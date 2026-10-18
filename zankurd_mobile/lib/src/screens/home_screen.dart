@@ -131,9 +131,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool _firstSession = true;
 
   /// Konu ızgarasının verisi: her kategorinin ustalık ilerlemesi ve
-  /// oynanabilir soru sayısı.
+  /// (soru sayısı 2026-10-19'da karodan kalktı).
   Map<String, CategoryProgress> _topicProgress = const {};
-  Map<String, int> _topicCounts = const {};
   LearningGoal? _learningGoal;
   bool _learningGoalLoaded = false;
   late AnimationController _loadAnimationController;
@@ -170,7 +169,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // DEĞİŞİMİ tetiklemiyor — kullanıcı başka bir sekmeye gidip dönene
     // kadar bölüm hep boş kalıyordu (2026-08-14 denetimi).
     _refreshProgress();
-    _refreshTopicCounts();
     widget.refreshSignal?.addListener(_handleRefreshSignal);
   }
 
@@ -370,17 +368,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
   }
 
-  /// Konu karolarındaki soru sayıları. Süs bilgisidir: gelmezse karo
-  /// yalnız adıyla kalır, ekran beklemez.
-  Future<void> _refreshTopicCounts() async {
-    try {
-      final counts = await repo.loadCategoryQuestionCounts();
-      if (mounted && counts.isNotEmpty) setState(() => _topicCounts = counts);
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'home topic counts failed');
-    }
-  }
-
   Future<void> _selectLearningGoal(LearningGoal goal) async {
     final store = await LearningGoalStore.load();
     final saved = await store.save(goal);
@@ -539,7 +526,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             isKu: ku,
             categories: repo.categories,
             progress: _topicProgress,
-            questionCounts: _topicCounts,
             onOpen: _openCategory,
           ),
           const SizedBox(height: SahneSpace.x6),

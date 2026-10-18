@@ -34,7 +34,7 @@ class SahneStatChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final visual = SahneTappable(
-      shape: SahneShape.m,
+      shape: SahneShape.chamferM,
       color: gold ? t.goldTint : t.s2,
       onTap: onTap,
       child: ConstrainedBox(
@@ -404,7 +404,7 @@ class SahneStatusBadge extends StatelessWidget {
       );
     } else {
       body = DecoratedBox(
-        decoration: ShapeDecoration(color: bg, shape: SahneShape.m),
+        decoration: ShapeDecoration(color: bg, shape: SahneShape.chamferM),
         child: ConstrainedBox(
           // a11y-tap-target: noninteractive — durum rozeti; salt görsel,
           // dokunma hedefi değil.

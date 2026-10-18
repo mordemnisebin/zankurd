@@ -9,6 +9,14 @@
 /// 2026-09-29 Şahnê: kilim çubuk ve maskot kalktı; kimlik artık gece sahne
 /// kartı (üstte kilim göz şeridi) ve ders elmasıyla taşınır. Bekçiler bu
 /// yeni dile göre güncellendi.
+///
+/// 2026-10-19 SADELEŞME (bu dosya güncellendi): günün görevi artık gece sahne
+/// kartı değil SAKİN YÜZEY KARTIDIR (`SahneSurfaceCard`: gündüz beyaz + 1 px
+/// kenar, gece Perde) ve ilerleme 80 px'lik ders elması yerine ince 4 px
+/// çubuk ve küçük "4/15" metnidir. İki test bu yüzden değişti: ilerleme
+/// testi çubuğu (`SahneProgressBar`) ve metni bekler, elmas YOKTUR; kart
+/// testi yüzey kartını ve TEMANIN (gündüz) birincil metnini bekler. Tek
+/// birincil düğme (Agir + koyu metin) kuralı aynı.
 library;
 
 import 'package:flutter/material.dart';
@@ -18,7 +26,9 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 void main() {
-  testWidgets('günün görevi ilerlemeyi ders elmasıyla okutur', (tester) async {
+  testWidgets('günün görevi ilerlemeyi ince çubuk ve küçük metinle okutur', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.light(),
@@ -34,21 +44,18 @@ void main() {
       ),
     );
 
-    final diamond = tester.widget<SahneLessonDiamond>(
-      find.byType(SahneLessonDiamond),
+    expect(find.byType(SahneLessonDiamond), findsNothing);
+    final bar = tester.widget<SahneProgressBar>(
+      find.byKey(const ValueKey('home-daily-task-progress')),
     );
-    expect(diamond.done, 4);
-    expect(diamond.total, 15);
+    expect(bar.height, 4);
+    expect(bar.value, closeTo(4 / 15, 1e-9));
+    expect(bar.trailing, '4/15');
     expect(find.text('4/15'), findsOneWidget);
-    expect(
-      find.byType(LinearProgressIndicator),
-      findsNothing,
-      reason: 'düz çubuğa geri dönüş kimliği yeniden siler',
-    );
   });
 
   testWidgets(
-    'günün görevi gece sahne kartıdır; tek birincil düğme Agir + koyu metin',
+    'günün görevi sakin yüzey kartıdır; tek birincil düğme Agir + koyu metin',
     (tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -67,16 +74,20 @@ void main() {
 
       final card = find.byKey(const ValueKey('home-daily-task'));
       expect(
-        find.descendant(of: card, matching: find.byType(SahneStageCard)),
+        find.descendant(of: card, matching: find.byType(SahneSurfaceCard)),
         findsOneWidget,
+      );
+      expect(
+        find.descendant(of: card, matching: find.byType(SahneStageCard)),
+        findsNothing,
       );
 
       // `firstSession` burada varsayılan (false) ve done(4) < total(15):
       // 2026-09-27'den beri bu durumda başlık "Günün dersi" değil "Günlük
-      // hedef" der (bkz. TodayTaskCard.build). Sahne kartı gündüz temasında
-      // da gecedir: başlık gecenin birincil metni.
+      // hedef" der (bkz. TodayTaskCard.build). 2026-10-19: kart temanın
+      // yüzeyidir (gündüz beyaz): başlık gündüzün birincil metni.
       final title = tester.widget<Text>(find.text('Günlük hedef'));
-      expect(title.style?.color, SahneTokens.night.tx);
+      expect(title.style?.color, SahneTokens.day.tx);
 
       final start = find.byKey(const ValueKey('home-daily-task-start'));
       expect(

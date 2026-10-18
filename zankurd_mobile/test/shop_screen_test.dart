@@ -1,3 +1,5 @@
+// 2026-10-19 sadeleşme: "sakin yüzey" bekçisi yuvarlak köşeli yüzey
+// kartını (`OutlinedBorder`) kabul eder; eskiden pahlı şekle cast ediyordu.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-09-29 doğallık (G3): fiyat etiketi "120j" değil "120" (birimi jeton
 // glifi söyler, K10); ürün adları cümle düzeninde ("Neon çerçeve"). Bu
@@ -318,7 +320,7 @@ void main() {
       final t = SahneTokens.of(tester.element(card));
       expect(material.color, t.s1);
       expect(material.elevation, 0);
-      final shape = material.shape! as BeveledRectangleBorder;
+      final shape = material.shape! as OutlinedBorder;
       expect(shape.side.color, t.edge);
       expect(
         find

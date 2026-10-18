@@ -277,7 +277,9 @@ class SahneButton extends StatelessWidget {
 
 /// Joker düğmesi — ikincilin kompakt çeşidi (maketteki `.sh-jk`).
 ///
-/// 52 boy, Kulis tonu, ortada ikon + jeton glifi + fiyat (Zêr metni). Adı
+/// 2026-10-19 sadeleşme: KAPSÜL çip (görsel 40, dokunma kutusu 48), ikon +
+/// jeton glifi + fiyat. Eskiden 52'lik köşeli düğmeydi. Jetonu yetmeyen
+/// joker soluk + küçük kilit, dokunulabilir. (Önceki belge:) Ortada ikon + jeton glifi + fiyat (Zêr metni). Adı
 /// ekranda yazmaz: ekran okuyucu "ad, fiyat"ı okur, uzun basışta ipucu
 /// olarak görünür. Dar ekranda ve büyük yazıda içerik sığdırılarak küçülür
 /// (taşmaz). Hâller:
@@ -318,22 +320,35 @@ class SahneJokerButton extends StatelessWidget {
   /// Jeton yetmiyor: pasif görünür ama fiyatı gösterir.
   final bool unaffordable;
 
+  /// Kapsülün görsel boyu; dokunma kutusu [sahneTapTarget] (48).
+  static const double visualHeight = 40;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final enabled = onPressed != null && !unaffordable;
+    // Jetonu yetmeyen joker SOLUK çizilir ama dokunulabilir kalır (neden
+    // alınamadığı söylensin): `unaffordable` görünümü, `onPressed` dokunmayı
+    // belirler. Etkin = hem dokunulabilir hem alınabilir.
+    final tappable = onPressed != null;
+    final enabled = tappable && !unaffordable;
     final fg = selected ? t.goldTx : (enabled ? t.tx : t.tx3);
     final showPrice = !selected && (enabled || unaffordable);
-    final shape = selected
-        ? SahneShape.withSide(SahneShape.m, t.goldTx, width: SahneRing.r2)
-        : SahneShape.m;
+    final capsule = StadiumBorder(
+      side: selected
+          ? BorderSide(
+              color: t.goldTx,
+              width: SahneRing.r2,
+              strokeAlign: BorderSide.strokeAlignInside,
+            )
+          : BorderSide.none,
+    );
     return Semantics(
       container: true,
       button: true,
-      enabled: enabled,
+      enabled: tappable,
       selected: selected ? true : null,
       label: semanticLabel ?? '$label, $price',
-      onTap: enabled ? onPressed : null,
+      onTap: tappable ? onPressed : null,
       excludeSemantics: true,
       child: Tooltip(
         message: label,
@@ -341,44 +356,70 @@ class SahneJokerButton extends StatelessWidget {
         excludeFromSemantics: true,
         child: SahnePressSink(
           enabled: enabled,
-          child: SahneTappable(
-            shape: shape,
-            color: selected ? t.goldTint : (enabled ? t.s2 : t.s1),
-            onTap: enabled ? onPressed : null,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 52, minWidth: 52),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x1),
-                child: Center(
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(icon, size: 20, color: fg),
-                        if (selected) ...[
-                          const SizedBox(width: SahneSpace.x1),
-                          Icon(AppIcons.check, size: 16, color: t.goldTx),
-                        ],
-                        if (showPrice) ...[
-                          const SizedBox(width: SahneSpace.x1),
-                          SahneGlyph(
-                            SahneGlyphKind.coin,
-                            size: 16,
-                            filled: enabled,
-                          ),
-                          const SizedBox(width: SahneSpace.x1),
-                          Text(
-                            '$price',
-                            style: SahneType.captionStrong.copyWith(
-                              color: enabled ? t.goldTx : t.tx3,
-                              fontFeatures: const [
-                                FontFeature.tabularFigures(),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ],
+          child: SizedBox(
+            // Dokunma kutusu 48; görsel kapsül 40 (ortada).
+            height: sahneTapTarget,
+            child: Center(
+              child: SahneTappable(
+                shape: capsule,
+                color: selected ? t.goldTint : (enabled ? t.s2 : t.s1),
+                onTap: tappable ? onPressed : null,
+                child: ConstrainedBox(
+                  // a11y-tap-target: noninteractive — görsel kapsül tabanı;
+                  // dokunma hedefi dıştaki 48'lik kutudur.
+                  constraints: const BoxConstraints(
+                    minHeight: visualHeight,
+                    minWidth: 52,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: SahneSpace.x2,
+                    ),
+                    child: Center(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(icon, size: 20, color: fg),
+                            if (selected) ...[
+                              const SizedBox(width: SahneSpace.x1),
+                              Icon(AppIcons.check, size: 16, color: t.goldTx),
+                            ],
+                            if (showPrice) ...[
+                              const SizedBox(width: SahneSpace.x1),
+                              if (unaffordable)
+                                // Kilit: ikonla fiyat arasında küçük, soluk.
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                    end: SahneSpace.x1,
+                                  ),
+                                  child: Icon(
+                                    AppIcons.lock,
+                                    key: const ValueKey('joker-lock'),
+                                    size: 12,
+                                    color: t.tx3,
+                                  ),
+                                ),
+                              SahneGlyph(
+                                SahneGlyphKind.coin,
+                                size: 16,
+                                filled: enabled,
+                              ),
+                              const SizedBox(width: SahneSpace.x1),
+                              Text(
+                                '$price',
+                                style: SahneType.captionStrong.copyWith(
+                                  color: enabled ? t.goldTx : t.tx3,
+                                  fontFeatures: const [
+                                    FontFeature.tabularFigures(),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),

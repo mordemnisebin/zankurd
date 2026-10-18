@@ -1,3 +1,6 @@
+// 2026-10-19 sadeleşme: joker kapsül çip oldu; jetonu yetmeyen joker soluk +
+// küçük kilitli ama DOKUNULABİLİR (neden alınamadığı tost olarak açıklanır).
+// "jeton yetmiyor" testi bu yüzden dokunuşu 1 sayar ve kilit ikonunu arar.
 /// Şahnê birleştirme turunun (2026-09-29) bileşen bekçileri.
 ///
 /// ## Neyi korur
@@ -626,29 +629,36 @@ void main() {
       semantics.dispose();
     });
 
-    testWidgets('jeton yetmiyor: pasif ama fiyat görünür', (tester) async {
-      var taps = 0;
-      await pumpSahne(
-        tester,
-        SahneJokerButton(
-          key: const Key('j'),
-          icon: AppIcons.clone,
-          label: 'Du bersiv',
-          price: 30,
-          unaffordable: true,
-          onPressed: () => taps++,
-        ),
-        dark: true,
-        textScale: 1,
-      );
-      expect(find.text('30'), findsOneWidget);
-      expect(
-        tester.widget<Text>(find.text('30')).style?.color,
-        SahneTokens.night.tx3,
-      );
-      await tester.tap(find.byKey(const Key('j')));
-      expect(taps, 0);
-    });
+    // 2026-10-19 sadeleşme: jetonu yetmeyen joker soluk + küçük kilitli
+    // ama DOKUNULABİLİR (neden alınamadığını açıklamak için); eskiden ölü
+    // pasif düğmeydi (dokunuş sayısı 0).
+    testWidgets(
+      'jeton yetmiyor: soluk, kilitli, dokunulabilir; fiyat görünür',
+      (tester) async {
+        var taps = 0;
+        await pumpSahne(
+          tester,
+          SahneJokerButton(
+            key: const Key('j'),
+            icon: AppIcons.clone,
+            label: 'Du bersiv',
+            price: 30,
+            unaffordable: true,
+            onPressed: () => taps++,
+          ),
+          dark: true,
+          textScale: 1,
+        );
+        expect(find.text('30'), findsOneWidget);
+        expect(
+          tester.widget<Text>(find.text('30')).style?.color,
+          SahneTokens.night.tx3,
+        );
+        expect(find.byKey(const ValueKey('joker-lock')), findsOneWidget);
+        await tester.tap(find.byKey(const Key('j')));
+        expect(taps, 1);
+      },
+    );
   });
 
   // 2026-09-29 doğallık: bu bekçi eskiden sakin sayacın halesinin kategori

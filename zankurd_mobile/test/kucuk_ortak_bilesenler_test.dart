@@ -1,6 +1,9 @@
 /// 2026-10-01 tasarım denetimi, küçük düzeltmeler (3/3): ortak bileşenler —
 /// seçim çipi, liste ayırıcısı, uygulama çubuğunun sağ kenarı, ana sayfa
 /// dil düğmesi.
+///
+/// 2026-10-19 sadeleşme: çip yuvarlak köşeli oldu (`RoundedRectangleBorder`);
+/// ölçü bekçileri artık şekil türüne değil `OutlinedBorder.side`a bakar.
 library;
 
 import 'package:flutter/material.dart';
@@ -74,7 +77,7 @@ void main() {
                 )
                 .first,
           );
-          return (material.shape! as BeveledRectangleBorder).side.width;
+          return (material.shape! as OutlinedBorder).side.width;
         }
 
         expect(ring('on'), ring('off'));
@@ -89,7 +92,7 @@ void main() {
               )
               .first,
         );
-        expect((off.shape! as BeveledRectangleBorder).side.color, off.color);
+        expect((off.shape! as OutlinedBorder).side.color, off.color);
       },
     );
   });

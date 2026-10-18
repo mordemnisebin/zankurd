@@ -1,3 +1,8 @@
+// 2026-10-19 sadeleşme: günün görevi artık gece sahne kartı değil sakin yüzey
+// kartıdır (`SahneSurfaceCard`); "ana sahne hero" testi bunu bekler. Turuncu
+// yine yalnız ana düğmedir ve ekrandaki TEK Agir dolgudur; düello kartı artık
+// tek kompakt ikincil düğme taşır (Kulis tonu, açık `backgroundColor`).
+//
 // 2026-09-29 Şahnê: başlık A iskeletinin marka satırıdır (`SahneTabPage`),
 // günün görevi gece sahne kartı; kapılar konu ızgarasının altında tek liste
 // grubunda (dokunmadan önce görünür olana dek kaydırılır).
@@ -234,7 +239,7 @@ void main() {
     expect(
       find.descendant(
         of: find.byKey(const ValueKey('home-daily-task')),
-        matching: find.byType(SahneStageCard),
+        matching: find.byType(SahneSurfaceCard),
       ),
       findsOneWidget,
     );

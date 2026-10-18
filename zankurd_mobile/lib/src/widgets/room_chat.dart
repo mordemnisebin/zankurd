@@ -245,7 +245,7 @@ class _RoomChatState extends State<RoomChat> {
     // kendi mesajın Zêr tonu ("Sen" altındır), ötekiler Kulis. Giriş alanı
     // temanın girdi alanıdır; gönder ikonu Agir metni (bağlantı rengi).
     final t = SahneTokens.of(context);
-    const topBevel = BeveledRectangleBorder(
+    const topBevel = RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(SahneShape.lValue),
         topRight: Radius.circular(SahneShape.lValue),

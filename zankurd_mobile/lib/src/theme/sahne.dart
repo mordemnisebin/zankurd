@@ -204,17 +204,20 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     rim: Color(0x29FFFFFF),
   );
 
+  // 2026-10-19 sadeleşme: gündüz zemini #F4F6FA, kart beyaz, kenar 1 px
+  // #E3E7F0 (eski zemin #E9EDF6 artık yükseltilmiş yüzey `s2`; eski `s2`
+  // #D8DEEE kartın içinde fazla koyu, "kalabalık" izlenimi veriyordu).
   static const day = SahneTokens(
-    bg: Color(0xFFE9EDF6),
+    bg: Color(0xFFF4F6FA),
     nav: Color(0xFFFFFFFF),
     s1: Color(0xFFFFFFFF),
-    s2: Color(0xFFD8DEEE),
+    s2: Color(0xFFE9EDF6),
     s3: Color(0xFFD0D7EC),
     tx: Color(0xFF0E1433),
     tx2: Color(0xFF454E79),
     tx3: Color(0xFF566090),
     line: Color(0x1A0E1433),
-    edge: Color(0x140E1433),
+    edge: Color(0xFFE3E7F0),
     act: Color(0xFFFF8A3D),
     onAct: Color(0xFF1B0C02),
     // #A84300 Kulis (s2) üstünde 4.499:1 kalıyordu; bir ton koyulaştı.
@@ -558,53 +561,81 @@ class SahneSpace {
   static const double cardGap = 12;
 }
 
-/// Kesik köşe (45° pah) şekil dili. Yarıçap değil, pah boyu.
+/// Şekil dili: yumuşak yuvarlak köşe + yalnız marka aksanında kesik köşe.
 ///
-/// * S (4) — yüksekliği ≤ 28 öğe: rozet, durum karesi, ilerleme çubuğu.
-/// * M (8) — 32–56 öğe: çip, düğme, şık, ikon karosu, gezinme plaketi.
-/// * L (12) — kart ve karo.
-/// * Elmas — YALNIZ iki anlamda: soru ilerlemesi (elmas dizisi, sayaç) ve
-///   ders sayacı (ders elması). 2026-09-29 doğallık (K5): avatar pahlı kare
-///   oldu ([forSize]); elmas her yerde olunca hiçbir şey anlatmıyordu.
+/// ## 2026-10-19 sadeleşme
+///
+/// Test edenler genel tasarımı "çok kalabalık, gözü yoruyor" diye
+/// değerlendirdi; iki bağımsız dış inceleme (Gemini, ChatGPT) aynı bulguyu
+/// verdi: her kart ve düğmenin pahlı köşesi, üstüne doygun dolgu, sayfayı
+/// "oyun menüsü" gürültüsüne çeviriyordu. Karar (onaylı maket): kart ve
+/// karo YUVARLAK dikdörtgen (16), düğme, çip ve şık YUVARLAK (12). Kesik
+/// köşe (pah) yalnız küçük rozet, sıra/seviye mücevheri ve jeton çipinde
+/// kalır: markanın tek imza ayrıntısı olarak, az olduğu için anlamlı.
+///
+/// * [l] — kart ve karo: yarıçap 16.
+/// * [m] — düğme, şık, çip, joker, ikon karosu: yarıçap 12.
+/// * [s] — rozet, durum karesi: pah 4 (kesik köşe kalır).
+/// * [chamferM] / [chamferL] — marka aksanı: jeton çipi, sıra/seviye
+///   mücevheri, avatar ([forSize]). Pah boyu 8 / 12.
+/// * Elmas — YALNIZ ders sayacı ve sonuç/mücevher süsü (soru ilerlemesi
+///   artık ince çubuk).
 class SahneShape {
   const SahneShape._();
 
   /// Öğenin boyuna uygun pahlı kare: ≤ 28 → S, ≤ 56 → M, üstü → L.
-  /// Avatar ve avatar renk örnekleri bunu kullanır.
+  /// Avatar ve avatar renk örnekleri bunu kullanır (marka aksanı: pah
+  /// kalır).
   static BeveledRectangleBorder forSize(double size) {
     if (size <= 28) return s;
-    if (size <= 56) return m;
-    return l;
+    if (size <= 56) return chamferM;
+    return chamferL;
   }
 
-  static const double sValue = 4;
-  static const double mValue = 8;
-  static const double lValue = 12;
+  /// Yuvarlak yarıçaplar: kart / kontrol.
+  static const double lValue = 16;
+  static const double mValue = 12;
 
-  static const BeveledRectangleBorder s = BeveledRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(sValue)),
-  );
-  static const BeveledRectangleBorder m = BeveledRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(mValue)),
-  );
-  static const BeveledRectangleBorder l = BeveledRectangleBorder(
+  /// Pah boyları (marka aksanı).
+  static const double sValue = 4;
+  static const double chamferMValue = 8;
+  static const double chamferLValue = 12;
+
+  /// Kart ve karo.
+  static const RoundedRectangleBorder l = RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(lValue)),
   );
 
-  /// Kenarlıklı çeşit (halka). Halkalar içe çizilir.
-  static BeveledRectangleBorder withSide(
-    BeveledRectangleBorder shape,
+  /// Düğme, şık, çip, joker.
+  static const RoundedRectangleBorder m = RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(mValue)),
+  );
+
+  /// Rozet ve durum karesi: kesik köşe kalır.
+  static const BeveledRectangleBorder s = BeveledRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(sValue)),
+  );
+  static const BeveledRectangleBorder chamferM = BeveledRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(chamferMValue)),
+  );
+  static const BeveledRectangleBorder chamferL = BeveledRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(chamferLValue)),
+  );
+
+  /// Kenarlıklı çeşit (halka). Halkalar içe çizilir; şekil türü korunur.
+  static T withSide<T extends OutlinedBorder>(
+    T shape,
     Color color, {
     double width = SahneRing.r1,
   }) {
-    return BeveledRectangleBorder(
-      borderRadius: shape.borderRadius,
-      side: BorderSide(
-        color: color,
-        width: width,
-        strokeAlign: BorderSide.strokeAlignInside,
-      ),
-    );
+    return shape.copyWith(
+          side: BorderSide(
+            color: color,
+            width: width,
+            strokeAlign: BorderSide.strokeAlignInside,
+          ),
+        )
+        as T;
   }
 
   /// Elmas: kenar uzunluğunun yarısı kadar pah, yani 45° dönmüş kare.
@@ -667,6 +698,22 @@ class SahneType {
     fontWeight: FontWeight.w800,
     fontSize: 28,
     height: 32 / 28,
+    leadingDistribution: TextLeadingDistribution.even,
+  );
+
+  /// 24/30 — YALNIZ soru metni (soru ekranı, düello, seviye belirleme).
+  ///
+  /// 2026-10-19 sadeleşme: soru 28/32 ile çiziliyordu; üstündeki ışık
+  /// huzmesi ve elmas sayaçla yarışırken ekranın en yüksek sesiydi. 24/30
+  /// hâlâ büyük ve ağır (800) okunur ama sahnenin geri kalanıyla aynı
+  /// ölçekte durur. Beş boyutlu ölçeğin dışında tek ek boyuttur ve yalnız
+  /// soru metni içindir (bekçi: `typography_scale_test.dart`); satır
+  /// bütçesini aşan soru yine [headline] 22/28'e iner.
+  static const TextStyle question = TextStyle(
+    fontFamily: display,
+    fontWeight: FontWeight.w800,
+    fontSize: 24,
+    height: 30 / 24,
     leadingDistribution: TextLeadingDistribution.even,
   );
 

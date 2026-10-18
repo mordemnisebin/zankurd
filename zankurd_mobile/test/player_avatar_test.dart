@@ -92,13 +92,15 @@ void main() {
     expect(find.byIcon(AppIcons.user), findsOneWidget);
   });
 
+  // 2026-10-19 sadeleşme: `SahneShape.m/l` yuvarlak oldu; avatar marka
+  // aksanı olarak pahlı kalır (`chamferM/chamferL`, `forSize`).
   // 2026-09-29 doğallık (K5): avatar elmas değil, boyuna uygun pahlı kare.
   // Elmas yalnız soru ilerlemesi ve ders sayacında kalır; avatar da elmas
   // olunca şekil hiçbir şey anlatmıyordu ve fotoğrafın yarısı kesiliyordu.
   for (final (radius, shape) in [
     (12.0, SahneShape.s),
-    (20.0, SahneShape.m),
-    (48.0, SahneShape.l),
+    (20.0, SahneShape.chamferM),
+    (48.0, SahneShape.chamferL),
   ]) {
     testWidgets('avatar ${radius * 2} px: pahlı kare, elmas değil', (
       tester,

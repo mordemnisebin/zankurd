@@ -15,12 +15,13 @@ Material _frameOf(WidgetTester tester, Finder field) => tester.widget<Material>(
   find.descendant(of: field, matching: find.byType(Material)).first,
 );
 
-/// Alanın pahlı çerçevesinin kenar çizgisi.
+/// Alanın çerçevesinin kenar çizgisi (2026-10-19: pahlı değil yuvarlak köşeli
+/// çerçeve; `RoundedRectangleBorder`, yarıçap 12).
 BorderSide _sideOf(WidgetTester tester, Finder field) =>
-    (_frameOf(tester, field).shape! as BeveledRectangleBorder).side;
+    (_frameOf(tester, field).shape! as RoundedRectangleBorder).side;
 
 void main() {
-  testWidgets('alan tema çerçevesini ikinci kez çizmez, çerçeve pahlıdır', (
+  testWidgets('alan tema çerçevesini ikinci kez çizmez, çerçeve yuvarlaktır', (
     tester,
   ) async {
     final controller = TextEditingController();
@@ -48,7 +49,7 @@ void main() {
     expect(decoration?.filled, isFalse);
     expect(
       _frameOf(tester, find.byType(SahneField)).shape,
-      isA<BeveledRectangleBorder>(),
+      isA<RoundedRectangleBorder>(),
     );
   });
 

@@ -1,3 +1,6 @@
+// 2026-10-19 sadeleşme: "polished visual accents" testi ışık huzmesinin
+// KALKTIĞINI (`sahne-stage-beam` yok) ve yeni üst satırı (⋯ menüsü, ince
+// ilerleme çubuğu) bekler; diğer testler aynı.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
@@ -252,8 +255,13 @@ void main() {
       find.byKey(const ValueKey('quiz-question-ghost-icon')),
       findsNothing,
     );
-    expect(find.byKey(const ValueKey('sahne-stage-beam')), findsOneWidget);
+    // 2026-10-19 sadeleşme: ışık huzmesi ve elmas sayaç kalktı (sahne
+    // sakinleşti); ufuktaki dağ sırtı kaldı. Tek üst satır: künye + sayaç
+    // saniyesi yok (süresiz tur) + ⋯ menüsü; altında 4 px ilerleme çubuğu.
+    expect(find.byKey(const ValueKey('sahne-stage-beam')), findsNothing);
     expect(find.byKey(const ValueKey('sahne-stage-ridge')), findsOneWidget);
+    expect(find.byKey(const ValueKey('quiz-more-menu')), findsOneWidget);
+    expect(find.byKey(const ValueKey('quiz-progress-bar')), findsOneWidget);
   });
 
   testWidgets('online room answer broadcasts readiness outside 1vs1', (

@@ -480,9 +480,13 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         // 2026-09-29 doğallık (K2): soru arkasındaki hayalet kategori
         // çizimi kalktı (bkz. quiz_screen `_stageLight`).
         //
+        // 2026-10-19 sadeleşme: üst satır soru ekranıyla aynı (kapat | ortada
+        // düello adı | sağda kalan saniye); 60 px'lik elmas sayaç ve 7'li
+        // elmas dizisi kalktı, yerine 4 px'lik ince ilerleme çubuğu geldi.
+        center: Text(context.t(K.asyncDuel)),
         // Çıkış gönderilirken sayaç yerine bekleme göstergesi: kalan
         // sorular sunucuya TIMEOUT olarak gidiyor.
-        center: _exitInFlight
+        score: _exitInFlight
             ? const SizedBox.square(
                 dimension: 24,
                 child: CircularProgressIndicator(strokeWidth: 2),
@@ -492,11 +496,10 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                 builder: (context, _) {
                   final fraction = _timerController.animation.value;
                   final seconds = (fraction * _questionSeconds).ceil();
-                  return SahneTimerDiamond(
+                  return SahneStageTimer(
                     secondsLeft: seconds,
-                    fraction: fraction,
-                    // Cevap gönderildikten sonra sayaç durur; gerilim
-                    // nabzı da durur.
+                    // Cevap gönderildikten sonra sayaç durur; gerilim rengi
+                    // de söner.
                     hotSeconds: disabled ? -1 : 5,
                     semanticLabel: '$seconds ${context.t(K.secondsShortUnit)}',
                   );
@@ -504,14 +507,17 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
               ),
         progress: Padding(
           padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-          child: SahneDiamondRow(
-            states: [
-              for (var i = 0; i < total; i++)
-                i < _results.length
-                    ? _results[i] ?? SahneDiamondState.pending
-                    : SahneDiamondState.pending,
-            ],
-            currentIndex: _index,
+          child: SahneProgressBar(
+            key: const ValueKey('async-duel-progress-bar'),
+            // `_results` toplam uzunlukta ve boş (`null`) başlar: yalnız
+            // cevaplananlar dolu sayılır.
+            value: total == 0
+                ? 0
+                : (_results.where((r) => r != null).length / total).clamp(
+                    0.0,
+                    1.0,
+                  ),
+            height: 4,
             semanticLabel: progressLabel,
           ),
         ),
@@ -621,7 +627,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   }
 }
 
-/// Soru metni: Başlık 28/32; 28'de dört satırı aşarsa Manşet 22/28'e iner.
+/// Soru metni: Soru 24/30; 24'te dört satırı aşarsa Manşet 22/28'e iner.
 /// Karar karakter sayısıyla değil, gerçek ölçümle (`TextPainter`) verilir.
 class _QuestionText extends StatelessWidget {
   const _QuestionText({required this.text});
@@ -636,7 +642,7 @@ class _QuestionText extends StatelessWidget {
         final painter = TextPainter(
           text: TextSpan(
             text: text,
-            style: SahneType.title.copyWith(fontFamily: SahneType.display),
+            style: SahneType.question.copyWith(fontFamily: SahneType.display),
           ),
           textDirection: Directionality.of(context),
           textScaler: MediaQuery.textScalerOf(context),
@@ -644,7 +650,7 @@ class _QuestionText extends StatelessWidget {
         )..layout(maxWidth: constraints.maxWidth);
         final style = painter.didExceedMaxLines
             ? SahneType.headline
-            : SahneType.title;
+            : SahneType.question;
         painter.dispose();
         return Semantics(
           header: true,

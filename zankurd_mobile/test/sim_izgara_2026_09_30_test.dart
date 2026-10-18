@@ -1,3 +1,10 @@
+// 2026-10-19 SADELEŞME (bu başlık güncellendi): L5 + S10 grubu yeni konu
+// karosuna göre yeniden yazıldı. Karo yatay ve iki sütunludur (yalnız
+// geçerli dilde ad); soru sayısı ve boş çubuk kalktı. "Sütun sayısı düşer"
+// bekçisi artık 2 → 1 düşüşünü ölçer; S10 (soru sayısı durur, boylar eşit)
+// yerine "çubuk yalnız ilerleme > 0 ise" ve "ad bölünmez" geçti. Öteki
+// gruplar (L4, L10, L13, L14, S2, S8, S9, S12) olduğu gibi.
+//
 // 2026-09-30 simülatör: ızgara ve yerleşim kusurları (L4, L5, L10, L13, L14,
 // S2, S8, S9, S10).
 //
@@ -149,15 +156,6 @@ void main() {
                 threshold: 10,
               ),
             },
-            questionCounts: const {
-              'Ziman': 241,
-              'Çand': 214,
-              'Dîrok': 138,
-              'Wêje': 151,
-              'Cografya': 245,
-              'Muzîk': 120,
-              'Sînema': 71,
-            },
             onOpen: (_) {},
           ),
         ),
@@ -185,50 +183,43 @@ void main() {
       }
     }
 
-    testWidgets('büyük yazıda sütun sayısı düşer', (tester) async {
+    testWidgets('büyük yazıda sütun sayısı 2 → 1 düşer', (tester) async {
       _setSize(tester, _sizes.first);
       await tester.pumpWidget(grid(isKu: true, scale: 1.0));
       await tester.pumpAndSettle();
       double leftOf(String c) =>
           tester.getTopLeft(find.byKey(ValueKey('home-topic-$c'))).dx;
-      final normalColumns = _categories.map(leftOf).toSet().length;
-      expect(normalColumns, greaterThanOrEqualTo(3));
+      expect(_categories.map(leftOf).toSet().length, 2);
 
       await tester.pumpWidget(grid(isKu: true, scale: 2.35));
       await tester.pumpAndSettle();
-      final largeColumns = _categories.map(leftOf).toSet().length;
-      expect(largeColumns, lessThan(normalColumns));
+      expect(_categories.map(leftOf).toSet().length, 1);
+      expect(tester.takeException(), isNull);
     });
 
     testWidgets(
-      'S10: oynanmış ve oynanmamış karoda soru sayısı durur, boylar eşit',
+      'S10: ince çubuk yalnız ilerleme > 0 olan karoda; soru sayısı yok',
       (tester) async {
         _setSize(tester, _sizes.last);
         await tester.pumpWidget(grid(isKu: false, scale: 1.0));
         await tester.pumpAndSettle();
-        // Oynanmış (Çand, Dîrok) ve oynanmamış (Ziman, Wêje) karoların
-        // hepsinde sayı satırı var; çubuk yalnız oynanmışlarda.
         for (final c in _categories) {
           final tile = find.byKey(ValueKey('home-topic-$c'));
           expect(
             find.descendant(of: tile, matching: find.textContaining(' soru')),
-            findsOneWidget,
-            reason: '$c karosunda soru sayısı yok',
+            findsNothing,
+            reason: '$c karosunda soru sayısı olmamalı',
           );
         }
-        // 2026-09-30 izgara: çubuk HER karoda (oynanmamışta boş iz); dolu
-        // olanlar yalnız oynanmışlar.
-        final bars = tester.widgetList<LinearProgressIndicator>(
-          find.byType(LinearProgressIndicator),
-        );
-        expect(bars.length, _categories.length);
-        expect(bars.where((b) => (b.value ?? 0) > 0).length, 2);
-        // Aynı satırdaki karolar (Ziman oynanmamış, Çand ve Dîrok oynanmış) eşit yükseklikte.
-        final heights = ['Ziman', 'Çand', 'Dîrok']
-            .map((c) => tester.getSize(find.byKey(ValueKey('home-topic-$c'))))
-            .map((s) => s.height)
-            .toSet();
-        expect(heights.length, 1, reason: 'karo boyları eşit değil: $heights');
+        final bars = tester
+            .widgetList<LinearProgressIndicator>(
+              find.byType(LinearProgressIndicator),
+            )
+            .toList();
+        // Yalnız oynanmış iki konu (Çand, Dîrok) çubuk taşır; hepsi dolu.
+        expect(bars.length, 2);
+        expect(bars.every((b) => (b.value ?? 0) > 0), isTrue);
+        expect(bars.every((b) => b.minHeight == 4), isTrue);
       },
     );
   });

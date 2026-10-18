@@ -177,6 +177,9 @@ class AppIcons {
   /// Lucide `flag`.
   static const IconData flag = IconData(0xe0d1, fontFamily: 'Lucide');
 
+  /// Lucide `ellipsis` (yatay üç nokta, "daha fazla" menüsü).
+  static const IconData ellipsis = IconData(0xe0b6, fontFamily: 'Lucide');
+
   /// Lucide `ellipsis-vertical`.
   static const IconData ellipsisVertical = IconData(
     0xe0b7,

@@ -1,3 +1,5 @@
+// 2026-10-19 sadeleşme: joker kapsül çip (görsel 40, dokunma kutusu 48); boy
+// bekçisi 52 yerine 48 bekler. Düğme boyları ve etiketleri aynı.
 /// Şahnê düğmelerinin bekçisi (birincil, ikincil, metin, pasif, joker).
 ///
 /// ## Neyi korur
@@ -110,7 +112,8 @@ void main() {
       }
       for (final e in find.byType(SahneJokerButton).evaluate()) {
         final size = tester.getSize(find.byWidget(e.widget));
-        expect(size.height, greaterThanOrEqualTo(52));
+        // 2026-10-19 sadeleşme: joker kapsül çip (görsel 40); dokunma kutusu 48.
+        expect(size.height, greaterThanOrEqualTo(48));
         expect(size.width, greaterThanOrEqualTo(44));
       }
       expect(find.bySemanticsLabel('Nîv bi Nîv, 20'), findsOneWidget);

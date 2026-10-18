@@ -672,7 +672,7 @@ class SahneStageScaffold extends StatelessWidget {
     this.progress,
     this.dock,
     this.backdrop,
-    this.beam = true,
+    this.beam = false,
     this.light,
     this.ridge = false,
   });
@@ -690,6 +690,10 @@ class SahneStageScaffold extends StatelessWidget {
   final Widget? progress;
   final Widget? dock;
   final ImageProvider? backdrop;
+
+  /// Işık huzmesi. 2026-10-19 sadeleşme: varsayılan KAPALI. Soru metninin
+  /// arkasındaki parlak huzme, test edenlerin "gözü yoruyor" dediği
+  /// kalabalığın büyük parçasıydı; ekranların hiçbiri artık açmıyor.
   final bool beam;
 
   /// Kategori ışığı: huzmenin rengi (yalnız ışık; dolgu değil).
@@ -723,7 +727,7 @@ class SahneStageScaffold extends StatelessWidget {
     final dockWidget = dock;
 
     final topBar = ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 68),
+      constraints: const BoxConstraints(minHeight: _GameBarRow.minHeight),
       child: Padding(
         // Kapat plakasının görsel kenarı sayfa kenarına (16) oturur; 48'lik
         // dokunma kutusu 2 px dışarı taşar. Sağ öğe yine 16'ya hizalanır
@@ -1088,7 +1092,7 @@ enum _GameBarSlot { leading, center, trailing }
 /// karşılığı. Orta yuva her zaman TAM ortadadır (yan öğelerin genişliği
 /// farklı olsa da); genişliği iki yandaki geniş öğeye göre sınırlanır.
 ///
-/// Yükseklik 68 (en az); büyük yazıda orta metin uzarsa satır UZAR.
+/// Yükseklik 56 (en az); büyük yazıda orta metin uzarsa satır UZAR.
 ///
 /// 2026-09-30 simülatör: bu satır önce `CustomMultiChildLayout` idi ve
 /// `getSize` yüksekliği çocuklar ölçülmeden, 68'e sabitliyordu. Belge "satır
@@ -1100,7 +1104,9 @@ enum _GameBarSlot { leading, center, trailing }
 class _GameBarRow extends MultiChildRenderObjectWidget {
   const _GameBarRow({required super.children});
 
-  static const double minHeight = 68;
+  /// 2026-10-19 sadeleşme: 68 → 56 (60 px'lik elmas sayaç kalktı; satır 48'lik
+  /// düğmeyi taşır, soru yukarı çıkar).
+  static const double minHeight = 56;
 
   /// Orta metin ile satırın alt/üst kenarı arasındaki en az boşluk.
   static const double centerPad = SahneSpace.x2;
@@ -1149,11 +1155,16 @@ class _RenderGameBar extends RenderBox
     final ls = leading == null ? Size.zero : layout(leading, loose);
     final ts = trailing == null ? Size.zero : layout(trailing, loose);
     final tw = trailing == null ? 0.0 : ts.width + _GameBarRow.trailingInset;
-    final side = ls.width > tw ? ls.width : tw;
     var cs = Size.zero;
+    // Orta yuva, yan öğeler eşitse TAM ortadadır; sağ grup soldan genişse
+    // (kapat | künye | saniye + menü) orta yuva ortalamayı bırakıp iki yan
+    // arasındaki boşluğa kayar. Eskiden her iki yana da geniş olanın payı
+    // ayrılırdı: 320 px'te künyeye yer kalmıyordu.
+    final lead = ls.width;
+    final trail = tw;
+    final freeW = (w - lead - trail - 2 * SahneSpace.x2).clamp(0.0, w);
     if (center != null) {
-      final maxW = (w - 2 * (side + SahneSpace.x2)).clamp(0.0, w);
-      cs = layout(center, BoxConstraints(maxWidth: maxW));
+      cs = layout(center, BoxConstraints(maxWidth: freeW));
     }
     var h = _GameBarRow.minHeight;
     if (center != null) {
@@ -1173,7 +1184,10 @@ class _RenderGameBar extends RenderBox
         );
       }
       if (center != null) {
-        place(center, Offset((w - cs.width) / 2, (h - cs.height) / 2));
+        final minX = lead + SahneSpace.x2;
+        final maxX = w - trail - SahneSpace.x2 - cs.width;
+        final x = ((w - cs.width) / 2).clamp(minX, maxX < minX ? minX : maxX);
+        place(center, Offset(x, (h - cs.height) / 2));
       }
     }
     return Size(w, h);

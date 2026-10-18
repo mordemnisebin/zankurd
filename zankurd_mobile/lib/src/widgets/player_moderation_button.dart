@@ -136,7 +136,7 @@ Future<void> showPlayerModerationSheet({
     context: context,
     // 2026-09-29 Şahnê: alt perde Perde (`s1`), üst köşeler L pah.
     backgroundColor: SahneTokens.of(context).s1,
-    shape: const BeveledRectangleBorder(
+    shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(SahneShape.lValue),
       ),

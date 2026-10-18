@@ -11,6 +11,11 @@ import 'support/widget_test_helpers.dart';
 
 /// Soru bildirme başarısı/hatası kullanıcıya görünmeli; mock çağrıyı kaydetmeli.
 ///
+/// 2026-10-19 SADELEŞME (bu dosya güncellendi): "Bildir" artık gövdedeki ayrı
+/// bir ikon düğmesi değil üst satırdaki ⋯ menüsünün satırıdır (Kaydet +
+/// Bildir). Testler önce menüyü açar (`_openReport`); bildirme akışının
+/// kendisi (diyalog, depo çağrısı, snackbar) değişmedi.
+///
 /// ## Kusur
 ///
 /// `_reportQuestion` snackbar ve `repository.reportQuestion` insert
@@ -31,6 +36,13 @@ class _FailingReportRepository extends MockZanKurdRepository {
   Future<void> reportQuestion(QuizQuestion question, String reason) async {
     throw StateError('injected: report failed');
   }
+}
+
+/// ⋯ menüsünü açıp "Bildir" satırına dokunur.
+Future<void> _openReport(WidgetTester tester) async {
+  await tester.tap(find.byKey(const ValueKey('quiz-more-menu')));
+  await tester.pumpAndSettle();
+  await tester.tap(find.byKey(const ValueKey('quiz-menu-report')));
 }
 
 void main() {
@@ -69,7 +81,7 @@ void main() {
     final repo = _RecordingReportRepository();
     await pumpQuiz(tester, repo);
 
-    await tester.tap(find.byTooltip('Bildir'));
+    await _openReport(tester);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 200));
 
@@ -85,7 +97,7 @@ void main() {
     final repo = _FailingReportRepository();
     await pumpQuiz(tester, repo);
 
-    await tester.tap(find.byTooltip('Bildir'));
+    await _openReport(tester);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 200));
 
@@ -117,7 +129,7 @@ void main() {
     ) async {
       await pumpQuiz(tester, _RecordingReportRepository());
 
-      await tester.tap(find.byTooltip('Bildir'));
+      await _openReport(tester);
       await tester.pumpAndSettle();
       expect(find.byType(AlertDialog), findsOneWidget);
 

@@ -15,6 +15,13 @@ import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 /// Soru ekranının renk ve yüzey kuralları.
 ///
+/// 2026-10-19 SADELEŞME (bu dosya güncellendi): (1) şık çubuğunun halkası
+/// artık yuvarlak köşeli şekildedir (`OutlinedBorder`; eskiden pahlı);
+/// (2) 5'li/10'lu elmas dizisi kalktı, yerine 4 px'lik ince ilerleme çubuğu
+/// geldi: "elmas dizisi turun kaydını taşır" testi "ilerleme çubuğu turun
+/// kaydını taşır" oldu ve çubuğun doluluğunu (tamamlanan/toplam) ile ekran
+/// okuyucu özetindeki doğru sayısını ölçer. Renk kuralları aynı.
+///
 /// 2026-09-29 Şahnê: bekçiler eski görünüşü (Forest seçim gradyanı, şık
 /// kimlik rengi kenarlığı, turuncu marka dolgusu, kilim tahtası, 3D gölge,
 /// Zana yüzü) sabitliyordu; soru ekranı Şahnê C iskeletine taşınınca
@@ -65,7 +72,7 @@ void main() {
         )
         .firstWhere((d) => d.position == DecorationPosition.foreground);
     final shape = (box.decoration as ShapeDecoration).shape;
-    return (shape as BeveledRectangleBorder).side;
+    return (shape as OutlinedBorder).side;
   }
 
   testWidgets('kontrol edilen şık renksiz kalır, yalnız halka alır', (
@@ -216,11 +223,11 @@ void main() {
     expect(fill.color, SahneTokens.night.act);
   });
 
-  // Eski adı: "kilim tahtası turun kaydını taşır". Şerit 2026-09-29'da
-  // kilim tahtasından Şahnê'nin elmas dizisine geçti. Korunan kural aynı:
-  // şerit turun KAYDINI tutar — kaçıncı sorudayız ve hangileri doğruydu.
-  // Kayıt bileşenin aldığı değerlerden okunur, boyanan pikselden değil.
-  testWidgets('elmas dizisi turun kaydını taşır', (tester) async {
+  // Eski adı: "kilim tahtası turun kaydını taşır", sonra "elmas dizisi ...".
+  // 2026-10-19'da şerit 4 px'lik ince çubuğa geçti. Korunan kural aynı:
+  // şerit turun KAYDINI tutar — kaç soru tamamlandı ve kaçı doğruydu. Kayıt
+  // bileşenin aldığı değerlerden okunur, boyanan pikselden değil.
+  testWidgets('ilerleme çubuğu turun kaydını taşır', (tester) async {
     final repository = MockZanKurdRepository();
     final questions = repository.questions.take(3).toList();
     await tester.pumpWidget(
@@ -235,17 +242,14 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    SahneDiamondRow row() => tester.widget<SahneDiamondRow>(
+    SahneProgressBar bar() => tester.widget<SahneProgressBar>(
       find.byKey(const ValueKey('quiz-progress-bar')),
     );
 
-    expect(row().states, hasLength(questions.length));
-    expect(row().currentIndex, 0);
-    expect(
-      row().states,
-      everyElement(SahneDiamondState.pending),
-      reason: 'tur başında hiçbir soru cevaplanmadı',
-    );
+    expect(bar().height, 4);
+    expect(find.byType(SahneDiamondRow), findsNothing);
+    expect(bar().value, 0, reason: 'tur başında hiçbir soru tamamlanmadı');
+    expect(bar().semanticLabel, startsWith('1/3'));
 
     await tester.tap(
       find
@@ -258,9 +262,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      row().states.first,
-      SahneDiamondState.correct,
-      reason: 'doğru cevap dizide dolu elmas + ✓ olur',
+      bar().value,
+      closeTo(1 / 3, 1e-9),
+      reason: 'cevaplanan soru tamamlanmış sayılır',
+    );
+    expect(
+      bar().semanticLabel,
+      contains('1 Doğru'),
+      reason: 'doğru sayısı ekran okuyucu özetinde',
     );
   });
 

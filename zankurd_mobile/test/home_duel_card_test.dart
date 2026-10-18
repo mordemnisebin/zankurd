@@ -14,6 +14,15 @@
 // sekmesindeki "Sırayla düello" ile aynı olduğunu, sayının yoklama
 // döngüsüyle değil tek çekimle geldiğini ve kartın ikinci bir Agir (turuncu)
 // dolgulu birincil düğme taşımadığını sabitler.
+//
+// 2026-10-19 SADELEŞME (bu dosya güncellendi): büyük bordo "Sırayla düello"
+// kartı kompakt tek satırlık yüzey kartı oldu: solda başlık + kısa açıklama,
+// sağda TEK ikincil düğme. Varsayılan durumda düğme ("Oyna") bir menü açar
+// (Yeni düello / Arkadaşına meydan oku / Hızlı düello: eski kartın üç yolu,
+// aynı hedefler); "Sıra sende" ve "Sonuç hazır" durumlarında düğme o eylemi
+// yapar ve menü yanındaki ⋯ düğmesindedir (`home-duel-more`). Yani eskiden
+// kartta doğrudan görünen "Yeni düello" ve "Hızlı düello" metin düğmeleri
+// artık menüdedir; testler önce menüyü açar. İşlev kaybı yok, ağırlık azaldı.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -77,6 +86,15 @@ Widget _card(
   ),
 );
 
+/// Düello menüsünü açar: varsayılan durumda ana düğme, bekleyen durumda ⋯.
+Future<void> _openMenu(WidgetTester tester, {bool pending = false}) async {
+  await tester.tap(
+    find.byKey(ValueKey(pending ? 'home-duel-more' : 'home-duel-primary')),
+  );
+  await tester.pumpAndSettle();
+  expect(find.byKey(const ValueKey('home-duel-menu')), findsOneWidget);
+}
+
 Future<void> _useSurface(WidgetTester tester) async {
   await tester.binding.setSurfaceSize(const Size(390, 844));
   addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -97,6 +115,11 @@ void main() {
     expect(find.byKey(const ValueKey('home-duel-card')), findsOneWidget);
     expect(find.text('Sırayla düello'), findsOneWidget);
     expect(find.text('Sen şimdi oyna, rakibin sonra'), findsOneWidget);
+    // Kompakt kart: tek ikincil düğme; üç yol menüde.
+    expect(find.text('Oyna'), findsOneWidget);
+    expect(find.text('Yeni düello'), findsNothing);
+    expect(find.text('Hızlı düello'), findsNothing);
+    await _openMenu(tester);
     expect(find.text('Yeni düello'), findsOneWidget);
     expect(find.text('Hızlı düello'), findsOneWidget);
     expect(find.textContaining('Sonuç hazır'), findsNothing);
@@ -113,7 +136,8 @@ void main() {
     expect(find.text('Sonuç hazır'), findsOneWidget);
     expect(find.text('Rojda'), findsOneWidget);
     expect(find.text('Sen şimdi oyna, rakibin sonra'), findsNothing);
-    // Yeni düello yine ulaşılabilir (ikincil).
+    // Yeni düello yine ulaşılabilir (⋯ menüsü).
+    await _openMenu(tester, pending: true);
     expect(find.text('Yeni düello'), findsOneWidget);
   });
 
@@ -170,7 +194,7 @@ void main() {
     await tester.pumpWidget(_card(repo, enabled: false));
     await tester.pumpAndSettle();
 
-    expect(find.byType(SahneStageCard), findsNothing);
+    expect(find.byType(SahneSurfaceCard), findsNothing);
     expect(find.byKey(const ValueKey('home-duel-primary')), findsNothing);
     expect(repo.loads, 0);
   });
@@ -185,7 +209,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byType(SahneStageCard), findsNothing);
+    expect(find.byType(SahneSurfaceCard), findsNothing);
     expect(find.byKey(const ValueKey('home-duel-primary')), findsNothing);
     expect(find.byKey(const ValueKey('home-duel-secondary')), findsNothing);
     expect(repo.loads, 0);
@@ -211,13 +235,14 @@ void main() {
     expect(find.byKey(const ValueKey('home-duel-primary')), findsOneWidget);
   });
 
-  testWidgets('birincil "Yeni düello" sırayla düello oyun ekranını açar', (
+  testWidgets('menüdeki "Yeni düello" sırayla düello oyun ekranını açar', (
     tester,
   ) async {
     await _useSurface(tester);
     await tester.pumpWidget(_card(freshMockRepository()));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('home-duel-primary')));
+    await _openMenu(tester);
+    await tester.tap(find.byKey(const ValueKey('home-duel-new')));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.byType(AsyncDuelPlayScreen), findsOneWidget);
@@ -241,10 +266,11 @@ void main() {
     expect(find.byType(AsyncDuelPlayScreen), findsOneWidget);
   });
 
-  testWidgets('ikincil "Hızlı düello" eşleşme ekranını açar', (tester) async {
+  testWidgets('menüdeki "Hızlı düello" eşleşme ekranını açar', (tester) async {
     await _useSurface(tester);
     await tester.pumpWidget(_card(freshMockRepository()));
     await tester.pumpAndSettle();
+    await _openMenu(tester);
     await tester.tap(find.byKey(const ValueKey('home-duel-secondary')));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));

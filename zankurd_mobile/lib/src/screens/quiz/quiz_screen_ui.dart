@@ -12,6 +12,15 @@ part of '../quiz_screen.dart';
 // başlık kartı, kategori rozeti, hayalet ikon ve Zana yüzü kalktı: kategori
 // kimliği sahne zemininde (%14 çizim) ve huzmenin ışığında yaşar.
 
+// ─── 2026-10-19 sadeleşme ───────────────────────────────────────────────────
+//
+// Test edenler ekranı "çok kalabalık, gözü yoruyor" buldu. Soru ekranı artık
+// TEK üst satır taşır: kapat (X) | ortada "Kategori · 1/5" | sağda kalan
+// saniye + ⋯ menüsü (Kaydet, Bildir). 60 px'lik elmas sayaç, ışık huzmesi,
+// 5'li elmas dizisi ve gövdedeki ayrı künye/araç satırı kalktı; yerine
+// satırın hemen altında 4 px'lik ince ilerleme çubuğu geldi. Joker dizisi
+// açıklama cümlesini bırakıp kapsül çiplere indi (bkz. `_buildWildcardRow`).
+
 extension _QuizScreenUI on _QuizScreenState {
   /// Dikey akış: kayan gövde (üst etiket, soru, şıklar, bildirimler). Alt
   /// perde (joker/Sonraki) sahnenin kendisinde sabittir; soru ne kadar uzun
@@ -58,8 +67,6 @@ extension _QuizScreenUI on _QuizScreenState {
                     _buildCrowdHeader(),
                     const SizedBox(height: SahneSpace.x4),
                   ],
-                  _buildQuestionEyebrow(context),
-                  const SizedBox(height: SahneSpace.x2),
                   _buildQuestionSwitcher(
                     context,
                     layoutSize: layoutSize,
@@ -131,8 +138,6 @@ extension _QuizScreenUI on _QuizScreenState {
                           _VersusBanner(text: widget.versusBannerText!),
                           const SizedBox(height: SahneSpace.x3),
                         ],
-                        _buildQuestionEyebrow(context),
-                        const SizedBox(height: SahneSpace.x2),
                         _buildQuestionSwitcher(
                           context,
                           layoutSize: layoutSize,
@@ -199,78 +204,225 @@ extension _QuizScreenUI on _QuizScreenState {
       _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
   ];
 
-  /// Üst satırın orta yuvası: süreli turda sayaç, süresiz turda turun adı.
+  /// Üst satırın orta yuvası: kategori ikonu + "Kategori · 1/5" künyesi.
   ///
-  /// Tur adı sırası: oda kodu (çevrimiçi) → turun kendi adı → kategori
-  /// (bkz. `quizRoundTitle`). Kategori adı doğrudan yazıldığında günün
-  /// dersinde yalan oluyordu: o tur karışık kategorilidir (2026-07-27).
+  /// Künye artık gövdede değil üst satırdadır (2026-10-19). Tur adı ("Günün
+  /// dersi", oda kodu) buraya yazılmaz: günün dersi karışık kategorilidir ve
+  /// künye SORUNUN kategorisini söyler (2026-07-27: kategori adı turun adı
+  /// diye yazılınca günün dersinde yalan oluyordu; burada yalan değil, her
+  /// soruda o sorunun kategorisi). Künye `AnimatedSwitcher`in DIŞINDA durur.
   ///
-  /// Coach-mark hedefi (`_timerTargetKey`) her iki hâlde de bu yuvadadır:
-  /// süreli turda "süre burada", süresiz turda "burada süre yok" der.
-  /// Üst satır `AnimatedSwitcher`in dışında olduğu için anahtar her soruda
-  /// güvenle takılır.
+  /// Süresiz turda coach-mark hedefi (`_timerTargetKey`) bu yuvadadır
+  /// ("burada süre yok" der); süreli turda hedef sayaçtır
+  /// ([_buildStageTrailing]).
   Widget _buildStageCenter(BuildContext context) {
-    if (_usesTimer) {
-      return KeyedSubtree(
-        key: _timerTargetKey,
-        // Sabit 'quiz-circular-timer' anahtarı widget'ın kendisinde.
-        child: QuizTimerWidget(
-          key: const ValueKey('quiz-circular-timer'),
-          animation: _timerController,
-          // Gerçek kaynak room.secondsPerQuestion'dır; sabit 15 lobi
-          // çipiyle (örn. 30 sn) çelişiyordu.
-          maxSeconds: widget.room.secondsPerQuestion,
-          isPaused: answered,
-          light: _stageLight,
-        ),
-      );
-    }
+    final t = SahneTokens.of(context);
+    final category = CategoryNames.localized(question.category, context.isKu);
+    final progress = context.t(K.placementProgress, {
+      'index': '${index + 1}',
+      'total': '${widget.questions.length}',
+    });
+    // Büyük yazıda (≥ 1.5) künye işareti düşer: 320 px @2.0'da işaret +
+    // saniye + ⋯ yanında kategori adı "Siya…" diye kesiliyor ve "Soru 1/5"
+    // hiç görünmüyordu. Ad ve sıra, işaretten önemli.
+    final compact = MediaQuery.textScalerOf(context).scale(16) >= 24;
     return KeyedSubtree(
-      key: _timerTargetKey,
-      child: Semantics(header: true, child: Text(_roundTitle(context))),
+      key: _usesTimer ? null : _timerTargetKey,
+      child: Semantics(
+        header: true,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (!compact) ...[
+              CategoryKickerMark(
+                key: const ValueKey('quiz-question-icon-badge'),
+                category: question.category,
+                fallbackColor: t.tx2,
+                size: 24,
+              ),
+              const SizedBox(width: SahneSpace.x2),
+            ],
+            Flexible(
+              child: Text(
+                '$category · $progress',
+                key: const ValueKey('quiz-stage-kicker'),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: SahneType.eyebrow.copyWith(color: t.tx),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  /// Üst satırın sağ yuvası: yarışmada skor çipi (Zêr yıldız + puan).
+  /// Üst satırın sağ yuvası: [sohbet] [skor] [kalan saniye] [⋯ menü].
   ///
-  /// Öğrenmede skor yok (rekabet baskısı gösterilmez); düelloda iki skor
-  /// gövdedeki düello kartında yan yana durur.
-  Widget? _buildScoreChip(BuildContext context) {
-    if (_isLearningExperience || widget.is1v1 || _isCrowd) return null;
-    // Tur başında "★ 0" bilgi vermez, yalnız baskı kurar; ilk puanda belirir.
-    if (score <= 0) return null;
-    return SahneStatChip(
-      leading: const SahneGlyph(SahneGlyphKind.star),
-      label: groupThousands(score),
-      semanticLabel: '${groupThousands(score)} ${context.t(K.scoreWord)}',
+  /// * Sohbet yalnız çok oyunculuda.
+  /// * Skor (Zêr yıldız + puan) yalnız yarışmada ve ilk puandan sonra: tur
+  ///   başında "★ 0" bilgi vermez, yalnız baskı kurar. Öğrenmede skor yok
+  ///   (rekabet baskısı gösterilmez); düelloda iki skor gövdedeki düello
+  ///   kartında yan yana durur.
+  /// * Sayaç yalnız süreli turda; coach-mark hedefidir.
+  /// * ⋯ menüsü Kaydet ve Bildir'i taşır (eskiden gövdedeki künye satırında
+  ///   iki ayrı düğmeydi).
+  ///
+  /// Grup, dar ekranda ve büyük yazıda taşmaz: sığdırılarak küçülür.
+  Widget _buildStageTrailing(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final showScore =
+        !(_isLearningExperience || widget.is1v1 || _isCrowd) && score > 0;
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: AlignmentDirectional.centerEnd,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (_isMultiplayer)
+            SahneIconButton(
+              key: const ValueKey('quiz-reaction-menu-button'),
+              icon: AppIcons.faceSmile,
+              semanticLabel: context.t(K.chat),
+              onPressed: () => _showLiveReactionMenu(context),
+            ),
+          if (showScore) ...[
+            Semantics(
+              label: '${groupThousands(score)} ${context.t(K.scoreWord)}',
+              excludeSemantics: true,
+              child: Row(
+                key: const ValueKey('quiz-score-chip'),
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SahneGlyph(SahneGlyphKind.star, size: 16),
+                  const SizedBox(width: SahneSpace.x1),
+                  Text(
+                    groupThousands(score),
+                    style: SahneType.captionStrong.copyWith(
+                      color: t.goldTx,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: SahneSpace.x3),
+          ],
+          if (_usesTimer) ...[
+            KeyedSubtree(
+              key: _timerTargetKey,
+              // Sabit 'quiz-circular-timer' anahtarı widget'ın kendisinde.
+              child: QuizTimerWidget(
+                key: const ValueKey('quiz-circular-timer'),
+                animation: _timerController,
+                // Gerçek kaynak room.secondsPerQuestion'dır; sabit 15 lobi
+                // çipiyle (örn. 30 sn) çelişiyordu.
+                maxSeconds: widget.room.secondsPerQuestion,
+                isPaused: answered,
+                light: _stageLight,
+              ),
+            ),
+            const SizedBox(width: SahneSpace.x1),
+          ],
+          Builder(
+            builder: (buttonContext) => SahneIconButton(
+              key: const ValueKey('quiz-more-menu'),
+              icon: AppIcons.ellipsis,
+              semanticLabel: context.t(K.moreOptions),
+              onPressed: () => _openQuestionMenu(buttonContext),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  /// Üst satırın altı: 10'lu elmas dizisi (+ yarışmada seri rozeti).
+  /// ⋯ menüsü: Kaydet (soru kayıtlıysa Kaldır) ve Bildir.
   ///
-  /// Durum ŞEKİLLE ayrışır: doğru dolu + ✓, yanlış boş + ✗, bekleyen yalnız
-  /// çizgi; şimdiki soru altın halka. Eski kilim tahtasının yeşil/kırmızı
-  /// ayrımı renk körlüğünde kayboluyordu; elmasların şekli kaybolmaz.
-  /// Ekran okuyucu tek bir özet okur ("3/10 · 2 Doğru · 0 Yanlış").
+  /// Menü sahne (gece) temasında açılır: `buttonContext` sahnenin altındadır.
+  Future<void> _openQuestionMenu(BuildContext buttonContext) async {
+    final box = buttonContext.findRenderObject() as RenderBox?;
+    final overlay =
+        Overlay.of(buttonContext).context.findRenderObject() as RenderBox?;
+    if (box == null || overlay == null) return;
+    final topLeft = box.localToGlobal(Offset.zero, ancestor: overlay);
+    final position = RelativeRect.fromRect(
+      Rect.fromLTWH(
+        topLeft.dx,
+        topLeft.dy + box.size.height,
+        box.size.width,
+        0,
+      ),
+      Offset.zero & overlay.size,
+    );
+    final t = SahneTokens.of(buttonContext);
+    final favoriteLabel = favorite
+        ? buttonContext.t(K.removeAction)
+        : buttonContext.t(K.save);
+    final reportLabel = buttonContext.t(K.reportAction);
+    final choice = await showMenu<String>(
+      context: buttonContext,
+      position: position,
+      items: [
+        PopupMenuItem<String>(
+          key: const ValueKey('quiz-menu-favorite'),
+          value: 'favorite',
+          height: 48,
+          child: Row(
+            children: [
+              Icon(
+                AppIcons.bookmark,
+                size: 20,
+                color: favorite ? t.goldTx : t.tx,
+              ),
+              const SizedBox(width: SahneSpace.x3),
+              Flexible(child: Text(favoriteLabel)),
+            ],
+          ),
+        ),
+        PopupMenuItem<String>(
+          key: const ValueKey('quiz-menu-report'),
+          value: 'report',
+          height: 48,
+          child: Row(
+            children: [
+              Icon(AppIcons.triangleExclamation, size: 20, color: t.tx),
+              const SizedBox(width: SahneSpace.x3),
+              Flexible(child: Text(reportLabel)),
+            ],
+          ),
+        ),
+      ],
+    );
+    if (!mounted) return;
+    switch (choice) {
+      case 'favorite':
+        _toggleFavorite();
+      case 'report':
+        _reportQuestion();
+    }
+  }
+
+  /// Üst satırın altı: 4 px'lik ince ilerleme çubuğu (+ yarışmada seri
+  /// rozeti).
+  ///
+  /// Eskiden 10'lu elmas dizisiydi (doğru dolu + ✓, yanlış boş + ✗). Çubuk
+  /// tamamlanan soru oranını gösterir; tek tek doğru/yanlış sonuç ekranında
+  /// ve ekran okuyucu özetinde ("3/10 · 2 Doğru · 0 Yanlış") yaşar.
   Widget _buildStageProgress(BuildContext context) {
     final total = widget.questions.length;
     final results = [for (final record in answerRecords) record.isCorrect];
     final right = results.where((r) => r).length;
     final wrong = results.length - right;
+    // Cevaplanmış soru tamamlanmış sayılır; sıradaki soru henüz değil.
+    final done = (index + (answered ? 1 : 0)).clamp(0, total);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SahneDiamondRow(
+        SahneProgressBar(
           key: const ValueKey('quiz-progress-bar'),
-          states: [
-            for (var i = 0; i < total; i++)
-              i < results.length
-                  ? (results[i]
-                        ? SahneDiamondState.correct
-                        : SahneDiamondState.wrong)
-                  : SahneDiamondState.pending,
-          ],
-          currentIndex: index < total ? index : null,
+          value: total == 0 ? 0 : done / total,
+          height: 4,
           semanticLabel:
               '${index + 1}/$total · $right ${context.t(K.correct)} · '
               '$wrong ${context.t(K.wrong)}',
@@ -348,60 +500,6 @@ extension _QuizScreenUI on _QuizScreenState {
       total: standings.length,
       top: standings.take(3).toList(growable: false),
       progress: _currentCrowdProgress,
-    );
-  }
-
-  /// Gövdenin üst etiketi: kategori ikonu + "DİL • SORU 3/10" ve sorunun
-  /// araçları (sohbet, kaydet, bildir). Araçlar 44'lük Şahnê ikon
-  /// düğmeleridir, 48'lik dokunma kutusunda.
-  ///
-  /// Etiket `AnimatedSwitcher`in DIŞINDA: soru geçişinde araç düğmeleri iki
-  /// kez görünmesin (eski ve yeni panel geçiş boyunca birlikte yaşar).
-  Widget _buildQuestionEyebrow(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final category = CategoryNames.localized(question.category, context.isKu);
-    final progress = context.t(K.placementProgress, {
-      'index': '${index + 1}',
-      'total': '${widget.questions.length}',
-    });
-    final favoriteActionLabel = favorite
-        ? context.t(K.removeAction)
-        : context.t(K.save);
-    return Row(
-      children: [
-        CategoryKickerMark(
-          key: const ValueKey('quiz-question-icon-badge'),
-          category: question.category,
-          fallbackColor: t.tx2,
-        ),
-        const SizedBox(width: SahneSpace.x2),
-        Expanded(
-          child: Text(
-            '$category · $progress',
-            style: SahneType.eyebrow.copyWith(color: t.tx),
-          ),
-        ),
-        if (_isMultiplayer)
-          SahneIconButton(
-            key: const ValueKey('quiz-reaction-menu-button'),
-            icon: AppIcons.faceSmile,
-            semanticLabel: context.t(K.chat),
-            onPressed: () => _showLiveReactionMenu(context),
-          ),
-        // Kaydedilmiş soru dolu (Zêr) hâlde durur: "Kaldır" sözü tek
-        // başına durumu göstermiyordu.
-        SahneIconButton(
-          icon: AppIcons.bookmark,
-          semanticLabel: favoriteActionLabel,
-          selected: favorite,
-          onPressed: _toggleFavorite,
-        ),
-        SahneIconButton(
-          icon: AppIcons.triangleExclamation,
-          semanticLabel: context.t(K.reportAction),
-          onPressed: _reportQuestion,
-        ),
-      ],
     );
   }
 
@@ -598,16 +696,12 @@ extension _QuizScreenUI on _QuizScreenState {
         _CoinBalanceLine(
           balance: _coinBalance,
           // Hiç jetonu olmayan yeni oyuncuya kilitler "her şey paralı"
-          // gibi görünmesin: jetonun nereden kazanılacağını söyle.
+          // gibi görünmesin: jetonun nereden kazanılacağını söyle (ekranda
+          // yazılmaz; ekran okuyucuya gider ve kilitli jokere dokununca tost
+          // olur).
           hint: _coinBalance == 0 && index == 0
               ? context.t(K.finishQuizHint)
               : null,
-          // Dar dikey alanda (küçük telefon, %150+ yazı) ipucu yalnız ekran
-          // okuyucuya gider: iki satırlık bir cümle alt perdeyi büyütüp
-          // soruya kalan yeri yarıya indiriyordu (320×568 @2.0).
-          showHint:
-              MediaQuery.textScalerOf(context).scale(1) < 1.5 &&
-              MediaQuery.sizeOf(context).height >= 640,
         ),
         const SizedBox(height: SahneSpace.x2),
         // Adlar ekranda yazmadığı için (ikon + fiyat) dört joker her
@@ -639,7 +733,29 @@ extension _QuizScreenUI on _QuizScreenState {
       isActive: isActive,
       cantAfford: !used && !canAfford && !answered,
       onTap: () => _onWildcardTap(type),
+      onLockedTap: _explainLockedWildcard,
     );
+  }
+
+  /// Jetonu yetmeyen (kilitli) jokere dokunma: neden alınamadığını söyler.
+  /// Joker soluk ve kilitli görünür ama dokunulabilir kalır; ölü bir düğme
+  /// sebebini anlatmaz (2026-10-19 sadeleşme: bu cümle eskiden her soruda
+  /// jeton satırında yazılıydı).
+  void _explainLockedWildcard() {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          key: const ValueKey('quiz-wildcard-locked-note'),
+          content: Text(
+            '${context.t(K.insufficientBalance)} · '
+            '${context.t(K.finishQuizHint)}',
+          ),
+          behavior: SnackBarBehavior.floating,
+          margin: _quizSnackBarMargin,
+          duration: const Duration(seconds: 3),
+        ),
+      );
   }
 
   void _onWildcardTap(WildcardType type) {
