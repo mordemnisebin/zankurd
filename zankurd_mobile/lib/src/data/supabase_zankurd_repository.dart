@@ -913,7 +913,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     late final dynamic response;
     try {
       response = await client.rpc(
-        'join_room_by_code',
+        // v2: yanlış kod denemesini kalıcı sayar (6 haneli kod kaba kuvvet
+        // sınırı) ve bulunamadığında istisna yerine JSON `error` döndürür.
+        'join_room_by_code_v2',
         params: {'p_code': normalizedCode},
       );
     } on PostgrestException catch (error, stack) {
@@ -925,9 +927,23 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
     final rawSnapshot = response is List ? response.firstOrNull : response;
     if (rawSnapshot == null) {
-      throw StateError('join_room_by_code boş yanıt döndürdü: oda bulunamadı');
+      throw StateError(
+        'join_room_by_code_v2 boş yanıt döndürdü: oda bulunamadı',
+      );
     }
-    final room = _requiredJsonObject(rawSnapshot, 'join_room_by_code');
+    final room = _requiredJsonObject(rawSnapshot, 'join_room_by_code_v2');
+    final softError = room['error'];
+    if (softError is String) {
+      _recordError(
+        StateError('joinOnlineRoom soft error: $softError'),
+        StackTrace.current,
+        reason: 'joinOnlineRoom rejected',
+      );
+      throw RoomJoinException(
+        roomJoinFailureReasonForMessage(softError),
+        softError,
+      );
+    }
     final roomId = _requiredString(room, const ['room_id']);
     final hostId = _requiredString(room, const ['host_id']);
     final players = await _loadRoomPlayersById(roomId);

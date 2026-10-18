@@ -104,6 +104,11 @@ begin
   from public.room_questions rq join public.questions q on q.id = rq.question_id
   where rq.room_id = rid;
   insert into smoke values (4, 'karışık: birden çok kategoriden soru', n >= 2, n::text);
+  select count(*) into outside
+  from public.room_questions rq join public.questions q on q.id = rq.question_id
+  left join public.categories c on c.id = q.category_id
+  where rq.room_id = rid and coalesce(c.is_active, false) = false;
+  insert into smoke values (4, 'karışık: pasif kategoriden soru yok', outside = 0, outside::text);
 
   -- 5) v2 çoklu (3 kategori): sorular yalnız seçilenlerden.
   perform set_config('request.jwt.claims',

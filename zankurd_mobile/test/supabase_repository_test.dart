@@ -232,6 +232,7 @@ class _RoomSessionHttpClient extends http.BaseClient {
     },
     this.rpcErrorCode,
     this.joinRoomErrorMessage,
+    this.joinRoomSoftError,
     this.markReadyResponse = const {'status': 'waiting'},
     this.answerProgressResponse = const {
       'question_index': 0,
@@ -275,6 +276,9 @@ class _RoomSessionHttpClient extends http.BaseClient {
   /// (bkz. `join_room_by_code`'un `raise exception` metinleri,
   /// `supabase/2026-08-02_multiplayer_session_hardening.sql`).
   final String? joinRoomErrorMessage;
+
+  /// Set edilirse `join_room_by_code_v2` 200 ile `{error: ...}` döner.
+  final String? joinRoomSoftError;
   final Object roomPlayersResponse;
   final requestedPaths = <String>[];
   final requestBodies = <Map<String, dynamic>>[];
@@ -302,6 +306,13 @@ class _RoomSessionHttpClient extends http.BaseClient {
       case '/rest/v1/rpc/create_online_room':
       case '/rest/v1/rpc/create_online_room_v2':
         return _jsonResponse(request, roomSnapshot);
+      case '/rest/v1/rpc/join_room_by_code_v2':
+        final soft = joinRoomSoftError;
+        if (soft != null) {
+          return _jsonResponse(request, {'error': soft});
+        }
+        continue joinRoomLegacy;
+      joinRoomLegacy:
       case '/rest/v1/rpc/join_room_by_code':
         final message = joinRoomErrorMessage;
         if (message != null) {
@@ -1078,7 +1089,7 @@ void main() {
       // 2026-08-13'te kaldırıldı; gerekçesi `room_ready_state_test.dart`
       // içinde yazılıdır.
       expect(httpClient.requestedPaths, [
-        '/rest/v1/rpc/join_room_by_code',
+        '/rest/v1/rpc/join_room_by_code_v2',
         '/rest/v1/room_players',
       ]);
       expect(
@@ -1100,6 +1111,31 @@ void main() {
   /// `RoomJoinException(reason)` olarak yeniden fırlatılıyor — UI katmanı
   /// artık gerçek sebebe göre farklı metin gösterebiliyor
   /// (bkz. `test/room_join_error_mapping_test.dart`).
+  test('v2 JSON hata cevapları RoomJoinException olarak yükselir', () async {
+    for (final entry in {
+      'room_not_found': RoomJoinFailureReason.notFound,
+      'too_many_attempts': RoomJoinFailureReason.tooManyAttempts,
+    }.entries) {
+      final repository = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _RoomSessionHttpClient(joinRoomSoftError: entry.key),
+        ),
+      );
+      await expectLater(
+        repository.joinOnlineRoom('482913'),
+        throwsA(
+          isA<RoomJoinException>().having(
+            (e) => e.reason,
+            'reason',
+            entry.value,
+          ),
+        ),
+      );
+    }
+  });
+
   test(
     'sunucunun "oda dolu" reddi RoomJoinFailureReason.full olarak yükselir',
     () async {
@@ -2052,7 +2088,7 @@ void main() {
       'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
 
-    expect(source, contains("'join_room_by_code'"));
+    expect(source, contains("'join_room_by_code_v2'"));
     expect(
       source,
       isNot(contains(".from('rooms')\n        .select('id, code")),

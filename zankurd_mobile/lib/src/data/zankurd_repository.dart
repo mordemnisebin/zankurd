@@ -97,6 +97,10 @@ enum RoomJoinFailureReason {
   /// Odanın katılım ücretine bakiye yetmiyor. Sunucu bunu
   /// `'Insufficient coins for room entry fee'` ile reddeder.
   insufficientCoins,
+
+  /// Kısa sürede çok fazla yanlış oda kodu denendi
+  /// (`join_room_by_code_v2` -> `too_many_attempts`).
+  tooManyAttempts,
   unknown,
 }
 
@@ -118,6 +122,15 @@ class RoomJoinException implements Exception {
 /// açıklamıyor); istemci de bunu ayıramaz, `notFound` bu birleşik durumu
 /// temsil eder.
 RoomJoinFailureReason roomJoinFailureReasonForMessage(String message) {
+  // `join_room_by_code_v2` bulunamadı/sınır durumlarını istisna yerine JSON
+  // `error` anahtarıyla döndürür (istisna işlemi geri alıp yanlış-deneme
+  // kaydını silerdi); aynı eşleme buradan geçer.
+  if (message == 'too_many_attempts') {
+    return RoomJoinFailureReason.tooManyAttempts;
+  }
+  if (message == 'room_not_found') {
+    return RoomJoinFailureReason.notFound;
+  }
   if (message.contains('Room is full')) {
     return RoomJoinFailureReason.full;
   }

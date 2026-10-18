@@ -8,9 +8,23 @@
 --
 -- Tasarım ilkeleri:
 --  * Katılım KODU sunucuda YENİDEN yazılmaz: `respond_room_invite` kabulde
---    yalnız oda kodunu döndürür, istemci mevcut `join_room_by_code` yolundan
---    girer. Böylece dolu oda, engel, başka odada olma, jeton şartı gibi bütün
---    kontroller tek yerde kalır.
+--    yalnız oda kodunu döndürür ve davet DURUMUNU DEĞİŞTİRMEZ; istemci
+--    katılım yolundan (`join_room_by_code_v2`) girer. Katılım başarılı olunca
+--    o odanın bekleyen davetleri 'accepted' olur; katılım başarısızsa (dolu,
+--    jeton yetmedi...) davet kartı durur, yeniden denenebilir. Böylece dolu
+--    oda, engel, başka odada olma, jeton şartı gibi bütün kontroller tek
+--    yerde kalır.
+--  * `join_room_by_code_v2` (yeni istemci): 6 haneli kodun kaba kuvvetle
+--    taranmasına karşı kullanıcı başına 10 dakikada en çok 20 BAŞARISIZ
+--    arama. RAISE işlemi geri alıp sayaç satırını da sildiğinden, bulunamadı
+--    durumunda v2 istisna fırlatmaz: yanlış denemeyi `room_code_misses`e
+--    yazar ve `{"error":"room_not_found"}` döndürür (sınır aşılınca
+--    `{"error":"too_many_attempts"}`). Başarılı katılımı ESKİ
+--    `join_room_by_code`a devreder; diğer bütün hatalar (dolu, jeton...)
+--    eskisi gibi istisnadır. ESKİ `join_room_by_code` DEĞİŞMEDİ ve
+--    istisna fırlatmayı sürdürür (mağazadaki istemciler JSON'u başarı
+--    sanıp oda kimliği bulamazdı). Ödün: eski istemciler sınırı atlar;
+--    yeni sürüm yaygınlaşınca eski RPC'nin istemci yetkisi kaldırılabilir.
 --  * Yeni tablo (`room_invites`) istemciye yalnız SELECT açar; yazma sadece
 --    RPC ile.
 --  * Hiçbir mevcut fonksiyon değişmez; `push_outbox`a mevcut şemayla satır
@@ -22,6 +36,8 @@
 --   drop function if exists public.invite_friends_to_room(uuid, uuid[]);
 --   drop function if exists public.list_my_room_invites();
 --   drop function if exists public.respond_room_invite(uuid, boolean);
+--   drop function if exists public.join_room_by_code_v2(text);
+--   drop table if exists public.room_code_misses;
 --   drop table if exists public.room_invites;
 
 begin;
@@ -96,7 +112,7 @@ begin
     raise exception 'Too many invitees';
   end if;
 
-  select r.id, r.status, r.is_custom, r.max_players into v_room
+  select r.id, r.status, r.is_custom, r.max_players, r.host_id into v_room
   from public.rooms r
   where r.id = p_room_id
   for share;
@@ -155,6 +171,13 @@ begin
          select 1 from public.blocked_users b
          where (b.blocker_id = v_uid and b.blocked_id = v_friend)
             or (b.blocker_id = v_friend and b.blocked_id = v_uid)
+       )
+       -- Davetli ile oda SAHİBİ arasında (her iki yönde) engel varsa da
+       -- atlanır: katılımda zaten reddedilirdi, ölü davet kartı üretme.
+       or exists (
+         select 1 from public.blocked_users b
+         where (b.blocker_id = v_room.host_id and b.blocked_id = v_friend)
+            or (b.blocker_id = v_friend and b.blocked_id = v_room.host_id)
        )
        or exists (
          select 1 from public.room_players rp
@@ -269,6 +292,18 @@ begin
       where (b.blocker_id = v_uid and b.blocked_id = i.inviter_id)
          or (b.blocker_id = i.inviter_id and b.blocked_id = v_uid)
     )
+    and not exists (
+      select 1 from public.blocked_users b
+      where (b.blocker_id = v_uid and b.blocked_id = r.host_id)
+         or (b.blocker_id = r.host_id and b.blocked_id = v_uid)
+    )
+    -- Zaten odadaki aktif oyuncuya davet kartı gösterilmez.
+    and not exists (
+      select 1 from public.room_players me
+      where me.room_id = r.id
+        and me.player_id = v_uid
+        and me.left_at is null
+    )
   order by i.created_at desc
   limit 10;
 end;
@@ -325,7 +360,9 @@ begin
     raise exception 'Invite expired';
   end if;
 
-  update public.room_invites set status = 'accepted' where id = v_inv.id;
+  -- Durum BURADA değişmez: 'accepted' yalnız katılım gerçekten başarılı
+  -- olunca join_room_by_code_v2 tarafından yazılır. Aksi halde katılım
+  -- (dolu, jeton...) düşünce davet kaybolurdu.
   return v_code;
 end;
 $function$;
@@ -333,6 +370,76 @@ $function$;
 revoke all on function public.respond_room_invite(uuid, boolean)
   from public, anon;
 grant execute on function public.respond_room_invite(uuid, boolean)
+  to authenticated;
+
+-- ---------------------------------------------------------------------
+-- 4) join_room_by_code_v2 + room_code_misses (6 haneli kod kaba kuvvet sınırı)
+-- ---------------------------------------------------------------------
+
+create table if not exists public.room_code_misses (
+  id bigint generated always as identity primary key,
+  player_id uuid not null references public.profiles(id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+create index if not exists room_code_misses_player_created_idx
+  on public.room_code_misses (player_id, created_at desc);
+
+alter table public.room_code_misses enable row level security;
+revoke all on table public.room_code_misses from public, anon, authenticated;
+
+create or replace function public.join_room_by_code_v2(p_code text)
+returns json
+language plpgsql
+security definer
+set search_path = public
+as $function$
+declare
+  v_uid uuid := auth.uid();
+  v_misses integer;
+  v_result json;
+begin
+  if v_uid is null then
+    raise exception 'Not authenticated';
+  end if;
+
+  -- Eski kayıtlar süpürülür (tablo küçük kalır).
+  delete from public.room_code_misses m
+  where m.player_id = v_uid
+    and m.created_at < now() - interval '1 hour';
+
+  select count(*)::integer into v_misses
+  from public.room_code_misses m
+  where m.player_id = v_uid
+    and m.created_at > now() - interval '10 minutes';
+  if v_misses >= 20 then
+    return json_build_object('error', 'too_many_attempts');
+  end if;
+
+  begin
+    v_result := public.join_room_by_code(p_code);
+  exception when others then
+    -- Yalnız "bulunamadı" (engel de aynı mesajı verir) sayılır ve JSON olur;
+    -- dolu oda, jeton, başka odada olma gibi hatalar istisna kalır.
+    if sqlerrm = 'Room not found or already started' then
+      insert into public.room_code_misses (player_id) values (v_uid);
+      return json_build_object('error', 'room_not_found');
+    end if;
+    raise;
+  end;
+
+  -- Katılım başarılı: bu odanın bekleyen davetleri kabul edilmiş olur.
+  update public.room_invites i
+  set status = 'accepted'
+  where i.invitee_id = v_uid
+    and i.status = 'pending'
+    and i.room_id = (v_result ->> 'room_id')::uuid;
+
+  return v_result;
+end;
+$function$;
+
+revoke all on function public.join_room_by_code_v2(text) from public, anon;
+grant execute on function public.join_room_by_code_v2(text)
   to authenticated;
 
 -- Doğrulama: nesneler ve yetkiler yerinde mi?
@@ -344,6 +451,11 @@ begin
   if has_table_privilege('authenticated', 'public.room_invites', 'insert')
      or has_table_privilege('authenticated', 'public.room_invites', 'update') then
     raise exception 'room_invites istemciye yazılabilir olmamalı';
+  end if;
+  if has_function_privilege('anon', 'public.join_room_by_code_v2(text)',
+       'execute') or has_table_privilege('authenticated',
+       'public.room_code_misses', 'select') then
+    raise exception 'join_room_by_code_v2 / room_code_misses yetkisi yanlış';
   end if;
   if has_function_privilege('anon',
        'public.invite_friends_to_room(uuid, uuid[])', 'execute') then
