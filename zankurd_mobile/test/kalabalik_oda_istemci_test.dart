@@ -1,3 +1,4 @@
+// 2026-10-19 sadeleşme (ikinci tur): "Hazırım" anahtarı ayrı kart (SwitchListTile) değil yerel oyuncunun KENDİ satırındaki Switch (anahtar room-ready-switch).
 // Kalabalık oda (2–50 kişi) istemci sözleşmesi.
 //
 // Sunucu 2026-10-16 göçüyle özel odayı kalabalığa açtı; istemci her yerde
@@ -262,7 +263,7 @@ void main() {
       expect(button.onPressed, isNotNull);
       // "Hazırım" anahtarı kalabalık odada yoktur.
       expect(find.text('Hazırım'), findsNothing);
-      expect(find.byType(SwitchListTile), findsNothing);
+      expect(find.byKey(const ValueKey("room-ready-switch")), findsNothing);
       // x/max sayacı.
       expect(
         find.descendant(
@@ -432,7 +433,7 @@ void main() {
       );
 
       expect(find.text('Hazırım'), findsOneWidget);
-      expect(find.byType(SwitchListTile), findsOneWidget);
+      expect(find.byKey(const ValueKey("room-ready-switch")), findsOneWidget);
       expect(find.text('1vs1'), findsOneWidget);
       // Sayaç "2" — kapasite yalnız kalabalık odada yazılır.
       expect(

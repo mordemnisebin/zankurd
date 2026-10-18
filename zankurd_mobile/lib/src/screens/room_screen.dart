@@ -832,6 +832,12 @@ class _RoomScreenState extends State<RoomScreen> {
         .where((p) => p.id == null || !_blockedPlayerIds.contains(p.id))
         .toList();
     final isHost = _isHost;
+    // "Hazırım" anahtarı yerel oyuncunun satırındadır: kimliği eşleşen (ya da
+    // henüz kimliği olmayan) İLK satır. Sahte depolarda birden çok satırın
+    // kimliği boştur; anahtar yalnız bir kez çizilir.
+    final selfRowIndex = visiblePlayers.indexWhere(
+      (p) => p.id == null || p.id == widget.repository.currentUserId,
+    );
     final allPlayersReady = room.players.every(
       (player) => player.state == Player.readyState,
     );
@@ -1124,6 +1130,14 @@ class _RoomScreenState extends State<RoomScreen> {
                                                   RoomStatus.lobby,
                                               showReadyState: !crowd,
                                               quietModeration: crowd,
+                                              // "Hazırım" anahtarı yalnız
+                                              // 1v1/2 kişilik odada ve YEREL
+                                              // oyuncunun kendi satırında.
+                                              onReadyChanged:
+                                                  !crowd && i == selfRowIndex
+                                                  ? _toggleReady
+                                                  : null,
+                                              readyValue: ready,
                                               repository: widget.repository,
                                               isSelf:
                                                   visiblePlayers[i].id ==
@@ -1150,52 +1164,65 @@ class _RoomScreenState extends State<RoomScreen> {
                                         ],
                                       ),
                               ),
-                              // Hazır anahtarı yalnız 1v1/2 kişilik odada: kalabalık
-                              // odada başlatmak için "herkes hazır" aranmaz, kart
-                              // yalnız bilgi şeritlerini taşır (yoksa hiç çizilmez).
-                              if (!crowd || notices.isNotEmpty) ...[
+                              // Yerel oyuncunun satırı listede yoksa (depo kimliği
+                              // eşleşmiyor) anahtar kaybolmasın: eski kartın yerine
+                              // tek satırlık yedek.
+                              if (!crowd && selfRowIndex < 0) ...[
                                 const SizedBox(height: SahneSpace.cardGap),
                                 padded(
                                   SahneSurfaceCard(
-                                    padding: EdgeInsets.fromLTRB(
-                                      SahneSpace.x4,
-                                      crowd ? SahneSpace.x3 : SahneSpace.x1,
-                                      SahneSpace.x2,
-                                      crowd ? 0 : SahneSpace.x1,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: SahneSpace.x4,
+                                      vertical: SahneSpace.x1,
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
+                                    child: Row(
                                       children: [
-                                        if (!crowd)
-                                          SwitchListTile(
-                                            value: ready,
-                                            onChanged: _toggleReady,
-                                            title: Text(
-                                              context.t(K.imReady),
-                                              style: SahneType.bodyStrong
-                                                  .copyWith(color: t.tx),
-                                            ),
-                                            contentPadding: EdgeInsets.zero,
+                                        Expanded(
+                                          child: Text(
+                                            context.t(K.imReady),
+                                            style: SahneType.bodyStrong
+                                                .copyWith(color: t.tx),
                                           ),
-                                        for (final notice in notices) ...[
-                                          notice,
-                                          const SizedBox(height: SahneSpace.x3),
-                                        ],
+                                        ),
+                                        Switch(
+                                          key: const ValueKey(
+                                            'room-ready-switch',
+                                          ),
+                                          value: ready,
+                                          onChanged: _toggleReady,
+                                        ),
                                       ],
                                     ),
                                   ),
                                 ),
                               ],
-                              // Tepkiler yalnız karşıda biri varken anlamlı;
-                              // tek başına bekleyen ev sahibine ikinci bir
-                              // eylem yığını göstermenin yararı yok.
-                              if (room.players.length >= 2) ...[
-                                const SizedBox(height: SahneSpace.x4),
-                                _buildQuickReactionChips(context),
+                              // Bilgi şeritleri (hazır değil, 2 oyuncu gerekli…): "Hazırım"
+                              // anahtarı artık oyuncunun kendi satırında, ayrı kart yok.
+                              if (notices.isNotEmpty) ...[
+                                const SizedBox(height: SahneSpace.cardGap),
+                                padded(
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      for (
+                                        var i = 0;
+                                        i < notices.length;
+                                        i++
+                                      ) ...[
+                                        if (i > 0)
+                                          const SizedBox(height: SahneSpace.x2),
+                                        notices[i],
+                                      ],
+                                    ],
+                                  ),
+                                ),
                               ],
-
-                              // ── Oda sohbeti ───────────────────────
+                              // 2026-10-19 sadeleşme (ikinci tur): hızlı tepkiler ve
+                              // sohbet TEK kompakt düğmenin ("Sohbet") arkasında;
+                              // lobi varsayılanda yalnız kod, oyuncular ve başlat
+                              // düğmesidir. Tepkiler yalnız karşıda biri varken
+                              // anlamlıdır.
                               //
                               // Sohbet 2026-07-31'de moderasyonuyla (Apple
                               // 1.2: gönderimde süzgeç, uzun basınca
@@ -1216,7 +1243,12 @@ class _RoomScreenState extends State<RoomScreen> {
                                     onToggle: () =>
                                         setState(() => _chatOpen = !_chatOpen),
                                   ),
-                                if (_chatOpen)
+                                if (_chatOpen && room.players.length >= 2) ...[
+                                  const SizedBox(height: SahneSpace.x2),
+                                  _buildQuickReactionChips(context),
+                                ],
+                                if (_chatOpen && room.id != null) ...[
+                                  const SizedBox(height: SahneSpace.x2),
                                   padded(
                                     RoomChat(
                                       key: const ValueKey('room-chat'),
@@ -1228,6 +1260,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                       ),
                                     ),
                                   ),
+                                ],
                               ],
                             ],
                           ),
@@ -1446,11 +1479,15 @@ class _RoomHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SahneStageCard(
-      role: SahneRole.race,
+    // 2026-10-19 sadeleşme (ikinci tur): kahraman Boyax degradeli büyük
+    // sahne kartıydı (lobinin en doygun lekesi; kod kutusu içinde kutu).
+    // Artık TEK sakin yüzey kartı: oda adı + künye, yuvarlak kod kutusu,
+    // kopyala / paylaş / arkadaşlarımdan davet et. Renk rolü yalnız
+    // simgelerde (yarış tonu).
+    return SahneSurfaceCard(
+      key: const ValueKey('room-hero'),
       child: Builder(
         builder: (context) {
-          // Sahne kartının içi gece belirteçleridir.
           final t = SahneTokens.of(context);
           final meta = <(IconData, String)>[
             (
@@ -1512,7 +1549,7 @@ class _RoomHero extends StatelessWidget {
                   room.isCrowd ? context.t(K.crowdRoomTitle) : room.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: SahneType.title.copyWith(color: t.tx),
+                  style: SahneType.headline.copyWith(color: t.tx),
                 ),
               ),
               const SizedBox(height: SahneSpace.x2),
@@ -1535,12 +1572,9 @@ class _RoomHero extends StatelessWidget {
                 button: true,
                 hint: context.t(K.roomCodeTapCopy),
                 child: Material(
-                  color: t.bg,
-                  shape: SahneShape.withSide(
-                    SahneShape.m,
-                    SahneStageColors.raceSoft.withValues(alpha: 0.4),
-                    width: SahneRing.r1,
-                  ),
+                  color: t.s2,
+                  // Kod kutusu YUVARLAK (pahlı köşe yalnız rozet ve avatar).
+                  shape: SahneShape.withSide(SahneShape.m, t.edge, width: 1),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     key: const ValueKey('room-code-copy'),
@@ -1577,7 +1611,7 @@ class _RoomHero extends StatelessWidget {
                                     maxLines: 1,
                                     softWrap: false,
                                     style: SahneType.title.copyWith(
-                                      color: t.gold,
+                                      color: t.tx,
                                       letterSpacing: 3,
                                       fontFeatures: const [
                                         FontFeature.tabularFigures(),
@@ -1590,11 +1624,7 @@ class _RoomHero extends StatelessWidget {
                           ),
                           const SizedBox(width: SahneSpace.x3),
                           ExcludeSemantics(
-                            child: Icon(
-                              AppIcons.copy,
-                              color: t.goldTx,
-                              size: 22,
-                            ),
+                            child: Icon(AppIcons.copy, color: t.tx2, size: 22),
                           ),
                         ],
                       ),
@@ -1648,11 +1678,7 @@ class _PlayerCount extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            AppIcons.peopleGroup,
-            size: 18,
-            color: SahneStageColors.raceSoft,
-          ),
+          Icon(AppIcons.peopleGroup, size: 18, color: t.raceTx),
           const SizedBox(width: SahneSpace.x1),
           Text(
             text,
@@ -1681,7 +1707,7 @@ class _MetaItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: SahneStageColors.raceSoft, size: 16),
+        Icon(icon, color: t.raceTx, size: 16),
         const SizedBox(width: SahneSpace.x1 + 2),
         Flexible(
           child: Text(
@@ -1837,7 +1863,15 @@ class _RoomPlayerRow extends StatelessWidget {
     this.showReadyState = true,
     this.quietModeration = false,
     this.onBlocked,
+    this.onReadyChanged,
+    this.readyValue = false,
   });
+
+  /// Yalnız YEREL oyuncunun satırında verilir: "Hazırım" anahtarı kendi
+  /// satırındadır (2026-10-19 sadeleşme: ayrı "Hazırım" kartı kalktı; durum
+  /// rozeti ve onu değiştiren anahtar aynı satırda).
+  final ValueChanged<bool>? onReadyChanged;
+  final bool readyValue;
 
   /// Ayırıcının sol boşluğu: avatarın hizası (12 + 24 + 12).
   static const double indent = SahneSpace.x3 + 24 + SahneSpace.x3;
@@ -1897,7 +1931,6 @@ class _RoomPlayerRow extends StatelessWidget {
     final t = SahneTokens.of(context);
     final isReady = player.state == Player.readyState;
     final stacked = MediaQuery.textScalerOf(context).scale(16) >= 24;
-
     final nameText = Text(
       _displayName(context),
       maxLines: 1,
@@ -1962,77 +1995,123 @@ class _RoomPlayerRow extends StatelessWidget {
       ],
     );
 
-    final row = ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 64),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(
-          SahneSpace.x3,
-          SahneSpace.x2,
-          SahneSpace.x1,
-          SahneSpace.x2,
-        ),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 24,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  '$rank',
-                  maxLines: 1,
-                  style: SahneType.bodyStrong.copyWith(
-                    color: isHost ? t.goldTx : t.tx2,
-                    fontFeatures: const [FontFeature.tabularFigures()],
+    // Yerel oyuncunun hazır anahtarı: etiket + Switch. Büyük yazıda satırın
+    // altına iner (adın yanında sıkışmasın).
+    final readyToggle = onReadyChanged == null
+        ? null
+        : Semantics(
+            container: true,
+            label: context.t(K.imReady),
+            toggled: readyValue,
+            excludeSemantics: true,
+            onTap: () => onReadyChanged!(!readyValue),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  child: Text(
+                    context.t(K.imReady),
+                    style: SahneType.captionStrong.copyWith(color: t.tx),
                   ),
                 ),
-              ),
+                const SizedBox(width: SahneSpace.x2),
+                Switch(
+                  key: const ValueKey('room-ready-switch'),
+                  value: readyValue,
+                  onChanged: onReadyChanged,
+                ),
+              ],
             ),
-            const SizedBox(width: SahneSpace.x3),
-            PlayerAvatar(
-              radius: 18,
-              photoUrl: player.avatarUrl,
-              iconId: player.avatarIcon,
-              colorHex: player.avatarColor,
-              frameId: player.avatarFrame,
-              displayName: _displayName(context),
+          );
+
+    // Hazır anahtarı dar satırda (< 340 px; telefon 320) ya da büyük yazıda
+    // adın ALTINA iner; adın yanında sıkışınca ad harf harf bölünüyordu.
+    // Ölçü ekranın değil SATIRIN genişliğidir (MediaQuery testte ve
+    // bölünmüş ekranda satırın gerçek genişliğini vermez).
+    final row = LayoutBuilder(
+      builder: (context, constraints) {
+        final toggleBelow = stacked || constraints.maxWidth < 340;
+        return ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 64),
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(
+              SahneSpace.x3,
+              SahneSpace.x2,
+              SahneSpace.x1,
+              SahneSpace.x2,
             ),
-            const SizedBox(width: SahneSpace.x3),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  nameLine,
-                  if (showReadyState) ...[const SizedBox(height: 2), state],
-                  if (stacked && showScore) ...[
-                    const SizedBox(height: SahneSpace.x1),
-                    score,
-                  ],
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 24,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      '$rank',
+                      maxLines: 1,
+                      style: SahneType.bodyStrong.copyWith(
+                        color: isHost ? t.goldTx : t.tx2,
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: SahneSpace.x3),
+                PlayerAvatar(
+                  radius: 18,
+                  photoUrl: player.avatarUrl,
+                  iconId: player.avatarIcon,
+                  colorHex: player.avatarColor,
+                  frameId: player.avatarFrame,
+                  displayName: _displayName(context),
+                ),
+                const SizedBox(width: SahneSpace.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      nameLine,
+                      if (showReadyState) ...[const SizedBox(height: 2), state],
+                      if (stacked && showScore) ...[
+                        const SizedBox(height: SahneSpace.x1),
+                        score,
+                      ],
+                      if (toggleBelow && readyToggle != null) ...[
+                        const SizedBox(height: SahneSpace.x1),
+                        readyToggle,
+                      ],
+                    ],
+                  ),
+                ),
+                if (!toggleBelow && readyToggle != null) ...[
+                  const SizedBox(width: SahneSpace.x2),
+                  readyToggle,
                 ],
-              ),
+                if (!stacked && showScore) ...[
+                  const SizedBox(width: SahneSpace.x2),
+                  score,
+                ],
+                // Yabancı bir oyuncunun avatarı ve adı bu satırda da
+                // gösteriliyor; bildir/engelle burada (2026-08-06 denetimi).
+                // Satırın SONUNDA: 48 dp'lik hedef metin sütununu uzatırsa
+                // birincil eylem katlamanın altına iniyordu.
+                PlayerModerationButton(
+                  repository: repository,
+                  playerId: player.id,
+                  playerName: _displayName(context),
+                  isSelf: isSelf,
+                  compact: true,
+                  quiet: quietModeration,
+                  onBlocked: onBlocked,
+                ),
+                if (isSelf || player.id == null)
+                  const SizedBox(width: SahneSpace.x3),
+              ],
             ),
-            if (!stacked && showScore) ...[
-              const SizedBox(width: SahneSpace.x2),
-              score,
-            ],
-            // Yabancı bir oyuncunun avatarı ve adı bu satırda da
-            // gösteriliyor; bildir/engelle burada (2026-08-06 denetimi).
-            // Satırın SONUNDA: 48 dp'lik hedef metin sütununu uzatırsa
-            // birincil eylem katlamanın altına iniyordu.
-            PlayerModerationButton(
-              repository: repository,
-              playerId: player.id,
-              playerName: _displayName(context),
-              isSelf: isSelf,
-              compact: true,
-              quiet: quietModeration,
-              onBlocked: onBlocked,
-            ),
-            if (isSelf || player.id == null)
-              const SizedBox(width: SahneSpace.x3),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
 
     final id = player.id;
@@ -2184,22 +2263,16 @@ class _ChatToggleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return Center(
-      child: TextButton.icon(
-        key: const ValueKey('room-chat-toggle'),
+    // Tek kompakt çubuk: ikincil düğme (tam genişlik, 48). Sohbet ve hızlı
+    // tepkiler bunun arkasındadır.
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+      child: SahneButton.secondary(
+        buttonKey: const ValueKey('room-chat-toggle'),
         onPressed: onToggle,
-        icon: Icon(AppIcons.comment, size: 18, color: t.tx2),
-        label: Text(
-          context.t(K.chat),
-          style: SahneType.captionStrong.copyWith(color: t.tx2),
-        ),
-        iconAlignment: IconAlignment.start,
-        style: TextButton.styleFrom(
-          minimumSize: const Size(sahneTapTarget, sahneTapTarget),
-          shape: SahneShape.m,
-          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x4),
-        ),
+        icon: AppIcons.comment,
+        label: context.t(K.chat),
+        expand: true,
       ),
     );
   }
