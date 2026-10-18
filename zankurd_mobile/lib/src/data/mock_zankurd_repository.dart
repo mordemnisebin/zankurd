@@ -17,6 +17,7 @@ import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../game/speed_score.dart';
+import '../models/room_invite.dart';
 import '../models/room_message.dart';
 import '../utils/error_reporter.dart';
 import '../models/tournament.dart';
@@ -897,6 +898,64 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<bool> supportsAsyncDuelChallenge() async =>
       challengeSupportedForTesting;
+
+  // ─── Odaya arkadaş daveti ────────────────────────────────────────────
+
+  /// Testin sunucuda oda daveti RPC'lerinin olmadığı durumu denemesi için.
+  @visibleForTesting
+  bool roomInvitesSupportedForTesting = true;
+
+  /// [inviteFriendsToRoom]un kaydettiği (odaId -> alıcı kimlikleri).
+  final Map<String, Set<String>> _invitedByRoom = {};
+
+  /// [loadMyRoomInvites]ın döneceği davetler; testler doldurur.
+  final List<RoomInvite> _incomingRoomInvites = [];
+
+  /// [respondRoomInvite] bu sebeple fırlatsın (süresi dolmuş davet testi).
+  @visibleForTesting
+  RoomInviteFailure? respondRoomInviteFailureForTesting;
+
+  @visibleForTesting
+  void seedRoomInviteForTesting(RoomInvite invite) =>
+      _incomingRoomInvites.add(invite);
+
+  @override
+  Future<bool> supportsRoomInvites() async => roomInvitesSupportedForTesting;
+
+  @override
+  Future<int> inviteFriendsToRoom(GameRoom room, List<String> friendIds) async {
+    final id = room.id ?? room.code;
+    final set = _invitedByRoom.putIfAbsent(id, () => <String>{});
+    final fresh = friendIds.toSet()..remove(currentUserId);
+    set.addAll(fresh);
+    return fresh.length;
+  }
+
+  @override
+  Future<Set<String>> loadRoomInvitedIds(GameRoom room) async =>
+      Set.of(_invitedByRoom[room.id ?? room.code] ?? const <String>{});
+
+  @override
+  Future<List<RoomInvite>> loadMyRoomInvites() async =>
+      List.of(_incomingRoomInvites);
+
+  @override
+  Future<String?> respondRoomInvite(
+    String inviteId, {
+    required bool accept,
+  }) async {
+    final failure = respondRoomInviteFailureForTesting;
+    if (failure != null) {
+      _incomingRoomInvites.removeWhere((i) => i.id == inviteId);
+      throw RoomInviteException(failure);
+    }
+    final index = _incomingRoomInvites.indexWhere((i) => i.id == inviteId);
+    if (index < 0) {
+      throw const RoomInviteException(RoomInviteFailure.expired);
+    }
+    final invite = _incomingRoomInvites.removeAt(index);
+    return accept ? invite.roomCode : null;
+  }
 
   static const _challengeAlphabet = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';
 

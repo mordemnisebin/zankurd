@@ -35,6 +35,7 @@ import 'paywall_screen.dart';
 import 'quiz_screen.dart';
 import 'home/today_task_card.dart';
 import 'home/home_duel_card.dart';
+import 'home/room_invite_card.dart';
 import 'home/home_rows.dart';
 import 'home/home_sections.dart';
 import 'home/daily_missions_card.dart';
@@ -482,6 +483,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // Düello kartı: sırayla düello vaadi ya da "Sonuç hazır · N"
           // dönüş kancası. Bayrak kapalı/çevrimdışıyken kendini çizmez
           // (üstündeki aralık da kartın içindedir, boşluk kalmaz).
+          // Bir arkadaşın odaya daveti varsa kart düello kartının ÜSTÜNDE
+          // çıkar (zaman duyarlı: 30 dk); yoksa hiç yer kaplamaz.
+          RoomInviteCard(repository: repo, refreshToken: _refreshCounter),
           HomeDuelCard(repository: repo, refreshToken: _refreshCounter),
           // İlk oturumda seviye çubuğu ("Seviye 1 · 0/1000") yeni gelen için
           // anlamsız bir sayıdır; yerine bir şey konmaz. 2026-09-30 doğallık:

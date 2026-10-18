@@ -13,9 +13,13 @@ import '../utils/error_reporter.dart';
 /// sende" satırıdır. `friend_request` → [friends] (Liderlik sekmesi +
 /// üstüne açılan Arkadaşlar ekranı).
 ///
+/// `room_invite` (bir arkadaş beni odasına çağırdı) → [roomInvite]: tek
+/// bekleyen davet varsa doğrudan odaya katılınır, birden çoksa Ana ekranın
+/// "Odaya davet" kartı açılır.
+///
 /// [home] yerel bildirimlerden gelir (günlük hatırlatıcı, seri uyarısı):
 /// Öğren sekmesi, günün dersi kartı en üstte.
-enum PushTapTarget { playTab, duelInbox, friends, home }
+enum PushTapTarget { playTab, duelInbox, friends, home, roomInvite }
 
 /// Bildirime dokunan oyuncuyu doğru ekrana yönlendirir.
 ///
@@ -37,6 +41,7 @@ class PushTapRouter {
       'async_duel_result' => PushTapTarget.playTab,
       'async_duel_invite' || 'async_duel_turn' => PushTapTarget.duelInbox,
       'friend_request' => PushTapTarget.friends,
+      'room_invite' => PushTapTarget.roomInvite,
       _ => null,
     };
   }

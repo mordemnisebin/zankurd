@@ -117,6 +117,9 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   Future<bool> supportsAsyncDuelChallenge() async => false;
 
   @override
+  Future<bool> supportsRoomInvites() async => false;
+
+  @override
   Future<GameRoom> loadRoomSnapshot(String roomId) async {
     throw StateError('Remote service unavailable.');
   }
