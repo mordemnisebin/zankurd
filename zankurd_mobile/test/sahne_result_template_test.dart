@@ -30,6 +30,15 @@ import 'support/widget_test_helpers.dart';
 /// sonuç ekranı kendi iskeletini yazsa hepsi yeşil kalırdı. Bu dosya
 /// şablonun kurallarını (sıra, sıfır gizleme, gece renkleri) ve hangi
 /// dosyaların şablonu kullandığını ölçer.
+///
+/// ## Alt boşluk (2026-10-19 son rötuş)
+///
+/// "Nerelerde zorlandın?" satırı, sayfa sonuna kaydırılınca sabit eylem
+/// çubuğunun altında kalıyor görünüyordu. Gövde zaten çubuğun üstünde biter;
+/// listenin alt boşluğu ayrıca çubuk boyunu bir daha ekleyip ya da hiç
+/// eklemeyip belirsiz kalıyordu. Sözleşme: kaydırma sonunda son bölümün alt
+/// kenarı çubuğun üst kenarından en az 16 yukarıdadır (`alt boşluk` testi,
+/// alt güvenli alanlı ve alansız).
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
@@ -122,6 +131,45 @@ void main() {
     final primary = tester.getCenter(find.text('Tamam')).dx;
     expect(secondary, lessThan(primary));
   });
+
+  for (final inset in [0.0, 34.0]) {
+    testWidgets('kaydırma sonunda son bölüm eylem çubuğunun 16 üstünde '
+        '(alt güvenli alan $inset)', (tester) async {
+      tester.view.devicePixelRatio = 1.0;
+      tester.view.physicalSize = const Size(390, 844);
+      tester.view.padding = FakeViewPadding(bottom: inset);
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        testShell(
+          themeProvider: ThemeProvider(initialMode: ThemeMode.dark),
+          child: SahneResultScaffold(
+            hero: const SahneResultHero(
+              emblem: SizedBox(height: 44),
+              title: 'Bitti',
+              value: 7,
+            ),
+            sections: [
+              for (var i = 0; i < 12; i++)
+                SizedBox(height: 120, child: Text('satır $i')),
+              const SizedBox(
+                key: ValueKey('son-bolum'),
+                height: 80,
+                child: Text('Nerelerde zorlandın?'),
+              ),
+            ],
+            primary: SahneResultAction(label: 'Tamam', onPressed: () {}),
+            secondary: SahneResultAction(label: 'Kapat', onPressed: () {}),
+          ),
+        ),
+      );
+      await tester.pump(const Duration(seconds: 2));
+      await tester.drag(find.byType(ListView), const Offset(0, -10000));
+      await tester.pumpAndSettle();
+      final last = tester.getRect(find.byKey(const ValueKey('son-bolum')));
+      final bar = tester.getRect(find.byType(SahneResultDock));
+      expect(last.bottom, lessThanOrEqualTo(bar.top - 16 + 0.5));
+    });
+  }
 
   group('sırayla düello sonucu', () {
     AsyncDuelSummary summary({

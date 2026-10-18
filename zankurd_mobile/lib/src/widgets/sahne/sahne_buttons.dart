@@ -279,7 +279,8 @@ class SahneButton extends StatelessWidget {
 ///
 /// 2026-10-19 sadeleşme: KAPSÜL çip (görsel 40, dokunma kutusu 48), ikon +
 /// jeton glifi + fiyat. Eskiden 52'lik köşeli düğmeydi. Jetonu yetmeyen
-/// joker soluk + küçük kilit, dokunulabilir. (Önceki belge:) Ortada ikon + jeton glifi + fiyat (Zêr metni). Adı
+/// joker aynı kapsülde ikon + fiyat %60 opaklıkta (kilit simgesi yok),
+/// dokunulabilir. (Önceki belge:) Ortada ikon + jeton glifi + fiyat (Zêr metni). Adı
 /// ekranda yazmaz: ekran okuyucu "ad, fiyat"ı okur, uzun basışta ipucu
 /// olarak görünür. Dar ekranda ve büyük yazıda içerik sığdırılarak küçülür
 /// (taşmaz). Hâller:
@@ -321,7 +322,7 @@ class SahneJokerButton extends StatelessWidget {
   final bool unaffordable;
 
   /// Kapsülün görsel boyu; dokunma kutusu [sahneTapTarget] (48).
-  static const double visualHeight = 40;
+  static const double visualHeight = 48;
 
   @override
   Widget build(BuildContext context) {
@@ -331,7 +332,10 @@ class SahneJokerButton extends StatelessWidget {
     // belirler. Etkin = hem dokunulabilir hem alınabilir.
     final tappable = onPressed != null;
     final enabled = tappable && !unaffordable;
-    final fg = selected ? t.goldTx : (enabled ? t.tx : t.tx3);
+    // Jeton yetmiyorsa kapsül AYNI kalır; ikon ve fiyat %60 opaklıkta
+    // çizilir (kilit simgesi yok: simge + jeton + fiyat kalabalıktı).
+    Color dim(Color c) => c.withValues(alpha: 0.6);
+    final fg = selected ? t.goldTx : (enabled ? t.tx : dim(t.tx));
     final showPrice = !selected && (enabled || unaffordable);
     final capsule = StadiumBorder(
       side: selected
@@ -362,7 +366,7 @@ class SahneJokerButton extends StatelessWidget {
             child: Center(
               child: SahneTappable(
                 shape: capsule,
-                color: selected ? t.goldTint : (enabled ? t.s2 : t.s1),
+                color: selected ? t.goldTint : t.s2,
                 onTap: tappable ? onPressed : null,
                 child: ConstrainedBox(
                   // a11y-tap-target: noninteractive — görsel kapsül tabanı;
@@ -388,29 +392,19 @@ class SahneJokerButton extends StatelessWidget {
                             ],
                             if (showPrice) ...[
                               const SizedBox(width: SahneSpace.x1),
-                              if (unaffordable)
-                                // Kilit: ikonla fiyat arasında küçük, soluk.
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.only(
-                                    end: SahneSpace.x1,
-                                  ),
-                                  child: Icon(
-                                    AppIcons.lock,
-                                    key: const ValueKey('joker-lock'),
-                                    size: 12,
-                                    color: t.tx3,
-                                  ),
+                              Opacity(
+                                opacity: enabled ? 1 : 0.6,
+                                child: const SahneGlyph(
+                                  SahneGlyphKind.coin,
+                                  size: 16,
+                                  filled: true,
                                 ),
-                              SahneGlyph(
-                                SahneGlyphKind.coin,
-                                size: 16,
-                                filled: enabled,
                               ),
                               const SizedBox(width: SahneSpace.x1),
                               Text(
                                 '$price',
                                 style: SahneType.captionStrong.copyWith(
-                                  color: enabled ? t.goldTx : t.tx3,
+                                  color: enabled ? t.goldTx : dim(t.tx),
                                   fontFeatures: const [
                                     FontFeature.tabularFigures(),
                                   ],
