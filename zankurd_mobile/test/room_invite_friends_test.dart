@@ -18,20 +18,19 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/models/room_invite.dart';
 import 'package:zankurd_mobile/src/screens/home/room_invite_card.dart';
-import 'package:zankurd_mobile/src/screens/room_invite_friends_sheet.dart';
+import 'package:zankurd_mobile/src/screens/room/room_invite_friends_sheet.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/services/push_tap_router.dart';
 
 import 'support/widget_test_helpers.dart';
 
 class _Repo extends TestMockZanKurdRepository {
-  _Repo({int friendCount = 3}) : _friendCount = friendCount;
+  _Repo({this._friendCount = 3});
 
   final int _friendCount;
   final List<List<String>> sent = [];

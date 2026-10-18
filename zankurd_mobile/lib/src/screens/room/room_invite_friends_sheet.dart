@@ -2,17 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../data/zankurd_repository.dart';
-import '../l10n/lang.dart';
-import '../l10n/strings.dart';
-import '../models/friend.dart';
-import '../models/room.dart';
-import '../models/room_invite.dart';
-import '../theme/app_icons.dart';
-import '../utils/error_reporter.dart';
-import '../utils/player_identity.dart';
-import '../widgets/app_panel.dart';
-import '../widgets/sahne/sahne.dart';
+import '../../data/zankurd_repository.dart';
+import '../../l10n/lang.dart';
+import '../../l10n/strings.dart';
+import '../../models/friend.dart';
+import '../../models/room.dart';
+import '../../models/room_invite.dart';
+import '../../theme/app_icons.dart';
+import '../../utils/error_reporter.dart';
+import '../../utils/player_identity.dart';
+import '../../widgets/app_panel.dart';
+import '../../widgets/sahne/sahne.dart';
 
 /// Oda lobisinden kabul edilmiş arkadaşları, kod girmeden davet eden sayfa.
 ///

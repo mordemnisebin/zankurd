@@ -22,7 +22,7 @@ import '../widgets/player_moderation_button.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
-import 'room_invite_friends_sheet.dart';
+import 'room/room_invite_friends_sheet.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
 
