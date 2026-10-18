@@ -1162,7 +1162,10 @@ class _RenderGameBar extends RenderBox
     // ayrılırdı: 320 px'te künyeye yer kalmıyordu.
     final lead = ls.width;
     final trail = tw;
-    final freeW = (w - lead - trail - 2 * SahneSpace.x2).clamp(0.0, w);
+    final freeW = (w - lead - trail - SahneSpace.x2 - SahneSpace.x3).clamp(
+      0.0,
+      w,
+    );
     if (center != null) {
       cs = layout(center, BoxConstraints(maxWidth: freeW));
     }
@@ -1185,7 +1188,7 @@ class _RenderGameBar extends RenderBox
       }
       if (center != null) {
         final minX = lead + SahneSpace.x2;
-        final maxX = w - trail - SahneSpace.x2 - cs.width;
+        final maxX = w - trail - SahneSpace.x3 - cs.width;
         final x = ((w - cs.width) / 2).clamp(minX, maxX < minX ? minX : maxX);
         place(center, Offset(x, (h - cs.height) / 2));
       }

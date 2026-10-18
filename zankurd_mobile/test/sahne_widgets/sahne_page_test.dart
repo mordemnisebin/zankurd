@@ -195,7 +195,9 @@ void main() {
       expect(scaffold.backgroundColor, SahneTokens.night.bg);
 
       final timer = tester.getCenter(find.byKey(const Key('timer')));
-      expect(timer.dx, closeTo(kNarrow.width / 2, 0.5));
+      // Sayaç ile sağ grup arasında en az 12 px (2026-10-19): kalabalık
+      // satırda sayaç tam ortadan en çok 4 px kayabilir.
+      expect(timer.dx, closeTo(kNarrow.width / 2, 4));
 
       expect(find.bySemanticsLabel('Bigire'), findsOneWidget);
       expect(find.bySemanticsLabel('4 çirke mane'), findsOneWidget);

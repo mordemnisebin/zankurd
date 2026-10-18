@@ -454,9 +454,13 @@ class SahnePickChip extends StatelessWidget {
     required this.selected,
     required this.onTap,
     this.leading,
+    this.semanticLabel,
   });
 
   final String label;
+
+  /// Ekran okuyucunun okuyacağı tam ad; [label] kısaltılmışsa verilir.
+  final String? semanticLabel;
   final bool selected;
   final VoidCallback? onTap;
 
@@ -476,7 +480,7 @@ class SahnePickChip extends StatelessWidget {
       container: true,
       button: true,
       selected: selected,
-      label: label,
+      label: semanticLabel ?? label,
       onTap: onTap,
       excludeSemantics: true,
       child: ConstrainedBox(
@@ -523,6 +527,45 @@ class SahnePickChip extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Kaydırma alanının alt kenarında 24 px'lik yumuşak solma: ayracın hemen
+/// üstünde yarım kalan satır (oyuncu sayısı çipleri) "kesilmiş" değil
+/// "kayıyor" diye okunur. Renk, sayfa yüzeyi ([color] (AppPanel dolgusu)) ile aynıdır. Dokunuşu geçirir.
+class SahneBottomFade extends StatelessWidget {
+  const SahneBottomFade({super.key, required this.child, required this.color});
+
+  final Widget child;
+
+  /// Kaydırma alanının arkasındaki yüzey rengi.
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final surface = color;
+    return Stack(
+      children: [
+        child,
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 24,
+          child: IgnorePointer(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [surface.withValues(alpha: 0), surface],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
