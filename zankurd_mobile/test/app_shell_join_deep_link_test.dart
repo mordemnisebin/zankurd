@@ -250,6 +250,18 @@ void main() {
       expect(JoinDeepLink.parse('/join/ZK-ABCDEF0123'), 'ZK-ABCDEF0123');
     });
 
+    test('6 rakamlı oda kodu kabul edilir ve meydan okumayla karışmaz', () {
+      expect(
+        JoinDeepLink.parse('https://www.zankurd.com/join/482913'),
+        '482913',
+      );
+      expect(JoinDeepLink.isChallengeCode('482913'), isFalse);
+      expect(JoinDeepLink.isChallengeCode('DK7M2Q9XA'), isTrue);
+      // Rakamla başlayan kod hiçbir koşulda meydan okuma kodu değildir.
+      expect(JoinDeepLink.parse('/join/48291'), isNull);
+      expect(JoinDeepLink.parse('/join/4829131'), isNull);
+    });
+
     test('biçimi tutmayan kod reddedilir', () {
       expect(JoinDeepLink.parse('/join/MERHABA'), isNull);
       expect(JoinDeepLink.parse('/join/ZK-'), isNull);

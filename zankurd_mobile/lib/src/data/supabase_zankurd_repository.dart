@@ -836,10 +836,20 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }
       await ensureProfile();
 
+      // `category` seçimi tek dizgede taşır: `Tevlihev` = Karışık (hepsi),
+      // `A, B` = çoklu, `A` = tek kategori. Hepsi `create_online_room_v2`ye
+      // gider (yalnız o 6 rakamlı kod üretir; boş dizi = Karışık). Eski
+      // 5 parametreli RPC mağazadaki sürümler içindir.
+      final isMixed = category == 'Tevlihev';
+      final picked = category
+          .split(',')
+          .map((c) => c.trim())
+          .where((c) => c.isNotEmpty)
+          .toList(growable: false);
       final response = await client.rpc(
-        'create_online_room',
+        'create_online_room_v2',
         params: {
-          'p_category_name': category,
+          'p_category_names': isMixed ? const <String>[] : picked,
           'p_seconds_per_question': secondsPerQuestion,
           'p_question_count': questionCount,
           'p_entry_fee': entryFee,
@@ -848,7 +858,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           if (maxPlayers != 2) 'p_max_players': maxPlayers,
         },
       );
-      final snapshot = _requiredJsonObject(response, 'create_online_room');
+      final snapshot = _requiredJsonObject(response, 'create_online_room_v2');
       final roomId = _requiredString(snapshot, const ['room_id']);
       final roomCode = _requiredString(snapshot, const ['code']);
       final hostId = _requiredString(snapshot, const ['host_id']);

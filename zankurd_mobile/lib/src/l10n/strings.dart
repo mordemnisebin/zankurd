@@ -352,8 +352,8 @@ class Tr {
     K.roomCode: {'ku': 'Koda odeyê', 'tr': 'Oda kodu'},
     K.roomCodeRequired: {'ku': 'Kod pêwîst e', 'tr': 'Kod zorunlu'},
     K.roomCodeInvalid: {
-      'ku': 'Kodê kontrol bike. Mînak: ZK-ABCDEF0123',
-      'tr': 'Kodu kontrol et. Örnek: ZK-ABCDEF0123',
+      'ku': 'Kodê kontrol bike. Mînak: 482 913',
+      'tr': 'Kodu kontrol et. Örnek: 482 913',
     },
     K.roomNotFound: {
       'ku': 'Odeya bi vê kodê nehate dîtin.',

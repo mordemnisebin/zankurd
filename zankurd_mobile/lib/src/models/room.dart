@@ -258,14 +258,29 @@ class MatchmakingTouch {
   final String? opponentName;
 }
 
+/// Eski (2026-10-18 öncesi) oda kodu öneki. Yeni kodlar önek taşımaz.
 const roomCodePrefix = 'ZK-';
 const roomCodeSuffixLength = 10;
-const roomCodeLength = 13;
+
+/// Yeni oda kodunun uzunluğu: 6 rakam (örn. 482913). Sesli söylenir,
+/// "482 913" diye gruplanıp gösterilir. 13 karakterlik `ZK-` + onaltılık
+/// kod test kullanıcılarına söylenemiyordu.
+const roomCodeLength = 6;
 const _legacyRoomCodeSuffixLength = 4;
 const _roomCodePrefixLetterLength = 2;
 
-final _canonicalRoomCodePattern = RegExp(r'^ZK-[0-9A-F]{10}$');
+final _canonicalRoomCodePattern = RegExp(r'^[1-9][0-9]{5}$');
+final _legacyHexRoomCodePattern = RegExp(r'^ZK-[0-9A-F]{10}$');
 final _legacyRoomCodePattern = RegExp(r'^ZK-[A-HJ-NP-Z2-9]{4}$');
+final _digitsOnlyPattern = RegExp(r'^[0-9]+$');
+final _joinLinkPattern = RegExp(r'/join/([^/?#\s]+)', caseSensitive: false);
+
+/// Yapıştırılan `https://www.zankurd.com/join/482913` bağlantısından kodu
+/// çıkarır; bağlantı değilse girdiyi olduğu gibi verir.
+String _extractRoomCodeFromLink(String input) {
+  final match = _joinLinkPattern.firstMatch(input);
+  return match == null ? input : match.group(1)!;
+}
 
 bool _hasExplicitRoomCodePrefix(String input) {
   final upper = input.trimLeft().toUpperCase();
@@ -281,39 +296,43 @@ bool _hasCompleteCompactRoomCodePrefix(String compact) {
       length == _legacyRoomCodeSuffixLength;
 }
 
-/// Sunucudaki sözleşmeyle aynı 40-bit oda kodunu üretir.
+/// Yalnız rakamlardan oluşan girdi yeni (6 haneli) koddur; tek istisna 10
+/// rakamdır: o, soneki yalnız rakamdan ibaret eski `ZK-` onaltılık kodudur.
+bool _isNumericRoomCodeInput(String compact) =>
+    compact.isNotEmpty &&
+    _digitsOnlyPattern.hasMatch(compact) &&
+    compact.length != roomCodeSuffixLength;
+
+/// Yeni oda kodunu üretir: 6 rakam, ilk hane 1-9.
 ///
-/// Canlı oda oluşturma yetkili SQL RPC'sinde yapılır; bu üretici yalnız yerel
-/// depo ve test kabuğu içindir. Yine de iki yolun biçimi ayrışmasın diye aynı
-/// `ZK-` + 10 büyük onaltılık karakter sözleşmesini uygular.
+/// Canlı oda oluşturma yetkili SQL RPC'sinde yapılır (`create_online_room_v2`);
+/// bu üretici yalnız yerel depo ve test kabuğu içindir. Biçim sunucuyla aynı.
 String generateRoomCode([Random? random]) {
-  const alphabet = '0123456789ABCDEF';
   final rng = random ?? Random.secure();
-  final suffix = List.generate(
-    roomCodeSuffixLength,
-    (_) => alphabet[rng.nextInt(alphabet.length)],
-  ).join();
-  return '$roomCodePrefix$suffix';
+  final first = 1 + rng.nextInt(9);
+  final rest = List.generate(roomCodeLength - 1, (_) => rng.nextInt(10)).join();
+  return '$first$rest';
 }
 
-/// Elle yazılmış bir oda kodunu `generateRoomCode`un ürettiği biçime çevirir.
+/// Elle yazılmış bir oda kodunu sunucunun beklediği biçime çevirir.
 ///
-/// Kod kullanıcıya `ZK-ABCDEF0123` diye gösterilir ama insan onu tireyi atlayarak,
-/// küçük harfle ya da araya boşluk koyarak yazar. Katılma alanı bir zamanlar
-/// yalnızca `trim().toUpperCase()` yapıyordu; `zkx8wy` yazan kişi "oda
-/// bulunamadı" görüyordu — oda oradayken. Kusur 2026-08-01'de iki gerçek
-/// cihaz arasında oda kurulup katılınırken bulundu.
+/// Yeni kod 6 rakamdır; kullanıcı onu "482 913", "482-913" ya da
+/// `zankurd.com/join/482913` bağlantısı olarak yazıp yapıştırabilir: bu
+/// biçimlerin hepsi `482913` olur. Eski odalardaki `ZK-ABCDEF0123` kodu
+/// da çalışır: tireyi atlayan, küçük harfle yazan ya da yalnız soneki
+/// yazan kullanıcı yine kanonik `ZK-…` biçimine çevrilir.
 ///
 /// Ayıklama yalnızca biçimseldir: harf/rakam dışını atar, büyütür ve açık
 /// ayraçla ya da tam önekli uzunlukla belirlenen `ZK` önekini kaldırır.
-/// Tarihsel dört karakterli alfabe `ZK` ile başlayabildiği için kısa bir
-/// `ZKAB` girdisi önek sanılmaz. Karakter *düzeltmez* — `0`ı `O` yapmak gibi
-/// bir tahmin yanlış odaya sokabilirdi.
+/// Karakter *düzeltmez* — `0`ı `O` yapmak gibi bir tahmin yanlış odaya
+/// sokabilirdi.
 String normalizeRoomCode(String input) {
-  final compact = input.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
+  final source = _extractRoomCodeFromLink(input);
+  final compact = source.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
+  if (_isNumericRoomCodeInput(compact)) return compact;
   if (compact == 'ZK') return '';
   final hasPrefix =
-      _hasExplicitRoomCodePrefix(input) ||
+      _hasExplicitRoomCodePrefix(source) ||
       _hasCompleteCompactRoomCodePrefix(compact);
   final body = hasPrefix
       ? compact.substring(_roomCodePrefixLetterLength)
@@ -322,20 +341,30 @@ String normalizeRoomCode(String input) {
   return '$roomCodePrefix$body';
 }
 
-/// Metin alanında hem önekli hem yalnız sonekli karakter karakter girişi
-/// kanonik gösterime taşır. `normalizeRoomCode('Z')` doğrudan çağrı için
-/// `ZK-Z` üretirken bu yardımcı `Z`, `ZK` ve `ZK-` ara durumlarını özellikle
-/// korur; böylece biçimlendirici kullanıcının yazdığı öneki çoğaltmaz.
+/// Metin alanında girişi gösterim biçimine taşır.
+///
+/// Rakam girişi 6 haneye kesilir ve "482 913" diye gruplanır (boşluk yalnız
+/// gösterim; `normalizeRoomCode` onu atar). Harf içeren (eski `ZK-…`) giriş
+/// kesilmeden kanonik eski biçime çekilir: `Z`, `ZK`, `ZK-` ara durumları
+/// korunur, önek çoğaltılmaz.
 String formatRoomCodeInput(String input) {
-  final upper = input.toUpperCase();
+  final source = _extractRoomCodeFromLink(input);
+  final upper = source.toUpperCase();
   final compact = upper.replaceAll(RegExp(r'[^A-Z0-9]'), '');
   if (compact.isEmpty) return '';
+  if (_isNumericRoomCodeInput(compact)) {
+    return displayRoomCode(
+      compact.length > roomCodeLength
+          ? compact.substring(0, roomCodeLength)
+          : compact,
+    );
+  }
   if (compact == 'Z') return 'Z';
   if (compact == 'ZK') {
-    return _hasExplicitRoomCodePrefix(input) ? roomCodePrefix : 'ZK';
+    return _hasExplicitRoomCodePrefix(source) ? roomCodePrefix : 'ZK';
   }
   final hasPrefix =
-      _hasExplicitRoomCodePrefix(input) ||
+      _hasExplicitRoomCodePrefix(source) ||
       _hasCompleteCompactRoomCodePrefix(compact);
   if (hasPrefix) {
     return '$roomCodePrefix${compact.substring(_roomCodePrefixLetterLength)}';
@@ -344,21 +373,29 @@ String formatRoomCodeInput(String input) {
   return '$roomCodePrefix$compact';
 }
 
-/// Yeni oda üretim sözleşmesini doğrular.
+/// Kodu ekranda göstermek için gruplar: `482913` -> `482 913`. 6 haneye
+/// ulaşmamış kısmi girişi ve eski `ZK-…` kodlarını olduğu gibi bırakır
+/// (kısmi giriş için ilk üç hane + kalan gruplanır).
+String displayRoomCode(String code) {
+  if (!_digitsOnlyPattern.hasMatch(code) || code.length <= 3) return code;
+  return '${code.substring(0, 3)} ${code.substring(3)}';
+}
+
+/// Yeni oda üretim sözleşmesini doğrular (6 rakam).
 bool isCanonicalRoomCode(String input) {
   return _canonicalRoomCodePattern.hasMatch(input);
 }
 
 /// Kullanıcının esnek yazımını normalize ettikten sonra JOIN kapısının
-/// geçiş süresinde desteklediği biçimlerden birine uyup uymadığını doğrular.
+/// desteklediği biçimlerden birine uyup uymadığını doğrular: yeni 6 rakam,
+/// eski `ZK-` + 10 onaltılık, ya da tarihsel dört karakterli.
 ///
-/// Yeni odalar yalnız 10 haneli onaltılık biçimde üretilir. Dört haneli eski
-/// biçim, canlı geçişin uygulandığı ve 24 saatlik oda temizliği sonrasında
-/// eski aktif lobi kalmadığı ayrıca doğrulanana kadar yalnız JOIN için kabul
-/// edilir; yeni kod üretimine geri dönmez.
+/// Dört haneli eski biçim yalnız JOIN için kabul edilir; yeni kod üretimine
+/// geri dönmez.
 bool isSupportedRoomCode(String input) {
   final normalized = normalizeRoomCode(input);
   return _canonicalRoomCodePattern.hasMatch(normalized) ||
+      _legacyHexRoomCodePattern.hasMatch(normalized) ||
       _legacyRoomCodePattern.hasMatch(normalized);
 }
 
