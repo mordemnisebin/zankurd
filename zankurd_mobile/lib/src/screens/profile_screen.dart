@@ -97,6 +97,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  /// "Ayrıntılı istatistik" bağlantısıyla açılan ayrıntı paneli.
+  bool _statsDetailsOpen = false;
+
   late final Future<MistakeStore> _mistakeStoreFuture = MistakeStore.load();
   bool _loading = true;
   bool _loadFailed = false;
@@ -373,7 +376,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
         ],
-        SahneSectionHeader(title: context.t(K.myStats)),
+        // 2026-10-19 sadeleşme (ikinci tur): "Ayrıntılı istatistik" ayrı bir
+        // açılır kart değil, başlığın yanındaki bağlantıdır; ayrıntılar
+        // altta, bağlantıya basınca açılır (varsayılan kapalı).
+        SahneSectionHeader(
+          title: context.t(K.myStats),
+          actionLabel: context.t(K.detailedStats),
+          onAction: () =>
+              setState(() => _statsDetailsOpen = !_statsDetailsOpen),
+        ),
         // Sunucu satırı yoksa yerel ilerleme de gizleniyordu: çevrimdışı
         // 2 soru cevaplamış oyuncu kendi cevapladığı soru sayısını
         // göremiyordu (2026-07-27). Kapı sunucu satırına değil,
@@ -386,48 +397,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
           // 2026-09-29 doğallık (K3): burada 64'lük maskot/logo plakası
           // duruyordu; boş durumların ortak dili gibi 32'lik üçüncül bir
           // çizgi ikon (istatistik sütunu) oldu. Logo marka satırının işi.
+          // 2026-10-19 sadeleşme (ikinci tur): boş durum 190 px'lik büyük
+          // karttı ve içinde ikinci bir turuncu düğme vardı; artık tek
+          // satırlık küçük şerit: simge + cümle, altında metin eylemi.
           SahneSurfaceCard(
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.x4,
+              vertical: SahneSpace.x3,
+            ),
             child: Builder(
               builder: (context) {
                 final t = SahneTokens.of(context);
-                final body = Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.t(K.noOnlineHistory),
-                      style: SahneType.body.copyWith(color: t.tx2),
-                    ),
-                    const SizedBox(height: SahneSpace.x3),
-                    SahneButton.primary(
-                      key: const ValueKey('profile-stats-start-cta'),
-                      label: context.t(K.startToday),
-                      icon: AppIcons.bolt,
-                      arrow: false,
-                      onPressed: _startQuickRace,
-                    ),
-                  ],
-                );
-                final plate = ExcludeSemantics(
-                  child: Icon(AppIcons.chartColumn, size: 32, color: t.tx3),
-                );
-                // Büyük yazıda metin dar sütunda harf harf bölünmesin:
-                // plaka üste, metin ve düğme tam genişliğe.
-                if (MediaQuery.textScalerOf(context).scale(16) >= 24) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      plate,
-                      const SizedBox(height: SahneSpace.x3),
-                      body,
-                    ],
-                  );
-                }
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    plate,
-                    const SizedBox(width: SahneSpace.x4),
-                    Expanded(child: body),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: ExcludeSemantics(
+                        child: Icon(
+                          AppIcons.chartColumn,
+                          size: 20,
+                          color: t.tx3,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x3),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            context.t(K.noOnlineHistory),
+                            style: SahneType.caption.copyWith(color: t.tx2),
+                          ),
+                          SahneButton.text(
+                            buttonKey: const ValueKey(
+                              'profile-stats-start-cta',
+                            ),
+                            label: context.t(K.startToday),
+                            arrow: true,
+                            onPressed: _startQuickRace,
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 );
               },
@@ -483,71 +496,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(height: SahneSpace.cardGap),
 
         // Detaylı analiz (grafik, kategori ustalığı, güçlü/zayıf yön) —
-        // sadelik için varsayılan kapalı.
-        SahneSurfaceCard(
-          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x4),
-          child: Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-            child: Material(
-              type: MaterialType.transparency,
-              child: ExpansionTile(
-                tilePadding: EdgeInsets.zero,
-                childrenPadding: const EdgeInsets.only(bottom: SahneSpace.x4),
-                iconColor: SahneTokens.of(context).tx2,
-                collapsedIconColor: SahneTokens.of(context).tx2,
-                title: Text(
-                  context.t(K.detailedStats),
-                  style: SahneType.bodyStrong.copyWith(
-                    color: SahneTokens.of(context).tx,
-                  ),
+        // sadelik için varsayılan kapalı; başlıktaki bağlantı açar.
+        if (_statsDetailsOpen)
+          SahneSurfaceCard(
+            key: const ValueKey('profile-detailed-stats'),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _SubHeading(context.t(K.weeklyPerformance)),
+                const SizedBox(height: SahneSpace.x3),
+                FutureBuilder<MistakeStore>(
+                  future: _mistakeStoreFuture,
+                  builder: (context, snapshot) {
+                    final t = SahneTokens.of(context);
+                    if (snapshot.hasError) {
+                      return SizedBox(
+                        height: 160,
+                        child: Center(
+                          child: Text(
+                            context.t(K.performanceLoadFail),
+                            style: SahneType.caption.copyWith(color: t.tx2),
+                          ),
+                        ),
+                      );
+                    }
+                    if (!snapshot.hasData) {
+                      return SizedBox(
+                        height: 160,
+                        child: Center(
+                          child: CircularProgressIndicator(color: t.tx2),
+                        ),
+                      );
+                    }
+                    final history = snapshot.data!.getLast7DaysHistory();
+                    return WeeklyPerformanceChart(history: history, isKu: ku);
+                  },
                 ),
-                expandedCrossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _SubHeading(context.t(K.weeklyPerformance)),
-                  const SizedBox(height: SahneSpace.x3),
-                  FutureBuilder<MistakeStore>(
-                    future: _mistakeStoreFuture,
-                    builder: (context, snapshot) {
-                      final t = SahneTokens.of(context);
-                      if (snapshot.hasError) {
-                        return SizedBox(
-                          height: 160,
-                          child: Center(
-                            child: Text(
-                              context.t(K.performanceLoadFail),
-                              style: SahneType.caption.copyWith(color: t.tx2),
-                            ),
-                          ),
-                        );
-                      }
-                      if (!snapshot.hasData) {
-                        return SizedBox(
-                          height: 160,
-                          child: Center(
-                            child: CircularProgressIndicator(color: t.tx2),
-                          ),
-                        );
-                      }
-                      final history = snapshot.data!.getLast7DaysHistory();
-                      return WeeklyPerformanceChart(history: history, isKu: ku);
-                    },
-                  ),
+                const SizedBox(height: SahneSpace.x6),
+                _PedagogicalAnalyticsSection(isKu: ku),
+                const SizedBox(height: SahneSpace.x6),
+                StrengthMapSection(
+                  isKu: ku,
+                  refreshSignal: widget.refreshSignal,
+                ),
+                if (_masteryStore != null) ...[
                   const SizedBox(height: SahneSpace.x6),
-                  _PedagogicalAnalyticsSection(isKu: ku),
-                  const SizedBox(height: SahneSpace.x6),
-                  StrengthMapSection(
-                    isKu: ku,
-                    refreshSignal: widget.refreshSignal,
-                  ),
-                  if (_masteryStore != null) ...[
-                    const SizedBox(height: SahneSpace.x6),
-                    _MasterySection(store: _masteryStore!, isKu: ku),
-                  ],
+                  _MasterySection(store: _masteryStore!, isKu: ku),
                 ],
-              ),
+              ],
             ),
           ),
-        ),
       ],
     );
 
