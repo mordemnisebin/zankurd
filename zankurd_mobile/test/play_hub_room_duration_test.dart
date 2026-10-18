@@ -189,6 +189,25 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  testWidgets('oda kurma: konu çipi karo adını yazar, anlamsal ad tam kalır; '
+      'kaydırma alanı altında solma var', (tester) async {
+    final handle = tester.ensureSemantics();
+    await openCreateSheet(tester, _CapturingRepository());
+    final chip = find.byKey(const ValueKey('custom-room-cat-Paradigma'));
+    if (chip.evaluate().isNotEmpty) {
+      expect(
+        find.descendant(of: chip, matching: find.text('Bilim')),
+        findsOneWidget,
+      );
+      expect(tester.getSemantics(chip).label, 'Bilim ve Düşünce');
+    }
+    expect(
+      find.byKey(const ValueKey('custom-room-bottom-fade')),
+      findsOneWidget,
+    );
+    handle.dispose();
+  });
+
   for (final scale in [1.0, 2.0]) {
     testWidgets('oda kurma çipleri: aynı satırda eşit boy, normal yazıda 48 '
         '(yazı x$scale)', (tester) async {

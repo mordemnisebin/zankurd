@@ -347,7 +347,12 @@ class SahneTopicMarkBadge extends StatelessWidget {
     required this.mark,
     required this.tone,
     this.size = 28,
+    this.strong = false,
   });
+
+  /// Koyu temada zemin tonu daha açık (%38): koyu sahne üst satırındaki küçük
+  /// künye işareti %22'de zeminden ayrışmıyordu.
+  final bool strong;
 
   final SahneTopicMark mark;
   final SahneCategoryTone tone;
@@ -364,7 +369,7 @@ class SahneTopicMarkBadge extends StatelessWidget {
         ? tone
         : () {
             final base = Color.alphaBlend(
-              tone.detail.withValues(alpha: 0.22),
+              tone.detail.withValues(alpha: strong ? 0.38 : 0.22),
               SahneTokens.of(context).s1,
             );
             return SahneCategoryTone(

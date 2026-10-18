@@ -892,7 +892,14 @@ Widget _filterChip(
   required String label,
   required bool selected,
   required VoidCallback onTap,
-}) => SahnePickChip(key: key, label: label, selected: selected, onTap: onTap);
+  String? semanticLabel,
+}) => SahnePickChip(
+  key: key,
+  label: label,
+  semanticLabel: semanticLabel,
+  selected: selected,
+  onTap: onTap,
+);
 
 class _CustomRoomBottomSheet extends StatefulWidget {
   const _CustomRoomBottomSheet({
@@ -1004,219 +1011,231 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
               ),
               const SizedBox(height: SahneSpace.x4),
               Flexible(
-                child: SingleChildScrollView(
-                  // Alt boşluk: son satır (oyuncu sayısı/ücret) kaydırınca
-                  // ayracın ve düğmenin tam üstüne rahatça çıkar.
-                  padding: const EdgeInsets.only(bottom: SahneSpace.x4),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Kategori Seçimi
-                      Text(
-                        context.t(K.selectCategory),
-                        style: SahneType.bodyStrong.copyWith(
-                          color: SahneTokens.of(context).tx,
-                        ),
-                      ),
-                      const SizedBox(height: SahneSpace.x2),
-                      _ChoiceGrid(
-                        columns: 3,
-                        children: [
-                          // Karışık: bütün kategoriler. Seçilince tekil
-                          // seçimler temizlenir; bir kategori seçilince
-                          // Karışık kalkar.
-                          _filterChip(
-                            context,
-                            key: const ValueKey('custom-room-cat-mixed'),
-                            label: CategoryNames.localized(
-                              'Tevlihev',
-                              context.isKu,
-                            ),
-                            selected: _mixed,
-                            onTap: () => setState(() {
-                              _mixed = true;
-                              _selectedCategories.clear();
-                            }),
+                child: SahneBottomFade(
+                  key: const ValueKey('custom-room-bottom-fade'),
+                  color: SahneTokens.of(context).s1,
+                  child: SingleChildScrollView(
+                    // Alt boşluk: son satır (oyuncu sayısı/ücret) kaydırınca
+                    // ayracın ve düğmenin tam üstüne rahatça çıkar.
+                    padding: const EdgeInsets.only(bottom: SahneSpace.x4),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Kategori Seçimi
+                        Text(
+                          context.t(K.selectCategory),
+                          style: SahneType.bodyStrong.copyWith(
+                            color: SahneTokens.of(context).tx,
                           ),
-                          for (final cat in widget.availableCategories)
+                        ),
+                        const SizedBox(height: SahneSpace.x2),
+                        _ChoiceGrid(
+                          columns: 3,
+                          children: [
+                            // Karışık: bütün kategoriler. Seçilince tekil
+                            // seçimler temizlenir; bir kategori seçilince
+                            // Karışık kalkar.
                             _filterChip(
                               context,
-                              key: ValueKey('custom-room-cat-$cat'),
-                              label: CategoryNames.localized(cat, context.isKu),
-                              selected: _selectedCategories.contains(cat),
+                              key: const ValueKey('custom-room-cat-mixed'),
+                              label: CategoryNames.tile(
+                                'Tevlihev',
+                                context.isKu,
+                              ),
+                              semanticLabel: CategoryNames.localized(
+                                'Tevlihev',
+                                context.isKu,
+                              ),
+                              selected: _mixed,
                               onTap: () => setState(() {
-                                if (!_selectedCategories.remove(cat)) {
-                                  _selectedCategories.add(cat);
-                                }
-                                // Son kategori kaldırılırsa Karışık'a dön:
-                                // seçimsiz oda kurulamaz.
-                                _mixed = _selectedCategories.isEmpty;
+                                _mixed = true;
+                                _selectedCategories.clear();
                               }),
                             ),
-                        ],
-                      ),
-                      const SizedBox(height: SahneSpace.x4),
-
-                      // Soru Sayısı Seçimi
-                      Text(
-                        context.t(K.questionCountLabel),
-                        style: SahneType.bodyStrong.copyWith(
-                          color: SahneTokens.of(context).tx,
-                        ),
-                      ),
-                      const SizedBox(height: SahneSpace.x2),
-                      _ChoiceGrid(
-                        columns: 3,
-                        children: [
-                          for (final count in GameRoom.allowedQuestionCounts)
-                            _choiceChip(
-                              context,
-                              key: ValueKey('custom-room-count-$count'),
-                              label: '$count ${context.t(K.soru)}',
-                              selected: _selectedQuestionCount == count,
-                              onTap: () => setState(
-                                () => _selectedQuestionCount = count,
+                            for (final cat in widget.availableCategories)
+                              _filterChip(
+                                context,
+                                key: ValueKey('custom-room-cat-$cat'),
+                                label: CategoryNames.tile(cat, context.isKu),
+                                semanticLabel: CategoryNames.localized(
+                                  cat,
+                                  context.isKu,
+                                ),
+                                selected: _selectedCategories.contains(cat),
+                                onTap: () => setState(() {
+                                  if (!_selectedCategories.remove(cat)) {
+                                    _selectedCategories.add(cat);
+                                  }
+                                  // Son kategori kaldırılırsa Karışık'a dön:
+                                  // seçimsiz oda kurulamaz.
+                                  _mixed = _selectedCategories.isEmpty;
+                                }),
                               ),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: SahneSpace.x4),
-
-                      // Soru Başına Süre
-                      Text(
-                        context.t(K.secondsPerQuestion),
-                        style: SahneType.bodyStrong.copyWith(
-                          color: SahneTokens.of(context).tx,
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: SahneSpace.x2),
-                      _ChoiceGrid(
-                        columns: 4,
-                        children: [
-                          for (final seconds in GameRoom.allowedDurations)
-                            _choiceChip(
-                              context,
-                              key: ValueKey('custom-room-duration-$seconds'),
-                              label:
-                                  '$seconds ${context.t(K.secondsShortUnit)}',
-                              selected: _selectedDuration == seconds,
-                              onTap: () =>
-                                  setState(() => _selectedDuration = seconds),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: SahneSpace.x4),
+                        const SizedBox(height: SahneSpace.x4),
 
-                      // Oyuncu sayısı (kapasite). 2 = bugünkü iki kişilik oda;
-                      // daha fazlası kalabalık oda: ev sahibi >= 2 kişiyle
-                      // başlatır, sonuç sıralı gelir.
-                      Text(
-                        context.t(K.roomCapacityLabel),
-                        style: SahneType.bodyStrong.copyWith(
-                          color: SahneTokens.of(context).tx,
-                        ),
-                      ),
-                      const SizedBox(height: SahneSpace.x2),
-                      _ChoiceGrid(
-                        columns: 3,
-                        children: [
-                          for (final capacity in GameRoom.allowedMaxPlayers)
-                            _choiceChip(
-                              context,
-                              key: ValueKey('custom-room-capacity-$capacity'),
-                              label: context.t(K.roomCapacityOption, {
-                                'n': '$capacity',
-                              }),
-                              selected: _selectedMaxPlayers == capacity,
-                              onTap: () => setState(
-                                () => _selectedMaxPlayers = capacity,
-                              ),
-                            ),
-                        ],
-                      ),
-                      if (_selectedMaxPlayers > 2) ...[
-                        const SizedBox(height: SahneSpace.x2),
+                        // Soru Sayısı Seçimi
                         Text(
-                          context.t(K.roomCapacityHint),
-                          key: const ValueKey('custom-room-capacity-hint'),
-                          style: SahneType.caption.copyWith(
-                            color: SahneTokens.of(context).tx2,
+                          context.t(K.questionCountLabel),
+                          style: SahneType.bodyStrong.copyWith(
+                            color: SahneTokens.of(context).tx,
                           ),
                         ),
-                      ],
-                      const SizedBox(height: SahneSpace.x4),
-
-                      // Bahis / Giriş Ücreti
-                      // İki metin de esnek: dar ekranda ve Kurmancî'de etiketler
-                      // uzuyor ve sabit genişlikli `Row` sağdan 192 piksel taşıyordu
-                      // (`home_room_failures_test` yakaladı). `spaceBetween` tek
-                      // başına taşmayı önlemez — çocuklar doğal boyutlarını ister.
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              context.t(K.entryFeeLabel),
-                              style: SahneType.bodyStrong.copyWith(
-                                color: SahneTokens.of(context).tx,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: SahneSpace.x2),
-                          Flexible(
-                            child: Text(
-                              context.t(K.yourBalance, {
-                                'coins': widget.coinBalance.toString(),
-                              }),
-                              textAlign: TextAlign.end,
-                              style: SahneType.caption.copyWith(
-                                color: SahneTokens.of(context).tx2,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: SahneSpace.x2),
-                      _ChoiceGrid(
-                        columns: 2,
-                        children: [
-                          for (final fee in GameRoom.allowedEntryFees)
-                            _choiceChip(
-                              context,
-                              key: ValueKey('custom-room-fee-$fee'),
-                              avatar: fee > 0
-                                  ? const ExcludeSemantics(
-                                      child: SahneGlyph(
-                                        SahneGlyphKind.coin,
-                                        size: 16,
-                                      ),
-                                    )
-                                  : null,
-                              label: fee == 0
-                                  ? context.t(K.freeEntry)
-                                  : '$fee ${context.t(K.coinWord)}',
-                              selected: _selectedEntryFee == fee,
-                              onTap: () =>
-                                  setState(() => _selectedEntryFee = fee),
-                            ),
-                        ],
-                      ),
-                      if (!hasEnoughCoins) ...[
                         const SizedBox(height: SahneSpace.x2),
-                        // Eksik miktar yazılır ("N jeton eksik"); düz "Jetonun
-                        // yetmiyor" ne kadar eksik olduğunu söylemiyordu.
-                        SahneShortfallNote(
-                          key: const ValueKey('custom-room-shortfall'),
-                          missing: coinShortfall(
-                            cost: _selectedEntryFee,
-                            balance: widget.coinBalance,
-                          ),
-                          alert: true,
+                        _ChoiceGrid(
+                          columns: 3,
+                          children: [
+                            for (final count in GameRoom.allowedQuestionCounts)
+                              _choiceChip(
+                                context,
+                                key: ValueKey('custom-room-count-$count'),
+                                label: '$count ${context.t(K.soru)}',
+                                selected: _selectedQuestionCount == count,
+                                onTap: () => setState(
+                                  () => _selectedQuestionCount = count,
+                                ),
+                              ),
+                          ],
                         ),
+                        const SizedBox(height: SahneSpace.x4),
+
+                        // Soru Başına Süre
+                        Text(
+                          context.t(K.secondsPerQuestion),
+                          style: SahneType.bodyStrong.copyWith(
+                            color: SahneTokens.of(context).tx,
+                          ),
+                        ),
+                        const SizedBox(height: SahneSpace.x2),
+                        _ChoiceGrid(
+                          columns: 4,
+                          children: [
+                            for (final seconds in GameRoom.allowedDurations)
+                              _choiceChip(
+                                context,
+                                key: ValueKey('custom-room-duration-$seconds'),
+                                label:
+                                    '$seconds ${context.t(K.secondsShortUnit)}',
+                                selected: _selectedDuration == seconds,
+                                onTap: () =>
+                                    setState(() => _selectedDuration = seconds),
+                              ),
+                          ],
+                        ),
+                        const SizedBox(height: SahneSpace.x4),
+
+                        // Oyuncu sayısı (kapasite). 2 = bugünkü iki kişilik oda;
+                        // daha fazlası kalabalık oda: ev sahibi >= 2 kişiyle
+                        // başlatır, sonuç sıralı gelir.
+                        Text(
+                          context.t(K.roomCapacityLabel),
+                          style: SahneType.bodyStrong.copyWith(
+                            color: SahneTokens.of(context).tx,
+                          ),
+                        ),
+                        const SizedBox(height: SahneSpace.x2),
+                        _ChoiceGrid(
+                          columns: 3,
+                          children: [
+                            for (final capacity in GameRoom.allowedMaxPlayers)
+                              _choiceChip(
+                                context,
+                                key: ValueKey('custom-room-capacity-$capacity'),
+                                label: context.t(K.roomCapacityOption, {
+                                  'n': '$capacity',
+                                }),
+                                selected: _selectedMaxPlayers == capacity,
+                                onTap: () => setState(
+                                  () => _selectedMaxPlayers = capacity,
+                                ),
+                              ),
+                          ],
+                        ),
+                        if (_selectedMaxPlayers > 2) ...[
+                          const SizedBox(height: SahneSpace.x2),
+                          Text(
+                            context.t(K.roomCapacityHint),
+                            key: const ValueKey('custom-room-capacity-hint'),
+                            style: SahneType.caption.copyWith(
+                              color: SahneTokens.of(context).tx2,
+                            ),
+                          ),
+                        ],
+                        const SizedBox(height: SahneSpace.x4),
+
+                        // Bahis / Giriş Ücreti
+                        // İki metin de esnek: dar ekranda ve Kurmancî'de etiketler
+                        // uzuyor ve sabit genişlikli `Row` sağdan 192 piksel taşıyordu
+                        // (`home_room_failures_test` yakaladı). `spaceBetween` tek
+                        // başına taşmayı önlemez — çocuklar doğal boyutlarını ister.
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                context.t(K.entryFeeLabel),
+                                style: SahneType.bodyStrong.copyWith(
+                                  color: SahneTokens.of(context).tx,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: SahneSpace.x2),
+                            Flexible(
+                              child: Text(
+                                context.t(K.yourBalance, {
+                                  'coins': widget.coinBalance.toString(),
+                                }),
+                                textAlign: TextAlign.end,
+                                style: SahneType.caption.copyWith(
+                                  color: SahneTokens.of(context).tx2,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: SahneSpace.x2),
+                        _ChoiceGrid(
+                          columns: 2,
+                          children: [
+                            for (final fee in GameRoom.allowedEntryFees)
+                              _choiceChip(
+                                context,
+                                key: ValueKey('custom-room-fee-$fee'),
+                                avatar: fee > 0
+                                    ? const ExcludeSemantics(
+                                        child: SahneGlyph(
+                                          SahneGlyphKind.coin,
+                                          size: 16,
+                                        ),
+                                      )
+                                    : null,
+                                label: fee == 0
+                                    ? context.t(K.freeEntry)
+                                    : '$fee ${context.t(K.coinWord)}',
+                                selected: _selectedEntryFee == fee,
+                                onTap: () =>
+                                    setState(() => _selectedEntryFee = fee),
+                              ),
+                          ],
+                        ),
+                        if (!hasEnoughCoins) ...[
+                          const SizedBox(height: SahneSpace.x2),
+                          // Eksik miktar yazılır ("N jeton eksik"); düz "Jetonun
+                          // yetmiyor" ne kadar eksik olduğunu söylemiyordu.
+                          SahneShortfallNote(
+                            key: const ValueKey('custom-room-shortfall'),
+                            missing: coinShortfall(
+                              cost: _selectedEntryFee,
+                              balance: widget.coinBalance,
+                            ),
+                            alert: true,
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),
