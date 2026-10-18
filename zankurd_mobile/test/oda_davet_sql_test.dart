@@ -20,6 +20,20 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   final sql = File('supabase/2026-10-18_oda_davet.sql').readAsStringSync();
 
+  // PL/pgSQL `IF` koşulunu ilk THEN'de keser; `if x >= case when … then`
+  // göçü canlıda "syntax error at end of input" ile düşürüyordu ve yerelde
+  // Postgres olmadığı için hiçbir test görmemişti (2026-10-18).
+  test('IF koşulunda CASE yok', () {
+    expect(
+      RegExp(
+        r'\bif\b[^;]*\bcase\s*$',
+        multiLine: true,
+        caseSensitive: false,
+      ).hasMatch(sql),
+      isFalse,
+    );
+  });
+
   String body(String name) {
     final start = RegExp(
       'create or replace function public\\.$name\\(',

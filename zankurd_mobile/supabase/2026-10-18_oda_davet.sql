@@ -74,6 +74,7 @@ declare
   v_friend uuid;
   v_count integer := 0;
   v_active integer;
+  v_cap integer;
   v_recent integer;
   v_name text;
   v_prev timestamptz;
@@ -117,10 +118,14 @@ begin
   from public.room_players rp
   where rp.room_id = p_room_id and rp.left_at is null;
 
-  if v_active >= case
-       when v_room.is_custom and v_room.max_players > 2 then v_room.max_players
-       else 2
-     end then
+  -- Sınır önce ayrı hesaplanır: PL/pgSQL `IF` koşulunu ilk THEN'de
+  -- keser; koşul içindeki `CASE … THEN` göçü sözdizimi hatasıyla
+  -- düşürüyordu (canlıda rollback'li duman testi, 2026-10-18).
+  v_cap := case
+    when v_room.is_custom and v_room.max_players > 2 then v_room.max_players
+    else 2
+  end;
+  if v_active >= v_cap then
     raise exception 'Room is full';
   end if;
 
@@ -246,7 +251,9 @@ begin
     r.code,
     i.inviter_id,
     coalesce(nullif(btrim(left(p.display_name, 40)), ''), 'ZanKurd'),
-    coalesce(c.name, 'Ziman'),
+    -- Karışık/çok kategorili oda (2026-10-18_oda_kod_kategori.sql) etiketi
+    -- aynı yardımcıdan gelir; tek kategoride eski ad aynen döner.
+    public.room_category_label(r.category_ids, c.name),
     (select count(*)::integer from public.room_players rp
        where rp.room_id = r.id and rp.left_at is null),
     case when r.is_custom and r.max_players > 2 then r.max_players else 2 end,

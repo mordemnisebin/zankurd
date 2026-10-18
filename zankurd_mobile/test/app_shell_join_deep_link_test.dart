@@ -250,6 +250,20 @@ void main() {
       expect(JoinDeepLink.parse('/join/ZK-ABCDEF0123'), 'ZK-ABCDEF0123');
     });
 
+    // Web'deki /join.html "Uygulamada aç" düğmesi App Links doğrulaması
+    // tutmadığında uygulamayı özel şemayla açar; yol https bağlantısıyla
+    // aynıdır ve aynı kuralla çözülmelidir (2026-10-18).
+    test('özel şemalı "uygulamada aç" bağlantısı da çözülür', () {
+      expect(
+        JoinDeepLink.parse('com.zankurd.app://zankurd.com/join/482913'),
+        '482913',
+      );
+      expect(
+        JoinDeepLink.parse('com.zankurd.app://evil.example/join/482913'),
+        isNull,
+      );
+    });
+
     test('6 rakamlı oda kodu kabul edilir ve meydan okumayla karışmaz', () {
       expect(
         JoinDeepLink.parse('https://www.zankurd.com/join/482913'),

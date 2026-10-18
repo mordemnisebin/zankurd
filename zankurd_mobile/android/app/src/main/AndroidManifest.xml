@@ -89,6 +89,19 @@
                     android:host="zankurd.com"
                     android:pathPrefix="/join/"/>
             </intent-filter>
+            <!-- Web'deki /join.html "Uygulamada aç" düğmesi intent:// ile bu
+                 şemayı açar: App Links doğrulaması tutmasa (ör. eski kurulum)
+                 bile bağlantı odaya gider. Yol https bağlantısıyla aynı, böylece
+                 JoinDeepLink.parse ikisini tek kurala göre çözer. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:scheme="com.zankurd.app"
+                    android:host="zankurd.com"
+                    android:pathPrefix="/join/"/>
+            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
