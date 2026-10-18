@@ -501,7 +501,7 @@ class SahnePickChip extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: SahneType.captionStrong.copyWith(
-                        color: selected ? Colors.white : t.tx,
+                        color: selected ? SahneTokens.night.tx : t.tx,
                       ),
                     ),
                   ),

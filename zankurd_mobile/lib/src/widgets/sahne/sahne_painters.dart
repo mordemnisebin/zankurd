@@ -327,24 +327,16 @@ class SahneStagePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final box = Offset.zero & size;
-    final base = race
-        ? const LinearGradient(
-            // CSS 155°: aşağı ve biraz sağa.
-            begin: Alignment(-0.47, -1),
-            end: Alignment(0.47, 1),
-            colors: [
-              SahneStageColors.race1,
-              SahneStageColors.race2,
-              SahneStageColors.race3,
-            ],
-            stops: [0, 0.52, 1],
-          )
-        : const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [SahneStageColors.top, SahneStageColors.bottom],
-          );
-    canvas.drawRect(box, Paint()..shader = base.createShader(box));
+    // 2026-10-19 sadeleşme (ikinci tur): büyük koyu kartlarda degrade
+    // yok. Eski doğrusal degrade (yarışta üç duraklı lal, öğrenmede
+    // çivit) koyu temada kartı "ışıklı panel" gibi gösteriyor ve ana
+    // ekrandaki sakin yüzeylerle çelişiyordu; artık düz dolgu (yarış: orta
+    // lal `race2`, öteki: sahne kartı üst tonu). Rol radyali (ince köşe ışığı)
+    // aynen kalır.
+    canvas.drawRect(
+      box,
+      Paint()..color = race ? SahneStageColors.race2 : SahneStageColors.top,
+    );
     final g = glow;
     if (g != null) {
       paintEllipseGlow(
