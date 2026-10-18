@@ -1553,7 +1553,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       hero: SahneResultHero(
         key: const ValueKey('result-score-header'),
         emblem: switch (duelOutcome) {
-          null => SizedBox(height: 44, child: _ScoreStars(earned: starsEarned)),
+          null => SizedBox(height: 28, child: _ScoreStars(earned: starsEarned)),
           _DuelOutcome.win => const SahneResultEmblem.win(),
           _DuelOutcome.draw => const SahneResultEmblem.state(
             icon: AppIcons.scaleBalanced,
@@ -1646,7 +1646,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
 enum _DuelOutcome { win, draw, loss, podium }
 
-/// Kahramanın üç puan yıldızı: 32 · 44 · 32, alta hizalı, 8 aralık.
+/// Kahramanın üç puan yıldızı: 20 · 28 · 20, alta hizalı, 8 aralık.
+///
+/// 2026-10-19 sadeleşme (ikinci tur): 32 · 44 · 32 idi; puan ekranın tek
+/// büyük öğesi olsun diye yıldızlar küçüldü (dekoratif, sayı zaten söylüyor).
 ///
 /// ## Kusur (tarih)
 ///
@@ -1670,7 +1673,7 @@ class _ScoreStars extends StatelessWidget {
           if (i > 0) const SizedBox(width: SahneSpace.x2),
           SahneGlyph(
             SahneGlyphKind.star,
-            size: i == 1 ? 44 : 32,
+            size: i == 1 ? 28 : 20,
             filled: i < earned,
           ),
         ],
