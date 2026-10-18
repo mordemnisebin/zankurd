@@ -17,6 +17,13 @@ void main() {
     'supabase/2026-10-18_oda_kod_kategori.sql',
   ).readAsStringSync();
 
+  // Ajan v2 gövdesini kabuk kaçışıyla `AS \$` yazmıştı; Postgres ters
+  // bölüyü tanımaz, göç canlıda sözdizimi hatasıyla düşerdi. Yerelde
+  // Postgres olmadığı için hiçbir test bunu görmemişti (2026-10-18).
+  test('dolar tırnakları kaçışlı yazılmamış', () {
+    expect(sql.contains(r'\$'), isFalse);
+  });
+
   test('kod 6 rakam; benzersizlik yalnız açık odalar arasında', () {
     expect(sql, contains("lpad(floor(random() * 100000)"));
     expect(sql, contains('rooms_open_upper_code_uidx'));
