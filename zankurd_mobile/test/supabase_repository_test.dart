@@ -581,25 +581,22 @@ void main() {
       expect(room.name, '1vs1');
     });
 
-    test(
-      'tek kategori ESKİ RPC gövdesiyle gider (mağazadaki sunucu)',
-      () async {
-        final httpClient = _RoomSessionHttpClient();
-        final repository = _SignedInRoomSessionRepository(
-          SupabaseClient(
-            'https://example.supabase.co',
-            'sb_publishable_test_key',
-            httpClient: httpClient,
-          ),
-        );
+    test('tek kategori de v2 RPC ile ad listesi olarak gider', () async {
+      final httpClient = _RoomSessionHttpClient();
+      final repository = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
 
-        await repository.createOnlineRoom(category: 'Dîrok');
+      await repository.createOnlineRoom(category: 'Dîrok');
 
-        final body = httpClient.requestBodies.first;
-        expect(body['p_category_name'], 'Dîrok');
-        expect(body.containsKey('p_category_names'), isFalse);
-      },
-    );
+      final body = httpClient.requestBodies.first;
+      expect(body['p_category_names'], ['Dîrok']);
+      expect(body.containsKey('p_category_name'), isFalse);
+    });
 
     test('Karışık boş dizi, çoklu seçim ad listesi olarak gider', () async {
       final mixedClient = _RoomSessionHttpClient();

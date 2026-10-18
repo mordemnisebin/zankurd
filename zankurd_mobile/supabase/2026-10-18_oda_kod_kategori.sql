@@ -16,6 +16,9 @@
 --     parametreli create_online_room AYNEN çalışır (ince sarmalayıcı):
 --     mağazadaki sürümler bozulmaz. İki aşırı yükleme YOK (PostgREST
 --     adlandırılmış çağrıda belirsizlik hatası verirdi); ad farklıdır.
+--     ESKİ RPC eski 'ZK-'+10 onaltılık kodu üretmeye DEVAM EDER (mağaza
+--     sürümleri yalnız onu katılımda kabul eder); yalnız v2 6 rakam üretir.
+--     Gövde create_online_room_impl'dedir (istemciye kapalı).
 --     Kategori etiketi (category_name) için public.room_category_label:
 --     Karışık -> 'Tevlihev', çoklu -> adlar ', ' ile.
 --  3. Sorular zor bulundu: oda ve 1v1 düello soru seçimi eskiden düz
@@ -132,7 +135,7 @@ grant execute on function public.room_category_label(uuid[], text) to authentica
 revoke all on function public.weighted_question_pick(uuid[], uuid[], integer) from public, anon, authenticated;
 grant execute on function public.weighted_question_pick(uuid[], uuid[], integer) to service_role;
 
-CREATE OR REPLACE FUNCTION public.create_online_room_v2(p_category_names text[], p_seconds_per_question integer, p_question_count integer DEFAULT 10, p_entry_fee integer DEFAULT 0, p_max_players integer DEFAULT 2)
+CREATE OR REPLACE FUNCTION public.create_online_room_impl(p_category_names text[], p_seconds_per_question integer, p_question_count integer, p_entry_fee integer, p_max_players integer, p_legacy_code boolean)
  RETURNS json
  LANGUAGE plpgsql
  SECURITY DEFINER
@@ -275,8 +278,16 @@ begin
     v_attempt := v_attempt + 1;
     -- 6 haneli rakam kodu (ilk hane 1-9): sesli söylenir. Benzersizlik
     -- yalnız AÇIK odalar arasındadır (rooms_open_upper_code_uidx).
-    v_room_code := (1 + floor(random() * 9))::integer::text
-      || lpad(floor(random() * 100000)::integer::text, 5, '0');
+    if p_legacy_code then
+      -- Mağazadaki eski istemciler yalnız ZK-+10 onaltılık kodu katılımda
+      -- kabul eder: eski 5 parametreli RPC bunu AYNEN üretmeye devam eder.
+      v_room_code := 'ZK-' || upper(
+        substr(replace(gen_random_uuid()::text, '-', ''), 1, 10)
+      );
+    else
+      v_room_code := (1 + floor(random() * 9))::integer::text
+        || lpad(floor(random() * 100000)::integer::text, 5, '0');
+    end if;
 
     begin
       insert into public.rooms (
@@ -338,6 +349,21 @@ begin
 end;
 $function$;
 
+CREATE OR REPLACE FUNCTION public.create_online_room_v2(p_category_names text[], p_seconds_per_question integer, p_question_count integer DEFAULT 10, p_entry_fee integer DEFAULT 0, p_max_players integer DEFAULT 2)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS \$
+begin
+  -- Yeni istemci: 6 rakamlı kod; NULL/boş dizi = Karışık.
+  return public.create_online_room_impl(
+    p_category_names, p_seconds_per_question, p_question_count,
+    p_entry_fee, p_max_players, false
+  );
+end;
+\$;
+
 CREATE OR REPLACE FUNCTION public.create_online_room(p_category_name text, p_seconds_per_question integer, p_question_count integer DEFAULT 10, p_entry_fee integer DEFAULT 0, p_max_players integer DEFAULT 2)
  RETURNS json
  LANGUAGE plpgsql
@@ -346,16 +372,17 @@ CREATE OR REPLACE FUNCTION public.create_online_room(p_category_name text, p_sec
 AS $function$
 begin
   -- Eski istemci (mağazadaki sürümler) 5 parametreli imzayı çağırır: tek ad
-  -- zorunlu, anlamı değişmedi. Asıl iş create_online_room_v2'dedir.
+  -- zorunlu, anlamı değişmedi. Asıl iş create_online_room_impl'dedir (eski 'ZK-' kod biçimi).
   if nullif(btrim(coalesce(p_category_name, '')), '') is null then
     raise exception 'Category is not available';
   end if;
-  return public.create_online_room_v2(
+  return public.create_online_room_impl(
     array[p_category_name],
     p_seconds_per_question,
     p_question_count,
     p_entry_fee,
-    p_max_players
+    p_max_players,
+    true
   );
 end;
 $function$;
@@ -1866,6 +1893,8 @@ begin
 end;
 $function$;
 
+revoke all on function public.create_online_room_impl(text[], integer, integer, integer, integer, boolean) from public, anon, authenticated;
+grant execute on function public.create_online_room_impl(text[], integer, integer, integer, integer, boolean) to service_role;
 revoke all on function public.create_online_room_v2(text[], integer, integer, integer, integer) from public, anon;
 grant execute on function public.create_online_room_v2(text[], integer, integer, integer, integer) to authenticated, service_role;
 

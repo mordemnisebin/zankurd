@@ -48,27 +48,27 @@ begin
     return;
   end if;
 
-  -- 1) Eski 5 parametreli imza: tek kategori, 6 haneli kod, category_id dolu.
+  -- 1) Eski 5 parametreli imza: tek kategori, ESKİ 'ZK-'+10 hex kod, category_id dolu.
   perform set_config('request.jwt.claims',
     json_build_object('sub', u[1], 'role', 'authenticated')::text, true);
   r := public.create_online_room('Ziman', 20, 10, 0, 2);
   rid := (r->>'room_id')::uuid;
   code := r->>'code';
-  insert into smoke values (1, 'eski imza: kod 6 rakam', code ~ '^[1-9][0-9]{5}$', code);
+  insert into smoke values (1, 'eski imza: kod ZK-+10 hex', code ~ '^ZK-[0-9A-F]{10}$', code);
   insert into smoke select 1, 'eski imza: category_id dolu, category_ids boş',
     (category_id is not null and category_ids is null), null
     from public.rooms where id = rid;
   insert into smoke values (1, 'eski imza: etiket Ziman', r->>'category_name' = 'Ziman', r->>'category_name');
 
-  -- 2) Aynı kodla BİTMİŞ bir oda varken katılım AÇIK odayı çözer
+  -- 2) Eski biçimde: aynı kodla BİTMİŞ bir oda varken katılım AÇIK odayı çözer
   --    (küresel benzersizlik kalktı; biten oda katılımı ele geçirmez).
   insert into public.rooms (code, host_id, status, question_count, max_players, is_custom, ended_reason)
   values (code, u[1], 'finished', 10, 2, true, 'completed');
-  spaced := substr(code, 1, 3) || ' ' || substr(code, 4);
+  spaced := lower(code);
   perform set_config('request.jwt.claims',
     json_build_object('sub', u[2], 'role', 'authenticated')::text, true);
   r := public.join_room_by_code(spaced);
-  insert into smoke values (2, 'boşluklu kodla katılım açık odayı çözer',
+  insert into smoke values (2, 'küçük harfli eski kodla katılım açık odayı çözer',
     (r->>'room_id')::uuid = rid, r->>'room_id');
 
   -- 3) Başlat: kolay ilk soru + zorluk dağılımı.
@@ -94,7 +94,8 @@ begin
   insert into smoke values (4, 'karışık: kod 6 rakam', (r->>'code') ~ '^[1-9][0-9]{5}$', r->>'code');
   perform set_config('request.jwt.claims',
     json_build_object('sub', u[4], 'role', 'authenticated')::text, true);
-  perform public.join_room_by_code(r->>'code');
+  -- 6 rakamlı kod boşluklu yazılsa da çözülür.
+  perform public.join_room_by_code(substr(r->>'code', 1, 3) || ' ' || substr(r->>'code', 4));
   update public.room_players set is_ready = true where room_id = rid;
   perform set_config('request.jwt.claims',
     json_build_object('sub', u[3], 'role', 'authenticated')::text, true);

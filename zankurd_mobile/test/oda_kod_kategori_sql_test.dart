@@ -24,11 +24,16 @@ void main() {
     expect(sql, contains('drop constraint if exists rooms_code_key'));
     // Oda kurma (v2) artık 'ZK-' üretmez; hızlı eşleşme odasının kodunu
     // kimse yazmadığından join_matchmaking bilerek dokunulmadı.
-    final v2 = sql.substring(
+    // Eski 5 parametreli RPC eski 'ZK-' kodunu üretmeye devam eder (mağaza
+    // sürümleri yalnız onu kabul eder); yeni kod yalnız v2 yoluyla gelir.
+    final impl = sql.substring(
+      sql.indexOf('FUNCTION public.create_online_room_impl'),
       sql.indexOf('FUNCTION public.create_online_room_v2'),
-      sql.indexOf('FUNCTION public.join_room_by_code'),
     );
-    expect(v2, isNot(contains("'ZK-'")));
+    expect(impl, contains('if p_legacy_code then'));
+    expect(impl, contains("v_room_code := 'ZK-' || upper("));
+    expect(sql, contains('p_entry_fee, p_max_players, false'));
+    expect(sql, contains('    p_max_players,\n    true\n  );'));
   });
 
   test(
