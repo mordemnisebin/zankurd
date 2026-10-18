@@ -663,8 +663,20 @@ class _PlacementPromptCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    // 2026-10-19 sadeleşme (ikinci tur): "Seviyeni bul" 200 px'lik tam
+    // genişlik düğmeli büyük kartı ekranın ilk yarısını yiyordu ve derse
+    // gelen oyuncu asıl işi (sıradaki ders) aşağıda arıyordu. Artık küçük,
+    // isteğe bağlı bir şerit: başlık + tek satır açıklama, altında iki metin
+    // eylemi ("Teste başla", "Şimdilik geç"). Seviye biliniyorsa ya da
+    // geçildiyse hiç çizilmez (`_placementPrompt`).
     return SahneSurfaceCard(
       key: const ValueKey('learning-placement-prompt'),
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        SahneSpace.x4,
+        SahneSpace.x3,
+        SahneSpace.x2,
+        SahneSpace.x1,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -680,22 +692,23 @@ class _PlacementPromptCard extends StatelessWidget {
             context.t(K.placementCardBody),
             style: SahneType.caption.copyWith(color: t.tx2),
           ),
-          const SizedBox(height: SahneSpace.x3),
-          SahneButton.secondary(
-            buttonKey: const ValueKey('learning-placement-start'),
-            label: context.t(K.placementCardStart),
-            onPressed: onStart,
-            expand: true,
-          ),
           const SizedBox(height: SahneSpace.x1),
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: SahneButton.text(
-              buttonKey: const ValueKey('learning-placement-dismiss'),
-              label: context.t(K.placementSkip),
-              arrow: false,
-              onPressed: onDismiss,
-            ),
+          Wrap(
+            alignment: WrapAlignment.start,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              SahneButton.text(
+                buttonKey: const ValueKey('learning-placement-start'),
+                label: context.t(K.placementCardStart),
+                onPressed: onStart,
+              ),
+              SahneButton.text(
+                buttonKey: const ValueKey('learning-placement-dismiss'),
+                label: context.t(K.placementSkip),
+                arrow: false,
+                onPressed: onDismiss,
+              ),
+            ],
           ),
         ],
       ),
@@ -815,6 +828,12 @@ class _CurrentLessonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final metaText = meta?.trim();
+    final t = SahneTokens.of(context);
+    // 2026-10-19 sadeleşme (ikinci tur): etkin ders gece degradeli sahne
+    // kartı ve 80 px'lik "0/21" elmasıydı; ekranın en ağır lekesi ve elmas
+    // yalnız soru ilerlemesinde kalmalıydı. Artık sakin yüzey kartı: rozet +
+    // kapsül ilerleme, ders adı, bağlam, ince çubuk ve TEK birincil "Başla"
+    // düğmesi aynı kartta.
     return Semantics(
       key: const ValueKey('learning-next-step'),
       button: true,
@@ -825,17 +844,71 @@ class _CurrentLessonCard extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: SahneStageCard.lesson(
-          tag: SahneBadge(
-            key: const ValueKey('lesson-recommended-badge'),
-            label: context.t(K.recommendedForYou),
+        child: SahneSurfaceCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Flexible(
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: SahneBadge(
+                        key: const ValueKey('lesson-recommended-badge'),
+                        label: context.t(K.recommendedForYou),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: SahneSpace.x2),
+                  // Kapsül ilerleme "tamamlanan / toplam ders".
+                  DecoratedBox(
+                    key: const ValueKey('learning-progress-capsule'),
+                    decoration: ShapeDecoration(
+                      color: t.s2,
+                      shape: const StadiumBorder(),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: SahneSpace.x3,
+                        vertical: SahneSpace.x1,
+                      ),
+                      child: Text(
+                        '$done/$total',
+                        style: SahneType.captionStrong.copyWith(
+                          color: t.tx2,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: SahneSpace.x2),
+              Semantics(
+                header: true,
+                child: Text(
+                  title,
+                  style: SahneType.headline.copyWith(color: t.tx),
+                ),
+              ),
+              if (metaText != null && metaText.isNotEmpty) ...[
+                const SizedBox(height: SahneSpace.x1),
+                Text(metaText, style: SahneType.caption.copyWith(color: t.tx2)),
+              ],
+              const SizedBox(height: SahneSpace.x3),
+              SahneProgressBar(
+                value: total == 0 ? 0 : (done / total).clamp(0.0, 1.0),
+                height: 4,
+                semanticLabel: title,
+              ),
+              const SizedBox(height: SahneSpace.x4),
+              SahneButton.primary(
+                label: context.t(K.start),
+                onPressed: onTap,
+                expand: true,
+              ),
+            ],
           ),
-          title: title,
-          meta: metaText == null || metaText.isEmpty ? null : metaText,
-          done: done,
-          total: total,
-          actionLabel: context.t(K.start),
-          onAction: onTap,
         ),
       ),
     );

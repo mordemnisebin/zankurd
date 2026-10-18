@@ -417,11 +417,12 @@ void main() {
     expect(find.byType(LessonDetailScreen), findsOneWidget);
   });
 
-  // 2026-09-29 Şahnê: etkin ders artık turuncu dolu bir satır değil, gece
-  // sahne kartıdır (`SahneStageCard.lesson`); Agir (turuncu) yalnız kartın
-  // içindeki TEK birincil düğmededir ve üstündeki metin koyu `onAct`tır.
-  // Ekranda başka Agir dolgu yoktur.
-  testWidgets('önerilen ders sahne kartında tek birincil Agir düğme taşır', (
+  // 2026-10-19 sadeleşme (ikinci tur): etkin ders gece sahne kartı
+  // (`SahneStageCard.lesson`) değil sakin yüzey kartıdır (`SahneSurfaceCard`:
+  // rozet + kapsül ilerleme + ince çubuk + tek birincil düğme). Agir
+  // (turuncu) yine yalnız kartın içindeki TEK birincil düğmededir ve
+  // üstündeki metin koyu `onAct`tır; ekranda başka Agir dolgu yoktur.
+  testWidgets('önerilen ders yüzey kartında tek birincil Agir düğme taşır', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -431,14 +432,26 @@ void main() {
 
     final nextStep = find.byKey(const ValueKey('learning-next-step'));
     expect(
+      find.descendant(of: nextStep, matching: find.byType(SahneSurfaceCard)),
+      findsOneWidget,
+    );
+    expect(
       find.descendant(of: nextStep, matching: find.byType(SahneStageCard)),
+      findsNothing,
+    );
+    expect(
+      find.descendant(of: nextStep, matching: find.byType(SahneLessonDiamond)),
+      findsNothing,
+      reason: 'elmas yalnız soru ilerlemesi; ders sayacı kapsül',
+    );
+    expect(
+      find.byKey(const ValueKey('learning-progress-capsule')),
       findsOneWidget,
     );
     final title = tester.widget<Text>(
       find.descendant(of: nextStep, matching: find.text('Alfabe')),
     );
-    // Sahne kartı gündüz temasında da gece çizilir.
-    expect(title.style?.color, SahneTokens.night.tx);
+    expect(title.style?.color, SahneTokens.of(tester.element(nextStep)).tx);
 
     final primary = find.descendant(
       of: nextStep,
@@ -448,11 +461,11 @@ void main() {
     final fill = tester.widget<Material>(
       find.descendant(of: primary, matching: find.byType(Material)).first,
     );
-    expect(fill.color, SahneTokens.night.act);
+    expect(fill.color, SahneTokens.of(tester.element(nextStep)).act);
     final label = tester.widget<RichText>(
       find.descendant(of: primary, matching: find.byType(RichText)).first,
     );
-    expect(label.text.style?.color, SahneTokens.night.onAct);
+    expect(label.text.style?.color, SahneTokens.of(tester.element(nextStep)).onAct);
 
     // Tek birincil: yoldaki kartın dışında Agir dolgulu düğme yok.
     final agirButtons = tester
