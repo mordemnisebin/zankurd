@@ -147,7 +147,10 @@ void main() {
       find.byKey(const ValueKey('play-hub-async-duel-inbox')),
       findsOneWidget,
     );
-    expect(find.text('Düellolarım'), findsOneWidget);
+    // 2026-10-19 sadeleşme (ikinci tur): gösterecek düellosu olmayan
+    // kutu hiç çizilmez; "Düellolarım" başlığı yalnız satır varken gelir
+    // (anahtar yerinde kalır, bkz. `AsyncDuelInboxSection`).
+    expect(find.text('Düellolarım'), findsNothing);
   });
 
   testWidgets(

@@ -1,3 +1,9 @@
+// 2026-10-19 sadeleşme (ikinci tur): hızlı düello kartı gece sahne
+// kartından sakin yüzey kartına (`SahneSurfaceCard`) döndü; "Arkadaşlarınla"
+// bölüm başlığı, "Etkinlikler" başlığı ve oda eylemlerinin açıklama satırı
+// kalktı (iki düğme kendini anlatıyor; Yarış sekmesi başlıksız, kısa
+// liste). Bekçiler yeni sözleşmeyi sorar: kartın yarış kimliği üst etiket
+// metnindedir, tek Agir düğme yine "Rakip bul".
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-09-29 doğallık (K5, K7): düello kartında VS amblemi yok (yerine
 // "10 soru · ~2 dakika"); "Oda kur" ve "Kodla katıl" liste grubu değil yan
@@ -41,10 +47,14 @@ void main() {
     await tester.pumpAndSettle();
 
     final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
-    final card = tester.widget<SahneStageCard>(
-      find.descendant(of: hero, matching: find.byType(SahneStageCard)),
+    expect(
+      find.descendant(of: hero, matching: find.byType(SahneSurfaceCard)),
+      findsOneWidget,
     );
-    expect(card.role, SahneRole.race);
+    expect(
+      find.descendant(of: hero, matching: find.byType(SahneStageCard)),
+      findsNothing,
+    );
     expect(
       find.descendant(of: hero, matching: find.byType(SahneVsEmblem)),
       findsNothing,
@@ -131,15 +141,9 @@ void main() {
     expect(find.text('Kodla katıl'), findsOneWidget);
     // 2026-09-29 Şahnê: bölümler tek bölüm başlığıyla (`SahneSectionHeader`)
     // açılır; başlık altı açıklama satırı yok (maket).
-    expect(find.text('Arkadaşlarınla'), findsOneWidget);
-    expect(find.text('Her gün'), findsOneWidget);
-    // 2026-09-30: `kAsyncDuelEnabled` açıkken "Düellolarım" gelen kutusu
-    // kendi bölüm başlığını çizer (üçüncü başlık); bayrak kapalıyken yalnız
-    // iki başlık vardır.
-    expect(
-      find.byType(SahneSectionHeader),
-      findsNWidgets(kAsyncDuelEnabled ? 3 : 2),
-    );
+    expect(find.text('Arkadaşlarınla'), findsNothing);
+    // Bölüm başlığı yok: boş "Düellolarım" kutusu da çizilmez.
+    expect(find.byType(SahneSectionHeader), findsNothing);
     expect(find.byKey(const ValueKey('play-hub-quick-duel')), findsOneWidget);
     expect(find.byKey(const ValueKey('play-hub-create-room')), findsOneWidget);
     expect(find.byKey(const ValueKey('play-hub-join-room')), findsOneWidget);
@@ -207,7 +211,7 @@ void main() {
       find.ancestor(of: createFinder, matching: find.byType(SahneListGroup)),
       findsNothing,
     );
-    expect(find.text('Arkadaşlarını kodla çağır'), findsOneWidget);
+    expect(find.text('Arkadaşlarını kodla çağır'), findsNothing);
   });
 
   testWidgets('%200 metinde oda eylemleri güvenli biçimde alt alta döner', (

@@ -434,3 +434,83 @@ class SahneStatusBadge extends StatelessWidget {
     return Semantics(label: label, excludeSemantics: true, child: body);
   }
 }
+
+/// Seçim çipi — bir gruptan seçme (oda kurma: konu, soru sayısı, süre,
+/// oyuncu, ücret). Seçili = DOLU renk + beyaz metin; seçilmemiş = saydam
+/// zemin + ince çerçeve.
+///
+/// 2026-10-19 sadeleşme (ikinci tur): Material `ChoiceChip`/`FilterChip`
+/// seçili ve seçilmemiş hâli yalnız ton farkıyla ayırıyor, doğal genişlikte
+/// tırtıklı satırlar çiziyordu. Bu bileşen bulunduğu hücreyi doldurur
+/// (çağıran eşit sütunlu ızgara kurar), en az 48 yüksekliktedir, metin
+/// ortalanır ve sığmazsa iki satıra sarar. Ekran okuyucu seçili durumu okur.
+class SahnePickChip extends StatelessWidget {
+  const SahnePickChip({
+    super.key,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+    this.leading,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback? onTap;
+
+  /// Metnin önündeki küçük glif (ör. jeton).
+  final Widget? leading;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final shape = SahneShape.withSide(
+      SahneShape.m,
+      selected ? t.race : t.tx3,
+      width: 1,
+    );
+    return Semantics(
+      container: true,
+      button: true,
+      selected: selected,
+      label: label,
+      onTap: onTap,
+      excludeSemantics: true,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: sahneTapTarget),
+        child: SahneTappable(
+          shape: shape,
+          color: selected ? t.race : Colors.transparent,
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.x2,
+              vertical: SahneSpace.x2,
+            ),
+            child: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (leading != null) ...[
+                    leading!,
+                    const SizedBox(width: SahneSpace.x1),
+                  ],
+                  Flexible(
+                    child: Text(
+                      label,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: SahneType.captionStrong.copyWith(
+                        color: selected ? SahneTokens.night.tx : t.tx,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -581,7 +581,10 @@ class AppTheme {
   }
 
   /// Yalnız gerçek birincil eylemler için tema uyumlu CTA rengi.
-  static Color primaryCtaColor(BuildContext context) => brand;
+  /// Birincil eylem dolgusu: temaya göre Agir (gecede bir ton sönük,
+  /// bkz. `SahneTokens.night.act`).
+  static Color primaryCtaColor(BuildContext context) =>
+      SahneTokens.of(context).act;
 
   // Private helpers for theme checks
   static bool _isLight(BuildContext context) =>

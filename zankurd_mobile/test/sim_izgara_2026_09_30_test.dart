@@ -1,3 +1,5 @@
+// 2026-10-19 sadeleşme (ikinci tur): S9 sonuç sayımları artık tek kartta;
+// bekçi tek kartı ve bölünmeyen sözleri sorar.
 // 2026-10-19 SADELEŞME (bu başlık güncellendi): L5 + S10 grubu yeni konu
 // karosuna göre yeniden yazıldı. Karo yatay ve iki sütunludur (yalnız
 // geçerli dilde ad); soru sayısı ve boş çubuk kalktı. "Sütun sayısı düşer"
@@ -295,21 +297,11 @@ void main() {
             of: find.byType(ResultStatTiles),
             matching: find.byType(SahneSurfaceCard),
           );
-          expect(cards, findsNWidgets(3));
-          final rows = <int, Set<double>>{};
-          for (var i = 0; i < 3; i++) {
-            final top = tester.getTopLeft(cards.at(i)).dy.round();
-            rows
-                .putIfAbsent(top, () => {})
-                .add(tester.getSize(cards.at(i)).height);
-          }
-          for (final entry in rows.entries) {
-            expect(
-              entry.value.length,
-              1,
-              reason: 'satır ${entry.key}: boylar ${entry.value}',
-            );
-          }
+          // 2026-10-19 sadeleşme (ikinci tur): sayımlar üç ayrı karo değil
+          // TEK kart; satırlardaki sütunlar `IntrinsicHeight` ile eşit
+          // yükseklikte kalır. Bekçi artık "tek kart, taşma yok, sözler
+          // bölünmüyor"u ölçer.
+          expect(cards, findsOneWidget);
           _expectNoMidWordBreaks(find.byType(ResultStatTiles), 'karolar');
         });
       }

@@ -338,7 +338,7 @@ Widget _resultScreen() {
 /// görür. Arkadaşları Diyar ve Berfin, isteği bekleyen Rojîn. Sıralamanın
 /// başı Rojda, Baran, Dilan.
 const _tourPlayerTag = '4F7K';
-const _tourRoomCode = 'ZK-7A41C29E0B';
+const _tourRoomCode = '482913';
 
 /// Oda yarışının puanı: `68_result` karesi ve sıralamadaki kendi satır.
 const _tourRaceScore = 240;

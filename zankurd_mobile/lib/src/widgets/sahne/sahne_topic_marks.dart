@@ -355,13 +355,31 @@ class SahneTopicMarkBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 2026-10-19 sadeleşme (ikinci tur): koyu temada konu işareti, kategori
+    // renginin kısık koyu zemini yerine kartın üstüne %22 şeffaf kategori
+    // tonu olarak çizilir; koyu kart üstünde çamurlaşmaz, kimlik renkte
+    // kalır. Gündüzde değişmez.
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    final shown = !dark
+        ? tone
+        : () {
+            final base = Color.alphaBlend(
+              tone.detail.withValues(alpha: 0.22),
+              SahneTokens.of(context).s1,
+            );
+            return SahneCategoryTone(
+              ground: base,
+              deep: base,
+              detail: tone.detail,
+            );
+          }();
     return ExcludeSemantics(
       child: SizedBox.square(
         dimension: size,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(size * 0.25),
           child: CustomPaint(
-            painter: SahneCategoryGlyphPainter(mark: mark, tone: tone),
+            painter: SahneCategoryGlyphPainter(mark: mark, tone: shown),
           ),
         ),
       ),

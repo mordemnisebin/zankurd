@@ -61,7 +61,9 @@ void main() {
     );
     expect(icon, findsOneWidget);
     final iconWidget = tester.widget<Icon>(icon);
-    expect(iconWidget.size, 32);
+    // 2026-10-19 sadeleşme (ikinci tur): boş durum küçük tek satırlık şerit,
+    // ikon 32 yerine 20 ve eylem metin bağlantısı (kart 190 px'ti).
+    expect(iconWidget.size, 20);
     expect(iconWidget.color, SahneTokens.of(tester.element(icon)).tx3);
     expect(
       find.ancestor(of: icon, matching: find.byType(ExcludeSemantics)),

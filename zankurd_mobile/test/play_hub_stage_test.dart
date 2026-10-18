@@ -13,6 +13,14 @@
 /// kartının alt satırı hiçbir yerde `find.text` ile aranmıyordu; kontrast
 /// hiçbir yerde ölçülmüyordu.
 ///
+/// ## 2026-10-19 sadeleşme (ikinci tur):
+///
+/// Düello kartı sahne kartı (Boyax degrade) değil sakin yüzey kartı
+/// (`SahneSurfaceCard`); yarış kimliği üst etiketin rengindedir. Oda
+/// eylemlerinin açıklama satırı ("Arkadaşlarını kodla çağır") kalktı: iki
+/// düğme ("Oda kur", "Kodla katıl") kendini anlatıyor. Bekçiler artık
+/// bunların YOKLUĞUNU sabitler.
+///
 /// ## 2026-09-29 Şahnê:
 ///
 /// 2026-09-27'deki yeşil degrade + ışık hüzmesi/konfeti sahnesi Şahnê'ye
@@ -84,10 +92,11 @@ void main() {
 
           final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
           expect(hero, findsOneWidget, reason: why);
-          final card = tester.widget<SahneStageCard>(
-            find.descendant(of: hero, matching: find.byType(SahneStageCard)),
+          expect(
+            find.descendant(of: hero, matching: find.byType(SahneSurfaceCard)),
+            findsOneWidget,
+            reason: why,
           );
-          expect(card.role, SahneRole.race, reason: why);
           expect(
             find.descendant(of: hero, matching: find.byType(SahneVsEmblem)),
             findsNothing,
@@ -182,7 +191,7 @@ void main() {
       final note = isKu
           ? 'Hevalên xwe bi kodê vexwîne'
           : 'Arkadaşlarını kodla çağır';
-      expect(find.text(note), findsOneWidget, reason: 'ku=$isKu');
+      expect(find.text(note), findsNothing, reason: 'ku=$isKu');
     }
 
     // 2026-09-30 simülatör: kilitliyken açıklama satırları normal kalır;
@@ -195,7 +204,7 @@ void main() {
         find.text(
           isKu ? 'Hevalên xwe bi kodê vexwîne' : 'Arkadaşlarını kodla çağır',
         ),
-        findsOneWidget,
+        findsNothing,
       );
       expect(
         find.text(isKu ? 'Pêşkêşkar negihîştbar e' : 'Sunucuya ulaşılamadı'),

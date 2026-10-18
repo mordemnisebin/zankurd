@@ -430,6 +430,12 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         ),
       ],
       children: [
+        if (!locked)
+          RoomInviteCard(
+            repository: widget.repository,
+            refreshSignal: widget.refreshSignal,
+            topGap: false,
+          ),
         _QuickDuelHero(
           onLockedTap: locked ? _notifyLocked : null,
           onTap: locked
@@ -502,27 +508,10 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 ),
             ],
           ),
-          if (!locked) ...[
-            const SizedBox(height: SahneSpace.x2),
-            AsyncDuelInboxSection(
-              repository: widget.repository,
-              refreshSignal: _asyncDuelInboxSignal,
-            ),
-          ],
         ],
-        if (!locked)
-          RoomInviteCard(
-            repository: widget.repository,
-            refreshSignal: widget.refreshSignal,
-            topGap: false,
-          ),
-        SahneSectionHeader(title: context.t(K.withFriends)),
-        _RoomActions(
-          note: context.t(K.createRoomSub),
-          createRoom: createRoom,
-          joinRoom: joinRoom,
-        ),
-        SahneSectionHeader(title: context.t(K.events)),
+        const SizedBox(height: SahneSpace.cardGap),
+        _RoomActions(createRoom: createRoom, joinRoom: joinRoom),
+        const SizedBox(height: SahneSpace.cardGap),
         SahneListGroup(
           children: [
             dailyContest,
@@ -581,6 +570,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             ],
           ],
         ),
+        if (widget.asyncDuelEnabled && !locked)
+          AsyncDuelInboxSection(
+            repository: widget.repository,
+            refreshSignal: _asyncDuelInboxSignal,
+          ),
         // Mağaza satırı buradan kaldırıldı: aynı ekrana Yarış
         // sekmesinden, profilden ve kendi rotasından olmak üzere üç
         // ayrı giriş vardı ve "burası neresi?" hissi yaratıyordu
@@ -595,24 +589,16 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 /// "Kodla katıl" Kurmancîde ("Bi kodê têkeve") yarım genişliğe iki
 /// satırdan fazla düşmesin diye eşik yazı ölçeğine de bakar.
 class _RoomActions extends StatelessWidget {
-  const _RoomActions({
-    required this.note,
-    required this.createRoom,
-    required this.joinRoom,
-  });
+  const _RoomActions({required this.createRoom, required this.joinRoom});
 
-  final String note;
   final Widget createRoom;
   final Widget joinRoom;
 
   @override
   Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(note, style: SahneType.caption.copyWith(color: t.tx2)),
-        const SizedBox(height: SahneSpace.x3),
         LayoutBuilder(
           builder: (context, constraints) {
             final largeText = MediaQuery.textScalerOf(context).scale(16) > 20;
@@ -659,7 +645,14 @@ class _RowSpinner extends StatelessWidget {
   }
 }
 
-/// Ekranın tek birincil eylemi — bir YARIŞMA SAHNESİ.
+/// Ekranın tek birincil eylemi — sakin bir yüzey kartı.
+///
+/// 2026-10-19 sadeleşme (ikinci tur): kart Boyax sahne degradeli gece
+/// kartıydı; ana ekranın "Günün dersi" kartı sadeleşince Yarış sekmesinin
+/// bu kartı ekranın en doygun, en büyük lekesi kalmıştı. Artık gündüz
+/// beyaz / gece Perde yüzey kartı; kimliği yarış tonundaki üst etiket
+/// taşır, turuncu yalnız "Rakip bul". Anahtarlar ve ekran okuyucu düğümü
+/// değişmedi.
 ///
 /// 2026-09-29 Şahnê: düello sahne kartı (Boyax sahne degradesi, gündüzde de
 /// gece). Üstte "Hızlı düello" etiketi, manşet ve bilgi satırı; altında tam
@@ -708,8 +701,7 @@ class _QuickDuelHero extends StatelessWidget {
       excludeSemantics: true,
       label: '${context.t(K.quickDuel)}. ${context.t(K.findOpponent)}',
       onTap: onTap,
-      child: SahneStageCard(
-        role: SahneRole.race,
+      child: SahneSurfaceCard(
         child: Builder(
           builder: (context) {
             final t = SahneTokens.of(context);
@@ -718,9 +710,7 @@ class _QuickDuelHero extends StatelessWidget {
               children: [
                 Text(
                   context.t(K.quickDuel),
-                  style: SahneType.captionStrong.copyWith(
-                    color: SahneStageColors.raceSoft,
-                  ),
+                  style: SahneType.captionStrong.copyWith(color: t.raceTx),
                 ),
                 const SizedBox(height: SahneSpace.x1),
                 Text(title, style: SahneType.headline.copyWith(color: t.tx)),
@@ -728,9 +718,7 @@ class _QuickDuelHero extends StatelessWidget {
                 Text(
                   meta,
                   key: const ValueKey('play-hub-quick-duel-meta'),
-                  style: SahneType.caption.copyWith(
-                    color: SahneStageColors.raceSoft,
-                  ),
+                  style: SahneType.caption.copyWith(color: t.tx2),
                 ),
                 const SizedBox(height: SahneSpace.x4),
                 KeyedSubtree(
@@ -827,13 +815,13 @@ class _CustomRoomConfig {
   final int maxPlayers;
 }
 
-/// Sayısal seçim grupları (soru sayısı, süre, oyuncu sayısı, ücret) için
-/// sütunlu çip ızgarası: `Wrap`te Kurmancî ya da büyük yazıda tek bir çip
-/// kendi satırına düşüyor ve gruplar arasında satır boşlukları tutarsız
-/// görünüyordu. Hücre genişliği yazı ölçeğiyle büyür; sığmayınca sütun
-/// sayısı düşer (en az 1). Çip hücrede başa yaslanır, doğal boyunda kalır:
-/// hepsi aynı `ChoiceChip`, seçili görünüm değişmez (çipi hücreye germek
-/// onay işaretiyle birlikte etiketi kesiyordu; sığmayan çip küçülür).
+/// Eşit sütunlu seçim ızgarası (konu, soru sayısı, süre, oyuncu, ücret).
+///
+/// 2026-10-19 sadeleşme (ikinci tur): seçenekler `Wrap` içinde doğal
+/// genişlikte dizildiği için satırlar tırtıklı, seçili/seçilmemiş çipler
+/// birbirine benziyordu. Artık her hücre eşit genişlikte ve çip hücreyi
+/// doldurur; seçili çip DOLU renk, seçilmemiş çip yalnız çerçevedir.
+/// Sığmayınca (dar ekran, büyük yazı) sütun sayısı düşer (en az 1).
 class _ChoiceGrid extends StatelessWidget {
   const _ChoiceGrid({required this.columns, required this.children});
 
@@ -845,7 +833,7 @@ class _ChoiceGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         const gap = SahneSpace.x2;
-        final minCell = MediaQuery.textScalerOf(context).scale(88);
+        final minCell = MediaQuery.textScalerOf(context).scale(72);
         var cols = columns;
         double cell(int c) => (constraints.maxWidth - gap * (c - 1)) / c;
         while (cols > 1 && cell(cols) < minCell) {
@@ -856,23 +844,36 @@ class _ChoiceGrid extends StatelessWidget {
           spacing: gap,
           runSpacing: gap,
           children: [
-            for (final child in children)
-              SizedBox(
-                width: width,
-                // `scaleDown`: onay işaretiyle genişleyen seçili çip hücreye
-                // sığmazsa küçülür, kesilmez.
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: AlignmentDirectional.centerStart,
-                  child: child,
-                ),
-              ),
+            for (final child in children) SizedBox(width: width, child: child),
           ],
         );
       },
     );
   }
 }
+
+Widget _choiceChip(
+  BuildContext context, {
+  required Key key,
+  required String label,
+  required bool selected,
+  required VoidCallback onTap,
+  Widget? avatar,
+}) => SahnePickChip(
+  key: key,
+  label: label,
+  selected: selected,
+  onTap: onTap,
+  leading: avatar,
+);
+
+Widget _filterChip(
+  BuildContext context, {
+  required Key key,
+  required String label,
+  required bool selected,
+  required VoidCallback onTap,
+}) => SahnePickChip(key: key, label: label, selected: selected, onTap: onTap);
 
 class _CustomRoomBottomSheet extends StatefulWidget {
   const _CustomRoomBottomSheet({
@@ -989,32 +990,32 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         ),
                       ),
                       const SizedBox(height: SahneSpace.x2),
-                      Wrap(
-                        spacing: SahneSpace.x2,
-                        runSpacing: SahneSpace.x2,
+                      _ChoiceGrid(
+                        columns: 3,
                         children: [
                           // Karışık: bütün kategoriler. Seçilince tekil
                           // seçimler temizlenir; bir kategori seçilince
                           // Karışık kalkar.
-                          FilterChip(
+                          _filterChip(
+                            context,
                             key: const ValueKey('custom-room-cat-mixed'),
-                            label: Text(
-                              CategoryNames.localized('Tevlihev', context.isKu),
+                            label: CategoryNames.localized(
+                              'Tevlihev',
+                              context.isKu,
                             ),
                             selected: _mixed,
-                            onSelected: (_) => setState(() {
+                            onTap: () => setState(() {
                               _mixed = true;
                               _selectedCategories.clear();
                             }),
                           ),
                           for (final cat in widget.availableCategories)
-                            FilterChip(
+                            _filterChip(
+                              context,
                               key: ValueKey('custom-room-cat-$cat'),
-                              label: Text(
-                                CategoryNames.localized(cat, context.isKu),
-                              ),
+                              label: CategoryNames.localized(cat, context.isKu),
                               selected: _selectedCategories.contains(cat),
-                              onSelected: (_) => setState(() {
+                              onTap: () => setState(() {
                                 if (!_selectedCategories.remove(cat)) {
                                   _selectedCategories.add(cat);
                                 }
@@ -1039,11 +1040,12 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         columns: 3,
                         children: [
                           for (final count in GameRoom.allowedQuestionCounts)
-                            ChoiceChip(
+                            _choiceChip(
+                              context,
                               key: ValueKey('custom-room-count-$count'),
-                              label: Text('$count ${context.t(K.soru)}'),
+                              label: '$count ${context.t(K.soru)}',
                               selected: _selectedQuestionCount == count,
-                              onSelected: (_) => setState(
+                              onTap: () => setState(
                                 () => _selectedQuestionCount = count,
                               ),
                             ),
@@ -1060,16 +1062,16 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                       ),
                       const SizedBox(height: SahneSpace.x2),
                       _ChoiceGrid(
-                        columns: 2,
+                        columns: 4,
                         children: [
                           for (final seconds in GameRoom.allowedDurations)
-                            ChoiceChip(
+                            _choiceChip(
+                              context,
                               key: ValueKey('custom-room-duration-$seconds'),
-                              label: Text(
-                                '$seconds ${context.t(K.secondsShortUnit)}',
-                              ),
+                              label:
+                                  '$seconds ${context.t(K.secondsShortUnit)}',
                               selected: _selectedDuration == seconds,
-                              onSelected: (_) =>
+                              onTap: () =>
                                   setState(() => _selectedDuration = seconds),
                             ),
                         ],
@@ -1090,15 +1092,14 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         columns: 3,
                         children: [
                           for (final capacity in GameRoom.allowedMaxPlayers)
-                            ChoiceChip(
+                            _choiceChip(
+                              context,
                               key: ValueKey('custom-room-capacity-$capacity'),
-                              label: Text(
-                                context.t(K.roomCapacityOption, {
-                                  'n': '$capacity',
-                                }),
-                              ),
+                              label: context.t(K.roomCapacityOption, {
+                                'n': '$capacity',
+                              }),
                               selected: _selectedMaxPlayers == capacity,
-                              onSelected: (_) => setState(
+                              onTap: () => setState(
                                 () => _selectedMaxPlayers = capacity,
                               ),
                             ),
@@ -1152,7 +1153,8 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         columns: 2,
                         children: [
                           for (final fee in GameRoom.allowedEntryFees)
-                            ChoiceChip(
+                            _choiceChip(
+                              context,
                               key: ValueKey('custom-room-fee-$fee'),
                               avatar: fee > 0
                                   ? const ExcludeSemantics(
@@ -1162,13 +1164,11 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                       ),
                                     )
                                   : null,
-                              label: Text(
-                                fee == 0
-                                    ? context.t(K.freeEntry)
-                                    : '$fee ${context.t(K.coinWord)}',
-                              ),
+                              label: fee == 0
+                                  ? context.t(K.freeEntry)
+                                  : '$fee ${context.t(K.coinWord)}',
                               selected: _selectedEntryFee == fee,
-                              onSelected: (_) =>
+                              onTap: () =>
                                   setState(() => _selectedEntryFee = fee),
                             ),
                         ],
@@ -1186,44 +1186,46 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                           alert: true,
                         ),
                       ],
-                      const SizedBox(height: SahneSpace.x6),
-
-                      // Ücrete yetilmiyorsa "Oda aç" pasif bırakılmaz: yerine jeton
-                      // kazanma yolu gelir. Ücretsiz seçenek yukarıda her zaman açık.
-                      // Sayfanın düğmesi `FilledButton` kalır: ekranın tek `SahneButton.
-                      // primary`si hızlı düellodur (bkz. `brand_accent_guard_test`).
-                      SizedBox(
-                        width: double.infinity,
-                        child: hasEnoughCoins
-                            ? FilledButton(
-                                key: const ValueKey('custom-room-open'),
-                                onPressed: () {
-                                  Navigator.of(context).pop(
-                                    _CustomRoomConfig(
-                                      category: _mixed
-                                          ? 'Tevlihev'
-                                          : _selectedCategories.join(', '),
-                                      duration: _selectedDuration,
-                                      questionCount: _selectedQuestionCount,
-                                      entryFee: _selectedEntryFee,
-                                      maxPlayers: _selectedMaxPlayers,
-                                    ),
-                                  );
-                                },
-                                child: Text(context.t(K.openRoom)),
-                              )
-                            : FilledButton.icon(
-                                key: const ValueKey('custom-room-earn-coins'),
-                                onPressed: () => Navigator.of(
-                                  context,
-                                ).pop(const _EarnCoinsRequest()),
-                                icon: const Icon(AppIcons.dice),
-                                label: Text(context.t(K.earnCoins)),
-                              ),
-                      ),
                     ],
                   ),
                 ),
+              ),
+              const SizedBox(height: SahneSpace.x3),
+
+              // 2026-10-19: düğme kaydırma alanının DIŞINDA, sayfanın altında SABİT;
+              // uzun seçim listesinde "Oda kur" hiç kaybolmaz.
+              // Ücrete yetilmiyorsa "Oda aç" pasif bırakılmaz: yerine jeton
+              // kazanma yolu gelir. Ücretsiz seçenek yukarıda her zaman açık.
+              // Sayfanın düğmesi `FilledButton` kalır: ekranın tek `SahneButton.
+              // primary`si hızlı düellodur (bkz. `brand_accent_guard_test`).
+              SizedBox(
+                width: double.infinity,
+                child: hasEnoughCoins
+                    ? FilledButton(
+                        key: const ValueKey('custom-room-open'),
+                        onPressed: () {
+                          Navigator.of(context).pop(
+                            _CustomRoomConfig(
+                              category: _mixed
+                                  ? 'Tevlihev'
+                                  : _selectedCategories.join(', '),
+                              duration: _selectedDuration,
+                              questionCount: _selectedQuestionCount,
+                              entryFee: _selectedEntryFee,
+                              maxPlayers: _selectedMaxPlayers,
+                            ),
+                          );
+                        },
+                        child: Text(context.t(K.openRoom)),
+                      )
+                    : FilledButton.icon(
+                        key: const ValueKey('custom-room-earn-coins'),
+                        onPressed: () => Navigator.of(
+                          context,
+                        ).pop(const _EarnCoinsRequest()),
+                        icon: const Icon(AppIcons.dice),
+                        label: Text(context.t(K.earnCoins)),
+                      ),
               ),
             ],
           ),

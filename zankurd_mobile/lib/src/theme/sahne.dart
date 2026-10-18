@@ -95,7 +95,7 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Satır ve bölüm ayırıcı.
   final Color line;
 
-  /// Gündüz yüzeylerinin 1 px kenarı; gecede saydam (katman tonla ayrılır).
+  /// Yüzeylerin 1 px kenarı: gündüz açık gri-mavi, gece ince saydam çizgi.
   final Color edge;
 
   /// Agir — birincil eylem dolgusu.
@@ -171,8 +171,14 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     tx2: Color(0xFFBCC3E4),
     tx3: Color(0xFF959DC9),
     line: Color(0x24BCC3E4),
-    edge: Color(0x00000000),
-    act: Color(0xFFFF8A3D),
+    // 2026-10-19 sadeleşme (ikinci tur): gecede kenar artık görünür (≈ %18
+    // ikincil metin); katmanlar yalnız tonla ayrılınca koyu kartlar zemine
+    // karışıyordu. İnce ama var.
+    edge: Color(0x2EBCC3E4),
+    // Büyük dolgularda (birincil düğme) gece turuncusu bir ton sönük: tam
+    // doygun #FF8A3D koyu zeminde göz yoruyordu. Üstündeki koyu metin 9:1'in
+    // üstünde kalır.
+    act: Color(0xFFF08A4A),
     onAct: Color(0xFF1B0C02),
     actTx: Color(0xFFFF9A57),
     // rgba(255,138,61,.7)

@@ -1,3 +1,4 @@
+// 2026-10-19 sadeleşme (ikinci tur): "Hazırım" anahtarı ayrı kart (SwitchListTile) değil yerel oyuncunun KENDİ satırındaki Switch (anahtar room-ready-switch).
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 import 'dart:io';
@@ -227,7 +228,7 @@ void main() {
       tester.getRect(find.byKey(const ValueKey('room-code-copy'))),
       tester.getRect(find.byKey(const ValueKey('room-player-tile-1'))),
       tester.getRect(find.byKey(const ValueKey('room-player-tile-2'))),
-      tester.getRect(find.byType(SwitchListTile)),
+      tester.getRect(find.byKey(const ValueKey("room-ready-switch"))),
       tester.getRect(
         find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
       ),

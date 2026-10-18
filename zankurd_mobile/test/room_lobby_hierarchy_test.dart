@@ -17,6 +17,13 @@
 /// rakip?" sorusunu soran hiçbir test yoktu; ekran yeni bir eylem aldıkça
 /// kimse ötekini geri çekmedi.
 ///
+/// ## 2026-10-19 sadeleşme (ikinci tur)
+///
+/// Kahraman Boyax degradeli `SahneStageCard` değil sakin yüzey kartıdır
+/// (`room-hero`); tepki rayı ve sohbet TEK "Sohbet" düğmesinin arkasında
+/// (kapalıyken lobide yok); "Hazırım" anahtarı ayrı kart değil yerel
+/// oyuncunun kendi satırındadır. Bekçiler bunları sorar.
+///
 /// Bu dosya hiyerarşiyi ölçülebilir kurallara bağlar: kartın boyu, kartın
 /// içindeki düğme türü, ev sahibi işaretinin sayısı, oyuncu sayısı,
 /// yalnız kalan ev sahibinde tepki rayının yokluğu, sohbetin yüzeysizliği
@@ -96,7 +103,7 @@ void main() {
       tester,
       _LobbyRepository(userId: 'host-user', players: [_me, _guest]),
     );
-    final hero = tester.getRect(find.byType(SahneStageCard));
+    final hero = tester.getRect(find.byKey(const ValueKey('room-hero')));
     expect(
       hero.height,
       lessThanOrEqualTo(300),
@@ -113,7 +120,7 @@ void main() {
       tester,
       _LobbyRepository(userId: 'host-user', players: [_me, _guest]),
     );
-    final hero = find.byType(SahneStageCard);
+    final hero = find.byKey(const ValueKey('room-hero'));
     expect(
       find.descendant(of: hero, matching: find.byType(SahneButton)),
       findsNothing,
@@ -197,6 +204,10 @@ void main() {
       tester,
       _LobbyRepository(userId: 'host-user', players: [_me, _guest]),
     );
+    // Tepkiler "Sohbet" düğmesinin arkasında: kapalıyken lobide yok.
+    expect(find.byType(SahneRailChip), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('room-chat-toggle')));
+    await tester.pump(const Duration(milliseconds: 300));
     expect(find.byType(SahneRailChip), findsWidgets);
   });
 

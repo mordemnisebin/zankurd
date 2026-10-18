@@ -1,9 +1,12 @@
+// 2026-10-19 sadeleşme (ikinci tur): oda kurma çipleri Material ChoiceChip/FilterChip yerine `SahnePickChip` (seçili = dolu renk, değilse çerçeve; eşit sütunlu ızgara);
+// bekçiler `.selected` alanını yeni bileşenden okur, davranış (çoklu seçim, Karışık, gönderilen değerler) aynı.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -197,7 +200,7 @@ void main() {
           reason: '$capacity kişilik seçenek eksik',
         );
       }
-      final eight = tester.widget<ChoiceChip>(
+      final eight = tester.widget<SahnePickChip>(
         find.byKey(const ValueKey('custom-room-capacity-8')),
       );
       expect(eight.selected, isTrue);
@@ -279,7 +282,7 @@ void main() {
       final repository = _CapturingRepository();
       await openCreateSheet(tester, repository);
 
-      final mixed = tester.widget<FilterChip>(
+      final mixed = tester.widget<SahnePickChip>(
         find.byKey(const ValueKey('custom-room-cat-mixed')),
       );
       expect(mixed.selected, isTrue);
@@ -295,7 +298,7 @@ void main() {
 
         await tapChip(tester, 'custom-room-cat-Dîrok');
         await tapChip(tester, 'custom-room-cat-Ziman');
-        final mixed = tester.widget<FilterChip>(
+        final mixed = tester.widget<SahnePickChip>(
           find.byKey(const ValueKey('custom-room-cat-mixed')),
         );
         expect(mixed.selected, isFalse);
@@ -310,7 +313,7 @@ void main() {
 
       await tapChip(tester, 'custom-room-cat-Dîrok');
       await tapChip(tester, 'custom-room-cat-mixed');
-      final dirok = tester.widget<FilterChip>(
+      final dirok = tester.widget<SahnePickChip>(
         find.byKey(const ValueKey('custom-room-cat-Dîrok')),
       );
       expect(dirok.selected, isFalse);
@@ -326,7 +329,7 @@ void main() {
 
       await tapChip(tester, 'custom-room-cat-Dîrok');
       await tapChip(tester, 'custom-room-cat-Dîrok');
-      final mixed = tester.widget<FilterChip>(
+      final mixed = tester.widget<SahnePickChip>(
         find.byKey(const ValueKey('custom-room-cat-mixed')),
       );
       expect(mixed.selected, isTrue);

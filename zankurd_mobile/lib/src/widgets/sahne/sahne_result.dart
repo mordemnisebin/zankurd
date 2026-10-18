@@ -137,7 +137,7 @@ class SahneResultScaffold extends StatelessWidget {
               side,
               SahneSpace.x4,
               side,
-              SahneSpace.x4,
+              SahneSpace.x4 + MediaQuery.paddingOf(context).bottom,
             ),
             child: ConstrainedBox(
               constraints: BoxConstraints(
@@ -158,11 +158,14 @@ class SahneResultScaffold extends StatelessWidget {
             // erişilebilirlik ağacına birlikte girsinler. Kayıt sayısı tur
             // soru sayısıyla sınırlı olduğu için geniş önbellek güvenlidir.
             scrollCacheExtent: const ScrollCacheExtent.pixels(2500),
+            // Alt perde gövdenin ÜSTÜNE biner (`extendBody`): son öğe perdenin
+            // arkasında kalmasın diye alt boşluk perdenin yüksekliği
+            // (`MediaQuery.padding.bottom`) + 24 olur.
             padding: EdgeInsets.fromLTRB(
               side,
               SahneSpace.x2,
               side,
-              SahneSpace.x6,
+              SahneSpace.x6 + MediaQuery.paddingOf(context).bottom,
             ),
             children: items,
           );
@@ -314,7 +317,9 @@ class SahneResultHero extends StatelessWidget {
             title,
             key: titleKey,
             textAlign: TextAlign.center,
-            style: SahneType.title.copyWith(
+            // 2026-10-19 sadeleşme (ikinci tur): başlık 28 yerine 22; ekranın
+            // tek büyük sesi puandır (64).
+            style: SahneType.headline.copyWith(
               color: titleRole == null ? t.tx : t.roleText(titleRole!),
             ),
           ),
@@ -435,80 +440,94 @@ class SahneResultStat {
   bool get visible => value > 0 || showWhenZero;
 }
 
-/// Sayım karoları — maketteki `.sh-stats`; en az 56 yüksek, L pah yüzey.
-/// Durum hiçbir zaman yalnız renkle verilmez: ikon şekli ve söz birlikte.
+/// Sayımlar — TEK kompakt satır (doğru / yanlış / boş / seri).
 ///
-/// Karolar eşit genişlikte yan yana durur; dar ekranda ya da büyük yazıda
-/// bir karo 96'dan darsa ikişerli satıra iner (sayı ve söz harf harf
-/// bölünmez). Görünür karo yoksa hiçbir şey çizilmez.
+/// 2026-10-19 sadeleşme (ikinci tur): sayımlar üç dört ayrı yüzey karosuydu;
+/// ekran "kutu üstüne kutu" görünüyor, ödül kartı ve konu listesiyle birlikte
+/// sonuç ekranı beş altı kart yığınına dönüyordu. Artık TEK yüzey kartı,
+/// içinde ince ayırıcılarla eşit sütunlar: simge + sayı + söz. Durum hiçbir
+/// zaman yalnız renkle verilmez: ikon şekli ve söz birlikte.
+///
+/// Dar ekranda ya da büyük yazıda bir sütun 96'dan darsa sütunlar aynı kartın
+/// içinde ikişerli satıra iner (sayı ve söz harf harf bölünmez). Görünür
+/// sayım yoksa hiçbir şey çizilmez.
 class SahneResultStats extends StatelessWidget {
   const SahneResultStats({super.key, required this.stats});
 
   final List<SahneResultStat> stats;
 
-  /// Çizilecek bir karo var mı? Çağıran, boş şerit için yer ayırmasın diye
+  /// Çizilecek bir sayım var mı? Çağıran, boş şerit için yer ayırmasın diye
   /// önceden sorar.
   static bool hasVisible(List<SahneResultStat> stats) =>
       stats.any((stat) => stat.visible);
 
   @override
   Widget build(BuildContext context) {
-    final tiles = <Widget>[
+    final items = <Widget>[
       for (final stat in stats)
         if (stat.visible) _StatTile(stat: stat),
     ];
-    if (tiles.isEmpty) return const SizedBox.shrink();
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        const gap = SahneSpace.x2;
-        final minTile = MediaQuery.textScalerOf(context).scale(96);
-        var perRow = tiles.length;
-        // Büyük yazıda bile en az ikişerli: üç karo tam genişlikte üst üste
-        // binince ekranın üçte biri sayımlara gidiyordu (320 px / 2×). Yalnız
-        // gerçekten dar kutuda (< 240) tek sütuna inilir.
-        final minCols = math.min(
-          tiles.length,
-          constraints.maxWidth >= 240 ? 2 : 1,
-        );
-        while (perRow > minCols &&
-            (constraints.maxWidth - gap * (perRow - 1)) / perRow < minTile) {
-          perRow = perRow > 2 ? 2 : 1;
-        }
-        // 2026-09-30 simülatör: karolar `Wrap` içinde kendi boyunda
-        // duruyordu; "Li pey hev" iki satıra kırılınca üçüncü karo öteki
-        // ikisinden uzun çıkıyordu. Satırdaki karolar eşit yükseklikte
-        // (`IntrinsicHeight` + uzatma); eksik kalan son satır boş
-        // `SizedBox` ile aynı genişliği korur. Normal ölçekte sözler tek
-        // satırdı, tur ve testler orada koştuğu için kusur sessiz kaldı.
-        final rows = <Widget>[];
-        for (var i = 0; i < tiles.length; i += perRow) {
-          final chunk = tiles.sublist(i, math.min(i + perRow, tiles.length));
-          rows.add(
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  for (var j = 0; j < perRow; j++) ...[
-                    if (j > 0) const SizedBox(width: gap),
-                    Expanded(
-                      child: j < chunk.length ? chunk[j] : const SizedBox(),
-                    ),
-                  ],
-                ],
-              ),
-            ),
+    if (items.isEmpty) return const SizedBox.shrink();
+    final t = SahneTokens.of(context);
+    return SahneSurfaceCard(
+      padding: const EdgeInsets.symmetric(
+        horizontal: SahneSpace.x3,
+        vertical: SahneSpace.x2,
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final minTile = MediaQuery.textScalerOf(context).scale(96);
+          var perRow = items.length;
+          // Büyük yazıda bile en az ikişerli; yalnız gerçekten dar kutuda
+          // (< 240) tek sütuna inilir.
+          final minCols = math.min(
+            items.length,
+            constraints.maxWidth >= 240 ? 2 : 1,
           );
-        }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (var i = 0; i < rows.length; i++) ...[
-              if (i > 0) const SizedBox(height: gap),
-              rows[i],
+          while (perRow > minCols && constraints.maxWidth / perRow < minTile) {
+            perRow = perRow > 2 ? 2 : 1;
+          }
+          // Satırdaki sütunlar eşit yükseklikte (`IntrinsicHeight`):
+          // "Li pey hev" iki satıra kırılınca öteki sütunlar kısa kalmasın
+          // (2026-09-30 simülatör). Eksik son satır boş `SizedBox` ile aynı
+          // genişliği korur.
+          final rows = <Widget>[];
+          for (var i = 0; i < items.length; i += perRow) {
+            final chunk = items.sublist(i, math.min(i + perRow, items.length));
+            rows.add(
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var j = 0; j < perRow; j++) ...[
+                      if (j > 0)
+                        VerticalDivider(
+                          width: SahneSpace.x3 * 2 + 1,
+                          thickness: 1,
+                          indent: SahneSpace.x1,
+                          endIndent: SahneSpace.x1,
+                          color: t.line,
+                        ),
+                      Expanded(
+                        child: j < chunk.length ? chunk[j] : const SizedBox(),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            );
+          }
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var i = 0; i < rows.length; i++) ...[
+                if (i > 0) const SizedBox(height: SahneSpace.x2),
+                rows[i],
+              ],
             ],
-          ],
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
@@ -525,41 +544,35 @@ class _StatTile extends StatelessWidget {
       container: true,
       label: '${stat.value} ${stat.label}',
       excludeSemantics: true,
-      child: SahneSurfaceCard(
-        padding: const EdgeInsets.symmetric(
-          horizontal: SahneSpace.x3,
-          vertical: SahneSpace.x2,
-        ),
-        child: ConstrainedBox(
-          // a11y-tap-target: noninteractive — istatistik karosu; salt
-          // görsel, dokunma hedefi değil.
-          constraints: const BoxConstraints(minHeight: 40),
-          child: Row(
-            children: [
-              SizedBox.square(dimension: 20, child: stat.leading),
-              const SizedBox(width: SahneSpace.x2),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '${stat.value}',
-                      style: SahneType.bodyStrong.copyWith(
-                        color: t.tx,
-                        fontFeatures: const [FontFeature.tabularFigures()],
-                      ),
+      child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — sayım; salt görsel, dokunma
+        // hedefi değil.
+        constraints: const BoxConstraints(minHeight: 40),
+        child: Row(
+          children: [
+            SizedBox.square(dimension: 20, child: stat.leading),
+            const SizedBox(width: SahneSpace.x2),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '${stat.value}',
+                    style: SahneType.bodyStrong.copyWith(
+                      color: t.tx,
+                      fontFeatures: const [FontFeature.tabularFigures()],
                     ),
-                    Text(
-                      stat.label,
-                      style: SahneType.caption.copyWith(color: t.tx2),
-                    ),
-                  ],
-                ),
+                  ),
+                  Text(
+                    stat.label,
+                    style: SahneType.caption.copyWith(color: t.tx2),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -649,18 +662,20 @@ class SahneResultRewards extends StatelessWidget {
         ],
       );
     }
-    return Row(
-      children: [
-        Expanded(child: labelText),
-        const SizedBox(width: SahneSpace.x3),
-        // Çipler sağa yaslı; sözü ezmesin diye genişlikleri sınırlı.
-        ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.sizeOf(context).width * 0.6,
+    return LayoutBuilder(
+      builder: (context, c) => Row(
+        children: [
+          Expanded(child: labelText),
+          const SizedBox(width: SahneSpace.x3),
+          // Çipler sağa yaslı; sözü ezmesin diye genişlikleri sınırlı. Sınır
+          // ekranın değil KARTIN genişliğinin %70'i: dar kartta (320 px)
+          // ekran genişliğine göre hesaplanan sınır satırı taşırıyordu.
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: c.maxWidth * 0.7),
+            child: chips,
           ),
-          child: chips,
-        ),
-      ],
+        ],
+      ),
     );
   }
 
