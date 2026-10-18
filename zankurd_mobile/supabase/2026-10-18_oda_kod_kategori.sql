@@ -354,7 +354,7 @@ CREATE OR REPLACE FUNCTION public.create_online_room_v2(p_category_names text[],
  LANGUAGE plpgsql
  SECURITY DEFINER
  SET search_path TO 'public'
-AS \$
+AS $function$
 begin
   -- Yeni istemci: 6 rakamlı kod; NULL/boş dizi = Karışık.
   return public.create_online_room_impl(
@@ -362,7 +362,7 @@ begin
     p_entry_fee, p_max_players, false
   );
 end;
-\$;
+$function$;
 
 CREATE OR REPLACE FUNCTION public.create_online_room(p_category_name text, p_seconds_per_question integer, p_question_count integer DEFAULT 10, p_entry_fee integer DEFAULT 0, p_max_players integer DEFAULT 2)
  RETURNS json
