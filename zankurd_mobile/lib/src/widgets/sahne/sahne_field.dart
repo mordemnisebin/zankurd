@@ -520,7 +520,7 @@ class _SahneFieldFrame extends StatelessWidget {
     return Material(
       color: t.s2,
       clipBehavior: Clip.antiAlias,
-      shape: BeveledRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: SahneShape.m.borderRadius,
         side: side,
       ),

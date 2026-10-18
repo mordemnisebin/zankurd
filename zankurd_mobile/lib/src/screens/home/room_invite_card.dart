@@ -171,8 +171,7 @@ class _RoomInviteCardState extends State<RoomInviteCard> {
       child: Semantics(
         container: true,
         label: '$title. $meta',
-        child: SahneStageCard(
-          role: SahneRole.race,
+        child: SahneSurfaceCard(
           child: Builder(
             builder: (context) {
               final t = SahneTokens.of(context);
@@ -183,9 +182,7 @@ class _RoomInviteCardState extends State<RoomInviteCard> {
                     extra > 0
                         ? '${context.t(K.roomInviteSection)} · ${_invites.length}'
                         : context.t(K.roomInviteSection),
-                    style: SahneType.captionStrong.copyWith(
-                      color: SahneStageColors.raceSoft,
-                    ),
+                    style: SahneType.captionStrong.copyWith(color: t.raceTx),
                   ),
                   const SizedBox(height: SahneSpace.x1),
                   Semantics(
@@ -199,9 +196,7 @@ class _RoomInviteCardState extends State<RoomInviteCard> {
                   Text(
                     meta,
                     key: const ValueKey('room-invite-meta'),
-                    style: SahneType.caption.copyWith(
-                      color: SahneStageColors.raceSoft,
-                    ),
+                    style: SahneType.caption.copyWith(color: t.tx2),
                   ),
                   const SizedBox(height: SahneSpace.x4),
                   SahneButton.secondary(

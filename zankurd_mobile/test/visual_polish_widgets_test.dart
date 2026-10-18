@@ -1,3 +1,6 @@
+// 2026-10-19 sadeleşme: kart geometrisi artık YUVARLAK dikdörtgendir
+// (yarıçap 16; eskiden L pahı). Bu dosyadaki ilk test bu yüzden
+// `RoundedRectangleBorder` bekler; öteki testler (gölge, kontrast) aynı.
 import 'dart:math' as math;
 import 'dart:ui' show SemanticsAction;
 
@@ -17,9 +20,9 @@ double _contrast(Color first, Color second) {
 void main() {
   test('light and dark themes keep one card geometry language', () {
     for (final theme in [AppTheme.light(), AppTheme.dark()]) {
-      // Şahnê (2026-09-29): köşe yuvarlak değil kesik (45° pah); kartlar
-      // iki temada da aynı L pahını taşır.
-      final shape = theme.cardTheme.shape! as BeveledRectangleBorder;
+      // 2026-10-19 sadeleşme: kartlar iki temada da aynı yuvarlak köşeyi
+      // (16) taşır. (Şahnê 2026-09-29: eskiden kesik köşe, 45° pah.)
+      final shape = theme.cardTheme.shape! as RoundedRectangleBorder;
 
       expect(shape.borderRadius, BorderRadius.circular(AppRadius.card));
       expect(theme.cardTheme.elevation, 0);

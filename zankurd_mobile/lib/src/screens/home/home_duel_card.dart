@@ -211,37 +211,57 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
     final hasIncoming = incomingCount > 0;
     final pending = readyCount > 0 || hasIncoming;
 
-    final String eyebrow;
-    final String headline;
-    final String? meta;
+    final String title;
+    final String subtitle;
     if (hasIncoming) {
-      eyebrow = context.t(K.asyncDuelInbox);
-      headline = incomingCount == 1
+      title = incomingCount == 1
           ? context.t(K.challengeYourTurn)
           : '${context.t(K.challengeYourTurn)} · $incomingCount';
       final inviter = _incoming.first.opponentName;
       if (incomingCount == 1 && inviter != null) {
-        meta = context.t(K.challengeIncomingBy, {
+        subtitle = context.t(K.challengeIncomingBy, {
           'name': context.playerDisplayName(inviter),
         });
       } else if (readyCount > 0) {
-        meta = '${context.t(K.asyncDuelReady)} · $readyCount';
+        subtitle = '${context.t(K.asyncDuelReady)} · $readyCount';
       } else {
-        meta = null;
+        subtitle = context.t(K.asyncDuelInbox);
       }
     } else if (pending) {
-      eyebrow = context.t(K.asyncDuelInbox);
-      headline = readyCount == 1
+      title = readyCount == 1
           ? context.t(K.asyncDuelReady)
           : '${context.t(K.asyncDuelReady)} · $readyCount';
       final opponent = _ready.first.opponentName;
-      meta = readyCount == 1 && opponent != null
+      subtitle = readyCount == 1 && opponent != null
           ? context.playerDisplayName(opponent)
-          : null;
+          : context.t(K.asyncDuelInbox);
     } else {
-      eyebrow = context.t(K.asyncDuel);
-      headline = context.t(K.asyncDuelSub);
-      meta = null;
+      title = context.t(K.asyncDuel);
+      subtitle = context.t(K.asyncDuelSub);
+    }
+
+    // Sağdaki TEK ikincil düğme. Bekleyen bir şey varsa (sıra sende, sonuç
+    // hazır) düğme o eylemi yapar; yoksa menüyü açar. Bekleyen durumda
+    // menü, düğmenin yanındaki ⋯ ile de erişilir: işlev kaybı yok.
+    final String buttonLabel;
+    final IconData buttonIcon;
+    final VoidCallback buttonAction;
+    if (hasIncoming) {
+      buttonLabel = incomingCount == 1
+          ? context.t(K.challengePlay)
+          : context.t(K.asyncDuelInbox);
+      buttonIcon = AppIcons.hourglass;
+      buttonAction = _openIncoming;
+    } else if (pending) {
+      buttonLabel = readyCount == 1
+          ? context.t(K.resultTitle)
+          : context.t(K.asyncDuelInbox);
+      buttonIcon = AppIcons.trophy;
+      buttonAction = _openReady;
+    } else {
+      buttonLabel = context.t(K.challengePlay);
+      buttonIcon = AppIcons.hourglass;
+      buttonAction = _openMenu;
     }
 
     return Padding(
@@ -255,103 +275,156 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
       padding: const EdgeInsets.only(top: SahneSpace.cardGap),
       child: Semantics(
         container: true,
-        label: '$eyebrow. $headline',
-        child: SahneStageCard(
-          role: SahneRole.race,
+        label: '$title. $subtitle',
+        child: SahneSurfaceCard(
+          padding: const EdgeInsets.symmetric(
+            horizontal: SahneSpace.x4,
+            vertical: SahneSpace.x3,
+          ),
           child: Builder(
             builder: (context) {
               final t = SahneTokens.of(context);
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              final texts = Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    eyebrow,
-                    style: SahneType.captionStrong.copyWith(
-                      color: SahneStageColors.raceSoft,
-                    ),
-                  ),
-                  const SizedBox(height: SahneSpace.x1),
                   Semantics(
                     header: true,
                     child: Text(
-                      headline,
-                      style: SahneType.headline.copyWith(color: t.tx),
-                    ),
-                  ),
-                  if (meta != null) ...[
-                    const SizedBox(height: SahneSpace.x1),
-                    Text(
-                      meta,
-                      key: const ValueKey('home-duel-meta'),
-                      style: SahneType.caption.copyWith(
-                        color: SahneStageColors.raceSoft,
+                      title,
+                      style: SahneType.bodyStrong.copyWith(
+                        color: pending ? t.raceTx : t.tx,
                       ),
                     ),
-                  ],
-                  const SizedBox(height: SahneSpace.x4),
-                  if (hasIncoming)
-                    SahneButton.secondary(
-                      key: const ValueKey('home-duel-primary'),
-                      icon: AppIcons.hourglass,
-                      label: incomingCount == 1
-                          ? context.t(K.challengePlay)
-                          : context.t(K.asyncDuelInbox),
-                      expand: true,
-                      onPressed: _openIncoming,
-                    )
-                  else if (pending)
-                    SahneButton.secondary(
-                      key: const ValueKey('home-duel-primary'),
-                      icon: AppIcons.trophy,
-                      label: readyCount == 1
-                          ? context.t(K.resultTitle)
-                          : context.t(K.asyncDuelInbox),
-                      expand: true,
-                      onPressed: _openReady,
-                    )
-                  else
-                    SahneButton.secondary(
-                      key: const ValueKey('home-duel-primary'),
-                      icon: AppIcons.hourglass,
-                      label: context.t(K.asyncDuelNew),
-                      expand: true,
-                      onPressed: _openNewDuel,
-                    ),
-                  // İkincil eylemler sakin metin düğmeleri (Agir dolgu
-                  // yalnız "Günün dersi"nde). Dar ekranda ve büyük yazıda
-                  // alt satıra sarar.
-                  Wrap(
-                    alignment: _challengeAvailable
-                        ? WrapAlignment.spaceBetween
-                        : WrapAlignment.end,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      if (_challengeAvailable)
-                        SahneButton.text(
-                          key: const ValueKey('home-duel-challenge'),
-                          label: context.t(K.challengeEntry),
-                          arrow: false,
-                          onPressed: _openChallengeSheet,
-                        ),
-                      if (pending)
-                        SahneButton.text(
-                          key: const ValueKey('home-duel-secondary'),
-                          label: context.t(K.asyncDuelNew),
-                          onPressed: _openNewDuel,
-                        )
-                      else
-                        SahneButton.text(
-                          key: const ValueKey('home-duel-secondary'),
-                          label: context.t(K.quickDuel),
-                          onPressed: _openQuickDuel,
-                        ),
-                    ],
+                  ),
+                  Text(
+                    subtitle,
+                    key: const ValueKey('home-duel-meta'),
+                    style: SahneType.caption.copyWith(color: t.tx2),
                   ),
                 ],
+              );
+              final button = SahneButton.secondary(
+                key: const ValueKey('home-duel-primary'),
+                icon: buttonIcon,
+                label: buttonLabel,
+                onPressed: buttonAction,
+              );
+              // Menü yalnız bekleyen durumda ayrı bir ⋯ düğmesidir;
+              // varsayılan durumda düğmenin kendisi menüyü açar.
+              final more = pending
+                  ? SahneIconButton(
+                      key: const ValueKey('home-duel-more'),
+                      icon: AppIcons.ellipsis,
+                      semanticLabel: context.t(K.moreOptions),
+                      onPressed: _openMenu,
+                    )
+                  : null;
+              return LayoutBuilder(
+                builder: (context, c) {
+                  // Dar ekran ya da büyük yazıda düğme metnin altına iner.
+                  final stacked =
+                      c.maxWidth < 300 ||
+                      MediaQuery.textScalerOf(context).scale(16) >= 24;
+                  final actions = Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ?more,
+                      if (more != null) const SizedBox(width: SahneSpace.x1),
+                      Flexible(child: button),
+                    ],
+                  );
+                  if (stacked) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        texts,
+                        const SizedBox(height: SahneSpace.x3),
+                        Align(
+                          alignment: AlignmentDirectional.centerEnd,
+                          child: actions,
+                        ),
+                      ],
+                    );
+                  }
+                  return Row(
+                    children: [
+                      Expanded(child: texts),
+                      const SizedBox(width: SahneSpace.x3),
+                      actions,
+                    ],
+                  );
+                },
               );
             },
           ),
         ),
+      ),
+    );
+  }
+
+  /// Düello menüsü: Yeni düello / Arkadaşına meydan oku / Hızlı düello.
+  /// Eski kartın üç yolu burada toplanır; hedefleri değişmedi.
+  void _openMenu() {
+    unawaited(
+      showModalBottomSheet<void>(
+        context: context,
+        showDragHandle: true,
+        builder: (sheetContext) {
+          void go(VoidCallback action) {
+            Navigator.of(sheetContext).pop();
+            action();
+          }
+
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                SahneSpace.page,
+                0,
+                SahneSpace.page,
+                SahneSpace.page,
+              ),
+              child: Column(
+                key: const ValueKey('home-duel-menu'),
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SahneListGroup(
+                    children: [
+                      SahneListRow.icon(
+                        key: const ValueKey('home-duel-new'),
+                        icon: AppIcons.hourglass,
+                        role: SahneRole.race,
+                        title: context.t(K.asyncDuelNew),
+                        subtitle: context.t(K.asyncDuelSub),
+                        chevron: true,
+                        onTap: () => go(_openNewDuel),
+                      ),
+                      if (_challengeAvailable)
+                        SahneListRow.icon(
+                          key: const ValueKey('home-duel-challenge'),
+                          icon: AppIcons.peopleGroup,
+                          role: SahneRole.race,
+                          title: context.t(K.challengeEntry),
+                          subtitle: context.t(K.challengeEntrySub),
+                          chevron: true,
+                          onTap: () => go(_openChallengeSheet),
+                        ),
+                      SahneListRow.icon(
+                        key: const ValueKey('home-duel-secondary'),
+                        icon: AppIcons.bolt,
+                        role: SahneRole.race,
+                        title: context.t(K.quickDuel),
+                        chevron: true,
+                        onTap: () => go(_openQuickDuel),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -17,6 +17,12 @@
 /// seçim sayfasını (boş arkadaş durumu dahil), sonuç ekranındaki Paylaş'ı,
 /// gelen kutusu ve ana ekran kartındaki "Sıra sende"yi, hata metinlerini ve
 /// RPC yokken giriş noktalarının gizlenmesini sabitler.
+///
+/// 2026-10-19 sadeleşme: ana ekran düello kartı kompakt oldu; "Arkadaşına
+/// meydan oku" ve "Hızlı düello" artık kartın üstünde metin düğmesi değil
+/// düello menüsünün satırlarıdır (`home-duel-primary` düğmesi menüyü açar).
+/// İlgili iki test önce menüyü açar; RPC yoksa meydan okuma satırının hiç
+/// çizilmediği ve "Hızlı düello"nun durduğu yine sabit.
 library;
 
 import 'dart:convert';
@@ -694,6 +700,8 @@ void main() {
       await tester.pumpWidget(card(freshMockRepository()));
       await tester.pumpAndSettle();
 
+      await tester.tap(find.byKey(const ValueKey('home-duel-primary')));
+      await tester.pumpAndSettle();
       final challenge = find.byKey(const ValueKey('home-duel-challenge'));
       expect(challenge, findsOneWidget);
       await tester.tap(challenge);
@@ -733,6 +741,8 @@ void main() {
           ),
         ),
       );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('home-duel-primary')));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('home-duel-challenge')), findsNothing);
       expect(find.text('Hızlı düello'), findsOneWidget);

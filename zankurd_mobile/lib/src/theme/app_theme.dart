@@ -486,8 +486,8 @@ class AppTheme {
 
   // ============ Light Mode Palette — Cream / Ink ============
   static const lightBg = Color(
-    0xFFE9EDF6,
-  ); // Gündüz zemini (soğuk; krem değil).
+    0xFFF4F6FA,
+  ); // Gündüz zemini (soğuk; krem değil). 2026-10-19: #E9EDF6 → #F4F6FA.
   static const lightBgDeep = Color(0xFFDDE3F0); // Gündüz zemin koyu.
   static const lightSurface = Color(0xFFFFFFFF); // Gündüz yüzeyi.
   static const lightSurfaceHi = Color(0xFFEEF1F8); // Gündüz yükseltilmiş yüzey.
@@ -1093,7 +1093,7 @@ class AppTheme {
         backgroundColor: t.s1,
         surfaceTintColor: t.s1,
         modalBackgroundColor: t.s1,
-        shape: const BeveledRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(SahneShape.lValue),
           ),

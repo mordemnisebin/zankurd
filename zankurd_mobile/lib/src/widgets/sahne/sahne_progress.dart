@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/app_icons.dart';
 import '../../theme/sahne.dart';
 import '../../utils/percent_format.dart';
 import 'sahne_foundation.dart';
@@ -29,7 +30,8 @@ enum SahneProgressTone {
 
 /// İlerleme çubuğu — maketteki `.sh-bar` / `.sh-prog`.
 ///
-/// 8 px, S pah; iz Ray (`s3`; gündüzde ince bir kenarla, bkz.
+/// 8 px (ya da [height]), tam yuvarlak uç (2026-10-19 sadeleşme: pahlı uç
+/// "kalabalık" izlenimi veriyordu); iz Ray (`s3`; gündüzde ince bir kenarla, bkz.
 /// [sahneTrackEdge]), dolgu öğrenmede `learnBar`, ödülde Zêr.
 /// İsteğe bağlı sağda değer ([trailing], ör. "2/5", "200 XP"; kalın
 /// açıklama, tablo rakamı). Ekran okuyucu değeri yüzde olarak duyar.
@@ -41,10 +43,14 @@ class SahneProgressBar extends StatelessWidget {
     this.tone = SahneProgressTone.learn,
     this.trailing,
     this.semanticLabel,
+    this.height = 8,
   });
 
   /// 0–1.
   final double value;
+
+  /// Çubuğun kalınlığı (ana ekran karolarında ve soru ekranında 4).
+  final double height;
   final SahneProgressTone tone;
   final String? trailing;
   final String? semanticLabel;
@@ -55,18 +61,22 @@ class SahneProgressBar extends StatelessWidget {
     final v = value.clamp(0.0, 1.0);
     final fill = tone == SahneProgressTone.gold ? t.gold : t.learnBar;
     final reduceMotion = sahneMotionReduced(context);
+    final pill = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(height / 2),
+    );
     final bar = TweenAnimationBuilder<double>(
       tween: Tween(end: v),
       duration: reduceMotion ? Duration.zero : SahneMotion.answerReveal,
       curve: Curves.easeOutCubic,
       builder: (context, animated, _) => SizedBox(
-        height: 8,
+        height: height,
         child: DecoratedBox(
           decoration: ShapeDecoration(
             color: t.s3,
             shape: SahneShape.withSide(
-              SahneShape.s,
-              sahneTrackEdge(t),
+              pill,
+              // İnce çubukta (< 6) 1 px kenar çubuğun yarısını yerdi.
+              height < 6 ? Colors.transparent : sahneTrackEdge(t),
               width: 1,
             ),
           ),
@@ -76,7 +86,7 @@ class SahneProgressBar extends StatelessWidget {
               widthFactor: animated,
               heightFactor: 1,
               child: DecoratedBox(
-                decoration: ShapeDecoration(color: fill, shape: SahneShape.s),
+                decoration: ShapeDecoration(color: fill, shape: pill),
               ),
             ),
           ),
@@ -319,6 +329,59 @@ class SahneLessonDiamond extends StatelessWidget {
           ),
           child: _DiamondLabel(text: '$done/$total', color: t.tx, size: size),
         ),
+      ),
+    );
+  }
+}
+
+/// Sade sayaç — oyun sahnesinin üst satırındaki küçük saniye göstergesi:
+/// saat ikonu + tablo rakamlı saniye ("17").
+///
+/// 2026-10-19 sadeleşme: 60 px'lik elmas sayaç, arkasındaki hale ve ışık
+/// huzmesi sahnenin en parlak, en büyük öğesiydi ve soru okunurken gözü
+/// metinden çekiyordu. Bilgi aynı (kalan saniye), ağırlık küçüldü. Son
+/// [hotSeconds] saniyede ikon ve sayı Boyax metnine döner (gerilim yalnız
+/// renkle değil sayının kendisiyle de okunur); hale ve nabız yok. Ekran
+/// okuyucu [semanticLabel]ı okur ("17 saniye kaldı").
+class SahneStageTimer extends StatelessWidget {
+  const SahneStageTimer({
+    super.key,
+    required this.secondsLeft,
+    required this.semanticLabel,
+    this.hotSeconds = 5,
+  });
+
+  final int secondsLeft;
+
+  /// Ör. "17 saniye kaldı".
+  final String semanticLabel;
+
+  /// Bu saniyeye ve altına inince Boyax.
+  final int hotSeconds;
+
+  bool get isHot => secondsLeft <= hotSeconds;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final color = isHot ? t.raceTx : t.tx2;
+    return Semantics(
+      label: semanticLabel,
+      excludeSemantics: true,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(AppIcons.clock, size: 16, color: color),
+          const SizedBox(width: SahneSpace.x1),
+          Text(
+            '$secondsLeft',
+            key: const ValueKey('stage-timer-seconds'),
+            style: SahneType.captionStrong.copyWith(
+              color: color,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
+        ],
       ),
     );
   }
