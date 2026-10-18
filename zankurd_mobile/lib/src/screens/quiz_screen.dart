@@ -1759,7 +1759,7 @@ class _QuizScreenState extends State<QuizScreen>
                   light: _stageLight,
                   ridge: true,
                   center: _buildStageCenter(context),
-                  score: _buildScoreChip(context),
+                  score: _buildStageTrailing(context),
                   progress: _buildStageProgress(context),
                   dock: landscape ? null : _buildDock(context),
                   body: Stack(

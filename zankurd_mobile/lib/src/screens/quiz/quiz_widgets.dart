@@ -339,7 +339,7 @@ class _QuestionImageFallback extends StatelessWidget {
 ///
 /// ## Soru metninin boyu (Şahnê)
 ///
-/// Soru Başlık 28/32'dir; dört satırı aşarsa Manşet 22/28'e iner — ölçerek,
+/// Soru 24/30'dur (2026-10-19; eskiden Başlık 28/32); dört satırı aşarsa Manşet 22/28'e iner — ölçerek,
 /// karakter sayarak değil (bkz. [QuizQuestionPrompt]).
 ///
 /// ## Şıklar doğal boylarında
@@ -395,7 +395,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final bool forceHeadline;
   final bool twoColumn;
 
-  /// Sorunun Başlık 28/32 ile çizilebileceği en çok satır (düelloda 3).
+  /// Sorunun Soru 24/30 ile çizilebileceği en çok satır (düelloda 3).
   final int titleLineBudget;
 
   /// Quiz turu için cevap alanını hedef gösteren GlobalKey.
@@ -1646,17 +1646,15 @@ class _QuizAnswerBoard extends StatelessWidget {
 /// alabileceğini bilmesi için bakiye aynı bakışta görünmeli. Ekran
 /// okuyucu "120 jeton" okur.
 class _CoinBalanceLine extends StatelessWidget {
-  const _CoinBalanceLine({
-    required this.balance,
-    this.hint,
-    this.showHint = true,
-  });
+  const _CoinBalanceLine({required this.balance, this.hint});
 
   final int balance;
-  final String? hint;
 
-  /// İpucu ekranda mı? `false` ise yalnız ekran okuyucuya gider.
-  final bool showHint;
+  /// Açıklayıcı cümle. 2026-10-19 sadeleşme: ekranda YAZILMAZ (iki satırlık
+  /// "Yarışı bitir, jeton kazan, jokerleri aç" alt perdeyi büyütüyor, her
+  /// soruda aynı cümleyi tekrar okutuyordu); yalnız ekran okuyucuya gider ve
+  /// jetonu yetmeyen jokere dokununca tost olarak açılır.
+  final String? hint;
 
   @override
   Widget build(BuildContext context) {
@@ -1677,17 +1675,6 @@ class _CoinBalanceLine extends StatelessWidget {
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
-          if (hint != null && showHint) ...[
-            const SizedBox(width: SahneSpace.x2),
-            Flexible(
-              child: Text(
-                hint!,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: SahneType.caption.copyWith(color: t.tx2),
-              ),
-            ),
-          ],
         ],
       ),
     );

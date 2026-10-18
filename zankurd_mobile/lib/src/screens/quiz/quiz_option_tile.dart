@@ -431,7 +431,7 @@ class _HatchPainter extends CustomPainter {
 }
 
 /// Soru metni — Şahnê'de soru sahnenin kendisinde durur (maketteki
-/// `.sh-q`): Başlık 28/32, birincil metin.
+/// `.sh-q`): Soru 24/30 (2026-10-19; eskiden Başlık 28/32), birincil metin.
 ///
 /// ## Boy kuralı
 ///
@@ -461,10 +461,10 @@ class QuizQuestionPrompt extends StatelessWidget {
   /// Telefon-yatay gibi dar dikey alanda hep Manşet 22.
   final bool forceHeadline;
 
-  /// Başlık 28/32'de en çok bu kadar satır.
+  /// Soru 24/30'da en çok bu kadar satır.
   static const int maxTitleLines = 4;
 
-  /// Bu soruda Başlık 28/32'ye izin verilen en çok satır.
+  /// Bu soruda Soru 24/30'a izin verilen en çok satır.
   ///
   /// Düelloda üstteki puan kartı (~120 pt) şıkların bütçesinden yer yer.
   /// 2026-09-30 canlı: dört satırlık soru + dört şıkta D şıkkı alt perdenin
@@ -483,7 +483,10 @@ class QuizQuestionPrompt extends StatelessWidget {
     final t = SahneTokens.of(context);
     final headline = SahneType.headline.copyWith(color: t.tx);
     if (forceHeadline || !maxWidth.isFinite || maxWidth <= 0) return headline;
-    final title = SahneType.title.copyWith(color: t.tx, letterSpacing: -0.28);
+    final title = SahneType.question.copyWith(
+      color: t.tx,
+      letterSpacing: -0.24,
+    );
     final painter = TextPainter(
       text: TextSpan(
         text: text,

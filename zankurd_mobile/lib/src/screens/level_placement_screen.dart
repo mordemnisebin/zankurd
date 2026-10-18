@@ -156,6 +156,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
       progress: question == null
           ? null
           : SahneProgressBar(
+              height: 4,
               value: (_index + 1) / _questions.length,
               semanticLabel: context.t(K.placementProgress, {
                 'index': '${_index + 1}',
