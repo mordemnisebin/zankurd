@@ -22,6 +22,7 @@ import '../widgets/player_moderation_button.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
+import 'room_invite_friends_sheet.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
 
@@ -225,6 +226,7 @@ class _RoomScreenState extends State<RoomScreen> {
     // başlar. Odayla birlikte gelen liste ilk veridir; o varsa dönen daire
     // hiç çizilmez.
     _playersRefreshing = widget.initialRoom.players.isEmpty;
+    unawaited(_probeRoomInvites());
     _startSubscriptions();
     _startPolling();
     _startStatusPolling();
@@ -738,6 +740,44 @@ class _RoomScreenState extends State<RoomScreen> {
     );
   }
 
+  /// Sunucuda oda daveti RPC'leri var mı (göç uygulanmamışsa düğme yok).
+  /// Sonuç gelene dek `false`: düğme çizilip sonra kaybolmasın.
+  bool _roomInvitesSupported = false;
+
+  bool get _canInviteFriends =>
+      _roomInvitesSupported &&
+      room.id != null &&
+      room.isCustom &&
+      room.status == RoomStatus.lobby;
+
+  Future<void> _probeRoomInvites() async {
+    try {
+      final ok = await widget.repository.supportsRoomInvites();
+      if (mounted && ok) setState(() => _roomInvitesSupported = true);
+    } catch (_) {
+      // Belirsiz: düğme gizli kalır, paylaşım yolu zaten var.
+    }
+  }
+
+  /// Kabul edilmiş arkadaşları kod girmeden davet eden sayfayı açar.
+  Future<void> _inviteFriends() async {
+    final count = await showRoomInviteFriendsSheet(
+      context,
+      widget.repository,
+      room,
+    );
+    if (!mounted || count == null) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          count > 0
+              ? context.t(K.roomInviteSent, {'n': '$count'})
+              : context.t(K.roomInviteNoneSent),
+        ),
+      ),
+    );
+  }
+
   /// Odayı paylaşım sayfasıyla (WhatsApp, Telegram, SMS…) paylaşır.
   ///
   /// Oda kodu `ZK-` + on karakterdir; bir arkadaşa bunu sesli okumak ya da
@@ -1004,6 +1044,9 @@ class _RoomScreenState extends State<RoomScreen> {
                                   room: room,
                                   onCopy: () => _copyRoomCode(context, ku),
                                   onShare: _shareRoomInvite,
+                                  onInviteFriends: _canInviteFriends
+                                      ? _inviteFriends
+                                      : null,
                                 ),
                               ),
                               padded(
@@ -1384,11 +1427,16 @@ class _RoomHero extends StatelessWidget {
     required this.room,
     required this.onCopy,
     required this.onShare,
+    this.onInviteFriends,
   });
 
   final GameRoom room;
   final VoidCallback onCopy;
   final Future<void> Function(Rect? origin) onShare;
+
+  /// Arkadaş listesinden davet; `null` ise (sunucuda göç yok, oda henüz
+  /// sunucuda değil, lobi değil) düğme çizilmez.
+  final VoidCallback? onInviteFriends;
 
   @override
   Widget build(BuildContext context) {
@@ -1548,9 +1596,19 @@ class _RoomHero extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: SahneSpace.x1),
-              _RoomInviteButton(
-                label: context.t(K.roomInviteAction),
-                onShare: onShare,
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  _RoomInviteButton(
+                    label: context.t(K.roomInviteAction),
+                    onShare: onShare,
+                  ),
+                  if (onInviteFriends != null)
+                    _RoomInviteFriendsButton(
+                      label: context.t(K.roomInviteFriendsAction),
+                      onPressed: onInviteFriends!,
+                    ),
+                ],
               ),
             ],
           );
@@ -1669,6 +1727,37 @@ class _RoomInviteButton extends StatelessWidget {
           onShare(origin);
         },
       ),
+    );
+  }
+}
+
+/// "Arkadaşlarımdan davet et": [_RoomInviteButton] ile aynı sakin metin
+/// düğmesi; kodsuz, arkadaş listesinden davet sayfasını açar.
+class _RoomInviteFriendsButton extends StatelessWidget {
+  const _RoomInviteFriendsButton({
+    required this.label,
+    required this.onPressed,
+  });
+
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return TextButton.icon(
+      key: const ValueKey('room-invite-friends'),
+      icon: Icon(AppIcons.userPlus, size: 18, color: t.tx2),
+      label: Text(label, style: SahneType.captionStrong.copyWith(color: t.tx2)),
+      style: TextButton.styleFrom(
+        minimumSize: const Size(sahneTapTarget, sahneTapTarget),
+        shape: SahneShape.m,
+        padding: const EdgeInsetsDirectional.only(end: SahneSpace.x3),
+      ),
+      onPressed: () {
+        HapticFeedback.selectionClick();
+        onPressed();
+      },
     );
   }
 }

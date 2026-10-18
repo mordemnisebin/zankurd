@@ -1456,6 +1456,59 @@ class Tr {
       'ku': 'Hevalên xwe vexwîne',
       'tr': 'Arkadaşlarını davet et',
     },
+    // ── Odaya arkadaş daveti (2026-10-18). Kurmancî metinler yerli göz
+    // incelemesi bekliyor (NEEDS_JURY).
+    K.roomInviteFriendsAction: {
+      'ku': 'Ji hevalan vexwîne',
+      'tr': 'Arkadaşlarımdan davet et',
+    },
+    K.roomInviteSheetTitle: {'ku': 'Hevalan vexwîne', 'tr': 'Arkadaş davet et'},
+    K.roomInviteSheetSub: {
+      'ku': 'Bê kod, rasterast tevlî dibin.',
+      'tr': 'Kod girmeden doğrudan katılırlar.',
+    },
+    K.roomInviteSearchHint: {'ku': 'Li heval bigere', 'tr': 'Arkadaş ara'},
+    K.roomInviteSend: {
+      'ku': 'Vexwendinê bişîne ({n})',
+      'tr': 'Davet gönder ({n})',
+    },
+    K.roomInviteAlreadyIn: {'ku': 'Di odeyê de', 'tr': 'Odada'},
+    K.roomInviteAlreadyInvited: {'ku': 'Hat vexwendin', 'tr': 'Davet edildi'},
+    K.roomInviteSent: {
+      'ku': 'Vexwendin ji {n} hevalan re çû',
+      'tr': '{n} arkadaşa davet gitti',
+    },
+    K.roomInviteNoneSent: {
+      'ku': 'Kes nehat vexwendin.',
+      'tr': 'Kimse davet edilemedi.',
+    },
+    K.roomInviteFailed: {
+      'ku': 'Vexwendin neçû. Dîsa biceribîne.',
+      'tr': 'Davet gönderilemedi. Tekrar dene.',
+    },
+    K.roomInviteTooMany: {
+      'ku': 'Te gelek vexwendin şandin; piştre dîsa biceribîne.',
+      'tr': 'Çok fazla davet gönderdin; biraz sonra tekrar dene.',
+    },
+    K.roomInviteNoFriends: {
+      'ku': 'Hîn hevalê te tune. Tu dikarî bi kod an girêdanê parve bikî.',
+      'tr': 'Henüz arkadaşın yok. Kod ya da bağlantıyla paylaşabilirsin.',
+    },
+    K.roomInviteCardTitle: {
+      'ku': '{name} tu vexwendî odeyê',
+      'tr': '{name} seni odaya çağırıyor',
+    },
+    K.roomInviteCardMeta: {
+      'ku': '{category} · {count}/{max} kes',
+      'tr': '{category} · {count}/{max} kişi',
+    },
+    K.roomInviteJoin: {'ku': 'Tevlî bibe', 'tr': 'Katıl'},
+    K.roomInviteDecline: {'ku': 'Red bike', 'tr': 'Reddet'},
+    K.roomInviteExpired: {
+      'ku': 'Ev vexwendin qediya an ode hate girtin.',
+      'tr': 'Bu davetin süresi doldu ya da oda kapandı.',
+    },
+    K.roomInviteSection: {'ku': 'Vexwendinên odeyê', 'tr': 'Oda davetleri'},
     K.roomInviteShareText: {
       'ku':
           'Were odeya min a ZanKurdê, em bi hev re bilîzin! Bitikîne û tevlî bibe: {link} (Koda odeyê: {code})',
@@ -3776,6 +3829,24 @@ class K {
   /// Oda lobisindeki davet düğmesi ve paylaşılan metin.
   static const roomInviteAction = 'room.invite.action';
   static const roomInviteShareText = 'room.invite.shareText';
+  static const roomInviteFriendsAction = 'room.inviteFriends.action';
+  static const roomInviteSheetTitle = 'room.inviteFriends.title';
+  static const roomInviteSheetSub = 'room.inviteFriends.sub';
+  static const roomInviteSearchHint = 'room.inviteFriends.search';
+  static const roomInviteSend = 'room.inviteFriends.send';
+  static const roomInviteAlreadyIn = 'room.inviteFriends.alreadyIn';
+  static const roomInviteAlreadyInvited = 'room.inviteFriends.alreadyInvited';
+  static const roomInviteSent = 'room.inviteFriends.sent';
+  static const roomInviteNoneSent = 'room.inviteFriends.noneSent';
+  static const roomInviteFailed = 'room.inviteFriends.failed';
+  static const roomInviteTooMany = 'room.inviteFriends.tooMany';
+  static const roomInviteNoFriends = 'room.inviteFriends.noFriends';
+  static const roomInviteCardTitle = 'room.inviteCard.title';
+  static const roomInviteCardMeta = 'room.inviteCard.meta';
+  static const roomInviteJoin = 'room.inviteCard.join';
+  static const roomInviteDecline = 'room.inviteCard.decline';
+  static const roomInviteExpired = 'room.inviteCard.expired';
+  static const roomInviteSection = 'room.inviteCard.section';
   static const playersWord = 'room.players';
   static const playerListUpdating = 'room.playerListUpdating';
   static const noPlayersYet = 'room.noPlayers';

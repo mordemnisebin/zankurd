@@ -1,3 +1,4 @@
+import 'home/room_invite_card.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -506,6 +507,12 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             ),
           ],
         ],
+        if (!locked)
+          RoomInviteCard(
+            repository: widget.repository,
+            refreshSignal: widget.refreshSignal,
+            topGap: false,
+          ),
         SahneSectionHeader(title: context.t(K.withFriends)),
         _RoomActions(
           note: context.t(K.createRoomSub),

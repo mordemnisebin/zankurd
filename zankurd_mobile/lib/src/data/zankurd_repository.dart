@@ -13,6 +13,7 @@ import '../models/player.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../models/room_invite.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
 import '../models/referral_result.dart';
@@ -296,6 +297,30 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// giriş noktaları gizlenir. Belirsizlikte (ağ hatası, oturum yok) `true`
   /// döner: yalnız KESİN "fonksiyon yok" yanıtı gizler.
   Future<bool> supportsAsyncDuelChallenge();
+
+  // ─── Odaya arkadaş daveti (supabase/2026-10-18_oda_davet.sql) ─────────
+
+  /// Sunucuda oda daveti RPC'leri var mı? Göç uygulanmamışsa giriş
+  /// noktaları gizlenir. Belirsizlikte `true`; yalnız KESİN "fonksiyon yok"
+  /// yanıtı `false` döner.
+  Future<bool> supportsRoomInvites();
+
+  /// [friendIds] arkadaşlarını [room]a davet eder; gerçekten davet edilen
+  /// kişi sayısını döner (arkadaş olmayan/engelli/odadaki kişiler atlanır).
+  /// Hatada [RoomInviteException].
+  Future<int> inviteFriendsToRoom(GameRoom room, List<String> friendIds);
+
+  /// [room] için benim gönderdiğim, hâlâ bekleyen davetlerin alıcı kimlikleri
+  /// (davet sayfasında "davet edildi" durumu). Hatada boş küme.
+  Future<Set<String>> loadRoomInvitedIds(GameRoom room);
+
+  /// Bana gelen bekleyen oda davetleri (en yeni önce). RPC yoksa/ağ yoksa boş.
+  Future<List<RoomInvite>> loadMyRoomInvites();
+
+  /// Daveti reddeder ya da kabul eder. Kabulde odanın kodunu döner; istemci
+  /// onu mevcut `joinOnlineRoom` yoluna verir. Reddette `null`. Süresi
+  /// dolmuşsa [RoomInviteException] ([RoomInviteFailure.expired]).
+  Future<String?> respondRoomInvite(String inviteId, {required bool accept});
 
   /// Sunucudaki odanın tek ve yetkili snapshot'ını oyuncularıyla yükler.
   ///

@@ -17,6 +17,7 @@ import '../models/player.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../models/room_invite.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
 import '../models/referral_result.dart';
@@ -3803,6 +3804,102 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // gerçek çağrı kendi hatasını gösterir.
       _recordError(error, stack, reason: 'supportsAsyncDuelChallenge failed');
       return true;
+    }
+  }
+
+  // ─── Odaya arkadaş daveti (supabase/2026-10-18_oda_davet.sql) ────────
+
+  /// `null`: henüz bilinmiyor; `false`: sunucu RPC'yi tanımıyor (göç
+  /// uygulanmamış). Yalnız KESİN yanıtlar saklanır.
+  bool? _roomInviteRpcSupported;
+
+  @override
+  Future<bool> supportsRoomInvites() async {
+    final known = _roomInviteRpcSupported;
+    if (known != null) return known;
+    // Oturum yokken sormak misafir hesabı yaratırdı; belirsiz = göster.
+    if (client.auth.currentUser == null) return true;
+    try {
+      await client.rpc<List<dynamic>>('list_my_room_invites');
+      return _roomInviteRpcSupported = true;
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) return _roomInviteRpcSupported = false;
+      _recordError(error, stack, reason: 'supportsRoomInvites failed');
+      return true;
+    }
+  }
+
+  @override
+  Future<int> inviteFriendsToRoom(GameRoom room, List<String> friendIds) async {
+    final roomId = room.id;
+    if (roomId == null || friendIds.isEmpty) return 0;
+    try {
+      final res = await client.rpc(
+        'invite_friends_to_room',
+        params: {'p_room_id': roomId, 'p_friend_ids': friendIds},
+      );
+      return (res as num?)?.toInt() ?? 0;
+    } on PostgrestException catch (error, stack) {
+      _recordError(error, stack, reason: 'inviteFriendsToRoom rejected');
+      throw RoomInviteException(
+        RoomInviteException.reasonForMessage(error.message),
+        error.message,
+      );
+    }
+  }
+
+  @override
+  Future<Set<String>> loadRoomInvitedIds(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null) return const {};
+    try {
+      final rows = await client
+          .from('room_invites')
+          .select('invitee_id')
+          .eq('room_id', roomId)
+          .eq('status', 'pending');
+      return {for (final row in rows) (row as Map)['invitee_id'] as String};
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadRoomInvitedIds failed');
+      return const {};
+    }
+  }
+
+  @override
+  Future<List<RoomInvite>> loadMyRoomInvites() async {
+    if (_roomInviteRpcSupported == false) return const [];
+    if (client.auth.currentUser == null) return const [];
+    try {
+      final res = await client.rpc<List<dynamic>>('list_my_room_invites');
+      _roomInviteRpcSupported = true;
+      return [
+        for (final row in res)
+          RoomInvite.fromJson(Map<String, dynamic>.from(row as Map)),
+      ];
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) _roomInviteRpcSupported = false;
+      _recordError(error, stack, reason: 'loadMyRoomInvites failed');
+      return const [];
+    }
+  }
+
+  @override
+  Future<String?> respondRoomInvite(
+    String inviteId, {
+    required bool accept,
+  }) async {
+    try {
+      final res = await client.rpc(
+        'respond_room_invite',
+        params: {'p_invite_id': inviteId, 'p_accept': accept},
+      );
+      return res as String?;
+    } on PostgrestException catch (error, stack) {
+      _recordError(error, stack, reason: 'respondRoomInvite rejected');
+      throw RoomInviteException(
+        RoomInviteException.reasonForMessage(error.message),
+        error.message,
+      );
     }
   }
 

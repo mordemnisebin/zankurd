@@ -12,6 +12,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/async_duel.dart';
 import '../models/room.dart';
+import '../models/room_invite.dart';
 import '../providers/auth_provider.dart';
 import '../providers/remote_availability.dart';
 import '../providers/repository_holder.dart';
@@ -838,6 +839,8 @@ class _AppShellState extends State<AppShell>
             context,
           ).push(AppRoute.to(AsyncDuelListScreen(repository: _repository))),
         );
+      case PushTapTarget.roomInvite:
+        unawaited(_openRoomInviteFromPush());
       case PushTapTarget.friends:
         _selectTab(2);
         unawaited(
@@ -845,6 +848,32 @@ class _AppShellState extends State<AppShell>
             context,
           ).push(AppRoute.to(FriendsScreen(repository: _repository))),
         );
+    }
+  }
+
+  /// `room_invite` bildirimine dokunuş: tek bekleyen davet varsa kabul edilip
+  /// mevcut oda katılma yolundan girilir (bağlantıyla gelen davetle aynı
+  /// davranış); birden çoksa ya da hiç yoksa Ana ekran açılır, "Odaya davet"
+  /// kartı orada bekler. Süresi dolmuş davet sessiz kalmaz.
+  Future<void> _openRoomInviteFromPush() async {
+    _selectTab(0);
+    try {
+      final invites = await _repository.loadMyRoomInvites();
+      if (!mounted || invites.length != 1) {
+        if (mounted) _homeRefresh.value++;
+        return;
+      }
+      final code = await _repository.respondRoomInvite(
+        invites.single.id,
+        accept: true,
+      );
+      if (code == null || !mounted) return;
+      await _joinOnlineRoomAndOpen(code);
+    } on RoomInviteException {
+      if (mounted) _showJoinFailure(context.t(K.roomInviteExpired));
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'room invite push tap');
+      if (mounted) _showJoinFailure(context.t(K.roomInviteFailed));
     }
   }
 
