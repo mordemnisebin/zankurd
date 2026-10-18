@@ -181,7 +181,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.joinCalls, 0);
-    expect(find.text('Kodu kontrol et. Örnek: ZK-ABCDEF0123'), findsOneWidget);
+    expect(find.text('Kodu kontrol et. Örnek: 482 913'), findsOneWidget);
     expect(find.byType(RoomScreen), findsNothing);
   });
 
@@ -228,7 +228,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.joinCalls, 0);
-    const fullError = 'Kodê kontrol bike. Mînak: ZK-ABCDEF0123';
+    const fullError = 'Kodê kontrol bike. Mînak: 482 913';
     final error = find.text(fullError);
     expect(error, findsOneWidget);
     await tester.ensureVisible(error);

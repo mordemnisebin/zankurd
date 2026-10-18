@@ -672,7 +672,7 @@ void main() {
     expect(Tr.of(K.passwordHintMin6, AppLanguage.ku), 'Herî kêm 6 tîp');
     expect(
       Tr.of(K.roomCodeInvalid, AppLanguage.ku),
-      'Kodê kontrol bike. Mînak: ZK-ABCDEF0123',
+      'Kodê kontrol bike. Mînak: 482 913',
     );
 
     final karakter = RegExp(r'karakter', caseSensitive: false);
