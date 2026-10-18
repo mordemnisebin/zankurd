@@ -1042,11 +1042,11 @@ void main() {
     expect(room.status, RoomStatus.lobby);
     expect(room.players.map((player) => player.id), ['host-id']);
     expect(httpClient.requestedPaths, [
-      '/rest/v1/rpc/create_online_room',
+      '/rest/v1/rpc/create_online_room_v2',
       '/rest/v1/room_players',
     ]);
     expect(httpClient.requestBodies.single, {
-      'p_category_name': 'Ziman',
+      'p_category_names': ['Ziman'],
       'p_seconds_per_question': 20,
       'p_question_count': 10,
       'p_entry_fee': 0,
