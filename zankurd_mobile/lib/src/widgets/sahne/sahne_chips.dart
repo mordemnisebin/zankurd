@@ -443,7 +443,10 @@ class SahneStatusBadge extends StatelessWidget {
 /// seçili ve seçilmemiş hâli yalnız ton farkıyla ayırıyor, doğal genişlikte
 /// tırtıklı satırlar çiziyordu. Bu bileşen bulunduğu hücreyi doldurur
 /// (çağıran eşit sütunlu ızgara kurar), en az 48 yüksekliktedir, metin
-/// ortalanır ve sığmazsa iki satıra sarar. Ekran okuyucu seçili durumu okur.
+/// ortalanır. 2026-10-19 son rötuş: metin tek satırdır (uzun ad küçülerek
+/// sığar; "Bilim ve Düşünce" iki satıra sarıp satırı uzatıyordu); yalnız
+/// büyük yazıda (≥ %150) iki satıra izin verilir ve çağıranın ızgarası aynı
+/// satırdaki bütün çipleri eşit boya getirir. Ekran okuyucu seçili durumu okur.
 class SahnePickChip extends StatelessWidget {
   const SahnePickChip({
     super.key,
@@ -463,6 +466,7 @@ class SahnePickChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    final large = MediaQuery.textScalerOf(context).scale(14) >= 21;
     final shape = SahneShape.withSide(
       SahneShape.m,
       selected ? t.race : t.tx3,
@@ -495,15 +499,23 @@ class SahnePickChip extends StatelessWidget {
                     const SizedBox(width: SahneSpace.x1),
                   ],
                   Flexible(
-                    child: Text(
-                      label,
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: SahneType.captionStrong.copyWith(
-                        color: selected ? SahneTokens.night.tx : t.tx,
-                      ),
-                    ),
+                    child: () {
+                      final text = Text(
+                        label,
+                        textAlign: TextAlign.center,
+                        maxLines: large ? 2 : 1,
+                        softWrap: large,
+                        overflow: TextOverflow.ellipsis,
+                        style: SahneType.captionStrong.copyWith(
+                          color: selected ? SahneTokens.night.tx : t.tx,
+                        ),
+                      );
+                      // Normal yazıda tek satır: uzun ad ("Bilim ve Düşünce")
+                      // küçülerek sığar, satır boyu bozulmaz.
+                      return large
+                          ? text
+                          : FittedBox(fit: BoxFit.scaleDown, child: text);
+                    }(),
                   ),
                 ],
               ),

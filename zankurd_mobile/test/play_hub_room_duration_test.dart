@@ -1,5 +1,6 @@
 // 2026-10-19 sadeleşme (ikinci tur): oda kurma çipleri Material ChoiceChip/FilterChip yerine `SahnePickChip` (seçili = dolu renk, değilse çerçeve; eşit sütunlu ızgara);
 // bekçiler `.selected` alanını yeni bileşenden okur, davranış (çoklu seçim, Karışık, gönderilen değerler) aynı.
+// 2026-10-19 son rötuş: çipler tek satır ("Bilim ve Düşünce" iki satıra sarıp satırı uzatıyordu); büyük yazıda iki satıra izin var ama aynı satırdaki çipler eşit boyda; alt çubuğun üstünde ayraç var.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -186,6 +187,29 @@ void main() {
     );
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
+  }
+
+  for (final scale in [1.0, 2.0]) {
+    testWidgets('oda kurma çipleri: aynı satırda eşit boy, normal yazıda 48 '
+        '(yazı x$scale)', (tester) async {
+      tester.platformDispatcher.textScaleFactorTestValue = scale;
+      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+      await openCreateSheet(tester, _CapturingRepository());
+      expect(
+        find.byKey(const ValueKey('custom-room-footer-divider')),
+        findsOneWidget,
+      );
+      final rows = <int, Set<double>>{};
+      for (final e in find.byType(SahnePickChip).evaluate()) {
+        final r = tester.getRect(find.byWidget(e.widget));
+        rows.putIfAbsent(r.top.round(), () => {}).add(r.height);
+        if (scale == 1.0) expect(r.height, 48, reason: 'tek satır, 48');
+      }
+      expect(rows, isNotEmpty);
+      rows.forEach((top, heights) {
+        expect(heights.length, 1, reason: 'satır $top: eşit boy olmalı');
+      });
+    });
   }
 
   testWidgets(

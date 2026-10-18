@@ -840,11 +840,30 @@ class _ChoiceGrid extends StatelessWidget {
           cols--;
         }
         final width = cell(cols);
-        return Wrap(
-          spacing: gap,
-          runSpacing: gap,
+        // Satır satır kurulur: her satırda bütün çipler en uzununun boyunu
+        // alır (büyük yazıda biri iki satıra sarsa bile satır eşit kalır).
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            for (final child in children) SizedBox(width: width, child: child),
+            for (var i = 0; i < children.length; i += cols) ...[
+              if (i > 0) const SizedBox(height: gap),
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var j = 0; j < cols; j++) ...[
+                      if (j > 0) const SizedBox(width: gap),
+                      SizedBox(
+                        width: width,
+                        child: i + j < children.length
+                            ? children[i + j]
+                            : const SizedBox.shrink(),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
           ],
         );
       },
@@ -949,18 +968,26 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
               const SizedBox(height: SahneSpace.x3),
               Row(
                 children: [
-                  // Yarış rolünün ikon karosu (Boyax tonu, M pah).
-                  DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: t.raceTint,
-                      shape: SahneShape.m,
+                  // Yarış rolünün ikon karosu (Boyax tonu, M pah). Büyük
+                  // yazıda (≥ %150) karo kalkar: başlık "oluştu / r" diye
+                  // sözcüğün ortasından kırılıyordu (320 px, x2).
+                  if (MediaQuery.textScalerOf(context).scale(14) < 21) ...[
+                    DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: t.raceTint,
+                        shape: SahneShape.m,
+                      ),
+                      child: SizedBox.square(
+                        dimension: 44,
+                        child: Icon(
+                          AppIcons.gamepad,
+                          color: t.raceTx,
+                          size: 24,
+                        ),
+                      ),
                     ),
-                    child: SizedBox.square(
-                      dimension: 44,
-                      child: Icon(AppIcons.gamepad, color: t.raceTx, size: 24),
-                    ),
-                  ),
-                  const SizedBox(width: SahneSpace.x3),
+                    const SizedBox(width: SahneSpace.x3),
+                  ],
                   Expanded(
                     child: Text(
                       context.t(K.customRoomTitle),
@@ -978,6 +1005,9 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
               const SizedBox(height: SahneSpace.x4),
               Flexible(
                 child: SingleChildScrollView(
+                  // Alt boşluk: son satır (oyuncu sayısı/ücret) kaydırınca
+                  // ayracın ve düğmenin tam üstüne rahatça çıkar.
+                  padding: const EdgeInsets.only(bottom: SahneSpace.x4),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1190,7 +1220,14 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                   ),
                 ),
               ),
-              const SizedBox(height: SahneSpace.x3),
+              // Alt çubuğun üstünde ince ayraç: kaydırılan içerik düğmenin
+              // altında "kesilmiş" görünmesin.
+              Divider(
+                key: const ValueKey('custom-room-footer-divider'),
+                height: SahneSpace.x3 * 2 + 1,
+                thickness: 1,
+                color: t.tx3.withValues(alpha: 0.35),
+              ),
 
               // 2026-10-19: düğme kaydırma alanının DIŞINDA, sayfanın altında SABİT;
               // uzun seçim listesinde "Oda kur" hiç kaybolmaz.

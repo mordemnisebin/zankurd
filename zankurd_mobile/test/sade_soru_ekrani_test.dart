@@ -14,7 +14,7 @@
 // kalabalık olur. Bu dosya yeni sözleşmeyi sabitler: TEK üst satır (kapat |
 // "Kategori · n/N" | saniye + ⋯), 4 px ilerleme çubuğu, huzme ve elmas yok,
 // Kaydet ve Bildir ⋯ menüsünde, joker dizisinde açıklama cümlesi yok ve
-// jetonu yetmeyen joker kilitli ama dokunulabilir (dokununca nedenini
+// jetonu yetmeyen joker soluk (kilit simgesiz) ama dokunulabilir (dokununca nedenini
 // söyler). 320 px ve 2.0 yazı ölçeğinde taşma yok.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -133,9 +133,10 @@ void main() {
       );
       expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsOneWidget);
 
-      // Başlangıç bakiyesi 0: her joker kilitli ve soluk.
-      final locks = find.byKey(const ValueKey('joker-lock'));
-      expect(locks, findsWidgets);
+      // Başlangıç bakiyesi 0: her joker soluk; ayrı kilit simgesi YOK
+      // (kapsülde yalnız ikon + jeton + fiyat), neden Semantics'te yazar.
+      expect(find.byKey(const ValueKey('joker-lock')), findsNothing);
+      expect(find.byType(SahneJokerButton), findsWidgets);
 
       // Kilitli jokere dokununca neden söylenir (ölü düğme yok).
       await tester.tap(find.byType(SahneJokerButton).first);

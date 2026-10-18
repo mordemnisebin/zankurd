@@ -1,5 +1,5 @@
-// 2026-10-19 sadeleşme: joker kapsül çip oldu; jetonu yetmeyen joker soluk +
-// küçük kilitli ama DOKUNULABİLİR (neden alınamadığı tost olarak açıklanır).
+// 2026-10-19 sadeleşme: joker kapsül çip oldu; jetonu yetmeyen joker %60
+// soluk (kilit simgesi yok; son rötuşta kalktı) ama DOKUNULABİLİR (neden alınamadığı tost olarak açıklanır).
 // "jeton yetmiyor" testi bu yüzden dokunuşu 1 sayar ve kilit ikonunu arar.
 /// Şahnê birleştirme turunun (2026-09-29) bileşen bekçileri.
 ///
@@ -22,6 +22,8 @@
 ///   kategori geri düşüşü; durum rozetinin nötr "boş" hâli; joker ve ikon
 ///   düğmesinin seçili hâlleri; sayaç halesinin kategori ışığı.
 library;
+
+import 'dart:math' as math;
 
 import 'dart:ui' show Tristate;
 
@@ -633,7 +635,7 @@ void main() {
     // ama DOKUNULABİLİR (neden alınamadığını açıklamak için); eskiden ölü
     // pasif düğmeydi (dokunuş sayısı 0).
     testWidgets(
-      'jeton yetmiyor: soluk, kilitli, dokunulabilir; fiyat görünür',
+      'jeton yetmiyor: %60 soluk, kilit simgesiz, dokunulabilir; fiyat görünür',
       (tester) async {
         var taps = 0;
         await pumpSahne(
@@ -650,11 +652,22 @@ void main() {
           textScale: 1,
         );
         expect(find.text('30'), findsOneWidget);
+        // Kapsül etkin jokerle aynı; fiyat %60 opaklıkta, ayrı kilit yok.
+        final price = tester.widget<Text>(find.text('30')).style!.color!;
+        expect(price.a, closeTo(0.6, 0.01));
+        expect(find.byKey(const ValueKey('joker-lock')), findsNothing);
+        // Kontrast >= 3:1 (gece Kulis kapsülü üstünde).
+        final bg = SahneTokens.night.s2;
+        final fg = Color.alphaBlend(price, bg);
+        double lum(Color c) => c.computeLuminance();
+        final ratio =
+            (math.max(lum(fg), lum(bg)) + 0.05) /
+            (math.min(lum(fg), lum(bg)) + 0.05);
+        expect(ratio, greaterThanOrEqualTo(3.0));
         expect(
-          tester.widget<Text>(find.text('30')).style?.color,
-          SahneTokens.night.tx3,
+          tester.getSize(find.byKey(const Key('j'))).height,
+          greaterThanOrEqualTo(48),
         );
-        expect(find.byKey(const ValueKey('joker-lock')), findsOneWidget);
         await tester.tap(find.byKey(const Key('j')));
         expect(taps, 1);
       },

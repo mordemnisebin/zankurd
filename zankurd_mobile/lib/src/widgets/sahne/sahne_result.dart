@@ -158,14 +158,15 @@ class SahneResultScaffold extends StatelessWidget {
             // erişilebilirlik ağacına birlikte girsinler. Kayıt sayısı tur
             // soru sayısıyla sınırlı olduğu için geniş önbellek güvenlidir.
             scrollCacheExtent: const ScrollCacheExtent.pixels(2500),
-            // Alt perde gövdenin ÜSTÜNE biner (`extendBody`): son öğe perdenin
-            // arkasında kalmasın diye alt boşluk perdenin yüksekliği
-            // (`MediaQuery.padding.bottom`) + 24 olur.
+            // Gövde zaten alt perdenin ÜSTÜNDE biter (`SahneStageScaffold`
+            // perde boyunu gövdeden düşer); listenin kendi alt boşluğu yalnız
+            // 16'dır: son bölüm perdenin 16 üstünde durur (perde boyu bir daha
+            // eklenmez — eskiden güvenli alanlı telefonda çifte boşluk vardı).
             padding: EdgeInsets.fromLTRB(
               side,
               SahneSpace.x2,
               side,
-              SahneSpace.x6 + MediaQuery.paddingOf(context).bottom,
+              SahneSpace.x4,
             ),
             children: items,
           );
