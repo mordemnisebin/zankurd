@@ -161,6 +161,13 @@ class _AsyncDuelInboxSectionState extends State<AsyncDuelInboxSection> {
     // liste grubunda (`SahneListRow`, Boyax yarış karosu). Okunmamış sayı
     // dolu turuncu kutu değil, yarış tonunda rol rozeti: dolu kırmızı/
     // turuncu rozet yok, Agir yalnız birincil eylemdir.
+    // 2026-10-19 sadeleşme (ikinci tur): boş kutu ya da ilk yükleme çarkı
+    // Yarış sekmesine "henüz hiçbir şey yok" başlığı ekliyordu. Kutu yalnız
+    // gösterecek satırı varken (ya da yükleme hatasında, "tekrar dene" için)
+    // çizilir; anahtar yine de yerinde durur.
+    if ((items == null && !_failed) || (items != null && all.isEmpty)) {
+      return const SizedBox.shrink(key: ValueKey('play-hub-async-duel-inbox'));
+    }
     return KeyedSubtree(
       key: const ValueKey('play-hub-async-duel-inbox'),
       child: Column(
