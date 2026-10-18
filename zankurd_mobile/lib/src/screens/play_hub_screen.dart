@@ -833,7 +833,7 @@ class _ChoiceGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         const gap = SahneSpace.x2;
-        final minCell = MediaQuery.textScalerOf(context).scale(88);
+        final minCell = MediaQuery.textScalerOf(context).scale(72);
         var cols = columns;
         double cell(int c) => (constraints.maxWidth - gap * (c - 1)) / c;
         while (cols > 1 && cell(cols) < minCell) {
@@ -1150,7 +1150,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                       ),
                       const SizedBox(height: SahneSpace.x2),
                       _ChoiceGrid(
-                        columns: 4,
+                        columns: 2,
                         children: [
                           for (final fee in GameRoom.allowedEntryFees)
                             _choiceChip(
