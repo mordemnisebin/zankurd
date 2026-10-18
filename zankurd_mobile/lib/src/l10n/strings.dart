@@ -1459,7 +1459,7 @@ class Tr {
     // ── Odaya arkadaş daveti (2026-10-18). Kurmancî metinler yerli göz
     // incelemesi bekliyor (NEEDS_JURY).
     K.roomInviteFriendsAction: {
-      'ku': 'Ji hevalan vexwîne',
+      'ku': 'Ji hevalên xwe vexwîne',
       'tr': 'Arkadaşlarımdan davet et',
     },
     K.roomInviteSheetTitle: {'ku': 'Hevalan vexwîne', 'tr': 'Arkadaş davet et'},
@@ -1467,7 +1467,7 @@ class Tr {
       'ku': 'Bê kod, rasterast tevlî dibin.',
       'tr': 'Kod girmeden doğrudan katılırlar.',
     },
-    K.roomInviteSearchHint: {'ku': 'Li heval bigere', 'tr': 'Arkadaş ara'},
+    K.roomInviteSearchHint: {'ku': 'Li hevalan bigere', 'tr': 'Arkadaş ara'},
     K.roomInviteSend: {
       'ku': 'Vexwendinê bişîne ({n})',
       'tr': 'Davet gönder ({n})',
@@ -1491,11 +1491,11 @@ class Tr {
       'tr': 'Çok fazla davet gönderdin; biraz sonra tekrar dene.',
     },
     K.roomInviteNoFriends: {
-      'ku': 'Hîn hevalê te tune. Tu dikarî bi kod an girêdanê parve bikî.',
+      'ku': 'Hê hevalên te nînin. Tu dikarî bi kod an girêdanê parve bikî.',
       'tr': 'Henüz arkadaşın yok. Kod ya da bağlantıyla paylaşabilirsin.',
     },
     K.roomInviteCardTitle: {
-      'ku': '{name} tu vexwendî odeyê',
+      'ku': '{name} te vedixwîne odeyê',
       'tr': '{name} seni odaya çağırıyor',
     },
     K.roomInviteCardMeta: {

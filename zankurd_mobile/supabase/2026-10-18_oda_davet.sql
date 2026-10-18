@@ -187,7 +187,7 @@ begin
         'ZanKurd',
         -- Sunucu alıcının arayüz dilini bilmiyor; metin iki dilli
         -- (enqueue_async_duel_invite_push ile aynı kalıp).
-        v_name || ' tu vexwendî odeyê · ' || v_name
+        v_name || ' te vedixwîne odeyê · ' || v_name
           || ' seni odaya davet etti'
       );
     end if;
