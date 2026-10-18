@@ -165,7 +165,17 @@ class CategoryNames {
 
   static String localized(String kuName, bool isKu) {
     final key = _keys[kuName];
-    if (key == null) return kuName;
+    if (key == null) {
+      // Çoklu kategorili oda etiketi: adlar `, ` ile birleşik gelir; her
+      // biri ayrı yerelleştirilir.
+      if (kuName.contains(', ')) {
+        return kuName
+            .split(', ')
+            .map((part) => localized(part, isKu))
+            .join(', ');
+      }
+      return kuName;
+    }
     return Tr.forKu(key, isKu);
   }
 

@@ -836,10 +836,24 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }
       await ensureProfile();
 
+      // `category` seçimi tek dizgede taşır: `Tevlihev` = Karışık (hepsi),
+      // `A, B` = çoklu, `A` = tek kategori. Tek kategori ESKİ RPC'ye aynen
+      // gider (sunucu göçü uygulanmadan da çalışır); Karışık/çoklu yeni
+      // `create_online_room_v2`ye gider (boş dizi = Karışık).
+      final isMixed = category == 'Tevlihev';
+      final picked = category
+          .split(',')
+          .map((c) => c.trim())
+          .where((c) => c.isNotEmpty)
+          .toList(growable: false);
+      final useV2 = isMixed || picked.length > 1;
       final response = await client.rpc(
-        'create_online_room',
+        useV2 ? 'create_online_room_v2' : 'create_online_room',
         params: {
-          'p_category_name': category,
+          if (useV2)
+            'p_category_names': isMixed ? const <String>[] : picked
+          else
+            'p_category_name': category,
           'p_seconds_per_question': secondsPerQuestion,
           'p_question_count': questionCount,
           'p_entry_fee': entryFee,
@@ -848,7 +862,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           if (maxPlayers != 2) 'p_max_players': maxPlayers,
         },
       );
-      final snapshot = _requiredJsonObject(response, 'create_online_room');
+      final snapshot = _requiredJsonObject(
+        response,
+        useV2 ? 'create_online_room_v2' : 'create_online_room',
+      );
       final roomId = _requiredString(snapshot, const ['room_id']);
       final roomCode = _requiredString(snapshot, const ['code']);
       final hostId = _requiredString(snapshot, const ['host_id']);

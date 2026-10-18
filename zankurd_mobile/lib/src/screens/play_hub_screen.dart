@@ -244,9 +244,12 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                       label: context.t(K.roomCode),
                       controller: controller,
                       textCapitalization: TextCapitalization.characters,
-                      // Yazarken kanonik biçime çeker: kullanıcı yalnız soneki
-                      // yazsa da alanda `ZK-ABCDEF0123` görünür, yani gönderilen
-                      // kodun doğru olduğunu göndermeden önce görür.
+                      // Yeni kod 6 rakamdır: sayı klavyesi açılır. Eski `ZK-…`
+                      // kodu ya da bağlantı yapıştırılırsa biçimlendirici
+                      // yine kabul eder (klavye türü yapıştırmayı engellemez).
+                      keyboardType: TextInputType.number,
+                      // Yazarken gösterim biçimine çeker: "482913" alanda
+                      // "482 913" görünür; eski kodlarda kanonik `ZK-…`.
                       inputFormatters: const [_RoomCodeInputFormatter()],
                       inputTextStyle: inputTextStyle,
                       prefixIcon: AppIcons.doorOpen,
@@ -798,6 +801,8 @@ class _EarnCoinsRequest {
 
 class _CustomRoomConfig {
   const _CustomRoomConfig({
+    /// Seçilen kategoriler tek dizgede: Karışık = `Tevlihev`, tek kategori =
+    /// adı, çoklu = adlar `, ` ile (sunucudaki `room_category_label` biçimi).
     required this.category,
     required this.duration,
     required this.questionCount,
@@ -875,7 +880,10 @@ class _CustomRoomBottomSheet extends StatefulWidget {
 }
 
 class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
-  late String _selectedCategory;
+  /// Seçili kategori adları. Boş küme = Karışık (hepsi). En az bir seçim
+  /// her zaman vardır: Karışık da bir seçimdir.
+  final Set<String> _selectedCategories = <String>{};
+  bool _mixed = true;
   int _selectedDuration = GameRoom.defaultSecondsPerQuestion;
   int _selectedQuestionCount = 10;
   int _selectedEntryFee = 0;
@@ -884,7 +892,6 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _selectedCategory = widget.availableCategories.firstOrNull ?? 'Ziman';
   }
 
   @override
@@ -978,15 +985,35 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         spacing: SahneSpace.x2,
                         runSpacing: SahneSpace.x2,
                         children: [
+                          // Karışık: bütün kategoriler. Seçilince tekil
+                          // seçimler temizlenir; bir kategori seçilince
+                          // Karışık kalkar.
+                          FilterChip(
+                            key: const ValueKey('custom-room-cat-mixed'),
+                            label: Text(
+                              CategoryNames.localized('Tevlihev', context.isKu),
+                            ),
+                            selected: _mixed,
+                            onSelected: (_) => setState(() {
+                              _mixed = true;
+                              _selectedCategories.clear();
+                            }),
+                          ),
                           for (final cat in widget.availableCategories)
-                            ChoiceChip(
+                            FilterChip(
                               key: ValueKey('custom-room-cat-$cat'),
                               label: Text(
                                 CategoryNames.localized(cat, context.isKu),
                               ),
-                              selected: _selectedCategory == cat,
-                              onSelected: (_) =>
-                                  setState(() => _selectedCategory = cat),
+                              selected: _selectedCategories.contains(cat),
+                              onSelected: (_) => setState(() {
+                                if (!_selectedCategories.remove(cat)) {
+                                  _selectedCategories.add(cat);
+                                }
+                                // Son kategori kaldırılırsa Karışık'a dön:
+                                // seçimsiz oda kurulamaz.
+                                _mixed = _selectedCategories.isEmpty;
+                              }),
                             ),
                         ],
                       ),
@@ -1165,7 +1192,9 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                 onPressed: () {
                                   Navigator.of(context).pop(
                                     _CustomRoomConfig(
-                                      category: _selectedCategory,
+                                      category: _mixed
+                                          ? 'Tevlihev'
+                                          : _selectedCategories.join(', '),
                                       duration: _selectedDuration,
                                       questionCount: _selectedQuestionCount,
                                       entryFee: _selectedEntryFee,

@@ -734,14 +734,18 @@ class _RoomScreenState extends State<RoomScreen> {
     await Clipboard.setData(ClipboardData(text: room.code));
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(context.t(K.roomCodeCopied, {'code': room.code}))),
+      SnackBar(
+        content: Text(
+          context.t(K.roomCodeCopied, {'code': displayRoomCode(room.code)}),
+        ),
+      ),
     );
   }
 
   /// Odayı paylaşım sayfasıyla (WhatsApp, Telegram, SMS…) paylaşır.
   ///
-  /// Oda kodu `ZK-` + on karakterdir; bir arkadaşa bunu sesli okumak ya da
-  /// elle yazdırmak odayı fiilen kilitliyordu. Kod kopyalama tek yoldu ve
+  /// Oda kodu eskiden `ZK-` + on karakterdi; bir arkadaşa bunu sesli okumak
+  /// ya da elle yazdırmak odayı fiilen kilitliyordu (şimdi 6 rakam). Kod kopyalama tek yoldu ve
   /// kopyalanan kodun nereye yapıştırılacağını oyuncu kendisi bulmalıydı.
   /// Paylaşılan metin `zankurd.com/join/<kod>` bağlantısını taşır: web
   /// sürümü bu yolu açınca odaya doğrudan katılır (`JoinDeepLink`), yani
@@ -750,7 +754,7 @@ class _RoomScreenState extends State<RoomScreen> {
   Future<void> _shareRoomInvite(Rect? origin) async {
     final text = context.t(K.roomInviteShareText, {
       'link': JoinDeepLink.shareUrl(room.code),
-      'code': room.code,
+      'code': displayRoomCode(room.code),
     });
     try {
       await SharePlus.instance.share(
@@ -763,7 +767,9 @@ class _RoomScreenState extends State<RoomScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(context.t(K.roomCodeCopied, {'code': room.code})),
+          content: Text(
+            context.t(K.roomCodeCopied, {'code': displayRoomCode(room.code)}),
+          ),
         ),
       );
     }
@@ -1511,13 +1517,14 @@ class _RoomHero extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: SahneSpace.x1),
-                                // Kod hiçbir genişlikte kısaltılmaz: 13
-                                // karakter 320 px'te de tam okunur.
+                                // Kod hiçbir genişlikte kısaltılmaz: "482 913"
+                                // (eski odalarda 13 karakter) 320 px'te de
+                                // tam okunur.
                                 FittedBox(
                                   fit: BoxFit.scaleDown,
                                   alignment: AlignmentDirectional.centerStart,
                                   child: Text(
-                                    room.code,
+                                    displayRoomCode(room.code),
                                     key: const ValueKey('room-code'),
                                     maxLines: 1,
                                     softWrap: false,

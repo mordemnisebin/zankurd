@@ -255,4 +255,83 @@ void main() {
 
     expect(repository.capturedMaxPlayers, 2);
   });
+
+  group('kategori seçimi: Karışık ve çoklu', () {
+    Future<void> tapChip(WidgetTester tester, String key) async {
+      final chip = find.byKey(ValueKey(key));
+      await tester.ensureVisible(chip);
+      await tester.pump();
+      await tester.tap(chip);
+      await tester.pumpAndSettle();
+    }
+
+    Future<void> open(WidgetTester tester) async {
+      final openButton = find.text('Odayı aç');
+      await tester.ensureVisible(openButton);
+      await tester.pump();
+      await tester.tap(openButton);
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('varsayılan Karışık seçili ve Tevlihev gönderir', (
+      tester,
+    ) async {
+      final repository = _CapturingRepository();
+      await openCreateSheet(tester, repository);
+
+      final mixed = tester.widget<FilterChip>(
+        find.byKey(const ValueKey('custom-room-cat-mixed')),
+      );
+      expect(mixed.selected, isTrue);
+      await open(tester);
+      expect(repository.capturedCategory, 'Tevlihev');
+    });
+
+    testWidgets(
+      'birden çok kategori seçilince Karışık kalkar, adlar birleşir',
+      (tester) async {
+        final repository = _CapturingRepository();
+        await openCreateSheet(tester, repository);
+
+        await tapChip(tester, 'custom-room-cat-Dîrok');
+        await tapChip(tester, 'custom-room-cat-Ziman');
+        final mixed = tester.widget<FilterChip>(
+          find.byKey(const ValueKey('custom-room-cat-mixed')),
+        );
+        expect(mixed.selected, isFalse);
+        await open(tester);
+        expect(repository.capturedCategory, 'Dîrok, Ziman');
+      },
+    );
+
+    testWidgets('Karışık seçilince tekil seçimler temizlenir', (tester) async {
+      final repository = _CapturingRepository();
+      await openCreateSheet(tester, repository);
+
+      await tapChip(tester, 'custom-room-cat-Dîrok');
+      await tapChip(tester, 'custom-room-cat-mixed');
+      final dirok = tester.widget<FilterChip>(
+        find.byKey(const ValueKey('custom-room-cat-Dîrok')),
+      );
+      expect(dirok.selected, isFalse);
+      await open(tester);
+      expect(repository.capturedCategory, 'Tevlihev');
+    });
+
+    testWidgets('son kategori kaldırılınca Karışık\'a döner (boş seçim yok)', (
+      tester,
+    ) async {
+      final repository = _CapturingRepository();
+      await openCreateSheet(tester, repository);
+
+      await tapChip(tester, 'custom-room-cat-Dîrok');
+      await tapChip(tester, 'custom-room-cat-Dîrok');
+      final mixed = tester.widget<FilterChip>(
+        find.byKey(const ValueKey('custom-room-cat-mixed')),
+      );
+      expect(mixed.selected, isTrue);
+      await open(tester);
+      expect(repository.capturedCategory, 'Tevlihev');
+    });
+  });
 }

@@ -23,6 +23,17 @@ void main() {
       expect(room.code, 'ZK-0123456789');
     });
 
+    test('6 rakamlı kod boşluklu, tireli ve bağlantıyla da katılır', () {
+      for (final typed in [
+        '482913',
+        '482 913',
+        ' 482-913 ',
+        'https://www.zankurd.com/join/482913',
+      ]) {
+        expect(repository.joinRoom(typed).code, '482913', reason: typed);
+      }
+    });
+
     test('zaten normalize kod değişmeden kalır', () {
       final room = repository.joinRoom('ZK-ABCDEF0123');
       expect(room.code, 'ZK-ABCDEF0123');
@@ -30,10 +41,10 @@ void main() {
   });
 
   group('oda oluşturma', () {
-    test('yeni oda 40-bit kanonik kod üretir', () {
+    test('yeni oda 6 rakamlı kanonik kod üretir', () {
       for (var i = 0; i < 100; i++) {
         final room = repository.createRoom(category: 'Ziman');
-        expect(room.code, matches(RegExp(r'^ZK-[0-9A-F]{10}$')));
+        expect(room.code, matches(RegExp(r'^[1-9][0-9]{5}$')));
         expect(isCanonicalRoomCode(room.code), isTrue);
         expect(room.code.length, roomCodeLength);
         expect(room.category, 'Ziman');

@@ -7,14 +7,15 @@ import '../models/room.dart' show isSupportedRoomCode;
 ///
 /// ## İki kod biçimi, çakışmaz
 ///
-/// * Oda kodu: `ZK-` + 10 onaltılık karakter (eski odalarda 4 karakter).
-///   Her zaman `ZK` ile başlar.
+/// * Oda kodu: 6 rakam (örn. `482913`). Eski odalarda `ZK-` + 10 onaltılık
+///   karakter (daha eskilerde 4 karakter); onlar `ZK` ile başlar.
 /// * Meydan okuma kodu (arkadaşa sırayla düello): `D` + 8 karakter,
 ///   alfabe `23456789ABCDEFGHJKMNPQRSTUVWXYZ` ([isChallengeCode]).
 ///
-/// Ayrım üç bağımsız yoldan garantidir: önek (`ZK` ≠ `D`), uzunluk (9 ≠ 13/7)
-/// ve alfabe (meydan okumada `0 1 O I L` yok; onaltılık oda sonekinde `0`/`1`
-/// sık geçer). Sunucudaki CHECK aynı regex'i taşır
+/// Ayrım bağımsız yollardan garantidir: yeni oda kodu yalnız rakamdır, meydan
+/// okuma kodu `D` ile başlar (rakamla başlayan kod hiçbir zaman `D…` değildir);
+/// eski kodlarda ayrıca önek (`ZK` ≠ `D`), uzunluk (9 ≠ 13/7) ve alfabe
+/// (meydan okumada `0 1 O I L` yok). Sunucudaki CHECK aynı regex'i taşır
 /// (`supabase/2026-10-13_friend_challenge.sql`).
 class JoinDeepLink {
   JoinDeepLink._();

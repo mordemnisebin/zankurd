@@ -300,6 +300,7 @@ class _RoomSessionHttpClient extends http.BaseClient {
 
     switch (request.url.path) {
       case '/rest/v1/rpc/create_online_room':
+      case '/rest/v1/rpc/create_online_room_v2':
         return _jsonResponse(request, roomSnapshot);
       case '/rest/v1/rpc/join_room_by_code':
         final message = joinRoomErrorMessage;
@@ -578,6 +579,57 @@ void main() {
       expect(room.maxPlayers, 2);
       expect(room.isCrowd, isFalse);
       expect(room.name, '1vs1');
+    });
+
+    test(
+      'tek kategori ESKİ RPC gövdesiyle gider (mağazadaki sunucu)',
+      () async {
+        final httpClient = _RoomSessionHttpClient();
+        final repository = _SignedInRoomSessionRepository(
+          SupabaseClient(
+            'https://example.supabase.co',
+            'sb_publishable_test_key',
+            httpClient: httpClient,
+          ),
+        );
+
+        await repository.createOnlineRoom(category: 'Dîrok');
+
+        final body = httpClient.requestBodies.first;
+        expect(body['p_category_name'], 'Dîrok');
+        expect(body.containsKey('p_category_names'), isFalse);
+      },
+    );
+
+    test('Karışık boş dizi, çoklu seçim ad listesi olarak gider', () async {
+      final mixedClient = _RoomSessionHttpClient();
+      final mixed = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: mixedClient,
+        ),
+      );
+      await mixed.createOnlineRoom(category: 'Tevlihev');
+      expect(mixedClient.requestBodies.first['p_category_names'], isEmpty);
+      expect(
+        mixedClient.requestBodies.first.containsKey('p_category_name'),
+        isFalse,
+      );
+
+      final multiClient = _RoomSessionHttpClient();
+      final multi = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: multiClient,
+        ),
+      );
+      await multi.createOnlineRoom(category: 'Dîrok, Ziman');
+      expect(multiClient.requestBodies.first['p_category_names'], [
+        'Dîrok',
+        'Ziman',
+      ]);
     });
 
     test('kodla katılma kapasiteyi ve kalabalık ayrımını taşır', () async {
