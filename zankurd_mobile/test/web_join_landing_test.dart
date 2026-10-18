@@ -39,7 +39,10 @@ void main() {
     expect(js, contains('intent://'));
     expect(js, contains('com.zankurd.app://'));
     expect(js, contains('apps.apple.com/app/id6797175984'));
-    expect(js, contains('play.google.com/store/apps/details?id=com.zankurd.app'));
+    expect(
+      js,
+      contains('play.google.com/store/apps/details?id=com.zankurd.app'),
+    );
   });
 
   test('ku ve tr sözlükleri aynı anahtarlara sahip', () {
@@ -48,10 +51,10 @@ void main() {
         '$lang: \\{(.*?)\\n    \\}',
         dotAll: true,
       ).firstMatch(js)!.group(1)!;
-      return RegExp(r"^\s*(\w+):", multiLine: true)
-          .allMatches(block)
-          .map((m) => m.group(1)!)
-          .toSet();
+      return RegExp(
+        r"^\s*(\w+):",
+        multiLine: true,
+      ).allMatches(block).map((m) => m.group(1)!).toSet();
     }
 
     expect(keys('ku'), isNotEmpty);
