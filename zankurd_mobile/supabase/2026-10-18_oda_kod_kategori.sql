@@ -462,11 +462,28 @@ begin
     end if;
   end if;
 
+  -- Satır var ama left_at dolu: oyuncu ayrılmış. Canlıda left_at yalnız
+  -- oyun BAŞLADIKTAN sonra yazılır (crowd_room_member_leave/mark_room_client_ready,
+  -- lobide ayrılan satırı silinir) ve katılım yalnız 'lobby' odayı çözer;
+  -- yani bu durum erişilemez. Yine de ayrılmış birine sessizce "başarılı"
+  -- dönmek yerine normal hata verilir (giriş ücreti ayrılışta iade edilmediği
+  -- için yeniden etkinleştirmek çift ücret riskidir).
   if exists (
     select 1
     from public.room_players rp
     where rp.room_id = v_room.id
       and rp.player_id = v_uid
+      and rp.left_at is not null
+  ) then
+    raise exception 'Room not found or already started';
+  end if;
+
+  if exists (
+    select 1
+    from public.room_players rp
+    where rp.room_id = v_room.id
+      and rp.player_id = v_uid
+      and rp.left_at is null
   ) then
     return json_build_object(
       'room_id', v_room.id,
@@ -1435,6 +1452,12 @@ begin
       select q.id
       from public.questions q
       where q.is_approved = true
+        -- Pasif (yayından kaldırılmış) kategoriden soru gelmez: Karışık da
+        -- açık kategori listesi de aynı kuralı izler (async düello ile aynı).
+        and exists (
+          select 1 from public.categories ac
+          where ac.id = q.category_id and ac.is_active = true
+        )
         and (
           case
             when v_room.category_ids is not null

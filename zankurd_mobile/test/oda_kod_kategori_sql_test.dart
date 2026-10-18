@@ -86,6 +86,24 @@ void main() {
     expect(start, contains('v_room.category_ids'));
   });
 
+  test('start_room_game yalnız aktif kategorilerden soru seçer', () {
+    final start = sql.substring(
+      sql.indexOf('FUNCTION public.start_room_game'),
+      sql.indexOf('FUNCTION public.create_async_duel_challenge'),
+    );
+    expect(start, contains('ac.is_active = true'));
+    expect(start, contains('ac.id = q.category_id'));
+  });
+
+  test('join_room_by_code: ayrılmış satır sessizce başarı döndürmez', () {
+    final join = sql.substring(
+      sql.indexOf('FUNCTION public.join_room_by_code(p_code text)'),
+      sql.indexOf('FUNCTION public.get_my_resumable_room'),
+    );
+    expect(join, contains('rp.left_at is not null'));
+    expect(join, contains('rp.left_at is null'));
+  });
+
   test('göç dosyası uygulandı olarak işaretlenmeden bekçisiz kalmaz', () {
     final applied = File('supabase/applied.md').readAsStringSync();
     expect(applied, contains('2026-10-18_oda_kod_kategori.sql'));

@@ -72,6 +72,9 @@ void main() {
       expect(b, contains("raise exception 'Room is full'"));
       expect(b, contains('from public.friends f'));
       expect(b, contains('from public.blocked_users b'));
+      // Oda SAHİBİ ile davetli arasındaki engel de atlanır.
+      expect(b, contains('b.blocker_id = v_room.host_id'));
+      expect(b, contains('b.blocked_id = v_room.host_id'));
       expect(b, contains('> 20'));
       expect(b, contains("interval '1 hour'"));
       expect(b, contains('> 100'));
@@ -86,6 +89,8 @@ void main() {
       final b = body('respond_room_invite');
       expect(b, isNot(contains('insert into public.room_players')));
       expect(b, contains('return v_code'));
+      // Katılım başarısız olursa davet kaybolmasın: kabul durumu yazmaz.
+      expect(b, isNot(contains("status = 'accepted'")));
       expect(b, contains("'Invite expired'"));
       expect(b, contains('invitee_id = v_uid'));
     },
@@ -96,6 +101,38 @@ void main() {
     expect(b, contains("interval '30 minutes'"));
     expect(b, contains("r.status = 'lobby'"));
     expect(b, contains('public.blocked_users'));
+    // Oda sahibiyle engel ve zaten odada olan davetli gizlenir.
+    expect(b, contains('b.blocked_id = r.host_id'));
+    expect(b, contains('me.player_id = v_uid'));
+    expect(b, contains('me.left_at is null'));
+  });
+
+  test('join_room_by_code_v2: yanlış kod kalıcı sayılır, JSON döner', () {
+    final b = body('join_room_by_code_v2');
+    expect(b, contains('security definer'));
+    expect(b, contains('set search_path = public'));
+    expect(b, contains("interval '10 minutes'"));
+    expect(b, contains('>= 20'));
+    expect(b, contains("'too_many_attempts'"));
+    // Sayaç RAISE ile geri alınmasın: bulunamadı istisna değil JSON.
+    expect(b, contains('insert into public.room_code_misses'));
+    expect(b, contains("'room_not_found'"));
+    expect(b, contains("sqlerrm = 'Room not found or already started'"));
+    // Yalnız o mesaj yutulur, ötekiler (dolu, jeton...) yeniden fırlatılır.
+    expect(b, contains('raise;'));
+    // Başarılı katılım bekleyen daveti kabul edilmiş yapar.
+    expect(b, contains("set status = 'accepted'"));
+    expect(
+      sql,
+      contains(
+        'revoke all on table public.room_code_misses from public, anon, authenticated',
+      ),
+    );
+    // Eski RPC'ye dokunulmaz (mağaza istemcileri istisna bekler).
+    expect(
+      sql,
+      isNot(contains('create or replace function public.join_room_by_code(')),
+    );
   });
 
   test('üç RPC de SECURITY DEFINER + sabit search_path, anon kapalı', () {
@@ -103,6 +140,7 @@ void main() {
       'invite_friends_to_room',
       'list_my_room_invites',
       'respond_room_invite',
+      'join_room_by_code_v2',
     ]) {
       final b = body(name);
       expect(b, contains('security definer'), reason: name);
@@ -113,13 +151,13 @@ void main() {
       RegExp(
         r'revoke all on function public\.\w+\([^)]*\)\s+from public, anon',
       ).allMatches(sql).length,
-      3,
+      4,
     );
     expect(
       RegExp(
         r'grant execute on function[^;]*to authenticated',
       ).allMatches(sql).length,
-      3,
+      4,
     );
   });
 
