@@ -883,7 +883,13 @@ class _LobbyView extends StatelessWidget {
     // Kupanın ne zaman başlayacağı: kontenjan dolunca, dolmazsa 24 saat
     // sonunda eldeki oyuncularla. Eski "Her Cumartesi 20:00" metni bu
     // kuraldan önce yazılmıştı ve gerçeği anlatmıyordu (2026-07-27).
-    final scheduleText = context.t(K.cupStartsWhenFull);
+    // Kurul 2. tur 2026-10-20: başlama koşulu iki ayrı yerde, ikincisi
+    // yarım cümle olarak ("En geç 24 saat içinde, eldeki oyuncularla")
+    // durup kesilmiş gibi okunuyordu. İkisi kahramanın alt satırında TEK
+    // cümle; alt satır sarar, kesilmez.
+    final scheduleText =
+        '${context.t(K.cupStartsWhenFull)}; '
+        '${context.t(K.cupStartsLatest).toLowerCaseFirst()}';
 
     // Kupa kahramanı: durum, ödül ve ana eylem TEK yüzeyde (2026-08-04).
     //
@@ -1023,7 +1029,7 @@ class _CupFormatPanel extends StatelessWidget {
               const SizedBox(height: SahneSpace.x3),
               // Kupanın iki kuralı da burada durur.
               Text(
-                '${Tr.forKu(K.botRaceHint, ku)}\n${Tr.forKu(K.cupStartsLatest, ku)}',
+                Tr.forKu(K.botRaceHint, ku),
                 style: SahneType.caption.copyWith(color: t.tx2),
               ),
             ],
@@ -1576,4 +1582,11 @@ class _UserMatchCard extends StatelessWidget {
       ),
     );
   }
+}
+
+extension on String {
+  /// Birleşik cümlede ikinci parça küçük harfle başlar (Türkçe/Kurmancî
+  /// ilk harfleri `I`/`İ` ile karışmaz: cümleler `E` ve `H` ile başlar).
+  String toLowerCaseFirst() =>
+      isEmpty ? this : '${this[0].toLowerCase()}${substring(1)}';
 }

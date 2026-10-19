@@ -20,6 +20,7 @@ import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 
@@ -348,44 +349,57 @@ void main() {
     );
   });
 
-  testWidgets('mağazada yalnız hero satın alma eylemi primary CTA olur', (
+  // Kurul 2. tur 2026-10-20: alınabilir fiyat = turuncu çerçeveli açık düğme
+  // (hero dahil); pasif düğme gri dolgu + kilit. İkisi bir bakışta ayrılır;
+  // eskiden alınabilir olan da gri dolguydu ve pasif görünüyordu.
+  testWidgets(
+    'alınabilir fiyat turuncu çerçeveli, yetmeyen gri dolgulu ve kilitli',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      final repository = _ShopRepository(coins: 500);
+
+      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+      await tester.pumpAndSettle();
+
+      final t = SahneTokens.of(tester.element(find.byType(ShopScreen)));
+      final affordable = find.byKey(
+        const ValueKey('shop-buy-spin_wheel_extra'),
+      );
+      expect(affordable, findsOneWidget);
+      final outlined = tester.widget<OutlinedButton>(affordable);
+      expect(
+        (outlined.style!.shape!.resolve({}) as OutlinedBorder).side.color,
+        t.actTx,
+      );
+      expect(outlined.style!.backgroundColor!.resolve({}), t.s1);
+
+      final short = find.byKey(const ValueKey('shop-short-profile_badge_vip'));
+      expect(short, findsOneWidget);
+      expect(
+        find.descendant(of: short, matching: find.byIcon(AppIcons.lock)),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(of: short, matching: find.byType(OutlinedButton)),
+        findsNothing,
+      );
+    },
+  );
+
+  testWidgets('VIP kartı yatay ve kompakt (ızgara kartının yarısı kadar boy)', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
-    final repository = _ShopRepository(coins: 1000);
-
-    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: _ShopRepository(coins: 1000))),
+    );
     await tester.pumpAndSettle();
-
-    final heroButtonFinder = find.ancestor(
-      of: find.text('720'),
-      matching: find.byType(FilledButton),
+    final hero = tester.getSize(
+      find.byKey(const ValueKey('shop-hero-surface')),
     );
-    final gridButtonFinder = find.ancestor(
-      of: find.text('120'),
-      matching: find.byType(FilledButton),
-    );
-    expect(heroButtonFinder, findsOneWidget);
-    expect(gridButtonFinder, findsOneWidget);
-
-    final heroPrimary = AppTheme.primaryCtaColor(
-      tester.element(heroButtonFinder),
-    );
-    final gridPrimary = AppTheme.primaryCtaColor(
-      tester.element(gridButtonFinder),
-    );
-
-    // 2026-09-29 Şahnê: birincil düğme dolgusunu temadan alır (düğmenin
-    // kendi `style`ında değil); ölçülen, çizilen ETKİN dolgudur.
-    Color? fill(Finder button) => tester
-        .widget<Material>(
-          find.descendant(of: button, matching: find.byType(Material)).first,
-        )
-        .color;
-
-    expect(fill(heroButtonFinder), heroPrimary);
-    expect(fill(gridButtonFinder), isNot(gridPrimary));
+    expect(hero.height, lessThanOrEqualTo(120));
   });
 
   testWidgets('mağaza bakiyeyi ve ürünleri listeler', (tester) async {
@@ -544,14 +558,13 @@ void main() {
 
     await tester.ensureVisible(find.text('120'));
     await tester.pumpAndSettle();
-    final button = tester.widget<FilledButton>(
-      find.ancestor(of: find.text('120'), matching: find.byType(FilledButton)),
+    final button = tester.widget<OutlinedButton>(
+      find.ancestor(
+        of: find.text('120'),
+        matching: find.byType(OutlinedButton),
+      ),
     );
     expect(button.style?.elevation?.resolve(<WidgetState>{}), 0);
-    expect(
-      button.style?.shadowColor?.resolve(<WidgetState>{}),
-      Colors.transparent,
-    );
   });
 
   testWidgets('bakiye yetersizse uyarı çıkar ve coin harcanmaz', (
