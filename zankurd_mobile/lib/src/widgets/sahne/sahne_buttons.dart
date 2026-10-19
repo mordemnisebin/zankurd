@@ -169,23 +169,25 @@ class SahneButton extends StatelessWidget {
         ? (onPressed == null ? null : () {})
         : onPressed;
 
-    WidgetStateProperty<BorderSide?> side(BorderSide rest) =>
-        WidgetStateProperty.resolveWith((s) {
-          if (s.contains(WidgetState.focused)) {
-            return BorderSide(
-              color: t.tx,
-              width: SahneRing.r2,
-              strokeAlign: BorderSide.strokeAlignInside,
-            );
-          }
-          if (s.contains(WidgetState.disabled)) {
-            return BorderSide(
-              color: t.edge,
-              strokeAlign: BorderSide.strokeAlignInside,
-            );
-          }
-          return rest;
-        });
+    WidgetStateProperty<BorderSide?> side(
+      BorderSide rest, {
+      bool disabledBorder = true,
+    }) => WidgetStateProperty.resolveWith((s) {
+      if (s.contains(WidgetState.focused)) {
+        return BorderSide(
+          color: t.tx,
+          width: SahneRing.r2,
+          strokeAlign: BorderSide.strokeAlignInside,
+        );
+      }
+      if (disabledBorder && s.contains(WidgetState.disabled)) {
+        return BorderSide(
+          color: t.edge,
+          strokeAlign: BorderSide.strokeAlignInside,
+        );
+      }
+      return rest;
+    });
 
     Widget button;
     switch (_kind) {
@@ -195,7 +197,12 @@ class SahneButton extends StatelessWidget {
           onPressed: press,
           style: ButtonStyle(
             minimumSize: const WidgetStatePropertyAll(Size(52, 52)),
-            side: side(BorderSide.none),
+            // Pasif birincil: soluk Kulis dolgusu (`s2`, temadan) + üçüncül
+            // etiket, KENARSIZ (`backgroundColor` burada yazılmaz: Agir
+            // dolgu bekçisi temadan gelen dolguyu sayar). Eskiden Perde (`s1`, gündüz beyaz) + `edge` çerçeve
+            // beyaz bir "ikincil" düğme gibi okunuyordu (oda lobisi, tek
+            // oyuncu: "Yarışı başlat" etkin sanıldı).
+            side: side(BorderSide.none, disabledBorder: false),
             textStyle: const WidgetStatePropertyAll(SahneType.button),
             padding: WidgetStatePropertyAll(
               EdgeInsets.symmetric(horizontal: hPad, vertical: SahneSpace.x3),
@@ -366,7 +373,9 @@ class SahneJokerButton extends StatelessWidget {
             child: Center(
               child: SahneTappable(
                 shape: capsule,
-                color: selected ? t.goldTint : t.s2,
+                // Jetonu yetmeyen joker ortak pasif dolguyu (Perde `s1`) alır:
+                // yalnız %60 soluk metin onu "etkin ama silik" gösteriyordu.
+                color: selected ? t.goldTint : (unaffordable ? t.s1 : t.s2),
                 onTap: tappable ? onPressed : null,
                 child: ConstrainedBox(
                   // a11y-tap-target: noninteractive — görsel kapsül tabanı;

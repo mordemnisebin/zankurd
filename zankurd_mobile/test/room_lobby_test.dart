@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/widgets/floating_reaction_overlay.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
@@ -385,6 +386,28 @@ void main() {
       find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
     );
     expect(startButton.onPressed, isNull);
+    // 2026-10-19 6. tur: pasif "Yarışı başlat" beyaz çerçeveli (Perde + edge)
+    // bir ikincil düğme gibi etkin okunuyordu; ortak pasif görünüm: soluk
+    // Kulis dolgusu, üçüncül etiket, çerçeve YOK. Anlamsal olarak pasif kalır.
+    final t = SahneTokens.of(tester.element(find.byType(RoomScreen)));
+    final filled = tester.widget<FilledButton>(
+      find.descendant(
+        of: find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
+        matching: find.byType(FilledButton),
+      ),
+    );
+    expect(filled.onPressed, isNull);
+    final theme = Theme.of(tester.element(find.byType(RoomScreen)));
+    expect(
+      theme.filledButtonTheme.style!.backgroundColor!.resolve({
+        WidgetState.disabled,
+      }),
+      t.s2,
+    );
+    expect(
+      filled.style!.side!.resolve({WidgetState.disabled}),
+      BorderSide.none,
+    );
   });
 
   testWidgets('room lobby enables start after player stream adds a guest', (

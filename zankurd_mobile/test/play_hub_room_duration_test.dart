@@ -1,6 +1,7 @@
 // 2026-10-19 sadeleşme (ikinci tur): oda kurma çipleri Material ChoiceChip/FilterChip yerine `SahnePickChip` (seçili = dolu renk, değilse çerçeve; eşit sütunlu ızgara);
 // bekçiler `.selected` alanını yeni bileşenden okur, davranış (çoklu seçim, Karışık, gönderilen değerler) aynı.
 // 2026-10-19 son rötuş: çipler tek satır ("Bilim ve Düşünce" iki satıra sarıp satırı uzatıyordu); büyük yazıda iki satıra izin var ama aynı satırdaki çipler eşit boyda; alt çubuğun üstünde ayraç var.
+// 2026-10-19 6. tur: oyuncu sayısı TEK satırda rakam çipi ("2 4 8 16 30 50"); ikinci satırın yarısı sabit "Odayı aç" altında kalınca iki tasarım turu onu "boş çerçeve" sandı. Dar ekranda 2x3 (yetim çip yok); "N kişi" ekran okuyucuda.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -248,12 +249,75 @@ void main() {
       );
       expect(eight.selected, isTrue);
       expect(find.text('Oyuncu sayısı'), findsOneWidget);
+      // Etiket yalnız rakam; birim anlamsal adda.
+      expect(
+        find.descendant(
+          of: find.byType(SahnePickChip),
+          matching: find.text('8'),
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('8 kişi'), findsNothing);
       expect(
         find.byKey(const ValueKey('custom-room-capacity-hint')),
         findsOneWidget,
       );
     },
   );
+
+  testWidgets(
+    'oyuncu sayısı: 390 pt telefonda TEK satır, çipler >= 48 genişlik',
+    (tester) async {
+      tester.view.physicalSize = const Size(390, 844);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final handle = tester.ensureSemantics();
+      await openCreateSheet(tester, _CapturingRepository());
+      final tops = <int>{};
+      for (final c in GameRoom.allowedMaxPlayers) {
+        final f = find.byKey(ValueKey('custom-room-capacity-$c'));
+        final r = tester.getRect(f);
+        tops.add(r.top.round());
+        expect(r.width, greaterThanOrEqualTo(48), reason: '$c çipi dar');
+        expect(r.height, greaterThanOrEqualTo(48));
+      }
+      expect(tops, hasLength(1), reason: 'tek satır olmalı');
+      expect(
+        tester
+            .getSemantics(find.byKey(const ValueKey('custom-room-capacity-16')))
+            .label,
+        '16 kişi',
+      );
+      handle.dispose();
+    },
+  );
+
+  testWidgets('oyuncu sayısı: 320 pt + büyük yazıda 2x3, yetim çip yok', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(320, 640);
+    tester.view.devicePixelRatio = 1;
+    tester.platformDispatcher.textScaleFactorTestValue = 2.0;
+    addTearDown(tester.view.reset);
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await openCreateSheet(tester, _CapturingRepository());
+    final first = find.byKey(const ValueKey('custom-room-capacity-2'));
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('custom-room-capacity-50')),
+      100,
+      scrollable: find.descendant(
+        of: find.byKey(const ValueKey('custom-room-bottom-fade')),
+        matching: find.byType(Scrollable),
+      ),
+    );
+    final rows = <int, int>{};
+    for (final c in GameRoom.allowedMaxPlayers) {
+      final r = tester.getRect(find.byKey(ValueKey('custom-room-capacity-$c')));
+      rows.update(r.top.round(), (n) => n + 1, ifAbsent: () => 1);
+    }
+    expect(first, findsOneWidget);
+    expect(rows.values.toSet(), {3}, reason: 'iki satır, ikisi de 3 çip');
+  });
 
   testWidgets(
     'seçilen oyuncu sayısı createOnlineRoom\'a maxPlayers olarak gider',

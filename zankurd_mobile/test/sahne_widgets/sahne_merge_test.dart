@@ -656,8 +656,15 @@ void main() {
         final price = tester.widget<Text>(find.text('30')).style!.color!;
         expect(price.a, closeTo(0.6, 0.01));
         expect(find.byKey(const ValueKey('joker-lock')), findsNothing);
-        // Kontrast >= 3:1 (gece Kulis kapsülü üstünde).
-        final bg = SahneTokens.night.s2;
+        // Kapsül ortak pasif dolguyu (Perde `s1`) alır; yalnız %60 soluk
+        // metin onu "etkin ama silik" gösteriyordu (2026-10-19 6. tur).
+        final cap = tester
+            .widgetList<SahneTappable>(find.byType(SahneTappable))
+            .single;
+        expect(cap.color, SahneTokens.night.s1);
+        expect(cap.color, isNot(SahneTokens.night.s2));
+        // Kontrast >= 3:1 (gece pasif kapsül üstünde).
+        final bg = SahneTokens.night.s1;
         final fg = Color.alphaBlend(price, bg);
         double lum(Color c) => c.computeLuminance();
         final ratio =

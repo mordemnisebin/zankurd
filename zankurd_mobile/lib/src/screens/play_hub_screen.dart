@@ -823,19 +823,39 @@ class _CustomRoomConfig {
 /// doldurur; seçili çip DOLU renk, seçilmemiş çip yalnız çerçevedir.
 /// Sığmayınca (dar ekran, büyük yazı) sütun sayısı düşer (en az 1).
 class _ChoiceGrid extends StatelessWidget {
-  const _ChoiceGrid({required this.columns, required this.children});
+  const _ChoiceGrid({
+    required this.columns,
+    required this.children,
+    this.minCellWidth,
+    this.fallbackColumns,
+    this.gap = SahneSpace.x2,
+  });
 
   final int columns;
+
+  /// Verilirse hücre en az bu genişlikte (ölçeksiz) olmalıdır; yoksa yazı
+  /// ölçeğine göre 72 kullanılır. Yalnız rakam çipleri için.
+  final double? minCellWidth;
+
+  /// [columns] sığmazsa düşülecek sütun sayısı. Ardışık azaltma tek çipi
+  /// yetim satıra atar (6 -> 5 = 5+1); bu yüzden doğrudan 3'e (2x3) iner.
+  final int? fallbackColumns;
+
+  /// Çipler arası boşluk (satır ve sütun).
+  final double gap;
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        const gap = SahneSpace.x2;
-        final minCell = MediaQuery.textScalerOf(context).scale(72);
+        final minCell =
+            minCellWidth ?? MediaQuery.textScalerOf(context).scale(72);
         var cols = columns;
         double cell(int c) => (constraints.maxWidth - gap * (c - 1)) / c;
+        if (fallbackColumns != null && cell(cols) < minCell) {
+          cols = fallbackColumns!;
+        }
         while (cols > 1 && cell(cols) < minCell) {
           cols--;
         }
@@ -846,13 +866,13 @@ class _ChoiceGrid extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             for (var i = 0; i < children.length; i += cols) ...[
-              if (i > 0) const SizedBox(height: gap),
+              if (i > 0) SizedBox(height: gap),
               IntrinsicHeight(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     for (var j = 0; j < cols; j++) ...[
-                      if (j > 0) const SizedBox(width: gap),
+                      if (j > 0) SizedBox(width: gap),
                       SizedBox(
                         width: width,
                         child: i + j < children.length
@@ -878,9 +898,11 @@ Widget _choiceChip(
   required bool selected,
   required VoidCallback onTap,
   Widget? avatar,
+  String? semanticLabel,
 }) => SahnePickChip(
   key: key,
   label: label,
+  semanticLabel: semanticLabel,
   selected: selected,
   onTap: onTap,
   leading: avatar,
@@ -1074,7 +1096,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                               ),
                           ],
                         ),
-                        const SizedBox(height: SahneSpace.x4),
+                        const SizedBox(height: SahneSpace.x3),
 
                         // Soru Sayısı Seçimi
                         Text(
@@ -1099,7 +1121,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                               ),
                           ],
                         ),
-                        const SizedBox(height: SahneSpace.x4),
+                        const SizedBox(height: SahneSpace.x3),
 
                         // Soru Başına Süre
                         Text(
@@ -1124,7 +1146,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                               ),
                           ],
                         ),
-                        const SizedBox(height: SahneSpace.x4),
+                        const SizedBox(height: SahneSpace.x3),
 
                         // Oyuncu sayısı (kapasite). 2 = bugünkü iki kişilik oda;
                         // daha fazlası kalabalık oda: ev sahibi >= 2 kişiyle
@@ -1136,14 +1158,24 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                           ),
                         ),
                         const SizedBox(height: SahneSpace.x2),
+                        // TEK satır, yalnız rakamlar ("Oyuncu sayısı" başlığı
+                        // birimi söyler; ekran okuyucu "N kişi" okur). İkinci
+                        // satırın yarısı sabit "Odayı aç" altında kaldığında
+                        // "boş çerçeve" gibi okunuyordu (iki tasarım turu).
+                        // 320'de 6x48 sığmaz: 2x3'e iner, hiç yetim çip yok.
                         _ChoiceGrid(
-                          columns: 3,
+                          columns: GameRoom.allowedMaxPlayers.length,
+                          minCellWidth: sahneTapTarget,
+                          fallbackColumns: 3,
+                          // 6 çip 390 pt telefonda 48'e ancak 6 pt aralıkla sığar.
+                          gap: 6,
                           children: [
                             for (final capacity in GameRoom.allowedMaxPlayers)
                               _choiceChip(
                                 context,
                                 key: ValueKey('custom-room-capacity-$capacity'),
-                                label: context.t(K.roomCapacityOption, {
+                                label: '$capacity',
+                                semanticLabel: context.t(K.roomCapacityOption, {
                                   'n': '$capacity',
                                 }),
                                 selected: _selectedMaxPlayers == capacity,
@@ -1163,7 +1195,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                             ),
                           ),
                         ],
-                        const SizedBox(height: SahneSpace.x4),
+                        const SizedBox(height: SahneSpace.x3),
 
                         // Bahis / Giriş Ücreti
                         // İki metin de esnek: dar ekranda ve Kurmancî'de etiketler

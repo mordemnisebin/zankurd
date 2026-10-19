@@ -993,8 +993,10 @@ class AppTheme {
         style: FilledButton.styleFrom(
           backgroundColor: t.act,
           foregroundColor: t.onAct,
-          // Pasif: opaklık değil Perde + üçüncül metin (saveLayer açmaz).
-          disabledBackgroundColor: t.s1,
+          // Pasif: opaklık değil Kulis (`s2`) + üçüncül metin (saveLayer
+          // açmaz). Perde (`s1`) gündüz beyazdı: pasif düğme beyaz bir
+          // çerçeveli düğme gibi, yani etkin okunuyordu.
+          disabledBackgroundColor: t.s2,
           disabledForegroundColor: t.tx3,
           minimumSize: buttonSize,
           textStyle: SahneType.button,
