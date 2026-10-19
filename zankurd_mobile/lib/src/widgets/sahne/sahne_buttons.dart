@@ -358,7 +358,7 @@ class SahneJokerButton extends StatelessWidget {
     final tappable = onPressed != null;
     final enabled = tappable && !unaffordable;
     // Jeton yetmiyorsa kapsül AYNI kalır; ikon ve etiket %50 opaklıkta, kenarsız, ortak pasif dolguda
-    // çizilir (kilit simgesi yok: simge + jeton + fiyat kalabalıktı).
+    // çizilir (kilit simgesi jeton glifinin yerine geçer: kalabalık olmasın).
     Color dim(Color c) => c.withValues(alpha: 0.5);
     final fg = selected ? t.goldTx : (enabled ? t.tx : dim(t.tx));
     final showPrice = !selected && (enabled || unaffordable);
@@ -435,14 +435,24 @@ class SahneJokerButton extends StatelessWidget {
                                 ],
                                 if (showPrice) ...[
                                   const SizedBox(width: SahneSpace.x1),
-                                  Opacity(
-                                    opacity: enabled ? 1 : 0.5,
-                                    child: const SahneGlyph(
+                                  // Kurul 2. tur (2026-10-20): sıfır bakiyede
+                                  // pasif joker hâlâ "etkin" okunuyordu (üç
+                                  // model). Jeton glifi yerine KİLİT: fiyatın
+                                  // yanındaki kilit "alınamaz"ı söyler,
+                                  // soluk dolgu tek başına söylemiyordu.
+                                  if (unaffordable)
+                                    Icon(
+                                      AppIcons.lock,
+                                      key: const ValueKey('joker-locked-glyph'),
+                                      size: 14,
+                                      color: t.tx2,
+                                    )
+                                  else
+                                    const SahneGlyph(
                                       SahneGlyphKind.coin,
                                       size: 16,
                                       filled: true,
                                     ),
-                                  ),
                                   const SizedBox(width: SahneSpace.x1),
                                   Text(
                                     '$price',
@@ -463,8 +473,11 @@ class SahneJokerButton extends StatelessWidget {
                                 style: SahneType.caption.copyWith(
                                   color: selected
                                       ? t.goldTx
-                                      : (enabled ? t.tx2 : dim(t.tx2)),
-                                  fontSize: 11,
+                                      : (enabled
+                                            ? t.tx2
+                                            : t.tx2.withValues(alpha: 0.75)),
+                                  // ≥ 13: 11 px etiket kurulda okunmadı.
+                                  fontSize: 13,
                                 ),
                               ),
                           ],
