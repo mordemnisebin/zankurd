@@ -1,3 +1,5 @@
+// Tasarım kurulu tüm ekranlar 2026-10-20: az alt konulu kategoride altta
+// "Tüm sorular" kısayolu (sayfa yarı boş kalmasın).
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -99,6 +101,22 @@ void main() {
   // (`SahneListGroup`, Perde yüzeyi) standart satırlardır: öğrenme rolünün
   // ikon karosu, ad, açıklama, rozetler. Bekçi yüzeyin açık temada Perde
   // (beyaz) kaldığını ve satırın öğrenme rolünü taşıdığını ölçer.
+  testWidgets('az alt konulu kategori altta "Tüm sorular" satırı taşır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(
+        SubcategoryScreen(
+          repository: MockZanKurdRepository(),
+          category: 'Ziman',
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('subcategory-card-gisti')), findsOne);
+    expect(find.text('Tüm sorular'), findsOneWidget);
+  });
+
   testWidgets('alt kategoriler açık yüzeyli liste grubunda satır olur', (
     tester,
   ) async {
