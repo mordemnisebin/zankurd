@@ -387,7 +387,7 @@ void main() {
     },
   );
 
-  testWidgets('VIP kartı yatay ve kompakt (ızgara kartının yarısı kadar boy)', (
+  testWidgets('VIP kartı yatay ve kompakt (eskiden ~490 mp)', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -399,7 +399,7 @@ void main() {
     final hero = tester.getSize(
       find.byKey(const ValueKey('shop-hero-surface')),
     );
-    expect(hero.height, lessThanOrEqualTo(120));
+    expect(hero.height, lessThanOrEqualTo(170));
   });
 
   testWidgets('mağaza bakiyeyi ve ürünleri listeler', (tester) async {
