@@ -195,6 +195,8 @@ void main() {
         findsNothing,
       );
 
+      await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+      await tester.pump();
       await tester.tap(find.text('Sonraki'));
       await tester.pumpAndSettle();
 
@@ -255,6 +257,8 @@ void main() {
       await _pumpOnboarding(tester);
       expect(tester.takeException(), isNull);
 
+      await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+      await tester.pump();
       await tester.tap(find.text('Sonraki'));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
@@ -283,6 +287,8 @@ void main() {
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
 
+      await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+      await tester.pump();
       await tester.tap(find.text('Sonraki'));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);

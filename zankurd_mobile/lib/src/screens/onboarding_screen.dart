@@ -159,21 +159,53 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 ),
                 child: Material(
                   type: MaterialType.transparency,
-                  child: CheckboxListTile(
-                    key: const ValueKey('onboarding-age-gate'),
-                    value: _ageConfirmed,
-                    onChanged: (value) => setState(() {
-                      _ageConfirmed = value ?? false;
+                  child: Semantics(
+                    // Yaş onayı: işaretlenmeden "Sonraki" pasif; ekran
+                    // okuyucu kutuyu işaretli/işaretsiz söyler.
+                    checked: _ageConfirmed,
+                    container: true,
+                    excludeSemantics: true,
+                    label: context.t(K.ageGateLabel),
+                    onTap: () => setState(() {
+                      _ageConfirmed = !_ageConfirmed;
                       if (_ageConfirmed) _showAgeGateHint = false;
                     }),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: SahneSpace.x1,
-                    ),
-                    shape: SahneShape.m,
-                    title: Text(
-                      context.t(K.ageGateLabel),
-                      style: SahneType.body.copyWith(color: t.tx),
+                    child: InkWell(
+                      key: const ValueKey('onboarding-age-gate'),
+                      customBorder: SahneShape.m,
+                      // Satırın tamamı dokunulur; ikinci kez yankılanmasın.
+                      onTap: () => setState(() {
+                        _ageConfirmed = !_ageConfirmed;
+                        if (_ageConfirmed) _showAgeGateHint = false;
+                      }),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: SahneSpace.x2,
+                          vertical: SahneSpace.x1,
+                        ),
+                        child: Row(
+                          // Kutu metnin ilk satırıyla değil, bloğun
+                          // ortasıyla hizalı (73).
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ExcludeSemantics(
+                              child: IgnorePointer(
+                                child: Checkbox(
+                                  value: _ageConfirmed,
+                                  onChanged: (_) {},
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: SahneSpace.x2),
+                            Expanded(
+                              child: Text(
+                                context.t(K.ageGateLabel),
+                                style: SahneType.body.copyWith(color: t.tx),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -216,13 +248,20 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           // Pasif düğmeye basılırsa yine satır içi ipucu çıkar
           // ([_completeIfAgeOk]) — oyuncu ne eksik olduğunu öğrenir;
           // doğrulama değişmedi.
+          // Kurul 3. tur (2026-10-20): "Sonraki" da yaş onayı olmadan pasif
+          // (73). Eskiden yalnız "Başla" pasifti; "Sonraki" etkin görünüp
+          // onaysız ilerletiyordu. Pasif düğmeye basılırsa satır içi ipucu
+          // çıkar ([_completeIfAgeOk]).
           primary: GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTap: last && !_ageConfirmed ? _completeIfAgeOk : null,
+            excludeFromSemantics: true,
+            onTap: !_ageConfirmed ? _completeIfAgeOk : null,
             child: SahneButton.primary(
               expand: true,
-              onPressed: last
-                  ? (_ageConfirmed ? _completeIfAgeOk : null)
+              onPressed: !_ageConfirmed
+                  ? null
+                  : last
+                  ? _completeIfAgeOk
                   : () {
                       _controller.nextPage(
                         duration: reduce
@@ -774,15 +813,15 @@ class _MockOption extends StatelessWidget {
         ),
         child: Row(
           children: [
-            DecoratedBox(
-              decoration: ShapeDecoration(color: t.s3, shape: SahneShape.s),
-              child: SizedBox.square(
-                dimension: 28,
-                child: Center(
-                  child: Text(
-                    letter,
-                    style: SahneType.captionStrong.copyWith(color: t.tx),
-                  ),
+            // Kurul 3. tur (2026-10-20): harf karosu ayrı bir ton (s3)
+            // olunca şık zemininde yamalı görünüyordu (73). Harf artık
+            // aynı zeminde, karosuz.
+            SizedBox.square(
+              dimension: 28,
+              child: Center(
+                child: Text(
+                  letter,
+                  style: SahneType.captionStrong.copyWith(color: t.tx2),
                 ),
               ),
             ),

@@ -115,6 +115,8 @@ void main() {
   ) async {
     await _open(tester, _entries.first);
     final page0 = _primaryRect(tester);
+    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+    await tester.pump();
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('onboarding-back')), findsOneWidget);
@@ -183,6 +185,8 @@ void main() {
     (tester) async {
       // Karşılama 2. sayfa.
       await _open(tester, _entries.first);
+      await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+      await tester.pump();
       await tester.tap(find.text('Sonraki'));
       await tester.pumpAndSettle();
       var primary = _primaryRect(tester);

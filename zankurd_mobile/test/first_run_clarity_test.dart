@@ -118,7 +118,7 @@ void main() {
       (tester) async {
         var completed = false;
         await _pumpOnboarding(tester, onComplete: () => completed = true);
-        await tester.tap(find.text('Sonraki'));
+        await tester.fling(find.byType(PageView), const Offset(-400, 0), 1000);
         await tester.pumpAndSettle();
 
         expect(
@@ -148,7 +148,7 @@ void main() {
     ) async {
       var completed = false;
       await _pumpOnboarding(tester, onComplete: () => completed = true);
-      await tester.tap(find.text('Sonraki'));
+      await tester.fling(find.byType(PageView), const Offset(-400, 0), 1000);
       await tester.pumpAndSettle();
       await tester.tap(find.text('Başla'));
       await tester.pumpAndSettle();
@@ -395,6 +395,8 @@ void main() {
             .getTopLeft(find.byKey(const ValueKey('entry-dock')))
             .dy;
 
+        await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+        await tester.pump();
         await tester.tap(find.text('Sonraki'));
         await tester.pumpAndSettle();
 

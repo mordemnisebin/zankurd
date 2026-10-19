@@ -13,6 +13,7 @@ void main() {
   // 2) Yaş kutusu ve "Başla"
   // ───────────────────────────────────────────────────────────────────────
   //
+  // Kurul 3. tur 2026-10-20: "Sonraki" da onaysız pasif; aşağıdaki son test onu sabitler.
   // KUSUR: "13 yaşından büyüğüm" işaretsizken "Başla" tam etkin görünüyordu;
   // koşul yalnız basınca, hata olarak çıkıyordu. NİÇİN SESSİZ: davranış
   // doğruydu (basınca ipucu çıkıyor, akış durmuyor) ve testler yalnız
@@ -28,7 +29,9 @@ void main() {
       );
       await tester.pumpAndSettle();
       for (var i = 0; i < 6 && find.text('Başla').evaluate().isEmpty; i++) {
-        await tester.tap(find.text('Sonraki'));
+        // "Sonraki" yaş onayı olmadan pasif (kurul 3. tur): sayfalar
+        // kaydırılarak geçilir, "Başla" yine kapıda kalır.
+        await tester.fling(find.byType(PageView), const Offset(-400, 0), 1000);
         await tester.pumpAndSettle();
       }
     }
@@ -67,6 +70,44 @@ void main() {
       },
     );
 
+    testWidgets(
+      'kurul 3. tur: "Sonraki" yaş onayı olmadan pasif, onayla etkin',
+      (tester) async {
+        await tester.pumpWidget(
+          ChangeNotifierProvider(
+            create: (_) => LanguageProvider()..setLang('tr'),
+            child: MaterialApp(home: OnboardingScreen(onComplete: () {})),
+          ),
+        );
+        await tester.pumpAndSettle();
+        FilledButton next() => tester.widget<FilledButton>(
+          find.ancestor(
+            of: find.text('Sonraki'),
+            matching: find.byType(FilledButton),
+          ),
+        );
+        expect(next().onPressed, isNull);
+        // Onaysız basış sayfayı çevirmez, ipucunu açar.
+        await tester.tap(find.text('Sonraki'));
+        await tester.pumpAndSettle();
+        expect(find.text('Sonraki'), findsOneWidget);
+        expect(
+          find.byKey(const ValueKey('onboarding-age-gate-hint')),
+          findsOneWidget,
+        );
+        await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+        await tester.pumpAndSettle();
+        expect(next().onPressed, isNotNull);
+        // Onay kutusu ekran okuyucuya işaretli olarak bildirilir.
+        expect(
+          find.byWidgetPredicate(
+            (w) => w is Semantics && w.properties.checked == true,
+          ),
+          findsWidgets,
+        );
+      },
+    );
+
     testWidgets('satırın her yeri kutuyu işaretler (yalnız kutucuk değil)', (
       tester,
     ) async {
@@ -77,12 +118,26 @@ void main() {
       // Sağ uç, kutucuğun çok uzağında.
       await tester.tapAt(Offset(rect.right - 12, rect.center.dy));
       await tester.pumpAndSettle();
-      expect(tester.widget<CheckboxListTile>(row).value, isTrue);
+      expect(
+        tester
+            .widget<Checkbox>(
+              find.descendant(of: row, matching: find.byType(Checkbox)),
+            )
+            .value,
+        isTrue,
+      );
 
       // Etiket metnine basmak da geri alır.
       await tester.tap(find.text('13 yaşından büyüğüm'));
       await tester.pumpAndSettle();
-      expect(tester.widget<CheckboxListTile>(row).value, isFalse);
+      expect(
+        tester
+            .widget<Checkbox>(
+              find.descendant(of: row, matching: find.byType(Checkbox)),
+            )
+            .value,
+        isFalse,
+      );
     });
   });
 }
