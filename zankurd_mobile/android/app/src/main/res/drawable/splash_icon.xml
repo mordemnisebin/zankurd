@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 12+ açılış simgesi. Sistem bunu 288dp'lik alana koyar ve ortadaki
+  192dp'lik daireyle (2/3) maskeler; amblem daireden taşarsa kırpılır.
+  Logo her yönden %22 içeri alınır: ~%56 genişlik, daireye sığar.
+-->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/splash_logo"
+    android:insetLeft="22%"
+    android:insetRight="22%"
+    android:insetTop="22%"
+    android:insetBottom="22%" />
