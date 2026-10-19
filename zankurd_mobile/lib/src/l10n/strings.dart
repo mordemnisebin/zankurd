@@ -1425,7 +1425,7 @@ class Tr {
     K.searchingShort: {'ku': 'Lê tê gerîn…', 'tr': 'Aranıyor…'},
     K.searchingNote: {
       'ku':
-          'Li hevrikekî tê gerîn. Heke lîstikvanekî zindî neyê dîtin, tu yê bi botekê re bêyî lihevanîn. Tu dikarî betal bikî.',
+          'Li hevrikekî tê gerîn. Heke lîstikvanekî zindî neyê dîtin, tu yê bi botekê re bêyî lihevanîn. Tu dikarî kengî bixwazî betal bikî.',
       'tr':
           'Rakip aranıyor. Canlı rakip bulunamazsa botla eşleşirsin. İstediğin zaman iptal edebilirsin.',
     },
