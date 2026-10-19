@@ -996,7 +996,14 @@ class _ShopScreenState extends State<ShopScreen> {
               final columns = largeText
                   ? 1
                   : (width >= 680 ? 3 : (width >= 300 ? 2 : 1));
-              return GridView(
+              // Kurul 3. tur 2026-10-20: tek sayıda ürün ve iki sütunda son
+              // kart satırda yalnız kalıyordu (Neon). Son ürün tam genişlik
+              // yatay kart (VIP gibi) olur; ızgara çift sayıyla kalır.
+              final spanLast = columns == 2 && restItems.length.isOdd;
+              final gridItems = spanLast
+                  ? restItems.sublist(0, restItems.length - 1)
+                  : restItems;
+              final grid = GridView(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -1006,13 +1013,22 @@ class _ShopScreenState extends State<ShopScreen> {
                   crossAxisSpacing: SahneSpace.cardGap,
                   mainAxisExtent: _gridCellExtent(
                     context,
-                    restItems,
+                    gridItems,
                     ku,
                     (width - SahneSpace.cardGap * (columns - 1)) / columns,
                   ),
                 ),
                 children: [
-                  for (final item in restItems) _buildShopCard(item, ku),
+                  for (final item in gridItems) _buildShopCard(item, ku),
+                ],
+              );
+              if (!spanLast) return grid;
+              return Column(
+                children: [
+                  if (gridItems.isNotEmpty) grid,
+                  if (gridItems.isNotEmpty)
+                    const SizedBox(height: SahneSpace.cardGap),
+                  _buildShopCard(restItems.last, ku, wide: true),
                 ],
               );
             },
@@ -1035,7 +1051,7 @@ class _ShopScreenState extends State<ShopScreen> {
     double cellWidth,
   ) {
     const pad = SahneSpace.x3;
-    const tile = 72.0;
+    const tile = 56.0;
     final scaler = MediaQuery.textScalerOf(context);
     final direction = Directionality.of(context);
     // Metin, kartın `Material`inin verdiği varsayılan biçemle (temanın
@@ -1134,13 +1150,18 @@ class _ShopScreenState extends State<ShopScreen> {
   // ortak pasif biçimde (disabledFill/Edge/Fg) çizilir ve altında eksik
   // miktar yazar; kartın kendisi dokunulabilir kalır (pencere jeton kazanma
   // yolunu sunar). Ürün kimliği yalnız önizleme karosunda yaşar.
-  Widget _buildShopCard(ShopItem item, bool ku, {bool hero = false}) {
+  Widget _buildShopCard(
+    ShopItem item,
+    bool ku, {
+    bool hero = false,
+    bool wide = false,
+  }) {
     final t = SahneTokens.of(context);
     final title = ku ? item.titleKu : item.titleTr;
     final desc = ku ? item.descKu : item.descTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
 
-    if (hero) {
+    if (hero || wide) {
       final largeText = MediaQuery.textScalerOf(context).scale(16) >= 24;
       final texts = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1159,7 +1180,9 @@ class _ShopScreenState extends State<ShopScreen> {
           ? _buildOwnedChip(expand: largeText)
           : _buildBuyButton(item, ku, expand: largeText);
       return SahneSurfaceCard(
-        key: const ValueKey('shop-hero-surface'),
+        key: hero
+            ? const ValueKey('shop-hero-surface')
+            : ValueKey('shop-item-surface-${item.id}'),
         padding: const EdgeInsets.all(SahneSpace.x3),
         onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
         child: largeText
@@ -1198,7 +1221,7 @@ class _ShopScreenState extends State<ShopScreen> {
         children: [
           Align(
             alignment: AlignmentDirectional.centerStart,
-            child: _preview(item, size: 72, dim: isPurchased),
+            child: _preview(item, size: 56, dim: isPurchased),
           ),
           const SizedBox(height: SahneSpace.x3),
           Text(
@@ -1328,7 +1351,10 @@ class _ShopScreenState extends State<ShopScreen> {
               horizontal: SahneSpace.x4,
               vertical: SahneSpace.x3,
             ),
-            shape: SahneShape.withSide(SahneShape.m, t.actTx, width: 1.5),
+            // `side` açık yazılır: temanın ikincil kenarı (ink %40) yoksa
+            // şeklin turuncu kenarını ezer.
+            side: BorderSide(color: t.actTx, width: 1.5),
+            shape: SahneShape.m,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
