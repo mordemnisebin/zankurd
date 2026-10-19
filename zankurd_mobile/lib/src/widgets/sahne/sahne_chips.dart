@@ -534,7 +534,11 @@ class SahnePickChip extends StatelessWidget {
 /// Kaydırma alanının alt kenarında 24 px'lik yumuşak solma: ayracın hemen
 /// üstünde yarım kalan satır (oyuncu sayısı çipleri) "kesilmiş" değil
 /// "kayıyor" diye okunur. Renk, sayfa yüzeyi ([color] (AppPanel dolgusu)) ile aynıdır. Dokunuşu geçirir.
-class SahneBottomFade extends StatelessWidget {
+///
+/// 2026-10-19 cila: solma yalnız altta GERÇEKTEN içerik kaldıkça çizilir.
+/// Sona gelince de çizilince sondaki ipucu metni ("Oda sahibi en az 2
+/// oyuncuyla…") yüzeye karışıp soluk, düşük karşıtlıklı okunuyordu.
+class SahneBottomFade extends StatefulWidget {
   const SahneBottomFade({super.key, required this.child, required this.color});
 
   final Widget child;
@@ -543,29 +547,53 @@ class SahneBottomFade extends StatelessWidget {
   final Color color;
 
   @override
+  State<SahneBottomFade> createState() => _SahneBottomFadeState();
+}
+
+class _SahneBottomFadeState extends State<SahneBottomFade> {
+  bool _more = true;
+
+  bool _onMetrics(ScrollMetrics m) {
+    final more = m.extentAfter > 1;
+    if (more != _more) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) setState(() => _more = more);
+      });
+    }
+    return false;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final surface = color;
-    return Stack(
-      children: [
-        child,
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: 24,
-          child: IgnorePointer(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [surface.withValues(alpha: 0), surface],
+    final surface = widget.color;
+    return NotificationListener<ScrollMetricsNotification>(
+      onNotification: (n) => _onMetrics(n.metrics),
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (n) => _onMetrics(n.metrics),
+        child: Stack(
+          children: [
+            widget.child,
+            if (_more)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: 24,
+                child: IgnorePointer(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [surface.withValues(alpha: 0), surface],
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

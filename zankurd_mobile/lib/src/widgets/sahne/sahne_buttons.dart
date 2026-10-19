@@ -44,7 +44,8 @@ class SahneButton extends StatelessWidget {
     this.loading = false,
     this.semanticLabel,
     this.buttonKey,
-  }) : _kind = _SahneButtonKind.primary;
+  }) : quiet = false,
+       _kind = _SahneButtonKind.primary;
 
   const SahneButton.secondary({
     super.key,
@@ -57,13 +58,15 @@ class SahneButton extends StatelessWidget {
     this.loading = false,
     this.semanticLabel,
     this.buttonKey,
-  }) : _kind = _SahneButtonKind.secondary;
+  }) : quiet = false,
+       _kind = _SahneButtonKind.secondary;
 
   const SahneButton.text({
     super.key,
     required this.label,
     required this.onPressed,
     this.arrow = true,
+    this.quiet = false,
     this.semanticLabel,
     this.buttonKey,
   }) : _kind = _SahneButtonKind.text,
@@ -93,6 +96,11 @@ class SahneButton extends StatelessWidget {
 
   /// Birincilde sağda ok (→), metin düğmesinde chevron (›).
   final bool arrow;
+
+  /// Yalnız metin düğmesi: ikincil metin rengi (turuncu vurgu yok). Aynı
+  /// satırdaki birincil metin eylemiyle ("Teste başla") yarışmasın diye
+  /// "Şimdilik geç" gibi vazgeçme bağlantıları için.
+  final bool quiet;
 
   /// Tam genişlik.
   final bool expand;
@@ -252,7 +260,7 @@ class SahneButton extends StatelessWidget {
           key: buttonKey,
           onPressed: press,
           style: TextButton.styleFrom(
-            foregroundColor: t.actTx,
+            foregroundColor: quiet ? t.tx2 : t.actTx,
             disabledForegroundColor: t.tx3,
             minimumSize: const Size(44, 44),
             textStyle: SahneType.captionStrong,
