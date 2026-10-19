@@ -23,46 +23,21 @@ Future<void> showLeaderboardEntryMenu(
   required VoidCallback onReport,
 }) {
   final name = PlayerIdentity.resolveName(entry.displayName, isKu: isKu);
-  return showModalBottomSheet<void>(
+  return showSahneSheet<void>(
     context: context,
-    showDragHandle: true,
-    builder: (sheetContext) => SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          SahneSpace.page,
-          0,
-          SahneSpace.page,
-          SahneSpace.page,
+    title: name,
+    builder: (sheetContext) => SahneListGroup(
+      children: [
+        SahneListRow.icon(
+          key: ValueKey('leaderboard-report-${entry.playerId}'),
+          icon: AppIcons.flag,
+          title: Tr.forKu(K.reportProfileTitle, isKu),
+          onTap: () {
+            Navigator.of(sheetContext).pop();
+            onReport();
+          },
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: SahneSpace.x3),
-              child: Text(
-                name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: SahneType.headline,
-              ),
-            ),
-            SahneListGroup(
-              children: [
-                SahneListRow.icon(
-                  key: ValueKey('leaderboard-report-${entry.playerId}'),
-                  icon: AppIcons.flag,
-                  title: Tr.forKu(K.reportProfileTitle, isKu),
-                  onTap: () {
-                    Navigator.of(sheetContext).pop();
-                    onReport();
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+      ],
     ),
   );
 }

@@ -667,47 +667,14 @@ class _LearningExplanationAction extends StatelessWidget {
   final QuizQuestion question;
 
   void _open(BuildContext context, String explanation) {
-    showModalBottomSheet<void>(
+    // Kurul 3. tur (2026-10-20): ortak alt sayfa kabuğu (tutamaç + başlık
+    // + kapat). Ku modda engel-kapatma etiketi de kabuktan yerelleşir.
+    showSahneSheet<void>(
       context: context,
-      showDragHandle: true,
-      // Ku modda engel-kapatma etiketi Türkçe Material varsayılanından
-      // ("Kapat") gelmesin diye açıkça yerelleştirildi (2026-09-25 web turu).
-      barrierLabel: context.t(K.close),
+      title: context.t(K.explanationTitle),
       builder: (sheetContext) {
         final t = SahneTokens.of(sheetContext);
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              SahneSpace.page,
-              SahneSpace.x1,
-              SahneSpace.page,
-              SahneSpace.x6,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(AppIcons.bookOpen, color: t.learnTx, size: 24),
-                    const SizedBox(width: SahneSpace.x2),
-                    Expanded(
-                      child: Semantics(
-                        header: true,
-                        child: Text(
-                          sheetContext.t(K.explanationTitle),
-                          style: SahneType.headline.copyWith(color: t.tx),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: SahneSpace.x3),
-                Text(explanation, style: SahneType.body.copyWith(color: t.tx)),
-              ],
-            ),
-          ),
-        );
+        return Text(explanation, style: SahneType.body.copyWith(color: t.tx));
       },
     );
   }

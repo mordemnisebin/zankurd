@@ -11,7 +11,6 @@ import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/error_reporter.dart';
 import '../../utils/player_identity.dart';
-import '../../widgets/app_panel.dart';
 import '../../widgets/sahne/sahne.dart';
 import 'async_duel_play_screen.dart';
 
@@ -32,11 +31,12 @@ Future<void> showAsyncDuelChallengeSheet(
   BuildContext context,
   ZanKurdRepository repository,
 ) async {
-  final entry = await showModalBottomSheet<AsyncDuelEntry>(
+  // Kurul 3. tur (2026-10-20, 249): ortak alt sayfa kabuğu (tutamaç +
+  // başlık + kapat + görünür karartma). Eskiden şeffaf zemin üstünde bir
+  // AppPanel'di; ne tutamacı ne kapat düğmesi vardı, arka planla karışıyordu.
+  final entry = await showSahneSheet<AsyncDuelEntry>(
     context: context,
-    isScrollControlled: true,
-    useSafeArea: true,
-    backgroundColor: Colors.transparent,
+    title: context.t(K.challengeEntry),
     builder: (sheetContext) => _ChallengeSheet(repository: repository),
   );
   if (entry == null || !context.mounted) return;
@@ -104,62 +104,44 @@ class _ChallengeSheetState extends State<_ChallengeSheet> {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return SingleChildScrollView(
-      padding: const EdgeInsets.only(
-        left: SahneSpace.page,
-        right: SahneSpace.page,
-        bottom: SahneSpace.page,
-      ),
-      child: AppPanel(
-        child: Column(
-          key: const ValueKey('challenge-sheet'),
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Semantics(
-              header: true,
-              child: Text(
-                context.t(K.challengeEntry),
-                style: SahneType.headline.copyWith(color: t.tx),
-              ),
+    return Column(
+      key: const ValueKey('challenge-sheet'),
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (!_pickingFriend) ...[
+          SahneButton.primary(
+            key: const ValueKey('challenge-sheet-link'),
+            label: context.t(K.challengeViaLink),
+            icon: AppIcons.shareNodes,
+            arrow: false,
+            expand: true,
+            onPressed: () => _choose(const AsyncDuelEntry.createChallenge()),
+          ),
+          const SizedBox(height: SahneSpace.x2),
+          Text(
+            context.t(K.challengeViaLinkSub),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x4),
+          SahneButton.secondary(
+            key: const ValueKey('challenge-sheet-friend'),
+            label: context.t(K.challengePickFriend),
+            icon: AppIcons.peopleGroup,
+            expand: true,
+            onPressed: () => unawaited(_openFriends()),
+          ),
+        ] else
+          _FriendPicker(
+            friends: _friends,
+            failed: _friendsFailed,
+            onRetry: () => unawaited(_openFriends()),
+            onPick: (friend) => _choose(
+              AsyncDuelEntry.createChallenge(friendId: friend.friendId),
             ),
-            const SizedBox(height: SahneSpace.x4),
-            if (!_pickingFriend) ...[
-              SahneButton.primary(
-                key: const ValueKey('challenge-sheet-link'),
-                label: context.t(K.challengeViaLink),
-                icon: AppIcons.shareNodes,
-                arrow: false,
-                expand: true,
-                onPressed: () =>
-                    _choose(const AsyncDuelEntry.createChallenge()),
-              ),
-              const SizedBox(height: SahneSpace.x2),
-              Text(
-                context.t(K.challengeViaLinkSub),
-                style: SahneType.caption.copyWith(color: t.tx2),
-              ),
-              const SizedBox(height: SahneSpace.x4),
-              SahneButton.secondary(
-                key: const ValueKey('challenge-sheet-friend'),
-                label: context.t(K.challengePickFriend),
-                icon: AppIcons.peopleGroup,
-                expand: true,
-                onPressed: () => unawaited(_openFriends()),
-              ),
-            ] else
-              _FriendPicker(
-                friends: _friends,
-                failed: _friendsFailed,
-                onRetry: () => unawaited(_openFriends()),
-                onPick: (friend) => _choose(
-                  AsyncDuelEntry.createChallenge(friendId: friend.friendId),
-                ),
-                onLink: () => _choose(const AsyncDuelEntry.createChallenge()),
-              ),
-          ],
-        ),
-      ),
+            onLink: () => _choose(const AsyncDuelEntry.createChallenge()),
+          ),
+      ],
     );
   }
 }
