@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../theme/app_icons.dart';
+import '../../theme/app_theme.dart';
 import '../../theme/sahne.dart';
 import 'sahne_foundation.dart';
 import 'sahne_page.dart';
@@ -30,10 +31,10 @@ Future<T?> showSahneSheet<T>({
     // Başlık satırı ve tutamacı kabuk çizer; Material'inki çift olmasın.
     showDragHandle: false,
     // Görünür karartma: sayfa arka planla karışmaz.
-    barrierColor: Colors.black.withValues(alpha: 0.6),
+    barrierColor: AppColors.heroScrim(0.6),
     barrierLabel: context.t(K.close),
     elevation: 12,
-    builder: (sheetContext) => SahneSheetChrome(
+    builder: (sheetContext) => _SahneSheetChrome(
       key: chromeKey,
       title: title,
       child: Builder(builder: builder),
@@ -42,8 +43,12 @@ Future<T?> showSahneSheet<T>({
 }
 
 /// [showSahneSheet]in içeriği saran kabuğu.
-class SahneSheetChrome extends StatelessWidget {
-  const SahneSheetChrome({super.key, required this.title, required this.child});
+class _SahneSheetChrome extends StatelessWidget {
+  const _SahneSheetChrome({
+    super.key,
+    required this.title,
+    required this.child,
+  });
 
   final String title;
   final Widget child;

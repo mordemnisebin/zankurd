@@ -702,7 +702,7 @@ class _RivalLine extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SahneAvatar(
-          initial: name.isEmpty ? '?' : name.characters.first.toUpperCase(),
+          initial: name.isEmpty ? '?' : name.characters.first,
           size: 24,
           textStyle: SahneType.captionStrong.copyWith(color: t.tx),
         ),
