@@ -431,8 +431,8 @@ class MissionProgressCard extends StatelessWidget {
                   style: FilledButton.styleFrom(
                     backgroundColor: t.s2,
                     foregroundColor: t.tx,
-                    disabledBackgroundColor: t.s1,
-                    disabledForegroundColor: t.tx3,
+                    disabledBackgroundColor: t.disabledFill,
+                    disabledForegroundColor: t.disabledFg,
                     minimumSize: const Size(48, 48),
                     shape: SahneShape.m,
                   ),

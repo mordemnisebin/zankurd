@@ -1,3 +1,5 @@
+// Tasarım kurulu tüm ekranlar 2026-10-20: yetmeyen mağaza ürünü çip değil,
+// ortak pasif fiyat düğmesi + eksik miktar taşır.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -101,47 +103,50 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    testWidgets('yetmeyen ürün düğme değil, eksik miktarlı durum çipi taşır', (
-      tester,
-    ) async {
-      await pumpShop(tester, 200);
+    testWidgets(
+      'yetmeyen ürün pasif (ortak pasif biçim) fiyat düğmesi ve eksik miktar taşır',
+      (tester) async {
+        await pumpShop(tester, 200);
 
-      // 120 jetonluk ürüne 200 yeter: gerçek satın alma düğmesi.
-      final affordable = find.byKey(
-        const ValueKey('shop-item-surface-spin_wheel_extra'),
-      );
-      expect(
-        find.descendant(of: affordable, matching: find.byType(FilledButton)),
-        findsOneWidget,
-      );
-      expect(
-        find.byKey(const ValueKey('shop-short-spin_wheel_extra')),
-        findsNothing,
-      );
-
-      // 480 ve 350 jetonluk çerçeveler ve 720'lik rozet yetmiyor.
-      for (final (id, cost) in [
-        ('avatar_frame_gold', 480),
-        ('avatar_frame_neon', 350),
-        ('profile_badge_vip', 720),
-      ]) {
-        final chip = find.byKey(ValueKey('shop-short-$id'));
-        expect(chip, findsOneWidget, reason: '$id yetmiyor ama çip yok');
-        expect(find.text('${cost - 200} jeton eksik'), findsOneWidget);
-        expect(
-          find.descendant(
-            of: find.ancestor(
-              of: chip,
-              matching: find.byType(SahneSurfaceCard),
-            ),
-            matching: find.byType(FilledButton),
-          ),
-          findsNothing,
-          reason: '$id için etkin görünen bir satın alma düğmesi kalmış',
+        // 120 jetonluk ürüne 200 yeter: gerçek satın alma düğmesi.
+        final affordable = find.byKey(
+          const ValueKey('shop-item-surface-spin_wheel_extra'),
         );
-      }
-      expect(tester.takeException(), isNull);
-    });
+        expect(
+          find.descendant(of: affordable, matching: find.byType(FilledButton)),
+          findsOneWidget,
+        );
+        expect(
+          find.byKey(const ValueKey('shop-short-spin_wheel_extra')),
+          findsNothing,
+        );
+
+        // 480 ve 350 jetonluk çerçeveler ve 720'lik rozet yetmiyor.
+        for (final (id, cost) in [
+          ('avatar_frame_gold', 480),
+          ('avatar_frame_neon', 350),
+          ('profile_badge_vip', 720),
+        ]) {
+          final chip = find.byKey(ValueKey('shop-short-$id'));
+          expect(
+            chip,
+            findsOneWidget,
+            reason: '$id yetmiyor ama pasif düğme yok',
+          );
+          expect(find.text('${cost - 200} jeton eksik'), findsOneWidget);
+          // Düğme var ama PASİF: etkin görünen satın alma eylemi yok.
+          final button = tester.widget<FilledButton>(
+            find.descendant(of: chip, matching: find.byType(FilledButton)),
+          );
+          expect(
+            button.onPressed,
+            isNull,
+            reason: '$id için etkin görünen bir satın alma düğmesi kalmış',
+          );
+        }
+        expect(tester.takeException(), isNull);
+      },
+    );
 
     testWidgets(
       'yetmeyen ürünün penceresinde pasif "Satın al" yok, "Jeton kazan" birincil',

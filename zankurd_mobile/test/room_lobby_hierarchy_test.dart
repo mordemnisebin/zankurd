@@ -1,3 +1,4 @@
+// Tasarım kurulu tüm ekranlar 2026-10-20: sohbet başlıkta ikon düğmesi.
 /// Oda lobisinin görsel hiyerarşisi (A7, 2026-10-01).
 ///
 /// ## Kusur
@@ -211,25 +212,36 @@ void main() {
     expect(find.byType(SahneRailChip), findsWidgets);
   });
 
-  testWidgets('sohbet satırı yüzeysiz metin eylemi, kart içinde değil', (
-    tester,
-  ) async {
-    await _open(
-      tester,
-      _LobbyRepository(userId: 'host-user', players: [_me, _guest]),
-    );
-    final toggle = find.byKey(const ValueKey('room-chat-toggle'));
-    expect(toggle, findsOneWidget);
-    expect(
-      find.ancestor(of: toggle, matching: find.byType(SahneListGroup)),
-      findsNothing,
-      reason: 'Sohbet "Hazırım" kartıyla aynı yüzey ağırlığındaydı.',
-    );
-    expect(
-      find.ancestor(of: toggle, matching: find.byType(SahneSurfaceCard)),
-      findsNothing,
-    );
-  });
+  testWidgets(
+    'sohbet başlıkta küçük ikon düğmesi, tam genişlik ikincil düğme değil',
+    (tester) async {
+      await _open(
+        tester,
+        _LobbyRepository(userId: 'host-user', players: [_me, _guest]),
+      );
+      final toggle = find.byKey(const ValueKey('room-chat-toggle'));
+      expect(toggle, findsOneWidget);
+      expect(
+        find.ancestor(of: toggle, matching: find.byType(SahneListGroup)),
+        findsNothing,
+        reason: 'Sohbet "Hazırım" kartıyla aynı yüzey ağırlığındaydı.',
+      );
+      expect(
+        find.ancestor(of: toggle, matching: find.byType(SahneSurfaceCard)),
+        findsNothing,
+      );
+      expect(
+        tester.getSize(toggle).width,
+        lessThanOrEqualTo(64),
+        reason:
+            'Sohbet pasif "Yarışı başlat"la karışan tam genişlik düğme değil.',
+      );
+      expect(
+        find.descendant(of: toggle, matching: find.byType(FilledButton)),
+        findsNothing,
+      );
+    },
+  );
 
   testWidgets('konuğun alt perdesi ölü düğme değil, bekleme satırı', (
     tester,

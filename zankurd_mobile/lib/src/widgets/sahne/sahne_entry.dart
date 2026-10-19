@@ -176,11 +176,13 @@ class SahneEntryScaffold extends StatelessWidget {
                         ],
                       );
                 return SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(
+                  // Sabit perde varken alt pay büyür: kartın son satırı
+                  // perdenin altında kalıp kesik görünmesin (kurul 2026-10-20).
+                  padding: EdgeInsets.fromLTRB(
                     SahneSpace.page,
                     SahneSpace.x2,
                     SahneSpace.page,
-                    SahneSpace.x6,
+                    anchored ? SahneSpace.x8 : SahneSpace.x6,
                   ),
                   child: limited(laidOut),
                 );
@@ -191,7 +193,38 @@ class SahneEntryScaffold extends StatelessWidget {
                   limited(
                     _TopBar(leading: leading, skip: skip, progress: progress),
                   ),
-                  Expanded(child: paged ?? scrollBody()),
+                  Expanded(
+                    child: paged != null
+                        ? paged!
+                        : Stack(
+                            children: [
+                              Positioned.fill(child: scrollBody()),
+                              if (anchored)
+                                // Perdenin hemen üstünde zemin rengine
+                                // sönen şerit: kart kesik değil, kayıyor.
+                                Positioned(
+                                  left: 0,
+                                  right: 0,
+                                  bottom: 0,
+                                  height: SahneSpace.x6,
+                                  child: IgnorePointer(
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            t.bg.withValues(alpha: 0),
+                                            t.bg,
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                  ),
                   if (anchored)
                     DecoratedBox(
                       key: dockKey,

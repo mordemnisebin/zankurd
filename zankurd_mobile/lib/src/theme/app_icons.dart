@@ -153,6 +153,9 @@ class AppIcons {
   /// Lucide `dice-5`.
   static const IconData dice = IconData(0xe28b, fontFamily: 'Lucide');
 
+  /// Lucide `ferris-wheel`.
+  static const IconData ferrisWheel = IconData(0xe47f, fontFamily: 'Lucide');
+
   /// Lucide `door-open`.
   static const IconData doorOpen = IconData(0xe3d6, fontFamily: 'Lucide');
 

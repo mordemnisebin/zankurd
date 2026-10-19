@@ -509,9 +509,13 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             ],
           ),
         ],
-        const SizedBox(height: SahneSpace.cardGap),
+        // Kurul 2026-10-20 (GLM, Nemotron): sayfa yarı boş duruyordu. Yeni
+        // öğe eklenmedi; "Günün soruları" zaten görünür. Gruplar arası
+        // dikey ritim bir kademe açıldı (cardGap → x5) ki içerik yukarıya
+        // yığılmış değil, sayfaya yayılmış okunsun.
+        const SizedBox(height: SahneSpace.x5),
         _RoomActions(createRoom: createRoom, joinRoom: joinRoom),
-        const SizedBox(height: SahneSpace.cardGap),
+        const SizedBox(height: SahneSpace.x5),
         SahneListGroup(
           children: [
             dailyContest,

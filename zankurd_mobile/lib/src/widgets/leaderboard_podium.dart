@@ -8,6 +8,65 @@ import 'player_avatar.dart';
 import 'sahne/sahne.dart';
 import '../utils/number_format.dart';
 
+/// Bir sıralama satırının "daha fazla" menüsü: tek eylem, profili bildir.
+///
+/// Kurul 2026-10-20 (Opus, Longcat): podyumda ve her satırda duran bayrak
+/// simgeleri gürültüydü. Bildirme eylemi ARTIK menüde (Apple 1.2: hâlâ
+/// görünür bir yol — satırdaki ⋯ düğmesi ve podyum sütununa dokunuş —
+/// yalnız uzun basma DEĞİL). Menü öğesi eski anahtarı
+/// (`leaderboard-report-<id>`) ve aynı etiketi taşır; anlamı aynı:
+/// onay penceresi → `report_player_profile`.
+Future<void> showLeaderboardEntryMenu(
+  BuildContext context, {
+  required LeaderboardEntry entry,
+  required bool isKu,
+  required VoidCallback onReport,
+}) {
+  final name = PlayerIdentity.resolveName(entry.displayName, isKu: isKu);
+  return showModalBottomSheet<void>(
+    context: context,
+    showDragHandle: true,
+    builder: (sheetContext) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(
+          SahneSpace.page,
+          0,
+          SahneSpace.page,
+          SahneSpace.page,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: SahneSpace.x3),
+              child: Text(
+                name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: SahneType.headline,
+              ),
+            ),
+            SahneListGroup(
+              children: [
+                SahneListRow.icon(
+                  key: ValueKey('leaderboard-report-${entry.playerId}'),
+                  icon: AppIcons.flag,
+                  title: Tr.forKu(K.reportProfileTitle, isKu),
+                  onTap: () {
+                    Navigator.of(sheetContext).pop();
+                    onReport();
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 /// Sıralamanın ilk üçü: ortada birinci (en uzun kaide), solda ikinci,
 /// sağda üçüncü.
 ///
@@ -29,9 +88,11 @@ import '../utils/number_format.dart';
 ///   liste satırı olarak kalır; adlar kırpılmaz.
 /// * Rakam her zaman yazılıdır (kaidenin üstünde); sıra yalnız renkle ya da
 ///   yükseklikle anlatılmaz.
-/// * "Bildir" düğmesi GÖRÜNÜRDÜR (Apple 1.2): liste satırındaki aynı
-///   anahtar (`leaderboard-report-<id>`) ve aynı etiket; kendi kaidende
-///   düğme yerine "Sen" rozeti durur.
+/// * Kaide (2026-10-20 kurul): avatar kaidenin ÜSTÜNDE oturur; ad ve puan
+///   kaidenin içinde, rakamın altında. Yükseklikler açık basamaklı
+///   (1 > 2 > 3). Bayrak simgesi yok: sütuna dokununca ([showLeaderboardEntryMenu])
+///   "Profili bildir" menüsü açılır (Apple 1.2 yolu korunur). Kendi
+///   kaidende menü yok, "Sen" rozeti durur.
 class LeaderboardPodium extends StatelessWidget {
   const LeaderboardPodium({
     super.key,
@@ -84,7 +145,12 @@ class LeaderboardPodium extends StatelessWidget {
                 colorOverride: colorOverrides[entries[order[i]].playerId],
                 onReport: selfId != null && entries[order[i]].playerId == selfId
                     ? null
-                    : () => onReport(entries[order[i]]),
+                    : () => showLeaderboardEntryMenu(
+                        context,
+                        entry: entries[order[i]],
+                        isKu: isKu,
+                        onReport: () => onReport(entries[order[i]]),
+                      ),
               ),
             ),
           ],
@@ -115,7 +181,7 @@ class _PodiumColumn extends StatelessWidget {
 
   /// Kaide yükseklikleri: birinci en uzun. Dört katı; büyük yazıda kaide
   /// içeriğiyle birlikte uzar (en az bu kadar).
-  static const _pedestal = [104.0, 92.0, 80.0];
+  static const _pedestal = [152.0, 124.0, 100.0];
   static const _avatarRadius = [32.0, 24.0, 24.0];
 
   String get _name => PlayerIdentity.resolveName(entry.displayName, isKu: isKu);
@@ -149,12 +215,17 @@ class _PodiumColumn extends StatelessWidget {
           shape: pedestalShape,
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: SahneSpace.x2),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ExcludeSemantics(
-                child: Text(
+          padding: const EdgeInsets.fromLTRB(
+            SahneSpace.x1,
+            SahneSpace.x2,
+            SahneSpace.x1,
+            SahneSpace.x2,
+          ),
+          child: ExcludeSemantics(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
                   '${entry.rank}',
                   maxLines: 1,
                   style: SahneType.title.copyWith(
@@ -162,65 +233,7 @@ class _PodiumColumn extends StatelessWidget {
                     fontFeatures: const [FontFeature.tabularFigures()],
                   ),
                 ),
-              ),
-              if (isSelf)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: SahneSpace.x2),
-                  child: SahneBadge(
-                    label: Tr.forKu(K.you, isKu),
-                    tone: SahneBadgeTone.gold,
-                  ),
-                )
-              else
-                Semantics(
-                  button: true,
-                  label: Tr.forKu(K.reportProfileTitle, isKu),
-                  child: IconButton(
-                    key: ValueKey('leaderboard-report-${entry.playerId}'),
-                    onPressed: onReport,
-                    icon: const Icon(AppIcons.flag, size: 16),
-                    color: t.tx3,
-                    // Android dokunma hedefi: 48 dp altına düşmez.
-                    constraints: const BoxConstraints(
-                      minWidth: 48,
-                      minHeight: 48,
-                    ),
-                    padding: EdgeInsets.zero,
-                    tooltip: Tr.forKu(K.reportProfileTitle, isKu),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-
-    return Semantics(
-      key: ValueKey('leaderboard-rank-row-${entry.rank}'),
-      container: true,
-      label: label,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ExcludeSemantics(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (first) ...[
-                  const SahneGlyph(SahneGlyphKind.crown, size: 28),
-                  const SizedBox(height: SahneSpace.x1),
-                ],
-                PlayerAvatar(
-                  radius: _avatarRadius[place],
-                  photoUrl: entry.avatarUrl,
-                  iconId: entry.avatarIcon,
-                  colorHex: entry.avatarColor,
-                  frameId: entry.avatarFrame,
-                  displayName: entry.displayName,
-                  colorOverride: colorOverride,
-                ),
-                const SizedBox(height: SahneSpace.x2),
+                const SizedBox(height: SahneSpace.x1),
                 _PodiumName(name: _name),
                 const SizedBox(height: SahneSpace.x1),
                 SizedBox(
@@ -237,12 +250,64 @@ class _PodiumColumn extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: SahneSpace.x2),
+                if (isSelf) ...[
+                  const SizedBox(height: SahneSpace.x1),
+                  SahneBadge(
+                    label: Tr.forKu(K.you, isKu),
+                    tone: SahneBadgeTone.gold,
+                  ),
+                ],
               ],
             ),
           ),
-          pedestal,
-        ],
+        ),
+      ),
+    );
+
+    final column = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ExcludeSemantics(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (first) ...[
+                const SahneGlyph(SahneGlyphKind.crown, size: 28),
+                const SizedBox(height: SahneSpace.x1),
+              ],
+              PlayerAvatar(
+                radius: _avatarRadius[place],
+                photoUrl: entry.avatarUrl,
+                iconId: entry.avatarIcon,
+                colorHex: entry.avatarColor,
+                frameId: entry.avatarFrame,
+                displayName: entry.displayName,
+                colorOverride: colorOverride,
+              ),
+              const SizedBox(height: SahneSpace.x2),
+            ],
+          ),
+        ),
+        pedestal,
+      ],
+    );
+
+    final onReport = this.onReport;
+    return Semantics(
+      key: ValueKey('leaderboard-rank-row-${entry.rank}'),
+      container: true,
+      label: label,
+      button: onReport != null,
+      onTap: onReport,
+      onLongPress: onReport,
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        excludeFromSemantics: true,
+        onTap: onReport,
+        onLongPress: onReport,
+        child: column,
       ),
     );
   }

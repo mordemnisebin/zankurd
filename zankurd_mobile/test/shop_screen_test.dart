@@ -1,3 +1,5 @@
+// Tasarım kurulu tüm ekranlar 2026-10-20: mağaza kartı = ikon, ad, açıklama,
+// fiyat düğmesi; VIP aynı çerçeve; yetmeyen ürün ortak pasif düğme.
 // 2026-10-19 sadeleşme: "sakin yüzey" bekçisi yuvarlak köşeli yüzey
 // kartını (`OutlinedBorder`) kabul eder; eskiden pahlı şekle cast ediyordu.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
@@ -514,23 +516,26 @@ void main() {
     expect(find.text('30 jeton'), findsOneWidget);
   });
 
-  testWidgets('dar kart açıklamayı gizler, ürüne dokununca ayrıntıyı açar', (
-    tester,
-  ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-    final repository = _ShopRepository(coins: 500);
-    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
-    await tester.pumpAndSettle();
+  testWidgets(
+    'kart açıklamayı gösterir, ürüne dokununca onay penceresi aynı ayrıntıyı açar',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      final repository = _ShopRepository(coins: 500);
+      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+      await tester.pumpAndSettle();
 
-    const description = 'Bugün çarkı tekrar çevirmek için ekstra hak verir.';
-    expect(find.text(description), findsNothing);
-    await tester.ensureVisible(find.text('Ekstra çevirme'));
-    await tester.tap(find.text('Ekstra çevirme'));
-    await tester.pumpAndSettle();
-    expect(find.text(description), findsOneWidget);
-    expect(find.text('Satın al'), findsOneWidget);
-  });
+      const description = 'Bugün çarkı tekrar çevirmek için ekstra hak verir.';
+      // Kurul 2026-10-20: açıklama artık kartta yazar (kart: ikon, ad,
+      // açıklama, fiyat düğmesi).
+      expect(find.text(description), findsOneWidget);
+      await tester.ensureVisible(find.text('Ekstra çevirme'));
+      await tester.tap(find.text('Ekstra çevirme'));
+      await tester.pumpAndSettle();
+      expect(find.text(description), findsNWidgets(2));
+      expect(find.text('Satın al'), findsOneWidget);
+    },
+  );
 
   testWidgets('satın alma eylemleri düz ve gölgesizdir', (tester) async {
     final repository = _ShopRepository(coins: 500);

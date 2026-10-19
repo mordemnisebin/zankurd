@@ -36,6 +36,20 @@ import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
+
+class _RequestRepo extends _Repo {
+  @override
+  Future<List<FriendRequest>> loadPendingFriendRequests() async => [
+    FriendRequest(
+      id: 'r1',
+      fromUserId: 'u-rojin',
+      fromUserName: 'Rojîn',
+      toUserId: 'me',
+      createdAt: DateTime(2026, 10, 1),
+    ),
+  ];
+}
 
 class _Repo extends MockZanKurdRepository {
   final List<String?> challengedFriendIds = [];
@@ -116,14 +130,33 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Meydan oku'), findsNWidgets(2));
-    // Canlı oda daveti yazılı eylem olmaktan çıktı.
-    expect(find.text('Odaya çağır'), findsNothing);
-    // ... ama kaybolmadı: simge düğmesi, ekran okuyucu adıyla.
+    // Tasarım kurulu tüm ekranlar 2026-10-20: kapı simgesi neyi yaptığını
+    // söylemiyordu; canlı oda daveti artık yazılı SESSİZ metin eylemi
+    // ("Meydan oku" ikincil düğme kalır, bu ikincisi metin).
     final roomButton = find.byKey(const ValueKey('friend-room-Rojda'));
     expect(roomButton, findsOneWidget);
-    expect(find.bySemanticsLabel('Odaya çağır'), findsNWidgets(2));
+    expect(find.text('Odaya çağır'), findsNWidgets(2));
+    expect(find.byIcon(AppIcons.doorOpen), findsNothing);
     expect(tester.getSize(roomButton).width, greaterThanOrEqualTo(48));
     expect(tester.getSize(roomButton).height, greaterThanOrEqualTo(48));
+  });
+
+  // Tasarım kurulu tüm ekranlar 2026-10-20: bekleyen isteğin "Kabul"ü
+  // ekranın birincil (turuncu) eylemidir.
+  testWidgets('bekleyen isteğin Kabul düğmesi birincil (turuncu) eylemdir', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_app(_RequestRepo()));
+    await tester.pumpAndSettle();
+    final accept = find.ancestor(
+      of: find.text('Kabul'),
+      matching: find.byType(FilledButton),
+    );
+    expect(accept, findsOneWidget);
+    final style = tester.widget<FilledButton>(accept).style;
+    // Birincil düğme arka planı tema (Agir) dolgusundan gelir; ikincil
+    // (Kulis) kendi `backgroundColor`ını yazar.
+    expect(style?.backgroundColor, isNull);
   });
 
   testWidgets(
