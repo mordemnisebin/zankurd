@@ -151,6 +151,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     bool ku,
   ) {
     final uid = widget.repository.currentUserId;
+    // Sıra kaynağın sırasına değil `rank` alanına bağlanır: podyum "1" yazan
+    // kaideye listedeki İLK kaydı koyar, kaynak sırasız dönerse ad ile sıra
+    // rakamı ayrışırdı (kurul 2026-10-20, MiniMax). Kararlı sıralama.
+    final indexed = entries.indexed.toList()
+      ..sort((a, b) {
+        final byRank = a.$2.rank.compareTo(b.$2.rank);
+        return byRank != 0 ? byRank : a.$1.compareTo(b.$1);
+      });
+    entries = [for (final e in indexed) e.$2];
 
     Widget listOf(List<LeaderboardEntry> rows) => KeyedSubtree(
       key: const ValueKey('leaderboard-rank-list'),
@@ -1148,6 +1157,7 @@ class _RankRow extends StatelessWidget {
       label: label,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
+        excludeFromSemantics: true,
         // Uzun basma YALNIZ kısayol; görünür yol satırdaki ⋯ düğmesi.
         onLongPress: onReport == null
             ? null

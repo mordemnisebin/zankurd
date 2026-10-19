@@ -301,8 +301,10 @@ class _PodiumColumn extends StatelessWidget {
       button: onReport != null,
       onTap: onReport,
       onLongPress: onReport,
+      excludeSemantics: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
+        excludeFromSemantics: true,
         onTap: onReport,
         onLongPress: onReport,
         child: column,

@@ -1107,9 +1107,7 @@ class _ShopScreenState extends State<ShopScreen> {
       // Jeton yetmeyen ürünün düğmesi pasiftir; eksik sözü düğmenin
       // altında ayrı satırdır, hücre onu da sığdırmalı.
       final missing = coinShortfall(cost: item.cost, balance: _coinBalance);
-      if (missing > 0 &&
-          SahnePriceChip.noteShownFor(price: item.cost, missing: missing) &&
-          !_purchasedItemIds.contains(item.id)) {
+      if (missing > 0 && !_purchasedItemIds.contains(item.id)) {
         note = math.max(
           note,
           measure(

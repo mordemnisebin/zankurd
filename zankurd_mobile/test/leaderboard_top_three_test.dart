@@ -90,6 +90,20 @@ Color? _rankDigitColor(WidgetTester tester, int rank) {
   return tester.widget<Text>(digit).style?.color;
 }
 
+/// Kaynak sırasız döndürür (3., 1., 2.).
+class _ShuffledRepo extends _Repo {
+  _ShuffledRepo() : super(count: 4);
+
+  @override
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    int limit = 20,
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async {
+    final all = await super.loadLeaderboard(limit: limit, period: period);
+    return [all[2], all[0], all[3], all[1]];
+  }
+}
+
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
@@ -165,6 +179,50 @@ void main() {
 
   // Tasarım kurulu tüm ekranlar 2026-10-20: podyumda bayrak yok (gürültü);
   // sütuna dokununca menü açılır ve bildir yolu orada durur (Apple 1.2).
+  // Tasarım kurulu tüm ekranlar 2026-10-20 (MiniMax: "adlar sıralarla
+  // eşleşmiyor"): her kaide kendi sırasının adını/puanını taşır, kaynak
+  // sırasız gelse bile.
+  testWidgets('podyum her sırayı doğru ad ve puanla eşler (sırasız kaynak)', (
+    tester,
+  ) async {
+    await _pump(tester, _ShuffledRepo());
+    const expected = {
+      1: ('Rojda', '8.420'),
+      2: ('Baran', '7.520'),
+      3: ('Dilan', '6.620'),
+    };
+    for (final e in expected.entries) {
+      final column = find.byKey(ValueKey('leaderboard-rank-row-${e.key}'));
+      expect(column, findsOneWidget);
+      expect(
+        find.descendant(of: column, matching: find.text(e.value.$1)),
+        findsOneWidget,
+        reason: 'sıra ${e.key}: ad',
+      );
+      expect(
+        find.descendant(of: column, matching: find.text(e.value.$2)),
+        findsOneWidget,
+        reason: 'sıra ${e.key}: puan',
+      );
+    }
+    // 4. oyuncu podyumda değil, listede.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('leaderboard-podium')),
+        matching: find.text('Zelal'),
+      ),
+      findsNothing,
+    );
+  });
+
+  testWidgets('üçten az oyuncuda podyum yok, boş kart da yok', (tester) async {
+    await _pump(tester, _Repo(count: 2));
+    expect(find.byKey(const ValueKey('leaderboard-podium')), findsNothing);
+    expect(find.text('Rojda'), findsOneWidget);
+    expect(find.text('Baran'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('podyumda bayrak yok; sütuna dokununca bildir menüsü açılır', (
     tester,
   ) async {

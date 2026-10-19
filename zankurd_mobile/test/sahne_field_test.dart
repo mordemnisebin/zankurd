@@ -75,7 +75,8 @@ void main() {
     );
 
     final field = find.byType(SahneField);
-    expect(_sideOf(tester, field).color, t.edge);
+    // Kurul 2026-10-20: dinlenme kenarı zemine karışmayan fieldEdge.
+    expect(_sideOf(tester, field).color, t.fieldEdge);
 
     await tester.tap(find.byType(TextField));
     await tester.pumpAndSettle();
