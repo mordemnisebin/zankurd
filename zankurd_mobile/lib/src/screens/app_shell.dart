@@ -858,7 +858,7 @@ class _AppShellState extends State<AppShell>
   Future<void> _openRoomInviteFromPush() async {
     _selectTab(0);
     try {
-      final invites = await _repository.loadMyRoomInvites();
+      final invites = await _repository.loadMyRoomInvites(throwOnError: true);
       if (!mounted || invites.length != 1) {
         if (mounted) _homeRefresh.value++;
         return;
@@ -869,8 +869,16 @@ class _AppShellState extends State<AppShell>
       );
       if (code == null || !mounted) return;
       await _joinOnlineRoomAndOpen(code);
-    } on RoomInviteException {
-      if (mounted) _showJoinFailure(context.t(K.roomInviteExpired));
+    } on RoomInviteException catch (error) {
+      if (mounted) {
+        _showJoinFailure(
+          context.t(
+            error.reason == RoomInviteFailure.expired
+                ? K.roomInviteExpired
+                : K.roomInviteFailed,
+          ),
+        );
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'room invite push tap');
       if (mounted) _showJoinFailure(context.t(K.roomInviteFailed));

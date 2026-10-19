@@ -915,6 +915,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @visibleForTesting
   RoomInviteFailure? respondRoomInviteFailureForTesting;
 
+  /// [loadMyRoomInvites] `throwOnError: true` ile bunu fırlatsın (push yolu).
+  @visibleForTesting
+  Object? loadMyRoomInvitesErrorForTesting;
+
   @visibleForTesting
   void seedRoomInviteForTesting(RoomInvite invite) =>
       _incomingRoomInvites.add(invite);
@@ -936,8 +940,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Set.of(_invitedByRoom[room.id ?? room.code] ?? const <String>{});
 
   @override
-  Future<List<RoomInvite>> loadMyRoomInvites() async =>
-      List.of(_incomingRoomInvites);
+  Future<List<RoomInvite>> loadMyRoomInvites({
+    bool throwOnError = false,
+  }) async {
+    if (throwOnError && loadMyRoomInvitesErrorForTesting != null) {
+      throw loadMyRoomInvitesErrorForTesting!;
+    }
+    return List.of(_incomingRoomInvites);
+  }
 
   @override
   Future<String?> respondRoomInvite(

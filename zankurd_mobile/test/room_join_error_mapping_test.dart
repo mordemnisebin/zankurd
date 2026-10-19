@@ -55,6 +55,21 @@ void main() {
   });
 
   group('joinRoomErrorKey', () {
+    // Codex incelemesi 2026-10-19: sunucunun 20 yanlış kod / 10 dk sınırı
+    // (too_many_attempts) genel "katılamadın" metnine iniyordu; oyuncu
+    // bekleyeceğini değil kodun yanlış olduğunu sanıp aynı kodu denerdi.
+    test('RoomJoinException(tooManyAttempts) → K.roomCodeTooManyAttempts', () {
+      expect(
+        joinRoomErrorKey(
+          const RoomJoinException(
+            RoomJoinFailureReason.tooManyAttempts,
+            'too_many_attempts',
+          ),
+        ),
+        K.roomCodeTooManyAttempts,
+      );
+    });
+
     test('RoomJoinException(full) → K.roomFull', () {
       expect(
         joinRoomErrorKey(
