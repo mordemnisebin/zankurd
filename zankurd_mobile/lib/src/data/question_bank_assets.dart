@@ -160,4 +160,9 @@ const questionBankAssets = <String>[
   // sağlık, okul, ulaşım, geçmiş zaman) için derse etiketli 121 soru
   // (`learningLessonId`). Kurmancî Gemini 3.1 Pro + Grok 4.7 okumasından geçti.
   'assets/data/dersler3_2026_10_08_questions.json',
+  // 2026-10-19: KOLAY HAVUZ. 455 fazla zor "kolay" soru zorluk 3'e çekilince
+  // Sînema/Edebiyat/Siyaset/Dîrok kolay havuzları inceldi; DeepSeek V4.1
+  // taslağı, iki bağımsız jüri (Gemini 3.1 Pro + Grok/ChatGPT) ikisi de KABUL
+  // dediği 57 zorluk-1 soru. Sunucu eşi: `supabase/2026-10-19_kolay_ekle.sql`.
+  'assets/data/kolay_2026_10_19_questions.json',
 ];

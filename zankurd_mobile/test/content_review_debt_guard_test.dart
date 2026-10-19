@@ -14,7 +14,12 @@ void main() {
     // kopyadan çıkarılıp karantinaya döndü. Borç artışı tamamen geri alındı:
     // tavan eski değerine, 1199'a indi. Yeni içerik bu tavanı kendiliğinden
     // büyütemez; bir artış gerekçelendirilmeden yapılamaz.
-    const maximumMissingSourceReferences = 1199;
+    //
+    // 1199 -> 1235 (+36): 2026-10-19 `kolay_2026_10_19`. Kolay havuz takviyesi
+    // (zorluk-1 genel bilgi: Sînema, Edebiyat, Siyaset, Dîrok) tek bir web
+    // sayfasına bağlanamayan temel bilgilerdir; iki bağımsız jüri (Gemini 3.1
+    // Pro + Grok/ChatGPT) ikisi de KABUL dedi. Kaynak borcu bilinçli artırıldı.
+    const maximumMissingSourceReferences = 1235;
     var missing = 0;
 
     for (final asset in questionBankAssets) {

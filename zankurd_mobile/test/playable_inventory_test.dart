@@ -87,7 +87,8 @@ void main() {
       // `hat_2026_10_07` (128).
       // 3613 -> 3734 (+121): 2026-10-08 `dersler3_2026_10_08`.
       // 3734 -> 3759 (+25): 2026-10-13 derse bağlı 25 çoktan seçmeli (dersler3 +21, dersler2 +4).
-      3759,
+      // 3759 -> 3795 (+36): 2026-10-19 `kolay_2026_10_19`.
+      3795,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -177,7 +178,8 @@ void main() {
       // (iki modelce "aynı olgu" bulunan çiftlerin zayıf yarısı).
       // 3284 -> 3277 (-7): 2026-10-19 dış içerik denetimi; yerelde
       // karşılığı olan 7 soru emekli (4 kimlik yalnız sunucuda).
-      3277,
+      // 3277 -> 3313 (+36): 2026-10-19 `kolay_2026_10_19`, hepsi `approved`.
+      3313,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '

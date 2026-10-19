@@ -92,6 +92,8 @@ void main() {
       // 2026-10-08: alt konu hattı (128 kaynaklı soru) kalite bekçilerine bağlı.
       'hat': fromJson('assets/data/hat_2026_10_07_questions.json'),
       'dersler3': fromJson('assets/data/dersler3_2026_10_08_questions.json'),
+      // 2026-10-19: kolay havuz takviyesi (36 zorluk-1 soru).
+      'kolay': fromJson('assets/data/kolay_2026_10_19_questions.json'),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
@@ -113,7 +115,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla yirmi bir kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla yirmi iki kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -159,6 +161,8 @@ void main() {
         ...fromJson('assets/data/hat_2026_10_07_questions.json'),
         // 2026-10-08: başlangıç yolu III (124).
         ...fromJson('assets/data/dersler3_2026_10_08_questions.json'),
+        // 2026-10-19: kolay havuz takviyesi (36).
+        ...fromJson('assets/data/kolay_2026_10_19_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;
