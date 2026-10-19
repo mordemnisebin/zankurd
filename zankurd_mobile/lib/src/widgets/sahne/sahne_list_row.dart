@@ -4,6 +4,7 @@ import '../../theme/app_icons.dart';
 import '../../theme/sahne.dart';
 import 'sahne_foundation.dart';
 import 'sahne_painters.dart';
+import 'sahne_topic_marks.dart';
 
 /// Eski ad. 2026-09-29 doğallık (K5): avatar elmas değil pahlı kare;
 /// çağıranlar kırılmasın diye ad [SahneAvatar]a yönlenir.
@@ -178,6 +179,7 @@ class SahneListRow extends StatelessWidget {
     this.destructive = false,
   }) : _kind = _RowKind.standard,
        tone = SahneCategoryTone.fallback,
+       mark = null,
        image = null,
        rank = null,
        initial = null,
@@ -197,6 +199,7 @@ class SahneListRow extends StatelessWidget {
     this.onTap,
     this.semanticLabel,
     this.tone = SahneCategoryTone.fallback,
+    this.mark,
   }) : _kind = _RowKind.info,
        role = SahneRole.neutral,
        enabled = true,
@@ -205,7 +208,7 @@ class SahneListRow extends StatelessWidget {
        avatar = null,
        destructive = false,
        leadingWidget = null,
-       leadingWidth = 36;
+       leadingWidth = 44;
 
   /// Serbest öncüllü satır (ör. `PlayerAvatar`): [leadingWidth] ayırıcı
   /// hizası içindir (öncülün genişliği).
@@ -223,6 +226,7 @@ class SahneListRow extends StatelessWidget {
     this.destructive = false,
   }) : _kind = _RowKind.custom,
        tone = SahneCategoryTone.fallback,
+       mark = null,
        leadingWidget = leading,
        icon = null,
        image = null,
@@ -249,6 +253,7 @@ class SahneListRow extends StatelessWidget {
        ),
        _kind = _RowKind.plain,
        tone = SahneCategoryTone.fallback,
+       mark = null,
        icon = null,
        image = null,
        role = SahneRole.neutral,
@@ -271,6 +276,7 @@ class SahneListRow extends StatelessWidget {
     this.semanticLabel,
   }) : _kind = _RowKind.rank,
        tone = SahneCategoryTone.fallback,
+       mark = null,
        image = null,
        role = SahneRole.gold,
        chevron = false,
@@ -291,6 +297,7 @@ class SahneListRow extends StatelessWidget {
     this.semanticLabel,
   }) : _kind = _RowKind.me,
        tone = SahneCategoryTone.fallback,
+       mark = null,
        image = null,
        initial = null,
        role = SahneRole.gold,
@@ -322,6 +329,14 @@ class SahneListRow extends StatelessWidget {
   /// Bilgi satırının çizimsiz küçüğünün kategori tonu.
   final SahneCategoryTone tone;
 
+  /// Bilgi satırında konunun ana sayfa karosundaki çizimi (tek kaynak:
+  /// `CategoryVisuals.mark`). Verilirse ikonlu düz küçük yerine bu çizilir.
+  ///
+  /// Kusur (kurul, 2026-10-20): ana sayfa kategoriyi çizimle, eşleşme ve
+  /// sonuç satırları başka bir çizgi ikon takımıyla çiziyordu; "Kültür" üç
+  /// ayrı biçimde görünüyordu. Çizim artık her yerde aynı.
+  final SahneTopicMark? mark;
+
   /// Sıra/"Sen" satırında avatarın yerine (36'lık yuva).
   final Widget? avatar;
 
@@ -335,7 +350,7 @@ class SahneListRow extends StatelessWidget {
   /// sıra satırında avatarın hizası (12 + öncül + 12).
   double get dividerIndent => switch (_kind) {
     _RowKind.standard => SahneSpace.x3 + 44 + SahneSpace.x3,
-    _RowKind.info => SahneSpace.x3 + 36 + SahneSpace.x3,
+    _RowKind.info => SahneSpace.x3 + 44 + SahneSpace.x3,
     _RowKind.rank || _RowKind.me => SahneSpace.x3 + 24 + SahneSpace.x3,
     _RowKind.custom => SahneSpace.x3 + leadingWidth + SahneSpace.x3,
     _RowKind.plain => SahneSpace.x4,
@@ -353,19 +368,21 @@ class SahneListRow extends StatelessWidget {
     final isMe = _kind == _RowKind.me;
 
     // Çizimsiz kategori küçüğü: kategorinin düz tonu + ikon, 36.
-    Widget noArt() => SizedBox.square(
-      dimension: 36,
-      child: CustomPaint(
-        painter: SahneNoArtPainter(tone: tone),
-        child: Center(
-          child: Icon(
-            icon ?? AppIcons.clapperboard,
-            size: 18,
-            color: SahneTokens.night.tx,
-          ),
-        ),
-      ),
-    );
+    Widget noArt() => mark != null
+        ? SahneTopicMarkBadge(mark: mark!, tone: tone, size: 44, strong: true)
+        : SizedBox.square(
+            dimension: 44,
+            child: CustomPaint(
+              painter: SahneNoArtPainter(tone: tone),
+              child: Center(
+                child: Icon(
+                  icon ?? AppIcons.clapperboard,
+                  size: 22,
+                  color: SahneTokens.night.tx,
+                ),
+              ),
+            ),
+          );
 
     Widget? leading;
     switch (_kind) {
@@ -402,8 +419,8 @@ class SahneListRow extends StatelessWidget {
                   decoration: BoxDecoration(color: tone.ground),
                   child: Image(
                     image: img,
-                    width: 36,
-                    height: 36,
+                    width: 44,
+                    height: 44,
                     fit: BoxFit.cover,
                     excludeFromSemantics: true,
                     errorBuilder: (_, _, _) => noArt(),

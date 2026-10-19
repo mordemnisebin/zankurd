@@ -1335,6 +1335,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       image: null,
       icon: CategoryVisuals.icon(category),
       tone: CategoryVisuals.tone(category),
+      mark: CategoryVisuals.mark(category),
       title: title,
       subtitle: subtitle,
       chevron: true,
