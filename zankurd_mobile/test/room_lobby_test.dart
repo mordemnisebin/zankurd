@@ -402,11 +402,13 @@ void main() {
       theme.filledButtonTheme.style!.backgroundColor!.resolve({
         WidgetState.disabled,
       }),
-      t.s2,
+      t.disabledFill,
     );
+    // Son panel cilası 2026-10-19: pasif düğme zeminden ayrılsın diye 1 px
+    // `disabledEdge` kenar taşır (eskiden çerçevesizdi, zemine karışıyordu).
     expect(
-      filled.style!.side!.resolve({WidgetState.disabled}),
-      BorderSide.none,
+      filled.style!.side!.resolve({WidgetState.disabled})!.color,
+      t.disabledEdge,
     );
   });
 

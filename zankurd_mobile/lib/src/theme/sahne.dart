@@ -98,6 +98,19 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Yüzeylerin 1 px kenarı: gündüz açık gri-mavi, gece ince saydam çizgi.
   final Color edge;
 
+  bool get _isDay => bg.computeLuminance() > 0.5;
+
+  /// Ortak pasif dolgu (son kurul cilası 2026-10-19): zeminden gözle
+  /// ayrılır. Gündüz `#E3E7F0` (zemin `#F4F6FA`), gece Kulis `s2`; eski
+  /// `s2`/`s1` pasif düğme zemine karışıyordu (5 modelin ortak bulgusu).
+  Color get disabledFill => _isDay ? const Color(0xFFE3E7F0) : s2;
+
+  /// Pasif düğmenin 1 px kenarı (gündüz `#D3D9E6`, gece `edge`).
+  Color get disabledEdge => _isDay ? const Color(0xFFD3D9E6) : edge;
+
+  /// Pasif etiket: ikincil metin; pasif dolguya karşı ≥ 4.5.
+  Color get disabledFg => tx2;
+
   /// Agir — birincil eylem dolgusu.
   final Color act;
 

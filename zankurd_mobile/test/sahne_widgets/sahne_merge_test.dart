@@ -654,17 +654,18 @@ void main() {
         expect(find.text('30'), findsOneWidget);
         // Kapsül etkin jokerle aynı; fiyat %60 opaklıkta, ayrı kilit yok.
         final price = tester.widget<Text>(find.text('30')).style!.color!;
-        expect(price.a, closeTo(0.6, 0.01));
+        // Son panel cilası 2026-10-19: fiyat soluk değil, ikincil metin.
+        expect(price, SahneTokens.night.tx2);
         expect(find.byKey(const ValueKey('joker-lock')), findsNothing);
         // Kapsül ortak pasif dolguyu (Perde `s1`) alır; yalnız %60 soluk
         // metin onu "etkin ama silik" gösteriyordu (2026-10-19 6. tur).
         final cap = tester
             .widgetList<SahneTappable>(find.byType(SahneTappable))
             .single;
-        expect(cap.color, SahneTokens.night.s1);
-        expect(cap.color, isNot(SahneTokens.night.s2));
+        expect(cap.color, SahneTokens.night.disabledFill);
+        expect((cap.shape as StadiumBorder).side, BorderSide.none);
         // Kontrast >= 3:1 (gece pasif kapsül üstünde).
-        final bg = SahneTokens.night.s1;
+        final bg = SahneTokens.night.disabledFill;
         final fg = Color.alphaBlend(price, bg);
         double lum(Color c) => c.computeLuminance();
         final ratio =

@@ -3,10 +3,12 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 /// 2026-09-03 simülatör: Ayarlar'daki pasif Kaydet turuncu-on-kahve
 /// neredeyse okunmuyordu. Pasif FilledButton metni zemininden ayrılmalı.
 void main() {
+  panelCilasiPasifDugme();
   testWidgets('koyu temada pasif zemin gece (çivit) ailesinde kalır', (
     tester,
   ) async {
@@ -62,4 +64,25 @@ double _relLuminance(Color color) {
   double lin(double c) =>
       c <= 0.04045 ? c / 12.92 : math.pow((c + 0.055) / 1.055, 2.4).toDouble();
   return 0.2126 * lin(color.r) + 0.7152 * lin(color.g) + 0.0722 * lin(color.b);
+}
+
+/// Son panel cilası 2026-10-19: pasif dolu düğme sayfa zeminine karışıyordu
+/// (oda lobisi, tek oyuncu "Yarışı başlat"). Her iki temada pasif dolgu
+/// zeminden gözle ayrılır, etiket dolguya karşı >= 4.5.
+void panelCilasiPasifDugme() {
+  test('pasif dolgu zeminden ayrılır, etiket okunur (gündüz ve gece)', () {
+    for (final t in [SahneTokens.day, SahneTokens.night]) {
+      expect(
+        _contrastRatio(t.disabledFill, t.bg),
+        greaterThanOrEqualTo(1.08),
+        reason: 'pasif dolgu zeminden ayrılmalı',
+      );
+      expect(
+        _contrastRatio(t.disabledFg, t.disabledFill),
+        greaterThanOrEqualTo(4.5),
+      );
+    }
+    expect(SahneTokens.day.disabledFill, const Color(0xFFE3E7F0));
+    expect(SahneTokens.day.disabledEdge, const Color(0xFFD3D9E6));
+  });
 }

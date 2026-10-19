@@ -18,8 +18,9 @@ enum _SahneButtonKind { primary, secondary, text }
 /// * [SahneButton.secondary] düz ve gölgesizdir (yükselti 0, basınca da).
 /// * [SahneButton.text] — Agir metni (`actTx`) + chevron; görsel 44,
 ///   dokunma alanı 48 ([sahneTapTarget], `MaterialTapTargetSize.padded`).
-/// * Pasif — `onPressed: null`: opaklık değil Perde (`s1`) + üçüncül metin
-///   (`tx3`), gündüzde 1 px kenar; gölge yok.
+/// * Pasif — `onPressed: null`: opaklık değil ortak pasif dolgu
+///   (`disabledFill`) + ikincil metin + 1 px `disabledEdge` kenar; gölge yok.
+///   Son panel cilası 2026-10-19: zeminden gözle ayrılır.
 /// * Yükleniyor — [loading]: etiketin yerinde 20'lik döner gösterge; düğme
 ///   görünüşünü korur (pasifleşmez, sözü değişmez) ama dokunuşu yok sayar.
 ///
@@ -190,7 +191,7 @@ class SahneButton extends StatelessWidget {
       }
       if (disabledBorder && s.contains(WidgetState.disabled)) {
         return BorderSide(
-          color: t.edge,
+          color: t.disabledEdge,
           strokeAlign: BorderSide.strokeAlignInside,
         );
       }
@@ -210,7 +211,7 @@ class SahneButton extends StatelessWidget {
             // dolgu bekçisi temadan gelen dolguyu sayar). Eskiden Perde (`s1`, gündüz beyaz) + `edge` çerçeve
             // beyaz bir "ikincil" düğme gibi okunuyordu (oda lobisi, tek
             // oyuncu: "Yarışı başlat" etkin sanıldı).
-            side: side(BorderSide.none, disabledBorder: false),
+            side: side(BorderSide.none),
             textStyle: const WidgetStatePropertyAll(SahneType.button),
             padding: WidgetStatePropertyAll(
               EdgeInsets.symmetric(horizontal: hPad, vertical: SahneSpace.x3),
@@ -238,21 +239,30 @@ class SahneButton extends StatelessWidget {
         button = FilledButton(
           key: buttonKey,
           onPressed: press,
-          style: FilledButton.styleFrom(
-            elevation: 0,
-            shadowColor: Colors.transparent,
-            backgroundColor: t.s2,
-            foregroundColor: t.tx,
-            disabledBackgroundColor: t.s1,
-            disabledForegroundColor: t.tx3,
-            minimumSize: const Size(52, 52),
-            textStyle: SahneType.button,
-            shape: SahneShape.m,
-            padding: EdgeInsets.symmetric(
-              horizontal: hPad,
-              vertical: SahneSpace.x3,
-            ),
-          ).copyWith(side: side(BorderSide.none)),
+          style:
+              FilledButton.styleFrom(
+                elevation: 0,
+                shadowColor: Colors.transparent,
+                backgroundColor: t.s2,
+                foregroundColor: t.tx,
+                disabledBackgroundColor: t.disabledFill,
+                disabledForegroundColor: t.disabledFg,
+                minimumSize: const Size(52, 52),
+                textStyle: SahneType.button,
+                shape: SahneShape.m,
+                padding: EdgeInsets.symmetric(
+                  horizontal: hPad,
+                  vertical: SahneSpace.x3,
+                ),
+              ).copyWith(
+                // Gece ikincil düğme kartına karışıyordu (Ana ekran düello
+                // satırı "Oyna"): 1 px görünür kenar.
+                side: side(
+                  t.bg.computeLuminance() > 0.5
+                      ? BorderSide.none
+                      : BorderSide(color: t.tx3.withValues(alpha: 0.55)),
+                ),
+              ),
           child: content,
         );
       case _SahneButtonKind.text:
@@ -294,7 +304,7 @@ class SahneButton extends StatelessWidget {
 ///
 /// 2026-10-19 sadeleşme: KAPSÜL çip (görsel 40, dokunma kutusu 48), ikon +
 /// jeton glifi + fiyat. Eskiden 52'lik köşeli düğmeydi. Jetonu yetmeyen
-/// joker aynı kapsülde ikon + fiyat %60 opaklıkta (kilit simgesi yok),
+/// joker aynı kapsülde ikon + etiket %50 opaklıkta, fiyat ikincil metinle okunur (kilit simgesi yok),
 /// dokunulabilir. (Önceki belge:) Ortada ikon + jeton glifi + fiyat (Zêr metni). Adı
 /// ekranda yazmaz: ekran okuyucu "ad, fiyat"ı okur, uzun basışta ipucu
 /// olarak görünür. Dar ekranda ve büyük yazıda içerik sığdırılarak küçülür
@@ -347,9 +357,9 @@ class SahneJokerButton extends StatelessWidget {
     // belirler. Etkin = hem dokunulabilir hem alınabilir.
     final tappable = onPressed != null;
     final enabled = tappable && !unaffordable;
-    // Jeton yetmiyorsa kapsül AYNI kalır; ikon ve fiyat %60 opaklıkta
+    // Jeton yetmiyorsa kapsül AYNI kalır; ikon ve etiket %50 opaklıkta, kenarsız, ortak pasif dolguda
     // çizilir (kilit simgesi yok: simge + jeton + fiyat kalabalıktı).
-    Color dim(Color c) => c.withValues(alpha: 0.6);
+    Color dim(Color c) => c.withValues(alpha: 0.5);
     final fg = selected ? t.goldTx : (enabled ? t.tx : dim(t.tx));
     final showPrice = !selected && (enabled || unaffordable);
     // Kurul incelemesi 2026-10-19: kapsül gecede zemine karışıyordu (4 model).
@@ -361,7 +371,7 @@ class SahneJokerButton extends StatelessWidget {
               width: SahneRing.r2,
               strokeAlign: BorderSide.strokeAlignInside,
             )
-          : BorderSide(color: enabled ? t.tx3 : t.edge),
+          : (enabled ? BorderSide(color: t.tx3) : BorderSide.none),
     );
     // Ad etiketi (ikonun altında, tek satır, sığmazsa küçülür); büyük
     // yazıda (≥ %130) gizlenir, ad Semantics'te bütündür.
@@ -389,8 +399,10 @@ class SahneJokerButton extends StatelessWidget {
               child: SahneTappable(
                 shape: capsule,
                 // Jetonu yetmeyen joker ortak pasif dolguyu (Perde `s1`) alır:
-                // yalnız %60 soluk metin onu "etkin ama silik" gösteriyordu.
-                color: selected ? t.goldTint : (unaffordable ? t.s1 : t.s2),
+                // yalnız soluk metin onu "etkin ama silik" gösteriyordu.
+                color: selected
+                    ? t.goldTint
+                    : (unaffordable ? t.disabledFill : t.s2),
                 onTap: tappable ? onPressed : null,
                 child: ConstrainedBox(
                   // a11y-tap-target: noninteractive — görsel kapsül tabanı;
@@ -424,7 +436,7 @@ class SahneJokerButton extends StatelessWidget {
                                 if (showPrice) ...[
                                   const SizedBox(width: SahneSpace.x1),
                                   Opacity(
-                                    opacity: enabled ? 1 : 0.6,
+                                    opacity: enabled ? 1 : 0.5,
                                     child: const SahneGlyph(
                                       SahneGlyphKind.coin,
                                       size: 16,
@@ -435,7 +447,7 @@ class SahneJokerButton extends StatelessWidget {
                                   Text(
                                     '$price',
                                     style: SahneType.captionStrong.copyWith(
-                                      color: enabled ? t.goldTx : dim(t.tx),
+                                      color: enabled ? t.goldTx : t.tx2,
                                       fontFeatures: const [
                                         FontFeature.tabularFigures(),
                                       ],
