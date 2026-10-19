@@ -1389,7 +1389,7 @@ class Tr {
     K.playerWord: {'ku': 'Lîstikvan', 'tr': 'Oyuncu'},
     K.opponentWord: {'ku': 'Hevrik', 'tr': 'Rakip'},
     K.matchFailed: {
-      'ku': 'Lihevanîn bi ser neket.',
+      'ku': 'Lihevanîn bi ser neket. Dîsa biceribîne.',
       'tr': 'Eşleşme olmadı, tekrar dene.',
     },
     K.searchTimedOut: {'ku': 'Dema gerînê qediya', 'tr': 'Arama süresi doldu'},
@@ -1703,7 +1703,7 @@ class Tr {
       'tr': 'Satın alma sorunu',
     },
     K.purchaseFailed: {
-      'ku': 'Kirîn bi ser neket.',
+      'ku': 'Kirîn bi ser neket. Dîsa biceribîne.',
       'tr': 'Satın alınamadı. Tekrar dene.',
     },
     K.errorOccurred: {
