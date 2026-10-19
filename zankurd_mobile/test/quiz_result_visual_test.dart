@@ -1,3 +1,4 @@
+// kurul 3. tur 2026-10-20: öğrenme kartı sayımların hemen altında, kaydırmadan görünür.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:math' as math;
 
@@ -416,6 +417,28 @@ void main() {
       tester.getRect(primary).bottom,
       lessThanOrEqualTo(844),
       reason: 'özet okunurken de birincil eylem ekranda kalır',
+    );
+  });
+
+  testWidgets('kurul 3. tur: öğrenme kartı dinlenmede alt perdenin üstünde', (
+    tester,
+  ) async {
+    // Kusur (68/200, üç tur): kart konu listesinin altında kaldığı için
+    // yapışkan alt perde onu kesiyordu. Kart artık sayımların hemen
+    // altında; dinlenme halinde tamamı perdenin üstünde olmalı.
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+
+    final card = find.byKey(const ValueKey('learning-outcome-card'));
+    final primary = find.byKey(const ValueKey('result-play-again-button'));
+    expect(card, findsOneWidget);
+    expect(
+      tester.getRect(card).bottom,
+      lessThanOrEqualTo(tester.getRect(primary).top),
+      reason: 'kart kaydırmadan, alt perdenin arkasına girmeden görünür',
     );
   });
 

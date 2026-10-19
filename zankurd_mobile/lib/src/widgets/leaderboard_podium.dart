@@ -23,46 +23,21 @@ Future<void> showLeaderboardEntryMenu(
   required VoidCallback onReport,
 }) {
   final name = PlayerIdentity.resolveName(entry.displayName, isKu: isKu);
-  return showModalBottomSheet<void>(
+  return showSahneSheet<void>(
     context: context,
-    showDragHandle: true,
-    builder: (sheetContext) => SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          SahneSpace.page,
-          0,
-          SahneSpace.page,
-          SahneSpace.page,
+    title: name,
+    builder: (sheetContext) => SahneListGroup(
+      children: [
+        SahneListRow.icon(
+          key: ValueKey('leaderboard-report-${entry.playerId}'),
+          icon: AppIcons.flag,
+          title: Tr.forKu(K.reportProfileTitle, isKu),
+          onTap: () {
+            Navigator.of(sheetContext).pop();
+            onReport();
+          },
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: SahneSpace.x3),
-              child: Text(
-                name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: SahneType.headline,
-              ),
-            ),
-            SahneListGroup(
-              children: [
-                SahneListRow.icon(
-                  key: ValueKey('leaderboard-report-${entry.playerId}'),
-                  icon: AppIcons.flag,
-                  title: Tr.forKu(K.reportProfileTitle, isKu),
-                  onTap: () {
-                    Navigator.of(sheetContext).pop();
-                    onReport();
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+      ],
     ),
   );
 }
@@ -204,16 +179,16 @@ class _PodiumColumn extends StatelessWidget {
       'p2': groupThousands(entry.totalScore),
     });
     final first = place == 0;
-    final pedestalShape = first
-        ? SahneShape.withSide(SahneShape.l, t.gold, width: SahneRing.r1)
-        : SahneShape.withSide(SahneShape.l, t.edge, width: 1);
+    // Kurul 3. tur (2026-10-20, 06): kaideler liste grubuyla AYNI kart
+    // işleme (Perde + 1 px kenar + L pah). Eskiden birinci kaide altın
+    // dolgu ve altın halkaydı; liste ise nötr kartta kalıyor, sıralama
+    // sekmesi (turuncu seçili) ile üç ayrı vurgu dili çıkıyordu. Birinciyi
+    // artık yalnız taç ve altın rakam ayırır.
+    final pedestalShape = SahneShape.withSide(SahneShape.l, t.edge, width: 1);
     final pedestal = ConstrainedBox(
       constraints: BoxConstraints(minHeight: _pedestal[place]),
       child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: first ? t.goldTint : t.s1,
-          shape: pedestalShape,
-        ),
+        decoration: ShapeDecoration(color: t.s1, shape: pedestalShape),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(
             SahneSpace.x1,

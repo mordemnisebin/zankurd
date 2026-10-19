@@ -985,7 +985,8 @@ class _HeaderAction extends StatelessWidget {
 // ─── Dönem rayı ─────────────────────────────────────────────────────────────
 
 /// Gün / Hafta / Ay / Arkadaş — sığan seçim rayı ([SahneRail.fit]); seçili
-/// çip Zêr (ödül) tonu. Kısa etiketler: 4 eşit çip 320 px'te de sığar.
+/// çip ortak seçili biçimdir (`selFill`/`selLine`; kurul 3. tur: eskiden
+/// çağrıdaki `role: gold` hiç uygulanmıyordu, belge yanlış söylüyordu). Kısa etiketler: 4 eşit çip 320 px'te de sığar.
 class _PeriodRail extends StatelessWidget {
   const _PeriodRail({required this.controller, required this.ku});
 
@@ -1017,7 +1018,6 @@ class _PeriodRail extends StatelessWidget {
                 child: SahneRailChip(
                   label: labels[i],
                   selected: controller.index == i,
-                  role: SahneRole.gold,
                   onTap: () => controller.index = i,
                 ),
               ),

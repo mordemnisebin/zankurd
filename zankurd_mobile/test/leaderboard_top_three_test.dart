@@ -332,6 +332,26 @@ void main() {
     }
   });
 
+  // Kurul 3. tur 2026-10-20 (06): kaideler liste grubuyla aynı kart işleme;
+  // birinciye özel altın dolgu yok (üç ayrı vurgu dili çıkıyordu).
+  testWidgets('kurul 3. tur: kaideler liste kartıyla aynı nötr dolguyu taşır', (
+    tester,
+  ) async {
+    await _pump(tester, _Repo(count: 5));
+    final podium = find.byKey(const ValueKey('leaderboard-podium'));
+    final t = SahneTokens.of(tester.element(podium));
+    final fills = tester
+        .widgetList<DecoratedBox>(
+          find.descendant(of: podium, matching: find.byType(DecoratedBox)),
+        )
+        .map((d) => d.decoration)
+        .whereType<ShapeDecoration>()
+        .map((d) => d.color)
+        .whereType<Color>();
+    expect(fills, isNot(contains(t.goldTint)));
+    expect(fills.where((c) => c == t.s1).length, greaterThanOrEqualTo(3));
+  });
+
   for (final mode in [ThemeMode.light, ThemeMode.dark]) {
     testWidgets('podyum rakamları madalya rengini taşır ($mode)', (
       tester,

@@ -30,6 +30,8 @@ void main() {
     expect(find.text('Başla'), findsNothing);
     expect(find.text('Arkadaşlarınla yarış'), findsNothing);
 
+    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+    await tester.pump();
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
 
@@ -37,8 +39,7 @@ void main() {
     expect(find.text('Başla'), findsOneWidget);
     expect(find.text('Sonraki'), findsNothing);
 
-    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-    await tester.pump();
+    // Yaş kutusu ilk "Sonraki"ndan önce işaretlendi (kurul 3. tur).
     await tester.tap(find.text('Başla'));
     expect(completed, 1);
   });
@@ -113,6 +114,8 @@ void main() {
 
     expect(hero().role, SahneRole.learn);
 
+    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+    await tester.pump();
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
 
@@ -139,6 +142,8 @@ void main() {
     expect(tester.widget<SahneProgressBar>(bar).trailing, '1/2');
     expect(find.text('1/2'), findsOneWidget);
 
+    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+    await tester.pump();
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
     expect(tester.widget<SahneProgressBar>(bar).value, 1.0);

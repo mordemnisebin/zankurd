@@ -261,6 +261,40 @@ void main() {
     },
   );
 
+  // Kurul 3. tur 2026-10-20 (99): düello soru ekranı üst çubukta soru
+  // ekranıyla aynı yerleşimi taşır (sayaç + ⋯ yuvası), rakip avatarla görünür.
+  testWidgets('kurul 3. tur: üst çubuk soru ekranıyla aynı, rakip avatarlı', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = freshMockRepository();
+    repository.addPendingAsyncDuelForTesting(opponentCorrect: 0, opponentMs: 1);
+    await tester.pumpWidget(
+      testShell(
+        child: PlayHubScreen(repository: repository, asyncDuelEnabled: true),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await _openAsyncDuelFromHub(tester);
+
+    expect(
+      find.byKey(const ValueKey('async-duel-more-slot')),
+      findsOneWidget,
+      reason: 'sayaç sağdan soru ekranıyla aynı uzaklıkta durur',
+    );
+    expect(
+      tester.getSize(find.byKey(const ValueKey('async-duel-more-slot'))),
+      const Size(48, 48),
+    );
+    final line = find.byKey(const ValueKey('async-duel-rival-line'));
+    expect(line, findsOneWidget);
+    expect(
+      find.descendant(of: line, matching: find.byType(SahneAvatar)),
+      findsOneWidget,
+    );
+  });
+
   testWidgets(
     'süre dolumu: hiçbir şıkka dokunulmazsa TIMEOUT gönderilir ve ilerleme '
     '2/7\'ye geçer',

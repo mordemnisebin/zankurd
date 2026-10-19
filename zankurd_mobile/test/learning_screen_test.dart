@@ -1,3 +1,4 @@
+// Kurul 3. tur 2026-10-20: kilitli dersler 3'ten sonra "+N ders daha" satırında toplanır.
 // 2026-09-29 doğallık (K5, K7): ders yolunda elmas düğüm ve ikon karosu yok.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
@@ -228,6 +229,34 @@ class _PlacementRepository extends MockZanKurdRepository {
 }
 
 void main() {
+  testWidgets(
+    'kilitli dersler üçten sonra tek "+N ders daha" satırında toplanır',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 3000));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        wrap(LearningScreen(repository: _PlacementRepository(const {}))),
+      );
+      await tester.pumpAndSettle();
+
+      final rows = find.byWidgetPredicate(
+        (w) =>
+            w.key is ValueKey<String> &&
+            (w.key as ValueKey<String>).value.startsWith('learning-path-node-'),
+      );
+      final more = find.byKey(const ValueKey('learning-locked-more'));
+      // Etkin ders + 3 kilitli görünür; kalanı tek satırda.
+      final total = _placementLessons.length;
+      expect(rows, findsNWidgets(4));
+      expect(more, findsOneWidget);
+      expect(find.text('+${total - 4} ders daha'), findsOneWidget);
+      await tester.tap(more);
+      await tester.pumpAndSettle();
+      expect(more, findsNothing);
+      expect(rows, findsNWidgets(total));
+    },
+  );
+
   testWidgets('öğrenme yolu kart değil doğrudan rota durakları kullanır', (
     tester,
   ) async {

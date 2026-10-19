@@ -157,6 +157,10 @@ void main() {
                 expect(r.top, greaterThanOrEqualTo(surface.top));
               }
               if (page == 0) {
+                await tester.tap(
+                  find.byKey(const ValueKey('onboarding-age-gate')),
+                );
+                await tester.pump();
                 await tester.tap(find.text('Bidomîne'));
                 await tester.pumpAndSettle();
               }

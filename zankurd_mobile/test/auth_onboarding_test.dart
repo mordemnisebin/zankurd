@@ -668,6 +668,8 @@ void main() {
       lessThanOrEqualTo(390),
     );
 
+    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+    await tester.pump();
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
 
@@ -695,6 +697,8 @@ void main() {
       lessThanOrEqualTo(844),
     );
 
+    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+    await tester.pump();
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
 
@@ -863,6 +867,8 @@ void main() {
       lessThanOrEqualTo(800),
     );
 
+    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+    await tester.pump();
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
 

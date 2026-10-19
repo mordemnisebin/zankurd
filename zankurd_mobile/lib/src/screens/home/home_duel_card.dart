@@ -367,62 +367,53 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
   /// Eski kartın üç yolu burada toplanır; hedefleri değişmedi.
   void _openMenu() {
     unawaited(
-      showModalBottomSheet<void>(
+      // Kurul 3. tur (2026-10-20): ortak alt sayfa kabuğu.
+      showSahneSheet<void>(
         context: context,
-        showDragHandle: true,
+        title: context.t(K.asyncDuel),
         builder: (sheetContext) {
           void go(VoidCallback action) {
             Navigator.of(sheetContext).pop();
             action();
           }
 
-          return SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                SahneSpace.page,
-                0,
-                SahneSpace.page,
-                SahneSpace.page,
-              ),
-              child: Column(
-                key: const ValueKey('home-duel-menu'),
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+          return Column(
+            key: const ValueKey('home-duel-menu'),
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SahneListGroup(
                 children: [
-                  SahneListGroup(
-                    children: [
-                      SahneListRow.icon(
-                        key: const ValueKey('home-duel-new'),
-                        icon: AppIcons.hourglass,
-                        role: SahneRole.race,
-                        title: context.t(K.asyncDuelNew),
-                        subtitle: context.t(K.asyncDuelSub),
-                        chevron: true,
-                        onTap: () => go(_openNewDuel),
-                      ),
-                      if (_challengeAvailable)
-                        SahneListRow.icon(
-                          key: const ValueKey('home-duel-challenge'),
-                          icon: AppIcons.peopleGroup,
-                          role: SahneRole.race,
-                          title: context.t(K.challengeEntry),
-                          subtitle: context.t(K.challengeEntrySub),
-                          chevron: true,
-                          onTap: () => go(_openChallengeSheet),
-                        ),
-                      SahneListRow.icon(
-                        key: const ValueKey('home-duel-secondary'),
-                        icon: AppIcons.bolt,
-                        role: SahneRole.race,
-                        title: context.t(K.quickDuel),
-                        chevron: true,
-                        onTap: () => go(_openQuickDuel),
-                      ),
-                    ],
+                  SahneListRow.icon(
+                    key: const ValueKey('home-duel-new'),
+                    icon: AppIcons.hourglass,
+                    role: SahneRole.race,
+                    title: context.t(K.asyncDuelNew),
+                    subtitle: context.t(K.asyncDuelSub),
+                    chevron: true,
+                    onTap: () => go(_openNewDuel),
+                  ),
+                  if (_challengeAvailable)
+                    SahneListRow.icon(
+                      key: const ValueKey('home-duel-challenge'),
+                      icon: AppIcons.peopleGroup,
+                      role: SahneRole.race,
+                      title: context.t(K.challengeEntry),
+                      subtitle: context.t(K.challengeEntrySub),
+                      chevron: true,
+                      onTap: () => go(_openChallengeSheet),
+                    ),
+                  SahneListRow.icon(
+                    key: const ValueKey('home-duel-secondary'),
+                    icon: AppIcons.bolt,
+                    role: SahneRole.race,
+                    title: context.t(K.quickDuel),
+                    chevron: true,
+                    onTap: () => go(_openQuickDuel),
                   ),
                 ],
               ),
-            ),
+            ],
           );
         },
       ),

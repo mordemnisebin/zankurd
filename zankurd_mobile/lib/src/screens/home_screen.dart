@@ -815,62 +815,47 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       return (week, store);
     }();
     // Biçim temadan gelir (Perde, üstte L pah).
-    showModalBottomSheet(
+    // Kurul 3. tur (2026-10-20): ortak alt sayfa kabuğu; başlık kabukta.
+    showSahneSheet<void>(
       context: context,
+      title: Tr.forKu(K.gunlukSeriStreak, isKu),
       builder: (ctx) {
         // Bilgilendirme sayfası değil, seriyi KORUMAK için gereken bilgi:
         // haftalık ritim, sonraki milestone ve freeze durumu tek yüzeyde.
         // Önceki hâli ikon + başlık + paragraf + bilgi kartıydı; oyuncu
         // hangi günleri kaçırdığını göremiyordu (2026-08-04).
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(SahneSpace.x6),
-            child: FutureBuilder<(List<StreakDayState>, StreakStore)>(
-              future: streakFuture,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: SahneSpace.x8),
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                }
-                final (week, store) = snapshot.data!;
-                final freezeState = _freezeStateFor(store);
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Semantics(
-                      header: true,
-                      child: Text(
-                        Tr.forKu(K.gunlukSeriStreak, isKu),
-                        style: SahneType.headline.copyWith(
-                          color: SahneTokens.of(context).tx,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: SahneSpace.x4),
-                    StreakPanel(
-                      current: _streak,
-                      days: week,
-                      freezeState: freezeState,
-                      freezeLabel: _freezeLabel(context, freezeState),
-                      dayLabels: context.t(K.streakWeekdays).split(','),
-                      dayUnitLabel: context.t(K.streakDayUnit),
-                      nextMilestone: _nextStreakMilestone(_streak),
-                      freezeCost: store.freezeCount > 0
-                          ? null
-                          : _streakFreezeCost,
-                      freezeActionLabel: context.t(K.streakProtectAction),
-                      // Dondurma sonuç ekranında, ödül akışının içinde
-                      // uygulanıyor; buradan tetiklemek ikinci bir yol
-                      // açar ve idempotency anahtarını bağlamsız bırakır.
-                      onFreeze: null,
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
+        return FutureBuilder<(List<StreakDayState>, StreakStore)>(
+          future: streakFuture,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Padding(
+                padding: EdgeInsets.symmetric(vertical: SahneSpace.x8),
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
+            final (week, store) = snapshot.data!;
+            final freezeState = _freezeStateFor(store);
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                StreakPanel(
+                  current: _streak,
+                  days: week,
+                  freezeState: freezeState,
+                  freezeLabel: _freezeLabel(context, freezeState),
+                  dayLabels: context.t(K.streakWeekdays).split(','),
+                  dayUnitLabel: context.t(K.streakDayUnit),
+                  nextMilestone: _nextStreakMilestone(_streak),
+                  freezeCost: store.freezeCount > 0 ? null : _streakFreezeCost,
+                  freezeActionLabel: context.t(K.streakProtectAction),
+                  // Dondurma sonuç ekranında, ödül akışının içinde
+                  // uygulanıyor; buradan tetiklemek ikinci bir yol
+                  // açar ve idempotency anahtarını bağlamsız bırakır.
+                  onFreeze: null,
+                ),
+              ],
+            );
+          },
         );
       },
     );
