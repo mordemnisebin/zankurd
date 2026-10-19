@@ -250,47 +250,12 @@ extension _QuizScreenUI on _QuizScreenState {
   /// Süresiz turda coach-mark hedefi (`_timerTargetKey`) bu yuvadadır
   /// ("burada süre yok" der); süreli turda hedef sayaçtır
   /// ([_buildStageTrailing]).
-  Widget _buildStageCenter(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final category = CategoryNames.localized(question.category, context.isKu);
-    final progress = context.t(K.placementProgress, {
-      'index': '${index + 1}',
-      'total': '${widget.questions.length}',
-    });
-    // Büyük yazıda (≥ 1.5) künye işareti düşer: 320 px @2.0'da işaret +
-    // saniye + ⋯ yanında kategori adı "Siya…" diye kesiliyor ve "Soru 1/5"
-    // hiç görünmüyordu. Ad ve sıra, işaretten önemli.
-    final compact = MediaQuery.textScalerOf(context).scale(16) >= 24;
-    return KeyedSubtree(
-      key: _usesTimer ? null : _timerTargetKey,
-      child: Semantics(
-        header: true,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (!compact) ...[
-              CategoryKickerMark(
-                key: const ValueKey('quiz-question-icon-badge'),
-                category: question.category,
-                fallbackColor: t.tx2,
-                size: 24,
-              ),
-              const SizedBox(width: SahneSpace.x2),
-            ],
-            Flexible(
-              child: Text(
-                '$category · $progress',
-                key: const ValueKey('quiz-stage-kicker'),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: SahneType.eyebrow.copyWith(color: t.tx),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  Widget _buildStageCenter(BuildContext context) => QuizStageCenter(
+    keyed: _usesTimer ? null : _timerTargetKey,
+    category: question.category,
+    index: index,
+    total: widget.questions.length,
+  );
 
   /// Üst satırın sağ yuvası: [sohbet] [skor] [kalan saniye] [⋯ menü].
   ///

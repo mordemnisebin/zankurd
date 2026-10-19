@@ -79,7 +79,7 @@ void main() {
             expect(tester.takeException(), isNull);
             expect(find.byType(SahneStageScaffold), findsOneWidget);
             expect(
-              find.text(isKu ? 'Asta xwe diyar bike' : 'Seviyeni belirle'),
+              find.byKey(const ValueKey('quiz-stage-kicker')),
               findsOneWidget,
             );
             expect(
@@ -123,9 +123,7 @@ void main() {
               );
               await tester.pumpAndSettle();
 
-              final title = find.text(
-                isKu ? 'Asta xwe diyar bike' : 'Seviyeni belirle',
-              );
+              final title = find.byKey(const ValueKey('quiz-stage-kicker'));
               final skipLabel = isKu ? 'Paşê bike' : 'Şimdilik geç';
               final isFullLabel = size.width == 390 && textScale == 1.0;
               final action = find.byKey(

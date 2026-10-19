@@ -13,6 +13,7 @@ import '../../utils/app_route.dart';
 import '../../utils/player_identity.dart';
 import '../../data/streak_store.dart';
 import '../../utils/error_reporter.dart';
+import '../../widgets/quiz_top_bar.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../quiz/quiz_option_tile.dart';
 import '../quiz/quiz_timer_controller.dart';
@@ -484,7 +485,12 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         // 2026-10-19 sadeleşme: üst satır soru ekranıyla aynı (kapat | ortada
         // düello adı | sağda kalan saniye); 60 px'lik elmas sayaç ve 7'li
         // elmas dizisi kalktı, yerine 4 px'lik ince ilerleme çubuğu geldi.
-        center: Text(context.t(K.asyncDuel)),
+        center: QuizStageCenter(
+          category: question.category,
+          index: _index,
+          total: total,
+          textKey: const ValueKey('async-duel-progress'),
+        ),
         // Çıkış gönderilirken sayaç yerine bekleme göstergesi: kalan
         // sorular sunucuya TIMEOUT olarak gidiyor.
         score: _exitInFlight
@@ -541,112 +547,103 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
             // Kurul 2026-10-20: şıklar alta (baş parmak bölgesi), soru boş
             // alanda ortalanır — ders ve yarışma ekranıyla AYNI yerleşim.
             return LayoutBuilder(
-              builder: (context, constraints) => SahneStageScroll(
-                scrollKey: const ValueKey('async-duel-scroll'),
-                // Yeni soruda başa dön; üst kenar elmas şeridin altında sönsün.
-                resetKey: _index,
-                padding: const EdgeInsets.fromLTRB(
-                  SahneSpace.page,
-                  SahneSpace.x4,
-                  SahneSpace.page,
-                  SahneSpace.x6,
-                ),
-                child: ConstrainedBox(
-                  key: const ValueKey('async-duel-answers-anchored'),
-                  constraints: BoxConstraints(
-                    minHeight: math.max(
-                      0.0,
-                      constraints.maxHeight - SahneSpace.x4 - SahneSpace.x6,
-                    ),
+              builder: (context, constraints) {
+                final reserve = quizAnswerBottomReserve(
+                  context,
+                  constraints.maxHeight,
+                );
+                return SahneStageScroll(
+                  scrollKey: const ValueKey('async-duel-scroll'),
+                  // Yeni soruda başa dön; üst kenar elmas şeridin altında sönsün.
+                  resetKey: _index,
+                  padding: EdgeInsets.fromLTRB(
+                    SahneSpace.page,
+                    SahneSpace.x4,
+                    SahneSpace.page,
+                    reserve,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                        child: Wrap(
-                          spacing: SahneSpace.x2,
-                          runSpacing: SahneSpace.x1,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: [
-                            Text(
-                              progressLabel,
-                              key: const ValueKey('async-duel-progress'),
-                              style: SahneType.eyebrow.copyWith(
-                                color: t.raceTx,
-                                fontFeatures: const [
-                                  FontFeature.tabularFigures(),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              duel.role == AsyncDuelRole.opponent
-                                  ? '${context.t(K.you)} · '
-                                        '${duel.opponentName == null ? context.t(K.asyncDuelOpponent) : context.playerDisplayName(duel.opponentName)}'
-                                  : context.t(K.asyncDuelSub),
-                              style: SahneType.caption.copyWith(color: t.tx2),
-                            ),
-                          ],
-                        ),
+                  child: ConstrainedBox(
+                    key: const ValueKey('async-duel-answers-anchored'),
+                    constraints: BoxConstraints(
+                      minHeight: math.max(
+                        0.0,
+                        constraints.maxHeight - SahneSpace.x4 - reserve,
                       ),
-                      _QuestionText(text: question.promptText),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const SizedBox(height: SahneSpace.x4),
-                          if (_phase == _Phase.error) ...[
-                            Row(
-                              children: [
-                                Icon(
-                                  AppIcons.triangleExclamation,
-                                  size: 20,
-                                  color: t.errTx,
-                                ),
-                                const SizedBox(width: SahneSpace.x2),
-                                Expanded(
-                                  child: Text(
-                                    context.t(K.asyncDuelAnswerFailed),
-                                    style: SahneType.bodyStrong.copyWith(
-                                      color: t.errTx,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Sıra ve kategori ortak üst satırda; burada yalnız
+                        // rakip bağlamı (boş yuva soruyu ortalar).
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                          child: Text(
+                            duel.role == AsyncDuelRole.opponent
+                                ? '${context.t(K.you)} · '
+                                      '${duel.opponentName == null ? context.t(K.asyncDuelOpponent) : context.playerDisplayName(duel.opponentName)}'
+                                : context.t(K.asyncDuelSub),
+                            style: SahneType.caption.copyWith(color: t.tx2),
+                          ),
+                        ),
+                        _QuestionText(text: question.promptText),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(height: SahneSpace.x4),
+                            if (_phase == _Phase.error) ...[
+                              Row(
+                                children: [
+                                  Icon(
+                                    AppIcons.triangleExclamation,
+                                    size: 20,
+                                    color: t.errTx,
+                                  ),
+                                  const SizedBox(width: SahneSpace.x2),
+                                  Expanded(
+                                    child: Text(
+                                      context.t(K.asyncDuelAnswerFailed),
+                                      style: SahneType.bodyStrong.copyWith(
+                                        color: t.errTx,
+                                      ),
                                     ),
                                   ),
+                                ],
+                              ),
+                              const SizedBox(height: SahneSpace.x3),
+                            ],
+                            for (final (i, answer) in answers.indexed)
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: SahneSpace.x2,
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: SahneSpace.x3),
+                                child: QuizOptionTile(
+                                  key: ValueKey('async-duel-option-$i'),
+                                  index: i,
+                                  answer: answer,
+                                  selected: _selectedAnswer == answer,
+                                  correct:
+                                      _revealedAnswerText != null &&
+                                      answer == _revealedAnswerText,
+                                  disabled: disabled,
+                                  suspense: suspenseVisual,
+                                  optionCount: answers.length,
+                                  dimmed:
+                                      _revealedAnswerText != null &&
+                                      answer != _revealedAnswerText &&
+                                      _selectedAnswer != answer,
+                                  onTap: () => _handleAnswerTap(answer),
+                                ),
+                              ),
                           ],
-                          for (final (i, answer) in answers.indexed)
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: SahneSpace.x2,
-                              ),
-                              child: QuizOptionTile(
-                                key: ValueKey('async-duel-option-$i'),
-                                index: i,
-                                answer: answer,
-                                selected: _selectedAnswer == answer,
-                                correct:
-                                    _revealedAnswerText != null &&
-                                    answer == _revealedAnswerText,
-                                disabled: disabled,
-                                suspense: suspenseVisual,
-                                optionCount: answers.length,
-                                dimmed:
-                                    _revealedAnswerText != null &&
-                                    answer != _revealedAnswerText &&
-                                    _selectedAnswer != answer,
-                                onTap: () => _handleAnswerTap(answer),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             );
           },
         ),

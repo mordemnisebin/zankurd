@@ -415,8 +415,9 @@ void main() {
             );
             await tester.pumpAndSettle();
 
-            final title = find.text(
-              ku ? 'Asta xwe diyar bike' : 'Seviyeni belirle',
+            final title = // Kurul 2. tur: ortak üst satır (kategori · soru n/N).
+            find.byKey(
+              const ValueKey('quiz-stage-kicker'),
             );
             expect(title, findsOneWidget);
             final progress = find.byType(SahneProgressBar);
