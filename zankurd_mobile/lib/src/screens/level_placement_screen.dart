@@ -10,7 +10,7 @@ import '../models/quiz_question.dart';
 import '../config/category_visuals.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_icons.dart';
-import '../widgets/category_kicker_mark.dart';
+import '../widgets/quiz_top_bar.dart';
 import '../widgets/sahne/sahne.dart';
 import 'quiz/quiz_option_tile.dart';
 import 'quiz_screen.dart' show QuizQuestionImage;
@@ -143,7 +143,13 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
               CategoryVisuals.canonicalName(question.category),
             ),
       ridge: true,
-      center: Semantics(header: true, child: Text(context.t(K.placementTitle))),
+      center: question == null
+          ? Semantics(header: true, child: Text(context.t(K.placementTitle)))
+          : QuizStageCenter(
+              category: question.category,
+              index: _index,
+              total: _questions.length,
+            ),
       score: useCompactSkip
           ? _SkipIconButton(
               key: const ValueKey('placement-skip-compact'),
@@ -159,7 +165,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
           ? null
           : SahneProgressBar(
               height: 4,
-              value: (_index + 1) / _questions.length,
+              value: _index / _questions.length,
               semanticLabel: context.t(K.placementProgress, {
                 'index': '${_index + 1}',
                 'total': '${_questions.length}',
@@ -192,109 +198,88 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     // Kurmancî soru/şık metni basılıyordu — quiz_screen.dart'ın 2026-07'de
     // kurduğu desenin aynısı burada eksikti (2026-08-14 denetimi).
     // Çevirisi eksik sorularda alanlar Kurmancî kalır (bkz. `answersFor`).
-    final t = SahneTokens.of(context);
-    final category = CategoryNames.localized(question.category, context.isKu);
-    final progress = context.t(K.placementProgress, {
-      'index': '${_index + 1}',
-      'total': '${_questions.length}',
-    });
     // Kurul 2026-10-20: şıklar alta (baş parmak bölgesi), soru üstteki boş
     // alanda ortalanır — ders ve yarışma ekranıyla AYNI yerleşim. Eskiden
     // her şey tepeye yığılıyor, altı bomboştu.
     return LayoutBuilder(
-      builder: (context, constraints) => SahneStageScroll(
-        // Yeni soruda başa dön, üst kenar ilerleme çubuğunun altında sönsün
-        // (bkz. `SahneStageScroll`).
-        scrollKey: const ValueKey('placement-scroll'),
-        resetKey: _index,
-        padding: const EdgeInsets.fromLTRB(
-          SahneSpace.page,
-          SahneSpace.x4,
-          SahneSpace.page,
-          SahneSpace.x6,
-        ),
-        child: Center(
-          child: ConstrainedBox(
-            key: const ValueKey('placement-answers-anchored'),
-            constraints: BoxConstraints(
-              maxWidth: 800,
-              minHeight: math.max(
-                0.0,
-                constraints.maxHeight - SahneSpace.x4 - SahneSpace.x6,
+      builder: (context, constraints) {
+        final reserve = quizAnswerBottomReserve(context, constraints.maxHeight);
+        return SahneStageScroll(
+          // Yeni soruda başa dön, üst kenar ilerleme çubuğunun altında sönsün
+          // (bkz. `SahneStageScroll`).
+          scrollKey: const ValueKey('placement-scroll'),
+          resetKey: _index,
+          padding: EdgeInsets.fromLTRB(
+            SahneSpace.page,
+            SahneSpace.x4,
+            SahneSpace.page,
+            reserve,
+          ),
+          child: Center(
+            child: ConstrainedBox(
+              key: const ValueKey('placement-answers-anchored'),
+              constraints: BoxConstraints(
+                maxWidth: 800,
+                minHeight: math.max(
+                  0.0,
+                  constraints.maxHeight - SahneSpace.x4 - reserve,
+                ),
               ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Üst etiket (quiz'le aynı): kategori • soru sırası.
-                // İlerleme metni ("SORU 1/12") ekranda kalır; çubuk görsel
-                // özettir.
-                Padding(
-                  padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                  child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Üst etiket artık ortak üst satırda; boş yuva soruyu
+                  // şıklarla tepe arasında ortalar (ders ekranıyla aynı).
+                  const SizedBox.shrink(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      CategoryKickerMark(
-                        category: question.category,
-                        fallbackColor: t.tx2,
-                      ),
-                      const SizedBox(width: SahneSpace.x2),
-                      Expanded(
-                        child: Text(
-                          '$category · $progress',
-                          style: SahneType.eyebrow.copyWith(color: t.tx),
+                      if (question.hasImage) ...[
+                        QuizQuestionImage(
+                          key: const ValueKey('placement-question-image'),
+                          url: question.imageUrl!,
+                          alt: question.imageAltFor(isKu: context.isKu),
                         ),
-                      ),
+                        const SizedBox(height: SahneSpace.x3),
+                      ],
+                      QuizQuestionPrompt(question.prompt),
+                      const SizedBox(height: SahneSpace.x4),
                     ],
                   ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (question.hasImage) ...[
-                      QuizQuestionImage(
-                        key: const ValueKey('placement-question-image'),
-                        url: question.imageUrl!,
-                        alt: question.imageAltFor(isKu: context.isKu),
-                      ),
-                      const SizedBox(height: SahneSpace.x3),
-                    ],
-                    QuizQuestionPrompt(question.prompt),
-                    const SizedBox(height: SahneSpace.x4),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    for (final (index, answer)
-                        in question.displayAnswers.indexed)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                        // Quiz'in şık çubuğu: harf karosu renksiz, cevaptan
-                        // önce renk yok (bkz.
-                        // `answer_option_color_semantics_test`). Sınav
-                        // doğru/yanlış göstermez: çubuk yalnız dokunulur.
-                        child: QuizOptionTile(
-                          index: index,
-                          answer: answer,
-                          selected: false,
-                          correct: false,
-                          disabled: _inputLocked,
-                          onTap: _inputLocked
-                              ? null
-                              : () => _answer(question, answer),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (final (index, answer)
+                          in question.displayAnswers.indexed)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                          // Quiz'in şık çubuğu: harf karosu renksiz, cevaptan
+                          // önce renk yok (bkz.
+                          // `answer_option_color_semantics_test`). Sınav
+                          // doğru/yanlış göstermez: çubuk yalnız dokunulur.
+                          child: QuizOptionTile(
+                            index: index,
+                            answer: answer,
+                            selected: false,
+                            correct: false,
+                            disabled: _inputLocked,
+                            onTap: _inputLocked
+                                ? null
+                                : () => _answer(question, answer),
+                          ),
                         ),
-                      ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

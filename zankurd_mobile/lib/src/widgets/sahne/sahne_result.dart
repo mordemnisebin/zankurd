@@ -173,7 +173,20 @@ class SahneResultScaffold extends StatelessWidget {
         }
         // Işınlar kahramanın dışına taşar; üst satırın (kapat, bağlam)
         // üstüne boyanmasın diye gövde kırpılır.
-        return ClipRect(child: Stack(children: [scroll, ?overlay]));
+        //
+        // Kurul 2. tur (2026-10-20, ekran 68/69/200): durağan hâlde alt
+        // perde "Nerelerde zorlandın?" kartını ortasından kesiyor, kart
+        // bitmiş mi sürüyor mu anlaşılmıyordu. Uzun sonuçta (kayan) gövdenin
+        // dibine perde rengine solan 48 px'lik bant: kart "devamı var"
+        // diye okunur; sona gelince bant kalkar.
+        final Widget scrolling = short
+            ? scroll
+            : SahneBottomFade(
+                color: SahneTokens.of(context).bg,
+                height: 48,
+                child: scroll,
+              );
+        return ClipRect(child: Stack(children: [scrolling, ?overlay]));
       },
     );
 

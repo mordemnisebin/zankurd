@@ -719,8 +719,12 @@ class _LearningExplanationAction extends StatelessWidget {
     final t = SahneTokens.of(context);
     final label = context.t(K.viewExplanation);
 
+    // Kurul 2. tur (2026-10-20, ekran 84): koyu yeşil dolgulu tam genişlik
+    // düğme beşinci bir şık ya da "doğru cevap" gibi okunuyordu. Artık
+    // ÇERÇEVELİ, dolgusuz, ortalı metin düğmesi: şıklardan (dolgulu çubuk)
+    // biçimce ayrılır ve üstündeki boşluk daha geniştir.
     return Padding(
-      padding: const EdgeInsets.only(top: SahneSpace.x2),
+      padding: const EdgeInsets.only(top: SahneSpace.x4),
       child: Semantics(
         button: true,
         label: label,
@@ -728,28 +732,31 @@ class _LearningExplanationAction extends StatelessWidget {
         excludeSemantics: true,
         child: SahneTappable(
           key: const ValueKey('quiz-view-explanation'),
-          shape: SahneShape.l,
-          color: t.learnTint,
+          shape: RoundedRectangleBorder(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(SahneShape.lValue),
+            ),
+            side: BorderSide(color: t.learnTx, width: 1.5),
+          ),
+          color: Colors.transparent,
           onTap: () => _open(context, explanation),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              SahneSpace.x3,
-              SahneSpace.x3,
-              SahneSpace.x3,
-              SahneSpace.x3,
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.x3,
+              vertical: SahneSpace.x3,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(AppIcons.bookOpen, color: t.learnTx, size: 24),
-                const SizedBox(width: SahneSpace.x3),
-                Expanded(
+                Icon(AppIcons.bookOpen, color: t.learnTx, size: 20),
+                const SizedBox(width: SahneSpace.x2),
+                Flexible(
                   child: Text(
                     label,
-                    style: SahneType.bodyStrong.copyWith(color: t.tx),
+                    textAlign: TextAlign.center,
+                    style: SahneType.bodyStrong.copyWith(color: t.learnTx),
                   ),
                 ),
-                const SizedBox(width: SahneSpace.x2),
-                Icon(AppIcons.chevronRight, color: t.learnTx, size: 20),
               ],
             ),
           ),

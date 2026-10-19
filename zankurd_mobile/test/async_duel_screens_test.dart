@@ -121,8 +121,15 @@ Future<void> _answerCurrentQuestion(
   await tester.pump();
 }
 
-Text _progressText(WidgetTester tester) =>
-    tester.widget<Text>(find.byKey(const ValueKey('async-duel-progress')));
+/// Üst satırın "Kategori · Soru n/N" etiketinden yalnız "n/N" (kurul 2. tur:
+/// sıra artık ortak üst satırda, kategoriyle birlikte).
+({String? data}) _progressText(WidgetTester tester) => (
+  data: tester
+      .widget<Text>(find.byKey(const ValueKey('async-duel-progress')))
+      .data
+      ?.split(' ')
+      .last,
+);
 
 void main() {
   testWidgets('Play Hub kilit açıkken kart ve düellolarım kutusu görünür', (
