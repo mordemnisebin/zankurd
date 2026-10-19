@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,25 @@ import 'package:zankurd_mobile/src/theme/sahne.dart';
 /// neredeyse okunmuyordu. Pasif FilledButton metni zemininden ayrılmalı.
 void main() {
   panelCilasiPasifDugme();
+  // Tasarım kurulu tüm ekranlar 2026-10-20: pasif düğme zemini her yerde
+  // ortak jetondur; el yazması `s1`/`s2` pasif dolgu (Ayarlar Kaydet,
+  // alanla aynı gri-gri) geri gelmesin.
+  test('pasif düğme dolgusu yalnız ortak jetondan gelir', () {
+    final offenders = <String>[];
+    for (final f in Directory('lib/src').listSync(recursive: true)) {
+      if (f is! File || !f.path.endsWith('.dart')) continue;
+      final lines = f.readAsLinesSync();
+      for (var i = 0; i < lines.length; i++) {
+        if (RegExp(
+          r'disabledBackgroundColor:\s*[\w.()]*\.(s1|s2|s3)\b',
+        ).hasMatch(lines[i])) {
+          offenders.add('${f.path}:${i + 1}');
+        }
+      }
+    }
+    expect(offenders, isEmpty, reason: 'disabledFill kullanılmalı');
+  });
+
   testWidgets('koyu temada pasif zemin gece (çivit) ailesinde kalır', (
     tester,
   ) async {

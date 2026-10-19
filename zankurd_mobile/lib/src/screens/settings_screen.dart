@@ -908,8 +908,9 @@ class _FinalDeleteDialogState extends State<_FinalDeleteDialog> {
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.error,
               foregroundColor: Theme.of(context).colorScheme.onError,
-              disabledBackgroundColor: SahneTokens.of(context).s1,
-              disabledForegroundColor: SahneTokens.of(context).tx3,
+              // Ortak pasif jetonlar (kurul 2026-10-20).
+              disabledBackgroundColor: SahneTokens.of(context).disabledFill,
+              disabledForegroundColor: SahneTokens.of(context).disabledFg,
             ),
             child: Text(context.t(K.deleteForever)),
           ),
