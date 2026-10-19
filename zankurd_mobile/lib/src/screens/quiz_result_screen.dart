@@ -1552,20 +1552,38 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       ].join(' • '),
       hero: SahneResultHero(
         key: const ValueKey('result-score-header'),
-        emblem: switch (duelOutcome) {
-          null => SizedBox(height: 28, child: _ScoreStars(earned: starsEarned)),
-          _DuelOutcome.win => const SahneResultEmblem.win(),
-          _DuelOutcome.draw => const SahneResultEmblem.state(
-            icon: AppIcons.scaleBalanced,
-          ),
-          _DuelOutcome.loss => const SahneResultEmblem.state(
-            icon: AppIcons.flag,
-          ),
-          _DuelOutcome.podium => const SahneResultEmblem.state(
-            icon: AppIcons.medal,
-          ),
-        },
+        emblem: is1v1 && !isLearningExperience
+            ? _DuelFaceOff(
+                me: room.players.isNotEmpty ? room.players.first : null,
+                opponent: opponents.first,
+                emblem: isWinner
+                    ? const SahneResultEmblem.win()
+                    : SahneResultEmblem.state(
+                        icon: isDraw ? AppIcons.scaleBalanced : AppIcons.flag,
+                      ),
+              )
+            : switch (duelOutcome) {
+                null => SizedBox(
+                  height: 28,
+                  child: _ScoreStars(earned: starsEarned),
+                ),
+                _DuelOutcome.win => const SahneResultEmblem.win(),
+                _DuelOutcome.draw => const SahneResultEmblem.state(
+                  icon: AppIcons.scaleBalanced,
+                ),
+                _DuelOutcome.loss => const SahneResultEmblem.state(
+                  icon: AppIcons.flag,
+                ),
+                _DuelOutcome.podium => const SahneResultEmblem.state(
+                  icon: AppIcons.medal,
+                ),
+              },
         title: headerTitle,
+        // 1v1: skor karşılaştırması ("Sen 5 – 3 Rojda") büyük puanın altında.
+        subtitle: is1v1 && !isLearningExperience
+            ? '${context.t(K.you)} $score – ${opponents.first.score} '
+                  '${context.playerDisplayName(opponents.first.name)}'
+            : null,
         titleRole: duelOutcome == _DuelOutcome.win ? SahneRole.gold : null,
         // Öğrenme turunda puan üretilmez (`score` hep 0); büyük sayı "0"
         // yazınca 3 doğru yapan kullanıcıya başarısız gibi görünüyordu
@@ -1645,6 +1663,40 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 }
 
 enum _DuelOutcome { win, draw, loss, podium }
+
+/// 1v1 kahramanının amblem yuvası: iki oyuncu yüz yüze, ortada sonucun
+/// amblemi (taç / terazi / bayrak).
+///
+/// Kusur (kurul, 2026-10-20): 1v1 sonucu rakibi hiç göstermiyordu; kazanma
+/// anı yalnız bir taçtı ve "kime karşı" sorusu aşağıdaki listeye kalıyordu.
+/// Avatarlar sonucu ilk bakışta kişiye bağlar ("sen ↔ Rojda").
+class _DuelFaceOff extends StatelessWidget {
+  const _DuelFaceOff({
+    required this.me,
+    required this.opponent,
+    required this.emblem,
+  });
+
+  final Player? me;
+  final Player opponent;
+  final Widget emblem;
+
+  @override
+  Widget build(BuildContext context) {
+    final mine = me ?? const Player(name: '', score: 0, state: '');
+    return Row(
+      key: const ValueKey('result-duel-faceoff'),
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _avatarOf(mine.copyWith(name: context.t(K.you)), radius: 24),
+        const SizedBox(width: SahneSpace.x3),
+        emblem,
+        const SizedBox(width: SahneSpace.x3),
+        _avatarOf(opponent, radius: 24),
+      ],
+    );
+  }
+}
 
 /// Kahramanın üç puan yıldızı: 20 · 28 · 20, alta hizalı, 8 aralık.
 ///
@@ -1807,6 +1859,7 @@ class _CategoryLearnings extends StatelessWidget {
       image: null,
       icon: CategoryVisuals.icon(tally.category),
       tone: CategoryVisuals.tone(tally.category),
+      mark: CategoryVisuals.mark(tally.category),
       title: name,
       trailing: trailing,
       semanticLabel: semantic,
@@ -1892,8 +1945,8 @@ class _SecondaryActions extends StatelessWidget {
 }
 
 /// Satırın 36'lık avatar yuvası: oyuncunun seçtiği kimlik.
-Widget _avatarOf(Player player) => PlayerAvatar(
-  radius: 18,
+Widget _avatarOf(Player player, {double radius = 18}) => PlayerAvatar(
+  radius: radius,
   photoUrl: player.avatarUrl,
   iconId: player.avatarIcon,
   colorHex: player.avatarColor,
