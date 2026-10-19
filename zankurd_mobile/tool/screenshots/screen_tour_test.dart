@@ -8,7 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/learning_goal_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/models/learning_goal.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/models/async_duel.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
@@ -395,6 +397,28 @@ class _LobbyTourRepository extends _TourRepository {
   @override
   Stream<List<Player>> subscribeRoomPlayers(GameRoom room) =>
       Stream.value(room.players);
+}
+
+/// Kurul 3. tur 2026-10-20: ayarlar karelerinde öğrenme amacı SEÇİLİ gelir;
+/// seçimsiz kare "hiçbiri seçili değil" diye okunuyordu ve seçili hâli hiç
+/// göstermiyordu.
+Future<void> _pumpSettings(
+  WidgetTester t,
+  MockZanKurdRepository repository,
+  String name, {
+  bool dark = false,
+  bool ku = false,
+}) async {
+  LearningGoalStore.resetInstance();
+  await (await LearningGoalStore.load()).save(LearningGoal.learnKurmanci);
+  await _pump(
+    t,
+    SettingsScreen(repository: repository),
+    dark: dark,
+    ku: ku,
+  );
+  await _shoot(t, name);
+  LearningGoalStore.resetInstance();
 }
 
 class _TourRepository extends TestMockZanKurdRepository {
@@ -815,8 +839,7 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('08 ayarlar', (t) async {
-    await _pump(t, SettingsScreen(repository: repository));
-    await _shoot(t, '08_settings');
+    await _pumpSettings(t, repository, '08_settings');
   }, tags: ['preview']);
 
   testWidgets('09 paywall', (t) async {
@@ -866,7 +889,7 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('19 mağaza', (t) async {
-    await _pump(t, ShopScreen(repository: repository));
+    await _pump(t, ShopScreen(repository: _BalanceTourRepository(300)));
     await _shoot(t, '19_shop');
   }, tags: ['preview']);
 
@@ -930,7 +953,11 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('23 mağaza (karanlık)', (t) async {
-    await _pump(t, ShopScreen(repository: repository), dark: true);
+    await _pump(
+      t,
+      ShopScreen(repository: _BalanceTourRepository(300)),
+      dark: true,
+    );
     await _shoot(t, '23_shop_dark');
   }, tags: ['preview']);
 
@@ -973,13 +1000,16 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('29 mağaza (Kurmancî)', (t) async {
-    await _pump(t, ShopScreen(repository: repository), ku: true);
+    await _pump(
+      t,
+      ShopScreen(repository: _BalanceTourRepository(300)),
+      ku: true,
+    );
     await _shoot(t, '29_shop_ku');
   }, tags: ['preview']);
 
   testWidgets('30 ayarlar (Kurmancî)', (t) async {
-    await _pump(t, SettingsScreen(repository: repository), ku: true);
-    await _shoot(t, '30_settings_ku');
+    await _pumpSettings(t, repository, '30_settings_ku', ku: true);
   }, tags: ['preview']);
 
   testWidgets('31 yarışma (Kurmancî)', (t) async {
@@ -1218,8 +1248,7 @@ void main() {
   // kontrast kusuru çıkmıştı (öğrenme kartı). Kalan ekranlar da basılır:
   // ölçülmeyen yerde kusur görünmez.
   testWidgets('45 ayarlar (karanlık)', (t) async {
-    await _pump(t, SettingsScreen(repository: repository), dark: true);
-    await _shoot(t, '45_settings_dark');
+    await _pumpSettings(t, repository, '45_settings_dark', dark: true);
   }, tags: ['preview']);
 
   testWidgets('46 arkadaşlar (karanlık)', (t) async {
@@ -1653,13 +1682,13 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('89 ayarlar (Kurmancî, karanlık)', (t) async {
-    await _pump(
+    await _pumpSettings(
       t,
-      SettingsScreen(repository: repository),
+      repository,
+      '89_settings_ku_dark',
       ku: true,
       dark: true,
     );
-    await _shoot(t, '89_settings_ku_dark');
   }, tags: ['preview']);
 
   // ── 2026-08-19 Eklenen Yüzeyler ──────────────────────────────────
@@ -2096,6 +2125,12 @@ void main() {
     await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
+    // Kurul 3. tur: ücret grubu "Ayarlar" satırında katlı; önce açılır.
+    await t.ensureVisible(
+      find.byKey(const ValueKey('custom-room-settings-row')),
+    );
+    await t.tap(find.byKey(const ValueKey('custom-room-settings-row')));
+    await t.pumpAndSettle();
     final fee = find.byKey(const ValueKey('custom-room-fee-50'));
     await t.ensureVisible(fee);
     await t.tap(fee);
@@ -2115,6 +2150,12 @@ void main() {
     await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
+    // Kurul 3. tur: ücret grubu "Ayarlar" satırında katlı; önce açılır.
+    await t.ensureVisible(
+      find.byKey(const ValueKey('custom-room-settings-row')),
+    );
+    await t.tap(find.byKey(const ValueKey('custom-room-settings-row')));
+    await t.pumpAndSettle();
     final fee = find.byKey(const ValueKey('custom-room-fee-50'));
     await t.ensureVisible(fee);
     await t.tap(fee);

@@ -927,6 +927,74 @@ Widget _filterChip(
   onTap: onTap,
 );
 
+/// Katlanır "Ayarlar" satırı: başlık + güncel değerlerin özeti + ok.
+class _SettingsSummaryRow extends StatelessWidget {
+  const _SettingsSummaryRow({
+    super.key,
+    required this.title,
+    required this.summary,
+    required this.open,
+    required this.onTap,
+  });
+
+  final String title;
+  final String summary;
+  final bool open;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Semantics(
+      container: true,
+      button: true,
+      expanded: open,
+      label: '$title, $summary',
+      onTap: onTap,
+      excludeSemantics: true,
+      child: SahneTappable(
+        shape: SahneShape.withSide(SahneShape.m, t.tx3, width: 1),
+        color: Colors.transparent,
+        onTap: onTap,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: sahneTapTarget),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.x3,
+              vertical: SahneSpace.x2,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
+                      ),
+                      Text(
+                        summary,
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: SahneSpace.x2),
+                Icon(
+                  open ? AppIcons.chevronUp : AppIcons.chevronDown,
+                  size: 20,
+                  color: t.tx2,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _CustomRoomBottomSheet extends StatefulWidget {
   const _CustomRoomBottomSheet({
     required this.availableCategories,
@@ -949,6 +1017,13 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
   int _selectedQuestionCount = 10;
   int _selectedEntryFee = 0;
   int _selectedMaxPlayers = GameRoom.defaultCrowdCapacity;
+  bool _settingsOpen = false;
+
+  /// "10 soru · 20 sn · ücretsiz": kapalı Ayarlar satırının özeti.
+  String _settingsSummary(BuildContext context) =>
+      '$_selectedQuestionCount ${context.t(K.soru)} · '
+      '$_selectedDuration ${context.t(K.secondsShortUnit)} · '
+      '${_selectedEntryFee == 0 ? context.t(K.freeEntry) : '$_selectedEntryFee ${context.t(K.coinWord)}'}';
 
   @override
   void initState() {
@@ -1102,56 +1177,6 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         ),
                         const SizedBox(height: SahneSpace.x3),
 
-                        // Soru Sayısı Seçimi
-                        Text(
-                          context.t(K.questionCountLabel),
-                          style: SahneType.bodyStrong.copyWith(
-                            color: SahneTokens.of(context).tx,
-                          ),
-                        ),
-                        const SizedBox(height: SahneSpace.x2),
-                        _ChoiceGrid(
-                          columns: 3,
-                          children: [
-                            for (final count in GameRoom.allowedQuestionCounts)
-                              _choiceChip(
-                                context,
-                                key: ValueKey('custom-room-count-$count'),
-                                label: '$count ${context.t(K.soru)}',
-                                selected: _selectedQuestionCount == count,
-                                onTap: () => setState(
-                                  () => _selectedQuestionCount = count,
-                                ),
-                              ),
-                          ],
-                        ),
-                        const SizedBox(height: SahneSpace.x3),
-
-                        // Soru Başına Süre
-                        Text(
-                          context.t(K.secondsPerQuestion),
-                          style: SahneType.bodyStrong.copyWith(
-                            color: SahneTokens.of(context).tx,
-                          ),
-                        ),
-                        const SizedBox(height: SahneSpace.x2),
-                        _ChoiceGrid(
-                          columns: 4,
-                          children: [
-                            for (final seconds in GameRoom.allowedDurations)
-                              _choiceChip(
-                                context,
-                                key: ValueKey('custom-room-duration-$seconds'),
-                                label:
-                                    '$seconds ${context.t(K.secondsShortUnit)}',
-                                selected: _selectedDuration == seconds,
-                                onTap: () =>
-                                    setState(() => _selectedDuration = seconds),
-                              ),
-                          ],
-                        ),
-                        const SizedBox(height: SahneSpace.x3),
-
                         // Oyuncu sayısı (kapasite). 2 = bugünkü iki kişilik oda;
                         // daha fazlası kalabalık oda: ev sahibi >= 2 kişiyle
                         // başlatır, sonuç sıralı gelir.
@@ -1201,62 +1226,130 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         ],
                         const SizedBox(height: SahneSpace.x3),
 
-                        // Bahis / Giriş Ücreti
-                        // İki metin de esnek: dar ekranda ve Kurmancî'de etiketler
-                        // uzuyor ve sabit genişlikli `Row` sağdan 192 piksel taşıyordu
-                        // (`home_room_failures_test` yakaladı). `spaceBetween` tek
-                        // başına taşmayı önlemez — çocuklar doğal boyutlarını ister.
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                context.t(K.entryFeeLabel),
-                                style: SahneType.bodyStrong.copyWith(
-                                  color: SahneTokens.of(context).tx,
+                        // Kurul 3. tur 2026-10-20: üç ikincil grup (soru sayısı,
+                        // süre, ücret) tek "Ayarlar" satırında toplandı; özet
+                        // güncel değerleri gösterir, dokununca satır içinde açılır.
+                        _SettingsSummaryRow(
+                          key: const ValueKey('custom-room-settings-row'),
+                          title: context.t(K.settings),
+                          summary: _settingsSummary(context),
+                          open: _settingsOpen,
+                          onTap: () =>
+                              setState(() => _settingsOpen = !_settingsOpen),
+                        ),
+                        if (_settingsOpen) ...[
+                          const SizedBox(height: SahneSpace.x3),
+                          // Soru Sayısı Seçimi
+                          Text(
+                            context.t(K.questionCountLabel),
+                            style: SahneType.bodyStrong.copyWith(
+                              color: SahneTokens.of(context).tx,
+                            ),
+                          ),
+                          const SizedBox(height: SahneSpace.x2),
+                          _ChoiceGrid(
+                            columns: 3,
+                            children: [
+                              for (final count
+                                  in GameRoom.allowedQuestionCounts)
+                                _choiceChip(
+                                  context,
+                                  key: ValueKey('custom-room-count-$count'),
+                                  label: '$count ${context.t(K.soru)}',
+                                  selected: _selectedQuestionCount == count,
+                                  onTap: () => setState(
+                                    () => _selectedQuestionCount = count,
+                                  ),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: SahneSpace.x3),
+
+                          // Soru Başına Süre
+                          Text(
+                            context.t(K.secondsPerQuestion),
+                            style: SahneType.bodyStrong.copyWith(
+                              color: SahneTokens.of(context).tx,
+                            ),
+                          ),
+                          const SizedBox(height: SahneSpace.x2),
+                          _ChoiceGrid(
+                            columns: 4,
+                            children: [
+                              for (final seconds in GameRoom.allowedDurations)
+                                _choiceChip(
+                                  context,
+                                  key: ValueKey(
+                                    'custom-room-duration-$seconds',
+                                  ),
+                                  label:
+                                      '$seconds ${context.t(K.secondsShortUnit)}',
+                                  selected: _selectedDuration == seconds,
+                                  onTap: () => setState(
+                                    () => _selectedDuration = seconds,
+                                  ),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: SahneSpace.x3),
+
+                          // Bahis / Giriş Ücreti
+                          // İki metin de esnek: dar ekranda ve Kurmancî'de etiketler
+                          // uzuyor ve sabit genişlikli `Row` sağdan 192 piksel taşıyordu
+                          // (`home_room_failures_test` yakaladı). `spaceBetween` tek
+                          // başına taşmayı önlemez — çocuklar doğal boyutlarını ister.
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  context.t(K.entryFeeLabel),
+                                  style: SahneType.bodyStrong.copyWith(
+                                    color: SahneTokens.of(context).tx,
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: SahneSpace.x2),
-                            Flexible(
-                              child: Text(
-                                context.t(K.yourBalance, {
-                                  'coins': widget.coinBalance.toString(),
-                                }),
-                                textAlign: TextAlign.end,
-                                style: SahneType.caption.copyWith(
-                                  color: SahneTokens.of(context).tx2,
+                              const SizedBox(width: SahneSpace.x2),
+                              Flexible(
+                                child: Text(
+                                  context.t(K.yourBalance, {
+                                    'coins': widget.coinBalance.toString(),
+                                  }),
+                                  textAlign: TextAlign.end,
+                                  style: SahneType.caption.copyWith(
+                                    color: SahneTokens.of(context).tx2,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: SahneSpace.x2),
-                        _ChoiceGrid(
-                          columns: 2,
-                          children: [
-                            for (final fee in GameRoom.allowedEntryFees)
-                              _choiceChip(
-                                context,
-                                key: ValueKey('custom-room-fee-$fee'),
-                                avatar: fee > 0
-                                    ? const ExcludeSemantics(
-                                        child: SahneGlyph(
-                                          SahneGlyphKind.coin,
-                                          size: 16,
-                                        ),
-                                      )
-                                    : null,
-                                label: fee == 0
-                                    ? context.t(K.freeEntry)
-                                    : '$fee ${context.t(K.coinWord)}',
-                                selected: _selectedEntryFee == fee,
-                                onTap: () =>
-                                    setState(() => _selectedEntryFee = fee),
-                              ),
-                          ],
-                        ),
+                            ],
+                          ),
+                          const SizedBox(height: SahneSpace.x2),
+                          _ChoiceGrid(
+                            columns: 2,
+                            children: [
+                              for (final fee in GameRoom.allowedEntryFees)
+                                _choiceChip(
+                                  context,
+                                  key: ValueKey('custom-room-fee-$fee'),
+                                  avatar: fee > 0
+                                      ? const ExcludeSemantics(
+                                          child: SahneGlyph(
+                                            SahneGlyphKind.coin,
+                                            size: 16,
+                                          ),
+                                        )
+                                      : null,
+                                  label: fee == 0
+                                      ? context.t(K.freeEntry)
+                                      : '$fee ${context.t(K.coinWord)}',
+                                  selected: _selectedEntryFee == fee,
+                                  onTap: () =>
+                                      setState(() => _selectedEntryFee = fee),
+                                ),
+                            ],
+                          ),
+                        ],
                         if (!hasEnoughCoins) ...[
                           const SizedBox(height: SahneSpace.x2),
                           // Eksik miktar yazılır ("N jeton eksik"); düz "Jetonun
