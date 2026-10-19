@@ -729,6 +729,19 @@ const Set<String> retiredQuestionIds = <String>{
   'ds_dirok_0091', // kalan: ds_dirok_0055
   'ds_muzik_0144', // kalan: ds_muzik_0133
   'offline_2668', // kalan: edit_dirok_0028
+  // ---------------------------------------------------------------------
+  // 2026-10-19: dış içerik denetimi (AI Studio Gemini 3.1 Pro + Grok, canlı
+  // 4197 sorunun tamamı); işaretlenenleri ana ajan tek tek doğruladı. Sunucu
+  // karşılığı: `supabase/2026-10-19_icerik_emekli.sql` (4 kimlik yalnız
+  // sunucuda; yerel karşılıkları yok).
+  // ---------------------------------------------------------------------
+  'sf_cin_0007', // özne yok: "uluslararası jüri ilk kez hangi yıl" — hangi festival?
+  'sf_cin_0008', // özne yok: "ilk edisyon nerede" — hangi festival?
+  'offline_tf_ede_0019', // D/Y: anahtar (Şaş) yaygın tanımla çelişiyor
+  'offline_tf_siy_0040', // D/Y: anahtar (Şaş) yaygın tanımla çelişiyor
+  'offline_curated_21475', // "heyran" yalnız Serhad kadın aşk türküsü: tartışmalı
+  'curated_siyaset_0009', // Barzani hareketinin ilk lideri: Şeyh Abdüsselam mı Mustafa mı
+  'offline_9668', // "Destana Dewrêşê Evdî çi ye?" B ve D şıkları birbirine çok yakın
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

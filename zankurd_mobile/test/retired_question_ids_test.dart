@@ -96,7 +96,15 @@ void main() {
         for (final id in retiredQuestionIds)
           if (byId[id]?.category == 'Cîhan') id,
       },
-      {'ds_cografya_0133', 'ds_dirok_0091', 'ds_muzik_0144'},
+      // 2026-10-19: iki festival sorusu (`sf_cin_0007/0008`) öznesiz olduğu
+      // için (hangi festival?) dış içerik denetimiyle eklendi.
+      {
+        'ds_cografya_0133',
+        'ds_dirok_0091',
+        'ds_muzik_0144',
+        'sf_cin_0007',
+        'sf_cin_0008',
+      },
     );
   });
 }
