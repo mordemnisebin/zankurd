@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../config/category_visuals.dart';
 import '../../data/zankurd_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
@@ -479,6 +480,14 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         closeKey: const ValueKey('async-duel-quit'),
         closeLabel: context.t(K.close),
         onClose: () => unawaited(_confirmExit()),
+        // Kurul 3. tur (2026-10-20): üst çubuk soru ekranıyla (16) AYNI
+        // yerleşim: kategori ışığı + dağ sırtı ufku, sağda sayaç ve ⋯
+        // yuvası. Düello sorusunda kaydet/bildir yok; yuva boş ama yer
+        // tutar, böylece sayaç iki ekranda aynı x'te durur.
+        light: SahneCategoryLight.of(
+          CategoryVisuals.canonicalName(question.category),
+        ),
+        ridge: true,
         // 2026-09-29 doğallık (K2): soru arkasındaki hayalet kategori
         // çizimi kalktı (bkz. quiz_screen `_stageLight`).
         //
@@ -493,25 +502,40 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         ),
         // Çıkış gönderilirken sayaç yerine bekleme göstergesi: kalan
         // sorular sunucuya TIMEOUT olarak gidiyor.
-        score: _exitInFlight
-            ? const SizedBox.square(
-                dimension: 24,
-                child: CircularProgressIndicator(strokeWidth: 2),
-              )
-            : AnimatedBuilder(
-                animation: _timerController.animation,
-                builder: (context, _) {
-                  final fraction = _timerController.animation.value;
-                  final seconds = (fraction * _questionSeconds).ceil();
-                  return SahneStageTimer(
-                    secondsLeft: seconds,
-                    // Cevap gönderildikten sonra sayaç durur; gerilim rengi
-                    // de söner.
-                    hotSeconds: disabled ? -1 : 5,
-                    semanticLabel: '$seconds ${context.t(K.secondsShortUnit)}',
-                  );
-                },
+        score: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: AlignmentDirectional.centerEnd,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _exitInFlight
+                  ? const SizedBox.square(
+                      dimension: 24,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : AnimatedBuilder(
+                      animation: _timerController.animation,
+                      builder: (context, _) {
+                        final fraction = _timerController.animation.value;
+                        final seconds = (fraction * _questionSeconds).ceil();
+                        return SahneStageTimer(
+                          secondsLeft: seconds,
+                          // Cevap gönderildikten sonra sayaç durur; gerilim rengi
+                          // de söner.
+                          hotSeconds: disabled ? -1 : 5,
+                          semanticLabel:
+                              '$seconds ${context.t(K.secondsShortUnit)}',
+                        );
+                      },
+                    ),
+              const SizedBox(width: SahneSpace.x1),
+              const SizedBox.square(
+                key: ValueKey('async-duel-more-slot'),
+                dimension: sahneTapTarget,
               ),
+            ],
+          ),
+        ),
         progress: Padding(
           padding: const EdgeInsets.only(bottom: SahneSpace.x2),
           child: SahneProgressBar(
@@ -576,16 +600,27 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Sıra ve kategori ortak üst satırda; burada yalnız
-                        // rakip bağlamı (boş yuva soruyu ortalar).
+                        // rakip bağlamı (boş yuva soruyu ortalar). Rakip adı
+                        // biliniyorsa avatarıyla birlikte ("Sen · Rojda"):
+                        // "Rojda'ya karşı" Türkçe ek uyumu gerektirdiği için
+                        // yeni cümle kurulmadı (NEEDS_JURY).
                         Padding(
-                          padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                          child: Text(
-                            duel.role == AsyncDuelRole.opponent
-                                ? '${context.t(K.you)} · '
-                                      '${duel.opponentName == null ? context.t(K.asyncDuelOpponent) : context.playerDisplayName(duel.opponentName)}'
-                                : context.t(K.asyncDuelSub),
-                            style: SahneType.caption.copyWith(color: t.tx2),
-                          ),
+                          padding: const EdgeInsets.only(bottom: SahneSpace.x4),
+                          child: duel.role == AsyncDuelRole.opponent
+                              ? _RivalLine(
+                                  name: duel.opponentName == null
+                                      ? context.t(K.asyncDuelOpponent)
+                                      : context.playerDisplayName(
+                                          duel.opponentName,
+                                        ),
+                                  you: context.t(K.you),
+                                )
+                              : Text(
+                                  context.t(K.asyncDuelSub),
+                                  style: SahneType.caption.copyWith(
+                                    color: t.tx2,
+                                  ),
+                                ),
                         ),
                         _QuestionText(text: question.promptText),
                         Column(
@@ -648,6 +683,39 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           },
         ),
       ),
+    );
+  }
+}
+
+/// Alt başlık satırı: avatar + "Sen · Rakip adı".
+class _RivalLine extends StatelessWidget {
+  const _RivalLine({required this.name, required this.you});
+
+  final String name;
+  final String you;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Row(
+      key: const ValueKey('async-duel-rival-line'),
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SahneAvatar(
+          initial: name.isEmpty ? '?' : name.characters.first.toUpperCase(),
+          size: 24,
+          textStyle: SahneType.captionStrong.copyWith(color: t.tx),
+        ),
+        const SizedBox(width: SahneSpace.x2),
+        Flexible(
+          child: Text(
+            '$you · $name',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+        ),
+      ],
     );
   }
 }
