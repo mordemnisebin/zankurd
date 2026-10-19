@@ -71,11 +71,12 @@ void main() {
     // Kurmancî kayıt yeniden yazıldı. 45 -> 12: 2026-09-27 Paradigma ve
     // Siyaset gizlendi; curated kayıtların 33'ü bu iki kategorideydi.
     // 12 -> 45: 2026-09-30 Paradigma ve Siyaset yeniden açıldı; 33 curated
-    // kayıt geri geldi. Sayı düşerse banka yüklenen kümede görünmüyor
+    // kayıt geri geldi. 45 -> 44: 2026-10-19 `curated_siyaset_0009` (Barzani
+    // hareketinin ilk lideri belirsiz) emekli. Sayı düşerse banka yüklenen kümede görünmüyor
     // demektir; artarsa sessizce yeni curated id girmiştir.
     expect(
       curated.length,
-      45,
+      44,
       reason:
           'Curated bankadan oynanabilir soru sayısı değişti. Düştüyse banka '
           'yüklenen kümede görünmüyor ve kapsam ölçümü onu atlıyor demektir; '

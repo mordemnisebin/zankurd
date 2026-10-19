@@ -175,7 +175,9 @@ void main() {
       // 3264 -> 3289 (+25): 2026-10-13 ders çoktan seçmelileri, hepsi `approved`.
       // 3289 -> 3284 (-5): 2026-10-17 yakın tekrar, 5 soru emekliye ayrıldı
       // (iki modelce "aynı olgu" bulunan çiftlerin zayıf yarısı).
-      3284,
+      // 3284 -> 3277 (-7): 2026-10-19 dış içerik denetimi; yerelde
+      // karşılığı olan 7 soru emekli (4 kimlik yalnız sunucuda).
+      3277,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -245,12 +247,12 @@ void main() {
       //   Çand 32 + 9 = 41; Teknolojî 0 + 3 = 3; Siyaset 68 + 2 = 70.
       'retired=Sînema': 25,
       'retired=Cografya': 51,
-      'retired=Edebiyat': 23,
+      'retired=Edebiyat': 25, // 2026-10-19 içerik denetimi +2
       // 43 -> 45: 2026-10-17 yakın tekrar (`ds_dirok_0029`, `offline_2668`).
       'retired=Dîrok': 45,
       // 2026-10-17 yakın tekrar: `ds_cografya_0133`, `ds_dirok_0091`, `ds_muzik_0144`.
-      'retired=Cîhan': 3,
-      'retired=Muzîk': 27,
+      'retired=Cîhan': 5, // 2026-10-19: +sf_cin_0007/0008
+      'retired=Muzîk': 28, // 2026-10-19 içerik denetimi +1
       // 2026-09-30: 36 -> 37 (`offline_0120`, görsel "pîr" gösteriyor).
       'retired=Ziman': 37,
       // 41 -> 42: 2026-10-08 `ds_cand_0285` (cevap soru metninde) emekliye ayrıldı.
@@ -264,7 +266,7 @@ void main() {
       // 2026-09-30 beşinci dalga (ChatGPT ikinci geçişi): Siyaset 51 -> 68
       // (+17: 8 çoktan seçmeli + 9 doğru/yanlış). Paradigma değişmedi.
       // 2026-09-30 altıncı dalga: +2 (68 -> 70).
-      'retired=Siyaset': 70,
+      'retired=Siyaset': 72, // 2026-10-19 içerik denetimi +2
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });
 
