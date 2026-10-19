@@ -10,7 +10,6 @@ import 'package:zankurd_mobile/src/config/subcategory_config.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
-import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/subcategory_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';

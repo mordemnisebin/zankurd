@@ -280,7 +280,7 @@ class _LevelProgressCard extends StatelessWidget {
     // Kurul 2. tur 2026-10-20: ayrı kart kalktı; ilerleme başlığın hemen
     // altında kartsız bir satırdır (seviye kartlarıyla aynı düzeyde
     // ikinci bir kart ağırlığı taşımaz). 0/N iken dolu görünmesin diye
-    // çubuğun sönük izi ince çizilir.
+    // çubuk hiç çizilmez (yalnız sayaç).
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x1),
       child: Column(
@@ -290,18 +290,35 @@ class _LevelProgressCard extends StatelessWidget {
             Text(text, style: SahneType.body.copyWith(color: t.tx2)),
             const SizedBox(height: SahneSpace.x3),
           ],
-          SahneProgressBar(
-            value: ratio,
-            height: completed == 0 ? 4 : 8,
-            trailing: Tr.forKu(K.pPSeviye, isKu, {
-              'p0': '$completed',
-              'p1': '$total',
-            }),
-            semanticLabel: Tr.forKu(K.progressLevelsCompleted, isKu, {
-              'completed': '$completed',
-              'total': '$total',
-            }),
-          ),
+          if (completed == 0)
+            // Hiç seviye bitmemişken çubuk yok: lavanta iz dolu gibi
+            // okunuyordu (kurul 2. tur, ChatGPT). Yalnız sayaç.
+            Semantics(
+              label: Tr.forKu(K.progressLevelsCompleted, isKu, {
+                'completed': '$completed',
+                'total': '$total',
+              }),
+              excludeSemantics: true,
+              child: Text(
+                Tr.forKu(K.pPSeviye, isKu, {
+                  'p0': '$completed',
+                  'p1': '$total',
+                }),
+                style: SahneType.captionStrong.copyWith(color: t.tx2),
+              ),
+            )
+          else
+            SahneProgressBar(
+              value: ratio,
+              trailing: Tr.forKu(K.pPSeviye, isKu, {
+                'p0': '$completed',
+                'p1': '$total',
+              }),
+              semanticLabel: Tr.forKu(K.progressLevelsCompleted, isKu, {
+                'completed': '$completed',
+                'total': '$total',
+              }),
+            ),
         ],
       ),
     );
