@@ -409,7 +409,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
               final share = tag != null
                   ? SahneButton.secondary(
                       key: const ValueKey('friends-share-code-button'),
-                      label: tag,
+                      // "Paylaş · ZK-4F7K": düğme kodun kendisi gibi
+                      // okunuyordu, ne yaptığı söylenmiyordu (kurul
+                      // 2026-10-20). Mevcut `K.share` sözü; "Kodumu paylaş"
+                      // yeni söz olurdu (NEEDS_JURY).
+                      label: '${context.t(K.share)} · $tag',
                       icon: AppIcons.shareNodes,
                       expand: true,
                       onPressed: () {
@@ -554,10 +558,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
     }
     final incoming = _incomingByUser[player.id];
     if (incoming != null) {
-      return SahneButton.secondary(
+      return SahneButton.primary(
         key: ValueKey('search-accept-${player.id}'),
         label: context.t(K.acceptAction),
         icon: AppIcons.check,
+        arrow: false,
         onPressed: () => _acceptRequest(incoming.id),
       );
     }
@@ -956,10 +961,13 @@ class _FriendRow extends StatelessWidget {
                     icon: AppIcons.swords,
                     onPressed: busy ? null : onChallenge,
                   ),
-                  SahneIconButton(
+                  // Kapı simgesi neyi yaptığını söylemiyordu (kurul
+                  // 2026-10-20): yazılı sessiz eylem, mevcut söz.
+                  SahneButton.text(
                     key: ValueKey('friend-room-${friend.friendName}'),
-                    icon: busy ? AppIcons.hourglass : AppIcons.doorOpen,
-                    semanticLabel: context.t(K.inviteToRoom),
+                    label: context.t(K.inviteToRoom),
+                    arrow: false,
+                    quiet: true,
                     onPressed: busy ? null : onPlay,
                   ),
                 ] else
@@ -1033,11 +1041,14 @@ class _FriendRequestRow extends StatelessWidget {
           ),
         ),
         const SizedBox(width: SahneSpace.x2),
-        // Kabul ikincil: bir listede birden çok istek olabilir; ekranın tek
-        // birincil eylemi değil.
-        SahneButton.secondary(
+        // Kurul 2026-10-20 (Opus): Kabul bekleyen isteğin ASIL eylemidir,
+        // reddet ikon düğmesi yanında sessiz kalır; bu yüzden birincil
+        // (turuncu). Eskiden ikincildi (bir listede birden çok istek olur
+        // gerekçesiyle) ve "Reddet"le aynı gri yüzeydeydi.
+        SahneButton.primary(
           label: context.t(K.acceptAction),
           icon: AppIcons.check,
+          arrow: false,
           onPressed: onAccept,
         ),
       ],
