@@ -170,6 +170,13 @@ void main() {
             await tester.pumpAndSettle();
             await tester.tap(createRoom);
             await tester.pumpAndSettle();
+            await tester.ensureVisible(
+              find.byKey(const ValueKey('custom-room-settings-row')),
+            );
+            await tester.tap(
+              find.byKey(const ValueKey('custom-room-settings-row')),
+            );
+            await tester.pumpAndSettle();
 
             final feeLabels = <String>[
               locale == 'ku' ? 'Bêpere (0)' : 'Ücretsiz (0)',
@@ -220,6 +227,12 @@ void main() {
     );
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('custom-room-settings-row')),
+    );
+    await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
     await tester.pumpAndSettle();
 
     final fee = find.byKey(const ValueKey('custom-room-fee-100'));

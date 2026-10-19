@@ -1004,19 +1004,26 @@ class AppTheme {
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         ),
       ),
-      // İkincil düğme: Kulis tonu, kenarsız.
+      // İkincil düğme: şeffaf dolgu + 1,5 px görünür kenar + güçlü etiket
+      // (kurul 3. tur); pasif = kenarsız düz dolgu.
       outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          backgroundColor: t.s2,
-          foregroundColor: t.tx,
-          disabledBackgroundColor: t.disabledFill,
-          disabledForegroundColor: t.disabledFg,
-          side: BorderSide(color: t.edge),
-          minimumSize: buttonSize,
-          textStyle: SahneType.button,
-          shape: SahneShape.m,
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-        ),
+        style:
+            OutlinedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              foregroundColor: t.tx,
+              disabledBackgroundColor: t.disabledFill,
+              disabledForegroundColor: t.disabledFg,
+              minimumSize: buttonSize,
+              textStyle: SahneType.button,
+              shape: SahneShape.m,
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+            ).copyWith(
+              side: WidgetStateProperty.resolveWith(
+                (s) => s.contains(WidgetState.disabled)
+                    ? BorderSide.none
+                    : BorderSide(color: t.secondaryEdge, width: 1.5),
+              ),
+            ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(

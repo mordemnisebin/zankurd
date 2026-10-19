@@ -181,11 +181,10 @@ void main() {
             final button = tester.widget<FilledButton>(
               find.descendant(of: finder, matching: find.byType(FilledButton)),
             );
-            final t = SahneTokens.of(tester.element(finder));
             expect(
               button.style?.backgroundColor?.resolve(<WidgetState>{}),
-              t.s2,
-              reason: '$key ikincil (Kulis) olmalı, Agir değil',
+              Colors.transparent,
+              reason: '$key ikincil (şeffaf + kenar) olmalı, Agir değil',
             );
             _expectActionSemantics(tester, key);
           }

@@ -238,6 +238,7 @@ class SahneRailChip extends StatelessWidget {
       maxLines: fitted ? 1 : null,
       style: SahneType.captionStrong.copyWith(
         color: selected ? t.selTx : t.tx2,
+        fontWeight: selected ? FontWeight.w800 : FontWeight.w700,
       ),
     );
     final fill = selected ? t.selFill : (onSurface ? t.s2 : t.s1);
@@ -474,7 +475,7 @@ class SahnePickChip extends StatelessWidget {
     final shape = SahneShape.withSide(
       SahneShape.m,
       selected ? t.selLine : t.tx3,
-      width: selected ? 1.5 : 1,
+      width: selected ? SahneRing.r2 : 1,
     );
     return Semantics(
       container: true,
@@ -512,6 +513,9 @@ class SahnePickChip extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: SahneType.captionStrong.copyWith(
                           color: selected ? t.selTx : t.tx,
+                          fontWeight: selected
+                              ? FontWeight.w800
+                              : FontWeight.w600,
                         ),
                       );
                       // Normal yazıda tek satır: uzun ad ("Bilim ve Düşünce")

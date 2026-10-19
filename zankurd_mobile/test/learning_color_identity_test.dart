@@ -140,7 +140,12 @@ void main() {
             of: find.byKey(ValueKey(key)),
             matching: find.byType(FilledButton),
           );
-          expect(materialColorIn(tester, button), t.s2, reason: '$combo $key');
+          // Kurul 3. tur 2026-10-20: ikincil düğme şeffaf + görünür kenar.
+          expect(
+            materialColorIn(tester, button),
+            Colors.transparent,
+            reason: '$combo $key',
+          );
         }
 
         final primary = find.descendant(
@@ -180,7 +185,7 @@ void main() {
       for (final (name, fg, bg) in [
         ('seçili çip: Zimrût metni / Zimrût tonu', t.learnTx, t.learnTint),
         ('seçili olmayan çip: ikincil metin / Perde', t.tx2, t.s1),
-        ('ikincil düğme: birincil metin / Kulis', t.tx, t.s2),
+        ('ikincil düğme: birincil metin / Perde', t.tx, t.s1),
         ('yol satırı: birincil metin / Perde', t.tx, t.s1),
         ('kilitli satır: ikincil metin / Perde', t.tx2, t.s1),
         ('birincil düğme: onAct / Agir', t.onAct, t.act),

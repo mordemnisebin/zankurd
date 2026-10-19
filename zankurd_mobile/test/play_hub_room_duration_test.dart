@@ -94,6 +94,12 @@ void main() {
 
       await tester.tap(find.text('Oda kur'));
       await tester.pumpAndSettle();
+      // Kurul 3. tur: soru sayısı, süre ve ücret "Ayarlar" satırında katlı.
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('custom-room-settings-row')),
+      );
+      await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
+      await tester.pumpAndSettle();
 
       // Süre seçimi (20 sn varsayılan; 30 sn seçelim)
       expect(find.text('20 sn'), findsOneWidget);
@@ -138,6 +144,11 @@ void main() {
 
     await tester.tap(find.text('Oda kur'));
     await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('custom-room-settings-row')),
+    );
+    await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
+    await tester.pumpAndSettle();
 
     for (final seconds in GameRoom.allowedDurations) {
       expect(
@@ -166,6 +177,11 @@ void main() {
     );
 
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('custom-room-settings-row')),
+    );
+    await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
     await tester.pumpAndSettle();
 
     for (final seconds in GameRoom.allowedDurations) {
@@ -443,5 +459,42 @@ void main() {
       await open(tester);
       expect(repository.capturedCategory, 'Tevlihev');
     });
+  });
+
+  // Kurul 3. tur 2026-10-20: soru sayısı, süre ve ücret tek "Ayarlar"
+  // satırında katlıdır; kapalıyken yalnız güncel değerlerin özeti görünür.
+  testWidgets('Ayarlar satırı kapalıyken özet gösterir, dokununca açılır', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      testShell(child: PlayHubScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Konu seç'), findsOneWidget);
+    expect(find.text('Oyuncu sayısı'), findsOneWidget);
+    expect(find.byKey(const ValueKey('custom-room-count-5')), findsNothing);
+    expect(find.byKey(const ValueKey('custom-room-duration-30')), findsNothing);
+    expect(find.byKey(const ValueKey('custom-room-fee-25')), findsNothing);
+    expect(find.text('10 soru · 20 sn · Ücretsiz (0)'), findsOneWidget);
+
+    final row = find.byKey(const ValueKey('custom-room-settings-row'));
+    await tester.ensureVisible(row);
+    await tester.tap(row);
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('custom-room-count-5')),
+    );
+    await tester.tap(find.byKey(const ValueKey('custom-room-count-5')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(row);
+    await tester.tap(row);
+    await tester.pumpAndSettle();
+    expect(find.text('5 soru · 20 sn · Ücretsiz (0)'), findsOneWidget);
+    expect(find.byKey(const ValueKey('custom-room-count-5')), findsNothing);
   });
 }

@@ -232,6 +232,11 @@ void main() {
       expect(find.byKey(const ValueKey('custom-room-open')), findsOneWidget);
       expect(find.byKey(const ValueKey('custom-room-shortfall')), findsNothing);
 
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('custom-room-settings-row')),
+      );
+      await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
+      await tester.pumpAndSettle();
       final fee = find.byKey(const ValueKey('custom-room-fee-25'));
       await tester.ensureVisible(fee);
       await tester.tap(fee);

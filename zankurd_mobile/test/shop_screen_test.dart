@@ -368,10 +368,7 @@ void main() {
       );
       expect(affordable, findsOneWidget);
       final outlined = tester.widget<OutlinedButton>(affordable);
-      expect(
-        (outlined.style!.shape!.resolve({}) as OutlinedBorder).side.color,
-        t.actTx,
-      );
+      expect(outlined.style!.side!.resolve({})!.color, t.actTx);
       expect(outlined.style!.backgroundColor!.resolve({}), t.s1);
 
       final short = find.byKey(const ValueKey('shop-short-profile_badge_vip'));
@@ -398,6 +395,28 @@ void main() {
       find.byKey(const ValueKey('shop-hero-surface')),
     );
     expect(hero.height, lessThanOrEqualTo(170));
+  });
+
+  // Kurul 3. tur 2026-10-20: üç ızgara ürünü iki sütunda sonuncuyu satırda
+  // yalnız bırakıyordu (Neon çerçeve). Tek sayıda ürünün sonuncusu tam
+  // genişlik yatay karttır.
+  testWidgets('tek sayıda ızgara ürününün sonuncusu tam genişlik olur', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: _ShopRepository(coins: 300))),
+    );
+    await tester.pumpAndSettle();
+    final first = tester.getRect(
+      find.byKey(const ValueKey('shop-item-surface-spin_wheel_extra')),
+    );
+    final last = tester.getRect(
+      find.byKey(const ValueKey('shop-item-surface-avatar_frame_neon')),
+    );
+    expect(last.width, greaterThan(first.width * 1.8));
+    expect(last.top, greaterThan(first.bottom - 1));
   });
 
   testWidgets('mağaza bakiyeyi ve ürünleri listeler', (tester) async {

@@ -14,13 +14,14 @@ enum _SahneButtonKind { primary, secondary, text }
 /// * [SahneButton.primary] — Agir dolgu, koyu metin, isteğe bağlı ok,
 ///   ekrandaki TEK bulanık gölge (`0 8 24 -8`). Ekranda tek birincil.
 ///   Uygulamanın `FilledButton` temasına dayanır.
-/// * [SahneButton.secondary] — Kulis (`s2`) tonu, kenarsız.
-/// * [SahneButton.secondary] düz ve gölgesizdir (yükselti 0, basınca da).
+/// * [SahneButton.secondary] — ŞEFFAF dolgu + 1,5 px görünür kenar
+///   (`secondaryEdge`) + güçlü etiket. Düz ve gölgesizdir (yükselti 0).
 /// * [SahneButton.text] — Agir metni (`actTx`) + chevron; görsel 44,
 ///   dokunma alanı 48 ([sahneTapTarget], `MaterialTapTargetSize.padded`).
-/// * Pasif — `onPressed: null`: opaklık değil ortak pasif dolgu
-///   (`disabledFill`) + ikincil metin + 1 px `disabledEdge` kenar; gölge yok.
-///   Son panel cilası 2026-10-19: zeminden gözle ayrılır.
+/// * Pasif — `onPressed: null`: opaklık değil ortak DÜZ soluk dolgu
+///   (`disabledFill`) + soluk etiket (`disabledFg`), KENARSIZ; gölge yok.
+///   Kurul 3. tur 2026-10-20: ikincil (kenarlı, şeffaf) ile pasif (kenarsız,
+///   dolgulu) ayrı okunur; eskiden ikisi de soluk gri-mavi dolguydu.
 /// * Yükleniyor — [loading]: etiketin yerinde 20'lik döner gösterge; düğme
 ///   görünüşünü korur (pasifleşmez, sözü değişmez) ama dokunuşu yok sayar.
 ///
@@ -190,10 +191,7 @@ class SahneButton extends StatelessWidget {
         );
       }
       if (disabledBorder && s.contains(WidgetState.disabled)) {
-        return BorderSide(
-          color: t.disabledEdge,
-          strokeAlign: BorderSide.strokeAlignInside,
-        );
+        return BorderSide.none;
       }
       return rest;
     });
@@ -243,7 +241,7 @@ class SahneButton extends StatelessWidget {
               FilledButton.styleFrom(
                 elevation: 0,
                 shadowColor: Colors.transparent,
-                backgroundColor: t.s2,
+                backgroundColor: Colors.transparent,
                 foregroundColor: t.tx,
                 disabledBackgroundColor: t.disabledFill,
                 disabledForegroundColor: t.disabledFg,
@@ -255,12 +253,14 @@ class SahneButton extends StatelessWidget {
                   vertical: SahneSpace.x3,
                 ),
               ).copyWith(
-                // Gece ikincil düğme kartına karışıyordu (Ana ekran düello
-                // satırı "Oyna"): 1 px görünür kenar.
+                // Kurul 3. tur: ikincil = şeffaf + 1,5 px görünür kenar (her
+                // iki temada); pasiften (kenarsız dolgu) bu ayırır.
                 side: side(
-                  t.bg.computeLuminance() > 0.5
-                      ? BorderSide.none
-                      : BorderSide(color: t.tx3.withValues(alpha: 0.55)),
+                  BorderSide(
+                    color: t.secondaryEdge,
+                    width: 1.5,
+                    strokeAlign: BorderSide.strokeAlignInside,
+                  ),
                 ),
               ),
           child: content,

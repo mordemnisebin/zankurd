@@ -65,7 +65,7 @@ void main() {
       final bg = style.backgroundColor!.resolve(disabled)!;
       expect(
         _contrastRatio(fg, bg),
-        greaterThanOrEqualTo(4.5),
+        greaterThanOrEqualTo(3.0),
         reason: 'pasif Kaydet okunaklı olmalı (fg=$fg bg=$bg)',
       );
     },
@@ -97,12 +97,23 @@ void panelCilasiPasifDugme() {
         greaterThanOrEqualTo(1.08),
         reason: 'pasif dolgu zeminden ayrılmalı',
       );
+      // Kurul 3. tur 2026-10-20: pasif etiket etkin etiketten soluk ama ≥ 3.
       expect(
         _contrastRatio(t.disabledFg, t.disabledFill),
-        greaterThanOrEqualTo(4.5),
+        greaterThanOrEqualTo(3.0),
+      );
+      expect(
+        _contrastRatio(t.tx, t.disabledFill),
+        greaterThan(_contrastRatio(t.disabledFg, t.disabledFill)),
+        reason: 'pasif etiket etkin etiketten soluk olmalı',
+      );
+      // İkincil kenar zeminde görünür (≥ 1,8); pasif kenarsız.
+      expect(
+        _contrastRatio(t.secondaryEdge, t.bg),
+        greaterThanOrEqualTo(1.8),
+        reason: 'ikincil düğme kenarı görünür olmalı',
       );
     }
     expect(SahneTokens.day.disabledFill, const Color(0xFFE3E7F0));
-    expect(SahneTokens.day.disabledEdge, const Color(0xFFD3D9E6));
   });
 }

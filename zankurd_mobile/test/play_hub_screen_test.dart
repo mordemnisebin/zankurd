@@ -69,11 +69,11 @@ void main() {
       find.descendant(of: hero, matching: find.byType(FilledButton)),
       findsOneWidget,
     );
-    final night = SahneTokens.of(tester.element(hero));
     final outside = find.byWidgetPredicate(
       (w) =>
           w is FilledButton &&
-          w.style?.backgroundColor?.resolve(<WidgetState>{}) == night.s2,
+          w.style?.backgroundColor?.resolve(<WidgetState>{}) ==
+              Colors.transparent,
     );
     expect(outside, findsNWidgets(2));
     final ctx = tester.element(find.text('Rakip bul'));

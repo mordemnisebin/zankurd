@@ -100,16 +100,18 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
 
   bool get _isDay => bg.computeLuminance() > 0.5;
 
-  /// Ortak pasif dolgu (son kurul cilası 2026-10-19): zeminden gözle
-  /// ayrılır. Gündüz `#E3E7F0` (zemin `#F4F6FA`), gece Kulis `s2`; eski
-  /// `s2`/`s1` pasif düğme zemine karışıyordu (5 modelin ortak bulgusu).
+  /// Ortak pasif dolgu (kurul 3. tur 2026-10-20): DÜZ soluk dolgu, kenarsız.
+  /// İkincil düğmeyle karışmasın diye pasifin kenarı YOKTUR (ikincil görünür
+  /// kenar taşır, bkz. [secondaryEdge]). Gündüz `#E3E7F0`, gece Kulis `s2`.
   Color get disabledFill => _isDay ? const Color(0xFFE3E7F0) : s2;
 
-  /// Pasif düğmenin 1 px kenarı (gündüz `#D3D9E6`, gece `edge`).
-  Color get disabledEdge => _isDay ? const Color(0xFFD3D9E6) : edge;
+  /// Pasif etiket: üçüncül metin; pasif dolguya karşı yine ≥ 3 (okunur ama
+  /// etkin ikincil etiketten (`tx`) belli ölçüde soluk).
+  Color get disabledFg => tx3;
 
-  /// Pasif etiket: ikincil metin; pasif dolguya karşı ≥ 4.5.
-  Color get disabledFg => tx2;
+  /// İkincil düğmenin 1,5 px görünür kenarı (mürekkep ~%40): şeffaf dolgu +
+  /// bu kenar + güçlü etiket = ikincil; kenarsız soluk dolgu = pasif.
+  Color get secondaryEdge => tx.withValues(alpha: 0.4);
 
   /// Metin alanı dolgusu (kurul 2026-10-20): gündüz Şev'e yakın açık ton, kart
   /// içinde beyazdan ve pasif düğmeden ayrılır; gece Kulis.
@@ -187,9 +189,11 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// sekme her yerde Agir'den türer — açık turuncu ton dolgu + turuncu çizgi
   /// + koyu turuncu metin. Dolu turuncu yalnız ana eylem düğmesindedir;
   /// seçili çip de dolu olunca ikisi birbiriyle yarışıyordu (7 modelden 4'ü).
-  /// Metin ≥ 4.5:1 ([selTx] ton dolgu üstünde; test bunu ölçer).
+  /// Kurul 3. tur 2026-10-20: seçili hâl soluktu (oda kurma sheet'i); ton
+  /// koyulaştı, çizgi 2 px, etiket kalın. Metin ≥ 4.5:1 ([selTx] ton dolgu
+  /// üstünde; test bunu ölçer).
   Color get selFill =>
-      Color.alphaBlend(act.withValues(alpha: _isNight ? 0.24 : 0.18), s1);
+      Color.alphaBlend(act.withValues(alpha: _isNight ? 0.32 : 0.28), s1);
   Color get selLine => act;
   Color get selTx => actTx;
 
