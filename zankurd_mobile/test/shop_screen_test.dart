@@ -387,9 +387,7 @@ void main() {
     },
   );
 
-  testWidgets('VIP kartı yatay ve kompakt (eskiden ~490 mp)', (
-    tester,
-  ) async {
+  testWidgets('VIP kartı yatay ve kompakt (eskiden ~490 mp)', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(

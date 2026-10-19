@@ -478,6 +478,9 @@ class SahneListRow extends StatelessWidget {
           Text(subtitle!, style: SahneType.caption.copyWith(color: t.tx2)),
       ],
     );
+    // Kilitli (pasif) satır ~%60 vurguyla söner (kurul 2. tur 2026-10-20:
+    // kilitli dersler açık olanlarla aynı koyulukta okunuyordu).
+    final dimmedText = enabled ? text : Opacity(opacity: 0.6, child: text);
 
     // Büyük yazı ölçeğinde (≥ 1.5) sağdaki rozet/değer metnin altına
     // iner: başlık dar bir sütunda harf harf bölünmesin.
@@ -516,12 +519,12 @@ class SahneListRow extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        ExcludeSemantics(child: text),
+                        ExcludeSemantics(child: dimmedText),
                         const SizedBox(height: SahneSpace.x1),
                         trail,
                       ],
                     )
-                  : ExcludeSemantics(child: text),
+                  : ExcludeSemantics(child: dimmedText),
             ),
             if (!stacked && trail != null) ...[
               const SizedBox(width: SahneSpace.x2),

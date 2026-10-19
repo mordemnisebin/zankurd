@@ -473,15 +473,19 @@ class _LevelNode extends StatelessWidget {
           SahneSpace.x4,
           SahneSpace.x3,
         ),
-        child: _LevelRowContent(
-          level: level,
-          name: name,
-          badge: locked
-              ? _LevelBadge.locked
-              : played
-              ? _LevelBadge.played
-              : _LevelBadge.open,
-          trailing: locked ? null : AppIcons.chevronRight,
+        // Kilitli seviye ~%60 vurguyla söner (kurul 2. tur 2026-10-20).
+        child: Opacity(
+          opacity: locked ? 0.6 : 1,
+          child: _LevelRowContent(
+            level: level,
+            name: name,
+            badge: locked
+                ? _LevelBadge.locked
+                : played
+                ? _LevelBadge.played
+                : _LevelBadge.open,
+            trailing: locked ? null : AppIcons.chevronRight,
+          ),
         ),
       ),
     );
