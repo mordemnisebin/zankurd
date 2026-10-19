@@ -289,10 +289,9 @@ void main() {
     final button = tester.widget<FilledButton>(
       find.descendant(of: primary, matching: find.byType(FilledButton)),
     );
-    final t = SahneTokens.of(tester.element(primary));
     expect(
       button.style?.backgroundColor?.resolve(<WidgetState>{}),
-      t.s2,
+      Colors.transparent,
       reason: 'Agir yalnız "Günün dersi" düğmesindedir; kart ikincil kalır.',
     );
     // Karttaki hiçbir düğme birincil (Agir) değil.
@@ -302,7 +301,7 @@ void main() {
           find.descendant(of: card, matching: find.byType(FilledButton)),
         )
         .map((b) => b.style?.backgroundColor?.resolve(<WidgetState>{}));
-    expect(fills, everyElement(t.s2));
+    expect(fills, everyElement(Colors.transparent));
   });
 
   testWidgets('Ana ekranda kart "Günün dersi" kartının hemen altındadır', (
