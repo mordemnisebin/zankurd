@@ -328,7 +328,10 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   Future<Set<String>> loadRoomInvitedIds(GameRoom room);
 
   /// Bana gelen bekleyen oda davetleri (en yeni önce). RPC yoksa/ağ yoksa boş.
-  Future<List<RoomInvite>> loadMyRoomInvites();
+  ///
+  /// [throwOnError] true ise ağ/RPC hatası boş listeye çevrilmez, fırlatılır:
+  /// push dokunuşu "hiç davet yok" ile "yüklenemedi"yi ayırmak zorundadır.
+  Future<List<RoomInvite>> loadMyRoomInvites({bool throwOnError = false});
 
   /// Daveti reddeder ya da kabul eder. Kabulde odanın kodunu döner; istemci
   /// onu mevcut `joinOnlineRoom` yoluna verir. Reddette `null`. Süresi

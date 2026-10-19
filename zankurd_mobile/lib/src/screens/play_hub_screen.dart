@@ -759,7 +759,7 @@ String joinRoomErrorKey(Object error) {
     RoomJoinFailureReason.full => K.roomFull,
     RoomJoinFailureReason.alreadyInAnotherRoom => K.roomAlreadyInAnotherRoom,
     RoomJoinFailureReason.insufficientCoins => K.insufficientCoins,
-    RoomJoinFailureReason.tooManyAttempts => K.roomJoinFailed,
+    RoomJoinFailureReason.tooManyAttempts => K.roomCodeTooManyAttempts,
     RoomJoinFailureReason.unknown => K.roomJoinFailed,
   };
 }

@@ -1571,6 +1571,11 @@ class Tr {
       'ku': 'Tu jixwe di odeyeke din a zindî de yî.',
       'tr': 'Zaten başka bir canlı odadasın.',
     },
+    K.roomCodeTooManyAttempts: {
+      'ku':
+          'Te gelek kodên şaş ceribandin; piştî çend deqîqeyan dîsa biceribîne.',
+      'tr': 'Çok fazla yanlış kod denendi. Birkaç dakika sonra tekrar dene.',
+    },
     K.roomJoinFailed: {
       'ku': 'Tevlîbûn têk çû. Dîsa biceribîne.',
       'tr': 'Odaya katılamadın. Tekrar dene.',
@@ -3863,6 +3868,7 @@ class K {
   static const readyUpdateFailed = 'room.readyUpdateFailed';
   static const roomFull = 'room.full';
   static const roomAlreadyInAnotherRoom = 'room.alreadyInAnotherRoom';
+  static const roomCodeTooManyAttempts = 'room.codeTooManyAttempts';
   static const roomJoinFailed = 'room.joinFailed';
   static const roomCapacityLabel = 'room.capacity.label';
   static const roomCapacityOption = 'room.capacity.option';

@@ -268,7 +268,7 @@ class _RoomInviteFriendsSheetState extends State<RoomInviteFriendsSheet> {
         : invited
         ? context.t(K.roomInviteAlreadyInvited)
         : null;
-    final disabled = here;
+    final disabled = here || invited;
     return SahneListRow.icon(
       key: ValueKey('room-invite-friend-$id'),
       icon: AppIcons.peopleGroup,

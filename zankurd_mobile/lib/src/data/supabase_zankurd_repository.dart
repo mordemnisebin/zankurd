@@ -3892,7 +3892,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<List<RoomInvite>> loadMyRoomInvites() async {
+  Future<List<RoomInvite>> loadMyRoomInvites({
+    bool throwOnError = false,
+  }) async {
     if (_roomInviteRpcSupported == false) return const [];
     if (client.auth.currentUser == null) return const [];
     try {
@@ -3905,6 +3907,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     } catch (error, stack) {
       if (isMissingRpcError(error)) _roomInviteRpcSupported = false;
       _recordError(error, stack, reason: 'loadMyRoomInvites failed');
+      if (throwOnError) rethrow;
       return const [];
     }
   }

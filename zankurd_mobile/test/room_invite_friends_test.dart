@@ -163,6 +163,28 @@ void main() {
       expect(find.text('Davet gönder (0)'), findsOneWidget);
     });
 
+    // Codex incelemesi 2026-10-19: "Davet edildi" etiketli arkadaş seçilebilir
+    // kalıyordu; yeniden göndermek sunucuda saatlik sınırı yiyordu.
+    testWidgets('daha önce davet edilen etiketli ama seçilemez', (
+      tester,
+    ) async {
+      await _surface(tester);
+      final repo = _Repo();
+      final room = _room(repo);
+      await repo.inviteFriendsToRoom(room, ['friend-1']);
+      repo.sent.clear();
+      await tester.pumpWidget(_sheetHost(repo, room, (_) {}));
+      await tester.tap(find.byKey(const ValueKey('open')));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Davet edildi'), findsOneWidget);
+      await tester.tap(
+        find.byKey(const ValueKey('room-invite-friend-friend-1')),
+      );
+      await tester.pump();
+      expect(find.text('Davet gönder (0)'), findsOneWidget);
+    });
+
     testWidgets('arama kutusu 8de yok, 9da var ve süzer', (tester) async {
       await _surface(tester);
       final few = _Repo(friendCount: 8);
