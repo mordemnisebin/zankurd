@@ -1482,15 +1482,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           opponents: opponents,
         ),
       if (answerRecords.isNotEmpty) ...[
-        if (breakdown.isNotEmpty) ...[
-          SahneSectionHeader(title: context.t(K.resultLearnedTitle)),
-          _CategoryLearnings(breakdown: breakdown),
-          // Yorumu olmayan kart çizilmez (bkz. [LearningOutcomeCard]): boşluk
-          // da onunla birlikte gider.
-          if (learningOutcome.hasSpotlight)
-            const SizedBox(height: SahneSpace.cardGap),
-        ] else
-          const SizedBox(height: SahneSpace.sectionTop),
+        // Kurul 3. tur (2026-10-20): "Nerelerde zorlandın?" kartı sayım
+        // karolarının hemen altına alındı. Konu listesinin altında kalınca
+        // 390x844'te yapışkan alt perdenin arkasında kesiliyordu (68/200,
+        // üç turdur tekrar eden bulgu). Yorum önce, ayrıntı sonra okunur.
+        const SizedBox(height: SahneSpace.sectionTop),
         LearningOutcomeCard(
           outcome: learningOutcome,
           // Kategori listesi gösteriliyorsa sayımlar orada: kart yalnız
@@ -1500,6 +1496,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               ? null
               : () => openReview(learningOutcome.reviewRecords),
         ),
+        if (breakdown.isNotEmpty) ...[
+          SahneSectionHeader(title: context.t(K.resultLearnedTitle)),
+          _CategoryLearnings(breakdown: breakdown),
+        ],
       ],
       if (secondaryResultActions.isNotEmpty) ...[
         const SizedBox(height: SahneSpace.cardGap),
