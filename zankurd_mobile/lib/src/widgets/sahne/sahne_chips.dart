@@ -395,12 +395,12 @@ class SahneStatusBadge extends StatelessWidget {
       false => (t.errTint, t.errTx, AppIcons.xmark),
       null => (t.s2, t.tx2, AppIcons.hourglass),
     };
-    final icon = Icon(glyph, size: 16, color: fg);
+    final icon = Icon(glyph, size: square ? 22 : 16, color: fg);
     final Widget body;
     if (square) {
       body = DecoratedBox(
         decoration: ShapeDecoration(color: bg, shape: SahneShape.s),
-        child: SizedBox.square(dimension: 28, child: Center(child: icon)),
+        child: SizedBox.square(dimension: 36, child: Center(child: icon)),
       );
     } else {
       body = DecoratedBox(

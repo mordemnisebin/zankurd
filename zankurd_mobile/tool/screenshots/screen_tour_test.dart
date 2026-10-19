@@ -1740,18 +1740,10 @@ void main() {
   // 3. Çevrimiçi 1v1 maç sonu — galibiyet görünümü ve "Yeni Oda" düğmesi.
   testWidgets('94 1v1 maç sonu (galibiyet)', (t) async {
     await _pump(t, _result1v1VictoryScreen());
-    // Vakanın DERDİ "Yeni Oda" düğmesi; o düğme sayfanın altında ve ilk
-    // kadrajda görünmüyordu. Ekran görüntüsü, göstermek için var olduğu
-    // şeyi göstermezse tur o vakayı boşuna koşturur.
-    // `ensureVisible` YETMEZ: sonuç ekranı tembel kuran bir listedir ve
-    // eylem satırı henüz İNŞA EDİLMEMİŞTİR — bulucu hiçbir öğe bulamaz.
-    // Önce kaydırıp inşa ettirmek gerekir.
-    final action = find.byKey(const ValueKey('result-new-room-button'));
-    await t.scrollUntilVisible(
-      action,
-      240,
-      scrollable: find.byType(Scrollable).first,
-    );
+    // Kurul 2026-10-20: kare artık sayfanın TEPESİNDE çekilir (kazanma
+    // anı: avatarlar, "Kazandın!", skor). Eskiden "Yeni oda" düğmesini
+    // göstermek için kaydırılıyordu ve ekran görüntüsü "Yeni oda" ile
+    // açılıyordu; düğme artık ikincil eylemdir, varlığı testle korunur.
     await t.pump(const Duration(milliseconds: 400));
     await _shoot(t, '94_result_1v1_win');
   }, tags: ['preview']);

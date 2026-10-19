@@ -528,7 +528,7 @@ void main() {
         ),
       );
       expect(noArt, findsOneWidget);
-      expect(tester.getSize(noArt), const Size(36, 36));
+      expect(tester.getSize(noArt), const Size(44, 44));
     });
 
     testWidgets('durum rozeti: nötr "boş" hâli ✓/✗ değil kum saati', (

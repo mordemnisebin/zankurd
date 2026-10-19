@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../data/placement_store.dart';
@@ -196,69 +198,100 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
       'index': '${_index + 1}',
       'total': '${_questions.length}',
     });
-    return SahneStageScroll(
-      // Yeni soruda başa dön, üst kenar ilerleme çubuğunun altında sönsün
-      // (bkz. `SahneStageScroll`).
-      scrollKey: const ValueKey('placement-scroll'),
-      resetKey: _index,
-      padding: const EdgeInsets.fromLTRB(
-        SahneSpace.page,
-        SahneSpace.x4,
-        SahneSpace.page,
-        SahneSpace.x6,
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 800),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Üst etiket (quiz'le aynı): kategori • soru sırası. İlerleme
-              // metni ("SORU 1/12") ekranda kalır; çubuk görsel özettir.
-              Row(
-                children: [
-                  CategoryKickerMark(
-                    category: question.category,
-                    fallbackColor: t.tx2,
-                  ),
-                  const SizedBox(width: SahneSpace.x2),
-                  Expanded(
-                    child: Text(
-                      '$category · $progress',
-                      style: SahneType.eyebrow.copyWith(color: t.tx),
-                    ),
-                  ),
-                ],
+    // Kurul 2026-10-20: şıklar alta (baş parmak bölgesi), soru üstteki boş
+    // alanda ortalanır — ders ve yarışma ekranıyla AYNI yerleşim. Eskiden
+    // her şey tepeye yığılıyor, altı bomboştu.
+    return LayoutBuilder(
+      builder: (context, constraints) => SahneStageScroll(
+        // Yeni soruda başa dön, üst kenar ilerleme çubuğunun altında sönsün
+        // (bkz. `SahneStageScroll`).
+        scrollKey: const ValueKey('placement-scroll'),
+        resetKey: _index,
+        padding: const EdgeInsets.fromLTRB(
+          SahneSpace.page,
+          SahneSpace.x4,
+          SahneSpace.page,
+          SahneSpace.x6,
+        ),
+        child: Center(
+          child: ConstrainedBox(
+            key: const ValueKey('placement-answers-anchored'),
+            constraints: BoxConstraints(
+              maxWidth: 800,
+              minHeight: math.max(
+                0.0,
+                constraints.maxHeight - SahneSpace.x4 - SahneSpace.x6,
               ),
-              const SizedBox(height: SahneSpace.x2),
-              if (question.hasImage) ...[
-                QuizQuestionImage(
-                  key: const ValueKey('placement-question-image'),
-                  url: question.imageUrl!,
-                  alt: question.imageAltFor(isKu: context.isKu),
-                ),
-                const SizedBox(height: SahneSpace.x3),
-              ],
-              QuizQuestionPrompt(question.prompt),
-              const SizedBox(height: SahneSpace.x4),
-              for (final (index, answer) in question.displayAnswers.indexed)
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Üst etiket (quiz'le aynı): kategori • soru sırası.
+                // İlerleme metni ("SORU 1/12") ekranda kalır; çubuk görsel
+                // özettir.
                 Padding(
                   padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                  // Quiz'in şık çubuğu: harf karosu renksiz, cevaptan önce
-                  // renk yok (bkz. `answer_option_color_semantics_test`).
-                  // Sınav doğru/yanlış göstermez: çubuk yalnız dokunulur.
-                  child: QuizOptionTile(
-                    index: index,
-                    answer: answer,
-                    selected: false,
-                    correct: false,
-                    disabled: _inputLocked,
-                    onTap: _inputLocked
-                        ? null
-                        : () => _answer(question, answer),
+                  child: Row(
+                    children: [
+                      CategoryKickerMark(
+                        category: question.category,
+                        fallbackColor: t.tx2,
+                      ),
+                      const SizedBox(width: SahneSpace.x2),
+                      Expanded(
+                        child: Text(
+                          '$category · $progress',
+                          style: SahneType.eyebrow.copyWith(color: t.tx),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-            ],
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (question.hasImage) ...[
+                      QuizQuestionImage(
+                        key: const ValueKey('placement-question-image'),
+                        url: question.imageUrl!,
+                        alt: question.imageAltFor(isKu: context.isKu),
+                      ),
+                      const SizedBox(height: SahneSpace.x3),
+                    ],
+                    QuizQuestionPrompt(question.prompt),
+                    const SizedBox(height: SahneSpace.x4),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (final (index, answer)
+                        in question.displayAnswers.indexed)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                        // Quiz'in şık çubuğu: harf karosu renksiz, cevaptan
+                        // önce renk yok (bkz.
+                        // `answer_option_color_semantics_test`). Sınav
+                        // doğru/yanlış göstermez: çubuk yalnız dokunulur.
+                        child: QuizOptionTile(
+                          index: index,
+                          answer: answer,
+                          selected: false,
+                          correct: false,
+                          disabled: _inputLocked,
+                          onTap: _inputLocked
+                              ? null
+                              : () => _answer(question, answer),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
