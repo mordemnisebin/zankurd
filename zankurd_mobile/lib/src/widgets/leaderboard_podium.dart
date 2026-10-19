@@ -188,10 +188,7 @@ class _PodiumColumn extends StatelessWidget {
     final pedestal = ConstrainedBox(
       constraints: BoxConstraints(minHeight: _pedestal[place]),
       child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: t.s1,
-          shape: pedestalShape,
-        ),
+        decoration: ShapeDecoration(color: t.s1, shape: pedestalShape),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(
             SahneSpace.x1,
