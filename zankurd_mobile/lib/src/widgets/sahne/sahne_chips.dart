@@ -237,10 +237,10 @@ class SahneRailChip extends StatelessWidget {
       textAlign: TextAlign.center,
       maxLines: fitted ? 1 : null,
       style: SahneType.captionStrong.copyWith(
-        color: selected ? t.roleText(role) : t.tx2,
+        color: selected ? t.selTx : t.tx2,
       ),
     );
-    final fill = selected ? t.roleTint(role) : (onSurface ? t.s2 : t.s1);
+    final fill = selected ? t.selFill : (onSurface ? t.s2 : t.s1);
     // Seçili olmayan çip de AYNI kalınlıkta halka taşır; halkası kendi
     // zeminin rengindedir (görünmez). Eskiden 1 px'lik soluk bir kenar vardı:
     // gündüzde sayfa zeminiyle birleşip beyaz alanı küçültüyor, seçilince
@@ -248,7 +248,7 @@ class SahneRailChip extends StatelessWidget {
     // İki hâlde de dolu alan aynı 44'ü kaplar; fark yalnız halkanın rengi.
     final shape = SahneShape.withSide(
       SahneShape.m,
-      selected ? t.roleText(role) : fill,
+      selected ? t.selLine : fill,
       width: SahneRing.r2,
     );
     return Semantics(
@@ -436,7 +436,7 @@ class SahneStatusBadge extends StatelessWidget {
 }
 
 /// Seçim çipi — bir gruptan seçme (oda kurma: konu, soru sayısı, süre,
-/// oyuncu, ücret). Seçili = DOLU renk + beyaz metin; seçilmemiş = saydam
+/// oyuncu, ücret). Seçili = ortak seçili stili (`SahneTokens.selFill/selLine/selTx`: turuncu ton + çizgi + koyu turuncu metin); seçilmemiş = saydam
 /// zemin + ince çerçeve.
 ///
 /// 2026-10-19 sadeleşme (ikinci tur): Material `ChoiceChip`/`FilterChip`
@@ -473,8 +473,8 @@ class SahnePickChip extends StatelessWidget {
     final large = MediaQuery.textScalerOf(context).scale(14) >= 21;
     final shape = SahneShape.withSide(
       SahneShape.m,
-      selected ? t.race : t.tx3,
-      width: 1,
+      selected ? t.selLine : t.tx3,
+      width: selected ? 1.5 : 1,
     );
     return Semantics(
       container: true,
@@ -487,7 +487,7 @@ class SahnePickChip extends StatelessWidget {
         constraints: const BoxConstraints(minHeight: sahneTapTarget),
         child: SahneTappable(
           shape: shape,
-          color: selected ? t.race : Colors.transparent,
+          color: selected ? t.selFill : Colors.transparent,
           onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -511,7 +511,7 @@ class SahnePickChip extends StatelessWidget {
                         softWrap: large,
                         overflow: TextOverflow.ellipsis,
                         style: SahneType.captionStrong.copyWith(
-                          color: selected ? SahneTokens.night.tx : t.tx,
+                          color: selected ? t.selTx : t.tx,
                         ),
                       );
                       // Normal yazıda tek satır: uzun ad ("Bilim ve Düşünce")

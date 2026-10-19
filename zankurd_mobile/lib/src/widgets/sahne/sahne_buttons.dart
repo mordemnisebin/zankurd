@@ -352,6 +352,8 @@ class SahneJokerButton extends StatelessWidget {
     Color dim(Color c) => c.withValues(alpha: 0.6);
     final fg = selected ? t.goldTx : (enabled ? t.tx : dim(t.tx));
     final showPrice = !selected && (enabled || unaffordable);
+    // Kurul incelemesi 2026-10-19: kapsül gecede zemine karışıyordu (4 model).
+    // Etkin ve pasif kapsül 1 px görünür kenar taşır; ikon tam karşıtlıkta.
     final capsule = StadiumBorder(
       side: selected
           ? BorderSide(
@@ -359,8 +361,11 @@ class SahneJokerButton extends StatelessWidget {
               width: SahneRing.r2,
               strokeAlign: BorderSide.strokeAlignInside,
             )
-          : BorderSide.none,
+          : BorderSide(color: enabled ? t.tx3 : t.edge),
     );
+    // Ad etiketi (ikonun altında, tek satır, sığmazsa küçülür); büyük
+    // yazıda (≥ %130) gizlenir, ad Semantics'te bütündür.
+    final showLabel = MediaQuery.textScalerOf(context).scale(14) < 18.2;
     return Semantics(
       container: true,
       button: true,
@@ -375,10 +380,12 @@ class SahneJokerButton extends StatelessWidget {
         excludeFromSemantics: true,
         child: SahnePressSink(
           enabled: enabled,
-          child: SizedBox(
-            // Dokunma kutusu 48; görsel kapsül 40 (ortada).
-            height: sahneTapTarget,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: sahneTapTarget),
+            // Dokunma kutusu en az 48.
+            // Etiket eklenince kapsül 48'in üstüne uzayabilir.
             child: Center(
+              heightFactor: 1,
               child: SahneTappable(
                 shape: capsule,
                 // Jetonu yetmeyen joker ortak pasif dolguyu (Perde `s1`) alır:
@@ -399,35 +406,55 @@ class SahneJokerButton extends StatelessWidget {
                     child: Center(
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
-                        child: Row(
+                        child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(icon, size: 20, color: fg),
-                            if (selected) ...[
-                              const SizedBox(width: SahneSpace.x1),
-                              Icon(AppIcons.check, size: 16, color: t.goldTx),
-                            ],
-                            if (showPrice) ...[
-                              const SizedBox(width: SahneSpace.x1),
-                              Opacity(
-                                opacity: enabled ? 1 : 0.6,
-                                child: const SahneGlyph(
-                                  SahneGlyphKind.coin,
-                                  size: 16,
-                                  filled: true,
-                                ),
-                              ),
-                              const SizedBox(width: SahneSpace.x1),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(icon, size: 20, color: fg),
+                                if (selected) ...[
+                                  const SizedBox(width: SahneSpace.x1),
+                                  Icon(
+                                    AppIcons.check,
+                                    size: 16,
+                                    color: t.goldTx,
+                                  ),
+                                ],
+                                if (showPrice) ...[
+                                  const SizedBox(width: SahneSpace.x1),
+                                  Opacity(
+                                    opacity: enabled ? 1 : 0.6,
+                                    child: const SahneGlyph(
+                                      SahneGlyphKind.coin,
+                                      size: 16,
+                                      filled: true,
+                                    ),
+                                  ),
+                                  const SizedBox(width: SahneSpace.x1),
+                                  Text(
+                                    '$price',
+                                    style: SahneType.captionStrong.copyWith(
+                                      color: enabled ? t.goldTx : dim(t.tx),
+                                      fontFeatures: const [
+                                        FontFeature.tabularFigures(),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                            if (showLabel)
                               Text(
-                                '$price',
-                                style: SahneType.captionStrong.copyWith(
-                                  color: enabled ? t.goldTx : dim(t.tx),
-                                  fontFeatures: const [
-                                    FontFeature.tabularFigures(),
-                                  ],
+                                label,
+                                maxLines: 1,
+                                style: SahneType.caption.copyWith(
+                                  color: selected
+                                      ? t.goldTx
+                                      : (enabled ? t.tx2 : dim(t.tx2)),
+                                  fontSize: 11,
                                 ),
                               ),
-                            ],
                           ],
                         ),
                       ),

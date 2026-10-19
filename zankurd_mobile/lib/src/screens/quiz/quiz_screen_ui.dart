@@ -71,6 +71,20 @@ extension _QuizScreenUI on _QuizScreenState {
                     context,
                     layoutSize: layoutSize,
                     bodyHeight: constraints.maxHeight,
+                    // Yarışta (açıklamasız) kısa soru için şıklar alta
+                    // oturur. Bildirim ve tost payı 160 (joker ipucu tostu şıkları örtmesin) + üst/alt dolgu
+                    // düşülür: içerik sığıyorsa gereksiz kaydırma doğmaz.
+                    anchorHeight:
+                        (_isLearningExperience ||
+                            widget.versusBannerText != null ||
+                            widget.is1v1 ||
+                            _isCrowd ||
+                            question.hasImage)
+                        ? null
+                        : constraints.maxHeight -
+                              SahneSpace.x4 -
+                              SahneSpace.x6 -
+                              160,
                     showExplanation: showExpl,
                     // Coach-mark anahtarı yalnız ilk soruda: panel
                     // AnimatedSwitcher içinde, geçişte eski ve yeni panel
@@ -507,6 +521,7 @@ extension _QuizScreenUI on _QuizScreenState {
     BuildContext context, {
     Size? layoutSize,
     double? bodyHeight,
+    double? anchorHeight,
     bool? showExplanation,
     GlobalKey? answerAreaKey,
     GlobalKey? correctAnswerKey,
@@ -549,6 +564,7 @@ extension _QuizScreenUI on _QuizScreenState {
           context,
           layoutSize: layoutSize,
           bodyHeight: bodyHeight,
+          anchorHeight: anchorHeight,
           showExplanation: showExplanation,
           answerAreaKey: answerAreaKey,
           correctAnswerKey: correctAnswerKey,
@@ -799,7 +815,7 @@ extension _QuizScreenUI on _QuizScreenState {
   /// 148 = alt perdenin en yüksek hâli: jeton satırı (~20) + joker dizisi
   /// (52) + perdenin iç boşluğu ve alt güvenli alan (~76). Tost bu yüksekliğin
   /// üstünde açılır, jokerlerin ya da "Sonraki"nin üstünü örtmez (M-2).
-  static const double _kActionBarClearance = 148.0;
+  static const double _kActionBarClearance = 164.0;
   static const EdgeInsets _quizSnackBarMargin = EdgeInsets.fromLTRB(
     SahneSpace.page,
     0,
@@ -1114,6 +1130,7 @@ extension _QuizScreenUI on _QuizScreenState {
     BuildContext context, {
     Size? layoutSize,
     double? bodyHeight,
+    double? anchorHeight,
     bool? showExplanation,
     GlobalKey? answerAreaKey,
     GlobalKey? correctAnswerKey,
@@ -1157,6 +1174,7 @@ extension _QuizScreenUI on _QuizScreenState {
       suspense: _suspense,
       opponentSelectedAnswers: _opponentSelectedAnswers,
       isCompact: isCompact,
+      minBodyHeight: anchorHeight,
       twoColumn: compactLandscape,
       answerAreaKey: answerAreaKey,
       correctAnswerKey: correctAnswerKey,

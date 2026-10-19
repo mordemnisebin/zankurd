@@ -366,6 +366,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     this.opponentSelectedAnswers,
     this.isCompact = false,
     this.twoColumn = false,
+    this.minBodyHeight,
     this.answerAreaKey,
     this.correctAnswerKey,
     this.explanationKey,
@@ -394,6 +395,10 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   /// Telefon-yatay: soru hep Manşet 22; dört şık genişse iki sütun.
   final bool forceHeadline;
   final bool twoColumn;
+
+  /// Doluysa soru+şık bloğu en az bu boydadır; fazlalık soru ile şıklar
+  /// arasına girer (şıklar alta oturur).
+  final double? minBodyHeight;
 
   /// Sorunun Soru 24/30 ile çizilebileceği en çok satır (düelloda 3).
   final int titleLineBudget;
@@ -438,54 +443,81 @@ class _QuestionTextAndAnswers extends StatelessWidget {
         final showListen =
             canListen && onListen != null && listeningListenable != null;
 
+        final promptRow = Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Dinleme düğmesi (48) soru metninin yanında durur; boy
+            // kararı metne kalan genişlikte ölçülür.
+            Expanded(
+              child: QuizQuestionPrompt(
+                promptText,
+                lexicon: LexiconTapPolicy.forQuestion(
+                  enabled: lexiconEnabled,
+                  isKu: context.isKu,
+                  answered: answered,
+                  type: question.type.name,
+                  promptText: promptText,
+                  correctAnswer: question.correctAnswer,
+                ),
+                forceHeadline: forceHeadline,
+                titleLineBudget: titleLineBudget,
+              ),
+            ),
+            if (showListen) ...[
+              const SizedBox(width: SahneSpace.x2),
+              _ListenButton(
+                onTap: onListen!,
+                listeningListenable: listeningListenable!,
+              ),
+            ],
+          ],
+        );
+        final rest = <Widget>[
+          SizedBox(height: isCompact ? SahneSpace.x3 : SahneSpace.x4),
+          Container(key: answerAreaKey, child: _answerArea(context)),
+          _AnswerRevealFallback(
+            question: question,
+            isKu: context.isKu,
+            visible:
+                showExplanation && needsAnswerRevealFallback(question.type),
+            revealKey: showExplanation ? explanationKey : null,
+          ),
+          if (showExplanation && answered)
+            _LearningExplanationAction(
+              key: explanationActionKey,
+              question: question,
+            ),
+        ];
+        // Kısa soru: şıklar alt perdenin hemen üstüne (baş parmak bölgesi)
+        // oturur, soru üstte kalır (kurul incelemesi 2026-10-19). Min boy
+        // Column'a verilir: içerik daha uzunsa hiçbir şey olmaz, kayar.
+        final minHeight = minBodyHeight;
+        if (minHeight != null && minHeight > 0) {
+          return ConstrainedBox(
+            key: const ValueKey('quiz-answers-anchored'),
+            constraints: BoxConstraints(minHeight: minHeight),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Boş üst çocuk: spaceBetween artan boşluğu soru üstü ve
+                // soru-şık arası EŞİT böler (soru boş alanda ortalanır).
+                const SizedBox.shrink(),
+                promptRow,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: rest,
+                ),
+              ],
+            ),
+          );
+        }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Dinleme düğmesi (48) soru metninin yanında durur; boy
-                // kararı metne kalan genişlikte ölçülür.
-                Expanded(
-                  child: QuizQuestionPrompt(
-                    promptText,
-                    lexicon: LexiconTapPolicy.forQuestion(
-                      enabled: lexiconEnabled,
-                      isKu: context.isKu,
-                      answered: answered,
-                      type: question.type.name,
-                      promptText: promptText,
-                      correctAnswer: question.correctAnswer,
-                    ),
-                    forceHeadline: forceHeadline,
-                    titleLineBudget: titleLineBudget,
-                  ),
-                ),
-                if (showListen) ...[
-                  const SizedBox(width: SahneSpace.x2),
-                  _ListenButton(
-                    onTap: onListen!,
-                    listeningListenable: listeningListenable!,
-                  ),
-                ],
-              ],
-            ),
-            SizedBox(height: isCompact ? SahneSpace.x3 : SahneSpace.x4),
-            Container(key: answerAreaKey, child: _answerArea(context)),
-            _AnswerRevealFallback(
-              question: question,
-              isKu: context.isKu,
-              visible:
-                  showExplanation && needsAnswerRevealFallback(question.type),
-              revealKey: showExplanation ? explanationKey : null,
-            ),
-            if (showExplanation && answered)
-              _LearningExplanationAction(
-                key: explanationActionKey,
-                question: question,
-              ),
-          ],
+          children: [promptRow, ...rest],
         );
       },
     );

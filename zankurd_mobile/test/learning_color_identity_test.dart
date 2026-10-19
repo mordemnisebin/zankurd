@@ -98,13 +98,15 @@ void main() {
             matching: find.text(isKu ? 'Rojane' : 'Günlük'),
           ),
         );
-        expect(selectedText.style?.color, t.learnTx, reason: combo);
+        // Kurul incelemesi 2026-10-19: seçili stil tek ve markadan türer
+        // (`selTx`/`selFill`); öğrenme rolü rengi artık seçili çipi boyamaz.
+        expect(selectedText.style?.color, t.selTx, reason: combo);
         expect(
           materialColorIn(
             tester,
             find.byKey(const ValueKey('learning-tab-everyday')),
           ),
-          t.learnTint,
+          t.selFill,
           reason: combo,
         );
 
@@ -120,7 +122,7 @@ void main() {
             tester,
             find.byKey(const ValueKey('learning-tab-grammar')),
           ),
-          isNot(t.learnTint),
+          isNot(t.selFill),
           reason: combo,
         );
       });
