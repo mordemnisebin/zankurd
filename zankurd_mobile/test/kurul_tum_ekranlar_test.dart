@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
-import 'package:zankurd_mobile/src/widgets/sahne/sahne_topic_marks.dart';
 
 void main() {
   testWidgets('konu işareti verilen bilgi satırı çizimi gösterir', (t) async {

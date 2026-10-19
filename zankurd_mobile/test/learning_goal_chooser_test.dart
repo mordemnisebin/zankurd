@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/models/learning_goal.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/widgets/learning_goal_chooser.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 void main() {
   testWidgets('iki amaçtan seçilen değeri bildirir', (tester) async {
@@ -49,6 +51,39 @@ void main() {
           .isSelected
           .toString(),
       'Tristate.isTrue',
+    );
+  });
+
+  // Kurul 2. tur 2026-10-20 (Argon, iki kez): seçili amaç yeşil tonda
+  // ayırt edilemiyordu; ortak seçili biçim (turuncu ton + onay) kullanılır.
+  testWidgets('seçili amaç ortak seçili biçimde: turuncu ton ve onay simgesi', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: LearningGoalChooser(
+            isKu: false,
+            selected: LearningGoal.learnKurmanci,
+            onSelected: (_) {},
+          ),
+        ),
+      ),
+    );
+    final t = SahneTokens.of(tester.element(find.byType(LearningGoalChooser)));
+    final chosen = find.byKey(const ValueKey('learning-goal-language'));
+    final tappable = tester.widget<SahneTappable>(
+      find.descendant(of: chosen, matching: find.byType(SahneTappable)),
+    );
+    expect(tappable.color, t.selFill);
+    expect(
+      find.descendant(of: chosen, matching: find.byIcon(AppIcons.check)),
+      findsOneWidget,
+    );
+    final other = find.byKey(const ValueKey('learning-goal-culture'));
+    expect(
+      find.descendant(of: other, matching: find.byIcon(AppIcons.check)),
+      findsNothing,
     );
   });
 }

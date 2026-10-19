@@ -256,7 +256,7 @@ class _LevelHeading {
   }
 }
 
-/// İlerleme kartı (yüzey kartı): varsa alt kategorinin açıklaması, altında
+/// İlerleme satırı (kartsız): varsa alt kategorinin açıklaması, altında
 /// öğrenme tonlu ilerleme çubuğu ve "2/5 seviye". Ekran okuyucu tek bir
 /// cümle duyar: "5 seviyeden 2 tanesi tamamlandı".
 class _LevelProgressCard extends StatelessWidget {
@@ -277,7 +277,12 @@ class _LevelProgressCard extends StatelessWidget {
     final t = SahneTokens.of(context);
     final ratio = total <= 0 ? 0.0 : (completed / total).clamp(0.0, 1.0);
     final text = description?.trim();
-    return SahneSurfaceCard(
+    // Kurul 2. tur 2026-10-20: ayrı kart kalktı; ilerleme başlığın hemen
+    // altında kartsız bir satırdır (seviye kartlarıyla aynı düzeyde
+    // ikinci bir kart ağırlığı taşımaz). 0/N iken dolu görünmesin diye
+    // çubuk hiç çizilmez (yalnız sayaç).
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -285,17 +290,35 @@ class _LevelProgressCard extends StatelessWidget {
             Text(text, style: SahneType.body.copyWith(color: t.tx2)),
             const SizedBox(height: SahneSpace.x3),
           ],
-          SahneProgressBar(
-            value: ratio,
-            trailing: Tr.forKu(K.pPSeviye, isKu, {
-              'p0': '$completed',
-              'p1': '$total',
-            }),
-            semanticLabel: Tr.forKu(K.progressLevelsCompleted, isKu, {
-              'completed': '$completed',
-              'total': '$total',
-            }),
-          ),
+          if (completed == 0)
+            // Hiç seviye bitmemişken çubuk yok: lavanta iz dolu gibi
+            // okunuyordu (kurul 2. tur, ChatGPT). Yalnız sayaç.
+            Semantics(
+              label: Tr.forKu(K.progressLevelsCompleted, isKu, {
+                'completed': '$completed',
+                'total': '$total',
+              }),
+              excludeSemantics: true,
+              child: Text(
+                Tr.forKu(K.pPSeviye, isKu, {
+                  'p0': '$completed',
+                  'p1': '$total',
+                }),
+                style: SahneType.captionStrong.copyWith(color: t.tx2),
+              ),
+            )
+          else
+            SahneProgressBar(
+              value: ratio,
+              trailing: Tr.forKu(K.pPSeviye, isKu, {
+                'p0': '$completed',
+                'p1': '$total',
+              }),
+              semanticLabel: Tr.forKu(K.progressLevelsCompleted, isKu, {
+                'completed': '$completed',
+                'total': '$total',
+              }),
+            ),
         ],
       ),
     );
@@ -467,15 +490,19 @@ class _LevelNode extends StatelessWidget {
           SahneSpace.x4,
           SahneSpace.x3,
         ),
-        child: _LevelRowContent(
-          level: level,
-          name: name,
-          badge: locked
-              ? _LevelBadge.locked
-              : played
-              ? _LevelBadge.played
-              : _LevelBadge.open,
-          trailing: locked ? null : AppIcons.chevronRight,
+        // Kilitli seviye ~%60 vurguyla söner (kurul 2. tur 2026-10-20).
+        child: Opacity(
+          opacity: locked ? 0.6 : 1,
+          child: _LevelRowContent(
+            level: level,
+            name: name,
+            badge: locked
+                ? _LevelBadge.locked
+                : played
+                ? _LevelBadge.played
+                : _LevelBadge.open,
+            trailing: locked ? null : AppIcons.chevronRight,
+          ),
         ),
       ),
     );

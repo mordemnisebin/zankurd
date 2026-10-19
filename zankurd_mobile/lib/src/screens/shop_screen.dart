@@ -973,19 +973,9 @@ class _ShopScreenState extends State<ShopScreen> {
       children: [
         _buildWheelShortcut(context),
         const SizedBox(height: SahneSpace.x6),
-        // VIP de ızgaradaki kartla AYNI çerçeve; yalnız tam genişlik. Boyu
-        // aynı ölçümle hesaplanır, hizası ızgaraya oturur.
-        LayoutBuilder(
-          builder: (context, constraints) => SizedBox(
-            height: _gridCellExtent(
-              context,
-              [heroItem],
-              ku,
-              constraints.maxWidth,
-            ),
-            child: _buildShopCard(heroItem, ku, hero: true),
-          ),
-        ),
+        // Kurul 2. tur 2026-10-20: VIP kartı yatay ve kompakt (ikon solda,
+        // ad+açıklama ortada, fiyat sağda); ızgara kartlarının yarısı boy.
+        _buildShopCard(heroItem, ku, hero: true),
         if (restItems.isNotEmpty) ...[
           const SizedBox(height: SahneSpace.cardGap),
           // Sütun sayısı genişlikten; hücre yüksekliği içerikten. Sabit bir
@@ -1150,10 +1140,57 @@ class _ShopScreenState extends State<ShopScreen> {
     final desc = ku ? item.descKu : item.descTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
 
+    if (hero) {
+      final largeText = MediaQuery.textScalerOf(context).scale(16) >= 24;
+      final texts = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: SahneType.bodyStrong.copyWith(
+              color: isPurchased ? t.tx2 : t.tx,
+            ),
+          ),
+          const SizedBox(height: SahneSpace.x1),
+          Text(desc, style: SahneType.caption.copyWith(color: t.tx2)),
+        ],
+      );
+      final action = isPurchased
+          ? _buildOwnedChip(expand: largeText)
+          : _buildBuyButton(item, ku, expand: largeText);
+      return SahneSurfaceCard(
+        key: const ValueKey('shop-hero-surface'),
+        padding: const EdgeInsets.all(SahneSpace.x3),
+        onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
+        child: largeText
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: _preview(item, size: 56, dim: isPurchased),
+                  ),
+                  const SizedBox(height: SahneSpace.x3),
+                  texts,
+                  const SizedBox(height: SahneSpace.x3),
+                  action,
+                ],
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _preview(item, size: 56, dim: isPurchased),
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(child: texts),
+                  const SizedBox(width: SahneSpace.x3),
+                  action,
+                ],
+              ),
+      );
+    }
+
     return SahneSurfaceCard(
-      key: ValueKey(
-        hero ? 'shop-hero-surface' : 'shop-item-surface-${item.id}',
-      ),
+      key: ValueKey('shop-item-surface-${item.id}'),
       padding: const EdgeInsets.all(SahneSpace.x3),
       onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
       child: Column(
@@ -1179,20 +1216,18 @@ class _ShopScreenState extends State<ShopScreen> {
           ),
           const Spacer(),
           const SizedBox(height: SahneSpace.x3),
-          isPurchased
-              ? _buildOwnedChip()
-              : _buildBuyButton(item, ku, primary: hero),
+          isPurchased ? _buildOwnedChip() : _buildBuyButton(item, ku),
         ],
       ),
     );
   }
 
   // ── "Sende": pasif ikincil düğme + ✓ (satın alınmış, tekrar alınamaz) ──
-  Widget _buildOwnedChip() {
+  Widget _buildOwnedChip({bool expand = true}) {
     return SahneButton.secondary(
       label: context.t(K.ownedLabel),
       icon: AppIcons.check,
-      expand: true,
+      expand: expand,
       onPressed: null,
     );
   }
@@ -1202,7 +1237,7 @@ class _ShopScreenState extends State<ShopScreen> {
   // Öne çıkan ürünün düğmesi ekranın TEK birincil eylemidir (Agir); ızgara
   // kartlarınınki ikincil (Kulis). Fiyatın solunda Şahnê jeton glifi
   // durur — Lucide ikonu değil (ödül glifleri `SahneGlyph`).
-  Widget _buildBuyButton(ShopItem item, bool ku, {bool primary = false}) {
+  Widget _buildBuyButton(ShopItem item, bool ku, {bool expand = true}) {
     // Görünen etiket yalnız sayı; birimi soldaki jeton glifi söyler.
     // 2026-09-29 doğallık: "720j" kısaltması kalktı (K10) — glifin
     // yanında "j" ikinci kez aynı şeyi söylüyordu ve Kurmancîde "720z"
@@ -1226,14 +1261,29 @@ class _ShopScreenState extends State<ShopScreen> {
           ? context.t(K.coinsShort, {'coins': '$missing'})
           : null;
       return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: expand
+            ? CrossAxisAlignment.stretch
+            : CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           SahneButton.secondary(
             key: ValueKey('shop-short-${item.id}'),
             label: label,
-            leading: const SahneGlyph(SahneGlyphKind.coin, size: 20),
-            expand: true,
+            // Kilit + jeton: pasif düğme "alınamaz"ı yalnız renkle değil
+            // simgeyle de söyler (kurul 2. tur).
+            leading: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  AppIcons.lock,
+                  size: 16,
+                  color: SahneTokens.of(context).tx2,
+                ),
+                const SizedBox(width: SahneSpace.x1),
+                const SahneGlyph(SahneGlyphKind.coin, size: 20),
+              ],
+            ),
+            expand: expand,
             semanticLabel:
                 '$semanticLabel. ${context.t(K.coinsShort, {'coins': '$missing'})}',
             onPressed: null,
@@ -1252,23 +1302,45 @@ class _ShopScreenState extends State<ShopScreen> {
       );
     }
     final onPressed = _loading ? null : () => _confirmPurchase(item);
-    const glyph = SahneGlyph(SahneGlyphKind.coin, size: 20);
-    if (primary) {
-      return SahneButton.primary(
-        label: label,
-        leading: glyph,
-        arrow: false,
-        expand: true,
-        semanticLabel: semanticLabel,
-        onPressed: onPressed,
-      );
-    }
-    return SahneButton.secondary(
-      label: label,
-      leading: glyph,
-      expand: true,
-      semanticLabel: semanticLabel,
-      onPressed: onPressed,
+    // Alınabilir fiyat: turuncu çerçeveli, açık zeminli düğme. Pasif düğme
+    // gri DOLGU olduğundan ikisi bir bakışta ayrılır; eskiden alınabilir
+    // olan da ikincil gri dolguydu ve pasif görünüyordu (kurul 2. tur).
+    final t = SahneTokens.of(context);
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: onPressed != null,
+      label: semanticLabel,
+      onTap: onPressed,
+      excludeSemantics: true,
+      child: SizedBox(
+        width: expand ? double.infinity : null,
+        child: OutlinedButton(
+          key: ValueKey('shop-buy-${item.id}'),
+          onPressed: onPressed,
+          style: OutlinedButton.styleFrom(
+            elevation: 0,
+            backgroundColor: t.s1,
+            foregroundColor: t.actTx,
+            minimumSize: const Size(52, 52),
+            textStyle: SahneType.button,
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.x4,
+              vertical: SahneSpace.x3,
+            ),
+            shape: SahneShape.withSide(SahneShape.m, t.actTx, width: 1.5),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SahneGlyph(SahneGlyphKind.coin, size: 20),
+              const SizedBox(width: SahneSpace.x2),
+              Flexible(child: Text(label)),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

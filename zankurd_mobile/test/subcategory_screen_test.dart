@@ -10,7 +10,6 @@ import 'package:zankurd_mobile/src/config/subcategory_config.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
-import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/subcategory_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -204,27 +203,11 @@ void main() {
     expect(find.text('2/5'), findsOneWidget);
   });
 
-  // 2026-09-29 doğallık (K1): Ziman'ın çizimi kalktı (çizimsiz ton + ikon).
-  // 2026-09-30 kimlik: başlıkta artık hiçbir kategori resim çizmez, hepsi
-  // kilim bandı kurar; Ziman'da başlıkta hiç resim olmamalı.
-  testWidgets('çizimi kalkan kategori başlıkta resim çizmez', (tester) async {
-    await tester.pumpWidget(
-      wrap(
-        SubcategoryScreen(
-          repository: MockZanKurdRepository(),
-          category: 'Ziman',
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-    expect(find.byType(Image), findsNothing);
-  });
-
-  // 2026-09-30 kimlik: başlık artık fotoğraf benzeri çizimle (Çand'ın hero
-  // görseli) değil, K1 kilim deseniyle kurulur. Eski bekçi "hero görseli
-  // semantics ağacına girmez" diyordu; görsel kalktı, kural kilim bandına
-  // taşındı: dekoratif bant ekran okuyucuya adsız durak olmamalı.
-  testWidgets('kilim bandı dekoratiftir: resim yok, semantics ağacına girmez', (
+  // Kurul 2. tur 2026-10-20: başlık koyu kilim bandı değil, standart sayfa
+  // başlığıdır (beyaz kare geri düğmesi + ad); kategori rengi yalnız ikon
+  // karosunda ve ince çizgide. Eski bant bekçileri (desen, yuva, bant
+  // yüksekliği) bu yüzden kalktı.
+  testWidgets('başlık standart: resim yok, ince kategori çizgisi var', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -236,87 +219,27 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-
     expect(find.byType(Image), findsNothing);
-    final band = find.byKey(const ValueKey('category-kilim-band'));
-    expect(band, findsOneWidget);
-    expect(
-      find.ancestor(of: band, matching: find.byType(ExcludeSemantics)),
-      findsOneWidget,
-    );
-    final painter =
-        tester.widget<CustomPaint>(band).painter! as SahneKilimBandPainter;
-    expect(painter.mark, SahneTopicMark.cand);
-    expect(painter.tone, SahneCategoryTone.cand);
+    final line = find.byKey(CategoryBandScaffold.accentKey);
+    expect(line, findsOneWidget);
+    expect(tester.getSize(line).height, lessThanOrEqualTo(4));
+    // Koyu bant yok: çubuk saydam/zemin renginde, geri düğmesi Perde plaka.
+    expect(find.byType(ZkBackButton), findsOneWidget);
+    expect(find.byType(SahneKilimBandPainter), findsNothing);
   });
 
-  // 2026-09-30 kimlik: yedi konunun HEPSİ (eskiden çizimi olanlar ve
-  // olmayanlar iki ayrı dilde konuşuyordu) kendi motifini taşır; motifsiz
-  // konu düz tonda kalır ve çökmez. 320 px, %200 yazıda taşma yok.
-  for (final category in [...CategoryVisuals.markedCategories, 'Bilinmeyen']) {
-    testWidgets('$category başlığı 320 px ve %200 yazıda taşmaz', (
-      tester,
-    ) async {
-      // 2026-09-30 bant: `setSurfaceSize` MediaQuery'yi 800 px bırakıyordu;
-      // gerçek 320 px görünümü kurulur (bkz. [_phone]).
-      _phone(tester, 320);
-      await tester.pumpWidget(
-        MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (_) => LanguageProvider()..setLang('ku'),
-            ),
-          ],
-          child: MaterialApp(
-            theme: AppTheme.light(),
-            builder: (context, child) => MediaQuery(
-              data: MediaQuery.of(
-                context,
-              ).copyWith(textScaler: const TextScaler.linear(2)),
-              child: child!,
-            ),
-            home: SubcategoryScreen(
-              repository: _FixedPlayableRepository(
-                _keywordMatchedQuestions(
-                  category: category,
-                  keyword: 'x',
-                  count: 3,
-                ),
-              ),
-              category: category,
-            ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-      expect(tester.takeException(), isNull, reason: category);
-      final band = find.byKey(const ValueKey('category-kilim-band'));
-      expect(
-        band,
-        CategoryVisuals.mark(category) == null ? findsNothing : findsOneWidget,
-        reason: category,
-      );
-    });
-  }
-
-  // 2026-09-30 bant: bant eskiden çubuğun altına 88 px boş bant ekliyordu,
-  // desen köşede küçük bir blok kalıyordu. Kusur sessizdi: yükseklik ve desen
-  // konumu hiçbir testte ölçülmüyordu, taşma da yoktu, yalnız dengesiz
-  // görünüyordu. Bekçi: desen bandın üst ve alt kenarına değer (tam
-  // yükseklik), hücre tam sayı pikseldir, desen başlığın ve alt satırın
-  // sınır kutusuyla kesişmez, alt satırın altında 16-25 px boşluk kalır;
-  // 320 px ve %200 yazıda da (bant uzar, hücre yeniden hesaplanır).
-  for (final scale in [1.0, 2.0, 2.35]) {
+  // Kurmancî "Zanist û Raman" ve büyük yazı: başlık ve alt satır kırpılmaz.
+  for (final screen in ['alt kategori', 'seviye']) {
     for (final width in [320.0, 390.0]) {
-      for (final category in CategoryVisuals.markedCategories) {
-        testWidgets('$category bandı: desen tam yükseklikte, metinle çakışmaz '
-            '(${width.round()} px, x$scale)', (tester) async {
+      for (final scale in [1.0, 2.0]) {
+        testWidgets('Zanist û Raman başlığı kırpılmaz ($screen, '
+            '${width.round()} px, x$scale)', (tester) async {
           _phone(tester, width);
           await tester.pumpWidget(
             MultiProvider(
               providers: [
                 ChangeNotifierProvider(
-                  create: (_) => LanguageProvider()..setLang('tr'),
+                  create: (_) => LanguageProvider()..setLang('ku'),
                 ),
               ],
               child: MaterialApp(
@@ -327,125 +250,37 @@ void main() {
                   ).copyWith(textScaler: TextScaler.linear(scale)),
                   child: child!,
                 ),
-                home: SubcategoryScreen(
-                  repository: MockZanKurdRepository(),
-                  category: category,
-                ),
+                home: screen == 'alt kategori'
+                    ? SubcategoryScreen(
+                        repository: MockZanKurdRepository(),
+                        category: 'Paradigma',
+                      )
+                    : LevelScreen(
+                        repository: MockZanKurdRepository(),
+                        category: 'Paradigma',
+                      ),
               ),
             ),
           );
           await tester.pumpAndSettle();
-          expect(tester.takeException(), isNull, reason: category);
-
-          final bandFinder = find.byKey(const ValueKey('category-kilim-band'));
-          final band = tester.getRect(bandFinder);
-          final painter =
-              tester.widget<CustomPaint>(bandFinder).painter!
-                  as SahneKilimBandPainter;
-          final cell = SahneKilimBandPainter.cellFor(
-            band.height,
-            painter.reservedWidth,
-          );
-          expect(cell, cell.roundToDouble(), reason: 'hücre tam sayı');
-          expect(band.height % 9, 0, reason: 'yükseklik 9 katı');
-          expect(cell * 9, lessThanOrEqualTo(band.height));
-          expect(
-            cell * 9,
-            lessThanOrEqualTo(painter.reservedWidth + 0.001),
-            reason: 'desen ayrılan yere sığar',
-          );
-
-          final pattern = SahneKilimBandPainter.patternRect(
-            band.size,
-            painter.reservedWidth,
-          ).shift(band.topLeft);
-          // 2026-10-01 maket: desen kırpılmaz. Yüksekliğe sığan hücreyle
-          // bandı doldurur; yazı büyüyüp ayrılan genişlik yetmezse küçülür
-          // ve ortalanır, ama bandın hiçbir kenarından taşmaz.
-          final visible = pattern.intersect(band);
-          expect(visible, pattern, reason: 'desen bandın içinde kırpılmadan');
-          expect(pattern.right, band.right, reason: 'sağ kenara yaslı');
-          if (cell * 9 == band.height) {
-            expect(pattern.top, band.top, reason: 'desen bandın üstüne değer');
-            expect(pattern.bottom, band.bottom, reason: 'altına değer');
+          expect(tester.takeException(), isNull);
+          for (final text in tester.widgetList<Text>(
+            find.descendant(
+              of: find.byType(AppBar),
+              matching: find.byType(Text),
+            ),
+          )) {
+            final paragraph = tester.renderObject<RenderParagraph>(
+              find.byWidget(text),
+            );
+            expect(
+              paragraph.didExceedMaxLines,
+              isFalse,
+              reason: '"${text.data}" kesiliyor',
+            );
           }
-
-          final title = tester.getRect(
-            find.text(CategoryNames.localized(category, false)),
-          );
-          final subtitle = tester.getRect(
-            find.text(Tr.of(K.birAltAlanSecerek, AppLanguage.tr)),
-          );
-          expect(
-            visible.overlaps(title),
-            isFalse,
-            reason: 'desen başlıkla çakışıyor: $visible / $title',
-          );
-          expect(
-            visible.overlaps(subtitle),
-            isFalse,
-            reason: 'desen alt satırla çakışıyor: $visible / $subtitle',
-          );
-          // Bant içeriğe oturur: alt satırın altında boş blok kalmaz.
-          final gap = band.bottom - subtitle.bottom;
-          expect(gap, greaterThanOrEqualTo(16), reason: 'alt boşluk $gap');
-          // 9'a yuvarlama en çok 9 px ekler; durum payı artık desenli kısmın
-          // dışında (2026-09-30 simülatör) olduğundan üst sınır 16 + 9.
-          expect(gap, lessThanOrEqualTo(25), reason: 'alt boşluk $gap');
         });
       }
-    }
-  }
-
-  // 2026-09-30 simülatör: en büyük yazıda (iPhone 17e, %235) alt satır iki
-  // satırda "…" ile kesiliyordu ("Barekî hilbijêre û dest bi lîsti…"); kusur
-  // sessizdi çünkü çubuk yüksekliği de iki satırla ölçülüyor, taşma ya da
-  // çakışma yoktu, yalnız cümle yarım kalıyordu. Bekçi: %235'te iki dilde,
-  // iki genişlikte alt satır ve başlık kesilmez, çubuk ve bant taşmaz.
-  for (final lang in ['tr', 'ku']) {
-    for (final width in [320.0, 390.0]) {
-      testWidgets('alt satır ve başlık x2.35 yazıda kesilmez '
-          '($lang, ${width.round()} px)', (tester) async {
-        _phone(tester, width);
-        await tester.pumpWidget(
-          MultiProvider(
-            providers: [
-              ChangeNotifierProvider(
-                create: (_) => LanguageProvider()..setLang(lang),
-              ),
-            ],
-            child: MaterialApp(
-              theme: AppTheme.light(),
-              builder: (context, child) => MediaQuery(
-                data: MediaQuery.of(
-                  context,
-                ).copyWith(textScaler: const TextScaler.linear(2.35)),
-                child: child!,
-              ),
-              home: SubcategoryScreen(
-                repository: MockZanKurdRepository(),
-                category: 'Ziman',
-              ),
-            ),
-          ),
-        );
-        await tester.pumpAndSettle();
-        expect(tester.takeException(), isNull);
-        final ku = lang == 'ku';
-        for (final text in [
-          Tr.forKu(K.birAltAlanSecerek, ku),
-          CategoryNames.localized('Ziman', ku),
-        ]) {
-          final paragraph = tester.renderObject<RenderParagraph>(
-            find.text(text).first,
-          );
-          expect(
-            paragraph.didExceedMaxLines,
-            isFalse,
-            reason: '"$text" kesiliyor',
-          );
-        }
-      });
     }
   }
 
@@ -632,10 +467,10 @@ void main() {
     });
   }
 
-  // Konu akışının ortak başlığı: alt kategori ve seviye ekranı AYNI bantlı
-  // bileşeni ve aynı kategori tonunu taşır; üçüncü bir başlık yapısı yok.
+  // Konu akışının ortak başlığı: alt kategori ve seviye ekranı AYNI
+  // bileşeni ve aynı kategori çizgisini taşır; üçüncü bir başlık yok.
   for (final category in ['Ziman', 'Çand', 'Paradigma']) {
-    testWidgets('$category: alt kategori ve seviye ekranı aynı bantlı başlığı '
+    testWidgets('$category: alt kategori ve seviye ekranı aynı başlığı '
         'kullanır', (tester) async {
       _phone(tester, 390);
       for (final screen in <Widget>[
@@ -648,78 +483,9 @@ void main() {
         await tester.pumpWidget(wrap(screen));
         await tester.pumpAndSettle();
         expect(find.byType(CategoryBandScaffold), findsOneWidget);
-        final band = tester.widget<CategoryBand>(find.byType(CategoryBand));
-        expect(band.category, category);
-        // Geri düğmesi tek tür: Şahnê geri plakası.
+        expect(find.byKey(CategoryBandScaffold.accentKey), findsOneWidget);
         expect(find.byType(ZkBackButton), findsOneWidget);
       }
     });
-  }
-
-  // Kurmancî "Zanist û Raman": ad iki satıra sarar, alt satır üç satıra;
-  // hiçbiri kırpılmaz ve bant, çubuğun ölçülen yüksekliğinden kısa kalmaz.
-  // Eskiden başlık odası gerçek alandan geniş ölçülüyor, alt satır ölçülenden
-  // bir satır fazla sarıp bandın altında kırpılıyordu (2026-09-30).
-  for (final screen in ['alt kategori', 'seviye']) {
-    for (final width in [320.0, 360.0, 390.0]) {
-      for (final scale in [1.0, 1.5, 2.0]) {
-        testWidgets('Zanist û Raman başlığı kırpılmaz ($screen, '
-            '${width.round()} px, x$scale)', (tester) async {
-          _phone(tester, width);
-          await tester.pumpWidget(
-            MultiProvider(
-              providers: [
-                ChangeNotifierProvider(
-                  create: (_) => LanguageProvider()..setLang('ku'),
-                ),
-              ],
-              child: MaterialApp(
-                theme: AppTheme.light(),
-                builder: (context, child) => MediaQuery(
-                  data: MediaQuery.of(
-                    context,
-                  ).copyWith(textScaler: TextScaler.linear(scale)),
-                  child: child!,
-                ),
-                home: screen == 'alt kategori'
-                    ? SubcategoryScreen(
-                        repository: MockZanKurdRepository(),
-                        category: 'Paradigma',
-                      )
-                    : LevelScreen(
-                        repository: MockZanKurdRepository(),
-                        category: 'Paradigma',
-                      ),
-              ),
-            ),
-          );
-          await tester.pumpAndSettle();
-          expect(tester.takeException(), isNull);
-          final bar = tester.getRect(find.byType(AppBar));
-          final band = tester.getRect(find.byType(CategoryBand));
-          for (final text in tester.widgetList<Text>(
-            find.descendant(
-              of: find.byType(AppBar),
-              matching: find.byType(Text),
-            ),
-          )) {
-            final finder = find.byWidget(text);
-            final paragraph = tester.renderObject<RenderParagraph>(finder);
-            expect(
-              paragraph.didExceedMaxLines,
-              isFalse,
-              reason: '"${text.data}" kesiliyor',
-            );
-            final rect = tester.getRect(finder);
-            expect(
-              rect.bottom,
-              lessThanOrEqualTo(band.bottom),
-              reason: '"${text.data}" bandın dışına taşıyor',
-            );
-          }
-          expect(bar.bottom, lessThanOrEqualTo(band.bottom));
-        });
-      }
-    }
   }
 }

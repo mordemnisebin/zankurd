@@ -93,11 +93,11 @@ void main() {
           matching: find.text(title),
         );
         expect(inBar, findsOneWidget, reason: combo);
-        // 2026-09-30 izgara: başlık bantlıdır (kategori tonu, her temada
-        // gece zemini); ad gece metniyle yazılır, temaya göre değişmez.
+        // Kurul 2. tur 2026-10-20: başlık standart sayfa başlığıdır; ad
+        // temanın birincil metin rengiyle yazılır (koyu bant kalktı).
         expect(
           DefaultTextStyle.of(tester.element(inBar)).style.color,
-          SahneTokens.night.tx,
+          t.tx,
           reason: combo,
         );
         final gradients = find.byWidgetPredicate((widget) {

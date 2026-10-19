@@ -113,7 +113,10 @@ void main() {
           const ValueKey('shop-item-surface-spin_wheel_extra'),
         );
         expect(
-          find.descendant(of: affordable, matching: find.byType(FilledButton)),
+          find.descendant(
+            of: affordable,
+            matching: find.byType(OutlinedButton),
+          ),
           findsOneWidget,
         );
         expect(

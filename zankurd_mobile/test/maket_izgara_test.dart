@@ -309,4 +309,33 @@ void main() {
       }
     });
   });
+
+  // Kurul 2. tur 2026-10-20: kilitli seviye açık olanla aynı koyulukta
+  // okunuyordu; ~%60 vurguyla söner.
+  testWidgets('kilitli seviye kartı sönük, açık olan değil', (tester) async {
+    await tester.pumpWidget(
+      _shell(
+        LevelScreen(
+          repository: MockZanKurdRepository(),
+          category: 'Ziman',
+          subCategory: 'reziman',
+        ),
+        scale: 1.0,
+        ku: false,
+        dark: false,
+      ),
+    );
+    await tester.pumpAndSettle();
+    double opacityOf(int n) => tester
+        .widget<Opacity>(
+          find
+              .descendant(
+                of: find.byKey(ValueKey('level-card-$n')),
+                matching: find.byType(Opacity),
+              )
+              .first,
+        )
+        .opacity;
+    expect(opacityOf(2), closeTo(0.6, 0.001));
+  });
 }

@@ -1071,10 +1071,11 @@ class _RoomScreenState extends State<RoomScreen> {
                                   room: room,
                                   onCopy: () => _copyRoomCode(context, ku),
                                   onShare: _shareRoomInvite,
-                                  inviteFirst:
-                                      isHost &&
-                                      !crowd &&
-                                      room.players.length < 2,
+                                  // Kurul 2. tur 2026-10-20: davet düğmesi her
+                                  // lobi durumunda aynı sakin biçimde; yalnızken
+                                  // turuncu dolu düğmeye dönüşüp kartı
+                                  // öteki durumlardan farklı yapıyordu.
+                                  inviteFirst: false,
                                   onInviteFriends: _canInviteFriends
                                       ? _inviteFriends
                                       : null,
