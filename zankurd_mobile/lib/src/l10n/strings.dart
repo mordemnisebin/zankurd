@@ -1758,7 +1758,7 @@ class Tr {
     K.locked: {'ku': 'Girtî', 'tr': 'Kilitli'},
     // Kurul 3. tur 2026-10-20: kilitli dersleri tek satırda toplayan
     // düğme. Kurmancî metin jüri incelemesi bekliyor (NEEDS_JURY).
-    K.lessonsMoreCount: {'ku': '+{n} ders din', 'tr': '+{n} ders daha'},
+    K.lessonsMoreCount: {'ku': '+{n} dersên din', 'tr': '+{n} ders daha'},
     K.titleWord: {'ku': 'Nav û nîşan', 'tr': 'Unvan'},
     K.hideAction: {'ku': 'Veşêre', 'tr': 'Gizle'},
     K.noTitlesYet: {
