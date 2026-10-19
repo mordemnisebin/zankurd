@@ -71,20 +71,17 @@ extension _QuizScreenUI on _QuizScreenState {
                     context,
                     layoutSize: layoutSize,
                     bodyHeight: constraints.maxHeight,
-                    // Yarışta (açıklamasız) kısa soru için şıklar alta
-                    // oturur. Bildirim ve tost payı 160 (joker ipucu tostu şıkları örtmesin) + üst/alt dolgu
-                    // düşülür: içerik sığıyorsa gereksiz kaydırma doğmaz.
-                    anchorHeight:
-                        (_isLearningExperience ||
-                            widget.versusBannerText != null ||
-                            widget.is1v1 ||
-                            _isCrowd ||
-                            question.hasImage)
-                        ? null
-                        : constraints.maxHeight -
-                              SahneSpace.x4 -
-                              SahneSpace.x6 -
-                              160,
+                    // TÜM modlarda (ders, yarışma, düello, oda, görselli)
+                    // kısa soru için şıklar alta (baş parmak bölgesi) oturur,
+                    // soru üstteki boş alanda ortalanır. Bildirim ve tost payı
+                    // 160 + üst/alt dolgu düşülür; düello/oda/karşılaşma
+                    // üstlüğü ve görsel de kayan gövdede yer tutar, onların
+                    // payı ayrıca düşülür: içerik sığıyorsa gereksiz kaydırma
+                    // doğmaz. Uzun soru/şık zaten kayar.
+                    anchorHeight: _portraitAnchorHeight(
+                      constraints.maxHeight,
+                      layoutSize,
+                    ),
                     showExplanation: showExpl,
                     // Coach-mark anahtarı yalnız ilk soruda: panel
                     // AnimatedSwitcher içinde, geçişte eski ve yeni panel
@@ -107,6 +104,30 @@ extension _QuizScreenUI on _QuizScreenState {
         );
       },
     );
+  }
+
+  /// Dikey akışta soru+şık bloğunun en az boyu (şıkları alta oturtur).
+  ///
+  /// Kusur (kurul, 2026-10-20): yalnız yarışma sorusu şıkları alta
+  /// oturtuyordu; ders, seviye belirleme, sırayla düello ve ders yanlış
+  /// cevabı şıkları ekranın tepesine yığıp altı bomboş bırakıyordu — aynı
+  /// uygulamada iki ayrı soru ekranı gibi. Tek kural artık hepsinde.
+  double? _portraitAnchorHeight(double bodyHeight, Size layoutSize) {
+    var reserve = SahneSpace.x4 + SahneSpace.x6 + 160;
+    // Karşılaşma bandı / düello ve oda başlığı gövdenin içinde yer tutar.
+    if (widget.versusBannerText != null) reserve += 56;
+    if (widget.is1v1 || _isCrowd) reserve += 120;
+    if (question.hasImage) {
+      final compact = layoutSize.height < 700;
+      reserve +=
+          questionImagePortraitHeight(
+            layoutSize,
+            isCompact: compact || bodyHeight < 720,
+          ) +
+          SahneSpace.x3;
+    }
+    final height = bodyHeight - reserve;
+    return height > 0 ? height : null;
   }
 
   // ─── Compact landscape layout ──────────────────────────────────────────
