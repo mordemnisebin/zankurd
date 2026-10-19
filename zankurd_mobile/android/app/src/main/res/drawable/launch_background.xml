@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Açılış ekranı: uygulamanın krem zemini + ortada logo. -->
+<!-- Açılış ekranı: uygulamanın Şahnê zemini + ortada logo. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/zk_splash_bg" />
 
