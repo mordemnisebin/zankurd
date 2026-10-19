@@ -44,9 +44,12 @@ void main() {
       // Sohbette bildir/engelle yalnız keşfedilemez bir uzun basmayla
       // erişilebiliyordu ve bu ayrıca kusur sayılmıştı. Liderlikte aynı
       // hata tekrarlanmamalı.
-      final src = File(
-        'lib/src/screens/leaderboard_screen.dart',
-      ).readAsStringSync();
+      // Tasarım kurulu tüm ekranlar 2026-10-20: bildir bayrağı satırdan
+      // menüye taşındı (⋯ düğmesi → `leaderboard-report-<id>` öğesi); menü
+      // öğesi podyum dosyasında yaşar, ⋯ düğmesi ekran dosyasında.
+      final src =
+          File('lib/src/screens/leaderboard_screen.dart').readAsStringSync() +
+          File('lib/src/widgets/leaderboard_podium.dart').readAsStringSync();
       expect(
         src,
         contains('leaderboard-report-'),

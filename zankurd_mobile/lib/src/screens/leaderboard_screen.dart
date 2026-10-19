@@ -1146,7 +1146,19 @@ class _RankRow extends StatelessWidget {
       key: ValueKey('leaderboard-rank-row-${entry.rank}'),
       container: true,
       label: label,
-      child: _buildRow(context),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        // Uzun basma YALNIZ kısayol; görünür yol satırdaki ⋯ düğmesi.
+        onLongPress: onReport == null
+            ? null
+            : () => showLeaderboardEntryMenu(
+                context,
+                entry: entry,
+                isKu: isKu,
+                onReport: onReport!,
+              ),
+        child: _buildRow(context),
+      ),
     );
   }
 
@@ -1251,11 +1263,11 @@ class _RankRow extends StatelessWidget {
                 child: _score(),
               ),
             ),
-            // Bildir düğmesi GÖRÜNÜRDÜR. Sohbetteki bildir/engelle yalnız
-            // keşfedilemez bir uzun basmayla erişilebiliyordu ve denetimde
-            // bu ayrıca kusur sayılmıştı. Kendi satırında düğme yok ama
-            // LİSTE İÇİNDE yeri durur: aksi hâlde puan sağa kayıyor ve
-            // listenin sağ kenarı en çok bakılan satırda kırılıyordu.
+            // "Daha fazla" düğmesi görünür kalır (Apple 1.2: bildirme yolu
+            // yalnız uzun basma değil); bayrak simgesi ise her satırda
+            // gürültüydü (kurul 2026-10-20). Bildir menüde; satıra uzun
+            // basmak da aynı menüyü açar. Kendi satırında düğme yok ama
+            // LİSTE İÇİNDE yeri durur: aksi hâlde puan sağa kayıyor.
             if (onReport == null)
               if (grouped)
                 const SizedBox(width: 48)
@@ -1266,9 +1278,14 @@ class _RankRow extends StatelessWidget {
                 button: true,
                 label: Tr.forKu(K.reportProfileTitle, isKu),
                 child: IconButton(
-                  key: ValueKey('leaderboard-report-${entry.playerId}'),
-                  onPressed: onReport,
-                  icon: const Icon(AppIcons.flag, size: 16),
+                  key: ValueKey('leaderboard-more-${entry.playerId}'),
+                  onPressed: () => showLeaderboardEntryMenu(
+                    context,
+                    entry: entry,
+                    isKu: isKu,
+                    onReport: onReport!,
+                  ),
+                  icon: const Icon(AppIcons.ellipsisVertical, size: 18),
                   color: t.tx3,
                   // Android dokunma hedefi: 48 dp altına düşmez.
                   constraints: const BoxConstraints(

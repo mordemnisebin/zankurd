@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
@@ -162,17 +163,38 @@ void main() {
     }
   });
 
-  testWidgets('podyumdaki oyuncu da bildirilebilir (görünür düğme)', (
+  // Tasarım kurulu tüm ekranlar 2026-10-20: podyumda bayrak yok (gürültü);
+  // sütuna dokununca menü açılır ve bildir yolu orada durur (Apple 1.2).
+  testWidgets('podyumda bayrak yok; sütuna dokununca bildir menüsü açılır', (
     tester,
   ) async {
     await _pump(tester, _Repo(count: 4));
+    expect(find.byIcon(AppIcons.flag), findsNothing);
     for (final id in ['p0', 'p1', 'p2']) {
+      expect(find.byKey(ValueKey('leaderboard-report-$id')), findsNothing);
+    }
+    for (final (id, rank) in [('p0', 1), ('p1', 2), ('p2', 3)]) {
+      await tester.tap(find.byKey(ValueKey('leaderboard-rank-row-$rank')));
+      await tester.pumpAndSettle();
       expect(
         find.byKey(ValueKey('leaderboard-report-$id')),
         findsOneWidget,
         reason: '$id podyumda bildirilebilmeli (Apple 1.2)',
       );
+      await tester.tapAt(const Offset(5, 5)); // menüyü kapat
+      await tester.pumpAndSettle();
     }
+  });
+
+  testWidgets('podyum basamaklı: 1. kaide 2.den, 2. kaide 3.den yüksek', (
+    tester,
+  ) async {
+    await _pump(tester, _Repo(count: 4));
+    double h(int rank) => tester
+        .getSize(find.byKey(ValueKey('leaderboard-rank-row-$rank')))
+        .height;
+    expect(h(1), greaterThan(h(2)));
+    expect(h(2), greaterThan(h(3)));
   });
 
   testWidgets('320 px ve uzun adlar: taşma yok, adlar tam okunur', (
