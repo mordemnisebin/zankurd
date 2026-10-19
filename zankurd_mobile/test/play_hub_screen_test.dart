@@ -69,7 +69,6 @@ void main() {
       find.descendant(of: hero, matching: find.byType(FilledButton)),
       findsOneWidget,
     );
-    final night = SahneTokens.of(tester.element(hero));
     final outside = find.byWidgetPredicate(
       (w) =>
           w is FilledButton &&

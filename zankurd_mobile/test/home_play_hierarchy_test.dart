@@ -181,7 +181,6 @@ void main() {
             final button = tester.widget<FilledButton>(
               find.descendant(of: finder, matching: find.byType(FilledButton)),
             );
-            final t = SahneTokens.of(tester.element(finder));
             expect(
               button.style?.backgroundColor?.resolve(<WidgetState>{}),
               Colors.transparent,
