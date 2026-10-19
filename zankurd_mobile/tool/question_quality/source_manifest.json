@@ -2793,6 +2793,35 @@
     "reviewedAt": "metadata.reviewedAt",
     "locale": "ku-kmr"
    }
+  },
+  {
+   "id": "kolay_2026_10_19",
+   "description": "2026-10-19: kolay havuz takviyesi: Sînema, Edebiyat, Siyaset, Dîrok zorluk-1 çoktan seçmeli (36)",
+   "path": "assets/data/kolay_2026_10_19_questions.json",
+   "role": "runtime_secondary",
+   "parser": "json",
+   "canonicalGroup": "runtime_questions",
+   "reportIncluded": true,
+   "gateIncluded": true,
+   "productionLike": true,
+   "precedence": 994,
+   "expectedRecordCount": 36,
+   "notes": "DeepSeek V4.1 taslağı; iki bağımsız jüri (Gemini 3.1 Pro + Grok/ChatGPT) ikisi de KABUL dedi.",
+   "columns": {
+    "id": "id",
+    "category": "category",
+    "prompt": "prompt",
+    "options": "answers",
+    "correct": "correctAnswer",
+    "explanation": "explanationKu",
+    "difficulty": "difficulty",
+    "type": "type",
+    "dialect": "metadata.dialect",
+    "sourceTitle": "metadata.sourceTitle",
+    "sourceUrl": "metadata.sourceReference",
+    "reviewedAt": "metadata.reviewedAt",
+    "locale": "ku-kmr"
+   }
   }
  ]
 }

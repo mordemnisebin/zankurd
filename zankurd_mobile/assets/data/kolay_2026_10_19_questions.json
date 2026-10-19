@@ -1,0 +1,1226 @@
+[
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_sinema_06",
+    "category": "Sînema",
+    "prompt": "Kîjan xelat xelata herî navdar a sînemaya Amerîkayê ye?",
+    "promptTr": "Amerika sinemasının en ünlü ödülü hangisidir?",
+    "answers": [
+      "Palme d'Or",
+      "Xelata Oscarê",
+      "Xelata Nobelê",
+      "Grammy"
+    ],
+    "answersTr": [
+      "Altın Palmiye",
+      "Oscar Ödülü",
+      "Nobel Ödülü",
+      "Grammy"
+    ],
+    "correctAnswer": "Xelata Oscarê",
+    "correctAnswerTr": "Oscar Ödülü",
+    "explanation": "Oscar, Amerika sinemasının en ünlü ödülüdür.",
+    "explanationKu": "Xelata Oscarê xelata herî navdar a sînemaya Amerîkayê ye.",
+    "explanationTr": "Oscar, Amerika sinemasının en ünlü ödülüdür.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_sinema_10",
+    "category": "Sînema",
+    "prompt": "Bahman Ghobadi, derhênerê kurd ê fîlma \"Kûsî jî difirin\", ji kîjan welatî ye?",
+    "promptTr": "\"Kaplumbağalar da Uçar\" filminin Kürt yönetmeni Bahman Ghobadi hangi ülkedendir?",
+    "answers": [
+      "Hindistan",
+      "Fransa",
+      "Îran",
+      "Tirkiye"
+    ],
+    "answersTr": [
+      "Hindistan",
+      "Fransa",
+      "İran",
+      "Türkiye"
+    ],
+    "correctAnswer": "Îran",
+    "correctAnswerTr": "İran",
+    "explanation": "Bahman Ghobadi, İran Kürdistanı'ndan bir Kürt yönetmendir.",
+    "explanationKu": "Bahman Ghobadi derhênerê kurd ê ji Îranê ye.",
+    "explanationTr": "Bahman Ghobadi, İran Kürdistanı'ndan bir Kürt yönetmendir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_sinema_17",
+    "category": "Sînema",
+    "prompt": "Fîlmên \"Harry Potter\" behsa kê dikin?",
+    "promptTr": "\"Harry Potter\" filmleri kimi anlatır?",
+    "answers": [
+      "Rojnamevanekî",
+      "Futbolvanekî",
+      "Kurekî ciwan ê sêrbaz",
+      "Stranbêjekî"
+    ],
+    "answersTr": [
+      "Bir gazeteci",
+      "Bir futbolcu",
+      "Genç bir büyücü çocuk",
+      "Bir şarkıcı"
+    ],
+    "correctAnswer": "Kurekî ciwan ê sêrbaz",
+    "correctAnswerTr": "Genç bir büyücü çocuk",
+    "explanation": "Harry Potter, büyücülük okuluna giden genç bir çocuktur.",
+    "explanationKu": "Harry Potter kurekî ciwan ê sêrbaz e.",
+    "explanationTr": "Harry Potter, büyücülük okuluna giden genç bir çocuktur.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_sinema_21",
+    "category": "Sînema",
+    "prompt": "Kîjan ji van fîlman bi zimanê kurdî hatiye çêkirin?",
+    "promptTr": "Bu filmlerden hangisi Kürtçe olarak çekilmiştir?",
+    "answers": [
+      "Mem û Zîn",
+      "Jurassic Park",
+      "Titanic",
+      "Avatar"
+    ],
+    "answersTr": [
+      "Mem û Zîn",
+      "Jurassic Park",
+      "Titanic",
+      "Avatar"
+    ],
+    "correctAnswer": "Mem û Zîn",
+    "correctAnswerTr": "Mem û Zîn",
+    "explanation": "\"Mem û Zîn\" Kürtçe çekilmiş tanınmış bir filmdir.",
+    "explanationKu": "\"Mem û Zîn\" fîlmekî bi zimanê kurdî hatiye çêkirin.",
+    "explanationTr": "\"Mem û Zîn\" Kürtçe çekilmiş tanınmış bir filmdir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_edebiyat_01",
+    "category": "Edebiyat",
+    "prompt": "\"Mem û Zîn\" kî nivîsandiye?",
+    "promptTr": "\"Mem û Zîn\"i kim yazmıştır?",
+    "answers": [
+      "Feqiyê Teyran",
+      "Ehmedê Xanî",
+      "Cegerxwîn",
+      "Melayê Cizîrî"
+    ],
+    "answersTr": [
+      "Feqiyê Teyran",
+      "Ehmedê Xanî",
+      "Cegerxwîn",
+      "Melayê Cizîrî"
+    ],
+    "correctAnswer": "Ehmedê Xanî",
+    "correctAnswerTr": "Ehmedê Xanî",
+    "explanation": "Mem û Zîn, Kürt edebiyatının en ünlü eseridir ve Ehmedê Xanî tarafından yazılmıştır.",
+    "explanationKu": "\"Mem û Zîn\" berhema herî navdar a wêjeya kurdî ye û ji aliyê Ehmedê Xanî ve hatiye nivîsandin.",
+    "explanationTr": "Mem û Zîn, Kürt edebiyatının en ünlü eseridir ve Ehmedê Xanî tarafından yazılmıştır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_edebiyat_03",
+    "category": "Edebiyat",
+    "prompt": "\"Mem û Zîn\" çi cure berhemek e?",
+    "promptTr": "\"Mem û Zîn\" ne tür bir eserdir?",
+    "answers": [
+      "Ferhengek",
+      "Pirtûkeke matematîkê",
+      "Kovareke rojnamevaniyê",
+      "Berhemeke evînê (destan)"
+    ],
+    "answersTr": [
+      "Bir sözlük",
+      "Bir matematik kitabı",
+      "Bir gazete dergisi",
+      "Bir aşk eseri (destan)"
+    ],
+    "correctAnswer": "Berhemeke evînê (destan)",
+    "correctAnswerTr": "Bir aşk eseri (destan)",
+    "explanation": "Mem û Zîn, Mem ile Zîn arasındaki aşkı anlatan manzum bir destandır.",
+    "explanationKu": "\"Mem û Zîn\" berhemeke evînê ye ku evîna Mem û Zîn vedibêje.",
+    "explanationTr": "Mem û Zîn, Mem ile Zîn arasındaki aşkı anlatan manzum bir destandır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_edebiyat_07",
+    "category": "Edebiyat",
+    "prompt": "Melayê Cizîrî ji kîjan bajarî bû?",
+    "promptTr": "Melayê Cizîrî hangi şehirdendir?",
+    "answers": [
+      "Bexda",
+      "Tewrêz",
+      "Cizîr (Cizre)",
+      "Stenbol (Îstanbul)"
+    ],
+    "answersTr": [
+      "Bağdat",
+      "Tebriz",
+      "Cizîr (Cizre)",
+      "İstanbul"
+    ],
+    "correctAnswer": "Cizîr (Cizre)",
+    "correctAnswerTr": "Cizîr (Cizre)",
+    "explanation": "Melayê Cizîrî, adından da anlaşılacağı gibi Cizre'dendir.",
+    "explanationKu": "Melayê Cizîrî, wek ku navê wî jî nîşan dide, ji Cizîrê (Cizre) ye.",
+    "explanationTr": "Melayê Cizîrî, adından da anlaşılacağı gibi Cizre'dendir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_edebiyat_08",
+    "category": "Edebiyat",
+    "prompt": "Kîjan berhem a Feqiyê Teyran e?",
+    "promptTr": "Hangisi Feqiyê Teyran'ın eseridir?",
+    "answers": [
+      "Şerefname",
+      "Dîwana Melayê Cizîrî",
+      "Mem û Zîn",
+      "Şêxê Sen'an"
+    ],
+    "answersTr": [
+      "Şerefname",
+      "Dîwana Melayê Cizîrî",
+      "Mem û Zîn",
+      "Şêxê Sen'an"
+    ],
+    "correctAnswer": "Şêxê Sen'an",
+    "correctAnswerTr": "Şêxê Sen'an",
+    "explanation": "Şêxê Sen'an, Feqiyê Teyran'ın en tanınmış eseridir.",
+    "explanationKu": "\"Şêxê Sen'an\" berhema Feqiyê Teyran ya herî navdar e.",
+    "explanationTr": "Şêxê Sen'an, Feqiyê Teyran'ın en tanınmış eseridir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_edebiyat_12",
+    "category": "Edebiyat",
+    "prompt": "Kesê ku helbestan dinivîse, jê re çi tê gotin?",
+    "promptTr": "Şiir yazan kişiye ne denir?",
+    "answers": [
+      "Stranbêj",
+      "Ferhengsaz",
+      "Helbestvan",
+      "Romannivîs"
+    ],
+    "answersTr": [
+      "Şarkıcı",
+      "Sözlük yazarı",
+      "Şair",
+      "Romancı"
+    ],
+    "correctAnswer": "Helbestvan",
+    "correctAnswerTr": "Şair",
+    "explanation": "Helbestvan, \"şair\" anlamına gelir.",
+    "explanationKu": "\"Helbestvan\" di kurdî de tê wateya şair.",
+    "explanationTr": "Helbestvan, \"şair\" anlamına gelir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_edebiyat_14",
+    "category": "Edebiyat",
+    "prompt": "\"Çîrok\" çi ye?",
+    "promptTr": "\"Çîrok\" nedir?",
+    "answers": [
+      "Pirtûkeke matematîkê",
+      "Ferhengek",
+      "Berhemeke kin ku bûyeran vedibêje",
+      "Kovareke rojnamevaniyê"
+    ],
+    "answersTr": [
+      "Bir matematik kitabı",
+      "Bir sözlük",
+      "Olayları anlatan kısa bir eser",
+      "Bir gazete dergisi"
+    ],
+    "correctAnswer": "Berhemeke kin ku bûyeran vedibêje",
+    "correctAnswerTr": "Olayları anlatan kısa bir eser",
+    "explanation": "Çîrok, olayları anlatan kısa bir edebî eserdir.",
+    "explanationKu": "\"Çîrok\" berhemeke kin a wêjeyê ye ku bûyeran vedibêje.",
+    "explanationTr": "Çîrok, olayları anlatan kısa bir edebî eserdir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_edebiyat_15",
+    "category": "Edebiyat",
+    "prompt": "Pirtûka ku helbestên helbestvanekî tê de hatine berhevkirin, jê re çi tê gotin?",
+    "promptTr": "Bir şairin şiirlerinin toplandığı kitaba ne denir?",
+    "answers": [
+      "Kovar",
+      "Ferheng",
+      "Rojname",
+      "Dîwan"
+    ],
+    "answersTr": [
+      "Dergi",
+      "Sözlük",
+      "Gazete",
+      "Divan"
+    ],
+    "correctAnswer": "Dîwan",
+    "correctAnswerTr": "Divan",
+    "explanation": "Divan, bir şairin şiirlerinin toplandığı kitaptır.",
+    "explanationKu": "\"Dîwan\" pirtûka ku helbestên helbestvanekî tê de hatine berhevkirin e.",
+    "explanationTr": "Divan, bir şairin şiirlerinin toplandığı kitaptır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_edebiyat_17",
+    "category": "Edebiyat",
+    "prompt": "\"Nûbihara Piçûkan\" kê nivîsandiye?",
+    "promptTr": "\"Nûbihara Piçûkan\"ı kim yazmıştır?",
+    "answers": [
+      "Cegerxwîn",
+      "Melayê Cizîrî",
+      "Ehmedê Xanî",
+      "Feqiyê Teyran"
+    ],
+    "answersTr": [
+      "Cegerxwîn",
+      "Melayê Cizîrî",
+      "Ehmedê Xanî",
+      "Feqiyê Teyran"
+    ],
+    "correctAnswer": "Ehmedê Xanî",
+    "correctAnswerTr": "Ehmedê Xanî",
+    "explanation": "Nûbihara Piçûkan, Ehmedê Xanî'nin çocuklar için hazırladığı Kürtçe-Arapça sözlüktür.",
+    "explanationKu": "\"Nûbihara Piçûkan\" ferhenga kurdî-arabî ye ku Ehmedê Xanî ji bo zarokan nivîsandiye.",
+    "explanationTr": "Nûbihara Piçûkan, Ehmedê Xanî'nin çocuklar için hazırladığı Kürtçe-Arapça sözlüktür.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_edebiyat_19",
+    "category": "Edebiyat",
+    "prompt": "Kîjan navê helbestvanekî kurd e?",
+    "promptTr": "Hangisi bir Kürt şairinin adıdır?",
+    "answers": [
+      "Ferheng",
+      "Dîwan",
+      "Zîn",
+      "Cegerxwîn"
+    ],
+    "answersTr": [
+      "Sözlük",
+      "Divan",
+      "Zîn",
+      "Cegerxwîn"
+    ],
+    "correctAnswer": "Cegerxwîn",
+    "correctAnswerTr": "Cegerxwîn",
+    "explanation": "Cegerxwîn bir şairdir; Zîn bir karakter, Divan ve Ferheng ise eser adlarıdır.",
+    "explanationKu": "Cegerxwîn helbestvanek e; Zîn navekî karakterekî, Dîwan û Ferheng jî navê berheman in.",
+    "explanationTr": "Cegerxwîn bir şairdir; Zîn bir karakter, Divan ve Ferheng ise eser adlarıdır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_siyaset_01",
+    "category": "Siyaset",
+    "prompt": "Paytexta Tirkiyeyê kîjan bajar e?",
+    "promptTr": "Türkiye'nin başkenti hangi şehirdir?",
+    "answers": [
+      "Stenbol",
+      "Îzmîr",
+      "Bûrsa",
+      "Enqere"
+    ],
+    "answersTr": [
+      "İstanbul",
+      "İzmir",
+      "Bursa",
+      "Ankara"
+    ],
+    "correctAnswer": "Enqere",
+    "correctAnswerTr": "Ankara",
+    "explanation": "Türkiye'nin başkenti Ankara'dır.",
+    "explanationKu": "Paytexta Tirkiyeyê Enqere ye.",
+    "explanationTr": "Türkiye'nin başkenti Ankara'dır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_siyaset_07",
+    "category": "Siyaset",
+    "prompt": "\"Hikûmet\" tê çi wateyê?",
+    "promptTr": "\"Hükümet\" ne anlama gelir?",
+    "answers": [
+      "Cihê ku pirtûk têne firotin",
+      "Koma kesên ku welat bi rê ve dibin",
+      "Komela werzişê",
+      "Rojnameyeke rojane"
+    ],
+    "answersTr": [
+      "Kitap satılan yer",
+      "Ülkeyi yöneten kişiler topluluğu",
+      "Spor kulübü",
+      "Günlük bir gazete"
+    ],
+    "correctAnswer": "Koma kesên ku welat bi rê ve dibin",
+    "correctAnswerTr": "Ülkeyi yöneten kişiler topluluğu",
+    "explanation": "Hükümet, ülkeyi yöneten kişilerden oluşur.",
+    "explanationKu": "Hikûmet, koma kesên ku welat bi rê ve dibin e.",
+    "explanationTr": "Hükümet, ülkeyi yöneten kişilerden oluşur.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_siyaset_11",
+    "category": "Siyaset",
+    "prompt": "\"Destûr\" (makeqanûn) çi ye?",
+    "promptTr": "\"Anayasa\" nedir?",
+    "answers": [
+      "Sirûda neteweyî",
+      "Qanûna herî bilind a welatekî",
+      "Alaya welatekî",
+      "Paytexta welatekî"
+    ],
+    "answersTr": [
+      "Ulusal marş",
+      "Bir ülkenin en yüksek kanunu",
+      "Bir ülkenin bayrağı",
+      "Bir ülkenin başkenti"
+    ],
+    "correctAnswer": "Qanûna herî bilind a welatekî",
+    "correctAnswerTr": "Bir ülkenin en yüksek kanunu",
+    "explanation": "Anayasa, bir ülkenin en üstün kanunudur.",
+    "explanationKu": "Destûr, qanûna herî bilind a welatekî ye.",
+    "explanationTr": "Anayasa, bir ülkenin en üstün kanunudur.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_siyaset_12",
+    "category": "Siyaset",
+    "prompt": "\"Neteweyên Yekbûyî\" (NY) çi ye?",
+    "promptTr": "\"Birleşmiş Milletler\" (BM) nedir?",
+    "answers": [
+      "Partiyeke siyasî ya Tirkiyeyê ye",
+      "Komeleyeke werzişê ye",
+      "Rêxistineke navneteweyî ye ku gelek welat tê de ne",
+      "Bajarekî mezin e"
+    ],
+    "answersTr": [
+      "Türkiye'de bir siyasi parti",
+      "Bir spor kulübü",
+      "Birçok ülkenin üye olduğu uluslararası bir kuruluş",
+      "Büyük bir şehir"
+    ],
+    "correctAnswer": "Rêxistineke navneteweyî ye ku gelek welat tê de ne",
+    "correctAnswerTr": "Birçok ülkenin üye olduğu uluslararası bir kuruluş",
+    "explanation": "Birleşmiş Milletler, çok sayıda ülkenin üye olduğu uluslararası bir kuruluştur.",
+    "explanationKu": "Neteweyên Yekbûyî rêxistineke navneteweyî ye.",
+    "explanationTr": "Birleşmiş Milletler, çok sayıda ülkenin üye olduğu uluslararası bir kuruluştur.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_siyaset_15",
+    "category": "Siyaset",
+    "prompt": "Neteweyên Yekbûyî piştî kîjan şerî hatin damezrandin?",
+    "promptTr": "Birleşmiş Milletler hangi savaştan sonra kuruldu?",
+    "answers": [
+      "Şerê Cîhanê yê Duyem",
+      "Şerê Koreyê",
+      "Şerê Cîhanê yê Yekem",
+      "Şerê Sar"
+    ],
+    "answersTr": [
+      "İkinci Dünya Savaşı",
+      "Kore Savaşı",
+      "Birinci Dünya Savaşı",
+      "Soğuk Savaş"
+    ],
+    "correctAnswer": "Şerê Cîhanê yê Duyem",
+    "correctAnswerTr": "İkinci Dünya Savaşı",
+    "explanation": "Birleşmiş Milletler, İkinci Dünya Savaşı'ndan sonra 1945'te kuruldu.",
+    "explanationKu": "Neteweyên Yekbûyî piştî Şerê Cîhanê yê Duyem, di sala 1945an de hatin damezrandin.",
+    "explanationTr": "Birleşmiş Milletler, İkinci Dünya Savaşı'ndan sonra 1945'te kuruldu.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_siyaset_16",
+    "category": "Siyaset",
+    "prompt": "Komara Tirkiyeyê kengî hat damezrandin?",
+    "promptTr": "Türkiye Cumhuriyeti ne zaman kuruldu?",
+    "answers": [
+      "1938",
+      "1923",
+      "1918",
+      "1946"
+    ],
+    "answersTr": [
+      "1938",
+      "1923",
+      "1918",
+      "1946"
+    ],
+    "correctAnswer": "1923",
+    "correctAnswerTr": "1923",
+    "explanation": "Türkiye Cumhuriyeti 1923'te kuruldu.",
+    "explanationKu": "Komara Tirkiyeyê di sala 1923an de hat damezrandin.",
+    "explanationTr": "Türkiye Cumhuriyeti 1923'te kuruldu.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_siyaset_18",
+    "category": "Siyaset",
+    "prompt": "Peymana Lozanê kengî hat îmzekirin?",
+    "promptTr": "Lozan Antlaşması ne zaman imzalandı?",
+    "answers": [
+      "1930",
+      "1920",
+      "1918",
+      "1923"
+    ],
+    "answersTr": [
+      "1930",
+      "1920",
+      "1918",
+      "1923"
+    ],
+    "correctAnswer": "1923",
+    "correctAnswerTr": "1923",
+    "explanation": "Lozan Antlaşması 1923'te imzalandı.",
+    "explanationKu": "Peymana Lozanê di sala 1923an de hat îmzekirin.",
+    "explanationTr": "Lozan Antlaşması 1923'te imzalandı.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_siyaset_24",
+    "category": "Siyaset",
+    "prompt": "\"Serokwezîr\" kî ye?",
+    "promptTr": "\"Başbakan\" kimdir?",
+    "answers": [
+      "Serokê artêşê",
+      "Serokê hikûmetê",
+      "Serokê bajêr",
+      "Serokê dadgehê"
+    ],
+    "answersTr": [
+      "Ordunun başı",
+      "Hükümetin başı",
+      "Şehrin başı",
+      "Mahkemenin başı"
+    ],
+    "correctAnswer": "Serokê hikûmetê",
+    "correctAnswerTr": "Hükümetin başı",
+    "explanation": "Başbakan, hükümetin başıdır.",
+    "explanationKu": "Serokwezîr serokê hikûmetê ye.",
+    "explanationTr": "Başbakan, hükümetin başıdır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_02",
+    "category": "Dîrok",
+    "prompt": "Kawayê hesinkar bi kê re şer kir?",
+    "promptTr": "Demirci Kawa kiminle savaştı?",
+    "answers": [
+      "Napoleon",
+      "Ristemê Zal",
+      "Dehak",
+      "Keyxusrew"
+    ],
+    "answersTr": [
+      "Napolyon",
+      "Rüstem-i Zal",
+      "Dehak (Zahhak)",
+      "Keyhusrev"
+    ],
+    "correctAnswer": "Dehak",
+    "correctAnswerTr": "Dehak (Zahhak)",
+    "explanation": "Kawa efsanesine göre demirci Kawa, zalim kral Dehak'a karşı ayaklandı.",
+    "explanationKu": "Li gorî efsaneya Kawa, Kawayê hesinkar li dijî padîşahê zalim Dehak serî hilda.",
+    "explanationTr": "Kawa efsanesine göre demirci Kawa, zalim kral Dehak'a karşı ayaklandı.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_03",
+    "category": "Dîrok",
+    "prompt": "Newroz kengî tê pîrozkirin?",
+    "promptTr": "Newroz ne zaman kutlanır?",
+    "answers": [
+      "1ê Gulanê",
+      "21ê Îlonê",
+      "1ê Rêbendanê",
+      "21ê Adarê"
+    ],
+    "answersTr": [
+      "1 Mayıs",
+      "21 Eylül",
+      "1 Ocak",
+      "21 Mart"
+    ],
+    "correctAnswer": "21ê Adarê",
+    "correctAnswerTr": "21 Mart",
+    "explanation": "Newroz her yıl 21 Mart'ta kutlanır.",
+    "explanationKu": "Newroz her sal di 21ê Adarê de tê pîrozkirin.",
+    "explanationTr": "Newroz her yıl 21 Mart'ta kutlanır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_04",
+    "category": "Dîrok",
+    "prompt": "Mem û Zîn kê nivîsandiye?",
+    "promptTr": "Mem û Zîn'i kim yazdı?",
+    "answers": [
+      "Feqiyê Teyran",
+      "Melayê Cizîrî",
+      "Şerefxanê Bedlîsî",
+      "Ehmedê Xanî"
+    ],
+    "answersTr": [
+      "Faqiyê Teyran",
+      "Melayê Cizîrî",
+      "Şerefhanê Bedlîsî",
+      "Ahmedê Xanî"
+    ],
+    "correctAnswer": "Ehmedê Xanî",
+    "correctAnswerTr": "Ahmedê Xanî",
+    "explanation": "Mem û Zîn mesnevisini 17. yüzyılda Ahmedê Xanî yazmıştır.",
+    "explanationKu": "Ehmedê Xanî di sedsala 17an de Mem û Zîn nivîsandiye.",
+    "explanationTr": "Mem û Zîn mesnevisini 17. yüzyılda Ahmedê Xanî yazmıştır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_08",
+    "category": "Dîrok",
+    "prompt": "Ehmedê Xanî kî bû?",
+    "promptTr": "Ahmedê Xanî kimdi?",
+    "answers": [
+      "Dahênerê çapxaneyê",
+      "Padîşahekî Osmanî",
+      "Helbestvan û nivîskarekî kurd",
+      "Fermandarekî Romayê"
+    ],
+    "answersTr": [
+      "Matbaanın mucidi",
+      "Bir Osmanlı padişahı",
+      "Kürt bir şair ve yazar",
+      "Bir Roma komutanı"
+    ],
+    "correctAnswer": "Helbestvan û nivîskarekî kurd",
+    "correctAnswerTr": "Kürt bir şair ve yazar",
+    "explanation": "Ahmedê Xanî, Mem û Zîn'in yazarı olan ünlü bir Kürt şair ve düşünürdür.",
+    "explanationKu": "Ehmedê Xanî helbestvan û nivîskarekî navdar ê kurd e û nivîskarê Mem û Zîn e.",
+    "explanationTr": "Ahmedê Xanî, Mem û Zîn'in yazarı olan ünlü bir Kürt şair ve düşünürdür.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_09",
+    "category": "Dîrok",
+    "prompt": "Mem û Zîn çi cureyê çîrokê ye?",
+    "promptTr": "Mem û Zîn ne tür bir hikâyedir?",
+    "answers": [
+      "Çîrokeke seyahetê",
+      "Çîrokeke evînê",
+      "Çîrokeke şer",
+      "Çîrokeke bazirganiyê"
+    ],
+    "answersTr": [
+      "Bir seyahat hikâyesi",
+      "Bir aşk hikâyesi",
+      "Bir savaş hikâyesi",
+      "Bir ticaret hikâyesi"
+    ],
+    "correctAnswer": "Çîrokeke evînê",
+    "correctAnswerTr": "Bir aşk hikâyesi",
+    "explanation": "Mem û Zîn, Mem ile Zîn arasındaki aşkı anlatan ünlü bir Kürt halk hikâyesidir.",
+    "explanationKu": "Mem û Zîn çîrokeke evînê ya navdar a kurdî ye ku evîna Mem û Zîn vedibêje.",
+    "explanationTr": "Mem û Zîn, Mem ile Zîn arasındaki aşkı anlatan ünlü bir Kürt halk hikâyesidir.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_10",
+    "category": "Dîrok",
+    "prompt": "Pîramîdên Mezin li kîjan welatî ne?",
+    "promptTr": "Büyük Piramitler hangi ülkededir?",
+    "answers": [
+      "Misir",
+      "Îran",
+      "Tirkiye",
+      "Yewnanistan"
+    ],
+    "answersTr": [
+      "Mısır",
+      "İran",
+      "Türkiye",
+      "Yunanistan"
+    ],
+    "correctAnswer": "Misir",
+    "correctAnswerTr": "Mısır",
+    "explanation": "Giza'daki Büyük Piramitler Mısır'da bulunur.",
+    "explanationKu": "Pîramîdên Mezin ên Gîzayê li Misirê ne.",
+    "explanationTr": "Giza'daki Büyük Piramitler Mısır'da bulunur.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_11",
+    "category": "Dîrok",
+    "prompt": "Şerê Cîhanê yê Duyem kengî bi dawî bû?",
+    "promptTr": "İkinci Dünya Savaşı ne zaman sona erdi?",
+    "answers": [
+      "1945",
+      "1960",
+      "1939",
+      "1918"
+    ],
+    "answersTr": [
+      "1945",
+      "1960",
+      "1939",
+      "1918"
+    ],
+    "correctAnswer": "1945",
+    "correctAnswerTr": "1945",
+    "explanation": "İkinci Dünya Savaşı 1945'te sona erdi.",
+    "explanationKu": "Şerê Cîhanê yê Duyem di sala 1945an de bi dawî bû.",
+    "explanationTr": "İkinci Dünya Savaşı 1945'te sona erdi.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_12",
+    "category": "Dîrok",
+    "prompt": "Krîstof Kolomb kengî gihîşt parzemîna Amerîkayê?",
+    "promptTr": "Kristof Kolomb Amerika kıtasına ne zaman ulaştı?",
+    "answers": [
+      "1776",
+      "1492",
+      "1453",
+      "1620"
+    ],
+    "answersTr": [
+      "1776",
+      "1492",
+      "1453",
+      "1620"
+    ],
+    "correctAnswer": "1492",
+    "correctAnswerTr": "1492",
+    "explanation": "Kristof Kolomb 1492'de Amerika kıtasına ulaştı.",
+    "explanationKu": "Krîstof Kolomb di sala 1492an de gihîşt parzemîna Amerîkayê.",
+    "explanationTr": "Kristof Kolomb 1492'de Amerika kıtasına ulaştı.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_14",
+    "category": "Dîrok",
+    "prompt": "Kawayê hesinkar çi pîşe dikir?",
+    "promptTr": "Demirci Kawa ne iş yapardı?",
+    "answers": [
+      "Bazirganî",
+      "Hesinkarî",
+      "Cotkarî",
+      "Masîgirî"
+    ],
+    "answersTr": [
+      "Tüccarlık",
+      "Demircilik",
+      "Çiftçilik",
+      "Balıkçılık"
+    ],
+    "correctAnswer": "Hesinkarî",
+    "correctAnswerTr": "Demircilik",
+    "explanation": "Kawa bir demirciydi; bu yüzden \"Kawayê Hesinkar\" (Demirci Kawa) olarak anılır.",
+    "explanationKu": "Kawa hesinkar bû, ji ber vê yekê jê re \"Kawayê Hesinkar\" tê gotin.",
+    "explanationTr": "Kawa bir demirciydi; bu yüzden \"Kawayê Hesinkar\" (Demirci Kawa) olarak anılır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_15",
+    "category": "Dîrok",
+    "prompt": "Newroz sembola çi ye?",
+    "promptTr": "Newroz neyin sembolüdür?",
+    "answers": [
+      "Destpêka biharê û azadiyê",
+      "Dawiya havînê",
+      "Roja berfê",
+      "Destpêka zivistanê"
+    ],
+    "answersTr": [
+      "Baharın başlangıcı ve özgürlük",
+      "Yazın sonu",
+      "Kar günü",
+      "Kışın başlangıcı"
+    ],
+    "correctAnswer": "Destpêka biharê û azadiyê",
+    "correctAnswerTr": "Baharın başlangıcı ve özgürlük",
+    "explanation": "Newroz, baharın gelişini ve özgürlüğü simgeler.",
+    "explanationKu": "Newroz destpêka biharê û azadiyê sembolîze dike.",
+    "explanationTr": "Newroz, baharın gelişini ve özgürlüğü simgeler.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_16",
+    "category": "Dîrok",
+    "prompt": "Selahedîn Eyyûbî kîjan dewletê damezrand?",
+    "promptTr": "Selahaddin Eyyubi hangi devleti kurdu?",
+    "answers": [
+      "Dewleta Eyûbî",
+      "Dewleta Romayê",
+      "Dewleta Sasanî",
+      "Dewleta Osmanî"
+    ],
+    "answersTr": [
+      "Eyyubi Devleti",
+      "Roma Devleti",
+      "Sasani Devleti",
+      "Osmanlı Devleti"
+    ],
+    "correctAnswer": "Dewleta Eyûbî",
+    "correctAnswerTr": "Eyyubi Devleti",
+    "explanation": "Selahaddin Eyyubi, Eyyubi Devleti'nin kurucusudur.",
+    "explanationKu": "Selahedîn Eyyûbî damezrênerê Dewleta Eyûbî ye.",
+    "explanationTr": "Selahaddin Eyyubi, Eyyubi Devleti'nin kurucusudur.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_17",
+    "category": "Dîrok",
+    "prompt": "Şerê Cîhanê yê Yekem kengî dest pê kir?",
+    "promptTr": "Birinci Dünya Savaşı ne zaman başladı?",
+    "answers": [
+      "1900",
+      "1914",
+      "1939",
+      "1923"
+    ],
+    "answersTr": [
+      "1900",
+      "1914",
+      "1939",
+      "1923"
+    ],
+    "correctAnswer": "1914",
+    "correctAnswerTr": "1914",
+    "explanation": "Birinci Dünya Savaşı 1914'te başladı.",
+    "explanationKu": "Şerê Cîhanê yê Yekem di sala 1914an de dest pê kir.",
+    "explanationTr": "Birinci Dünya Savaşı 1914'te başladı.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_18",
+    "category": "Dîrok",
+    "prompt": "Kê di sala 1923an de Komara Tirkiyê damezrand?",
+    "promptTr": "1923'te Türkiye Cumhuriyeti'ni kim kurdu?",
+    "answers": [
+      "Selahedîn Eyyûbî",
+      "Mustafa Kemal Atatürk",
+      "Sultan Abdulhemîdê Duyem",
+      "Osman Beg"
+    ],
+    "answersTr": [
+      "Selahaddin Eyyubi",
+      "Mustafa Kemal Atatürk",
+      "II. Abdülhamid",
+      "Osman Bey"
+    ],
+    "correctAnswer": "Mustafa Kemal Atatürk",
+    "correctAnswerTr": "Mustafa Kemal Atatürk",
+    "explanation": "Türkiye Cumhuriyeti 29 Ekim 1923'te Mustafa Kemal Atatürk tarafından kuruldu.",
+    "explanationKu": "Komara Tirkiyê di 29ê Cotmeha 1923an de ji aliyê Mustafa Kemal Atatürk ve hat damezrandin.",
+    "explanationTr": "Türkiye Cumhuriyeti 29 Ekim 1923'te Mustafa Kemal Atatürk tarafından kuruldu.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_20",
+    "category": "Dîrok",
+    "prompt": "Kê di sala 1969an de cara pêşî li ser Heyvê meşiya?",
+    "promptTr": "1969'da Ay'a ilk kez kim ayak bastı?",
+    "answers": [
+      "Neil Armstrong",
+      "Thomas Edison",
+      "Yuri Gagarin",
+      "Krîstof Kolomb"
+    ],
+    "answersTr": [
+      "Neil Armstrong",
+      "Thomas Edison",
+      "Yuri Gagarin",
+      "Kristof Kolomb"
+    ],
+    "correctAnswer": "Neil Armstrong",
+    "correctAnswerTr": "Neil Armstrong",
+    "explanation": "Neil Armstrong, 1969'da Ay'a ayak basan ilk insandır.",
+    "explanationKu": "Neil Armstrong di sala 1969an de bû mirovê pêşî ku li ser Heyvê meşiya.",
+    "explanationTr": "Neil Armstrong, 1969'da Ay'a ayak basan ilk insandır.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  },
+  {
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "id": "kolay_dirok_22",
+    "category": "Dîrok",
+    "prompt": "Li gorî efsaneyê, Kawa roja Newrozê çi kir?",
+    "promptTr": "Efsaneye göre Kawa Newroz günü ne yaptı?",
+    "answers": [
+      "Serî hilda û Dehak kuşt",
+      "Kelehek ava kir",
+      "Pirtûkek nivîsand",
+      "Gemiyek çêkir"
+    ],
+    "answersTr": [
+      "Ayaklandı ve Dehak'ı öldürdü",
+      "Bir kale inşa etti",
+      "Bir kitap yazdı",
+      "Bir gemi yaptı"
+    ],
+    "correctAnswer": "Serî hilda û Dehak kuşt",
+    "correctAnswerTr": "Ayaklandı ve Dehak'ı öldürdü",
+    "explanation": "Efsaneye göre Kawa ayaklanıp Dehak'ı yendi ve Newroz'u müjdeledi.",
+    "explanationKu": "Li gorî efsaneyê, Kawa serî hilda, Dehak têk bir û Newroz da xuyakirin.",
+    "explanationTr": "Efsaneye göre Kawa ayaklanıp Dehak'ı yendi ve Newroz'u müjdeledi.",
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "kurmanci",
+      "sourceTitle": "Kolay soru taslağı 2026-10-19",
+      "qualityVersion": 2,
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedAt": "2026-10-19",
+      "lastContentCheckAt": "2026-10-19"
+    }
+  }
+]
