@@ -539,12 +539,20 @@ class SahnePickChip extends StatelessWidget {
 /// Sona gelince de çizilince sondaki ipucu metni ("Oda sahibi en az 2
 /// oyuncuyla…") yüzeye karışıp soluk, düşük karşıtlıklı okunuyordu.
 class SahneBottomFade extends StatefulWidget {
-  const SahneBottomFade({super.key, required this.child, required this.color});
+  const SahneBottomFade({
+    super.key,
+    required this.child,
+    required this.color,
+    this.height = 24,
+  });
 
   final Widget child;
 
   /// Kaydırma alanının arkasındaki yüzey rengi.
   final Color color;
+
+  /// Solma bandının yüksekliği (varsayılan 24).
+  final double height;
 
   @override
   State<SahneBottomFade> createState() => _SahneBottomFadeState();
@@ -578,7 +586,7 @@ class _SahneBottomFadeState extends State<SahneBottomFade> {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                height: 24,
+                height: widget.height,
                 child: IgnorePointer(
                   child: DecoratedBox(
                     decoration: BoxDecoration(
