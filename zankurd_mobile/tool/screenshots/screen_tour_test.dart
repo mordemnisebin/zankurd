@@ -343,7 +343,7 @@ const _tourRoomCode = '482913';
 /// Oda yarışının puanı: `68_result` karesi ve sıralamadaki kendi satır.
 const _tourRaceScore = 240;
 
-enum _LobbyView { hostAlone, hostGuestNotReady, guest }
+enum _LobbyView { hostAlone, hostGuestNotReady, hostGuestReady, guest }
 
 /// Oda lobisinin ev sahibi / konuk durumları için tur deposu. Oyuncu
 /// kimliği `user`; ev sahibi olan odalarda `hostId` oyuncunun kendisidir,
@@ -380,6 +380,7 @@ class _LobbyTourRepository extends _TourRepository {
       players: switch (view) {
         _LobbyView.hostAlone => const [me],
         _LobbyView.hostGuestNotReady => const [me, berfinWaiting],
+        _LobbyView.hostGuestReady => const [me, berfin],
         _LobbyView.guest => const [berfin, me],
       },
       status: RoomStatus.lobby,
@@ -847,9 +848,14 @@ void main() {
   // kullanıcının en çok "şimdi ne olacak?" diye durakladığı noktalar
   // burasıdır, bu yüzden turda ana ekranlar kadar yer tutarlar.
   testWidgets('17 oda', (t) async {
+    // Kurul 2. tur: 17 de öteki lobi durumlarıyla aynı düzeni (ev sahibi
+    // rozeti, sohbet simgesi) göstersin diye gerçek lobi verisiyle basılır.
     await _pump(
       t,
-      RoomScreen(repository: repository, initialRoom: repository.createRoom()),
+      RoomScreen(
+        repository: _LobbyTourRepository(_LobbyView.hostGuestReady),
+        initialRoom: _LobbyTourRepository.room(_LobbyView.hostGuestReady),
+      ),
     );
     await _shoot(t, '17_room');
   }, tags: ['preview']);
