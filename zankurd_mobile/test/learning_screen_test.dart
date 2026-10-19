@@ -664,7 +664,6 @@ void main() {
       ),
     );
     expect(chip('learning-tab-everyday').selected, isTrue);
-    expect(chip('learning-tab-everyday').role, SahneRole.learn);
     expect(chip('learning-tab-grammar').selected, isFalse);
 
     final label = tester.widget<Text>(
@@ -673,7 +672,8 @@ void main() {
         matching: find.text('Günlük'),
       ),
     );
-    expect(label.style?.color, SahneTokens.day.learnTx);
+    // Kurul incelemesi 2026-10-19: tek seçili stil (turuncu ton).
+    expect(label.style?.color, SahneTokens.day.selTx);
     final other = tester.widget<Text>(
       find.descendant(
         of: find.byKey(const ValueKey('learning-tab-grammar')),

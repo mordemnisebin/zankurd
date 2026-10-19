@@ -1056,6 +1056,10 @@ class _RoomScreenState extends State<RoomScreen> {
                                   room: room,
                                   onCopy: () => _copyRoomCode(context, ku),
                                   onShare: _shareRoomInvite,
+                                  inviteFirst:
+                                      isHost &&
+                                      !crowd &&
+                                      room.players.length < 2,
                                   onInviteFriends: _canInviteFriends
                                       ? _inviteFriends
                                       : null,
@@ -1231,7 +1235,10 @@ class _RoomScreenState extends State<RoomScreen> {
                               // katlanabilir bir panel olarak geri geldi;
                               // kalabalık kaygısı kapalı başlayarak
                               // karşılanıyor.
-                              if (room.id != null) ...[
+                              // Yalnızken kimseyle konuşulmaz: "Sohbet" düğmesi
+                              // gizli (kurul incelemesi 2026-10-19).
+                              if (room.id != null &&
+                                  (room.players.length >= 2 || _chatOpen)) ...[
                                 const SizedBox(height: SahneSpace.cardGap),
                                 // Kapalıyken dış satır, açıkken RoomChat'in
                                 // KENDİ başlığı görünür — ikisi asla aynı
@@ -1467,7 +1474,13 @@ class _RoomHero extends StatelessWidget {
     required this.onCopy,
     required this.onShare,
     this.onInviteFriends,
+    this.inviteFirst = false,
   });
+
+  /// Ev sahibi odada TEK başına: davet bağlantısı sayfanın birincil
+  /// (dolu) düğmesi olur (kurul incelemesi 2026-10-19). Yarışı başlatmak
+  /// henüz mümkün değildir; asıl iş birini çağırmaktır.
+  final bool inviteFirst;
 
   final GameRoom room;
   final VoidCallback onCopy;
@@ -1639,6 +1652,7 @@ class _RoomHero extends StatelessWidget {
                   _RoomInviteButton(
                     label: context.t(K.roomInviteAction),
                     onShare: onShare,
+                    primary: inviteFirst,
                   ),
                   if (onInviteFriends != null)
                     _RoomInviteFriendsButton(
@@ -1727,14 +1741,41 @@ class _MetaItem extends StatelessWidget {
 /// Paylaşım sayfası iPad'de bir çıkış noktası ister; düğmenin kendi
 /// konumu [onShare]'e verilir. Telefonlarda yok sayılır.
 class _RoomInviteButton extends StatelessWidget {
-  const _RoomInviteButton({required this.label, required this.onShare});
+  const _RoomInviteButton({
+    required this.label,
+    required this.onShare,
+    this.primary = false,
+  });
 
   final String label;
+
+  /// Dolu birincil düğme olarak çizilir (ev sahibi tek başınayken).
+  final bool primary;
   final Future<void> Function(Rect? origin) onShare;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    if (primary) {
+      return Padding(
+        padding: const EdgeInsets.only(top: SahneSpace.x2),
+        child: SahneButton.primary(
+          key: const ValueKey('room-invite-share'),
+          expand: true,
+          label: label,
+          icon: AppIcons.shareNodes,
+          arrow: false,
+          onPressed: () {
+            HapticFeedback.selectionClick();
+            final box = context.findRenderObject() as RenderBox?;
+            final origin = box == null || !box.hasSize
+                ? null
+                : box.localToGlobal(Offset.zero) & box.size;
+            onShare(origin);
+          },
+        ),
+      );
+    }
     return Align(
       alignment: AlignmentDirectional.centerStart,
       child: TextButton.icon(
@@ -2072,7 +2113,12 @@ class _RoomPlayerRow extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       nameLine,
-                      if (showReadyState) ...[const SizedBox(height: 2), state],
+                      // Yerel oyuncunun satırında durumu "Hazırım" anahtarı söyler;
+                      // rozet aynı bilgiyi tekrarlıyordu (kurul 2026-10-19).
+                      if (showReadyState && onReadyChanged == null) ...[
+                        const SizedBox(height: 2),
+                        state,
+                      ],
                       if (stacked && showScore) ...[
                         const SizedBox(height: SahneSpace.x1),
                         score,

@@ -161,6 +161,18 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Mücevher karonun nötr kaşı.
   final Color rim;
 
+  /// TEK seçili stili (kurul incelemesi 2026-10-19): seçili çip, segment ve
+  /// sekme her yerde Agir'den türer — açık turuncu ton dolgu + turuncu çizgi
+  /// + koyu turuncu metin. Dolu turuncu yalnız ana eylem düğmesindedir;
+  /// seçili çip de dolu olunca ikisi birbiriyle yarışıyordu (7 modelden 4'ü).
+  /// Metin ≥ 4.5:1 ([selTx] ton dolgu üstünde; test bunu ölçer).
+  Color get selFill =>
+      Color.alphaBlend(act.withValues(alpha: _isNight ? 0.24 : 0.18), s1);
+  Color get selLine => act;
+  Color get selTx => actTx;
+
+  bool get _isNight => bg.computeLuminance() < 0.2;
+
   static const night = SahneTokens(
     bg: Color(0xFF0A0F2E),
     nav: Color(0xFF0D1335),
