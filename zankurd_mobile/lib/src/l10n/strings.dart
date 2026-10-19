@@ -1756,6 +1756,9 @@ class Tr {
     K.silver: {'ku': 'Zîv', 'tr': 'Gümüş'},
     K.gold: {'ku': 'Zêrîn', 'tr': 'Altın'},
     K.locked: {'ku': 'Girtî', 'tr': 'Kilitli'},
+    // Kurul 3. tur 2026-10-20: kilitli dersleri tek satırda toplayan
+    // düğme. Kurmancî metin jüri incelemesi bekliyor (NEEDS_JURY).
+    K.lessonsMoreCount: {'ku': '+{n} ders din', 'tr': '+{n} ders daha'},
     K.titleWord: {'ku': 'Nav û nîşan', 'tr': 'Unvan'},
     K.hideAction: {'ku': 'Veşêre', 'tr': 'Gizle'},
     K.noTitlesYet: {
@@ -3929,6 +3932,7 @@ class K {
   static const silver = 'avatar.silver';
   static const gold = 'avatar.gold';
   static const locked = 'common.locked';
+  static const lessonsMoreCount = 'learning.lessonsMoreCount';
   static const titleWord = 'avatar.titleWord';
   static const hideAction = 'common.hide';
   static const noTitlesYet = 'avatar.noTitles';

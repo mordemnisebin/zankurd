@@ -73,6 +73,9 @@ int learningRecommendedIndex({
   );
 }
 
+/// Etkin dersten sonra görünen kilitli ders sayısı; kalanı "+N ders daha".
+const int _kVisibleLockedLessons = 3;
+
 /// Ders kilitli mi: tamamlanmamış ve önerilen dersin ARKASINDA olan kilitlidir.
 /// Önerilene kadar (kendisi dahil) her ders açıktır; tamamlananlar açık kalır.
 /// [recommendedIndex] -1 ise hepsi tamamlanmıştır, hiçbiri kilitli değildir.
@@ -133,6 +136,7 @@ class _LearningScreenState extends State<LearningScreen> {
   String _selectedCategory = _kLearningCategoryIds.first;
   Set<String> _completedIds = const {};
   List<Lesson> _currentLessons = const [];
+  bool _showAllLocked = false;
   PlacementLevel? _placementLevel;
   bool _placementPrompt = false;
   bool _lessonsLoading = false;
@@ -212,6 +216,7 @@ class _LearningScreenState extends State<LearningScreen> {
     if (_lessonsLoading) return;
     setState(() {
       _selectedCategory = category;
+      _showAllLocked = false;
       _loadLessons();
     });
   }
@@ -434,7 +439,25 @@ class _LearningScreenState extends State<LearningScreen> {
           run = <Widget>[];
         }
 
+        // Kurul 3. tur (2026-10-20): uzun sönük kilitli ders listesi
+        // ilerlemeyi zayıf gösteriyordu (55/56). Sıradaki en çok
+        // [_kVisibleLockedLessons] kilitli ders görünür; kalanı tek
+        // "+N ders daha" satırında toplanır, dokununca açılır.
+        var lockedShown = 0;
+        var lockedHidden = 0;
         for (var i = 0; i < lessons.length; i++) {
+          final isLocked = learningLessonLocked(
+            index: i,
+            completed: _completedIds.contains(lessons[i].id),
+            recommendedIndex: firstOpenIndex,
+          );
+          if (isLocked) {
+            if (!_showAllLocked && lockedShown >= _kVisibleLockedLessons) {
+              lockedHidden++;
+              continue;
+            }
+            lockedShown++;
+          }
           final stop = _pathStop(
             ctx,
             ku,
@@ -449,6 +472,20 @@ class _LearningScreenState extends State<LearningScreen> {
           } else {
             run.add(stop.widget);
           }
+        }
+        if (lockedHidden > 0) {
+          run.add(
+            SahneListRow.plain(
+              key: const ValueKey('learning-locked-more'),
+              title: context.t(K.lessonsMoreCount, {'n': '$lockedHidden'}),
+              onTap: () => setState(() => _showAllLocked = true),
+              trailing: Icon(
+                AppIcons.lock,
+                size: 20,
+                color: t.tx3.withValues(alpha: 0.7),
+              ),
+            ),
+          );
         }
         closeRun();
         return Column(
