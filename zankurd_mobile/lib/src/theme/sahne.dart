@@ -111,6 +111,15 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Pasif etiket: ikincil metin; pasif dolguya karşı ≥ 4.5.
   Color get disabledFg => tx2;
 
+  /// Metin alanı dolgusu (kurul 2026-10-20): gündüz Şev'e yakın açık ton, kart
+  /// içinde beyazdan ve pasif düğmeden ayrılır; gece Kulis.
+  Color get fieldFill => _isDay ? const Color(0xFFF4F6FA) : s2;
+
+  /// Metin alanının dinlenme kenarı, 1 px: eski `edge` zemine karışıyordu
+  /// (Giriş ekranında alanlar arka planla birleşti).
+  Color get fieldEdge =>
+      _isDay ? const Color(0xFFB4BCD0) : const Color(0x66BCC3E4);
+
   /// Agir — birincil eylem dolgusu.
   final Color act;
 
