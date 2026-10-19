@@ -2,7 +2,7 @@
   {
     "id": "ex28_dastangotin_001",
     "category": "Çand",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di destana Mem û Zînê de kesê fesad ê ku nahêle Mem û Zîn bigihîjin hev kî ye?",
     "promptTr": "\"Mem û Zîn\" destanında Mem ile Zîn'in kavuşmasına engel olan fesat kişi kimdir?",
@@ -36,7 +36,7 @@
   {
     "id": "ex28_dastangotin_002",
     "category": "Çand",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Bûyerên destana Mem û Zîna Ehmedê Xanî li kîjan bajarî derbas dibin?",
     "promptTr": "Ehmedê Xanî'nin \"Mem û Zîn\" destanındaki olaylar hangi şehirde geçer?",
@@ -104,7 +104,7 @@
   {
     "id": "ex28_dastangotin_004",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di destana Siyabend û Xecê de Siyabend li ser kîjan çiyayî jiyana xwe ji dest dide?",
     "promptTr": "\"Siyabend û Xecê\" destanında Siyabend hangi dağda hayatını kaybeder?",
@@ -138,7 +138,7 @@
   {
     "id": "ex28_dastangotin_005",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di destana Mem û Zînê de hevalê herî nêzîk ê Mem kî ye?",
     "promptTr": "\"Mem û Zîn\" destanında Mem'in en yakın dostu kimdir?",
@@ -172,7 +172,7 @@
   {
     "id": "ex28_dastangotin_006",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di destana Mem û Zîna Ehmedê Xanî de Sitî çi dibe Zînê?",
     "promptTr": "Ehmedê Xanî'nin \"Mem û Zîn\" destanında Sitî, Zîn'in nesi olur?",
@@ -206,7 +206,7 @@
   {
     "id": "ex28_dastangotin_007",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Destana Zembîlfiroş a menzûm ji aliyê kîjan helbestvanê klasîk ve hatiye nivîsandin?",
     "promptTr": "Manzum Zembîlfiroş destanı hangi klasik şair tarafından yazılmıştır?",
@@ -240,7 +240,7 @@
   {
     "id": "ex28_dastangotin_008",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di destana Siyabend û Xecê de Siyabend ji bo Xecê li pey kîjan ajalî diçe û di encamê de ji zinaran dikeve?",
     "promptTr": "\"Siyabend û Xecê\" destanında Siyabend, Xecê için hangi hayvanın peşine düşer ve sonunda kayalıklardan düşer?",
@@ -410,7 +410,7 @@
   {
     "id": "ex28_dastangotin_013",
     "category": "Çand",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Lehengê destana Kela Dimdimê, Emîrxan, çima bi navê \"Lepzêrîn\" tê naskirin?",
     "promptTr": "Kela Dimdim destanının kahramanı Emîrxan neden \"Lepzêrîn\" adıyla tanınır?",
@@ -444,7 +444,7 @@
   {
     "id": "ex28_dastangotin_014",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kela Dimdimê, ku lehengê destana wê Emîrxanê Lepzêrîn e, li nêzîkî kîjan golê ye?",
     "promptTr": "Destanının kahramanı Emîrxanê Lepzêrîn olan Dimdim Kalesi hangi gölün yakınındadır?",
@@ -478,7 +478,7 @@
   {
     "id": "ex28_dastangotin_015",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Li gorî destana Kela Dimdimê, leşkerê kîjan şahî kel dorpêç kir û bi Emîrxanê Lepzêrîn re şer kir?",
     "promptTr": "Kela Dimdim destanına göre kaleyi hangi şahın ordusu kuşattı ve Emîrxanê Lepzêrîn ile savaştı?",
@@ -580,7 +580,7 @@
   {
     "id": "ex28_dastangotin_018",
     "category": "Çand",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Cembelî, lehengê destana \"Cembelî û Binevşê\", kurê mîrê kîjan herêmê bû?",
     "promptTr": "\"Cembelî ile Binevş\" destanının kahramanı Cembelî hangi yörenin mirinin oğluydu?",
@@ -614,7 +614,7 @@
   {
     "id": "ex28_dastangotin_019",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di destana Cembelî û Binevşê de, leheng Cembelî ji bo ku Binevşê bibîne li ba Derwêş Beg dibe çi?",
     "promptTr": "Cembelî ile Binevş destanında kahraman Cembelî, Binevş'i görebilmek için Derweş Bey'in yanında ne olur?",
@@ -682,7 +682,7 @@
   {
     "id": "ex28_dastangotin_021",
     "category": "Çand",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di destana Derwêşê Evdî de, navê keça ku leheng Derwêş jê hez dike çi ye?",
     "promptTr": "Derwêşê Evdî destanında kahraman Derwêş'in sevdiği kızın adı nedir?",
@@ -750,7 +750,7 @@
   {
     "id": "ex28_dastangotin_023",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di wêjeya devkî ya kurdî de, navê hespê lehengê navdar Ristemê Zal çi ye?",
     "promptTr": "Kürt sözlü edebiyatında ünlü kahraman Zaloğlu Rüstem'in atının adı nedir?",
@@ -818,7 +818,7 @@
   {
     "id": "ex28_festival_belgefilm_001",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Festîvala Fîlmên Kurdî ya Londonê (LKFF), ku kurtefîlm û belgefîlmên kurdî jî pêşkêş dike, di kîjan salê de hate damezrandin?",
     "promptTr": "Kürt kısa filmlerini ve belgesellerini de sunan Londra Kürt Film Festivali (LKFF) hangi yıl kuruldu?",
@@ -886,7 +886,7 @@
   {
     "id": "ex28_festival_belgefilm_003",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Festîvala Navneteweyî ya Fîlman a Duhokê, ku xelatan dide fîlmên dirêj, kurtefîlm û belgefîlman, cara yekem di kîjan salê de hate lidarxistin?",
     "promptTr": "Uzun metrajlı filmlere, kısa filmlere ve belgesellere ödül veren Duhok Uluslararası Film Festivali ilk kez hangi yıl düzenlendi?",
@@ -954,7 +954,7 @@
   {
     "id": "ex28_festival_belgefilm_005",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Fîlmê \"Vodka Lemon\" yê Hiner Saleem sala 2003an li festîvala kîjan bajarî xelata San Marco wergirt?",
     "promptTr": "Hiner Saleem'in \"Vodka Lemon\" filmi 2003 yılında hangi şehrin festivalinde San Marco Ödülü'nü kazandı?",
@@ -1022,7 +1022,7 @@
   {
     "id": "ex28_festival_belgefilm_007",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Fîlmê \"Min Dît\" yê Miraz Bezar li 46emîn Festîvala \"Altın Portakal\" a kîjan bajarî xelateke taybet a jûriyê wergirt?",
     "promptTr": "Miraz Bezar'ın \"Min Dît\" filmi hangi şehirdeki 46. Altın Portakal Film Festivali'nde jüri özel ödülü kazandı?",
@@ -1056,7 +1056,7 @@
   {
     "id": "ex28_festival_belgefilm_008",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Fîlmê \"Kilomètre zéro\" yê Hiner Saleem bû yekem berhema Iraqê ku ji bo xelata sereke ya kîjan festîvalê ket pêşbirka fermî?",
     "promptTr": "Hiner Saleem'in \"Kilomètre zéro\" filmi hangi festivalin büyük ödülü için resmî yarışmaya giren ilk Irak yapımı oldu?",
@@ -1226,7 +1226,7 @@
   {
     "id": "ex28_festival_belgefilm_013",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Belgefîlma xelatgir \"İki Dil Bir Bavul\" salekê ji jiyana kê li gundekî kurdan ê Rihayê vedibêje?",
     "promptTr": "Ödüllü \"İki Dil Bir Bavul\" belgeseli, Urfa'daki bir Kürt köyünde kimin hayatından bir yılı anlatır?",
@@ -1328,7 +1328,7 @@
   {
     "id": "ex28_festival_belgefilm_016",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Belgefîlma xelatgir \"Der Imker\" ya Mano Khalil li ser jiyana kurdekî ye ku bi kîjan karî mijûl dibe?",
     "promptTr": "Mano Khalil'in ödüllü \"Der Imker\" belgeseli hangi işle uğraşan bir Kürdün hayatını anlatır?",
@@ -1362,7 +1362,7 @@
   {
     "id": "ex28_festival_belgefilm_017",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Belgefîlma xelatgir \"Demsala Dawî: Şewaxan\" (2009) ya Kazim Öz jiyana kê di çar demsalan de vedibêje?",
     "promptTr": "Kazım Öz'ün ödüllü \"Son Mevsim: Şavaklar\" (2009) belgeseli dört mevsim boyunca kimlerin hayatını anlatır?",
@@ -1464,7 +1464,7 @@
   {
     "id": "ex28_festival_belgefilm_020",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Belgefîlma xelatgir \"Evdalê Zeynikê\" (2010) ya Bulent Gunduz bi giranî kîjan kevneşopiya kurdî vedibêje?",
     "promptTr": "Bülent Gündüz'ün ödüllü \"Evdalê Zeynikê\" (2010) belgeseli ağırlıklı olarak hangi Kürt geleneğini anlatır?",
@@ -1532,7 +1532,7 @@
   {
     "id": "ex28_festival_belgefilm_022",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Belgefîlma \"Allihopa: The Dalkurd Story\", ku sala 2023an li festîvala Hot Docs cara yekem hat nîşandan, çîroka tîmeke futbolê ya kurdan li kîjan welatî vedibêje?",
     "promptTr": "2023'te Hot Docs festivalinde ilk kez gösterilen \"Allihopa: The Dalkurd Story\" belgeseli, hangi ülkedeki bir Kürt futbol takımının hikâyesini anlatır?",
@@ -1566,7 +1566,7 @@
   {
     "id": "ex28_festival_belgefilm_023",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Belgefîlma kurt \"Life in Fog\", ku panzdeh xelatên navneteweyî wergirtin, ji aliyê kê ve hatiye çêkirin?",
     "promptTr": "On beş uluslararası ödül kazanan kısa belgesel \"Life in Fog\" kim tarafından yapılmıştır?",
@@ -1600,7 +1600,7 @@
   {
     "id": "ex28_festival_belgefilm_024",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Festîvala Belgefîlman a FîlmAmedê, ku li Diyarbekirê tê lidarxistin, bi kîjan zimanan pêk tê?",
     "promptTr": "Diyarbakır'da düzenlenen FilmAmed Belgesel Film Festivali hangi dillerde gerçekleştirilir?",
@@ -1634,7 +1634,7 @@
   {
     "id": "ex28_nujen_001",
     "category": "Muzîk",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan helbestvanî ji Şivan Perwer re gotiye \"dengê helbestên min\"?",
     "promptTr": "Hangi şair Şivan Perwer için \"şiirlerimin sesi\" demiştir?",
@@ -1668,7 +1668,7 @@
   {
     "id": "ex28_nujen_002",
     "category": "Muzîk",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Ciwan Haco sala 2012an \"Esmer\" bi kîjan hunermenda navdar a Tirkiyeyê re got?",
     "promptTr": "Ciwan Haco 2012'de \"Esmer\"i hangi ünlü sanatçıyla birlikte seslendirdi?",
@@ -1736,7 +1736,7 @@
   {
     "id": "ex28_nujen_004",
     "category": "Muzîk",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Aram Tigran ji sala 1966an pê ve bi salan li kîjan radyoyê xebitî?",
     "promptTr": "Aram Tigran 1966'dan itibaren yıllarca hangi radyoda çalıştı?",
@@ -1770,7 +1770,7 @@
   {
     "id": "ex28_nujen_005",
     "category": "Muzîk",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Şivan Perwer sala 1976an li kîjan welatî bi cih bû?",
     "promptTr": "Şivan Perwer 1976'da hangi ülkeye yerleşti?",
@@ -1940,7 +1940,7 @@
   {
     "id": "ex28_nujen_010",
     "category": "Muzîk",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Hozan Kawa bi albûma xwe ya sala 2001ê hat naskirin. Navê wê albûmê çi ye?",
     "promptTr": "Hozan Kawa 2001 tarihli albümüyle tanındı. Bu albümün adı nedir?",
@@ -2110,7 +2110,7 @@
   {
     "id": "ex28_nujen_015",
     "category": "Muzîk",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Koma Wetan, yekem grûpa rockê ya kurdî, li kîjan bajarî hate damezrandin?",
     "promptTr": "İlk Kürt rock grubu olan Koma Wetan hangi şehirde kuruldu?",
@@ -2178,7 +2178,7 @@
   {
     "id": "ex28_nujen_017",
     "category": "Muzîk",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Grûpa malbatî ya Kamkaran ji çend bira û xwişkan pêk tê?",
     "promptTr": "Kamkarlar aile topluluğu kaç erkek ve kız kardeşten oluşur?",
@@ -2280,7 +2280,7 @@
   {
     "id": "ex28_nujen_020",
     "category": "Muzîk",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Şîrketa \"Kalan Müzik\", ku gelek albûmên muzîka kurdî weşandine, di sala 1991ê de ji aliyê kê ve hate damezrandin?",
     "promptTr": "Pek çok Kürt müziği albümü yayımlayan Kalan Müzik, 1991'de kim tarafından kuruldu?",
@@ -2518,7 +2518,7 @@
   {
     "id": "ex28_rastnivisin_005",
     "category": "Ziman",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di alfabeya kurmancî de kîjan sê tîp dengdêrên kurt in?",
     "promptTr": "Kurmancî alfabesinde hangi üç harf kısa ünlüdür?",
@@ -3099,7 +3099,7 @@
   {
     "id": "ex28_tistonek_001",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di mamik û tiştonekên kurdî de bersiva \"Goma bavê min tije pez e, şefeqê radibim hebek tune ye\" çi ye?",
     "promptTr": "Kürt bilmecelerinde \"Babamın ağılı koyun dolu; şafakta kalkıyorum, bir tanesi bile yok\" bilmecesinin cevabı nedir?",
@@ -3133,7 +3133,7 @@
   {
     "id": "ex28_tistonek_002",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Bersiva vê tiştonekê, ku jê re mamik jî tê gotin, çi ye: \"Şev têt, şemal têt; gah têt, gopal têt; nik padîşah û sultan têt\"?",
     "promptTr": "Kürtçede \"mamik\" de denen şu bilmecenin (tiştonek) cevabı nedir: \"Gece gelir, kandil olup gelir; kimi zaman değnek olup gelir; padişahın, sultanın yanına da gelir\"?",
@@ -3235,7 +3235,7 @@
   {
     "id": "ex28_tistonek_005",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Bersiva vê tiştonekê, ku jê re mamik jî tê gotin, çi ye: \"Ji hire heta Bexda kulav rada\"?",
     "promptTr": "Kürtçede \"mamik\" de denen şu bilmecenin (tiştonek) cevabı nedir: \"Buradan Bağdat'a kadar keçe serildi\"?",
@@ -3303,7 +3303,7 @@
   {
     "id": "ex28_tistonek_007",
     "category": "Çand",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Mamikeke kurdî (tiştonek) wiha dibêje: \"Kalokî tê ji deştê, barê striyan li piştê.\" Bersiv çi ye?",
     "promptTr": "Bir Kürt bilmecesi şöyle der: \"Bir ihtiyarcık ovadan gelir, sırtında diken yükü.\" Cevabı nedir?",
@@ -3507,7 +3507,7 @@
   {
     "id": "ex28_tistonek_013",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Mamikeke kurdî (tiştonek) wiha dibêje: \"Tiştekî min heye, sindoqa xilqandî, li ser darê daliqandî.\" Bersiv çi ye?",
     "promptTr": "Bir Kürt bilmecesi şöyle der: \"Bir şeyim var: yaratılmış bir sandık, ağaca asılmış.\" Cevabı nedir?",
@@ -3711,7 +3711,7 @@
   {
     "id": "ex28_tistonek_019",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Bersiva vê mamikê (tiştonekê) çi ye? \"Mezela şuştî û miştî, du feqên çavreş tê de rûniştî\"",
     "promptTr": "Bu bilmecenin (mamik/tiştonek) cevabı nedir? \"Yıkanıp temizlenmiş bir oda, içinde kara gözlü iki medrese talebesi (feqe) oturmuş\"",
@@ -3745,7 +3745,7 @@
   {
     "id": "ex28_tistonek_020",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Ev tiştonek çi ye? \"Şil bike, rep bike, tê re bike\" — bersiva mamikê bibêje.",
     "promptTr": "Bu bilmece (tiştonek) nedir? \"Islat, dikleştir, içinden geçir\" — mamik'in cevabını söyle.",
@@ -3915,7 +3915,7 @@
   {
     "id": "ex28_tistonek_025",
     "category": "Çand",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Li hin herêman ji tiştonekê re navekî din tê gotin û pirs bi qalibekî taybet dest pê dike. Ew qalib kîjan e?",
     "promptTr": "Bazı yörelerde tiştonek'e (bilmece) başka bir ad verilir ve soru özel bir kalıpla başlar. Bu kalıp hangisidir?",
@@ -4051,7 +4051,7 @@
   {
     "id": "ex28_yilmaz_guney_001",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Li Festîvala Navneteweyî ya Fîlman a Duhokê, xelata herî mezin a fîlmê dirêj ê herî baş bi navê kê hatiye binavkirin?",
     "promptTr": "Duhok Uluslararası Film Festivali'nde en iyi uzun metrajlı filme verilen en büyük ödül kimin adını taşır?",
@@ -4153,7 +4153,7 @@
   {
     "id": "ex28_yilmaz_guney_004",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Yilmaz Guney \"Duvar\" (1983) li kîjan welatî kişand?",
     "promptTr": "Yılmaz Güney \"Duvar\"ı (1983) hangi ülkede çekti?",
@@ -4187,7 +4187,7 @@
   {
     "id": "ex28_yilmaz_guney_005",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Yilmaz Guney di kîjan salê de ji dayik bû?",
     "promptTr": "Yılmaz Güney hangi yılda doğdu?",
@@ -4255,7 +4255,7 @@
   {
     "id": "ex28_yilmaz_guney_007",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan berhema Yilmaz Guney wekî \"yekem fîlmê realîst ê sînemaya Tirkiyeyê\" tê hesibandin?",
     "promptTr": "Yılmaz Güney'in hangi eseri \"Türk sinemasının ilk gerçekçi filmi\" kabul edilir?",
@@ -4289,7 +4289,7 @@
   {
     "id": "ex28_yilmaz_guney_008",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di \"Umut\" (1970) de Cabbar, ku Yilmaz Guney dilîze, bi kîjan karî debara xwe dike?",
     "promptTr": "\"Umut\" (1970) filminde Yılmaz Güney'in oynadığı Cabbar geçimini hangi işle sağlar?",
@@ -4527,7 +4527,7 @@
   {
     "id": "ex28_yilmaz_guney_015",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Fîlmê \"Zare\" (1926) ji aliyê deng û axaftinê ve çi celeb e?",
     "promptTr": "\"Zare\" filmi (1926) ses ve konuşma bakımından nasıl bir yapımdır?",
@@ -4561,7 +4561,7 @@
   {
     "id": "ex28_yilmaz_guney_016",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di fîlmê \"Zare\" de Saydo, dergistiyê Zareyê, bi kîjan karî debara xwe dike?",
     "promptTr": "\"Zare\" filminde Zare'nin nişanlısı Saydo hangi işle geçimini sağlar?",
@@ -4629,7 +4629,7 @@
   {
     "id": "ex28_yilmaz_guney_018",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di fîlmê \"Dema Hespên Serxweş\" de, da ku hêstir li ber sermaya zivistana çiyê xwe ragirin, çi didin wan?",
     "promptTr": "\"Sarhoş Atlar Zamanı\" filminde katırların dağın sert kışına dayanabilmesi için onlara ne verilir?",
@@ -4697,7 +4697,7 @@
   {
     "id": "ex28_yilmaz_guney_020",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di fîlmê Bahman Ghobadi \"Nîwemang\" (Half Moon, 2006) de Mamo kî ye?",
     "promptTr": "Bahman Ghobadi'nin filmi \"Yarım Ay\"da (Nîwemang, 2006) Mamo kimdir?",
@@ -4765,7 +4765,7 @@
   {
     "id": "ex28_yilmaz_guney_022",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di fîlmê Bahman Ghobadi \"Marooned in Iraq\" (2002) de muzîkjenê navdar Mirza bi du kurên xwe re li kê digere?",
     "promptTr": "Bahman Ghobadi'nin filmi \"Marooned in Iraq\"te (2002) ünlü müzisyen Mirza iki oğluyla birlikte kimi arar?",
@@ -4833,7 +4833,7 @@
   {
     "id": "ex28_yilmaz_guney_024",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Fîlmê Jano Rosebiani \"Jiyan\" (2002) li kîjan parçeyê Kurdistanê hatiye kişandin?",
     "promptTr": "Jano Rosebiani'nin filmi \"Jiyan\" (2002) Kürdistan'ın hangi parçasında çekilmiştir?",

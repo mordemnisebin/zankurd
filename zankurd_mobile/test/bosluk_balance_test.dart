@@ -106,7 +106,12 @@ void main() {
     );
   });
 
-  test('Siyaset yeni soruları kolay katmanda da var (d1-2 >= 10 her konu)', () {
+  // 2026-10-19: Testçiler soruları çok zor buldu; iki bağımsız model
+  // (DeepSeek + Grok) ortak olarak ≥3 saydığı sorular zorluk 3'e çekildi ve
+  // bu partinin kolay (d1-2) payı 24'ten 10'a indi. Eşik 10'dan 5'e
+  // düşürüldü: kolay katman hâlâ her konuda var; Siyaset'in bütün bankadaki
+  // kolay havuzu ayrıca ayrı testlerle ve seviye planıyla korunur.
+  test('Siyaset yeni soruları kolay katmanda da var (d1-2 >= 5 her konu)', () {
     final bank = (jsonDecode(File(_bank).readAsStringSync()) as List)
         .cast<Map<String, dynamic>>();
     final byId = {for (final q in playable) q.id: q};
@@ -117,8 +122,8 @@ void main() {
       final id = SubcategoryConfig.getSubcategoryId(q!);
       if (q.difficulty <= 2) easy[id] = (easy[id] ?? 0) + 1;
     }
-    expect(easy['diroka_siyasi'] ?? 0, greaterThanOrEqualTo(10));
-    expect(easy['siyaseta_nujen'] ?? 0, greaterThanOrEqualTo(10));
+    expect(easy['diroka_siyasi'] ?? 0, greaterThanOrEqualTo(5));
+    expect(easy['siyaseta_nujen'] ?? 0, greaterThanOrEqualTo(5));
   });
 
   test('Çand, Dîrok, Cografya doğru/yanlışta "Rast" payı <= %60', () {

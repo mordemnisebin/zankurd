@@ -492,7 +492,7 @@
   {
     "id": "bilim_0015",
     "category": "Paradigma",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Hejmara berhemên felsefî yên Sokratês ku wî bi xwe nivîsandine û gihîştine roja me çend e?",
     "promptTr": "Sokrates'in günümüze ulaşmış, kendisinin yazdığı felsefi eser sayısı kaçtır?",
@@ -1052,7 +1052,7 @@
   {
     "id": "bilim_0031",
     "category": "Paradigma",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Danezana Gerdûnî ya Mafên Mirovan di kîjan dîrokê de ji aliyê Civata Giştî ya Neteweyên Yekbûyî ve hate îlankirin?",
     "promptTr": "İnsan Hakları Evrensel Beyannamesi Birleşmiş Milletler Genel Kurulu tarafından hangi tarihte ilan edildi?",
@@ -1192,7 +1192,7 @@
   {
     "id": "bilim_0035",
     "category": "Paradigma",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Konseya Ewlekariyê ya Neteweyên Yekbûyî bi giştî ji çend endaman pêk tê?",
     "promptTr": "Birleşmiş Milletler Güvenlik Konseyi toplam kaç üyeden oluşur?",
@@ -1472,7 +1472,7 @@
   {
     "id": "bilim_0043",
     "category": "Paradigma",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Rêxistina Tenduristiyê ya Cîhanê pêşniyar dike ku mezin xwarina xwê ya rojane di bin kîjan astê de bihêlin?",
     "promptTr": "Dünya Sağlık Örgütü yetişkinlerin günlük tuz tüketimini hangi düzeyin altında tutmasını önerir?",
@@ -1717,7 +1717,7 @@
   {
     "id": "bilim_0050",
     "category": "Paradigma",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Yek ji peywirên girîng ên daristanên mangrovê di ekosîstemên peravê de kîjan e?",
     "promptTr": "Mangrov ormanlarının kıyı ekosistemlerinde önemli işlevlerinden biri hangisidir?",
@@ -2312,7 +2312,7 @@
   {
     "id": "bilim_0067",
     "category": "Paradigma",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Gerstêrka ku di 1781'an de ji aliyê William Herschel ve hatiye keşfkirin kîjan e?",
     "promptTr": "1781'de William Herschel tarafından keşfedilen gezegen hangisidir?",
