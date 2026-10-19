@@ -28,17 +28,13 @@ void main() {
     source = File('lib/src/screens/room_screen.dart').readAsStringSync();
   });
 
-  test('dış katlama satırı yalnız sohbet kapalıyken basılır', () {
-    // Biçimlendirici satır sonlarını değiştirebilir; kural boşluktan
-    // bağımsız okunmalı yoksa `dart format` bekçiyi kırar.
+  // Tasarım kurulu tüm ekranlar 2026-10-20: dış "Sohbet" satırı kalktı; sohbet
+  // başlıktaki küçük ikon düğmesidir ve RoomChat açıkken başlıkları tek kalır.
+  test('sohbet düğmesi başlıkta; tam genişlik satır yok', () {
     final collapsed = source.replaceAll(RegExp(r'\s+'), ' ');
-    expect(
-      collapsed,
-      contains('if (!_chatOpen) _ChatToggleRow('),
-      reason:
-          '_ChatToggleRow koşulsuz basılırsa RoomChat açıkken iki başlık '
-          'üst üste biner.',
-    );
+    expect(collapsed, isNot(contains('_ChatToggleRow')));
+    expect(collapsed, contains("ValueKey('room-chat-toggle')"));
+    expect(collapsed, contains('trailing:'));
   });
 
   test('RoomChat kendi chevronundan kapanabiliyor', () {

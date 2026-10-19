@@ -1036,6 +1036,21 @@ class _RoomScreenState extends State<RoomScreen> {
                   title: context.t(K.roomLobbyTitle),
                   leaveLabel: context.t(K.leaveRoom),
                   onLeave: _leaving ? null : _leaveRoom,
+                  // Kurul 2026-10-20 (Opus, DeepSeek): tam genişlik ikincil
+                  // "Sohbet" düğmesi pasif "Yarışı başlat"la aynı
+                  // görünüyordu. Sohbet artık başlıkta küçük ikon düğmesi.
+                  // Yalnızken kimseyle konuşulmaz: gizli (kurul 2026-10-19).
+                  trailing:
+                      room.id != null && (room.players.length >= 2 || _chatOpen)
+                      ? SahneIconButton(
+                          key: const ValueKey('room-chat-toggle'),
+                          icon: AppIcons.comment,
+                          semanticLabel: context.t(K.chat),
+                          selected: _chatOpen,
+                          onPressed: () =>
+                              setState(() => _chatOpen = !_chatOpen),
+                        )
+                      : null,
                 ),
                 Expanded(
                   child: ListView(
@@ -1235,21 +1250,10 @@ class _RoomScreenState extends State<RoomScreen> {
                               // katlanabilir bir panel olarak geri geldi;
                               // kalabalık kaygısı kapalı başlayarak
                               // karşılanıyor.
-                              // Yalnızken kimseyle konuşulmaz: "Sohbet" düğmesi
-                              // gizli (kurul incelemesi 2026-10-19).
-                              if (room.id != null &&
-                                  (room.players.length >= 2 || _chatOpen)) ...[
+                              // Sohbet düğmesi artık başlıkta ([_RoomBar.trailing]);
+                              // burada yalnız açıkken panel durur.
+                              if (room.id != null && _chatOpen) ...[
                                 const SizedBox(height: SahneSpace.cardGap),
-                                // Kapalıyken dış satır, açıkken RoomChat'in
-                                // KENDİ başlığı görünür — ikisi asla aynı
-                                // anda değil (2026-08-01, iOS simülatörü:
-                                // alt alta iki "Sohbet" başlığı).
-                                if (!_chatOpen)
-                                  _ChatToggleRow(
-                                    open: _chatOpen,
-                                    onToggle: () =>
-                                        setState(() => _chatOpen = !_chatOpen),
-                                  ),
                                 if (_chatOpen && room.players.length >= 2) ...[
                                   const SizedBox(height: SahneSpace.x2),
                                   _buildQuickReactionChips(context),
@@ -1416,11 +1420,15 @@ class _RoomBar extends StatelessWidget {
     required this.title,
     required this.leaveLabel,
     required this.onLeave,
+    this.trailing,
   });
 
   final String title;
   final String leaveLabel;
   final VoidCallback? onLeave;
+
+  /// Başlığın sağındaki küçük eylem (lobide sohbet).
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -1451,6 +1459,7 @@ class _RoomBar extends StatelessWidget {
                 ),
               ),
             ),
+            ?trailing,
           ],
         ),
       ),
@@ -2290,36 +2299,4 @@ class _ReactionChip extends StatelessWidget {
     role: SahneRole.race,
     onTap: onTap,
   );
-}
-
-/// Sohbet panelini açıp kapatan satır.
-///
-/// Sohbet kapalı başlar ve bu satır onun var olduğunu söyler. aa42044
-/// odayı seyreltmek için sohbeti tamamen kaldırmıştı; kalabalık kaygısı
-/// haklıydı ama çözüm silmek değil katlamaktı (2026-07-31).
-///
-/// 2026-10-01: kartlı liste satırı kalktı. Lobinin en az önemli eylemi
-/// "Hazırım" kartı ve başlat düğmesiyle aynı yüzey ağırlığını taşıyordu;
-/// artık yüzeysiz, ortalı bir metin eylemi (simge + söz).
-class _ChatToggleRow extends StatelessWidget {
-  const _ChatToggleRow({required this.open, required this.onToggle});
-
-  final bool open;
-  final VoidCallback onToggle;
-
-  @override
-  Widget build(BuildContext context) {
-    // Tek kompakt çubuk: ikincil düğme (tam genişlik, 48). Sohbet ve hızlı
-    // tepkiler bunun arkasındadır.
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
-      child: SahneButton.secondary(
-        buttonKey: const ValueKey('room-chat-toggle'),
-        onPressed: onToggle,
-        icon: AppIcons.comment,
-        label: context.t(K.chat),
-        expand: true,
-      ),
-    );
-  }
 }
