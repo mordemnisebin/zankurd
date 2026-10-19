@@ -66,7 +66,7 @@
   },
   {
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "id": "edit_ziman_0003",
     "category": "Ziman",
     "prompt": "Di alfabeya kurdî ya latînî de çend dengdêr (vowel) hene?",
@@ -679,7 +679,7 @@
   },
   {
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "id": "edit_cand_0006",
     "category": "Çand",
     "prompt": "Di kevneşopiya kurdî de \"şevbihêrk\" çi ye?",
@@ -1471,7 +1471,7 @@
   },
   {
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "id": "edit_edebiyat_0001",
     "category": "Edebiyat",
     "prompt": "Nivîskarê \"Mem û Zîn\"ê kî ye?",

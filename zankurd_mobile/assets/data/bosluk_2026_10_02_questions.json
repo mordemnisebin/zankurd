@@ -1297,7 +1297,7 @@
   {
     "id": "bosluk_0038",
     "category": "Siyaset",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîroka siyasî ya Japonyayê de Restorasyona Meijiyê di kîjan salê de pêk hatiye?",
     "promptTr": "Japonya siyasi tarihinde Meiji Restorasyonu hangi yıl gerçekleşmiştir?",
@@ -1332,7 +1332,7 @@
   {
     "id": "bosluk_0039",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîroka siyasî ya Macaristanê de, serhildana sala 1956an ji aliyê kîjan dewletê ve hat tepeserkirin?",
     "promptTr": "Macaristan siyasi tarihinde, 1956 ayaklanması hangi devlet tarafından bastırıldı?",
@@ -1367,7 +1367,7 @@
   {
     "id": "bosluk_0040",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîroka siyasî ya Fransayê de, di dema serhildana 1848an de kîjan qiralê Fransayê dest ji text berda û welat terikand?",
     "promptTr": "Fransız siyasi tarihinde, 1848 devrimleri sırasında tahttan feragat edip ülkeyi terk eden Fransa kralı kimdir?",
@@ -1402,7 +1402,7 @@
   {
     "id": "bosluk_0041",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîroka siyasî ya Çekoslovakyayê de, serokê Partiya Komunîst ê ku di Bihara Pragê ya 1968an de dest bi reforman kir kî bû?",
     "promptTr": "Çekoslovakya siyasi tarihinde, 1968 Prag Baharı sırasında reformları başlatan Komünist Parti lideri kimdir?",
@@ -1437,7 +1437,7 @@
   {
     "id": "bosluk_0042",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîroka siyasî ya Amerîkayê de kîjan partî di sala 1854an de hatiye avakirin?",
     "promptTr": "ABD siyasi tarihinde 1854 yılında kurulan parti hangisidir?",
@@ -1472,7 +1472,7 @@
   {
     "id": "bosluk_0043",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîroka siyasî ya Çînê de serhildana sala 1911an dawî li kîjan împeratoriyê aniye?",
     "promptTr": "Çin siyasi tarihinde 1911 ayaklanması hangi imparatorluğu sona erdirmiştir?",
@@ -1507,7 +1507,7 @@
   {
     "id": "bosluk_0044",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan partî di sala 1921ê de li Şanghayê hate damezrandin û di sala 1949an de li Çînê desthilatdarî girt?",
     "promptTr": "Hangi parti 1921'de Şanghay'da kuruldu ve 1949'da Çin'de iktidara geldi?",
@@ -1892,7 +1892,7 @@
   {
     "id": "bosluk_0055",
     "category": "Siyaset",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîrokê de welatê yekem ê ku di hilbijartinan de mafê dengdanê daye jinan kîjan e?",
     "promptTr": "Tarihte seçimlerde kadınlara oy hakkını tanıyan ilk ülke hangisidir?",
@@ -2102,7 +2102,7 @@
   {
     "id": "bosluk_0061",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Yekemîn hilbijartina rasterast a Parlamentoya Ewropayê di kîjan salê de pêk hat?",
     "promptTr": "Avrupa Parlamentosu'nun ilk doğrudan seçimi hangi yılda yapılmıştır?",
@@ -2137,7 +2137,7 @@
   {
     "id": "bosluk_0062",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di siyaseta nûjen a Almanyayê de, di hilbijartinên Bundestagê de her hilbijêrek çend dengan dide?",
     "promptTr": "Almanya modern siyasetinde, Bundestag seçimlerinde her seçmen kaç oy kullanır?",
@@ -2172,7 +2172,7 @@
   {
     "id": "bosluk_0063",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di baskê jêrîn ê Parlamentoya Brîtanyayê (House of Commons) de çend kursî hene?",
     "promptTr": "Birleşik Krallık Parlamentosu'nun alt kanadı olan Avam Kamarası'nda (House of Commons) kaç sandalye vardır?",
@@ -2207,7 +2207,7 @@
   {
     "id": "bosluk_0064",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Navenda fermî ya Parlamentoya Ewropayê li kîjan bajarî ye?",
     "promptTr": "Avrupa Parlamentosu'nun resmî merkezi hangi şehirdir?",
@@ -2242,7 +2242,7 @@
   {
     "id": "bosluk_0065",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di siyaseta nûjen a Kanadayê de, senato ji çend endaman pêk tê?",
     "promptTr": "Kanada'nın modern siyasetinde, senato kaç üyeden oluşmaktadır?",
@@ -2277,7 +2277,7 @@
   {
     "id": "bosluk_0066",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di siyaseta nûjen a Fransayê de, baskê jêrîn ê parlamentoyê (Assemblée nationale) xwedî çend kursiyan e?",
     "promptTr": "Fransa'nın modern siyasetinde, parlamentonun alt kanadı olan Ulusal Meclis'te (Assemblée nationale) kaç sandalye vardır?",

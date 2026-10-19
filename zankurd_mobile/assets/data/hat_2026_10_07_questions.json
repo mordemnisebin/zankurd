@@ -2,7 +2,7 @@
   {
     "id": "hat_0001",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan nivîskarî romana Şivanê Kurmanca nivîsandiye?",
     "promptTr": "Şivanê Kurmanca romanını kim yazmıştır?",
@@ -37,7 +37,7 @@
   {
     "id": "hat_0002",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan nivîskarî romana Tu nivîsandiye?",
     "promptTr": "Tu romanını kim yazmıştır?",
@@ -72,7 +72,7 @@
   {
     "id": "hat_0003",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan nivîskarî romana Siya Evînê nivîsandiye?",
     "promptTr": "Siya Evînê romanını kim yazmıştır?",
@@ -107,7 +107,7 @@
   {
     "id": "hat_0004",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan nivîskarî romana Hawara Dîcleyê nivîsandiye?",
     "promptTr": "Hawara Dîcleyê romanını kim yazmıştır?",
@@ -142,7 +142,7 @@
   {
     "id": "hat_0005",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan nivîskarî romana Janî Gel nivîsandiye?",
     "promptTr": "Janî Gel romanını kim yazmıştır?",
@@ -177,7 +177,7 @@
   {
     "id": "hat_0006",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan nivîskarî romana Şarî Mûsîqare Spîyekan nivîsandiye?",
     "promptTr": "Şarî Mûsîqare Spîyekan romanını kim yazmıştır?",
@@ -212,7 +212,7 @@
   {
     "id": "hat_0007",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan nivîskarî romana Mîrname nivîsandiye?",
     "promptTr": "Mîrname romanını kim yazmıştır?",
@@ -247,7 +247,7 @@
   {
     "id": "hat_0008",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan nivîskarî romana Payîza Dereng nivîsandiye?",
     "promptTr": "Payîza Dereng romanını kim yazmıştır?",
@@ -282,7 +282,7 @@
   {
     "id": "hat_0009",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan nivîskarê kurd romana bi navê \"Şivanê Kurmancan\" nivîsiye, ku wek yekem romana kurmancî tê qebûlkirin?",
     "promptTr": "Kurmancî'nin ilk romanı kabul edilen \"Şivanê Kurmancan\" adlı eseri hangi Kürt yazar yazmıştır?",
@@ -317,7 +317,7 @@
   {
     "id": "hat_0010",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Romana bi navê \"Janî Gel\" ku wek yekem romana soranî tê qebûlkirin, kê nivîsiye?",
     "promptTr": "Soranî'nin ilk romanı kabul edilen \"Janî Gel\" adlı eseri kim yazmıştır?",
@@ -387,7 +387,7 @@
   {
     "id": "hat_0012",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Romana bi navê \"Tu\" ku di sala 1985an de li Swêdê hatiye weşandin, kê nivîsiye?",
     "promptTr": "1985 yılında İsveç'te yayımlanan \"Tu\" adlı romanı kim yazmıştır?",
@@ -422,7 +422,7 @@
   {
     "id": "hat_0013",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Mehmed Uzun li kîjan navçeya Rihayê ji dayik bûye?",
     "promptTr": "Mehmed Uzun, Şanlıurfa'nın hangi ilçesinde doğmuştur?",
@@ -457,7 +457,7 @@
   {
     "id": "hat_0014",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Nivîskarê navdar Bextiyar Elî romanên xwe bi kîjan zaravayê kurdî dinivîse?",
     "promptTr": "Ünlü yazar Bextiyar Elî romanlarını Kürtçenin hangi lehçesinde yazar?",
@@ -492,7 +492,7 @@
   {
     "id": "hat_0015",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Romana bi navê \"Şarî Mûsîqare Spîyekan\" ku di sala 2006an de hatiye weşandin, kê nivîsiye?",
     "promptTr": "2006 yılında yayımlanan \"Şarî Mûsîqare Spîyekan\" adlı romanı kim yazmıştır?",
@@ -527,7 +527,7 @@
   {
     "id": "hat_0016",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Romana bi navê \"Mijabad\" ku behsa dîroka Komara Mahabadê dike, kê nivîsiye?",
     "promptTr": "Mahabad Kürt Cumhuriyeti tarihini anlatan \"Mijabad\" adlı romanı kim yazmıştır?",
@@ -562,7 +562,7 @@
   {
     "id": "hat_0017",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Nivîskarê romana \"Sobarto\"yê Helîm Yûsiv xelkê kîjan bajarê Rojavayê ye?",
     "promptTr": "\"Sobarto\" romanının yazarı Helîm Yûsiv, Suriye Kürt bölgesinin hangi şehrindendir?",
@@ -632,7 +632,7 @@
   {
     "id": "hat_0019",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan berhem ji aliyê Melayê Cizîrî ve hatiye nivîsandin?",
     "promptTr": "Melayê Cizîrî tarafından yazılan eser hangisidir?",
@@ -667,7 +667,7 @@
   {
     "id": "hat_0020",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan berhem ji aliyê Feqiyê Teyran ve hatiye nivîsandin?",
     "promptTr": "Feqiyê Teyran tarafından yazılan eser hangisidir?",
@@ -702,7 +702,7 @@
   {
     "id": "hat_0021",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan berhem ferhenga menzûm a zarokan e û ji aliyê Ehmedê Xanî ve hatiye amadekirin?",
     "promptTr": "Çocuklar için manzum sözlük olan eser hangisidir ve Ahmed-i Hani tarafından hazırlanmıştır?",
@@ -737,7 +737,7 @@
   {
     "id": "hat_0022",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Melayê Cizîrî li kîjan herêmê ji dayik bûye û jiyaye?",
     "promptTr": "Melayê Cizîrî hangi bölgede doğup yaşamıştır?",
@@ -807,7 +807,7 @@
   {
     "id": "hat_0024",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Ehmedê Xanî di pêşgotina Mem û Zînê de gazinan ji çi dike?",
     "promptTr": "Ahmed-i Hani, Mem û Zîn'in önsözünde neyden yakınır?",
@@ -877,7 +877,7 @@
   {
     "id": "hat_0026",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Nivîskarê \"Dîwan\"a tesewufî ya sedsala 17an kî ye?",
     "promptTr": "17. yüzyılın ünlü tasavvufi \"Dîwan\"ının yazarı kimdir?",
@@ -912,7 +912,7 @@
   {
     "id": "hat_0027",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Nivîskarê çîroka bi helbest a \"Zembîlfiroş\" kî ye?",
     "promptTr": "Manzum \"Zembîlfiroş\" hikâyesinin yazarı kimdir?",
@@ -947,7 +947,7 @@
   {
     "id": "hat_0028",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan berhem ferhengeke bi helbest e û ji bo zarokan hatiye amadekirin?",
     "promptTr": "Hangisi manzume biçiminde hazırlanmış çocuklara yönelik bir sözlüktür?",
@@ -982,7 +982,7 @@
   {
     "id": "hat_0029",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan helbestvan wekî yekemîn helbestvanê edebiyata klasîk a Kurmancî tê qebûlkirin?",
     "promptTr": "Hangi şair Kurmanci klasik edebiyatının ilk şairi olarak kabul edilir?",
@@ -1017,7 +1017,7 @@
   {
     "id": "hat_0030",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Nivîskarê berhema \"Eqîdeya Îmanê\" kî ye?",
     "promptTr": "\"Eqîdeya Îmanê\" eserinin yazarı kimdir?",
@@ -1052,7 +1052,7 @@
   {
     "id": "hat_0031",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Nivîskarê berhema \"Şêxê Senan\" kî ye?",
     "promptTr": "Şêxê Senan' eserinin yazarı kimdir?",
@@ -1122,7 +1122,7 @@
   {
     "id": "hat_0033",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "\"Mem û Zîn\" ji aliyê cureyê edebî ve kîjan şêwe ye?",
     "promptTr": "Edebi tür bakımından \"Mem û Zîn\" hangi biçimdedir?",
@@ -1157,7 +1157,7 @@
   {
     "id": "hat_0034",
     "category": "Edebiyat",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan helbestvanê klasîk di sedsala 15an de jiyaye?",
     "promptTr": "Klasik şairlerden hangisi 15. yüzyılda yaşamıştır?",
@@ -1262,7 +1262,7 @@
   {
     "id": "hat_0037",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Fîlmê Yol li Festîvala Cannesê di kîjan salê de Xelata Palmiyeya Zêrîn wergirt?",
     "promptTr": "Yol filmi Cannes Film Festivali'nde hangi yıl Altın Palmiye ödülünü kazandı?",
@@ -1297,7 +1297,7 @@
   {
     "id": "hat_0038",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Dema Yilmaz Guney girtî bû, kişandin û derhêneriya fîlmê Yol kê kir?",
     "promptTr": "Yılmaz Güney cezaevindeyken Yol filminin çekimini ve yönetmenliğini kim üstlendi?",
@@ -1332,7 +1332,7 @@
   {
     "id": "hat_0039",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan fîlm ji senaryoya Yilmaz Guney hatiye kişandin û derhênerê wê Zeki Okten e?",
     "promptTr": "Senaryosunu Yılmaz Güney'in yazdığı ve Zeki Ökten'in yönettiği film hangisidir?",
@@ -1367,7 +1367,7 @@
   {
     "id": "hat_0040",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan berhem fîlmê dawî yê Yilmaz Guney e û li Fransayê hatiye kişandin?",
     "promptTr": "Fransa'da çekilen ve Yılmaz Güney'in son filmi olan eser hangisidir?",
@@ -1402,7 +1402,7 @@
   {
     "id": "hat_0041",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Yilmaz Guney li Parîsê di kîjan salê de koça dawî kir?",
     "promptTr": "Yılmaz Güney Paris'te hangi yıl hayatını kaybetti?",
@@ -1437,7 +1437,7 @@
   {
     "id": "hat_0042",
     "category": "Sînema",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Fîlmê Mem û Zîn ê sala 1991ê ji aliyê kîjan derhênerî ve hatiye kişandin?",
     "promptTr": "1991 yapımı Mem û Zin filmini kim yönetmiştir?",
@@ -1507,7 +1507,7 @@
   {
     "id": "hat_0044",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Fîlma bi navê Zare ku wekî yekem fîlma kurdî tê naskirin di kîjan salê de hatiye kişandin?",
     "promptTr": "İlk Kürt filmi olarak bilinen Zare adlı film hangi yılda çekilmiştir?",
@@ -1542,7 +1542,7 @@
   {
     "id": "hat_0045",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Fîlma Yilmaz Guney û Şerîf Goren a bi navê Yol di kîjan salê de li Cannesê xelata sereke wergirt?",
     "promptTr": "Yılmaz Güney ve Şerif Gören'in Yol filmi Cannes'da ana ödülü hangi yılda kazandı?",
@@ -1577,7 +1577,7 @@
   {
     "id": "hat_0046",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan derhêner fîlma bi navê Dema Hespên Serxweş kişandiye?",
     "promptTr": "Sarhoş Atlar Zamanı adlı filmi hangi yönetmen çekmiştir?",
@@ -1612,7 +1612,7 @@
   {
     "id": "hat_0047",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Fîlma Behmen Qubadî ya bi navê Kûsî Jî Dikarin Bifirin di kîjan festîvalê de xelata sereke wergirt?",
     "promptTr": "Bahman Ghobadi'nin Kaplumbağalar da Uçar filmi hangi festivalde büyük ödülü kazandı?",
@@ -1647,7 +1647,7 @@
   {
     "id": "hat_0048",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan fîlm di sala 2005an de wekî yekem fîlma Iraqê beşdarî pêşbaziya sereke ya Cannesê bû?",
     "promptTr": "2005 yılında Cannes ana yarışmasına katılan ilk Irak filmi hangisidir?",
@@ -1682,7 +1682,7 @@
   {
     "id": "hat_0049",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan derhêner fîlma bi navê Min Dît a sala 2009an kişandiye?",
     "promptTr": "2009 yapımı Min Dît / Gördüm adlı filmi hangi yönetmen çekmiştir?",
@@ -1717,7 +1717,7 @@
   {
     "id": "hat_0050",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Fîlma Kazim Oz a bi navê Zer di kîjan salê de derket?",
     "promptTr": "Kazım Öz'ün Zer filmi hangi yılda vizyona girdi?",
@@ -1752,7 +1752,7 @@
   {
     "id": "hat_0051",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Belgesela bi navê Bakur a sala 2015an kîjan derhêneran kişandiye?",
     "promptTr": "2015 yapımı Bakur / Kuzey belgeselini hangi yönetmenler çekmiştir?",
@@ -1822,7 +1822,7 @@
   {
     "id": "hat_0053",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan fîlmê ku senaryoya wî Yilmaz Guney nivîsî, di sala 1982an de li Cannesê Xelata Palmiyeya Zêrîn wergirt?",
     "promptTr": "Senaryosunu Yılmaz Güney'in yazdığı hangi film 1982'de Cannes'da Altın Palmiye kazandı?",
@@ -1857,7 +1857,7 @@
   {
     "id": "hat_0054",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan fîlmê yekem ê derhênerê kurd Bahman Ghobadi di sala 2000î de li Cannesê Xelata Caméra d'Or wergirt?",
     "promptTr": "Kürt yönetmen Bahman Ghobadi'nin 2000'de Cannes'da Caméra d'Or ödülünü kazanan ilk filmi hangisidir?",
@@ -1892,7 +1892,7 @@
   {
     "id": "hat_0055",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan fîlmê Bahman Ghobadi di sala 2004an de li Festîvala San Sebastianê Xelata Golden Shell wergirt?",
     "promptTr": "Bahman Ghobadi'nin hangi filmi 2004'te San Sebastian Festivali'nde Altın İstiridye ödülünü kazandı?",
@@ -1927,7 +1927,7 @@
   {
     "id": "hat_0056",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kê fîlmê Min Dît ê sala 2009an derhênerî kir?",
     "promptTr": "2009 yapımı Min Dît filmini kim yönetti?",
@@ -1962,7 +1962,7 @@
   {
     "id": "hat_0057",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kê fîlmê Kilometre Zero yê sala 2005an derhênerî kir?",
     "promptTr": "2005 yapımı Kilometre Zero filmini kim yönetti?",
@@ -1997,7 +1997,7 @@
   {
     "id": "hat_0058",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kê belgefîlmê The Legend of the Ugly King ê sala 2017an ê li ser Yilmaz Guney derhênerî kir?",
     "promptTr": "Yılmaz Güney hakkında 2017 yapımı The Legend of the Ugly King belgeselini kim yönetti?",
@@ -2032,7 +2032,7 @@
   {
     "id": "hat_0059",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Fîlmê My Sweet Pepper Land ê Hiner Saleem di kîjan beşê Festîvala Cannesê ya 2013an de hat nîşandan?",
     "promptTr": "Hiner Saleem'in My Sweet Pepper Land filmi 2013 Cannes Festivali'nin hangi bölümünde gösterildi?",
@@ -2067,7 +2067,7 @@
   {
     "id": "hat_0060",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan derhêneran fîlmê Dengê Bavê Min ê sala 2012an derhênerî kirin?",
     "promptTr": "2012 yapımı Babamın Sesi filmini kimler yönetti?",
@@ -2102,7 +2102,7 @@
   {
     "id": "hat_0061",
     "category": "Sînema",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Festîvala Fîlman a Navneteweyî ya Silêmaniyê di kîjan salê de hatiye damezrandin?",
     "promptTr": "Süleymaniye Uluslararası Film Festivali hangi yılda kuruldu?",
@@ -2277,7 +2277,7 @@
   {
     "id": "hat_0066",
     "category": "Cografya",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan çem li nêzî Mûsilê bi çemê Dîcleyê re dibe yek?",
     "promptTr": "Musul yakınlarında Dicle Nehri ile birleşen akarsu hangisidir?",
@@ -2312,7 +2312,7 @@
   {
     "id": "hat_0067",
     "category": "Cografya",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan çem li nêzî Zaxoyê diherike û li Başûr dirije çemê Dîcleyê?",
     "promptTr": "Zaho yakınından geçip güneyde Dicle'ye dökülen akarsu hangisidir?",
@@ -2347,7 +2347,7 @@
   {
     "id": "hat_0068",
     "category": "Cografya",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan gol bi bendava li ser Zapê Biçûk çêbûye û li Silêmaniyê ye?",
     "promptTr": "Küçük Zap üzerindeki barajla oluşmuş ve Süleymaniye'de bulunan göl hangisidir?",
@@ -2417,7 +2417,7 @@
   {
     "id": "hat_0070",
     "category": "Cografya",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan çem ji herêma Gurgumê dertê û dirije Deryaya Spî?",
     "promptTr": "Kahramanmaraş bölgesinden doğup Akdeniz'e dökülen nehir hangisidir?",
@@ -2627,7 +2627,7 @@
   {
     "id": "hat_0076",
     "category": "Cografya",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan gol û bendav li parêzgeha Silêmaniyê ye û li ser Zapê Biçûk hatiye çêkirin?",
     "promptTr": "Süleymaniye ilinde bulunan ve Küçük Zap üzerinde kurulmuş olan göl ve baraj hangisidir?",
@@ -2767,7 +2767,7 @@
   {
     "id": "hat_0080",
     "category": "Cografya",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan ji van çeman bi Qeresûyê re dibe yek û Firatê çêdike?",
     "promptTr": "Bu akarsulardan hangisi Karasu ile birleşerek Fırat'ı oluşturur?",
@@ -2802,7 +2802,7 @@
   {
     "id": "hat_0081",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Paytexta dewleta Medan kîjan bajar bû?",
     "promptTr": "Med devletinin başkenti hangi şehirdi?",
@@ -2837,7 +2837,7 @@
   {
     "id": "hat_0082",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kî wekî damezrînerê yekem ê dewleta Medan tê naskirin?",
     "promptTr": "Med devletinin ilk kurucusu olarak kim tanınır?",
@@ -2872,7 +2872,7 @@
   {
     "id": "hat_0083",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Zimanê hurriyan bi kîjan zimanê kevnar ve girêdayî tê dîtin?",
     "promptTr": "Hurrice hangi antik dille akraba kabul edilir?",
@@ -2907,7 +2907,7 @@
   {
     "id": "hat_0084",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Paytexta dewleta Mîtanniyê kîjan bû?",
     "promptTr": "Mitanni devletinin başkenti hangisiydi?",
@@ -2942,7 +2942,7 @@
   {
     "id": "hat_0085",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Mîtannî di Rojhilata Nêzîk a kevnar de bi kîjan pisporiyê navdar bûn?",
     "promptTr": "Mitanniler eski Yakın Doğu'da hangi uzmanlıklarıyla ünlüydü?",
@@ -2977,7 +2977,7 @@
   {
     "id": "hat_0086",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Gûtî piştî hilweşîna kîjan dewletê li Mezopotamyayê bûn desthilatdar?",
     "promptTr": "Gutiler hangi devletin yıkılmasından sonra Mezopotamya'da egemen oldular?",
@@ -3012,7 +3012,7 @@
   {
     "id": "hat_0087",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Navê Kardûxiyan di kîjan berhema nivîskarekî yewnanî yê kevnar de derbas dibe?",
     "promptTr": "Kardukların adı hangi antik Yunan yazarının eserinde geçer?",
@@ -3047,7 +3047,7 @@
   {
     "id": "hat_0088",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan keyê medî bi hevkariya babîliyan paytexta aşûriyan hilweşand?",
     "promptTr": "Asur başkentini Babillilerle iş birliği yaparak yıkan Med kralı hangisidir?",
@@ -3082,7 +3082,7 @@
   {
     "id": "hat_0089",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Zimanê medan ê kevnar di kîjan malbata zimanan de cih digire?",
     "promptTr": "Antik Med dili hangi dil ailesine girer?",
@@ -3117,7 +3117,7 @@
   {
     "id": "hat_0090",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Xwedayê sereke yê bahozê di ola hurriyan de kî bû?",
     "promptTr": "Hurri dininde baş fırtına tanrısı kimdi?",
@@ -3152,7 +3152,7 @@
   {
     "id": "hat_0091",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di sala 612 b.z. de Medan û Babîliyan paytexta Asûriyan hilweşand, ew paytext kîjan bû?",
     "promptTr": "MÖ 612'de Medler ve Babilliler Asur başkentini yıktılar, bu başkent hangisiydi?",
@@ -3187,7 +3187,7 @@
   {
     "id": "hat_0092",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Keyê dawî yê Medan kî bû ku Kyrosê Mezin ew têk bir?",
     "promptTr": "Büyük Kyros tarafından yenilgiye uğratılan son Med kralı kimdir?",
@@ -3222,7 +3222,7 @@
   {
     "id": "hat_0093",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Yek ji navendên herî girîng ên Hûrriyan li Mezopotamyaya Jorîn kîjan bû?",
     "promptTr": "Yukarı Mezopotamya'da Hurrilerin en önemli merkezlerinden biri hangisiydi?",
@@ -3257,7 +3257,7 @@
   {
     "id": "hat_0094",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Paytexta dewleta Mîtanniyan kîjan bajar bû?",
     "promptTr": "Mitanni devletinin başkenti hangisiydi?",
@@ -3292,7 +3292,7 @@
   {
     "id": "hat_0095",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan kes bi metnê navdar ê perwerdehiya hespan ê Mîtanniyê tê naskirin?",
     "promptTr": "Mitanni'ye ait ünlü at eğitimi metniyle tanınan kişi kimdir?",
@@ -3327,7 +3327,7 @@
   {
     "id": "hat_0096",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Gutiyan piştî hilweşîna kîjan împeratoriyê li Sumerê desthilatdarî kir?",
     "promptTr": "Gutiler Sümer'de hangi imparatorluğun yıkılmasından sonra iktidara geldiler?",
@@ -3362,7 +3362,7 @@
   {
     "id": "hat_0097",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Keyê dawî yê Gutiyan kî bû ku Ûtu-hengal ew têk bir?",
     "promptTr": "Utu-hengal tarafından yenilgiye uğratılan son Guti kralı kimdir?",
@@ -3397,7 +3397,7 @@
   {
     "id": "hat_0098",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Li gorî Anabasîsa Ksenofon, kîjan gelê çiyayî li hemberî Deh Hezaran li ber xwe da?",
     "promptTr": "Ksenofon'un Anabasis'ine göre On Binlere karşı direnen dağlı halk hangisidir?",
@@ -3432,7 +3432,7 @@
   {
     "id": "hat_0099",
     "category": "Dîrok",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan keyê Hîtîtan Mîtannî lawaz kir û Waşûkanî dagir kir?",
     "promptTr": "Mitanni'yi zayıflatıp başkentini ele geçiren Hitit kralı hangisidir?",
@@ -3467,7 +3467,7 @@
   {
     "id": "hat_0100",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Partiya Demokrat a Kurdistanê (PDK) ya Iraqê di kîjan salê de hate damezrandin?",
     "promptTr": "Irak Kürdistan Demokrat Partisi (KDP) hangi yılda kuruldu?",
@@ -3537,7 +3537,7 @@
   {
     "id": "hat_0102",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "PKK di 27ê Mijdara 1978an de li kîjan gundî kongreya xwe ya damezrandinê li dar xist?",
     "promptTr": "PKK, 27 Kasım 1978'de hangi köyde kuruluş kongresini yaptı?",
@@ -3572,7 +3572,7 @@
   {
     "id": "hat_0103",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Yekîtiya Niştimanî ya Kurdistanê (YNK) di 1975an de bi pêşengiya kîjan siyasetmedarî hate damezrandin?",
     "promptTr": "Kürdistan Yurtseverler Birliği (KYB) 1975'te hangi siyasetçinin öncülüğünde kuruldu?",
@@ -3607,7 +3607,7 @@
   {
     "id": "hat_0104",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Rêxistina Xoybûnê di kîjan salê de hate damezrandin?",
     "promptTr": "Hoybun örgütü hangi yılda kuruldu?",
@@ -3677,7 +3677,7 @@
   {
     "id": "hat_0106",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Partiya Keda Gel (HEP) di 1990an de bi serokatiya kîjan siyasetmedarî hate damezrandin?",
     "promptTr": "Halkın Emek Partisi (HEP) 1990'da hangi siyasetçinin başkanlığında kuruldu?",
@@ -3747,7 +3747,7 @@
   {
     "id": "hat_0108",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Partiya Demokrasiyê (DEP) di kîjan salê de hate damezrandin?",
     "promptTr": "Demokrasi Partisi (DEP) hangi yılda kuruldu?",
@@ -3782,7 +3782,7 @@
   {
     "id": "hat_0109",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Rêxistina Xoybûnê di kîjan salê de hatiye damezrandin?",
     "promptTr": "Hoybûn örgütü hangi yılda kurulmuştur?",
@@ -3852,7 +3852,7 @@
   {
     "id": "hat_0111",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan kes di avakirina Partiya Demokrat a Kurdistana Iraqê de cihê sereke girtiye?",
     "promptTr": "Irak Kürdistan Demokrat Partisinin kuruluşunda başlıca rolü oynayan kişi kimdir?",
@@ -3957,7 +3957,7 @@
   {
     "id": "hat_0114",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan kes di nav damezrînerên Yekîtiya Niştimanî ya Kurdistanê de bû?",
     "promptTr": "Kürdistan Yurtseverler Birliğinin kurucuları arasında kim yer almıştır?",
@@ -3992,7 +3992,7 @@
   {
     "id": "hat_0115",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan kes di Serhildana Agiriyê de fermandarê giştî bû?",
     "promptTr": "Ağrı İsyanı sırasında genel komutanlık görevini üstlenen kişi kimdir?",
@@ -4027,7 +4027,7 @@
   {
     "id": "hat_0116",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Partiya Keda Gel (HEP) di kîjan salê de hatiye damezrandin?",
     "promptTr": "Halkın Emek Partisi (HEP) hangi yılda kurulmuştur?",
@@ -4062,7 +4062,7 @@
   {
     "id": "hat_0117",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Bûyerên Dêrsimê di kîjan salê de dest pê kirine?",
     "promptTr": "Dersim olayları hangi yılda başlamıştır?",
