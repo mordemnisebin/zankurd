@@ -213,4 +213,45 @@ void main() {
     await tester.tap(find.text('20'));
     expect(taps, 1);
   });
+
+  // Kurul 3. tur 2026-10-20: ikincil ve pasif düğme aynı soluk gri-mavi
+  // dolguyu taşıyordu, ayırt edilemiyordu. İkincil = şeffaf + 1,5 px görünür
+  // kenar + güçlü etiket; pasif = düz soluk dolgu, KENARSIZ, soluk etiket.
+  for (final entry in kThemes.entries) {
+    testWidgets('ikincil ve pasif düğme ayrı okunur (${entry.key})', (
+      tester,
+    ) async {
+      await pumpSahne(
+        tester,
+        const Column(
+          children: [
+            SahneButton.secondary(label: 'Kur', onPressed: noop),
+            SahneButton.secondary(label: 'Pasif', onPressed: null),
+          ],
+        ),
+        dark: entry.value,
+        textScale: 1,
+      );
+      final t = SahneTokens.of(tester.element(find.text('Kur')));
+      final buttons = tester
+          .widgetList<FilledButton>(find.byType(FilledButton))
+          .toList();
+      final on = buttons[0].style!;
+      final off = buttons[1].style!;
+      expect(on.backgroundColor!.resolve({}), Colors.transparent);
+      final edge = on.side!.resolve({})!;
+      expect(edge.width, 1.5);
+      expect(edge.color, t.secondaryEdge);
+      expect(on.foregroundColor!.resolve({}), t.tx);
+      expect(
+        off.backgroundColor!.resolve({WidgetState.disabled}),
+        t.disabledFill,
+      );
+      expect(off.side!.resolve({WidgetState.disabled}), BorderSide.none);
+      expect(
+        off.foregroundColor!.resolve({WidgetState.disabled}),
+        t.disabledFg,
+      );
+    });
+  }
 }

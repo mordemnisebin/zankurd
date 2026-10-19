@@ -404,11 +404,11 @@ void main() {
       }),
       t.disabledFill,
     );
-    // Son panel cilası 2026-10-19: pasif düğme zeminden ayrılsın diye 1 px
-    // `disabledEdge` kenar taşır (eskiden çerçevesizdi, zemine karışıyordu).
+    // Kurul 3. tur 2026-10-20: pasif düğme KENARSIZ düz dolgudur; kenar
+    // ikincil düğmeye ayrılmıştır (ikisi karışıyordu).
     expect(
-      filled.style!.side!.resolve({WidgetState.disabled})!.color,
-      t.disabledEdge,
+      filled.style!.side!.resolve({WidgetState.disabled}),
+      BorderSide.none,
     );
   });
 
