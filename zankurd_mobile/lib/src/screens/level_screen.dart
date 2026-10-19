@@ -256,7 +256,7 @@ class _LevelHeading {
   }
 }
 
-/// İlerleme kartı (yüzey kartı): varsa alt kategorinin açıklaması, altında
+/// İlerleme satırı (kartsız): varsa alt kategorinin açıklaması, altında
 /// öğrenme tonlu ilerleme çubuğu ve "2/5 seviye". Ekran okuyucu tek bir
 /// cümle duyar: "5 seviyeden 2 tanesi tamamlandı".
 class _LevelProgressCard extends StatelessWidget {
@@ -277,7 +277,12 @@ class _LevelProgressCard extends StatelessWidget {
     final t = SahneTokens.of(context);
     final ratio = total <= 0 ? 0.0 : (completed / total).clamp(0.0, 1.0);
     final text = description?.trim();
-    return SahneSurfaceCard(
+    // Kurul 2. tur 2026-10-20: ayrı kart kalktı; ilerleme başlığın hemen
+    // altında kartsız bir satırdır (seviye kartlarıyla aynı düzeyde
+    // ikinci bir kart ağırlığı taşımaz). 0/N iken dolu görünmesin diye
+    // çubuğun sönük izi ince çizilir.
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -287,6 +292,7 @@ class _LevelProgressCard extends StatelessWidget {
           ],
           SahneProgressBar(
             value: ratio,
+            height: completed == 0 ? 4 : 8,
             trailing: Tr.forKu(K.pPSeviye, isKu, {
               'p0': '$completed',
               'p1': '$total',
