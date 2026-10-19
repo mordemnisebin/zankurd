@@ -706,6 +706,7 @@ class _PlacementPromptCard extends StatelessWidget {
                 buttonKey: const ValueKey('learning-placement-dismiss'),
                 label: context.t(K.placementSkip),
                 arrow: false,
+                quiet: true,
                 onPressed: onDismiss,
               ),
             ],
@@ -952,7 +953,7 @@ class _LessonRow extends StatelessWidget {
       onTap: onTap,
       semanticLabel: semanticLabel,
       trailing: locked
-          ? Icon(AppIcons.lock, size: 20, color: t.tx3)
+          ? Icon(AppIcons.lock, size: 20, color: t.tx3.withValues(alpha: 0.7))
           : completed
           ? Icon(AppIcons.check, size: 20, color: t.learnTx)
           : null,
