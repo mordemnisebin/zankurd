@@ -10,14 +10,14 @@ class AppColors {
 
   static Color disabledSurface(BuildContext context) =>
       AppTheme.isLight(context)
-      ? const Color(0xFFEEF1F8)
+      ? SahneTokens.day.disabledFill
       // Koyu ton `#282A36`ydı: maviye çalan bir gri, markanın orman
       // ailesinde yeri yok. Soru tahtasında pasif "Kontrol bike" yeşil
       // kartın üstünde mora kaçan bir leke gibi duruyordu (2026-09-27
       // simülatör turu). Aynı koyulukta, orman ailesinden doygunluğu
       // düşük bir gri; soluk metinle karşıtlık ~6.3.
       // Şahnê: pasif öğe Perde (s1) + üçüncül metin; opaklıkla değil.
-      : SahneTokens.night.s1;
+      : SahneTokens.night.disabledFill;
 
   /// İkon zemin tonu (menü/istatistik ikon karoları). Light'ta hafif pastel
   /// kalır; dark'ta alfa yükselir ki koyu zeminde ikon kaybolmasın — ama
@@ -996,8 +996,8 @@ class AppTheme {
           // Pasif: opaklık değil Kulis (`s2`) + üçüncül metin (saveLayer
           // açmaz). Perde (`s1`) gündüz beyazdı: pasif düğme beyaz bir
           // çerçeveli düğme gibi, yani etkin okunuyordu.
-          disabledBackgroundColor: t.s2,
-          disabledForegroundColor: t.tx3,
+          disabledBackgroundColor: t.disabledFill,
+          disabledForegroundColor: t.disabledFg,
           minimumSize: buttonSize,
           textStyle: SahneType.button,
           shape: SahneShape.m,
@@ -1009,8 +1009,8 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           backgroundColor: t.s2,
           foregroundColor: t.tx,
-          disabledBackgroundColor: t.s1,
-          disabledForegroundColor: t.tx3,
+          disabledBackgroundColor: t.disabledFill,
+          disabledForegroundColor: t.disabledFg,
           side: BorderSide(color: t.edge),
           minimumSize: buttonSize,
           textStyle: SahneType.button,
