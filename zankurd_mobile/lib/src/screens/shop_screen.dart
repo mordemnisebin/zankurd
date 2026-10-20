@@ -996,7 +996,6 @@ class _ShopScreenState extends State<ShopScreen> {
   // ortak pasif biçimde (disabledFill/Edge/Fg) çizilir ve altında eksik
   // miktar yazar; kartın kendisi dokunulabilir kalır (pencere jeton kazanma
   // yolunu sunar). Ürün kimliği yalnız önizleme karosunda yaşar.
-  static const double _actionWidth = 136;
 
   /// Kilit · jeton · tutar arası ve "N jeton eksik" üstü: 6 px.
   static const double _lockGap = 6;
@@ -1042,9 +1041,10 @@ class _ShopScreenState extends State<ShopScreen> {
             // Açıklama hiçbir dilde kesilmez: oyuncu ne aldığını bilmeli.
             style: SahneType.caption.copyWith(color: t.tx2, fontSize: 13),
           ),
-          if (missing > 0) ...[
-            const SizedBox(height: SahneSpace.x1),
-            Text(
+        ],
+      );
+      final note = missing > 0
+          ? Text(
               context.t(K.coinsShort, {'coins': '$missing'}),
               key: ValueKey('shop-short-note-${item.id}'),
               style: SahneType.caption.copyWith(
@@ -1052,10 +1052,8 @@ class _ShopScreenState extends State<ShopScreen> {
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
               ),
-            ),
-          ],
-        ],
-      );
+            )
+          : null;
       final action = isPurchased
           ? _buildOwnedChip(expand: largeText)
           : _buildBuyButton(item, ku, expand: largeText);
@@ -1065,31 +1063,37 @@ class _ShopScreenState extends State<ShopScreen> {
             : ValueKey('shop-item-surface-${item.id}'),
         padding: const EdgeInsets.all(14),
         onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
-        child: largeText
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+        // Tur 10b (kurul, Opus + Codex): metin sütunu fiyat sütunuyla
+        // yarışınca ad 2, açıklama 3-4 satıra kırılıyordu. Üst satır ikon +
+        // ad + açıklama TAM genişlik; fiyat/eylem altta, sağa yaslı satırda.
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _preview(item, size: 44, dim: isPurchased),
+                const SizedBox(width: SahneSpace.x3),
+                Expanded(child: texts),
+              ],
+            ),
+            const SizedBox(height: SahneSpace.x3),
+            if (largeText) ...[
+              if (note != null) ...[
+                note,
+                const SizedBox(height: SahneSpace.x2),
+              ],
+              action,
+            ] else
+              Row(
                 children: [
-                  Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: _preview(item, size: 56, dim: isPurchased),
-                  ),
-                  const SizedBox(height: SahneSpace.x3),
-                  texts,
-                  const SizedBox(height: SahneSpace.x3),
+                  if (note != null) Expanded(child: note) else const Spacer(),
+                  const SizedBox(width: SahneSpace.x3),
                   action,
                 ],
-              )
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _preview(item, size: 56, dim: isPurchased),
-                  const SizedBox(width: SahneSpace.x3),
-                  Expanded(child: texts),
-                  const SizedBox(width: SahneSpace.x3),
-                  // Sabit sütun: fiyat/eylem her kartta aynı yerde, aynı genişlikte.
-                  SizedBox(width: _actionWidth, child: action),
-                ],
               ),
+          ],
+        ),
       );
     }
   }

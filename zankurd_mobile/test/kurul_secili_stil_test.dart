@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 double _contrast(Color a, Color b) {
   final la = a.computeLuminance(), lb = b.computeLuminance();
@@ -19,6 +20,7 @@ double _contrast(Color a, Color b) {
 }
 
 void main() {
+  railChipIdleGuard();
   for (final t in [SahneTokens.day, SahneTokens.night]) {
     test('seçili metin ton dolgu üstünde ≥ 4.5:1', () {
       expect(_contrast(t.selTx, t.selFill), greaterThanOrEqualTo(4.5));
@@ -66,3 +68,53 @@ void main() {
     expect(find.byIcon(AppIcons.check), findsOneWidget);
   });
 }
+
+// Tur 10b kusuru: seçilmemiş ray çipi sayfa/kart beyazıyla aynı dolguda,
+// düz metin gibi duruyordu; seçili çip de ders çerçevesi ve Başla ile aynı
+// güçlü 2 px turuncuyu taşıyordu. Sessizdi: ikisi de "çalışıyor" ve AA geçiyor.
+// Bekçi: seçilmemiş çip sayfa zemininden (s1 değil s2) ayrışır; seçili çipin
+// çerçevesi 1 px'tir ve iki hâl AYNI halka kalınlığında (boyut oynamaz).
+void railChipIdleGuard() {
+  testWidgets('ray çipi: seçilmemiş nötr dolgulu, seçili ince çerçeveli', (
+    tester,
+  ) async {
+    for (final dark in [false, true]) {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: dark ? AppTheme.dark() : AppTheme.light(),
+          home: const Scaffold(
+            body: Row(
+              children: [
+                SahneRailChip(
+                  key: Key('idle'),
+                  label: 'A',
+                  selected: false,
+                  onTap: _noop,
+                ),
+                SahneRailChip(
+                  key: Key('sel'),
+                  label: 'B',
+                  selected: true,
+                  onTap: _noop,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      final t = SahneTokens.of(tester.element(find.byKey(const Key('idle'))));
+      Material mat(String k) => tester.widget<Material>(
+        find
+            .descendant(of: find.byKey(Key(k)), matching: find.byType(Material))
+            .first,
+      );
+      expect(mat('idle').color, t.s2);
+      expect(mat('idle').color, isNot(t.s1));
+      final side = (mat('sel').shape! as OutlinedBorder).side;
+      expect(side.width, SahneRailChip.railChipRing);
+      expect(side.width, lessThanOrEqualTo(1));
+    }
+  });
+}
+
+void _noop() {}

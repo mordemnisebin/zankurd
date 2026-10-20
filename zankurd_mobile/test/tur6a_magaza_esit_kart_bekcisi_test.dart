@@ -5,7 +5,7 @@
 //
 // Niçin sessiz kaldı: testler her kartın kendi içeriğini (düğme/not var mı)
 // sınıyordu, kartlar ARASI hizayı değil. Bekçi: her ürün aynı genişlikte yatay
-// satır, fiyat/eylem sütunu her kartta aynı sağ kenarda ve aynı genişlikte;
+// satır, fiyat/eylem (tur 10b: altta sağa yaslı satır) her kartta aynı sağ kenarda;
 // alınabilen eylem fiil içerir ("Satın al · 120").
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -51,19 +51,20 @@ void main() {
     // Alınabilen üründe eylem fiil taşır, çıplak sayı değil.
     expect(find.text('Satın al · 120'), findsOneWidget);
 
-    // Eylem/fiyat sütununun sağ kenarı her kartta aynı.
+    // Eylem/fiyat satırının sağ kenarı her kartta aynı (tur 10b: eylem artık
+    // metnin altında sağa yaslı satırda; sütun değil satır).
     final rights = <double>{};
-    for (final c in cards) {
-      final col = find.descendant(
-        of: c,
-        matching: find.byWidgetPredicate(
-          (w) => w is SizedBox && w.width == 136,
-        ),
-      );
-      expect(col, findsOneWidget);
-      rights.add(tester.getTopRight(col).dx);
+    for (final k in [
+      'shop-short-profile_badge_vip',
+      'shop-buy-spin_wheel_extra',
+      'shop-short-avatar_frame_gold',
+      'shop-short-avatar_frame_neon',
+    ]) {
+      final f = find.byKey(ValueKey(k));
+      expect(f, findsOneWidget);
+      rights.add(tester.getTopRight(f).dx.roundToDouble());
     }
-    expect(rights.length, 1, reason: 'Fiyat sütunu aynı yerde olmalı.');
+    expect(rights.length, 1, reason: 'Fiyat/eylem aynı sağ kenarda: $rights');
     expect(tester.takeException(), isNull);
   });
 }

@@ -605,6 +605,55 @@ void main() {
     },
   );
 
+  // Tur 10b kusuru: metin sütunu fiyat/eylem sütunuyla genişliği paylaşıyordu;
+  // ad 2, açıklama 3-4 satıra kırılıyordu. Sessiz kaldı çünkü hiçbir şey
+  // taşmıyor, yalnız kart uzuyordu. Bekçi: metin kartın tam genişliğini alır
+  // ve fiyat/eylem satırı metnin ALTINDA, sağa yaslı durur.
+  testWidgets('mağaza kartı: metin tam genişlik, eylem altta sağa yaslı', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _ShopRepository(coins: 300);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    final card = find.byKey(
+      const ValueKey('shop-item-surface-spin_wheel_extra'),
+    );
+    final title = find.descendant(
+      of: card,
+      matching: find.text('Ekstra çevirme'),
+    );
+    final desc = find.descendant(
+      of: card,
+      matching: find.text('Bugün çarkı tekrar çevirmek için ekstra hak verir.'),
+    );
+    final buy = find.byKey(const ValueKey('shop-buy-spin_wheel_extra'));
+    final cardRect = tester.getRect(card);
+    // Ad tek satır; açıklama kart genişliğinin sağ kenarına kadar uzanır
+    // (test yazı tipi geniştir, satır sayısı değil genişlik sabitlenir).
+    expect(tester.getSize(title).height, lessThan(26));
+    expect(tester.getRect(desc).right, greaterThan(cardRect.right - 60));
+    // Eylem metnin altında ve sağa yaslı, standart düğme boyu (dokunma hedefi kuralı 40 altına inmeye izin vermez).
+    expect(
+      tester.getRect(buy).top,
+      greaterThanOrEqualTo(tester.getRect(desc).bottom),
+    );
+    expect(tester.getRect(buy).right, greaterThan(cardRect.right - 20));
+    expect(tester.getSize(buy).height, inInclusiveRange(44, 52));
+    // Kilitli üründe eksik notu eylem satırında, kilitli fiyatın solunda.
+    final note = find.byKey(
+      const ValueKey('shop-short-note-profile_badge_vip'),
+    );
+    final locked = find.byKey(const ValueKey('shop-short-profile_badge_vip'));
+    expect(
+      tester.getRect(note).right,
+      lessThanOrEqualTo(tester.getRect(locked).left),
+    );
+    expect(tester.getRect(locked).right, greaterThan(cardRect.right - 40));
+  });
+
   testWidgets('satın alma eylemleri düz ve gölgesizdir', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 1400));
     addTearDown(() => tester.binding.setSurfaceSize(null));
