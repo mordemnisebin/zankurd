@@ -89,7 +89,14 @@ class SahneResultScaffold extends StatelessWidget {
     this.closeLabel,
     this.onClose,
     this.overlay,
+    this.balanced = false,
   });
+
+  /// Dikeyde dengele (tur 9b): içerik sayımlar/ödül taşısa da ekranda dikey
+  /// ortalanır; ara boşluklar 16-24. Sıralı düello zaferinde skor + ödül
+  /// kartlarından sonra ekranın ~%35'i boş kalıyordu (Opus + ChatGPT). Uzun
+  /// içerikte sayfa yine kayar.
+  final bool balanced;
 
   /// Kahraman ([SahneResultHero]).
   final Widget hero;
@@ -120,6 +127,7 @@ class SahneResultScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final short = stats == null && sections.isEmpty;
+    final centered = short || balanced;
     final body = LayoutBuilder(
       builder: (context, constraints) {
         final side = math.max(
@@ -133,12 +141,18 @@ class SahneResultScaffold extends StatelessWidget {
           // eklenen boşluk onu 20'ye tamamlar. Kısa (ortalanan) sonuçta
           // eski 12 korunur.
           if (stats != null) ...[
-            const SizedBox(height: kSahneResultRhythmGap - SahneSpace.x4),
+            SizedBox(
+              height: balanced
+                  ? SahneSpace.x6 - SahneSpace.x4
+                  : kSahneResultRhythmGap - SahneSpace.x4,
+            ),
             stats!,
           ],
           if (rewards != null) ...[
             SizedBox(
-              height: short
+              height: balanced
+                  ? SahneSpace.x4
+                  : short
                   ? SahneSpace.x3
                   : stats == null
                   ? kSahneResultRhythmGap - SahneSpace.x4
@@ -146,14 +160,16 @@ class SahneResultScaffold extends StatelessWidget {
             ),
             rewards!,
           ],
-          if (short && rewards != null)
+          if (balanced)
+            const SizedBox(height: SahneSpace.x4)
+          else if (short && rewards != null)
             const SizedBox(height: SahneSpace.x6)
           else if (!short)
             const SizedBox(height: SahneSpace.x2),
           ...sections,
         ];
         final Widget scroll;
-        if (short) {
+        if (centered) {
           // Kısa içerik sahnede ortada durur; %200 yazıda uzarsa sayfa
           // kayar.
           scroll = SingleChildScrollView(
@@ -238,23 +254,29 @@ enum SahneResultTone { reward, race }
 /// boydadır (eskiden düello 72'lik pahlı kare, tur sonucu 44'lük yıldızlar
 /// çiziyordu).
 class SahneResultEmblem extends StatelessWidget {
-  const SahneResultEmblem.win({super.key}) : icon = null, _win = true;
+  const SahneResultEmblem.win({super.key, this.size = 44})
+    : icon = null,
+      _win = true;
 
   /// Nötr durum amblemi (berabere, kayıp, bekleme…).
   const SahneResultEmblem.state({super.key, required IconData this.icon})
-    : _win = false;
+    : _win = false,
+      size = 44;
 
   final IconData? icon;
   final bool _win;
+
+  /// Taç boyu (varsayılan 44; sıralı düello zaferinde 64).
+  final double size;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     return SizedBox(
-      height: 44,
+      height: size,
       child: Center(
         child: _win
-            ? const SahneGlyph(SahneGlyphKind.crown, size: 44)
+            ? SahneGlyph(SahneGlyphKind.crown, size: size)
             : ExcludeSemantics(child: Icon(icon, size: 36, color: t.tx2)),
       ),
     );
@@ -280,6 +302,7 @@ class SahneResultHero extends StatelessWidget {
     this.suffix = '',
     this.valueKey,
     this.subtitle,
+    this.subtitleSize,
     this.caption,
     this.body,
     this.extras = const [],
@@ -309,6 +332,9 @@ class SahneResultHero extends StatelessWidget {
 
   /// Puanın altında Başlık 22 satırı ("Sen 5 – 3 Rojda").
   final String? subtitle;
+
+  /// [subtitle] punto (varsayılan Başlık 22; düello zaferinde 32).
+  final double? subtitleSize;
 
   /// Açıklama 14 satırı ("puan • %67 doğruluk").
   final String? caption;
@@ -378,6 +404,7 @@ class SahneResultHero extends StatelessWidget {
             textAlign: TextAlign.center,
             style: SahneType.headline.copyWith(
               color: t.tx,
+              fontSize: subtitleSize,
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),

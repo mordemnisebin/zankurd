@@ -319,7 +319,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
         // Rojda") yazılı. Tek amblem kalır: sonucun kendisi.
         hero = SahneResultHero(
           emblem: switch (outcome) {
-            AsyncDuelOutcome.win => const SahneResultEmblem.win(),
+            AsyncDuelOutcome.win => const SahneResultEmblem.win(size: 64),
             AsyncDuelOutcome.loss => const SahneResultEmblem.state(
               icon: AppIcons.flag,
             ),
@@ -336,6 +336,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
           subtitle:
               '${context.t(K.you)} ${view.myCorrect} – ${view.opponentCorrect} '
               '$opponentName',
+          subtitleSize: win ? 32 : null,
           extras: [
             if (outcome != AsyncDuelOutcome.draw &&
                 view.myCorrect != null &&
@@ -393,6 +394,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
       closeLabel: context.t(K.close),
       contextLabel: context.t(K.asyncDuel),
       hero: hero,
+      balanced: true,
       stats: scoreboard,
       // Sıfır XP ("+0 XP") gösterilmez: yanlış ya da süresi dolmuş sıfır
       // doğrulu düello ödülsüz biter.
