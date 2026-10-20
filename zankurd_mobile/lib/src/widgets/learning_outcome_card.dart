@@ -307,7 +307,7 @@ class LearningOutcomeCard extends StatelessWidget {
                   ),
                   if (strong != null) lines(strong),
                   if (review != null) lines(review),
-                  if (link != null) lines(link, color: t.learnTx),
+                  if (link != null) lines(link, color: t.linkTx),
                 ],
               ),
             ),

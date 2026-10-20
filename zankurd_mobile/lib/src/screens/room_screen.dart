@@ -1795,12 +1795,12 @@ class _RoomInviteButton extends StatelessWidget {
       alignment: AlignmentDirectional.centerStart,
       child: TextButton.icon(
         key: const ValueKey('room-invite-share'),
-        // Agir yalnız ekranın birincil eyleminindir (alttaki "Yarışı başlat");
-        // davet bağlantısı nötr (`tx2`) kalır, iki turuncu yarışmasın.
-        icon: Icon(AppIcons.shareNodes, size: 18, color: t.tx2),
+        // Metin bağlantısı rengi tek belirteçtir (`linkTx`); dolgulu birincil
+        // düğme (Agir dolgusu) ile karışmaz, çünkü biri dolgu biri metindir.
+        icon: Icon(AppIcons.shareNodes, size: 18, color: t.linkTx),
         label: Text(
           label,
-          style: SahneType.captionStrong.copyWith(color: t.tx2),
+          style: SahneType.captionStrong.copyWith(color: t.linkTx),
         ),
         style: TextButton.styleFrom(
           minimumSize: const Size(sahneTapTarget, sahneTapTarget),
@@ -1836,8 +1836,11 @@ class _RoomInviteFriendsButton extends StatelessWidget {
     final t = SahneTokens.of(context);
     return TextButton.icon(
       key: const ValueKey('room-invite-friends'),
-      icon: Icon(AppIcons.userPlus, size: 18, color: t.tx2),
-      label: Text(label, style: SahneType.captionStrong.copyWith(color: t.tx2)),
+      icon: Icon(AppIcons.userPlus, size: 18, color: t.linkTx),
+      label: Text(
+        label,
+        style: SahneType.captionStrong.copyWith(color: t.linkTx),
+      ),
       style: TextButton.styleFrom(
         minimumSize: const Size(sahneTapTarget, sahneTapTarget),
         shape: SahneShape.m,

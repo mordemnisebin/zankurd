@@ -136,6 +136,12 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Agir'in metin bağlantısı hâli (düz zeminde okunur).
   final Color actTx;
 
+  /// TEK metin bağlantısı / ikincil eylem rengi. Yeşil (`okTx`) yalnız
+  /// doğruya, kırmızı (`errTx`) yalnız hataya aittir; "gözden geçir",
+  /// "davet et", "Adını gir" gibi dokunulur metinler hep bu belirteci
+  /// kullanır (7. kurul: aynı eylem ekrana göre yeşil/turuncu/gri çıkıyordu).
+  Color get linkTx => actTx;
+
   /// Eylem gölgesinin rengi ve bulanıklığı — ekrandaki TEK bulanık gölge,
   /// yalnız birincil düğmede (`0 8 24 -8`; gündüzde `0 8 20 -8`, koyu
   /// turuncu). Rengi Agir'den türetilemez: gündüzde ayrı bir tondur.
