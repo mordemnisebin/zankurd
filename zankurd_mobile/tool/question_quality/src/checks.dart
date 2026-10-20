@@ -1,3 +1,4 @@
+import 'package:zankurd_mobile/src/config/retired_question_ids.dart';
 import 'models.dart';
 import 'normalization.dart';
 
@@ -43,6 +44,23 @@ List<AuditIssue> runChecks(
         Severity.blocker,
         'Question has fewer than two options.',
       );
+    }
+    // Boşluk doldurmada tam BİR `___` olmalı. Sıfır boşluk "neyi dolduruyorum"
+    // dedirtir; ikiden fazlası (çeviri parantezine de `___` konunca olduğu
+    // gibi) tek cevabın iki yere sığmasını bekler: 2026-10-21'de
+    // dersler2_..._0104–0109 bu yüzden havuzdan çıkarıldı.
+    // Emekli kimlik oynanmaz: kusuru zaten havuzdan çıkarılmış sorular
+    // kapıyı yeniden kırmasın.
+    if (record.questionType == 'fillInBlank' &&
+        !isQuestionRetired(record.sourceRecordId ?? '')) {
+      final blanks = fillInBlankCount(record.prompt);
+      if (blanks != 1) {
+        add(
+          'fill_in_blank_blank_count',
+          Severity.blocker,
+          'fillInBlank prompt must contain exactly one ___ (found $blanks).',
+        );
+      }
     }
     if (record.options.any((value) => value.trim().isEmpty)) {
       add('empty_option', Severity.blocker, 'Question has an empty option.');
@@ -378,3 +396,7 @@ int _compareIssues(AuditIssue a, AuditIssue b) {
   final row = a.record.sourceRow.compareTo(b.record.sourceRow);
   return row != 0 ? row : a.checkId.compareTo(b.checkId);
 }
+
+/// `___` (üç ya da daha çok alt çizgi) boşluk sayısı.
+int fillInBlankCount(String prompt) =>
+    RegExp('_{3,}').allMatches(prompt).length;
