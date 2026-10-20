@@ -494,26 +494,24 @@ class _LevelNode extends StatelessWidget {
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: tap,
-          child: SahneStageCard(
+          child: _ActiveLevelFrame(
             key: ValueKey('level-card-${level.number}'),
-            child: Builder(
-              builder: (context) => Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _LevelRowContent(
-                    level: level,
-                    name: name,
-                    badge: _LevelBadge.next,
-                    headline: true,
-                  ),
-                  const SizedBox(height: SahneSpace.x4),
-                  SahneButton.primary(
-                    label: context.t(K.start),
-                    onPressed: disabled ? null : onTap,
-                    expand: true,
-                  ),
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _LevelRowContent(
+                  level: level,
+                  name: name,
+                  badge: _LevelBadge.next,
+                  headline: true,
+                ),
+                const SizedBox(height: SahneSpace.x4),
+                SahneButton.primary(
+                  label: context.t(K.start),
+                  onPressed: disabled ? null : onTap,
+                  expand: true,
+                ),
+              ],
             ),
           ),
         ),
@@ -536,19 +534,17 @@ class _LevelNode extends StatelessWidget {
           SahneSpace.x4,
           SahneSpace.x3,
         ),
-        // Kilitli seviye ~%60 vurguyla söner (kurul 2. tur 2026-10-20).
-        child: Opacity(
-          opacity: locked ? 0.6 : 1,
-          child: _LevelRowContent(
-            level: level,
-            name: name,
-            badge: locked
-                ? _LevelBadge.locked
-                : played
-                ? _LevelBadge.played
-                : _LevelBadge.open,
-            trailing: locked ? null : AppIcons.chevronRight,
-          ),
+        // Kilitli seviye saydamlıkla değil renk belirteciyle söner (tur 6b:
+        // ×0,6 saydamlık başlığı okunmaz yapıyordu); bkz. `_LevelRowContent`.
+        child: _LevelRowContent(
+          level: level,
+          name: name,
+          badge: locked
+              ? _LevelBadge.locked
+              : played
+              ? _LevelBadge.played
+              : _LevelBadge.open,
+          trailing: locked ? null : AppIcons.chevronRight,
         ),
       ),
     );
@@ -610,7 +606,7 @@ class _LevelRowContent extends StatelessWidget {
         Text(
           name,
           style: (headline ? SahneType.headline : SahneType.bodyStrong)
-              .copyWith(color: locked ? t.tx2 : t.tx),
+              .copyWith(color: locked ? t.disabledFg : t.tx),
         ),
         const SizedBox(height: SahneSpace.x1),
         Row(
@@ -639,7 +635,9 @@ class _LevelRowContent extends StatelessWidget {
                 key: locked
                     ? ValueKey('level-lock-hint-${level.number}')
                     : null,
-                style: SahneType.caption.copyWith(color: t.tx2),
+                style: SahneType.caption.copyWith(
+                  color: locked ? t.disabledFg : t.tx2,
+                ),
               ),
             ),
           ],
@@ -717,6 +715,44 @@ class _DifficultyBars extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Sıradaki (aktif) seviye kartı: iki temada AYNI çerçeve dili — 2 px Agir
+/// (turuncu) çizgi.
+///
+/// Kusur (kurul tur 6b, 38/53/60): açık temada aktif kart koyu bir gece
+/// adası (#1E2228) olarak duruyordu; sayfanın geri kalanı beyaz kartlar,
+/// ada uygulamanın açık kart diliyle çatışıyordu (2 denetçi). Açık temada
+/// artık açık yüzey kartı ([SahneSurfaceCard]); koyu temada eski sahne kartı
+/// (degrade + ışıma) kalır. Ayrım çerçeveyle verilir, kilitli satırlardan
+/// "bu sıradaki" diye ayrılır.
+class _ActiveLevelFrame extends StatelessWidget {
+  const _ActiveLevelFrame({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    return DecoratedBox(
+      position: DecorationPosition.foreground,
+      decoration: ShapeDecoration(
+        shape: SahneShape.withSide(SahneShape.l, t.act, width: 2),
+      ),
+      child: dark
+          ? SahneStageCard(child: child)
+          : SahneSurfaceCard(
+              padding: const EdgeInsets.fromLTRB(
+                SahneSpace.x4,
+                SahneSpace.x5,
+                SahneSpace.x4,
+                SahneSpace.x4,
+              ),
+              child: child,
+            ),
     );
   }
 }

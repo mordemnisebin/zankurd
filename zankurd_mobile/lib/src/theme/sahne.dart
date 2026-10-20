@@ -222,16 +222,20 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     // tx3 ≥ 4.0 (yüzeylerde AA'ya yakın, test ölçer).
     bg: Color(0xFF121214),
     nav: Color(0xFF17171A),
-    s1: Color(0xFF1C1D21),
-    s2: Color(0xFF26272C),
-    s3: Color(0xFF313339),
+    // 2026-10-20 (tur 6b, 20/21/22): kart/zemin ayrımı zayıftı (2 denetçi):
+    // Perde #1C1D21, Şev #121214 üstünde yalnız 1,13:1 duruyordu. Perde bir
+    // ton açıldı (#222328), Kulis ve Ray ona göre kaydı; zemin #121214 ve
+    // grafit kimlik aynı. Kenar da bir ton belirginleşti (#3A3D44).
+    s1: Color(0xFF222328),
+    s2: Color(0xFF2B2C32),
+    s3: Color(0xFF34363C),
     tx: Color(0xFFF5F3EF),
     tx2: Color(0xFFB9BAC0),
     tx3: Color(0xFF8F9199),
     // Ayırıcı ve yüzey kenarı DEKORATİF (opak, saydam değil): etkileşimli
     // kenar için tx3 kullanılır (≥ 3:1).
-    line: Color(0xFF34363C),
-    edge: Color(0xFF34363C),
+    line: Color(0xFF3A3D44),
+    edge: Color(0xFF3A3D44),
     // Büyük dolgularda (birincil düğme) gece turuncusu bir ton sönük: tam
     // doygun #FF8A3D koyu zeminde göz yoruyordu.
     act: Color(0xFFF08A4A),
@@ -763,19 +767,20 @@ class SahneType {
     leadingDistribution: TextLeadingDistribution.even,
   );
 
-  /// 24/30 — YALNIZ soru metni (soru ekranı, düello, seviye belirleme).
+  /// 26/32 — YALNIZ soru metni (soru ekranı, düello, seviye belirleme).
   ///
   /// 2026-10-19 sadeleşme: soru 28/32 ile çiziliyordu; üstündeki ışık
   /// huzmesi ve elmas sayaçla yarışırken ekranın en yüksek sesiydi. 24/30
   /// hâlâ büyük ve ağır (800) okunur ama sahnenin geri kalanıyla aynı
-  /// ölçekte durur. Beş boyutlu ölçeğin dışında tek ek boyuttur ve yalnız
+  /// ölçekte durur. 2026-10-20 kurul: 24 şıklara göre cılız bulundu, 26/32'ye
+  /// çıkarıldı ([title] 28/32 ile [headline] 22/28 arasında). Beş boyutlu ölçeğin dışında tek ek boyuttur ve yalnız
   /// soru metni içindir (bekçi: `typography_scale_test.dart`); satır
   /// bütçesini aşan soru yine [headline] 22/28'e iner.
   static const TextStyle question = TextStyle(
     fontFamily: display,
     fontWeight: FontWeight.w800,
-    fontSize: 24,
-    height: 30 / 24,
+    fontSize: 26,
+    height: 32 / 26,
     leadingDistribution: TextLeadingDistribution.even,
   );
 

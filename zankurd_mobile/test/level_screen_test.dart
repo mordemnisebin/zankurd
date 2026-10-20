@@ -164,9 +164,13 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('level-locked-more')));
       await tester.pumpAndSettle();
 
+      // Açık temada (bu test) aktif kart yüzey kartıdır (tur 6b).
       expect(
-        tester.widget(find.byKey(const ValueKey('level-card-1'))),
-        isA<SahneStageCard>(),
+        find.descendant(
+          of: find.byKey(const ValueKey('level-card-1')),
+          matching: find.byType(SahneSurfaceCard),
+        ),
+        findsOneWidget,
       );
       for (final n in [2, 3, 4, 5]) {
         expect(

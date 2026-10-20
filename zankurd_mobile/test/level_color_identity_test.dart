@@ -126,17 +126,16 @@ void main() {
           await tester.tap(find.byKey(const ValueKey('level-locked-more')));
           await tester.pumpAndSettle();
 
+          // Aktif kart: koyuda sahne kartı, açıkta yüzey kartı (tur 6b).
           expect(
-            tester.widget(find.byKey(const ValueKey('level-card-1'))),
-            isA<SahneStageCard>(),
+            find.descendant(
+              of: find.byKey(const ValueKey('level-card-1')),
+              matching: find.byType(dark ? SahneStageCard : SahneSurfaceCard),
+            ),
+            findsOneWidget,
             reason: combo,
           );
-          // Sahne kartı her temada gece çizilir.
-          expect(
-            badgeColor(tester, 1),
-            SahneTokens.night.learnTint,
-            reason: combo,
-          );
+          expect(badgeColor(tester, 1), t.learnTint, reason: combo);
           for (final locked in [2, 3, 4, 5]) {
             expect(badgeColor(tester, locked), t.s2, reason: '$combo $locked');
           }
@@ -173,9 +172,13 @@ void main() {
           expect(star.kind, SahneGlyphKind.star, reason: combo);
           expect(star.filled, isTrue, reason: combo);
 
+          // Aktif kart: koyuda sahne kartı, açıkta yüzey kartı (tur 6b).
           expect(
-            tester.widget(find.byKey(const ValueKey('level-card-2'))),
-            isA<SahneStageCard>(),
+            find.descendant(
+              of: find.byKey(const ValueKey('level-card-2')),
+              matching: find.byType(dark ? SahneStageCard : SahneSurfaceCard),
+            ),
+            findsOneWidget,
             reason: combo,
           );
           for (final locked in [3, 4, 5]) {
