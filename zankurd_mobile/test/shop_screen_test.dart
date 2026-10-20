@@ -411,7 +411,9 @@ void main() {
     final hero = tester.getSize(
       find.byKey(const ValueKey('shop-hero-surface')),
     );
-    expect(hero.height, lessThanOrEqualTo(170));
+    // Kurul 4. tur: birincil düğme yan boşluğu 20 (eskiden 16); açıklama bir
+    // satır fazla sarabilir. Kart yine kompakt (eskiden ~490 mp).
+    expect(hero.height, lessThanOrEqualTo(180));
   });
 
   // Kurul 3. tur 2026-10-20: üç ızgara ürünü iki sütunda sonuncuyu satırda
