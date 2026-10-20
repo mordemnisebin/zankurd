@@ -222,16 +222,20 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     // tx3 ≥ 4.0 (yüzeylerde AA'ya yakın, test ölçer).
     bg: Color(0xFF121214),
     nav: Color(0xFF17171A),
-    s1: Color(0xFF1C1D21),
-    s2: Color(0xFF26272C),
-    s3: Color(0xFF313339),
+    // 2026-10-20 (tur 6b, 20/21/22): kart/zemin ayrımı zayıftı (2 denetçi):
+    // Perde #1C1D21, Şev #121214 üstünde yalnız 1,13:1 duruyordu. Perde bir
+    // ton açıldı (#222328), Kulis ve Ray ona göre kaydı; zemin #121214 ve
+    // grafit kimlik aynı. Kenar da bir ton belirginleşti (#3A3D44).
+    s1: Color(0xFF222328),
+    s2: Color(0xFF2B2C32),
+    s3: Color(0xFF34363C),
     tx: Color(0xFFF5F3EF),
     tx2: Color(0xFFB9BAC0),
     tx3: Color(0xFF8F9199),
     // Ayırıcı ve yüzey kenarı DEKORATİF (opak, saydam değil): etkileşimli
     // kenar için tx3 kullanılır (≥ 3:1).
-    line: Color(0xFF34363C),
-    edge: Color(0xFF34363C),
+    line: Color(0xFF3A3D44),
+    edge: Color(0xFF3A3D44),
     // Büyük dolgularda (birincil düğme) gece turuncusu bir ton sönük: tam
     // doygun #FF8A3D koyu zeminde göz yoruyordu.
     act: Color(0xFFF08A4A),

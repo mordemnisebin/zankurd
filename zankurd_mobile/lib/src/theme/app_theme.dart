@@ -431,7 +431,7 @@ class AppTheme {
     0xFF0E7453,
   ); // Palet dışıydı; Zimrût dolgusuna indirildi.
   static const playPurple = Color(
-    0xFF313339,
+    0xFF34363C,
   ); // Palet dışıydı (profil moru); Ray tonuna indirildi.
 
   /// Yarışın rengi (Madder). Ana ekranın "Arkadaşınla yarış" kapısı ve
@@ -452,8 +452,8 @@ class AppTheme {
 
   static const bg = Color(0xFF121214); // Şev — gece zemini.
   static const bgDeep = Color(0xFF0D0D0F); // Şev koyu.
-  static const surface = Color(0xFF1C1D21); // Perde — gece yüzeyi.
-  static const surfaceHi = Color(0xFF26272C); // Kulis — yükseltilmiş yüzey.
+  static const surface = Color(0xFF222328); // Perde — gece yüzeyi.
+  static const surfaceHi = Color(0xFF2B2C32); // Kulis — yükseltilmiş yüzey.
   static const darkBg = bg;
 
   static const textPrimary = Color(0xFFF5F3EF); // Gece birincil metin.
@@ -461,7 +461,7 @@ class AppTheme {
   static const textMuted = Color(0xFF8F9199); // Gece üçüncül metin (AA geçer).
 
   static const border = Color(
-    0xFF34363C,
+    0xFF3A3D44,
   ); // Gece ayırıcı çizgi (tx2 %14 harmanı).
 
   static const accent = primaryGradientStart;
@@ -814,10 +814,10 @@ class AppTheme {
   /// gece olduğu için gece değeri. Ton ~231°: doğru (Rast, ~160°) ve yanlış
   /// (Şaş, ~5°) tonlarından uzak; dördü yine aynı.
   static const List<Color> answerOptionColors = [
-    Color(0xFF313339),
-    Color(0xFF313339),
-    Color(0xFF313339),
-    Color(0xFF313339),
+    Color(0xFF34363C),
+    Color(0xFF34363C),
+    Color(0xFF34363C),
+    Color(0xFF34363C),
   ];
 
   static LinearGradient categoryGradient(int index) {
@@ -845,8 +845,8 @@ class AppTheme {
   /// Birincil eylemler yalnız [primaryCtaColor] / [brand] kullanır.
   /// Bu teal yalnız çark segmenti ve turnuva gradyanı gibi dekoratif
   /// yüzeyler içindir; yeni CTA butonu için referans alınmamalı.
-  static const ctaTeal = Color(0xFF26272C); // Dekoratif teal kalktı; Kulis.
-  static const ctaTealDeep = Color(0xFF1C1D21); // Dekoratif teal kalktı; Perde.
+  static const ctaTeal = Color(0xFF2B2C32); // Dekoratif teal kalktı; Kulis.
+  static const ctaTealDeep = Color(0xFF222328); // Dekoratif teal kalktı; Perde.
   static const List<Color> ctaTealGradient = [ctaTeal, ctaTealDeep];
   static const List<Color> ctaBrandGradient = [brand, brandDeep];
 
