@@ -1031,10 +1031,17 @@ class _AppShellState extends State<AppShell>
     final showSeconds =
         seconds.any((label) => label != null) &&
         MediaQuery.textScalerOf(context).scale(10) <= 15;
-    final bar = _buildNavigationBar(context);
     if (!showSeconds) {
-      return DecoratedBox(decoration: decoration, child: bar);
+      return DecoratedBox(
+        decoration: decoration,
+        child: _buildNavigationBar(context),
+      );
     }
+    // Küçük satır asıl adın hemen altına otursun: çubuk 64 yerine 60
+    // (ikon plaketi 32 + 4 + ad 20 = 56 yine sığar), altında 12'lik sıra.
+    // Toplam 72: ana sayfada ilk konu satırı 390×844'te ilk ekranda kalır
+    // (bekçi: `manzara_seridi_test.dart`).
+    final bar = _buildNavigationBar(context, height: 60);
     return DecoratedBox(
       decoration: decoration,
       child: SafeArea(
@@ -1046,34 +1053,29 @@ class _AppShellState extends State<AppShell>
             mainAxisSize: MainAxisSize.min,
             children: [
               bar,
-              Transform.translate(
-                // Asıl adın hemen altına otursun: çubuğun 64'lük kutusu
-                // adın altında ~4 pt boşluk bırakır.
-                offset: const Offset(0, -SahneSpace.x1),
-                child: Row(
-                  key: const ValueKey('nav-second-labels'),
-                  children: [
-                    for (var i = 0; i < seconds.length; i++)
-                      Expanded(
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          excludeFromSemantics: true,
-                          onTap: () => _selectTab(i),
-                          child: SizedBox(
-                            height: 12,
-                            child: seconds[i] == null
-                                ? null
-                                : Center(
-                                    child: SahneBilingualLabel(
-                                      seconds[i]!,
-                                      compact: true,
-                                    ),
+              Row(
+                key: const ValueKey('nav-second-labels'),
+                children: [
+                  for (var i = 0; i < seconds.length; i++)
+                    Expanded(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        excludeFromSemantics: true,
+                        onTap: () => _selectTab(i),
+                        child: SizedBox(
+                          height: 12,
+                          child: seconds[i] == null
+                              ? null
+                              : Center(
+                                  child: SahneBilingualLabel(
+                                    seconds[i]!,
+                                    compact: true,
                                   ),
-                          ),
+                                ),
                         ),
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
             ],
           ),
@@ -1090,8 +1092,9 @@ class _AppShellState extends State<AppShell>
     K.navProfile,
   ];
 
-  Widget _buildNavigationBar(BuildContext context) {
+  Widget _buildNavigationBar(BuildContext context, {double? height}) {
     return NavigationBar(
+      height: height,
       selectedIndex: _tab,
       onDestinationSelected: _selectTab,
       // Sekme hedefleri dile bağımlı metinle değil, sabit anahtarla
