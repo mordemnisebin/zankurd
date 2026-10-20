@@ -152,17 +152,16 @@ void main() {
 
     final chipFinder = find.byKey(const ValueKey('sign-in-language-chip-KU'));
     expect(chipFinder, findsOneWidget);
-    final chip = tester.widget<SahneRailChip>(
-      find.descendant(of: chipFinder, matching: find.byType(SahneRailChip)),
+    // Tur 8: dil seçici tek bitişik segment (SahneRailChip değil); seçili
+    // durum anlamsal ağaçta okunur.
+    bool selectedOf(Finder f) =>
+        tester.getSemantics(f).getSemanticsData().flagsCollection.isSelected ==
+        ui.Tristate.isTrue;
+    expect(selectedOf(chipFinder), isTrue);
+    expect(
+      selectedOf(find.byKey(const ValueKey('sign-in-language-chip-TR'))),
+      isFalse,
     );
-    expect(chip.selected, isTrue);
-    final other = tester.widget<SahneRailChip>(
-      find.descendant(
-        of: find.byKey(const ValueKey('sign-in-language-chip-TR')),
-        matching: find.byType(SahneRailChip),
-      ),
-    );
-    expect(other.selected, isFalse);
     expect(
       tester
           .getSemantics(chipFinder)

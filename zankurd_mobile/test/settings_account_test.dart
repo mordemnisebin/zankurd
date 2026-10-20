@@ -1,3 +1,4 @@
+import 'dart:ui' show Tristate;
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
@@ -122,14 +123,16 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    SahneRailChip chip(String key) => tester.widget<SahneRailChip>(
-      find.descendant(
-        of: find.byKey(ValueKey(key)),
-        matching: find.byType(SahneRailChip),
-      ),
-    );
-    expect(chip('settings-language-tr').selected, isTrue);
-    expect(chip('settings-language-ku').selected, isFalse);
+    // Tur 8: dil seçici tek bitişik segment; seçili durum anlamsal ağaçta.
+    bool selectedOf(String key) =>
+        tester
+            .getSemantics(find.byKey(ValueKey(key)))
+            .getSemanticsData()
+            .flagsCollection
+            .isSelected ==
+        Tristate.isTrue;
+    expect(selectedOf('settings-language-tr'), isTrue);
+    expect(selectedOf('settings-language-ku'), isFalse);
   });
 
   testWidgets('ayarlar hakkında kartı marka işaretini ve sürümü taşır', (

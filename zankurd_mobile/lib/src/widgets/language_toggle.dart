@@ -14,7 +14,9 @@ import 'sahne/sahne.dart';
 /// kararı iki kez (ve farklı) uygulamasın diye kod tek yerde durur;
 /// çağıran ekran yalnız her çipin `ValueKey`'ini verir.
 ///
-/// 2026-09-29 Şahnê: seçim rayının sığan çeşidi ([SahneRail.fit] +
+/// Tur 8: iki ayrı çip değil TEK bitişik segment (aşağıda `build` notu).
+///
+/// 2026-09-29 Şahnê (eski): seçim rayının sığan çeşidi ([SahneRail.fit] +
 /// [SahneRailChip]) — iki eşit çip, 8 aralık; seçili çip nötr rolün tonu
 /// + Halka 2, öteki Perde + kenar. Boyu içeriğe göre sabittir (120 × 48):
 /// bu kap bazı ekranlarda Stack/Align'ın gevşek ama sınırlı kısıtı altında
@@ -29,36 +31,67 @@ class LanguageToggle extends StatelessWidget {
   /// "TR" çipinin test/erişilebilirlik anahtarı.
   final Key trKey;
 
+  /// Toplam boy ve genişlik: tek bitişik segment (tur 8).
+  static const double width = 120;
+  static const double height = 48;
+
   @override
   Widget build(BuildContext context) {
     final isKu = context.isKu;
+    final t = SahneTokens.of(context);
+    // Tur 8 (3 denetçi): iki ayrı düğme (biri dolu, biri çerçeveli) gibi
+    // okunuyordu; "dil seçici" değil iki bağımsız eylem sanılıyordu. Artık
+    // TEK bitişik segment: ortak 1 px dış kenar, ortada ince ayraç, seçili
+    // yarı ortak seçili stille (selFill + selTx) dolu.
     return SizedBox(
-      width: 56 * 2 + SahneSpace.x2,
-      height: 48,
-      child: SahneRail.fit(
-        children: [
-          _LanguageChip(
-            chipKey: kuKey,
-            label: 'KU',
-            semanticLabel: 'Kurmancî',
-            active: isKu,
-            onTap: () => context.langProvider.setLang('ku'),
+      key: const ValueKey('language-toggle-segment'),
+      width: width,
+      height: height,
+      child: DecoratedBox(
+        // Kenar ÖNDE çizilir: seçili yarının dolgusu kenarı örtmesin.
+        position: DecorationPosition.foreground,
+        decoration: ShapeDecoration(
+          shape: SahneShape.withSide(SahneShape.m, t.tx2, width: 1),
+        ),
+        child: ClipPath(
+          clipper: const ShapeBorderClipper(shape: SahneShape.m),
+          child: ColoredBox(
+            color: t.s1,
+            child: Row(
+              children: [
+                Expanded(
+                  child: _LanguageSegment(
+                    chipKey: kuKey,
+                    label: 'KU',
+                    semanticLabel: 'Kurmancî',
+                    active: isKu,
+                    onTap: () => context.langProvider.setLang('ku'),
+                  ),
+                ),
+                ColoredBox(
+                  color: t.tx2,
+                  child: const SizedBox(width: 1, height: double.infinity),
+                ),
+                Expanded(
+                  child: _LanguageSegment(
+                    chipKey: trKey,
+                    label: 'TR',
+                    semanticLabel: 'Türkçe',
+                    active: !isKu,
+                    onTap: () => context.langProvider.setLang('tr'),
+                  ),
+                ),
+              ],
+            ),
           ),
-          _LanguageChip(
-            chipKey: trKey,
-            label: 'TR',
-            semanticLabel: 'Türkçe',
-            active: !isKu,
-            onTap: () => context.langProvider.setLang('tr'),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
-class _LanguageChip extends StatelessWidget {
-  const _LanguageChip({
+class _LanguageSegment extends StatelessWidget {
+  const _LanguageSegment({
     required this.chipKey,
     required this.label,
     required this.semanticLabel,
@@ -78,6 +111,7 @@ class _LanguageChip extends StatelessWidget {
     // (yalnız "button"); ekran okuyucu hangi dile geçildiğini
     // söyleyemiyordu (2026-07-22 canlı UX denetimi). Görünen söz "KU",
     // okunan söz dilin adıdır.
+    final t = SahneTokens.of(context);
     return KeyedSubtree(
       key: chipKey,
       child: Semantics(
@@ -87,11 +121,20 @@ class _LanguageChip extends StatelessWidget {
         label: semanticLabel,
         onTap: onTap,
         excludeSemantics: true,
-        child: SahneRailChip(
-          label: label,
-          selected: active,
-          role: SahneRole.neutral,
-          onTap: onTap,
+        child: Material(
+          color: active ? t.selFill : Colors.transparent,
+          child: InkWell(
+            onTap: onTap,
+            child: Center(
+              child: Text(
+                label,
+                style: SahneType.captionStrong.copyWith(
+                  color: active ? t.selTx : t.tx2,
+                  fontWeight: active ? FontWeight.w800 : FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
