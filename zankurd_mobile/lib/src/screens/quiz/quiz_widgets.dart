@@ -347,6 +347,11 @@ class _QuestionImageFallback extends StatelessWidget {
 /// Şık çubuğu en az 52'dir ve içerikle büyür; kalan alanı doldurmak için
 /// şişirilmez. Şahnê'de soru ile şıkların altında kalan yer boş bir karta
 /// değil sahneye (zemin çizimi, huzme, ufuk) açılır.
+/// Soru metni ile şık grubu arası (şıklar alta oturan düzende). 24-32 aralığı
+/// kurul kararıdır; 28 başparmak bölgesinde soruyu şıklara bağlar ama
+/// birbirine yapıştırmaz.
+const double quizPromptToAnswersGap = 28;
+
 class _QuestionTextAndAnswers extends StatelessWidget {
   const _QuestionTextAndAnswers({
     required this.promptText,
@@ -496,20 +501,21 @@ class _QuestionTextAndAnswers extends StatelessWidget {
           return ConstrainedBox(
             key: const ValueKey('quiz-answers-anchored'),
             constraints: BoxConstraints(minHeight: minHeight),
+            // Soru + şıklar TEK dikey grup: artan boşluk grubun ÜSTÜNDE
+            // kalır (mainAxisAlignment.end), soru şıkların hemen üstünde
+            // durur. Eskiden spaceBetween boşluğu soru üstü ve soru-şık arası
+            // eşit bölüyordu: soru ekranın ortasında yüzüyor, şıklardan
+            // ~150 pt uzakta kalıyordu (kurul, 2026-10-20).
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                // Boş üst çocuk: spaceBetween artan boşluğu soru üstü ve
-                // soru-şık arası EŞİT böler (soru boş alanda ortalanır).
-                const SizedBox.shrink(),
                 promptRow,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: rest,
-                ),
+                const SizedBox(height: quizPromptToAnswersGap),
+                // `rest[0]` bitişik düzenin 16'lık aralığıdır; burada yerini
+                // yukarıdaki sabit aralık alır.
+                ...rest.skip(1),
               ],
             ),
           );

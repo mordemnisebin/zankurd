@@ -98,7 +98,7 @@ void main() {
     expect(find.text('Bildir'), findsOneWidget);
   });
 
-  testWidgets('soru metni 24/30 ve şıklar 12 yarıçaplı', (tester) async {
+  testWidgets('soru metni 26/32 ve şıklar 12 yarıçaplı', (tester) async {
     await pump(tester);
     final question = tester.widget<Text>(
       find
@@ -109,13 +109,13 @@ void main() {
           .first,
     );
     // Test yazı tipinde (kare harfler) uzun soru satır bütçesini aşıp Manşet
-    // 22'ye inebilir; gerçek yazıda 24 (bkz. `QuizQuestionPrompt.styleFor`).
+    // 22'ye inebilir; gerçek yazıda 26 (bkz. `QuizQuestionPrompt.styleFor`).
     expect(
       question.style?.fontSize,
       anyOf(SahneType.question.fontSize, SahneType.headline.fontSize),
     );
-    expect(SahneType.question.fontSize, 24);
-    expect(SahneType.question.height, 30 / 24);
+    expect(SahneType.question.fontSize, 26);
+    expect(SahneType.question.height, 32 / 26);
     expect(SahneShape.m.borderRadius, BorderRadius.circular(12));
     expect(SahneShape.l.borderRadius, BorderRadius.circular(16));
   });

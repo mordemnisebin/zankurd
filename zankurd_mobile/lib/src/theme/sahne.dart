@@ -763,19 +763,20 @@ class SahneType {
     leadingDistribution: TextLeadingDistribution.even,
   );
 
-  /// 24/30 — YALNIZ soru metni (soru ekranı, düello, seviye belirleme).
+  /// 26/32 — YALNIZ soru metni (soru ekranı, düello, seviye belirleme).
   ///
   /// 2026-10-19 sadeleşme: soru 28/32 ile çiziliyordu; üstündeki ışık
   /// huzmesi ve elmas sayaçla yarışırken ekranın en yüksek sesiydi. 24/30
   /// hâlâ büyük ve ağır (800) okunur ama sahnenin geri kalanıyla aynı
-  /// ölçekte durur. Beş boyutlu ölçeğin dışında tek ek boyuttur ve yalnız
+  /// ölçekte durur. 2026-10-20 kurul: 24 şıklara göre cılız bulundu, 26/32'ye
+  /// çıkarıldı ([title] 28/32 ile [headline] 22/28 arasında). Beş boyutlu ölçeğin dışında tek ek boyuttur ve yalnız
   /// soru metni içindir (bekçi: `typography_scale_test.dart`); satır
   /// bütçesini aşan soru yine [headline] 22/28'e iner.
   static const TextStyle question = TextStyle(
     fontFamily: display,
     fontWeight: FontWeight.w800,
-    fontSize: 24,
-    height: 30 / 24,
+    fontSize: 26,
+    height: 32 / 26,
     leadingDistribution: TextLeadingDistribution.even,
   );
 
