@@ -1018,14 +1018,36 @@ class _CupFormatPanel extends StatelessWidget {
               ),
               const SizedBox(height: SahneSpace.x3),
               // Karolar sarar: %200 yazıda dar telefonda alt satıra iner.
-              Wrap(
-                spacing: SahneSpace.x2,
-                runSpacing: SahneSpace.x2,
-                children: [
-                  for (final item in items)
-                    _CupStat(icon: item.$1, value: item.$2, label: item.$3),
-                ],
-              ),
+              // Kurul 4. tur (10): karolar yalnız solu dolduruyor, sağ yarı
+              // boş kalıyordu; normal yazıda satırı eşit paylaşırlar, büyük
+              // yazıda sarmaya döner.
+              if (MediaQuery.textScalerOf(context).scale(16) >= 24)
+                Wrap(
+                  spacing: SahneSpace.x2,
+                  runSpacing: SahneSpace.x2,
+                  children: [
+                    for (final item in items)
+                      _CupStat(icon: item.$1, value: item.$2, label: item.$3),
+                  ],
+                )
+              else
+                IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (var i = 0; i < items.length; i++) ...[
+                        if (i > 0) const SizedBox(width: SahneSpace.x2),
+                        Expanded(
+                          child: _CupStat(
+                            icon: items[i].$1,
+                            value: items[i].$2,
+                            label: items[i].$3,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
               const SizedBox(height: SahneSpace.x3),
               // Kupanın iki kuralı da burada durur.
               Text(

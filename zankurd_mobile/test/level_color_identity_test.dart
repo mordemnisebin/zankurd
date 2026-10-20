@@ -122,6 +122,9 @@ void main() {
             ),
           );
           await tester.pumpAndSettle();
+          // Kurul 4. tur: ilk kilitliden sonrası "+N seviye daha" satırında.
+          await tester.tap(find.byKey(const ValueKey('level-locked-more')));
+          await tester.pumpAndSettle();
 
           expect(
             tester.widget(find.byKey(const ValueKey('level-card-1'))),
@@ -156,6 +159,8 @@ void main() {
               dark: dark,
             ),
           );
+          await tester.pumpAndSettle();
+          await tester.tap(find.byKey(const ValueKey('level-locked-more')));
           await tester.pumpAndSettle();
 
           expect(badgeColor(tester, 1), t.goldTint, reason: combo);

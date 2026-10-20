@@ -77,10 +77,17 @@ void main() {
     // 2-5 arası düğümler numara yerine kilit ikonu taşır; final kupası da
     // kilitli olduğu için görünmez.
     expect(find.text('4'), findsNothing);
-    expect(find.byIcon(AppIcons.lock), findsNWidgets(4));
+    // Kurul 4. tur: yalnız ilk kilitli seviye kart; kalan üçü tek
+    // "+3 seviye daha" satırında (kilit simgesi de o satırda).
+    expect(find.byIcon(AppIcons.lock), findsNWidgets(2));
+    expect(find.text('+3 seviye daha'), findsOneWidget);
+    expect(find.text('Usta'), findsNothing);
     expect(find.byIcon(AppIcons.trophy), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('level-locked-more')));
+    await tester.pumpAndSettle();
+    expect(find.byIcon(AppIcons.lock), findsNWidgets(4));
 
-    // Beş satır da çizilir — kilitli olmak görünmez olmak değildir.
+    // Açılınca beş satır da çizilir.
     expect(find.text('Başlangıç'), findsOneWidget);
     expect(find.text('Usta'), findsOneWidget);
 
@@ -151,6 +158,10 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+
+    // Kurul 4. tur: ilk kilitli seviyeden sonrası "+N seviye daha" satırında.
+    await tester.tap(find.byKey(const ValueKey('level-locked-more')));
+    await tester.pumpAndSettle();
 
       expect(
         tester.widget(find.byKey(const ValueKey('level-card-1'))),
