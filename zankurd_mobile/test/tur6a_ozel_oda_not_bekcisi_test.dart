@@ -42,15 +42,17 @@ void main() {
       await tester.ensureVisible(
         find.byKey(const ValueKey('custom-room-settings-row')),
       );
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
       await tester.pumpAndSettle();
       final fee = find.byKey(const ValueKey('custom-room-fee-25'));
       await tester.ensureVisible(fee);
+      await tester.pumpAndSettle();
       await tester.tap(fee);
       await tester.pumpAndSettle();
 
       final note = find.byKey(const ValueKey('custom-room-shortfall'));
-      final button = find.byKey(const ValueKey('custom-room-earn-coins'));
+      final button = find.byKey(const ValueKey('custom-room-open'));
       expect(note, findsOneWidget);
       expect(
         find.descendant(

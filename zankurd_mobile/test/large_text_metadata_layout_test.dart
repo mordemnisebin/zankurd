@@ -173,6 +173,7 @@ void main() {
             await tester.ensureVisible(
               find.byKey(const ValueKey('custom-room-settings-row')),
             );
+            await tester.pumpAndSettle();
             await tester.tap(
               find.byKey(const ValueKey('custom-room-settings-row')),
             );
@@ -194,6 +195,7 @@ void main() {
               final chip = find.byKey(ValueKey('custom-room-fee-$fee'));
               expect(chip, findsOneWidget, reason: '$fee chip missing');
               await tester.ensureVisible(chip);
+              await tester.pumpAndSettle();
               await tester.pump();
               final chipRect = tester.getRect(chip);
               expect(chipRect.left, greaterThanOrEqualTo(0));
@@ -232,11 +234,14 @@ void main() {
     await tester.ensureVisible(
       find.byKey(const ValueKey('custom-room-settings-row')),
     );
+
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
     await tester.pumpAndSettle();
 
     final fee = find.byKey(const ValueKey('custom-room-fee-100'));
     await tester.ensureVisible(fee);
+    await tester.pumpAndSettle();
     await tester.tap(fee);
     await tester.pumpAndSettle();
     expect(
@@ -246,6 +251,7 @@ void main() {
 
     final openRoom = find.text('Odayı aç');
     await tester.ensureVisible(openRoom);
+    await tester.pumpAndSettle();
     await tester.pump();
     await tester.tap(openRoom);
     await tester.pumpAndSettle();

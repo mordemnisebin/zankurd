@@ -73,6 +73,7 @@ void main() {
 
       final openButton = find.text('Odayı aç');
       await tester.ensureVisible(openButton);
+      await tester.pumpAndSettle();
       await tester.pump();
       await tester.tap(openButton);
       await tester.pumpAndSettle();
@@ -98,12 +99,14 @@ void main() {
       await tester.ensureVisible(
         find.byKey(const ValueKey('custom-room-settings-row')),
       );
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
       await tester.pumpAndSettle();
 
       // Süre seçimi (20 sn varsayılan; 30 sn seçelim)
       expect(find.text('20 sn'), findsOneWidget);
       await tester.ensureVisible(find.text('30 sn'));
+      await tester.pumpAndSettle();
       await tester.pump();
       await tester.tap(find.text('30 sn'));
       await tester.pumpAndSettle();
@@ -111,6 +114,7 @@ void main() {
       // Soru sayısı seçimi (5 soru seçelim)
       expect(find.text('5 soru'), findsOneWidget);
       await tester.ensureVisible(find.text('5 soru'));
+      await tester.pumpAndSettle();
       await tester.pump();
       await tester.tap(find.text('5 soru'));
       await tester.pumpAndSettle();
@@ -122,6 +126,7 @@ void main() {
       // kaydırma tamamlanmadan dokunulup eski konuma vurulmuştu.
       final openButton = find.text('Odayı aç');
       await tester.ensureVisible(openButton);
+      await tester.pumpAndSettle();
       await tester.pump();
       await tester.tap(openButton);
       await tester.pumpAndSettle();
@@ -147,6 +152,7 @@ void main() {
     await tester.ensureVisible(
       find.byKey(const ValueKey('custom-room-settings-row')),
     );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
     await tester.pumpAndSettle();
 
@@ -181,6 +187,7 @@ void main() {
     await tester.ensureVisible(
       find.byKey(const ValueKey('custom-room-settings-row')),
     );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
     await tester.pumpAndSettle();
 
@@ -352,12 +359,14 @@ void main() {
 
       final chip = find.byKey(const ValueKey('custom-room-capacity-30'));
       await tester.ensureVisible(chip);
+      await tester.pumpAndSettle();
       await tester.pump();
       await tester.tap(chip);
       await tester.pumpAndSettle();
 
       final openButton = find.text('Odayı aç');
       await tester.ensureVisible(openButton);
+      await tester.pumpAndSettle();
       await tester.pump();
       await tester.tap(openButton);
       await tester.pumpAndSettle();
@@ -374,6 +383,7 @@ void main() {
 
     final chip = find.byKey(const ValueKey('custom-room-capacity-2'));
     await tester.ensureVisible(chip);
+    await tester.pumpAndSettle();
     await tester.pump();
     await tester.tap(chip);
     await tester.pumpAndSettle();
@@ -384,6 +394,7 @@ void main() {
 
     final openButton = find.text('Odayı aç');
     await tester.ensureVisible(openButton);
+    await tester.pumpAndSettle();
     await tester.pump();
     await tester.tap(openButton);
     await tester.pumpAndSettle();
@@ -395,6 +406,7 @@ void main() {
     Future<void> tapChip(WidgetTester tester, String key) async {
       final chip = find.byKey(ValueKey(key));
       await tester.ensureVisible(chip);
+      await tester.pumpAndSettle();
       await tester.pump();
       await tester.tap(chip);
       await tester.pumpAndSettle();
@@ -403,6 +415,7 @@ void main() {
     Future<void> open(WidgetTester tester) async {
       final openButton = find.text('Odayı aç');
       await tester.ensureVisible(openButton);
+      await tester.pumpAndSettle();
       await tester.pump();
       await tester.tap(openButton);
       await tester.pumpAndSettle();
@@ -493,14 +506,17 @@ void main() {
 
     final row = find.byKey(const ValueKey('custom-room-settings-row'));
     await tester.ensureVisible(row);
+    await tester.pumpAndSettle();
     await tester.tap(row);
     await tester.pumpAndSettle();
     await tester.ensureVisible(
       find.byKey(const ValueKey('custom-room-count-5')),
     );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('custom-room-count-5')));
     await tester.pumpAndSettle();
     await tester.ensureVisible(row);
+    await tester.pumpAndSettle();
     await tester.tap(row);
     await tester.pumpAndSettle();
     expect(find.text('5 soru · 20 sn · Ücretsiz (0)'), findsOneWidget);

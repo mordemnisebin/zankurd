@@ -5,7 +5,7 @@
 // Niçin sessiz kaldı: testler çiplerin VARLIĞINA ve konumuna bakıyordu; bir
 // satırın yarısının kaydırma kenarında kesilmesi yalnız ekran görüntüsünde
 // görünür. Burada 390×844'te (dpr 1) kapalı sayfanın kaydırmasız sığdığı,
-// Ayarlar açılınca satırın tepeye oturduğu ve en alt satırın (50/100 jeton)
+// Ayarlar açılınca içeriğin sona kaydığı ve en alt satırın (50/100 jeton)
 // kesilmeden görünür alanın içinde kaldığı ölçülür.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -60,25 +60,17 @@ void main() {
   });
 
   testWidgets(
-    'Ayarlar açılınca satır tepeye oturur; son ücret satırı kesilmez',
+    'Ayarlar açılınca içerik sona kayar; son ücret satırı kesilmez, boşluk yok',
     (tester) async {
       final position = await open(tester);
       final row = find.byKey(const ValueKey('custom-room-settings-row'));
       await tester.tap(row);
       await tester.pumpAndSettle();
 
-      final view = viewportRect(tester);
-      expect(
-        tester.getTopLeft(row).dy - view.top,
-        lessThanOrEqualTo(12),
-        reason: 'Ayarlar satırı tepede; üstte yarım kesik satır yok',
-      );
-
-      // Yetmeyen ücrete dokun: not belirir, görünür alan değişmemeli.
+      // Yetmeyen ücrete dokun: not belirir, ızgara yine kesilmeden görünür.
       await tester.tap(find.byKey(const ValueKey('custom-room-fee-100')));
       await tester.pumpAndSettle();
       final after = viewportRect(tester);
-      expect(after.height, view.height, reason: 'not satırı yer ayırmalı');
       for (final fee in [50, 100]) {
         final r = tester.getRect(find.byKey(ValueKey('custom-room-fee-$fee')));
         expect(r.bottom, lessThanOrEqualTo(after.bottom + 0.5));
