@@ -578,6 +578,13 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             ],
           ],
         ),
+        // 'Bu hafta' kartı düellolarım kutusunun ALTINDA durur: üstte olunca
+        // yüksekliği kutuyu tembel listede ekran dışına itiyordu.
+        if (widget.asyncDuelEnabled && !locked)
+          AsyncDuelInboxSection(
+            repository: widget.repository,
+            refreshSignal: _asyncDuelInboxSignal,
+          ),
         if (!locked) ...[
           const SizedBox(height: SahneSpace.x5),
           ThisWeekCard(
@@ -588,11 +595,6 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             ),
           ),
         ],
-        if (widget.asyncDuelEnabled && !locked)
-          AsyncDuelInboxSection(
-            repository: widget.repository,
-            refreshSignal: _asyncDuelInboxSignal,
-          ),
         // Mağaza satırı buradan kaldırıldı: aynı ekrana Yarış
         // sekmesinden, profilden ve kendi rotasından olmak üzere üç
         // ayrı giriş vardı ve "burası neresi?" hissi yaratıyordu

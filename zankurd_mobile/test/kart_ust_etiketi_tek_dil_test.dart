@@ -111,12 +111,13 @@ void main() {
       expect(src, contains('eyebrowTx'), reason: path);
     }
     final hub = File('lib/src/screens/play_hub_screen.dart').readAsStringSync();
+    // Hızlı düello üst etiketi: K.quickDuel metni eyebrowTx ile çizilir
+    // (boşluk gözetmeyen kalıp; biçimleyici girintiyi değiştirse bozulmasın).
     expect(
-      hub,
-      contains(
-        'context.t(K.quickDuel),\n'
-        '                  style: SahneType.captionStrong.copyWith(color: t.eyebrowTx)',
-      ),
+      RegExp(
+        r'context\.t\(K\.quickDuel\),\s*style: SahneType\.captionStrong\.copyWith\(\s*color: t\.eyebrowTx',
+      ).hasMatch(hub),
+      isTrue,
     );
   });
 }
