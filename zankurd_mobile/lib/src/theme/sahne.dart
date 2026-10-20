@@ -113,7 +113,13 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
 
   /// Pasif etiket: üçüncül metin; pasif dolguya karşı yine ≥ 3 (okunur ama
   /// etkin ikincil etiketten (`tx`) belli ölçüde soluk).
-  Color get disabledFg => tx3;
+  ///
+  /// Tur 8 (Opus + Grok, 115/116/73/14): `tx3` pasif dolguya 4,9 (gündüz) ve
+  /// 4,6 (gece) idi: AA'yı geçiyor ama "Yarışı başlat"/"Sonraki" yazısı yine
+  /// silik duruyordu. Gündüz `#3F4872` (≈ 7:1), gece `#A9ABB3` (≈ 6,2:1);
+  /// etkin etiketten (`tx`) hâlâ soluk, ama okunur.
+  Color get disabledFg =>
+      _isDay ? const Color(0xFF3F4872) : const Color(0xFFA9ABB3);
 
   /// İkincil düğmenin 1,5 px görünür kenarı (mürekkep ~%40): şeffaf dolgu +
   /// bu kenar + güçlü etiket = ikincil; kenarsız soluk dolgu = pasif.
