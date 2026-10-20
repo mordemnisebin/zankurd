@@ -608,8 +608,7 @@ class SahneResultRewards extends StatelessWidget {
 
   /// Ödül satırının sözü ("Kazanıldı"): çipler tek başına durunca kartta
   /// ne olduğu belli olmuyordu (kalabalık sonuçta karta yalnız "+40"
-  /// düşüyordu). Verilirse söz solda, çipler sağda, aynı satırda; dar
-  /// ekranda ya da büyük yazıda çipler sözün altına iner.
+  /// düşüyordu). Verilirse söz tam genişlikte üstte, çipler altında.
   final String? label;
 
   final int coins;
@@ -635,7 +634,7 @@ class SahneResultRewards extends StatelessWidget {
       child: Wrap(
         spacing: SahneSpace.x2,
         runSpacing: SahneSpace.x2,
-        alignment: WrapAlignment.end,
+        alignment: WrapAlignment.start,
         children: [
           if (coins > 0)
             SahneStatChip(
@@ -661,30 +660,17 @@ class SahneResultRewards extends StatelessWidget {
       text,
       style: SahneType.bodyStrong.copyWith(color: t.tx),
     );
-    if (MediaQuery.textScalerOf(context).scale(16) >= 24) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          labelText,
-          const SizedBox(height: SahneSpace.x2),
-          Align(alignment: AlignmentDirectional.centerStart, child: chips),
-        ],
-      );
-    }
-    return LayoutBuilder(
-      builder: (context, c) => Row(
-        children: [
-          Expanded(child: labelText),
-          const SizedBox(width: SahneSpace.x3),
-          // Çipler sağa yaslı; sözü ezmesin diye genişlikleri sınırlı. Sınır
-          // ekranın değil KARTIN genişliğinin %70'i: dar kartta (320 px)
-          // ekran genişliğine göre hesaplanan sınır satırı taşırıyordu.
-          ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: c.maxWidth * 0.7),
-            child: chips,
-          ),
-        ],
-      ),
+    // Söz HER ZAMAN tam genişlikte üst satırda, çipler altında. Yan yana
+    // düzende Kurmancî "Hat qezenckirin" çiplerin artığı olan dar sütuna
+    // sığmayıp iki satıra kırılıyordu (tur 6, 70_result_ku); genişlik/ölçek
+    // eşiğine bağlı her düzen bir sonraki dilde yine kırılırdı.
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        labelText,
+        const SizedBox(height: SahneSpace.x2),
+        Align(alignment: AlignmentDirectional.centerStart, child: chips),
+      ],
     );
   }
 
