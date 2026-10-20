@@ -6,6 +6,7 @@
 library;
 
 export '../../theme/sahne.dart';
+export 'sahne_bilingual.dart';
 export 'sahne_buttons.dart';
 export 'sahne_cards.dart';
 export 'sahne_chips.dart';

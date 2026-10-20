@@ -183,6 +183,13 @@ class _HomeTopicTile extends StatelessWidget {
   final CategoryProgress? progress;
   final VoidCallback? onTap;
 
+  Widget? _secondName(BuildContext context) {
+    final key = CategoryNames.tileKey(category);
+    if (key == null) return null;
+    final text = secondLabelFor(context, key, isKu: isKu);
+    return text == null ? null : SahneBilingualLabel(text);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Karoda KISA ad yazılır (bkz. [CategoryNames.tile]); ekran okuyucu tam
@@ -221,6 +228,9 @@ class _HomeTopicTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: SahneType.bodyStrong.copyWith(color: t.tx),
                   ),
+                  // İki dilli etiket: konunun öbür dildeki adı, düz, tek
+                  // satır; sığmazsa hiç çizilmez (dar ekran, büyük yazı).
+                  ?_secondName(context),
                   if (started)
                     Padding(
                       padding: const EdgeInsets.only(top: SahneSpace.x2),

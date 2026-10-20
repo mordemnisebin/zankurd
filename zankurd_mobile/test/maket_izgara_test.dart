@@ -1,3 +1,8 @@
+// 2026-10-20 iki dilli etiket: öbür dildeki ad karoya küçük satır olarak
+// döndü (kullanıcı geri bildirimi: oyuncu konuyu bulamıyordu). A1 artık
+// asıl adın tek ve kesilmez olduğunu, öbür dilin YALNIZ küçük satır
+// bileşeninde ve aynı anahtardan geldiğini sabitler.
+//
 // 2026-10-19 SADELEŞME (bu başlık güncellendi): konu karosu artık YATAY
 // karodur (küçük konu işareti + YALNIZ geçerli dilde ad). Öteki dildeki ad,
 // soru sayısı ve boş ilerleme çubuğu kalktı; ince çubuk yalnız ilerleme > 0
@@ -125,11 +130,32 @@ void main() {
 
               for (final c in _categories) {
                 final tile = find.byKey(ValueKey('home-topic-$c'));
-                // 1) Tek metin: geçerli dildeki kısa ad. Öteki dil ve soru
-                // sayısı yok.
+                // 1) Tek ASIL metin: geçerli dildeki kısa ad. Soru sayısı
+                // yok. 2026-10-20 iki dilli etiket: öbür dildeki ad YALNIZ
+                // küçük satır bileşeninde ([SahneBilingualLabel]) durabilir
+                // ve aynı anahtarın öbür dil değeridir; asıl adla karışmaz.
+                final second = find.descendant(
+                  of: tile,
+                  matching: find.byKey(SahneBilingualLabel.valueKey),
+                );
+                for (final e in second.evaluate()) {
+                  expect(
+                    (e.widget as Text).data,
+                    CategoryNames.tile(c, !ku),
+                    reason: '$c: küçük satır öbür dilin adı değil',
+                  );
+                }
                 final texts = find.descendant(
                   of: tile,
-                  matching: find.byType(RichText),
+                  matching: find.byWidgetPredicate(
+                    (w) =>
+                        w is RichText &&
+                        !second.evaluate().any(
+                          (e) =>
+                              e.widget is Text &&
+                              (e.widget as Text).data == w.text.toPlainText(),
+                        ),
+                  ),
                 );
                 expect(
                   texts.evaluate().length,

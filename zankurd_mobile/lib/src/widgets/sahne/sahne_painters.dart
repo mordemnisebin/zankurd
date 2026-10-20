@@ -502,6 +502,195 @@ class SahneRidgePainter extends CustomPainter {
       oldDelegate.color != color;
 }
 
+/// Günün dersi kartının tepesindeki manzara ("Çiya", 2026-10-20).
+///
+/// Uygulamanın dağ sırtı ([SahneRidgePainter.ridgeLine], logodaki dağ)
+/// büyür ve manzaraya döner: gökyüzü degradesi, üç katman sırt (uzak açık,
+/// orta = logo sırtı, yakın koyu taban) ve güneş. Gecede gökte yıldızlar,
+/// güneş yerine zirvede TEK turuncu ışık. Renkler belirteçtir
+/// ([SahneTokens.vistaSkyTop] …); degrade yalnız gökte, bulanıklık ve
+/// `saveLayer` yok. Metin ve düğme manzaranın üstüne binmez: şerit kartın
+/// ayrı bir satırıdır.
+class SahneVistaPainter extends CustomPainter {
+  const SahneVistaPainter({
+    required this.skyTop,
+    required this.skyBottom,
+    required this.sun,
+    required this.ridgeFar,
+    required this.ridgeMid,
+    required this.ridgeNear,
+    required this.star,
+    required this.night,
+  });
+
+  SahneVistaPainter.of(SahneTokens t, {required bool night})
+    : this(
+        skyTop: t.vistaSkyTop,
+        skyBottom: t.vistaSkyBottom,
+        sun: t.vistaSun,
+        ridgeFar: t.vistaRidgeFar,
+        ridgeMid: t.vistaRidgeMid,
+        ridgeNear: t.vistaRidgeNear,
+        star: t.vistaStar,
+        night: night,
+      );
+
+  final Color skyTop;
+  final Color skyBottom;
+  final Color sun;
+  final Color ridgeFar;
+  final Color ridgeMid;
+  final Color ridgeNear;
+  final Color star;
+  final bool night;
+
+  /// Uzak sırt (maketteki açık katman), 0–1 ızgarasında.
+  static const List<Offset> farLine = [
+    Offset(0.00, 0.40),
+    Offset(0.08, 0.30),
+    Offset(0.14, 0.35),
+    Offset(0.22, 0.18),
+    Offset(0.27, 0.24),
+    Offset(0.33, 0.12),
+    Offset(0.40, 0.27),
+    Offset(0.48, 0.22),
+    Offset(0.55, 0.33),
+    Offset(0.63, 0.15),
+    Offset(0.70, 0.21),
+    Offset(0.76, 0.08),
+    Offset(0.83, 0.25),
+    Offset(0.90, 0.19),
+    Offset(1.00, 0.34),
+  ];
+
+  /// Gece yıldızları (sabit, 0–1 ızgarasında; zirvenin çevresi boş).
+  static const List<Offset> stars = [
+    Offset(0.06, 0.14),
+    Offset(0.13, 0.32),
+    Offset(0.21, 0.08),
+    Offset(0.30, 0.22),
+    Offset(0.37, 0.06),
+    Offset(0.62, 0.10),
+    Offset(0.69, 0.28),
+    Offset(0.78, 0.07),
+    Offset(0.86, 0.20),
+    Offset(0.94, 0.09),
+  ];
+
+  static Path _line(List<Offset> line, Rect box) {
+    final path = Path()..moveTo(box.left, box.bottom);
+    for (final p in line) {
+      path.lineTo(box.left + p.dx * box.width, box.top + p.dy * box.height);
+    }
+    return path
+      ..lineTo(box.right, box.bottom)
+      ..close();
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.isEmpty) return;
+    final rect = Offset.zero & size;
+    canvas.drawRect(
+      rect,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [skyTop, skyBottom],
+        ).createShader(rect),
+    );
+    final h = size.height;
+    final w = size.width;
+    // Orta sırt (logo sırtı) şeridin %25'inden başlar; zirvesi oradadır.
+    final midBox = Rect.fromLTWH(0, h * 0.25, w, h * 0.75);
+    final peak = Offset(
+      midBox.left + 0.50 * midBox.width,
+      midBox.top + 0.00 * midBox.height,
+    );
+    if (night) {
+      final starPaint = Paint()..color = star.withValues(alpha: 0.7);
+      for (final p in stars) {
+        canvas.drawCircle(Offset(p.dx * w, p.dy * h), 1.1, starPaint);
+      }
+    } else {
+      // Güneş zirvenin sağ arkasında, sırtın ardından doğar.
+      final c = Offset(w * 0.68, h * 0.42);
+      final r = h * 0.17;
+      canvas.drawCircle(
+        c,
+        r * 1.5,
+        Paint()..color = sun.withValues(alpha: 0.22),
+      );
+      canvas.drawCircle(c, r, Paint()..color = sun);
+    }
+    canvas.drawPath(
+      _line(farLine, Rect.fromLTWH(0, h * 0.40, w, h * 0.60)),
+      Paint()..color = ridgeFar,
+    );
+    canvas.drawPath(
+      SahneRidgePainter.ridgePath(midBox),
+      Paint()..color = ridgeMid,
+    );
+    // Yakın taban: alçak, dalgasız koyu şerit.
+    canvas.drawPath(
+      _line(const [
+        Offset(0.00, 0.30),
+        Offset(0.20, 0.45),
+        Offset(0.42, 0.25),
+        Offset(0.66, 0.50),
+        Offset(0.86, 0.20),
+        Offset(1.00, 0.35),
+      ], Rect.fromLTWH(0, h * 0.80, w, h * 0.20)),
+      Paint()..color = ridgeNear,
+    );
+    if (night) {
+      // Zirvede TEK turuncu ışık: küçük hale + nokta.
+      canvas.drawCircle(peak, 6, Paint()..color = sun.withValues(alpha: 0.25));
+      canvas.drawCircle(peak, 2.5, Paint()..color = sun);
+    }
+  }
+
+  @override
+  bool shouldRepaint(SahneVistaPainter old) =>
+      old.skyTop != skyTop ||
+      old.skyBottom != skyBottom ||
+      old.sun != sun ||
+      old.ridgeFar != ridgeFar ||
+      old.ridgeMid != ridgeMid ||
+      old.ridgeNear != ridgeNear ||
+      old.star != star ||
+      old.night != night;
+}
+
+/// Manzara şeridi: kartın tepesinde tam genişlik, en çok [maxHeight].
+/// Dekoratiftir, ekran okuyucuya görünmez.
+class SahneVistaStrip extends StatelessWidget {
+  const SahneVistaStrip({super.key, this.height = defaultHeight});
+
+  /// Kurulun tek itirazı manzaranın kartı büyütüp konuları aşağı itmesiydi:
+  /// şerit ALÇAKTIR (≤ [maxHeight]); 390×844'te konu ızgarasının ilk satırı
+  /// ilk ekranda kalır (bekçi: `manzara_seridi_test.dart`).
+  static const double defaultHeight = 88;
+  static const double maxHeight = 100;
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final night = Theme.of(context).brightness == Brightness.dark;
+    return ExcludeSemantics(
+      child: SizedBox(
+        key: const ValueKey('sahne-vista-strip'),
+        height: height.clamp(0, maxHeight),
+        width: double.infinity,
+        child: CustomPaint(painter: SahneVistaPainter.of(t, night: night)),
+      ),
+    );
+  }
+}
+
 /// Sonuç kahramanının arkası: sonuç ışınları + dağ sırtı ufku (solo ve
 /// düello sonucu).
 ///

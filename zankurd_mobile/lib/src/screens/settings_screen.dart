@@ -12,6 +12,7 @@ import '../l10n/strings.dart';
 import '../utils/app_route.dart';
 import '../utils/confirm_word.dart';
 import 'level_placement_screen.dart';
+import '../providers/bilingual_labels_provider.dart';
 import '../providers/auth_provider.dart';
 import '../providers/analytics_consent_provider.dart';
 import '../providers/reduced_motion_provider.dart';
@@ -209,7 +210,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     // Bölümler tek biçimli [SahneSectionHeader]; satırlar liste grubu.
     return Scaffold(
       backgroundColor: t.bg,
-      appBar: zkAppBar(context, title: Text(context.t(K.settings))),
+      appBar: zkAppBar(
+        context,
+        title: Text(context.t(K.settings)),
+        titleSecondary: context.secondLabel(K.settings),
+      ),
       body: SafeArea(
         top: false,
         // 2026-10-02: bu sayfa tembel `ListView` idi. Tembel liste, ekran
@@ -392,6 +397,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   // yolu bulunmalı. Öğrenme ve tekrar akışları zaten
                   // sayaçsızdı; kategori ve alıştırma turunda kapatmanın
                   // hiçbir yolu yoktu.
+                  // İki dilli etiketler (2026-10-20): varsayılan açık.
+                  // Sağlayıcısız ağaçta (eski testler) satır yoktur.
+                  if (_hasProvider<BilingualLabelsProvider>(context))
+                    Consumer<BilingualLabelsProvider>(
+                      builder: (context, bilingual, _) => SahneListRow.plain(
+                        title: context.t(K.bilingualLabels),
+                        trailing: Switch(
+                          key: const ValueKey('bilingual-labels-switch'),
+                          value: bilingual.enabled,
+                          onChanged: (v) => bilingual.setEnabled(v),
+                        ),
+                      ),
+                    ),
                   Consumer<UntimedModeProvider>(
                     builder: (context, untimed, _) => SahneListRow.plain(
                       title: context.t(K.untimedSolo),
@@ -1355,5 +1373,15 @@ class _BlockedUsersSectionState extends State<_BlockedUsersSection> {
         );
       },
     );
+  }
+}
+
+/// Ağaçta [T] sağlayıcısı var mı (dinlemeden).
+bool _hasProvider<T>(BuildContext context) {
+  try {
+    Provider.of<T>(context, listen: false);
+    return true;
+  } on ProviderNotFoundException {
+    return false;
   }
 }

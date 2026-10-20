@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../providers/bilingual_labels_provider.dart';
 import '../services/analytics_service.dart';
 import 'strings.dart';
 
@@ -125,6 +126,21 @@ extension LangContext on BuildContext {
     return Tr.of(key, language, params);
   }
 
+  /// İki dilli etiketin küçük satırı: [key]in öbür dildeki karşılığı.
+  ///
+  /// Ayar kapalıysa ([BilingualLabelsProvider]) ya da öbür dilde ayrı bir
+  /// karşılık yoksa `null`. Tek kaynak budur: sekme, başlık ve konu kartı
+  /// hepsi buradan okur (bkz. [Tr.counterpart]).
+  String? secondLabel(String key, [Map<String, String>? params]) {
+    final bool ku;
+    try {
+      ku = isKu;
+    } on ProviderNotFoundException {
+      return null;
+    }
+    return secondLabelFor(this, key, isKu: ku, params: params);
+  }
+
   /// Kimlik sağlayıcısının hata dizgisini geçerli dile çevirir.
   ///
   /// `AuthProvider.errorMessage` artık bir metin ANAHTARIDIR (`K.authErr*`).
@@ -137,6 +153,18 @@ extension LangContext on BuildContext {
     if (Tr.hasKey(message)) return t(message);
     return isKu ? t(K.authErrGeneric) : message;
   }
+}
+
+/// [BuildContext.secondLabel]in dili parametre olarak taşıyan bileşenler
+/// (`isKu` alan kartlar) için eşi: aynı ayar, aynı kaynak.
+String? secondLabelFor(
+  BuildContext context,
+  String key, {
+  required bool isKu,
+  Map<String, String>? params,
+}) {
+  if (!BilingualLabelsProvider.isEnabledIn(context)) return null;
+  return Tr.counterpart(key, isKu: isKu, params: params);
 }
 
 /// Category names in both languages. Görünen ad [Tr] tablosundadır.
@@ -189,6 +217,10 @@ class CategoryNames {
 
   /// Karoda yazılan ad: kısa adı varsa o, yoksa [localized]. Tam ad başka
   /// her yerde ([localized]) olduğu gibi kalır.
+  /// Karoda yazılan adın metin anahtarı ([tile] ile aynı seçim); bilinmeyen
+  /// konuda `null`. İki dilli etiket öbür dili bu anahtardan okur.
+  static String? tileKey(String kuName) => _tileKeys[kuName] ?? _keys[kuName];
+
   static String tile(String kuName, bool isKu) {
     final key = _tileKeys[kuName];
     if (key == null) return localized(kuName, isKu);

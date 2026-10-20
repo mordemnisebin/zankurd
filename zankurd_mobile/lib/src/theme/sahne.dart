@@ -251,6 +251,29 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
 
   bool get _isNight => bg.computeLuminance() < 0.2;
 
+  /// Günün dersi kartının tepesindeki manzara şeridi ("Çiya", 2026-10-20
+  /// kimlik kararı; kullanıcının açık tercihi). Logodaki dağ sırtı büyüyüp
+  /// alçak bir manzaraya döner: gündüz şafak gökyüzü + lacivert tonlu üç
+  /// katman sırt + güneş; gece yıldızlı lacivert gök + aynı sırtlar koyu +
+  /// zirvede TEK turuncu ışık. Değerler maketten (`B_ciya.html`); gece
+  /// değerleri aynı rolün koyu ikizi. Yalnız bu şerit kullanır.
+  Color get vistaSkyTop =>
+      _isDay ? const Color(0xFFFFD9BC) : const Color(0xFF1B1E3A);
+  Color get vistaSkyBottom =>
+      _isDay ? const Color(0xFFFFF7EF) : const Color(0xFF2E3152);
+
+  /// Gündüz güneşi; gecede zirvedeki tek ışık [act] (turuncu) olur.
+  Color get vistaSun => _isDay ? const Color(0xFFFFB27F) : act;
+  Color get vistaRidgeFar =>
+      _isDay ? const Color(0xFFD6DCEE) : const Color(0xFF3A4068);
+  Color get vistaRidgeMid =>
+      _isDay ? const Color(0xFF9EA9CF) : const Color(0xFF2A2F55);
+  Color get vistaRidgeNear =>
+      _isDay ? const Color(0xFF454E79) : const Color(0xFF191B30);
+
+  /// Gece yıldızı (gündüz çizilmez).
+  Color get vistaStar => const Color(0xFFF5F3EF);
+
   static const night = SahneTokens(
     // 2026-10-20 gece paleti kuruldu (9 modelli kurul oy birliğiyle B):
     // nötr grafit, mavi ton yok; turuncu Agir aynı. Eski lacivert (#0A0F2E)
@@ -887,6 +910,19 @@ class SahneType {
     fontWeight: FontWeight.w700,
     fontSize: 14,
     height: 20 / 14,
+    leadingDistribution: TextLeadingDistribution.even,
+  );
+
+  /// 10/12 — YALNIZ alt gezinmedeki iki dilli etiketin küçük satırı
+  /// (2026-10-20). Beş boyutlu ölçeğin dışında bilerek kalan tek küçük
+  /// boyut: 64 + küçük satırlık gezinme çubuğuna 14'lük ikinci bir satır
+  /// sığmıyor ve sekme adının kendisiyle yarışıyordu. Okunur içerik
+  /// taşımaz (asıl ad 14'lük satırdadır); büyük yazı ölçeğinde gizlenir.
+  static const TextStyle navHint = TextStyle(
+    fontFamily: text,
+    fontWeight: FontWeight.w500,
+    fontSize: 10,
+    height: 12 / 10,
     leadingDistribution: TextLeadingDistribution.even,
   );
 

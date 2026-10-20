@@ -8,6 +8,7 @@ import '../../theme/app_icons.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/sahne.dart';
 import '../brand_mark.dart';
+import 'sahne_bilingual.dart';
 import 'sahne_foundation.dart';
 import 'sahne_painters.dart';
 
@@ -132,6 +133,7 @@ class SahneTabPage extends StatelessWidget {
   const SahneTabPage({
     super.key,
     required this.title,
+    this.titleEyebrow,
     this.subtitle,
     this.stats = const [],
     this.children = const [],
@@ -141,6 +143,11 @@ class SahneTabPage extends StatelessWidget {
   });
 
   final String title;
+
+  /// Başlığın hemen üstündeki küçük öbür dil satırı (bkz.
+  /// [SahneBilingualLabel]); `null` ise çizilmez. Çağıran
+  /// `context.secondLabel(K.…)` ile verir.
+  final String? titleEyebrow;
   final String? subtitle;
 
   /// Marka satırının sağındaki stat çipleri (`SahneStatChip`).
@@ -180,6 +187,7 @@ class SahneTabPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: SahneSpace.x1),
+          if (titleEyebrow != null) SahneBilingualLabel(titleEyebrow!),
           Semantics(
             header: true,
             // Büyük yazıda başlık sarar, kesilmez; tek bir uzun söz dar

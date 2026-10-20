@@ -1017,49 +1017,120 @@ class _AppShellState extends State<AppShell>
   /// bürünüyordu. Artık her yerde TEK görünüş; üstte yalnız 1 px çizgi.
   Widget _buildBottomNav(BuildContext context, bool ku) {
     final t = SahneTokens.of(context);
+    final decoration = BoxDecoration(
+      color: t.nav,
+      border: Border(top: BorderSide(color: t.line)),
+    );
+    // İki dilli etiket (2026-10-20): her sekme adının altında öbür dildeki
+    // adı, 10/12 ([SahneBilingualLabel.compact]). `NavigationDestination`
+    // yalnız düz metin etiket alır; küçük satır çubuğun altındaki ayrı bir
+    // sırada, her sekmenin tam altında durur ve dokunulunca aynı sekmeyi
+    // açar. Ekran okuyucu yalnız asıl adı okur. Büyük yazıda (10 → 15'i
+    // aşınca) satır hiç çizilmez: çubuk uzar ve sekme adlarıyla yarışırdı.
+    final seconds = [for (final key in _navLabelKeys) context.secondLabel(key)];
+    final showSeconds =
+        seconds.any((label) => label != null) &&
+        MediaQuery.textScalerOf(context).scale(10) <= 15;
+    if (!showSeconds) {
+      return DecoratedBox(
+        decoration: decoration,
+        child: _buildNavigationBar(context),
+      );
+    }
+    // Küçük satır asıl adın hemen altına otursun: çubuk 64 yerine 60
+    // (ikon plaketi 32 + 4 + ad 20 = 56 yine sığar), altında 12'lik sıra.
+    // Toplam 72: ana sayfada ilk konu satırı 390×844'te ilk ekranda kalır
+    // (bekçi: `manzara_seridi_test.dart`).
+    final bar = _buildNavigationBar(context, height: 60);
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: t.nav,
-        border: Border(top: BorderSide(color: t.line)),
+      decoration: decoration,
+      child: SafeArea(
+        top: false,
+        child: MediaQuery.removePadding(
+          context: context,
+          removeBottom: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              bar,
+              Row(
+                key: const ValueKey('nav-second-labels'),
+                children: [
+                  for (var i = 0; i < seconds.length; i++)
+                    Expanded(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        excludeFromSemantics: true,
+                        onTap: () => _selectTab(i),
+                        child: SizedBox(
+                          height: 12,
+                          child: seconds[i] == null
+                              ? null
+                              : Center(
+                                  child: SahneBilingualLabel(
+                                    seconds[i]!,
+                                    compact: true,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
-      child: NavigationBar(
-        selectedIndex: _tab,
-        onDestinationSelected: _selectTab,
-        // Sekme hedefleri dile bağımlı metinle değil, sabit anahtarla
-        // bulunur — etiketler ("Yarış") ekran içeriğinde de geçebiliyor.
-        destinations: [
-          NavigationDestination(
-            key: const ValueKey('nav-learn'),
-            icon: const Icon(_learnIcon),
-            selectedIcon: KeyedSubtree(
-              key: _homeNavKey,
-              child: const Icon(_learnIcon),
-            ),
-            label: context.t(K.navLearn),
+    );
+  }
+
+  /// Alt sekmelerin metin anahtarları, sekme sırasıyla.
+  static const _navLabelKeys = [
+    K.navLearn,
+    K.navPlay,
+    K.navLeaderboard,
+    K.navProfile,
+  ];
+
+  Widget _buildNavigationBar(BuildContext context, {double? height}) {
+    return NavigationBar(
+      height: height,
+      selectedIndex: _tab,
+      onDestinationSelected: _selectTab,
+      // Sekme hedefleri dile bağımlı metinle değil, sabit anahtarla
+      // bulunur — etiketler ("Yarış") ekran içeriğinde de geçebiliyor.
+      destinations: [
+        NavigationDestination(
+          key: const ValueKey('nav-learn'),
+          icon: const Icon(_learnIcon),
+          selectedIcon: KeyedSubtree(
+            key: _homeNavKey,
+            child: const Icon(_learnIcon),
           ),
-          NavigationDestination(
-            key: const ValueKey('nav-play'),
-            icon: KeyedSubtree(key: _playNavKey, child: const Icon(_playIcon)),
-            selectedIcon: const Icon(_playIcon),
-            label: context.t(K.navPlay),
+          label: context.t(K.navLearn),
+        ),
+        NavigationDestination(
+          key: const ValueKey('nav-play'),
+          icon: KeyedSubtree(key: _playNavKey, child: const Icon(_playIcon)),
+          selectedIcon: const Icon(_playIcon),
+          label: context.t(K.navPlay),
+        ),
+        NavigationDestination(
+          key: const ValueKey('nav-leaderboard'),
+          icon: const Icon(_leaderboardIcon),
+          selectedIcon: const Icon(_leaderboardIcon),
+          label: context.t(K.navLeaderboard),
+        ),
+        NavigationDestination(
+          key: const ValueKey('nav-profile'),
+          icon: KeyedSubtree(
+            key: _profileNavKey,
+            child: const Icon(_profileIcon),
           ),
-          NavigationDestination(
-            key: const ValueKey('nav-leaderboard'),
-            icon: const Icon(_leaderboardIcon),
-            selectedIcon: const Icon(_leaderboardIcon),
-            label: context.t(K.navLeaderboard),
-          ),
-          NavigationDestination(
-            key: const ValueKey('nav-profile'),
-            icon: KeyedSubtree(
-              key: _profileNavKey,
-              child: const Icon(_profileIcon),
-            ),
-            selectedIcon: const Icon(_profileIcon),
-            label: context.t(K.navProfile),
-          ),
-        ],
-      ),
+          selectedIcon: const Icon(_profileIcon),
+          label: context.t(K.navProfile),
+        ),
+      ],
     );
   }
 

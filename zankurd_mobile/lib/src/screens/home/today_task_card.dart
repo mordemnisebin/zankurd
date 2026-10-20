@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../widgets/sahne/sahne.dart';
 
@@ -20,6 +21,13 @@ import '../../widgets/sahne/sahne.dart';
 /// ("BUGÜNÜN GÖREVİ") bağırıyordu; artık kalın açıklama, cümle düzeni
 /// ("Bugünün görevi"). Büyük harf yalnız soru sahnesinin künyesinde kalır.
 /// Kilim şeridi de yok (K4: `SahneStageCard` varsayılanı kapalı).
+///
+/// 2026-10-20 kimlik ("Çiya", kullanıcının açık tercihi): kartın tepesinde
+/// ALÇAK bir manzara şeridi ([SahneVistaStrip], 88 pt): logodaki dağ sırtı
+/// şafakta (gece yıldızlı gökte zirvede tek turuncu ışık). Şerit kartın
+/// ayrı bir satırıdır; metin ve düğme üstüne binmez. Kurulun tek itirazı
+/// konuların aşağı itilmesiydi; şerit bu yüzden alçak ve 390×844'te ilk
+/// konu satırı ilk ekranda kalır (bekçi: `manzara_seridi_test.dart`).
 ///
 /// Kart düğmeyi kendisi çizer: ekran okuyucu düğümü (`home-daily-task-start`) ve yükleniyor
 /// hâli ana ekranın sözleşmesidir, bileşenin kendi düğmesi bunları taşımaz.
@@ -67,9 +75,8 @@ class TodayTaskCard extends StatelessWidget {
     final goalInProgress = !firstSession && started && done < total;
     final remaining = total - done;
 
-    final title = goalInProgress
-        ? Tr.forKu(K.dailyGoalTitle, isKu)
-        : Tr.forKu(K.gununDersi, isKu);
+    final titleKey = goalInProgress ? K.dailyGoalTitle : K.gununDersi;
+    final title = Tr.forKu(titleKey, isKu);
     final meta = goalInProgress
         ? Tr.forKu(K.dailyGoalRemainingCorrect, isKu, {
             'n': '$remaining',
@@ -96,6 +103,8 @@ class TodayTaskCard extends StatelessWidget {
     return KeyedSubtree(
       key: const ValueKey('home-daily-task'),
       child: SahneSurfaceCard(
+        // Manzara kenardan kenara; içerik kendi 16'lık boşluğunu taşır.
+        padding: EdgeInsets.zero,
         child: Builder(
           builder: (context) {
             final t = SahneTokens.of(context);
@@ -104,37 +113,57 @@ class TodayTaskCard extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                KeyedSubtree(
-                  key: firstSession
-                      ? const ValueKey('home-first-session-badge')
-                      : null,
-                  child: Text(
-                    eyebrow,
-                    style: SahneType.captionStrong.copyWith(color: t.eyebrowTx),
+                const SahneVistaStrip(),
+                Padding(
+                  padding: const EdgeInsets.all(SahneSpace.x4),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      KeyedSubtree(
+                        key: firstSession
+                            ? const ValueKey('home-first-session-badge')
+                            : null,
+                        child: Text(
+                          eyebrow,
+                          style: SahneType.captionStrong.copyWith(
+                            color: t.eyebrowTx,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: SahneSpace.x1),
+                      Semantics(
+                        header: true,
+                        child: Text(
+                          title,
+                          style: SahneType.headline.copyWith(color: t.tx),
+                        ),
+                      ),
+                      // İki dilli etiket: kart başlığının öbür dildeki adı.
+                      ?_secondLabel(context, titleKey, isKu),
+                      const SizedBox(height: SahneSpace.x1),
+                      Text(
+                        meta,
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                      ),
+                      const SizedBox(height: SahneSpace.x3),
+                      // İlerleme: ince 4 px çubuk + küçük "0/5". Eskiden 80 px'lik
+                      // ders elmasıydı (bkz. sınıf belgesi).
+                      SahneProgressBar(
+                        key: const ValueKey('home-daily-task-progress'),
+                        value: safeTotal == 0 ? 0 : safeDone / safeTotal,
+                        height: 4,
+                        trailing: '$safeDone/$safeTotal',
+                        semanticLabel: title,
+                      ),
+                      const SizedBox(height: SahneSpace.x4),
+                      _StartButton(
+                        label: label,
+                        loading: loading,
+                        onTap: onStart,
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: SahneSpace.x1),
-                Semantics(
-                  header: true,
-                  child: Text(
-                    title,
-                    style: SahneType.headline.copyWith(color: t.tx),
-                  ),
-                ),
-                const SizedBox(height: SahneSpace.x1),
-                Text(meta, style: SahneType.caption.copyWith(color: t.tx2)),
-                const SizedBox(height: SahneSpace.x3),
-                // İlerleme: ince 4 px çubuk + küçük "0/5". Eskiden 80 px'lik
-                // ders elmasıydı (bkz. sınıf belgesi).
-                SahneProgressBar(
-                  key: const ValueKey('home-daily-task-progress'),
-                  value: safeTotal == 0 ? 0 : safeDone / safeTotal,
-                  height: 4,
-                  trailing: '$safeDone/$safeTotal',
-                  semanticLabel: title,
-                ),
-                const SizedBox(height: SahneSpace.x4),
-                _StartButton(label: label, loading: loading, onTap: onStart),
               ],
             );
           },
@@ -142,6 +171,13 @@ class TodayTaskCard extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Kart başlığının öbür dildeki karşılığı (ayar kapalıysa ya da karşılık
+/// yoksa `null`). Kart dili `isKu` ile taşır.
+Widget? _secondLabel(BuildContext context, String key, bool isKu) {
+  final text = secondLabelFor(context, key, isKu: isKu);
+  return text == null ? null : SahneBilingualLabel(text);
 }
 
 /// Kartın tek birincil düğmesi: Agir dolgu, koyu `onAct` metin, tam

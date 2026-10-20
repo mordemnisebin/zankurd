@@ -853,6 +853,7 @@ class _ShopScreenState extends State<ShopScreen> {
       appBar: zkAppBar(
         context,
         title: Text(context.t(K.shop)),
+        titleSecondary: context.secondLabel(K.shop),
         actions: [
           // Dalga 5: devasa bakiye kartı yerine kompakt jeton çipi.
           SahneStatChip(

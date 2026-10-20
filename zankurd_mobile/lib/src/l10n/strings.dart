@@ -2213,6 +2213,9 @@ class Tr {
       'tr': 'Oda kur ya da rakip bul',
     },
     K.homeTopicsTitle: {'ku': 'Mijar', 'tr': 'Konular'},
+    // Ayar: iki dilli etiketler (2026-10-20). Kurmancî karşılık Kurmancî
+    // kurulunda (Grok 4.7 + Muse Spark, birebir aynı öneri) onaylandı.
+    K.bilingualLabels: {'ku': 'Etîketên duzimanî', 'tr': 'İki dilli etiketler'},
     K.language: {'ku': 'Ziman', 'tr': 'Dil'},
     K.languageCode: {'ku': 'KU', 'tr': 'TR'},
     K.dailyLesson: {'ku': 'Dersa rojê', 'tr': 'Günün dersi'},
@@ -3236,6 +3239,28 @@ class Tr {
   /// metin mi diye bakmak için bu kullanılır.
   static bool hasKey(String key) => _table.containsKey(key);
 
+  /// [key]in ÖBÜR dildeki karşılığı (iki dilli etiket).
+  ///
+  /// 2026-10-20 kimlik kararı ve kullanıcı geri bildirimi: yön bulduran
+  /// etiketlerde (sekme, ekran/bölüm başlığı, konu adı) seçili dilin
+  /// yanında öbür dil küçük yazılır. Kural: YENİ metin yazılmaz, aynı
+  /// anahtarın defterdeki öbür dil değeri okunur. [of] eksik dili Kurmancîye
+  /// düşürdüğü için burada ayrı bakılır: öbür dilin değeri yoksa ya da
+  /// seçili dildekiyle aynıysa (ör. "Siyaset") `null` döner ve çağıran ikinci
+  /// satırı hiç çizmez — aynı sözü iki kez yazmak bilgi değildir.
+  static String? counterpart(
+    String key, {
+    required bool isKu,
+    Map<String, String>? params,
+  }) {
+    final other = isKu ? AppLanguage.tr : AppLanguage.ku;
+    final raw = _table[key]?[other.code];
+    if (raw == null || raw.trim().isEmpty) return null;
+    final text = of(key, other, params);
+    if (text == forKu(key, isKu, params)) return null;
+    return text;
+  }
+
   /// Kayıtlı tüm anahtarlar — kapsam testleri için.
   static Iterable<String> get keys => _table.keys;
 
@@ -4156,6 +4181,9 @@ class K {
 
   /// Ana ekrandaki konu ızgarası.
   static const homeTopicsTitle = 'home.topics.title';
+
+  /// Ayar: iki dilli etiketler.
+  static const bilingualLabels = 'settings.bilingualLabels';
   static const language = 'common.language';
   static const languageCode = 'common.languageCode';
   static const dailyLesson = 'home.dailyLesson';
