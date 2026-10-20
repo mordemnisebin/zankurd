@@ -126,7 +126,7 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Grok): koyu temada 13 px / 400 [tx2] 64 punto sayının altında sönük
   /// kalıyordu. Ana ikincil metinden bir ton açık (gecede daha açık, gündüzde
   /// daha koyu): [tx2] ile [tx] arası %35.
-  Color get heroCaptionTx => Color.lerp(tx2, tx, 0.35)!;
+  Color get heroCaptionTx => Color.lerp(tx2, tx, 0.6)!;
 
   Color get shortfallTx => _isDay ? const Color(0xFF6E4400) : goldTx;
 
@@ -160,6 +160,34 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Şık çubuğunun 1 px kenarı: gece zeminden ve dolgudan ayrılan ince çizgi
   /// (`#4C4F57`), gündüz `edge`.
   Color get optionEdge => _isDay ? edge : const Color(0xFF4C4F57);
+
+  /// Zêr (ödül) bandı: mağaza üst bandı ve vip rozeti karosu (2026-10-20 D
+  /// aşaması, 4 model: mağaza sönüktü, Zêr yalnız küçük jeton glifindeydi).
+  /// Gündüz doygun altın, gece bir basamak koyu kehribar; üstünde KOYU yazı
+  /// ([onZer], ≥ 9:1) çünkü altın üstünde beyaz okunmaz.
+  Color get zerBand =>
+      _isDay ? const Color(0xFFF5C24C) : const Color(0xFFE2AB35);
+
+  /// [zerBand] üstündeki yazı ve ikon: koyu kahve.
+  Color get onZer => onGold;
+
+  /// Zêr bandındaki bakiye çipinin dolgusu: koyu kahve, içinde altın jeton ve
+  /// açık yazı belirgin durur.
+  Color get zerChip => const Color(0xFF2A1D00);
+
+  /// Konu tonlu şık dolgusu (2026-10-20 D aşaması, 3 model: şıklar düz gri,
+  /// sahne konunun rengini taşırken kartlar renksizdi): [optionFill]den
+  /// konunun dolu rengine doğru ölçülü (%15) kayar; metin kontrastı bekçide
+  /// ölçülür (≥ 4,5). Harf karosu renksiz KALIR (bkz. QuizOptionTile).
+  Color optionFillFor(SahneCategoryTone tone) =>
+      Color.lerp(optionFill, tone.fill(night: !_isDay), 0.15)!;
+
+  /// Konu tonlu şık kenarı: konu rengi düşük alfa, [optionFillFor] üstünde
+  /// opak karışım.
+  Color optionEdgeFor(SahneCategoryTone tone) => Color.alphaBlend(
+    tone.fill(night: !_isDay).withValues(alpha: 0.55),
+    optionEdge,
+  );
 
   /// Şık harf karosu: gecede dolgu Ray olduğu için karo bir ton koyu (`s1`).
   Color get optionLetterFill => _isDay ? s3 : s1;
@@ -382,11 +410,14 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     // üçüncül yazı grafit kartlarda sönük okunuyordu. tx2 #B9BAC0 → #C4C6CD
     // (Perde üstünde ~9:1), tx3 #8F9199 → #A2A5AD (Perde üstünde ~6:1);
     // sıra (tx > tx2 > tx3) korunur.
-    tx2: Color(0xFFC4C6CD),
-    tx3: Color(0xFFA2A5AD),
+    tx2: Color(0xFFD0D2D8),
+    // 2026-10-20 D aşaması (3 model): gece tx3 sonuç ve sıralama alt
+    // yazılarında hâlâ sönüktü: #A2A5AD → #B6B9C1, tx2 #C4C6CD → #D0D2D8.
+    tx3: Color(0xFFB6B9C1),
     // Ayırıcı ve yüzey kenarı DEKORATİF (opak, saydam değil): etkileşimli
     // kenar için tx3 kullanılır (≥ 3:1).
-    line: Color(0xFF3A3D44),
+    // D aşaması: gece liste ayırıcısı bir ton belirgin (sıralama 4-7).
+    line: Color(0xFF474A52),
     edge: Color(0xFF3A3D44),
     // Büyük dolgularda (birincil düğme) gece turuncusu bir ton sönük: tam
     // doygun #FF8A3D koyu zeminde göz yoruyordu.
@@ -837,6 +868,11 @@ class SahneVivid {
 
   /// Renkli yüzeyde cam çip dolgusu, iz ve ince çizgi (beyaz %16 / %18 / %12).
   static const glass = Color(0x29FFFFFF);
+
+  /// Cam düğme (davet kodu gir): kart zemininden ayrışan yarı saydam beyaz
+  /// dolgu (%22) ve ince beyaz kenar (%70); beyaz yazı Nîl kartta ≥ 4,5:1.
+  static const glassButton = Color(0x1AFFFFFF);
+  static const glassButtonEdge = Color(0xB3FFFFFF);
   static const glassTrack = Color(0x2EFFFFFF);
   static const hairline = Color(0x1FFFFFFF);
 

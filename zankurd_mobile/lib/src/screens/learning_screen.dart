@@ -492,7 +492,9 @@ class _LearningScreenState extends State<LearningScreen> {
               trailing: Icon(
                 AppIcons.lock,
                 size: 20,
-                color: t.tx3.withValues(alpha: 0.7),
+                // D aşaması (3 model): kilit öğrenme alanının Zimrût'una
+                // doğru kayık, düşük doygunluk; açık satırdan geride.
+                color: Color.lerp(t.tx2, t.learnTx, 0.4),
               ),
             ),
           );
@@ -1045,7 +1047,11 @@ class _LessonRow extends StatelessWidget {
       onTap: onTap,
       semanticLabel: semanticLabel,
       trailing: locked
-          ? Icon(AppIcons.lock, size: 16, color: t.tx3)
+          ? Icon(
+              AppIcons.lock,
+              size: 16,
+              color: Color.lerp(t.tx2, t.learnTx, 0.4),
+            )
           : completed
           ? Icon(AppIcons.check, size: 20, color: t.learnTx)
           : null,

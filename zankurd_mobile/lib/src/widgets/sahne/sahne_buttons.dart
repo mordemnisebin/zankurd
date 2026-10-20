@@ -54,6 +54,7 @@ class SahneButton extends StatelessWidget {
     this.buttonKey,
   }) : quiet = false,
        tint = null,
+       edge = null,
        foreground = null,
        _kind = _SahneButtonKind.primary;
 
@@ -70,6 +71,7 @@ class SahneButton extends StatelessWidget {
     this.buttonKey,
   }) : quiet = false,
        tint = null,
+       edge = null,
        foreground = null,
        _kind = _SahneButtonKind.secondary;
 
@@ -79,6 +81,7 @@ class SahneButton extends StatelessWidget {
     required this.onPressed,
     required Color this.tint,
     required Color this.foreground,
+    this.edge,
     this.icon,
     this.leading,
     this.arrow = false,
@@ -100,6 +103,7 @@ class SahneButton extends StatelessWidget {
     this.buttonKey,
   }) : _kind = _SahneButtonKind.text,
        tint = null,
+       edge = null,
        foreground = null,
        leading = null,
        loading = false,
@@ -111,6 +115,9 @@ class SahneButton extends StatelessWidget {
   /// Yalnız tonal düğme: ton dolgusu ve etiket/ikon rengi.
   final Color? tint;
   final Color? foreground;
+
+  /// Yalnız tonal düğme: isteğe bağlı 1 px kenar (cam düğme: ince beyaz).
+  final Color? edge;
 
   /// `null` → pasif.
   final VoidCallback? onPressed;
@@ -301,21 +308,27 @@ class SahneButton extends StatelessWidget {
         button = FilledButton(
           key: buttonKey,
           onPressed: press,
-          style: FilledButton.styleFrom(
-            elevation: 0,
-            shadowColor: Colors.transparent,
-            backgroundColor: tint,
-            foregroundColor: foreground,
-            disabledBackgroundColor: t.disabledFill,
-            disabledForegroundColor: t.disabledFg,
-            minimumSize: const Size(52, 52),
-            textStyle: SahneType.button,
-            shape: SahneShape.m,
-            padding: EdgeInsets.symmetric(
-              horizontal: hPad,
-              vertical: SahneSpace.x3,
-            ),
-          ).copyWith(side: side(BorderSide.none, disabledBorder: true)),
+          style:
+              FilledButton.styleFrom(
+                elevation: 0,
+                shadowColor: Colors.transparent,
+                backgroundColor: tint,
+                foregroundColor: foreground,
+                disabledBackgroundColor: t.disabledFill,
+                disabledForegroundColor: t.disabledFg,
+                minimumSize: const Size(52, 52),
+                textStyle: SahneType.button,
+                shape: SahneShape.m,
+                padding: EdgeInsets.symmetric(
+                  horizontal: hPad,
+                  vertical: SahneSpace.x3,
+                ),
+              ).copyWith(
+                side: side(
+                  edge == null ? BorderSide.none : BorderSide(color: edge!),
+                  disabledBorder: true,
+                ),
+              ),
           child: content,
         );
       case _SahneButtonKind.text:

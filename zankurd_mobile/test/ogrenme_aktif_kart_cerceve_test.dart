@@ -58,6 +58,7 @@ void main() {
 
     final lock = tester.widgetList<Icon>(find.byIcon(AppIcons.lock)).first;
     expect(lock.size, 16);
-    expect(lock.color, t.tx3);
+    // D aşaması: kilit öğrenme alanının Zimrût'una doğru kayık (soluk değil).
+    expect(lock.color, Color.lerp(t.tx2, t.learnTx, 0.4));
   });
 }

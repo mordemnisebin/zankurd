@@ -58,6 +58,7 @@ class QuizOptionTile extends StatelessWidget {
     this.fixedHeight,
     this.optionCount = 4,
     this.dimmed = false,
+    this.tone,
     super.key,
   });
 
@@ -89,6 +90,10 @@ class QuizOptionTile extends StatelessWidget {
   /// Açıklanmada seçilmeyen ve doğru olmayan şıklar ya da elenen şık:
   /// sönük (Perde + üçüncül metin).
   final bool dimmed;
+
+  /// Soru sahnesinin konu tonu: boştaki şıkta dolgu ve kenar ona doğru ölçülü
+  /// kayar. Doğru/yanlış/kontrol/sönük durumları değişmez; harf renksizdir.
+  final SahneCategoryTone? tone;
 
   @override
   Widget build(BuildContext context) {
@@ -124,12 +129,17 @@ class QuizOptionTile extends StatelessWidget {
       _OptionState.wrong => t.errFill,
       _ => null,
     };
-    final Color base = state == _OptionState.dimmed ? t.s1 : t.optionFill;
+    final tn = tone;
+    final Color base = state == _OptionState.dimmed
+        ? t.s1
+        : (tn != null && state == _OptionState.idle
+              ? t.optionFillFor(tn)
+              : t.optionFill);
     final Color ring = switch (state) {
       _OptionState.correct => t.okTx,
       _OptionState.wrong => t.errTx,
       _OptionState.checking => t.tx,
-      _OptionState.idle => t.optionEdge,
+      _OptionState.idle => tn == null ? t.optionEdge : t.optionEdgeFor(tn),
       _ => Colors.transparent,
     };
     final double ringWidth = state == _OptionState.idle ? 1 : SahneRing.r2;

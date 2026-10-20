@@ -77,6 +77,10 @@ PreferredSizeWidget zkAppBar(
   SystemUiOverlayStyle? systemOverlayStyle,
   Color? foregroundColor,
   Color? subtitleColor,
+
+  /// İki dilli küçük satırın rengi (renkli bantta okunur renk); verilmezse
+  /// ikincil metin.
+  Color? secondaryColor,
   bool glassBack = false,
 }) {
   final t = SahneTokens.of(context);
@@ -146,7 +150,8 @@ PreferredSizeWidget zkAppBar(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (secondaryFits) SahneBilingualLabel(secondary),
+                    if (secondaryFits)
+                      SahneBilingualLabel(secondary, color: secondaryColor),
                     shownTitle,
                     if (subtitle != null)
                       DefaultTextStyle.merge(

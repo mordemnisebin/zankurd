@@ -683,6 +683,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       opponentNamesWhoSelected: opps,
       isCompact: isCompact,
       optionCount: question.displayAnswers.length,
+      tone: CategoryVisuals.tone(question.category),
       // Açıklanmada renk yalnız anlam taşır: doğru Rast, seçilen yanlış
       // Şaş; geri kalan şıklar söner.
       dimmed:

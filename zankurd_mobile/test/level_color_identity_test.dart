@@ -143,7 +143,16 @@ void main() {
             reason: combo,
           );
           for (final locked in [2, 3, 4, 5]) {
-            expect(badgeColor(tester, locked), t.s2, reason: '$combo $locked');
+            // D aşaması: kilitli rozet Kulis'ten konu rengine %16 kayık.
+            expect(
+              badgeColor(tester, locked),
+              Color.lerp(
+                t.s2,
+                CategoryVisuals.tone(category).fill(night: dark),
+                0.16,
+              ),
+              reason: '$combo $locked',
+            );
           }
         },
       );
@@ -188,7 +197,16 @@ void main() {
             reason: combo,
           );
           for (final locked in [3, 4, 5]) {
-            expect(badgeColor(tester, locked), t.s2, reason: '$combo $locked');
+            // D aşaması: kilitli rozet Kulis'ten konu rengine %16 kayık.
+            expect(
+              badgeColor(tester, locked),
+              Color.lerp(
+                t.s2,
+                CategoryVisuals.tone(category).fill(night: dark),
+                0.16,
+              ),
+              reason: '$combo $locked',
+            );
           }
         },
       );
@@ -227,6 +245,26 @@ void main() {
     final lo = math.min(l1, l2);
     return (hi + 0.05) / (lo + 0.05);
   }
+
+  test('D aşaması: kilitli rozet ikonu konu tonlu karoda >= 4.5:1', () {
+    for (final (theme, t, night) in [
+      ('gündüz', SahneTokens.day, false),
+      ('gece', SahneTokens.night, true),
+    ]) {
+      for (final category in SahneCategoryTone.byCategory.keys) {
+        final topic = CategoryVisuals.tone(category).fill(night: night);
+        final tile = Color.lerp(t.s2, topic, 0.16)!;
+        final icon = Color.lerp(t.tx2, topic, 0.4)!;
+        expect(
+          contrast(icon, tile),
+          greaterThanOrEqualTo(4.5),
+          reason: '$theme $category',
+        );
+        // Açık satırdan geride: kilit ikonu dolu konu renginden sönük.
+        expect(icon, isNot(topic));
+      }
+    }
+  });
 
   test('seviye ekranının renk çiftleri iki temada WCAG AA (4.5:1) geçer', () {
     for (final (theme, t) in [

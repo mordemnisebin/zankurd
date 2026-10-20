@@ -312,13 +312,19 @@ class _ShopScreenState extends State<ShopScreen> {
   Widget _preview(ShopItem item, {required double size, bool dim = false}) {
     final avatar = _avatar;
     if (avatar == null || !_isFrameItem(item.id)) {
-      return _PreviewTile(icon: item.icon, size: size, dim: dim);
+      return _PreviewTile(
+        icon: item.icon,
+        size: size,
+        dim: dim,
+        itemId: item.id,
+      );
     }
     final framed = applyShopPurchaseEffect(item.id, avatar);
     return _PreviewTile(
       icon: item.icon,
       size: size,
       dim: dim,
+      itemId: item.id,
       child: PlayerAvatar(
         radius: (size * 0.34).roundToDouble(),
         photoUrl: framed.photoUrl,
@@ -838,13 +844,29 @@ class _ShopScreenState extends State<ShopScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final ku = context.isKu;
+  bool _coinChipBelow(BuildContext context) =>
+      MediaQuery.textScalerOf(context).scale(16) >= 24 ||
+      MediaQuery.sizeOf(context).width < 360;
+
+  /// Zêr bandındaki bakiye çipi: koyu kahve dolgu, altın jeton, açık yazı.
+  Widget _coinChip(BuildContext context) {
     final t = SahneTokens.of(context);
     final coinLabel =
         '${groupThousands(_coinBalance)} '
         '${context.t(K.coinWord).toLowerCase()}';
+    return SahneStatChip(
+      key: const ValueKey('shop-coin-chip'),
+      leading: const SahneGlyph(SahneGlyphKind.coin),
+      label: coinLabel,
+      tint: t.zerChip,
+      foreground: SahneVivid.onFill,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ku = context.isKu;
+    final t = SahneTokens.of(context);
     // 2026-09-29 Şahnê: B iskeleti. Sayfa adı çubukta, bakiye çubuğun
     // sağında jeton glifli stat çipi. Eski kimlik kartı ("Mağaza /
     // Jetonlarını akıllıca harca") kalktı: sayfa adı iki kez yazılmıyor.
@@ -854,14 +876,14 @@ class _ShopScreenState extends State<ShopScreen> {
         context,
         title: Text(context.t(K.shop)),
         titleSecondary: context.secondLabel(K.shop),
-        actions: [
-          // Dalga 5: devasa bakiye kartı yerine kompakt jeton çipi.
-          SahneStatChip(
-            key: const ValueKey('shop-coin-chip'),
-            leading: const SahneGlyph(SahneGlyphKind.coin),
-            label: coinLabel,
-          ),
-        ],
+        // D aşaması: mağaza Zêr kimliğinde; dolu altın bant, koyu yazı.
+        backgroundColor: t.zerBand,
+        foregroundColor: t.onZer,
+        secondaryColor: t.onZer,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        // Büyük yazı ya da dar telefonda çip başlığın yerini yiyip "Mağaza"yı
+        // harf harf kırıyordu ("M / a"): orada çip gövdenin başına iner.
+        actions: _coinChipBelow(context) ? null : [_coinChip(context)],
       ),
       body: SafeArea(
         top: false,
@@ -937,7 +959,7 @@ class _ShopScreenState extends State<ShopScreen> {
     final row = SahneListRow.icon(
       key: const ValueKey('shop-spin-wheel-entry'),
       icon: AppIcons.ferrisWheel,
-      role: SahneRole.gold,
+      role: SahneRole.race,
       title: context.t(K.wheelTitle),
       subtitle: zero ? context.t(K.zeroBalanceHint) : null,
       chevron: true,
@@ -970,6 +992,13 @@ class _ShopScreenState extends State<ShopScreen> {
         SahneSpace.x8,
       ),
       children: [
+        if (_coinChipBelow(context)) ...[
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: _coinChip(context),
+          ),
+          const SizedBox(height: SahneSpace.cardGap),
+        ],
         _buildWheelShortcut(context),
         const SizedBox(height: SahneSpace.x6),
         // Kurul 2. tur 2026-10-20: VIP kartı yatay ve kompakt (ikon solda,
@@ -1211,7 +1240,11 @@ class _PreviewTile extends StatelessWidget {
     required this.size,
     this.dim = false,
     this.child,
+    this.itemId = '',
   });
+
+  /// Ürün kimliği: karonun dolgusunu ürün türü seçer.
+  final String itemId;
 
   final IconData icon;
   final double size;
@@ -1224,18 +1257,26 @@ class _PreviewTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    // Ürün türüne göre DOLU karo (D aşaması, 4 model: mağaza sönüktü; hepsi
+    // aynı soluk Zêr tonuydu): çark Boyax, VIP rozeti Zêr, altın çerçeve
+    // Nîl, neon çerçeve Zimrût (konu renkleri gibi, ürün başına bir renk).
+    final (Color fill, Color on) = dim
+        ? (t.s2, t.tx3)
+        : switch (itemId) {
+            'spin_wheel_extra' => (t.raceFill, SahneVivid.onFill),
+            'profile_badge_vip' => (t.zerBand, t.onZer),
+            'avatar_frame_neon' => (t.learnFill, SahneVivid.onFill),
+            _ => (t.nilFill, SahneVivid.onFill),
+          };
     return ExcludeSemantics(
       child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: dim ? t.s2 : t.goldTint,
-          shape: SahneShape.m,
-        ),
+        decoration: ShapeDecoration(color: fill, shape: SahneShape.m),
         child: SizedBox(
           width: size,
           height: size,
           child: child != null
               ? Center(child: child)
-              : Icon(icon, size: size * 0.45, color: dim ? t.tx3 : t.goldTx),
+              : Icon(icon, size: size * 0.45, color: on),
         ),
       ),
     );

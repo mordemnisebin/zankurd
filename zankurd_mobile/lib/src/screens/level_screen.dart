@@ -407,13 +407,36 @@ class _LevelPathState extends State<_LevelPath> {
               size: 20,
               // Kurul 5. tur 2026-10-20 (Grok): %70 saydam üçüncül ton
               // satırı soluk gösteriyordu; ikincil metin rengi.
-              color: t.tx2,
+              // D aşaması (3 model): kilitler renksiz-soluktu; konu rengine
+              // doğru kaydırılır (açık satırdan yine geride).
+              color: _lockedMark(
+                context,
+                t,
+                levels.isEmpty ? null : levels.first.category,
+              ),
             ),
           ),
       ],
     );
   }
 }
+
+/// Konunun dolu rengi (gece/gündüz) — kilitli öğelerin soluk tonu bunun
+/// düşük doygunluklu karışımıdır (D aşaması, 3 model: kilitler renksiz-soluktu).
+Color _topicOf(BuildContext context, String? category) {
+  if (category == null) return SahneTokens.of(context).tx2;
+  final night = Theme.of(context).brightness == Brightness.dark;
+  return CategoryVisuals.tone(category).fill(night: night);
+}
+
+/// Kilit ikonu: ikincil metinden konu rengine %40 kayık; ≥ 3:1 kalır, açık
+/// seviyenin dolu konu renginden net geride durur.
+Color _lockedMark(BuildContext context, SahneTokens t, String? category) =>
+    Color.lerp(t.tx2, _topicOf(context, category), 0.4)!;
+
+/// Kilitli rozet karosu: Kulis'ten konu rengine %16.
+Color _lockedTile(BuildContext context, SahneTokens t, String? category) =>
+    Color.lerp(t.s2, _topicOf(context, category), 0.16)!;
 
 class _LevelNode extends StatelessWidget {
   const _LevelNode({
@@ -510,6 +533,14 @@ class _LevelNode extends StatelessWidget {
       child: SahneSurfaceCard(
         key: ValueKey('level-card-${level.number}'),
         onTap: tap,
+        // Kilitli kartın kenarı konu rengine doğru biraz belirgin (D aşaması).
+        edgeColor: locked
+            ? Color.lerp(
+                SahneTokens.of(context).edge,
+                _topicOf(context, level.category),
+                0.4,
+              )
+            : null,
         padding: const EdgeInsetsDirectional.fromSTEB(
           SahneSpace.x3,
           SahneSpace.x3,
@@ -574,7 +605,14 @@ class _LevelRowContent extends StatelessWidget {
       ),
     );
     final (Color tile, Widget mark) = switch (badge) {
-      _LevelBadge.locked => (t.s2, Icon(AppIcons.lock, color: t.tx2, size: 20)),
+      _LevelBadge.locked => (
+        _lockedTile(context, t, level.category),
+        Icon(
+          AppIcons.lock,
+          color: _lockedMark(context, t, level.category),
+          size: 20,
+        ),
+      ),
       _LevelBadge.played => (
         t.goldTint,
         const SahneGlyph(SahneGlyphKind.star, size: 24),

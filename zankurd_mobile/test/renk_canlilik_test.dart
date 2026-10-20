@@ -49,6 +49,7 @@ import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
+import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
@@ -531,6 +532,92 @@ void main() {
           reason: '$name Nîl beyaz tonal',
         );
       }
+    });
+  });
+  // D aşaması (2026-10-20, kurul): mağaza Zêr kimliği, konu tonlu şıklar,
+  // gece ikincil metin, cam davet düğmesi.
+  group('D aşaması', () {
+    for (final dark in [false, true]) {
+      testWidgets(
+        'mağaza üst bandı Zêr, bakiye çipi koyu (${dark ? "gece" : "gündüz"})',
+        (tester) async {
+          await tester.pumpWidget(
+            _wrap(ShopScreen(repository: MockZanKurdRepository()), dark: dark),
+          );
+          await tester.pump(const Duration(seconds: 1));
+          final t = SahneTokens.of(tester.element(find.byType(ShopScreen)));
+          final bar = tester.widget<AppBar>(find.byType(AppBar));
+          expect(bar.backgroundColor, t.zerBand);
+          expect(_contrast(t.onZer, t.zerBand), greaterThanOrEqualTo(4.5));
+          expect(
+            _contrast(SahneVivid.onFill, t.zerChip),
+            greaterThanOrEqualTo(4.5),
+          );
+        },
+      );
+    }
+
+    test('şık dolgusu konu tonundan türer ve metin >= 4.5:1', () {
+      for (final (name, t) in [
+        ('gündüz', SahneTokens.day),
+        ('gece', SahneTokens.night),
+      ]) {
+        for (final category in SahneCategoryTone.byCategory.keys) {
+          final tone = CategoryVisuals.tone(category);
+          final fill = t.optionFillFor(tone);
+          expect(
+            fill,
+            Color.lerp(t.optionFill, tone.fill(night: name == 'gece'), 0.15),
+            reason: '$name $category konudan türer',
+          );
+          expect(fill, isNot(t.optionFill), reason: '$category düz gri değil');
+          expect(
+            _contrast(t.tx, fill),
+            greaterThanOrEqualTo(4.5),
+            reason: '$name $category şık metni',
+          );
+        }
+      }
+    });
+
+    test('gece tx3 sahne kartları üstünde >= 4.5:1', () {
+      const t = SahneTokens.night;
+      for (final (name, bg) in [
+        ('bg', t.bg),
+        ('s1', t.s1),
+        ('s2', t.s2),
+        ('optionFill', t.optionFill),
+        ('race1', SahneStageColors.race1),
+        ('goldTint', t.goldTint),
+      ]) {
+        expect(
+          _contrast(t.tx3, bg),
+          greaterThanOrEqualTo(4.5),
+          reason: 'tx3 / $name',
+        );
+      }
+      expect(
+        _contrast(t.tx2, SahneStageColors.race1),
+        greaterThanOrEqualTo(4.5),
+      );
+      expect(
+        _contrast(t.heroCaptionTx, SahneStageColors.race1),
+        greaterThanOrEqualTo(4.5),
+      );
+    });
+
+    test('davet ikinci düğmesi (cam) Nîl kartta beyaz yazı >= 4.5:1', () {
+      for (final t in [SahneTokens.day, SahneTokens.night]) {
+        for (final card in [t.nilFill, t.nilDeep]) {
+          final glass = _over(SahneVivid.glassButton, card);
+          expect(
+            _contrast(SahneVivid.onFill, glass),
+            greaterThanOrEqualTo(4.5),
+          );
+          expect(glass, isNot(card), reason: 'zeminden ayrışır');
+        }
+      }
+      expect(SahneVivid.glassButtonEdge.a, greaterThan(0.5));
     });
   });
 }

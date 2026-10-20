@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
+import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 /// Soru ekranının renk ve yüzey kuralları.
@@ -128,9 +129,13 @@ void main() {
     for (final answer in question.displayAnswers) {
       final decoration = barOf(tester, answer).decoration! as BoxDecoration;
       // Tur 8: dinlenme dolgusu bir ton açık (optionFill) + 1 px kenar.
-      expect(decoration.color, t.optionFill);
+      // D aşaması: dinlenme dolgusu ve kenarı soru konusunun tonuna doğru
+      // ölçülü kayar (düz gri değil); harf karosu renksiz kalır.
+      final tone = CategoryVisuals.tone(question.category);
+      expect(decoration.color, t.optionFillFor(tone));
+      expect(decoration.color, isNot(t.optionFill));
       expect(decoration.gradient, isNull);
-      expect(ringOf(tester, answer).color, t.optionEdge);
+      expect(ringOf(tester, answer).color, t.optionEdgeFor(tone));
       expect(ringOf(tester, answer).width, 1);
     }
     // Harf karoları (A/B/C/D) hepsi aynı tonda (optionLetterFill): harfe göre renk yok.

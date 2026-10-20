@@ -674,6 +674,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                                   disabled: disabled,
                                   suspense: suspenseVisual,
                                   optionCount: answers.length,
+                                  tone: CategoryVisuals.tone(question.category),
                                   dimmed:
                                       _revealedAnswerText != null &&
                                       answer != _revealedAnswerText &&

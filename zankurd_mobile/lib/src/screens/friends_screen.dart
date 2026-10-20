@@ -439,7 +439,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
                       )
                     : null;
                 final enter = SahneButton.tonal(
-                  tint: SahneVivid.glass,
+                  // D aşaması (2 model): cam dolgu kart zeminine karışıyordu;
+                  // belirgin yarı saydam beyaz dolgu + ince beyaz kenar.
+                  tint: SahneVivid.glassButton,
+                  edge: SahneVivid.glassButtonEdge,
                   foreground: SahneVivid.onFill,
                   key: const ValueKey('friends-enter-code-button'),
                   label: context.t(K.enterReferralCode),

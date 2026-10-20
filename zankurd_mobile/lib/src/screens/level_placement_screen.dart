@@ -273,6 +273,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
                             selected: false,
                             correct: false,
                             disabled: _inputLocked,
+                            tone: CategoryVisuals.tone(question.category),
                             onTap: _inputLocked
                                 ? null
                                 : () => _answer(question, answer),
