@@ -20,8 +20,17 @@ class CategoryBandScaffold extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.body,
+    this.progress,
     super.key,
   });
+
+  /// Verilirse başlığın altındaki çizgi GERÇEK bir ilerleme çubuğudur
+  /// (0–1): dolu kısım kategori tonunda, boş kısım nötr iz. Verilmezse
+  /// kategori kimliğini taşıyan dolu süs çizgisidir (alt kategori ekranı).
+  ///
+  /// Kusur (8. kurul, Opus): seviye listesinde süs çizgisi tam genişlik dolu
+  /// olduğundan 0/5'te "tamamlanmış ilerleme" gibi okunuyordu.
+  final double? progress;
 
   /// İkon karosunu ve ince çizgiyi renklendiren kategori kimliği.
   final String category;
@@ -74,16 +83,22 @@ class CategoryBandScaffold extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
-              child: SizedBox(
-                height: 3,
-                child: DecoratedBox(
-                  key: accentKey,
-                  decoration: ShapeDecoration(
-                    color: CategoryVisuals.tone(category).ground,
-                    shape: const StadiumBorder(),
-                  ),
-                ),
-              ),
+              child: progress == null
+                  ? SizedBox(
+                      height: 3,
+                      child: DecoratedBox(
+                        key: accentKey,
+                        decoration: ShapeDecoration(
+                          color: CategoryVisuals.tone(category).ground,
+                          shape: const StadiumBorder(),
+                        ),
+                      ),
+                    )
+                  : _BandProgress(
+                      key: accentKey,
+                      value: progress!,
+                      fill: CategoryVisuals.tone(category).ground,
+                    ),
             ),
             Expanded(child: body),
           ],
@@ -118,6 +133,43 @@ class CategoryIconTile extends StatelessWidget {
       child: SizedBox.square(
         dimension: 44,
         child: Icon(icon, size: 24, color: SahneTokens.night.tx),
+      ),
+    );
+  }
+}
+
+/// Başlık altı ilerleme çubuğu: 4 pt, yuvarlak uç; boş kısım nötr iz (`s3`,
+/// gündüzde ince kenarlı), dolu kısım kategori tonu. Değer 0'da dolu kısım
+/// hiç çizilmez.
+class _BandProgress extends StatelessWidget {
+  const _BandProgress({super.key, required this.value, required this.fill});
+
+  final double value;
+  final Color fill;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final v = value.clamp(0.0, 1.0);
+    return SizedBox(
+      height: 4,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(color: t.s3, shape: const StadiumBorder()),
+        child: Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: v <= 0
+              ? null
+              : FractionallySizedBox(
+                  widthFactor: v,
+                  heightFactor: 1,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: fill,
+                      shape: const StadiumBorder(),
+                    ),
+                  ),
+                ),
+        ),
       ),
     );
   }

@@ -79,13 +79,17 @@ void main() {
       // Tur 8: neden baştan DEĞİL, yalnız "Sonraki"ye basılınca yazar (hiçbir
       // şeye dokunulmadan hata gibi duruyordu).
       expect(
-        find.text('Devam etmek için "13 yaşından büyüğüm" kutusunu işaretle.'),
+        find.text(
+          'Devam etmek için "13 yaşında veya daha büyüğüm" kutusunu işaretle.',
+        ),
         findsNothing,
       );
       await tester.tap(find.text('Sonraki'));
       await tester.pumpAndSettle();
       expect(
-        find.text('Devam etmek için "13 yaşından büyüğüm" kutusunu işaretle.'),
+        find.text(
+          'Devam etmek için "13 yaşında veya daha büyüğüm" kutusunu işaretle.',
+        ),
         findsOneWidget,
       );
     },

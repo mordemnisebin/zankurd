@@ -26,6 +26,10 @@ enum SahneProgressTone {
 
   /// Ödül (Zêr): XP, seviye.
   gold,
+
+  /// Eylem rengi (`act`, turuncu): yol boyunca ilerleyen akışlar (tanıtım,
+  /// soru ilerlemesi); uygulamanın birincil eylem rengiyle aynı ton.
+  action,
 }
 
 /// İlerleme çubuğu — maketteki `.sh-bar` / `.sh-prog`.
@@ -44,6 +48,7 @@ class SahneProgressBar extends StatelessWidget {
     this.trailing,
     this.semanticLabel,
     this.height = 8,
+    this.trackColor,
   });
 
   /// 0–1.
@@ -55,11 +60,19 @@ class SahneProgressBar extends StatelessWidget {
   final String? trailing;
   final String? semanticLabel;
 
+  /// İz rengini değiştirir (varsayılan `s3`). Koyu sahnede `s3` zeminden
+  /// ayrışmayan ince çubuğa görünür bir iz vermek için.
+  final Color? trackColor;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final v = value.clamp(0.0, 1.0);
-    final fill = tone == SahneProgressTone.gold ? t.gold : t.learnBar;
+    final fill = switch (tone) {
+      SahneProgressTone.gold => t.gold,
+      SahneProgressTone.action => t.act,
+      SahneProgressTone.learn => t.learnBar,
+    };
     final reduceMotion = sahneMotionReduced(context);
     final pill = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(height / 2),
@@ -72,7 +85,7 @@ class SahneProgressBar extends StatelessWidget {
         height: height,
         child: DecoratedBox(
           decoration: ShapeDecoration(
-            color: t.s3,
+            color: trackColor ?? t.s3,
             shape: SahneShape.withSide(
               pill,
               // İnce çubukta (< 6) 1 px kenar çubuğun yarısını yerdi.

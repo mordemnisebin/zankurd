@@ -120,6 +120,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               ? ExcludeSemantics(
                   child: SahneProgressBar(
                     key: const ValueKey('onboarding-progress'),
+                    tone: SahneProgressTone.action,
                     value: (_page + 1) / pages.length,
                     trailing: '${_page + 1}/${pages.length}',
                   ),

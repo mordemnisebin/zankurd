@@ -220,8 +220,8 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    testWidgets('ücrete yetmeyince eksik miktar yazar, "Odayı aç" yerine '
-        '"Jeton kazan" gelir', (tester) async {
+    testWidgets('ücrete yetmeyince eksik miktar yazar, "Jeton kazan" ikincil '
+        'bağlantı olur, "Odayı aç" birincil kalır', (tester) async {
       await openSheet(tester, 10);
 
       // Ücretsiz seçenek varsayılan: oda açılabilir.
@@ -231,19 +231,22 @@ void main() {
       await tester.ensureVisible(
         find.byKey(const ValueKey('custom-room-settings-row')),
       );
+
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
       await tester.pumpAndSettle();
       final fee = find.byKey(const ValueKey('custom-room-fee-25'));
       await tester.ensureVisible(fee);
+      await tester.pumpAndSettle();
       await tester.tap(fee);
       await tester.pumpAndSettle();
 
       expect(find.text('15 jeton eksik'), findsOneWidget);
-      expect(find.byKey(const ValueKey('custom-room-open')), findsNothing);
+      expect(find.byKey(const ValueKey('custom-room-open')), findsOneWidget);
       final earn = find.byKey(const ValueKey('custom-room-earn-coins'));
       expect(earn, findsOneWidget);
       await tester.ensureVisible(earn);
-      expect(tester.widget<FilledButton>(earn).onPressed, isNotNull);
+      await tester.pumpAndSettle();
 
       await tester.tap(earn);
       await tester.pumpAndSettle();

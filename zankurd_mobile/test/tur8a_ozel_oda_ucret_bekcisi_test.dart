@@ -38,6 +38,7 @@ void main() {
     await tester.pumpAndSettle();
     final row = find.byKey(const ValueKey('custom-room-settings-row'));
     await tester.ensureVisible(row);
+    await tester.pumpAndSettle();
     await tester.tap(row);
     await tester.pumpAndSettle();
   }
@@ -50,6 +51,7 @@ void main() {
     await open(tester);
     final fee50 = find.byKey(const ValueKey('custom-room-fee-50'));
     await tester.ensureVisible(fee50);
+    await tester.pumpAndSettle();
     expect(chip(tester, 50).locked, isTrue);
     expect(chip(tester, 25).locked, isFalse);
     expect(

@@ -24,7 +24,7 @@ void main() {
   // ───────────────────────────────────────────────────────────────────────
   //
   // Kurul 3. tur 2026-10-20: "Sonraki" da onaysız pasif; aşağıdaki son test onu sabitler.
-  // KUSUR: "13 yaşından büyüğüm" işaretsizken "Başla" tam etkin görünüyordu;
+  // KUSUR: "13 yaşında veya daha büyüğüm" işaretsizken "Başla" tam etkin görünüyordu;
   // koşul yalnız basınca, hata olarak çıkıyordu. NİÇİN SESSİZ: davranış
   // doğruydu (basınca ipucu çıkıyor, akış durmuyor) ve testler yalnız
   // davranışa baktı; düğmenin GÖRÜNÜŞÜ (pasif mi etkin mi) hiçbir testte
@@ -131,7 +131,7 @@ void main() {
       expect(checked(tester), isTrue);
 
       // Etiket metnine basmak da geri alır.
-      await tester.tap(find.text('13 yaşından büyüğüm'));
+      await tester.tap(find.text('13 yaşında veya daha büyüğüm'));
       await tester.pumpAndSettle();
       expect(checked(tester), isFalse);
     });

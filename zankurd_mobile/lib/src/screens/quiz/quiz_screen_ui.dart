@@ -423,6 +423,13 @@ extension _QuizScreenUI on _QuizScreenState {
           key: const ValueKey('quiz-progress-bar'),
           value: total == 0 ? 0 : done / total,
           height: 4,
+          // Koyu sahnede varsayılan iz ve koyu dolgu 4 pt'te görünmüyordu
+          // (8. kurul: Opus + Gemini): dolgu turuncu eylem rengi, iz ~%12
+          // beyaz (gündüzde nötr gri).
+          tone: SahneProgressTone.action,
+          trackColor: SahneTokens.of(context).bg == SahneTokens.day.bg
+              ? SahneTokens.of(context).tx3.withValues(alpha: 0.35)
+              : Colors.white.withValues(alpha: 0.12),
           semanticLabel:
               '${index + 1}/$total · $right ${context.t(K.correct)} · '
               '$wrong ${context.t(K.wrong)}',
@@ -768,20 +775,11 @@ extension _QuizScreenUI on _QuizScreenState {
   /// sebebini anlatmaz (2026-10-19 sadeleşme: bu cümle eskiden her soruda
   /// jeton satırında yazılıydı).
   void _explainLockedWildcard() {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          key: const ValueKey('quiz-wildcard-locked-note'),
-          content: Text(
-            '${context.t(K.insufficientBalance)} · '
-            '${context.t(K.finishQuizHint)}',
-          ),
-          behavior: SnackBarBehavior.floating,
-          margin: _quizSnackBarMargin,
-          duration: const Duration(seconds: 3),
-        ),
-      );
+    _showStageToast(
+      '${context.t(K.insufficientBalance)} · '
+      '${context.t(K.finishQuizHint)}',
+      key: const ValueKey('quiz-wildcard-locked-note'),
+    );
   }
 
   void _onWildcardTap(WildcardType type) {
@@ -812,14 +810,7 @@ extension _QuizScreenUI on _QuizScreenState {
       WildcardType.doubleAnswer => context.t(K.wildcardDoubleHint),
       WildcardType.changeQuestion => context.t(K.wildcardChangeHint),
     };
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(hint),
-        behavior: SnackBarBehavior.floating,
-        margin: _quizSnackBarMargin,
-        duration: const Duration(seconds: 3),
-      ),
-    );
+    _showStageToast(hint);
   }
 
   /// 148 = alt perdenin en yüksek hâli: jeton satırı (~20) + joker dizisi

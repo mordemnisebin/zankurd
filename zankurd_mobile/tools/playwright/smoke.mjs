@@ -60,7 +60,7 @@ await page.waitForFunction(
 await expectText('Bi pirsên kurt peyvan hîn bibe, çandê nas bike.');
 await screenshot('01-onboarding');
 
-const ageGateLabel = 'Ez ji 13 salî mezintir im';
+const ageGateLabel = 'Ez 13 salî an jî mezintir im';
 const ageGate = page.getByRole('checkbox', { name: ageGateLabel });
 await ageGate.waitFor({ state: 'visible', timeout: 15_000 });
 await ageGate.click();

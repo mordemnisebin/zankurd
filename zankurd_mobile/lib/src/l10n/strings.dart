@@ -2824,8 +2824,8 @@ class Tr {
           'sonra buradan sonraki soruya geç.',
     },
     K.ageGateLabel: {
-      'ku': 'Ez ji 13 salî mezintir im',
-      'tr': '13 yaşından büyüğüm',
+      'ku': 'Ez 13 salî an jî mezintir im',
+      'tr': '13 yaşında veya daha büyüğüm',
     },
     // 2026-09-27 canlı gezinti: kutu işaretsizken kuralın kendisi ("ZanKurd
     // 13 yaş ve üzeri içindir.") bir SnackBar'da çıkıyordu — oyuncu ne
@@ -2833,8 +2833,10 @@ class Tr {
     // örtüyordu. Bu metin kutunun yanında satır içi durur ve ne YAPILACAĞINI
     // söyler; kuralı kutunun kendi etiketi zaten söylüyor.
     K.ageGateHint: {
-      'ku': 'Ji bo berdewamiyê qutiya "Ez ji 13 salî mezintir im" nîşan bike.',
-      'tr': 'Devam etmek için "13 yaşından büyüğüm" kutusunu işaretle.',
+      'ku':
+          'Ji bo berdewamiyê qutiya "Ez 13 salî an jî mezintir im" nîşan bike.',
+      'tr':
+          'Devam etmek için "13 yaşında veya daha büyüğüm" kutusunu işaretle.',
     },
     // Etiket `Koda Vexwendinê` der (`K.enterReferralCode`). Misafir
     // yasağı "davetê" deyince oyuncu aynı kodu iki adla görür. Türkçe

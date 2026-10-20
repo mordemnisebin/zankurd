@@ -2138,6 +2138,7 @@ void main() {
     await t.pumpAndSettle();
     final fee = find.byKey(const ValueKey('custom-room-fee-50'));
     await t.ensureVisible(fee);
+    await t.pumpAndSettle();
     await t.tap(fee);
     await t.pump(const Duration(milliseconds: 400));
     await _shoot(t, '109_custom_room_short');
@@ -2163,6 +2164,7 @@ void main() {
     await t.pumpAndSettle();
     final fee = find.byKey(const ValueKey('custom-room-fee-50'));
     await t.ensureVisible(fee);
+    await t.pumpAndSettle();
     await t.tap(fee);
     await t.pump(const Duration(milliseconds: 400));
     await _shoot(t, '110_custom_room_short_dark_ku');

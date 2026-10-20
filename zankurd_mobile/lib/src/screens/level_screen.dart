@@ -76,6 +76,8 @@ class _LevelScreenState extends State<LevelScreen> {
       category: widget.category,
       title: heading.title,
       subtitle: heading.subtitle,
+      // Başlık altı çizgi gerçek ilerlemedir: 0/N'de dolu kısım görünmez.
+      progress: levels.isEmpty ? 0 : _playedLevels.length / levels.length,
       body: ListView(
         padding: const EdgeInsets.fromLTRB(
           SahneSpace.page,
@@ -278,7 +280,6 @@ class _LevelProgressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final ratio = total <= 0 ? 0.0 : (completed / total).clamp(0.0, 1.0);
     final text = description?.trim();
     // Kurul 2. tur 2026-10-20: ayrı kart kalktı; ilerleme başlığın hemen
     // altında kartsız bir satırdır (seviye kartlarıyla aynı düzeyde
@@ -293,35 +294,19 @@ class _LevelProgressCard extends StatelessWidget {
             Text(text, style: SahneType.body.copyWith(color: t.tx2)),
             const SizedBox(height: SahneSpace.x3),
           ],
-          if (completed == 0)
-            // Hiç seviye bitmemişken çubuk yok: lavanta iz dolu gibi
-            // okunuyordu (kurul 2. tur, ChatGPT). Yalnız sayaç.
-            Semantics(
-              label: Tr.forKu(K.progressLevelsCompleted, isKu, {
-                'completed': '$completed',
-                'total': '$total',
-              }),
-              excludeSemantics: true,
-              child: Text(
-                Tr.forKu(K.pPSeviye, isKu, {
-                  'p0': '$completed',
-                  'p1': '$total',
-                }),
-                style: SahneType.captionStrong.copyWith(color: t.tx2),
-              ),
-            )
-          else
-            SahneProgressBar(
-              value: ratio,
-              trailing: Tr.forKu(K.pPSeviye, isKu, {
-                'p0': '$completed',
-                'p1': '$total',
-              }),
-              semanticLabel: Tr.forKu(K.progressLevelsCompleted, isKu, {
-                'completed': '$completed',
-                'total': '$total',
-              }),
+          // Çubuk başlığın altındaki çizgidir ([CategoryBandScaffold.progress]);
+          // burada yalnız sayaç.
+          Semantics(
+            label: Tr.forKu(K.progressLevelsCompleted, isKu, {
+              'completed': '$completed',
+              'total': '$total',
+            }),
+            excludeSemantics: true,
+            child: Text(
+              Tr.forKu(K.pPSeviye, isKu, {'p0': '$completed', 'p1': '$total'}),
+              style: SahneType.captionStrong.copyWith(color: t.tx2),
             ),
+          ),
         ],
       ),
     );
