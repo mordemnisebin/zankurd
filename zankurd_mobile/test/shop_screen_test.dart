@@ -402,11 +402,17 @@ void main() {
         findsNothing,
         reason: 'kilitli fiyat kutu/düğme değil düz metin',
       );
-      final note = tester.widget<Text>(
+      // Tur 9b: eksik söz sağ sütundan sol metin sütununa (açıklamanın altına)
+      // taşındı; sağ sütunda yalnız kilitli fiyat kalır.
+      expect(
         find.descendant(
           of: short,
           matching: find.textContaining('jeton eksik'),
         ),
+        findsNothing,
+      );
+      final note = tester.widget<Text>(
+        find.byKey(const ValueKey('shop-short-note-profile_badge_vip')),
       );
       expect(note.style?.color, t.goldTx, reason: 'eksik söz sıcak ton');
     },

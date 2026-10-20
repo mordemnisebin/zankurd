@@ -885,70 +885,82 @@ class _CurrentLessonCard extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: SahneSurfaceCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  Flexible(
-                    child: Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: SahneBadge(
-                        key: const ValueKey('lesson-recommended-badge'),
-                        label: context.t(K.recommendedForYou),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: SahneSpace.x2),
-                  // Kapsül ilerleme "tamamlanan / toplam ders".
-                  DecoratedBox(
-                    key: const ValueKey('learning-progress-capsule'),
-                    decoration: ShapeDecoration(
-                      color: t.s2,
-                      shape: const StadiumBorder(),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: SahneSpace.x3,
-                        vertical: SahneSpace.x1,
-                      ),
-                      child: Text(
-                        '$done/$total',
-                        style: SahneType.captionStrong.copyWith(
-                          color: t.tx2,
-                          fontFeatures: const [FontFeature.tabularFigures()],
+        // Tur 9b: etkin ders kartı seviye ekranındaki etkin kart diliyle
+        // 2 px Agir çerçeve taşır; kilitli satırlardan görsel ağırlıkla ayrılır.
+        child: DecoratedBox(
+          key: const ValueKey('learning-active-frame'),
+          position: DecorationPosition.foreground,
+          decoration: ShapeDecoration(
+            shape: SahneShape.withSide(SahneShape.l, t.act, width: 2),
+          ),
+          child: SahneSurfaceCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: SahneBadge(
+                          key: const ValueKey('lesson-recommended-badge'),
+                          label: context.t(K.recommendedForYou),
                         ),
                       ),
                     ),
+                    const SizedBox(width: SahneSpace.x2),
+                    // Kapsül ilerleme "tamamlanan / toplam ders".
+                    DecoratedBox(
+                      key: const ValueKey('learning-progress-capsule'),
+                      decoration: ShapeDecoration(
+                        color: t.s2,
+                        shape: const StadiumBorder(),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: SahneSpace.x3,
+                          vertical: SahneSpace.x1,
+                        ),
+                        child: Text(
+                          '$done/$total',
+                          style: SahneType.captionStrong.copyWith(
+                            color: t.tx2,
+                            fontFeatures: const [FontFeature.tabularFigures()],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: SahneSpace.x2),
+                Semantics(
+                  header: true,
+                  child: Text(
+                    title,
+                    style: SahneType.headline.copyWith(color: t.tx),
+                  ),
+                ),
+                if (metaText != null && metaText.isNotEmpty) ...[
+                  const SizedBox(height: SahneSpace.x1),
+                  Text(
+                    metaText,
+                    style: SahneType.caption.copyWith(color: t.tx2),
                   ),
                 ],
-              ),
-              const SizedBox(height: SahneSpace.x2),
-              Semantics(
-                header: true,
-                child: Text(
-                  title,
-                  style: SahneType.headline.copyWith(color: t.tx),
+                const SizedBox(height: SahneSpace.x3),
+                SahneProgressBar(
+                  value: total == 0 ? 0 : (done / total).clamp(0.0, 1.0),
+                  height: 4,
+                  semanticLabel: title,
                 ),
-              ),
-              if (metaText != null && metaText.isNotEmpty) ...[
-                const SizedBox(height: SahneSpace.x1),
-                Text(metaText, style: SahneType.caption.copyWith(color: t.tx2)),
+                const SizedBox(height: SahneSpace.x4),
+                SahneButton.primary(
+                  label: context.t(K.start),
+                  onPressed: onTap,
+                  expand: true,
+                ),
               ],
-              const SizedBox(height: SahneSpace.x3),
-              SahneProgressBar(
-                value: total == 0 ? 0 : (done / total).clamp(0.0, 1.0),
-                height: 4,
-                semanticLabel: title,
-              ),
-              const SizedBox(height: SahneSpace.x4),
-              SahneButton.primary(
-                label: context.t(K.start),
-                onPressed: onTap,
-                expand: true,
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -993,7 +1005,7 @@ class _LessonRow extends StatelessWidget {
       onTap: onTap,
       semanticLabel: semanticLabel,
       trailing: locked
-          ? Icon(AppIcons.lock, size: 20, color: t.disabledFg)
+          ? Icon(AppIcons.lock, size: 16, color: t.tx3)
           : completed
           ? Icon(AppIcons.check, size: 20, color: t.learnTx)
           : null,

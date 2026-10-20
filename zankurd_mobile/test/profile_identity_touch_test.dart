@@ -102,13 +102,49 @@ void main() {
     final t = SahneTokens.of(tester.element(find.byIcon(AppIcons.camera)));
     expect(decoration.color, t.s2);
     expect(decoration.shape, isA<BeveledRectangleBorder>());
-    // Elmas `SahneShape.diamond(28)` pahı kenarın yarısıdır (14); pahlı
-    // kare boyuna uygun S pahı taşır.
+    // Tur 9b: yuva 32 (simge 20, dokunma alanı 44x44); pahlı kare boyuna
+    // uygun pah taşır.
     expect(
       (decoration.shape as BeveledRectangleBorder).borderRadius,
-      SahneShape.forSize(28).borderRadius,
+      SahneShape.forSize(32).borderRadius,
     );
     expect(find.byKey(const ValueKey('profile-avatar-edit')), findsOneWidget);
+  });
+
+  // 2026-10-20 TASARIM KURULU (tur 9b, Grok + ChatGPT) — kusur: avatar, ad ve
+  // seviye çubuğu çıplak bir satırdı (hizalar tutarsız), kamera düğmesi 28 px
+  // yuva / 12 px simgeydi. Niçin sessiz: yerleşim sabitleri hata vermez; eski
+  // bekçi yalnız rozetin biçimini ölçüyordu. Sözleşme: blok 16 iç boşluklu
+  // TEK yüzey kartı; kamera düğmesi ≥ 44x44 dokunma, 20-24 görünen simge.
+  testWidgets('kimlik bloğu tek kart (iç boşluk 16), kamera düğmesi ≥ 44', (
+    tester,
+  ) async {
+    await _seedMistakes();
+    await _pumpLoaded(tester, _RankedRepo());
+
+    final card = find.byKey(const ValueKey('profile-identity-card'));
+    expect(card, findsOneWidget);
+    expect(
+      find.descendant(
+        of: card,
+        matching: find.byKey(const ValueKey('profile-avatar-edit')),
+      ),
+      findsOneWidget,
+    );
+    final cardRect = tester.getRect(card);
+    final avatar = tester.getRect(
+      find.byKey(const ValueKey('profile-avatar-edit')),
+    );
+    expect(avatar.left - cardRect.left, closeTo(16, 1));
+    expect(avatar.top - cardRect.top, closeTo(16, 1));
+
+    final cam = tester.getRect(
+      find.byKey(const ValueKey('profile-camera-button')),
+    );
+    expect(cam.width, greaterThanOrEqualTo(44));
+    expect(cam.height, greaterThanOrEqualTo(44));
+    final icon = tester.widget<Icon>(find.byIcon(AppIcons.camera));
+    expect(icon.size, inInclusiveRange(20, 24));
   });
 
   testWidgets('profil kimlik dokunuşlarını taşır', (tester) async {

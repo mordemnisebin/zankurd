@@ -88,167 +88,189 @@ class _ProfileHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return Row(
-      children: [
-        // Ekran okuyucuda etiketsiz bir düğme olarak görünüyordu
-        // (2026-07-25 denetimi).
-        Semantics(
-          button: true,
-          label: Tr.forKu(K.editAvatar, ku),
-          excludeSemantics: true,
-          onTap: onEditAvatar,
-          child: GestureDetector(
-            key: const ValueKey('profile-avatar-edit'),
-            behavior: HitTestBehavior.opaque,
+    // Tur 9b (Grok + ChatGPT): avatar, ad ve seviye çubuğu çıplak bir satırdı;
+    // hizaları tutarsızdı (avatar satırın ortasında, ad üstte). Blok artık
+    // 16 iç boşluklu TEK karttır, avatar üstten hizalı.
+    return SahneSurfaceCard(
+      key: const ValueKey('profile-identity-card'),
+      padding: const EdgeInsets.all(SahneSpace.x4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Ekran okuyucuda etiketsiz bir düğme olarak görünüyordu
+          // (2026-07-25 denetimi).
+          Semantics(
+            button: true,
+            label: Tr.forKu(K.editAvatar, ku),
+            excludeSemantics: true,
             onTap: onEditAvatar,
-            child: SizedBox.square(
-              dimension: 80,
-              child: Stack(
-                children: [
-                  Center(
-                    child: PlayerAvatar(
-                      radius: 36,
-                      photoUrl: avatarIdentity.photoUrl,
-                      iconId: avatarIdentity.iconId,
-                      colorHex: avatarIdentity.colorHex,
-                      frameId: avatarIdentity.frameId,
-                      displayName: displayName,
-                      colorSeed: PlayerIdentity.resolveColorSeed(displayName),
-                    ),
-                  ),
-                  PositionedDirectional(
-                    end: 0,
-                    bottom: 0,
-                    child: SizedBox.square(
-                      dimension: 28,
-                      child: DecoratedBox(
-                        decoration: ShapeDecoration(
-                          color: t.s2,
-                          shape: SahneShape.withSide(
-                            SahneShape.forSize(28),
-                            t.bg,
-                            width: SahneRing.r2,
-                          ),
-                        ),
-                        child: Icon(AppIcons.camera, size: 12, color: t.tx),
+            child: GestureDetector(
+              key: const ValueKey('profile-avatar-edit'),
+              behavior: HitTestBehavior.opaque,
+              onTap: onEditAvatar,
+              child: SizedBox.square(
+                dimension: 80,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: PlayerAvatar(
+                        radius: 36,
+                        photoUrl: avatarIdentity.photoUrl,
+                        iconId: avatarIdentity.iconId,
+                        colorHex: avatarIdentity.colorHex,
+                        frameId: avatarIdentity.frameId,
+                        displayName: displayName,
+                        colorSeed: PlayerIdentity.resolveColorSeed(displayName),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: SahneSpace.x4),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // 7. kurul (Opus + Grok): ad yokken başlık yerinde bir
-              // bağlantı ("Oyundaki adını gir ›") duruyordu. Artık başlık
-              // hep gerçek bir kimliktir: ad varsa ad, yoksa "Oyuncu ZK-4F7K"
-              // (kod dokununca kopyalanır); adı girme eylemi kalemli bağlantı
-              // olarak altında.
-              _identityTitle(context, t),
-              if (!hasOwnName)
-                Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: SahneButton.text(
-                    buttonKey: const ValueKey('profile-set-name-cta'),
-                    label: Tr.forKu(K.playerNameHint, ku).replaceAll('…', ''),
-                    icon: AppIcons.pen,
-                    arrow: false,
-                    onPressed: onSetName,
-                  ),
-                ),
-              const SizedBox(height: SahneSpace.x1),
-              Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      '${Tr.forKu(K.progressLevelLabel, ku)} $level',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: SahneType.captionStrong.copyWith(color: t.tx),
-                    ),
-                  ),
-                  if (coins != null) ...[
-                    const Spacer(),
-                    // Jeton ayrı küçük hap: çubuğun üstüne sıkışan çıplak
-                    // sayı değil.
-                    DecoratedBox(
-                      key: const ValueKey('profile-coin-pill'),
-                      decoration: ShapeDecoration(
-                        color: t.goldTint,
-                        shape: const StadiumBorder(),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: SahneSpace.x2,
-                          vertical: SahneSpace.x1,
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const SahneGlyph(SahneGlyphKind.coin, size: 16),
-                            const SizedBox(width: SahneSpace.x1),
-                            Text(
-                              groupThousands(coins!),
-                              style: SahneType.captionStrong.copyWith(
+                    // Kamera düğmesi: dokunma alanı 44x44, görünen yuva 32 ve
+                    // simge 20 (eskiden 28/12: parmakla vurulamayacak kadar
+                    // küçüktü).
+                    PositionedDirectional(
+                      end: -SahneSpace.x2,
+                      bottom: -SahneSpace.x2,
+                      child: SizedBox.square(
+                        key: const ValueKey('profile-camera-button'),
+                        dimension: 44,
+                        child: Center(
+                          child: SizedBox.square(
+                            dimension: 32,
+                            child: DecoratedBox(
+                              decoration: ShapeDecoration(
+                                color: t.s2,
+                                shape: SahneShape.withSide(
+                                  SahneShape.forSize(32),
+                                  t.edge,
+                                  width: SahneRing.r2,
+                                ),
+                              ),
+                              child: Icon(
+                                AppIcons.camera,
+                                size: 20,
                                 color: t.tx,
-                                fontFeatures: const [
-                                  FontFeature.tabularFigures(),
-                                ],
                               ),
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
                   ],
-                ],
+                ),
               ),
-              const SizedBox(height: SahneSpace.x2),
-              SahneProgressBar(
-                value: xpNeeded > 0 ? xpInLevel / xpNeeded : 0,
-                tone: SahneProgressTone.gold,
-                height: 8,
-                semanticLabel: '${Tr.forKu(K.progressLevelLabel, ku)} $level',
-              ),
-              if (playerTag != null && hasOwnName)
-                _PlayerTagChip(tag: playerTag!, ku: ku)
-              else if (playerTag == null)
-                Text(
-                  Tr.forKu(K.keepProgress, ku),
-                  style: SahneType.caption.copyWith(color: t.tx2),
-                ),
-              if (showcaseTitle != null) ...[
-                const SizedBox(height: SahneSpace.x1),
-                Text(
-                  showcaseTitle!,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: SahneType.captionStrong.copyWith(color: t.goldTx),
-                ),
-              ],
-              // Lig rozeti bayrakla kapalı: az oyuncuyla herkes "Bronz
-              // Lig"de (bkz. `kWeeklyLeagueEnabled`).
-              if (kWeeklyLeagueEnabled) ...[
-                const SizedBox(height: SahneSpace.x2),
-                Builder(
-                  builder: (context) {
-                    final tier = LeagueTier.forRank(rank);
-                    return SahneBadge(
-                      label: tier.label(ku),
-                      tone: SahneBadgeTone.gold,
-                    );
-                  },
-                ),
-              ],
-            ],
+            ),
           ),
-        ),
-      ],
+          const SizedBox(width: SahneSpace.x4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // 7. kurul (Opus + Grok): ad yokken başlık yerinde bir
+                // bağlantı ("Oyundaki adını gir ›") duruyordu. Artık başlık
+                // hep gerçek bir kimliktir: ad varsa ad, yoksa "Oyuncu ZK-4F7K"
+                // (kod dokununca kopyalanır); adı girme eylemi kalemli bağlantı
+                // olarak altında.
+                _identityTitle(context, t),
+                if (!hasOwnName)
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: SahneButton.text(
+                      buttonKey: const ValueKey('profile-set-name-cta'),
+                      label: Tr.forKu(K.playerNameHint, ku).replaceAll('…', ''),
+                      icon: AppIcons.pen,
+                      arrow: false,
+                      onPressed: onSetName,
+                    ),
+                  ),
+                // Seviye satırı adın 6 altında (tek sabit ritim).
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        '${Tr.forKu(K.progressLevelLabel, ku)} $level',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: SahneType.captionStrong.copyWith(color: t.tx),
+                      ),
+                    ),
+                    if (coins != null) ...[
+                      const Spacer(),
+                      // Jeton ayrı küçük hap: çubuğun üstüne sıkışan çıplak
+                      // sayı değil.
+                      DecoratedBox(
+                        key: const ValueKey('profile-coin-pill'),
+                        decoration: ShapeDecoration(
+                          color: t.goldTint,
+                          shape: const StadiumBorder(),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: SahneSpace.x2,
+                            vertical: SahneSpace.x1,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const SahneGlyph(SahneGlyphKind.coin, size: 16),
+                              const SizedBox(width: SahneSpace.x1),
+                              Text(
+                                groupThousands(coins!),
+                                style: SahneType.captionStrong.copyWith(
+                                  color: t.tx,
+                                  fontFeatures: const [
+                                    FontFeature.tabularFigures(),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+                const SizedBox(height: SahneSpace.x2),
+                SahneProgressBar(
+                  value: xpNeeded > 0 ? xpInLevel / xpNeeded : 0,
+                  tone: SahneProgressTone.gold,
+                  height: 8,
+                  semanticLabel: '${Tr.forKu(K.progressLevelLabel, ku)} $level',
+                ),
+                if (playerTag != null && hasOwnName)
+                  _PlayerTagChip(tag: playerTag!, ku: ku)
+                else if (playerTag == null)
+                  Text(
+                    Tr.forKu(K.keepProgress, ku),
+                    style: SahneType.caption.copyWith(color: t.tx2),
+                  ),
+                if (showcaseTitle != null) ...[
+                  const SizedBox(height: SahneSpace.x1),
+                  Text(
+                    showcaseTitle!,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                  ),
+                ],
+                // Lig rozeti bayrakla kapalı: az oyuncuyla herkes "Bronz
+                // Lig"de (bkz. `kWeeklyLeagueEnabled`).
+                if (kWeeklyLeagueEnabled) ...[
+                  const SizedBox(height: SahneSpace.x2),
+                  Builder(
+                    builder: (context) {
+                      final tier = LeagueTier.forRank(rank);
+                      return SahneBadge(
+                        label: tier.label(ku),
+                        tone: SahneBadgeTone.gold,
+                      );
+                    },
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 

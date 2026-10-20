@@ -1011,6 +1011,12 @@ class _ShopScreenState extends State<ShopScreen> {
     final title = ku ? item.titleKu : item.titleTr;
     final desc = ku ? item.descKu : item.descTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
+    // Tur 9b: "N jeton eksik" sağ sütunda fiyatın altına sıkışıyordu (3
+    // denetçi). Söz artık sol metin sütununda, açıklamanın altında tek satır
+    // kehribar uyarıdır; sağ sütunda yalnız kilitli fiyat hapı kalır.
+    final missing = isPurchased
+        ? 0
+        : coinShortfall(cost: item.cost, balance: _coinBalance);
 
     {
       // Büyük yazıda ya da dar telefonda (< 360) sağ sütun açıklamayı 4+
@@ -1036,6 +1042,18 @@ class _ShopScreenState extends State<ShopScreen> {
             // Açıklama hiçbir dilde kesilmez: oyuncu ne aldığını bilmeli.
             style: SahneType.caption.copyWith(color: t.tx2, fontSize: 13),
           ),
+          if (missing > 0) ...[
+            const SizedBox(height: SahneSpace.x1),
+            Text(
+              context.t(K.coinsShort, {'coins': '$missing'}),
+              key: ValueKey('shop-short-note-${item.id}'),
+              style: SahneType.caption.copyWith(
+                color: t.shortfallTx,
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ],
       );
       final action = isPurchased
@@ -1045,7 +1063,7 @@ class _ShopScreenState extends State<ShopScreen> {
         key: hero
             ? const ValueKey('shop-hero-surface')
             : ValueKey('shop-item-surface-${item.id}'),
-        padding: const EdgeInsets.all(SahneSpace.x3),
+        padding: const EdgeInsets.all(14),
         onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
         child: largeText
             ? Column(
@@ -1158,18 +1176,6 @@ class _ShopScreenState extends State<ShopScreen> {
                       ),
                     ),
                   ],
-                ),
-              ),
-              // Kurul 5. tur: söz kendi satırında, fiyattan 4 px ayrı ve
-              // koyu kehribar (gündüz ≥ 4.5:1).
-              const SizedBox(height: _lockGap),
-              Text(
-                note,
-                textAlign: TextAlign.center,
-                style: SahneType.caption.copyWith(
-                  color: t.shortfallTx,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],

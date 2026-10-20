@@ -190,7 +190,7 @@ class SahneStageCard extends StatelessWidget {
     final t = SahneTokens.of(context);
     final race = role == SahneRole.race;
     final metaColor = race ? SahneStageColors.raceSoft : t.tx2;
-    final eyebrowColor = race ? SahneStageColors.raceSoft : t.roleText(role);
+    final eyebrowColor = t.eyebrowTx;
 
     Widget texts({required double gap}) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,

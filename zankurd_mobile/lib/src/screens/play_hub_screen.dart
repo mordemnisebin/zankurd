@@ -714,7 +714,7 @@ class _QuickDuelHero extends StatelessWidget {
               children: [
                 Text(
                   context.t(K.quickDuel),
-                  style: SahneType.captionStrong.copyWith(color: t.raceTx),
+                  style: SahneType.captionStrong.copyWith(color: t.eyebrowTx),
                 ),
                 const SizedBox(height: SahneSpace.x1),
                 Text(title, style: SahneType.headline.copyWith(color: t.tx)),

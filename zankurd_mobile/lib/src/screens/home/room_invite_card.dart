@@ -182,7 +182,7 @@ class _RoomInviteCardState extends State<RoomInviteCard> {
                     extra > 0
                         ? '${context.t(K.roomInviteSection)} · ${_invites.length}'
                         : context.t(K.roomInviteSection),
-                    style: SahneType.captionStrong.copyWith(color: t.raceTx),
+                    style: SahneType.captionStrong.copyWith(color: t.eyebrowTx),
                   ),
                   const SizedBox(height: SahneSpace.x1),
                   Semantics(

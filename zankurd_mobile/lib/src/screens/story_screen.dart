@@ -178,7 +178,7 @@ class _StoryScreenState extends State<StoryScreen> {
                   children: [
                     Text(
                       context.t(K.storyWord),
-                      style: SahneType.eyebrow.copyWith(color: s.learnTx),
+                      style: SahneType.eyebrow.copyWith(color: s.eyebrowTx),
                     ),
                     const SizedBox(height: SahneSpace.x2),
                     Text(
@@ -339,7 +339,7 @@ class _MiniGuideView extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: SahneSpace.x1),
       child: Text(
         text,
-        style: SahneType.captionStrong.copyWith(color: t.learnTx),
+        style: SahneType.captionStrong.copyWith(color: t.eyebrowTx),
       ),
     );
   }
