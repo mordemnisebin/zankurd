@@ -463,8 +463,10 @@ void main() {
           ),
         )
         .color!;
-    expect(fill('out'), SahneTokens.night.s1);
-    expect(fill('in'), SahneTokens.night.s2);
+    // Tur 10b: seçilmemiş çip artık nötr dolgulu (s2); kartın içinde bir
+    // basamak yükselir (s3). Anlam aynı: yüzeyle aynı tonda durmaz.
+    expect(fill('out'), SahneTokens.night.s2);
+    expect(fill('in'), SahneTokens.night.s3);
   });
 
   group('liste satırı', () {

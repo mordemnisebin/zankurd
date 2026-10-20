@@ -211,6 +211,9 @@ class _FitRailScope extends InheritedWidget {
 /// rol rengi. Ekran okuyucu seçili durumunu okur. Metin sığmazsa sarar,
 /// çip uzar.
 class SahneRailChip extends StatelessWidget {
+  /// Seçili ve seçilmemiş çipin halka kalınlığı (ikisi AYNI: boyut oynamaz).
+  static const double railChipRing = 1;
+
   const SahneRailChip({
     super.key,
     required this.label,
@@ -241,7 +244,12 @@ class SahneRailChip extends StatelessWidget {
         fontWeight: selected ? FontWeight.w800 : FontWeight.w700,
       ),
     );
-    final fill = selected ? t.selFill : (onSurface ? t.s2 : t.s1);
+    // Tur 10b (Gemini + ChatGPT): seçili olmayan çip s1 (kartla aynı beyaz)
+    // idi, düz metin gibi duruyordu; seçili olan da ders çerçevesi ve Başla
+    // ile aynı güçlü turuncuyu (2 px) paylaşıyordu. Seçilmemiş çip artık
+    // nötr dolgulu (s2); seçili çip turuncu metin + açık turuncu dolgu + 1 px
+    // çerçeve: ana eylemden sakin.
+    final fill = selected ? t.selFill : (onSurface ? t.s3 : t.s2);
     // Seçili olmayan çip de AYNI kalınlıkta halka taşır; halkası kendi
     // zeminin rengindedir (görünmez). Eskiden 1 px'lik soluk bir kenar vardı:
     // gündüzde sayfa zeminiyle birleşip beyaz alanı küçültüyor, seçilince
@@ -250,7 +258,7 @@ class SahneRailChip extends StatelessWidget {
     final shape = SahneShape.withSide(
       SahneShape.m,
       selected ? t.selLine : fill,
-      width: SahneRing.r2,
+      width: railChipRing,
     );
     return Semantics(
       container: true,
