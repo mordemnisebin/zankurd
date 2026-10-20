@@ -294,8 +294,20 @@ class LearningOutcomeCard extends StatelessWidget {
         ),
         onTap: canReview ? onReview : null,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(AppIcons.lightbulb, size: 20, color: t.learnTx),
+            // 7. kurul: çıplak 20 px ampul başlıkla hizasız yüzüyordu; 36 px
+            // öğrenme tonlu kutuda, başlıkla üstten hizalı.
+            DecoratedBox(
+              decoration: ShapeDecoration(
+                color: t.learnTint,
+                shape: SahneShape.forSize(36),
+              ),
+              child: SizedBox.square(
+                dimension: 36,
+                child: Icon(AppIcons.lightbulb, size: 20, color: t.learnTx),
+              ),
+            ),
             const SizedBox(width: SahneSpace.x3),
             Expanded(
               child: Column(
@@ -303,7 +315,11 @@ class LearningOutcomeCard extends StatelessWidget {
                 children: [
                   Text(
                     context.t(title),
-                    style: SahneType.bodyStrong.copyWith(color: t.tx),
+                    style: SahneType.bodyStrong.copyWith(
+                      color: t.tx,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   if (strong != null) lines(strong),
                   if (review != null) lines(review),
@@ -313,7 +329,10 @@ class LearningOutcomeCard extends StatelessWidget {
             ),
             if (canReview) ...[
               const SizedBox(width: SahneSpace.x2),
-              Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
+              SizedBox(
+                height: 36,
+                child: Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
+              ),
             ],
           ],
         ),

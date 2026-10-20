@@ -503,9 +503,11 @@ class SahneResultStats extends StatelessWidget {
     if (items.isEmpty) return const SizedBox.shrink();
     final t = SahneTokens.of(context);
     return SahneSurfaceCard(
+      // 7. kurul (Gemini): ikon+sayı+söz kutu kenarına sıkışıktı; yatay iç
+      // boşluk x4, dikey x3.
       padding: const EdgeInsets.symmetric(
-        horizontal: SahneSpace.x3,
-        vertical: SahneSpace.x2,
+        horizontal: SahneSpace.x4,
+        vertical: SahneSpace.x3,
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -582,10 +584,11 @@ class _StatTile extends StatelessWidget {
         // hedefi değil.
         constraints: const BoxConstraints(minHeight: 40),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox.square(dimension: 20, child: stat.leading),
             const SizedBox(width: SahneSpace.x2),
-            Expanded(
+            Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
