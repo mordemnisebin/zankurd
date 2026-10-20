@@ -69,10 +69,10 @@ class SahneButton extends StatelessWidget {
     required this.onPressed,
     this.arrow = true,
     this.quiet = false,
+    this.icon,
     this.semanticLabel,
     this.buttonKey,
   }) : _kind = _SahneButtonKind.text,
-       icon = null,
        leading = null,
        loading = false,
        expand = false;
