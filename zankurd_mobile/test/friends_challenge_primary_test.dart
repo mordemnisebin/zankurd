@@ -124,8 +124,10 @@ void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   // 7. kurul: satır başına iki büyük çerçeveli düğme listeyi düğme yığınına
-  // çeviriyordu. Artık sağda TEK simge düğmesi (meydan oku, 48 dokunma
-  // kutusu) + "⋯" menüsü; "Odaya çağır" menüde, satır ~64 yüksekliğinde.
+  // çeviriyordu. Artık sağda TEK küçük düğme (kılıç simgesi + "Meydan oku"
+  // metni, >= 44) + "⋯" menüsü (44x44, ikincil gri); "Odaya çağır" menüde,
+  // satır ~64 yüksekliğinde. 9. kurul (tur 10a): yalnız simge anlaşılmıyordu,
+  // metin geri geldi; bu bekçi onu kilitler.
   testWidgets('meydan okuma destekliyken satırda simge + ⋯ menüsü; satır ~64', (
     tester,
   ) async {
@@ -137,8 +139,15 @@ void main() {
     expect(find.byIcon(AppIcons.swords), findsNWidgets(2));
     expect(tester.getSize(challenge).width, greaterThanOrEqualTo(44));
     expect(tester.getSize(challenge).height, greaterThanOrEqualTo(44));
-    // Satırda yazılı düğme yok; "Odaya çağır" menüde.
-    expect(find.text('Meydan oku'), findsNothing);
+    // Meydan okuma düğmesi simge + metin taşır (tur 10a: etiketsiz simgenin
+    // anlamı belli değildi); "Odaya çağır" menüde.
+    expect(
+      find.descendant(of: challenge, matching: find.text('Meydan oku')),
+      findsOneWidget,
+    );
+    final more = find.byKey(const ValueKey('friend-more-Rojda'));
+    expect(tester.getSize(more).width, greaterThanOrEqualTo(44));
+    expect(tester.getSize(more).height, greaterThanOrEqualTo(44));
     expect(find.text('Odaya çağır'), findsNothing);
     final row = find.byKey(const ValueKey('friend-row-Rojda'));
     expect(tester.getSize(row).height, lessThanOrEqualTo(72));
