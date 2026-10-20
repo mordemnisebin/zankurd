@@ -457,8 +457,8 @@ class AppTheme {
   static const darkBg = bg;
 
   static const textPrimary = Color(0xFFF5F3EF); // Gece birincil metin.
-  static const textSub = Color(0xFFB9BAC0); // Gece ikincil metin.
-  static const textMuted = Color(0xFF8F9199); // Gece üçüncül metin (AA geçer).
+  static const textSub = Color(0xFFC4C6CD); // Gece ikincil metin.
+  static const textMuted = Color(0xFFA2A5AD); // Gece üçüncül metin (AA geçer).
 
   static const border = Color(
     0xFF3A3D44,

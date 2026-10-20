@@ -269,8 +269,12 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     s2: Color(0xFF2B2C32),
     s3: Color(0xFF34363C),
     tx: Color(0xFFF5F3EF),
-    tx2: Color(0xFFB9BAC0),
-    tx3: Color(0xFF8F9199),
+    // 2026-10-20 (kurul 9-10. tur, ChatGPT + Grok + Codex): ikincil ve
+    // üçüncül yazı grafit kartlarda sönük okunuyordu. tx2 #B9BAC0 → #C4C6CD
+    // (Perde üstünde ~9:1), tx3 #8F9199 → #A2A5AD (Perde üstünde ~6:1);
+    // sıra (tx > tx2 > tx3) korunur.
+    tx2: Color(0xFFC4C6CD),
+    tx3: Color(0xFFA2A5AD),
     // Ayırıcı ve yüzey kenarı DEKORATİF (opak, saydam değil): etkileşimli
     // kenar için tx3 kullanılır (≥ 3:1).
     line: Color(0xFF3A3D44),

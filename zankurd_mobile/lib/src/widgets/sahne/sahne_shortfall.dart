@@ -42,11 +42,13 @@ class SahneShortfallNote extends StatelessWidget {
     this.alert = false,
     this.warn = false,
     this.center = false,
-    this.feeLabel,
+    this.fee,
   });
 
-  /// Verilirse not hangi ücrete ait olduğunu söyler ("50 jeton için ...").
-  final String? feeLabel;
+  /// Verilirse not hangi ücrete ait olduğunu söyler: TR "50 jeton için 40
+  /// jeton eksik", KU "Ji bo 50 zêran 40 zêr kêm in". Ücret hazır bir etiket
+  /// olarak birleştirilmez; Kurmancîde sözcük sırası farklıdır (önce "Ji bo").
+  final int? fee;
 
   /// Eksik jeton sayısı (> 0).
   final int missing;
@@ -64,11 +66,9 @@ class SahneShortfallNote extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final color = warn ? t.shortfallTx : (alert ? t.errTx : t.tx2);
-    final base = context.t(K.coinsShort, {'coins': '$missing'});
-    final join = feeLabel == null ? '' : context.t(K.coinsShortForFee);
-    final label = (join.isEmpty || join == '-')
-        ? base
-        : '$feeLabel $join $base';
+    final label = fee == null
+        ? context.t(K.coinsShort, {'coins': '$missing'})
+        : context.t(K.coinsShortForFee, {'fee': '$fee', 'coins': '$missing'});
     return Semantics(
       container: true,
       label: label,

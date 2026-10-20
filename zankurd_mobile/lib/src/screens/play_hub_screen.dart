@@ -1503,7 +1503,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                               cost: blockedFee,
                               balance: widget.coinBalance,
                             ),
-                            feeLabel: '$blockedFee ${context.t(K.coinWord)}',
+                            fee: blockedFee,
                             warn: true,
                           ),
                         ),

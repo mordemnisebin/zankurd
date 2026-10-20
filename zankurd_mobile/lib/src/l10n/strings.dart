@@ -1634,10 +1634,13 @@ class Tr {
     K.earnCoins: {'ku': 'Zêr qezenc bike', 'tr': 'Jeton kazan'},
     // "Jeton yetmiyor" durumunun miktarlı sözü (`SahneShortfallNote`): oyuncu
     // yalnız "yetmiyor" değil, NE KADAR eksik olduğunu da bilir.
-    // Not hangi ücrete ait: TR "50 jeton için 40 jeton eksik". KU mevcut
-    // "{coins} zêr kêm e" olduğu gibi kalır ("-" = ücret öneki yazılmaz;
-    // sözlük boş değer kabul etmez ve KU'ya yeni metin eklenmez).
-    K.coinsShortForFee: {'ku': '-', 'tr': 'için'},
+    // Not hangi ücrete ait (oda katılım ücreti). KU 2026-10-20 kurulu
+    // (Grok 4.7 + Muse Spark, birebir aynı): "ji bo" çoğul eğik "zêran",
+    // çoğul özneye "kêm in".
+    K.coinsShortForFee: {
+      'ku': 'Ji bo {fee} zêran {coins} zêr kêm in',
+      'tr': '{fee} jeton için {coins} jeton eksik',
+    },
     K.coinsShort: {'ku': '{coins} zêr kêm e', 'tr': '{coins} jeton eksik'},
     K.cancelShort: {'ku': 'Betal', 'tr': 'Vazgeç'},
     K.rewardPending: {
