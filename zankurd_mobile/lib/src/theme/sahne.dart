@@ -68,7 +68,7 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     required this.rim,
   });
 
-  /// Zemin (Şev). Gece çivit; gündüz soğuk açık gri-mavi (krem değil).
+  /// Zemin (Şev). Gece nötr grafit; gündüz soğuk açık gri-mavi (krem değil).
   final Color bg;
 
   /// Alt gezinme çubuğunun zemini.
@@ -102,8 +102,9 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
 
   /// Ortak pasif dolgu (kurul 3. tur 2026-10-20): DÜZ soluk dolgu, kenarsız.
   /// İkincil düğmeyle karışmasın diye pasifin kenarı YOKTUR (ikincil görünür
-  /// kenar taşır, bkz. [secondaryEdge]). Gündüz `#E3E7F0`, gece Kulis `s2`.
-  Color get disabledFill => _isDay ? const Color(0xFFE3E7F0) : s2;
+  /// kenar taşır, bkz. [secondaryEdge]). Gündüz `#E3E7F0`, gece `#282A2F` (tx3 etiket ile ≥ 4.5).
+  Color get disabledFill =>
+      _isDay ? const Color(0xFFE3E7F0) : const Color(0xFF282A2F);
 
   /// Pasif etiket: üçüncül metin; pasif dolguya karşı yine ≥ 3 (okunur ama
   /// etkin ikincil etiketten (`tx`) belli ölçüde soluk).
@@ -119,8 +120,7 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
 
   /// Metin alanının dinlenme kenarı, 1 px: eski `edge` zemine karışıyordu
   /// (Giriş ekranında alanlar arka planla birleşti).
-  Color get fieldEdge =>
-      _isDay ? const Color(0xFFB4BCD0) : const Color(0x66BCC3E4);
+  Color get fieldEdge => _isDay ? const Color(0xFFB4BCD0) : tx3;
 
   /// Agir — birincil eylem dolgusu.
   final Color act;
@@ -192,59 +192,69 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Kurul 3. tur 2026-10-20: seçili hâl soluktu (oda kurma sheet'i); ton
   /// koyulaştı, çizgi 2 px, etiket kalın. Metin ≥ 4.5:1 ([selTx] ton dolgu
   /// üstünde; test bunu ölçer).
-  Color get selFill =>
-      Color.alphaBlend(act.withValues(alpha: _isNight ? 0.32 : 0.28), s1);
+  ///
+  /// Gece (2026-10-20): yarı saydam turuncu koyu zeminde çamur kahve-mor
+  /// oluyordu; seçili çip OPAK `#3A2A1F` dolgu + 2 px Agir çizgi + `#FFB27F`
+  /// etiket (≥ 7.8:1).
+  Color get selFill => _isNight
+      ? const Color(0xFF3A2A1F)
+      : Color.alphaBlend(act.withValues(alpha: 0.28), s1);
   Color get selLine => act;
-  Color get selTx => actTx;
+  Color get selTx => _isNight ? const Color(0xFFFFB27F) : actTx;
 
   bool get _isNight => bg.computeLuminance() < 0.2;
 
   static const night = SahneTokens(
-    bg: Color(0xFF0A0F2E),
-    nav: Color(0xFF0D1335),
-    s1: Color(0xFF131A42),
-    s2: Color(0xFF1C2455),
-    s3: Color(0xFF29336F),
-    tx: Color(0xFFF6F3EC),
-    tx2: Color(0xFFBCC3E4),
-    tx3: Color(0xFF959DC9),
-    line: Color(0x24BCC3E4),
-    // 2026-10-19 sadeleşme (ikinci tur): gecede kenar artık görünür (≈ %18
-    // ikincil metin); katmanlar yalnız tonla ayrılınca koyu kartlar zemine
-    // karışıyordu. İnce ama var.
-    edge: Color(0x2EBCC3E4),
+    // 2026-10-20 gece paleti kuruldu (9 modelli kurul oy birliğiyle B):
+    // nötr grafit, mavi ton yok; turuncu Agir aynı. Eski lacivert (#0A0F2E)
+    // mavi tonlu yüzeylerle katmanları bulandırıyor, turuncuyla tamamlayıcı
+    // titreşim yapıyor, yarı saydam turuncu tonlar lacivert üstünde çamur
+    // moru oluyordu. Gündüz temasının koyu ikizi: aynı turuncu, aynı roller.
+    // Okunurluk: tx, bg/s1/s2/s3 üstünde 16.9/15.2/13.5/11.4; tx2 ≥ 6.5;
+    // tx3 ≥ 4.0 (yüzeylerde AA'ya yakın, test ölçer).
+    bg: Color(0xFF121214),
+    nav: Color(0xFF17171A),
+    s1: Color(0xFF1C1D21),
+    s2: Color(0xFF26272C),
+    s3: Color(0xFF313339),
+    tx: Color(0xFFF5F3EF),
+    tx2: Color(0xFFB9BAC0),
+    tx3: Color(0xFF8F9199),
+    // Ayırıcı ve yüzey kenarı DEKORATİF (opak, saydam değil): etkileşimli
+    // kenar için tx3 kullanılır (≥ 3:1).
+    line: Color(0xFF34363C),
+    edge: Color(0xFF34363C),
     // Büyük dolgularda (birincil düğme) gece turuncusu bir ton sönük: tam
-    // doygun #FF8A3D koyu zeminde göz yoruyordu. Üstündeki koyu metin 9:1'in
-    // üstünde kalır.
+    // doygun #FF8A3D koyu zeminde göz yoruyordu.
     act: Color(0xFFF08A4A),
     onAct: Color(0xFF1B0C02),
     actTx: Color(0xFFFF9A57),
     // rgba(255,138,61,.7)
     actShadow: Color(0xB3FF8A3D),
     actShadowBlur: 24,
-    race: Color(0xFFC4265A),
+    race: Color(0xFFE8638F),
     raceTx: Color(0xFFFF86AE),
-    raceTint: Color(0xFF4A1233),
-    learn: Color(0xFF1DB482),
+    raceTint: Color(0xFF3A2229),
+    learn: Color(0xFF34C795),
     learnTx: Color(0xFF52DBA5),
-    learnTint: Color(0xFF0B4637),
-    learnBar: Color(0xFF1DB482),
+    learnTint: Color(0xFF1E2F28),
+    learnBar: Color(0xFF34C795),
     gold: Color(0xFFF5C24C),
     goldTx: Color(0xFFF5C24C),
-    goldTint: Color(0xFF3A3218),
+    goldTint: Color(0xFF362E1C),
     goldDeep: Color(0xFFB07D12),
     onGold: Color(0xFF1E1400),
     // Gümüş, ikincil metinden (4. sıra ve sonrası) parlaklığıyla ayrılsın
     // diye sahne madalyasından bir ton açık; bronz sahne madalyasının aynısı.
-    silverTx: Color(0xFFDDE2F2),
+    silverTx: Color(0xFFDDDEE3),
     bronzeTx: SahneStageColors.bronze,
     okFill: Color(0xFF0E7453),
     okTx: Color(0xFF52DBA5),
-    okTint: Color(0xFF0B4637),
+    okTint: Color(0xFF1E2F28),
     onOk: Color(0xFF03140D),
     errFill: Color(0xFF6B1F1A),
     errTx: Color(0xFFFF7466),
-    errTint: Color(0xFF45160F),
+    errTint: Color(0xFF3A2220),
     rim: Color(0x29FFFFFF),
   );
 
@@ -357,39 +367,39 @@ class SahneStageColors {
   const SahneStageColors._();
 
   /// Sahne kartı degradesi (üst → alt).
-  static const top = Color(0xFF1A2352);
-  static const bottom = Color(0xFF121942);
+  static const top = Color(0xFF24252A);
+  static const bottom = Color(0xFF1A1B1F);
 
   /// Yarış sahnesi degradesi.
-  static const race1 = Color(0xFF7A1446);
-  static const race2 = Color(0xFF4A1036);
-  static const race3 = Color(0xFF2A0A1E);
+  static const race1 = Color(0xFF6B2A45);
+  static const race2 = Color(0xFF43202F);
+  static const race3 = Color(0xFF25141C);
 
   /// Altın hale (sayaç, 1. sıra) ve yarış halesi (≤ 5 sn).
   static const haloGold = Color(0x4DF5C24C);
-  static const haloRace = Color(0x5CC4265A);
+  static const haloRace = Color(0x5CE8638F);
 
   /// Işık huzmesi ve sonuç ışınları.
   static const beam = Color(0x1FFFEECC);
   static const ray = Color(0x1FF5C24C);
 
   /// Madalyalar.
-  static const silver = Color(0xFFC9D0EA);
+  static const silver = Color(0xFFC9CBD2);
   static const bronze = Color(0xFFD9925F);
 
-  /// Çizimi olmayan kategori karosu (Sinema) — kobalt radyal.
-  static const art1 = Color(0xFF3F74EE);
-  static const art2 = Color(0xFF1D43B0);
-  static const art3 = Color(0xFF0F2468);
+  /// Çizimi olmayan kategori karosu (Sinema) — nötr grafit radyal.
+  static const art1 = Color(0xFF5A5C66);
+  static const art2 = Color(0xFF3C3E46);
+  static const art3 = Color(0xFF26272C);
 
-  /// Sayacın boş izi: rgba(149,157,201,.36).
-  static const timerTrack = Color(0x5C959DC9);
+  /// Sayacın boş izi: rgba(143,145,153,.36).
+  static const timerTrack = Color(0x5C8F9199);
 
   /// Yarış sahnesinin yumuşak metni (düello meta satırı, VS rakibi).
   static const raceSoft = Color(0xFFFFC9DA);
 
-  /// Oyun sahnesinin alttan ışıması: rgba(62,90,210,.22).
-  static const underglow = Color(0x383E5AD2);
+  /// Oyun sahnesinin alttan ışıması: rgba(240,138,74,.14).
+  static const underglow = Color(0x24F08A4A);
 
   /// Sahne zemini çiziminin opaklığı (%14). `Image.color` + `modulate` ile
   /// uygulanır; `Opacity` katmanı (saveLayer) açılmaz.
@@ -479,66 +489,66 @@ class SahneCategoryTone {
   final Color detail;
 
   static const ziman = SahneCategoryTone(
-    ground: Color(0xFF22595E),
-    deep: Color(0xFF1A4447),
+    ground: Color(0xFF254D51),
+    deep: Color(0xFF1E4042),
     detail: SahneCategoryLight.ziman,
   );
   static const cand = SahneCategoryTone(
-    ground: Color(0xFF5E2C22),
-    deep: Color(0xFF47221A),
+    ground: Color(0xFF583028),
+    deep: Color(0xFF42251E),
     detail: SahneCategoryLight.cand,
   );
   static const dirok = SahneCategoryTone(
-    ground: Color(0xFF5E4522),
-    deep: Color(0xFF47341A),
+    ground: Color(0xFF584428),
+    deep: Color(0xFF42331E),
     detail: SahneCategoryLight.dirok,
   );
   static const edebiyat = SahneCategoryTone(
-    ground: Color(0xFF5E2233),
-    deep: Color(0xFF471A27),
+    ground: Color(0xFF582836),
+    deep: Color(0xFF421E29),
     detail: SahneCategoryLight.edebiyat,
   );
   static const cografya = SahneCategoryTone(
-    ground: Color(0xFF255A3A),
-    deep: Color(0xFF1C452C),
+    ground: Color(0xFF275037),
+    deep: Color(0xFF20412D),
     detail: SahneCategoryLight.cografya,
   );
   static const muzik = SahneCategoryTone(
-    ground: Color(0xFF6B3A18),
-    deep: Color(0xFF502B12),
+    ground: Color(0xFF633B20),
+    deep: Color(0xFF4A2C18),
     detail: SahneCategoryLight.muzik,
   );
   static const sinema = SahneCategoryTone(
-    ground: Color(0xFF34225E),
-    deep: Color(0xFF271A47),
+    ground: Color(0xFF362858),
+    deep: Color(0xFF291E42),
     detail: SahneCategoryLight.sinema,
   );
   static const teknoloji = SahneCategoryTone(
-    ground: Color(0xFF22395E),
-    deep: Color(0xFF1A2C47),
-    detail: Color(0xFF4F8EF0),
+    ground: Color(0xFF283A58),
+    deep: Color(0xFF1E2D42),
+    detail: Color(0xFF5F91E0),
   );
   // Cîhan: deniz petrolü. Teknolojî'nin lacivertiyle (0xFF22395E) Ziman'ın
   // yeşilimsi turkuazı (0xFF22595E) arasındaki boşluk; zemin gece birincil
   // metni üstünde ≥ 4,5:1 (bekçi: category_color_identity_test).
   static const cihan = SahneCategoryTone(
-    ground: Color(0xFF1F4B6B),
-    deep: Color(0xFF173A54),
-    detail: Color(0xFF5BC0EB),
+    ground: Color(0xFF274A63),
+    deep: Color(0xFF1D394E),
+    detail: Color(0xFF69BADD),
   );
   static const paradigma = SahneCategoryTone(
-    ground: Color(0xFF54225E),
-    deep: Color(0xFF401A47),
-    detail: Color(0xFFD07FE0),
+    ground: Color(0xFF502858),
+    deep: Color(0xFF3D1E42),
+    detail: Color(0xFFCA89D6),
   );
   // Zemin 0xFF575528 idi: alt konu bandındaki gece alt satırı (`tx2`) 4,41:1
   // kalıyordu (< 4,5). Kimliği bozmayan bir basamak koyulaştırıldı (4,61:1);
   // bekçi yalnız yedi konuyu ölçtüğü için kusur bu üçüne bakılmadan
   // sessiz kalmıştı (`sahne_topic_marks_test`, artık 11 işaretin hepsi).
   static const siyaset = SahneCategoryTone(
-    ground: Color(0xFF54522A),
-    deep: Color(0xFF413F1F),
-    detail: Color(0xFFB8B24A),
+    ground: Color(0xFF4B492B),
+    deep: Color(0xFF3E3C22),
+    detail: Color(0xFFADA855),
   );
 
   /// Tabloda olmayan kategori: sahne kartının gece tonu, ayrıntı üçüncül
@@ -546,7 +556,7 @@ class SahneCategoryTone {
   static const fallback = SahneCategoryTone(
     ground: SahneStageColors.top,
     deep: SahneStageColors.bottom,
-    detail: Color(0xFF959DC9),
+    detail: Color(0xFF8F9199),
   );
 
   /// Kanonik kategori kimliği → ton (bkz. `CategoryVisuals.canonicalName`).
