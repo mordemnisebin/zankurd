@@ -502,11 +502,6 @@ class SahnePickChip extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (selected) ...[
-                        // Kurul 4. tur: seçili hâl renge ek olarak ✓ ile de söylenir.
-                        Icon(AppIcons.check, size: 14, color: t.selTx),
-                        const SizedBox(width: SahneSpace.x1),
-                      ],
                       if (leading != null) ...[
                         leading!,
                         const SizedBox(width: SahneSpace.x1),
