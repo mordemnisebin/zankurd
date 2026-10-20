@@ -618,28 +618,31 @@ class _EmailSectionDivider extends StatelessWidget {
     Widget line() => Expanded(
       child: SizedBox(height: 1, child: ColoredBox(color: t.line)),
     );
+    // Kurul 4. tur (74): metin `Flexible` (gevşek) iken sağ çizgi soldakinden
+    // kısa kalıyor, ayıraç ortalanmıyordu (boş pay dağıtılmıyor). Metin artık
+    // en çok genişliğin %75'ine kadar kendi boyunda durur, iki çizgi kalanı
+    // EŞİT paylaşır.
     return ConstrainedBox(
       // a11y-tap-target: noninteractive — statik bölüm ayıracı.
       constraints: const BoxConstraints(minHeight: 44),
-      child: Row(
-        children: [
-          line(),
-          Flexible(
-            // Uzun çeviri metni iki Expanded çizgiyle eşit pay (flex:1)
-            // aldığında dar ekranlarda kesiliyordu; metne 3 kat pay
-            // veriyoruz ki çizgiler ince kalıp metin tam sığsın.
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
-              child: Text(
-                context.t(K.orWithEmail),
-                textAlign: TextAlign.center,
-                style: SahneType.caption.copyWith(color: t.tx2),
+      child: LayoutBuilder(
+        builder: (context, box) => Row(
+          children: [
+            line(),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: box.maxWidth * 0.75),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
+                child: Text(
+                  context.t(K.orWithEmail),
+                  textAlign: TextAlign.center,
+                  style: SahneType.caption.copyWith(color: t.tx2),
+                ),
               ),
             ),
-          ),
-          line(),
-        ],
+            line(),
+          ],
+        ),
       ),
     );
   }

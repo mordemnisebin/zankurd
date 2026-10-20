@@ -962,12 +962,13 @@ class _FriendRow extends StatelessWidget {
                     onPressed: busy ? null : onChallenge,
                   ),
                   // Kapı simgesi neyi yaptığını söylemiyordu (kurul
-                  // 2026-10-20): yazılı sessiz eylem, mevcut söz.
-                  SahneButton.text(
+                  // 2026-10-20): yazılı eylem, mevcut söz. Kurul 4. tur
+                  // (13): yalnız metin olan bu eylem, kenarlı "Meydan oku"
+                  // düğmesinin yanında öksüz duruyordu; iki eylem de aynı
+                  // ikincil (kenarlı) düğmedir.
+                  SahneButton.secondary(
                     key: ValueKey('friend-room-${friend.friendName}'),
                     label: context.t(K.inviteToRoom),
-                    arrow: false,
-                    quiet: true,
                     onPressed: busy ? null : onPlay,
                   ),
                 ] else
