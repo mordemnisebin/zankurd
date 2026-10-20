@@ -73,7 +73,7 @@ void main() {
       expect(find.text('Karışık sorular'), findsOneWidget);
       expect(
         find.text('Farklı konulardan karışık soruları cevapla.'),
-        findsOneWidget,
+        findsNothing,
       );
       expect(find.text('1-3'), findsNothing);
       expect(find.text('10 soru'), findsOneWidget);

@@ -18,7 +18,7 @@ class CategoryBandScaffold extends StatelessWidget {
   const CategoryBandScaffold({
     required this.category,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     required this.body,
     this.progress,
     super.key,
@@ -39,7 +39,7 @@ class CategoryBandScaffold extends StatelessWidget {
   final String title;
 
   /// Adın altındaki satır (sarar, kesilmez).
-  final String subtitle;
+  final String? subtitle;
 
   /// Başlığın altındaki gövde; kalan alanı doldurur (genellikle bir liste).
   final Widget body;
@@ -55,7 +55,7 @@ class CategoryBandScaffold extends StatelessWidget {
       appBar: zkAppBar(
         context,
         title: Text(title),
-        subtitle: Text(subtitle, maxLines: 12),
+        subtitle: subtitle == null ? null : Text(subtitle!, maxLines: 12),
         // Büyük yazıda ikon karosu düşer: dar ekranda ad ve alt satıra
         // yer kalsın, kesilmesin (kategori rengi çizgide durur).
         actions: MediaQuery.textScalerOf(context).scale(16) >= 24

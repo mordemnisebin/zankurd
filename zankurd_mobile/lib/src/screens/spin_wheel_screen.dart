@@ -407,12 +407,6 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                   style: SahneType.headline.copyWith(color: t.tx),
                 ),
               ),
-              const SizedBox(height: SahneSpace.x1),
-              Text(
-                context.t(K.wheelRewardNote),
-                textAlign: TextAlign.center,
-                style: SahneType.caption.copyWith(color: t.tx2),
-              ),
               const SizedBox(height: SahneSpace.x4),
               _buildWheelSection(),
             ],

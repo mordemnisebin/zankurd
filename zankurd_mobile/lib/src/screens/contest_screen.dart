@@ -318,7 +318,6 @@ class _ContestContent extends StatelessWidget {
     // yarış biçimidir, rengi Boyax'tır.
     final hero = ArenaHero(
       title: context.t(K.dailyEventCardTitle),
-      subtitle: context.t(K.dailyEventCardBody),
       accent: SahneTokens.of(context).race,
       icon: AppIcons.champagneGlasses,
       tokens: [

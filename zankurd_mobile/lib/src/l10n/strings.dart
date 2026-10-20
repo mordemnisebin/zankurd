@@ -563,10 +563,6 @@ class Tr {
       'ku': '{perMatch} pirs/pêşbirk',
       'tr': '{perMatch} soru/maç',
     },
-    K.botRaceHint: {
-      'ku': 'Şampiyon kûpayê digire.',
-      'tr': 'Şampiyon kupayı alır.',
-    },
     K.joinTournament: {'ku': 'Tevlî kûpayê bibe', 'tr': 'Turnuvaya katıl'},
     K.cupPlayers: {'ku': 'lîstikvan', 'tr': 'oyuncu'},
     K.cupRounds: {'ku': 'ger', 'tr': 'tur'},
@@ -748,10 +744,6 @@ class Tr {
     K.online: {'ku': 'Serhêl', 'tr': 'Çevrimiçi'},
     K.offline: {'ku': 'Ne li serhêl', 'tr': 'Çevrimdışı'},
     K.inviteToRoom: {'ku': 'Vexwîne odeyê', 'tr': 'Odaya çağır'},
-    K.wantsToBeFriend: {
-      'ku': 'Dixwaze bi te re bibe heval',
-      'tr': 'Seninle arkadaş olmak istiyor',
-    },
     K.rejectAction: {'ku': 'Red bike', 'tr': 'Reddet'},
     K.acceptAction: {'ku': 'Qebûl', 'tr': 'Kabul'},
     K.inviteFriends: {
@@ -932,10 +924,6 @@ class Tr {
       'ku': 'Pirsên vê astê nehatin barkirin.',
       'tr': 'Bu seviyenin soruları yüklenemedi.',
     },
-    K.kolaydanZoraDogruIlerle: {
-      'ku': 'Ji hêsan ber bi dijwar ve biçe, pûan kom bike.',
-      'tr': 'Kolaydan zora doğru ilerle, puan topla.',
-    },
     K.pPSeviye: {'ku': '{p0}/{p1} ast', 'tr': '{p0}/{p1} seviye'},
     K.progressLevelsCompleted: {
       'ku': '{completed} ji {total} astan temam bûn',
@@ -1085,10 +1073,6 @@ class Tr {
     K.ornekler: {'ku': 'Mînak', 'tr': 'Örnekler'},
     K.kulturelNot: {'ku': 'Nota çandî', 'tr': 'Kültürel not'},
     K.derseBasla: {'ku': 'Dest bi dersê bike', 'tr': 'Derse başla'},
-    K.birAltAlanSecerek: {
-      'ku': 'Beşekê hilbijêre û dest bi lîstinê bike.',
-      'tr': 'Bir alt alan seçerek yarışmaya başla.',
-    },
     K.huhuGununSorulukEtkinligi: {
       'ku': 'Dersa rojê amade ye. Îro hînbûnê bidomîne.',
       'tr': 'Günün dersi hazır. Bugün öğrenmeye devam et.',
@@ -1332,24 +1316,16 @@ class Tr {
     },
     K.retryTiny: {'ku': 'Dîsa', 'tr': 'Tekrar'},
     K.contestNoneToday: {
-      'ku': 'Pirsên rojê hîn amade nînin. Paşê dîsa were.',
-      'tr': 'Günün soruları henüz hazır değil. Daha sonra tekrar gel.',
+      'ku': 'Pirsên rojê hîn amade nînin.',
+      'tr': 'Günün soruları henüz hazır değil.',
     },
     K.goHome: {'ku': 'Vegere rûpela sereke', 'tr': 'Ana sayfaya dön'},
     K.dailyEvent: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
     K.dailyEventCardTitle: {'ku': 'Pirsên tevlihev', 'tr': 'Karışık sorular'},
-    K.dailyEventCardBody: {
-      'ku': 'Ji mijarên cuda pirsên tevlihev bibersivîne.',
-      'tr': 'Farklı konulardan karışık soruları cevapla.',
-    },
     K.questionCount: {'ku': '{count} pirs', 'tr': '{count} soru'},
     K.preparing: {'ku': 'Tê amadekirin…', 'tr': 'Hazırlanıyor…'},
     K.startEvent: {'ku': 'Dest pê bike', 'tr': 'Başla'},
     K.wheelTitle: {'ku': 'Çerxa rojê', 'tr': 'Günün çarkı'},
-    K.wheelRewardNote: {
-      'ku': 'Xelat rasterast li hejmara zêrên te tê zêdekirin.',
-      'tr': 'Ödül doğrudan jetonlarına eklenir.',
-    },
     K.wheelOncePerDay: {
       'ku': 'Her roj carekê bizivirîne.',
       'tr': 'Her gün bir kez çevir.',
@@ -1406,10 +1382,6 @@ class Tr {
     K.duel1v1Short: {'ku': 'Pêşbirka bilez', 'tr': 'Hızlı düello'},
     K.duel1v1: {'ku': 'Pêşbirka bilez', 'tr': 'Hızlı düello'},
     K.randomMatch: {'ku': 'Lihevanîna rasthatî', 'tr': 'Rastgele eşleşme'},
-    K.randomMatchSub: {
-      'ku': 'Bêyî hilbijartina mijarê rasterast bikeve rêzê.',
-      'tr': 'Konu seçmeden doğrudan sıraya gir.',
-    },
     K.matchByCategory: {
       'ku': 'Li gorî mijarê li hev bîne',
       'tr': 'Konuya göre eşleş',
@@ -1893,12 +1865,8 @@ class Tr {
     // bota karşı düello ve günün soruları cihazda oynanır. Oyuncu ikisini
     // oynayıp sıralamayı boş görünce nedenini bilmiyordu.
     K.startRaceHint: {
-      'ku':
-          'Pêşbirka xwe ya serhêl a yekem bilîze, navê te li vir xuya bibe. '
-          'Pêşbirka bi botê û pirsên rojê di rêzbendiyê de nayên jimartin.',
-      'tr':
-          'İlk çevrimiçi yarışını oyna, adın burada çıksın. '
-          'Botla düello ve günün soruları sıralamaya sayılmaz.',
+      'ku': 'Pêşbirka xwe ya serhêl a yekem bilîze, navê te li vir xuya bibe.',
+      'tr': 'İlk çevrimiçi yarışını oyna, adın burada çıksın.',
     },
     K.startRaceAction: {'ku': 'Dest bi pêşbirkê bike', 'tr': 'Yarışa başla'},
     // 2026-10-01 (A8): sıralamanın altına sabitlenen kendi satırı, oyuncunun
@@ -2253,16 +2221,12 @@ class Tr {
     // Tek soruda Kurmancî oblik tekil ("di 1 pirsê de"); kurul: Grok 4.7 +
     // Muse Spark uyuştu. Çoğul anahtar aşağıda aynen durur.
     K.outcomeReviewOne: {
-      'ku':
-          '{name}: di {answered} pirsê de {wrong} şaş. Li van bersivan careke din binêre.',
-      'tr':
-          '{name}: {answered} soruda {wrong} yanlış. Bu cevaplara yeniden bak.',
+      'ku': '{name}: di {answered} pirsê de {wrong} şaş.',
+      'tr': '{name}: {answered} soruda {wrong} yanlış.',
     },
     K.outcomeReview: {
-      'ku':
-          '{name}: di {answered} pirsan de {wrong} şaş. Li van bersivan careke din binêre.',
-      'tr':
-          '{name}: {answered} soruda {wrong} yanlış. Bu cevaplara yeniden bak.',
+      'ku': '{name}: di {answered} pirsan de {wrong} şaş.',
+      'tr': '{name}: {answered} soruda {wrong} yanlış.',
     },
     // Karışık kategorili turlarda (ör. günün dersi) `outcomeStrong`/
     // `outcomeReview` spotlight'ına giremeyen kategoriler için iddiasız,
@@ -3494,7 +3458,6 @@ class K {
   static const cupStartsLatest = 'tournament.startsLatest';
   static const botDailyCup = 'tournament.botDailyCup';
   static const formatSummary = 'tournament.formatSummary';
-  static const botRaceHint = 'tournament.botRaceHint';
   static const joinTournament = 'tournament.join';
 
   // Turnuva biçim ve ödül şeridi (2026-08-04). Kupanın kaç oyuncu, kaç
@@ -3585,7 +3548,6 @@ class K {
   static const online = 'friends.online';
   static const offline = 'friends.offline';
   static const inviteToRoom = 'friends.inviteToRoom';
-  static const wantsToBeFriend = 'friends.wantsToBeFriend';
   static const rejectAction = 'friends.reject';
   static const acceptAction = 'friends.accept';
   static const inviteFriends = 'friends.inviteFriends';
@@ -3666,7 +3628,6 @@ class K {
   static const lessonSavedOffline = 'screen.lessonSavedOffline';
   static const buSeviyeninSorulariYuklenemedi =
       'screen.buSeviyeninSorulariYuklenemedi';
-  static const kolaydanZoraDogruIlerle = 'screen.kolaydanZoraDogruIlerle';
   static const pPSeviye = 'screen.pPSeviye';
   static const progressLevelsCompleted = 'screen.progressLevelsCompleted';
   static const levelNotPassed = 'screen.levelNotPassed';
@@ -3719,7 +3680,6 @@ class K {
   static const ornekler = 'screen.ornekler';
   static const kulturelNot = 'screen.kulturelNot';
   static const derseBasla = 'screen.derseBasla';
-  static const birAltAlanSecerek = 'screen.birAltAlanSecerek';
   static const huhuGununSorulukEtkinligi = 'screen.huhuGununSorulukEtkinligi';
   static const zanaDiyorKiYeni = 'screen.zanaDiyorKiYeni';
   static const huhuPSeninleYarismak = 'screen.huhuPSeninleYarismak';
@@ -3825,12 +3785,10 @@ class K {
   static const goHome = 'common.goHome';
   static const dailyEvent = 'contest.dailyEvent';
   static const dailyEventCardTitle = 'contest.dailyEvent.cardTitle';
-  static const dailyEventCardBody = 'contest.dailyEvent.cardBody';
   static const questionCount = 'contest.questionCount';
   static const preparing = 'common.preparing';
   static const startEvent = 'contest.start';
   static const wheelTitle = 'wheel.title';
-  static const wheelRewardNote = 'wheel.rewardNote';
   static const wheelOncePerDay = 'wheel.oncePerDay';
   static const wheelWonAmount = 'wheel.wonAmount';
   static const congrats = 'common.congrats';
@@ -3857,7 +3815,6 @@ class K {
   static const duel1v1Short = 'match.duel1v1Short';
   static const duel1v1 = 'match.duel1v1';
   static const randomMatch = 'match.random';
-  static const randomMatchSub = 'match.random.sub';
   static const matchByCategory = 'match.byCategory';
   static const categoriesNotFound = 'match.categoriesNotFound';
   static const categoryPrefix = 'match.categoryPrefix';

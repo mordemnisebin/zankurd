@@ -96,7 +96,6 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
     return CategoryBandScaffold(
       category: category,
       title: CategoryNames.localized(category, ku),
-      subtitle: Tr.forKu(K.birAltAlanSecerek, ku),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(
           SahneSpace.page,
@@ -154,7 +153,6 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
         icon: icon ?? _iconForSubcategory(sub.id),
       ),
       title: ku ? sub.nameKu : sub.nameTr,
-      subtitle: ku ? sub.descriptionKu : sub.descriptionTr,
       trailing: played > 0 && total > 0
           ? SahneRowValue.meta(
               '${groupThousands(played)}/${groupThousands(total)}',

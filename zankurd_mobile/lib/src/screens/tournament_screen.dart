@@ -1048,12 +1048,6 @@ class _CupFormatPanel extends StatelessWidget {
                     ],
                   ),
                 ),
-              const SizedBox(height: SahneSpace.x3),
-              // Kupanın iki kuralı da burada durur.
-              Text(
-                Tr.forKu(K.botRaceHint, ku),
-                style: SahneType.caption.copyWith(color: t.tx2),
-              ),
             ],
           ),
         ),
