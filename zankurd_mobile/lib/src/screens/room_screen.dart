@@ -323,24 +323,41 @@ class _RoomScreenState extends State<RoomScreen> {
 
     final roomId = room.id;
     if (roomId != null && _broadcastSub == null) {
-      _broadcastSub = widget.repository.subscribeRoomBroadcast(roomId).listen((
-        payload,
-      ) {
-        if (!mounted || generation != _subscriptionGeneration) return;
-        if (payload['type'] == 'reaction') {
-          final text = payload['text'] as String?;
-          final senderId = payload['sender_id'] as String?;
-          final senderName = payload['sender_name'] as String?;
-          if (text != null && senderId != _currentUserId) {
-            _reactionController.triggerReaction(
-              text,
-              senderName: senderName == null
-                  ? null
-                  : PlayerIdentity.resolveName(senderName, isKu: context.isKu),
-            );
-          }
-        }
-      });
+      _broadcastSub = widget.repository
+          .subscribeRoomBroadcast(roomId)
+          .listen(
+            (payload) {
+              if (!mounted || generation != _subscriptionGeneration) return;
+              if (payload['type'] == 'reaction') {
+                final text = payload['text'] as String?;
+                final senderId = payload['sender_id'] as String?;
+                final senderName = payload['sender_name'] as String?;
+                if (text != null && senderId != _currentUserId) {
+                  _reactionController.triggerReaction(
+                    text,
+                    senderName: senderName == null
+                        ? null
+                        : PlayerIdentity.resolveName(
+                            senderName,
+                            isKu: context.isKu,
+                          ),
+                  );
+                }
+              }
+            },
+            onError: (Object err, StackTrace stack) {
+              // Yakalanmayan akış hatası zone'a kaçar; tepki yayını sessizce
+              // ölür. Kaydet ve yedek yoklamayı sürdür.
+              ErrorReporter.record(
+                err,
+                stack,
+                reason: 'room broadcast stream error',
+              );
+              if (!mounted || _leaving || _terminalHandled) return;
+              _startPolling();
+              _startStatusPolling();
+            },
+          );
     }
   }
 

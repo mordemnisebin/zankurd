@@ -171,11 +171,25 @@ class _FriendsScreenState extends State<FriendsScreen> {
     }
   }
 
+  /// Süren istek/yanıt işlemleri (kişi/istek kimliği başına). Çift dokunuş
+  /// ikinci bir RPC göndermesin; o sırada düğme pasif.
+  final Set<String> _busyIds = <String>{};
+
   Future<void> _sendRequest(PlayerSearchResult player) async {
-    final success = await widget.repository.addFriend(
-      player.id,
-      player.displayName,
-    );
+    if (!_busyIds.add(player.id)) return;
+    setState(() {});
+    bool success;
+    try {
+      success = await widget.repository.addFriend(
+        player.id,
+        player.displayName,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'friend_request_send');
+      success = false;
+    } finally {
+      _busyIds.remove(player.id);
+    }
     if (!mounted) return;
     if (success) {
       setState(() {
@@ -201,7 +215,17 @@ class _FriendsScreenState extends State<FriendsScreen> {
   }
 
   Future<void> _acceptRequest(String requestId) async {
-    final success = await widget.repository.acceptFriendRequest(requestId);
+    if (!_busyIds.add(requestId)) return;
+    setState(() {});
+    bool success;
+    try {
+      success = await widget.repository.acceptFriendRequest(requestId);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'friend_request_accept');
+      success = false;
+    } finally {
+      _busyIds.remove(requestId);
+    }
     if (!mounted) return;
     if (success) {
       _showMessage(context.t(K.requestAccepted));
@@ -212,7 +236,17 @@ class _FriendsScreenState extends State<FriendsScreen> {
   }
 
   Future<void> _rejectRequest(String requestId) async {
-    final success = await widget.repository.rejectFriendRequest(requestId);
+    if (!_busyIds.add(requestId)) return;
+    setState(() {});
+    bool success;
+    try {
+      success = await widget.repository.rejectFriendRequest(requestId);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'friend_request_reject');
+      success = false;
+    } finally {
+      _busyIds.remove(requestId);
+    }
     if (!mounted) return;
     if (success) {
       _showMessage(context.t(K.requestRejected));
@@ -666,6 +700,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 for (final req in requests)
                   _FriendRequestRow(
                     request: req,
+                    busy: _busyIds.contains(req.id),
                     onAccept: () => _acceptRequest(req.id),
                     onReject: () => _rejectRequest(req.id),
                   ),
@@ -1094,17 +1129,23 @@ class _FriendRow extends StatelessWidget {
 class _FriendRequestRow extends StatelessWidget {
   const _FriendRequestRow({
     required this.request,
+    required this.busy,
     required this.onAccept,
     required this.onReject,
   });
 
   final FriendRequest request;
+  final bool busy;
   final VoidCallback onAccept;
   final VoidCallback onReject;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    void reject() {
+      if (!busy) onReject();
+    }
+
     final actions = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -1116,11 +1157,11 @@ class _FriendRequestRow extends StatelessWidget {
           child: Semantics(
             button: true,
             label: context.t(K.rejectAction),
-            onTap: onReject,
+            onTap: reject,
             excludeSemantics: true,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: onReject,
+              onTap: reject,
               child: SizedBox.square(
                 dimension: 48,
                 child: Center(
@@ -1133,7 +1174,7 @@ class _FriendRequestRow extends StatelessWidget {
                       width: 1.5,
                     ),
                     color: t.s2,
-                    onTap: onReject,
+                    onTap: reject,
                     child: SizedBox.square(
                       dimension: 44,
                       child: Icon(AppIcons.xmark, size: 20, color: t.tx),
@@ -1153,7 +1194,7 @@ class _FriendRequestRow extends StatelessWidget {
           label: context.t(K.acceptAction),
           icon: AppIcons.check,
           arrow: false,
-          onPressed: onAccept,
+          onPressed: busy ? null : onAccept,
         ),
       ],
     );

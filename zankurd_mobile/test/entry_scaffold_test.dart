@@ -64,7 +64,7 @@ final _entries = <_Entry>[
     'Oyuna başla',
     () => ProfileNameGateScreen(
       repository: MockZanKurdRepository(),
-      onCompleted: () {},
+      onCompleted: () async {},
     ),
   ),
 ];
@@ -267,7 +267,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: MockZanKurdRepository(),
-          onCompleted: () {},
+          onCompleted: () async {},
         ),
       ),
     );

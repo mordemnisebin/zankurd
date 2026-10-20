@@ -297,7 +297,7 @@ void main() {
   testWidgets('isim kapısı', (t) async {
     await expectNoOverflow(
       t,
-      ProfileNameGateScreen(repository: repository, onCompleted: () {}),
+      ProfileNameGateScreen(repository: repository, onCompleted: () async {}),
     );
   });
 

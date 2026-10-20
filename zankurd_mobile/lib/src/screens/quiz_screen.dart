@@ -717,7 +717,7 @@ class _QuizScreenState extends State<QuizScreen>
                 }
                 _checkMultiplayerSync();
               }
-            });
+            }, onError: _onRealtimeError);
 
         if (widget.is1v1) {
           if (!_resumingOnlineSession && !_usesServerHiddenAnswers) {
@@ -757,7 +757,7 @@ class _QuizScreenState extends State<QuizScreen>
                 });
                 if (_isCrowd) _onCrowdPlayersChanged();
                 _checkMultiplayerSync();
-              });
+              }, onError: _onRealtimeError);
         }
       } else {
         if (widget.is1v1) {
@@ -805,7 +805,7 @@ class _QuizScreenState extends State<QuizScreen>
                   unawaited(_reconcileOnlineRoom());
                 }
               }
-            });
+            }, onError: _onRealtimeError);
       }
       _ensureRoomPolling();
       final binding = WidgetsBinding.instance;
@@ -2328,6 +2328,13 @@ class _QuizScreenState extends State<QuizScreen>
     );
     if (!mounted) return;
     Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
+  /// Gerçek zamanlı akış hatası (kanal düşmesi, sunucu hatası) yakalanmazsa
+  /// zone'a kaçar ve akış sessizce ölür. Kaydet; yedek yoklamayı garantile.
+  void _onRealtimeError(Object error, StackTrace stack) {
+    ErrorReporter.record(error, stack, reason: 'quiz realtime stream error');
+    if (mounted) _ensureRoomPolling();
   }
 
   void _ensureRoomPolling() {

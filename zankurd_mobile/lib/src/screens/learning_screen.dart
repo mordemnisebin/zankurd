@@ -1471,15 +1471,29 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     );
   }
 
-  void _markCompleted() async {
+  /// Çift dokunuşta ikinci RPC ve ikinci `Navigator.pop` (fazladan bir ekran
+  /// geri atılır) olmasın diye süren çağrı varken düğme pasiftir.
+  bool _completing = false;
+
+  Future<void> _markCompleted() async {
+    if (_completing) return;
+    setState(() => _completing = true);
     final lessonId = widget.lesson.id;
-    var success = await widget.repository.markLessonCompleted(lessonId);
+    var success = false;
     // Sunucu onaylamadıysa dersi yine de bitmiş say: önce yerele yazılır,
     // sonra eşitleme kuyruğuna girer; bağlantı gelince kendiliğinden gider.
     // Yerel yazım da olmazsa (kuyruk yok / disk yazmadı) dürüstçe hata göster.
     var savedOffline = false;
-    if (!success) savedOffline = await _queueLessonCompletion(lessonId);
-    if (success || savedOffline) unawaited(StreakStore.recordActivity());
+    try {
+      success = await widget.repository.markLessonCompleted(lessonId);
+      if (!success) savedOffline = await _queueLessonCompletion(lessonId);
+      if (success || savedOffline) unawaited(StreakStore.recordActivity());
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'mark_lesson_completed');
+    }
+    if (mounted && !(success || savedOffline)) {
+      setState(() => _completing = false);
+    }
     if ((success || savedOffline) && mounted) {
       widget.repository
           .logAnalyticsEvent('lesson_completed', {
@@ -1716,7 +1730,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                     isLast: isLast,
                     onBack: () => _goToSlide(_currentSlideIndex - 1),
                     onNext: isLast
-                        ? _markCompleted
+                        ? (_completing ? null : _markCompleted)
                         : () => _goToSlide(_currentSlideIndex + 1),
                     onMiniQuiz: _miniQuizLoading ? null : _startMiniQuiz,
                   ),
@@ -1745,7 +1759,7 @@ class LessonSlideNavigation extends StatelessWidget {
   final bool showBack;
   final bool isLast;
   final VoidCallback onBack;
-  final VoidCallback onNext;
+  final VoidCallback? onNext;
   final VoidCallback? onMiniQuiz;
 
   @override
