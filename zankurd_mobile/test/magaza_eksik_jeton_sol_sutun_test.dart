@@ -11,8 +11,9 @@
 // Eski bekçiler sözün VARLIĞINI ve rengini ölçüyordu, YERİNİ değil: söz
 // hangi sütunda olursa olsun geçiyorlardı. Sözleşme: söz sol metin
 // sütununda, açıklamanın ALTINDA (aynı sol kenar), sağ sütunda yalnız
-// kilitli fiyat; kart iç boşluğu 14; açıklama kesilmez
-// (`magaza_aciklama_kesilmez_test.dart`).
+// kilitli fiyat; kart iç boşluğu 14.
+// 2026-10-20 az söz turu: kartlardan açıklama satırı kalktı; söz artık
+// ürün adının ALTINDA (aynı sol kenar) durur.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,7 +31,7 @@ class _Repo extends MockZanKurdRepository {
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  testWidgets('eksik söz açıklamanın altında, fiyat sütununda değil', (
+  testWidgets('eksik söz ürün adının altında, fiyat sütununda değil', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 1400));
@@ -42,17 +43,14 @@ void main() {
     final note = find.byKey(
       const ValueKey('shop-short-note-profile_badge_vip'),
     );
-    final desc = find.descendant(
-      of: card,
-      matching: find.text('Profilinde özel VIP rozeti görünsün.'),
-    );
+    final desc = find.descendant(of: card, matching: find.text('VIP rozeti'));
     final price = find.byKey(const ValueKey('shop-short-profile_badge_vip'));
     expect(note, findsOneWidget);
 
     final n = tester.getRect(note), d = tester.getRect(desc);
     final p = tester.getRect(price);
-    // Tur 10b: söz artık eylem satırının solunda (kartın iç sol kenarı),
-    // açıklamanın altında; açıklamayla yan yana değil.
+    // Söz eylem satırının solunda (kartın iç sol kenarı), ürün adının
+    // altında; adla yan yana değil.
     expect(n.left, lessThanOrEqualTo(d.left), reason: 'metinden sola yaslı');
     expect(n.top, greaterThanOrEqualTo(d.bottom));
     expect(n.right, lessThanOrEqualTo(p.left), reason: 'sağ sütunda değil');

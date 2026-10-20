@@ -279,7 +279,7 @@ class _ContestSkeleton extends StatelessWidget {
 
 /// Kahraman kartın yüklenmiş hâldeki yüksekliği (iskelet bununla aynı yeri
 /// tutsun; `contest_skeleton_test` ölçüp kilitler).
-const double _kHeroSkeletonHeight = 260;
+const double _kHeroSkeletonHeight = 204;
 
 class _ContestContent extends StatelessWidget {
   const _ContestContent({
