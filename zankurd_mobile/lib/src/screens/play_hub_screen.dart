@@ -502,6 +502,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             refreshSignal: widget.refreshSignal,
             topGap: false,
           ),
+        if (widget.asyncDuelEnabled && !locked)
+          AsyncDuelTurnSection(
+            repository: widget.repository,
+            refreshSignal: _asyncDuelInboxSignal,
+          ),
         _QuickDuelHero(
           repository: widget.repository,
           onLockedTap: locked ? _notifyLocked : null,
@@ -644,6 +649,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
           AsyncDuelInboxSection(
             repository: widget.repository,
             refreshSignal: _asyncDuelInboxSignal,
+            excludeNeedsAttention: true,
           ),
         if (!locked) ...[
           const SizedBox(height: SahneSpace.x5),

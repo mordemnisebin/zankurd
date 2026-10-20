@@ -58,10 +58,18 @@ String quizRoundTitle({
   required bool isKu,
   required String roomWord,
   required String raceWord,
+  String? crowdTitle,
 }) {
   if (roomId != null) return '$roomWord $roomCode';
   final name = roomName.trim();
-  if (name.isNotEmpty && name != _defaultSoloRoomName) return name;
+  // Depo, kalabalık odayı 'crowd', ikili odayı '1vs1' diye adlandırır
+  // (`_roomDisplayName`): bunlar KİMLİKTİR, başlık değil. Sonuç ekranının
+  // tepesinde "crowd • 10 soru" diye ham basılıyordu (2026-10-21 iki
+  // simülatör turu). Kalabalık odası dilindeki adıyla, ikili oda genel
+  // "yarış" sözüyle çizilir.
+  if (name == 'crowd' && crowdTitle != null) return crowdTitle;
+  final isSlug = name == 'crowd' || name == '1vs1';
+  if (name.isNotEmpty && name != _defaultSoloRoomName && !isSlug) return name;
   if (category.isEmpty) return raceWord;
   return CategoryNames.localized(category, isKu);
 }

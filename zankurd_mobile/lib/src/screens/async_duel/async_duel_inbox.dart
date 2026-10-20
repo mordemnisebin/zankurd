@@ -25,6 +25,13 @@ List<AsyncDuelSummary> asyncDuelInboxOrder(List<AsyncDuelSummary> items) {
   ];
 }
 
+/// Oyuncunun HEMEN yapacağı bir şey var mı: sırası gelen meydan okuma
+/// ("Sıra sende") ya da sonucu hazır, görülmemiş düello. Yarış sekmesinde
+/// bu satırlar kahramanın ÜSTÜNDE durur; "Düellolarım" kutusu onları
+/// tekrarlamaz.
+bool asyncDuelNeedsAttention(AsyncDuelSummary s) =>
+    s.incomingChallenge || (s.outcome != null && !s.seen);
+
 /// Bir gelen kutusu satırına dokunma: gelen meydan okumayı kabul edip oyna,
 /// diğerlerinde sonucu aç. Dönüşte çağıran listeyi tazeler.
 Future<void> openAsyncDuelSummary(
@@ -67,12 +74,17 @@ class AsyncDuelInboxSection extends StatefulWidget {
     required this.repository,
     this.refreshSignal,
     this.maxRows = 3,
+    this.excludeNeedsAttention = false,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final Listenable? refreshSignal;
   final int maxRows;
+
+  /// `true` → sırası gelen / sonucu hazır düellolar bu kutuda yer almaz
+  /// ([AsyncDuelTurnSection] onları sayfanın üstünde gösterir).
+  final bool excludeNeedsAttention;
 
   @override
   State<AsyncDuelInboxSection> createState() => _AsyncDuelInboxSectionState();
@@ -145,7 +157,14 @@ class _AsyncDuelInboxSectionState extends State<AsyncDuelInboxSection> {
   @override
   Widget build(BuildContext context) {
     final items = _items;
-    final all = asyncDuelInboxOrder(items ?? const <AsyncDuelSummary>[]);
+    final all = asyncDuelInboxOrder(
+      (items ?? const <AsyncDuelSummary>[])
+          .where(
+            (s) =>
+                !(widget.excludeNeedsAttention && asyncDuelNeedsAttention(s)),
+          )
+          .toList(),
+    );
     // Okunmamış = sonucu hazır ve görülmemiş VEYA sırası bende olan
     // meydan okuma.
     final unreadCount = all
@@ -232,6 +251,100 @@ class _AsyncDuelInboxSectionState extends State<AsyncDuelInboxSection> {
                 ),
               ),
           ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Yarış sekmesinin üstündeki "Sıra sende" / "Sonuç hazır" satırları.
+///
+/// 2026-10-21 iki simülatör turu: sırası gelen düello "Düellolarım"
+/// kutusunda, sayfanın en altındaydı; kaydırmayan oyuncu bekleyen hamlesini
+/// görmüyordu. Satırlar Hızlı düello kahramanının üstünde (oda daveti
+/// kartının altında) durur. Bekleyen yoksa hiçbir şey çizilmez.
+class AsyncDuelTurnSection extends StatefulWidget {
+  const AsyncDuelTurnSection({
+    required this.repository,
+    this.refreshSignal,
+    this.maxRows = 2,
+    super.key,
+  });
+
+  final ZanKurdRepository repository;
+  final Listenable? refreshSignal;
+  final int maxRows;
+
+  @override
+  State<AsyncDuelTurnSection> createState() => _AsyncDuelTurnSectionState();
+}
+
+class _AsyncDuelTurnSectionState extends State<AsyncDuelTurnSection> {
+  List<AsyncDuelSummary> _items = const [];
+  int _epoch = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.refreshSignal?.addListener(_reload);
+    unawaited(_fetch());
+  }
+
+  @override
+  void didUpdateWidget(covariant AsyncDuelTurnSection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.refreshSignal != widget.refreshSignal) {
+      oldWidget.refreshSignal?.removeListener(_reload);
+      widget.refreshSignal?.addListener(_reload);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.refreshSignal?.removeListener(_reload);
+    super.dispose();
+  }
+
+  void _reload() {
+    if (mounted) unawaited(_fetch());
+  }
+
+  Future<void> _fetch() async {
+    final epoch = ++_epoch;
+    try {
+      final all = await widget.repository.loadMyAsyncDuels();
+      if (!mounted || epoch != _epoch) return;
+      setState(() {
+        _items = asyncDuelInboxOrder(
+          all.where(asyncDuelNeedsAttention).toList(),
+        );
+      });
+    } catch (_) {
+      // Eski satırlar kalır; "Düellolarım" kutusu hatayı kendisi gösterir.
+    }
+  }
+
+  Future<void> _open(AsyncDuelSummary summary) async {
+    await openAsyncDuelSummary(context, widget.repository, summary);
+    if (mounted) _reload();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_items.isEmpty) {
+      return const SizedBox.shrink(key: ValueKey('play-hub-async-duel-turn'));
+    }
+    return Padding(
+      key: const ValueKey('play-hub-async-duel-turn'),
+      padding: const EdgeInsets.symmetric(vertical: SahneSpace.cardGap),
+      child: SahneListGroup(
+        children: [
+          for (final summary in _items.take(widget.maxRows))
+            _AsyncDuelSummaryRow(
+              key: ValueKey('async-duel-row-${summary.duelId}'),
+              summary: summary,
+              onTap: () => _open(summary),
+            ),
         ],
       ),
     );

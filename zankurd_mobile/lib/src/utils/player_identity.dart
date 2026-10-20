@@ -35,6 +35,31 @@ class PlayerIdentity {
     return name;
   }
 
+  /// Kısa oyuncu kodunu ekranda yazılan biçime çevirir (`ZK-R5C4`).
+  /// Kod yoksa/boşsa `null` — uydurma kod gösterilmez.
+  static String? formatTag(String? tag) {
+    final t = tag?.trim() ?? '';
+    if (t.isEmpty) return null;
+    return t.toUpperCase().startsWith('ZK-') ? t : 'ZK-$t';
+  }
+
+  /// Her yerde AYNI gösterim kuralı: ad seçilmişse ad; adsız/yer tutucu ise
+  /// "Oyuncu ZK-R5C4" (profildeki biçim), kod bilinmiyorsa yalnız "Oyuncu".
+  ///
+  /// 2026-10-21 iki simülatör turu: adsız oyuncu bir ekranda "Oyuncu", bir
+  /// başkasında "Lîstikvan", sunucudan gelen ham "ZanKurd Oyuncusu" ve
+  /// profilde "Lîstikvan ZK-R5C4" diye görünüyordu. Dört ayrı kural vardı.
+  static String resolveNameWithTag(
+    String? rawName, {
+    required bool isKu,
+    String? tag,
+  }) {
+    final resolved = resolveName(rawName, isKu: isKu);
+    if (!isPlaceholderDisplayName(rawName)) return resolved;
+    final label = formatTag(tag);
+    return label == null ? resolved : '$resolved $label';
+  }
+
   /// Selamlamada kullanılan kısa ad (ilk kelime).
   static String resolveShortName(String? rawName, {required bool isKu}) {
     final resolved = resolveName(rawName, isKu: isKu);
@@ -86,8 +111,8 @@ class PlayerIdentity {
 }
 
 extension PlayerIdentityContext on BuildContext {
-  String playerDisplayName(String? rawName) =>
-      PlayerIdentity.resolveName(rawName, isKu: isKu);
+  String playerDisplayName(String? rawName, {String? tag}) =>
+      PlayerIdentity.resolveNameWithTag(rawName, isKu: isKu, tag: tag);
 
   String playerShortName(String? rawName) =>
       PlayerIdentity.resolveShortName(rawName, isKu: isKu);

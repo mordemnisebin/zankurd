@@ -1189,6 +1189,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         isKu: context.isKu,
         roomWord: context.t(K.roomWord),
         raceWord: raceWord,
+        crowdTitle: context.t(K.crowdRoomTitle),
       );
       roundLabel = title == raceWord ? null : title;
     } else {
@@ -1261,7 +1262,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         bestStreak: bestStreak,
         // Karışık turda ekrandaki başlıkla aynı: tek bir kategori adı
         // turu yanlış anlatırdı.
-        category: isMixedCategoryRound ? room.name : room.category,
+        category: roundLabel ?? room.category,
         results: [for (final record in answerRecords) record.isCorrect],
         // 1v1 galibiyetinde kart "pêşbirkê bi ser ketim" satırını yazar.
         duelWin:
@@ -2163,7 +2164,7 @@ class _RaceStandings extends StatelessWidget {
         blocks.add(
           SahneListRow.me(
             rank: i + 1,
-            title: player.name,
+            title: context.playerDisplayName(player.name),
             avatar: userIdentity == null ? null : _avatarOf(player),
             subtitle: streakLine,
             trailing: SahneRowValue(groupThousands(player.score)),

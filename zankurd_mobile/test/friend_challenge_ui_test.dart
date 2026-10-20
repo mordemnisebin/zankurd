@@ -577,7 +577,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       await tester.ensureVisible(
-        find.byKey(const ValueKey('play-hub-async-duel-inbox')),
+        find.byKey(const ValueKey('play-hub-async-duel-turn')),
       );
 
       expect(find.text('Sıra sende'), findsOneWidget);

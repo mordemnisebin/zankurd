@@ -276,10 +276,7 @@ class _ProfileHeroCard extends StatelessWidget {
 
   /// Kimlik başlığı: ad varsa ad; yoksa "Oyuncu ZK-4F7K" (kod varsa).
   Widget _identityTitle(BuildContext context, SahneTokens t) {
-    final tag = playerTag;
-    final label = tag == null
-        ? null
-        : (tag.toUpperCase().startsWith('ZK-') ? tag : 'ZK-$tag');
+    final label = PlayerIdentity.formatTag(playerTag);
     final text = hasOwnName || label == null
         ? displayName
         : '$displayName $label';
