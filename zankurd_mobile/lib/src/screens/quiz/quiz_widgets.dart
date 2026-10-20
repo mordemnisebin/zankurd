@@ -527,8 +527,12 @@ class _QuestionTextAndAnswers extends StatelessWidget {
           _AnswerRevealFallback(
             question: question,
             isKu: context.isKu,
+            // Yalnız YANLIŞTA (ya da süre dolunca): doğru kuran oyuncunun
+            // kutusu zaten ✓ ile yeşil; aynı cümleyi bir daha yazmak gürültü.
             visible:
-                showExplanation && needsAnswerRevealFallback(question.type),
+                showExplanation &&
+                needsAnswerRevealFallback(question.type) &&
+                question.matchAnswer(selectedAnswer) != FreeTextMatch.exact,
             revealKey: showExplanation ? explanationKey : null,
           ),
           if (showExplanation && answered)

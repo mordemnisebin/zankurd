@@ -322,7 +322,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Kurul 4. tur: ilk kilitli seviyeden sonrası "+N seviye daha" satırında.
-        await tester.tap(find.byKey(const ValueKey('level-locked-more')));
+        await tester.tap(find.byKey(const ValueKey('level-locked-more-3')));
         await tester.pumpAndSettle();
         // 2. seviyeden itibaren kilitli: koşul bir önceki seviyeyi söyler.
         for (var n = 2; n <= 5; n++) {

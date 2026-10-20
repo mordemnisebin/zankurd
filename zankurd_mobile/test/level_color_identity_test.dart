@@ -124,7 +124,7 @@ void main() {
           );
           await tester.pumpAndSettle();
           // Kurul 4. tur: ilk kilitliden sonrası "+N seviye daha" satırında.
-          await tester.tap(find.byKey(const ValueKey('level-locked-more')));
+          await tester.tap(find.byKey(const ValueKey('level-locked-more-3')));
           await tester.pumpAndSettle();
 
           // Aktif kart: koyuda sahne kartı, açıkta yüzey kartı (tur 6b).
@@ -174,7 +174,7 @@ void main() {
             ),
           );
           await tester.pumpAndSettle();
-          await tester.tap(find.byKey(const ValueKey('level-locked-more')));
+          await tester.tap(find.byKey(const ValueKey('level-locked-more-4')));
           await tester.pumpAndSettle();
 
           expect(badgeColor(tester, 1), t.goldTint, reason: combo);

@@ -78,13 +78,13 @@ void main() {
     // 2-5 arası düğümler numara yerine kilit ikonu taşır; final kupası da
     // kilitli olduğu için görünmez.
     expect(find.text('4'), findsNothing);
-    // Kurul 4. tur: yalnız ilk kilitli seviye kart; kalan üçü tek
-    // "+3 seviye daha" satırında (kilit simgesi de o satırda).
-    expect(find.byIcon(AppIcons.lock), findsNWidgets(2));
-    expect(find.text('+3 seviye daha'), findsOneWidget);
-    expect(find.text('Usta'), findsNothing);
+    // Kurul 4. tur: yalnız ilk kilitli seviye tam kart; kalan üçü kompakt
+    // kilitli satır (2026-10-21: "+3" satırı alt yarıyı boş bırakıyordu).
+    expect(find.byIcon(AppIcons.lock), findsNWidgets(4));
+    expect(find.text('+3 seviye daha'), findsNothing);
+    expect(find.text('Usta'), findsOneWidget); // kompakt satırda
     expect(find.byIcon(AppIcons.trophy), findsNothing);
-    await tester.tap(find.byKey(const ValueKey('level-locked-more')));
+    await tester.tap(find.byKey(const ValueKey('level-locked-more-3')));
     await tester.pumpAndSettle();
     expect(find.byIcon(AppIcons.lock), findsNWidgets(4));
 
@@ -161,7 +161,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Kurul 4. tur: ilk kilitli seviyeden sonrası "+N seviye daha" satırında.
-      await tester.tap(find.byKey(const ValueKey('level-locked-more')));
+      await tester.tap(find.byKey(const ValueKey('level-locked-more-3')));
       await tester.pumpAndSettle();
 
       // Açık temada (bu test) aktif kart yüzey kartıdır (tur 6b).

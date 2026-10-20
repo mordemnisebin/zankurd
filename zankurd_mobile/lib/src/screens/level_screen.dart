@@ -225,6 +225,14 @@ class _LevelScreenState extends State<LevelScreen> {
 /// Görünen kilitli seviye sayısı (kalanı "+N seviye daha").
 const int _kVisibleLockedLevels = 1;
 
+/// Yolda en çok kaç seviye (açık + kilitli) görünür; kalanı "+N seviye daha".
+/// 2026-10-21 simülatör: 5 seviyeli bir yolda açık kart + tek kilitli kart +
+/// "+3" satırı ekranın alt yarısını bomboş bırakıyordu. Kurul 4. tur "az söz"
+/// kararı (tam boy kilitli kartlar ilerlemeyi zayıf gösterir) KORUNUR: kalan
+/// kilitliler tam kart değil, tek satırlık kompakt satırdır; dokununca
+/// eskisi gibi tam kartlara açılır.
+const int _kVisibleLevelRows = 5;
+
 enum _LevelLoadState { ready, empty, error }
 
 /// Çubuğun adı ve alt satırı, ilerleme kartının açıklaması.
@@ -363,18 +371,24 @@ class _LevelPathState extends State<_LevelPath> {
   Widget build(BuildContext context) {
     final next = _nextNumber;
     final shown = <QuizLevel>[];
+    final compact = <QuizLevel>[];
     var lockedShown = 0;
     var hidden = 0;
     for (final level in levels) {
       if (!_isUnlocked(level.number)) {
         if (!_showAll && lockedShown >= _kVisibleLockedLevels) {
-          hidden++;
+          if (shown.length + compact.length < _kVisibleLevelRows) {
+            compact.add(level);
+          } else {
+            hidden++;
+          }
           continue;
         }
         lockedShown++;
       }
       shown.add(level);
     }
+    final hasMore = hidden > 0 || compact.isNotEmpty;
     final t = SahneTokens.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -382,7 +396,7 @@ class _LevelPathState extends State<_LevelPath> {
         for (var i = 0; i < shown.length; i++)
           Padding(
             padding: EdgeInsets.only(
-              bottom: i == shown.length - 1 && hidden == 0
+              bottom: i == shown.length - 1 && !hasMore
                   ? 0
                   : SahneSpace.cardGap,
             ),
@@ -395,6 +409,20 @@ class _LevelPathState extends State<_LevelPath> {
               isNext: shown[i].number == next,
               locked: !_isUnlocked(shown[i].number),
               onTap: () => widget.onOpen(shown[i]),
+            ),
+          ),
+        for (var i = 0; i < compact.length; i++)
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: i == compact.length - 1 && hidden == 0
+                  ? 0
+                  : SahneSpace.cardGap,
+            ),
+            child: _CompactLockedLevel(
+              key: ValueKey('level-locked-more-${compact[i].number}'),
+              level: compact[i],
+              isKu: widget.isKu,
+              onTap: () => setState(() => _showAll = true),
             ),
           ),
         if (hidden > 0)
@@ -417,6 +445,84 @@ class _LevelPathState extends State<_LevelPath> {
             ),
           ),
       ],
+    );
+  }
+}
+
+/// Kompakt kilitli seviye satırı: ad + soru sayısı + kilit. Tam kilitli
+/// karttan küçük ve sönüktür (konu tonu, açık seviyeden net geride).
+class _CompactLockedLevel extends StatelessWidget {
+  const _CompactLockedLevel({
+    super.key,
+    required this.level,
+    required this.isKu,
+    required this.onTap,
+  });
+
+  final QuizLevel level;
+  final bool isKu;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final name = LevelNames.localized(level.title, isKu);
+    return Semantics(
+      container: true,
+      button: true,
+      label: context.t(K.pKilitliOncekiSeviyeyi, {'p0': name}),
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 56),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: _lockedTile(context, t, level.category),
+              shape: SahneShape.l,
+            ),
+            child: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                SahneSpace.x4,
+                SahneSpace.x2,
+                SahneSpace.x4,
+                SahneSpace.x2,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          name,
+                          style: SahneType.bodyStrong.copyWith(
+                            color: t.disabledFg,
+                          ),
+                        ),
+                        Text(
+                          '${groupThousands(level.questionCount)} ${context.t(K.soru)}',
+                          style: SahneType.caption.copyWith(
+                            color: t.disabledFg,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: SahneSpace.x2),
+                  Icon(
+                    AppIcons.lock,
+                    size: 20,
+                    color: _lockedMark(context, t, level.category),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -156,6 +156,7 @@ class TodayTaskCard extends StatelessWidget {
                             // Kalın (8 px) Zimrût çubuk, tonlu iz (2026-10-20).
                             height: 8,
                             trackColor: t.learnTrack,
+                            edgeColor: t.learnEdge,
                             trailing: '$safeDone/$safeTotal',
                             semanticLabel: title,
                           ),

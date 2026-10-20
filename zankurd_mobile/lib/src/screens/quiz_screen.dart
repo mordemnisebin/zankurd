@@ -27,6 +27,7 @@ import '../game/bot_opponent.dart';
 import '../models/answer_record.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
+import '../utils/free_text_answer_matcher.dart';
 import '../models/room.dart';
 import '../models/wildcard.dart';
 import '../l10n/lang.dart';

@@ -75,7 +75,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const ValueKey('level-locked-more')));
+      await tester.tap(find.byKey(const ValueKey('level-locked-more-3')));
       await tester.pumpAndSettle();
 
       final card = find.byKey(const ValueKey('level-card-2'));

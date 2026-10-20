@@ -310,4 +310,30 @@ void main() {
       expect(find.text('Ünlü harf'), findsWidgets);
     },
   );
+
+  /// Kusur: çizgi her sözcükte sabit yeşil (`learnTx`) ve kalın 2'ydi; renkli
+  /// soru sahnesinde (beyaz yazı) her kelime yeşil noktalıydı (2026-10-21).
+  /// Çizgi artık yazının KENDİ renginden türer; yeşile dönerse bu düşer.
+  testWidgets('sözcük çizgisi yazının renginden türer, ince ve sakin', (
+    tester,
+  ) async {
+    final repository = freshMockRepository();
+    final lesson = (await repository.loadLessonsByCategory(
+      'everyday',
+    )).firstWhere((l) => l.id == 'alphabet_1');
+    await tester.pumpWidget(
+      testShell(
+        child: LessonDetailScreen(lesson: lesson, repository: repository),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final text = tester.widget<Text>(
+      find.descendant(of: _word('dengder'), matching: find.byType(Text)),
+    );
+    final style = text.style!;
+    final base = style.color!;
+    expect(style.decorationThickness, lessThan(2));
+    expect(style.decorationColor!.a, closeTo(0.45, 0.01));
+    expect(style.decorationColor!.withValues(alpha: 1), base);
+  });
 }

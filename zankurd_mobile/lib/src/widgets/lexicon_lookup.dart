@@ -218,8 +218,14 @@ class LexiconText extends StatelessWidget {
                 style: style.copyWith(
                   decoration: TextDecoration.underline,
                   decorationStyle: TextDecorationStyle.dotted,
-                  decorationColor: t.learnTx,
-                  decorationThickness: 2,
+                  // Çizgi metnin KENDİ renginden türer (~%45 alfa): renkli
+                  // soru sahnesinde (beyaz yazı) her sözcüğün altında yeşil
+                  // nokta gürültü yapıyordu; açık zeminli ders slaytında da
+                  // koyu yazının sakin bir izi kalır (2026-10-21 simülatör).
+                  decorationColor: (style.color ?? t.tx).withValues(
+                    alpha: 0.45,
+                  ),
+                  decorationThickness: 1.2,
                 ),
               ),
             ),

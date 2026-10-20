@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import '../../l10n/strings.dart';
 import '../../l10n/lang.dart';
 import '../../models/quiz_question.dart';
+import '../../utils/free_text_answer_matcher.dart';
+import '../../theme/app_icons.dart';
 import '../../widgets/sahne/sahne.dart';
 
 /// Etkileşimli Cümle Kurma (Word Ordering / Rêzkirina Hevokan) bileşeni.
@@ -152,6 +154,15 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
       WidgetsBinding.instance.addPostFrameCallback((_) => _measurePool());
     }
 
+    // Kontrol sonrası oyuncunun kutusu kendi hükmünü taşır: doğruysa Rast
+    // tonu + ✓, yanlışsa Hata tonu + ✕ (çoktan seçmelideki yanlış şıkla aynı
+    // dil). Bunsuz kutu nötr kalıyor, yalnız alttaki yeşil "doğru cevap" notu
+    // görünüyordu ve oyuncu yanlış kurduğunu anlamıyordu (2026-10-21 simülatör).
+    // Süre dolması bir cevap sayılmaz; kutu nötr kalır.
+    final bool? verdict = answered && !timedOut && submitted != null
+        ? widget.question.matchAnswer(submitted) == FreeTextMatch.exact
+        : null;
+
     // İpucu (ör. «"ez" sözcüğüyle başla.») bankada 126 soruda vardı ama hiçbir
     // ekran göstermiyordu; cevap verilince anlamsız olduğundan yalnız öncesinde.
     final hint = answered ? null : widget.question.hintFor(isKu: isKu);
@@ -175,8 +186,16 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
           constraints: const BoxConstraints(minHeight: 88),
           padding: const EdgeInsets.all(SahneSpace.x4),
           decoration: ShapeDecoration(
-            color: t.s1,
-            shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
+            color: switch (verdict) {
+              true => t.okTint,
+              false => t.errTint,
+              null => t.s1,
+            },
+            shape: switch (verdict) {
+              true => SahneShape.withSide(SahneShape.l, t.okTx, width: 2),
+              false => SahneShape.withSide(SahneShape.l, t.errTx, width: 2),
+              null => SahneShape.withSide(SahneShape.l, t.edge, width: 1),
+            },
           ),
           child: timedOut && submitted!.isEmpty
               ? Text(
@@ -184,9 +203,31 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
                   style: SahneType.bodyStrong.copyWith(color: t.tx2),
                 )
               : submitted != null
-              ? Text(
-                  submitted,
-                  style: SahneType.bodyStrong.copyWith(color: t.tx),
+              ? Row(
+                  key: ValueKey(
+                    verdict == null
+                        ? 'word-ordering-submitted'
+                        : verdict
+                        ? 'word-ordering-correct'
+                        : 'word-ordering-wrong',
+                  ),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (verdict != null) ...[
+                      Icon(
+                        verdict ? AppIcons.check : AppIcons.xmark,
+                        color: verdict ? t.okTx : t.errTx,
+                        size: 24,
+                      ),
+                      const SizedBox(width: SahneSpace.x3),
+                    ],
+                    Expanded(
+                      child: Text(
+                        submitted,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
+                      ),
+                    ),
+                  ],
                 )
               : _selectedWords.isEmpty
               ? Center(

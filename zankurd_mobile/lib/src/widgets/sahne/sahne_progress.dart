@@ -50,6 +50,7 @@ class SahneProgressBar extends StatelessWidget {
     this.height = 8,
     this.trackColor,
     this.fillColor,
+    this.edgeColor,
   });
 
   /// 0–1.
@@ -67,6 +68,10 @@ class SahneProgressBar extends StatelessWidget {
 
   /// Dolgu rengini değiştirir (renkli konu bandında beyaz).
   final Color? fillColor;
+
+  /// İz kenarı (varsayılan `sahneTrackEdge`, mavimsi gri). Renkli kartta
+  /// kartın ton ailesinden verilir; yoksa yeşil izin çevresi gri kalıyordu.
+  final Color? edgeColor;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +100,9 @@ class SahneProgressBar extends StatelessWidget {
             shape: SahneShape.withSide(
               pill,
               // İnce çubukta (< 6) 1 px kenar çubuğun yarısını yerdi.
-              height < 6 ? Colors.transparent : sahneTrackEdge(t),
+              height < 6
+                  ? Colors.transparent
+                  : (edgeColor ?? sahneTrackEdge(t)),
               width: 1,
             ),
           ),
