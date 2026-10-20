@@ -139,7 +139,11 @@ void main() {
           seconds,
           contains(Tr.counterpart(K.homeTopicsTitle, isKu: isKu)),
         );
-        expect(seconds, contains(Tr.counterpart(K.gununDersi, isKu: isKu)));
+        // "Günün dersi" kartının İÇİNDE öbür dil yok (AZ SÖZ 2026-10-20).
+        expect(
+          seconds,
+          isNot(contains(Tr.counterpart(K.gununDersi, isKu: isKu))),
+        );
         // Konu kartı: kategori adının öbür dildeki karşılığı, karonun İÇİNDE.
         final tile = find.byKey(const ValueKey('home-topic-Dîrok'));
         expect(

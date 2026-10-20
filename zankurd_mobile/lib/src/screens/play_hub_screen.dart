@@ -467,11 +467,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                   icon: AppIcons.hourglass,
                   role: SahneRole.race,
                   title: context.t(K.asyncDuel),
-                  subtitle: context.t(K.asyncDuelSub),
                   chevron: !locked,
                   enabled: !locked,
-                  semanticLabel:
-                      '${context.t(K.asyncDuel)}. ${context.t(K.asyncDuelSub)}',
                   onTap: locked
                       ? null
                       : () async {
@@ -494,11 +491,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     icon: AppIcons.peopleGroup,
                     role: SahneRole.race,
                     title: context.t(K.challengeEntry),
-                    subtitle: context.t(K.challengeEntrySub),
                     chevron: !locked,
                     enabled: !locked,
-                    semanticLabel:
-                        '${context.t(K.challengeEntry)}. ${context.t(K.challengeEntrySub)}',
                     onTap: locked
                         ? null
                         : () async {
@@ -528,7 +522,6 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 key: const ValueKey('play-hub-async-duel-soon'),
                 icon: AppIcons.shuffle,
                 title: context.t(K.asyncDuel),
-                subtitle: context.t(K.asyncDuelSub),
                 enabled: false,
                 trailing: SahneBadge(
                   label: context.t(K.yakinda),

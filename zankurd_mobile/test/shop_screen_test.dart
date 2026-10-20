@@ -585,7 +585,7 @@ void main() {
   });
 
   testWidgets(
-    'kart açıklamayı gösterir, ürüne dokununca onay penceresi aynı ayrıntıyı açar',
+    'kart açıklamayı göstermez, ürüne dokununca onay penceresi açıklamayı gösterir',
     (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -594,13 +594,13 @@ void main() {
       await tester.pumpAndSettle();
 
       const description = 'Bugün çarkı tekrar çevirmek için ekstra hak verir.';
-      // Kurul 2026-10-20: açıklama artık kartta yazar (kart: ikon, ad,
-      // açıklama, fiyat düğmesi).
-      expect(find.text(description), findsOneWidget);
+      // AZ SÖZ 2026-10-20: kart yalnız ikon, ad ve fiyat/eylem taşır;
+      // açıklama yalnız onay penceresinde okunur.
+      expect(find.text(description), findsNothing);
       await tester.ensureVisible(find.text('Ekstra çevirme'));
       await tester.tap(find.text('Ekstra çevirme'));
       await tester.pumpAndSettle();
-      expect(find.text(description), findsNWidgets(2));
+      expect(find.text(description), findsOneWidget);
       expect(find.text('Satın al'), findsOneWidget);
     },
   );
@@ -625,20 +625,14 @@ void main() {
       of: card,
       matching: find.text('Ekstra çevirme'),
     );
-    final desc = find.descendant(
-      of: card,
-      matching: find.text('Bugün çarkı tekrar çevirmek için ekstra hak verir.'),
-    );
     final buy = find.byKey(const ValueKey('shop-buy-spin_wheel_extra'));
     final cardRect = tester.getRect(card);
-    // Ad tek satır; açıklama kart genişliğinin sağ kenarına kadar uzanır
-    // (test yazı tipi geniştir, satır sayısı değil genişlik sabitlenir).
+    // Ad tek satır (açıklama satırı AZ SÖZ turunda kaldırıldı).
     expect(tester.getSize(title).height, lessThan(26));
-    expect(tester.getRect(desc).right, greaterThan(cardRect.right - 60));
     // Eylem metnin altında ve sağa yaslı, standart düğme boyu (dokunma hedefi kuralı 40 altına inmeye izin vermez).
     expect(
       tester.getRect(buy).top,
-      greaterThanOrEqualTo(tester.getRect(desc).bottom),
+      greaterThanOrEqualTo(tester.getRect(title).bottom),
     );
     expect(tester.getRect(buy).right, greaterThan(cardRect.right - 20));
     expect(tester.getSize(buy).height, inInclusiveRange(44, 52));

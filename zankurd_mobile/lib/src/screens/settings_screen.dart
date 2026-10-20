@@ -287,9 +287,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     future: _placementStoreFuture,
                     builder: (context, snap) {
                       final level = snap.data?.level;
-                      final String sub;
+                      final String? sub;
                       if (level == null) {
-                        sub = context.t(K.retakePlacementSub);
+                        sub = null;
                       } else {
                         final name = ku ? level.labelKu : level.labelTr;
                         sub = context.t(K.currentLevel, {'name': name});
@@ -333,7 +333,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     SahneListRow.plain(
                       key: const ValueKey('settings-beta-feedback'),
                       title: context.t(K.betaFeedback),
-                      subtitle: context.t(K.betaFeedbackSub),
                       chevron: true,
                       onTap: _openBetaFeedback,
                     ),
