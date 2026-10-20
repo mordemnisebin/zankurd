@@ -274,16 +274,6 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Gece yıldızı (gündüz çizilmez).
   Color get vistaStar => const Color(0xFFF5F3EF);
 
-  /// Kilim imzasının rengi (2026-10-20 kimlik kararı, imza "Kilim"):
-  /// kökboya kırmızısı ile turuncu arasında tek ton. Yarış kimliğinin pembe
-  /// düello vurgusundan ([raceTx]) ve Agir'den ([act]) ayrı; gündüz Perde
-  /// üstünde koyu, gece düşük opaklıkla çizilir (bkz. [kilimOpacity]).
-  Color get kilimTx =>
-      _isDay ? const Color(0xFFB4442A) : const Color(0xFFE0663F);
-
-  /// Kilim şeridinin opaklığı: gecede şerit fısıltı kalır.
-  double get kilimOpacity => _isDay ? 1.0 : 0.55;
-
   static const night = SahneTokens(
     // 2026-10-20 gece paleti kuruldu (9 modelli kurul oy birliğiyle B):
     // nötr grafit, mavi ton yok; turuncu Agir aynı. Eski lacivert (#0A0F2E)
