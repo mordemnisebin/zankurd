@@ -2140,7 +2140,7 @@ void main() {
     await t.ensureVisible(fee);
     await t.pumpAndSettle();
     await t.tap(fee);
-    await t.pump(const Duration(milliseconds: 400));
+    await t.pumpAndSettle();
     await _shoot(t, '109_custom_room_short');
   }, tags: ['preview']);
 
@@ -2166,7 +2166,7 @@ void main() {
     await t.ensureVisible(fee);
     await t.pumpAndSettle();
     await t.tap(fee);
-    await t.pump(const Duration(milliseconds: 400));
+    await t.pumpAndSettle();
     await _shoot(t, '110_custom_room_short_dark_ku');
   }, tags: ['preview']);
 
