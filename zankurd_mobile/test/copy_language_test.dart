@@ -764,6 +764,9 @@ void main() {
       // Kısa etiketler ("Boş", "Evet") bağlama göre haklı olarak ayrışabilir;
       // kural cümle uzunluğundaki metinler için anlamlı.
       if (turkish.length < 12) continue;
+      // Tekil/çoğul çiftleri: Türkçe aynı, Kurmancî sayıya göre çekimli
+      // ("di 1 pirsê de" / "di 3 pirsan de"; tur 9b kurul kararı).
+      if (key == K.outcomeReviewOne) continue;
       byTurkish.putIfAbsent(turkish, () => {})[key] = Tr.of(
         key,
         AppLanguage.ku,
