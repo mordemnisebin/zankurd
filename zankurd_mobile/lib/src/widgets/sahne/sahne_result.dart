@@ -428,7 +428,12 @@ class SahneResultHero extends StatelessWidget {
                   // ortasından çıkar.
                   raysCenterY: value != null ? 104 : 84,
                   bg: t.bg,
-                  ridge: t.s1,
+                  // Gece Perde açıldığı için (tur 6b) sırtın dolgusu aynı
+                  // belirgin ton için zemine doğru karıştırılır; aksi hâlde
+                  // kahraman bloğunun altında sert bir bant görünüyordu.
+                  ridge: t.bg.computeLuminance() < 0.2
+                      ? Color.lerp(t.bg, t.s1, 0.62)!
+                      : t.s1,
                 ),
               ),
             ),

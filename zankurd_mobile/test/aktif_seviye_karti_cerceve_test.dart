@@ -31,59 +31,61 @@ void main() {
   });
 
   for (final dark in [false, true]) {
-    testWidgets('aktif kart: ${dark ? 'koyu' : 'açık'} tema, 2 px Agir çerçeve', (
-      tester,
-    ) async {
-      await tester.pumpWidget(
-        MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (_) => LanguageProvider()..setLang('tr'),
-            ),
-          ],
-          child: MaterialApp(
-            theme: dark ? AppTheme.dark() : AppTheme.light(),
-            home: LevelScreen(
-              repository: MockZanKurdRepository(),
-              category: 'Ziman',
+    testWidgets(
+      'aktif kart: ${dark ? 'koyu' : 'açık'} tema, 2 px Agir çerçeve',
+      (tester) async {
+        await tester.pumpWidget(
+          MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (_) => LanguageProvider()..setLang('tr'),
+              ),
+            ],
+            child: MaterialApp(
+              theme: dark ? AppTheme.dark() : AppTheme.light(),
+              home: LevelScreen(
+                repository: MockZanKurdRepository(),
+                category: 'Ziman',
+              ),
             ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
-      final t = dark ? SahneTokens.night : SahneTokens.day;
-      final card = find.byKey(const ValueKey('level-card-1'));
+        );
+        await tester.pumpAndSettle();
+        final t = dark ? SahneTokens.night : SahneTokens.day;
+        final card = find.byKey(const ValueKey('level-card-1'));
 
-      expect(
-        find.descendant(of: card, matching: find.byType(SahneSurfaceCard)),
-        dark ? findsNothing : findsOneWidget,
-        reason: 'açık temada koyu ada yok',
-      );
-      expect(
-        find.descendant(of: card, matching: find.byType(SahneStageCard)),
-        dark ? findsOneWidget : findsNothing,
-      );
+        expect(
+          find.descendant(of: card, matching: find.byType(SahneSurfaceCard)),
+          dark ? findsNothing : findsOneWidget,
+          reason: 'açık temada koyu ada yok',
+        );
+        expect(
+          find.descendant(of: card, matching: find.byType(SahneStageCard)),
+          dark ? findsOneWidget : findsNothing,
+        );
 
-      final frame = find
-          .descendant(
-            of: card,
-            matching: find.byWidgetPredicate(
-              (w) =>
-                  w is DecoratedBox &&
-                  w.position == DecorationPosition.foreground,
-            ),
-          )
-          .first;
-      final shape =
-          ((tester.widget(frame) as DecoratedBox).decoration as ShapeDecoration)
-                  .shape
-              as OutlinedBorder;
-      expect(shape.side.width, 2);
-      expect(shape.side.color, t.act);
-      expect(
-        find.descendant(of: card, matching: find.byType(FilledButton)),
-        findsOneWidget,
-      );
-    });
+        final frame = find
+            .descendant(
+              of: card,
+              matching: find.byWidgetPredicate(
+                (w) =>
+                    w is DecoratedBox &&
+                    w.position == DecorationPosition.foreground,
+              ),
+            )
+            .first;
+        final shape =
+            ((tester.widget(frame) as DecoratedBox).decoration
+                        as ShapeDecoration)
+                    .shape
+                as OutlinedBorder;
+        expect(shape.side.width, 2);
+        expect(shape.side.color, t.act);
+        expect(
+          find.descendant(of: card, matching: find.byType(FilledButton)),
+          findsOneWidget,
+        );
+      },
+    );
   }
 }

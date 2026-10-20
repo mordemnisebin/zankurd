@@ -69,10 +69,7 @@ void main() {
     expect(SahneType.question.fontSize, 26);
   });
 
-  for (final c in [
-    (const Size(320, 640), 1.0),
-    (const Size(390, 844), 2.0),
-  ]) {
+  for (final c in [(const Size(320, 640), 1.0), (const Size(390, 844), 2.0)]) {
     testWidgets('${c.$1.width.toInt()}px @${c.$2}: taşma yok', (tester) async {
       await pump(tester, c.$1, c.$2);
       expect(tester.takeException(), isNull);

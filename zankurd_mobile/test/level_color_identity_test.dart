@@ -130,18 +130,12 @@ void main() {
           expect(
             find.descendant(
               of: find.byKey(const ValueKey('level-card-1')),
-              matching: find.byType(
-                dark ? SahneStageCard : SahneSurfaceCard,
-              ),
+              matching: find.byType(dark ? SahneStageCard : SahneSurfaceCard),
             ),
             findsOneWidget,
             reason: combo,
           );
-          expect(
-            badgeColor(tester, 1),
-            t.learnTint,
-            reason: combo,
-          );
+          expect(badgeColor(tester, 1), t.learnTint, reason: combo);
           for (final locked in [2, 3, 4, 5]) {
             expect(badgeColor(tester, locked), t.s2, reason: '$combo $locked');
           }
@@ -182,9 +176,7 @@ void main() {
           expect(
             find.descendant(
               of: find.byKey(const ValueKey('level-card-2')),
-              matching: find.byType(
-                dark ? SahneStageCard : SahneSurfaceCard,
-              ),
+              matching: find.byType(dark ? SahneStageCard : SahneSurfaceCard),
             ),
             findsOneWidget,
             reason: combo,
