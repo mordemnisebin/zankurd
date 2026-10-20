@@ -314,16 +314,21 @@ void main() {
       );
       await pumpFriends(tester, repository);
 
-      await tester.tap(find.byKey(const ValueKey('friend-remove-Rojda')));
-      await tester.pumpAndSettle();
+      Future<void> openRemove() async {
+        await tester.tap(find.byKey(const ValueKey('friend-more-Rojda')));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(const ValueKey('friend-remove-Rojda')));
+        await tester.pumpAndSettle();
+      }
+
+      await openRemove();
       expect(find.byKey(const ValueKey('friend-remove-confirm')), findsOne);
 
       await tester.tap(find.byKey(const ValueKey('friend-remove-cancel')));
       await tester.pumpAndSettle();
       expect(repository.removedFriendIds, isEmpty);
 
-      await tester.tap(find.byKey(const ValueKey('friend-remove-Rojda')));
-      await tester.pumpAndSettle();
+      await openRemove();
       await tester.tap(find.byKey(const ValueKey('friend-remove-confirm')));
       await tester.pumpAndSettle();
       expect(repository.removedFriendIds, ['u-rojda']);
