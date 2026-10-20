@@ -82,6 +82,9 @@ class RoomScreen extends StatefulWidget {
   State<RoomScreen> createState() => _RoomScreenState();
 }
 
+/// Lobide görünen boş koltuk satırı üst sınırı.
+const int _kMaxEmptySeatRows = 4;
+
 class _RoomScreenState extends State<RoomScreen> {
   /// Sohbet paneli açık mı. Kapalı başlar: aa42044'ün kalabalık kaygısı
   /// haklıydı, ama çözümü sohbeti silmek değil katlamaktı.
@@ -815,6 +818,26 @@ class _RoomScreenState extends State<RoomScreen> {
     }
   }
 
+  /// Kalabalık odada boş koltuklar (tur 11): en çok [_kMaxEmptySeatRows]
+  /// satır, fazlası tek "+N" satırı. Satır sayısı oda kapasitesinden gelir.
+  List<Widget> _emptySeatRows(int seats, {required int firstRank}) {
+    if (seats <= 0) return const [];
+    final shown = seats > _kMaxEmptySeatRows ? _kMaxEmptySeatRows : seats;
+    final more = seats - shown;
+    return [
+      for (var k = 0; k < shown; k++)
+        _EmptySeatRow(
+          key: ValueKey('room-empty-seat-${k + 1}'),
+          label: '${firstRank + k}',
+        ),
+      if (more > 0)
+        _EmptySeatRow(
+          key: const ValueKey('room-empty-seat-more'),
+          label: '+$more',
+        ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
@@ -1179,7 +1202,14 @@ class _RoomScreenState extends State<RoomScreen> {
                                                 );
                                               },
                                             ),
-                                          if (visiblePlayers.length < 2)
+                                          if (crowd)
+                                            ..._emptySeatRows(
+                                              room.maxPlayers -
+                                                  visiblePlayers.length,
+                                              firstRank:
+                                                  visiblePlayers.length + 1,
+                                            )
+                                          else if (visiblePlayers.length < 2)
                                             _WaitingPlayerTile(
                                               isKu: ku,
                                               onInvite: _canInviteFriends
@@ -2307,4 +2337,79 @@ class _ReactionChip extends StatelessWidget {
     role: SahneRole.race,
     onTap: onTap,
   );
+}
+
+/// Boş koltuk: kesik çizgili soluk elmas + sıra numarası (ya da "+N").
+/// Metin yok: yeni Kurmancî anahtarı gerektirmesin diye ikon ve sayı.
+class _EmptySeatRow extends StatelessWidget {
+  const _EmptySeatRow({super.key, required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return ExcludeSemantics(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 56),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(
+            SahneSpace.x3,
+            SahneSpace.x1,
+            SahneSpace.x4,
+            SahneSpace.x1,
+          ),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 24,
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  style: SahneType.caption.copyWith(color: t.tx3),
+                ),
+              ),
+              const SizedBox(width: SahneSpace.x3),
+              CustomPaint(
+                painter: _DashedDiamondPainter(t.tx3.withValues(alpha: 0.6)),
+                child: SizedBox.square(
+                  dimension: 36,
+                  child: Icon(
+                    AppIcons.userPlus,
+                    size: 16,
+                    color: t.tx3.withValues(alpha: 0.6),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DashedDiamondPainter extends CustomPainter {
+  _DashedDiamondPainter(this.color);
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final path = SahneShape.diamond(36).getOuterPath(Offset.zero & size);
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5;
+    for (final m in path.computeMetrics()) {
+      var d = 0.0;
+      while (d < m.length) {
+        canvas.drawPath(m.extractPath(d, d + 4), paint);
+        d += 8;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_DashedDiamondPainter old) => old.color != color;
 }

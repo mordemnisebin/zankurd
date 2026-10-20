@@ -285,8 +285,9 @@ class _LearningScreenState extends State<LearningScreen> {
               // Ana ders yolu ilk ekranda görünür. Yardımcı içerikler aynı
               // kaydırma yüzeyinde, derslerin ardından gelir.
               _page(_buildLessons(context, ku)),
-              const SizedBox(height: SahneSpace.x4),
-              // Konuyu pekiştirmenin iki yolu, derslerin hemen altında ve
+              const SizedBox(height: SahneSpace.sectionTop),
+              // Pratik bölümü (tur 11): iki düğme + hikâyeler + sözlük,
+              // ders listesinden belirgin boşlukla ayrı ve ikincil. Konuyu pekiştirmenin iki yolu ve
               // adıyla: "Soru çöz" ve "Flaş kart". İkisi de ikincil (Kulis);
               // ekranın TEK birincil eylemi yoldaki etkin derstir.
               _page(
@@ -477,6 +478,7 @@ class _LearningScreenState extends State<LearningScreen> {
           run.add(
             SahneListRow.plain(
               key: const ValueKey('learning-locked-more'),
+              dense: true,
               title: context.t(K.lessonsMoreCount, {'n': '$lockedHidden'}),
               onTap: () => setState(() => _showAllLocked = true),
               trailing: Icon(
@@ -700,56 +702,48 @@ class _PlacementPromptCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    // 2026-10-19 sadeleşme (ikinci tur): "Seviyeni bul" 200 px'lik tam
-    // genişlik düğmeli büyük kartı ekranın ilk yarısını yiyordu ve derse
-    // gelen oyuncu asıl işi (sıradaki ders) aşağıda arıyordu. Artık küçük,
-    // isteğe bağlı bir şerit: başlık + tek satır açıklama, altında iki metin
-    // eylemi ("Teste başla", "Şimdilik geç"). Seviye biliniyorsa ya da
-    // geçildiyse hiç çizilmez (`_placementPrompt`).
+    // 2026-10-20 sadeleşme (tur 11): kart (başlık + açıklama + iki eylem,
+    // ~130 px) ilk ekranda sıradaki dersle yarışıyordu; Codex, Opus ve
+    // ChatGPT aynı şeyi söyledi. Artık tek satırlık ince şerit: ikon +
+    // başlık + "Teste başla ›"; "Şimdilik geç" ikincil, yalnız çarpı.
+    // Açıklama cümlesi kalktı (başlık + eylem aynı şeyi söylüyor). Seviye
+    // biliniyorsa ya da geçildiyse hiç çizilmez (`_placementPrompt`).
     return SahneSurfaceCard(
       key: const ValueKey('learning-placement-prompt'),
       padding: const EdgeInsetsDirectional.fromSTEB(
         SahneSpace.x4,
-        SahneSpace.x3,
-        // Sağ iç boşluk 16 (tur 6b): 8 iken uzun Kurmancî gövde metni kart
-        // kenarına değiyordu. Metin eylemleri kendi 8'lik dokunma payını
-        // taşır; görsel kenar yine sola oturur.
-        SahneSpace.x4,
+        0,
         SahneSpace.x1,
+        0,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Semantics(
-            header: true,
-            child: Text(
-              context.t(K.placementCardTitle),
-              style: SahneType.bodyStrong.copyWith(color: t.tx),
+          Icon(AppIcons.compass, size: 18, color: t.learnTx),
+          const SizedBox(width: SahneSpace.x2),
+          Expanded(
+            child: Semantics(
+              header: true,
+              child: Text(
+                context.t(K.placementCardTitle),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: SahneType.bodyStrong.copyWith(color: t.tx),
+              ),
             ),
           ),
-          const SizedBox(height: SahneSpace.x1),
-          Text(
-            context.t(K.placementCardBody),
-            style: SahneType.caption.copyWith(color: t.tx2),
+          Flexible(
+            child: SahneButton.text(
+              buttonKey: const ValueKey('learning-placement-start'),
+              label: context.t(K.placementCardStart),
+              onPressed: onStart,
+            ),
           ),
-          const SizedBox(height: SahneSpace.x1),
-          Wrap(
-            alignment: WrapAlignment.start,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              SahneButton.text(
-                buttonKey: const ValueKey('learning-placement-start'),
-                label: context.t(K.placementCardStart),
-                onPressed: onStart,
-              ),
-              SahneButton.text(
-                buttonKey: const ValueKey('learning-placement-dismiss'),
-                label: context.t(K.placementSkip),
-                arrow: false,
-                quiet: true,
-                onPressed: onDismiss,
-              ),
-            ],
+          IconButton(
+            key: const ValueKey('learning-placement-dismiss'),
+            tooltip: context.t(K.placementSkip),
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+            icon: Icon(AppIcons.xmark, size: 18, color: t.tx3),
+            onPressed: onDismiss,
           ),
         ],
       ),
@@ -1000,7 +994,12 @@ class _LessonRow extends StatelessWidget {
     final description = lesson.description(context.isKu)?.trim();
     return SahneListRow.plain(
       title: title,
-      subtitle: description == null || description.isEmpty ? null : description,
+      // Kilitli satır sıkı (48) ve açıklamasız: soluk liste ilerlemeyi
+      // bastırmasın (tur 11). Açıklama dersin kendi ekranında okunur.
+      dense: locked,
+      subtitle: locked || description == null || description.isEmpty
+          ? null
+          : description,
       enabled: !locked,
       onTap: onTap,
       semanticLabel: semanticLabel,
