@@ -51,7 +51,9 @@ void main() {
 
     final n = tester.getRect(note), d = tester.getRect(desc);
     final p = tester.getRect(price);
-    expect(n.left, closeTo(d.left, 0.5), reason: 'aynı sol kenar');
+    // Tur 10b: söz artık eylem satırının solunda (kartın iç sol kenarı),
+    // açıklamanın altında; açıklamayla yan yana değil.
+    expect(n.left, lessThanOrEqualTo(d.left), reason: 'metinden sola yaslı');
     expect(n.top, greaterThanOrEqualTo(d.bottom));
     expect(n.right, lessThanOrEqualTo(p.left), reason: 'sağ sütunda değil');
 
@@ -61,8 +63,7 @@ void main() {
     expect(style.fontWeight, FontWeight.w500);
     expect(style.color, t.shortfallTx);
 
-    // Kart iç boşluğu 14: metin sütunu kartın sol kenarından 14 içeridedir
-    // (önizleme karosu 56 + 12 aralık sonrası).
+    // Kart iç boşluğu 14: önizleme karosu kartın sol kenarından 14 içeridedir.
     final tile = tester.getRect(
       find.descendant(of: card, matching: find.byType(DecoratedBox)).first,
     );
