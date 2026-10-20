@@ -1634,6 +1634,7 @@ class Tr {
     K.earnCoins: {'ku': 'Zêr qezenc bike', 'tr': 'Jeton kazan'},
     // "Jeton yetmiyor" durumunun miktarlı sözü (`SahneShortfallNote`): oyuncu
     // yalnız "yetmiyor" değil, NE KADAR eksik olduğunu da bilir.
+    K.coinsShortForFee: {'ku': '{note}', 'tr': '{fee} için {note}'},
     K.coinsShort: {'ku': '{coins} zêr kêm e', 'tr': '{coins} jeton eksik'},
     K.cancelShort: {'ku': 'Betal', 'tr': 'Vazgeç'},
     K.rewardPending: {
@@ -3904,6 +3905,7 @@ class K {
   static const yourBalance = 'shop.yourBalance';
   static const earnCoins = 'shop.earnCoins';
   static const coinsShort = 'shop.coinsShort';
+  static const coinsShortForFee = 'shop.coinsShortForFee';
   static const cancelShort = 'common.cancelShort';
   static const rewardPending = 'result.rewardPending';
   static const rewardUnresolved = 'result.rewardUnresolved';

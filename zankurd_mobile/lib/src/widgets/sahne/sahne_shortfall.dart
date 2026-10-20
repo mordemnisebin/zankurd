@@ -42,7 +42,11 @@ class SahneShortfallNote extends StatelessWidget {
     this.alert = false,
     this.warn = false,
     this.center = false,
+    this.feeLabel,
   });
+
+  /// Verilirse not hangi ücrete ait olduğunu söyler ("50 jeton için ...").
+  final String? feeLabel;
 
   /// Eksik jeton sayısı (> 0).
   final int missing;
@@ -60,7 +64,10 @@ class SahneShortfallNote extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final color = warn ? t.shortfallTx : (alert ? t.errTx : t.tx2);
-    final label = context.t(K.coinsShort, {'coins': '$missing'});
+    final base = context.t(K.coinsShort, {'coins': '$missing'});
+    final label = feeLabel == null
+        ? base
+        : context.t(K.coinsShortForFee, {'fee': feeLabel!, 'note': base});
     return Semantics(
       container: true,
       label: label,
