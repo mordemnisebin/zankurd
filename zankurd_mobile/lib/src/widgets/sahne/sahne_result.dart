@@ -418,7 +418,10 @@ class SahneResultHero extends StatelessWidget {
           Text(
             caption!,
             textAlign: TextAlign.center,
-            style: SahneType.caption.copyWith(color: t.tx2),
+            style: SahneType.caption.copyWith(
+              color: t.heroCaptionTx,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ],
         if (body != null) ...[

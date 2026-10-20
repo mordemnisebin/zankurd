@@ -109,6 +109,12 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// "N jeton eksik" notu (kurul 5. tur 2026-10-20): altın metin gündüz
   /// kartta soluk kalıyordu; gündüz koyu kehribar `#6E4400` (beyaz üstünde
   /// ≈ 8.9:1), gece Zêr metni.
+  /// Sonuç kahramanının "puan · %67 doğruluk" satırı (tur 10b, Gemini +
+  /// Grok): koyu temada 13 px / 400 [tx2] 64 punto sayının altında sönük
+  /// kalıyordu. Ana ikincil metinden bir ton açık (gecede daha açık, gündüzde
+  /// daha koyu): [tx2] ile [tx] arası %35.
+  Color get heroCaptionTx => Color.lerp(tx2, tx, 0.35)!;
+
   Color get shortfallTx => _isDay ? const Color(0xFF6E4400) : goldTx;
 
   /// Pasif etiket: üçüncül metin; pasif dolguya karşı yine ≥ 3 (okunur ama
