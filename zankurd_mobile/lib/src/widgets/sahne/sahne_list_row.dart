@@ -181,6 +181,7 @@ class SahneListRow extends StatelessWidget {
     this.semanticLabel,
     this.destructive = false,
   }) : _kind = _RowKind.standard,
+       dense = false,
        tone = SahneCategoryTone.fallback,
        mark = null,
        image = null,
@@ -204,6 +205,7 @@ class SahneListRow extends StatelessWidget {
     this.tone = SahneCategoryTone.fallback,
     this.mark,
   }) : _kind = _RowKind.info,
+       dense = false,
        role = SahneRole.neutral,
        enabled = true,
        rank = null,
@@ -228,6 +230,7 @@ class SahneListRow extends StatelessWidget {
     this.semanticLabel,
     this.destructive = false,
   }) : _kind = _RowKind.custom,
+       dense = false,
        tone = SahneCategoryTone.fallback,
        mark = null,
        leadingWidget = leading,
@@ -242,6 +245,7 @@ class SahneListRow extends StatelessWidget {
   /// Satırın tamamı dokunulur; sağda ok ya da değer, ikisi birden değil.
   const SahneListRow.plain({
     super.key,
+    this.dense = false,
     required this.title,
     this.subtitle,
     this.trailing,
@@ -278,6 +282,7 @@ class SahneListRow extends StatelessWidget {
     this.onTap,
     this.semanticLabel,
   }) : _kind = _RowKind.rank,
+       dense = false,
        tone = SahneCategoryTone.fallback,
        mark = null,
        image = null,
@@ -299,6 +304,7 @@ class SahneListRow extends StatelessWidget {
     this.onTap,
     this.semanticLabel,
   }) : _kind = _RowKind.me,
+       dense = false,
        tone = SahneCategoryTone.fallback,
        mark = null,
        image = null,
@@ -349,6 +355,10 @@ class SahneListRow extends StatelessWidget {
   /// Öncülün genişliği (ayırıcı hizası).
   final double leadingWidth;
 
+  /// Yalnız [SahneListRow.plain]: sıkı satır (48). Kilitli ders listesi gibi
+  /// soluk, sıralı satırlar 56 yüksekliğinde yer tutmasın.
+  final bool dense;
+
   /// Grup ayırıcısının sol boşluğu: standart ve bilgi satırında metnin,
   /// sıra satırında avatarın hizası (12 + öncül + 12).
   double get dividerIndent => switch (_kind) {
@@ -362,7 +372,8 @@ class SahneListRow extends StatelessWidget {
   double get _minHeight => switch (_kind) {
     _RowKind.standard || _RowKind.me || _RowKind.custom => 64,
     _RowKind.info => 52,
-    _RowKind.rank || _RowKind.plain => 56,
+    _RowKind.rank => 56,
+    _RowKind.plain => dense ? 48 : 56,
   };
 
   @override

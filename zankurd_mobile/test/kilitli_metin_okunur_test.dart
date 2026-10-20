@@ -15,7 +15,7 @@
 // metnin kontrastını ölçen yoktu. Sözleşme: kilitli metin saydamlıkla değil
 // `SahneTokens.disabledFg` belirteciyle boyanır ve her iki temada yüzey
 // üstünde WCAG AA (4.5) geçer; kilit ikonu kalır; saydamlık katmanı yoktur.
-// Yerleşim: "Asta xwe bibîne" gövde metni karta 16 pt'den yakın değildir.
+// Yerleşim: "Asta xwe bibîne" şeridinde eylem metni karta 16 pt'den yakın değildir.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -128,12 +128,15 @@ void main() {
     final card = tester.getRect(
       find.byKey(const ValueKey('learning-placement-prompt')),
     );
+    // Tur 11: açıklama kalktı; şeritte kenara değebilecek metin başlık ve
+    // "Dest bi azmûnê bike" eylemidir (sağda 48'lik kapatma düğmesi durur).
     final body = tester.getRect(
       find.descendant(
-        of: find.byKey(const ValueKey('learning-placement-prompt')),
-        matching: find.textContaining('pirsên kurt'),
+        of: find.byKey(const ValueKey('learning-placement-start')),
+        matching: find.byType(Text),
       ),
     );
+    expect(tester.takeException(), isNull);
     expect(card.right - body.right, greaterThanOrEqualTo(16));
   });
 }
