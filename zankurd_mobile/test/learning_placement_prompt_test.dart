@@ -9,6 +9,8 @@ import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/services/placement_scoring.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'support/realistic_device.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 /// Öğren ekranındaki "Seviyeni bul" daveti.
 ///
@@ -40,6 +42,8 @@ Widget _app({String lang = 'tr', double scale = 1}) => MultiProvider(
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUpAll(loadAppFonts);
 
   setUp(() {
     SharedPreferences.setMockInitialValues({});
@@ -104,4 +108,58 @@ void main() {
     );
     expect(tester.takeException(), isNull);
   });
+
+  // Kusur: 320 pt + 2x yazıda başlık "Sevi…" diye kesiliyor, "Teste başla ›"
+  // harf harf alt alta kırılıyordu. Tek satır düzeni dar alanda sessizce
+  // bozulur; testler yalnız 390 pt/1x'te bakıyordu.
+  for (final lang in ['tr', 'ku']) {
+    testWidgets('320 pt + 2x yazı ($lang): metin kesilmez, eylem tek satır', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(320, 800);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(_app(lang: lang, scale: 2));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(card), findsOneWidget);
+      final texts = tester.widgetList<Text>(
+        find.descendant(of: find.byKey(card), matching: find.byType(Text)),
+      );
+      for (final t in texts) {
+        expect(t.overflow, isNot(TextOverflow.ellipsis));
+      }
+      final start = find.byKey(const ValueKey('learning-placement-start'));
+      final textBox = tester.getSize(
+        find.descendant(of: start, matching: find.byType(Text)).first,
+      );
+      // Etiket tek satır: kutu yüksekliği captionStrong'un tek satırını
+      // (2x ölçekte) aşmaz.
+      final oneLine = const TextScaler.linear(2).scale(
+        (SahneType.captionStrong.fontSize ?? 14) *
+            (SahneType.captionStrong.height ?? 1.4),
+      );
+      // Kurmancî etiket ("Dest bi azmûnê bike") 2x yazıda 272 pt'ye
+      // doğal olarak sığmaz; en çok iki satır ve sözcük ortadan bölünmez.
+      expect(
+        textBox.height,
+        lessThanOrEqualTo(oneLine * (lang == 'ku' ? 2 : 1) + 2),
+      );
+      final words = tester
+          .widget<Text>(
+            find.descendant(of: start, matching: find.byType(Text)).first,
+          )
+          .data!
+          .split(' ');
+      for (final w in words) {
+        final p = TextPainter(
+          text: TextSpan(text: w, style: SahneType.captionStrong),
+          textDirection: TextDirection.ltr,
+          textScaler: const TextScaler.linear(2),
+        )..layout();
+        expect(textBox.width, greaterThanOrEqualTo(p.width - 1), reason: w);
+      }
+      expect(tester.takeException(), isNull);
+    });
+  }
 }

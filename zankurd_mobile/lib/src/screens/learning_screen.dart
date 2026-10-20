@@ -716,36 +716,63 @@ class _PlacementPromptCard extends StatelessWidget {
         SahneSpace.x1,
         0,
       ),
-      child: Row(
-        children: [
-          Icon(AppIcons.compass, size: 18, color: t.learnTx),
-          const SizedBox(width: SahneSpace.x2),
-          Expanded(
-            child: Semantics(
-              header: true,
-              child: Text(
-                context.t(K.placementCardTitle),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: SahneType.bodyStrong.copyWith(color: t.tx),
-              ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // Dar alan ya da büyük yazıda tek satıra sığmaz: başlık sözcük
+          // ortasından kesilir, eylem harf harf alt alta kırılırdı (320 pt
+          // + 2x yazı). O durumda iki satır: ikon + başlık (sarabilir) +
+          // çarpı üstte, "Teste başla ›" altta tek satır.
+          final scale = MediaQuery.textScalerOf(context).scale(16) / 16;
+          final stacked = constraints.maxWidth < 400 || scale > 1.3;
+          final icon = Icon(AppIcons.compass, size: 18, color: t.learnTx);
+          final title = Semantics(
+            header: true,
+            child: Text(
+              context.t(K.placementCardTitle),
+              maxLines: stacked ? null : 1,
+              overflow: stacked ? TextOverflow.visible : TextOverflow.ellipsis,
+              style: SahneType.bodyStrong.copyWith(color: t.tx),
             ),
-          ),
-          Flexible(
-            child: SahneButton.text(
-              buttonKey: const ValueKey('learning-placement-start'),
-              label: context.t(K.placementCardStart),
-              onPressed: onStart,
-            ),
-          ),
-          IconButton(
+          );
+          final start = SahneButton.text(
+            buttonKey: const ValueKey('learning-placement-start'),
+            label: context.t(K.placementCardStart),
+            onPressed: onStart,
+          );
+          final dismiss = IconButton(
             key: const ValueKey('learning-placement-dismiss'),
             tooltip: context.t(K.placementSkip),
             constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             icon: Icon(AppIcons.xmark, size: 18, color: t.tx3),
             onPressed: onDismiss,
-          ),
-        ],
+          );
+          if (!stacked) {
+            return Row(
+              children: [
+                icon,
+                const SizedBox(width: SahneSpace.x2),
+                Expanded(child: title),
+                Flexible(child: start),
+                dismiss,
+              ],
+            );
+          }
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  icon,
+                  const SizedBox(width: SahneSpace.x2),
+                  Expanded(child: title),
+                  dismiss,
+                ],
+              ),
+              Align(alignment: AlignmentDirectional.centerStart, child: start),
+              const SizedBox(height: SahneSpace.x2),
+            ],
+          );
+        },
       ),
     );
   }
