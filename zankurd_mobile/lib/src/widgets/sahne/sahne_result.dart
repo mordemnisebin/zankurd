@@ -65,6 +65,11 @@ const double kSahneResultMaxWidth = 560;
 /// arasına bu değerden 16 az eklenir.
 const double kSahneResultRhythmGap = 20;
 
+/// Büyük puan ile hemen altındaki satır ("puan · %67 doğruluk") arası.
+/// Tur 9b (Gemini + Grok): 64 punto rakamın alt boşluğu ile 14 punto alt satır
+/// 8 ile yapışık duruyordu; 8 pt eklendi.
+const double kSahneResultValueGap = SahneSpace.x4;
+
 /// Sonuç şablonunun iskeleti — Şahnê C iskeleti (gece sahnesi) üzerinde
 /// kahraman → sayımlar → ödül → bölümler sırası ve alt perde.
 ///
@@ -365,7 +370,9 @@ class SahneResultHero extends StatelessWidget {
             ),
           ),
         if (subtitle != null) ...[
-          const SizedBox(height: SahneSpace.x2),
+          SizedBox(
+            height: value != null ? kSahneResultValueGap : SahneSpace.x2,
+          ),
           Text(
             subtitle!,
             textAlign: TextAlign.center,
@@ -376,7 +383,11 @@ class SahneResultHero extends StatelessWidget {
           ),
         ],
         if (caption != null) ...[
-          const SizedBox(height: SahneSpace.x2),
+          SizedBox(
+            height: value != null && subtitle == null
+                ? kSahneResultValueGap
+                : SahneSpace.x2,
+          ),
           Text(
             caption!,
             textAlign: TextAlign.center,
