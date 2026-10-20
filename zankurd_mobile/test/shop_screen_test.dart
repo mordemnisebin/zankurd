@@ -182,10 +182,13 @@ void main() {
   testWidgets(
     'neon çerçeve satın alınca depoya yazılan kimlikte frameId "neon" olur',
     (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 1400));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
       final repository = _ShopRepository(coins: 1000);
       await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
       await tester.pumpAndSettle();
 
+      await tester.ensureVisible(find.text('Neon çerçeve'));
       await tester.tap(find.text('Neon çerçeve'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Satın al'));
@@ -198,10 +201,13 @@ void main() {
   testWidgets(
     'kozmetik alındıktan sonra kuşanma kaydı bozulursa tekrar coin harcanmaz',
     (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 1400));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
       final repository = _FailingEffectShopRepository();
       await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
       await tester.pumpAndSettle();
 
+      await tester.ensureVisible(find.text('Neon çerçeve'));
       await tester.tap(find.text('Neon çerçeve'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Satın al'));
@@ -238,6 +244,8 @@ void main() {
   testWidgets(
     'kuyruktan sonra onaylanan satın almanın etkisi açılışta uygulanır',
     (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 1400));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
       SharedPreferences.setMockInitialValues({
         'shop_pending_purchase_effects': ['avatar_frame_neon'],
       });
@@ -257,10 +265,13 @@ void main() {
   testWidgets('kuyruğa alınan çerçeve satın alması etkisi için işaretlenir', (
     tester,
   ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
     final repository = _OfflineSpendShopRepository();
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(find.text('Neon çerçeve'));
     await tester.tap(find.text('Neon çerçeve'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Satın al'));
@@ -411,18 +422,17 @@ void main() {
     final hero = tester.getSize(
       find.byKey(const ValueKey('shop-hero-surface')),
     );
-    // Kurul 4. tur: birincil düğme yan boşluğu 20 (eskiden 16); açıklama bir
-    // satır fazla sarabilir. Kart yine kompakt (eskiden ~490 mp).
-    expect(hero.height, lessThanOrEqualTo(180));
+    // Tur 6: Kurmancî olmayan Türkçe açıklama dar sütunda 3 satıra iner;
+    // kart yine kompakt (eskiden ~490 mp).
+    expect(hero.height, lessThanOrEqualTo(230));
   });
 
-  // Kurul 3. tur 2026-10-20: üç ızgara ürünü iki sütunda sonuncuyu satırda
-  // yalnız bırakıyordu (Neon çerçeve). Tek sayıda ürünün sonuncusu tam
-  // genişlik yatay karttır.
-  testWidgets('tek sayıda ızgara ürününün sonuncusu tam genişlik olur', (
+  // Tur 6: tüm ürünler aynı tam genişlik yatay satır (bkz.
+  // tur6a_magaza_esit_kart_bekcisi_test).
+  testWidgets('tüm ürün kartları tam genişlik ve alt alta dizilir', (
     tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(
       _shell(ShopScreen(repository: _ShopRepository(coins: 300))),
@@ -434,11 +444,13 @@ void main() {
     final last = tester.getRect(
       find.byKey(const ValueKey('shop-item-surface-avatar_frame_neon')),
     );
-    expect(last.width, greaterThan(first.width * 1.8));
+    expect(last.width, first.width);
     expect(last.top, greaterThan(first.bottom - 1));
   });
 
   testWidgets('mağaza bakiyeyi ve ürünleri listeler', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
     final repository = _ShopRepository(coins: 500);
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
@@ -588,14 +600,19 @@ void main() {
   );
 
   testWidgets('satın alma eylemleri düz ve gölgesizdir', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
     final repository = _ShopRepository(coins: 500);
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120'));
+    await tester.ensureVisible(find.text('Satın al · 120'));
     await tester.pumpAndSettle();
     final button = tester.widget<FilledButton>(
-      find.ancestor(of: find.text('120'), matching: find.byType(FilledButton)),
+      find.ancestor(
+        of: find.text('Satın al · 120'),
+        matching: find.byType(FilledButton),
+      ),
     );
     expect(button.style?.elevation?.resolve(<WidgetState>{}) ?? 0, 0);
   });
@@ -629,9 +646,9 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120'));
+    await tester.ensureVisible(find.text('Satın al · 120'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120'));
+    await tester.tap(find.text('Satın al · 120'));
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın al"
     await tester.tap(find.text('Satın al'));
@@ -671,7 +688,7 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.text('120'), findsOneWidget);
+    expect(find.text('Satın al · 120'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -682,9 +699,9 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120'));
+    await tester.ensureVisible(find.text('Satın al · 120'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120'));
+    await tester.tap(find.text('Satın al · 120'));
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın al"
     await tester.tap(find.text('Satın al'));
@@ -739,6 +756,8 @@ void main() {
   // Şerit kaldırıldı; karşılamayı kimlik kartının alt başlığı taşır.
   // Maskot onboarding, liderlik ve boş durumlarda görünmeye devam eder.
   testWidgets('mağaza başlığı tek karşılama gösterir', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
     final repository = _ShopRepository(coins: 500);
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
