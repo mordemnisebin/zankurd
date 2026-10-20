@@ -367,9 +367,14 @@ void main() {
         const ValueKey('shop-buy-spin_wheel_extra'),
       );
       expect(affordable, findsOneWidget);
-      final outlined = tester.widget<OutlinedButton>(affordable);
-      expect(outlined.style!.side!.resolve({})!.color, t.actTx);
-      expect(outlined.style!.backgroundColor!.resolve({}), t.s1);
+      // Kurul 4. tur 2026-10-20: alınabilir fiyat DOLU turuncu birincil
+      // düğme; kilitli fiyat kutusuz düz metin (gri kutu düğme gibi okunuyor,
+      // alınabilen ürün ondan zayıf kalıyordu).
+      final filled = tester.widget<FilledButton>(
+        find.descendant(of: affordable, matching: find.byType(FilledButton)),
+      );
+      expect(filled.onPressed, isNotNull);
+      expect(t.act.computeLuminance(), greaterThan(0.2));
 
       final short = find.byKey(const ValueKey('shop-short-profile_badge_vip'));
       expect(short, findsOneWidget);
@@ -381,6 +386,18 @@ void main() {
         find.descendant(of: short, matching: find.byType(OutlinedButton)),
         findsNothing,
       );
+      expect(
+        find.descendant(of: short, matching: find.byType(FilledButton)),
+        findsNothing,
+        reason: 'kilitli fiyat kutu/düğme değil düz metin',
+      );
+      final note = tester.widget<Text>(
+        find.descendant(
+          of: short,
+          matching: find.textContaining('jeton eksik'),
+        ),
+      );
+      expect(note.style?.color, t.goldTx, reason: 'eksik söz sıcak ton');
     },
   );
 
@@ -575,13 +592,10 @@ void main() {
 
     await tester.ensureVisible(find.text('120'));
     await tester.pumpAndSettle();
-    final button = tester.widget<OutlinedButton>(
-      find.ancestor(
-        of: find.text('120'),
-        matching: find.byType(OutlinedButton),
-      ),
+    final button = tester.widget<FilledButton>(
+      find.ancestor(of: find.text('120'), matching: find.byType(FilledButton)),
     );
-    expect(button.style?.elevation?.resolve(<WidgetState>{}), 0);
+    expect(button.style?.elevation?.resolve(<WidgetState>{}) ?? 0, 0);
   });
 
   testWidgets('bakiye yetersizse uyarı çıkar ve coin harcanmaz', (

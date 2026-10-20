@@ -113,10 +113,7 @@ void main() {
           const ValueKey('shop-item-surface-spin_wheel_extra'),
         );
         expect(
-          find.descendant(
-            of: affordable,
-            matching: find.byType(OutlinedButton),
-          ),
+          find.descendant(of: affordable, matching: find.byType(FilledButton)),
           findsOneWidget,
         );
         expect(
@@ -137,14 +134,12 @@ void main() {
             reason: '$id yetmiyor ama pasif düğme yok',
           );
           expect(find.text('${cost - 200} jeton eksik'), findsOneWidget);
-          // Düğme var ama PASİF: etkin görünen satın alma eylemi yok.
-          final button = tester.widget<FilledButton>(
-            find.descendant(of: chip, matching: find.byType(FilledButton)),
-          );
+          // Kurul 4. tur: kilitli fiyat kutusuz metindir; düğme ya da
+          // dokunulur öğe yok, etkin görünen satın alma eylemi de yok.
           expect(
-            button.onPressed,
-            isNull,
-            reason: '$id için etkin görünen bir satın alma düğmesi kalmış',
+            find.descendant(of: chip, matching: find.byType(FilledButton)),
+            findsNothing,
+            reason: '$id için düğme görünümlü kutu kalmış',
           );
         }
         expect(tester.takeException(), isNull);
