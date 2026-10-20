@@ -590,8 +590,9 @@ class _OnboardingPage extends StatelessWidget {
         // ekranlarıyla aynı hiza); aralarında yalnız [gap] kalır.
         //
         // Tur 10a: içerik kısaysa artan boşluk (yaş onayının üstünde ~100 pt)
-        // tek yerde birikmesin diye üstte, kartla metin arasında ve altta eşit
-        // dağılır (`spaceEvenly`); içerik sığmıyorsa boşluk 0'dır, düzen aynı.
+        // tek yerde (altta) birikmesin diye `spaceEvenly` ile dört eşit paya
+        // bölünür: üst 1, kart-metin 2 (araya konan sıfır boyutlu çocuk), alt 1.
+        // İçerik sığmıyorsa boşluk 0'dır ve düzen aynıdır.
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -652,6 +653,7 @@ class _OnboardingPage extends StatelessWidget {
                   ),
                 ),
               ),
+            if (heroMax > 0) const SizedBox.shrink(),
             Flexible(
               // Kısa içerik kendi boyundadır; uzun içerikte (büyük yazı, uzun
               // çeviri) bant kalan yüksekliğe sınırlanır ve aşağıdan kayar.

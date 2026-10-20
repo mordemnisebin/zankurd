@@ -98,7 +98,7 @@ void main() {
         matching: find.byType(SahneTappable),
       ),
     );
-    final side = (looked.shape as ShapeBorder) as OutlinedBorder;
+    final side = looked.shape as OutlinedBorder;
     expect(
       side.side.color,
       SahneTokens.of(

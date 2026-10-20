@@ -241,7 +241,7 @@ void main() {
       await tester.tap(fee);
       await tester.pumpAndSettle();
 
-      expect(find.text('15 jeton eksik'), findsOneWidget);
+      expect(find.text('25 jeton için 15 jeton eksik'), findsOneWidget);
       expect(find.byKey(const ValueKey('custom-room-open')), findsOneWidget);
       final earn = find.byKey(const ValueKey('custom-room-earn-coins'));
       expect(earn, findsOneWidget);

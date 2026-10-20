@@ -65,9 +65,10 @@ class SahneShortfallNote extends StatelessWidget {
     final t = SahneTokens.of(context);
     final color = warn ? t.shortfallTx : (alert ? t.errTx : t.tx2);
     final base = context.t(K.coinsShort, {'coins': '$missing'});
-    final label = feeLabel == null
+    final join = feeLabel == null ? '' : context.t(K.coinsShortForFee);
+    final label = (join.isEmpty || join == '-')
         ? base
-        : context.t(K.coinsShortForFee, {'fee': feeLabel!, 'note': base});
+        : '$feeLabel $join $base';
     return Semantics(
       container: true,
       label: label,
