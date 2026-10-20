@@ -132,7 +132,7 @@ void main() {
         );
         expect(
           find.text(
-            'Devam etmek için "13 yaşından büyüğüm" kutusunu işaretle.',
+            'Devam etmek için "13 yaşında veya daha büyüğüm" kutusunu işaretle.',
           ),
           findsNothing,
         );
@@ -143,7 +143,7 @@ void main() {
         // Ne YAPILACAĞI artık söyleniyor...
         expect(
           find.text(
-            'Devam etmek için "13 yaşından büyüğüm" kutusunu işaretle.',
+            'Devam etmek için "13 yaşında veya daha büyüğüm" kutusunu işaretle.',
           ),
           findsOneWidget,
         );

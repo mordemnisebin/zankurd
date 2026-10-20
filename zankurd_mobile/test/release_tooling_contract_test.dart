@@ -46,7 +46,7 @@ void main() {
     'Playwright smoke güncel tek sayfalık onboarding sözleşmesini izler',
     () {
       final source = File('tools/playwright/smoke.mjs').readAsStringSync();
-      expect(source, contains("Ez ji 13 salî mezintir im"));
+      expect(source, contains("Ez 13 salî an jî mezintir im"));
       expect(source, contains('await ageGate.click();'));
       expect(source, contains("await ageGate.waitFor({ state: 'visible'"));
       expect(source, contains("aria-checked"));
@@ -79,7 +79,7 @@ void main() {
     final source = File(
       'tools/playwright/learning-focus.mjs',
     ).readAsStringSync();
-    expect(source, contains("Ez ji 13 salî mezintir im"));
+    expect(source, contains("Ez 13 salî an jî mezintir im"));
     expect(source, contains("Wek mêvan bidomîne"));
     expect(source, contains("click('Bidomîne')"));
     expect(source, contains("Hînbûn temam bû"));

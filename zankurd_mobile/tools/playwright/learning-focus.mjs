@@ -27,10 +27,10 @@ try {
  await page.goto(process.env.ZANKURD_URL??'http://127.0.0.1:8876');
  await page.getByText('Bi pirsên kurt peyvan hîn bibe, çandê nas bike.',{exact:true}).waitFor();
  await shot('onboarding');
- const ageGate=page.getByRole('checkbox',{name:'Ez ji 13 salî mezintir im'});
+ const ageGate=page.getByRole('checkbox',{name:'Ez 13 salî an jî mezintir im'});
  await ageGate.waitFor({state:'visible'});
  await ageGate.click();
- await page.waitForFunction(() => document.querySelector('[role="checkbox"][aria-label="Ez ji 13 salî mezintir im"]')?.getAttribute('aria-checked') === 'true');
+ await page.waitForFunction(() => document.querySelector('[role="checkbox"][aria-label="Ez 13 salî an jî mezintir im"]')?.getAttribute('aria-checked') === 'true');
  await click('Bidomîne');
  await click('Dest pê bike');
  await click('Wek mêvan bidomîne');

@@ -28,7 +28,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  const hint = 'Devam etmek için "13 yaşından büyüğüm" kutusunu işaretle.';
+  const hint =
+      'Devam etmek için "13 yaşında veya daha büyüğüm" kutusunu işaretle.';
 
   testWidgets('uyarı yalnız kutu işaretsizken "Sonraki"ye basılınca görünür', (
     tester,
