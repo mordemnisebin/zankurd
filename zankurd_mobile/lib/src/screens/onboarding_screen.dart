@@ -178,66 +178,95 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                         _ageConfirmed = !_ageConfirmed;
                         if (_ageConfirmed) _showAgeGateHint = false;
                       }),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: SahneSpace.x2,
-                          vertical: SahneSpace.x1,
-                        ),
-                        child: Row(
-                          // Kutu metnin ilk satırıyla değil, bloğun
-                          // ortasıyla hizalı (73).
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ExcludeSemantics(
-                              child: IgnorePointer(
-                                child: Checkbox(
-                                  value: _ageConfirmed,
-                                  onChanged: (_) {},
+                      child: ConstrainedBox(
+                        // Kurul 4. tur 2026-10-20: bütün satır ≥ 56 yüksek
+                        // dokunma hedefi (kutu 48'lik alanda, ölçek 1.3).
+                        constraints: const BoxConstraints(minHeight: 56),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: SahneSpace.x2,
+                            vertical: SahneSpace.x1,
+                          ),
+                          child: Row(
+                            // Kutu metnin ilk satırıyla değil, bloğun
+                            // ortasıyla hizalı (73).
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ExcludeSemantics(
+                                child: IgnorePointer(
+                                  child: Transform.scale(
+                                    scale: 1.3,
+                                    child: Checkbox(
+                                      key: const ValueKey(
+                                        'onboarding-age-checkbox',
+                                      ),
+                                      value: _ageConfirmed,
+                                      onChanged: (_) {},
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: SahneSpace.x2),
-                            Expanded(
-                              child: Text(
-                                context.t(K.ageGateLabel),
-                                style: SahneType.body.copyWith(color: t.tx),
+                              const SizedBox(width: SahneSpace.x2),
+                              Expanded(
+                                child: Text(
+                                  context.t(K.ageGateLabel),
+                                  style: SahneType.body.copyWith(color: t.tx),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-              if (_showAgeGateHint) ...[
+              // Kurul 4. tur 2026-10-20 (Opus, AI Studio): pasif "Sonraki"
+              // bozuk sanılıyordu. Kutu işaretlenene kadar nedeni kutunun
+              // altında HEP yazar (sönük bilgi); başarısız denemeden sonra
+              // aynı satır Şaş tonuna döner.
+              // Kısa ekranda (< 700) ve büyük yazıda yer yok: orada yalnız başarısız
+              // denemeden sonra görünür (eski davranış).
+              if (_showAgeGateHint || (!compact && height >= 700)) ...[
                 const SizedBox(height: SahneSpace.x1),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: SahneSpace.x2,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 2),
-                        child: Icon(
-                          AppIcons.triangleExclamation,
-                          size: 16,
-                          color: t.errTx,
-                        ),
-                      ),
-                      const SizedBox(width: SahneSpace.x2),
-                      Expanded(
-                        child: Text(
-                          context.t(K.ageGateHint),
-                          key: const ValueKey('onboarding-age-gate-hint'),
-                          style: SahneType.captionStrong.copyWith(
-                            color: t.errTx,
+                // Yer ayrılı kalır (maintainSize): kutu işaretlenince alt perde
+                // yukarı zıplamasın. Hata anahtarı yalnız başarısız denemede.
+                Visibility(
+                  visible: !_ageConfirmed,
+                  maintainSize: true,
+                  maintainAnimation: true,
+                  maintainState: true,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: SahneSpace.x2,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 2),
+                          child: Icon(
+                            _showAgeGateHint
+                                ? AppIcons.triangleExclamation
+                                : AppIcons.circleInfo,
+                            size: 16,
+                            color: _showAgeGateHint ? t.errTx : t.tx2,
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: SahneSpace.x2),
+                        Expanded(
+                          child: Text(
+                            context.t(K.ageGateHint),
+                            key: _showAgeGateHint
+                                ? const ValueKey('onboarding-age-gate-hint')
+                                : null,
+                            style: SahneType.captionStrong.copyWith(
+                              color: _showAgeGateHint ? t.errTx : t.tx2,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
