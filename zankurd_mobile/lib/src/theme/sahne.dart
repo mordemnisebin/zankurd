@@ -196,9 +196,12 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Gece (2026-10-20): yarı saydam turuncu koyu zeminde çamur kahve-mor
   /// oluyordu; seçili çip OPAK `#3A2A1F` dolgu + 2 px Agir çizgi + `#FFB27F`
   /// etiket (≥ 7.8:1).
-  Color get selFill => _isNight
-      ? const Color(0xFF3A2A1F)
-      : Color.alphaBlend(act.withValues(alpha: 0.28), s1);
+  ///
+  /// Kurul 4. tur 2026-10-20 (AI Studio, Grok): seçili hâl hâlâ yalnız ince
+  /// çerçeveyle okunuyordu; dolgu koyulaştı (gündüz `#FFE1CC`, gece opak
+  /// `#4A321F`). Metin hâlâ ≥ 4.5:1 (bekçi ölçer).
+  Color get selFill =>
+      _isNight ? const Color(0xFF4A321F) : const Color(0xFFFFE1CC);
   Color get selLine => act;
   Color get selTx => _isNight ? const Color(0xFFFFB27F) : actTx;
 

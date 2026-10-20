@@ -12,6 +12,10 @@ import 'support/widget_test_helpers.dart';
 class _ServerHiddenAnswerRepository extends MockZanKurdRepository {
   @override
   bool get usesServerHiddenAnswers => true;
+
+  // Kurul 4. tur: bakiye 0 iken joker dizisi tek sönük satıra iner.
+  @override
+  Future<int> loadCoinBalance() async => 500;
 }
 
 const _question = QuizQuestion(
@@ -77,6 +81,7 @@ void main() {
       ),
     );
     await tester.pump();
+    await tester.pump();
 
     expect(_renderedWildcards(tester), WildcardType.values);
   });
@@ -98,6 +103,7 @@ void main() {
         ),
       ),
     );
+    await tester.pump();
     await tester.pump();
 
     expect(_renderedWildcards(tester), WildcardType.values);

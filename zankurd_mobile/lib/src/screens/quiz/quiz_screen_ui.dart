@@ -690,6 +690,30 @@ extension _QuizScreenUI on _QuizScreenState {
       if (_isSoloMode) WildcardType.changeQuestion,
     ];
 
+    // Kurul 4. tur 2026-10-20 (Opus, önceki turlar dahil): hiç jokere
+    // jetonu yetmeyen oyuncu her soruda dört kilitli çip görüyordu (ölü
+    // ağırlık). Hiçbiri alınamıyorsa satır TEK sönük satıra iner (kilit +
+    // jeton + bakiye + "Yetersiz bakiye"; yeni söz yok); dokununca mevcut
+    // tost nedenini ve jeton kazanma yolunu söyler. En az biri alınabiliyorsa
+    // satır olduğu gibi durur (yetmeyenler zaten sönük).
+    final noneAffordable =
+        jokers.isNotEmpty &&
+        jokers.every(
+          (type) => !_wildcard.isUsed(type) && _coinBalance < type.coinCost,
+        );
+    if (noneAffordable) {
+      return KeyedSubtree(
+        key: const ValueKey('quiz-wildcard-row'),
+        child: KeyedSubtree(
+          key: _wildcardKey,
+          child: _CollapsedWildcardLine(
+            balance: _coinBalance,
+            onTap: _explainLockedWildcard,
+          ),
+        ),
+      );
+    }
+
     return Column(
       key: const ValueKey('quiz-wildcard-row'),
       crossAxisAlignment: CrossAxisAlignment.stretch,

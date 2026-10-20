@@ -1278,95 +1278,76 @@ class _ShopScreenState extends State<ShopScreen> {
     // kendisidir, ikinci kez yazılmaz). Kartın kendisi dokunulabilir kalır:
     // pencere jeton kazanma yolunu sunar.
     final missing = coinShortfall(cost: item.cost, balance: _coinBalance);
-    if (missing > 0) {
-      final note =
-          SahnePriceChip.noteShownFor(price: item.cost, missing: missing)
-          ? context.t(K.coinsShort, {'coins': '$missing'})
-          : null;
-      return Column(
-        crossAxisAlignment: expand
-            ? CrossAxisAlignment.stretch
-            : CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SahneButton.secondary(
-            key: ValueKey('shop-short-${item.id}'),
-            label: label,
-            // Kilit + jeton: pasif düğme "alınamaz"ı yalnız renkle değil
-            // simgeyle de söyler (kurul 2. tur).
-            leading: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  AppIcons.lock,
-                  size: 16,
-                  color: SahneTokens.of(context).tx2,
-                ),
-                const SizedBox(width: SahneSpace.x1),
-                const SahneGlyph(SahneGlyphKind.coin, size: 20),
-              ],
-            ),
-            expand: expand,
-            semanticLabel:
-                '$semanticLabel. ${context.t(K.coinsShort, {'coins': '$missing'})}',
-            onPressed: null,
-          ),
-          if (note != null) ...[
-            const SizedBox(height: SahneSpace.x1),
-            Text(
-              note,
-              textAlign: TextAlign.center,
-              style: SahneType.captionStrong.copyWith(
-                color: SahneTokens.of(context).tx2,
-              ),
-            ),
-          ],
-        ],
-      );
-    }
-    final onPressed = _loading ? null : () => _confirmPurchase(item);
-    // Alınabilir fiyat: turuncu çerçeveli, açık zeminli düğme. Pasif düğme
-    // gri DOLGU olduğundan ikisi bir bakışta ayrılır; eskiden alınabilir
-    // olan da ikincil gri dolguydu ve pasif görünüyordu (kurul 2. tur).
     final t = SahneTokens.of(context);
-    return Semantics(
-      container: true,
-      button: true,
-      enabled: onPressed != null,
-      label: semanticLabel,
-      onTap: onPressed,
-      excludeSemantics: true,
-      child: SizedBox(
-        width: expand ? double.infinity : null,
-        child: OutlinedButton(
-          key: ValueKey('shop-buy-${item.id}'),
-          onPressed: onPressed,
-          style: OutlinedButton.styleFrom(
-            elevation: 0,
-            backgroundColor: t.s1,
-            foregroundColor: t.actTx,
-            minimumSize: const Size(52, 52),
-            textStyle: SahneType.button,
-            padding: const EdgeInsets.symmetric(
-              horizontal: SahneSpace.x4,
-              vertical: SahneSpace.x3,
-            ),
-            // `side` açık yazılır: temanın ikincil kenarı (ink %40) yoksa
-            // şeklin turuncu kenarını ezer.
-            side: BorderSide(color: t.actTx, width: 1.5),
-            shape: SahneShape.m,
-          ),
-          child: Row(
+    if (missing > 0) {
+      // Kurul 4. tur 2026-10-20 (4 model, mağazanın en zayıf ekranı):
+      // alınamayan fiyat gri DOLGULU kutuydu ve düğme gibi okunuyordu;
+      // alınabilen tek ürünün ince çerçevesi ondan zayıf kalıyordu
+      // (erişilebilirlik hiyerarşisi ters). Artık kilitli fiyat KUTUSUZ düz
+      // metindir (kilit + jeton + tutar, ikincil renk); eksik söz sıcak
+      // (altın metin) tonda altında durur: hata değil, hedeftir.
+      // Eylem yalnız alınabilen üründe vardır. Kartın kendisi dokunulabilir
+      // kalır: pencere jeton kazanma yolunu sunar.
+      final note = context.t(K.coinsShort, {'coins': '$missing'});
+      return Semantics(
+        container: true,
+        label: '$semanticLabel. $note',
+        excludeSemantics: true,
+        // Yatay kartta (hero) düğme alanı sınırsız genişlik alır; eksik söz
+        // tek satırda dar ekranı taşırıyordu. Genişlik sınırlı, söz sarar.
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: expand ? double.infinity : 124),
+          child: Column(
+            key: ValueKey('shop-short-${item.id}'),
+            crossAxisAlignment: expand
+                ? CrossAxisAlignment.stretch
+                : CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SahneGlyph(SahneGlyphKind.coin, size: 20),
-              const SizedBox(width: SahneSpace.x2),
-              Flexible(child: Text(label)),
+              ConstrainedBox(
+                // a11y-tap-target: noninteractive — kilitli fiyat bir durumdur.
+                constraints: const BoxConstraints(minHeight: 36),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(AppIcons.lock, size: 16, color: t.tx2),
+                    const SizedBox(width: SahneSpace.x2),
+                    const SahneGlyph(SahneGlyphKind.coin, size: 20),
+                    const SizedBox(width: SahneSpace.x2),
+                    Flexible(
+                      child: Text(
+                        label,
+                        style: SahneType.button.copyWith(
+                          color: t.tx2,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                note,
+                textAlign: TextAlign.center,
+                style: SahneType.captionStrong.copyWith(color: t.goldTx),
+              ),
             ],
           ),
         ),
-      ),
+      );
+    }
+    final onPressed = _loading ? null : () => _confirmPurchase(item);
+    // Alınabilir fiyat: dolu turuncu birincil düğme (jeton + tutar, koyu
+    // etiket). Kartta tek birincil eylem budur; kilitli kardeşleri düz metin.
+    return SahneButton.primary(
+      key: ValueKey('shop-buy-${item.id}'),
+      label: label,
+      leading: const SahneGlyph(SahneGlyphKind.coin, size: 20),
+      arrow: false,
+      expand: expand,
+      semanticLabel: semanticLabel,
+      onPressed: onPressed,
     );
   }
 }

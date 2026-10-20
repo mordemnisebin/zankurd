@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/wildcard.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
@@ -55,7 +56,10 @@ void main() {
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
-    final repository = freshMockRepository();
+    // Kurul 4. tur: bakiye 0 iken joker dizisi tek sönük satıra iner;
+    // joker kapısını ölçmek için jetonlu oyuncu.
+    freshMockRepository();
+    final repository = _RichRepo();
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
@@ -139,4 +143,9 @@ void main() {
     expect(shown, contains(WildcardType.audience));
     expect(shown, contains(WildcardType.doubleAnswer));
   });
+}
+
+class _RichRepo extends MockZanKurdRepository {
+  @override
+  Future<int> loadCoinBalance() async => 500;
 }

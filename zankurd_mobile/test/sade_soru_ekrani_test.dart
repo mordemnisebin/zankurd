@@ -19,6 +19,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
@@ -133,13 +134,18 @@ void main() {
       );
       expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsOneWidget);
 
-      // Başlangıç bakiyesi 0: her joker soluk; ayrı kilit simgesi YOK
-      // (kapsülde yalnız ikon + jeton + fiyat), neden Semantics'te yazar.
-      expect(find.byKey(const ValueKey('joker-lock')), findsNothing);
-      expect(find.byType(SahneJokerButton), findsWidgets);
+      // Başlangıç bakiyesi 0: hiçbir jokere yetmez; kurul 4. tur 2026-10-20:
+      // dört ölü kilitli çip yerine TEK sönük satır (kilit + bakiye).
+      expect(find.byType(SahneJokerButton), findsNothing);
+      expect(find.byIcon(AppIcons.lock), findsWidgets);
 
-      // Kilitli jokere dokununca neden söylenir (ölü düğme yok).
-      await tester.tap(find.byType(SahneJokerButton).first);
+      // Satıra dokununca neden söylenir (ölü düğme yok).
+      await tester.tap(
+        find.descendant(
+          of: find.byKey(const ValueKey('quiz-wildcard-row')),
+          matching: find.byIcon(AppIcons.lock),
+        ),
+      );
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 300));
       expect(

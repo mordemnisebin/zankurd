@@ -1686,3 +1686,57 @@ class _CoinBalanceLine extends StatelessWidget {
     );
   }
 }
+
+/// Hiçbir jokere jetonu yetmeyen oyuncunun tek sönük satırı (kurul 4. tur
+/// 2026-10-20): kilit + jeton + bakiye + "Yetersiz bakiye". Dört kilitli çip
+/// yerine geçer; dokunulabilir (48 yüksek) ve nedenini tostla söyler.
+class _CollapsedWildcardLine extends StatelessWidget {
+  const _CollapsedWildcardLine({required this.balance, required this.onTap});
+
+  final int balance;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final label = context.t(K.insufficientBalance);
+    return Semantics(
+      button: true,
+      label: '$balance ${context.t(K.coinWord)}. $label',
+      excludeSemantics: true,
+      onTap: onTap,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: sahneTapTarget),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(AppIcons.lock, size: 16, color: t.tx2),
+              const SizedBox(width: SahneSpace.x2),
+              const SahneGlyph(SahneGlyphKind.coin, size: 16),
+              const SizedBox(width: SahneSpace.x1),
+              Text(
+                groupThousands(balance),
+                style: SahneType.captionStrong.copyWith(
+                  color: t.goldTx,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+              const SizedBox(width: SahneSpace.x2),
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: SahneType.captionStrong.copyWith(color: t.tx2),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
