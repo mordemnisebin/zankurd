@@ -1,3 +1,4 @@
+// Kurul 5. tur 2026-10-20: boş yuvada rozet yok, tek satır.
 // 2026-10-19 sadeleşme (ikinci tur): "Hazırım" anahtarı ayrı kart (SwitchListTile) değil yerel oyuncunun KENDİ satırındaki Switch (anahtar room-ready-switch).
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
@@ -718,12 +719,13 @@ void main() {
         ),
         findsOneWidget,
       );
+      // Kurul 5. tur 2026-10-20: "Henüz yok" rozeti kalktı (metni yineliyordu).
       expect(
         find.descendant(
           of: slot,
           matching: find.text(Tr.forKu(K.statPending, false)),
         ),
-        findsOneWidget,
+        findsNothing,
       );
     },
   );
