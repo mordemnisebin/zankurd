@@ -69,10 +69,10 @@ class SahneButton extends StatelessWidget {
     required this.onPressed,
     this.arrow = true,
     this.quiet = false,
+    this.icon,
     this.semanticLabel,
     this.buttonKey,
   }) : _kind = _SahneButtonKind.text,
-       icon = null,
        leading = null,
        loading = false,
        expand = false;
@@ -270,7 +270,7 @@ class SahneButton extends StatelessWidget {
           key: buttonKey,
           onPressed: press,
           style: TextButton.styleFrom(
-            foregroundColor: quiet ? t.tx2 : t.actTx,
+            foregroundColor: quiet ? t.tx2 : t.linkTx,
             disabledForegroundColor: t.tx3,
             minimumSize: const Size(44, 44),
             textStyle: SahneType.captionStrong,

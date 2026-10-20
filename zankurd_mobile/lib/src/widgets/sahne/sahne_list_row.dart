@@ -6,6 +6,9 @@ import 'sahne_foundation.dart';
 import 'sahne_painters.dart';
 import 'sahne_topic_marks.dart';
 
+/// Satır metni ile sağdaki ok simgesi arasındaki en az boşluk (7. kurul).
+const double sahneChevronGuard = 16;
+
 /// Eski ad. 2026-09-29 doğallık (K5): avatar elmas değil pahlı kare;
 /// çağıranlar kırılmasın diye ad [SahneAvatar]a yönlenir.
 typedef SahneDiamondAvatar = SahneAvatar;
@@ -540,7 +543,10 @@ class SahneListRow extends StatelessWidget {
               trail,
             ],
             if (chevron) ...[
-              const SizedBox(width: SahneSpace.x1),
+              // 7. kurul (Opus + ChatGPT): uzun Kurmancî alt satır ok
+              // simgesine yapışıyordu (27_play_hub_ku); metin ile chevron
+              // arası en az 16 px koruma boşluğu.
+              const SizedBox(width: sahneChevronGuard),
               ExcludeSemantics(
                 child: Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
               ),

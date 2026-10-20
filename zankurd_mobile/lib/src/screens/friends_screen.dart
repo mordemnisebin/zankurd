@@ -853,13 +853,6 @@ class _SentMark extends StatelessWidget {
   }
 }
 
-/// İki eylemli satır telefon genişliğinde (390 dahil) ya da büyük yazıda adın
-/// altına iner; yan yana sığdırınca "Çevrimdışı" ve düğme etiketi ikişer
-/// satıra bölünüyordu (ekran turu, 2026-10-14).
-bool _stackActions(BuildContext context) =>
-    MediaQuery.sizeOf(context).width < 430 ||
-    MediaQuery.textScalerOf(context).scale(1) > 1.3;
-
 class _FriendRow extends StatelessWidget {
   const _FriendRow({
     required this.friend,
@@ -927,69 +920,81 @@ class _FriendRow extends StatelessWidget {
       subtitleStrong: online,
       // 2026-10-14: ürünün günlük aktif oyuncusu 3-25; iki arkadaşın aynı
       // anda çevrimiçi olması neredeyse hiç yok. Canlı oda daveti oyuncuyu
-      // boş bir lobide bekletiyordu. Birincil eylem artık sırayla meydan
-      // okumadır (arkadaş sonra oynar, bildirim alır); canlı oda daveti
-      // sakin bir simge düğmesine indi. Meydan okuma yoksa (RPC'ler
-      // sunucuda yok ya da bayrak kapalı) eski yazılı "Odaya çağır" kalır.
-      // Oda kurulurken iki düğme de pasifleşir (eskiden ikinci dokunuş
-      // sessizce yutuluyordu).
-      trailing: onChallenge == null && onRemove == null
-          ? ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 180),
-              child: SahneButton.secondary(
-                key: ValueKey('friend-action-${friend.friendName}'),
-                label: context.t(K.inviteToRoom),
-                icon: busy ? AppIcons.hourglass : null,
-                onPressed: busy ? null : onPlay,
-              ),
+      // boş bir lobide bekletiyordu. Birincil eylem sırayla meydan okumadır
+      // (arkadaş sonra oynar, bildirim alır).
+      //
+      // 7. kurul (Opus 6. tur + ChatGPT 7. tur): her arkadaşın altındaki iki
+      // büyük çerçeveli düğme listeyi düğme yığınına çeviriyordu. Satır içi,
+      // sağda: meydan oku simge düğmesi (44) + "⋯" menüsü ("Odaya çağır",
+      // "Arkadaşlıktan çıkar"). Meydan okuma yoksa (RPC'ler sunucuda yok ya
+      // da bayrak kapalı) yazılı "Odaya çağır" düğmesi kalır. Oda kurulurken
+      // eylemler pasifleşir (eskiden ikinci dokunuş sessizce yutuluyordu).
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (onChallenge != null)
+            SahneIconButton(
+              key: ValueKey('friend-action-${friend.friendName}'),
+              icon: AppIcons.swords,
+              semanticLabel: context.t(K.challengeFriendActionA11y, {
+                'name': friend.friendName,
+              }),
+              tooltip: context.t(K.challengeFriendAction),
+              onPressed: busy ? null : onChallenge,
             )
-          // Wrap: büyük yazıda iki eylem sığmazsa simge düğmesi alta geçer
-          // (Row taşıyordu; 360 genişlik, 2x yazı).
-          : Wrap(
-              alignment: WrapAlignment.end,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              spacing: SahneSpace.x1,
-              runSpacing: SahneSpace.x1,
-              children: [
-                if (onChallenge != null) ...[
-                  SahneButton.secondary(
-                    key: ValueKey('friend-action-${friend.friendName}'),
-                    label: context.t(K.challengeFriendAction),
-                    semanticLabel: context.t(K.challengeFriendActionA11y, {
-                      'name': friend.friendName,
-                    }),
-                    icon: AppIcons.swords,
-                    onPressed: busy ? null : onChallenge,
-                  ),
-                  // Kapı simgesi neyi yaptığını söylemiyordu (kurul
-                  // 2026-10-20): yazılı eylem, mevcut söz. Kurul 4. tur
-                  // (13): yalnız metin olan bu eylem, kenarlı "Meydan oku"
-                  // düğmesinin yanında öksüz duruyordu; iki eylem de aynı
-                  // ikincil (kenarlı) düğmedir.
-                  SahneButton.secondary(
-                    key: ValueKey('friend-room-${friend.friendName}'),
-                    label: context.t(K.inviteToRoom),
-                    onPressed: busy ? null : onPlay,
-                  ),
-                ] else
-                  SahneButton.secondary(
-                    key: ValueKey('friend-action-${friend.friendName}'),
-                    label: context.t(K.inviteToRoom),
-                    icon: busy ? AppIcons.hourglass : null,
-                    onPressed: busy ? null : onPlay,
-                  ),
-                if (onRemove != null)
-                  SahneIconButton(
-                    key: ValueKey('friend-remove-${friend.friendName}'),
-                    icon: AppIcons.xmark,
-                    semanticLabel: context.t(K.removeFriendAction),
-                    onPressed: onRemove,
-                  ),
-              ],
+          else
+            SahneButton.secondary(
+              key: ValueKey('friend-action-${friend.friendName}'),
+              label: context.t(K.inviteToRoom),
+              icon: busy ? AppIcons.hourglass : null,
+              onPressed: busy ? null : onPlay,
             ),
-      stackTrailing: onChallenge == null && onRemove == null
-          ? null
-          : _stackActions(context),
+          if (onChallenge != null || onRemove != null) ...[
+            const SizedBox(width: SahneSpace.x1),
+            SahneIconButton(
+              key: ValueKey('friend-more-${friend.friendName}'),
+              icon: AppIcons.ellipsis,
+              semanticLabel: context.t(K.moreOptions),
+              onPressed: () => _openMenu(context),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  void _openMenu(BuildContext context) {
+    unawaited(
+      showSahneSheet<void>(
+        context: context,
+        title: friend.friendName,
+        builder: (sheetContext) => SahneListGroup(
+          children: [
+            if (onChallenge != null)
+              SahneListRow.icon(
+                key: ValueKey('friend-room-${friend.friendName}'),
+                icon: AppIcons.doorOpen,
+                title: context.t(K.inviteToRoom),
+                onTap: busy
+                    ? null
+                    : () {
+                        Navigator.of(sheetContext).pop();
+                        onPlay();
+                      },
+              ),
+            if (onRemove != null)
+              SahneListRow.icon(
+                key: ValueKey('friend-remove-${friend.friendName}'),
+                icon: AppIcons.xmark,
+                title: context.t(K.removeFriendAction),
+                onTap: () {
+                  Navigator.of(sheetContext).pop();
+                  onRemove!();
+                },
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

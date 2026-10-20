@@ -202,6 +202,13 @@ void main() {
       find.byKey(const ValueKey('play-hub-create-room')),
       200,
     );
+    // 320 pt + 2x yazıda liste satırları ok boşluğu (16) yüzünden bir satır
+    // daha sarar; `scrollUntilVisible` düğmeyi görünür ilan edip kenarda
+    // bırakabiliyor. Dokunmadan önce tam görünür kıl.
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('play-hub-create-room')),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
   }

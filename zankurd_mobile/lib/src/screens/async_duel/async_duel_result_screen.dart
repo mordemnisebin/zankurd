@@ -14,6 +14,7 @@ import '../../utils/app_route.dart';
 import '../../utils/join_deep_link.dart';
 import '../../utils/player_identity.dart';
 import '../../utils/error_reporter.dart';
+import '../../widgets/player_avatar.dart';
 import '../../widgets/dialog_action_pair.dart';
 import '../../widgets/sahne/sahne.dart';
 import 'async_duel_play_screen.dart';
@@ -288,6 +289,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
     final canStartNew = view.kind != AsyncDuelResultKind.unfinished;
 
     final SahneResultHero hero;
+    Widget? scoreboard;
     int xp = 0;
     switch (view.kind) {
       case AsyncDuelResultKind.completed:
@@ -298,6 +300,19 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
             ? context.t(K.asyncDuelOpponent)
             : context.playerDisplayName(rawOpponentName);
         xp = _completedXp(view);
+        if (view.myCorrect != null && view.opponentCorrect != null) {
+          scoreboard = Padding(
+            padding: const EdgeInsets.symmetric(vertical: SahneSpace.x1),
+            child: _DuelScoreboard(
+              myName: context.t(K.you),
+              myCorrect: view.myCorrect!,
+              opponentName: opponentName,
+              opponentCorrect: view.opponentCorrect!,
+              total: view.total,
+              outcome: outcome,
+            ),
+          );
+        }
         // 2026-09-29 doğallık: sonuçta iki amblem üst üsteydi (taç/bayrak/
         // terazi + iki avatarlı VS amblemi). Avatarlar yalnız "sen" ve
         // rakibin baş harfiydi; aynı bilgi skor satırında ("Sen 2 – 0
@@ -378,6 +393,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
       closeLabel: context.t(K.close),
       contextLabel: context.t(K.asyncDuel),
       hero: hero,
+      stats: scoreboard,
       // Sıfır XP ("+0 XP") gösterilmez: yanlış ya da süresi dolmuş sıfır
       // doğrulu düello ödülsüz biter.
       rewards: xp > 0
@@ -495,5 +511,87 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
         context,
       ).showSnackBar(SnackBar(content: Text(context.t(K.challengeLinkCopied))));
     }
+  }
+}
+
+/// Tamamlanmış düellonun iki oyunculu skor kartı: avatar, ad, "doğru/7".
+///
+/// Kusur (7. kurul, Opus + ChatGPT): zafer ekranının alt yarısı boştu; tek
+/// "+130 XP" kartı vardı ve "kime karşı, kaç doğru" yalnız başlığın altındaki
+/// tek satırda okunuyordu. Modelde soru-soru doğru/yanlış dizisi YOK
+/// ([AsyncDuelResultView] yalnız iki doğru sayısı taşır), bu yüzden şerit
+/// uydurulmaz: iki oyuncu yan yana, kazananın sayısı Zêr.
+class _DuelScoreboard extends StatelessWidget {
+  const _DuelScoreboard({
+    required this.myName,
+    required this.myCorrect,
+    required this.opponentName,
+    required this.opponentCorrect,
+    required this.total,
+    required this.outcome,
+  });
+
+  final String myName;
+  final int myCorrect;
+  final String opponentName;
+  final int opponentCorrect;
+  final int total;
+  final AsyncDuelOutcome outcome;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    Widget side(String name, int correct, bool winner) => Expanded(
+      child: Semantics(
+        container: true,
+        label: '$name, $correct/$total ${context.t(K.correct)}',
+        excludeSemantics: true,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            PlayerAvatar(radius: 28, displayName: name),
+            const SizedBox(height: SahneSpace.x2),
+            Text(
+              name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: SahneType.captionStrong.copyWith(color: t.tx2),
+            ),
+            const SizedBox(height: SahneSpace.x1),
+            Text(
+              '$correct/$total',
+              style: SahneType.headline.copyWith(
+                color: winner ? t.goldTx : t.tx,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
+            ),
+            Text(
+              context.t(K.correct),
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+          ],
+        ),
+      ),
+    );
+    return SahneSurfaceCard(
+      key: const ValueKey('async-duel-result-scoreboard'),
+      padding: const EdgeInsets.symmetric(
+        horizontal: SahneSpace.x4,
+        vertical: SahneSpace.x4,
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            side(myName, myCorrect, outcome == AsyncDuelOutcome.win),
+            VerticalDivider(width: SahneSpace.x4 * 2 + 1, color: t.line),
+            side(
+              opponentName,
+              opponentCorrect,
+              outcome == AsyncDuelOutcome.loss,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

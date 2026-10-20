@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../game/avatar_frames.dart';
 import '../l10n/strings.dart';
 import '../models/leaderboard_entry.dart';
 import '../theme/app_icons.dart';
@@ -251,14 +252,37 @@ class _PodiumColumn extends StatelessWidget {
                 const SahneGlyph(SahneGlyphKind.crown, size: 28),
                 const SizedBox(height: SahneSpace.x1),
               ],
-              PlayerAvatar(
-                radius: _avatarRadius[place],
-                photoUrl: entry.avatarUrl,
-                iconId: entry.avatarIcon,
-                colorHex: entry.avatarColor,
-                frameId: entry.avatarFrame,
-                displayName: entry.displayName,
-                colorOverride: colorOverride,
+              // Madalya halkası (7. kurul): ilk üçün avatarı altın / gümüş /
+              // bronz ince halkayla ayrışır. Halka avatarın kendi pahlı
+              // şeklini izler (yuvarlak değil); oyuncunun seçtiği çerçeve
+              // içeride aynen kalır.
+              DecoratedBox(
+                key: ValueKey('podium-medal-ring-${place + 1}'),
+                decoration: ShapeDecoration(
+                  shape: SahneShape.withSide(
+                    SahneShape.forSize(_avatarRadius[place] * 2 + 8),
+                    frameColor(
+                      const [
+                        AvatarFrame.gold,
+                        AvatarFrame.silver,
+                        AvatarFrame.bronze,
+                      ][place],
+                    ),
+                    width: 2,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: PlayerAvatar(
+                    radius: _avatarRadius[place],
+                    photoUrl: entry.avatarUrl,
+                    iconId: entry.avatarIcon,
+                    colorHex: entry.avatarColor,
+                    frameId: entry.avatarFrame,
+                    displayName: entry.displayName,
+                    colorOverride: colorOverride,
+                  ),
+                ),
               ),
               const SizedBox(height: SahneSpace.x2),
             ],

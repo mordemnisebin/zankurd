@@ -123,22 +123,32 @@ void main() {
 
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  testWidgets('meydan okuma destekliyken satırın yazılı eylemi "Meydan oku"', (
+  // 7. kurul: satır başına iki büyük çerçeveli düğme listeyi düğme yığınına
+  // çeviriyordu. Artık sağda TEK simge düğmesi (meydan oku, 48 dokunma
+  // kutusu) + "⋯" menüsü; "Odaya çağır" menüde, satır ~64 yüksekliğinde.
+  testWidgets('meydan okuma destekliyken satırda simge + ⋯ menüsü; satır ~64', (
     tester,
   ) async {
     await tester.pumpWidget(_app(_Repo()));
     await tester.pumpAndSettle();
 
-    expect(find.text('Meydan oku'), findsNWidgets(2));
-    // Tasarım kurulu tüm ekranlar 2026-10-20: kapı simgesi neyi yaptığını
-    // söylemiyordu; canlı oda daveti artık yazılı SESSİZ metin eylemi
-    // ("Meydan oku" ikincil düğme kalır, bu ikincisi metin).
-    final roomButton = find.byKey(const ValueKey('friend-room-Rojda'));
-    expect(roomButton, findsOneWidget);
-    expect(find.text('Odaya çağır'), findsNWidgets(2));
-    expect(find.byIcon(AppIcons.doorOpen), findsNothing);
-    expect(tester.getSize(roomButton).width, greaterThanOrEqualTo(48));
-    expect(tester.getSize(roomButton).height, greaterThanOrEqualTo(48));
+    final challenge = find.byKey(const ValueKey('friend-action-Rojda'));
+    expect(challenge, findsOneWidget);
+    expect(find.byIcon(AppIcons.swords), findsNWidgets(2));
+    expect(tester.getSize(challenge).width, greaterThanOrEqualTo(44));
+    expect(tester.getSize(challenge).height, greaterThanOrEqualTo(44));
+    // Satırda yazılı düğme yok; "Odaya çağır" menüde.
+    expect(find.text('Meydan oku'), findsNothing);
+    expect(find.text('Odaya çağır'), findsNothing);
+    final row = find.byKey(const ValueKey('friend-row-Rojda'));
+    expect(tester.getSize(row).height, lessThanOrEqualTo(72));
+
+    await tester.tap(find.byKey(const ValueKey('friend-more-Rojda')));
+    await tester.pumpAndSettle();
+    final roomItem = find.byKey(const ValueKey('friend-room-Rojda'));
+    expect(roomItem, findsOneWidget);
+    expect(find.text('Odaya çağır'), findsOneWidget);
+    expect(tester.getSize(roomItem).height, greaterThanOrEqualTo(48));
   });
 
   // Tasarım kurulu tüm ekranlar 2026-10-20: bekleyen isteğin "Kabul"ü
@@ -178,11 +188,15 @@ void main() {
     },
   );
 
-  testWidgets('simge düğmesi hâlâ canlı oda açar', (tester) async {
+  testWidgets('⋯ menüsündeki "Odaya çağır" hâlâ canlı oda açar', (
+    tester,
+  ) async {
     final repo = _Repo();
     await tester.pumpWidget(_app(repo));
     await tester.pumpAndSettle();
 
+    await tester.tap(find.byKey(const ValueKey('friend-more-Rojda')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('friend-room-Rojda')));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));

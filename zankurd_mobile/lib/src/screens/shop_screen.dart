@@ -998,6 +998,9 @@ class _ShopScreenState extends State<ShopScreen> {
   // yolunu sunar). Ürün kimliği yalnız önizleme karosunda yaşar.
   static const double _actionWidth = 136;
 
+  /// Kilit · jeton · tutar arası ve "N jeton eksik" üstü: 6 px.
+  static const double _lockGap = 6;
+
   Widget _buildShopCard(
     ShopItem item,
     bool ku, {
@@ -1010,18 +1013,29 @@ class _ShopScreenState extends State<ShopScreen> {
     final isPurchased = _purchasedItemIds.contains(item.id);
 
     {
-      final largeText = MediaQuery.textScalerOf(context).scale(16) >= 24;
+      // Büyük yazıda ya da dar telefonda (< 360) sağ sütun açıklamayı 4+
+      // satıra sıkıştırır: fiyat/eylem açıklamanın altına iner.
+      final largeText =
+          MediaQuery.textScalerOf(context).scale(16) >= 24 ||
+          MediaQuery.sizeOf(context).width < 360;
       final texts = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
+            // 7. kurul hiyerarşisi: ad 16/600, açıklama 13 (kesilmez),
+            // fiyat 14/600 — üç kademe birbirinden ayrışır.
             style: SahneType.bodyStrong.copyWith(
               color: isPurchased ? t.tx2 : t.tx,
+              fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: SahneSpace.x1),
-          Text(desc, style: SahneType.caption.copyWith(color: t.tx2)),
+          Text(
+            desc,
+            // Açıklama hiçbir dilde kesilmez: oyuncu ne aldığını bilmeli.
+            style: SahneType.caption.copyWith(color: t.tx2, fontSize: 13),
+          ),
         ],
       );
       final action = isPurchased
@@ -1129,14 +1143,16 @@ class _ShopScreenState extends State<ShopScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(AppIcons.lock, size: 16, color: t.tx2),
-                    const SizedBox(width: SahneSpace.x2),
+                    const SizedBox(width: _lockGap),
                     const SahneGlyph(SahneGlyphKind.coin, size: 20),
-                    const SizedBox(width: SahneSpace.x2),
+                    const SizedBox(width: _lockGap),
                     Flexible(
                       child: Text(
                         label,
                         style: SahneType.button.copyWith(
                           color: t.tx2,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
                           fontFeatures: const [FontFeature.tabularFigures()],
                         ),
                       ),
@@ -1146,11 +1162,15 @@ class _ShopScreenState extends State<ShopScreen> {
               ),
               // Kurul 5. tur: söz kendi satırında, fiyattan 4 px ayrı ve
               // koyu kehribar (gündüz ≥ 4.5:1).
-              const SizedBox(height: SahneSpace.x1),
+              const SizedBox(height: _lockGap),
               Text(
                 note,
                 textAlign: TextAlign.center,
-                style: SahneType.captionStrong.copyWith(color: t.shortfallTx),
+                style: SahneType.caption.copyWith(
+                  color: t.shortfallTx,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),

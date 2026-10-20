@@ -188,8 +188,9 @@ void main() {
       );
       // Düğmenin sözü ile işi aynı olmalı: oyun başlatmıyor. Birincil eylem
       // sırayla meydan okuma (2026-10-14, bkz. friends_challenge_primary_
-      // test.dart); canlı oda daveti simge düğmesinde.
-      expect(find.text('Meydan oku'), findsNWidgets(2));
+      // test.dart); satırda simge düğmesi (7. kurul), canlı oda daveti "⋯"
+      // menüsünde.
+      expect(find.byIcon(AppIcons.swords), findsNWidgets(2));
       expect(find.text('Oyna'), findsNothing);
     });
 

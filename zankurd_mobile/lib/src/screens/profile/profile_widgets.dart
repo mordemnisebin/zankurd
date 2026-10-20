@@ -144,22 +144,22 @@ class _ProfileHeroCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (hasOwnName)
-                FittedBox(
-                  fit: BoxFit.scaleDown,
+              // 7. kurul (Opus + Grok): ad yokken başlık yerinde bir
+              // bağlantı ("Oyundaki adını gir ›") duruyordu. Artık başlık
+              // hep gerçek bir kimliktir: ad varsa ad, yoksa "Oyuncu ZK-4F7K"
+              // (kod dokununca kopyalanır); adı girme eylemi kalemli bağlantı
+              // olarak altında.
+              _identityTitle(context, t),
+              if (!hasOwnName)
+                Align(
                   alignment: AlignmentDirectional.centerStart,
-                  child: Text(
-                    displayName,
-                    maxLines: 1,
-                    style: SahneType.headline.copyWith(color: t.tx),
+                  child: SahneButton.text(
+                    buttonKey: const ValueKey('profile-set-name-cta'),
+                    label: Tr.forKu(K.playerNameHint, ku).replaceAll('…', ''),
+                    icon: AppIcons.pen,
+                    arrow: false,
+                    onPressed: onSetName,
                   ),
-                )
-              else
-                SahneButton.text(
-                  buttonKey: const ValueKey('profile-set-name-cta'),
-                  label: Tr.forKu(K.playerNameHint, ku).replaceAll('…', ''),
-                  arrow: true,
-                  onPressed: onSetName,
                 ),
               const SizedBox(height: SahneSpace.x1),
               Row(
@@ -174,28 +174,50 @@ class _ProfileHeroCard extends StatelessWidget {
                   ),
                   if (coins != null) ...[
                     const Spacer(),
-                    const SahneGlyph(SahneGlyphKind.coin, size: 16),
-                    const SizedBox(width: SahneSpace.x1),
-                    Text(
-                      groupThousands(coins!),
-                      style: SahneType.captionStrong.copyWith(
-                        color: t.tx,
-                        fontFeatures: const [FontFeature.tabularFigures()],
+                    // Jeton ayrı küçük hap: çubuğun üstüne sıkışan çıplak
+                    // sayı değil.
+                    DecoratedBox(
+                      key: const ValueKey('profile-coin-pill'),
+                      decoration: ShapeDecoration(
+                        color: t.goldTint,
+                        shape: const StadiumBorder(),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: SahneSpace.x2,
+                          vertical: SahneSpace.x1,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SahneGlyph(SahneGlyphKind.coin, size: 16),
+                            const SizedBox(width: SahneSpace.x1),
+                            Text(
+                              groupThousands(coins!),
+                              style: SahneType.captionStrong.copyWith(
+                                color: t.tx,
+                                fontFeatures: const [
+                                  FontFeature.tabularFigures(),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ],
               ),
-              const SizedBox(height: SahneSpace.x1),
+              const SizedBox(height: SahneSpace.x2),
               SahneProgressBar(
                 value: xpNeeded > 0 ? xpInLevel / xpNeeded : 0,
                 tone: SahneProgressTone.gold,
-                height: 6,
+                height: 8,
                 semanticLabel: '${Tr.forKu(K.progressLevelLabel, ku)} $level',
               ),
-              if (playerTag != null)
+              if (playerTag != null && hasOwnName)
                 _PlayerTagChip(tag: playerTag!, ku: ku)
-              else
+              else if (playerTag == null)
                 Text(
                   Tr.forKu(K.keepProgress, ku),
                   style: SahneType.caption.copyWith(color: t.tx2),
@@ -229,6 +251,52 @@ class _ProfileHeroCard extends StatelessWidget {
       ],
     );
   }
+
+  /// Kimlik başlığı: ad varsa ad; yoksa "Oyuncu ZK-4F7K" (kod varsa).
+  Widget _identityTitle(BuildContext context, SahneTokens t) {
+    final tag = playerTag;
+    final label = tag == null
+        ? null
+        : (tag.toUpperCase().startsWith('ZK-') ? tag : 'ZK-$tag');
+    final text = hasOwnName || label == null
+        ? displayName
+        : '$displayName $label';
+    final title = FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: AlignmentDirectional.centerStart,
+      child: Text(
+        text,
+        maxLines: 1,
+        style: SahneType.headline.copyWith(color: t.tx),
+      ),
+    );
+    if (hasOwnName || label == null) return title;
+    return Semantics(
+      button: true,
+      label: Tr.forKu(K.playerTagSemantics, ku, {'tag': label}),
+      excludeSemantics: true,
+      child: GestureDetector(
+        key: const ValueKey('profile-title-tag'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _copyPlayerTag(context, label, ku),
+        child: title,
+      ),
+    );
+  }
+}
+
+/// Oyuncu kodunu panoya kopyalar ve söyler.
+Future<void> _copyPlayerTag(BuildContext context, String label, bool ku) async {
+  await Clipboard.setData(ClipboardData(text: label));
+  if (!context.mounted) return;
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(
+      SnackBar(
+        content: Text(Tr.forKu(K.playerTagCopied, ku)),
+        duration: const Duration(seconds: 2),
+      ),
+    );
 }
 
 /// Kendi oyuncu kodun: dokununca panoya kopyalanır.
@@ -253,18 +321,7 @@ class _PlayerTagChip extends StatelessWidget {
       child: SahneTappable(
         shape: SahneShape.m,
         color: Colors.transparent,
-        onTap: () async {
-          await Clipboard.setData(ClipboardData(text: label));
-          if (!context.mounted) return;
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text(Tr.forKu(K.playerTagCopied, ku)),
-                duration: const Duration(seconds: 2),
-              ),
-            );
-        },
+        onTap: () => _copyPlayerTag(context, label, ku),
         child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: sahneTapTarget,
