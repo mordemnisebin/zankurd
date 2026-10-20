@@ -210,7 +210,16 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                 onReport: _reportProfile,
               ),
               if (entries.length > 3) ...[
-                const SizedBox(height: SahneSpace.cardGap),
+                // 7. kurul: kürsü ile liste birbirinden kopuktu; kürsü
+                // altında 24 boşluk + ince ayraç, sonra liste.
+                const SizedBox(height: SahneSpace.x6),
+                Divider(
+                  key: const ValueKey('leaderboard-podium-divider'),
+                  height: 1,
+                  thickness: 1,
+                  color: SahneTokens.of(context).line,
+                ),
+                const SizedBox(height: SahneSpace.x4),
                 listOf(entries.skip(3).toList(growable: false)),
               ],
             ] else
