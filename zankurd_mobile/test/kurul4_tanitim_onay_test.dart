@@ -61,24 +61,33 @@ void main() {
     expect(completed, isTrue);
   });
 
-  testWidgets('onay satırı ≥ 48 yüksek, kutu büyütülmüş; neden baştan yazar', (
-    tester,
-  ) async {
-    await pump(tester, () {});
-    final row = tester.getSize(
-      find.byKey(const ValueKey('onboarding-age-gate')),
-    );
-    expect(row.height, greaterThanOrEqualTo(48));
-    // Kurul 5. tur 2026-10-20: kutu standart yuvarlak kare (sekizgen
-    // Material Checkbox kalktı), ≥ 28 px.
-    final box = tester.getSize(
-      find.byKey(const ValueKey('onboarding-age-checkbox')),
-    );
-    expect(box.width, greaterThanOrEqualTo(28));
-    expect(find.byType(Checkbox), findsNothing);
-    expect(
-      find.text('Devam etmek için "13 yaşından büyüğüm" kutusunu işaretle.'),
-      findsOneWidget,
-    );
-  });
+  testWidgets(
+    'onay satırı ≥ 48 yüksek, kutu büyütülmüş; neden yalnız denemeden sonra yazar',
+    (tester) async {
+      await pump(tester, () {});
+      final row = tester.getSize(
+        find.byKey(const ValueKey('onboarding-age-gate')),
+      );
+      expect(row.height, greaterThanOrEqualTo(48));
+      // Kurul 5. tur 2026-10-20: kutu standart yuvarlak kare (sekizgen
+      // Material Checkbox kalktı), ≥ 28 px.
+      final box = tester.getSize(
+        find.byKey(const ValueKey('onboarding-age-checkbox')),
+      );
+      expect(box.width, greaterThanOrEqualTo(28));
+      expect(find.byType(Checkbox), findsNothing);
+      // Tur 8: neden baştan DEĞİL, yalnız "Sonraki"ye basılınca yazar (hiçbir
+      // şeye dokunulmadan hata gibi duruyordu).
+      expect(
+        find.text('Devam etmek için "13 yaşından büyüğüm" kutusunu işaretle.'),
+        findsNothing,
+      );
+      await tester.tap(find.text('Sonraki'));
+      await tester.pumpAndSettle();
+      expect(
+        find.text('Devam etmek için "13 yaşından büyüğüm" kutusunu işaretle.'),
+        findsOneWidget,
+      );
+    },
+  );
 }

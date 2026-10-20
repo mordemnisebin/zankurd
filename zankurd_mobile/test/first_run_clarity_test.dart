@@ -123,20 +123,18 @@ void main() {
         await tester.fling(find.byType(PageView), const Offset(-400, 0), 1000);
         await tester.pumpAndSettle();
 
-        // Kurul 4. tur 2026-10-20: neden baştan sönük bilgi olarak yazar
-        // (pasif düğme bozuk sanılıyordu); HATA hâli (anahtarlı, Şaş tonu)
-        // yalnız başarısız denemeden sonra.
+        // Tur 8: neden baştan YAZMAZ (hiçbir şeye dokunulmadan hata gibi
+        // duruyordu); yalnız başarısız denemeden sonra Şaş tonunda görünür.
         expect(
           find.byKey(const ValueKey('onboarding-age-gate-hint')),
           findsNothing,
-          reason: 'henüz hiçbir deneme yokken hata hâli görünmemeli',
+          reason: 'henüz hiçbir deneme yokken ipucu görünmemeli',
         );
         expect(
           find.text(
             'Devam etmek için "13 yaşından büyüğüm" kutusunu işaretle.',
           ),
-          findsOneWidget,
-          reason: 'pasif düğmenin nedeni kutunun altında sönük yazar',
+          findsNothing,
         );
 
         await tester.tap(find.text('Başla'));

@@ -247,13 +247,10 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   ),
                 ),
               ),
-              // Kurul 4. tur 2026-10-20 (Opus, AI Studio): pasif "Sonraki"
-              // bozuk sanılıyordu. Kutu işaretlenene kadar nedeni kutunun
-              // altında HEP yazar (sönük bilgi); başarısız denemeden sonra
-              // aynı satır Şaş tonuna döner.
-              // Kısa ekranda (< 700) ve büyük yazıda yer yok: orada yalnız başarısız
-              // denemeden sonra görünür (eski davranış).
-              if (_showAgeGateHint || (!compact && height >= 700)) ...[
+              // Tur 8 (3 denetçi): kurul 4'ün "hep yazar" notu hiçbir şeye
+              // dokunulmadan ekranda hata gibi duruyordu. Artık YALNIZ kutu
+              // işaretsizken "Sonraki/Başla"ya basılınca görünür (Şaş tonu).
+              if (_showAgeGateHint && !_ageConfirmed) ...[
                 const SizedBox(height: SahneSpace.x1),
                 // Yer ayrılı kalır (maintainSize): kutu işaretlenince alt perde
                 // yukarı zıplamasın. Hata anahtarı yalnız başarısız denemede.

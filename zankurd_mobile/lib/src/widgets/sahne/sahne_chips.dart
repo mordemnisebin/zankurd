@@ -456,9 +456,20 @@ class SahnePickChip extends StatelessWidget {
     required this.onTap,
     this.leading,
     this.semanticLabel,
+    this.locked = false,
+    this.minHeight = sahneTapTarget,
   });
 
   final String label;
+
+  /// En az yükseklik (varsayılan 48). Yoğun sayfalarda (oda kurma) 44'e
+  /// inilir; 44 dokunma tabanıdır.
+  final double minHeight;
+
+  /// Kilitli seçenek (ör. jetonu yetmeyen oda ücreti): seçilemez ama okunur.
+  /// Önünde kilit ikonu, gri (`tx3`) metin ve çerçeve; dokunuş yine
+  /// [onTap]'a gider (çağıran "N jeton eksik" bilgisini gösterir).
+  final bool locked;
 
   /// Ekran okuyucunun okuyacağı tam ad; [label] kısaltılmışsa verilir.
   final String? semanticLabel;
@@ -477,7 +488,7 @@ class SahnePickChip extends StatelessWidget {
       // Seçilmemiş çerçeve ikincil metin tonu (tx3 değil): tx3 çerçeve ve
       // yazı birlikte "devre dışı" okunuyordu (tur 6, 5 denetçi). Yazı tam
       // opak ana metin rengi, yükseklik >= 48 (>= 44 mantıksal).
-      selected ? t.selLine : t.tx2,
+      selected ? t.selLine : (locked ? t.tx3 : t.tx2),
       width: selected ? SahneRing.r2 : 1,
     );
     return Semantics(
@@ -488,7 +499,7 @@ class SahnePickChip extends StatelessWidget {
       onTap: onTap,
       excludeSemantics: true,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: sahneTapTarget),
+        constraints: BoxConstraints(minHeight: minHeight),
         child: SahneTappable(
           shape: shape,
           color: selected ? t.selFill : Colors.transparent,
@@ -505,7 +516,16 @@ class SahnePickChip extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (leading != null) ...[
+                      if (locked) ...[
+                        ExcludeSemantics(
+                          child: Icon(
+                            AppIcons.lock,
+                            size: 14,
+                            color: t.disabledFg,
+                          ),
+                        ),
+                        const SizedBox(width: SahneSpace.x1),
+                      ] else if (leading != null) ...[
                         leading!,
                         const SizedBox(width: SahneSpace.x1),
                       ],
@@ -518,7 +538,9 @@ class SahnePickChip extends StatelessWidget {
                             softWrap: large,
                             overflow: TextOverflow.ellipsis,
                             style: SahneType.captionStrong.copyWith(
-                              color: selected ? t.selTx : t.tx,
+                              color: selected
+                                  ? t.selTx
+                                  : (locked ? t.disabledFg : t.tx),
                               fontWeight: selected
                                   ? FontWeight.w800
                                   : FontWeight.w600,
@@ -563,9 +585,14 @@ class SahneBottomFade extends StatefulWidget {
     required this.child,
     required this.color,
     this.height = 24,
+    this.topHeight = 0,
   });
 
   final Widget child;
+
+  /// Üst kenarda içerik başlığın altına girerken çizilen opak-saydam bant
+  /// (0 = yok). Yarım kesik çip satırının ince kenarını söndürür.
+  final double topHeight;
 
   /// Kaydırma alanının arkasındaki yüzey rengi.
   final Color color;
@@ -579,12 +606,19 @@ class SahneBottomFade extends StatefulWidget {
 
 class _SahneBottomFadeState extends State<SahneBottomFade> {
   bool _more = true;
+  bool _before = false;
 
   bool _onMetrics(ScrollMetrics m) {
     final more = m.extentAfter > 1;
-    if (more != _more) {
+    final before = m.extentBefore > 1;
+    if (more != _more || before != _before) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) setState(() => _more = more);
+        if (mounted) {
+          setState(() {
+            _more = more;
+            _before = before;
+          });
+        }
       });
     }
     return false;
@@ -600,6 +634,25 @@ class _SahneBottomFadeState extends State<SahneBottomFade> {
         child: Stack(
           children: [
             widget.child,
+            if (_before && widget.topHeight > 0)
+              Positioned(
+                key: const ValueKey('sahne-fade-top'),
+                left: 0,
+                right: 0,
+                top: 0,
+                height: widget.topHeight,
+                child: IgnorePointer(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [surface, surface.withValues(alpha: 0)],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             if (_more)
               Positioned(
                 left: 0,

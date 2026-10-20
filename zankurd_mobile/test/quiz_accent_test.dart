@@ -127,11 +127,13 @@ void main() {
     const t = SahneTokens.night;
     for (final answer in question.displayAnswers) {
       final decoration = barOf(tester, answer).decoration! as BoxDecoration;
-      expect(decoration.color, t.s2);
+      // Tur 8: dinlenme dolgusu bir ton açık (optionFill) + 1 px kenar.
+      expect(decoration.color, t.optionFill);
       expect(decoration.gradient, isNull);
-      expect(ringOf(tester, answer).color, Colors.transparent);
+      expect(ringOf(tester, answer).color, t.optionEdge);
+      expect(ringOf(tester, answer).width, 1);
     }
-    // Harf karoları (A/B/C/D) hepsi aynı Ray tonunda: harfe göre renk yok.
+    // Harf karoları (A/B/C/D) hepsi aynı tonda (optionLetterFill): harfe göre renk yok.
     for (final letter in ['A', 'B', 'C', 'D']) {
       final tile = tester.widget<AnimatedContainer>(
         find
@@ -141,7 +143,7 @@ void main() {
             )
             .first,
       );
-      expect((tile.decoration! as ShapeDecoration).color, t.s3);
+      expect((tile.decoration! as ShapeDecoration).color, t.optionLetterFill);
     }
   });
 
