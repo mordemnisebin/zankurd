@@ -1009,7 +1009,6 @@ class _ShopScreenState extends State<ShopScreen> {
   }) {
     final t = SahneTokens.of(context);
     final title = ku ? item.titleKu : item.titleTr;
-    final desc = ku ? item.descKu : item.descTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
     // Tur 9b: "N jeton eksik" sağ sütunda fiyatın altına sıkışıyordu (3
     // denetçi). Söz artık sol metin sütununda, açıklamanın altında tek satır
@@ -1029,18 +1028,12 @@ class _ShopScreenState extends State<ShopScreen> {
         children: [
           Text(
             title,
-            // 7. kurul hiyerarşisi: ad 16/600, açıklama 13 (kesilmez),
-            // fiyat 14/600 — üç kademe birbirinden ayrışır.
+            // 7. kurul hiyerarşisi: ad 16/600, fiyat 14/600 (açıklama satırı
+            // 2026-10-20'de kaldırıldı: bkz. test/az_soz_1_test.dart).
             style: SahneType.bodyStrong.copyWith(
               color: isPurchased ? t.tx2 : t.tx,
               fontWeight: FontWeight.w600,
             ),
-          ),
-          const SizedBox(height: SahneSpace.x1),
-          Text(
-            desc,
-            // Açıklama hiçbir dilde kesilmez: oyuncu ne aldığını bilmeli.
-            style: SahneType.caption.copyWith(color: t.tx2, fontSize: 13),
           ),
         ],
       );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../widgets/sahne/sahne.dart';
 
@@ -138,8 +137,6 @@ class TodayTaskCard extends StatelessWidget {
                           style: SahneType.headline.copyWith(color: t.tx),
                         ),
                       ),
-                      // İki dilli etiket: kart başlığının öbür dildeki adı.
-                      ?_secondLabel(context, titleKey, isKu),
                       const SizedBox(height: SahneSpace.x1),
                       Text(
                         meta,
@@ -171,13 +168,6 @@ class TodayTaskCard extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Kart başlığının öbür dildeki karşılığı (ayar kapalıysa ya da karşılık
-/// yoksa `null`). Kart dili `isKu` ile taşır.
-Widget? _secondLabel(BuildContext context, String key, bool isKu) {
-  final text = secondLabelFor(context, key, isKu: isKu);
-  return text == null ? null : SahneBilingualLabel(text);
 }
 
 /// Kartın tek birincil düğmesi: Agir dolgu, koyu `onAct` metin, tam

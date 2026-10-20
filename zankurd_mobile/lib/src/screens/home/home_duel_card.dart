@@ -212,7 +212,7 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
     final pending = readyCount > 0 || hasIncoming;
 
     final String title;
-    final String subtitle;
+    final String? subtitle;
     if (hasIncoming) {
       title = incomingCount == 1
           ? context.t(K.challengeYourTurn)
@@ -237,7 +237,7 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
           : context.t(K.asyncDuelInbox);
     } else {
       title = context.t(K.asyncDuel);
-      subtitle = context.t(K.asyncDuelSub);
+      subtitle = null;
     }
 
     // Sağdaki TEK ikincil düğme. Bekleyen bir şey varsa (sıra sende, sonuç
@@ -275,7 +275,7 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
       padding: const EdgeInsets.only(top: SahneSpace.cardGap),
       child: Semantics(
         container: true,
-        label: '$title. $subtitle',
+        label: subtitle == null ? title : '$title. $subtitle',
         child: SahneSurfaceCard(
           padding: const EdgeInsets.symmetric(
             horizontal: SahneSpace.x4,
@@ -297,11 +297,12 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
                       ),
                     ),
                   ),
-                  Text(
-                    subtitle,
-                    key: const ValueKey('home-duel-meta'),
-                    style: SahneType.caption.copyWith(color: t.tx2),
-                  ),
+                  if (subtitle != null)
+                    Text(
+                      subtitle,
+                      key: const ValueKey('home-duel-meta'),
+                      style: SahneType.caption.copyWith(color: t.tx2),
+                    ),
                 ],
               );
               final button = SahneButton.secondary(
@@ -389,7 +390,6 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
                     icon: AppIcons.hourglass,
                     role: SahneRole.race,
                     title: context.t(K.asyncDuelNew),
-                    subtitle: context.t(K.asyncDuelSub),
                     chevron: true,
                     onTap: () => go(_openNewDuel),
                   ),
@@ -399,7 +399,6 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
                       icon: AppIcons.peopleGroup,
                       role: SahneRole.race,
                       title: context.t(K.challengeEntry),
-                      subtitle: context.t(K.challengeEntrySub),
                       chevron: true,
                       onTap: () => go(_openChallengeSheet),
                     ),

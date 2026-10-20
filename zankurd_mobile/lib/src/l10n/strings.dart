@@ -61,10 +61,6 @@ class Tr {
       'ku': 'Asta xwe ji nû ve diyar bike',
       'tr': 'Seviyeni yeniden belirle',
     },
-    K.retakePlacementSub: {
-      'ku': 'Azmûneke kurt a çend pirsan',
-      'tr': 'Birkaç soruluk kısa test',
-    },
     K.currentLevel: {
       'ku': 'Asta te ya niha: {name}',
       'tr': 'Mevcut seviyen: {name}',
@@ -88,10 +84,6 @@ class Tr {
     K.betaFeedback: {
       'ku': 'Ramanên xwe parve bike',
       'tr': 'Geri bildirim gönder',
-    },
-    K.betaFeedbackSub: {
-      'ku': 'Em dikarin çi baştir bikin?',
-      'tr': 'Neyi daha iyi yapabiliriz?',
     },
     K.betaMailSubject: {
       'ku': 'ZanKurd — raman û pêşniyar',
@@ -2002,10 +1994,8 @@ class Tr {
     // sayıyor; eski metin yalnız "çevrimiçi oyun" ve "oda" diyordu, oysa
     // ilk ders sorusu çözülünce kart dolar (2026-09-27).
     K.noOnlineHistory: {
-      'ku':
-          'Te hêj tu pirs çareser nekiriye. Gera xwe ya yekem bilîze, statîstîkên te li vir kom dibin.',
-      'tr':
-          'Henüz soru çözmedin. İlk turunu oyna, istatistiklerin burada birikir.',
+      'ku': 'Te hêj tu pirs çareser nekiriye.',
+      'tr': 'Henüz soru çözmedin.',
     },
     K.startToday: {'ku': 'Îro dest pê bike', 'tr': 'Bugün başla'},
     K.savedQuestions: {'ku': 'Pirsên tomarkirî', 'tr': 'Kaydedilen sorular'},
@@ -3072,10 +3062,6 @@ class Tr {
       'ku': 'Hevalê xwe vexwîne pêşbirkê',
       'tr': 'Arkadaşına meydan oku',
     },
-    K.challengeEntrySub: {
-      'ku': 'Girêdanekê bişîne, hevalê te dê paşê bilîze',
-      'tr': 'Bağlantı gönder, arkadaşın sonra oynasın',
-    },
     K.challengeViaLink: {
       'ku': 'Bi girêdanê vexwîne',
       'tr': 'Bağlantıyla meydan oku',
@@ -3309,7 +3295,6 @@ class K {
   static const playerNameHint = 'settings.playerName.hint';
   static const secLearning = 'settings.section.learning';
   static const retakePlacement = 'settings.retakePlacement';
-  static const retakePlacementSub = 'settings.retakePlacement.sub';
   static const currentLevel = 'settings.currentLevel';
   static const secSafety = 'settings.section.safety';
   static const secPrivacy = 'settings.section.privacy';
@@ -3317,7 +3302,6 @@ class K {
   static const analyticsConsentSub = 'settings.analyticsConsent.sub';
   static const reportAbuse = 'settings.reportAbuse';
   static const betaFeedback = 'settings.betaFeedback';
-  static const betaFeedbackSub = 'settings.betaFeedback.sub';
   static const betaMailSubject = 'settings.betaMail.subject';
   static const abuseMailSubject = 'settings.abuseMail.subject';
   static const linkOpenFailed = 'settings.linkOpenFailed';
@@ -4527,7 +4511,6 @@ class K {
 
   /// Oyun sekmesi satırı, ana ekran düğmesi ve seçim sayfasının başlığı.
   static const challengeEntry = 'duel.challenge.entry';
-  static const challengeEntrySub = 'duel.challenge.entry.sub';
 
   /// Seçim sayfasının birincil seçeneği.
   static const challengeViaLink = 'duel.challenge.viaLink';

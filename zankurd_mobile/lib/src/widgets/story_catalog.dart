@@ -191,11 +191,6 @@ class _StoryCatalogCard extends StatelessWidget {
                         overflow: compact ? TextOverflow.ellipsis : null,
                         style: SahneType.bodyStrong.copyWith(color: t.tx),
                       ),
-                      if (!compact)
-                        Text(
-                          isKu ? story.titleTr : story.titleKu,
-                          style: SahneType.caption.copyWith(color: t.tx2),
-                        ),
                     ],
                   ),
                 ),

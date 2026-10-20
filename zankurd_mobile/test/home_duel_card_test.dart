@@ -114,7 +114,8 @@ void main() {
 
     expect(find.byKey(const ValueKey('home-duel-card')), findsOneWidget);
     expect(find.text('Sırayla düello'), findsOneWidget);
-    expect(find.text('Sen şimdi oyna, rakibin sonra'), findsOneWidget);
+    // Açıklama alt satırı 2026-10-20'de kaldırıldı (test/az_soz_1_test.dart).
+    expect(find.text('Sen şimdi oyna, rakibin sonra'), findsNothing);
     // Kompakt kart: tek ikincil düğme; üç yol menüde.
     expect(find.text('Oyna'), findsOneWidget);
     expect(find.text('Yeni düello'), findsNothing);
