@@ -88,18 +88,28 @@ void _setSize(WidgetTester tester, Size size) {
 
 /// [root] altındaki her metinde hiçbir söz iki satıra bölünmemeli ve hiçbir
 /// metin "…" ile kesilmemeli.
-void _expectNoMidWordBreaks(Finder root, String where) {
+///
+/// [allowEllipsis]: 7. kurul kararı — mağaza açıklaması en çok 2 satırdır ve
+/// taşarsa "…" ile biter (kart şişmesin); bu bilinçli kesmedir, söz ortasından
+/// bölme yine yasaktır.
+void _expectNoMidWordBreaks(
+  Finder root,
+  String where, {
+  bool allowEllipsis = false,
+}) {
   for (final element
       in find
           .descendant(of: root, matching: find.byType(RichText))
           .evaluate()) {
     final paragraph = element.renderObject! as RenderParagraph;
     final text = paragraph.text.toPlainText();
-    expect(
-      paragraph.didExceedMaxLines,
-      isFalse,
-      reason: '$where: "$text" kesildi',
-    );
+    if (!allowEllipsis) {
+      expect(
+        paragraph.didExceedMaxLines,
+        isFalse,
+        reason: '$where: "$text" kesildi',
+      );
+    }
     for (final word in RegExp(r'\S+').allMatches(text)) {
       final boxes = paragraph.getBoxesForSelection(
         TextSelection(baseOffset: word.start, extentOffset: word.end),
@@ -258,7 +268,11 @@ void main() {
               .toSet();
           // Tur 6: her ürün tam genişlik satır; hep tek sütun.
           expect(lefts.length, 1, reason: 'ürünler tek sütun olmalı');
-          _expectNoMidWordBreaks(find.byType(ListView), 'mağaza listesi');
+          _expectNoMidWordBreaks(
+            find.byType(ListView),
+            'mağaza listesi',
+            allowEllipsis: true,
+          );
         });
       }
     }
