@@ -1486,7 +1486,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // karolarının hemen altına alındı. Konu listesinin altında kalınca
         // 390x844'te yapışkan alt perdenin arkasında kesiliyordu (68/200,
         // üç turdur tekrar eden bulgu). Yorum önce, ayrıntı sonra okunur.
-        const SizedBox(height: SahneSpace.sectionTop),
+        // Şablon ödülden sonra 8 ekler; 12 ile toplam 20 (kart ritmi).
+        const SizedBox(height: SahneSpace.x3),
         LearningOutcomeCard(
           outcome: learningOutcome,
           // Kategori listesi gösteriliyorsa sayımlar orada: kart yalnız

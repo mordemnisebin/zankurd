@@ -59,6 +59,12 @@ class SahneResultAction {
 /// ekran boyunca uzayıp okunmaz hâle gelmesin.
 const double kSahneResultMaxWidth = 560;
 
+/// Sonuç şablonunda ana bloklar (kahraman, sayımlar, ödül, ilk bölüm) arası
+/// tek boşluk: yıldız/puan/alt satır grubu ile kartlar aynı ritimde durur.
+/// Kahraman bloğunun kendi alt dolgusu 16 olduğundan kahraman→sayımlar
+/// arasına bu değerden 16 az eklenir.
+const double kSahneResultRhythmGap = 20;
+
 /// Sonuç şablonunun iskeleti — Şahnê C iskeleti (gece sahnesi) üzerinde
 /// kahraman → sayımlar → ödül → bölümler sırası ve alt perde.
 ///
@@ -117,9 +123,22 @@ class SahneResultScaffold extends StatelessWidget {
         );
         final items = <Widget>[
           hero,
-          if (stats != null) ...[const SizedBox(height: SahneSpace.x3), stats!],
+          // Ritim (kurul tur 6b): kahraman → sayımlar → ödül → ilk bölüm
+          // arası HEP 20. Kahramanın kendi alt dolgusu 16'dır; uzun sonuçta
+          // eklenen boşluk onu 20'ye tamamlar. Kısa (ortalanan) sonuçta
+          // eski 12 korunur.
+          if (stats != null) ...[
+            const SizedBox(height: kSahneResultRhythmGap - SahneSpace.x4),
+            stats!,
+          ],
           if (rewards != null) ...[
-            const SizedBox(height: SahneSpace.x3),
+            SizedBox(
+              height: short
+                  ? SahneSpace.x3
+                  : stats == null
+                  ? kSahneResultRhythmGap - SahneSpace.x4
+                  : kSahneResultRhythmGap,
+            ),
             rewards!,
           ],
           if (short && rewards != null)
@@ -311,7 +330,7 @@ class SahneResultHero extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         emblem,
-        const SizedBox(height: SahneSpace.x2),
+        const SizedBox(height: SahneSpace.x3),
         if (eyebrow != null) ...[
           Text(
             eyebrow!,
@@ -357,7 +376,7 @@ class SahneResultHero extends StatelessWidget {
           ),
         ],
         if (caption != null) ...[
-          const SizedBox(height: SahneSpace.x1),
+          const SizedBox(height: SahneSpace.x2),
           Text(
             caption!,
             textAlign: TextAlign.center,
