@@ -1,3 +1,4 @@
+// Kurul 5. tur 2026-10-20: seviye+XP+jeton kimlik başlığında; boş durumda "Adını belirle" ve birincil başla düğmesi.
 /// Profilin boş istatistik durumu: bağlamsal ikon + tek cümle + tek eylem.
 ///
 /// ## Kusur
@@ -91,7 +92,8 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
     }
     expect(rewards, findsOneWidget);
-    expect(find.byKey(const ValueKey('profile-level-card')), findsNothing);
+    // Kurul 5. tur 2026-10-20: seviye + XP kimlik başlığına taşındı.
+    expect(find.byKey(const ValueKey('profile-set-name-cta')), findsOneWidget);
     expect(
       find.descendant(of: rewards, matching: find.byType(SahneProgressBar)),
       findsNothing,

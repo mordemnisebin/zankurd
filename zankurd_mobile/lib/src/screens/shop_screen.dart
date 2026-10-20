@@ -1327,10 +1327,13 @@ class _ShopScreenState extends State<ShopScreen> {
                   ],
                 ),
               ),
+              // Kurul 5. tur: söz kendi satırında, fiyattan 4 px ayrı ve
+              // koyu kehribar (gündüz ≥ 4.5:1).
+              const SizedBox(height: SahneSpace.x1),
               Text(
                 note,
                 textAlign: TextAlign.center,
-                style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                style: SahneType.captionStrong.copyWith(color: t.shortfallTx),
               ),
             ],
           ),

@@ -423,7 +423,9 @@ class _LevelPathState extends State<_LevelPath> {
             trailing: Icon(
               AppIcons.lock,
               size: 20,
-              color: t.tx3.withValues(alpha: 0.7),
+              // Kurul 5. tur 2026-10-20 (Grok): %70 saydam üçüncül ton
+              // satırı soluk gösteriyordu; ikincil metin rengi.
+              color: t.tx2,
             ),
           ),
       ],

@@ -181,7 +181,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                       child: ConstrainedBox(
                         // Kurul 4. tur 2026-10-20: bütün satır ≥ 56 yüksek
                         // dokunma hedefi (kutu 48'lik alanda, ölçek 1.3).
-                        constraints: const BoxConstraints(minHeight: 56),
+                        constraints: const BoxConstraints(minHeight: 60),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: SahneSpace.x2,
@@ -192,21 +192,47 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             // ortasıyla hizalı (73).
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              // Kurul 5. tur 2026-10-20 (3 model): Material
+                              // Checkbox'ın tema şekli sekizgendi ve ayrıca
+                              // büyütülünce "dur tabelası"/avatar çerçevesi
+                              // gibi okunuyordu. Standart yuvarlak kare:
+                              // 2 px kenar; işaretliyken dolu turuncu + ✓.
                               ExcludeSemantics(
                                 child: IgnorePointer(
-                                  child: Transform.scale(
-                                    scale: 1.3,
-                                    child: Checkbox(
-                                      key: const ValueKey(
-                                        'onboarding-age-checkbox',
-                                      ),
-                                      value: _ageConfirmed,
-                                      onChanged: (_) {},
+                                  child: AnimatedContainer(
+                                    key: const ValueKey(
+                                      'onboarding-age-checkbox',
                                     ),
+                                    duration: reduce
+                                        ? Duration.zero
+                                        : const Duration(milliseconds: 120),
+                                    width: 28,
+                                    height: 28,
+                                    decoration: ShapeDecoration(
+                                      color: _ageConfirmed
+                                          ? t.act
+                                          : Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(8),
+                                        ),
+                                        side: BorderSide(
+                                          color: _ageConfirmed ? t.act : t.tx2,
+                                          width: 2,
+                                        ),
+                                      ),
+                                    ),
+                                    child: _ageConfirmed
+                                        ? Icon(
+                                            Icons.check_rounded,
+                                            size: 20,
+                                            color: t.onAct,
+                                          )
+                                        : null,
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: SahneSpace.x2),
+                              const SizedBox(width: SahneSpace.x3),
                               Expanded(
                                 child: Text(
                                   context.t(K.ageGateLabel),
@@ -834,7 +860,16 @@ class _MockOption extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     return DecoratedBox(
-      decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
+      // Kurul 5. tur 2026-10-20: kart zemini ile şık zemini aynı grafit
+      // olduğundan satırlar görünmüyordu (73); açık ton + ince kenar.
+      decoration: ShapeDecoration(
+        color: Colors.white.withValues(alpha: 0.10),
+        shape: SahneShape.withSide(
+          SahneShape.m,
+          Colors.white.withValues(alpha: 0.22),
+          width: 1,
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: SahneSpace.x2,
@@ -850,7 +885,7 @@ class _MockOption extends StatelessWidget {
               child: Center(
                 child: Text(
                   letter,
-                  style: SahneType.captionStrong.copyWith(color: t.tx2),
+                  style: SahneType.captionStrong.copyWith(color: t.tx),
                 ),
               ),
             ),

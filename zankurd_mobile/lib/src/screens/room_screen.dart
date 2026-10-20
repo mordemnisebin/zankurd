@@ -1180,7 +1180,12 @@ class _RoomScreenState extends State<RoomScreen> {
                                               },
                                             ),
                                           if (visiblePlayers.length < 2)
-                                            _WaitingPlayerTile(isKu: ku),
+                                            _WaitingPlayerTile(
+                                              isKu: ku,
+                                              onInvite: _canInviteFriends
+                                                  ? _inviteFriends
+                                                  : null,
+                                            ),
                                         ],
                                       ),
                               ),
@@ -2195,7 +2200,10 @@ class _RoomPlayerRow extends StatelessWidget {
 
 /// Henüz katılmamış 2. oyuncu için boş yuva satırı.
 class _WaitingPlayerTile extends StatelessWidget {
-  const _WaitingPlayerTile({required this.isKu});
+  const _WaitingPlayerTile({required this.isKu, this.onInvite});
+
+  /// Boş yuvadaki ikincil eylem: arkadaş daveti (kurul 5. tur 2026-10-20).
+  final VoidCallback? onInvite;
 
   /// Bekçinin tutunacağı çapa.
   ///
@@ -2240,45 +2248,41 @@ class _WaitingPlayerTile extends StatelessWidget {
               ),
             ),
             const SizedBox(width: SahneSpace.x3),
+            // Kurul 5. tur 2026-10-20 (Opus, Gemini): "Rakip bekleniyor…" iki
+            // satıra sarıyor ve "Henüz yok" rozeti aynı şeyi yineliyordu.
+            // Rozet kalktı; metin tek satır; boşalan yere davet eylemi geldi.
             Expanded(
-              child: Text(
-                context.t(K.waitingOpponent),
-                style: SahneType.bodyStrong.copyWith(color: t.tx2),
-              ),
-            ),
-            const SizedBox(width: SahneSpace.x2),
-            // Alt satırdaki ikinci "Henüz yok" kaldırıldı: yuva aynı iki
-            // kelimeyi iki kez basıyordu; kum saatli rozet daha çok şey
-            // söylüyor.
-            Flexible(
-              child: DecoratedBox(
-                decoration: ShapeDecoration(
-                  color: t.goldTint,
-                  shape: SahneShape.s,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: SahneSpace.x2,
-                    vertical: 2,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(AppIcons.hourglass, size: 14, color: t.goldTx),
-                      const SizedBox(width: SahneSpace.x1),
-                      Flexible(
-                        child: Text(
-                          context.t(K.statPending),
-                          style: SahneType.captionStrong.copyWith(
-                            color: t.goldTx,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  context.t(K.waitingOpponent),
+                  maxLines: 1,
+                  style: SahneType.bodyStrong.copyWith(color: t.tx2),
                 ),
               ),
             ),
+            if (onInvite != null) ...[
+              const SizedBox(width: SahneSpace.x2),
+              Semantics(
+                button: true,
+                label: context.t(K.inviteFriends),
+                excludeSemantics: true,
+                child: SahneTappable(
+                  key: const ValueKey('room-waiting-invite'),
+                  shape: SahneShape.m,
+                  color: Colors.transparent,
+                  onTap: onInvite!,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      minHeight: sahneTapTarget,
+                      minWidth: sahneTapTarget,
+                    ),
+                    child: Icon(AppIcons.shareNodes, size: 20, color: t.actTx),
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),

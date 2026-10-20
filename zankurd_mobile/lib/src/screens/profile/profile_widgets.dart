@@ -50,7 +50,21 @@ class _ProfileHeroCard extends StatelessWidget {
     required this.playerTag,
     required this.rank,
     required this.onEditAvatar,
+    required this.level,
+    required this.xpInLevel,
+    required this.xpNeeded,
+    required this.coins,
+    required this.onSetName,
   });
+
+  /// Kurul 5. tur 2026-10-20 (Opus, Grok): profilin tepesinde kimlik yoktu
+  /// (yalnız ZK-kodu). Artık ad (ya da "Adını belirle →"), seviye + XP çubuğu
+  /// ve jeton avatarın yanında durur; kod ikincil, küçük.
+  final int level;
+  final int xpInLevel;
+  final int xpNeeded;
+  final int? coins;
+  final VoidCallback onSetName;
 
   final bool ku;
 
@@ -139,7 +153,46 @@ class _ProfileHeroCard extends StatelessWidget {
                     maxLines: 1,
                     style: SahneType.headline.copyWith(color: t.tx),
                   ),
+                )
+              else
+                SahneButton.text(
+                  buttonKey: const ValueKey('profile-set-name-cta'),
+                  label: Tr.forKu(K.playerNameHint, ku).replaceAll('…', ''),
+                  arrow: true,
+                  onPressed: onSetName,
                 ),
+              const SizedBox(height: SahneSpace.x1),
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      '${Tr.forKu(K.progressLevelLabel, ku)} $level',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: SahneType.captionStrong.copyWith(color: t.tx),
+                    ),
+                  ),
+                  if (coins != null) ...[
+                    const Spacer(),
+                    const SahneGlyph(SahneGlyphKind.coin, size: 16),
+                    const SizedBox(width: SahneSpace.x1),
+                    Text(
+                      groupThousands(coins!),
+                      style: SahneType.captionStrong.copyWith(
+                        color: t.tx,
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+              const SizedBox(height: SahneSpace.x1),
+              SahneProgressBar(
+                value: xpNeeded > 0 ? xpInLevel / xpNeeded : 0,
+                tone: SahneProgressTone.gold,
+                height: 6,
+                semanticLabel: '${Tr.forKu(K.progressLevelLabel, ku)} $level',
+              ),
               if (playerTag != null)
                 _PlayerTagChip(tag: playerTag!, ku: ku)
               else

@@ -1,5 +1,6 @@
 // Tasarım kurulu tüm ekranlar 2026-10-20: yetmeyen mağaza ürünü çip değil,
 // ortak pasif fiyat düğmesi + eksik miktar taşır.
+// Kurul 5. tur 2026-10-20: eksik notu gündüz koyu kehribar (≥ 4.5:1).
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -318,5 +319,17 @@ void main() {
         expect(find.byType(SpinWheelScreen), findsOneWidget);
       },
     );
+  });
+
+  test('eksik notu rengi her iki temada kartta ≥ 4.5:1', () {
+    double c(Color a, Color b) {
+      final la = a.computeLuminance(), lb = b.computeLuminance();
+      return ((la > lb ? la : lb) + 0.05) / ((la > lb ? lb : la) + 0.05);
+    }
+
+    for (final t in [SahneTokens.day, SahneTokens.night]) {
+      expect(c(t.shortfallTx, t.s1), greaterThanOrEqualTo(4.5));
+      expect(c(t.shortfallTx, t.bg), greaterThanOrEqualTo(4.5));
+    }
   });
 }

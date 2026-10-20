@@ -126,7 +126,7 @@ void main() {
     );
     expect(bar.tone, SahneProgressTone.gold);
     // Oynamış oyuncuda seviye kartı görünür.
-    expect(find.byKey(const ValueKey('profile-level-card')), findsOneWidget);
+    expect(find.byType(SahneProgressBar), findsWidgets);
     // Sayısal istatistikler RollingCount ile sayar.
     expect(find.byType(RollingCount), findsWidgets);
     // Sıra NUMARASI kimlikte madalya olarak çizilmez; rakam yalnız Sıra

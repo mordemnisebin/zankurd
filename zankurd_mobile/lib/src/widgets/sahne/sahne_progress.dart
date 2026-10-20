@@ -361,23 +361,32 @@ class SahneStageTimer extends StatelessWidget {
 
   bool get isHot => secondsLeft <= hotSeconds;
 
+  /// Kurul 5. tur 2026-10-20 (Opus, Grok): sayı küçük ve gri kalıyordu, soru
+  /// ekranında süre en önemli bilgilerden biri. Normalde birincil metin,
+  /// kalın, 20 px; ≤ [hotSeconds] kehribar; ≤ 3 sn kırmızı. Duraklatılmışta
+  /// ([hotSeconds] < 0) gerilim rengi yok.
+  static const double _redSeconds = 3;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final color = isHot ? t.raceTx : t.tx2;
+    final red = isHot && secondsLeft <= _redSeconds;
+    final color = red ? t.errTx : (isHot ? t.shortfallTx : t.tx);
     return Semantics(
       label: semanticLabel,
       excludeSemantics: true,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(AppIcons.clock, size: 16, color: color),
+          Icon(AppIcons.clock, size: 20, color: color),
           const SizedBox(width: SahneSpace.x1),
           Text(
             '$secondsLeft',
             key: const ValueKey('stage-timer-seconds'),
-            style: SahneType.captionStrong.copyWith(
+            style: SahneType.headline.copyWith(
               color: color,
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),

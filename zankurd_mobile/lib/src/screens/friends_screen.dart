@@ -1028,12 +1028,18 @@ class _FriendRequestRow extends StatelessWidget {
                 dimension: 48,
                 child: Center(
                   child: SahneTappable(
-                    shape: SahneShape.m,
+                    // Kurul 5. tur 2026-10-20 (Grok): gri ✗ gri karoda
+                    // görünmüyordu; birincil renk + görünür kenar.
+                    shape: SahneShape.withSide(
+                      SahneShape.m,
+                      t.secondaryEdge,
+                      width: 1.5,
+                    ),
                     color: t.s2,
                     onTap: onReject,
                     child: SizedBox.square(
                       dimension: 44,
-                      child: Icon(AppIcons.xmark, size: 20, color: t.tx2),
+                      child: Icon(AppIcons.xmark, size: 20, color: t.tx),
                     ),
                   ),
                 ),
