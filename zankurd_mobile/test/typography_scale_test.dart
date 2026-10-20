@@ -126,17 +126,20 @@ void main() {
     expect(SahneType.eyebrow.fontSize, SahneType.caption.fontSize);
   });
 
-  test('soru metni boyutu: 26/32, 800, ölçeğin dışında tek istisna', () {
-    expect(SahneType.question.fontSize, 26);
-    expect(SahneType.question.height, 32 / 26);
-    expect(SahneType.question.fontWeight, FontWeight.w800);
-    expect(SahneType.question.fontFamily, SahneType.display);
-    expect(SahneType.question.fontSize, lessThan(SahneType.title.fontSize!));
-    expect(
-      SahneType.question.fontSize,
-      greaterThan(SahneType.headline.fontSize!),
-    );
-  });
+  test(
+    'soru metni boyutu: 26/32, 700 (tur 8: 800 den hafifledi), ölçeğin dışında tek istisna',
+    () {
+      expect(SahneType.question.fontSize, 26);
+      expect(SahneType.question.height, 32 / 26);
+      expect(SahneType.question.fontWeight, FontWeight.w700);
+      expect(SahneType.question.fontFamily, SahneType.display);
+      expect(SahneType.question.fontSize, lessThan(SahneType.title.fontSize!));
+      expect(
+        SahneType.question.fontSize,
+        greaterThan(SahneType.headline.fontSize!),
+      );
+    },
+  );
 
   test('yazı tipi ailesi tek yerden geliyor', () {
     // `CustomPainter` içinde çizilen metin temadan aile almaz; aile

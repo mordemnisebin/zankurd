@@ -352,6 +352,16 @@ class _QuestionImageFallback extends StatelessWidget {
 /// birbirine yapıştırmaz.
 const double quizPromptToAnswersGap = 28;
 
+/// Şıklar arası dikey boşluk (tur 8: 8 → 12; koyu temada şıklar birbirine
+/// yapışık okunuyordu).
+const double quizOptionGap = 12;
+
+/// Soru+şık grubunun altında bildirim/tost için bırakılan pay (tur 8:
+/// 160 → 12). 160 grubu alt çubuktan ~195 pt yukarı itiyor, altta ölü boşluk
+/// bırakıyordu (Opus, ChatGPT); alt dolguyla birlikte grup alt çubuğun
+/// ~48 pt üstünde durur. Bildirim çıkarsa içerik uzar ve kayar.
+const double quizAnchorNoticeReserve = 12;
+
 class _QuestionTextAndAnswers extends StatelessWidget {
   const _QuestionTextAndAnswers({
     required this.promptText,
@@ -557,7 +567,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     }
 
     final answers = question.displayAnswers;
-    const gap = SahneSpace.x2;
+    const gap = quizOptionGap;
 
     Widget item(int index, String answer) {
       final hidden = hiddenAnswers.contains(answer);
@@ -1716,30 +1726,47 @@ class _CollapsedWildcardLine extends StatelessWidget {
         onTap: onTap,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: sahneTapTarget),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(AppIcons.lock, size: 16, color: t.tx2),
-              const SizedBox(width: SahneSpace.x2),
-              const SahneGlyph(SahneGlyphKind.coin, size: 16),
-              const SizedBox(width: SahneSpace.x1),
-              Text(
-                groupThousands(balance),
-                style: SahneType.captionStrong.copyWith(
-                  color: t.goldTx,
-                  fontFeatures: const [FontFeature.tabularFigures()],
+          child: Center(
+            // Hap: koyu zeminde yalın satır kayboluyordu (tur 7, Gemini).
+            // Hafif saydam dolgu + 1 px kenar satırı okunur bir nesne yapar.
+            child: DecoratedBox(
+              key: const ValueKey('quiz-collapsed-wildcard-pill'),
+              decoration: ShapeDecoration(
+                color: t.optionFill.withValues(alpha: 0.7),
+                shape: StadiumBorder(side: BorderSide(color: t.optionEdge)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SahneSpace.x3,
+                  vertical: SahneSpace.x1,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(AppIcons.lock, size: 16, color: t.tx2),
+                    const SizedBox(width: SahneSpace.x2),
+                    const SahneGlyph(SahneGlyphKind.coin, size: 16),
+                    const SizedBox(width: SahneSpace.x1),
+                    Text(
+                      groupThousands(balance),
+                      style: SahneType.captionStrong.copyWith(
+                        color: t.goldTx,
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x2),
+                    Flexible(
+                      child: Text(
+                        label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: SahneType.captionStrong.copyWith(color: t.tx),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(width: SahneSpace.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: SahneType.captionStrong.copyWith(color: t.tx2),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

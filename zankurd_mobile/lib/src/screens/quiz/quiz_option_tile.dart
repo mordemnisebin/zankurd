@@ -9,6 +9,9 @@ import '../../utils/player_identity.dart';
 import '../../widgets/lexicon_lookup.dart';
 import '../../widgets/sahne/sahne.dart';
 
+/// Şık çubuğunun en az yüksekliği (tur 8: 52 → 56).
+const double quizOptionMinHeight = 56;
+
 /// Şık çubuğu — Şahnê'nin "8 · Şık çubuğu" bileşeni (maketteki `.sh-ans`).
 ///
 /// ## Görünüm
@@ -121,19 +124,21 @@ class QuizOptionTile extends StatelessWidget {
       _OptionState.wrong => t.errFill,
       _ => null,
     };
-    final Color base = state == _OptionState.dimmed ? t.s1 : t.s2;
+    final Color base = state == _OptionState.dimmed ? t.s1 : t.optionFill;
     final Color ring = switch (state) {
       _OptionState.correct => t.okTx,
       _OptionState.wrong => t.errTx,
       _OptionState.checking => t.tx,
+      _OptionState.idle => t.optionEdge,
       _ => Colors.transparent,
     };
+    final double ringWidth = state == _OptionState.idle ? 1 : SahneRing.r2;
     final Color textColor = state == _OptionState.dimmed ? t.tx3 : t.tx;
     final Color letterBg = switch (state) {
       _OptionState.correct => t.okTx,
       _OptionState.wrong => t.errTx,
       _OptionState.dimmed => t.s2,
-      _ => t.s3,
+      _ => t.optionLetterFill,
     };
     final Color letterFg = switch (state) {
       _OptionState.correct => t.onOk,
@@ -232,7 +237,7 @@ class QuizOptionTile extends StatelessWidget {
                 shape: SahneShape.withSide(
                   SahneShape.m,
                   ring,
-                  width: SahneRing.r2,
+                  width: ringWidth,
                 ),
               ),
               child: ClipPath(
@@ -245,8 +250,10 @@ class QuizOptionTile extends StatelessWidget {
                   width: double.infinity,
                   constraints: BoxConstraints(
                     minHeight: fixedHeight == null
-                        ? 52
-                        : (fixedHeight! < 52 ? 52 : fixedHeight!),
+                        ? quizOptionMinHeight
+                        : (fixedHeight! < quizOptionMinHeight
+                              ? quizOptionMinHeight
+                              : fixedHeight!),
                   ),
                   decoration: BoxDecoration(
                     color: base,

@@ -113,7 +113,7 @@ extension _QuizScreenUI on _QuizScreenState {
   /// cevabı şıkları ekranın tepesine yığıp altı bomboş bırakıyordu — aynı
   /// uygulamada iki ayrı soru ekranı gibi. Tek kural artık hepsinde.
   double? _portraitAnchorHeight(double bodyHeight, Size layoutSize) {
-    var reserve = SahneSpace.x4 + SahneSpace.x6 + 160;
+    var reserve = SahneSpace.x4 + SahneSpace.x6 + quizAnchorNoticeReserve;
     // Karşılaşma bandı / düello ve oda başlığı gövdenin içinde yer tutar.
     if (widget.versusBannerText != null) reserve += 56;
     if (widget.is1v1 || _isCrowd) reserve += 120;
