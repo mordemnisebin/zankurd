@@ -983,6 +983,12 @@ class _FriendRow extends StatelessWidget {
       subtitle: online ? context.t(K.online) : context.t(K.offline),
       subtitleColor: online ? t.okTx : t.tx2,
       subtitleStrong: online,
+      // Uzun etiket (KU "Vexwîne pêşbirkê") ad sütununu daraltıp adı ve
+      // "Ne li serhêl"i sarıyordu: eylemler adın altına iner (tur 10a).
+      stackTrailing:
+          onChallenge != null && context.t(K.challengeFriendAction).length > 12
+          ? true
+          : null,
       // 2026-10-14: ürünün günlük aktif oyuncusu 3-25; iki arkadaşın aynı
       // anda çevrimiçi olması neredeyse hiç yok. Canlı oda daveti oyuncuyu
       // boş bir lobide bekletiyordu. Birincil eylem sırayla meydan okumadır
