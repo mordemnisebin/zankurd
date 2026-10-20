@@ -635,13 +635,13 @@ void main() {
     // (test yazı tipi geniştir, satır sayısı değil genişlik sabitlenir).
     expect(tester.getSize(title).height, lessThan(26));
     expect(tester.getRect(desc).right, greaterThan(cardRect.right - 60));
-    // Eylem metnin altında ve sağa yaslı, ~40 yükseklik.
+    // Eylem metnin altında ve sağa yaslı, standart düğme boyu (dokunma hedefi kuralı 40 altına inmeye izin vermez).
     expect(
       tester.getRect(buy).top,
       greaterThanOrEqualTo(tester.getRect(desc).bottom),
     );
     expect(tester.getRect(buy).right, greaterThan(cardRect.right - 20));
-    expect(tester.getSize(buy).height, inInclusiveRange(38, 48));
+    expect(tester.getSize(buy).height, inInclusiveRange(44, 52));
     // Kilitli üründe eksik notu eylem satırında, kilitli fiyatın solunda.
     final note = find.byKey(
       const ValueKey('shop-short-note-profile_badge_vip'),
