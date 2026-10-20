@@ -239,7 +239,9 @@ void main() {
       for (final e in find.byType(SahnePickChip).evaluate()) {
         final r = tester.getRect(find.byWidget(e.widget));
         rows.putIfAbsent(r.top.round(), () => {}).add(r.height);
-        if (scale == 1.0) expect(r.height, 48, reason: 'tek satır, 48');
+        // Tur 8b: oda kurma çipleri 44 (dokunma tabanı) — sayfa 390×844'te
+        // kaydırmadan sığsın.
+        if (scale == 1.0) expect(r.height, 44, reason: 'tek satır, 44');
       }
       expect(rows, isNotEmpty);
       rows.forEach((top, heights) {
@@ -295,7 +297,7 @@ void main() {
         final r = tester.getRect(f);
         tops.add(r.top.round());
         expect(r.width, greaterThanOrEqualTo(48), reason: '$c çipi dar');
-        expect(r.height, greaterThanOrEqualTo(48));
+        expect(r.height, greaterThanOrEqualTo(44));
       }
       expect(tops, hasLength(1), reason: 'tek satır olmalı');
       expect(

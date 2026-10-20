@@ -2,6 +2,7 @@ import 'home/room_invite_card.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 import '../config/feature_flags.dart';
@@ -905,6 +906,7 @@ Widget _choiceChip(
   String? semanticLabel,
   bool locked = false,
 }) => SahnePickChip(
+  minHeight: _roomChipHeight,
   key: key,
   label: label,
   semanticLabel: semanticLabel,
@@ -922,12 +924,21 @@ Widget _filterChip(
   required VoidCallback onTap,
   String? semanticLabel,
 }) => SahnePickChip(
+  minHeight: _roomChipHeight,
   key: key,
   label: label,
   semanticLabel: semanticLabel,
   selected: selected,
   onTap: onTap,
 );
+
+/// Oda kurma sayfasındaki çiplerin yüksekliği (tur 8b: 48 → 44; 44 dokunma
+/// tabanıdır). Sayfa 390×844'te kaydırmadan sığsın diye.
+const double _roomChipHeight = 44;
+
+/// "Jeton eksik" notu için HEP ayrılan satır (kaydırma alanının altında):
+/// not belirip kaybolunca görünür alan oynamasın.
+const double _roomNoteSlot = 28;
 
 /// Katlanır "Ayarlar" satırı: başlık + güncel değerlerin özeti + ok.
 class _SettingsSummaryRow extends StatelessWidget {
@@ -937,6 +948,7 @@ class _SettingsSummaryRow extends StatelessWidget {
     required this.summary,
     required this.open,
     required this.onTap,
+    this.anchorKey,
   });
 
   final String title;
@@ -944,51 +956,57 @@ class _SettingsSummaryRow extends StatelessWidget {
   final bool open;
   final VoidCallback onTap;
 
+  /// Kaydırma hizası için satırın GlobalKey'i.
+  final GlobalKey? anchorKey;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return Semantics(
-      container: true,
-      button: true,
-      expanded: open,
-      label: '$title, $summary',
-      onTap: onTap,
-      excludeSemantics: true,
-      child: SahneTappable(
-        shape: SahneShape.withSide(SahneShape.m, t.tx3, width: 1),
-        color: Colors.transparent,
+    return KeyedSubtree(
+      key: anchorKey,
+      child: Semantics(
+        container: true,
+        button: true,
+        expanded: open,
+        label: '$title, $summary',
         onTap: onTap,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: sahneTapTarget),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: SahneSpace.x3,
-              vertical: SahneSpace.x2,
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: SahneType.bodyStrong.copyWith(color: t.tx),
-                      ),
-                      Text(
-                        summary,
-                        style: SahneType.caption.copyWith(color: t.tx2),
-                      ),
-                    ],
+        excludeSemantics: true,
+        child: SahneTappable(
+          shape: SahneShape.withSide(SahneShape.m, t.tx3, width: 1),
+          color: Colors.transparent,
+          onTap: onTap,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: sahneTapTarget),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: SahneSpace.x3,
+                vertical: SahneSpace.x2,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: SahneType.bodyStrong.copyWith(color: t.tx),
+                        ),
+                        Text(
+                          summary,
+                          style: SahneType.caption.copyWith(color: t.tx2),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: SahneSpace.x2),
-                Icon(
-                  open ? AppIcons.chevronUp : AppIcons.chevronDown,
-                  size: 20,
-                  color: t.tx2,
-                ),
-              ],
+                  const SizedBox(width: SahneSpace.x2),
+                  Icon(
+                    open ? AppIcons.chevronUp : AppIcons.chevronDown,
+                    size: 20,
+                    color: t.tx2,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -1024,6 +1042,57 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
   int? _blockedFee;
   int _selectedMaxPlayers = GameRoom.defaultCrowdCapacity;
   bool _settingsOpen = false;
+  final ScrollController _scroll = ScrollController();
+  final GlobalKey _settingsRowKey = GlobalKey();
+
+  /// Ayarlar açıkken kaydırma içeriğinin altına eklenen boşluk: "Ayarlar"
+  /// satırı görünür alanın tepesine TAM oturabilsin diye (aksi hâlde üstte
+  /// yarım kesik satır kalır).
+  double _tail = 0;
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  /// Ayarlar açılınca satırı görünür alanın tepesine getirir: üstte yarım
+  /// kesik çip satırı kalmaz, açılan gruplar kaydırmadan görünür.
+  void _alignSettingsToTop() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_scroll.hasClients) return;
+      final box = _settingsRowKey.currentContext?.findRenderObject();
+      if (box == null || !box.attached) return;
+      final viewport = RenderAbstractViewport.maybeOf(box);
+      if (viewport == null) return;
+      final target = viewport.getOffsetToReveal(box, 0).offset;
+      final position = _scroll.position;
+      final naturalMax = position.maxScrollExtent - _tail;
+      final tail = (target - naturalMax).clamp(0.0, double.infinity);
+      if ((tail - _tail).abs() > 0.5) {
+        setState(() => _tail = tail);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted && _scroll.hasClients) {
+            unawaited(
+              _scroll.animateTo(
+                target.clamp(0.0, _scroll.position.maxScrollExtent),
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeOutCubic,
+              ),
+            );
+          }
+        });
+      } else {
+        unawaited(
+          _scroll.animateTo(
+            target.clamp(0.0, position.maxScrollExtent),
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOutCubic,
+          ),
+        );
+      }
+    });
+  }
 
   /// "10 soru · 20 sn · ücretsiz": kapalı Ayarlar satırının özeti.
   String _settingsSummary(BuildContext context) =>
@@ -1128,7 +1197,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                   ),
                 ],
               ),
-              const SizedBox(height: SahneSpace.x3),
+              const SizedBox(height: SahneSpace.x2),
               // Başlığın altında net ayraç: kaydırılan içerik başlığın altından
               // "yarım kesik çip" olarak görünmesin.
               Divider(
@@ -1137,19 +1206,20 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                 thickness: 1,
                 color: t.tx3.withValues(alpha: 0.35),
               ),
-              const SizedBox(height: SahneSpace.x3),
+              const SizedBox(height: SahneSpace.x2),
               Flexible(
                 child: SahneBottomFade(
                   key: const ValueKey('custom-room-bottom-fade'),
                   color: SahneTokens.of(context).s1,
                   // Tur 8: 24 px solma son ücret satırını soluk/bozuk
-                  // gösteriyordu; 8 px'e indi, üstte 16 px bant.
+                  // gösteriyordu; 8 px'e indi, üstte 8 px bant.
                   height: 8,
-                  topHeight: 16,
+                  topHeight: 8,
                   child: SingleChildScrollView(
+                    controller: _scroll,
                     // Alt boşluk: son satır (oyuncu sayısı/ücret) kaydırınca
                     // ayracın ve düğmenin tam üstüne rahatça çıkar.
-                    padding: const EdgeInsets.only(bottom: SahneSpace.x4),
+                    padding: EdgeInsets.only(bottom: SahneSpace.x2 + _tail),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1262,11 +1332,17 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         // güncel değerleri gösterir, dokununca satır içinde açılır.
                         _SettingsSummaryRow(
                           key: const ValueKey('custom-room-settings-row'),
+                          anchorKey: _settingsRowKey,
                           title: context.t(K.settings),
                           summary: _settingsSummary(context),
                           open: _settingsOpen,
-                          onTap: () =>
-                              setState(() => _settingsOpen = !_settingsOpen),
+                          onTap: () {
+                            setState(() {
+                              _settingsOpen = !_settingsOpen;
+                              if (!_settingsOpen) _tail = 0;
+                            });
+                            if (_settingsOpen) _alignSettingsToTop();
+                          },
                         ),
                         if (_settingsOpen) ...[
                           const SizedBox(height: SahneSpace.x3),
@@ -1403,25 +1479,31 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
               // altında "kesilmiş" görünmesin.
               Divider(
                 key: const ValueKey('custom-room-footer-divider'),
-                height: SahneSpace.x3 * 2 + 1,
+                height: SahneSpace.x2 * 2 + 1,
                 thickness: 1,
                 color: t.tx3.withValues(alpha: 0.35),
               ),
 
-              if (!hasEnoughCoins)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                  // Not kaydırma alanının DIŞINDA, düğmenin hemen üstünde:
-                  // solma altında kalıp okunmaz hale geliyordu.
-                  child: SahneShortfallNote(
-                    key: const ValueKey('custom-room-shortfall'),
-                    missing: coinShortfall(
-                      cost: blockedFee,
-                      balance: widget.coinBalance,
-                    ),
-                    warn: true,
-                  ),
+              // Not kaydırma alanının DIŞINDA, düğmenin hemen üstünde: solma
+              // altında kalıp okunmaz hale geliyordu. Satır HEP ayrılır (not
+              // yokken boş): not belirince kaydırma alanı küçülüp son satırı
+              // ayraçla kesmesin (tur 8b).
+              Padding(
+                padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                child: SizedBox(
+                  height: _roomNoteSlot - SahneSpace.x2,
+                  child: hasEnoughCoins
+                      ? null
+                      : SahneShortfallNote(
+                          key: const ValueKey('custom-room-shortfall'),
+                          missing: coinShortfall(
+                            cost: blockedFee,
+                            balance: widget.coinBalance,
+                          ),
+                          warn: true,
+                        ),
                 ),
+              ),
               // 2026-10-19: düğme kaydırma alanının DIŞINDA, sayfanın altında SABİT;
               // uzun seçim listesinde "Oda kur" hiç kaybolmaz.
               // Ücrete yetilmiyorsa "Oda aç" pasif bırakılmaz: yerine jeton

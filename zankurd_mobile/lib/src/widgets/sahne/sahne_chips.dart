@@ -457,9 +457,14 @@ class SahnePickChip extends StatelessWidget {
     this.leading,
     this.semanticLabel,
     this.locked = false,
+    this.minHeight = sahneTapTarget,
   });
 
   final String label;
+
+  /// En az yükseklik (varsayılan 48). Yoğun sayfalarda (oda kurma) 44'e
+  /// inilir; 44 dokunma tabanıdır.
+  final double minHeight;
 
   /// Kilitli seçenek (ör. jetonu yetmeyen oda ücreti): seçilemez ama okunur.
   /// Önünde kilit ikonu, gri (`tx3`) metin ve çerçeve; dokunuş yine
@@ -494,7 +499,7 @@ class SahnePickChip extends StatelessWidget {
       onTap: onTap,
       excludeSemantics: true,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: sahneTapTarget),
+        constraints: BoxConstraints(minHeight: minHeight),
         child: SahneTappable(
           shape: shape,
           color: selected ? t.selFill : Colors.transparent,

@@ -74,12 +74,12 @@ void main() {
     expect(SahneTokens.night.shortfallTx, isNot(SahneTokens.night.errTx));
   });
 
-  testWidgets('alt solma 8 px, üstte 16 px bant', (tester) async {
+  testWidgets('alt solma 8 px, üstte 8 px bant', (tester) async {
     await open(tester);
     final fade = tester.widget<SahneBottomFade>(
       find.byKey(const ValueKey('custom-room-bottom-fade')),
     );
     expect(fade.height, lessThanOrEqualTo(8));
-    expect(fade.topHeight, 16);
+    expect(fade.topHeight, 8);
   });
 }
