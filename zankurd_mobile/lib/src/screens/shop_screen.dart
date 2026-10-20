@@ -1293,42 +1293,47 @@ class _ShopScreenState extends State<ShopScreen> {
         container: true,
         label: '$semanticLabel. $note',
         excludeSemantics: true,
-        child: Column(
-          key: ValueKey('shop-short-${item.id}'),
-          crossAxisAlignment: expand
-              ? CrossAxisAlignment.stretch
-              : CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ConstrainedBox(
-              // a11y-tap-target: noninteractive — kilitli fiyat bir durumdur.
-              constraints: const BoxConstraints(minHeight: 36),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(AppIcons.lock, size: 16, color: t.tx2),
-                  const SizedBox(width: SahneSpace.x2),
-                  const SahneGlyph(SahneGlyphKind.coin, size: 20),
-                  const SizedBox(width: SahneSpace.x2),
-                  Flexible(
-                    child: Text(
-                      label,
-                      style: SahneType.button.copyWith(
-                        color: t.tx2,
-                        fontFeatures: const [FontFeature.tabularFigures()],
+        // Yatay kartta (hero) düğme alanı sınırsız genişlik alır; eksik söz
+        // tek satırda dar ekranı taşırıyordu. Genişlik sınırlı, söz sarar.
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: expand ? double.infinity : 124),
+          child: Column(
+            key: ValueKey('shop-short-${item.id}'),
+            crossAxisAlignment: expand
+                ? CrossAxisAlignment.stretch
+                : CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ConstrainedBox(
+                // a11y-tap-target: noninteractive — kilitli fiyat bir durumdur.
+                constraints: const BoxConstraints(minHeight: 36),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(AppIcons.lock, size: 16, color: t.tx2),
+                    const SizedBox(width: SahneSpace.x2),
+                    const SahneGlyph(SahneGlyphKind.coin, size: 20),
+                    const SizedBox(width: SahneSpace.x2),
+                    Flexible(
+                      child: Text(
+                        label,
+                        style: SahneType.button.copyWith(
+                          color: t.tx2,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Text(
-              note,
-              textAlign: TextAlign.center,
-              style: SahneType.captionStrong.copyWith(color: t.goldTx),
-            ),
-          ],
+              Text(
+                note,
+                textAlign: TextAlign.center,
+                style: SahneType.captionStrong.copyWith(color: t.goldTx),
+              ),
+            ],
+          ),
         ),
       );
     }
