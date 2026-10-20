@@ -56,12 +56,16 @@ void main() {
     );
     expect(mark.left - a.left, greaterThanOrEqualTo(16));
     expect(mark.width, 28);
-    final text = tester.getRect(
-      find.descendant(
-        of: find.byKey(const ValueKey('home-topic-Ziman')),
-        matching: find.byType(Text),
-      ),
+    // 2026-10-20 iki dilli etiket: ad + öbür dildeki küçük satır bir
+    // blok olarak işaretle dikey ortalanır; ölçü bloğun kutusudur.
+    final texts = find.descendant(
+      of: find.byKey(const ValueKey('home-topic-Ziman')),
+      matching: find.byType(Text),
     );
+    final text = texts
+        .evaluate()
+        .map((e) => tester.getRect(find.byWidget(e.widget)))
+        .reduce((a, b) => a.expandToInclude(b));
     expect(text.center.dy, closeTo(mark.center.dy, 1.5));
     expect(text.left - mark.right, closeTo(12, 1));
   });

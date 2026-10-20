@@ -423,6 +423,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
     return SahneTabPage(
       title: context.t(K.playTitle),
+      // İki dilli etiket: öbür dilde aynı anahtar ("Pêşbirk" / "Yarış").
+      titleEyebrow: context.secondLabel(K.playTitle),
       stats: [
         TabStatChips(
           repository: widget.repository,

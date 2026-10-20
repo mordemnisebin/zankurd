@@ -598,6 +598,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: SahneTabPage(
         controller: widget.scrollController,
         title: context.t(K.profileTitle),
+        titleEyebrow: context.secondLabel(K.profileTitle),
         stats: [
           TabStatChips(
             repository: widget.repository,

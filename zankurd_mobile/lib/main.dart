@@ -24,6 +24,7 @@ import 'src/data/zankurd_repository.dart';
 import 'src/l10n/lang.dart';
 import 'src/l10n/material_locales.dart';
 import 'src/l10n/strings.dart';
+import 'src/providers/bilingual_labels_provider.dart';
 import 'src/providers/auth_provider.dart';
 import 'src/providers/analytics_consent_provider.dart';
 import 'src/providers/reduced_motion_provider.dart';
@@ -152,6 +153,11 @@ Future<void> main() async {
         ReducedMotionProvider.load(),
         reason: 'ReducedMotionProvider load',
         fallback: ReducedMotionProvider.new,
+      );
+      final bilingualLabelsFuture = bootStep(
+        BilingualLabelsProvider.load(),
+        reason: 'BilingualLabelsProvider load',
+        fallback: BilingualLabelsProvider.new,
       );
       final untimedModeFuture = bootStep(
         UntimedModeProvider.load(),
@@ -301,6 +307,7 @@ Future<void> main() async {
       final soundProvider = await soundFuture;
       final reducedMotionProvider = await reducedMotionFuture;
       final untimedModeProvider = await untimedModeFuture;
+      final bilingualLabelsProvider = await bilingualLabelsFuture;
       final analyticsConsentProvider = await analyticsConsentFuture;
 
       // İlk kareyi bekletmeyen işler. Hatalar yutulmaz, bildirilir; ama
@@ -385,6 +392,7 @@ Future<void> main() async {
           soundProvider: soundProvider,
           reducedMotionProvider: reducedMotionProvider,
           untimedModeProvider: untimedModeProvider,
+          bilingualLabelsProvider: bilingualLabelsProvider,
           analyticsConsentProvider: analyticsConsentProvider,
           remoteAvailability: remoteAvailability,
           premiumService: premiumService,
@@ -542,6 +550,7 @@ class ZanKurdApp extends StatelessWidget {
     SoundProvider? soundProvider,
     ReducedMotionProvider? reducedMotionProvider,
     UntimedModeProvider? untimedModeProvider,
+    BilingualLabelsProvider? bilingualLabelsProvider,
     AnalyticsConsentProvider? analyticsConsentProvider,
     RemoteAvailability? remoteAvailability,
     PremiumService? premiumService,
@@ -553,6 +562,8 @@ class ZanKurdApp extends StatelessWidget {
        soundProvider = soundProvider ?? SoundProvider(),
        reducedMotionProvider = reducedMotionProvider ?? ReducedMotionProvider(),
        untimedModeProvider = untimedModeProvider ?? UntimedModeProvider(),
+       bilingualLabelsProvider =
+           bilingualLabelsProvider ?? BilingualLabelsProvider(),
        analyticsConsentProvider =
            analyticsConsentProvider ?? AnalyticsConsentProvider(),
        remoteAvailability =
@@ -570,6 +581,7 @@ class ZanKurdApp extends StatelessWidget {
   final SoundProvider soundProvider;
   final ReducedMotionProvider reducedMotionProvider;
   final UntimedModeProvider untimedModeProvider;
+  final BilingualLabelsProvider bilingualLabelsProvider;
   final AnalyticsConsentProvider analyticsConsentProvider;
   final RemoteAvailability remoteAvailability;
   final PremiumService premiumService;
@@ -596,6 +608,9 @@ class ZanKurdApp extends StatelessWidget {
         ChangeNotifierProvider<SoundProvider>.value(value: soundProvider),
         ChangeNotifierProvider<ReducedMotionProvider>.value(
           value: reducedMotionProvider,
+        ),
+        ChangeNotifierProvider<BilingualLabelsProvider>.value(
+          value: bilingualLabelsProvider,
         ),
         ChangeNotifierProvider<UntimedModeProvider>.value(
           value: untimedModeProvider,

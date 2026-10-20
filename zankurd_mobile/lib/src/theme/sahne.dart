@@ -890,6 +890,19 @@ class SahneType {
     leadingDistribution: TextLeadingDistribution.even,
   );
 
+  /// 10/12 — YALNIZ alt gezinmedeki iki dilli etiketin küçük satırı
+  /// (2026-10-20). Beş boyutlu ölçeğin dışında bilerek kalan tek küçük
+  /// boyut: 64 + küçük satırlık gezinme çubuğuna 14'lük ikinci bir satır
+  /// sığmıyor ve sekme adının kendisiyle yarışıyordu. Okunur içerik
+  /// taşımaz (asıl ad 14'lük satırdadır); büyük yazı ölçeğinde gizlenir.
+  static const TextStyle navHint = TextStyle(
+    fontFamily: text,
+    fontWeight: FontWeight.w500,
+    fontSize: 10,
+    height: 12 / 10,
+    leadingDistribution: TextLeadingDistribution.even,
+  );
+
   /// 14/20 — soru sahnesinin üst satırı ("Konu · Soru n/N"), hikâye ve
   /// bölüm künyesi: başlık ailesi, 800, CÜMLE DÜZENİ, harf aralığı yok.
   ///

@@ -56,6 +56,7 @@ PreferredSizeWidget zkAppBar(
   Key? key,
   Widget? title,
   Widget? subtitle,
+  String? titleSecondary,
   List<Widget>? actions,
   Color? backgroundColor,
   double? elevation,
@@ -95,9 +96,21 @@ PreferredSizeWidget zkAppBar(
             MediaQuery.textScalerOf(context),
           ),
         );
+  // İki dilli etiketin küçük satırı (başlığın üstünde): yalnız sığarsa
+  // çizilir ve çubuk yalnız o zaman uzar.
+  final secondary = titleSecondary != null && shownTitle != null
+      ? titleSecondary
+      : null;
+  final secondaryFits =
+      secondary != null &&
+      _fitsOneLine(context, secondary, SahneType.caption, titleRoom);
   final toolbarHeight = _barHeight(
     context,
     title: titleText?.data,
+    extraHeight: secondaryFits
+        ? MediaQuery.textScalerOf(context).scale(SahneType.caption.fontSize!) *
+              SahneType.caption.height!
+        : 0,
     subtitle: subtitle is Text ? subtitle.data : null,
     subtitleMaxLines: subtitle is Text ? subtitle.maxLines : null,
     hasSubtitle: subtitle != null,
@@ -114,18 +127,20 @@ PreferredSizeWidget zkAppBar(
       ? null
       : Semantics(
           header: true,
-          child: subtitle == null
+          child: subtitle == null && !secondaryFits
               ? shownTitle
               : Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (secondaryFits) SahneBilingualLabel(secondary),
                     shownTitle,
-                    DefaultTextStyle.merge(
-                      style: SahneType.caption.copyWith(color: t.tx2),
-                      softWrap: true,
-                      child: subtitle,
-                    ),
+                    if (subtitle != null)
+                      DefaultTextStyle.merge(
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                        softWrap: true,
+                        child: subtitle,
+                      ),
                   ],
                 ),
         );
@@ -264,6 +279,7 @@ double _barHeight(
   BuildContext context, {
   required String? title,
   required String? subtitle,
+  double extraHeight = 0,
   int? subtitleMaxLines,
   required bool hasSubtitle,
   required bool hasLeading,
@@ -306,7 +322,33 @@ double _barHeight(
   if (hasSubtitle) {
     h += measure(subtitle, SahneType.caption, maxLines: subtitleMaxLines);
   }
+  h += extraHeight;
   // Alt satırlı başlıkta dikey pay 24: 16'da ad çubuğun üst kenarına,
   // alt satır altındaki çizgiye yapışık okunuyordu (kurul 4. tur 2026-10-20).
-  return math.max(64, h + (hasSubtitle ? SahneSpace.x6 : SahneSpace.x4));
+  return math.max(
+    64,
+    h + (hasSubtitle || extraHeight > 0 ? SahneSpace.x6 : SahneSpace.x4),
+  );
+}
+
+/// [text] [room] genişliğine tek satırda sığıyor mu (iki dilli küçük satır).
+bool _fitsOneLine(
+  BuildContext context,
+  String text,
+  TextStyle style,
+  double room,
+) {
+  final merged = DefaultTextStyle.of(context).style.merge(style);
+  final painter = TextPainter(
+    text: TextSpan(
+      text: text,
+      style: merged.copyWith(fontFamily: merged.fontFamily ?? SahneType.text),
+    ),
+    textDirection: Directionality.maybeOf(context) ?? TextDirection.ltr,
+    textScaler: MediaQuery.textScalerOf(context),
+    maxLines: 1,
+  )..layout();
+  final fits = painter.width <= room;
+  painter.dispose();
+  return fits;
 }

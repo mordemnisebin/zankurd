@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../widgets/sahne/sahne.dart';
 
@@ -67,9 +68,8 @@ class TodayTaskCard extends StatelessWidget {
     final goalInProgress = !firstSession && started && done < total;
     final remaining = total - done;
 
-    final title = goalInProgress
-        ? Tr.forKu(K.dailyGoalTitle, isKu)
-        : Tr.forKu(K.gununDersi, isKu);
+    final titleKey = goalInProgress ? K.dailyGoalTitle : K.gununDersi;
+    final title = Tr.forKu(titleKey, isKu);
     final meta = goalInProgress
         ? Tr.forKu(K.dailyGoalRemainingCorrect, isKu, {
             'n': '$remaining',
@@ -121,6 +121,8 @@ class TodayTaskCard extends StatelessWidget {
                     style: SahneType.headline.copyWith(color: t.tx),
                   ),
                 ),
+                // İki dilli etiket: kart başlığının öbür dildeki adı.
+                ?_secondLabel(context, titleKey, isKu),
                 const SizedBox(height: SahneSpace.x1),
                 Text(meta, style: SahneType.caption.copyWith(color: t.tx2)),
                 const SizedBox(height: SahneSpace.x3),
@@ -142,6 +144,13 @@ class TodayTaskCard extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Kart başlığının öbür dildeki karşılığı (ayar kapalıysa ya da karşılık
+/// yoksa `null`). Kart dili `isKu` ile taşır.
+Widget? _secondLabel(BuildContext context, String key, bool isKu) {
+  final text = secondLabelFor(context, key, isKu: isKu);
+  return text == null ? null : SahneBilingualLabel(text);
 }
 
 /// Kartın tek birincil düğmesi: Agir dolgu, koyu `onAct` metin, tam

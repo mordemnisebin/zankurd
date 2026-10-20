@@ -539,6 +539,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       scroll = SahneTabPage(
         controller: widget.scrollController,
         title: context.t(K.leaderboardTitle),
+        titleEyebrow: context.secondLabel(K.leaderboardTitle),
         stats: [actions],
         children: top,
       );

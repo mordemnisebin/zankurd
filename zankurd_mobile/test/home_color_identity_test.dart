@@ -128,8 +128,8 @@ void main() {
   });
 
   testWidgets(
-    'her görünür kategori yatay karodur: kendi işareti, kendi tonu, yalnız '
-    'geçerli dilde ad',
+    'her görünür kategori yatay karodur: kendi işareti, kendi tonu, öbür '
+    'dil yalnız küçük satırda',
     (tester) async {
       await _pumpHome(tester);
       final repo = freshMockRepository();
@@ -148,13 +148,20 @@ void main() {
           findsOneWidget,
           reason: category,
         );
+        // 2026-10-20 iki dilli etiket: öbür dildeki ad YALNIZ küçük satır
+        // bileşeninde durur; asıl ad gibi büyük yazılmaz.
         final other = CategoryNames.tile(category, true);
         if (other != CategoryNames.tile(category, false)) {
-          expect(
-            find.descendant(of: finder, matching: find.text(other)),
-            findsNothing,
-            reason: '$category: öteki dil adı karoda olmamalı',
-          );
+          for (final e
+              in find
+                  .descendant(of: finder, matching: find.text(other))
+                  .evaluate()) {
+            expect(
+              e.widget.key,
+              SahneBilingualLabel.valueKey,
+              reason: '$category: öteki dil adı yalnız küçük satırda',
+            );
+          }
         }
         // Mücevher karo (kare, büyük silüet) yok.
         expect(

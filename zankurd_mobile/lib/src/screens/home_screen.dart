@@ -521,7 +521,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onSelected: _selectLearningGoal,
             ),
           ],
-          SahneSectionHeader(title: context.t(K.homeTopicsTitle)),
+          SahneSectionHeader(
+            title: context.t(K.homeTopicsTitle),
+            // İki dilli etiket: öbür dilde aynı anahtar (bkz.
+            // [SahneBilingualLabel]).
+            eyebrow: context.secondLabel(K.homeTopicsTitle),
+          ),
           HomeTopicGrid(
             isKu: ku,
             categories: repo.categories,
@@ -629,6 +634,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return SahneTabPage(
       controller: widget.scrollController,
       title: _greeting(context, ku),
+      titleEyebrow: _greetingSecondLabel(context, ku),
       stats: [_buildHeaderControls(context, ku)],
       children: [content],
     );
@@ -642,25 +648,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     if (PlayerIdentity.isPlaceholderDisplayName(currentName)) {
       return context.t(K.homeGreetingAnon);
     }
-    final hour = DateTime.now().hour;
-    final String greeting;
-    if (isFlutterTestEnvironment) {
-      // Testte saat sabit değil; selam sabit kalsın.
-      greeting = context.t(K.homeGreetDay);
-    } else if (hour >= 5 && hour < 12) {
-      greeting = context.t(K.homeGreetMorning);
-    } else if (hour >= 12 && hour < 17) {
-      greeting = context.t(K.homeGreetDay);
-    } else if (hour >= 17 && hour < 22) {
-      greeting = context.t(K.homeGreetEvening);
-    } else {
-      greeting = context.t(K.homeGreetNight);
-    }
+    final greeting = context.t(_greetingKey());
     // Ad çözümlemesi profil ekranıyla aynı kaynaktan gelir; aksi halde
     // "ZanKurd" (ana ekran) ile "Lîstikvanê ZanKurd" (profil) gibi iki
     // ayrı kimlik oluşuyordu.
     final shortName = PlayerIdentity.resolveShortName(currentName, isKu: ku);
     return context.t(K.homeGreeting, {'greeting': greeting, 'name': shortName});
+  }
+
+  /// Günün saatine göre selam anahtarı.
+  String _greetingKey() {
+    // Testte saat sabit değil; selam sabit kalsın.
+    if (isFlutterTestEnvironment) return K.homeGreetDay;
+    final hour = DateTime.now().hour;
+    if (hour >= 5 && hour < 12) return K.homeGreetMorning;
+    if (hour >= 12 && hour < 17) return K.homeGreetDay;
+    if (hour >= 17 && hour < 22) return K.homeGreetEvening;
+    return K.homeGreetNight;
+  }
+
+  /// Selamın öbür dildeki karşılığı — iki dilli etiketin küçük satırı.
+  ///
+  /// Yeni metin yazılmaz: aynı anahtarların öbür dildeki değerleri
+  /// ([BuildContext.secondLabel]) ve adın o dildeki kısa biçimi birleştirilir.
+  /// Ayar kapalıysa ya da karşılık yoksa `null` (satır çizilmez).
+  String? _greetingSecondLabel(BuildContext context, bool ku) {
+    final currentName = _displayName ?? widget.displayName;
+    if (PlayerIdentity.isPlaceholderDisplayName(currentName)) {
+      return context.secondLabel(K.homeGreetingAnon);
+    }
+    final greeting = context.secondLabel(_greetingKey());
+    if (greeting == null) return null;
+    // Kalıp ("{greeting}, {name}!") iki dilde aynıdır; farkı selam taşır.
+    return Tr.forKu(K.homeGreeting, !ku, {
+      'greeting': greeting,
+      'name': PlayerIdentity.resolveShortName(currentName, isKu: !ku),
+    });
   }
 
   /// Marka satırının sağı: seri, jeton (stat çipleri) ve dil düğmesi.

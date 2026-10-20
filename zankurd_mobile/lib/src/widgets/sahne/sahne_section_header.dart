@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../theme/sahne.dart';
 import 'sahne_buttons.dart';
 import 'sahne_foundation.dart';
+import 'sahne_bilingual.dart';
 
 /// Bölüm başlığı — TEK stil (maketteki `.sh-sec`).
 ///
@@ -20,12 +21,17 @@ class SahneSectionHeader extends StatelessWidget {
   const SahneSectionHeader({
     super.key,
     required this.title,
+    this.eyebrow,
     this.actionLabel,
     this.onAction,
     this.actionSemanticLabel,
   });
 
   final String title;
+
+  /// Başlığın üstündeki ikinci dil satırı ([SahneBilingualLabel]); çağıran
+  /// `context.secondLabel(K.…)` ile verir.
+  final String? eyebrow;
   final String? actionLabel;
   final VoidCallback? onAction;
 
@@ -44,7 +50,7 @@ class SahneSectionHeader extends StatelessWidget {
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final heading = Semantics(
+          final Widget titleText = Semantics(
             header: true,
             // Uzun tek söz (Kurmancî, %200) dar sütunda harf harf
             // bölünmez.
@@ -53,6 +59,13 @@ class SahneSectionHeader extends StatelessWidget {
               style: SahneType.headline.copyWith(color: t.tx),
             ),
           );
+          final heading = eyebrow == null
+              ? titleText
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [SahneBilingualLabel(eyebrow!), titleText],
+                );
           // Büyük yazı ölçeğinde bağlantı başlığın altına iner; başlık
           // dar sütunda harf harf bölünmez.
           if (hasAction && MediaQuery.textScalerOf(context).scale(16) >= 24) {
