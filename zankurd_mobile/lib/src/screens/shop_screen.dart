@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -976,167 +974,15 @@ class _ShopScreenState extends State<ShopScreen> {
         // Kurul 2. tur 2026-10-20: VIP kartı yatay ve kompakt (ikon solda,
         // ad+açıklama ortada, fiyat sağda); ızgara kartlarının yarısı boy.
         _buildShopCard(heroItem, ku, hero: true),
-        if (restItems.isNotEmpty) ...[
+        // Tur 6 (kurul): her ürün AYNI yatay satır düzeninde (ikon solda, ad +
+        // açıklama ortada, fiyat/eylem sağda). Karışık ızgara iki fiyat dili ve
+        // eşit olmayan kartlar üretiyordu; tek düzen fiyatı hep aynı yere koyar.
+        for (final item in restItems) ...[
           const SizedBox(height: SahneSpace.cardGap),
-          // Sütun sayısı genişlikten; hücre yüksekliği içerikten. Sabit bir
-          // en-boy oranı büyük yazıda ve Kurmancî adlarda kartı taşırıyordu
-          // (kart dar, ad iki-üç satıra iner). Hücre boyu artık en uzun ürün
-          // adının ve düğme etiketinin o genişlikte, o yazı ölçeğinde
-          // ölçülen yüksekliğinden hesaplanır: satırdaki kartlar eşit boy
-          // kalır, hiçbiri taşmaz ya da kesilmez.
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final width = constraints.maxWidth;
-              // 2026-09-30 simülatör: büyük yazıda (Ekstra Büyük 2.35x)
-              // iki sütun kalıyordu; ~165 px'lik kartta "Zivirîna zêde"
-              // gibi adlar kelime ortasından kırılıyordu. Yazı 1.5x'i
-              // geçince tek sütun: ad ve düğme tam genişlikte okunur.
-              final largeText =
-                  MediaQuery.textScalerOf(context).scale(1) >= 1.5;
-              final columns = largeText
-                  ? 1
-                  : (width >= 680 ? 3 : (width >= 300 ? 2 : 1));
-              // Kurul 3. tur 2026-10-20: tek sayıda ürün ve iki sütunda son
-              // kart satırda yalnız kalıyordu (Neon). Son ürün tam genişlik
-              // yatay kart (VIP gibi) olur; ızgara çift sayıyla kalır.
-              final spanLast = columns == 2 && restItems.length.isOdd;
-              final gridItems = spanLast
-                  ? restItems.sublist(0, restItems.length - 1)
-                  : restItems;
-              final grid = GridView(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: columns,
-                  mainAxisSpacing: SahneSpace.cardGap,
-                  crossAxisSpacing: SahneSpace.cardGap,
-                  mainAxisExtent: _gridCellExtent(
-                    context,
-                    gridItems,
-                    ku,
-                    (width - SahneSpace.cardGap * (columns - 1)) / columns,
-                  ),
-                ),
-                children: [
-                  for (final item in gridItems) _buildShopCard(item, ku),
-                ],
-              );
-              if (!spanLast) return grid;
-              return Column(
-                children: [
-                  if (gridItems.isNotEmpty) grid,
-                  if (gridItems.isNotEmpty)
-                    const SizedBox(height: SahneSpace.cardGap),
-                  _buildShopCard(restItems.last, ku, wide: true),
-                ],
-              );
-            },
-          ),
+          _buildShopCard(item, ku, wide: true),
         ],
       ],
     );
-  }
-
-  /// Izgara hücresinin yüksekliği: kartın dikey dolgusu + önizleme
-  /// karosu + en uzun ad + düğme. Ad ve düğme etiketi o sütun genişliğinde
-  /// ve etkin yazı ölçeğinde gerçekten ölçülür.
-  /// Kart açıklamasının en çok satırı; ızgara boyu ve kart aynı sınırı kullanır.
-  static const int _descMaxLines = 3;
-
-  double _gridCellExtent(
-    BuildContext context,
-    List<ShopItem> items,
-    bool ku,
-    double cellWidth,
-  ) {
-    const pad = SahneSpace.x3;
-    const tile = 56.0;
-    final scaler = MediaQuery.textScalerOf(context);
-    final direction = Directionality.of(context);
-    // Metin, kartın `Material`inin verdiği varsayılan biçemle (temanın
-    // `bodyMedium`i) birleştirilerek ölçülür: miras harf aralığı satır
-    // kırılımını değiştirir. 1 px pay, kenarda duran bir sözün ölçümde
-    // sığıp çizimde alt satıra inmesini önler.
-    final inherited =
-        Theme.of(context).textTheme.bodyMedium ??
-        DefaultTextStyle.of(context).style;
-    double measure(
-      String text,
-      TextStyle style,
-      double maxWidth, {
-      int? maxLines,
-    }) {
-      final painter = TextPainter(
-        maxLines: maxLines,
-        // Aile açıkça ölçülen biçemden gelir (Onest / Bricolage);
-        // miras biçemin ailesi ölçümü sistem yazı tipine düşürmesin.
-        text: TextSpan(
-          text: text,
-          style: inherited.merge(style).copyWith(fontFamily: style.fontFamily),
-        ),
-        textDirection: direction,
-        textScaler: scaler,
-      )..layout(maxWidth: (maxWidth - 1).clamp(1.0, double.infinity));
-      final height = painter.height;
-      painter.dispose();
-      return height;
-    }
-
-    final inner = cellWidth - pad * 2;
-    var title = 0.0;
-    var desc = 0.0;
-    var button = 52.0;
-    var note = 0.0;
-    for (final item in items) {
-      final name = ku ? item.titleKu : item.titleTr;
-      title = math.max(title, measure(name, SahneType.bodyStrong, inner));
-      desc = math.max(
-        desc,
-        measure(
-          ku ? item.descKu : item.descTr,
-          SahneType.caption,
-          inner,
-          maxLines: _descMaxLines,
-        ),
-      );
-      final label = _purchasedItemIds.contains(item.id)
-          ? context.t(K.ownedLabel)
-          : '${item.cost}';
-      // Düğme: 12 + ikon (20) + 8 yan boşlukla etiket; dikeyde 12 + 12.
-      final labelHeight = measure(
-        label,
-        SahneType.button,
-        inner - SahneSpace.x3 * 2 - 20 - SahneSpace.x2,
-      );
-      button = math.max(button, labelHeight + SahneSpace.x3 * 2);
-      // Jeton yetmeyen ürünün düğmesi pasiftir; eksik sözü düğmenin
-      // altında ayrı satırdır, hücre onu da sığdırmalı.
-      final missing = coinShortfall(cost: item.cost, balance: _coinBalance);
-      if (missing > 0 && !_purchasedItemIds.contains(item.id)) {
-        note = math.max(
-          note,
-          measure(
-            context.t(K.coinsShort, {'coins': '$missing'}),
-            SahneType.captionStrong,
-            inner,
-          ),
-        );
-      }
-    }
-    if (note > 0) note += SahneSpace.x1;
-    // +2: basınca 2 px çöken düğmenin payı ve yuvarlama.
-    return pad +
-        tile +
-        SahneSpace.x3 +
-        title +
-        SahneSpace.x1 +
-        desc +
-        SahneSpace.x3 +
-        button +
-        note +
-        pad +
-        2;
   }
 
   // ────────────────────────────────────────────
@@ -1150,6 +996,8 @@ class _ShopScreenState extends State<ShopScreen> {
   // ortak pasif biçimde (disabledFill/Edge/Fg) çizilir ve altında eksik
   // miktar yazar; kartın kendisi dokunulabilir kalır (pencere jeton kazanma
   // yolunu sunar). Ürün kimliği yalnız önizleme karosunda yaşar.
+  static const double _actionWidth = 136;
+
   Widget _buildShopCard(
     ShopItem item,
     bool ku, {
@@ -1161,7 +1009,7 @@ class _ShopScreenState extends State<ShopScreen> {
     final desc = ku ? item.descKu : item.descTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
 
-    if (hero || wide) {
+    {
       final largeText = MediaQuery.textScalerOf(context).scale(16) >= 24;
       final texts = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1206,43 +1054,12 @@ class _ShopScreenState extends State<ShopScreen> {
                   const SizedBox(width: SahneSpace.x3),
                   Expanded(child: texts),
                   const SizedBox(width: SahneSpace.x3),
-                  action,
+                  // Sabit sütun: fiyat/eylem her kartta aynı yerde, aynı genişlikte.
+                  SizedBox(width: _actionWidth, child: action),
                 ],
               ),
       );
     }
-
-    return SahneSurfaceCard(
-      key: ValueKey('shop-item-surface-${item.id}'),
-      padding: const EdgeInsets.all(SahneSpace.x3),
-      onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: _preview(item, size: 56, dim: isPurchased),
-          ),
-          const SizedBox(height: SahneSpace.x3),
-          Text(
-            title,
-            style: SahneType.bodyStrong.copyWith(
-              color: isPurchased ? t.tx2 : t.tx,
-            ),
-          ),
-          const SizedBox(height: SahneSpace.x1),
-          Text(
-            desc,
-            maxLines: _descMaxLines,
-            overflow: TextOverflow.ellipsis,
-            style: SahneType.caption.copyWith(color: t.tx2),
-          ),
-          const Spacer(),
-          const SizedBox(height: SahneSpace.x3),
-          isPurchased ? _buildOwnedChip() : _buildBuyButton(item, ku),
-        ],
-      ),
-    );
   }
 
   // ── "Sende": pasif ikincil düğme + ✓ (satın alınmış, tekrar alınamaz) ──
@@ -1296,7 +1113,7 @@ class _ShopScreenState extends State<ShopScreen> {
         // Yatay kartta (hero) düğme alanı sınırsız genişlik alır; eksik söz
         // tek satırda dar ekranı taşırıyordu. Genişlik sınırlı, söz sarar.
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: expand ? double.infinity : 124),
+          constraints: const BoxConstraints(maxWidth: double.infinity),
           child: Column(
             key: ValueKey('shop-short-${item.id}'),
             crossAxisAlignment: expand
@@ -1345,8 +1162,7 @@ class _ShopScreenState extends State<ShopScreen> {
     // etiket). Kartta tek birincil eylem budur; kilitli kardeşleri düz metin.
     return SahneButton.primary(
       key: ValueKey('shop-buy-${item.id}'),
-      label: label,
-      leading: const SahneGlyph(SahneGlyphKind.coin, size: 20),
+      label: '${context.t(K.buyAction)} · $label',
       arrow: false,
       expand: expand,
       semanticLabel: semanticLabel,

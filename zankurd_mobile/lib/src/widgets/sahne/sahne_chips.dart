@@ -474,7 +474,10 @@ class SahnePickChip extends StatelessWidget {
     final large = MediaQuery.textScalerOf(context).scale(14) >= 21;
     final shape = SahneShape.withSide(
       SahneShape.m,
-      selected ? t.selLine : t.tx3,
+      // Seçilmemiş çerçeve ikincil metin tonu (tx3 değil): tx3 çerçeve ve
+      // yazı birlikte "devre dışı" okunuyordu (tur 6, 5 denetçi). Yazı tam
+      // opak ana metin rengi, yükseklik >= 48 (>= 44 mantıksal).
+      selected ? t.selLine : t.tx2,
       width: selected ? SahneRing.r2 : 1,
     );
     return Semantics(

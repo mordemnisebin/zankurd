@@ -1110,7 +1110,16 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                   ),
                 ],
               ),
-              const SizedBox(height: SahneSpace.x4),
+              const SizedBox(height: SahneSpace.x3),
+              // Başlığın altında net ayraç: kaydırılan içerik başlığın altından
+              // "yarım kesik çip" olarak görünmesin.
+              Divider(
+                key: const ValueKey('custom-room-header-divider'),
+                height: 1,
+                thickness: 1,
+                color: t.tx3.withValues(alpha: 0.35),
+              ),
+              const SizedBox(height: SahneSpace.x3),
               Flexible(
                 child: SahneBottomFade(
                   key: const ValueKey('custom-room-bottom-fade'),
@@ -1350,19 +1359,6 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                             ],
                           ),
                         ],
-                        if (!hasEnoughCoins) ...[
-                          const SizedBox(height: SahneSpace.x2),
-                          // Eksik miktar yazılır ("N jeton eksik"); düz "Jetonun
-                          // yetmiyor" ne kadar eksik olduğunu söylemiyordu.
-                          SahneShortfallNote(
-                            key: const ValueKey('custom-room-shortfall'),
-                            missing: coinShortfall(
-                              cost: _selectedEntryFee,
-                              balance: widget.coinBalance,
-                            ),
-                            alert: true,
-                          ),
-                        ],
                       ],
                     ),
                   ),
@@ -1377,6 +1373,20 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                 color: t.tx3.withValues(alpha: 0.35),
               ),
 
+              if (!hasEnoughCoins)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                  // Not kaydırma alanının DIŞINDA, düğmenin hemen üstünde:
+                  // solma altında kalıp okunmaz hale geliyordu.
+                  child: SahneShortfallNote(
+                    key: const ValueKey('custom-room-shortfall'),
+                    missing: coinShortfall(
+                      cost: _selectedEntryFee,
+                      balance: widget.coinBalance,
+                    ),
+                    alert: true,
+                  ),
+                ),
               // 2026-10-19: düğme kaydırma alanının DIŞINDA, sayfanın altında SABİT;
               // uzun seçim listesinde "Oda kur" hiç kaybolmaz.
               // Ücrete yetilmiyorsa "Oda aç" pasif bırakılmaz: yerine jeton

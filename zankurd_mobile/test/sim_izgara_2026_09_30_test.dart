@@ -256,12 +256,9 @@ void main() {
               .evaluate()
               .map((e) => tester.getTopLeft(find.byWidget(e.widget)).dx)
               .toSet();
-          if (scale > 2) {
-            expect(lefts.length, 1, reason: 'büyük yazıda tek sütun olmalı');
-          } else {
-            expect(lefts.length, 2, reason: 'normal yazıda iki sütun');
-          }
-          _expectNoMidWordBreaks(find.byType(GridView), 'mağaza ızgarası');
+          // Tur 6: her ürün tam genişlik satır; hep tek sütun.
+          expect(lefts.length, 1, reason: 'ürünler tek sütun olmalı');
+          _expectNoMidWordBreaks(find.byType(ListView), 'mağaza listesi');
         });
       }
     }

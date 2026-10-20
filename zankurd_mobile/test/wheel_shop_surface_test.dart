@@ -37,27 +37,34 @@ void main() {
     );
   });
 
-  testWidgets('mağaza telefonda iki sütunlu grid kullanır', (tester) async {
-    // Tek sütuna düşerse ekran başına bir ürün görünür ve vitrin
-    // beyaz kart yığınına döner.
+  testWidgets('mağaza telefonda tek tip yatay satır kullanır (tur 6)', (
+    tester,
+  ) async {
+    // Tur 6: karışık ızgara (iki fiyat dili, eşit olmayan kartlar) kalktı;
+    // her ürün tam genişlik aynı satır düzenindedir.
     tester.view.devicePixelRatio = 3.0;
-    tester.view.physicalSize = const Size(390, 1000) * 3.0;
+    tester.view.physicalSize = const Size(390, 1400) * 3.0;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(
       testShell(child: ShopScreen(repository: MockZanKurdRepository())),
     );
     await tester.pump(const Duration(milliseconds: 800));
     await tester.pump(const Duration(milliseconds: 800));
-
-    final grids = tester.widgetList<GridView>(find.byType(GridView));
-    expect(grids, isNotEmpty, reason: 'ürün grid’i hiç çizilmedi');
-    final delegate = grids.first.gridDelegate;
-    expect(delegate, isA<SliverGridDelegateWithFixedCrossAxisCount>());
-    expect(
-      (delegate as SliverGridDelegateWithFixedCrossAxisCount).crossAxisCount,
-      greaterThanOrEqualTo(2),
-      reason: 'modern telefonlarda vitrin iki sütun olmalı',
-    );
+    expect(find.byType(GridView), findsNothing);
+    final lefts = {
+      for (final e
+          in find
+              .byWidgetPredicate(
+                (w) =>
+                    w.key is ValueKey<String> &&
+                    (w.key! as ValueKey<String>).value.startsWith(
+                      'shop-item-surface-',
+                    ),
+              )
+              .evaluate())
+        tester.getTopLeft(find.byWidget(e.widget)).dx,
+    };
+    expect(lefts.length, 1);
   });
 
   testWidgets('mağaza gerçek coin bakiyesini gösterir', (tester) async {
@@ -87,24 +94,5 @@ void main() {
     await tester.pump(const Duration(milliseconds: 800));
     await tester.pump(const Duration(milliseconds: 800));
     expect(tester.takeException(), isNull);
-  });
-
-  testWidgets('mağaza iPad’de daha çok sütun kullanır', (tester) async {
-    tester.view.devicePixelRatio = 2.0;
-    tester.view.physicalSize = const Size(834, 1194) * 2.0;
-    addTearDown(tester.view.reset);
-    await tester.pumpWidget(
-      testShell(child: ShopScreen(repository: MockZanKurdRepository())),
-    );
-    await tester.pump(const Duration(milliseconds: 800));
-    await tester.pump(const Duration(milliseconds: 800));
-    final delegate =
-        tester.widgetList<GridView>(find.byType(GridView)).first.gridDelegate
-            as SliverGridDelegateWithFixedCrossAxisCount;
-    expect(
-      delegate.crossAxisCount,
-      greaterThanOrEqualTo(3),
-      reason: 'tablet telefon düzenini gerdirmemeli',
-    );
   });
 }
