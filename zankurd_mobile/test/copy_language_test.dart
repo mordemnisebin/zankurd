@@ -720,7 +720,8 @@ void main() {
     expect(Tr.of(K.coinWord, AppLanguage.ku), 'Zêr');
     expect(
       Tr.of(K.soloDailyCapReached, AppLanguage.ku),
-      'Sînorê zêran ê îro tije bû. Sibê ji nû ve dest pê dike.',
+      // 'tijî' (standart) — 2026-10-20 kurulu 4-2: 'tije' ağız biçimi.
+      'Sînorê zêran ê îro tijî bû. Sibê ji nû ve dest pê dike.',
     );
 
     final jeton = RegExp(r'jeton', caseSensitive: false);

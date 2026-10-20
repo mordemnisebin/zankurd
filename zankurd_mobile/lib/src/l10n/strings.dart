@@ -1278,7 +1278,7 @@ class Tr {
     // deyince oyuncu aynı parayı iki adla görür. Türkçe `jeton` kökü
     // İngilizce `\bcoin\b` taramasını kör eder — turnûva ile aynı sınıf.
     K.soloDailyCapReached: {
-      'ku': 'Sînorê zêran ê îro tije bû. Sibê ji nû ve dest pê dike.',
+      'ku': 'Sînorê zêran ê îro tijî bû. Sibê ji nû ve dest pê dike.',
       'tr': 'Bugünün jeton sınırına ulaştın. Yarın sıfırlanır.',
     },
     K.stopAction: {'ku': 'Rawestîne', 'tr': 'Durdur'},
@@ -1566,7 +1566,7 @@ class Tr {
           'Rewşa te ya amadebûnê nehat tomarkirin. Rewşa berê hat vegerandin.',
       'tr': 'Hazır durumun kaydedilemedi. Önceki durumuna döndürüldü.',
     },
-    K.roomFull: {'ku': 'Ode tije ye.', 'tr': 'Oda dolu.'},
+    K.roomFull: {'ku': 'Ode tijî ye.', 'tr': 'Oda dolu.'},
     K.roomAlreadyInAnotherRoom: {
       'ku': 'Tu jixwe di odeyeke din a zindî de yî.',
       'tr': 'Zaten başka bir canlı odadasın.',

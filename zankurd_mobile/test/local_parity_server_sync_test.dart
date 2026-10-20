@@ -74,21 +74,27 @@ const _retiredAfterSync = <String, String>{
   'sf_cin_0008': 'supabase/2026-10-19_icerik_emekli.sql',
 };
 
-/// Ekleme göçünden sonra yerelde metni düzeltilen soruların sunucu göçü.
-const _promptFixSql = 'supabase/2026-10-14_banka_ku_duzeltme.sql';
+/// Ekleme göçünden sonra yerelde metni düzeltilen soruların sunucu göçleri,
+/// tarih sırasıyla. Aynı kimliği iki göç düzeltirse sonraki geçerlidir.
+/// 2026-10-20: tek dosyaya bağlıydı; tije→tijî göçü ikinci dosya oldu.
+const _promptFixSqls = [
+  'supabase/2026-10-14_banka_ku_duzeltme.sql',
+  'supabase/2026-10-20_tije_tiji.sql',
+];
 
-// update questions set\n  prompt = '…', … where id = 'uuid';
+// update questions set\n  prompt = '…'[, …] where id = 'uuid';
 final _promptFixRe = RegExp(
-  r"^update questions set\n  prompt = '((?:[^']|'')*)',[\s\S]*?\nwhere id = '([0-9a-f-]{36})';",
+  r"^update questions set\n  prompt = '((?:[^']|'')*)'(?:,[\s\S]*?)?\nwhere id = '([0-9a-f-]{36})';",
   multiLine: true,
 );
 
-/// Düzeltme göçünün [id] için yazdığı soru metni; yoksa null.
+/// Düzeltme göçlerinin [id] için yazdığı son soru metni; yoksa null.
 String? _promptFixFor(String sql, String id) {
+  String? son;
   for (final m in _promptFixRe.allMatches(sql)) {
-    if (m.group(2) == id) return m.group(1)!.replaceAll("''", "'");
+    if (m.group(2) == id) son = m.group(1)!.replaceAll("''", "'");
   }
-  return null;
+  return son;
 }
 
 /// RFC 4122 sürüm 5 (SHA-1) — Python'daki `uuid.uuid5` ile aynı.
@@ -145,7 +151,9 @@ void main() {
     updateFiles = _files(_updatePrefix);
     sync = syncFiles.values.join('\n');
     retired = File(_retiredSql).readAsStringSync();
-    corrections = File(_promptFixSql).readAsStringSync();
+    corrections = _promptFixSqls
+        .map((f) => File(f).readAsStringSync())
+        .join('\n');
   });
 
   test('eklenen her satır bankada şu an oynanabilir bir yerel sorudur', () {

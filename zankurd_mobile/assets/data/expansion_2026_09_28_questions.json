@@ -3101,7 +3101,7 @@
     "category": "Çand",
     "difficulty": 3,
     "type": "multipleChoice",
-    "prompt": "Di mamik û tiştonekên kurdî de bersiva \"Goma bavê min tije pez e, şefeqê radibim hebek tune ye\" çi ye?",
+    "prompt": "Di mamik û tiştonekên kurdî de bersiva \"Goma bavê min tijî pez e, şefeqê radibim hebek tune ye\" çi ye?",
     "promptTr": "Kürt bilmecelerinde \"Babamın ağılı koyun dolu; şafakta kalkıyorum, bir tanesi bile yok\" bilmecesinin cevabı nedir?",
     "answers": [
       "Roj",
@@ -3118,7 +3118,7 @@
     "correctAnswer": "Stêrk",
     "correctAnswerTr": "Yıldız",
     "explanation": "Bu bilmecede gece göğü koyunla dolu bir ağıla benzetilir: yıldızlar gece sayısızca görünür, şafak sökünce hiçbiri kalmaz.",
-    "explanationKu": "Di vê mamikê de ezmanê şevê wek gomeke tije pez hatiye wesifandin: stêrk bi şev bêhejmar xuya dikin, lê bi şefeqê re yek jî namîne.",
+    "explanationKu": "Di vê mamikê de ezmanê şevê wek gomeke tijî pez hatiye wesifandin: stêrk bi şev bêhejmar xuya dikin, lê bi şefeqê re yek jî namîne.",
     "explanationTr": "Bu bilmecede gece göğü koyunla dolu bir ağıla benzetilir: yıldızlar gece sayısızca görünür, şafak sökünce hiçbiri kalmaz.",
     "metadata": {
       "dialect": "kurmanci",
@@ -3492,7 +3492,7 @@
     "correctAnswer": "Hinar",
     "correctAnswerTr": "Nar",
     "explanation": "Nar ağaçta olgunlaşır ve içi bulgura benzeyen küçük tanelerle doludur; bu yüzden bir bulgur tepsisine benzetilir.",
-    "explanationKu": "Hinar li ser darê digihîje û hundirê wê tije libên biçûk e ku dişibin savarê; loma ew wek sîniyeke savarê tê wesifandin.",
+    "explanationKu": "Hinar li ser darê digihîje û hundirê wê tijî libên biçûk e ku dişibin savarê; loma ew wek sîniyeke savarê tê wesifandin.",
     "explanationTr": "Nar ağaçta olgunlaşır ve içi bulgura benzeyen küçük tanelerle doludur; bu yüzden bir bulgur tepsisine benzetilir.",
     "metadata": {
       "dialect": "kurmanci",

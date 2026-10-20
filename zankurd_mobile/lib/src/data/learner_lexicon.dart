@@ -5131,7 +5131,7 @@ class LearnerLexicon {
     ),
     LearnerLexiconEntry(
       id: 'q-tije',
-      termKu: 'Tije',
+      termKu: 'Tijî',
       meaningTr: 'dolu',
       sourceId: 'questions',
     ),
