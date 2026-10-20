@@ -131,6 +131,24 @@ class _QuizScreenState extends State<QuizScreen>
   bool get _isLearningExperience =>
       widget.experience == QuizExperience.learning;
 
+  /// Soru ekranının tek satırlık geçici bildirimi (joker ipucu, kilitli joker
+  /// nedeni). Alttaki SnackBar yerine üst çubuğun hemen altında gösterilir:
+  /// şıkları ve alt çubuğu örtmez, böylece alt pay küçük kalır.
+  String? _stageToast;
+  Key? _stageToastKey;
+  Timer? _stageToastTimer;
+
+  void _showStageToast(String text, {Key? key}) {
+    _stageToastTimer?.cancel();
+    setState(() {
+      _stageToast = text;
+      _stageToastKey = key;
+    });
+    _stageToastTimer = Timer(const Duration(seconds: 3), () {
+      if (mounted) setState(() => _stageToast = null);
+    });
+  }
+
   /// Sözcüğe dokununca sözlük anlamı: yalnız başkasına karşı puanlanmayan,
   /// tek kişilik oyunda. Kategori seviyesi, günün dersi ve yanlış çalışması
   /// `learning`; ödülsüz tekrar (`practice`) de öyle. Oda, hızlı düello,
@@ -1413,6 +1431,7 @@ class _QuizScreenState extends State<QuizScreen>
     _playersSub?.cancel();
     _realtimeSub?.cancel();
     _autoNextTimer?.cancel();
+    _stageToastTimer?.cancel();
     _revealTimer?.cancel();
     _revealTickTimer?.cancel();
     _opponentWaitTimer?.cancel();
@@ -1799,6 +1818,16 @@ class _QuizScreenState extends State<QuizScreen>
                               !_opponentClientReady &&
                               !_questionFlowStarted))
                         _OpponentWaitingOverlay(isKu: _isKu),
+                      if (_stageToast != null)
+                        PositionedDirectional(
+                          top: SahneSpace.x2,
+                          start: SahneSpace.page,
+                          end: SahneSpace.page,
+                          child: _StageToast(
+                            key: _stageToastKey ?? const ValueKey('quiz-toast'),
+                            text: _stageToast!,
+                          ),
+                        ),
                       // Canlı çok oyunculu reaksiyon baloncukları.
                       //
                       // Baloncuk çizimi burada ELDE yazılmaz: `room_screen`

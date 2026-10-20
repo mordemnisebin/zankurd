@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
-import 'package:zankurd_mobile/src/theme/sahne.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/realistic_device.dart';
 import 'support/widget_test_helpers.dart';
@@ -17,7 +18,7 @@ import 'support/widget_test_helpers.dart';
 ///    ve kenarı yoktu; şıklar "ışığı sönük" okunuyordu.
 /// 2. Soru metni 800 ağırlıktaydı; 700 ağırlıklı şıklara göre fazla bağırıyordu.
 /// 3. Soru+şık grubu alt çubuktan ~195 pt yukarıda duruyordu (bildirim payı
-///    160): altta ölü boşluk.
+///    160; tur 9a: tost üste alındı, pay 48): altta ölü boşluk.
 /// 4. Şıklar 52 yüksek, aralarında 8 pt.
 ///
 /// ## Niçin sessiz kalırdı
@@ -102,9 +103,9 @@ void main() {
     // Tur 8b: grup, üst çubuk ile alt bildirim payı arasında ORTALI (üst ve
     // alt boşluk yaklaşık eşit); 48 pt kuralı yanlıştı, geri alındı.
     final scroll = find.byKey(const ValueKey('quiz-portrait-scroll'));
-    final top = tester
-        .getTopLeft(find.byKey(const ValueKey('quiz-answer-content')))
-        .dy;
+    // Grubun üstü SORUNUN üstüdür (`quiz-answer-content` dış sütunu her zaman
+    // dolgunun hemen altında başlar; grup içinde ortalanır).
+    final top = tester.getTopLeft(find.byType(QuizQuestionPrompt)).dy;
     final topGap = top - tester.getTopLeft(scroll).dy;
     final bottomGap =
         tester.getBottomLeft(scroll).dy -
@@ -117,22 +118,44 @@ void main() {
     );
   });
 
-  testWidgets('tost görünürken son şıkkın alt kenarı tostun üstünde kalır', (
+  // 8. kurul (Opus, Gemini): 4 pt ilerleme çubuğu koyu zeminde görünmüyordu;
+  // (Codex, ChatGPT): grup "yukarıda, altı boş" kalıyordu çünkü alttan açılan
+  // joker tostu için 160 pt pay ayrılıyordu. Tost üst çubuğun altına alındı,
+  // alt pay 48'e indi. Eski testler tostu yalnız SnackBar'la, alt payı yalnız
+  // sabitin kendisiyle sınadığından ikisi de sessiz kaldı.
+  testWidgets('tost üst çubuğun altında açılır, şıklarla kesişmez', (
     tester,
   ) async {
     await pump(tester);
-    final context = tester.element(find.byType(QuizOptionTile).first);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        behavior: SnackBarBehavior.floating,
-        content: Text('İlk deneme yanlışsa bir hak daha'),
-      ),
-    );
+    expect(quizAnchorNoticeReserve, lessThanOrEqualTo(48));
+    // Bakiye 0: kilitli joker satırına dokunmak tost açar.
+    await tester.tap(find.byIcon(AppIcons.lock).first);
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 400));
-    final toast = tester.getRect(find.byType(SnackBar));
-    final last = tester.getRect(find.byType(QuizOptionTile).last);
-    expect(last.bottom, lessThanOrEqualTo(toast.top));
+    await tester.pump(const Duration(milliseconds: 300));
+    final toast = tester.getRect(
+      find.byKey(const ValueKey('quiz-wildcard-locked-note')),
+    );
+    final first = tester.getRect(find.byType(QuizOptionTile).first);
+    expect(toast.bottom, lessThanOrEqualTo(first.top));
+    final bar = tester.getRect(find.byKey(const ValueKey('quiz-progress-bar')));
+    expect(toast.top, greaterThanOrEqualTo(bar.bottom));
+    await tester.pump(const Duration(seconds: 4));
+    expect(
+      find.byKey(const ValueKey('quiz-wildcard-locked-note')),
+      findsNothing,
+    );
+  });
+
+  testWidgets('ilerleme çubuğu 4 pt, turuncu dolgu, görünür iz', (
+    tester,
+  ) async {
+    await pump(tester);
+    final finder = find.byKey(const ValueKey('quiz-progress-bar'));
+    final bar = tester.widget<SahneProgressBar>(finder);
+    expect(bar.height, 4);
+    expect(bar.tone, SahneProgressTone.action);
+    expect(bar.trackColor, isNotNull);
+    expect(bar.trackColor!.a, greaterThan(0.1));
   });
 
   for (final (name, size, scale) in [

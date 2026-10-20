@@ -356,11 +356,45 @@ const double quizPromptToAnswersGap = 28;
 /// yapışık okunuyordu).
 const double quizOptionGap = 12;
 
-/// Soru+şık grubunun altında bildirim/tost için bırakılan pay (160). Tur 8'de
-/// 12'ye indirilmişti; joker ipucu tostu son şıkkı örttü, geri alındı. Grup,
-/// üst çubuk ile bu pay arasındaki alanda DİKEYDE ORTALANIR (üst ve alt
-/// boşluk eşit); tost payı alanın dışında kalır.
-const double quizAnchorNoticeReserve = 160;
+/// Soru+şık grubunun altında bırakılan pay (48). Eskiden 160'tı: joker ipucu
+/// tostu alttan açıldığı için son şıkkı örtmesin diye pay ayrılıyor, grup
+/// "yukarıda, altı boş" kalıyordu (8. kurul: Codex + ChatGPT). Tost artık
+/// üst çubuğun hemen altında ([_StageToast]); alt pay yalnız nefes boşluğu.
+/// Grup, üst çubuk ile bu pay arasındaki alanda DİKEYDE ORTALANIR.
+const double quizAnchorNoticeReserve = 48;
+
+/// Soru ekranının üst çubuğun altındaki geçici bildirimi.
+class _StageToast extends StatelessWidget {
+  const _StageToast({super.key, required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Semantics(
+      liveRegion: true,
+      container: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: t.s3,
+          shape: SahneShape.withSide(SahneShape.m, t.tx3, width: 1),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: SahneSpace.x3,
+            vertical: SahneSpace.x2,
+          ),
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: SahneType.caption.copyWith(color: t.tx),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class _QuestionTextAndAnswers extends StatelessWidget {
   const _QuestionTextAndAnswers({
