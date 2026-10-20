@@ -1736,6 +1736,9 @@ class _ScoreStars extends StatelessWidget {
             size: scenic ? (i == 1 ? 70 : 50) : (i == 1 ? 28 : 20),
             filled: i < earned,
             color: scenic && i >= earned ? SahneVivid.starEmpty : null,
+            // Kazanılmayan yıldızın koyu konturu bordo zeminde sert
+            // duruyordu (kurul 2026-10-20): kontur yok, yalnız cam dolgu.
+            edgeColor: scenic && i >= earned ? Colors.transparent : null,
           ),
         ],
       ],

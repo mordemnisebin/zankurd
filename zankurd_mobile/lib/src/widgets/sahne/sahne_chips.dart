@@ -228,12 +228,17 @@ class SahneRailChip extends StatelessWidget {
     required this.selected,
     required this.onTap,
     this.role = SahneRole.learn,
+    this.vivid = false,
   });
 
   final String label;
   final bool selected;
   final VoidCallback? onTap;
   final SahneRole role;
+
+  /// Seçili çip rolün DOLU renginde ve beyaz yazılı olur (2026-10-20 renk ve
+  /// canlılık, B): öğrenme konu rayı Zimrût.
+  final bool vivid;
 
   /// Dokunma kutusunun görselden her yandaki payı.
   static const double inset = (sahneTapTarget - 44) / 2;
@@ -243,12 +248,15 @@ class SahneRailChip extends StatelessWidget {
     final t = SahneTokens.of(context);
     final fitted = SahneRail.isFitted(context);
     final onSurface = SahneOnSurface.of(context);
+    final roleFill = vivid ? t.roleFill(role) : null;
     final text = Text(
       label,
       textAlign: TextAlign.center,
       maxLines: fitted ? 1 : null,
       style: SahneType.captionStrong.copyWith(
-        color: selected ? t.selTx : t.tx2,
+        color: selected
+            ? (roleFill != null ? SahneVivid.onFill : t.selTx)
+            : t.tx2,
         fontWeight: selected ? FontWeight.w800 : FontWeight.w700,
       ),
     );
@@ -257,7 +265,7 @@ class SahneRailChip extends StatelessWidget {
     // ile aynı güçlü turuncuyu (2 px) paylaşıyordu. Seçilmemiş çip artık
     // nötr dolgulu (s2); seçili çip turuncu metin + açık turuncu dolgu + 1 px
     // çerçeve: ana eylemden sakin.
-    final fill = selected ? t.selFill : (onSurface ? t.s3 : t.s2);
+    final fill = selected ? (roleFill ?? t.selFill) : (onSurface ? t.s3 : t.s2);
     // Seçili olmayan çip de AYNI kalınlıkta halka taşır; halkası kendi
     // zeminin rengindedir (görünmez). Eskiden 1 px'lik soluk bir kenar vardı:
     // gündüzde sayfa zeminiyle birleşip beyaz alanı küçültüyor, seçilince
@@ -265,7 +273,7 @@ class SahneRailChip extends StatelessWidget {
     // İki hâlde de dolu alan aynı 44'ü kaplar; fark yalnız halkanın rengi.
     final shape = SahneShape.withSide(
       SahneShape.m,
-      selected ? t.selLine : fill,
+      selected ? (roleFill ?? t.selLine) : fill,
       width: railChipRing,
     );
     return Semantics(

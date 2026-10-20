@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -97,7 +98,7 @@ void main() {
         // temanın birincil metin rengiyle yazılır (koyu bant kalktı).
         expect(
           DefaultTextStyle.of(tester.element(inBar)).style.color,
-          t.tx,
+          SahneVivid.onFill,
           reason: combo,
         );
         final gradients = find.byWidgetPredicate((widget) {
@@ -135,7 +136,12 @@ void main() {
             findsOneWidget,
             reason: combo,
           );
-          expect(badgeColor(tester, 1), t.learnTint, reason: combo);
+          // 2026-10-20 (B): sıradaki seviye konunun DOLU renginde.
+          expect(
+            badgeColor(tester, 1),
+            CategoryVisuals.tone(category).fill(night: dark),
+            reason: combo,
+          );
           for (final locked in [2, 3, 4, 5]) {
             expect(badgeColor(tester, locked), t.s2, reason: '$combo $locked');
           }

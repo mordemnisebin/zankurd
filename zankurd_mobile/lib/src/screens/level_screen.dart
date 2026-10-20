@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/strings.dart';
+import '../config/category_visuals.dart';
 import '../data/level_progress_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -535,7 +536,7 @@ class _LevelNode extends StatelessWidget {
 /// Seviye rozeti (44'lük M karo) dört dil konuşur: kilitli (Kulis + kilit;
 /// ikon ikincil metinde — üçüncül metin Kulis üstünde 4.49:1 kalıyor),
 /// oynanmış (Zêr tonu + yıldız glifi — altın bu uygulamada yalnız
-/// KAZANILMIŞ ödül demektir), sıradaki (Zimrût tonu + numara) ve nadiren
+/// KAZANILMIŞ ödül demektir), sıradaki (konunun dolu rengi + beyaz numara) ve nadiren
 /// "açık ama sırada değil" (Kulis + numara; düz ilerlemede hemen hiç
 /// oluşmaz).
 enum _LevelBadge { locked, played, next, open }
@@ -561,10 +562,14 @@ class _LevelRowContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final locked = badge == _LevelBadge.locked;
+    // 2026-10-20 renk ve canlılık (B): sıradaki seviye konunun DOLU renginde
+    // (beyaz numara); konu ekranının bandıyla aynı renk.
+    final night = Theme.of(context).brightness == Brightness.dark;
+    final topic = CategoryVisuals.tone(level.category).fill(night: night);
     final number = Text(
       '${level.number}',
       style: SahneType.headline.copyWith(
-        color: badge == _LevelBadge.next ? t.learnTx : t.tx,
+        color: badge == _LevelBadge.next ? SahneVivid.onFill : t.tx,
         fontFeatures: const [FontFeature.tabularFigures()],
       ),
     );
@@ -574,7 +579,7 @@ class _LevelRowContent extends StatelessWidget {
         t.goldTint,
         const SahneGlyph(SahneGlyphKind.star, size: 24),
       ),
-      _LevelBadge.next => (t.learnTint, number),
+      _LevelBadge.next => (topic, number),
       _LevelBadge.open => (t.s2, number),
     };
     final badgeTile = DecoratedBox(
@@ -598,7 +603,7 @@ class _LevelRowContent extends StatelessWidget {
             if (!locked) ...[
               _DifficultyBars(
                 filled: level.difficultyMax.clamp(1, 5),
-                color: t.learnTx,
+                color: topic,
               ),
               const SizedBox(width: SahneSpace.x2),
             ],

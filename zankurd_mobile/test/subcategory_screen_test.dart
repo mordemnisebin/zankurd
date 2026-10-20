@@ -147,7 +147,7 @@ void main() {
     );
     expect(
       (tile.decoration as ShapeDecoration).color,
-      CategoryVisuals.tone('Ziman').ground,
+      CategoryVisuals.tone('Ziman').fill(night: false),
     );
     final group = tester.widget<Material>(
       find

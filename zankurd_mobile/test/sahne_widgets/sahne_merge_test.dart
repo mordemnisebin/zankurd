@@ -526,7 +526,12 @@ void main() {
       final noArt = find.descendant(
         of: find.byKey(const Key('thumb')),
         matching: find.byWidgetPredicate(
-          (w) => w is CustomPaint && w.painter is SahneNoArtPainter,
+          // 2026-10-20 (B): çizimsiz küçük konunun DOLU rengi + beyaz ikon.
+          (w) =>
+              w is DecoratedBox &&
+              w.decoration is ShapeDecoration &&
+              (w.decoration as ShapeDecoration).color ==
+                  SahneCategoryTone.fallback.fill(night: false),
         ),
       );
       expect(noArt, findsOneWidget);

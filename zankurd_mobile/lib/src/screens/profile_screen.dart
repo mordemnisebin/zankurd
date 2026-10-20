@@ -498,7 +498,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     : context.percent(_accuracyPercent!.round()),
                 // Doğruluk bir durum değil bir ölçüdür: yeşil "iyi", kırmızı
                 // "kötü" demez (renk tek başına anlam taşımaz). Nötr karo.
-                role: SahneRole.neutral,
+                role: SahneRole.social,
                 icon: AppIcons.bullseye,
               ),
             ],

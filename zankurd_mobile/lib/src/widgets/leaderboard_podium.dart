@@ -185,11 +185,19 @@ class _PodiumColumn extends StatelessWidget {
     // dolgu ve altın halkaydı; liste ise nötr kartta kalıyor, sıralama
     // sekmesi (turuncu seçili) ile üç ayrı vurgu dili çıkıyordu. Birinciyi
     // artık yalnız taç ve altın rakam ayırır.
-    final pedestalShape = SahneShape.withSide(SahneShape.l, t.edge, width: 1);
     final pedestal = ConstrainedBox(
       constraints: BoxConstraints(minHeight: _pedestal[place]),
       child: DecoratedBox(
-        decoration: ShapeDecoration(color: t.s1, shape: pedestalShape),
+        // Zêr ilk üç (2026-10-20 B): kaide madalya tonunda, üstte madalya
+        // renginde şerit; kendi satırın altın vurgusu aşağıda sürer.
+        decoration: ShapeDecoration(
+          color: t.medalTint(place),
+          shape: SahneShape.withSide(
+            SahneShape.l,
+            t.medalBar(place),
+            width: 1.5,
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(
             SahneSpace.x1,

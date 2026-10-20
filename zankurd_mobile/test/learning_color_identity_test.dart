@@ -78,7 +78,7 @@ void main() {
           expect(title, findsOneWidget, reason: combo);
           expect(
             DefaultTextStyle.of(tester.element(title)).style.color,
-            t.tx,
+            SahneVivid.onFill,
             reason: combo,
           );
         },
@@ -98,15 +98,15 @@ void main() {
             matching: find.text(isKu ? 'Rojane' : 'Günlük'),
           ),
         );
-        // Kurul incelemesi 2026-10-19: seçili stil tek ve markadan türer
-        // (`selTx`/`selFill`); öğrenme rolü rengi artık seçili çipi boyamaz.
-        expect(selectedText.style?.color, t.selTx, reason: combo);
+        // 2026-10-20 renk ve canlılık (B): öğrenme konu rayında seçili çip
+        // Zimrût DOLU, beyaz yazılı (mod rengi geri geldi).
+        expect(selectedText.style?.color, SahneVivid.onFill, reason: combo);
         expect(
           materialColorIn(
             tester,
             find.byKey(const ValueKey('learning-tab-everyday')),
           ),
-          t.selFill,
+          t.learnFill,
           reason: combo,
         );
 
@@ -122,7 +122,7 @@ void main() {
             tester,
             find.byKey(const ValueKey('learning-tab-grammar')),
           ),
-          isNot(t.selFill),
+          isNot(t.learnFill),
           reason: combo,
         );
       });

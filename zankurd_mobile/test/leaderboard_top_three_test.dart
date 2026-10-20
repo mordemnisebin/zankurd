@@ -334,7 +334,7 @@ void main() {
 
   // Kurul 3. tur 2026-10-20 (06): kaideler liste grubuyla aynı kart işleme;
   // birinciye özel altın dolgu yok (üç ayrı vurgu dili çıkıyordu).
-  testWidgets('kurul 3. tur: kaideler liste kartıyla aynı nötr dolguyu taşır', (
+  testWidgets('2026-10-20 (B): kaideler Zêr/gümüş/bronz madalya tonunu taşır', (
     tester,
   ) async {
     await _pump(tester, _Repo(count: 5));
@@ -348,8 +348,11 @@ void main() {
         .whereType<ShapeDecoration>()
         .map((d) => d.color)
         .whereType<Color>();
-    expect(fills, isNot(contains(t.goldTint)));
-    expect(fills.where((c) => c == t.s1).length, greaterThanOrEqualTo(3));
+    // Zêr ilk üç: her kaide kendi madalya tonunda (renk bekçisi:
+    // renk_canlilik_test.dart).
+    for (var place = 0; place < 3; place++) {
+      expect(fills, contains(t.medalTint(place)), reason: 'kaide ${place + 1}');
+    }
   });
 
   for (final mode in [ThemeMode.light, ThemeMode.dark]) {

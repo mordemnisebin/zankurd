@@ -35,6 +35,23 @@ extension SahneRoleTokens on SahneTokens {
     SahneRole.neutral => s2,
   };
 
+  /// Rolün DOLU yüzeyi (kahraman, sayfa bandı; üstünde beyaz yazı ≥ 4,5:1).
+  /// Zêr ve nötr rolün dolu yüzeyi yoktur (Zêr yalnız ödüldür).
+  Color? roleFill(SahneRole role) => switch (role) {
+    SahneRole.learn => learnFill,
+    SahneRole.race => raceFill,
+    SahneRole.social => nilFill,
+    SahneRole.gold || SahneRole.neutral => null,
+  };
+
+  /// Dolu yüzeyin gradyan sonundaki koyu uç.
+  Color? roleDeep(SahneRole role) => switch (role) {
+    SahneRole.learn => learnDeep,
+    SahneRole.race => raceDeep,
+    SahneRole.social => nilDeep,
+    SahneRole.gold || SahneRole.neutral => null,
+  };
+
   /// Sahne kartının köşe radyali: rol renginin %20'si (`--stage-learn`).
   Color roleGlow(SahneRole role) => switch (role) {
     SahneRole.learn => learn.withValues(alpha: 0.2),

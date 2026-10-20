@@ -1299,6 +1299,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     }
 
     return SahnePushedPage(
+      role: SahneRole.race,
       // Ekranın kimliği artık B iskeletinin çubuğudur (başlık + alt satır);
       // eski kimlik başlığının anahtarı çubuğu taşıyan sayfadadır.
       key: const ValueKey('matchmaking-selection-header'),
@@ -1750,7 +1751,7 @@ class _RandomMatchCard extends StatelessWidget {
               // Kenarlık yok: dikdörtgen kenarlık pah kırpıcısında köşeleri
               // kesik bir çerçeve bırakıyordu.
               decoration: BoxDecoration(
-                color: t.s1,
+                color: t.raceTint,
                 boxShadow: const <BoxShadow>[],
               ),
               padding: const EdgeInsets.all(SahneSpace.x4),
@@ -1760,12 +1761,16 @@ class _RandomMatchCard extends StatelessWidget {
                     // İkon karosu nötr (Kulis): kartın tek renkli öğesi
                     // sağdaki Agir ok karosudur.
                     decoration: ShapeDecoration(
-                      color: t.s2,
+                      color: t.raceFill,
                       shape: SahneShape.m,
                     ),
-                    child: SizedBox.square(
+                    child: const SizedBox.square(
                       dimension: 44,
-                      child: Icon(AppIcons.shuffle, color: t.tx2, size: 24),
+                      child: Icon(
+                        AppIcons.shuffle,
+                        color: SahneVivid.onFill,
+                        size: 24,
+                      ),
                     ),
                   ),
                   const SizedBox(width: SahneSpace.x3),

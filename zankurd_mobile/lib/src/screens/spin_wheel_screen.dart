@@ -359,6 +359,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     return Stack(
       children: [
         SahnePushedPage(
+          role: SahneRole.race,
           title: context.t(K.wheelTitle),
           backLabel: context.t(K.back),
           slivers: [body],

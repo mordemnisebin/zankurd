@@ -460,12 +460,24 @@ class SahneSurfaceCard extends StatelessWidget {
         child: Padding(padding: padding, child: child),
       ),
     );
-    if (semanticLabel == null && onTap == null) return card;
+    // Kart ayrımı (kurul 2026-10-20, 3 model): beyaz kart açık gri zeminde
+    // düz duruyordu. Gündüz çok hafif, kısa bir gölge (yayılmayan, 6 pt);
+    // gece kenar zaten ayırır.
+    final raised = color == null && t.bg.computeLuminance() > 0.5
+        ? DecoratedBox(
+            decoration: ShapeDecoration(
+              shape: SahneShape.l,
+              shadows: [t.cardShadow],
+            ),
+            child: card,
+          )
+        : card;
+    if (semanticLabel == null && onTap == null) return raised;
     return Semantics(
       container: true,
       button: onTap != null,
       label: semanticLabel,
-      child: card,
+      child: raised,
     );
   }
 }

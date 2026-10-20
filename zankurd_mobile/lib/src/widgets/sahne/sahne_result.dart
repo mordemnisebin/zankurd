@@ -954,8 +954,8 @@ class SahneResultRewards extends StatelessWidget {
     final t = SahneTokens.of(context);
     return SahneSurfaceCard(
       // Zêr "Kazanıldı" kartı (2026-10-20): altın tonlu zemin ve kenar.
-      color: t.gold.withValues(alpha: 0.16),
-      edgeColor: t.gold.withValues(alpha: 0.4),
+      color: t.gold.withValues(alpha: 0.24),
+      edgeColor: t.gold.withValues(alpha: 0.55),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

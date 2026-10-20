@@ -26,6 +26,7 @@ class QuizTimerWidget extends StatelessWidget {
     required this.maxSeconds,
     required this.isPaused,
     this.light,
+    this.onBand = false,
     super.key,
   });
 
@@ -35,6 +36,9 @@ class QuizTimerWidget extends StatelessWidget {
 
   /// Geriye uyum: sayacın halesi kalktığı için artık bir şey boyamaz.
   final Color? light;
+
+  /// Konu bandının üstünde ([SahneStageTimer.onBand]).
+  final bool onBand;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +51,7 @@ class QuizTimerWidget extends StatelessWidget {
           secondsLeft: seconds,
           // Cevaptan sonra gerilim eşiği kapanır (bkz. sınıf belgesi).
           hotSeconds: isPaused ? -1 : 5,
+          onBand: onBand,
           semanticLabel: context.t(K.timerSecondsLeft, {'n': '$seconds'}),
         );
       },

@@ -251,88 +251,87 @@ class ArenaHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final role = sahneRoleFor(accent);
+    // 2026-10-20 renk ve canlılık (B): arena başlığı modun DOLU renginde
+    // (yarış Boyax; Zêr ödül ikonu için de zemin Boyax kalır, altın yalnız
+    // ödül jetonunda). Beyaz yazı, cam ikon karosu.
+    final accentRole = sahneRoleFor(accent);
+    final role = switch (accentRole) {
+      SahneRole.learn || SahneRole.social => accentRole,
+      _ => SahneRole.race,
+    };
     return SizedBox(
       width: double.infinity,
-      child: SahneStageCard(
+      child: SahneHeroSurface(
         role: role,
-        child: Builder(
-          builder: (context) {
-            // Sahne kartının içi gece belirteçleridir.
-            final t = SahneTokens.of(context);
-            final race = role == SahneRole.race;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    ExcludeSemantics(
-                      child: DecoratedBox(
-                        decoration: ShapeDecoration(
-                          color: t.roleTint(role),
-                          shape: SahneShape.m,
-                        ),
-                        child: SizedBox.square(
-                          dimension: 44,
-                          child: Icon(
-                            icon,
-                            size: 24,
-                            color: race
-                                ? SahneStageColors.raceSoft
-                                : t.roleText(role),
-                          ),
-                        ),
+        kilim: false,
+        child: Padding(
+          padding: const EdgeInsets.all(SahneSpace.x4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  ExcludeSemantics(
+                    child: DecoratedBox(
+                      decoration: const ShapeDecoration(
+                        color: SahneVivid.glass,
+                        shape: SahneShape.m,
+                      ),
+                      child: SizedBox.square(
+                        dimension: 44,
+                        child: Icon(icon, size: 24, color: SahneVivid.onFill),
                       ),
                     ),
-                    const SizedBox(width: SahneSpace.x3),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Başlık kesilmez: uzun Kurmancî kupa adı iki
-                          // satırda "…" ile bitiyordu. Sarar; tek uzun söz
-                          // harf harf bölünmez.
-                          Semantics(
-                            header: true,
-                            child: SahneUnbrokenText(
-                              title,
-                              style: SahneType.headline.copyWith(color: t.tx),
+                  ),
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Başlık kesilmez: uzun Kurmancî kupa adı iki
+                        // satırda "…" ile bitiyordu. Sarar; tek uzun söz
+                        // harf harf bölünmez.
+                        Semantics(
+                          header: true,
+                          child: SahneUnbrokenText(
+                            title,
+                            style: SahneType.headline.copyWith(
+                              color: SahneVivid.onFill,
                             ),
                           ),
-                          if (subtitle != null)
-                            Text(
-                              subtitle!,
-                              style: SahneType.caption.copyWith(
-                                color: race ? SahneStageColors.raceSoft : t.tx2,
-                              ),
+                        ),
+                        if (subtitle != null)
+                          Text(
+                            subtitle!,
+                            style: SahneType.caption.copyWith(
+                              color: SahneVivid.onFillSoft,
                             ),
-                        ],
-                      ),
+                          ),
+                      ],
                     ),
-                  ],
-                ),
-                // Durum çipi başlığın yanında değil, ödül jetonlarıyla aynı
-                // satırda ve ORTA hizada durur: başlığın yanında başlığı
-                // daraltıp kesiyordu, jetonlarla (36) ayrı satırda 28'lik
-                // çip hizasız kalıyordu. Wrap sarar, satır taşmaz.
-                if (status != null || tokens.isNotEmpty) ...[
-                  const SizedBox(height: SahneSpace.x3),
-                  Wrap(
-                    spacing: SahneSpace.x2,
-                    runSpacing: SahneSpace.x2,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [?status, ...tokens],
                   ),
                 ],
-                if (action != null) ...[
-                  const SizedBox(height: SahneSpace.x4),
-                  SizedBox(width: double.infinity, child: action!),
-                ],
+              ),
+              // Durum çipi başlığın yanında değil, ödül jetonlarıyla aynı
+              // satırda ve ORTA hizada durur: başlığın yanında başlığı
+              // daraltıp kesiyordu. Wrap sarar, satır taşmaz.
+              if (status != null || tokens.isNotEmpty) ...[
+                const SizedBox(height: SahneSpace.x3),
+                Wrap(
+                  spacing: SahneSpace.x2,
+                  runSpacing: SahneSpace.x2,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [?status, ...tokens],
+                ),
               ],
-            );
-          },
+              if (action != null) ...[
+                const SizedBox(height: SahneSpace.x4),
+                SizedBox(width: double.infinity, child: action!),
+              ],
+            ],
+          ),
         ),
       ),
     );

@@ -1064,14 +1064,17 @@ class _ShopScreenState extends State<ShopScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _preview(item, size: 44, dim: isPurchased),
                 const SizedBox(width: SahneSpace.x3),
                 Expanded(child: texts),
               ],
             ),
-            const SizedBox(height: SahneSpace.x3),
+            // Açıklama kalkınca ad ile fiyat satırı arasında geniş bir bant
+            // kalıyordu (kurul 2026-10-20): ikon adla dikey ortalı, aralık
+            // 8; yerleşim sözleşmesi (metin tam genişlik, eylem altta sağa
+            // yaslı) aynen korunur.
+            const SizedBox(height: SahneSpace.x2),
             if (largeText) ...[
               if (note != null) ...[
                 note,

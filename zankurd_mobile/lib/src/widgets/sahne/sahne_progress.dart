@@ -49,6 +49,7 @@ class SahneProgressBar extends StatelessWidget {
     this.semanticLabel,
     this.height = 8,
     this.trackColor,
+    this.fillColor,
   });
 
   /// 0–1.
@@ -64,15 +65,20 @@ class SahneProgressBar extends StatelessWidget {
   /// ayrışmayan ince çubuğa görünür bir iz vermek için.
   final Color? trackColor;
 
+  /// Dolgu rengini değiştirir (renkli konu bandında beyaz).
+  final Color? fillColor;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final v = value.clamp(0.0, 1.0);
-    final fill = switch (tone) {
-      SahneProgressTone.gold => t.gold,
-      SahneProgressTone.action => t.act,
-      SahneProgressTone.learn => t.learnBar,
-    };
+    final fill =
+        fillColor ??
+        switch (tone) {
+          SahneProgressTone.gold => t.gold,
+          SahneProgressTone.action => t.act,
+          SahneProgressTone.learn => t.learnBar,
+        };
     final reduceMotion = sahneMotionReduced(context);
     final pill = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(height / 2),
@@ -362,7 +368,13 @@ class SahneStageTimer extends StatelessWidget {
     required this.secondsLeft,
     required this.semanticLabel,
     this.hotSeconds = 5,
+    this.onBand = false,
   });
+
+  /// Renkli konu bandının üstünde (soru ekranı): normalde beyaz; gerilim
+  /// saniyelerinde beyaz hap + koyu kehribar/kırmızı sayı (bandın renginden
+  /// bağımsız okunur).
+  final bool onBand;
 
   final int secondsLeft;
 
@@ -384,27 +396,45 @@ class SahneStageTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final red = isHot && secondsLeft <= _redSeconds;
-    final color = red ? t.errTx : (isHot ? t.shortfallTx : t.tx);
+    const day = SahneTokens.day;
+    final color = onBand
+        ? (isHot ? (red ? day.errTx : day.shortfallTx) : SahneVivid.onFill)
+        : (red ? t.errTx : (isHot ? t.shortfallTx : t.tx));
+    final row = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(AppIcons.clock, size: 20, color: color),
+        const SizedBox(width: SahneSpace.x1),
+        Text(
+          '$secondsLeft',
+          key: const ValueKey('stage-timer-seconds'),
+          style: SahneType.headline.copyWith(
+            color: color,
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
+            fontFeatures: const [FontFeature.tabularFigures()],
+          ),
+        ),
+      ],
+    );
     return Semantics(
       label: semanticLabel,
       excludeSemantics: true,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(AppIcons.clock, size: 20, color: color),
-          const SizedBox(width: SahneSpace.x1),
-          Text(
-            '$secondsLeft',
-            key: const ValueKey('stage-timer-seconds'),
-            style: SahneType.headline.copyWith(
-              color: color,
-              fontSize: 20,
-              fontWeight: FontWeight.w800,
-              fontFeatures: const [FontFeature.tabularFigures()],
-            ),
-          ),
-        ],
-      ),
+      child: onBand && isHot
+          ? DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: SahneVivid.onFill,
+                shape: StadiumBorder(),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SahneSpace.x2,
+                  vertical: SahneSpace.x1,
+                ),
+                child: row,
+              ),
+            )
+          : row,
     );
   }
 }

@@ -143,12 +143,28 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
               CategoryVisuals.canonicalName(question.category),
             ),
       ridge: true,
+      // 2026-10-20 renk ve canlılık (B): seviye belirleme öğrenme akışıdır;
+      // üst bant Zimrût (soru konusu her adımda değişir, bant sabit kalır).
+      band: question == null ? null : SahneTokens.of(context).learnFill,
+      bandProgress: question == null
+          ? null
+          : SahneProgressBar(
+              height: 6,
+              value: _index / _questions.length,
+              fillColor: SahneVivid.onFill,
+              trackColor: SahneVivid.glassTrack,
+              semanticLabel: context.t(K.placementProgress, {
+                'index': '${_index + 1}',
+                'total': '${_questions.length}',
+              }),
+            ),
       center: question == null
           ? Semantics(header: true, child: Text(context.t(K.placementTitle)))
           : QuizStageCenter(
               category: question.category,
               index: _index,
               total: _questions.length,
+              onBand: true,
             ),
       score: useCompactSkip
           ? _SkipIconButton(
@@ -160,16 +176,6 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
               key: const ValueKey('placement-skip'),
               label: skipLabel,
               onPressed: _inputLocked ? null : _skip,
-            ),
-      progress: question == null
-          ? null
-          : SahneProgressBar(
-              height: 4,
-              value: _index / _questions.length,
-              semanticLabel: context.t(K.placementProgress, {
-                'index': '${_index + 1}',
-                'total': '${_questions.length}',
-              }),
             ),
       body: Builder(
         builder: (context) => _questions.isEmpty
@@ -384,7 +390,34 @@ class _SkipTextButton extends StatelessWidget {
         label: label,
         onTap: onPressed,
         excludeSemantics: true,
-        child: SahneButton.text(label: label, onPressed: onPressed),
+        // Yeşil bandın üstünde Agir metni okunmaz: beyaz metinli cam hap.
+        child: SizedBox(
+          height: sahneTapTarget,
+          child: Center(
+            child: SahneTappable(
+              shape: SahneShape.m,
+              color: SahneVivid.glass,
+              onTap: onPressed,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: sahneTapTarget),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: SahneSpace.x3,
+                  ),
+                  child: Center(
+                    widthFactor: 1,
+                    child: Text(
+                      label,
+                      style: SahneType.captionStrong.copyWith(
+                        color: SahneVivid.onFill,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       );
 }
 
@@ -402,6 +435,7 @@ class _SkipIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SahneIconButton(
+    glass: true,
     icon: AppIcons.forward,
     semanticLabel: label,
     onPressed: onPressed,

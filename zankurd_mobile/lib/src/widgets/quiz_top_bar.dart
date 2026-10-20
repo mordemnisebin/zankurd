@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../config/category_visuals.dart';
 import 'category_kicker_mark.dart';
 import 'sahne/sahne.dart';
 
@@ -22,6 +23,7 @@ class QuizStageCenter extends StatelessWidget {
     required this.total,
     this.textKey = const ValueKey('quiz-stage-kicker'),
     this.keyed,
+    this.onBand = false,
   });
 
   final String category;
@@ -35,6 +37,9 @@ class QuizStageCenter extends StatelessWidget {
 
   /// Dış sarmalayıcıya verilecek anahtar (coach-mark hedefi gibi).
   final Key? keyed;
+
+  /// Konu renginde dolu bandın üstünde: beyaz yazı ve beyaz konu ikonu.
+  final bool onBand;
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +61,20 @@ class QuizStageCenter extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (!compact) ...[
-              CategoryKickerMark(
-                key: const ValueKey('quiz-question-icon-badge'),
-                category: category,
-                fallbackColor: t.tx2,
-                size: 24,
-              ),
+              if (onBand)
+                Icon(
+                  CategoryVisuals.icon(category),
+                  key: const ValueKey('quiz-question-icon-badge'),
+                  size: 22,
+                  color: SahneVivid.onFill,
+                )
+              else
+                CategoryKickerMark(
+                  key: const ValueKey('quiz-question-icon-badge'),
+                  category: category,
+                  fallbackColor: t.tx2,
+                  size: 24,
+                ),
               const SizedBox(width: SahneSpace.x2),
             ],
             Flexible(
@@ -70,7 +83,9 @@ class QuizStageCenter extends StatelessWidget {
                 key: textKey,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: SahneType.eyebrow.copyWith(color: t.tx),
+                style: SahneType.eyebrow.copyWith(
+                  color: onBand ? SahneVivid.onFill : t.tx,
+                ),
               ),
             ),
           ],

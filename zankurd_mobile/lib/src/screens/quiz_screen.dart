@@ -1736,6 +1736,9 @@ class _QuizScreenState extends State<QuizScreen>
     // sormadan bitiriyordu (öğrenme alıştırması ve konu turu, 1/10). Tur
     // başlamış sayılır: ilk soruda da sorulur. Sonuç ekranında sorulmaz (o
     // ayrı ekran).
+    // Konu bandının rengi UYGULAMA temasından okunur (sahne teması her zaman
+    // gecedir; band ana sayfadaki dolu konu karosuyla aynı rengi taşımalı).
+    final appNight = Theme.of(context).brightness == Brightness.dark;
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
@@ -1776,6 +1779,10 @@ class _QuizScreenState extends State<QuizScreen>
                   closeKey: const ValueKey('quiz-close'),
                   closeLabel: context.t(K.close),
                   light: _stageLight,
+                  band: CategoryVisuals.tone(
+                    question.category,
+                  ).fill(night: appNight),
+                  bandProgress: _buildBandProgress(context),
                   ridge: true,
                   center: _buildStageCenter(context),
                   score: _buildStageTrailing(context),

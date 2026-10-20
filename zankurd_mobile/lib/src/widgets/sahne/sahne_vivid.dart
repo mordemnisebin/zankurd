@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../theme/app_icons.dart';
 import '../../theme/sahne.dart';
+import 'sahne_foundation.dart';
 import 'sahne_list_row.dart';
 import 'sahne_painters.dart';
 
@@ -22,10 +23,23 @@ import 'sahne_painters.dart';
 /// (kilim) motifi, altta kilim şeridi. İçerik (üst etiket, manşet, çipler,
 /// birincil Agir düğme) çağıranın. Renkler [SahneTokens] ve [SahneVivid]'den
 /// gelir; ham renk yok.
-class SahneRaceHeroSurface extends StatelessWidget {
-  const SahneRaceHeroSurface({super.key, required this.child, this.kilimKey});
+///
+/// [SahneHeroSurface] aynı yüzeyin ROL rengindeki hâlidir (2026-10-20, B
+/// aşaması): sosyal Nîl (arkadaş, oda), öğrenme Zimrût, yarış Boyax.
+class SahneHeroSurface extends StatelessWidget {
+  const SahneHeroSurface({
+    super.key,
+    required this.child,
+    this.role = SahneRole.race,
+    this.kilimKey,
+    this.kilim = true,
+  });
 
   final Widget child;
+  final SahneRole role;
+
+  /// Alt kilim şeridi çizilsin mi.
+  final bool kilim;
 
   /// Alt kilim şeridinin anahtarı (testler şeridi bununla sayar).
   final Key? kilimKey;
@@ -40,7 +54,10 @@ class SahneRaceHeroSurface extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [t.raceFill, t.raceDeep],
+            colors: [
+              t.roleFill(role) ?? t.raceFill,
+              t.roleDeep(role) ?? t.raceDeep,
+            ],
           ),
         ),
         child: Stack(
@@ -61,11 +78,12 @@ class SahneRaceHeroSurface extends StatelessWidget {
               children: [
                 child,
                 // Kilim imzası: ekranda TEK; yükseklik ≤ 12 pt.
-                SahneKilimStrip(
-                  key: kilimKey,
-                  color: SahneVivid.heroKilim,
-                  height: 8,
-                ),
+                if (kilim)
+                  SahneKilimStrip(
+                    key: kilimKey,
+                    color: SahneVivid.heroKilim,
+                    height: 8,
+                  ),
               ],
             ),
           ],
@@ -73,6 +91,12 @@ class SahneRaceHeroSurface extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Yarış (Boyax) kahramanı: [SahneHeroSurface]'in yarış rolü.
+class SahneRaceHeroSurface extends SahneHeroSurface {
+  const SahneRaceHeroSurface({super.key, required super.child, super.kilimKey})
+    : super(role: SahneRole.race);
 }
 
 /// Boyax kahramanın köşesindeki silik iç içe baklava motifi.

@@ -307,6 +307,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
     // düğme yok: buradaki eylemlerin hiçbiri tek birincil değil (bir
     // listede birden çok "Kabul" / "Odaya çağır" olabilir), hepsi ikincil.
     return SahnePushedPage(
+      role: SahneRole.social,
       title: context.t(K.myFriends),
       backLabel: context.t(K.back),
       // Tek parça kolon (tembel liste değil): istek ve arkadaş satırları
@@ -338,114 +339,131 @@ class _FriendsScreenState extends State<FriendsScreen> {
     final t = SahneTokens.of(context);
     // Davet ödülü bir Zêr (ödül) konusudur: jeton glifi ton karoda; iki
     // eylem de ikincil (Kulis) — ekranın birincili değiller.
-    return SahneSurfaceCard(
+    // 2026-10-20 renk ve canlılık (B): sosyal mod Nîl; davet kartı dolu Nîl
+    // kahraman (beyaz yazı, cam jeton karosu, beyaz tonal Paylaş düğmesi).
+    return SahneHeroSurface(
       key: const ValueKey('friends-invite-panel'),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Builder(
-            builder: (context) {
-              final tile = DecoratedBox(
-                decoration: ShapeDecoration(
-                  color: t.goldTint,
-                  shape: SahneShape.m,
-                ),
-                child: const SizedBox.square(
-                  dimension: 44,
-                  child: Center(
-                    child: SahneGlyph(SahneGlyphKind.coin, size: 24),
+      role: SahneRole.social,
+      kilim: false,
+      child: Padding(
+        padding: const EdgeInsets.all(SahneSpace.x4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Builder(
+              builder: (context) {
+                const tile = DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: SahneVivid.glass,
+                    shape: SahneShape.m,
                   ),
-                ),
-              );
-              final texts = Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.t(K.inviteFriends),
-                    style: SahneType.bodyStrong.copyWith(color: t.tx),
+                  child: SizedBox.square(
+                    dimension: 44,
+                    child: Center(
+                      child: SahneGlyph(SahneGlyphKind.coin, size: 24),
+                    ),
                   ),
-                  Text(
-                    context.t(K.inviteSubtitle),
-                    style: SahneType.caption.copyWith(color: t.tx2),
-                  ),
-                ],
-              );
-              // Büyük yazıda jeton karosu metnin üstüne çıkar: başlık dar
-              // sütunda hece hece bölünmesin.
-              if (MediaQuery.textScalerOf(context).scale(16) >= 24) {
-                return Column(
+                );
+                final texts = Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    tile,
-                    const SizedBox(height: SahneSpace.x3),
-                    texts,
+                    Text(
+                      context.t(K.inviteFriends),
+                      style: SahneType.bodyStrong.copyWith(
+                        color: SahneVivid.onFill,
+                      ),
+                    ),
+                    Text(
+                      context.t(K.inviteSubtitle),
+                      style: SahneType.caption.copyWith(
+                        color: SahneVivid.onFillSoft,
+                      ),
+                    ),
                   ],
                 );
-              }
-              return Row(
-                children: [
-                  tile,
-                  const SizedBox(width: SahneSpace.x3),
-                  Expanded(child: texts),
-                ],
-              );
-            },
-          ),
-          const SizedBox(height: SahneSpace.x4),
-          FutureBuilder<String?>(
-            future: _playerTagFuture,
-            builder: (context, snapshot) {
-              final rawTag = snapshot.data;
-              // Kod her yerde "ZK-4F7K" biçiminde görünür ve paylaşılır:
-              // profil rozeti panoya böyle kopyalıyor, arama ve davet
-              // kodu girişi de bu biçimi bekliyor (`search_profiles`
-              // "ZK-4F7K" ve "4F7K"yı aynı kodla eşler). 2026-09-30 canlı:
-              // bu düğme çıplak "7RHC" yazıyordu, profil "ZK-7RHC".
-              final tag = rawTag != null && rawTag.isNotEmpty
-                  ? (rawTag.toUpperCase().startsWith('ZK-')
-                        ? rawTag
-                        : 'ZK-$rawTag')
-                  : null;
-              final share = tag != null
-                  ? SahneButton.secondary(
-                      key: const ValueKey('friends-share-code-button'),
-                      // "Paylaş · ZK-4F7K": düğme kodun kendisi gibi
-                      // okunuyordu, ne yaptığı söylenmiyordu (kurul
-                      // 2026-10-20). Mevcut `K.share` sözü; "Kodumu paylaş"
-                      // yeni söz olurdu (NEEDS_JURY).
-                      label: '${context.t(K.share)} · $tag',
-                      icon: AppIcons.shareNodes,
-                      expand: true,
-                      onPressed: () {
-                        HapticFeedback.selectionClick();
-                        final text = context.t(K.inviteShareText, {'tag': tag});
-                        SharePlus.instance.share(ShareParams(text: text));
-                      },
-                    )
-                  : null;
-              final enter = SahneButton.secondary(
-                key: const ValueKey('friends-enter-code-button'),
-                label: context.t(K.enterReferralCode),
-                icon: AppIcons.userPlus,
-                expand: true,
-                onPressed: () => _showReferralDialog(ku),
-              );
-              if (share == null) return enter;
-              // İki düğme HER ZAMAN alt alta: yan yana yarım genişlikte
-              // "Koda vexwendinê" iki satıra kırılıyordu (2026-09-30
-              // canlı); etiketi kısaltmak yerine düğmeye tam genişlik
-              // verilir.
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  share,
-                  const SizedBox(height: SahneSpace.x2),
-                  enter,
-                ],
-              );
-            },
-          ),
-        ],
+                // Büyük yazıda jeton karosu metnin üstüne çıkar: başlık dar
+                // sütunda hece hece bölünmesin.
+                if (MediaQuery.textScalerOf(context).scale(16) >= 24) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      tile,
+                      const SizedBox(height: SahneSpace.x3),
+                      texts,
+                    ],
+                  );
+                }
+                return Row(
+                  children: [
+                    tile,
+                    const SizedBox(width: SahneSpace.x3),
+                    Expanded(child: texts),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: SahneSpace.x4),
+            FutureBuilder<String?>(
+              future: _playerTagFuture,
+              builder: (context, snapshot) {
+                final rawTag = snapshot.data;
+                // Kod her yerde "ZK-4F7K" biçiminde görünür ve paylaşılır:
+                // profil rozeti panoya böyle kopyalıyor, arama ve davet
+                // kodu girişi de bu biçimi bekliyor (`search_profiles`
+                // "ZK-4F7K" ve "4F7K"yı aynı kodla eşler). 2026-09-30 canlı:
+                // bu düğme çıplak "7RHC" yazıyordu, profil "ZK-7RHC".
+                final tag = rawTag != null && rawTag.isNotEmpty
+                    ? (rawTag.toUpperCase().startsWith('ZK-')
+                          ? rawTag
+                          : 'ZK-$rawTag')
+                    : null;
+                final share = tag != null
+                    ? SahneButton.tonal(
+                        tint: SahneVivid.onFill,
+                        foreground: t.nilOnWhite,
+                        key: const ValueKey('friends-share-code-button'),
+                        // "Paylaş · ZK-4F7K": düğme kodun kendisi gibi
+                        // okunuyordu, ne yaptığı söylenmiyordu (kurul
+                        // 2026-10-20). Mevcut `K.share` sözü; "Kodumu paylaş"
+                        // yeni söz olurdu (NEEDS_JURY).
+                        label: '${context.t(K.share)} · $tag',
+                        icon: AppIcons.shareNodes,
+                        expand: true,
+                        onPressed: () {
+                          HapticFeedback.selectionClick();
+                          final text = context.t(K.inviteShareText, {
+                            'tag': tag,
+                          });
+                          SharePlus.instance.share(ShareParams(text: text));
+                        },
+                      )
+                    : null;
+                final enter = SahneButton.tonal(
+                  tint: SahneVivid.glass,
+                  foreground: SahneVivid.onFill,
+                  key: const ValueKey('friends-enter-code-button'),
+                  label: context.t(K.enterReferralCode),
+                  icon: AppIcons.userPlus,
+                  expand: true,
+                  onPressed: () => _showReferralDialog(ku),
+                );
+                if (share == null) return enter;
+                // İki düğme HER ZAMAN alt alta: yan yana yarım genişlikte
+                // "Koda vexwendinê" iki satıra kırılıyordu (2026-09-30
+                // canlı); etiketi kısaltmak yerine düğmeye tam genişlik
+                // verilir.
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    share,
+                    const SizedBox(height: SahneSpace.x2),
+                    enter,
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

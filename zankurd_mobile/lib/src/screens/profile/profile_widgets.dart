@@ -470,13 +470,26 @@ class _StatTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           DecoratedBox(
+            // 2026-10-20 renk ve canlılık (B): istatistik ikonları mod renginde
+            // DOLU (öğrenme Zimrût, yarış Boyax, sosyal Nîl; Zêr ödül).
             decoration: ShapeDecoration(
-              color: t.roleTint(role),
+              color: switch (role) {
+                SahneRole.gold => t.gold,
+                _ => t.roleFill(role) ?? t.roleTint(role),
+              },
               shape: SahneShape.m,
             ),
             child: SizedBox.square(
               dimension: 36,
-              child: Icon(icon, color: t.roleText(role), size: 20),
+              child: Icon(
+                icon,
+                color: switch (role) {
+                  SahneRole.gold => t.onGold,
+                  SahneRole.neutral => t.roleText(role),
+                  _ => SahneVivid.onFill,
+                },
+                size: 20,
+              ),
             ),
           ),
           const SizedBox(height: SahneSpace.x2),

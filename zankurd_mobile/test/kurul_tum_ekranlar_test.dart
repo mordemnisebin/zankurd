@@ -29,7 +29,18 @@ void main() {
         ),
       ),
     );
-    expect(find.byType(SahneTopicMarkBadge), findsOneWidget);
-    expect(t.getSize(find.byType(SahneTopicMarkBadge)), const Size(44, 44));
+    // 2026-10-20 (B): küçük konunun DOLU rengi + beyaz ikon (44x44).
+    final tile = find.descendant(
+      of: find.byType(SahneListRow),
+      matching: find.byWidgetPredicate(
+        (w) =>
+            w is DecoratedBox &&
+            w.decoration is ShapeDecoration &&
+            (w.decoration as ShapeDecoration).color ==
+                CategoryVisuals.tone('Ziman').fill(night: false),
+      ),
+    );
+    expect(tile, findsOneWidget);
+    expect(t.getSize(tile), const Size(44, 44));
   });
 }

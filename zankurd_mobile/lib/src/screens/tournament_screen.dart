@@ -732,6 +732,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
     }
 
     return SahnePushedPage(
+      role: SahneRole.race,
       title: context.t(inBracket ? K.tournamentTitle : K.tournament),
       // Tur bilgisi yalnızca maç kartında gösterilir; burada tekrar
       // edilmez.

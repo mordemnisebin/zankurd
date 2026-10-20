@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../config/category_visuals.dart';
 import 'sahne/sahne.dart';
 import 'zk_back_button.dart';
 
 /// Konu akışının TEK başlığı: kategori → alt kategori → seviye ekranları
-/// uygulamanın standart sayfa başlığını ([zkAppBar]: beyaz kare geri düğmesi
-/// + ad + alt satır) taşır; kategori rengi yalnız sağdaki ikon karosunda ve
-/// başlığın altındaki ince çizgide durur.
+/// uygulamanın standart sayfa başlığını ([zkAppBar]) taşır; başlık BANDI
+/// konunun dolu rengindedir ([SahneCategoryTone.fill]) — beyaz ad, cam geri
+/// düğmesi, cam ikon karosu, altında beyaz ilerleme izi.
 ///
-/// Kurul 2. tur 2026-10-20 (Opus, ChatGPT, Argon): başlık eskiden koyu
-/// yeşil-turkuaz bir bant + kilim deseniydi; koyu geri düğmesi ve düşük
-/// kontrastlı alt yazı öteki bütün ekranların beyaz kare geri düğmeli
-/// başlığından ayrışıyordu. Üç ekranın aynı bileşenden gelmesi korunur;
-/// yalnız bantlı görünüm gitti (kilim deseni ana sayfada kalır).
+/// 2026-10-20 renk ve canlılık (B aşaması): kurul 2. tur başlığı sade beyaz
+/// çubuğa indirmişti (kategori rengi yalnız ikon karosunda ve 3 pt'lik
+/// çizgide kalmıştı); ana sayfadaki dolu konu karosundan konu ekranına
+/// geçince renk kayboluyordu. Rakiplerde (Kurdish Quiz, Trivia Crack) konu
+/// ekranının bandı konunun rengindedir. Üç ekranın aynı bileşenden gelmesi
+/// korunur; kilim deseni ana sayfada kalır.
 class CategoryBandScaffold extends StatelessWidget {
   const CategoryBandScaffold({
     required this.category,
@@ -24,15 +26,15 @@ class CategoryBandScaffold extends StatelessWidget {
     super.key,
   });
 
-  /// Verilirse başlığın altındaki çizgi GERÇEK bir ilerleme çubuğudur
-  /// (0–1): dolu kısım kategori tonunda, boş kısım nötr iz. Verilmezse
-  /// kategori kimliğini taşıyan dolu süs çizgisidir (alt kategori ekranı).
+  /// Verilirse bandın altındaki çizgi GERÇEK bir ilerleme çubuğudur (0–1):
+  /// dolu kısım beyaz, boş kısım cam iz. Verilmezse kategori kimliğini taşıyan
+  /// dolu süs çizgisidir (alt kategori ekranı).
   ///
   /// Kusur (8. kurul, Opus): seviye listesinde süs çizgisi tam genişlik dolu
   /// olduğundan 0/5'te "tamamlanmış ilerleme" gibi okunuyordu.
   final double? progress;
 
-  /// İkon karosunu ve ince çizgiyi renklendiren kategori kimliği.
+  /// Bandı ve ikon karosunu renklendiren kategori kimliği.
   final String category;
 
   /// Başlıktaki ad.
@@ -47,17 +49,27 @@ class CategoryBandScaffold extends StatelessWidget {
   /// Kategori çizgisinin anahtarı (bekçi testleri okur).
   static const accentKey = ValueKey('category-accent-line');
 
+  /// Bandın anahtarı (renk bekçisi okur).
+  static const bandKey = ValueKey('category-band');
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    final night = Theme.of(context).brightness == Brightness.dark;
+    final fill = CategoryVisuals.tone(category).fill(night: night);
     return Scaffold(
       backgroundColor: t.bg,
       appBar: zkAppBar(
         context,
         title: Text(title),
         subtitle: subtitle == null ? null : Text(subtitle!, maxLines: 12),
+        backgroundColor: fill,
+        foregroundColor: SahneVivid.onFill,
+        subtitleColor: SahneVivid.onFillSoft,
+        glassBack: true,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         // Büyük yazıda ikon karosu düşer: dar ekranda ad ve alt satıra
-        // yer kalsın, kesilmesin (kategori rengi çizgide durur).
+        // yer kalsın, kesilmesin (kategori rengi bandın kendisinde).
         actions: MediaQuery.textScalerOf(context).scale(16) >= 24
             ? null
             : [
@@ -70,6 +82,7 @@ class CategoryBandScaffold extends StatelessWidget {
                       child: CategoryIconTile(
                         category: category,
                         icon: CategoryVisuals.icon(category),
+                        onBand: true,
                       ),
                     ),
                   ),
@@ -81,24 +94,29 @@ class CategoryBandScaffold extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
-              child: progress == null
-                  ? SizedBox(
-                      height: 3,
-                      child: DecoratedBox(
-                        key: accentKey,
-                        decoration: ShapeDecoration(
-                          color: CategoryVisuals.tone(category).ground,
-                          shape: const StadiumBorder(),
+            ColoredBox(
+              key: bandKey,
+              color: fill,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  SahneSpace.page,
+                  0,
+                  SahneSpace.page,
+                  SahneSpace.x4,
+                ),
+                child: progress == null
+                    ? const SizedBox(
+                        height: 3,
+                        child: DecoratedBox(
+                          key: accentKey,
+                          decoration: ShapeDecoration(
+                            color: SahneVivid.glassTrack,
+                            shape: StadiumBorder(),
+                          ),
                         ),
-                      ),
-                    )
-                  : _BandProgress(
-                      key: accentKey,
-                      value: progress!,
-                      fill: CategoryVisuals.tone(category).ground,
-                    ),
+                      )
+                    : _BandProgress(key: accentKey, value: progress!),
+              ),
             ),
             Expanded(child: body),
           ],
@@ -110,51 +128,57 @@ class CategoryBandScaffold extends StatelessWidget {
 
 /// Kategori tonlu 44'lük ikon karosu: konu akışının satırlarında (alt
 /// kategori listesi) ikon, uygulamanın genel Zimrût yerine KONUNUN renginde
-/// durur — ana ekrandaki karo ve başlık bandıyla aynı renk ailesi. Zemin
-/// kategorinin düz tonu, ikon gece birincil metni (yedi tonun hepsinde
-/// ≥ 4,5:1, bkz. `category_color_identity_test`).
+/// durur — ana ekrandaki dolu karo ve başlık bandıyla aynı renk ailesi.
+/// Zemin konunun dolu rengi ([SahneCategoryTone.fill], gece/gündüz), ikon
+/// beyaz (≥ 4,5:1). [onBand] bandın üstünde durur: dolu renk bandın
+/// kendisi olduğundan karo yarı saydam beyaz camdır.
 class CategoryIconTile extends StatelessWidget {
   const CategoryIconTile({
     required this.category,
     required this.icon,
+    this.onBand = false,
     super.key,
   });
 
   final String category;
   final IconData icon;
+  final bool onBand;
 
   @override
   Widget build(BuildContext context) {
+    final night = Theme.of(context).brightness == Brightness.dark;
     return DecoratedBox(
       decoration: ShapeDecoration(
-        color: CategoryVisuals.tone(category).ground,
+        color: onBand
+            ? SahneVivid.glass
+            : CategoryVisuals.tone(category).fill(night: night),
         shape: SahneShape.m,
       ),
       child: SizedBox.square(
         dimension: 44,
-        child: Icon(icon, size: 24, color: SahneTokens.night.tx),
+        child: Icon(icon, size: 24, color: SahneVivid.onFill),
       ),
     );
   }
 }
 
-/// Başlık altı ilerleme çubuğu: 4 pt, yuvarlak uç; boş kısım nötr iz (`s3`,
-/// gündüzde ince kenarlı), dolu kısım kategori tonu. Değer 0'da dolu kısım
-/// hiç çizilmez.
+/// Başlık altı ilerleme çubuğu: 4 pt, yuvarlak uç; boş kısım cam iz, dolu
+/// kısım beyaz. Değer 0'da dolu kısım hiç çizilmez.
 class _BandProgress extends StatelessWidget {
-  const _BandProgress({super.key, required this.value, required this.fill});
+  const _BandProgress({super.key, required this.value});
 
   final double value;
-  final Color fill;
 
   @override
   Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
     final v = value.clamp(0.0, 1.0);
     return SizedBox(
       height: 4,
       child: DecoratedBox(
-        decoration: ShapeDecoration(color: t.s3, shape: const StadiumBorder()),
+        decoration: const ShapeDecoration(
+          color: SahneVivid.glassTrack,
+          shape: StadiumBorder(),
+        ),
         child: Align(
           alignment: AlignmentDirectional.centerStart,
           child: v <= 0
@@ -162,10 +186,10 @@ class _BandProgress extends StatelessWidget {
               : FractionallySizedBox(
                   widthFactor: v,
                   heightFactor: 1,
-                  child: DecoratedBox(
+                  child: const DecoratedBox(
                     decoration: ShapeDecoration(
-                      color: fill,
-                      shape: const StadiumBorder(),
+                      color: SahneVivid.onFill,
+                      shape: StadiumBorder(),
                     ),
                   ),
                 ),

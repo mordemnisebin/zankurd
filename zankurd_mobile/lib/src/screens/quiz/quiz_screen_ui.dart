@@ -251,6 +251,7 @@ extension _QuizScreenUI on _QuizScreenState {
   /// ("burada süre yok" der); süreli turda hedef sayaçtır
   /// ([_buildStageTrailing]).
   Widget _buildStageCenter(BuildContext context) => QuizStageCenter(
+    onBand: true,
     keyed: _usesTimer ? null : _timerTargetKey,
     category: question.category,
     index: index,
@@ -270,7 +271,6 @@ extension _QuizScreenUI on _QuizScreenState {
   ///
   /// Grup, dar ekranda ve büyük yazıda taşmaz: sığdırılarak küçülür.
   Widget _buildStageTrailing(BuildContext context) {
-    final t = SahneTokens.of(context);
     final showScore =
         !(_isLearningExperience || widget.is1v1 || _isCrowd) && score > 0;
     return FittedBox(
@@ -282,6 +282,7 @@ extension _QuizScreenUI on _QuizScreenState {
           if (_isMultiplayer)
             SahneIconButton(
               key: const ValueKey('quiz-reaction-menu-button'),
+              glass: true,
               icon: AppIcons.faceSmile,
               semanticLabel: context.t(K.chat),
               onPressed: () => _showLiveReactionMenu(context),
@@ -299,7 +300,7 @@ extension _QuizScreenUI on _QuizScreenState {
                   Text(
                     groupThousands(score),
                     style: SahneType.captionStrong.copyWith(
-                      color: t.goldTx,
+                      color: SahneVivid.onFill,
                       fontFeatures: const [FontFeature.tabularFigures()],
                     ),
                   ),
@@ -320,6 +321,7 @@ extension _QuizScreenUI on _QuizScreenState {
                 maxSeconds: widget.room.secondsPerQuestion,
                 isPaused: answered,
                 light: _stageLight,
+                onBand: true,
               ),
             ),
             const SizedBox(width: SahneSpace.x1),
@@ -327,6 +329,7 @@ extension _QuizScreenUI on _QuizScreenState {
           Builder(
             builder: (buttonContext) => SahneIconButton(
               key: const ValueKey('quiz-more-menu'),
+              glass: true,
               icon: AppIcons.ellipsis,
               semanticLabel: context.t(K.moreOptions),
               onPressed: () => _openQuestionMenu(buttonContext),
@@ -410,32 +413,32 @@ extension _QuizScreenUI on _QuizScreenState {
   /// tamamlanan soru oranını gösterir; tek tek doğru/yanlış sonuç ekranında
   /// ve ekran okuyucu özetinde ("3/10 · 2 Doğru · 0 Yanlış") yaşar.
   Widget _buildStageProgress(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [if (!_isLearningExperience) _buildComboRow()],
+    );
+  }
+
+  /// Konu bandının içindeki ilerleme çubuğu (2026-10-20 renk ve canlılık, B):
+  /// bandın rengi konunun rengi olduğundan dolgu beyaz, iz cam; turuncu
+  /// eylem rengi kırmızı/turuncu konularda kaybolurdu.
+  Widget _buildBandProgress(BuildContext context) {
     final total = widget.questions.length;
     final results = [for (final record in answerRecords) record.isCorrect];
     final right = results.where((r) => r).length;
     final wrong = results.length - right;
     // Cevaplanmış soru tamamlanmış sayılır; sıradaki soru henüz değil.
     final done = (index + (answered ? 1 : 0)).clamp(0, total);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SahneProgressBar(
-          key: const ValueKey('quiz-progress-bar'),
-          value: total == 0 ? 0 : done / total,
-          height: 4,
-          // Koyu sahnede varsayılan iz ve koyu dolgu 4 pt'te görünmüyordu
-          // (8. kurul: Opus + Gemini): dolgu turuncu eylem rengi, iz ~%12
-          // beyaz (gündüzde nötr gri).
-          tone: SahneProgressTone.action,
-          trackColor: SahneTokens.of(context).bg == SahneTokens.day.bg
-              ? SahneTokens.of(context).tx3.withValues(alpha: 0.35)
-              : Colors.white.withValues(alpha: 0.12),
-          semanticLabel:
-              '${index + 1}/$total · $right ${context.t(K.correct)} · '
-              '$wrong ${context.t(K.wrong)}',
-        ),
-        if (!_isLearningExperience) _buildComboRow(),
-      ],
+    return SahneProgressBar(
+      key: const ValueKey('quiz-progress-bar'),
+      value: total == 0 ? 0 : done / total,
+      height: 4,
+      tone: SahneProgressTone.action,
+      fillColor: SahneVivid.onFill,
+      trackColor: SahneVivid.glassTrack,
+      semanticLabel:
+          '${index + 1}/$total · $right ${context.t(K.correct)} · '
+          '$wrong ${context.t(K.wrong)}',
     );
   }
 

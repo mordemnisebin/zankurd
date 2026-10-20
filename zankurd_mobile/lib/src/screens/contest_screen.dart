@@ -156,6 +156,7 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
     // alt kenardaki üçgen kilim deseni kalktı (desen yalnız sahne kartının
     // üst şeridi). Sayfa adı oyun merkezindeki girişle aynı kalır.
     return SahnePushedPage(
+      role: SahneRole.race,
       title: context.t(K.dailyEvent),
       backLabel: context.t(K.back),
       slivers: [

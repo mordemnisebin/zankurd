@@ -1177,7 +1177,14 @@ class _RankRow extends StatelessWidget {
                 isKu: isKu,
                 onReport: onReport!,
               ),
-        child: _buildRow(context),
+        // Kendi satırın Zêr tonlu zemin taşır (2026-10-20 B): vurgu yalnız
+        // rakam rengi değil, satırın kendisidir.
+        child: highlight
+            ? ColoredBox(
+                color: SahneTokens.of(context).goldTint,
+                child: _buildRow(context),
+              )
+            : _buildRow(context),
       ),
     );
   }

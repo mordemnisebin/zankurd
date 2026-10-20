@@ -1053,6 +1053,7 @@ class _RoomScreenState extends State<RoomScreen> {
           controller: _reactionController,
           placement: FloatingReactionPlacement.roomHeader,
           child: SafeArea(
+            top: false,
             child: Column(
               children: [
                 _RoomBar(
@@ -1067,6 +1068,7 @@ class _RoomScreenState extends State<RoomScreen> {
                       room.id != null && (room.players.length >= 2 || _chatOpen)
                       ? SahneIconButton(
                           key: const ValueKey('room-chat-toggle'),
+                          glass: true,
                           icon: AppIcons.comment,
                           semanticLabel: context.t(K.chat),
                           selected: _chatOpen,
@@ -1469,7 +1471,8 @@ class _RoomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return ConstrainedBox(
+    // 2026-10-20 renk ve canlılık (B): oda sosyal moddur; çubuk Nîl.
+    final bar = ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 64),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(
@@ -1481,6 +1484,7 @@ class _RoomBar extends StatelessWidget {
         child: Row(
           children: [
             SahneIconButton(
+              glass: true,
               icon: AppIcons.arrowLeft,
               semanticLabel: leaveLabel,
               onPressed: onLeave,
@@ -1491,13 +1495,20 @@ class _RoomBar extends StatelessWidget {
                 header: true,
                 child: SahneUnbrokenText(
                   title,
-                  style: SahneType.headline.copyWith(color: t.tx),
+                  style: SahneType.headline.copyWith(color: SahneVivid.onFill),
                 ),
               ),
             ),
             ?trailing,
           ],
         ),
+      ),
+    );
+    return ColoredBox(
+      color: t.nilFill,
+      child: Padding(
+        padding: EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
+        child: bar,
       ),
     );
   }
@@ -1542,8 +1553,12 @@ class _RoomHero extends StatelessWidget {
     // Artık TEK sakin yüzey kartı: oda adı + künye, yuvarlak kod kutusu,
     // kopyala / paylaş / arkadaşlarımdan davet et. Renk rolü yalnız
     // simgelerde (yarış tonu).
+    final nil = SahneTokens.of(context);
     return SahneSurfaceCard(
       key: const ValueKey('room-hero'),
+      // 2026-10-20 renk ve canlılık (B): oda sosyal moddur; kart Nîl tonlu.
+      color: nil.nilTint,
+      edgeColor: nil.nilFill.withValues(alpha: 0.3),
       child: Builder(
         builder: (context) {
           final t = SahneTokens.of(context);
@@ -1630,7 +1645,7 @@ class _RoomHero extends StatelessWidget {
                 button: true,
                 hint: context.t(K.roomCodeTapCopy),
                 child: Material(
-                  color: t.s2,
+                  color: t.s1,
                   // Kod kutusu YUVARLAK (pahlı köşe yalnız rozet ve avatar).
                   shape: SahneShape.withSide(SahneShape.m, t.edge, width: 1),
                   clipBehavior: Clip.antiAlias,

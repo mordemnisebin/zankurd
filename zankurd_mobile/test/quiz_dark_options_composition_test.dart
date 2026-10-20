@@ -146,14 +146,16 @@ void main() {
     );
   });
 
-  testWidgets('ilerleme çubuğu 4 pt, turuncu dolgu, görünür iz', (
+  testWidgets('ilerleme çubuğu 4 pt, beyaz dolgu (konu bandında), görünür iz', (
     tester,
   ) async {
     await pump(tester);
     final finder = find.byKey(const ValueKey('quiz-progress-bar'));
     final bar = tester.widget<SahneProgressBar>(finder);
     expect(bar.height, 4);
-    expect(bar.tone, SahneProgressTone.action);
+    // 2026-10-20 (B): çubuk konu renginde bandın içinde; turuncu kırmızı/turuncu
+    // konularda kaybolurdu, dolgu beyaz.
+    expect(bar.fillColor, SahneVivid.onFill);
     expect(bar.trackColor, isNotNull);
     expect(bar.trackColor!.a, greaterThan(0.1));
   });

@@ -702,7 +702,7 @@ void main() {
       ),
     );
     // Kurul incelemesi 2026-10-19: tek seçili stil (turuncu ton).
-    expect(label.style?.color, SahneTokens.day.selTx);
+    expect(label.style?.color, SahneVivid.onFill);
     final other = tester.widget<Text>(
       find.descendant(
         of: find.byKey(const ValueKey('learning-tab-grammar')),

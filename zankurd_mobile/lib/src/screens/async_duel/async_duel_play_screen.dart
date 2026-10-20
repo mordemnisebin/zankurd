@@ -488,6 +488,26 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           CategoryVisuals.canonicalName(question.category),
         ),
         ridge: true,
+        // 2026-10-20 renk ve canlılık (B): üst bant sorunun konusunun renginde
+        // (ders ve yarışma ekranıyla aynı; renk uygulama temasından okunur).
+        band: CategoryVisuals.tone(
+          question.category,
+        ).fill(night: Theme.of(context).brightness == Brightness.dark),
+        bandProgress: SahneProgressBar(
+          key: const ValueKey('async-duel-progress-bar'),
+          // `_results` toplam uzunlukta ve boş (`null`) başlar: yalnız
+          // cevaplananlar dolu sayılır.
+          value: total == 0
+              ? 0
+              : (_results.where((r) => r != null).length / total).clamp(
+                  0.0,
+                  1.0,
+                ),
+          height: 6,
+          fillColor: SahneVivid.onFill,
+          trackColor: SahneVivid.glassTrack,
+          semanticLabel: progressLabel,
+        ),
         // 2026-09-29 doğallık (K2): soru arkasındaki hayalet kategori
         // çizimi kalktı (bkz. quiz_screen `_stageLight`).
         //
@@ -499,6 +519,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           index: _index,
           total: total,
           textKey: const ValueKey('async-duel-progress'),
+          onBand: true,
         ),
         // Çıkış gönderilirken sayaç yerine bekleme göstergesi: kalan
         // sorular sunucuya TIMEOUT olarak gidiyor.
@@ -511,7 +532,10 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
               _exitInFlight
                   ? const SizedBox.square(
                       dimension: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: SahneVivid.onFill,
+                      ),
                     )
                   : AnimatedBuilder(
                       animation: _timerController.animation,
@@ -523,6 +547,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                           // Cevap gönderildikten sonra sayaç durur; gerilim rengi
                           // de söner.
                           hotSeconds: disabled ? -1 : 5,
+                          onBand: true,
                           semanticLabel:
                               '$seconds ${context.t(K.secondsShortUnit)}',
                         );
@@ -534,22 +559,6 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                 dimension: sahneTapTarget,
               ),
             ],
-          ),
-        ),
-        progress: Padding(
-          padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-          child: SahneProgressBar(
-            key: const ValueKey('async-duel-progress-bar'),
-            // `_results` toplam uzunlukta ve boş (`null`) başlar: yalnız
-            // cevaplananlar dolu sayılır.
-            value: total == 0
-                ? 0
-                : (_results.where((r) => r != null).length / total).clamp(
-                    0.0,
-                    1.0,
-                  ),
-            height: 4,
-            semanticLabel: progressLabel,
           ),
         ),
         // Cevap gönderilemediyse alt perdede TEK birincil: tekrar dene.

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../data/learner_lexicon.dart';
 import '../data/lesson_completion_store.dart';
@@ -231,7 +232,14 @@ class _LearningScreenState extends State<LearningScreen> {
     // katlı bir başlık. Maket (4 · Öğrenme yolu): çubuk → konu rayı → yol.
     return Scaffold(
       backgroundColor: t.bg,
-      appBar: zkAppBar(context, title: Text(context.t(K.learnKurmanci))),
+      appBar: zkAppBar(
+        context,
+        title: Text(context.t(K.learnKurmanci)),
+        backgroundColor: t.learnFill,
+        foregroundColor: SahneVivid.onFill,
+        glassBack: true,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+      ),
       body: SafeArea(
         top: false,
         // Kısa bir sayfa: hepsi bir kerede kurulur (tembel liste, sözlük
@@ -857,8 +865,12 @@ class _CategoryTab extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) =>
-      SahneRailChip(label: label, selected: isSelected, onTap: onTap);
+  Widget build(BuildContext context) => SahneRailChip(
+    label: label,
+    selected: isSelected,
+    onTap: onTap,
+    vivid: true,
+  );
 }
 
 /// Yolun etkin durağı — sahne kartı (maketteki `SahneStageCard.lesson`):
@@ -915,6 +927,8 @@ class _CurrentLessonCard extends StatelessWidget {
             shape: SahneShape.withSide(SahneShape.l, t.act, width: 2),
           ),
           child: SahneSurfaceCard(
+            color: t.learnTint,
+            edgeColor: t.learnEdge,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -1520,6 +1534,10 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
       backgroundColor: t.bg,
       appBar: zkAppBar(
         context,
+        backgroundColor: t.learnFill,
+        foregroundColor: SahneVivid.onFill,
+        glassBack: true,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         // Ders başlığı arayüz diline uyar; Kurmancî adı yedek kalır.
         title: Text(
           ku
@@ -1528,6 +1546,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
         ),
         actions: [
           SahneIconButton(
+            glass: true,
             icon: _flashcardMode ? AppIcons.clone : AppIcons.layerGroup,
             semanticLabel: context.t(K.flashcardMode),
             onPressed: _toggleFlashcard,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../theme/app_icons.dart';
 import '../../theme/sahne.dart';
 import 'sahne_foundation.dart';
-import 'sahne_painters.dart';
 import 'sahne_topic_marks.dart';
 
 /// Satır metni ile sağdaki ok simgesi arasındaki en az boşluk (7. kurul).
@@ -382,28 +381,35 @@ class SahneListRow extends StatelessWidget {
     final isMe = _kind == _RowKind.me;
 
     // Çizimsiz kategori küçüğü: kategorinin düz tonu + ikon, 36.
-    Widget noArt() => mark != null
-        ? SahneTopicMarkBadge(mark: mark!, tone: tone, size: 44, strong: true)
-        : SizedBox.square(
-            dimension: 44,
-            child: CustomPaint(
-              painter: SahneNoArtPainter(tone: tone),
-              child: Center(
-                child: Icon(
-                  icon ?? AppIcons.clapperboard,
-                  size: 22,
-                  color: SahneTokens.night.tx,
-                ),
-              ),
-            ),
-          );
+    // 2026-10-20 renk ve canlılık (B): küçük artık konunun DOLU rengidir
+    // (ana sayfadaki karo ve konu bandıyla aynı renk), beyaz ikon.
+    Widget noArt() => DecoratedBox(
+      decoration: ShapeDecoration(
+        color: tone.fill(
+          night: Theme.of(context).brightness == Brightness.dark,
+        ),
+        shape: SahneShape.m,
+      ),
+      child: SizedBox.square(
+        dimension: 44,
+        child: Icon(
+          icon ?? AppIcons.clapperboard,
+          size: 24,
+          color: SahneVivid.onFill,
+        ),
+      ),
+    );
 
     Widget? leading;
     switch (_kind) {
       case _RowKind.standard:
+        // 2026-10-20 renk ve canlılık (B): mod rolleri (öğrenme, yarış,
+        // sosyal) ikon karosunda DOLU renk + beyaz ikon taşır; nötr ve Zêr
+        // ton zemininde kalır.
+        final vividFill = destructive || !enabled ? null : t.roleFill(role);
         leading = DecoratedBox(
           decoration: ShapeDecoration(
-            color: destructive ? t.errTint : t.roleTint(role),
+            color: destructive ? t.errTint : (vividFill ?? t.roleTint(role)),
             shape: SahneShape.m,
           ),
           child: SizedBox.square(
@@ -415,7 +421,7 @@ class SahneListRow extends StatelessWidget {
                   ? t.tx3
                   : destructive
                   ? t.errTx
-                  : t.roleText(role),
+                  : (vividFill != null ? SahneVivid.onFill : t.roleText(role)),
             ),
           ),
         );
@@ -636,7 +642,7 @@ class SahneListGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return Material(
+    final group = Material(
       color: t.s1,
       shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       clipBehavior: Clip.antiAlias,
@@ -672,6 +678,12 @@ class SahneListGroup extends StatelessWidget {
           ],
         ),
       ),
+    );
+    // Kart ayrımı: gündüz çok hafif gölge (bkz. SahneSurfaceCard).
+    if (t.bg.computeLuminance() <= 0.5) return group;
+    return DecoratedBox(
+      decoration: ShapeDecoration(shape: SahneShape.l, shadows: [t.cardShadow]),
+      child: group,
     );
   }
 }
