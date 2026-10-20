@@ -27,6 +27,11 @@ const _question = QuizQuestion(
   type: QuestionType.fillInBlank,
 );
 
+class _RichRepository extends MockZanKurdRepository {
+  @override
+  Future<int> loadCoinBalance() async => 500;
+}
+
 class _FailingSubmitRepository extends MockZanKurdRepository {
   @override
   Future<Map<String, dynamic>> submitAnswer({
@@ -60,7 +65,9 @@ void main() {
   testWidgets('yazılı soruda yalnız işe yarayan jokerler gösterilir', (
     tester,
   ) async {
-    final repository = freshMockRepository();
+    // Kurul 4. tur: bakiye 0 iken joker dizisi tek sönük satıra iner.
+    freshMockRepository();
+    final repository = _RichRepository();
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
