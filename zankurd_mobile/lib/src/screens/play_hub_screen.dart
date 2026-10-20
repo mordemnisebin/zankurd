@@ -1420,7 +1420,12 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                 ),
                                 const SizedBox(height: SahneSpace.x2),
                                 _ChoiceGrid(
-                                  columns: 2,
+                                  columns: GameRoom.allowedEntryFees.length,
+                                  // Tek satır, eşit genişlik; dar ekran/büyük yazıda 2x2
+                                  // (tur 9a: ikinci satır kaydırma altında kalıyordu).
+                                  minCellWidth: 72,
+                                  fallbackColumns: 2,
+                                  gap: 6,
                                   children: [
                                     for (final fee in GameRoom.allowedEntryFees)
                                       _choiceChip(
