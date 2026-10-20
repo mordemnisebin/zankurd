@@ -34,7 +34,6 @@ import '../widgets/player_avatar.dart';
 import '../widgets/rolling_count.dart';
 import '../widgets/strength_map_section.dart';
 import '../widgets/weekly_performance_chart.dart';
-import '../widgets/progress_summary.dart';
 import '../widgets/sahne/sahne.dart';
 import 'home/home_rows.dart' show TabStatChips;
 import 'avatar_editor_screen.dart';
@@ -114,6 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? _playerTag;
   List<Achievement> _achievements = const [];
   MasteryStore? _masteryStore;
+  int? _coins;
   int _level = 1;
   int _xpInLevel = 0;
   int _xpNeeded = 1000;
@@ -259,9 +259,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // profil gridinde gösterilmiyor, quiz üst barında görünüyor.
       final mistakeStore = await MistakeStore.load();
       final badgeService = await BadgeService.load();
+      int? coins;
+      try {
+        coins = await widget.repository.loadCoinBalance();
+      } catch (_) {
+        coins = null; // bakiye yoksa jeton satırı çizilmez
+      }
       if (mounted) {
         setState(() {
           _currentName = name;
+          _coins = coins;
           _stats = stats;
           _playerTag = tag;
           _avatarIdentity = avatarIdentity;
@@ -286,6 +293,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
       }
     }
+  }
+
+  Future<void> _openSettings() async {
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(SettingsScreen(repository: widget.repository)));
+    if (mounted) _load();
   }
 
   Future<void> _openAvatarEditor() async {
@@ -351,6 +365,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // duruyordu (2026-07-26 denetimi).
       rank: _hasServerScore ? _stats?.rank : null,
       onEditAvatar: _openAvatarEditor,
+      level: _level,
+      xpInLevel: _xpInLevel,
+      xpNeeded: _xpNeeded,
+      coins: _coins,
+      onSetName: _openSettings,
     );
 
     Widget leftColumn = Column(
@@ -362,20 +381,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           alignment: AlignmentDirectional.centerStart,
           child: _SyncStatusChip(),
         ),
-        // Seviye kartı: seviye karosu + XP çipi + Zêr ilerleme çubuğu.
-        // İlk turdan önce yok ([_hasPlayed]).
-        if (_hasPlayed) ...[
-          const SizedBox(height: SahneSpace.cardGap),
-          SahneSurfaceCard(
-            key: const ValueKey('profile-level-card'),
-            child: ProgressSummary(
-              level: _level,
-              xpInLevel: _xpInLevel,
-              xpNeeded: _xpNeeded,
-              levelLabel: context.t(K.progressLevelLabel),
-            ),
-          ),
-        ],
+        // Seviye + XP çubuğu + jeton artık kimlik başlığındadır (kurul 5. tur).
         // 2026-10-19 sadeleşme (ikinci tur): "Ayrıntılı istatistik" ayrı bir
         // açılır kart değil, başlığın yanındaki bağlantıdır; ayrıntılar
         // altta, bağlantıya basınca açılır (varsayılan kapalı).
@@ -430,7 +436,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             context.t(K.noOnlineHistory),
                             style: SahneType.caption.copyWith(color: t.tx2),
                           ),
-                          SahneButton.text(
+                          // Kurul 5. tur 2026-10-20 (Opus, Grok): boş durumun
+                          // eylemi metin bağlantısıydı, kart sönük kalıyordu;
+                          // artık net birincil düğme.
+                          const SizedBox(height: SahneSpace.x2),
+                          SahneButton.primary(
                             buttonKey: const ValueKey(
                               'profile-stats-start-cta',
                             ),

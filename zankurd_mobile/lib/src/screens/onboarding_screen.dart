@@ -214,9 +214,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                           : Colors.transparent,
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
-                                        color: _ageConfirmed
-                                            ? t.act
-                                            : t.tx2,
+                                        color: _ageConfirmed ? t.act : t.tx2,
                                         width: 2,
                                       ),
                                     ),
