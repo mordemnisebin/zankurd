@@ -356,11 +356,11 @@ const double quizPromptToAnswersGap = 28;
 /// yapışık okunuyordu).
 const double quizOptionGap = 12;
 
-/// Soru+şık grubunun altında bildirim/tost için bırakılan pay (tur 8:
-/// 160 → 12). 160 grubu alt çubuktan ~195 pt yukarı itiyor, altta ölü boşluk
-/// bırakıyordu (Opus, ChatGPT); alt dolguyla birlikte grup alt çubuğun
-/// ~48 pt üstünde durur. Bildirim çıkarsa içerik uzar ve kayar.
-const double quizAnchorNoticeReserve = 12;
+/// Soru+şık grubunun altında bildirim/tost için bırakılan pay (160). Tur 8'de
+/// 12'ye indirilmişti; joker ipucu tostu son şıkkı örttü, geri alındı. Grup,
+/// üst çubuk ile bu pay arasındaki alanda DİKEYDE ORTALANIR (üst ve alt
+/// boşluk eşit); tost payı alanın dışında kalır.
+const double quizAnchorNoticeReserve = 160;
 
 class _QuestionTextAndAnswers extends StatelessWidget {
   const _QuestionTextAndAnswers({
@@ -511,15 +511,15 @@ class _QuestionTextAndAnswers extends StatelessWidget {
           return ConstrainedBox(
             key: const ValueKey('quiz-answers-anchored'),
             constraints: BoxConstraints(minHeight: minHeight),
-            // Soru + şıklar TEK dikey grup: artan boşluk grubun ÜSTÜNDE
-            // kalır (mainAxisAlignment.end), soru şıkların hemen üstünde
-            // durur. Eskiden spaceBetween boşluğu soru üstü ve soru-şık arası
+            // Soru + şıklar TEK dikey grup, alanda ORTALANIR (tur 8b): artan
+            // boşluk grubun üstüne ve altına eşit bölünür; soru şıkların
+            // hemen üstünde durur. Eskiden spaceBetween boşluğu soru üstü ve soru-şık arası
             // eşit bölüyordu: soru ekranın ortasında yüzüyor, şıklardan
             // ~150 pt uzakta kalıyordu (kurul, 2026-10-20).
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 promptRow,
                 const SizedBox(height: quizPromptToAnswersGap),

@@ -79,7 +79,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('şıklar en az 56 yüksek, aralarında 12; grup alt çubuğa yakın', (
+  testWidgets('şıklar en az 56 yüksek, aralarında 12; grup dikeyde ortalı', (
     tester,
   ) async {
     await pump(tester);
@@ -99,10 +99,40 @@ void main() {
         );
       }
     }
+    // Tur 8b: grup, üst çubuk ile alt bildirim payı arasında ORTALI (üst ve
+    // alt boşluk yaklaşık eşit); 48 pt kuralı yanlıştı, geri alındı.
     final scroll = find.byKey(const ValueKey('quiz-portrait-scroll'));
-    final gap =
-        tester.getBottomLeft(scroll).dy - tester.getBottomLeft(tiles.last).dy;
-    expect(gap, lessThanOrEqualTo(50), reason: 'grup alt çubuğa ≤ ~48 pt');
+    final top = tester
+        .getTopLeft(find.byKey(const ValueKey('quiz-answer-content')))
+        .dy;
+    final topGap = top - tester.getTopLeft(scroll).dy;
+    final bottomGap =
+        tester.getBottomLeft(scroll).dy -
+        quizAnchorNoticeReserve -
+        tester.getBottomLeft(tiles.last).dy;
+    expect(
+      (topGap - bottomGap).abs(),
+      lessThanOrEqualTo(48),
+      reason: 'üst=$topGap alt=$bottomGap eşit olmalı',
+    );
+  });
+
+  testWidgets('tost görünürken son şıkkın alt kenarı tostun üstünde kalır', (
+    tester,
+  ) async {
+    await pump(tester);
+    final context = tester.element(find.byType(QuizOptionTile).first);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text('İlk deneme yanlışsa bir hak daha'),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    final toast = tester.getRect(find.byType(SnackBar));
+    final last = tester.getRect(find.byType(QuizOptionTile).last);
+    expect(last.bottom, lessThanOrEqualTo(toast.top));
   });
 
   for (final (name, size, scale) in [

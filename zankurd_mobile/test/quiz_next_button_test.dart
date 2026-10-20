@@ -115,11 +115,6 @@ void main() {
       expect(nextButtonCallback(tester), isNull);
 
       // İkinci deneme: doğru şık → reveal → Piştre aktif
-      // Tur 8: grup alt çubuğa 48 pt yaklaştı (bildirim payı 160 → 12);
-      // joker ipucu tostu geçici olarak son şıkkı örter. Tost kapanınca
-      // dokun.
-      await tester.pump(const Duration(seconds: 6));
-      await tester.pumpAndSettle();
       await tester.tap(find.text(q1.correctAnswer).first);
       await tester.pumpAndSettle();
 
