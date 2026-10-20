@@ -219,6 +219,9 @@ class _LevelScreenState extends State<LevelScreen> {
   }
 }
 
+/// Görünen kilitli seviye sayısı (kalanı "+N seviye daha").
+const int _kVisibleLockedLevels = 1;
+
 enum _LevelLoadState { ready, empty, error }
 
 /// Çubuğun adı ve alt satırı, ilerleme kartının açıklaması.
@@ -333,7 +336,7 @@ class _LevelProgressCard extends StatelessWidget {
 /// rozeti aynı durumu zaten söylüyordu (yıldız / numara / kilit); elmas
 /// ikinci bir işaretti ve elmas yalnız soru ilerlemesi ile ders sayacında
 /// kalır. Sıra, kartların sırasıyla okunur.
-class _LevelPath extends StatelessWidget {
+class _LevelPath extends StatefulWidget {
   const _LevelPath({
     required this.levels,
     required this.disabled,
@@ -347,6 +350,20 @@ class _LevelPath extends StatelessWidget {
   final bool isKu;
   final Set<int> playedLevels;
   final ValueChanged<QuizLevel> onOpen;
+
+  @override
+  State<_LevelPath> createState() => _LevelPathState();
+}
+
+/// Kilitli seviyeler dersler gibi ([learning_screen]) özetlenir: sıradaki
+/// ilk kilitli seviye görünür, kalanı tek "+N seviye daha" satırında toplanır
+/// (kurul 4. tur 2026-10-20: dört tam boy kilitli kart ilerlemeyi zayıf
+/// gösteriyordu).
+class _LevelPathState extends State<_LevelPath> {
+  bool _showAll = false;
+
+  List<QuizLevel> get levels => widget.levels;
+  Set<int> get playedLevels => widget.playedLevels;
 
   bool _isUnlocked(int number) {
     if (number <= 1) return true;
@@ -363,23 +380,50 @@ class _LevelPath extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final next = _nextNumber;
+    final shown = <QuizLevel>[];
+    var lockedShown = 0;
+    var hidden = 0;
+    for (final level in levels) {
+      if (!_isUnlocked(level.number)) {
+        if (!_showAll && lockedShown >= _kVisibleLockedLevels) {
+          hidden++;
+          continue;
+        }
+        lockedShown++;
+      }
+      shown.add(level);
+    }
+    final t = SahneTokens.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (var i = 0; i < levels.length; i++)
+        for (var i = 0; i < shown.length; i++)
           Padding(
             padding: EdgeInsets.only(
-              bottom: i == levels.length - 1 ? 0 : SahneSpace.cardGap,
+              bottom: i == shown.length - 1 && hidden == 0
+                  ? 0
+                  : SahneSpace.cardGap,
             ),
             child: _LevelNode(
-              key: ValueKey('level-node-${levels[i].number}'),
-              level: levels[i],
-              disabled: disabled,
-              isKu: isKu,
-              played: playedLevels.contains(levels[i].number),
-              isNext: levels[i].number == next,
-              locked: !_isUnlocked(levels[i].number),
-              onTap: () => onOpen(levels[i]),
+              key: ValueKey('level-node-${shown[i].number}'),
+              level: shown[i],
+              disabled: widget.disabled,
+              isKu: widget.isKu,
+              played: playedLevels.contains(shown[i].number),
+              isNext: shown[i].number == next,
+              locked: !_isUnlocked(shown[i].number),
+              onTap: () => widget.onOpen(shown[i]),
+            ),
+          ),
+        if (hidden > 0)
+          SahneListRow.plain(
+            key: const ValueKey('level-locked-more'),
+            title: context.t(K.levelsMoreCount, {'n': '$hidden'}),
+            onTap: () => setState(() => _showAll = true),
+            trailing: Icon(
+              AppIcons.lock,
+              size: 20,
+              color: t.tx3.withValues(alpha: 0.7),
             ),
           ),
       ],

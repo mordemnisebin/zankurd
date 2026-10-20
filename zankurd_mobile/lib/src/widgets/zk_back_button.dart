@@ -306,5 +306,7 @@ double _barHeight(
   if (hasSubtitle) {
     h += measure(subtitle, SahneType.caption, maxLines: subtitleMaxLines);
   }
-  return math.max(64, h + SahneSpace.x4);
+  // Alt satırlı başlıkta dikey pay 24: 16'da ad çubuğun üst kenarına,
+  // alt satır altındaki çizgiye yapışık okunuyordu (kurul 4. tur 2026-10-20).
+  return math.max(64, h + (hasSubtitle ? SahneSpace.x6 : SahneSpace.x4));
 }
