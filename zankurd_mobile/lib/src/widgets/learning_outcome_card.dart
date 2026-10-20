@@ -328,7 +328,7 @@ class LearningOutcomeCard extends StatelessWidget {
               ),
             ),
             if (canReview) ...[
-              const SizedBox(width: SahneSpace.x2),
+              const SizedBox(width: sahneChevronGuard),
               SizedBox(
                 height: 36,
                 child: Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
