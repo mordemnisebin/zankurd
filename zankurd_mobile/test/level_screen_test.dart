@@ -159,9 +159,9 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-    // Kurul 4. tur: ilk kilitli seviyeden sonrası "+N seviye daha" satırında.
-    await tester.tap(find.byKey(const ValueKey('level-locked-more')));
-    await tester.pumpAndSettle();
+      // Kurul 4. tur: ilk kilitli seviyeden sonrası "+N seviye daha" satırında.
+      await tester.tap(find.byKey(const ValueKey('level-locked-more')));
+      await tester.pumpAndSettle();
 
       expect(
         tester.widget(find.byKey(const ValueKey('level-card-1'))),
