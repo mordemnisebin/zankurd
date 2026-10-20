@@ -1273,7 +1273,12 @@ void main() {
   testWidgets('49 oda (karanlık)', (t) async {
     await _pump(
       t,
-      RoomScreen(repository: repository, initialRoom: repository.createRoom()),
+      // Kurul 4. tur: 49 sahte oda yerine 17 ile AYNI gerçek lobi verisini
+      // basar (ev sahibi rozeti, sohbet düğmesi); iki tema karşılaştırılabilir.
+      RoomScreen(
+        repository: _LobbyTourRepository(_LobbyView.hostGuestReady),
+        initialRoom: _LobbyTourRepository.room(_LobbyView.hostGuestReady),
+      ),
       dark: true,
     );
     await _shoot(t, '49_room_dark');
