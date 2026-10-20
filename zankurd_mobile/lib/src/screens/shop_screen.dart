@@ -1013,13 +1013,17 @@ class _ShopScreenState extends State<ShopScreen> {
     final isPurchased = _purchasedItemIds.contains(item.id);
 
     {
-      final largeText = MediaQuery.textScalerOf(context).scale(16) >= 24;
+      // Büyük yazıda ya da dar telefonda (< 360) sağ sütun açıklamayı 4+
+      // satıra sıkıştırır: fiyat/eylem açıklamanın altına iner.
+      final largeText =
+          MediaQuery.textScalerOf(context).scale(16) >= 24 ||
+          MediaQuery.sizeOf(context).width < 360;
       final texts = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            // 7. kurul hiyerarşisi: ad 16/600, açıklama 13 (en çok 2 satır),
+            // 7. kurul hiyerarşisi: ad 16/600, açıklama 13 (kesilmez),
             // fiyat 14/600 — üç kademe birbirinden ayrışır.
             style: SahneType.bodyStrong.copyWith(
               color: isPurchased ? t.tx2 : t.tx,
@@ -1029,8 +1033,7 @@ class _ShopScreenState extends State<ShopScreen> {
           const SizedBox(height: SahneSpace.x1),
           Text(
             desc,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+            // Açıklama hiçbir dilde kesilmez: oyuncu ne aldığını bilmeli.
             style: SahneType.caption.copyWith(color: t.tx2, fontSize: 13),
           ),
         ],

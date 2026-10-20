@@ -6,7 +6,7 @@
 //
 // Yazı boyutu/ağırlığı ve satır sınırı işlevsel değildir: düğme, fiyat ve
 // not testleri metni arıyordu, biçimini değil. Bekçi hiyerarşiyi sabitler:
-// ad 16/600, açıklama 13 ve en çok 2 satır (taşarsa …), fiyat 14/600, eksik
+// ad 16/600, açıklama 13 ve kesilmez, fiyat 14/600, eksik
 // notu 13/500; kilit ile fiyat arası 6 px.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -27,7 +27,7 @@ void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   testWidgets(
-    'ad 16/600, açıklama 13 ve ≤ 2 satır, fiyat 14/600, eksik 13/500',
+    'ad 16/600, açıklama 13 ve kesilmez, fiyat 14/600, eksik 13/500',
     (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 1400));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -50,8 +50,8 @@ void main() {
         ),
       );
       expect(desc.style?.fontSize, 13);
-      expect(desc.maxLines, 2);
-      expect(desc.overflow, TextOverflow.ellipsis);
+      expect(desc.maxLines, isNull);
+      expect(desc.overflow, isNot(TextOverflow.ellipsis));
 
       final price = tester.widget<Text>(
         find.descendant(of: card, matching: find.text('720')),
