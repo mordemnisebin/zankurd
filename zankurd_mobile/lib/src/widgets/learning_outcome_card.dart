@@ -261,11 +261,16 @@ class LearningOutcomeCard extends StatelessWidget {
     if (!showCounts) {
       final review = reviewName == null
           ? null
-          : context.t(K.outcomeReview, {
-              'name': reviewName,
-              'answered': '${outcome.reviewAnswered}',
-              'wrong': '${outcome.reviewWrong}',
-            });
+          : context.t(
+              outcome.reviewAnswered == 1
+                  ? K.outcomeReviewOne
+                  : K.outcomeReview,
+              {
+                'name': reviewName,
+                'answered': '${outcome.reviewAnswered}',
+                'wrong': '${outcome.reviewWrong}',
+              },
+            );
       final strong = strongestName == null
           ? null
           : context.t(K.outcomeStrong, {

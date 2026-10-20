@@ -2239,6 +2239,14 @@ class Tr {
       'ku': '{name}: ji {answered} pirsan {correct} rast.',
       'tr': '{name}: {answered} sorudan {correct} doğru.',
     },
+    // Tek soruda Kurmancî oblik tekil ("di 1 pirsê de"); kurul: Grok 4.7 +
+    // Muse Spark uyuştu. Çoğul anahtar aşağıda aynen durur.
+    K.outcomeReviewOne: {
+      'ku':
+          '{name}: di {answered} pirsê de {wrong} şaş. Li van bersivan careke din binêre.',
+      'tr':
+          '{name}: {answered} soruda {wrong} yanlış. Bu cevaplara yeniden bak.',
+    },
     K.outcomeReview: {
       'ku':
           '{name}: di {answered} pirsan de {wrong} şaş. Li van bersivan careke din binêre.',
@@ -4151,6 +4159,7 @@ class K {
   static const outcomeUnanswered = 'outcome.unanswered';
   static const outcomeStrong = 'outcome.strong';
   static const outcomeReview = 'outcome.review';
+  static const outcomeReviewOne = 'outcome.review.one';
   static const outcomeCategoryTally = 'outcome.category.tally';
   static const outcomeEmpty = 'outcome.empty';
   static const outcomeReviewGeneric = 'outcome.review.generic';
