@@ -217,7 +217,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: repository,
-          onCompleted: () {},
+          onCompleted: () async {},
         ),
       ),
     );
@@ -541,7 +541,7 @@ void main() {
           child: testShell(
             child: ProfileNameGateScreen(
               repository: repository,
-              onCompleted: () {},
+              onCompleted: () async {},
             ),
             themeProvider: ThemeProvider(initialMode: mode),
           ),
@@ -565,7 +565,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: repository,
-          onCompleted: () {},
+          onCompleted: () async {},
         ),
         languageProvider: kurmanciLang(),
       ),

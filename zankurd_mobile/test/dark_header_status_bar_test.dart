@@ -49,7 +49,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: MockZanKurdRepository(),
-          onCompleted: () {},
+          onCompleted: () async {},
         ),
       ),
     );

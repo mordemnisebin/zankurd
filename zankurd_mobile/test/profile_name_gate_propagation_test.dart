@@ -31,7 +31,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: repository,
-          onCompleted: () => completed = true,
+          onCompleted: () async => completed = true,
         ),
       ),
     );
