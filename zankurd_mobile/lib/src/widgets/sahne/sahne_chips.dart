@@ -490,44 +490,61 @@ class SahnePickChip extends StatelessWidget {
           shape: shape,
           color: selected ? t.selFill : Colors.transparent,
           onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: SahneSpace.x2,
-              vertical: SahneSpace.x2,
-            ),
-            child: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (leading != null) ...[
-                    leading!,
-                    const SizedBox(width: SahneSpace.x1),
-                  ],
-                  Flexible(
-                    child: () {
-                      final text = Text(
-                        label,
-                        textAlign: TextAlign.center,
-                        maxLines: large ? 2 : 1,
-                        softWrap: large,
-                        overflow: TextOverflow.ellipsis,
-                        style: SahneType.captionStrong.copyWith(
-                          color: selected ? t.selTx : t.tx,
-                          fontWeight: selected
-                              ? FontWeight.w800
-                              : FontWeight.w600,
-                        ),
-                      );
-                      // Normal yazıda tek satır: uzun ad ("Bilim ve Düşünce")
-                      // küçülerek sığar, satır boyu bozulmaz.
-                      return large
-                          ? text
-                          : FittedBox(fit: BoxFit.scaleDown, child: text);
-                    }(),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SahneSpace.x2,
+                  vertical: SahneSpace.x2,
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (selected) ...[
+                        // Kurul 4. tur: seçili hâl renge ek olarak ✓ ile de söylenir.
+                        Icon(AppIcons.check, size: 14, color: t.selTx),
+                        const SizedBox(width: SahneSpace.x1),
+                      ],
+                      if (leading != null) ...[
+                        leading!,
+                        const SizedBox(width: SahneSpace.x1),
+                      ],
+                      Flexible(
+                        child: () {
+                          final text = Text(
+                            label,
+                            textAlign: TextAlign.center,
+                            maxLines: large ? 2 : 1,
+                            softWrap: large,
+                            overflow: TextOverflow.ellipsis,
+                            style: SahneType.captionStrong.copyWith(
+                              color: selected ? t.selTx : t.tx,
+                              fontWeight: selected
+                                  ? FontWeight.w800
+                                  : FontWeight.w600,
+                            ),
+                          );
+                          // Normal yazıda tek satır: uzun ad ("Bilim ve Düşünce")
+                          // küçülerek sığar, satır boyu bozulmaz.
+                          return large
+                              ? text
+                              : FittedBox(fit: BoxFit.scaleDown, child: text);
+                        }(),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              if (selected)
+                // Kurul 4. tur: seçili hâl renge ek olarak ✓ ile de söylenir.
+                PositionedDirectional(
+                  top: 4,
+                  end: 4,
+                  child: Icon(AppIcons.check, size: 12, color: t.selTx),
+                ),
+            ],
           ),
         ),
       ),
