@@ -409,7 +409,6 @@ void main() {
     // kûpayê digire!" diyordu. "Gerçek oyuncular" ifadesi turnuva kartında üç
     // kez geçiyordu: kimlik bandı alt metni, biçim satırı ve bu slogan. Bilgi
     // bir kez söylenir; slogan yalnız kendi taşıdığı bilgiyi bıraktı.
-    expect(Tr.of(K.botRaceHint, AppLanguage.ku), 'Şampiyon kûpayê digire.');
     expect(
       Tr.of(K.tournamentSub, AppLanguage.ku),
       contains('lîstikvanên rastî'),

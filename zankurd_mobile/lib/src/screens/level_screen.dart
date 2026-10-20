@@ -236,7 +236,7 @@ class _LevelHeading {
   const _LevelHeading(this.title, this.subtitle, this.description);
 
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final String? description;
 
   factory _LevelHeading.of(String category, String? subCategory, bool isKu) {
@@ -248,16 +248,12 @@ class _LevelHeading {
           return _LevelHeading(
             isKu ? sub.nameKu : sub.nameTr,
             categoryName,
-            isKu ? sub.descriptionKu : sub.descriptionTr,
+            null,
           );
         }
       }
     }
-    return _LevelHeading(
-      categoryName,
-      Tr.forKu(K.kolaydanZoraDogruIlerle, isKu),
-      null,
-    );
+    return _LevelHeading(categoryName, null, null);
   }
 }
 

@@ -1143,7 +1143,6 @@ class _FriendRequestRow extends StatelessWidget {
         return _PersonRow(
           avatar: PlayerAvatar(radius: 18, displayName: request.fromUserName),
           title: request.fromUserName,
-          subtitle: context.t(K.wantsToBeFriend),
           trailing: actions,
           stackTrailing: stackActions,
         );

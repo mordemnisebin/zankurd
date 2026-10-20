@@ -506,7 +506,6 @@ void main() {
     // liste, Kurmancî karşılığı üründe zaten olan kavramların Türkçe
     // biçimleridir — hiçbiri bugün Ku metinde geçmiyor; biri geçerse
     // ya karşılığı kullanılmalı ya da buraya gerekçesi yazılmalı.
-    expect(Tr.of(K.botRaceHint, AppLanguage.ku), 'Şampiyon kûpayê digire.');
     expect(Tr.of(K.champion, AppLanguage.ku), 'Şampiyon!');
     expect(
       Tr.of(K.championCongrats, AppLanguage.ku),

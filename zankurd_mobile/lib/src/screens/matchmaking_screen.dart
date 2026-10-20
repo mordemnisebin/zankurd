@@ -1777,10 +1777,6 @@ class _RandomMatchCard extends StatelessWidget {
                           context.t(K.randomMatch),
                           style: SahneType.button.copyWith(color: t.tx),
                         ),
-                        Text(
-                          context.t(K.randomMatchSub),
-                          style: SahneType.caption.copyWith(color: t.tx2),
-                        ),
                       ],
                     ),
                   ),
