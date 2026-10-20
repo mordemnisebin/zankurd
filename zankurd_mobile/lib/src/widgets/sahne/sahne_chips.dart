@@ -323,7 +323,7 @@ class SahneBadge extends StatelessWidget {
     final t = SahneTokens.of(context);
     final (bg, fg) = switch (tone) {
       SahneBadgeTone.race => (t.raceTint, t.raceTx),
-      SahneBadgeTone.learn => (t.learnTint, t.learnTx),
+      SahneBadgeTone.learn => (t.eyebrowFill, t.eyebrowTx),
       SahneBadgeTone.gold => (t.goldTint, t.goldTx),
       SahneBadgeTone.soon => (t.s2, t.tx2),
     };

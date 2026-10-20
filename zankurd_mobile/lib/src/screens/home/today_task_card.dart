@@ -110,7 +110,7 @@ class TodayTaskCard extends StatelessWidget {
                       : null,
                   child: Text(
                     eyebrow,
-                    style: SahneType.captionStrong.copyWith(color: t.learnTx),
+                    style: SahneType.captionStrong.copyWith(color: t.eyebrowTx),
                   ),
                 ),
                 const SizedBox(height: SahneSpace.x1),

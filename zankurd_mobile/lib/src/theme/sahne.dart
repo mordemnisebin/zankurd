@@ -160,6 +160,15 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// kullanır (7. kurul: aynı eylem ekrana göre yeşil/turuncu/gri çıkıyordu).
   Color get linkTx => actTx;
 
+  /// TEK kart üst etiketi (eyebrow) rengi ve hap dolgusu (tur 9b, Opus iki
+  /// tur + Gemini): "İlk ders" yeşil, "Hızlı düello" kırmızı/mor, "Sıradaki
+  /// ders" nane yeşili çıkıyordu; kartların üst etiketi üç ayrı renk
+  /// konuşuyordu. Artık hepsi bağlantı rengidir ([linkTx]); hap biçimli
+  /// etiket aynı rengin %12'lik açık dolgusunu ([eyebrowFill]) taşır.
+  /// Yeşil yalnız doğruya/başarıya, kırmızı yalnız hataya kalır.
+  Color get eyebrowTx => linkTx;
+  Color get eyebrowFill => act.withValues(alpha: 0.12);
+
   /// Eylem gölgesinin rengi ve bulanıklığı — ekrandaki TEK bulanık gölge,
   /// yalnız birincil düğmede (`0 8 24 -8`; gündüzde `0 8 20 -8`, koyu
   /// turuncu). Rengi Agir'den türetilemez: gündüzde ayrı bir tondur.
