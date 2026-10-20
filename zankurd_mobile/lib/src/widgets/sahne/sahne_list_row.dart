@@ -460,6 +460,14 @@ class SahneListRow extends StatelessWidget {
         );
     }
 
+    // Kilitli (pasif) satır: başlık ve açıklama [SahneTokens.disabledFg]
+    // (üçüncül metin) — hâlâ belli ölçüde soluk ama AA'yı geçer.
+    //
+    // Kusur (kurul tur 6b): kilitli satır önce ikincil metin ×0,6 saydamlıkla
+    // çiziliyordu (2. tur kararı); gündüz kartta ≈ #9AA0B8 gibi bir griye
+    // iniyor, "kilitli ders" başlıkları okunmuyordu (2 denetçi). Saydamlık
+    // kalktı, renk belirteçten gelir; kilitli olduğu kilit ikonundan ve
+    // etkin satırın tam koyu metninden ayırt edilir.
     final text = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -468,20 +476,21 @@ class SahneListRow extends StatelessWidget {
           title,
           style: SahneType.bodyStrong.copyWith(
             color: !enabled
-                ? t.tx2
+                ? t.disabledFg
                 : destructive
                 ? t.errTx
                 : t.tx,
           ),
         ),
         if (subtitle != null)
-          Text(subtitle!, style: SahneType.caption.copyWith(color: t.tx2)),
+          Text(
+            subtitle!,
+            style: SahneType.caption.copyWith(
+              color: enabled ? t.tx2 : t.disabledFg,
+            ),
+          ),
       ],
     );
-    // Kilitli (pasif) satır ~%60 vurguyla söner (kurul 2. tur 2026-10-20:
-    // kilitli dersler açık olanlarla aynı koyulukta okunuyordu).
-    final dimmedText = enabled ? text : Opacity(opacity: 0.6, child: text);
-
     // Büyük yazı ölçeğinde (≥ 1.5) sağdaki rozet/değer metnin altına
     // iner: başlık dar bir sütunda harf harf bölünmesin.
     final stacked =
@@ -519,12 +528,12 @@ class SahneListRow extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        ExcludeSemantics(child: dimmedText),
+                        ExcludeSemantics(child: text),
                         const SizedBox(height: SahneSpace.x1),
                         trail,
                       ],
                     )
-                  : ExcludeSemantics(child: dimmedText),
+                  : ExcludeSemantics(child: text),
             ),
             if (!stacked && trail != null) ...[
               const SizedBox(width: SahneSpace.x2),

@@ -534,19 +534,17 @@ class _LevelNode extends StatelessWidget {
           SahneSpace.x4,
           SahneSpace.x3,
         ),
-        // Kilitli seviye ~%60 vurguyla söner (kurul 2. tur 2026-10-20).
-        child: Opacity(
-          opacity: locked ? 0.6 : 1,
-          child: _LevelRowContent(
-            level: level,
-            name: name,
-            badge: locked
-                ? _LevelBadge.locked
-                : played
-                ? _LevelBadge.played
-                : _LevelBadge.open,
-            trailing: locked ? null : AppIcons.chevronRight,
-          ),
+        // Kilitli seviye saydamlıkla değil renk belirteciyle söner (tur 6b:
+        // ×0,6 saydamlık başlığı okunmaz yapıyordu); bkz. `_LevelRowContent`.
+        child: _LevelRowContent(
+          level: level,
+          name: name,
+          badge: locked
+              ? _LevelBadge.locked
+              : played
+              ? _LevelBadge.played
+              : _LevelBadge.open,
+          trailing: locked ? null : AppIcons.chevronRight,
         ),
       ),
     );
@@ -608,7 +606,7 @@ class _LevelRowContent extends StatelessWidget {
         Text(
           name,
           style: (headline ? SahneType.headline : SahneType.bodyStrong)
-              .copyWith(color: locked ? t.tx2 : t.tx),
+              .copyWith(color: locked ? t.disabledFg : t.tx),
         ),
         const SizedBox(height: SahneSpace.x1),
         Row(
@@ -637,7 +635,9 @@ class _LevelRowContent extends StatelessWidget {
                 key: locked
                     ? ValueKey('level-lock-hint-${level.number}')
                     : null,
-                style: SahneType.caption.copyWith(color: t.tx2),
+                style: SahneType.caption.copyWith(
+                  color: locked ? t.disabledFg : t.tx2,
+                ),
               ),
             ),
           ],

@@ -711,7 +711,10 @@ class _PlacementPromptCard extends StatelessWidget {
       padding: const EdgeInsetsDirectional.fromSTEB(
         SahneSpace.x4,
         SahneSpace.x3,
-        SahneSpace.x2,
+        // Sağ iç boşluk 16 (tur 6b): 8 iken uzun Kurmancî gövde metni kart
+        // kenarına değiyordu. Metin eylemleri kendi 8'lik dokunma payını
+        // taşır; görsel kenar yine sola oturur.
+        SahneSpace.x4,
         SahneSpace.x1,
       ),
       child: Column(
@@ -990,7 +993,7 @@ class _LessonRow extends StatelessWidget {
       onTap: onTap,
       semanticLabel: semanticLabel,
       trailing: locked
-          ? Icon(AppIcons.lock, size: 20, color: t.tx3.withValues(alpha: 0.7))
+          ? Icon(AppIcons.lock, size: 20, color: t.disabledFg)
           : completed
           ? Icon(AppIcons.check, size: 20, color: t.learnTx)
           : null,
