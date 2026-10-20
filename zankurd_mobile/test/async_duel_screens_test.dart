@@ -444,6 +444,8 @@ void main() {
       final badge = find.byKey(const ValueKey('async-duel-ready-badge'));
       expect(badge, findsOneWidget);
 
+      await tester.ensureVisible(badge);
+      await tester.pump();
       await tester.tap(badge);
       await tester.pumpAndSettle();
 

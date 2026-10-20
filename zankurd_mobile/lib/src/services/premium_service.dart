@@ -102,14 +102,6 @@ class PremiumService extends ChangeNotifier {
 
   static const _entitlementId = 'premium';
 
-  /// Teklif yükleme ve satın alma çağrılarının üst sınırı. Takılan bir ağ ya
-  /// da yanıt vermeyen mağaza çağrısı, paywall yükleyicisini sonsuza dek
-  /// döndürür ve `_purchaseInProgress` kilidini bir daha açmazdı.
-  @visibleForTesting
-  static Duration offeringsTimeout = const Duration(seconds: 20);
-  @visibleForTesting
-  static Duration purchaseTimeout = const Duration(seconds: 90);
-
   static PremiumService? _instance;
 
   bool _initialized = false;
@@ -366,7 +358,7 @@ class PremiumService extends ChangeNotifier {
     if (_configurationFailed) return const OfferingsFetchFailure();
     if (!_configured) return const OfferingsFetchSuccess([]);
     try {
-      final offerings = await _getOfferings().timeout(offeringsTimeout);
+      final offerings = await _getOfferings();
       return OfferingsFetchSuccess(offerings.all.values.toList());
     } catch (error, stack) {
       _recordError(error, stack, reason: 'premium offerings');
@@ -388,9 +380,7 @@ class PremiumService extends ChangeNotifier {
     _infoMessage = null;
     notifyListeners();
     try {
-      final result = await Purchases.purchase(
-        PurchaseParams.package(package),
-      ).timeout(purchaseTimeout);
+      final result = await Purchases.purchase(PurchaseParams.package(package));
       _isPremium = _hasEntitlement(result.customerInfo.entitlements.all);
       _purchaseInProgress = false;
       notifyListeners();

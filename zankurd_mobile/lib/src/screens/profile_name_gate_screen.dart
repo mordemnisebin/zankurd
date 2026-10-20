@@ -21,7 +21,7 @@ class ProfileNameGateScreen extends StatefulWidget {
 
   final ZanKurdRepository repository;
   final String? initialName;
-  final Future<void> Function() onCompleted;
+  final VoidCallback onCompleted;
 
   @override
   State<ProfileNameGateScreen> createState() => _ProfileNameGateScreenState();
@@ -83,7 +83,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
     try {
       await widget.repository.updateProfileName(name);
       if (!mounted) return;
-      await widget.onCompleted();
+      widget.onCompleted();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'profile name gate failed');
       if (!mounted) return;
@@ -126,7 +126,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
         key: const ValueKey('name-gate-skip'),
         label: context.t(K.nameGateSkip),
         arrow: false,
-        onPressed: _saving ? null : () => widget.onCompleted(),
+        onPressed: _saving ? null : widget.onCompleted,
       ),
       hero: const SahneEntryHero(
         key: ValueKey('profile-name-gate-hero'),

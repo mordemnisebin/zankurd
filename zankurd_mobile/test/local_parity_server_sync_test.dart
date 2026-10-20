@@ -72,8 +72,6 @@ const _retiredAfterSync = <String, String>{
   'offline_9668': 'supabase/2026-10-19_icerik_emekli.sql',
   'sf_cin_0007': 'supabase/2026-10-19_icerik_emekli.sql',
   'sf_cin_0008': 'supabase/2026-10-19_icerik_emekli.sql',
-  'offline_5016': 'supabase/2026-10-21_bozuk_8_soru.sql',
-  'offline_5225': 'supabase/2026-10-21_bozuk_8_soru.sql',
 };
 
 /// Ekleme göçünden sonra yerelde metni düzeltilen soruların sunucu göçleri,

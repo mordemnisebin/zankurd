@@ -48,7 +48,7 @@ void main() {
         testShell(
           child: ProfileNameGateScreen(
             repository: MockZanKurdRepository(),
-            onCompleted: () async => completed = true,
+            onCompleted: () => completed = true,
           ),
         ),
       );
@@ -79,7 +79,7 @@ void main() {
         testShell(
           child: ProfileNameGateScreen(
             repository: MockZanKurdRepository(),
-            onCompleted: () async {},
+            onCompleted: () {},
           ),
         ),
       );

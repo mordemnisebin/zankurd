@@ -21,6 +21,7 @@ import 'async_duel/async_duel_challenge_sheet.dart';
 import 'async_duel/async_duel_inbox.dart';
 import 'async_duel/async_duel_play_screen.dart';
 import 'contest_screen.dart';
+import 'friends_screen.dart';
 import 'matchmaking_screen.dart';
 import 'room_screen.dart';
 import 'spin_wheel_screen.dart';
@@ -68,9 +69,32 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   /// giriş noktası çizilip sonra kaybolmasın).
   bool _challengeAvailable = false;
 
+  /// Bekleyen arkadaşlık isteği sayısı; "Arkadaşlar" satırında rozet olur.
+  int _pendingRequests = 0;
+
+  /// Rozet bir iyileştirmedir: başarısızlık sessizdir, satır yine açılır.
+  Future<void> _refreshPendingRequests() async {
+    try {
+      final requests = await widget.repository.loadPendingFriendRequests();
+      if (!mounted || requests.length == _pendingRequests) return;
+      setState(() => _pendingRequests = requests.length);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'play_hub_pending_requests');
+    }
+  }
+
+  Future<void> _openFriends() async {
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(FriendsScreen(repository: widget.repository)));
+    if (!mounted) return;
+    await _refreshPendingRequests();
+  }
+
   @override
   void initState() {
     super.initState();
+    unawaited(_refreshPendingRequests());
     if (widget.asyncDuelEnabled) {
       unawaited(
         asyncDuelChallengeAvailable(widget.repository).then((available) {
@@ -427,6 +451,40 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     );
     final dailyContest = _lockedTap(locked, dailyContestRow);
 
+    // Çark: günlük jeton kazanma yeri. Eskiden yalnız mağazadan ve "jeton
+    // yetmedi" iletisinden bulunuyordu; Yarış sekmesinde tek dokunuşta durur.
+    final wheelRow = SahneListRow.icon(
+      key: const ValueKey('play-hub-spin-wheel'),
+      icon: AppIcons.dice,
+      role: SahneRole.gold,
+      title: context.t(K.wheelTitle),
+      chevron: true,
+      onTap: _openSpinWheel,
+    );
+
+    // Arkadaşlar: istek göndermek/yanıtlamak için tek dokunuş (Nîl, sosyal).
+    // Sıralama ekranındaki yalnız-simge düğmesi de durur.
+    final friendsRow = _lockedTap(
+      locked,
+      SahneListRow.icon(
+        key: const ValueKey('play-hub-friends'),
+        icon: AppIcons.userPlus,
+        role: SahneRole.social,
+        title: context.t(K.friendsScreen),
+        trailing: _pendingRequests > 0 && !locked
+            ? SahneBadge(label: '$_pendingRequests', tone: SahneBadgeTone.learn)
+            : null,
+        chevron: !locked && _pendingRequests == 0,
+        enabled: !locked,
+        onTap: locked ? null : _openFriends,
+        semanticLabel: _pendingRequests > 0
+            ? context.t(K.friendRequestsPendingA11y, {
+                'count': '$_pendingRequests',
+              })
+            : context.t(K.friendsScreen),
+      ),
+    );
+
     return SahneTabPage(
       title: context.t(K.playTitle),
       // İki dilli etiket: öbür dilde aynı anahtar ("Pêşbirk" / "Yarış").
@@ -519,10 +577,13 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         // yığılmış değil, sayfaya yayılmış okunsun.
         const SizedBox(height: SahneSpace.x5),
         _RoomActions(createRoom: createRoom, joinRoom: joinRoom),
+        const SizedBox(height: SahneSpace.x3),
+        SahneListGroup(children: [friendsRow]),
         const SizedBox(height: SahneSpace.x5),
         SahneListGroup(
           children: [
             dailyContest,
+            wheelRow,
             if (!widget.asyncDuelEnabled)
               SahneListRow.icon(
                 key: const ValueKey('play-hub-async-duel-soon'),

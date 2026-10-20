@@ -430,38 +430,17 @@ class _AppShellState extends State<AppShell>
   }
 
   Future<void> _loadOnboardingState() async {
-    // Okuma başarısız olursa (bozuk depo) yükleyici sonsuza dek kalmasın:
-    // güvenli varsayılan, tanıtımı göstermektir.
-    var show = true;
-    try {
-      final preferences = await SharedPreferences.getInstance();
-      show = preferences.getBool(_onboardingSeenKey) != true;
-    } catch (error, stack) {
-      ErrorReporter.record(
-        error,
-        stack,
-        reason: 'onboarding state load failed',
-      );
-    }
+    final preferences = await SharedPreferences.getInstance();
     if (!mounted) return;
     setState(() {
-      _showOnboarding = show;
+      _showOnboarding = preferences.getBool(_onboardingSeenKey) != true;
       _checkingOnboarding = false;
     });
   }
 
   Future<void> _completeOnboarding() async {
-    try {
-      final preferences = await SharedPreferences.getInstance();
-      await preferences.setBool(_onboardingSeenKey, true);
-    } catch (error, stack) {
-      // Yazılamasa da kullanıcıyı tanıtımda kilitleme; bellekte ilerle.
-      ErrorReporter.record(
-        error,
-        stack,
-        reason: 'onboarding flag write failed',
-      );
-    }
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(_onboardingSeenKey, true);
     AnalyticsService.instance.logOnboardingCompleted();
     if (!mounted) return;
     setState(() => _showOnboarding = false);
@@ -1158,15 +1137,9 @@ class _AppShellState extends State<AppShell>
   Future<void> _loadProfileNameState(String? userId) async {
     setState(() => _checkingProfileName = true);
     final offlineMode = context.read<AuthProvider>().isOfflineMode;
-    var completed = false;
-    try {
-      final preferences = await SharedPreferences.getInstance();
-      final key = _profileNameCompletionKey(userId, offlineMode: offlineMode);
-      completed = key != null && preferences.getBool(key) == true;
-    } catch (error, stack) {
-      // Okunamazsa kapı gösterilir (güvenli varsayılan); yükleyici kapanır.
-      ErrorReporter.record(error, stack, reason: 'profile name state failed');
-    }
+    final preferences = await SharedPreferences.getInstance();
+    final key = _profileNameCompletionKey(userId, offlineMode: offlineMode);
+    final completed = key != null && preferences.getBool(key) == true;
 
     // Bu kapı yalnız oyuncunun adı başarıyla kaydettiğini belirten yerel
     // ve kullanıcıya özel bayrağa dayanır. Global bir bayrak hesap değişiminde
@@ -1182,17 +1155,12 @@ class _AppShellState extends State<AppShell>
 
   Future<void> _completeProfileName() async {
     final offlineMode = context.read<AuthProvider>().isOfflineMode;
-    try {
-      final preferences = await SharedPreferences.getInstance();
-      final key = _profileNameCompletionKey(
-        _repository.currentUserId,
-        offlineMode: offlineMode,
-      );
-      if (key != null) await preferences.setBool(key, true);
-    } catch (error, stack) {
-      // Yazılamasa da kullanıcıyı içeride kilitleme; bellekte ilerle.
-      ErrorReporter.record(error, stack, reason: 'profile name flag failed');
-    }
+    final preferences = await SharedPreferences.getInstance();
+    final key = _profileNameCompletionKey(
+      _repository.currentUserId,
+      offlineMode: offlineMode,
+    );
+    if (key != null) await preferences.setBool(key, true);
     if (!mounted) return;
     setState(() {
       _profileNameComplete = true;

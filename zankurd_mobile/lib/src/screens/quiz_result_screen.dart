@@ -1271,16 +1271,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       );
       final earned = await ResultSharer.claimDailyShareReward();
       if (earned && context.mounted) {
-        // Ödül ancak sunucu yazdıysa duyurulur (0 = yazılamadı); eskiden
-        // `unawaited` ile hemen "kazanıldı" deniyor, hata yutuluyordu.
-        var awarded = 0;
-        try {
-          awarded = await repository.awardSpinCoins();
-        } catch (error, stack) {
-          ErrorReporter.record(error, stack, reason: 'share awardSpinCoins');
-        }
-        if (awarded <= 0 || !context.mounted) return;
         HapticFeedback.mediumImpact();
+        unawaited(repository.awardSpinCoins());
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.t(K.shareRewardEarned)),

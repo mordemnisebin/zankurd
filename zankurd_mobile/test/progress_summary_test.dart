@@ -133,7 +133,7 @@ void main() {
     final home = File('lib/src/screens/home_screen.dart').readAsStringSync();
     expect(
       home.indexOf('TodayTaskCard('),
-      lessThan(home.indexOf('ProgressSummary(')),
+      lessThan(home.indexOf('progressCard,')),
       reason: 'özet CTA’nın üstüne çıkarsa ana eylem aşağı itilir',
     );
   });

@@ -1261,7 +1261,7 @@ void main() {
   testWidgets('77 ad sorma', (t) async {
     await _pump(
       t,
-      ProfileNameGateScreen(repository: repository, onCompleted: () async {}),
+      ProfileNameGateScreen(repository: repository, onCompleted: () {}),
     );
     await _shoot(t, '77_name_gate');
   }, tags: ['preview']);
@@ -1704,7 +1704,7 @@ void main() {
   testWidgets('88 ad sorma (Kurmancî)', (t) async {
     await _pump(
       t,
-      ProfileNameGateScreen(repository: repository, onCompleted: () async {}),
+      ProfileNameGateScreen(repository: repository, onCompleted: () {}),
       ku: true,
     );
     await _shoot(t, '88_name_gate_ku');

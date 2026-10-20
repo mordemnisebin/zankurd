@@ -742,23 +742,6 @@ const Set<String> retiredQuestionIds = <String>{
   'offline_curated_21475', // "heyran" yalnız Serhad kadın aşk türküsü: tartışmalı
   'curated_siyaset_0009', // Barzani hareketinin ilk lideri: Şeyh Abdüsselam mı Mustafa mı
   'offline_9668', // "Destana Dewrêşê Evdî çi ye?" B ve D şıkları birbirine çok yakın
-  // ---------------------------------------------------------------------
-  // 2026-10-21: biçimi bozuk 8 soru; metin yeniden yazılmadı, havuzdan
-  // çıkarıldı (kanıt: ekranda tek cevaplı sorunun iki boşluk ya da
-  // anlamsız şık göstermesi).
-  // - dersler2_2026_10_08_0104–0109: çeviri parantezine de `___`
-  //   konmuş, soru iki boşluklu görünüyor ama tek cevap alıyor.
-  // - offline_5016, offline_5225: şık listesinde sözcük olmayan "di-"
-  //   eki duruyor ("aslan"/"göz" bi Kurmancî çi ye?).
-  // ---------------------------------------------------------------------
-  'dersler2_2026_10_08_0104',
-  'dersler2_2026_10_08_0105',
-  'dersler2_2026_10_08_0106',
-  'dersler2_2026_10_08_0107',
-  'dersler2_2026_10_08_0108',
-  'dersler2_2026_10_08_0109',
-  'offline_5016',
-  'offline_5225',
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

@@ -12,9 +12,11 @@
 /// * Şerit ALÇAKTIR (≤ 100). Birisi "daha güzel dursun" diye yüksekliği
 ///   artırırsa hiçbir test kırılmaz; konular ekranın altına kayar ve ana
 ///   sayfanın "neyi öğrenebilirim?" sorusu ilk bakışta cevapsız kalır.
-/// * 390×844'te (en yaygın telefon) konu ızgarasının İLK satırı alt gezinme
-///   çubuğunun üstünde, ilk ekranda görünür — iki dilli etiketler açıkken
-///   de (en kalabalık hâl), iki dilde ve iki temada.
+/// * 390×844'te (en yaygın telefon) öğren kapısı alt gezinme çubuğunun
+///   üstünde, ilk ekranda görünür ve konu ızgarasının İLK satırı en çok bir
+///   kaydırma ötededir (2026-10-21'den önce ilk satırın kendisi ilk
+///   ekrandaydı; kapılar ızgaranın üstüne taşınınca bu şart gevşedi) — iki
+///   dilli etiketler açıkken de, iki dilde ve iki temada.
 /// * Şerit ana sayfada TEK kezdir ve kilim yoktur (kilim imzası yalnız yarış
 ///   merkezindedir).
 library;
@@ -69,10 +71,20 @@ void main() {
         );
         expect(firstTile, findsOneWidget);
         final navTop = tester.getRect(find.byType(NavigationBar)).top;
+        // Erişim haritası (2026-10-21): öğren/oyna kapıları konu ızgarasının
+        // ÜSTÜNE taşındı ve günlük görevler Günün dersinin altına indi; ilk
+        // konu satırı artık ilk ekranın hemen altında başlar. "Neyi
+        // öğrenebilirim?" sorusunun cevabı ilk ekranda KAPI olarak durur,
+        // ızgara bir kaydırma ötededir.
+        expect(
+          tester.getRect(find.byKey(const ValueKey('home-door-learn'))).bottom,
+          lessThanOrEqualTo(navTop),
+          reason: 'öğren kapısı alt çubuğun altında kaldı',
+        );
         expect(
           tester.getRect(firstTile).bottom,
-          lessThanOrEqualTo(navTop),
-          reason: 'ilk konu satırı alt çubuğun altında kaldı',
+          lessThanOrEqualTo(navTop + 844 - 100),
+          reason: 'ilk konu satırı ilk iki ekrandan da uzağa düştü',
         );
       });
     }

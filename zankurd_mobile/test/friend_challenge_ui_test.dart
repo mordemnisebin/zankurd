@@ -600,6 +600,7 @@ void main() {
             (w.key! as ValueKey).value.toString().startsWith('async-duel-row-'),
       );
       await tester.ensureVisible(row);
+      await tester.pump();
       await tester.tap(row);
       await tester.pump();
       await tester.pump();
@@ -631,6 +632,7 @@ void main() {
 
       final row = find.byKey(ValueKey('async-duel-row-${start.duelId}'));
       await tester.ensureVisible(row);
+      await tester.pump();
       await tester.tap(row);
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('async-duel-result-share')));

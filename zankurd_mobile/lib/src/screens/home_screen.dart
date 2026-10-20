@@ -444,6 +444,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
     final t = SahneTokens.of(context);
 
+    final narrow = !isWide && !_firstSession;
+    // Ana sayfa günün tek bakışta okunabilen özeti olmalı. Kompakt
+    // görünüm iki aktif görevi ve kalan sayısını gösterir.
+    final missionsCard = DailyMissionsCard(
+      isKu: ku,
+      missions: _missions,
+      compact: true,
+      onClaimReward: _claimMissionReward,
+    );
+    final progressCard = SahneSurfaceCard(
+      child: ProgressSummary(
+        key: const ValueKey('home-progress-summary'),
+        level: _level,
+        xpInLevel: _xpInLevel,
+        xpNeeded: _xpNeeded,
+        levelLabel: context.t(K.progressLevelLabel),
+      ),
+    );
+
     final primary = _buildAnimatedCard(
       _heroFadeAnimation(0),
       Column(
@@ -483,17 +502,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // İlerleme özeti günlük görevin ALTINDA durur: turuncu "Başla"
           // ekranın ilk ve en güçlü eylemi kalmalı. Coin burada YOK:
           // marka satırında zaten kalıcı bir jeton çipi ve mağaza girişi var.
-          if (!_firstSession) ...[
+          // Dar düzende günlük görevler Günün dersinin hemen altında durur
+          // (eskiden sayfa dibindeydi: görev var mı diye kimse bakmıyordu);
+          // ilerleme özeti ve Pro sayfa sonuna iner.
+          if (narrow) ...[
             const SizedBox(height: SahneSpace.cardGap),
-            SahneSurfaceCard(
-              child: ProgressSummary(
-                key: const ValueKey('home-progress-summary'),
-                level: _level,
-                xpInLevel: _xpInLevel,
-                xpNeeded: _xpNeeded,
-                levelLabel: context.t(K.progressLevelLabel),
-              ),
-            ),
+            missionsCard,
+          ],
+          if (!_firstSession && !narrow) ...[
+            const SizedBox(height: SahneSpace.cardGap),
+            progressCard,
           ],
           if (_reviewReadyCount > 0) ...[
             const SizedBox(height: SahneSpace.cardGap),
@@ -521,22 +539,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onSelected: _selectLearningGoal,
             ),
           ],
-          SahneSectionHeader(
-            title: context.t(K.homeTopicsTitle),
-            // İki dilli etiket: öbür dilde aynı anahtar (bkz.
-            // [SahneBilingualLabel]).
-            eyebrow: context.secondLabel(K.homeTopicsTitle),
-          ),
-          HomeTopicGrid(
-            isKu: ku,
-            categories: repo.categories,
-            progress: _topicProgress,
-            onOpen: _openCategory,
-          ),
-          const SizedBox(height: SahneSpace.x6),
+          // Erişim haritası (2026-10-21): kapılar konu ızgarasının ÜSTÜNDE.
+          // Öğren kapısı ızgaranın altında, ekranın en dibinde duruyordu;
+          // oyuncu Kurmancî öğrenme alanını ancak sonuna kadar kaydırınca
+          // buluyordu. Konular ana içerik olarak hemen ardından gelir.
+          //
           // Öğrenme alanı ve yarış: tek liste grubunda iki satır. Yarış
           // kapısı ilk oturumda da görünür: uygulamanın ikinci yüzü budur
           // ve yeni gelen onu ancak burada görürse arar.
+          const SizedBox(height: SahneSpace.cardGap),
           HomeDoors(
             learn: HomeDoorTile(
               key: const ValueKey('home-door-learn'),
@@ -555,6 +566,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onTap: widget.onOpenPlay,
             ),
           ),
+          SahneSectionHeader(
+            title: context.t(K.homeTopicsTitle),
+            // İki dilli etiket: öbür dilde aynı anahtar (bkz.
+            // [SahneBilingualLabel]).
+            eyebrow: context.secondLabel(K.homeTopicsTitle),
+          ),
+          HomeTopicGrid(
+            isKu: ku,
+            categories: repo.categories,
+            progress: _topicProgress,
+            onOpen: _openCategory,
+          ),
         ],
       ),
     );
@@ -564,15 +587,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Ana sayfa günün tek bakışta okunabilen özeti olmalı. Kompakt
-          // görünüm iki aktif görevi ve kalan sayısını gösterir; tüm görevler
-          // ekranın altına taşınıp konuları gömmez.
-          DailyMissionsCard(
-            isKu: ku,
-            missions: _missions,
-            compact: true,
-            onClaimReward: _claimMissionReward,
-          ),
+          if (!narrow) missionsCard,
+          if (narrow) progressCard,
 
           // ── Abonelik girişi ────────────────────────────────────────────
           //

@@ -179,9 +179,7 @@ void main() {
       // 3284 -> 3277 (-7): 2026-10-19 dış içerik denetimi; yerelde
       // karşılığı olan 7 soru emekli (4 kimlik yalnız sunucuda).
       // 3277 -> 3313 (+36): 2026-10-19 `kolay_2026_10_19`, hepsi `approved`.
-      // 3313 -> 3305 (-8): 2026-10-21 biçimi bozuk 8 soru emekliye ayrıldı
-      // (dersler2 0104–0109 çift boşluk, offline_5016/5225 "di-" şıkkı).
-      3305,
+      3313,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -258,7 +256,7 @@ void main() {
       'retired=Cîhan': 5, // 2026-10-19: +sf_cin_0007/0008
       'retired=Muzîk': 28, // 2026-10-19 içerik denetimi +1
       // 2026-09-30: 36 -> 37 (`offline_0120`, görsel "pîr" gösteriyor).
-      'retired=Ziman': 45,
+      'retired=Ziman': 37,
       // 41 -> 42: 2026-10-08 `ds_cand_0285` (cevap soru metninde) emekliye ayrıldı.
       'retired=Çand': 42,
       // 2026-09-30 altıncı dalga: Teknolojî'den iki modelce onaylanan 3 soru.
