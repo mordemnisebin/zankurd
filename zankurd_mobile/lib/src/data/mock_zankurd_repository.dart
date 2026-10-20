@@ -187,6 +187,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   final int _levelSeed;
 
+  /// Haftalık "benim sıram" örneği: ekran turu ve testler "Bu hafta" kartını
+  /// dolu görmek için verir. Varsayılan null (gerçek mock davranışı).
+  LeaderboardEntry? sampleMyWeeklyRank;
+
   /// Alt konu planları (kategori|alt konu → plan). Plan, soru listesi
   /// değişmedikçe aynıdır; `build` her çizimde çağrıldığı için ağır planı
   /// yeniden kurmamak gerekir. Kaynak liste özdeş değilse (testler her
@@ -369,7 +373,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Sahte depoda biten çevrimiçi oda yok; `loadLeaderboard` de boş
     // liste verdiği için dönemin sıralamasında satır yoktur. Sabit satır
     // ancak gerçekten dönem puanı geldiğinde çizilir (2026-09-30).
-    return null;
+    // [sampleMyWeeklyRank] yalnız ekran turu/testler içindir.
+    return period == LeaderboardPeriod.weekly ? sampleMyWeeklyRank : null;
   }
 
   @override
