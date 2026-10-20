@@ -1,3 +1,4 @@
+// Kurul 5. tur 2026-10-20: yaş kutusu standart yuvarlak kare (sekizgen kalktı).
 // Kurul 4. tur 2026-10-20 (Opus, AI Studio): tanıtımda pasif "Sonraki"
 // bozuk sanılıyordu. Bu bekçi dördünü sabitler: (1) pasif etiket ≥ 4.5:1 her
 // iki temada, (2) "Atla" yaş onayını DELMEZ (kusur olasılığı: Atla doğrudan
@@ -68,15 +69,13 @@ void main() {
       find.byKey(const ValueKey('onboarding-age-gate')),
     );
     expect(row.height, greaterThanOrEqualTo(48));
-    final scale = tester.widget<Transform>(
-      find
-          .ancestor(
-            of: find.byKey(const ValueKey('onboarding-age-checkbox')),
-            matching: find.byType(Transform),
-          )
-          .first,
+    // Kurul 5. tur 2026-10-20: kutu standart yuvarlak kare (sekizgen
+    // Material Checkbox kalktı), ≥ 28 px.
+    final box = tester.getSize(
+      find.byKey(const ValueKey('onboarding-age-checkbox')),
     );
-    expect(scale.transform.getMaxScaleOnAxis(), greaterThan(1.0));
+    expect(box.width, greaterThanOrEqualTo(28));
+    expect(find.byType(Checkbox), findsNothing);
     expect(
       find.text('Devam etmek için "13 yaşından büyüğüm" kutusunu işaretle.'),
       findsOneWidget,
