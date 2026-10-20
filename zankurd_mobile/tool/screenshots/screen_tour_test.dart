@@ -824,6 +824,14 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('05 oyun merkezi', (t) async {
+    repository.sampleMyWeeklyRank = const LeaderboardEntry(
+      rank: 7,
+      playerId: 'tour',
+      displayName: 'Tour',
+      totalScore: 1240,
+      bestStreak: 3,
+      roomsPlayed: 5,
+    );
     await _pump(t, PlayHubScreen(repository: repository));
     await _shoot(t, '05_play_hub');
   }, tags: ['preview']);
@@ -939,6 +947,14 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('21 oyun merkezi (karanlık)', (t) async {
+    repository.sampleMyWeeklyRank = const LeaderboardEntry(
+      rank: 7,
+      playerId: 'tour',
+      displayName: 'Tour',
+      totalScore: 1240,
+      bestStreak: 3,
+      roomsPlayed: 5,
+    );
     await _pump(t, PlayHubScreen(repository: repository), dark: true);
     await _shoot(t, '21_play_hub_dark');
   }, tags: ['preview']);
@@ -986,6 +1002,14 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('27 oyun merkezi (Kurmancî)', (t) async {
+    repository.sampleMyWeeklyRank = const LeaderboardEntry(
+      rank: 7,
+      playerId: 'tour',
+      displayName: 'Tour',
+      totalScore: 1240,
+      bestStreak: 3,
+      roomsPlayed: 5,
+    );
     await _pump(t, PlayHubScreen(repository: repository), ku: true);
     await _shoot(t, '27_play_hub_ku');
   }, tags: ['preview']);

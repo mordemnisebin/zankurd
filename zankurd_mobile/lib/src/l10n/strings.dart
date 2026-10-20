@@ -899,6 +899,7 @@ class Tr {
       'ku': 'Rêza te ya heftane: #{p0}',
       'tr': 'Bu haftaki sıran: #{p0}',
     },
+    K.thisWeek: {'ku': 'Vê heftê', 'tr': 'Bu hafta'},
     K.buHaftaYarisLige: {
       'ku': 'Vê heftê bilîze û bikeve lîgê.',
       'tr': 'Bu hafta yarış, lige gir.',
@@ -3653,6 +3654,7 @@ class K {
   static const streakDayStateUpcoming = 'streak.day.state.upcoming';
   static const streakDayStateFrozen = 'streak.day.state.frozen';
   static const buHaftakiSiranP = 'screen.buHaftakiSiranP';
+  static const thisWeek = 'screen.thisWeek';
   static const buHaftaYarisLige = 'screen.buHaftaYarisLige';
   static const seninSiranPP = 'screen.seninSiranPP';
   static const pPPPuan = 'screen.pPPPuan';

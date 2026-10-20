@@ -249,6 +249,13 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   Color get selLine => act;
   Color get selTx => _isNight ? const Color(0xFFFFB27F) : actTx;
 
+  /// Kilim imzası (2026-10-20 kimlik işi): kökboya kırmızısı ile turuncu
+  /// arası; yalnız Yarış'ın kahraman kartının alt kenarındaki ince kilim
+  /// şeridinde. Gündüz düz, gece düşük opaklık (gece zeminde parlamasın,
+  /// metinle yarışmasın). Rol rengi değil, imzadır: düğme/durum için değil.
+  Color get kilimTx =>
+      _isNight ? const Color(0x8CD86B4A) : const Color(0xFFB4452F);
+
   bool get _isNight => bg.computeLuminance() < 0.2;
 
   static const night = SahneTokens(

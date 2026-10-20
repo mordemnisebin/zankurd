@@ -8,6 +8,8 @@ import '../config/feature_flags.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/leaderboard_entry.dart';
+import '../models/leaderboard_period.dart';
 import '../models/room.dart';
 import '../providers/remote_availability.dart';
 import '../widgets/sahne/sahne.dart';
@@ -576,6 +578,16 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             ],
           ],
         ),
+        if (!locked) ...[
+          const SizedBox(height: SahneSpace.x5),
+          ThisWeekCard(
+            repository: widget.repository,
+            refreshSignal: widget.refreshSignal,
+            onStart: () => Navigator.of(context).push(
+              AppRoute.to(MatchmakingScreen(repository: widget.repository)),
+            ),
+          ),
+        ],
         if (widget.asyncDuelEnabled && !locked)
           AsyncDuelInboxSection(
             repository: widget.repository,
@@ -708,42 +720,187 @@ class _QuickDuelHero extends StatelessWidget {
       label: '${context.t(K.quickDuel)}. ${context.t(K.findOpponent)}',
       onTap: onTap,
       child: SahneSurfaceCard(
+        // Kilim şeridi kartın alt kenarına oturur: dolgu şeridin dışında
+        // kalır, şerit metnin/düğmenin arkasına girmez.
+        padding: EdgeInsets.zero,
         child: Builder(
           builder: (context) {
             final t = SahneTokens.of(context);
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  context.t(K.quickDuel),
-                  style: SahneType.captionStrong.copyWith(color: t.eyebrowTx),
-                ),
-                const SizedBox(height: SahneSpace.x1),
-                Text(title, style: SahneType.headline.copyWith(color: t.tx)),
-                const SizedBox(height: SahneSpace.x1),
-                Text(
-                  meta,
-                  key: const ValueKey('play-hub-quick-duel-meta'),
-                  style: SahneType.caption.copyWith(color: t.tx2),
-                ),
-                const SizedBox(height: SahneSpace.x4),
-                KeyedSubtree(
-                  key: const ValueKey('play-hub-quick-duel-cta'),
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    excludeFromSemantics: true,
-                    onTap: onTap == null ? onLockedTap : null,
-                    child: SahneButton.primary(
-                      label: context.t(K.findOpponent),
-                      onPressed: onTap,
-                      expand: true,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    SahneSpace.x4,
+                    SahneSpace.x4,
+                    SahneSpace.x4,
+                    SahneSpace.x3,
                   ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        context.t(K.quickDuel),
+                        style: SahneType.captionStrong.copyWith(
+                          color: t.eyebrowTx,
+                        ),
+                      ),
+                      const SizedBox(height: SahneSpace.x1),
+                      Text(
+                        title,
+                        style: SahneType.headline.copyWith(color: t.tx),
+                      ),
+                      const SizedBox(height: SahneSpace.x1),
+                      Text(
+                        meta,
+                        key: const ValueKey('play-hub-quick-duel-meta'),
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                      ),
+                      const SizedBox(height: SahneSpace.x4),
+                      KeyedSubtree(
+                        key: const ValueKey('play-hub-quick-duel-cta'),
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          excludeFromSemantics: true,
+                          onTap: onTap == null ? onLockedTap : null,
+                          child: SahneButton.primary(
+                            label: context.t(K.findOpponent),
+                            onPressed: onTap,
+                            expand: true,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Kilim imzası: ekranda TEK; yükseklik ≤ 12 pt.
+                SahneKilimStrip(
+                  key: const ValueKey('play-hub-kilim-strip'),
+                  color: t.kilimTx,
+                  height: 8,
                 ),
               ],
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+/// "Bu hafta" kartı: YALNIZ gerçek veri — `getMyLeaderboardRank(weekly)`
+/// (haftalık lig sırası, hafta puanı, hafta içinde biten çevrimiçi yarış
+/// sayısı). Sunucuda "bu hafta kazanılan düello" sayısı yoktur; uydurulmaz.
+/// Değeri 0 olan hücre (puan, yarış) gösterilmez. Oyuncunun haftalık
+/// kaydı yoksa sayı yerine kısa bir çağrı ve "Yarışa başla" durur.
+class ThisWeekCard extends StatefulWidget {
+  const ThisWeekCard({
+    super.key,
+    required this.repository,
+    required this.onStart,
+    this.refreshSignal,
+  });
+
+  final ZanKurdRepository repository;
+  final VoidCallback onStart;
+  final Listenable? refreshSignal;
+
+  @override
+  State<ThisWeekCard> createState() => _ThisWeekCardState();
+}
+
+class _ThisWeekCardState extends State<ThisWeekCard> {
+  bool _loaded = false;
+  LeaderboardEntry? _entry;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.refreshSignal?.addListener(_load);
+    _load();
+  }
+
+  @override
+  void dispose() {
+    widget.refreshSignal?.removeListener(_load);
+    super.dispose();
+  }
+
+  Future<void> _load() async {
+    LeaderboardEntry? entry;
+    try {
+      entry = await widget.repository.getMyLeaderboardRank(
+        LeaderboardPeriod.weekly,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'play_hub_this_week');
+    }
+    if (!mounted) return;
+    setState(() {
+      _entry = entry;
+      _loaded = true;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Yüklenene dek hiçbir şey çizilmez: boş durum parlayıp kaybolmasın.
+    if (!_loaded) return const SizedBox.shrink();
+    final t = SahneTokens.of(context);
+    final entry = _entry;
+    final hasData = entry != null && entry.rank > 0;
+    final cells = <(String, String)>[
+      if (hasData) (context.t(K.statRank), '#${entry.rank}'),
+      if (hasData && entry.totalScore > 0)
+        (context.t(K.scoreWord), '${entry.totalScore}'),
+      if (hasData && entry.roomsPlayed > 0)
+        (context.t(K.raceWord), '${entry.roomsPlayed}'),
+    ];
+    return SahneSurfaceCard(
+      key: const ValueKey('play-hub-this-week'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            context.t(K.thisWeek),
+            style: SahneType.captionStrong.copyWith(color: t.eyebrowTx),
+          ),
+          const SizedBox(height: SahneSpace.x2),
+          if (hasData)
+            Row(
+              key: const ValueKey('play-hub-this-week-stats'),
+              children: [
+                for (final c in cells)
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          c.$2,
+                          style: SahneType.headline.copyWith(color: t.tx),
+                        ),
+                        Text(
+                          c.$1,
+                          style: SahneType.caption.copyWith(color: t.tx2),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            )
+          else ...[
+            Text(
+              context.t(K.buHaftaYarisLige),
+              key: const ValueKey('play-hub-this-week-empty'),
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+            SahneButton.text(
+              key: const ValueKey('play-hub-this-week-start'),
+              label: context.t(K.startRaceAction),
+              onPressed: widget.onStart,
+            ),
+          ],
+        ],
       ),
     );
   }
