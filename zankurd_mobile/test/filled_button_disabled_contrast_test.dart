@@ -29,12 +29,13 @@ void main() {
     expect(offenders, isEmpty, reason: 'disabledFill kullanılmalı');
   });
 
-  testWidgets('koyu temada pasif zemin gece (çivit) ailesinde kalır', (
+  testWidgets('koyu temada pasif zemin gece (grafit) ailesinde kalır', (
     tester,
   ) async {
     // Pasif zemin paletin kendi ailesinden olmalı: `#282A36` orman yeşili
-    // paletinde mora kaçan bir leke gibi duruyordu (2026-09-27). Şahnê'de
-    // (2026-09-29) palet çivit gecedir; pasif öğe Perde (s1) tonudur.
+    // paletinde mora kaçan bir leke gibi duruyordu (2026-09-27). Gece paleti
+    // kuruldu 2026-10-20 (oy birliğiyle B): nötr grafit, mavi ton yok; pasif
+    // zemin `#282A2F` (tx3 etiketle ≥ 4.5).
     late Color surface;
     await tester.pumpWidget(
       MaterialApp(
@@ -47,8 +48,8 @@ void main() {
         ),
       ),
     );
-    final hue = HSVColor.fromColor(surface).hue;
-    expect(hue, inInclusiveRange(220, 245), reason: 'ton: $hue ($surface)');
+    final sat = HSVColor.fromColor(surface).saturation;
+    expect(sat, lessThan(0.15), reason: 'nötr grafit olmalı: $surface');
     expect(
       _contrastRatio(AppTheme.textMuted, surface),
       greaterThanOrEqualTo(4.5),
