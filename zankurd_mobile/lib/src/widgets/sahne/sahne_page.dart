@@ -48,7 +48,11 @@ class SahneIconButton extends StatelessWidget {
     this.selected,
     this.selectedIcon,
     this.tooltip,
+    this.quiet = false,
   });
+
+  /// İkincil gri ikon (`tx2`): satır içi "⋯" gibi yardımcı eylemler.
+  final bool quiet;
 
   final IconData icon;
   final String semanticLabel;
@@ -83,7 +87,7 @@ class SahneIconButton extends StatelessWidget {
         child: Icon(
           on ? (selectedIcon ?? icon) : icon,
           size: 24,
-          color: on ? t.goldTx : (enabled ? t.tx : t.tx3),
+          color: on ? t.goldTx : (enabled ? (quiet ? t.tx2 : t.tx) : t.tx3),
         ),
       ),
     );

@@ -67,7 +67,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(chip(tester, 50).selected, isFalse, reason: 'seçilmemeli');
     expect(chip(tester, 25).selected, isTrue, reason: 'seçim yetebilene kalır');
-    expect(find.text('20 jeton eksik'), findsOneWidget);
+    expect(find.text('50 jeton için 20 jeton eksik'), findsOneWidget);
     final note = tester.widget<SahneShortfallNote>(
       find.byKey(const ValueKey('custom-room-shortfall')),
     );

@@ -100,8 +100,14 @@ class HomeTopicGrid extends StatelessWidget {
   final ValueChanged<String>? onOpen;
 
   /// Karonun iç boşluğu ve işaret ölçüsü.
-  static const double _pad = SahneSpace.x3;
-  static const double _mark = 40;
+  ///
+  /// Tur 10a (9. kurul kare 01/20/26, Gemini + Grok): ikon+metin sola
+  /// yapışık, sağda orantısız boşluk, kartlar sıkışıktı. İç sol/sağ boşluk 16,
+  /// dikey 12, ızgara aralığı 12; işaret 28'lik kutu, metin onunla dikey ortalı.
+  static const double _pad = SahneSpace.x4;
+  static const double _padV = SahneSpace.x3;
+  static const double _gap = SahneSpace.x3;
+  static const double _mark = 28;
 
   /// Sütun sayısı: 2; en uzun ad (gerçek biçem ve yazı ölçeğiyle ölçülür)
   /// sütundaki yazı alanına sığmazsa 1.
@@ -127,7 +133,7 @@ class HomeTopicGrid extends StatelessWidget {
     const columns = 2;
     final tile = (maxWidth - gap * (columns - 1)) / columns;
     // 2 px kenar halkası + 1 px pay.
-    final room = tile - 2 - _pad * 2 - _mark - SahneSpace.x3;
+    final room = tile - 2 - _pad * 2 - _mark - _gap;
     return room >= widest + 1 ? columns : 1;
   }
 
@@ -135,7 +141,7 @@ class HomeTopicGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        const gap = SahneSpace.x2;
+        const gap = _gap;
         final columns = _columnsFor(context, constraints.maxWidth, gap);
         final tileWidth =
             ((constraints.maxWidth - gap * (columns - 1)) / columns)
@@ -188,7 +194,10 @@ class _HomeTopicTile extends StatelessWidget {
     final percent = started ? context.percentRatio(ratio) : null;
     final t = SahneTokens.of(context);
     return SahneSurfaceCard(
-      padding: const EdgeInsets.all(HomeTopicGrid._pad),
+      padding: const EdgeInsets.symmetric(
+        horizontal: HomeTopicGrid._pad,
+        vertical: HomeTopicGrid._padV,
+      ),
       onTap: onTap,
       semanticLabel: [fullName, ?percent].join(', '),
       child: ExcludeSemantics(
@@ -199,7 +208,7 @@ class _HomeTopicTile extends StatelessWidget {
               fallbackColor: t.tx2,
               size: HomeTopicGrid._mark,
             ),
-            const SizedBox(width: SahneSpace.x3),
+            const SizedBox(width: HomeTopicGrid._gap),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

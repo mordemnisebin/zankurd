@@ -107,16 +107,20 @@ class _Repo extends MockZanKurdRepository {
   }
 }
 
-Widget _app(_Repo repo, {bool asyncDuelEnabled = true}) => MultiProvider(
-  providers: [
-    ChangeNotifierProvider<LanguageProvider>(
-      create: (_) => LanguageProvider(initialLang: 'tr'),
-    ),
-  ],
-  child: MaterialApp(
-    home: FriendsScreen(repository: repo, asyncDuelEnabled: asyncDuelEnabled),
-  ),
-);
+Widget _app(_Repo repo, {bool asyncDuelEnabled = true, String lang = 'tr'}) =>
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<LanguageProvider>(
+          create: (_) => LanguageProvider(initialLang: lang),
+        ),
+      ],
+      child: MaterialApp(
+        home: FriendsScreen(
+          repository: repo,
+          asyncDuelEnabled: asyncDuelEnabled,
+        ),
+      ),
+    );
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -124,8 +128,10 @@ void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   // 7. kurul: satır başına iki büyük çerçeveli düğme listeyi düğme yığınına
-  // çeviriyordu. Artık sağda TEK simge düğmesi (meydan oku, 48 dokunma
-  // kutusu) + "⋯" menüsü; "Odaya çağır" menüde, satır ~64 yüksekliğinde.
+  // çeviriyordu. Artık sağda TEK küçük düğme (kılıç simgesi + "Meydan oku"
+  // metni, >= 44) + "⋯" menüsü (44x44, ikincil gri); "Odaya çağır" menüde,
+  // satır ~64 yüksekliğinde. 9. kurul (tur 10a): yalnız simge anlaşılmıyordu,
+  // metin geri geldi; bu bekçi onu kilitler.
   testWidgets('meydan okuma destekliyken satırda simge + ⋯ menüsü; satır ~64', (
     tester,
   ) async {
@@ -137,8 +143,15 @@ void main() {
     expect(find.byIcon(AppIcons.swords), findsNWidgets(2));
     expect(tester.getSize(challenge).width, greaterThanOrEqualTo(44));
     expect(tester.getSize(challenge).height, greaterThanOrEqualTo(44));
-    // Satırda yazılı düğme yok; "Odaya çağır" menüde.
-    expect(find.text('Meydan oku'), findsNothing);
+    // Meydan okuma düğmesi simge + metin taşır (tur 10a: etiketsiz simgenin
+    // anlamı belli değildi); "Odaya çağır" menüde.
+    expect(
+      find.descendant(of: challenge, matching: find.text('Meydan oku')),
+      findsOneWidget,
+    );
+    final more = find.byKey(const ValueKey('friend-more-Rojda'));
+    expect(tester.getSize(more).width, greaterThanOrEqualTo(44));
+    expect(tester.getSize(more).height, greaterThanOrEqualTo(44));
     expect(find.text('Odaya çağır'), findsNothing);
     final row = find.byKey(const ValueKey('friend-row-Rojda'));
     expect(tester.getSize(row).height, lessThanOrEqualTo(72));
@@ -149,6 +162,25 @@ void main() {
     expect(roomItem, findsOneWidget);
     expect(find.text('Odaya çağır'), findsOneWidget);
     expect(tester.getSize(roomItem).height, greaterThanOrEqualTo(48));
+  });
+
+  // Tur 10a: uzun KU etiketi ("Vexwîne pêşbirkê") ad sütununu daraltıp
+  // "Berfin"i "Berfi/n" diye sarıyordu; eylemler adın altına iner, ad tek satır.
+  testWidgets('KU uzun etiket adı sarmaz: eylemler adın altında', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(390, 844);
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(_app(_Repo(), lang: 'ku'));
+    await tester.pumpAndSettle();
+    final name = tester.getRect(find.text('Rojda'));
+    expect(name.height, lessThan(30), reason: 'ad tek satır');
+    final action = tester.getRect(
+      find.byKey(const ValueKey('friend-action-Rojda')),
+    );
+    expect(action.top, greaterThanOrEqualTo(name.bottom));
+    expect(action.height, greaterThanOrEqualTo(44));
   });
 
   // Tasarım kurulu tüm ekranlar 2026-10-20: bekleyen isteğin "Kabul"ü

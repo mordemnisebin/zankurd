@@ -67,7 +67,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(fee50);
     await tester.pumpAndSettle();
-    expect(find.text('40 jeton eksik'), findsOneWidget);
+    expect(find.text('50 jeton için 40 jeton eksik'), findsOneWidget);
     expect(earn, findsOneWidget);
     expect(tester.widget<FilledButton>(openRoom).onPressed, isNotNull);
 

@@ -1,0 +1,68 @@
+// 9. kurul, kare 01/20/26 (Gemini + Grok): konu kartında ikon + metin sola
+// yapışık, sağda orantısız boşluk; kartlar arası sıkışıktı (8 pt).
+//
+// Niçin sessiz kaldı: bekçiler sütun sayısı, sarma ve boy eşitliğini ölçer;
+// iç boşluğun ve aralığın "ferah" olup olmadığı bir sayı değildi. Şimdi:
+// kart iç sol boşluğu 16, ızgara aralığı 12 (yatay ve dikey), işaret 28'lik
+// kutu, metin işaretle dikey ortalı.
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/category_kicker_mark.dart';
+
+void main() {
+  testWidgets('konu kartı: sol boşluk 16, aralık 12, işaret 28 ve ortalı', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      ChangeNotifierProvider<LanguageProvider>(
+        create: (_) => LanguageProvider()..setLang('tr'),
+        child: MaterialApp(
+          theme: AppTheme.light(),
+          home: Scaffold(
+            body: Padding(
+              padding: const EdgeInsets.all(16),
+              child: HomeTopicGrid(
+                isKu: false,
+                categories: const ['Ziman', 'Çand', 'Dîrok', 'Cîhan'],
+                progress: const {},
+                onOpen: (_) {},
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    Rect tile(String c) =>
+        tester.getRect(find.byKey(ValueKey('home-topic-$c')));
+    final a = tile('Ziman');
+    final b = tile('Çand');
+    final c = tile('Dîrok');
+    expect(b.left - a.right, closeTo(12, 1), reason: 'yatay aralık');
+    expect(c.top - a.bottom, closeTo(12, 1), reason: 'dikey aralık');
+
+    final mark = tester.getRect(
+      find.descendant(
+        of: find.byKey(const ValueKey('home-topic-Ziman')),
+        matching: find.byType(CategoryKickerMark),
+      ),
+    );
+    expect(mark.left - a.left, greaterThanOrEqualTo(16));
+    expect(mark.width, 28);
+    final text = tester.getRect(
+      find.descendant(
+        of: find.byKey(const ValueKey('home-topic-Ziman')),
+        matching: find.byType(Text),
+      ),
+    );
+    expect(text.center.dy, closeTo(mark.center.dy, 1.5));
+    expect(text.left - mark.right, closeTo(12, 1));
+  });
+}

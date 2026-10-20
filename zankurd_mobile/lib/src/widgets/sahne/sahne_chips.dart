@@ -457,8 +457,13 @@ class SahnePickChip extends StatelessWidget {
     this.leading,
     this.semanticLabel,
     this.locked = false,
+    this.looked = false,
     this.minHeight = sahneTapTarget,
   });
+
+  /// "Bakılan" kilitli seçenek: dokunulup eksik notu açıkken kehribar çerçeve
+  /// (seçili DEĞİL; seçili çip yine ayrı kalır). Not kapanınca söner.
+  final bool looked;
 
   final String label;
 
@@ -488,8 +493,10 @@ class SahnePickChip extends StatelessWidget {
       // Seçilmemiş çerçeve ikincil metin tonu (tx3 değil): tx3 çerçeve ve
       // yazı birlikte "devre dışı" okunuyordu (tur 6, 5 denetçi). Yazı tam
       // opak ana metin rengi, yükseklik >= 48 (>= 44 mantıksal).
-      selected ? t.selLine : (locked ? t.tx3 : t.tx2),
-      width: selected ? SahneRing.r2 : 1,
+      selected
+          ? t.selLine
+          : (looked ? t.shortfallTx : (locked ? t.tx3 : t.tx2)),
+      width: (selected || looked) ? SahneRing.r2 : 1,
     );
     return Semantics(
       container: true,

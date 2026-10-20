@@ -588,8 +588,13 @@ class _OnboardingPage extends StatelessWidget {
         );
         // Kahraman ile metin sayfanın TEPESİNDEN başlar (giriş, kayıt ve ad
         // ekranlarıyla aynı hiza); aralarında yalnız [gap] kalır.
+        //
+        // Tur 10a: içerik kısaysa artan boşluk (yaş onayının üstünde ~100 pt)
+        // tek yerde (altta) birikmesin diye `spaceEvenly` ile dört eşit paya
+        // bölünür: üst 1, kart-metin 2 (araya konan sıfır boyutlu çocuk), alt 1.
+        // İçerik sığmıyorsa boşluk 0'dır ve düzen aynıdır.
         return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (heroMax > 0)
@@ -648,13 +653,16 @@ class _OnboardingPage extends StatelessWidget {
                   ),
                 ),
               ),
-            if (heroMax > 0) SizedBox(height: gap),
+            if (heroMax > 0) const SizedBox.shrink(),
             Flexible(
               // Kısa içerik kendi boyundadır; uzun içerikte (büyük yazı, uzun
               // çeviri) bant kalan yüksekliğe sınırlanır ve aşağıdan kayar.
               // `auth_onboarding_test` bunu SE + %200 yazıda sözleşme olarak
               // kilitler.
-              child: _OnboardingTextBand(data: data, compact: compact),
+              child: Padding(
+                padding: EdgeInsets.only(top: heroMax > 0 ? gap : 0),
+                child: _OnboardingTextBand(data: data, compact: compact),
+              ),
             ),
           ],
         );

@@ -739,6 +739,71 @@ class _FriendsScreenState extends State<FriendsScreen> {
 /// 12/8/16/8 iç boşluk, 36'lık elmas, 12 aralık, başlık Gövde 700, alt
 /// satır Açıklama. Büyük yazıda sağdaki eylem metnin altına iner (başlık
 /// dar sütunda harf harf bölünmez).
+/// Arkadaş satırındaki meydan okuma düğmesi: simge + kısa metin, 44 yükseklik.
+///
+/// 9. kurul (Opus + ChatGPT, kare 13/46/65): tek başına kılıç simgesinin anlamı
+/// belli değildi. Metin ("Meydan oku") simgeyle birlikte durur; satırdaki
+/// ikincil eylemdir (turuncu birincil değil): çerçeveli, şeffaf.
+class _ChallengePill extends StatelessWidget {
+  const _ChallengePill({
+    super.key,
+    required this.label,
+    required this.semanticLabel,
+    required this.onPressed,
+  });
+
+  final String label;
+  final String semanticLabel;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final enabled = onPressed != null;
+    final fg = enabled ? t.tx : t.tx3;
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: enabled,
+      label: semanticLabel,
+      onTap: onPressed,
+      excludeSemantics: true,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minHeight: SahneIconButton.visualSize,
+          maxWidth: 176,
+        ),
+        child: SahneTappable(
+          shape: SahneShape.withSide(SahneShape.m, t.edge, width: 1),
+          color: t.s1,
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.x3,
+              vertical: SahneSpace.x2,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(AppIcons.swords, size: 20, color: fg),
+                const SizedBox(width: SahneSpace.x2),
+                Flexible(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: SahneType.captionStrong.copyWith(color: fg),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _PersonRow extends StatelessWidget {
   const _PersonRow({
     super.key,
@@ -918,6 +983,12 @@ class _FriendRow extends StatelessWidget {
       subtitle: online ? context.t(K.online) : context.t(K.offline),
       subtitleColor: online ? t.okTx : t.tx2,
       subtitleStrong: online,
+      // Uzun etiket (KU "Vexwîne pêşbirkê") ad sütununu daraltıp adı ve
+      // "Ne li serhêl"i sarıyordu: eylemler adın altına iner (tur 10a).
+      stackTrailing:
+          onChallenge != null && context.t(K.challengeFriendAction).length > 12
+          ? true
+          : null,
       // 2026-10-14: ürünün günlük aktif oyuncusu 3-25; iki arkadaşın aynı
       // anda çevrimiçi olması neredeyse hiç yok. Canlı oda daveti oyuncuyu
       // boş bir lobide bekletiyordu. Birincil eylem sırayla meydan okumadır
@@ -933,13 +1004,12 @@ class _FriendRow extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (onChallenge != null)
-            SahneIconButton(
+            _ChallengePill(
               key: ValueKey('friend-action-${friend.friendName}'),
-              icon: AppIcons.swords,
+              label: context.t(K.challengeFriendAction),
               semanticLabel: context.t(K.challengeFriendActionA11y, {
                 'name': friend.friendName,
               }),
-              tooltip: context.t(K.challengeFriendAction),
               onPressed: busy ? null : onChallenge,
             )
           else
@@ -954,6 +1024,7 @@ class _FriendRow extends StatelessWidget {
             SahneIconButton(
               key: ValueKey('friend-more-${friend.friendName}'),
               icon: AppIcons.ellipsis,
+              quiet: true,
               semanticLabel: context.t(K.moreOptions),
               onPressed: () => _openMenu(context),
             ),

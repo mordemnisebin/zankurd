@@ -904,6 +904,7 @@ Widget _choiceChip(
   Widget? avatar,
   String? semanticLabel,
   bool locked = false,
+  bool looked = false,
 }) => SahnePickChip(
   minHeight: _roomChipHeight,
   key: key,
@@ -913,6 +914,7 @@ Widget _choiceChip(
   onTap: onTap,
   leading: avatar,
   locked: locked,
+  looked: looked,
 );
 
 Widget _filterChip(
@@ -1420,12 +1422,9 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                 ),
                                 const SizedBox(height: SahneSpace.x2),
                                 _ChoiceGrid(
-                                  columns: GameRoom.allowedEntryFees.length,
-                                  // Tek satır, eşit genişlik; dar ekran/büyük yazıda 2x2
-                                  // (tur 9a: ikinci satır kaydırma altında kalıyordu).
-                                  minCellWidth: 72,
-                                  fallbackColumns: 2,
-                                  gap: 6,
+                                  // 2x2: tek satırda çip ~80 pt'e daralıp yazı
+                                  // küçülüyordu (tur 10a); 14 pt yazı için geniş hücre.
+                                  columns: 2,
                                   children: [
                                     for (final fee in GameRoom.allowedEntryFees)
                                       _choiceChip(
@@ -1444,6 +1443,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                             : '$fee ${context.t(K.coinWord)}',
                                         selected: _selectedEntryFee == fee,
                                         locked: fee > widget.coinBalance,
+                                        looked: _blockedFee == fee,
                                         semanticLabel: fee > widget.coinBalance
                                             ? '${'$fee ${context.t(K.coinWord)}'}, '
                                                   '${context.t(K.coinsShort, {'coins': '${coinShortfall(cost: fee, balance: widget.coinBalance)}'})}'
@@ -1503,6 +1503,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                               cost: blockedFee,
                               balance: widget.coinBalance,
                             ),
+                            feeLabel: '$blockedFee ${context.t(K.coinWord)}',
                             warn: true,
                           ),
                         ),
