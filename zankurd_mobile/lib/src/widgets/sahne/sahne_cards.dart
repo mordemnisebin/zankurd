@@ -433,6 +433,8 @@ class SahneSurfaceCard extends StatelessWidget {
     this.padding = const EdgeInsets.all(SahneSpace.x4),
     this.onTap,
     this.semanticLabel,
+    this.color,
+    this.edgeColor,
   });
 
   final Widget child;
@@ -440,12 +442,19 @@ class SahneSurfaceCard extends StatelessWidget {
   final VoidCallback? onTap;
   final String? semanticLabel;
 
+  /// Mod tonlu kart (2026-10-20 renk ve canlılık işi): Günün dersi Zimrût
+  /// tonu, düello satırı Boyax tonu. Verilmezse beyaz/Perde yüzey ve nötr
+  /// kenar. Zemin ve kenar çifti çağıranın işidir; içerik metni ton zemin
+  /// üstünde ≥ 4.5:1 kalmalıdır.
+  final Color? color;
+  final Color? edgeColor;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final card = SahneTappable(
-      shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
-      color: t.s1,
+      shape: SahneShape.withSide(SahneShape.l, edgeColor ?? t.edge, width: 1),
+      color: color ?? t.s1,
       onTap: onTap,
       child: SahneOnSurface(
         child: Padding(padding: padding, child: child),

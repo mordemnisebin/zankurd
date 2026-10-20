@@ -1541,6 +1541,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     ];
 
     final scaffold = SahneResultScaffold(
+      // Sahne rengi modun rengi: öğrenme Zimrût, yarış Boyax.
+      accent: isLearningExperience ? SahneRole.learn : SahneRole.race,
       // Çevrimiçi turda kapatmak da ana eylem gibi ilk rotaya döner; solo
       // turda yalnız sonuç rotası kapanır (`PopScope` aşağıda).
       onClose: isOnlineRoom ? completeResultAction : null,
@@ -1565,7 +1567,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               )
             : switch (duelOutcome) {
                 null => SizedBox(
-                  height: 28,
+                  height: 70,
                   child: _ScoreStars(earned: starsEarned),
                 ),
                 _DuelOutcome.win => const SahneResultEmblem.win(),
@@ -1596,6 +1598,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             ? accuracyText
             : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
         celebrate: celebrate,
+        lightGlow: duelOutcome == null && starsEarned >= 2,
         tone: duelOutcome == null
             ? SahneResultTone.reward
             : SahneResultTone.race,
@@ -1718,6 +1721,10 @@ class _ScoreStars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 2026-10-20 renk ve canlılık: renkli sahnede yıldızlar büyür
+    // (50 · 70 · 50, kazanılan altın); kazanılmayan yıldız beyaz %16 DOLU
+    // (doluluk yine ayrımı taşır).
+    final scenic = SahneResultScene.maybeOf(context) != null;
     return Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -1726,8 +1733,9 @@ class _ScoreStars extends StatelessWidget {
           if (i > 0) const SizedBox(width: SahneSpace.x2),
           SahneGlyph(
             SahneGlyphKind.star,
-            size: i == 1 ? 28 : 20,
+            size: scenic ? (i == 1 ? 70 : 50) : (i == 1 ? 28 : 20),
             filled: i < earned,
+            color: scenic && i >= earned ? SahneVivid.starEmpty : null,
           ),
         ],
       ],
@@ -1790,27 +1798,41 @@ class ResultStatTiles extends StatelessWidget {
     final t = SahneTokens.of(context);
     return SahneResultStats(
       stats: [
+        // Renkli çipler (2026-10-20): doğru yeşil, yanlış kırmızı, boş nötr,
+        // seri altın; ton dolgu renkli sahnenin üstünde %18.
         SahneResultStat(
           leading: Icon(AppIcons.check, size: 20, color: t.okTx),
           value: correct,
           label: context.t(K.correct),
           showWhenZero: true,
+          tint: SahneVivid.chipOkTint,
+          accent: SahneVivid.chipOkTx,
         ),
         SahneResultStat(
-          leading: Icon(AppIcons.xmark, size: 20, color: t.errTx),
+          leading: const Icon(
+            AppIcons.xmark,
+            size: 20,
+            color: SahneVivid.chipErrTx,
+          ),
           value: wrong,
           label: context.t(K.wrong),
           showWhenZero: true,
+          tint: SahneVivid.chipErrTint,
+          accent: SahneVivid.chipErrTx,
         ),
         SahneResultStat(
           leading: Icon(AppIcons.hourglass, size: 20, color: t.tx2),
           value: unanswered,
           label: context.t(K.blank),
+          tint: SahneVivid.chipBlankTint,
+          accent: SahneVivid.chipBlankTx,
         ),
         SahneResultStat(
           leading: const SahneGlyph(SahneGlyphKind.flame),
           value: streak,
           label: context.t(K.streakLabel),
+          tint: SahneVivid.chipGoldTint,
+          accent: SahneVivid.chipGoldTx,
         ),
       ],
     );
@@ -1829,41 +1851,130 @@ class _CategoryLearnings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isKu = context.isKu;
-    return SahneListGroup(
-      children: [
-        for (final tally in breakdown)
-          _categoryRow(
-            context,
-            tally,
-            CategoryNames.localized(tally.category, isKu),
-          ),
-      ],
+    // Konu renginde satırlar (2026-10-20 renk ve canlılık): solda konu
+    // renginde şerit, konu renginde dolu ikon kutusu ve konu renginde mini
+    // çubuk. Gri liste satırları konuyu rengiyle söylemiyordu.
+    return SahneSurfaceCard(
+      key: const ValueKey('result-category-learnings'),
+      color: SahneVivid.sheet,
+      edgeColor: SahneVivid.sheetEdge,
+      padding: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (var i = 0; i < breakdown.length; i++) ...[
+            if (i > 0)
+              const Divider(
+                height: 1,
+                thickness: 1,
+                color: SahneVivid.sheetEdge,
+              ),
+            _categoryRow(
+              context,
+              breakdown[i],
+              CategoryNames.localized(breakdown[i].category, isKu),
+            ),
+          ],
+        ],
+      ),
     );
   }
 
   Widget _categoryRow(BuildContext context, CategoryTally tally, String name) {
+    final t = SahneTokens.of(context);
+    final night = SahneResultScene.maybeOf(context)?.night ?? true;
     final ok = tally.correct * 2 >= tally.answered;
     final statusLabel = context.t(ok ? K.correct : K.wrong);
     final fraction = '${tally.correct}/${tally.answered}';
-    final trailing = Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SahneRowValue(fraction),
-        const SizedBox(width: SahneSpace.x3),
-        SahneStatusBadge.square(correct: ok, label: statusLabel),
-      ],
-    );
+    final tone = CategoryVisuals.tone(tally.category);
+    final fill = tone.fill(night: night);
+    final mark = CategoryVisuals.mark(tally.category);
+    final ratio = tally.answered == 0
+        ? 0.0
+        : (tally.correct / tally.answered).clamp(0.0, 1.0);
     final semantic = '$name, $fraction, $statusLabel';
-    // 2026-09-29 doğallık (K1): liste satırında çizim yok; kategori kendi
-    // tonu + ikonuyla çizimsiz küçüğe düşer (bkz. matchmaking `_categoryRow`).
-    return SahneListRow.thumb(
-      image: null,
-      icon: CategoryVisuals.icon(tally.category),
-      tone: CategoryVisuals.tone(tally.category),
-      mark: CategoryVisuals.mark(tally.category),
-      title: name,
-      trailing: trailing,
-      semanticLabel: semantic,
+    final showBar =
+        MediaQuery.sizeOf(context).width >= 360 &&
+        MediaQuery.textScalerOf(context).scale(16) < 21;
+    return Semantics(
+      container: true,
+      label: semantic,
+      excludeSemantics: true,
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ColoredBox(color: tone.detail, child: const SizedBox(width: 4)),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SahneSpace.x3,
+                  vertical: SahneSpace.x3,
+                ),
+                child: Row(
+                  children: [
+                    DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: fill,
+                        shape: SahneShape.m,
+                      ),
+                      child: SizedBox.square(
+                        dimension: 40,
+                        child: mark == null
+                            ? Icon(
+                                CategoryVisuals.icon(tally.category),
+                                size: 22,
+                                color: SahneVivid.onFill,
+                              )
+                            : CustomPaint(
+                                painter: SahneCategoryGlyphPainter(
+                                  mark: mark,
+                                  tone: SahneCategoryTone(
+                                    ground: fill,
+                                    deep: fill,
+                                    detail: SahneVivid.onFill,
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x3),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        name,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x2),
+                    // Mini çubuk dar ekranda / büyük yazıda çizilmez: ad
+                    // harf harf bölünmesin (320 px, %200).
+                    if (showBar)
+                      Expanded(
+                        flex: 2,
+                        child: ClipPath(
+                          clipper: const ShapeBorderClipper(
+                            shape: StadiumBorder(),
+                          ),
+                          child: LinearProgressIndicator(
+                            value: ratio,
+                            minHeight: 6,
+                            color: tone.detail,
+                            backgroundColor: SahneVivid.glassTrack,
+                          ),
+                        ),
+                      ),
+                    const SizedBox(width: SahneSpace.x3),
+                    SahneRowValue(fraction),
+                    const SizedBox(width: SahneSpace.x3),
+                    SahneStatusBadge.square(correct: ok, label: statusLabel),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -181,11 +181,18 @@ void main() {
             final button = tester.widget<FilledButton>(
               find.descendant(of: finder, matching: find.byType(FilledButton)),
             );
-            expect(
-              button.style?.backgroundColor?.resolve(<WidgetState>{}),
-              Colors.transparent,
-              reason: '$key ikincil (şeffaf + kenar) olmalı, Agir değil',
+            // 2026-10-20 renk ve canlılık: oda düğmeleri çerçeveli gri değil,
+            // Nîl (sosyal mod) TON düğmedir; yine Agir değil.
+            final tokens = SahneTokens.of(tester.element(finder));
+            final fill = button.style?.backgroundColor?.resolve(
+              <WidgetState>{},
             );
+            expect(
+              fill,
+              tokens.nilTint,
+              reason: '$key Nîl tonlu ikincil olmalı',
+            );
+            expect(fill, isNot(tokens.act), reason: '$key Agir olmamalı');
             _expectActionSemantics(tester, key);
           }
           for (final key in ['play-hub-daily-contest']) {

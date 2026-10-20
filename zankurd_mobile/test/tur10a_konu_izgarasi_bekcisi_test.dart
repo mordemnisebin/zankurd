@@ -5,13 +5,16 @@
 // iç boşluğun ve aralığın "ferah" olup olmadığı bir sayı değildi. Şimdi:
 // kart iç sol boşluğu 16, ızgara aralığı 12 (yatay ve dikey), işaret 28'lik
 // kutu, metin işaretle dikey ortalı.
+//
+// 2026-10-20 renk ve canlılık: karo konunun renginde DOLUDUR ve ad ikonun
+// ALTINDADIR (maket); bekçi aynı ferahlığı yeni dizilişte ölçer: iç sol
+// boşluk 16, üst boşluk 12, işaret 28'lik kutu, ad işaretle aynı sol hizada.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/category_kicker_mark.dart';
 
 void main() {
   testWidgets('konu kartı: sol boşluk 16, aralık 12, işaret 28 ve ortalı', (
@@ -51,13 +54,16 @@ void main() {
     final mark = tester.getRect(
       find.descendant(
         of: find.byKey(const ValueKey('home-topic-Ziman')),
-        matching: find.byType(CategoryKickerMark),
+        matching: find.byWidgetPredicate(
+          (w) => w is SizedBox && w.width == 28 && w.height == 28,
+        ),
       ),
     );
     expect(mark.left - a.left, greaterThanOrEqualTo(16));
+    expect(mark.top - a.top, greaterThanOrEqualTo(12));
     expect(mark.width, 28);
-    // 2026-10-20 iki dilli etiket: ad + öbür dildeki küçük satır bir
-    // blok olarak işaretle dikey ortalanır; ölçü bloğun kutusudur.
+    // Ad + öbür dildeki küçük satır bir blok olarak işaretin ALTINDA, aynı
+    // sol hizada durur.
     final texts = find.descendant(
       of: find.byKey(const ValueKey('home-topic-Ziman')),
       matching: find.byType(Text),
@@ -66,7 +72,7 @@ void main() {
         .evaluate()
         .map((e) => tester.getRect(find.byWidget(e.widget)))
         .reduce((a, b) => a.expandToInclude(b));
-    expect(text.center.dy, closeTo(mark.center.dy, 1.5));
-    expect(text.left - mark.right, closeTo(12, 1));
+    expect(text.top, greaterThanOrEqualTo(mark.bottom));
+    expect(text.left, closeTo(mark.left, 1));
   });
 }

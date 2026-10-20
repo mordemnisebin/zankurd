@@ -47,8 +47,22 @@ void main() {
     await tester.pumpAndSettle();
 
     final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
+    // 2026-10-20 renk ve canlılık: kahraman beyaz yüzey kartı değil, Boyax
+    // gradyanlı DOLU karttır (bkz. renk_canlilik_test.dart).
     expect(
       find.descendant(of: hero, matching: find.byType(SahneSurfaceCard)),
+      findsNothing,
+    );
+    expect(
+      find.descendant(
+        of: hero,
+        matching: find.byWidgetPredicate(
+          (w) =>
+              w is DecoratedBox &&
+              w.decoration is BoxDecoration &&
+              (w.decoration as BoxDecoration).gradient is LinearGradient,
+        ),
+      ),
       findsOneWidget,
     );
     expect(
@@ -69,11 +83,12 @@ void main() {
       find.descendant(of: hero, matching: find.byType(FilledButton)),
       findsOneWidget,
     );
+    // Oda eylemleri Nîl TON düğmedir (2026-10-20), Agir değil.
     final outside = find.byWidgetPredicate(
       (w) =>
           w is FilledButton &&
           w.style?.backgroundColor?.resolve(<WidgetState>{}) ==
-              Colors.transparent,
+              SahneTokens.night.nilTint,
     );
     expect(outside, findsNWidgets(2));
     final ctx = tester.element(find.text('Rakip bul'));

@@ -91,14 +91,22 @@ void main() {
     final roles = RegExp(
       r'role: SahneRole\.([a-z]+)',
     ).allMatches(code).map((m) => m.group(1)!).toList();
+    // 2026-10-20 renk ve canlılık: arkadaşa meydan okuma SOSYAL moddur (Nîl);
+    // düello ve günün soruları yarış rolüdür (Boyax). Oda kur / Kodla katıl
+    // Nîl tonlu düğmelerdir (bkz. renk_canlilik_test.dart).
     expect(
       roles.where((r) => r == 'race').length,
-      greaterThanOrEqualTo(3),
-      reason: 'Oda kurma, kodla katılma ve düello aynı yarış rolüdür.',
+      greaterThanOrEqualTo(2),
+      reason: 'Düello ve günün soruları aynı yarış rolüdür.',
+    );
+    expect(
+      roles,
+      contains('social'),
+      reason: 'Arkadaşa meydan okuma sosyal (Nîl) roldür.',
     );
     expect(roles, contains('gold'), reason: 'Turnuva prestij (Zêr) rolüdür.');
     expect(
-      roles.toSet().difference({'race', 'gold', 'learn', 'neutral'}),
+      roles.toSet().difference({'race', 'social', 'gold', 'learn', 'neutral'}),
       isEmpty,
     );
   });

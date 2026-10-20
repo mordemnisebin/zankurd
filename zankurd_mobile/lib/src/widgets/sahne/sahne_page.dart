@@ -687,9 +687,19 @@ class SahneStageScaffold extends StatelessWidget {
     this.beam = false,
     this.light,
     this.ridge = false,
+    this.scene,
+    this.sceneGlow,
   });
 
   final Widget body;
+
+  /// Renkli sahne (2026-10-20 renk ve canlılık): verilirse sahne zemini düz
+  /// grafit yerine bu renklerin tepeden dibe gradyanıdır (sonuç ekranı:
+  /// Boyax → koyu, öğrenmede Zimrût → koyu). Son renk alt perdenin ve
+  /// Scaffold'un rengidir. [sceneGlow] puanın arkasındaki sıcak hale
+  /// (radyal, üstten %22'de).
+  final List<Color>? scene;
+  final Color? sceneGlow;
 
   /// Varsayılan: `Navigator.maybePop`.
   final VoidCallback? onClose;
@@ -777,15 +787,17 @@ class SahneStageScaffold extends StatelessWidget {
     );
 
     final artwork = backdrop;
+    final sceneColors = scene;
+    final floor = sceneColors == null ? t.bg : sceneColors.last;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayFor(Brightness.dark),
       child: Scaffold(
-        backgroundColor: t.bg,
+        backgroundColor: floor,
         extendBody: dockWidget != null,
         bottomNavigationBar: dockWidget == null
             ? null
             : SahneBottomDock(
-                color: t.bg,
+                color: floor,
                 padding: EdgeInsets.fromLTRB(
                   SahneSpace.page,
                   SahneSpace.x2,
@@ -796,11 +808,46 @@ class SahneStageScaffold extends StatelessWidget {
               ),
         body: Stack(
           children: [
-            const Positioned.fill(
-              child: IgnorePointer(
-                child: CustomPaint(painter: SahneUnderglowPainter()),
+            if (sceneColors != null)
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: ExcludeSemantics(
+                    child: DecoratedBox(
+                      key: const ValueKey('sahne-stage-scene'),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: sceneColors,
+                          stops: const [0, 0.3, 0.58, 1],
+                        ),
+                      ),
+                      child: sceneGlow == null
+                          ? null
+                          : DecoratedBox(
+                              decoration: BoxDecoration(
+                                gradient: RadialGradient(
+                                  center: const Alignment(0, -0.56),
+                                  radius: 0.9,
+                                  colors: [
+                                    sceneGlow!,
+                                    sceneGlow!.withValues(alpha: 0.06),
+                                    sceneGlow!.withValues(alpha: 0),
+                                  ],
+                                  stops: const [0, 0.45, 0.7],
+                                ),
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
+              )
+            else
+              const Positioned.fill(
+                child: IgnorePointer(
+                  child: CustomPaint(painter: SahneUnderglowPainter()),
+                ),
               ),
-            ),
             if (artwork != null)
               Positioned(
                 left: 0,

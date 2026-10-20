@@ -7,7 +7,7 @@ import '../../theme/sahne.dart';
 import 'sahne_foundation.dart';
 import 'sahne_glyphs.dart';
 
-enum _SahneButtonKind { primary, secondary, text }
+enum _SahneButtonKind { primary, secondary, text, tonal }
 
 /// Şahnê düğmesi — maketteki "1 · Düğme".
 ///
@@ -16,6 +16,12 @@ enum _SahneButtonKind { primary, secondary, text }
 ///   Uygulamanın `FilledButton` temasına dayanır.
 /// * [SahneButton.secondary] — ŞEFFAF dolgu + 1,5 px görünür kenar
 ///   (`secondaryEdge`) + güçlü etiket. Düz ve gölgesizdir (yükselti 0).
+/// * [SahneButton.tonal] — MOD RENGİNDE ton dolgu ([tint]) + mod renginde
+///   etiket ([foreground]), kenarsız (2026-10-20 renk ve canlılık işi).
+///   Çerçeveli gri ikincil düğmeler ("Oyna", "Oda kur", "Kodla katıl")
+///   hiçbir moda ait görünmüyordu; tonal düğme hangi modda olduğunu renkle
+///   söyler (düello Boyax, arkadaş/oda Nîl, öğrenme Zimrût). Ekranın
+///   birincil eylemi yine Agir'dir; tonal düğme onunla yarışmaz.
 /// * [SahneButton.text] — Agir metni (`actTx`) + chevron; görsel 44,
 ///   dokunma alanı 48 ([sahneTapTarget], `MaterialTapTargetSize.padded`).
 /// * Pasif — `onPressed: null`: opaklık değil ortak DÜZ soluk dolgu
@@ -47,6 +53,8 @@ class SahneButton extends StatelessWidget {
     this.semanticLabel,
     this.buttonKey,
   }) : quiet = false,
+       tint = null,
+       foreground = null,
        _kind = _SahneButtonKind.primary;
 
   const SahneButton.secondary({
@@ -61,7 +69,25 @@ class SahneButton extends StatelessWidget {
     this.semanticLabel,
     this.buttonKey,
   }) : quiet = false,
+       tint = null,
+       foreground = null,
        _kind = _SahneButtonKind.secondary;
+
+  const SahneButton.tonal({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    required Color this.tint,
+    required Color this.foreground,
+    this.icon,
+    this.leading,
+    this.arrow = false,
+    this.expand = false,
+    this.loading = false,
+    this.semanticLabel,
+    this.buttonKey,
+  }) : quiet = false,
+       _kind = _SahneButtonKind.tonal;
 
   const SahneButton.text({
     super.key,
@@ -73,12 +99,18 @@ class SahneButton extends StatelessWidget {
     this.semanticLabel,
     this.buttonKey,
   }) : _kind = _SahneButtonKind.text,
+       tint = null,
+       foreground = null,
        leading = null,
        loading = false,
        expand = false;
 
   final _SahneButtonKind _kind;
   final String label;
+
+  /// Yalnız tonal düğme: ton dolgusu ve etiket/ikon rengi.
+  final Color? tint;
+  final Color? foreground;
 
   /// `null` → pasif.
   final VoidCallback? onPressed;
@@ -263,6 +295,27 @@ class SahneButton extends StatelessWidget {
                   ),
                 ),
               ),
+          child: content,
+        );
+      case _SahneButtonKind.tonal:
+        button = FilledButton(
+          key: buttonKey,
+          onPressed: press,
+          style: FilledButton.styleFrom(
+            elevation: 0,
+            shadowColor: Colors.transparent,
+            backgroundColor: tint,
+            foregroundColor: foreground,
+            disabledBackgroundColor: t.disabledFill,
+            disabledForegroundColor: t.disabledFg,
+            minimumSize: const Size(52, 52),
+            textStyle: SahneType.button,
+            shape: SahneShape.m,
+            padding: EdgeInsets.symmetric(
+              horizontal: hPad,
+              vertical: SahneSpace.x3,
+            ),
+          ).copyWith(side: side(BorderSide.none, disabledBorder: true)),
           child: content,
         );
       case _SahneButtonKind.text:

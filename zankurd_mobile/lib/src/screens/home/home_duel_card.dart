@@ -244,23 +244,19 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
     // hazır) düğme o eylemi yapar; yoksa menüyü açar. Bekleyen durumda
     // menü, düğmenin yanındaki ⋯ ile de erişilir: işlev kaybı yok.
     final String buttonLabel;
-    final IconData buttonIcon;
     final VoidCallback buttonAction;
     if (hasIncoming) {
       buttonLabel = incomingCount == 1
           ? context.t(K.challengePlay)
           : context.t(K.asyncDuelInbox);
-      buttonIcon = AppIcons.hourglass;
       buttonAction = _openIncoming;
     } else if (pending) {
       buttonLabel = readyCount == 1
           ? context.t(K.resultTitle)
           : context.t(K.asyncDuelInbox);
-      buttonIcon = AppIcons.trophy;
       buttonAction = _openReady;
     } else {
       buttonLabel = context.t(K.challengePlay);
-      buttonIcon = AppIcons.hourglass;
       buttonAction = _openMenu;
     }
 
@@ -277,13 +273,27 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
         container: true,
         label: subtitle == null ? title : '$title. $subtitle',
         child: SahneSurfaceCard(
-          padding: const EdgeInsets.symmetric(
-            horizontal: SahneSpace.x4,
-            vertical: SahneSpace.x3,
-          ),
+          // Boyax vurgusu (2026-10-20 renk ve canlılık): solda 4 px Boyax
+          // şerit, Boyax tonlu ikon kutusu ve Boyax tonlu "Oyna" düğmesi;
+          // kart yarış modunun rengini söyler.
+          padding: EdgeInsets.zero,
           child: Builder(
             builder: (context) {
               final t = SahneTokens.of(context);
+              final night = Theme.of(context).brightness == Brightness.dark;
+              final iconBox = Container(
+                width: 44,
+                height: 44,
+                decoration: ShapeDecoration(
+                  color: t.raceTint,
+                  shape: SahneShape.m,
+                ),
+                child: Icon(
+                  AppIcons.hourglass,
+                  size: 22,
+                  color: night ? t.raceTx : t.race,
+                ),
+              );
               final texts = Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -305,9 +315,10 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
                     ),
                 ],
               );
-              final button = SahneButton.secondary(
+              final button = SahneButton.tonal(
                 key: const ValueKey('home-duel-primary'),
-                icon: buttonIcon,
+                tint: t.raceTint,
+                foreground: t.raceTx,
                 label: buttonLabel,
                 onPressed: buttonAction,
               );
@@ -321,7 +332,14 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
                       onPressed: _openMenu,
                     )
                   : null;
-              return LayoutBuilder(
+              final head = Row(
+                children: [
+                  iconBox,
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(child: texts),
+                ],
+              );
+              final content = LayoutBuilder(
                 builder: (context, c) {
                   // Dar ekran ya da büyük yazıda düğme metnin altına iner.
                   final stacked =
@@ -339,7 +357,7 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        texts,
+                        head,
                         const SizedBox(height: SahneSpace.x3),
                         Align(
                           alignment: AlignmentDirectional.centerEnd,
@@ -350,12 +368,32 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
                   }
                   return Row(
                     children: [
-                      Expanded(child: texts),
+                      Expanded(child: head),
                       const SizedBox(width: SahneSpace.x3),
                       actions,
                     ],
                   );
                 },
+              );
+              return Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                      SahneSpace.x4 + 4,
+                      SahneSpace.x3,
+                      SahneSpace.x4,
+                      SahneSpace.x3,
+                    ),
+                    child: content,
+                  ),
+                  PositionedDirectional(
+                    start: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: 4,
+                    child: ColoredBox(color: t.raceFill),
+                  ),
+                ],
               );
             },
           ),

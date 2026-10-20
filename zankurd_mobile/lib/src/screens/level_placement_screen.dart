@@ -300,6 +300,8 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
       PlacementLevel.pesketi => (AppIcons.medal, SahneRole.gold),
     };
     return SahneResultScaffold(
+      // Seviye tespiti öğrenme modudur: Zimrût sahne.
+      accent: SahneRole.learn,
       closeLabel: context.t(K.close),
       contextLabel: context.t(K.placementTitle),
       hero: SahneResultHero(

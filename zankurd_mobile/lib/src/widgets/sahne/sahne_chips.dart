@@ -21,7 +21,15 @@ class SahneStatChip extends StatelessWidget {
     this.semanticLabel,
     this.onTap,
     this.gold = false,
+    this.tint,
+    this.foreground,
   });
+
+  /// Renkli çip (2026-10-20 renk ve canlılık işi): üst çubuktaki seri alevi
+  /// ve jeton çipi nötr gri yüzeyde duruyordu; verilirse dolgu ve yazı bu
+  /// renklerle çizilir ([gold]un yerine geçer).
+  final Color? tint;
+  final Color? foreground;
 
   /// Glif (genelde `SahneGlyph`, 20).
   final Widget leading;
@@ -35,7 +43,7 @@ class SahneStatChip extends StatelessWidget {
     final t = SahneTokens.of(context);
     final visual = SahneTappable(
       shape: SahneShape.chamferM,
-      color: gold ? t.goldTint : t.s2,
+      color: tint ?? (gold ? t.goldTint : t.s2),
       onTap: onTap,
       child: ConstrainedBox(
         // a11y-tap-target: noninteractive — görsel çip tabanı; dokunma
@@ -55,7 +63,7 @@ class SahneStatChip extends StatelessWidget {
                 child: Text(
                   label,
                   style: SahneType.captionStrong.copyWith(
-                    color: gold ? t.goldTx : t.tx,
+                    color: foreground ?? (gold ? t.goldTx : t.tx),
                     fontFeatures: const [FontFeature.tabularFigures()],
                   ),
                 ),

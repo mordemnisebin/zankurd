@@ -48,7 +48,8 @@ void main() {
     final bar = tester.widget<SahneProgressBar>(
       find.byKey(const ValueKey('home-daily-task-progress')),
     );
-    expect(bar.height, 4);
+    // 2026-10-20 renk ve canlılık: kalın (8 px) Zimrût çubuk.
+    expect(bar.height, 8);
     expect(bar.value, closeTo(4 / 15, 1e-9));
     expect(bar.trailing, '4/15');
     expect(find.text('4/15'), findsOneWidget);

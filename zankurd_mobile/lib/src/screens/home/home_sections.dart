@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
 import '../../utils/percent_format.dart';
-import '../../widgets/category_kicker_mark.dart';
+import '../../config/category_visuals.dart';
 import '../../widgets/sahne/sahne.dart';
 import 'home_rows.dart' show CategoryProgress;
 
@@ -81,6 +81,16 @@ class HomeDoorTile extends StatelessWidget {
 /// ad. Öteki dildeki ad, soru sayısı ve boş çubuk kalktı; ince (4 px) çubuk
 /// yalnız ilerleme sıfırdan büyükse çizilir (yüzdeyi ekran okuyucu okur).
 ///
+/// ## 2026-10-20 renk ve canlılık
+///
+/// Sadeleştirme konu rengini 28 px'lik koyu kısık bir kutuya indirmişti; on
+/// bir karo yan yana gri-kahve bir leke gibi okunuyordu (sahibi "renkliliği,
+/// canlılığı öldürüldü" dedi; rakipler — TRT Bil Bakalım, Trivia Crack —
+/// konuyu karonun TAMAMINA boyuyor). Karo artık konunun renginde DOLUDUR
+/// ([SahneCategoryTone.fill]): beyaz silüet, beyaz ad, altında beyaz %92
+/// Kurmancî ikinci satır, sağ altta beyaz %12 filigran. Gece aynı karo bir
+/// basamak koyu dolguyla kalır; griye dönmez.
+///
 /// Sütun sayısı 2'dir; en uzun ad bir sütuna tek satırda sığmıyorsa (dar
 /// ekran, büyük yazı) tek sütuna düşer — ad hiçbir zaman kelime ortasından
 /// bölünmez ya da "…" ile kesilmez (2026-09-30 simülatör bulgusu: büyük
@@ -108,6 +118,8 @@ class HomeTopicGrid extends StatelessWidget {
   static const double _padV = SahneSpace.x3;
   static const double _gap = SahneSpace.x3;
   static const double _mark = 28;
+  static const double _minHeight = 96;
+  static const double _watermarkBox = 80;
 
   /// Sütun sayısı: 2; en uzun ad (gerçek biçem ve yazı ölçeğiyle ölçülür)
   /// sütundaki yazı alanına sığmazsa 1.
@@ -132,8 +144,8 @@ class HomeTopicGrid extends StatelessWidget {
     }
     const columns = 2;
     final tile = (maxWidth - gap * (columns - 1)) / columns;
-    // 2 px kenar halkası + 1 px pay.
-    final room = tile - 2 - _pad * 2 - _mark - _gap;
+    // Ad ikonun ALTINDADIR (dolu karo): yazı alanı karonun iç genişliği.
+    final room = tile - _pad * 2;
     return room >= widest + 1 ? columns : 1;
   }
 
@@ -183,11 +195,18 @@ class _HomeTopicTile extends StatelessWidget {
   final CategoryProgress? progress;
   final VoidCallback? onTap;
 
+  /// Karonun yazısı: beyaz; Kurmancî ikinci satır beyazın %92'si.
+  static const Color _onFill = SahneVivid.onFill;
+  static const Color _onFillSoft = SahneVivid.onFillSoft;
+
+  /// Karonun sağ altındaki soluk filigran: beyaz %12.
+  static const Color _watermark = SahneVivid.watermark;
+
   Widget? _secondName(BuildContext context) {
     final key = CategoryNames.tileKey(category);
     if (key == null) return null;
     final text = secondLabelFor(context, key, isKu: isKu);
-    return text == null ? null : SahneBilingualLabel(text);
+    return text == null ? null : SahneBilingualLabel(text, color: _onFillSoft);
   }
 
   @override
@@ -199,61 +218,116 @@ class _HomeTopicTile extends StatelessWidget {
     final ratio = (progress?.ratio ?? 0).clamp(0.0, 1.0);
     final started = ratio > 0;
     final percent = started ? context.percentRatio(ratio) : null;
-    final t = SahneTokens.of(context);
-    return SahneSurfaceCard(
-      padding: const EdgeInsets.symmetric(
-        horizontal: HomeTopicGrid._pad,
-        vertical: HomeTopicGrid._padV,
-      ),
+    final night = Theme.of(context).brightness == Brightness.dark;
+    final tone = CategoryVisuals.tone(category);
+    final fill = tone.fill(night: night);
+    final mark = CategoryVisuals.mark(category);
+    return Semantics(
+      container: true,
+      button: onTap != null,
+      label: [fullName, ?percent].join(', '),
+      excludeSemantics: true,
       onTap: onTap,
-      semanticLabel: [fullName, ?percent].join(', '),
-      child: ExcludeSemantics(
-        child: Row(
-          children: [
-            CategoryKickerMark(
-              category: category,
-              fallbackColor: t.tx2,
-              size: HomeTopicGrid._mark,
-            ),
-            const SizedBox(width: HomeTopicGrid._gap),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    name,
-                    maxLines: 1,
-                    softWrap: false,
-                    overflow: TextOverflow.ellipsis,
-                    style: SahneType.bodyStrong.copyWith(color: t.tx),
-                  ),
-                  // İki dilli etiket: konunun öbür dildeki adı, düz, tek
-                  // satır; sığmazsa hiç çizilmez (dar ekran, büyük yazı).
-                  ?_secondName(context),
-                  if (started)
-                    Padding(
-                      padding: const EdgeInsets.only(top: SahneSpace.x2),
-                      // `LinearProgressIndicator` üstüne kurulu: ortak
-                      // `home_screen_navigation_refresh_test` ilerlemenin
-                      // karoda bu tiple çizildiğini arıyor.
-                      child: ClipPath(
-                        clipper: const ShapeBorderClipper(
-                          shape: StadiumBorder(),
-                        ),
-                        child: LinearProgressIndicator(
-                          key: ValueKey('home-topic-progress-$category'),
-                          value: ratio,
-                          minHeight: 4,
-                          color: t.learnBar,
-                          backgroundColor: t.s3,
+      child: SahneTappable(
+        shape: SahneShape.l,
+        color: fill,
+        onTap: onTap,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: HomeTopicGrid._minHeight,
+          ),
+          child: Stack(
+            children: [
+              if (mark != null)
+                PositionedDirectional(
+                  end: -14,
+                  bottom: -18,
+                  child: IgnorePointer(
+                    child: Transform.rotate(
+                      angle: -10 * math.pi / 180,
+                      child: SizedBox.square(
+                        dimension: HomeTopicGrid._watermarkBox,
+                        child: CustomPaint(
+                          painter: SahneCategoryGlyphPainter(
+                            mark: mark,
+                            tone: const SahneCategoryTone(
+                              ground: Colors.transparent,
+                              deep: Colors.transparent,
+                              detail: _watermark,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                ],
+                  ),
+                ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: HomeTopicGrid._pad,
+                  vertical: HomeTopicGrid._padV,
+                ),
+                child: ExcludeSemantics(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Beyaz ikon: konunun silüeti, iç ayrıntısı karonun
+                      // kendi renginde (oyuk gibi okunur).
+                      SizedBox.square(
+                        dimension: HomeTopicGrid._mark,
+                        child: mark == null
+                            ? Icon(
+                                CategoryVisuals.icon(category),
+                                size: 24,
+                                color: _onFill,
+                              )
+                            : CustomPaint(
+                                painter: SahneCategoryGlyphPainter(
+                                  mark: mark,
+                                  tone: SahneCategoryTone(
+                                    ground: fill,
+                                    deep: fill,
+                                    detail: _onFill,
+                                  ),
+                                ),
+                              ),
+                      ),
+                      const SizedBox(height: SahneSpace.x2),
+                      Text(
+                        name,
+                        maxLines: 1,
+                        softWrap: false,
+                        overflow: TextOverflow.ellipsis,
+                        style: SahneType.bodyStrong.copyWith(color: _onFill),
+                      ),
+                      // İki dilli etiket: konunun öbür dildeki adı, düz, tek
+                      // satır; sığmazsa hiç çizilmez (dar ekran, büyük yazı).
+                      ?_secondName(context),
+                      if (started)
+                        Padding(
+                          padding: const EdgeInsets.only(top: SahneSpace.x2),
+                          // `LinearProgressIndicator` üstüne kurulu: ortak
+                          // `home_screen_navigation_refresh_test` ilerlemenin
+                          // karoda bu tiple çizildiğini arıyor.
+                          child: ClipPath(
+                            clipper: const ShapeBorderClipper(
+                              shape: StadiumBorder(),
+                            ),
+                            child: LinearProgressIndicator(
+                              key: ValueKey('home-topic-progress-$category'),
+                              value: ratio,
+                              minHeight: 4,
+                              color: _onFill,
+                              backgroundColor: _watermark,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

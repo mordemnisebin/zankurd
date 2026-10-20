@@ -717,12 +717,19 @@ class SahneResultBackdropPainter extends CustomPainter {
     required this.raysCenterY,
     required this.bg,
     required this.ridge,
+    this.tinted = false,
   });
 
   final bool rays;
   final double raysCenterY;
   final Color bg;
   final Color ridge;
+
+  /// Renkli sahnede ([SahneStageScaffold.scene]) ışınlar düz zemine değil
+  /// gradyana düşer: kenarlarda `bg` rengiyle örtmek yerine ışının KENDİ
+  /// opaklığı merkezden dışa söner; dağ sırtı opak bir bant değil %16 siyah
+  /// gölgedir (maketteki gibi).
+  final bool tinted;
 
   static const double _raysRadius = 300;
   static const double _rayDegrees = 5;
@@ -733,7 +740,38 @@ class SahneResultBackdropPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (rays) {
+    if (rays && tinted) {
+      final center = Offset(size.width / 2, raysCenterY);
+      final rect = Rect.fromCircle(center: center, radius: _raysRadius);
+      canvas
+        ..saveLayer(rect, Paint())
+        ..clipPath(Path()..addOval(rect));
+      const period = _rayPeriodDegrees * math.pi / 180;
+      const on = _rayDegrees / _rayPeriodDegrees;
+      // Hafif ışınlar: düşük saydamlıkta sıcak altın.
+      const ray = SahneVivid.sceneRay;
+      canvas
+        ..drawRect(
+          rect,
+          Paint()
+            ..shader = const SweepGradient(
+              endAngle: period,
+              tileMode: TileMode.repeated,
+              colors: [ray, ray, Colors.transparent, Colors.transparent],
+              stops: [0, on, on, 1],
+            ).createShader(rect),
+        )
+        ..drawRect(
+          rect,
+          Paint()
+            ..blendMode = BlendMode.dstIn
+            ..shader = const RadialGradient(
+              colors: [SahneVivid.onFill, Colors.transparent],
+              stops: [0.16, 0.74],
+            ).createShader(rect),
+        )
+        ..restore();
+    } else if (rays) {
       final center = Offset(size.width / 2, raysCenterY);
       final rect = Rect.fromCircle(center: center, radius: _raysRadius);
       canvas.save();
@@ -774,6 +812,20 @@ class SahneResultBackdropPainter extends CustomPainter {
       ridgeHeight,
     );
     final path = SahneRidgePainter.ridgePath(box, floor: SahneSpace.x3);
+    if (tinted) {
+      // %16 siyah gölge, dibe doğru söner: kahramanın altında sert bir
+      // yatay kenar kalmasın.
+      canvas.drawPath(
+        path,
+        Paint()
+          ..shader = const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [SahneVivid.sceneRidge, Colors.transparent],
+          ).createShader(box),
+      );
+      return;
+    }
     canvas.drawPath(path, Paint()..color = bg);
     canvas.drawPath(path, Paint()..color = ridge.withValues(alpha: 0.4));
   }
@@ -783,6 +835,7 @@ class SahneResultBackdropPainter extends CustomPainter {
       old.rays != rays ||
       old.raysCenterY != raysCenterY ||
       old.bg != bg ||
+      old.tinted != tinted ||
       old.ridge != ridge;
 }
 

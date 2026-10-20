@@ -101,70 +101,79 @@ class TodayTaskCard extends StatelessWidget {
 
     return KeyedSubtree(
       key: const ValueKey('home-daily-task'),
-      child: SahneSurfaceCard(
-        // Manzara kenardan kenara; içerik kendi 16'lık boşluğunu taşır.
-        padding: EdgeInsets.zero,
-        child: Builder(
-          builder: (context) {
-            final t = SahneTokens.of(context);
-            final safeTotal = total < 0 ? 0 : total;
-            final safeDone = done.clamp(0, safeTotal);
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SahneVistaStrip(),
-                Padding(
-                  padding: const EdgeInsets.all(SahneSpace.x4),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      KeyedSubtree(
-                        key: firstSession
-                            ? const ValueKey('home-first-session-badge')
-                            : null,
-                        child: Text(
-                          eyebrow,
-                          style: SahneType.captionStrong.copyWith(
-                            color: t.eyebrowTx,
+      child: Builder(
+        builder: (context) {
+          final t = SahneTokens.of(context);
+          return SahneSurfaceCard(
+            // Zimrût tonlu kart (2026-10-20): öğrenme modunun rengi.
+            color: t.learnTint,
+            edgeColor: t.learnEdge,
+            // Manzara kenardan kenara; içerik kendi 16'lık boşluğunu taşır.
+            padding: EdgeInsets.zero,
+            child: Builder(
+              builder: (context) {
+                final safeTotal = total < 0 ? 0 : total;
+                final safeDone = done.clamp(0, safeTotal);
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SahneVistaStrip(),
+                    Padding(
+                      padding: const EdgeInsets.all(SahneSpace.x4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          KeyedSubtree(
+                            key: firstSession
+                                ? const ValueKey('home-first-session-badge')
+                                : null,
+                            child: Text(
+                              eyebrow,
+                              style: SahneType.captionStrong.copyWith(
+                                color: t.learnTx,
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(height: SahneSpace.x1),
+                          Semantics(
+                            header: true,
+                            child: Text(
+                              title,
+                              style: SahneType.headline.copyWith(color: t.tx),
+                            ),
+                          ),
+                          const SizedBox(height: SahneSpace.x1),
+                          Text(
+                            meta,
+                            style: SahneType.caption.copyWith(color: t.tx2),
+                          ),
+                          const SizedBox(height: SahneSpace.x3),
+                          // İlerleme: ince 4 px çubuk + küçük "0/5". Eskiden 80 px'lik
+                          // ders elmasıydı (bkz. sınıf belgesi).
+                          SahneProgressBar(
+                            key: const ValueKey('home-daily-task-progress'),
+                            value: safeTotal == 0 ? 0 : safeDone / safeTotal,
+                            // Kalın (8 px) Zimrût çubuk, tonlu iz (2026-10-20).
+                            height: 8,
+                            trackColor: t.learnTrack,
+                            trailing: '$safeDone/$safeTotal',
+                            semanticLabel: title,
+                          ),
+                          const SizedBox(height: SahneSpace.x4),
+                          _StartButton(
+                            label: label,
+                            loading: loading,
+                            onTap: onStart,
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: SahneSpace.x1),
-                      Semantics(
-                        header: true,
-                        child: Text(
-                          title,
-                          style: SahneType.headline.copyWith(color: t.tx),
-                        ),
-                      ),
-                      const SizedBox(height: SahneSpace.x1),
-                      Text(
-                        meta,
-                        style: SahneType.caption.copyWith(color: t.tx2),
-                      ),
-                      const SizedBox(height: SahneSpace.x3),
-                      // İlerleme: ince 4 px çubuk + küçük "0/5". Eskiden 80 px'lik
-                      // ders elmasıydı (bkz. sınıf belgesi).
-                      SahneProgressBar(
-                        key: const ValueKey('home-daily-task-progress'),
-                        value: safeTotal == 0 ? 0 : safeDone / safeTotal,
-                        height: 4,
-                        trailing: '$safeDone/$safeTotal',
-                        semanticLabel: title,
-                      ),
-                      const SizedBox(height: SahneSpace.x4),
-                      _StartButton(
-                        label: label,
-                        loading: loading,
-                        onTap: onStart,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }

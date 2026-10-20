@@ -51,6 +51,13 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     required this.learnTx,
     required this.learnTint,
     required this.learnBar,
+    required this.learnFill,
+    required this.raceFill,
+    required this.raceDeep,
+    required this.nil,
+    required this.nilTx,
+    required this.nilTint,
+    required this.nilFill,
     required this.gold,
     required this.goldTx,
     required this.goldTint,
@@ -194,6 +201,29 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Öğrenme ilerleme çubuğunun dolgusu (gündüzde koyulaşır).
   final Color learnBar;
 
+  /// MOD RENKLERİ — dolu yüzey (2026-10-20 renk ve canlılık işi).
+  ///
+  /// Sadeleştirme turları rengi tek turuncuya indirmişti; kimlik renkleri
+  /// ([learn], [race]) yalnız 40 px'lik ikon kutusunda yaşıyordu. Artık her
+  /// modun büyük bir yüzeyi vardır: öğrenme Zimrût ([learnFill]), yarış Boyax
+  /// ([raceFill] → [raceDeep] gradyanı), sosyal (arkadaş, oda, kodla katıl)
+  /// Nîl ([nilFill]). Gündüzde dolgu, ikon/metin rengi olan [learn]/[race]
+  /// ile aynıdır; gecede dolgu bir basamak koyudur (üstündeki beyaz yazı
+  /// ≥ 4.5:1), ikon rengi parlak kalır. Agir yalnız birincil eylem, Zêr
+  /// yalnız ödüldür.
+  final Color learnFill;
+  final Color raceFill;
+
+  /// Boyax kahraman gradyanının koyu ucu.
+  final Color raceDeep;
+
+  /// Nîl — sosyal mod (arkadaş, oda, turnuva): ikon/aksan, metin, ton zemini
+  /// ve dolu yüzey.
+  final Color nil;
+  final Color nilTx;
+  final Color nilTint;
+  final Color nilFill;
+
   /// Zêr — ödül ve ışık.
   final Color gold;
   final Color goldTx;
@@ -256,6 +286,21 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   Color get kilimTx =>
       _isNight ? const Color(0x8CD86B4A) : const Color(0xFFB4452F);
 
+  /// Günün dersi kartının kenarı ve ilerleme izi (Zimrût ton ailesi;
+  /// 2026-10-20 renk ve canlılık işi).
+  Color get learnEdge =>
+      _isNight ? const Color(0xFF24453A) : const Color(0xFFC4E9DA);
+  Color get learnTrack =>
+      _isNight ? const Color(0xFF24453A) : const Color(0xFFCFEBDF);
+
+  /// "Bu hafta" sıra bloğu: Zêr tonlu gradyan ve kenarı.
+  Color get goldBlockFrom =>
+      _isNight ? const Color(0xFF3D321A) : const Color(0xFFFFF6DD);
+  Color get goldBlockTo =>
+      _isNight ? const Color(0xFF2A2416) : const Color(0xFFFBE7AE);
+  Color get goldBlockEdge =>
+      _isNight ? const Color(0xFF5A4A22) : const Color(0xFFF1D68A);
+
   bool get _isNight => bg.computeLuminance() < 0.2;
 
   /// Günün dersi kartının tepesindeki manzara şeridi ("Çiya", 2026-10-20
@@ -265,18 +310,18 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// zirvede TEK turuncu ışık. Değerler maketten (`B_ciya.html`); gece
   /// değerleri aynı rolün koyu ikizi. Yalnız bu şerit kullanır.
   Color get vistaSkyTop =>
-      _isDay ? const Color(0xFFFFD9BC) : const Color(0xFF1B1E3A);
+      _isDay ? const Color(0xFFFFC58A) : const Color(0xFF151A3D);
   Color get vistaSkyBottom =>
-      _isDay ? const Color(0xFFFFF7EF) : const Color(0xFF2E3152);
+      _isDay ? const Color(0xFFFFE8CC) : const Color(0xFF2B3B86);
 
   /// Gündüz güneşi; gecede zirvedeki tek ışık [act] (turuncu) olur.
-  Color get vistaSun => _isDay ? const Color(0xFFFFB27F) : act;
+  Color get vistaSun => _isDay ? const Color(0xFFFF8A3D) : act;
   Color get vistaRidgeFar =>
-      _isDay ? const Color(0xFFD6DCEE) : const Color(0xFF3A4068);
+      _isDay ? const Color(0xFF8FD3B5) : const Color(0xFF33438F);
   Color get vistaRidgeMid =>
-      _isDay ? const Color(0xFF9EA9CF) : const Color(0xFF2A2F55);
+      _isDay ? const Color(0xFF2E9F74) : const Color(0xFF24336E);
   Color get vistaRidgeNear =>
-      _isDay ? const Color(0xFF454E79) : const Color(0xFF191B30);
+      _isDay ? const Color(0xFF0E8360) : const Color(0xFF1B2752);
 
   /// Gece yıldızı (gündüz çizilmez).
   Color get vistaStar => const Color(0xFFF5F3EF);
@@ -319,11 +364,18 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     actShadowBlur: 24,
     race: Color(0xFFE8638F),
     raceTx: Color(0xFFFF86AE),
-    raceTint: Color(0xFF3A2229),
+    raceTint: Color(0xFF35202A),
     learn: Color(0xFF34C795),
     learnTx: Color(0xFF52DBA5),
-    learnTint: Color(0xFF1E2F28),
+    learnTint: Color(0xFF1B2E27),
     learnBar: Color(0xFF34C795),
+    learnFill: Color(0xFF1F7A5C),
+    raceFill: Color(0xFF8E2A45),
+    raceDeep: Color(0xFF43202F),
+    nil: Color(0xFF7F95F0),
+    nilTx: Color(0xFF9DB0FF),
+    nilTint: Color(0xFF1F2442),
+    nilFill: Color(0xFF2E3F8F),
     gold: Color(0xFFF5C24C),
     goldTx: Color(0xFFF5C24C),
     goldTint: Color(0xFF362E1C),
@@ -364,13 +416,20 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     // rgba(214,98,20,.6)
     actShadow: Color(0x99D66214),
     actShadowBlur: 20,
-    race: Color(0xFFC4265A),
-    raceTx: Color(0xFFA8134A),
-    raceTint: Color(0xFFFBE1EA),
-    learn: Color(0xFF1DB482),
-    learnTx: Color(0xFF08784F),
-    learnTint: Color(0xFFD8F3E8),
-    learnBar: Color(0xFF08784F),
+    race: Color(0xFFC2304F),
+    raceTx: Color(0xFFA51F42),
+    raceTint: Color(0xFFFBE6EB),
+    learn: Color(0xFF0E8360),
+    learnTx: Color(0xFF08704F),
+    learnTint: Color(0xFFE3F5EE),
+    learnBar: Color(0xFF0E8360),
+    learnFill: Color(0xFF0E8360),
+    raceFill: Color(0xFFC2304F),
+    raceDeep: Color(0xFF8E2A45),
+    nil: Color(0xFF3E5BD6),
+    nilTx: Color(0xFF2F47B5),
+    nilTint: Color(0xFFE7ECFC),
+    nilFill: Color(0xFF3E5BD6),
     gold: Color(0xFFF5C24C),
     goldTx: Color(0xFF8A5A00),
     goldTint: Color(0xFFFBF0D2),
@@ -427,6 +486,13 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
       learnTx: l(learnTx, other.learnTx),
       learnTint: l(learnTint, other.learnTint),
       learnBar: l(learnBar, other.learnBar),
+      learnFill: l(learnFill, other.learnFill),
+      raceFill: l(raceFill, other.raceFill),
+      raceDeep: l(raceDeep, other.raceDeep),
+      nil: l(nil, other.nil),
+      nilTx: l(nilTx, other.nilTx),
+      nilTint: l(nilTint, other.nilTint),
+      nilFill: l(nilFill, other.nilFill),
       gold: l(gold, other.gold),
       goldTx: l(goldTx, other.goldTx),
       goldTint: l(goldTint, other.goldTint),
@@ -567,51 +633,85 @@ class SahneCategoryTone {
     required this.ground,
     required this.deep,
     required this.detail,
+    this.dayFill,
+    this.nightFill,
   });
 
   final Color ground;
   final Color deep;
   final Color detail;
 
+  /// Konu karosunun DOLU zemini (2026-10-20 renk ve canlılık işi). Sadeleştirme
+  /// turları konu rengini 28 px'lik koyu kısık bir ikon kutusuna indirmişti;
+  /// on bir karo yan yana gri-kahve bir leke gibi okunuyordu. Artık karonun
+  /// TAMAMI konunun rengidir: gündüz doygun [dayFill], gece bir basamak koyu
+  /// [nightFill]; üstünde beyaz ikon ve beyaz yazı (≥ 4.5:1, bekçi ölçer).
+  /// Verilmezse [ground]a düşer.
+  ///
+  /// Maketin (`build/renk/gen.mjs`) üç gündüz dolgusu (Dil #0B7F8E,
+  /// Coğrafya #21824A, Dünya #0D7F72) bir basamak koyulaştırıldı: Kurmancî
+  /// ikinci satır beyaz %92 + 14 pt olduğundan 4.26–4.41:1 kalıyordu (< 4.5).
+  final Color? dayFill;
+  final Color? nightFill;
+
+  /// Karonun dolu zemini: gece [nightFill], gündüz [dayFill].
+  Color fill({required bool night}) => (night ? nightFill : dayFill) ?? ground;
+
   static const ziman = SahneCategoryTone(
     ground: Color(0xFF254D51),
     deep: Color(0xFF1E4042),
     detail: SahneCategoryLight.ziman,
+    dayFill: Color(0xFF0A7785),
+    nightFill: Color(0xFF12707D),
   );
   static const cand = SahneCategoryTone(
     ground: Color(0xFF583028),
     deep: Color(0xFF42251E),
     detail: SahneCategoryLight.cand,
+    dayFill: Color(0xFFC24130),
+    nightFill: Color(0xFF8F3526),
   );
   static const dirok = SahneCategoryTone(
     ground: Color(0xFF584428),
     deep: Color(0xFF42331E),
     detail: SahneCategoryLight.dirok,
+    dayFill: Color(0xFF98650F),
+    nightFill: Color(0xFF7A5418),
   );
   static const edebiyat = SahneCategoryTone(
     ground: Color(0xFF582836),
     deep: Color(0xFF421E29),
     detail: SahneCategoryLight.edebiyat,
+    dayFill: Color(0xFFC23A6E),
+    nightFill: Color(0xFF8A2C52),
   );
   static const cografya = SahneCategoryTone(
     ground: Color(0xFF275037),
     deep: Color(0xFF20412D),
     detail: SahneCategoryLight.cografya,
+    dayFill: Color(0xFF207D47),
+    nightFill: Color(0xFF1C6A3D),
   );
   static const muzik = SahneCategoryTone(
     ground: Color(0xFF633B20),
     deep: Color(0xFF4A2C18),
     detail: SahneCategoryLight.muzik,
+    dayFill: Color(0xFF9B3FB8),
+    nightFill: Color(0xFF6E2F84),
   );
   static const sinema = SahneCategoryTone(
     ground: Color(0xFF362858),
     deep: Color(0xFF291E42),
     detail: SahneCategoryLight.sinema,
+    dayFill: Color(0xFF6448D1),
+    nightFill: Color(0xFF4A3699),
   );
   static const teknoloji = SahneCategoryTone(
     ground: Color(0xFF283A58),
     deep: Color(0xFF1E2D42),
     detail: Color(0xFF5F91E0),
+    dayFill: Color(0xFF1F70BD),
+    nightFill: Color(0xFF1A5794),
   );
   // Cîhan: deniz petrolü. Teknolojî'nin lacivertiyle (0xFF22395E) Ziman'ın
   // yeşilimsi turkuazı (0xFF22595E) arasındaki boşluk; zemin gece birincil
@@ -620,11 +720,15 @@ class SahneCategoryTone {
     ground: Color(0xFF274A63),
     deep: Color(0xFF1D394E),
     detail: Color(0xFF69BADD),
+    dayFill: Color(0xFF0D7B6F),
+    nightFill: Color(0xFF0B6459),
   );
   static const paradigma = SahneCategoryTone(
     ground: Color(0xFF502858),
     deep: Color(0xFF3D1E42),
     detail: Color(0xFFCA89D6),
+    dayFill: Color(0xFF537A0E),
+    nightFill: Color(0xFF46670F),
   );
   // Zemin 0xFF575528 idi: alt konu bandındaki gece alt satırı (`tx2`) 4,41:1
   // kalıyordu (< 4,5). Kimliği bozmayan bir basamak koyulaştırıldı (4,61:1);
@@ -634,6 +738,8 @@ class SahneCategoryTone {
     ground: Color(0xFF4B492B),
     deep: Color(0xFF3E3C22),
     detail: Color(0xFFADA855),
+    dayFill: Color(0xFF36559E),
+    nightFill: Color(0xFF283F75),
   );
 
   /// Tabloda olmayan kategori: sahne kartının gece tonu, ayrıntı üçüncül
@@ -668,10 +774,93 @@ class SahneCategoryTone {
       other is SahneCategoryTone &&
       other.ground == ground &&
       other.deep == deep &&
-      other.detail == detail;
+      other.detail == detail &&
+      other.dayFill == dayFill &&
+      other.nightFill == nightFill;
 
   @override
-  int get hashCode => Object.hash(ground, deep, detail);
+  int get hashCode => Object.hash(ground, deep, detail, dayFill, nightFill);
+}
+
+/// Renkli yüzeylerin üstündeki sabit renkler (2026-10-20 renk ve canlılık
+/// işi): dolu konu karosu, Boyax kahraman, renkli sonuç sahnesi. Bu
+/// yüzeyler iki temada da renkli olduğundan üstündeki beyaz yazı, cam
+/// çipler ve ışıklar temaya göre DEĞİŞMEZ; ham renk ekrana ya da bileşene
+/// yazılmaz (`sahne_design_guard_test`), buradan okunur.
+class SahneVivid {
+  const SahneVivid._();
+
+  /// Dolu yüzey üstünde ad/ikon: beyaz; ikinci satır beyazın %92'si; filigran
+  /// beyazın %12'si.
+  static const onFill = Color(0xFFFFFFFF);
+  static const onFillSoft = Color(0xEBFFFFFF);
+  static const watermark = Color(0x1FFFFFFF);
+
+  /// Renkli yüzeyde cam çip dolgusu, iz ve ince çizgi (beyaz %16 / %18 / %12).
+  static const glass = Color(0x29FFFFFF);
+  static const glassTrack = Color(0x2EFFFFFF);
+  static const hairline = Color(0x1FFFFFFF);
+
+  /// Boyax kahraman: üst etiket, baklava motifi, kilim şeridi.
+  static const heroEyebrow = Color(0xFFFFE3EA);
+  static const heroMotif = Color(0x17FFFFFF);
+  static const heroKilim = Color(0x52FFFFFF);
+
+  /// "SK vs ?" göstergesi: şeftali oyuncu dairesi ve kesik çizgili boş rakip.
+  static const vsAvatar = Color(0xFFFFE1CC);
+  static const vsAvatarTx = Color(0xFF9E3F00);
+  static const vsDash = Color(0x99FFFFFF);
+
+  /// Sonuç sahnesi: parıltılar, ışınlar, dağ gölgesi, ödül etiketi.
+  static const sparkGold = Color(0xFFF5C24C);
+  static const sparkLight = Color(0xFFFFE7A8);
+  static const sceneRay = Color(0x14FFE2A8);
+  static const sceneRidge = Color(0x2E000000);
+  static const rewardLabel = Color(0xFFFFE7A8);
+  static const starEmpty = Color(0x29FFFFFF);
+
+  /// Sonuç sahnesinin gradyanı (4 durak) ve puan arkasındaki hale: yarışta
+  /// Boyax, öğrenmede Zimrût; gündüz doygun, gece bir basamak koyu.
+  static const raceSceneDay = [
+    Color(0xFFB8294A),
+    Color(0xFF8E2342),
+    Color(0xFF4E1A2C),
+    Color(0xFF24141B),
+  ];
+  static const raceSceneNight = [
+    Color(0xFF6B2A45),
+    Color(0xFF4A2030),
+    Color(0xFF24161C),
+    Color(0xFF16171B),
+  ];
+  static const learnSceneDay = [
+    Color(0xFF0E8360),
+    Color(0xFF0B6B4E),
+    Color(0xFF0A3F31),
+    Color(0xFF0F1D19),
+  ];
+  static const learnSceneNight = [
+    Color(0xFF1B5C46),
+    Color(0xFF14412F),
+    Color(0xFF12261E),
+    Color(0xFF16171B),
+  ];
+  static const glowDay = Color(0x6BF5C24C);
+  static const glowNight = Color(0x42F5C24C);
+
+  /// Sonuç sayım çipleri (ton dolgu + etiket): doğru, yanlış, boş, seri.
+  static const chipOkTint = Color(0x2E34C795);
+  static const chipOkTx = Color(0xFF52DBA5);
+  static const chipErrTint = Color(0x2EFF7466);
+  static const chipErrTx = Color(0xFFFF8A7D);
+  static const chipBlankTint = Color(0x1FFFFFFF);
+  static const chipBlankTx = Color(0xFFE3E4E8);
+  static const chipGoldTint = Color(0x2EF5C24C);
+  static const chipGoldTx = Color(0xFFF5C24C);
+
+  /// Renkli sahnede konu listesi kartı.
+  static const sheet = Color(0x14FFFFFF);
+  static const sheetEdge = Color(0x1FFFFFFF);
 }
 
 /// Aralık ölçeği. Bütün boşluklar 4'ün katıdır; sayfa kenarı 16.

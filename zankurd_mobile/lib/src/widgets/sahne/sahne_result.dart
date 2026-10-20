@@ -70,6 +70,55 @@ const double kSahneResultRhythmGap = 20;
 /// 8 ile yapışık duruyordu; 8 pt eklendi.
 const double kSahneResultValueGap = SahneSpace.x4;
 
+/// Sonuç sahnesinin rengi (2026-10-20 renk ve canlılık işi).
+///
+/// ## Kusur
+///
+/// Sonuç ekranı düz grafit bir zemindi; kazanma anı (Duolingo seri, Kahoot
+/// podyum, TRT ilk üç) rakiplerde tam ekran bir sahneyken burada gri
+/// kartların üstüne büyük bir altın sayıydı. Sadeleştirme turları kutlamayı
+/// da söndürmüştü.
+///
+/// ## Karar
+///
+/// Zemin MODUN renginde gradyandır: yarışta Boyax → koyu, öğrenmede Zimrût →
+/// koyu; gündüzde doygun, gecede bir basamak koyu. Puanın arkasında sıcak
+/// altın hale ve düşük saydamlıkta ışınlar; dağ sırtı %16 siyah gölge. Altın
+/// puan ve yıldızlar bu zeminde de ≥ 3:1 okunur (büyük metin).
+class SahneResultScene extends InheritedWidget {
+  const SahneResultScene({
+    super.key,
+    required this.accent,
+    required this.night,
+    required super.child,
+  });
+
+  /// [SahneRole.race] (Boyax) ya da [SahneRole.learn] (Zimrût).
+  final SahneRole accent;
+
+  /// Dış temanın gece olup olmadığı (sahne kendi içinde hep gece
+  /// belirteçleriyle çizilir; gradyanın tonu dış temadan seçilir).
+  final bool night;
+
+  /// Tepeden dibe sahne renkleri (4 durak).
+  List<Color> get colors => switch ((accent, night)) {
+    (SahneRole.learn, false) => SahneVivid.learnSceneDay,
+    (SahneRole.learn, true) => SahneVivid.learnSceneNight,
+    (_, false) => SahneVivid.raceSceneDay,
+    (_, true) => SahneVivid.raceSceneNight,
+  };
+
+  /// Puanın arkasındaki sıcak hale.
+  Color get glow => night ? SahneVivid.glowNight : SahneVivid.glowDay;
+
+  static SahneResultScene? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<SahneResultScene>();
+
+  @override
+  bool updateShouldNotify(SahneResultScene oldWidget) =>
+      accent != oldWidget.accent || night != oldWidget.night;
+}
+
 /// Sonuç şablonunun iskeleti — Şahnê C iskeleti (gece sahnesi) üzerinde
 /// kahraman → sayımlar → ödül → bölümler sırası ve alt perde.
 ///
@@ -90,7 +139,12 @@ class SahneResultScaffold extends StatelessWidget {
     this.onClose,
     this.overlay,
     this.balanced = false,
+    this.accent = SahneRole.race,
   });
+
+  /// Sahnenin mod rengi: yarış Boyax (varsayılan), öğrenme Zimrût
+  /// ([SahneRole.learn]). Bkz. [SahneResultScene].
+  final SahneRole accent;
 
   /// Dikeyde dengele (tur 9b): içerik sayımlar/ödül taşısa da ekranda dikey
   /// ortalanır; ara boşluklar 16-24. Sıralı düello zaferinde skor + ödül
@@ -225,19 +279,31 @@ class SahneResultScaffold extends StatelessWidget {
       },
     );
 
-    return SahneStageScaffold(
-      onClose: onClose,
-      closeLabel: closeLabel,
-      // Sonuçta dar huzme yerine sonuç ışınları (kahramanın arkasında).
-      beam: false,
-      center: contextLabel == null ? null : Text(contextLabel!),
-      dock: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: kSahneResultMaxWidth),
-          child: SahneResultDock(primary: primary, secondary: secondary),
+    final night = Theme.of(context).brightness == Brightness.dark;
+    final scene = SahneResultScene(
+      accent: accent,
+      night: night,
+      child: const SizedBox.shrink(),
+    );
+    return SahneResultScene(
+      accent: accent,
+      night: night,
+      child: SahneStageScaffold(
+        onClose: onClose,
+        closeLabel: closeLabel,
+        // Sonuçta dar huzme yerine sonuç ışınları (kahramanın arkasında).
+        beam: false,
+        scene: scene.colors,
+        sceneGlow: scene.glow,
+        center: contextLabel == null ? null : Text(contextLabel!),
+        dock: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: kSahneResultMaxWidth),
+            child: SahneResultDock(primary: primary, secondary: secondary),
+          ),
         ),
+        body: body,
       ),
-      body: body,
     );
   }
 }
@@ -307,9 +373,16 @@ class SahneResultHero extends StatelessWidget {
     this.body,
     this.extras = const [],
     this.celebrate = false,
+    this.lightGlow = false,
     this.tone = SahneResultTone.reward,
     this.notices = const [],
   });
+
+  /// Renkli sahnede ([SahneResultScene]) hafif ışınlar ve parıltılar, tam
+  /// kutlama ([celebrate]) olmayan iyi sonuçta da açılır (solo turda iki
+  /// yıldız). Işınlar düşük saydamlıktadır; kilim şeridi yine yalnız
+  /// [celebrate]'te çizilir. Kaybedilen sonuçta kapalı kalır.
+  final bool lightGlow;
 
   final Widget emblem;
   final String title;
@@ -356,6 +429,10 @@ class SahneResultHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    // Renkli sahnede (bkz. [SahneResultScene]) puan büyür: sonuç anı bir
+    // sahnedir, tablo değil.
+    final scenic = SahneResultScene.maybeOf(context) != null;
+    final shine = celebrate || (scenic && lightGlow);
     final content = Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -392,7 +469,10 @@ class SahneResultHero extends StatelessWidget {
               key: valueKey ?? const ValueKey('result-score-count'),
               value: value!,
               suffix: suffix,
-              style: SahneType.screen.copyWith(color: t.gold),
+              style: SahneType.screen.copyWith(
+                color: t.gold,
+                fontSize: scenic ? 88 : null,
+              ),
             ),
           ),
         if (subtitle != null) ...[
@@ -464,10 +544,11 @@ class SahneResultHero extends StatelessWidget {
             child: ExcludeSemantics(
               child: CustomPaint(
                 painter: SahneResultBackdropPainter(
-                  rays: celebrate,
+                  rays: shine,
                   // Işınlar puan sayısının (ya da puansızsa başlığın)
                   // ortasından çıkar.
-                  raysCenterY: value != null ? 104 : 84,
+                  raysCenterY: value != null ? (scenic ? 128 : 104) : 84,
+                  tinted: scenic,
                   bg: t.bg,
                   // Gece Perde açıldığı için (tur 6b) sırtın dolgusu aynı
                   // belirgin ton için zemine doğru karıştırılır; aksi hâlde
@@ -480,6 +561,19 @@ class SahneResultHero extends StatelessWidget {
             ),
           ),
         ),
+        // En çok iki küçük parıltı (yalnız kutlanan sonuçta, renkli sahnede).
+        if (scenic && shine) ...const [
+          PositionedDirectional(
+            start: 32,
+            top: 64,
+            child: _Sparkle(size: 18, color: SahneVivid.sparkGold),
+          ),
+          PositionedDirectional(
+            end: 32,
+            top: 44,
+            child: _Sparkle(size: 20, color: SahneVivid.sparkLight),
+          ),
+        ],
         Padding(
           padding: const EdgeInsets.only(
             top: SahneSpace.x2,
@@ -492,6 +586,49 @@ class SahneResultHero extends StatelessWidget {
   }
 }
 
+/// Dört kollu küçük parıltı (dekoratif, ekran okuyucudan gizli).
+class _Sparkle extends StatelessWidget {
+  const _Sparkle({required this.size, required this.color});
+
+  final double size;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return ExcludeSemantics(
+      child: SizedBox.square(
+        dimension: size,
+        child: CustomPaint(painter: _SparklePainter(color)),
+      ),
+    );
+  }
+}
+
+class _SparklePainter extends CustomPainter {
+  const _SparklePainter(this.color);
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+    final c = Offset(w / 2, h / 2);
+    final k = w * 0.1;
+    final path = Path()
+      ..moveTo(c.dx, 0)
+      ..quadraticBezierTo(c.dx + k, c.dy - k, w, c.dy)
+      ..quadraticBezierTo(c.dx + k, c.dy + k, c.dx, h)
+      ..quadraticBezierTo(c.dx - k, c.dy + k, 0, c.dy)
+      ..quadraticBezierTo(c.dx - k, c.dy - k, c.dx, 0)
+      ..close();
+    canvas.drawPath(path, Paint()..color = color);
+  }
+
+  @override
+  bool shouldRepaint(_SparklePainter oldDelegate) => oldDelegate.color != color;
+}
+
 /// Bir sayım karosu: simge + sayı + söz.
 class SahneResultStat {
   const SahneResultStat({
@@ -499,7 +636,17 @@ class SahneResultStat {
     required this.value,
     required this.label,
     this.showWhenZero = false,
+    this.tint,
+    this.accent,
   });
+
+  /// Renkli çip (2026-10-20 renk ve canlılık): sayımlar tek gri kart yerine
+  /// her biri kendi renginde ton dolgulu çiptir — doğru yeşil, yanlış
+  /// kırmızı, seri altın. [tint] çip dolgusu, [accent] etiketin rengi. İki
+  /// alan da verilen sayımlar çip düzeninde çizilir; durum yine yalnız
+  /// renkle değil ikon şekli ve sözle söylenir.
+  final Color? tint;
+  final Color? accent;
 
   final Widget leading;
   final int value;
@@ -543,6 +690,64 @@ class SahneResultStats extends StatelessWidget {
     ];
     if (items.isEmpty) return const SizedBox.shrink();
     final t = SahneTokens.of(context);
+    final chips = stats.any((stat) => stat.visible && stat.tint != null);
+    final grid = LayoutBuilder(
+      builder: (context, constraints) {
+        final minTile = MediaQuery.textScalerOf(context).scale(96);
+        var perRow = items.length;
+        // Büyük yazıda bile en az ikişerli; yalnız gerçekten dar kutuda
+        // (< 240) tek sütuna inilir.
+        final minCols = math.min(
+          items.length,
+          constraints.maxWidth >= 240 ? 2 : 1,
+        );
+        while (perRow > minCols && constraints.maxWidth / perRow < minTile) {
+          perRow = perRow > 2 ? 2 : 1;
+        }
+        // Satırdaki sütunlar eşit yükseklikte (`IntrinsicHeight`):
+        // "Li pey hev" iki satıra kırılınca öteki sütunlar kısa kalmasın
+        // (2026-09-30 simülatör). Eksik son satır boş `SizedBox` ile aynı
+        // genişliği korur.
+        final rows = <Widget>[];
+        for (var i = 0; i < items.length; i += perRow) {
+          final chunk = items.sublist(i, math.min(i + perRow, items.length));
+          rows.add(
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (var j = 0; j < perRow; j++) ...[
+                    if (j > 0 && chips)
+                      const SizedBox(width: SahneSpace.x2)
+                    else if (j > 0)
+                      VerticalDivider(
+                        width: SahneSpace.x3 * 2 + 1,
+                        thickness: 1,
+                        indent: SahneSpace.x1,
+                        endIndent: SahneSpace.x1,
+                        color: t.line,
+                      ),
+                    Expanded(
+                      child: j < chunk.length ? chunk[j] : const SizedBox(),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var i = 0; i < rows.length; i++) ...[
+              if (i > 0) const SizedBox(height: SahneSpace.x2),
+              rows[i],
+            ],
+          ],
+        );
+      },
+    );
+    if (chips) return grid;
     return SahneSurfaceCard(
       // 7. kurul (Gemini): ikon+sayı+söz kutu kenarına sıkışıktı; yatay iç
       // boşluk x4, dikey x3.
@@ -550,60 +755,7 @@ class SahneResultStats extends StatelessWidget {
         horizontal: SahneSpace.x4,
         vertical: SahneSpace.x3,
       ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final minTile = MediaQuery.textScalerOf(context).scale(96);
-          var perRow = items.length;
-          // Büyük yazıda bile en az ikişerli; yalnız gerçekten dar kutuda
-          // (< 240) tek sütuna inilir.
-          final minCols = math.min(
-            items.length,
-            constraints.maxWidth >= 240 ? 2 : 1,
-          );
-          while (perRow > minCols && constraints.maxWidth / perRow < minTile) {
-            perRow = perRow > 2 ? 2 : 1;
-          }
-          // Satırdaki sütunlar eşit yükseklikte (`IntrinsicHeight`):
-          // "Li pey hev" iki satıra kırılınca öteki sütunlar kısa kalmasın
-          // (2026-09-30 simülatör). Eksik son satır boş `SizedBox` ile aynı
-          // genişliği korur.
-          final rows = <Widget>[];
-          for (var i = 0; i < items.length; i += perRow) {
-            final chunk = items.sublist(i, math.min(i + perRow, items.length));
-            rows.add(
-              IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (var j = 0; j < perRow; j++) ...[
-                      if (j > 0)
-                        VerticalDivider(
-                          width: SahneSpace.x3 * 2 + 1,
-                          thickness: 1,
-                          indent: SahneSpace.x1,
-                          endIndent: SahneSpace.x1,
-                          color: t.line,
-                        ),
-                      Expanded(
-                        child: j < chunk.length ? chunk[j] : const SizedBox(),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            );
-          }
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (var i = 0; i < rows.length; i++) ...[
-                if (i > 0) const SizedBox(height: SahneSpace.x2),
-                rows[i],
-              ],
-            ],
-          );
-        },
-      ),
+      child: grid,
     );
   }
 }
@@ -616,6 +768,55 @@ class _StatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    if (stat.tint != null) {
+      return Semantics(
+        container: true,
+        label: '${stat.value} ${stat.label}',
+        excludeSemantics: true,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(color: stat.tint, shape: SahneShape.m),
+          child: ConstrainedBox(
+            // a11y-tap-target: noninteractive — sayım çipi; salt görsel.
+            constraints: const BoxConstraints(minHeight: 58),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: SahneSpace.x3,
+                vertical: SahneSpace.x2,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox.square(dimension: 20, child: stat.leading),
+                  const SizedBox(width: SahneSpace.x2),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '${stat.value}',
+                          style: SahneType.headline.copyWith(
+                            color: SahneVivid.onFill,
+                            height: 1.1,
+                            fontFeatures: const [FontFeature.tabularFigures()],
+                          ),
+                        ),
+                        Text(
+                          stat.label,
+                          style: SahneType.captionStrong.copyWith(
+                            color: stat.accent ?? t.tx2,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
     return Semantics(
       container: true,
       label: '${stat.value} ${stat.label}',
@@ -704,17 +905,21 @@ class SahneResultRewards extends StatelessWidget {
         runSpacing: SahneSpace.x2,
         alignment: WrapAlignment.start,
         children: [
+          // Dolu Zêr çipler (2026-10-20): ödül kartı altın tonlu, çipler
+          // dolu altın + koyu yazı (≥ 9:1).
           if (coins > 0)
             SahneStatChip(
-              gold: true,
-              leading: const SahneGlyph(SahneGlyphKind.coin),
+              tint: t.gold,
+              foreground: t.onGold,
+              leading: SahneGlyph(SahneGlyphKind.coin, color: t.onGold),
               label: coinLabel ?? '+$coins',
               semanticLabel: coinSemanticLabel,
             ),
           if (xp > 0)
             SahneStatChip(
-              gold: true,
-              leading: const SahneGlyph(SahneGlyphKind.bolt),
+              tint: t.gold,
+              foreground: t.onGold,
+              leading: SahneGlyph(SahneGlyphKind.bolt, color: t.onGold),
               label: xpLabel ?? '+$xp XP',
             ),
         ],
@@ -726,7 +931,7 @@ class SahneResultRewards extends StatelessWidget {
     }
     final labelText = Text(
       text,
-      style: SahneType.bodyStrong.copyWith(color: t.tx),
+      style: SahneType.bodyStrong.copyWith(color: SahneVivid.rewardLabel),
     );
     // Söz HER ZAMAN tam genişlikte üst satırda, çipler altında. Yan yana
     // düzende Kurmancî "Hat qezenckirin" çiplerin artığı olan dar sütuna
@@ -746,7 +951,11 @@ class SahneResultRewards extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasChips = coins > 0 || xp > 0;
     if (!hasChips && progress == null) return const SizedBox.shrink();
+    final t = SahneTokens.of(context);
     return SahneSurfaceCard(
+      // Zêr "Kazanıldı" kartı (2026-10-20): altın tonlu zemin ve kenar.
+      color: t.gold.withValues(alpha: 0.16),
+      edgeColor: t.gold.withValues(alpha: 0.4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

@@ -290,15 +290,51 @@ void main() {
           );
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull);
-          final cards = find.descendant(
-            of: find.byType(ResultStatTiles),
-            matching: find.byType(SahneSurfaceCard),
+          // 2026-10-20 renk ve canlılık: sayımlar artık tek gri kart değil,
+          // her biri kendi renginde ton dolgulu ÇİPTİR (Doğru yeşil, Yanlış
+          // kırmızı, Üst üste altın). Bekçi aynı değişmezi ölçer: taşma yok,
+          // sözler bölünmüyor, aynı satırdaki çipler eşit yükseklikte.
+          expect(
+            find.descendant(
+              of: find.byType(ResultStatTiles),
+              matching: find.byType(SahneSurfaceCard),
+            ),
+            findsNothing,
           );
-          // 2026-10-19 sadeleşme (ikinci tur): sayımlar üç ayrı karo değil
-          // TEK kart; satırlardaki sütunlar `IntrinsicHeight` ile eşit
-          // yükseklikte kalır. Bekçi artık "tek kart, taşma yok, sözler
-          // bölünmüyor"u ölçer.
-          expect(cards, findsOneWidget);
+          final chips = tester
+              .widgetList<DecoratedBox>(
+                find.descendant(
+                  of: find.byType(ResultStatTiles),
+                  matching: find.byType(DecoratedBox),
+                ),
+              )
+              .where((d) => d.decoration is ShapeDecoration)
+              .toList();
+          expect(chips.length, 3, reason: 'doğru, yanlış, üst üste çipleri');
+          final rows = <double, List<double>>{};
+          for (final chip
+              in find
+                  .descendant(
+                    of: find.byType(ResultStatTiles),
+                    matching: find.byWidgetPredicate(
+                      (w) =>
+                          w is DecoratedBox &&
+                          w.decoration is ShapeDecoration &&
+                          (w.decoration as ShapeDecoration).color != null,
+                    ),
+                  )
+                  .evaluate()) {
+            final box = chip.renderObject! as RenderBox;
+            final top = box.localToGlobal(Offset.zero).dy.roundToDouble();
+            rows.putIfAbsent(top, () => []).add(box.size.height);
+          }
+          for (final heights in rows.values) {
+            expect(
+              heights.every((h) => (h - heights.first).abs() < 0.5),
+              isTrue,
+              reason: 'aynı satırdaki çipler eşit yükseklikte: $heights',
+            );
+          }
           _expectNoMidWordBreaks(find.byType(ResultStatTiles), 'karolar');
         });
       }

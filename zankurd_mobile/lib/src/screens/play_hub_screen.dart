@@ -381,7 +381,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       key: const ValueKey('play-hub-create-room'),
       child: _lockedTap(
         locked,
-        SahneButton.secondary(
+        SahneButton.tonal(
+          tint: SahneTokens.of(context).nilTint,
+          foreground: SahneTokens.of(context).nilTx,
           icon: AppIcons.peopleGroup,
           label: context.t(K.createRoom),
           // Anahtarın kendi ekran okuyucu düğümü olsun (düğme + dokunma).
@@ -396,7 +398,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       key: const ValueKey('play-hub-join-room'),
       child: _lockedTap(
         locked,
-        SahneButton.secondary(
+        SahneButton.tonal(
+          tint: SahneTokens.of(context).nilTint,
+          foreground: SahneTokens.of(context).nilTx,
           icon: AppIcons.hashtag,
           label: context.t(K.joinByCode),
           semanticLabel: context.t(K.joinByCode),
@@ -441,6 +445,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             topGap: false,
           ),
         _QuickDuelHero(
+          repository: widget.repository,
           onLockedTap: locked ? _notifyLocked : null,
           onTap: locked
               ? null
@@ -489,7 +494,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                   SahneListRow.icon(
                     key: const ValueKey('play-hub-async-duel-challenge'),
                     icon: AppIcons.peopleGroup,
-                    role: SahneRole.race,
+                    // Arkadaşa meydan okumak sosyal moddur: Nîl.
+                    role: SahneRole.social,
                     title: context.t(K.challengeEntry),
                     chevron: !locked,
                     enabled: !locked,
@@ -688,17 +694,57 @@ class _RowSpinner extends StatelessWidget {
 /// düğme "bozuk" sanılıyordu). 2026-09-30 simülatör: manşet ve alt satırlar
 /// artık "Sunucuya ulaşılamadı" demez; bunu üstteki şerit tek başına söyler
 /// (eskiden aynı cümle Yarış sekmesinde dört kez yazılıyordu).
-class _QuickDuelHero extends StatelessWidget {
-  const _QuickDuelHero({required this.onTap, this.onLockedTap});
+class _QuickDuelHero extends StatefulWidget {
+  const _QuickDuelHero({
+    required this.onTap,
+    required this.repository,
+    this.onLockedTap,
+  });
 
   final VoidCallback? onTap;
+  final ZanKurdRepository repository;
 
   /// Kilitliyken düğmeye dokunulunca çağrılır (geri bildirim); düğme yine
   /// pasif görünür ve ekran okuyucuya tıklanabilir bildirilmez.
   final VoidCallback? onLockedTap;
 
   @override
+  State<_QuickDuelHero> createState() => _QuickDuelHeroState();
+}
+
+class _QuickDuelHeroState extends State<_QuickDuelHero> {
+  /// Oyuncunun adının baş harfleri ("SK" göstergesi); ad yoksa kişi ikonu.
+  String? _initials;
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(_loadInitials());
+  }
+
+  Future<void> _loadInitials() async {
+    try {
+      final name = (await widget.repository.getProfileName()).trim();
+      if (!mounted || name.isEmpty) return;
+      final parts = name
+          .split(RegExp(r'\s+'))
+          .where((p) => p.isNotEmpty)
+          .toList();
+      final letters = parts.length >= 2
+          ? '${parts.first.characters.first}${parts.last.characters.first}'
+          : name.characters.take(2).toString();
+      setState(
+        () => _initials = SahneType.upperFor(letters, isKu: context.isKu),
+      );
+    } catch (error, stack) {
+      // Ad okunamazsa kişi ikonu kalır; gösterge süstür, akış değil.
+      ErrorReporter.record(error, stack, reason: 'play_hub_vs_initials');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final onTap = widget.onTap;
     final enabled = onTap != null;
     final title = context.t(K.quickDuelHeadline);
     // Eşleşme odası 10 soruyla kurulur (`MatchmakingScreen`, `limit: 10`).
@@ -714,69 +760,97 @@ class _QuickDuelHero extends StatelessWidget {
       excludeSemantics: true,
       label: '${context.t(K.quickDuel)}. ${context.t(K.findOpponent)}',
       onTap: onTap,
-      child: SahneSurfaceCard(
-        // Kilim şeridi kartın alt kenarına oturur: dolgu şeridin dışında
-        // kalır, şerit metnin/düğmenin arkasına girmez.
-        padding: EdgeInsets.zero,
-        child: Builder(
-          builder: (context) {
-            final t = SahneTokens.of(context);
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    SahneSpace.x4,
-                    SahneSpace.x4,
-                    SahneSpace.x4,
-                    SahneSpace.x3,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+      // Boyax DOLU kahraman (2026-10-20 renk ve canlılık): yarış kimliği tek
+      // bakışta. Sadeleştirme beyaz bir karta indirmişti; Boyax ekranda
+      // neredeyse görünmüyordu.
+      child: SahneRaceHeroSurface(
+        kilimKey: const ValueKey('play-hub-kilim-strip'),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            SahneSpace.x4,
+            SahneSpace.x4,
+            SahneSpace.x4,
+            SahneSpace.x3,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                context.t(K.quickDuel),
+                style: SahneType.captionStrong.copyWith(
+                  color: SahneVivid.heroEyebrow,
+                ),
+              ),
+              const SizedBox(height: SahneSpace.x1),
+              Text(
+                title,
+                style: SahneType.headline.copyWith(color: SahneVivid.onFill),
+              ),
+              const SizedBox(height: SahneSpace.x2),
+              LayoutBuilder(
+                builder: (context, c) {
+                  // Dar ekran / büyük yazıda "SK vs ?" göstergesi çizilmez
+                  // (süs; metin ve düğme önceliklidir).
+                  final showVs =
+                      c.maxWidth >= 300 &&
+                      MediaQuery.textScalerOf(context).scale(16) < 22;
+                  // Spacer yok: Flexible + Spacer genişliği yarı yarıya
+                  // bölüyordu ve çip yazısı FittedBox'ta ~10 pt'ye
+                  // küçülüyordu; çip önce kendi doğal genişliğini alır.
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        context.t(K.quickDuel),
-                        style: SahneType.captionStrong.copyWith(
-                          color: t.eyebrowTx,
-                        ),
-                      ),
-                      const SizedBox(height: SahneSpace.x1),
-                      Text(
-                        title,
-                        style: SahneType.headline.copyWith(color: t.tx),
-                      ),
-                      const SizedBox(height: SahneSpace.x1),
-                      Text(
-                        meta,
-                        key: const ValueKey('play-hub-quick-duel-meta'),
-                        style: SahneType.caption.copyWith(color: t.tx2),
-                      ),
-                      const SizedBox(height: SahneSpace.x4),
-                      KeyedSubtree(
-                        key: const ValueKey('play-hub-quick-duel-cta'),
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          excludeFromSemantics: true,
-                          onTap: onTap == null ? onLockedTap : null,
-                          child: SahneButton.primary(
-                            label: context.t(K.findOpponent),
-                            onPressed: onTap,
-                            expand: true,
+                      Flexible(
+                        child: DecoratedBox(
+                          decoration: const ShapeDecoration(
+                            color: SahneVivid.glass,
+                            shape: SahneShape.m,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: SahneSpace.x3,
+                              vertical: SahneSpace.x1,
+                            ),
+                            // Tek satır: sığmazsa yazı küçülür, sarmaz
+                            // ("10 soru · ~2 dakika").
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                meta,
+                                key: const ValueKey('play-hub-quick-duel-meta'),
+                                maxLines: 1,
+                                style: SahneType.captionStrong.copyWith(
+                                  color: SahneVivid.onFill,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
+                      if (showVs) ...[
+                        const SizedBox(width: SahneSpace.x3),
+                        SahneVsIndicator(initials: _initials),
+                      ],
                     ],
+                  );
+                },
+              ),
+              const SizedBox(height: SahneSpace.x4),
+              KeyedSubtree(
+                key: const ValueKey('play-hub-quick-duel-cta'),
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  excludeFromSemantics: true,
+                  onTap: onTap == null ? widget.onLockedTap : null,
+                  child: SahneButton.primary(
+                    label: context.t(K.findOpponent),
+                    onPressed: onTap,
+                    expand: true,
                   ),
                 ),
-                // Kilim imzası: ekranda TEK; yükseklik ≤ 12 pt.
-                SahneKilimStrip(
-                  key: const ValueKey('play-hub-kilim-strip'),
-                  color: t.kilimTx,
-                  height: 8,
-                ),
-              ],
-            );
-          },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -851,52 +925,120 @@ class _ThisWeekCardState extends State<ThisWeekCard> {
       if (hasData && entry.roomsPlayed > 0)
         (context.t(K.raceWord), '${entry.roomsPlayed}'),
     ];
+    final night = Theme.of(context).brightness == Brightness.dark;
     return SahneSurfaceCard(
       key: const ValueKey('play-hub-this-week'),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            context.t(K.thisWeek),
-            style: SahneType.captionStrong.copyWith(color: t.eyebrowTx),
-          ),
-          const SizedBox(height: SahneSpace.x2),
-          if (hasData)
-            Row(
+      child: hasData
+          // Zêr sıra bloğu + renkli ikonlu sayılar (2026-10-20): sıra altın,
+          // puan şimşek (Zêr tonu), yarış kupa (Boyax tonu).
+          ? IntrinsicHeight(
               key: const ValueKey('play-hub-this-week-stats'),
-              children: [
-                for (final c in cells)
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
                   Expanded(
+                    flex: 5,
+                    child: SahneGoldBlock(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            context.t(K.thisWeek),
+                            style: SahneType.captionStrong.copyWith(
+                              color: t.goldTx,
+                            ),
+                          ),
+                          Text(
+                            cells.first.$2,
+                            style: SahneType.title.copyWith(color: t.goldTx),
+                          ),
+                          Text(
+                            cells.first.$1,
+                            style: SahneType.caption.copyWith(color: t.tx2),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(
+                    flex: 6,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          c.$2,
-                          style: SahneType.headline.copyWith(color: t.tx),
-                        ),
-                        Text(
-                          c.$1,
-                          style: SahneType.caption.copyWith(color: t.tx2),
-                        ),
+                        for (var i = 1; i < cells.length; i++) ...[
+                          if (i > 1) const SizedBox(height: SahneSpace.x2),
+                          Row(
+                            children: [
+                              DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: i == 1 ? t.goldTint : t.raceTint,
+                                  shape: SahneShape.m,
+                                ),
+                                child: SizedBox.square(
+                                  dimension: 32,
+                                  child: Icon(
+                                    i == 1 ? AppIcons.bolt : AppIcons.trophy,
+                                    size: 18,
+                                    color: i == 1
+                                        ? t.goldTx
+                                        : night
+                                        ? t.raceTx
+                                        : t.race,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: SahneSpace.x2),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      cells[i].$2,
+                                      style: SahneType.bodyStrong.copyWith(
+                                        color: t.tx,
+                                      ),
+                                    ),
+                                    Text(
+                                      cells[i].$1,
+                                      style: SahneType.caption.copyWith(
+                                        color: t.tx2,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ],
                     ),
                   ),
-              ],
+                ],
+              ),
             )
-          else ...[
-            Text(
-              context.t(K.buHaftaYarisLige),
-              key: const ValueKey('play-hub-this-week-empty'),
-              style: SahneType.caption.copyWith(color: t.tx2),
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  context.t(K.thisWeek),
+                  style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                ),
+                const SizedBox(height: SahneSpace.x2),
+                Text(
+                  context.t(K.buHaftaYarisLige),
+                  key: const ValueKey('play-hub-this-week-empty'),
+                  style: SahneType.caption.copyWith(color: t.tx2),
+                ),
+                SahneButton.text(
+                  key: const ValueKey('play-hub-this-week-start'),
+                  label: context.t(K.startRaceAction),
+                  onPressed: widget.onStart,
+                ),
+              ],
             ),
-            SahneButton.text(
-              key: const ValueKey('play-hub-this-week-start'),
-              label: context.t(K.startRaceAction),
-              onPressed: widget.onStart,
-            ),
-          ],
-        ],
-      ),
     );
   }
 }

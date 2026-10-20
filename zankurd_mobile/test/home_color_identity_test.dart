@@ -172,6 +172,11 @@ void main() {
         // İşaret = soru künyesindeki ile aynı bileşen, aynı ton.
         final mark = CategoryVisuals.mark(category);
         expect(mark, isNotNull, reason: '$category: silüetsiz karo kalmamalı');
+        // 2026-10-20 renk ve canlılık: karo konunun renginde DOLU; işaret
+        // BEYAZ silüet (iç ayrıntı karonun kendi renginde), sağ altta ayrıca
+        // soluk beyaz filigran (aynı silüet). Renk kimliği karonun zeminidir
+        // (`SahneCategoryTone.fill`), silüet rengi değil.
+        final fill = CategoryVisuals.tone(category).fill(night: false);
         final glyphs = find.descendant(
           of: finder,
           matching: find.byWidgetPredicate(
@@ -179,11 +184,24 @@ void main() {
                 w is CustomPaint &&
                 w.painter is SahneCategoryGlyphPainter &&
                 (w.painter! as SahneCategoryGlyphPainter).mark == mark &&
-                (w.painter! as SahneCategoryGlyphPainter).tone ==
-                    CategoryVisuals.tone(category),
+                (w.painter! as SahneCategoryGlyphPainter).tone.ground == fill &&
+                (w.painter! as SahneCategoryGlyphPainter).tone.detail ==
+                    const Color(0xFFFFFFFF),
           ),
         );
-        expect(glyphs, findsOneWidget, reason: '$category işareti/tonu');
+        expect(glyphs, findsOneWidget, reason: '$category beyaz işareti');
+        final watermarks = find.descendant(
+          of: finder,
+          matching: find.byWidgetPredicate(
+            (w) =>
+                w is CustomPaint &&
+                w.painter is SahneCategoryGlyphPainter &&
+                (w.painter! as SahneCategoryGlyphPainter).mark == mark &&
+                (w.painter! as SahneCategoryGlyphPainter).tone.detail ==
+                    const Color(0x1FFFFFFF),
+          ),
+        );
+        expect(watermarks, findsOneWidget, reason: '$category filigranı');
       }
     },
   );

@@ -102,20 +102,27 @@ void main() {
     expect((box.decoration as ShapeDecoration).color, t.eyebrowFill);
   });
 
-  test('ana sayfa ve yarış kartlarının üst etiketi rol rengi kullanmaz', () {
-    for (final path in [
+  test('ana sayfa ve yarış kartlarının üst etiketi tek ve belirteçten gelir', () {
+    // 2026-10-20 renk ve canlılık: Günün dersi artık Zimrût tonlu karttır;
+    // üst etiketi MOD rengidir (`learnTx`, ton zemin üstünde ≥ 4.5:1),
+    // Boyax kahramanın üst etiketi renkli zeminde okunan belirteçtir
+    // (`SahneVivid.heroEyebrow`). Ham renk yok; davet kartı eskisi gibi
+    // `eyebrowTx`.
+    final today = File(
       'lib/src/screens/home/today_task_card.dart',
+    ).readAsStringSync();
+    expect(today, contains('learnTx'));
+    final invite = File(
       'lib/src/screens/home/room_invite_card.dart',
-    ]) {
-      final src = File(path).readAsStringSync();
-      expect(src, contains('eyebrowTx'), reason: path);
-    }
+    ).readAsStringSync();
+    expect(invite, contains('eyebrowTx'));
     final hub = File('lib/src/screens/play_hub_screen.dart').readAsStringSync();
-    // Hızlı düello üst etiketi: K.quickDuel metni eyebrowTx ile çizilir
-    // (boşluk gözetmeyen kalıp; biçimleyici girintiyi değiştirse bozulmasın).
+    // Hızlı düello üst etiketi: K.quickDuel metni kahraman belirteciyle
+    // çizilir (boşluk gözetmeyen kalıp; biçimleyici girintiyi değiştirse
+    // bozulmasın).
     expect(
       RegExp(
-        r'context\.t\(K\.quickDuel\),\s*style: SahneType\.captionStrong\.copyWith\(\s*color: t\.eyebrowTx',
+        r'context\.t\(K\.quickDuel\),\s*style: SahneType\.captionStrong\.copyWith\(\s*color: SahneVivid\.heroEyebrow',
       ).hasMatch(hub),
       isTrue,
     );

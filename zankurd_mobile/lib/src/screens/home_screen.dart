@@ -709,6 +709,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           SahneStatChip(
             leading: const SahneGlyph(SahneGlyphKind.flame),
             label: '$_streak ${context.t(K.streakDayUnit)}',
+            // Renkli çip: seri Agir tonlu, jeton Zêr tonlu (2026-10-20).
+            tint: SahneTokens.of(context).selFill,
+            foreground: SahneTokens.of(context).selTx,
             semanticLabel: context.t(K.dailyStreakDays, {'days': '$_streak'}),
             onTap: () => _showStreakFreezeBottomSheet(context),
           ),
@@ -716,6 +719,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           SahneStatChip(
             leading: const SahneGlyph(SahneGlyphKind.coin),
             label: groupThousands(_coinBalance),
+            gold: true,
             semanticLabel:
                 '${context.t(K.shop)}. ${groupThousands(_coinBalance)} '
                 '${context.t(K.coinWord)}',

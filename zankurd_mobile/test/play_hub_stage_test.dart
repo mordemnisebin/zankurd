@@ -92,8 +92,23 @@ void main() {
 
           final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
           expect(hero, findsOneWidget, reason: why);
+          // 2026-10-20 renk ve canlılık: Boyax gradyanlı DOLU kahraman
+          // (beyaz yüzey kartı değil).
           expect(
             find.descendant(of: hero, matching: find.byType(SahneSurfaceCard)),
+            findsNothing,
+            reason: why,
+          );
+          expect(
+            find.descendant(
+              of: hero,
+              matching: find.byWidgetPredicate(
+                (w) =>
+                    w is DecoratedBox &&
+                    w.decoration is BoxDecoration &&
+                    (w.decoration as BoxDecoration).gradient is LinearGradient,
+              ),
+            ),
             findsOneWidget,
             reason: why,
           );

@@ -290,10 +290,15 @@ void main() {
     final button = tester.widget<FilledButton>(
       find.descendant(of: primary, matching: find.byType(FilledButton)),
     );
+    // 2026-10-20 renk ve canlılık: kart düğmesi çerçeveli gri değil, Boyax
+    // TON düğmedir (yarış modunun rengi); Agir yine yalnız "Günün dersi".
+    final raceTint = SahneTokens.of(tester.element(primary)).raceTint;
+    final act = SahneTokens.of(tester.element(primary)).act;
     expect(
       button.style?.backgroundColor?.resolve(<WidgetState>{}),
-      Colors.transparent,
-      reason: 'Agir yalnız "Günün dersi" düğmesindedir; kart ikincil kalır.',
+      raceTint,
+      reason:
+          'Agir yalnız "Günün dersi" düğmesindedir; kart Boyax tonlu kalır.',
     );
     // Karttaki hiçbir düğme birincil (Agir) değil.
     final card = find.byKey(const ValueKey('home-duel-card'));
@@ -302,7 +307,8 @@ void main() {
           find.descendant(of: card, matching: find.byType(FilledButton)),
         )
         .map((b) => b.style?.backgroundColor?.resolve(<WidgetState>{}));
-    expect(fills, everyElement(Colors.transparent));
+    expect(fills, everyElement(raceTint));
+    expect(fills, everyElement(isNot(act)));
   });
 
   testWidgets('Ana ekranda kart "Günün dersi" kartının hemen altındadır', (

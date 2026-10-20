@@ -24,7 +24,11 @@ class SahneBilingualLabel extends StatelessWidget {
     super.key,
     this.compact = false,
     this.textAlign = TextAlign.start,
+    this.color,
   });
+
+  /// Renkli zeminde (dolu konu karosu) okunur renk; verilmezse [SahneTokens.tx2].
+  final Color? color;
 
   final String text;
 
@@ -38,7 +42,7 @@ class SahneBilingualLabel extends StatelessWidget {
   TextStyle styleFor(BuildContext context) {
     final t = SahneTokens.of(context);
     return (compact ? SahneType.navHint : SahneType.caption).copyWith(
-      color: t.tx2,
+      color: color ?? t.tx2,
     );
   }
 

@@ -49,6 +49,7 @@ class KilimProgressBar extends StatelessWidget {
       SahneRole.learn => t.learnBar,
       SahneRole.gold => t.gold,
       SahneRole.race => t.race,
+      SahneRole.social => t.nil,
       SahneRole.neutral => c,
     };
   }
