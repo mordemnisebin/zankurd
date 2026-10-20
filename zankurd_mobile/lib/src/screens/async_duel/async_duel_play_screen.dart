@@ -34,6 +34,10 @@ enum _Phase { idle, submitting, revealed, error }
 /// Sırayla düellonun oyun ekranı: sunucunun seçtiği 7 soru, soru başına
 /// 20 saniye. Doğru cevap oda maçlarıyla aynı sözleşmeyle GİZLİDİR — yalnız
 /// `answerAsyncDuel` cevaplandıktan sonra açıklanır.
+/// Çıkışta kalan soruların gönderimine tanınan toplam süre.
+@visibleForTesting
+Duration asyncDuelQuitSendTimeout = const Duration(seconds: 10);
+
 class AsyncDuelPlayScreen extends StatefulWidget {
   const AsyncDuelPlayScreen({
     required this.repository,
@@ -342,6 +346,17 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
 
   Future<void> _confirmExit() async {
     if (_exitInFlight) return;
+    // Diyalog açıkken soru sayacı DURUR (2026-10-21): "Yarıştan çık?" sorusunu
+    // düşünen oyuncunun süresi akıp soruyu yakıyordu (19 → 7). Duvar saati
+    // (`_stopwatch`) da durur ki sunucuya giden `responseMs` ile ekrandaki
+    // sayaç ayrışmasın; cevap süresini sunucu yeniden hesaplamaz, istemci
+    // bildirir.
+    final pauseForDialog =
+        _phase == _Phase.idle && _timerController.isAnimating;
+    if (pauseForDialog) {
+      _timerController.pause();
+      _stopwatch.stop();
+    }
     final quit = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -364,7 +379,16 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         ],
       ),
     );
-    if (quit != true || !mounted) return;
+    if (quit != true || !mounted) {
+      if (pauseForDialog &&
+          mounted &&
+          _phase == _Phase.idle &&
+          !_exitInFlight) {
+        _stopwatch.start();
+        _timerController.resume();
+      }
+      return;
+    }
     await _quitAndTimeoutRemaining();
   }
 
@@ -384,17 +408,33 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     if (inFlight != null) await inFlight;
     final duel = _duel;
     if (duel != null) {
+      // Gönderimler PARALEL ve toplam süre sınırlı (2026-10-21): sırayla
+      // beklemek yavaş ağda her RPC için 15 sn demekti; ekran dakikalarca
+      // `_exitInFlight` ile tutuluyordu. Süre aşılırsa ekran yine kapanır;
+      // ulaşmayan sorular sunucudaki süre dolumuyla tamamlanır.
+      final sends = <Future<void>>[];
       for (var i = 0; i < duel.questions.length; i++) {
         if (_confirmedIndices.contains(i)) continue;
         final pendingChoice = _pendingChoice;
         final pendingMs = _pendingResponseMs;
         final resendPending =
             i == _index && pendingChoice != null && pendingMs != null;
-        await _sendQuietly(
-          duelId: duel.duelId,
-          index: i,
-          choice: resendPending ? pendingChoice : 'TIMEOUT',
-          responseMs: resendPending ? pendingMs : _questionDurationMs,
+        sends.add(
+          _sendQuietly(
+            duelId: duel.duelId,
+            index: i,
+            choice: resendPending ? pendingChoice : 'TIMEOUT',
+            responseMs: resendPending ? pendingMs : _questionDurationMs,
+          ),
+        );
+      }
+      try {
+        await Future.wait(sends).timeout(asyncDuelQuitSendTimeout);
+      } on TimeoutException {
+        ErrorReporter.record(
+          TimeoutException('async duel quit sends'),
+          StackTrace.current,
+          reason: 'async duel quit timed out; closing anyway',
         );
       }
     }

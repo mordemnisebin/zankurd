@@ -70,6 +70,31 @@ const double kSahneResultRhythmGap = 20;
 /// 8 ile yapışık duruyordu; 8 pt eklendi.
 const double kSahneResultValueGap = SahneSpace.x4;
 
+/// Sonucun tonu (2026-10-21): doğruluğa göre sahnenin ne kadar kutladığı.
+///
+/// ## Kusur
+///
+/// 2/10 bitiren oyuncu da gradyan, altın hale, altın puan ve ışınlı bir
+/// kutlama sahnesi görüyordu; kutlama yersizdi. Rakiplerde (Duolingo, Trivia
+/// Crack) düşük puanda sahne sakin ve cesaretlendiricidir.
+///
+/// ## Karar
+///
+/// [high] tam kutlama (varsayılan); [mid] ışın ve parıltı yok, yıldız var;
+/// [low] hale yok, gradyan bir kademe sakin, puan nötr beyaz.
+enum SahneResultMood {
+  high,
+  mid,
+  low;
+
+  /// Doğruluk yüzdesinden ton: ≥ %70 yüksek, %40-69 orta, < %40 düşük.
+  static SahneResultMood fromAccuracy(int accuracy) => accuracy >= 70
+      ? high
+      : accuracy >= 40
+      ? mid
+      : low;
+}
+
 /// Sonuç sahnesinin rengi (2026-10-20 renk ve canlılık işi).
 ///
 /// ## Kusur
@@ -91,7 +116,11 @@ class SahneResultScene extends InheritedWidget {
     required this.accent,
     required this.night,
     required super.child,
+    this.mood = SahneResultMood.high,
   });
+
+  /// Sonucun tonu; [SahneResultMood.low]'da hale kalkar, gradyan sakinleşir.
+  final SahneResultMood mood;
 
   /// [SahneRole.race] (Boyax) ya da [SahneRole.learn] (Zimrût).
   final SahneRole accent;
@@ -101,22 +130,36 @@ class SahneResultScene extends InheritedWidget {
   final bool night;
 
   /// Tepeden dibe sahne renkleri (4 durak).
-  List<Color> get colors => switch ((accent, night)) {
-    (SahneRole.learn, false) => SahneVivid.learnSceneDay,
-    (SahneRole.learn, true) => SahneVivid.learnSceneNight,
-    (_, false) => SahneVivid.raceSceneDay,
-    (_, true) => SahneVivid.raceSceneNight,
-  };
+  List<Color> get colors {
+    final full = switch ((accent, night)) {
+      (SahneRole.learn, false) => SahneVivid.learnSceneDay,
+      (SahneRole.learn, true) => SahneVivid.learnSceneNight,
+      (_, false) => SahneVivid.raceSceneDay,
+      (_, true) => SahneVivid.raceSceneNight,
+    };
+    if (mood != SahneResultMood.low) return full;
+    // Bir kademe sakin: üst duraklar tabana doğru çekilir.
+    final base = full.last;
+    return [
+      for (final c in full) Color.lerp(c, base, SahneVivid.calmSceneMix)!,
+    ];
+  }
 
-  /// Puanın arkasındaki sıcak hale.
-  Color get glow => night ? SahneVivid.glowNight : SahneVivid.glowDay;
+  /// Puanın arkasındaki sıcak hale; düşük sonuçta yok.
+  Color? get glow => mood == SahneResultMood.low
+      ? null
+      : night
+      ? SahneVivid.glowNight
+      : SahneVivid.glowDay;
 
   static SahneResultScene? maybeOf(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<SahneResultScene>();
 
   @override
   bool updateShouldNotify(SahneResultScene oldWidget) =>
-      accent != oldWidget.accent || night != oldWidget.night;
+      accent != oldWidget.accent ||
+      night != oldWidget.night ||
+      mood != oldWidget.mood;
 }
 
 /// Sonuç şablonunun iskeleti — Şahnê C iskeleti (gece sahnesi) üzerinde
@@ -140,7 +183,11 @@ class SahneResultScaffold extends StatelessWidget {
     this.overlay,
     this.balanced = false,
     this.accent = SahneRole.race,
+    this.mood = SahneResultMood.high,
   });
+
+  /// Sonucun tonu (bkz. [SahneResultMood]).
+  final SahneResultMood mood;
 
   /// Sahnenin mod rengi: yarış Boyax (varsayılan), öğrenme Zimrût
   /// ([SahneRole.learn]). Bkz. [SahneResultScene].
@@ -283,11 +330,13 @@ class SahneResultScaffold extends StatelessWidget {
     final scene = SahneResultScene(
       accent: accent,
       night: night,
+      mood: mood,
       child: const SizedBox.shrink(),
     );
     return SahneResultScene(
       accent: accent,
       night: night,
+      mood: mood,
       child: SahneStageScaffold(
         onClose: onClose,
         closeLabel: closeLabel,
@@ -374,6 +423,7 @@ class SahneResultHero extends StatelessWidget {
     this.extras = const [],
     this.celebrate = false,
     this.lightGlow = false,
+    this.calm = false,
     this.tone = SahneResultTone.reward,
     this.notices = const [],
   });
@@ -383,6 +433,9 @@ class SahneResultHero extends StatelessWidget {
   /// yıldız). Işınlar düşük saydamlıktadır; kilim şeridi yine yalnız
   /// [celebrate]'te çizilir. Kaybedilen sonuçta kapalı kalır.
   final bool lightGlow;
+
+  /// Düşük sonuçta (bkz. [SahneResultMood.low]) puan altın değil nötr yazılır.
+  final bool calm;
 
   final Widget emblem;
   final String title;
@@ -470,7 +523,7 @@ class SahneResultHero extends StatelessWidget {
               value: value!,
               suffix: suffix,
               style: SahneType.screen.copyWith(
-                color: t.gold,
+                color: calm ? t.tx : t.gold,
                 fontSize: scenic ? 88 : null,
               ),
             ),

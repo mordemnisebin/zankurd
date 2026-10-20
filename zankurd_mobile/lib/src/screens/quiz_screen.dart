@@ -1582,6 +1582,18 @@ class _QuizScreenState extends State<QuizScreen>
     var leaveFailed = false;
     RoomLeaveOutcome? outcome;
     try {
+      // Çıkış diyaloğu açıkken tek kişilik turun soru sayacı DURUR: oyuncu
+      // "çık?" sorusunu düşünürken süre akıp soruyu yakıyordu. Çevrimiçi
+      // odada süreyi sunucu yönetir; orada istemci sayacı durdurulmaz.
+      final pauseForDialog =
+          !_isMultiplayer &&
+          _usesTimer &&
+          !answered &&
+          _timerController.isAnimating;
+      if (pauseForDialog) {
+        _timerController.stop();
+        _questionStopwatch.stop();
+      }
       final leave = await showDialog<bool>(
         context: context,
         builder: (_) => _QuizExitDialog(
@@ -1590,6 +1602,10 @@ class _QuizScreenState extends State<QuizScreen>
           isCrowd: _isCrowd,
         ),
       );
+      if (pauseForDialog && leave != true && mounted && !answered) {
+        _timerController.reverse();
+        _questionStopwatch.start();
+      }
       if (leave != true ||
           !_canContinueExit(generation, expectedOwnerId, expectedRoute)) {
         return;

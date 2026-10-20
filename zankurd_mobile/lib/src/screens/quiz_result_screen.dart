@@ -1388,8 +1388,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ? _DuelOutcome.draw
         : _DuelOutcome.loss;
 
+    // 2026-10-21: sonucun tonu doğruluğa göre (bkz. [SahneResultMood]);
+    // düello/oda sonuçları kendi kazanma/kaybetme diliyle anlatılır.
+    final mood = duelOutcome == null
+        ? SahneResultMood.fromAccuracy(accuracy)
+        : SahneResultMood.high;
+    final lowMood = mood == SahneResultMood.low;
+
     final headerTitle = isLearningExperience
-        ? context.t(K.learningResultTitle)
+        // Düşük puanda "Öğrenme tamamlandı" kutlaması yersiz; var olan
+        // "Tekrar dene" dizesi cesaretlendirir.
+        ? (lowMood ? context.t(K.retry) : context.t(K.learningResultTitle))
         : is1v1
         ? (isWinner
               ? context.t(K.youWon)
@@ -1472,15 +1481,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // 2026-10-01 (A6): kahraman, sayımlar ve ödül ortak sonuç şablonundan
     // ([SahneResultScaffold]) gelir; burada yalnız bu ekrana özgü bölümler
     // sıralanır. Sıra artık şablonun sırası: kahraman → sayımlar → ödül.
-    final sections = <Widget>[
-      if (room.isCrowd)
-        _CrowdStandings(players: room.players, ownId: widget.resultOwnerUserId)
-      else if (opponents.isNotEmpty)
-        _RaceStandings(
-          userScore: score,
-          userIdentity: room.players.isNotEmpty ? room.players.first : null,
-          opponents: opponents,
-        ),
+    final outcomeSection = <Widget>[
       if (answerRecords.isNotEmpty) ...[
         // Kurul 3. tur (2026-10-20): "Nerelerde zorlandın?" kartı sayım
         // karolarının hemen altına alındı. Konu listesinin altında kalınca
@@ -1502,6 +1503,21 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           _CategoryLearnings(breakdown: breakdown),
         ],
       ],
+    ];
+
+    final sections = <Widget>[
+      // Düşük puanda "Nerelerde zorlandın?" ve tekrar akışı en üste çıkar:
+      // oyuncunun bir sonraki adımı önce okunur.
+      if (lowMood) ...outcomeSection,
+      if (room.isCrowd)
+        _CrowdStandings(players: room.players, ownId: widget.resultOwnerUserId)
+      else if (opponents.isNotEmpty)
+        _RaceStandings(
+          userScore: score,
+          userIdentity: room.players.isNotEmpty ? room.players.first : null,
+          opponents: opponents,
+        ),
+      if (!lowMood) ...outcomeSection,
       if (secondaryResultActions.isNotEmpty) ...[
         const SizedBox(height: SahneSpace.cardGap),
         _SecondaryActions(actions: secondaryResultActions),
@@ -1541,6 +1557,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     ];
 
     final scaffold = SahneResultScaffold(
+      mood: mood,
       // Sahne rengi modun rengi: öğrenme Zimrût, yarış Boyax.
       accent: isLearningExperience ? SahneRole.learn : SahneRole.race,
       // Çevrimiçi turda kapatmak da ana eylem gibi ilk rotaya döner; solo
@@ -1568,7 +1585,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             : switch (duelOutcome) {
                 null => SizedBox(
                   height: 70,
-                  child: _ScoreStars(earned: starsEarned),
+                  child: _ScoreStars(earned: starsEarned, calm: lowMood),
                 ),
                 _DuelOutcome.win => const SahneResultEmblem.win(),
                 _DuelOutcome.draw => const SahneResultEmblem.state(
@@ -1598,7 +1615,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             ? accuracyText
             : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
         celebrate: celebrate,
-        lightGlow: duelOutcome == null && starsEarned >= 2,
+        lightGlow: mood == SahneResultMood.high && starsEarned >= 2,
+        calm: lowMood,
         tone: duelOutcome == null
             ? SahneResultTone.reward
             : SahneResultTone.race,
@@ -1715,9 +1733,12 @@ class _DuelFaceOff extends StatelessWidget {
 /// yıldız DOLU Zêr glif, kazanılmayan Ray (`s3`) tonunda — ayrımı renk
 /// değil doluluk taşır (bkz. `quiz_result_star_fill_test.dart`).
 class _ScoreStars extends StatelessWidget {
-  const _ScoreStars({required this.earned});
+  const _ScoreStars({required this.earned, this.calm = false});
 
   final int earned;
+
+  /// Düşük sonuç: kazanılan yıldız altın değil sönük nötr.
+  final bool calm;
 
   @override
   Widget build(BuildContext context) {
@@ -1735,10 +1756,16 @@ class _ScoreStars extends StatelessWidget {
             SahneGlyphKind.star,
             size: scenic ? (i == 1 ? 70 : 50) : (i == 1 ? 28 : 20),
             filled: i < earned,
-            color: scenic && i >= earned ? SahneVivid.starEmpty : null,
+            color: scenic && i >= earned
+                ? SahneVivid.starEmpty
+                : calm
+                ? SahneTokens.of(context).tx2.withValues(alpha: 0.55)
+                : null,
             // Kazanılmayan yıldızın koyu konturu bordo zeminde sert
             // duruyordu (kurul 2026-10-20): kontur yok, yalnız cam dolgu.
-            edgeColor: scenic && i >= earned ? Colors.transparent : null,
+            edgeColor: scenic && (i >= earned || calm)
+                ? Colors.transparent
+                : null,
           ),
         ],
       ],

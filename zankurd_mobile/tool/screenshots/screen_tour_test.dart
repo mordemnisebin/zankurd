@@ -2340,6 +2340,22 @@ void main() {
     await _shoot(t, '209_placement_result_dark_ku');
   }, tags: ['preview']);
 
+  // Düşük puan: sakin sahne (hale, ışın, altın puan yok) — 2026-10-21.
+  testWidgets('280 sonuç — düşük puan (gündüz)', (t) async {
+    await _pump(t, _resultVariant(wrong: 2, coins: 0));
+    await _shoot(t, '280_result_low_day');
+  }, tags: ['preview']);
+
+  testWidgets('281 sonuç — düşük puan (öğrenme, Kurmancî, gece)', (t) async {
+    await _pump(
+      t,
+      _resultVariant(isLearningExperience: true, coins: 0, wrong: 2),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '281_result_low_learning_dark_ku');
+  }, tags: ['preview']);
+
   testWidgets('210 tur özeti — hepsi doğru (sıfır karo yok)', (t) async {
     await _pump(
       t,

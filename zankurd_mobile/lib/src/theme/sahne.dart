@@ -920,6 +920,9 @@ class SahneVivid {
     Color(0xFF12261E),
     Color(0xFF16171B),
   ];
+
+  /// Düşük sonuçta gradyanın tabana doğru çekilme payı (bir kademe sakin).
+  static const calmSceneMix = 0.38;
   static const glowDay = Color(0x6BF5C24C);
   static const glowNight = Color(0x42F5C24C);
 
