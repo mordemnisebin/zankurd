@@ -164,9 +164,13 @@ class _ProfileHeroCard extends StatelessWidget {
               const SizedBox(height: SahneSpace.x1),
               Row(
                 children: [
-                  Text(
-                    '${Tr.forKu(K.progressLevelLabel, ku)} $level',
-                    style: SahneType.captionStrong.copyWith(color: t.tx),
+                  Flexible(
+                    child: Text(
+                      '${Tr.forKu(K.progressLevelLabel, ku)} $level',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: SahneType.captionStrong.copyWith(color: t.tx),
+                    ),
                   ),
                   if (coins != null) ...[
                     const Spacer(),

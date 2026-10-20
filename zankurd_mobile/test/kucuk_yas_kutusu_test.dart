@@ -8,6 +8,16 @@ import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 
+/// Kutu işaretli mi: yuvarlak kare artık Checkbox değil; işaretliyken dolgu
+/// turuncudur (kurul 5. tur 2026-10-20).
+bool checked(WidgetTester tester) {
+  final box = tester.widget<AnimatedContainer>(
+    find.byKey(const ValueKey('onboarding-age-checkbox')),
+  );
+  final d = box.decoration! as ShapeDecoration;
+  return d.color != null && d.color != Colors.transparent;
+}
+
 void main() {
   // ───────────────────────────────────────────────────────────────────────
   // 2) Yaş kutusu ve "Başla"
@@ -118,26 +128,12 @@ void main() {
       // Sağ uç, kutucuğun çok uzağında.
       await tester.tapAt(Offset(rect.right - 12, rect.center.dy));
       await tester.pumpAndSettle();
-      expect(
-        tester
-            .widget<Checkbox>(
-              find.descendant(of: row, matching: find.byType(Checkbox)),
-            )
-            .value,
-        isTrue,
-      );
+      expect(checked(tester), isTrue);
 
       // Etiket metnine basmak da geri alır.
       await tester.tap(find.text('13 yaşından büyüğüm'));
       await tester.pumpAndSettle();
-      expect(
-        tester
-            .widget<Checkbox>(
-              find.descendant(of: row, matching: find.byType(Checkbox)),
-            )
-            .value,
-        isFalse,
-      );
+      expect(checked(tester), isFalse);
     });
   });
 }

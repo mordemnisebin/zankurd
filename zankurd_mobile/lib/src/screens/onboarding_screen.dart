@@ -208,14 +208,18 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                         : const Duration(milliseconds: 120),
                                     width: 28,
                                     height: 28,
-                                    decoration: BoxDecoration(
+                                    decoration: ShapeDecoration(
                                       color: _ageConfirmed
                                           ? t.act
                                           : Colors.transparent,
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(
-                                        color: _ageConfirmed ? t.act : t.tx2,
-                                        width: 2,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(8),
+                                        ),
+                                        side: BorderSide(
+                                          color: _ageConfirmed ? t.act : t.tx2,
+                                          width: 2,
+                                        ),
                                       ),
                                     ),
                                     child: _ageConfirmed
