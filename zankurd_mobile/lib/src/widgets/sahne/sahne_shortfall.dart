@@ -40,6 +40,7 @@ class SahneShortfallNote extends StatelessWidget {
     super.key,
     required this.missing,
     this.alert = false,
+    this.warn = false,
     this.center = false,
   });
 
@@ -47,13 +48,18 @@ class SahneShortfallNote extends StatelessWidget {
   final int missing;
   final bool alert;
 
+  /// Uyarı (kehribar, `shortfallTx`): hata değil, "yetmiyor ama çözümü var"
+  /// (tur 8: oda ücretinde kırmızı "40 jeton eksik" hata gibi okunuyordu).
+  /// [alert]'ten öncelikli.
+  final bool warn;
+
   /// Satırı ortala (diyalog içinde).
   final bool center;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final color = alert ? t.errTx : t.tx2;
+    final color = warn ? t.shortfallTx : (alert ? t.errTx : t.tx2);
     final label = context.t(K.coinsShort, {'coins': '$missing'});
     return Semantics(
       container: true,
@@ -72,7 +78,9 @@ class SahneShortfallNote extends StatelessWidget {
             // ikonudur; aynı ikon iki satırda tekrarlanmasın diye eksik sözü
             // durum ikonunu taşır.
             child: Icon(
-              alert ? AppIcons.triangleExclamation : AppIcons.circleInfo,
+              (alert || warn)
+                  ? AppIcons.triangleExclamation
+                  : AppIcons.circleInfo,
               size: 16,
               color: color,
             ),

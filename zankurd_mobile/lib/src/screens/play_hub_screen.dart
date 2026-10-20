@@ -903,6 +903,7 @@ Widget _choiceChip(
   required VoidCallback onTap,
   Widget? avatar,
   String? semanticLabel,
+  bool locked = false,
 }) => SahnePickChip(
   key: key,
   label: label,
@@ -910,6 +911,7 @@ Widget _choiceChip(
   selected: selected,
   onTap: onTap,
   leading: avatar,
+  locked: locked,
 );
 
 Widget _filterChip(
@@ -1016,6 +1018,10 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
   int _selectedDuration = GameRoom.defaultSecondsPerQuestion;
   int _selectedQuestionCount = 10;
   int _selectedEntryFee = 0;
+
+  /// Jetonu yetmediği için seçilemeyen ve dokunulan ücret; "N jeton eksik"
+  /// notu ile "Jeton kazan" yolunu açar. Seçim ASLA bakiyeyi aşmaz.
+  int? _blockedFee;
   int _selectedMaxPlayers = GameRoom.defaultCrowdCapacity;
   bool _settingsOpen = false;
 
@@ -1028,11 +1034,23 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
   @override
   void initState() {
     super.initState();
+    _selectedEntryFee = _affordableFee(_selectedEntryFee);
+  }
+
+  /// [fee] bakiyeyi aşıyorsa yetebilen en yüksek izinli ücret (en az 0).
+  int _affordableFee(int fee) {
+    if (fee <= widget.coinBalance) return fee;
+    var best = 0;
+    for (final f in GameRoom.allowedEntryFees) {
+      if (f <= widget.coinBalance && f > best) best = f;
+    }
+    return best;
   }
 
   @override
   Widget build(BuildContext context) {
-    final hasEnoughCoins = widget.coinBalance >= _selectedEntryFee;
+    final blockedFee = _blockedFee;
+    final hasEnoughCoins = blockedFee == null;
 
     final t = SahneTokens.of(context);
     // 2026-10-02 uçtan uca QA: bu sayfa kapatılamıyordu. İçerik (dört seçim
@@ -1124,6 +1142,10 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                 child: SahneBottomFade(
                   key: const ValueKey('custom-room-bottom-fade'),
                   color: SahneTokens.of(context).s1,
+                  // Tur 8: 24 px solma son ücret satırını soluk/bozuk
+                  // gösteriyordu; 8 px'e indi, üstte 16 px bant.
+                  height: 8,
+                  topHeight: 16,
                   child: SingleChildScrollView(
                     // Alt boşluk: son satır (oyuncu sayısı/ücret) kaydırınca
                     // ayracın ve düğmenin tam üstüne rahatça çıkar.
@@ -1353,8 +1375,21 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                       ? context.t(K.freeEntry)
                                       : '$fee ${context.t(K.coinWord)}',
                                   selected: _selectedEntryFee == fee,
-                                  onTap: () =>
-                                      setState(() => _selectedEntryFee = fee),
+                                  locked: fee > widget.coinBalance,
+                                  semanticLabel: fee > widget.coinBalance
+                                      ? '${'$fee ${context.t(K.coinWord)}'}, '
+                                            '${context.t(K.coinsShort, {'coins': '${coinShortfall(cost: fee, balance: widget.coinBalance)}'})}'
+                                      : null,
+                                  onTap: () => setState(() {
+                                    if (fee > widget.coinBalance) {
+                                      // Yetmeyen ücret seçilmez: seçim kalır,
+                                      // eksik miktar alt notta söylenir.
+                                      _blockedFee = fee;
+                                    } else {
+                                      _selectedEntryFee = fee;
+                                      _blockedFee = null;
+                                    }
+                                  }),
                                 ),
                             ],
                           ),
@@ -1381,10 +1416,10 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                   child: SahneShortfallNote(
                     key: const ValueKey('custom-room-shortfall'),
                     missing: coinShortfall(
-                      cost: _selectedEntryFee,
+                      cost: blockedFee,
                       balance: widget.coinBalance,
                     ),
-                    alert: true,
+                    warn: true,
                   ),
                 ),
               // 2026-10-19: düğme kaydırma alanının DIŞINDA, sayfanın altında SABİT;
