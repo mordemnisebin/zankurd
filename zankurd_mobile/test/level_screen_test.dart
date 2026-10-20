@@ -1,3 +1,4 @@
+// Kurul 5. tur 2026-10-20: "+N seviye daha" kilidi ikincil renk; reddet ✗ görünür kenar + birincil renk.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
 
