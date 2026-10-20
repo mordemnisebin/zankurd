@@ -497,21 +497,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
           children: [
             // Dinleme düğmesi (48) soru metninin yanında durur; boy
             // kararı metne kalan genişlikte ölçülür.
-            Expanded(
-              child: QuizQuestionPrompt(
-                promptText,
-                lexicon: LexiconTapPolicy.forQuestion(
-                  enabled: lexiconEnabled,
-                  isKu: context.isKu,
-                  answered: answered,
-                  type: question.type.name,
-                  promptText: promptText,
-                  correctAnswer: question.correctAnswer,
-                ),
-                forceHeadline: forceHeadline,
-                titleLineBudget: titleLineBudget,
-              ),
-            ),
+            Expanded(child: _promptWidget(context)),
             if (showListen) ...[
               const SizedBox(width: SahneSpace.x2),
               _ListenButton(
@@ -575,6 +561,33 @@ class _QuestionTextAndAnswers extends StatelessWidget {
         );
       },
     );
+  }
+
+  /// Soru başlığı. Boşluk doldurma ve kelime sıralama `Yönerge: "cümle"
+  /// ("çeviri")` kalıbındaysa dört role ayrılır; kalıba uymayan her soru
+  /// (ve her şıklı soru) eski tek parça başlıkla çizilir.
+  Widget _promptWidget(BuildContext context) {
+    final lexicon = LexiconTapPolicy.forQuestion(
+      enabled: lexiconEnabled,
+      isKu: context.isKu,
+      answered: answered,
+      type: question.type.name,
+      promptText: promptText,
+      correctAnswer: question.correctAnswer,
+    );
+    return QuestionPromptBlock.tryBuild(
+          question: question,
+          promptText: promptText,
+          lexicon: lexicon,
+          forceHeadline: forceHeadline,
+          titleLineBudget: titleLineBudget,
+        ) ??
+        QuizQuestionPrompt(
+          promptText,
+          lexicon: lexicon,
+          forceHeadline: forceHeadline,
+          titleLineBudget: titleLineBudget,
+        );
   }
 
   Widget _answerArea(BuildContext context) {

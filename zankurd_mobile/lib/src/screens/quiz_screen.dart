@@ -56,6 +56,7 @@ import '../widgets/quiz_top_bar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
 import '../widgets/lexicon_lookup.dart';
 import '../widgets/sahne/sahne.dart';
+import 'quiz/question_prompt_block.dart';
 import 'quiz/quiz_effects.dart';
 import 'quiz/quiz_feedback_overlay.dart';
 import 'quiz/quiz_option_tile.dart';

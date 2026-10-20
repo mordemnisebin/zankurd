@@ -143,6 +143,17 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // Model ipucu (hintKu/hintTr) kelime sıralamadakiyle aynı çizilir;
+        // cevap verilince anlamsızlaştığından yalnız öncesinde.
+        if (!widget.disabled &&
+            widget.question.hintFor(isKu: isKu) != null) ...[
+          Text(
+            widget.question.hintFor(isKu: isKu)!,
+            key: const ValueKey('fill-in-blank-hint'),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x2),
+        ],
         SahneField(
           key: const ValueKey('fill-in-blank-input'),
           controller: _controller,
