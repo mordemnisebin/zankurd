@@ -2543,7 +2543,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'alphabet_1',
         order: 1,
         contentKu:
-            'Alfabeya Kurmancî (Hawar) 31 tîp e:\n\nA B C Ç D E Ê F G H I Î J K L M N O P Q R S Ş T U Û V W X Y Z\n\nHeşt tîp dengdêr in, bîst û sê tîp dengdar in.\n\n• Alfabe: Alfabe\n• Tîp: Harf\n• Dengdêr: Ünlü harf\n• Dengdar: Ünsüz harf',
+            'Alfabeya Kurmancî (Hawar) 31 tîp e:\n\nA B C Ç D E Ê F G H I Î J K L M N O P Q R S Ş T U Û V W X Y Z\n\nHeşt tîp dengdêr in, bîst û sê tîp dengdar in.\n\n• Elîfbê: Alfabe\n• Tîp: Harf\n• Dengdêr: Ünlü harf\n• Dengdar: Ünsüz harf',
         contentTr:
             'Kurmancî (Hawar) alfabesi 31 harftir: 8 ünlü ve 23 ünsüz harf. Hawar alfabesi Latin harflerini kullanır.',
         exampleKu: 'A, B, C, Ç, D...',
@@ -2808,7 +2808,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'body_1',
         order: 4,
         contentKu:
-            'Hevokên Hêsan bi Laş:\n\nNiha em peyvan di hevokan de dibînin:\n\n• Çavên min reş in: Gözlerim siyahtır\n• Serê min diêşe: Başım ağrıyor\n• Ez destên xwe dişom: Ellerimi yıkıyorum\n• Diranên min spî ne: Dişlerim beyazdır\n• Lingê min diêşe: Bacağım, ayağım ağrıyor',
+            'Hevokên Hêsan bi Laş:\n\nNiha em peyvan di hevokan de dibînin:\n\n• Çavên min reş in: Gözlerim siyahtır\n• Serê min diêşe: Başım ağrıyor\n• Ez destên xwe dişom: Ellerimi yıkıyorum\n• Diranên min spî ne: Dişlerim beyazdır\n• Linga min diêşe: Bacağım, ayağım ağrıyor',
         contentTr:
             'Şimdi kelimeleri cümleler içinde görüyoruz:\n- Gözlerim siyahtır\n- Başım ağrıyor\n- Ellerimi yıkıyorum\n- Dişlerim beyazdır\n- Bacağım (ayağım) ağrıyor',
       ),
@@ -2960,7 +2960,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentKu:
             'Demsal û ez:\n\nEm dibêjin ez germ im an ez sar im.\n\n• bihar: ilkbahar\n• havîn: yaz\n• payîz: sonbahar\n• zivistan: kış\n• ez germ im: sıcağım, bana sıcak geliyor\n• ez sar im: üşüyorum, bana soğuk geliyor\n• Ez li malê me: Ben evdeyim',
         contentTr:
-            'Dört mevsim ve bûn fiili (olmak). Ez im (benim), tu yî (sensin), ew e (odur). Hava için e, kişi için im kullanırız: Hewa sar e. Ez sar im.',
+            'Dört mevsim ve bûn fiili (olmak). Ez im (benim), tu yî (sensin), ew e (odur). Ek, önündeki sözcüğün son sesine göre değişir: ünsüzden sonra e / im, ünlüden sonra ye / me. Hewa sar e. Ez sar im.',
       ),
     ],
     'questions_1': [
@@ -3065,7 +3065,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentKu:
             'Pîşe çi ye?\n\nPîşe karê mirovan e. Piştî dengdêrî: Ez mamoste me. Piştî dengdarî: Ez doktor im.\n\n• pîşe: meslek\n• kar: iş\n• ez: ben\n• tu: sen\n• ew: o\n• im/me: -ım, -im\n• e/ye: -dır, -dir',
         contentTr:
-            'Meslek insanların işidir. Sesliden sonra Ez mamoste me, sessizden sonra Ez doktor im deriz. Bu derste 12 meslek öğreneceğiz.',
+            'Meslek insanların işidir. Sesliden sonra Ez mamoste me, sessizden sonra Ez doktor im deriz. Bu derste 7 meslek öğreneceğiz.',
       ),
       LessonSlide(
         id: 'jobs_1_s2',
@@ -3286,7 +3286,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'school_1',
         order: 5,
         contentKu:
-            'Di Polê de:\n\nEm di polê de çi dikin? Em hîn dibin.\n\n• ez dixwînim: okuyorum\n• ez dinivîsim: yazıyorum\n• guhdar dike: dinliyor\n• dibêje: söylüyor\n• mezin: büyük\n• biçûk: küçük',
+            'Di Polê de:\n\nEm di polê de çi dikin? Em hîn dibin.\n\n• ez dixwînim: okuyorum\n• ez dinivîsim: yazıyorum\n• guhdarî dike: dinliyor\n• dibêje: söylüyor\n• mezin: büyük\n• biçûk: küçük',
         contentTr:
             'Sınıfta ne yaparız? Öğreniriz. Şimdiki zamanla çok basit cümleler kuruyoruz.',
       ),

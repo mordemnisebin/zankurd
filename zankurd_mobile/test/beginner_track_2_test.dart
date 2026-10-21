@@ -74,19 +74,12 @@ void main() {
         id == 'verbs_1' ? 11 : 8,
         reason: '$id MC',
       );
-      // questions_1: altı boşluk doldurmanın hepsi çift boşluklu çıktı ve
-      // 2026-10-21'de havuzdan çıkarıldı (metin yeniden yazılmadı); bu ders
-      // boşluk doldurmasız kalır, yeni sorular yazılınca 6'ya dönmeli.
-      expect(
-        of(QuestionType.fillInBlank).length,
-        id == 'questions_1' ? 0 : 6,
-        reason: '$id boşluk',
-      );
+      expect(of(QuestionType.fillInBlank).length, 6, reason: '$id boşluk');
       expect(of(QuestionType.wordOrdering).length, 5, reason: '$id cümle');
     }
     expect(
       playable.where((q) => q.id.startsWith('dersler2_2026_10_08_')).length,
-      130, // 132 + 4 verbs_1 sorusu (2026-10-13) - 6 çift boşluklu (2026-10-21)
+      136, // 132 + 4 verbs_1 (2026-10-13) - 6 çift boşluklu + 6 jüri onaylı yeni (2026-10-21)
     );
   });
 
