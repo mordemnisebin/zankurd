@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show Clipboard, ClipboardData;
+import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +26,6 @@ import '../services/analytics_service.dart';
 import '../services/premium_service.dart';
 import '../services/tts_service.dart';
 import '../utils/percent_format.dart';
-import '../utils/external_link.dart';
 
 import '../config/app_config.dart';
 import '../models/friend.dart';
@@ -169,17 +170,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
   ///
   /// Apple 1.2, UGC barındıran uygulamada iletişim bilgisinin
   /// yayımlanmasını şart koşar ve kullanıcı ona uygulamadan ulaşabilmeli.
-  Future<void> _openAbuseReport() => openExternalUri(
-    context,
+  Future<void> _openAbuseReport() => _openMail(
     AppConfig.abuseReportUri(subject: context.t(K.abuseMailSubject)),
     reason: 'abuse report mailto',
   );
 
-  Future<void> _openBetaFeedback() => openExternalUri(
-    context,
+  Future<void> _openBetaFeedback() => _openMail(
     AppConfig.feedbackUri(subject: context.t(K.betaMailSubject)),
     reason: 'beta feedback mailto',
   );
+
+  /// `mailto:` açılamazsa (cihazda posta uygulaması yok) yalnız "Bağlantı
+  /// açılamadı" demek kullanıcıyı çıkışsız bırakıyordu; adres panoya
+  /// kopyalanır ve SnackBar adresi gösterir (2026-10-21 simülatör turu).
+  Future<void> _openMail(Uri uri, {required String reason}) async {
+    var opened = false;
+    try {
+      opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: '$reason: $uri');
+    }
+    if (opened || !mounted) return;
+    final copiedText = context.t(K.roomCodeCopied, {
+      'code': AppConfig.supportEmail,
+    });
+    try {
+      await Clipboard.setData(
+        const ClipboardData(text: AppConfig.supportEmail),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: '$reason clipboard');
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.linkOpenFailed))));
+      return;
+    }
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(copiedText)));
+  }
 
   Future<void> _setAnalyticsConsent(bool enabled) async {
     final saved = await context.read<AnalyticsConsentProvider>().setEnabled(
