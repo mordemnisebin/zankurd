@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +11,7 @@ import '../l10n/lang.dart';
 import '../utils/player_identity.dart';
 import '../l10n/strings.dart';
 import '../utils/app_route.dart';
+import '../utils/external_link.dart';
 import '../utils/confirm_word.dart';
 import 'level_placement_screen.dart';
 import '../providers/bilingual_labels_provider.dart';
@@ -184,12 +184,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   /// açılamadı" demek kullanıcıyı çıkışsız bırakıyordu; adres panoya
   /// kopyalanır ve SnackBar adresi gösterir (2026-10-21 simülatör turu).
   Future<void> _openMail(Uri uri, {required String reason}) async {
-    var opened = false;
-    try {
-      opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: '$reason: $uri');
-    }
+    final opened = await tryOpenExternalUri(uri, reason: reason);
     if (opened || !mounted) return;
     final copiedText = context.t(K.roomCodeCopied, {
       'code': AppConfig.supportEmail,

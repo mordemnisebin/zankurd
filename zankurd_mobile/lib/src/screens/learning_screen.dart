@@ -1131,6 +1131,9 @@ class _LessonRowState extends State<_LessonRow> {
     return GestureDetector(
       key: ValueKey('lesson-locked-${lesson.id}'),
       behavior: HitTestBehavior.opaque,
+      // Titreşim yalnız görsel geri bildirim; okuyucu satırı zaten
+      // "kilitli" etiketiyle okur (etiketsiz dokunma düğümü üretmesin).
+      excludeFromSemantics: true,
       onTap: _nudgeLock,
       child: row,
     );

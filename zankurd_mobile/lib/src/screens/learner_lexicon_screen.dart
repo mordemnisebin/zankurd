@@ -122,6 +122,9 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
                         // `ExcludeSemantics` yalnız metin sütununu sarar.
                         return SahneSurfaceCard(
                           key: ValueKey('lexicon-entry-${entry.id}'),
+                          // Dokunulabilir kart etiketli olmalı (a11y matrisi):
+                          // okuyucu "terim, anlam" duyar ve balonu açar.
+                          semanticLabel: '${entry.termKu}. ${entry.meaningTr}.',
                           // Kart dokunulabilir: aramadan çıkan maddeyi balon
                           // olarak açar (ses, biçimler, kaynak ders).
                           onTap: () => showLexiconEntrySheet(
