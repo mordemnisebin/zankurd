@@ -16,6 +16,9 @@ import '../config/subcategory_config.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
 
+/// Sonuç ekranının alt eylem çubuğu (~110) + nefes payı.
+const double _kResultActionBarClearance = 124;
+
 class LevelScreen extends StatefulWidget {
   const LevelScreen({
     required this.repository,
@@ -198,6 +201,16 @@ class _LevelScreenState extends State<LevelScreen> {
           ..hideCurrentSnackBar()
           ..showSnackBar(
             SnackBar(
+              // Sonuç ekranı hâlâ üstteyken açılır: düz SnackBar alt eylem
+              // çubuğuna oturup "Nerelerde zorlandın?" kartını örtüyordu.
+              // Yüzen + alt boşluk onu eylem çubuğunun ÜSTÜNDE tutar.
+              behavior: SnackBarBehavior.floating,
+              margin: const EdgeInsets.fromLTRB(
+                SahneSpace.page,
+                0,
+                SahneSpace.page,
+                _kResultActionBarClearance,
+              ),
               content: Text(
                 context.t(K.levelNotPassed, {
                   'p0': '${(LevelProgressStore.passRatio * 100).round()}',

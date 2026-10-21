@@ -329,8 +329,20 @@ class QuizQuestion {
   /// değişmeden doğru kalır.
   ///
   /// Çevirisi eksik sorularda alanlar Kurmancî kalır (bkz. [answersFor]).
-  QuizQuestion localized({required bool isKu}) {
+  ///
+  /// [learning] true iken yalnız soru metni (yönerge) arayüz diline gelir;
+  /// şıklar, doğru cevap ve kabul edilen cevaplar kanonik Kurmancî kalır:
+  /// Kurmancî öğreten derste Türkçe şık hiçbir şey öğretmez. "X bi Tirkî çi
+  /// ye?" tipinde `answers` zaten Türkçe kelimedir ve aynen doğru kalır.
+  /// Değerlendirme, açıklama ve sonuç listesi aynı (kanonik) alanı okur.
+  QuizQuestion localized({required bool isKu, bool learning = false}) {
     if (isKu) return this;
+    if (learning) {
+      final translatedPrompt = promptFor(isKu: false);
+      return translatedPrompt == prompt
+          ? this
+          : copyWith(prompt: translatedPrompt);
+    }
     final localizedAnswers = answersFor(isKu: false);
     final localizedAcceptedAnswers = acceptedAnswersFor(isKu: false);
     final localizedAnswerLanguage =

@@ -504,7 +504,7 @@ class _QuizScreenState extends State<QuizScreen>
         (_isLearningExperience
                 ? LearningProductiveRecall.transform(question)
                 : question)
-            .localized(isKu: _isKu),
+            .localized(isKu: _isKu, learning: _isLearningExperience),
     ];
     _myId = widget.repository.currentUserId;
     _onlineResultOwnerId = widget.repository.currentUserId?.trim() ?? '';

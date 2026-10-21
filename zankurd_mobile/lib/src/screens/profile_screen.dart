@@ -17,6 +17,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/achievement.dart';
 import '../models/leaderboard_entry.dart';
+import '../models/leaderboard_period.dart';
 import '../models/league_tier.dart';
 import '../providers/auth_provider.dart';
 import '../providers/reduced_motion_provider.dart';
@@ -108,6 +109,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int _readyMistakeCount = 0;
   String? _currentName;
   LeaderboardEntry? _stats;
+
+  /// Haftalık sıra: Yarış sekmesindeki "Bu hafta" kartıyla AYNI kaynak
+  /// (`getMyLeaderboardRank(weekly)`). Profil karosu eskiden `getPlayerStats`
+  /// sırasını (toplam XP, tüm profiller) gösteriyordu; iki ekranda aynı
+  /// "sıra" iki farklı sayı oluyordu.
+  LeaderboardEntry? _weeklyEntry;
 
   /// Oyuncunun kendi kodu; sunucu vermezse null kalır ve hiç gösterilmez.
   String? _playerTag;
@@ -250,6 +257,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       final name = await widget.repository.getProfileName();
       final stats = await widget.repository.getPlayerStats();
+      LeaderboardEntry? weekly;
+      try {
+        weekly = await widget.repository.getMyLeaderboardRank(
+          LeaderboardPeriod.weekly,
+        );
+      } catch (_) {
+        weekly = null; // sıra yoksa karo çizilmez
+      }
       final tag = await widget.repository.getPlayerTag();
       final avatarIdentity = await widget.repository.loadAvatarIdentity();
       final achievementStore = await AchievementStore.load();
@@ -270,6 +285,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _currentName = name;
           _coins = coins;
           _stats = stats;
+          _weeklyEntry = weekly;
           _playerTag = tag;
           _avatarIdentity = avatarIdentity;
           _achievements = achievementStore.unlockedAchievements;
@@ -468,14 +484,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // bir "ilk yarıştan sonra" cümlesi uydurulmaz. Sıralama sekmesi
               // ve ilk yarış eylemi zaten durur.
               if (_hasServerScore) ...[
-                _StatTile(
-                  label: context.t(K.statRank),
-                  value: '—',
-                  count: _stats!.rank,
-                  countPrefix: '#',
-                  role: SahneRole.gold,
-                  icon: AppIcons.chartColumn,
-                ),
+                if ((_weeklyEntry?.rank ?? 0) > 0)
+                  _StatTile(
+                    label: context.t(K.thisWeek),
+                    value: '—',
+                    count: _weeklyEntry!.rank,
+                    countPrefix: '#',
+                    role: SahneRole.gold,
+                    icon: AppIcons.chartColumn,
+                  ),
                 _StatTile(
                   label: context.t(K.statTotalScore),
                   value: '—',
