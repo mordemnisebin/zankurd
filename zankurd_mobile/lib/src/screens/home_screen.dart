@@ -501,7 +501,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // (üstündeki aralık da kartın içindedir, boşluk kalmaz).
           // Bir arkadaşın odaya daveti varsa kart düello kartının ÜSTÜNDE
           // çıkar (zaman duyarlı: 30 dk); yoksa hiç yer kaplamaz.
-          DailyQuoteCard(isKu: ku),
           RoomInviteCard(repository: repo, refreshToken: _refreshCounter),
           HomeDuelCard(repository: repo, refreshToken: _refreshCounter),
           // İlk oturumda seviye çubuğu ("Seviye 1 · 0/1000") yeni gelen için
@@ -594,6 +593,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onTap: widget.onOpenPlay,
             ),
           ),
+          // Günün sözü kapıların ALTINDA: Günün dersi ile kapılar arasına
+          // konunca öğren kapısını 390×844'te alt çubuğun altına itiyordu
+          // (manzara_seridi_test).
+          DailyQuoteCard(isKu: ku),
           SahneSectionHeader(
             title: context.t(K.homeTopicsTitle),
             // İki dilli etiket: öbür dilde aynı anahtar (bkz.

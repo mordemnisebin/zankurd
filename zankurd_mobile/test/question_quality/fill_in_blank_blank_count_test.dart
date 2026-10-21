@@ -59,7 +59,9 @@ void main() {
       _blankIssues(
         _fill(
           'Hevokê temam bike: "Tu ___ yî?" ("Sen ___sin?")',
-          id: 'dersler2_2026_10_08_0104',
+          // 0104–0109 dosyadan silindi (emekli listesinde değil); kapı
+          // hâlâ listede duran bir kimlikle sınanır.
+          id: 'offline_5016',
         ),
       ),
       isEmpty,
