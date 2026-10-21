@@ -489,10 +489,15 @@ class SahnePushedPage extends StatelessWidget {
     this.bottom,
     this.controller,
     this.role,
+    this.onRefresh,
   });
 
   final String title;
   final String? subtitle;
+
+  /// Verilirse içerik aşağı çekilerek yenilenir. Kaydırılabilir alan içerik
+  /// kısa olsa da çekilebilsin diye her durumda kaydırılabilir fizik alır.
+  final Future<void> Function()? onRefresh;
 
   /// Çubuk bu rolün DOLU renginde olur (2026-10-20 renk ve canlılık, B):
   /// öğrenme Zimrût, yarış Boyax, sosyal Nîl; beyaz başlık, cam geri düğmesi,
@@ -514,6 +519,17 @@ class SahnePushedPage extends StatelessWidget {
   /// İçeriğin altında sabit duran alan (ör. tek birincil eylem).
   final Widget? bottom;
   final ScrollController? controller;
+
+  Widget _wrapRefresh(SahneTokens t, Widget scroll) {
+    final refresh = onRefresh;
+    if (refresh == null) return scroll;
+    return RefreshIndicator(
+      color: t.tx,
+      backgroundColor: t.s2,
+      onRefresh: refresh,
+      child: scroll,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -574,6 +590,21 @@ class SahnePushedPage extends StatelessWidget {
       ),
     );
 
+    final scroll = CustomScrollView(
+      controller: controller,
+      physics: onRefresh == null ? null : const AlwaysScrollableScrollPhysics(),
+      slivers: [
+        const SliverToBoxAdapter(child: SizedBox(height: SahneSpace.x2)),
+        if (children.isNotEmpty)
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+            sliver: SliverList.list(children: children),
+          ),
+        ...slivers,
+        const SliverToBoxAdapter(child: SizedBox(height: SahneSpace.x6)),
+      ],
+    );
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayFor(
         band != null ? Brightness.dark : Theme.of(context).brightness,
@@ -597,27 +628,7 @@ class SahnePushedPage extends StatelessWidget {
                 )
               else
                 bar,
-              Expanded(
-                child: CustomScrollView(
-                  controller: controller,
-                  slivers: [
-                    const SliverToBoxAdapter(
-                      child: SizedBox(height: SahneSpace.x2),
-                    ),
-                    if (children.isNotEmpty)
-                      SliverPadding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: SahneSpace.page,
-                        ),
-                        sliver: SliverList.list(children: children),
-                      ),
-                    ...slivers,
-                    const SliverToBoxAdapter(
-                      child: SizedBox(height: SahneSpace.x6),
-                    ),
-                  ],
-                ),
-              ),
+              Expanded(child: _wrapRefresh(t, scroll)),
             ],
           ),
         ),

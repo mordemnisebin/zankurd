@@ -1720,6 +1720,7 @@ class _QuizScreenState extends State<QuizScreen>
       isKu: context.isKu,
       roomWord: context.t(K.roomWord),
       raceWord: context.t(K.raceWord),
+      crowdTitle: context.t(K.crowdRoomTitle),
     );
   }
 

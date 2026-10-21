@@ -440,7 +440,19 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      // Sonucu hazır düello artık sayfanın üstünde; bekleyen creator satırı
+      // "Düellolarım" kutusunda (tembel listede aşağıda).
+      await tester.scrollUntilVisible(
+        find.text('Rakip bekleniyor'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text('Rakip bekleniyor'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('async-duel-ready-badge')),
+        -200,
+        scrollable: find.byType(Scrollable).first,
+      );
       final badge = find.byKey(const ValueKey('async-duel-ready-badge'));
       expect(badge, findsOneWidget);
 

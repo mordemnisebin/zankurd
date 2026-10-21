@@ -1,12 +1,17 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+
+import '../providers/auth_provider.dart';
 
 import '../data/zankurd_repository.dart';
 import '../config/feature_flags.dart';
 import '../models/referral_result.dart';
+import '../utils/player_identity.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/friend.dart';
@@ -38,7 +43,14 @@ class FriendsScreen extends StatefulWidget {
   State<FriendsScreen> createState() => _FriendsScreenState();
 }
 
-class _FriendsScreenState extends State<FriendsScreen> {
+class _FriendsScreenState extends State<FriendsScreen>
+    with WidgetsBindingObserver {
+  /// Ekran açıkken hafif yenileme aralığı: gelen istek ve kabuller ekrana
+  /// yeniden girmeden görünsün (2026-10-21 iki simülatör turu).
+  static const _pollInterval = Duration(seconds: 20);
+  Timer? _pollTimer;
+  bool _reloading = false;
+
   final TextEditingController _searchController = TextEditingController();
 
   late Future<List<Friend>> _friendsFuture;
@@ -98,10 +110,44 @@ class _FriendsScreenState extends State<FriendsScreen> {
         ? asyncDuelChallengeAvailable(widget.repository)
         : Future<bool>.value(false);
     _loadFriends();
+    WidgetsBinding.instance.addObserver(this);
+    _pollTimer = Timer.periodic(_pollInterval, (_) => unawaited(_reload()));
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) unawaited(_reload());
+  }
+
+  /// Listeleri sunucudan yeniden okur. Uçuştaki istek varken ikincisi
+  /// başlamaz; hata sessizce yutulur (bölüm eski veriyi gösterir).
+  Future<void> _reload() async {
+    if (_reloading || !mounted) return;
+    _reloading = true;
+    try {
+      final friends = widget.repository.loadFriends();
+      final requests = widget.repository.loadPendingFriendRequests();
+      final friendList = await friends;
+      final requestList = await requests;
+      if (!mounted) return;
+      // SynchronousFuture: FutureBuilder tamamlanmış veriyi aynı karede
+      // çizer; her turda bir kare dönen göstergesi titremez.
+      setState(() {
+        _friendsFuture = SynchronousFuture(friendList);
+        _requestsFuture = SynchronousFuture(requestList);
+      });
+      await _refreshSocialState();
+    } catch (_) {
+      // Eski veri ekranda kalır; bir sonraki turda yeniden denenir.
+    } finally {
+      _reloading = false;
+    }
   }
 
   @override
   void dispose() {
+    _pollTimer?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     _searchController.dispose();
     super.dispose();
   }
@@ -277,7 +323,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(
-          dialogContext.t(K.removeFriendTitle, {'name': friend.friendName}),
+          dialogContext.t(K.removeFriendTitle, {
+            'name': context.playerDisplayName(friend.friendName),
+          }),
         ),
         content: Text(dialogContext.t(K.removeFriendBody)),
         actions: [
@@ -315,7 +363,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
     try {
       final room = await widget.repository.createOnlineRoom();
       if (!mounted) return;
-      _showMessage(context.t(K.shareRoomCodeWith, {'name': friend.friendName}));
+      _showMessage(
+        context.t(K.shareRoomCodeWith, {
+          'name': context.playerDisplayName(friend.friendName),
+        }),
+      );
       await Navigator.of(context).push(
         AppRoute.to(
           RoomScreen(repository: widget.repository, initialRoom: room),
@@ -344,6 +396,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
       role: SahneRole.social,
       title: context.t(K.myFriends),
       backLabel: context.t(K.back),
+      onRefresh: _reload,
       // Tek parça kolon (tembel liste değil): istek ve arkadaş satırları
       // büyük yazıda ilk ekranın altına düşse de kurulur; ekran okuyucu ve
       // "sonraki öğe" gezinmesi hepsini görür. Liste kısa (istekler +
@@ -484,6 +537,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   expand: true,
                   onPressed: () => _showReferralDialog(ku),
                 );
+                // Misafir kendi kodunu paylaşabilir ama başkasının kodunu
+                // KULLANAMAZ: sunucu "yalnız doğrulanmış hesaplar" diye
+                // reddediyordu (2026-10-21 iki simülatör turu). Ölü düğme
+                // yerine misafirde hiç çizilmez; hesabı kaydetme yolu
+                // Profil'dedir.
+                if (_isGuestSession(context)) return share ?? const SizedBox();
                 if (share == null) return enter;
                 // İki düğme HER ZAMAN alt alta: yan yana yarım genişlikte
                 // "Koda vexwendinê" iki satıra kırılıyordu (2026-09-30
@@ -503,6 +562,15 @@ class _FriendsScreenState extends State<FriendsScreen> {
         ),
       ),
     );
+  }
+
+  /// Oturum misafir mi? Sağlayıcı yoksa (yalın testler) `false`.
+  bool _isGuestSession(BuildContext context) {
+    try {
+      return context.read<AuthProvider>().isGuest;
+    } on ProviderNotFoundException {
+      return false;
+    }
   }
 
   Future<void> _showReferralDialog(bool ku) async {
@@ -586,12 +654,20 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     colorHex: player.avatarColor,
                     displayName: player.displayName,
                   ),
-                  title: player.displayName,
+                  title: context.playerDisplayName(
+                    player.displayName,
+                    tag: player.playerTag,
+                  ),
                   // Kod, iki aynı adı ayıran tek şey: adlar benzersiz değil
                   // ve olmayacak. Kodu olmayan eski profillerde satır hiç
                   // yazılmaz — uydurulmuş bir kod göstermektense yok saymak
                   // dürüst (2026-07-28).
-                  subtitle: player.formattedTag,
+                  subtitle:
+                      PlayerIdentity.isPlaceholderDisplayName(
+                        player.displayName,
+                      )
+                      ? null
+                      : player.formattedTag,
                   subtitleStrong: player.formattedTag != null,
                   trailing: _searchTrailing(player),
                 ),
@@ -651,7 +727,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   radius: 18,
                   displayName: request.toUserName,
                 ),
-                title: request.toUserName,
+                title: context.playerDisplayName(request.toUserName),
                 subtitle: context.t(K.requestAwaiting),
                 trailing: SahneButton.secondary(
                   key: ValueKey('sent-cancel-${request.toUserId}'),
@@ -1035,7 +1111,7 @@ class _FriendRow extends StatelessWidget {
           ],
         ),
       ),
-      title: friend.friendName,
+      title: context.playerDisplayName(friend.friendName),
       subtitle: online ? context.t(K.online) : context.t(K.offline),
       subtitleColor: online ? t.okTx : t.tx2,
       subtitleStrong: online,
@@ -1064,7 +1140,7 @@ class _FriendRow extends StatelessWidget {
               key: ValueKey('friend-action-${friend.friendName}'),
               label: context.t(K.challengeFriendAction),
               semanticLabel: context.t(K.challengeFriendActionA11y, {
-                'name': friend.friendName,
+                'name': context.playerDisplayName(friend.friendName),
               }),
               onPressed: busy ? null : onChallenge,
             )
@@ -1094,7 +1170,7 @@ class _FriendRow extends StatelessWidget {
     unawaited(
       showSahneSheet<void>(
         context: context,
-        title: friend.friendName,
+        title: context.playerDisplayName(friend.friendName),
         builder: (sheetContext) => SahneListGroup(
           children: [
             if (onChallenge != null)
@@ -1204,7 +1280,7 @@ class _FriendRequestRow extends StatelessWidget {
         final stackActions = constraints.maxWidth < 380 || textScale > 1.3;
         return _PersonRow(
           avatar: PlayerAvatar(radius: 18, displayName: request.fromUserName),
-          title: request.fromUserName,
+          title: context.playerDisplayName(request.fromUserName),
           trailing: actions,
           stackTrailing: stackActions,
         );

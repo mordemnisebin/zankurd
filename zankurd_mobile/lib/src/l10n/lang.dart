@@ -191,8 +191,17 @@ class CategoryNames {
     return Tr.of(key, AppLanguage.tr);
   }
 
+  /// Depo/sunucu kimlikleri: oyuncuya ham gösterilmez (2026-10-21 "crowd •
+  /// 10 soru"). Karışık/rastgele kategori "Tevlihev/Karışık"tır, kalabalık
+  /// odası "Pêşbirka komê/Grup yarışı".
+  static const Map<String, String> _slugKeys = {
+    'mixed': K.catTevlihev,
+    'random': K.catTevlihev,
+    'crowd': K.crowdRoomTitle,
+  };
+
   static String localized(String kuName, bool isKu) {
-    final key = _keys[kuName];
+    final key = _keys[kuName] ?? _slugKeys[kuName.trim().toLowerCase()];
     if (key == null) {
       // Çoklu kategorili oda etiketi: adlar `, ` ile birleşik gelir; her
       // biri ayrı yerelleştirilir.
