@@ -251,6 +251,13 @@ class _LevelHeading {
   factory _LevelHeading.of(String category, String? subCategory, bool isKu) {
     final categoryName = CategoryNames.localized(category, isKu);
     if (subCategory != null) {
+      if (subCategory == 'gisti') {
+        return _LevelHeading(
+          Tr.forKu(K.allQuestionsSubcategory, isKu),
+          categoryName,
+          null,
+        );
+      }
       final list = SubcategoryConfig.forCategory(category);
       for (final sub in list) {
         if (sub.id == subCategory) {

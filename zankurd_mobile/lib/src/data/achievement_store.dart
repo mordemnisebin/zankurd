@@ -118,10 +118,10 @@ class AchievementStore {
     ),
     const Achievement(
       id: AchievementIds.dailyQuizFive,
-      titleKu: '5 pirsên rojê',
-      titleTr: 'Günün soruları x5',
-      descriptionKu: 'Te pirsên rojê pênc caran qedandin.',
-      descriptionTr: 'Günün sorularını 5 kez tamamladın.',
+      titleKu: 'Gera rojê ×5',
+      titleTr: 'Günün turu ×5',
+      descriptionKu: 'Te gera rojê pênc caran qedandiye.',
+      descriptionTr: 'Günün turunu 5 kez tamamladın.',
       icon: AppIcons.bolt,
     ),
   ];

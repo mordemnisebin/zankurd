@@ -133,6 +133,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   /// Konu ızgarasının verisi: her kategorinin ustalık ilerlemesi ve
   /// (soru sayısı 2026-10-19'da karodan kalktı).
   Map<String, CategoryProgress> _topicProgress = const {};
+  int _completedLessonsCount = 0;
   LearningGoal? _learningGoal;
   bool _learningGoalLoaded = false;
   late AnimationController _loadAnimationController;
@@ -178,6 +179,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     if (oldWidget.refreshSignal != widget.refreshSignal) {
       oldWidget.refreshSignal?.removeListener(_handleRefreshSignal);
       widget.refreshSignal?.addListener(_handleRefreshSignal);
+    }
+    if (oldWidget.repository != widget.repository) {
+      _handleRefreshSignal();
     }
   }
 
@@ -348,6 +352,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     try {
       final mastery = await MasteryStore.load();
       final learningGoalStore = await LearningGoalStore.load();
+      final completedLessons = await repo.loadCompletedLessonIds();
       final progress = {
         for (final category in repo.categories)
           category: CategoryProgress(
@@ -359,6 +364,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       if (mounted) {
         setState(() {
           _topicProgress = progress;
+          _completedLessonsCount = completedLessons.length;
           _learningGoal = learningGoalStore.goal;
           _learningGoalLoaded = true;
         });
@@ -555,6 +561,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               role: SahneRole.learn,
               title: context.t(K.learnKurmanci),
               subtitle: context.t(K.homeDoorLearnSub),
+              trailing: _completedLessonsCount > 0
+                  // ✓ glifi Rubik'te yok (ui_glyph_coverage_test); simge.
+                  ? Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          AppIcons.check,
+                          size: 16,
+                          color: SahneTokens.of(context).learnTx,
+                        ),
+                        const SizedBox(width: SahneSpace.x1),
+                        SahneRowValue.meta(
+                          groupThousands(_completedLessonsCount),
+                        ),
+                      ],
+                    )
+                  : null,
               onTap: widget.onOpenLearning == null ? null : _openLearning,
             ),
             play: HomeDoorTile(

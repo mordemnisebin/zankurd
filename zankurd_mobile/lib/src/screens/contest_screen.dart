@@ -91,7 +91,6 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
   void _loadContest() {
     _contestFuture = widget.repository.loadTodayContest().timeout(
       const Duration(seconds: 8),
-      onTimeout: () => null,
     );
   }
 

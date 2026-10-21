@@ -611,7 +611,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
-    expect(find.text('Günün soruları'), findsNothing);
+    expect(find.text('Günün turu'), findsNothing);
   });
 
   testWidgets('first launch shows onboarding before auth screen', (

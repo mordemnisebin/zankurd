@@ -40,10 +40,10 @@ void main() {
             value: 7,
             caption: 'puan',
           ),
-          stats: SahneResultStats(
+          stats: const SahneResultStats(
             stats: [
               SahneResultStat(
-                leading: const SizedBox(),
+                leading: SizedBox(),
                 value: 2,
                 label: 'Doğru',
                 showWhenZero: true,

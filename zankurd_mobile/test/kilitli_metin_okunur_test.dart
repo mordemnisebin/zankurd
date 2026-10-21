@@ -98,12 +98,12 @@ void main() {
     ) async {
       await tester.pumpWidget(
         _app(
-          Scaffold(
+          const Scaffold(
             body: SahneListRow.plain(
               title: 'Silavkirin',
               enabled: false,
               onTap: null,
-              trailing: const Icon(Icons.lock),
+              trailing: Icon(Icons.lock),
             ),
           ),
           dark: dark,

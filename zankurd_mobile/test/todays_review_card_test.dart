@@ -182,6 +182,73 @@ void main() {
     semantics.dispose();
   });
 
+  testWidgets('aynı karede iki dokunuş tek tekrar oturumu başlatır', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.mistakeQuestionIds': ['offline_0005'],
+    });
+    var starts = 0;
+    await pump(tester, onStart: (_) => starts++);
+    final tap = tester
+        .widget<InkWell>(
+          find.descendant(
+            of: find.byKey(const ValueKey('todays-review-card')),
+            matching: find.byType(InkWell),
+          ),
+        )
+        .onTap!;
+    tap();
+    tap();
+    await tester.pumpAndSettle();
+    expect(starts, 1);
+    await tester.tap(find.byKey(const ValueKey('todays-review-card')));
+    await tester.pumpAndSettle();
+    expect(
+      starts,
+      2,
+      reason: 'Biten başlatma kilidi sonraki oturumu engellemez',
+    );
+  });
+
+  testWidgets('başka akışta tüketilen tekrar bayat kartı tazeler', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.mistakeQuestionIds': ['offline_0005'],
+    });
+    var starts = 0;
+    await pump(tester, onStart: (_) => starts++);
+    await (await MistakeStore.load()).clear();
+    await tester.tap(find.byKey(const ValueKey('todays-review-card')));
+    await tester.pumpAndSettle();
+    expect(starts, 0);
+    expect(find.byKey(const ValueKey('todays-review-card')), findsNothing);
+    expect(find.byKey(const ValueKey('todays-review-empty')), findsOneWidget);
+  });
+
+  testWidgets('tekrar başlatma hatası yakalanır ve yeniden denenebilir', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.mistakeQuestionIds': ['offline_0005'],
+    });
+    var starts = 0;
+    await pump(
+      tester,
+      onStart: (_) {
+        if (++starts == 1) throw StateError('start failed');
+      },
+    );
+    await tester.tap(find.byKey(const ValueKey('todays-review-card')));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    expect(find.text('Quiz yüklenemedi'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('todays-review-card')));
+    await tester.pumpAndSettle();
+    expect(starts, 2);
+  });
+
   testWidgets('tablet boyutunda overflow oluşmaz', (tester) async {
     SharedPreferences.setMockInitialValues({
       'zankurd.mistakeQuestionIds': ['offline_0005', 'offline_0010'],

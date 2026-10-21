@@ -32,7 +32,7 @@ double _ratio(Color a, Color b) {
 
 void main() {
   test('gece tx2 ve tx3 Perde üstünde belirgin, sıra korunur', () {
-    final night = SahneTokens.night;
+    const night = SahneTokens.night;
     expect(_ratio(night.tx2, night.s1), greaterThanOrEqualTo(8.0));
     expect(_ratio(night.tx3, night.s1), greaterThanOrEqualTo(5.5));
     expect(_lum(night.tx), greaterThan(_lum(night.tx2)));

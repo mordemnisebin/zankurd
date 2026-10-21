@@ -89,7 +89,7 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
     // yarısı boştu. Boşluğu dolgu ile değil işe yarar bir kısayolla kapat:
     // az alt konu varsa altta "Tüm sorular" satırı (konunun hepsinden karışık
     // tur). Mevcut metinler; çok alt konulu kategoride liste zaten doludur.
-    final showAllFooter = rawList.isNotEmpty && rawList.length <= 4;
+    final showAllFooter = rawList.isNotEmpty;
 
     // Konu akışının ortak bantlı başlığı ([CategoryBandScaffold]): kategori
     // tonu + kilim deseni, seviye ekranıyla AYNI bileşen.

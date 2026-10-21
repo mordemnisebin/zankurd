@@ -72,6 +72,7 @@ class _FriendsScreenState extends State<FriendsScreen>
   /// hata `false` sayılır ve sonuç depoda önbelleğe alınır.
   late final Future<bool> _challengeFuture;
   List<PlayerSearchResult> _searchResults = const [];
+  int _searchEpoch = 0;
   bool _searching = false;
   bool _roomLoading = false;
 
@@ -197,23 +198,26 @@ class _FriendsScreenState extends State<FriendsScreen>
       _showMessage(context.t(K.minTwoChars));
       return;
     }
+    final epoch = ++_searchEpoch;
     setState(() => _searching = true);
     try {
       final results = await widget.repository.searchPlayers(query);
-      if (!mounted) return;
+      if (!mounted || epoch != _searchEpoch) return;
       setState(() => _searchResults = results);
       if (results.isEmpty) {
         _showMessage(context.t(K.playerNotFound));
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'friends_load');
-      if (mounted) {
+      if (mounted && epoch == _searchEpoch) {
         setState(() => _searching = false);
         _showMessage(context.t(K.searchFailed));
       }
       return;
     } finally {
-      if (mounted) setState(() => _searching = false);
+      if (mounted && epoch == _searchEpoch) {
+        setState(() => _searching = false);
+      }
     }
   }
 
@@ -270,7 +274,9 @@ class _FriendsScreenState extends State<FriendsScreen>
       ErrorReporter.record(error, stack, reason: 'friend_request_accept');
       success = false;
     } finally {
-      _busyIds.remove(requestId);
+      if (mounted) {
+        setState(() => _busyIds.remove(requestId));
+      }
     }
     if (!mounted) return;
     if (success) {
@@ -291,7 +297,9 @@ class _FriendsScreenState extends State<FriendsScreen>
       ErrorReporter.record(error, stack, reason: 'friend_request_reject');
       success = false;
     } finally {
-      _busyIds.remove(requestId);
+      if (mounted) {
+        setState(() => _busyIds.remove(requestId));
+      }
     }
     if (!mounted) return;
     if (success) {
@@ -408,8 +416,11 @@ class _FriendsScreenState extends State<FriendsScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (kReferralRewardsEnabled) _buildInviteSection(ku),
                 _buildSearchSection(ku),
+                if (kReferralRewardsEnabled) ...[
+                  const SizedBox(height: SahneSpace.x4),
+                  _buildInviteSection(ku),
+                ],
                 _buildRequestsSection(ku),
                 _buildSentSection(),
                 SahneSectionHeader(title: context.t(K.friendsScreen)),
@@ -455,7 +466,7 @@ class _FriendsScreenState extends State<FriendsScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      context.t(K.inviteFriends),
+                      context.t(K.referralRewardTitle),
                       style: SahneType.bodyStrong.copyWith(
                         color: SahneVivid.onFill,
                       ),
@@ -533,7 +544,7 @@ class _FriendsScreenState extends State<FriendsScreen>
                   foreground: SahneVivid.onFill,
                   key: const ValueKey('friends-enter-code-button'),
                   label: context.t(K.enterReferralCode),
-                  icon: AppIcons.userPlus,
+                  icon: AppIcons.coins,
                   expand: true,
                   onPressed: () => _showReferralDialog(ku),
                 );

@@ -1,4 +1,5 @@
 import json
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -96,6 +97,82 @@ const questionBankAssets = <String>[
 """)
         with self.assertRaisesRegex(editorial_queue.AuditError, "Duplicate id: same"):
             editorial_queue.build_report(self.root, duplicate)
+
+
+class ReviewedDuplicateGroupsTest(unittest.TestCase):
+    setUp = EditorialQueueTest.setUp
+    tearDown = EditorialQueueTest.tearDown
+    write_manifest = EditorialQueueTest.write_manifest
+    write_bank = EditorialQueueTest.write_bank
+    def prepare(self):
+        self.write_manifest("const questionBankAssets = <String>['assets/data/a.json'];")
+        self.a = {"id": "a", "prompt": "Same target?", "correctAnswer": "31"}
+        self.b = {"id": "b", "prompt": "Same target again?", "correctAnswer": "31"}
+        self.write_bank("a.json", [self.a, self.b])
+        sidecar = self.root / "tool/content_authoring/reviewed_duplicate_groups.json"
+        sidecar.parent.mkdir(parents=True)
+        members = [{"sourcePath": "assets/data/a.json", "id": q["id"],
+                    "recordSha256": hashlib.sha256(json.dumps(q, sort_keys=True, ensure_ascii=False,
+                        separators=(",", ":")).encode("utf-8")).hexdigest()} for q in [self.a, self.b]]
+        sidecar.write_text(json.dumps({"schemaVersion": 1,
+            "hashAlgorithm": "sha256-canonical-json-v1", "groups": [{
+                "groupId": "same-objective", "rationale": "Same alphabet size objective",
+                "members": members}]}))
+        return sidecar
+
+    # Break caught: silently treating reviewed groups as absent instead of showing current review.
+    def test_current_group_report_preserves_both_production_records(self):
+        self.prepare()
+        report = editorial_queue.build_report(self.root)
+        self.assertIn("reviewedDuplicateGroups", report)
+        groups = report["reviewedDuplicateGroups"]
+        self.assertEqual(groups["status"], "loaded")
+        self.assertEqual(groups["groups"][0]["status"], "current")
+        self.assertTrue(groups["groups"][0]["reviewValid"])
+        self.assertEqual(report["summary"]["recordCount"], 2)
+        self.assertEqual({r["id"] for r in report["records"]}, {"a", "b"})
+
+    # Break caught: carrying a review forward after even one record's answer changes.
+    def test_answer_drift_invalidates_the_whole_group(self):
+        self.prepare()
+        changed = {**self.b, "correctAnswer": "32"}
+        self.write_bank("a.json", [self.a, changed])
+        report = editorial_queue.build_report(self.root)
+        self.assertIn("reviewedDuplicateGroups", report)
+        group = report["reviewedDuplicateGroups"]["groups"][0]
+        self.assertEqual(group["status"], "stale")
+        self.assertFalse(group["reviewValid"])
+        self.assertEqual([m["status"] for m in group["members"]], ["current", "changed"])
+
+    # Break caught: counting missing/excluded members as reviewed current zero debt.
+    def test_missing_member_is_reported_and_never_approved(self):
+        self.prepare()
+        self.write_bank("a.json", [self.a])
+        report = editorial_queue.build_report(self.root)
+        self.assertIn("reviewedDuplicateGroups", report)
+        group = report["reviewedDuplicateGroups"]["groups"][0]
+        self.assertEqual(group["status"], "stale")
+        self.assertFalse(group["reviewValid"])
+        self.assertEqual(group["members"][1]["status"], "missing_or_not_registered")
+
+    def test_new_matching_prompt_is_candidate_and_does_not_join_reviewed_group(self):
+        self.prepare()
+        third = {"id": "c", "prompt": "  SAME target? ", "correctAnswer": "32"}
+        self.write_bank("a.json", [self.a, self.b, third])
+        report = editorial_queue.build_report(self.root)
+        self.assertIn("reviewedDuplicateGroups", report)
+        group = report["reviewedDuplicateGroups"]["groups"][0]
+        self.assertEqual(len(group["members"]), 2)
+        self.assertEqual(group["unreviewedPromptMatches"], [{
+            "sourcePath": "assets/data/a.json", "id": "c",
+            "matchesMemberId": "a", "matchKind": "normalized_prompt",
+            "semanticReviewRequired": True}])
+
+    def test_malformed_sidecar_fails_instead_of_reporting_no_groups(self):
+        sidecar = self.prepare()
+        sidecar.write_text('{"groups": []}')
+        with self.assertRaisesRegex(editorial_queue.AuditError, "reviewed duplicate"):
+            editorial_queue.build_report(self.root)
 
 
 if __name__ == "__main__":

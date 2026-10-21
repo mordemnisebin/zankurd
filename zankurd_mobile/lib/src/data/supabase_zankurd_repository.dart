@@ -28,6 +28,7 @@ import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
 import '../config/category_visibility.dart';
 import 'lesson_completion_store.dart';
+import 'learning_lesson_aliases.dart';
 import 'local_progress_scope.dart';
 import 'mock_zankurd_repository.dart';
 import 'xp_store.dart';
@@ -3002,6 +3003,16 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .maybeSingle();
       final resolved = row?['id'];
       if (resolved is String && _lessonUuid.hasMatch(resolved)) return resolved;
+      final alias = LearningLessonAliases.completionSlugFor(id);
+      if (alias != null && alias != id) {
+        final aliasRow = await client
+            .from('lessons')
+            .select('id')
+            .eq('slug', alias)
+            .maybeSingle();
+        final aliasId = aliasRow?['id'];
+        if (aliasId is String && _lessonUuid.hasMatch(aliasId)) return aliasId;
+      }
     } catch (error, stack) {
       _recordError(error, stack, reason: 'lesson slug lookup failed');
     }

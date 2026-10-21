@@ -19,7 +19,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 double _contrast(Color a, Color b) {
@@ -86,7 +85,7 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      MaterialApp(
+      const MaterialApp(
         home: Scaffold(body: SahneBadge(label: 'Sıradaki ders')),
       ),
     );

@@ -363,7 +363,7 @@ class Tr {
     },
     K.joinByCode: {'ku': 'Bi kodê têkeve', 'tr': 'Kodla katıl'},
     K.events: {'ku': 'Her roj', 'tr': 'Her gün'},
-    K.dailyContest: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
+    K.dailyContest: {'ku': 'Gera rojê', 'tr': 'Günün turu'},
     K.tenQuestions: {'ku': '10 pirs', 'tr': '10 soru'},
     K.tournament: {'ku': 'Kûpa', 'tr': 'Turnuva'},
     // Kontenjan sunucu tarafında ayarlanır (`tournaments.size`); metne sayı
@@ -742,6 +742,7 @@ class Tr {
       'ku': 'Hevalên xwe vexwîne',
       'tr': 'Arkadaşlarını davet et',
     },
+    K.referralRewardTitle: {'ku': 'Xelata vexwendinê', 'tr': 'Davet ödülü'},
     K.inviteSubtitle: {
       'ku': 'Koda xwe parve bike, her du alî jî 100 zêr bistînin.',
       'tr': 'Kodunu paylaş, iki taraf da 100 jeton kazansın.',
@@ -752,7 +753,7 @@ class Tr {
       'tr':
           'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: {tag}. Sen de katıl: https://zankurd.com',
     },
-    K.enterReferralCode: {'ku': 'Kodê binivîse', 'tr': 'Davet kodu gir'},
+    K.enterReferralCode: {'ku': 'Koda xelatê têxe', 'tr': 'Ödül kodu gir'},
     // 2026-09-30 simülatör: kod GİRME diyaloğu paylaşma cümlesini
     // ([K.inviteSubtitle]) tekrar ediyordu; girişle ilgisizdi.
     K.enterReferralCodeHint: {
@@ -1299,20 +1300,20 @@ class Tr {
     // ── Etkinlik / çark / eşleşme ────────────────────────────────────
     K.noQuestionsFound: {'ku': 'Pirs nehatin dîtin.', 'tr': 'Soru bulunamadı.'},
     K.contestStartFailed: {
-      'ku': 'Pirsên rojê dest pê nekirin. Dîsa biceribîne.',
-      'tr': 'Günün soruları başlatılamadı. Tekrar dene.',
+      'ku': 'Gera rojê dest pê nekir. Dîsa biceribîne.',
+      'tr': 'Günün turu başlatılamadı. Tekrar dene.',
     },
     K.contestLoadFailed: {
-      'ku': 'Pirsên rojê nehatin barkirin.',
-      'tr': 'Günün soruları yüklenemedi.',
+      'ku': 'Gera rojê nehat barkirin.',
+      'tr': 'Günün turu yüklenemedi.',
     },
     K.retryTiny: {'ku': 'Dîsa', 'tr': 'Tekrar'},
     K.contestNoneToday: {
-      'ku': 'Pirsên rojê hîn amade nînin.',
-      'tr': 'Günün soruları henüz hazır değil.',
+      'ku': 'Gera rojê hîn amade nîne.',
+      'tr': 'Günün turu henüz hazır değil.',
     },
     K.goHome: {'ku': 'Vegere rûpela sereke', 'tr': 'Ana sayfaya dön'},
-    K.dailyEvent: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
+    K.dailyEvent: {'ku': 'Gera rojê', 'tr': 'Günün turu'},
     K.dailyEventCardTitle: {'ku': 'Pirsên tevlihev', 'tr': 'Karışık sorular'},
     K.questionCount: {'ku': '{count} pirs', 'tr': '{count} soru'},
     K.preparing: {'ku': 'Tê amadekirin…', 'tr': 'Hazırlanıyor…'},
@@ -2309,8 +2310,8 @@ class Tr {
       'tr': 'Düello yap ya da oda kurup arkadaşlarını çağır.',
     },
     K.onbDuelBullet: {
-      'ku': 'Pêşbirka bilez û pirsên rojê',
-      'tr': 'Hızlı düello ve günün soruları',
+      'ku': 'Pêşbirka bilez û gera rojê',
+      'tr': 'Hızlı düello ve günün turu',
     },
     // Quiz ipucu `alîkariyan` der (`K.finishQuizHint`). Tanıtım
     // "joker" deyince oyuncu aynı yardımcıyı Türkçe adla görür.
@@ -2557,15 +2558,15 @@ class Tr {
     // `contains('nîv')` taramasını kör eder — turnûva ile aynı sınıf.
     K.howToPlayBody: {
       'ku':
-          '• Pêşbirka bilez: tavilê 10 pirsan bibersivîne.\n• Pirsên '
-          'rojê: her roj 10 pirsan bibersivîne û pêşketina xwe '
+          '• Pêşbirka bilez: tavilê 10 pirsan bibersivîne.\n• Gera rojê: '
+          'her roj 10 pirsan bibersivîne û pêşketina xwe '
           'bibîne.\n• Ode ava bike: girêdana vexwendinê bi hevalên xwe '
           're parve bike û bi hev re bilîzin.\n• Mijar û ast: mijarekê '
           'û ji 5 astan yekê hilbijêre.\n• Nîv bi nîv: du bersivên şaş '
           'radike.\n• Bersivên rast pûan û zêr didin; bersivên rast ên '
           'li pey hev pûanên zêde didin.',
       'tr':
-          '• Hızlı düello: hemen 10 soru cevapla.\n• Günün soruları: '
+          '• Hızlı düello: hemen 10 soru cevapla.\n• Günün turu: '
           'her gün 10 soruyu cevapla ve ilerlemeni gör.\n• Oda kur: '
           'davet bağlantısını arkadaşlarınla paylaş, birlikte '
           'yarışın.\n• Konu ve seviye: bir konu ve 5 seviyeden birini '
@@ -3535,6 +3536,7 @@ class K {
   static const rejectAction = 'friends.reject';
   static const acceptAction = 'friends.accept';
   static const inviteFriends = 'friends.inviteFriends';
+  static const referralRewardTitle = 'friends.referralRewardTitle';
   static const inviteSubtitle = 'friends.inviteSubtitle';
   static const inviteShareText = 'friends.inviteShareText';
   static const enterReferralCode = 'friends.enterReferralCode';

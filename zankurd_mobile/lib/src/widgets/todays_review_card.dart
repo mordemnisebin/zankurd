@@ -52,6 +52,7 @@ class TodaysReviewCard extends StatefulWidget {
 class _TodaysReviewCardState extends State<TodaysReviewCard> {
   int _readyCount = 0;
   bool _loading = true;
+  bool _starting = false;
 
   @override
   void initState() {
@@ -128,35 +129,51 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   }
 
   Future<void> _startReview() async {
-    final store = await MistakeStore.load();
-    final questions = _launchable(store.readyIdsMostOverdueFirst);
-    if (questions.isEmpty) return;
+    if (_starting) return;
+    setState(() => _starting = true);
+    try {
+      final store = await MistakeStore.load();
+      if (!mounted) return;
+      final questions = _launchable(store.readyIdsMostOverdueFirst);
+      if (questions.isEmpty) {
+        await _refresh();
+        return;
+      }
 
-    final onStart = widget.onStartReview;
-    if (onStart != null) {
-      onStart(questions);
-      return;
-    }
+      final onStart = widget.onStartReview;
+      if (onStart != null) {
+        onStart(questions);
+        return;
+      }
 
-    if (!mounted) return;
-    final ku = widget.isKu;
-    final room = widget.repository.createRoom().copyWith(
-      name: Tr.forKu(K.todaysReviews, ku),
-      questionCount: questions.length,
-    );
-    await Navigator.of(context).push(
-      AppRoute.to(
-        QuizScreen(
-          repository: widget.repository,
-          room: room,
-          questions: questions,
-          practice: true,
-          enableTimer: false,
-          experience: QuizExperience.learning,
+      final ku = widget.isKu;
+      final room = widget.repository.createRoom().copyWith(
+        name: Tr.forKu(K.todaysReviews, ku),
+        questionCount: questions.length,
+      );
+      await Navigator.of(context).push(
+        AppRoute.to(
+          QuizScreen(
+            repository: widget.repository,
+            room: room,
+            questions: questions,
+            practice: true,
+            enableTimer: false,
+            experience: QuizExperience.learning,
+          ),
         ),
-      ),
-    );
-    if (mounted) _refresh();
+      );
+      if (mounted) await _refresh();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'todays_review_start');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(Tr.forKu(K.quizLoadFail, widget.isKu))),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _starting = false);
+    }
   }
 
   @override
@@ -196,14 +213,14 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
       key: const ValueKey('todays-review-card'),
       container: true,
       button: true,
-      enabled: true,
+      enabled: !_starting,
       label: semanticLabel,
       excludeSemantics: true,
-      onTap: _startReview,
+      onTap: _starting ? null : _startReview,
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
-          onTap: _startReview,
+          onTap: _starting ? null : _startReview,
           excludeFromSemantics: true,
           customBorder: SahneShape.m,
           child: Padding(

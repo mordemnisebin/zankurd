@@ -43,6 +43,7 @@ class HomeDoorTile extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.onTap,
+    this.trailing,
     super.key,
   });
 
@@ -51,6 +52,7 @@ class HomeDoorTile extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback? onTap;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,7 @@ class HomeDoorTile extends StatelessWidget {
       role: role,
       title: title,
       subtitle: subtitle,
+      trailing: trailing,
       chevron: true,
       enabled: onTap != null,
       onTap: onTap,

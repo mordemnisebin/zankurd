@@ -14,8 +14,10 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/lesson.dart';
+import '../models/quiz_question.dart';
 import '../services/lesson_listening_speaker.dart';
 import '../services/placement_scoring.dart';
+import '../services/question_set_policy.dart';
 import '../utils/app_route.dart';
 import 'level_placement_screen.dart';
 import '../data/streak_store.dart';
@@ -595,23 +597,52 @@ class _LearningScreenState extends State<LearningScreen> {
 
   Future<void> _openCategoryPractice() async {
     if (_currentLessons.isEmpty || !mounted) return;
-    final lesson = _currentLessons.first;
+    final lessons = List<Lesson>.of(_currentLessons);
+    final lesson = lessons.first;
     final quizCategory = quizCategoryForLesson(lesson.category);
     try {
-      final questions = await widget.repository.loadLevelQuestions(
+      final levelQuestions = await widget.repository.loadLevelQuestions(
         category: quizCategory,
         difficultyMin: 1,
         difficultyMax: 5,
         limit: 10,
       );
       if (!mounted) return;
-      if (questions.isEmpty) {
+      if (levelQuestions.isEmpty) {
         _showPracticeLoadFailure(context.t(K.noQuestionsFound));
         return;
       }
+      final start = _recommendedLessonIndex(
+        lessons,
+      ).clamp(0, lessons.length - 1);
+      final orderedLessons = [
+        ...lessons.sublist(start),
+        ...lessons.sublist(0, start),
+      ];
+      final perLesson = [
+        for (final item in orderedLessons)
+          await widget.repository.loadLearningQuizQuestions(
+            category: quizCategory,
+            learningLessonId: item.slug,
+            limit: 5,
+          ),
+      ];
+      if (!mounted) return;
+      final topicQuestions = <QuizQuestion>[
+        for (var i = 0; i < 5; i++)
+          for (final batch in perLesson)
+            if (i < batch.length) batch[i],
+      ];
+      final questions = QuestionSetPolicy.diverseWithoutLeaks([
+        ...topicQuestions,
+        ...levelQuestions,
+      ], limit: 10);
       final room = widget.repository
           .createRoom(category: quizCategory)
-          .copyWith(questionCount: questions.length);
+          .copyWith(
+            name: _categoryLabel(_selectedCategory, context.isKu),
+            questionCount: questions.length,
+          );
       await Navigator.of(context).push(
         AppRoute(
           page: QuizScreen(
@@ -623,6 +654,7 @@ class _LearningScreenState extends State<LearningScreen> {
           ),
         ),
       );
+      _refreshCompleted();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'learning_category_practice');
       if (mounted) {

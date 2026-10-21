@@ -25,8 +25,8 @@ class _TrackingContestRepository extends MockZanKurdRepository {
 
 void main() {
   test('günlük etkinlik iki dilde 10 soruluk ilerleme olarak tanımlanır', () {
-    expect(Tr.of(K.dailyContest, AppLanguage.tr), 'Günün soruları');
-    expect(Tr.of(K.dailyContest, AppLanguage.ku), 'Pirsên rojê');
+    expect(Tr.of(K.dailyContest, AppLanguage.tr), 'Günün turu');
+    expect(Tr.of(K.dailyContest, AppLanguage.ku), 'Gera rojê');
 
     final trCopy = [
       Tr.of(K.contestNoneToday, AppLanguage.tr),
@@ -40,11 +40,11 @@ void main() {
     ].join(' ');
 
     expect(trCopy, contains('10'));
-    expect(trCopy, contains('Günün soruları'));
+    expect(trCopy, contains('Günün turu'));
     expect(trCopy.toLowerCase(), isNot(contains('ödül')));
     expect(trCopy.toLowerCase(), isNot(contains('sıralama')));
     expect(kuCopy, contains('10'));
-    expect(kuCopy, contains('Pirsên rojê'));
+    expect(kuCopy, contains('Gera rojê'));
     expect(kuCopy.toLowerCase(), isNot(contains('xelat')));
     expect(kuCopy.toLowerCase(), isNot(contains('pêşderçûn')));
   });
@@ -62,7 +62,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Günün soruları'), findsWidgets);
+      expect(find.text('Günün turu'), findsWidgets);
       expect(find.text('Günün Yarışması'), findsNothing);
       expect(find.textContaining('Ödül:'), findsNothing);
       expect(find.text('Katıl ve sıralamada yerini al.'), findsNothing);
@@ -87,7 +87,7 @@ void main() {
       expect(quiz.dailyQuiz, isTrue);
       expect(quiz.contestId, isNull);
       expect(quiz.room.category, 'Tevlihev');
-      expect(quiz.room.name, 'Günün soruları');
+      expect(quiz.room.name, 'Günün turu');
     },
   );
 }

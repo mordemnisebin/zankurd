@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 import re
 import sys
+import unicodedata
 
 
 class AuditError(RuntimeError):
@@ -93,6 +94,85 @@ def _record(asset: str, raw: dict[str, object]) -> dict[str, object]:
     }
 
 
+def reviewed_duplicate_groups(
+    root: Path, raw_records: dict[tuple[str, str], dict[str, object]]
+) -> dict[str, object]:
+    """Validate explicit reviews; no removal, suppression or semantic inference."""
+    path = root / "tool/content_authoring/reviewed_duplicate_groups.json"
+    if not path.exists():
+        return {"status": "not_configured", "groups": []}
+    try:
+        sidecar = json.loads(path.read_text(encoding="utf-8"))
+        if (not isinstance(sidecar, dict) or sidecar.get("schemaVersion") != 1
+                or sidecar.get("hashAlgorithm") != "sha256-canonical-json-v1"
+                or not isinstance(sidecar.get("groups"), list)):
+            raise ValueError("unsupported schema or hash algorithm")
+        groups = []
+        seen_groups = set()
+        seen_members = set()
+        for group in sidecar["groups"]:
+            if not isinstance(group, dict):
+                raise ValueError("group must be an object")
+            group_id = group.get("groupId")
+            if not isinstance(group_id, str) or not group_id or group_id in seen_groups:
+                raise ValueError("groupId must be nonempty and unique")
+            seen_groups.add(group_id)
+            if not isinstance(group.get("rationale"), str) or not group["rationale"].strip():
+                raise ValueError("group rationale is required")
+            members = group.get("members")
+            if not isinstance(members, list) or len(members) < 2:
+                raise ValueError("group requires at least two members")
+            checked = []
+            for member in members:
+                if not isinstance(member, dict):
+                    raise ValueError("member must be an object")
+                source, record_id = member.get("sourcePath"), member.get("id")
+                expected = member.get("recordSha256")
+                if (not isinstance(source, str) or not source.startswith("assets/data/")
+                        or not isinstance(record_id, str) or not record_id
+                        or not isinstance(expected, str)
+                        or not re.fullmatch(r"[0-9a-f]{64}", expected)):
+                    raise ValueError("invalid source/id/recordSha256")
+                key = (source, record_id)
+                if key in seen_members:
+                    raise ValueError("member belongs to multiple groups; union them first")
+                seen_members.add(key)
+                raw = raw_records.get(key)
+                actual = None if raw is None else hashlib.sha256(json.dumps(
+                    raw, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+                ).encode("utf-8")).hexdigest()
+                status = "missing_or_not_registered" if raw is None else (
+                    "current" if actual == expected else "changed")
+                checked.append({**member, "actualRecordSha256": actual, "status": status})
+            valid = all(member["status"] == "current" for member in checked)
+            member_keys = {(m["sourcePath"], m["id"]) for m in members}
+            matches = []
+            for key, candidate in raw_records.items():
+                if key in member_keys:
+                    continue
+                for member in checked:
+                    raw = raw_records.get((member["sourcePath"], member["id"]))
+                    if raw is None:
+                        continue
+                    left, right = _text(candidate.get("prompt")), _text(raw.get("prompt"))
+                    normalize = lambda text: " ".join(unicodedata.normalize("NFKC", text).casefold().split())
+                    if left and normalize(left) == normalize(right):
+                        matches.append({"sourcePath": key[0], "id": key[1],
+                            "matchesMemberId": member["id"],
+                            "matchKind": "exact_prompt" if left == right else "normalized_prompt",
+                            "semanticReviewRequired": True})
+                        break
+            groups.append({**group, "members": checked, "reviewValid": valid,
+                "status": "current" if valid else "stale",
+                "unreviewedPromptMatches": matches})
+        return {"status": "loaded", "sourcePath": str(path.relative_to(root)),
+            "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            "scopeNote": "Explicit same-objective review only; prompt matches are unreviewed candidates. No semantic third-variant detection or quality suppression.",
+            "groups": groups}
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError, ValueError, TypeError) as exc:
+        raise AuditError(f"Invalid reviewed duplicate sidecar: {exc}") from exc
+
+
 def build_report(root: Path, manifest: Path | None = None) -> dict[str, object]:
     manifest = manifest or root / "lib/src/data/question_bank_assets.dart"
     assets = registered_assets(manifest)
@@ -100,6 +180,7 @@ def build_report(root: Path, manifest: Path | None = None) -> dict[str, object]:
     banks: list[dict[str, object]] = []
     seen_ids: dict[str, str] = {}
     combined = hashlib.sha256()
+    raw_records: dict[tuple[str, str], dict[str, object]] = {}
 
     for asset in assets:
         path = root / asset
@@ -131,6 +212,7 @@ def build_report(root: Path, manifest: Path | None = None) -> dict[str, object]:
                     f"Duplicate id: {question_id} ({seen_ids[question_id]}, {asset})"
                 )
             seen_ids[question_id] = asset
+            raw_records[(asset, question_id)] = item
             records.append(record)
 
     priority_order = {f"P{i}": i for i in range(5)}
@@ -159,6 +241,7 @@ def build_report(root: Path, manifest: Path | None = None) -> dict[str, object]:
             "imageAltMissing": sum(bool(row["imageAltMissing"]) for row in records),
             "audioAbsent": sum(bool(row["audioAbsent"]) for row in records),
         },
+        "reviewedDuplicateGroups": reviewed_duplicate_groups(root, raw_records),
         "records": records,
     }
 
@@ -210,7 +293,13 @@ def write_outputs(report: dict[str, object], output_base: Path) -> None:
             f"| {row['priority']} | {row['reviewStatus']} | `{row['id']}` | "
             f"`{row['bank']}` | {prompt} | {source} |"
         )
-    lines.extend(["", "Tam kayıt kuyruğu JSON ve CSV çıktılarındadır.", ""])
+    duplicate_reviews = report["reviewedDuplicateGroups"]
+    lines.extend(["", "## İncelenmiş aynı hedef grupları", "",
+        f"Yan rapor durumu: `{duplicate_reviews['status']}`. Üretim kaydı elenmez; kalite uyarıları bastırılmaz.", ""])
+    for group in duplicate_reviews["groups"]:
+        lines.append(f"- `{group['groupId']}`: `{group['status']}`; "
+            f"üye={len(group['members'])}; incelenmemiş prompt eşleşmesi={len(group['unreviewedPromptMatches'])}.")
+    lines.extend(["", "Tam kayıt kuyruğu ve hash doğrulamaları JSON çıktısındadır.", ""])
     output_base.with_suffix(".md").write_text("\n".join(lines), encoding="utf-8")
 
 

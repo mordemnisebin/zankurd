@@ -245,8 +245,8 @@ void main() {
     // Ürün terimi zaten `Koda Vexwendinê` (`K.enterReferralCode`).
     // Misafir yasağı "davetê" deyince aynı kod iki adla duruyordu.
     // Türkçe `davet` kökü `contains('vexwend')` taramasını kör eder.
-    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Kodê binivîse');
-    expect(Tr.of(K.enterReferralCode, AppLanguage.tr), 'Davet kodu gir');
+    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda xelatê têxe');
+    expect(Tr.of(K.enterReferralCode, AppLanguage.tr), 'Ödül kodu gir');
     expect(
       Tr.of(K.referralGuestBlocked, AppLanguage.ku),
       contains('Koda vexwendinê'),

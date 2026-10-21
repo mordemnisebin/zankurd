@@ -4,6 +4,7 @@
 // degrade kart değil, liste satırıdır (`SahneListRow`); bekçi
 // "tek birincil (turuncu) eylem, öteki yollar sakin ve erişilebilir"
 // kuralını bu dilde sorar.
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -25,7 +26,11 @@ import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
-Widget _homeShell({required bool isKu, required bool isDark}) {
+Widget _homeShell({
+  required bool isKu,
+  required bool isDark,
+  MockZanKurdRepository? repository,
+}) {
   return MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -41,7 +46,7 @@ Widget _homeShell({required bool isKu, required bool isDark}) {
       key: ValueKey('home-$isKu-$isDark'),
       theme: isDark ? AppTheme.dark() : AppTheme.light(),
       home: HomeScreen(
-        repository: MockZanKurdRepository(),
+        repository: repository ?? MockZanKurdRepository(),
         onOpenLearning: () async {},
         onOpenPlay: () {},
       ),
@@ -263,6 +268,46 @@ void main() {
           .getSemanticsData();
       expect(data.flagsCollection.isHeader, isFalse);
       expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+    },
+  );
+
+  testWidgets(
+    'öğren kapısı tamamlanan ders sayısını sıfırdan büyükken gösterir',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      final repo = MockZanKurdRepository();
+      await tester.pumpWidget(_homeShell(isKu: false, isDark: false));
+      await tester.pump(const Duration(seconds: 1));
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('home-door-learn')),
+          matching: find.byIcon(AppIcons.check),
+        ),
+        findsNothing,
+      );
+
+      await repo.markLessonCompleted('alphabet_1');
+      await repo.markLessonCompleted('everyday_1');
+      await tester.pumpWidget(
+        _homeShell(isKu: false, isDark: true, repository: repo),
+      );
+      await tester.pump(const Duration(seconds: 1));
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('home-door-learn')),
+          matching: find.text('2'),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('home-door-learn')),
+          matching: find.byIcon(AppIcons.check),
+        ),
+        findsOneWidget,
+      );
     },
   );
 }

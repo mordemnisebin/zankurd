@@ -114,6 +114,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('subcategory-card-gisti')), findsOne);
     expect(find.text('Tüm sorular'), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('subcategory-card-gisti')));
+    await tester.pumpAndSettle();
+    expect(find.byType(LevelScreen), findsOneWidget);
+    expect(find.text('Tüm sorular'), findsOneWidget);
+    expect(find.text('Dil'), findsOneWidget);
   });
 
   testWidgets('alt kategoriler açık yüzeyli liste grubunda satır olur', (

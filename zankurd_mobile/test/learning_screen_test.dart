@@ -13,6 +13,7 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/lesson.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/services/lesson_listening_speaker.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -1490,4 +1491,43 @@ void main() {
     expect(find.byKey(const ValueKey('lesson-recall-answer')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets(
+    'Soru çöz seçili konunun ders sorularını önceliklendirir ve oda adını '
+    'konu adıyla açar',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({});
+      PlacementStore.resetInstance();
+      addTearDown(PlacementStore.resetInstance);
+
+      await tester.pumpWidget(
+        wrap(LearningScreen(repository: MockZanKurdRepository())),
+      );
+      await tester.pumpAndSettle();
+
+      final foodTab = find.byKey(const ValueKey('learning-tab-food'));
+      await tester.ensureVisible(foodTab);
+      await tester.tap(foodTab);
+      await tester.pumpAndSettle();
+
+      final practice = find.descendant(
+        of: find.byKey(const ValueKey('learning-topic-practice')),
+        matching: find.byType(FilledButton),
+      );
+      await tester.ensureVisible(practice);
+      await tester.tap(practice);
+      await tester.pumpAndSettle();
+
+      final quiz = tester.widget<QuizScreen>(find.byType(QuizScreen));
+      expect(quiz.room.name, 'Yemek');
+      expect(
+        quiz.questions.any(
+          (q) =>
+              (q.metadata?.learningLessonId ?? '').startsWith('food') ||
+              q.id.contains('food'),
+        ),
+        isTrue,
+      );
+    },
+  );
 }

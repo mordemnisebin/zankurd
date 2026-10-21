@@ -309,8 +309,8 @@ void main() {
       // Kurul 2026-10-20: düğme "Parve bike · ZK-7RHC" (ne yaptığını söyler).
       expect(find.textContaining('· ZK-7RHC'), findsOneWidget);
       expect(find.text('7RHC'), findsNothing);
-      // "Kodê binivîse" tek satır: tam genişlikte düğme.
-      final label = tester.getSize(find.text('Kodê binivîse'));
+      // "Koda xelatê têxe" tek satır: tam genişlikte düğme.
+      final label = tester.getSize(find.text('Koda xelatê têxe'));
       expect(label.height, lessThanOrEqualTo(26));
     });
 

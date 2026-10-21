@@ -849,7 +849,7 @@ void main() {
     // Etiket `Koda Vexwendinê` der (`K.enterReferralCode`). Misafir
     // yasağı "davetê" deyince oyuncu aynı kodu iki adla görür. Türkçe
     // `davet` kökü `contains('vexwend')` taramasını kör eder.
-    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Kodê binivîse');
+    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda xelatê têxe');
     expect(
       Tr.of(K.referralGuestBlocked, AppLanguage.ku),
       contains('Koda vexwendinê'),

@@ -3,7 +3,6 @@
 // ≤ 3 sn kırmızı; duraklatılmışta (hotSeconds -1) gerilim rengi yok.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 void main() {
