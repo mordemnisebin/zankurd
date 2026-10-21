@@ -63,7 +63,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('story-open-guide')));
     await tester.pumpAndSettle();
     expect(find.text('Yeni kelimeler'), findsOneWidget);
-    expect(find.text('Derse başla'), findsOneWidget);
+    expect(find.text('Anladım'), findsOneWidget);
   });
 
   testWidgets('yeniden başlatma başa döner', (tester) async {
