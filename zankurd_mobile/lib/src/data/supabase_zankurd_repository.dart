@@ -2637,9 +2637,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     // kaydedildi…" diyordu (iki simülatör turu, 2026-10-21: oyun ortasında
     // rakip çıkınca). `room_not_finished` / `answers_incomplete` GEÇİCİ
     // durumlardır (oda henüz kapanmadı); onlar kuyruğa girmeye devam eder.
+    //
+    // `room_progress_incomplete` da kalıcıdır: iki kişilik odada biri oyun
+    // ortasında çıkınca `crowd_room_member_leave` odayı bilerek
+    // `completed` kapatır ama indeksi ilerletmez (havuz yarım oyunda
+    // dağıtılmaz). Kapanmış odanın indeksi bir daha ilerlemez; bu sıfır
+    // kuyruğa girerse kalan oyuncu yine "Bağlantı yok" görüyordu (iki
+    // simülatör turu, 2026-10-22: 10 sorunun 3'ünde rakip çıktı).
     if (json != null &&
         json['amount'] == 0 &&
-        json['room_not_completed'] == true) {
+        (json['room_not_completed'] == true ||
+            json['room_progress_incomplete'] == true)) {
       return 0;
     }
 

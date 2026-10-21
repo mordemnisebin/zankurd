@@ -124,6 +124,20 @@ void main() {
   });
 
   test(
+    'rakip ortada çıkınca kapanan odanın yarım ilerlemesi arıza sayılmaz',
+    () async {
+      // crowd_room_member_leave: kalan tek oyuncu → `completed`, indeks
+      // ilerlemez → claim_quiz_reward `room_progress_incomplete` döner.
+      final result = await _claim({
+        'amount': 0,
+        'room_progress_incomplete': true,
+      });
+      expect(result.amount, 0);
+      expect(result.cap, isFalse);
+    },
+  );
+
+  test(
     'geçici durumlar ve bayraksız sıfır hâlâ reddedilir (kuyruğa girer)',
     () async {
       await expectLater(
