@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+import 'public_profile.dart';
+
 /// Bir arkadaşın beni odasına davet etmesi (`list_my_room_invites`).
 ///
 /// Sunucu yalnız lobisi hâlâ açık, 30 dakikadan yeni ve engelsiz davetleri
@@ -17,6 +19,7 @@ class RoomInvite {
     required this.playerCount,
     required this.maxPlayers,
     required this.createdAt,
+    this.inviterProfile,
   });
 
   final String id;
@@ -28,6 +31,9 @@ class RoomInvite {
   final int playerCount;
   final int maxPlayers;
   final DateTime createdAt;
+
+  /// Davet edenin fotoğraf/kod kimliği (depo tamamlar; yoksa null).
+  final PublicProfile? inviterProfile;
 
   static RoomInvite fromJson(Map<String, dynamic> json) => RoomInvite(
     id: json['invite_id'] as String,

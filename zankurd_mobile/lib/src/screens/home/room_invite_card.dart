@@ -11,6 +11,7 @@ import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/error_reporter.dart';
 import '../../utils/player_identity.dart';
+import '../../widgets/player_avatar.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../play_hub_screen.dart' show joinRoomErrorKey;
 import '../room_screen.dart';
@@ -158,7 +159,10 @@ class _RoomInviteCardState extends State<RoomInviteCard> {
     }
     final invite = _invites.first;
     final extra = _invites.length - 1;
-    final name = context.playerDisplayName(invite.inviterName);
+    final name = context.playerDisplayName(
+      invite.inviterName,
+      tag: invite.inviterProfile?.playerTag,
+    );
     final title = context.t(K.roomInviteCardTitle, {'name': name});
     final meta = context.t(K.roomInviteCardMeta, {
       'category': invite.categoryName,
@@ -185,12 +189,25 @@ class _RoomInviteCardState extends State<RoomInviteCard> {
                     style: SahneType.captionStrong.copyWith(color: t.eyebrowTx),
                   ),
                   const SizedBox(height: SahneSpace.x1),
-                  Semantics(
-                    header: true,
-                    child: Text(
-                      title,
-                      style: SahneType.headline.copyWith(color: t.tx),
-                    ),
+                  Row(
+                    children: [
+                      PlayerAvatar.fromIdentity(
+                        key: const ValueKey('room-invite-avatar'),
+                        radius: 18,
+                        identity: invite.inviterProfile?.avatar,
+                        displayName: invite.inviterName,
+                      ),
+                      const SizedBox(width: SahneSpace.x3),
+                      Expanded(
+                        child: Semantics(
+                          header: true,
+                          child: Text(
+                            title,
+                            style: SahneType.headline.copyWith(color: t.tx),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: SahneSpace.x1),
                   Text(

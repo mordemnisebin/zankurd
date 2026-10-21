@@ -14,6 +14,7 @@ import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
+import '../models/public_profile.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
@@ -674,7 +675,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final totalScore = (row['total_score'] as num?)?.toInt() ?? 0;
       if (rank <= 0 || totalScore <= 0) return null;
 
+      final tags = await _publicProfilesById([row['player_id'] as String?]);
       return LeaderboardEntry(
+        playerTag: tags[row['player_id'] as String?]?.playerTag,
         rank: rank,
         playerId: row['player_id'] as String? ?? '',
         displayName: row['display_name'] as String? ?? 'Oyuncu',
@@ -1107,9 +1110,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<RoomResultSnapshot?> loadMyPendingRoomResult() async {
     final response = await client.rpc('get_my_pending_room_result');
-    return _parseRoomResultResponse(
-      response,
-      source: 'get_my_pending_room_result',
+    return _withResultProfiles(
+      _parseRoomResultResponse(response, source: 'get_my_pending_room_result'),
     );
   }
 
@@ -1123,10 +1125,39 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       'get_my_room_result',
       params: {'p_room_id': roomId},
     );
-    return _parseRoomResultResponse(
-      response,
-      source: 'get_my_room_result',
-      expectedRoomId: roomId,
+    return _withResultProfiles(
+      _parseRoomResultResponse(
+        response,
+        source: 'get_my_room_result',
+        expectedRoomId: roomId,
+      ),
+    );
+  }
+
+  /// Sonuç yükü yalnız ad döndürür (boşsa 'Hevrik'); fotoğraf, simge ve
+  /// oyuncu kodu herkese açık profilden tamamlanır. Profil okunamazsa
+  /// sunucunun yüküyle devam edilir — sonuç ekranı bu yüzden bekletilmez.
+  Future<RoomResultSnapshot?> _withResultProfiles(
+    RoomResultSnapshot? snapshot,
+  ) async {
+    if (snapshot == null) return null;
+    final profiles = await _publicProfilesById([
+      for (final p in snapshot.room.players) p.id,
+    ]);
+    if (profiles.isEmpty) return snapshot;
+    return RoomResultSnapshot(
+      room: snapshot.room.copyWith(
+        players: [
+          for (final p in snapshot.room.players) p.withProfile(profiles[p.id]),
+        ],
+      ),
+      ownPlayerId: snapshot.ownPlayerId,
+      questionIds: snapshot.questionIds,
+      answers: snapshot.answers,
+      winnerId: snapshot.winnerId,
+      endedReason: snapshot.endedReason,
+      forfeitedBy: snapshot.forfeitedBy,
+      finishedAt: snapshot.finishedAt,
     );
   }
 
@@ -1584,14 +1615,30 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         // Akış `order`ının varsayılanı AZALAN (`ascending: false`); sohbet
         // listesi eski üstte/yeni altta bekler (2026-10-21 ters sohbet).
         .order('created_at', ascending: true)
-        .map(
-          (rows) => rows
-              .map(
-                (row) =>
-                    RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
-              )
-              .toList(),
+        .asyncMap(
+          (rows) => _withSenderProfiles([
+            for (final row in rows)
+              RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
+          ]),
         );
+  }
+
+  /// Sohbet satırı yalnız gönderim anındaki adı/rengi taşır; fotoğraf ve
+  /// güncel ad herkese açık profilden gelir. Aynı oyuncu için yeniden
+  /// sorulmaz (oda ömrü boyunca önbellek).
+  final Map<String, PublicProfile> _chatProfiles = {};
+
+  Future<List<RoomMessage>> _withSenderProfiles(
+    List<RoomMessage> messages,
+  ) async {
+    final missing = {
+      for (final m in messages)
+        if (!_chatProfiles.containsKey(m.senderId)) m.senderId,
+    };
+    if (missing.isNotEmpty) {
+      _chatProfiles.addAll(await _publicProfilesById(missing));
+    }
+    return [for (final m in messages) m.withProfile(_chatProfiles[m.senderId])];
   }
 
   @override
@@ -1602,12 +1649,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .select('*')
           .eq('room_id', roomId)
           .order('created_at');
-      return rows
-          .map(
-            (row) =>
-                RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
-          )
-          .toList();
+      return _withSenderProfiles([
+        for (final row in rows)
+          RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
+      ]);
     } catch (e, s) {
       _recordError(e, s, reason: 'loadRoomMessages failed');
       return _offline.loadRoomMessages(roomId);
@@ -1774,6 +1819,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
                 avatarUrl: cachedProfile?['avatar_url'] as String?,
                 avatarFrame: cachedProfile?['avatar_frame'] as String?,
                 showcaseTitle: cachedProfile?['showcase_title'] as String?,
+                tag: cachedProfile?['player_tag'] as String?,
                 left: row['left_at'] != null,
               ),
             );
@@ -2531,6 +2577,34 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  /// id'ye göre herkese açık kimlik (taze; önbelleğe bakmaz — fotoğraf/ad
+  /// değişmiş olabilir). Hata ve eksik RPC boş harita döner: çağıran eski
+  /// davranışa (baş harf, yer tutucu ad) düşer, ekran bozulmaz.
+  Future<Map<String, PublicProfile>> _publicProfilesById(
+    Iterable<String?> ids,
+  ) async {
+    final unique = <String>{
+      for (final id in ids)
+        if (id != null && id.trim().isNotEmpty) id,
+    }.toList();
+    if (unique.isEmpty) return const {};
+    try {
+      final rows = await _fetchPublicProfiles(unique);
+      return {
+        for (final row in rows)
+          if (row['id'] is String)
+            row['id'] as String: PublicProfile.fromJson(row),
+      };
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'public profiles lookup failed');
+      return const {};
+    }
+  }
+
+  @override
+  Future<Map<String, PublicProfile>> loadPublicProfiles(Iterable<String> ids) =>
+      _publicProfilesById(ids);
+
   int? _amountFromRpcResponse(Object? response) {
     if (response is Map<String, dynamic>) {
       return (response['amount'] as num?)?.toInt();
@@ -2702,10 +2776,14 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'get_leaderboard',
         params: {'p_days': period.days, 'p_limit': limit},
       );
+      final tags = await _publicProfilesById([
+        for (final row in rows) (row as Map)['player_id'] as String?,
+      ]);
       return rows.indexed.map((item) {
         final index = item.$1;
         final row = item.$2 as Map<String, dynamic>;
         return LeaderboardEntry(
+          playerTag: tags[row['player_id'] as String?]?.playerTag,
           rank: index + 1,
           playerId: row['player_id'] as String? ?? '',
           displayName: row['display_name'] as String? ?? 'Oyuncu',
@@ -2735,8 +2813,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .from('room_players')
         .select(
           'player_id, score, streak, is_ready, left_at, '
-          'profiles(display_name, avatar_icon, avatar_color, avatar_url, '
-          'avatar_frame, showcase_title)',
+          'profiles(display_name, player_tag, avatar_icon, avatar_color, '
+          'avatar_url, avatar_frame, showcase_title)',
         )
         .eq('room_id', roomId)
         .order('joined_at');
@@ -2782,6 +2860,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         avatarUrl: profile?['avatar_url'] as String?,
         avatarFrame: profile?['avatar_frame'] as String?,
         showcaseTitle: profile?['showcase_title'] as String?,
+        tag: profile?['player_tag'] as String?,
         left: row['left_at'] != null,
       );
     }).toList();
@@ -3128,13 +3207,28 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<List<SentFriendRequest>?> loadSentFriendRequests() async {
     try {
       final res = await client.rpc<List<dynamic>>('list_sent_friend_requests');
-      return res
+      final sent = res
           .map(
             (row) => SentFriendRequest.fromJson(
               Map<String, dynamic>.from(row as Map),
             ),
           )
           .toList();
+      final profiles = await _publicProfilesById([
+        for (final r in sent) r.toUserId,
+      ]);
+      return [
+        for (final r in sent)
+          profiles[r.toUserId] == null
+              ? r
+              : SentFriendRequest(
+                  id: r.id,
+                  toUserId: r.toUserId,
+                  toUserName: profiles[r.toUserId]!.nameOr(r.toUserName),
+                  createdAt: r.createdAt,
+                  toProfile: profiles[r.toUserId],
+                ),
+      ];
     } catch (e, s) {
       if (isMissingRpcError(e)) return null;
       _recordError(e, s, reason: 'loadSentFriendRequests failed');
@@ -3236,13 +3330,28 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'search_profiles',
         params: {'p_query': query},
       );
-      return res
+      final found = res
           .map(
             (row) => PlayerSearchResult.fromJson(
               Map<String, dynamic>.from(row as Map),
             ),
           )
           .toList();
+      // `search_profiles` fotoğraf/simge döndürmez; arama sonucu da aynı
+      // avatarla çizilsin diye herkese açık profille tamamlanır.
+      final profiles = await _publicProfilesById([for (final f in found) f.id]);
+      return [
+        for (final f in found)
+          profiles[f.id] == null
+              ? f
+              : PlayerSearchResult(
+                  id: f.id,
+                  displayName: f.displayName,
+                  avatarColor: f.avatarColor,
+                  playerTag: f.playerTag,
+                  profile: profiles[f.id],
+                ),
+      ];
     } catch (e, s) {
       _recordError(e, s, reason: 'searchPlayers failed');
       // BAŞARISIZLIĞI SIFIR SONUÇMUŞ GİBİ GÖSTERME.
@@ -3263,8 +3372,23 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<List<Friend>> loadFriends() async {
     try {
       final res = await client.rpc<List<dynamic>>('list_friends');
+      // `list_friends` çağıranın yetkisiyle çalışır: `profiles` RLS'si
+      // arkadaşın satırını gizler, ad ve renk `friends` tablosuna yazılmış
+      // eski kopyadan gelir (fotoğraf hiç gelmez). Güncel kimlik herkese
+      // açık profilden tamamlanır.
+      final profiles = await _publicProfilesById([
+        for (final row in res) (row as Map)['friend_id'] as String?,
+      ]);
       return res.map((row) {
-        final friend = Friend.fromJson(Map<String, dynamic>.from(row as Map));
+        var friend = Friend.fromJson(Map<String, dynamic>.from(row as Map));
+        final profile = profiles[friend.friendId];
+        if (profile != null) {
+          friend = friend.copyWith(
+            friendName: profile.nameOr(friend.friendName),
+            friendAvatarColor: profile.avatar.colorHex,
+            profile: profile,
+          );
+        }
         // `list_friends` seviye döndürmez (yalnız `total_score` = xp);
         // Arkadaşlar sekmesi rozet olarak seviye gösteriyor
         // (leaderboard_screen.dart _FriendRankRow). Aynı XP→seviye
@@ -3298,12 +3422,29 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final res = await client.rpc<List<dynamic>>(
         'list_pending_friend_requests',
       );
-      return res
+      final pending = res
           .map(
             (row) =>
                 FriendRequest.fromJson(Map<String, dynamic>.from(row as Map)),
           )
           .toList();
+      final profiles = await _publicProfilesById([
+        for (final r in pending) r.fromUserId,
+      ]);
+      return [
+        for (final r in pending)
+          profiles[r.fromUserId] == null
+              ? r
+              : FriendRequest(
+                  id: r.id,
+                  fromUserId: r.fromUserId,
+                  fromUserName: profiles[r.fromUserId]!.nameOr(r.fromUserName),
+                  toUserId: r.toUserId,
+                  createdAt: r.createdAt,
+                  status: r.status,
+                  fromProfile: profiles[r.fromUserId],
+                ),
+      ];
     } catch (e, s) {
       _recordError(e, s, reason: 'loadPendingFriendRequests failed');
       return _offline.loadPendingFriendRequests();
@@ -3437,8 +3578,28 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     try {
       final response = await client.rpc('get_tournament_bracket');
       if (response == null) return null;
-      return TournamentBracket.fromJson(
+      final bracket = TournamentBracket.fromJson(
         Map<String, dynamic>.from(response as Map),
+      );
+      // Bracket yalnız ad döndürür; fotoğraf/simge/kod herkese açık profilden.
+      final profiles = await _publicProfilesById([
+        for (final round in bracket.rounds)
+          for (final m in round.matches) ...[m.playerOneId, m.playerTwoId],
+      ]);
+      if (profiles.isEmpty) return bracket;
+      return bracket.copyWith(
+        rounds: [
+          for (final round in bracket.rounds)
+            round.copyWith(
+              matches: [
+                for (final m in round.matches)
+                  m.copyWith(
+                    playerOneProfile: profiles[m.playerOneId],
+                    playerTwoProfile: profiles[m.playerTwoId],
+                  ),
+              ],
+            ),
+        ],
       );
     } catch (e, s) {
       // `null` yalnız "turnuvada değilsin / sunucu tarafı yok" demektir.
@@ -3551,6 +3712,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   /// herkes `active` kalır.
   List<TournamentStandings> _standingsFromBracket(TournamentBracket bracket) {
     final names = <String, String>{};
+    final profiles = <String, PublicProfile>{};
     final scores = <String, int>{};
     final status = <String, String>{};
 
@@ -3570,6 +3732,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       for (final match in round.matches) {
         touch(match.playerOneId, match.playerOneName);
         touch(match.playerTwoId, match.playerTwoName);
+        final p1 = match.playerOneProfile;
+        final p2 = match.playerTwoProfile;
+        if (p1 != null) profiles[match.playerOneId] = p1;
+        if (p2 != null) profiles[match.playerTwoId] = p2;
         if (match.playerOneId.isNotEmpty) {
           scores[match.playerOneId] =
               (scores[match.playerOneId] ?? 0) + match.playerOneScore;
@@ -3615,6 +3781,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         playerName: names[ids[i]] ?? '—',
         totalScore: scores[ids[i]] ?? 0,
         status: status[ids[i]] ?? 'active',
+        profile: profiles[ids[i]],
       ),
     );
   }
@@ -3731,6 +3898,18 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   // sabittir; burası yalnız RPC çağrısı + JSON ayrıştırmadır, iş kuralları
   // (kazanan, XP, süre) sunucudadır.
 
+  Future<AsyncDuelStart> _withDuelProfiles(AsyncDuelStart start) async {
+    final profiles = await _publicProfilesById([
+      start.opponentId,
+      start.invitedId,
+    ]);
+    if (profiles.isEmpty) return start;
+    return start.withProfiles(
+      opponent: profiles[start.opponentId],
+      invited: profiles[start.invitedId],
+    );
+  }
+
   @override
   Future<AsyncDuelStart> startAsyncDuel({String? category}) async {
     try {
@@ -3742,8 +3921,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'start_async_duel',
         params: {'p_category': category},
       );
-      return AsyncDuelStart.fromJson(
-        _requiredJsonObject(response, 'start_async_duel'),
+      return _withDuelProfiles(
+        AsyncDuelStart.fromJson(
+          _requiredJsonObject(response, 'start_async_duel'),
+        ),
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'startAsyncDuel failed');
@@ -3781,13 +3962,26 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<List<AsyncDuelSummary>> loadMyAsyncDuels() async {
     try {
       final response = await client.rpc<List<dynamic>>('list_my_async_duels');
-      return response
+      final duels = response
           .map(
             (row) => AsyncDuelSummary.fromJson(
               Map<String, dynamic>.from(row as Map),
             ),
           )
           .toList();
+      // Rakip/davetli kimliği `2026-10-21_oyuncu_kimligi.sql` uygulanınca
+      // gelir; gelmediyse harita boş kalır ve eski çizim sürer.
+      final profiles = await _publicProfilesById([
+        for (final d in duels) ...[d.opponentId, d.invitedId],
+      ]);
+      if (profiles.isEmpty) return duels;
+      return [
+        for (final d in duels)
+          d.withProfiles(
+            opponent: profiles[d.opponentId],
+            invited: profiles[d.invitedId],
+          ),
+      ];
     } catch (error, stack) {
       // Boş listeye düşülmez: "hiç düellon yok" demek, rakibini bekleyen ya
       // da sonucu hazır bir düelloyu oyuncudan gizlemek olurdu. Ekran hatayı
@@ -3923,9 +4117,29 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     try {
       final res = await client.rpc<List<dynamic>>('list_my_room_invites');
       _roomInviteRpcSupported = true;
-      return [
+      final invites = [
         for (final row in res)
           RoomInvite.fromJson(Map<String, dynamic>.from(row as Map)),
+      ];
+      final profiles = await _publicProfilesById([
+        for (final i in invites) i.inviterId,
+      ]);
+      return [
+        for (final i in invites)
+          profiles[i.inviterId] == null
+              ? i
+              : RoomInvite(
+                  id: i.id,
+                  roomId: i.roomId,
+                  roomCode: i.roomCode,
+                  inviterId: i.inviterId,
+                  inviterName: profiles[i.inviterId]!.nameOr(i.inviterName),
+                  categoryName: i.categoryName,
+                  playerCount: i.playerCount,
+                  maxPlayers: i.maxPlayers,
+                  createdAt: i.createdAt,
+                  inviterProfile: profiles[i.inviterId],
+                ),
       ];
     } catch (error, stack) {
       if (isMissingRpcError(error)) _roomInviteRpcSupported = false;
@@ -3969,8 +4183,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'create_async_duel_challenge',
         params: {'p_category': category, 'p_friend_id': friendId},
       );
-      return AsyncDuelStart.fromJson(
-        _requiredJsonObject(response, 'create_async_duel_challenge'),
+      return _withDuelProfiles(
+        AsyncDuelStart.fromJson(
+          _requiredJsonObject(response, 'create_async_duel_challenge'),
+        ),
       );
     } catch (error, stack) {
       if (isMissingRpcError(error)) _challengeRpcSupported = false;
@@ -3986,8 +4202,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'resume_my_async_duel',
         params: {'p_duel_id': duelId},
       );
-      return AsyncDuelStart.fromJson(
-        _requiredJsonObject(response, 'resume_my_async_duel'),
+      return _withDuelProfiles(
+        AsyncDuelStart.fromJson(
+          _requiredJsonObject(response, 'resume_my_async_duel'),
+        ),
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'resumeAsyncDuel failed');
@@ -4022,8 +4240,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'accept_async_duel_challenge',
         params: {'p_code': code},
       );
-      return AsyncDuelStart.fromJson(
-        _requiredJsonObject(response, 'accept_async_duel_challenge'),
+      return _withDuelProfiles(
+        AsyncDuelStart.fromJson(
+          _requiredJsonObject(response, 'accept_async_duel_challenge'),
+        ),
       );
     } catch (error, stack) {
       if (isMissingRpcError(error)) _challengeRpcSupported = false;

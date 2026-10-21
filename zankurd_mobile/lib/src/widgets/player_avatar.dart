@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../config/avatar_presets.dart';
 import '../game/avatar_frames.dart';
+import '../models/avatar_identity.dart';
 import '../theme/app_icons.dart';
 import '../theme/app_theme.dart';
 import '../utils/player_identity.dart';
@@ -38,6 +39,36 @@ class PlayerAvatar extends StatelessWidget {
     this.imageProviderFactory,
     super.key,
   });
+
+  /// Ortak kimlik nesnesinden ([AvatarIdentity]) kurar: oyuncu listelerinin
+  /// hepsi (lobi, sıralama, 1v1, arkadaşlar, davet, düello) aynı yolu
+  /// kullanır. Öncelik yine fotoğraf > simge > baş harf; [colorHex] kimlikte
+  /// yoksa çağıranın bildiği yedek renk ([fallbackColorHex]) kullanılır.
+  ///
+  /// [displayName] HAM ad (yer tutucu olabilir) verilir: baş harf/renk
+  /// tohumu kuralı [PlayerIdentity] ile bu bileşenin içinde uygulanır.
+  factory PlayerAvatar.fromIdentity({
+    required double radius,
+    AvatarIdentity? identity,
+    String? displayName,
+    String? fallbackColorHex,
+    Color? colorOverride,
+    ImageProvider Function(String url)? imageProviderFactory,
+    Key? key,
+  }) {
+    return PlayerAvatar(
+      key: key,
+      radius: radius,
+      photoUrl: identity?.photoUrl,
+      iconId: identity?.iconId,
+      colorHex: identity?.colorHex ?? fallbackColorHex,
+      frameId: identity?.frameId,
+      displayName: displayName,
+      colorSeed: PlayerIdentity.resolveColorSeed(displayName),
+      colorOverride: colorOverride,
+      imageProviderFactory: imageProviderFactory,
+    );
+  }
 
   final double radius;
   final String? photoUrl;
@@ -112,12 +143,17 @@ class PlayerAvatar extends StatelessWidget {
       final provider =
           imageProviderFactory?.call(url) ??
           CachedNetworkImageProvider(url) as ImageProvider;
-      return Image(
-        image: provider,
-        fit: BoxFit.cover,
-        // Fotoğraf süstür: oyuncunun adı yanındaki metindedir.
-        excludeFromSemantics: true,
-        errorBuilder: (context, error, stack) => _iconOrLetter(context, bg),
+      // İndirilirken boş kare yerine oyuncunun rengi görünür; hata olursa
+      // simge/harf katmanına düşülür (fotoğraf "bozuk resim" çizmez).
+      return ColoredBox(
+        color: bg,
+        child: Image(
+          image: provider,
+          fit: BoxFit.cover,
+          // Fotoğraf süstür: oyuncunun adı yanındaki metindedir.
+          excludeFromSemantics: true,
+          errorBuilder: (context, error, stack) => _iconOrLetter(context, bg),
+        ),
       );
     }
     return _iconOrLetter(context, bg);

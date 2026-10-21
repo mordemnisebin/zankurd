@@ -8,12 +8,14 @@ import '../../data/zankurd_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../models/async_duel.dart';
+import '../../models/avatar_identity.dart';
 import '../../models/quiz_question.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/player_identity.dart';
 import '../../data/streak_store.dart';
 import '../../utils/error_reporter.dart';
+import '../../widgets/player_avatar.dart';
 import '../../widgets/quiz_top_bar.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../quiz/quiz_option_tile.dart';
@@ -661,7 +663,10 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                                       ? context.t(K.asyncDuelOpponent)
                                       : context.playerDisplayName(
                                           duel.opponentName,
+                                          tag: duel.opponentProfile?.playerTag,
                                         ),
+                                  rawName: duel.opponentName,
+                                  identity: duel.opponentProfile?.avatar,
                                   you: context.t(K.you),
                                 )
                               : Text(
@@ -739,10 +744,19 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
 
 /// Alt başlık satırı: avatar + "Sen · Rakip adı".
 class _RivalLine extends StatelessWidget {
-  const _RivalLine({required this.name, required this.you});
+  const _RivalLine({
+    required this.name,
+    required this.you,
+    this.rawName,
+    this.identity,
+  });
 
   final String name;
   final String you;
+
+  /// HAM rakip adı ve fotoğraf/simge kimliği (avatar için); yoksa baş harf.
+  final String? rawName;
+  final AvatarIdentity? identity;
 
   @override
   Widget build(BuildContext context) {
@@ -751,10 +765,10 @@ class _RivalLine extends StatelessWidget {
       key: const ValueKey('async-duel-rival-line'),
       mainAxisSize: MainAxisSize.min,
       children: [
-        SahneAvatar(
-          initial: name.isEmpty ? '?' : name.characters.first,
-          size: 24,
-          textStyle: SahneType.captionStrong.copyWith(color: t.tx),
+        PlayerAvatar.fromIdentity(
+          radius: 12,
+          identity: identity,
+          displayName: rawName ?? name,
         ),
         const SizedBox(width: SahneSpace.x2),
         Flexible(

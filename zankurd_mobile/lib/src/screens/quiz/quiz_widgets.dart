@@ -113,7 +113,7 @@ class _LiveScoreRow extends StatelessWidget {
           const SizedBox(width: SahneSpace.x2),
           Expanded(
             child: Text(
-              context.playerDisplayName(player.name),
+              context.playerDisplayName(player.name, tag: player.tag),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: SahneType.bodyStrong.copyWith(color: t.tx),
@@ -866,7 +866,7 @@ class _CrowdScoreHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                context.playerDisplayName(player.name),
+                context.playerDisplayName(player.name, tag: player.tag),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: SahneType.captionStrong.copyWith(color: t.tx),
@@ -947,7 +947,10 @@ class _CrowdScoreHeader extends StatelessWidget {
               if (stacked) ...[
                 Expanded(
                   child: Text(
-                    context.playerDisplayName(standing.player.name),
+                    context.playerDisplayName(
+                      standing.player.name,
+                      tag: standing.player.tag,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: SahneType.caption.copyWith(color: t.tx),
@@ -968,7 +971,10 @@ class _CrowdScoreHeader extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        context.playerDisplayName(standing.player.name),
+                        context.playerDisplayName(
+                          standing.player.name,
+                          tag: standing.player.tag,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: SahneType.caption.copyWith(color: t.tx),
@@ -1192,7 +1198,7 @@ class _DuelScoreHeader extends StatelessWidget {
               : CrossAxisAlignment.start,
           children: [
             Text(
-              context.playerDisplayName(p.name),
+              context.playerDisplayName(p.name, tag: p.tag),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: SahneType.captionStrong.copyWith(color: t.tx),

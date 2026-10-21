@@ -445,9 +445,10 @@ class _MessageBubble extends StatelessWidget {
             : MainAxisAlignment.start,
         children: [
           if (!isMine) ...[
-            PlayerAvatar(
+            PlayerAvatar.fromIdentity(
               radius: 14,
-              colorHex: message.senderAvatarColor,
+              identity: message.senderProfile?.avatar,
+              fallbackColorHex: message.senderAvatarColor,
               displayName: message.senderName,
             ),
             const SizedBox(width: SahneSpace.x2),
@@ -495,9 +496,10 @@ class _MessageBubble extends StatelessWidget {
           ),
           if (isMine) ...[
             const SizedBox(width: SahneSpace.x2),
-            PlayerAvatar(
+            PlayerAvatar.fromIdentity(
               radius: 14,
-              colorHex: message.senderAvatarColor,
+              identity: message.senderProfile?.avatar,
+              fallbackColorHex: message.senderAvatarColor,
               displayName: message.senderName,
             ),
           ],

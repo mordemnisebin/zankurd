@@ -13,6 +13,7 @@ import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
+import '../models/public_profile.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
@@ -3823,6 +3824,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // zaten düzeltilmişti (2026-07-31 Antigravity eklentisi denetimi).
     return const [];
   }
+
+  @override
+  Future<Map<String, PublicProfile>> loadPublicProfiles(
+    Iterable<String> ids,
+  ) async => const {};
 
   @override
   Future<List<Friend>> loadFriends() async {

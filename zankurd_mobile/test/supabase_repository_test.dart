@@ -1390,8 +1390,11 @@ void main() {
       expect(result.endedReason, 'completed');
       expect(result.forfeitedBy, isNull);
       expect(result.finishedAt, DateTime.utc(2026, 8, 2, 12, 1));
+      // Sonuç yükü yalnız ad taşır; oyuncuların fotoğraf/kod kimliği ikinci
+      // bir herkese açık profil çağrısıyla tamamlanır (2026-10-21).
       expect(httpClient.requestedPaths, [
         '/rest/v1/rpc/get_my_pending_room_result',
+        '/rest/v1/rpc/get_public_profiles',
       ]);
     },
   );
@@ -1436,10 +1439,11 @@ void main() {
     final result = await repository.loadRoomResult(room);
 
     expect(result?.room.id, room.id);
-    expect(httpClient.requestedPaths, ['/rest/v1/rpc/get_my_room_result']);
-    expect(httpClient.requestBodies, [
-      {'p_room_id': room.id},
+    expect(httpClient.requestedPaths, [
+      '/rest/v1/rpc/get_my_room_result',
+      '/rest/v1/rpc/get_public_profiles',
     ]);
+    expect(httpClient.requestBodies.first, {'p_room_id': room.id});
   });
 
   test(
@@ -2227,8 +2231,9 @@ void main() {
 
     expect(
       source,
-      contains('profiles(display_name, avatar_icon, avatar_color'),
+      contains('profiles(display_name, player_tag, avatar_icon, avatar_color'),
     );
+    expect(source, contains("tag: profile?['player_tag'] as String?"));
     expect(source, contains("avatarIcon: profile?['avatar_icon'] as String?"));
     expect(
       source,

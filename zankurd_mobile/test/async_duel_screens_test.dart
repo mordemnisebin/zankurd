@@ -44,6 +44,7 @@ import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_inbox.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
+import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -290,7 +291,9 @@ void main() {
     final line = find.byKey(const ValueKey('async-duel-rival-line'));
     expect(line, findsOneWidget);
     expect(
-      find.descendant(of: line, matching: find.byType(SahneAvatar)),
+      // Rakip artık harf değil ortak oyuncu avatarıyla (fotoğraf > simge >
+      // harf) çizilir; kimlik bilinmiyorsa baş harf yine görünür.
+      find.descendant(of: line, matching: find.byType(PlayerAvatar)),
       findsOneWidget,
     );
   });

@@ -10,8 +10,10 @@ import '../models/quiz_question.dart';
 import '../models/tournament.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/player_identity.dart';
 import '../widgets/arena_kit.dart';
 import '../widgets/app_state.dart';
+import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/tournament_bracket_widget.dart';
 import 'quiz_screen.dart';
@@ -858,7 +860,18 @@ class _TournamentScreenState extends State<TournamentScreen> {
               for (final s in _standings)
                 SahneListRow.rank(
                   rank: s.rank,
-                  title: s.playerName,
+                  title: PlayerIdentity.resolveNameWithTag(
+                    s.profile?.displayName ?? s.playerName,
+                    isKu: ku,
+                    tag: s.profile?.playerTag,
+                  ),
+                  avatar: s.profile == null
+                      ? null
+                      : PlayerAvatar.fromIdentity(
+                          radius: 18,
+                          identity: s.profile!.avatar,
+                          displayName: s.profile!.displayName ?? s.playerName,
+                        ),
                   initial: s.playerName.trim().isEmpty
                       ? null
                       : SahneType.upperFor(s.playerName.trim()[0], isKu: ku),

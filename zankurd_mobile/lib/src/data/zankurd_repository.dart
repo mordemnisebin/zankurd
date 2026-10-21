@@ -10,6 +10,7 @@ import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
+import '../models/public_profile.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
@@ -609,6 +610,13 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   /// Görünen ada göre oyuncu ara (arkadaş ekleme akışı).
   Future<List<PlayerSearchResult>> searchPlayers(String query);
+
+  /// Başka oyuncuların herkese açık kimliği (ad, kod, avatar), id'ye göre.
+  ///
+  /// Liste RPC'leri kimlik alanlarını eksik/bayat döndürdüğünde depo ve
+  /// ekranlar bununla tamamlar. Hata ve eksik RPC boş harita döner: çağıran
+  /// eski davranışa (baş harf, yer tutucu ad) düşer.
+  Future<Map<String, PublicProfile>> loadPublicProfiles(Iterable<String> ids);
 
   /// Arkadaş listesini yükle.
   Future<List<Friend>> loadFriends();

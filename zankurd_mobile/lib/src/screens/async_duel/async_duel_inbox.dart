@@ -10,6 +10,7 @@ import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/player_identity.dart';
 import '../../widgets/app_state.dart';
+import '../../widgets/player_avatar.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../../widgets/zk_back_button.dart';
 import 'async_duel_play_screen.dart';
@@ -418,7 +419,10 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
     final rawOpponent = summary.opponentName;
     final knownOpponent = rawOpponent == null
         ? null
-        : context.playerDisplayName(rawOpponent);
+        : context.playerDisplayName(
+            rawOpponent,
+            tag: summary.opponentProfile?.playerTag,
+          );
     final myCorrect = view.myCorrect;
     final invited = summary.invitedName;
     final incoming = summary.incomingChallenge;
@@ -440,7 +444,10 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
           ? '${context.t(K.you)} $myCorrect/${view.total}'
           : null;
     } else if (invited != null && knownOpponent == null) {
-      title = context.playerDisplayName(invited);
+      title = context.playerDisplayName(
+        invited,
+        tag: summary.invitedProfile?.playerTag,
+      );
       subtitle = statusLabel;
     } else {
       title = knownOpponent ?? statusLabel;
@@ -471,24 +478,46 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
       AsyncDuelResultKind.unfinished => AppIcons.clock,
     };
 
+    final semanticLabel = [
+      title,
+      ?subtitle,
+      if (showReadyChip) readyLabel,
+    ].join('. ');
+    final trailing = showReadyChip
+        ? SahneBadge(
+            key: const ValueKey('async-duel-ready-badge'),
+            label: readyLabel,
+            tone: SahneBadgeTone.race,
+          )
+        : null;
+    // Rakibin kimliği biliniyorsa satırın başında ONUN fotoğrafı/simgesi
+    // durur; bilinmiyorsa (bekleyen düello ya da sunucu SQL'i uygulanmadı)
+    // durum ikonu kalır.
+    final opponentProfile = summary.opponentProfile;
+    if (opponentProfile != null) {
+      return SahneListRow.leading(
+        leading: PlayerAvatar.fromIdentity(
+          key: const ValueKey('async-duel-opponent-avatar'),
+          radius: 20,
+          identity: opponentProfile.avatar,
+          displayName: rawOpponent,
+        ),
+        title: title,
+        subtitle: subtitle,
+        semanticLabel: semanticLabel,
+        chevron: !showReadyChip,
+        trailing: trailing,
+        onTap: onTap,
+      );
+    }
     return SahneListRow.icon(
       icon: icon,
       role: SahneRole.race,
       title: title,
       subtitle: subtitle,
-      semanticLabel: [
-        title,
-        ?subtitle,
-        if (showReadyChip) readyLabel,
-      ].join('. '),
+      semanticLabel: semanticLabel,
       chevron: !showReadyChip,
-      trailing: showReadyChip
-          ? SahneBadge(
-              key: const ValueKey('async-duel-ready-badge'),
-              label: readyLabel,
-              tone: SahneBadgeTone.race,
-            )
-          : null,
+      trailing: trailing,
       onTap: onTap,
     );
   }

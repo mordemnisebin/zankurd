@@ -127,6 +127,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   /// Bot rakipte `null` kalır: bot bildirilebilir bir kullanıcı değildir
   /// ve sunucuya gönderilecek bir kimliği yoktur.
   String? _opponentId;
+  String? _opponentTag;
 
   /// Rakip bu oturumda engellendi mi; VS kartındaki fotoğraf/ad bunun
   /// yerine geçer.
@@ -168,7 +169,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     final name = _opponentName;
     return name == null
         ? null
-        : PlayerIdentity.resolveName(name, isKu: context.isKu);
+        : PlayerIdentity.resolveNameWithTag(
+            name,
+            isKu: context.isKu,
+            tag: _opponentTag,
+          );
   }
 
   bool _isCancelled = false;
@@ -610,6 +615,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       _matchmakingErrorMessage = null;
       _opponentIdentity = const AvatarIdentity();
       _opponentId = null;
+      _opponentTag = null;
       // Yeni arama yeni bir rakip getirir; önceki rakibin engeli bu
       // ekranın yerel görüntüsünde kalıcı değil (gerçek engel sunucuda
       // duruyor, bir sonraki eşleşmede yine rakip olmaz zaten — bkz.
@@ -1074,6 +1080,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         ku,
         attempt,
         opponentId: opponent?.id,
+        opponentTag: opponent?.tag,
       );
     } catch (error, stack) {
       ErrorReporter.record(
@@ -1095,6 +1102,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     bool ku,
     int attempt, {
     String? opponentId,
+    String? opponentTag,
     // `null` = gerçek rakip, gerçek seviye verisi yok → rozet gizlenir.
     // Yalnız bot dalı gerçek bir sayı geçer (bkz. `_opponentLevelKnown`).
     int? opponentLevel,
@@ -1111,7 +1119,12 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       if (opponentLevel != null) _opponentLevel = opponentLevel;
       _opponentIdentity = opponentIdentity;
       _opponentId = opponentId;
-      final shownName = PlayerIdentity.resolveName(matchedName, isKu: ku);
+      _opponentTag = opponentTag;
+      final shownName = PlayerIdentity.resolveNameWithTag(
+        matchedName,
+        isKu: ku,
+        tag: opponentTag,
+      );
       _statusTextKu = 'Lîstikvanek hat dîtin: $shownName!';
       _statusTextTr = 'Rakip bulundu: $shownName!';
     });

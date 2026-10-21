@@ -12,6 +12,7 @@ import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/error_reporter.dart';
 import '../../utils/player_identity.dart';
+import '../../widgets/player_avatar.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../async_duel/async_duel_challenge_sheet.dart';
 import '../async_duel/async_duel_inbox.dart';
@@ -220,7 +221,10 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
       final inviter = _incoming.first.opponentName;
       if (incomingCount == 1 && inviter != null) {
         subtitle = context.t(K.challengeIncomingBy, {
-          'name': context.playerDisplayName(inviter),
+          'name': context.playerDisplayName(
+            inviter,
+            tag: _incoming.first.opponentProfile?.playerTag,
+          ),
         });
       } else if (readyCount > 0) {
         subtitle = '${context.t(K.asyncDuelReady)} · $readyCount';
@@ -233,12 +237,22 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
           : '${context.t(K.asyncDuelReady)} · $readyCount';
       final opponent = _ready.first.opponentName;
       subtitle = readyCount == 1 && opponent != null
-          ? context.playerDisplayName(opponent)
+          ? context.playerDisplayName(
+              opponent,
+              tag: _ready.first.opponentProfile?.playerTag,
+            )
           : context.t(K.asyncDuelInbox);
     } else {
       title = context.t(K.asyncDuel);
       subtitle = null;
     }
+
+    // Tek bir rakip söz konusuysa kartın solunda onun fotoğrafı/simgesi
+    // durur (sunucu SQL'i uygulanmadıysa profil yoktur: kum saati kalır).
+    final leadSummary = hasIncoming
+        ? (incomingCount == 1 ? _incoming.first : null)
+        : (readyCount == 1 ? _ready.first : null);
+    final leadProfile = leadSummary?.opponentProfile;
 
     // Sağdaki TEK ikincil düğme. Bekleyen bir şey varsa (sıra sende, sonuç
     // hazır) düğme o eylemi yapar; yoksa menüyü açar. Bekleyen durumda
@@ -281,19 +295,26 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
             builder: (context) {
               final t = SahneTokens.of(context);
               final night = Theme.of(context).brightness == Brightness.dark;
-              final iconBox = Container(
-                width: 44,
-                height: 44,
-                decoration: ShapeDecoration(
-                  color: t.raceTint,
-                  shape: SahneShape.m,
-                ),
-                child: Icon(
-                  AppIcons.hourglass,
-                  size: 22,
-                  color: night ? t.raceTx : t.race,
-                ),
-              );
+              final Widget iconBox = leadProfile != null
+                  ? PlayerAvatar.fromIdentity(
+                      key: const ValueKey('home-duel-avatar'),
+                      radius: 22,
+                      identity: leadProfile.avatar,
+                      displayName: leadSummary?.opponentName,
+                    )
+                  : Container(
+                      width: 44,
+                      height: 44,
+                      decoration: ShapeDecoration(
+                        color: t.raceTint,
+                        shape: SahneShape.m,
+                      ),
+                      child: Icon(
+                        AppIcons.hourglass,
+                        size: 22,
+                        color: night ? t.raceTx : t.race,
+                      ),
+                    );
               final texts = Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
