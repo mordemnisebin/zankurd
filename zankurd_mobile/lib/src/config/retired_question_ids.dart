@@ -747,16 +747,12 @@ const Set<String> retiredQuestionIds = <String>{
   // çıkarıldı (kanıt: ekranda tek cevaplı sorunun iki boşluk ya da
   // anlamsız şık göstermesi).
   // - dersler2_2026_10_08_0104–0109: çeviri parantezine de `___`
-  //   konmuş, soru iki boşluklu görünüyor ama tek cevap alıyor.
+  //   konmuş, soru iki boşluklu görünüyor ama tek cevap alıyordu; aynı
+  //   gün dosyadan tamamen silindi, yerine jüri onaylı 0137–0142 geldi
+  //   (bu yüzden listede değiller).
   // - offline_5016, offline_5225: şık listesinde sözcük olmayan "di-"
   //   eki duruyor ("aslan"/"göz" bi Kurmancî çi ye?).
   // ---------------------------------------------------------------------
-  'dersler2_2026_10_08_0104',
-  'dersler2_2026_10_08_0105',
-  'dersler2_2026_10_08_0106',
-  'dersler2_2026_10_08_0107',
-  'dersler2_2026_10_08_0108',
-  'dersler2_2026_10_08_0109',
   'offline_5016',
   'offline_5225',
 };

@@ -36,6 +36,20 @@ class _Connection extends ConnectivityMonitor {
   ];
 }
 
+/// `supabase/2026-10-21_slayt_juri.sql` (canlıya uygulandı, applied.md):
+/// jüri onaylı beş slayt düzeltmesi.
+const _laterSlideFixes = <(String, String)>[
+  ('• Alfabe: Alfabe', '• Elîfbê: Alfabe'),
+  ('• Lingê min diêşe: Bacağım', '• Linga min diêşe: Bacağım'),
+  (
+    'Hava için e, kişi için im kullanırız: Hewa sar e. Ez sar im.',
+    'Ek, önündeki sözcüğün son sesine göre değişir: ünsüzden sonra e / im, '
+        'ünlüden sonra ye / me. Hewa sar e. Ez sar im.',
+  ),
+  ('Bu derste 12 meslek öğreneceğiz.', 'Bu derste 7 meslek öğreneceğiz.'),
+  ('• guhdar dike: dinliyor', '• guhdarî dike: dinliyor'),
+];
+
 List<Map<String, Object?>> _seedSlides(String file, String slug) {
   final sql = File(file).readAsStringSync();
   final end = sql.indexOf(") as s(ord, ku, tr, ex) where slug = '$slug'");
@@ -47,8 +61,18 @@ List<Map<String, Object?>> _seedSlides(String file, String slug) {
     r"^\s*\((\d+), E'((?:[^']|'')*)', E'((?:[^']|'')*)', (?:E'((?:[^']|'')*)'|null::text)\)",
     multiLine: true,
   );
-  String? decode(String? value) =>
-      value?.replaceAll("''", "'").replaceAll(r'\n', '\n');
+  // Tohum SQL'leri tarihseldir; sonradan canlıya uygulanan içerik
+  // göçlerinin düzeltmeleri burada tohum metnin üstüne uygulanır ki
+  // karşılaştırma bugünkü sunucu içeriğiyle yapılsın.
+  String? decode(String? value) {
+    var text = value?.replaceAll("''", "'").replaceAll(r'\n', '\n');
+    if (text == null) return null;
+    for (final fix in _laterSlideFixes) {
+      text = text!.replaceAll(fix.$1, fix.$2);
+    }
+    return text;
+  }
+
   return [
     for (final match in row.allMatches(sql.substring(start, end)))
       {
