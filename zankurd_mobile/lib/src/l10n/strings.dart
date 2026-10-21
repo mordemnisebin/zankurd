@@ -808,6 +808,7 @@ class Tr {
     K.soruDegistir: {'ku': 'Pirsê biguhere', 'tr': 'Soru değiştir'},
     K.yakinda: {'ku': 'Di demeke nêzîk de tê.', 'tr': 'Yakında'},
     K.soru: {'ku': 'pirs', 'tr': 'soru'},
+    K.gotinaRoje: {'ku': 'Gotina rojê', 'tr': 'Günün sözü'},
     K.gunlukGorevler: {'ku': 'Erkên rojane', 'tr': 'Günlük görevler'},
     K.tamamlandi: {'ku': 'Temam bû', 'tr': 'tamamlandı'},
     K.pGorevTamam: {'ku': '{p0} erk temam bûn', 'tr': '{p0} görev tamam'},
@@ -3563,6 +3564,7 @@ class K {
   static const soruDegistir = 'screen.soruDegistir';
   static const yakinda = 'screen.yakinda';
   static const soru = 'screen.soru';
+  static const gotinaRoje = 'home.gotinaRoje';
   static const gunlukGorevler = 'screen.gunlukGorevler';
   static const tamamlandi = 'screen.tamamlandi';
   static const pGorevTamam = 'screen.pGorevTamam';

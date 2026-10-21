@@ -327,8 +327,14 @@ void main() {
     final topics = tester.getRect(
       find.byKey(const ValueKey('home-topic-grid')),
     );
-    expect(duel.top, greaterThanOrEqualTo(lesson.bottom));
-    expect(duel.top - lesson.bottom, lessThan(32), reason: 'hemen altında');
+    // Günün sözü kartı (2026-10-21) dersle düello arasına girer: sıra
+    // ders < söz < düello; düello yine sözün hemen altındadır.
+    final quote = tester.getRect(
+      find.byKey(const ValueKey('home-daily-quote')),
+    );
+    expect(quote.top, greaterThanOrEqualTo(lesson.bottom));
+    expect(duel.top, greaterThanOrEqualTo(quote.bottom));
+    expect(duel.top - quote.bottom, lessThan(32), reason: 'hemen altında');
     expect(topics.top, greaterThan(duel.bottom));
     // Turuncu yine yalnız günün dersinde.
     expect(

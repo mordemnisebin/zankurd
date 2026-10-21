@@ -39,6 +39,7 @@ import 'home/room_invite_card.dart';
 import 'home/home_rows.dart';
 import 'home/home_sections.dart';
 import 'home/daily_missions_card.dart';
+import 'home/daily_quote_card.dart';
 import 'shop_screen.dart';
 import '../data/mastery_store.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -497,6 +498,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // (üstündeki aralık da kartın içindedir, boşluk kalmaz).
           // Bir arkadaşın odaya daveti varsa kart düello kartının ÜSTÜNDE
           // çıkar (zaman duyarlı: 30 dk); yoksa hiç yer kaplamaz.
+          DailyQuoteCard(isKu: ku),
           RoomInviteCard(repository: repo, refreshToken: _refreshCounter),
           HomeDuelCard(repository: repo, refreshToken: _refreshCounter),
           // İlk oturumda seviye çubuğu ("Seviye 1 · 0/1000") yeni gelen için

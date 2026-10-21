@@ -154,6 +154,7 @@ flutter:
     # eklerken `lib/src/data/question_bank_assets.dart` + buraya; unutulursa
     # `test/asset_usage_test.dart` kırılır.
     - assets/data/image_credits.json
+    - assets/data/gotin_roje.json
     - assets/data/sentence_building_questions.json
     - assets/data/fill_in_blank_2026_08_questions.json
     - assets/data/community_questions.json
