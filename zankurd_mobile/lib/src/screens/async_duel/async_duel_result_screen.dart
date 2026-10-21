@@ -248,6 +248,11 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
   /// ya da okunamazsa null: baş harf/simge avatarı çizilir.
   AvatarIdentity? _myIdentity;
 
+  /// Kendi profil adım: "Sen" avatarının baş harfi bundan gelir. Yoksa
+  /// avatar "Sen"in S'sini çiziyordu, lobide aynı oyuncu T idi (iki
+  /// simülatör turu, 2026-10-22).
+  String? _myName;
+
   @override
   void initState() {
     super.initState();
@@ -259,6 +264,8 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
     try {
       final identity = await widget.repository.loadAvatarIdentity();
       if (mounted) setState(() => _myIdentity = identity);
+      final name = (await widget.repository.getProfileName()).trim();
+      if (mounted && name.isNotEmpty) setState(() => _myName = name);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'duel result own identity');
     }
@@ -344,6 +351,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
               total: view.total,
               outcome: outcome,
               myIdentity: _myIdentity,
+              myRawName: _myName,
               opponentProfile: view.opponentProfile,
               opponentRawName: rawOpponentName,
             ),
@@ -565,6 +573,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
 class _DuelScoreboard extends StatelessWidget {
   const _DuelScoreboard({
     required this.myName,
+    this.myRawName,
     required this.myCorrect,
     required this.opponentName,
     required this.opponentCorrect,
@@ -576,6 +585,7 @@ class _DuelScoreboard extends StatelessWidget {
   });
 
   final String myName;
+  final String? myRawName;
   final int myCorrect;
   final String opponentName;
   final int opponentCorrect;
@@ -646,7 +656,7 @@ class _DuelScoreboard extends StatelessWidget {
               myCorrect,
               outcome == AsyncDuelOutcome.win,
               myIdentity,
-              null,
+              myRawName,
             ),
             VerticalDivider(width: SahneSpace.x4 * 2 + 1, color: t.line),
             side(
