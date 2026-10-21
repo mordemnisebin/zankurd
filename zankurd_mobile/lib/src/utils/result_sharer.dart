@@ -40,7 +40,11 @@ class ResultSharer {
   static String _dateKey(DateTime date) =>
       '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 
-  static Future<void> share(
+  /// Paylaşım gerçekten yapıldıysa true. `dismissed` (kullanıcı iptal etti)
+  /// false döner; `unavailable` (iOS bazı sürümlerde sonucu bildirmez, web vb.)
+  /// true sayılır: sonuç bilinemeyen platformda ödülü kesmek sürekli
+  /// "ödül yok" demek olurdu, o yüzden kullanıcı lehine.
+  static Future<bool> share(
     BuildContext context, {
     required bool isKu,
     required int score,
@@ -93,15 +97,23 @@ class ResultSharer {
           for (var i = 0; i < images.length; i++)
             XFile.fromData(images[i], mimeType: 'image/png', name: names[i]),
         ];
-        await SharePlus.instance.share(ShareParams(text: text, files: files));
-        return;
+        final result = await SharePlus.instance.share(
+          ShareParams(text: text, files: files),
+        );
+        return statusCounts(result.status);
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'result_share_capture');
       // Görsel paylaşımı başarısız — metne düş.
     }
-    await SharePlus.instance.share(ShareParams(text: text));
+    final result = await SharePlus.instance.share(ShareParams(text: text));
+    return statusCounts(result.status);
   }
+
+  /// Ödüle sayılan paylaşım durumu (bekçi testi bunu doğrudan sınar).
+  @visibleForTesting
+  static bool statusCounts(ShareResultStatus status) =>
+      status != ShareResultStatus.dismissed;
 
   /// Verilen widget'ı ekran dışında render edip PNG byte'larına çevirir.
   static Future<Uint8List?> _captureCard(

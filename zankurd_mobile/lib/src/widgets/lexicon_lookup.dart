@@ -240,8 +240,11 @@ class LexiconText extends StatelessWidget {
 /// "Sözlükte aç".
 Future<void> showLexiconEntrySheet(
   BuildContext context,
-  LearnerLexiconEntry entry,
-) {
+  LearnerLexiconEntry entry, {
+  // Sözlük ekranının kendi içinden açılınca "Sözlükte aç" aynı ekranı bir
+  // kez daha üst üste açardı.
+  bool showOpenInLexicon = true,
+}) {
   final t = SahneTokens.of(context);
   final isKu = context.isKu;
   final source = LearnerLexicon.sourceFor(entry);
@@ -293,19 +296,20 @@ Future<void> showLexiconEntrySheet(
             style: SahneType.captionStrong.copyWith(color: t.learnTx),
           ),
           const SizedBox(height: SahneSpace.x4),
-          SahneButton.secondary(
-            buttonKey: const ValueKey('lexicon-sheet-open'),
-            label: context.t(K.lexiconOpen),
-            expand: true,
-            onPressed: () {
-              Navigator.of(sheetContext).pop();
-              Navigator.of(context).push(
-                AppRoute(
-                  page: LearnerLexiconScreen(initialQuery: entry.termKu),
-                ),
-              );
-            },
-          ),
+          if (showOpenInLexicon)
+            SahneButton.secondary(
+              buttonKey: const ValueKey('lexicon-sheet-open'),
+              label: context.t(K.lexiconOpen),
+              expand: true,
+              onPressed: () {
+                Navigator.of(sheetContext).pop();
+                Navigator.of(context).push(
+                  AppRoute(
+                    page: LearnerLexiconScreen(initialQuery: entry.termKu),
+                  ),
+                );
+              },
+            ),
         ],
       ),
     ),

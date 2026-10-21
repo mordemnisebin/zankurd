@@ -142,11 +142,11 @@ void main() {
       id: 'q2',
       category: 'Ziman',
       prompt: '"Av" bi Tirkî çi ye?',
-      answers: const ['Su', 'Ateş', 'Toprak'],
+      answers: ['Su', 'Ateş', 'Toprak'],
       correctAnswer: 'Su',
       explanation: '',
       promptTr: '"Av" Türkçede ne demek?',
-      answersTr: const ['Su', 'Ateş', 'Toprak'],
+      answersTr: ['Su', 'Ateş', 'Toprak'],
       correctAnswerTr: 'Su',
     );
     final learning = q.localized(isKu: false, learning: true);

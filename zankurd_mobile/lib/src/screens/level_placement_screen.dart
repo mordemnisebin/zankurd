@@ -109,8 +109,10 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     if (_inputLocked) return;
     setState(() => _inputLocked = true);
     try {
-      final store = await PlacementStore.load();
-      await store.markSkipped();
+      // "Sonra yap" kartı KALICI gizlemez: yalnız bu ekrandan çıkılır, kart
+      // ana sayfada kalır. Kalıcı kapatma yalnız karttaki X'in işidir
+      // (learning_screen `markSkipped`). Eskiden onaysız tek dokunuş
+      // kartı sonsuza dek kaldırıyordu.
       widget.onFinished?.call(null);
       if (mounted) Navigator.of(context).maybePop();
     } finally {
@@ -128,7 +130,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     final skipLabel = context.t(K.placementSkip);
     final textScale = MediaQuery.textScalerOf(context).scale(16) / 16;
     final useCompactSkip =
-        MediaQuery.sizeOf(context).width < 380 || textScale > 1.05;
+        MediaQuery.sizeOf(context).width < 430 || textScale > 1.05;
     final question = _questions.isNotEmpty
         ? _questions[_index].localized(isKu: ku, learning: true)
         : null;

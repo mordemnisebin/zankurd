@@ -90,6 +90,13 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
     if (tokens.length > 1 && _isOriginalOrder(tokens)) {
       tokens.insert(0, tokens.removeLast());
     }
+    // Geri alınan kelimenin dönüş yeri = havuzdaki İLK görünür konumu.
+    // `shuffleRank` eskiden nesne yaratılırken (karıştırmadan ÖNCE, cevap
+    // sırasıyla) atanıyordu; geri alınan kelime bu yüzden özgün yerine değil
+    // cevap sırasına göre başka bir yere, çoğu kez sona düşüyordu.
+    for (final (position, token) in tokens.indexed) {
+      token.shuffleRank = position;
+    }
     _availableWords = tokens;
   }
 
@@ -303,16 +310,14 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
 /// Havuzdaki tek bir kelime. Aynı kelime cümlede birden çok kez geçebildiği
 /// için kimlik dizinden değil bu nesneden gelir.
 class _Token {
-  _Token(this.index, this.word) : shuffleRank = _nextRank++;
-
-  static int _nextRank = 0;
+  _Token(this.index, this.word);
 
   /// Doğru cümledeki özgün sıra (yalnızca karıştırma kontrolü için).
   final int index;
   final String word;
 
   /// Havuzdaki karışık konumunu koruyan sıra numarası.
-  final int shuffleRank;
+  int shuffleRank = 0;
 }
 
 class _WordChip extends StatelessWidget {

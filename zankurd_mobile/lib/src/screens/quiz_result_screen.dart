@@ -1202,11 +1202,31 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ? AppIcons.house
         : AppIcons.arrowRotateLeft;
 
+    void goHome() {
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      // Puanlama isteği yalnız ana sayfaya dönüşte (sonuç ekranı okunurken
+      // değil): bir sonraki karede, yani rota kapanmaya başladıktan sonra.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        unawaited(
+          ReviewService.load().then((service) => service.requestIfDue()),
+        );
+      });
+    }
+
     void completeResultAction() {
       // Quiz rotası sonuç ekranıyla değiştirilir; çevrimiçi turda tek `pop`
       // bitmiş RoomScreen'i yeniden gösteriyordu. İlk rotaya dönmek solo
       // tekrar davranışını korurken çevrimiçi odanın eski rotasını temizler.
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      //
+      // Öğrenme turunda (öğrenme/ders/profil/ana sayfa kartından açılan)
+      // "Devam" X ve çıkış diyaloğuyla tutarlı olmalı: tek `pop` kullanıcıyı
+      // turu açtığı ekrana döndürür. Eskiden her durumda ilk rotaya atıyor,
+      // dersin ortasındaki öğrenciyi ana sayfaya fırlatıyordu.
+      if (isLearningExperience && !isOnlineRoom) {
+        Navigator.of(context).pop();
+        return;
+      }
+      goHome();
     }
 
     Future<void> openReview(List<AnswerRecord> records) async {
@@ -1253,7 +1273,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     }
 
     Future<void> shareResult() async {
-      await ResultSharer.share(
+      final shared = await ResultSharer.share(
         context,
         isKu: context.isKu,
         score: score,
@@ -1270,6 +1290,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             opponents.length == 1 &&
             score > opponents.first.score,
       );
+      // Paylaşım sayfası kapatılırsa (iptal) ödül verilmez.
+      if (!shared) return;
       final earned = await ResultSharer.claimDailyShareReward();
       if (earned && context.mounted) {
         // Ödül ancak sunucu yazdıysa duyurulur (0 = yazılamadı); eskiden
@@ -1555,7 +1577,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       _AllExplanationsCard(records: answerRecords),
       const SizedBox(height: SahneSpace.sectionTop),
       _MoreOptions(
-        onHome: () => Navigator.of(context).popUntil((route) => route.isFirst),
+        onHome: goHome,
         onLeaderboard: () {
           Navigator.of(
             context,

@@ -351,7 +351,7 @@ class _MiniGuideView extends StatelessWidget {
             const SizedBox(height: SahneSpace.x5),
             SahneButton.primary(
               onPressed: () => Navigator.of(context).maybePop(),
-              label: Tr.forKu(K.derseBasla, isKu),
+              label: Tr.forKu(K.anladim, isKu),
               expand: true,
             ),
           ],

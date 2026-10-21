@@ -1056,7 +1056,7 @@ class _CurrentLessonCard extends StatelessWidget {
 /// 2026-09-29 doğallık (K7): satırın başındaki 44'lük ders ikonu karosu ve
 /// sağdaki ok kalktı; ikon çoğu derste aynı konu ikonuydu (Günlük: hep
 /// konuşma balonu) ve satırı şablon bir menüye çeviriyordu.
-class _LessonRow extends StatelessWidget {
+class _LessonRow extends StatefulWidget {
   const _LessonRow({
     required this.lesson,
     required this.title,
@@ -1074,11 +1074,30 @@ class _LessonRow extends StatelessWidget {
   final VoidCallback? onTap;
 
   @override
+  State<_LessonRow> createState() => _LessonRowState();
+}
+
+class _LessonRowState extends State<_LessonRow> {
+  /// Kilitli satıra her dokunuşta artar; kilit simgesi titrer (dizesiz geri
+  /// bildirim: "bu ders henüz açık değil" sessiz kalmasın).
+  int _nudge = 0;
+
+  void _nudgeLock() {
+    HapticFeedback.selectionClick();
+    setState(() => _nudge++);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final lesson = widget.lesson;
+    final title = widget.title;
+    final completed = widget.completed;
+    final semanticLabel = widget.semanticLabel;
+    final onTap = widget.onTap;
     final t = SahneTokens.of(context);
     final locked = onTap == null;
     final description = lesson.description(context.isKu)?.trim();
-    return SahneListRow.plain(
+    final row = SahneListRow.plain(
       title: title,
       // Kilitli satır sıkı (48) ve açıklamasız: soluk liste ilerlemeyi
       // bastırmasın (tur 11). Açıklama dersin kendi ekranında okunur.
@@ -1090,14 +1109,30 @@ class _LessonRow extends StatelessWidget {
       onTap: onTap,
       semanticLabel: semanticLabel,
       trailing: locked
-          ? Icon(
-              AppIcons.lock,
-              size: 16,
-              color: Color.lerp(t.tx2, t.learnTx, 0.4),
+          ? TweenAnimationBuilder<double>(
+              key: ValueKey('lesson-lock-$_nudge'),
+              tween: Tween(begin: _nudge == 0 ? 1 : 0, end: 1),
+              duration: const Duration(milliseconds: 360),
+              builder: (context, v, child) => Transform.translate(
+                offset: Offset(6 * math.sin(v * math.pi * 4) * (1 - v), 0),
+                child: child,
+              ),
+              child: Icon(
+                AppIcons.lock,
+                size: 16,
+                color: Color.lerp(t.tx2, t.learnTx, 0.4),
+              ),
             )
           : completed
           ? Icon(AppIcons.check, size: 20, color: t.learnTx)
           : null,
+    );
+    if (!locked) return row;
+    return GestureDetector(
+      key: ValueKey('lesson-locked-${lesson.id}'),
+      behavior: HitTestBehavior.opaque,
+      onTap: _nudgeLock,
+      child: row,
     );
   }
 }

@@ -3452,6 +3452,13 @@ class _QuizScreenState extends State<QuizScreen>
     };
   }
 
+  /// Gerilim tutuşu TV-şovu ritmidir (yarış). Öğrenmede (tek kişilik,
+  /// cevap cihazda değerlendirilir) doğru/yanlış tepkisi dokunur dokunmaz
+  /// gelmeli: 520 ms tutuş + yerel değerlendirme beklemesi simülatörde
+  /// tepkiyi saniyeler sonraya itiyordu ve öğrenen cevabının alındığından
+  /// emin olamıyordu. Çevrimiçi odada sunucu cevabı zaten beklenir.
+  bool get _skipsSuspenseHold => _isLearningExperience && !_isMultiplayer;
+
   Future<void> _answer(String answer) async {
     if (answered) return;
     HapticFeedback.selectionClick();
@@ -3494,14 +3501,16 @@ class _QuizScreenState extends State<QuizScreen>
     final questionIndex = index;
     setState(() {
       selectedAnswer = answer;
-      _suspense = !isTimeout || _usesServerHiddenAnswers;
+      _suspense =
+          (!isTimeout || _usesServerHiddenAnswers) && !_skipsSuspenseHold;
     });
     final responseMs = _questionStopwatch.elapsedMilliseconds;
-    final hold =
-        widget.suspenseHold ??
-        (isFlutterTestEnvironment
-            ? Duration.zero
-            : const Duration(milliseconds: 520));
+    final hold = _skipsSuspenseHold
+        ? Duration.zero
+        : widget.suspenseHold ??
+              (isFlutterTestEnvironment
+                  ? Duration.zero
+                  : const Duration(milliseconds: 520));
     if (!isTimeout && hold > Duration.zero) {
       await Future.delayed(hold);
     }

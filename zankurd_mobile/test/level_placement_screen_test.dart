@@ -20,7 +20,7 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 // iter. Kullanıcı kaydırır; bekçiler de dokunmadan önce şıkkı görünür
 // kılar (`ensureVisible`). Davranış aynı.
 
-Widget wrap(Widget child, {Size size = const Size(390, 844)}) => MultiProvider(
+Widget wrap(Widget child, {Size size = const Size(440, 844)}) => MultiProvider(
   providers: [
     ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang('tr')),
   ],
@@ -73,7 +73,10 @@ void main() {
     expect(called, isTrue);
     expect(finished, isNull);
     final store = await PlacementStore.load();
-    expect(store.skipped, isTrue);
+    // "Sonra yap" kartı KALICI gizlemez (2026-10-21 simülatör düğme turu):
+    // kalıcı kapatma yalnız karttaki X'in işidir.
+    expect(store.skipped, isFalse);
+    expect(store.shouldPrompt, isTrue);
   });
 
   testWidgets('tüm sorular doğru cevaplanınca İleri sonucu ve kayıt', (

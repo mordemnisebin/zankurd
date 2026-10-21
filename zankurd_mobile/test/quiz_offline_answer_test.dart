@@ -80,6 +80,18 @@ void main() {
 
           await tester.tap(find.text('ekmek'));
           await tester.pump();
+          if (experience == QuizExperience.learning) {
+            // 2026-10-21 simülatör düğme turu: öğrenmede gerilim tutuşu YOK;
+            // tepki yalnız yerel değerlendirme sınırı (300 ms) kadar bekler.
+            await tester.pump(const Duration(milliseconds: 400));
+            expect(
+              nextEnabled(tester),
+              isTrue,
+              reason: 'öğrenmede tepki 400 ms içinde gelmeli (tutuş yok)',
+            );
+            await tester.pumpAndSettle(const Duration(seconds: 2));
+            return;
+          }
           expect(
             nextEnabled(tester),
             isFalse,

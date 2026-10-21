@@ -5,6 +5,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_icons.dart';
 import '../widgets/app_state.dart';
+import '../widgets/lexicon_lookup.dart';
 import '../widgets/lexicon_speak_button.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
@@ -121,6 +122,13 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
                         // `ExcludeSemantics` yalnız metin sütununu sarar.
                         return SahneSurfaceCard(
                           key: ValueKey('lexicon-entry-${entry.id}'),
+                          // Kart dokunulabilir: aramadan çıkan maddeyi balon
+                          // olarak açar (ses, biçimler, kaynak ders).
+                          onTap: () => showLexiconEntrySheet(
+                            context,
+                            entry,
+                            showOpenInLexicon: false,
+                          ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

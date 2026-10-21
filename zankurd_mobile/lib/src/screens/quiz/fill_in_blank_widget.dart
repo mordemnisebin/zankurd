@@ -131,6 +131,10 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
         normalizeFreeTextAnswer(submittedAnswer) ==
         normalizeFreeTextAnswer(widget.question.correctAnswer);
     final t = SahneTokens.of(context);
+    final bool? verdict =
+        widget.showResult && widget.selectedAnswer != 'TIMEOUT'
+        ? isCorrect
+        : null;
     final resultText = isCorrect
         ? usesCanonicalWriting
               ? Tr.forKu(K.correct, isKu)
@@ -154,18 +158,58 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
           ),
           const SizedBox(height: SahneSpace.x2),
         ],
-        SahneField(
-          key: const ValueKey('fill-in-blank-input'),
-          controller: _controller,
-          enabled: !widget.disabled,
-          textInputAction: TextInputAction.done,
-          autocorrect: false,
-          enableSuggestions: false,
-          onSubmitted: (_) => _submit(),
-          inputTextStyle: SahneType.bodyStrong,
-          hintText: label,
-          semanticLabel: label,
-          prefixIcon: AppIcons.pen,
+        // Kontrol sonrası alan kendi hükmünü taşır: yanlışta Hata kenarı + ✕,
+        // doğruda Rast kenarı + ✓ (çoktan seçmeli ve kelime sıralamadaki dil).
+        // Bunsuz yanlış cevapta alan nötr kalıyor, yalnız alttaki not hükmü
+        // söylüyordu. Süre dolması bir cevap sayılmaz; alan nötr kalır.
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: DecoratedBox(
+                key: verdict == null
+                    ? null
+                    : ValueKey(
+                        verdict
+                            ? 'fill-in-blank-verdict-correct'
+                            : 'fill-in-blank-verdict-wrong',
+                      ),
+                position: DecorationPosition.foreground,
+                decoration: ShapeDecoration(
+                  shape: verdict == null
+                      ? const RoundedRectangleBorder()
+                      : SahneShape.withSide(
+                          SahneShape.m,
+                          verdict ? t.okTx : t.errTx,
+                          width: 2,
+                        ),
+                ),
+                child: SahneField(
+                  key: const ValueKey('fill-in-blank-input'),
+                  controller: _controller,
+                  enabled: !widget.disabled,
+                  textInputAction: TextInputAction.done,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  onSubmitted: (_) => _submit(),
+                  inputTextStyle: SahneType.bodyStrong,
+                  hintText: label,
+                  semanticLabel: label,
+                  prefixIcon: AppIcons.pen,
+                ),
+              ),
+            ),
+            if (verdict != null) ...[
+              const SizedBox(width: SahneSpace.x3),
+              ExcludeSemantics(
+                child: Icon(
+                  verdict ? AppIcons.check : AppIcons.xmark,
+                  color: verdict ? t.okTx : t.errTx,
+                  size: 24,
+                ),
+              ),
+            ],
+          ],
         ),
         if (!widget.disabled) ...[
           const SizedBox(height: SahneSpace.x3),
