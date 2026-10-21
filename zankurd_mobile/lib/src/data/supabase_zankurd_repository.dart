@@ -535,7 +535,14 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .uploadBinary(
           path,
           bytes,
-          fileOptions: FileOptions(contentType: contentType, upsert: true),
+          // upsert: false — yol zaten her yüklemede benzersiz. Storage
+          // upsert'te `INSERT ... ON CONFLICT DO UPDATE ... RETURNING` yapar
+          // ve RLS SELECT politikası da ister; 2026-08-01 sertleştirmesi
+          // (security_advisor_hardening) avatars için SELECT politikasını
+          // kaldırdığından o günden beri her fotoğraf yüklemesi 403 ile
+          // düşüyordu (canlıda ağustostan sonra tek nesne yok). INSERT
+          // politikası tek başına yeter.
+          fileOptions: FileOptions(contentType: contentType, upsert: false),
         );
     return client.storage.from('avatars').getPublicUrl(path);
   }

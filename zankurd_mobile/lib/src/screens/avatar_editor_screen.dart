@@ -24,6 +24,27 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Avatar/çerçeve/unvan düzenleyici. Kaydet ile repository'ye yazar ve
 /// pop(true) döner; çağıran ekran görünümünü tazeler.
+
+/// Yüklenecek avatarın içerik türü BAYTLARDAN belirlenir: dosya adı
+/// (iOS'ta `image_picker_XXXX.jpg` ya da HEIC kökenli adlar) güvenilir
+/// değil. PNG imzası `89 50 4E 47`; aksi hâlde image_picker boyutlandırıp
+/// JPEG'e çevirdiği için JPEG. Kova yalnız jpeg/png/webp kabul eder.
+@visibleForTesting
+String avatarContentTypeFor(List<int> bytes) {
+  const png = [0x89, 0x50, 0x4E, 0x47];
+  if (bytes.length >= 4) {
+    var isPng = true;
+    for (var i = 0; i < 4; i++) {
+      if (bytes[i] != png[i]) {
+        isPng = false;
+        break;
+      }
+    }
+    if (isPng) return 'image/png';
+  }
+  return 'image/jpeg';
+}
+
 class AvatarEditorScreen extends StatefulWidget {
   const AvatarEditorScreen({
     required this.repository,
@@ -223,9 +244,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
         _showSnack(tooLargeMessage);
         return;
       }
-      final contentType = file.name.toLowerCase().endsWith('.png')
-          ? 'image/png'
-          : 'image/jpeg';
+      final contentType = avatarContentTypeFor(bytes);
       final url = await widget.repository.uploadAvatarPhoto(
         Uint8List.fromList(bytes),
         contentType,
