@@ -858,7 +858,7 @@ class LearnerLexicon {
     ),
     LearnerLexiconEntry(
       id: 'alfabe',
-      termKu: 'Alfabe',
+      termKu: 'Elîfbê',
       meaningTr: 'Alfabe',
       sourceId: 'alphabet_1',
       forms: ['alfabeya'],
@@ -5943,7 +5943,7 @@ class LearnerLexicon {
     ),
     LearnerLexiconEntry(
       id: 'linge_min_diese',
-      termKu: 'Lingê min diêşe',
+      termKu: 'Linga min diêşe',
       meaningTr: 'Bacağım, ayağım ağrıyor',
       sourceId: 'body_1',
     ),
@@ -7405,7 +7405,7 @@ class LearnerLexicon {
     ),
     LearnerLexiconEntry(
       id: 'guhdar_dike',
-      termKu: 'guhdar dike',
+      termKu: 'guhdarî dike',
       meaningTr: 'dinliyor',
       sourceId: 'school_1',
     ),
