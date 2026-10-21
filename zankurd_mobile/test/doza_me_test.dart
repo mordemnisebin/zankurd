@@ -264,8 +264,8 @@ void main() {
       await tester.pumpWidget(
         testShell(
           languageProvider: ku ? kurmanciLang() : turkishLang(),
-          child: MediaQuery(
-            data: const MediaQueryData(
+          child: const MediaQuery(
+            data: MediaQueryData(
               size: Size(320, 640),
               textScaler: TextScaler.linear(2),
             ),
