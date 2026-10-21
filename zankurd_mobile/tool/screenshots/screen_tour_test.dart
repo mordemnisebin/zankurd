@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/daily_quote_store.dart';
 import 'package:zankurd_mobile/src/data/learning_goal_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/learning_goal.dart';
@@ -1064,6 +1065,24 @@ void main() {
       ku: true,
     );
     await _shoot(t, '26_home_ku');
+  }, tags: ['preview']);
+
+  // Günün sözü kartı (2026-10-21): ana ekranda Günün dersinin altında.
+  testWidgets('310 ana ekran günün sözü', (t) async {
+    await t.runAsync(DailyQuoteStore.load);
+    await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+    await _shoot(t, '310_home_quote');
+  }, tags: ['preview']);
+
+  testWidgets('311 ana ekran günün sözü (Kurmancî, karanlık)', (t) async {
+    await t.runAsync(DailyQuoteStore.load);
+    await _pump(
+      t,
+      Scaffold(body: HomeScreen(repository: repository)),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '311_home_quote_ku_dark');
   }, tags: ['preview']);
 
   testWidgets('27 oyun merkezi (Kurmancî)', (t) async {
