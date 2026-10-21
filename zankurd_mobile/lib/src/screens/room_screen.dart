@@ -336,11 +336,16 @@ class _RoomScreenState extends State<RoomScreen> {
                 if (text != null && senderId != _currentUserId) {
                   _reactionController.triggerReaction(
                     text,
+                    // Adsız oyuncu lobi satırındaki gibi "Oyuncu ZK-XXXX".
                     senderName: senderName == null
                         ? null
-                        : PlayerIdentity.resolveName(
+                        : PlayerIdentity.resolveNameWithTag(
                             senderName,
                             isKu: context.isKu,
+                            tag: room.players
+                                .where((p) => p.id == senderId)
+                                .firstOrNull
+                                ?.tag,
                           ),
                   );
                 }

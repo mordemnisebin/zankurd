@@ -344,7 +344,7 @@ class _RoomChatState extends State<RoomChat> {
                             button: !isMine,
                             enabled: !isMine,
                             label:
-                                '${PlayerIdentity.resolveName(msg.senderName, isKu: context.isKu)}: ${msg.text}',
+                                '${PlayerIdentity.resolveNameWithTag(msg.senderName, isKu: context.isKu, tag: msg.senderProfile?.playerTag)}: ${msg.text}',
                             onLongPress: isMine
                                 ? null
                                 : () => _showModerationSheet(msg),
@@ -440,7 +440,13 @@ class _MessageBubble extends StatelessWidget {
     final t = SahneTokens.of(context);
     // Gönderen adı da tek kural: sunucudan gelen ham "ZanKurd Oyuncusu"
     // gönderene göre farklı görünüyordu (iki simülatör turu, 2026-10-21).
-    final senderName = PlayerIdentity.resolveName(message.senderName, isKu: ku);
+    // Adsız gönderen lobideki gibi "Oyuncu ZK-XXXX" (2026-10-22: sohbette
+    // yalnız "Oyuncu" görünüyordu).
+    final senderName = PlayerIdentity.resolveNameWithTag(
+      message.senderName,
+      isKu: ku,
+      tag: message.senderProfile?.playerTag,
+    );
     return Padding(
       padding: const EdgeInsets.only(bottom: SahneSpace.x2),
       child: Row(

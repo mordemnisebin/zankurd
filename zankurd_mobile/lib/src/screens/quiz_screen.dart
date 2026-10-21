@@ -618,9 +618,18 @@ class _QuizScreenState extends State<QuizScreen>
                 if (text != null && !isSelf) {
                   _reactionController.triggerReaction(
                     text,
+                    // Adsız oyuncu her yerde "Oyuncu ZK-XXXX" (lobi, skor
+                    // tablosu); tepki bandında yalnız "Oyuncu" kalıyordu.
                     senderName: sender == null
                         ? null
-                        : PlayerIdentity.resolveName(sender, isKu: _isKu),
+                        : PlayerIdentity.resolveNameWithTag(
+                            sender,
+                            isKu: _isKu,
+                            tag: livePlayers
+                                .where((p) => p.id == senderId)
+                                .firstOrNull
+                                ?.tag,
+                          ),
                   );
                 }
                 return;
