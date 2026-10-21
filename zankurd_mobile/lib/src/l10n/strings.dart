@@ -3129,6 +3129,124 @@ class Tr {
     },
     K.notifPromptEnable: {'ku': 'Agahdariyan veke', 'tr': 'Bildirimleri aç'},
     K.notifPromptLater: {'ku': 'Niha na', 'tr': 'Şimdi değil'},
+    // ── Doza me / Davamız (jüriden geçmiş kimlik metni, AYNEN) ─────
+    K.dozaTitle: {'ku': 'Doza me', 'tr': 'Davamız'},
+    K.dozaIntro: {
+      'ku':
+          'ZanKurd ji bo zindîhiştina zimanê Kurdî, nasname û îradeya jiyana azad heye. Zimanê me sed salan hat qedexekirin; bi înkar û asîmîlasyonê xwestin ji dibistan, dadgeh û kolanan were jêbirin. Lê gelê me li ber xwe da, zimanê xwe di mal de, di stran û dengbêjiya xwe de zindî hişt. Her pirsa ku em li vir dipirsin, her peyva ku em hîn dikin bersiveke li dijî înkarê ye, gaveke ber bi jiyana azad ve ye.',
+      'tr':
+          'ZanKurd, Kürt dilini, kimliğini ve özgür yaşam iradesini yaşatmak için var. Dilimiz yüz yıl boyunca yasaklandı; inkâr ve asimilasyonla okullardan, mahkemelerden, sokaklardan silinmek istendi. Ama halkımız direndi, dilini evinde, türküsünde, dengbêjinde yaşattı. Burada sorduğumuz her soru, öğrettiğimiz her kelime inkâra karşı bir cevap, özgür yaşama doğru bir adımdır.',
+    },
+    K.dozaRights: {
+      'ku': 'Mafên me, daxwazên me',
+      'tr': 'Haklarımız, taleplerimiz',
+    },
+    K.dozaM1Head: {'ku': 'Perwerde bi zimanê dayikê', 'tr': 'Anadilde eğitim'},
+    K.dozaM1Body: {
+      'ku':
+          'Her zarokekî Kurd xwedî maf e ku bi zimanê xwe fêrî xwendin û nivîsandinê bibe û perwerdeyê bistîne. Zimanê dayikê ne mijara danûstandinê ye.',
+      'tr':
+          'Her Kürt çocuğu kendi dilinde okuma yazma öğrenme ve eğitim alma hakkına sahiptir. Anadil pazarlık konusu değildir.',
+    },
+    K.dozaM2Head: {'ku': 'Kurdî zimanê fermî', 'tr': 'Kürtçe resmî dil'},
+    K.dozaM2Body: {
+      'ku':
+          'Divê Kurdî li her derê ku tê axaftin bibe zimanê fermî û giştî: li dibistanê, li nexweşxaneyê, li dadgehê, li meclisê.',
+      'tr':
+          'Kürtçe, konuşulduğu her yerde resmî ve kamusal dil olmalıdır: okulda, hastanede, mahkemede, mecliste.',
+    },
+    K.dozaM3Head: {
+      'ku': 'Naskirina azad a nasnameyê',
+      'tr': 'Kimliğin özgürce tanınması',
+    },
+    K.dozaM3Body: {
+      'ku':
+          'Nasnameya gelê Kurd nayê înkarkirin; divê bi awayekî wekhev, bi rûmet û bi garantiya destûrî were naskirin.',
+      'tr':
+          'Kürt halkının kimliği inkâr edilemez; eşit, onurlu ve anayasal güvenceyle tanınmalıdır.',
+    },
+    K.dozaM4Head: {
+      'ku': 'Civaka demokratîk û xweserî',
+      'tr': 'Demokratik toplum ve öz yönetim',
+    },
+    K.dozaM4Body: {
+      'ku':
+          'Divê gel bikaribe bi zimanê xwe û bi îradeya xwe jiyana xwe birêve bibe. Biratiya gelan, hevjiyana wekhev û azad.',
+      'tr':
+          'Halklar kendi yaşamlarına kendi dilleri ve kendi iradeleriyle yön verebilmelidir. Halkların kardeşliği, eşit ve özgür bir arada yaşam.',
+    },
+    K.dozaM5Head: {'ku': 'Azadiya jinê', 'tr': 'Kadın özgürlüğü'},
+    K.dozaM5Body: {
+      'ku': 'Heta jin azad nebe, civak azad nabe. Jin, Jiyan, Azadî.',
+      'tr': 'Kadın özgürleşmeden toplum özgürleşemez. Jin, Jiyan, Azadî.',
+    },
+    K.dozaM6Head: {'ku': 'Navên cihan û bîr', 'tr': 'Yer adları ve hafıza'},
+    K.dozaM6Body: {
+      'ku':
+          'Divê navên gund, bajarok û bajarên me yên hatine guhertin vegerin ser navên xwe yên resen; bîra me nayê jêbirin.',
+      'tr':
+          'Değiştirilen köy, kasaba ve şehir adlarımız asıllarına döndürülmeli; hafızamız silinemez.',
+    },
+    K.dozaM7Head: {
+      'ku': 'Azadiya gotinê, hunerê û çapemeniyê',
+      'tr': 'Söz, sanat ve basın özgürlüğü',
+    },
+    K.dozaM7Body: {
+      'ku':
+          'Divê stran, pirtûk, fîlm û weşanên Kurdî bêyî tu qedexe û zextê bên çêkirin.',
+      'tr':
+          'Kürtçe şarkı, kitap, film ve yayın hiçbir yasak ve baskı olmadan yapılabilmelidir.',
+    },
+    K.dozaM8Head: {'ku': 'Ekolojî û ax', 'tr': 'Ekoloji ve toprak'},
+    K.dozaM8Body: {
+      'ku':
+          'Çiyayên me, çemên me, daristanên me jiyan bi xwe ne; divê li dijî talan û wêrankirinê bên parastin.',
+      'tr':
+          'Dağlarımız, ırmaklarımız, ormanlarımız yaşamın kendisidir; yağma ve yıkıma karşı korunmalıdır.',
+    },
+    K.dozaClosing: {
+      'ku':
+          'Ziman heta tê axaftin dijî. Her ku tu fêr dibî, Kurdî dijî; her ku tu diaxivî, Kurdî mezin dibe. Berxwedan jiyan e. Zimanê me nasnameya me ye.',
+      'tr':
+          'Bir dil, konuşulduğu sürece yaşar. Sen öğrendikçe Kürtçe yaşar; sen konuştukça Kürtçe büyür. Berxwedan jiyan e. Zimanê me nasnameya me ye.',
+    },
+    K.dozaShare: {'ku': 'Doza me parve bike', 'tr': 'Davamızı paylaş'},
+    K.dozaSlogan: {
+      'ku': 'Zimanê me nasnameya me ye.',
+      'tr': 'Zimanê me nasnameya me ye.',
+    },
+    K.dozaG1Text: {
+      'ku': 'Newroz pîroz be! Berxwedan û azadî.',
+      'tr': 'Newroz kutlu olsun! Direniş ve özgürlük.',
+    },
+    K.dozaG1Date: {'ku': '21ê Adarê', 'tr': '21 Mart'},
+    K.dozaG2Text: {
+      'ku': 'Roja Zimanê Dayikê ya Cîhanê: Zimanê me mafê me ye.',
+      'tr': 'Dünya Anadili Günü: Dilimiz hakkımızdır.',
+    },
+    K.dozaG2Date: {'ku': '21ê Sibatê', 'tr': '21 Şubat'},
+    K.dozaG3Text: {
+      'ku': 'Em Helebceyê ji bîr nakin.',
+      'tr': 'Halepçe\'yi unutmuyoruz.',
+    },
+    K.dozaG3Sub: {
+      'ku':
+          '(Ji bo bîranîna kesên ku di êrîşa kîmyewî ya 1988an de jiyana xwe ji dest dan)',
+      'tr': '(1988 kimyasal saldırısında yitirdiklerimizin anısına)',
+    },
+    K.dozaG3Date: {'ku': '16ê Adarê', 'tr': '16 Mart'},
+    K.dozaG4Text: {
+      'ku':
+          'Cejna Zimanê Kurdî: Salvegera kovara Hawarê ya Celadet Bedirxan (1932). Bi zimanê xwe bipeyive!',
+      'tr':
+          'Kürt Dili Bayramı: Celadet Bedirxan\'ın Hawar dergisinin (1932) yıldönümü. Bi zimanê xwe bipeyive!',
+    },
+    K.dozaG4Date: {'ku': '15ê Gulanê', 'tr': '15 Mayıs'},
+    K.dozaG5Text: {
+      'ku': 'Roja Jinên Cîhanê: Jin, Jiyan, Azadî.',
+      'tr': 'Dünya Kadınlar Günü: Jin, Jiyan, Azadî.',
+    },
+    K.dozaG5Date: {'ku': '8ê Adarê', 'tr': '8 Mart'},
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.
@@ -4510,4 +4628,37 @@ class K {
   static const notifPromptBody = 'notif.prompt.body';
   static const notifPromptEnable = 'notif.prompt.enable';
   static const notifPromptLater = 'notif.prompt.later';
+  static const dozaTitle = 'doza.page';
+  static const dozaIntro = 'doza.intro';
+  static const dozaRights = 'doza.rights';
+  static const dozaM1Head = 'doza.m1.head';
+  static const dozaM1Body = 'doza.m1.body';
+  static const dozaM2Head = 'doza.m2.head';
+  static const dozaM2Body = 'doza.m2.body';
+  static const dozaM3Head = 'doza.m3.head';
+  static const dozaM3Body = 'doza.m3.body';
+  static const dozaM4Head = 'doza.m4.head';
+  static const dozaM4Body = 'doza.m4.body';
+  static const dozaM5Head = 'doza.m5.head';
+  static const dozaM5Body = 'doza.m5.body';
+  static const dozaM6Head = 'doza.m6.head';
+  static const dozaM6Body = 'doza.m6.body';
+  static const dozaM7Head = 'doza.m7.head';
+  static const dozaM7Body = 'doza.m7.body';
+  static const dozaM8Head = 'doza.m8.head';
+  static const dozaM8Body = 'doza.m8.body';
+  static const dozaClosing = 'doza.closing';
+  static const dozaShare = 'doza.share';
+  static const dozaSlogan = 'doza.slogan';
+  static const dozaG1Text = 'doza.g1.text';
+  static const dozaG1Date = 'doza.g1.date';
+  static const dozaG2Text = 'doza.g2.text';
+  static const dozaG2Date = 'doza.g2.date';
+  static const dozaG3Text = 'doza.g3.text';
+  static const dozaG3Sub = 'doza.g3.sub';
+  static const dozaG3Date = 'doza.g3.date';
+  static const dozaG4Text = 'doza.g4.text';
+  static const dozaG4Date = 'doza.g4.date';
+  static const dozaG5Text = 'doza.g5.text';
+  static const dozaG5Date = 'doza.g5.date';
 }

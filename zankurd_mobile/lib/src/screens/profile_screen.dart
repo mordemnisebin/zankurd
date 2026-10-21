@@ -1,3 +1,4 @@
+import '../widgets/doza_widgets.dart';
 import 'package:flutter/foundation.dart'
     show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
@@ -397,6 +398,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           alignment: AlignmentDirectional.centerStart,
           child: _SyncStatusChip(),
         ),
+        // Kimlik ve değerler sayfası: profilin altında belirgin giriş.
+        const SizedBox(height: SahneSpace.x2),
+        const DozaMeEntryCard(),
         // Seviye + XP çubuğu + jeton artık kimlik başlığındadır (kurul 5. tur).
         // 2026-10-19 sadeleşme (ikinci tur): "Ayrıntılı istatistik" ayrı bir
         // açılır kart değil, başlığın yanındaki bağlantıdır; ayrıntılar

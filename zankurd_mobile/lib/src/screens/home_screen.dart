@@ -1,3 +1,4 @@
+import '../widgets/doza_widgets.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -484,6 +485,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
             const SizedBox(height: SahneSpace.x2),
           ],
+          // Tarihî gün şeridi: yalnız o gün (21 Şubat, 8/16/21 Mart, 15 Mayıs).
+          if (DozaDay.today() case final day?) DozaDayStrip(day: day),
           TodayTaskCard(
             isKu: ku,
             loading: _roomActionLoading,
@@ -601,6 +604,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             progress: _topicProgress,
             onOpen: _openCategory,
           ),
+          // Slogan satırı (S1): dokununca "Doza me" sayfası.
+          const DozaSloganLine(),
         ],
       ),
     );
