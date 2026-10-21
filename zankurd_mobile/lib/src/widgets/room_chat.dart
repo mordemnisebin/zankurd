@@ -50,13 +50,20 @@ class _RoomChatState extends State<RoomChat> {
   final Set<String> _hiddenMessageIds = <String>{};
 
   /// Ekranda gösterilecek mesajlar.
-  List<RoomMessage> get _visibleMessages => _messages
-      .where(
-        (m) =>
-            !_blockedSenderIds.contains(m.senderId) &&
-            !_hiddenMessageIds.contains(m.id),
-      )
-      .toList();
+  ///
+  /// Sıra burada da kurulur (eski üstte, yeni altta): akıştan gelen sıraya
+  /// güvenmek, `order` varsayılanının azalan olması yüzünden sohbeti
+  /// ters çevirmişti.
+  List<RoomMessage> get _visibleMessages {
+    final list = _messages
+        .where(
+          (m) =>
+              !_blockedSenderIds.contains(m.senderId) &&
+              !_hiddenMessageIds.contains(m.id),
+        )
+        .toList();
+    return orderChatMessages(list);
+  }
 
   @override
   void initState() {
@@ -498,4 +505,16 @@ class _MessageBubble extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Sohbeti klasik sıraya dizer: en eski üstte, en yeni altta. Eşit
+/// zamanlılar kimliğe göre, sıra kararlı kalsın diye.
+@visibleForTesting
+List<RoomMessage> orderChatMessages(List<RoomMessage> messages) {
+  final sorted = List<RoomMessage>.of(messages);
+  sorted.sort((a, b) {
+    final byTime = a.createdAt.compareTo(b.createdAt);
+    return byTime != 0 ? byTime : a.id.compareTo(b.id);
+  });
+  return sorted;
 }
