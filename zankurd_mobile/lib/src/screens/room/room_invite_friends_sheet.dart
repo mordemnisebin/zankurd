@@ -12,6 +12,7 @@ import '../../theme/app_icons.dart';
 import '../../utils/error_reporter.dart';
 import '../../utils/player_identity.dart';
 import '../../widgets/app_panel.dart';
+import '../../widgets/player_avatar.dart';
 import '../../widgets/sahne/sahne.dart';
 
 /// Oda lobisinden kabul edilmiş arkadaşları, kod girmeden davet eden sayfa.
@@ -262,17 +263,24 @@ class _RoomInviteFriendsSheetState extends State<RoomInviteFriendsSheet> {
     final here = inRoom.contains(id);
     final invited = !here && _invited.contains(id);
     final selected = _selected.contains(id);
-    final name = context.playerDisplayName(friend.friendName);
+    final name = context.playerDisplayName(
+      friend.friendName,
+      tag: friend.friendTag,
+    );
     final note = here
         ? context.t(K.roomInviteAlreadyIn)
         : invited
         ? context.t(K.roomInviteAlreadyInvited)
         : null;
     final disabled = here || invited;
-    return SahneListRow.icon(
+    return SahneListRow.leading(
       key: ValueKey('room-invite-friend-$id'),
-      icon: AppIcons.peopleGroup,
-      role: SahneRole.race,
+      leading: PlayerAvatar.fromIdentity(
+        radius: 20,
+        identity: friend.friendAvatar,
+        fallbackColorHex: friend.friendAvatarColor,
+        displayName: friend.friendName,
+      ),
       title: name,
       subtitle: note,
       enabled: !disabled,

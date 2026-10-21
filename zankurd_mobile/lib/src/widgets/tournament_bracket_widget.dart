@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../config/avatar_presets.dart';
 import '../l10n/strings.dart';
+import '../models/public_profile.dart';
 import '../models/tournament.dart';
+import '../utils/player_identity.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../theme/app_icons.dart';
 import 'player_avatar.dart';
@@ -385,6 +387,7 @@ class _BracketMatchCard extends StatelessWidget {
               _PlayerSlot(
                 name: match.playerOneName,
                 playerId: match.playerOneId,
+                profile: match.playerOneProfile,
                 score: match.playerOneScore,
                 isWinner: p1Won,
                 isUser: match.playerOneId == userId,
@@ -451,6 +454,7 @@ class _BracketMatchCard extends StatelessWidget {
               _PlayerSlot(
                 name: match.playerTwoName,
                 playerId: match.playerTwoId,
+                profile: match.playerTwoProfile,
                 score: match.playerTwoScore,
                 isWinner: p2Won,
                 isUser: match.playerTwoId == userId,
@@ -472,6 +476,7 @@ class _PlayerSlot extends StatelessWidget {
     required this.playerId,
     required this.score,
     required this.isWinner,
+    this.profile,
     required this.isUser,
     required this.isCompleted,
     required this.ku,
@@ -479,6 +484,10 @@ class _PlayerSlot extends StatelessWidget {
 
   final String name;
   final String playerId;
+
+  /// Gerçek turnuvada oyuncunun herkese açık kimliği; yoksa (bot/yerel)
+  /// kimlikten türetilen simge ve renk çizilir.
+  final PublicProfile? profile;
   final int score;
   final bool isWinner;
   final bool isUser;
@@ -488,7 +497,13 @@ class _PlayerSlot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final placeholder = Tr.forKu(K.unknownPlayer, ku);
-    final displayName = name == 'TBD' || name.isEmpty ? placeholder : name;
+    final displayName = name == 'TBD' || name.isEmpty
+        ? placeholder
+        : PlayerIdentity.resolveNameWithTag(
+            profile?.displayName ?? name,
+            isKu: ku,
+            tag: profile?.playerTag,
+          );
     final isDimmed = isCompleted && !isWinner;
     final hasPlayer = name.isNotEmpty && name != 'TBD';
 
@@ -512,12 +527,18 @@ class _PlayerSlot extends StatelessWidget {
           children: [
             // Player avatar
             if (hasPlayer)
-              PlayerAvatar(
-                radius: 12,
-                displayName: displayName,
-                iconId: _playerIconId(playerId),
-                colorHex: _playerColorHex(playerId),
-              )
+              profile != null
+                  ? PlayerAvatar.fromIdentity(
+                      radius: 12,
+                      identity: profile!.avatar,
+                      displayName: profile!.displayName ?? name,
+                    )
+                  : PlayerAvatar(
+                      radius: 12,
+                      displayName: displayName,
+                      iconId: _playerIconId(playerId),
+                      colorHex: _playerColorHex(playerId),
+                    )
             else
               SahneDiamondAvatar(
                 size: 24,

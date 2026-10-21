@@ -11,6 +11,7 @@ class LeaderboardEntry {
     this.avatarUrl,
     this.avatarFrame,
     this.showcaseTitle,
+    this.playerTag,
   });
 
   final int rank;
@@ -27,4 +28,8 @@ class LeaderboardEntry {
   final String? avatarUrl;
   final String? avatarFrame;
   final String? showcaseTitle;
+
+  /// Oyuncu kodu (`get_leaderboard` döndürmez; depo tamamlar). Adsız
+  /// oyuncuda "Oyuncu ZK-XXXX" yazılması için gerekir.
+  final String? playerTag;
 }

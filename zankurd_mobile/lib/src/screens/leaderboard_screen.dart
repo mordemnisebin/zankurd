@@ -1112,7 +1112,11 @@ class _RankRow extends StatelessWidget {
   /// Görünen ad: sunucunun yer tutucu adı ("ZanKurd Oyuncusu") ham
   /// basılmaz, dile göre "Oyuncu" / "Lîstikvan" olur (satırda "ZanKurd
   /// Oyu…" diye kesiliyordu). Avatar rengi ham addan türer (değişmez).
-  String get _name => PlayerIdentity.resolveName(entry.displayName, isKu: isKu);
+  String get _name => PlayerIdentity.resolveNameWithTag(
+    entry.displayName,
+    isKu: isKu,
+    tag: entry.playerTag,
+  );
 
   /// Alt metindeki sayı `get_leaderboard`ın `count(distinct room_id)`
   /// değeridir: oyuncunun BİTMİŞ çevrimiçi yarış (oda) sayısı. Birim
@@ -1378,9 +1382,10 @@ class _FriendRankRow extends StatelessWidget {
               dimension: 40,
               child: Stack(
                 children: [
-                  PlayerAvatar(
+                  PlayerAvatar.fromIdentity(
                     radius: 18,
-                    colorHex: friend.friendAvatarColor,
+                    identity: friend.friendAvatar,
+                    fallbackColorHex: friend.friendAvatarColor,
                     displayName: friend.friendName,
                   ),
                   PositionedDirectional(
@@ -1409,7 +1414,11 @@ class _FriendRankRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    PlayerIdentity.resolveName(friend.friendName, isKu: isKu),
+                    PlayerIdentity.resolveNameWithTag(
+                      friend.friendName,
+                      isKu: isKu,
+                      tag: friend.friendTag,
+                    ),
                     style: SahneType.bodyStrong.copyWith(color: t.tx),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

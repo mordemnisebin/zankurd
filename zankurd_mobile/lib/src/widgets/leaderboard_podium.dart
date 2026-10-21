@@ -23,7 +23,11 @@ Future<void> showLeaderboardEntryMenu(
   required bool isKu,
   required VoidCallback onReport,
 }) {
-  final name = PlayerIdentity.resolveName(entry.displayName, isKu: isKu);
+  final name = PlayerIdentity.resolveNameWithTag(
+    entry.displayName,
+    isKu: isKu,
+    tag: entry.playerTag,
+  );
   return showSahneSheet<void>(
     context: context,
     title: name,
@@ -160,7 +164,11 @@ class _PodiumColumn extends StatelessWidget {
   static const _pedestal = [152.0, 124.0, 100.0];
   static const _avatarRadius = [32.0, 24.0, 24.0];
 
-  String get _name => PlayerIdentity.resolveName(entry.displayName, isKu: isKu);
+  String get _name => PlayerIdentity.resolveNameWithTag(
+    entry.displayName,
+    isKu: isKu,
+    tag: entry.playerTag,
+  );
 
   Color _rankColor(SahneTokens t) {
     if (isSelf) return t.goldTx;

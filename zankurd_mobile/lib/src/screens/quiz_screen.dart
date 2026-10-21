@@ -667,13 +667,21 @@ class _QuizScreenState extends State<QuizScreen>
                   final opponentIdx = livePlayers.indexWhere(
                     (player) => playersShareIdentity(player, incomingPlayer),
                   );
-                  final updatedOpponent = Player(
-                    id:
-                        senderId ??
-                        (opponentIdx != -1
-                            ? livePlayers[opponentIdx].id
-                            : null),
-                    name: senderName,
+                  // Yayın yalnız ad/skor taşır; fotoğraf, simge, renk, çerçeve
+                  // ve oyuncu kodu odadaki kayıttan (`room_players` + herkese
+                  // açık profil) gelir. Eskiden bu satır sıfırdan bir Player
+                  // kurup hepsini düşürüyordu: rakibin fotoğrafı ilk yayında
+                  // kayboluyor, sunucudan gelen gerçek ad da yayındaki
+                  // yer tutucu adla ("Oyuncu") eziliyordu.
+                  final existing = opponentIdx != -1
+                      ? livePlayers[opponentIdx]
+                      : null;
+                  final keepName =
+                      existing != null &&
+                      !PlayerIdentity.isPlaceholderDisplayName(existing.name);
+                  final updatedOpponent = (existing ?? incomingPlayer).copyWith(
+                    id: senderId ?? existing?.id,
+                    name: keepName ? existing.name : senderName,
                     score: (payload['score'] as num?)?.toInt() ?? 0,
                     streak: (payload['streak'] as num?)?.toInt() ?? 0,
                     state: payload['answered'] == true
@@ -736,14 +744,28 @@ class _QuizScreenState extends State<QuizScreen>
                     );
                     final key = playerIdentityKey(id: p.id, legacyName: p.name);
                     if (idx != -1) {
-                      livePlayers[idx] = livePlayers[idx].copyWith(
-                        score: p.score,
-                        streak: p.streak,
-                        left: p.left,
-                        state: _answeredPlayerKeys.contains(key)
-                            ? Tr.forKu(K.answeredState, _isKu)
-                            : Tr.forKu(K.waitingAnswerState, _isKu),
-                      );
+                      // İlk anlık görüntü adı/fotoğrafı eksik olabilir; akış
+                      // daha zengin kimlik getirdiyse tamamlanır.
+                      final current = livePlayers[idx];
+                      livePlayers[idx] = current
+                          .copyWith(
+                            name:
+                                PlayerIdentity.isPlaceholderDisplayName(
+                                      current.name,
+                                    ) &&
+                                    !PlayerIdentity.isPlaceholderDisplayName(
+                                      p.name,
+                                    )
+                                ? p.name
+                                : null,
+                            score: p.score,
+                            streak: p.streak,
+                            left: p.left,
+                            state: _answeredPlayerKeys.contains(key)
+                                ? Tr.forKu(K.answeredState, _isKu)
+                                : Tr.forKu(K.waitingAnswerState, _isKu),
+                          )
+                          .mergeIdentity(p);
                     } else {
                       livePlayers.add(
                         p.copyWith(
@@ -1897,7 +1919,8 @@ class _QuizScreenState extends State<QuizScreen>
     if (!_isMultiplayer) return;
     final myIdx = livePlayers.indexWhere(_isMe);
     if (myIdx != -1) {
-      livePlayers[myIdx] = Player(
+      // copyWith: kendi fotoğrafım/simgem/çerçevem satırda kalsın.
+      livePlayers[myIdx] = livePlayers[myIdx].copyWith(
         id: _myId,
         name: _myName,
         score: score,

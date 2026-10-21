@@ -1,0 +1,40 @@
+{
+  "greetings_2": {
+    "slug": "silav-u-rezdari",
+    "slides": 4,
+    "identical_field_pairs": 15,
+    "compared_fields": [
+      "order",
+      "ku",
+      "tr",
+      "example"
+    ],
+    "differences": [
+      {
+        "order": 3,
+        "field": "ku",
+        "sql": "Spas û lêborîn:\n\n• Gelek spas: Çok teşekkürler\n• Bibore: Özür dilerim / Pardon",
+        "local": "Spas, lêborîn û gotin:\n\n• Gelek spas: Çok teşekkürler\n• Bibore: Özür dilerim / Pardon\n• Gotin: Söylemek"
+      }
+    ]
+  },
+  "intro_1": {
+    "slug": "xwe-nasandin",
+    "slides": 5,
+    "identical_field_pairs": 19,
+    "compared_fields": [
+      "order",
+      "ku",
+      "tr",
+      "example"
+    ],
+    "differences": [
+      {
+        "order": 3,
+        "field": "tr",
+        "sql": "Nerelisin? sorusu ve cevabı. \"ji\" ile dişil şehir adlarının sonuna -ê eklenir: Wan → Wanê, Mêrdîn → Mêrdînê, Stenbol → Stenbolê..",
+        "local": "Nerelisin? sorusu ve cevabı. \"ji\" ile dişil şehir adlarının sonuna -ê eklenir: Wan → Wanê, Mêrdîn → Mêrdînê, Stenbol → Stenbolê."
+      }
+    ]
+  }
+}

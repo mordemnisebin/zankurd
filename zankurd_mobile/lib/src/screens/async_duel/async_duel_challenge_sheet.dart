@@ -11,6 +11,7 @@ import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/error_reporter.dart';
 import '../../utils/player_identity.dart';
+import '../../widgets/player_avatar.dart';
 import '../../widgets/sahne/sahne.dart';
 import 'async_duel_play_screen.dart';
 
@@ -225,11 +226,18 @@ class _FriendPicker extends StatelessWidget {
         child: SahneListGroup(
           children: [
             for (final friend in list)
-              SahneListRow.icon(
+              SahneListRow.leading(
                 key: ValueKey('challenge-friend-${friend.friendId}'),
-                icon: AppIcons.peopleGroup,
-                role: SahneRole.race,
-                title: context.playerDisplayName(friend.friendName),
+                leading: PlayerAvatar.fromIdentity(
+                  radius: 20,
+                  identity: friend.friendAvatar,
+                  fallbackColorHex: friend.friendAvatarColor,
+                  displayName: friend.friendName,
+                ),
+                title: context.playerDisplayName(
+                  friend.friendName,
+                  tag: friend.friendTag,
+                ),
                 chevron: true,
                 onTap: () => onPick(friend),
               ),

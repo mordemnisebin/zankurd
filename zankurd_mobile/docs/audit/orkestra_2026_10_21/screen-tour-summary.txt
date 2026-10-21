@@ -1,0 +1,15 @@
+Kaynak: /tmp/zankurd-20261021-screen-tour.log
+SHA256: 335154caf81d661b4c92c318c691bff9d5684487fb5eb43dbc743dec2d18d906
+
+[Analytics] language_change {lang: tr}
+[Analytics] quiz_start {category: Ziman, mode: crowd}
+✓ 261_crowd_game_header
++171: 262 kalabalık oyun — başlık (karanlık, Kurmancî)
+[Analytics] quiz_start {category: Ziman, mode: crowd}
+✓ 262_crowd_game_header_dark_ku
++172: 263 kalabalık sonuç — sıralama
+[Analytics] language_change {lang: tr}
+✓ 263_crowd_result
++173: 264 kalabalık sonuç — sıralama (karanlık, Kurmancî)
+✓ 264_crowd_result_dark_ku
++174: All tests passed!

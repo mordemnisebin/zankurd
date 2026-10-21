@@ -11,6 +11,7 @@ import '../l10n/strings.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../models/avatar_identity.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/room_chat.dart';
 import '../utils/app_route.dart';
@@ -2042,7 +2043,11 @@ class _RoomPlayerRow extends StatelessWidget {
   String _displayName(BuildContext context) =>
       player.name == 'Tu' && player.id == null
       ? context.t(K.you)
-      : PlayerIdentity.resolveName(player.name, isKu: isKu);
+      : PlayerIdentity.resolveNameWithTag(
+          player.name,
+          isKu: isKu,
+          tag: player.tag,
+        );
 
   /// Depodan gelen durum metni Türkçe sabittir; KU modunda burada çevrilir.
   String _localizedState(String state) {
@@ -2186,13 +2191,20 @@ class _RoomPlayerRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: SahneSpace.x3),
-                PlayerAvatar(
+                // Avatara HAM ad verilir: "Oyuncu ZK-XXXX" yer tutucu sayılmaz
+                // ve baş harf "O" çıkardı; yer tutucuda simge, renk tohumu
+                // dilden bağımsız kalır.
+                PlayerAvatar.fromIdentity(
                   radius: 18,
-                  photoUrl: player.avatarUrl,
-                  iconId: player.avatarIcon,
-                  colorHex: player.avatarColor,
-                  frameId: player.avatarFrame,
-                  displayName: _displayName(context),
+                  identity: AvatarIdentity(
+                    iconId: player.avatarIcon,
+                    colorHex: player.avatarColor,
+                    photoUrl: player.avatarUrl,
+                    frameId: player.avatarFrame,
+                  ),
+                  displayName: player.name == 'Tu' && player.id == null
+                      ? _displayName(context)
+                      : player.name,
                 ),
                 const SizedBox(width: SahneSpace.x3),
                 Expanded(

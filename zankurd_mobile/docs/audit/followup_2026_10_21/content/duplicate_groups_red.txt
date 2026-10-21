@@ -1,0 +1,53 @@
+test_commented_bank_is_excluded_and_scope_is_json_only (test_editorial_queue.EditorialQueueTest) ... ok
+test_missing_malformed_bank_and_duplicate_id_fail (test_editorial_queue.EditorialQueueTest) ... ok
+test_visual_without_bilingual_alt_has_top_priority_and_statuses_stay_separate (test_editorial_queue.EditorialQueueTest) ... ok
+test_answer_drift_invalidates_the_whole_group (test_editorial_queue.ReviewedDuplicateGroupsTest) ... FAIL
+test_current_group_report_preserves_both_production_records (test_editorial_queue.ReviewedDuplicateGroupsTest) ... FAIL
+test_malformed_sidecar_fails_instead_of_reporting_no_groups (test_editorial_queue.ReviewedDuplicateGroupsTest) ... FAIL
+test_missing_member_is_reported_and_never_approved (test_editorial_queue.ReviewedDuplicateGroupsTest) ... FAIL
+test_new_matching_prompt_is_candidate_and_does_not_join_reviewed_group (test_editorial_queue.ReviewedDuplicateGroupsTest) ... FAIL
+
+======================================================================
+FAIL: test_answer_drift_invalidates_the_whole_group (test_editorial_queue.ReviewedDuplicateGroupsTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kocer/Projects/zankurd/zankurd_mobile/tool/content_authoring/test_editorial_queue.py", line 141, in test_answer_drift_invalidates_the_whole_group
+    self.assertIn("reviewedDuplicateGroups", report)
+AssertionError: 'reviewedDuplicateGroups' not found in {'schemaVersion': 1, 'generatedAt': '2026-10-21T10:43:57.347882+00:00', 'scope': 'registered_json_assets_only', 'scopeNote': 'Only JSON assets actively listed in questionBankAssets are counted; commented/quarantined files and Dart curated/runtime totals are excluded.', 'source': {'manifest': 'lib/src/data/question_bank_assets.dart', 'sha256': '607ccddf42f3b4a537f50dd104a630c87e6bb0c82af5a6d84e314e2015d2c4fe', 'banks': [{'asset': 'assets/data/a.json', 'sha256': '76585b3a38ec611f3226fb30c05af7409733dd464c6bec7b1ebf51198c58fa6c', 'recordCount': 2}]}, 'summary': {'bankCount': 1, 'recordCount': 2, 'reviewStatuses': {'unreviewed': 2}, 'priorities': {'P3': 2}, 'sourceMissing': 2, 'imageAltMissing': 0, 'audioAbsent': 2}, 'records': [{'priority': 'P3', 'id': 'a', 'bank': 'assets/data/a.json', 'category': '', 'type': 'unspecified', 'difficulty': None, 'reviewStatus': 'unreviewed', 'metadataAbsent': True, 'sourceMissing': True, 'sourceTitle': '', 'sourceReference': '', 'imageUrl': '', 'imageAltMissing': False, 'audioAbsent': True, 'prompt': 'Same target?', 'promptTr': ''}, {'priority': 'P3', 'id': 'b', 'bank': 'assets/data/a.json', 'category': '', 'type': 'unspecified', 'difficulty': None, 'reviewStatus': 'unreviewed', 'metadataAbsent': True, 'sourceMissing': True, 'sourceTitle': '', 'sourceReference': '', 'imageUrl': '', 'imageAltMissing': False, 'audioAbsent': True, 'prompt': 'Same target again?', 'promptTr': ''}]}
+
+======================================================================
+FAIL: test_current_group_report_preserves_both_production_records (test_editorial_queue.ReviewedDuplicateGroupsTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kocer/Projects/zankurd/zankurd_mobile/tool/content_authoring/test_editorial_queue.py", line 127, in test_current_group_report_preserves_both_production_records
+    self.assertIn("reviewedDuplicateGroups", report)
+AssertionError: 'reviewedDuplicateGroups' not found in {'schemaVersion': 1, 'generatedAt': '2026-10-21T10:43:57.351289+00:00', 'scope': 'registered_json_assets_only', 'scopeNote': 'Only JSON assets actively listed in questionBankAssets are counted; commented/quarantined files and Dart curated/runtime totals are excluded.', 'source': {'manifest': 'lib/src/data/question_bank_assets.dart', 'sha256': 'e108f58b4ac21e39353d2e1d73f91112589dbd387961ff144231f7295e268dcc', 'banks': [{'asset': 'assets/data/a.json', 'sha256': 'f8e958a3c55463eee0c0616f4b49b4c0d8c0c6e4db6863ca970d6f90db5c4b28', 'recordCount': 2}]}, 'summary': {'bankCount': 1, 'recordCount': 2, 'reviewStatuses': {'unreviewed': 2}, 'priorities': {'P3': 2}, 'sourceMissing': 2, 'imageAltMissing': 0, 'audioAbsent': 2}, 'records': [{'priority': 'P3', 'id': 'a', 'bank': 'assets/data/a.json', 'category': '', 'type': 'unspecified', 'difficulty': None, 'reviewStatus': 'unreviewed', 'metadataAbsent': True, 'sourceMissing': True, 'sourceTitle': '', 'sourceReference': '', 'imageUrl': '', 'imageAltMissing': False, 'audioAbsent': True, 'prompt': 'Same target?', 'promptTr': ''}, {'priority': 'P3', 'id': 'b', 'bank': 'assets/data/a.json', 'category': '', 'type': 'unspecified', 'difficulty': None, 'reviewStatus': 'unreviewed', 'metadataAbsent': True, 'sourceMissing': True, 'sourceTitle': '', 'sourceReference': '', 'imageUrl': '', 'imageAltMissing': False, 'audioAbsent': True, 'prompt': 'Same target again?', 'promptTr': ''}]}
+
+======================================================================
+FAIL: test_malformed_sidecar_fails_instead_of_reporting_no_groups (test_editorial_queue.ReviewedDuplicateGroupsTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kocer/Projects/zankurd/zankurd_mobile/tool/content_authoring/test_editorial_queue.py", line 175, in test_malformed_sidecar_fails_instead_of_reporting_no_groups
+    editorial_queue.build_report(self.root)
+AssertionError: AuditError not raised
+
+======================================================================
+FAIL: test_missing_member_is_reported_and_never_approved (test_editorial_queue.ReviewedDuplicateGroupsTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kocer/Projects/zankurd/zankurd_mobile/tool/content_authoring/test_editorial_queue.py", line 152, in test_missing_member_is_reported_and_never_approved
+    self.assertIn("reviewedDuplicateGroups", report)
+AssertionError: 'reviewedDuplicateGroups' not found in {'schemaVersion': 1, 'generatedAt': '2026-10-21T10:43:57.357391+00:00', 'scope': 'registered_json_assets_only', 'scopeNote': 'Only JSON assets actively listed in questionBankAssets are counted; commented/quarantined files and Dart curated/runtime totals are excluded.', 'source': {'manifest': 'lib/src/data/question_bank_assets.dart', 'sha256': 'e40e34b57db81afbd52f3aae165010e823da51456ae1bb7b636428f2c979c5ec', 'banks': [{'asset': 'assets/data/a.json', 'sha256': '541dc06b3a3aa79b10548a9e11c22700f10e45c8270fde48cbb4617b277cc6a8', 'recordCount': 1}]}, 'summary': {'bankCount': 1, 'recordCount': 1, 'reviewStatuses': {'unreviewed': 1}, 'priorities': {'P3': 1}, 'sourceMissing': 1, 'imageAltMissing': 0, 'audioAbsent': 1}, 'records': [{'priority': 'P3', 'id': 'a', 'bank': 'assets/data/a.json', 'category': '', 'type': 'unspecified', 'difficulty': None, 'reviewStatus': 'unreviewed', 'metadataAbsent': True, 'sourceMissing': True, 'sourceTitle': '', 'sourceReference': '', 'imageUrl': '', 'imageAltMissing': False, 'audioAbsent': True, 'prompt': 'Same target?', 'promptTr': ''}]}
+
+======================================================================
+FAIL: test_new_matching_prompt_is_candidate_and_does_not_join_reviewed_group (test_editorial_queue.ReviewedDuplicateGroupsTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kocer/Projects/zankurd/zankurd_mobile/tool/content_authoring/test_editorial_queue.py", line 163, in test_new_matching_prompt_is_candidate_and_does_not_join_reviewed_group
+    self.assertIn("reviewedDuplicateGroups", report)
+AssertionError: 'reviewedDuplicateGroups' not found in {'schemaVersion': 1, 'generatedAt': '2026-10-21T10:43:57.360169+00:00', 'scope': 'registered_json_assets_only', 'scopeNote': 'Only JSON assets actively listed in questionBankAssets are counted; commented/quarantined files and Dart curated/runtime totals are excluded.', 'source': {'manifest': 'lib/src/data/question_bank_assets.dart', 'sha256': '33cc47126feea70d0c53da4be35c3552a319c87dc2479b27493bb6dab381b9bf', 'banks': [{'asset': 'assets/data/a.json', 'sha256': 'dbec66060ea58714115ad532e7fe25e6decde863d6a085744db78c876147223d', 'recordCount': 3}]}, 'summary': {'bankCount': 1, 'recordCount': 3, 'reviewStatuses': {'unreviewed': 3}, 'priorities': {'P3': 3}, 'sourceMissing': 3, 'imageAltMissing': 0, 'audioAbsent': 3}, 'records': [{'priority': 'P3', 'id': 'a', 'bank': 'assets/data/a.json', 'category': '', 'type': 'unspecified', 'difficulty': None, 'reviewStatus': 'unreviewed', 'metadataAbsent': True, 'sourceMissing': True, 'sourceTitle': '', 'sourceReference': '', 'imageUrl': '', 'imageAltMissing': False, 'audioAbsent': True, 'prompt': 'Same target?', 'promptTr': ''}, {'priority': 'P3', 'id': 'b', 'bank': 'assets/data/a.json', 'category': '', 'type': 'unspecified', 'difficulty': None, 'reviewStatus': 'unreviewed', 'metadataAbsent': True, 'sourceMissing': True, 'sourceTitle': '', 'sourceReference': '', 'imageUrl': '', 'imageAltMissing': False, 'audioAbsent': True, 'prompt': 'Same target again?', 'promptTr': ''}, {'priority': 'P3', 'id': 'c', 'bank': 'assets/data/a.json', 'category': '', 'type': 'unspecified', 'difficulty': None, 'reviewStatus': 'unreviewed', 'metadataAbsent': True, 'sourceMissing': True, 'sourceTitle': '', 'sourceReference': '', 'imageUrl': '', 'imageAltMissing': False, 'audioAbsent': True, 'prompt': 'SAME target?', 'promptTr': ''}]}
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.025s
+
+FAILED (failures=5)

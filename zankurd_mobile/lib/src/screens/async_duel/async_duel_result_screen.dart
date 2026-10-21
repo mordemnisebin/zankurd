@@ -9,6 +9,8 @@ import '../../data/zankurd_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../models/async_duel.dart';
+import '../../models/avatar_identity.dart';
+import '../../models/public_profile.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/join_deep_link.dart';
@@ -42,6 +44,8 @@ class AsyncDuelResultView {
     this.opponentCorrect,
     this.outcome,
     this.opponentName,
+    this.opponentProfile,
+    this.invitedProfile,
     this.challengeCode,
     this.invitedName,
     this.canCancel = false,
@@ -53,6 +57,10 @@ class AsyncDuelResultView {
   final int? opponentCorrect;
   final AsyncDuelOutcome? outcome;
   final String? opponentName;
+
+  /// Rakibin / davetlinin fotoğraf-simge-kod kimliği (yoksa baş harf).
+  final PublicProfile? opponentProfile;
+  final PublicProfile? invitedProfile;
 
   /// Benim açtığım meydan okumanın `D…` kodu (paylaşım için); rastgele
   /// düellolarda ve rakibin açtığı düellolarda null.
@@ -94,10 +102,12 @@ class AsyncDuelResultView {
         kind: AsyncDuelResultKind.waiting,
         myCorrect: result.myCorrect,
         opponentName: start.opponentName,
+        opponentProfile: start.opponentProfile,
         challengeCode: start.role == AsyncDuelRole.creator
             ? start.challengeCode
             : null,
         invitedName: start.invitedName,
+        invitedProfile: start.invitedProfile,
       );
     }
     return AsyncDuelResultView._(
@@ -107,6 +117,7 @@ class AsyncDuelResultView {
       opponentCorrect: result.opponentCorrect,
       outcome: result.outcome,
       opponentName: start.opponentName,
+      opponentProfile: start.opponentProfile,
     );
   }
 
@@ -123,6 +134,7 @@ class AsyncDuelResultView {
         duelId: summary.duelId,
         kind: AsyncDuelResultKind.unfinished,
         opponentName: summary.opponentName,
+        opponentProfile: summary.opponentProfile,
       );
     }
     if (summary.outcome != null) {
@@ -133,6 +145,7 @@ class AsyncDuelResultView {
         opponentCorrect: summary.opponentCorrect,
         outcome: summary.outcome,
         opponentName: summary.opponentName,
+        opponentProfile: summary.opponentProfile,
       );
     }
     if (summary.status == AsyncDuelStatus.expired) {
@@ -141,6 +154,7 @@ class AsyncDuelResultView {
         kind: AsyncDuelResultKind.expired,
         myCorrect: myCorrect,
         opponentName: summary.opponentName,
+        opponentProfile: summary.opponentProfile,
       );
     }
     // open/matched, outcome henüz yok: rakip hâlâ oynuyor ya da hiç
@@ -150,6 +164,7 @@ class AsyncDuelResultView {
       kind: AsyncDuelResultKind.waiting,
       myCorrect: myCorrect,
       opponentName: summary.opponentName,
+      opponentProfile: summary.opponentProfile,
       // Yalnız hâlâ kimsenin almadığı meydan okuma yeniden paylaşılır.
       challengeCode:
           summary.role == AsyncDuelRole.creator &&
@@ -157,6 +172,7 @@ class AsyncDuelResultView {
           ? summary.challengeCode
           : null,
       invitedName: summary.invitedName,
+      invitedProfile: summary.invitedProfile,
       canCancel: summary.canCancel,
     );
   }
@@ -228,10 +244,24 @@ class AsyncDuelResultScreen extends StatefulWidget {
 }
 
 class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
+  /// Kendi fotoğrafım/simgem (skor kartında "Sen" avatarı). Yüklenene dek
+  /// ya da okunamazsa null: baş harf/simge avatarı çizilir.
+  AvatarIdentity? _myIdentity;
+
   @override
   void initState() {
     super.initState();
     unawaited(_runSideEffectsOnce());
+    unawaited(_loadMyIdentity());
+  }
+
+  Future<void> _loadMyIdentity() async {
+    try {
+      final identity = await widget.repository.loadAvatarIdentity();
+      if (mounted) setState(() => _myIdentity = identity);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'duel result own identity');
+    }
   }
 
   /// Ekran açılınca bir kez: görüldü işareti ve XP talebi.
@@ -298,7 +328,10 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
         final rawOpponentName = view.opponentName;
         final opponentName = rawOpponentName == null
             ? context.t(K.asyncDuelOpponent)
-            : context.playerDisplayName(rawOpponentName);
+            : context.playerDisplayName(
+                rawOpponentName,
+                tag: view.opponentProfile?.playerTag,
+              );
         xp = _completedXp(view);
         if (view.myCorrect != null && view.opponentCorrect != null) {
           scoreboard = Padding(
@@ -310,6 +343,9 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
               opponentCorrect: view.opponentCorrect!,
               total: view.total,
               outcome: outcome,
+              myIdentity: _myIdentity,
+              opponentProfile: view.opponentProfile,
+              opponentRawName: rawOpponentName,
             ),
           );
         }
@@ -365,7 +401,10 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
               ? context.t(K.asyncDuelWaitingBody)
               : view.invitedName != null
               ? context.t(K.challengeFriendWaitBody, {
-                  'name': context.playerDisplayName(view.invitedName!),
+                  'name': context.playerDisplayName(
+                    view.invitedName!,
+                    tag: view.invitedProfile?.playerTag,
+                  ),
                 })
               : context.t(K.challengeLinkWaitBody),
           tone: SahneResultTone.race,
@@ -531,6 +570,9 @@ class _DuelScoreboard extends StatelessWidget {
     required this.opponentCorrect,
     required this.total,
     required this.outcome,
+    this.myIdentity,
+    this.opponentProfile,
+    this.opponentRawName,
   });
 
   final String myName;
@@ -539,11 +581,22 @@ class _DuelScoreboard extends StatelessWidget {
   final int opponentCorrect;
   final int total;
   final AsyncDuelOutcome outcome;
+  final AvatarIdentity? myIdentity;
+  final PublicProfile? opponentProfile;
+
+  /// Rakibin HAM adı (avatar baş harfi/rengi için; gösterilen ad değil).
+  final String? opponentRawName;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    Widget side(String name, int correct, bool winner) => Expanded(
+    Widget side(
+      String name,
+      int correct,
+      bool winner,
+      AvatarIdentity? identity,
+      String? avatarName,
+    ) => Expanded(
       child: Semantics(
         container: true,
         label: '$name, $correct/$total ${context.t(K.correct)}',
@@ -551,7 +604,11 @@ class _DuelScoreboard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            PlayerAvatar(radius: 28, displayName: name),
+            PlayerAvatar.fromIdentity(
+              radius: 28,
+              identity: identity,
+              displayName: avatarName ?? name,
+            ),
             const SizedBox(height: SahneSpace.x2),
             Text(
               name,
@@ -584,12 +641,20 @@ class _DuelScoreboard extends StatelessWidget {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            side(myName, myCorrect, outcome == AsyncDuelOutcome.win),
+            side(
+              myName,
+              myCorrect,
+              outcome == AsyncDuelOutcome.win,
+              myIdentity,
+              null,
+            ),
             VerticalDivider(width: SahneSpace.x4 * 2 + 1, color: t.line),
             side(
               opponentName,
               opponentCorrect,
               outcome == AsyncDuelOutcome.loss,
+              opponentProfile?.avatar,
+              opponentRawName,
             ),
           ],
         ),

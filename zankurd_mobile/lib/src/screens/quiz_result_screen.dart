@@ -1633,7 +1633,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // 1v1: skor karşılaştırması ("Sen 5 – 3 Rojda") büyük puanın altında.
         subtitle: is1v1 && !isLearningExperience
             ? '${context.t(K.you)} $score – ${opponents.first.score} '
-                  '${context.playerDisplayName(opponents.first.name)}'
+                  '${context.playerDisplayName(opponents.first.name, tag: opponents.first.tag)}'
             : null,
         titleRole: duelOutcome == _DuelOutcome.win ? SahneRole.gold : null,
         // Öğrenme turunda puan üretilmez (`score` hep 0); büyük sayı "0"
@@ -2157,7 +2157,7 @@ class _RaceStandings extends StatelessWidget {
     final summary = leader.state == 'Player'
         ? context.t(K.finishedAtRank, {'rank': '$userRank'})
         : context.t(K.leaderFinishedFirst, {
-            'leader': context.playerDisplayName(leader.name),
+            'leader': context.playerDisplayName(leader.name, tag: leader.tag),
             'rank': '$userRank',
           });
 
@@ -2186,7 +2186,7 @@ class _RaceStandings extends StatelessWidget {
         blocks.add(
           SahneListRow.me(
             rank: i + 1,
-            title: context.playerDisplayName(player.name),
+            title: context.playerDisplayName(player.name, tag: player.tag),
             avatar: userIdentity == null ? null : _avatarOf(player),
             subtitle: streakLine,
             trailing: SahneRowValue(groupThousands(player.score)),
@@ -2197,7 +2197,7 @@ class _RaceStandings extends StatelessWidget {
         pending.add(
           SahneListRow.rank(
             rank: i + 1,
-            title: context.playerDisplayName(player.name),
+            title: context.playerDisplayName(player.name, tag: player.tag),
             initial: name.isEmpty ? null : context.playerInitial(player.name),
             icon: AppIcons.user,
             // Oyuncunun kendi kimliği (fotoğraf, ikon, renk, çerçeve)
@@ -2309,7 +2309,7 @@ class _CrowdStandings extends StatelessWidget {
           SahneListRow.rank(
             key: ValueKey('crowd-standing-${player.id}'),
             rank: rank,
-            title: context.playerDisplayName(player.name),
+            title: context.playerDisplayName(player.name, tag: player.tag),
             initial: name.isEmpty ? null : context.playerInitial(player.name),
             icon: AppIcons.user,
             avatar: _avatarOf(player),
@@ -2356,7 +2356,7 @@ class _CrowdStandings extends StatelessWidget {
                 // puanımı ve son durumu görürüm.
                 title: player.id == ownId
                     ? context.t(K.you)
-                    : context.playerDisplayName(player.name),
+                    : context.playerDisplayName(player.name, tag: player.tag),
                 subtitle: context.t(K.crowdLeftBadge),
                 trailing: SahneInlineTrailing(
                   child: SahneRowValue.meta(groupThousands(player.score)),

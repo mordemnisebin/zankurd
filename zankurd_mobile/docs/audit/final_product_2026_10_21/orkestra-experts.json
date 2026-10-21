@@ -1,0 +1,59 @@
+{
+  "profile": "free",
+  "members": [
+    "claude",
+    "agy-gemini4"
+  ],
+  "requested_members": 2,
+  "role": "kod",
+  "max_calls": 2,
+  "parallel": 2,
+  "quota": true,
+  "sources": [
+    {
+      "path": "lib/src/screens/learning_screen.dart",
+      "start": 587,
+      "end": 700,
+      "sha256": "db1284d9eeb98f1aa71deda76f256ed4ff7d1a63dd74364d49df563019a5febc"
+    },
+    {
+      "path": "lib/src/widgets/todays_review_card.dart",
+      "start": 1,
+      "end": 284,
+      "sha256": "135edb836c8007e873be15513512ff50b36812de4b555f44470ef5fa92581abc"
+    },
+    {
+      "path": "lib/src/screens/learner_lexicon_screen.dart",
+      "start": 1,
+      "end": 199,
+      "sha256": "ff019bcd24ef43ed87f68c35df04569fda34f93da634328c1eedc6624dd2adb7"
+    }
+  ],
+  "synthesis_member": null,
+  "id": "20261021-113106-1a5b0354",
+  "question": "Ürün/öğrenme denetimi. Resmi referanslar 21 Ekim 2026 okundu: https://blog.duolingo.com/guide-to-duolingo-practice-hub/ yanlış/kelime/dinleme seçilebilir tekrar; https://www.busuu.com/en/languages/spaced-repetition uyarlanabilir tekrar; https://www.languagedrops.com/ kısa günlük oturum ve görsel ilişkilendirme. Bu sayfaları kendin taradığını iddia etme, özet sağlandı. ZanKurd zaten ders yolu, yerleştirme, sözlük, dinleme, SM2 ve 12 soru tekrar sınırı içeriyor. Verilen gerçek kaynakta EN FAZLA iki küçük yüksek değerli düzeltme öner. Somut tetikleyici, fonksiyon ve test ver. Kör özellik çoğaltma/oyunlaştırma önerme. Özellikle tekrar kartı hata ve çoklu dokunma davranışını değerlendir. 300 kelime sınır.",
+  "results": [
+    {
+      "id": "claude",
+      "status": "ok",
+      "text": "## Değerlendirme: Tekrar kartı hata ve çoklu dokunma davranışı\n\n### Düzeltme 1: Çoklu dokunmada üst üste quiz açılıyor\n\n**Yer:** `lib/src/widgets/todays_review_card.dart:130-160` (`_startReview`)\n\n**Tetikleyici:** Hızlı çift dokunma. `MistakeStore.load()` beklenirken ikinci `onTap` de çalışır. İki `Navigator.push` olur ve iki `QuizScreen` yığına biner. Kullanıcı aynı 12 soruyu iki kez çözer, SM-2 güncellemesi de iki kez yazılabilir.\n\n**Etki:** Tekrar sonuçları bozulur ve geri tuşu kafa karıştırır.\n\n**En küçük düzeltme:**\n```dart\nbool _starting = false;\n\nFuture<void> _startReview() async {\n  if (_starting) return;\n  _starting = true;\n  try {\n    // mevcut gövde\n  } finally {\n    _starting = false;\n  }\n}\n```\n\n**Test:** `onStartReview` sayaçlı bir widget testi. `tap` → `tap` → `pumpAndSettle` sonrası çağrı sayısı 1 olmalı. Hazır tekrar tohumlamak için `MistakeStore` test kurulumu gerekiyor: **EKSİK KANIT** (API verilmedi).\n\n### Düzeltme 2: Başlatma hatası ve boş liste sessiz kalıyor\n\n**Yer:** `todays_review_card.dart:131-133`\n\n**Tetikleyici 1:** `MistakeStore.load()` hata atarsa `_refresh`'teki try/catch burada yok. Hata yakalanmaz, kullanıcı geri bildirim almaz.\n\n**Tetikleyici 2:** Rozet bayatsa (ör. başka ekranda tekrar bitti), `questions.isEmpty` olur ve fonksiyon sessizce döner. Bu, satır 89-92'de belgelenen \"tepkisiz kart\" kusurunun yeniden doğması demek.\n\n**En küçük düzeltme:**\n- Gövdeyi `try/catch (error, stack)` içine alın.\n- Hatada `ErrorReporter.record(..., reason: 'todays_review_start')` çağırın ve `K.quizLoadFail` ile SnackBar gösterin (`learning_screen.dart:634` deseni).\n- Boş dalda `_refresh()` çağırın; kart \"tamamlandı\" durumuna geçer.\n\n**Testler:**\n- (a) Rozet > 0 iken store boşaltılır. Dokunuş sonrası `todays-review-empty` görünmeli ya da `hideWhenEmpty` ile kart kaybolmalı.\n- (b) Load hatası enjekte edilir. SnackBar görünmeli.\n\nHata enjeksiyonu için `MistakeStore` bir dikiş (seam) gerektirebilir: **EKSİK KANIT**.\n\n**Not:** Testleri çalıştırmadım; yukarıdakiler kaynak okumasına dayanıyor.",
+      "diagnostic": "",
+      "returncode": 0,
+      "seconds": 20.046,
+      "model": "CLI default",
+      "verified": false
+    },
+    {
+      "id": "agy-gemini4",
+      "status": "ok",
+      "text": "### Ürün ve Öğrenme Denetimi\n\nZanKurd’da aralıklı tekrar (SM-2), `kReviewSessionCap = 12` oturum sınırı, konu pratiği, `Rêziman`/`Çand`/`Erdnîgarî` konu ayrımı ve çekimli biçimleri (`malê`, `dizanim`) gösteren sözlük zaten mevcuttur; yeni oyunlaştırma veya özellik kopyalamaya gerek yoktur. Mevcut kaynakta güvenilirliği artıracak **iki küçük düzeltme**:\n\n---\n\n#### 1. Tekrar Kartında Çoklu Dokunma Yarışı\n* **Dosya:Satır:** `lib/src/widgets/todays_review_card.dart:52-55`, `130-160`, `199-206`\n* **Tetikleyici ve Fonksiyon:** Kullanıcı `TodaysReviewCard` (`_buildReady`) satırına `await MistakeStore.load()` tamamlanmadan art arda dokunduğunda `_startReview()` birden çok kez tetiklenir.\n* **Etki:** Eşzamanlı çağrılar üst üste birden fazla `QuizScreen` rotası (`Navigator.of(context).push`) açar veya `onStartReview` geri çağrısını mükerrer çalıştırır.\n* **En Küçük Düzeltme:** `_TodaysReviewCardState` içine `bool _starting = false;` ekleyin. `_startReview()` başında `if (_starting) return; setState(() => _starting = true);` ile girişi kilitleyin, `Semantics` ve `InkWell` içinde `onTap: _starting ? null : _startReview` kullanın, işlem bitiminde `finally` bloğunda `if (mounted) setState(() => _starting = false);` ile kilidi kaldırın.\n* **Test:** Widget testinde (`TodaysReviewCard`) `MistakeStore.load()` tamamlanmadan `ValueKey('todays-review-card')` hedefine art arda iki kez dokunulduğunda `onStartReview` çağrısının ve açılan `QuizScreen` sayısının yalnız `1` olduğunu doğrulayın.\n\n---\n\n#### 2. Tekrar Başlatmada Yakalanmayan Hata ve Bayat Sayaç Durumu\n* **Dosya:Satır:** `lib/src/widgets/todays_review_card.dart:114-140`\n* **Tetikleyici ve Fonksiyon:** `_startReview()` içinde `MistakeStore.load()` hata fırlattığında veya hazır sorular başka yoldan tüketilip `questions.isEmpty` döndüğünde.\n* **Etki:** `_refresh()` içinde `try/catch` ve `ErrorReporter.record` varken `_startReview()` korumasızdır; depolama hatası yakalanmaz. Ayrıca `questions.isEmpty` dalı (satır 133) `_refresh()` çağırmadan çıktığı için kart ekranda bayat `_readyCount > 0` görünümünde asılı kalır.\n* **En Küçük Düzeltme:** `_startReview()` gövdesini `try { ... } catch (error, stack) { ErrorReporter.record(error, stack, reason: 'todays_review_start'); }` içine alın; `if (questions.isEmpty)` dalında çıkmadan önce `if (mounted) _refresh();` çağırın.\n* **Test:** `questions.isEmpty` döndüğünde kartın `_buildEmpty` (`ValueKey('todays-review-empty')`) veya gizli duruma geçtiğini; `MistakeStore.load` hata verdiğinde `ErrorReporter.record` çağrılıp uygulamanın çökmediğini doğrulayın.",
+      "diagnostic": "",
+      "returncode": 0,
+      "seconds": 48.027,
+      "model": "gemini-4-argon-medium",
+      "verified": false
+    }
+  ],
+  "synthesis": null,
+  "complete": true
+}

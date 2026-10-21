@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 
+import 'avatar_identity.dart';
+import 'public_profile.dart';
+
 /// Arkadaş ilişkisi — iki oyuncu arasındaki bağlantı
 @immutable
 class Friend {
@@ -18,6 +21,11 @@ class Friend {
   /// Son aktiflik zamanı; null ise hiç çevrimiçi olmamış sayılır.
   final DateTime? lastActiveAt;
 
+  /// Herkese açık kimlik (kod + fotoğraf/simge); `list_friends` avatar
+  /// döndürmediği için depo `get_public_profiles` ile tamamlar. null ise
+  /// eski davranış: yalnız renk + baş harf.
+  final PublicProfile? profile;
+
   const Friend({
     required this.id,
     required this.userId,
@@ -29,7 +37,12 @@ class Friend {
     this.level = 1,
     this.gamesPlayed = 0,
     this.lastActiveAt,
+    this.profile,
   });
+
+  /// Oyuncu kodu ve avatar kimliği ([profile] yoksa null).
+  String? get friendTag => profile?.playerTag;
+  AvatarIdentity? get friendAvatar => profile?.avatar;
 
   /// Son 5 dakika içinde aktifse çevrimiçi sayılır.
   bool get isOnline {
@@ -49,6 +62,7 @@ class Friend {
     int? level,
     int? gamesPlayed,
     DateTime? lastActiveAt,
+    PublicProfile? profile,
   }) => Friend(
     id: id ?? this.id,
     userId: userId ?? this.userId,
@@ -60,6 +74,7 @@ class Friend {
     level: level ?? this.level,
     gamesPlayed: gamesPlayed ?? this.gamesPlayed,
     lastActiveAt: lastActiveAt ?? this.lastActiveAt,
+    profile: profile ?? this.profile,
   );
 
   Map<String, dynamic> toJson() => {
@@ -112,6 +127,9 @@ class FriendRequest {
   final DateTime createdAt;
   final String status; // 'pending', 'accepted', 'rejected'
 
+  /// Gönderenin herkese açık kimliği (depo tamamlar; yoksa null).
+  final PublicProfile? fromProfile;
+
   const FriendRequest({
     required this.id,
     required this.fromUserId,
@@ -119,6 +137,7 @@ class FriendRequest {
     required this.toUserId,
     required this.createdAt,
     this.status = 'pending',
+    this.fromProfile,
   });
 
   Map<String, dynamic> toJson() => {
@@ -159,11 +178,15 @@ class SentFriendRequest {
   final String toUserName;
   final DateTime createdAt;
 
+  /// Alıcının herkese açık kimliği (depo tamamlar; yoksa null).
+  final PublicProfile? toProfile;
+
   const SentFriendRequest({
     required this.id,
     required this.toUserId,
     required this.toUserName,
     required this.createdAt,
+    this.toProfile,
   });
 
   static SentFriendRequest fromJson(Map<String, dynamic> json) =>
@@ -198,11 +221,16 @@ class PlayerSearchResult {
   /// o durumda kodu hiç göstermez, yanlış bir şey uydurmaz.
   final String? playerTag;
 
+  /// Fotoğraf/simge dahil herkese açık kimlik; `search_profiles` avatar
+  /// döndürmediği için depo tamamlar.
+  final PublicProfile? profile;
+
   const PlayerSearchResult({
     required this.id,
     required this.displayName,
     this.avatarColor,
     this.playerTag,
+    this.profile,
   });
 
   /// Ekranda gösterilecek biçim: `ZK-4F7K`. Önek uygulamanın oda

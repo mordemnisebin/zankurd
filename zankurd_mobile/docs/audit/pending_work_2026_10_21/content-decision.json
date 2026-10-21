@@ -1,0 +1,34 @@
+{
+  "question_id": "ders_2026_10_01_0003",
+  "fields": {
+    "answers[3]": {
+      "before": "Silav",
+      "after": "Spas"
+    },
+    "answersTr[3]": {
+      "before": "Merhaba",
+      "after": "Teşekkürler"
+    }
+  },
+  "reason": "Genel selam Silav/Merhaba sabah da doğru olabileceği için tek doğru seçenek belirsizdi. Spas/Teşekkürler zaman selamı değildir.",
+  "correct_answer_unchanged": "Rojbaş",
+  "quality_delta": {
+    "blockers": [
+      0,
+      0
+    ],
+    "criticals": [
+      0,
+      0
+    ],
+    "issues": [
+      183,
+      183
+    ]
+  },
+  "style_candidates_not_applied": [
+    "Ku der yanlış şıkkının Ku derê yapılması",
+    "0003/0004 sonundaki ___ biçimi",
+    "navan tekil üslup önerisi"
+  ]
+}

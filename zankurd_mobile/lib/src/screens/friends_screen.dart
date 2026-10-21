@@ -332,7 +332,10 @@ class _FriendsScreenState extends State<FriendsScreen>
       builder: (dialogContext) => AlertDialog(
         title: Text(
           dialogContext.t(K.removeFriendTitle, {
-            'name': context.playerDisplayName(friend.friendName),
+            'name': context.playerDisplayName(
+              friend.friendName,
+              tag: friend.friendTag,
+            ),
           }),
         ),
         content: Text(dialogContext.t(K.removeFriendBody)),
@@ -373,7 +376,10 @@ class _FriendsScreenState extends State<FriendsScreen>
       if (!mounted) return;
       _showMessage(
         context.t(K.shareRoomCodeWith, {
-          'name': context.playerDisplayName(friend.friendName),
+          'name': context.playerDisplayName(
+            friend.friendName,
+            tag: friend.friendTag,
+          ),
         }),
       );
       await Navigator.of(context).push(
@@ -660,9 +666,10 @@ class _FriendsScreenState extends State<FriendsScreen>
             children: [
               for (final player in _searchResults)
                 _PersonRow(
-                  avatar: PlayerAvatar(
+                  avatar: PlayerAvatar.fromIdentity(
                     radius: 18,
-                    colorHex: player.avatarColor,
+                    identity: player.profile?.avatar,
+                    fallbackColorHex: player.avatarColor,
                     displayName: player.displayName,
                   ),
                   title: context.playerDisplayName(
@@ -734,11 +741,15 @@ class _FriendsScreenState extends State<FriendsScreen>
             for (final request in sent)
               _PersonRow(
                 key: ValueKey('sent-request-${request.toUserId}'),
-                avatar: PlayerAvatar(
+                avatar: PlayerAvatar.fromIdentity(
                   radius: 18,
+                  identity: request.toProfile?.avatar,
                   displayName: request.toUserName,
                 ),
-                title: context.playerDisplayName(request.toUserName),
+                title: context.playerDisplayName(
+                  request.toUserName,
+                  tag: request.toProfile?.playerTag,
+                ),
                 subtitle: context.t(K.requestAwaiting),
                 trailing: SahneButton.secondary(
                   key: ValueKey('sent-cancel-${request.toUserId}'),
@@ -1098,9 +1109,10 @@ class _FriendRow extends StatelessWidget {
         dimension: 40,
         child: Stack(
           children: [
-            PlayerAvatar(
+            PlayerAvatar.fromIdentity(
               radius: 18,
-              colorHex: friend.friendAvatarColor,
+              identity: friend.friendAvatar,
+              fallbackColorHex: friend.friendAvatarColor,
               displayName: friend.friendName,
             ),
             PositionedDirectional(
@@ -1122,7 +1134,10 @@ class _FriendRow extends StatelessWidget {
           ],
         ),
       ),
-      title: context.playerDisplayName(friend.friendName),
+      title: context.playerDisplayName(
+        friend.friendName,
+        tag: friend.friendTag,
+      ),
       subtitle: online ? context.t(K.online) : context.t(K.offline),
       subtitleColor: online ? t.okTx : t.tx2,
       subtitleStrong: online,
@@ -1151,7 +1166,10 @@ class _FriendRow extends StatelessWidget {
               key: ValueKey('friend-action-${friend.friendName}'),
               label: context.t(K.challengeFriendAction),
               semanticLabel: context.t(K.challengeFriendActionA11y, {
-                'name': context.playerDisplayName(friend.friendName),
+                'name': context.playerDisplayName(
+                  friend.friendName,
+                  tag: friend.friendTag,
+                ),
               }),
               onPressed: busy ? null : onChallenge,
             )
@@ -1181,7 +1199,10 @@ class _FriendRow extends StatelessWidget {
     unawaited(
       showSahneSheet<void>(
         context: context,
-        title: context.playerDisplayName(friend.friendName),
+        title: context.playerDisplayName(
+          friend.friendName,
+          tag: friend.friendTag,
+        ),
         builder: (sheetContext) => SahneListGroup(
           children: [
             if (onChallenge != null)
@@ -1290,8 +1311,15 @@ class _FriendRequestRow extends StatelessWidget {
         final textScale = MediaQuery.textScalerOf(context).scale(1);
         final stackActions = constraints.maxWidth < 380 || textScale > 1.3;
         return _PersonRow(
-          avatar: PlayerAvatar(radius: 18, displayName: request.fromUserName),
-          title: context.playerDisplayName(request.fromUserName),
+          avatar: PlayerAvatar.fromIdentity(
+            radius: 18,
+            identity: request.fromProfile?.avatar,
+            displayName: request.fromUserName,
+          ),
+          title: context.playerDisplayName(
+            request.fromUserName,
+            tag: request.fromProfile?.playerTag,
+          ),
           trailing: actions,
           stackTrailing: stackActions,
         );

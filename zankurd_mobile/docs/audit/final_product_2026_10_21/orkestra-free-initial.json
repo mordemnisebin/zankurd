@@ -1,0 +1,42 @@
+{
+  "profile": "free",
+  "members": [
+    "or-code"
+  ],
+  "requested_members": 1,
+  "role": "kod",
+  "max_calls": 1,
+  "parallel": 2,
+  "quota": false,
+  "sources": [
+    {
+      "path": "lib/src/widgets/todays_review_card.dart",
+      "start": 1,
+      "end": 284,
+      "sha256": "135edb836c8007e873be15513512ff50b36812de4b555f44470ef5fa92581abc"
+    },
+    {
+      "path": "lib/src/screens/learner_lexicon_screen.dart",
+      "start": 1,
+      "end": 199,
+      "sha256": "ff019bcd24ef43ed87f68c35df04569fda34f93da634328c1eedc6624dd2adb7"
+    }
+  ],
+  "synthesis_member": null,
+  "id": "20261021-113011-81aded3e",
+  "question": "Salt okunur kısa ürün denetimi. Resmi kaynak özeti: Duolingo Practice sekmesinde yanlışlar/kelimeler/dinleme ayrı ve seçilebilir; Busuu Vocabulary Review zayıf ve zamanı gelmiş kelimelere odaklanır; Drops kısa beş dakikalık görsel oturumlar sunar. Bunlar ZanKurd için sadece ilkeler. Verilen gerçek iki kaynakta en çok 2 somut hata veya ufak yüksek değerli iyileştirme bul; var olan SM2 ve 12 soru sınırını eksik sanma. Dosya/fonksiyon, tetikleyici, düzeltme ve regresyon senaryosu ver. 250 kelimeyi geçme. Eksik kanıttan özellik uydurma.",
+  "results": [
+    {
+      "id": "or-code",
+      "status": "timeout",
+      "text": "",
+      "diagnostic": "Süre/iptal/çıktı sınırı; süreç grubu kapatıldı",
+      "returncode": null,
+      "seconds": 60.004,
+      "model": "",
+      "verified": false
+    }
+  ],
+  "synthesis": null,
+  "complete": false
+}

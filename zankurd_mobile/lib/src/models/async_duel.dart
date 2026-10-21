@@ -1,3 +1,4 @@
+import 'public_profile.dart';
 import 'quiz_question.dart';
 
 /// Sırayla düellodaki oyuncunun rolü.
@@ -72,6 +73,10 @@ class AsyncDuelStart {
     required this.duelId,
     required this.role,
     this.opponentName,
+    this.opponentId,
+    this.invitedId,
+    this.opponentProfile,
+    this.invitedProfile,
     required this.expiresAt,
     required List<QuizQuestion> questions,
     this.challengeCode,
@@ -85,6 +90,15 @@ class AsyncDuelStart {
 
   /// Yalnız [role] `opponent` iken dolu: düelloyu açanın adı.
   final String? opponentName;
+
+  /// Rakibin / davet edilenin kimliği (`2026-10-21_oyuncu_kimligi.sql`
+  /// sonrası dolar; öncesinde null ve ekran baş harfe düşer) ve depo
+  /// tarafından tamamlanan herkese açık profilleri (fotoğraf, kod).
+  final String? opponentId;
+  final String? invitedId;
+  final PublicProfile? opponentProfile;
+  final PublicProfile? invitedProfile;
+
   final DateTime expiresAt;
   final List<QuizQuestion> questions;
 
@@ -110,6 +124,8 @@ class AsyncDuelStart {
       duelId: json['duel_id'] as String,
       role: _asyncDuelRoleFromJson(json['role']),
       opponentName: json['opponent_name'] as String?,
+      opponentId: json['opponent_id'] as String?,
+      invitedId: json['invited_id'] as String?,
       expiresAt: DateTime.parse(json['expires_at'] as String),
       questions: rawQuestions
           .map(
@@ -124,6 +140,26 @@ class AsyncDuelStart {
       alreadyFinished: json['finished'] as bool? ?? false,
     );
   }
+
+  /// Herkese açık profilleri tamamlanmış kopya (ad boşsa profildeki ad).
+  AsyncDuelStart withProfiles({
+    PublicProfile? opponent,
+    PublicProfile? invited,
+  }) => AsyncDuelStart(
+    duelId: duelId,
+    role: role,
+    opponentName: opponentName ?? opponent?.displayName,
+    opponentId: opponentId,
+    invitedId: invitedId,
+    opponentProfile: opponent ?? opponentProfile,
+    invitedProfile: invited ?? invitedProfile,
+    expiresAt: expiresAt,
+    questions: questions,
+    challengeCode: challengeCode,
+    invitedName: invitedName ?? invited?.displayName,
+    answeredCount: answeredCount,
+    alreadyFinished: alreadyFinished,
+  );
 }
 
 /// Oyun ekranının düelloyu NASIL başlattığı.
@@ -330,6 +366,10 @@ class AsyncDuelSummary {
     required this.status,
     required this.role,
     this.opponentName,
+    this.opponentId,
+    this.invitedId,
+    this.opponentProfile,
+    this.invitedProfile,
     this.categoryName,
     this.myCorrect,
     this.opponentCorrect,
@@ -346,6 +386,12 @@ class AsyncDuelSummary {
   final AsyncDuelStatus status;
   final AsyncDuelRole role;
   final String? opponentName;
+
+  /// Bkz. [AsyncDuelStart.opponentId]; sunucu SQL'i uygulanmadıysa null.
+  final String? opponentId;
+  final String? invitedId;
+  final PublicProfile? opponentProfile;
+  final PublicProfile? invitedProfile;
   final String? categoryName;
   final int? myCorrect;
   final int? opponentCorrect;
@@ -406,6 +452,8 @@ class AsyncDuelSummary {
       status: _asyncDuelStatusFromJson(json['status']),
       role: _asyncDuelRoleFromJson(json['role']),
       opponentName: json['opponent_name'] as String?,
+      opponentId: json['opponent_id'] as String?,
+      invitedId: json['invited_id'] as String?,
       categoryName: json['category_name'] as String?,
       myCorrect: (json['my_correct'] as num?)?.toInt(),
       opponentCorrect: (json['opponent_correct'] as num?)?.toInt(),
@@ -422,4 +470,29 @@ class AsyncDuelSummary {
       invitedName: json['invited_name'] as String?,
     );
   }
+
+  /// Herkese açık profilleri tamamlanmış kopya.
+  AsyncDuelSummary withProfiles({
+    PublicProfile? opponent,
+    PublicProfile? invited,
+  }) => AsyncDuelSummary(
+    duelId: duelId,
+    status: status,
+    role: role,
+    opponentName: opponentName ?? opponent?.displayName,
+    opponentId: opponentId,
+    invitedId: invitedId,
+    opponentProfile: opponent ?? opponentProfile,
+    invitedProfile: invited ?? invitedProfile,
+    categoryName: categoryName,
+    myCorrect: myCorrect,
+    opponentCorrect: opponentCorrect,
+    outcome: outcome,
+    createdAt: createdAt,
+    completedAt: completedAt,
+    seen: seen,
+    challengeCode: challengeCode,
+    incomingChallenge: incomingChallenge,
+    invitedName: invitedName ?? invited?.displayName,
+  );
 }
