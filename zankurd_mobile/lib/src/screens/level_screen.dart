@@ -16,8 +16,11 @@ import '../config/subcategory_config.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
 
-/// Sonuç ekranının alt eylem çubuğu (~110) + nefes payı.
-const double _kResultActionBarClearance = 124;
+/// Sonuç ekranının alt eylem çubuğu Scaffold'un alt çubuğu olduğu için
+/// floating SnackBar zaten onun üstüne yerleşir; burada yalnız nefes payı.
+/// 124 verildiğinde (2026-10-21 simülatör) uyarı ödül kartının üstüne
+/// biniyordu.
+const double _kResultActionBarClearance = SahneSpace.x2;
 
 class LevelScreen extends StatefulWidget {
   const LevelScreen({

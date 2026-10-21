@@ -365,29 +365,6 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
 
   bool get _isNight => bg.computeLuminance() < 0.2;
 
-  /// Günün dersi kartının tepesindeki manzara şeridi ("Çiya", 2026-10-20
-  /// kimlik kararı; kullanıcının açık tercihi). Logodaki dağ sırtı büyüyüp
-  /// alçak bir manzaraya döner: gündüz şafak gökyüzü + lacivert tonlu üç
-  /// katman sırt + güneş; gece yıldızlı lacivert gök + aynı sırtlar koyu +
-  /// zirvede TEK turuncu ışık. Değerler maketten (`B_ciya.html`); gece
-  /// değerleri aynı rolün koyu ikizi. Yalnız bu şerit kullanır.
-  Color get vistaSkyTop =>
-      _isDay ? const Color(0xFFFFC58A) : const Color(0xFF151A3D);
-  Color get vistaSkyBottom =>
-      _isDay ? const Color(0xFFFFE8CC) : const Color(0xFF2B3B86);
-
-  /// Gündüz güneşi; gecede zirvedeki tek ışık [act] (turuncu) olur.
-  Color get vistaSun => _isDay ? const Color(0xFFFF8A3D) : act;
-  Color get vistaRidgeFar =>
-      _isDay ? const Color(0xFF8FD3B5) : const Color(0xFF33438F);
-  Color get vistaRidgeMid =>
-      _isDay ? const Color(0xFF2E9F74) : const Color(0xFF24336E);
-  Color get vistaRidgeNear =>
-      _isDay ? const Color(0xFF0E8360) : const Color(0xFF1B2752);
-
-  /// Gece yıldızı (gündüz çizilmez).
-  Color get vistaStar => const Color(0xFFF5F3EF);
-
   static const night = SahneTokens(
     // 2026-10-20 gece paleti kuruldu (9 modelli kurul oy birliğiyle B):
     // nötr grafit, mavi ton yok; turuncu Agir aynı. Eski lacivert (#0A0F2E)
@@ -1243,4 +1220,128 @@ class SahneStage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Theme(data: stage, child: child);
+}
+
+/// Manzara şeridinin saat dilimi (2026-10-21). Şerit TEMAYA değil cihazın
+/// yerel saatine bakar: sabah şafak, gündüz mavi gök, akşam gün batımı,
+/// gece yıldızlı gök. Kartın zemini ve metni temayı izlemeye devam eder.
+enum SahneVistaPhase {
+  dawn,
+  day,
+  dusk,
+  night;
+
+  /// 05:00–09:59 şafak, 10:00–16:59 gündüz, 17:00–19:59 akşam, kalanı gece.
+  static SahneVistaPhase atHour(int hour) {
+    if (hour >= 5 && hour < 10) return dawn;
+    if (hour >= 10 && hour < 17) return day;
+    if (hour >= 17 && hour < 20) return dusk;
+    return night;
+  }
+
+  static SahneVistaPhase now() => atHour(SahneClock.now().hour);
+}
+
+/// Test edilebilir saat: testler `SahneClock.now = () => DateTime(...)` ile
+/// sabitler (ekran turu öğlen 12:00 / gece kareleri 22:00).
+class SahneClock {
+  SahneClock._();
+  static DateTime Function() now = DateTime.now;
+}
+
+/// Bir manzara döneminin renkleri ve güneş yerleşimi. Ham renk yalnız burada.
+class SahneVistaPalette {
+  const SahneVistaPalette({
+    required this.skyTop,
+    required this.skyBottom,
+    required this.sun,
+    required this.ridgeFar,
+    required this.ridgeMid,
+    required this.ridgeNear,
+    required this.star,
+    required this.stars,
+    required this.sunX,
+    required this.sunY,
+    required this.sunR,
+  });
+
+  final Color skyTop;
+  final Color skyBottom;
+
+  /// Güneş; gecede zirvedeki tek turuncu ışık.
+  final Color sun;
+  final Color ridgeFar;
+  final Color ridgeMid;
+  final Color ridgeNear;
+  final Color star;
+
+  /// Yıldız çizilir mi (yalnız gece; gecede güneş yerine zirve ışığı çizilir).
+  final bool stars;
+
+  /// Güneşin merkezi (şerit boyutuna oranla) ve yarıçapı (yüksekliğe oranla).
+  final double sunX;
+  final double sunY;
+  final double sunR;
+
+  static const _star = Color(0xFFF5F3EF);
+
+  static const dawn = SahneVistaPalette(
+    skyTop: Color(0xFFFFC58A),
+    skyBottom: Color(0xFFFFE8CC),
+    sun: Color(0xFFFF8A3D),
+    ridgeFar: Color(0xFF8FD3B5),
+    ridgeMid: Color(0xFF2E9F74),
+    ridgeNear: Color(0xFF0E8360),
+    star: _star,
+    stars: false,
+    sunX: 0.68,
+    sunY: 0.50,
+    sunR: 0.15,
+  );
+  static const day = SahneVistaPalette(
+    skyTop: Color(0xFF5AA9EA),
+    skyBottom: Color(0xFFC3E4FA),
+    sun: Color(0xFFFFD23F),
+    ridgeFar: Color(0xFF8FD3B5),
+    ridgeMid: Color(0xFF2E9F74),
+    ridgeNear: Color(0xFF0E8360),
+    star: _star,
+    stars: false,
+    sunX: 0.70,
+    sunY: 0.20,
+    sunR: 0.15,
+  );
+  static const dusk = SahneVistaPalette(
+    skyTop: Color(0xFF5C2E7E),
+    skyBottom: Color(0xFFF5744F),
+    sun: Color(0xFFE8391F),
+    ridgeFar: Color(0xFF5B8F86),
+    ridgeMid: Color(0xFF1D7254),
+    ridgeNear: Color(0xFF0A5A44),
+    star: _star,
+    stars: false,
+    sunX: 0.66,
+    sunY: 0.52,
+    sunR: 0.25,
+  );
+  static const night = SahneVistaPalette(
+    skyTop: Color(0xFF151A3D),
+    skyBottom: Color(0xFF2B3B86),
+    sun: Color(0xFFFF8A3D),
+    ridgeFar: Color(0xFF33438F),
+    ridgeMid: Color(0xFF24336E),
+    ridgeNear: Color(0xFF1B2752),
+    star: _star,
+    stars: true,
+    sunX: 0.5,
+    sunY: 0.25,
+    sunR: 0.1,
+  );
+
+  static SahneVistaPalette of(SahneVistaPhase phase) => switch (phase) {
+    SahneVistaPhase.dawn => dawn,
+    SahneVistaPhase.day => day,
+    SahneVistaPhase.dusk => dusk,
+    SahneVistaPhase.night => night,
+  };
 }

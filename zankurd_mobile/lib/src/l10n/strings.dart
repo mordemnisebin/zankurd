@@ -822,12 +822,12 @@ class Tr {
       'ku': '+{xp} XP hate wergirtin!',
       'tr': '+{xp} XP kazanıldı!',
     },
-    K.firstSessionBadge: {'ku': 'Dersa yekem', 'tr': 'İlk ders'},
+    K.firstSessionBadge: {'ku': 'Erkê îro', 'tr': 'Bugünün görevi'},
     K.firstSessionSub: {
       'ku': '{p0} pirs · nêzîkî {p1} deqe',
       'tr': '{p0} soru · yaklaşık {p1} dakika',
     },
-    K.gununDersi: {'ku': 'Dersa rojê', 'tr': 'Günün dersi'},
+    K.gununDersi: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
     K.pSoruYaklasikP: {
       'ku': '{p0} pirs · nêzîkî {p1} deqe',
       'tr': '{p0} soru · yaklaşık {p1} dakika',
@@ -1067,8 +1067,8 @@ class Tr {
     K.kulturelNot: {'ku': 'Nota çandî', 'tr': 'Kültürel not'},
     K.derseBasla: {'ku': 'Dest bi dersê bike', 'tr': 'Derse başla'},
     K.huhuGununSorulukEtkinligi: {
-      'ku': 'Dersa rojê amade ye. Îro hînbûnê bidomîne.',
-      'tr': 'Günün dersi hazır. Bugün öğrenmeye devam et.',
+      'ku': 'Pirsên rojê amade ne. Îro hînbûnê bidomîne.',
+      'tr': 'Günün soruları hazır. Bugün öğrenmeye devam et.',
     },
     K.zanaDiyorKiYeni: {
       'ku': 'Zana dibêje: hevalekî nû',
@@ -2178,7 +2178,7 @@ class Tr {
     K.bilingualLabels: {'ku': 'Etîketên duzimanî', 'tr': 'İki dilli etiketler'},
     K.language: {'ku': 'Ziman', 'tr': 'Dil'},
     K.languageCode: {'ku': 'KU', 'tr': 'TR'},
-    K.dailyLesson: {'ku': 'Dersa rojê', 'tr': 'Günün dersi'},
+    K.dailyLesson: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
     K.learningGoalTitle: {
       'ku': 'Îro tu dixwazî li ser çi bisekinî?',
       'tr': 'Bugün neye odaklanmak istersin?',
@@ -2296,8 +2296,8 @@ class Tr {
     // oyuncu aynı açıklamayı iki adla görür; çekim `Şîroveyê
     // bibihîze` ile aynıdır.
     K.onbDailyBullet: {
-      'ku': 'Di dersa rojê de dem tune, şîroveya her pirsê heye.',
-      'tr': 'Günün dersinde süre yok, her sorunun açıklaması var.',
+      'ku': 'Di pirsên rojê de dem tune, şîroveya her pirsê heye.',
+      'tr': 'Günün sorularında süre yok, her sorunun açıklaması var.',
     },
     K.onbCompeteTitle: {
       'ku': 'Bi hevalên xwe re pêşbirkê bike',

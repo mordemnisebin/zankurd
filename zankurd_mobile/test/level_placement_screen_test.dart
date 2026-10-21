@@ -114,11 +114,9 @@ void main() {
         }
         await tester.tap(find.text('Kontrol et'));
       } else {
-        // `wrap()` Türkçe kuruyor; %100 çeviri kapsamasıyla artık pek çok
-        // soru `correctAnswerTr`yi çiziyor, ham `correctAnswer` (Kurmancî)
-        // değil (content genişlemesinin getirdiği kapsama, 2026-08-15
-        // birleştirmesi).
-        final option = find.text(current.correctAnswerFor(isKu: false)).last;
+        // 2026-10-21: seviye sınavında şıklar Türkçe arayüzde de kanonik
+        // Kurmancî (`localized(learning: true)`); doğru şık ham alandır.
+        final option = find.text(current.correctAnswer).last;
         await tester.ensureVisible(option);
         await tester.pumpAndSettle();
         await tester.tap(option);

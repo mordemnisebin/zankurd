@@ -130,7 +130,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     final useCompactSkip =
         MediaQuery.sizeOf(context).width < 380 || textScale > 1.05;
     final question = _questions.isNotEmpty
-        ? _questions[_index].localized(isKu: ku)
+        ? _questions[_index].localized(isKu: ku, learning: true)
         : null;
 
     return SahneStageScaffold(

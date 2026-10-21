@@ -205,7 +205,7 @@ void main() {
     expect(Tr.of(K.viewExplanation, AppLanguage.ku), 'Şîroveyê bibîne');
     expect(
       Tr.of(K.onbDailyBullet, AppLanguage.ku),
-      'Di dersa rojê de dem tune, şîroveya her pirsê heye.',
+      'Di pirsên rojê de dem tune, şîroveya her pirsê heye.',
     );
 
     for (final key in Tr.keys) {

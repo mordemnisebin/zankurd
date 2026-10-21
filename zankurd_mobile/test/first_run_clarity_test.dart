@@ -281,7 +281,7 @@ void main() {
         ),
       );
 
-      expect(find.text('Günün dersi'), findsOneWidget);
+      expect(find.text('Günün soruları'), findsOneWidget);
       expect(find.text('Günlük hedef'), findsNothing);
     });
 
@@ -300,7 +300,7 @@ void main() {
         ),
       );
 
-      expect(find.text('Günün dersi'), findsOneWidget);
+      expect(find.text('Günün soruları'), findsOneWidget);
       expect(find.text('Günlük hedef'), findsNothing);
     });
 
@@ -325,7 +325,7 @@ void main() {
         );
 
         expect(find.text('Günlük hedef'), findsOneWidget);
-        expect(find.text('Günün dersi'), findsNothing);
+        expect(find.text('Günün soruları'), findsNothing);
         // Kalan = 10-4 = 6; süre de KALANDAN hesaplanır:
         // ((6*25)/60).ceil() = 3 dakika. Toplamdan (10 → 5 dakika)
         // hesaplansaydı yarısı biten hedef için süre hiç kısalmazdı.
@@ -354,7 +354,7 @@ void main() {
           ),
         );
 
-        expect(find.text('Günün dersi'), findsOneWidget);
+        expect(find.text('Günün soruları'), findsOneWidget);
         expect(find.text('Günlük hedef'), findsNothing);
         expect(find.text('10 soru · yaklaşık 5 dakika'), findsOneWidget);
       },

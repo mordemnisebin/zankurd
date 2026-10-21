@@ -801,7 +801,7 @@ void main() {
     // günlük ders maddesi kaydırarak görünür hale gelmeli.
     final pageScroll = find.byType(SingleChildScrollView);
     final dailyBullet = find.text(
-      'Di dersa rojê de dem tune, şîroveya her pirsê heye.',
+      'Di pirsên rojê de dem tune, şîroveya her pirsê heye.',
     );
     final pageScrollable = find.descendant(
       of: pageScroll,
@@ -821,7 +821,7 @@ void main() {
     final dailyRect = tester.getRect(dailyBullet);
     expect(afterScrollY, lessThan(beforeScrollY));
     expect(dailyRect.top, greaterThanOrEqualTo(scrollRect.top));
-    // 2026-09-29 doğallık: madde metni "Di dersa rojê de dem tune, şîroveya
+    // 2026-09-29 doğallık: madde metni "Di pirsên rojê de dem tune, şîroveya
     // her pirsê heye." uzadı; 2x ölçekte 288 px yüksekliğinde, SE'nin
     // 219 px'lik kaydırma alanından büyük. Sözleşme "madde bir bakışta
     // tamamen sığar" değil "madde kaydırarak TAMAMEN okunabilir" olarak
@@ -944,7 +944,7 @@ void main() {
 
     expect(find.byType(HomeScreen), findsOneWidget);
     // Ana ekranın tek birincil eylemi günün dersidir.
-    expect(find.text('Günün dersi'), findsOneWidget);
+    expect(find.text('Günün soruları'), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-duel-row')), findsNothing);
 
@@ -1119,7 +1119,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Oyundaki adın ne olsun?'), findsOneWidget);
-    expect(find.text('Günün dersi'), findsNothing);
+    expect(find.text('Günün soruları'), findsNothing);
 
     await tester.enterText(
       find.byKey(const ValueKey('player-name-field')),
@@ -1129,7 +1129,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.savedName, 'Rojda Test');
-    expect(find.text('Günün dersi'), findsOneWidget);
+    expect(find.text('Günün soruları'), findsOneWidget);
   });
 
   test('unsupported provider auth error is user friendly', () {

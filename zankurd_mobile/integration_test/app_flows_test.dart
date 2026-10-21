@@ -75,10 +75,10 @@ void main() {
           );
         }
       } else {
-        // UI yerelleştirilmiş metni çizer (`localized`); ham alan
-        // Kurmancî kalır ve Türkçe turda bulunamazdı.
+        // Seviye belirleme öğrenme kuralıyla çizer (2026-10-21): soru
+        // metni arayüz dilinde, şıklar kanonik Kurmancî.
         // ignore: avoid_dynamic_calls
-        final localized = current.localized(isKu: false);
+        final localized = current.localized(isKu: false, learning: true);
         await tester.tap(find.text(localized.correctAnswer).last);
       }
       await tester.pumpAndSettle();

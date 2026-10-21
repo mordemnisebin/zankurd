@@ -20,6 +20,7 @@ import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/models/contest.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
@@ -562,6 +563,9 @@ Widget _tourShell({
   );
 }
 
+/// Saat dönem kareleri (290–293) kendi saatini kurar; [_pump] ezmesin.
+bool _tourClockPinned = false;
+
 Future<void> _pump(
   WidgetTester tester,
   Widget child, {
@@ -571,6 +575,11 @@ Future<void> _pump(
   Size? size,
 }) async {
   _applyViewport(tester, size ?? _size);
+  // Manzara şeridi cihaz saatini izler: tur belirleyici kalsın diye açık
+  // kareler öğlen (gündüz), koyu kareler 22:00 (gece) basar.
+  if (!_tourClockPinned) {
+    SahneClock.now = () => DateTime(2026, 10, 21, dark ? 22 : 12);
+  }
   await tester.pumpWidget(
     _tourShell(
       child: child,
@@ -698,6 +707,11 @@ class _EmptyStateRepository extends MockZanKurdRepository {
 
 void main() {
   late MockZanKurdRepository repository;
+
+  tearDown(() {
+    _tourClockPinned = false;
+    SahneClock.now = DateTime.now;
+  });
 
   setUpAll(() async {
     // Yazı tipleri elle yüklenmezse test koşucusu her metni siyah bir kutu
@@ -937,6 +951,22 @@ void main() {
   // Tur bugüne dek yalnız açık temayı basıyordu; karanlık temada sabit
   // kalmış renkler (`Colors.white`, sabit siyah gölge) hiç ölçülmüyordu.
   // Aynı ekranlar ikinci kez, tema karanlıkken basılır.
+  // Manzara saat dilimleri (2026-10-21): aynı ana ekran dört saatte, açık
+  // temada; şerit temaya değil saate bakar.
+  for (final (name, hour) in [
+    ('290_home_dawn', 7),
+    ('291_home_day', 13),
+    ('292_home_dusk', 18),
+    ('293_home_night', 23),
+  ]) {
+    testWidgets('$name ana ekran saat dilimi', (t) async {
+      _tourClockPinned = true;
+      SahneClock.now = () => DateTime(2026, 10, 21, hour, 30);
+      await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+      await _shoot(t, name);
+    }, tags: ['preview']);
+  }
+
   testWidgets('20 ana ekran (karanlık)', (t) async {
     await _pump(
       t,

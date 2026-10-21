@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -512,37 +513,12 @@ class SahneRidgePainter extends CustomPainter {
 /// `saveLayer` yok. Metin ve düğme manzaranın üstüne binmez: şerit kartın
 /// ayrı bir satırıdır.
 class SahneVistaPainter extends CustomPainter {
-  const SahneVistaPainter({
-    required this.skyTop,
-    required this.skyBottom,
-    required this.sun,
-    required this.ridgeFar,
-    required this.ridgeMid,
-    required this.ridgeNear,
-    required this.star,
-    required this.night,
-  });
+  const SahneVistaPainter(this.palette);
 
-  SahneVistaPainter.of(SahneTokens t, {required bool night})
-    : this(
-        skyTop: t.vistaSkyTop,
-        skyBottom: t.vistaSkyBottom,
-        sun: t.vistaSun,
-        ridgeFar: t.vistaRidgeFar,
-        ridgeMid: t.vistaRidgeMid,
-        ridgeNear: t.vistaRidgeNear,
-        star: t.vistaStar,
-        night: night,
-      );
+  SahneVistaPainter.of(SahneVistaPhase phase)
+    : this(SahneVistaPalette.of(phase));
 
-  final Color skyTop;
-  final Color skyBottom;
-  final Color sun;
-  final Color ridgeFar;
-  final Color ridgeMid;
-  final Color ridgeNear;
-  final Color star;
-  final bool night;
+  final SahneVistaPalette palette;
 
   /// Uzak sırt (maketteki açık katman), 0–1 ızgarasında.
   static const List<Offset> farLine = [
@@ -597,7 +573,7 @@ class SahneVistaPainter extends CustomPainter {
         ..shader = LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [skyTop, skyBottom],
+          colors: [palette.skyTop, palette.skyBottom],
         ).createShader(rect),
     );
     final h = size.height;
@@ -608,15 +584,16 @@ class SahneVistaPainter extends CustomPainter {
       midBox.left + 0.50 * midBox.width,
       midBox.top + 0.00 * midBox.height,
     );
-    if (night) {
-      final starPaint = Paint()..color = star.withValues(alpha: 0.7);
+    if (palette.stars) {
+      final starPaint = Paint()..color = palette.star.withValues(alpha: 0.7);
       for (final p in stars) {
         canvas.drawCircle(Offset(p.dx * w, p.dy * h), 1.1, starPaint);
       }
     } else {
       // Güneş zirvenin sağ arkasında, sırtın ardından doğar.
-      final c = Offset(w * 0.68, h * 0.42);
-      final r = h * 0.17;
+      final c = Offset(w * palette.sunX, h * palette.sunY);
+      final r = h * palette.sunR;
+      final sun = palette.sun;
       canvas.drawCircle(
         c,
         r * 1.5,
@@ -626,11 +603,11 @@ class SahneVistaPainter extends CustomPainter {
     }
     canvas.drawPath(
       _line(farLine, Rect.fromLTWH(0, h * 0.40, w, h * 0.60)),
-      Paint()..color = ridgeFar,
+      Paint()..color = palette.ridgeFar,
     );
     canvas.drawPath(
       SahneRidgePainter.ridgePath(midBox),
-      Paint()..color = ridgeMid,
+      Paint()..color = palette.ridgeMid,
     );
     // Yakın taban: alçak, dalgasız koyu şerit.
     canvas.drawPath(
@@ -642,9 +619,10 @@ class SahneVistaPainter extends CustomPainter {
         Offset(0.86, 0.20),
         Offset(1.00, 0.35),
       ], Rect.fromLTWH(0, h * 0.80, w, h * 0.20)),
-      Paint()..color = ridgeNear,
+      Paint()..color = palette.ridgeNear,
     );
-    if (night) {
+    if (palette.stars) {
+      final sun = palette.sun;
       // Zirvede TEK turuncu ışık: küçük hale + nokta.
       canvas.drawCircle(peak, 6, Paint()..color = sun.withValues(alpha: 0.25));
       canvas.drawCircle(peak, 2.5, Paint()..color = sun);
@@ -652,20 +630,12 @@ class SahneVistaPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(SahneVistaPainter old) =>
-      old.skyTop != skyTop ||
-      old.skyBottom != skyBottom ||
-      old.sun != sun ||
-      old.ridgeFar != ridgeFar ||
-      old.ridgeMid != ridgeMid ||
-      old.ridgeNear != ridgeNear ||
-      old.star != star ||
-      old.night != night;
+  bool shouldRepaint(SahneVistaPainter old) => old.palette != palette;
 }
 
 /// Manzara şeridi: kartın tepesinde tam genişlik, en çok [maxHeight].
 /// Dekoratiftir, ekran okuyucuya görünmez.
-class SahneVistaStrip extends StatelessWidget {
+class SahneVistaStrip extends StatefulWidget {
   const SahneVistaStrip({super.key, this.height = defaultHeight});
 
   /// Kurulun tek itirazı manzaranın kartı büyütüp konuları aşağı itmesiydi:
@@ -677,15 +647,38 @@ class SahneVistaStrip extends StatelessWidget {
   final double height;
 
   @override
+  State<SahneVistaStrip> createState() => _SahneVistaStripState();
+}
+
+/// Dönemi cihaz saatinden alır ([SahneClock]); açıkken dakikada bir bakar,
+/// dönem değişirse (19:59→20:00) yeniden çizer. Tema dönemi etkilemez.
+class _SahneVistaStripState extends State<SahneVistaStrip> {
+  late SahneVistaPhase _phase = SahneVistaPhase.now();
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(minutes: 1), (_) {
+      final next = SahneVistaPhase.now();
+      if (next != _phase && mounted) setState(() => _phase = next);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final night = Theme.of(context).brightness == Brightness.dark;
     return ExcludeSemantics(
       child: SizedBox(
         key: const ValueKey('sahne-vista-strip'),
-        height: height.clamp(0, maxHeight),
+        height: widget.height.clamp(0, SahneVistaStrip.maxHeight),
         width: double.infinity,
-        child: CustomPaint(painter: SahneVistaPainter.of(t, night: night)),
+        child: CustomPaint(painter: SahneVistaPainter.of(_phase)),
       ),
     );
   }

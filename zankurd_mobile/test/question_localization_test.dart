@@ -138,7 +138,7 @@ void main() {
   });
 
   test('"bi Tirkî çi ye" sorusunda öğrenme şıkları Türkçe kelime kalır', () {
-    final q = QuizQuestion(
+    const q = QuizQuestion(
       id: 'q2',
       category: 'Ziman',
       prompt: '"Av" bi Tirkî çi ye?',
