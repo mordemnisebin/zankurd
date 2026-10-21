@@ -269,7 +269,7 @@ void main() {
               size: Size(320, 640),
               textScaler: TextScaler.linear(2),
             ),
-            child: const DozaMeScreen(),
+            child: DozaMeScreen(),
           ),
         ),
       );
