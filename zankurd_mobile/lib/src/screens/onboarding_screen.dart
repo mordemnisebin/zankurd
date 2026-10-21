@@ -361,6 +361,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         // gerçek bir soru — bkz. [OnboardingSampleQuestion].
         question: OnboardingSampleQuestion.learn,
         title: context.t(K.onbLearnTitle),
+        slogan: context.t(K.dozaSlogan),
         body: context.t(K.onbLearnBody),
         bullets: [
           // Sayı sabit yazılıydı ve Sînema kategorisi eklenince yanlışa
@@ -466,6 +467,7 @@ class _OnboardingData {
     required this.body,
     this.showProgress = false,
     this.bullets = const [],
+    this.slogan,
   });
 
   /// Slaytın Şahnê rolü: sahne kartının zemini, kilim şeridi, madde
@@ -481,6 +483,9 @@ class _OnboardingData {
   final String title;
   final String body;
   final List<String> bullets;
+
+  /// Başlığın altında küçük, vurgulu söz (yalnız ilk ekran: S1).
+  final String? slogan;
 }
 
 class _OnboardingPage extends StatelessWidget {
@@ -725,6 +730,17 @@ class _OnboardingTextBandState extends State<_OnboardingTextBand> {
               body: data.body,
               compact: compact,
             ),
+            if (data.slogan != null) ...[
+              const SizedBox(height: SahneSpace.x2),
+              Text(
+                data.slogan!,
+                key: const ValueKey('onboarding-slogan'),
+                style: SahneType.bodyStrong.copyWith(
+                  color: t.roleText(data.role),
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
             if (data.bullets.isNotEmpty) ...[
               SizedBox(height: compact ? SahneSpace.x3 : SahneSpace.x4),
               for (final bullet in data.bullets) ...[

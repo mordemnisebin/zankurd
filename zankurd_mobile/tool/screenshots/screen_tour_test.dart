@@ -26,6 +26,7 @@ import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
+import 'package:zankurd_mobile/src/screens/doza_me_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/learn_home_screen.dart';
 import 'package:zankurd_mobile/src/screens/password_recovery_screen.dart';
@@ -966,6 +967,40 @@ void main() {
       await _shoot(t, name);
     }, tags: ['preview']);
   }
+
+  // Doza me / Davamız (2026-10-21): kimlik sayfası ve tarihî gün şeritleri.
+  testWidgets('300 Doza me (Türkçe)', (t) async {
+    await _pump(t, const DozaMeScreen(), size: Size(_size.width, 2600));
+    await _shoot(t, '300_doza_me');
+  }, tags: ['preview']);
+
+  testWidgets('301 Doza me (karanlık, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      const DozaMeScreen(),
+      dark: true,
+      ku: true,
+      size: Size(_size.width, 2600),
+    );
+    await _shoot(t, '301_doza_me_ku_dark');
+  }, tags: ['preview']);
+
+  for (final (name, month, day) in [
+    ('302_home_newroz', 3, 21),
+    ('303_home_halepce', 3, 16),
+  ]) {
+    testWidgets('$name ana ekran tarihî gün', (t) async {
+      _tourClockPinned = true;
+      SahneClock.now = () => DateTime(2027, month, day, 12);
+      await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+      await _shoot(t, name);
+    }, tags: ['preview']);
+  }
+
+  testWidgets('304 profil — Doza me girişi', (t) async {
+    await _pump(t, Scaffold(body: ProfileScreen(repository: repository)));
+    await _shoot(t, '304_profile_doza');
+  }, tags: ['preview']);
 
   testWidgets('20 ana ekran (karanlık)', (t) async {
     await _pump(

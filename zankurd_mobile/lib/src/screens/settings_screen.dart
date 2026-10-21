@@ -1,3 +1,4 @@
+import '../widgets/doza_widgets.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
@@ -567,6 +568,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // ============ HAKKINDA / ABOUT ============
               SahneSectionHeader(title: context.t(K.secAbout)),
+              SahneListGroup(
+                children: [
+                  SahneListRow.icon(
+                    key: const ValueKey('settings-doza-row'),
+                    icon: AppIcons.flag,
+                    role: SahneRole.learn,
+                    title: context.t(K.dozaTitle),
+                    subtitle: context.t(K.dozaSlogan),
+                    chevron: true,
+                    onTap: () => openDozaMe(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: SahneSpace.cardGap),
               SahneListGroup(
                 dividerIndent: _rowTextInset,
                 children: [
