@@ -110,6 +110,21 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  test('tekrar başlığı sorunun konusunu taşır, karışıksa Karışık', () {
+    // Simülatör gezisi 2026-10-21: Siyaset sorusunun tekrarında başlık
+    // createRoom() varsayılanıyla "Ziman · 1 pirs" yazıyordu.
+    QuizQuestion q(String id, String category) => QuizQuestion(
+      id: id,
+      category: category,
+      prompt: 'p',
+      answers: const ['a', 'b'],
+      correctAnswer: 'a',
+      explanation: '',
+    );
+    expect(reviewRoomCategory([q('1', 'Siyaset')]), 'Siyaset');
+    expect(reviewRoomCategory([q('1', 'Dîrok'), q('2', 'Ziman')]), 'mixed');
+  });
+
   testWidgets('karta dokununca hazır sorularla tekrar başlar', (tester) async {
     SharedPreferences.setMockInitialValues({
       'zankurd.mistakeQuestionIds': ['offline_0005', 'offline_0010'],

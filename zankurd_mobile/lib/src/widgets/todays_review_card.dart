@@ -19,6 +19,14 @@ const int kReviewSessionCap = 12;
 /// sayar. Hazır tekrar varsa dokunulabilir bir kart, yoksa sakin bir
 /// "tamamlandı" durumu gösterir. Karta dokununca yalnız hazır sorularla,
 /// öğrenme deneyiminde (sayaç/skor/joker yok) bir tekrar quizi açılır.
+/// Tekrar oturumunun başlık kategorisi: sorular tek konudansa o konu,
+/// değilse Karışık (`mixed`). createRoom() varsayılanı ("Ziman") başlıkta
+/// yanlış konu gösteriyordu.
+String reviewRoomCategory(List<QuizQuestion> questions) {
+  final categories = {for (final q in questions) q.category};
+  return categories.length == 1 ? categories.single : 'mixed';
+}
+
 class TodaysReviewCard extends StatefulWidget {
   const TodaysReviewCard({
     required this.repository,
@@ -147,9 +155,13 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
       }
 
       final ku = widget.isKu;
+      // createRoom() varsayılan kategoriyi ("Ziman") taşıyordu; tekrar
+      // sorusu Siyaset'tenken başlıkta "Ziman · 1 pirs" yazıyordu
+      // (simülatör gezisi 2026-10-21). Tek konuysa o, değilse Karışık.
       final room = widget.repository.createRoom().copyWith(
         name: Tr.forKu(K.todaysReviews, ku),
         questionCount: questions.length,
+        category: reviewRoomCategory(questions),
       );
       await Navigator.of(context).push(
         AppRoute.to(
