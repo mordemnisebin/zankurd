@@ -794,6 +794,33 @@ void main() {
       expect(repository.finishCalls, 0);
       expect(repository.resultCalls, 0);
     });
+
+    // 2026-10-22 iki simülatör turu: kendi isteğiyle çıkan oyuncunun
+    // `left_at` satırı ekran kapanırken realtime ile geliyordu; çıkış
+    // bayrağı `finally`'de sıfırlandığı için ana ekranda "Zamanında hazır
+    // olmadığın için çıkarıldın" penceresi açılıyordu.
+    testWidgets('kendi isteğiyle çıkan "düşürüldün" penceresi görmez', (
+      tester,
+    ) async {
+      final repository = await mount(tester);
+
+      await tester.binding.handlePopRoute();
+      await tester.pump();
+      await tester.tap(find.text('Çık'));
+      await tester.pump();
+      repository.playersController.add([
+        _p('me', 'Ez', left: true),
+        _p('a', 'Ayşe', score: 500),
+        _p('b', 'Berat', score: 300),
+      ]);
+      await pumpFrames(tester, 6);
+
+      expect(repository.leaveCalls, 1);
+      expect(
+        find.textContaining('Zamanında hazır olmadığın için'),
+        findsNothing,
+      );
+    });
   });
 
   group('sonuç ekranı', () {

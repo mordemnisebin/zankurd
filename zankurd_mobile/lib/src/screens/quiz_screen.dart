@@ -1635,6 +1635,12 @@ class _QuizScreenState extends State<QuizScreen>
       }
       if (!mounted) return;
       leaveConfirmed = true;
+      // Kendi isteğiyle çıkan oyuncu "düşürüldün" görmez: ekran kapanırken
+      // kendi `left_at` satırı realtime ile gelir ve `_exitInFlight`
+      // `finally`'de sıfırlandığı için `_handleDroppedFromCrowd` "Zamanında
+      // hazır olmadığın için çıkarıldın" diyordu (iki simülatör turu,
+      // 2026-10-22: ana ekranda hükmen penceresi).
+      _crowdDropHandled = true;
 
       if (_isMultiplayer) {
         // Zaman aşımı, diğer çevrimiçi çağrılarla aynı bütçeyi kullanır.
