@@ -2555,6 +2555,20 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       json = null;
     }
 
+    // Oda tamamlanmadan KAPANDIYSA (rakip ayrıldı, hükmen bitti, oda
+    // terk edildi) sunucu `already_claimed` olmadan `amount: 0` ve
+    // `room_not_completed` döner: kalıcı, geçerli bir sıfırdır. Eskiden
+    // aşağıdaki "tam alan" denetimi bunu StateError sayıp talebi kuyruğa
+    // alıyordu ve sonuç ekranı bağlantı olduğu hâlde "Bağlantı yok. Ödülün
+    // kaydedildi…" diyordu (iki simülatör turu, 2026-10-21: oyun ortasında
+    // rakip çıkınca). `room_not_finished` / `answers_incomplete` GEÇİCİ
+    // durumlardır (oda henüz kapanmadı); onlar kuyruğa girmeye devam eder.
+    if (json != null &&
+        json['amount'] == 0 &&
+        json['room_not_completed'] == true) {
+      return 0;
+    }
+
     // Zorunlu iki alan yeter; fazlası yok sayılır. 2026-10-02'de sunucu
     // `daily_cap`/`cap_reached` ekleyince "tam iki alan" kuralı her oda
     // turunun ilk talebini reddediyordu: jeton sunucuda ödeniyor, istemci

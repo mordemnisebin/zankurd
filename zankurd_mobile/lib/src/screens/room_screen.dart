@@ -865,6 +865,14 @@ class _RoomScreenState extends State<RoomScreen> {
     if (!crowd || room.status != RoomStatus.lobby) {
       sorted.sort((a, b) => b.score.compareTo(a.score));
     }
+    // Lobide ev sahibi listenin başındadır (ev sahibi el değiştirince de):
+    // iki simülatör turunda sahip ikinci sırada kalıyordu. Yalnız lobi;
+    // oyun başlayınca sıra puan sırasıdır.
+    final lobbyHostId = room.hostId;
+    if (room.status == RoomStatus.lobby && lobbyHostId != null) {
+      final at = sorted.indexWhere((p) => p.id == lobbyHostId);
+      if (at > 0) sorted.insert(0, sorted.removeAt(at));
+    }
     // `room.players` (yukarıdaki `sorted`) kasten süzülmez: oda üyeliği,
     // `canStart`/`allPlayersReady` gibi oyun mantığı hâlâ GERÇEK listeye
     // bakmalı. Yalnız EKRANDA çizilen satırlar süzülür.

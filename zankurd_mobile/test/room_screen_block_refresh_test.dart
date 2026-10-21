@@ -57,6 +57,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('player-block-action')));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('player-moderation-confirm')));
+    await tester.pumpAndSettle();
 
     expect(
       find.text('Berfin'),

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show kIsWeb, visibleForTesting;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1289,6 +1289,15 @@ class _AppShellState extends State<AppShell>
         _roomResumeCheckedUsers.add(userId);
         return;
       }
+      // Odadan KENDİ isteğiyle ayrılan oyuncunun bekleyen sonucu yoktur.
+      // Sunucu kalabalık odada ayrılana da son durumu döndürüyordu; oda
+      // sonradan bitince (kimi zaman bir dakika sonra, uygulama başka
+      // sekmedeyken) "0 puan" sonuç ekranı kendiliğinden açılıyordu (iki
+      // simülatör turu, 2026-10-21). Ayrılan oyuncuya sonuç sunulmaz.
+      if (pendingResultOwnerLeft(pending, userId)) {
+        _roomResumeCheckedUsers.add(userId);
+        return;
+      }
       if (!_isValidPendingRoomResult(pending, userId)) {
         _roomResumeCheckedUsers.add(userId);
         _roomResumeRejectedUsers.add(userId);
@@ -1455,4 +1464,13 @@ class _TabRefreshRouteAware extends RouteAware {
 
   @override
   void didPopNext() => onReturnedToShell();
+}
+
+/// Bekleyen oda sonucunda sonuç sahibi odadan ayrılmış mı?
+@visibleForTesting
+bool pendingResultOwnerLeft(RoomResultSnapshot snapshot, String userId) {
+  for (final player in snapshot.room.players) {
+    if (player.id == userId) return player.left;
+  }
+  return false;
 }

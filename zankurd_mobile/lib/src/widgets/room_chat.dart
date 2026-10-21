@@ -8,6 +8,7 @@ import '../l10n/strings.dart';
 import '../models/room_message.dart';
 import '../services/chat_moderation_policy.dart';
 import '../utils/error_reporter.dart';
+import '../utils/player_identity.dart';
 import '../theme/app_icons.dart';
 import 'player_avatar.dart';
 import 'sahne/sahne.dart';
@@ -342,7 +343,8 @@ class _RoomChatState extends State<RoomChat> {
                             container: true,
                             button: !isMine,
                             enabled: !isMine,
-                            label: '${msg.senderName}: ${msg.text}',
+                            label:
+                                '${PlayerIdentity.resolveName(msg.senderName, isKu: context.isKu)}: ${msg.text}',
                             onLongPress: isMine
                                 ? null
                                 : () => _showModerationSheet(msg),
@@ -436,6 +438,9 @@ class _MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    // Gönderen adı da tek kural: sunucudan gelen ham "ZanKurd Oyuncusu"
+    // gönderene göre farklı görünüyordu (iki simülatör turu, 2026-10-21).
+    final senderName = PlayerIdentity.resolveName(message.senderName, isKu: ku);
     return Padding(
       padding: const EdgeInsets.only(bottom: SahneSpace.x2),
       child: Row(
@@ -448,7 +453,7 @@ class _MessageBubble extends StatelessWidget {
             PlayerAvatar(
               radius: 14,
               colorHex: message.senderAvatarColor,
-              displayName: message.senderName,
+              displayName: senderName,
             ),
             const SizedBox(width: SahneSpace.x2),
           ],
@@ -473,7 +478,7 @@ class _MessageBubble extends StatelessWidget {
                 children: [
                   if (!isMine)
                     Text(
-                      message.senderName,
+                      senderName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: SahneType.captionStrong.copyWith(color: t.tx2),
@@ -498,7 +503,7 @@ class _MessageBubble extends StatelessWidget {
             PlayerAvatar(
               radius: 14,
               colorHex: message.senderAvatarColor,
-              displayName: message.senderName,
+              displayName: senderName,
             ),
           ],
         ],
