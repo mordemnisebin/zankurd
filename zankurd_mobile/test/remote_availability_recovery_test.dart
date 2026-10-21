@@ -255,7 +255,12 @@ void main() {
       );
 
       // Kanca kapalı olmadığı için sonraki başarılı yoklama yeniden dener.
-      await Future<void>.delayed(const Duration(milliseconds: 40));
+      // Sabit 40 ms bekleme yüklü makinede (paralel tam test) yetmiyordu
+      // (2026-10-21, tek başına 3/3 geçti, tam koşuda bir kez kaldı):
+      // takvim gerçek zamanlı, o yüzden en çok 2 sn yoklanır.
+      for (var i = 0; i < 100 && upgrades < 2; i++) {
+        await Future<void>.delayed(const Duration(milliseconds: 20));
+      }
       expect(
         upgrades,
         greaterThanOrEqualTo(2),
