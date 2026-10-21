@@ -5,6 +5,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_icons.dart';
 import '../theme/sahne.dart';
+import 'dialog_action_pair.dart';
 
 /// Yabancı bir oyuncunun avatarı/adı gösterilen yerlerde bildir/engelle.
 ///
@@ -169,6 +170,16 @@ Future<void> showPlayerModerationSheet({
   );
   if (action == null || !context.mounted) return;
 
+  // Alt sayfadaki satıra dokunmak tek başına karar değildir: bildir/engelle
+  // geri alınması zor eylemlerdir (bildirim engeli de kurar). Sıralama
+  // ekranındaki bildir akışıyla AYNI onay penceresi; Vazgeç hiçbir şey yapmaz.
+  final confirmed = await confirmPlayerModeration(
+    context: context,
+    action: action,
+    playerName: playerName,
+  );
+  if (!confirmed || !context.mounted) return;
+
   final okText = context.t(
     action == 'report' ? K.reportProfileDone : K.chatBlocked,
   );
@@ -186,4 +197,47 @@ Future<void> showPlayerModerationSheet({
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(content: Text(ok ? okText : failText)));
+}
+
+/// Bildir/engelle onay penceresi. `true` yalnız açık onayda döner.
+@visibleForTesting
+Future<bool> confirmPlayerModeration({
+  required BuildContext context,
+  required String action,
+  required String playerName,
+}) async {
+  final isReport = action == 'report';
+  final result = await showDialog<bool>(
+    context: context,
+    builder: (dialogContext) => AlertDialog(
+      key: ValueKey(isReport ? 'report-profile-dialog' : 'block-player-dialog'),
+      title: Text(
+        dialogContext.t(isReport ? K.reportProfileTitle : K.chatBlock),
+      ),
+      content: Text(
+        isReport
+            ? Tr.forKu(K.reportProfileBodyP, dialogContext.isKu, {
+                'p0': playerName,
+              })
+            : dialogContext.t(K.chatBlockSub),
+      ),
+      actions: [
+        DialogActionPair(
+          cancel: TextButton(
+            key: const ValueKey('player-moderation-cancel'),
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(dialogContext.t(K.cancel)),
+          ),
+          confirm: FilledButton(
+            key: const ValueKey('player-moderation-confirm'),
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(
+              dialogContext.t(isReport ? K.reportAction : K.chatBlock),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  return result == true;
 }

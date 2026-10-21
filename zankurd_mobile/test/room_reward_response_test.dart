@@ -112,4 +112,29 @@ void main() {
       throwsStateError,
     );
   });
+
+  test('oda tamamlanmadan kapandıysa (rakip ayrıldı) arıza sayılmaz', () async {
+    final result = await _claim({
+      'amount': 0,
+      'room_not_completed': true,
+      'ended_reason': 'forfeit',
+    });
+    expect(result.amount, 0);
+    expect(result.cap, isFalse);
+  });
+
+  test(
+    'geçici durumlar ve bayraksız sıfır hâlâ reddedilir (kuyruğa girer)',
+    () async {
+      await expectLater(
+        _claim({'amount': 0, 'room_not_finished': true}),
+        throwsStateError,
+      );
+      await expectLater(
+        _claim({'amount': 0, 'answers_incomplete': true}),
+        throwsStateError,
+      );
+      await expectLater(_claim({'amount': 0}), throwsStateError);
+    },
+  );
 }
