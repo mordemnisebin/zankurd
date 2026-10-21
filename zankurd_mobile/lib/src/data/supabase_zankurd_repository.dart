@@ -1574,7 +1574,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .from('room_messages')
         .stream(primaryKey: ['id'])
         .eq('room_id', roomId)
-        .order('created_at')
+        // Akış `order`ının varsayılanı AZALAN (`ascending: false`); sohbet
+        // listesi eski üstte/yeni altta bekler (2026-10-21 ters sohbet).
+        .order('created_at', ascending: true)
         .map(
           (rows) => rows
               .map(
@@ -2834,7 +2836,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       event: 'game_event',
       callback: (payload) {
         if (!controller.isClosed) {
-          controller.add(payload);
+          controller.add(decodeRoomBroadcast(payload));
         }
       },
     );
@@ -2854,7 +2856,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   ) async {
     try {
       final channel = _ensureRoomChannel(roomId).channel;
-      await channel.sendBroadcastMessage(event: 'game_event', payload: payload);
+      await channel.sendBroadcastMessage(
+        event: 'game_event',
+        payload: encodeRoomBroadcast(payload),
+      );
       await _disposeUnretainedRoomChannel(roomId);
     } catch (error, stack) {
       _recordError(
@@ -4024,4 +4029,35 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       rethrow;
     }
   }
+}
+
+/// Yayın yükünde `type` anahtarı kütüphane tarafından ezilir.
+///
+/// `RealtimeChannel.send` (realtime_client 2.13) verilen haritanın kendisine
+/// `payload['type'] = 'broadcast'` ve `payload['event'] = 'game_event'`
+/// yazar. Ekranların gönderdiği `{'type': 'reaction', ...}` bu yüzden telden
+/// `type: 'broadcast'` olarak gidiyor, alıcıdaki `payload['type'] ==
+/// 'reaction'` denetimi hiç tutmuyor ve hazır mesajlar/tepkiler karşıya
+/// ulaşmıyordu. Gönderim hatası yoktu, bu yüzden kusur sessizdi.
+/// `kind` anahtarı ezilmez; alıcı [decodeRoomBroadcast] ile geri yazar.
+@visibleForTesting
+Map<String, dynamic> encodeRoomBroadcast(Map<String, dynamic> payload) {
+  final copy = Map<String, dynamic>.of(payload);
+  final type = copy['type'];
+  if (type != null) copy['kind'] = type;
+  return copy;
+}
+
+/// [encodeRoomBroadcast]ın tersi. Sunucu yükü düz ya da `payload` altında
+/// iç içe (REST yedeği böyle taşır) verebilir; ikisi de düzleştirilir.
+@visibleForTesting
+Map<String, dynamic> decodeRoomBroadcast(Map<String, dynamic> raw) {
+  final out = Map<String, dynamic>.of(raw);
+  final inner = raw['payload'];
+  if (inner is Map) {
+    out.addAll(Map<String, dynamic>.from(inner));
+  }
+  final kind = out['kind'];
+  if (kind != null) out['type'] = kind;
+  return out;
 }
