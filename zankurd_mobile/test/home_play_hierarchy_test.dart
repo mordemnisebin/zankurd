@@ -21,7 +21,6 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
-import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -117,7 +116,7 @@ void main() {
             // 2026-09-29 Şahnê: kapı bir liste satırıdır ve rolü Agir
             // değildir (Agir bir rol değil, tek birincil eylemin rengidir);
             // satırda dolgulu düğme yok.
-            final tile = tester.widget<HomeDoorTile>(finder);
+            final tile = tester.widget<SahneModeTile>(finder);
             expect(tile.role, isNot(SahneRole.neutral), reason: door);
             expect(
               find.descendant(of: finder, matching: find.byType(FilledButton)),
@@ -298,13 +297,8 @@ void main() {
         ),
         findsOneWidget,
       );
-      expect(
-        find.descendant(
-          of: find.byKey(const ValueKey('home-door-learn')),
-          matching: find.byIcon(AppIcons.check),
-        ),
-        findsOneWidget,
-      );
+      // 2026-10-22: kapı dolu mod kartı; sayı sağ üstte rozet olarak durur
+      // (tik ikonu artık yok).
     },
   );
 }

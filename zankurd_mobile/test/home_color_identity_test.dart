@@ -48,7 +48,6 @@ import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
-import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
@@ -102,30 +101,23 @@ void main() {
     freshMockRepository();
   });
 
-  testWidgets('kapılar rol taşır: öğrenme Zimrût, yarış Boyax; degrade yok', (
-    tester,
-  ) async {
-    await _pumpHome(tester);
-    for (final (key, role) in [
-      ('home-door-learn', SahneRole.learn),
-      ('home-door-play', SahneRole.race),
-    ]) {
-      final finder = find.byKey(ValueKey(key));
-      expect(finder, findsOneWidget, reason: key);
-      final tile = tester.widget<HomeDoorTile>(finder);
-      expect(tile.role, role, reason: key);
-      expect(
-        find.descendant(of: finder, matching: find.byType(SahneListRow)),
-        findsOneWidget,
-        reason: '$key liste satırı olmalı',
-      );
-      expect(
-        find.descendant(of: finder, matching: find.byType(Ink)),
-        findsNothing,
-        reason: '$key degrade dolgulu kart olmamalı',
-      );
-    }
-  });
+  testWidgets(
+    'kapılar rol taşır: öğrenme Zimrût, yarış Boyax (dolu mod kartı)',
+    (tester) async {
+      await _pumpHome(tester);
+      for (final (key, role) in [
+        ('home-door-learn', SahneRole.learn),
+        ('home-door-play', SahneRole.race),
+      ]) {
+        final finder = find.byKey(ValueKey(key));
+        expect(finder, findsOneWidget, reason: key);
+        // 2026-10-22 tasarım kurulu (ChatGPT + Claude Opus): kapılar artık
+        // rolün dolu renginde mod kartıdır (Yarış sekmesiyle aynı dil).
+        final tile = tester.widget<SahneModeTile>(finder);
+        expect(tile.role, role, reason: key);
+      }
+    },
+  );
 
   testWidgets(
     'her görünür kategori yatay karodur: kendi işareti, kendi tonu, öbür '

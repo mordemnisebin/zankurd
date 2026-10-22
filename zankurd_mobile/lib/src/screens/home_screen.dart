@@ -515,40 +515,32 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // kapısı ilk oturumda da görünür: uygulamanın ikinci yüzü budur
           // ve yeni gelen onu ancak burada görürse arar.
           const SizedBox(height: SahneSpace.cardGap),
-          HomeDoors(
-            learn: HomeDoorTile(
-              key: const ValueKey('home-door-learn'),
-              icon: AppIcons.graduationCap,
-              role: SahneRole.learn,
-              title: context.t(K.learnKurmanci),
-              subtitle: context.t(K.homeDoorLearnSub),
-              trailing: _completedLessonsCount > 0
-                  // ✓ glifi Rubik'te yok (ui_glyph_coverage_test); simge.
-                  ? Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          AppIcons.check,
-                          size: 16,
-                          color: SahneTokens.of(context).learnTx,
-                        ),
-                        const SizedBox(width: SahneSpace.x1),
-                        SahneRowValue.meta(
-                          groupThousands(_completedLessonsCount),
-                        ),
-                      ],
-                    )
-                  : null,
-              onTap: widget.onOpenLearning == null ? null : _openLearning,
-            ),
-            play: HomeDoorTile(
-              key: const ValueKey('home-door-play'),
-              icon: AppIcons.gamepad,
-              role: SahneRole.race,
-              title: context.t(K.homeDoorPlayTitle),
-              subtitle: context.t(K.homeDoorPlaySub),
-              onTap: widget.onOpenPlay,
-            ),
+          // Tasarım kurulu 2026-10-22 (ChatGPT + Claude Opus): öğren ve oyna
+          // kapıları liste satırıydı ("ayarlar menüsü" görünümü); artık yan
+          // yana iki dolu mod kartı (Zimrût / Boyax), Yarış sekmesindeki
+          // kartlarla aynı dil.
+          SahneModeGrid(
+            children: [
+              SahneModeTile(
+                key: const ValueKey('home-door-learn'),
+                icon: AppIcons.graduationCap,
+                role: SahneRole.learn,
+                title: context.t(K.learnKurmanci),
+                subtitle: context.t(K.homeDoorLearnSub),
+                badge: _completedLessonsCount > 0
+                    ? groupThousands(_completedLessonsCount)
+                    : null,
+                onTap: widget.onOpenLearning == null ? null : _openLearning,
+              ),
+              SahneModeTile(
+                key: const ValueKey('home-door-play'),
+                icon: AppIcons.gamepad,
+                role: SahneRole.race,
+                title: context.t(K.homeDoorPlayTitle),
+                subtitle: context.t(K.homeDoorPlaySub),
+                onTap: widget.onOpenPlay,
+              ),
+            ],
           ),
           // İlk oturumda seviye çubuğu ("Seviye 1 · 0/1000") yeni gelen için
           // anlamsız bir sayıdır; yerine bir şey konmaz. 2026-09-30 doğallık:

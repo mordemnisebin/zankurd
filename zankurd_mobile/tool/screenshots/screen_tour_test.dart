@@ -835,7 +835,17 @@ void main() {
   // sonra çözülmeyen bir future yüzünden zaman aşımına düşüyor. Ekranlar
   // zaten aşağıda doğrudan açıldığı için kabuk turu kaldırıldı.
   testWidgets('01 ana ekran', (t) async {
-    await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+    await _pump(
+      t,
+      Scaffold(
+        body: HomeScreen(
+          repository: repository,
+          // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+          onOpenLearning: () async {},
+          onOpenPlay: () {},
+        ),
+      ),
+    );
     await _shoot(t, '01_home');
   }, tags: ['preview']);
 
@@ -964,7 +974,17 @@ void main() {
     testWidgets('$name ana ekran saat dilimi', (t) async {
       _tourClockPinned = true;
       SahneClock.now = () => DateTime(2026, 10, 21, hour, 30);
-      await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+      await _pump(
+        t,
+        Scaffold(
+          body: HomeScreen(
+            repository: repository,
+            // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+            onOpenLearning: () async {},
+            onOpenPlay: () {},
+          ),
+        ),
+      );
       await _shoot(t, name);
     }, tags: ['preview']);
   }
@@ -993,7 +1013,17 @@ void main() {
     testWidgets('$name ana ekran tarihî gün', (t) async {
       _tourClockPinned = true;
       SahneClock.now = () => DateTime(2027, month, day, 12);
-      await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+      await _pump(
+        t,
+        Scaffold(
+          body: HomeScreen(
+            repository: repository,
+            // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+            onOpenLearning: () async {},
+            onOpenPlay: () {},
+          ),
+        ),
+      );
       await _shoot(t, name);
     }, tags: ['preview']);
   }
@@ -1006,7 +1036,14 @@ void main() {
   testWidgets('20 ana ekran (karanlık)', (t) async {
     await _pump(
       t,
-      Scaffold(body: HomeScreen(repository: repository)),
+      Scaffold(
+        body: HomeScreen(
+          repository: repository,
+          // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+          onOpenLearning: () async {},
+          onOpenPlay: () {},
+        ),
+      ),
       dark: true,
     );
     await _shoot(t, '20_home_dark');
@@ -1061,7 +1098,14 @@ void main() {
   testWidgets('26 ana ekran (Kurmancî)', (t) async {
     await _pump(
       t,
-      Scaffold(body: HomeScreen(repository: repository)),
+      Scaffold(
+        body: HomeScreen(
+          repository: repository,
+          // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+          onOpenLearning: () async {},
+          onOpenPlay: () {},
+        ),
+      ),
       ku: true,
     );
     await _shoot(t, '26_home_ku');
@@ -1070,7 +1114,17 @@ void main() {
   // Günün sözü kartı (2026-10-21): ana ekranda Günün dersinin altında.
   testWidgets('310 ana ekran günün sözü', (t) async {
     await t.runAsync(DailyQuoteStore.load);
-    await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+    await _pump(
+      t,
+      Scaffold(
+        body: HomeScreen(
+          repository: repository,
+          // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+          onOpenLearning: () async {},
+          onOpenPlay: () {},
+        ),
+      ),
+    );
     await _shoot(t, '310_home_quote');
   }, tags: ['preview']);
 
@@ -1078,7 +1132,14 @@ void main() {
     await t.runAsync(DailyQuoteStore.load);
     await _pump(
       t,
-      Scaffold(body: HomeScreen(repository: repository)),
+      Scaffold(
+        body: HomeScreen(
+          repository: repository,
+          // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+          onOpenLearning: () async {},
+          onOpenPlay: () {},
+        ),
+      ),
       dark: true,
       ku: true,
     );
@@ -1681,7 +1742,15 @@ void main() {
   // Öğrenme sekmesinin kökü. `HomeScreen`i sarar ve gezinme argümanlarını
   // bağlar; kendi başına hiç ölçülmemişti.
   testWidgets('81 öğrenme kökü', (t) async {
-    await _pump(t, LearnHomeScreen(repository: repository));
+    await _pump(
+      t,
+      LearnHomeScreen(
+        repository: repository,
+        // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+        onOpenLearning: () async {},
+        onOpenPlay: () {},
+      ),
+    );
     await _shoot(t, '81_learn_home');
   }, tags: ['preview']);
 

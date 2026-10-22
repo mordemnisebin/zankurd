@@ -8,68 +8,6 @@ import '../../config/category_visuals.dart';
 import '../../widgets/sahne/sahne.dart';
 import 'home_rows.dart' show CategoryProgress;
 
-/// Ana ekranın iki kapısı: öğrenme alanı ve yarış.
-///
-/// Uygulama iki şeyi birden yapar: Kurmancî ve Kürt kültürünü öğretir,
-/// insanları birbiriyle yarıştırır. Yarış kapısı eskiden yalnız ikinci
-/// oturumdan sonra, sayfanın dibinde düz bir satırdı; yeni gelen,
-/// uygulamada yarış olduğunu ancak alt menüden tahmin edebiliyordu.
-///
-/// 2026-09-29 Şahnê: iki doygun degrade kart yerine TEK liste grubu, iki
-/// satır. Renk yalnız rol taşır: öğrenme satırının ikon karosu Zimrût,
-/// yarışınki Boyax. Degrade kapılar ekranın tek birincil eylemiyle (günün
-/// dersi) yarışıyordu.
-class HomeDoors extends StatelessWidget {
-  const HomeDoors({required this.learn, required this.play, super.key});
-
-  final HomeDoorTile learn;
-  final HomeDoorTile play;
-
-  @override
-  Widget build(BuildContext context) {
-    return SahneListGroup(
-      dividerIndent: SahneSpace.x3 + 44 + SahneSpace.x3,
-      children: [learn, play],
-    );
-  }
-}
-
-/// Kapılardan biri: rol tonlu ikon karosu, başlık, tek satırlık vaat,
-/// chevron. [SahneListRow.icon] üstüne kurulur.
-class HomeDoorTile extends StatelessWidget {
-  const HomeDoorTile({
-    required this.icon,
-    required this.role,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-    this.trailing,
-    super.key,
-  });
-
-  final IconData icon;
-  final SahneRole role;
-  final String title;
-  final String subtitle;
-  final VoidCallback? onTap;
-  final Widget? trailing;
-
-  @override
-  Widget build(BuildContext context) {
-    return SahneListRow.icon(
-      icon: icon,
-      role: role,
-      title: title,
-      subtitle: subtitle,
-      trailing: trailing,
-      chevron: true,
-      enabled: onTap != null,
-      onTap: onTap,
-      semanticLabel: '$title. $subtitle',
-    );
-  }
-}
-
 /// Konu ızgarası: kategorilerin HEPSİ ilk bakışta, iki sütunlu yatay
 /// karolarda.
 ///
