@@ -112,9 +112,24 @@ class _ProfileHeroCard extends StatelessWidget {
                 dimension: 80,
                 child: Stack(
                   children: [
+                    // Seviye halkası (tasarım oylaması 2026-10-22, 18/19
+                    // EVET): avatarın çevresinde Zêr yay, seviye içindeki
+                    // XP ilerlemesini gösterir.
+                    Positioned.fill(
+                      child: CustomPaint(
+                        key: const ValueKey('profile-level-ring'),
+                        painter: _LevelRingPainter(
+                          progress: xpNeeded <= 0
+                              ? 0
+                              : (xpInLevel / xpNeeded).clamp(0.0, 1.0),
+                          track: t.line,
+                          fill: t.gold,
+                        ),
+                      ),
+                    ),
                     Center(
                       child: PlayerAvatar(
-                        radius: 36,
+                        radius: 34,
                         photoUrl: avatarIdentity.photoUrl,
                         iconId: avatarIdentity.iconId,
                         colorHex: avatarIdentity.colorHex,
@@ -793,6 +808,43 @@ class _LockedRewardMark extends StatelessWidget {
   }
 }
 
+/// Avatarın çevresindeki seviye halkası: ince iz + Zêr ilerleme yayı
+/// (tepeden saat yönünde).
+class _LevelRingPainter extends CustomPainter {
+  _LevelRingPainter({
+    required this.progress,
+    required this.track,
+    required this.fill,
+  });
+
+  final double progress;
+  final Color track;
+  final Color fill;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const stroke = 3.5;
+    final rect = Offset.zero & size;
+    final arcRect = rect.deflate(stroke / 2);
+    final base = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = stroke
+      ..color = track;
+    canvas.drawArc(arcRect, 0, math.pi * 2, false, base);
+    if (progress <= 0) return;
+    final arc = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = stroke
+      ..strokeCap = StrokeCap.round
+      ..color = fill;
+    canvas.drawArc(arcRect, -math.pi / 2, math.pi * 2 * progress, false, arc);
+  }
+
+  @override
+  bool shouldRepaint(_LevelRingPainter old) =>
+      old.progress != progress || old.track != track || old.fill != fill;
+}
+
 /// Kazanılmış başarı / rozet çipi: Zêr tonu, M pah, ikon + ad.
 class _RewardChip extends StatelessWidget {
   const _RewardChip({required this.icon, required this.title});
@@ -804,7 +856,9 @@ class _RewardChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     return DecoratedBox(
-      decoration: ShapeDecoration(color: t.goldTint, shape: SahneShape.m),
+      // Dolu altın (tasarım oylaması 2026-10-22): kazanılmış rozet ödül
+      // renginin kendisidir; koyu yazı Zêr bandında okunur.
+      decoration: ShapeDecoration(color: t.zerBand, shape: SahneShape.m),
       child: ConstrainedBox(
         // a11y-tap-target: noninteractive — başarı/rozet çipi; salt
         // görsel, dokunma hedefi değil.
@@ -817,12 +871,12 @@ class _RewardChip extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, color: t.goldTx, size: 16),
+              Icon(icon, color: t.onZer, size: 16),
               const SizedBox(width: SahneSpace.x2),
               Flexible(
                 child: Text(
                   title,
-                  style: SahneType.captionStrong.copyWith(color: t.tx),
+                  style: SahneType.captionStrong.copyWith(color: t.onZer),
                 ),
               ),
             ],

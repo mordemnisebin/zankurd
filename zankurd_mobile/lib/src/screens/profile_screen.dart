@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import '../widgets/doza_widgets.dart';
 import 'package:flutter/foundation.dart'
     show kIsWeb, defaultTargetPlatform, TargetPlatform;
