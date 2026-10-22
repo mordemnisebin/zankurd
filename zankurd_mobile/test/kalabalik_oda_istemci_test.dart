@@ -38,6 +38,7 @@ Player _p(
   int streak = 0,
   int? rank,
   String state = Player.readyState,
+  String? tag,
 }) => Player(
   id: id,
   name: name,
@@ -46,6 +47,7 @@ Player _p(
   state: state,
   left: left,
   rank: rank,
+  tag: tag,
 );
 
 GameRoom _crowdRoom({
@@ -930,6 +932,20 @@ void main() {
 
     // Simülatör denemesi (2026-10-16): herkes 0 puanla berabere bitince ev
     // sahibi "Kazandın!" görüyordu. Tam beraberlik beraberliktir.
+    // 2026-10-22: adsız ve ayrılmış oyuncu da sonuç listesinde lobideki
+    // gibi "Oyuncu ZK-XXXX" görünür (kod sonuç yükünde yok, profilden gelir).
+    testWidgets('ayrılan adsız oyuncu kodla görünür', (tester) async {
+      await mountResult(
+        tester,
+        players: [
+          _p('me', 'Ez', score: 250, rank: 1),
+          _p('guest', 'Rojda', score: 100, rank: 2),
+          _p('gone', '', score: 50, left: true, tag: 'R5C4'),
+        ],
+      );
+      expect(find.text('Oyuncu ZK-R5C4'), findsOneWidget);
+    });
+
     testWidgets('herkes birinciyse "Kazandın" değil "Berabere" yazar', (
       tester,
     ) async {
