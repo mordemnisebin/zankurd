@@ -184,8 +184,11 @@ class _LetterTiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    // Ortalı: sola yaslı karolar dar ekranda sağda boş şerit bırakıyordu
+    // (simülatör, 2026-10-22).
     return Wrap(
       key: const ValueKey('lesson-letter-tiles'),
+      alignment: WrapAlignment.center,
       spacing: SahneSpace.x1,
       runSpacing: SahneSpace.x1,
       children: [
