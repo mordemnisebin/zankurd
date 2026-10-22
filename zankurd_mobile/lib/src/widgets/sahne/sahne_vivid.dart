@@ -250,7 +250,12 @@ class SahneModeTile extends StatelessWidget {
     this.badge,
     this.loading = false,
     this.semanticLabel,
+    this.deep = false,
   });
+
+  /// Rolün koyu tonu (şimdilik yalnız Boyax): aynı roldeki kartlar alt alta
+  /// gelince birbirine karışmasın (kurul 2. tur, Claude Opus + ChatGPT).
+  final bool deep;
 
   final IconData icon;
   final String title;
@@ -273,10 +278,11 @@ class SahneModeTile extends StatelessWidget {
       SahneRole.social => t.nilFill,
       SahneRole.learn => t.learnFill,
       SahneRole.gold => t.zerBand,
-      _ => t.raceFill,
+      _ => deep ? t.raceDeep : t.raceFill,
     };
     final ink = gold ? t.onZer : SahneVivid.onFill;
-    final soft = gold ? t.onZer.withValues(alpha: 0.82) : SahneVivid.onFillSoft;
+    // Zêr bandında alt yazı da tam koyu: %82 gece ve gündüz zayıf okunuyordu.
+    final soft = gold ? t.onZer : SahneVivid.onFillSoft;
     final watermark = gold
         ? t.onZer.withValues(alpha: 0.12)
         : SahneVivid.watermark;

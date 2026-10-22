@@ -459,6 +459,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         key: const ValueKey('play-hub-daily-contest'),
         icon: AppIcons.calendarDays,
         role: SahneRole.race,
+        // Hızlı düello ve sırayla düelloyla aynı kırmızı alt alta karışıyordu.
+        deep: true,
         title: context.t(K.dailyContest),
         subtitle: context.t(K.tenQuestions),
         loading: _dailyLoading,
