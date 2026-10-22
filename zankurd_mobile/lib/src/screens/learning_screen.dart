@@ -778,7 +778,29 @@ class _PlacementPromptCard extends StatelessWidget {
           // + 2x yazı). O durumda iki satır: ikon + başlık (sarabilir) +
           // çarpı üstte, "Teste başla ›" altta tek satır.
           final scale = MediaQuery.textScalerOf(context).scale(16) / 16;
-          final stacked = constraints.maxWidth < 400 || scale > 1.3;
+          // Tek satıra sığıp sığmadığı ÖLÇÜLÜR: sabit eşik (400) yaygın
+          // telefonlarda şeridi hep iki satıra indirip boş bant bırakıyordu,
+          // 320 eşiği ise Kurmancî eylemi ("Dest bi azmûnê bike") iki satıra
+          // kırıyordu (simülatör + ekran turu, 2026-10-22).
+          double textWidth(String text, TextStyle style) {
+            final painter = TextPainter(
+              text: TextSpan(text: text, style: style),
+              textDirection: Directionality.of(context),
+              textScaler: MediaQuery.textScalerOf(context),
+              maxLines: 1,
+            )..layout();
+            return painter.width;
+          }
+
+          final needed =
+              18 +
+              SahneSpace.x2 +
+              textWidth(context.t(K.placementCardTitle), SahneType.bodyStrong) +
+              textWidth(context.t(K.placementCardStart), SahneType.bodyStrong) +
+              40 + // metin düğmesinin dolgusu ve oku
+              48 + // çarpı
+              SahneSpace.x2;
+          final stacked = needed > constraints.maxWidth || scale > 1.3;
           final icon = Icon(AppIcons.compass, size: 18, color: t.learnTx);
           final title = Semantics(
             header: true,
