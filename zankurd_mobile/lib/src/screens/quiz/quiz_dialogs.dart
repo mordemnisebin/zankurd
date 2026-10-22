@@ -62,15 +62,23 @@ class _QuizExitDialog extends StatelessWidget {
 }
 
 class _QuizForfeitDialog extends StatelessWidget {
-  const _QuizForfeitDialog({required this.bodyKey});
+  const _QuizForfeitDialog({required this.bodyKey, this.coinsAwarded = 0});
 
   final String bodyKey;
 
+  /// Rakip hükmen çıkınca kazanılan jeton; 0 ise satır çizilmez.
+  final int coinsAwarded;
+
   @override
   Widget build(BuildContext context) {
+    final body = context.t(bodyKey);
     return AlertDialog(
       title: Text(context.t(K.matchForfeitedTitle)),
-      content: Text(context.t(bodyKey)),
+      content: Text(
+        coinsAwarded > 0
+            ? '$body\n\n${context.t(K.wheelWonPlus, {'amount': '$coinsAwarded'})}'
+            : body,
+      ),
       actions: [
         FilledButton(
           onPressed: () => Navigator.of(context).pop(),

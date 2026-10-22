@@ -725,37 +725,42 @@ void main() {
     },
   );
 
-  testWidgets('rakibin hükmen çıkışı tek terminal gösterir ve ödül yazmaz', (
-    tester,
-  ) async {
-    final repository = _SessionRepository(_snapshot(questionIndex: 0));
-    addTearDown(repository.close);
-    await _openQuiz(tester, repository);
+  testWidgets(
+    'rakibin hükmen çıkışı tek terminal gösterir ve ödülü bir kez ister',
+    (tester) async {
+      final repository = _SessionRepository(_snapshot(questionIndex: 0));
+      addTearDown(repository.close);
+      await _openQuiz(tester, repository);
 
-    repository.endState = const RoomEndState(
-      status: RoomStatus.finished,
-      endedReason: 'forfeit',
-      forfeitedBy: 'opponent',
-    );
-    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
-    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
-    await _pumpFrames(tester, 5);
+      repository.endState = const RoomEndState(
+        status: RoomStatus.finished,
+        endedReason: 'forfeit',
+        forfeitedBy: 'opponent',
+      );
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await _pumpFrames(tester, 5);
 
-    expect(find.text('Maç hükmen sona erdi'), findsOneWidget);
-    expect(
-      find.text('Rakibin maçtan ayrıldı. Maçı hükmen kazandın.'),
-      findsOneWidget,
-    );
-    expect(find.byType(AlertDialog), findsOneWidget);
-    expect(find.byType(QuizResultScreen), findsNothing);
-    expect(repository.finishCalls, 0);
-    expect(repository.awardCalls, 0);
+      expect(find.text('Maç hükmen sona erdi'), findsOneWidget);
+      expect(
+        find.text(
+          'Rakibin maçtan ayrıldı. Maçı hükmen kazandın.\n\n+7 jeton kazandın!',
+        ),
+        findsOneWidget,
+      );
+      expect(find.byType(AlertDialog), findsOneWidget);
+      expect(find.byType(QuizResultScreen), findsNothing);
+      expect(repository.finishCalls, 0);
+      // 2026-10-22: kalan oyuncu verdiği cevapların payını alır
+      // (rakip_cikinca_odul.sql); iki resumed olayı tek talep yapar.
+      expect(repository.awardCalls, 1);
 
-    await tester.tap(find.text('Tamam'));
-    await _pumpFrames(tester, 8);
-    expect(find.byType(QuizScreen), findsNothing);
-    expect(find.byKey(const ValueKey('open-resumed-quiz')), findsOneWidget);
-  });
+      await tester.tap(find.text('Tamam'));
+      await _pumpFrames(tester, 8);
+      expect(find.byType(QuizScreen), findsNothing);
+      expect(find.byKey(const ValueKey('open-resumed-quiz')), findsOneWidget);
+    },
+  );
 
   testWidgets('kendi hükmen çıkışını rakip terk etmiş gibi göstermez', (
     tester,
@@ -980,14 +985,16 @@ void main() {
     await _pumpFrames(tester, 8);
 
     expect(
-      find.text('Rakibin maçtan ayrıldı. Maçı hükmen kazandın.'),
+      find.text(
+        'Rakibin maçtan ayrıldı. Maçı hükmen kazandın.\n\n+7 jeton kazandın!',
+      ),
       findsOneWidget,
     );
     expect(
       find.text('Sonuç yüklenemedi. Tekrar deneyebilirsin.'),
       findsNothing,
     );
-    expect(repository.awardCalls, 0);
+    expect(repository.awardCalls, 1);
 
     repository.userId = 'other';
     await tester.tap(find.text('Tamam'));
@@ -1000,7 +1007,9 @@ void main() {
     await tester.tap(find.text('Tekrar dene'));
     await _pumpFrames(tester, 8);
     expect(
-      find.text('Rakibin maçtan ayrıldı. Maçı hükmen kazandın.'),
+      find.text(
+        'Rakibin maçtan ayrıldı. Maçı hükmen kazandın.\n\n+7 jeton kazandın!',
+      ),
       findsOneWidget,
     );
   });

@@ -2628,10 +2628,34 @@ class _QuizScreenState extends State<QuizScreen>
         ? K.youForfeitedMatch
         : K.opponentForfeitedMatch;
 
+    // Rakip hükmen çıktıysa kalan oyuncu verdiği cevapların performans
+    // payını alır (2026-10-22_rakip_cikinca_odul.sql). Eskiden bu dal ödülü
+    // hiç istemiyordu; "hükmen kazandın" diyen oyuncu 0 jeton alıyordu.
+    // Talep başarısızsa _settleCoins kuyruğa alır; pencere beklemez.
+    var forfeitCoins = 0;
+    if (_isMultiplayer &&
+        forfeitedBy != null &&
+        !userForfeited &&
+        reason == 'forfeit') {
+      try {
+        final settlement = await _settleCoins(
+          score: score,
+          correctCount: correctCount,
+          bestStreak: bestStreak,
+          totalQuestions: widget.questions.length,
+        ).timeout(_onlineResultRequestTimeout);
+        forfeitCoins = settlement.coinsAwarded;
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'forfeit win reward');
+      }
+      if (!mounted) return true;
+    }
+
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (_) => _QuizForfeitDialog(bodyKey: bodyKey),
+      builder: (_) =>
+          _QuizForfeitDialog(bodyKey: bodyKey, coinsAwarded: forfeitCoins),
     );
     if (!mounted) return true;
     if (!_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute)) {
