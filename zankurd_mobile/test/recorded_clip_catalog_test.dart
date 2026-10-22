@@ -107,7 +107,7 @@ void main() {
       expect(file.existsSync(), isTrue, reason: '${r['file']} yok');
       expect(file.lengthSync(), greaterThan(1000), reason: '${r['file']}');
       expect(terms, contains(r['key']), reason: '${r['text']} sözlükte yok');
-      expect(r['speaker'], contains('sentetik'));
+      expect(r['speaker'], contains('Anadil'));
     }
     expect(catalog.clipForText('Rojbaş'), isNotNull);
   });

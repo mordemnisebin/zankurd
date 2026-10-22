@@ -13,7 +13,7 @@ import subprocess
 import sys
 
 ESIK = 0.10
-SPEAKER = "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)"
+SPEAKER = "Anadil Kurmancî (VoxCPM2 + LoRA)"
 LICENSE = "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)"
 PROVENANCE = (
     "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; "
