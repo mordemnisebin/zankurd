@@ -78,16 +78,16 @@ void main() {
 
   // 2026-10-22 tasarım oylaması: doğru seçilen şık bir kez seker;
   // hareketi azaltta sekme hiç kurulmaz.
-  testWidgets('doğru seçilen şık seker, hareketi azaltta sekmez', (
-    tester,
-  ) async {
+  testWidgets('doğru seçilen şık bir kez seker', (tester) async {
     await tester.pumpWidget(_shell(reducedMotion: false));
     expect(
       find.byKey(const ValueKey('quiz-option-correct-bounce')),
       findsOneWidget,
     );
     await tester.pumpAndSettle();
+  });
 
+  testWidgets('hareketi azaltta doğru şık sekmez', (tester) async {
     await tester.pumpWidget(_shell(reducedMotion: true));
     expect(
       find.byKey(const ValueKey('quiz-option-correct-bounce')),
