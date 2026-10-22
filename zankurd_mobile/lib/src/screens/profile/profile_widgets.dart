@@ -691,6 +691,7 @@ class _UnifiedRewardsSection extends StatelessWidget {
                 // siluet olarak görünür: "yok" değil "hedef" okunur.
                 Row(
                   key: const ValueKey('profile-locked-rewards'),
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     for (final a in AchievementStore.definitions.take(4))
                       Expanded(
@@ -757,16 +758,18 @@ class _LockedRewardMark extends StatelessWidget {
               alignment: Alignment.center,
               decoration: ShapeDecoration(
                 color: t.s2,
+                // Kurul 2. tur: siluet iki temada da sönüktü; Zêr kenar ve
+                // ikon belirginleşti, ad iki satıra sarar (kesilmesin).
                 shape: SahneShape.withSide(
                   SahneShape.s,
-                  Color.lerp(t.line, t.goldTx, 0.35)!,
-                  width: 1,
+                  Color.lerp(t.line, t.goldTx, 0.6)!,
+                  width: 1.5,
                 ),
               ),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Icon(icon, size: 22, color: Color.lerp(t.tx2, t.goldTx, 0.3)),
+                  Icon(icon, size: 24, color: Color.lerp(t.tx2, t.goldTx, 0.6)),
                   Positioned(
                     right: 6,
                     bottom: 4,
@@ -778,7 +781,8 @@ class _LockedRewardMark extends StatelessWidget {
             const SizedBox(height: SahneSpace.x1),
             Text(
               title,
-              maxLines: 1,
+              maxLines: 2,
+              textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: SahneType.caption.copyWith(color: t.tx2),
             ),

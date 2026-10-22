@@ -14,12 +14,18 @@ void main() {
   test('terimleri dök', () {
     final path = Platform.environment['ZANKURD_TERIM_CIKTI'];
     if (path == null || path.isEmpty) return;
+    // ZANKURD_METIN_GIRDI verilirse (JSON metin listesi, ör. ders örnek
+    // cümleleri) sözlük yerine o liste anahtarlanır.
+    final input = Platform.environment['ZANKURD_METIN_GIRDI'];
+    final texts = input == null || input.isEmpty
+        ? [for (final entry in LearnerLexicon.entries) entry.termKu]
+        : (jsonDecode(File(input).readAsStringSync()) as List).cast<String>();
     final seen = <String>{};
     final out = <Map<String, String>>[];
-    for (final entry in LearnerLexicon.entries) {
-      final key = kurmanciTextKey(entry.termKu);
+    for (final text in texts) {
+      final key = kurmanciTextKey(text);
       if (key.isEmpty || !seen.add(key)) continue;
-      out.add({'key': key, 'text': entry.termKu.trim()});
+      out.add({'key': key, 'text': text.trim()});
     }
     File(
       path,

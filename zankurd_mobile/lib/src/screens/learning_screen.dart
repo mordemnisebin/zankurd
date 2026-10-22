@@ -1993,6 +1993,8 @@ class _LessonStepMark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    // Kurul 2. tur (iki denetçi): üç durum zor ayrılıyordu, kilitli numara
+    // çok sönüktü. Açık durak Zimrût kenarlı, kilitli numara okunur tonda.
     final fill = completed
         ? t.learn
         : locked
@@ -2001,7 +2003,7 @@ class _LessonStepMark extends StatelessWidget {
     final ink = completed
         ? Colors.white
         : locked
-        ? t.tx2
+        ? Color.lerp(t.tx2, t.tx, 0.35)!
         : t.learnTx;
     return ExcludeSemantics(
       child: Container(
@@ -2013,8 +2015,12 @@ class _LessonStepMark extends StatelessWidget {
           color: fill,
           shape: SahneShape.withSide(
             SahneShape.s,
-            completed ? t.learn : t.learnEdge,
-            width: 1,
+            completed
+                ? t.learn
+                : locked
+                ? t.line
+                : t.learnTx,
+            width: locked ? 1 : 1.5,
           ),
         ),
         child: completed
