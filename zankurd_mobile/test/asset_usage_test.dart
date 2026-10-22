@@ -53,6 +53,10 @@ void main() {
     for (final f in Directory('assets/data').listSync().whereType<File>()) {
       if (f.path.endsWith('.json')) haystack.write(f.readAsStringSync());
     }
+    // Ses kayıtlarına atıf dizinlerinden gelir (RecordedClipCatalog);
+    // dizinde olmayan bir .m4a yine öksüz sayılır.
+    final audioIndex = File('assets/audio/ku/index.json');
+    if (audioIndex.existsSync()) haystack.write(audioIndex.readAsStringSync());
     final text = haystack.toString();
 
     final orphans = <String>[];
