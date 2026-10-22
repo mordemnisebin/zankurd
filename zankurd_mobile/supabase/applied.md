@@ -247,3 +247,4 @@
 | 2026-10-22_cikarma_geri_alma.sql | ✅ | 2026-10-22, kullanıcı terminalinden uyguladı; doğrulama: canlı `invite_friends_to_room` gövdesinde `room_kicks` var. Önce begin…rollback: sahibin daveti 1, kalan kick 0. |
 | 2026-10-22_yakin_tekrar_emekli.sql | ✅ | 2026-10-22, kullanıcı terminalinden uyguladı; doğrulama: hat_0043/0109/0112/0118 karşılığı 4 satırın 4'ü `is_approved=false`. |
 | 2026-10-22_yayin_oncesi_test_verisi_temizligi.sql | ✅ | 2026-10-22, kullanıcı terminalinden uyguladı (2.1.0 yayını öncesi). Doğrulama: auth.users 0, profiles 0, rooms 0; questions 16374, lessons 33 yerinde. Önce begin…rollback ile aynı sonuç. Geri alınamaz; bundan sonraki hesaplar gerçek kullanıcıdır. |
+| 2026-10-23_resmi_dil_kalibi_emekli.sql | ✅ | 2026-10-23, ana ajan uyguladı (kullanıcı onayıyla). Doğrulama: kalıpta onaylı 0, toplam onaylı 4210 (önce 4217). Önce begin…rollback ile aynı sonuç. Geri almak: aynı WHERE ile is_approved=true. |
