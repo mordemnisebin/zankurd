@@ -167,6 +167,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
               index: _index,
               total: _questions.length,
               onBand: true,
+              title: context.t(K.placementTitle),
             ),
       score: useCompactSkip
           ? _SkipIconButton(

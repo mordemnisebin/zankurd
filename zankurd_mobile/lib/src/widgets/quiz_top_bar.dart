@@ -24,9 +24,15 @@ class QuizStageCenter extends StatelessWidget {
     this.textKey = const ValueKey('quiz-stage-kicker'),
     this.keyed,
     this.onBand = false,
+    this.title,
   });
 
   final String category;
+
+  /// Konu adı yerine yazılacak başlık. Seviye testinde soru konusu
+  /// ("Siyaset") değil testin adı okunur: konu etiketi testi genel kültür
+  /// sınavı gibi gösteriyordu (tam uygulama incelemesi 2026-10-22, 4 model).
+  final String? title;
 
   /// 0 tabanlı geçerli soru.
   final int index;
@@ -44,7 +50,7 @@ class QuizStageCenter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final name = CategoryNames.localized(category, context.isKu);
+    final name = title ?? CategoryNames.localized(category, context.isKu);
     final progress = context.t(K.placementProgress, {
       'index': '${index + 1}',
       'total': '$total',

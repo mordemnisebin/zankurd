@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
@@ -225,7 +227,7 @@ class QuizOptionTile extends StatelessWidget {
       ),
     );
 
-    return Semantics(
+    final tile = Semantics(
       button: true,
       enabled: !disabled,
       selected: selected,
@@ -293,6 +295,24 @@ class QuizOptionTile extends StatelessWidget {
           child: content,
         ),
       ),
+    );
+    // Doğru cevapta kısa ödül sekmesi (tasarım oylaması 2026-10-22, 19/19
+    // EVET): YALNIZ oyuncunun seçtiği şık doğruysa bir kez %4 büyüyüp
+    // döner; hareketi azaltta yok. Anahtar duruma bağlı: aynı soruda
+    // yeniden çizim tekrar oynatmaz.
+    if (!(selected && state == _OptionState.correct) || reducedMotion) {
+      return tile;
+    }
+    return TweenAnimationBuilder<double>(
+      key: const ValueKey('quiz-option-correct-bounce'),
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 360),
+      builder: (context, v, child) => Transform.scale(
+        // 0 → 1 → 0 yarım sinüs: 1.00 → 1.04 → 1.00.
+        scale: 1 + 0.04 * math.sin(v * math.pi),
+        child: child,
+      ),
+      child: tile,
     );
   }
 
