@@ -264,6 +264,12 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   Future<bool> blockPlayer(String playerId) async => false;
 
   @override
+  Future<bool> kickRoomPlayer({
+    required String roomId,
+    required String playerId,
+  }) async => false;
+
+  @override
   Future<bool> unblockPlayer(String playerId) async => false;
 
   @override

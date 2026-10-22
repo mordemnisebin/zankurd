@@ -48,6 +48,7 @@ class PlayerModerationButton extends StatefulWidget {
     this.compact = false,
     this.quiet = false,
     this.onBlocked,
+    this.onKick,
     super.key,
   });
 
@@ -74,6 +75,10 @@ class PlayerModerationButton extends StatefulWidget {
   /// Engelleme başarılıysa çağıranın listeyi tazelemesi için.
   final VoidCallback? onBlocked;
 
+  /// Verilirse alt sayfada "Odadan çıkar" satırı çıkar (yalnız oda sahibi,
+  /// yalnız lobide). Sonuç `true` ise oyuncu çıkarılmıştır.
+  final Future<bool> Function()? onKick;
+
   @override
   State<PlayerModerationButton> createState() => _PlayerModerationButtonState();
 }
@@ -92,6 +97,7 @@ class _PlayerModerationButtonState extends State<PlayerModerationButton> {
         playerId: playerId,
         playerName: widget.playerName,
         onBlocked: widget.onBlocked,
+        onKick: widget.onKick,
       );
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -132,6 +138,7 @@ Future<void> showPlayerModerationSheet({
   required String playerId,
   required String playerName,
   VoidCallback? onBlocked,
+  Future<bool> Function()? onKick,
 }) async {
   final action = await showModalBottomSheet<String>(
     context: context,
@@ -146,6 +153,14 @@ Future<void> showPlayerModerationSheet({
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          if (onKick != null)
+            ListTile(
+              key: const ValueKey('player-kick-action'),
+              leading: const Icon(AppIcons.doorOpen),
+              title: Text(sheetContext.t(K.roomKick)),
+              subtitle: Text(sheetContext.t(K.roomKickSub)),
+              onTap: () => Navigator.of(sheetContext).pop('kick'),
+            ),
           ListTile(
             key: const ValueKey('player-report-action'),
             leading: const Icon(AppIcons.flag),
@@ -169,6 +184,42 @@ Future<void> showPlayerModerationSheet({
     ),
   );
   if (action == null || !context.mounted) return;
+
+  if (action == 'kick' && onKick != null) {
+    final sure = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        key: const ValueKey('kick-player-dialog'),
+        title: Text(dialogContext.t(K.roomKick)),
+        content: Text(
+          Tr.forKu(K.roomKickConfirmP, dialogContext.isKu, {'p0': playerName}),
+        ),
+        actions: [
+          DialogActionPair(
+            cancel: TextButton(
+              key: const ValueKey('kick-player-cancel'),
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(dialogContext.t(K.cancel)),
+            ),
+            confirm: FilledButton(
+              key: const ValueKey('kick-player-confirm'),
+              onPressed: () => Navigator.pop(dialogContext, true),
+              child: Text(dialogContext.t(K.roomKick)),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (sure != true || !context.mounted) return;
+    final doneText = context.t(K.roomKickDone);
+    final failText = context.t(K.roomKickFailed);
+    final kicked = await onKick();
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(kicked ? doneText : failText)));
+    return;
+  }
 
   // Alt sayfadaki satıra dokunmak tek başına karar değildir: bildir/engelle
   // geri alınması zor eylemlerdir (bildirim engeli de kurar). Sıralama

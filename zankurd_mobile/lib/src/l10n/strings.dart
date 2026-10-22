@@ -1823,6 +1823,29 @@ class Tr {
       'tr': 'Mesajları bundan sonra sana gösterilmez.',
     },
     K.chatReported: {'ku': 'Peyam hate ragihandin.', 'tr': 'Mesaj bildirildi.'},
+    // Oda sahibinin lobiden oyuncu çıkarması (2026-10-22). Çıkarılan aynı
+    // odaya kodla geri giremez (kick_room_player + room_kicks).
+    K.roomKick: {'ku': 'Ji odeyê derxe', 'tr': 'Odadan çıkar'},
+    K.roomKickSub: {
+      'ku': 'Nikare bi kodê vegere vê odeyê.',
+      'tr': 'Bu odaya kodla geri giremez.',
+    },
+    K.roomKickConfirmP: {
+      'ku': 'Bila {p0} ji odeyê were derxistin?',
+      'tr': '{p0} odadan çıkarılsın mı?',
+    },
+    K.roomKickDone: {
+      'ku': 'Lîstikvan ji odeyê hate derxistin.',
+      'tr': 'Oyuncu odadan çıkarıldı.',
+    },
+    K.roomKickFailed: {
+      'ku': 'Lîstikvan nehate derxistin. Dîsa biceribîne.',
+      'tr': 'Oyuncu çıkarılamadı. Tekrar dene.',
+    },
+    K.roomKickedYou: {
+      'ku': 'Xwediyê odeyê tu ji odeyê derxistî.',
+      'tr': 'Oda sahibi seni odadan çıkardı.',
+    },
     K.chatBlocked: {
       'ku': 'Lîstikvan hate astengkirin.',
       'tr': 'Oyuncu engellendi.',
@@ -4086,6 +4109,12 @@ class K {
   static const chatReportSub = 'chat.report.sub';
   static const chatBlock = 'chat.block';
   static const chatBlockSub = 'chat.block.sub';
+  static const roomKick = 'room.kick';
+  static const roomKickSub = 'room.kick.sub';
+  static const roomKickConfirmP = 'room.kick.confirm';
+  static const roomKickDone = 'room.kick.done';
+  static const roomKickFailed = 'room.kick.failed';
+  static const roomKickedYou = 'room.kicked.you';
   static const chatReported = 'chat.reported';
   static const chatBlocked = 'chat.blocked';
   static const chatModerationFailed = 'chat.moderation.failed';

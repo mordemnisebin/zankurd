@@ -372,9 +372,52 @@ class _RoomScreenState extends State<RoomScreen> {
     _realtimeEventSeq++;
   }
 
+  /// Oda sahibi lobide başka bir oyuncuyu çıkarabilir (2026-10-22).
+  /// Oyun başladıktan sonra çıkarma yok: hükmen/havuz kuralları bozulmasın.
+  Future<bool> Function()? _kickHandlerFor(Player player) {
+    final id = player.id;
+    final roomId = room.id;
+    if (!_isHost ||
+        room.hostId == null ||
+        room.status != RoomStatus.lobby ||
+        id == null ||
+        roomId == null ||
+        id == _currentUserId) {
+      return null;
+    }
+    return () async {
+      final ok = await widget.repository.kickRoomPlayer(
+        roomId: roomId,
+        playerId: id,
+      );
+      if (ok && mounted) {
+        setState(
+          () => room = room.copyWith(
+            players: room.players.where((p) => p.id != id).toList(),
+          ),
+        );
+      }
+      return ok;
+    };
+  }
+
+  /// Kendi satırımı lobide bir kez gördüm mü? Katılırken ilk liste kendi
+  /// satırımdan önce gelebilir; çıkarılma ancak görüldükten sonra sayılır.
+  bool _sawSelfInLobby = false;
+
   void _applyPlayerList(List<Player> players) {
     if (!mounted || _leaving || _terminalHandled || quizOpened) return;
     final unique = dedupeRoomPlayers(players);
+    final me = _currentUserId;
+    if (room.status == RoomStatus.lobby && me != null && unique.isNotEmpty) {
+      final present = unique.any((p) => p.id == me);
+      if (present) {
+        _sawSelfInLobby = true;
+      } else if (_sawSelfInLobby && room.hostId != me) {
+        _handleKickedFromLobby();
+        return;
+      }
+    }
     setState(() {
       room = room.copyWith(players: unique);
       // Liste elde: yenileme (ilk yükleme) bitti, gösterge iner. Sonraki
@@ -724,6 +767,26 @@ class _RoomScreenState extends State<RoomScreen> {
     // Widget bir test/yerleştirme kabında kök rota olarak açılmışsa
     // güvenli bir geri hedef yoktur; ekranı kilitli bırakma.
     setState(() => _leaving = false);
+  }
+
+  /// Oda sahibi beni lobiden çıkardı: kendi satırım listeden düştü ama oda
+  /// hâlâ lobide. Sessizce kalırsam "hazır" anahtarı ölü bir odaya yazardı.
+  void _handleKickedFromLobby() {
+    if (!mounted || quizOpened || _leaving || _terminalHandled) return;
+    _terminalHandled = true;
+    _cancelSubscriptionsBestEffort('room_kicked_subscription_cancel_failed');
+    _pausePolling();
+    _pauseStatusPolling();
+    final message = context.t(K.roomKickedYou);
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) navigator.pop();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!messenger.mounted) return;
+      messenger
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(message)));
+    });
   }
 
   void _handleLobbyFinished() {
@@ -1234,6 +1297,9 @@ class _RoomScreenState extends State<RoomScreen> {
                                                       _blockedPlayerIds.add(id),
                                                 );
                                               },
+                                              onKick: _kickHandlerFor(
+                                                visiblePlayers[i],
+                                              ),
                                             ),
                                           if (crowd)
                                             ..._emptySeatRows(
@@ -1998,6 +2064,7 @@ class _RoomPlayerRow extends StatelessWidget {
     this.showReadyState = true,
     this.quietModeration = false,
     this.onBlocked,
+    this.onKick,
     this.onReadyChanged,
     this.readyValue = false,
   });
@@ -2007,6 +2074,9 @@ class _RoomPlayerRow extends StatelessWidget {
   /// rozeti ve onu değiştiren anahtar aynı satırda).
   final ValueChanged<bool>? onReadyChanged;
   final bool readyValue;
+
+  /// Oda sahibinin lobide bu oyuncuyu çıkarması; yalnız sahibe verilir.
+  final Future<bool> Function()? onKick;
 
   /// Ayırıcının sol boşluğu: avatarın hizası (12 + 24 + 12).
   static const double indent = SahneSpace.x3 + 24 + SahneSpace.x3;
@@ -2255,6 +2325,7 @@ class _RoomPlayerRow extends StatelessWidget {
                   compact: true,
                   quiet: quietModeration,
                   onBlocked: onBlocked,
+                  onKick: onKick,
                 ),
                 if (isSelf || player.id == null)
                   const SizedBox(width: SahneSpace.x3),
@@ -2274,6 +2345,7 @@ class _RoomPlayerRow extends StatelessWidget {
       playerId: id,
       playerName: name,
       onBlocked: onBlocked,
+      onKick: onKick,
     );
     return Semantics(
       customSemanticsActions: {

@@ -655,6 +655,13 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Bir oyuncuyu engeller: mesajları bundan sonra gösterilmez.
   Future<bool> blockPlayer(String playerId);
 
+  /// Oda sahibi lobideki bir oyuncuyu odadan çıkarır (`kick_room_player`).
+  /// Çıkarılan aynı odaya kodla geri giremez. Başarısızsa `false`.
+  Future<bool> kickRoomPlayer({
+    required String roomId,
+    required String playerId,
+  });
+
   /// Engeli kaldırır.
   Future<bool> unblockPlayer(String playerId);
 

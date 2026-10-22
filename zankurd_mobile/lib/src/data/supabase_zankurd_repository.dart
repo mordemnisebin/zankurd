@@ -1700,6 +1700,23 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<bool> kickRoomPlayer({
+    required String roomId,
+    required String playerId,
+  }) async {
+    try {
+      await client.rpc(
+        'kick_room_player',
+        params: {'p_room_id': roomId, 'p_player_id': playerId},
+      );
+      return true;
+    } catch (e, s) {
+      _recordError(e, s, reason: 'kickRoomPlayer failed');
+      return false;
+    }
+  }
+
+  @override
   Future<bool> blockPlayer(String playerId) async {
     try {
       await client.rpc('block_player', params: {'p_blocked_id': playerId});

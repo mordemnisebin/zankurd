@@ -1688,6 +1688,18 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return true;
   }
 
+  /// Testler çıkarılan oyuncuları buradan okur.
+  final List<String> kickedPlayerIds = [];
+
+  @override
+  Future<bool> kickRoomPlayer({
+    required String roomId,
+    required String playerId,
+  }) async {
+    kickedPlayerIds.add(playerId);
+    return true;
+  }
+
   @override
   Future<bool> unblockPlayer(String playerId) async {
     _blockedPlayerIds.remove(playerId);
