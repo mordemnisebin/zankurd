@@ -99,14 +99,26 @@ void main() {
     final catalog = RecordedClipCatalog.parse(raw);
     expect(catalog.length, rows.length, reason: 'geçersiz satır var');
     expect(catalog.length, greaterThanOrEqualTo(1000));
+    // Kayıt ya bir sözlük terimine ya da bir ders örnek cümlesine aittir
+    // (örnekler sunucudaki lesson_slides.example_ku'dan, 2026-10-22 kopyası
+    // tool/ses/ders_ornekleri.json).
+    final examples =
+        (jsonDecode(File('tool/ses/ders_ornekleri.json').readAsStringSync())
+                as List)
+            .cast<String>();
     final terms = {
       for (final e in LearnerLexicon.entries) kurmanciTextKey(e.termKu),
+      for (final e in examples) kurmanciTextKey(e),
     };
     for (final r in rows) {
       final file = File('${RecordedClipCatalog.folder}${r['file']}');
       expect(file.existsSync(), isTrue, reason: '${r['file']} yok');
       expect(file.lengthSync(), greaterThan(1000), reason: '${r['file']}');
-      expect(terms, contains(r['key']), reason: '${r['text']} sözlükte yok');
+      expect(
+        terms,
+        contains(r['key']),
+        reason: '${r['text']} sözlükte/örneklerde yok',
+      );
       expect(r['speaker'], contains('Anadil'));
     }
     expect(catalog.clipForText('Rojbaş'), isNotNull);

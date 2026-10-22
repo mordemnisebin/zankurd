@@ -27,7 +27,7 @@ LORA = TTS_DIR + "/models/anadil/"
 PREFIX = "[speaker:spk_tmp_001 language:kmr] "
 SR = 48000
 ESIK = 0.10
-TOHUMLAR = [1, 2, 3]
+TOHUMLAR = [int(x) for x in os.environ.get("ZK_TOHUMLAR", "1,2,3").split(",")]
 
 
 def log(*a):
@@ -131,14 +131,14 @@ def main():
                 continue
             # Çok kısa sözcükte MMS geri okuması bir harfi kaçırınca CER
             # sıçrar ("Hesp" -> "hesm" 0.25); eşik kısa sözcükte 0.25.
-            esik = 0.25 if len(norm(metin)) <= 5 else ESIK
+            esik = 0.25 if len(norm(metin)) <= 5 and os.environ.get("ZK_SIKI") != "1" else ESIK
             okunan = metin if metin[-1] in ".?!" else metin + "."
             en_iyi = None
             t0 = time.time()
             for tohum in TOHUMLAR:
                 torch.manual_seed(tohum)
                 a = np.asarray(
-                    tts.generate(text=PREFIX + okunan, inference_timesteps=10, cfg_value=3.0)
+                    tts.generate(text=PREFIX + okunan, inference_timesteps=int(os.environ.get("ZK_TS", "10")), cfg_value=float(os.environ.get("ZK_CFG", "3.0")))
                 ).squeeze().astype(np.float32)
                 a = kirp(a)
                 if len(a) < SR * 0.15 or len(a) > SR * 8:
