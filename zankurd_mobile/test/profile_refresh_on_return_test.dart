@@ -29,9 +29,14 @@ class _RenamingRepository extends MockZanKurdRepository {
 
   void renameProfile(String name) => _name = name;
 
+  /// Yeniden yüklemede gecikme: dönüşte iskeletin görünüp görünmediği
+  /// ancak yükleme sürerken anlaşılır.
+  Duration delay = Duration.zero;
+
   @override
   Future<String> getProfileName() async {
     nameLoadCalls++;
+    if (delay > Duration.zero) await Future<void>.delayed(delay);
     return _name;
   }
 }
@@ -86,6 +91,30 @@ void main() {
       reason: 'Mağazadan dönünce _load() tekrar çağrılmadı',
     );
     expect(find.text('Yeni Ad'), findsWidgets);
+  });
+
+  // 2026-10-22 simülatör turu: dönüşteki yeniden yükleme iskelete geçip
+  // içeriği yeniden kuruyordu; kullanıcı en üste fırlıyordu.
+  testWidgets('Ayarlar\'dan dönünce kaydırma yeri korunur', (tester) async {
+    final repository = _RenamingRepository();
+    await tester.pumpWidget(_wrap(ProfileScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Ayarlar'));
+    await tester.pumpAndSettle();
+    final before = tester.getTopLeft(find.text('Ayarlar')).dy;
+
+    await tester.tap(find.text('Ayarlar'));
+    await tester.pumpAndSettle();
+    repository.delay = const Duration(milliseconds: 500);
+    Navigator.of(tester.element(find.byType(SettingsScreen))).pop();
+    await tester.pumpAndSettle(const Duration(milliseconds: 50));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    // Yükleme sürerken içerik yerinde (iskelete geçilmedi) ve aynı konumda.
+    expect(find.text('Ayarlar'), findsOneWidget);
+    expect(tester.getTopLeft(find.text('Ayarlar')).dy, before);
+    await tester.pumpAndSettle();
   });
 
   testWidgets('Ayarlar\'dan dönünce profil yeniden yüklenir', (tester) async {

@@ -104,6 +104,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   late final Future<MistakeStore> _mistakeStoreFuture = MistakeStore.load();
   bool _loading = true;
+
+  /// İlk yükleme bitti mi; sonraki yüklemeler iskelet göstermez.
+  bool _loadedOnce = false;
   bool _loadFailed = false;
   bool _practiceLoading = false;
   AvatarIdentity _avatarIdentity = const AvatarIdentity();
@@ -255,7 +258,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _load() async {
-    setState(() => _loading = true);
+    // İskelet yalnız ilk yüklemede. Alt sayfadan dönüşte de iskelete
+    // geçiliyordu; içerik yeniden kurulup kaydırma en üste sıçrıyordu
+    // (2026-10-22 simülatör turu). Sonraki yüklemeler içerik yerindeyken
+    // sessizce tazeler.
+    if (!_loadedOnce) setState(() => _loading = true);
     try {
       final name = await widget.repository.getProfileName();
       final stats = await widget.repository.getPlayerStats();
@@ -299,6 +306,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _accuracyPercent = mistakeStore.accuracyPercent;
           _answeredTotal = mistakeStore.totalCorrect + mistakeStore.totalWrong;
           _loading = false;
+          _loadedOnce = true;
           _loadFailed = false;
         });
       }

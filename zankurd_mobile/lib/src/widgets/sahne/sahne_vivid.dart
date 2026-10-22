@@ -449,7 +449,10 @@ class SahneModeGrid extends StatelessWidget {
       builder: (context, constraints) {
         const gap = SahneSpace.x3;
         final scale = MediaQuery.textScalerOf(context).scale(16) / 16;
-        final columns = constraints.maxWidth < 300 || scale > 1.6 ? 1 : 2;
+        // iOS'un "çok çok büyük" yazısı ~1,35; eşik 1,6 iken iki sütunda
+        // Kurmancî başlık ("Hevalê xwe vexwîne pêş…") ve rozet ("Amade…")
+        // kesiliyordu (2026-10-22, iPhone 17e simülatörü).
+        final columns = constraints.maxWidth < 300 || scale > 1.3 ? 1 : 2;
         if (columns == 1) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
