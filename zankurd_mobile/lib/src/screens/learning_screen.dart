@@ -569,6 +569,7 @@ class _LearningScreenState extends State<LearningScreen> {
     } else {
       card = _LessonRow(
         lesson: lesson,
+        step: index + 1,
         title: _lessonTitle(lesson, ku),
         completed: completed,
         semanticLabel: semanticLabel,
@@ -1060,6 +1061,7 @@ class _CurrentLessonCard extends StatelessWidget {
 class _LessonRow extends StatefulWidget {
   const _LessonRow({
     required this.lesson,
+    required this.step,
     required this.title,
     required this.completed,
     required this.semanticLabel,
@@ -1067,6 +1069,9 @@ class _LessonRow extends StatefulWidget {
   });
 
   final Lesson lesson;
+
+  /// Yoldaki sıra numarası (1'den): satırın başındaki durak işareti.
+  final int step;
   final String title;
   final bool completed;
   final String semanticLabel;
@@ -1098,11 +1103,20 @@ class _LessonRowState extends State<_LessonRow> {
     final t = SahneTokens.of(context);
     final locked = onTap == null;
     final description = lesson.description(context.isKu)?.trim();
-    final row = SahneListRow.plain(
+    // 2026-10-22 görsellik taraması (iki denetçi): liste düz kilitli metin
+    // satırlarıydı. Başta yoldaki sırayı gösteren durak işareti: bitti =
+    // dolu Zimrût + tik, açık = açık Zimrût + numara, kilitli = sönük
+    // numara. Eskiden kalkan konu ikonu (hep aynı ikon) geri gelmedi.
+    final row = SahneListRow.leading(
+      leading: _LessonStepMark(
+        step: widget.step,
+        completed: completed,
+        locked: locked,
+      ),
+      leadingWidth: 32,
       title: title,
-      // Kilitli satır sıkı (48) ve açıklamasız: soluk liste ilerlemeyi
-      // bastırmasın (tur 11). Açıklama dersin kendi ekranında okunur.
-      dense: locked,
+      // Kilitli satır açıklamasız: soluk liste ilerlemeyi bastırmasın
+      // (tur 11). Açıklama dersin kendi ekranında okunur.
       subtitle: locked || description == null || description.isEmpty
           ? null
           : description,
@@ -1124,8 +1138,7 @@ class _LessonRowState extends State<_LessonRow> {
                 color: Color.lerp(t.tx2, t.learnTx, 0.4),
               ),
             )
-          : completed
-          ? Icon(AppIcons.check, size: 20, color: t.learnTx)
+          // Tamamlanan ders tikini baştaki durak işareti taşır.
           : null,
     );
     if (!locked) return row;
@@ -1960,6 +1973,56 @@ class _SlideImage extends StatelessWidget {
                       placeholder(Icon(AppIcons.image, color: t.tx3, size: 32)),
                 ),
         ),
+      ),
+    );
+  }
+}
+
+/// Ders yolunda durak işareti (bkz. [_LessonRow]).
+class _LessonStepMark extends StatelessWidget {
+  const _LessonStepMark({
+    required this.step,
+    required this.completed,
+    required this.locked,
+  });
+
+  final int step;
+  final bool completed;
+  final bool locked;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final fill = completed
+        ? t.learn
+        : locked
+        ? t.s2
+        : t.learnTint;
+    final ink = completed
+        ? Colors.white
+        : locked
+        ? t.tx2
+        : t.learnTx;
+    return ExcludeSemantics(
+      child: Container(
+        key: const ValueKey('lesson-step-mark'),
+        width: 32,
+        height: 32,
+        alignment: Alignment.center,
+        decoration: ShapeDecoration(
+          color: fill,
+          shape: SahneShape.withSide(
+            SahneShape.s,
+            completed ? t.learn : t.learnEdge,
+            width: 1,
+          ),
+        ),
+        child: completed
+            ? Icon(AppIcons.check, size: 16, color: ink)
+            : Text(
+                '$step',
+                style: SahneType.captionStrong.copyWith(color: ink),
+              ),
       ),
     );
   }
