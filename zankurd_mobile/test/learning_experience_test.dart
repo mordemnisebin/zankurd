@@ -146,7 +146,7 @@ void main() {
       expect(
         find.text(
           experience == QuizExperience.learning
-              ? 'Dersten çıkılsın mı?'
+              ? 'Turdan çıkılsın mı?'
               : 'Yarıştan çıkılsın mı?',
         ),
         findsOneWidget,
@@ -162,14 +162,14 @@ void main() {
 
   testWidgets('öğrenme akışında çıkış diyalogu "ders" der', (tester) async {
     await pumpAndOpenExit(tester, repository, QuizExperience.learning);
-    expect(find.text('Dersten çıkılsın mı?'), findsOneWidget);
+    expect(find.text('Turdan çıkılsın mı?'), findsOneWidget);
     expect(find.text('Yarıştan çıkılsın mı?'), findsNothing);
   });
 
   testWidgets('yarışma akışında çıkış diyalogu "yarış" der', (tester) async {
     await pumpAndOpenExit(tester, repository, QuizExperience.competition);
     expect(find.text('Yarıştan çıkılsın mı?'), findsOneWidget);
-    expect(find.text('Dersten çıkılsın mı?'), findsNothing);
+    expect(find.text('Turdan çıkılsın mı?'), findsNothing);
   });
 
   // Bu, 1. düzeltmenin asıl kanıtı: öğrenme akışında cevaptan sonra

@@ -222,6 +222,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   Future<void> _showJoinSheet() async {
     final controller = _joinCodeController..clear();
     final formKey = GlobalKey<FormState>();
+    var joining = false;
     final inputTextStyle = SahneType.bodyStrong.copyWith(
       color: SahneTokens.of(context).tx,
       letterSpacing: 1.4,
@@ -291,55 +292,73 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                       },
                     ),
                     const SizedBox(height: SahneSpace.x4),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton.icon(
-                        onPressed: () async {
-                          if (!formKey.currentState!.validate()) return;
-                          try {
-                            final room = await widget.repository.joinOnlineRoom(
-                              normalizeRoomCode(controller.text),
-                            );
-                            if (!sheetCtx.mounted) return;
-                            AnalyticsService.instance.logActivationStep(
-                              'room_joined',
-                            );
-                            Navigator.of(sheetCtx).pop();
-                            if (mounted) _openRoom(room);
-                          } catch (error, stack) {
-                            ErrorReporter.record(
-                              error,
-                              stack,
-                              reason: 'play hub join room failed',
-                            );
-                            if (!sheetCtx.mounted) return;
-                            Navigator.of(sheetCtx).pop();
-                            if (!mounted) return;
-                            // Ücretli odaya jetonu yetmeyen oyuncuya "tekrar
-                            // dene" demek yalandı: tekrar denemek sonucu
-                            // değiştirmez. Mesajın yanında gerçek sonraki
-                            // adım (jeton kazan) durur.
-                            final short =
-                                error is RoomJoinException &&
-                                error.reason ==
-                                    RoomJoinFailureReason.insufficientCoins;
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  context.t(joinRoomErrorKey(error)),
-                                ),
-                                action: short
-                                    ? SnackBarAction(
-                                        label: context.t(K.earnCoins),
-                                        onPressed: _openSpinWheel,
-                                      )
-                                    : null,
-                              ),
-                            );
-                          }
-                        },
-                        icon: const Icon(AppIcons.rightToBracket),
-                        label: Text(context.t(K.joinAction)),
+                    // Katıl beklerken düğme kilitlenir ve dönen gösterge
+                    // görünür: 1–2 sn hiçbir geri bildirim yoktu, oyuncu
+                    // tekrar dokunuyordu (Android turu, 2026-10-22).
+                    StatefulBuilder(
+                      builder: (btnCtx, setBtn) => SizedBox(
+                        width: double.infinity,
+                        child: FilledButton.icon(
+                          key: const ValueKey('play-hub-join-submit'),
+                          onPressed: joining
+                              ? null
+                              : () async {
+                                  if (!formKey.currentState!.validate()) return;
+                                  setBtn(() => joining = true);
+                                  try {
+                                    final room = await widget.repository
+                                        .joinOnlineRoom(
+                                          normalizeRoomCode(controller.text),
+                                        );
+                                    if (!sheetCtx.mounted) return;
+                                    AnalyticsService.instance.logActivationStep(
+                                      'room_joined',
+                                    );
+                                    Navigator.of(sheetCtx).pop();
+                                    if (mounted) _openRoom(room);
+                                  } catch (error, stack) {
+                                    ErrorReporter.record(
+                                      error,
+                                      stack,
+                                      reason: 'play hub join room failed',
+                                    );
+                                    if (!sheetCtx.mounted) return;
+                                    Navigator.of(sheetCtx).pop();
+                                    if (!mounted) return;
+                                    // Ücretli odaya jetonu yetmeyen oyuncuya "tekrar
+                                    // dene" demek yalandı: tekrar denemek sonucu
+                                    // değiştirmez. Mesajın yanında gerçek sonraki
+                                    // adım (jeton kazan) durur.
+                                    final short =
+                                        error is RoomJoinException &&
+                                        error.reason ==
+                                            RoomJoinFailureReason
+                                                .insufficientCoins;
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          context.t(joinRoomErrorKey(error)),
+                                        ),
+                                        action: short
+                                            ? SnackBarAction(
+                                                label: context.t(K.earnCoins),
+                                                onPressed: _openSpinWheel,
+                                              )
+                                            : null,
+                                      ),
+                                    );
+                                  }
+                                },
+                          icon: joining
+                              ? const SizedBox.square(
+                                  dimension: 18,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : const Icon(AppIcons.rightToBracket),
+                          label: Text(context.t(K.joinAction)),
+                        ),
                       ),
                     ),
                   ],

@@ -1137,11 +1137,14 @@ class Tr {
       'ku': 'Bersiv nehat şandin. Dîsa biceribîne.',
       'tr': 'Cevap gönderilemedi. Tekrar dene.',
     },
-    K.leaveLessonQ: {'ku': 'Ji dersê derkevî?', 'tr': 'Dersten çıkılsın mı?'},
+    // Öğrenme deneyimli her tur (ders mini quizi, Günün soruları, tekrar)
+    // bu pencereyi kullanır; "ders" yalnız birine uyuyordu (Android turu,
+    // 2026-10-22: Günün soruları "dersten çıkılsın mı" diyordu).
+    K.leaveLessonQ: {'ku': 'Ji gerê derkevî?', 'tr': 'Turdan çıkılsın mı?'},
     K.leaveRaceQ: {'ku': 'Ji pêşbirkê derkevî?', 'tr': 'Yarıştan çıkılsın mı?'},
     K.leaveLessonBody: {
-      'ku': 'Pêşketina te ya vê dersê winda dibe.',
-      'tr': 'Bu dersteki ilerlemen kaybolur.',
+      'ku': 'Pêşketina te ya vê gerê winda dibe.',
+      'tr': 'Bu turdaki ilerlemen kaybolur.',
     },
     K.leaveRaceBody: {
       'ku': 'Pêşketina te ya vê pêşbirkê winda dibe.',

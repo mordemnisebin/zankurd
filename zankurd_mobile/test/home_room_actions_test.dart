@@ -1,4 +1,6 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -19,6 +21,18 @@ class _CapturingJoinRepository extends MockZanKurdRepository {
   Future<GameRoom> joinOnlineRoom(String code) async {
     joinedCode = code;
     return createRoom().copyWith(code: normalizeRoomCode(code));
+  }
+}
+
+/// Katılma isteği testin elinde bekler: bekleme hâli gözlenebilsin.
+class _SlowJoinRepository extends MockZanKurdRepository {
+  final gate = Completer<GameRoom>();
+  int calls = 0;
+
+  @override
+  Future<GameRoom> joinOnlineRoom(String code) {
+    calls++;
+    return gate.future;
   }
 }
 
@@ -294,5 +308,45 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.joinedCode, 'ZK-ZKAB');
+  });
+
+  // 2026-10-22 Android turu: Katıl'a basınca 1–2 sn geri bildirim yoktu,
+  // oyuncu yeniden dokunuyordu.
+  testWidgets('katılma beklerken düğme kilitli ve gösterge döner', (
+    tester,
+  ) async {
+    final repository = _SlowJoinRepository();
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: FakeAuthProvider(),
+        languageProvider: turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('play-hub-join-room')),
+    );
+    await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('play-hub-join-room-code-field')),
+      '482913',
+    );
+    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('play-hub-join-submit')));
+    await tester.pump();
+
+    expect(find.byType(CircularProgressIndicator), findsWidgets);
+    await tester.tap(find.byKey(const ValueKey('play-hub-join-submit')));
+    await tester.pump();
+    expect(repository.calls, 1, reason: 'beklerken ikinci istek gitmez');
+
+    repository.gate.complete(repository.createRoom().copyWith(code: '482913'));
+    await tester.pumpAndSettle();
   });
 }
