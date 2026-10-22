@@ -1681,7 +1681,7 @@ class Tr {
     // Soru ekranında joker satırı: neyin yetmediği açık (tam uygulama
     // incelemesi 2026-10-22, Opus + ChatGPT + Grok).
     K.wildcardNoCoins: {
-      'ku': 'Ji bo alîkariyê zêr têr nakin',
+      'ku': 'Ji bo alîkariyê zêrên te têr nakin',
       'tr': 'Joker için jeton yetmiyor',
     },
     K.insufficientBalance: {
