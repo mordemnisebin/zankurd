@@ -26,6 +26,7 @@ import 'story_screen.dart';
 import '../widgets/app_state.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/lesson_listening_card.dart';
+import '../widgets/lexicon_speak_button.dart';
 import '../widgets/lesson_recall_card.dart';
 import '../widgets/story_catalog.dart';
 import '../widgets/todays_review_card.dart';
@@ -1444,12 +1445,21 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
       decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
       child: Padding(
         padding: const EdgeInsets.all(SahneSpace.x3),
-        child: Text(
-          example,
-          style: SahneType.caption.copyWith(
-            color: t.tx2,
-            fontStyle: FontStyle.italic,
-          ),
+        // Örnek cümlenin sesi varsa yanında dinle düğmesi (2026-10-22,
+        // ders örnekleri seslendirildi); yoksa düğme yer kaplamaz.
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                example,
+                style: SahneType.caption.copyWith(
+                  color: t.tx2,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+            LexiconSpeakButton(text: example),
+          ],
         ),
       ),
     );
