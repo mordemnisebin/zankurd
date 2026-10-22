@@ -195,8 +195,10 @@ void main() {
     final eventTop = tester
         .getTopLeft(find.byKey(const ValueKey('play-hub-daily-contest')))
         .dy;
-    expect(quickDuelTop, lessThan(roomTop));
-    expect(roomTop, lessThan(eventTop));
+    // 2026-10-22 tasarım kurulu: sıra hızlı düello → mod kartları (günün
+    // turu dahil) → oda kur/kodla katıl.
+    expect(quickDuelTop, lessThan(eventTop));
+    expect(eventTop, lessThan(roomTop));
     expect(tester.takeException(), isNull);
   });
 

@@ -453,31 +453,29 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       ),
     );
 
-    final dailyContestRow = SahneListRow.icon(
-      key: const ValueKey('play-hub-daily-contest'),
-      icon: AppIcons.calendarDays,
-      role: SahneRole.race,
-      title: context.t(K.dailyContest),
-      subtitle: context.t(K.tenQuestions),
-      // 2026-09-29 doğallık (K7): sağdaki "Bugün" rozeti kalktı; satırın
-      // adı zaten "Günün soruları", rozet aynı sözü ikinci kez söylüyordu.
-      trailing: _dailyLoading ? const _RowSpinner() : null,
-      chevron: !locked && !_dailyLoading,
-      enabled: !locked,
-      onTap: locked || _dailyLoading ? null : _openDailyQuiz,
-      semanticLabel:
-          '${context.t(K.dailyContest)}. ${context.t(K.tenQuestions)}',
+    final dailyContest = _lockedTap(
+      locked,
+      SahneModeTile(
+        key: const ValueKey('play-hub-daily-contest'),
+        icon: AppIcons.calendarDays,
+        role: SahneRole.race,
+        title: context.t(K.dailyContest),
+        subtitle: context.t(K.tenQuestions),
+        loading: _dailyLoading,
+        onTap: locked || _dailyLoading ? null : _openDailyQuiz,
+        semanticLabel:
+            '${context.t(K.dailyContest)}. ${context.t(K.tenQuestions)}',
+      ),
     );
-    final dailyContest = _lockedTap(locked, dailyContestRow);
 
     // Çark: günlük jeton kazanma yeri. Eskiden yalnız mağazadan ve "jeton
     // yetmedi" iletisinden bulunuyordu; Yarış sekmesinde tek dokunuşta durur.
-    final wheelRow = SahneListRow.icon(
+    final wheelTile = SahneModeTile(
       key: const ValueKey('play-hub-spin-wheel'),
       icon: AppIcons.dice,
       role: SahneRole.gold,
       title: context.t(K.wheelTitle),
-      chevron: true,
+      subtitle: context.t(K.wheelOncePerDay),
       onTap: _openSpinWheel,
     );
 
@@ -543,19 +541,25 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         // olmasını istemez — oyuncu şimdi oynar, rakip kendi
         // zamanında. Sunucu göçü uygulanana dek bayrakla kapalı; kapalıyken
         // "Etkinlikler" grubunda "Yakında" satırı olarak durur.
-        if (widget.asyncDuelEnabled) ...[
-          const SizedBox(height: SahneSpace.cardGap),
-          SahneListGroup(
-            children: [
+        // Tasarım kurulu 2026-10-22 (ChatGPT, Gemini 3.1 Pro, Claude Opus;
+        // rakip kıyası TRT Bil Bakalım, Trivia Crack, Kahoot): üç model de
+        // liste satırlarının büyük renkli mod kartlarına dönmesini istedi.
+        // Hızlı düello kahramanı üstte kalır; altında 2×2 mod kartı:
+        // Sırayla düello (Boyax), Arkadaşına meydan oku (Nîl), Günün turu
+        // (Boyax), Günün çarkı (Zêr). Oda kur / Kodla katıl ve Arkadaşlar
+        // aşağıda kompakt kalır. Turuncu yalnız "Rakip bul"da.
+        const SizedBox(height: SahneSpace.cardGap),
+        SahneModeGrid(
+          children: [
+            if (widget.asyncDuelEnabled)
               _lockedTap(
                 locked,
-                SahneListRow.icon(
+                SahneModeTile(
                   key: const ValueKey('play-hub-async-duel'),
                   icon: AppIcons.hourglass,
                   role: SahneRole.race,
                   title: context.t(K.asyncDuel),
-                  chevron: !locked,
-                  enabled: !locked,
+                  subtitle: context.t(K.asyncDuelSub),
                   onTap: locked
                       ? null
                       : () async {
@@ -570,31 +574,30 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                         },
                 ),
               ),
-              if (_challengeAvailable)
-                _lockedTap(
-                  locked,
-                  SahneListRow.icon(
-                    key: const ValueKey('play-hub-async-duel-challenge'),
-                    icon: AppIcons.peopleGroup,
-                    // Arkadaşa meydan okumak sosyal moddur: Nîl.
-                    role: SahneRole.social,
-                    title: context.t(K.challengeEntry),
-                    chevron: !locked,
-                    enabled: !locked,
-                    onTap: locked
-                        ? null
-                        : () async {
-                            await showAsyncDuelChallengeSheet(
-                              context,
-                              widget.repository,
-                            );
-                            if (mounted) _asyncDuelInboxRefresh.value++;
-                          },
-                  ),
+            if (widget.asyncDuelEnabled && _challengeAvailable)
+              _lockedTap(
+                locked,
+                SahneModeTile(
+                  key: const ValueKey('play-hub-async-duel-challenge'),
+                  icon: AppIcons.peopleGroup,
+                  // Arkadaşa meydan okumak sosyal moddur: Nîl.
+                  role: SahneRole.social,
+                  title: context.t(K.challengeEntry),
+                  onTap: locked
+                      ? null
+                      : () async {
+                          await showAsyncDuelChallengeSheet(
+                            context,
+                            widget.repository,
+                          );
+                          if (mounted) _asyncDuelInboxRefresh.value++;
+                        },
                 ),
-            ],
-          ),
-        ],
+              ),
+            dailyContest,
+            wheelTile,
+          ],
+        ),
         // Kurul 2026-10-20 (GLM, Nemotron): sayfa yarı boş duruyordu. Yeni
         // öğe eklenmedi; "Günün soruları" zaten görünür. Gruplar arası
         // dikey ritim bir kademe açıldı (cardGap → x5) ki içerik yukarıya
@@ -603,65 +606,67 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         _RoomActions(createRoom: createRoom, joinRoom: joinRoom),
         const SizedBox(height: SahneSpace.x3),
         SahneListGroup(children: [friendsRow]),
-        const SizedBox(height: SahneSpace.x5),
-        SahneListGroup(
-          children: [
-            dailyContest,
-            wheelRow,
-            if (!widget.asyncDuelEnabled)
-              SahneListRow.icon(
-                key: const ValueKey('play-hub-async-duel-soon'),
-                icon: AppIcons.shuffle,
-                title: context.t(K.asyncDuel),
-                enabled: false,
-                trailing: SahneBadge(
-                  label: context.t(K.yakinda),
-                  tone: SahneBadgeTone.soon,
-                ),
-              ),
-            // Turnuva kalabalık bir kitle bekliyor; o kitle gelene dek
-            // bayrakla kapalı (bkz. `kTournamentEnabled`). Açıkken de ilk
-            // bakışta yok: benzer uygulamalarda indirme/tekrar sebebi "şimdi
-            // oyna" + günlük dönüş; eleme modu ikinci katman.
-            if (kTournamentEnabled) ...[
-              if (!_moreOpen)
+        if (!widget.asyncDuelEnabled || kTournamentEnabled) ...[
+          const SizedBox(height: SahneSpace.x5),
+          SahneListGroup(
+            children: [
+              if (!widget.asyncDuelEnabled)
                 SahneListRow.icon(
-                  key: const ValueKey('play-hub-more'),
-                  icon: AppIcons.chevronDown,
-                  title: context.t(K.playMore),
-                  subtitle: context.t(K.playMoreSub),
-                  semanticLabel:
-                      '${context.t(K.playMore)}. ${context.t(K.playMoreSub)}',
-                  onTap: () => setState(() => _moreOpen = true),
-                ),
-              if (_moreOpen)
-                _lockedTap(
-                  locked,
-                  SahneListRow.icon(
-                    key: const ValueKey('play-hub-tournament'),
-                    icon: AppIcons.trophy,
-                    role: SahneRole.gold,
-                    title: context.t(K.tournament),
-                    subtitle: context.t(K.tournamentSub),
-                    chevron: !locked,
-                    enabled: !locked,
-                    semanticLabel:
-                        '${context.t(K.tournament)}. '
-                        '${context.t(K.tournamentSub)}',
-                    onTap: locked
-                        ? null
-                        : () {
-                            Navigator.of(context).push(
-                              AppRoute.to(
-                                TournamentScreen(repository: widget.repository),
-                              ),
-                            );
-                          },
+                  key: const ValueKey('play-hub-async-duel-soon'),
+                  icon: AppIcons.shuffle,
+                  title: context.t(K.asyncDuel),
+                  enabled: false,
+                  trailing: SahneBadge(
+                    label: context.t(K.yakinda),
+                    tone: SahneBadgeTone.soon,
                   ),
                 ),
+              // Turnuva kalabalık bir kitle bekliyor; o kitle gelene dek
+              // bayrakla kapalı (bkz. `kTournamentEnabled`). Açıkken de ilk
+              // bakışta yok: benzer uygulamalarda indirme/tekrar sebebi "şimdi
+              // oyna" + günlük dönüş; eleme modu ikinci katman.
+              if (kTournamentEnabled) ...[
+                if (!_moreOpen)
+                  SahneListRow.icon(
+                    key: const ValueKey('play-hub-more'),
+                    icon: AppIcons.chevronDown,
+                    title: context.t(K.playMore),
+                    subtitle: context.t(K.playMoreSub),
+                    semanticLabel:
+                        '${context.t(K.playMore)}. ${context.t(K.playMoreSub)}',
+                    onTap: () => setState(() => _moreOpen = true),
+                  ),
+                if (_moreOpen)
+                  _lockedTap(
+                    locked,
+                    SahneListRow.icon(
+                      key: const ValueKey('play-hub-tournament'),
+                      icon: AppIcons.trophy,
+                      role: SahneRole.gold,
+                      title: context.t(K.tournament),
+                      subtitle: context.t(K.tournamentSub),
+                      chevron: !locked,
+                      enabled: !locked,
+                      semanticLabel:
+                          '${context.t(K.tournament)}. '
+                          '${context.t(K.tournamentSub)}',
+                      onTap: locked
+                          ? null
+                          : () {
+                              Navigator.of(context).push(
+                                AppRoute.to(
+                                  TournamentScreen(
+                                    repository: widget.repository,
+                                  ),
+                                ),
+                              );
+                            },
+                    ),
+                  ),
+              ],
             ],
-          ],
-        ),
+          ),
+        ],
         // 'Bu hafta' kartı düellolarım kutusunun ALTINDA durur: üstte olunca
         // yüksekliği kutuyu tembel listede ekran dışına itiyordu.
         if (widget.asyncDuelEnabled && !locked)
@@ -730,22 +735,6 @@ class _RoomActions extends StatelessWidget {
           },
         ),
       ],
-    );
-  }
-}
-
-/// Satır sağındaki yükleniyor göstergesi (oda kuruluyor, etkinlik açılıyor).
-class _RowSpinner extends StatelessWidget {
-  const _RowSpinner();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: 16,
-      child: CircularProgressIndicator(
-        strokeWidth: 2,
-        color: SahneTokens.of(context).tx2,
-      ),
     );
   }
 }

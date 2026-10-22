@@ -291,7 +291,7 @@ void main() {
 
       final key = find.byKey(const ValueKey('play-hub-daily-contest'));
       await tester.scrollUntilVisible(key, 200);
-      expect(tester.widget<SahneListRow>(key).role, SahneRole.race);
+      expect(tester.widget<SahneModeTile>(key).role, SahneRole.race);
       expect(
         find.descendant(of: key, matching: find.byType(SahneBadge)),
         findsNothing,

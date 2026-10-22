@@ -136,7 +136,7 @@ void main() {
   testWidgets('Play Hub kilit açıkken kart ve düellolarım kutusu görünür', (
     tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
+    await tester.binding.setSurfaceSize(const Size(390, 1600));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(
@@ -180,9 +180,9 @@ void main() {
 
       final cardFinder = find.byKey(const ValueKey('play-hub-async-duel'));
       expect(cardFinder, findsOneWidget);
-      // 2026-09-29 Şahnê: kart artık liste satırıdır (`SahneListRow`);
-      // kural aynı: kilitliyken dokunulamaz ve nedenini söyler.
-      final card = tester.widget<SahneListRow>(cardFinder);
+      // 2026-10-22: kart artık mod kartıdır (`SahneModeTile`, tasarım
+      // kurulu); kural aynı: kilitliyken dokunulamaz.
+      final card = tester.widget<SahneModeTile>(cardFinder);
       expect(card.onTap, isNull, reason: 'kilitliyken kart dokunulamaz olmalı');
       // 2026-09-30 simülatör: neden üstteki şeritte söylenir; satır kendi
       // açıklamasını korur.
@@ -480,7 +480,7 @@ void main() {
   testWidgets('kart varsayılanda kAsyncDuelEnabled bayrağını izler', (
     tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
+    await tester.binding.setSurfaceSize(const Size(390, 1600));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(

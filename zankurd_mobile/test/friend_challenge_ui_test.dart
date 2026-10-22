@@ -656,6 +656,13 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      // 2026-10-22: mod kartları düellolarım kutusunu tembel listede
+      // aşağı itti; satır görünene dek kaydırılır.
+      await tester.scrollUntilVisible(
+        find.text('Meydan okuma bağlantısı'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text('Meydan okuma bağlantısı'), findsOneWidget);
 
       final row = find.byKey(ValueKey('async-duel-row-${start.duelId}'));

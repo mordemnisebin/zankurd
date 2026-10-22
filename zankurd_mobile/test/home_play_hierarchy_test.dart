@@ -206,12 +206,9 @@ void main() {
             // listenin kurulu bölgesinden çıkardı.
             await tester.scrollUntilVisible(finder, 200);
             expect(finder, findsOneWidget);
-            expect(tester.widget(finder), isA<SahneListRow>(), reason: key);
-            expect(
-              find.descendant(of: finder, matching: find.byType(Ink)),
-              findsNothing,
-              reason: key,
-            );
+            // 2026-10-22 tasarım kurulu: günün turu Boyax mod kartıdır
+            // (dolu rol rengi; Agir değil, birincil düğme taşımaz).
+            expect(tester.widget(finder), isA<SahneModeTile>(), reason: key);
             expect(
               find.descendant(of: finder, matching: find.byType(FilledButton)),
               findsNothing,
@@ -219,7 +216,7 @@ void main() {
             );
             _expectActionSemantics(tester, key);
           }
-          final daily = tester.widget<SahneListRow>(
+          final daily = tester.widget<SahneModeTile>(
             find.byKey(const ValueKey('play-hub-daily-contest')),
           );
           expect(daily.role, SahneRole.race);

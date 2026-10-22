@@ -231,3 +231,198 @@ class SahneGoldBlock extends StatelessWidget {
     );
   }
 }
+
+/// Yarış merkezinin mod kartı (2026-10-22 tasarım kurulu: ChatGPT,
+/// Gemini 3.1 Pro, Claude Opus; üçü de "liste satırları büyük renkli mod
+/// kartlarına dönmeli" dedi, TRT Bil Bakalım / Trivia Crack kıyası).
+///
+/// Ana sayfadaki konu karosuyla aynı dil: rolün DOLU rengi (Boyax, Nîl ya da
+/// Zêr bandı), pahlı L köşe, beyaz ikon ve kalın ad, sağ altta beyaz %12
+/// büyük ikon filigranı. Zêr bandında yazı ve ikon koyudur (`onZer`).
+class SahneModeTile extends StatelessWidget {
+  const SahneModeTile({
+    super.key,
+    required this.icon,
+    required this.title,
+    this.subtitle,
+    this.role = SahneRole.race,
+    this.onTap,
+    this.badge,
+    this.loading = false,
+    this.semanticLabel,
+  });
+
+  final IconData icon;
+  final String title;
+  final String? subtitle;
+  final SahneRole role;
+  final VoidCallback? onTap;
+
+  /// Sağ üstte küçük sayı rozeti (ör. bekleyen istek).
+  final String? badge;
+  final bool loading;
+  final String? semanticLabel;
+
+  static const double minHeight = 112;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final gold = role == SahneRole.gold;
+    final fill = switch (role) {
+      SahneRole.social => t.nilFill,
+      SahneRole.learn => t.learnFill,
+      SahneRole.gold => t.zerBand,
+      _ => t.raceFill,
+    };
+    final ink = gold ? t.onZer : SahneVivid.onFill;
+    final soft = gold ? t.onZer.withValues(alpha: 0.82) : SahneVivid.onFillSoft;
+    final watermark = gold
+        ? t.onZer.withValues(alpha: 0.12)
+        : SahneVivid.watermark;
+    final enabled = onTap != null;
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: enabled,
+      label: semanticLabel ?? [title, ?subtitle].join('. '),
+      excludeSemantics: true,
+      onTap: onTap,
+      child: Opacity(
+        opacity: enabled ? 1 : 0.55,
+        child: SahneTappable(
+          shape: SahneShape.l,
+          color: fill,
+          onTap: onTap,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: minHeight),
+            child: Stack(
+              children: [
+                PositionedDirectional(
+                  end: -10,
+                  bottom: -14,
+                  child: IgnorePointer(
+                    child: Transform.rotate(
+                      angle: -10 * math.pi / 180,
+                      child: Icon(icon, size: 76, color: watermark),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(SahneSpace.x4),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(icon, size: 26, color: ink),
+                          const Spacer(),
+                          if (loading)
+                            SizedBox.square(
+                              dimension: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: ink,
+                              ),
+                            )
+                          else if (badge != null)
+                            DecoratedBox(
+                              decoration: ShapeDecoration(
+                                color: gold ? t.zerChip : SahneVivid.onFill,
+                                shape: const StadiumBorder(),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: SahneSpace.x2,
+                                  vertical: 2,
+                                ),
+                                child: Text(
+                                  badge!,
+                                  style: SahneType.captionStrong.copyWith(
+                                    color: gold ? t.goldTx : fill,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: SahneSpace.x3),
+                      Text(
+                        title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: SahneType.bodyStrong.copyWith(color: ink),
+                      ),
+                      if (subtitle != null) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          subtitle!,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: SahneType.caption.copyWith(color: soft),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// İki sütunlu mod kartı ızgarası; dar ekranda ya da büyük yazıda tek sütun.
+class SahneModeGrid extends StatelessWidget {
+  const SahneModeGrid({super.key, required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const gap = SahneSpace.x3;
+        final scale = MediaQuery.textScalerOf(context).scale(16) / 16;
+        final columns = constraints.maxWidth < 300 || scale > 1.6 ? 1 : 2;
+        if (columns == 1) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var i = 0; i < children.length; i++) ...[
+                if (i > 0) const SizedBox(height: gap),
+                children[i],
+              ],
+            ],
+          );
+        }
+        // Aynı satırdaki iki kart eşit boyda (alt yazısı olan ile olmayan
+        // yan yana kısa-uzun duruyordu).
+        final rows = <Widget>[];
+        for (var i = 0; i < children.length; i += 2) {
+          if (rows.isNotEmpty) rows.add(const SizedBox(height: gap));
+          final right = i + 1 < children.length ? children[i + 1] : null;
+          rows.add(
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(child: children[i]),
+                  const SizedBox(width: gap),
+                  Expanded(child: right ?? const SizedBox.shrink()),
+                ],
+              ),
+            ),
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: rows,
+        );
+      },
+    );
+  }
+}
