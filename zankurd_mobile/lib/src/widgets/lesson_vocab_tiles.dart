@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/sahne.dart';
 import 'lexicon_lookup.dart';
+import '../services/lesson_listening_speaker.dart';
 import 'lexicon_speak_button.dart';
 
 /// Ders slaytının Kurmancî içeriği: düz metin + görsel kelime kartları.
@@ -116,20 +117,60 @@ class LessonContentBlocks extends StatelessWidget {
   }
 }
 
-class _VocabTile extends StatelessWidget {
+class _VocabTile extends StatefulWidget {
   const _VocabTile({required this.term, required this.meaning});
 
   final String term;
   final String meaning;
 
   @override
+  State<_VocabTile> createState() => _VocabTileState();
+}
+
+/// Kartın tamamı dokununca terimi seslendirir ve kısa süre parlar
+/// (kurul 2. tur, iki denetçinin ortak önerisi). Ses yoksa kart dokunulmaz;
+/// sağdaki düğme zaten görünmez.
+class _VocabTileState extends State<_VocabTile> {
+  LessonListeningSpeaker? _speaker = LessonAudio.loaded;
+  bool _lit = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (_speaker == null) {
+      LessonAudio.shared().then((s) {
+        if (mounted) setState(() => _speaker = s);
+      }, onError: (_) {});
+    }
+  }
+
+  Future<void> _play() async {
+    final speaker = _speaker;
+    if (speaker == null) return;
+    setState(() => _lit = true);
+    try {
+      await speaker.speak(widget.term);
+    } finally {
+      if (mounted) setState(() => _lit = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final swatch = LessonContentBlocks.colorWords[term.toLowerCase().trim()];
-    return DecoratedBox(
+    final swatch =
+        LessonContentBlocks.colorWords[widget.term.toLowerCase().trim()];
+    final speaker = _speaker;
+    final canPlay = speaker != null && speaker.availableFor(widget.term);
+    final card = AnimatedContainer(
+      duration: const Duration(milliseconds: 180),
       decoration: ShapeDecoration(
-        color: t.learnTint,
-        shape: SahneShape.withSide(SahneShape.m, t.learnEdge, width: 1),
+        color: _lit ? Color.lerp(t.learnTint, t.learn, 0.18) : t.learnTint,
+        shape: SahneShape.withSide(
+          SahneShape.m,
+          _lit ? t.learnTx : t.learnEdge,
+          width: _lit ? 1.5 : 1,
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(
@@ -147,7 +188,8 @@ class _VocabTile extends StatelessWidget {
                 height: 28,
                 decoration: ShapeDecoration(
                   color: swatch,
-                  shape: SahneShape.withSide(SahneShape.s, t.line, width: 1),
+                  // Beyaz leke açık zeminde kaybolmasın: belirgin kenar.
+                  shape: SahneShape.withSide(SahneShape.s, t.tx2, width: 1),
                 ),
               ),
               const SizedBox(width: SahneSpace.x3),
@@ -157,21 +199,31 @@ class _VocabTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    term,
+                    widget.term,
                     style: SahneType.bodyStrong.copyWith(color: t.learnTx),
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    meaning,
+                    widget.meaning,
                     style: SahneType.caption.copyWith(color: t.tx2),
                   ),
                 ],
               ),
             ),
-            LexiconSpeakButton(text: term),
+            LexiconSpeakButton(text: widget.term, speaker: speaker),
           ],
         ),
       ),
+    );
+    if (!canPlay) return card;
+    return GestureDetector(
+      key: const ValueKey('lesson-vocab-tile'),
+      behavior: HitTestBehavior.opaque,
+      // Okuyucu sağdaki ses düğmesini kullanır; kart ikinci bir düğüm
+      // üretmesin.
+      excludeFromSemantics: true,
+      onTap: _play,
+      child: card,
     );
   }
 }

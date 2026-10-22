@@ -9,12 +9,28 @@
 /// ve METNİN kaybolmadığını (terim + anlam ikisi de ekranda) doğrular.
 library;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/services/lesson_listening_speaker.dart';
 import 'package:zankurd_mobile/src/widgets/lesson_vocab_tiles.dart';
 import 'package:zankurd_mobile/src/widgets/lexicon_lookup.dart';
 
 import 'support/widget_test_helpers.dart';
+
+class _Speaker implements LessonListeningSpeaker {
+  final spoken = <String>[];
+  @override
+  bool get available => true;
+  @override
+  bool availableFor(String text) => true;
+  @override
+  ValueListenable<bool> get speakingListenable => ValueNotifier(false);
+  @override
+  Future<void> speak(String text) async => spoken.add(text);
+  @override
+  Future<void> stop() async {}
+}
 
 Finder _lexiconText(String part) =>
     find.byWidgetPredicate((w) => w is LexiconText && w.text.contains(part));
@@ -60,5 +76,16 @@ void main() {
     expect(find.byKey(const ValueKey('lesson-letter-tiles')), findsOneWidget);
     expect(find.text('Ç'), findsOneWidget);
     expect(_lexiconText('Heşt tîp'), findsOneWidget);
+  });
+
+  // Kurul 2. tur: kartın tamamı dokununca terim seslenir.
+  testWidgets('kelime kartına dokununca terim seslenir', (tester) async {
+    final speaker = _Speaker();
+    LessonAudio.overrideForTesting(speaker);
+    addTearDown(() => LessonAudio.overrideForTesting(null));
+    await pump(tester, '• spî: beyaz');
+    await tester.tap(find.byKey(const ValueKey('lesson-vocab-tile')));
+    await tester.pump();
+    expect(speaker.spoken, ['spî']);
   });
 }
