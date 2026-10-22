@@ -215,6 +215,11 @@ class LexiconText extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
               child: Text(
                 word,
+                // Flutter yer tutucu çocuğu metnin ölçeğiyle zaten büyütür;
+                // içteki metin MediaQuery ölçeğini bir daha uygularsa büyük
+                // yazıda sözcük komşularının iki katı çıkıyordu (2026-10-22
+                // simülatör, bkz. lexicon_text_scale_test).
+                textScaler: TextScaler.noScaling,
                 style: style.copyWith(
                   decoration: TextDecoration.underline,
                   decorationStyle: TextDecorationStyle.dotted,

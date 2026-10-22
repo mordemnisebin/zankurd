@@ -1067,8 +1067,13 @@ class _AppShellState extends State<AppShell>
       decoration: decoration,
       child: SafeArea(
         top: false,
+        // Üst dolgu da silinir: `NavigationBar` kendi `SafeArea`sıyla durum
+        // çubuğu payını (iPhone'da ~62) ekliyordu; iki dilli satır açıkken
+        // çubuk 60 yerine 122 çiziliyor, içerik üstünde boş bir bantta
+        // kesiliyordu (2026-10-22 simülatör, bekçi: nav_yukseklik_test).
         child: MediaQuery.removePadding(
           context: context,
+          removeTop: true,
           removeBottom: true,
           child: Column(
             mainAxisSize: MainAxisSize.min,
