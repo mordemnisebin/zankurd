@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/learner_lexicon.dart';
 import 'package:zankurd_mobile/src/services/recorded_clip_catalog.dart';
 import 'package:zankurd_mobile/src/utils/kurmanci_text_key.dart';
 
@@ -86,10 +88,28 @@ void main() {
     expect(catalog.isEmpty, isTrue);
   });
 
-  test('load: paketlenmiş dizin şimdilik boş', () async {
+  // 2026-10-22: sözlük terimlerinin sentetik sesleri paketlendi (Anadil
+  // Kurmancî TTS, MMS-1B ile geri okunarak denetlendi). Bekçi: dizindeki her
+  // satır geçerli, dosyası diskte, metni sözlükte bir terim; kayıt sayısı
+  // sessizce düşmesin (bir paketleme hatası bütün sesi kapatırdı).
+  test('load: paketlenmiş dizin sözlük terimlerinin seslerini taşır', () async {
     TestWidgetsFlutterBinding.ensureInitialized();
-    final catalog = await RecordedClipCatalog.load(bundle: rootBundle);
-    expect(catalog.isEmpty, isTrue);
+    final raw = await rootBundle.loadString(RecordedClipCatalog.indexAsset);
+    final rows = (jsonDecode(raw) as List).cast<Map<String, dynamic>>();
+    final catalog = RecordedClipCatalog.parse(raw);
+    expect(catalog.length, rows.length, reason: 'geçersiz satır var');
+    expect(catalog.length, greaterThanOrEqualTo(1000));
+    final terms = {
+      for (final e in LearnerLexicon.entries) kurmanciTextKey(e.termKu),
+    };
+    for (final r in rows) {
+      final file = File('${RecordedClipCatalog.folder}${r['file']}');
+      expect(file.existsSync(), isTrue, reason: '${r['file']} yok');
+      expect(file.lengthSync(), greaterThan(1000), reason: '${r['file']}');
+      expect(terms, contains(r['key']), reason: '${r['text']} sözlükte yok');
+      expect(r['speaker'], contains('sentetik'));
+    }
+    expect(catalog.clipForText('Rojbaş'), isNotNull);
   });
 
   test('load: dizini asset paketinden okur', () async {
