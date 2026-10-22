@@ -295,6 +295,34 @@ void main() {
       expect(find.byKey(const ValueKey('async-duel-play')), findsOneWidget);
     });
 
+    // 2026-10-22: arkadaşı olmayan yeni oyuncu bağlantı gönderip karşı
+    // tarafı beklemek zorundaydı; rastgele rakip hemen oynatır.
+    testWidgets('arkadaşı yoksa rastgele rakiple hemen oynanabilir', (
+      tester,
+    ) async {
+      await _useSurface(tester);
+      await tester.pumpWidget(
+        testShell(
+          child: PlayHubScreen(
+            repository: freshMockRepository(),
+            asyncDuelEnabled: true,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openChallengeSheetFromHub(tester);
+      await tester.tap(find.byKey(const ValueKey('challenge-sheet-friend')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(
+        find.byKey(const ValueKey('challenge-friends-empty-random')),
+      );
+      await tester.pump();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(find.byKey(const ValueKey('async-duel-play')), findsOneWidget);
+    });
+
     testWidgets('arkadaş listesi kabul edilmiş arkadaşları sıralar; seçilen '
         'arkadaş için düello açılır', (tester) async {
       await _useSurface(tester);

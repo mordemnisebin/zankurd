@@ -141,6 +141,7 @@ class _ChallengeSheetState extends State<_ChallengeSheet> {
               AsyncDuelEntry.createChallenge(friendId: friend.friendId),
             ),
             onLink: () => _choose(const AsyncDuelEntry.createChallenge()),
+            onRandom: () => _choose(const AsyncDuelEntry.random()),
           ),
       ],
     );
@@ -154,6 +155,7 @@ class _FriendPicker extends StatelessWidget {
     required this.onRetry,
     required this.onPick,
     required this.onLink,
+    required this.onRandom,
   });
 
   final List<Friend>? friends;
@@ -161,6 +163,9 @@ class _FriendPicker extends StatelessWidget {
   final VoidCallback onRetry;
   final ValueChanged<Friend> onPick;
   final VoidCallback onLink;
+
+  /// Arkadaşı olmayan yeni oyuncu yine de hemen oynayabilsin: rastgele rakip.
+  final VoidCallback onRandom;
 
   @override
   Widget build(BuildContext context) {
@@ -214,6 +219,17 @@ class _FriendPicker extends StatelessWidget {
             arrow: false,
             expand: true,
             onPressed: onLink,
+          ),
+          // 2026-10-22: arkadaşı olmayan yeni oyuncunun tek yolu bağlantı
+          // göndermekti; karşı taraf açana dek oynayamıyordu. Rastgele rakip
+          // hemen bir düello başlatır.
+          const SizedBox(height: SahneSpace.x2),
+          SahneButton.secondary(
+            key: const ValueKey('challenge-friends-empty-random'),
+            label: context.t(K.randomMatch),
+            icon: AppIcons.shuffle,
+            expand: true,
+            onPressed: onRandom,
           ),
         ],
       );
