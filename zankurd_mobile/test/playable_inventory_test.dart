@@ -183,7 +183,9 @@ void main() {
       // (dersler2 0104–0109 çift boşluk, offline_5016/5225 "di-" şıkkı).
       // 3305 -> 3311 (+6): 2026-10-21 jüri onaylı 6 yeni boşluk doldurma
       // (dersler2 0137–0142); eski 0104–0109 dosyadan tamamen çıktı.
-      3311,
+      // 3311 -> 3306 (-5): 2026-10-22 yakın tekrar emeklisi (hat_0043,
+      // hat_0109, hat_0112, hat_0118, baslangic_2026_10_06_0068).
+      3306,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -251,7 +253,7 @@ void main() {
       //   Sînema 102 - 79 + 2 = 25; Cografya 67 - 19 + 2 = 50;
       //   Edebiyat 16 - 1 + 8 = 23; Dîrok 36 + 7 = 43; Muzîk 22 + 5 = 27;
       //   Çand 32 + 9 = 41; Teknolojî 0 + 3 = 3; Siyaset 68 + 2 = 70.
-      'retired=Sînema': 25,
+      'retired=Sînema': 26, // 2026-10-22 yakın tekrar +1 (hat_0043)
       'retired=Cografya': 51,
       'retired=Edebiyat': 25, // 2026-10-19 içerik denetimi +2
       // 43 -> 45: 2026-10-17 yakın tekrar (`ds_dirok_0029`, `offline_2668`).
@@ -262,7 +264,7 @@ void main() {
       // 2026-09-30: 36 -> 37 (`offline_0120`, görsel "pîr" gösteriyor).
       // 45 -> 39: 2026-10-21 emekli 0104–0109 dosyadan silindi (yerine
       // 0137–0142 geldi), artık envanterde sayılmıyor.
-      'retired=Ziman': 39,
+      'retired=Ziman': 40, // 2026-10-22 yakın tekrar +1
       // 41 -> 42: 2026-10-08 `ds_cand_0285` (cevap soru metninde) emekliye ayrıldı.
       'retired=Çand': 42,
       // 2026-09-30 altıncı dalga: Teknolojî'den iki modelce onaylanan 3 soru.
@@ -274,7 +276,7 @@ void main() {
       // 2026-09-30 beşinci dalga (ChatGPT ikinci geçişi): Siyaset 51 -> 68
       // (+17: 8 çoktan seçmeli + 9 doğru/yanlış). Paradigma değişmedi.
       // 2026-09-30 altıncı dalga: +2 (68 -> 70).
-      'retired=Siyaset': 72, // 2026-10-19 içerik denetimi +2
+      'retired=Siyaset': 75, // 2026-10-19 +2; 2026-10-22 yakın tekrar +3
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });
 

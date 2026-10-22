@@ -755,6 +755,15 @@ const Set<String> retiredQuestionIds = <String>{
   // ---------------------------------------------------------------------
   'offline_5016',
   'offline_5225',
+  // ---------------------------------------------------------------------
+  // 2026-10-22: yakın tekrar (kalite kapısının 182 uyarısı tam incelendi;
+  // Grok 4.7 + ana ajan ikisi de "aynı bilgi" dedi). Kalanlar parantezde.
+  // ---------------------------------------------------------------------
+  'hat_0043', // Yılmaz Güney doğum yılı (ex28_yilmaz_guney_005)
+  'hat_0109', // Xoybûn kuruluş yılı (hat_0104)
+  'hat_0112', // Şêx Seîd serhildanı yılı (hat_0105)
+  'hat_0118', // HDP kuruluş yılı (hat_0107)
+  'baslangic_2026_10_06_0068', // "Ew doktor ___." (dersler3_2026_10_08_0008)
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

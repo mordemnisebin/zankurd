@@ -1,5 +1,6 @@
 import 'package:zankurd_mobile/src/config/retired_question_ids.dart';
 import 'models.dart';
+import 'near_duplicate_reviewed.dart';
 import 'normalization.dart';
 
 List<AuditIssue> runChecks(
@@ -337,6 +338,10 @@ List<AuditIssue> runDuplicateChecks(
                 'jaccard=${similarity.toStringAsFixed(3)}.',
             confidence: 'medium',
           );
+          // Jüriyle incelenip "farklı bilgi" denen çift bir daha uyarı
+          // üretmez; soru metni değişirse parmak izi değişir ve çift
+          // yeniden incelemeye düşer (bkz. near_duplicate_reviewed.dart).
+          if (reviewedNearDuplicates.containsKey(issue.fingerprint)) continue;
           if (nearFingerprints.add(issue.fingerprint)) {
             issues.add(issue);
           }
