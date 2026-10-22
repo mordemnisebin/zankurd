@@ -335,7 +335,7 @@ the abuse-report route: iletisim@zankurd.com.
 
 ## Tested devices and release evidence
 
-- Candidate build: 2.0.4 (34). App Store Connect upload and Binary State are
+- Candidate build: 2.1.0 (35). App Store Connect upload and Binary State are
   intentionally left blank until this exact candidate is uploaded.
 - Build device family: iPhone and iPad; minimum iOS: 15.0.
 - Local production-config validation and local iOS release build results are
@@ -348,7 +348,7 @@ the abuse-report route: iletisim@zankurd.com.
 ## Privacy and App Store metadata gate
 
 The checked-in privacy manifest declares the data categories currently used by
-the app and declares no location collection. Before uploading build 34, the
+the app and declares no location collection. Before uploading build 35, the
 App Store Connect App Privacy answers must be compared with
 `docs/app_privacy_reconciliation_1.9.2_build15.md` and with the push token
 flow above (the device push token stored on the profile is an identifier; the
@@ -376,7 +376,7 @@ open/licensed imagery. It does not claim ownership of third-party imagery.
 - Enter the current owner phone number and the confirmed support email in App
   Store Connect App Review Information; do not store private contact details
   in source control.
-- Upload the exact build 34 and reconcile App Privacy answers (including the
+- Upload the exact build 35 and reconcile App Privacy answers (including the
   push token and the 2.0.3 progress sync) before sending it to review.
 - Retake the store screenshots with the new design (the current set predates
   it; see `docs/store_listing.md`).
