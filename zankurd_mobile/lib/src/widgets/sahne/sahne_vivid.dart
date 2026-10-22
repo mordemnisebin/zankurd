@@ -282,10 +282,16 @@ class SahneModeTile extends StatelessWidget {
     };
     final ink = gold ? t.onZer : SahneVivid.onFill;
     // Zêr bandında alt yazı da tam koyu: %82 gece ve gündüz zayıf okunuyordu.
-    final soft = gold ? t.onZer : SahneVivid.onFillSoft;
+    // Son kurul (ChatGPT 8,8, Grok 8,5, Nemotron 7; üçünün ortak bulgusu):
+    // gecede ikincil yazı ve filigran kayboluyor, kart kenarı seçilmiyordu.
+    // Gece: koyu tonda alt yazı tam beyaz, filigran %18, ince açık kenar.
+    final night = Theme.of(context).brightness == Brightness.dark;
+    final soft = gold
+        ? t.onZer
+        : (night && deep ? SahneVivid.onFill : SahneVivid.onFillSoft);
     final watermark = gold
-        ? t.onZer.withValues(alpha: 0.12)
-        : SahneVivid.watermark;
+        ? t.onZer.withValues(alpha: night ? 0.18 : 0.12)
+        : (night ? SahneVivid.watermarkNight : SahneVivid.watermark);
     final enabled = onTap != null;
     return Semantics(
       container: true,
@@ -297,7 +303,13 @@ class SahneModeTile extends StatelessWidget {
       child: Opacity(
         opacity: enabled ? 1 : 0.55,
         child: SahneTappable(
-          shape: SahneShape.l,
+          shape: night
+              ? SahneShape.withSide(
+                  SahneShape.l,
+                  SahneVivid.tileEdgeNight,
+                  width: 1,
+                )
+              : SahneShape.l,
           color: fill,
           onTap: onTap,
           child: ConstrainedBox(

@@ -843,6 +843,12 @@ class SahneVivid {
   static const onFillSoft = Color(0xEBFFFFFF);
   static const watermark = Color(0x1FFFFFFF);
 
+  /// Gece mod kartında filigran (%18) ve ince açık kenar (%14): koyu
+  /// dolguda %12 filigran ve kenarsız kart kayboluyordu (son kurul,
+  /// 2026-10-22).
+  static const watermarkNight = Color(0x2EFFFFFF);
+  static const tileEdgeNight = Color(0x24FFFFFF);
+
   /// Renkli yüzeyde cam çip dolgusu, iz ve ince çizgi (beyaz %16 / %18 / %12).
   static const glass = Color(0x29FFFFFF);
 
