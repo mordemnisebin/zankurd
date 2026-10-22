@@ -153,8 +153,11 @@ void main() {
 
       Finder richTextContaining(String value) => find.byWidgetPredicate(
         (widget) =>
+            // Başlık bandı 2026-10-22'den beri ad ve tepkiyi ayrı Text'te
+            // çizer (tepki kesilmesin); düz metin de aranır.
             widget is Text &&
-            widget.textSpan?.toPlainText().contains(value) == true,
+            ((widget.data?.contains(value) ?? false) ||
+                widget.textSpan?.toPlainText().contains(value) == true),
       );
       expect(richTextContaining('İlk'), findsOneWidget);
 

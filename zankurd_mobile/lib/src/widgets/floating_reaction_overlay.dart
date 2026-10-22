@@ -312,25 +312,41 @@ class _SingleAnimatedReactionBubbleState
                       horizontal: SahneSpace.x3,
                       vertical: SahneSpace.x2,
                     ),
+                    // Dar başlık bandında TEPKİ tam görünür, kısalan ad
+                    // olur: "Oyuncu ZK-R5C4" eklenince tek satırlık metin
+                    // tepkinin kendisini "S…" diye kesiyordu (iki
+                    // simülatör turu, 2026-10-22).
                     child: inRoomHeader
-                        ? Text.rich(
-                            TextSpan(
-                              children: [
-                                if (hasSender) ...[
-                                  TextSpan(
-                                    text: widget.bubble.senderName!,
+                        ? Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (hasSender)
+                                Flexible(
+                                  child: Text(
+                                    '${widget.bubble.senderName!} · ',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: SahneType.captionStrong.copyWith(
                                       color: t.goldTx,
                                     ),
                                   ),
-                                  const TextSpan(text: ' · '),
-                                ],
-                                TextSpan(text: widget.bubble.text),
-                              ],
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: SahneType.bodyStrong.copyWith(color: t.tx),
+                                ),
+                              // Hazır tepkiler kısa; yayından gelen uzun bir
+                              // metin yine de satırı taşırmaz.
+                              ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  maxWidth: 110,
+                                ),
+                                child: Text(
+                                  widget.bubble.text,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: SahneType.bodyStrong.copyWith(
+                                    color: t.tx,
+                                  ),
+                                ),
+                              ),
+                            ],
                           )
                         : Column(
                             mainAxisSize: MainAxisSize.min,
