@@ -512,6 +512,14 @@
   "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
  },
  {
+  "key": "belgefilm_fb9c4d60",
+  "text": "Belgefîlm",
+  "file": "belgefilm_fb9c4d60.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
   "key": "bendav_d48cc845",
   "text": "Bendav",
   "file": "bendav_d48cc845.m4a",
@@ -2584,6 +2592,14 @@
   "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
  },
  {
+  "key": "ergatif_b9d1778f",
+  "text": "Ergatîf",
+  "file": "ergatif_b9d1778f.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
   "key": "erk_85979a87",
   "text": "Erk",
   "file": "erk_85979a87.m4a",
@@ -3656,6 +3672,22 @@
   "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
  },
  {
+  "key": "giring_ff9597a3",
+  "text": "Girîng",
+  "file": "giring_ff9597a3.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
+  "key": "giringi_fb3f838a",
+  "text": "Girîngî",
+  "file": "giringi_fb3f838a.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
   "key": "girtin_a36a7df8",
   "text": "Girtin",
   "file": "girtin_a36a7df8.m4a",
@@ -3827,6 +3859,14 @@
   "key": "gur-di-zivistane-de-birc_a0567dea",
   "text": "Gur di zivistanê de birçî dibin.",
   "file": "gur-di-zivistane-de-birc_a0567dea.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
+  "key": "gur_523546a1",
+  "text": "Gur",
+  "file": "gur_523546a1.m4a",
   "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
   "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
   "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
@@ -4008,6 +4048,14 @@
   "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
  },
  {
+  "key": "herikin_7b830e75",
+  "text": "Herikîn",
+  "file": "herikin_7b830e75.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
   "key": "hersbuyi_53739ecf",
   "text": "Hêrsbûyî",
   "file": "hersbuyi_53739ecf.m4a",
@@ -4067,6 +4115,14 @@
   "key": "hev_f0b48740",
   "text": "Hev",
   "file": "hev_f0b48740.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
+  "key": "hevahengi_f541ed3a",
+  "text": "Hevahengî",
+  "file": "hevahengi_f541ed3a.m4a",
   "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
   "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
   "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
@@ -4363,6 +4419,14 @@
   "key": "hun_caa80f31",
   "text": "Hûn",
   "file": "hun_caa80f31.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
+  "key": "huneri_12bb963e",
+  "text": "Hunerî",
+  "file": "huneri_12bb963e.m4a",
   "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
   "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
   "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
@@ -6376,6 +6440,14 @@
   "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
  },
  {
+  "key": "pejgeh_debab2b8",
+  "text": "Pêjgeh",
+  "file": "pejgeh_debab2b8.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
   "key": "pel_714b9716",
   "text": "Pel",
   "file": "pel_714b9716.m4a",
@@ -6848,6 +6920,14 @@
   "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
  },
  {
+  "key": "qad_df12cdd9",
+  "text": "Qad",
+  "file": "qad_df12cdd9.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
   "key": "qanun_dec247d5",
   "text": "Qanûn",
   "file": "qanun_dec247d5.m4a",
@@ -6891,6 +6971,14 @@
   "key": "qelem_7a2a0467",
   "text": "Qelem",
   "file": "qelem_7a2a0467.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
+  "key": "qereqol_5815dbd2",
+  "text": "qereqol",
+  "file": "qereqol_5815dbd2.m4a",
   "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
   "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
   "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
@@ -7203,6 +7291,14 @@
   "key": "rojbas_726dc9f9",
   "text": "Rojbaş",
   "file": "rojbas_726dc9f9.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
+  "key": "rojhilat_58bd06c4",
+  "text": "Rojhilat",
+  "file": "rojhilat_58bd06c4.m4a",
   "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
   "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
   "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
@@ -8107,6 +8203,14 @@
   "key": "tewandi_0acdb10d",
   "text": "Tewandî",
   "file": "tewandi_0acdb10d.m4a",
+  "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
+  "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
+  "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
+ },
+ {
+  "key": "tewang_f725cf61",
+  "text": "Tewang",
+  "file": "tewang_f725cf61.m4a",
   "speaker": "Anadil Kurmanji TTS (sentetik ses, VoxCPM2 + LoRA)",
   "license": "MIT (Anadil LoRA) + Apache-2.0 (openbmb/VoxCPM2)",
   "provenance": "Anadilorg/Anadil_Kurmanji_TTS ile 2026-10-22'de üretildi; facebook/mms-1b-all (kmr) ile geri okunup harf hatası <= 0.10 olanlar alındı"
