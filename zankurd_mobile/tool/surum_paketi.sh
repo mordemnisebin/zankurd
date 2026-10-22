@@ -33,6 +33,18 @@ if [[ "$HEDEF" == ios ]]; then
     echo "HATA: arşivdeki ikilide iOS RevenueCat anahtarı yok; yükleme." >&2
     exit 1
   }
+  # Crashlytics sembolleri: Xcode projesinde yükleme adımı yok; 2.1.0'a dek
+  # hiçbir dSYM Firebase'e gitmemişti ve iOS çökmeleri "işlenmemiş" kalıyordu
+  # (2026-10-23). Yükleme başarısızsa paket yine geçerlidir; yalnız uyarılır.
+  semboller="build/ios/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols"
+  if [[ -x "$semboller" ]]; then
+    "$semboller" -gsp ios/Runner/GoogleService-Info.plist -p ios \
+      build/ios/archive/Runner.xcarchive/dSYMs > /dev/null 2>&1 &&
+      echo "✓ Crashlytics sembolleri yüklendi." ||
+      echo "UYARI: Crashlytics sembolleri yüklenemedi; elle: $semboller -gsp ios/Runner/GoogleService-Info.plist -p ios build/ios/archive/Runner.xcarchive/dSYMs" >&2
+  else
+    echo "UYARI: $semboller yok; Crashlytics sembolleri yüklenmedi." >&2
+  fi
 else
   flutter build appbundle --release --dart-define-from-file="$ENV_FILE"
   aab="build/app/outputs/bundle/release/app-release.aab"
