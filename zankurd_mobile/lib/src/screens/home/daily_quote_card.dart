@@ -36,9 +36,14 @@ class DailyQuoteCard extends StatefulWidget {
   /// Verilirse paylaşım metni buraya gider (test); yoksa share_plus.
   final void Function(String text)? onShare;
 
+  /// Sözün tırnak içindeki hâli. Türkçe ve Kurmancî yazımda açılış da
+  /// kapanış da üstte durur (“…”); önceki Almanca alt açılış tırnağı kullanıcı
+  /// geri bildiriminde "yanlış yerde" diye bildirildi (2026-10-23).
+  static String quoted(String text) => '“$text”';
+
   /// Paylaşım metni.
   static String shareText(DailyQuote q) =>
-      '„${q.ku}“ — ${q.tr}\n${q.source}\nZanKurd · zankurd.com';
+      '${quoted(q.ku)} — ${q.tr}\n${q.source}\nZanKurd · zankurd.com';
 
   @override
   State<DailyQuoteCard> createState() => _DailyQuoteCardState();
@@ -108,7 +113,7 @@ class _DailyQuoteCardState extends State<DailyQuoteCard> {
                 ],
               ),
               Text(
-                '„${quote.ku}“',
+                DailyQuoteCard.quoted(quote.ku),
                 key: const ValueKey('home-daily-quote-ku'),
                 style: SahneType.headline.copyWith(color: t.tx),
               ),

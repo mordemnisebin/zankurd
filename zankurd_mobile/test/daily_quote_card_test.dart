@@ -118,7 +118,7 @@ void main() {
     await pumpCard(t, ku: false, quotes: quotes);
     final expected = DailyQuoteStore.pick(quotes)!;
     expect(find.text('Günün sözü'), findsOneWidget);
-    expect(find.text('„${expected.ku}“'), findsOneWidget);
+    expect(find.text('“${expected.ku}”'), findsOneWidget);
     expect(find.text(expected.tr), findsOneWidget);
     expect(find.text(expected.source), findsOneWidget);
   });
@@ -131,7 +131,7 @@ void main() {
     await pumpCard(t, ku: true, quotes: quotes);
     final expected = DailyQuoteStore.pick(quotes)!;
     expect(find.text('Gotina rojê'), findsOneWidget);
-    expect(find.text('„${expected.ku}“'), findsOneWidget);
+    expect(find.text('“${expected.ku}”'), findsOneWidget);
     expect(find.text(expected.tr), findsOneWidget);
   });
 
@@ -140,12 +140,12 @@ void main() {
     SahneClock.now = () => DateTime(2026, 10, 21, 23, 59);
     await pumpCard(t, ku: false, quotes: quotes);
     final before = DailyQuoteStore.pick(quotes)!;
-    expect(find.text('„${before.ku}“'), findsOneWidget);
+    expect(find.text('“${before.ku}”'), findsOneWidget);
     SahneClock.now = () => DateTime(2026, 10, 22, 0, 1);
     await pumpCard(t, ku: false, quotes: quotes, textScale: 1.001);
     final after = DailyQuoteStore.pick(quotes)!;
     expect(after.id, isNot(before.id));
-    expect(find.text('„${after.ku}“'), findsOneWidget);
+    expect(find.text('“${after.ku}”'), findsOneWidget);
   });
 
   testWidgets('paylaş düğmesi biçimli metni gönderir', (t) async {
@@ -155,7 +155,7 @@ void main() {
     await pumpCard(t, ku: false, quotes: quotes, onShare: shared.add);
     await t.tap(find.byKey(const ValueKey('home-daily-quote-share')));
     final q = DailyQuoteStore.pick(quotes)!;
-    expect(shared, ['„${q.ku}“ — ${q.tr}\n${q.source}\nZanKurd · zankurd.com']);
+    expect(shared, ['“${q.ku}” — ${q.tr}\n${q.source}\nZanKurd · zankurd.com']);
   });
 
   for (final ku in [false, true]) {
