@@ -708,8 +708,14 @@ class _QuizScreenState extends State<QuizScreen>
                       ? null
                       : payload['selected_answer'] as String?;
                   if (oppAnswer != null) {
+                    // Şık rozetinde de lobideki ad: adsız rakip
+                    // "Oyuncu ZK-XXXX" (kod odadaki kayıttan).
                     _opponentSelectedAnswers[senderKey] = _OpponentAnswer(
-                      name: senderName,
+                      name: PlayerIdentity.resolveNameWithTag(
+                        updatedOpponent.name,
+                        isKu: _isKu,
+                        tag: updatedOpponent.tag,
+                      ),
                       answer: oppAnswer,
                     );
                   } else if (payload['answered'] == false) {

@@ -731,9 +731,10 @@ class _RoomScreenState extends State<RoomScreen> {
   Future<void> _sendReaction(String text) async {
     final roomId = room.id;
     final me = room.players.where((p) => p.id == _currentUserId).firstOrNull;
-    final myName = PlayerIdentity.resolveName(
+    final myName = PlayerIdentity.resolveNameWithTag(
       me?.name ?? 'Tu',
       isKu: context.isKu,
+      tag: me?.tag,
     );
     _reactionController.triggerReaction(text, senderName: myName);
     if (roomId == null) return;

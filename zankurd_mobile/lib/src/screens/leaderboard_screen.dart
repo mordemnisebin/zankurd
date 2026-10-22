@@ -358,9 +358,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         title: Text(dialogContext.t(K.reportProfileTitle)),
         content: Text(
           Tr.forKu(K.reportProfileBodyP, dialogContext.isKu, {
-            'p0': PlayerIdentity.resolveName(
+            'p0': PlayerIdentity.resolveNameWithTag(
               entry.displayName,
               isKu: dialogContext.isKu,
+              tag: entry.playerTag,
             ),
           }),
         ),
