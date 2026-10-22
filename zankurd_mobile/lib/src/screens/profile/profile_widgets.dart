@@ -685,12 +685,31 @@ class _UnifiedRewardsSection extends StatelessWidget {
                 ),
                 const SizedBox(height: SahneSpace.x3),
               ],
-              if (achievements.isEmpty && badgeUnlocked.isEmpty)
+              if (achievements.isEmpty && badgeUnlocked.isEmpty) ...[
+                // Görsellik taraması (2026-10-22, iki denetçi): boş durum
+                // tek satır yazıydı. Kazanılacak ilk başarılar kilitli
+                // siluet olarak görünür: "yok" değil "hedef" okunur.
+                Row(
+                  key: const ValueKey('profile-locked-rewards'),
+                  children: [
+                    for (final a in AchievementStore.definitions.take(4))
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: SahneSpace.x2),
+                          child: _LockedRewardMark(
+                            icon: a.icon,
+                            title: a.title(isKu),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: SahneSpace.x3),
                 Text(
                   Tr.forKu(K.birYarisTamamlaVe, isKu),
                   style: SahneType.caption.copyWith(color: t.tx2),
-                )
-              else
+                ),
+              ] else
                 // Önce başarımlar, sonra rozetler; sarar (kaydırma yok).
                 Wrap(
                   spacing: SahneSpace.x2,
@@ -713,6 +732,59 @@ class _UnifiedRewardsSection extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Henüz kazanılmamış başarının kilitli silueti: sönük pahlı karo + ikon,
+/// altında ad. Ekran okuyucu adı ve "kilitli" durumunu okur.
+class _LockedRewardMark extends StatelessWidget {
+  const _LockedRewardMark({required this.icon, required this.title});
+
+  final IconData icon;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Semantics(
+      label: title,
+      child: ExcludeSemantics(
+        child: Column(
+          children: [
+            Container(
+              height: 48,
+              alignment: Alignment.center,
+              decoration: ShapeDecoration(
+                color: t.s2,
+                shape: SahneShape.withSide(
+                  SahneShape.s,
+                  Color.lerp(t.line, t.goldTx, 0.35)!,
+                  width: 1,
+                ),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Icon(icon, size: 22, color: Color.lerp(t.tx2, t.goldTx, 0.3)),
+                  Positioned(
+                    right: 6,
+                    bottom: 4,
+                    child: Icon(AppIcons.lock, size: 11, color: t.tx2),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: SahneSpace.x1),
+            Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

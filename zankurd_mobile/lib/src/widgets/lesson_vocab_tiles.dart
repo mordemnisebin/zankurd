@@ -45,10 +45,11 @@ class LessonContentBlocks extends StatelessWidget {
     'xemrî': Color(0xFF6B1F2E),
   };
 
+  static final _singleCapital = RegExp(r'^\p{Lu}$', unicode: true);
+
   static bool _isLetterRow(String line) {
     final parts = line.trim().split(RegExp(r'\s+'));
-    return parts.length >= 8 &&
-        parts.every((p) => p.runes.length == 1 && p.toUpperCase() == p);
+    return parts.length >= 8 && parts.every(_singleCapital.hasMatch);
   }
 
   @override
