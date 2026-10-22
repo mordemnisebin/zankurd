@@ -1,7 +1,7 @@
-# ZanKurd iOS 2.0.4 (35) — App Review Packet
+# ZanKurd iOS 2.1.0 (35) — App Review Packet
 
-Bu paket, mevcut kaynak koddan üretilen 2.0.4 (35) release adayı içindir.
-31 TestFlight harici testine gönderildi; 35 son yayın adayıdır (32–34 yerine geçer).
+Bu paket, mevcut kaynak koddan üretilen 2.1.0 (35) release adayı içindir.
+31 TestFlight harici testine gönderildi; 2.1.0 (35), 2.0.4 TestFlight buildlerinin (31–34) yerine geçen yayın sürümüdür.
 2.0.3 (30) paketinden (`app_review_packet_2.0.3_build30.md`) türetildi;
 "2.0.3 (30)'dan beri değişenler" bölümü yeni olanı toplar, 2.0.3 ara
 buildlerinin ve "2.0.2 (25)'den beri değişenler" bölümleri tarihsel olarak korunur, aşağıdaki
@@ -116,7 +116,7 @@ correct answer were removed from the playable set before this build
 events, people and dates; the general-knowledge categories are neutral facts.
 
 
-## 2.0.4 (34)'ten beri değişenler
+## 2.1.0 (35): 2.0.4 (34)'ten beri değişenler
 
 - Sözlük ve ders sözcükleri cihazdan bağımsız sesli: 1160 kayıtlı Kurmancî ses
   dosyası uygulama içinde paketlidir; ağ ya da üçüncü taraf ses servisi yoktur.
