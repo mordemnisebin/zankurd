@@ -784,7 +784,12 @@ class _PlacementPromptCard extends StatelessWidget {
           // kırıyordu (simülatör + ekran turu, 2026-10-22).
           double textWidth(String text, TextStyle style) {
             final painter = TextPainter(
-              text: TextSpan(text: text, style: style),
+              // Aile açıkça yazılır: ölçü, çizilen yazı tipiyle aynı olsun
+              // (painter_font_test).
+              text: TextSpan(
+                text: text,
+                style: style.copyWith(fontFamily: style.fontFamily),
+              ),
               textDirection: Directionality.of(context),
               textScaler: MediaQuery.textScalerOf(context),
               maxLines: 1,
