@@ -481,7 +481,8 @@ void main() {
     final title = tester.widget<Text>(
       find.descendant(of: nextStep, matching: find.text('Alfabe')),
     );
-    expect(title.style?.color, SahneTokens.of(tester.element(nextStep)).tx);
+    // 2026-10-22: dolu Zimrût kartta başlık beyaz.
+    expect(title.style?.color, SahneVivid.onFill);
 
     final primary = find.descendant(
       of: nextStep,

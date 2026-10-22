@@ -992,81 +992,128 @@ class _CurrentLessonCard extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        // Tur 9b: etkin ders kartı seviye ekranındaki etkin kart diliyle
-        // 2 px Agir çerçeve taşır; kilitli satırlardan görsel ağırlıkla ayrılır.
+        // Tasarım kurulu 2026-10-22 (ChatGPT, Gemini 3.1 Pro, Claude Opus):
+        // sıradaki ders kartı yalnız kenarıyla değil DOLU Zimrût yüzeyle
+        // öne çıkar (Duolingo'daki ilerleme hissi); yazı beyaz, sağ altta
+        // kep filigranı. Agir yalnız "Başla"da kalır; eski 2 px Agir çerçeve
+        // dolu yüzeyde gereksiz ağırlık olurdu.
         child: DecoratedBox(
           key: const ValueKey('learning-active-frame'),
           position: DecorationPosition.foreground,
           decoration: ShapeDecoration(
-            shape: SahneShape.withSide(SahneShape.l, t.act, width: 2),
+            shape: SahneShape.withSide(SahneShape.l, t.learnFill, width: 2),
           ),
           child: SahneSurfaceCard(
-            color: t.learnTint,
-            edgeColor: t.learnEdge,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            color: t.learnFill,
+            edgeColor: t.learnFill,
+            child: Stack(
               children: [
-                Row(
-                  children: [
-                    Flexible(
-                      child: Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: SahneBadge(
-                          key: const ValueKey('lesson-recommended-badge'),
-                          label: context.t(K.recommendedForYou),
-                        ),
+                PositionedDirectional(
+                  end: -8,
+                  top: 34,
+                  child: IgnorePointer(
+                    child: Transform.rotate(
+                      angle: -10 * math.pi / 180,
+                      child: const Icon(
+                        AppIcons.graduationCap,
+                        size: 96,
+                        color: SahneVivid.watermark,
                       ),
                     ),
-                    const SizedBox(width: SahneSpace.x2),
-                    // Kapsül ilerleme "tamamlanan / toplam ders".
-                    DecoratedBox(
-                      key: const ValueKey('learning-progress-capsule'),
-                      decoration: ShapeDecoration(
-                        color: t.s2,
-                        shape: const StadiumBorder(),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: SahneSpace.x3,
-                          vertical: SahneSpace.x1,
-                        ),
-                        child: Text(
-                          '$done/$total',
-                          style: SahneType.captionStrong.copyWith(
-                            color: t.tx2,
-                            fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Align(
+                            alignment: AlignmentDirectional.centerStart,
+                            // Dolu Zimrût üstünde cam çip, beyaz yazı
+                            // (turuncu rozet yazısı yeşilde okunmuyordu).
+                            child: DecoratedBox(
+                              key: const ValueKey('lesson-recommended-badge'),
+                              decoration: const ShapeDecoration(
+                                color: SahneVivid.glass,
+                                shape: StadiumBorder(),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: SahneSpace.x3,
+                                  vertical: SahneSpace.x1,
+                                ),
+                                child: Text(
+                                  context.t(K.recommendedForYou),
+                                  style: SahneType.captionStrong.copyWith(
+                                    color: SahneVivid.onFill,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
+                        const SizedBox(width: SahneSpace.x2),
+                        // Kapsül ilerleme "tamamlanan / toplam ders".
+                        DecoratedBox(
+                          key: const ValueKey('learning-progress-capsule'),
+                          decoration: const ShapeDecoration(
+                            color: SahneVivid.glass,
+                            shape: StadiumBorder(),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: SahneSpace.x3,
+                              vertical: SahneSpace.x1,
+                            ),
+                            child: Text(
+                              '$done/$total',
+                              style: SahneType.captionStrong.copyWith(
+                                color: SahneVivid.onFill,
+                                fontFeatures: const [
+                                  FontFeature.tabularFigures(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: SahneSpace.x2),
+                    Semantics(
+                      header: true,
+                      child: Text(
+                        title,
+                        style: SahneType.headline.copyWith(
+                          color: SahneVivid.onFill,
+                        ),
                       ),
                     ),
+                    if (metaText != null && metaText.isNotEmpty) ...[
+                      const SizedBox(height: SahneSpace.x1),
+                      Text(
+                        metaText,
+                        style: SahneType.caption.copyWith(
+                          color: SahneVivid.onFillSoft,
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: SahneSpace.x3),
+                    SahneProgressBar(
+                      value: total == 0 ? 0 : (done / total).clamp(0.0, 1.0),
+                      height: 4,
+                      semanticLabel: title,
+                      trackColor: SahneVivid.glassTrack,
+                      fillColor: SahneVivid.onFill,
+                      edgeColor: Colors.transparent,
+                    ),
+                    const SizedBox(height: SahneSpace.x4),
+                    SahneButton.primary(
+                      label: context.t(K.start),
+                      onPressed: onTap,
+                      expand: true,
+                    ),
                   ],
-                ),
-                const SizedBox(height: SahneSpace.x2),
-                Semantics(
-                  header: true,
-                  child: Text(
-                    title,
-                    style: SahneType.headline.copyWith(color: t.tx),
-                  ),
-                ),
-                if (metaText != null && metaText.isNotEmpty) ...[
-                  const SizedBox(height: SahneSpace.x1),
-                  Text(
-                    metaText,
-                    style: SahneType.caption.copyWith(color: t.tx2),
-                  ),
-                ],
-                const SizedBox(height: SahneSpace.x3),
-                SahneProgressBar(
-                  value: total == 0 ? 0 : (done / total).clamp(0.0, 1.0),
-                  height: 4,
-                  semanticLabel: title,
-                ),
-                const SizedBox(height: SahneSpace.x4),
-                SahneButton.primary(
-                  label: context.t(K.start),
-                  onPressed: onTap,
-                  expand: true,
                 ),
               ],
             ),

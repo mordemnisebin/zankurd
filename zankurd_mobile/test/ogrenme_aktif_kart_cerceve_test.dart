@@ -54,7 +54,10 @@ void main() {
     final shape = (frame.decoration as ShapeDecoration).shape;
     final side = (shape as OutlinedBorder).side;
     expect(side.width, 2);
-    expect(side.color, t.act);
+    // 2026-10-22 tasarım kurulu (ChatGPT, Gemini 3.1 Pro, Claude Opus):
+    // ağırlık farkını artık DOLU Zimrût yüzey taşır; çerçeve yüzeyle aynı
+    // renktedir (Agir yalnız "Başla" düğmesinde kalır).
+    expect(side.color, t.learnFill);
 
     final lock = tester.widgetList<Icon>(find.byIcon(AppIcons.lock)).first;
     expect(lock.size, 16);
