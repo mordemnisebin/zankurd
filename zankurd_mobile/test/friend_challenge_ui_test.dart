@@ -608,7 +608,17 @@ void main() {
         find.byKey(const ValueKey('play-hub-async-duel-turn')),
       );
 
-      expect(find.text('Sıra sende'), findsOneWidget);
+      // 2026-10-22: "Sıra sende" hem düello bölümünün başlığında hem de
+      // Sırayla düello mod kartının durum rozetinde görünür.
+      expect(find.text('Sıra sende'), findsNWidgets(2));
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('play-hub-async-duel')),
+          matching: find.text('Sıra sende'),
+        ),
+        findsOneWidget,
+        reason: 'mod kartı rozeti',
+      );
       expect(find.text('Rojda seni düelloya çağırdı'), findsOneWidget);
       expect(find.text('Oyna'), findsOneWidget);
     });

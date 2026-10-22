@@ -1323,6 +1323,8 @@ class Tr {
     K.preparing: {'ku': 'Tê amadekirin…', 'tr': 'Hazırlanıyor…'},
     K.startEvent: {'ku': 'Dest pê bike', 'tr': 'Başla'},
     K.wheelTitle: {'ku': 'Çerxa rojê', 'tr': 'Günün çarkı'},
+    // Mod kartı rozeti: çark bugün çevrilebilir (2026-10-22).
+    K.wheelReadyBadge: {'ku': 'Amade ye!', 'tr': 'Hazır!'},
     K.wheelOncePerDay: {
       'ku': 'Her roj carekê bizivirîne.',
       'tr': 'Her gün bir kez çevir.',
@@ -3924,6 +3926,7 @@ class K {
   static const questionCount = 'contest.questionCount';
   static const preparing = 'common.preparing';
   static const startEvent = 'contest.start';
+  static const wheelReadyBadge = 'wheel.ready.badge';
   static const wheelTitle = 'wheel.title';
   static const wheelOncePerDay = 'wheel.oncePerDay';
   static const wheelWonAmount = 'wheel.wonAmount';

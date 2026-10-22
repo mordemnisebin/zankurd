@@ -95,6 +95,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   void initState() {
     super.initState();
     unawaited(_refreshPendingRequests());
+    unawaited(_refreshModeBadges());
+    _asyncDuelInboxSignal.addListener(_refreshModeBadges);
     if (widget.asyncDuelEnabled) {
       unawaited(
         asyncDuelChallengeAvailable(widget.repository).then((available) {
@@ -118,6 +120,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
   @override
   void dispose() {
+    _asyncDuelInboxSignal.removeListener(_refreshModeBadges);
     _joinCodeController.dispose();
     _asyncDuelInboxRefresh.dispose();
     super.dispose();
@@ -211,6 +214,33 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     await Navigator.of(context).push(
       AppRoute<void>(page: SpinWheelScreen(repository: widget.repository)),
     );
+    if (mounted) unawaited(_refreshModeBadges());
+  }
+
+  /// Mod kartlarının durum rozetleri (tasarım oylaması 2026-10-22, 15/15
+  /// EVET, en çok seçilen öneri): çark bugün çevrilebiliyorsa "Hazır!",
+  /// sırası bende olan düello varsa "Sıra sende". Rozet bir iyileştirmedir:
+  /// okunamazsa kart rozetsiz çizilir.
+  bool _spinReady = false;
+  int _duelsMyTurn = 0;
+
+  Future<void> _refreshModeBadges() async {
+    try {
+      final ready = await widget.repository.canSpinToday();
+      if (mounted && ready != _spinReady) setState(() => _spinReady = ready);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'play_hub_spin_badge');
+    }
+    if (!widget.asyncDuelEnabled) return;
+    try {
+      final duels = await widget.repository.loadMyAsyncDuels();
+      final mine = duels
+          .where((d) => d.incomingChallenge || d.canResume)
+          .length;
+      if (mounted && mine != _duelsMyTurn) setState(() => _duelsMyTurn = mine);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'play_hub_duel_badge');
+    }
   }
 
   void _openRoom(GameRoom room) {
@@ -478,6 +508,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       role: SahneRole.gold,
       title: context.t(K.wheelTitle),
       subtitle: context.t(K.wheelOncePerDay),
+      badge: _spinReady ? context.t(K.wheelReadyBadge) : null,
       onTap: _openSpinWheel,
     );
 
@@ -562,6 +593,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                   role: SahneRole.race,
                   title: context.t(K.asyncDuel),
                   subtitle: context.t(K.asyncDuelSub),
+                  badge: _duelsMyTurn > 0 && !locked
+                      ? context.t(K.challengeYourTurn)
+                      : null,
                   onTap: locked
                       ? null
                       : () async {

@@ -335,6 +335,7 @@ class SahneModeTile extends StatelessWidget {
                       Row(
                         children: [
                           Icon(icon, size: 26, color: ink),
+                          const SizedBox(width: SahneSpace.x2),
                           const Spacer(),
                           if (loading)
                             SizedBox.square(
@@ -345,20 +346,25 @@ class SahneModeTile extends StatelessWidget {
                               ),
                             )
                           else if (badge != null)
-                            DecoratedBox(
-                              decoration: ShapeDecoration(
-                                color: gold ? t.zerChip : SahneVivid.onFill,
-                                shape: const StadiumBorder(),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: SahneSpace.x2,
-                                  vertical: 2,
+                            Flexible(
+                              flex: 6,
+                              child: DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: gold ? t.zerChip : SahneVivid.onFill,
+                                  shape: const StadiumBorder(),
                                 ),
-                                child: Text(
-                                  badge!,
-                                  style: SahneType.captionStrong.copyWith(
-                                    color: gold ? t.goldTx : fill,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: SahneSpace.x2,
+                                    vertical: 2,
+                                  ),
+                                  child: Text(
+                                    badge!,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: SahneType.captionStrong.copyWith(
+                                      color: gold ? t.goldTx : fill,
+                                    ),
                                   ),
                                 ),
                               ),
