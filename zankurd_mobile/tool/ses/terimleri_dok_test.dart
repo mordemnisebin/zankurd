@@ -21,8 +21,8 @@ void main() {
       if (key.isEmpty || !seen.add(key)) continue;
       out.add({'key': key, 'text': entry.termKu.trim()});
     }
-    File(path).writeAsStringSync(
-      const JsonEncoder.withIndent(' ').convert(out),
-    );
+    File(
+      path,
+    ).writeAsStringSync(const JsonEncoder.withIndent(' ').convert(out));
   });
 }
