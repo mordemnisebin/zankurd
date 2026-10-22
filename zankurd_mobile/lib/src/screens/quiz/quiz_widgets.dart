@@ -1773,7 +1773,7 @@ class _CollapsedWildcardLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final label = context.t(K.insufficientBalance);
+    final label = context.t(K.wildcardNoCoins);
     return Semantics(
       button: true,
       label: '$balance ${context.t(K.coinWord)}. $label',

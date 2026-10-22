@@ -779,7 +779,7 @@ extension _QuizScreenUI on _QuizScreenState {
   /// jeton satırında yazılıydı).
   void _explainLockedWildcard() {
     _showStageToast(
-      '${context.t(K.insufficientBalance)} · '
+      '${context.t(K.wildcardNoCoins)} · '
       '${context.t(K.finishQuizHint)}',
       key: const ValueKey('quiz-wildcard-locked-note'),
     );

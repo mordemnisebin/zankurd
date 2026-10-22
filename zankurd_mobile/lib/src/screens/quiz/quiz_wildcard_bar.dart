@@ -71,7 +71,7 @@ class WildcardButton extends StatelessWidget {
         : isAnswered
         ? context.t(K.locked)
         : cantAfford
-        ? context.t(K.insufficientBalance)
+        ? context.t(K.wildcardNoCoins)
         : null;
 
     final typeLabel = type.label(isKu);

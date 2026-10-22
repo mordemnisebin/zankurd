@@ -1678,6 +1678,12 @@ class Tr {
       'ku': '{item} bikire, {coins} zêr',
       'tr': '{item} satın al, {coins} jeton',
     },
+    // Soru ekranında joker satırı: neyin yetmediği açık (tam uygulama
+    // incelemesi 2026-10-22, Opus + ChatGPT + Grok).
+    K.wildcardNoCoins: {
+      'ku': 'Ji bo alîkariyê zêr têr nakin',
+      'tr': 'Joker için jeton yetmiyor',
+    },
     K.insufficientBalance: {
       'ku': 'Zêrên te têr nakin.',
       'tr': 'Jetonun yetmiyor.',
@@ -3927,6 +3933,7 @@ class K {
   static const preparing = 'common.preparing';
   static const startEvent = 'contest.start';
   static const wheelReadyBadge = 'wheel.ready.badge';
+  static const wildcardNoCoins = 'quiz.wildcard.no.coins';
   static const wheelTitle = 'wheel.title';
   static const wheelOncePerDay = 'wheel.oncePerDay';
   static const wheelWonAmount = 'wheel.wonAmount';
