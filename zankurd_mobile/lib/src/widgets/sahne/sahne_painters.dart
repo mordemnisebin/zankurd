@@ -599,6 +599,29 @@ class SahneVistaPainter extends CustomPainter {
         r * 1.5,
         Paint()..color = sun.withValues(alpha: 0.22),
       );
+      // 21 ışınlı Roj (Kürt güneşi; tasarım oylaması 2026-10-22, 19 modelden
+      // 15'i EVET): ince üçgen ışınlar diskin çevresinde. Gece paletinde
+      // güneş yoktur (yıldızlar + zirvede tek ışık), ışınlar da yoktur.
+      final rays = Path();
+      const count = 21;
+      for (var i = 0; i < count; i++) {
+        final a = -math.pi / 2 + i * 2 * math.pi / count;
+        const half = math.pi / count * 0.42;
+        final inner = r * 1.12;
+        final outer = r * 1.62;
+        rays
+          ..moveTo(
+            c.dx + inner * math.cos(a - half),
+            c.dy + inner * math.sin(a - half),
+          )
+          ..lineTo(c.dx + outer * math.cos(a), c.dy + outer * math.sin(a))
+          ..lineTo(
+            c.dx + inner * math.cos(a + half),
+            c.dy + inner * math.sin(a + half),
+          )
+          ..close();
+      }
+      canvas.drawPath(rays, Paint()..color = sun.withValues(alpha: 0.85));
       canvas.drawCircle(c, r, Paint()..color = sun);
     }
     canvas.drawPath(
