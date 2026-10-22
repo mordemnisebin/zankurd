@@ -1316,6 +1316,11 @@ void main() {
     expect(find.text('Rojbaş'), findsOneWidget);
     expect(find.text('Günaydın / İyi günler'), findsNothing);
 
+    // Slayt içeriği 2026-10-22'den beri kelime kartları: kart aşağı iner.
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('lesson-recall-reveal')),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('lesson-recall-reveal')));
     await tester.pump();
     expect(find.text('Günaydın / İyi günler'), findsOneWidget);

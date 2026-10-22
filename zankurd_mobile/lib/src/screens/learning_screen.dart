@@ -26,13 +26,13 @@ import 'story_screen.dart';
 import '../widgets/app_state.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/lesson_listening_card.dart';
+import '../widgets/lesson_vocab_tiles.dart';
 import '../widgets/lexicon_speak_button.dart';
 import '../widgets/lesson_recall_card.dart';
 import '../widgets/story_catalog.dart';
 import '../widgets/todays_review_card.dart';
 import '../widgets/zk_back_button.dart';
 import 'learner_lexicon_screen.dart';
-import '../widgets/lexicon_lookup.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -1431,11 +1431,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     // Kurmancî sözcüğe dokununca sözlük maddesi açılır. `• terim: anlam`
     // çiftleri düz kalır (terim ve anlamı zaten yan yana yazılı); başlık ve
     // örnek satırlardaki sözcükler dokunulabilir.
-    return LexiconText(
-      slide.contentKu,
-      style: SahneType.body.copyWith(color: t.tx),
-      skipLinePattern: RegExp(r'^• .+?: .+$'),
-    );
+    // `• terim: anlam` satırları sesli kelime kartı, harf satırı karo
+    // olur (bkz. LessonContentBlocks); öteki satırlar dokunulabilir kalır.
+    return LessonContentBlocks(text: slide.contentKu);
   }
 
   /// Örnek cümle: Kulis (`s2`) tonlu M pahlı kutu, ikincil metin.
