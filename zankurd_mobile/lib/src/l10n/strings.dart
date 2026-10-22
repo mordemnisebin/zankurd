@@ -2638,9 +2638,13 @@ class Tr {
           'Kurmancî bilgi yarışması uygulaması. Kürt dili, kültürü, '
           'tarihi, edebiyatı, coğrafyası ve müziğini öğren, yarış.',
     },
+    // 2026-10-22: sözlük ve ders sözcüklerinin paketlenmiş sesleri her
+    // cihazda çalar; yalnız soru/açıklama okuması cihaz sesine bağlı.
     K.ttsKurdishLimited: {
-      'ku': 'Li vê amûrê dengê Kurmancî tune ye. Xwendina bi deng neçalak e.',
-      'tr': 'Bu cihazda Kurmancî sesi bulunamadı. Sesli okuma kullanılamıyor.',
+      'ku':
+          'Li vê amûrê dengê Kurmancî tune ye; pirs û şîrove bi deng nayên xwendin. Dengê peyvên ferhengê û dersan dîsa dixebite.',
+      'tr':
+          'Bu cihazda Kurmancî sesi yok; soru ve açıklamalar sesli okunamıyor. Sözlük ve ders sözcüklerinin sesleri yine çalar.',
     },
 
     // ── Hikâye ekranı ─────────────────────────────────────────────

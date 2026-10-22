@@ -6,10 +6,14 @@ import '../utils/error_reporter.dart';
 import '../utils/kurmanci_text_key.dart';
 import 'question_audio_service.dart';
 
-/// Ana dili Kurmancî olan bir seslendirmenin kaydı.
+/// Bir Kurmancî ifadenin paketlenmiş ses kaydı.
 ///
-/// [VerifiedQuestionAudioClip] ile aynı kural: köken ve lisans boş
-/// olamaz. Fark: klip bir soruya değil bir İFADEYE bağlıdır
+/// [VerifiedQuestionAudioClip] ile aynı kural: köken, lisans ve konuşmacı
+/// boş olamaz; sentetik ses ise [speaker] bunu açıkça söyler. 2026-10-22'de
+/// sözlük terimleri Anadil Kurmancî TTS (VoxCPM2 + LoRA) ile üretildi ve
+/// her klip MMS-1B (kmr) ile geri okunarak denetlendi (bkz. [provenance]);
+/// cihazda Kurmancî TTS sesi neredeyse hiç olmadığından bu kayıtlar ses
+/// düğmesinin tek gerçek kaynağıdır. Fark: klip bir soruya değil bir İFADEYE bağlıdır
 /// ([kurmanciTextKey]); böylece ders, sözlük ve sorudaki aynı ifade tek
 /// kaydı kullanır.
 class RecordedClip {
