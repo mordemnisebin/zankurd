@@ -4515,10 +4515,10 @@
     "category": "Ziman",
     "prompt": "\"okul/akademi\" bi Kurmancî çi ye?",
     "answers": [
-      "Neh",
-      "Duşem",
+      "Dokuz",
+      "Pazartesi",
       "Xwendegeh",
-      "Heşt"
+      "Sekiz"
     ],
     "correctAnswer": "Xwendegeh",
     "explanation": "\"xwendegeh\" = \"okul\". Mînak: Xwendegeha gund tenê du polan hebûn.",
@@ -4528,10 +4528,10 @@
     "explanationTr": "\"xwendegeh\" = \"okul\". Örnek: Köyün okulunda yalnız iki sınıf vardı.",
     "promptTr": "\"okul/akademi\" Kurmancîde nasıl denir?",
     "answersTr": [
-      "Neh",
-      "Duşem",
+      "Dokuz",
+      "Pazartesi",
       "Xwendegeh",
-      "Heşt"
+      "Sekiz"
     ],
     "correctAnswerTr": "Xwendegeh"
   },
@@ -11270,7 +11270,7 @@
     "difficulty": 4,
     "explanationKu": "Kilamên dengbêjan bê amûr û bi rîtmeke azad tên gotin; meqam behsa vê şêwaza gotinê dike, ne navê stranekê ye.",
     "explanationTr": "Dengbêj kilamları çalgısız ve serbest ritimle okunur; makam bir şarkının adı değil, bu okuyuş tarzını anlatır.",
-    "promptTr": "\"dengbêj makamı\" kavramı neyi ifade eder?",
+    "promptTr": "\"makama dengbêjan\" kavramı neyi ifade eder?",
     "answersTr": [
       "kilamların okunduğu serbest ritimli vokal tarzı",
       "Behdînan yöresinin sevilen devrimci müzisyeni",

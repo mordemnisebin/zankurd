@@ -65,6 +65,9 @@ const _recategorisedLocally = <String, String>{'offline_0757': 'Cografya'};
 /// id -> sunucuyu onaydan çıkaran göç. Ekleme göçü tarihî bir kayıttır;
 /// soru yerelde artık oynanmaz, sunucuda ise o göçle `is_approved=false`dır.
 const _retiredAfterSync = <String, String>{
+  // 2026-10-23 soru kalitesi taraması emeklileri.
+  'offline_2818': 'supabase/2026-10-23_icerik_taramasi.sql',
+  'edit_ziman_0003': 'supabase/2026-10-23_icerik_taramasi.sql',
   'curated_siyaset_0009': 'supabase/2026-10-19_icerik_emekli.sql',
   'offline_tf_siy_0040': 'supabase/2026-10-19_icerik_emekli.sql',
   'offline_tf_ede_0019': 'supabase/2026-10-19_icerik_emekli.sql',
@@ -82,6 +85,7 @@ const _retiredAfterSync = <String, String>{
 const _promptFixSqls = [
   'supabase/2026-10-14_banka_ku_duzeltme.sql',
   'supabase/2026-10-20_tije_tiji.sql',
+  'supabase/2026-10-23_icerik_taramasi.sql',
 ];
 
 // update questions set\n  prompt = '…'[, …] where id = 'uuid';

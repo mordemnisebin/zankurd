@@ -185,7 +185,9 @@ void main() {
       // (dersler2 0137–0142); eski 0104–0109 dosyadan tamamen çıktı.
       // 3311 -> 3306 (-5): 2026-10-22 yakın tekrar emeklisi (hat_0043,
       // hat_0109, hat_0112, hat_0118, baslangic_2026_10_06_0068).
-      3306,
+      // 3306 -> 3304 (-2): 2026-10-23 soru kalitesi taraması emeklisi
+      // (offline_2818 cevabı ele veriyor, edit_ziman_0003 yinelenen bilgi).
+      3304,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -254,7 +256,7 @@ void main() {
       //   Edebiyat 16 - 1 + 8 = 23; Dîrok 36 + 7 = 43; Muzîk 22 + 5 = 27;
       //   Çand 32 + 9 = 41; Teknolojî 0 + 3 = 3; Siyaset 68 + 2 = 70.
       'retired=Sînema': 26, // 2026-10-22 yakın tekrar +1 (hat_0043)
-      'retired=Cografya': 51,
+      'retired=Cografya': 52, // 2026-10-23 offline_2818
       'retired=Edebiyat': 25, // 2026-10-19 içerik denetimi +2
       // 43 -> 45: 2026-10-17 yakın tekrar (`ds_dirok_0029`, `offline_2668`).
       'retired=Dîrok': 45,
@@ -264,7 +266,8 @@ void main() {
       // 2026-09-30: 36 -> 37 (`offline_0120`, görsel "pîr" gösteriyor).
       // 45 -> 39: 2026-10-21 emekli 0104–0109 dosyadan silindi (yerine
       // 0137–0142 geldi), artık envanterde sayılmıyor.
-      'retired=Ziman': 40, // 2026-10-22 yakın tekrar +1
+      'retired=Ziman':
+          41, // 2026-10-22 yakın tekrar +1; 2026-10-23 edit_ziman_0003
       // 41 -> 42: 2026-10-08 `ds_cand_0285` (cevap soru metninde) emekliye ayrıldı.
       'retired=Çand': 42,
       // 2026-09-30 altıncı dalga: Teknolojî'den iki modelce onaylanan 3 soru.

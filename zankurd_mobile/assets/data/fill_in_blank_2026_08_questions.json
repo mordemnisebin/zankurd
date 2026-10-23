@@ -172,8 +172,8 @@
     "category": "Ziman",
     "type": "fillInBlank",
     "difficulty": 3,
-    "prompt": "Di dema borî de lêkera \"dîtin\" li gorî berkara kesê yekem a yekjimar temam bike: \"Wî ez ___.\"",
-    "promptTr": "Geçmiş zamanda “görmek” geçişli fiilini birinci tekil kişi nesnesine göre tamamla: “Wî ez ___.”",
+    "prompt": "Di dema borî ya lêkera derbasdar de, lêkerê li gorî berkara kesê yekem a yekjimar temam bike: \"Wî ez ___.\"",
+    "promptTr": "Geçmiş zamanda geçişli fiili birinci tekil kişi nesnesine göre tamamla: \"Wî ez ___.\"",
     "answers": [
       "dîtim"
     ],
