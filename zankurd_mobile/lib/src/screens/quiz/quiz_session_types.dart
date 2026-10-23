@@ -24,6 +24,19 @@ bool lexiconTapAllowedFor({
   return learning || practice;
 }
 
+/// Soru altındaki açılır Türkçe çeviri: rakibin olmadığı her tek kişilik
+/// turda açık (konu karosundan açılan normal tur dahil; sözlük dokunuşu orada
+/// kapalı olduğu için ona bağlanmadı). Düello, bot yarışı, günün soruları,
+/// yarışma ve çevrimiçi oda kapalıdır: orada çeviri başkasına karşı ipucudur.
+bool translationRevealAllowedFor({
+  required bool is1v1,
+  required bool botRace,
+  required bool dailyQuiz,
+  required bool contest,
+  required bool versus,
+  required bool onlineRoom,
+}) => !(is1v1 || botRace || dailyQuiz || contest || versus || onlineRoom);
+
 /// Ödül üretmeyen tek kişilik tur: süre tercihi yalnız burada geçerlidir.
 bool isRewardNeutralSoloQuiz({
   required bool is1v1,

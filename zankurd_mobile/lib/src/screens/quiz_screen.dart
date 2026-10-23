@@ -38,6 +38,7 @@ import '../services/favorite_mutation_service.dart';
 import '../services/learning_productive_recall.dart';
 import '../services/question_audio_service.dart';
 import '../services/room_result_presentation.dart';
+import 'quiz/prompt_translation_reveal.dart';
 import '../services/wildcard_replacement.dart';
 import 'quiz/fill_in_blank_widget.dart';
 import 'quiz/word_ordering_widget.dart';
@@ -164,6 +165,16 @@ class _QuizScreenState extends State<QuizScreen>
     dailyQuiz: widget.dailyQuiz,
     contest: widget.contestId != null,
     versus: widget.versusBannerText != null,
+  );
+
+  /// Bkz. [translationRevealAllowedFor].
+  bool get _translationRevealAllowed => translationRevealAllowedFor(
+    is1v1: widget.is1v1,
+    botRace: widget.botRace,
+    dailyQuiz: widget.dailyQuiz,
+    contest: widget.contestId != null,
+    versus: widget.versusBannerText != null,
+    onlineRoom: (widget.room.id?.trim() ?? '').isNotEmpty,
   );
 
   /// Süresiz modun geçerli olabileceği tek yer: ödül üretmeyen tek kişilik

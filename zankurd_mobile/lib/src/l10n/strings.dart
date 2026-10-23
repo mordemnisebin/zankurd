@@ -1680,6 +1680,12 @@ class Tr {
     },
     // Soru ekranında joker satırı: neyin yetmediği açık (tam uygulama
     // incelemesi 2026-10-22, Opus + ChatGPT + Grok).
+    // Soru altındaki açılır Türkçe çeviri şeridi (2026-10-23). KU jüri:
+    // Grok + Gemini 'Bi tirkî nîşan bide', Codex taslağı onayladı; çoğunluk.
+    K.showTurkishTranslation: {
+      'ku': 'Bi tirkî nîşan bide',
+      'tr': 'Türkçesini göster',
+    },
     K.wildcardNoCoins: {
       'ku': 'Ji bo alîkariyê zêrên te têr nakin',
       'tr': 'Joker için jeton yetmiyor',
@@ -3933,6 +3939,7 @@ class K {
   static const preparing = 'common.preparing';
   static const startEvent = 'contest.start';
   static const wheelReadyBadge = 'wheel.ready.badge';
+  static const showTurkishTranslation = 'quiz.showTurkishTranslation';
   static const wildcardNoCoins = 'quiz.wildcard.no.coins';
   static const wheelTitle = 'wheel.title';
   static const wheelOncePerDay = 'wheel.oncePerDay';

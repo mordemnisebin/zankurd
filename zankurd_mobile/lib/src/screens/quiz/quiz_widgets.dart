@@ -409,6 +409,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     required this.suspense,
     required this.onAnswer,
     this.lexiconEnabled = false,
+    this.translationEnabled = false,
     this.forceHeadline = false,
     this.titleLineBudget = QuizQuestionPrompt.maxTitleLines,
     this.audiencePoll,
@@ -430,6 +431,9 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   /// Sözlük dokunuşu: yalnız öğrenme modunda (günün dersi, ders kısa testi,
   /// alıştırma); yarış, oda ve düelloda KAPALI.
   final bool lexiconEnabled;
+
+  /// Açılır Türkçe çeviri şeridi (bkz. [translationRevealAllowedFor]).
+  final bool translationEnabled;
   final QuizQuestion question;
   final String selectedAnswer;
   final bool? adjudicatedCorrect;
@@ -492,7 +496,8 @@ class _QuestionTextAndAnswers extends StatelessWidget {
         final showListen =
             canListen && onListen != null && listeningListenable != null;
 
-        final promptRow = Row(
+        final translation = _revealableTranslation(context);
+        final promptLine = Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Dinleme düğmesi (48) soru metninin yanında durur; boy
@@ -507,6 +512,20 @@ class _QuestionTextAndAnswers extends StatelessWidget {
             ],
           ],
         );
+        final Widget promptRow = translation == null
+            ? promptLine
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  promptLine,
+                  const SizedBox(height: SahneSpace.x2),
+                  PromptTranslationReveal(
+                    key: ValueKey('prompt-tr-reveal-${question.id}'),
+                    translation: translation,
+                  ),
+                ],
+              );
         final rest = <Widget>[
           SizedBox(height: isCompact ? SahneSpace.x3 : SahneSpace.x4),
           Container(key: answerAreaKey, child: _answerArea(context)),
@@ -561,6 +580,23 @@ class _QuestionTextAndAnswers extends StatelessWidget {
         );
       },
     );
+  }
+
+  /// Kurmancî oynayana açılır Türkçe çeviri (2026-10-23, kullanıcı geri
+  /// bildirimi: "hiç bilmeyen birine altta kapalı, basınca çevirisini
+  /// gösteren bir şey"). Yalnız rakipsiz tek kişilik turda
+  /// ([translationEnabled]). Yalnız soru metni çevrilir: şık çevirisi
+  /// kelime sorularında cevabı ele verir.
+  /// Boşluk doldurma ve kelime sıralama kendi çevirisini zaten taşır.
+  String? _revealableTranslation(BuildContext context) {
+    if (!translationEnabled || !context.isKu) return null;
+    if (question.type == QuestionType.fillInBlank ||
+        question.type == QuestionType.wordOrdering) {
+      return null;
+    }
+    final tr = question.promptTr?.trim();
+    if (tr == null || tr.isEmpty || tr == promptText.trim()) return null;
+    return tr;
   }
 
   /// Soru başlığı. Boşluk doldurma ve kelime sıralama `Yönerge: "cümle"
