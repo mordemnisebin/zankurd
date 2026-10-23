@@ -171,6 +171,13 @@
 library;
 
 const Set<String> retiredQuestionIds = <String>{
+  // 2026-10-23 soru kalitesi taraması (Flash + Grok tarama, GPT-5.6 + Claude
+  // Opus 5 doğrulama): doğru şık sorudaki iki adı birleştirip cevabı
+  // ele veriyor ("Cizîr û Botan" -> "herêma Botan/Cizîrê"); onarılamaz.
+  'offline_2818',
+  // Aynı tarama: "(vowel)" kalkınca baslangic_2026_10_06_0002 ile birebir
+  // aynı bilgiyi sorduğu görüldü (sesli harf sayısı, cevap 8).
+  'edit_ziman_0003',
   // Sînema (18)
   'cinema_0002',
   'cinema_0011',

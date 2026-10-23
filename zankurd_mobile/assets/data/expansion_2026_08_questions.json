@@ -2212,7 +2212,7 @@
   {
     "id": "tech_core_0012",
     "category": "Teknolojî",
-    "prompt": "Hejmara dehanî 13 di pergala binary de çawa tê nivîsandin?",
+    "prompt": "Hejmara dehanî 13 di pergala duyî de çawa tê nivîsandin?",
     "answers": [
       "1011",
       "1110",
@@ -2283,8 +2283,8 @@
     "prompt": "Kîjan bîr bi giranî tenê ji bo xwendinê ye û naveroka xwe bêyî ceryan diparêze?",
     "answers": [
       "RAM",
-      "Cache",
-      "Bîra virtual",
+      "Pêşbîr",
+      "Bîra virtûel",
       "ROM"
     ],
     "correctAnswer": "ROM",
@@ -2450,7 +2450,7 @@
   {
     "id": "tech_core_0019",
     "category": "Teknolojî",
-    "prompt": "Nirxa dehanî ya hejmara binary 11111111 çi ye?",
+    "prompt": "Nirxa dehanî ya hejmara dualî 11111111 çi ye?",
     "answers": [
       "255",
       "127",
@@ -2994,7 +2994,7 @@
   {
     "id": "tech_core_0035",
     "category": "Teknolojî",
-    "prompt": "Têgeha \"latency\" di torê de çi dipîve?",
+    "prompt": "Têgeha derengiyê (latency) di torê de çi dipîve?",
     "answers": [
       "Dema ku dane heta bigihîje derbas dike",
       "Hejmara amûrên girêdayî",
@@ -4150,7 +4150,7 @@
   {
     "id": "tech_invent_0014",
     "category": "Teknolojî",
-    "prompt": "Pîla yekem a ku di sala 1800î de cereyanek berdewam da kî çêkir?",
+    "prompt": "Pîla yekem a ku di sala 1800î de cereyanek berdewam da kê çêkir?",
     "answers": [
       "André-Marie Ampère",
       "Alessandro Volta",

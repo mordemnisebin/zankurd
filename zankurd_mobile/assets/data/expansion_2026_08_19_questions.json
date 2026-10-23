@@ -102,7 +102,7 @@
     "id": "ds_cografya_0250",
     "category": "Cografya",
     "difficulty": 4,
-    "prompt": "Li Çiyayên Cîlo û Agiriyê hebûna cemedên herdemî (buzul) encama kîjan taybetmendiya erdnîgarî ye?",
+    "prompt": "Li Çiyayên Cîlo û Agiriyê hebûna cemedên herdemî encama kîjan taybetmendiya erdnîgarî ye?",
     "promptTr": "Cilo ve Ağrı Dağları'nda sirk ve vadi buzullarının günümüze kadar varlığını koruyabilmesi hangi coğrafi etmene bağlıdır?",
     "answers": [
       "Nêzîkbûna wan a ber bi qiraxa Deryaya Reş ve",
@@ -432,7 +432,7 @@
     "id": "ds_cografya_0260",
     "category": "Cografya",
     "difficulty": 5,
-    "prompt": "Li herêmê sedema çêbûna avhewaya parzemînî ya hişk (karasal) li hember nêzîkbûna deryayan çi ye?",
+    "prompt": "Li herêmê sedema çêbûna avhewaya parzemînî ya hişk li hember nêzîkbûna deryayan çi ye?",
     "promptTr": "Bölgede denizlere olan mesafeye rağmen şiddetli karasal iklimin hüküm sürmesinin ana orografik nedeni nedir?",
     "answers": [
       "Nebûna çemên mezin li seranserê herêmê",
@@ -1196,7 +1196,7 @@
     "answers": [
       "Tenê xeta Ekwatorê ya nizm",
       "Tenê herêma Cemsera Bakur",
-      "Hêlîlarên navîn (orta enlemler)",
+      "Hêlîlarên navîn",
       "Tenê rûberên okyanûsên kûr"
     ],
     "answersTr": [
@@ -1205,7 +1205,7 @@
       "Orta enlemler (ılıman kuşak ülkeleri)",
       "Yalnızca derin okyanus çukurlukları"
     ],
-    "correctAnswer": "Hêlîlarên navîn (orta enlemler)",
+    "correctAnswer": "Hêlîlarên navîn",
     "correctAnswerTr": "Orta enlemler (ılıman kuşak ülkeleri)",
     "explanation": "Konik projeksiyon bir koninin orta enlemlere teğet geçirilmesiyle oluşur ve bu kuşaktaki şekil ve alan bozulmalarını en aza indirir.",
     "explanationTr": "Konik projeksiyon bir koninin orta enlemlere teğet geçirilmesiyle oluşur ve bu kuşaktaki şekil ve alan bozulmalarını en aza indirir.",

@@ -976,8 +976,8 @@
     "category": "Çand",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Piştî meha Remezanê kîjan cejn tê?",
-    "promptTr": "Ramazan ayından sonra hangi bayram gelir?",
+    "prompt": "Piştî meha rojiyê kîjan cejn tê?",
+    "promptTr": "Oruç ayından sonra hangi bayram gelir?",
     "answers": [
       "Cejna Qurbanê",
       "Cejna Newrozê",
@@ -1012,8 +1012,8 @@
     "category": "Çand",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Di ___ de qurban tê serjêkirin.",
-    "promptTr": "___ kurban kesilir.",
+    "prompt": "Di ___ de ajal wekî ayîn têne serjêkirin.",
+    "promptTr": "___ hayvanlar ibadet amacıyla kesilir.",
     "answers": [
       "Cejna Remezanê",
       "Cejna Newrozê",

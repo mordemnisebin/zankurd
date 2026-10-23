@@ -4,12 +4,12 @@
     "category": "Sînema",
     "prompt": "Dema ku rûyê lîstikvan bi tevahî dîmenê dagire, ev kîjan plan e?",
     "answers": [
-      "plana dûr (uzak çekim)",
-      "plana nêzîk (yakın çekim)",
-      "plana navîn (orta çekim)",
-      "plana damezrîner (establishing shot)"
+      "plana dûr",
+      "plana nêzîk",
+      "plana navîn",
+      "plana damezrîner"
     ],
-    "correctAnswer": "plana nêzîk (yakın çekim)",
+    "correctAnswer": "plana nêzîk",
     "promptTr": "Oyuncunun yüzü çerçevenin tamamını doldurduğunda bu hangi plandır?",
     "answersTr": [
       "uzak çekim",
@@ -37,12 +37,12 @@
     "category": "Sînema",
     "prompt": "Kîjan plan cih û hawîrdora ku çîrok lê derbas dibe bi tevahî nîşan dide?",
     "answers": [
-      "plana damezrîner (kurucu çekim)",
-      "plana nêzîk (yakın çekim)",
-      "plana serpîrî (tepe çekimi)",
-      "çarçoveya cemidî (dondurulmuş kare)"
+      "plana damezrîner",
+      "plana nêzîk",
+      "plana serpîrî",
+      "çarçoveya cemidî"
     ],
-    "correctAnswer": "plana damezrîner (kurucu çekim)",
+    "correctAnswer": "plana damezrîner",
     "promptTr": "Öykünün geçtiği mekânı ve çevreyi bir bütün olarak gösteren plan hangisidir?",
     "answersTr": [
       "geniş açılış çekimi (establishing shot)",
@@ -307,7 +307,7 @@
       "Tribeca Institute"
     ],
     "correctAnswer": "AMPAS",
-    "promptTr": "Oscar'ı veren kurum hangisidir ve hangi yıl kurulmuştur?",
+    "promptTr": "Oscar'ı veren ve 1927 yılında kurulan kurum hangisidir?",
     "answersTr": [
       "Cannes Film Cemiyeti",
       "AMPAS",
@@ -563,7 +563,7 @@
   {
     "id": "sf_cin_0006",
     "category": "Cîhan",
-    "prompt": "Pêşbaziya fermî cara yekem di kîjan salê de ket nav festîvalê?",
+    "prompt": "Pêşbaziya fermî cara yekem di kîjan salê de ket nav Festîvala Fîlman a Venedîkê?",
     "answers": [
       "1932",
       "1949",
@@ -571,7 +571,7 @@
       "1937"
     ],
     "correctAnswer": "1934",
-    "promptTr": "Resmî yarışma ilk kez hangi yılda festivale girdi?",
+    "promptTr": "Resmî yarışma ilk kez hangi yılda Venedik Film Festivali'ne girdi?",
     "answersTr": [
       "1932",
       "1949",
@@ -1368,7 +1368,7 @@
       "Altın Aslan",
       "Altın Palmiye",
       "Altın Ayı",
-      "Altın Küre"
+      "Altın Kurt"
     ],
     "correctAnswerTr": "Altın Ayı",
     "explanationKu": "Xelatên herî girîng ên Berlinaleyê Hirça Zêrîn û Hirçên Zîvîn in.",

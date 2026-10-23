@@ -69,7 +69,7 @@
     "difficulty": 3,
     "id": "edit_ziman_0003",
     "category": "Ziman",
-    "prompt": "Di alfabeya kurdî ya latînî de çend dengdêr (vowel) hene?",
+    "prompt": "Di alfabeya kurdî ya latînî de çend dengdêr hene?",
     "answers": [
       "8",
       "5",
@@ -167,7 +167,7 @@
     "difficulty": 3,
     "id": "edit_ziman_0006",
     "category": "Ziman",
-    "prompt": "Nîşana pirjimariyê ya rewşa tewandî (oblique) di Kurmancî de kîjan e?",
+    "prompt": "Nîşana pirjimariyê ya rewşa tewandî di Kurmancî de kîjan e?",
     "answers": [
       "-an",
       "-ek",
@@ -395,7 +395,7 @@
     "difficulty": 4,
     "id": "edit_ziman_0015",
     "category": "Ziman",
-    "prompt": "Di Kurmancî de \"daçek\" (preposition/postposition) çi ye?",
+    "prompt": "Di Kurmancî de \"daçek\" çi ye?",
     "answers": [
       "avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide",
       "Peyvên wek \"di, bi, ji, li\" yên ku têkiliya navdêran diyar dikin",
@@ -415,7 +415,7 @@
     },
     "promptTr": "Kurmancîde \"daçek\" (edat) nedir?",
     "answersTr": [
-      "eylemin çok uzak bir geçmişte olduğunu gösteren fiil yapısı",
+      "bir eylemin başka bir geçmiş eylemden önce bittiğini gösteren fiil yapısı",
       "İsimlerin ilişkisini belirten \"di, bi, ji, li\" gibi sözcükler",
       "\"Tu\" tekil, \"hûn\" çoğul/saygı biçimidir",
       "isim ya da zamirlerin cümledeki rolüne göre ekinin değişmesi"
@@ -622,10 +622,10 @@
     "answers": [
       "Stranek dînî",
       "Cureyekî xwarinê",
-      "Mamik / bilmece",
+      "Mamik",
       "Reqseke gelêrî"
     ],
-    "correctAnswer": "Mamik / bilmece",
+    "correctAnswer": "Mamik",
     "explanation": "Tiştonek, kış sohbetlerinde sorulan zekâ bilmeceleridir.",
     "explanationKu": "Tiştonek pirsên jîrekiyê ne ku di şevbihêrkan de tên gotin.",
     "explanationTr": "Tiştonek, kış sohbetlerinde sorulan zekâ bilmeceleridir.",
@@ -749,9 +749,9 @@
     "prompt": "Di çanda kurdî de \"heval\" bi giştî çi tê wateyê?",
     "answers": [
       "Hogir / dost",
-      "Toplu halk oyunu",
-      "Mamik / bilmece",
-      "Atalar/ecdat"
+      "Govend",
+      "Mamik",
+      "Kal û bav"
     ],
     "correctAnswer": "Hogir / dost",
     "explanation": "\"Heval\" arkadaş/yoldaş anlamını taşır.",
@@ -1001,9 +1001,9 @@
     "prompt": "Di kevneşopiya kurdî de \"rîspî\" kî ye?",
     "answers": [
       "Kesê pîr ê bi rûmet ê ku pirsgirêkan çareser dike",
-      "pîrozbahiya serê salê di salnameya gelêrî ya kurdî de",
-      "reqsa kevneşopî ya herêma Şirnexê",
-      "vegotina ku ji nifşî bo nifşî hatiye veguhastin"
+      "Kesê ku stranên kevneşopî dibêje",
+      "Kesê ku merasîmên olî bi rê ve dibe",
+      "Kesê ku dermanên gelêrî amade dike"
     ],
     "correctAnswer": "Kesê pîr ê bi rûmet ê ku pirsgirêkan çareser dike",
     "explanation": "Rîspî (aksakal), toplumda arabuluculuk yapan, anlaşmazlıkları çözen saygın yaşlıdır.",
@@ -1019,9 +1019,9 @@
     "promptTr": "Kürt geleneğinde \"rîspî\" kimdir?",
     "answersTr": [
       "Anlaşmazlıkları çözen saygın yaşlı kişi",
-      "Kürt halk takvimindeki yılbaşı kutlaması",
-      "Şirnex yöresinin geleneksel dansı",
-      "kuşaktan kuşağa aktarılan anlatı"
+      "Geleneksel şarkılar söyleyen kişi",
+      "Dinî törenleri yöneten kişi",
+      "Halk ilaçları hazırlayan kişi"
     ],
     "correctAnswerTr": "Anlaşmazlıkları çözen saygın yaşlı kişi"
   },
@@ -1825,8 +1825,8 @@
     "prompt": "Zincîra çiyayên ku bi piranî di erdnîgariya kurdî re derbas dibe kîjan e?",
     "answers": [
       "Alp",
-      "Kafkas",
-      "Toros Rojava",
+      "Qefqas",
+      "Torosên Rojava",
       "Zagros"
     ],
     "correctAnswer": "Zagros",
@@ -2292,7 +2292,7 @@
     "answersTr": [
       "Bilûr",
       "Tembûr",
-      "Davul",
+      "Def",
       "Zurna"
     ],
     "correctAnswerTr": "Tembûr"
@@ -2432,9 +2432,9 @@
     "category": "Muzîk",
     "prompt": "Ayşe Şan di dîroka muzîka kurdî de çima girîng e?",
     "answers": [
-      "Amûra pifê ya bi dengê bilind a ku li derve tê lêxistin",
+      "Nivîskara yekem romana kurdî ye",
       "Yekem hunermenda kurd a jin a ku plak dagirt",
-      "Sazê rîtmê yê ku bi zirneyê re tê lêxistin",
+      "Damezrênera yekem koma muzîkê ya kurdî ye",
       "Yek ji dengên jin ên pêşeng ên muzîka kurdî ye"
     ],
     "correctAnswer": "Yek ji dengên jin ên pêşeng ên muzîka kurdî ye",
@@ -2450,9 +2450,9 @@
     },
     "promptTr": "Ayşe Şan, Kürt müziği tarihinde neden önemlidir?",
     "answersTr": [
-      "açık havada çalınan yüksek sesli üflemeli çalgıdır",
+      "İlk Kürtçe romanın yazarıdır",
       "plak dolduran ilk Kürt kadın sanatçıdır",
-      "zurnayla birlikte çalınan ritim sazıdır",
+      "ilk Kürt müzik grubunun kurucusudur",
       "Kürt müziğinin öncü kadın seslerinden biridir"
     ],
     "correctAnswerTr": "Kürt müziğinin öncü kadın seslerinden biridir"
@@ -2464,10 +2464,10 @@
     "category": "Muzîk",
     "prompt": "\"Lawik\" di muzîka kurdî de bi giştî çi ye?",
     "answers": [
-      "Yek ji dengên jin ên pêşeng ên muzîka kurdî ye",
-      "Belavbûna cîhanî ya stran û tomarkirinê",
+      "Cureyekî stranê yê taybet bi mersiyeyan",
+      "Cureyekî reqsa komî",
       "Cureyekî kilamê yê bi gelemperî evîndar",
-      "Bi tiliyan an bi mizrabê"
+      "Cureyekî muzîka bêgotin"
     ],
     "correctAnswer": "Cureyekî kilamê yê bi gelemperî evîndar",
     "explanation": "Lawik bir kilam türüdür; çoğunlukla aşk ve hasret üzerinedir.",
@@ -2482,10 +2482,10 @@
     },
     "promptTr": "Kürt müziğinde \"lawik\" genel olarak nedir?",
     "answersTr": [
-      "Kürt müziğinin öncü kadın seslerinden biridir",
-      "Şarkı ve kayıtların dünyaya yayılmasıdır",
+      "Özellikle ağıtlara özgü bir şarkı türüdür",
+      "Bir toplu dans türüdür",
       "Çoğunlukla aşk üzerine bir kilam türüdür",
-      "Parmakla ya da mızrapla çalınır"
+      "Sözsüz bir müzik türüdür"
     ],
     "correctAnswerTr": "Çoğunlukla aşk üzerine bir kilam türüdür"
   },
@@ -2588,10 +2588,10 @@
     "category": "Muzîk",
     "prompt": "\"Erbane\" cureyekî çi amûrê ye?",
     "answers": [
-      "Avaz û qalibê kilamê",
+      "Amûra têlî ya wek tembûrê",
       "Amûra lêdanê ya wek def",
-      "Reqsa gelêrî ya komî",
-      "Bûyerên şer û berxwedanê"
+      "Amûra pifê ya wek bilûrê",
+      "Amûra klavyeyî ya wek piyanoyê"
     ],
     "correctAnswer": "Amûra lêdanê ya wek def",
     "explanation": "Erbane (def), deri kaplı vurmalı bir çalgıdır; dini ve halk müziğinde kullanılır.",
@@ -2606,10 +2606,10 @@
     },
     "promptTr": "\"Erbane\" ne tür bir çalgıdır?",
     "answersTr": [
-      "Kilamın ezgi ve kalıbıdır",
+      "Tembur gibi telli bir çalgıdır",
       "Def gibi vurmalı bir çalgıdır",
-      "Toplu oynanan halk dansıdır",
-      "Savaş ve direniş olaylarıdır"
+      "Bilûr gibi üflemeli bir çalgıdır",
+      "Piyano gibi klavyeli bir çalgıdır"
     ],
     "correctAnswerTr": "Def gibi vurmalı bir çalgıdır"
   },
@@ -3285,12 +3285,12 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de \"-ek\" wek paşgir çi diyar dike?",
     "answers": [
-      "nebinavkirîbûn (yek/bir)",
+      "nebinavkirîbûn (yek)",
       "cînavkên kesane",
       "kesê ku karekî dike",
       "lêkera gerguhêz"
     ],
-    "correctAnswer": "nebinavkirîbûn (yek/bir)",
+    "correctAnswer": "nebinavkirîbûn (yek)",
     "explanation": "\"Pirtûkek\" bir kitap demektir; belirsizlik ekidir.",
     "explanationKu": "\"Pirtûkek\" wateya \"bir kitap\" dide; ew nîşana nebinavkirîbûnê ye.",
     "explanationTr": "\"Pirtûkek\" bir kitap demektir; belirsizlik ekidir.",
@@ -3445,7 +3445,7 @@
     "difficulty": 5,
     "id": "edit_ziman_0031",
     "category": "Ziman",
-    "prompt": "Di Kurmancî de \"raweya bilanî\" (subjunctive) bi kîjan pêşgirê tê çêkirin?",
+    "prompt": "Di Kurmancî de \"raweya bilanî\" bi kîjan pêşgirê tê çêkirin?",
     "answers": [
       "di-",
       "na-",
@@ -3544,9 +3544,9 @@
       "Amûra hûnandina xalîçe û bêrîkan",
       "Kesên ku bûkê ji mala wê tînin",
       "Destana Memê Alan",
-      "Li ber xwe dan / direniş"
+      "Li ber xwe dan"
     ],
-    "correctAnswer": "Li ber xwe dan / direniş",
+    "correctAnswer": "Li ber xwe dan",
     "explanation": "\"Berxwedan\", \"li ber xwe dan\"dan gelir; direnme ve ısrar anlamındadır.",
     "explanationKu": "\"Berxwedan\" ji \"li ber xwe dan\" tê; wateya xwe-parastin û israrê dide.",
     "explanationTr": "\"Berxwedan\", \"li ber xwe dan\"dan gelir; direnme ve ısrar anlamındadır.",
@@ -3562,9 +3562,9 @@
       "Halı ve heybe dokuma aracı",
       "Gelini evinden alıp getirenler",
       "Memê Alan destanı",
-      "Li ber xwe dan / direniş"
+      "Direnmek / direniş"
     ],
-    "correctAnswerTr": "Li ber xwe dan / direniş"
+    "correctAnswerTr": "Direnmek / direniş"
   },
   {
     "type": "multipleChoice",
@@ -3575,7 +3575,7 @@
     "answers": [
       "Amûra hûnandina xalîçe û bêrîkan",
       "Belg û sebzeyên dagirtî",
-      "Li ber xwe dan / direniş",
+      "Li ber xwe dan",
       "Şeva herî dirêj a salê"
     ],
     "correctAnswer": "Belg û sebzeyên dagirtî",
@@ -3593,7 +3593,7 @@
     "answersTr": [
       "Halı ve heybe dokuma aracı",
       "Doldurulmuş yaprak ve sebzeler",
-      "Li ber xwe dan / direniş",
+      "Direnmek / direniş",
       "Yılın en uzun gecesi"
     ],
     "correctAnswerTr": "Doldurulmuş yaprak ve sebzeler"
@@ -5632,10 +5632,10 @@
     "answers": [
       "çanda koçeriyê",
       "hest û bîra civakî",
-      "serê sibê / şafak",
+      "serê sibê / spêde",
       "çîmena çiyayî ya havînê"
     ],
-    "correctAnswer": "serê sibê / şafak",
+    "correctAnswer": "serê sibê / spêde",
     "explanation": "\"Berbang\" ışığın söktüğü an, şafaktır.",
     "explanationKu": "\"Berbang\" wextê ku ronahî dest pê dike ye.",
     "explanationTr": "\"Berbang\" ışığın söktüğü an, şafaktır.",
@@ -5756,11 +5756,11 @@
     "prompt": "\"Hevrîşk\" an \"hevrîşim\" di destkariya kurdî de çi ye?",
     "answers": [
       "amûra kevneşopî ya dişibe bilûrê",
-      "hevrîşim (ipek) — ji bo tevn û xemlê",
+      "hevrîşim — ji bo tevn û xemlê",
       "mêvan bi rûmet pêşwazîkirin",
       "fîgura mîtolojîk a çanda rojhilat"
     ],
-    "correctAnswer": "hevrîşim (ipek) — ji bo tevn û xemlê",
+    "correctAnswer": "hevrîşim — ji bo tevn û xemlê",
     "explanation": "İpek, dokuma ve süslü giysilerde kullanılır.",
     "explanationKu": "Hevrîşim di tevn û cilûbergên xemilandî de tê bikaranîn.",
     "explanationTr": "İpek, dokuma ve süslü giysilerde kullanılır.",
@@ -5820,11 +5820,11 @@
     "prompt": "Xalîçe û kilîmên kurdî bi giştî bi çi tên xemilandin?",
     "answers": [
       "Wêneyên fotografî",
-      "Motîfên hejmarî û sembolîk",
+      "Motîfên geometrîk û sembolîk",
       "Nivîsên dirêj",
       "Rengên tenê reş û spî"
     ],
-    "correctAnswer": "Motîfên hejmarî û sembolîk",
+    "correctAnswer": "Motîfên geometrîk û sembolîk",
     "explanation": "Her motifin bir anlamı vardır: bereket, koruma, aile.",
     "explanationKu": "Her motîf xwedî wateyekê ye: bereket, parastin, malbat.",
     "explanationTr": "Her motifin bir anlamı vardır: bereket, koruma, aile.",
@@ -5918,7 +5918,7 @@
       "Amed û derdora wê",
       "Silêmanî",
       "Sine (Sanandaj)",
-      "Mezopotamyaya jorîn"
+      "Xorasan"
     ],
     "correctAnswer": "Amed û derdora wê",
     "explanation": "Mervaniler (990-1085) Amed ve Silvan çevresinde hüküm sürdü.",
@@ -5936,7 +5936,7 @@
       "Amed ve çevresi",
       "Silêmanî",
       "Sine (Sanandaj)",
-      "Yukarı Mezopotamya"
+      "Horasan"
     ],
     "correctAnswerTr": "Amed ve çevresi"
   },
@@ -6064,7 +6064,7 @@
       "Osmanlı ile Kürt beyleri arasında arabuluculuk",
       "merkezi Amed olan ortaçağ Kürt hanedanı",
       "Mehabad Kürt Cumhuriyeti'nin cumhurbaşkanı",
-      "çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin"
+      "Irak rejimi tarafından idam edilen Kürt kadın aktivist"
     ],
     "correctAnswerTr": "Osmanlı ile Kürt beyleri arasında arabuluculuk"
   },
@@ -6409,9 +6409,9 @@
     },
     "promptTr": "Kürt edebiyatında \"medrese\" hangi rolü oynadı?",
     "answersTr": [
-      "dize sonlarındaki seslerin uyumu",
-      "dünyada tanınan, Kürt kökenli usta romancı",
-      "Kürt edebiyatının en eski klasik şairlerinden biri",
+      "basım ve yayıncılığın yaygınlaştırılması",
+      "destanların kuşaktan kuşağa sözlü aktarımı",
+      "mir saraylarının sanatçılara desteği",
       "klasik eğitim ve şairlerin yetiştirilmesi"
     ],
     "correctAnswerTr": "klasik eğitim ve şairlerin yetiştirilmesi"
@@ -6630,9 +6630,9 @@
     "promptTr": "Dünya eserlerinin Kürtçeye çevrilmesi neden önemli görülür?",
     "answersTr": [
       "Yazı dilini genişletir ve söz varlığını zenginleştirir",
-      "Kürt sözlü edebiyatının en hüzünlü destanlarından biri",
-      "ilk Kürt romanı Şivanê Kurmanca'nın yazarı",
-      "Latin temelli Kürt alfabesinin yayılması"
+      "Kürtçe eserleri dışarıda tanıtır",
+      "Okullar için resmî kitaplar hazırlar",
+      "Arap alfabesinin yerine Latin alfabesini koyar"
     ],
     "correctAnswerTr": "Yazı dilini genişletir ve söz varlığını zenginleştirir"
   },
@@ -6834,7 +6834,7 @@
     "difficulty": 4,
     "id": "edit_cografya_0029",
     "category": "Cografya",
-    "prompt": "Deşta Herîrê an deştên çandiniyê yên başûrê Kurdistanê bi giştî bi çi tên nasîn?",
+    "prompt": "Deşta Herîrê li Başûrê Kurdistanê bi giştî bi çi tê nasîn?",
     "answers": [
       "Çandiniya genim û ceh",
       "Masîgirî",
@@ -6852,7 +6852,7 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Herîr Ovası ve Başûr'un tarım ovaları genel olarak neyle tanınır?",
+    "promptTr": "Başûr'daki Herîr Ovası genel olarak neyle tanınır?",
     "answersTr": [
       "Buğday ve arpa tarımı",
       "Deniz balıkçılığı",
@@ -7204,11 +7204,11 @@
     "promptTr": "Kürt düğünlerinde toplu dans genellikle hangi çalgılarla yürütülür?",
     "answersTr": [
       "Tembûr ve bilûr",
-      "Def ve zurna",
+      "Davul ve zurna",
       "Piyano ve gitar",
       "Erbane ve ney"
     ],
-    "correctAnswerTr": "Def ve zurna"
+    "correctAnswerTr": "Davul ve zurna"
   },
   {
     "type": "multipleChoice",
@@ -7960,9 +7960,9 @@
     "promptTr": "\"Kûsî jî Difirin\" filminin olayları nerede geçer?",
     "answersTr": [
       "Irak Kürdistanı'ndaki bir mülteci kampında",
-      "Çiyayê Agirî'nin yüksek yaylalarında",
+      "Ağrı Dağı'nın yüksek yaylalarında",
       "Büyük bir kentin göçmen mahallesinde",
-      "Îran sınırındaki bir dağ köyünde"
+      "İran sınırındaki bir dağ köyünde"
     ],
     "correctAnswerTr": "Irak Kürdistanı'ndaki bir mülteci kampında"
   },

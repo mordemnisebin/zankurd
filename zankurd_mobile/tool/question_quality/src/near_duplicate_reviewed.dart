@@ -5,6 +5,8 @@
 // değişir ve çift yeniden uyarı olur. Değer: çift ve karar gerekçesi.
 // Aynı bilgiyi soran çiftlerin biri `retired_question_ids.dart`ta emeklidir.
 const Map<String, String> reviewedNearDuplicates = {
+  '914f7810da7203f8a99fe4d04a323df2':
+      "edit_ziman_0003 ~ baslangic_2026_10_06_0002: aynı bilgi (sesli harf sayısı); edit_ziman_0003 emekli (2026-10-23)",
   '7180533b7192c919331a20b7f75e30f5':
       "baslangic_2026_10_06_0033 ~ baslangic_2026_10_06_0034: farklı bilgi: doğru cevaplar farklı",
   '5264d0024b2ccf52ebb9978dd05c3829':
