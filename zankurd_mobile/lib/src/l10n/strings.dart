@@ -244,9 +244,11 @@ class Tr {
     K.newPasswordSave: {'ku': 'Şîfreyê tomar bike', 'tr': 'Parolayı kaydet'},
     // Web'de şifre kaydedilince (2026-10-23). KU jüri: Gemini + Claude Opus 5
     // ('şîfreya xwe ya nû', 'têkevî sepana'); Grok'un önerisi azınlıkta.
+    // E-posta için uygulamanın standart biçimi 'e-name' (bkz.
+    // l10n_migration_guard_test).
     K.newPasswordSavedWeb: {
       'ku':
-          'Şîfreya te hat guhertin. Êdî tu dikarî bi e-peyama xwe û şîfreya xwe ya nû têkevî sepana ZanKurdê.',
+          'Şîfreya te hat guhertin. Êdî tu dikarî bi e-nameya xwe û şîfreya xwe ya nû têkevî sepana ZanKurdê.',
       'tr':
           'Parolan değiştirildi. Artık ZanKurd uygulamasında e-postan ve yeni parolanla giriş yapabilirsin.',
     },

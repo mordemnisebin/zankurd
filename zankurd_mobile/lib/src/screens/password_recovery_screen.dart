@@ -74,7 +74,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
             key: const ValueKey('password-saved-web-notice'),
             content: Text(dialogContext.t(K.newPasswordSavedWeb)),
             actions: [
-              TextButton(
+              FilledButton(
                 onPressed: () => Navigator.of(dialogContext).pop(),
                 child: Text(dialogContext.t(K.ok)),
               ),
