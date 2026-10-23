@@ -5,6 +5,7 @@ import 'durable_write.dart';
 import '../models/async_duel.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
+import '../models/add_friend_outcome.dart';
 import '../models/friend.dart';
 import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
@@ -467,7 +468,7 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   Future<Set<String>> loadCompletedLessonIds();
 
   /// Arkadaş ekleme isteği gönder.
-  Future<bool> addFriend(String friendId, String friendName);
+  Future<AddFriendOutcome> addFriend(String friendId, String friendName);
 
   /// Bu cihazın FCM token'ını sunucuya yazar. Push kuyruğu token'ı buradan okur.
   Future<void> setFcmToken(String token);

@@ -7,6 +7,7 @@ import '../config/feature_flags.dart';
 import '../models/referral_result.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/add_friend_outcome.dart';
 import '../models/friend.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -98,13 +99,37 @@ class _FriendsScreenState extends State<FriendsScreen> {
   }
 
   Future<void> _sendRequest(PlayerSearchResult player) async {
-    final success = await widget.repository.addFriend(
+    final outcome = await widget.repository.addFriend(
       player.id,
       player.displayName,
     );
     if (!mounted) return;
-    if (success) {
+    // Sunucunun cevabı ayrıştırılır; her sonuç kendi cümlesini alır (bkz.
+    // test/friend_request_outcome_test.dart). Karşılıklı istek sunucuda
+    // otomatik kabul edilirse "istek gönderildi" demek yanlış olurdu.
+    if (outcome == AddFriendOutcome.alreadyFriends) {
+      _showMessage(context.t(K.friendAlreadyFriends));
+      return;
+    }
+    if (outcome == AddFriendOutcome.alreadyPending) {
       setState(() => _sentRequests.add(player.id));
+      _showMessage(context.t(K.friendRequestAlreadyPending));
+      return;
+    }
+    if (outcome == AddFriendOutcome.blocked) {
+      _showMessage(context.t(K.friendRequestBlocked));
+      return;
+    }
+    if (outcome == AddFriendOutcome.rateLimited) {
+      _showMessage(context.t(K.friendRequestRateLimited));
+      return;
+    }
+    if (outcome.isSuccess) {
+      setState(() => _sentRequests.add(player.id));
+      if (outcome == AddFriendOutcome.autoAccepted) {
+        // Arkadaşlık kuruldu: liste ve istekler tazelenir.
+        setState(_loadFriends);
+      }
       widget.repository
           .logAnalyticsEvent('friend_request_sent', null)
           .catchError((error, stack) {
@@ -115,7 +140,13 @@ class _FriendsScreenState extends State<FriendsScreen> {
             );
             return false;
           });
-      _showMessage(context.t(K.requestSent));
+      _showMessage(
+        context.t(
+          outcome == AddFriendOutcome.autoAccepted
+              ? K.requestAccepted
+              : K.requestSent,
+        ),
+      );
     } else {
       _showMessage(context.t(K.requestFailed));
     }

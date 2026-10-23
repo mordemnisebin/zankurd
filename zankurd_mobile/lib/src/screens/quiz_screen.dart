@@ -195,6 +195,21 @@ class _QuizScreenState extends State<QuizScreen>
   late List<Player> livePlayers = widget.room.players;
   StreamSubscription<List<Player>>? _playersSub;
   StreamSubscription<Map<String, dynamic>>? _realtimeSub;
+
+  /// Sunucudaki engel listesi: engellediğim oyuncunun canlı tepkileri
+  /// çizilmez (C1). Okunamazsa boş kalır, tepkiler gelmeye devam eder.
+  Set<String> _blockedPlayerIds = const <String>{};
+
+  Future<void> _loadBlockedPlayers() async {
+    try {
+      final ids = await widget.repository.loadBlockedPlayerIds();
+      if (!mounted) return;
+      _blockedPlayerIds = ids;
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz_load_blocked_players');
+    }
+  }
+
   final FloatingReactionController _reactionController =
       FloatingReactionController();
   final Map<String, _OpponentAnswer> _opponentSelectedAnswers = {};
@@ -547,6 +562,7 @@ class _QuizScreenState extends State<QuizScreen>
         // "Berfin"li maçta skor ve hazır sinyallerini tersine çeviriyordu.
         // Kimliksiz eski kayıtlarda [_isMe] ad yedeğini kullanır.
         _myId = widget.repository.currentUserId;
+        unawaited(_loadBlockedPlayers());
         _applyOwnAuthoritativePlayerState();
         _realtimeSub = widget.repository
             .subscribeRoomBroadcast(widget.room.id!)
@@ -567,7 +583,9 @@ class _QuizScreenState extends State<QuizScreen>
               if (payload['type'] == 'reaction') {
                 final text = payload['text'] as String?;
                 final sender = payload['sender_name'] as String? ?? senderName;
-                if (text != null && !isSelf) {
+                final blocked =
+                    senderId != null && _blockedPlayerIds.contains(senderId);
+                if (text != null && !isSelf && !blocked) {
                   _reactionController.triggerReaction(
                     text,
                     senderName: sender == null

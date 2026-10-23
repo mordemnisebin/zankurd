@@ -73,7 +73,7 @@ void main() {
       );
       expect(
         catchTail,
-        contains('return false;'),
+        anyOf(contains('return false;'), contains('AddFriendOutcome.failed')),
         reason: '$reason başarısızlığı çağırana bildirilmiyor',
       );
     });

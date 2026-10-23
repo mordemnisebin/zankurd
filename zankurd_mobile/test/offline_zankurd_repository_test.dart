@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/models/add_friend_outcome.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/offline_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
@@ -16,7 +17,10 @@ void main() {
 
       expect(repository.currentUserId, isNull);
       expect(await repository.getPlayerTag(), isNull);
-      expect(await repository.addFriend('u2', 'Rojda'), isFalse);
+      expect(
+        await repository.addFriend('u2', 'Rojda'),
+        AddFriendOutcome.failed,
+      );
       expect(await repository.acceptFriendRequest('r1'), isFalse);
       expect(await repository.rejectFriendRequest('r1'), isFalse);
       expect(

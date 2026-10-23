@@ -691,6 +691,22 @@ class Tr {
     },
     K.requestSent: {'ku': 'Daxwaz hat şandin', 'tr': 'İstek gönderildi'},
     K.requestFailed: {'ku': 'Daxwaz nehat şandin', 'tr': 'İstek gönderilemedi'},
+    K.friendAlreadyFriends: {
+      'ku': 'Hûn jixwe heval in',
+      'tr': 'Zaten arkadaşsınız',
+    },
+    K.friendRequestAlreadyPending: {
+      'ku': 'Daxwaz jixwe hat şandin',
+      'tr': 'İstek zaten gönderilmiş',
+    },
+    K.friendRequestBlocked: {
+      'ku': 'Ji vî lîstikvanî re daxwaz nayê şandin',
+      'tr': 'Bu oyuncuya istek gönderilemez',
+    },
+    K.friendRequestRateLimited: {
+      'ku': 'Pir daxwaz hatin şandin. Hinekî bisekine û dîsa biceribîne.',
+      'tr': 'Çok fazla istek gönderildi. Biraz bekleyip tekrar dene.',
+    },
     K.requestAccepted: {'ku': 'Heval hat zêdekirin', 'tr': 'Arkadaş eklendi'},
     K.acceptFailed: {
       'ku': 'Daxwaz nehat qebûlkirin.',
@@ -3095,6 +3111,10 @@ class K {
   static const searchFailed = 'friends.searchFailed';
   static const requestSent = 'friends.requestSent';
   static const requestFailed = 'friends.requestFailed';
+  static const friendAlreadyFriends = 'friends.alreadyFriends';
+  static const friendRequestAlreadyPending = 'friends.requestAlreadyPending';
+  static const friendRequestBlocked = 'friends.requestBlocked';
+  static const friendRequestRateLimited = 'friends.requestRateLimited';
   static const requestAccepted = 'friends.requestAccepted';
   static const acceptFailed = 'friends.acceptFailed';
   static const requestRejected = 'friends.requestRejected';

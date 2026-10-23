@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/async_duel.dart';
 import '../models/contest.dart';
+import '../models/add_friend_outcome.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/referral_result.dart';
@@ -211,7 +212,10 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }) async => const [];
 
   @override
-  Future<bool> addFriend(String friendId, String friendName) async => false;
+  Future<AddFriendOutcome> addFriend(
+    String friendId,
+    String friendName,
+  ) async => AddFriendOutcome.failed;
 
   @override
   Future<void> setFcmToken(String token) async {

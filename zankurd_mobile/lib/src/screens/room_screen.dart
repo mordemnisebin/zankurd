@@ -215,6 +215,7 @@ class _RoomScreenState extends State<RoomScreen> {
     // başlar. Odayla birlikte gelen liste ilk veridir; o varsa dönen daire
     // hiç çizilmez.
     _playersRefreshing = widget.initialRoom.players.isEmpty;
+    unawaited(_loadBlockedPlayers());
     _startSubscriptions();
     _startPolling();
     _startStatusPolling();
@@ -316,7 +317,10 @@ class _RoomScreenState extends State<RoomScreen> {
           final text = payload['text'] as String?;
           final senderId = payload['sender_id'] as String?;
           final senderName = payload['sender_name'] as String?;
-          if (text != null && senderId != _currentUserId) {
+          // Engellediğim oyuncunun tepkisi çizilmez.
+          final blocked =
+              senderId != null && _blockedPlayerIds.contains(senderId);
+          if (text != null && senderId != _currentUserId && !blocked) {
             _reactionController.triggerReaction(
               text,
               senderName: senderName == null
@@ -326,6 +330,22 @@ class _RoomScreenState extends State<RoomScreen> {
           }
         }
       });
+    }
+  }
+
+  /// Sunucudaki engel listesini yükler (C1).
+  ///
+  /// `_blockedPlayerIds` yalnız bu oturumda verilen engelleri tutuyordu;
+  /// önceden engellenen oyuncu yeni odada yine görünüyordu (bkz.
+  /// test/room_blocked_players_server_test.dart). Okunamazsa ekran bozulmaz:
+  /// liste boş kalır, anlık engeller çalışmaya devam eder.
+  Future<void> _loadBlockedPlayers() async {
+    try {
+      final ids = await widget.repository.loadBlockedPlayerIds();
+      if (!mounted || ids.isEmpty) return;
+      setState(() => _blockedPlayerIds.addAll(ids));
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'room_load_blocked_players');
     }
   }
 
