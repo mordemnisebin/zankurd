@@ -14,6 +14,7 @@ import '../models/league_tier.dart';
 import '../providers/remote_availability.dart';
 import '../utils/app_route.dart';
 import '../utils/player_identity.dart';
+import '../widgets/player_moderation_button.dart';
 import '../widgets/app_state.dart';
 import '../widgets/leaderboard_podium.dart';
 import '../widgets/player_avatar.dart';
@@ -21,7 +22,6 @@ import '../widgets/sahne/sahne.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
-import '../widgets/dialog_action_pair.dart';
 import '../utils/number_format.dart';
 
 class LeaderboardScreen extends StatefulWidget {
@@ -175,7 +175,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
               // Kişi kendini bildiremez. Liste eskiden kendi satırında da
               // bildir düğmesi çiziyordu, çünkü satırın kime ait olduğu
               // sorulmuyordu (2026-08-04).
-              onReport: e.playerId == uid ? null : () => _reportProfile(e),
+              onReport: e.playerId == uid || e.playerId.isEmpty
+                  ? null
+                  : () => _openPlayerSheet(e),
             ),
         ],
       ),
@@ -207,7 +209,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                 isKu: ku,
                 selfId: uid,
                 colorOverrides: avatarColorOverrides,
-                onReport: _reportProfile,
+                onReport: _openPlayerSheet,
               ),
               if (entries.length > 3) ...[
                 // 7. kurul: kürsü ile liste birbirinden kopuktu; kürsü
@@ -344,55 +346,28 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     }
   }
 
-  /// Bir oyuncunun profilini (avatar + görünen ad) bildirir.
+  /// Bir oyuncunun alt sayfasını açar: Arkadaş ekle + Bildir + Engelle.
   ///
-  /// Sunucu bildirimi kaydeder VE bildiren kullanıcı için engeli kurar:
-  /// kişi bildirdiği avatarı bir daha görmek zorunda kalmamalı. Karar
-  /// (içeriğin kaldırılması) moderasyon tarafındadır; istemci karar vermez —
-  /// `report_room_message` de aynı deseni izliyor.
-  Future<void> _reportProfile(LeaderboardEntry entry) async {
-    final confirmed = await showDialog<bool>(
+  /// Bildirme sunucuda bildiren için engeli de kurar; bu yüzden liste
+  /// bildirimden ve engelden sonra yeniden okunur. Karar (içeriğin
+  /// kaldırılması) moderasyon tarafındadır; istemci karar vermez.
+  ///
+  /// 2026-10-23: sıralamadaki satır eskiden yalnız "bildir" sunuyordu;
+  /// sıralamada karşılaşılan biri arkadaş eklenemiyordu. Giriş artık
+  /// odalarla AYNI alt sayfa ([showPlayerModerationSheet]).
+  Future<void> _openPlayerSheet(LeaderboardEntry entry) {
+    return showPlayerModerationSheet(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        key: const ValueKey('report-profile-dialog'),
-        title: Text(dialogContext.t(K.reportProfileTitle)),
-        content: Text(
-          Tr.forKu(K.reportProfileBodyP, dialogContext.isKu, {
-            'p0': PlayerIdentity.resolveNameWithTag(
-              entry.displayName,
-              isKu: dialogContext.isKu,
-              tag: entry.playerTag,
-            ),
-          }),
-        ),
-        actions: [
-          DialogActionPair(
-            cancel: TextButton(
-              onPressed: () => Navigator.pop(dialogContext, false),
-              child: Text(dialogContext.t(K.cancel)),
-            ),
-            confirm: FilledButton(
-              key: const ValueKey('report-profile-confirm'),
-              onPressed: () => Navigator.pop(dialogContext, true),
-              child: Text(dialogContext.t(K.reportAction)),
-            ),
-          ),
-        ],
-      ),
-    );
-    if (confirmed != true || !mounted) return;
-
-    final ok = await widget.repository.reportPlayerProfile(
+      repository: widget.repository,
       playerId: entry.playerId,
-      reason: 'profile_avatar_or_name',
-    );
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(context.t(ok ? K.reportProfileDone : K.errorOccurred)),
+      playerName: PlayerIdentity.resolveNameWithTag(
+        entry.displayName,
+        isKu: context.isKu,
+        tag: entry.playerTag,
       ),
+      onBlocked: _loadData,
+      onReported: _loadData,
     );
-    if (ok) _loadData();
   }
 
   /// 30 saniyelik yenileme yalnız uygulama ÖNDEYKEN çalışır.
@@ -1173,15 +1148,10 @@ class _RankRow extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         excludeFromSemantics: true,
-        // Uzun basma YALNIZ kısayol; görünür yol satırdaki ⋯ düğmesi.
-        onLongPress: onReport == null
-            ? null
-            : () => showLeaderboardEntryMenu(
-                context,
-                entry: entry,
-                isKu: isKu,
-                onReport: onReport!,
-              ),
+        // Satıra dokunmak da, uzun basmak da aynı alt sayfayı açar; görünür
+        // yol satırdaki ⋯ düğmesi (Apple 1.2: yalnız uzun basma DEĞİL).
+        onTap: onReport,
+        onLongPress: onReport,
         // Kendi satırın Zêr tonlu zemin taşır (2026-10-20 B): vurgu yalnız
         // rakam rengi değil, satırın kendisidir.
         child: highlight
@@ -1311,12 +1281,7 @@ class _RankRow extends StatelessWidget {
                 label: Tr.forKu(K.reportProfileTitle, isKu),
                 child: IconButton(
                   key: ValueKey('leaderboard-more-${entry.playerId}'),
-                  onPressed: () => showLeaderboardEntryMenu(
-                    context,
-                    entry: entry,
-                    isKu: isKu,
-                    onReport: onReport!,
-                  ),
+                  onPressed: onReport,
                   icon: const Icon(AppIcons.ellipsisVertical, size: 18),
                   color: t.tx3,
                   // Android dokunma hedefi: 48 dp altına düşmez.

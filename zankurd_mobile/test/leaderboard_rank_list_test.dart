@@ -231,7 +231,7 @@ void main() {
     await tester.pump();
     await tester.tap(find.byKey(const ValueKey('leaderboard-more-other-6')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('leaderboard-report-other-6')), findsOne);
+    expect(find.byKey(const ValueKey('player-report-action')), findsOne);
   });
 
   testWidgets('kendi satırı vurgu için turuncuya boyanmaz', (tester) async {

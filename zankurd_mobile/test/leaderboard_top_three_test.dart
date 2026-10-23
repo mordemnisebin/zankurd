@@ -228,16 +228,14 @@ void main() {
   ) async {
     await _pump(tester, _Repo(count: 4));
     expect(find.byIcon(AppIcons.flag), findsNothing);
-    for (final id in ['p0', 'p1', 'p2']) {
-      expect(find.byKey(ValueKey('leaderboard-report-$id')), findsNothing);
-    }
-    for (final (id, rank) in [('p0', 1), ('p1', 2), ('p2', 3)]) {
+    expect(find.byKey(const ValueKey('player-report-action')), findsNothing);
+    for (final (_, rank) in [('p0', 1), ('p1', 2), ('p2', 3)]) {
       await tester.tap(find.byKey(ValueKey('leaderboard-rank-row-$rank')));
       await tester.pumpAndSettle();
       expect(
-        find.byKey(ValueKey('leaderboard-report-$id')),
+        find.byKey(const ValueKey('player-report-action')),
         findsOneWidget,
-        reason: '$id podyumda bildirilebilmeli (Apple 1.2)',
+        reason: '$rank. sıra podyumda bildirilebilmeli (Apple 1.2)',
       );
       await tester.tapAt(const Offset(5, 5)); // menüyü kapat
       await tester.pumpAndSettle();

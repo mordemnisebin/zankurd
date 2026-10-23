@@ -45,14 +45,15 @@ void main() {
       // erişilebiliyordu ve bu ayrıca kusur sayılmıştı. Liderlikte aynı
       // hata tekrarlanmamalı.
       // Tasarım kurulu tüm ekranlar 2026-10-20: bildir bayrağı satırdan
-      // menüye taşındı (⋯ düğmesi → `leaderboard-report-<id>` öğesi); menü
-      // öğesi podyum dosyasında yaşar, ⋯ düğmesi ekran dosyasında.
+      // menüye taşındı; 2026-10-23'ten beri ⋯ düğmesi, satıra dokunuş ve
+      // podyum sütunu odalarla AYNI alt sayfayı (`player-report-action`
+      // öğesi) açar.
       final src =
           File('lib/src/screens/leaderboard_screen.dart').readAsStringSync() +
           File('lib/src/widgets/leaderboard_podium.dart').readAsStringSync();
       expect(
         src,
-        contains('leaderboard-report-'),
+        contains('showPlayerModerationSheet'),
         reason: 'liderlik satırında bildir düğmesi yok',
       );
       expect(

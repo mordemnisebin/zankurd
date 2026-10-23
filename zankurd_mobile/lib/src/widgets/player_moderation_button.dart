@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
+import '../models/friend.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_icons.dart';
@@ -48,6 +49,7 @@ class PlayerModerationButton extends StatefulWidget {
     this.compact = false,
     this.quiet = false,
     this.onBlocked,
+    this.onReported,
     this.onKick,
     super.key,
   });
@@ -75,6 +77,11 @@ class PlayerModerationButton extends StatefulWidget {
   /// Engelleme başarılıysa çağıranın listeyi tazelemesi için.
   final VoidCallback? onBlocked;
 
+  /// Bildirme başarılıysa çağıranın listeyi tazelemesi için (sunucu bildireni
+  /// de o oyuncudan korur; sıralama bildirilen avatarı göstermeye devam
+  /// etmesin).
+  final VoidCallback? onReported;
+
   /// Verilirse alt sayfada "Odadan çıkar" satırı çıkar (yalnız oda sahibi,
   /// yalnız lobide). Sonuç `true` ise oyuncu çıkarılmıştır.
   final Future<bool> Function()? onKick;
@@ -97,6 +104,7 @@ class _PlayerModerationButtonState extends State<PlayerModerationButton> {
         playerId: playerId,
         playerName: widget.playerName,
         onBlocked: widget.onBlocked,
+        onReported: widget.onReported,
         onKick: widget.onKick,
       );
     } finally {
@@ -138,6 +146,7 @@ Future<void> showPlayerModerationSheet({
   required String playerId,
   required String playerName,
   VoidCallback? onBlocked,
+  VoidCallback? onReported,
   Future<bool> Function()? onKick,
 }) async {
   final action = await showModalBottomSheet<String>(
@@ -153,6 +162,9 @@ Future<void> showPlayerModerationSheet({
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // 2026-10-23: sıralamada ya da aynı odada biriyle karşılaşan
+          // oyuncunun arkadaş ekleyebilmesi gerekir; bu satır EN ÜSTTE.
+          _AddFriendTile(repository: repository, playerId: playerId),
           if (onKick != null)
             ListTile(
               key: const ValueKey('player-kick-action'),
@@ -184,6 +196,22 @@ Future<void> showPlayerModerationSheet({
     ),
   );
   if (action == null || !context.mounted) return;
+
+  if (action == 'friend') {
+    final doneText = context.t(K.requestSent);
+    final failText = context.t(K.requestFailed);
+    bool ok;
+    try {
+      ok = await repository.addFriend(playerId, playerName);
+    } catch (_) {
+      ok = false;
+    }
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(ok ? doneText : failText)));
+    return;
+  }
 
   if (action == 'kick' && onKick != null) {
     final sure = await showDialog<bool>(
@@ -245,9 +273,75 @@ Future<void> showPlayerModerationSheet({
 
   if (!context.mounted) return;
   if (ok && action == 'block') onBlocked?.call();
+  if (ok && action == 'report') onReported?.call();
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(content: Text(ok ? okText : failText)));
+}
+
+enum _FriendState { unknown, friend, sent }
+
+/// Alt sayfanın "Arkadaş ekle" satırı.
+///
+/// Sayfa hemen açılır; arkadaşlık durumu arkadan okunur (arkadaşlar ve
+/// gönderilmiş istekler). Zaten arkadaşsa "Arkadaşın", istek gönderilmişse
+/// "İstek gönderildi" yazan PASİF satıra döner. Okuma başarısız olursa satır
+/// normal kalır: sunucu zaten çifte isteği reddeder, yalan söylemekten iyidir.
+class _AddFriendTile extends StatefulWidget {
+  const _AddFriendTile({required this.repository, required this.playerId});
+
+  final ZanKurdRepository repository;
+  final String playerId;
+
+  @override
+  State<_AddFriendTile> createState() => _AddFriendTileState();
+}
+
+class _AddFriendTileState extends State<_AddFriendTile> {
+  _FriendState _state = _FriendState.unknown;
+
+  @override
+  void initState() {
+    super.initState();
+    _resolve();
+  }
+
+  Future<void> _resolve() async {
+    try {
+      final friends = await widget.repository.loadFriends();
+      if (friends.any((Friend f) => f.friendId == widget.playerId)) {
+        _set(_FriendState.friend);
+        return;
+      }
+      final sent = await widget.repository.loadSentFriendRequests();
+      if (sent?.any((r) => r.toUserId == widget.playerId) ?? false) {
+        _set(_FriendState.sent);
+      }
+    } catch (_) {
+      // Okunamadı: satır normal kalır.
+    }
+  }
+
+  void _set(_FriendState state) {
+    if (mounted) setState(() => _state = state);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final friend = _state == _FriendState.friend;
+    final sent = _state == _FriendState.sent;
+    return ListTile(
+      key: const ValueKey('player-add-friend-action'),
+      enabled: !friend && !sent,
+      leading: const Icon(AppIcons.userPlus),
+      title: Text(
+        context.t(
+          friend ? K.friendAlreadyMark : (sent ? K.requestSent : K.addFriend),
+        ),
+      ),
+      onTap: friend || sent ? null : () => Navigator.of(context).pop('friend'),
+    );
+  }
 }
 
 /// Bildir/engelle onay penceresi. `true` yalnız açık onayda döner.

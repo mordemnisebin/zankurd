@@ -22,6 +22,7 @@ import '../l10n/lang.dart';
 import '../utils/coin_calculator.dart';
 import '../l10n/strings.dart';
 import '../services/crowd_standings.dart';
+import '../widgets/player_moderation_button.dart';
 import '../services/premium_service.dart';
 import '../services/quiz_reward_settlement_service.dart';
 import '../models/achievement.dart';
@@ -1604,7 +1605,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       // oyuncunun bir sonraki adımı önce okunur.
       if (lowMood) ...outcomeSection,
       if (room.isCrowd)
-        _CrowdStandings(players: room.players, ownId: widget.resultOwnerUserId)
+        _CrowdStandings(
+          players: room.players,
+          ownId: widget.resultOwnerUserId,
+          repository: repository,
+        )
       else if (opponents.isNotEmpty)
         _RaceStandings(
           userScore: score,
@@ -2302,10 +2307,15 @@ class _RaceStandings extends StatelessWidget {
 /// kadar uzar. Yapı aynıdır: "Sen" satırı iki liste grubunun arasında tek
 /// başına durur, ardışık rakipler tek grupta toplanır.
 class _CrowdStandings extends StatelessWidget {
-  const _CrowdStandings({required this.players, required this.ownId});
+  const _CrowdStandings({
+    required this.players,
+    required this.ownId,
+    required this.repository,
+  });
 
   final List<Player> players;
   final String? ownId;
+  final ZanKurdRepository repository;
 
   @override
   Widget build(BuildContext context) {
@@ -2381,6 +2391,19 @@ class _CrowdStandings extends StatelessWidget {
             key: ValueKey('crowd-standing-${player.id}'),
             rank: rank,
             title: context.playerDisplayName(player.name, tag: player.tag),
+            // Sonuçta rakibe dokununca Arkadaş ekle / Bildir / Engelle
+            // (kimliği olmayan ya da kendi satırı hariç).
+            onTap: player.id == null || player.id!.isEmpty
+                ? null
+                : () => showPlayerModerationSheet(
+                    context: context,
+                    repository: repository,
+                    playerId: player.id!,
+                    playerName: context.playerDisplayName(
+                      player.name,
+                      tag: player.tag,
+                    ),
+                  ),
             initial: name.isEmpty ? null : context.playerInitial(player.name),
             icon: AppIcons.user,
             avatar: _avatarOf(player),

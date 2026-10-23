@@ -3,49 +3,10 @@ import 'package:flutter/material.dart';
 import '../game/avatar_frames.dart';
 import '../l10n/strings.dart';
 import '../models/leaderboard_entry.dart';
-import '../theme/app_icons.dart';
 import '../utils/player_identity.dart';
 import 'player_avatar.dart';
 import 'sahne/sahne.dart';
 import '../utils/number_format.dart';
-
-/// Bir sıralama satırının "daha fazla" menüsü: tek eylem, profili bildir.
-///
-/// Kurul 2026-10-20 (Opus, Longcat): podyumda ve her satırda duran bayrak
-/// simgeleri gürültüydü. Bildirme eylemi ARTIK menüde (Apple 1.2: hâlâ
-/// görünür bir yol — satırdaki ⋯ düğmesi ve podyum sütununa dokunuş —
-/// yalnız uzun basma DEĞİL). Menü öğesi eski anahtarı
-/// (`leaderboard-report-<id>`) ve aynı etiketi taşır; anlamı aynı:
-/// onay penceresi → `report_player_profile`.
-Future<void> showLeaderboardEntryMenu(
-  BuildContext context, {
-  required LeaderboardEntry entry,
-  required bool isKu,
-  required VoidCallback onReport,
-}) {
-  final name = PlayerIdentity.resolveNameWithTag(
-    entry.displayName,
-    isKu: isKu,
-    tag: entry.playerTag,
-  );
-  return showSahneSheet<void>(
-    context: context,
-    title: name,
-    builder: (sheetContext) => SahneListGroup(
-      children: [
-        SahneListRow.icon(
-          key: ValueKey('leaderboard-report-${entry.playerId}'),
-          icon: AppIcons.flag,
-          title: Tr.forKu(K.reportProfileTitle, isKu),
-          onTap: () {
-            Navigator.of(sheetContext).pop();
-            onReport();
-          },
-        ),
-      ],
-    ),
-  );
-}
 
 /// Sıralamanın ilk üçü: ortada birinci (en uzun kaide), solda ikinci,
 /// sağda üçüncü.
@@ -70,7 +31,7 @@ Future<void> showLeaderboardEntryMenu(
 ///   yükseklikle anlatılmaz.
 /// * Kaide (2026-10-20 kurul): avatar kaidenin ÜSTÜNDE oturur; ad ve puan
 ///   kaidenin içinde, rakamın altında. Yükseklikler açık basamaklı
-///   (1 > 2 > 3). Bayrak simgesi yok: sütuna dokununca ([showLeaderboardEntryMenu])
+///   (1 > 2 > 3). Bayrak simgesi yok: sütuna dokununca (`onReport`: oyuncu alt sayfası)
 ///   "Profili bildir" menüsü açılır (Apple 1.2 yolu korunur). Kendi
 ///   kaidende menü yok, "Sen" rozeti durur.
 class LeaderboardPodium extends StatelessWidget {
@@ -125,12 +86,7 @@ class LeaderboardPodium extends StatelessWidget {
                 colorOverride: colorOverrides[entries[order[i]].playerId],
                 onReport: selfId != null && entries[order[i]].playerId == selfId
                     ? null
-                    : () => showLeaderboardEntryMenu(
-                        context,
-                        entry: entries[order[i]],
-                        isKu: isKu,
-                        onReport: () => onReport(entries[order[i]]),
-                      ),
+                    : () => onReport(entries[order[i]]),
               ),
             ),
           ],
