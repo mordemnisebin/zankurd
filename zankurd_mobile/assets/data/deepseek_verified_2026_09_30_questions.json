@@ -1294,7 +1294,7 @@
   {
     "id": "ds_dirok_0010",
     "category": "Dîrok",
-    "prompt": "Şerefxanê Bidlîsî ji kîjan dînî bû?",
+    "prompt": "Şerefxanê Bidlîsî ji kîjan mezhebî bû?",
     "answers": [
       "Şîa",
       "Elewî",
@@ -1314,7 +1314,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Şerefhan Bitlisi hangi dinden idi?",
+    "promptTr": "Şerefhan Bitlisi hangi mezhebe mensuptu?",
     "answersTr": [
       "Şii",
       "Alevi",
@@ -3235,9 +3235,9 @@
     "prompt": "Kîjan roman ji aliyê Charles Dickens ve hatiye nivîsandin?",
     "answers": [
       "Hêviyên Mezin",
-      "Mîzrab",
-      "Bekirê Londonê",
-      "Karderî"
+      "Kûzê Notre-Dameê",
+      "Nobedarê Londonê",
+      "Birayên Karamazov"
     ],
     "correctAnswer": "Hêviyên Mezin",
     "explanation": "Büyük Umutlar (Great Expectations), Charles Dickens tarafından yazılmıştır. Onun en ünlü romanlarından biridir ve Pip'in büyümesi ile hayallerini anlatır.",
@@ -3270,7 +3270,7 @@
     "answers": [
       "Bilindahiyên Wuthering",
       "Jane Eyre",
-      "Pîrika",
+      "Jinên Biçûk",
       "Hêviyên Mezin"
     ],
     "correctAnswer": "Bilindahiyên Wuthering",
@@ -3372,7 +3372,7 @@
     "answers": [
       "Oliver Twist",
       "David Copperfield",
-      "Pîrika",
+      "Jinên Biçûk",
       "Huckleberry Finn"
     ],
     "correctAnswer": "Huckleberry Finn",
@@ -3474,7 +3474,7 @@
     "answers": [
       "Anna Karenina",
       "Oliver Twist",
-      "Pîrika",
+      "Jinên Biçûk",
       "Madame Bovary"
     ],
     "correctAnswer": "Madame Bovary",
@@ -3507,7 +3507,7 @@
     "prompt": "Kîjan roman ji aliyê Charlotte Brontë ve hatiye nivîsandin?",
     "answers": [
       "Bilindahiyên Wuthering",
-      "Pîrika",
+      "Jinên Biçûk",
       "Madame Bovary",
       "Jane Eyre"
     ],
@@ -7278,7 +7278,7 @@
   {
     "id": "ds_cand_0035",
     "category": "Çand",
-    "prompt": "Kîjan peyv di Kurmancî de ji bo \"bridegroom\" tê bikaranîn?",
+    "prompt": "Kîjan peyv di Kurmancî de ji bo mêrê ku dizewice tê bikaranîn?",
     "answers": [
       "Bûk",
       "Xesû",
@@ -10857,7 +10857,7 @@
     "id": "ds_sinema_0286",
     "category": "Sînema",
     "difficulty": 5,
-    "prompt": "Di fîlmên Bahman Ghobadi de çima \"têlên strîdar\" (dikenli teller) di gelek dîmenan de dubare dibin?",
+    "prompt": "Di fîlmên Bahman Ghobadi de çima \"têlên strîdar\" di gelek dîmenan de dubare dibin?",
     "promptTr": "Bahman Ghobadi filmlerinde kadraja sık sık giren \"dikenli teller\" görsel olarak neyi vurgular?",
     "answers": [
       "Tenê ji bo xemilandina dîmenên kamerayê di dema rojavabûnê de",
@@ -15956,7 +15956,7 @@
   {
     "id": "ds_dirok_0016",
     "category": "Dîrok",
-    "prompt": "Şerefxanê Bidlîsî ji kîjan mîrektiyê bû?",
+    "prompt": "Nivîskarê Şerefnameyê ji kîjan mîrektiyê bû?",
     "answers": [
       "Mîrektiya Cizîrê",
       "Mîrektiya Botanê",
@@ -15976,7 +15976,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Şerefxanê Bidlîsî hangi beylikten idi?",
+    "promptTr": "Şerefname'nin yazarı hangi beyliktendi?",
     "answersTr": [
       "Cizre Beyliği",
       "Botan Beyliği",
@@ -17248,7 +17248,7 @@
   {
     "id": "ds_dirok_0173",
     "category": "Cîhan",
-    "prompt": "Kîjan şer di navbera 1950 û 1953'an de li Nîvgirava Koreyê qewimî?",
+    "prompt": "Kîjan şer di navbera 1950 û 1953'an de li Asyaya Rojhilat qewimî?",
     "answers": [
       "Şerê Koreyê",
       "Şerê Viyetnamê",
@@ -17268,7 +17268,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "1950 ile 1953 yılları arasında Kore Yarımadası'nda hangi savaş gerçekleşti?",
+    "promptTr": "1950 ile 1953 yılları arasında Doğu Asya'da hangi savaş gerçekleşti?",
     "answersTr": [
       "Kore Savaşı",
       "Vietnam Savaşı",
@@ -18268,7 +18268,7 @@
   {
     "id": "ds_dirok_0293",
     "category": "Cîhan",
-    "prompt": "Ewlehiya Riya Hevrîşimê di kîjan serdemê de bi \"Pax Mongolica\" ve zêde bû?",
+    "prompt": "Ewlehiya Riya Hevrîşimê di kîjan serdemê de herî zêde bû?",
     "answers": [
       "Serdema Kevir",
       "Serdema Bronz",
@@ -18288,7 +18288,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "İpek Yolu'nun güvenliği hangi dönemde \"Pax Mongolica\" ile arttı?",
+    "promptTr": "İpek Yolu'nun güvenliği hangi dönemde en üst düzeye ulaştı?",
     "answersTr": [
       "Taş Devri",
       "Tunç Devri",
@@ -18409,7 +18409,7 @@
       "Karwanên deveyan",
       "Trenên elektrîkê",
       "Balafirên bazirganî",
-      "Keştiyên buharê"
+      "Keştiyên hilmê"
     ],
     "correctAnswer": "Karwanên deveyan",
     "explanation": "İpek Yolu'nda deve kervanları kullanılıyordu çünkü develer çölde kolayca yürüyor ve yük taşıyorlardı.",
@@ -18613,7 +18613,7 @@
       "Şer û Aştî",
       "Tawan û Ceza",
       "Anna Karenina",
-      "Karderî"
+      "Bav û Kur"
     ],
     "correctAnswer": "Tawan û Ceza",
     "explanation": "Suç ve Ceza, Fyodor Dostoyevski tarafından yazılmıştır. Yazarın en çok okunan romanlarındandır ve suç, vicdan ve kurtuluş üzerinedir.",
@@ -18633,7 +18633,7 @@
       "Savaş ve Barış",
       "Suç ve Ceza",
       "Anna Karenina",
-      "Karamazov Kardeşler"
+      "Babalar ve Oğullar"
     ],
     "correctAnswerTr": "Suç ve Ceza",
     "explanationKu": "Tawan û Ceza ji aliyê Fyodor Dostoyevskî ve hatiye nivîsandin. Ew romana wî ya herî navdar e û li ser tawan, wijdan û xilasiyê ye.",
@@ -18714,7 +18714,7 @@
     "answers": [
       "Şer û Aştî",
       "Tawan û Ceza",
-      "Karderî",
+      "Birayên Karamazov",
       "Sefîl"
     ],
     "correctAnswer": "Sefîl",
@@ -18781,7 +18781,7 @@
     "prompt": "Kîjan roman ji aliyê Herman Melville ve hatiye nivîsandin?",
     "answers": [
       "Moby-Dick",
-      "Pîrika",
+      "Jinên Biçûk",
       "Jane Eyre",
       "Wuthering Heights"
     ],
@@ -19190,10 +19190,10 @@
     "answers": [
       "Qafiye",
       "Îmge",
-      "Kêş (Vezin)",
+      "Kêş",
       "Rîwayet"
     ],
-    "correctAnswer": "Kêş (Vezin)",
+    "correctAnswer": "Kêş",
     "explanation": "Metr, şiirde ölçüdür; ahenk için kullanılır.",
     "type": "multipleChoice",
     "difficulty": 3,
@@ -19210,10 +19210,10 @@
     "answersTr": [
       "Kafiye",
       "İmge",
-      "Metr",
+      "Vezin",
       "Rivayet"
     ],
-    "correctAnswerTr": "Metr",
+    "correctAnswerTr": "Vezin",
     "explanationKu": "Kêş (vezin) pîvana ahengê ye; Ehmedê Xanî di helbestên xwe de kêşa erûzê bi kar aniye.",
     "explanationTr": "Metr, şiirde ölçüdür; ahenk için kullanılır."
   },
@@ -19560,7 +19560,7 @@
   {
     "id": "ds_muzik_0023",
     "category": "Muzîk",
-    "prompt": "Dengbêj bi piranî kilamên xwe bi kîjan awayî ji ber dibêjin?",
+    "prompt": "Dengbêj bi piranî kilamên xwe bi kîjan awayî dibêjin?",
     "answers": [
       "Bi ezber",
       "Bi nivîsê",
@@ -19580,7 +19580,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Dengbêjler kilamlarını çoğunlukla nasıl ezberden söylerler?",
+    "promptTr": "Dengbêjler kilamlarını çoğunlukla hangi şekilde söylerler?",
     "answersTr": [
       "Ezberleyerek",
       "Yazarak",
@@ -19866,7 +19866,7 @@
   {
     "id": "ds_muzik_0103",
     "category": "Cîhan",
-    "prompt": "Di muzîkê de, rêjdana dengan li gorî demê çi ye?",
+    "prompt": "Di muzîkê de, rêzkirina dengan li gorî demê çi ye?",
     "answers": [
       "Rîtm",
       "Nota",
@@ -20469,9 +20469,9 @@
       "Ritim",
       "Tempo",
       "Dinamik",
-      "Pitch"
+      "Perde"
     ],
-    "correctAnswerTr": "Pitch",
+    "correctAnswerTr": "Perde",
     "explanationKu": "Perde bilindahiya dengan diyar dike. Rîtm demê, tempo lezê û dînamîk jî bihêzbûna dengan nîşan dide.",
     "explanationTr": "Pitch, seslerin yüksekliğini ifade eder. Ritim zamanı, tempo hızı ve dinamik de seslerin gücünü gösterir."
   },
@@ -21702,7 +21702,7 @@
   {
     "id": "ds_sinema_0194",
     "category": "Cîhan",
-    "prompt": "Belgefîlmê \"Senna\" li ser jiyana kîjan ajokarê pêşbirkê ye?",
+    "prompt": "Belgefîlma Asif Kapadia ya sala 2010an li ser jiyana kîjan ajokarê pêşbirkê ye?",
     "answers": [
       "Ayrton Senna",
       "Michael Schumacher",
@@ -21722,7 +21722,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "\"Senna\" belgesel filmi hangi yarış pilotunun hayatı hakkındadır?",
+    "promptTr": "Asif Kapadia'nın 2010 tarihli belgeseli hangi yarış pilotunun hayatı hakkındadır?",
     "answersTr": [
       "Ayrton Senna",
       "Michael Schumacher",
@@ -21838,7 +21838,7 @@
   {
     "id": "ds_teknoloji_0073",
     "category": "Teknolojî",
-    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekî ku dikare bibe komek nirxan tê bikaranîn?",
+    "prompt": "Di bernamekirinê de, kîjan struktur ji bo hilanîna çend nirxên bêdubare û bê rêz tê bikaranîn?",
     "answers": [
       "Guherbar",
       "Xelek",
@@ -21858,7 +21858,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Programlamada, bir değerler kümesi olabilen bir değeri saklamak için hangi kavram kullanılır?",
+    "promptTr": "Programlamada, birden fazla benzersiz ve sırasız değeri saklamak için hangi yapı kullanılır?",
     "answersTr": [
       "Değişken",
       "Döngü",
@@ -22656,10 +22656,10 @@
     "category": "Teknolojî",
     "prompt": "Di têlefoneke jîr de, kîjan sepan ji bo wergirtina nûçeyan tê bikaranîn?",
     "answers": [
-      "Calculator",
+      "Hesabker",
       "BBC News",
-      "Compass",
-      "Flashlight"
+      "Pûsûle",
+      "Çira"
     ],
     "correctAnswer": "BBC News",
     "explanation": "BBC News haber almak için kullanılan bir uygulamadır. Hesap makinesi hesaplar içindir, pusula yön bulma içindir ve fener ışık içindir.",
@@ -22692,7 +22692,7 @@
     "answers": [
       "Kamera",
       "Mîkrofon",
-      "Speaker",
+      "Bilindbêj",
       "Sensora tiliyan"
     ],
     "correctAnswer": "Kamera",
@@ -23504,7 +23504,7 @@
   {
     "id": "ds_cand_0033",
     "category": "Çand",
-    "prompt": "Kîjan peyv di Kurmancî de ji bo \"wedding\" tê bikaranîn?",
+    "prompt": "Kîjan peyv di Kurmancî de ji bo merasîma zewacê tê bikaranîn?",
     "answers": [
       "Dawet",
       "Cejn",
@@ -24753,7 +24753,7 @@
       "Kapı kapatılır",
       "Yemek hazırlanır",
       "Işık söndürülür",
-      "Cami okunur"
+      "Mevlit okunur"
     ],
     "correctAnswerTr": "Yemek hazırlanır",
     "explanationKu": "Di mêvanperweriya kurdî de, xwarin bi gelemperî ji bo mêvanan tê amadekirin da ku ew baş werin pêşwazîkirin. Derî girtin, çira vemirandin û mewlûd xwendin ne adetên mêvanperweriyê ne.",
@@ -26667,9 +26667,9 @@
       "Tora neuralî ya pêşverû",
       "Tora neuralî ya dubare",
       "Tora neuralî ya belavbûyî",
-      "Tora neuralî ya konvulsiyonî"
+      "Tora neuralî ya konvolusyonî"
     ],
-    "correctAnswer": "Tora neuralî ya konvulsiyonî",
+    "correctAnswer": "Tora neuralî ya konvolusyonî",
     "explanation": "Evrişimli sinir ağı (CNN) özellikle görüntü işleme için tasarlanmıştır. Evrişim katmanlarını kullanarak kenarlar ve şekiller gibi görsel özellikleri görüntülerden çıkarır ve görüntü tanıma için çok etkilidir.",
     "type": "multipleChoice",
     "difficulty": 2,
@@ -26852,7 +26852,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Gelecekte meydana gelmiş bir olayı göstermek için hangi terim kullanılır?",
+    "promptTr": "Gelecekte meydana gelecek bir olayı göstermek için hangi terim kullanılır?",
     "answersTr": [
       "Geriye dönüş",
       "Gelişme",
@@ -26971,8 +26971,8 @@
     "prompt": "Kîjan teknolojî ji bo girêdana bêtêl a înternetê tê bikaranîn?",
     "answers": [
       "Ethernet",
-      "Fiber optic",
-      "Coaxial cable",
+      "Fîbera optîkî",
+      "Kabloya koaksîyel",
       "Wi-Fi"
     ],
     "correctAnswer": "Wi-Fi",

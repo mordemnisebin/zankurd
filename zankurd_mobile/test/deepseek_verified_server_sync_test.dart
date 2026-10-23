@@ -39,10 +39,14 @@ const _verified = 'assets/data/deepseek_verified_2026_09_30_questions.json';
 const _science = 'assets/data/bilim_2026_09_30_questions.json';
 const _syncSql = 'supabase/2026-09-30_deepseek_verified_sync.sql';
 
-/// Sonradan yerelde metni düzeltilen soruların canlı göçü: kimlik -> yeni
+/// Sonradan yerelde metni düzeltilen soruların canlı göçleri: kimlik -> yeni
 /// istem (SQL kaçışlı). Göçteki ya da daha önce uygulanmış satırın istemi
-/// yerelden ayrışırsa bu göç o satırı yeni metne çekmelidir.
-const _promptFixSql = 'supabase/2026-10-14_banka_ku_duzeltme.sql';
+/// yerelden ayrışırsa bu göçlerden biri o satırı yeni metne çekmelidir.
+const _promptFixSqls = [
+  'supabase/2026-10-14_banka_ku_duzeltme.sql',
+  // 2026-10-23 soru kalitesi taraması.
+  'supabase/2026-10-23_icerik_taramasi.sql',
+];
 final _fixRe = RegExp(
   r"^update questions set\n  prompt = '((?:[^']|'')*)'(?:,[\s\S]*?)?\nwhere id = '([0-9a-f-]{36})';",
   multiLine: true,
@@ -85,11 +89,11 @@ void main() {
         'supabase/2026-09-30_cihan_and_science.sql',
         'supabase/2026-09-30_sinema_category_and_questions.sql',
       ].map((f) => File(f).readAsStringSync()).join('\n');
+      // Sonraki düzeltme göçü öncekini ezer (sırayla uygulanır).
       final fixes = {
-        for (final m in _fixRe.allMatches(
-          File(_promptFixSql).readAsStringSync(),
-        ))
-          m.group(2)!: m.group(1)!,
+        for (final file in _promptFixSqls)
+          for (final m in _fixRe.allMatches(File(file).readAsStringSync()))
+            m.group(2)!: m.group(1)!,
       };
       // Düzeltme göçünün ekleme göçü dışında (uygulanmış göçlerdeki) bir
       // satıra yazdığı istemler de sunucuda sayılır.

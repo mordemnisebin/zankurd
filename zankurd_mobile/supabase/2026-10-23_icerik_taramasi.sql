@@ -108,4 +108,39 @@ where id = '7dfcc320-fd6b-5fa8-b26b-b4bb15ccb900';
 update public.questions set is_approved = false, updated_at = now() where id = '66f2e690-67aa-5624-b0c9-ecd26dee105e'; -- offline_2818
 update public.questions set is_approved = false, updated_at = now() where id = '2b5b3057-0fc4-52af-9de7-cd6d5f728437'; -- edit_ziman_0003
 
+-- Doğrulanmış DeepSeek kopyasında istemi düzelen 11 soru (sunucu kimliğiyle).
+update questions set
+  prompt = 'Dengbêj bi piranî kilamên xwe bi kîjan awayî dibêjin?'
+where id = 'ee6f5df9-6002-5526-907e-1e8a553adfb0';
+update questions set
+  prompt = 'Di muzîkê de, rêzkirina dengan li gorî demê çi ye?'
+where id = '7c32ea79-e7cd-5d95-8d9f-28990bc41ff4';
+update questions set
+  prompt = 'Nivîskarê Şerefnameyê ji kîjan mîrektiyê bû?'
+where id = '5ecf5ab2-a5f5-5237-b10f-23d49107e6eb';
+update questions set
+  prompt = 'Ewlehiya Riya Hevrîşimê di kîjan serdemê de herî zêde bû?'
+where id = 'ad0433a8-baa8-5443-b73f-25aebad68894';
+update questions set
+  prompt = 'Di bernamekirinê de, kîjan struktur ji bo hilanîna çend nirxên bêdubare û bê rêz tê bikaranîn?'
+where id = '70235e02-cee3-5030-99e5-44adf8474cd2';
+update questions set
+  prompt = 'Kîjan peyv di Kurmancî de ji bo mêrê ku dizewice tê bikaranîn?'
+where id = 'af986efe-4565-5cb3-8c59-44765c19848f';
+update questions set
+  prompt = 'Kîjan peyv di Kurmancî de ji bo merasîma zewacê tê bikaranîn?'
+where id = '78abbb10-0bc6-5e69-a7f5-8dcd76631e78';
+update questions set
+  prompt = 'Di fîlmên Bahman Ghobadi de çima "têlên strîdar" di gelek dîmenan de dubare dibin?'
+where id = 'afc98046-ee16-56ad-8768-a41084722f10';
+update questions set
+  prompt = 'Kîjan şer di navbera 1950 û 1953''an de li Asyaya Rojhilat qewimî?'
+where id = '1ed0c7de-9dd9-5c4c-8605-9e3d753c6ea4';
+update questions set
+  prompt = 'Şerefxanê Bidlîsî ji kîjan mezhebî bû?'
+where id = '6282fdc4-4dea-59b0-bff9-9642487cb765';
+update questions set
+  prompt = 'Belgefîlma Asif Kapadia ya sala 2010an li ser jiyana kîjan ajokarê pêşbirkê ye?'
+where id = '95ba436f-2297-5000-8b11-2eb40d214194';
+
 commit;

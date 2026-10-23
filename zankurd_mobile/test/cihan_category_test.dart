@@ -164,6 +164,42 @@ void main() {
         // bilinçli bir kararla eklenir.
         const editorialFixes = <String, Set<String>>{
           'ds_cografya_0177': {'answers', 'answersTr'},
+          // 2026-10-23 soru kalitesi taraması: Flash + Grok tarama, GPT-5.6 +
+          // Claude Opus 5 doğrulama (uyuşmazlıkta Grok hakem). Doğru şıkkın
+          // kimliği ve iki dildeki hizası korunur.
+          'ds_edebiyat_0157': {
+            'answers',
+            'correctAnswer',
+            'answersTr',
+            'correctAnswerTr',
+          },
+          'ds_teknoloji_0130': {'answers', 'correctAnswer'},
+          'ds_cand_0033': {'prompt'},
+          'ds_cand_0035': {'prompt'},
+          'ds_cand_0159': {'answersTr'},
+          'ds_dirok_0010': {'prompt', 'promptTr'},
+          'ds_dirok_0016': {'prompt', 'promptTr'},
+          'ds_dirok_0173': {'prompt', 'promptTr'},
+          'ds_dirok_0287': {'answers'},
+          'ds_dirok_0293': {'prompt', 'promptTr'},
+          'ds_edebiyat_0102': {'answers', 'answersTr'},
+          'ds_edebiyat_0106': {'answers'},
+          'ds_edebiyat_0108': {'answers'},
+          'ds_edebiyat_0110': {'answers'},
+          'ds_edebiyat_0112': {'answers'},
+          'ds_edebiyat_0114': {'answers'},
+          'ds_edebiyat_0122': {'answers'},
+          'ds_edebiyat_0124': {'answers'},
+          'ds_muzik_0023': {'prompt', 'promptTr'},
+          'ds_muzik_0103': {'prompt'},
+          'ds_muzik_0203': {'answersTr', 'correctAnswerTr'},
+          'ds_sinema_0194': {'prompt', 'promptTr'},
+          'ds_sinema_0249': {'promptTr'},
+          'ds_sinema_0286': {'prompt'},
+          'ds_teknoloji_0010': {'answers'},
+          'ds_teknoloji_0073': {'prompt', 'promptTr'},
+          'ds_teknoloji_0195': {'answers'},
+          'ds_teknoloji_0197': {'answers'},
         };
         for (final c in copies) {
           final o = original[c['id']];
