@@ -195,8 +195,9 @@ exception when others then
   insert into _kanit values (13, 'S2d kurulum', '-', '-', 'HATA: ' || sqlerrm);
 end $$;
 
--- S2e: 20 dk önce kurulmuş, misafir (p4) 18 dk önce girip çıktı (satırı
--- silindi); ev sahibi (p6) lobisi açık kalmalı
+-- S2e: 40 dk önce kurulmuş lobi, misafir (p4) 5 dk önce girip leave_room ile
+-- çıktı (room_players satırı silinir, joined_at kaybolur); ev sahibi (p6)
+-- lobisi açık kalmalı (leave_room rooms.last_activity_at yazar)
 do $$
 declare
   p4 uuid := (select id from _p where n = 4);
@@ -205,11 +206,11 @@ declare
 begin
   insert into public.rooms (code, host_id, status, created_at)
   values ('K' || upper(substr(md5(random()::text), 1, 5)), p6, 'lobby',
-          now() - interval '20 minutes')
+          now() - interval '40 minutes')
   returning id into v;
   insert into public.room_players (room_id, player_id, joined_at)
-  values (v, p6, now() - interval '20 minutes'),
-         (v, p4, now() - interval '18 minutes');
+  values (v, p6, now() - interval '40 minutes'),
+         (v, p4, now() - interval '5 minutes');
   perform set_config('request.jwt.claims', json_build_object('sub', p4)::text, true);
   perform public.leave_room(v);
   insert into _r values ('guest_lobby', v);
@@ -303,7 +304,7 @@ from (values
   (11, 'fresh_lobby',   'S2b taze lobi (kontrol)', 'lobby/null', 'lobby/null'),
   (12, 'chat_lobby',    'S2c 40 dk önce kurulmuş ama sohbet eden lobi kapanmaz (kontrol)', 'lobby/null', 'lobby/null'),
   (13, 'invite_lobby',  'S2d 40 dk önce kurulmuş ama davet atılan lobi kapanmaz (kontrol)', 'lobby/null', 'lobby/null'),
-  (14, 'guest_lobby',   'S2e misafir girip çıktı, ev sahibi lobisi açık kalır (kontrol)', 'lobby/null', 'lobby/null'),
+  (14, 'guest_lobby',   'S2e 40 dk'lık lobiye misafir 5 dk önce girip çıktı, lobi açık kalır', 'lobby/null', 'lobby/null'),
   (15, 'stale_active',  'S2f 20 dk etkinliksiz aktif oda', 'active/null', 'finished/stale_timeout'),
   (16, 'final_active',  'S2g tüm soruları açıklanmış bayat aktif oda stale değil completed olur', 'active/null', 'finished/completed'),
   (17, 'fresh_active',  'S2h taze aktif oda (kontrol)', 'active/null', 'active/null')

@@ -76,6 +76,21 @@ void main() {
     expect(body, contains('max(rp.joined_at)'));
     expect(body, contains('public.room_messages'));
     expect(body, contains('public.room_invites'));
+    expect(body, contains('r.last_activity_at'));
+    expect(
+      sql,
+      contains(
+        'alter table public.rooms add column if not exists last_activity_at',
+      ),
+    );
+    // Lobiden ayrılma etkinliği yazar (guest satırı silinse de iz kalır).
+    final leave = fn('leave_room');
+    expect(leave, contains('set last_activity_at = now()'));
+    expect(
+      leave.indexOf('set last_activity_at = now()'),
+      lessThan(leave.indexOf('crowd_room_member_leave')),
+      reason: 'kalabalık lobi çıkışı da etkinliği yenilemeli',
+    );
     // Aktif oda: 10 dk etkinliksizlik.
     expect(body, contains("interval '10 minutes'"));
     expect(body, isNot(contains("interval '24 hours'")));

@@ -8,7 +8,8 @@
 -- S2  cleanup_stale_rooms + cron: hayalet oda oyuncuyu 24 saat kilitliyordu
 --     (join_matchmaking mevcut canlı odayı döndürür, join_room_by_code
 --     'already in another live room' der). Lobi 30 dk etkinliksiz (kuruluş,
---     katılım, sohbet, davet) -> kapanır; aktif oda 10 dk etkinliksiz ->
+--     katılım, sohbet, davet, lobiden ayrılma = rooms.last_activity_at)
+--     -> kapanır; aktif oda 10 dk etkinliksiz ->
 --     'stale_timeout', AMA son soru açıklanmışsa 'completed' (kazanç
 --     kaybolmasın). İş her 5 dk çalışır (eskiden saatte bir).
 -- S3  push_outbox: gönderen sütunu (from_user_id) eklendi; claim_push_outbox
@@ -37,6 +38,10 @@
 
 begin;
 
+
+-- rooms.last_activity_at: lobiden ayrılma gibi silinen izlerin yerine
+-- bayat-lobi süzgecinin okuduğu son etkinlik zamanı (null olabilir).
+alter table public.rooms add column if not exists last_activity_at timestamptz;
 
 -- S1 --------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public.leave_room(p_room_id uuid)
@@ -72,6 +77,16 @@ begin
       'reason', coalesce(v_room.ended_reason, 'already_finished'),
       'forfeited_by', v_room.forfeited_by
     );
+  end if;
+
+  -- Lobiden biri ayrılınca lobi etkinliği yenilenir: misafirin room_players
+  -- satırı silindiğinden joined_at kaybolur, bayat-lobi süzgeci (30 dk)
+  -- bu zaman damgasına bakar. Kalabalık odayı da kapsar (aşağıdaki
+  -- ortak yardımcıdan ÖNCE yazılır).
+  if v_room.status = 'lobby' then
+    update public.rooms r
+    set last_activity_at = now()
+    where r.id = p_room_id;
   end if;
 
   -- Kalabalık oda (is_custom ve max_players > 2): ayrılma mantığı ortak
@@ -247,7 +262,8 @@ begin
         (select max(m.created_at) from public.room_messages m
          where m.room_id = r.id),
         (select max(i.created_at) from public.room_invites i
-         where i.room_id = r.id)
+         where i.room_id = r.id),
+        r.last_activity_at
       ) < now() - interval '30 minutes'
     ) or (
       r.status = 'active'
