@@ -143,8 +143,12 @@ graph TB
   göçü tarihsel no-op olarak durur; yeniden çalıştırılmaz.
 - **Sırayla düello verisi** — `models/async_duel.dart`;
   `ZanKurdRepository.startAsyncDuel/answerAsyncDuel/loadMyAsyncDuels/markAsyncDuelSeen/claimAsyncDuelXp`.
-  Kazanan, XP ve 48 saat kuralı sunucuda (`supabase/2026-09-28_async_duels.sql`,
-  canlıda uygulandı; bkz. `supabase/applied.md`)
+  Kazanan, XP ve 24 saat kuralı sunucuda (`supabase/2026-09-28_async_duels.sql`,
+  canlıda uygulandı; bkz. `supabase/applied.md`). 2026-10-24 göçü
+  (`supabase/2026-10-24_duello_sirasi.sql`): pencere 48 → 24 saat, süre
+  dolunca turunu bitiren HÜKMEN kazanır (`forfeit_loser_id`, durum yine
+  'expired'), 4 saat kala tek hatırlatma ve hükmen bildirimi
+  (`expire_async_duels`, 10 dk cron), devam adaleti (`*_resumed_at`)
 - **Arkadaşa meydan okuma** — `screens/async_duel/async_duel_challenge_sheet.dart`
   (seçim sayfası), `ZanKurdRepository.createAsyncDuelChallenge/
   acceptAsyncDuelChallenge/supportsAsyncDuelChallenge`; sunucu

@@ -82,6 +82,7 @@ class _MockAsyncDuel {
     this.invitedName,
     this.incoming = false,
     this.unclaimed = false,
+    this.forfeitIWon,
   });
 
   final String id;
@@ -120,6 +121,11 @@ class _MockAsyncDuel {
   DateTime? completedAt;
   bool seen = false;
   bool xpAwarded = false;
+
+  /// Hükmen sonuç: `true` rakip 24 saatte oynamadı ben kazandım, `false`
+  /// ben oynamadım kaybettim, `null` hükmen yok (sunucu:
+  /// `async_duels.forfeit_loser_id`).
+  final bool? forfeitIWon;
 
   bool get myFinished => answeredIndices.length >= questions.length;
   bool get otherFinished => otherCorrect != null && otherMs != null;
@@ -688,7 +694,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
   // düello kurar; bir SONRAKİ `startAsyncDuel` bunu tüketir.
 
   static const _asyncDuelQuestionCount = 7;
-  static const _asyncDuelDuration = Duration(hours: 48);
+  static const _asyncDuelDuration = asyncDuelWindow;
 
   int _asyncDuelSeq = 0;
   final Map<String, _MockAsyncDuel> _asyncDuels = {};
@@ -867,7 +873,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
           categoryName: duel.category,
           myCorrect: duel.myFinished ? duel.myCorrect : null,
           opponentCorrect: duel.otherCorrect,
-          outcome: (duel.myFinished && duel.otherFinished)
+          outcome: duel.forfeitIWon != null
+              ? (duel.forfeitIWon!
+                    ? AsyncDuelOutcome.win
+                    : AsyncDuelOutcome.loss)
+              : (duel.myFinished && duel.otherFinished)
               ? _asyncDuelOutcome(
                   myCorrect: duel.myCorrect,
                   myMs: duel.myMs,
@@ -875,6 +885,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
                   otherMs: duel.otherMs!,
                 )
               : null,
+          expiresAt: duel.expiresAt,
+          isForfeit: duel.forfeitIWon != null,
           createdAt: duel.createdAt,
           completedAt: duel.completedAt,
           seen: duel.seen,
@@ -1096,7 +1108,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
     int creatorCorrect = 5,
     int creatorMs = 40000,
     bool friendChallenge = true,
-    Duration expiresIn = const Duration(hours: 48),
+    Duration expiresIn = asyncDuelWindow,
   }) {
     final now = DateTime.now().toUtc();
     final id = 'mock_async_duel_${++_asyncDuelSeq}';
@@ -1116,6 +1128,71 @@ class MockZanKurdRepository implements ZanKurdRepository {
     );
   }
 
+  /// Testin, 24 saati dolmuş ve HÜKMEN sonuçlanmış bir düello kurmasını
+  /// sağlar. [iWon] true: rakip oynamadı, ben turumu bitirmiştim
+  /// ([myCorrect] doğru) ve kazandım; false: ben oynamadım, rakip bitirmişti
+  /// ([creatorCorrect]) ve kaybettim (turum yok, XP yok).
+  @visibleForTesting
+  void addForfeitedAsyncDuelForTesting({
+    required bool iWon,
+    String opponentName = 'Rojda',
+    int myCorrect = 5,
+    int opponentCorrect = 3,
+  }) {
+    final now = DateTime.now().toUtc();
+    final id = 'mock_async_duel_${++_asyncDuelSeq}';
+    final questions = _pickAsyncDuelQuestions(null);
+    final duel = _MockAsyncDuel(
+      id: id,
+      role: iWon ? AsyncDuelRole.creator : AsyncDuelRole.opponent,
+      category: null,
+      questions: questions,
+      opponentName: opponentName,
+      createdAt: now.subtract(const Duration(hours: 25)),
+      expiresAt: now.subtract(const Duration(minutes: 5)),
+      otherCorrect: iWon ? null : opponentCorrect,
+      otherMs: iWon ? null : 30000,
+      forfeitIWon: iWon,
+    );
+    if (iWon) {
+      duel.answeredIndices.addAll(List.generate(questions.length, (i) => i));
+      duel.myCorrect = myCorrect;
+      duel.myMs = 30000;
+    }
+    _asyncDuels[id] = duel;
+  }
+
+  /// Testin belirli bir kalan süreyle "sırası bende" (turumu bitirmedim,
+  /// [myTurn] true) ya da "rakip bekleniyor" (turumu bitirdim, [myTurn]
+  /// false) bir düello kurmasını sağlar. Sıralama ve kalan süre sınamak
+  /// içindir.
+  @visibleForTesting
+  String addOpenAsyncDuelForTesting({
+    required Duration expiresIn,
+    bool myTurn = true,
+    String opponentName = 'Rojda',
+  }) {
+    final now = DateTime.now().toUtc();
+    final id = 'mock_async_duel_${++_asyncDuelSeq}';
+    final questions = _pickAsyncDuelQuestions(null);
+    final duel = _MockAsyncDuel(
+      id: id,
+      role: AsyncDuelRole.opponent,
+      category: null,
+      questions: questions,
+      opponentName: opponentName,
+      createdAt: now.subtract(const Duration(hours: 1)),
+      expiresAt: now.add(expiresIn),
+    );
+    if (!myTurn) {
+      duel.answeredIndices.addAll(List.generate(questions.length, (i) => i));
+      duel.myCorrect = 4;
+      duel.myMs = 40000;
+    }
+    _asyncDuels[id] = duel;
+    return id;
+  }
+
   @override
   Future<int> claimAsyncDuelXp(String duelId) async {
     final duel = _asyncDuels[duelId];
@@ -1132,7 +1209,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
     final otherCorrect = duel.otherCorrect;
     final otherMs = duel.otherMs;
-    final outcome = (otherCorrect != null && otherMs != null)
+    final outcome = duel.forfeitIWon == true
+        ? AsyncDuelOutcome.win
+        : (otherCorrect != null && otherMs != null)
         ? _asyncDuelOutcome(
             myCorrect: duel.myCorrect,
             myMs: duel.myMs,

@@ -2971,6 +2971,28 @@ class Tr {
     K.asyncDuelReady: {'ku': 'Encam amade ye', 'tr': 'Sonuç hazır'},
     K.asyncDuelExpired: {'ku': 'Hevrik derneket', 'tr': 'Rakip çıkmadı'},
     K.asyncDuelUnfinished: {'ku': 'Nîvco ma', 'tr': 'Yarım kaldı'},
+    // 2026-10-24 sırayla düello: 24 saat penceresi, kalan süre, hükmen sonuç.
+    // Kurmancî taslak, yeni sözcük yok: `mane` (K.timerSecondsLeft), `saet`/
+    // `deqe` (K.cupStartsLatest, K.quickDuelDuration), `xweber serketî`
+    // (K.opponentForfeitedMatch), `nelîst` (streak metni). Jüri bekliyor.
+    K.asyncDuelTimeLeftHours: {'ku': '{n} saet mane', 'tr': '{n} sa kaldı'},
+    K.asyncDuelTimeLeftMinutes: {'ku': '{n} deqe mane', 'tr': '{n} dk kaldı'},
+    K.asyncDuelWonForfeit: {
+      'ku': 'Tu bi ser ketî · xweber',
+      'tr': 'Kazandın · hükmen',
+    },
+    K.asyncDuelLostForfeit: {
+      'ku': 'Te winda kir · xweber',
+      'tr': 'Kaybettin · hükmen',
+    },
+    K.asyncDuelForfeitOpponentReason: {
+      'ku': '{name} di 24 saetan de nelîst',
+      'tr': '{name} 24 saatte oynamadı',
+    },
+    K.asyncDuelForfeitMyReason: {
+      'ku': 'Te di 24 saetan de nelîst',
+      'tr': '24 saatte oynamadın',
+    },
     // 2026-10-15 sosyal yüzey: arkadaşlık yönetimi ve düello devam/geri çekme.
     K.friendAlreadyMark: {'ku': 'Hevalê te ye', 'tr': 'Arkadaşın'},
     K.removeFriendAction: {
@@ -3037,9 +3059,9 @@ class Tr {
     },
     K.asyncDuelExpiredBody: {
       'ku':
-          'Di 48 saetan de hevrik derneket. Tu ji bo bersivên xwe yên rast '
+          'Di 24 saetan de hevrik derneket. Tu ji bo bersivên xwe yên rast '
           'XP distînî.',
-      'tr': '48 saat içinde rakip çıkmadı. Doğru cevapların için XP alırsın.',
+      'tr': '24 saat içinde rakip çıkmadı. Doğru cevapların için XP alırsın.',
     },
     K.asyncDuelUnfinishedBody: {
       'ku': 'Te hemû pirs nebersivandin; ev pêşbirk dê bi dawî bibe.',
@@ -4601,8 +4623,21 @@ class K {
   /// Okunmamış tamamlanmış düello satırındaki rozet metni.
   static const asyncDuelReady = 'duel.async.ready';
 
-  /// 48 saat doldu, rakip hiç çıkmadı durumu.
+  /// 24 saat doldu, rakip hiç çıkmadı durumu.
   static const asyncDuelExpired = 'duel.async.expired';
+
+  /// Satırın kalan süre etiketi: "18 sa kaldı" / "35 dk kaldı" (`{n}`).
+  static const asyncDuelTimeLeftHours = 'duel.async.timeLeft.hours';
+  static const asyncDuelTimeLeftMinutes = 'duel.async.timeLeft.minutes';
+
+  /// Hükmen sonuç başlıkları: "Kazandın · hükmen" / "Kaybettin · hükmen".
+  static const asyncDuelWonForfeit = 'duel.async.forfeit.won';
+  static const asyncDuelLostForfeit = 'duel.async.forfeit.lost';
+
+  /// Hükmenin tek satırlık nedeni: "{name} 24 saatte oynamadı" (rakip) ve
+  /// "24 saatte oynamadın" (kaybeden ben).
+  static const asyncDuelForfeitOpponentReason = 'duel.async.forfeit.opponent';
+  static const asyncDuelForfeitMyReason = 'duel.async.forfeit.me';
 
   /// Ben kendi 7 sorumu bitirmedim durumu (`myCorrect == null`).
   static const asyncDuelUnfinished = 'duel.async.unfinished';

@@ -24,7 +24,7 @@ import 'async_duel_play_screen.dart';
 /// Sonuç ekranının dört bitiş durumu.
 ///
 /// [completed]: iki taraf da bitirdi, karşılaştırma kesin. [waiting]: BEN
-/// bitirdim, rakip henüz değil. [expired]: 48 saat doldu ve rakip hiç
+/// bitirdim, rakip henüz değil. [expired]: 24 saat doldu ve rakip hiç
 /// çıkmadı. [unfinished]: BEN kendi 7 sorumu bitirmedim — kendi hatam,
 /// düello süresi dolunca kendiliğinden kapanacak.
 enum AsyncDuelResultKind { completed, waiting, expired, unfinished }
@@ -49,6 +49,7 @@ class AsyncDuelResultView {
     this.challengeCode,
     this.invitedName,
     this.canCancel = false,
+    this.isForfeit = false,
   });
 
   final String duelId;
@@ -74,6 +75,15 @@ class AsyncDuelResultView {
   /// ([AsyncDuelSummary.canCancel]). Yalnız gelen kutusundan açılan görünümde
   /// dolar; turun hemen ardındaki sonuçta gösterilmez.
   final bool canCancel;
+
+  /// Hükmen sonuç (kind daima [AsyncDuelResultKind.completed]): süre doldu,
+  /// bir taraf turunu bitirmedi. Skor karşılaştırması yoktur; başlık
+  /// "Kazandın · hükmen" / "Kaybettin · hükmen", altında tek satır neden.
+  final bool isForfeit;
+
+  /// Hükmen KAYBEDEN benim: turum yok, XP yok, sunucuda talep edecek sonuç
+  /// satırı da yok.
+  bool get isForfeitLoss => isForfeit && outcome == AsyncDuelOutcome.loss;
 
   /// Bağlantı meydan okumasını (kimse almadan) paylaşabilirim: turum bitti,
   /// skorum belli, kod elimde, belirli bir arkadaşa gitmedi.
@@ -129,6 +139,20 @@ class AsyncDuelResultView {
   /// çıkmadı" değil, "nîvco ma" olarak okunmalı (kusur bende).
   factory AsyncDuelResultView.fromSummary(AsyncDuelSummary summary) {
     final myCorrect = summary.myCorrect;
+    // Hükmen sonuç `myCorrect == null`dan ÖNCE okunur: hükmen kaybeden
+    // turunu bitirmemiştir ama "Yarım kaldı" değil "Kaybettin · hükmen" der.
+    if (summary.isForfeit && summary.outcome != null) {
+      return AsyncDuelResultView._(
+        duelId: summary.duelId,
+        kind: AsyncDuelResultKind.completed,
+        myCorrect: myCorrect,
+        opponentCorrect: summary.opponentCorrect,
+        outcome: summary.outcome,
+        opponentName: summary.opponentName,
+        opponentProfile: summary.opponentProfile,
+        isForfeit: true,
+      );
+    }
     if (myCorrect == null) {
       return AsyncDuelResultView._(
         duelId: summary.duelId,
@@ -219,6 +243,11 @@ String asyncDuelStatusLabel(BuildContext context, AsyncDuelResultView view) {
     case AsyncDuelResultKind.unfinished:
       return context.t(K.asyncDuelUnfinished);
     case AsyncDuelResultKind.completed:
+      if (view.isForfeit) {
+        return view.outcome == AsyncDuelOutcome.win
+            ? context.t(K.asyncDuelWonForfeit)
+            : context.t(K.asyncDuelLostForfeit);
+      }
       final headline = switch (view.outcome!) {
         AsyncDuelOutcome.win => context.t(K.youWon),
         AsyncDuelOutcome.loss => context.t(K.youLost),
@@ -290,6 +319,8 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
         );
       }
     }
+    // Hükmen kaybeden: sunucuda sonuç satırı da talep edilecek XP de yok.
+    if (view.isForfeitLoss) return;
     if (view.kind == AsyncDuelResultKind.completed ||
         view.kind == AsyncDuelResultKind.expired) {
       try {
@@ -340,6 +371,30 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
                 tag: view.opponentProfile?.playerTag,
               );
         xp = _completedXp(view);
+        if (view.isForfeit) {
+          // Hükmen: karşılaştırılacak skor yok; kahraman tek satır neden
+          // söyler (kaybeden ben ya da rakip).
+          final forfeitName = rawOpponentName == null
+              ? context.t(K.asyncDuelOpponent)
+              : opponentName;
+          hero = SahneResultHero(
+            emblem: win
+                ? const SahneResultEmblem.win(size: 64)
+                : const SahneResultEmblem.state(icon: AppIcons.flag),
+            title: win
+                ? context.t(K.asyncDuelWonForfeit)
+                : context.t(K.asyncDuelLostForfeit),
+            titleRole: win ? SahneRole.gold : null,
+            body: win
+                ? context.t(K.asyncDuelForfeitOpponentReason, {
+                    'name': forfeitName,
+                  })
+                : context.t(K.asyncDuelForfeitMyReason),
+            celebrate: win,
+            tone: SahneResultTone.race,
+          );
+          break;
+        }
         if (view.myCorrect != null && view.opponentCorrect != null) {
           scoreboard = Padding(
             padding: const EdgeInsets.symmetric(vertical: SahneSpace.x1),

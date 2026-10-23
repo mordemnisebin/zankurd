@@ -18,6 +18,7 @@ import '../async_duel/async_duel_challenge_sheet.dart';
 import '../async_duel/async_duel_inbox.dart';
 import '../async_duel/async_duel_play_screen.dart';
 import '../async_duel/async_duel_result_screen.dart';
+import '../async_duel/async_duel_time.dart';
 import '../matchmaking_screen.dart';
 
 /// Ana ekranın düello kartı: "Günün dersi"nin hemen altında, öğrenme
@@ -41,6 +42,15 @@ import '../matchmaking_screen.dart';
 ///   (`outcome != null && !seen` — "Düellolarım" kutusunun okunmamış
 ///   rozetiyle aynı kural). Kart sayıyla açılır; tek düelloysa doğrudan
 ///   sonucu, birden çoksa tam listeyi açar.
+///
+/// ## Kalan süre (2026-10-24)
+///
+/// Düello penceresi 24 saattir. "Sıra sende" durumunda kart, en yakın
+/// bitişin kalan süresini ("18 sa kaldı", ≤ 4 saatte kırmızı) ve ince bir
+/// kalan-süre çubuğunu gösterir; "Sıra sende" artık yalnız gelen arkadaş
+/// meydan okuması değil, yarım bıraktığım tur da demektir ("Devam et").
+/// Bekleyen sırası ya da sonucu yokken rakibi beklenen düello varsa alt
+/// satır "Rakip bekleniyor" der ve onun kalan süresini verir.
 ///
 /// ## Üçüncü durum: "Sıra sende" (2026-10-13)
 ///
@@ -95,8 +105,12 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
   /// ya da hatada boş: kart varsayılan durumda kalır.
   List<AsyncDuelSummary> _ready = const [];
 
-  /// Bana gelen, kabul etmediğim arkadaş meydan okumaları ("Sıra sende").
+  /// "Sıra sende": bana gelen, kabul etmediğim arkadaş meydan okumaları ve
+  /// yarım bıraktığım turlar; en yakın bitiş başta.
   List<AsyncDuelSummary> _incoming = const [];
+
+  /// Turumu bitirdim, rakip henüz bitirmedi; en yakın bitiş başta.
+  List<AsyncDuelSummary> _waiting = const [];
 
   /// Meydan okuma RPC'leri sunucuda var mı; belli olana dek gizli.
   bool _challengeAvailable = false;
@@ -132,10 +146,15 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
       final all = await widget.repository.loadMyAsyncDuels();
       if (!mounted || epoch != _epoch) return;
       setState(() {
-        _incoming = [
+        _incoming = asyncDuelInboxOrder([
           for (final s in all)
-            if (s.incomingChallenge && s.challengeCode != null) s,
-        ];
+            if ((s.incomingChallenge && s.challengeCode != null) || s.canResume)
+              s,
+        ]);
+        _waiting = _byExpiry([
+          for (final s in all)
+            if (s.isWaitingOpponent) s,
+        ]);
         _ready = [
           for (final s in all)
             if (s.outcome != null && !s.seen) s,
@@ -147,8 +166,28 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
       setState(() {
         _ready = const [];
         _incoming = const [];
+        _waiting = const [];
       });
     }
+  }
+
+  /// Bitişi yakın olan başta; bitişi bilinmeyen sonda (sunucu sırası korunur).
+  static List<AsyncDuelSummary> _byExpiry(List<AsyncDuelSummary> items) {
+    final indexed = [for (var i = 0; i < items.length; i++) (i, items[i])];
+    indexed.sort((a, b) {
+      final ea = a.$2.expiresAt;
+      final eb = b.$2.expiresAt;
+      if (ea != null && eb != null) {
+        final c = ea.compareTo(eb);
+        if (c != 0) return c;
+      } else if (ea != null) {
+        return -1;
+      } else if (eb != null) {
+        return 1;
+      }
+      return a.$1.compareTo(b.$1);
+    });
+    return [for (final e in indexed) e.$2];
   }
 
   Future<void> _push(Widget page) async {
@@ -171,13 +210,14 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
 
   void _openIncoming() {
     if (_incoming.length == 1) {
+      final only = _incoming.single;
       unawaited(
         _push(
           AsyncDuelPlayScreen(
             repository: widget.repository,
-            entry: AsyncDuelEntry.acceptChallenge(
-              _incoming.single.challengeCode!,
-            ),
+            entry: only.incomingChallenge
+                ? AsyncDuelEntry.acceptChallenge(only.challengeCode!)
+                : AsyncDuelEntry.resume(only.duelId),
           ),
         ),
       );
@@ -219,13 +259,23 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
           ? context.t(K.challengeYourTurn)
           : '${context.t(K.challengeYourTurn)} · $incomingCount';
       final inviter = _incoming.first.opponentName;
-      if (incomingCount == 1 && inviter != null) {
-        subtitle = context.t(K.challengeIncomingBy, {
-          'name': context.playerDisplayName(
-            inviter,
-            tag: _incoming.first.opponentProfile?.playerTag,
-          ),
-        });
+      if (incomingCount == 1 && _incoming.first.incomingChallenge) {
+        subtitle = inviter == null
+            ? null
+            : context.t(K.challengeIncomingBy, {
+                'name': context.playerDisplayName(
+                  inviter,
+                  tag: _incoming.first.opponentProfile?.playerTag,
+                ),
+              });
+      } else if (incomingCount == 1) {
+        // Yarım bıraktığım tur: rakip adı (varsa), yoksa "Yarım kaldı".
+        subtitle = inviter == null
+            ? context.t(K.asyncDuelUnfinished)
+            : context.playerDisplayName(
+                inviter,
+                tag: _incoming.first.opponentProfile?.playerTag,
+              );
       } else if (readyCount > 0) {
         subtitle = '${context.t(K.asyncDuelReady)} · $readyCount';
       } else {
@@ -244,8 +294,23 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
           : context.t(K.asyncDuelInbox);
     } else {
       title = context.t(K.asyncDuel);
-      subtitle = null;
+      // Bekleyen sıra/sonuç yokken rakibi beklenen düello varsa durumu söyle.
+      subtitle = _waiting.isEmpty
+          ? null
+          : _waiting.length == 1
+          ? context.t(K.asyncDuelWaiting)
+          : '${context.t(K.asyncDuelWaiting)} · ${_waiting.length}';
     }
+
+    // Kalan süre: sırası bende olan düelloların en yakın bitişi (metin +
+    // ince çubuk) ya da rakip beklenenlerin en yakın bitişi (yalnız metin).
+    final now = DateTime.now();
+    final Duration? timeLeft = hasIncoming
+        ? _incoming.first.timeLeft(now)
+        : (!pending && _waiting.isNotEmpty
+              ? _waiting.first.timeLeft(now)
+              : null);
+    final timeLabel = asyncDuelTimeLeftLabel(context, timeLeft);
 
     // Tek bir rakip söz konusuysa kartın solunda onun fotoğrafı/simgesi
     // durur (sunucu SQL'i uygulanmadıysa profil yoktur: kum saati kalır).
@@ -261,7 +326,9 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
     final VoidCallback buttonAction;
     if (hasIncoming) {
       buttonLabel = incomingCount == 1
-          ? context.t(K.challengePlay)
+          ? (_incoming.single.incomingChallenge
+                ? context.t(K.challengePlay)
+                : context.t(K.asyncDuelResume))
           : context.t(K.asyncDuelInbox);
       buttonAction = _openIncoming;
     } else if (pending) {
@@ -285,7 +352,7 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
       padding: const EdgeInsets.only(top: SahneSpace.cardGap),
       child: Semantics(
         container: true,
-        label: subtitle == null ? title : '$title. $subtitle',
+        label: [title, ?subtitle, ?timeLabel].join('. '),
         child: SahneSurfaceCard(
           // Boyax vurgusu (2026-10-20 renk ve canlılık): solda 4 px Boyax
           // şerit, Boyax tonlu ikon kutusu ve Boyax tonlu "Oyna" düğmesi;
@@ -334,6 +401,14 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
                       key: const ValueKey('home-duel-meta'),
                       style: SahneType.caption.copyWith(color: t.tx2),
                     ),
+                  if (timeLeft != null) ...[
+                    const SizedBox(height: SahneSpace.x1),
+                    AsyncDuelTimeLeft(
+                      key: const ValueKey('home-duel-time'),
+                      left: timeLeft,
+                      showBar: hasIncoming,
+                    ),
+                  ],
                 ],
               );
               final button = SahneButton.tonal(
