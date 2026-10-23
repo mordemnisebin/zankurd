@@ -1686,6 +1686,12 @@ class Tr {
       'ku': 'Bi tirkî nîşan bide',
       'tr': 'Türkçesini göster',
     },
+    // Yazma sorusunda harf tuşlarının üstü (2026-10-23). KU jüri: Argon +
+    // Gemini 'li ser klavyeya te', Codex + Grok 'lê'siz 'ji vir zêde bike'.
+    K.diacriticHint: {
+      'ku': 'Heke ev tîp li ser klavyeya te tune bin, ji vir zêde bike',
+      'tr': 'Klavyende bu harfler yoksa buradan ekleyebilirsin',
+    },
     K.wildcardNoCoins: {
       'ku': 'Ji bo alîkariyê zêrên te têr nakin',
       'tr': 'Joker için jeton yetmiyor',
@@ -3940,6 +3946,7 @@ class K {
   static const startEvent = 'contest.start';
   static const wheelReadyBadge = 'wheel.ready.badge';
   static const showTurkishTranslation = 'quiz.showTurkishTranslation';
+  static const diacriticHint = 'quiz.diacriticHint';
   static const wildcardNoCoins = 'quiz.wildcard.no.coins';
   static const wheelTitle = 'wheel.title';
   static const wheelOncePerDay = 'wheel.oncePerDay';

@@ -213,6 +213,17 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
         ),
         if (!widget.disabled) ...[
           const SizedBox(height: SahneSpace.x3),
+          // Harf tuşları "yalnız bunlarla yazılır" sanılıyordu (2026-10-23
+          // kullanıcı geri bildirimi): klavyede yoksa ekleme yolu olduğu
+          // söylenir; telefonun kendi klavyesiyle yazmak her zaman geçerli.
+          Text(
+            Tr.forKu(K.diacriticHint, isKu),
+            key: const ValueKey('fill-in-blank-diacritic-hint'),
+            style: SahneType.caption.copyWith(
+              color: SahneTokens.of(context).tx2,
+            ),
+          ),
+          const SizedBox(height: SahneSpace.x2),
           _DiacriticRow(onInsert: _insert),
           const SizedBox(height: SahneSpace.x4),
           FilledButton(

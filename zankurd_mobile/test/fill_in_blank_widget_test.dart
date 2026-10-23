@@ -195,4 +195,15 @@ void main() {
     );
     expect(input.controller!.text, 'çşêîû');
   });
+
+  // 2026-10-23 kullanıcı geri bildirimi: harf tuşları "yalnız bunlarla
+  // yazılır" sanılıyordu. Üstlerinde, klavyede yoksa ekleme yolu olduğunu
+  // söyleyen açıklama durur; cevap verildikten sonra (tuşlarla birlikte) kalkar.
+  testWidgets('harf tuşlarının üstünde klavye açıklaması var', (tester) async {
+    await tester.pumpWidget(_host(onSubmit: (_) {}));
+    expect(
+      find.byKey(const ValueKey('fill-in-blank-diacritic-hint')),
+      findsOneWidget,
+    );
+  });
 }
