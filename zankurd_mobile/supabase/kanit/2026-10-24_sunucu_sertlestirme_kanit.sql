@@ -122,148 +122,197 @@ exception when others then
 end $$;
 
 -- ---------------------------------------------------------------- S2
+-- Her senaryo KENDİ do-bloğunda (kendi savepoint'i): biri hata verirse
+-- ötekiler sürer. Oda kimlikleri _r'de tutulur. Sohbet satırı
+-- enforce_chat_moderation tetikleyicisinden geçer (üye + jwt kimliği
+-- zorunlu, created_at'i now() yapar), bu yüzden önce oyuncu room_players'a
+-- eklenir ve jwt o oyuncuya çevrilir.
+create temp table _r (ad text primary key, id uuid) on commit drop;
+
+-- S2a: 40 dk önce kurulmuş, hiç etkinlik yok (p3)
+do $$
+declare p3 uuid := (select id from _p where n = 3); v uuid;
+begin
+  insert into public.rooms (code, host_id, status, created_at)
+  values ('K' || upper(substr(md5(random()::text), 1, 5)), p3, 'lobby',
+          now() - interval '40 minutes')
+  returning id into v;
+  insert into public.room_players (room_id, player_id, joined_at)
+  values (v, p3, now() - interval '40 minutes');
+  insert into _r values ('stale_lobby', v);
+exception when others then
+  insert into _kanit values (10, 'S2a kurulum', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- S2b: taze lobi (p4)
+do $$
+declare p4 uuid := (select id from _p where n = 4); v uuid;
+begin
+  insert into public.rooms (code, host_id, status)
+  values ('K' || upper(substr(md5(random()::text), 1, 5)), p4, 'lobby')
+  returning id into v;
+  insert into public.room_players (room_id, player_id) values (v, p4);
+  insert into _r values ('fresh_lobby', v);
+exception when others then
+  insert into _kanit values (11, 'S2b kurulum', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- S2c: 40 dk önce kurulmuş AMA az önce sohbet var (p5, üye olarak yazar)
+do $$
+declare p5 uuid := (select id from _p where n = 5); v uuid;
+begin
+  insert into public.rooms (code, host_id, status, created_at)
+  values ('K' || upper(substr(md5(random()::text), 1, 5)), p5, 'lobby',
+          now() - interval '40 minutes')
+  returning id into v;
+  insert into public.room_players (room_id, player_id, joined_at)
+  values (v, p5, now() - interval '40 minutes');
+  perform set_config('request.jwt.claims', json_build_object('sub', p5)::text, true);
+  insert into public.room_messages (room_id, sender_id, text)
+  values (v, p5, 'merheba');
+  insert into _r values ('chat_lobby', v);
+exception when others then
+  insert into _kanit values (12, 'S2c kurulum', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- S2d: 40 dk önce kurulmuş AMA az önce davet atılmış (p7 -> p8)
+do $$
+declare
+  p7 uuid := (select id from _p where n = 7);
+  p8 uuid := (select id from _p where n = 8);
+  v uuid;
+begin
+  insert into public.rooms (code, host_id, status, created_at)
+  values ('K' || upper(substr(md5(random()::text), 1, 5)), p7, 'lobby',
+          now() - interval '40 minutes')
+  returning id into v;
+  insert into public.room_players (room_id, player_id, joined_at)
+  values (v, p7, now() - interval '40 minutes');
+  insert into public.room_invites (room_id, inviter_id, invitee_id, created_at)
+  values (v, p7, p8, now() - interval '5 minutes');
+  insert into _r values ('invite_lobby', v);
+exception when others then
+  insert into _kanit values (13, 'S2d kurulum', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- S2e: 20 dk önce kurulmuş, misafir (p4) 18 dk önce girip çıktı (satırı
+-- silindi); ev sahibi (p6) lobisi açık kalmalı
+do $$
+declare
+  p4 uuid := (select id from _p where n = 4);
+  p6 uuid := (select id from _p where n = 6);
+  v uuid;
+begin
+  insert into public.rooms (code, host_id, status, created_at)
+  values ('K' || upper(substr(md5(random()::text), 1, 5)), p6, 'lobby',
+          now() - interval '20 minutes')
+  returning id into v;
+  insert into public.room_players (room_id, player_id, joined_at)
+  values (v, p6, now() - interval '20 minutes'),
+         (v, p4, now() - interval '18 minutes');
+  perform set_config('request.jwt.claims', json_build_object('sub', p4)::text, true);
+  perform public.leave_room(v);
+  insert into _r values ('guest_lobby', v);
+exception when others then
+  insert into _kanit values (14, 'S2e kurulum', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- S2f: 20 dk önce başlamış, hiç etkinlik yok aktif oda (p1, p2)
 do $$
 declare
   p1 uuid := (select id from _p where n = 1);
   p2 uuid := (select id from _p where n = 2);
-  p3 uuid := (select id from _p where n = 3);
-  p4 uuid := (select id from _p where n = 4);
-  p5 uuid := (select id from _p where n = 5);
-  p6 uuid := (select id from _p where n = 6);
-  p7 uuid := (select id from _p where n = 7);
-  p8 uuid := (select id from _p where n = 8);
-  v_q uuid[];
-  r_stale_lobby uuid; r_fresh_lobby uuid; r_chat_lobby uuid; r_guest_lobby uuid;
-  r_invite_lobby uuid; r_stale_active uuid; r_final_active uuid; r_fresh_active uuid;
-  i int;
+  v uuid; v_q uuid;
 begin
-  select array_agg(id) into v_q from (select id from public.questions limit 3) q;
-
-  -- 40 dk önce kurulmuş, hiçbir etkinlik yok (p3)
-  insert into public.rooms (code, host_id, status, created_at)
-  values ('K' || upper(substr(md5(random()::text), 1, 5)), p3, 'lobby',
-          now() - interval '40 minutes')
-  returning id into r_stale_lobby;
-  insert into public.room_players (room_id, player_id, joined_at)
-  values (r_stale_lobby, p3, now() - interval '40 minutes');
-
-  -- taze lobi (p4)
-  insert into public.rooms (code, host_id, status)
-  values ('K' || upper(substr(md5(random()::text), 1, 5)), p4, 'lobby')
-  returning id into r_fresh_lobby;
-  insert into public.room_players (room_id, player_id) values (r_fresh_lobby, p4);
-
-  -- 40 dk önce kurulmuş AMA 5 dk önce sohbet var (p5)
-  insert into public.rooms (code, host_id, status, created_at)
-  values ('K' || upper(substr(md5(random()::text), 1, 5)), p5, 'lobby',
-          now() - interval '40 minutes')
-  returning id into r_chat_lobby;
-  insert into public.room_players (room_id, player_id, joined_at)
-  values (r_chat_lobby, p5, now() - interval '40 minutes');
-  insert into public.room_messages (room_id, sender_id, text, created_at)
-  values (r_chat_lobby, p5, 'kanit', now() - interval '5 minutes');
-
-  -- 40 dk önce kurulmuş AMA 5 dk önce davet atılmış (p7 -> p8)
-  insert into public.rooms (code, host_id, status, created_at)
-  values ('K' || upper(substr(md5(random()::text), 1, 5)), p7, 'lobby',
-          now() - interval '40 minutes')
-  returning id into r_invite_lobby;
-  insert into public.room_players (room_id, player_id, joined_at)
-  values (r_invite_lobby, p7, now() - interval '40 minutes');
-  insert into public.room_invites (room_id, inviter_id, invitee_id, created_at)
-  values (r_invite_lobby, p7, p8, now() - interval '5 minutes');
-
-  -- 20 dk önce kurulmuş, misafir (p4) 18 dk önce girip çıktı (satırı silindi);
-  -- ev sahibi (p6) lobisi açık kalmalı
-  insert into public.rooms (code, host_id, status, created_at)
-  values ('K' || upper(substr(md5(random()::text), 1, 5)), p6, 'lobby',
-          now() - interval '20 minutes')
-  returning id into r_guest_lobby;
-  insert into public.room_players (room_id, player_id, joined_at)
-  values (r_guest_lobby, p6, now() - interval '20 minutes'),
-         (r_guest_lobby, p4, now() - interval '18 minutes');
-  perform set_config('request.jwt.claims', json_build_object('sub', p4)::text, true);
-  perform public.leave_room(r_guest_lobby);
-
-  -- 20 dk önce başlamış, hiç etkinlik yok aktif oda (p1, p2)
+  select id into v_q from public.questions limit 1;
   insert into public.rooms (code, host_id, status, started_at, created_at)
   values ('K' || upper(substr(md5(random()::text), 1, 5)), p1, 'active',
           now() - interval '20 minutes', now() - interval '21 minutes')
-  returning id into r_stale_active;
+  returning id into v;
   insert into public.room_players (room_id, player_id, joined_at)
-  values (r_stale_active, p1, now() - interval '21 minutes'),
-         (r_stale_active, p2, now() - interval '21 minutes');
+  values (v, p1, now() - interval '21 minutes'),
+         (v, p2, now() - interval '21 minutes');
   insert into public.room_questions (room_id, question_id, question_index, started_at)
-  values (r_stale_active, v_q[1], 0, now() - interval '20 minutes');
+  values (v, v_q, 0, now() - interval '20 minutes');
+  insert into _r values ('stale_active', v);
+exception when others then
+  insert into _kanit values (15, 'S2f kurulum', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
 
-  -- 20 dk önce BÜTÜN soruları açıklanmış ama finished yapılmamış oda
+-- S2g: 20 dk önce BÜTÜN soruları açıklanmış ama finished yapılmamış oda
+do $$
+declare
+  p1 uuid := (select id from _p where n = 1);
+  p2 uuid := (select id from _p where n = 2);
+  v uuid; v_q uuid[]; i int;
+begin
+  select array_agg(id) into v_q from (select id from public.questions limit 3) q;
   insert into public.rooms (code, host_id, status, question_count, started_at,
                             created_at, current_question_index)
   values ('K' || upper(substr(md5(random()::text), 1, 5)), p1, 'active', 3,
           now() - interval '22 minutes', now() - interval '23 minutes', 2)
-  returning id into r_final_active;
+  returning id into v;
   insert into public.room_players (room_id, player_id, score)
-  values (r_final_active, p1, 300), (r_final_active, p2, 100);
+  values (v, p1, 300), (v, p2, 100);
   for i in 1..3 loop
     insert into public.room_questions (room_id, question_id, question_index,
                                        started_at, revealed_at)
-    values (r_final_active, v_q[i], i - 1, now() - interval '20 minutes',
+    values (v, v_q[i], i - 1, now() - interval '20 minutes',
             now() - interval '20 minutes');
   end loop;
+  insert into _r values ('final_active', v);
+exception when others then
+  insert into _kanit values (16, 'S2g kurulum', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
 
-  -- taze aktif oda: soru az önce başladı
+-- S2h: taze aktif oda: soru az önce başladı
+do $$
+declare
+  p1 uuid := (select id from _p where n = 1);
+  p2 uuid := (select id from _p where n = 2);
+  v uuid; v_q uuid;
+begin
+  select id into v_q from public.questions limit 1;
   insert into public.rooms (code, host_id, status, started_at)
   values ('K' || upper(substr(md5(random()::text), 1, 5)), p1, 'active', now())
-  returning id into r_fresh_active;
-  insert into public.room_players (room_id, player_id)
-  values (r_fresh_active, p1), (r_fresh_active, p2);
+  returning id into v;
+  insert into public.room_players (room_id, player_id) values (v, p1), (v, p2);
   insert into public.room_questions (room_id, question_id, question_index, started_at)
-  values (r_fresh_active, v_q[1], 0, now());
-
-  perform public.cleanup_stale_rooms();
-
-  insert into _kanit
-  select 10, 'S2a 40 dk etkinliksiz lobi', 'lobby/null', 'finished/stale_timeout',
-         (select status::text || '/' || coalesce(ended_reason, 'null')
-          from public.rooms where id = r_stale_lobby);
-  insert into _kanit
-  select 11, 'S2b taze lobi (kontrol)', 'lobby/null', 'lobby/null',
-         (select status::text || '/' || coalesce(ended_reason, 'null')
-          from public.rooms where id = r_fresh_lobby);
-  insert into _kanit
-  select 12, 'S2c 40 dk önce kurulmuş ama sohbet eden lobi kapanmaz (kontrol)',
-         'lobby/null', 'lobby/null',
-         (select status::text || '/' || coalesce(ended_reason, 'null')
-          from public.rooms where id = r_chat_lobby);
-  insert into _kanit
-  select 13, 'S2d 40 dk önce kurulmuş ama davet atılan lobi kapanmaz (kontrol)',
-         'lobby/null', 'lobby/null',
-         (select status::text || '/' || coalesce(ended_reason, 'null')
-          from public.rooms where id = r_invite_lobby);
-  insert into _kanit
-  select 14, 'S2e misafir girip çıktı, ev sahibi lobisi açık kalır (kontrol)',
-         'lobby/null', 'lobby/null',
-         (select status::text || '/' || coalesce(ended_reason, 'null')
-          from public.rooms where id = r_guest_lobby);
-  insert into _kanit
-  select 15, 'S2f 20 dk etkinliksiz aktif oda', 'active/null', 'finished/stale_timeout',
-         (select status::text || '/' || coalesce(ended_reason, 'null')
-          from public.rooms where id = r_stale_active);
-  insert into _kanit
-  select 16, 'S2g tüm soruları açıklanmış bayat aktif oda stale değil completed olur',
-         'active/null', 'finished/completed',
-         (select status::text || '/' || coalesce(ended_reason, 'null')
-          from public.rooms where id = r_final_active);
-  insert into _kanit
-  select 17, 'S2h taze aktif oda (kontrol)', 'active/null', 'active/null',
-         (select status::text || '/' || coalesce(ended_reason, 'null')
-          from public.rooms where id = r_fresh_active);
-  insert into _kanit
-  select 18, 'S2i cleanup-stale-rooms cron takvimi', '17 * * * *', '*/5 * * * *',
-         coalesce((select schedule from cron.job where jobname = 'cleanup-stale-rooms'), 'yok');
+  values (v, v_q, 0, now());
+  insert into _r values ('fresh_active', v);
 exception when others then
-  insert into _kanit values (10, 'S2', '-', '-', 'HATA: ' || sqlerrm);
+  insert into _kanit values (17, 'S2h kurulum', '-', '-', 'HATA: ' || sqlerrm);
 end $$;
+
+-- temizlik çalışır
+do $$
+begin
+  perform public.cleanup_stale_rooms();
+exception when others then
+  insert into _kanit values (18, 'S2 cleanup_stale_rooms çağrısı', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- sonuçlar (oda yoksa 'yok')
+insert into _kanit
+select x.ord, x.bulgu, x.once, x.sonra,
+       coalesce((select r.status::text || '/' || coalesce(r.ended_reason, 'null')
+                 from public.rooms r join _r on _r.id = r.id where _r.ad = x.ad),
+                'yok')
+from (values
+  (10, 'stale_lobby',   'S2a 40 dk etkinliksiz lobi', 'lobby/null', 'finished/stale_timeout'),
+  (11, 'fresh_lobby',   'S2b taze lobi (kontrol)', 'lobby/null', 'lobby/null'),
+  (12, 'chat_lobby',    'S2c 40 dk önce kurulmuş ama sohbet eden lobi kapanmaz (kontrol)', 'lobby/null', 'lobby/null'),
+  (13, 'invite_lobby',  'S2d 40 dk önce kurulmuş ama davet atılan lobi kapanmaz (kontrol)', 'lobby/null', 'lobby/null'),
+  (14, 'guest_lobby',   'S2e misafir girip çıktı, ev sahibi lobisi açık kalır (kontrol)', 'lobby/null', 'lobby/null'),
+  (15, 'stale_active',  'S2f 20 dk etkinliksiz aktif oda', 'active/null', 'finished/stale_timeout'),
+  (16, 'final_active',  'S2g tüm soruları açıklanmış bayat aktif oda stale değil completed olur', 'active/null', 'finished/completed'),
+  (17, 'fresh_active',  'S2h taze aktif oda (kontrol)', 'active/null', 'active/null')
+) as x(ord, ad, bulgu, once, sonra)
+where exists (select 1 from _r where _r.ad = x.ad);
+
+insert into _kanit
+select 19, 'S2i cleanup-stale-rooms cron takvimi', '17 * * * *', '*/5 * * * *',
+       coalesce((select schedule from cron.job where jobname = 'cleanup-stale-rooms'), 'yok');
 
 -- ---------------------------------------------------------------- S3
 do $$
