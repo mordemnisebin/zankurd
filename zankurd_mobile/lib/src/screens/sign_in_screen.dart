@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../theme/brand_icons.dart';
 import 'package:provider/provider.dart';
@@ -423,7 +424,14 @@ class _AnimatedTitle extends StatelessWidget {
 // kaldırıyordu; desteklenen tüm ZanKurd yüzeylerinde gösterilir.
 bool get _supportsGoogleSignIn => true;
 
-bool get _supportsAppleSignIn => true;
+/// Apple yalnız iOS'ta (2026-10-23): orada Apple'ın yerleşik penceresi
+/// kullanılır ve kimlik doğrudan Supabase'e gider. Android ve web'deki
+/// tarayıcı akışı Supabase'teki Apple anahtarına bağlıdır; Apple bu anahtarı
+/// 6 ayda bir yeniletir, süresi dolunca giriş sessizce kırılır. App Store
+/// 4.8 Apple girişini yalnız Apple platformlarında ister; o tarihe dek
+/// Android/web'de hiç Apple girişi yapılmamıştı.
+bool get _supportsAppleSignIn =>
+    !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
 
 /// Google'ın kendi marka kılavuzundaki "Sign in with Google" renkleri:
 /// beyaz dolgu, #747775 kontur, #1F1F1F yazı. Bunlar Şahnê paletinin

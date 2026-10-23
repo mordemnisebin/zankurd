@@ -250,7 +250,7 @@ void main() {
   testWidgets(
     'desteklenen giriş ekranında Apple seçeneği görünür ve akışı başlatır',
     (tester) async {
-      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       addTearDown(() => debugDefaultTargetPlatformOverride = null);
 
       final authProvider = _AppleAuthProvider();
@@ -271,10 +271,23 @@ void main() {
     },
   );
 
+  // 2026-10-23: Android/web'deki Apple tarayıcı akışı Supabase'teki 6 aylık
+  // Apple anahtarına bağlı; süresi dolunca sessizce kırılır. Apple yalnız
+  // iOS'ta (yerleşik pencere) gösterilir.
+  testWidgets('Android giriş ekranında Apple seçeneği yok', (tester) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    addTearDown(() => debugDefaultTargetPlatformOverride = null);
+    await tester.pumpWidget(testShell(child: const SignInScreen()));
+    await tester.pumpAndSettle();
+    final appleButton = find.text('Apple ile giriş yap');
+    debugDefaultTargetPlatformOverride = null;
+    expect(appleButton, findsNothing);
+  });
+
   testWidgets('OAuth tarayıcı açılışı tamamlanmış login olarak ölçülmez', (
     tester,
   ) async {
-    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
 
     final loginMethods = <String>[];
