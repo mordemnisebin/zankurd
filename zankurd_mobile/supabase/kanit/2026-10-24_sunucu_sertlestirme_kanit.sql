@@ -304,7 +304,7 @@ from (values
   (11, 'fresh_lobby',   'S2b taze lobi (kontrol)', 'lobby/null', 'lobby/null'),
   (12, 'chat_lobby',    'S2c 40 dk önce kurulmuş ama sohbet eden lobi kapanmaz (kontrol)', 'lobby/null', 'lobby/null'),
   (13, 'invite_lobby',  'S2d 40 dk önce kurulmuş ama davet atılan lobi kapanmaz (kontrol)', 'lobby/null', 'lobby/null'),
-  (14, 'guest_lobby',   'S2e 40 dk'lık lobiye misafir 5 dk önce girip çıktı, lobi açık kalır', 'lobby/null', 'lobby/null'),
+  (14, 'guest_lobby',   'S2e 40 dk''lık lobiye misafir 5 dk önce girip çıktı, lobi açık kalır', 'lobby/null', 'lobby/null'),
   (15, 'stale_active',  'S2f 20 dk etkinliksiz aktif oda', 'active/null', 'finished/stale_timeout'),
   (16, 'final_active',  'S2g tüm soruları açıklanmış bayat aktif oda stale değil completed olur', 'active/null', 'finished/completed'),
   (17, 'fresh_active',  'S2h taze aktif oda (kontrol)', 'active/null', 'active/null')
