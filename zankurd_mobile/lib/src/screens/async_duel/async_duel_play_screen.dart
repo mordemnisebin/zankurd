@@ -72,6 +72,13 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   late final QuizTimerController _timerController;
   final Stopwatch _stopwatch = Stopwatch();
 
+  /// Yarım bırakılıp dönülen soruda sunucunun SUNUM anından bu yana işleyen
+  /// süre ([ZanKurdRepository.presentAsyncDuelQuestion]); yerel kronometreye
+  /// eklenir. Yeni soruda sıfırlanır.
+  int _presentOffsetMs = 0;
+
+  int get _elapsedMs => _stopwatch.elapsedMilliseconds + _presentOffsetMs;
+
   int _index = 0;
   _Phase _phase = _Phase.idle;
   String? _selectedAnswer;
@@ -131,7 +138,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
 
   void _reconcileTimerAfterResume() {
     if (_duel == null || _phase != _Phase.idle || _exitInFlight) return;
-    final elapsedMs = _stopwatch.elapsedMilliseconds;
+    final elapsedMs = _elapsedMs;
     if (elapsedMs >= _questionDurationMs) {
       _handleTimeout();
       return;
@@ -201,15 +208,59 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   }
 
   void _beginQuestion() {
+    _presentOffsetMs = 0;
     _stopwatch
       ..reset()
       ..start();
     _timerController.start();
+    unawaited(_presentCurrentQuestion());
+  }
+
+  /// Soruyu ekrana koyduğumu sunucuya bildirir. Sunucu süreyi bu andan ölçer
+  /// ve ilk kaydı DEĞİŞTİRMEZ: uygulamayı kapatıp açmak saati sıfırlamaz.
+  /// Yarım bırakılıp dönülen soruda sunucu saati işlemiştir; sayaç buna
+  /// eşitlenir (süre geçmişse hemen TIMEOUT) ve kısa bir not gösterilir.
+  /// Hata/eksik RPC sessizce geçilir: cevap eski ölçümle sürer.
+  Future<void> _presentCurrentQuestion() async {
+    final duelId = _duel?.duelId;
+    if (duelId == null) return;
+    final index = _index;
+    final int? serverElapsed;
+    try {
+      serverElapsed = await widget.repository.presentAsyncDuelQuestion(
+        duelId,
+        index,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'async duel present failed');
+      return;
+    }
+    if (serverElapsed == null ||
+        !mounted ||
+        _exitInFlight ||
+        _index != index ||
+        _phase != _Phase.idle) {
+      return;
+    }
+    final localMs = _stopwatch.elapsedMilliseconds;
+    // Normal ilk sunum: sunucu ile yerel saat ağ gecikmesi kadar ayrışır.
+    if (serverElapsed <= localMs + 1500) return;
+    _presentOffsetMs = serverElapsed - localMs;
+    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+      SnackBar(content: Text(context.t(K.asyncDuelResumedQuestionNote))),
+    );
+    if (serverElapsed >= _questionDurationMs) {
+      _handleTimeout();
+      return;
+    }
+    _timerController.sync(
+      (_questionDurationMs - serverElapsed) / _questionDurationMs,
+    );
   }
 
   void _handleAnswerTap(String answer) {
     if (_phase != _Phase.idle || _exitInFlight) return;
-    final responseMs = _stopwatch.elapsedMilliseconds;
+    final responseMs = _elapsedMs;
     final choice = _currentQuestion.optionKeyForAnswer(answer);
     unawaited(
       _submitAnswer(selected: answer, choice: choice, responseMs: responseMs),

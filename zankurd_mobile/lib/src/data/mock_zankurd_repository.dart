@@ -799,6 +799,43 @@ class MockZanKurdRepository implements ZanKurdRepository {
     );
   }
 
+  /// [presentAsyncDuelQuestion] çağrılarının kaydı (duelId#index).
+  final List<String> presentedAsyncDuelQuestions = [];
+  final Map<String, DateTime> _asyncDuelPresentedAt = {};
+
+  /// Testin, sunumdan bu yana geçen süreyi (ms) zorlaması için; null ise
+  /// gerçek saat farkı döner (ilk çağrıda 0).
+  @visibleForTesting
+  int? presentElapsedMsForTesting;
+
+  /// Testin sunucuda present RPC'sinin olmadığı (göç uygulanmamış) durumu
+  /// denemesi için.
+  @visibleForTesting
+  bool presentSupportedForTesting = true;
+
+  @override
+  Future<int?> presentAsyncDuelQuestion(
+    String duelId,
+    int questionIndex,
+  ) async {
+    if (!presentSupportedForTesting) return null;
+    final duel = _asyncDuels[duelId];
+    if (duel == null) throw StateError('Duel not found');
+    if (DateTime.now().toUtc().isAfter(duel.expiresAt)) {
+      throw StateError('Duel expired');
+    }
+    // Sunucu gibi: yalnız SIRADAKİ soru (önceki cevap sayısı) sunulabilir.
+    if (questionIndex != duel.answeredIndices.length ||
+        questionIndex >= duel.questions.length) {
+      throw StateError('Invalid index');
+    }
+    final key = '$duelId#$questionIndex';
+    presentedAsyncDuelQuestions.add(key);
+    final first = _asyncDuelPresentedAt.putIfAbsent(key, DateTime.now);
+    return presentElapsedMsForTesting ??
+        DateTime.now().difference(first).inMilliseconds;
+  }
+
   @override
   Future<AsyncDuelAnswer> answerAsyncDuel({
     required String duelId,

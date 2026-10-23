@@ -1,4 +1,9 @@
--- Kanıt betiği: 2026-10-24_duello_sirasi.sql (+ _cron.sql), bulgular a..i.
+-- Kanıt betiği: 2026-10-24_duello_sirasi.sql (+ _cron.sql), bulgular a..o:
+-- a 24 saat · b/c/d hükmen, davetli ve rakipsiz düz expired · e hatırlatma tek ·
+-- f hükmen bildirimi · g dönüşte yarım soru yanlış, sonrakiler temiz ·
+-- h liste alanları · i cron · j süre dolunca cevap reddi · k/l/m soru sunumu
+-- (başlangıç değişmez, 30 sn gecikme yanlış, sıra dışı indeks) · n hükmen XP
+-- sunucuda, claim çift vermez · o ardışık expire'da hatırlatma tek.
 --
 -- CANLIYA KALICI YAZMAZ: tek transaction, sonda rollback. Göçten ÖNCE ve
 -- SONRA aynı betik çalıştırılır; her bulgu için bir satır basar:
@@ -158,8 +163,11 @@ declare
   v_rakipsiz uuid := (select id from _f where k = 'rakipsiz');
   v_hat uuid := (select id from _f where k = 'hatirlat');
   v_row jsonb; v_n int; s text;
+  v_xp0 int; v_xp1 int; v_xp2 int;
 begin
+  select coalesce(xp, 0) into v_xp0 from public.profiles where id = a;
   perform public.expire_async_duels();
+  select coalesce(xp, 0) into v_xp1 from public.profiles where id = a;
 
   -- (b) kaybeden = bitirmeyen rakip; kazanan için outcome win.
   s := pg_temp.kaybeden(v_forfeit);
@@ -209,6 +217,15 @@ begin
   insert into _kanit values (10, '(f0) kabul etmemiş davetliye sonuç bildirimi yok (kontrol)',
     '0', '0', v_n::text);
 
+  -- (n) hükmen kazananın XP'si SUNUCUDA yazıldı (cron), ikinci claim çift
+  -- vermez. Gözlem: "expire'ın verdiği/claim'in verdiği". Eski: expire
+  -- vermez, claim 5×20 = 100 verir (hükmen +30 yok).
+  perform set_config('request.jwt.claims', json_build_object('sub', a)::text, true);
+  perform public.claim_async_duel_xp(v_forfeit);
+  select coalesce(xp, 0) into v_xp2 from public.profiles where id = a;
+  insert into _kanit values (15, '(n) hükmen kazanan XP: expire / sonradan claim',
+    '0/100', '130/0', (v_xp1 - v_xp0)::text || '/' || (v_xp2 - v_xp1)::text);
+
   -- (h) liste alanları.
   insert into _kanit values (11, '(h) list_my_async_duels expires_at / forfeit anahtarları',
     'expires_at=yok,forfeit=yok', 'expires_at=var,forfeit=var',
@@ -232,35 +249,151 @@ exception when others then
   insert into _kanit values (12, '(e2)', '-', '-', 'HATA: ' || sqlerrm);
 end $$;
 
--- ---------------------------------------------------------------- (g)
--- Devam adaleti: rakip (6) 4 saat önce eşleşti, ilk soruyu 3 saat önce
--- cevapladı; şimdi devam edip ikinciyi cevaplar. Eski: ölçülen süre 20 sn
--- tavanı; yeni: dönüş anından ölçülür (küçük).
+-- ---------------------------------------------------------------- (j)
+-- Süre dolduktan sonra gelen cevap reddedilir. j1: süresi geçmiş (henüz
+-- süpürülmemiş) düello. j2: durum 'expired' ama bitiş saati ileride (veri
+-- anomalisi / hükmen sonrası): ESKİ gövde bunu kabul ederdi.
 do $$
 declare
   a uuid := pg_temp.uid(1); u uuid := pg_temp.uid(6);
-  x uuid; v_ms int;
+  x uuid; r text;
 begin
+  perform set_config('request.jwt.claims', json_build_object('sub', u)::text, true);
+
+  x := pg_temp.duello(a, u, null, 'matched', interval '3 hours', interval '-2 seconds');
+  perform pg_temp.bitir(x, a);
+  begin
+    perform public.answer_async_duel(x, 0, 'A', 0);
+    r := 'kabul edildi';
+  exception when others then r := sqlerrm;
+  end;
+  insert into _kanit values (16, '(j1) süresi geçmiş düelloya cevap', 'Duel expired',
+    'Duel expired', r);
+
+  x := pg_temp.duello(a, u, null, 'expired', interval '3 hours', interval '5 hours');
+  perform pg_temp.bitir(x, a);
+  begin
+    perform public.answer_async_duel(x, 0, 'A', 0);
+    r := 'kabul edildi';
+  exception when others then r := sqlerrm;
+  end;
+  insert into _kanit values (17, '(j2) durumu expired olan düelloya cevap', 'kabul edildi',
+    'Duel expired', r);
+exception when others then
+  insert into _kanit values (16, '(j)', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- ---------------------------------------------------------------- (k,l,m)
+-- Soru sunumu. Göç yoksa üç satır da 'RPC yok' (ONCE-DURUMU).
+do $$
+declare
+  a uuid := pg_temp.uid(1); u uuid := pg_temp.uid(6);
+  x uuid; v_has boolean; r text; s1 text; s2 text; v_opt text;
+  v_res jsonb; v_ms int;
+begin
+  v_has := to_regprocedure('public.present_async_duel_question(uuid,integer)') is not null;
+  perform set_config('request.jwt.claims', json_build_object('sub', u)::text, true);
+
+  -- (k) present iki kez: başlangıç DEĞİŞMEZ.
+  x := pg_temp.duello(a, u, null, 'matched', interval '1 hour', interval '23 hours');
+  perform pg_temp.bitir(x, a);
+  if v_has then
+    execute 'select (public.present_async_duel_question($1, 0))->>''started_at''' into s1 using x;
+    perform pg_sleep(0.2);
+    execute 'select (public.present_async_duel_question($1, 0))->>''started_at''' into s2 using x;
+    r := case when s1 = s2 then 'ayni' else 'degisti' end;
+  else r := 'RPC yok'; end if;
+  insert into _kanit values (18, '(k) present iki kez çağrılınca başlangıç', 'RPC yok', 'ayni', r);
+
+  -- (m) sıra dışı indeks reddedilir (cevap yokken 3. soru sunulamaz).
+  if v_has then
+    begin
+      execute 'select public.present_async_duel_question($1, 3)' using x;
+      r := 'kabul edildi';
+    exception when others then r := sqlerrm;
+    end;
+  else r := 'RPC yok'; end if;
+  insert into _kanit values (19, '(m) sıra dışı indeks', 'RPC yok', 'Invalid index', r);
+
+  -- (l) present sonrası 30 sn gecikmeli (doğru) cevap YANLIŞ sayılır.
+  x := pg_temp.duello(a, u, null, 'matched', interval '1 hour', interval '23 hours');
+  perform pg_temp.bitir(x, a);
+  if v_has then
+    select q.correct_option into v_opt from public.questions q
+    where q.id = (select question_ids[1] from public.async_duels where id = x);
+    execute 'select public.present_async_duel_question($1, 0)' using x;
+    execute 'update public.async_duel_question_starts set started_at = clock_timestamp() - interval ''30 seconds'' where duel_id = $1 and player_id = $2'
+      using x, u;
+    v_res := public.answer_async_duel(x, 0, v_opt, 0);
+    select response_ms into v_ms from public.async_duel_answers
+    where duel_id = x and player_id = u and question_index = 0;
+    r := 'correct=' || (v_res->>'correct') || ',ms=' || v_ms;
+  else r := 'RPC yok'; end if;
+  insert into _kanit values (20, '(l) present sonrası 30 sn gecikmeli doğru cevap',
+    'RPC yok', 'correct=false,ms=20000', r);
+
+  -- (l0) kontrol: present sonrası hemen verilen doğru cevap doğru kalır.
+  x := pg_temp.duello(a, u, null, 'matched', interval '1 hour', interval '23 hours');
+  perform pg_temp.bitir(x, a);
+  if v_has then
+    select q.correct_option into v_opt from public.questions q
+    where q.id = (select question_ids[1] from public.async_duels where id = x);
+    execute 'select public.present_async_duel_question($1, 0)' using x;
+    v_res := public.answer_async_duel(x, 0, v_opt, 0);
+    r := 'correct=' || (v_res->>'correct');
+  else r := 'RPC yok'; end if;
+  insert into _kanit values (21, '(l0) kontrol: hemen verilen doğru cevap',
+    'RPC yok', 'correct=true', r);
+
+  -- (g) devam adaleti: 3 saat önce sunulmuş soru, dönüşte süresi geçmiş
+  -- sayılır (resume saati sıfırlamaz); sonraki soru sunulunca temiz başlar.
   x := pg_temp.duello(a, u, null, 'matched', interval '4 hours', interval '20 hours');
   perform pg_temp.bitir(x, a);
-  insert into public.async_duel_answers (duel_id, player_id, question_index,
-                                         choice, is_correct, response_ms, answered_at)
-  values (x, u, 0, 'A', false, 5000, now() - interval '3 hours');
-  perform set_config('request.jwt.claims', json_build_object('sub', u)::text, true);
-  perform public.resume_my_async_duel(x);
-  perform public.answer_async_duel(x, 1, 'A', 0);
-  select response_ms into v_ms from public.async_duel_answers
-  where duel_id = x and player_id = u and question_index = 1;
-  insert into _kanit values (13, '(g) 3 sa sonra devam: sonraki cevabın ölçülen süresi',
-    'tavan(20000)', 'kucuk',
-    case when v_ms >= 20000 then 'tavan(20000)' else 'kucuk' end);
+  if v_has then
+    execute 'select public.present_async_duel_question($1, 0)' using x;
+    execute 'update public.async_duel_question_starts set started_at = clock_timestamp() - interval ''3 hours'' where duel_id = $1 and player_id = $2'
+      using x, u;
+    perform public.resume_my_async_duel(x);
+    select q.correct_option into v_opt from public.questions q
+    where q.id = (select question_ids[1] from public.async_duels where id = x);
+    v_res := public.answer_async_duel(x, 0, v_opt, 0);
+    r := 'soru0 correct=' || (v_res->>'correct');
+    execute 'select public.present_async_duel_question($1, 1)' using x;
+    select q.correct_option into v_opt from public.questions q
+    where q.id = (select question_ids[2] from public.async_duels where id = x);
+    v_res := public.answer_async_duel(x, 1, v_opt, 0);
+    select response_ms into v_ms from public.async_duel_answers
+    where duel_id = x and player_id = u and question_index = 1;
+    r := r || ',soru1 correct=' || (v_res->>'correct') || ',kucuk=' || (v_ms < 20000);
+  else r := 'RPC yok'; end if;
+  insert into _kanit values (22, '(g) 3 sa sonra dönüş: yarım soru yanlış, sonraki temiz',
+    'RPC yok', 'soru0 correct=false,soru1 correct=true,kucuk=true', r);
 exception when others then
-  insert into _kanit values (13, '(g)', '-', '-', 'HATA: ' || sqlerrm);
+  insert into _kanit values (18, '(k,l,m,g)', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- ---------------------------------------------------------------- (o)
+-- Ardışık/aynı sorguda iki expire: hatırlatma tek. (Gerçek eşzamanlılık iki
+-- oturum ister; `for update skip locked` + `marked` birleşimi o durumu
+-- sözleşmeye bağlar, bekçi: test/duello_sirasi_sql_test.dart.)
+do $$
+declare
+  a uuid := pg_temp.uid(1); e uuid := pg_temp.uid(5);
+  x uuid; v_n int;
+begin
+  x := pg_temp.duello(a, e, null, 'matched', interval '22 hours', interval '2 hours');
+  perform pg_temp.bitir(x, a);
+  perform public.expire_async_duels(), public.expire_async_duels();
+  select count(*) into v_n from public.push_outbox
+  where to_user_id = e and kind = 'async_duel_turn' and created_at >= now();
+  insert into _kanit values (23, '(o) aynı sorguda iki expire: hatırlatma sayısı', '0', '1', v_n::text);
+exception when others then
+  insert into _kanit values (23, '(o)', '-', '-', 'HATA: ' || sqlerrm);
 end $$;
 
 -- ---------------------------------------------------------------- (i)
 insert into _kanit
-select 14, '(i) expire-async-duels cron takvimi', '37 * * * *', '*/10 * * * *',
+select 24, '(i) expire-async-duels cron takvimi', '37 * * * *', '*/10 * * * *',
        coalesce((select schedule from cron.job where jobname = 'expire-async-duels'),
                 'iş yok');
 

@@ -148,7 +148,7 @@ graph TB
   (`supabase/2026-10-24_duello_sirasi.sql`): pencere 48 → 24 saat, süre
   dolunca turunu bitiren HÜKMEN kazanır (`forfeit_loser_id`, durum yine
   'expired'), 4 saat kala tek hatırlatma ve hükmen bildirimi
-  (`expire_async_duels`, 10 dk cron), devam adaleti (`*_resumed_at`)
+  (`expire_async_duels`, 10 dk cron), soru sunumu (`present_async_duel_question`: süre sunumdan ölçülür)
 - **Arkadaşa meydan okuma** — `screens/async_duel/async_duel_challenge_sheet.dart`
   (seçim sayfası), `ZanKurdRepository.createAsyncDuelChallenge/
   acceptAsyncDuelChallenge/supportsAsyncDuelChallenge`; sunucu

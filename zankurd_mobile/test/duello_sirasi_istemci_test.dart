@@ -36,6 +36,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/async_duel.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_inbox.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_time.dart';
 import 'package:zankurd_mobile/src/screens/home/home_duel_card.dart';
@@ -490,6 +491,94 @@ void main() {
       expect(left, greaterThan(const Duration(hours: 23, minutes: 59)));
       final summary = (await repo.loadMyAsyncDuels()).single;
       expect(summary.expiresAt, start.expiresAt);
+    });
+  });
+
+  group('soru sunumu (present_async_duel_question)', () {
+    Future<(MockZanKurdRepository, String)> openResumed(
+      WidgetTester tester, {
+      int? elapsedMs,
+      bool supported = true,
+    }) async {
+      await _surface(tester);
+      final repo = freshMockRepository()
+        ..presentElapsedMsForTesting = elapsedMs
+        ..presentSupportedForTesting = supported;
+      final start = await repo.startAsyncDuel();
+      await tester.pumpWidget(
+        testShell(
+          child: AsyncDuelPlayScreen(
+            repository: repo,
+            entry: AsyncDuelEntry.resume(start.duelId),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      return (repo, start.duelId);
+    }
+
+    testWidgets('soru ekrana konunca sunum bildirilir (sıradaki indeks)', (
+      tester,
+    ) async {
+      final (repo, id) = await openResumed(tester);
+      expect(repo.presentedAsyncDuelQuestions, ['$id#0']);
+      expect(
+        find.text('Yarım kalan soruda süre işlemeye devam ediyor.'),
+        findsNothing,
+      );
+    });
+
+    testWidgets('yarım bırakılan soruda sunucu saati işler: not görünür', (
+      tester,
+    ) async {
+      await openResumed(tester, elapsedMs: 12000);
+      expect(
+        find.text('Yarım kalan soruda süre işlemeye devam ediyor.'),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('dönüşte süresi geçmiş soru hemen süre doldu sayılır', (
+      tester,
+    ) async {
+      final (repo, id) = await openResumed(tester, elapsedMs: 26000);
+      // Sonraki soru temiz başlasın (zincirleme süre aşımı olmasın).
+      repo.presentElapsedMsForTesting = null;
+      // Açıklama duraklaması (1,2 sn) bitsin, ekran sökülsün.
+      await tester.pump(const Duration(milliseconds: 1500));
+      final resumed = await repo.resumeAsyncDuel(id);
+      expect(
+        resumed.answeredCount,
+        greaterThanOrEqualTo(1),
+        reason: 'TIMEOUT gönderildi',
+      );
+      await tester.pumpWidget(const SizedBox());
+      await tester.pump();
+    });
+
+    testWidgets('sunucuda RPC yoksa (göç uygulanmadı) oyun eski gibi sürer', (
+      tester,
+    ) async {
+      final (repo, _) = await openResumed(tester, supported: false);
+      expect(repo.presentedAsyncDuelQuestions, isEmpty);
+      expect(find.byKey(const ValueKey('async-duel-play')), findsOneWidget);
+    });
+
+    test('mock sunucu gibi: sıra dışı indeks reddedilir, tekrar başlangıcı '
+        'değiştirmez', () async {
+      final repo = freshMockRepository();
+      final start = await repo.startAsyncDuel();
+      await expectLater(
+        repo.presentAsyncDuelQuestion(start.duelId, 3),
+        throwsA(isA<StateError>()),
+      );
+      final first = await repo.presentAsyncDuelQuestion(start.duelId, 0);
+      await Future<void>.delayed(const Duration(milliseconds: 30));
+      final second = await repo.presentAsyncDuelQuestion(start.duelId, 0);
+      expect(first, 0);
+      expect(second, greaterThanOrEqualTo(30));
     });
   });
 

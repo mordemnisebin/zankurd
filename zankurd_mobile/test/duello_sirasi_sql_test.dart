@@ -81,23 +81,17 @@ void main() {
       for (final fn in ['start_async_duel', 'accept_async_duel_challenge']) {
         expect(
           body(fn),
-          contains(
-            "expires_at = greatest(expires_at, now() + interval '24 hours')",
-          ),
+          contains("expires_at = now() + interval '24 hours'"),
           reason: fn,
         );
+        // Eski 48 saatlik açık düello 24 saatten uzun pencere VERMEZ.
+        expect(body(fn), isNot(contains('greatest(expires_at')), reason: fn);
       }
     });
 
-    test('katılan oyuncu hatırlatma hakkını yeniden kazanır', () {
+    test('katılım hatırlatma kaydını silmez (ikinci hatırlatma yok)', () {
       for (final fn in ['start_async_duel', 'accept_async_duel_challenge']) {
-        expect(
-          body(fn),
-          contains(
-            'reminder_sent_for = array_remove(reminder_sent_for, v_uid)',
-          ),
-          reason: fn,
-        );
+        expect(body(fn), isNot(contains('reminder_sent_for')), reason: fn);
       }
     });
 
@@ -162,6 +156,9 @@ void main() {
       expect(b, contains("'async_duel_turn'"));
       expect(b, contains("d.expires_at <= now() + interval '4 hours'"));
       expect(b, contains('d.expires_at > now()'));
+      // Yarış: adaylar kilitlenir, push yalnız işaretlenen satırlardan.
+      expect(b, contains('for update of d skip locked'));
+      expect(b, contains('join marked mk on mk.id = c.id'));
       // Dedupe: gönderilmiş oyuncu tekrar aday olmaz ve işaretlenir.
       expect(b, contains('not (p.uid = any (d.reminder_sent_for))'));
       expect(b, contains('reminder_sent_for = d.reminder_sent_for || m.uids'));
@@ -178,10 +175,29 @@ void main() {
       // Davetli/rakip için yaratıcı turunu bitirmiş olmalı; engel iki yönde.
       expect(b, contains('p.is_creator'));
       expect(b, contains('public.blocked_users b'));
+      // Engelli çift (yaratıcı ↔ rakip/davetli) iki yönde süzülür.
+      expect(b, contains('b.blocker_id = d.creator_id'));
       // Metin iki dilli.
       expect(b, contains("'Dora te ye: '"));
       expect(b, contains("' saet mane · Sıra sende: '"));
       expect(b, contains("' saat kaldı'"));
+    });
+
+    test('hükmen bildirimi engelli çifte gitmez; XP yine verilir', () {
+      final b = fn();
+      expect(b, contains('and not c.blocked'));
+      expect(b, contains('decided.blocked'));
+    });
+
+    test('hükmen kazananın XP\'si sunucuda, xp_awarded ile tek seferlik', () {
+      final b = fn();
+      expect(b, contains('set xp_awarded = true'));
+      expect(b, contains('and r.xp_awarded = false'));
+      expect(b, contains('public.award_xp_delta(v_cc * 20 + 30)'));
+      // award_xp_delta auth.uid() okur: kimlik işlem içinde taklit edilir.
+      expect(b, contains("'request.jwt.claims'"));
+      // Tek oyuncunun XP hatası cron'u düşürmez.
+      expect(b, contains('exception when others then'));
     });
 
     test('yalnız service_role çalıştırabilir', () {
@@ -255,54 +271,109 @@ void main() {
       for (final c in [
         'forfeit_loser_id uuid',
         "reminder_sent_for uuid[] not null default '{}'",
-        'creator_resumed_at timestamptz',
-        'opponent_resumed_at timestamptz',
       ]) {
         expect(code, contains('add column if not exists $c'), reason: c);
       }
     });
   });
 
-  group('devam adaleti', () {
-    test('answer_async_duel süreyi dönüş anından ölçer', () {
-      final b = body('answer_async_duel');
-      expect(b, contains('v_duel.creator_resumed_at'));
-      expect(b, contains('v_duel.opponent_resumed_at'));
-      expect(b, contains('v_baseline := greatest('));
-      expect(b, contains('v_resumed_at\n  );'));
-      // 20 sn tavanı ve sunucu ölçümü korunur.
-      expect(b, contains('v_max_ms constant integer := 20000'));
+  group('soru sunumu: süre sunumdan ölçülür, resume saati sıfırlamaz', () {
+    test('resume artık saati sıfırlamaz: devam işareti/sütunu YOK', () {
+      expect(code, isNot(contains('resumed_at')));
+      expect(code, isNot(contains('async_duel_touch_resume')));
+      expect(code, isNot(contains('function public.resume_my_async_duel')));
     });
 
-    test('resume / start / accept devam işaretini yazar', () {
-      for (final fn in [
-        'resume_my_async_duel',
-        'start_async_duel',
-        'accept_async_duel_challenge',
-      ]) {
-        expect(
-          body(fn),
-          contains('perform public.async_duel_touch_resume(v_duel.id, v_uid)'),
-          reason: fn,
-        );
-      }
+    test('sunum tablosu: PK üçlü, RLS, istemciye kapalı', () {
+      expect(
+        code,
+        contains(
+          'create table if not exists public.async_duel_question_starts',
+        ),
+      );
+      expect(
+        code,
+        contains('primary key (duel_id, player_id, question_index)'),
+      );
+      expect(
+        code,
+        contains(
+          'alter table public.async_duel_question_starts enable row level security',
+        ),
+      );
+      expect(
+        code,
+        contains(
+          'revoke all on table public.async_duel_question_starts\n'
+          '  from public, anon, authenticated;',
+        ),
+      );
     });
 
     test(
-      'işaret yalnız 2 dakikadan eski etkinlikte yazılır, istemciye kapalı',
+      'present: yalnız sıradaki indeks, ilk çağrı kaydeder, sonra değişmez',
       () {
-        final b = body('async_duel_touch_resume');
-        expect(b, contains("interval '2 minutes'"));
-        expect(b, contains('for update'));
+        final b = body('present_async_duel_question');
+        expect(b, contains('p_question_index <> v_answered'));
+        expect(b, contains("raise exception 'Invalid index'"));
         expect(
-          code,
+          b,
           contains(
-            'revoke all on function public.async_duel_touch_resume(uuid, uuid)\n'
-            '  from public, anon, authenticated;',
+            'on conflict (duel_id, player_id, question_index) do nothing',
           ),
         );
+        expect(b, contains('for update'));
+        expect(b, contains('clock_timestamp()'));
+        // Süresi dolan/hükmen kapanan düelloya sunum yazılmaz.
+        expect(b, contains("v_duel.status = 'expired'"));
+        expect(b, contains("raise exception 'Duel expired'"));
       },
     );
+
+    test('present izinleri: anon/public kapalı, authenticated açık', () {
+      expect(
+        code,
+        contains(
+          'revoke all on function public.present_async_duel_question(uuid, integer)\n'
+          '  from public, anon;',
+        ),
+      );
+      expect(
+        code,
+        contains(
+          'grant execute on function public.present_async_duel_question(uuid, integer)\n'
+          '  to authenticated;',
+        ),
+      );
+    });
+
+    test(
+      'answer: sunum kaydı varsa süre duvar saatiyle, 20+5 sn aşımı YANLIŞ',
+      () {
+        final b = body('answer_async_duel');
+        expect(b, contains('from public.async_duel_question_starts st'));
+        expect(b, contains('clock_timestamp() - v_started_at'));
+        expect(b, contains('v_elapsed_ms > v_max_ms + 5000'));
+        expect(b, contains('v_is_correct := false;'));
+        expect(
+          b,
+          contains("when p_choice = 'TIMEOUT' or v_late then v_max_ms"),
+        );
+        // Kayıt yoksa (2.1.0) eski ölçüm: önceki cevap / açılış, 20 sn tavan.
+        expect(b, contains('v_prev_at'));
+        expect(b, contains('v_max_ms constant integer := 20000'));
+      },
+    );
+
+    test('answer: kilitten sonra duvar saatiyle durum+süre doğrulaması', () {
+      final b = body('answer_async_duel');
+      final lock = b.indexOf('for update;');
+      final check = b.indexOf('v_duel.expires_at <= clock_timestamp()');
+      expect(lock, greaterThan(0));
+      expect(check, greaterThan(lock));
+      expect(b, contains("v_duel.status = 'expired'"));
+      expect(b, isNot(contains('now() > v_duel.expires_at')));
+    });
   });
 
   group('her gövde security definer + search_path', () {
@@ -310,16 +381,15 @@ void main() {
       'start_async_duel',
       'accept_async_duel_challenge',
       'answer_async_duel',
-      'resume_my_async_duel',
       'claim_async_duel_xp',
       'list_my_async_duels',
       'expire_async_duels',
-      'async_duel_touch_resume',
+      'present_async_duel_question',
     ]) {
       test(fn, () {
         final b = body(fn).toLowerCase();
         expect(b, contains('security definer'));
-        expect(b, contains('search_path'));
+        expect(b, contains("search_path to 'public', 'pg_temp'"));
         expect(b, isNot(RegExp(r'\bstable\b')));
       });
     }

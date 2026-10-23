@@ -2990,6 +2990,13 @@ class Tr {
       'ku': '{name} di 24 saetan de nelîst',
       'tr': '{name} 24 saatte oynamadı',
     },
+    // Yarım bırakılıp dönülen soru: sunucu saati işlemeye devam etti.
+    // Kurmancî taslak (jüri bekliyor): `nîvco ma` (K.asyncDuelUnfinished),
+    // `dem` (K.timerSecondsLeft ailesi), `berdewam` (K.asyncDuelResume).
+    K.asyncDuelResumedQuestionNote: {
+      'ku': 'Pirsa nîvco ma, dem berdewam dike.',
+      'tr': 'Yarım kalan soruda süre işlemeye devam ediyor.',
+    },
     K.asyncDuelForfeitMyReason: {
       'ku': 'Te di 24 saetan de nelîst',
       'tr': '24 saatte oynamadın',
@@ -4639,6 +4646,9 @@ class K {
   /// "24 saatte oynamadın" (kaybeden ben).
   static const asyncDuelForfeitOpponentReason = 'duel.async.forfeit.opponent';
   static const asyncDuelForfeitMyReason = 'duel.async.forfeit.me';
+
+  /// Yarım bırakılıp dönülen sorunun kısa notu (sunucu saati işledi).
+  static const asyncDuelResumedQuestionNote = 'duel.async.resumedNote';
 
   /// Ben kendi 7 sorumu bitirmedim durumu (`myCorrect == null`).
   static const asyncDuelUnfinished = 'duel.async.unfinished';

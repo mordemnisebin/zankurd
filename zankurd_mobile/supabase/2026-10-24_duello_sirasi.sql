@@ -1,12 +1,17 @@
--- 2026-10-24: SIRAYLA DÜELLO — 24 saat, hükmen sonuç, hatırlatma, devam adaleti.
+-- 2026-10-24: SIRAYLA DÜELLO — 24 saat, hükmen sonuç, hatırlatma, soru sunumu.
 --
--- Ürün sahibi onaylı Trivia-Crack benzeri düzen. Dört değişiklik, tek göç:
+-- Ürün sahibi onaylı Trivia-Crack benzeri düzen. Beş değişiklik, tek göç:
 --   1) PENCERE 24 SAAT (48'di): yaratma (sütun varsayılanı), rastgele
 --      eşleşmeye katılma ve arkadaş meydan okumasını kabul etme.
 --   2) HÜKMEN: süresi dolan düelloda turunu BİTİREN taraf kazanır, diğeri
 --      kaybeder. Kalıcı iz: `async_duels.forfeit_loser_id`. Durum yine
 --      'expired' kalır (yeni durum değeri yok: CHECK ve eski istemci bozulmaz);
---      kazanan normal galibiyetin XP'sini alır (claim_async_duel_xp +30).
+--      kazanan normal galibiyetin XP'sini SUNUCUDA alır: expire_async_duels
+--      sonuç satırının `xp_awarded` işaretiyle tek seferlik verir (istemci
+--      claim_async_duel_xp'yi sonradan çağırırsa çift vermez; 2.1.0 istemcisi
+--      'expired'i kayıpsız kapanış sanıp claim etmese de XP kaybolmaz).
+--      Yalnız düelloya GİRMİŞ rakip kaybeder; kabul edilmemiş arkadaş daveti
+--      hükmen sayılmaz.
 --      Rakibi hiç çıkmayan rastgele düello ve kimsenin almadığı bağlantı
 --      meydan okuması eskisi gibi kayıpsız 'expired' kalır.
 --   3) list_my_async_duels `expires_at`, `forfeit` döndürür; `outcome`
@@ -16,12 +21,25 @@
 --      hatırlatma (`async_duel_turn`), (b) hükmen sonuç her iki oyuncuya
 --      (`async_duel_result`). Metin iki dilli "KU · TR" (sunucu alıcının
 --      dilini bilmiyor; 2026-10-23_arkadaslik_bildirimleri.sql ile aynı biçim).
---   5) DEVAM ADALETİ: saatler sonra dönen oyuncunun sıradaki sorusu son
---      cevaptan değil dönüş anından ölçülür (answer_async_duel).
+--   5) SORU SUNUMU (devam adaleti + süre hilesi kapatma): yeni RPC
+--      `present_async_duel_question` oyuncunun SIRADAKİ soruyu ekrana koyduğu
+--      anı ilk çağrıda kaydeder (`async_duel_question_starts`; tekrar çağrıda
+--      değişmez). answer_async_duel o indeks için kayıt VARSA süreyi
+--      clock_timestamp() - started_at ile ölçer; 20 sn + 5 sn ağ payını
+--      aşan cevap YANLIŞ sayılır. Kayıt yoksa (2.1.0 istemcisi) eski ölçüm
+--      (önceki cevaptan itibaren, 20 sn tavan) aynen sürer. "Devam"
+--      (resume) artık saati sıfırlamaz: yarıda bırakılmış soru dönüşte
+--      süresi geçmişse yanlış sayılır, sonraki sorular sunulduklarında temiz
+--      başlar.
+--   Ek sertleştirme: answer_async_duel kilitten SONRA duvar saatiyle
+--   (clock_timestamp) durum+süreyi doğrular; hükmen/hatırlatma bildirimleri
+--   engelli çiftlere gitmez; hatırlatma yalnız gerçekten işaretlenen
+--   satırlardan üretilir (eşzamanlı cron koşusunda tek); değişen bütün
+--   SECURITY DEFINER gövdelerinde `search_path = public, pg_temp`.
 --
 -- Her gövde CANLI tanımdan (2026-10-24, `pg_get_functiondef`) alındı; yalnız
--- işaretli satırlar farklıdır. SECURITY DEFINER, search_path ve izinler
--- (create or replace ile) korunur. İstemci imzaları DEĞİŞMEDİ.
+-- işaretli satırlar ve search_path farklıdır. İzinler (create or replace ile)
+-- korunur. İstemci imzaları DEĞİŞMEDİ.
 --
 -- Cron: expire_async_duels artık 10 dakikada bir koşar —
 -- 2026-10-24_duello_sirasi_cron.sql (bu dosyadan SONRA uygula).
@@ -51,92 +69,119 @@ alter table public.async_duels
 alter table public.async_duels
   add column if not exists reminder_sent_for uuid[] not null default '{}';
 
--- Devam adaleti: oyuncunun düelloya son döndüğü an (rol başına bir sütun).
-alter table public.async_duels
-  add column if not exists creator_resumed_at timestamptz;
-alter table public.async_duels
-  add column if not exists opponent_resumed_at timestamptz;
+-- Soru sunum kaydı: oyuncu bir soruyu ekrana koyduğunda ilk çağrıda yazılır,
+-- sonra DEĞİŞMEZ (PK üçlü; `on conflict do nothing`). İstemciye kapalı tablo.
+create table if not exists public.async_duel_question_starts (
+  duel_id uuid not null references public.async_duels(id) on delete cascade,
+  player_id uuid not null references auth.users(id) on delete cascade,
+  question_index integer not null check (question_index >= 0),
+  started_at timestamptz not null default clock_timestamp(),
+  primary key (duel_id, player_id, question_index)
+);
+alter table public.async_duel_question_starts enable row level security;
+revoke all on table public.async_duel_question_starts
+  from public, anon, authenticated;
 
 -- ═════════════════════════════════════════════════════════════════════════
--- 2) Devam işareti (yalnız diğer SECURITY DEFINER fonksiyonlar çağırır)
+-- 2) present_async_duel_question — soru sunum anı (Trivia Crack modeli)
 -- ═════════════════════════════════════════════════════════════════════════
--- NİÇİN: answer_async_duel süreyi "önceki cevaptan bu yana" ölçer ve 20 sn'ye
--- kırpar (M4, 2026-10-02). Saatler sonra dönen oyuncu bu yüzden sıradaki
--- soruda hep 20 sn kaybediyordu; eşitlik bozucu (toplam süre) haksız yere
--- ona aleyhine dönüyordu. Dönüş anı kaydedilirse süre oradan ölçülür.
--- SALDIRI YÜZEYİ: oyuncu her soru öncesi "devam"ı çağırıp süreyi sıfırlayamaz
--- diye işaret YALNIZ son etkinlikten 2 dakikadan fazla sonra yazılır (son
--- etkinlik = son cevap, önceki devam işareti, ya da açılış/eşleşme anı).
--- Dürüst dönüş (arka plan, telefon görüşmesi) bunu aşar; hile için her soruda
--- 2 dakika beklemek gerekir ve beklenen süre zaten 20 sn tavanını aşar.
-create or replace function public.async_duel_touch_resume(
+-- İstemci soruyu ekrana koyarken çağırır. Yalnız oyuncunun SIRADAKİ beklenen
+-- sorusu (önceki cevap sayısı) sunulabilir; sıra dışı indeks 'Invalid index'.
+-- İlk çağrı başlangıcı kaydeder, sonrakiler AYNI başlangıcı döndürür:
+-- uygulamayı kapatıp açmak ya da "devam"ı tekrarlamak saati sıfırlamaz.
+-- Dönüş: started_at, elapsed_ms (sunumdan bu yana), limit_ms (20000).
+create or replace function public.present_async_duel_question(
   p_duel_id uuid,
-  p_uid uuid
+  p_question_index integer
 )
-returns void
+returns jsonb
 language plpgsql
 security definer
-set search_path = public
+set search_path to 'public', 'pg_temp'
 as $function$
 declare
+  v_uid uuid := auth.uid();
   v_duel public.async_duels%rowtype;
-  v_is_creator boolean;
-  v_last timestamptz;
+  v_total integer;
+  v_answered integer;
+  v_started timestamptz;
 begin
+  if v_uid is null then
+    raise exception 'Not authenticated';
+  end if;
+
   select * into v_duel
   from public.async_duels
   where id = p_duel_id
   for update;
 
   if not found then
-    return;
+    raise exception 'Duel not found';
   end if;
 
-  v_is_creator := (p_uid = v_duel.creator_id);
-  if not v_is_creator and p_uid is distinct from v_duel.opponent_id then
-    return;
+  if v_uid <> v_duel.creator_id
+     and v_uid is distinct from v_duel.opponent_id then
+    raise exception 'Not a duel player';
   end if;
 
-  select greatest(
-    (select max(a.answered_at)
-     from public.async_duel_answers a
-     where a.duel_id = p_duel_id and a.player_id = p_uid),
-    case when v_is_creator then v_duel.creator_resumed_at
-         else v_duel.opponent_resumed_at end,
-    case when v_is_creator then v_duel.created_at
-         else coalesce(v_duel.matched_at, v_duel.created_at) end
-  ) into v_last;
-
-  if now() - v_last <= interval '2 minutes' then
-    return;
+  if v_duel.status = 'expired'
+     or (v_duel.status <> 'completed'
+         and v_duel.expires_at <= clock_timestamp()) then
+    raise exception 'Duel expired';
   end if;
 
-  if v_is_creator then
-    update public.async_duels
-    set creator_resumed_at = now()
-    where id = p_duel_id;
-  else
-    update public.async_duels
-    set opponent_resumed_at = now()
-    where id = p_duel_id;
+  v_total := coalesce(array_length(v_duel.question_ids, 1), 0);
+  select count(*)::integer into v_answered
+  from public.async_duel_answers a
+  where a.duel_id = p_duel_id and a.player_id = v_uid;
+
+  if p_question_index is null
+     or p_question_index <> v_answered
+     or p_question_index >= v_total then
+    raise exception 'Invalid index';
   end if;
+
+  insert into public.async_duel_question_starts (
+    duel_id, player_id, question_index, started_at
+  ) values (
+    p_duel_id, v_uid, p_question_index, clock_timestamp()
+  )
+  on conflict (duel_id, player_id, question_index) do nothing;
+
+  select st.started_at into v_started
+  from public.async_duel_question_starts st
+  where st.duel_id = p_duel_id
+    and st.player_id = v_uid
+    and st.question_index = p_question_index;
+
+  return jsonb_build_object(
+    'started_at', v_started,
+    'elapsed_ms', greatest(
+      0,
+      floor(extract(epoch from (clock_timestamp() - v_started)) * 1000)
+    )::integer,
+    'limit_ms', 20000
+  );
 end;
 $function$;
 
-revoke all on function public.async_duel_touch_resume(uuid, uuid)
-  from public, anon, authenticated;
+revoke all on function public.present_async_duel_question(uuid, integer)
+  from public, anon;
+grant execute on function public.present_async_duel_question(uuid, integer)
+  to authenticated;
 
 -- ═════════════════════════════════════════════════════════════════════════
 -- 3) İstemci RPC'leri (canlı gövde + işaretli farklar)
 -- ═════════════════════════════════════════════════════════════════════════
--- Farklar: 48 → 24 saat; rakip katılınca reminder_sent_for'dan çıkarılır
--- (yeni pencere, yeni hatırlatma hakkı); devam işareti; hükmen XP; liste.
+-- Farklar: 48 → 24 saat (greatest YOK: eski 48 saatlik açık düello da en
+-- fazla 24 saat verir); answer'da duvar saati doğrulaması + sunum süresi;
+-- hükmen XP; liste.
 
 CREATE OR REPLACE FUNCTION public.start_async_duel(p_category text DEFAULT NULL::text)
  RETURNS jsonb
  LANGUAGE plpgsql
  SECURITY DEFINER
- SET search_path TO 'public'
+ SET search_path TO 'public', 'pg_temp'
 AS $function$
 declare
   v_uid uuid := auth.uid();
@@ -199,9 +244,6 @@ begin
   limit 1;
 
   if found then
-    -- Yarım kalan düelloya dönüş = DEVAM (bkz. async_duel_touch_resume).
-    perform public.async_duel_touch_resume(v_duel.id, v_uid);
-
     select p.display_name into v_opponent_name
     from public.profiles p
     where p.id = v_duel.creator_id;
@@ -263,8 +305,7 @@ begin
     set opponent_id = v_uid,
         status = 'matched',
         matched_at = now(),
-        expires_at = greatest(expires_at, now() + interval '24 hours'),
-        reminder_sent_for = array_remove(reminder_sent_for, v_uid)
+        expires_at = now() + interval '24 hours'
     where id = v_duel.id
     returning expires_at into v_expires_at;
 
@@ -389,7 +430,7 @@ CREATE OR REPLACE FUNCTION public.accept_async_duel_challenge(p_code text)
  RETURNS jsonb
  LANGUAGE plpgsql
  SECURITY DEFINER
- SET search_path TO 'public'
+ SET search_path TO 'public', 'pg_temp'
 AS $function$
 declare
   v_uid uuid := auth.uid();
@@ -446,9 +487,6 @@ begin
       raise exception 'Challenge expired';
     end if;
 
-    -- Yeniden açış = DEVAM: sonraki sorunun süresi bu andan ölçülür.
-    perform public.async_duel_touch_resume(v_duel.id, v_uid);
-
     select count(*)::integer into v_answered
     from public.async_duel_answers a
     where a.duel_id = v_duel.id and a.player_id = v_uid;
@@ -496,14 +534,11 @@ begin
   end if;
 
   -- Rakibe kendi 24 saati verilir (start_async_duel ile aynı gerekçe).
-  -- Davetli arkadaşa yaratıcının süresi dolmadan hatırlatma gitmiş olabilir;
-  -- yeni pencere için hatırlatma hakkı yeniden doğar.
   update public.async_duels
   set opponent_id = v_uid,
       status = 'matched',
       matched_at = now(),
-      expires_at = greatest(expires_at, now() + interval '24 hours'),
-      reminder_sent_for = array_remove(reminder_sent_for, v_uid)
+      expires_at = now() + interval '24 hours'
   where id = v_duel.id
   returning expires_at into v_expires_at;
 
@@ -525,7 +560,7 @@ CREATE OR REPLACE FUNCTION public.answer_async_duel(p_duel_id uuid, p_question_i
  RETURNS jsonb
  LANGUAGE plpgsql
  SECURITY DEFINER
- SET search_path TO 'public'
+ SET search_path TO 'public', 'pg_temp'
 AS $function$
 declare
   v_uid uuid := auth.uid();
@@ -538,7 +573,9 @@ declare
   v_response_ms integer;
   v_prev_at timestamptz;
   v_baseline timestamptz;
-  v_resumed_at timestamptz;
+  v_started_at timestamptz;
+  v_elapsed_ms integer;
+  v_late boolean := false;
   v_server_ms integer;
   -- İstemcideki soru süresi (async_duel_play_screen `_questionSeconds` = 20).
   v_max_ms constant integer := 20000;
@@ -574,7 +611,13 @@ begin
     raise exception 'Not a duel player';
   end if;
 
-  if v_duel.status <> 'completed' and now() > v_duel.expires_at then
+  -- Duvar saatiyle (clock_timestamp: işlem başlangıcı DEĞİL) ve kilitten
+  -- SONRA: süresi dolan ya da hükmen kapanan düelloya cevap yazılamaz. (Tam
+  -- cevaplanmış 'completed' düello 'Already answered' yoluna düşer: istemci
+  -- yeniden gönderimi buna güvenir.)
+  if v_duel.status = 'expired'
+     or (v_duel.status <> 'completed'
+         and v_duel.expires_at <= clock_timestamp()) then
     raise exception 'Duel expired';
   end if;
 
@@ -615,24 +658,12 @@ begin
   where a.duel_id = p_duel_id
     and a.player_id = v_uid;
 
-  -- DEVAM ADALETİ (2026-10-24): saatler sonra düelloya dönen oyuncunun
-  -- sıradaki sorusu, saatler önceki son cevaptan değil dönüş anından
-  -- (resume_my_async_duel / async_duel_touch_resume) ölçülür. `greatest`
-  -- NULL'ları yok sayar: hiç devam kaydı yoksa eski davranış aynen sürer.
-  v_resumed_at := case
-    when v_uid = v_duel.creator_id then v_duel.creator_resumed_at
-    else v_duel.opponent_resumed_at
-  end;
-
-  v_baseline := greatest(
-    coalesce(
-      v_prev_at,
-      case
-        when v_uid = v_duel.creator_id then v_duel.created_at
-        else coalesce(v_duel.matched_at, v_duel.created_at)
-      end
-    ),
-    v_resumed_at
+  v_baseline := coalesce(
+    v_prev_at,
+    case
+      when v_uid = v_duel.creator_id then v_duel.created_at
+      else coalesce(v_duel.matched_at, v_duel.created_at)
+    end
   );
 
   v_server_ms := greatest(
@@ -643,7 +674,32 @@ begin
     )
   )::integer;
 
-  v_response_ms := case when p_choice = 'TIMEOUT' then v_max_ms else v_server_ms end;
+  -- SUNUM KAYDI (2026-10-24): istemci soruyu ekrana koyarken
+  -- present_async_duel_question çağırdıysa süre sunumdan ölçülür (resume
+  -- saati sıfırlayamaz). 20 sn + 5 sn ağ payını aşan cevap YANLIŞtır.
+  -- Kayıt yoksa (2.1.0 istemcisi) yukarıdaki eski ölçüm aynen geçerli.
+  select st.started_at into v_started_at
+  from public.async_duel_question_starts st
+  where st.duel_id = p_duel_id
+    and st.player_id = v_uid
+    and st.question_index = p_question_index;
+
+  if found then
+    v_elapsed_ms := greatest(
+      0,
+      floor(extract(epoch from (clock_timestamp() - v_started_at)) * 1000)
+    )::integer;
+    v_server_ms := least(v_elapsed_ms, v_max_ms);
+    if v_elapsed_ms > v_max_ms + 5000 then
+      v_late := true;
+      v_is_correct := false;
+    end if;
+  end if;
+
+  v_response_ms := case
+    when p_choice = 'TIMEOUT' or v_late then v_max_ms
+    else v_server_ms
+  end;
 
   begin
     insert into public.async_duel_answers (
@@ -754,89 +810,11 @@ end;
 $function$;
 
 
-CREATE OR REPLACE FUNCTION public.resume_my_async_duel(p_duel_id uuid)
- RETURNS jsonb
- LANGUAGE plpgsql
- SECURITY DEFINER
- SET search_path TO 'public'
-AS $function$
-declare
-  v_uid uuid := auth.uid();
-  v_duel public.async_duels%rowtype;
-  v_other_name text;
-  v_invited_name text;
-  v_answered integer;
-  v_finished boolean;
-  v_is_creator boolean;
-begin
-  if v_uid is null then
-    raise exception 'Not authenticated';
-  end if;
-
-  select * into v_duel
-  from public.async_duels
-  where id = p_duel_id;
-
-  if not found or (v_duel.creator_id <> v_uid
-                   and v_duel.opponent_id is distinct from v_uid) then
-    raise exception 'Duel not found';
-  end if;
-
-  if v_duel.status = 'expired'
-     or (v_duel.status <> 'completed' and now() > v_duel.expires_at) then
-    raise exception 'Duel expired';
-  end if;
-
-  v_is_creator := (v_duel.creator_id = v_uid);
-
-  -- DEVAM ADALETİ (2026-10-24): sıradaki sorunun süresi bu andan ölçülür.
-  perform public.async_duel_touch_resume(v_duel.id, v_uid);
-
-  select p.display_name into v_other_name
-  from public.profiles p
-  where p.id = case when v_is_creator then v_duel.opponent_id
-                    else v_duel.creator_id end;
-
-  if v_is_creator and v_duel.invited_id is not null then
-    select p.display_name into v_invited_name
-    from public.profiles p
-    where p.id = v_duel.invited_id;
-  end if;
-
-  select count(*)::integer into v_answered
-  from public.async_duel_answers a
-  where a.duel_id = v_duel.id and a.player_id = v_uid;
-
-  select exists (
-    select 1 from public.async_duel_results r
-    where r.duel_id = v_duel.id and r.player_id = v_uid
-  ) into v_finished;
-
-  return jsonb_build_object(
-    'duel_id', v_duel.id,
-    'role', case when v_is_creator then 'creator' else 'opponent' end,
-    'opponent_name', v_other_name,
-    'opponent_id', case when v_is_creator then v_duel.opponent_id
-                        else v_duel.creator_id end,
-    'expires_at', v_duel.expires_at,
-    'questions', public.async_duel_questions_payload(v_duel.question_ids),
-    'answered', v_answered,
-    'finished', v_finished,
-    'challenge_code', case when v_is_creator then v_duel.challenge_code
-                           else null end,
-    'invited_name', v_invited_name,
-    'invited_id', case when v_is_creator then v_duel.invited_id
-                       else null end
-  );
-end;
-$function$;
-
-
 CREATE OR REPLACE FUNCTION public.claim_async_duel_xp(p_duel_id uuid)
  RETURNS integer
  LANGUAGE plpgsql
  SECURITY DEFINER
- SET search_path TO 'public'
+ SET search_path TO 'public', 'pg_temp'
 AS $function$
 declare
   v_uid uuid := auth.uid();
@@ -934,7 +912,7 @@ CREATE OR REPLACE FUNCTION public.list_my_async_duels()
  RETURNS SETOF jsonb
  LANGUAGE plpgsql
  SECURITY DEFINER
- SET search_path TO 'public'
+ SET search_path TO 'public', 'pg_temp'
 AS $function$
 declare
   v_uid uuid := auth.uid();
@@ -1061,14 +1039,23 @@ $function$;
 --   * Rakip yok (rakipsiz rastgele düello, kimsenin almadığı bağlantı,
 --     KABUL EDİLMEMİŞ arkadaş daveti) ya da kimse bitirmedi → kayıpsız
 --     'expired'; yaratıcı "Rakip çıkmadı" doğru başına XP'sini alır.
+--   * Kazanan +30'lu tam XP'yi (doğru × 20 + 30) SUNUCUDA alır: sonuç
+--     satırının `xp_awarded` işareti claim_async_duel_xp ile ORTAKTIR, yani
+--     istemci sonradan claim ederse çift verilmez. award_xp_delta
+--     auth.uid() okuduğu için kimlik işlem içinde taklit edilir.
+--   * Hükmen sonuç bildirimi engelli çifte gitmez (XP yine verilir).
 create or replace function public.expire_async_duels()
 returns integer
 language plpgsql
 security definer
-set search_path = public
+set search_path to 'public', 'pg_temp'
 as $function$
 declare
   v_count integer := 0;
+  v_ids uuid[] := '{}';
+  v_winners uuid[] := '{}';
+  v_cc integer;
+  i integer;
 begin
   -- (a) Süresi dolanları kapat; hükmen kaybedeni işle; iki tarafa sonuç
   -- bildirimi kuyrukla.
@@ -1086,7 +1073,13 @@ begin
         select 1 from public.async_duel_results r
         where r.duel_id = d.id
           and r.player_id = d.opponent_id
-      ) as other_done
+      ) as other_done,
+      exists (
+        select 1 from public.blocked_users b
+        where d.opponent_id is not null
+          and ((b.blocker_id = d.creator_id and b.blocked_id = d.opponent_id)
+            or (b.blocker_id = d.opponent_id and b.blocked_id = d.creator_id))
+      ) as blocked
     from public.async_duels d
     where d.status in ('open', 'matched')
       and d.expires_at <= now()
@@ -1097,6 +1090,7 @@ begin
       due.id,
       due.creator_id,
       due.other_id,
+      due.blocked,
       case
         when due.creator_done
              and due.other_id is not null
@@ -1113,7 +1107,8 @@ begin
         forfeit_loser_id = decided.loser_id
     from decided
     where d.id = decided.id
-    returning d.id, decided.creator_id, decided.other_id, decided.loser_id
+    returning d.id, decided.creator_id, decided.other_id, decided.loser_id,
+              decided.blocked
   ),
   pushed as (
     insert into public.push_outbox (to_user_id, kind, title, body)
@@ -1140,17 +1135,58 @@ begin
     ) as p(uid, body)
     where c.loser_id is not null
       and p.uid is not null
+      and not c.blocked
     returning 1
   )
-  select count(*)::integer into v_count from closed;
+  select
+    count(*)::integer,
+    coalesce(array_agg(c.id) filter (where c.loser_id is not null),
+             '{}'::uuid[]),
+    coalesce(
+      array_agg(
+        case when c.loser_id = c.creator_id then c.other_id
+             else c.creator_id end
+      ) filter (where c.loser_id is not null),
+      '{}'::uuid[]
+    )
+  into v_count, v_ids, v_winners
+  from closed c;
+
+  -- (a2) Hükmen kazananın XP'si sunucuda, tek seferlik (xp_awarded).
+  for i in 1 .. coalesce(array_length(v_ids, 1), 0) loop
+    begin
+      update public.async_duel_results r
+      set xp_awarded = true
+      where r.duel_id = v_ids[i]
+        and r.player_id = v_winners[i]
+        and r.xp_awarded = false
+      returning r.correct_count into v_cc;
+
+      if found then
+        perform set_config(
+          'request.jwt.claims',
+          json_build_object('sub', v_winners[i])::text,
+          true
+        );
+        perform public.award_xp_delta(v_cc * 20 + 30);
+      end if;
+    exception when others then
+      -- Tek oyuncunun XP hatası bütün cron koşusunu düşürmesin; alt blok
+      -- geri alınır (xp_awarded da), istemci claim'i yine verebilir.
+      null;
+    end;
+  end loop;
+  perform set_config('request.jwt.claims', '{}', true);
 
   -- (b) Hatırlatma: süreye ≤ 4 saat kala turunu bitirmemiş oyuncuya, düello
-  -- ve oyuncu başına TEK kez (`reminder_sent_for` tekrarı keser; cron 10
-  -- dakikada bir koştuğu için aynı oyuncuya ikinci kez gitmez).
-  --   * Yaratıcı: turunu bitirmediyse.
-  --   * Öteki taraf (rakip ya da davetli arkadaş): yalnız yaratıcı turunu
-  --     bitirdiyse (yoksa davet henüz onun ekranında görünmez) ve bitirmediyse.
-  --     Davetli arkadaş için aramızda engel olmamalı.
+  -- ve oyuncu başına TEK kez (`reminder_sent_for`).
+  --   * Yaratıcı: turunu bitirdiyse hatırlatılmaz.
+  --   * Öteki taraf (rakip ya da kabul etmemiş davetli): yalnız yaratıcı
+  --     turunu bitirdiyse ve kendisi bitirmediyse.
+  --   * Engelli çifte (yaratıcı ↔ rakip/davetli) hatırlatma gitmez.
+  -- YARIŞ KORUMASI: adaylar `for update of d skip locked` ile kilitlenir
+  -- (eşzamanlı ikinci koşu bu satırları atlar) ve push YALNIZ gerçekten
+  -- işaretlenen düellolar için üretilir (`marked` ile birleşim).
   with cand as (
     select d.id, p.uid, d.expires_at
     from public.async_duels d
@@ -1177,9 +1213,13 @@ begin
       )
       and not exists (
         select 1 from public.blocked_users b
-        where (b.blocker_id = p.uid and b.blocked_id = d.creator_id)
-           or (b.blocker_id = d.creator_id and b.blocked_id = p.uid)
+        where coalesce(d.opponent_id, d.invited_id) is not null
+          and ((b.blocker_id = d.creator_id
+                and b.blocked_id = coalesce(d.opponent_id, d.invited_id))
+            or (b.blocker_id = coalesce(d.opponent_id, d.invited_id)
+                and b.blocked_id = d.creator_id))
       )
+    for update of d skip locked
   ),
   marked as (
     update public.async_duels d
@@ -1202,7 +1242,8 @@ begin
       || ' saet mane · Sıra sende: '
       || greatest(1, ceil(extract(epoch from (c.expires_at - now())) / 3600))::integer
       || ' saat kaldı'
-  from cand c;
+  from cand c
+  join marked mk on mk.id = c.id;
 
   return coalesce(v_count, 0);
 end;
@@ -1231,9 +1272,12 @@ begin
 
   if (select count(*) from information_schema.columns
       where table_schema = 'public' and table_name = 'async_duels'
-        and column_name in ('forfeit_loser_id', 'reminder_sent_for',
-                            'creator_resumed_at', 'opponent_resumed_at')) <> 4 then
+        and column_name in ('forfeit_loser_id', 'reminder_sent_for')) <> 2 then
     raise exception 'async_duels yeni sütunları eksik';
+  end if;
+
+  if to_regclass('public.async_duel_question_starts') is null then
+    raise exception 'async_duel_question_starts yok';
   end if;
 
   if exists (
@@ -1246,6 +1290,14 @@ begin
     raise exception 'start/accept hâlâ 48 saat veriyor';
   end if;
 
+  if has_function_privilege(
+       'anon', 'public.present_async_duel_question(uuid, integer)', 'execute')
+     or not has_function_privilege(
+       'authenticated', 'public.present_async_duel_question(uuid, integer)',
+       'execute') then
+    raise exception 'present_async_duel_question izinleri yanlış';
+  end if;
+
   if pg_get_functiondef('public.list_my_async_duels()'::regprocedure)
        not like '%''expires_at''%'
      or pg_get_functiondef('public.list_my_async_duels()'::regprocedure)
@@ -1256,6 +1308,11 @@ begin
   if pg_get_functiondef('public.expire_async_duels()'::regprocedure)
        not like '%forfeit_loser_id%' then
     raise exception 'expire_async_duels hükmen işlemiyor';
+  end if;
+
+  if pg_get_functiondef('public.answer_async_duel(uuid, integer, text, integer)'::regprocedure)
+       not like '%clock_timestamp()%' then
+    raise exception 'answer_async_duel duvar saatiyle doğrulamıyor';
   end if;
 end;
 $verify$;
