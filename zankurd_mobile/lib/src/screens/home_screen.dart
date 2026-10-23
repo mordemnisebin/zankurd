@@ -634,7 +634,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // (2026-09-05 canlı turu).
           Consumer<PremiumService>(
             builder: (context, premium, _) {
-              if (premium.isPremium || !AppConfig.hasRevenuecatConfig) {
+              // Satılabilir paket yoksa da gizli: ödeme sözleşmesi/satıcı
+              // hesabı eksikken paywall boş geliyordu (2026-10-23).
+              if (premium.isPremium || !premium.canSell) {
                 return const SizedBox.shrink();
               }
               return Padding(

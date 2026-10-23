@@ -491,6 +491,12 @@ class _AppShellState extends State<AppShell>
       return const Scaffold(body: BrandedLoaderCenter());
     }
 
+    // Kurtarma kapısı tanıtımdan ÖNCE: sıfırlama bağlantısını yeni bir
+    // tarayıcıda açan kişi önce örnek sorularla karşılaşıyordu (2026-10-23).
+    if (authProvider.needsPasswordRecovery) {
+      return const PasswordRecoveryScreen();
+    }
+
     if (_showOnboarding) {
       return OnboardingScreen(onComplete: _completeOnboarding);
     }
@@ -525,9 +531,6 @@ class _AppShellState extends State<AppShell>
     //
     // İtilmiş bir rota yerine build kapısı olması bilinçli: geri tuşu
     // ya da web'de tarayıcı geri düğmesi kurtarmayı atlayamasın.
-    if (authProvider.needsPasswordRecovery) {
-      return const PasswordRecoveryScreen();
-    }
 
     final activeUserId = _repository.currentUserId;
     if (_profileCheckedUserId != activeUserId) {

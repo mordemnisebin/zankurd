@@ -46,6 +46,15 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
   static String get authRedirectUri =>
       kIsWeb ? 'https://www.zankurd.com/' : 'com.zankurd.app://login-callback/';
 
+  /// Şifre sıfırlama bağlantısının açılacağı yer: her zaman web sitesi.
+  ///
+  /// Bağlantı eskiden uygulamaya (`com.zankurd.app://`) dönüyordu; e-posta
+  /// bilgisayarda ya da Gmail'in iç tarayıcısında açılınca hiçbir yere
+  /// gitmiyordu (2026-10-23 kullanıcı bildirimi: "reset password diyor ama
+  /// hiçbir yere yönlendirmedi"). zankurd.com aynı uygulamanın web
+  /// sürümüdür ve kurtarma oturumunda yeni parola ekranını açar.
+  static const passwordResetRedirectUri = 'https://www.zankurd.com/';
+
   /// Cihazın son sahibi olarak kaydedilen kullanıcı kimliği — bkz.
   /// [_resetLocalProgressIfForeignUser].
   static const _deviceOwnerUserIdKey = LocalProgressScope.ownerKey;
@@ -730,11 +739,34 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   Future<bool> resetPassword(String email) {
-    return _run(
-      (client) =>
-          client.auth.resetPasswordForEmail(email, redirectTo: authRedirectUri),
-    );
+    return _run((client) async {
+      if (kIsWeb) {
+        // Web istemcisi zaten implicit akışta (bkz. main.dart).
+        await client.auth.resetPasswordForEmail(
+          email,
+          redirectTo: passwordResetRedirectUri,
+        );
+        return;
+      }
+      // Uygulamanın istemcisi PKCE kullanır: bağlantıdaki kod yalnız bu
+      // cihazdaki doğrulayıcıyla açılır, web sitesi açamaz. İstek bu yüzden
+      // implicit akışlı geçici bir istemciyle gönderilir; bağlantı oturumu
+      // adres parçasında taşır ve hangi tarayıcıda açılırsa açılsın çalışır.
+      await implicitAuthClient(
+        client,
+      ).resetPasswordForEmail(email, redirectTo: passwordResetRedirectUri);
+    });
   }
+
+  /// Yalnız sıfırlama isteği için, oturum saklamayan implicit istemci.
+  @visibleForTesting
+  static GoTrueClient Function(SupabaseClient client)
+  implicitAuthClient = (client) => GoTrueClient(
+    url: '${client.rest.url.replaceFirst(RegExp(r'/rest/v1/?$'), '')}/auth/v1',
+    headers: {...client.headers},
+    flowType: AuthFlowType.implicit,
+    autoRefreshToken: false,
+  );
 
   /// Oturum olayının kurtarma bayrağına etkisi.
   ///

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,6 +53,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
     final authProvider = context.read<AuthProvider>();
     final messenger = ScaffoldMessenger.of(context);
     final saved = context.t(K.newPasswordSaved);
+    final webNoticeContext = Navigator.of(context, rootNavigator: true).context;
 
     final ok = await authProvider.completePasswordRecovery(
       _passwordController.text,
@@ -63,6 +65,23 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
       // Bayrak düştüğü için `AppShell` bu kareden sonra normal akışa
       // geçer; ekranı elle kapatmak gerekmez.
       messenger.showSnackBar(SnackBar(content: Text(saved)));
+      // Sıfırlama bağlantısı artık web sitesinde açılıyor (2026-10-23).
+      // Kişi telefondaki uygulamaya dönmesi gerektiğini bilmeyebilir.
+      if (kIsWeb && webNoticeContext.mounted) {
+        await showDialog<void>(
+          context: webNoticeContext,
+          builder: (dialogContext) => AlertDialog(
+            key: const ValueKey('password-saved-web-notice'),
+            content: Text(dialogContext.t(K.newPasswordSavedWeb)),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                child: Text(dialogContext.t(K.ok)),
+              ),
+            ],
+          ),
+        );
+      }
     }
   }
 

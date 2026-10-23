@@ -133,6 +133,22 @@ class PremiumService extends ChangeNotifier {
   bool get isPremium => _isPremium;
   bool get purchaseInProgress => _purchaseInProgress;
 
+  /// Mağazada satın alınabilir paket var mı ([warmUp] sonrası bilinir).
+  ///
+  /// Satın alma girişleri (ana sayfa Pro satırı, Ayarlar > Premium) yalnız
+  /// bu doğruyken görünür. Ödeme sözleşmesi ya da mağaza ürünü eksikken
+  /// paket listesi boş gelir ve paywall "paketler henüz aktif değil" diye
+  /// çıkmaz sokak oluyordu (2026-10-23: Android'de satıcı hesabı yok).
+  bool get canSell =>
+      AppConfig.hasRevenuecatConfig &&
+      (debugCanSell ?? (_configured && _hasProducts));
+
+  /// Testte satılabilirliği zorlar (`AppConfig.debugHasRevenuecatConfig`
+  /// gibi); null iken gerçek durum okunur.
+  @visibleForTesting
+  static bool? debugCanSell;
+  bool _hasProducts = false;
+
   /// Kullanıcıya hata olarak gösterilecek mesajın METİN ANAHTARI (`K.premium*`);
   /// ekranda `context.t(...)` ile çevrilir. Eskiden sabit Türkçe metindi:
   /// Kurmancî kullanıcıya Türkçe hata giderdi. Satın almanın kullanıcı
@@ -271,6 +287,17 @@ class PremiumService extends ChangeNotifier {
       notifyListeners();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'premium_service warmUp');
+    }
+    final offerings = await fetchOfferings();
+    final hasProducts = switch (offerings) {
+      OfferingsFetchSuccess(:final offerings) => offerings.any(
+        (o) => o.availablePackages.isNotEmpty,
+      ),
+      _ => false,
+    };
+    if (hasProducts != _hasProducts) {
+      _hasProducts = hasProducts;
+      notifyListeners();
     }
   }
 

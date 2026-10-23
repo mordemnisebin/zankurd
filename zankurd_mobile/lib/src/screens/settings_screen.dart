@@ -526,7 +526,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Consumer<PremiumService>(
                 builder: (context, premium, _) {
                   final isPremium = premium.isPremium;
-                  if (!isPremium && !AppConfig.hasRevenuecatConfig) {
+                  // Satılabilir paket yoksa da gizli (2026-10-23).
+                  if (!isPremium && !premium.canSell) {
                     return const SizedBox.shrink();
                   }
                   return Column(

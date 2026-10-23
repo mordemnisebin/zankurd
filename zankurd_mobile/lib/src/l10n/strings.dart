@@ -242,6 +242,14 @@ class Tr {
     },
     K.newPasswordLabel: {'ku': 'Şîfreya nû', 'tr': 'Yeni parola'},
     K.newPasswordSave: {'ku': 'Şîfreyê tomar bike', 'tr': 'Parolayı kaydet'},
+    // Web'de şifre kaydedilince (2026-10-23). KU jüri: Gemini + Claude Opus 5
+    // ('şîfreya xwe ya nû', 'têkevî sepana'); Grok'un önerisi azınlıkta.
+    K.newPasswordSavedWeb: {
+      'ku':
+          'Şîfreya te hat guhertin. Êdî tu dikarî bi e-peyama xwe û şîfreya xwe ya nû têkevî sepana ZanKurdê.',
+      'tr':
+          'Parolan değiştirildi. Artık ZanKurd uygulamasında e-postan ve yeni parolanla giriş yapabilirsin.',
+    },
     K.newPasswordSaved: {
       'ku': 'Şîfreya te hat guhertin.',
       'tr': 'Parolan değiştirildi.',
@@ -4257,6 +4265,7 @@ class K {
   static const newPasswordBody = 'auth.newPassword.body';
   static const newPasswordLabel = 'auth.newPassword.label';
   static const newPasswordSave = 'auth.newPassword.save';
+  static const newPasswordSavedWeb = 'auth.newPasswordSavedWeb';
   static const newPasswordSaved = 'auth.newPassword.saved';
   static const recoveryCancel = 'auth.recovery.cancel';
   static const emailAddress = 'auth.emailAddress';

@@ -196,6 +196,14 @@ Future<void> main() async {
                 url: AppConfig.supabaseUrl,
                 publishableKey: AppConfig.supabaseAnonKey,
                 httpClient: TimeoutHttpClient(),
+                // Web'de implicit: şifre sıfırlama bağlantısı uygulamadan
+                // istenir ve başka bir tarayıcıda açılabilir; PKCE kodu orada
+                // açılamaz (bkz. AuthProvider.passwordResetRedirectUri).
+                authOptions: const FlutterAuthClientOptions(
+                  authFlowType: kIsWeb
+                      ? AuthFlowType.implicit
+                      : AuthFlowType.pkce,
+                ),
               ),
               ping: _pingSupabase,
             )

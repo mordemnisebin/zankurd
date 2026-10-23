@@ -40,6 +40,7 @@ void main() {
     AchievementStore.resetInstance();
     // Satın alınabilirlik kapısı derleme bayrağıdır; testte düğmeyle açılır.
     AppConfig.debugHasRevenuecatConfig = true;
+    PremiumService.debugCanSell = true;
     SharedPreferences.setMockInitialValues({
       'zankurd.onboarding.seen': true,
       'zankurd.profileName.completed.user': true,
@@ -50,6 +51,7 @@ void main() {
 
   tearDown(() {
     AppConfig.debugHasRevenuecatConfig = null;
+    PremiumService.debugCanSell = null;
   });
 
   Future<void> pumpHome(
@@ -133,5 +135,14 @@ void main() {
       findsNothing,
       reason: 'Satın alınabilir ürün yokken satış satırı çiziliyor.',
     );
+  });
+
+  // 2026-10-23: satılabilir paket yokken (ödeme sözleşmesi/satıcı hesabı
+  // eksik) satır gizli; paywall "paketler henüz aktif değil" diyen çıkmaz
+  // sokaktı.
+  testWidgets('satılabilir paket yoksa Pro satırı görünmez', (tester) async {
+    PremiumService.debugCanSell = false;
+    await pumpHome(tester);
+    expect(find.byKey(const ValueKey('home-premium-row')), findsNothing);
   });
 }
