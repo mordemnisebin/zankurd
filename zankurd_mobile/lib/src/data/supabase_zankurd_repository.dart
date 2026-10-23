@@ -871,45 +871,83 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         },
       );
       final snapshot = _requiredJsonObject(response, 'create_online_room_v2');
-      final roomId = _requiredString(snapshot, const ['room_id']);
-      final roomCode = _requiredString(snapshot, const ['code']);
-      final hostId = _requiredString(snapshot, const ['host_id']);
-      final canonicalCategory = _requiredString(snapshot, const [
-        'category_name',
-      ]);
-      final serverQuestionCount = _requiredInt(snapshot, const [
-        'question_count',
-      ]);
-      final serverSeconds = _requiredInt(snapshot, const [
-        'seconds_per_question',
-      ]);
-      final serverEntryFee = snapshot['entry_fee'] != null
-          ? (snapshot['entry_fee'] as num).toInt()
-          : entryFee;
-      // Eski sunucu bu iki alanı hiç döndürmez: tolere edilir, 2 kişilik.
-      final serverMaxPlayers =
-          (snapshot['max_players'] as num?)?.toInt() ?? maxPlayers;
-      final serverIsCustom = snapshot['is_custom'] as bool? ?? true;
-
-      final players = await _loadRoomPlayersById(roomId);
-      return GameRoom(
-        id: roomId,
-        name: _roomDisplayName(serverMaxPlayers, serverIsCustom),
-        code: roomCode,
-        category: canonicalCategory,
-        players: players,
-        status: _roomStatusFromValue(snapshot['status'] ?? 'lobby'),
-        questionCount: serverQuestionCount,
-        secondsPerQuestion: serverSeconds,
-        entryFee: serverEntryFee,
-        hostId: hostId,
-        maxPlayers: serverMaxPlayers,
-        isCustom: serverIsCustom,
+      return _roomFromCreateSnapshot(
+        snapshot,
+        fallbackEntryFee: entryFee,
+        fallbackMaxPlayers: maxPlayers,
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'createOnlineRoom failed');
       rethrow;
     }
+  }
+
+  /// `create_online_room_v2` ve `create_room_rematch` AYNI biçimde JSON döner
+  /// (room_id, code, host_id, category_name, ...); ikisi de bu tek yoldan
+  /// [GameRoom]a çevrilir ki alan eşlemesi iki yerde ayrışmasın.
+  Future<GameRoom> _roomFromCreateSnapshot(
+    Map<String, dynamic> snapshot, {
+    int fallbackEntryFee = 0,
+    int fallbackMaxPlayers = 2,
+  }) async {
+    final roomId = _requiredString(snapshot, const ['room_id']);
+    final roomCode = _requiredString(snapshot, const ['code']);
+    final hostId = _requiredString(snapshot, const ['host_id']);
+    final canonicalCategory = _requiredString(snapshot, const [
+      'category_name',
+    ]);
+    final serverQuestionCount = _requiredInt(snapshot, const [
+      'question_count',
+    ]);
+    final serverSeconds = _requiredInt(snapshot, const [
+      'seconds_per_question',
+    ]);
+    final serverEntryFee = snapshot['entry_fee'] != null
+        ? (snapshot['entry_fee'] as num).toInt()
+        : fallbackEntryFee;
+    // Eski sunucu bu iki alanı hiç döndürmez: tolere edilir, 2 kişilik.
+    final serverMaxPlayers =
+        (snapshot['max_players'] as num?)?.toInt() ?? fallbackMaxPlayers;
+    final serverIsCustom = snapshot['is_custom'] as bool? ?? true;
+
+    final players = await _loadRoomPlayersById(roomId);
+    return GameRoom(
+      id: roomId,
+      name: _roomDisplayName(serverMaxPlayers, serverIsCustom),
+      code: roomCode,
+      category: canonicalCategory,
+      players: players,
+      status: _roomStatusFromValue(snapshot['status'] ?? 'lobby'),
+      questionCount: serverQuestionCount,
+      secondsPerQuestion: serverSeconds,
+      entryFee: serverEntryFee,
+      hostId: hostId,
+      maxPlayers: serverMaxPlayers,
+      isCustom: serverIsCustom,
+    );
+  }
+
+  @override
+  Future<GameRoom> createRoomRematch(String roomId) async {
+    client.auth.currentUser ?? await signInAnonymously();
+    final dynamic response;
+    try {
+      response = await client.rpc(
+        'create_room_rematch',
+        params: {'p_room_id': roomId},
+      );
+    } on PostgrestException catch (error, stack) {
+      // Sunucu düz metinle reddeder; sebep çevrilir (UI genel "oda
+      // açılamadı" der, ama istisna türü çağırana ayrım yaptırır).
+      _recordError(error, stack, reason: 'createRoomRematch rejected');
+      throw RoomRematchException(
+        roomRematchFailureReasonForMessage(error.message),
+        error.message,
+      );
+    }
+    final rawSnapshot = response is List ? response.firstOrNull : response;
+    final snapshot = _requiredJsonObject(rawSnapshot, 'create_room_rematch');
+    return _roomFromCreateSnapshot(snapshot);
   }
 
   @override

@@ -115,6 +115,43 @@ class RoomJoinException implements Exception {
   String toString() => 'RoomJoinException($reason, $message)';
 }
 
+/// `create_room_rematch`in reddetme sebebi.
+enum RoomRematchFailureReason {
+  /// 'Rematch not available': oda bitmemiş, özel değil ya da çağıran o
+  /// odanın oyuncusu değil.
+  notAvailable,
+
+  /// Giriş ücretine jeton yetmiyor.
+  insufficientCoins,
+
+  /// Oyuncu başka canlı bir odada.
+  alreadyInAnotherRoom,
+  unknown,
+}
+
+class RoomRematchException implements Exception {
+  const RoomRematchException(this.reason, [this.message]);
+
+  final RoomRematchFailureReason reason;
+  final String? message;
+
+  @override
+  String toString() => 'RoomRematchException($reason, $message)';
+}
+
+RoomRematchFailureReason roomRematchFailureReasonForMessage(String message) {
+  if (message.contains('Rematch not available')) {
+    return RoomRematchFailureReason.notAvailable;
+  }
+  if (message.contains('Insufficient coins')) {
+    return RoomRematchFailureReason.insufficientCoins;
+  }
+  if (message.contains('already in another live room')) {
+    return RoomRematchFailureReason.alreadyInAnotherRoom;
+  }
+  return RoomRematchFailureReason.unknown;
+}
+
 /// `join_room_by_code`ın ham `raise exception` metnini bir sebebe eşler.
 ///
 /// Sunucu hata kodu değil düz metin döndürüyor, o yüzden eşleme metin
@@ -247,6 +284,10 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
     int maxPlayers = 2,
   });
   Future<GameRoom> joinOnlineRoom(String code);
+
+  /// Biten ÖZEL odanın aynı ayarlarla yeni lobisi: ilk basan kurar, sonra
+  /// basanlar aynı lobiye katılır (sunucu `create_room_rematch`).
+  Future<GameRoom> createRoomRematch(String roomId);
 
   // ─── Sırayla düello (async 1v1) ──────────────────────────────────────
   //

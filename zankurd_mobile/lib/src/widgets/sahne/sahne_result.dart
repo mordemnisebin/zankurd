@@ -43,9 +43,13 @@ class SahneResultAction {
     required this.onPressed,
     this.key,
     this.icon,
+    this.loading = false,
   });
 
   final String label;
+
+  /// Eylem sürerken düğmede döner gösterge; yeni dokunuş yutulur.
+  final bool loading;
   final VoidCallback onPressed;
 
   /// Eylemin sabit anahtarı (testler ve erişilebilirlik düğümü bunu arar).
@@ -1127,12 +1131,13 @@ class SahneResultDock extends StatelessWidget {
     final primaryButton = _DockAction(
       key: primary.key,
       label: primary.label,
-      onTap: primary.onPressed,
+      onTap: primary.loading ? () {} : primary.onPressed,
       child: SahneButton.primary(
         label: primary.label,
         icon: primary.icon,
         arrow: primary.icon == null,
         expand: true,
+        loading: primary.loading,
         onPressed: primary.onPressed,
       ),
     );

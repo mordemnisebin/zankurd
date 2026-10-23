@@ -66,6 +66,11 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<GameRoom> createRoomRematch(String roomId) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
   Future<GameRoom> joinOnlineRoom(String code) async {
     throw StateError('Remote service unavailable.');
   }

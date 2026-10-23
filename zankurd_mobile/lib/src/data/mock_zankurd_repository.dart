@@ -1540,6 +1540,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<GameRoom> createRoomRematch(String roomId) async {
+    // Yerel sahte oda: yeni (kimliği başka) özel lobi.
+    return createRoom().copyWith(id: 'rematch-$roomId', isCustom: true);
+  }
+
+  @override
   Future<GameRoom> joinOnlineRoom(String code) async {
     return joinRoom(code);
   }

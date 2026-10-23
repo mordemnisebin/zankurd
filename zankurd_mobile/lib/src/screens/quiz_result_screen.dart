@@ -199,6 +199,46 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   bool _showNotifPrompt = false;
   NotificationPromptPolicy? _notifPolicy;
 
+  /// Özel oda sonucunda "Tekrar oyna": sunucu aynı ayarlarla yeni lobi kurar
+  /// (ya da arkadaşının zaten kurduğuna katılır); sonuç rotası lobiyle
+  /// DEĞİŞTİRİLİR, geri tuşu bitmiş odaya dönmez. Süren istek çift basışı
+  /// yutar: iki istek iki lobi (iki ücret) demek olurdu.
+  Future<void> _rematch() async {
+    final roomId = widget.room.id?.trim() ?? '';
+    if (_newRoomLoading || roomId.isEmpty) return;
+    setState(() => _newRoomLoading = true);
+    try {
+      final newRoom = await widget.repository.createRoomRematch(roomId);
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        AppRoute.to(
+          RoomScreen(repository: widget.repository, initialRoom: newRoom),
+        ),
+      );
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'room rematch failed');
+      if (!mounted) return;
+      final short =
+          e is RoomRematchException &&
+          e.reason == RoomRematchFailureReason.insufficientCoins;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            context.t(short ? K.insufficientCoins : K.roomOpenFailed),
+          ),
+          action: short
+              ? SnackBarAction(
+                  label: context.t(K.earnCoins),
+                  onPressed: _openSpinWheel,
+                )
+              : null,
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _newRoomLoading = false);
+    }
+  }
+
   Future<void> _openNewRoom() async {
     if (_newRoomLoading) return;
     if (widget.room.entryFee > 0) {
@@ -1197,8 +1237,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     }
 
     final isOnlineRoom = room.id != null;
-    final nextActionLabel = context.t(isOnlineRoom ? K.home : K.playAgain);
-    final nextActionIcon = isOnlineRoom
+    // Yalnız ÖZEL oda tekrar oynanabilir (sunucu kuralı); hızlı düello ve
+    // rastgele eşleşmede düğme çıkmaz.
+    final canRematch = isOnlineRoom && room.isCustom;
+    final nextActionLabel = context.t(
+      isOnlineRoom && !canRematch ? K.home : K.playAgain,
+    );
+    final nextActionIcon = isOnlineRoom && !canRematch
         ? AppIcons.house
         : AppIcons.arrowRotateLeft;
 
@@ -1316,6 +1361,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final learningContinue = isLearningExperience && !isOnlineRoom;
     final primaryResultKey = learningContinue
         ? 'result-primary-learning-continue'
+        : canRematch
+        ? 'result-room-rematch-button'
         : isOnlineRoom
         ? 'result-primary-home'
         : 'result-play-again-button';
@@ -1356,6 +1403,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           icon: AppIcons.squareCheck,
           label: context.t(K.reviewMistakes),
           onTap: () => openReview(wrongRecords),
+        ),
+      // "Tekrar oyna" dock'ta birincil, "Ana sayfa" ikincil olunca "Paylaş"
+      // buraya iner (dock'ta yalnız iki eylem durur).
+      if (canRematch)
+        _ResultAction(
+          key: const ValueKey('result-share-button'),
+          icon: AppIcons.shareNodes,
+          label: context.t(K.share),
+          onTap: shareResult,
         ),
       if (isOnlineRoom)
         _ResultAction(
@@ -1686,14 +1742,22 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         key: ValueKey(primaryResultKey),
         label: primaryResultLabel,
         icon: learningContinue ? null : nextActionIcon,
-        onPressed: completeResultAction,
+        loading: canRematch && _newRoomLoading,
+        onPressed: canRematch ? _rematch : completeResultAction,
       ),
-      secondary: SahneResultAction(
-        key: const ValueKey('result-share-button'),
-        label: context.t(K.share),
-        icon: AppIcons.shareNodes,
-        onPressed: shareResult,
-      ),
+      secondary: canRematch
+          ? SahneResultAction(
+              key: const ValueKey('result-primary-home'),
+              label: context.t(K.home),
+              icon: AppIcons.house,
+              onPressed: completeResultAction,
+            )
+          : SahneResultAction(
+              key: const ValueKey('result-share-button'),
+              label: context.t(K.share),
+              icon: AppIcons.shareNodes,
+              onPressed: shareResult,
+            ),
       overlay: _showConfetti
           ? ConfettiOverlay(
               onFinished: () {

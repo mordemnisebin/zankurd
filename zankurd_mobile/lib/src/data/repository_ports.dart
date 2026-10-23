@@ -68,6 +68,9 @@ abstract interface class LivePlayPort {
   });
   Future<GameRoom> joinOnlineRoom(String code);
 
+  /// Biten ÖZEL odanın aynı ayarlarla yeni lobisi (sunucu `create_room_rematch`).
+  Future<GameRoom> createRoomRematch(String roomId);
+
   // ─── Sırayla düello (async 1v1) — bkz. `ZanKurdRepository` doc'u ──────
   Future<AsyncDuelStart> startAsyncDuel({String? category});
   Future<AsyncDuelAnswer> answerAsyncDuel({
