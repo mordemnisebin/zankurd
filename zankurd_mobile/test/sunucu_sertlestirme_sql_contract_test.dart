@@ -70,12 +70,29 @@ void main() {
 
   test('S2: bayat oda zaman aşımları ve 5 dakikalık cron', () {
     final body = fn('cleanup_stale_rooms');
-    expect(body, contains("interval '15 minutes'"));
+    // Lobi: 30 dk, etkinlik = katılım + sohbet + davet (+ kuruluş).
+    expect(body, contains("interval '30 minutes'"));
+    expect(body, isNot(contains("interval '15 minutes'")));
+    expect(body, contains('max(rp.joined_at)'));
+    expect(body, contains('public.room_messages'));
+    expect(body, contains('public.room_invites'));
+    // Aktif oda: 10 dk etkinliksizlik.
     expect(body, contains("interval '10 minutes'"));
     expect(body, isNot(contains("interval '24 hours'")));
     expect(body, contains('max(pa.created_at)'));
     expect(body, contains('max(rq.revealed_at)'));
     expect(body, contains("ended_reason = 'stale_timeout'"));
+    // Son soru açıklanmış bayat oda 'completed' biter, stale değil.
+    expect(body, contains('as final_revealed'));
+    expect(
+      body,
+      contains("elsif v_room.status = 'active' and v_room.final_revealed"),
+    );
+    expect(
+      body.indexOf("ended_reason = 'completed'"),
+      lessThan(body.lastIndexOf("ended_reason = 'stale_timeout'")),
+      reason: 'completed dalı stale dalından önce gelmeli',
+    );
     expect(sql, contains("cron.unschedule('cleanup-stale-rooms')"));
     expect(sql, contains("'*/5 * * * *'"));
   });
@@ -88,11 +105,19 @@ void main() {
       ),
     );
     final claim = fn('claim_push_outbox');
-    expect(claim, contains("d.kind = 'room_invite'"));
+    // Düşürme: yaş (kind null = diğer) ve engel, sınırlı.
+    expect(claim, contains("coalesce(d.kind, '') = 'room_invite'"));
     expect(claim, contains("interval '30 minutes'"));
     expect(claim, contains("interval '24 hours'"));
     expect(claim, contains('public.blocked_users'));
     expect(claim, contains('d.from_user_id is not null'));
+    expect(claim, contains('limit 500'));
+    // Seçim: token'ı olan profil + aynı yaş/engel koşulları; işaretleme
+    // profil JOIN'inden SONRA (token'sız bildirim yanmaz).
+    expect(claim, contains('join public.profiles pr on pr.id = o.to_user_id'));
+    expect(claim, contains("nullif(pr.fcm_token, '') is not null"));
+    expect(claim, contains('o.from_user_id is not null'));
+    expect(claim, contains('for update of o skip locked'));
     for (final trigger in [
       'enqueue_friend_request_push',
       'enqueue_friend_accept_push',
@@ -111,13 +136,51 @@ void main() {
     );
   });
 
-  test('S4: görev ödülü sınırlı', () {
+  test('S4: görev ödülü sunucu eşlemesinden, anahtar beyaz listeli', () {
     final body = fn('sync_mission_completion');
+    // İstemci değerleri yok sayılır: ekleme sunucu sabitlerini kullanır.
+    expect(body, isNot(contains('p_coin_reward,')));
     expect(
       body,
-      contains('least(greatest(coalesce(p_coin_reward, 0), 0), 100)'),
+      contains('VALUES (v_user_id, p_mission_key, v_today, v_coin, 100)'),
     );
-    expect(body, contains('least(greatest(coalesce(p_xp_reward, 0), 0), 100)'));
+    expect(body, contains('ELSE NULL'));
+    expect(body, contains('IF v_coin IS NULL THEN'));
+    expect(body, contains('IF v_rows < 3 THEN'));
+    expect(body, contains('public.mission_completions'));
+    expect(body, isNot(contains(' mission_completions mc')));
+
+    // 14 şablonun anahtarı istemci modelinden (pool) çıkar ve eşlemede olmalı.
+    final model = File('lib/src/models/daily_mission.dart').readAsStringSync();
+    final pool = model.substring(
+      model.indexOf('static const List<MissionDef> pool'),
+    );
+    final defs = RegExp(
+      r'MissionDef\(\s*type: MissionType\.(\w+),\s*target: (\d+),\s*coinReward: (\d+)'
+      r"(?:,\s*category: '([^']+)')?",
+    ).allMatches(pool.substring(0, pool.indexOf('];')));
+    const slugs = {
+      'Ziman': 'ziman',
+      'Çand': 'cand',
+      'Dîrok': 'dirok',
+      'Edebiyat': 'edebiyat',
+      'Cografya': 'cografya',
+      'Muzîk': 'muzik',
+    };
+    var count = 0;
+    for (final m in defs) {
+      final type = m.group(1)!;
+      final key = type == 'playCategory'
+          ? 'playCategory:${slugs[m.group(4)]}'
+          : '$type:${m.group(2)}';
+      expect(
+        body,
+        contains("WHEN '$key' THEN ${m.group(3)}"),
+        reason: '$key eşlemede ve şablonun jetonuyla olmalı',
+      );
+      count++;
+    }
+    expect(count, 14, reason: 'havuzda 14 görev şablonu var');
   });
 
   test('S5: analitik olay saatte 600 ile sınırlı', () {
@@ -125,6 +188,8 @@ void main() {
     expect(body, contains("interval '1 hour'"));
     expect(body, contains('limit 600'));
     expect(body, contains('v_recent >= 600'));
+    expect(body, contains('public.analytics_events'));
+    expect(body, isNot(contains(' analytics_events e')));
   });
 
   test('S6: lig kapanışı completed süzgecini ve yetki geri almayı taşır', () {
@@ -139,6 +204,41 @@ void main() {
     );
   });
 
+  test('yetki: iç fonksiyonlar açıkça kapalı, search_path pg_temp taşır', () {
+    expect(
+      sql,
+      contains(
+        'revoke execute on function public.claim_push_outbox(integer) '
+        'from public, anon, authenticated;',
+      ),
+    );
+    expect(
+      sql,
+      contains(
+        'revoke execute on function public.cleanup_stale_rooms() '
+        'from public, anon, authenticated;',
+      ),
+    );
+    for (final name in [
+      'leave_room',
+      'cleanup_stale_rooms',
+      'claim_push_outbox',
+      'enqueue_friend_request_push',
+      'enqueue_friend_accept_push',
+      'invite_friends_to_room',
+      'sync_mission_completion',
+      'log_analytics_event',
+      'finalize_weekly_league',
+    ]) {
+      expect(
+        fn(name),
+        contains("SET search_path TO 'public', 'pg_temp'"),
+        reason: '$name SECURITY DEFINER gövdesi pg_temp ile sabitlenmeli',
+      );
+    }
+    expect(sql, isNot(contains("SET search_path TO 'public'\n")));
+  });
+
   test(
     'kanıt betiği begin ile açılır, rollback ile kapanır, tüm bulguları kapsar',
     () {
@@ -146,7 +246,22 @@ void main() {
       expect(proof, contains('\nbegin;\n'));
       expect(proof.trimRight(), endsWith('rollback;'));
       expect(proof, isNot(contains('commit;')));
-      for (final s in ['S1a', 'S2a', 'S3b', 'S4', 'S5', 'S6a']) {
+      for (final s in [
+        'S1a',
+        'S1c',
+        'S2c',
+        'S2e',
+        'S2g',
+        'S3b',
+        'S3f',
+        'S4a',
+        'S4b',
+        'S4c',
+        'S5',
+        'S6a',
+        'Y1',
+        'Y4',
+      ]) {
         expect(proof, contains(s), reason: 'kanıt betiği $s satırını basmalı');
       }
     },
