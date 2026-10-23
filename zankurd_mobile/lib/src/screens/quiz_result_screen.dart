@@ -924,10 +924,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // XP ve Seviye Hesaplaması
     int earnedXP = (correctCount * 10) + 50;
     if (isNewDay) earnedXP += 30;
-    earnedXP += completedMissions.fold(
-      0,
-      (sum, mission) => sum + mission.xpReward,
-    );
+    // Tamamlanan görevlerin XP'si tur XP'sine EKLENMEZ: ödül ana ekranda
+    // "Ödülü al" ile alınırken verilir. İkisinde de eklemek her görevi iki
+    // kez ödüllendiriyordu (bkz. test/mission_xp_single_grant_test.dart).
     earnedXP += promotions.length * 200;
 
     final xpStore = await XPStore.load();
@@ -1166,10 +1165,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // 1v1 galibiyetinde kart "pêşbirkê bi ser ketim" satırını yazar.
         duelWin: opponents.length == 1 && score > opponents.first.score,
       );
-      final earned = await ResultSharer.claimDailyShareReward();
+      // Gün, sunucu ödülü verdikten SONRA işaretlenir (bkz.
+      // test/share_reward_scope_and_order_test.dart).
+      final earned = await ResultSharer.settleDailyShareReward(
+        awardCoins: repository.awardSpinCoins,
+      );
       if (earned && context.mounted) {
         HapticFeedback.mediumImpact();
-        unawaited(repository.awardSpinCoins());
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.t(K.shareRewardEarned)),
@@ -1897,9 +1899,11 @@ class _RoundGains extends StatelessWidget {
                 icon: AppIcons.listCheck,
                 role: SahneRole.gold,
                 title: context.t(K.gorevTamamlandi),
+                // XP burada verilmez, ana ekranda alınır; toplamda
+                // görünmeyen bir "+100 XP" yazmak yanlış olurdu.
                 subtitle:
                     '${context.isKu ? mission.labelKu : mission.labelTr}'
-                    ' — +${mission.xpReward} XP',
+                    ' — ${context.t(K.missionClaimAction)}',
               ),
             if (dailyStreak > 0)
               SahneListRow.icon(

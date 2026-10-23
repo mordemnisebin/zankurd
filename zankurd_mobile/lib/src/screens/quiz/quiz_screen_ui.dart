@@ -701,30 +701,11 @@ extension _QuizScreenUI on _QuizScreenState {
     final completed = await store.reportWildcardUsed();
     if (completed == null || !mounted) return;
 
-    final xpStore = await XPStore.load();
-    final missionXP = completed.xpReward;
-    final leveledUp = await xpStore.addXP(missionXP);
-    unawaited(
-      XpAwardPublisher.publish(repository: widget.repository, delta: missionXP),
-    );
-
-    if (!mounted) return;
+    // Görev XP'si BURADA verilmez: ödül ana ekranda "Ödülü al" ile alınırken
+    // (`HomeScreen._claimMissionReward`) tek kez yazılır. Burada da yazmak
+    // aynı görevi iki kez ödüllendiriyordu (bkz.
+    // test/mission_xp_single_grant_test.dart).
     MissionToast.show(context, completed);
-    if (leveledUp) {
-      final isKu = context.isKu;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            Tr.forKu(K.tebriklerSeviyeAtladinYeni, isKu, {
-              'p0': '${xpStore.currentLevel}',
-            }),
-          ),
-          behavior: SnackBarBehavior.floating,
-          margin: _quizSnackBarMargin,
-          duration: const Duration(seconds: 2),
-        ),
-      );
-    }
   }
 
   /// Jokerin ücretini sunucuya yazar ve gösterilen bakiyeyi gerçekle eşitler.

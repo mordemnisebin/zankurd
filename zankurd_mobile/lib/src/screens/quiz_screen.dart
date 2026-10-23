@@ -17,8 +17,6 @@ import '../data/sync_manager.dart';
 import '../providers/sound_provider.dart';
 import '../providers/untimed_mode_provider.dart';
 import '../data/daily_mission_store.dart';
-import '../data/xp_award_publisher.dart';
-import '../data/xp_store.dart';
 import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';

@@ -44,6 +44,7 @@ void main() {
   test('tracks cumulative question and daily quiz milestones', () async {
     final store = await AchievementStore.load();
 
+    // Günün soruları sayacı günde en çok bir kez artar (B3): beş FARKLI gün.
     for (var i = 0; i < 4; i++) {
       await store.recordQuizResult(
         category: 'Ziman',
@@ -53,6 +54,7 @@ void main() {
         dailyStreak: 1,
         userScore: 1000,
         dailyQuiz: true,
+        now: DateTime(2026, 10, 1 + i, 12),
       );
     }
     final unlocks = await store.recordQuizResult(
@@ -63,6 +65,7 @@ void main() {
       dailyStreak: 1,
       userScore: 1000,
       dailyQuiz: true,
+      now: DateTime(2026, 10, 5, 12),
     );
 
     final ids = unlocks.map((achievement) => achievement.id).toSet();

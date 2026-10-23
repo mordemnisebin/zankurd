@@ -19,6 +19,7 @@ import '../data/placement_store.dart';
 import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/story_progress_store.dart';
 import '../data/sync_manager.dart';
+import '../services/push_tap_router.dart';
 import '../services/premium_service.dart';
 import '../services/apple_revocation.dart';
 import '../services/native_auth_service.dart';
@@ -151,7 +152,21 @@ class AuthProvider extends ChangeNotifier {
           notifyWhenReady: true,
         ),
       );
-    });
+    }, onError: _onAuthStreamError);
+  }
+
+  /// OAuth geri dönüş hatası gotrue'da akışa HATA olarak yazılır
+  /// (bkz. `test/auth_state_stream_error_test.dart`). İşleyici yoksa
+  /// yakalanmamış bölge hatasına dönüşür ve kullanıcı hiçbir şey görmez.
+  void _onAuthStreamError(Object error, StackTrace stack) {
+    if (error is AuthException) {
+      _errorMessage = _translateError(error);
+    } else {
+      ErrorReporter.record(error, stack, reason: 'auth state stream error');
+      _errorMessage = _translateUnexpectedError(error);
+    }
+    _isLoading = false;
+    notifyListeners();
   }
 
   bool _isCurrentAuthGeneration(int generation, String? userId) =>
@@ -815,6 +830,9 @@ class AuthProvider extends ChangeNotifier {
     String? pendingRewardsOwnerId,
   }) async {
     var accountCleanupFailed = false;
+    // Bu hesabın tüketilmemiş bildirim hedefi sonraki hesaba geçmesin
+    // (bkz. test/push_tap_signout_test.dart).
+    PushTapRouter.pending.value = null;
     // Devam eden eski oturum hazırlığını geçersiz kıl ve tamamlanmasını bekle.
     // Böylece gecikmiş A kullanıcısı, logout temizliğinden sonra kapsamı veya
     // SyncManager'ı yeniden A adına kuramaz.
@@ -924,9 +942,30 @@ class AuthProvider extends ChangeNotifier {
         message.contains('provider is not enabled')) {
       return 'Google girişi şu anda etkin değil. Supabase panelinde Google sağlayıcısını aç.';
     }
-    if (message.contains('validation_failed') ||
-        message.contains('redirect') ||
-        message.contains('uri')) {
+    // 2026-10-24 (A1/A2): kod, mesaj metninden kararlıdır; önce kod bakılır.
+    // Hız sınırı yönlendirme kontrolünden ÖNCE gelir: Supabase'in "For
+    // security purposes, you can only request this after 30 seconds."
+    // mesajında 'uri' alt dizgisi (sec-uri-ty) geçer ve eski eşleme bunu
+    // "yönlendirme ayarlarını kontrol et" diye gösteriyordu.
+    final code = e.code;
+    if (code == 'over_email_send_rate_limit' ||
+        code == 'over_request_rate_limit' ||
+        code == 'over_sms_send_rate_limit' ||
+        message.contains('rate limit') ||
+        message.contains('for security purposes')) {
+      return 'Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.';
+    }
+    if (code == 'same_password' ||
+        message.contains('different from the old password')) {
+      return 'Yeni parola eskisinden farklı olmalı.';
+    }
+    if (code == 'weak_password' || message.contains('password should be')) {
+      return 'Parola çok zayıf (en az 6 karakter).';
+    }
+    if (code == 'email_address_invalid') {
+      return 'Geçersiz e-posta adresi.';
+    }
+    if (message.contains('validation_failed') || message.contains('redirect')) {
       return 'Giriş bağlantısı doğrulanamadı. Uygulama yönlendirme ayarlarını kontrol et.';
     }
     if (message.contains('invalid login credentials')) {
@@ -936,18 +975,12 @@ class AuthProvider extends ChangeNotifier {
         message.contains('already been registered')) {
       return 'Bu e-posta zaten kullanılıyor.';
     }
-    if (message.contains('password should be')) {
-      return 'Parola çok zayıf (en az 6 karakter).';
-    }
     if (message.contains('invalid email') ||
         message.contains('unable to validate email')) {
       return 'Geçersiz e-posta adresi.';
     }
     if (message.contains('email not confirmed')) {
       return 'E-posta adresin henüz doğrulanmamış. Gelen kutunu kontrol et.';
-    }
-    if (message.contains('rate limit')) {
-      return 'Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.';
     }
     if (message.contains('anonymous')) {
       return 'Misafir girişi şu anda kapalı.';

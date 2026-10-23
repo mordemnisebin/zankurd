@@ -154,6 +154,8 @@ extension LangContext on BuildContext {
         return 'Navnîşana e-nameyê ya nederbasdar.';
       case 'E-posta adresin henüz doğrulanmamış. Gelen kutunu kontrol et.':
         return 'Navnîşana e-nameya te hîna nehatiye piştrastkirin. Sindoqa xwe ya nameyan kontrol bike.';
+      case 'Yeni parola eskisinden farklı olmalı.':
+        return 'Şîfreya nû divê ji ya kevin cuda be.';
       case 'Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.':
         return 'Pir ceribandin hatin kirin. Hinekî bisekine û dîsa biceribîne.';
       case 'Misafir girişi şu anda kapalı.':

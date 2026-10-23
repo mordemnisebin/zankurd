@@ -408,6 +408,28 @@ class _AppShellState extends State<AppShell>
     setState(() => _showOnboarding = false);
   }
 
+  bool _wasAuthenticated = false;
+
+  /// Oturumlu → oturumsuz GEÇİŞİNDE kabuğun üstündeki rotaları kapatır.
+  ///
+  /// Hesap silme ya da uzaktan oturum kapanması giriş ekranını kabuğun
+  /// YERİNE çizer; üstteki Ayarlar gibi itilmiş rotalar yığında kalır ve
+  /// kullanıcı giriş yerine takılı bir sayfaya bakardı (bkz.
+  /// `test/app_shell_signed_out_pops_routes_test.dart`). Yalnız geçiş
+  /// tetikler: hiç girmemiş kullanıcının açtığı Kayıt ol gibi sayfalara
+  /// dokunulmaz.
+  void _popRoutesWhenSignedOut(bool authenticated) {
+    final wasAuthenticated = _wasAuthenticated;
+    _wasAuthenticated = authenticated;
+    if (!wasAuthenticated || authenticated) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final shellRoute = _shellRoute;
+      if (shellRoute == null) return;
+      Navigator.of(context).popUntil((route) => identical(route, shellRoute));
+    });
+  }
+
   /// Etkin depo.
   ///
   /// Geç kurtarmada [RepositoryHolder] değişir; sağlayıcı yoksa (izole
@@ -427,6 +449,7 @@ class _AppShellState extends State<AppShell>
           ? _normalizedUserId(_repository.currentUserId)
           : null,
     );
+    _popRoutesWhenSignedOut(authProvider.isAuthenticated);
 
     if (_checkingOnboarding) {
       return const Scaffold(body: BrandedLoaderCenter());

@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/local_progress_scope.dart';
 import '../l10n/strings.dart';
 import '../widgets/share_story_card.dart';
 import 'error_reporter.dart';
@@ -17,7 +18,10 @@ import 'percent_format.dart';
 /// paylaşılır. Görsel üretimi herhangi bir nedenle başarısız olursa,
 /// güvenli biçimde metin paylaşımına düşülür (her platformda çalışır).
 class ResultSharer {
-  static const _shareRewardDateKey = 'zankurd.shareReward.lastDate';
+  /// Kullanıcıya özel: aynı cihazda hesap değişince A'nın aldığı ödül B'yi
+  /// kilitlemesin (bkz. `LocalProgressScope`).
+  static String get _shareRewardDateKey =>
+      LocalProgressScope.physical('zankurd.shareReward.lastDate');
 
   /// Günlük ilk paylaşım ödülü verilebilir mi?
   static Future<bool> canClaimDailyShareReward([DateTime? now]) async {
@@ -27,13 +31,31 @@ class ResultSharer {
     return last != today;
   }
 
-  /// Günlük paylaşım ödülünü işaretler; ödül hak edildiyse true döner.
-  static Future<bool> claimDailyShareReward([DateTime? now]) async {
+  /// Günü "ödül alındı" diye işaretler. YALNIZ sunucu ödülü gerçekten
+  /// verdikten sonra çağrılır; önce işaretlemek, sunucu isteği düşerse
+  /// oyuncuyu gün boyu ödülsüz bırakırdı.
+  static Future<void> markDailyShareRewardClaimed([DateTime? now]) async {
     final prefs = await SharedPreferences.getInstance();
-    final today = _dateKey(now ?? DateTime.now());
-    final last = prefs.getString(_shareRewardDateKey);
-    if (last == today) return false;
-    await prefs.setString(_shareRewardDateKey, today);
+    await prefs.setString(_shareRewardDateKey, _dateKey(now ?? DateTime.now()));
+  }
+
+  /// Günlük paylaşım ödülünü tek adımda çözer: hak varsa [awardCoins]
+  /// çağrılır, miktar > 0 ise gün işaretlenir ve `true` döner. Hata ya da 0
+  /// (sunucu vermedi) günü YAKMAZ; sonraki paylaşımda yeniden denenir.
+  static Future<bool> settleDailyShareReward({
+    required Future<int> Function() awardCoins,
+    DateTime? now,
+  }) async {
+    if (!await canClaimDailyShareReward(now)) return false;
+    final int amount;
+    try {
+      amount = await awardCoins();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'share_reward_award');
+      return false;
+    }
+    if (amount <= 0) return false;
+    await markDailyShareRewardClaimed(now);
     return true;
   }
 
