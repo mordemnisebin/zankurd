@@ -1021,9 +1021,6 @@ begin
   where (
       d.creator_id = v_uid
       or d.opponent_id = v_uid
-      -- Daveti hiç açmadığı için hükmen kaybeden arkadaş (opponent_id boş):
-      -- sonucu görebilsin.
-      or d.forfeit_loser_id = v_uid
       -- Bana gelen meydan okuma: davetliyim, kabul etmedim (rakip boş),
       -- süresi dolmadı, yaratıcı turunu bitirdi ve aramızda engel yok.
       or (
@@ -1054,13 +1051,16 @@ $function$;
 -- Dönüş: bu çalışmada kapatılan düello sayısı (eski sözleşme).
 --
 -- HÜKMEN KURALI (süresi geçmiş 'open'/'matched' düello):
---   * "Öteki taraf" = rakip, yoksa davet edilen arkadaş (daveti hiç açmayan
---     arkadaş da turu bırakmış sayılır).
---   * Yaratıcı turunu BİTİRDİ, öteki taraf VAR ve bitirmedi → öteki KAYBEDER.
+--   * "Öteki taraf" = EŞLEŞMİŞ/KABUL ETMİŞ rakip (`opponent_id`). Kabul
+--     edilmemiş arkadaş daveti (opponent_id boş, yalnız invited_id dolu)
+--     düelloya HİÇ GİRMEMİŞTİR: hükmen sayılmaz, kimse kaybetmez (karar:
+--     koordinatör, 2026-10-24).
+--   * Yaratıcı turunu BİTİRDİ, rakip GİRDİ ve bitirmedi → rakip KAYBEDER.
 --   * Yaratıcı bitirmedi, öteki bitirdi → yaratıcı kaybeder (normalde
 --     eşleşme için yaratıcının turu şarttır; savunma amaçlı).
---   * Öteki taraf yok (rakipsiz rastgele düello, kimsenin almadığı bağlantı)
---     ya da kimse bitirmedi → kayıpsız 'expired' ("Rakip çıkmadı").
+--   * Rakip yok (rakipsiz rastgele düello, kimsenin almadığı bağlantı,
+--     KABUL EDİLMEMİŞ arkadaş daveti) ya da kimse bitirmedi → kayıpsız
+--     'expired'; yaratıcı "Rakip çıkmadı" doğru başına XP'sini alır.
 create or replace function public.expire_async_duels()
 returns integer
 language plpgsql
@@ -1076,7 +1076,8 @@ begin
     select
       d.id,
       d.creator_id,
-      coalesce(d.opponent_id, d.invited_id) as other_id,
+      -- Yalnız düelloya GİRMİŞ rakip; davetli (invited_id) hükmen dışı.
+      d.opponent_id as other_id,
       exists (
         select 1 from public.async_duel_results r
         where r.duel_id = d.id and r.player_id = d.creator_id
@@ -1084,7 +1085,7 @@ begin
       exists (
         select 1 from public.async_duel_results r
         where r.duel_id = d.id
-          and r.player_id = coalesce(d.opponent_id, d.invited_id)
+          and r.player_id = d.opponent_id
       ) as other_done
     from public.async_duels d
     where d.status in ('open', 'matched')
@@ -1128,12 +1129,12 @@ begin
           case when c.loser_id = c.creator_id then c.other_id
                else c.creator_id end,
           -- Sunucu alıcının arayüz dilini bilmiyor; metin iki dilli.
-          'Hevrikê te di 24 saetan de nelîst; tu xweber serketî · '
+          'Hevrikê te di 24 saetan de nelîst; tu bi hukmî bi ser ketî · '
             || 'Rakibin 24 saatte oynamadı; düelloyu hükmen kazandın'
         ),
         (
           c.loser_id,
-          'Te di 24 saetan de nelîst; te winda kir · '
+          'Te di 24 saetan de nelîst; te bi hukmî winda kir · '
             || '24 saatte oynamadın; düelloyu hükmen kaybettin'
         )
     ) as p(uid, body)

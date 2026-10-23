@@ -122,31 +122,28 @@ void main() {
       expect(fn(), contains('for update of d'));
     });
 
-    test(
-      'kural: bitiren kazanır, öteki taraf (rakip ya da davetli) kaybeder',
-      () {
-        final b = fn();
-        // Öteki taraf = rakip, yoksa davet edilen arkadaş.
-        expect(b, contains('coalesce(d.opponent_id, d.invited_id)'));
-        expect(
-          b,
-          contains(
-            'when due.creator_done\n'
-            '             and due.other_id is not null\n'
-            '             and not due.other_done then due.other_id',
-          ),
-        );
-        expect(
-          b,
-          contains(
-            'when not due.creator_done\n'
-            '             and due.other_done then due.creator_id',
-          ),
-        );
-        // Rakipsiz düello ve kimsenin bitirmediği düello kayıpsız kalır.
-        expect(b, contains('else null'));
-      },
-    );
+    test('kural: bitiren kazanır, düelloya girmiş rakip kaybeder', () {
+      final b = fn();
+      // Öteki taraf = yalnız düelloya girmiş rakip.
+      expect(b, contains('d.opponent_id as other_id'));
+      expect(
+        b,
+        contains(
+          'when due.creator_done\n'
+          '             and due.other_id is not null\n'
+          '             and not due.other_done then due.other_id',
+        ),
+      );
+      expect(
+        b,
+        contains(
+          'when not due.creator_done\n'
+          '             and due.other_done then due.creator_id',
+        ),
+      );
+      // Rakipsiz düello ve kimsenin bitirmediği düello kayıpsız kalır.
+      expect(b, contains('else null'));
+    });
 
     test('hükmen sonuç iki oyuncuya async_duel_result bildirimi kuyruklar', () {
       final b = fn();
@@ -154,9 +151,9 @@ void main() {
       expect(b, contains('c.loser_id is not null'));
       expect(b, contains('p.uid is not null'));
       // Bildirim metni iki dilli "KU · TR".
-      expect(b, contains('tu xweber serketî · '));
+      expect(b, contains('tu bi hukmî bi ser ketî · '));
       expect(b, contains('düelloyu hükmen kazandın'));
-      expect(b, contains('te winda kir · '));
+      expect(b, contains('te bi hukmî winda kir · '));
       expect(b, contains('düelloyu hükmen kaybettin'));
     });
 
@@ -176,6 +173,8 @@ void main() {
           '        where r.duel_id = d.id and r.player_id = p.uid',
         ),
       );
+      // Hatırlatma kabul edilmemiş davetliye de gider (kaçırmasın).
+      expect(b, contains('coalesce(d.opponent_id, d.invited_id)'));
       // Davetli/rakip için yaratıcı turunu bitirmiş olmalı; engel iki yönde.
       expect(b, contains('p.is_creator'));
       expect(b, contains('public.blocked_users b'));
@@ -228,10 +227,23 @@ void main() {
         b.indexOf('d.forfeit_loser_id is not null then'),
         lessThan(b.indexOf('mine.duel_id is not null and theirs.duel_id')),
       );
-      // Daveti hiç açmayan hükmen kaybeden de listede görür.
-      expect(b, contains('or d.forfeit_loser_id = v_uid'));
+      // Hükmen kaybeden hep girmiş rakiptir: ayrı bir görünürlük kolu yok.
+      expect(b, isNot(contains('\n      or d.forfeit_loser_id = v_uid')));
       // Kaybeden, bitiren rakibin skorunu görür.
       expect(b, contains('or d.forfeit_loser_id = v_uid then theirs'));
+    });
+
+    test('BEKÇİ: kabul edilmemiş arkadaş daveti hükmen sayılmaz '
+        '(davetli kaybetmez, kurucu "Rakip çıkmadı" XP\'si alır)', () {
+      final b = body('expire_async_duels');
+      final forfeit = b.substring(
+        b.indexOf('with due as'),
+        b.indexOf('closed as'),
+      );
+      // Hükmen bloğu invited_id'ye hiç bakmaz: kaybeden yalnız opponent_id.
+      expect(forfeit, isNot(contains('invited_id')));
+      expect(forfeit, contains('d.opponent_id as other_id'));
+      expect(forfeit, isNot(contains('coalesce(d.opponent_id')));
     });
 
     test('hükmen yeni durum değeri eklemez: status check değişmez', () {

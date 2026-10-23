@@ -2972,17 +2972,18 @@ class Tr {
     K.asyncDuelExpired: {'ku': 'Hevrik derneket', 'tr': 'Rakip çıkmadı'},
     K.asyncDuelUnfinished: {'ku': 'Nîvco ma', 'tr': 'Yarım kaldı'},
     // 2026-10-24 sırayla düello: 24 saat penceresi, kalan süre, hükmen sonuç.
-    // Kurmancî taslak, yeni sözcük yok: `mane` (K.timerSecondsLeft), `saet`/
-    // `deqe` (K.cupStartsLatest, K.quickDuelDuration), `xweber serketî`
-    // (K.opponentForfeitedMatch), `nelîst` (streak metni). Jüri bekliyor.
+    // Kurmancî: `mane` (K.timerSecondsLeft), `saet`/`deqe` (K.cupStartsLatest,
+    // K.quickDuelDuration), `bi ser ketî` (K.youWon), `nelîst` (streak
+    // metni). `bi hukmî` (hükmen) Kurmancî jürisi (3 model, çoğunluk)
+    // metnidir; `xweber` hükmen anlamına gelmediği için bırakıldı.
     K.asyncDuelTimeLeftHours: {'ku': '{n} saet mane', 'tr': '{n} sa kaldı'},
     K.asyncDuelTimeLeftMinutes: {'ku': '{n} deqe mane', 'tr': '{n} dk kaldı'},
     K.asyncDuelWonForfeit: {
-      'ku': 'Tu bi ser ketî · xweber',
+      'ku': 'Tu bi ser ketî · bi hukmî',
       'tr': 'Kazandın · hükmen',
     },
     K.asyncDuelLostForfeit: {
-      'ku': 'Te winda kir · xweber',
+      'ku': 'Te winda kir · bi hukmî',
       'tr': 'Kaybettin · hükmen',
     },
     K.asyncDuelForfeitOpponentReason: {

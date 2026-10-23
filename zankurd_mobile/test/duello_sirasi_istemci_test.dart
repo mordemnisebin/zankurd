@@ -351,8 +351,8 @@ void main() {
       await tester.pumpWidget(_listScreen(repo, ku: true));
       await tester.pumpAndSettle();
 
-      expect(find.text('Tu bi ser ketî · xweber'), findsOneWidget);
-      expect(find.text('Te winda kir · xweber'), findsOneWidget);
+      expect(find.text('Tu bi ser ketî · bi hukmî'), findsOneWidget);
+      expect(find.text('Te winda kir · bi hukmî'), findsOneWidget);
       expect(find.text('Rojda di 24 saetan de nelîst'), findsOneWidget);
       expect(find.text('Te di 24 saetan de nelîst'), findsOneWidget);
     });
@@ -443,7 +443,7 @@ void main() {
         ..addForfeitedAsyncDuelForTesting(iWon: true, opponentName: 'Rojda');
       await openResult(tester, repo, ku: true);
 
-      expect(find.text('Tu bi ser ketî · xweber'), findsOneWidget);
+      expect(find.text('Tu bi ser ketî · bi hukmî'), findsOneWidget);
       expect(find.text('Rojda di 24 saetan de nelîst'), findsOneWidget);
     });
 
