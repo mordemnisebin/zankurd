@@ -41,6 +41,7 @@ import 'src/screens/splash_screen.dart';
 import 'src/services/analytics_service.dart';
 import 'src/services/notification_service.dart';
 import 'src/services/premium_service.dart';
+import 'src/services/foreground_push_center.dart';
 import 'src/services/push_tap_router.dart';
 import 'src/services/push_token_sync.dart';
 import 'src/services/remote_upgrade.dart';
@@ -48,6 +49,7 @@ import 'src/services/firebase_push_token_source.dart';
 import 'src/theme/app_theme.dart';
 import 'src/utils/app_route.dart';
 import 'src/utils/error_reporter.dart';
+import 'src/widgets/foreground_push_banner.dart';
 import 'src/widgets/responsive_wrapper.dart';
 
 /// Açılış penceresinde ısıtılan iş.
@@ -242,6 +244,8 @@ Future<void> main() async {
       // açılış akışı bundan etkilenmemeli.
       if (firebaseReady) {
         unawaited(PushTapRouter.wireFirebase());
+        // Uygulama açıkken gelen push'u üstte bant olarak gösterir.
+        ForegroundPushCenter.wire();
       }
 
       // Abonelik kimliği, AuthProvider mevcut oturumu eşlemeden önce hazır
@@ -687,8 +691,10 @@ class ZanKurdApp extends StatelessWidget {
                 // etkin parlaklığa göre verilir.
                 child: AnnotatedRegion<SystemUiOverlayStyle>(
                   value: _overlayStyleFor(context),
-                  child: ResponsiveWrapper(
-                    child: child ?? const SizedBox.shrink(),
+                  child: ForegroundPushBanner(
+                    child: ResponsiveWrapper(
+                      child: child ?? const SizedBox.shrink(),
+                    ),
                   ),
                 ),
               );

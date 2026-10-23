@@ -28,6 +28,7 @@ import 'spin_wheel_screen.dart';
 import 'tournament_screen.dart';
 import 'home/home_rows.dart' show TabStatChips;
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../services/social_push_prompt.dart';
 
 class PlayHubScreen extends StatefulWidget {
   const PlayHubScreen({
@@ -198,6 +199,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       );
       if (!mounted) return;
       AnalyticsService.instance.logActivationStep('room_created');
+      await SocialPushPrompt.maybeAsk(context);
+      if (!mounted) return;
       _openRoom(room);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'play hub create room failed');

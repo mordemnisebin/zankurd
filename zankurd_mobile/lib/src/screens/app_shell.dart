@@ -29,7 +29,10 @@ import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
 import 'onboarding_screen.dart';
 import '../services/analytics_service.dart';
+import '../services/foreground_push_center.dart';
+import '../services/push_messaging_gateway.dart';
 import '../services/push_tap_router.dart';
+import '../services/social_push_prompt.dart';
 import '../services/room_result_presentation.dart';
 import '../services/push_token_sync.dart';
 import 'async_duel/async_duel_inbox.dart';
@@ -167,6 +170,10 @@ class _AppShellState extends State<AppShell>
     WidgetsBinding.instance.addObserver(this);
     JoinDeepLink.incoming.addListener(_onIncomingJoinLink);
     PushTapRouter.pending.addListener(_onPushTapTarget);
+    _foregroundPushSub = ForegroundPushCenter.events.listen(
+      _refreshForForegroundPush,
+    );
+    SocialPushPrompt.tokenSync = widget.pushTokenSync;
     _homeScrollController = ScrollController();
     _profileScrollController = ScrollController();
     _loadOnboardingState();
@@ -419,6 +426,10 @@ class _AppShellState extends State<AppShell>
     WidgetsBinding.instance.removeObserver(this);
     JoinDeepLink.incoming.removeListener(_onIncomingJoinLink);
     PushTapRouter.pending.removeListener(_onPushTapTarget);
+    unawaited(_foregroundPushSub?.cancel());
+    if (identical(SocialPushPrompt.tokenSync, widget.pushTokenSync)) {
+      SocialPushPrompt.tokenSync = null;
+    }
     _connectivitySub?.cancel();
     _homeScrollController.dispose();
     _profileScrollController.dispose();
@@ -842,6 +853,25 @@ class _AppShellState extends State<AppShell>
     final target = PushTapRouter.take();
     if (target == null) return;
     _applyPushTapTarget(target);
+  }
+
+  StreamSubscription<ForegroundPush>? _foregroundPushSub;
+
+  /// Uygulama açıkken gelen push'un ilgili yüzeyini tazeler: arkadaşlık
+  /// isteği/kabulü → Sıralama (arkadaş rozeti) ve Yarış; oda daveti → Ana
+  /// ("Odaya davet" kartı); düello → Yarış ("Düellolarım"). Bant iletiyi
+  /// gösterir, bu ise ardındaki sayacı bayat bırakmaz.
+  void _refreshForForegroundPush(ForegroundPush push) {
+    if (!mounted) return;
+    switch (push.kind) {
+      case 'friend_request' || 'friend_accept':
+        _leaderboardRefresh.value++;
+        _playRefresh.value++;
+      case 'room_invite':
+        _homeRefresh.value++;
+      case 'async_duel_invite' || 'async_duel_turn' || 'async_duel_result':
+        _playRefresh.value++;
+    }
   }
 
   /// Kabuğun üstünde bir sayfa ya da diyalog (ör. canlı bir oda maçı) açık

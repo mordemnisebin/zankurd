@@ -55,6 +55,7 @@ import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
 import '../utils/number_format.dart';
+import '../services/social_push_prompt.dart';
 
 /// Seri kararının sonucu.
 ///
@@ -411,6 +412,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       final show = await policy.shouldShow();
       if (!mounted) return;
       if (show) {
+        // Aynı oturumda tek bildirim sorusu: sosyal eylem istemi
+        // ([SocialPushPrompt]) zaten gösterildiyse kart çıkmaz.
+        if (SocialPushPrompt.promptedThisSession) return;
+        SocialPushPrompt.markPromptedThisSession();
         setState(() => _showNotifPrompt = true);
       }
     } catch (_) {}

@@ -3190,6 +3190,19 @@ class Tr {
     },
     K.notifPromptEnable: {'ku': 'Agahdariyan veke', 'tr': 'Bildirimleri aç'},
     K.notifPromptLater: {'ku': 'Niha na', 'tr': 'Şimdi değil'},
+    // Sosyal eylem sonrası bildirim izni (2026-10-23). KU: Sonnet taslağı,
+    // Kurmancî jürisinden geçecek (copy_language kapısı Türkçe sızıntıyı
+    // yakalar; bu yüzden Türkçe geçici metin konamadı).
+    K.socialPushTitle: {
+      'ku': 'Em agahdariyan vekin?',
+      'tr': 'Bildirimleri açalım mı?',
+    },
+    K.socialPushBody: {
+      'ku': 'Dema hevalê te bersiv bide an jî te vexwîne, em te agahdar bikin?',
+      'tr': 'Arkadaşın cevap verince ya da seni davet edince haber verelim mi?',
+    },
+    K.pushBannerOpen: {'ku': 'Veke', 'tr': 'Aç'},
+    K.pushBannerDismiss: {'ku': 'Bigire', 'tr': 'Kapat'},
     // ── Doza me / Davamız (jüriden geçmiş kimlik metni, AYNEN) ─────
     K.dozaTitle: {'ku': 'Doza me', 'tr': 'Davamız'},
     K.dozaIntro: {
@@ -4701,6 +4714,10 @@ class K {
   static const notifPromptBody = 'notif.prompt.body';
   static const notifPromptEnable = 'notif.prompt.enable';
   static const notifPromptLater = 'notif.prompt.later';
+  static const socialPushTitle = 'notif.socialPush.title';
+  static const socialPushBody = 'notif.socialPush.body';
+  static const pushBannerOpen = 'notif.banner.open';
+  static const pushBannerDismiss = 'notif.banner.dismiss';
   static const dozaTitle = 'doza.page';
   static const dozaIntro = 'doza.intro';
   static const dozaRights = 'doza.rights';

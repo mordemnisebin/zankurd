@@ -14,6 +14,7 @@ import '../../utils/player_identity.dart';
 import '../../widgets/player_avatar.dart';
 import '../../widgets/sahne/sahne.dart';
 import 'async_duel_play_screen.dart';
+import '../../services/social_push_prompt.dart';
 
 /// "Arkadaşına meydan oku" seçim sayfası.
 ///
@@ -50,9 +51,17 @@ Future<void> _playEntry(
   BuildContext context,
   ZanKurdRepository repository,
   AsyncDuelEntry entry,
-) => Navigator.of(
-  context,
-).push(AppRoute.to(AsyncDuelPlayScreen(repository: repository, entry: entry)));
+) async {
+  // Meydan okuyan, rakibin cevabını beklediği için bildirim iznine en
+  // yatkın andadır; oyun ekranı açılmadan önce sorulur.
+  if (entry.kind == AsyncDuelEntryKind.createChallenge) {
+    await SocialPushPrompt.maybeAsk(context);
+    if (!context.mounted) return;
+  }
+  await Navigator.of(context).push(
+    AppRoute.to(AsyncDuelPlayScreen(repository: repository, entry: entry)),
+  );
+}
 
 /// Seçim sayfasını atlayıp doğrudan [friendId]'ye meydan okur: oyun ekranı
 /// [AsyncDuelEntry.createChallenge] ile açılır, 7 sorudan sonra sonuç

@@ -24,6 +24,7 @@ import 'async_duel/async_duel_challenge_sheet.dart';
 import 'room_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
+import '../services/social_push_prompt.dart';
 
 /// Arkadaş listesi, oyuncu arama ve istek yönetimi ekranı.
 class FriendsScreen extends StatefulWidget {
@@ -259,6 +260,7 @@ class _FriendsScreenState extends State<FriendsScreen>
             return false;
           });
       _showMessage(context.t(K.requestSent));
+      await SocialPushPrompt.maybeAsk(context);
     } else {
       _showMessage(context.t(K.requestFailed));
     }
@@ -282,6 +284,7 @@ class _FriendsScreenState extends State<FriendsScreen>
     if (success) {
       _showMessage(context.t(K.requestAccepted));
       setState(_loadFriends);
+      await SocialPushPrompt.maybeAsk(context);
     } else {
       _showMessage(context.t(K.acceptFailed));
     }
@@ -373,6 +376,8 @@ class _FriendsScreenState extends State<FriendsScreen>
     setState(() => _roomLoading = true);
     try {
       final room = await widget.repository.createOnlineRoom();
+      if (!mounted) return;
+      await SocialPushPrompt.maybeAsk(context);
       if (!mounted) return;
       _showMessage(
         context.t(K.shareRoomCodeWith, {

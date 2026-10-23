@@ -26,6 +26,7 @@ import 'quiz_screen.dart';
 import 'room/room_invite_friends_sheet.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
+import '../services/social_push_prompt.dart';
 
 /// Aynı kimlikli oyuncuyu TEK satıra indirir.
 ///
@@ -861,6 +862,8 @@ class _RoomScreenState extends State<RoomScreen> {
       room,
     );
     if (!mounted || count == null) return;
+    if (count > 0) await SocialPushPrompt.maybeAsk(context);
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
