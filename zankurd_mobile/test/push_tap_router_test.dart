@@ -73,6 +73,15 @@ void main() {
       );
     });
 
+    // 2026-10-23: isteğim kabul edilince gelen bildirim (sunucu
+    // trg_friend_accept_push) de arkadaş listesini açar.
+    test('friend_accept Arkadaşlara (friends) çözülür', () {
+      expect(
+        PushTapRouter.targetForKind('friend_accept'),
+        PushTapTarget.friends,
+      );
+    });
+
     test('bilinmeyen, boş ya da null tür null döner', () {
       expect(PushTapRouter.targetForKind('bilinmeyen_tur'), isNull);
       expect(PushTapRouter.targetForKind(''), isNull);

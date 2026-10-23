@@ -40,7 +40,8 @@ class PushTapRouter {
     return switch (kind) {
       'async_duel_result' => PushTapTarget.playTab,
       'async_duel_invite' || 'async_duel_turn' => PushTapTarget.duelInbox,
-      'friend_request' => PushTapTarget.friends,
+      // `friend_accept` (2026-10-23): isteğim kabul edildi → arkadaş listesi.
+      'friend_request' || 'friend_accept' => PushTapTarget.friends,
       'room_invite' => PushTapTarget.roomInvite,
       _ => null,
     };
