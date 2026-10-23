@@ -129,4 +129,59 @@ void main() {
     repo.gate!.complete(repo.createRoom().copyWith(id: 'next', isCustom: true));
     await tester.pump(const Duration(seconds: 1));
   });
+
+  // 2026-10-23 simülatör: yeni lobiden geri çıkan, yığında kalan BİTMİŞ
+  // odanın lobisine düşüyordu (orada "Başlat" bile etkindi). Yeni lobi
+  // açılırken ana kabuğa kadar yığın temizlenir.
+  testWidgets('Tekrar oyna sonrası geri, bitmiş odaya değil ana ekrana döner', (
+    tester,
+  ) async {
+    final repo = _repo();
+    final room = repo.createRoom().copyWith(
+      id: 'finished-room-1',
+      status: RoomStatus.finished,
+      isCustom: true,
+    );
+    final nav = GlobalKey<NavigatorState>();
+    await tester.pumpWidget(
+      testShell(
+        child: Navigator(
+          key: nav,
+          onGenerateRoute: (_) =>
+              MaterialPageRoute<void>(builder: (_) => const Text('ana-kabuk')),
+        ),
+      ),
+    );
+    nav.currentState!.push(
+      MaterialPageRoute<void>(builder: (_) => const Text('bitmis-oda')),
+    );
+    nav.currentState!.push(
+      MaterialPageRoute<void>(
+        builder: (_) => QuizResultScreen(
+          repository: repo,
+          room: room,
+          score: 100,
+          correctCount: 10,
+          wrongCount: 0,
+          totalQuestions: 10,
+          bestStreak: 10,
+          answerRecords: const [],
+          coinsAwarded: 0,
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+
+    await tester.tap(rematch);
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byType(RoomScreen), findsOneWidget);
+
+    nav.currentState!.pop();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('bitmis-oda'), findsNothing);
+    expect(find.text('ana-kabuk'), findsOneWidget);
+  });
 }

@@ -210,11 +210,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     try {
       final newRoom = await widget.repository.createRoomRematch(roomId);
       if (!mounted) return;
-      Navigator.of(context).pushReplacement(
-        AppRoute.to(
-          RoomScreen(repository: widget.repository, initialRoom: newRoom),
-        ),
-      );
+      _openLobby(newRoom);
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'room rematch failed');
       if (!mounted) return;
@@ -237,6 +233,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     } finally {
       if (mounted) setState(() => _newRoomLoading = false);
     }
+  }
+
+  /// Yeni lobiyi açar ve yığındaki bitmiş odayı da temizler. Eskiden yalnız
+  /// sonuç rotası değiştiriliyordu: yeni lobiden geri çıkan, altta kalan
+  /// BİTMİŞ odanın lobisine düşüyor, orada "Başlat" bile etkin görünüyordu
+  /// (2026-10-23 simülatör). Geri artık ana kabuğa döner.
+  void _openLobby(GameRoom newRoom) {
+    Navigator.of(context).pushAndRemoveUntil(
+      AppRoute.to(
+        RoomScreen(repository: widget.repository, initialRoom: newRoom),
+      ),
+      (route) => route.isFirst,
+    );
   }
 
   Future<void> _openNewRoom() async {
@@ -298,11 +307,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         maxPlayers: widget.room.maxPlayers,
       );
       if (!mounted) return;
-      Navigator.of(context).pushReplacement(
-        AppRoute.to(
-          RoomScreen(repository: widget.repository, initialRoom: newRoom),
-        ),
-      );
+      _openLobby(newRoom);
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'new room create failed');
       if (!mounted) return;

@@ -365,8 +365,13 @@ class SahneBadge extends StatelessWidget {
             child: Center(
               widthFactor: 1,
               heightFactor: 1,
+              // Rozet tek satırdır: dar satırda "Mêv/anda/r" diye harf harf
+              // kırılıyordu (2026-10-23 simülatör, oda lobisi). Sığmazsa kısalır.
               child: Text(
                 label,
+                maxLines: 1,
+                softWrap: false,
+                overflow: TextOverflow.ellipsis,
                 style: SahneType.captionStrong.copyWith(color: fg),
               ),
             ),
