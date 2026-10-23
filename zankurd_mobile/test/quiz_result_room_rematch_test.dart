@@ -93,6 +93,8 @@ void main() {
       findsOneWidget,
     );
     expect(find.byKey(const ValueKey('result-primary-home')), findsOneWidget);
+    // Özel odada ikinci bir "Yeni oda" yok: Tekrar oyna aynı işi görür.
+    expect(find.byKey(const ValueKey('result-new-room-button')), findsNothing);
 
     await tester.tap(rematch);
     await tester.pump();

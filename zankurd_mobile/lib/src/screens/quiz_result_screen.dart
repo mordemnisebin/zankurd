@@ -1413,7 +1413,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           label: context.t(K.share),
           onTap: shareResult,
         ),
-      if (isOnlineRoom)
+      // Özel odada "Tekrar oyna" aynı işi görür (aynı ayarla yeni lobi);
+      // ikinci bir "Yeni oda" kafa karıştırır.
+      if (isOnlineRoom && !canRematch)
         _ResultAction(
           key: const ValueKey('result-new-room-button'),
           icon: AppIcons.circlePlus,
