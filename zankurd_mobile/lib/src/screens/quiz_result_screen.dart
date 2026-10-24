@@ -657,6 +657,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     }
   }
 
+  /// quiz_start ile aynı öncelik: öğrenme, pratik, oda, günlük, bot, solo.
+  /// Sonuca taşınan oda ve rakiplerden türetilir; kimlik gönderilmez.
+  String get _quizModeLabel {
+    if (widget.isLearningExperience) return 'learning';
+    if (widget.practice) return 'practice';
+    if (widget.room.id != null && widget.room.isCrowd) return 'crowd';
+    if (widget.room.id != null) return '1v1';
+    if (widget.dailyQuiz) return 'daily';
+    if (widget.opponents.isNotEmpty) return 'bot_race';
+    return 'solo';
+  }
+
   Future<void> _recordProgressAndAnalytics(
     _StreakOutcome? streakOutcome,
   ) async {
@@ -664,6 +676,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     try {
       await repository.logAnalyticsEvent('quiz_complete', {
         'category': widget.room.category,
+        'mode': _quizModeLabel,
         'correct_count': widget.correctCount,
         'total_questions': widget.totalQuestions,
         'score': widget.score,
@@ -1144,6 +1157,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
     AnalyticsService.instance.logQuizComplete(
       category: room.category,
+      mode: _quizModeLabel,
       correctCount: correctCount,
       totalQuestions: totalQuestions,
       xpEarned: earnedXP,

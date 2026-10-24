@@ -290,8 +290,9 @@ List<AuditIssue> runDuplicateChecks(
     final tokens = normalized.split(' ');
     final firstToken = tokens.isEmpty ? '' : tokens.first;
     final lengthBucket = normalized.length ~/ 20;
-    final key =
-        '${normalizeText(record.category ?? '')}|$firstToken|$lengthBucket';
+    final key = records.length <= 16
+        ? normalizeText(record.category ?? '')
+        : '${normalizeText(record.category ?? '')}|$firstToken|$lengthBucket';
     buckets.putIfAbsent(key, () => []).add(record);
   }
   mark('buckets');
@@ -337,6 +338,7 @@ List<AuditIssue> runDuplicateChecks(
                 '${a.sourcePath}:${a.sourceRow} ($partnerId); '
                 'jaccard=${similarity.toStringAsFixed(3)}.',
             confidence: 'medium',
+            fingerprint: nearDuplicatePairFingerprint(a, b),
           );
           // Jüriyle incelenip "farklı bilgi" denen çift bir daha uyarı
           // üretmez; soru metni değişirse parmak izi değişir ve çift
@@ -355,21 +357,40 @@ List<AuditIssue> runDuplicateChecks(
   return issues;
 }
 
+String nearDuplicateMemberSignature(QuestionRecord r) => [
+  r.canonicalGroup,
+  normalizeText(r.prompt),
+  normalizeText(r.correctOptionText ?? ''),
+  r.options.map(normalizeText).join('\x1f'),
+  normalizeText(r.explanation ?? ''),
+].join('|');
+
+String nearDuplicatePairFingerprint(QuestionRecord a, QuestionRecord b) {
+  final sigs = [
+    nearDuplicateMemberSignature(a),
+    nearDuplicateMemberSignature(b),
+  ]..sort();
+  return stableFingerprint('near_duplicate_candidate|${sigs.join('||')}');
+}
+
 AuditIssue _duplicateIssue(
   QuestionRecord record,
   String id,
   Severity severity,
   String message, {
   String confidence = 'high',
+  String? fingerprint,
 }) => AuditIssue(
   checkId: id,
   severity: severity,
   record: record,
   message: message,
   confidence: confidence,
-  fingerprint: stableFingerprint(
-    '$id|${record.canonicalGroup}|${normalizeText(record.prompt)}',
-  ),
+  fingerprint:
+      fingerprint ??
+      stableFingerprint(
+        '$id|${record.canonicalGroup}|${normalizeText(record.prompt)}',
+      ),
 );
 
 class DuplicateDiagnostics {

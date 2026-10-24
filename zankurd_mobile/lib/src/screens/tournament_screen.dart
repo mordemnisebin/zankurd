@@ -242,124 +242,125 @@ class _TournamentScreenState extends State<TournamentScreen> {
       bracket.rounds.first.matches.any((m) => m.playerOneId.isNotEmpty);
 
   /// Bitmiş bir şemanın (`_bracket.status != 'active'`) üzerinden yeni bir
-  /// turnuvaya katılır. `_startTournament`in kendisi `_bracket`i her
-  /// durumda üzerine yazdığı için tek fark burada yalnız çift dokunuşu
-  /// engellemek.
+  /// turnuvaya katılır.
   Future<void> _startNewTournamentAfterFinish() async {
-    if (_startingNewTournament) return;
-    setState(() => _startingNewTournament = true);
-    try {
-      await _startTournament();
-    } finally {
-      if (mounted) setState(() => _startingNewTournament = false);
-    }
+    await _startTournament();
   }
 
   Future<void> _startTournament() async {
-    String name = '';
+    if (_startingNewTournament) return;
+    setState(() => _startingNewTournament = true);
     try {
-      name = await widget.repository.getProfileName();
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'tournament_action');
-    }
-    if (!mounted) return;
-    _userName = name.isEmpty ? context.t(K.you) : name;
-
-    // Önce gerçek turnuva: sunucu bizi açık turnuvaya yazar ve kontenjan
-    // dolduğunda eşleşmeleri kurar. Henüz dolmadıysa şema boş döner; o
-    // zaman beklenir — bot uydurmak, "gerçek insanlar" sözünü bozardı.
-    try {
-      final joined = await widget.repository.joinRealTournament();
+      String name = '';
+      try {
+        name = await widget.repository.getProfileName();
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'tournament_action');
+      }
       if (!mounted) return;
-      if (joined != null) {
-        setState(() {
-          final seeded = _isSeeded(joined);
-          _bracket = seeded ? joined : null;
-          _serverBracket = seeded;
-          // Kontenjan dolmadıysa beklenir; bot uydurmak "gerçek insanlar"
-          // sözünü bozardı.
-          _waitingForPlayers = !seeded;
-        });
+      _userName = name.isEmpty ? context.t(K.you) : name;
+
+      // Önce gerçek turnuva: sunucu bizi açık turnuvaya yazar ve kontenjan
+      // dolduğunda eşleşmeleri kurar. Henüz dolmadıysa şema boş döner; o
+      // zaman beklenir — bot uydurmak, "gerçek insanlar" sözünü bozardı.
+      try {
+        final joined = await widget.repository.joinRealTournament();
+        if (!mounted) return;
+        if (joined != null) {
+          setState(() {
+            final seeded = _isSeeded(joined);
+            _bracket = seeded ? joined : null;
+            _serverBracket = seeded;
+            // Kontenjan dolmadıysa beklenir; bot uydurmak "gerçek insanlar"
+            // sözünü bozardı.
+            _waitingForPlayers = !seeded;
+          });
+          return;
+        }
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'tournament_join');
+        // Geçici hata sahte bot şemasına düşürmez (gerçek insan sözü); kullanıcı
+        // tekrar deneyebilsin diye lobide kalır.
+        if (!mounted) return;
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.checkConnection))));
         return;
       }
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'tournament_join');
-      // Geçici hata sahte bot şemasına düşürmez (gerçek insan sözü); kullanıcı
-      // tekrar deneyebilsin diye lobide kalır.
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.t(K.checkConnection))));
-      return;
-    }
-    if (!mounted) return;
 
-    final rounds = TournamentConfig.generateBracket();
-    final firstRound = rounds.first;
-    final seededMatches = <TournamentMatch>[];
-    var botIndex = 0;
-    for (var i = 0; i < firstRound.matches.length; i++) {
-      final match = firstRound.matches[i];
-      if (i == 0) {
-        seededMatches.add(
-          match.copyWith(
-            playerOneId: _userId,
-            playerOneName: _userName,
-            playerTwoId: 'bot_$botIndex',
-            playerTwoName: _botNames[botIndex],
-            status: 'active',
-          ),
-        );
-        botIndex++;
-      } else {
-        seededMatches.add(
-          match.copyWith(
-            playerOneId: 'bot_$botIndex',
-            playerOneName: _botNames[botIndex],
-            playerTwoId: 'bot_${botIndex + 1}',
-            playerTwoName: _botNames[botIndex + 1],
-          ),
-        );
-        botIndex += 2;
+      final rounds = TournamentConfig.generateBracket();
+      final firstRound = rounds.first;
+      final seededMatches = <TournamentMatch>[];
+      var botIndex = 0;
+      for (var i = 0; i < firstRound.matches.length; i++) {
+        final match = firstRound.matches[i];
+        if (i == 0) {
+          seededMatches.add(
+            match.copyWith(
+              playerOneId: _userId,
+              playerOneName: _userName,
+              playerTwoId: 'bot_$botIndex',
+              playerTwoName: _botNames[botIndex],
+              status: 'active',
+            ),
+          );
+          botIndex++;
+        } else {
+          seededMatches.add(
+            match.copyWith(
+              playerOneId: 'bot_$botIndex',
+              playerOneName: _botNames[botIndex],
+              playerTwoId: 'bot_${botIndex + 1}',
+              playerTwoName: _botNames[botIndex + 1],
+            ),
+          );
+          botIndex += 2;
+        }
       }
-    }
 
-    setState(() {
-      _bracket = TournamentBracket(
-        tournamentId: 'daily',
-        userId: _userId,
-        rounds: [
-          firstRound.copyWith(matches: seededMatches, status: 'active'),
-          ...rounds.skip(1),
-        ],
-        createdAt: DateTime.now(),
+      setState(() {
+        _bracket = TournamentBracket(
+          tournamentId: 'daily',
+          userId: _userId,
+          rounds: [
+            firstRound.copyWith(matches: seededMatches, status: 'active'),
+            ...rounds.skip(1),
+          ],
+          createdAt: DateTime.now(),
+        );
+      });
+      // Sunucuya kaydet; hata sessizce yutulur (yerel oyun sürer).
+      //
+      // `save_tournament_progress`in geçerli `p_stage` kümesi ('lobby',
+      // 'quarter', 'semi', 'final', 'won', 'lost' —
+      // 2026-07-14_tournament_integrity_hardening.sql) 'r16' İÇERMEZ; bu
+      // çağrı her yerel turnuva başlangıcında sessizce reddediliyor,
+      // kaydın işi zaten yerel oyunu etkilemediği için kimse fark etmiyordu
+      // (2026-08-14 denetimi). Hiçbir eleme turu henüz tamamlanmadığı için
+      // doğru karşılık 'lobby'dir.
+      unawaited(
+        TournamentProgressPublisher.publish(
+          repository: widget.repository,
+          stage: 'lobby',
+          userScore: 0,
+          opponentScore: 0,
+          botWinners: const [],
+        ),
       );
-    });
-    // Sunucuya kaydet; hata sessizce yutulur (yerel oyun sürer).
-    //
-    // `save_tournament_progress`in geçerli `p_stage` kümesi ('lobby',
-    // 'quarter', 'semi', 'final', 'won', 'lost' —
-    // 2026-07-14_tournament_integrity_hardening.sql) 'r16' İÇERMEZ; bu
-    // çağrı her yerel turnuva başlangıcında sessizce reddediliyor,
-    // kaydın işi zaten yerel oyunu etkilemediği için kimse fark etmiyordu
-    // (2026-08-14 denetimi). Hiçbir eleme turu henüz tamamlanmadığı için
-    // doğru karşılık 'lobby'dir.
-    unawaited(
-      TournamentProgressPublisher.publish(
-        repository: widget.repository,
-        stage: 'lobby',
-        userScore: 0,
-        opponentScore: 0,
-        botWinners: const [],
-      ),
-    );
-    widget.repository.logAnalyticsEvent('tournament_started', null).catchError((
-      error,
-      stack,
-    ) {
-      ErrorReporter.record(error, stack, reason: 'log_tournament_started');
-      return false;
-    });
+      widget.repository
+          .logAnalyticsEvent('tournament_started', null)
+          .catchError((error, stack) {
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'log_tournament_started',
+            );
+            return false;
+          });
+    } finally {
+      if (mounted) setState(() => _startingNewTournament = false);
+    }
   }
 
   /// Şampiyonluk ödülünü talep eder.
@@ -727,7 +728,11 @@ class _TournamentScreenState extends State<TournamentScreen> {
         padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
         sliver: SliverToBoxAdapter(
           child: bracket == null
-              ? _LobbyView(ku: ku, onStart: _startTournament)
+              ? _LobbyView(
+                  ku: ku,
+                  onStart: _startTournament,
+                  starting: _startingNewTournament,
+                )
               : _buildBracket(context, ku),
         ),
       );
@@ -887,10 +892,15 @@ class _TournamentScreenState extends State<TournamentScreen> {
 }
 
 class _LobbyView extends StatelessWidget {
-  const _LobbyView({required this.ku, required this.onStart});
+  const _LobbyView({
+    required this.ku,
+    required this.onStart,
+    this.starting = false,
+  });
 
   final bool ku;
   final VoidCallback onStart;
+  final bool starting;
 
   @override
   Widget build(BuildContext context) {
@@ -939,7 +949,7 @@ class _LobbyView extends StatelessWidget {
         key: const ValueKey('tournament-primary-cta'),
         label: context.t(K.joinTournament),
         expand: true,
-        onPressed: onStart,
+        onPressed: starting ? null : onStart,
       ),
     );
 

@@ -8,6 +8,8 @@ import '../config/app_config.dart';
 import '../config/coin_prices.dart';
 import '../config/feature_flags.dart';
 import '../data/mistake_store.dart';
+import '../data/tekrar_plani.dart';
+import '../data/word_list_store.dart';
 import '../data/learning_goal_store.dart';
 import '../data/streak_store.dart';
 import '../data/xp_award_publisher.dart';
@@ -137,6 +139,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int _streak = 0;
   List<DailyMission> _missions = [];
   int _reviewReadyCount = 0;
+  int _reviewCountGeneration = 0;
 
   /// Günün turu bugün bitirildi mi (yerel takvim günü; bkz.
   /// [AchievementStore.dailyQuizDoneOn], `ContestScreen` ile aynı kaynak).
@@ -380,15 +383,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Future<void> _refreshReviewCount() async {
+    final generation = ++_reviewCountGeneration;
     try {
-      final store = await MistakeStore.load();
-      if (mounted) {
-        setState(
-          () => _reviewReadyCount = launchableReviewCount(
-            store.readyIds,
-            repo.playableQuestions,
-          ),
-        );
+      final mistakes = await MistakeStore.load();
+      final words = await WordListStore.load();
+      final plan = TekrarPlan.build(
+        wordStore: words,
+        mistakeStore: mistakes,
+        playable: repo.playableQuestions,
+      );
+      if (mounted && generation == _reviewCountGeneration) {
+        setState(() => _reviewReadyCount = plan.dueTotal);
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home_load');

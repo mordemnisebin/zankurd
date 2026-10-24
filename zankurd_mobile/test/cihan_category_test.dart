@@ -213,6 +213,7 @@ void main() {
           // 2026-10-24 yazım taraması: «Kurmanci/Kurmancça/Kurmancicede» →
           // «Kurmancî/Kurmancîde» (id, alan) çiftlerine tek tek; doğru şıkkın
           // kimliği korunur. Sunucu göçü: supabase/2026-10-24_icerik_yazim.sql.
+          'ds_cand_0041': {'explanation', 'explanationKu', 'explanationTr'},
           'ds_dirok_0128': {'answersTr', 'correctAnswerTr'},
           'ds_muzik_0008': {
             'answersTr',

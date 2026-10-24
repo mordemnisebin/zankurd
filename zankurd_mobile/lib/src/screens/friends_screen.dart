@@ -1482,13 +1482,18 @@ class _ReferralDialogState extends State<_ReferralDialog> {
   }
 
   Future<void> _submit() async {
+    if (_submitting) return;
     final code = _controller.text.trim();
     if (code.isEmpty) return;
     setState(() => _submitting = true);
-    final navigator = Navigator.of(context);
-    final result = await widget.repository.redeemReferralCode(code);
-    if (!mounted) return;
-    navigator.pop(result);
+    try {
+      final navigator = Navigator.of(context);
+      final result = await widget.repository.redeemReferralCode(code);
+      if (!mounted) return;
+      navigator.pop(result);
+    } finally {
+      if (mounted) setState(() => _submitting = false);
+    }
   }
 
   @override

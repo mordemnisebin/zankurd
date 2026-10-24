@@ -45,6 +45,8 @@ class AccountLocalCleanupException implements Exception {
 /// Misafir modu Supabase anonim oturumu kullanır ve daha sonra e-posta
 /// ile kalıcı hesaba yükseltilebilir.
 class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
+  bool _disposed = false;
+
   static String get authRedirectUri =>
       kIsWeb ? 'https://www.zankurd.com/' : 'com.zankurd.app://login-callback/';
 
@@ -401,7 +403,13 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   @override
+  void notifyListeners() {
+    if (!_disposed) super.notifyListeners();
+  }
+
+  @override
   void dispose() {
+    _disposed = true;
     _authSub?.cancel();
     if (_observingLifecycle) {
       try {
@@ -453,6 +461,7 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     @visibleForTesting Future<User?> Function(SupabaseClient client)? refresh,
     @visibleForTesting DateTime? now,
   }) async {
+    if (_disposed) return false;
     final client = _client;
     if (client == null || !hasPendingUpgrade(_currentUser)) return false;
     final at = now ?? DateTime.now();

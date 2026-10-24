@@ -88,6 +88,8 @@ class PremiumIdentityQueue {
 ///
 /// Singleton; [load] çağrısı main() içinde yapılmalıdır.
 class PremiumService extends ChangeNotifier {
+  bool _disposed = false;
+
   PremiumService._({
     Future<bool> Function()? isAnonymous,
     Future<CustomerInfo> Function()? logOut,
@@ -514,7 +516,13 @@ class PremiumService extends ChangeNotifier {
   }
 
   @override
+  void notifyListeners() {
+    if (!_disposed) super.notifyListeners();
+  }
+
+  @override
   void dispose() {
+    _disposed = true;
     if (AppConfig.hasRevenuecatConfig) {
       try {
         Purchases.removeCustomerInfoUpdateListener(_onCustomerInfoUpdate);

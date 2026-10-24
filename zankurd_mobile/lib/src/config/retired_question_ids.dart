@@ -771,6 +771,11 @@ const Set<String> retiredQuestionIds = <String>{
   'hat_0112', // Şêx Seîd serhildanı yılı (hat_0105)
   'hat_0118', // HDP kuruluş yılı (hat_0107)
   'baslangic_2026_10_06_0068', // "Ew doktor ___." (dersler3_2026_10_08_0008)
+  // ---------------------------------------------------------------------
+  // 2026-10-24: ds_cografya_0017 ile aynı bilgiyi (Musul'dan geçen Dicle
+  // nehrini) ölçtüğü için emekli. Kalan eş parantezde.
+  // ---------------------------------------------------------------------
+  'ds_cografya_0030', // kalan: ds_cografya_0017
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

@@ -1034,6 +1034,7 @@ class ThisWeekCard extends StatefulWidget {
 }
 
 class _ThisWeekCardState extends State<ThisWeekCard> {
+  int _loadGeneration = 0;
   bool _loaded = false;
   LeaderboardEntry? _entry;
 
@@ -1045,12 +1046,22 @@ class _ThisWeekCardState extends State<ThisWeekCard> {
   }
 
   @override
+  void didUpdateWidget(covariant ThisWeekCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.refreshSignal != widget.refreshSignal) {
+      oldWidget.refreshSignal?.removeListener(_load);
+      widget.refreshSignal?.addListener(_load);
+    }
+  }
+
+  @override
   void dispose() {
     widget.refreshSignal?.removeListener(_load);
     super.dispose();
   }
 
   Future<void> _load() async {
+    final generation = ++_loadGeneration;
     LeaderboardEntry? entry;
     try {
       entry = await widget.repository.getMyLeaderboardRank(
@@ -1059,7 +1070,7 @@ class _ThisWeekCardState extends State<ThisWeekCard> {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'play_hub_this_week');
     }
-    if (!mounted) return;
+    if (!mounted || generation != _loadGeneration) return;
     setState(() {
       _entry = entry;
       _loaded = true;

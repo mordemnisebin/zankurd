@@ -17,7 +17,7 @@ class AnalyticsService {
   @visibleForTesting
   void Function(String name, Map<String, Object>? parameters)? debugEventSink;
 
-  /// Uygulama başlatıldığında, yalnız açık rıza varsa çağrılır.
+  /// Uygulama başlatıldığında, kullanım analizi tercihi etkinse çağrılır.
   ///
   /// `enabled` varsayılan olarak kapalıdır. Böylece bu servis yanlışlıkla
   /// veya bir testten doğrudan çağrılsa bile ölçüm toplamaya başlamaz.
@@ -78,8 +78,10 @@ class AnalyticsService {
     required int correctCount,
     required int totalQuestions,
     required int xpEarned,
+    String mode = 'solo',
   }) => logEvent('quiz_complete', {
     'category': category,
+    'mode': mode,
     'correct': correctCount,
     'total': totalQuestions,
     'xp': xpEarned,

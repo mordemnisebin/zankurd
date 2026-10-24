@@ -147,6 +147,7 @@ class _LearningScreenState extends State<LearningScreen> {
   bool _placementPrompt = false;
   bool _lessonsLoading = false;
   int _wordCount = 0;
+  final _reviewRefresh = ValueNotifier<int>(0);
 
   @override
   void initState() {
@@ -155,6 +156,12 @@ class _LearningScreenState extends State<LearningScreen> {
     _refreshCompleted();
     _loadPlacementLevel();
     _loadWordList();
+  }
+
+  @override
+  void dispose() {
+    _reviewRefresh.dispose();
+    super.dispose();
   }
 
   /// "Kelimelerim" satırının alt yazısı: vadesi gelen kelime varsa onu,
@@ -296,6 +303,7 @@ class _LearningScreenState extends State<LearningScreen> {
                   repository: widget.repository,
                   isKu: ku,
                   hideWhenEmpty: true,
+                  refreshSignal: _reviewRefresh,
                 ),
               ),
               // Konu rayı sayfa kenarına taşar (kendi 16'lık kenarını verir);
@@ -626,7 +634,10 @@ class _LearningScreenState extends State<LearningScreen> {
         page: LessonDetailScreen(lesson: lesson, repository: widget.repository),
       ),
     );
-    _refreshCompleted();
+    if (!mounted) return;
+    _reviewRefresh.value++;
+    await _refreshCompleted();
+    if (mounted) await _loadWordList();
   }
 
   Future<void> _openCategoryPractice() async {

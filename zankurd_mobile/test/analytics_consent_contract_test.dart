@@ -165,4 +165,16 @@ void main() {
       contains('AnalyticsService.instance.initialize(enabled: true)'),
     );
   });
+
+  test(
+    'setEnabled tamamlanırken provider dispose edilirse hata fırlatmaz ve true döner',
+    () async {
+      SharedPreferences.setMockInitialValues({});
+      final provider = await AnalyticsConsentProvider.load();
+      final future = provider.setEnabled(false);
+      provider.dispose();
+      expect(await future, isTrue);
+      expect(AnalyticsConsentProvider.isEnabled, isFalse);
+    },
+  );
 }

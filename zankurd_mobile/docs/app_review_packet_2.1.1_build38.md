@@ -41,13 +41,14 @@ and Terms of Use when prompted, then enter a display name if requested.
 Suggested review path:
 
 1. Launch the app and continue as Guest.
-2. On the Home tab (the first tab, labeled “Öğren” / “Learn” in the tab
-   bar), open the daily lesson (ten questions;
-   five on the very first session), answer a question, and inspect the result
-   and explanation flow.
+2. On the Home tab (the first tab, labeled “Ana sayfa” / “Rûpela sereke”),
+   the first session offers a five-question, untimed introductory lesson with
+   explanations. Complete it and return home. The primary card then becomes
+   “Günün turu” / “Gera rojê”, opening the separate daily timed tour and its
+   results/leaderboard. The introductory lesson does not count as that tour.
 3. From the topic grid on the Home tab choose a category (there are eleven),
    open its levels, and start a quiz.
-4. Open the Play tab. “Hızlı düello” (quick duel) matches a random live
+4. Open the Play tab (“Yarış”). “Canlı düello” (live duel) matches a random live
    opponent; if none is found within 20 seconds the app offers “Sırayla
    düello” (turn-based duel: you play now, the opponent plays later) or a
    bot. “Sırayla düello” can also be started directly from the Play tab and
@@ -57,8 +58,8 @@ Suggested review path:
    Supabase service. New in 2.0.2: a turn-based duel can be sent to a
    specific friend (“Arkadaşına meydan oku”) as a share link or from the
    Friends list (“Meydan oku”); the friend opens the link, plays the same
-   seven questions, and both see the result. The Home tab also shows a
-   turn-based duel card below the daily lesson. New in 2.0.3: when creating a
+   seven questions, and both see the result. The Home tab’s Play shortcut also
+   indicates turn-based duels awaiting your turn or with ready results. New in 2.0.3: when creating a
    room you can choose how many players can join (2, 4, 8, 16, 30 or 50);
    rooms for more than two players are a group race started by the room
    owner, with a live ranking and a final standings list.
@@ -89,8 +90,10 @@ The app uses Supabase Auth, Postgres, Storage, and Realtime for optional
 account synchronization, multiplayer rooms, turn-based duels,
 leaderboard/friends, moderation, and user content. RevenueCat handles
 optional subscription state and purchase restoration. Firebase Crashlytics
-handles crash diagnostics. Firebase Analytics is disabled by default and is
-enabled only after the user’s analytics choice. Firebase Cloud Messaging
+handles crash diagnostics. When no analytics preference is saved, usage analytics is enabled by
+default. Settings → Usage analytics controls Firebase Analytics, Crashlytics
+and new Supabase product events together; a saved disabled preference is
+preserved. Firebase Cloud Messaging
 provides a device push token that is stored on the user’s profile so the
 server can send friend-request and duel notifications. The iOS notification
 permission prompt is shown only after the user taps “Bildirimleri aç” / “Turn

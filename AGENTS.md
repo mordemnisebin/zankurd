@@ -37,7 +37,7 @@ Orkestra (çok modelli çalışma; şef hangi araçtaysa — Claude Code, Antigr
 - Kurmancî metin: yeni/değişen her KU dizesi en az iki modelin onayıyla girer — Gemini 3.8 Flash (agy) + Grok 4.7 (Cursor); uyuşmazlıkta Codex ya da Gemini 4 Argon hakem. Anlamı/bilgiyi değiştiren "düzeltme"yi reddet.
 - Model rolleri (en iyi → yedek):
   - Şef / kod yazma: Claude Opus 5.5 High (agy) → Claude Sonnet 5.5 High (agy) → Codex `gpt-6.1-sol` → MiMo (OpenCode, ücretsiz, ayrı worktree'de).
-  - (2026-10-25 agy listesi: gemini-4-argon-*, gemini-3.8-flash-*, claude-opus-5-5-*, claude-sonnet-5-5-*, gpt-oss; Gemini 3.1 Pro ve Opus 4.6 KALKTI. Gemini 4 Argon yeni, sınanmadı: önce ikinci göz olarak kullan, sonucunu buraya yaz.)
+  - (2026-10-25 agy listesi: gemini-4-argon-*, gemini-3.8-flash-*, claude-opus-5-5-*, claude-sonnet-5-5-*, gpt-oss; Gemini 3.1 Pro ve Opus 4.6 KALKTI. Gemini 4 Argon High sınandı: analitik/tekrar/içerik incelemesi, şef koordinasyonu ve ikinci göz denetiminde güçlü ve hızlı — aktif kullanılır.)
   - Kod inceleme / zor hata: Codex `gpt-6-astra` ya da `gpt-6.1-sol` → Gemini 4 Argon High (agy).
   - Kurmancî denetim: Gemini 3.8 Flash (agy) + Grok 4.7 (cursor-agent). Taslak / üçüncü oy: DeepSeek V4.1 Flash (OpenCode, ücretsiz).
   - Bilgi doğrulama: Gemini 4 Argon + MiMo (web araması) çapraz.

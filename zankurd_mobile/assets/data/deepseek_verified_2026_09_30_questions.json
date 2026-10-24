@@ -7830,7 +7830,7 @@
       "Gîtar"
     ],
     "correctAnswer": "Def",
-    "explanation": "Def (davul) genellikle tembûr ile birlikte çalınır çünkü halayın ritmini artırır. Diğer aletler geleneksel değildir.",
+    "explanation": "Def, elle çalınan çerçeveli bir vurmalıdır ve halayın ritmini güçlendirmek için genellikle tembûr ile birlikte çalınır. Diğer aletler geleneksel değildir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -7850,8 +7850,8 @@
       "Gitar"
     ],
     "correctAnswerTr": "Def",
-    "explanationKu": "Def (dahol) bi gelemperî bi tembûrê re tê lêxistin ji ber ku ew rîtma govendê zêde dike. Amûrên din ne kevneşopî ne.",
-    "explanationTr": "Def (davul) genellikle tembûr ile birlikte çalınır çünkü halayın ritmini artırır. Diğer aletler geleneksel değildir."
+    "explanationKu": "Def amûreke lêdanê ya bi çarçoveyê ye ku bi destan tê lêxistin û bi gelemperî bi tembûrê re tê lêxistin da ku rîtma govendê xurt bike. Amûrên din ne kevneşopî ne.",
+    "explanationTr": "Def, elle çalınan çerçeveli bir vurmalıdır ve halayın ritmini güçlendirmek için genellikle tembûr ile birlikte çalınır. Diğer aletler geleneksel değildir."
   },
   {
     "id": "ds_cand_0077",

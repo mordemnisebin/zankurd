@@ -98,13 +98,25 @@ SourceReadResult _readJson(SourceDefinition source, File file, String path) {
         final map = items[i] as Map;
         Object? raw(String field) {
           final column = source.columns[field];
-          if (column == null) return null;
           Object? current = map;
-          for (final segment in column.split('.')) {
-            if (current is! Map) return null;
-            current = current[segment];
+          if (column != null) {
+            for (final segment in column.split('.')) {
+              if (current is! Map) {
+                current = null;
+                break;
+              }
+              current = current[segment];
+            }
+          } else {
+            current = null;
           }
-          return current;
+          if (field == 'explanation' && map.containsKey('explanation')) {
+            final exp = map['explanation'];
+            if (exp != null && exp != current) {
+              return current == null ? exp : '$current | $exp';
+            }
+          }
+          return current ?? map[field];
         }
 
         final optionsValue = raw('options');

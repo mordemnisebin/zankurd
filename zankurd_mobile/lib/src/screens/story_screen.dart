@@ -61,7 +61,7 @@ class _StoryScreenState extends State<StoryScreen> {
     if (_busy) return;
     final next = widget.story.follow(_node!, choice);
     if (next == null) return; // koruma
-    _busy = true;
+    setState(() => _busy = true);
     try {
       final store = await StoryProgressStore.load();
       await store.saveNode(widget.story.id, next.id);
@@ -70,32 +70,38 @@ class _StoryScreenState extends State<StoryScreen> {
       // Kayıt yazılamasa da hikâye bellekte ilerler.
       ErrorReporter.record(error, stack, reason: 'story saveNode failed');
     } finally {
-      _busy = false;
+      if (mounted && _busy) {
+        setState(() => _busy = false);
+      }
     }
     if (!mounted) return;
     setState(() {
       _node = next;
       _feedbackKu = choice.feedbackKu;
       _feedbackTr = choice.feedbackTr;
+      _busy = false;
     });
   }
 
   Future<void> _restart() async {
     if (_busy) return;
-    _busy = true;
+    setState(() => _busy = true);
     try {
       final store = await StoryProgressStore.load();
       await store.restart(widget.story.id, widget.story.start.id);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'story restart failed');
     } finally {
-      _busy = false;
+      if (mounted && _busy) {
+        setState(() => _busy = false);
+      }
     }
     if (!mounted) return;
     setState(() {
       _node = widget.story.start;
       _feedbackKu = null;
       _feedbackTr = null;
+      _busy = false;
     });
   }
 
@@ -141,7 +147,7 @@ class _StoryScreenState extends State<StoryScreen> {
             key: const ValueKey('story-restart'),
             icon: AppIcons.arrowsRotate,
             semanticLabel: context.t(K.restart),
-            onPressed: _restart,
+            onPressed: _busy ? null : _restart,
           ),
         ],
       ),
@@ -229,7 +235,7 @@ class _StoryScreenState extends State<StoryScreen> {
         if (node.isEnding)
           SahneButton.primary(
             key: const ValueKey('story-ending-restart'),
-            onPressed: _restart,
+            onPressed: _busy ? null : _restart,
             icon: AppIcons.arrowRotateLeft,
             arrow: false,
             label: context.t(K.playAgain),
@@ -243,7 +249,10 @@ class _StoryScreenState extends State<StoryScreen> {
           SahneListGroup(
             children: [
               for (final choice in node.choices)
-                _StoryChoiceRow(choice: choice, onTap: () => _choose(choice)),
+                _StoryChoiceRow(
+                  choice: choice,
+                  onTap: _busy ? null : () => _choose(choice),
+                ),
             ],
           ),
       ],
@@ -257,7 +266,7 @@ class _StoryChoiceRow extends StatelessWidget {
   const _StoryChoiceRow({required this.choice, required this.onTap});
 
   final StoryChoice choice;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

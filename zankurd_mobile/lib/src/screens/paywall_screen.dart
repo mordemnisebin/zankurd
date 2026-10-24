@@ -8,6 +8,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/premium_service.dart';
 import '../services/analytics_service.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/branded_loader.dart';
 import '../widgets/legal_links.dart';
 import '../widgets/sahne/sahne.dart';
@@ -59,6 +60,7 @@ class PaywallScreen extends StatefulWidget {
 }
 
 class _PaywallScreenState extends State<PaywallScreen> {
+  int _offeringsGeneration = 0;
   List<Package> _packages = [];
   bool _loading = true;
   bool _offeringsLoadFailed = false;
@@ -77,30 +79,41 @@ class _PaywallScreenState extends State<PaywallScreen> {
   static const _minRetrySpinner = Duration(milliseconds: 600);
 
   Future<void> _loadOfferings({bool manual = false}) async {
+    final generation = ++_offeringsGeneration;
     if (!_paywallViewLogged) {
       _paywallViewLogged = true;
       AnalyticsService.instance.logPaywallView();
     }
     setState(() => _loading = true);
-    final premium = context.read<PremiumService>();
-    final pkgs = <Package>[];
-    final started = DateTime.now();
-    final result = await premium.fetchOfferings();
-    if (manual) {
-      final left = _minRetrySpinner - DateTime.now().difference(started);
-      if (left > Duration.zero) await Future<void>.delayed(left);
-    }
-    if (result case OfferingsFetchSuccess(:final offerings)) {
-      for (final offering in offerings) {
-        pkgs.addAll(offering.availablePackages);
+    try {
+      final premium = context.read<PremiumService>();
+      final pkgs = <Package>[];
+      final started = DateTime.now();
+      final result = await premium.fetchOfferings();
+      if (manual) {
+        final left = _minRetrySpinner - DateTime.now().difference(started);
+        if (left > Duration.zero) await Future<void>.delayed(left);
+      }
+      if (result case OfferingsFetchSuccess(:final offerings)) {
+        for (final offering in offerings) {
+          pkgs.addAll(offering.availablePackages);
+        }
+      }
+      if (!mounted || generation != _offeringsGeneration) return;
+      setState(() {
+        _packages = pkgs;
+        _offeringsLoadFailed = result is OfferingsFetchFailure;
+        _loading = false;
+      });
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'paywall_load_offerings');
+      if (mounted && generation == _offeringsGeneration) {
+        setState(() {
+          _offeringsLoadFailed = true;
+          _loading = false;
+        });
       }
     }
-    if (!mounted) return;
-    setState(() {
-      _packages = pkgs;
-      _offeringsLoadFailed = result is OfferingsFetchFailure;
-      _loading = false;
-    });
   }
 
   void _showMessage(String message) {

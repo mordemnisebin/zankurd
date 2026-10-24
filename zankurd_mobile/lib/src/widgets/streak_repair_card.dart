@@ -6,6 +6,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/streak_repair_service.dart';
 import '../theme/app_icons.dart';
+import '../utils/error_reporter.dart';
 import 'sahne/sahne.dart';
 
 /// "Seriyi geri al" kartı: kırılan serinin son 24 saatte onarım teklifi.
@@ -48,34 +49,41 @@ class _StreakRepairCardState extends State<StreakRepairCard> {
       _busy = true;
       _errorKey = null;
     });
-    final outcome = await StreakRepairService.repair(
-      repository: widget.repository,
-      store: widget.store,
-      offer: widget.offer,
-      now: widget.now,
-    );
-    if (!mounted) return;
-    switch (outcome) {
-      case StreakRepairOutcome.charged ||
-          StreakRepairOutcome.free ||
-          StreakRepairOutcome.alreadyRepaired:
-        setState(() => _busy = false);
-        widget.onRepaired(widget.offer.restoredStreak);
-      case StreakRepairOutcome.insufficient:
-        setState(() {
-          _busy = false;
-          _errorKey = K.streakFreezeNoCoins;
-        });
-      case StreakRepairOutcome.monthlyLimit:
-        setState(() {
-          _busy = false;
-          _errorKey = K.streakRepairMonthly;
-        });
-      case StreakRepairOutcome.failed:
-        setState(() {
-          _busy = false;
-          _errorKey = K.streakRepairFailed;
-        });
+    try {
+      final outcome = await StreakRepairService.repair(
+        repository: widget.repository,
+        store: widget.store,
+        offer: widget.offer,
+        now: widget.now,
+      );
+      if (!mounted) return;
+      switch (outcome) {
+        case StreakRepairOutcome.charged ||
+            StreakRepairOutcome.free ||
+            StreakRepairOutcome.alreadyRepaired:
+          setState(() => _busy = false);
+          widget.onRepaired(widget.offer.restoredStreak);
+        case StreakRepairOutcome.insufficient:
+          setState(() {
+            _busy = false;
+            _errorKey = K.streakFreezeNoCoins;
+          });
+        case StreakRepairOutcome.monthlyLimit:
+          setState(() {
+            _busy = false;
+            _errorKey = K.streakRepairMonthly;
+          });
+        case StreakRepairOutcome.failed:
+          setState(() {
+            _busy = false;
+            _errorKey = K.streakRepairFailed;
+          });
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'streak_repair_card');
+      if (mounted) setState(() => _errorKey = K.streakRepairFailed);
+    } finally {
+      if (mounted && _busy) setState(() => _busy = false);
     }
   }
 

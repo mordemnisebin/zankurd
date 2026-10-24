@@ -104,6 +104,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  int _loadGeneration = 0;
+
   /// "Ayrıntılı istatistik" bağlantısıyla açılan ayrıntı paneli.
   bool _statsDetailsOpen = false;
 
@@ -265,6 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _load() async {
+    final generation = ++_loadGeneration;
     // İskelet yalnız ilk yüklemede. Alt sayfadan dönüşte de iskelete
     // geçiliyordu; içerik yeniden kurulup kaydırma en üste sıçrıyordu
     // (2026-10-22 simülatör turu). Sonraki yüklemeler içerik yerindeyken
@@ -300,7 +303,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       } catch (_) {
         coins = null; // bakiye yoksa jeton satırı çizilmez
       }
-      if (mounted) {
+      if (mounted && generation == _loadGeneration) {
         setState(() {
           _currentName = name;
           _coins = coins;
@@ -325,7 +328,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'profile load failed');
-      if (mounted) {
+      if (mounted && generation == _loadGeneration) {
         setState(() {
           _loading = false;
           _loadFailed = true;

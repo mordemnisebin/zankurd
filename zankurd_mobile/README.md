@@ -29,12 +29,15 @@ Eski Vite prototipi `../docs/archive/web_prototype` altındadır; Play paketi bu
 Hikâye (Öğren → Kurmancî öğren), arkadaşlar (Liderlik), günlük çark (Mağaza)
 ve yerleştirme (Ayarlar) ikinci katmandadır. Turnuva ve haftalık lig
 `lib/src/config/feature_flags.dart` ile kapalıdır. Sırayla düello (sen şimdi
-oyna, rakibin sonra) hazırdır ama sunucu göçü
-`supabase/2026-09-28_async_duels.sql` canlıya uygulanana dek
-`kAsyncDuelEnabled` ile kapalıdır. Paradigma, Siyaset ve
-Teknolojî kategorileri `lib/src/config/category_visibility.dart` ile
-gizlidir. Kürtlerle bağı olmayan dünya bilgisi soruları bankada durur ama
-`lib/src/config/retired_question_ids.dart` ile oyuna çıkmaz.
+oyna, rakibin sonra) `kAsyncDuelEnabled = true` ile açıktır; bu kaynak kod
+bayrağı canlı RPC sağlığının doğrulandığı anlamına gelmez.
+`lib/src/config/category_visibility.dart` içindeki `hiddenCategoryIds` boştur;
+Paradigma, Siyaset ve Teknolojî kategori gizleme mekanizmasıyla gizlenmez.
+Oynanabilir sorular ayrıca `lib/src/config/retired_question_ids.dart` ile
+soru bazında filtrelenir; genel dünya bilgisi topluca gizlenmez.
+Kayıtlı kullanım analizi tercihi yoksa analiz varsayılan açıktır; Ayarlar'dan
+kapatılabilir ve kayıtlı kapalı tercih korunur. Bu tercih Firebase Analytics,
+Crashlytics ve Supabase ürün olaylarını denetler.
 
 ## Mimari
 

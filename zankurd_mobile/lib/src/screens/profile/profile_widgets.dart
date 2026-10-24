@@ -1548,20 +1548,24 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
                       return;
                     }
                     setState(() => _submitting = true);
-                    final auth = context.read<AuthProvider>();
-                    final navigator = Navigator.of(context);
-                    final success = await auth.upgradeGuestAccount(
-                      email: _emailController.text.trim(),
-                      password: _passwordController.text,
-                    );
-                    if (!mounted) return;
-                    navigator.pop(
-                      !success
-                          ? _GuestUpgradeAction.emailFailure
-                          : auth.needsEmailConfirmation
-                          ? _GuestUpgradeAction.emailPendingConfirmation
-                          : _GuestUpgradeAction.emailSuccess,
-                    );
+                    try {
+                      final auth = context.read<AuthProvider>();
+                      final navigator = Navigator.of(context);
+                      final success = await auth.upgradeGuestAccount(
+                        email: _emailController.text.trim(),
+                        password: _passwordController.text,
+                      );
+                      if (!mounted) return;
+                      navigator.pop(
+                        !success
+                            ? _GuestUpgradeAction.emailFailure
+                            : auth.needsEmailConfirmation
+                            ? _GuestUpgradeAction.emailPendingConfirmation
+                            : _GuestUpgradeAction.emailSuccess,
+                      );
+                    } finally {
+                      if (mounted) setState(() => _submitting = false);
+                    }
                   },
             child: _submitting
                 ? SizedBox(

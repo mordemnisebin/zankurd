@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/question_quality/src/canonicalization.dart';
 import '../../tool/question_quality/src/checks.dart';
 import '../../tool/question_quality/src/models.dart';
+import '../../tool/question_quality/src/manifest.dart';
+import '../../tool/question_quality/src/source_readers.dart';
 import '../../tool/question_quality/src/reconciliation.dart';
 
 QuestionRecord question({
@@ -43,6 +48,78 @@ QuestionRecord question({
 );
 
 void main() {
+  group('reviewed near-duplicate content binding', () {
+    const path = 'assets/data/deepseek_verified_2026_09_30_questions.json';
+    final manifest = SourceManifest.fromJsonString(
+      File('tool/question_quality/source_manifest.json').readAsStringSync(),
+    );
+    final source = manifest.resolve(path).source!;
+    final bank = (jsonDecode(File(path).readAsStringSync()) as List)
+        .cast<Map<String, dynamic>>();
+    final originals = [
+      for (final id in ['ds_cografya_0030', 'ds_cografya_0017'])
+        bank.singleWhere((item) => item['id'] == id),
+    ];
+    late Directory temp;
+    setUp(() => temp = Directory.systemTemp.createTempSync('reviewed-pair-'));
+    tearDown(() => temp.deleteSync(recursive: true));
+
+    List<QuestionRecord> readPair(List<Map<String, dynamic>> pair) {
+      final file = File('${temp.path}/pair.json')
+        ..writeAsStringSync(jsonEncode(pair));
+      final result = readSource(source, file, repositoryRelativePath: path);
+      expect(result.errors, isEmpty);
+      expect(result.records, hasLength(2));
+      return result.records;
+    }
+
+    test('unchanged reviewed pair remains exempt in either input order', () {
+      final pair = readPair(originals);
+      expect(runDuplicateChecks(pair), isEmpty);
+      expect(runDuplicateChecks(pair.reversed.toList()), isEmpty);
+      expect(
+        runDuplicateChecks(readPair(originals.reversed.toList())),
+        isEmpty,
+      );
+    });
+
+    for (var side = 0; side < 2; side++) {
+      for (final field in [
+        'prompt',
+        'correctAnswer',
+        'answers',
+        'explanation',
+      ]) {
+        test('member $side $field mutation revokes review', () {
+          final pair = (jsonDecode(jsonEncode(originals)) as List)
+              .cast<Map<String, dynamic>>();
+          final changed = pair[side];
+          switch (field) {
+            case 'prompt':
+              changed[field] = '${changed[field]} Bi rastî?';
+            case 'correctAnswer':
+              changed[field] = (changed['answers'] as List)[1];
+            case 'answers':
+              (changed[field] as List)[3] = 'Çemê nû';
+            case 'explanation':
+              changed[field] = '${changed[field]} İnceleme değişti.';
+          }
+          final records = readPair(pair);
+          final issues = runDuplicateChecks(
+            records,
+          ).where((issue) => issue.checkId == 'near_duplicate_candidate');
+          expect(issues, hasLength(1));
+          expect(
+            runDuplicateChecks(
+              records.reversed.toList(),
+            ).map((issue) => issue.fingerprint),
+            issues.map((issue) => issue.fingerprint),
+          );
+        });
+      }
+    }
+  });
+
   test('physical copies collapse to one canonical record', () {
     final records = [
       question(sourceId: 'runtime', sourcePath: 'runtime.dart', row: 1),

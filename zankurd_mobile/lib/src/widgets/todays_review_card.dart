@@ -73,6 +73,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   TekrarPlan? _plan;
   bool _loading = true;
   bool _starting = false;
+  int _refreshGeneration = 0;
 
   int get _readyCount => _plan?.dueTotal ?? 0;
 
@@ -120,9 +121,10 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   }
 
   Future<void> _refresh() async {
+    final generation = ++_refreshGeneration;
     try {
       final plan = await _buildPlan();
-      if (mounted) {
+      if (mounted && generation == _refreshGeneration) {
         setState(() {
           _plan = plan;
           _loading = false;
@@ -130,7 +132,9 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'todays_review_card');
-      if (mounted) setState(() => _loading = false);
+      if (mounted && generation == _refreshGeneration) {
+        setState(() => _loading = false);
+      }
     }
   }
 

@@ -1445,16 +1445,32 @@ class _BlockedUsersSectionState extends State<_BlockedUsersSection> {
   });
 
   Future<void> _unblock(PlayerSearchResult player) async {
+    if (_working.contains(player.id)) return;
     setState(() => _working.add(player.id));
-    final ok = await widget.repository.unblockPlayer(player.id);
-    if (!mounted) return;
-    setState(() {
-      _working.remove(player.id);
-      if (ok) _future = widget.repository.loadBlockedPlayers();
-    });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(context.t(ok ? K.unblockDone : K.errorOccurred))),
-    );
+    try {
+      final ok = await widget.repository.unblockPlayer(player.id);
+      if (!mounted) return;
+      setState(() {
+        _working.remove(player.id);
+        if (ok) _future = widget.repository.loadBlockedPlayers();
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(context.t(ok ? K.unblockDone : K.errorOccurred)),
+        ),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'unblock_player_failed');
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.errorOccurred))));
+      }
+    } finally {
+      if (mounted && _working.contains(player.id)) {
+        setState(() => _working.remove(player.id));
+      }
+    }
   }
 
   @override

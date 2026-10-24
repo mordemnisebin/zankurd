@@ -724,7 +724,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 reason: 'matchmaking_timeout_cancel',
               );
               _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
-              if (mounted) {
+              if (mounted && _isAttemptActive(attempt)) {
                 setState(() {
                   _found = false;
                   _matchmakingErrorMessage = context.t(K.matchFailed);
@@ -752,7 +752,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 reason: 'matchmaking_timeout_matched_room',
               );
               _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
-              if (mounted) {
+              if (mounted && _isAttemptActive(attempt)) {
                 setState(() {
                   _found = false;
                   _matchmakingErrorMessage = context.t(K.matchFailed);

@@ -37,10 +37,17 @@ class AnalyticsConsentProvider extends ChangeNotifier {
   static bool isEnabled = false;
 
   bool _enabled;
+  bool _disposed = false;
   Future<void> _writeTail = Future<void>.value();
   int _writeGeneration = 0;
 
   bool get enabled => _enabled;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
 
   static Future<AnalyticsConsentProvider> load() async {
     try {
@@ -78,7 +85,9 @@ class AnalyticsConsentProvider extends ChangeNotifier {
         }
         _enabled = value;
         isEnabled = value;
-        notifyListeners();
+        if (!_disposed) {
+          notifyListeners();
+        }
         await ErrorReporter.setCollectionEnabled(value);
         result.complete(true);
       } catch (error, stack) {
