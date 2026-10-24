@@ -10,7 +10,11 @@ import '../../widgets/sahne/sahne.dart';
 ///
 /// ## Görünüm
 ///
-/// 52 boy, Kulis tonu; ortada jokerin ikonu + jeton glifi + fiyat. Jokerin
+/// 2026-10-19 sadeleşme: kapsül çip (40 boy, 48'lik dokunma kutusunda);
+/// ikon + jeton + fiyat. Jetonu yetmeyen joker soluk ve küçük bir kilitle
+/// çizilir, dokunulabilir kalır ([onLockedTap]).
+///
+/// (Önceki hâl) 52 boy, Kulis tonu; ortada jokerin ikonu + jeton glifi + fiyat. Jokerin
 /// ADI ekranda yazmaz: ekran okuyucu "ad • durum" okur, uzun basışta ad
 /// ipucu olarak görünür. Bu yüzden Kurmancî adların dar sütunda kırpılması
 /// ("Alîkariya Be…", 2026-08-16) artık olamaz — kırpılacak görünür etiket
@@ -38,6 +42,7 @@ class WildcardButton extends StatelessWidget {
     required this.isActive,
     required this.onTap,
     this.cantAfford = false,
+    this.onLockedTap,
     super.key,
   });
 
@@ -50,9 +55,14 @@ class WildcardButton extends StatelessWidget {
   final bool cantAfford;
   final VoidCallback onTap;
 
+  /// Jetonu yetmeyen joker soluk + kilitli çizilir ama DOKUNULABİLİR kalır:
+  /// dokununca neden alınamadığı söylenir. `null` → dokunulamaz.
+  final VoidCallback? onLockedTap;
+
   @override
   Widget build(BuildContext context) {
     final canTap = isEnabled;
+    final lockedTap = cantAfford && !canTap ? onLockedTap : null;
 
     final stateLabel = isActive
         ? context.t(K.wildcardActive)
@@ -61,7 +71,7 @@ class WildcardButton extends StatelessWidget {
         : isAnswered
         ? context.t(K.locked)
         : cantAfford
-        ? context.t(K.insufficientBalance)
+        ? context.t(K.wildcardNoCoins)
         : null;
 
     final typeLabel = type.label(isKu);
@@ -81,12 +91,12 @@ class WildcardButton extends StatelessWidget {
 
     return Semantics(
       button: true,
-      enabled: canTap,
+      enabled: canTap || lockedTap != null,
       selected: isActive,
       label: displayLabel,
       hint: hintMessage,
       excludeSemantics: true,
-      onTap: canTap ? onTap : null,
+      onTap: canTap ? onTap : lockedTap,
       child: SahneJokerButton(
         icon: type.icon,
         label: typeLabel,
@@ -97,7 +107,7 @@ class WildcardButton extends StatelessWidget {
         // görünsün).
         selected: isActive,
         unaffordable: cantAfford,
-        onPressed: canTap ? onTap : null,
+        onPressed: canTap ? onTap : lockedTap,
       ),
     );
   }

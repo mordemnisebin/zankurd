@@ -7,6 +7,9 @@ import '../../data/zankurd_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../widgets/sahne/sahne.dart';
+import '../../utils/app_route.dart';
+import '../../utils/number_format.dart';
+import '../shop_screen.dart';
 
 /// Home üzerindeki ikincil eylemler için düz satır.
 ///
@@ -157,9 +160,27 @@ class _TabStatChipsState extends State<TabStatChips> {
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         if (streak != null && streak > 0) streakStatChip(context, streak),
-        if (coins != null && coins > 0) coinStatChip(context, coins),
+        // Bakiye 0 iken de çizilir: jeton çipi her sekmede mağazanın
+        // kapısıdır; sıfırda kaybolunca jetonsuz oyuncu mağazayı (ve
+        // çarkı) bulamıyordu.
+        if (coins != null)
+          coinStatChip(
+            context,
+            coins,
+            semanticLabel:
+                '${context.t(K.shop)}. ${groupThousands(coins)} '
+                '${context.t(K.coinWord)}',
+            onTap: _openShop,
+          ),
       ],
     );
+  }
+
+  Future<void> _openShop() async {
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(ShopScreen(repository: widget.repository)));
+    if (mounted) await _load();
   }
 }
 
@@ -182,8 +203,9 @@ Widget coinStatChip(
 }) {
   return SahneStatChip(
     leading: const SahneGlyph(SahneGlyphKind.coin),
-    label: '$coins',
-    semanticLabel: semanticLabel ?? '$coins ${context.t(K.coinWord)}',
+    label: groupThousands(coins),
+    semanticLabel:
+        semanticLabel ?? '${groupThousands(coins)} ${context.t(K.coinWord)}',
     onTap: onTap,
   );
 }

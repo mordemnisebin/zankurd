@@ -8,6 +8,7 @@ import '../../theme/app_icons.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/sahne.dart';
 import '../brand_mark.dart';
+import 'sahne_bilingual.dart';
 import 'sahne_foundation.dart';
 import 'sahne_painters.dart';
 
@@ -48,7 +49,16 @@ class SahneIconButton extends StatelessWidget {
     this.selected,
     this.selectedIcon,
     this.tooltip,
+    this.quiet = false,
+    this.glass = false,
   });
+
+  /// Renkli sahnede (sonuç, quiz bandı) yarı saydam beyaz cam plaka: koyu
+  /// kutu doygun zeminde sert duruyordu (kurul 2026-10-20). Kenarsız, ikon beyaz.
+  final bool glass;
+
+  /// İkincil gri ikon (`tx2`): satır içi "⋯" gibi yardımcı eylemler.
+  final bool quiet;
 
   final IconData icon;
   final String semanticLabel;
@@ -73,17 +83,23 @@ class SahneIconButton extends StatelessWidget {
     final enabled = onPressed != null;
     final on = selected ?? false;
     final plate = SahneTappable(
-      shape: on
+      shape: glass
+          ? SahneShape.m
+          : on
           ? SahneShape.withSide(SahneShape.m, t.goldTx, width: SahneRing.r1)
           : SahneShape.withSide(SahneShape.m, t.edge, width: 1),
-      color: on ? t.goldTint : t.s1,
+      color: glass ? SahneVivid.glass : (on ? t.goldTint : t.s1),
       onTap: onPressed,
       child: SizedBox.square(
         dimension: visualSize,
         child: Icon(
           on ? (selectedIcon ?? icon) : icon,
           size: 24,
-          color: on ? t.goldTx : (enabled ? t.tx : t.tx3),
+          color: glass
+              ? SahneVivid.onFill
+              : on
+              ? t.goldTx
+              : (enabled ? (quiet ? t.tx2 : t.tx) : t.tx3),
         ),
       ),
     );
@@ -128,6 +144,7 @@ class SahneTabPage extends StatelessWidget {
   const SahneTabPage({
     super.key,
     required this.title,
+    this.titleEyebrow,
     this.subtitle,
     this.stats = const [],
     this.children = const [],
@@ -137,6 +154,11 @@ class SahneTabPage extends StatelessWidget {
   });
 
   final String title;
+
+  /// Başlığın hemen üstündeki küçük öbür dil satırı (bkz.
+  /// [SahneBilingualLabel]); `null` ise çizilmez. Çağıran
+  /// `context.secondLabel(K.…)` ile verir.
+  final String? titleEyebrow;
   final String? subtitle;
 
   /// Marka satırının sağındaki stat çipleri (`SahneStatChip`).
@@ -176,6 +198,7 @@ class SahneTabPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: SahneSpace.x1),
+          if (titleEyebrow != null) SahneBilingualLabel(titleEyebrow!),
           Semantics(
             header: true,
             // Büyük yazıda başlık sarar, kesilmez; tek bir uzun söz dar
@@ -465,10 +488,21 @@ class SahnePushedPage extends StatelessWidget {
     this.slivers = const [],
     this.bottom,
     this.controller,
+    this.role,
+    this.onRefresh,
   });
 
   final String title;
   final String? subtitle;
+
+  /// Verilirse içerik aşağı çekilerek yenilenir. Kaydırılabilir alan içerik
+  /// kısa olsa da çekilebilsin diye her durumda kaydırılabilir fizik alır.
+  final Future<void> Function()? onRefresh;
+
+  /// Çubuk bu rolün DOLU renginde olur (2026-10-20 renk ve canlılık, B):
+  /// öğrenme Zimrût, yarış Boyax, sosyal Nîl; beyaz başlık, cam geri düğmesi,
+  /// durum çubuğunun arkasına uzanır. `null` → sade çubuk.
+  final SahneRole? role;
 
   /// Varsayılan: `Navigator.maybePop`.
   final VoidCallback? onBack;
@@ -486,10 +520,22 @@ class SahnePushedPage extends StatelessWidget {
   final Widget? bottom;
   final ScrollController? controller;
 
+  Widget _wrapRefresh(SahneTokens t, Widget scroll) {
+    final refresh = onRefresh;
+    if (refresh == null) return scroll;
+    return RefreshIndicator(
+      color: t.tx,
+      backgroundColor: t.s2,
+      onRefresh: refresh,
+      child: scroll,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final back = backLabel ?? sahneBackLabel(context);
+    final band = role == null ? null : t.roleFill(role!);
     final bar = ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 64),
       child: Padding(
@@ -505,6 +551,7 @@ class SahnePushedPage extends StatelessWidget {
           children: [
             SahneIconButton(
               key: backKey,
+              glass: band != null,
               icon: AppIcons.arrowLeft,
               semanticLabel: back,
               onPressed: onBack ?? () => Navigator.maybePop(context),
@@ -519,13 +566,17 @@ class SahnePushedPage extends StatelessWidget {
                     header: true,
                     child: SahneUnbrokenText(
                       title,
-                      style: SahneType.headline.copyWith(color: t.tx),
+                      style: SahneType.headline.copyWith(
+                        color: band != null ? SahneVivid.onFill : t.tx,
+                      ),
                     ),
                   ),
                   if (subtitle != null)
                     Text(
                       subtitle!,
-                      style: SahneType.caption.copyWith(color: t.tx2),
+                      style: SahneType.caption.copyWith(
+                        color: band != null ? SahneVivid.onFillSoft : t.tx2,
+                      ),
                     ),
                 ],
               ),
@@ -539,35 +590,45 @@ class SahnePushedPage extends StatelessWidget {
       ),
     );
 
+    final scroll = CustomScrollView(
+      controller: controller,
+      physics: onRefresh == null ? null : const AlwaysScrollableScrollPhysics(),
+      slivers: [
+        const SliverToBoxAdapter(child: SizedBox(height: SahneSpace.x2)),
+        if (children.isNotEmpty)
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+            sliver: SliverList.list(children: children),
+          ),
+        ...slivers,
+        const SliverToBoxAdapter(child: SizedBox(height: SahneSpace.x6)),
+      ],
+    );
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _overlayFor(Theme.of(context).brightness),
+      value: _overlayFor(
+        band != null ? Brightness.dark : Theme.of(context).brightness,
+      ),
       child: Scaffold(
         backgroundColor: t.bg,
         body: SafeArea(
+          top: band == null,
           child: Column(
             children: [
-              bar,
-              Expanded(
-                child: CustomScrollView(
-                  controller: controller,
-                  slivers: [
-                    const SliverToBoxAdapter(
-                      child: SizedBox(height: SahneSpace.x2),
+              if (band != null)
+                ColoredBox(
+                  key: const ValueKey('sahne-pushed-band'),
+                  color: band,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.paddingOf(context).top,
                     ),
-                    if (children.isNotEmpty)
-                      SliverPadding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: SahneSpace.page,
-                        ),
-                        sliver: SliverList.list(children: children),
-                      ),
-                    ...slivers,
-                    const SliverToBoxAdapter(
-                      child: SizedBox(height: SahneSpace.x6),
-                    ),
-                  ],
-                ),
-              ),
+                    child: bar,
+                  ),
+                )
+              else
+                bar,
+              Expanded(child: _wrapRefresh(t, scroll)),
             ],
           ),
         ),
@@ -672,12 +733,34 @@ class SahneStageScaffold extends StatelessWidget {
     this.progress,
     this.dock,
     this.backdrop,
-    this.beam = true,
+    this.beam = false,
     this.light,
     this.ridge = false,
+    this.scene,
+    this.sceneGlow,
+    this.band,
+    this.bandProgress,
   });
 
   final Widget body;
+
+  /// Konu bandı (2026-10-20 renk ve canlılık, B): verilirse üst satır (kapat |
+  /// bağlam | skor) ve [bandProgress] bu DOLU renkte bir bandın içinde, durum
+  /// çubuğunun arkasına kadar uzanır; kapat düğmesi cam olur. Soru ekranı
+  /// konunun rengini taşır (Kurdish Quiz, Trivia Crack deseni); gövde gece
+  /// sahnesi kalır.
+  final Color? band;
+
+  /// Bandın içinde, üst satırın altındaki ilerleme çubuğu.
+  final Widget? bandProgress;
+
+  /// Renkli sahne (2026-10-20 renk ve canlılık): verilirse sahne zemini düz
+  /// grafit yerine bu renklerin tepeden dibe gradyanıdır (sonuç ekranı:
+  /// Boyax → koyu, öğrenmede Zimrût → koyu). Son renk alt perdenin ve
+  /// Scaffold'un rengidir. [sceneGlow] puanın arkasındaki sıcak hale
+  /// (radyal, üstten %22'de).
+  final List<Color>? scene;
+  final Color? sceneGlow;
 
   /// Varsayılan: `Navigator.maybePop`.
   final VoidCallback? onClose;
@@ -690,6 +773,10 @@ class SahneStageScaffold extends StatelessWidget {
   final Widget? progress;
   final Widget? dock;
   final ImageProvider? backdrop;
+
+  /// Işık huzmesi. 2026-10-19 sadeleşme: varsayılan KAPALI. Soru metninin
+  /// arkasındaki parlak huzme, test edenlerin "gözü yoruyor" dediği
+  /// kalabalığın büyük parçasıydı; ekranların hiçbiri artık açmıyor.
   final bool beam;
 
   /// Kategori ışığı: huzmenin rengi (yalnız ışık; dolgu değil).
@@ -723,7 +810,7 @@ class SahneStageScaffold extends StatelessWidget {
     final dockWidget = dock;
 
     final topBar = ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 68),
+      constraints: const BoxConstraints(minHeight: _GameBarRow.minHeight),
       child: Padding(
         // Kapat plakasının görsel kenarı sayfa kenarına (16) oturur; 48'lik
         // dokunma kutusu 2 px dışarı taşar. Sağ öğe yine 16'ya hizalanır
@@ -737,6 +824,7 @@ class SahneStageScaffold extends StatelessWidget {
               id: _GameBarSlot.leading,
               child: SahneIconButton(
                 key: closeKey,
+                glass: scene != null || band != null,
                 icon: AppIcons.xmark,
                 semanticLabel: close,
                 onPressed: onClose ?? () => Navigator.maybePop(context),
@@ -761,15 +849,17 @@ class SahneStageScaffold extends StatelessWidget {
     );
 
     final artwork = backdrop;
+    final sceneColors = scene;
+    final floor = sceneColors == null ? t.bg : sceneColors.last;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayFor(Brightness.dark),
       child: Scaffold(
-        backgroundColor: t.bg,
+        backgroundColor: floor,
         extendBody: dockWidget != null,
         bottomNavigationBar: dockWidget == null
             ? null
             : SahneBottomDock(
-                color: t.bg,
+                color: floor,
                 padding: EdgeInsets.fromLTRB(
                   SahneSpace.page,
                   SahneSpace.x2,
@@ -780,11 +870,46 @@ class SahneStageScaffold extends StatelessWidget {
               ),
         body: Stack(
           children: [
-            const Positioned.fill(
-              child: IgnorePointer(
-                child: CustomPaint(painter: SahneUnderglowPainter()),
+            if (sceneColors != null)
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: ExcludeSemantics(
+                    child: DecoratedBox(
+                      key: const ValueKey('sahne-stage-scene'),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: sceneColors,
+                          stops: const [0, 0.3, 0.58, 1],
+                        ),
+                      ),
+                      child: sceneGlow == null
+                          ? null
+                          : DecoratedBox(
+                              decoration: BoxDecoration(
+                                gradient: RadialGradient(
+                                  center: const Alignment(0, -0.56),
+                                  radius: 0.9,
+                                  colors: [
+                                    sceneGlow!,
+                                    sceneGlow!.withValues(alpha: 0.06),
+                                    sceneGlow!.withValues(alpha: 0),
+                                  ],
+                                  stops: const [0, 0.45, 0.7],
+                                ),
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
+              )
+            else
+              const Positioned.fill(
+                child: IgnorePointer(
+                  child: CustomPaint(painter: SahneUnderglowPainter()),
+                ),
               ),
-            ),
             if (artwork != null)
               Positioned(
                 left: 0,
@@ -839,6 +964,7 @@ class SahneStageScaffold extends StatelessWidget {
                 ),
               ),
             SafeArea(
+              top: band == null,
               bottom: false,
               child: Builder(
                 // `extendBody`: gövde alt perdenin arkasına uzanır; içerik
@@ -853,7 +979,32 @@ class SahneStageScaffold extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      topBar,
+                      if (band != null)
+                        ColoredBox(
+                          key: const ValueKey('sahne-stage-band'),
+                          color: band!,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.paddingOf(context).top,
+                              bottom: SahneSpace.x3,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                topBar,
+                                if (bandProgress != null)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: SahneSpace.page,
+                                    ),
+                                    child: Center(child: bandProgress),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        )
+                      else
+                        topBar,
                       if (progress != null)
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -862,29 +1013,39 @@ class SahneStageScaffold extends StatelessWidget {
                           child: Center(child: progress),
                         ),
                       Expanded(
-                        child: Stack(
-                          children: [
-                            if (ridge)
-                              Positioned(
-                                left: 0,
-                                right: 0,
-                                bottom: 0,
-                                height: ridgeHeight,
-                                child: IgnorePointer(
-                                  child: CustomPaint(
-                                    key: const ValueKey('sahne-stage-ridge'),
-                                    painter: SahneRidgePainter(
-                                      t.s1.withValues(alpha: 0.4),
+                        child: DecoratedBox(
+                          key: band == null
+                              ? null
+                              : const ValueKey('sahne-stage-band-floor'),
+                          decoration: band == null
+                              ? const BoxDecoration()
+                              : BoxDecoration(
+                                  gradient: bandFloorGradient(band!, t.bg),
+                                ),
+                          child: Stack(
+                            children: [
+                              if (ridge)
+                                Positioned(
+                                  left: 0,
+                                  right: 0,
+                                  bottom: 0,
+                                  height: ridgeHeight,
+                                  child: IgnorePointer(
+                                    child: CustomPaint(
+                                      key: const ValueKey('sahne-stage-ridge'),
+                                      painter: SahneRidgePainter(
+                                        t.s1.withValues(alpha: 0.4),
+                                      ),
                                     ),
                                   ),
                                 ),
+                              Positioned.fill(
+                                child: dockWidget == null
+                                    ? body
+                                    : _DockEdge(color: t.line, child: body),
                               ),
-                            Positioned.fill(
-                              child: dockWidget == null
-                                  ? body
-                                  : _DockEdge(color: t.line, child: body),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -895,6 +1056,25 @@ class SahneStageScaffold extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  /// Konu bandının altındaki zemin (2026-10-20 renk, C): soru ekranının
+  /// %90'ı düz grafitti; Trivia Crack ve Kurdish Quiz soru ekranını konunun
+  /// rengine boyar. Zemin konunun koyu tonunda ([band] ile sahne üstü arası
+  /// lerp 0,55) başlar, ilk ~%35'te onu tutar, sonra sahnenin dibine
+  /// ([floor]) erir. Koyu ton bilerek bandın kendi rengi DEĞİL: kaydırılan
+  /// metnin başlık altında söndüğünü ölçen piksel bekçisi (`quiz_stage_scroll_
+  /// test`) zeminin orada koyu olmasını ister; en açık nokta (üst uç) bandın
+  /// ~yarı parlaklığıdır, beyaz yazı ≥ 4,5:1 (bekçi ölçer).
+  @visibleForTesting
+  static LinearGradient bandFloorGradient(Color band, Color floor) {
+    final deep = Color.lerp(band, SahneStageColors.top, 0.55)!;
+    return LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [deep, deep, floor],
+      stops: const [0, 0.35, 1],
     );
   }
 }
@@ -1088,7 +1268,7 @@ enum _GameBarSlot { leading, center, trailing }
 /// karşılığı. Orta yuva her zaman TAM ortadadır (yan öğelerin genişliği
 /// farklı olsa da); genişliği iki yandaki geniş öğeye göre sınırlanır.
 ///
-/// Yükseklik 68 (en az); büyük yazıda orta metin uzarsa satır UZAR.
+/// Yükseklik 56 (en az); büyük yazıda orta metin uzarsa satır UZAR.
 ///
 /// 2026-09-30 simülatör: bu satır önce `CustomMultiChildLayout` idi ve
 /// `getSize` yüksekliği çocuklar ölçülmeden, 68'e sabitliyordu. Belge "satır
@@ -1100,7 +1280,9 @@ enum _GameBarSlot { leading, center, trailing }
 class _GameBarRow extends MultiChildRenderObjectWidget {
   const _GameBarRow({required super.children});
 
-  static const double minHeight = 68;
+  /// 2026-10-19 sadeleşme: 68 → 56 (60 px'lik elmas sayaç kalktı; satır 48'lik
+  /// düğmeyi taşır, soru yukarı çıkar).
+  static const double minHeight = 56;
 
   /// Orta metin ile satırın alt/üst kenarı arasındaki en az boşluk.
   static const double centerPad = SahneSpace.x2;
@@ -1149,11 +1331,19 @@ class _RenderGameBar extends RenderBox
     final ls = leading == null ? Size.zero : layout(leading, loose);
     final ts = trailing == null ? Size.zero : layout(trailing, loose);
     final tw = trailing == null ? 0.0 : ts.width + _GameBarRow.trailingInset;
-    final side = ls.width > tw ? ls.width : tw;
     var cs = Size.zero;
+    // Orta yuva, yan öğeler eşitse TAM ortadadır; sağ grup soldan genişse
+    // (kapat | künye | saniye + menü) orta yuva ortalamayı bırakıp iki yan
+    // arasındaki boşluğa kayar. Eskiden her iki yana da geniş olanın payı
+    // ayrılırdı: 320 px'te künyeye yer kalmıyordu.
+    final lead = ls.width;
+    final trail = tw;
+    final freeW = (w - lead - trail - SahneSpace.x2 - SahneSpace.x3).clamp(
+      0.0,
+      w,
+    );
     if (center != null) {
-      final maxW = (w - 2 * (side + SahneSpace.x2)).clamp(0.0, w);
-      cs = layout(center, BoxConstraints(maxWidth: maxW));
+      cs = layout(center, BoxConstraints(maxWidth: freeW));
     }
     var h = _GameBarRow.minHeight;
     if (center != null) {
@@ -1173,7 +1363,10 @@ class _RenderGameBar extends RenderBox
         );
       }
       if (center != null) {
-        place(center, Offset((w - cs.width) / 2, (h - cs.height) / 2));
+        final minX = lead + SahneSpace.x2;
+        final maxX = w - trail - SahneSpace.x3 - cs.width;
+        final x = ((w - cs.width) / 2).clamp(minX, maxX < minX ? minX : maxX);
+        place(center, Offset(x, (h - cs.height) / 2));
       }
     }
     return Size(w, h);

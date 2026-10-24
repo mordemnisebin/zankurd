@@ -7,6 +7,7 @@ class Lesson {
   final String titleKu;
   final String? titleTr;
   final String? descriptionKu;
+  final String? descriptionTr;
   final String category;
   final String? iconName;
   final int order;
@@ -17,6 +18,7 @@ class Lesson {
     required this.titleKu,
     this.titleTr,
     this.descriptionKu,
+    this.descriptionTr,
     required this.category,
     this.iconName,
     this.order = 0,
@@ -28,6 +30,7 @@ class Lesson {
     String? titleKu,
     String? titleTr,
     String? descriptionKu,
+    String? descriptionTr,
     String? category,
     String? iconName,
     int? order,
@@ -37,6 +40,7 @@ class Lesson {
     titleKu: titleKu ?? this.titleKu,
     titleTr: titleTr ?? this.titleTr,
     descriptionKu: descriptionKu ?? this.descriptionKu,
+    descriptionTr: descriptionTr ?? this.descriptionTr,
     category: category ?? this.category,
     iconName: iconName ?? this.iconName,
     order: order ?? this.order,
@@ -48,6 +52,7 @@ class Lesson {
     'title_ku': titleKu,
     'title_tr': titleTr,
     'description_ku': descriptionKu,
+    'description_tr': descriptionTr,
     'category': category,
     'icon_name': iconName,
     'order': order,
@@ -59,10 +64,15 @@ class Lesson {
     titleKu: json['title_ku'] as String,
     titleTr: json['title_tr'] as String?,
     descriptionKu: json['description_ku'] as String?,
+    descriptionTr: json['description_tr'] as String?,
     category: json['category'] as String? ?? '',
     iconName: json['icon_name'] as String?,
     order: json['order'] as int? ?? 0,
   );
+
+  /// Türkçe modda Kurmancî açıklama gösterilmez: alt başlık yanlış dilde
+  /// görünüyordu (2026-10-15 denetimi); Türkçesi yoksa alt başlık boş kalır.
+  String? description(bool ku) => ku ? descriptionKu : descriptionTr;
 
   @override
   String toString() => 'Lesson(slug: $slug, title: $titleKu)';

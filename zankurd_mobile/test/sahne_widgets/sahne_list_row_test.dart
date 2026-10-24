@@ -1,3 +1,6 @@
+// 2026-10-19 sadeleşme: satır kartı yuvarlak köşeli (`OutlinedBorder`; eskiden
+// pahlı) ve sıra avatarı marka aksanı olarak pahlı kalır (`chamferM`); iki
+// şekil bekçisi buna göre güncellendi. Öteki testler aynı.
 /// Şahnê liste satırının bekçisi (standart, bilgi, sıra, Sen).
 ///
 /// ## Neyi korur
@@ -21,7 +24,7 @@ import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import '../support/realistic_device.dart';
 import 'sahne_harness.dart';
 
-const _thumb = AssetImage('assets/question_images/cat_cand.webp');
+const _thumb = AssetImage('assets/question_images/cilubergen_kurdi.webp');
 
 void main() {
   setUpAll(loadAppFonts);
@@ -155,7 +158,7 @@ void main() {
           )
           .first,
     );
-    final shape = material.shape! as BeveledRectangleBorder;
+    final shape = material.shape! as OutlinedBorder;
     expect(shape.side.color, SahneTokens.night.gold);
     expect(shape.side.width, SahneRing.r1);
   });
@@ -221,7 +224,8 @@ void main() {
     );
     final shape =
         (box.decoration as ShapeDecoration).shape as BeveledRectangleBorder;
-    expect(shape.borderRadius, SahneShape.m.borderRadius);
+    // 2026-10-19: avatar marka aksanı, pah kalır (`chamferM`).
+    expect(shape.borderRadius, SahneShape.chamferM.borderRadius);
   });
 
   // Kusur (2026-10-02 erişilebilirlik denetimi): sağında `Switch` olan satır

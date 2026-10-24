@@ -36,40 +36,65 @@ ve mağaza metni onu aşmamalı.
 
 ## Mağaza ekran görüntüleri
 
+Mağaza önce **Kürtçe bilgi yarışması** olarak okunur (düello, oda, rastgele
+rakip); öğrenme (ders, sözlük) ikinci sıradadır. Sıra buna göre.
+
 App Store en az bir 6,9" (1320×2868) ekran görüntüsü ister; Play için
-telefon görüntüsü 1080 px genişlikten büyük olmalı — aynı dosyalar ikisine
-de yeter.
+telefon görüntüsü 1080 px genişlikten büyük olmalı ve en çok 8 tane
+yüklenir — aynı sekiz dosya ikisine de yeter. 2026-10-13'te Şahnê
+tasarımıyla (2.0.x) yeniden alındı; eski altı görüntü (Şahnê öncesi) atıldı.
 
-Altı yayın görüntüsü iPhone 17 Pro Max simülatöründen, Türkçe arayüzle alındı ve
-`docs/screenshots/store/tr/` altında duruyor:
+Dosyalar `docs/screenshots/store/tr/` altında, hepsi 1320×2868:
 
-| Dosya | Ekran |
-|---|---|
-| `01_home.png` | Ana ekran: günlük ders, dersler, hızlı düello, görevler |
-| `02_categories.png` | Kategoriler ve soru sayıları |
-| `03_subcategories.png` | Alt alanlar (illüstrasyonlu başlık) |
-| `04_levels.png` | Seviye yolu |
-| `06_quiz.png` | Dört şıklı soru |
-| `07_photo_question.png` | Fotoğraflı soru |
+| Dosya | Başlık | Ekran |
+|---|---|---|
+| `01_yaris.png` | Arkadaşına meydan oku | Yarış sekmesi: hızlı düello, sırayla düello, oda kur / kodla katıl |
+| `02_fotografli_soru.png` | Kürt kültürünü sınayan sorular | Fotoğraflı soru (Newroz), süre ve ilerleme |
+| `03_duello_puan.png` | Canlı puanla düello | Düello ortası: Sen / rakip puanı, dört şık, jokerler |
+| `04_sonuc.png` | Sonucunu paylaş | Sonuç: yıldız, puan, doğru/yanlış, XP, Paylaş |
+| `05_oda.png` | Oda kur, kodla davet et | Özel oda lobisi (oda kodu, hazırım) |
+| `06_ana_ekran.png` | Günlük hedef, seri ve seviye | Öğren sekmesi: günlük hedef, seviye, konular |
+| `07_ders_yolu.png` | Alfabeden başla | Kurmancî öğren: sıradaki ders ve ders listesi |
+| `08_sozluk.png` | 1.119 kelime ve ifade | Sözlük (uygulama "1119 kelime ve ifade" yazar) |
 
-Bu altı görüntü Şahnê tasarımından (2.0.0) ÖNCE alındı; yeni görünümü
-göstermiyor. 2.0.0 için mağazaya yüklemeden önce aşağıdaki tarifle yeniden
-alınmalı (görüntü seçimi ve sırası aynı kalabilir).
+Ayrıca `docs/screenshots/store/` altında:
 
-`05_word_order.png` yalnız taslak arşividir ve güncel mağaza setinde
-kullanılmıyor. Yeniden kullanılacaksa mevcut derlemeyle yeniden çekilip
-görsel kalite kontrolünden geçirilmelidir.
+- `play_feature_graphic.png` — Play öne çıkan görsel, 1024×500 (logo,
+  "ZanKurd", "Kürtçe bilgi yarışması", iki ekran).
+- `play_icon_512.png` — Play yüksek çözünürlüklü simge, 512×512, 32 bit PNG;
+  `tool/generate_app_icons.py`'deki aynı çizimden (uygulama simgesiyle birebir).
 
 `docs/screenshots/` sürüm denetiminde tutulmuyor (kökteki `.gitignore`);
 üretilmiş görsellerin kaynak gibi davranmaması için konmuş bir kural.
-Yükleme öncesi yeniden almak gerekirse tarif şu:
+Kaynak, ham görüntülerden bu görselleri üreten betiktir (zankurd_mobile/ içinde):
 
-1. `xcrun simctl boot "iPhone 17 Pro Max"` — 1320×2868 tam bu cihazdan
-   çıkar, başka bir cihaz yanlış boyut verir.
-2. `flutter run -d <udid>` (hata ayıklama derlemesi yeterlidir; uygulama
-   `debugShowCheckedModeBanner: false` kullanıyor, köşede şerit çıkmaz).
-3. Misafir girişi → dili TR yap → ekranları gez.
-4. `xcrun simctl io <udid> screenshot <dosya>.png`
+```
+python3 tool/magaza_gorselleri.py   # Pillow gerekir
+```
+
+Betik zemini ve renkleri `lib/src/theme/sahne.dart` gece belirteçlerinden okur,
+başlıkta Bricolage Grotesque ExtraBold kullanır, durum çubuğu saatini 9:41'e
+sabitler (ham görüntüler farklı saatlerde alındı) ve her çıktının boyutunu
+8 MB sınırına karşı denetler. Başlıklar en çok 32 karakterdir ve yalnız
+ekranın gösterdiğini söyler; ham görüntü değişirse başlığı da gözle kontrol et.
+
+Ham görüntüleri yeniden almak için (`docs/screenshots/store/tr/raw/`, yukarıdaki
+ad eşlemesi betikteki `SHOTS` listesindedir):
+
+1. Yalnız "Claude Store" (iPhone 17 Pro Max, 1320×2868) benzeri bir 6,9"
+   cihaz: `xcrun simctl boot <udid>` — başka cihaz yanlış boyut verir.
+2. `flutter run -d <udid> --dart-define-from-file=.env.mobile.release.json`
+   (hata ayıklama derlemesi yeterli; köşede şerit çıkmaz). Yapılandırmasız
+   derleme çevrimiçi ekranları (düello, oda) açmaz.
+3. Misafir girişi → dil TR → görünen ad "Zana" gibi nötr bir ad.
+4. Düelloda "Rakip bul" → 20 sn sonra "Botla oyna" (ikinci kişi gerekmez).
+   Soru süresi 20 sn: ekranı süre dolmadan almak için `xcrun simctl io`
+   ile her saniye kare alıp sonradan seç.
+5. `xcrun simctl io <udid> screenshot <dosya>.png`
+
+Sıralama ekranı bilerek setten çıkarıldı: başka kullanıcıların görünen adlarını
+gösteriyor ve az kişiyle seyrek duruyor. Kelime dokununca çıkan anlam kartı
+(`lesson3`) ham olarak çekildi ama sekizinci sıra için sözlük seçildi.
 
 Kurmancî liste eklenirse aynı yol dil KU'yken tekrarlanır ve görüntüler
 `docs/screenshots/store/ku/` altına konur.
@@ -81,30 +106,44 @@ Kurmancî liste eklenirse aynı yol dil KU'yken tekrarlanır ve görüntüler
 ### Uygulama adı (en fazla 30 karakter)
 
 ```
-ZanKurd — Kurmancî öğren
+ZanKurd Kürtçe Bilgi Yarışması
 ```
 
-(24 karakter)
+(30 karakter. 2026-10-13: ad yarışmayı öne alır; Kürtçe öğrenme araması
+Bimus gibi büyük uygulamalarla dolu, Kürtçe bilgi yarışması ise boş.
+Pirs 2022'den beri güncellenmiyor.)
 
 ### Kısa açıklama (en fazla 80 karakter)
 
 ```
-Kurmancî öğren, sorularla yarış. 2.400'den fazla soru, 11 kategori.
+Kürtçe bilgi yarışması: arkadaşınla düello, oda kur, oynarken Kurmancî öğren.
 ```
 
-(67 karakter)
+(77 karakter)
 
 ### Tam açıklama (en fazla 4000 karakter)
 
 ```
-ZanKurd, Kurmancî öğrenmeyi bir yarışmaya çeviren bir bilgi
-uygulamasıdır. Dil, kültür, tarih, edebiyat, coğrafya, müzik, sinema,
-siyaset, bilim ve düşünce, teknoloji ve dünya — 2.400'den fazla soru,
-on bir kategori.
+ZanKurd, Kürtçe bilgi yarışmasıdır. Arkadaşına meydan oku, oda kur ya da
+rastgele bir rakiple düello yap; Kürt dili, tarihi, edebiyatı, müziği ve
+sineması üzerine 2.400'den fazla soruyla kimin daha çok bildiğini gör.
+Oynarken Kurmancî de öğrenirsin.
+
+Dil, kültür, tarih, edebiyat, coğrafya, müzik, sinema, siyaset, bilim ve
+düşünce, teknoloji ve dünya: on bir kategori.
 
 Soruların çoğu Kürt dili, tarihi ve kültürü üzerinedir. Dünya, Teknoloji
 ve Bilim ve Düşünce kategorileri genel bilgi sorularıdır; Kürt
 kategorilerinden ayrı durur.
+
+YARIŞ
+
+• Hızlı düello: rastgele bir rakiple canlı 1v1.
+• Sırayla düello: rakibin aynı anda çevrimiçi olması gerekmez. Sen şimdi
+  oynarsın, o sonra; sonuç Düellolarım'da görünür.
+• Oda kur: davet bağlantısını paylaş, arkadaşların tek dokunuşla katılsın.
+  Grup yarışında 50 kişiye kadar aynı anda yarışın, canlı sıralamayı izleyin.
+• Liderlik tablosu: gün, hafta, ay ve arkadaşlar arası sıralama.
 
 NASIL İŞLER
 
@@ -113,20 +152,14 @@ NASIL İŞLER
 • Açıklamalar: tur bitince her sorunun niçin öyle olduğunu okursun.
 • Yanlışların takibi: yanlış yaptığın sorular geri gelir, öğrenene kadar.
 
-YARIŞ
-
-• Hızlı düello: rastgele bir rakiple canlı 1v1.
-• Sırayla düello: rakibin aynı anda çevrimiçi olması gerekmez. Sen şimdi
-  oynarsın, o sonra; sonuç Düellolarım'da görünür.
-• Oda kur: davet bağlantısını paylaş, arkadaşların tek dokunuşla katılsın.
-• Liderlik tablosu: gün, hafta, ay ve arkadaşlar arası sıralama.
-
 ÖĞREN
 
-• Ders yolları: konu konu ilerleyen kısa dersler.
+• Başlangıç yolu: alfabeden geçmiş zamana kısa dersler; ders sonunda
+  boşluk doldurma, cümle kurma ve çoktan seçmeli alıştırmalar.
 • Hikâye: Kurmancî bir sahnede seçim yaparak ilerlersin.
 • Kelime kartları: kelime ezberi için.
-• Sözlük (Ferheng): Kurmancî ya da Türkçe ara.
+• Sözlük (Ferheng): 1.100'den fazla kelime, Kurmancî ya da Türkçe ara.
+  Derste ya da soruda Kurmancî bir kelimeye dokununca anlamı açılır.
 
 İKİ DİL
 
@@ -136,7 +169,8 @@ değiştirirsin; sorular, açıklamalar ve dersler iki dilde de yazılıdır.
 ÇEVRİMDIŞI
 
 Tek kişilik soruların tamamı cihazda. İnternet olmadan da oynarsın.
-Seviye çubuğun ve öğrenme ilerlemen cihazda saklanır.
+Seviye çubuğun ve öğrenme ilerlemen cihazda saklanır; hesabınla girdiysen
+hesabına da eşitlenir, telefon değişse de kaybolmaz.
 Sıralama puanın hesabına yazılır; çevrimiçi yarışlar, coin işlemleri ve
 hesap özellikleri internet gerektirir.
 
@@ -176,18 +210,18 @@ ZanKurd
 ### Alt başlık (en fazla 30 karakter)
 
 ```
-Kurmancî öğren, yarış, ilerle
+Kürtçe bilgi yarışması, düello
 ```
 
-(29 karakter)
+(30 karakter; alt başlık yalnız yeni sürümle değişir, 2.0.2 ile gönderilir)
 
 ### Tanıtım metni (en fazla 170 karakter — güncellemesi incelemesizdir)
 
 ```
-Yeni: baştan tasarlandı. 2.400'den fazla soru, on bir kategori ve rakibin çevrimiçi olmasını beklemeden oynadığın sırayla düello.
+Arkadaşına meydan oku: Kürt dili, tarihi ve kültürü üzerine 2.400'den fazla soruyla düello. Yeni: alfabeden başlayan 18 ders ve 1.119 kelimelik sözlük.
 ```
 
-(129 karakter)
+(151 karakter)
 
 ### Açıklama (en fazla 4000 karakter)
 
@@ -198,14 +232,26 @@ bağlantısı App Description'da bulunmalı (1.9.2 öncesi 3.1.2(c) reddi,
 bkz. `docs/app_review_packet_1.9.2_build20.md`).
 
 ```
-ZanKurd, Kurmancî öğrenmeyi bir yarışmaya çeviren bir bilgi
-uygulamasıdır. Dil, kültür, tarih, edebiyat, coğrafya, müzik, sinema,
-siyaset, bilim ve düşünce, teknoloji ve dünya — 2.400'den fazla soru,
-on bir kategori.
+ZanKurd, Kürtçe bilgi yarışmasıdır. Arkadaşına meydan oku, oda kur ya da
+rastgele bir rakiple düello yap; Kürt dili, tarihi, edebiyatı, müziği ve
+sineması üzerine 2.400'den fazla soruyla kimin daha çok bildiğini gör.
+Oynarken Kurmancî de öğrenirsin.
+
+Dil, kültür, tarih, edebiyat, coğrafya, müzik, sinema, siyaset, bilim ve
+düşünce, teknoloji ve dünya: on bir kategori.
 
 Soruların çoğu Kürt dili, tarihi ve kültürü üzerinedir. Dünya, Teknoloji
 ve Bilim ve Düşünce kategorileri genel bilgi sorularıdır; Kürt
 kategorilerinden ayrı durur.
+
+Yarış
+
+• Hızlı düello: rastgele bir rakiple canlı 1v1.
+• Sırayla düello: rakibin aynı anda çevrimiçi olması gerekmez. Sen şimdi
+  oynarsın, o sonra; sonuç Düellolarım'da görünür.
+• Oda kur: davet bağlantısını paylaş, arkadaşların tek dokunuşla katılsın.
+  Grup yarışında 50 kişiye kadar aynı anda yarışın, canlı sıralamayı izleyin.
+• Liderlik tablosu: gün, hafta, ay ve arkadaşlar arası sıralama.
 
 Nasıl işler
 
@@ -214,20 +260,14 @@ Nasıl işler
 • Açıklamalar: tur bitince her sorunun niçin öyle olduğunu okursun.
 • Yanlışların takibi: yanlış yaptığın sorular geri gelir, öğrenene kadar.
 
-Yarış
-
-• Hızlı düello: rastgele bir rakiple canlı 1v1.
-• Sırayla düello: rakibin aynı anda çevrimiçi olması gerekmez. Sen şimdi
-  oynarsın, o sonra; sonuç Düellolarım'da görünür.
-• Oda kur: davet bağlantısını paylaş, arkadaşların tek dokunuşla katılsın.
-• Liderlik tablosu: gün, hafta, ay ve arkadaşlar arası sıralama.
-
 Öğren
 
-• Ders yolları: konu konu ilerleyen kısa dersler.
+• Başlangıç yolu: alfabeden geçmiş zamana kısa dersler; ders sonunda
+  boşluk doldurma, cümle kurma ve çoktan seçmeli alıştırmalar.
 • Hikâye: Kurmancî bir sahnede seçim yaparak ilerlersin.
 • Kelime kartları: kelime ezberi için.
-• Sözlük (Ferheng): Kurmancî ya da Türkçe ara.
+• Sözlük (Ferheng): 1.100'den fazla kelime, Kurmancî ya da Türkçe ara.
+  Derste ya da soruda Kurmancî bir kelimeye dokununca anlamı açılır.
 
 İki dil
 
@@ -237,7 +277,8 @@ değiştirirsin; sorular, açıklamalar ve dersler iki dilde de yazılıdır.
 Çevrimdışı
 
 Tek kişilik soruların tamamı cihazda. İnternet olmadan da oynarsın.
-Seviye çubuğun ve öğrenme ilerlemen cihazda saklanır.
+Seviye çubuğun ve öğrenme ilerlemen cihazda saklanır; hesabınla girdiysen
+hesabına da eşitlenir, telefon değişse de kaybolmaz.
 Sıralama puanın hesabına yazılır; çevrimiçi yarışlar, coin işlemleri ve
 hesap özellikleri internet gerektirir.
 
@@ -315,7 +356,7 @@ ZanKurd sepaneke zanînê ye ku hînbûna kurmancî dike pêşbirk. Ziman, çand
 dîrok, wêje, erdnîgarî, muzîk, sînema, siyaset, zanist û raman, teknolojî
 û cîhan — zêdetir ji 2.400 pirs, yanzdeh kategorî.
 
-Piraniya pirsan li ser zimân, dîrok û çanda kurdî ne. Pirsên Cîhan,
+Piraniya pirsan li ser ziman, dîrok û çanda kurdî ne. Pirsên Cîhan,
 Teknolojî û Zanist û Raman zanîna giştî ne û ji kategoriyên kurdî cuda ne.
 
 ÇAWA DIXEBITE
@@ -327,7 +368,7 @@ Teknolojî û Zanist û Raman zanîna giştî ne û ji kategoriyên kurdî cuda 
 
 PÊŞBIRK
 
-• Pêşbirka bilez: bi hevrikekî rasthatî re 1v1 rasterast.
+• Pêşbirka zindî: bi hevrikekî rasthatî re 1v1 rasterast.
 • Pêşbirka bi dorê: ne pêwist e hevrikê te di heman demê de serhêl be.
   Tu niha dilîzî, ew paşê; encam di "Pêşbirkên min" de xuya dibe.
 • Ode ava bike: girêdana vexwendinê parve bike, bila hevalên te bi yek

@@ -33,6 +33,10 @@ void main() {
 
   test('dokunmayla sözcük arama da ı yazımını bulur', () {
     expect(LearnerLexicon.lookup('Şîv')?.termKu, 'Şîv');
-    expect(LearnerLexicon.lookup('sıv')?.termKu, 'Şîv');
+    // `ı` yine `i`'nin klavye gölgesidir (`dızanım` -> `dizanim`); ama dokunma
+    // eşlemesi aksan harflerini katlamaz, bu yüzden `sıv` (= `siv`) artık
+    // `Şîv` değildir (bkz. lexicon_strict_lookup_test.dart).
+    expect(LearnerLexicon.lookup('dızanım')?.termKu, 'Zanîn');
+    expect(LearnerLexicon.lookup('sıv')?.termKu, isNot('Şîv'));
   });
 }

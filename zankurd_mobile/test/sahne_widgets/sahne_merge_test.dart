@@ -1,3 +1,6 @@
+// 2026-10-19 sadeleşme: joker kapsül çip oldu; jetonu yetmeyen joker %60
+// soluk (kilit simgesi yok; son rötuşta kalktı) ama DOKUNULABİLİR (neden alınamadığı tost olarak açıklanır).
+// "jeton yetmiyor" testi bu yüzden dokunuşu 1 sayar ve kilit ikonunu arar.
 /// Şahnê birleştirme turunun (2026-09-29) bileşen bekçileri.
 ///
 /// ## Neyi korur
@@ -19,6 +22,8 @@
 ///   kategori geri düşüşü; durum rozetinin nötr "boş" hâli; joker ve ikon
 ///   düğmesinin seçili hâlleri; sayaç halesinin kategori ışığı.
 library;
+
+import 'dart:math' as math;
 
 import 'dart:ui' show Tristate;
 
@@ -458,8 +463,10 @@ void main() {
           ),
         )
         .color!;
-    expect(fill('out'), SahneTokens.night.s1);
-    expect(fill('in'), SahneTokens.night.s2);
+    // Tur 10b: seçilmemiş çip artık nötr dolgulu (s2); kartın içinde bir
+    // basamak yükselir (s3). Anlam aynı: yüzeyle aynı tonda durmaz.
+    expect(fill('out'), SahneTokens.night.s2);
+    expect(fill('in'), SahneTokens.night.s3);
   });
 
   group('liste satırı', () {
@@ -519,11 +526,16 @@ void main() {
       final noArt = find.descendant(
         of: find.byKey(const Key('thumb')),
         matching: find.byWidgetPredicate(
-          (w) => w is CustomPaint && w.painter is SahneNoArtPainter,
+          // 2026-10-20 (B): çizimsiz küçük konunun DOLU rengi + beyaz ikon.
+          (w) =>
+              w is DecoratedBox &&
+              w.decoration is ShapeDecoration &&
+              (w.decoration as ShapeDecoration).color ==
+                  SahneCategoryTone.fallback.fill(night: false),
         ),
       );
       expect(noArt, findsOneWidget);
-      expect(tester.getSize(noArt), const Size(36, 36));
+      expect(tester.getSize(noArt), const Size(44, 44));
     });
 
     testWidgets('durum rozeti: nötr "boş" hâli ✓/✗ değil kum saati', (
@@ -581,7 +593,7 @@ void main() {
         meta: '~2 deqe',
         actionLabel: 'Hevrik bibîne',
         actionKey: const Key('cta'),
-        semanticLabel: 'Pêşbirka bilez',
+        semanticLabel: 'Pêşbirka zindî',
         emblem: const SahneVsEmblem(),
         onAction: () => taps++,
       ),
@@ -590,7 +602,7 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(tester.widget(find.byKey(const Key('cta'))), isA<FilledButton>());
     expect(
-      find.bySemanticsLabel('Pêşbirka bilez. Hevrik bibîne'),
+      find.bySemanticsLabel('Pêşbirka zindî. Hevrik bibîne'),
       findsOneWidget,
     );
     await tester.tap(find.byKey(const Key('cta')));
@@ -626,29 +638,55 @@ void main() {
       semantics.dispose();
     });
 
-    testWidgets('jeton yetmiyor: pasif ama fiyat görünür', (tester) async {
-      var taps = 0;
-      await pumpSahne(
-        tester,
-        SahneJokerButton(
-          key: const Key('j'),
-          icon: AppIcons.clone,
-          label: 'Du bersiv',
-          price: 30,
-          unaffordable: true,
-          onPressed: () => taps++,
-        ),
-        dark: true,
-        textScale: 1,
-      );
-      expect(find.text('30'), findsOneWidget);
-      expect(
-        tester.widget<Text>(find.text('30')).style?.color,
-        SahneTokens.night.tx3,
-      );
-      await tester.tap(find.byKey(const Key('j')));
-      expect(taps, 0);
-    });
+    // 2026-10-19 sadeleşme: jetonu yetmeyen joker soluk + küçük kilitli
+    // ama DOKUNULABİLİR (neden alınamadığını açıklamak için); eskiden ölü
+    // pasif düğmeydi (dokunuş sayısı 0).
+    testWidgets(
+      'jeton yetmiyor: %60 soluk, kilit simgesiz, dokunulabilir; fiyat görünür',
+      (tester) async {
+        var taps = 0;
+        await pumpSahne(
+          tester,
+          SahneJokerButton(
+            key: const Key('j'),
+            icon: AppIcons.clone,
+            label: 'Du bersiv',
+            price: 30,
+            unaffordable: true,
+            onPressed: () => taps++,
+          ),
+          dark: true,
+          textScale: 1,
+        );
+        expect(find.text('30'), findsOneWidget);
+        // Kapsül etkin jokerle aynı; fiyat %60 opaklıkta, ayrı kilit yok.
+        final price = tester.widget<Text>(find.text('30')).style!.color!;
+        // Son panel cilası 2026-10-19: fiyat soluk değil, ikincil metin.
+        expect(price, SahneTokens.night.tx2);
+        expect(find.byKey(const ValueKey('joker-lock')), findsNothing);
+        // Kapsül ortak pasif dolguyu (Perde `s1`) alır; yalnız %60 soluk
+        // metin onu "etkin ama silik" gösteriyordu (2026-10-19 6. tur).
+        final cap = tester
+            .widgetList<SahneTappable>(find.byType(SahneTappable))
+            .single;
+        expect(cap.color, SahneTokens.night.disabledFill);
+        expect((cap.shape as StadiumBorder).side, BorderSide.none);
+        // Kontrast >= 3:1 (gece pasif kapsül üstünde).
+        final bg = SahneTokens.night.disabledFill;
+        final fg = Color.alphaBlend(price, bg);
+        double lum(Color c) => c.computeLuminance();
+        final ratio =
+            (math.max(lum(fg), lum(bg)) + 0.05) /
+            (math.min(lum(fg), lum(bg)) + 0.05);
+        expect(ratio, greaterThanOrEqualTo(3.0));
+        expect(
+          tester.getSize(find.byKey(const Key('j'))).height,
+          greaterThanOrEqualTo(48),
+        );
+        await tester.tap(find.byKey(const Key('j')));
+        expect(taps, 1);
+      },
+    );
   });
 
   // 2026-09-29 doğallık: bu bekçi eskiden sakin sayacın halesinin kategori

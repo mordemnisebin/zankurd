@@ -5,14 +5,18 @@ import 'durable_write.dart';
 import '../models/async_duel.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
+import '../models/add_friend_outcome.dart';
 import '../models/friend.dart';
 import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
+import '../models/match_history.dart';
 import '../models/player.dart';
+import '../models/public_profile.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../models/room_invite.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
 import '../models/referral_result.dart';
@@ -36,6 +40,55 @@ enum StreakFreezeChargeOutcome {
 
   /// Çağrı başarısız oldu (ağ/sunucu). Tahsil edilip edilmediği BİLİNMİYOR.
   failed,
+}
+
+/// Seri onarımının sonucu (`spend_streak_repair`).
+///
+/// [charged] ve [free] bu çağrıda yeni bir onarım kaydı yazıldığını,
+/// [alreadyRepaired] aynı ay + aynı kırılma günü için kaydın zaten
+/// bulunduğunu söyler (ücret yeniden KESİLMEZ). Üçü de "onarım sunucuda
+/// geçerli": çağıran seriyi yerelde geri yükler. [monthlyLimit] bu ay başka
+/// bir kırılma için hak kullanıldığını, [failed] ise ağ/sunucu hatasını
+/// (ücretin kesilip kesilmediği bilinmez; aynı çağrı güvenle tekrarlanır).
+enum StreakRepairOutcome {
+  charged,
+  free,
+  alreadyRepaired,
+  insufficient,
+  monthlyLimit,
+  failed,
+}
+
+class StreakRepairResult {
+  const StreakRepairResult(this.outcome);
+
+  final StreakRepairOutcome outcome;
+
+  bool get succeeded =>
+      outcome == StreakRepairOutcome.charged ||
+      outcome == StreakRepairOutcome.free ||
+      outcome == StreakRepairOutcome.alreadyRepaired;
+}
+
+/// Sunucuda tutulan hesap bayrakları (`get_my_account_flags`): bildirim
+/// tercihleri ve nazik e-posta doğrulaması.
+class AccountFlags {
+  const AccountFlags({
+    required this.pushDuel,
+    required this.pushSocial,
+    this.emailVerifiedAt,
+    this.emailVerifiedAddress,
+  });
+
+  final bool pushDuel;
+  final bool pushSocial;
+  final DateTime? emailVerifiedAt;
+
+  /// Doğrulanan adres (küçük harf); mevcut e-postayla eşleşmiyorsa
+  /// doğrulama düşmüş sayılır.
+  final String? emailVerifiedAddress;
+
+  bool get emailVerified => emailVerifiedAt != null;
 }
 
 class StreakFreezeChargeResult {
@@ -96,6 +149,10 @@ enum RoomJoinFailureReason {
   /// Odanın katılım ücretine bakiye yetmiyor. Sunucu bunu
   /// `'Insufficient coins for room entry fee'` ile reddeder.
   insufficientCoins,
+
+  /// Kısa sürede çok fazla yanlış oda kodu denendi
+  /// (`join_room_by_code_v2` -> `too_many_attempts`).
+  tooManyAttempts,
   unknown,
 }
 
@@ -109,6 +166,43 @@ class RoomJoinException implements Exception {
   String toString() => 'RoomJoinException($reason, $message)';
 }
 
+/// `create_room_rematch`in reddetme sebebi.
+enum RoomRematchFailureReason {
+  /// 'Rematch not available': oda bitmemiş, özel değil ya da çağıran o
+  /// odanın oyuncusu değil.
+  notAvailable,
+
+  /// Giriş ücretine jeton yetmiyor.
+  insufficientCoins,
+
+  /// Oyuncu başka canlı bir odada.
+  alreadyInAnotherRoom,
+  unknown,
+}
+
+class RoomRematchException implements Exception {
+  const RoomRematchException(this.reason, [this.message]);
+
+  final RoomRematchFailureReason reason;
+  final String? message;
+
+  @override
+  String toString() => 'RoomRematchException($reason, $message)';
+}
+
+RoomRematchFailureReason roomRematchFailureReasonForMessage(String message) {
+  if (message.contains('Rematch not available')) {
+    return RoomRematchFailureReason.notAvailable;
+  }
+  if (message.contains('Insufficient coins')) {
+    return RoomRematchFailureReason.insufficientCoins;
+  }
+  if (message.contains('already in another live room')) {
+    return RoomRematchFailureReason.alreadyInAnotherRoom;
+  }
+  return RoomRematchFailureReason.unknown;
+}
+
 /// `join_room_by_code`ın ham `raise exception` metnini bir sebebe eşler.
 ///
 /// Sunucu hata kodu değil düz metin döndürüyor, o yüzden eşleme metin
@@ -117,6 +211,15 @@ class RoomJoinException implements Exception {
 /// açıklamıyor); istemci de bunu ayıramaz, `notFound` bu birleşik durumu
 /// temsil eder.
 RoomJoinFailureReason roomJoinFailureReasonForMessage(String message) {
+  // `join_room_by_code_v2` bulunamadı/sınır durumlarını istisna yerine JSON
+  // `error` anahtarıyla döndürür (istisna işlemi geri alıp yanlış-deneme
+  // kaydını silerdi); aynı eşleme buradan geçer.
+  if (message == 'too_many_attempts') {
+    return RoomJoinFailureReason.tooManyAttempts;
+  }
+  if (message == 'room_not_found') {
+    return RoomJoinFailureReason.notFound;
+  }
   if (message.contains('Room is full')) {
     return RoomJoinFailureReason.full;
   }
@@ -212,8 +315,15 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   });
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room);
 
-  /// Aynı gün içinde herkese aynı soru setini verir (tarih tohumlu seçim).
-  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10});
+  /// "Günün dersi": aynı gün ilk oyunda hep aynı set (tarih tohumlu seçim).
+  /// [replay] doğruysa görülmemiş sorular öne alınır.
+  Future<List<QuizQuestion>> loadDailyQuestions({
+    int limit = 10,
+    bool replay = false,
+  });
+
+  /// "Günün etkinliği": günün dersinden ayrı tohum, onun setini dışlar.
+  Future<List<QuizQuestion>> loadDailyEventQuestions({int limit = 10});
 
   GameRoom createRoom({String category = 'Ziman'});
   GameRoom joinRoom(String code);
@@ -222,8 +332,13 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   });
   Future<GameRoom> joinOnlineRoom(String code);
+
+  /// Biten ÖZEL odanın aynı ayarlarla yeni lobisi: ilk basan kurar, sonra
+  /// basanlar aynı lobiye katılır (sunucu `create_room_rematch`).
+  Future<GameRoom> createRoomRematch(String roomId);
 
   // ─── Sırayla düello (async 1v1) ──────────────────────────────────────
   //
@@ -237,6 +352,13 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Bekleyen açık bir düelloya katılır (rakip=ben) ya da yenisini açar.
   /// [category] `categories.name` iledir; `null` ise herhangi bir kategori.
   Future<AsyncDuelStart> startAsyncDuel({String? category});
+
+  /// Soruyu ekrana koyduğum anı sunucuya kaydeder (ilk çağrıda yazılır, sonra
+  /// DEĞİŞMEZ). Dönüş: sunumdan bu yana geçen ms — yarım bırakıp dönülen
+  /// soruda sunucu saati işlemeye devam etmiştir. `null`: sunucuda bu RPC
+  /// yok (göç uygulanmadı); cevap eski ölçümle sürer. Yalnız oyuncunun
+  /// SIRADAKİ sorusu sunulabilir.
+  Future<int?> presentAsyncDuelQuestion(String duelId, int questionIndex);
 
   /// Tek bir soruyu cevaplar. Aynı [questionIndex] ikinci kez
   /// gönderilemez — sunucu ilk cevabı kilitler.
@@ -254,9 +376,88 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Bir düello sonucunu "görüldü" işaretler ("Sonuç hazır" rozeti buna göre iner).
   Future<void> markAsyncDuelSeen(String duelId);
 
+  /// Rakibi dürter (`nudge_async_duel`): rakibe "sıra sende" bildirimi gider.
+  /// Dönüş: sunucunun kaydettiği dürtme anı. Reddedilirse fırlatır; sınıf için
+  /// [classifyAsyncDuelNudgeError] (ör. 12 saat dolmadan ikinci dürtme).
+  Future<DateTime> nudgeAsyncDuel(String duelId);
+
+  /// Profildeki "Son maçlar": çağıranın bitmiş son [limit] maçı (sırayla
+  /// düello + canlı oda), yeniden eskiye. Sunucuya ulaşılamazsa fırlatır;
+  /// boş liste "henüz maç yok" demektir.
+  Future<List<RecentMatch>> loadMyRecentMatches({int limit = 10});
+
+  /// Profildeki "Rekorlarım" için sunucu sayıları. Sunucuya (ya da bu RPC'ye)
+  /// ulaşılamazsa fırlatır; ekran o zaman yerel değerlerle "—" gösterir.
+  Future<ServerRecords> loadMyServerRecords();
+
   /// Bitmiş (ya da süresi dolmuş) bir düellonun XP'sini talep eder;
   /// idempotenttir — ikinci çağrı yeniden XP eklemez.
   Future<int> claimAsyncDuelXp(String duelId);
+
+  /// Arkadaşa meydan okuma (2026-10-13): bekleyen rastgele düelloya ASLA
+  /// eşleşmeden taze bir düello açar ve paylaşılabilir bir `D…` kodu
+  /// ([AsyncDuelStart.challengeCode]) döndürür. [friendId] verilirse kabul
+  /// edilmiş bir arkadaşa gider (ona bildirim düşer), verilmezse kodu
+  /// bağlantıyı tutan herkes kabul edebilir. Sunucu hataları:
+  /// [classifyAsyncDuelChallengeError].
+  Future<AsyncDuelStart> createAsyncDuelChallenge({
+    String? category,
+    String? friendId,
+  });
+
+  /// `/join/D…` bağlantısındaki ya da gelen kutusundaki [code] ile meydan
+  /// okumayı kabul eder (misafir hesap dahil). Aynı kişi için idempotenttir.
+  Future<AsyncDuelStart> acceptAsyncDuelChallenge(String code);
+
+  /// Yarım bırakılan düelloya (yaratıcı ya da rakip olarak) kaldığı sorudan
+  /// devam eder (`resume_my_async_duel`). Yanıt, meydan okuma yeniden
+  /// açılışıyla aynı biçimdedir: [AsyncDuelStart.answeredCount] kaldığı
+  /// soruyu söyler.
+  Future<AsyncDuelStart> resumeAsyncDuel(String duelId);
+
+  /// Bitmiş bir düellonun soru soru karşılaştırması
+  /// (`get_async_duel_review`, 2026-10-24). `null`: sunucuda bu RPC yok
+  /// (göç uygulanmadı) — ekran bölümü ve rövanş düğmesini gizler. Süren
+  /// düello, katılımcı olmama ya da bağlantı hatasında fırlatır; sınıf için
+  /// [classifyAsyncDuelReviewError].
+  Future<AsyncDuelReview?> loadAsyncDuelReview(String duelId);
+
+  /// Kimsenin katılmadığı kendi açık düellomu geri çeker
+  /// (`cancel_my_async_duel`). Başarısızlıkta `false`; RPC yoksa
+  /// [isMissingRpcError] fırlatır.
+  Future<bool> cancelAsyncDuel(String duelId);
+
+  /// Sunucuda meydan okuma RPC'leri var mı? Yoksa (göç henüz uygulanmamış)
+  /// giriş noktaları gizlenir. Belirsizlikte (ağ hatası, oturum yok) `true`
+  /// döner: yalnız KESİN "fonksiyon yok" yanıtı gizler.
+  Future<bool> supportsAsyncDuelChallenge();
+
+  // ─── Odaya arkadaş daveti (supabase/2026-10-18_oda_davet.sql) ─────────
+
+  /// Sunucuda oda daveti RPC'leri var mı? Göç uygulanmamışsa giriş
+  /// noktaları gizlenir. Belirsizlikte `true`; yalnız KESİN "fonksiyon yok"
+  /// yanıtı `false` döner.
+  Future<bool> supportsRoomInvites();
+
+  /// [friendIds] arkadaşlarını [room]a davet eder; gerçekten davet edilen
+  /// kişi sayısını döner (arkadaş olmayan/engelli/odadaki kişiler atlanır).
+  /// Hatada [RoomInviteException].
+  Future<int> inviteFriendsToRoom(GameRoom room, List<String> friendIds);
+
+  /// [room] için benim gönderdiğim, hâlâ bekleyen davetlerin alıcı kimlikleri
+  /// (davet sayfasında "davet edildi" durumu). Hatada boş küme.
+  Future<Set<String>> loadRoomInvitedIds(GameRoom room);
+
+  /// Bana gelen bekleyen oda davetleri (en yeni önce). RPC yoksa/ağ yoksa boş.
+  ///
+  /// [throwOnError] true ise ağ/RPC hatası boş listeye çevrilmez, fırlatılır:
+  /// push dokunuşu "hiç davet yok" ile "yüklenemedi"yi ayırmak zorundadır.
+  Future<List<RoomInvite>> loadMyRoomInvites({bool throwOnError = false});
+
+  /// Daveti reddeder ya da kabul eder. Kabulde odanın kodunu döner; istemci
+  /// onu mevcut `joinOnlineRoom` yoluna verir. Reddette `null`. Süresi
+  /// dolmuşsa [RoomInviteException] ([RoomInviteFailure.expired]).
+  Future<String?> respondRoomInvite(String inviteId, {required bool accept});
 
   /// Sunucudaki odanın tek ve yetkili snapshot'ını oyuncularıyla yükler.
   ///
@@ -290,6 +491,10 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   /// Çevrimiçi odadan sunucunun yetkili çıkış sözleşmesiyle ayrılır.
   Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room);
+
+  /// Kalabalık odada mevcut sorunun cevap ilerlemesi ("x/N cevapladı").
+  /// Sunucuda RPC yoksa ya da cevap okunamazsa `null`.
+  Future<RoomAnswerProgress?> loadRoomAnswerProgress(GameRoom room);
 
   Future<List<Player>> loadRoomPlayers(GameRoom room);
   Future<RoomStatus> loadRoomStatus(GameRoom room);
@@ -341,6 +546,23 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
     required String idempotencyKey,
   });
 
+  /// Seri onarımını IDEMPOTENT biçimde işler: ay ([monthKey], `yyyy-MM`) ve
+  /// kırılma günü ([breakDay], `yyyy-MM-dd`) aynıysa ikinci çağrı ücreti
+  /// yeniden kesmez. [premium] true ise ücretsizdir (abonelik istemcide
+  /// bilinir; sunucu beyanı kabul eder, bkz. göç notu).
+  Future<StreakRepairResult> spendStreakRepair({
+    required String monthKey,
+    required String breakDay,
+    required bool premium,
+  });
+
+  /// Sunucudaki hesap bayrakları; ulaşılamıyorsa (çevrimdışı, göç yok) null.
+  Future<AccountFlags?> loadAccountFlags();
+
+  /// Sunucu tarafı bildirim tercihlerini yazar (null = değişmez). Başarıyı
+  /// döner; başarısızsa çağıran yerel tercihi korur ve sonra yeniden dener.
+  Future<bool> setPushPreferences({bool? duel, bool? social});
+
   /// Belirli bir ürün kimliğinin daha önce satın alınıp alınmadığını kontrol eder.
   Future<bool> hasPurchased(String itemId);
 
@@ -370,6 +592,20 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
     required int bestStreak,
     required int totalQuestions,
     GameRoom? room,
+  });
+
+  /// Solo tur ödülü, turun değişmez [clientRoundId]'siyle.
+  ///
+  /// Aynı kimlikle ikinci çağrı sunucuda İLK sonucu döndürür ve ÖDEMEZ
+  /// (`claim_solo_reward(int,int,int,uuid)`). Çağıran kimliği turun ilk
+  /// denemesinde üretir ve kuyruğa yazar; böylece yanıtı kaybolan bir çağrının
+  /// yeniden gönderimi çift ödeme yapmaz.
+  Future<QuizRewardClaim> awardSoloQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+    required String clientRoundId,
   });
 
   /// Kazanılan XP'yi SUNUCUYA bildirir ve sunucudaki güncel toplamı döner.
@@ -412,6 +648,11 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Görsel kimliği kalıcılaştırır (kozmetik; ekonomiye dokunmaz).
   Future<void> updateAvatarIdentity(AvatarIdentity identity);
 
+  /// [updateAvatarIdentity] gibi yazar ama sunucunun profil satırını GERÇEKTEN
+  /// güncellediğini bildirir: true yalnız sunucu onayında; ağ hatasında
+  /// (kuyruğa alındı) ya da oturum yokken false. Sunucu reddederse fırlatır.
+  Future<bool> updateAvatarIdentityConfirmed(AvatarIdentity identity);
+
   /// Avatar fotoğrafını yükler ve erişilebilir URL'ini döner.
   Future<String> uploadAvatarPhoto(Uint8List bytes, String contentType);
 
@@ -427,8 +668,18 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// içerik türünden seçtiği için önce PNG sonra JPG yükleyen bir kullanıcı
   /// aksi hâlde eski nesneyi yetim bırakırdı.
   ///
+  /// Yükleme zaman damgalı yola yazar (`avatar-<ms>.ext`); bu yollar
+  /// listelenemediğinden silinecek nesnelerin URL'leri [urls] ile verilir.
+  /// Çağıranın kendi klasörü dışındaki URL'ler yok sayılır.
+  ///
   /// Sessizce başarısız olmaz; çağıran hatayı görebilsin diye fırlatır.
-  Future<void> deleteAvatarPhoto();
+  Future<void> deleteAvatarPhoto({List<String> urls = const []});
+
+  /// YALNIZ verilen URL'lerin nesnelerini siler; sabit `avatar.jpg/png`
+  /// yollarına dokunmaz. Fotoğraf değiştirip vazgeçildiğinde geçici yükleme
+  /// ile, kaydedildiğinde de eski nesneyle çağrılır: kayıtlı fotoğraf bu
+  /// çağrıyla yok olmamalıdır. Çağıranın klasörü dışındaki URL'ler yok sayılır.
+  Future<void> deleteAvatarPhotoObjects(List<String> urls);
 
   /// Bugünün contest/etkinlik temesini yükler (varsa).
   Future<Contest?> loadTodayContest();
@@ -451,6 +702,19 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Kullanıcının kazandığı contest rozetlerini yükler.
   Future<List<UserContestBadge>> loadUserContestBadges();
 
+  /// Günün yarışması sonucunu sunucuya yazar (bugünün İLK bitişi sayılır).
+  ///
+  /// Yalnız GÖSTERİM için: ödül/XP/jeton bağlanmaz. Hata fırlatmaz; yazıldı
+  /// mı bilgisini döndürür (çevrimdışı ya da ikinci bitiş false).
+  Future<bool> submitDailyEventResult({
+    required int correct,
+    required int total,
+    required int seconds,
+  });
+
+  /// "Bugünün sıralaması" panosu; çevrimdışı/okunamazsa null.
+  Future<DailyEventBoard?> loadDailyEventBoard();
+
   /// Kategori ders listesini yükler.
   Future<List<Lesson>> loadLessonsByCategory(String category);
 
@@ -467,10 +731,26 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   Future<Set<String>> loadCompletedLessonIds();
 
   /// Arkadaş ekleme isteği gönder.
-  Future<bool> addFriend(String friendId, String friendName);
+  Future<AddFriendOutcome> addFriend(String friendId, String friendName);
 
   /// Bu cihazın FCM token'ını sunucuya yazar. Push kuyruğu token'ı buradan okur.
   Future<void> setFcmToken(String token);
+
+  /// Çıkışta bu hesabın FCM token'ını sunucudan siler (en iyi çaba; hata
+  /// yutulur). Silinmezse cihazı devralan hesap öncekinin bildirimlerini
+  /// alırdı.
+  Future<void> clearFcmToken();
+
+  /// Gönderdiğim, bekleyen arkadaş istekleri. Sunucuda RPC yoksa (göç
+  /// uygulanmamış) `null`: ekran "geri çek" / "arkadaşlıktan çıkar"
+  /// eylemlerini sessizce gizler. Başka bir hata boş liste döner.
+  Future<List<SentFriendRequest>?> loadSentFriendRequests();
+
+  /// Arkadaşı iki yönden siler. Başarısızlıkta `false`.
+  Future<bool> removeFriend(String friendId);
+
+  /// Kendi gönderdiğim bekleyen isteği geri çeker. Başarısızlıkta `false`.
+  Future<bool> cancelFriendRequest(String targetUserId);
 
   /// Arkadaş isteğini kabul et.
   Future<bool> acceptFriendRequest(String requestId);
@@ -480,6 +760,13 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   /// Görünen ada göre oyuncu ara (arkadaş ekleme akışı).
   Future<List<PlayerSearchResult>> searchPlayers(String query);
+
+  /// Başka oyuncuların herkese açık kimliği (ad, kod, avatar), id'ye göre.
+  ///
+  /// Liste RPC'leri kimlik alanlarını eksik/bayat döndürdüğünde depo ve
+  /// ekranlar bununla tamamlar. Hata ve eksik RPC boş harita döner: çağıran
+  /// eski davranışa (baş harf, yer tutucu ad) düşer.
+  Future<Map<String, PublicProfile>> loadPublicProfiles(Iterable<String> ids);
 
   /// Arkadaş listesini yükle.
   Future<List<Friend>> loadFriends();
@@ -517,6 +804,13 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   /// Bir oyuncuyu engeller: mesajları bundan sonra gösterilmez.
   Future<bool> blockPlayer(String playerId);
+
+  /// Oda sahibi lobideki bir oyuncuyu odadan çıkarır (`kick_room_player`).
+  /// Çıkarılan aynı odaya kodla geri giremez. Başarısızsa `false`.
+  Future<bool> kickRoomPlayer({
+    required String roomId,
+    required String playerId,
+  });
 
   /// Engeli kaldırır.
   Future<bool> unblockPlayer(String playerId);
@@ -569,6 +863,10 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   Future<Map<String, dynamic>> joinMatchmaking(String categoryName);
   Future<Map<String, dynamic>> cancelMatchmaking();
+
+  /// Bekleyen oyuncunun kalp atışı; eşleşme olmuşsa onu da döndürür.
+  Future<MatchmakingTouch> touchMatchmaking();
+
   Stream<Map<String, dynamic>?> subscribeMatchmakingQueue();
   Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId);
   Future<void> sendRoomBroadcast(String roomId, Map<String, dynamic> payload);

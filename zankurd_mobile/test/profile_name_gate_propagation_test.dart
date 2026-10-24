@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
@@ -30,7 +31,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: repository,
-          onCompleted: () => completed = true,
+          onCompleted: () async => completed = true,
         ),
       ),
     );
@@ -62,7 +63,17 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
 
-    expect(find.textContaining('Rojîn'), findsOneWidget);
+    // Asıl başlıkta bir kez (öbür dildeki selam küçük satırda ayrıca
+    // geçebilir; 2026-10-20 iki dilli etiket).
+    expect(
+      find.byWidgetPredicate(
+        (w) =>
+            w is Text &&
+            (w.data ?? '').contains('Rojîn') &&
+            w.key != SahneBilingualLabel.valueKey,
+      ),
+      findsOneWidget,
+    );
     expect(find.textContaining('ZanKurd Oyuncusu'), findsNothing);
   });
 }

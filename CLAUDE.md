@@ -46,3 +46,16 @@ telefonu, `ZANKURD_SCREEN_TOUR_TEXT_SCALE=2` büyük yazıyı bütün karelere u
 (format, analiz, soru kalitesi, şık taraması, dokunma hedefi) yerelde
 koşturur; `--tam` tam testi de ekler. Yalnız `flutter test`'e bakıp push
 etmek CI'yı iki kez kırdı (2026-09-30).
+
+## Mağaza paketi
+
+iOS arşivi ve Android AAB yalnız `zankurd_mobile/tool/surum_paketi.sh ios|android`
+ile üretilir. Betik `.env.mobile.release.json`'u doğrular, `--dart-define-from-file`
+ile derler ve ikilide anahtar yoksa durur. Bayraksız derleme imzalanır ve
+yüklenir ama uygulama "yapılandırma eksik" ekranında açılmaz (TestFlight
+build 23, 2026-10-13).
+
+Mağazaya yükleme de elle yapılmaz: `zankurd_mobile/tool/yayinla.sh ios|android [--kuru]`
+önce bu betiği çalıştırır, sonra IPA'yı App Store Connect'e, AAB'yi Play'e
+(taslak olarak) yükler. Gerekli ortam değişkenleri ve Play servis hesabı kurulumu
+`zankurd_mobile/docs/YAYIN_ADIMLARI.md` başında.

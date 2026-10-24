@@ -33,6 +33,7 @@
 ///   kart `kAsyncDuelEnabled` bayrağına bağlı.
 library;
 
+import 'support/play_hub_nav.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -44,6 +45,7 @@ import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_inbox.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
+import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -97,7 +99,8 @@ class _NeverStartsRepository extends MockZanKurdRepository {
 /// `pumpAndSettle` KULLANILMAZ — o, sayaç sıfıra inene kadar (20 sn'lik
 /// sahte zaman) pompalamaya devam eder ve istemeden bir TIMEOUT tetikler.
 Future<void> _openAsyncDuelFromHub(WidgetTester tester) async {
-  await tester.tap(find.byKey(const ValueKey('play-hub-async-duel')));
+  await openAsyncOpponentSheet(tester);
+  await tester.tap(find.byKey(const ValueKey('opponent-sheet-random')));
   await tester.pump();
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 300));
@@ -121,14 +124,21 @@ Future<void> _answerCurrentQuestion(
   await tester.pump();
 }
 
-Text _progressText(WidgetTester tester) =>
-    tester.widget<Text>(find.byKey(const ValueKey('async-duel-progress')));
+/// Üst satırın "Soru n/N · Kategori" etiketinden yalnız "n/N" (sayaç başta:
+/// kısaltma kategori adını yer, sayacı değil).
+({String? data}) _progressText(WidgetTester tester) => (
+  data: tester
+      .widget<Text>(find.byKey(const ValueKey('async-duel-progress')))
+      .data
+      ?.split(' ')
+      .elementAtOrNull(1),
+);
 
 void main() {
   testWidgets('Play Hub kilit açıkken kart ve düellolarım kutusu görünür', (
     tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
+    await tester.binding.setSurfaceSize(const Size(390, 1600));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(
@@ -147,7 +157,10 @@ void main() {
       find.byKey(const ValueKey('play-hub-async-duel-inbox')),
       findsOneWidget,
     );
-    expect(find.text('Düellolarım'), findsOneWidget);
+    // 2026-10-19 sadeleşme (ikinci tur): gösterecek düellosu olmayan
+    // kutu hiç çizilmez; "Düellolarım" başlığı yalnız satır varken gelir
+    // (anahtar yerinde kalır, bkz. `AsyncDuelInboxSection`).
+    expect(find.text('Düellolarım'), findsNothing);
   });
 
   testWidgets(
@@ -169,9 +182,9 @@ void main() {
 
       final cardFinder = find.byKey(const ValueKey('play-hub-async-duel'));
       expect(cardFinder, findsOneWidget);
-      // 2026-09-29 Şahnê: kart artık liste satırıdır (`SahneListRow`);
-      // kural aynı: kilitliyken dokunulamaz ve nedenini söyler.
-      final card = tester.widget<SahneListRow>(cardFinder);
+      // 2026-10-22: kart artık mod kartıdır (`SahneModeTile`, tasarım
+      // kurulu); kural aynı: kilitliyken dokunulamaz.
+      final card = tester.widget<SahneModeTile>(cardFinder);
       expect(card.onTap, isNull, reason: 'kilitliyken kart dokunulamaz olmalı');
       // 2026-09-30 simülatör: neden üstteki şeritte söylenir; satır kendi
       // açıklamasını korur.
@@ -250,6 +263,42 @@ void main() {
       expect(find.textContaining('Sen '), findsWidgets);
     },
   );
+
+  // Kurul 3. tur 2026-10-20 (99): düello soru ekranı üst çubukta soru
+  // ekranıyla aynı yerleşimi taşır (sayaç + ⋯ yuvası), rakip avatarla görünür.
+  testWidgets('kurul 3. tur: üst çubuk soru ekranıyla aynı, rakip avatarlı', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = freshMockRepository();
+    repository.addPendingAsyncDuelForTesting(opponentCorrect: 0, opponentMs: 1);
+    await tester.pumpWidget(
+      testShell(
+        child: PlayHubScreen(repository: repository, asyncDuelEnabled: true),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await _openAsyncDuelFromHub(tester);
+
+    expect(
+      find.byKey(const ValueKey('async-duel-more-slot')),
+      findsOneWidget,
+      reason: 'sayaç sağdan soru ekranıyla aynı uzaklıkta durur',
+    );
+    expect(
+      tester.getSize(find.byKey(const ValueKey('async-duel-more-slot'))),
+      const Size(48, 48),
+    );
+    final line = find.byKey(const ValueKey('async-duel-rival-line'));
+    expect(line, findsOneWidget);
+    expect(
+      // Rakip artık harf değil ortak oyuncu avatarıyla (fotoğraf > simge >
+      // harf) çizilir; kimlik bilinmiyorsa baş harf yine görünür.
+      find.descendant(of: line, matching: find.byType(PlayerAvatar)),
+      findsOneWidget,
+    );
+  });
 
   testWidgets(
     'süre dolumu: hiçbir şıkka dokunulmazsa TIMEOUT gönderilir ve ilerleme '
@@ -336,7 +385,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const ValueKey('play-hub-async-duel')));
+      await openAsyncOpponentSheet(tester);
+      await tester.tap(find.byKey(const ValueKey('opponent-sheet-random')));
       await tester.pump();
       await tester.pump();
       await tester.pumpAndSettle();
@@ -396,10 +446,24 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      // Sonucu hazır düello artık sayfanın üstünde; bekleyen creator satırı
+      // "Düellolarım" kutusunda (tembel listede aşağıda).
+      await tester.scrollUntilVisible(
+        find.text('Rakip bekleniyor'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text('Rakip bekleniyor'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('async-duel-ready-badge')),
+        -200,
+        scrollable: find.byType(Scrollable).first,
+      );
       final badge = find.byKey(const ValueKey('async-duel-ready-badge'));
       expect(badge, findsOneWidget);
 
+      await tester.ensureVisible(badge);
+      await tester.pump();
       await tester.tap(badge);
       await tester.pumpAndSettle();
 
@@ -419,7 +483,7 @@ void main() {
   testWidgets('kart varsayılanda kAsyncDuelEnabled bayrağını izler', (
     tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
+    await tester.binding.setSurfaceSize(const Size(390, 1600));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(

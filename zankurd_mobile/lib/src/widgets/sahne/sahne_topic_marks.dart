@@ -347,7 +347,12 @@ class SahneTopicMarkBadge extends StatelessWidget {
     required this.mark,
     required this.tone,
     this.size = 28,
+    this.strong = false,
   });
+
+  /// Koyu temada zemin tonu daha açık (%38): koyu sahne üst satırındaki küçük
+  /// künye işareti %22'de zeminden ayrışmıyordu.
+  final bool strong;
 
   final SahneTopicMark mark;
   final SahneCategoryTone tone;
@@ -355,13 +360,31 @@ class SahneTopicMarkBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 2026-10-19 sadeleşme (ikinci tur): koyu temada konu işareti, kategori
+    // renginin kısık koyu zemini yerine kartın üstüne %22 şeffaf kategori
+    // tonu olarak çizilir; koyu kart üstünde çamurlaşmaz, kimlik renkte
+    // kalır. Gündüzde değişmez.
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    final shown = !dark
+        ? tone
+        : () {
+            final base = Color.alphaBlend(
+              tone.detail.withValues(alpha: strong ? 0.38 : 0.22),
+              SahneTokens.of(context).s1,
+            );
+            return SahneCategoryTone(
+              ground: base,
+              deep: base,
+              detail: tone.detail,
+            );
+          }();
     return ExcludeSemantics(
       child: SizedBox.square(
         dimension: size,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(size * 0.25),
           child: CustomPaint(
-            painter: SahneCategoryGlyphPainter(mark: mark, tone: tone),
+            painter: SahneCategoryGlyphPainter(mark: mark, tone: shown),
           ),
         ),
       ),

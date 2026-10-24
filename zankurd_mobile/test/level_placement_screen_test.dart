@@ -20,7 +20,7 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 // iter. Kullanıcı kaydırır; bekçiler de dokunmadan önce şıkkı görünür
 // kılar (`ensureVisible`). Davranış aynı.
 
-Widget wrap(Widget child, {Size size = const Size(390, 844)}) => MultiProvider(
+Widget wrap(Widget child, {Size size = const Size(440, 844)}) => MultiProvider(
   providers: [
     ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang('tr')),
   ],
@@ -73,7 +73,10 @@ void main() {
     expect(called, isTrue);
     expect(finished, isNull);
     final store = await PlacementStore.load();
-    expect(store.skipped, isTrue);
+    // "Sonra yap" kartı KALICI gizlemez (2026-10-21 simülatör düğme turu):
+    // kalıcı kapatma yalnız karttaki X'in işidir.
+    expect(store.skipped, isFalse);
+    expect(store.shouldPrompt, isTrue);
   });
 
   testWidgets('tüm sorular doğru cevaplanınca İleri sonucu ve kayıt', (
@@ -114,11 +117,9 @@ void main() {
         }
         await tester.tap(find.text('Kontrol et'));
       } else {
-        // `wrap()` Türkçe kuruyor; %100 çeviri kapsamasıyla artık pek çok
-        // soru `correctAnswerTr`yi çiziyor, ham `correctAnswer` (Kurmancî)
-        // değil (content genişlemesinin getirdiği kapsama, 2026-08-15
-        // birleştirmesi).
-        final option = find.text(current.correctAnswerFor(isKu: false)).last;
+        // 2026-10-21: seviye sınavında şıklar Türkçe arayüzde de kanonik
+        // Kurmancî (`localized(learning: true)`); doğru şık ham alandır.
+        final option = find.text(current.correctAnswer).last;
         await tester.ensureVisible(option);
         await tester.pumpAndSettle();
         await tester.tap(option);

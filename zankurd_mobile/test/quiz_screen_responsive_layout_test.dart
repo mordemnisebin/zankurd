@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/wildcard.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
@@ -62,11 +63,13 @@ void main() {
     Size size, {
     double textScale = 1.0,
     bool kurmanci = false,
+    bool rich = false,
   }) async {
     await tester.binding.setSurfaceSize(size);
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
-    final repository = freshMockRepository();
+    freshMockRepository();
+    final repository = _RichRepo(rich ? 500 : 0);
     await tester.pumpWidget(
       testShell(
         languageProvider: kurmanci ? kurmanciLang() : null,
@@ -448,6 +451,7 @@ void main() {
       const Size(320, 568),
       textScale: 2.0,
       kurmanci: true,
+      rich: true,
     );
 
     final row = find.byKey(const ValueKey('quiz-wildcard-row'));
@@ -491,4 +495,14 @@ void main() {
     expect(ctaRect.bottom, lessThanOrEqualTo(viewport.bottom));
     expectNoLayoutException(tester, '844×390 @2.0');
   });
+}
+
+/// Jetonu olan oyuncu: joker dizisi tam çip satırıdır (bakiye 0 iken tek
+/// sönük satıra iner; kurul 4. tur 2026-10-20).
+class _RichRepo extends MockZanKurdRepository {
+  _RichRepo(this._coins);
+  final int _coins;
+
+  @override
+  Future<int> loadCoinBalance() async => _coins;
 }

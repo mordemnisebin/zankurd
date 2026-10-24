@@ -4,12 +4,12 @@
     "category": "Sînema",
     "prompt": "Dema ku rûyê lîstikvan bi tevahî dîmenê dagire, ev kîjan plan e?",
     "answers": [
-      "plana dûr (uzak çekim)",
-      "plana nêzîk (yakın çekim)",
-      "plana navîn (orta çekim)",
-      "plana damezrîner (establishing shot)"
+      "plana dûr",
+      "plana nêzîk",
+      "plana navîn",
+      "plana damezrîner"
     ],
-    "correctAnswer": "plana nêzîk (yakın çekim)",
+    "correctAnswer": "plana nêzîk",
     "promptTr": "Oyuncunun yüzü çerçevenin tamamını doldurduğunda bu hangi plandır?",
     "answersTr": [
       "uzak çekim",
@@ -37,12 +37,12 @@
     "category": "Sînema",
     "prompt": "Kîjan plan cih û hawîrdora ku çîrok lê derbas dibe bi tevahî nîşan dide?",
     "answers": [
-      "plana damezrîner (establishing shot)",
-      "plana nêzîk (yakın çekim)",
-      "plana serpîrî (baş üstü çekim)",
-      "çarçoveya cemidî (freeze frame)"
+      "plana damezrîner",
+      "plana nêzîk",
+      "plana serpîrî",
+      "çarçoveya cemidî"
     ],
-    "correctAnswer": "plana damezrîner (establishing shot)",
+    "correctAnswer": "plana damezrîner",
     "promptTr": "Öykünün geçtiği mekânı ve çevreyi bir bütün olarak gösteren plan hangisidir?",
     "answersTr": [
       "geniş açılış çekimi (establishing shot)",
@@ -73,9 +73,9 @@
       "fade out (vedimirîn)",
       "dissolve (tevlîhevî)",
       "pan (gerandina panoramîk)",
-      "jump cut (qutbûna ji nişkê)"
+      "jump cut (qutbûna ji nişkê ve)"
     ],
-    "correctAnswer": "jump cut (qutbûna ji nişkê)",
+    "correctAnswer": "jump cut (qutbûna ji nişkê ve)",
     "promptTr": "Bir sahnenin içinde zamanı aniden ileri veya geri atlatan kesme tekniği hangisidir?",
     "answersTr": [
       "karartma (fade out)",
@@ -101,7 +101,7 @@
   {
     "id": "ds26_cinema_0035",
     "category": "Sînema",
-    "prompt": "Têgiha ku hemû hêmanên dîtbarî yên li ber kamerayê (dekor, ronahî, lîstik) di çarçoveyekê de berhev dike çi ye?",
+    "prompt": "Têgeha ku hemû hêmanên dîtbarî yên li ber kamerayê (dekor, ronahî, lîstik) di çarçoveyekê de berhev dike çi ye?",
     "answers": [
       "sînematografî",
       "montaj",
@@ -167,7 +167,7 @@
   {
     "id": "ds26_cinema_0089",
     "category": "Cîhan",
-    "prompt": "Palmiya Zêrîn xelata herî bilind a kîjan festîvalê ye?",
+    "prompt": "Palmiyeya Zêrîn xelata herî bilind a kîjan festîvalê ye?",
     "answers": [
       "Festîvala Venedîkê",
       "Festîvala Cannesê",
@@ -200,7 +200,7 @@
   {
     "id": "ds26_cinema_0090",
     "category": "Cîhan",
-    "prompt": "Kîjan festîvala fîlman a herî kevn a cîhanê ye?",
+    "prompt": "Festîvala fîlman a herî kevn a cîhanê kîjan e?",
     "answers": [
       "Festîvala Cannesê",
       "Festîvala Berlînê",
@@ -307,7 +307,7 @@
       "Tribeca Institute"
     ],
     "correctAnswer": "AMPAS",
-    "promptTr": "Oscar'ı veren kurum hangisidir ve hangi yıl kurulmuştur?",
+    "promptTr": "Oscar'ı veren ve 1927 yılında kurulan kurum hangisidir?",
     "answersTr": [
       "Cannes Film Cemiyeti",
       "AMPAS",
@@ -416,7 +416,7 @@
     "correctAnswerTr": "Sahneler arasındaki ilişkiden",
     "explanationKu": "Di montajê de dîmenek tenê bi têkiliya xwe ya bi dîmenekî din re wateyê digire.",
     "explanationTr": "Montajda bir sahne, anlamını ancak başka bir sahneyle kurduğu ilişkiden alır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -449,7 +449,7 @@
     "correctAnswerTr": "Yakın ve uzak birlikte net olur",
     "explanationKu": "Di teknîka deep focusê de cihên nêzîk û yên dûr di heman demê de zelal tên nîşandan.",
     "explanationTr": "Deep focus'ta yakın ve uzak düzlemler aynı anda net gösterilir.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -482,7 +482,7 @@
     "correctAnswerTr": "1932",
     "explanationKu": "Pêşangeha yekem a hunera sînemayê ya Venedîkê di sala 1932an de dest pê kir.",
     "explanationTr": "Venedik'in ilk sinema sanatı sergisi 1932 yılında başladı.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -515,7 +515,7 @@
     "correctAnswerTr": "1949",
     "explanationKu": "Şêrê Zêrîn ê Ezîz Marko di sala 1949an de ji bo fîlmê herî baş hate danîn.",
     "explanationTr": "Aziz Marko'nun Altın Aslanı, en iyi film için 1949 yılında konuldu.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -548,7 +548,7 @@
     "correctAnswerTr": "Dr. Jekyll and Mr. Hyde",
     "explanationKu": "Fîlmê yekem ê festîvalê Dr. Jekyll and Mr. Hyde a Rouben Mamoulian bû.",
     "explanationTr": "Festivalin ilk filmi Rouben Mamoulian'ın Dr. Jekyll and Mr. Hyde'ıydı.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -563,7 +563,7 @@
   {
     "id": "sf_cin_0006",
     "category": "Cîhan",
-    "prompt": "Pêşbaziya fermî cara yekem di kîjan salê de ket nav festîvalê?",
+    "prompt": "Pêşbaziya fermî cara yekem di kîjan salê de ket nav Festîvala Fîlman a Venedîkê?",
     "answers": [
       "1932",
       "1949",
@@ -571,7 +571,7 @@
       "1937"
     ],
     "correctAnswer": "1934",
-    "promptTr": "Resmî yarışma ilk kez hangi yılda festivale girdi?",
+    "promptTr": "Resmî yarışma ilk kez hangi yılda Venedik Film Festivali'ne girdi?",
     "answersTr": [
       "1932",
       "1949",
@@ -581,7 +581,7 @@
     "correctAnswerTr": "1934",
     "explanationKu": "Di festîvala duyem a 1934an de cara yekem pêşbazî hat zêdekirin.",
     "explanationTr": "1934'teki ikinci festival, ilk kez bir yarışma içeriyordu.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -614,7 +614,7 @@
     "correctAnswerTr": "1936",
     "explanationKu": "Di sala 1936an de cara yekem jûriyeke navneteweyî hate destnîşankirin.",
     "explanationTr": "1936 yılında ilk kez uluslararası bir jüri atandı.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -647,7 +647,7 @@
     "correctAnswerTr": "Hotel Excelsior terasında",
     "explanationKu": "Edîsyona yekem li terasa Hotel Excelsior a li Lido ya Venedîkê hate lidarxistin.",
     "explanationTr": "İlk edisyon, Venedik Lido'daki Hotel Excelsior'un terasında düzenlendi.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -680,7 +680,7 @@
     "correctAnswerTr": "1895",
     "explanationKu": "La Biennale di Venezia di sala 1895an de hate damezrandin.",
     "explanationTr": "La Biennale di Venezia 1895 yılında kuruldu.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -713,7 +713,7 @@
     "correctAnswerTr": "1895",
     "explanationKu": "Pêşangeha Hunerî ya Navneteweyî ya yekem di sala 1895an de hate lidarxistin.",
     "explanationTr": "İlk Uluslararası Sanat Sergisi 1895 yılında düzenlendi.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -746,7 +746,7 @@
     "correctAnswerTr": "1980",
     "explanationKu": "Pêşangeha Mîmarî ya Navneteweyî ya yekem di sala 1980'yî de pêk hat.",
     "explanationTr": "İlk Uluslararası Mimarlık Sergisi 1980 yılında gerçekleşti.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -779,7 +779,7 @@
     "correctAnswerTr": "1999",
     "explanationKu": "Dans di sala 1999an de beşdarî La Biennale bû.",
     "explanationTr": "Dans 1999 yılında La Biennale'ye katıldı.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -812,7 +812,7 @@
     "correctAnswerTr": "Jean-Luc Godard",
     "explanationKu": "Li gorî kataloga BFIyê, derhênerê fîlmê Jean-Luc Godard e.",
     "explanationTr": "BFI kataloğuna göre filmin yönetmeni Jean-Luc Godard'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -845,7 +845,7 @@
     "correctAnswerTr": "1960",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1960 e.",
     "explanationTr": "BFI kataloğuna göre filmin yılı 1960'tır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -878,7 +878,7 @@
     "correctAnswerTr": "Sergei M. Eisenstein",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Sergei M. Eisenstein e.",
     "explanationTr": "BFI kataloğuna göre filmin yönetmeni Sergei M. Eisenstein'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -911,7 +911,7 @@
     "correctAnswerTr": "1925",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1925 e.",
     "explanationTr": "BFI kataloğuna göre filmin yılı 1925'tir.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -944,7 +944,7 @@
     "correctAnswerTr": "Fritz Lang",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê Metropolisê Fritz Lang e.",
     "explanationTr": "BFI kataloğuna göre Metropolis'in yönetmeni Fritz Lang'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -977,7 +977,7 @@
     "correctAnswerTr": "Almanya",
     "explanationKu": "Li gorî kataloga BFIyê Metropolis hilberîneke Almanyayê ye.",
     "explanationTr": "BFI kataloğuna göre Metropolis bir Almanya yapımıdır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1010,7 +1010,7 @@
     "correctAnswerTr": "F. W. Murnau",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê Nosferatuyê F. W. Murnau ye.",
     "explanationTr": "BFI kataloğuna göre Nosferatu'nun yönetmeni F. W. Murnau'dur.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1043,7 +1043,7 @@
     "correctAnswerTr": "1922",
     "explanationKu": "Li gorî kataloga BFIyê sala Nosferatuyê 1922 ye.",
     "explanationTr": "BFI kataloğuna göre Nosferatu'nun yılı 1922'dir.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1076,7 +1076,7 @@
     "correctAnswerTr": "Yasujirō Ozu",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê Tokyo Storyê Yasujirō Ozu ye.",
     "explanationTr": "BFI kataloğuna göre Tokyo Story'nin yönetmeni Yasujirō Ozu'dur.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1109,7 +1109,7 @@
     "correctAnswerTr": "Japonya",
     "explanationKu": "Li gorî kataloga BFIyê Tokyo Story hilberîneke Japonyayê ye.",
     "explanationTr": "BFI kataloğuna göre Tokyo Story bir Japonya yapımıdır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1142,7 +1142,7 @@
     "correctAnswerTr": "İtalya",
     "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Îtalyayê ye.",
     "explanationTr": "BFI kataloğuna göre bu film bir İtalya yapımıdır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1175,7 +1175,7 @@
     "correctAnswerTr": "ABD",
     "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke DYA'yê ye.",
     "explanationTr": "BFI kataloğuna göre bu film bir ABD yapımıdır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1208,7 +1208,7 @@
     "correctAnswerTr": "Robert Wiene",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Robert Wiene ye.",
     "explanationTr": "BFI kataloğuna göre filmin yönetmeni Robert Wiene'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1241,7 +1241,7 @@
     "correctAnswerTr": "François Truffaut",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê François Truffaut e.",
     "explanationTr": "BFI kataloğuna göre filmin yönetmeni François Truffaut'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1274,7 +1274,7 @@
     "correctAnswerTr": "Fransa",
     "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Fransayê ye.",
     "explanationTr": "BFI kataloğuna göre bu film bir Fransa yapımıdır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1307,7 +1307,7 @@
     "correctAnswerTr": "1954",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1954 e.",
     "explanationTr": "BFI kataloğuna göre filmin yılı 1954'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1340,7 +1340,7 @@
     "correctAnswerTr": "1951",
     "explanationKu": "Berlinale di sala 1951an de ji bo temaşevanên Berlînê hate avakirin.",
     "explanationTr": "Berlinale 1951 yılında Berlin izleyicisi için kuruldu.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1368,12 +1368,12 @@
       "Altın Aslan",
       "Altın Palmiye",
       "Altın Ayı",
-      "Altın Küre"
+      "Altın Kurt"
     ],
     "correctAnswerTr": "Altın Ayı",
     "explanationKu": "Xelatên herî girîng ên Berlinaleyê Hirça Zêrîn û Hirçên Zîvîn in.",
     "explanationTr": "Berlinale'nin en önemli ödülleri Altın Ayı ve Gümüş Ayılar'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1406,7 +1406,7 @@
     "correctAnswerTr": "Ingmar Bergman",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Ingmar Bergman e.",
     "explanationTr": "BFI kataloğuna göre filmin yönetmeni Ingmar Bergman'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1439,7 +1439,7 @@
     "correctAnswerTr": "İsveç",
     "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Swêdê ye.",
     "explanationTr": "BFI kataloğuna göre bu film bir İsveç yapımıdır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1472,7 +1472,7 @@
     "correctAnswerTr": "1963",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1963 ye.",
     "explanationTr": "BFI kataloğuna göre filmin yılı 1963'dir.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1505,7 +1505,7 @@
     "correctAnswerTr": "Alfred Hitchcock",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Alfred Hitchcock e.",
     "explanationTr": "BFI kataloğuna göre filmin yönetmeni Alfred Hitchcock'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1538,7 +1538,7 @@
     "correctAnswerTr": "1958",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1958 e.",
     "explanationTr": "BFI kataloğuna göre filmin yılı 1958'dir.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1571,7 +1571,7 @@
     "correctAnswerTr": "1927",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1927 e.",
     "explanationTr": "BFI kataloğuna göre filmin yılı 1927'dir.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1604,7 +1604,7 @@
     "correctAnswerTr": "1929",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1929 e.",
     "explanationTr": "BFI kataloğuna göre filmin yılı 1929'dir.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1637,7 +1637,7 @@
     "correctAnswerTr": "Andrei Tarkovsky",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Andrei Tarkovsky ye.",
     "explanationTr": "BFI kataloğuna göre filmin yönetmeni Andrei Tarkovsky'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1670,7 +1670,7 @@
     "correctAnswerTr": "1975",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1975 e.",
     "explanationTr": "BFI kataloğuna göre filmin yılı 1975'dir.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1703,7 +1703,7 @@
     "correctAnswerTr": "Wong Kar Wai",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Wong Kar Wai ye.",
     "explanationTr": "BFI kataloğuna göre filmin yönetmeni Wong Kar Wai'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1736,7 +1736,7 @@
     "correctAnswerTr": "2000",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 2000 e.",
     "explanationTr": "BFI kataloğuna göre filmin yılı 2000'dir.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1769,7 +1769,7 @@
     "correctAnswerTr": "Elem Klimov",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Elem Klimov e.",
     "explanationTr": "BFI kataloğuna göre filmin yönetmeni Elem Klimov'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1802,7 +1802,7 @@
     "correctAnswerTr": "Abbas Kiarostami",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Abbas Kiarostami e.",
     "explanationTr": "BFI kataloğuna göre filmin yönetmeni Abbas Kiarostami'dır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1835,7 +1835,7 @@
     "correctAnswerTr": "İran",
     "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Îranê ye.",
     "explanationTr": "BFI kataloğuna göre bu film bir İran yapımıdır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1850,7 +1850,7 @@
   {
     "id": "sf_geo_0001",
     "category": "Cîhan",
-    "prompt": "Di dîrokê de çend okyanûsên bi nav hebûn?",
+    "prompt": "Di dîrokê de çend okyanûsên binavkirî hebûn?",
     "answers": [
       "Çar",
       "Sê",
@@ -1901,7 +1901,7 @@
     "correctAnswerTr": "Güney Okyanusu",
     "explanationKu": "Okyanûsa Başûr (Antarktîk) îro ji aliyê piraniya welatan ve wek okyanûsa pêncem tê naskirin.",
     "explanationTr": "Güney (Antarktika) Okyanusu bugün çoğu ülke tarafından beşinci okyanus olarak tanınır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1934,7 +1934,7 @@
     "correctAnswerTr": "2000",
     "explanationKu": "Sînorên vê okyanûsê di sala 2000î de ji Rêxistina Hîdrografîk a Navneteweyî re hatin pêşniyarkirin.",
     "explanationTr": "Bu okyanusun sınırları 2000 yılında Uluslararası Hidrografi Örgütü'ne önerildi.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -1967,7 +1967,7 @@
     "correctAnswerTr": "Tek bir küresel okyanus",
     "explanationKu": "NOAA dibêje ku tenê yek okyanûsa gerdûnî heye; nav li herêmên wê yên cuda tên kirin.",
     "explanationTr": "NOAA'ya göre tek bir küresel okyanus vardır; adlar onun ayrı bölgelerine verilir.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -2478,7 +2478,7 @@
   {
     "id": "sf_nat_0017",
     "category": "Cîhan",
-    "prompt": "Dûrahiya navînî ya di navbera Cîhan û Heyvê de çend kîlometre ye?",
+    "prompt": "Dûrahiya navîn a di navbera Cîhan û Heyvê de çend kîlometre ye?",
     "answers": [
       "150.000 km",
       "384.400 km",
@@ -2511,7 +2511,7 @@
   {
     "id": "sf_nat_0018",
     "category": "Cografya",
-    "prompt": "Heyv di çend rojan de li dora Cîhanê yek car digere?",
+    "prompt": "Heyv di çend rojan de li dora Cîhanê carekê digere?",
     "answers": [
       "7 roj",
       "14 roj",
@@ -2562,7 +2562,7 @@
     "correctAnswerTr": "Challenger Deep",
     "explanationKu": "Cihê herî kûr ê okyanûsê Challenger Deep e û li binê okyanûsa Aramê ya rojava ye.",
     "explanationTr": "Okyanusun en derin yeri Challenger Deep'tir ve batı Pasifik'in altındadır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -2595,7 +2595,7 @@
     "correctAnswerTr": "Bir geminin adından",
     "explanationKu": "Nav ji keştiya HMS Challenger tê; ekîba wê di 1875an de kûrahî pîva.",
     "explanationTr": "Ad, HMS Challenger gemisinden gelir; mürettebatı 1875'te derinliği ölçmüştür.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -2628,7 +2628,7 @@
     "correctAnswerTr": "Uniform Resource Locator",
     "explanationKu": "\"URL\" kurtenivîsa \"Uniform Resource Locator\" e.",
     "explanationTr": "\"URL\", \"Uniform Resource Locator\" ifadesinin kısaltmasıdır.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -2711,12 +2711,12 @@
     "category": "Teknolojî",
     "prompt": "Li gorî rêbernameya nû ya NISTê, tîpên taybet mecbûr in?",
     "answers": [
-      "Na, êdî mecbûr nayên pêşniyarkirin",
+      "Na, êdî mecbûrî nayên pêşniyarkirin",
       "Erê, her dem mecbûr in",
       "Tenê ji bo bankan mecbûr in",
       "Tenê ji bo e-nameyê mecbûr in"
     ],
-    "correctAnswer": "Na, êdî mecbûr nayên pêşniyarkirin",
+    "correctAnswer": "Na, êdî mecbûrî nayên pêşniyarkirin",
     "promptTr": "NIST'in yeni rehberine göre özel karakterler zorunlu mudur?",
     "answersTr": [
       "Hayır, artık zorunlu önerilmiyor",
@@ -2727,7 +2727,7 @@
     "correctAnswerTr": "Hayır, artık zorunlu önerilmiyor",
     "explanationKu": "NIST êdî pêşniyar nake ku şîfre bi mecbûrî tîpên taybet û hejmaran bihewîne.",
     "explanationTr": "NIST artık parolaların zorunlu olarak özel karakter ve sayı içermesini önermiyor.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -2760,7 +2760,7 @@
     "correctAnswerTr": "Birbiriyle birleştirilmiş birkaç farklı sözcükten oluşan ifade",
     "explanationKu": "Passphrase çend peyvên rastîn li hev tîne; hem hêsantir li bîr dimîne hem jî dirêjtir e.",
     "explanationTr": "Passphrase birkaç gerçek sözcüğü birleştirir; hem akılda kalıcı hem daha uzundur.",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
       "dialect": "kurmanci",
@@ -2779,7 +2779,7 @@
     "answers": [
       "Ji ber ku malper dikarin bi heman şîfreyê hêdîtir bibin",
       "Ji ber ku şikandina yek hesabî dikare hesabên din jî bixe xetereyê",
-      "Ji ber ku şîfreyek li gelek cihan bîranîna wê dijwartir dike",
+      "Ji ber ku bikaranîna şîfreyekê li gelek cihan bîranîna wê dijwartir dike",
       "Ji ber ku bikaranîna heman şîfreyê trafîka înternetê zêde dike"
     ],
     "correctAnswer": "Ji ber ku şikandina yek hesabî dikare hesabên din jî bixe xetereyê",

@@ -82,13 +82,13 @@
       "Rojbaş",
       "Şevbaş",
       "Êvarbaş",
-      "Silav"
+      "Spas"
     ],
     "answersTr": [
       "Günaydın",
       "İyi geceler",
       "İyi akşamlar",
-      "Merhaba"
+      "Teşekkürler"
     ],
     "correctAnswer": "Rojbaş",
     "correctAnswerTr": "Günaydın",
@@ -544,7 +544,7 @@
     "category": "Ziman",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Te şaşîyek kir, tu çi dibêjî? ___",
+    "prompt": "Te şaşiyek kir, tu çi dibêjî? ___",
     "promptTr": "Hata yaptın, ne dersin? ___",
     "answers": [
       "Spas",
@@ -561,7 +561,7 @@
     "correctAnswer": "Bibexşîne",
     "correctAnswerTr": "Özür dilerim",
     "explanation": "Hata yapınca \"Bibexşîne\" deriz.",
-    "explanationKu": "Dema em şaşîyekê dikin, em dibêjin \"Bibexşîne\".",
+    "explanationKu": "Dema em şaşiyekê dikin, em dibêjin \"Bibexşîne\".",
     "explanationTr": "Hata yapınca \"Bibexşîne\" deriz.",
     "metadata": {
       "dialect": "kurmanci",
@@ -835,14 +835,14 @@
     "prompt": "Di dawetê de em ___ digirin.",
     "promptTr": "Düğünde ___ oynarız.",
     "answers": [
-      "Şahî",
-      "Dîlan",
+      "Stran",
+      "Klam",
       "Govend",
       "Xwarin"
     ],
     "answersTr": [
-      "Şenlik",
-      "Eğlence",
+      "Şarkı",
+      "Ezgi",
       "Halay",
       "Yemek"
     ],
@@ -976,8 +976,8 @@
     "category": "Çand",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Piştî meha Remezanê kîjan cejn tê?",
-    "promptTr": "Ramazan ayından sonra hangi bayram gelir?",
+    "prompt": "Piştî meha rojiyê kîjan cejn tê?",
+    "promptTr": "Oruç ayından sonra hangi bayram gelir?",
     "answers": [
       "Cejna Qurbanê",
       "Cejna Newrozê",
@@ -1012,8 +1012,8 @@
     "category": "Çand",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Di ___ de qurban tê serjêkirin.",
-    "promptTr": "___ kurban kesilir.",
+    "prompt": "Di ___ de ajal wekî ayîn têne serjêkirin.",
+    "promptTr": "___ hayvanlar ibadet amacıyla kesilir.",
     "answers": [
       "Cejna Remezanê",
       "Cejna Newrozê",
@@ -1052,9 +1052,9 @@
     "promptTr": "Aile \"Ramazan Bayramı\"nda ne yapar?",
     "answers": [
       "Cejnê pîroz dike",
-      "Rojîyê digire",
+      "Rojiyê digire",
       "Qurbanê serjê dike",
-      "Dikeve rêwîtîyê"
+      "Dikeve rêwîtiyê"
     ],
     "answersTr": [
       "Bayramı kutlar",
@@ -1353,7 +1353,7 @@
     "correctAnswer": "Tirî",
     "correctAnswerTr": "Tirî",
     "explanation": "\"Tirî\" küçük ve tatlı bir meyvedir.",
-    "explanationKu": "\"Tirî\" fêkiyekî biçûk û şirîn e.",
+    "explanationKu": "\"Tirî\" fêkiyekî biçûk û şîrîn e.",
     "explanationTr": "\"Tirî\" küçük ve tatlı bir meyvedir.",
     "metadata": {
       "dialect": "kurmanci",
@@ -2001,7 +2001,7 @@
     "correctAnswer": "Evîndar",
     "correctAnswerTr": "Evîndar",
     "explanation": "\"Evîndar\" aşık olan kişi için söylenir.",
-    "explanationKu": "\"Evîndar\" ji bo kesê ku evînê dike tê gotin.",
+    "explanationKu": "\"Evîndar\" ji bo kesê ku ji kesekî hez dike tê gotin.",
     "explanationTr": "\"Evîndar\" aşık olan kişi için söylenir.",
     "metadata": {
       "dialect": "kurmanci",

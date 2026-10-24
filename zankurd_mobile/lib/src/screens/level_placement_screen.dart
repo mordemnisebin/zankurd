@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../data/placement_store.dart';
@@ -8,7 +10,7 @@ import '../models/quiz_question.dart';
 import '../config/category_visuals.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_icons.dart';
-import '../widgets/category_kicker_mark.dart';
+import '../widgets/quiz_top_bar.dart';
 import '../widgets/sahne/sahne.dart';
 import 'quiz/quiz_option_tile.dart';
 import 'quiz_screen.dart' show QuizQuestionImage;
@@ -107,8 +109,10 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     if (_inputLocked) return;
     setState(() => _inputLocked = true);
     try {
-      final store = await PlacementStore.load();
-      await store.markSkipped();
+      // "Sonra yap" kartı KALICI gizlemez: yalnız bu ekrandan çıkılır, kart
+      // ana sayfada kalır. Kalıcı kapatma yalnız karttaki X'in işidir
+      // (learning_screen `markSkipped`). Eskiden onaysız tek dokunuş
+      // kartı sonsuza dek kaldırıyordu.
       widget.onFinished?.call(null);
       if (mounted) Navigator.of(context).maybePop();
     } finally {
@@ -126,9 +130,9 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     final skipLabel = context.t(K.placementSkip);
     final textScale = MediaQuery.textScalerOf(context).scale(16) / 16;
     final useCompactSkip =
-        MediaQuery.sizeOf(context).width < 380 || textScale > 1.05;
+        MediaQuery.sizeOf(context).width < 430 || textScale > 1.05;
     final question = _questions.isNotEmpty
-        ? _questions[_index].localized(isKu: ku)
+        ? _questions[_index].localized(isKu: ku, learning: true)
         : null;
 
     return SahneStageScaffold(
@@ -141,7 +145,30 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
               CategoryVisuals.canonicalName(question.category),
             ),
       ridge: true,
-      center: Semantics(header: true, child: Text(context.t(K.placementTitle))),
+      // 2026-10-20 renk ve canlılık (B): seviye belirleme öğrenme akışıdır;
+      // üst bant Zimrût (soru konusu her adımda değişir, bant sabit kalır).
+      band: question == null ? null : SahneTokens.of(context).learnFill,
+      bandProgress: question == null
+          ? null
+          : SahneProgressBar(
+              height: 6,
+              value: _index / _questions.length,
+              fillColor: SahneVivid.onFill,
+              trackColor: SahneVivid.glassTrack,
+              semanticLabel: context.t(K.placementProgress, {
+                'index': '${_index + 1}',
+                'total': '${_questions.length}',
+              }),
+            ),
+      center: question == null
+          ? Semantics(header: true, child: Text(context.t(K.placementTitle)))
+          : QuizStageCenter(
+              category: question.category,
+              index: _index,
+              total: _questions.length,
+              onBand: true,
+              title: context.t(K.placementTitle),
+            ),
       score: useCompactSkip
           ? _SkipIconButton(
               key: const ValueKey('placement-skip-compact'),
@@ -152,15 +179,6 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
               key: const ValueKey('placement-skip'),
               label: skipLabel,
               onPressed: _inputLocked ? null : _skip,
-            ),
-      progress: question == null
-          ? null
-          : SahneProgressBar(
-              value: (_index + 1) / _questions.length,
-              semanticLabel: context.t(K.placementProgress, {
-                'index': '${_index + 1}',
-                'total': '${_questions.length}',
-              }),
             ),
       body: Builder(
         builder: (context) => _questions.isEmpty
@@ -189,78 +207,89 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     // Kurmancî soru/şık metni basılıyordu — quiz_screen.dart'ın 2026-07'de
     // kurduğu desenin aynısı burada eksikti (2026-08-14 denetimi).
     // Çevirisi eksik sorularda alanlar Kurmancî kalır (bkz. `answersFor`).
-    final t = SahneTokens.of(context);
-    final category = CategoryNames.localized(question.category, context.isKu);
-    final progress = context.t(K.placementProgress, {
-      'index': '${_index + 1}',
-      'total': '${_questions.length}',
-    });
-    return SahneStageScroll(
-      // Yeni soruda başa dön, üst kenar ilerleme çubuğunun altında sönsün
-      // (bkz. `SahneStageScroll`).
-      scrollKey: const ValueKey('placement-scroll'),
-      resetKey: _index,
-      padding: const EdgeInsets.fromLTRB(
-        SahneSpace.page,
-        SahneSpace.x4,
-        SahneSpace.page,
-        SahneSpace.x6,
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 800),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Üst etiket (quiz'le aynı): kategori • soru sırası. İlerleme
-              // metni ("SORU 1/12") ekranda kalır; çubuk görsel özettir.
-              Row(
+    // Kurul 2026-10-20: şıklar alta (baş parmak bölgesi), soru üstteki boş
+    // alanda ortalanır — ders ve yarışma ekranıyla AYNI yerleşim. Eskiden
+    // her şey tepeye yığılıyor, altı bomboştu.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final reserve = quizAnswerBottomReserve(context, constraints.maxHeight);
+        return SahneStageScroll(
+          // Yeni soruda başa dön, üst kenar ilerleme çubuğunun altında sönsün
+          // (bkz. `SahneStageScroll`).
+          scrollKey: const ValueKey('placement-scroll'),
+          resetKey: _index,
+          padding: EdgeInsets.fromLTRB(
+            SahneSpace.page,
+            SahneSpace.x4,
+            SahneSpace.page,
+            reserve,
+          ),
+          child: Center(
+            child: ConstrainedBox(
+              key: const ValueKey('placement-answers-anchored'),
+              constraints: BoxConstraints(
+                maxWidth: 800,
+                minHeight: math.max(
+                  0.0,
+                  constraints.maxHeight - SahneSpace.x4 - reserve,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CategoryKickerMark(
-                    category: question.category,
-                    fallbackColor: t.tx2,
+                  // Üst etiket artık ortak üst satırda; boş yuva soruyu
+                  // şıklarla tepe arasında ortalar (ders ekranıyla aynı).
+                  const SizedBox.shrink(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (question.hasImage) ...[
+                        QuizQuestionImage(
+                          key: const ValueKey('placement-question-image'),
+                          url: question.imageUrl!,
+                          alt: question.imageAltFor(isKu: context.isKu),
+                        ),
+                        const SizedBox(height: SahneSpace.x3),
+                      ],
+                      QuizQuestionPrompt(question.prompt),
+                      const SizedBox(height: SahneSpace.x4),
+                    ],
                   ),
-                  const SizedBox(width: SahneSpace.x2),
-                  Expanded(
-                    child: Text(
-                      '$category · $progress',
-                      style: SahneType.eyebrow.copyWith(color: t.tx),
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (final (index, answer)
+                          in question.displayAnswers.indexed)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                          // Quiz'in şık çubuğu: harf karosu renksiz, cevaptan
+                          // önce renk yok (bkz.
+                          // `answer_option_color_semantics_test`). Sınav
+                          // doğru/yanlış göstermez: çubuk yalnız dokunulur.
+                          child: QuizOptionTile(
+                            index: index,
+                            answer: answer,
+                            selected: false,
+                            correct: false,
+                            disabled: _inputLocked,
+                            tone: CategoryVisuals.tone(question.category),
+                            onTap: _inputLocked
+                                ? null
+                                : () => _answer(question, answer),
+                          ),
+                        ),
+                    ],
                   ),
                 ],
               ),
-              const SizedBox(height: SahneSpace.x2),
-              if (question.hasImage) ...[
-                QuizQuestionImage(
-                  key: const ValueKey('placement-question-image'),
-                  url: question.imageUrl!,
-                  alt: question.imageAltFor(isKu: context.isKu),
-                ),
-                const SizedBox(height: SahneSpace.x3),
-              ],
-              QuizQuestionPrompt(question.prompt),
-              const SizedBox(height: SahneSpace.x4),
-              for (final (index, answer) in question.displayAnswers.indexed)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                  // Quiz'in şık çubuğu: harf karosu renksiz, cevaptan önce
-                  // renk yok (bkz. `answer_option_color_semantics_test`).
-                  // Sınav doğru/yanlış göstermez: çubuk yalnız dokunulur.
-                  child: QuizOptionTile(
-                    index: index,
-                    answer: answer,
-                    selected: false,
-                    correct: false,
-                    disabled: _inputLocked,
-                    onTap: _inputLocked
-                        ? null
-                        : () => _answer(question, answer),
-                  ),
-                ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -281,6 +310,8 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
       PlacementLevel.pesketi => (AppIcons.medal, SahneRole.gold),
     };
     return SahneResultScaffold(
+      // Seviye tespiti öğrenme modudur: Zimrût sahne.
+      accent: SahneRole.learn,
       closeLabel: context.t(K.close),
       contextLabel: context.t(K.placementTitle),
       hero: SahneResultHero(
@@ -363,7 +394,34 @@ class _SkipTextButton extends StatelessWidget {
         label: label,
         onTap: onPressed,
         excludeSemantics: true,
-        child: SahneButton.text(label: label, onPressed: onPressed),
+        // Yeşil bandın üstünde Agir metni okunmaz: beyaz metinli cam hap.
+        child: SizedBox(
+          height: sahneTapTarget,
+          child: Center(
+            child: SahneTappable(
+              shape: SahneShape.m,
+              color: SahneVivid.glass,
+              onTap: onPressed,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: sahneTapTarget),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: SahneSpace.x3,
+                  ),
+                  child: Center(
+                    widthFactor: 1,
+                    child: Text(
+                      label,
+                      style: SahneType.captionStrong.copyWith(
+                        color: SahneVivid.onFill,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       );
 }
 
@@ -381,6 +439,7 @@ class _SkipIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SahneIconButton(
+    glass: true,
     icon: AppIcons.forward,
     semanticLabel: label,
     onPressed: onPressed,

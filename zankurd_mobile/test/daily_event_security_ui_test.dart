@@ -26,7 +26,7 @@ class _TrackingContestRepository extends MockZanKurdRepository {
 void main() {
   test('günlük etkinlik iki dilde 10 soruluk ilerleme olarak tanımlanır', () {
     expect(Tr.of(K.dailyContest, AppLanguage.tr), 'Günün turu');
-    expect(Tr.of(K.dailyContest, AppLanguage.ku), 'Dora rojê');
+    expect(Tr.of(K.dailyContest, AppLanguage.ku), 'Gera rojê');
 
     final trCopy = [
       Tr.of(K.contestNoneToday, AppLanguage.tr),
@@ -44,7 +44,7 @@ void main() {
     expect(trCopy.toLowerCase(), isNot(contains('ödül')));
     expect(trCopy.toLowerCase(), isNot(contains('sıralama')));
     expect(kuCopy, contains('10'));
-    expect(kuCopy, contains('Dora rojê'));
+    expect(kuCopy, contains('Gera rojê'));
     expect(kuCopy.toLowerCase(), isNot(contains('xelat')));
     expect(kuCopy.toLowerCase(), isNot(contains('pêşderçûn')));
   });
@@ -73,7 +73,7 @@ void main() {
       expect(find.text('Karışık sorular'), findsOneWidget);
       expect(
         find.text('Farklı konulardan karışık soruları cevapla.'),
-        findsOneWidget,
+        findsNothing,
       );
       expect(find.text('1-3'), findsNothing);
       expect(find.text('10 soru'), findsOneWidget);

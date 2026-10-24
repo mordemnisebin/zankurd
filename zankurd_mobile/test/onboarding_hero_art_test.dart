@@ -33,14 +33,12 @@
 /// ile başlık arasındaki boşluk da hiçbir yerde PİKSEL olarak ölçülmüyordu.
 library;
 
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
@@ -55,23 +53,6 @@ Future<void> _pumpOnboarding(WidgetTester tester, {String lang = 'tr'}) async {
     ),
   );
   await tester.pumpAndSettle();
-}
-
-/// Bankadaki bütün soruları kimliğe göre toplar.
-Map<String, Map<String, dynamic>> _bankById() {
-  final byId = <String, Map<String, dynamic>>{};
-  for (final entity in Directory('assets/data').listSync()) {
-    if (entity is! File || !entity.path.endsWith('_questions.json')) continue;
-    final decoded = jsonDecode(entity.readAsStringSync());
-    final list = decoded is List
-        ? decoded
-        : ((decoded as Map<String, dynamic>)['questions'] as List? ?? []);
-    for (final raw in list) {
-      final q = raw as Map<String, dynamic>;
-      byId[q['id'] as String] = q;
-    }
-  }
-  return byId;
 }
 
 /// Kahraman yuvası ([SahneEntryHero]) bir sahne kartı sarar; rol ve kilim
@@ -101,24 +82,8 @@ void _expectOnlyLogoImages(WidgetTester tester, Finder hero) {
 void main() {
   final hero = find.byKey(const ValueKey('onboarding-hero-panel'));
 
-  group('1) Maket bankadaki gerçek soruyu gösterir', () {
-    test('iki maket sorusu bankada aynı metin ve şıklarla durur', () {
-      final bank = _bankById();
-      for (final sample in [
-        OnboardingSampleQuestion.learn,
-        OnboardingSampleQuestion.race,
-      ]) {
-        final q = bank[sample.id];
-        expect(q, isNotNull, reason: '${sample.id} bankada yok');
-        expect(q!['prompt'], sample.promptKu);
-        expect(q['promptTr'], sample.promptTr);
-        expect(q['answers'], sample.answers);
-        // Şıklar iki dilde aynı olmalı: maket şıkları dile göre çevirmez.
-        expect(q['answersTr'] ?? q['answers'], sample.answers);
-      }
-    });
-
-    testWidgets('sayfa 1: soru ve dört şık, çizim yok, kilim açık', (
+  group('1) Kahraman dokunulmaz bir sahne çizimidir, soru değil', () {
+    testWidgets('sayfa 1: soru cümlesi, şık, harf karosu ve dokunma yok', (
       tester,
     ) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -126,52 +91,54 @@ void main() {
 
       await _pumpOnboarding(tester);
 
-      const sample = OnboardingSampleQuestion.learn;
+      // Eski maket: '"dar" Türkçede ne demektir?' ve dört şık. Kullanıcılar
+      // onu gerçek soru sanıp şıklara dokunuyordu.
       expect(
-        find.descendant(of: hero, matching: find.text(sample.promptTr)),
-        findsOneWidget,
+        find.descendant(of: hero, matching: find.textContaining('?')),
+        findsNothing,
       );
-      for (final answer in sample.answers) {
+      for (final letter in ['A', 'B', 'C', 'D']) {
         expect(
-          find.descendant(of: hero, matching: find.text(answer)),
-          findsOneWidget,
+          find.descendant(of: hero, matching: find.text(letter)),
+          findsNothing,
         );
       }
+      expect(
+        find.descendant(of: hero, matching: find.byType(InkWell)),
+        findsNothing,
+      );
+      expect(
+        find.descendant(of: hero, matching: find.byType(GestureDetector)),
+        findsNothing,
+      );
+      expect(
+        find.descendant(
+          of: hero,
+          matching: find.byKey(const ValueKey('onboarding-scene-art')),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: hero,
+          matching: find.byIcon(AppIcons.graduationCap),
+        ),
+        findsOneWidget,
+      );
       _expectOnlyLogoImages(tester, hero);
       expect(_card(tester, hero).kilim, isTrue);
     });
 
-    testWidgets('Kurmancî arayüzde soru metni Kurmancîdir', (tester) async {
-      await tester.binding.setSurfaceSize(const Size(390, 844));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-
-      await _pumpOnboarding(tester, lang: 'ku');
-
-      expect(
-        find.descendant(
-          of: hero,
-          matching: find.text(OnboardingSampleQuestion.learn.promptKu),
-        ),
-        findsOneWidget,
-      );
-    });
-
-    testWidgets('maket ekran okuyucuya ayrı düğüm eklemez', (tester) async {
+    testWidgets('sahne çizimi ekran okuyucuya duyurulmaz', (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
       final semantics = tester.ensureSemantics();
 
       await _pumpOnboarding(tester);
 
-      // Dekoratiftir: başlık ve gövde aynı bilgiyi metinle veriyor. Şıklar
-      // dokunulabilir sanılmasın diye ekran okuyucuya hiç duyurulmaz.
-      expect(
-        find.bySemanticsLabel(OnboardingSampleQuestion.learn.promptTr),
-        findsNothing,
-      );
       expect(
         find.ancestor(
-          of: find.text(OnboardingSampleQuestion.learn.promptTr),
+          of: find.byKey(const ValueKey('onboarding-scene-art')),
           matching: find.byType(ExcludeSemantics),
         ),
         findsWidgets,
@@ -182,7 +149,7 @@ void main() {
   });
 
   group('2) Sayfa 2: yarışma sahnesi (Boyax sahne kartı)', () {
-    testWidgets('öğrenme slaytı Zimrût, yarış slaytı Boyax + soru ilerlemesi', (
+    testWidgets('öğrenme slaytı Zimrût, yarış slaytı Boyax + kılıç ve kupa', (
       tester,
     ) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -190,31 +157,27 @@ void main() {
 
       await _pumpOnboarding(tester);
       expect(_card(tester, hero).role, SahneRole.learn);
-      expect(
-        find.descendant(of: hero, matching: find.byType(SahneDiamondRow)),
-        findsNothing,
-      );
 
+      // "Sonraki" ilk dokunuşta etkindir: yaş kutusu kalktı.
       await tester.tap(find.text('Sonraki'));
       await tester.pumpAndSettle();
 
       expect(_card(tester, hero).role, SahneRole.race);
       expect(
+        find.descendant(of: hero, matching: find.byIcon(AppIcons.swords)),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(of: hero, matching: find.byIcon(AppIcons.trophy)),
+        findsOneWidget,
+      );
+      expect(
         find.descendant(of: hero, matching: find.byType(SahneDiamondRow)),
-        findsOneWidget,
-        reason: 'yarış slaytı sorunun üstünde soru ilerlemesini gösterir',
-      );
-      expect(
-        find.descendant(
-          of: hero,
-          matching: find.text(OnboardingSampleQuestion.race.promptTr),
-        ),
-        findsOneWidget,
-      );
-      expect(
-        find.descendant(of: hero, matching: find.byType(SahneVsEmblem)),
         findsNothing,
-        reason: 'VS amblemi (iki elmas avatar) kalktı (K5)',
+      );
+      expect(
+        find.descendant(of: hero, matching: find.byType(InkWell)),
+        findsNothing,
       );
       _expectOnlyLogoImages(tester, hero);
       expect(find.byType(RojMascot), findsNothing, reason: 'maskot yok');

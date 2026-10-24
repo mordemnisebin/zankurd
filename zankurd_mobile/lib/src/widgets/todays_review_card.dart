@@ -10,12 +10,23 @@ import '../utils/error_reporter.dart';
 import '../theme/app_icons.dart';
 import 'sahne/sahne.dart';
 
+/// Bir tekrar oturumunun en çok soru sayısı.
+const int kReviewSessionCap = 12;
+
 /// "Bugünkü Tekrarlar" kartı — SM-2 aralıklı tekrar sisteminin ürün yüzü.
 ///
 /// Yalnızca [MistakeStore.readyIds] içindeki (tekrar zamanı gelmiş) soruları
 /// sayar. Hazır tekrar varsa dokunulabilir bir kart, yoksa sakin bir
 /// "tamamlandı" durumu gösterir. Karta dokununca yalnız hazır sorularla,
 /// öğrenme deneyiminde (sayaç/skor/joker yok) bir tekrar quizi açılır.
+/// Tekrar oturumunun başlık kategorisi: sorular tek konudansa o konu,
+/// değilse Karışık (`mixed`). createRoom() varsayılanı ("Ziman") başlıkta
+/// yanlış konu gösteriyordu.
+String reviewRoomCategory(List<QuizQuestion> questions) {
+  final categories = {for (final q in questions) q.category};
+  return categories.length == 1 ? categories.single : 'mixed';
+}
+
 class TodaysReviewCard extends StatefulWidget {
   const TodaysReviewCard({
     required this.repository,
@@ -49,12 +60,22 @@ class TodaysReviewCard extends StatefulWidget {
 class _TodaysReviewCardState extends State<TodaysReviewCard> {
   int _readyCount = 0;
   bool _loading = true;
+  bool _starting = false;
 
   @override
   void initState() {
     super.initState();
     _refresh();
     widget.refreshSignal?.addListener(_refresh);
+  }
+
+  @override
+  void didUpdateWidget(covariant TodaysReviewCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.refreshSignal != widget.refreshSignal) {
+      oldWidget.refreshSignal?.removeListener(_refresh);
+      widget.refreshSignal?.addListener(_refresh);
+    }
   }
 
   @override
@@ -81,16 +102,28 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   ///
   /// Artık ikisi de aynı listeden besleniyor: sayı neyi vaat ediyorsa
   /// dokunuş onu açar.
-  List<QuizQuestion> _launchable(Set<String> readyIds) => widget
-      .repository
-      .questions
-      .where((q) => readyIds.contains(q.id))
-      .toList();
+  ///
+  /// ## Kusur (2026-10-15)
+  ///
+  /// Kaynak `repository.questions` idi; ana ekran ise `playableQuestions`
+  /// ile sayıyordu. Karantinadaki bir soru kartta sayılmasa da oturuma
+  /// girebiliyordu; ayrıca hazır ne kadar soru varsa hepsi tek oturumda
+  /// açılıyordu (birikmiş yüzlerce tekrar bir "bugünkü" oturum olmuyordu).
+  ///
+  /// Kural: yalnız `playableQuestions`, en çok gecikenden başlayıp
+  /// [kReviewSessionCap] soru.
+  List<QuizQuestion> _launchable(List<String> readyIdsByOverdue) {
+    final byId = {for (final q in widget.repository.playableQuestions) q.id: q};
+    return [
+      for (final id in readyIdsByOverdue)
+        if (byId[id] != null) byId[id]!,
+    ].take(kReviewSessionCap).toList();
+  }
 
   Future<void> _refresh() async {
     try {
       final store = await MistakeStore.load();
-      final launchable = _launchable(store.readyIds).length;
+      final launchable = _launchable(store.readyIdsMostOverdueFirst).length;
       if (mounted) {
         setState(() {
           _readyCount = launchable;
@@ -104,35 +137,55 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   }
 
   Future<void> _startReview() async {
-    final store = await MistakeStore.load();
-    final questions = _launchable(store.readyIds);
-    if (questions.isEmpty) return;
+    if (_starting) return;
+    setState(() => _starting = true);
+    try {
+      final store = await MistakeStore.load();
+      if (!mounted) return;
+      final questions = _launchable(store.readyIdsMostOverdueFirst);
+      if (questions.isEmpty) {
+        await _refresh();
+        return;
+      }
 
-    final onStart = widget.onStartReview;
-    if (onStart != null) {
-      onStart(questions);
-      return;
-    }
+      final onStart = widget.onStartReview;
+      if (onStart != null) {
+        onStart(questions);
+        return;
+      }
 
-    if (!mounted) return;
-    final ku = widget.isKu;
-    final room = widget.repository.createRoom().copyWith(
-      name: Tr.forKu(K.todaysReviews, ku),
-      questionCount: questions.length,
-    );
-    await Navigator.of(context).push(
-      AppRoute.to(
-        QuizScreen(
-          repository: widget.repository,
-          room: room,
-          questions: questions,
-          practice: true,
-          enableTimer: false,
-          experience: QuizExperience.learning,
+      final ku = widget.isKu;
+      // createRoom() varsayılan kategoriyi ("Ziman") taşıyordu; tekrar
+      // sorusu Siyaset'tenken başlıkta "Ziman · 1 pirs" yazıyordu
+      // (simülatör gezisi 2026-10-21). Tek konuysa o, değilse Karışık.
+      final room = widget.repository.createRoom().copyWith(
+        name: Tr.forKu(K.todaysReviews, ku),
+        questionCount: questions.length,
+        category: reviewRoomCategory(questions),
+      );
+      await Navigator.of(context).push(
+        AppRoute.to(
+          QuizScreen(
+            repository: widget.repository,
+            room: room,
+            questions: questions,
+            practice: true,
+            enableTimer: false,
+            experience: QuizExperience.learning,
+          ),
         ),
-      ),
-    );
-    if (mounted) _refresh();
+      );
+      if (mounted) await _refresh();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'todays_review_start');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(Tr.forKu(K.quizLoadFail, widget.isKu))),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _starting = false);
+    }
   }
 
   @override
@@ -152,7 +205,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   // Gövde 700; chevron üçüncül.
   //
   // 2026-09-29 doğallık (K7): sağda sayıyı ikinci kez yazan Zimrût rozeti
-  // vardı ("3 soru tekrara hazır" + "3"). Sayı yalnız cümlede kalır.
+  // vardı ("Tekrar edilecek 3 soru" + "3"). Sayı yalnız cümlede kalır.
   Widget _tile(SahneTokens t, IconData icon) => DecoratedBox(
     decoration: ShapeDecoration(color: t.learnTint, shape: SahneShape.m),
     child: SizedBox.square(
@@ -172,14 +225,14 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
       key: const ValueKey('todays-review-card'),
       container: true,
       button: true,
-      enabled: true,
+      enabled: !_starting,
       label: semanticLabel,
       excludeSemantics: true,
-      onTap: _startReview,
+      onTap: _starting ? null : _startReview,
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
-          onTap: _startReview,
+          onTap: _starting ? null : _startReview,
           excludeFromSemantics: true,
           customBorder: SahneShape.m,
           child: Padding(

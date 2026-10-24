@@ -194,6 +194,42 @@ void main() {
       expect(find.text('Kaydet'), findsOneWidget);
     });
 
+    /// Yükseltme diyaloğunun denetleyicileri diyalogun kendi State'ine aittir.
+    ///
+    /// ## Kusur
+    ///
+    /// `_showGuestUpgradeDialog` e-posta ve şifre denetleyicilerini yaratıp
+    /// diyalog kapandıktan bir kare sonra atıyordu; kapanış animasyonu
+    /// onlarca kare sürer, iki alan bu sürede atılmış denetleyiciyi
+    /// dinlerdi. Sessizdi: akış testleri kapanışı `pumpAndSettle` ile
+    /// oynatıyordu ama çerçeve istisnasını hiçbiri sorgulamıyordu.
+    testWidgets('Vazgeç ile kapanırken alan denetleyicileri çökmez', (
+      tester,
+    ) async {
+      final guestAuth = _GuestAuthProvider();
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          ProfileScreen(repository: MockZanKurdRepository()),
+          guestAuth,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _scrollToCta(tester);
+      await tester.tap(find.text('Hesabını kaydet'));
+      await tester.pumpAndSettle();
+      expect(find.byType(SahneField), findsNWidgets(2));
+
+      // Odaklanmış alan: çökme yalnız odağı/imleci olan alanda görülür.
+      await tester.tap(find.byType(TextField).first);
+      await tester.pump();
+
+      await tester.tap(find.text('Vazgeç'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(AlertDialog), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('boş form gönderilemez — doğrulama hataları gösterilir', (
       tester,
     ) async {

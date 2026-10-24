@@ -22,6 +22,7 @@ class QuizTutorialOverlay extends StatefulWidget {
     this.onReady,
     this.timerSeconds = 15,
     this.timed = true,
+    this.enabled = true,
     super.key,
   });
 
@@ -56,6 +57,11 @@ class QuizTutorialOverlay extends StatefulWidget {
   /// ilk adım sayacı değil cevap alanını hedefler ve metni süreden söz etmez.
   final bool timed;
 
+  /// Kapalıyken rehber hiç çizilmez ve görüldü işareti yazılmaz/okunmaz;
+  /// [onReady] ilk karede hemen çağrılır. Online odalarda rakip beklerken
+  /// rehber hazır sinyalini tutmasın diye kullanılır.
+  final bool enabled;
+
   @override
   State<QuizTutorialOverlay> createState() => _QuizTutorialOverlayState();
 }
@@ -75,6 +81,13 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
   }
 
   Future<void> _load() async {
+    if (!widget.enabled) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _notifyReady();
+      });
+      _checking = false;
+      return;
+    }
     final prefs = await SharedPreferences.getInstance();
     final shouldShow = prefs.getBool(_seenKey) != true;
     if (!mounted) return;

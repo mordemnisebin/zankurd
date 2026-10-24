@@ -24,6 +24,44 @@ bool lexiconTapAllowedFor({
   return learning || practice;
 }
 
+/// Soru altındaki açılır Türkçe çeviri: rakibin olmadığı her tek kişilik
+/// turda açık (konu karosundan açılan normal tur dahil; sözlük dokunuşu orada
+/// kapalı olduğu için ona bağlanmadı). Düello, bot yarışı, günün soruları,
+/// yarışma ve çevrimiçi oda kapalıdır: orada çeviri başkasına karşı ipucudur.
+bool translationRevealAllowedFor({
+  required bool is1v1,
+  required bool botRace,
+  required bool dailyQuiz,
+  required bool contest,
+  required bool versus,
+  required bool onlineRoom,
+}) => !(is1v1 || botRace || dailyQuiz || contest || versus || onlineRoom);
+
+/// Yanlış cevaptan HEMEN sonra doğru cevap + açıklama gösterilsin mi?
+///
+/// Kural [translationRevealAllowedFor] ile AYNIDIR ve bilerek ona bağlı:
+/// rakibin olmadığı her tek kişilik tur (solo, öğrenme, alıştırma). Düello,
+/// bot yarışı, günün turu, yarışma ve çevrimiçi odada KAPALIDIR — orada
+/// cevap, rakibe karşı puanlanan bir turun içindedir ve anında açıklama
+/// hem ritmi keser hem de (sunucu cevabı gizlediği odalarda) cevabı sızdırır.
+/// Kuralı ikiye bölmek, çeviri açıkken açıklamanın kapalı kalması gibi
+/// tutarsız bir ürün çıkarırdı; bekçi: `test/wrong_answer_insight_test.dart`.
+bool instantExplanationAllowedFor({
+  required bool is1v1,
+  required bool botRace,
+  required bool dailyQuiz,
+  required bool contest,
+  required bool versus,
+  required bool onlineRoom,
+}) => translationRevealAllowedFor(
+  is1v1: is1v1,
+  botRace: botRace,
+  dailyQuiz: dailyQuiz,
+  contest: contest,
+  versus: versus,
+  onlineRoom: onlineRoom,
+);
+
 /// Ödül üretmeyen tek kişilik tur: süre tercihi yalnız burada geçerlidir.
 bool isRewardNeutralSoloQuiz({
   required bool is1v1,
@@ -58,10 +96,18 @@ String quizRoundTitle({
   required bool isKu,
   required String roomWord,
   required String raceWord,
+  String? crowdTitle,
 }) {
   if (roomId != null) return '$roomWord $roomCode';
   final name = roomName.trim();
-  if (name.isNotEmpty && name != _defaultSoloRoomName) return name;
+  // Depo, kalabalık odayı 'crowd', ikili odayı '1vs1' diye adlandırır
+  // (`_roomDisplayName`): bunlar KİMLİKTİR, başlık değil. Sonuç ekranının
+  // tepesinde "crowd • 10 soru" diye ham basılıyordu (2026-10-21 iki
+  // simülatör turu). Kalabalık odası dilindeki adıyla, ikili oda genel
+  // "yarış" sözüyle çizilir.
+  if (name == 'crowd' && crowdTitle != null) return crowdTitle;
+  final isSlug = name == 'crowd' || name == '1vs1';
+  if (name.isNotEmpty && name != _defaultSoloRoomName && !isSlug) return name;
   if (category.isEmpty) return raceWord;
   return CategoryNames.localized(category, isKu);
 }

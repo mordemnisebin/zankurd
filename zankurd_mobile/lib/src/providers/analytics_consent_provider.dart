@@ -5,8 +5,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/error_reporter.dart';
 
-/// Firebase Analytics yalnızca kullanıcı açıkça izin verdikten sonra çalışır.
-/// Varsayılan kapalıdır; böylece ilk açılışta tercih yapılmadan ölçüm başlamaz.
+/// Kullanım analizi (Firebase Analytics, Crashlytics ve sunucu olayları) tek
+/// anahtara bağlıdır; Ayarlar › Kullanım analizi ile kapatılır.
+///
+/// Diskte seçim yoksa AÇIK başlar (2026-10-23, sahibin kararı). Önceden
+/// varsayılan kapalıydı ve anahtarı kimse açmıyordu: 2.1.0'ın ilk gecesi
+/// 17 kişi oynadı, Firebase 0 etkin kullanıcı gösterdi, çökme raporları da
+/// aynı anahtara bağlı olduğu için "çökme yok" verisi boştu. Anahtarı bilerek
+/// kapatmış kişinin `false` seçimi diskte kalır ve korunur.
 class AnalyticsConsentProvider extends ChangeNotifier {
   AnalyticsConsentProvider({bool initialEnabled = false})
     : _enabled = initialEnabled {
@@ -15,6 +21,9 @@ class AnalyticsConsentProvider extends ChangeNotifier {
   }
 
   static const _storageKey = 'zankurd.analyticsConsent';
+
+  /// Diskte seçim yokken kullanılan değer.
+  static const defaultEnabled = true;
 
   /// `SupabaseZanKurdRepository.logAnalyticsEvent` gibi veri katmanı
   /// sınıfları `BuildContext`i olmadığı için Provider ağacını okuyamaz.
@@ -37,7 +46,7 @@ class AnalyticsConsentProvider extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       return AnalyticsConsentProvider(
-        initialEnabled: prefs.getBool(_storageKey) ?? false,
+        initialEnabled: prefs.getBool(_storageKey) ?? defaultEnabled,
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'analytics_consent_load');

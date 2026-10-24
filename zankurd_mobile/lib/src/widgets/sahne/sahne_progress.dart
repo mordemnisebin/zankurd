@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/app_icons.dart';
 import '../../theme/sahne.dart';
 import '../../utils/percent_format.dart';
 import 'sahne_foundation.dart';
@@ -25,11 +26,16 @@ enum SahneProgressTone {
 
   /// Ödül (Zêr): XP, seviye.
   gold,
+
+  /// Eylem rengi (`act`, turuncu): yol boyunca ilerleyen akışlar (tanıtım,
+  /// soru ilerlemesi); uygulamanın birincil eylem rengiyle aynı ton.
+  action,
 }
 
 /// İlerleme çubuğu — maketteki `.sh-bar` / `.sh-prog`.
 ///
-/// 8 px, S pah; iz Ray (`s3`; gündüzde ince bir kenarla, bkz.
+/// 8 px (ya da [height]), tam yuvarlak uç (2026-10-19 sadeleşme: pahlı uç
+/// "kalabalık" izlenimi veriyordu); iz Ray (`s3`; gündüzde ince bir kenarla, bkz.
 /// [sahneTrackEdge]), dolgu öğrenmede `learnBar`, ödülde Zêr.
 /// İsteğe bağlı sağda değer ([trailing], ör. "2/5", "200 XP"; kalın
 /// açıklama, tablo rakamı). Ekran okuyucu değeri yüzde olarak duyar.
@@ -41,32 +47,62 @@ class SahneProgressBar extends StatelessWidget {
     this.tone = SahneProgressTone.learn,
     this.trailing,
     this.semanticLabel,
+    this.height = 8,
+    this.trackColor,
+    this.fillColor,
+    this.edgeColor,
   });
 
   /// 0–1.
   final double value;
+
+  /// Çubuğun kalınlığı (ana ekran karolarında ve soru ekranında 4).
+  final double height;
   final SahneProgressTone tone;
   final String? trailing;
   final String? semanticLabel;
+
+  /// İz rengini değiştirir (varsayılan `s3`). Koyu sahnede `s3` zeminden
+  /// ayrışmayan ince çubuğa görünür bir iz vermek için.
+  final Color? trackColor;
+
+  /// Dolgu rengini değiştirir (renkli konu bandında beyaz).
+  final Color? fillColor;
+
+  /// İz kenarı (varsayılan `sahneTrackEdge`, mavimsi gri). Renkli kartta
+  /// kartın ton ailesinden verilir; yoksa yeşil izin çevresi gri kalıyordu.
+  final Color? edgeColor;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final v = value.clamp(0.0, 1.0);
-    final fill = tone == SahneProgressTone.gold ? t.gold : t.learnBar;
+    final fill =
+        fillColor ??
+        switch (tone) {
+          SahneProgressTone.gold => t.gold,
+          SahneProgressTone.action => t.act,
+          SahneProgressTone.learn => t.learnBar,
+        };
     final reduceMotion = sahneMotionReduced(context);
+    final pill = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(height / 2),
+    );
     final bar = TweenAnimationBuilder<double>(
       tween: Tween(end: v),
       duration: reduceMotion ? Duration.zero : SahneMotion.answerReveal,
       curve: Curves.easeOutCubic,
       builder: (context, animated, _) => SizedBox(
-        height: 8,
+        height: height,
         child: DecoratedBox(
           decoration: ShapeDecoration(
-            color: t.s3,
+            color: trackColor ?? t.s3,
             shape: SahneShape.withSide(
-              SahneShape.s,
-              sahneTrackEdge(t),
+              pill,
+              // İnce çubukta (< 6) 1 px kenar çubuğun yarısını yerdi.
+              height < 6
+                  ? Colors.transparent
+                  : (edgeColor ?? sahneTrackEdge(t)),
               width: 1,
             ),
           ),
@@ -76,7 +112,7 @@ class SahneProgressBar extends StatelessWidget {
               widthFactor: animated,
               heightFactor: 1,
               child: DecoratedBox(
-                decoration: ShapeDecoration(color: fill, shape: SahneShape.s),
+                decoration: ShapeDecoration(color: fill, shape: pill),
               ),
             ),
           ),
@@ -320,6 +356,92 @@ class SahneLessonDiamond extends StatelessWidget {
           child: _DiamondLabel(text: '$done/$total', color: t.tx, size: size),
         ),
       ),
+    );
+  }
+}
+
+/// Sade sayaç — oyun sahnesinin üst satırındaki küçük saniye göstergesi:
+/// saat ikonu + tablo rakamlı saniye ("17").
+///
+/// 2026-10-19 sadeleşme: 60 px'lik elmas sayaç, arkasındaki hale ve ışık
+/// huzmesi sahnenin en parlak, en büyük öğesiydi ve soru okunurken gözü
+/// metinden çekiyordu. Bilgi aynı (kalan saniye), ağırlık küçüldü. Son
+/// [hotSeconds] saniyede ikon ve sayı Boyax metnine döner (gerilim yalnız
+/// renkle değil sayının kendisiyle de okunur); hale ve nabız yok. Ekran
+/// okuyucu [semanticLabel]ı okur ("17 saniye kaldı").
+class SahneStageTimer extends StatelessWidget {
+  const SahneStageTimer({
+    super.key,
+    required this.secondsLeft,
+    required this.semanticLabel,
+    this.hotSeconds = 5,
+    this.onBand = false,
+  });
+
+  /// Renkli konu bandının üstünde (soru ekranı): normalde beyaz; gerilim
+  /// saniyelerinde beyaz hap + koyu kehribar/kırmızı sayı (bandın renginden
+  /// bağımsız okunur).
+  final bool onBand;
+
+  final int secondsLeft;
+
+  /// Ör. "17 saniye kaldı".
+  final String semanticLabel;
+
+  /// Bu saniyeye ve altına inince Boyax.
+  final int hotSeconds;
+
+  bool get isHot => secondsLeft <= hotSeconds;
+
+  /// Kurul 5. tur 2026-10-20 (Opus, Grok): sayı küçük ve gri kalıyordu, soru
+  /// ekranında süre en önemli bilgilerden biri. Normalde birincil metin,
+  /// kalın, 20 px; ≤ [hotSeconds] kehribar; ≤ 3 sn kırmızı. Duraklatılmışta
+  /// ([hotSeconds] < 0) gerilim rengi yok.
+  static const double _redSeconds = 3;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final red = isHot && secondsLeft <= _redSeconds;
+    const day = SahneTokens.day;
+    final color = onBand
+        ? (isHot ? (red ? day.errTx : day.shortfallTx) : SahneVivid.onFill)
+        : (red ? t.errTx : (isHot ? t.shortfallTx : t.tx));
+    final row = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(AppIcons.clock, size: 20, color: color),
+        const SizedBox(width: SahneSpace.x1),
+        Text(
+          '$secondsLeft',
+          key: const ValueKey('stage-timer-seconds'),
+          style: SahneType.headline.copyWith(
+            color: color,
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
+            fontFeatures: const [FontFeature.tabularFigures()],
+          ),
+        ),
+      ],
+    );
+    return Semantics(
+      label: semanticLabel,
+      excludeSemantics: true,
+      child: onBand && isHot
+          ? DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: SahneVivid.onFill,
+                shape: StadiumBorder(),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SahneSpace.x2,
+                  vertical: SahneSpace.x1,
+                ),
+                child: row,
+              ),
+            )
+          : row,
     );
   }
 }

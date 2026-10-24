@@ -93,6 +93,7 @@ MAPPING = {
     "copy": "copy",
     "dice": "dice-5",  # tek zar
     "doorOpen": "door-open",
+    "ferrisWheel": "ferris-wheel",  # günlük çark (zar değil)
     "envelope": "mail",
     "eye": "eye",
     "eyeSlash": "eye-off",
@@ -100,6 +101,7 @@ MAPPING = {
     "faceSmile": "smile",
     "fire": "flame",
     "flag": "flag",
+    "ellipsisVertical": "ellipsis-vertical",
     "floppyDisk": "save",
     "font": "type",
     "forward": "skip-forward",  # "soruyu atla"

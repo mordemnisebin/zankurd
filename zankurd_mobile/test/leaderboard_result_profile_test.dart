@@ -538,8 +538,12 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Profil açıldığında henüz rozet yok.
-    expect(find.text('İlk oyun'), findsNothing);
+    // Profil açıldığında henüz rozet yok: "İlk oyun" yalnız kilitli
+    // siluet olarak görünür (2026-10-22), kazanılmış çip olarak değil.
+    expect(
+      find.byKey(const ValueKey('profile-locked-rewards')),
+      findsOneWidget,
+    );
 
     // Profil tabı dışındayken bir quiz tamamlanıp rozet açılmış gibi yap.
     final store = await AchievementStore.load();

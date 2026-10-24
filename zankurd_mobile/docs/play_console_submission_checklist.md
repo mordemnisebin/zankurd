@@ -55,6 +55,8 @@ Base the Data Safety form on actual production configuration:
 - [ ] App activity: quiz scores, leaderboard entries, coin balance, daily spin state, favorites, reported questions.
 - [ ] App interactions: Firebase Analytics events (screen opened, round started/completed, language changed).
 - [ ] Device or other identifiers: Firebase app-installation identifier used for analytics; not advertising and not tracking.
+- [ ] Device or other identifiers: FCM push token (`profiles.fcm_token`), linked to the account, used only to deliver friend-request and duel notifications (App functionality); cleared on sign-out.
+- [ ] App activity / Other: learning progress backup (`player_progress`: streak, badges, level path, mastery, review queue), linked to the account so it survives sign-out and a new device; deleted with the account (since 2.0.3).
 - [ ] Purchases: RevenueCat subscription state, if premium packages are enabled for the release.
 - [ ] Diagnostics: Firebase Crashlytics crash data on supported platforms.
 - [ ] Data is transmitted over HTTPS.

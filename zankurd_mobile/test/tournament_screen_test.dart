@@ -77,7 +77,18 @@ void main() {
       expect(find.textContaining('4 soru/maç'), findsOneWidget);
       expect(find.textContaining('bot'), findsNothing);
       expect(find.textContaining('Cumartesi'), findsNothing);
-      expect(find.text('Kontenjan dolunca başlar'), findsOneWidget);
+      // Kurul 2. tur: başlama koşulu TEK cümle, kahramanın alt satırında
+      // (ikinci yarım cümle format kartından kalktı).
+      expect(
+        find.text(
+          'Kontenjan dolunca başlar; en geç 24 saat içinde, eldeki oyuncularla',
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.text('En geç 24 saat içinde, eldeki oyuncularla'),
+        findsNothing,
+      );
       expect(find.text('Turnuvaya katıl'), findsOneWidget);
       final startButton = tester.widget(
         find.byKey(const ValueKey('tournament-primary-cta')),

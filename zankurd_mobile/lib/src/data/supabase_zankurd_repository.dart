@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' show min;
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,24 +7,32 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'durable_write.dart';
 import '../models/async_duel.dart';
+import '../models/match_history.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
+import '../models/add_friend_outcome.dart';
 import '../models/friend.dart';
 import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
+import '../models/public_profile.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../models/room_invite.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
 import '../models/referral_result.dart';
 import '../providers/analytics_consent_provider.dart';
 import '../services/apple_revocation.dart';
+import '../utils/client_round_id.dart';
 import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
 import '../config/category_visibility.dart';
+import 'lesson_completion_store.dart';
+import 'learning_lesson_aliases.dart';
+import 'local_progress_scope.dart';
 import 'mock_zankurd_repository.dart';
 import 'xp_store.dart';
 import 'zankurd_repository.dart';
@@ -42,6 +51,12 @@ RoomStatus _roomStatusFromValue(Object? value) {
     _ => RoomStatus.lobby,
   };
 }
+
+/// Odanın gösterim adı. 2 kişilik oda eskiden olduğu gibi '1vs1'; kalabalık
+/// odanın başlığı ekranda dile göre çizilir (`K.crowdRoomTitle`), burada
+/// yalnız ayırt edici bir ad tutulur.
+String _roomDisplayName(int maxPlayers, bool isCustom) =>
+    isCustom && maxPlayers > 2 ? 'crowd' : '1vs1';
 
 Map<String, dynamic> _requiredJsonObject(Object? value, String field) {
   if (value is! Map) {
@@ -77,6 +92,14 @@ int _requiredInt(Map<String, dynamic> json, List<String> keys) {
   throw FormatException('${keys.join('/')} must be an integer.');
 }
 
+/// `get_my_favorite_questions` tek çağrıda en çok 200 kimlik alır; parça
+/// boyutu bunun çok altında tutulur.
+const _favoriteResolveChunk = 50;
+
+final _uuidPattern = RegExp(
+  r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$',
+);
+
 bool _requiredBool(Map<String, dynamic> json, String key) {
   final value = json[key];
   if (value is bool) return value;
@@ -96,14 +119,18 @@ String? _requiredNullableString(Map<String, dynamic> json, String key) {
   return _optionalString(json, key);
 }
 
-void _requireExactKeys(
+/// Beklenen anahtarların hepsi VAR olmalı; fazlalıklar yok sayılır.
+///
+/// Sunucu cevaplarına zamanla alan eklenir (ör. kalabalık odanın `rank`,
+/// `left`, `max_players`); eski bir istemcinin "bilmediğim alan var" diye
+/// sonucu reddetmesi, oyuncuyu bitmiş maçın sonucundan yoksun bırakırdı.
+void _requireKeys(
   Map<String, dynamic> json,
-  Set<String> expected,
+  Set<String> required,
   String field,
 ) {
-  final actual = json.keys.toSet();
-  if (actual.length != expected.length || !actual.containsAll(expected)) {
-    throw FormatException('$field contains missing or unexpected fields.');
+  if (!json.keys.toSet().containsAll(required)) {
+    throw FormatException('$field is missing required fields.');
   }
 }
 
@@ -176,6 +203,10 @@ ResumedPendingAnswer? _requiredPendingAnswer(Map<String, dynamic> json) {
     responseMs: responseMs,
   );
 }
+
+/// Öneri INSERT politikasının istediği katkı lisansı sürümü (canlı:
+/// `suggested_questions_insert_own`).
+const String suggestedQuestionLicenseVersion = '2026-08-11';
 
 class SupabaseZanKurdRepository implements ZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
@@ -291,6 +322,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       'display_name': displayName,
       'avatar_color': ?avatarColor,
     });
+    _profileCache.remove(user.id);
   }
 
   /// Profil satırı yoksa oluşturur; varsa adı EZMEZ.
@@ -377,7 +409,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   /// açık kalır. `loadAvatarIdentity` bu bayrak açıkken sunucu satırını
   /// okumaz — yoksa bağlantı dönünce eski avatar kullanıcının yüzüne geri
   /// gelirdi (yerel kopya zaten güncel, sunucu satırı henüz değil).
-  static const _avatarIdentityDirtyKey = 'zankurd.avatarIdentity.dirtyPending';
+  ///
+  /// Kullanıcıya göre ayrılır: sabit anahtarla, A'nın bekleyen değişikliği
+  /// aynı cihazdaki B'nin profiline yazılabiliyordu.
+  static String get _avatarIdentityDirtyKey =>
+      LocalProgressScope.physical('zankurd.avatarIdentity.dirtyPending');
 
   Future<bool> _avatarIdentityDirty() async {
     final prefs = await SharedPreferences.getInstance();
@@ -409,6 +445,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             'updated_at': DateTime.now().toUtc().toIso8601String(),
           })
           .eq('id', user.id);
+      _profileCache.remove(user.id);
       await _setAvatarIdentityDirty(false);
       return true;
     } on PostgrestException catch (error, stack) {
@@ -469,6 +506,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<bool> updateAvatarIdentityConfirmed(AvatarIdentity identity) async {
+    await _offline.updateAvatarIdentity(identity);
+    if (client.auth.currentUser == null) return false;
+    return _pushAvatarIdentity(identity);
+  }
+
+  @override
   Future<void> updateAvatarIdentity(AvatarIdentity identity) async {
     // Yereli her durumda güncelle: çevrimdışı görünürlük + fallback tutarlılığı.
     await _offline.updateAvatarIdentity(identity);
@@ -483,32 +527,72 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       throw StateError('Remote service unavailable.');
     }
     final ext = contentType == 'image/png' ? 'png' : 'jpg';
-    final path = '${user.id}/avatar.$ext';
+    // Her yükleme KENDİ yoluna gider (`avatar-<ms>.ext`). Eskiden hep
+    // `avatar.ext` üstüne yazılıyordu: kullanıcı fotoğrafı değiştirip
+    // vazgeçince temizlik, profilin hâlâ işaret ettiği kayıtlı fotoğrafı da
+    // siliyordu. Sunucu regex'i bu eki `2026-10-17_profil_veri.sql` ile kabul eder.
+    final path =
+        '${user.id}/avatar-${DateTime.now().millisecondsSinceEpoch}.$ext';
     await client.storage
         .from('avatars')
         .uploadBinary(
           path,
           bytes,
-          fileOptions: FileOptions(contentType: contentType, upsert: true),
+          // upsert: false — yol zaten her yüklemede benzersiz. Storage
+          // upsert'te `INSERT ... ON CONFLICT DO UPDATE ... RETURNING` yapar
+          // ve RLS SELECT politikası da ister; 2026-08-01 sertleştirmesi
+          // (security_advisor_hardening) avatars için SELECT politikasını
+          // kaldırdığından o günden beri her fotoğraf yüklemesi 403 ile
+          // düşüyordu (canlıda ağustostan sonra tek nesne yok). INSERT
+          // politikası tek başına yeter.
+          fileOptions: FileOptions(contentType: contentType, upsert: false),
         );
-    // Aynı yol üzerine yazıldığı için URL sabit kalır; önbellek kırıcı ekle.
-    final publicUrl = client.storage.from('avatars').getPublicUrl(path);
-    return '$publicUrl?v=${DateTime.now().millisecondsSinceEpoch}';
+    return client.storage.from('avatars').getPublicUrl(path);
+  }
+
+  /// Genel avatar URL'sinden kovadaki nesne yolunu çıkarır; yalnız çağıranın
+  /// kendi klasöründeki nesneler döner (başkasının yolu silinmeye çalışılmaz).
+  @visibleForTesting
+  static String? avatarObjectPath(String url, String userId) {
+    const marker = '/avatars/';
+    final at = url.indexOf(marker);
+    if (at < 0) return null;
+    var path = url.substring(at + marker.length);
+    final q = path.indexOf('?');
+    if (q >= 0) path = path.substring(0, q);
+    if (!path.startsWith('$userId/') || path.contains('..')) return null;
+    return path;
   }
 
   @override
-  Future<void> deleteAvatarPhoto() async {
+  Future<void> deleteAvatarPhoto({List<String> urls = const []}) async {
     final user = client.auth.currentUser;
     if (user == null) {
       throw StateError('Remote service unavailable.');
     }
     // Uzantı içerik türünden seçiliyor (`uploadAvatarPhoto`), yani aynı
     // kullanıcının geçmişte hem .png hem .jpg nesnesi olabilir. İkisini de
-    // kaldırmak gerekir; `remove` var olmayan yolu sorun etmez.
-    await client.storage.from('avatars').remove([
+    // kaldırmak gerekir; `remove` var olmayan yolu sorun etmez. Zaman
+    // damgalı yollar listelenemediği için çağıran URL'lerini verir.
+    final paths = <String>{
       '${user.id}/avatar.jpg',
       '${user.id}/avatar.png',
-    ]);
+      for (final url in urls) ?avatarObjectPath(url, user.id),
+    };
+    await client.storage.from('avatars').remove(paths.toList());
+  }
+
+  @override
+  Future<void> deleteAvatarPhotoObjects(List<String> urls) async {
+    final user = client.auth.currentUser;
+    if (user == null) {
+      throw StateError('Remote service unavailable.');
+    }
+    final paths = <String>{
+      for (final url in urls) ?avatarObjectPath(url, user.id),
+    };
+    if (paths.isEmpty) return;
+    await client.storage.from('avatars').remove(paths.toList());
   }
 
   /// Oturumdaki hesabın Apple kimliği var mı (testlerde geçersiz kılınır).
@@ -593,7 +677,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final totalScore = (row['total_score'] as num?)?.toInt() ?? 0;
       if (rank <= 0 || totalScore <= 0) return null;
 
+      final tags = await _publicProfilesById([row['player_id'] as String?]);
       return LeaderboardEntry(
+        playerTag: tags[row['player_id'] as String?]?.playerTag,
         rank: rank,
         playerId: row['player_id'] as String? ?? '',
         displayName: row['display_name'] as String? ?? 'Oyuncu',
@@ -725,8 +811,16 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
-    return _offline.loadDailyQuestions(limit: limit);
+  Future<List<QuizQuestion>> loadDailyQuestions({
+    int limit = 10,
+    bool replay = false,
+  }) async {
+    return _offline.loadDailyQuestions(limit: limit, replay: replay);
+  }
+
+  @override
+  Future<List<QuizQuestion>> loadDailyEventQuestions({int limit = 10}) async {
+    return _offline.loadDailyEventQuestions(limit: limit);
   }
 
   @override
@@ -748,6 +842,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   }) async {
     try {
       if (client.auth.currentUser == null) {
@@ -755,49 +850,106 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }
       await ensureProfile();
 
+      // `category` seçimi tek dizgede taşır: `Tevlihev` = Karışık (hepsi),
+      // `A, B` = çoklu, `A` = tek kategori. Hepsi `create_online_room_v2`ye
+      // gider (yalnız o 6 rakamlı kod üretir; boş dizi = Karışık). Eski
+      // 5 parametreli RPC mağazadaki sürümler içindir.
+      final isMixed = category == 'Tevlihev';
+      final picked = category
+          .split(',')
+          .map((c) => c.trim())
+          .where((c) => c.isNotEmpty)
+          .toList(growable: false);
       final response = await client.rpc(
-        'create_online_room',
+        'create_online_room_v2',
         params: {
-          'p_category_name': category,
+          'p_category_names': isMixed ? const <String>[] : picked,
           'p_seconds_per_question': secondsPerQuestion,
           'p_question_count': questionCount,
           'p_entry_fee': entryFee,
+          // Kapasite 2 iken istek eskisiyle birebir aynı gider (sunucuda
+          // 5. parametrenin varsayılanı 2); yalnız kalabalık oda gönderir.
+          if (maxPlayers != 2) 'p_max_players': maxPlayers,
         },
       );
-      final snapshot = _requiredJsonObject(response, 'create_online_room');
-      final roomId = _requiredString(snapshot, const ['room_id']);
-      final roomCode = _requiredString(snapshot, const ['code']);
-      final hostId = _requiredString(snapshot, const ['host_id']);
-      final canonicalCategory = _requiredString(snapshot, const [
-        'category_name',
-      ]);
-      final serverQuestionCount = _requiredInt(snapshot, const [
-        'question_count',
-      ]);
-      final serverSeconds = _requiredInt(snapshot, const [
-        'seconds_per_question',
-      ]);
-      final serverEntryFee = snapshot['entry_fee'] != null
-          ? (snapshot['entry_fee'] as num).toInt()
-          : entryFee;
-
-      final players = await _loadRoomPlayersById(roomId);
-      return GameRoom(
-        id: roomId,
-        name: '1vs1',
-        code: roomCode,
-        category: canonicalCategory,
-        players: players,
-        status: _roomStatusFromValue(snapshot['status'] ?? 'lobby'),
-        questionCount: serverQuestionCount,
-        secondsPerQuestion: serverSeconds,
-        entryFee: serverEntryFee,
-        hostId: hostId,
+      final snapshot = _requiredJsonObject(response, 'create_online_room_v2');
+      return _roomFromCreateSnapshot(
+        snapshot,
+        fallbackEntryFee: entryFee,
+        fallbackMaxPlayers: maxPlayers,
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'createOnlineRoom failed');
       rethrow;
     }
+  }
+
+  /// `create_online_room_v2` ve `create_room_rematch` AYNI biçimde JSON döner
+  /// (room_id, code, host_id, category_name, ...); ikisi de bu tek yoldan
+  /// [GameRoom]a çevrilir ki alan eşlemesi iki yerde ayrışmasın.
+  Future<GameRoom> _roomFromCreateSnapshot(
+    Map<String, dynamic> snapshot, {
+    int fallbackEntryFee = 0,
+    int fallbackMaxPlayers = 2,
+  }) async {
+    final roomId = _requiredString(snapshot, const ['room_id']);
+    final roomCode = _requiredString(snapshot, const ['code']);
+    final hostId = _requiredString(snapshot, const ['host_id']);
+    final canonicalCategory = _requiredString(snapshot, const [
+      'category_name',
+    ]);
+    final serverQuestionCount = _requiredInt(snapshot, const [
+      'question_count',
+    ]);
+    final serverSeconds = _requiredInt(snapshot, const [
+      'seconds_per_question',
+    ]);
+    final serverEntryFee = snapshot['entry_fee'] != null
+        ? (snapshot['entry_fee'] as num).toInt()
+        : fallbackEntryFee;
+    // Eski sunucu bu iki alanı hiç döndürmez: tolere edilir, 2 kişilik.
+    final serverMaxPlayers =
+        (snapshot['max_players'] as num?)?.toInt() ?? fallbackMaxPlayers;
+    final serverIsCustom = snapshot['is_custom'] as bool? ?? true;
+
+    final players = await _loadRoomPlayersById(roomId);
+    return GameRoom(
+      id: roomId,
+      name: _roomDisplayName(serverMaxPlayers, serverIsCustom),
+      code: roomCode,
+      category: canonicalCategory,
+      players: players,
+      status: _roomStatusFromValue(snapshot['status'] ?? 'lobby'),
+      questionCount: serverQuestionCount,
+      secondsPerQuestion: serverSeconds,
+      entryFee: serverEntryFee,
+      hostId: hostId,
+      maxPlayers: serverMaxPlayers,
+      isCustom: serverIsCustom,
+    );
+  }
+
+  @override
+  Future<GameRoom> createRoomRematch(String roomId) async {
+    client.auth.currentUser ?? await signInAnonymously();
+    final dynamic response;
+    try {
+      response = await client.rpc(
+        'create_room_rematch',
+        params: {'p_room_id': roomId},
+      );
+    } on PostgrestException catch (error, stack) {
+      // Sunucu düz metinle reddeder; sebep çevrilir (UI genel "oda
+      // açılamadı" der, ama istisna türü çağırana ayrım yaptırır).
+      _recordError(error, stack, reason: 'createRoomRematch rejected');
+      throw RoomRematchException(
+        roomRematchFailureReasonForMessage(error.message),
+        error.message,
+      );
+    }
+    final rawSnapshot = response is List ? response.firstOrNull : response;
+    final snapshot = _requiredJsonObject(rawSnapshot, 'create_room_rematch');
+    return _roomFromCreateSnapshot(snapshot);
   }
 
   @override
@@ -812,7 +964,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     late final dynamic response;
     try {
       response = await client.rpc(
-        'join_room_by_code',
+        // v2: yanlış kod denemesini kalıcı sayar (6 haneli kod kaba kuvvet
+        // sınırı) ve bulunamadığında istisna yerine JSON `error` döndürür.
+        'join_room_by_code_v2',
         params: {'p_code': normalizedCode},
       );
     } on PostgrestException catch (error, stack) {
@@ -824,9 +978,23 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
     final rawSnapshot = response is List ? response.firstOrNull : response;
     if (rawSnapshot == null) {
-      throw StateError('join_room_by_code boş yanıt döndürdü: oda bulunamadı');
+      throw StateError(
+        'join_room_by_code_v2 boş yanıt döndürdü: oda bulunamadı',
+      );
     }
-    final room = _requiredJsonObject(rawSnapshot, 'join_room_by_code');
+    final room = _requiredJsonObject(rawSnapshot, 'join_room_by_code_v2');
+    final softError = room['error'];
+    if (softError is String) {
+      _recordError(
+        StateError('joinOnlineRoom soft error: $softError'),
+        StackTrace.current,
+        reason: 'joinOnlineRoom rejected',
+      );
+      throw RoomJoinException(
+        roomJoinFailureReasonForMessage(softError),
+        softError,
+      );
+    }
     final roomId = _requiredString(room, const ['room_id']);
     final hostId = _requiredString(room, const ['host_id']);
     final players = await _loadRoomPlayersById(roomId);
@@ -840,7 +1008,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // başlıkla açılıyordu. `createOnlineRoom`/`loadRoomSnapshot`
       // (ev sahibi ve sonraki yeniden-yüklemeler) zaten '1vs1' kullanıyor
       // (2026-08-14 denetimi).
-      name: '1vs1',
+      name: _roomDisplayName(
+        (room['max_players'] as num?)?.toInt() ?? 2,
+        room['is_custom'] as bool? ?? false,
+      ),
       code: room['code'] as String,
       questionCount: room['question_count'] as int? ?? 10,
       players: players,
@@ -849,6 +1020,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           (room['seconds_per_question'] as int?) ??
           GameRoom.defaultSecondsPerQuestion,
       entryFee: (room['entry_fee'] as num?)?.toInt() ?? 0,
+      // Eski sunucu bu alanları döndürmez: 2 kişilik, eşleşme dışı sayılır.
+      maxPlayers: (room['max_players'] as num?)?.toInt() ?? 2,
+      isCustom: room['is_custom'] as bool? ?? false,
     );
 
     // Katılan oyuncu `join_room_by_code`un yazdığı gibi HAZIR DEĞİL başlar.
@@ -873,16 +1047,18 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .from('rooms')
         .select(
           'id, code, host_id, question_count, seconds_per_question, entry_fee, status, '
-          'categories(name)',
+          'max_players, is_custom, categories(name)',
         )
         .eq('id', roomId)
         .single();
     final players = await _loadRoomPlayersById(roomId);
     final category = row['categories'] as Map<String, dynamic>?;
+    final rowMaxPlayers = (row['max_players'] as num?)?.toInt() ?? 2;
+    final rowIsCustom = row['is_custom'] as bool? ?? false;
 
     return GameRoom(
       id: row['id'] as String? ?? roomId,
-      name: '1vs1',
+      name: _roomDisplayName(rowMaxPlayers, rowIsCustom),
       code: row['code'] as String? ?? '',
       category: category?['name'] as String? ?? 'Ziman',
       players: players,
@@ -893,6 +1069,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           GameRoom.defaultSecondsPerQuestion,
       entryFee: (row['entry_fee'] as num?)?.toInt() ?? 0,
       hostId: row['host_id'] as String?,
+      maxPlayers: rowMaxPlayers,
+      isCustom: rowIsCustom,
     );
   }
 
@@ -972,9 +1150,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<RoomResultSnapshot?> loadMyPendingRoomResult() async {
     final response = await client.rpc('get_my_pending_room_result');
-    return _parseRoomResultResponse(
-      response,
-      source: 'get_my_pending_room_result',
+    return _withResultProfiles(
+      _parseRoomResultResponse(response, source: 'get_my_pending_room_result'),
     );
   }
 
@@ -988,10 +1165,39 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       'get_my_room_result',
       params: {'p_room_id': roomId},
     );
-    return _parseRoomResultResponse(
-      response,
-      source: 'get_my_room_result',
-      expectedRoomId: roomId,
+    return _withResultProfiles(
+      _parseRoomResultResponse(
+        response,
+        source: 'get_my_room_result',
+        expectedRoomId: roomId,
+      ),
+    );
+  }
+
+  /// Sonuç yükü yalnız ad döndürür (boşsa 'Hevrik'); fotoğraf, simge ve
+  /// oyuncu kodu herkese açık profilden tamamlanır. Profil okunamazsa
+  /// sunucunun yüküyle devam edilir — sonuç ekranı bu yüzden bekletilmez.
+  Future<RoomResultSnapshot?> _withResultProfiles(
+    RoomResultSnapshot? snapshot,
+  ) async {
+    if (snapshot == null) return null;
+    final profiles = await _publicProfilesById([
+      for (final p in snapshot.room.players) p.id,
+    ]);
+    if (profiles.isEmpty) return snapshot;
+    return RoomResultSnapshot(
+      room: snapshot.room.copyWith(
+        players: [
+          for (final p in snapshot.room.players) p.withProfile(profiles[p.id]),
+        ],
+      ),
+      ownPlayerId: snapshot.ownPlayerId,
+      questionIds: snapshot.questionIds,
+      answers: snapshot.answers,
+      winnerId: snapshot.winnerId,
+      endedReason: snapshot.endedReason,
+      forfeitedBy: snapshot.forfeitedBy,
+      finishedAt: snapshot.finishedAt,
     );
   }
 
@@ -1003,7 +1209,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     if (response == null) return null;
 
     final json = _requiredJsonObject(response, source);
-    _requireExactKeys(json, const {
+    _requireKeys(json, const {
       'room',
       'own_player_id',
       'players',
@@ -1016,7 +1222,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }, source);
 
     final roomJson = _requiredJsonObject(json['room'], 'room');
-    _requireExactKeys(roomJson, const {
+    _requireKeys(roomJson, const {
       'id',
       'code',
       'host_id',
@@ -1041,22 +1247,39 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       'seconds_per_question',
     ]);
     final hostId = _requiredNullableString(roomJson, 'host_id');
+    // Eski sunucu bu ikisini göndermez: 2 kişilik, eşleşme/1v1 sayılır.
+    final maxPlayers = (roomJson['max_players'] as num?)?.toInt() ?? 2;
+    final isCustom = roomJson['is_custom'] as bool? ?? false;
+    final crowd = isCustom && maxPlayers > 2;
+    // Kalabalık odada kalan aktif sayısı 2'nin altına düşünce oda erken
+    // biter: soru dizini sondan önce kalır ve oyuncunun cevapları eksik
+    // olabilir. 1v1/2 kişilik odada bitiş her zaman tam olmalıdır.
+    final terminalIndexOk = crowd
+        ? currentQuestionIndex >= 0 && currentQuestionIndex <= questionCount
+        : currentQuestionIndex == questionCount;
     if (statusValue != 'finished' ||
         questionCount < 1 ||
-        currentQuestionIndex != questionCount ||
+        !terminalIndexOk ||
         !GameRoom.allowedSecondsPerQuestion.contains(secondsPerQuestion)) {
       throw const FormatException('Room result is not terminal and complete.');
     }
 
     final ownPlayerId = _requiredString(json, const ['own_player_id']);
     final rawPlayers = json['players'];
-    if (rawPlayers is! List || rawPlayers.length != 2) {
-      throw const FormatException('players must contain exactly two players.');
+    if (rawPlayers is! List ||
+        (crowd
+            ? rawPlayers.length < 2 || rawPlayers.length > maxPlayers
+            : rawPlayers.length != 2)) {
+      throw FormatException(
+        crowd
+            ? 'players must contain 2..$maxPlayers players.'
+            : 'players must contain exactly two players.',
+      );
     }
     final players = rawPlayers
         .map((rawPlayer) {
           final player = _requiredJsonObject(rawPlayer, 'players[]');
-          _requireExactKeys(player, const {
+          _requireKeys(player, const {
             'player_id',
             'display_name',
             'final_score',
@@ -1069,19 +1292,35 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
               'Final score and streak must be non-negative.',
             );
           }
+          int? rank;
+          var left = false;
+          if (crowd) {
+            left = _requiredBool(player, 'left');
+            final rawRank = player['rank'];
+            rank = rawRank == null
+                ? null
+                : _requiredInt(player, const ['rank']);
+            // Ayrılan sıralamaya girmez; aktif oyuncunun sırası 1'den başlar.
+            if (left ? rank != null : (rank == null || rank < 1)) {
+              throw const FormatException('Player rank and left disagree.');
+            }
+          }
           return Player(
             id: _requiredString(player, const ['player_id']),
             name: _requiredString(player, const ['display_name']),
             score: score,
             state: Player.readyState,
             streak: streak,
+            rank: rank,
+            left: left,
           );
         })
         .toList(growable: false);
     final playerIds = players.map((player) => player.id!).toSet();
-    if (playerIds.length != 2 || !playerIds.contains(ownPlayerId)) {
+    if (playerIds.length != players.length ||
+        !playerIds.contains(ownPlayerId)) {
       throw const FormatException(
-        'Result players are not two distinct members.',
+        'Result players are not distinct members including the owner.',
       );
     }
     if (hostId != null && !playerIds.contains(hostId)) {
@@ -1109,13 +1348,16 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
 
     final rawAnswers = json['answers'];
-    if (rawAnswers is! List || rawAnswers.length != questionCount) {
+    if (rawAnswers is! List ||
+        (crowd
+            ? rawAnswers.length > questionCount
+            : rawAnswers.length != questionCount)) {
       throw const FormatException('answers must contain every own answer.');
     }
     final answers = <ResumedAnswer>[];
     for (var index = 0; index < rawAnswers.length; index++) {
       final answer = _requiredJsonObject(rawAnswers[index], 'answers[]');
-      _requireExactKeys(answer, const {
+      _requireKeys(answer, const {
         'question_id',
         'question_index',
         'selected_option',
@@ -1174,7 +1416,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (!answer.isCorrect) break;
       ownStreak++;
     }
-    if (ownPlayer.score != ownScore || ownPlayer.streak != ownStreak) {
+    // Seri sunucuda yalnız AÇIKLANMIŞ sorulardan sayılır; erken biten
+    // kalabalık odada son cevap açıklanmamış kalabilir. Skor ise sunucuda
+    // cevap puanlarının toplamıyla eşitlenmiş olmak zorundadır.
+    if (ownPlayer.score != ownScore ||
+        (!crowd && ownPlayer.streak != ownStreak)) {
       throw const FormatException('Own final score does not match answers.');
     }
 
@@ -1184,21 +1430,28 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       throw const FormatException('Room result is not a normal completion.');
     }
     final winnerId = _requiredNullableString(json, 'winner_id');
-    final sortedPlayers = [...players]
-      ..sort((a, b) {
-        final scoreOrder = b.score.compareTo(a.score);
-        return scoreOrder != 0 ? scoreOrder : a.id!.compareTo(b.id!);
-      });
-    final expectedWinner = sortedPlayers[0].score == sortedPlayers[1].score
+    // Kalabalıkta kazanan, AKTİF oyuncular içinde tek başına en yüksek
+    // skorlu kişidir (ayrılanlar hesaba girmez); tepede eşitlik varsa null.
+    final contenders = crowd
+        ? players.where((player) => !player.left).toList()
+        : [...players];
+    contenders.sort((a, b) {
+      final scoreOrder = b.score.compareTo(a.score);
+      return scoreOrder != 0 ? scoreOrder : a.id!.compareTo(b.id!);
+    });
+    final expectedWinner =
+        contenders.isEmpty ||
+            (contenders.length > 1 &&
+                contenders[0].score == contenders[1].score)
         ? null
-        : sortedPlayers[0].id;
+        : contenders.first.id;
     if (winnerId != expectedWinner) {
       throw const FormatException('winner_id does not match final scores.');
     }
 
     final room = GameRoom(
       id: roomId,
-      name: '1vs1',
+      name: _roomDisplayName(maxPlayers, isCustom),
       code: _requiredString(roomJson, const ['code']),
       category: _requiredString(roomJson, const ['category_name']),
       players: List.unmodifiable(players),
@@ -1206,6 +1459,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       questionCount: questionCount,
       secondsPerQuestion: secondsPerQuestion,
       hostId: hostId,
+      maxPlayers: maxPlayers,
+      isCustom: isCustom,
     );
     return RoomResultSnapshot(
       room: room,
@@ -1243,7 +1498,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final roomId = room.id;
     if (roomId == null) return null;
 
-    await client.rpc('mark_room_client_ready', params: {'p_room_id': roomId});
+    final response = await client.rpc(
+      'mark_room_client_ready',
+      params: {'p_room_id': roomId},
+    );
+    // Kalabalık odada hazır süresi dolunca hazır olmayan oyuncu oyundan
+    // düşer ve `status: 'left'` alır. Sürdürülebilir oda artık onu
+    // döndürmeyeceğinden bunu ayrıca bildirmezsek istemci sonsuza dek
+    // "hazırlanıyor" ekranında beklerdi.
+    if (response is Map && response['status'] == 'left') {
+      throw const RoomMemberLeftException();
+    }
     return _loadExpectedRoomResume(roomId);
   }
 
@@ -1280,7 +1545,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       params: {'p_room_id': roomId},
     );
     final json = _requiredJsonObject(response, 'leave_room');
-    _requireExactKeys(json, const {
+    // Kalabalık lobide host çıkınca cevap `new_host_id` da taşır; üç temel
+    // alan zorunlu, fazlalık yok sayılır.
+    _requireKeys(json, const {
       'status',
       'reason',
       'forfeited_by',
@@ -1289,7 +1556,32 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       status: _requiredString(json, const ['status']),
       reason: _requiredString(json, const ['reason']),
       forfeitedBy: _requiredNullableString(json, 'forfeited_by'),
+      newHostId: _optionalString(json, 'new_host_id'),
     );
+  }
+
+  bool _answerProgressSupported = true;
+
+  @override
+  Future<RoomAnswerProgress?> loadRoomAnswerProgress(GameRoom room) async {
+    final roomId = room.id;
+    // Göç uygulanmamış sunucuda RPC yok: oturum boyunca bir daha sorma,
+    // başlık "Diğer oyuncular bekleniyor" metninde kalır.
+    if (roomId == null || !_answerProgressSupported) return null;
+    try {
+      final response = await client.rpc(
+        'get_room_answer_progress',
+        params: {'p_room_id': roomId},
+      );
+      return RoomAnswerProgress.tryParse(response);
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) {
+        _answerProgressSupported = false;
+        return null;
+      }
+      _recordError(error, stack, reason: 'loadRoomAnswerProgress failed');
+      rethrow;
+    }
   }
 
   @override
@@ -1360,15 +1652,33 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .from('room_messages')
         .stream(primaryKey: ['id'])
         .eq('room_id', roomId)
-        .order('created_at')
-        .map(
-          (rows) => rows
-              .map(
-                (row) =>
-                    RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
-              )
-              .toList(),
+        // Akış `order`ının varsayılanı AZALAN (`ascending: false`); sohbet
+        // listesi eski üstte/yeni altta bekler (2026-10-21 ters sohbet).
+        .order('created_at', ascending: true)
+        .asyncMap(
+          (rows) => _withSenderProfiles([
+            for (final row in rows)
+              RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
+          ]),
         );
+  }
+
+  /// Sohbet satırı yalnız gönderim anındaki adı/rengi taşır; fotoğraf ve
+  /// güncel ad herkese açık profilden gelir. Aynı oyuncu için yeniden
+  /// sorulmaz (oda ömrü boyunca önbellek).
+  final Map<String, PublicProfile> _chatProfiles = {};
+
+  Future<List<RoomMessage>> _withSenderProfiles(
+    List<RoomMessage> messages,
+  ) async {
+    final missing = {
+      for (final m in messages)
+        if (!_chatProfiles.containsKey(m.senderId)) m.senderId,
+    };
+    if (missing.isNotEmpty) {
+      _chatProfiles.addAll(await _publicProfilesById(missing));
+    }
+    return [for (final m in messages) m.withProfile(_chatProfiles[m.senderId])];
   }
 
   @override
@@ -1379,12 +1689,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .select('*')
           .eq('room_id', roomId)
           .order('created_at');
-      return rows
-          .map(
-            (row) =>
-                RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
-          )
-          .toList();
+      return _withSenderProfiles([
+        for (final row in rows)
+          RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
+      ]);
     } catch (e, s) {
       _recordError(e, s, reason: 'loadRoomMessages failed');
       return _offline.loadRoomMessages(roomId);
@@ -1427,6 +1735,23 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return true;
     } catch (e, s) {
       _recordError(e, s, reason: 'reportPlayerProfile failed');
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> kickRoomPlayer({
+    required String roomId,
+    required String playerId,
+  }) async {
+    try {
+      await client.rpc(
+        'kick_room_player',
+        params: {'p_room_id': roomId, 'p_player_id': playerId},
+      );
+      return true;
+    } catch (e, s) {
+      _recordError(e, s, reason: 'kickRoomPlayer failed');
       return false;
     }
   }
@@ -1551,6 +1876,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
                 avatarUrl: cachedProfile?['avatar_url'] as String?,
                 avatarFrame: cachedProfile?['avatar_frame'] as String?,
                 showcaseTitle: cachedProfile?['showcase_title'] as String?,
+                tag: cachedProfile?['player_tag'] as String?,
+                left: row['left_at'] != null,
               ),
             );
           }
@@ -1679,11 +2006,20 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<void> reportQuestion(QuizQuestion question, String reason) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
     await ensureProfile();
-    await client.from('question_reports').insert({
-      'question_id': question.id,
-      'reporter_id': user.id,
-      'reason': _clampReportReason(reason),
-    });
+    try {
+      await client.from('question_reports').insert({
+        'question_id': question.id,
+        'reporter_id': user.id,
+        'reason': _clampReportReason(reason),
+      });
+    } on PostgrestException catch (error, stack) {
+      // (reporter_id, question_id) tekil: aynı soruyu ikinci kez bildirmek
+      // zaten kayıtlı demektir. Hata göstermek kullanıcıya "bildirim
+      // başarısız" dedirtiyordu; sayaç RPC'si de ikinci kez çağrılmaz.
+      if (error.code == '23505') return;
+      _recordError(error, stack, reason: 'reportQuestion insert failed');
+      rethrow;
+    }
 
     // Editör kuyruğuna giden sayaç, eski rapor tablosuyla birlikte tutulur.
     // RPC henüz uygulanmamış eski ortamlarda bildirim yine de kaydedilmiş olur.
@@ -1713,29 +2049,24 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final byId = {
         for (final question in _offline.questions) question.id: question,
       };
-      final unresolvedIds = orderedIds
-          .where((id) => !byId.containsKey(id))
-          .toList();
-
-      // `unresolvedIds` çevrimiçi oda maçında kaydedilmiş favorilerdir:
-      // `toggleFavoriteQuestion` gerçek `questions.id` uuid'sini yazar,
-      // paketli bankada karşılığı yoktur. Eskiden bunlar süzülüp
-      // atılıyordu — kayıt sunucuda dururken "Kaydedilen Sorular" hep
-      // boş görünüyordu (2026-08-14 denetimi). Sunucudan çözülürler;
-      // `correct_option` taşımadıkları için `hasHiddenAnswer` ile
-      // işaretlenip yeniden oynatma bu soruları dışarıda bırakır
-      // (favorite_questions_screen.dart).
+      // Paketli bankada bulunmayan kimlikler çevrimiçi oda maçında
+      // kaydedilmiş gerçek `questions.id` uuid'leridir.
+      //
+      // Eskiden `quiz_public_questions` görünümünden okunuyordu; görünüm
+      // `security_invoker` idi ve altındaki `questions` tablosunda istemciye
+      // SELECT verilmediği için her çağrı "permission denied" ile düşüyor,
+      // hata yutulup bu favoriler hiç görünmüyordu. Görünüm 2026-10-15
+      // göçüyle silindi; çözüm artık `get_my_favorite_questions` RPC'sidir
+      // (`2026-10-16_son_bosluklar.sql`): yalnız çağıranın favorilerindeki
+      // onaylı soruların gösterim verisini döndürür, doğru şıkkı ASLA.
+      // Çözülen soru `hasHiddenAnswer` taşır; yeniden oynatma onları dışarıda
+      // bırakır (favorite_questions_screen.dart).
+      final unresolvedIds = <String>{
+        for (final id in orderedIds)
+          if (!byId.containsKey(id) && _uuidPattern.hasMatch(id)) id,
+      }.toList();
       if (unresolvedIds.isNotEmpty) {
-        try {
-          final resolved = await _resolveServerFavoriteQuestions(unresolvedIds);
-          byId.addAll(resolved);
-        } catch (error, stack) {
-          _recordError(
-            error,
-            stack,
-            reason: 'loadFavoriteQuestions server resolve failed',
-          );
-        }
+        byId.addAll(await _resolveServerFavoriteQuestions(unresolvedIds));
       }
 
       final questions = orderedIds
@@ -1745,52 +2076,73 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (questions.isNotEmpty) return questions;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadFavoriteQuestions failed');
+      if (isLikelyOfflineError(error)) rethrow;
       return const [];
     }
     return const [];
   }
 
+  /// Paketli bankada olmayan favori kimliklerini sunucudan çözer.
+  ///
+  /// RPC çağrısı başına en çok 200 kimlik kabul eder; 50'lik parçalar hem
+  /// bunun altında kalır hem de tek isteği küçük tutar. Göç henüz uygulanmamışsa
+  /// (`PGRST202`) sessizce atlanır: o favoriler eskiden de görünmüyordu.
+  /// Taşıma hatası ise YUKARI çıkar: ekran yarım liste ya da yalan bir boş
+  /// durum yerine hata + yeniden dene gösterir. Başka sunucu hataları
+  /// kaydedilir, çözülemeyen favoriler atlanır.
   Future<Map<String, QuizQuestion>> _resolveServerFavoriteQuestions(
     List<String> ids,
   ) async {
-    final rows = await client
-        .from('quiz_public_questions')
-        .select(
-          'id, category_id, prompt, option_a, option_b, option_c, '
-          'option_d, question_type, image_url, difficulty',
-        )
-        .inFilter('id', ids);
-    if (rows.isEmpty) return const {};
-
-    final categoryIds = rows
-        .map((row) => row['category_id'] as String?)
-        .whereType<String>()
-        .toSet()
-        .toList();
-    final categoryNames = <String, String>{};
-    if (categoryIds.isNotEmpty) {
-      final categories = await client
-          .from('categories')
-          .select('id, name')
-          .inFilter('id', categoryIds);
-      for (final row in categories) {
-        categoryNames[row['id'] as String] = row['name'] as String? ?? 'Ziman';
+    final resolved = <String, QuizQuestion>{};
+    for (var start = 0; start < ids.length; start += _favoriteResolveChunk) {
+      final chunk = ids.sublist(
+        start,
+        min(start + _favoriteResolveChunk, ids.length),
+      );
+      try {
+        final response = await client.rpc(
+          'get_my_favorite_questions',
+          params: {'p_ids': chunk},
+        );
+        if (response is! List) continue;
+        for (final row in response.whereType<Map>()) {
+          final question = QuizQuestion.fromServerRow(
+            Map<String, dynamic>.from(row),
+          );
+          resolved[question.id] = question;
+        }
+      } catch (error, stack) {
+        if (error is PostgrestException && error.code == 'PGRST202') {
+          // Göç henüz uygulanmadı: kalan parçalar da aynı yanıtı verir.
+          return resolved;
+        }
+        _recordError(
+          error,
+          stack,
+          reason: 'loadFavoriteQuestions server resolve failed',
+        );
+        if (isLikelyOfflineError(error)) rethrow;
       }
     }
-
-    return {
-      for (final row in rows)
-        row['id'] as String: QuizQuestion.fromServerRow({
-          ...row,
-          'category_name': categoryNames[row['category_id']] ?? 'Ziman',
-        }),
-    };
+    return resolved;
   }
 
   @override
   Future<int> loadCoinBalance() async {
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
+      try {
+        final response = await client.rpc('get_my_coin_balance');
+        if (response is num) return response.toInt();
+      } catch (error, stack) {
+        // Göç (2026-10-15_jeton_bakiyesi.sql) henüz uygulanmamış olabilir.
+        if (!_isMissingFunction(error)) {
+          _recordError(error, stack, reason: 'get_my_coin_balance failed');
+          Error.throwWithStackTrace(error, stack);
+        }
+      }
+      // Yedek yol: PostgREST 1000 satırda keser, çok işlemli hesapta eksik
+      // toplar.
       final rows = await client
           .from('coin_transactions')
           .select('amount')
@@ -1890,6 +2242,95 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<StreakRepairResult> spendStreakRepair({
+    required String monthKey,
+    required String breakDay,
+    required bool premium,
+  }) async {
+    try {
+      final _ = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+      final response = await client.rpc(
+        'spend_streak_repair',
+        params: {
+          'p_month': monthKey,
+          'p_break_day': breakDay,
+          // Sunucu p_premium'u yok sayar (2.2'ye kadar); imza için gönderilir.
+          'p_premium': false,
+        },
+      );
+      if (response is Map<String, dynamic>) {
+        if (response['success'] == true) {
+          if (response['already_repaired'] == true) {
+            return const StreakRepairResult(
+              StreakRepairOutcome.alreadyRepaired,
+            );
+          }
+          return StreakRepairResult(
+            response['paid'] == true
+                ? StreakRepairOutcome.charged
+                : StreakRepairOutcome.free,
+          );
+        }
+        return StreakRepairResult(switch (response['error']) {
+          'insufficient balance' => StreakRepairOutcome.insufficient,
+          'monthly_limit' => StreakRepairOutcome.monthlyLimit,
+          _ => StreakRepairOutcome.failed,
+        });
+      }
+      return const StreakRepairResult(StreakRepairOutcome.failed);
+    } catch (error, stack) {
+      // Göç uygulanmamışsa onarım sunulmaz: idempotent olmayan yedek yol
+      // YOK (çift çekim riski). Çağıran "şu an kullanılamıyor" gösterir.
+      if (!_isMissingFunction(error)) {
+        _recordError(error, stack, reason: 'spendStreakRepair failed');
+      }
+      return const StreakRepairResult(StreakRepairOutcome.failed);
+    }
+  }
+
+  @override
+  Future<AccountFlags?> loadAccountFlags() async {
+    try {
+      if (client.auth.currentUser == null) return null;
+      final response = await client.rpc('get_my_account_flags');
+      if (response is Map<String, dynamic> && response['success'] == true) {
+        return AccountFlags(
+          pushDuel: response['push_duel'] != false,
+          pushSocial: response['push_social'] != false,
+          emailVerifiedAt: DateTime.tryParse(
+            (response['email_verified_at'] as String?) ?? '',
+          ),
+          emailVerifiedAddress: response['email_verified_address'] as String?,
+        );
+      }
+      return null;
+    } catch (error, stack) {
+      if (!_isMissingFunction(error) && !isLikelyOfflineError(error)) {
+        _recordError(error, stack, reason: 'loadAccountFlags failed');
+      }
+      return null;
+    }
+  }
+
+  @override
+  Future<bool> setPushPreferences({bool? duel, bool? social}) async {
+    try {
+      if (client.auth.currentUser == null) return false;
+      final response = await client.rpc(
+        'set_my_push_prefs',
+        params: {'p_duel': duel, 'p_social': social},
+      );
+      return response is Map<String, dynamic> && response['success'] == true;
+    } catch (error, stack) {
+      if (!_isMissingFunction(error) && !isLikelyOfflineError(error)) {
+        _recordError(error, stack, reason: 'setPushPreferences failed');
+      }
+      return false;
+    }
+  }
+
+  @override
   Future<bool> hasPurchased(String itemId) async {
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
@@ -1945,6 +2386,33 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  /// [awardSoloQuizCoins]ın bir sonraki [awardQuizCoins] çağrısına taşıdığı
+  /// tur kimliği. Senkron okunup temizlenir (ilk `await`ten önce); böylece
+  /// başka bir çağrıya sızmaz ve `awardQuizCoins`ı geçersiz kılan testler/alt
+  /// sınıflar aynı yoldan geçer.
+  String? _nextSoloRoundId;
+
+  @override
+  Future<QuizRewardClaim> awardSoloQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+    required String clientRoundId,
+  }) {
+    _nextSoloRoundId = isClientRoundId(clientRoundId) ? clientRoundId : null;
+    try {
+      return awardQuizCoins(
+        score: score,
+        correctCount: correctCount,
+        bestStreak: bestStreak,
+        totalQuestions: totalQuestions,
+      );
+    } finally {
+      _nextSoloRoundId = null;
+    }
+  }
+
   @override
   Future<QuizRewardClaim> awardQuizCoins({
     required int score,
@@ -1953,6 +2421,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     required int totalQuestions,
     GameRoom? room,
   }) async {
+    final soloRoundId = _nextSoloRoundId;
+    _nextSoloRoundId = null;
     // Ödül miktarını yalnızca sunucu belirler. İstemciden
     // coin_transactions'a yazma yolu yoktur. RPC/transport/parse hatası
     // yeniden deneme kuyruğuna alınabilmesi için çağırana taşınır;
@@ -1974,13 +2444,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         throw StateError('Quiz reward owner changed before claim RPC.');
       }
       final response = isSolo
-          ? await client.rpc(
-              'claim_solo_reward',
-              params: {
-                'p_correct_count': correctCount,
-                'p_total_questions': totalQuestions,
-                'p_best_streak': bestStreak,
-              },
+          ? await _claimSolo(
+              correctCount: correctCount,
+              totalQuestions: totalQuestions,
+              bestStreak: bestStreak,
+              clientRoundId: soloRoundId,
             )
           : await client.rpc(
               'claim_quiz_reward',
@@ -2005,7 +2473,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }
       return (
         amount: _verifiedQuizRewardAmount(response, userId: user.id),
-        dailyCapReached: false,
+        dailyCapReached: response is Map && response['cap_reached'] == true,
       );
     } on PostgrestException catch (error, stack) {
       // Göç henüz üretime uygulanmadıysa `claim_solo_reward` yoktur
@@ -2026,6 +2494,39 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     } catch (error, stack) {
       _recordError(error, stack, reason: 'claim quiz reward failed');
       rethrow;
+    }
+  }
+
+  /// `claim_solo_reward`: tur kimliği varsa tekil (4 argümanlı) imza, yoksa
+  /// ya da sunucuda henüz yoksa (göç uygulanmamış: `PGRST202`/`42883`) eski
+  /// 3 argümanlı imza. Eski imza yayındaki sürümlerle aynı davranır.
+  Future<dynamic> _claimSolo({
+    required int correctCount,
+    required int totalQuestions,
+    required int bestStreak,
+    required String? clientRoundId,
+  }) async {
+    final legacy = {
+      'p_correct_count': correctCount,
+      'p_total_questions': totalQuestions,
+      'p_best_streak': bestStreak,
+    };
+    if (clientRoundId == null) {
+      return client.rpc('claim_solo_reward', params: legacy);
+    }
+    try {
+      return await client.rpc(
+        'claim_solo_reward',
+        params: {...legacy, 'p_client_round_id': clientRoundId},
+      );
+    } on PostgrestException catch (error, stack) {
+      if (error.code != 'PGRST202' && error.code != '42883') rethrow;
+      _recordError(
+        error,
+        stack,
+        reason: 'claim_solo_reward round-id signature missing — legacy call',
+      );
+      return client.rpc('claim_solo_reward', params: legacy);
     }
   }
 
@@ -2222,6 +2723,34 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  /// id'ye göre herkese açık kimlik (taze; önbelleğe bakmaz — fotoğraf/ad
+  /// değişmiş olabilir). Hata ve eksik RPC boş harita döner: çağıran eski
+  /// davranışa (baş harf, yer tutucu ad) düşer, ekran bozulmaz.
+  Future<Map<String, PublicProfile>> _publicProfilesById(
+    Iterable<String?> ids,
+  ) async {
+    final unique = <String>{
+      for (final id in ids)
+        if (id != null && id.trim().isNotEmpty) id,
+    }.toList();
+    if (unique.isEmpty) return const {};
+    try {
+      final rows = await _fetchPublicProfiles(unique);
+      return {
+        for (final row in rows)
+          if (row['id'] is String)
+            row['id'] as String: PublicProfile.fromJson(row),
+      };
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'public profiles lookup failed');
+      return const {};
+    }
+  }
+
+  @override
+  Future<Map<String, PublicProfile>> loadPublicProfiles(Iterable<String> ids) =>
+      _publicProfilesById(ids);
+
   int? _amountFromRpcResponse(Object? response) {
     if (response is Map<String, dynamic>) {
       return (response['amount'] as num?)?.toInt();
@@ -2246,8 +2775,34 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       json = null;
     }
 
+    // Oda tamamlanmadan KAPANDIYSA (rakip ayrıldı, hükmen bitti, oda
+    // terk edildi) sunucu `already_claimed` olmadan `amount: 0` ve
+    // `room_not_completed` döner: kalıcı, geçerli bir sıfırdır. Eskiden
+    // aşağıdaki "tam alan" denetimi bunu StateError sayıp talebi kuyruğa
+    // alıyordu ve sonuç ekranı bağlantı olduğu hâlde "Bağlantı yok. Ödülün
+    // kaydedildi…" diyordu (iki simülatör turu, 2026-10-21: oyun ortasında
+    // rakip çıkınca). `room_not_finished` / `answers_incomplete` GEÇİCİ
+    // durumlardır (oda henüz kapanmadı); onlar kuyruğa girmeye devam eder.
+    //
+    // `room_progress_incomplete` da kalıcıdır: iki kişilik odada biri oyun
+    // ortasında çıkınca `crowd_room_member_leave` odayı bilerek
+    // `completed` kapatır ama indeksi ilerletmez (havuz yarım oyunda
+    // dağıtılmaz). Kapanmış odanın indeksi bir daha ilerlemez; bu sıfır
+    // kuyruğa girerse kalan oyuncu yine "Bağlantı yok" görüyordu (iki
+    // simülatör turu, 2026-10-22: 10 sorunun 3'ünde rakip çıktı).
+    if (json != null &&
+        json['amount'] == 0 &&
+        (json['room_not_completed'] == true ||
+            json['room_progress_incomplete'] == true)) {
+      return 0;
+    }
+
+    // Zorunlu iki alan yeter; fazlası yok sayılır. 2026-10-02'de sunucu
+    // `daily_cap`/`cap_reached` ekleyince "tam iki alan" kuralı her oda
+    // turunun ilk talebini reddediyordu: jeton sunucuda ödeniyor, istemci
+    // "bağlantı yok" deyip kuyruğa alıyor, sonuç onayı hiç gitmiyor ve biten
+    // oda her soğuk açılışta geri geliyordu (simülatör denemesi 2026-10-16).
     if (json == null ||
-        json.length != 2 ||
         !json.containsKey('amount') ||
         json['already_claimed'] is! bool) {
       throw StateError(
@@ -2279,13 +2834,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   /// Çark guard'ı için gün anahtarı. Sunucudaki `can_spin_today` /
-  /// `award_spin_coins` RPC'leri `CURRENT_DATE` (UTC) ile gün sınırı çizer;
-  /// yerel saat kullanılırsa yerel gece yarısı ile UTC gece yarısı arasında
-  /// buton aktif görünüp sunucunun reddettiği "çark dönmüyor" tutarsızlığı
-  /// doğar. Ekrandaki geri sayım da UTC gece yarısını hedefler.
+  /// `award_spin_coins` RPC'leri `public.app_today()` (`Europe/Istanbul`,
+  /// kalıcı UTC+3) ile gün sınırı çizer (`2026-10-15_ilerleme_esitleme.sql`).
+  /// Cihaz saat diliminden bağımsız olarak sunucuyla aynı UTC+3 gün sınırını
+  /// kullanır; ekrandaki geri sayım da aynı gece yarısını hedefler.
   static String spinDayKey(DateTime now) {
-    final utc = now.toUtc();
-    return '${utc.year}-${utc.month}-${utc.day}';
+    final istanbul = now.toUtc().add(const Duration(hours: 3));
+    return '${istanbul.year}-${istanbul.month}-${istanbul.day}';
   }
 
   Future<bool> _hasUnusedExtraSpin() async {
@@ -2298,17 +2853,29 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final used = await client
         .from('coin_transactions')
         .count(CountOption.exact)
+        .eq('player_id', user.id)
         .inFilter('reason', ['extra_spin:server', 'daily_spin:extra_purchase']);
     return purchased > used;
+  }
+
+  static String get _lastSpinKey =>
+      LocalProgressScope.physical('zankurd.last_spin_date');
+
+  /// Yerel "bugün çevirdim" işareti; hesaba bağlıdır. Oturum yoksa null.
+  String? _spinMarker(String day) {
+    final uid = currentUserId;
+    return uid == null ? null : '$uid|$day';
   }
 
   @override
   Future<bool> canSpinToday() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final lastSpinStr = prefs.getString('zankurd.last_spin_date');
-      final todayStr = spinDayKey(DateTime.now());
-      if (lastSpinStr == todayStr) {
+      final lastSpinStr = prefs.getString(_lastSpinKey);
+      // Değer `<uid>|<gün>` biçimindedir: eski sabit anahtardan ya da başka
+      // hesaptan kalan kayıt eşleşmez, o durumda sunucuya sorulur.
+      final todayStr = _spinMarker(spinDayKey(DateTime.now()));
+      if (todayStr != null && lastSpinStr == todayStr) {
         return await _hasUnusedExtraSpin();
       }
       final freeSpinAvailable = await client.rpc<bool>('can_spin_today');
@@ -2345,10 +2912,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (amount > 0) {
         try {
           final prefs = await SharedPreferences.getInstance();
-          await prefs.setString(
-            'zankurd.last_spin_date',
-            spinDayKey(DateTime.now()),
-          );
+          final marker = _spinMarker(spinDayKey(DateTime.now()));
+          if (marker != null) await prefs.setString(_lastSpinKey, marker);
         } catch (error, stack) {
           _recordError(
             error,
@@ -2379,10 +2944,14 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'get_leaderboard',
         params: {'p_days': period.days, 'p_limit': limit},
       );
+      final tags = await _publicProfilesById([
+        for (final row in rows) (row as Map)['player_id'] as String?,
+      ]);
       return rows.indexed.map((item) {
         final index = item.$1;
         final row = item.$2 as Map<String, dynamic>;
         return LeaderboardEntry(
+          playerTag: tags[row['player_id'] as String?]?.playerTag,
           rank: index + 1,
           playerId: row['player_id'] as String? ?? '',
           displayName: row['display_name'] as String? ?? 'Oyuncu',
@@ -2411,12 +2980,32 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final rows = await client
         .from('room_players')
         .select(
-          'player_id, score, streak, is_ready, '
-          'profiles(display_name, avatar_icon, avatar_color, avatar_url, '
-          'avatar_frame, showcase_title)',
+          'player_id, score, streak, is_ready, left_at, '
+          'profiles(display_name, player_tag, avatar_icon, avatar_color, '
+          'avatar_url, avatar_frame, showcase_title)',
         )
         .eq('room_id', roomId)
         .order('joined_at');
+
+    // `profiles` RLS yalnız kendi satırını okutur: gömülü profil öteki
+    // oyuncular için null gelir ve lobide herkes "Oyuncu" görünüyordu.
+    // Adı bilinmeyenler herkese açık profil RPC'siyle tamamlanır.
+    final missing = [
+      for (final row in rows)
+        if (row['profiles'] == null &&
+            !_profileCache.containsKey(row['player_id'] as String))
+          row['player_id'] as String,
+    ];
+    if (missing.isNotEmpty) {
+      try {
+        for (final profile in await _fetchPublicProfiles(missing)) {
+          final id = profile['id'] as String?;
+          if (id != null) _profileCache[id] = profile;
+        }
+      } catch (error, stack) {
+        _recordError(error, stack, reason: 'room players public profiles');
+      }
+    }
 
     return rows.map((row) {
       final playerId = row['player_id'] as String;
@@ -2439,6 +3028,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         avatarUrl: profile?['avatar_url'] as String?,
         avatarFrame: profile?['avatar_frame'] as String?,
         showcaseTitle: profile?['showcase_title'] as String?,
+        tag: profile?['player_tag'] as String?,
+        left: row['left_at'] != null,
       );
     }).toList();
   }
@@ -2456,6 +3047,26 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<Map<String, dynamic>> cancelMatchmaking() async {
     final response = await client.rpc('cancel_matchmaking');
     return _requiredJsonObject(response, 'cancel_matchmaking');
+  }
+
+  bool _touchMatchmakingSupported = true;
+
+  @override
+  Future<MatchmakingTouch> touchMatchmaking() async {
+    // Göç uygulanmadan yayınlanan derleme: RPC yok, eski yola (akış + 20 sn
+    // zamanlayıcı) sessizce düş ve oturum boyunca bir daha sorma.
+    if (!_touchMatchmakingSupported) return const MatchmakingTouch.unknown();
+    try {
+      final response = await client.rpc('touch_matchmaking');
+      return MatchmakingTouch.fromJson(response);
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) {
+        _touchMatchmakingSupported = false;
+        return const MatchmakingTouch.unknown();
+      }
+      _recordError(error, stack, reason: 'touchMatchmaking failed');
+      rethrow;
+    }
   }
 
   @override
@@ -2479,7 +3090,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       event: 'game_event',
       callback: (payload) {
         if (!controller.isClosed) {
-          controller.add(payload);
+          controller.add(decodeRoomBroadcast(payload));
         }
       },
     );
@@ -2499,7 +3110,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   ) async {
     try {
       final channel = _ensureRoomChannel(roomId).channel;
-      await channel.sendBroadcastMessage(event: 'game_event', payload: payload);
+      await channel.sendBroadcastMessage(
+        event: 'game_event',
+        payload: encodeRoomBroadcast(payload),
+      );
       await _disposeUnretainedRoomChannel(roomId);
     } catch (error, stack) {
       _recordError(
@@ -2583,6 +3197,45 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<bool> submitDailyEventResult({
+    required int correct,
+    required int total,
+    required int seconds,
+  }) async {
+    try {
+      final res = await client
+          .rpc(
+            'submit_daily_event_result',
+            params: {
+              'p_correct': correct,
+              'p_total': total,
+              'p_seconds': seconds,
+            },
+          )
+          .timeout(const Duration(seconds: 8));
+      return res == true;
+    } catch (e, s) {
+      // Sıralama yalnız gösterimdir: yazılamayan sonuç turu bozmaz.
+      _recordError(e, s, reason: 'submitDailyEventResult failed');
+      return false;
+    }
+  }
+
+  @override
+  Future<DailyEventBoard?> loadDailyEventBoard() async {
+    try {
+      if (client.auth.currentUser == null) return null;
+      final res = await client
+          .rpc('get_daily_event_board')
+          .timeout(const Duration(seconds: 8));
+      return DailyEventBoard.tryParse(res);
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadDailyEventBoard failed');
+      return null;
+    }
+  }
+
+  @override
   Future<List<Lesson>> loadLessonsByCategory(String category) async {
     try {
       final res =
@@ -2648,6 +3301,16 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .maybeSingle();
       final resolved = row?['id'];
       if (resolved is String && _lessonUuid.hasMatch(resolved)) return resolved;
+      final alias = LearningLessonAliases.completionSlugFor(id);
+      if (alias != null && alias != id) {
+        final aliasRow = await client
+            .from('lessons')
+            .select('id')
+            .eq('slug', alias)
+            .maybeSingle();
+        final aliasId = aliasRow?['id'];
+        if (aliasId is String && _lessonUuid.hasMatch(aliasId)) return aliasId;
+      }
     } catch (error, stack) {
       _recordError(error, stack, reason: 'lesson slug lookup failed');
     }
@@ -2668,42 +3331,47 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       _recordError(e, s, reason: 'markLessonCompleted failed');
       // SUNUCUYA YAZILAMADIYSA BAŞARI BİLDİRME (addFriend'deki aynı kural).
       //
-      // `_offline.markLessonCompleted` yalnız BELLEK İÇİ bir kümeye ekliyor
-      // — SharedPreferences'a bile yazmıyor. Kullanıcı "Ders tamamlandı"
-      // görüp ekrandan çıkıyor, ama `loadCompletedLessonIds` sunucudan
-      // okuduğu için ders "tamamlanmadı" görünmeye devam ediyordu; ne bir
-      // kuyruğa alınıyordu (SyncManager yalnız quiz ödülünü kuyruklar) ne
-      // de kullanıcıya bir hata gösteriliyordu — uygulama kapanınca işaret
-      // de kayboluyordu (2026-08-14 denetimi).
+      // `false` "sunucu onaylamadı" demektir. Çağıran (ders ekranı)
+      // `SyncManager.queueLessonCompletion` ile dersi önce yerele yazar,
+      // sonra sunucu kuyruğuna alır; kilit durumu yerel ∪ sunucu okunur.
       return false;
     }
   }
 
   @override
   Future<Set<String>> loadCompletedLessonIds() async {
+    // Yerel (bekleyen ∪ eşitlenmiş) kümeyi hep ekle: çevrimdışı tamamlanan
+    // ders sunucuya ulaşana kadar sonraki dersleri açık tutar.
+    final local = await LessonCompletionStore.loadLocal();
     try {
       final rows = await client
           .from('user_lesson_progress')
           .select('lesson_id')
           .eq('completed', true);
-      return rows
+      final server = rows
           .map((row) => row['lesson_id'] as String?)
           .whereType<String>()
           .toSet();
+      await LessonCompletionStore.cacheServer(server);
+      return {...server, ...(await LessonCompletionStore.loadLocal())};
     } catch (e, s) {
       _recordError(e, s, reason: 'loadCompletedLessonIds failed');
-      return _offline.loadCompletedLessonIds();
+      return local;
     }
   }
 
   @override
-  Future<bool> addFriend(String friendId, String friendName) async {
+  Future<AddFriendOutcome> addFriend(String friendId, String friendName) async {
     try {
       final response = await client.rpc<dynamic>(
         'add_friend',
         params: {'p_friend_id': friendId, 'p_friend_name': friendName},
       );
-      return (_firstRow(response)?['success'] as bool?) ?? false;
+      final row = _firstRow(response);
+      return AddFriendOutcome.fromServer(
+        success: (row?['success'] as bool?) ?? false,
+        message: row?['message'] as String?,
+      );
     } catch (e, s) {
       _recordError(e, s, reason: 'addFriend failed');
       // SUNUCUYA YAZILAMADIYSA BAŞARI BİLDİRME.
@@ -2721,7 +3389,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // Arayüz zaten doğru yazılmış: `K.acceptFailed` / `K.rejectFailed`
       // metinleri vardı ama hiç görünmüyordu, çünkü depo hep true
       // dönüyordu (2026-08-02 denetimi).
-      return false;
+      return AddFriendOutcome.failed;
     }
   }
 
@@ -2731,6 +3399,80 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       await client.rpc<void>('set_fcm_token', params: {'p_token': token});
     } catch (e, s) {
       _recordError(e, s, reason: 'setFcmToken failed');
+    }
+  }
+
+  @override
+  Future<void> clearFcmToken() async {
+    try {
+      await client.rpc<void>('clear_my_fcm_token');
+    } catch (e, s) {
+      // Göç uygulanmamışsa (PGRST202) ya da ağ yoksa çıkış yine sürer.
+      if (!isMissingRpcError(e)) {
+        _recordError(e, s, reason: 'clearFcmToken failed');
+      }
+    }
+  }
+
+  @override
+  Future<List<SentFriendRequest>?> loadSentFriendRequests() async {
+    try {
+      final res = await client.rpc<List<dynamic>>('list_sent_friend_requests');
+      final sent = res
+          .map(
+            (row) => SentFriendRequest.fromJson(
+              Map<String, dynamic>.from(row as Map),
+            ),
+          )
+          .toList();
+      final profiles = await _publicProfilesById([
+        for (final r in sent) r.toUserId,
+      ]);
+      return [
+        for (final r in sent)
+          profiles[r.toUserId] == null
+              ? r
+              : SentFriendRequest(
+                  id: r.id,
+                  toUserId: r.toUserId,
+                  toUserName: profiles[r.toUserId]!.nameOr(r.toUserName),
+                  createdAt: r.createdAt,
+                  toProfile: profiles[r.toUserId],
+                ),
+      ];
+    } catch (e, s) {
+      if (isMissingRpcError(e)) return null;
+      _recordError(e, s, reason: 'loadSentFriendRequests failed');
+      return const [];
+    }
+  }
+
+  @override
+  Future<bool> removeFriend(String friendId) async {
+    try {
+      final response = await client.rpc<dynamic>(
+        'remove_friend',
+        params: {'p_friend_id': friendId},
+      );
+      return (_firstRow(response)?['success'] as bool?) ?? false;
+    } catch (e, s) {
+      _recordError(e, s, reason: 'removeFriend failed');
+      // Sunucuya yazılamadıysa başarı bildirme (addFriend ile aynı kural).
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> cancelFriendRequest(String targetUserId) async {
+    try {
+      final response = await client.rpc<dynamic>(
+        'cancel_friend_request',
+        params: {'p_target_id': targetUserId},
+      );
+      return (_firstRow(response)?['success'] as bool?) ?? false;
+    } catch (e, s) {
+      _recordError(e, s, reason: 'cancelFriendRequest failed');
+      return false;
     }
   }
 
@@ -2799,13 +3541,28 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'search_profiles',
         params: {'p_query': query},
       );
-      return res
+      final found = res
           .map(
             (row) => PlayerSearchResult.fromJson(
               Map<String, dynamic>.from(row as Map),
             ),
           )
           .toList();
+      // `search_profiles` fotoğraf/simge döndürmez; arama sonucu da aynı
+      // avatarla çizilsin diye herkese açık profille tamamlanır.
+      final profiles = await _publicProfilesById([for (final f in found) f.id]);
+      return [
+        for (final f in found)
+          profiles[f.id] == null
+              ? f
+              : PlayerSearchResult(
+                  id: f.id,
+                  displayName: f.displayName,
+                  avatarColor: f.avatarColor,
+                  playerTag: f.playerTag,
+                  profile: profiles[f.id],
+                ),
+      ];
     } catch (e, s) {
       _recordError(e, s, reason: 'searchPlayers failed');
       // BAŞARISIZLIĞI SIFIR SONUÇMUŞ GİBİ GÖSTERME.
@@ -2826,8 +3583,23 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<List<Friend>> loadFriends() async {
     try {
       final res = await client.rpc<List<dynamic>>('list_friends');
+      // `list_friends` çağıranın yetkisiyle çalışır: `profiles` RLS'si
+      // arkadaşın satırını gizler, ad ve renk `friends` tablosuna yazılmış
+      // eski kopyadan gelir (fotoğraf hiç gelmez). Güncel kimlik herkese
+      // açık profilden tamamlanır.
+      final profiles = await _publicProfilesById([
+        for (final row in res) (row as Map)['friend_id'] as String?,
+      ]);
       return res.map((row) {
-        final friend = Friend.fromJson(Map<String, dynamic>.from(row as Map));
+        var friend = Friend.fromJson(Map<String, dynamic>.from(row as Map));
+        final profile = profiles[friend.friendId];
+        if (profile != null) {
+          friend = friend.copyWith(
+            friendName: profile.nameOr(friend.friendName),
+            friendAvatarColor: profile.avatar.colorHex,
+            profile: profile,
+          );
+        }
         // `list_friends` seviye döndürmez (yalnız `total_score` = xp);
         // Arkadaşlar sekmesi rozet olarak seviye gösteriyor
         // (leaderboard_screen.dart _FriendRankRow). Aynı XP→seviye
@@ -2839,7 +3611,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }).toList();
     } catch (e, s) {
       _recordError(e, s, reason: 'loadFriends failed');
-      return _offline.loadFriends();
+      // Hata "arkadaşın yok" DEĞİLDİR: boş liste dönmek ekranın hata +
+      // "tekrar dene" durumunu hiç tetiklemiyordu (bkz.
+      // test/friend_read_errors_test.dart).
+      rethrow;
     }
   }
 
@@ -2851,7 +3626,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return friends;
     } catch (e, s) {
       _recordError(e, s, reason: 'loadFriendsLeaderboard failed');
-      return _offline.loadFriendsLeaderboard();
+      rethrow;
     }
   }
 
@@ -2861,15 +3636,33 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final res = await client.rpc<List<dynamic>>(
         'list_pending_friend_requests',
       );
-      return res
+      final pending = res
           .map(
             (row) =>
                 FriendRequest.fromJson(Map<String, dynamic>.from(row as Map)),
           )
           .toList();
+      final profiles = await _publicProfilesById([
+        for (final r in pending) r.fromUserId,
+      ]);
+      return [
+        for (final r in pending)
+          profiles[r.fromUserId] == null
+              ? r
+              : FriendRequest(
+                  id: r.id,
+                  fromUserId: r.fromUserId,
+                  fromUserName: profiles[r.fromUserId]!.nameOr(r.fromUserName),
+                  toUserId: r.toUserId,
+                  createdAt: r.createdAt,
+                  status: r.status,
+                  fromProfile: profiles[r.fromUserId],
+                ),
+      ];
     } catch (e, s) {
       _recordError(e, s, reason: 'loadPendingFriendRequests failed');
-      return _offline.loadPendingFriendRequests();
+      // Bkz. loadFriends: hata "bekleyen istek yok" anlamına gelmez.
+      rethrow;
     }
   }
 
@@ -2986,10 +3779,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       await client.rpc('join_tournament');
       return await loadRealTournamentBracket();
     } catch (e, s) {
-      if (!_isMissingFunction(e)) {
-        _recordError(e, s, reason: 'joinRealTournament failed');
-      }
-      return null;
+      // Yalnız "sunucu tarafı henüz yok" null döner (bot benzetimine izin
+      // verir). Geçici ağ hatası artık sahte bot şemasına düşürmez: çağıran
+      // hatayı görür ve yeniden dener.
+      if (_isMissingFunction(e)) return null;
+      _recordError(e, s, reason: 'joinRealTournament failed');
+      rethrow;
     }
   }
 
@@ -2998,14 +3793,36 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     try {
       final response = await client.rpc('get_tournament_bracket');
       if (response == null) return null;
-      return TournamentBracket.fromJson(
+      final bracket = TournamentBracket.fromJson(
         Map<String, dynamic>.from(response as Map),
       );
+      // Bracket yalnız ad döndürür; fotoğraf/simge/kod herkese açık profilden.
+      final profiles = await _publicProfilesById([
+        for (final round in bracket.rounds)
+          for (final m in round.matches) ...[m.playerOneId, m.playerTwoId],
+      ]);
+      if (profiles.isEmpty) return bracket;
+      return bracket.copyWith(
+        rounds: [
+          for (final round in bracket.rounds)
+            round.copyWith(
+              matches: [
+                for (final m in round.matches)
+                  m.copyWith(
+                    playerOneProfile: profiles[m.playerOneId],
+                    playerTwoProfile: profiles[m.playerTwoId],
+                  ),
+              ],
+            ),
+        ],
+      );
     } catch (e, s) {
-      if (!_isMissingFunction(e)) {
-        _recordError(e, s, reason: 'loadRealTournamentBracket failed');
-      }
-      return null;
+      // `null` yalnız "turnuvada değilsin / sunucu tarafı yok" demektir.
+      // Ağ hatası eskiden de null dönüp çevrimdışı bot şemasına düşüyordu;
+      // şimdi fırlar, ekran hata + yeniden dene gösterir.
+      if (_isMissingFunction(e)) return null;
+      _recordError(e, s, reason: 'loadRealTournamentBracket failed');
+      rethrow;
     }
   }
 
@@ -3110,6 +3927,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   /// herkes `active` kalır.
   List<TournamentStandings> _standingsFromBracket(TournamentBracket bracket) {
     final names = <String, String>{};
+    final profiles = <String, PublicProfile>{};
     final scores = <String, int>{};
     final status = <String, String>{};
 
@@ -3129,6 +3947,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       for (final match in round.matches) {
         touch(match.playerOneId, match.playerOneName);
         touch(match.playerTwoId, match.playerTwoName);
+        final p1 = match.playerOneProfile;
+        final p2 = match.playerTwoProfile;
+        if (p1 != null) profiles[match.playerOneId] = p1;
+        if (p2 != null) profiles[match.playerTwoId] = p2;
         if (match.playerOneId.isNotEmpty) {
           scores[match.playerOneId] =
               (scores[match.playerOneId] ?? 0) + match.playerOneScore;
@@ -3174,6 +3996,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         playerName: names[ids[i]] ?? '—',
         totalScore: scores[ids[i]] ?? 0,
         status: status[ids[i]] ?? 'active',
+        profile: profiles[ids[i]],
       ),
     );
   }
@@ -3227,6 +4050,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'explanation': explanation,
         'difficulty': difficulty,
         'status': 'pending',
+        // INSERT politikası `license_version = '2026-08-11'` ister;
+        // `accepted_at`i tetikleyici sunucu saatiyle damgalar.
+        'license_version': suggestedQuestionLicenseVersion,
+        'attribution_requested': false,
+        'do_not_publish': false,
       });
       return true;
     } catch (e, stack) {
@@ -3285,6 +4113,18 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   // sabittir; burası yalnız RPC çağrısı + JSON ayrıştırmadır, iş kuralları
   // (kazanan, XP, süre) sunucudadır.
 
+  Future<AsyncDuelStart> _withDuelProfiles(AsyncDuelStart start) async {
+    final profiles = await _publicProfilesById([
+      start.opponentId,
+      start.invitedId,
+    ]);
+    if (profiles.isEmpty) return start;
+    return start.withProfiles(
+      opponent: profiles[start.opponentId],
+      invited: profiles[start.invitedId],
+    );
+  }
+
   @override
   Future<AsyncDuelStart> startAsyncDuel({String? category}) async {
     try {
@@ -3296,11 +4136,33 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'start_async_duel',
         params: {'p_category': category},
       );
-      return AsyncDuelStart.fromJson(
-        _requiredJsonObject(response, 'start_async_duel'),
+      return _withDuelProfiles(
+        AsyncDuelStart.fromJson(
+          _requiredJsonObject(response, 'start_async_duel'),
+        ),
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'startAsyncDuel failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<int?> presentAsyncDuelQuestion(
+    String duelId,
+    int questionIndex,
+  ) async {
+    try {
+      final response = await client.rpc(
+        'present_async_duel_question',
+        params: {'p_duel_id': duelId, 'p_question_index': questionIndex},
+      );
+      final json = _requiredJsonObject(response, 'present_async_duel_question');
+      return (json['elapsed_ms'] as num?)?.toInt() ?? 0;
+    } catch (error, stack) {
+      // Göç uygulanmamış sunucu: cevap eski ölçümle sürer, hata değil.
+      if (isMissingRpcError(error)) return null;
+      _recordError(error, stack, reason: 'presentAsyncDuelQuestion failed');
       rethrow;
     }
   }
@@ -3335,13 +4197,26 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<List<AsyncDuelSummary>> loadMyAsyncDuels() async {
     try {
       final response = await client.rpc<List<dynamic>>('list_my_async_duels');
-      return response
+      final duels = response
           .map(
             (row) => AsyncDuelSummary.fromJson(
               Map<String, dynamic>.from(row as Map),
             ),
           )
           .toList();
+      // Rakip/davetli kimliği `2026-10-21_oyuncu_kimligi.sql` uygulanınca
+      // gelir; gelmediyse harita boş kalır ve eski çizim sürer.
+      final profiles = await _publicProfilesById([
+        for (final d in duels) ...[d.opponentId, d.invitedId],
+      ]);
+      if (profiles.isEmpty) return duels;
+      return [
+        for (final d in duels)
+          d.withProfiles(
+            opponent: profiles[d.opponentId],
+            invited: profiles[d.invitedId],
+          ),
+      ];
     } catch (error, stack) {
       // Boş listeye düşülmez: "hiç düellon yok" demek, rakibini bekleyen ya
       // da sonucu hazır bir düelloyu oyuncudan gizlemek olurdu. Ekran hatayı
@@ -3362,6 +4237,55 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<DateTime> nudgeAsyncDuel(String duelId) async {
+    try {
+      final response = await client.rpc(
+        'nudge_async_duel',
+        params: {'p_duel_id': duelId},
+      );
+      final json = _requiredJsonObject(response, 'nudge_async_duel');
+      return DateTime.parse(json['nudged_at'] as String);
+    } catch (error, stack) {
+      // Bekleme/engel gibi BEKLENEN retler hata raporuna düşmez; ekran
+      // sınıflandırıp oyuncuya söyler (classifyAsyncDuelNudgeError).
+      if (classifyAsyncDuelNudgeError(error) == AsyncDuelNudgeError.other) {
+        _recordError(error, stack, reason: 'nudgeAsyncDuel failed');
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<RecentMatch>> loadMyRecentMatches({int limit = 10}) async {
+    try {
+      final response = await client.rpc<List<dynamic>>(
+        'list_my_recent_matches',
+        params: {'p_limit': limit},
+      );
+      return [
+        for (final row in response)
+          ?RecentMatch.tryParse(Map<String, dynamic>.from(row as Map)),
+      ];
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadMyRecentMatches failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ServerRecords> loadMyServerRecords() async {
+    try {
+      final response = await client.rpc('get_my_records');
+      return ServerRecords.fromJson(
+        _requiredJsonObject(response, 'get_my_records'),
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadMyServerRecords failed');
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> claimAsyncDuelXp(String duelId) async {
     try {
       final response = await client.rpc<dynamic>(
@@ -3376,4 +4300,296 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       rethrow;
     }
   }
+
+  // ─── Arkadaşa meydan okuma (supabase/2026-10-13_friend_challenge.sql) ─
+
+  /// `null`: henüz bilinmiyor; `false`: sunucu RPC'yi tanımıyor (göç
+  /// uygulanmamış). Yalnız KESİN yanıtlar saklanır.
+  bool? _challengeRpcSupported;
+
+  @override
+  Future<bool> supportsAsyncDuelChallenge() async {
+    final known = _challengeRpcSupported;
+    if (known != null) return known;
+    // Oturum yokken (misafir henüz hesap açmadı) sormak hesap yaratırdı;
+    // belirsiz = göster.
+    if (client.auth.currentUser == null) return true;
+    try {
+      // Yan etkisiz sonda: bilinmeyen kod yeni sunucuda 'Challenge not
+      // found' fırlatır (RPC var), eskisinde PGRST202/42883 (RPC yok).
+      await client.rpc(
+        'accept_async_duel_challenge',
+        params: {'p_code': 'D00000000'},
+      );
+      return _challengeRpcSupported = true;
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) return _challengeRpcSupported = false;
+      if (error.toString().contains('Challenge')) {
+        return _challengeRpcSupported = true;
+      }
+      // Ağ hatası gibi belirsiz durum: giriş noktaları görünür kalır, ilk
+      // gerçek çağrı kendi hatasını gösterir.
+      _recordError(error, stack, reason: 'supportsAsyncDuelChallenge failed');
+      return true;
+    }
+  }
+
+  // ─── Odaya arkadaş daveti (supabase/2026-10-18_oda_davet.sql) ────────
+
+  /// `null`: henüz bilinmiyor; `false`: sunucu RPC'yi tanımıyor (göç
+  /// uygulanmamış). Yalnız KESİN yanıtlar saklanır.
+  bool? _roomInviteRpcSupported;
+
+  @override
+  Future<bool> supportsRoomInvites() async {
+    final known = _roomInviteRpcSupported;
+    if (known != null) return known;
+    // Oturum yokken sormak misafir hesabı yaratırdı; belirsiz = göster.
+    if (client.auth.currentUser == null) return true;
+    try {
+      await client.rpc<List<dynamic>>('list_my_room_invites');
+      return _roomInviteRpcSupported = true;
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) return _roomInviteRpcSupported = false;
+      _recordError(error, stack, reason: 'supportsRoomInvites failed');
+      return true;
+    }
+  }
+
+  @override
+  Future<int> inviteFriendsToRoom(GameRoom room, List<String> friendIds) async {
+    final roomId = room.id;
+    if (roomId == null || friendIds.isEmpty) return 0;
+    try {
+      final res = await client.rpc(
+        'invite_friends_to_room',
+        params: {'p_room_id': roomId, 'p_friend_ids': friendIds},
+      );
+      return (res as num?)?.toInt() ?? 0;
+    } on PostgrestException catch (error, stack) {
+      _recordError(error, stack, reason: 'inviteFriendsToRoom rejected');
+      throw RoomInviteException(
+        RoomInviteException.reasonForMessage(error.message),
+        error.message,
+      );
+    }
+  }
+
+  @override
+  Future<Set<String>> loadRoomInvitedIds(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null) return const {};
+    try {
+      final rows = await client
+          .from('room_invites')
+          .select('invitee_id')
+          .eq('room_id', roomId)
+          .eq('status', 'pending');
+      return {for (final row in rows) (row as Map)['invitee_id'] as String};
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadRoomInvitedIds failed');
+      return const {};
+    }
+  }
+
+  @override
+  Future<List<RoomInvite>> loadMyRoomInvites({
+    bool throwOnError = false,
+  }) async {
+    if (_roomInviteRpcSupported == false) return const [];
+    if (client.auth.currentUser == null) return const [];
+    try {
+      final res = await client.rpc<List<dynamic>>('list_my_room_invites');
+      _roomInviteRpcSupported = true;
+      final invites = [
+        for (final row in res)
+          RoomInvite.fromJson(Map<String, dynamic>.from(row as Map)),
+      ];
+      final profiles = await _publicProfilesById([
+        for (final i in invites) i.inviterId,
+      ]);
+      return [
+        for (final i in invites)
+          profiles[i.inviterId] == null
+              ? i
+              : RoomInvite(
+                  id: i.id,
+                  roomId: i.roomId,
+                  roomCode: i.roomCode,
+                  inviterId: i.inviterId,
+                  inviterName: profiles[i.inviterId]!.nameOr(i.inviterName),
+                  categoryName: i.categoryName,
+                  playerCount: i.playerCount,
+                  maxPlayers: i.maxPlayers,
+                  createdAt: i.createdAt,
+                  inviterProfile: profiles[i.inviterId],
+                ),
+      ];
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) _roomInviteRpcSupported = false;
+      _recordError(error, stack, reason: 'loadMyRoomInvites failed');
+      if (throwOnError) rethrow;
+      return const [];
+    }
+  }
+
+  @override
+  Future<String?> respondRoomInvite(
+    String inviteId, {
+    required bool accept,
+  }) async {
+    try {
+      final res = await client.rpc(
+        'respond_room_invite',
+        params: {'p_invite_id': inviteId, 'p_accept': accept},
+      );
+      return res as String?;
+    } on PostgrestException catch (error, stack) {
+      _recordError(error, stack, reason: 'respondRoomInvite rejected');
+      throw RoomInviteException(
+        RoomInviteException.reasonForMessage(error.message),
+        error.message,
+      );
+    }
+  }
+
+  @override
+  Future<AsyncDuelStart> createAsyncDuelChallenge({
+    String? category,
+    String? friendId,
+  }) async {
+    try {
+      if (client.auth.currentUser == null) {
+        await signInAnonymously();
+      }
+      await ensureProfile();
+      final response = await client.rpc(
+        'create_async_duel_challenge',
+        params: {'p_category': category, 'p_friend_id': friendId},
+      );
+      return _withDuelProfiles(
+        AsyncDuelStart.fromJson(
+          _requiredJsonObject(response, 'create_async_duel_challenge'),
+        ),
+      );
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) _challengeRpcSupported = false;
+      _recordError(error, stack, reason: 'createAsyncDuelChallenge failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AsyncDuelStart> resumeAsyncDuel(String duelId) async {
+    try {
+      final response = await client.rpc(
+        'resume_my_async_duel',
+        params: {'p_duel_id': duelId},
+      );
+      return _withDuelProfiles(
+        AsyncDuelStart.fromJson(
+          _requiredJsonObject(response, 'resume_my_async_duel'),
+        ),
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'resumeAsyncDuel failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AsyncDuelReview?> loadAsyncDuelReview(String duelId) async {
+    try {
+      final response = await client.rpc(
+        'get_async_duel_review',
+        params: {'p_duel_id': duelId},
+      );
+      return AsyncDuelReview.fromJson(
+        _requiredJsonObject(response, 'get_async_duel_review'),
+      );
+    } catch (error, stack) {
+      // Göç uygulanmamış sunucuda RPC yok: bölüm gizlenir, hata sayılmaz.
+      if (isMissingRpcError(error)) return null;
+      // "Henüz bitmedi / katılımcı değilsin" beklenen reddir, rapora düşmez.
+      if (classifyAsyncDuelReviewError(error) == AsyncDuelReviewError.other) {
+        _recordError(error, stack, reason: 'loadAsyncDuelReview failed');
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> cancelAsyncDuel(String duelId) async {
+    try {
+      final response = await client.rpc(
+        'cancel_my_async_duel',
+        params: {'p_duel_id': duelId},
+      );
+      return response == true;
+    } catch (error, stack) {
+      if (!isMissingRpcError(error)) {
+        _recordError(error, stack, reason: 'cancelAsyncDuel failed');
+      }
+      return false;
+    }
+  }
+
+  @override
+  Future<AsyncDuelStart> acceptAsyncDuelChallenge(String code) async {
+    try {
+      if (client.auth.currentUser == null) {
+        await signInAnonymously();
+      }
+      await ensureProfile();
+      final response = await client.rpc(
+        'accept_async_duel_challenge',
+        params: {'p_code': code},
+      );
+      return _withDuelProfiles(
+        AsyncDuelStart.fromJson(
+          _requiredJsonObject(response, 'accept_async_duel_challenge'),
+        ),
+      );
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) _challengeRpcSupported = false;
+      // Beklenen iş hataları (süresi dolmuş, başkası almış…) çökme kaydı
+      // değildir; yalnız beklenmeyenler kaydedilir.
+      if (classifyAsyncDuelChallengeError(error) ==
+          AsyncDuelChallengeError.other) {
+        _recordError(error, stack, reason: 'acceptAsyncDuelChallenge failed');
+      }
+      rethrow;
+    }
+  }
+}
+
+/// Yayın yükünde `type` anahtarı kütüphane tarafından ezilir.
+///
+/// `RealtimeChannel.send` (realtime_client 2.13) verilen haritanın kendisine
+/// `payload['type'] = 'broadcast'` ve `payload['event'] = 'game_event'`
+/// yazar. Ekranların gönderdiği `{'type': 'reaction', ...}` bu yüzden telden
+/// `type: 'broadcast'` olarak gidiyor, alıcıdaki `payload['type'] ==
+/// 'reaction'` denetimi hiç tutmuyor ve hazır mesajlar/tepkiler karşıya
+/// ulaşmıyordu. Gönderim hatası yoktu, bu yüzden kusur sessizdi.
+/// `kind` anahtarı ezilmez; alıcı [decodeRoomBroadcast] ile geri yazar.
+@visibleForTesting
+Map<String, dynamic> encodeRoomBroadcast(Map<String, dynamic> payload) {
+  final copy = Map<String, dynamic>.of(payload);
+  final type = copy['type'];
+  if (type != null) copy['kind'] = type;
+  return copy;
+}
+
+/// [encodeRoomBroadcast]ın tersi. Sunucu yükü düz ya da `payload` altında
+/// iç içe (REST yedeği böyle taşır) verebilir; ikisi de düzleştirilir.
+@visibleForTesting
+Map<String, dynamic> decodeRoomBroadcast(Map<String, dynamic> raw) {
+  final out = Map<String, dynamic>.of(raw);
+  final inner = raw['payload'];
+  if (inner is Map) {
+    out.addAll(Map<String, dynamic>.from(inner));
+  }
+  final kind = out['kind'];
+  if (kind != null) out['type'] = kind;
+  return out;
 }

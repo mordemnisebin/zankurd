@@ -81,42 +81,62 @@ class _FriendsScoreHttpClient extends http.BaseClient {
   }
 }
 
-/// `favorite_questions` + `quiz_public_questions` + `categories` uçlarını
-/// taklit eder. Bir favori paketli bankada (`local-bank-id`), diğeri
-/// yalnız sunucuda (`server-only-id`, gerçek oda maçında kaydedilmiş)
-/// çözülür — 2026-08-14 denetimindeki "favoriler ekranı sunucu kaydını
-/// asla çözmüyor" kusurunu taklit eder.
+/// `favorite_questions` + `get_my_favorite_questions` RPC uçlarını taklit
+/// eder. Bir favori paketli bankada (`curated_movement_0001`), diğerleri
+/// yalnız sunucuda (gerçek `questions.id` uuid'leri, oda maçında kaydedilmiş)
+/// çözülür — 2026-08-14 denetimindeki "favoriler ekranı sunucu kaydını asla
+/// çözmüyor" kusurunu taklit eder.
 class _FavoriteQuestionsHttpClient extends http.BaseClient {
+  _FavoriteQuestionsHttpClient({
+    this.serverIds = const [serverOnlyId],
+    this.rpcStatus = 200,
+    this.rpcBody,
+    this.rpcThrows,
+  });
+
+  static const serverOnlyId = '11111111-1111-4111-8111-111111111111';
+
+  final List<String> serverIds;
+  final int rpcStatus;
+  final Object? rpcBody;
+  final Object? rpcThrows;
   final requestedPaths = <String>[];
+  final rpcBodies = <Map<String, dynamic>>[];
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     requestedPaths.add(request.url.path);
     if (request.url.path == '/rest/v1/favorite_questions') {
       return _jsonResponse(request, [
-        {'question_id': 'server-only-id'},
+        for (final id in serverIds) {'question_id': id},
         {'question_id': 'curated_movement_0001'},
       ]);
     }
-    if (request.url.path == '/rest/v1/quiz_public_questions') {
+    if (request.url.path == '/rest/v1/rpc/get_my_favorite_questions') {
+      final body = jsonDecode(
+        await (request as http.Request).finalize().bytesToString(),
+      );
+      rpcBodies.add(Map<String, dynamic>.from(body as Map));
+      if (rpcThrows != null) throw rpcThrows!;
+      if (rpcStatus != 200) {
+        return _jsonResponse(request, rpcBody, statusCode: rpcStatus);
+      }
+      final asked = (body['p_ids'] as List).cast<String>();
       return _jsonResponse(request, [
-        {
-          'id': 'server-only-id',
-          'category_id': 'cat-1',
-          'prompt': 'Sunucu sorusu?',
-          'option_a': 'A',
-          'option_b': 'B',
-          'option_c': 'C',
-          'option_d': 'D',
-          'question_type': 'multiple_choice',
-          'image_url': null,
-          'difficulty': 2,
-        },
-      ]);
-    }
-    if (request.url.path == '/rest/v1/categories') {
-      return _jsonResponse(request, [
-        {'id': 'cat-1', 'name': 'Ziman'},
+        for (final id in asked)
+          {
+            'id': id,
+            'category_name': 'Ziman',
+            'prompt': 'Sunucu sorusu $id?',
+            'option_a': 'A',
+            'option_b': 'B',
+            'option_c': 'C',
+            'option_d': 'D',
+            'question_type': 'multiple_choice',
+            'image_url': null,
+            'difficulty': 2,
+            'language_code': 'ku',
+          },
       ]);
     }
     return _jsonResponse(request, [], statusCode: 404);
@@ -212,6 +232,14 @@ class _RoomSessionHttpClient extends http.BaseClient {
     },
     this.rpcErrorCode,
     this.joinRoomErrorMessage,
+    this.joinRoomSoftError,
+    this.markReadyResponse = const {'status': 'waiting'},
+    this.answerProgressResponse = const {
+      'question_index': 0,
+      'answered': 3,
+      'active': 8,
+    },
+    this.roomSnapshot = _roomRpcSnapshot,
     this.roomPlayersResponse = const [
       {
         'player_id': 'host-id',
@@ -235,10 +263,22 @@ class _RoomSessionHttpClient extends http.BaseClient {
   final Object? leaveResponse;
   final String? rpcErrorCode;
 
+  /// `mark_room_client_ready` cevabı (kalabalıkta düşenler 'left' alır).
+  final Object? markReadyResponse;
+
+  /// `get_room_answer_progress` cevabı.
+  final Object? answerProgressResponse;
+
+  /// `create_online_room` / `join_room_by_code` cevabı.
+  final Object? roomSnapshot;
+
   /// Set edilirse `join_room_by_code` başarı yerine bu mesajla 400 döner
   /// (bkz. `join_room_by_code`'un `raise exception` metinleri,
   /// `supabase/2026-08-02_multiplayer_session_hardening.sql`).
   final String? joinRoomErrorMessage;
+
+  /// Set edilirse `join_room_by_code_v2` 200 ile `{error: ...}` döner.
+  final String? joinRoomSoftError;
   final Object roomPlayersResponse;
   final requestedPaths = <String>[];
   final requestBodies = <Map<String, dynamic>>[];
@@ -264,7 +304,15 @@ class _RoomSessionHttpClient extends http.BaseClient {
 
     switch (request.url.path) {
       case '/rest/v1/rpc/create_online_room':
-        return _jsonResponse(request, _roomRpcSnapshot);
+      case '/rest/v1/rpc/create_online_room_v2':
+        return _jsonResponse(request, roomSnapshot);
+      case '/rest/v1/rpc/join_room_by_code_v2':
+        final soft = joinRoomSoftError;
+        if (soft != null) {
+          return _jsonResponse(request, {'error': soft});
+        }
+        continue joinRoomLegacy;
+      joinRoomLegacy:
       case '/rest/v1/rpc/join_room_by_code':
         final message = joinRoomErrorMessage;
         if (message != null) {
@@ -275,7 +323,7 @@ class _RoomSessionHttpClient extends http.BaseClient {
             'hint': null,
           }, statusCode: 400);
         }
-        return _jsonResponse(request, _roomRpcSnapshot);
+        return _jsonResponse(request, roomSnapshot);
       case '/rest/v1/rpc/get_my_resumable_room':
         return _jsonResponse(request, resumeResponse);
       case '/rest/v1/rpc/get_my_pending_room_result':
@@ -285,13 +333,21 @@ class _RoomSessionHttpClient extends http.BaseClient {
       case '/rest/v1/rpc/acknowledge_room_result':
         return _jsonResponse(request, const {'acknowledged': true});
       case '/rest/v1/rpc/mark_room_client_ready':
-        return _jsonResponse(request, const {'status': 'waiting'});
+        return _jsonResponse(request, markReadyResponse);
+      case '/rest/v1/rpc/get_room_answer_progress':
+        return _jsonResponse(request, answerProgressResponse);
       case '/rest/v1/rpc/advance_room_question':
         return _jsonResponse(request, 1);
       case '/rest/v1/rpc/set_room_ready':
         return _jsonResponse(request, null);
       case '/rest/v1/rpc/leave_room':
         return _jsonResponse(request, leaveResponse);
+      case '/rest/v1/rpc/touch_matchmaking':
+        return _jsonResponse(request, const {
+          'status': 'matched',
+          'room_id': '00000000-0000-0000-0000-000000000099',
+          'opponent_name': 'Rojda',
+        });
       case '/rest/v1/rpc/cancel_matchmaking':
         return _jsonResponse(request, const {
           'status': 'matched',
@@ -409,6 +465,58 @@ const _completedRoomResult = {
   'finished_at': '2026-08-02T12:01:00.000Z',
 };
 
+/// Kalabalık odanın sunucu cevabı: `rank` (eşitlikte ortak), `left` ve oda
+/// düzeyinde `is_custom`/`max_players`. Eski istemcinin bilmediği alanlar.
+Map<String, dynamic> _crowdRoomResult({
+  int currentQuestionIndex = 2,
+  List<Map<String, dynamic>>? answers,
+}) => {
+  ..._completedRoomResult,
+  'room': {
+    ...(_completedRoomResult['room'] as Map<String, dynamic>),
+    'current_question_index': currentQuestionIndex,
+    'is_custom': true,
+    'max_players': 8,
+  },
+  'players': [
+    {
+      'player_id': 'host-id',
+      'display_name': 'Berfin',
+      'final_score': 250,
+      'final_streak': 1,
+      'rank': 1,
+      'left': false,
+    },
+    {
+      'player_id': 'guest-id',
+      'display_name': 'Rojda',
+      'final_score': 250,
+      'final_streak': 0,
+      'rank': 1,
+      'left': false,
+    },
+    {
+      'player_id': 'third-id',
+      'display_name': 'Azad',
+      'final_score': 100,
+      'final_streak': 0,
+      'rank': 3,
+      'left': false,
+    },
+    {
+      'player_id': 'gone-id',
+      'display_name': 'Şêro',
+      'final_score': 400,
+      'final_streak': 0,
+      'rank': null,
+      'left': true,
+    },
+  ],
+  // İlk iki soru: tepede eşitlik → kazanan yok.
+  'winner_id': null,
+  'answers': ?answers,
+};
+
 class _SignedInRoomSessionRepository extends SupabaseZanKurdRepository {
   _SignedInRoomSessionRepository(super.client);
 
@@ -427,6 +535,392 @@ class _SignedInRoomSessionRepository extends SupabaseZanKurdRepository {
 }
 
 void main() {
+  group('kalabalık oda (2–50 kişi)', () {
+    SupabaseZanKurdRepository repoFor(_RoomSessionHttpClient http) =>
+        SupabaseZanKurdRepository(
+          SupabaseClient(
+            'https://example.supabase.co',
+            'sb_publishable_test_key',
+            httpClient: http,
+          ),
+        );
+
+    test('kapasite seçimi sunucuya p_max_players olarak gider', () async {
+      final httpClient = _RoomSessionHttpClient(
+        roomSnapshot: const {
+          ..._roomRpcSnapshot,
+          'max_players': 16,
+          'is_custom': true,
+        },
+      );
+      final repository = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      final room = await repository.createOnlineRoom(maxPlayers: 16);
+
+      expect(httpClient.requestBodies.first['p_max_players'], 16);
+      expect(room.maxPlayers, 16);
+      expect(room.isCustom, isTrue);
+      expect(room.isCrowd, isTrue);
+    });
+
+    test('kapasite 2 iken istek eskisiyle birebir aynıdır', () async {
+      final httpClient = _RoomSessionHttpClient();
+      final repository = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      final room = await repository.createOnlineRoom();
+
+      expect(
+        httpClient.requestBodies.first.containsKey('p_max_players'),
+        isFalse,
+      );
+      // Eski sunucu max_players/is_custom döndürmez; create 2 kişilik özel
+      // oda sayılır ama kalabalık değildir.
+      expect(room.maxPlayers, 2);
+      expect(room.isCrowd, isFalse);
+      expect(room.name, '1vs1');
+    });
+
+    test('tek kategori de v2 RPC ile ad listesi olarak gider', () async {
+      final httpClient = _RoomSessionHttpClient();
+      final repository = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      await repository.createOnlineRoom(category: 'Dîrok');
+
+      final body = httpClient.requestBodies.first;
+      expect(body['p_category_names'], ['Dîrok']);
+      expect(body.containsKey('p_category_name'), isFalse);
+    });
+
+    test('Karışık boş dizi, çoklu seçim ad listesi olarak gider', () async {
+      final mixedClient = _RoomSessionHttpClient();
+      final mixed = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: mixedClient,
+        ),
+      );
+      await mixed.createOnlineRoom(category: 'Tevlihev');
+      expect(mixedClient.requestBodies.first['p_category_names'], isEmpty);
+      expect(
+        mixedClient.requestBodies.first.containsKey('p_category_name'),
+        isFalse,
+      );
+
+      final multiClient = _RoomSessionHttpClient();
+      final multi = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: multiClient,
+        ),
+      );
+      await multi.createOnlineRoom(category: 'Dîrok, Ziman');
+      expect(multiClient.requestBodies.first['p_category_names'], [
+        'Dîrok',
+        'Ziman',
+      ]);
+    });
+
+    test('kodla katılma kapasiteyi ve kalabalık ayrımını taşır', () async {
+      final httpClient = _RoomSessionHttpClient(
+        roomSnapshot: const {
+          ..._roomRpcSnapshot,
+          'max_players': 30,
+          'is_custom': true,
+        },
+      );
+      final repository = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      final room = await repository.joinOnlineRoom('ZK-ABCDEF0123');
+
+      expect(room.maxPlayers, 30);
+      expect(room.isCrowd, isTrue);
+    });
+
+    test('sonuç: eşit skor aynı sırayı paylaşır, ayrılan en sonda', () async {
+      final repository = repoFor(
+        _RoomSessionHttpClient(resultResponse: _crowdRoomResult()),
+      );
+
+      final result = await repository.loadMyPendingRoomResult();
+
+      expect(result, isNotNull);
+      expect(result!.room.isCrowd, isTrue);
+      expect(result.room.maxPlayers, 8);
+      expect(result.room.players.map((p) => p.rank), [1, 1, 3, null]);
+      expect(result.room.players.map((p) => p.left), [
+        false,
+        false,
+        false,
+        true,
+      ]);
+      // Ayrılanın 400 puanı kazananı etkilemez; tepede eşitlik var.
+      expect(result.winnerId, isNull);
+    });
+
+    test('sonuç: erken biten odada eksik cevap kabul edilir', () async {
+      final full = (_completedRoomResult['answers'] as List)
+          .cast<Map<String, dynamic>>();
+      // Tek cevaplı oyuncu: skoru bu cevapların toplamı olmalı → 0.
+      final repository = repoFor(
+        _RoomSessionHttpClient(
+          resultResponse: {
+            ..._crowdRoomResult(currentQuestionIndex: 1, answers: [full.first]),
+            'players': [
+              {
+                'player_id': 'host-id',
+                'display_name': 'Berfin',
+                'final_score': 0,
+                'final_streak': 0,
+                'rank': 1,
+                'left': false,
+              },
+              {
+                'player_id': 'gone-id',
+                'display_name': 'Şêro',
+                'final_score': 0,
+                'final_streak': 0,
+                'rank': null,
+                'left': true,
+              },
+            ],
+            'winner_id': 'host-id',
+          },
+        ),
+      );
+
+      final result = await repository.loadMyPendingRoomResult();
+
+      expect(result!.answers, hasLength(1));
+      expect(result.winnerId, 'host-id');
+    });
+
+    test('sonuç: odadan ayrılan çağıran (sıra yok, cevap yok) ayrıştırılır, '
+        'sunucu answers yerine boş liste verir', () async {
+      // 2026-10-16: ayrılan oyuncu da biten odanın sonucunu okuyabilir
+      // (get_room_result_payload `left_at is null` şartını bıraktı). Çağıran
+      // `left: true`, sırasız ve hiç cevapsız gelir; ekran bunu "Ayrıldı"
+      // satırı ve son sıralamayla gösterir.
+      final repository = repoFor(
+        _RoomSessionHttpClient(
+          resultResponse: {
+            ..._crowdRoomResult(answers: const []),
+            'players': [
+              {
+                'player_id': 'host-id',
+                'display_name': 'Berfin',
+                'final_score': 0,
+                'final_streak': 0,
+                'rank': null,
+                'left': true,
+              },
+              {
+                'player_id': 'guest-id',
+                'display_name': 'Rojda',
+                'final_score': 250,
+                'final_streak': 1,
+                'rank': 1,
+                'left': false,
+              },
+              {
+                'player_id': 'third-id',
+                'display_name': 'Azad',
+                'final_score': 100,
+                'final_streak': 0,
+                'rank': 2,
+                'left': false,
+              },
+            ],
+            'winner_id': 'guest-id',
+          },
+        ),
+      );
+
+      final result = await repository.loadMyPendingRoomResult();
+
+      expect(result, isNotNull);
+      final me = result!.room.players.singleWhere((p) => p.id == 'host-id');
+      expect(me.left, isTrue);
+      expect(me.rank, isNull);
+      expect(result.answers, isEmpty);
+      expect(result.winnerId, 'guest-id');
+    });
+
+    test('1v1 sonucu eksik cevabı hâlâ reddeder', () async {
+      final answers = (_completedRoomResult['answers'] as List)
+          .take(1)
+          .toList();
+      final repository = repoFor(
+        _RoomSessionHttpClient(
+          resultResponse: {..._completedRoomResult, 'answers': answers},
+        ),
+      );
+
+      await expectLater(
+        repository.loadMyPendingRoomResult(),
+        throwsA(isA<FormatException>()),
+      );
+    });
+
+    test(
+      'kalabalık sonucunda sıra ile ayrılma tutarsızsa reddedilir',
+      () async {
+        final broken = _crowdRoomResult();
+        (broken['players'] as List<Map<String, dynamic>>)[3]['rank'] = 4;
+        final repository = repoFor(
+          _RoomSessionHttpClient(resultResponse: broken),
+        );
+
+        await expectLater(
+          repository.loadMyPendingRoomResult(),
+          throwsA(isA<FormatException>()),
+        );
+      },
+    );
+
+    test('lobide host devri: leave_room yeni host kimliğini taşır', () async {
+      final repository = repoFor(
+        _RoomSessionHttpClient(
+          leaveResponse: const {
+            'status': 'left',
+            'reason': 'host_transferred',
+            'forfeited_by': null,
+            'new_host_id': 'guest-id',
+          },
+        ),
+      );
+      const room = GameRoom(
+        id: '00000000-0000-0000-0000-000000000099',
+        name: 'crowd',
+        code: 'ZK-ABCDEF0123',
+        category: 'Ziman',
+        players: [],
+        status: RoomStatus.lobby,
+        maxPlayers: 8,
+        isCustom: true,
+      );
+
+      final outcome = await repository.leaveOnlineRoom(room);
+
+      expect(outcome.hostTransferred, isTrue);
+      expect(outcome.newHostId, 'guest-id');
+      expect(outcome.completed, isFalse);
+    });
+
+    const crowdRoom = GameRoom(
+      id: '00000000-0000-0000-0000-000000000099',
+      name: 'crowd',
+      code: 'ZK-ABCDEF0123',
+      category: 'Ziman',
+      players: [],
+      status: RoomStatus.active,
+      maxPlayers: 8,
+      isCustom: true,
+    );
+
+    test(
+      'cevap ilerlemesi yalnız oda kimliğiyle sorulur ve parse edilir',
+      () async {
+        final httpClient = _RoomSessionHttpClient();
+        final repository = repoFor(httpClient);
+
+        final progress = await repository.loadRoomAnswerProgress(crowdRoom);
+
+        expect(progress!.questionIndex, 0);
+        expect(progress.answered, 3);
+        expect(progress.active, 8);
+        expect(httpClient.requestedPaths, [
+          '/rest/v1/rpc/get_room_answer_progress',
+        ]);
+        expect(httpClient.requestBodies, [
+          {'p_room_id': crowdRoom.id},
+        ]);
+      },
+    );
+
+    test('bozuk ilerleme cevabı sayaçsız bırakır, hata fırlatmaz', () async {
+      for (final bad in <Object?>[
+        null,
+        'x',
+        const {'question_index': 0, 'answered': 3},
+        const {'question_index': 0, 'answered': 3, 'active': 0},
+      ]) {
+        final repository = repoFor(
+          _RoomSessionHttpClient(answerProgressResponse: bad),
+        );
+        expect(await repository.loadRoomAnswerProgress(crowdRoom), isNull);
+      }
+    });
+
+    test(
+      'RPC yoksa (PGRST202) null döner ve oturumda bir daha sorulmaz',
+      () async {
+        final httpClient = _RoomSessionHttpClient(rpcErrorCode: 'PGRST202');
+        final repository = repoFor(httpClient);
+
+        expect(await repository.loadRoomAnswerProgress(crowdRoom), isNull);
+        expect(await repository.loadRoomAnswerProgress(crowdRoom), isNull);
+
+        expect(
+          httpClient.requestedPaths
+              .where((p) => p.endsWith('get_room_answer_progress'))
+              .length,
+          1,
+        );
+      },
+    );
+
+    test('mark_room_client_ready left dönerse oyuncu düşmüştür', () async {
+      final repository = repoFor(
+        _RoomSessionHttpClient(
+          markReadyResponse: const {
+            'status': 'left',
+            'current_question_remaining_ms': 0,
+          },
+        ),
+      );
+      const room = GameRoom(
+        id: '00000000-0000-0000-0000-000000000099',
+        name: 'crowd',
+        code: 'ZK-ABCDEF0123',
+        category: 'Ziman',
+        players: [],
+        status: RoomStatus.active,
+        maxPlayers: 8,
+        isCustom: true,
+      );
+
+      await expectLater(
+        repository.markRoomClientReady(room),
+        throwsA(isA<RoomMemberLeftException>()),
+      );
+    });
+  });
   test('engel listesi okunamazsa hata boş listeye dönüştürülmez', () async {
     final repository = SupabaseZanKurdRepository(
       SupabaseClient(
@@ -559,11 +1053,11 @@ void main() {
     expect(room.status, RoomStatus.lobby);
     expect(room.players.map((player) => player.id), ['host-id']);
     expect(httpClient.requestedPaths, [
-      '/rest/v1/rpc/create_online_room',
+      '/rest/v1/rpc/create_online_room_v2',
       '/rest/v1/room_players',
     ]);
     expect(httpClient.requestBodies.single, {
-      'p_category_name': 'Ziman',
+      'p_category_names': ['Ziman'],
       'p_seconds_per_question': 20,
       'p_question_count': 10,
       'p_entry_fee': 0,
@@ -595,7 +1089,7 @@ void main() {
       // 2026-08-13'te kaldırıldı; gerekçesi `room_ready_state_test.dart`
       // içinde yazılıdır.
       expect(httpClient.requestedPaths, [
-        '/rest/v1/rpc/join_room_by_code',
+        '/rest/v1/rpc/join_room_by_code_v2',
         '/rest/v1/room_players',
       ]);
       expect(
@@ -617,6 +1111,31 @@ void main() {
   /// `RoomJoinException(reason)` olarak yeniden fırlatılıyor — UI katmanı
   /// artık gerçek sebebe göre farklı metin gösterebiliyor
   /// (bkz. `test/room_join_error_mapping_test.dart`).
+  test('v2 JSON hata cevapları RoomJoinException olarak yükselir', () async {
+    for (final entry in {
+      'room_not_found': RoomJoinFailureReason.notFound,
+      'too_many_attempts': RoomJoinFailureReason.tooManyAttempts,
+    }.entries) {
+      final repository = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _RoomSessionHttpClient(joinRoomSoftError: entry.key),
+        ),
+      );
+      await expectLater(
+        repository.joinOnlineRoom('482913'),
+        throwsA(
+          isA<RoomJoinException>().having(
+            (e) => e.reason,
+            'reason',
+            entry.value,
+          ),
+        ),
+      );
+    }
+  });
+
   test(
     'sunucunun "oda dolu" reddi RoomJoinFailureReason.full olarak yükselir',
     () async {
@@ -871,8 +1390,11 @@ void main() {
       expect(result.endedReason, 'completed');
       expect(result.forfeitedBy, isNull);
       expect(result.finishedAt, DateTime.utc(2026, 8, 2, 12, 1));
+      // Sonuç yükü yalnız ad taşır; oyuncuların fotoğraf/kod kimliği ikinci
+      // bir herkese açık profil çağrısıyla tamamlanır (2026-10-21).
       expect(httpClient.requestedPaths, [
         '/rest/v1/rpc/get_my_pending_room_result',
+        '/rest/v1/rpc/get_public_profiles',
       ]);
     },
   );
@@ -917,10 +1439,11 @@ void main() {
     final result = await repository.loadRoomResult(room);
 
     expect(result?.room.id, room.id);
-    expect(httpClient.requestedPaths, ['/rest/v1/rpc/get_my_room_result']);
-    expect(httpClient.requestBodies, [
-      {'p_room_id': room.id},
+    expect(httpClient.requestedPaths, [
+      '/rest/v1/rpc/get_my_room_result',
+      '/rest/v1/rpc/get_public_profiles',
     ]);
+    expect(httpClient.requestBodies.first, {'p_room_id': room.id});
   });
 
   test(
@@ -994,9 +1517,9 @@ void main() {
         'https://example.supabase.co',
         'sb_publishable_test_key',
         httpClient: _RoomSessionHttpClient(
-          resultResponse: const {
-            ..._completedRoomResult,
-            'opponent_answers': <Object>[],
+          resultResponse: {
+            for (final entry in _completedRoomResult.entries)
+              if (entry.key != 'winner_id') entry.key: entry.value,
           },
         ),
       ),
@@ -1035,10 +1558,8 @@ void main() {
           'question_ids': ['question-2', 'question-1'],
         },
         {
-          ..._completedRoomResult,
-          'opponent_answers': [
-            {'selected_option': 'B'},
-          ],
+          for (final entry in _completedRoomResult.entries)
+            if (entry.key != 'question_ids') entry.key: entry.value,
         },
         {
           ..._completedRoomResult,
@@ -1067,9 +1588,11 @@ void main() {
           ..._completedRoomResult,
           'answers': [
             {
-              ...(_completedRoomResult['answers']! as List<Object?>).first
-                  as Map<String, Object?>,
-              'opponent_selected_option': 'B',
+              for (final entry
+                  in ((_completedRoomResult['answers']! as List<Object?>).first
+                          as Map<String, Object?>)
+                      .entries)
+                if (entry.key != 'correct_option') entry.key: entry.value,
             },
             (_completedRoomResult['answers']! as List<Object?>).last,
           ],
@@ -1332,15 +1855,12 @@ void main() {
     }
   });
 
-  test('leave room eksik, fazla veya yanlış tipli cevabı reddeder', () async {
+  test('leave room eksik veya yanlış tipli cevabı reddeder', () async {
+    // Fazlalık alan artık reddedilmez: kalabalık lobide host devrinde sunucu
+    // `new_host_id` ekler ve gelecekte yeni alanlar eklenebilir. Zorunlu üç
+    // alanın varlığı ve tipi hâlâ denetlenir.
     final malformed = <Object?>[
       const {'status': 'finished', 'reason': 'completed'},
-      const {
-        'status': 'finished',
-        'reason': 'completed',
-        'forfeited_by': null,
-        'score': 100,
-      },
       const {'status': 'finished', 'reason': 3, 'forfeited_by': null},
     ];
     const room = GameRoom(
@@ -1367,6 +1887,64 @@ void main() {
       );
     }
   });
+
+  test(
+    'leave room, terminal sonuç ve resume fazla anahtarı yok sayar',
+    () async {
+      const room = GameRoom(
+        id: '00000000-0000-0000-0000-000000000099',
+        name: '1vs1',
+        code: 'ZK-RSME',
+        category: 'Ziman',
+        players: [],
+        status: RoomStatus.active,
+        questionCount: 10,
+      );
+      final leaveRepository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _RoomSessionHttpClient(
+            leaveResponse: const {
+              'status': 'finished',
+              'reason': 'completed',
+              'forfeited_by': null,
+              'yeni_alan': 100,
+            },
+          ),
+        ),
+      );
+      expect((await leaveRepository.leaveOnlineRoom(room)).status, 'finished');
+
+      final resultRepository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _RoomSessionHttpClient(
+            resultResponse: {
+              ..._completedRoomResult,
+              'yeni_alan': true,
+              'room': {
+                ..._completedRoomResult['room']! as Map<String, Object?>,
+                'yeni_alan': 1,
+              },
+              'players': [
+                for (final player
+                    in _completedRoomResult['players']! as List<Object?>)
+                  {...player! as Map<String, Object?>, 'yeni_alan': 'x'},
+              ],
+              'answers': [
+                for (final answer
+                    in _completedRoomResult['answers']! as List<Object?>)
+                  {...answer! as Map<String, Object?>, 'yeni_alan': 'x'},
+              ],
+            },
+          ),
+        ),
+      );
+      expect(await resultRepository.loadMyPendingRoomResult(), isNotNull);
+    },
+  );
 
   test(
     'leave room ve cancel matchmaking yetkili RPC sözleşmesini kullanır',
@@ -1453,12 +2031,68 @@ void main() {
     );
   });
 
+  // touch_matchmaking göçten ÖNCE yayınlanan derlemede 404/PGRST202 verir;
+  // bekleme ekranı bunu hata saymayıp eski yola (akış + 20 sn) düşmeli ve
+  // her 3 saniyede ölü bir RPC'ye vurmamalı.
+  test(
+    'touch_matchmaking RPC yoksa sessizce unknown döner ve bir daha sormaz',
+    () async {
+      final httpClient = _RoomSessionHttpClient(rpcErrorCode: 'PGRST202');
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      final first = await repository.touchMatchmaking();
+      final second = await repository.touchMatchmaking();
+
+      expect(first.status, MatchmakingTouchStatus.unknown);
+      expect(second.status, MatchmakingTouchStatus.unknown);
+      expect(
+        httpClient.requestedPaths.where((p) => p.endsWith('touch_matchmaking')),
+        hasLength(1),
+      );
+    },
+  );
+
+  test('touch_matchmaking eşleşme özetini tipli sonuca çevirir', () async {
+    final repository = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: _RoomSessionHttpClient(),
+      ),
+    );
+
+    final touch = await repository.touchMatchmaking();
+
+    expect(touch.status, MatchmakingTouchStatus.matched);
+    expect(touch.roomId, '00000000-0000-0000-0000-000000000099');
+    expect(touch.opponentName, 'Rojda');
+    expect(
+      MatchmakingTouch.fromJson(const {'status': 'waiting'}).status,
+      MatchmakingTouchStatus.waiting,
+    );
+    expect(
+      MatchmakingTouch.fromJson(const {'status': 'matched'}).status,
+      MatchmakingTouchStatus.unknown,
+      reason: 'room_id eksik eşleşme cevabı odaya çevrilmemeli',
+    );
+    expect(
+      MatchmakingTouch.fromJson(const {'status': 'none'}).status,
+      MatchmakingTouchStatus.none,
+    );
+  });
+
   test('online room join uses the room-code RPC contract', () {
     final source = File(
       'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
 
-    expect(source, contains("'join_room_by_code'"));
+    expect(source, contains("'join_room_by_code_v2'"));
     expect(
       source,
       isNot(contains(".from('rooms')\n        .select('id, code")),
@@ -1597,8 +2231,9 @@ void main() {
 
     expect(
       source,
-      contains('profiles(display_name, avatar_icon, avatar_color'),
+      contains('profiles(display_name, player_tag, avatar_icon, avatar_color'),
     );
+    expect(source, contains("tag: profile?['player_tag'] as String?"));
     expect(source, contains("avatarIcon: profile?['avatar_icon'] as String?"));
     expect(
       source,
@@ -1861,39 +2496,115 @@ void main() {
     },
   );
 
-  test(
-    'loadFavoriteQuestions çevrimiçi oda maçında kaydedilmiş favoriyi de çözer',
-    () async {
-      // Kayıt uuid ile yazılır (gerçek oda sorusu), okuma paketli banka
-      // kimlikleriyle eşleştiriyordu — sunucuda duran bir favori hiçbir
-      // zaman listede görünmüyordu (2026-08-14 denetimi).
+  group('loadFavoriteQuestions', () {
+    _SignedInRoomSessionRepository repositoryFor(http.BaseClient httpClient) =>
+        _SignedInRoomSessionRepository(
+          SupabaseClient(
+            'https://example.supabase.co',
+            'sb_publishable_test_key',
+            httpClient: httpClient,
+          ),
+        );
+
+    test('oda maçı favorisi RPC ile çözülür, cevapsız işaretlenir ve ölü '
+        'quiz_public_questions görünümüne gidilmez', () async {
+      // 2026-08-14'te oda maçında kaydedilmiş favoriler `quiz_public_questions`
+      // görünümünden çözülüyordu. Görünüm istemciye hep "permission denied"
+      // veriyordu (altındaki `questions` tablosunda SELECT yok), hata
+      // yutuluyor ve favori yine görünmüyordu; çağrı ve görünüm 2026-10-15'te
+      // kaldırıldı. Çözüm `get_my_favorite_questions` RPC'sidir (cevap
+      // taşımaz). Bekçi: paketli favori yerelden, oda favorisi RPC'den gelir;
+      // sunucuya `favorite_questions` ve RPC dışında gidilmez.
       final httpClient = _FavoriteQuestionsHttpClient();
-      final repository = _SignedInRoomSessionRepository(
-        SupabaseClient(
-          'https://example.supabase.co',
-          'sb_publishable_test_key',
-          httpClient: httpClient,
-        ),
-      );
 
-      final questions = await repository.loadFavoriteQuestions();
+      final questions = await repositoryFor(httpClient).loadFavoriteQuestions();
 
-      expect(questions, hasLength(2));
-      // Sunucu satırının sırası korunur (created_at desc).
-      expect(questions.first.id, 'server-only-id');
-      expect(questions.first.prompt, 'Sunucu sorusu?');
-      // Cevap istemciye hiç gönderilmedi — yeniden puanlanamaz.
+      expect(questions.map((q) => q.id), [
+        _FavoriteQuestionsHttpClient.serverOnlyId,
+        'curated_movement_0001',
+      ]);
       expect(questions.first.hasHiddenAnswer, isTrue);
-      expect(questions.last.id, 'curated_movement_0001');
+      expect(questions.first.category, 'Ziman');
+      expect(questions.first.answers, ['A', 'B', 'C', 'D']);
       expect(questions.last.hasHiddenAnswer, isFalse);
+      expect(httpClient.requestedPaths, [
+        '/rest/v1/favorite_questions',
+        '/rest/v1/rpc/get_my_favorite_questions',
+      ]);
+      expect(httpClient.rpcBodies.single, {
+        'p_ids': [_FavoriteQuestionsHttpClient.serverOnlyId],
+      });
       expect(
-        httpClient.requestedPaths,
-        containsAll([
-          '/rest/v1/favorite_questions',
-          '/rest/v1/quiz_public_questions',
-          '/rest/v1/categories',
-        ]),
+        File(
+          'lib/src/data/supabase_zankurd_repository.dart',
+        ).readAsStringSync().contains("from('quiz_public_questions')"),
+        isFalse,
       );
-    },
-  );
+    });
+
+    test(
+      'paketli bankadaki ve uuid olmayan kimlikler RPC\'ye gönderilmez',
+      () async {
+        final httpClient = _FavoriteQuestionsHttpClient(serverIds: const []);
+
+        final questions = await repositoryFor(
+          httpClient,
+        ).loadFavoriteQuestions();
+
+        expect(questions.map((q) => q.id), ['curated_movement_0001']);
+        expect(httpClient.requestedPaths, ['/rest/v1/favorite_questions']);
+      },
+    );
+
+    test('çözülemeyen kimlikler 50\'lik parçalarla sorulur', () async {
+      final ids = [
+        for (var i = 0; i < 120; i++)
+          '00000000-0000-4000-8000-${i.toString().padLeft(12, '0')}',
+      ];
+      final httpClient = _FavoriteQuestionsHttpClient(serverIds: ids);
+
+      final questions = await repositoryFor(httpClient).loadFavoriteQuestions();
+
+      expect(httpClient.rpcBodies.map((b) => (b['p_ids'] as List).length), [
+        50,
+        50,
+        20,
+      ]);
+      expect(questions, hasLength(121));
+      expect(questions.take(120).map((q) => q.id), ids);
+    });
+
+    test(
+      'RPC henüz yoksa (PGRST202) sessizce atlanır, yerel favori gelir',
+      () async {
+        final httpClient = _FavoriteQuestionsHttpClient(
+          rpcStatus: 404,
+          rpcBody: const {
+            'code': 'PGRST202',
+            'message': 'Could not find the function',
+          },
+        );
+
+        final questions = await repositoryFor(
+          httpClient,
+        ).loadFavoriteQuestions();
+
+        expect(questions.map((q) => q.id), ['curated_movement_0001']);
+      },
+    );
+
+    test(
+      'taşıma hatası yukarı çıkar: ekran hata + yeniden dene gösterir',
+      () async {
+        final httpClient = _FavoriteQuestionsHttpClient(
+          rpcThrows: const SocketException('Network is unreachable'),
+        );
+
+        await expectLater(
+          repositoryFor(httpClient).loadFavoriteQuestions(),
+          throwsA(anything),
+        );
+      },
+    );
+  });
 }

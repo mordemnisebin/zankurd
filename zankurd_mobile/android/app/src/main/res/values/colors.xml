@@ -13,8 +13,13 @@
   paletine göreydi; Flutter ilk kareyi çizince zemin renk atlıyordu.
 -->
 <resources>
-    <color name="zk_splash_bg">#E9EDF6</color>
-    <color name="zk_splash_bg_dark">#0A0F2E</color>
+    <!-- 2026-10-19: #E9EDF6 -> #F4F6FA (AppTheme.lightBg); native zemin eskide kalmıştı, Flutter ilk karede renk atlıyordu. -->
+    <color name="zk_splash_bg">#F4F6FA</color>
+    <!-- 2026-10-20: gece grafit (SahneTokens.night.bg); simge zemini kimlik, değişmedi. -->
+    <color name="zk_splash_bg_dark">#121214</color>
     <!-- Uyarlanabilir simgenin zemini: gece lacivert (iOS simgesiyle aynı). -->
     <color name="zk_icon_bg">#0A0F2E</color>
+    <!-- Bildirim küçük simgesinin rengi (FCM `default_notification_color`):
+         yerel bildirimlerdeki `NotificationService._accent` (Tîrêj) ile aynı. -->
+    <color name="zk_notification_color">#C2560E</color>
 </resources>

@@ -1,3 +1,4 @@
+// Kurul 5. tur 2026-10-20: "+N seviye daha" kilidi ikincil renk; reddet ✗ görünür kenar + birincil renk.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
 
@@ -77,10 +78,17 @@ void main() {
     // 2-5 arası düğümler numara yerine kilit ikonu taşır; final kupası da
     // kilitli olduğu için görünmez.
     expect(find.text('4'), findsNothing);
+    // Kurul 4. tur: yalnız ilk kilitli seviye tam kart; kalan üçü kompakt
+    // kilitli satır (2026-10-21: "+3" satırı alt yarıyı boş bırakıyordu).
     expect(find.byIcon(AppIcons.lock), findsNWidgets(4));
+    expect(find.text('+3 seviye daha'), findsNothing);
+    expect(find.text('Usta'), findsOneWidget); // kompakt satırda
     expect(find.byIcon(AppIcons.trophy), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('level-locked-more-3')));
+    await tester.pumpAndSettle();
+    expect(find.byIcon(AppIcons.lock), findsNWidgets(4));
 
-    // Beş satır da çizilir — kilitli olmak görünmez olmak değildir.
+    // Açılınca beş satır da çizilir.
     expect(find.text('Başlangıç'), findsOneWidget);
     expect(find.text('Usta'), findsOneWidget);
 
@@ -152,9 +160,17 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      // Kurul 4. tur: ilk kilitli seviyeden sonrası "+N seviye daha" satırında.
+      await tester.tap(find.byKey(const ValueKey('level-locked-more-3')));
+      await tester.pumpAndSettle();
+
+      // Açık temada (bu test) aktif kart yüzey kartıdır (tur 6b).
       expect(
-        tester.widget(find.byKey(const ValueKey('level-card-1'))),
-        isA<SahneStageCard>(),
+        find.descendant(
+          of: find.byKey(const ValueKey('level-card-1')),
+          matching: find.byType(SahneSurfaceCard),
+        ),
+        findsOneWidget,
       );
       for (final n in [2, 3, 4, 5]) {
         expect(

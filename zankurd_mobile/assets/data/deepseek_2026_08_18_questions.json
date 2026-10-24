@@ -105,7 +105,7 @@
     "correctAnswer": "Başûr",
     "explanation": "Kandil Dağı, Kürdistan'ın güneyinde, Irak ve İran sınırındadır ve tarihi dağlık merkezidir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -415,7 +415,7 @@
     "correctAnswer": "Zabê Biçûk",
     "explanation": "Küçük Zap, Zagros Dağları'ndan doğar ve Musul'un güneyinde Dicle'ye bağlanır. Fırat, Zagros'tan doğmaz ve Dicle'ye Irak'ın güneyinde bağlanır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1159,7 +1159,7 @@
     "correctAnswer": "Canberra",
     "explanation": "Canberra, Avustralya'nın başkentidir. Sidney, Melbourne ve Perth büyük şehirlerdir ancak başkent değildirler.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1717,7 +1717,7 @@
     "correctAnswer": "Pretoria",
     "explanation": "Güney Afrika'nın üç başkenti vardır: Pretoria idari, Cape Town yasama, Bloemfontein yargı başkentidir.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2182,7 +2182,7 @@
     "correctAnswer": "Projeksiyona Robinson",
     "explanation": "Robinson Projeksiyonu, yüzey, şekil ve mesafe arasında bir denge kurduğu için yüzeyleri gösteren dünya haritalarında kullanılır. Mercator Projeksiyonu yüzeyleri büyütür ve navigasyon içindir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2430,7 +2430,7 @@
     "correctAnswer": "Projeksiyona Peters",
     "explanation": "Peters Projeksiyonu kıtaların yüzeylerini gerçek oranlarıyla gösterir, ancak şekillerini bozar. Mercator yüzeyleri büyütür, Robinson ise bir denge kurar.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2461,7 +2461,7 @@
     "correctAnswer": "Xetên îzolîn",
     "explanation": "İzolin (kontur) çizgileri, topografik haritada eşit yükseklikteki noktaları gösteren çizgilerdir. Paraleller ve meridyenler koordinattır, yükseklik değil.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2554,7 +2554,7 @@
     "correctAnswer": "Projeksiyona Robinson",
     "explanation": "Robinson Projeksiyonu yüzeyleri ve şekilleri dengeli bir şekilde gösterir, bu yüzden dünya haritası için kullanılır. Mercator yüzeyleri büyütür, Peters ise şekilleri bozar.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2585,7 +2585,7 @@
     "correctAnswer": "Azîmût",
     "explanation": "Azimut, kuzey yönünden saat yönünde, yatay düzlemde ölçülen açıdır. Enlem ve boylam ise koordinattır, açı değil.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3422,7 +3422,7 @@
     "correctAnswer": "Karahrûd (nêzî Qumê)",
     "explanation": "Şerefhan Bitlisi 1543'te Kum yakınlarındaki Karahrud'da doğdu; Bitlis beyleri ailesindendi ve adını o beylikten alır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3453,7 +3453,7 @@
     "correctAnswer": "Sunnî",
     "explanation": "Şerefhan Bitlisi Sünni bir Müslümandı. Kitabında Kürtlerin din ve inancından da bahseder.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3515,7 +3515,7 @@
     "correctAnswer": "Împaratoriya Osmanî",
     "explanation": "Şerefhan önce Safevî sarayında yetişti, sonra Osmanlı tarafına geçti ve Bitlis beyi olarak Şerefname'yi orada yazdı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3546,7 +3546,7 @@
     "correctAnswer": "Mîrektiya Bidlîsê",
     "explanation": "Şerefxanê Bidlîsî, Bitlis Beyliği'ndendi. Bu beyliğin mir ailesine mensuptu ve daha sonra kendisi de Bitlis beyi oldu.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3577,7 +3577,7 @@
     "correctAnswer": "1603",
     "explanation": "Şerefxanê Bidlîsî'nin ölümü kaynaklarda 1603-04 olarak verilir; Şerefname'yi 1597'de tamamlamıştı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3608,7 +3608,7 @@
     "correctAnswer": "Her du dewletan",
     "explanation": "Şerefxanê Bidlîsî, hem Osmanlı İmparatorluğu hem de Safevi İmparatorluğu için çalışmıştır. İki devlet arasında manevra yapmıştır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3763,7 +3763,7 @@
     "correctAnswer": "1932",
     "explanation": "Hawar, 15 Mayıs 1932'de yayın hayatına başladı. 1943 yılına kadar aralıklarla yayımlandı.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4104,7 +4104,7 @@
     "correctAnswer": "Stenbol",
     "explanation": "Celadet Ali Bedirhan 1893 yılında İstanbul'da doğdu. Bedirhani ailesindendi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4352,7 +4352,7 @@
     "correctAnswer": "Nippur",
     "explanation": "Nippur, Enlil tapınağının bulunduğu Sümerlerin kutsal şehriydi. Ur, Uruk ve Lagaş da önemli şehirlerdi, ancak Nippur Enlil için biliniyordu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4383,7 +4383,7 @@
     "correctAnswer": "Uruk",
     "explanation": "Uruk, Sümerlerin en önemli tanrıçalarından biri olan İnanna'nın (İştar) tapınağının merkezi olan şehirdi. Ur, Nippur ve Eridu da diğer şehirlerdi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4414,7 +4414,7 @@
     "correctAnswer": "Akkad",
     "explanation": "Sargon tarafından kurulan Akkad İmparatorluğu, Mezopotamya'yı birleştiren ilk imparatorluktu. Sümer, Babil ve Asur daha sonra geldi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4631,7 +4631,7 @@
     "correctAnswer": "Aşurbanipal",
     "explanation": "Aşurbanipal, içinde binlerce çivi yazılı metin bulunan ünlü Ninova Kütüphanesi'ni inşa ettirdi. Sargon II, Sennacherib ve Tiglath-Pileser III ise diğer krallardı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4755,7 +4755,7 @@
     "correctAnswer": "Ur",
     "explanation": "Ur, Basra Körfezi'ne bağlı olduğu için deniz ticareti yapılan bir şehirdi. Uruk, Eridu ve Lagash da önemli şehirlerdi, ancak Ur ticaretiyle tanınıyordu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4817,7 +4817,7 @@
     "correctAnswer": "Akkadî",
     "explanation": "Eski Babil döneminde resmî belgeler Akadca yazılıyordu. Aramice ise çok daha sonra, Yeni Babil döneminden itibaren yaygınlaştı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4941,7 +4941,7 @@
     "correctAnswer": "Ekbatan",
     "explanation": "Ekbatan, yani günümüzdeki Hemedan, Medlerin başkentiydi ve tarihçiler tarafından onların siyasi merkezi olarak kabul edilir.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5096,7 +5096,7 @@
     "correctAnswer": "Sedsala 6'an berî zayînê",
     "explanation": "MÖ 6. yüzyılda Kyros, Astyages'i yenip Medleri de içine alan Ahameniş İmparatorluğu'nu kurdu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5158,7 +5158,7 @@
     "correctAnswer": "Mîrên xwecihî yên herêmê",
     "explanation": "Hakkari Emirliği, Hakkari Emirleri olarak bilinen yerel emirler tarafından yönetiliyordu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5189,7 +5189,7 @@
     "correctAnswer": "Girît",
     "explanation": "Bedirhan Paşa, 1847'deki isyanının başarısız olmasının ardından tüm ailesiyle birlikte Girit Adaları'na sürgün edildi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5282,7 +5282,7 @@
     "correctAnswer": "Mîrektiya Colemêrgê",
     "explanation": "Hakkari Emirliği, 16. yüzyılda Hakkari bölgesinde hüküm sürdü ve Osmanlılar ile Safeviler arasında önemli bir rol oynadı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5313,7 +5313,7 @@
     "correctAnswer": "1898",
     "explanation": "Kürdistan, ilk Kürtçe gazete olarak 1898'de Mîqdad Mîdhat Bedirhan tarafından Kahire'de yayımlandı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5344,7 +5344,7 @@
     "correctAnswer": "Mîqdad Mîdhat Bedirxan",
     "explanation": "Bedirhan Paşa'nın oğlu Mîqdad Mîdhat Bedirhan, 1898'de Kürdistan'ı Kahire'de çıkardı ve bu ilk Kürtçe gazete oldu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5654,7 +5654,7 @@
     "correctAnswer": "Qahîre",
     "explanation": "Kurdistan gazetesinin ilk sayısı 1898'de Kahire'de basıldı; sonraki sayılar Cenevre, Londra ve Folkestone gibi merkezlere taşındı.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5809,7 +5809,7 @@
     "correctAnswer": "Mîqdad Mîdhat û Ebdurehman Bedirxan",
     "explanation": "Kurdistan gazetesi, Mikdad Midhat ve Abdurrahman Bedirhan kardeşler tarafından yönetildi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6088,7 +6088,7 @@
     "correctAnswer": "1815",
     "explanation": "Waterloo Savaşı 18 Haziran 1815'te gerçekleşti. Bu savaşta Wellington ve Blücher liderliğindeki İngiliz ve Prusya kuvvetleri, Napolyon Bonapart'ı yendi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6119,7 +6119,7 @@
     "correctAnswer": "Sedsala 14'an û 15'an",
     "explanation": "Yüz Yıl Savaşları 1337 ile 1453 yılları arasında, yani 14. ve 15. yüzyılda gerçekleşti. Bu savaş İngiltere ve Fransa arasında yapıldı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6305,7 +6305,7 @@
     "correctAnswer": "1916",
     "explanation": "Verdun Savaşı 21 Şubat 1916'da başladı ve 18 Aralık 1916'ya kadar sürdü. Bu savaş, Birinci Dünya Savaşı'nın en uzun ve en kanlı savaşlarından biriydi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6336,7 +6336,7 @@
     "correctAnswer": "Şerê Trafalgarê",
     "explanation": "Trafalgar Savaşı 21 Ekim 1805'te gerçekleşti. Bu savaşta Amiral Horatio Nelson liderliğindeki İngiliz donanması, Fransa ve İspanya donanmalarına karşı zafer kazandı, ancak Nelson savaşta öldürüldü.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7173,7 +7173,7 @@
     "correctAnswer": "Şerê Cannae",
     "explanation": "Cannae Savaşı, MÖ 216 yılının 2 Ağustos'unda yapıldı. Hannibal, kuşatma taktiğiyle Roma ordusunu yendi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7297,7 +7297,7 @@
     "correctAnswer": "Portûgal",
     "explanation": "Portekiz, Vasco da Gama gibi kaşiflerin önderliğinde Hindistan'a giden deniz yolunu ilk kez 1498'de buldu. Bu, Portekiz'in deniz ticaretindeki üstünlüğünün başlangıcı oldu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7359,7 +7359,7 @@
     "correctAnswer": "Bartolomeu Dias",
     "explanation": "Bartolomeu Dias, 1488'de Ümit Burnu'nu ilk kez geçti. Bu, Hindistan'a giden deniz yolunun önünü açtı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7483,7 +7483,7 @@
     "correctAnswer": "John Cabot",
     "explanation": "Venedikli Giovanni Caboto — İngilizcede John Cabot — 1497'de İngiltere adına Kuzey Amerika kıyılarına ulaştı. İngiliz değil, İngiltere hizmetinde çalışan bir İtalyandı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7607,7 +7607,7 @@
     "correctAnswer": "James Watt",
     "explanation": "James Watt, 1769'da fabrikalar ve ulaşım için enerji sağlayan ve Sanayi Devrimi'ni hızlandıran gelişmiş buhar makinesini yaptı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7886,7 +7886,7 @@
     "correctAnswer": "Serhildana Luddîtan",
     "explanation": "Luddite İsyanı 1811'de Britanya'da meydana geldi; makineler yüzünden işlerini kaybeden işçiler makineleri tahrip etmeye başladı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7917,7 +7917,7 @@
     "correctAnswer": "Adam Smith",
     "explanation": "Adam Smith, 1776'da \"Ulusların Zenginliği\" kitabını yazdı; bu kitap klasik ekonominin temelini attı ve Sanayi Devrimi'ni etkiledi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7948,7 +7948,7 @@
     "correctAnswer": "Manchester",
     "explanation": "Manchester, Sanayi Devrimi'nde tekstilin merkeziydi çünkü orada birçok eğirme ve dokuma fabrikası kuruldu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -8041,7 +8041,7 @@
     "correctAnswer": "Eli Whitney",
     "explanation": "Eli Whitney, 1793'te pamuğu tohumundan ayırmak için kullanılan çırçır makinesini icat etti; bu da pamuk üretimini artırdı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -8196,7 +8196,7 @@
     "correctAnswer": "Wendabûna wateyê di wergerê de",
     "explanation": "Sözlü tarih bir dilden başka bir dile çevrildiğinde, anlatıcının özgün anlamı kaybolabilir veya değişebilir; bu da bilgilerin doğruluğunu azaltır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -8351,7 +8351,7 @@
     "correctAnswer": "Pirsên vekirî yên ku çîrokbêj azad dihêlin",
     "explanation": "Açık uçlu sorular anlatıcının serbestçe konuşmasını sağlar ve beklenmedik, derin bilgilerin ortaya çıkmasına olanak tanır; bu da sözlü tarih için daha faydalıdır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -8568,7 +8568,7 @@
     "correctAnswer": "Xanedana Han",
     "explanation": "Organize İpek Yolu ağı MÖ 2. yüzyılda Han hanedanı döneminde kuruldu; Tang döneminde yeniden canlandı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -8599,7 +8599,7 @@
     "correctAnswer": "Serdema Mongol",
     "explanation": "Moğol egemenliği döneminde (13.-14. yy) tek bir siyasal çatı altında yol güvenliği arttı; buna Pax Mongolica denir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -8692,7 +8692,7 @@
     "correctAnswer": "Semerkand",
     "explanation": "Semerkant, Buhara ve Merv gibi Orta Asya şehirleri İpek Yolu'nun başlıca merkezlerindendi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -9002,7 +9002,7 @@
     "correctAnswer": "Aşîl",
     "explanation": "İlyada Destanı'nda Aşil, Truva'ya karşı öfkesi ve savaşıyla tanınan ana kahramandır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -9219,7 +9219,7 @@
     "correctAnswer": "Nexweşiya romantîk û nerazîbûna xwe",
     "explanation": "Emma Bovary, sıradan hayatından duyduğu memnuniyetsizlik ve romantik hayalleriyle tanınır. Hayallerinin içinde yaşar ve gerçek hayatından kaçar.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -9281,7 +9281,7 @@
     "correctAnswer": "Şerê Napoleon ê li Rûsyayê",
     "explanation": "Savaş ve Barış, Napolyon'un Rusya Seferi'nin arka planında geçer. Tolstoy bu romanda savaş sırasında Rus toplumunun yaşamını anlatır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -9436,7 +9436,7 @@
     "correctAnswer": "Li dibistanekê",
     "explanation": "Jane önce Lowood Okulu'nda öğretmenlik yapar; oradan ayrıldıktan sonra Thornfield'da mürebbiye olarak çalışır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10025,7 +10025,7 @@
     "correctAnswer": "Trajedî",
     "explanation": "Kral Lear, yaşlılık, güç ve aile ilişkilerini konu alan bir trajedidir. Lear, gücünü kızlarına devreden bir kraldır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10056,7 +10056,7 @@
     "correctAnswer": "Komîdî",
     "explanation": "Bir Yaz Gecesi Rüyası, aşkı ve hayalleri konu alan bir komedidir. Shakespeare'in en ünlü komedilerinden biridir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10087,7 +10087,7 @@
     "correctAnswer": "Komîdî",
     "explanation": "Venedik Taciri, Antonio adında bir taciri anlatan bir komedidir. Trajik yönleri de olan bir komedidir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10180,7 +10180,7 @@
     "correctAnswer": "The Merchant of Venice",
     "explanation": "Venedik Taciri, Antonio adında bir taciri anlatır. Borç ve cezaları konu alan bir komedidir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10242,7 +10242,7 @@
     "correctAnswer": "Sihirbazê The Tempest",
     "explanation": "Prospero, Fırtına'nın büyücüsüdür. Bir adada yaşar ve büyüsüyle bir fırtına koparır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10335,7 +10335,7 @@
     "correctAnswer": "Metr",
     "explanation": "Metr, şiirde ölçüdür; ahenk için kullanılır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10552,7 +10552,7 @@
     "correctAnswer": "Herika hişê",
     "explanation": "Joyce, \"Ulysses\"te bilinç akışı tekniğini kullanır; bu da modernizmin bir özelliğidir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10583,7 +10583,7 @@
     "correctAnswer": "Mrs Dalloway",
     "explanation": "Woolf'un \"Mrs Dalloway\"i bilinç akışı tekniğiyle tanınır ve modernizmin eserlerinden biridir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10645,7 +10645,7 @@
     "correctAnswer": "The Metamorphosis",
     "explanation": "Kafka'nın \"Dönüşüm\"ü gerçeküstü ve modernist bakış açısıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10831,7 +10831,7 @@
     "correctAnswer": "Herta Müller",
     "explanation": "Herta Müller, 2009'da Nobel Edebiyat Ödülü'nü kazandı. Komünist diktatörlük altındaki yaşamı anlatan romanlarıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10862,7 +10862,7 @@
     "correctAnswer": "J.M. Coetzee",
     "explanation": "J.M. Coetzee, 2003'te Nobel Edebiyat Ödülü'nü kazandı. Yaşamın zorluklarını ve ahlakı anlatan romanlarıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10924,7 +10924,7 @@
     "correctAnswer": "Doris Lessing",
     "explanation": "Doris Lessing, 2007'de Nobel Edebiyat Ödülü'nü kazandı. Farklı toplumlardaki kadınların yaşamını anlatan romanlarıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10955,7 +10955,7 @@
     "correctAnswer": "Abdulrazak Gurnah",
     "explanation": "Abdulrazak Gurnah, 2021'de Nobel Edebiyat Ödülü'nü kazandı. Sömürgecilik ve göç üzerine romanlarıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -10986,7 +10986,7 @@
     "correctAnswer": "José Saramago",
     "explanation": "José Saramago, 1998'de Nobel Edebiyat Ödülü'nü kazandı. Alegorik tarzdaki romanlarıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -11017,7 +11017,7 @@
     "correctAnswer": "Ivo Andrić",
     "explanation": "Ivo Andrić, 1961'de Nobel Edebiyat Ödülü'nü kazandı. \"Drina Köprüsü\" adlı romanıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -11048,7 +11048,7 @@
     "correctAnswer": "W.B. Yeats",
     "explanation": "W.B. Yeats, 1923'te Nobel Edebiyat Ödülü'nü kazandı. İrlanda kimliğini konu alan şiirleriyle tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -11079,7 +11079,7 @@
     "correctAnswer": "Samuel Beckett",
     "explanation": "Samuel Beckett, 1969'da Nobel Edebiyat Ödülü'nü kazandı. \"Godot\"yu Beklerken' adlı eseriyle tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -11110,7 +11110,7 @@
     "correctAnswer": "Nadine Gordimer",
     "explanation": "Nadine Gordimer, 1991'de Nobel Edebiyat Ödülü'nü kazandı. Apartheid hakkındaki romanlarıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -13156,7 +13156,7 @@
     "correctAnswer": "Fidelio",
     "explanation": "Beethoven sadece bir opera yazmıştır, adı \"Fidelio\"dur ve en ünlü operalarından biridir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -13218,7 +13218,7 @@
     "correctAnswer": "104",
     "explanation": "Haydn yaklaşık 104 senfoni yazmıştır ve bu nedenle \"senfoninin babası\" olarak bilinir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -13435,7 +13435,7 @@
     "correctAnswer": "Joseph Haydn",
     "explanation": "Joseph Haydn, klasik müzik formları üzerindeki etkisi nedeniyle \"Klasik Müziğin Babası\" olarak bilinir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -13466,7 +13466,7 @@
     "correctAnswer": "1809",
     "explanation": "Haydn, 31 Mayıs 1809'da Viyana'da vefat etmiştir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -14055,7 +14055,7 @@
     "correctAnswer": "Arya",
     "explanation": "Arya, operada tek bir solist için yazılmış bağımsız vokal parçadır; orkestra eşliği bulunur.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -14117,7 +14117,7 @@
     "correctAnswer": "Çar beşan",
     "explanation": "Senfoni çoğunlukla dört bölümden oluşur. Bu bölümler hızlarıyla birbirinden ayrılır: birincisi hızlı, ikincisi yavaş, üçüncüsü dans ve dördüncüsü hızlıdır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -14489,7 +14489,7 @@
     "correctAnswer": "1895",
     "explanation": "\"La Sortie de l\"usine Lumière à Lyon' filmi 1895'te Lumière kardeşler tarafından çekildi. Bu film tarihin ilk filmlerinden biridir ve sinemanın başlangıcını gösterir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -14520,7 +14520,7 @@
     "correctAnswer": "1948",
     "explanation": "Bu İtalyan Yeni Gerçekçilik filmi 1948'de gösterime girdi ve bu akımın en önemli eserlerinden biri olarak kabul edilir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -14737,7 +14737,7 @@
     "correctAnswer": "Alfred Hitchcock",
     "explanation": "Alfred Hitchcock, 1927'de gösterime giren bu sessiz filmin yönetmenidir ve onun ilk dönem işlerinden biri olarak kabul edilir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -14799,7 +14799,7 @@
     "correctAnswer": "Akira Kurosawa",
     "explanation": "Akira Kurosawa, 1950'de gösterime giren bu filmin yönetmenidir ve Japon sinemasını dünyaya tanıtmıştır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -14892,7 +14892,7 @@
     "correctAnswer": "Asghar Farhadi",
     "explanation": "Asghar Farhadi, 2011'de gösterime giren bu filmin yönetmenidir ve film En İyi Yabancı Film Oscar'ını kazanmıştır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -14923,7 +14923,7 @@
     "correctAnswer": "Alejandro González Iñárritu",
     "explanation": "Alejandro González Iñárritu, 2014'te gösterime giren bu filmin yönetmenidir ve En İyi Yönetmen Oscar'ını kazanmıştır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15202,7 +15202,7 @@
     "correctAnswer": "Vittorio De Sica",
     "explanation": "\"Bicycle Thieves\", 1948'de Vittorio De Sica tarafından çekilen ünlü bir neorealizm filmidir. Bu film, çalınan bir bisikletin peşine düşen bir baba ve oğlunun hikayesini anlatır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15233,7 +15233,7 @@
     "correctAnswer": "Roberto Rossellini",
     "explanation": "\"Rome, Open City\" 1945'te Roberto Rossellini tarafından çekilmiş ve İtalyan neorealizminin temel filmlerinden biri olarak kabul edilir. Film, İtalyanların Nazi işgaline karşı direnişini konu alır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15264,7 +15264,7 @@
     "correctAnswer": "The 400 Blows",
     "explanation": "\"The 400 Blows\" (Les Quatre Cents Coups) 1959'da François Truffaut tarafından çekilmiş ve Fransız Yeni Dalgası'nın temel filmlerinden biri olarak kabul edilir. Film, Antoine Doinel adlı bir gencin hikayesini anlatır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15295,7 +15295,7 @@
     "correctAnswer": "1960",
     "explanation": "\"Breathless\" 1960'ta Jean-Luc Godard tarafından çekilmiştir. Bu film, Fransız Yeni Dalgası'nın en ünlü filmlerinden biridir ve \"jump cut\" tekniğiyle tanınır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15326,7 +15326,7 @@
     "correctAnswer": "Xortekî bi navê Antoine Doinel",
     "explanation": "\"The 400 Blows\", Paris'te yaşayan ve birçok sorunla karşı karşıya kalan Antoine Doinel adlı bir gencin hikayesini anlatır. Film, Fransız Yeni Dalgası'nın temel filmlerinden biridir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15357,7 +15357,7 @@
     "correctAnswer": "Vittorio De Sica",
     "explanation": "\"Umberto D.\" 1952'de Vittorio De Sica tarafından çekilmiştir. Bu film, İtalyan neorealizminin son filmlerinden biridir ve yaşlı bir adam ile köpeğinin hikayesini anlatır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15388,7 +15388,7 @@
     "correctAnswer": "Teknîka \"jump cut\"",
     "explanation": "\"Breathless\", \"jump cut\" tekniğiyle tanınır. Bu teknikte görüntüler aniden ve süreklilik olmadan kesilir ve Fransız Yeni Dalgası'nın işaretlerinden biri haline gelmiştir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15419,7 +15419,7 @@
     "correctAnswer": "Rome, Open City",
     "explanation": "\"Rome, Open City\" 1945'te Roberto Rossellini tarafından çekilmiş ve İtalyan neorealizminin ilk filmlerinden biri olarak kabul edilir. Film, İtalyanların Nazilere karşı direnişini konu alır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15450,7 +15450,7 @@
     "correctAnswer": "Bavekî û kurê wî",
     "explanation": "\"Bicycle Thieves\", çalınan bir bisikletin peşine düşen bir baba ve oğlunun hikayesini anlatır. Bu film, İtalyan neorealizminin en ünlü filmlerinden biridir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15481,7 +15481,7 @@
     "correctAnswer": "François Truffaut",
     "explanation": "\"Jules and Jim\" 1962'de François Truffaut tarafından çekilmiştir. Bu film, Fransız Yeni Dalgası'nın ünlü filmlerinden biridir ve üç arkadaşın hikayesini anlatır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15512,7 +15512,7 @@
     "correctAnswer": "Breathless",
     "explanation": "\"Breathless\" (À bout de souffle) 1960'ta Jean-Luc Godard tarafından çekilmiş ve Fransız Yeni Dalgası'nın en ünlü filmlerinden biridir. Film, \"jump cut\" tekniğiyle tanınır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15760,7 +15760,7 @@
     "correctAnswer": "Ari Folman",
     "explanation": "İsrailli yönetmen Ari Folman, \"Waltz with Bashir\" belgesel filmini yayınladı. Bu film animasyon tekniğiyle yapılmıştır ve Folman'ın Lübnan Savaşı'ndaki deneyimleri hakkındadır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15822,7 +15822,7 @@
     "correctAnswer": "Werner Herzog",
     "explanation": "Alman yönetmen Werner Herzog, \"Grizzly Man\" filmini yayınladı. Bu belgesel, boz ayılarla birlikte yaşayan Timothy Treadwell'in hayatı hakkındadır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16287,7 +16287,7 @@
     "correctAnswer": "1950",
     "explanation": "\"Rashomon\" filmi 1950'de gösterime girdi ve sinema tarihinin en önemli filmlerinden biri oldu. Bu film, hikayeyi farklı bakış açılarından anlatma konusundaki yenilikçi tekniğiyle tanınır. Kurosawa bu filmle Venedik Film Festivali'nde Altın Aslan Ödülü'nü kazandı.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16380,7 +16380,7 @@
     "correctAnswer": "Flashforward",
     "explanation": "İleri sıçrama, gelecekte meydana gelmiş bir olayı gösterir. Geriye dönüş geçmişi gösterir, gelişme çatışma aşamasıdır ve sonsöz ise sondur.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16566,7 +16566,7 @@
     "correctAnswer": "UDP",
     "explanation": "UDP (Kullanıcı Veri Birimi Protokolü), verileri hızlı bir şekilde iletmek için kullanılır, ancak tüm paketlerin hedefe ulaşacağını garanti etmez. TCP güvenilirdir, IP adresleme ve HTTP web siteleri içindir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16659,7 +16659,7 @@
     "correctAnswer": "IPsec",
     "explanation": "IPsec, farklı ağlar arasındaki verileri şifreleyen ve güvenlik sağlayan bir protokoldür.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17062,7 +17062,7 @@
     "correctAnswer": "Sertîfîkaya dîjîtal",
     "explanation": "Dijital sertifika, kullanıcının veya sunucunun kimliğini doğrular ve veri güvenliği için kullanılır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17186,7 +17186,7 @@
     "correctAnswer": "Ciphertext",
     "explanation": "Ciphertext şifrelenmiş veridir; yetkisiz kişiler için okunamaz.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17682,7 +17682,7 @@
     "correctAnswer": "JOIN",
     "explanation": "JOIN, SQL'de bir koşula göre birden çok tablodan veri birleştirmek için kullanılır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17775,7 +17775,7 @@
     "correctAnswer": "Lîsteya duqat-girêdayî",
     "explanation": "Çift bağlı liste, her öğede iki bağlantı içerir: biri önceki öğeye, diğeri sonraki öğeye.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17899,7 +17899,7 @@
     "correctAnswer": "Dara duduyî",
     "explanation": "İkili ağaç, her düğümün en fazla iki çocuğa sahip olduğu bir ağaç türüdür.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18519,7 +18519,7 @@
     "correctAnswer": "Veguhestina pêşverû",
     "explanation": "İleri yayılım (forward propagation), giriş verilerinin sinir ağının katmanlarından geçtiği ve her katmanda nihai çıktı oluşana kadar dönüştürüldüğü süreçtir. Bu süreç, modelin tahminlerini hesaplamanın temelidir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18550,7 +18550,7 @@
     "correctAnswer": "Veguhestina paşverû",
     "explanation": "Geri yayılım (backpropagation), modelin tahmini ile doğru sonuç arasındaki hatanın hesaplandığı ve bu hatanın son katmandan ilk katmana doğru yayıldığı bir yöntemdir. Bu süreçte, hatayı azaltmak için model parametreleri düzeltilir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18612,7 +18612,7 @@
     "correctAnswer": "Derxistina taybetmendiyan",
     "explanation": "Özellik çıkarımı (feature extraction), modelin ham verilerden temel özellikleri otomatik olarak çıkardığı süreçtir. Derin öğrenmede, bu süreç sinir ağı katmanlarıyla yapılır ve manuel özellik çıkarımı ihtiyacını ortadan kaldırır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18643,7 +18643,7 @@
     "correctAnswer": "Fêrbûna bêçavdêrî",
     "explanation": "Denetimsiz öğrenme (unsupervised learning), modelin etiketsiz verilerden öğrenip verilerdeki yapıyı veya düzeni keşfettiği bir süreçtir. Bu yöntem, örüntüleri bulmak ve verileri gruplamak için kullanılır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18767,7 +18767,7 @@
     "correctAnswer": "Path",
     "explanation": "Yol (path), URL'de belirli bir sayfanın konumunu gösterir. Protokol erişim yöntemi, Alan Adı web sitesi adresi, Bağlantı Noktası ise iletişim kapısıdır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19325,7 +19325,7 @@
     "correctAnswer": "John von Neumann",
     "explanation": "John von Neumann, 1945'te programların ve verilerin aynı bilgisayar belleğinde saklanmasını önerdi; bu, von Neumann mimarisi olarak bilinir. Turing ve Zuse de bu alanda önemlidir, ancak bu kavramı kapsamlı bir şekilde von Neumann ortaya koymuştur.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19356,7 +19356,7 @@
     "correctAnswer": "Ada Lovelace",
     "explanation": "Ada Lovelace, 1843'te Analitik Motor için ilk bilgisayar programı olarak kabul edilen bir algoritma yazdı. Babbage makineyi tasarladı, ancak algoritmayı Lovelace yazdı. Turing ve Hopper daha sonra geldi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19790,7 +19790,7 @@
     "correctAnswer": "Inertiya",
     "explanation": "Eylemsizlik, bir cismin hareket durumundaki değişime karşı direnç gösterme özelliğidir. Kütle bir cisimdeki madde miktarıdır, ağırlık yerçekimi kuvvetidir ve momentum ise kütle ile hızın çarpımıdır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19914,7 +19914,7 @@
     "correctAnswer": "Momentûm",
     "explanation": "Momentum, bir cismin kütlesi ile hızının çarpımıdır ve p = mv olarak hesaplanır. Ağırlık yerçekimi kuvvetidir, kütle madde miktarıdır ve eylemsizlik ise hareket değişimine karşı dirençtir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20007,7 +20007,7 @@
     "correctAnswer": "Qanûna termodînamîkê ya yekem",
     "explanation": "Termodinamiğin birinci yasası, enerjinin korunumu yasası olarak da bilinir ve enerjinin yoktan var edilemeyeceğini veya yok edilemeyeceğini, yalnızca dönüştürülebileceğini belirtir. Termodinamiğin ikinci yasası entropi ile ilgilidir ve Newton yasaları ise hareket ve kuvvetlerle ilgilidir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20069,7 +20069,7 @@
     "correctAnswer": "Kondansator",
     "explanation": "Kondansatör, elektrik enerjisini iki plakası arasındaki elektrik alanında depolar ve daha sonra serbest bırakabilir. Direnç enerjiyi ısı olarak harcar, indüktör enerjiyi manyetik alanda depolar ve transformatör ise voltajı değiştirir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20410,7 +20410,7 @@
     "correctAnswer": "Tanget",
     "explanation": "Teğet (tangent), bir çembere tek bir noktada değen doğrudur. Genellikle açıların oluşturulmasında kullanılır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -29088,7 +29088,7 @@
     "promptTr": "1958 Irak İhtilali sonrası Abdülkerim Kasım döneminde hazırlanan geçici anayasada Kürtler için hangi hüküm yer aldı?",
     "answers": [
       "Zimanê kurdî wekî tekane zimanê fermî yê tevahiya dewletê hate ragihandin",
-      "Ereb û kurd di avakirina welêt de wekî du şirîkên sereke hatin qebûlkirin",
+      "Ereb û kurd di avakirina welat de wekî du şirîkên sereke hatin qebûlkirin",
       "Hemû partiyên siyasî yên herêmî bi temamî hatin qedexekirin",
       "Herêmên kurdan ji axa dewleta Iraqê bi temamî hatin veqetandin"
     ],
@@ -29098,7 +29098,7 @@
       "Bölgedeki tüm siyasi partilerin ve örgütlerin süresiz kapatılması",
       "Kürt bölgelerinin Irak devlet sınırlarından tamamen çıkarılması"
     ],
-    "correctAnswer": "Ereb û kurd di avakirina welêt de wekî du şirîkên sereke hatin qebûlkirin",
+    "correctAnswer": "Ereb û kurd di avakirina welat de wekî du şirîkên sereke hatin qebûlkirin",
     "correctAnswerTr": "Kürtlerin ve Arapların Irak ortak vatanında eşit ortak olduğu maddesi",
     "explanation": "1958 Geçici Anayasası'nın 3. maddesinde \"Araplar ve Kürtler bu vatanda ortaktır\" hükmü yer almış ve Barzani sürgünden dönmüştür.",
     "explanationTr": "1958 Geçici Anayasası'nın 3. maddesinde \"Araplar ve Kürtler bu vatanda ortaktır\" hükmü yer almış ve Barzani sürgünden dönmüştür.",

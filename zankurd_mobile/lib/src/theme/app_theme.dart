@@ -10,20 +10,30 @@ class AppColors {
 
   static Color disabledSurface(BuildContext context) =>
       AppTheme.isLight(context)
-      ? const Color(0xFFEEF1F8)
+      ? SahneTokens.day.disabledFill
       // Koyu ton `#282A36`ydı: maviye çalan bir gri, markanın orman
       // ailesinde yeri yok. Soru tahtasında pasif "Kontrol bike" yeşil
       // kartın üstünde mora kaçan bir leke gibi duruyordu (2026-09-27
       // simülatör turu). Aynı koyulukta, orman ailesinden doygunluğu
       // düşük bir gri; soluk metinle karşıtlık ~6.3.
       // Şahnê: pasif öğe Perde (s1) + üçüncül metin; opaklıkla değil.
-      : SahneTokens.night.s1;
+      : SahneTokens.night.disabledFill;
 
   /// İkon zemin tonu (menü/istatistik ikon karoları). Light'ta hafif pastel
   /// kalır; dark'ta alfa yükselir ki koyu zeminde ikon kaybolmasın — ama
   /// hiçbir zaman açık temadan taşan düz pastel ("yapışkan not") kullanılmaz.
-  static Color iconTileBg(BuildContext context, Color color) =>
-      color.withValues(alpha: AppTheme.isLight(context) ? 0.14 : 0.24);
+  ///
+  /// Gece (2026-10-20, grafit): kategori ikon karoları doygunluğu %20
+  /// düşürülür; graphite üstünde doygun renkli karo "karnaval" izlenimi
+  /// veriyordu.
+  static Color iconTileBg(BuildContext context, Color color) {
+    if (AppTheme.isLight(context)) return color.withValues(alpha: 0.14);
+    final hsl = HSLColor.fromColor(color);
+    return hsl
+        .withSaturation(hsl.saturation * 0.8)
+        .toColor()
+        .withValues(alpha: 0.24);
+  }
 
   /// Aksan metin rengini yüzeye göre uyarlar. Dark temada koyu aksanlar
   /// (ör. brandDeep, deniz mavisi) yüzeyde boğulduğu için aydınlatılır;
@@ -406,7 +416,7 @@ class AppTheme {
 
   // Kesk — marka kimliği (başlık şeritleri, kimlik yüzeyleri).
   static const culturalBrandBg = Color(
-    0xFF1A2352,
+    0xFF24252A,
   ); // Sahne kartı üstü (gece kimliği; eski orman yeşili).
 
   // Yardımcı/kategori aksanları. Design 2 kategori renklerini korur fakat
@@ -415,20 +425,20 @@ class AppTheme {
     0xFF0E7453,
   ); // Zimrût dolgu tonu (beyaz metinle 5.77).
   static const playPink = Color(
-    0xFFC4265A,
+    0xFFE8638F,
   ); // Palet dışıydı; Boyax tonuna indirildi.
   static const playCyan = Color(
     0xFF0E7453,
   ); // Palet dışıydı; Zimrût dolgusuna indirildi.
   static const playPurple = Color(
-    0xFF29336F,
+    0xFF34363C,
   ); // Palet dışıydı (profil moru); Ray tonuna indirildi.
 
   /// Yarışın rengi (Madder). Ana ekranın "Arkadaşınla yarış" kapısı ve
   /// eski düello satırı aynı tonu satır içi sabitle taşıyordu; tek ad
   /// altında toplandı. Turuncu CTA'dan (brand) bilerek ayrıdır: yarış kapısı
   /// bir yöndür, ekranın birincil eylemi değil.
-  static const playRed = Color(0xFFC4265A); // Boyax — yarış (lal kök boyası).
+  static const playRed = Color(0xFFE8638F); // Boyax — yarış (lal kök boyası).
 
   // ============ Dark Mode Palette — Forest ============
   static const primaryGradientStart = brand;
@@ -440,23 +450,23 @@ class AppTheme {
 
   static const cyan = playCyan;
 
-  static const bg = Color(0xFF0A0F2E); // Şev — gece zemini.
-  static const bgDeep = Color(0xFF070B22); // Şev koyu.
-  static const surface = Color(0xFF131A42); // Perde — gece yüzeyi.
-  static const surfaceHi = Color(0xFF1C2455); // Kulis — yükseltilmiş yüzey.
+  static const bg = Color(0xFF121214); // Şev — gece zemini.
+  static const bgDeep = Color(0xFF0D0D0F); // Şev koyu.
+  static const surface = Color(0xFF222328); // Perde — gece yüzeyi.
+  static const surfaceHi = Color(0xFF2B2C32); // Kulis — yükseltilmiş yüzey.
   static const darkBg = bg;
 
-  static const textPrimary = Color(0xFFF6F3EC); // Gece birincil metin.
-  static const textSub = Color(0xFFBCC3E4); // Gece ikincil metin.
-  static const textMuted = Color(0xFF959DC9); // Gece üçüncül metin (AA geçer).
+  static const textPrimary = Color(0xFFF5F3EF); // Gece birincil metin.
+  static const textSub = Color(0xFFD0D2D8); // Gece ikincil metin.
+  static const textMuted = Color(0xFFB6B9C1); // Gece üçüncül metin (AA geçer).
 
   static const border = Color(
-    0xFF2D3259,
+    0xFF3A3D44,
   ); // Gece ayırıcı çizgi (tx2 %14 harmanı).
 
   static const accent = primaryGradientStart;
   static const violet = secondaryAccent;
-  static const correct = Color(0xFF1DB482); // Rast/Zimrût işaret rengi.
+  static const correct = Color(0xFF34C795); // Rast/Zimrût işaret rengi.
   static const wrong = Color(
     0xFFFF7466,
   ); // Şaş — yanlış (kendi tonu, yarıştan ayrı).
@@ -469,12 +479,12 @@ class AppTheme {
   static const terracotta = Color(0xFFC4265A); // Tanıtım yarış slaytı: Boyax.
 
   /// Solo sonuç vitrininin kutlama gradyanı.
-  static const celebrationInk = Color(0xFF0A0F2E); // Kutlama zemini: Şev.
+  static const celebrationInk = Color(0xFF121214); // Kutlama zemini: Şev.
   static const celebrationGreen = culturalBrandBg;
 
   // 1v1 sonuç ekranı — kazanma/kaybetme gradyanının koyu gölge renkleri.
-  static const correctDeep = Color(0xFF0B4637); // Kazanma gölgesi: Zimrût tonu.
-  static const wrongDeep = Color(0xFF45160F); // Kaybetme gölgesi: Şaş tonu.
+  static const correctDeep = Color(0xFF1E2F28); // Kazanma gölgesi: Zimrût tonu.
+  static const wrongDeep = Color(0xFF3A2220); // Kaybetme gölgesi: Şaş tonu.
 
   /// 1v1 sonuç başlığının AÇIK ucu — `correct`/`wrong`un okunur hâli.
   static const correctHeader = Color(
@@ -486,8 +496,8 @@ class AppTheme {
 
   // ============ Light Mode Palette — Cream / Ink ============
   static const lightBg = Color(
-    0xFFE9EDF6,
-  ); // Gündüz zemini (soğuk; krem değil).
+    0xFFF4F6FA,
+  ); // Gündüz zemini (soğuk; krem değil). 2026-10-19: #E9EDF6 → #F4F6FA.
   static const lightBgDeep = Color(0xFFDDE3F0); // Gündüz zemin koyu.
   static const lightSurface = Color(0xFFFFFFFF); // Gündüz yüzeyi.
   static const lightSurfaceHi = Color(0xFFEEF1F8); // Gündüz yükseltilmiş yüzey.
@@ -518,7 +528,7 @@ class AppTheme {
 
   // ============ Status Indicators ============
   static const onlineGreen = playGreen;
-  static const offlineGrey = Color(0xFF959DC9); // Çevrimdışı: üçüncül metin.
+  static const offlineGrey = Color(0xFF8F9199); // Çevrimdışı: üçüncül metin.
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -581,7 +591,10 @@ class AppTheme {
   }
 
   /// Yalnız gerçek birincil eylemler için tema uyumlu CTA rengi.
-  static Color primaryCtaColor(BuildContext context) => brand;
+  /// Birincil eylem dolgusu: temaya göre Agir (gecede bir ton sönük,
+  /// bkz. `SahneTokens.night.act`).
+  static Color primaryCtaColor(BuildContext context) =>
+      SahneTokens.of(context).act;
 
   // Private helpers for theme checks
   static bool _isLight(BuildContext context) =>
@@ -801,10 +814,10 @@ class AppTheme {
   /// gece olduğu için gece değeri. Ton ~231°: doğru (Rast, ~160°) ve yanlış
   /// (Şaş, ~5°) tonlarından uzak; dördü yine aynı.
   static const List<Color> answerOptionColors = [
-    Color(0xFF29336F),
-    Color(0xFF29336F),
-    Color(0xFF29336F),
-    Color(0xFF29336F),
+    Color(0xFF34363C),
+    Color(0xFF34363C),
+    Color(0xFF34363C),
+    Color(0xFF34363C),
   ];
 
   static LinearGradient categoryGradient(int index) {
@@ -832,8 +845,8 @@ class AppTheme {
   /// Birincil eylemler yalnız [primaryCtaColor] / [brand] kullanır.
   /// Bu teal yalnız çark segmenti ve turnuva gradyanı gibi dekoratif
   /// yüzeyler içindir; yeni CTA butonu için referans alınmamalı.
-  static const ctaTeal = Color(0xFF1C2455); // Dekoratif teal kalktı; Kulis.
-  static const ctaTealDeep = Color(0xFF131A42); // Dekoratif teal kalktı; Perde.
+  static const ctaTeal = Color(0xFF2B2C32); // Dekoratif teal kalktı; Kulis.
+  static const ctaTealDeep = Color(0xFF222328); // Dekoratif teal kalktı; Perde.
   static const List<Color> ctaTealGradient = [ctaTeal, ctaTealDeep];
   static const List<Color> ctaBrandGradient = [brand, brandDeep];
 
@@ -990,28 +1003,37 @@ class AppTheme {
         style: FilledButton.styleFrom(
           backgroundColor: t.act,
           foregroundColor: t.onAct,
-          // Pasif: opaklık değil Perde + üçüncül metin (saveLayer açmaz).
-          disabledBackgroundColor: t.s1,
-          disabledForegroundColor: t.tx3,
+          // Pasif: opaklık değil Kulis (`s2`) + üçüncül metin (saveLayer
+          // açmaz). Perde (`s1`) gündüz beyazdı: pasif düğme beyaz bir
+          // çerçeveli düğme gibi, yani etkin okunuyordu.
+          disabledBackgroundColor: t.disabledFill,
+          disabledForegroundColor: t.disabledFg,
           minimumSize: buttonSize,
           textStyle: SahneType.button,
           shape: SahneShape.m,
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         ),
       ),
-      // İkincil düğme: Kulis tonu, kenarsız.
+      // İkincil düğme: şeffaf dolgu + 1,5 px görünür kenar + güçlü etiket
+      // (kurul 3. tur); pasif = kenarsız düz dolgu.
       outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          backgroundColor: t.s2,
-          foregroundColor: t.tx,
-          disabledBackgroundColor: t.s1,
-          disabledForegroundColor: t.tx3,
-          side: BorderSide(color: t.edge),
-          minimumSize: buttonSize,
-          textStyle: SahneType.button,
-          shape: SahneShape.m,
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-        ),
+        style:
+            OutlinedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              foregroundColor: t.tx,
+              disabledBackgroundColor: t.disabledFill,
+              disabledForegroundColor: t.disabledFg,
+              minimumSize: buttonSize,
+              textStyle: SahneType.button,
+              shape: SahneShape.m,
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+            ).copyWith(
+              side: WidgetStateProperty.resolveWith(
+                (s) => s.contains(WidgetState.disabled)
+                    ? BorderSide.none
+                    : BorderSide(color: t.secondaryEdge, width: 1.5),
+              ),
+            ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -1093,7 +1115,7 @@ class AppTheme {
         backgroundColor: t.s1,
         surfaceTintColor: t.s1,
         modalBackgroundColor: t.s1,
-        shape: const BeveledRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(SahneShape.lValue),
           ),

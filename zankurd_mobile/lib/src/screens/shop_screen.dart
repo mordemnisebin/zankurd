@@ -1,9 +1,9 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../data/durable_write.dart';
+import '../data/local_progress_scope.dart';
 import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';
@@ -23,6 +23,7 @@ import '../widgets/zk_back_button.dart';
 import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
+import '../utils/number_format.dart';
 
 /// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
 /// Statik yedek listedeki (`ShopItem.catalog`) her ikon burada da
@@ -35,7 +36,7 @@ import '../widgets/dialog_action_pair.dart';
 const Map<String, IconData> _shopIcons = {
   'auto_awesome_motion_outlined': AppIcons.wandMagicSparkles,
   'favorite_border_rounded': AppIcons.heart,
-  'casino_outlined': AppIcons.dice,
+  'casino_outlined': AppIcons.ferrisWheel,
   'palette_outlined': AppIcons.palette,
   'star_rounded': AppIcons.star,
   'auto_awesome_rounded': AppIcons.wandMagicSparkles,
@@ -66,6 +67,43 @@ AvatarIdentity applyShopPurchaseEffect(String itemId, AvatarIdentity identity) {
     return identity.copyWith(showcaseTitle: 'VIP');
   }
   return identity;
+}
+
+/// Kullanıcıya göre ayrılır: A'nın bekleyen çerçeve/rozet etkisi aynı
+/// cihazdaki B'ye uygulanmasın.
+String get _pendingEffectsKey =>
+    LocalProgressScope.physical('shop_pending_purchase_effects');
+
+bool _hasPurchaseEffect(String itemId) =>
+    itemId == 'avatar_frame_gold' ||
+    itemId == 'avatar_frame_neon' ||
+    itemId == 'profile_badge_vip';
+
+/// Sunucuya henüz ulaşmamış (kuyruğa alınmış) satın almaların kimlikleri. Kuyruk sonradan boşalınca etki mağaza
+/// açılışında uygulanır; kayıt yoksa oyuncu parasını verip çerçevesini
+/// hiç göremezdi.
+Future<Set<String>> _readPendingEffects() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    return (prefs.getStringList(_pendingEffectsKey) ?? const []).toSet();
+  } catch (_) {
+    return <String>{};
+  }
+}
+
+Future<void> _writePendingEffects(Set<String> ids) async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_pendingEffectsKey, ids.toList()..sort());
+  } catch (error, stack) {
+    ErrorReporter.record(error, stack, reason: 'shop pending effects write');
+  }
+}
+
+Future<void> _markEffectPending(String itemId) async {
+  if (!_hasPurchaseEffect(itemId)) return;
+  final ids = await _readPendingEffects();
+  if (ids.add(itemId)) await _writePendingEffects(ids);
 }
 
 /// `shop_items` tablosundaki `theme_color` (ör. "FF3B81") sütununu
@@ -162,7 +200,7 @@ class ShopItem {
       descKu: 'Ji bo çerxa rojane mafekî zivirînê yê nû dide.',
       descTr: 'Bugün çarkı tekrar çevirmek için ekstra hak verir.',
       cost: 120,
-      icon: AppIcons.dice,
+      icon: AppIcons.ferrisWheel,
       themeColor: AppTheme.correct,
     ),
     ShopItem(
@@ -274,13 +312,19 @@ class _ShopScreenState extends State<ShopScreen> {
   Widget _preview(ShopItem item, {required double size, bool dim = false}) {
     final avatar = _avatar;
     if (avatar == null || !_isFrameItem(item.id)) {
-      return _PreviewTile(icon: item.icon, size: size, dim: dim);
+      return _PreviewTile(
+        icon: item.icon,
+        size: size,
+        dim: dim,
+        itemId: item.id,
+      );
     }
     final framed = applyShopPurchaseEffect(item.id, avatar);
     return _PreviewTile(
       icon: item.icon,
       size: size,
       dim: dim,
+      itemId: item.id,
       child: PlayerAvatar(
         radius: (size * 0.34).roundToDouble(),
         photoUrl: framed.photoUrl,
@@ -370,6 +414,7 @@ class _ShopScreenState extends State<ShopScreen> {
           purchasedIds.add(item.id);
         }
       }
+      await _applyPendingEffects(purchasedIds);
 
       AvatarIdentity? avatar;
       String? profileName;
@@ -410,6 +455,24 @@ class _ShopScreenState extends State<ShopScreen> {
     }
   }
 
+  /// Kuyruğa alınan ya da etkisi yarım kalan satın almaların etkisini,
+  /// sunucu satın almayı onayladığında (hasPurchased) uygular. Yalnız
+  /// işaretli ürünler uygulanır: oyuncunun sonradan seçtiği çerçeve her
+  /// açılışta ezilmez.
+  Future<void> _applyPendingEffects(Set<String> purchasedIds) async {
+    final pending = await _readPendingEffects();
+    if (pending.isEmpty) return;
+    var changed = false;
+    for (final itemId in pending.toList()) {
+      if (!purchasedIds.contains(itemId)) continue;
+      if (await _applyPurchaseEffect(itemId)) {
+        pending.remove(itemId);
+        changed = true;
+      }
+    }
+    if (changed) await _writePendingEffects(pending);
+  }
+
   Future<void> _openSpinWheel() async {
     await Navigator.of(context).push(
       AppRoute<void>(page: SpinWheelScreen(repository: widget.repository)),
@@ -440,6 +503,9 @@ class _ShopScreenState extends State<ShopScreen> {
         final t = SahneTokens.of(ctx);
         final short = _coinBalance < item.cost;
         return AlertDialog(
+          // Dar telefonda büyük yazıyla eksik-bakiye notu pencereyi 32 px
+          // taşırıyordu; kaydırılabilir pencerede düğmeler hep görünür.
+          scrollable: true,
           title: Row(
             children: [
               _preview(item, size: 44),
@@ -497,7 +563,9 @@ class _ShopScreenState extends State<ShopScreen> {
                   const SizedBox(width: SahneSpace.x2),
                   Flexible(
                     child: Text(
-                      context.t(K.yourBalance, {'coins': '$_coinBalance'}),
+                      context.t(K.yourBalance, {
+                        'coins': groupThousands(_coinBalance),
+                      }),
                       style: SahneType.caption.copyWith(color: t.tx2),
                     ),
                   ),
@@ -584,6 +652,7 @@ class _ShopScreenState extends State<ShopScreen> {
           reason: 'purchase_${item.id}',
           idempotencyKey: purchaseKey,
         );
+        await _markEffectPending(item.id);
         if (!mounted) return;
         setState(() {
           _purchaseErrorMessage = context.t(K.errorOccurred);
@@ -632,6 +701,7 @@ class _ShopScreenState extends State<ShopScreen> {
         reason: 'purchase_${item.id}',
         idempotencyKey: purchaseKey,
       );
+      await _markEffectPending(item.id);
       if (!mounted) return;
       setState(() {
         _purchaseErrorMessage = context.t(K.errorOccurred);
@@ -659,11 +729,7 @@ class _ShopScreenState extends State<ShopScreen> {
     // hiç açılmıyordu, yani neon satın alan oyuncu için
     // `loadAvatarIdentity`/`updateAvatarIdentity` hiç çağrılmıyordu
     // (2026-08-14 denetimi).
-    if (itemId != 'avatar_frame_gold' &&
-        itemId != 'avatar_frame_neon' &&
-        itemId != 'profile_badge_vip') {
-      return true;
-    }
+    if (!_hasPurchaseEffect(itemId)) return true;
     try {
       final identity = await widget.repository.loadAvatarIdentity();
       await widget.repository.updateAvatarIdentity(
@@ -778,11 +844,29 @@ class _ShopScreenState extends State<ShopScreen> {
     );
   }
 
+  bool _coinChipBelow(BuildContext context) =>
+      MediaQuery.textScalerOf(context).scale(16) >= 24 ||
+      MediaQuery.sizeOf(context).width < 360;
+
+  /// Zêr bandındaki bakiye çipi: koyu kahve dolgu, altın jeton, açık yazı.
+  Widget _coinChip(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final coinLabel =
+        '${groupThousands(_coinBalance)} '
+        '${context.t(K.coinWord).toLowerCase()}';
+    return SahneStatChip(
+      key: const ValueKey('shop-coin-chip'),
+      leading: const SahneGlyph(SahneGlyphKind.coin),
+      label: coinLabel,
+      tint: t.zerChip,
+      foreground: SahneVivid.onFill,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
     final t = SahneTokens.of(context);
-    final coinLabel = '$_coinBalance ${context.t(K.coinWord).toLowerCase()}';
     // 2026-09-29 Şahnê: B iskeleti. Sayfa adı çubukta, bakiye çubuğun
     // sağında jeton glifli stat çipi. Eski kimlik kartı ("Mağaza /
     // Jetonlarını akıllıca harca") kalktı: sayfa adı iki kez yazılmıyor.
@@ -791,14 +875,15 @@ class _ShopScreenState extends State<ShopScreen> {
       appBar: zkAppBar(
         context,
         title: Text(context.t(K.shop)),
-        actions: [
-          // Dalga 5: devasa bakiye kartı yerine kompakt jeton çipi.
-          SahneStatChip(
-            key: const ValueKey('shop-coin-chip'),
-            leading: const SahneGlyph(SahneGlyphKind.coin),
-            label: coinLabel,
-          ),
-        ],
+        titleSecondary: context.secondLabel(K.shop),
+        // D aşaması: mağaza Zêr kimliğinde; dolu altın bant, koyu yazı.
+        backgroundColor: t.zerBand,
+        foregroundColor: t.onZer,
+        secondaryColor: t.onZer,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        // Büyük yazı ya da dar telefonda çip başlığın yerini yiyip "Mağaza"yı
+        // harf harf kırıyordu ("M / a"): orada çip gövdenin başına iner.
+        actions: _coinChipBelow(context) ? null : [_coinChip(context)],
       ),
       body: SafeArea(
         top: false,
@@ -873,8 +958,8 @@ class _ShopScreenState extends State<ShopScreen> {
     final zero = !_loading && _coinBalance == 0;
     final row = SahneListRow.icon(
       key: const ValueKey('shop-spin-wheel-entry'),
-      icon: AppIcons.dice,
-      role: SahneRole.gold,
+      icon: AppIcons.ferrisWheel,
+      role: SahneRole.race,
       title: context.t(K.wheelTitle),
       subtitle: zero ? context.t(K.zeroBalanceHint) : null,
       chevron: true,
@@ -907,224 +992,144 @@ class _ShopScreenState extends State<ShopScreen> {
         SahneSpace.x8,
       ),
       children: [
+        if (_coinChipBelow(context)) ...[
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: _coinChip(context),
+          ),
+          const SizedBox(height: SahneSpace.cardGap),
+        ],
         _buildWheelShortcut(context),
         const SizedBox(height: SahneSpace.x6),
-        _buildHeroCard(heroItem, ku),
-        if (restItems.isNotEmpty) ...[
+        // Kurul 2. tur 2026-10-20: VIP kartı yatay ve kompakt (ikon solda,
+        // ad+açıklama ortada, fiyat sağda); ızgara kartlarının yarısı boy.
+        _buildShopCard(heroItem, ku, hero: true),
+        // Tur 6 (kurul): her ürün AYNI yatay satır düzeninde (ikon solda, ad +
+        // açıklama ortada, fiyat/eylem sağda). Karışık ızgara iki fiyat dili ve
+        // eşit olmayan kartlar üretiyordu; tek düzen fiyatı hep aynı yere koyar.
+        for (final item in restItems) ...[
           const SizedBox(height: SahneSpace.cardGap),
-          // Sütun sayısı genişlikten; hücre yüksekliği içerikten. Sabit bir
-          // en-boy oranı büyük yazıda ve Kurmancî adlarda kartı taşırıyordu
-          // (kart dar, ad iki-üç satıra iner). Hücre boyu artık en uzun ürün
-          // adının ve düğme etiketinin o genişlikte, o yazı ölçeğinde
-          // ölçülen yüksekliğinden hesaplanır: satırdaki kartlar eşit boy
-          // kalır, hiçbiri taşmaz ya da kesilmez.
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final width = constraints.maxWidth;
-              // 2026-09-30 simülatör: büyük yazıda (Ekstra Büyük 2.35x)
-              // iki sütun kalıyordu; ~165 px'lik kartta "Zivirîna zêde"
-              // gibi adlar kelime ortasından kırılıyordu. Yazı 1.5x'i
-              // geçince tek sütun: ad ve düğme tam genişlikte okunur.
-              final largeText =
-                  MediaQuery.textScalerOf(context).scale(1) >= 1.5;
-              final columns = largeText
-                  ? 1
-                  : (width >= 680 ? 3 : (width >= 300 ? 2 : 1));
-              return GridView(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: columns,
-                  mainAxisSpacing: SahneSpace.cardGap,
-                  crossAxisSpacing: SahneSpace.cardGap,
-                  mainAxisExtent: _gridCellExtent(
-                    context,
-                    restItems,
-                    ku,
-                    (width - SahneSpace.cardGap * (columns - 1)) / columns,
-                  ),
-                ),
-                children: [
-                  for (final item in restItems) _buildShopCard(item, ku),
-                ],
-              );
-            },
-          ),
+          _buildShopCard(item, ku, wide: true),
         ],
       ],
     );
   }
 
-  /// Izgara hücresinin yüksekliği: kartın dikey dolgusu + önizleme
-  /// karosu + en uzun ad + düğme. Ad ve düğme etiketi o sütun genişliğinde
-  /// ve etkin yazı ölçeğinde gerçekten ölçülür.
-  double _gridCellExtent(
-    BuildContext context,
-    List<ShopItem> items,
-    bool ku,
-    double cellWidth,
-  ) {
-    const pad = SahneSpace.x3;
-    const tile = 72.0;
-    final scaler = MediaQuery.textScalerOf(context);
-    final direction = Directionality.of(context);
-    // Metin, kartın `Material`inin verdiği varsayılan biçemle (temanın
-    // `bodyMedium`i) birleştirilerek ölçülür: miras harf aralığı satır
-    // kırılımını değiştirir. 1 px pay, kenarda duran bir sözün ölçümde
-    // sığıp çizimde alt satıra inmesini önler.
-    final inherited =
-        Theme.of(context).textTheme.bodyMedium ??
-        DefaultTextStyle.of(context).style;
-    double measure(String text, TextStyle style, double maxWidth) {
-      final painter = TextPainter(
-        // Aile açıkça ölçülen biçemden gelir (Onest / Bricolage);
-        // miras biçemin ailesi ölçümü sistem yazı tipine düşürmesin.
-        text: TextSpan(
-          text: text,
-          style: inherited.merge(style).copyWith(fontFamily: style.fontFamily),
-        ),
-        textDirection: direction,
-        textScaler: scaler,
-      )..layout(maxWidth: (maxWidth - 1).clamp(1.0, double.infinity));
-      final height = painter.height;
-      painter.dispose();
-      return height;
-    }
-
-    final inner = cellWidth - pad * 2;
-    var title = 0.0;
-    var button = 52.0;
-    for (final item in items) {
-      final name = ku ? item.titleKu : item.titleTr;
-      title = math.max(title, measure(name, SahneType.bodyStrong, inner));
-      final label = _purchasedItemIds.contains(item.id)
-          ? context.t(K.ownedLabel)
-          : '${item.cost}';
-      // Düğme: 12 + ikon (20) + 8 yan boşlukla etiket; dikeyde 12 + 12.
-      final labelHeight = measure(
-        label,
-        SahneType.button,
-        inner - SahneSpace.x3 * 2 - 20 - SahneSpace.x2,
-      );
-      button = math.max(button, labelHeight + SahneSpace.x3 * 2);
-      // Jeton yetmeyen ürünün durum çipi fiyat satırı + eksik sözü taşır;
-      // düğmeden uzundur, hücre onu da sığdırmalı.
-      final missing = coinShortfall(cost: item.cost, balance: _coinBalance);
-      if (missing > 0 &&
-          SahnePriceChip.noteShownFor(price: item.cost, missing: missing) &&
-          !_purchasedItemIds.contains(item.id)) {
-        final noteHeight = measure(
-          context.t(K.coinsShort, {'coins': '$missing'}),
-          SahneType.captionStrong,
-          inner - SahneSpace.x3 * 2,
-        );
-        button = math.max(
-          button,
-          SahnePriceChip.verticalPad * 2 + labelHeight + noteHeight,
-        );
-      }
-    }
-    // +2: basınca 2 px çöken düğmenin payı ve yuvarlama.
-    return pad +
-        tile +
-        SahneSpace.x3 +
-        title +
-        SahneSpace.x3 +
-        button +
-        pad +
-        2;
-  }
-
-  // ── Öne çıkan ürün: aynı yüzey kartının tam genişlik hâli ──
+  // ────────────────────────────────────────────
+  //  Tek mağaza kartı (ızgara hücresi ve VIP aynı çerçeve)
+  // ────────────────────────────────────────────
   //
-  // 2026-09-29 doğallık: kartın üstündeki "En çok alınan" rozeti kalktı
-  // (K10). Satış verisi yok; rozet her kurulumda en pahalı ürüne yapışan
-  // uydurma bir iddiaydı. Kart yalnız katalogun en pahalı ürününü geniş
-  // gösterir.
-  Widget _buildHeroCard(ShopItem item, bool ku) {
-    final t = SahneTokens.of(context);
-    final title = ku ? item.titleKu : item.titleTr;
-    final desc = ku ? item.descKu : item.descTr;
-    final isPurchased = _purchasedItemIds.contains(item.id);
+  // Kurul 2026-10-20 (5 model): VIP kartı ızgaradan boyut ve hizayla
+  // ayrışıyor, fiyatlar kartta süzülüyor, jeton yetmeyince neyin alınamadığı
+  // belli değildi. Artık her kart: ikon karosu, ad, kısa açıklama, ve kartın
+  // EYLEMİ olan fiyat düğmesi (jeton glifi + tutar). Jeton yetmiyorsa düğme
+  // ortak pasif biçimde (disabledFill/Edge/Fg) çizilir ve altında eksik
+  // miktar yazar; kartın kendisi dokunulabilir kalır (pencere jeton kazanma
+  // yolunu sunar). Ürün kimliği yalnız önizleme karosunda yaşar.
 
-    return SahneSurfaceCard(
-      key: const ValueKey('shop-hero-surface'),
-      onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              _preview(item, size: 72, dim: isPurchased),
-              const SizedBox(width: SahneSpace.x4),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: SahneType.headline.copyWith(
-                        color: isPurchased ? t.tx2 : t.tx,
-                      ),
-                    ),
-                    const SizedBox(height: SahneSpace.x1),
-                    Text(desc, style: SahneType.caption.copyWith(color: t.tx2)),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: SahneSpace.x4),
-          isPurchased
-              ? _buildOwnedChip()
-              : _buildBuyButton(item, ku, primary: true),
-        ],
-      ),
-    );
-  }
+  /// Kilit · jeton · tutar arası ve "N jeton eksik" üstü: 6 px.
+  static const double _lockGap = 6;
 
-  // ────────────────────────────────────────────
-  //  Single shop card
-  // ────────────────────────────────────────────
-  Widget _buildShopCard(ShopItem item, bool ku) {
+  Widget _buildShopCard(
+    ShopItem item,
+    bool ku, {
+    bool hero = false,
+    bool wide = false,
+  }) {
     final t = SahneTokens.of(context);
     final title = ku ? item.titleKu : item.titleTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
+    // Tur 9b: "N jeton eksik" sağ sütunda fiyatın altına sıkışıyordu (3
+    // denetçi). Söz artık sol metin sütununda, açıklamanın altında tek satır
+    // kehribar uyarıdır; sağ sütunda yalnız kilitli fiyat hapı kalır.
+    final missing = isPurchased
+        ? 0
+        : coinShortfall(cost: item.cost, balance: _coinBalance);
 
-    // Ürün kimliği yalnız önizleme karosunda yaşar; kart yüzeyi bütün
-    // katalogda aynı sakin dili korur (2026-07-24: dokuz pastel zemin
-    // birbiriyle yarışan renk lekelerine dönüşüyordu). Açıklama kartta
-    // yazmaz; dokununca onay diyaloğunda okunur.
-    return SahneSurfaceCard(
-      key: ValueKey('shop-item-surface-${item.id}'),
-      padding: const EdgeInsets.all(SahneSpace.x3),
-      onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+    {
+      // Büyük yazıda ya da dar telefonda (< 360) sağ sütun açıklamayı 4+
+      // satıra sıkıştırır: fiyat/eylem açıklamanın altına iner.
+      final largeText =
+          MediaQuery.textScalerOf(context).scale(16) >= 24 ||
+          MediaQuery.sizeOf(context).width < 360;
+      final texts = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _preview(item, size: 72, dim: isPurchased),
-          const SizedBox(height: SahneSpace.x3),
           Text(
             title,
+            // 7. kurul hiyerarşisi: ad 16/600, fiyat 14/600 (açıklama satırı
+            // 2026-10-20'de kaldırıldı: bkz. test/az_soz_1_test.dart).
             style: SahneType.bodyStrong.copyWith(
               color: isPurchased ? t.tx2 : t.tx,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          const Spacer(),
-          const SizedBox(height: SahneSpace.x3),
-          isPurchased ? _buildOwnedChip() : _buildBuyButton(item, ku),
         ],
-      ),
-    );
+      );
+      final note = missing > 0
+          ? Text(
+              context.t(K.coinsShort, {'coins': '$missing'}),
+              key: ValueKey('shop-short-note-${item.id}'),
+              style: SahneType.caption.copyWith(
+                color: t.shortfallTx,
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              ),
+            )
+          : null;
+      final action = isPurchased
+          ? _buildOwnedChip(expand: largeText)
+          : _buildBuyButton(item, ku, expand: largeText);
+      return SahneSurfaceCard(
+        key: hero
+            ? const ValueKey('shop-hero-surface')
+            : ValueKey('shop-item-surface-${item.id}'),
+        padding: const EdgeInsets.all(14),
+        onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
+        // Tur 10b (kurul, Opus + Codex): metin sütunu fiyat sütunuyla
+        // yarışınca ad 2, açıklama 3-4 satıra kırılıyordu. Üst satır ikon +
+        // ad + açıklama TAM genişlik; fiyat/eylem altta, sağa yaslı satırda.
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                _preview(item, size: 44, dim: isPurchased),
+                const SizedBox(width: SahneSpace.x3),
+                Expanded(child: texts),
+              ],
+            ),
+            // Açıklama kalkınca ad ile fiyat satırı arasında geniş bir bant
+            // kalıyordu (kurul 2026-10-20): ikon adla dikey ortalı, aralık
+            // 8; yerleşim sözleşmesi (metin tam genişlik, eylem altta sağa
+            // yaslı) aynen korunur.
+            const SizedBox(height: SahneSpace.x2),
+            if (largeText) ...[
+              if (note != null) ...[
+                note,
+                const SizedBox(height: SahneSpace.x2),
+              ],
+              action,
+            ] else
+              Row(
+                children: [
+                  if (note != null) Expanded(child: note) else const Spacer(),
+                  const SizedBox(width: SahneSpace.x3),
+                  action,
+                ],
+              ),
+          ],
+        ),
+      );
+    }
   }
 
   // ── "Sende": pasif ikincil düğme + ✓ (satın alınmış, tekrar alınamaz) ──
-  Widget _buildOwnedChip() {
+  Widget _buildOwnedChip({bool expand = true}) {
     return SahneButton.secondary(
       label: context.t(K.ownedLabel),
       icon: AppIcons.check,
-      expand: true,
+      expand: expand,
       onPressed: null,
     );
   }
@@ -1134,7 +1139,7 @@ class _ShopScreenState extends State<ShopScreen> {
   // Öne çıkan ürünün düğmesi ekranın TEK birincil eylemidir (Agir); ızgara
   // kartlarınınki ikincil (Kulis). Fiyatın solunda Şahnê jeton glifi
   // durur — Lucide ikonu değil (ödül glifleri `SahneGlyph`).
-  Widget _buildBuyButton(ShopItem item, bool ku, {bool primary = false}) {
+  Widget _buildBuyButton(ShopItem item, bool ku, {bool expand = true}) {
     // Görünen etiket yalnız sayı; birimi soldaki jeton glifi söyler.
     // 2026-09-29 doğallık: "720j" kısaltması kalktı (K10) — glifin
     // yanında "j" ikinci kez aynı şeyi söylüyordu ve Kurmancîde "720z"
@@ -1146,36 +1151,76 @@ class _ShopScreenState extends State<ShopScreen> {
       'item': ku ? item.titleKu : item.titleTr,
       'coins': '${item.cost}',
     });
-    // Jeton yetmiyorsa düğme YOKTUR: etkin görünüp dokunulunca pasif bir
-    // "Satın al" gösteren pencere açan düğme, sonuç vermeyen bir eylemdi
-    // (2026-10-01 tasarım denetimi, A5). Yerine durum çipi gelir; kartın
-    // kendisi dokunulabilir kalır ve pencere jeton kazanma yolunu sunar.
+    // Jeton yetmiyorsa düğme ortak pasif biçimdedir (kurul 2026-10-20:
+    // yetmeyen ürün gri-düz çip olunca kartın eylemi kayboluyordu). Fiyat
+    // görünür kalır; eksik söz altında yazar (bakiye 0 iken eksik fiyatın
+    // kendisidir, ikinci kez yazılmaz). Kartın kendisi dokunulabilir kalır:
+    // pencere jeton kazanma yolunu sunar.
     final missing = coinShortfall(cost: item.cost, balance: _coinBalance);
+    final t = SahneTokens.of(context);
     if (missing > 0) {
-      return SahnePriceChip(
-        key: ValueKey('shop-short-${item.id}'),
-        price: item.cost,
-        missing: missing,
-        semanticLabel:
-            '$semanticLabel. ${context.t(K.coinsShort, {'coins': '$missing'})}',
+      // Kurul 4. tur 2026-10-20 (4 model, mağazanın en zayıf ekranı):
+      // alınamayan fiyat gri DOLGULU kutuydu ve düğme gibi okunuyordu;
+      // alınabilen tek ürünün ince çerçevesi ondan zayıf kalıyordu
+      // (erişilebilirlik hiyerarşisi ters). Artık kilitli fiyat KUTUSUZ düz
+      // metindir (kilit + jeton + tutar, ikincil renk); eksik söz sıcak
+      // (altın metin) tonda altında durur: hata değil, hedeftir.
+      // Eylem yalnız alınabilen üründe vardır. Kartın kendisi dokunulabilir
+      // kalır: pencere jeton kazanma yolunu sunar.
+      final note = context.t(K.coinsShort, {'coins': '$missing'});
+      return Semantics(
+        container: true,
+        label: '$semanticLabel. $note',
+        excludeSemantics: true,
+        // Yatay kartta (hero) düğme alanı sınırsız genişlik alır; eksik söz
+        // tek satırda dar ekranı taşırıyordu. Genişlik sınırlı, söz sarar.
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: double.infinity),
+          child: Column(
+            key: ValueKey('shop-short-${item.id}'),
+            crossAxisAlignment: expand
+                ? CrossAxisAlignment.stretch
+                : CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ConstrainedBox(
+                // a11y-tap-target: noninteractive — kilitli fiyat bir durumdur.
+                constraints: const BoxConstraints(minHeight: 36),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(AppIcons.lock, size: 16, color: t.tx2),
+                    const SizedBox(width: _lockGap),
+                    const SahneGlyph(SahneGlyphKind.coin, size: 20),
+                    const SizedBox(width: _lockGap),
+                    Flexible(
+                      child: Text(
+                        label,
+                        style: SahneType.button.copyWith(
+                          color: t.tx2,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       );
     }
     final onPressed = _loading ? null : () => _confirmPurchase(item);
-    const glyph = SahneGlyph(SahneGlyphKind.coin, size: 20);
-    if (primary) {
-      return SahneButton.primary(
-        label: label,
-        leading: glyph,
-        arrow: false,
-        expand: true,
-        semanticLabel: semanticLabel,
-        onPressed: onPressed,
-      );
-    }
-    return SahneButton.secondary(
-      label: label,
-      leading: glyph,
-      expand: true,
+    // Alınabilir fiyat: dolu turuncu birincil düğme (jeton + tutar, koyu
+    // etiket). Kartta tek birincil eylem budur; kilitli kardeşleri düz metin.
+    return SahneButton.primary(
+      key: ValueKey('shop-buy-${item.id}'),
+      label: '${context.t(K.buyAction)} · $label',
+      arrow: false,
+      expand: expand,
       semanticLabel: semanticLabel,
       onPressed: onPressed,
     );
@@ -1195,7 +1240,11 @@ class _PreviewTile extends StatelessWidget {
     required this.size,
     this.dim = false,
     this.child,
+    this.itemId = '',
   });
+
+  /// Ürün kimliği: karonun dolgusunu ürün türü seçer.
+  final String itemId;
 
   final IconData icon;
   final double size;
@@ -1208,18 +1257,26 @@ class _PreviewTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    // Ürün türüne göre DOLU karo (D aşaması, 4 model: mağaza sönüktü; hepsi
+    // aynı soluk Zêr tonuydu): çark Boyax, VIP rozeti Zêr, altın çerçeve
+    // Nîl, neon çerçeve Zimrût (konu renkleri gibi, ürün başına bir renk).
+    final (Color fill, Color on) = dim
+        ? (t.s2, t.tx3)
+        : switch (itemId) {
+            'spin_wheel_extra' => (t.raceFill, SahneVivid.onFill),
+            'profile_badge_vip' => (t.zerBand, t.onZer),
+            'avatar_frame_neon' => (t.learnFill, SahneVivid.onFill),
+            _ => (t.nilFill, SahneVivid.onFill),
+          };
     return ExcludeSemantics(
       child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: dim ? t.s2 : t.goldTint,
-          shape: SahneShape.m,
-        ),
+        decoration: ShapeDecoration(color: fill, shape: SahneShape.m),
         child: SizedBox(
           width: size,
           height: size,
           child: child != null
               ? Center(child: child)
-              : Icon(icon, size: size * 0.45, color: dim ? t.tx3 : t.goldTx),
+              : Icon(icon, size: size * 0.45, color: on),
         ),
       ),
     );

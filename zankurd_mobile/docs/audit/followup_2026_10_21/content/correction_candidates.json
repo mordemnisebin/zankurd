@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "applied": false,
+  "certainRepeatedObjectives": 10,
+  "linguisticOrFactualCorrectionCandidates": 0,
+  "candidates": [
+    {
+      "id": "ds_muzik_0144",
+      "field": "future_generation.duplicate_group",
+      "old": {
+        "uncontrolledPair": [
+          "ds_muzik_0144",
+          "ds_muzik_0133"
+        ]
+      },
+      "new": {
+        "duplicateGroupAnchor": "ds_muzik_0133",
+        "sameObjectiveVariant": "ds_muzik_0144",
+        "productionQuestionUnchanged": true
+      },
+      "rationale": "Aynı besteci ve aynı Bavê Senfoniyê lakabı soruluyor; yanıt iki kayıtta Joseph Haydn. leqeba/navê anlatım farkı yeni öğrenme hedefi eklemiyor.",
+      "sourceEvidence": [
+        "assets/data/deepseek_verified_2026_09_30_questions.json:598",
+        "assets/data/deepseek_verified_2026_09_30_questions.json:147"
+      ],
+      "sourceOfTruth": "Compared two checked-in question records; no external fact validation claimed.",
+      "implementationProposal": "Record this explicit pair in authoring/generation review and reject a future third same-objective variant. Preserve both current IDs until topic/difficulty/type balance and stored-reference compatibility are reviewed. Do not apply global runtime dedupe.",
+      "status": "proposal_only; no content mutation",
+      "requiresEditorialApprovalForRetirement": true,
+      "safeForAutomaticFix": false
+    },
+    {
+      "id": "ds_dirok_0091",
+      "field": "future_generation.duplicate_group",
+      "old": {
+        "uncontrolledPair": [
+          "ds_dirok_0091",
+          "ds_dirok_0055"
+        ]
+      },
+      "new": {
+        "duplicateGroupAnchor": "ds_dirok_0055",
+        "sameObjectiveVariant": "ds_dirok_0091",
+        "productionQuestionUnchanged": true
+      },
+      "rationale": "İki kök Enlil tapınağının merkezi olan aynı kenti soruyor. Nîppur/Nippur yalnız yazım varyantı; Mezopotamya/Sümer bağlamı aynı olguya çıkıyor.",
+      "sourceEvidence": [
+        "assets/data/deepseek_verified_2026_09_30_questions.json:63",
+        "assets/data/deepseek_verified_2026_09_30_questions.json:53"
+      ],
+      "sourceOfTruth": "Compared two checked-in question records; no external fact validation claimed.",
+      "implementationProposal": "Record this explicit pair in authoring/generation review and reject a future third same-objective variant. Preserve both current IDs until topic/difficulty/type balance and stored-reference compatibility are reviewed. Do not apply global runtime dedupe.",
+      "status": "proposal_only; no content mutation",
+      "requiresEditorialApprovalForRetirement": true,
+      "safeForAutomaticFix": false
+    },
+    {
+      "id": "edit_dirok_0001",
+      "field": "future_generation.duplicate_group",
+      "old": {
+        "uncontrolledPair": [
+          "edit_dirok_0001",
+          "ds_dirok_0029"
+        ]
+      },
+      "new": {
+        "duplicateGroupAnchor": "ds_dirok_0029",
+        "sameObjectiveVariant": "edit_dirok_0001",
+        "productionQuestionUnchanged": true
+      },
+      "rationale": "İki kök Hawar dergisinin yayına başlangıç yılını soruyor; her ikisinin yanıtı 1932. Yazım/fiil farkı yeni hedef eklemiyor.",
+      "sourceEvidence": [
+        "assets/data/editorial_questions.json:33",
+        "assets/data/deepseek_verified_2026_09_30_questions.json:479"
+      ],
+      "sourceOfTruth": "Compared two checked-in question records; no external fact validation claimed.",
+      "implementationProposal": "Record this explicit pair in authoring/generation review and reject a future third same-objective variant. Preserve both current IDs until topic/difficulty/type balance and stored-reference compatibility are reviewed. Do not apply global runtime dedupe.",
+      "status": "proposal_only; no content mutation",
+      "requiresEditorialApprovalForRetirement": true,
+      "safeForAutomaticFix": false
+    },
+    {
+      "id": "hat_0109",
+      "field": "future_generation.duplicate_group",
+      "old": {
+        "uncontrolledPair": [
+          "hat_0109",
+          "hat_0104"
+        ]
+      },
+      "new": {
+        "duplicateGroupAnchor": "hat_0104",
+        "sameObjectiveVariant": "hat_0109",
+        "productionQuestionUnchanged": true
+      },
+      "rationale": "Aynı Xoybûn kuruluş yılı, aynı 1927 yanıtı; hatiye/hate farkı ayrı olgu ölçmüyor.",
+      "sourceEvidence": [
+        "assets/data/hat_2026_10_07_questions.json:109",
+        "assets/data/hat_2026_10_07_questions.json:104"
+      ],
+      "sourceOfTruth": "Compared two checked-in question records; no external fact validation claimed.",
+      "implementationProposal": "Record this explicit pair in authoring/generation review and reject a future third same-objective variant. Preserve both current IDs until topic/difficulty/type balance and stored-reference compatibility are reviewed. Do not apply global runtime dedupe.",
+      "status": "proposal_only; no content mutation",
+      "requiresEditorialApprovalForRetirement": true,
+      "safeForAutomaticFix": false
+    },
+    {
+      "id": "hat_0112",
+      "field": "future_generation.duplicate_group",
+      "old": {
+        "uncontrolledPair": [
+          "hat_0112",
+          "hat_0105"
+        ]
+      },
+      "new": {
+        "duplicateGroupAnchor": "hat_0105",
+        "sameObjectiveVariant": "hat_0112",
+        "productionQuestionUnchanged": true
+      },
+      "rationale": "Aynı Şêx Seîd isyanı başlangıç yılı, aynı 1925 yanıtı; kiriye/kir farkı ayrı olgu ölçmüyor.",
+      "sourceEvidence": [
+        "assets/data/hat_2026_10_07_questions.json:112",
+        "assets/data/hat_2026_10_07_questions.json:105"
+      ],
+      "sourceOfTruth": "Compared two checked-in question records; no external fact validation claimed.",
+      "implementationProposal": "Record this explicit pair in authoring/generation review and reject a future third same-objective variant. Preserve both current IDs until topic/difficulty/type balance and stored-reference compatibility are reviewed. Do not apply global runtime dedupe.",
+      "status": "proposal_only; no content mutation",
+      "requiresEditorialApprovalForRetirement": true,
+      "safeForAutomaticFix": false
+    },
+    {
+      "id": "hat_0118",
+      "field": "future_generation.duplicate_group",
+      "old": {
+        "uncontrolledPair": [
+          "hat_0118",
+          "hat_0107"
+        ]
+      },
+      "new": {
+        "duplicateGroupAnchor": "hat_0107",
+        "sameObjectiveVariant": "hat_0118",
+        "productionQuestionUnchanged": true
+      },
+      "rationale": "Aynı HDP kuruluş yılı, aynı 2012 yanıtı; hatiye/hate farkı ayrı olgu ölçmüyor.",
+      "sourceEvidence": [
+        "assets/data/hat_2026_10_07_questions.json:118",
+        "assets/data/hat_2026_10_07_questions.json:107"
+      ],
+      "sourceOfTruth": "Compared two checked-in question records; no external fact validation claimed.",
+      "implementationProposal": "Record this explicit pair in authoring/generation review and reject a future third same-objective variant. Preserve both current IDs until topic/difficulty/type balance and stored-reference compatibility are reviewed. Do not apply global runtime dedupe.",
+      "status": "proposal_only; no content mutation",
+      "requiresEditorialApprovalForRetirement": true,
+      "safeForAutomaticFix": false
+    },
+    {
+      "id": "hat_0043",
+      "field": "future_generation.duplicate_group",
+      "old": {
+        "uncontrolledPair": [
+          "hat_0043",
+          "ex28_yilmaz_guney_005"
+        ]
+      },
+      "new": {
+        "duplicateGroupAnchor": "ex28_yilmaz_guney_005",
+        "sameObjectiveVariant": "hat_0043",
+        "productionQuestionUnchanged": true
+      },
+      "rationale": "Aynı Yılmaz Güney doğum yılı, aynı 1937 yanıtı; bûye/bû farkı ayrı olgu ölçmüyor.",
+      "sourceEvidence": [
+        "assets/data/hat_2026_10_07_questions.json:43",
+        "assets/data/expansion_2026_09_28_questions.json:124"
+      ],
+      "sourceOfTruth": "Compared two checked-in question records; no external fact validation claimed.",
+      "implementationProposal": "Record this explicit pair in authoring/generation review and reject a future third same-objective variant. Preserve both current IDs until topic/difficulty/type balance and stored-reference compatibility are reviewed. Do not apply global runtime dedupe.",
+      "status": "proposal_only; no content mutation",
+      "requiresEditorialApprovalForRetirement": true,
+      "safeForAutomaticFix": false
+    },
+    {
+      "id": "hat_0062",
+      "field": "future_generation.duplicate_group",
+      "old": {
+        "uncontrolledPair": [
+          "hat_0062",
+          "ds_cografya_0007"
+        ]
+      },
+      "new": {
+        "duplicateGroupAnchor": "ds_cografya_0007",
+        "sameObjectiveVariant": "hat_0062",
+        "productionQuestionUnchanged": true
+      },
+      "rationale": "Amed kentinden geçen aynı nehir soruluyor; Dîcle ve Çemê Dîcleyê aynı yanıt. nav sözcüğü hedefi değiştirmiyor.",
+      "sourceEvidence": [
+        "assets/data/hat_2026_10_07_questions.json:62",
+        "assets/data/deepseek_verified_2026_09_30_questions.json:2"
+      ],
+      "sourceOfTruth": "Compared two checked-in question records; no external fact validation claimed.",
+      "implementationProposal": "Record this explicit pair in authoring/generation review and reject a future third same-objective variant. Preserve both current IDs until topic/difficulty/type balance and stored-reference compatibility are reviewed. Do not apply global runtime dedupe.",
+      "status": "proposal_only; no content mutation",
+      "requiresEditorialApprovalForRetirement": true,
+      "safeForAutomaticFix": false
+    },
+    {
+      "id": "hat_0071",
+      "field": "future_generation.duplicate_group",
+      "old": {
+        "uncontrolledPair": [
+          "hat_0071",
+          "ds_cografya_0007"
+        ]
+      },
+      "new": {
+        "duplicateGroupAnchor": "ds_cografya_0007",
+        "sameObjectiveVariant": "hat_0071",
+        "productionQuestionUnchanged": true
+      },
+      "rationale": "Diyarbekir/Amed aynı kentin adları; kök ve Dîcle yanıtı aynı nehir olgusunu tekrar ediyor.",
+      "sourceEvidence": [
+        "assets/data/hat_2026_10_07_questions.json:71",
+        "assets/data/deepseek_verified_2026_09_30_questions.json:2"
+      ],
+      "sourceOfTruth": "Compared two checked-in question records; no external fact validation claimed.",
+      "implementationProposal": "Record this explicit pair in authoring/generation review and reject a future third same-objective variant. Preserve both current IDs until topic/difficulty/type balance and stored-reference compatibility are reviewed. Do not apply global runtime dedupe.",
+      "status": "proposal_only; no content mutation",
+      "requiresEditorialApprovalForRetirement": true,
+      "safeForAutomaticFix": false
+    },
+    {
+      "id": "offline_2668",
+      "field": "future_generation.duplicate_group",
+      "old": {
+        "uncontrolledPair": [
+          "offline_2668",
+          "edit_dirok_0028"
+        ]
+      },
+      "new": {
+        "duplicateGroupAnchor": "edit_dirok_0028",
+        "sameObjectiveVariant": "offline_2668",
+        "productionQuestionUnchanged": true
+      },
+      "rationale": "Aynı Selahedînê Eyûbî doğum yeri soruluyor; Tikrit/Tikrît yazımı dışında aynı yanıt. Fiil farkı yeni hedef eklemiyor.",
+      "sourceEvidence": [
+        "assets/data/offline_questions.json:145",
+        "assets/data/editorial_questions.json:189"
+      ],
+      "sourceOfTruth": "Compared two checked-in question records; no external fact validation claimed.",
+      "implementationProposal": "Record this explicit pair in authoring/generation review and reject a future third same-objective variant. Preserve both current IDs until topic/difficulty/type balance and stored-reference compatibility are reviewed. Do not apply global runtime dedupe.",
+      "status": "proposal_only; no content mutation",
+      "requiresEditorialApprovalForRetirement": true,
+      "safeForAutomaticFix": false
+    }
+  ]
+}

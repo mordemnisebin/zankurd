@@ -1,13 +1,18 @@
+import '../services/email_verification.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart'
+    show AppLifecycleState, WidgetsBinding, WidgetsBindingObserver;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../data/local_progress_scope.dart';
+import '../l10n/strings.dart';
 import '../data/xp_store.dart';
 import '../data/streak_store.dart';
 import '../data/mistake_store.dart';
+import '../data/progress_sync.dart';
 import '../data/seen_question_store.dart';
 import '../data/achievement_store.dart';
 import '../data/badge_service.dart';
@@ -19,6 +24,8 @@ import '../data/placement_store.dart';
 import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/story_progress_store.dart';
 import '../data/sync_manager.dart';
+import '../models/async_duel.dart' show isMissingRpcError;
+import '../services/push_tap_router.dart';
 import '../services/premium_service.dart';
 import '../services/apple_revocation.dart';
 import '../services/native_auth_service.dart';
@@ -37,9 +44,18 @@ class AccountLocalCleanupException implements Exception {
 /// kimliği aynıdır; böylece liderlik/coin ilerlemesi hesaba bağlanır.
 /// Misafir modu Supabase anonim oturumu kullanır ve daha sonra e-posta
 /// ile kalıcı hesaba yükseltilebilir.
-class AuthProvider extends ChangeNotifier {
+class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
   static String get authRedirectUri =>
       kIsWeb ? 'https://www.zankurd.com/' : 'com.zankurd.app://login-callback/';
+
+  /// Şifre sıfırlama bağlantısının açılacağı yer: her zaman web sitesi.
+  ///
+  /// Bağlantı eskiden uygulamaya (`com.zankurd.app://`) dönüyordu; e-posta
+  /// bilgisayarda ya da Gmail'in iç tarayıcısında açılınca hiçbir yere
+  /// gitmiyordu (2026-10-23 kullanıcı bildirimi: "reset password diyor ama
+  /// hiçbir yere yönlendirmedi"). zankurd.com aynı uygulamanın web
+  /// sürümüdür ve kurtarma oturumunda yeni parola ekranını açar.
+  static const passwordResetRedirectUri = 'https://www.zankurd.com/';
 
   /// Cihazın son sahibi olarak kaydedilen kullanıcı kimliği — bkz.
   /// [_resetLocalProgressIfForeignUser].
@@ -64,6 +80,9 @@ class AuthProvider extends ChangeNotifier {
 
   User? get currentUser => _currentUser;
   bool get isLoading => _isLoading;
+
+  /// Son hatanın METİN ANAHTARI (`K.authErr*`); ekranda
+  /// `context.translateAuthError(...)` ile çevrilir.
   String? get errorMessage => _errorMessage;
   bool get needsEmailConfirmation => _needsEmailConfirmation;
 
@@ -85,6 +104,17 @@ class AuthProvider extends ChangeNotifier {
   bool get isGuest =>
       (_currentUser?.isAnonymous ?? false) ||
       (_offlineMode && _mockAuthenticated);
+
+  /// Nazik e-posta doğrulaması için uç; Supabase bağlı değilse (çevrimdışı,
+  /// test) null — profil kartı o zaman hiç çizilmez.
+  EmailVerificationGateway? get emailVerificationGateway {
+    final client = _client;
+    return client == null ? null : SupabaseEmailVerificationGateway(client);
+  }
+
+  /// Misafir hatırlatma sayacının anahtarı: oturumun kullanıcı kimliği
+  /// (çevrimdışı yerel misafirde kimlik yoktur → null).
+  String? get guestSaveUserId => _currentUser?.id;
 
   /// Uzak kimlik servisi başlatılamadığı için yerel misafir modunda mı?
   bool get isOfflineMode => _offlineMode;
@@ -136,12 +166,16 @@ class AuthProvider extends ChangeNotifier {
   /// Mevcut oturumu okur ve auth olaylarını dinlemeye başlar.
   void _wireAuth(SupabaseClient client) {
     _currentUser = client.auth.currentUser;
+    _observeLifecycle();
     unawaited(_syncPremiumIdentity(_currentUser));
     _authSub?.cancel();
     _authSub = client.auth.onAuthStateChange.listen((state) {
       final next = state.session?.user;
       final changed = next?.id != _currentUser?.id;
       _currentUser = next;
+      // Onay bağlantısı oturumu kalıcı kullanıcıya çevirdiyse "onay
+      // bekleniyor" durumu asılı kalmamalı.
+      if (next != null && !next.isAnonymous) _needsEmailConfirmation = false;
       applyAuthEvent(state.event, hasSession: next != null);
       unawaited(
         _queueSessionPreparation(
@@ -151,7 +185,21 @@ class AuthProvider extends ChangeNotifier {
           notifyWhenReady: true,
         ),
       );
-    });
+    }, onError: _onAuthStreamError);
+  }
+
+  /// OAuth geri dönüş hatası gotrue'da akışa HATA olarak yazılır
+  /// (bkz. `test/auth_state_stream_error_test.dart`). İşleyici yoksa
+  /// yakalanmamış bölge hatasına dönüşür ve kullanıcı hiçbir şey görmez.
+  void _onAuthStreamError(Object error, StackTrace stack) {
+    if (error is AuthException) {
+      _errorMessage = _translateError(error);
+    } else {
+      ErrorReporter.record(error, stack, reason: 'auth state stream error');
+      _errorMessage = _translateUnexpectedError(error);
+    }
+    _isLoading = false;
+    notifyListeners();
   }
 
   bool _isCurrentAuthGeneration(int generation, String? userId) =>
@@ -173,6 +221,7 @@ class AuthProvider extends ChangeNotifier {
           if (!_isCurrentAuthGeneration(generation, null)) return;
           await LocalProgressScope.activateOffline(prefs);
           if (!_isCurrentAuthGeneration(generation, null)) return;
+          ProgressSyncService.unbind();
           _dropProgressMemory();
         } catch (error, stack) {
           ErrorReporter.record(
@@ -231,6 +280,26 @@ class AuthProvider extends ChangeNotifier {
         ErrorReporter.record(e, s, reason: 'SyncManager restart');
       }
     }
+    _bindProgressSync(user, localProgressReady: localProgressReady);
+  }
+
+  /// Kayıtlı (misafir olmayan) kullanıcının ilerlemesini hesapla eşitler:
+  /// oturum açılışında sunucudaki anlık görüntü yerelle birleştirilir
+  /// (bkz. [ProgressSyncService]). Misafir oturumda eşitleme kapalıdır; veri
+  /// onunla gitmez, çıkışta zaten silinir. Sunucu RPC'si yoksa ya da ağ
+  /// yoksa sessizce yerel davranış sürer.
+  void _bindProgressSync(User user, {required bool localProgressReady}) {
+    final client = _client;
+    if (client == null || !localProgressReady || user.isAnonymous) {
+      ProgressSyncService.unbind();
+      return;
+    }
+    final service = ProgressSyncService.bind(
+      remote: SupabaseProgressRemote(client),
+      userId: user.id,
+      onLocalChanged: _dropProgressMemory,
+    );
+    unawaited(service.syncNow());
   }
 
   /// Aynı cihazda önceki oturumdan FARKLI bir kullanıcı geldiğinde onun
@@ -334,7 +403,79 @@ class AuthProvider extends ChangeNotifier {
   @override
   void dispose() {
     _authSub?.cancel();
+    if (_observingLifecycle) {
+      try {
+        WidgetsBinding.instance.removeObserver(this);
+      } catch (_) {}
+      _observingLifecycle = false;
+    }
     super.dispose();
+  }
+
+  bool _observingLifecycle = false;
+
+  /// Uygulama ön plana dönünce, e-posta onayı bekleyen misafir oturumunu
+  /// tazeler. Onay bağlantısı çoğu zaman başka bir uygulamada (posta
+  /// istemcisi, tarayıcı) açılır; uygulamaya dönüldüğünde JWT hâlâ
+  /// `is_anonymous` taşır ve `isGuest` yeniden başlatmaya kadar `true`
+  /// kalırdı.
+  void _observeLifecycle() {
+    if (_observingLifecycle) return;
+    try {
+      WidgetsBinding.instance.addObserver(this);
+      _observingLifecycle = true;
+    } catch (_) {
+      // Binding yok (saf Dart testi): yaşam döngüsü izlenmez.
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      unawaited(refreshGuestUpgrade());
+    }
+  }
+
+  /// Onay bekleyen bir yükseltme var mı: hâlâ anonim ama adres `new_email`de.
+  @visibleForTesting
+  static bool hasPendingUpgrade(User? user) =>
+      user != null && user.isAnonymous && (user.newEmail?.isNotEmpty ?? false);
+
+  DateTime? _lastUpgradeRefresh;
+
+  /// Bekleyen e-posta yükseltmesi varsa oturumu sunucudan yeniler; onay
+  /// gelmişse `isGuest` yeniden başlatmadan `false` olur.
+  ///
+  /// Ağ çağrısı yalnız [hasPendingUpgrade] iken yapılır ve 10 sn'de bir ile
+  /// sınırlıdır; sıradan misafir/kalıcı oturumlar her ön plana dönüşte ağ
+  /// yemez. Dönen değer: oturum bu çağrıyla kalıcıya döndü mü.
+  Future<bool> refreshGuestUpgrade({
+    @visibleForTesting Future<User?> Function(SupabaseClient client)? refresh,
+    @visibleForTesting DateTime? now,
+  }) async {
+    final client = _client;
+    if (client == null || !hasPendingUpgrade(_currentUser)) return false;
+    final at = now ?? DateTime.now();
+    final last = _lastUpgradeRefresh;
+    if (last != null && at.difference(last) < const Duration(seconds: 10)) {
+      return false;
+    }
+    _lastUpgradeRefresh = at;
+    try {
+      final user = refresh != null
+          ? await refresh(client)
+          : (await client.auth.refreshSession()).user ??
+                client.auth.currentUser;
+      if (user == null) return false;
+      final wasGuest = _currentUser?.isAnonymous ?? true;
+      _currentUser = user;
+      if (!user.isAnonymous) _needsEmailConfirmation = false;
+      notifyListeners();
+      return wasGuest && !user.isAnonymous;
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'guest upgrade refresh');
+      return false;
+    }
   }
 
   Future<bool> _run(Future<void> Function(SupabaseClient auth) body) async {
@@ -343,7 +484,7 @@ class AuthProvider extends ChangeNotifier {
       if (!_offlineMode) return true;
       _isLoading = false;
       _needsEmailConfirmation = false;
-      _errorMessage = 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.';
+      _errorMessage = K.authErrNetwork;
       notifyListeners();
       return false;
     }
@@ -583,8 +724,12 @@ class AuthProvider extends ChangeNotifier {
     required String password,
   }) {
     return _run((client) async {
+      // Onay e-postasındaki bağlantı uygulamaya dönmeli: yönlendirme
+      // verilmezse GoTrue site adresine (web) gider ve uygulama onaydan
+      // habersiz kalır.
       final response = await client.auth.updateUser(
         UserAttributes(email: email, password: password),
+        emailRedirectTo: authRedirectUri,
       );
       final user = response.user;
       final pendingEmail = user?.newEmail;
@@ -621,11 +766,34 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<bool> resetPassword(String email) {
-    return _run(
-      (client) =>
-          client.auth.resetPasswordForEmail(email, redirectTo: authRedirectUri),
-    );
+    return _run((client) async {
+      if (kIsWeb) {
+        // Web istemcisi zaten implicit akışta (bkz. main.dart).
+        await client.auth.resetPasswordForEmail(
+          email,
+          redirectTo: passwordResetRedirectUri,
+        );
+        return;
+      }
+      // Uygulamanın istemcisi PKCE kullanır: bağlantıdaki kod yalnız bu
+      // cihazdaki doğrulayıcıyla açılır, web sitesi açamaz. İstek bu yüzden
+      // implicit akışlı geçici bir istemciyle gönderilir; bağlantı oturumu
+      // adres parçasında taşır ve hangi tarayıcıda açılırsa açılsın çalışır.
+      await implicitAuthClient(
+        client,
+      ).resetPasswordForEmail(email, redirectTo: passwordResetRedirectUri);
+    });
   }
+
+  /// Yalnız sıfırlama isteği için, oturum saklamayan implicit istemci.
+  @visibleForTesting
+  static GoTrueClient Function(SupabaseClient client)
+  implicitAuthClient = (client) => GoTrueClient(
+    url: '${client.rest.url.replaceFirst(RegExp(r'/rest/v1/?$'), '')}/auth/v1',
+    headers: {...client.headers},
+    flowType: AuthFlowType.implicit,
+    autoRefreshToken: false,
+  );
 
   /// Oturum olayının kurtarma bayrağına etkisi.
   ///
@@ -810,11 +978,48 @@ class AuthProvider extends ChangeNotifier {
     return requiredStoresCleared;
   }
 
+  /// Kayıtlı hesabın çıkışı: son durumu hesaba göndermeyi dener (4 sn), sonra
+  /// eşitlemeyi kapatır ve cihaz sahibini "sahipsiz oturum"a çevirir. Böylece
+  /// çıkış sonrası çevrimdışı/misafir oturum, çıkan hesabın kapsamını değil
+  /// kendi ayrı kapsamını kullanır; çıkan hesabın anahtarları diskte kalır ve
+  /// aynı hesap dönünce eksiksiz görünür.
+  Future<bool> _keepLocalProgressOnSignOut() async {
+    try {
+      await ProgressSyncService.maybeInstance?.flush();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'progress flush on signOut');
+    }
+    ProgressSyncService.unbind();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return await prefs.setString(
+        _deviceOwnerUserIdKey,
+        LocalProgressScope.offlineUserId,
+      );
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'deviceOwner reset on signOut');
+      return false;
+    }
+  }
+
   Future<void> signOut({
     bool discardPendingRewards = false,
     String? pendingRewardsOwnerId,
   }) async {
     var accountCleanupFailed = false;
+    // Kayıtlı hesabın normal çıkışında yerel ilerleme SİLİNMEZ: anahtarlar
+    // kullanıcı kimliğine kapsamlı (bkz. [LocalProgressScope]) ve ilerleme
+    // hesaba eşitleniyor; silmek seri/rozet/seviyeyi, telefon değişiminde
+    // olduğu gibi, geri alınamaz biçimde kaybettirirdi. Misafir ve hesap
+    // silme eskisi gibi siler.
+    final keepLocalProgress =
+        !discardPendingRewards &&
+        _currentUser != null &&
+        !_currentUser!.isAnonymous;
+
+    // Bu hesabın tüketilmemiş bildirim hedefi sonraki hesaba geçmesin
+    // (bkz. test/push_tap_signout_test.dart).
+    PushTapRouter.pending.value = null;
     // Devam eden eski oturum hazırlığını geçersiz kıl ve tamamlanmasını bekle.
     // Böylece gecikmiş A kullanıcısı, logout temizliğinden sonra kapsamı veya
     // SyncManager'ı yeniden A adına kuramaz.
@@ -848,7 +1053,9 @@ class AuthProvider extends ChangeNotifier {
       ErrorReporter.record(e, s, reason: 'PremiumService logout on signOut');
     }
 
-    final localProgressCleared = await _clearLocalProgressStores();
+    final localProgressCleared = keepLocalProgress
+        ? await _keepLocalProgressOnSignOut()
+        : await _clearLocalProgressStores();
     if (discardPendingRewards && !localProgressCleared) {
       accountCleanupFailed = true;
     }
@@ -876,6 +1083,23 @@ class AuthProvider extends ChangeNotifier {
       }
       return;
     }
+    // Cihazın FCM token'ı bu hesaptan bırakılır. Bırakılmazsa aynı cihaza
+    // giren bir sonraki hesap token'ı alır ama bu hesabın satırı da onu
+    // tutmaya devam eder: çıkış yapmış kişi sonraki kullanıcının
+    // bildirimlerini alırdı. Oturum kapanmadan ÖNCE çağrılmalı (RPC
+    // `auth.uid()` ister); en iyi çabadır — ağ yoksa ya da göç uygulanmamışsa
+    // (PGRST202) çıkış yine sürer.
+    if (client.auth.currentUser != null) {
+      try {
+        await client
+            .rpc<void>('clear_my_fcm_token')
+            .timeout(const Duration(seconds: 3));
+      } catch (error, stack) {
+        if (!isMissingRpcError(error)) {
+          ErrorReporter.record(error, stack, reason: 'clear fcm token failed');
+        }
+      }
+    }
     try {
       await client.auth.signOut();
     } catch (error, stack) {
@@ -896,63 +1120,83 @@ class AuthProvider extends ChangeNotifier {
   String debugTranslateUnexpectedAuthError(Object error) =>
       _translateUnexpectedError(error);
 
+  /// Dönen dizgi bir METİN ANAHTARIDIR (`K.authErr*`), ekranda
+  /// `context.translateAuthError` ile çevrilir. Eskiden sabit Türkçe metin
+  /// dönüyordu ve Kurmancî karşılığı ayrı bir sözlükte elle eşleniyordu.
   String _translateUnexpectedError(Object error) {
     final message = error.toString().toLowerCase();
     if (_isNetworkErrorMessage(message)) {
-      return 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.';
+      return K.authErrNetwork;
     }
-    return 'Beklenmeyen bir hata oluştu.';
+    return K.authErrUnexpected;
   }
 
   String _translateError(AuthException e) {
     final message = e.message.toLowerCase();
     if (_isNetworkErrorMessage(message)) {
-      return 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.';
+      return K.authErrNetwork;
     }
-    // 2026-07-23 M18: Google hesap bağlama hataları — kod bazlı eşleşme
+    // 2026-07-23 M18: hesap bağlama hataları — kod bazlı eşleşme
     // mesaj metninden daha güvenilir (bkz. gotrue error_code.dart).
     if (e.code == 'identity_already_exists' ||
         message.contains('identity is already linked') ||
         message.contains('already been linked')) {
-      return 'Bu Google hesabı zaten başka bir hesaba bağlı.';
+      return K.authErrIdentityLinked;
     }
     if (e.code == 'manual_linking_disabled' ||
         message.contains('manual linking')) {
-      return 'Hesap bağlama şu anda kapalı. Supabase panelinde manuel bağlamayı aç.';
+      return K.authErrLinkingDisabled;
     }
     if (message.contains('unsupported provider') ||
         message.contains('provider is not enabled')) {
-      return 'Google girişi şu anda etkin değil. Supabase panelinde Google sağlayıcısını aç.';
+      return K.authErrProviderDisabled;
+    }
+    // 2026-10-24 (A1/A2): kod, mesaj metninden kararlıdır; önce kod bakılır.
+    // Hız sınırı yönlendirme kontrolünden ÖNCE gelir: Supabase'in "For
+    // security purposes, you can only request this after 30 seconds."
+    // mesajında 'uri' alt dizgisi (sec-uri-ty) geçer ve eski eşleme bunu
+    // "yönlendirme ayarlarını kontrol et" diye gösteriyordu.
+    final code = e.code;
+    if (code == 'over_email_send_rate_limit' ||
+        code == 'over_request_rate_limit' ||
+        code == 'over_sms_send_rate_limit' ||
+        message.contains('rate limit') ||
+        message.contains('for security purposes')) {
+      return K.authErrRateLimit;
+    }
+    if (code == 'same_password' ||
+        message.contains('different from the old password')) {
+      return K.authErrSamePassword;
+    }
+    if (code == 'weak_password' || message.contains('password should be')) {
+      return K.authErrWeakPassword;
+    }
+    if (code == 'email_address_invalid') {
+      return K.authErrInvalidEmail;
     }
     if (message.contains('validation_failed') ||
         message.contains('redirect') ||
         message.contains('uri')) {
-      return 'Giriş bağlantısı doğrulanamadı. Uygulama yönlendirme ayarlarını kontrol et.';
+      return K.authErrRedirect;
     }
     if (message.contains('invalid login credentials')) {
-      return 'E-posta veya parola hatalı.';
+      return K.authErrInvalidCredentials;
     }
     if (message.contains('already registered') ||
         message.contains('already been registered')) {
-      return 'Bu e-posta zaten kullanılıyor.';
-    }
-    if (message.contains('password should be')) {
-      return 'Parola çok zayıf (en az 6 karakter).';
+      return K.authErrEmailTaken;
     }
     if (message.contains('invalid email') ||
         message.contains('unable to validate email')) {
-      return 'Geçersiz e-posta adresi.';
+      return K.authErrInvalidEmail;
     }
     if (message.contains('email not confirmed')) {
-      return 'E-posta adresin henüz doğrulanmamış. Gelen kutunu kontrol et.';
-    }
-    if (message.contains('rate limit')) {
-      return 'Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.';
+      return K.authErrEmailNotConfirmed;
     }
     if (message.contains('anonymous')) {
-      return 'Misafir girişi şu anda kapalı.';
+      return K.authErrGuestDisabled;
     }
-    return 'Bir hata oluştu. Lütfen tekrar deneyin.';
+    return K.authErrGeneric;
   }
 
   bool _isNetworkErrorMessage(String message) {

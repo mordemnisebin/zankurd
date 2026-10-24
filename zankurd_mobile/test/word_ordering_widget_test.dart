@@ -174,4 +174,37 @@ void main() {
       );
     }
   });
+
+  /// ## Kusur
+  ///
+  /// Kontrol sonrası oyuncunun kutusu nötr kalıyordu; yanlış kuran yalnız
+  /// alttaki yeşil "doğru cevap" notunu görüyor ve hata yaptığını
+  /// anlamıyordu (2026-10-21 simülatör). Kutu artık hükmünü taşır.
+  testWidgets('kontrol sonrası kutu yanlışta ✕/hata, doğruda ✓/rast söyler', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _host(
+        question: _q1,
+        onSubmit: (_) {},
+        disabled: true,
+        selectedAnswer: 'diçim Ez malê',
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('word-ordering-wrong')), findsOneWidget);
+    expect(find.byKey(const ValueKey('word-ordering-correct')), findsNothing);
+
+    await tester.pumpWidget(
+      _host(
+        question: _q1,
+        onSubmit: (_) {},
+        disabled: true,
+        selectedAnswer: 'Ez diçim malê',
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('word-ordering-correct')), findsOneWidget);
+    expect(find.byKey(const ValueKey('word-ordering-wrong')), findsNothing);
+  });
 }

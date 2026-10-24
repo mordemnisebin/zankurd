@@ -1,7 +1,14 @@
+// 2026-10-19 sadeleşme (ikinci tur): hızlı düello kartı gece sahne
+// kartından sakin yüzey kartına (`SahneSurfaceCard`) döndü; "Arkadaşlarınla"
+// bölüm başlığı, "Etkinlikler" başlığı ve oda eylemlerinin açıklama satırı
+// kalktı (iki düğme kendini anlatıyor; Yarış sekmesi başlıksız, kısa
+// liste). Bekçiler yeni sözleşmeyi sorar: kartın yarış kimliği üst etiket
+// metnindedir, tek Agir düğme yine "Rakip bul".
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-09-29 doğallık (K5, K7): düello kartında VS amblemi yok (yerine
 // "10 soru · ~2 dakika"); "Oda kur" ve "Kodla katıl" liste grubu değil yan
 // yana iki ikincil düğme. Bekçiler yeni düzeni ve TEK Agir kuralını sorar.
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +19,8 @@ import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
+import 'support/widget_test_helpers.dart'
+    show testShell, kurmanciLang, turkishLang;
 
 Widget _shell(Widget child) {
   return MultiProvider(
@@ -41,10 +50,28 @@ void main() {
     await tester.pumpAndSettle();
 
     final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
-    final card = tester.widget<SahneStageCard>(
-      find.descendant(of: hero, matching: find.byType(SahneStageCard)),
+    // 2026-10-20 renk ve canlılık: kahraman beyaz yüzey kartı değil, Boyax
+    // gradyanlı DOLU karttır (bkz. renk_canlilik_test.dart).
+    expect(
+      find.descendant(of: hero, matching: find.byType(SahneSurfaceCard)),
+      findsNothing,
     );
-    expect(card.role, SahneRole.race);
+    expect(
+      find.descendant(
+        of: hero,
+        matching: find.byWidgetPredicate(
+          (w) =>
+              w is DecoratedBox &&
+              w.decoration is BoxDecoration &&
+              (w.decoration as BoxDecoration).gradient is LinearGradient,
+        ),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(of: hero, matching: find.byType(SahneStageCard)),
+      findsNothing,
+    );
     expect(
       find.descendant(of: hero, matching: find.byType(SahneVsEmblem)),
       findsNothing,
@@ -53,21 +80,14 @@ void main() {
       find.descendant(of: hero, matching: find.text('10 soru · ~2 dakika')),
       findsOneWidget,
     );
-    // Tek Agir düğme kartta; ekrandaki öteki dolgulu düğmeler (oda
-    // eylemleri) ikincildir: Kulis tonu.
+    // Tek Agir düğme kartta; ekranda başka dolgulu düğme yoktur (oda
+    // eylemleri artık alt sayfadadır).
     expect(
       find.descendant(of: hero, matching: find.byType(FilledButton)),
       findsOneWidget,
     );
-    final night = SahneTokens.of(tester.element(hero));
-    final outside = find.byWidgetPredicate(
-      (w) =>
-          w is FilledButton &&
-          w.style?.backgroundColor?.resolve(<WidgetState>{}) == night.s2,
-    );
-    expect(outside, findsNWidgets(2));
-    final ctx = tester.element(find.text('Rakip bul'));
-    final label = tester.widget<Text>(find.text('Rakip bul'));
+    final ctx = tester.element(find.text('Rakip seç'));
+    final label = tester.widget<Text>(find.text('Rakip seç'));
     expect(
       DefaultTextStyle.of(ctx).style.merge(label.style).color,
       SahneTokens.night.onAct,
@@ -89,7 +109,7 @@ void main() {
     final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
     final heroData = tester.getSemantics(hero).getSemanticsData();
     expect(heroData.flagsCollection.isButton, isTrue);
-    expect(heroData.label, 'Hızlı düello. Rakip bul');
+    expect(heroData.label, 'Canlı düello. Rakip seç');
     final action = find.byKey(const ValueKey('play-hub-quick-duel-cta'));
     expect(action, findsOneWidget);
     expect(tester.getSize(action).height, greaterThanOrEqualTo(48));
@@ -116,134 +136,153 @@ void main() {
     },
   );
 
-  testWidgets('oyun merkezi Pirs kapsamındaki ana yolları görünür kılar', (
+  testWidgets('oyun merkezi tam üç oyun seçimi ve günlük kartlar gösterir', (
     tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-
-    await tester.pumpWidget(
-      _shell(PlayHubScreen(repository: MockZanKurdRepository())),
-    );
-    await tester.pumpAndSettle();
-
-    expect(find.text('Oda kur'), findsOneWidget);
-    expect(find.text('Kodla katıl'), findsOneWidget);
-    // 2026-09-29 Şahnê: bölümler tek bölüm başlığıyla (`SahneSectionHeader`)
-    // açılır; başlık altı açıklama satırı yok (maket).
-    expect(find.text('Arkadaşlarınla'), findsOneWidget);
-    expect(find.text('Her gün'), findsOneWidget);
-    // 2026-09-30: `kAsyncDuelEnabled` açıkken "Düellolarım" gelen kutusu
-    // kendi bölüm başlığını çizer (üçüncü başlık); bayrak kapalıyken yalnız
-    // iki başlık vardır.
-    expect(
-      find.byType(SahneSectionHeader),
-      findsNWidgets(kAsyncDuelEnabled ? 3 : 2),
-    );
-    expect(find.byKey(const ValueKey('play-hub-quick-duel')), findsOneWidget);
-    expect(find.byKey(const ValueKey('play-hub-create-room')), findsOneWidget);
-    expect(find.byKey(const ValueKey('play-hub-join-room')), findsOneWidget);
-    expect(
-      find.byKey(const ValueKey('play-hub-daily-contest')),
-      findsOneWidget,
-    );
-    // Turnuva kalabalık bir kitle bekliyor; 2026-09-27'den beri bayrakla
-    // kapalı. Kapalıyken onu açan "Daha fazla" katmanı da çizilmez.
-    expect(find.byKey(const ValueKey('play-hub-tournament')), findsNothing);
-    if (kTournamentEnabled) {
-      expect(find.byKey(const ValueKey('play-hub-more')), findsOneWidget);
-      await tester.ensureVisible(find.byKey(const ValueKey('play-hub-more')));
-      await tester.tap(find.byKey(const ValueKey('play-hub-more')));
-      await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('play-hub-tournament')), findsOneWidget);
-    } else {
-      expect(find.byKey(const ValueKey('play-hub-more')), findsNothing);
-    }
-    expect(find.byKey(const ValueKey('play-hub-shop-card')), findsNothing);
-    expect(find.text('Turnuva ve sıralama'), findsNothing);
-    final quickDuelTop = tester
-        .getTopLeft(find.byKey(const ValueKey('play-hub-quick-duel')))
-        .dy;
-    final roomTop = tester
-        .getTopLeft(find.byKey(const ValueKey('play-hub-create-room')))
-        .dy;
-    final eventTop = tester
-        .getTopLeft(find.byKey(const ValueKey('play-hub-daily-contest')))
-        .dy;
-    expect(quickDuelTop, lessThan(roomTop));
-    expect(roomTop, lessThan(eventTop));
-    expect(tester.takeException(), isNull);
-  });
-
-  testWidgets('oda kur ve kodla katıl yan yana iki ikincil düğme', (
-    tester,
-  ) async {
-    // 2026-09-29 doğallık (K7): iki satırlık liste grubu (ikon karosu +
-    // alt satır + ok) yerine tek açıklama satırı ve yan yana iki ikincil
-    // düğme; ikisi de ≥ 48 dokunma hedefi ve aynı yükseklikte.
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-
-    await tester.pumpWidget(
-      _shell(PlayHubScreen(repository: MockZanKurdRepository())),
-    );
-    await tester.pumpAndSettle();
-
-    final createFinder = find.byKey(const ValueKey('play-hub-create-room'));
-    final joinFinder = find.byKey(const ValueKey('play-hub-join-room'));
-    final create = tester.getRect(createFinder);
-    final join = tester.getRect(joinFinder);
-    expect(create.top, join.top);
-    expect(join.left, greaterThan(create.right));
-    expect(create.height, greaterThanOrEqualTo(48));
-    expect(create.height, join.height);
-    expect(
-      find.ancestor(of: createFinder, matching: find.byType(SahneListGroup)),
-      findsNothing,
-    );
-    expect(find.text('Arkadaşlarını kodla çağır'), findsOneWidget);
-  });
-
-  testWidgets('%200 metinde oda eylemleri güvenli biçimde alt alta döner', (
-    tester,
-  ) async {
+    // 2026-10-24 sahibin kararı: Canlı düello, Sırayla düello, Oda. Eski
+    // "Arkadaşına meydan oku" kartı ve açıkta duran Oda kur / Kodla katıl
+    // düğmeleri yoktur; işlevleri üç seçimin içindedir.
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(
       _shell(
-        MediaQuery(
-          data: const MediaQueryData(textScaler: TextScaler.linear(2)),
-          child: PlayHubScreen(repository: MockZanKurdRepository()),
+        PlayHubScreen(
+          repository: MockZanKurdRepository(),
+          asyncDuelEnabled: true,
         ),
       ),
     );
     await tester.pumpAndSettle();
 
-    // %200 metinde üst hero daha uzun olduğu için ListView bu çocukları
-    // ilk karede henüz kurmayabilir; gerçek kullanıcı gibi aşağı kaydır.
-    // Sabit bir mesafe değil "görünene dek": hero'nun altına bir kart
-    // (ör. sırayla düello) eklenince sabit -600 oda eylemlerini hiç
-    // kurmuyordu ve test, düzenden değil mesafeden kırılıyordu.
+    expect(find.byType(SahneSectionHeader), findsNothing);
+    expect(find.byKey(const ValueKey('play-hub-quick-duel')), findsOneWidget);
+    expect(find.byKey(const ValueKey('play-hub-async-duel')), findsOneWidget);
+    expect(find.byKey(const ValueKey('play-hub-room')), findsOneWidget);
+    expect(find.text('Canlı düello'), findsOneWidget);
+    expect(find.text('Sırayla düello'), findsOneWidget);
+    expect(find.text('Oda'), findsOneWidget);
+    // Eski girişler ekranda DEĞİL.
+    expect(find.byKey(const ValueKey('play-hub-create-room')), findsNothing);
+    expect(find.byKey(const ValueKey('play-hub-join-room')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('play-hub-async-duel-challenge')),
+      findsNothing,
+    );
+    expect(find.text('Arkadaşına meydan oku'), findsNothing);
+    expect(find.text('Hızlı düello'), findsNothing);
+    // Günün turu ve çarkı korunur.
     await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('play-hub-join-room')),
+      find.byKey(const ValueKey('play-hub-spin-wheel')),
       200,
-      scrollable: find
-          .descendant(
-            of: find.byType(SahneTabPage),
-            matching: find.byType(Scrollable),
-          )
-          .first,
     );
-    await tester.pumpAndSettle();
-
-    final create = tester.getRect(
-      find.byKey(const ValueKey('play-hub-create-room')),
+    expect(
+      find.byKey(const ValueKey('play-hub-daily-contest')),
+      findsOneWidget,
     );
-    final join = tester.getRect(
-      find.byKey(const ValueKey('play-hub-join-room')),
-    );
-    expect(join.top, greaterThan(create.bottom));
+    expect(find.byKey(const ValueKey('play-hub-spin-wheel')), findsOneWidget);
+    expect(find.byKey(const ValueKey('play-hub-tournament')), findsNothing);
+    if (kTournamentEnabled) {
+      expect(find.byKey(const ValueKey('play-hub-more')), findsOneWidget);
+    } else {
+      expect(find.byKey(const ValueKey('play-hub-more')), findsNothing);
+    }
+    expect(find.byKey(const ValueKey('play-hub-shop-card')), findsNothing);
+    expect(find.text('Turnuva ve sıralama'), findsNothing);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets(
+    'sıra: canlı düello, sırayla düello ve oda, sonra günlük kartlar',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 1400));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        _shell(
+          PlayHubScreen(
+            repository: MockZanKurdRepository(),
+            asyncDuelEnabled: true,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      double top(String key) => tester.getTopLeft(find.byKey(ValueKey(key))).dy;
+      expect(top('play-hub-quick-duel'), lessThan(top('play-hub-async-duel')));
+      expect(top('play-hub-async-duel'), top('play-hub-room'));
+      expect(top('play-hub-room'), lessThan(top('play-hub-daily-contest')));
+      expect(top('play-hub-daily-contest'), lessThan(top('play-hub-friends')));
+    },
+  );
+
+  testWidgets('Oda kartı oda kur ve kodla katıl satırlarını açar', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      _shell(PlayHubScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+    await openRoomSheet(tester);
+    expect(find.byKey(const ValueKey('play-hub-room-sheet')), findsOneWidget);
+    for (final key in ['play-hub-create-room', 'play-hub-join-room']) {
+      final r = tester.getRect(find.byKey(ValueKey(key)));
+      expect(r.height, greaterThanOrEqualTo(48), reason: key);
+    }
+    expect(find.text('Oda kur'), findsOneWidget);
+    expect(find.text('Kodla katıl'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  for (final scale in [1.0, 2.0]) {
+    for (final lang in ['tr', 'ku']) {
+      testWidgets(
+        'rakip ve oda sayfaları 320 pt, yazı x$scale, $lang: taşma yok',
+        (tester) async {
+          await tester.binding.setSurfaceSize(const Size(320, 700));
+          addTearDown(() => tester.binding.setSurfaceSize(null));
+          await tester.pumpWidget(
+            testShell(
+              child: MediaQuery(
+                data: MediaQueryData(textScaler: TextScaler.linear(scale)),
+                child: PlayHubScreen(
+                  repository: MockZanKurdRepository(),
+                  asyncDuelEnabled: true,
+                ),
+              ),
+              languageProvider: lang == 'ku' ? kurmanciLang() : turkishLang(),
+            ),
+          );
+          await tester.pumpAndSettle();
+          expect(tester.takeException(), isNull);
+          await openLiveOpponentSheet(tester);
+          expect(
+            find.byKey(const ValueKey('opponent-sheet-random')),
+            findsOneWidget,
+          );
+          expect(
+            find.byKey(const ValueKey('opponent-sheet-friend')),
+            findsOneWidget,
+          );
+          expect(tester.takeException(), isNull);
+          await tester.tapAt(const Offset(160, 8));
+          await tester.pumpAndSettle();
+          await openAsyncOpponentSheet(tester);
+          expect(
+            find.byKey(const ValueKey('opponent-sheet-friend')),
+            findsOneWidget,
+          );
+          expect(tester.takeException(), isNull);
+          await tester.tapAt(const Offset(160, 8));
+          await tester.pumpAndSettle();
+          await openRoomSheet(tester);
+          expect(
+            find.byKey(const ValueKey('play-hub-create-room')),
+            findsOneWidget,
+          );
+          expect(tester.takeException(), isNull);
+        },
+      );
+    }
+  }
 }

@@ -120,6 +120,41 @@ void main() {
     });
   });
 
+  test('öğrenmede yalnız yönerge Türkçe, şıklar kanonik Kurmancî kalır', () {
+    final q = base(
+      promptTr: 'Botan Mîrliği nerede?',
+      answersTr: const ['Cizre', 'Erbil', 'Amed'],
+      correctAnswerTr: 'Cizre',
+    );
+    final learning = q.localized(isKu: false, learning: true);
+    expect(learning.prompt, 'Botan Mîrliği nerede?');
+    expect(learning.answers, ['Cizîr', 'Hewlêr', 'Amed']);
+    expect(learning.correctAnswer, 'Cizîr');
+    expect(learning.answers, contains(learning.correctAnswer));
+    // Yarışma yolu eskisi gibi: şıklar Türkçe.
+    final race = q.localized(isKu: false);
+    expect(race.answers, ['Cizre', 'Erbil', 'Amed']);
+    expect(race.correctAnswer, 'Cizre');
+  });
+
+  test('"bi Tirkî çi ye" sorusunda öğrenme şıkları Türkçe kelime kalır', () {
+    const q = QuizQuestion(
+      id: 'q2',
+      category: 'Ziman',
+      prompt: '"Av" bi Tirkî çi ye?',
+      answers: ['Su', 'Ateş', 'Toprak'],
+      correctAnswer: 'Su',
+      explanation: '',
+      promptTr: '"Av" Türkçede ne demek?',
+      answersTr: ['Su', 'Ateş', 'Toprak'],
+      correctAnswerTr: 'Su',
+    );
+    final learning = q.localized(isKu: false, learning: true);
+    expect(learning.answers, ['Su', 'Ateş', 'Toprak']);
+    expect(learning.correctAnswer, 'Su');
+    expect(learning.prompt, '"Av" Türkçede ne demek?');
+  });
+
   test('çeviri kapsamı ölçülebilir', () {
     // Bugün sıfır; banka çevrildikçe bu sayı yükselecek. Test kapsamı
     // *ölçer*, bir eşik dayatmaz — çeviri içerik işidir, kod işi değil.

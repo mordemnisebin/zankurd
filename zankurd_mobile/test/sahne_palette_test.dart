@@ -29,7 +29,9 @@ void main() {
   const day = SahneTokens.day;
 
   test('eski adlar Şahnê rollerine eşit (tek palet)', () {
-    expect(AppTheme.brand, night.act);
+    // 2026-10-19 sadeleşme (ikinci tur): gece Agir'i büyük dolgularda bir
+    // ton sönük (#F08A4A); marka turuncusu (#FF8A3D) gündüz Agir'iyle aynı.
+    expect(AppTheme.brand, day.act);
     expect(AppTheme.playRed, night.race);
     expect(AppTheme.gold, night.gold);
     expect(AppTheme.secondaryAccent, night.gold);
@@ -59,7 +61,7 @@ void main() {
       final style = theme.filledButtonTheme.style!;
       final fg = style.foregroundColor!.resolve({})!;
       final bg = style.backgroundColor!.resolve({})!;
-      expect(bg, night.act);
+      expect(bg, theme.brightness == Brightness.dark ? night.act : day.act);
       expect(_contrast(fg, bg), greaterThanOrEqualTo(4.5));
     }
   });

@@ -58,6 +58,15 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
   }
 
   @override
+  void didUpdateWidget(covariant StrengthMapSection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.refreshSignal != widget.refreshSignal) {
+      oldWidget.refreshSignal?.removeListener(_load);
+      widget.refreshSignal?.addListener(_load);
+    }
+  }
+
+  @override
   void dispose() {
     widget.refreshSignal?.removeListener(_load);
     super.dispose();

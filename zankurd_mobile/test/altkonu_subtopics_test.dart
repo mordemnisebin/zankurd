@@ -36,6 +36,7 @@ import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 
 const _bank = 'assets/data/altkonu_2026_10_01_questions.json';
 const _sql = 'supabase/2026-10-01_altkonu_sync.sql';
+const _promptFixSql = 'supabase/2026-10-14_banka_ku_duzeltme.sql';
 
 const _targets = <(String, String)>[
   ('Muzîk', 'nujen'),
@@ -109,8 +110,20 @@ void main() {
         multiLine: true,
       ).allMatches(sql).toList();
       expect(rows, hasLength(bank.length));
+      // Metni sonradan yerelde düzelen satırları düzeltme göçü yeni metne
+      // çeker; o kimlik için göçün yazdığı istem esas alınır.
+      final fixes = {
+        for (final m in RegExp(
+          r"^update questions set\n  prompt = '((?:[^']|'')*)'(?:,[\s\S]*?)?\nwhere id = '([0-9a-f-]{36})';",
+          multiLine: true,
+        ).allMatches(File(_promptFixSql).readAsStringSync()))
+          m.group(2)!: m.group(1)!,
+      };
       expect(
-        {for (final m in rows) '${m.group(2)}|${m.group(3)}'},
+        {
+          for (final m in rows)
+            '${m.group(2)}|${fixes[m.group(1)!] ?? m.group(3)}',
+        },
         {
           for (final q in bank)
             '${q['category']}|${(q['prompt'] as String).replaceAll("'", "''")}',

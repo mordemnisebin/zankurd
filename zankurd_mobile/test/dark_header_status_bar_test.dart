@@ -49,7 +49,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: MockZanKurdRepository(),
-          onCompleted: () {},
+          onCompleted: () async {},
         ),
       ),
     );
@@ -67,7 +67,9 @@ void main() {
     );
   });
 
-  testWidgets('kategori ekranının saydam app bar\'ı açık ikon ister', (
+  // Kurul 2. tur 2026-10-20: kategori başlığı artık koyu bant değil, standart
+  // açık başlık; açık ikon (koyu başlığa özgü stil) İSTEMEZ.
+  testWidgets('kategori ekranı standart açık başlıkta, açık ikon stili yok', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -81,6 +83,6 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
 
     final appBar = tester.widget<AppBar>(find.byType(AppBar).first);
-    expect(appBar.systemOverlayStyle, AppTheme.overlayOnDarkHeader);
+    expect(appBar.systemOverlayStyle, isNot(AppTheme.overlayOnDarkHeader));
   });
 }

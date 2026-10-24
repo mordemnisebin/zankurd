@@ -171,6 +171,13 @@
 library;
 
 const Set<String> retiredQuestionIds = <String>{
+  // 2026-10-23 soru kalitesi taraması (Flash + Grok tarama, GPT-5.6 + Claude
+  // Opus 5 doğrulama): doğru şık sorudaki iki adı birleştirip cevabı
+  // ele veriyor ("Cizîr û Botan" -> "herêma Botan/Cizîrê"); onarılamaz.
+  'offline_2818',
+  // Aynı tarama: "(vowel)" kalkınca baslangic_2026_10_06_0002 ile birebir
+  // aynı bilgiyi sorduğu görüldü (sesli harf sayısı, cevap 8).
+  'edit_ziman_0003',
   // Sînema (18)
   'cinema_0002',
   'cinema_0011',
@@ -717,6 +724,53 @@ const Set<String> retiredQuestionIds = <String>{
   // veriyordu; onlar yeniden ifade edildi, emekli DEĞİL.
   // ---------------------------------------------------------------------
   'ds_cand_0285',
+
+  // ---------------------------------------------------------------------
+  // 2026-10-17: yakın tekrar — kalite kapısının `near_duplicate_candidate`
+  // uyarılarından 70 oynanabilir çift Gemini 3.8 Flash + Grok 4.7 ile
+  // oylandı; yalnız ikisinin de "aynı olgu" dediği 5 çiftin daha zayıf
+  // yazılmış yarısı emekli (kalan eş parantezde).
+  // ---------------------------------------------------------------------
+  'ds_cografya_0133', // kalan: ds_cografya_0129
+  'ds_dirok_0029', // kalan: edit_dirok_0001
+  'ds_dirok_0091', // kalan: ds_dirok_0055
+  'ds_muzik_0144', // kalan: ds_muzik_0133
+  'offline_2668', // kalan: edit_dirok_0028
+  // ---------------------------------------------------------------------
+  // 2026-10-19: dış içerik denetimi (AI Studio Gemini 3.1 Pro + Grok, canlı
+  // 4197 sorunun tamamı); işaretlenenleri ana ajan tek tek doğruladı. Sunucu
+  // karşılığı: `supabase/2026-10-19_icerik_emekli.sql` (4 kimlik yalnız
+  // sunucuda; yerel karşılıkları yok).
+  // ---------------------------------------------------------------------
+  'sf_cin_0007', // özne yok: "uluslararası jüri ilk kez hangi yıl" — hangi festival?
+  'sf_cin_0008', // özne yok: "ilk edisyon nerede" — hangi festival?
+  'offline_tf_ede_0019', // D/Y: anahtar (Şaş) yaygın tanımla çelişiyor
+  'offline_tf_siy_0040', // D/Y: anahtar (Şaş) yaygın tanımla çelişiyor
+  'offline_curated_21475', // "heyran" yalnız Serhad kadın aşk türküsü: tartışmalı
+  'curated_siyaset_0009', // Barzani hareketinin ilk lideri: Şeyh Abdüsselam mı Mustafa mı
+  'offline_9668', // "Destana Dewrêşê Evdî çi ye?" B ve D şıkları birbirine çok yakın
+  // ---------------------------------------------------------------------
+  // 2026-10-21: biçimi bozuk 8 soru; metin yeniden yazılmadı, havuzdan
+  // çıkarıldı (kanıt: ekranda tek cevaplı sorunun iki boşluk ya da
+  // anlamsız şık göstermesi).
+  // - dersler2_2026_10_08_0104–0109: çeviri parantezine de `___`
+  //   konmuş, soru iki boşluklu görünüyor ama tek cevap alıyordu; aynı
+  //   gün dosyadan tamamen silindi, yerine jüri onaylı 0137–0142 geldi
+  //   (bu yüzden listede değiller).
+  // - offline_5016, offline_5225: şık listesinde sözcük olmayan "di-"
+  //   eki duruyor ("aslan"/"göz" bi Kurmancî çi ye?).
+  // ---------------------------------------------------------------------
+  'offline_5016',
+  'offline_5225',
+  // ---------------------------------------------------------------------
+  // 2026-10-22: yakın tekrar (kalite kapısının 182 uyarısı tam incelendi;
+  // Grok 4.7 + ana ajan ikisi de "aynı bilgi" dedi). Kalanlar parantezde.
+  // ---------------------------------------------------------------------
+  'hat_0043', // Yılmaz Güney doğum yılı (ex28_yilmaz_guney_005)
+  'hat_0109', // Xoybûn kuruluş yılı (hat_0104)
+  'hat_0112', // Şêx Seîd serhildanı yılı (hat_0105)
+  'hat_0118', // HDP kuruluş yılı (hat_0107)
+  'baslangic_2026_10_06_0068', // "Ew doktor ___." (dersler3_2026_10_08_0008)
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

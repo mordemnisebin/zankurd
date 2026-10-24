@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+import '../widgets/doza_widgets.dart';
 import 'package:flutter/foundation.dart'
     show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
@@ -17,8 +19,10 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/achievement.dart';
 import '../models/leaderboard_entry.dart';
+import '../models/leaderboard_period.dart';
 import '../models/league_tier.dart';
 import '../providers/auth_provider.dart';
+import '../widgets/email_verify_card.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../providers/remote_availability.dart';
 import '../utils/app_route.dart';
@@ -30,11 +34,12 @@ import '../widgets/skeleton_loader.dart';
 import '../models/avatar_identity.dart';
 import '../data/badge_service.dart';
 import '../widgets/badge_widget.dart';
+import '../widgets/reward_progress_view.dart';
+import '../data/reward_progress_snapshot.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/rolling_count.dart';
 import '../widgets/strength_map_section.dart';
 import '../widgets/weekly_performance_chart.dart';
-import '../widgets/progress_summary.dart';
 import '../widgets/sahne/sahne.dart';
 import 'home/home_rows.dart' show TabStatChips;
 import 'avatar_editor_screen.dart';
@@ -46,6 +51,9 @@ import 'shop_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/percent_format.dart';
 import '../utils/player_identity.dart';
+import '../utils/number_format.dart';
+
+import 'profile/profile_matches_section.dart';
 
 part 'profile/profile_widgets.dart';
 
@@ -60,12 +68,22 @@ enum _GuestUpgradeAction {
   emailPendingConfirmation,
   emailFailure,
   googleRequested,
+  appleRequested,
 }
 
 bool get _supportsGoogleAccountLinking =>
     kIsWeb ||
     (defaultTargetPlatform != TargetPlatform.iOS &&
         defaultTargetPlatform != TargetPlatform.macOS);
+
+/// iOS'ta misafirin tek kalıcı yolu e-postaydı: `linkAppleAccount` yazılmış
+/// ama hiçbir çağrı yeri yoktu ve Google bağlama bu platformda kapalıdır.
+/// Apple ile devam etmek hesabı aynı kimlikte (ilerleme kaybolmadan) kalıcı
+/// yapar.
+bool get _supportsAppleAccountLinking =>
+    !kIsWeb &&
+    (defaultTargetPlatform == TargetPlatform.iOS ||
+        defaultTargetPlatform == TargetPlatform.macOS);
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
@@ -86,8 +104,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  /// "Ayrıntılı istatistik" bağlantısıyla açılan ayrıntı paneli.
+  bool _statsDetailsOpen = false;
+
   late final Future<MistakeStore> _mistakeStoreFuture = MistakeStore.load();
   bool _loading = true;
+
+  /// İlk yükleme bitti mi; sonraki yüklemeler iskelet göstermez.
+  bool _loadedOnce = false;
   bool _loadFailed = false;
   bool _practiceLoading = false;
   AvatarIdentity _avatarIdentity = const AvatarIdentity();
@@ -96,15 +120,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? _currentName;
   LeaderboardEntry? _stats;
 
+  /// Haftalık sıra: Yarış sekmesindeki "Bu hafta" kartıyla AYNI kaynak
+  /// (`getMyLeaderboardRank(weekly)`). Profil karosu eskiden `getPlayerStats`
+  /// sırasını (toplam XP, tüm profiller) gösteriyordu; iki ekranda aynı
+  /// "sıra" iki farklı sayı oluyordu.
+  LeaderboardEntry? _weeklyEntry;
+
   /// Oyuncunun kendi kodu; sunucu vermezse null kalır ve hiç gösterilmez.
   String? _playerTag;
   List<Achievement> _achievements = const [];
   MasteryStore? _masteryStore;
+  int? _coins;
   int _level = 1;
   int _xpInLevel = 0;
   int _xpNeeded = 1000;
   double? _accuracyPercent;
   Set<String> _badgeUnlocked = {};
+  Map<String, RewardProgress> _rewardProgress = const {};
+  Map<String, DateTime> _rewardUnlockedOn = const {};
 
   /// Tüm modlarda cevaplanan toplam soru sayısı. "Oyun" karosu daha önce
   /// `roomsPlayed` gösteriyordu; o yalnız çevrimiçi oda sayısıdır, solo quiz
@@ -118,6 +151,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _load();
     _refreshMistakes();
     widget.refreshSignal?.addListener(_handleRefreshSignal);
+  }
+
+  @override
+  void didUpdateWidget(covariant ProfileScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.refreshSignal != widget.refreshSignal) {
+      oldWidget.refreshSignal?.removeListener(_handleRefreshSignal);
+      widget.refreshSignal?.addListener(_handleRefreshSignal);
+    }
   }
 
   @override
@@ -223,10 +265,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _load() async {
-    setState(() => _loading = true);
+    // İskelet yalnız ilk yüklemede. Alt sayfadan dönüşte de iskelete
+    // geçiliyordu; içerik yeniden kurulup kaydırma en üste sıçrıyordu
+    // (2026-10-22 simülatör turu). Sonraki yüklemeler içerik yerindeyken
+    // sessizce tazeler.
+    if (!_loadedOnce) setState(() => _loading = true);
     try {
       final name = await widget.repository.getProfileName();
       final stats = await widget.repository.getPlayerStats();
+      LeaderboardEntry? weekly;
+      try {
+        weekly = await widget.repository.getMyLeaderboardRank(
+          LeaderboardPeriod.weekly,
+        );
+      } catch (_) {
+        weekly = null; // sıra yoksa karo çizilmez
+      }
       final tag = await widget.repository.getPlayerTag();
       final avatarIdentity = await widget.repository.loadAvatarIdentity();
       final achievementStore = await AchievementStore.load();
@@ -236,14 +290,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // profil gridinde gösterilmiyor, quiz üst barında görünüyor.
       final mistakeStore = await MistakeStore.load();
       final badgeService = await BadgeService.load();
+      final rewardView = await RewardProgressSnapshot.load(
+        achievements: achievementStore,
+        badges: badgeService,
+      );
+      int? coins;
+      try {
+        coins = await widget.repository.loadCoinBalance();
+      } catch (_) {
+        coins = null; // bakiye yoksa jeton satırı çizilmez
+      }
       if (mounted) {
         setState(() {
           _currentName = name;
+          _coins = coins;
           _stats = stats;
+          _weeklyEntry = weekly;
           _playerTag = tag;
           _avatarIdentity = avatarIdentity;
           _achievements = achievementStore.unlockedAchievements;
           _badgeUnlocked = badgeService.unlockedBadges;
+          _rewardProgress = rewardView.progress;
+          _rewardUnlockedOn = rewardView.unlockedOn;
           _masteryStore = masteryStore;
           _level = xpStore.currentLevel;
           _xpInLevel = xpStore.xpInCurrentLevel;
@@ -251,6 +319,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _accuracyPercent = mistakeStore.accuracyPercent;
           _answeredTotal = mistakeStore.totalCorrect + mistakeStore.totalWrong;
           _loading = false;
+          _loadedOnce = true;
           _loadFailed = false;
         });
       }
@@ -263,6 +332,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
       }
     }
+  }
+
+  Future<void> _openSettings() async {
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(SettingsScreen(repository: widget.repository)));
+    if (mounted) _load();
   }
 
   Future<void> _openAvatarEditor() async {
@@ -310,6 +386,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final ku = context.isKu;
     final width = MediaQuery.sizeOf(context).width;
     final isWide = width > 720;
+    final remoteMatches = context.watch<AuthProvider>().canUseRemoteActions;
 
     // 2026-09-29 Şahnê A iskeleti: marka satırı → "Profil" → kimlik
     // (avatar + ad + kod) → seviye kartı → bölümler (tek bölüm
@@ -328,6 +405,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // duruyordu (2026-07-26 denetimi).
       rank: _hasServerScore ? _stats?.rank : null,
       onEditAvatar: _openAvatarEditor,
+      level: _level,
+      xpInLevel: _xpInLevel,
+      xpNeeded: _xpNeeded,
+      coins: _coins,
+      onSetName: _openSettings,
     );
 
     Widget leftColumn = Column(
@@ -339,21 +421,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           alignment: AlignmentDirectional.centerStart,
           child: _SyncStatusChip(),
         ),
-        // Seviye kartı: seviye karosu + XP çipi + Zêr ilerleme çubuğu.
-        // İlk turdan önce yok ([_hasPlayed]).
-        if (_hasPlayed) ...[
-          const SizedBox(height: SahneSpace.cardGap),
-          SahneSurfaceCard(
-            key: const ValueKey('profile-level-card'),
-            child: ProgressSummary(
-              level: _level,
-              xpInLevel: _xpInLevel,
-              xpNeeded: _xpNeeded,
-              levelLabel: context.t(K.progressLevelLabel),
-            ),
-          ),
-        ],
-        SahneSectionHeader(title: context.t(K.myStats)),
+        // Kimlik ve değerler sayfası: profilin altında belirgin giriş.
+        const SizedBox(height: SahneSpace.x2),
+        const DozaMeEntryCard(),
+        // Seviye + XP çubuğu + jeton artık kimlik başlığındadır (kurul 5. tur).
+        // 2026-10-19 sadeleşme (ikinci tur): "Ayrıntılı istatistik" ayrı bir
+        // açılır kart değil, başlığın yanındaki bağlantıdır; ayrıntılar
+        // altta, bağlantıya basınca açılır (varsayılan kapalı).
+        SahneSectionHeader(
+          title: context.t(K.myStats),
+          actionLabel: context.t(K.detailedStats),
+          onAction: () =>
+              setState(() => _statsDetailsOpen = !_statsDetailsOpen),
+        ),
         // Sunucu satırı yoksa yerel ilerleme de gizleniyordu: çevrimdışı
         // 2 soru cevaplamış oyuncu kendi cevapladığı soru sayısını
         // göremiyordu (2026-07-27). Kapı sunucu satırına değil,
@@ -366,48 +446,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
           // 2026-09-29 doğallık (K3): burada 64'lük maskot/logo plakası
           // duruyordu; boş durumların ortak dili gibi 32'lik üçüncül bir
           // çizgi ikon (istatistik sütunu) oldu. Logo marka satırının işi.
+          // 2026-10-19 sadeleşme (ikinci tur): boş durum 190 px'lik büyük
+          // karttı ve içinde ikinci bir turuncu düğme vardı; artık tek
+          // satırlık küçük şerit: simge + cümle, altında metin eylemi.
           SahneSurfaceCard(
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.x4,
+              vertical: SahneSpace.x3,
+            ),
             child: Builder(
               builder: (context) {
                 final t = SahneTokens.of(context);
-                final body = Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.t(K.noOnlineHistory),
-                      style: SahneType.body.copyWith(color: t.tx2),
-                    ),
-                    const SizedBox(height: SahneSpace.x3),
-                    SahneButton.primary(
-                      key: const ValueKey('profile-stats-start-cta'),
-                      label: context.t(K.startToday),
-                      icon: AppIcons.bolt,
-                      arrow: false,
-                      onPressed: _startQuickRace,
-                    ),
-                  ],
-                );
-                final plate = ExcludeSemantics(
-                  child: Icon(AppIcons.chartColumn, size: 32, color: t.tx3),
-                );
-                // Büyük yazıda metin dar sütunda harf harf bölünmesin:
-                // plaka üste, metin ve düğme tam genişliğe.
-                if (MediaQuery.textScalerOf(context).scale(16) >= 24) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      plate,
-                      const SizedBox(height: SahneSpace.x3),
-                      body,
-                    ],
-                  );
-                }
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    plate,
-                    const SizedBox(width: SahneSpace.x4),
-                    Expanded(child: body),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: ExcludeSemantics(
+                        child: Icon(
+                          AppIcons.chartColumn,
+                          size: 20,
+                          color: t.tx3,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x3),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            context.t(K.noOnlineHistory),
+                            style: SahneType.caption.copyWith(color: t.tx2),
+                          ),
+                          // Kurul 5. tur 2026-10-20 (Opus, Grok): boş durumun
+                          // eylemi metin bağlantısıydı, kart sönük kalıyordu;
+                          // artık net birincil düğme.
+                          const SizedBox(height: SahneSpace.x2),
+                          SahneButton.primary(
+                            buttonKey: const ValueKey(
+                              'profile-stats-start-cta',
+                            ),
+                            label: context.t(K.startToday),
+                            arrow: true,
+                            onPressed: _startQuickRace,
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 );
               },
@@ -425,14 +511,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // bir "ilk yarıştan sonra" cümlesi uydurulmaz. Sıralama sekmesi
               // ve ilk yarış eylemi zaten durur.
               if (_hasServerScore) ...[
-                _StatTile(
-                  label: context.t(K.statRank),
-                  value: '—',
-                  count: _stats!.rank,
-                  countPrefix: '#',
-                  role: SahneRole.gold,
-                  icon: AppIcons.chartColumn,
-                ),
+                if ((_weeklyEntry?.rank ?? 0) > 0)
+                  _StatTile(
+                    label: context.t(K.thisWeek),
+                    value: '—',
+                    count: _weeklyEntry!.rank,
+                    countPrefix: '#',
+                    role: SahneRole.gold,
+                    icon: AppIcons.chartColumn,
+                  ),
                 _StatTile(
                   label: context.t(K.statTotalScore),
                   value: '—',
@@ -443,7 +530,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
               _StatTile(
                 label: context.t(K.statAnswered),
-                value: '$_answeredTotal',
+                value: groupThousands(_answeredTotal),
                 count: _answeredTotal,
                 role: SahneRole.learn,
                 icon: AppIcons.gamepad,
@@ -455,7 +542,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     : context.percent(_accuracyPercent!.round()),
                 // Doğruluk bir durum değil bir ölçüdür: yeşil "iyi", kırmızı
                 // "kötü" demez (renk tek başına anlam taşımaz). Nötr karo.
-                role: SahneRole.neutral,
+                role: SahneRole.social,
                 icon: AppIcons.bullseye,
               ),
             ],
@@ -463,70 +550,77 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(height: SahneSpace.cardGap),
 
         // Detaylı analiz (grafik, kategori ustalığı, güçlü/zayıf yön) —
-        // sadelik için varsayılan kapalı.
-        SahneSurfaceCard(
-          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x4),
-          child: Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-            child: Material(
-              type: MaterialType.transparency,
-              child: ExpansionTile(
-                tilePadding: EdgeInsets.zero,
-                childrenPadding: const EdgeInsets.only(bottom: SahneSpace.x4),
-                iconColor: SahneTokens.of(context).tx2,
-                collapsedIconColor: SahneTokens.of(context).tx2,
-                title: Text(
-                  context.t(K.detailedStats),
-                  style: SahneType.bodyStrong.copyWith(
-                    color: SahneTokens.of(context).tx,
-                  ),
+        // sadelik için varsayılan kapalı; başlıktaki bağlantı açar.
+        if (_statsDetailsOpen)
+          SahneSurfaceCard(
+            key: const ValueKey('profile-detailed-stats'),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _SubHeading(context.t(K.weeklyPerformance)),
+                const SizedBox(height: SahneSpace.x3),
+                FutureBuilder<MistakeStore>(
+                  future: _mistakeStoreFuture,
+                  builder: (context, snapshot) {
+                    final t = SahneTokens.of(context);
+                    if (snapshot.hasError) {
+                      return SizedBox(
+                        height: 160,
+                        child: Center(
+                          child: Text(
+                            context.t(K.performanceLoadFail),
+                            style: SahneType.caption.copyWith(color: t.tx2),
+                          ),
+                        ),
+                      );
+                    }
+                    if (!snapshot.hasData) {
+                      return SizedBox(
+                        height: 160,
+                        child: Center(
+                          child: CircularProgressIndicator(color: t.tx2),
+                        ),
+                      );
+                    }
+                    final history = snapshot.data!.getLast7DaysHistory();
+                    return WeeklyPerformanceChart(history: history, isKu: ku);
+                  },
                 ),
-                expandedCrossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _SubHeading(context.t(K.weeklyPerformance)),
-                  const SizedBox(height: SahneSpace.x3),
-                  FutureBuilder<MistakeStore>(
-                    future: _mistakeStoreFuture,
-                    builder: (context, snapshot) {
-                      final t = SahneTokens.of(context);
-                      if (snapshot.hasError) {
-                        return SizedBox(
-                          height: 160,
-                          child: Center(
-                            child: Text(
-                              context.t(K.performanceLoadFail),
-                              style: SahneType.caption.copyWith(color: t.tx2),
-                            ),
-                          ),
-                        );
-                      }
-                      if (!snapshot.hasData) {
-                        return SizedBox(
-                          height: 160,
-                          child: Center(
-                            child: CircularProgressIndicator(color: t.tx2),
-                          ),
-                        );
-                      }
-                      final history = snapshot.data!.getLast7DaysHistory();
-                      return WeeklyPerformanceChart(history: history, isKu: ku);
-                    },
-                  ),
+                const SizedBox(height: SahneSpace.x6),
+                _PedagogicalAnalyticsSection(isKu: ku),
+                const SizedBox(height: SahneSpace.x6),
+                StrengthMapSection(
+                  isKu: ku,
+                  refreshSignal: widget.refreshSignal,
+                ),
+                if (_masteryStore != null) ...[
                   const SizedBox(height: SahneSpace.x6),
-                  _PedagogicalAnalyticsSection(isKu: ku),
-                  const SizedBox(height: SahneSpace.x6),
-                  StrengthMapSection(
-                    isKu: ku,
-                    refreshSignal: widget.refreshSignal,
-                  ),
-                  if (_masteryStore != null) ...[
-                    const SizedBox(height: SahneSpace.x6),
-                    _MasterySection(store: _masteryStore!, isKu: ku),
-                  ],
+                  _MasterySection(store: _masteryStore!, isKu: ku),
                 ],
-              ),
+              ],
             ),
           ),
+        // 2026-10-24: kişisel rekorlar ve son maçlar. Çevrimdışı/yerel
+        // misafirde sunucuya sorulmaz; yerel seri yine görünür.
+        ProfileRecordsSection(
+          repository: widget.repository,
+          refreshSignal: widget.refreshSignal,
+          remote: remoteMatches,
+          // Yeni oyuncunun boş rekor kartı oyuna götürür; üstteki boş
+          // istatistik kartı zaten "Bugün başla" taşıyorsa tekrarlanmaz.
+          onStartPlay: _stats == null && _answeredTotal == 0
+              ? null
+              : _startQuickRace,
+        ),
+        ProfileMatchHistorySection(
+          repository: widget.repository,
+          refreshSignal: widget.refreshSignal,
+          remote: remoteMatches,
+          // Üstteki boş istatistik kartı zaten "Bugün başla" düğmesini
+          // taşır; aynı eylem iki kez çizilmez.
+          onStartPlay: _stats == null && _answeredTotal == 0
+              ? null
+              : _startQuickRace,
         ),
       ],
     );
@@ -538,6 +632,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _UnifiedRewardsSection(
           achievements: _achievements,
           badgeUnlocked: _badgeUnlocked,
+          progress: _rewardProgress,
+          unlockedOn: _rewardUnlockedOn,
           showProgress: _hasPlayed,
           isKu: ku,
         ),
@@ -570,6 +666,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: SahneTabPage(
         controller: widget.scrollController,
         title: context.t(K.profileTitle),
+        titleEyebrow: context.secondLabel(K.profileTitle),
         stats: [
           TabStatChips(
             repository: widget.repository,
@@ -699,6 +796,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
         ],
       ),
+      // Nazik e-posta doğrulaması: yalnız doğrulanmamış e-posta hesabında
+      // çizilir; oyun ve sıralama buna bağlı değildir.
+      if (!auth.isGuest && auth.canUseRemoteActions)
+        if (auth.emailVerificationGateway case final gateway?)
+          EmailVerifyCard(gateway: gateway),
       SahneSectionHeader(title: context.t(K.secAccount)),
       SahneListGroup(
         children: [
@@ -752,148 +854,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   // 2026-07-22 canlı UX denetimi: misafir hesap yükseltme dialog'u
   Future<void> _showGuestUpgradeDialog() async {
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-    final formKey = GlobalKey<FormState>();
-    bool submitting = false;
-
+    // Alan denetleyicilerini diyalogun kendi State'i yönetir (bkz.
+    // [_GuestUpgradeDialog]); burada atmak kapanış animasyonunda çöküş
+    // riskiydi.
     final result = await showDialog<_GuestUpgradeAction>(
       context: context,
       barrierDismissible: false,
-      builder: (dialogContext) => StatefulBuilder(
-        builder: (ctx, setDialogState) => AlertDialog(
-          title: Text(
-            context.t(K.saveAccount),
-            style: SahneType.headline.copyWith(color: SahneTokens.of(ctx).tx),
-          ),
-          content: Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.t(K.saveAccountBody),
-                  style: SahneType.caption.copyWith(
-                    color: SahneTokens.of(ctx).tx2,
-                  ),
-                ),
-                const SizedBox(height: SahneSpace.x4),
-                SahneField(
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  label: context.t(K.email),
-                  validator: (v) {
-                    if (v == null || v.isEmpty || !v.contains('@')) {
-                      return context.t(K.emailInvalid);
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 12),
-                SahneField(
-                  controller: passwordController,
-                  obscureText: true,
-                  label: context.t(K.password),
-                  validator: (v) {
-                    if (v == null || v.length < 6) {
-                      return context.t(K.passwordTooShort);
-                    }
-                    return null;
-                  },
-                ),
-                if (_supportsGoogleAccountLinking) ...[
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(child: Divider(color: SahneTokens.of(ctx).line)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          context.t(K.orSeparator),
-                          style: SahneType.caption.copyWith(
-                            color: SahneTokens.of(ctx).tx2,
-                          ),
-                        ),
-                      ),
-                      Expanded(child: Divider(color: SahneTokens.of(ctx).line)),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton.icon(
-                      onPressed: submitting
-                          ? null
-                          : () => Navigator.pop(
-                              dialogContext,
-                              _GuestUpgradeAction.googleRequested,
-                            ),
-                      icon: const BrandIcon(
-                        BrandIcons.google,
-                        size: 18,
-                        color: Color(0xFF4285F4),
-                      ),
-                      label: Text(context.t(K.linkGoogle)),
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-          actions: [
-            DialogActionPair(
-              cancel: OutlinedButton(
-                onPressed: submitting
-                    ? null
-                    : () => Navigator.pop(dialogContext, null),
-                child: Text(context.t(K.cancel)),
-              ),
-              confirm: FilledButton(
-                onPressed: submitting
-                    ? null
-                    : () async {
-                        if (!(formKey.currentState?.validate() ?? false)) {
-                          return;
-                        }
-                        setDialogState(() => submitting = true);
-                        final auth = context.read<AuthProvider>();
-                        final success = await auth.upgradeGuestAccount(
-                          email: emailController.text.trim(),
-                          password: passwordController.text,
-                        );
-                        if (!ctx.mounted) return;
-                        Navigator.pop(
-                          dialogContext,
-                          !success
-                              ? _GuestUpgradeAction.emailFailure
-                              : auth.needsEmailConfirmation
-                              ? _GuestUpgradeAction.emailPendingConfirmation
-                              : _GuestUpgradeAction.emailSuccess,
-                        );
-                      },
-                child: submitting
-                    ? SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: SahneTokens.of(ctx).tx3,
-                        ),
-                      )
-                    : Text(context.t(K.save)),
-              ),
-            ),
-          ],
-        ),
+      builder: (_) => _GuestUpgradeDialog(
+        supportsGoogleLinking: _supportsGoogleAccountLinking,
+        supportsAppleLinking: _supportsAppleAccountLinking,
       ),
     );
-
-    // Controller'ları bir sonraki frame'den sonra imha et; dialog widget
-    // ağacı henüz deaktive edilmemiş olabilir.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      emailController.dispose();
-      passwordController.dispose();
-    });
 
     if (!mounted) return;
     switch (result) {
@@ -919,6 +890,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
       case _GuestUpgradeAction.googleRequested:
         await _linkGoogleAccount();
+      case _GuestUpgradeAction.appleRequested:
+        await _linkAppleAccount();
       case null:
         break;
     }
@@ -937,6 +910,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // gibi burada da anahtar defterinden çevrilmesi gerekir — yoksa
       // Kurmancî kullanıcı Google bağlama hatasını Türkçe görür
       // (2026-08-14 denetimi).
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.translateAuthError(auth.errorMessage!))),
+      );
+    }
+  }
+
+  /// [_linkGoogleAccount] ile aynı akış ve aynı hata işleme: yükleme perdesi,
+  /// sonuç auth dinleyicisinden gelir, hata anahtar defterinden çevrilir.
+  Future<void> _linkAppleAccount() async {
+    LoadingOverlay.show(context, message: context.t(K.connectingApple));
+    final auth = context.read<AuthProvider>();
+    final success = await auth.linkAppleAccount();
+    if (!mounted) return;
+    LoadingOverlay.hide(context);
+    if (!success && auth.errorMessage != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.translateAuthError(auth.errorMessage!))),
       );

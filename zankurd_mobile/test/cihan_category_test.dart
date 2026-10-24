@@ -90,8 +90,6 @@ void main() {
       final a = SahneCategoryTone.cihan.ground.computeLuminance();
       final b = SahneTokens.night.tx.computeLuminance();
       expect((b + 0.05) / (a + 0.05), greaterThanOrEqualTo(4.5));
-      // Ödünç görsel yanlış konuyu anlatır: kendi fotoğrafı yok.
-      expect(CategoryVisuals.ownImagePath('Cîhan'), isNull);
     });
   });
 
@@ -166,6 +164,89 @@ void main() {
         // bilinçli bir kararla eklenir.
         const editorialFixes = <String, Set<String>>{
           'ds_cografya_0177': {'answers', 'answersTr'},
+          // 2026-10-23 soru kalitesi taraması: Flash + Grok tarama, GPT-5.6 +
+          // Claude Opus 5 doğrulama (uyuşmazlıkta Grok hakem). Doğru şıkkın
+          // kimliği ve iki dildeki hizası korunur.
+          'ds_edebiyat_0157': {
+            'answers',
+            'correctAnswer',
+            'answersTr',
+            'correctAnswerTr',
+          },
+          'ds_teknoloji_0130': {'answers', 'correctAnswer'},
+          'ds_cand_0033': {
+            'explanation',
+            'explanationTr',
+            'prompt',
+            'promptTr',
+          },
+          'ds_cand_0035': {
+            'explanation',
+            'explanationTr',
+            'prompt',
+            'promptTr',
+          },
+          'ds_cand_0159': {'answersTr'},
+          'ds_dirok_0010': {'prompt', 'promptTr'},
+          'ds_dirok_0016': {'prompt', 'promptTr'},
+          'ds_dirok_0173': {'prompt', 'promptTr'},
+          'ds_dirok_0287': {'answers'},
+          'ds_dirok_0293': {'prompt', 'promptTr'},
+          'ds_edebiyat_0102': {'answers', 'answersTr'},
+          'ds_edebiyat_0106': {'answers'},
+          'ds_edebiyat_0108': {'answers'},
+          'ds_edebiyat_0110': {'answers'},
+          'ds_edebiyat_0112': {'answers'},
+          'ds_edebiyat_0114': {'answers'},
+          'ds_edebiyat_0122': {'answers'},
+          'ds_edebiyat_0124': {'answers'},
+          'ds_muzik_0023': {'prompt', 'promptTr'},
+          'ds_muzik_0103': {'prompt'},
+          'ds_muzik_0203': {'answersTr', 'correctAnswerTr'},
+          'ds_sinema_0194': {'prompt', 'promptTr'},
+          'ds_sinema_0249': {'promptTr'},
+          'ds_sinema_0286': {'prompt'},
+          'ds_teknoloji_0010': {'answers'},
+          'ds_teknoloji_0073': {'prompt', 'promptTr'},
+          'ds_teknoloji_0195': {'answers'},
+          'ds_teknoloji_0197': {'answers'},
+          // 2026-10-24 yazım taraması: «Kurmanci/Kurmancça/Kurmancicede» →
+          // «Kurmancî/Kurmancîde» (id, alan) çiftlerine tek tek; doğru şıkkın
+          // kimliği korunur. Sunucu göçü: supabase/2026-10-24_icerik_yazim.sql.
+          'ds_dirok_0128': {'answersTr', 'correctAnswerTr'},
+          'ds_muzik_0008': {
+            'answersTr',
+            'correctAnswerTr',
+            'explanation',
+            'explanationTr',
+          },
+          'ds_muzik_0249': {'answers', 'correctAnswer'},
+          'ds_ziman_0007': {'promptTr'},
+          'ds_ziman_0011': {'promptTr'},
+          'ds_ziman_0018': {'explanation', 'explanationTr'},
+          'ds_ziman_0025': {'promptTr'},
+          'ds_ziman_0027': {'promptTr'},
+          'ds_ziman_0028': {'explanation', 'explanationTr'},
+          'ds_ziman_0029': {'promptTr'},
+          'ds_ziman_0030': {'promptTr'},
+          'ds_ziman_0032': {'promptTr'},
+          'ds_ziman_0035': {'promptTr'},
+          'ds_ziman_0039': {'promptTr'},
+          'ds_ziman_0044': {'promptTr'},
+          'ds_ziman_0052': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_0206': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_0256': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_0257': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_0266': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_0272': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_0278': {'promptTr'},
+          'ds_ziman_0292': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_1028': {'promptTr'},
+          'ds_ziman_1029': {'promptTr'},
+          'ds_ziman_1031': {'promptTr'},
+          'ds_ziman_1034': {'promptTr'},
+          'ds_ziman_1036': {'promptTr'},
+          'ds_ziman_1038': {'promptTr'},
         };
         for (final c in copies) {
           final o = original[c['id']];
@@ -201,9 +282,12 @@ void main() {
           // Grok/Flash onayı) değişebilir; dalga-1 kayıtları birebir aynı.
           final meta = c['metadata'] as Map<String, dynamic>;
           final reviewedBy = meta['reviewedBy'] as String;
+          // 2026-10-15: dördüncü dalga, bütün bankaların Kurmancî denetimi
+          // (Gemini 3.8 Flash + Grok 4.7, ana ajan vetosu); künyesi kayıtta.
           final corrected =
               reviewedBy.contains('ikinci dalga') ||
-              reviewedBy.contains('üçüncü dalga');
+              reviewedBy.contains('üçüncü dalga') ||
+              reviewedBy.contains('dördüncü dalga');
           if (!corrected) {
             for (final key in [
               'prompt',
@@ -221,7 +305,10 @@ void main() {
                 reason: '${c['id']}.answers kümesi değişmiş',
               );
             }
-          } else if (c['explanation'] != o['explanation']) {
+          } else if (c['explanation'] != o['explanation'] &&
+              !(editorialFixes[c['id']]?.contains('explanation') ?? false)) {
+            // (2026-10-24: `explanation`ı Türkçe olan kayıtların yazım
+            // düzeltmesi `editorialFixes`te açıkça bildirilir.)
             // Bazı DeepSeek kayıtlarında `explanation` Türkçe değil Kurmancî
             // açıklamanın kopyasıdır; düzeltme ikisine birlikte uygulanır.
             expect(o['explanation'], o['explanationKu'], reason: '${c['id']}');

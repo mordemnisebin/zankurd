@@ -56,7 +56,33 @@ Widget _host({
   );
 }
 
+const _cay = QuizQuestion(
+  id: 'fill-widget-cay',
+  category: 'Ziman',
+  prompt: 'Ez ___ vedixwim.',
+  answers: ['çay'],
+  correctAnswer: 'çay',
+  explanation: '',
+  type: QuestionType.fillInBlank,
+);
+
 void main() {
+  testWidgets('inceltmesiz yazım doğru sayılır ve doğru yazım gösterilir', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _host(
+        question: _cay,
+        disabled: true,
+        showResult: true,
+        selectedAnswer: 'cay',
+        onSubmit: (_) {},
+      ),
+    );
+    expect(find.text('Doğru yazım: çay'), findsOneWidget);
+    expect(find.text('Doğru cevap: çay'), findsNothing);
+  });
+
   testWidgets('gönderme denetimi erişilebilir düğme rolü taşır', (
     tester,
   ) async {
@@ -143,7 +169,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Doğru: pirtûk'), findsOneWidget);
+    expect(find.text('Doğru yazım: pirtûk'), findsOneWidget);
   });
 
   /// ## Kusur
@@ -168,5 +194,16 @@ void main() {
       find.byKey(const ValueKey('fill-in-blank-input')),
     );
     expect(input.controller!.text, 'çşêîû');
+  });
+
+  // 2026-10-23 kullanıcı geri bildirimi: harf tuşları "yalnız bunlarla
+  // yazılır" sanılıyordu. Üstlerinde, klavyede yoksa ekleme yolu olduğunu
+  // söyleyen açıklama durur; cevap verildikten sonra (tuşlarla birlikte) kalkar.
+  testWidgets('harf tuşlarının üstünde klavye açıklaması var', (tester) async {
+    await tester.pumpWidget(_host(onSubmit: (_) {}));
+    expect(
+      find.byKey(const ValueKey('fill-in-blank-diacritic-hint')),
+      findsOneWidget,
+    );
   });
 }

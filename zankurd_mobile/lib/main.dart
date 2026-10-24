@@ -19,10 +19,12 @@ import 'src/data/offline_zankurd_repository.dart';
 import 'src/data/question_bank_loader.dart';
 import 'src/data/supabase_zankurd_repository.dart';
 import 'src/data/sync_manager.dart';
+import 'src/data/timeout_http_client.dart';
 import 'src/data/zankurd_repository.dart';
 import 'src/l10n/lang.dart';
 import 'src/l10n/material_locales.dart';
 import 'src/l10n/strings.dart';
+import 'src/providers/bilingual_labels_provider.dart';
 import 'src/providers/auth_provider.dart';
 import 'src/providers/analytics_consent_provider.dart';
 import 'src/providers/reduced_motion_provider.dart';
@@ -38,7 +40,9 @@ import 'src/screens/app_shell.dart';
 import 'src/screens/splash_screen.dart';
 import 'src/services/analytics_service.dart';
 import 'src/services/notification_service.dart';
+import 'src/services/notification_sync.dart';
 import 'src/services/premium_service.dart';
+import 'src/services/foreground_push_center.dart';
 import 'src/services/push_tap_router.dart';
 import 'src/services/push_token_sync.dart';
 import 'src/services/remote_upgrade.dart';
@@ -46,6 +50,7 @@ import 'src/services/firebase_push_token_source.dart';
 import 'src/theme/app_theme.dart';
 import 'src/utils/app_route.dart';
 import 'src/utils/error_reporter.dart';
+import 'src/widgets/foreground_push_banner.dart';
 import 'src/widgets/responsive_wrapper.dart';
 
 /// Açılış penceresinde ısıtılan iş.
@@ -152,6 +157,11 @@ Future<void> main() async {
         reason: 'ReducedMotionProvider load',
         fallback: ReducedMotionProvider.new,
       );
+      final bilingualLabelsFuture = bootStep(
+        BilingualLabelsProvider.load(),
+        reason: 'BilingualLabelsProvider load',
+        fallback: BilingualLabelsProvider.new,
+      );
       final untimedModeFuture = bootStep(
         UntimedModeProvider.load(),
         reason: 'UntimedModeProvider load',
@@ -188,6 +198,15 @@ Future<void> main() async {
               start: () => Supabase.initialize(
                 url: AppConfig.supabaseUrl,
                 publishableKey: AppConfig.supabaseAnonKey,
+                httpClient: TimeoutHttpClient(),
+                // Web'de implicit: şifre sıfırlama bağlantısı uygulamadan
+                // istenir ve başka bir tarayıcıda açılabilir; PKCE kodu orada
+                // açılamaz (bkz. AuthProvider.passwordResetRedirectUri).
+                authOptions: const FlutterAuthClientOptions(
+                  authFlowType: kIsWeb
+                      ? AuthFlowType.implicit
+                      : AuthFlowType.pkce,
+                ),
               ),
               ping: _pingSupabase,
             )
@@ -226,6 +245,8 @@ Future<void> main() async {
       // açılış akışı bundan etkilenmemeli.
       if (firebaseReady) {
         unawaited(PushTapRouter.wireFirebase());
+        // Uygulama açıkken gelen push'u üstte bant olarak gösterir.
+        ForegroundPushCenter.wire();
       }
 
       // Abonelik kimliği, AuthProvider mevcut oturumu eşlemeden önce hazır
@@ -299,6 +320,7 @@ Future<void> main() async {
       final soundProvider = await soundFuture;
       final reducedMotionProvider = await reducedMotionFuture;
       final untimedModeProvider = await untimedModeFuture;
+      final bilingualLabelsProvider = await bilingualLabelsFuture;
       final analyticsConsentProvider = await analyticsConsentFuture;
 
       // İlk kareyi bekletmeyen işler. Hatalar yutulmaz, bildirilir; ama
@@ -324,7 +346,26 @@ Future<void> main() async {
           );
         }
       }
-      startInBackground(NotificationService.load(), 'notifications load');
+      startInBackground(
+        // Servis kurulunca seri uyarısı bir sonraki akşama kurulur (tek atış).
+        NotificationService.load().then((_) async {
+          await NotificationService.syncStreakWarning();
+          // Tercihler sunucuyla eşitlenir, günün yarışması hatırlatması kurulur.
+          await NotificationSync.run(repositoryHolder.repository);
+        }),
+        'notifications load',
+      );
+      // Zamanlanmış bildirim metinleri zamanlama anındaki dilde donar; dil
+      // değişince yeniden kurulur (soğuk açılış beklenmez).
+      languageProvider.addListener(() {
+        final isKu = languageProvider.isKu;
+        startInBackground(
+          NotificationService.load().then(
+            (service) => service.applyLanguage(isKu: isKu),
+          ),
+          'notifications language',
+        );
+      });
 
       // Açılış çevrimdışı kararına rağmen Supabase sonradan açıldıysa,
       // ÇEVRİMDIŞI depoyla kurulan oturum uzak oturumla yeniden kurulur.
@@ -366,6 +407,7 @@ Future<void> main() async {
           soundProvider: soundProvider,
           reducedMotionProvider: reducedMotionProvider,
           untimedModeProvider: untimedModeProvider,
+          bilingualLabelsProvider: bilingualLabelsProvider,
           analyticsConsentProvider: analyticsConsentProvider,
           remoteAvailability: remoteAvailability,
           premiumService: premiumService,
@@ -523,6 +565,7 @@ class ZanKurdApp extends StatelessWidget {
     SoundProvider? soundProvider,
     ReducedMotionProvider? reducedMotionProvider,
     UntimedModeProvider? untimedModeProvider,
+    BilingualLabelsProvider? bilingualLabelsProvider,
     AnalyticsConsentProvider? analyticsConsentProvider,
     RemoteAvailability? remoteAvailability,
     PremiumService? premiumService,
@@ -534,6 +577,8 @@ class ZanKurdApp extends StatelessWidget {
        soundProvider = soundProvider ?? SoundProvider(),
        reducedMotionProvider = reducedMotionProvider ?? ReducedMotionProvider(),
        untimedModeProvider = untimedModeProvider ?? UntimedModeProvider(),
+       bilingualLabelsProvider =
+           bilingualLabelsProvider ?? BilingualLabelsProvider(),
        analyticsConsentProvider =
            analyticsConsentProvider ?? AnalyticsConsentProvider(),
        remoteAvailability =
@@ -551,6 +596,7 @@ class ZanKurdApp extends StatelessWidget {
   final SoundProvider soundProvider;
   final ReducedMotionProvider reducedMotionProvider;
   final UntimedModeProvider untimedModeProvider;
+  final BilingualLabelsProvider bilingualLabelsProvider;
   final AnalyticsConsentProvider analyticsConsentProvider;
   final RemoteAvailability remoteAvailability;
   final PremiumService premiumService;
@@ -577,6 +623,9 @@ class ZanKurdApp extends StatelessWidget {
         ChangeNotifierProvider<SoundProvider>.value(value: soundProvider),
         ChangeNotifierProvider<ReducedMotionProvider>.value(
           value: reducedMotionProvider,
+        ),
+        ChangeNotifierProvider<BilingualLabelsProvider>.value(
+          value: bilingualLabelsProvider,
         ),
         ChangeNotifierProvider<UntimedModeProvider>.value(
           value: untimedModeProvider,
@@ -645,8 +694,10 @@ class ZanKurdApp extends StatelessWidget {
                 // etkin parlaklığa göre verilir.
                 child: AnnotatedRegion<SystemUiOverlayStyle>(
                   value: _overlayStyleFor(context),
-                  child: ResponsiveWrapper(
-                    child: child ?? const SizedBox.shrink(),
+                  child: ForegroundPushBanner(
+                    child: ResponsiveWrapper(
+                      child: child ?? const SizedBox.shrink(),
+                    ),
                   ),
                 ),
               );
@@ -705,7 +756,7 @@ class ZanKurdApp extends StatelessWidget {
   /// uygulama her zaman `home` ile ve hatasız açılır.
   /// `JoinDeepLink.consumeInitialRoute()` `defaultRouteName`'i PLATFORMDAN
   /// doğrudan okur — bu metottan bağımsız çalışmaya devam eder, yani deep
-  /// link kodu burada kaybolmaz (bkz. `AppShell._consumeJoinDeepLink`).
+  /// link kodu burada kaybolmaz (bkz. `AppShell._tryOpenJoinCode`).
   List<Route<dynamic>> _buildInitialRoutes(String initialRouteName) {
     return [
       MaterialPageRoute<void>(

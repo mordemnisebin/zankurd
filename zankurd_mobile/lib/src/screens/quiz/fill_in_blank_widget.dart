@@ -41,10 +41,17 @@ class FillInBlankWidget extends StatefulWidget {
 class _FillInBlankWidgetState extends State<FillInBlankWidget> {
   late final TextEditingController _controller;
 
+  /// Alana yazılacak metin. Süre dolmuşsa 'TIMEOUT' işaretçisi bir cevap
+  /// değildir; alana yazılmaz (devam edilen turda "TIMEOUT" görünüyordu).
+  static String _shownAnswer(FillInBlankWidget w) {
+    final a = w.selectedAnswer;
+    return a == null || a == 'TIMEOUT' ? '' : a;
+  }
+
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.selectedAnswer ?? '')
+    _controller = TextEditingController(text: _shownAnswer(widget))
       ..addListener(_onTextChanged);
   }
 
@@ -52,7 +59,7 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
   void didUpdateWidget(covariant FillInBlankWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.question.id != widget.question.id) {
-      _controller.text = widget.selectedAnswer ?? '';
+      _controller.text = _shownAnswer(widget);
     } else if (oldWidget.excludedAnswer != widget.excludedAnswer &&
         widget.excludedAnswer?.isNotEmpty == true) {
       _controller.clear();
@@ -124,10 +131,14 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
         normalizeFreeTextAnswer(submittedAnswer) ==
         normalizeFreeTextAnswer(widget.question.correctAnswer);
     final t = SahneTokens.of(context);
+    final bool? verdict =
+        widget.showResult && widget.selectedAnswer != 'TIMEOUT'
+        ? isCorrect
+        : null;
     final resultText = isCorrect
         ? usesCanonicalWriting
               ? Tr.forKu(K.correct, isKu)
-              : '${Tr.forKu(K.correct, isKu)}: '
+              : '${Tr.forKu(K.correctSpelling, isKu)}: '
                     '${widget.question.correctAnswer}'
         : '${Tr.forKu(K.correctAnswerLabel, isKu)}: '
               '${widget.question.correctAnswer}';
@@ -136,21 +147,83 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SahneField(
-          key: const ValueKey('fill-in-blank-input'),
-          controller: _controller,
-          enabled: !widget.disabled,
-          textInputAction: TextInputAction.done,
-          autocorrect: false,
-          enableSuggestions: false,
-          onSubmitted: (_) => _submit(),
-          inputTextStyle: SahneType.bodyStrong,
-          hintText: label,
-          semanticLabel: label,
-          prefixIcon: AppIcons.pen,
+        // Model ipucu (hintKu/hintTr) kelime sıralamadakiyle aynı çizilir;
+        // cevap verilince anlamsızlaştığından yalnız öncesinde.
+        if (!widget.disabled &&
+            widget.question.hintFor(isKu: isKu) != null) ...[
+          Text(
+            widget.question.hintFor(isKu: isKu)!,
+            key: const ValueKey('fill-in-blank-hint'),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x2),
+        ],
+        // Kontrol sonrası alan kendi hükmünü taşır: yanlışta Hata kenarı + ✕,
+        // doğruda Rast kenarı + ✓ (çoktan seçmeli ve kelime sıralamadaki dil).
+        // Bunsuz yanlış cevapta alan nötr kalıyor, yalnız alttaki not hükmü
+        // söylüyordu. Süre dolması bir cevap sayılmaz; alan nötr kalır.
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: DecoratedBox(
+                key: verdict == null
+                    ? null
+                    : ValueKey(
+                        verdict
+                            ? 'fill-in-blank-verdict-correct'
+                            : 'fill-in-blank-verdict-wrong',
+                      ),
+                position: DecorationPosition.foreground,
+                decoration: ShapeDecoration(
+                  shape: verdict == null
+                      ? const RoundedRectangleBorder()
+                      : SahneShape.withSide(
+                          SahneShape.m,
+                          verdict ? t.okTx : t.errTx,
+                          width: 2,
+                        ),
+                ),
+                child: SahneField(
+                  key: const ValueKey('fill-in-blank-input'),
+                  controller: _controller,
+                  enabled: !widget.disabled,
+                  textInputAction: TextInputAction.done,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  onSubmitted: (_) => _submit(),
+                  inputTextStyle: SahneType.bodyStrong,
+                  hintText: label,
+                  semanticLabel: label,
+                  prefixIcon: AppIcons.pen,
+                ),
+              ),
+            ),
+            if (verdict != null) ...[
+              const SizedBox(width: SahneSpace.x3),
+              ExcludeSemantics(
+                child: Icon(
+                  verdict ? AppIcons.check : AppIcons.xmark,
+                  color: verdict ? t.okTx : t.errTx,
+                  size: 24,
+                ),
+              ),
+            ],
+          ],
         ),
         if (!widget.disabled) ...[
           const SizedBox(height: SahneSpace.x3),
+          // Harf tuşları "yalnız bunlarla yazılır" sanılıyordu (2026-10-23
+          // kullanıcı geri bildirimi): klavyede yoksa ekleme yolu olduğu
+          // söylenir; telefonun kendi klavyesiyle yazmak her zaman geçerli.
+          Text(
+            Tr.forKu(K.diacriticHint, isKu),
+            key: const ValueKey('fill-in-blank-diacritic-hint'),
+            style: SahneType.caption.copyWith(
+              color: SahneTokens.of(context).tx2,
+            ),
+          ),
+          const SizedBox(height: SahneSpace.x2),
           _DiacriticRow(onInsert: _insert),
           const SizedBox(height: SahneSpace.x4),
           FilledButton(

@@ -56,7 +56,7 @@ final _entries = <_Entry>[
     'Sonraki',
     () => OnboardingScreen(onComplete: () {}),
   ),
-  const _Entry('giriş', "ZanKurd'a hoş geldin", 'Giriş yap', SignInScreen.new),
+  const _Entry('giriş', "ZanKurd'a hoş geldin", 'Hemen oyna', SignInScreen.new),
   const _Entry('kayıt', 'Hesabını oluştur', 'İleri', SignUpScreen.new),
   _Entry(
     'ad sorma',
@@ -64,7 +64,7 @@ final _entries = <_Entry>[
     'Oyuna başla',
     () => ProfileNameGateScreen(
       repository: MockZanKurdRepository(),
-      onCompleted: () {},
+      onCompleted: () async {},
     ),
   ),
 ];
@@ -151,7 +151,14 @@ void main() {
       // Üst çubuğun (en az 56) hemen altında; ilerleme çubuğu olan
       // ekranlarda onun da altında.
       expect(rect.top, greaterThanOrEqualTo(SahneEntryScaffold.barHeight));
-      expect(rect.top, lessThan(110), reason: e.name);
+      // Karşılamanın ilk sayfasında kahramanın üstünde büyük dil seçici durur
+      // (2026-10-24: etiket + 56'lık segment); öteki ekranlarda kart hemen
+      // üst çubuğun altındadır.
+      expect(
+        rect.top,
+        lessThan(e.name == 'karşılama' ? 250 : 110),
+        reason: e.name,
+      );
       await tester.pumpWidget(const SizedBox.shrink());
     }
   });
@@ -263,7 +270,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: MockZanKurdRepository(),
-          onCompleted: () {},
+          onCompleted: () async {},
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../theme/brand_icons.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ import '../providers/reduced_motion_provider.dart';
 import '../services/analytics_service.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_logo.dart';
+import '../widgets/consent_line.dart';
 import '../widgets/language_toggle.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/sahne/sahne.dart';
@@ -197,8 +199,8 @@ class _SignInScreenState extends State<SignInScreen>
 
     // 2026-10-01 giriş iskeleti: dil seçici solda, kahraman kart (logo),
     // sola yaslı başlık, tek yüzey kartında sosyal girişler + e-posta formu;
-    // ekranın TEK birincil eylemi "Giriş Yap" alt perdede sabit, "Kaydol"
-    // altında ikincil metin eylemi (bkz. [SahneEntryScaffold]). Eskiden
+    // ekranın TEK birincil eylemi "Hemen oyna" (misafir, önce oyna hesap
+    // sonra) alt perdede sabit, "Kaydol" altında ikincil metin eylemi (bkz. [SahneEntryScaffold]). Eskiden
     // "Giriş Yap" kartın ortasında kayıyor, dil seçici sağ üstte duruyor,
     // başlık kahraman kartın İÇİNDE ortalanıyordu — kayıt ve ad ekranı başka
     // bir yerleşimdi.
@@ -240,7 +242,7 @@ class _SignInScreenState extends State<SignInScreen>
                         return null;
                       },
                     ),
-                    SizedBox(height: denseWide ? SahneSpace.x2 : SahneSpace.x4),
+                    SizedBox(height: denseWide ? SahneSpace.x2 : SahneSpace.x3),
                     FadeTransition(
                       opacity: LoadAnimationSequence.formField2FadeAnimation(
                         _animationController,
@@ -308,19 +310,20 @@ class _SignInScreenState extends State<SignInScreen>
                     ),
                     SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
                   ],
-                  // Misafir girişi bir kaçış yolu: metin bağlantısı olarak
-                  // sosyal girişlerden ayrılır.
-                  Center(
-                    child: _GuestSignInLink(
-                      onPressed: loading
-                          ? null
-                          : () => _signInAsGuest(authProvider),
-                    ),
-                  ),
-                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
                   const _EmailSectionDivider(),
-                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x3),
+                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
                   form,
+                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
+                  // Hesabı olan için ikincil yol: dolgulu birincil eylem
+                  // artık "Hemen oyna"dır (alt perde).
+                  SahneButton.secondary(
+                    key: const ValueKey('sign-in-have-account'),
+                    label: context.t(K.signInHaveAccount),
+                    icon: AppIcons.rightToBracket,
+                    arrow: false,
+                    expand: true,
+                    onPressed: loading ? null : () => _signIn(authProvider),
+                  ),
                 ],
               ),
             );
@@ -336,9 +339,9 @@ class _SignInScreenState extends State<SignInScreen>
                   key: const ValueKey('sign-in-hero-banner'),
                   padding: const EdgeInsets.fromLTRB(
                     SahneSpace.x4,
-                    SahneSpace.x6,
+                    SahneSpace.x3,
                     SahneSpace.x4,
-                    SahneSpace.x5,
+                    SahneSpace.x3,
                   ),
                   child: Center(
                     child: ScaleTransition(
@@ -352,6 +355,13 @@ class _SignInScreenState extends State<SignInScreen>
               ),
               title: context.t(K.welcomeTitle),
               content: panel,
+              // 2026-10-24: karşılamadaki yaş kutusu kalktı; şartlar ve
+              // gizlilik kabulü birincil düğmenin hemen ÜSTÜNDE düz metin
+              // bağlantıdır. Altında değil: birincil düğmenin dört giriş
+              // ekranında aynı yerde durması sözleşmedir
+              // (`entry_scaffold_test.dart`); üstteki satır onu kaydırmaz.
+              aboveAction: const ConsentLine(),
+              primaryFirstWhenFlowing: true,
               primary: FadeTransition(
                 opacity: LoadAnimationSequence.buttonFadeAnimation(
                   _animationController,
@@ -361,11 +371,14 @@ class _SignInScreenState extends State<SignInScreen>
                     _animationController,
                   ),
                   child: SahneButton.primary(
-                    label: context.t(K.signIn),
-                    icon: AppIcons.rightToBracket,
+                    key: const ValueKey('sign-in-play-now'),
+                    label: context.t(K.signInPlayNow),
+                    icon: AppIcons.play,
                     arrow: false,
                     expand: true,
-                    onPressed: loading ? null : () => _signIn(authProvider),
+                    onPressed: loading
+                        ? null
+                        : () => _signInAsGuest(authProvider),
                   ),
                 ),
               ),
@@ -423,7 +436,14 @@ class _AnimatedTitle extends StatelessWidget {
 // kaldırıyordu; desteklenen tüm ZanKurd yüzeylerinde gösterilir.
 bool get _supportsGoogleSignIn => true;
 
-bool get _supportsAppleSignIn => true;
+/// Apple yalnız iOS'ta (2026-10-23): orada Apple'ın yerleşik penceresi
+/// kullanılır ve kimlik doğrudan Supabase'e gider. Android ve web'deki
+/// tarayıcı akışı Supabase'teki Apple anahtarına bağlıdır; Apple bu anahtarı
+/// 6 ayda bir yeniletir, süresi dolunca giriş sessizce kırılır. App Store
+/// 4.8 Apple girişini yalnız Apple platformlarında ister; o tarihe dek
+/// Android/web'de hiç Apple girişi yapılmamıştı.
+bool get _supportsAppleSignIn =>
+    !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
 
 /// Google'ın kendi marka kılavuzundaki "Sign in with Google" renkleri:
 /// beyaz dolgu, #747775 kontur, #1F1F1F yazı. Bunlar Şahnê paletinin
@@ -563,50 +583,6 @@ class _AppleSignInButton extends StatelessWidget {
   }
 }
 
-/// Misafir girişi: ikincil eylem olarak altı çizili metin bağlantısı.
-/// Sosyal giriş bulunmayan Apple platformlarında da ana akış açık kalır.
-///
-/// Misafir girişi bir *kaçış yolu*, üçüncü bir teklif değil. Turuncu
-/// konturlu tam boy buton olarak Google (beyaz) ve Apple (siyah)
-/// düğmeleriyle aynı ağırlıktaydı; ekranda üç birincil eylem görünüyor ve
-/// hangisinin beklenen yol olduğu belirsiz kalıyordu (2026-07-25 canlı
-/// denetimi). 2026-09-29 Şahnê: birincil metin rengi (Agir değil — Agir
-/// ekranın tek birincil eylemine, "Giriş Yap"a ait), 48 dokunma alanı.
-class _GuestSignInLink extends StatelessWidget {
-  const _GuestSignInLink({required this.onPressed});
-
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final enabled = onPressed != null;
-    final fg = enabled ? t.tx : t.tx3;
-    return IgnorePointer(
-      ignoring: !enabled,
-      child: TextButton.icon(
-        onPressed: onPressed,
-        icon: Icon(AppIcons.user, size: 18, color: fg),
-        label: Text(
-          context.t(K.continueGuest),
-          textAlign: TextAlign.center,
-          style: SahneType.captionStrong.copyWith(
-            color: fg,
-            decoration: TextDecoration.underline,
-            decorationColor: fg,
-          ),
-        ),
-        style: TextButton.styleFrom(
-          foregroundColor: fg,
-          minimumSize: const Size(48, 48),
-          shape: SahneShape.m,
-          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x4),
-        ),
-      ),
-    );
-  }
-}
-
 /// E-posta giriş formunun üstündeki statik bölüm ayıracı (çizgi + metin).
 /// Form her zaman açık gösterildiği için aç/kapa chevron'u yoktur.
 class _EmailSectionDivider extends StatelessWidget {
@@ -618,28 +594,31 @@ class _EmailSectionDivider extends StatelessWidget {
     Widget line() => Expanded(
       child: SizedBox(height: 1, child: ColoredBox(color: t.line)),
     );
+    // Kurul 4. tur (74): metin `Flexible` (gevşek) iken sağ çizgi soldakinden
+    // kısa kalıyor, ayıraç ortalanmıyordu (boş pay dağıtılmıyor). Metin artık
+    // en çok genişliğin %75'ine kadar kendi boyunda durur, iki çizgi kalanı
+    // EŞİT paylaşır.
     return ConstrainedBox(
       // a11y-tap-target: noninteractive — statik bölüm ayıracı.
       constraints: const BoxConstraints(minHeight: 44),
-      child: Row(
-        children: [
-          line(),
-          Flexible(
-            // Uzun çeviri metni iki Expanded çizgiyle eşit pay (flex:1)
-            // aldığında dar ekranlarda kesiliyordu; metne 3 kat pay
-            // veriyoruz ki çizgiler ince kalıp metin tam sığsın.
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
-              child: Text(
-                context.t(K.orWithEmail),
-                textAlign: TextAlign.center,
-                style: SahneType.caption.copyWith(color: t.tx2),
+      child: LayoutBuilder(
+        builder: (context, box) => Row(
+          children: [
+            line(),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: box.maxWidth * 0.75),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
+                child: Text(
+                  context.t(K.orWithEmail),
+                  textAlign: TextAlign.center,
+                  style: SahneType.caption.copyWith(color: t.tx2),
+                ),
               ),
             ),
-          ),
-          line(),
-        ],
+            line(),
+          ],
+        ),
       ),
     );
   }

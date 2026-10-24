@@ -125,18 +125,29 @@ abstract interface class VerifiedQuestionAudioPlayer {
 
 class AudioplayersVerifiedQuestionAudioPlayer
     implements VerifiedQuestionAudioPlayer {
+  /// Ses motoru ilk [play]'de kurulur. 2026-10-22'de sözlük sesleri
+  /// paketlenince oynatıcı ekran açılır açılmaz kuruluyordu: kimse dinlemese
+  /// de platform kanalı açılıyor, test koşucusunda da (eklenti yok)
+  /// `MissingPluginException` atıyordu (ekran turu, öğrenen sözlüğü).
   AudioplayersVerifiedQuestionAudioPlayer({AudioPlayer? player})
-    : _player = player ?? AudioPlayer() {
-    _stateSubscription = _player.onPlayerStateChanged.listen((state) {
+    : _injected = player;
+
+  final AudioPlayer? _injected;
+  AudioPlayer? _created;
+  final ValueNotifier<bool> _playing = ValueNotifier(false);
+  StreamSubscription<PlayerState>? _stateSubscription;
+  bool _disposed = false;
+
+  AudioPlayer get _player {
+    final existing = _created;
+    if (existing != null) return existing;
+    final player = _injected ?? AudioPlayer();
+    _stateSubscription = player.onPlayerStateChanged.listen((state) {
       if (_disposed) return;
       _playing.value = state == PlayerState.playing;
     });
+    return _created = player;
   }
-
-  final AudioPlayer _player;
-  final ValueNotifier<bool> _playing = ValueNotifier(false);
-  late final StreamSubscription<PlayerState> _stateSubscription;
-  bool _disposed = false;
 
   @override
   bool get isPlaying => _playing.value;
@@ -159,7 +170,8 @@ class AudioplayersVerifiedQuestionAudioPlayer
 
   @override
   Future<void> stop() async {
-    await _player.stop();
+    final player = _created;
+    if (player != null) await player.stop();
     _playing.value = false;
   }
 
@@ -167,13 +179,14 @@ class AudioplayersVerifiedQuestionAudioPlayer
   void dispose() {
     if (_disposed) return;
     _disposed = true;
-    unawaited(_stateSubscription.cancel());
-    unawaited(_player.dispose());
+    unawaited(_stateSubscription?.cancel());
+    final player = _created;
+    if (player != null) unawaited(player.dispose());
     _playing.dispose();
   }
 }
 
-class _NoopVerifiedQuestionAudioPlayer implements VerifiedQuestionAudioPlayer {
+class NoopVerifiedQuestionAudioPlayer implements VerifiedQuestionAudioPlayer {
   final ValueNotifier<bool> _playing = ValueNotifier(false);
 
   @override
@@ -236,7 +249,7 @@ class QuestionAudioService {
       resolver: QuestionAudioResolver(catalog: resolvedCatalog),
       tts: TtsQuestionAudioAdapter(tts),
       verifiedPlayer: resolvedCatalog.isEmpty
-          ? _NoopVerifiedQuestionAudioPlayer()
+          ? NoopVerifiedQuestionAudioPlayer()
           : AudioplayersVerifiedQuestionAudioPlayer(),
     );
   }

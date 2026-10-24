@@ -61,6 +61,48 @@ const _namespace = '5a1e2b7c-3d4f-4e60-9a8b-2c1d0f9e8a77';
 /// `supabase/2026-10-02_e2e_content_fixes.sql`dir.
 const _recategorisedLocally = <String, String>{'offline_0757': 'Cografya'};
 
+/// Ekleme göçüyle sunucuya girdikten SONRA emekliye ayrılan sorular: yerel
+/// id -> sunucuyu onaydan çıkaran göç. Ekleme göçü tarihî bir kayıttır;
+/// soru yerelde artık oynanmaz, sunucuda ise o göçle `is_approved=false`dır.
+const _retiredAfterSync = <String, String>{
+  // 2026-10-23 soru kalitesi taraması emeklileri.
+  'offline_2818': 'supabase/2026-10-23_icerik_taramasi.sql',
+  'edit_ziman_0003': 'supabase/2026-10-23_icerik_taramasi.sql',
+  'curated_siyaset_0009': 'supabase/2026-10-19_icerik_emekli.sql',
+  'offline_tf_siy_0040': 'supabase/2026-10-19_icerik_emekli.sql',
+  'offline_tf_ede_0019': 'supabase/2026-10-19_icerik_emekli.sql',
+  'offline_curated_21475': 'supabase/2026-10-19_icerik_emekli.sql',
+  'offline_9668': 'supabase/2026-10-19_icerik_emekli.sql',
+  'sf_cin_0007': 'supabase/2026-10-19_icerik_emekli.sql',
+  'sf_cin_0008': 'supabase/2026-10-19_icerik_emekli.sql',
+  'offline_5016': 'supabase/2026-10-21_bozuk_8_soru.sql',
+  'offline_5225': 'supabase/2026-10-21_bozuk_8_soru.sql',
+};
+
+/// Ekleme göçünden sonra yerelde metni düzeltilen soruların sunucu göçleri,
+/// tarih sırasıyla. Aynı kimliği iki göç düzeltirse sonraki geçerlidir.
+/// 2026-10-20: tek dosyaya bağlıydı; tije→tijî göçü ikinci dosya oldu.
+const _promptFixSqls = [
+  'supabase/2026-10-14_banka_ku_duzeltme.sql',
+  'supabase/2026-10-20_tije_tiji.sql',
+  'supabase/2026-10-23_icerik_taramasi.sql',
+];
+
+// update questions set\n  prompt = '…'[, …] where id = 'uuid';
+final _promptFixRe = RegExp(
+  r"^update questions set\n  prompt = '((?:[^']|'')*)'(?:,[\s\S]*?)?\nwhere id = '([0-9a-f-]{36})';",
+  multiLine: true,
+);
+
+/// Düzeltme göçlerinin [id] için yazdığı son soru metni; yoksa null.
+String? _promptFixFor(String sql, String id) {
+  String? son;
+  for (final m in _promptFixRe.allMatches(sql)) {
+    if (m.group(2) == id) son = m.group(1)!.replaceAll("''", "'");
+  }
+  return son;
+}
+
 /// RFC 4122 sürüm 5 (SHA-1) — Python'daki `uuid.uuid5` ile aynı.
 String _uuid5(String name) {
   final ns = <int>[];
@@ -107,6 +149,7 @@ void main() {
   late Map<String, String> updateFiles;
   late String sync; // bütün ekleme dosyaları birleşik
   late String retired;
+  late String corrections;
 
   setUpAll(() {
     byId = {for (final q in QuestionBankLoader.instance.allQuestions) q.id: q};
@@ -114,6 +157,9 @@ void main() {
     updateFiles = _files(_updatePrefix);
     sync = syncFiles.values.join('\n');
     retired = File(_retiredSql).readAsStringSync();
+    corrections = _promptFixSqls
+        .map((f) => File(f).readAsStringSync())
+        .join('\n');
   });
 
   test('eklenen her satır bankada şu an oynanabilir bir yerel sorudur', () {
@@ -137,12 +183,23 @@ void main() {
         _uuid5('zankurd-local:$localId'),
         reason: '$localId: kimlik uuid5 değil',
       );
-      expect(
-        policy.isPlayable(q!),
-        isTrue,
-        reason:
-            '$localId oynanabilir değil (emekli/reddedilmiş) ama sunucuya ekleniyor',
-      );
+      final laterRetiredBy = _retiredAfterSync[localId];
+      if (laterRetiredBy != null) {
+        expect(
+          File(laterRetiredBy).readAsStringSync(),
+          contains(id),
+          reason:
+              '$localId sonradan emekli ama $laterRetiredBy kimliği içermiyor',
+        );
+        expect(policy.isPlayable(q!), isFalse, reason: localId);
+      } else {
+        expect(
+          policy.isPlayable(q!),
+          isTrue,
+          reason:
+              '$localId oynanabilir değil (emekli/reddedilmiş) ama sunucuya ekleniyor',
+        );
+      }
       // 2026-10-02: tek bilinçli ayrışma. offline_0757 ('"su" bi Kurmancî
       // çi ye?') ekleme göçünde Cografya idi; sözcük çevirisi olduğu için
       // yerelde Ziman'a alındı ve sunucuda
@@ -154,7 +211,16 @@ void main() {
       } else {
         expect(category, oldCategory, reason: '$localId: eski kategori');
       }
-      expect(q.prompt.trim(), prompt, reason: '$localId: soru metni ayrışmış');
+      if (q.prompt.trim() != prompt) {
+        // Metin sonradan yerelde düzeltildiyse düzeltme göçü sunucu
+        // satırını tam bu metne çekmeli; yoksa ayrışma kusurdur.
+        final fix = _promptFixFor(corrections, id);
+        expect(
+          fix,
+          q.prompt.trim(),
+          reason: '$localId: soru metni ayrışmış ve düzeltme göçünde yok',
+        );
+      }
       expect(
         q.type == QuestionType.fillInBlank ||
             q.type == QuestionType.wordOrdering ||

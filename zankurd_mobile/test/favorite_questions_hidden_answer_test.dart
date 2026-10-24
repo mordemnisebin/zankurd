@@ -26,11 +26,19 @@ import 'support/widget_test_helpers.dart';
 ///
 /// 2026-08-14 düzeltmesi: `question_id` sütunu `text`e çevrildi (yazma
 /// çalışır), `loadFavoriteQuestions` paketli bankada bulamadığı kimlikleri
-/// `quiz_public_questions`ten çözer (okuma çalışır). Ama çözülen satır
-/// `correct_option` TAŞIMAZ (hile önlemi — bkz. `_roomQuestionFromRow`),
-/// yani bu sorular YEREL olarak yeniden puanlanamaz. Bu bekçi, ekranın bu
-/// soruları oynatılabilir gibi göstermediğini — listelediğini ama "oyna"
-/// eylemini kapattığını — ölçer.
+/// sunucudan çözer (okuma çalışır). Ama çözülen satır `correct_option`
+/// TAŞIMAZ (hile önlemi — bkz. `_roomQuestionFromRow`), yani bu sorular YEREL
+/// olarak yeniden puanlanamaz. Bu bekçi, ekranın bu soruları oynatılabilir
+/// gibi göstermediğini — listelediğini ama "oyna" eylemini kapattığını —
+/// ölçer.
+///
+/// 2026-10-16: çözüm yolu `quiz_public_questions` görünümüydü, ama görünüm
+/// istemciye hep "permission denied" veriyordu (altındaki `questions`
+/// tablosunda SELECT yok) ve 2026-10-15'te silindi; bu favoriler hiç
+/// görünmüyordu. Yeni yol `get_my_favorite_questions` RPC'sidir
+/// (`supabase/2026-10-16_son_bosluklar.sql`); depo testi
+/// `supabase_repository_test.dart`ta, SQL bekçisi
+/// `son_bosluklar_sql_test.dart`ta.
 void main() {
   test('migration: question_id sütunları text\'e çevrilir, FK düşer', () {
     final sql = File(
@@ -71,6 +79,24 @@ void main() {
     );
     expect(hidden.hasHiddenAnswer, isTrue);
     expect(visible.hasHiddenAnswer, isFalse);
+  });
+
+  test('RPC satırı (correct_option yok) gizli cevaplı soruya dönüşür', () {
+    final question = QuizQuestion.fromServerRow(const {
+      'id': '11111111-1111-4111-8111-111111111111',
+      'category_name': 'Ziman',
+      'prompt': 'Sunucu sorusu?',
+      'option_a': 'A',
+      'option_b': 'B',
+      'option_c': 'C',
+      'option_d': 'D',
+      'question_type': 'multiple_choice',
+      'image_url': null,
+      'difficulty': 2,
+      'language_code': 'ku',
+    });
+    expect(question.hasHiddenAnswer, isTrue);
+    expect(question.answers, ['A', 'B', 'C', 'D']);
   });
 
   group('FavoriteQuestionsScreen', () {

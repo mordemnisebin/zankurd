@@ -173,6 +173,13 @@ class QuizQuestion {
       (hintKu != null && hintKu!.trim().isNotEmpty) ||
       (hintTr != null && hintTr!.trim().isNotEmpty);
 
+  /// Seçili dile göre ipucu; o dilde yoksa `null` (öteki dile düşülmez:
+  /// Türkçe ekranda Kurmancî yönerge okunmaz bir ipucudur).
+  String? hintFor({required bool isKu}) {
+    final text = (isKu ? hintKu : hintTr)?.trim();
+    return (text == null || text.isEmpty) ? null : text;
+  }
+
   String get promptText => prompt;
 
   /// Seçili dile göre soru metni. Çeviri yoksa Kurmancî'ye düşer.
@@ -219,20 +226,59 @@ class QuizQuestion {
     return acceptedAnswersTr ?? const [];
   }
 
+  /// Serbest metin yanıtının doğru cevapla ilişkisi: birebir, yalnız
+  /// inceltmesi eksik (doğru ama yazımı gösterilmeli) ya da yanlış.
+  FreeTextMatch matchAnswer(String candidate) {
+    if (type == QuestionType.wordOrdering) {
+      // Cümle kurmada tek dizilim doğru sayılıyordu: `acceptedAnswers`
+      // yalnız boşluk doldurmada okunuyordu, yani Kurmancîde serbest sıralı
+      // bir cümlenin ("ez duh hatim" / "duh ez hatim") ikinci geçerli
+      // dizilimi yazarı ekleyse bile YANLIŞ sayılırdı. Kelimeler havuzdan
+      // seçildiği için yalnız boşluk farkı yok sayılır; büyük harf ve
+      // inceltme katlaması YAPILMAZ (kelime kimliği zaten havuzdan gelir).
+      final given = _squashSpaces(candidate);
+      final accepted = <String>[correctAnswer, ...acceptedAnswers];
+      return accepted.any((answer) => _squashSpaces(answer) == given)
+          ? FreeTextMatch.exact
+          : FreeTextMatch.none;
+    }
+    if (type != QuestionType.fillInBlank) {
+      return candidate == correctAnswer
+          ? FreeTextMatch.exact
+          : FreeTextMatch.none;
+    }
+    return matchFreeTextAnswer(
+      candidate,
+      <String>[correctAnswer, ...acceptedAnswers],
+      rivals: answers.where((answer) => answer != correctAnswer),
+      isTurkish: answerLanguage == AnswerLanguage.turkish,
+      allowFolding: !_asksForDiacriticSpelling,
+    );
+  }
+
+  static String _squashSpaces(String value) =>
+      value.trim().split(RegExp(r'\s+')).join(' ');
+
+  /// Soru bir inceltmeli harfin kendisini adıyla soruyor mu («û» ünlüsünü
+  /// içeren sözcüğü doğru yaz)? Böyle bir soruda inceltmesiz yazım sorunun
+  /// iptalidir; katlama uygulanmaz.
+  bool get _asksForDiacriticSpelling {
+    final text = '$prompt ${promptTr ?? ''}';
+    return 'çşêîû'
+        .split('')
+        .where(correctAnswer.contains)
+        .any(
+          (letter) => text.contains('«$letter»') || text.contains('"$letter"'),
+        );
+  }
+
   /// Oyuncunun gönderdiği yanıt bu soru için doğru kabul ediliyor mu?
   ///
   /// Şıklı türlerin mevcut tam-eşitlik sözleşmesi korunur. Yalnız serbest
-  /// metinli boşluk doldurmada klavye toleransı uygulanır.
-  bool acceptsAnswer(String candidate) {
-    if (type != QuestionType.fillInBlank) return candidate == correctAnswer;
-    final isTurkish = answerLanguage == AnswerLanguage.turkish;
-    final normalized = normalizeFreeTextAnswer(candidate, isTurkish: isTurkish);
-    if (normalized.isEmpty) return false;
-    return <String>[correctAnswer, ...acceptedAnswers].any(
-      (accepted) =>
-          normalized == normalizeFreeTextAnswer(accepted, isTurkish: isTurkish),
-    );
-  }
+  /// metinli boşluk doldurmada klavye toleransı uygulanır: büyük/küçük harf,
+  /// Unicode biçimi ve `ç ş ê î û` inceltmeleri (bkz. [matchAnswer]).
+  bool acceptsAnswer(String candidate) =>
+      matchAnswer(candidate) != FreeTextMatch.none;
 
   /// Alanların bir bölümünü değiştirerek kopya üretir. Yalnız [localized]
   /// yansıtması için gereken alanlar parametreleşmiştir; gerisi taşınır.
@@ -283,8 +329,20 @@ class QuizQuestion {
   /// değişmeden doğru kalır.
   ///
   /// Çevirisi eksik sorularda alanlar Kurmancî kalır (bkz. [answersFor]).
-  QuizQuestion localized({required bool isKu}) {
+  ///
+  /// [learning] true iken yalnız soru metni (yönerge) arayüz diline gelir;
+  /// şıklar, doğru cevap ve kabul edilen cevaplar kanonik Kurmancî kalır:
+  /// Kurmancî öğreten derste Türkçe şık hiçbir şey öğretmez. "X bi Tirkî çi
+  /// ye?" tipinde `answers` zaten Türkçe kelimedir ve aynen doğru kalır.
+  /// Değerlendirme, açıklama ve sonuç listesi aynı (kanonik) alanı okur.
+  QuizQuestion localized({required bool isKu, bool learning = false}) {
     if (isKu) return this;
+    if (learning) {
+      final translatedPrompt = promptFor(isKu: false);
+      return translatedPrompt == prompt
+          ? this
+          : copyWith(prompt: translatedPrompt);
+    }
     final localizedAnswers = answersFor(isKu: false);
     final localizedAcceptedAnswers = acceptedAnswersFor(isKu: false);
     final localizedAnswerLanguage =

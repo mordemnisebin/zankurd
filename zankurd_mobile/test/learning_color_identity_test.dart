@@ -78,7 +78,7 @@ void main() {
           expect(title, findsOneWidget, reason: combo);
           expect(
             DefaultTextStyle.of(tester.element(title)).style.color,
-            t.tx,
+            SahneVivid.onFill,
             reason: combo,
           );
         },
@@ -98,13 +98,15 @@ void main() {
             matching: find.text(isKu ? 'Jiyana rojane' : 'Gündelik hayat'),
           ),
         );
-        expect(selectedText.style?.color, t.learnTx, reason: combo);
+        // 2026-10-20 renk ve canlılık (B): öğrenme konu rayında seçili çip
+        // Zimrût DOLU, beyaz yazılı (mod rengi geri geldi).
+        expect(selectedText.style?.color, SahneVivid.onFill, reason: combo);
         expect(
           materialColorIn(
             tester,
             find.byKey(const ValueKey('learning-tab-everyday')),
           ),
-          t.learnTint,
+          t.learnFill,
           reason: combo,
         );
 
@@ -120,7 +122,7 @@ void main() {
             tester,
             find.byKey(const ValueKey('learning-tab-grammar')),
           ),
-          isNot(t.learnTint),
+          isNot(t.learnFill),
           reason: combo,
         );
       });
@@ -138,7 +140,12 @@ void main() {
             of: find.byKey(ValueKey(key)),
             matching: find.byType(FilledButton),
           );
-          expect(materialColorIn(tester, button), t.s2, reason: '$combo $key');
+          // Kurul 3. tur 2026-10-20: ikincil düğme şeffaf + görünür kenar.
+          expect(
+            materialColorIn(tester, button),
+            Colors.transparent,
+            reason: '$combo $key',
+          );
         }
 
         final primary = find.descendant(
@@ -178,7 +185,7 @@ void main() {
       for (final (name, fg, bg) in [
         ('seçili çip: Zimrût metni / Zimrût tonu', t.learnTx, t.learnTint),
         ('seçili olmayan çip: ikincil metin / Perde', t.tx2, t.s1),
-        ('ikincil düğme: birincil metin / Kulis', t.tx, t.s2),
+        ('ikincil düğme: birincil metin / Perde', t.tx, t.s1),
         ('yol satırı: birincil metin / Perde', t.tx, t.s1),
         ('kilitli satır: ikincil metin / Perde', t.tx2, t.s1),
         ('birincil düğme: onAct / Agir', t.onAct, t.act),

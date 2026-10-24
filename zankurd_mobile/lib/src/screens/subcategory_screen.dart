@@ -10,6 +10,7 @@ import '../widgets/category_band.dart';
 import '../widgets/sahne/sahne.dart';
 import 'level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../utils/number_format.dart';
 
 class SubcategoryScreen extends StatefulWidget {
   const SubcategoryScreen({
@@ -71,33 +72,34 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
       category,
       repository.playableQuestions,
     );
-    final list = rawList.isNotEmpty
-        ? rawList
-        : [
-            SubcategoryInfo(
-              id: 'gisti',
-              nameKu: Tr.of(K.allQuestionsSubcategory, AppLanguage.ku),
-              nameTr: Tr.of(K.allQuestionsSubcategory, AppLanguage.tr),
-              // Kimlik ('Paradigma') değil görünen ad yazılır: 2026-09-30'da
-              // kategori "Bilim ve Düşünce" oldu, bu satır hâlâ eski adı
-              // gösteriyordu.
-              descriptionKu:
-                  'Têkelpêkel pirsên ${CategoryNames.localized(category, true)}',
-              descriptionTr:
-                  '${CategoryNames.localized(category, false)} kategorisindeki tüm sorular',
-            ),
-          ];
+    final allInfo = SubcategoryInfo(
+      id: 'gisti',
+      nameKu: Tr.of(K.allQuestionsSubcategory, AppLanguage.ku),
+      nameTr: Tr.of(K.allQuestionsSubcategory, AppLanguage.tr),
+      // Kimlik ('Paradigma') değil görünen ad yazılır: 2026-09-30'da
+      // kategori "Bilim ve Düşünce" oldu, bu satır hâlâ eski adı
+      // gösteriyordu.
+      descriptionKu:
+          'Têkelpêkel pirsên ${CategoryNames.localized(category, true)}',
+      descriptionTr:
+          '${CategoryNames.localized(category, false)} kategorisindeki tüm sorular',
+    );
+    final list = rawList.isNotEmpty ? rawList : [allInfo];
+    // Kurul 2026-10-20 (DeepSeek, Longcat): üç-dört satırlı konuda sayfanın
+    // yarısı boştu. Boşluğu dolgu ile değil işe yarar bir kısayolla kapat:
+    // az alt konu varsa altta "Tüm sorular" satırı (konunun hepsinden karışık
+    // tur). Mevcut metinler; çok alt konulu kategoride liste zaten doludur.
+    final showAllFooter = rawList.isNotEmpty;
 
     // Konu akışının ortak bantlı başlığı ([CategoryBandScaffold]): kategori
     // tonu + kilim deseni, seviye ekranıyla AYNI bileşen.
     return CategoryBandScaffold(
       category: category,
       title: CategoryNames.localized(category, ku),
-      subtitle: Tr.forKu(K.birAltAlanSecerek, ku),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(
           SahneSpace.page,
-          SahneSpace.x4,
+          SahneSpace.x3,
           SahneSpace.page,
           SahneSpace.x6,
         ),
@@ -107,6 +109,19 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
               for (final sub in list) _subcategoryRow(context, sub, ku),
             ],
           ),
+          if (showAllFooter) ...[
+            const SizedBox(height: SahneSpace.cardGap),
+            SahneListGroup(
+              children: [
+                _subcategoryRow(
+                  context,
+                  allInfo,
+                  ku,
+                  icon: AppIcons.layerGroup,
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );
@@ -120,7 +135,12 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
   /// (listenin altındaki "1 → 5" kartı bunu zaten söyler). Rozet kalktı;
   /// yerine yalnız o alt kategorideki gerçek ilerleme durur. Hiç
   /// oynanmamışsa sıfır sayaç gösterilmez (K6).
-  Widget _subcategoryRow(BuildContext context, SubcategoryInfo sub, bool ku) {
+  Widget _subcategoryRow(
+    BuildContext context,
+    SubcategoryInfo sub,
+    bool ku, {
+    IconData? icon,
+  }) {
     final played = _played[sub.id] ?? 0;
     final total = repository.levelsForCategory(category).length;
     // Satır ikonu konunun KENDİ renginde (bkz. [CategoryIconTile]): eskiden
@@ -130,12 +150,13 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
       key: ValueKey('subcategory-card-${sub.id}'),
       leading: CategoryIconTile(
         category: category,
-        icon: _iconForSubcategory(sub.id),
+        icon: icon ?? _iconForSubcategory(sub.id),
       ),
       title: ku ? sub.nameKu : sub.nameTr,
-      subtitle: ku ? sub.descriptionKu : sub.descriptionTr,
       trailing: played > 0 && total > 0
-          ? SahneRowValue.meta('$played/$total')
+          ? SahneRowValue.meta(
+              '${groupThousands(played)}/${groupThousands(total)}',
+            )
           : null,
       chevron: true,
       onTap: () {

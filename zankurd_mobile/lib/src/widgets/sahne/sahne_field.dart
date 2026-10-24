@@ -515,12 +515,15 @@ class _SahneFieldFrame extends StatelessWidget {
             width: SahneRing.r2,
             strokeAlign: BorderSide.strokeAlignInside,
           )
-        : BorderSide(color: t.edge, strokeAlign: BorderSide.strokeAlignInside);
+        : BorderSide(
+            color: t.fieldEdge,
+            strokeAlign: BorderSide.strokeAlignInside,
+          );
 
     return Material(
-      color: t.s2,
+      color: t.fieldFill,
       clipBehavior: Clip.antiAlias,
-      shape: BeveledRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: SahneShape.m.borderRadius,
         side: side,
       ),

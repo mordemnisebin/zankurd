@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+import 'public_profile.dart';
+
 /// Oda sohbet mesajı.
 @immutable
 class RoomMessage {
@@ -11,6 +13,10 @@ class RoomMessage {
   final String text;
   final DateTime createdAt;
 
+  /// Göndericinin güncel herkese açık kimliği (fotoğraf/simge/kod). Mesaj
+  /// satırı yalnız gönderim anındaki ad ve rengi taşır; depo bunu tamamlar.
+  final PublicProfile? senderProfile;
+
   const RoomMessage({
     required this.id,
     required this.roomId,
@@ -19,7 +25,23 @@ class RoomMessage {
     this.senderAvatarColor,
     required this.text,
     required this.createdAt,
+    this.senderProfile,
   });
+
+  /// Güncel profille tamamlanmış kopya (ad boşsa mesajdaki ad kalır).
+  RoomMessage withProfile(PublicProfile? profile) {
+    if (profile == null) return this;
+    return RoomMessage(
+      id: id,
+      roomId: roomId,
+      senderId: senderId,
+      senderName: profile.nameOr(senderName),
+      senderAvatarColor: profile.avatar.colorHex ?? senderAvatarColor,
+      text: text,
+      createdAt: createdAt,
+      senderProfile: profile,
+    );
+  }
 
   static RoomMessage fromJson(Map<String, dynamic> json) => RoomMessage(
     id: json['id'] as String,

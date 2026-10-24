@@ -1,23 +1,31 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../data/xp_store.dart';
 import '../../data/zankurd_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../models/async_duel.dart';
+import '../../models/avatar_identity.dart';
+import '../../models/public_profile.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
+import '../../utils/join_deep_link.dart';
 import '../../utils/player_identity.dart';
 import '../../utils/error_reporter.dart';
+import '../../widgets/player_avatar.dart';
+import '../../widgets/dialog_action_pair.dart';
 import '../../widgets/sahne/sahne.dart';
 import 'async_duel_play_screen.dart';
+import 'async_duel_review.dart';
 
 /// Sonuç ekranının dört bitiş durumu.
 ///
 /// [completed]: iki taraf da bitirdi, karşılaştırma kesin. [waiting]: BEN
-/// bitirdim, rakip henüz değil. [expired]: 48 saat doldu ve rakip hiç
+/// bitirdim, rakip henüz değil. [expired]: 24 saat doldu ve rakip hiç
 /// çıkmadı. [unfinished]: BEN kendi 7 sorumu bitirmedim — kendi hatam,
 /// düello süresi dolunca kendiliğinden kapanacak.
 enum AsyncDuelResultKind { completed, waiting, expired, unfinished }
@@ -37,6 +45,12 @@ class AsyncDuelResultView {
     this.opponentCorrect,
     this.outcome,
     this.opponentName,
+    this.opponentProfile,
+    this.invitedProfile,
+    this.challengeCode,
+    this.invitedName,
+    this.canCancel = false,
+    this.isForfeit = false,
   });
 
   final String duelId;
@@ -45,6 +59,40 @@ class AsyncDuelResultView {
   final int? opponentCorrect;
   final AsyncDuelOutcome? outcome;
   final String? opponentName;
+
+  /// Rakibin / davetlinin fotoğraf-simge-kod kimliği (yoksa baş harf).
+  final PublicProfile? opponentProfile;
+  final PublicProfile? invitedProfile;
+
+  /// Benim açtığım meydan okumanın `D…` kodu (paylaşım için); rastgele
+  /// düellolarda ve rakibin açtığı düellolarda null.
+  final String? challengeCode;
+
+  /// Arkadaşa meydan okumada davet ettiğim arkadaşın adı; bağlantı
+  /// meydan okumasında null.
+  final String? invitedName;
+
+  /// Kimsenin katılmadığı kendi açık düellomu geri çekebilirim
+  /// ([AsyncDuelSummary.canCancel]). Yalnız gelen kutusundan açılan görünümde
+  /// dolar; turun hemen ardındaki sonuçta gösterilmez.
+  final bool canCancel;
+
+  /// Hükmen sonuç (kind daima [AsyncDuelResultKind.completed]): süre doldu,
+  /// bir taraf turunu bitirmedi. Skor karşılaştırması yoktur; başlık
+  /// "Kazandın · hükmen" / "Kaybettin · hükmen", altında tek satır neden.
+  final bool isForfeit;
+
+  /// Hükmen KAYBEDEN benim: turum yok, XP yok, sunucuda talep edecek sonuç
+  /// satırı da yok.
+  bool get isForfeitLoss => isForfeit && outcome == AsyncDuelOutcome.loss;
+
+  /// Bağlantı meydan okumasını (kimse almadan) paylaşabilirim: turum bitti,
+  /// skorum belli, kod elimde, belirli bir arkadaşa gitmedi.
+  bool get canShareLink =>
+      kind == AsyncDuelResultKind.waiting &&
+      challengeCode != null &&
+      invitedName == null &&
+      myCorrect != null;
 
   /// Sırayla düellonun soru sayısı — sözleşmede sabit 7 (bkz.
   /// `lib/src/models/async_duel.dart`); hiçbir çağıranın özelleştirmesi
@@ -65,6 +113,12 @@ class AsyncDuelResultView {
         kind: AsyncDuelResultKind.waiting,
         myCorrect: result.myCorrect,
         opponentName: start.opponentName,
+        opponentProfile: start.opponentProfile,
+        challengeCode: start.role == AsyncDuelRole.creator
+            ? start.challengeCode
+            : null,
+        invitedName: start.invitedName,
+        invitedProfile: start.invitedProfile,
       );
     }
     return AsyncDuelResultView._(
@@ -74,6 +128,7 @@ class AsyncDuelResultView {
       opponentCorrect: result.opponentCorrect,
       outcome: result.outcome,
       opponentName: start.opponentName,
+      opponentProfile: start.opponentProfile,
     );
   }
 
@@ -85,11 +140,32 @@ class AsyncDuelResultView {
   /// çıkmadı" değil, "nîvco ma" olarak okunmalı (kusur bende).
   factory AsyncDuelResultView.fromSummary(AsyncDuelSummary summary) {
     final myCorrect = summary.myCorrect;
+    // Hükmen sonuç `myCorrect == null`dan ÖNCE okunur: hükmen kaybeden
+    // turunu bitirmemiştir ama "Yarım kaldı" değil "Kaybettin · hükmen" der.
+    // Rakibin skoru olmayan sonuç da hükmendir: rakip turunu bitirmedi, ya
+    // da eski sunucu `forfeit` bayrağını göndermedi. "5–null" yazmaktansa
+    // hükmen metni gösterilir.
+    if (summary.outcome != null &&
+        (summary.isForfeit ||
+            summary.opponentCorrect == null ||
+            myCorrect == null)) {
+      return AsyncDuelResultView._(
+        duelId: summary.duelId,
+        kind: AsyncDuelResultKind.completed,
+        myCorrect: myCorrect,
+        opponentCorrect: summary.opponentCorrect,
+        outcome: summary.outcome,
+        opponentName: summary.opponentName,
+        opponentProfile: summary.opponentProfile,
+        isForfeit: true,
+      );
+    }
     if (myCorrect == null) {
       return AsyncDuelResultView._(
         duelId: summary.duelId,
         kind: AsyncDuelResultKind.unfinished,
         opponentName: summary.opponentName,
+        opponentProfile: summary.opponentProfile,
       );
     }
     if (summary.outcome != null) {
@@ -100,6 +176,7 @@ class AsyncDuelResultView {
         opponentCorrect: summary.opponentCorrect,
         outcome: summary.outcome,
         opponentName: summary.opponentName,
+        opponentProfile: summary.opponentProfile,
       );
     }
     if (summary.status == AsyncDuelStatus.expired) {
@@ -108,6 +185,7 @@ class AsyncDuelResultView {
         kind: AsyncDuelResultKind.expired,
         myCorrect: myCorrect,
         opponentName: summary.opponentName,
+        opponentProfile: summary.opponentProfile,
       );
     }
     // open/matched, outcome henüz yok: rakip hâlâ oynuyor ya da hiç
@@ -117,6 +195,16 @@ class AsyncDuelResultView {
       kind: AsyncDuelResultKind.waiting,
       myCorrect: myCorrect,
       opponentName: summary.opponentName,
+      opponentProfile: summary.opponentProfile,
+      // Yalnız hâlâ kimsenin almadığı meydan okuma yeniden paylaşılır.
+      challengeCode:
+          summary.role == AsyncDuelRole.creator &&
+              summary.status == AsyncDuelStatus.open
+          ? summary.challengeCode
+          : null,
+      invitedName: summary.invitedName,
+      invitedProfile: summary.invitedProfile,
+      canCancel: summary.canCancel,
     );
   }
 
@@ -162,6 +250,11 @@ String asyncDuelStatusLabel(BuildContext context, AsyncDuelResultView view) {
     case AsyncDuelResultKind.unfinished:
       return context.t(K.asyncDuelUnfinished);
     case AsyncDuelResultKind.completed:
+      if (view.isForfeit) {
+        return view.outcome == AsyncDuelOutcome.win
+            ? context.t(K.asyncDuelWonForfeit)
+            : context.t(K.asyncDuelLostForfeit);
+      }
       final headline = switch (view.outcome!) {
         AsyncDuelOutcome.win => context.t(K.youWon),
         AsyncDuelOutcome.loss => context.t(K.youLost),
@@ -187,10 +280,94 @@ class AsyncDuelResultScreen extends StatefulWidget {
 }
 
 class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
+  /// Kendi fotoğrafım/simgem (skor kartında "Sen" avatarı). Yüklenene dek
+  /// ya da okunamazsa null: baş harf/simge avatarı çizilir.
+  AvatarIdentity? _myIdentity;
+
+  /// Kendi profil adım: "Sen" avatarının baş harfi bundan gelir. Yoksa
+  /// avatar "Sen"in S'sini çiziyordu, lobide aynı oyuncu T idi (iki
+  /// simülatör turu, 2026-10-22).
+  String? _myName;
+
+  /// Soru soru karşılaştırma (2026-10-24, `get_async_duel_review`). Yalnız
+  /// bitmiş düelloda ([AsyncDuelResultKind.completed], hükmen dahil)
+  /// istenir. `null` + [_reviewLoading] false + [_reviewFailed] false =
+  /// bölüm yok (sunucu göçü uygulanmamış ya da düello incelenemez): ne
+  /// bölüm ne de rövanş düğmesi çizilir — uygunluğu bilmeden düğme
+  /// göstermek boşa basılan bir düğme olurdu.
+  AsyncDuelReview? _review;
+  bool _reviewLoading = false;
+  bool _reviewFailed = false;
+  bool _rematchStarted = false;
+
   @override
   void initState() {
     super.initState();
     unawaited(_runSideEffectsOnce());
+    unawaited(_loadMyIdentity());
+    if (widget.view.kind == AsyncDuelResultKind.completed) {
+      unawaited(_loadReview());
+    }
+  }
+
+  Future<void> _loadReview() async {
+    setState(() {
+      _reviewLoading = true;
+      _reviewFailed = false;
+    });
+    try {
+      final review = await widget.repository.loadAsyncDuelReview(
+        widget.view.duelId,
+      );
+      if (!mounted) return;
+      setState(() {
+        _review = review;
+        _reviewLoading = false;
+      });
+    } catch (error, stack) {
+      if (!mounted) return;
+      // "Henüz bitmedi / katılımcı değilsin" beklenen reddir: bölüm sessizce
+      // yoktur. Gerisi geçici hata sayılır ve "Yeniden dene" gösterilir.
+      final expected =
+          classifyAsyncDuelReviewError(error) ==
+          AsyncDuelReviewError.notAvailable;
+      if (!expected) {
+        ErrorReporter.record(error, stack, reason: 'async duel review failed');
+      }
+      setState(() {
+        _reviewLoading = false;
+        _reviewFailed = !expected;
+      });
+    }
+  }
+
+  /// Rövanş: aynı rakibe arkadaş meydan okuması açar ve oyuna geçer. Sunucu
+  /// `can_rematch` demeden düğme zaten kapalıdır; yine de çift dokunuş tek
+  /// düello açar.
+  void _startRematch(String opponentId) {
+    if (_rematchStarted) return;
+    _rematchStarted = true;
+    unawaited(
+      Navigator.of(context).pushReplacement(
+        AppRoute.to(
+          AsyncDuelPlayScreen(
+            repository: widget.repository,
+            entry: AsyncDuelEntry.createChallenge(friendId: opponentId),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _loadMyIdentity() async {
+    try {
+      final identity = await widget.repository.loadAvatarIdentity();
+      if (mounted) setState(() => _myIdentity = identity);
+      final name = (await widget.repository.getProfileName()).trim();
+      if (mounted && name.isNotEmpty) setState(() => _myName = name);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'duel result own identity');
+    }
   }
 
   /// Ekran açılınca bir kez: görüldü işareti ve XP talebi.
@@ -212,6 +389,8 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
         );
       }
     }
+    // Hükmen kaybeden: sunucuda sonuç satırı da talep edilecek XP de yok.
+    if (view.isForfeitLoss) return;
     if (view.kind == AsyncDuelResultKind.completed ||
         view.kind == AsyncDuelResultKind.expired) {
       try {
@@ -248,23 +427,72 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
     final canStartNew = view.kind != AsyncDuelResultKind.unfinished;
 
     final SahneResultHero hero;
+    Widget? scoreboard;
     int xp = 0;
     switch (view.kind) {
       case AsyncDuelResultKind.completed:
         final outcome = view.outcome ?? AsyncDuelOutcome.draw;
         final win = outcome == AsyncDuelOutcome.win;
-        final rawOpponentName = view.opponentName;
+        // Aramızda engel varsa rakibin adı ve fotoğrafı gizlenir (sunucu da
+        // incelemede kimliği vermez); düello sonucu yine görünür.
+        final blocked = _review?.opponentBlocked ?? false;
+        final rawOpponentName = blocked ? null : view.opponentName;
+        final opponentProfile = blocked ? null : view.opponentProfile;
         final opponentName = rawOpponentName == null
             ? context.t(K.asyncDuelOpponent)
-            : context.playerDisplayName(rawOpponentName);
+            : context.playerDisplayName(
+                rawOpponentName,
+                tag: opponentProfile?.playerTag,
+              );
         xp = _completedXp(view);
+        if (view.isForfeit) {
+          // Hükmen: karşılaştırılacak skor yok; kahraman tek satır neden
+          // söyler (kaybeden ben ya da rakip).
+          final forfeitName = rawOpponentName == null
+              ? context.t(K.asyncDuelOpponent)
+              : opponentName;
+          hero = SahneResultHero(
+            emblem: win
+                ? const SahneResultEmblem.win(size: 64)
+                : const SahneResultEmblem.state(icon: AppIcons.flag),
+            title: win
+                ? context.t(K.asyncDuelWonForfeit)
+                : context.t(K.asyncDuelLostForfeit),
+            titleRole: win ? SahneRole.gold : null,
+            body: win
+                ? context.t(K.asyncDuelForfeitOpponentReason, {
+                    'name': forfeitName,
+                  })
+                : context.t(K.asyncDuelForfeitMyReason),
+            celebrate: win,
+            tone: SahneResultTone.race,
+          );
+          break;
+        }
+        if (view.myCorrect != null && view.opponentCorrect != null) {
+          scoreboard = Padding(
+            padding: const EdgeInsets.symmetric(vertical: SahneSpace.x1),
+            child: _DuelScoreboard(
+              myName: context.t(K.you),
+              myCorrect: view.myCorrect!,
+              opponentName: opponentName,
+              opponentCorrect: view.opponentCorrect!,
+              total: view.total,
+              outcome: outcome,
+              myIdentity: _myIdentity,
+              myRawName: _myName,
+              opponentProfile: opponentProfile,
+              opponentRawName: rawOpponentName,
+            ),
+          );
+        }
         // 2026-09-29 doğallık: sonuçta iki amblem üst üsteydi (taç/bayrak/
         // terazi + iki avatarlı VS amblemi). Avatarlar yalnız "sen" ve
         // rakibin baş harfiydi; aynı bilgi skor satırında ("Sen 2 – 0
         // Rojda") yazılı. Tek amblem kalır: sonucun kendisi.
         hero = SahneResultHero(
           emblem: switch (outcome) {
-            AsyncDuelOutcome.win => const SahneResultEmblem.win(),
+            AsyncDuelOutcome.win => const SahneResultEmblem.win(size: 64),
             AsyncDuelOutcome.loss => const SahneResultEmblem.state(
               icon: AppIcons.flag,
             ),
@@ -281,6 +509,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
           subtitle:
               '${context.t(K.you)} ${view.myCorrect} – ${view.opponentCorrect} '
               '$opponentName',
+          subtitleSize: win ? 32 : null,
           extras: [
             if (outcome != AsyncDuelOutcome.draw &&
                 view.myCorrect != null &&
@@ -305,7 +534,16 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
           value: view.myCorrect,
           suffix: '/${view.total}',
           valueKey: const ValueKey('async-duel-result-score'),
-          body: context.t(K.asyncDuelWaitingBody),
+          body: view.challengeCode == null
+              ? context.t(K.asyncDuelWaitingBody)
+              : view.invitedName != null
+              ? context.t(K.challengeFriendWaitBody, {
+                  'name': context.playerDisplayName(
+                    view.invitedName!,
+                    tag: view.invitedProfile?.playerTag,
+                  ),
+                })
+              : context.t(K.challengeLinkWaitBody),
           tone: SahneResultTone.race,
         );
       case AsyncDuelResultKind.expired:
@@ -332,15 +570,40 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
       closeLabel: context.t(K.close),
       contextLabel: context.t(K.asyncDuel),
       hero: hero,
+      balanced: true,
+      stats: scoreboard,
       // Sıfır XP ("+0 XP") gösterilmez: yanlış ya da süresi dolmuş sıfır
       // doğrulu düello ödülsüz biter.
       rewards: xp > 0
           ? SahneResultRewards(
+              label: context.t(K.kazanildi),
               xp: xp,
               xpLabel: context.t(K.asyncDuelXp, {'xp': '$xp'}),
             )
           : null,
-      primary: canStartNew
+      sections: [
+        ..._reviewSections(context, view),
+        if (view.canCancel)
+          Padding(
+            padding: const EdgeInsets.only(top: SahneSpace.x3),
+            child: Center(
+              child: SahneButton.text(
+                key: const ValueKey('async-duel-result-cancel'),
+                label: context.t(K.asyncDuelCancelAction),
+                arrow: false,
+                onPressed: () => unawaited(_confirmCancel(view)),
+              ),
+            ),
+          ),
+      ],
+      primary: view.canShareLink
+          ? SahneResultAction(
+              key: const ValueKey('async-duel-result-share'),
+              label: context.t(K.share),
+              icon: AppIcons.shareNodes,
+              onPressed: () => unawaited(_shareChallenge(view)),
+            )
+          : canStartNew
           ? SahneResultAction(
               key: const ValueKey('async-duel-result-new'),
               label: context.t(K.asyncDuelNew),
@@ -354,6 +617,277 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
             )
           : close,
       secondary: canStartNew ? close : null,
+    );
+  }
+
+  /// Rövanş düğmesi + soru soru karşılaştırma. Yalnız bitmiş düelloda;
+  /// yüklenirken başlık + gösterge, hatada "Yeniden dene", RPC yoksa hiçbiri.
+  List<Widget> _reviewSections(BuildContext context, AsyncDuelResultView view) {
+    if (view.kind != AsyncDuelResultKind.completed) return const [];
+    final t = SahneTokens.of(context);
+    final review = _review;
+    if (_reviewLoading) {
+      return [
+        SahneSectionHeader(title: context.t(K.asyncDuelReviewTitle)),
+        const Center(
+          child: SizedBox.square(
+            dimension: 24,
+            child: CircularProgressIndicator(
+              key: ValueKey('async-duel-review-loading'),
+              strokeWidth: 2,
+            ),
+          ),
+        ),
+      ];
+    }
+    if (_reviewFailed) {
+      return [
+        SahneSectionHeader(title: context.t(K.asyncDuelReviewTitle)),
+        Text(
+          context.t(K.asyncDuelReviewLoadFailed),
+          key: const ValueKey('async-duel-review-failed'),
+          style: SahneType.caption.copyWith(color: t.tx2),
+        ),
+        const SizedBox(height: SahneSpace.x2),
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: SahneButton.text(
+            key: const ValueKey('async-duel-review-retry'),
+            label: context.t(K.retry),
+            arrow: false,
+            onPressed: () => unawaited(_loadReview()),
+          ),
+        ),
+      ];
+    }
+    if (review == null) return const [];
+
+    final opponentId = review.opponentId;
+    final canRematch = review.canRematch && opponentId != null;
+    final String? whyNot = canRematch
+        ? null
+        : review.rematchLimitReached
+        ? context.t(K.asyncDuelRematchLimit)
+        : (review.opponentBlocked || opponentId == null)
+        ? context.t(K.asyncDuelRematchUnavailable)
+        : context.t(K.asyncDuelRematchFriendsOnly);
+    final rawName = review.opponentBlocked
+        ? null
+        : (review.opponentName ?? widget.view.opponentName);
+    final opponentLabel = rawName == null
+        ? context.t(K.asyncDuelOpponent)
+        : context.playerDisplayName(
+            rawName,
+            tag: widget.view.opponentProfile?.playerTag,
+          );
+    return [
+      Padding(
+        padding: const EdgeInsets.only(top: SahneSpace.x3),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SahneButton.secondary(
+              buttonKey: const ValueKey('async-duel-result-rematch'),
+              label: context.t(K.asyncDuelRematch),
+              icon: AppIcons.arrowsRotate,
+              expand: true,
+              onPressed: canRematch ? () => _startRematch(opponentId) : null,
+            ),
+            if (whyNot != null) ...[
+              const SizedBox(height: SahneSpace.x2),
+              Text(
+                whyNot,
+                key: const ValueKey('async-duel-result-rematch-why'),
+                textAlign: TextAlign.center,
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+            ],
+          ],
+        ),
+      ),
+      AsyncDuelReviewSection(review: review, opponentLabel: opponentLabel),
+    ];
+  }
+
+  /// Kimsenin katılmadığı düelloyu onaydan sonra geri çeker ve ekranı
+  /// kapatır (liste dönüşte yenilenir). RPC yoksa ya da çağrı başarısızsa
+  /// ekran açık kalır ve nedeni söylenir.
+  Future<void> _confirmCancel(AsyncDuelResultView view) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(dialogContext.t(K.asyncDuelCancelTitle)),
+        content: Text(dialogContext.t(K.asyncDuelCancelBody)),
+        actions: [
+          DialogActionPair(
+            cancel: TextButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(dialogContext.t(K.cancel)),
+            ),
+            confirm: SahneButton.primary(
+              key: const ValueKey('async-duel-cancel-confirm'),
+              label: dialogContext.t(K.asyncDuelCancelConfirm),
+              arrow: false,
+              onPressed: () => Navigator.pop(dialogContext, true),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    final cancelled = await widget.repository.cancelAsyncDuel(view.duelId);
+    if (!mounted) return;
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(
+          context.t(cancelled ? K.asyncDuelCancelled : K.asyncDuelCancelFailed),
+        ),
+      ),
+    );
+    if (cancelled) navigator.pop();
+  }
+
+  /// Meydan okuma bağlantısını sistem paylaşım sayfasıyla gönderir (odalar
+  /// aynı mekanizmayı kullanır: `RoomScreen._shareRoomInvite`). Sayfa
+  /// açılamazsa metin panoya gider ki davet boşa gitmesin.
+  Future<void> _shareChallenge(AsyncDuelResultView view) async {
+    final code = view.challengeCode;
+    final correct = view.myCorrect;
+    if (code == null || correct == null) return;
+    final text = context.t(K.challengeShareText, {
+      'n': '$correct',
+      'link': JoinDeepLink.shareUrl(code),
+    });
+    final size = MediaQuery.sizeOf(context);
+    // iPad paylaşım sayfası bir çıkış noktası ister: alt perdenin ortası.
+    final origin = Rect.fromCenter(
+      center: Offset(size.width / 2, size.height - 48),
+      width: 1,
+      height: 1,
+    );
+    try {
+      await SharePlus.instance.share(
+        ShareParams(text: text, sharePositionOrigin: origin),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'async duel share failed');
+      await Clipboard.setData(ClipboardData(text: text));
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.challengeLinkCopied))));
+    }
+  }
+}
+
+/// Tamamlanmış düellonun iki oyunculu skor kartı: avatar, ad, "doğru/7".
+///
+/// Kusur (7. kurul, Opus + ChatGPT): zafer ekranının alt yarısı boştu; tek
+/// "+130 XP" kartı vardı ve "kime karşı, kaç doğru" yalnız başlığın altındaki
+/// tek satırda okunuyordu. Modelde soru-soru doğru/yanlış dizisi YOK
+/// ([AsyncDuelResultView] yalnız iki doğru sayısı taşır), bu yüzden şerit
+/// uydurulmaz: iki oyuncu yan yana, kazananın sayısı Zêr.
+class _DuelScoreboard extends StatelessWidget {
+  const _DuelScoreboard({
+    required this.myName,
+    this.myRawName,
+    required this.myCorrect,
+    required this.opponentName,
+    required this.opponentCorrect,
+    required this.total,
+    required this.outcome,
+    this.myIdentity,
+    this.opponentProfile,
+    this.opponentRawName,
+  });
+
+  final String myName;
+  final String? myRawName;
+  final int myCorrect;
+  final String opponentName;
+  final int opponentCorrect;
+  final int total;
+  final AsyncDuelOutcome outcome;
+  final AvatarIdentity? myIdentity;
+  final PublicProfile? opponentProfile;
+
+  /// Rakibin HAM adı (avatar baş harfi/rengi için; gösterilen ad değil).
+  final String? opponentRawName;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    Widget side(
+      String name,
+      int correct,
+      bool winner,
+      AvatarIdentity? identity,
+      String? avatarName,
+    ) => Expanded(
+      child: Semantics(
+        container: true,
+        label: '$name, $correct/$total ${context.t(K.correct)}',
+        excludeSemantics: true,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            PlayerAvatar.fromIdentity(
+              radius: 28,
+              identity: identity,
+              displayName: avatarName ?? name,
+            ),
+            const SizedBox(height: SahneSpace.x2),
+            Text(
+              name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: SahneType.captionStrong.copyWith(color: t.tx2),
+            ),
+            const SizedBox(height: SahneSpace.x1),
+            Text(
+              '$correct/$total',
+              style: SahneType.headline.copyWith(
+                color: winner ? t.goldTx : t.tx,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
+            ),
+            Text(
+              context.t(K.correct),
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+          ],
+        ),
+      ),
+    );
+    return SahneSurfaceCard(
+      key: const ValueKey('async-duel-result-scoreboard'),
+      padding: const EdgeInsets.symmetric(
+        horizontal: SahneSpace.x4,
+        vertical: SahneSpace.x4,
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            side(
+              myName,
+              myCorrect,
+              outcome == AsyncDuelOutcome.win,
+              myIdentity,
+              myRawName,
+            ),
+            VerticalDivider(width: SahneSpace.x4 * 2 + 1, color: t.line),
+            side(
+              opponentName,
+              opponentCorrect,
+              outcome == AsyncDuelOutcome.loss,
+              opponentProfile?.avatar,
+              opponentRawName,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

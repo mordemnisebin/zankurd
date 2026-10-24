@@ -188,12 +188,12 @@ void main() {
       );
     });
 
-    test('kapı, oturum açıldıktan SONRA ve Home\'dan ÖNCE', () {
-      final signInGate = shell.indexOf('if (!authProvider.isAuthenticated)');
-      // Giriş ekranı 2026-09-27'den beri çevrimdışı şeridi görünürken
-      // `MediaQuery.removePadding` ile sarılıyor; aranan şey sarmalayıcı
-      // değil, ekranın bu kapının içinde çizilmesi.
-      final signInScreen = shell.indexOf('const SignInScreen()', signInGate);
+    // 2026-10-23: kapı tanıtımdan da ÖNCE. Sıfırlama bağlantısı artık web
+    // sitesine döner (her tarayıcıda çalışsın diye); yeni bir tarayıcıda
+    // tanıtım ekranı kapıyı örtüyordu. Giriş kapısından önce olması zararsız:
+    // bayrak yalnız kurtarma OTURUMU açıldığında kalkar (applyAuthEvent).
+    test('kapı, tanıtımdan ve Home\'dan ÖNCE', () {
+      final onboarding = shell.indexOf('if (_showOnboarding)');
       final recoveryGate = shell.indexOf(
         'if (authProvider.needsPasswordRecovery)',
       );
@@ -203,9 +203,8 @@ void main() {
       );
       final nameGate = shell.indexOf('ProfileNameGateScreen(', recoveryGate);
 
-      expect(signInGate, greaterThan(-1));
-      expect(signInScreen, greaterThan(signInGate));
-      expect(recoveryGate, greaterThan(signInScreen));
+      expect(recoveryGate, greaterThan(-1));
+      expect(onboarding, greaterThan(recoveryScreen));
       expect(recoveryScreen, greaterThan(recoveryGate));
       expect(
         recoveryScreen,
@@ -214,6 +213,15 @@ void main() {
             'Kurtarma, ad kapısından ve Home\'dan önce gelmeli; sonra '
             'gelirse kullanıcı parolasını yazmadan uygulamayı kullanır',
       );
+    });
+
+    test('sıfırlama bağlantısı web sitesine döner (her tarayıcıda açılır)', () {
+      expect(AuthProvider.passwordResetRedirectUri, 'https://www.zankurd.com/');
+      final auth = File(
+        'lib/src/providers/auth_provider.dart',
+      ).readAsStringSync();
+      expect(auth, contains('redirectTo: passwordResetRedirectUri'));
+      expect(auth, contains('flowType: AuthFlowType.implicit'));
     });
   });
 

@@ -205,7 +205,7 @@ void main() {
     expect(Tr.of(K.viewExplanation, AppLanguage.ku), 'Şîroveyê bibîne');
     expect(
       Tr.of(K.onbDailyBullet, AppLanguage.ku),
-      'Di dersa rojê de dem tune, şîroveya her pirsê heye.',
+      'Di pirsên rojê de dem tune, şîroveya her pirsê heye.',
     );
 
     for (final key in Tr.keys) {
@@ -245,8 +245,8 @@ void main() {
     // Ürün terimi zaten `Koda Vexwendinê` (`K.enterReferralCode`).
     // Misafir yasağı "davetê" deyince aynı kod iki adla duruyordu.
     // Türkçe `davet` kökü `contains('vexwend')` taramasını kör eder.
-    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Kodê binivîse');
-    expect(Tr.of(K.enterReferralCode, AppLanguage.tr), 'Davet kodu gir');
+    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda xelatê têxe');
+    expect(Tr.of(K.enterReferralCode, AppLanguage.tr), 'Ödül kodu gir');
     expect(
       Tr.of(K.referralGuestBlocked, AppLanguage.ku),
       contains('Koda vexwendinê'),
@@ -506,7 +506,6 @@ void main() {
     // liste, Kurmancî karşılığı üründe zaten olan kavramların Türkçe
     // biçimleridir — hiçbiri bugün Ku metinde geçmiyor; biri geçerse
     // ya karşılığı kullanılmalı ya da buraya gerekçesi yazılmalı.
-    expect(Tr.of(K.botRaceHint, AppLanguage.ku), 'Şampiyon kûpayê digire.');
     expect(Tr.of(K.champion, AppLanguage.ku), 'Şampiyon!');
     expect(
       Tr.of(K.championCongrats, AppLanguage.ku),

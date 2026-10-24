@@ -28,8 +28,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
+import 'package:zankurd_mobile/src/models/room_invite.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_inbox.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/services/push_tap_router.dart';
@@ -75,6 +78,28 @@ void main() {
     expect(find.byType(PlayHubScreen), findsOneWidget);
     expect(find.byType(FriendsScreen), findsNothing);
     // Hedef tüketildi; ikinci bir tazelemede tekrar uygulanmaz.
+    expect(PushTapRouter.pending.value, isNull);
+  });
+
+  testWidgets('bekleyen async_duel_invite hedefi Yarış sekmesini seçer ve '
+      'Düellolarım listesini üstüne açar', (tester) async {
+    final repository = freshMockRepository()..addIncomingChallengeForTesting();
+    expect(PushTapRouter.offer({'kind': 'async_duel_invite'}), isTrue);
+
+    await tester.pumpWidget(
+      testShell(
+        child: AppShell(
+          repository: repository,
+          connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(visibleTabIndex(tester), 1);
+    expect(find.byType(AsyncDuelListScreen), findsOneWidget);
+    // Gelen meydan okuma listenin başında "Sıra sende".
+    expect(find.text('Sıra sende'), findsOneWidget);
     expect(PushTapRouter.pending.value, isNull);
   });
 
@@ -162,4 +187,70 @@ void main() {
     expect(PushTapRouter.offer({'kind': 42}), isFalse);
     expect(PushTapRouter.pending.value, isNull);
   });
+
+  // Codex incelemesi 2026-10-19 (room_invite push dokunuşu):
+  //  1. loadMyRoomInvites ağ hatasını boş listeye çeviriyordu; dokunuş
+  //     sessizce Ana ekrana düşüyordu. Artık hata görünür olmalı.
+  //  2. Her RoomInviteException "süresi doldu" gösteriyordu; oda dolu ya da
+  //     bilinmeyen hata yanlış kesinlik taşırdı.
+  Future<void> tapRoomInvite(
+    WidgetTester tester,
+    MockZanKurdRepository repository,
+  ) async {
+    await tester.pumpWidget(
+      testShell(
+        child: AppShell(
+          repository: repository,
+          connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(PushTapRouter.offer({'kind': 'room_invite'}), isTrue);
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets('room_invite dokunuşu: yükleme hatası genel davet hatasını '
+      'gösterir', (tester) async {
+    final repository = freshMockRepository()
+      ..loadMyRoomInvitesErrorForTesting = StateError('ağ yok');
+    await tapRoomInvite(tester, repository);
+    expect(find.text('Davet gönderilemedi. Tekrar dene.'), findsOneWidget);
+  });
+
+  testWidgets('room_invite dokunuşu: dolu oda "süresi doldu" demez', (
+    tester,
+  ) async {
+    final repository = freshMockRepository()
+      ..seedRoomInviteForTesting(_invite())
+      ..respondRoomInviteFailureForTesting = RoomInviteFailure.full;
+    await tapRoomInvite(tester, repository);
+    expect(find.text('Davet gönderilemedi. Tekrar dene.'), findsOneWidget);
+    expect(find.textContaining('süresi doldu'), findsNothing);
+  });
+
+  testWidgets('room_invite dokunuşu: süresi dolan davet "süresi doldu" der', (
+    tester,
+  ) async {
+    final repository = freshMockRepository()
+      ..seedRoomInviteForTesting(_invite())
+      ..respondRoomInviteFailureForTesting = RoomInviteFailure.expired;
+    await tapRoomInvite(tester, repository);
+    expect(
+      find.text('Bu davetin süresi doldu ya da oda kapandı.'),
+      findsOneWidget,
+    );
+  });
 }
+
+RoomInvite _invite() => RoomInvite(
+  id: 'inv1',
+  roomId: 'room-1',
+  roomCode: 'ZK-TEST',
+  inviterId: 'u2',
+  inviterName: 'Rojda',
+  categoryName: 'Ziman',
+  playerCount: 2,
+  maxPlayers: 8,
+  createdAt: DateTime(2026, 10, 18),
+);

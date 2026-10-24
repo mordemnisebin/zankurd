@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ku">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0A0F2E">
+  <meta name="robots" content="noindex">
+  <title>ZanKurd</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      background: #0A0F2E;
+      color: #F2F4FF;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.4;
+      -webkit-text-size-adjust: 100%;
+    }
+    .lang {
+      position: absolute; top: 12px; right: 12px;
+      min-height: 48px; min-width: 48px; padding: 0 14px;
+      background: transparent; color: #C9CFF2;
+      border: 1px solid #3A4170; border-radius: 24px;
+      font: inherit; font-weight: 600; cursor: pointer;
+    }
+    main {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 72px 16px 32px; text-align: center;
+      max-width: 420px; margin: 0 auto;
+    }
+    .logo { width: 88px; height: 88px; border-radius: 20px; }
+    .brand { margin: 12px 0 0; font-size: 22px; font-weight: 700; letter-spacing: .5px; }
+    h1 { margin: 28px 0 0; font-size: 24px; line-height: 1.25; overflow-wrap: anywhere; }
+    .code-box {
+      margin: 24px 0 0; width: 100%;
+      background: #141A45; border: 1px solid #2B3366; border-radius: 16px;
+      padding: 16px 12px;
+    }
+    .code-label { margin: 0; font-size: 13px; color: #AEB5E3; }
+    .code {
+      margin: 6px 0 0; font-size: 36px; font-weight: 700; letter-spacing: 2px;
+      font-variant-numeric: tabular-nums; overflow-wrap: anywhere;
+    }
+    .btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; min-height: 52px; padding: 0 16px; margin: 12px 0 0;
+      border-radius: 14px; font: inherit; font-size: 17px; font-weight: 700;
+      text-decoration: none; cursor: pointer;
+    }
+    .btn.primary { background: #FFC83D; color: #0A0F2E; border: 0; }
+    .btn.ghost { background: transparent; color: #F2F4FF; border: 1px solid #3A4170; }
+    .btn.copy { margin-top: 12px; min-height: 48px; font-size: 15px; font-weight: 600; }
+    .sub { margin: 28px 0 0; font-size: 14px; color: #AEB5E3; }
+    .stores { display: flex; gap: 8px; width: 100%; }
+    .stores .btn { margin-top: 8px; font-size: 15px; }
+    .note { margin: 20px 0 0; font-size: 15px; color: #C9CFF2; }
+    a.web { display: inline-flex; align-items: center; min-height: 48px; margin-top: 8px; color: #8FB4FF; font-size: 15px; }
+    [hidden] { display: none !important; }
+    :focus-visible { outline: 3px solid #8FB4FF; outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <button type="button" class="lang" id="lang-toggle" aria-label="Language">TR</button>
+  <main>
+    <img class="logo" src="/icons/Icon-192.png" width="88" height="88" alt="">
+    <p class="brand">ZanKurd</p>
+    <h1 id="heading"></h1>
+
+    <div class="code-box" id="code-box" hidden>
+      <p class="code-label" id="code-label"></p>
+      <p class="code" id="code" dir="ltr"></p>
+      <button type="button" class="btn ghost copy" id="copy"></button>
+    </div>
+
+    <button type="button" class="btn primary" id="open-app" hidden></button>
+    <p class="note" id="desktop-note" hidden></p>
+
+    <p class="sub" id="no-app"></p>
+    <div class="stores">
+      <a class="btn ghost" id="store-ios" href="https://apps.apple.com/app/id6797175984">App Store</a>
+      <a class="btn ghost" id="store-android" href="https://play.google.com/store/apps/details?id=com.zankurd.app">Google Play</a>
+    </div>
+    <a class="web" id="web-link" href="/" hidden></a>
+  </main>
+  <script src="/join.js"></script>
+</body>
+</html>

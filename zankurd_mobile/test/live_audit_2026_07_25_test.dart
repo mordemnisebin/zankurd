@@ -1,3 +1,7 @@
+// 2026-10-19 sadeleşme: konu karosunda soru sayısı artık yok ve boş
+// (başlanmamış) konuda çubuk hiç çizilmez; "başlanmamış konu" testi bunu
+// sabitler (eskisi boş iz ve "245 soru" bekliyordu). Diğer testler aynı.
+//
 // 2026-09-29 Şahnê: görev kartının renkleri Şahnê belirteçlerinden
 // (Zimrût rol metni, ikincil metin) ölçülür; davranış bekçileri aynı.
 import 'package:flutter/material.dart';
@@ -224,67 +228,60 @@ void main() {
     // konu ana ekranda hem yolda hem listede görünebiliyordu. Bekçinin
     // korduğu iki davranış ızgaraya taşındı — sahte ilerleme çizilmez ve
     // ilerleme yalnız gerçekten başlanmış konuda görünür.
-    testWidgets(
-      'başlanmamış konu sahte ilerleme çizmez, soru sayısını gösterir',
-      (tester) async {
-        await tester.pumpWidget(
-          _shell(
-            const Scaffold(
-              body: SizedBox(
-                width: 390,
-                child: HomeTopicGrid(
-                  isKu: false,
-                  categories: ['Dîrok', 'Cografya'],
-                  progress: {
-                    'Dîrok': CategoryProgress(
-                      category: 'Dîrok',
-                      correct: 4,
-                      threshold: 10,
-                    ),
-                    'Cografya': CategoryProgress(
-                      category: 'Cografya',
-                      correct: 0,
-                      threshold: 10,
-                    ),
-                  },
-                  questionCounts: {'Dîrok': 174, 'Cografya': 245},
-                  onOpen: null,
-                ),
+    testWidgets('başlanmamış konuda çubuk hiç çizilmez; soru sayısı yok', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _shell(
+          const Scaffold(
+            body: SizedBox(
+              width: 390,
+              child: HomeTopicGrid(
+                isKu: false,
+                categories: ['Dîrok', 'Cografya'],
+                progress: {
+                  'Dîrok': CategoryProgress(
+                    category: 'Dîrok',
+                    correct: 4,
+                    threshold: 10,
+                  ),
+                  'Cografya': CategoryProgress(
+                    category: 'Cografya',
+                    correct: 0,
+                    threshold: 10,
+                  ),
+                },
+                onOpen: null,
               ),
             ),
           ),
-        );
-        await tester.pumpAndSettle();
+        ),
+      );
+      await tester.pumpAndSettle();
 
-        final started = find.byKey(const ValueKey('home-topic-Dîrok'));
-        final fresh = find.byKey(const ValueKey('home-topic-Cografya'));
-        expect(
-          find.descendant(
-            of: started,
-            matching: find.byType(LinearProgressIndicator),
-          ),
-          findsOneWidget,
-        );
-        // 2026-09-30 izgara: her karoda ilerleme çizgisi durur ki satır
-        // boyları eşit kalsın; başlanmamış konunun çizgisi BOŞ izdir (%0),
-        // sahte dolgu çizmez.
-        final freshBar = tester.widget<LinearProgressIndicator>(
-          find.descendant(
-            of: fresh,
-            matching: find.byType(LinearProgressIndicator),
-          ),
-        );
-        expect(
-          freshBar.value,
-          0,
-          reason: 'Başlanmamış konuda dolgu (sahte ilerleme) çizilmemeli.',
-        );
-        expect(
-          find.descendant(of: fresh, matching: find.text('245 soru')),
-          findsOneWidget,
-        );
-      },
-    );
+      final started = find.byKey(const ValueKey('home-topic-Dîrok'));
+      final fresh = find.byKey(const ValueKey('home-topic-Cografya'));
+      expect(
+        find.descendant(
+          of: started,
+          matching: find.byType(LinearProgressIndicator),
+        ),
+        findsOneWidget,
+      );
+      // 2026-10-19: boş çubuk da yok (eskiden %0 iz çiziliyordu).
+      expect(
+        find.descendant(
+          of: fresh,
+          matching: find.byType(LinearProgressIndicator),
+        ),
+        findsNothing,
+        reason: 'Başlanmamış konuda çubuk (sahte ilerleme) çizilmemeli.',
+      );
+      expect(
+        find.descendant(of: fresh, matching: find.textContaining(' soru')),
+        findsNothing,
+      );
+    });
 
     testWidgets('karoya dokunmak o konuyu açar', (tester) async {
       String? opened;
@@ -297,7 +294,6 @@ void main() {
                 isKu: false,
                 categories: const ['Ziman', 'Muzîk'],
                 progress: const {},
-                questionCounts: const {},
                 onOpen: (category) => opened = category,
               ),
             ),

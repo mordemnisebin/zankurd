@@ -1,0 +1,66 @@
+[
+  {
+    "file": "assets/data/ders_2026_10_01_questions.json",
+    "sha256": "626adf6a4aa341202f492c3dc8933d295df418dbc796f619c9d5a730af7808ad"
+  },
+  {
+    "file": "lib/src/data/achievement_store.dart",
+    "sha256": "d166d4985dc4222d9ca0523c1f12a5ac12b37e60be1a338169ebd6ac7ec7b64f"
+  },
+  {
+    "file": "lib/src/l10n/strings.dart",
+    "sha256": "863eb47a58a87828c7af17d4b0016787a055bc466fab53c61e9f44ad73e4dbf0"
+  },
+  {
+    "file": "lib/src/screens/friends_screen.dart",
+    "sha256": "afb2e770f5b89144248bd6d325260faa1321e9a638ecda8d9eb413d8c600712d"
+  },
+  {
+    "file": "test/achievement_store_test.dart",
+    "sha256": "d690a291eae45a412317e4edcc2d284353e73ad1c09db679ce34dc4e756d2147"
+  },
+  {
+    "file": "test/auth_onboarding_test.dart",
+    "sha256": "dcc9c2e979f05d1404ed02786b4ff4d9e3d6a5a5cc0f7162801828670e466443"
+  },
+  {
+    "file": "test/canli_veri_2026_09_30_test.dart",
+    "sha256": "17b482e981a7eadc11c98b81c175f9b12e80d2d8f3598135dd38d4fb85ea6bc7"
+  },
+  {
+    "file": "test/contest_arena_test.dart",
+    "sha256": "090de2bf293256d3ec0506c434e8019cdb9c4f1af5a54f3e34a987283b360280"
+  },
+  {
+    "file": "test/copy_language_test.dart",
+    "sha256": "802bc4e6e7adefca4141486f2a1a4677b194c05c44e3d7564f81a9e8f705b82b"
+  },
+  {
+    "file": "test/daily_event_security_ui_test.dart",
+    "sha256": "f54f6f38a353c3a84674701be6f112e2cbfb41c6c747e2ab0f3db2edff3f4538"
+  },
+  {
+    "file": "test/daily_round_identity_test.dart",
+    "sha256": "580410d7e463fd470037e2f87a75c5282f65ea4de66c27ed9eb007b137bdd3a9"
+  },
+  {
+    "file": "test/foreign_word_leak_test.dart",
+    "sha256": "b0b14f860d7bc4edbcbb93e49d92a799f00338939974da51d5b354a6ce039131"
+  },
+  {
+    "file": "test/friend_code_reward_separation_test.dart",
+    "sha256": "3c54e925a2bb14c1e0e20a71f95305afaf93cf68c33fecf9a2550efc40ca68b6"
+  },
+  {
+    "file": "test/home_room_actions_test.dart",
+    "sha256": "5da89f71050a33ceda9571269726b8c0e34e1cbe4c1cfc06a28b5ad8a5adc777"
+  },
+  {
+    "file": "test/lesson_greeting_question_test.dart",
+    "sha256": "f4023a06a4c459e46aa5ddffecebd5688ac87bb7e383eaba8eee40dbbe528845"
+  },
+  {
+    "file": "tool/question_quality/baseline.json",
+    "sha256": "2e3d3070dac7eebdb54e4cdbc7d178a2d06170d80c62f9e160fd18a1764adc28"
+  }
+]

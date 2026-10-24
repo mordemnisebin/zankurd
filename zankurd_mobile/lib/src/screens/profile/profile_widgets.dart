@@ -50,7 +50,21 @@ class _ProfileHeroCard extends StatelessWidget {
     required this.playerTag,
     required this.rank,
     required this.onEditAvatar,
+    required this.level,
+    required this.xpInLevel,
+    required this.xpNeeded,
+    required this.coins,
+    required this.onSetName,
   });
+
+  /// Kurul 5. tur 2026-10-20 (Opus, Grok): profilin tepesinde kimlik yoktu
+  /// (yalnız ZK-kodu). Artık ad (ya da "Adını belirle →"), seviye + XP çubuğu
+  /// ve jeton avatarın yanında durur; kod ikincil, küçük.
+  final int level;
+  final int xpInLevel;
+  final int xpNeeded;
+  final int? coins;
+  final VoidCallback onSetName;
 
   final bool ku;
 
@@ -74,108 +88,249 @@ class _ProfileHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return Row(
-      children: [
-        // Ekran okuyucuda etiketsiz bir düğme olarak görünüyordu
-        // (2026-07-25 denetimi).
-        Semantics(
-          button: true,
-          label: Tr.forKu(K.editAvatar, ku),
-          excludeSemantics: true,
-          onTap: onEditAvatar,
-          child: GestureDetector(
-            key: const ValueKey('profile-avatar-edit'),
-            behavior: HitTestBehavior.opaque,
+    // Tur 9b (Grok + ChatGPT): avatar, ad ve seviye çubuğu çıplak bir satırdı;
+    // hizaları tutarsızdı (avatar satırın ortasında, ad üstte). Blok artık
+    // 16 iç boşluklu TEK karttır, avatar üstten hizalı.
+    return SahneSurfaceCard(
+      key: const ValueKey('profile-identity-card'),
+      padding: const EdgeInsets.all(SahneSpace.x4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Ekran okuyucuda etiketsiz bir düğme olarak görünüyordu
+          // (2026-07-25 denetimi).
+          Semantics(
+            button: true,
+            label: Tr.forKu(K.editAvatar, ku),
+            excludeSemantics: true,
             onTap: onEditAvatar,
-            child: SizedBox.square(
-              dimension: 80,
-              child: Stack(
-                children: [
-                  Center(
-                    child: PlayerAvatar(
-                      radius: 36,
-                      photoUrl: avatarIdentity.photoUrl,
-                      iconId: avatarIdentity.iconId,
-                      colorHex: avatarIdentity.colorHex,
-                      frameId: avatarIdentity.frameId,
-                      displayName: displayName,
-                      colorSeed: PlayerIdentity.resolveColorSeed(displayName),
-                    ),
-                  ),
-                  PositionedDirectional(
-                    end: 0,
-                    bottom: 0,
-                    child: SizedBox.square(
-                      dimension: 28,
-                      child: DecoratedBox(
-                        decoration: ShapeDecoration(
-                          color: t.s2,
-                          shape: SahneShape.withSide(
-                            SahneShape.forSize(28),
-                            t.bg,
-                            width: SahneRing.r2,
-                          ),
+            child: GestureDetector(
+              key: const ValueKey('profile-avatar-edit'),
+              behavior: HitTestBehavior.opaque,
+              onTap: onEditAvatar,
+              child: SizedBox.square(
+                dimension: 80,
+                child: Stack(
+                  children: [
+                    // Seviye halkası (tasarım oylaması 2026-10-22, 18/19
+                    // EVET): avatarın çevresinde Zêr yay, seviye içindeki
+                    // XP ilerlemesini gösterir.
+                    Positioned.fill(
+                      child: CustomPaint(
+                        key: const ValueKey('profile-level-ring'),
+                        painter: _LevelRingPainter(
+                          progress: xpNeeded <= 0
+                              ? 0
+                              : (xpInLevel / xpNeeded).clamp(0.0, 1.0),
+                          track: t.line,
+                          fill: t.gold,
                         ),
-                        child: Icon(AppIcons.camera, size: 12, color: t.tx),
                       ),
                     ),
-                  ),
-                ],
+                    Center(
+                      child: PlayerAvatar(
+                        radius: 34,
+                        photoUrl: avatarIdentity.photoUrl,
+                        iconId: avatarIdentity.iconId,
+                        colorHex: avatarIdentity.colorHex,
+                        frameId: avatarIdentity.frameId,
+                        displayName: displayName,
+                        colorSeed: PlayerIdentity.resolveColorSeed(displayName),
+                      ),
+                    ),
+                    // Kamera düğmesi: dokunma alanı 44x44, görünen yuva 32 ve
+                    // simge 20 (eskiden 28/12: parmakla vurulamayacak kadar
+                    // küçüktü).
+                    PositionedDirectional(
+                      end: -SahneSpace.x2,
+                      bottom: -SahneSpace.x2,
+                      child: SizedBox.square(
+                        key: const ValueKey('profile-camera-button'),
+                        dimension: 44,
+                        child: Center(
+                          child: SizedBox.square(
+                            dimension: 32,
+                            child: DecoratedBox(
+                              decoration: ShapeDecoration(
+                                color: t.s2,
+                                shape: SahneShape.withSide(
+                                  SahneShape.forSize(32),
+                                  t.edge,
+                                  width: SahneRing.r2,
+                                ),
+                              ),
+                              child: Icon(
+                                AppIcons.camera,
+                                size: 20,
+                                color: t.tx,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        const SizedBox(width: SahneSpace.x4),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (hasOwnName)
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: AlignmentDirectional.centerStart,
-                  child: Text(
-                    displayName,
-                    maxLines: 1,
-                    style: SahneType.headline.copyWith(color: t.tx),
+          const SizedBox(width: SahneSpace.x4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // 7. kurul (Opus + Grok): ad yokken başlık yerinde bir
+                // bağlantı ("Oyundaki adını gir ›") duruyordu. Artık başlık
+                // hep gerçek bir kimliktir: ad varsa ad, yoksa "Oyuncu ZK-4F7K"
+                // (kod dokununca kopyalanır); adı girme eylemi kalemli bağlantı
+                // olarak altında.
+                _identityTitle(context, t),
+                if (!hasOwnName)
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: SahneButton.text(
+                      buttonKey: const ValueKey('profile-set-name-cta'),
+                      label: Tr.forKu(K.playerNameHint, ku).replaceAll('…', ''),
+                      icon: AppIcons.pen,
+                      arrow: false,
+                      onPressed: onSetName,
+                    ),
                   ),
+                // Seviye satırı adın 6 altında (tek sabit ritim).
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        '${Tr.forKu(K.progressLevelLabel, ku)} $level',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: SahneType.captionStrong.copyWith(color: t.tx),
+                      ),
+                    ),
+                    if (coins != null) ...[
+                      const Spacer(),
+                      // Jeton ayrı küçük hap: çubuğun üstüne sıkışan çıplak
+                      // sayı değil.
+                      DecoratedBox(
+                        key: const ValueKey('profile-coin-pill'),
+                        decoration: ShapeDecoration(
+                          color: t.goldTint,
+                          shape: const StadiumBorder(),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: SahneSpace.x2,
+                            vertical: SahneSpace.x1,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const SahneGlyph(SahneGlyphKind.coin, size: 16),
+                              const SizedBox(width: SahneSpace.x1),
+                              Text(
+                                groupThousands(coins!),
+                                style: SahneType.captionStrong.copyWith(
+                                  color: t.tx,
+                                  fontFeatures: const [
+                                    FontFeature.tabularFigures(),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
-              if (playerTag != null)
-                _PlayerTagChip(tag: playerTag!, ku: ku)
-              else
-                Text(
-                  Tr.forKu(K.keepProgress, ku),
-                  style: SahneType.caption.copyWith(color: t.tx2),
-                ),
-              if (showcaseTitle != null) ...[
-                const SizedBox(height: SahneSpace.x1),
-                Text(
-                  showcaseTitle!,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: SahneType.captionStrong.copyWith(color: t.goldTx),
-                ),
-              ],
-              // Lig rozeti bayrakla kapalı: az oyuncuyla herkes "Bronz
-              // Lig"de (bkz. `kWeeklyLeagueEnabled`).
-              if (kWeeklyLeagueEnabled) ...[
                 const SizedBox(height: SahneSpace.x2),
-                Builder(
-                  builder: (context) {
-                    final tier = LeagueTier.forRank(rank);
-                    return SahneBadge(
-                      label: tier.label(ku),
-                      tone: SahneBadgeTone.gold,
-                    );
-                  },
+                SahneProgressBar(
+                  value: xpNeeded > 0 ? xpInLevel / xpNeeded : 0,
+                  tone: SahneProgressTone.gold,
+                  height: 8,
+                  semanticLabel: '${Tr.forKu(K.progressLevelLabel, ku)} $level',
                 ),
+                if (playerTag != null && hasOwnName)
+                  _PlayerTagChip(tag: playerTag!, ku: ku)
+                else if (playerTag == null)
+                  Text(
+                    Tr.forKu(K.keepProgress, ku),
+                    style: SahneType.caption.copyWith(color: t.tx2),
+                  ),
+                if (showcaseTitle != null) ...[
+                  const SizedBox(height: SahneSpace.x1),
+                  Text(
+                    showcaseTitle!,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                  ),
+                ],
+                // Lig rozeti bayrakla kapalı: az oyuncuyla herkes "Bronz
+                // Lig"de (bkz. `kWeeklyLeagueEnabled`).
+                if (kWeeklyLeagueEnabled) ...[
+                  const SizedBox(height: SahneSpace.x2),
+                  Builder(
+                    builder: (context) {
+                      final tier = LeagueTier.forRank(rank);
+                      return SahneBadge(
+                        label: tier.label(ku),
+                        tone: SahneBadgeTone.gold,
+                      );
+                    },
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
+
+  /// Kimlik başlığı: ad varsa ad; yoksa "Oyuncu ZK-4F7K" (kod varsa).
+  Widget _identityTitle(BuildContext context, SahneTokens t) {
+    final label = PlayerIdentity.formatTag(playerTag);
+    final text = hasOwnName || label == null
+        ? displayName
+        : '$displayName $label';
+    final title = FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: AlignmentDirectional.centerStart,
+      child: Text(
+        text,
+        maxLines: 1,
+        style: SahneType.headline.copyWith(color: t.tx),
+      ),
+    );
+    if (hasOwnName || label == null) return title;
+    return Semantics(
+      button: true,
+      label: Tr.forKu(K.playerTagSemantics, ku, {'tag': label}),
+      excludeSemantics: true,
+      child: GestureDetector(
+        key: const ValueKey('profile-title-tag'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _copyPlayerTag(context, label, ku),
+        child: title,
+      ),
+    );
+  }
+}
+
+/// Oyuncu kodunu panoya kopyalar ve söyler.
+Future<void> _copyPlayerTag(BuildContext context, String label, bool ku) async {
+  await Clipboard.setData(ClipboardData(text: label));
+  if (!context.mounted) return;
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(
+      SnackBar(
+        content: Text(Tr.forKu(K.playerTagCopied, ku)),
+        duration: const Duration(seconds: 2),
+      ),
+    );
 }
 
 /// Kendi oyuncu kodun: dokununca panoya kopyalanır.
@@ -200,18 +355,7 @@ class _PlayerTagChip extends StatelessWidget {
       child: SahneTappable(
         shape: SahneShape.m,
         color: Colors.transparent,
-        onTap: () async {
-          await Clipboard.setData(ClipboardData(text: label));
-          if (!context.mounted) return;
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text(Tr.forKu(K.playerTagCopied, ku)),
-                duration: const Duration(seconds: 2),
-              ),
-            );
-        },
+        onTap: () => _copyPlayerTag(context, label, ku),
         child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: sahneTapTarget,
@@ -338,13 +482,26 @@ class _StatTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           DecoratedBox(
+            // 2026-10-20 renk ve canlılık (B): istatistik ikonları mod renginde
+            // DOLU (öğrenme Zimrût, yarış Boyax, sosyal Nîl; Zêr ödül).
             decoration: ShapeDecoration(
-              color: t.roleTint(role),
+              color: switch (role) {
+                SahneRole.gold => t.gold,
+                _ => t.roleFill(role) ?? t.roleTint(role),
+              },
               shape: SahneShape.m,
             ),
             child: SizedBox.square(
               dimension: 36,
-              child: Icon(icon, color: t.roleText(role), size: 20),
+              child: Icon(
+                icon,
+                color: switch (role) {
+                  SahneRole.gold => t.onGold,
+                  SahneRole.neutral => t.roleText(role),
+                  _ => SahneVivid.onFill,
+                },
+                size: 20,
+              ),
             ),
           ),
           const SizedBox(height: SahneSpace.x2),
@@ -377,10 +534,18 @@ class _UnifiedRewardsSection extends StatelessWidget {
     required this.badgeUnlocked,
     required this.showProgress,
     required this.isKu,
+    this.progress = const {},
+    this.unlockedOn = const {},
   });
 
   final List<Achievement> achievements;
   final Set<String> badgeUnlocked;
+
+  /// Başarı/rozet kimliği -> ilerleme (kilitli satırda çubuk ve `x/y`).
+  final Map<String, RewardProgress> progress;
+
+  /// Başarı/rozet kimliği -> açılış günü (açılmış satırda tarih).
+  final Map<String, DateTime> unlockedOn;
 
   /// "X/Y" ilerleme çubuğu. İlk turdan önce `false`: "0/13" ve boş çubuk
   /// yeni gelene yalnız eksiğini sayıyordu (2026-09-29 doğallık, K6); kart
@@ -450,6 +615,9 @@ class _UnifiedRewardsSection extends StatelessWidget {
                                   unlocked: achievements.any(
                                     (a) => a.id == def.id,
                                   ),
+                                  progress: progress[def.id],
+                                  unlockedOn: unlockedOn[def.id],
+                                  isKu: isKu,
                                 ),
                             ],
                           ),
@@ -488,6 +656,8 @@ class _UnifiedRewardsSection extends StatelessWidget {
                                 iconName: data['icon'] ?? 'badge',
                                 isUnlocked: badgeUnlocked.contains(entry.key),
                                 isKu: isKu,
+                                progress: progress[entry.key],
+                                unlockedOn: unlockedOn[entry.key],
                               );
                             },
                           ),
@@ -543,12 +713,32 @@ class _UnifiedRewardsSection extends StatelessWidget {
                 ),
                 const SizedBox(height: SahneSpace.x3),
               ],
-              if (achievements.isEmpty && badgeUnlocked.isEmpty)
+              if (achievements.isEmpty && badgeUnlocked.isEmpty) ...[
+                // Görsellik taraması (2026-10-22, iki denetçi): boş durum
+                // tek satır yazıydı. Kazanılacak ilk başarılar kilitli
+                // siluet olarak görünür: "yok" değil "hedef" okunur.
+                Row(
+                  key: const ValueKey('profile-locked-rewards'),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (final a in AchievementStore.definitions.take(4))
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: SahneSpace.x2),
+                          child: _LockedRewardMark(
+                            icon: a.icon,
+                            title: a.title(isKu),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: SahneSpace.x3),
                 Text(
                   Tr.forKu(K.birYarisTamamlaVe, isKu),
                   style: SahneType.caption.copyWith(color: t.tx2),
-                )
-              else
+                ),
+              ] else
                 // Önce başarımlar, sonra rozetler; sarar (kaydırma yok).
                 Wrap(
                   spacing: SahneSpace.x2,
@@ -575,6 +765,99 @@ class _UnifiedRewardsSection extends StatelessWidget {
   }
 }
 
+/// Henüz kazanılmamış başarının kilitli silueti: sönük pahlı karo + ikon,
+/// altında ad. Ekran okuyucu adı ve "kilitli" durumunu okur.
+class _LockedRewardMark extends StatelessWidget {
+  const _LockedRewardMark({required this.icon, required this.title});
+
+  final IconData icon;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Semantics(
+      label: title,
+      child: ExcludeSemantics(
+        child: Column(
+          children: [
+            Container(
+              height: 48,
+              alignment: Alignment.center,
+              decoration: ShapeDecoration(
+                color: t.s2,
+                // Kurul 2. tur: siluet iki temada da sönüktü; Zêr kenar ve
+                // ikon belirginleşti, ad iki satıra sarar (kesilmesin).
+                shape: SahneShape.withSide(
+                  SahneShape.s,
+                  Color.lerp(t.line, t.goldTx, 0.6)!,
+                  width: 1.5,
+                ),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Icon(icon, size: 24, color: Color.lerp(t.tx2, t.goldTx, 0.6)),
+                  Positioned(
+                    right: 6,
+                    bottom: 4,
+                    child: Icon(AppIcons.lock, size: 11, color: t.tx2),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: SahneSpace.x1),
+            Text(
+              title,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Avatarın çevresindeki seviye halkası: ince iz + Zêr ilerleme yayı
+/// (tepeden saat yönünde).
+class _LevelRingPainter extends CustomPainter {
+  _LevelRingPainter({
+    required this.progress,
+    required this.track,
+    required this.fill,
+  });
+
+  final double progress;
+  final Color track;
+  final Color fill;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const stroke = 3.5;
+    final rect = Offset.zero & size;
+    final arcRect = rect.deflate(stroke / 2);
+    final base = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = stroke
+      ..color = track;
+    canvas.drawArc(arcRect, 0, math.pi * 2, false, base);
+    if (progress <= 0) return;
+    final arc = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = stroke
+      ..strokeCap = StrokeCap.round
+      ..color = fill;
+    canvas.drawArc(arcRect, -math.pi / 2, math.pi * 2 * progress, false, arc);
+  }
+
+  @override
+  bool shouldRepaint(_LevelRingPainter old) =>
+      old.progress != progress || old.track != track || old.fill != fill;
+}
+
 /// Kazanılmış başarı / rozet çipi: Zêr tonu, M pah, ikon + ad.
 class _RewardChip extends StatelessWidget {
   const _RewardChip({required this.icon, required this.title});
@@ -586,7 +869,9 @@ class _RewardChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     return DecoratedBox(
-      decoration: ShapeDecoration(color: t.goldTint, shape: SahneShape.m),
+      // Dolu altın (tasarım oylaması 2026-10-22): kazanılmış rozet ödül
+      // renginin kendisidir; koyu yazı Zêr bandında okunur.
+      decoration: ShapeDecoration(color: t.zerBand, shape: SahneShape.m),
       child: ConstrainedBox(
         // a11y-tap-target: noninteractive — başarı/rozet çipi; salt
         // görsel, dokunma hedefi değil.
@@ -599,12 +884,12 @@ class _RewardChip extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, color: t.goldTx, size: 16),
+              Icon(icon, color: t.onZer, size: 16),
               const SizedBox(width: SahneSpace.x2),
               Flexible(
                 child: Text(
                   title,
-                  style: SahneType.captionStrong.copyWith(color: t.tx),
+                  style: SahneType.captionStrong.copyWith(color: t.onZer),
                 ),
               ),
             ],
@@ -623,21 +908,36 @@ class _AchievementRow extends StatelessWidget {
     required this.title,
     required this.description,
     required this.unlocked,
+    required this.isKu,
+    this.progress,
+    this.unlockedOn,
   });
 
   final IconData icon;
   final String title;
   final String description;
   final bool unlocked;
+  final bool isKu;
+  final RewardProgress? progress;
+  final DateTime? unlockedOn;
 
   @override
   Widget build(BuildContext context) {
+    // Açılmış: `Kazanıldı: 24.10.2026`. Kilitli: Zêr çubuk + `63/100 soru`.
+    // Satır `enabled: unlocked` ile sönük çizilir; ilerleme çubuğu o söndürme
+    // içinde de okunur kalır (altın dolgu, metin ayrıca yazılı).
+    final Widget? footer = unlocked
+        ? RewardUnlockedLabel(unlockedOn: unlockedOn, isKu: isKu)
+        : (progress == null
+              ? null
+              : RewardProgressMeter(progress: progress!, isKu: isKu));
     return SahneListRow.icon(
       icon: icon,
       role: unlocked ? SahneRole.gold : SahneRole.neutral,
       title: title,
       subtitle: description,
       enabled: unlocked,
+      footer: footer,
     );
   }
 }
@@ -1089,6 +1389,191 @@ class _LegendDot extends StatelessWidget {
         Text(
           label,
           style: SahneType.caption.copyWith(color: SahneTokens.of(context).tx2),
+        ),
+      ],
+    );
+  }
+}
+
+/// Misafir hesap yükseltme diyaloğu (e-posta + şifre ya da Google).
+///
+/// Form anahtarı ve iki alan denetleyicisi bu State'e aittir. Eskiden
+/// `_showGuestUpgradeDialog` onları yaratıp `await showDialog` sonrası bir
+/// kare beklemeyip atıyordu; kapanış animasyonu onlarca kare sürdüğünden
+/// alanlar atılmış denetleyiciyi dinlemeye devam ederdi ("used after being
+/// disposed"). Sessizdi: test ortamında route animasyonu çoğu zaman
+/// `pumpAndSettle` ile bitmeden kare okunmuyordu.
+class _GuestUpgradeDialog extends StatefulWidget {
+  const _GuestUpgradeDialog({
+    required this.supportsGoogleLinking,
+    this.supportsAppleLinking = false,
+  });
+
+  final bool supportsGoogleLinking;
+  final bool supportsAppleLinking;
+
+  @override
+  State<_GuestUpgradeDialog> createState() => _GuestUpgradeDialogState();
+}
+
+class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _submitting = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        context.t(K.saveAccount),
+        style: SahneType.headline.copyWith(color: SahneTokens.of(context).tx),
+      ),
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              context.t(K.saveAccountBody),
+              style: SahneType.caption.copyWith(
+                color: SahneTokens.of(context).tx2,
+              ),
+            ),
+            const SizedBox(height: SahneSpace.x4),
+            SahneField(
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              label: context.t(K.email),
+              validator: (v) {
+                if (v == null || v.isEmpty || !v.contains('@')) {
+                  return context.t(K.emailInvalid);
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 12),
+            SahneField(
+              controller: _passwordController,
+              obscureText: true,
+              label: context.t(K.password),
+              validator: (v) {
+                if (v == null || v.length < 6) {
+                  return context.t(K.passwordTooShort);
+                }
+                return null;
+              },
+            ),
+            if (widget.supportsGoogleLinking ||
+                widget.supportsAppleLinking) ...[
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(child: Divider(color: SahneTokens.of(context).line)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      context.t(K.orSeparator),
+                      style: SahneType.caption.copyWith(
+                        color: SahneTokens.of(context).tx2,
+                      ),
+                    ),
+                  ),
+                  Expanded(child: Divider(color: SahneTokens.of(context).line)),
+                ],
+              ),
+              if (widget.supportsAppleLinking) ...[
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    key: const ValueKey('guest-upgrade-apple'),
+                    onPressed: _submitting
+                        ? null
+                        : () => Navigator.pop(
+                            context,
+                            _GuestUpgradeAction.appleRequested,
+                          ),
+                    icon: BrandIcon(
+                      BrandIcons.apple,
+                      size: 18,
+                      color: SahneTokens.of(context).tx,
+                    ),
+                    label: Text(context.t(K.linkApple)),
+                  ),
+                ),
+              ],
+              if (widget.supportsGoogleLinking) ...[
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: _submitting
+                        ? null
+                        : () => Navigator.pop(
+                            context,
+                            _GuestUpgradeAction.googleRequested,
+                          ),
+                    icon: const BrandIcon(
+                      BrandIcons.google,
+                      size: 18,
+                      color: Color(0xFF4285F4),
+                    ),
+                    label: Text(context.t(K.linkGoogle)),
+                  ),
+                ),
+              ],
+            ],
+          ],
+        ),
+      ),
+      actions: [
+        DialogActionPair(
+          cancel: OutlinedButton(
+            onPressed: _submitting ? null : () => Navigator.pop(context, null),
+            child: Text(context.t(K.cancel)),
+          ),
+          confirm: FilledButton(
+            onPressed: _submitting
+                ? null
+                : () async {
+                    if (!(_formKey.currentState?.validate() ?? false)) {
+                      return;
+                    }
+                    setState(() => _submitting = true);
+                    final auth = context.read<AuthProvider>();
+                    final navigator = Navigator.of(context);
+                    final success = await auth.upgradeGuestAccount(
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text,
+                    );
+                    if (!mounted) return;
+                    navigator.pop(
+                      !success
+                          ? _GuestUpgradeAction.emailFailure
+                          : auth.needsEmailConfirmation
+                          ? _GuestUpgradeAction.emailPendingConfirmation
+                          : _GuestUpgradeAction.emailSuccess,
+                    );
+                  },
+            child: _submitting
+                ? SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: SahneTokens.of(context).tx3,
+                    ),
+                  )
+                : Text(context.t(K.save)),
+          ),
         ),
       ],
     );

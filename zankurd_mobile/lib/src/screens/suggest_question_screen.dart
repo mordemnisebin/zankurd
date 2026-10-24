@@ -274,6 +274,16 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
               ),
               const SizedBox(height: SahneSpace.x6),
 
+              // Katkı lisansı onayı: sunucu kuralı `license_version` ister;
+              // kullanıcı neyi kabul ettiğini göndermeden önce görür.
+              Text(
+                context.t(K.suggestLicenseNote),
+                key: const ValueKey('suggest-license-note'),
+                textAlign: TextAlign.center,
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+              const SizedBox(height: SahneSpace.x3),
+
               // Gönder: ekranın tek birincil eylemi.
               SahneButton.primary(
                 label: context.t(K.submitQuestion),

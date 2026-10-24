@@ -63,7 +63,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('story-open-guide')));
     await tester.pumpAndSettle();
     expect(find.text('Yeni kelimeler'), findsOneWidget);
-    expect(find.text('Derse başla'), findsOneWidget);
+    expect(find.text('Anladım'), findsOneWidget);
   });
 
   testWidgets('yeniden başlatma başa döner', (tester) async {
@@ -80,7 +80,7 @@ void main() {
   // 2026-09-29 Şahnê: eskiden eski yeşilin "okunur" tonunu ölçüyordu. Renk
   // artık rol taşır: hikâye etiketi ve rehber bölüm etiketleri öğrenme
   // rolünün metin rengindedir (`learnTx`); anlatı sahne kartında olduğu için
-  // hikâye etiketi her temada gecenin `learnTx`idir.
+  // hikâye etiketi her temada gecenin `eyebrowTx`idir (tur 9b: tek üst etiket rengi).
   testWidgets('hikâye ve rehber etiketleri öğrenme rolünün okunur metninde', (
     tester,
   ) async {
@@ -90,12 +90,12 @@ void main() {
     await tester.pumpAndSettle();
 
     final storyLabel = tester.widget<Text>(find.text('Hikâye'));
-    expect(storyLabel.style?.color, SahneTokens.night.learnTx);
+    expect(storyLabel.style?.color, SahneTokens.night.eyebrowTx);
 
     await tester.tap(find.byKey(const ValueKey('story-open-guide')));
     await tester.pumpAndSettle();
     final guideLabel = tester.widget<Text>(find.text('Kültürel not'));
-    expect(guideLabel.style?.color, SahneTokens.night.learnTx);
+    expect(guideLabel.style?.color, SahneTokens.night.eyebrowTx);
   });
 
   testWidgets('tablet boyutunda overflow oluşmaz', (tester) async {

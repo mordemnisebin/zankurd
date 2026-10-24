@@ -1,0 +1,42 @@
+[
+  {
+    "path": "lib/src/widgets/todays_review_card.dart",
+    "before_sha256": "135edb836c8007e873be15513512ff50b36812de4b555f44470ef5fa92581abc",
+    "after_sha256": "65d6370c4647345ce5244bcc213d8511084b357aaaccc00a009372a67db2b3d0"
+  },
+  {
+    "path": "lib/src/screens/friends_screen.dart",
+    "before_sha256": "afb2e770f5b89144248bd6d325260faa1321e9a638ecda8d9eb413d8c600712d",
+    "after_sha256": "f8db65a151d18ead312b7a439da8e26447427a6907951d8597b02715d705bc72"
+  },
+  {
+    "path": "lib/src/screens/contest_screen.dart",
+    "before_sha256": "f596475a9d5482f20a20103c7e7eb27e469297fd470f606209f29fcb74f27646",
+    "after_sha256": "a45ddf8a0c5beacb46b4cb2682676bb1983445c03a83afec41b08b23b860c891"
+  },
+  {
+    "path": "lib/src/data/learning_lesson_aliases.dart",
+    "before_sha256": "3264a681993bda6e18bfcd2d9e1d9959eb24144c420527daa0e7ae37dfb86b46",
+    "after_sha256": "8d6458bbceb420eb0f43ba2d6c02e46ba0f4a8768031bb122a8fb4e05bdc53d1"
+  },
+  {
+    "path": "lib/src/data/supabase_zankurd_repository.dart",
+    "before_sha256": "8c949a293166a4957bb894f4e054563185fee2a81caa4e714cf4fd81d2919848",
+    "after_sha256": "696a2b906b3a9895b7096b6ef54e979172ad74550b3f0ac8e06b4265d46651a9"
+  },
+  {
+    "path": "test/todays_review_card_test.dart",
+    "before_sha256": "3ac596d572145503e9c249245668ef9292c9e5120efe6ba4508f53fdfd59a6f4",
+    "after_sha256": "2e895a99e4bc33d8bf0b9428bdb2785ebd20e4c503585f3280f66860ab1c4adf"
+  },
+  {
+    "path": "test/final_async_recovery_test.dart",
+    "before_sha256": null,
+    "after_sha256": "fd8d46de4bb5e985b0c0d0d9e1a4cdd93a70994f9ac99fbfe621373c1672bdbc"
+  },
+  {
+    "path": "test/lesson_completion_alias_sync_test.dart",
+    "before_sha256": null,
+    "after_sha256": "384b4c5f37fb8c2560fe6c5e68ec90f90920be61cea8abcb4b501fdf8c41e292"
+  }
+]

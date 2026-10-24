@@ -6,6 +6,7 @@
 library;
 
 export '../../theme/sahne.dart';
+export 'sahne_bilingual.dart';
 export 'sahne_buttons.dart';
 export 'sahne_cards.dart';
 export 'sahne_chips.dart';
@@ -19,5 +20,7 @@ export 'sahne_painters.dart';
 export 'sahne_progress.dart';
 export 'sahne_result.dart';
 export 'sahne_section_header.dart';
+export 'sahne_sheet.dart';
 export 'sahne_shortfall.dart';
 export 'sahne_topic_marks.dart';
+export 'sahne_vivid.dart';

@@ -1,0 +1,60 @@
+{
+  "reviewed": 183,
+  "qualityGateIssuesUnchanged": 183,
+  "byDecision": {
+    "intentional_variation": 166,
+    "needs_editorial_review": 7,
+    "redundant_repeat": 10
+  },
+  "byCheck": {
+    "near_duplicate_candidate": 183
+  },
+  "bySeverity": {
+    "warning": 183
+  },
+  "byCategory": {
+    "Ziman": 51,
+    "Cografya": 20,
+    "Cîhan": 60,
+    "Muzîk": 5,
+    "Teknolojî": 18,
+    "Çand": 15,
+    "Dîrok": 7,
+    "Siyaset": 3,
+    "Edebiyat": 3,
+    "Sînema": 1
+  },
+  "byLearningLesson": {
+    "alphabet_1": 6,
+    "greetings_2": 1,
+    "intro_1": 1,
+    "family_1": 7,
+    "food_2": 1,
+    "animals_1": 2,
+    "animals_2": 2,
+    "unlinked": 136,
+    "body_1": 5,
+    "clothes_1": 1,
+    "home_1": 2,
+    "past_1": 3,
+    "city_1": 1,
+    "shopping_1": 3,
+    "health_1": 2,
+    "school_1": 2,
+    "transport_1": 2,
+    "jobs_1": 1,
+    "geography_2": 5
+  },
+  "beginnerSourceReviewed": 42,
+  "beginnerSourceDecisions": {
+    "intentional_variation": 42
+  },
+  "firstSevenLocalLessonRelation": 28,
+  "baselinePasses": true
+}
+
+Verification commands (2026-10-21 local disk):
+dart format docs/audit/followup_2026_10_21/content/snapshot.dart: formatted
+dart analyze docs/audit/followup_2026_10_21/content/snapshot.dart: No issues found
+dart run tool/question_quality/question_quality_audit.dart gate: sources=23 reportPhysical=3795 reportCanonical=3753 gatePhysical=3795 gateCanonical=3753 unknown=0; Question quality gate passed: no regression from baseline.
+No Flutter tests, Supabase operations, baseline writes, or production content writes.

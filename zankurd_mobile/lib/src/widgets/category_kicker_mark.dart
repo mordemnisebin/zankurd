@@ -34,6 +34,7 @@ class CategoryKickerMark extends StatelessWidget {
       mark: mark,
       tone: CategoryVisuals.tone(category),
       size: size,
+      strong: true,
     );
   }
 }

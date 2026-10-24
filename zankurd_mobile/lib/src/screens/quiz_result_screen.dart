@@ -14,12 +14,15 @@ import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
 import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/streak_store.dart';
+import '../data/progress_sync.dart';
 import '../data/xp_award_publisher.dart';
 import '../data/zankurd_repository.dart';
 import '../utils/error_reporter.dart';
 import '../l10n/lang.dart';
 import '../utils/coin_calculator.dart';
 import '../l10n/strings.dart';
+import '../services/crowd_standings.dart';
+import '../widgets/player_moderation_button.dart';
 import '../services/premium_service.dart';
 import '../services/quiz_reward_settlement_service.dart';
 import '../models/achievement.dart';
@@ -28,6 +31,7 @@ import '../models/daily_mission.dart';
 import '../models/quiz_question.dart';
 import '../models/player.dart';
 import '../models/room.dart';
+import '../widgets/daily_event_board.dart';
 import '../widgets/learning_outcome_card.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
@@ -38,7 +42,10 @@ import '../utils/player_identity.dart';
 import '../data/daily_mission_store.dart';
 import '../data/xp_store.dart';
 import '../services/analytics_service.dart';
+import '../services/notification_prompt_policy.dart';
 import '../services/notification_service.dart';
+import '../widgets/notification_prompt_card.dart';
+import '../services/guest_save_prompt.dart';
 import '../services/review_service.dart';
 import '../utils/result_sharer.dart';
 import '../widgets/confetti_overlay.dart';
@@ -49,6 +56,8 @@ import 'room_screen.dart';
 import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
+import '../utils/number_format.dart';
+import '../services/social_push_prompt.dart';
 
 /// Seri kararının sonucu.
 ///
@@ -191,6 +200,57 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   bool _showConfetti = false;
   bool _ackAttempted = false;
   bool _newRoomLoading = false;
+  bool _showNotifPrompt = false;
+  NotificationPromptPolicy? _notifPolicy;
+
+  /// Özel oda sonucunda "Tekrar oyna": sunucu aynı ayarlarla yeni lobi kurar
+  /// (ya da arkadaşının zaten kurduğuna katılır); sonuç rotası lobiyle
+  /// DEĞİŞTİRİLİR, geri tuşu bitmiş odaya dönmez. Süren istek çift basışı
+  /// yutar: iki istek iki lobi (iki ücret) demek olurdu.
+  Future<void> _rematch() async {
+    final roomId = widget.room.id?.trim() ?? '';
+    if (_newRoomLoading || roomId.isEmpty) return;
+    setState(() => _newRoomLoading = true);
+    try {
+      final newRoom = await widget.repository.createRoomRematch(roomId);
+      if (!mounted) return;
+      _openLobby(newRoom);
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'room rematch failed');
+      if (!mounted) return;
+      final short =
+          e is RoomRematchException &&
+          e.reason == RoomRematchFailureReason.insufficientCoins;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            context.t(short ? K.insufficientCoins : K.roomOpenFailed),
+          ),
+          action: short
+              ? SnackBarAction(
+                  label: context.t(K.earnCoins),
+                  onPressed: _openSpinWheel,
+                )
+              : null,
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _newRoomLoading = false);
+    }
+  }
+
+  /// Yeni lobiyi açar ve yığındaki bitmiş odayı da temizler. Eskiden yalnız
+  /// sonuç rotası değiştiriliyordu: yeni lobiden geri çıkan, altta kalan
+  /// BİTMİŞ odanın lobisine düşüyor, orada "Başlat" bile etkin görünüyordu
+  /// (2026-10-23 simülatör). Geri artık ana kabuğa döner.
+  void _openLobby(GameRoom newRoom) {
+    Navigator.of(context).pushAndRemoveUntil(
+      AppRoute.to(
+        RoomScreen(repository: widget.repository, initialRoom: newRoom),
+      ),
+      (route) => route.isFirst,
+    );
+  }
 
   Future<void> _openNewRoom() async {
     if (_newRoomLoading) return;
@@ -247,13 +307,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         secondsPerQuestion: widget.room.secondsPerQuestion,
         questionCount: widget.room.questionCount,
         entryFee: widget.room.entryFee,
+        // Aynı kapasiteyle yeniden kur: kalabalık oda 2 kişiye düşmesin.
+        maxPlayers: widget.room.maxPlayers,
       );
       if (!mounted) return;
-      Navigator.of(context).pushReplacement(
-        AppRoute.to(
-          RoomScreen(repository: widget.repository, initialRoom: newRoom),
-        ),
-      );
+      _openLobby(newRoom);
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'new room create failed');
       if (!mounted) return;
@@ -344,6 +402,70 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     if (widget.contestId != null) {
       _claimContestReward();
     }
+    unawaited(_checkNotifPrompt());
+  }
+
+  Future<void> _checkNotifPrompt() async {
+    try {
+      final policy = await NotificationPromptPolicy.load();
+      await policy.recordRoundCompleted();
+      _notifPolicy = policy;
+      if (!mounted) return;
+      final show = await policy.shouldShow();
+      if (!mounted) return;
+      if (show) {
+        // Aynı oturumda tek bildirim sorusu: sosyal eylem istemi
+        // ([SocialPushPrompt]) zaten gösterildiyse kart çıkmaz.
+        if (SocialPushPrompt.promptedThisSession) return;
+        SocialPushPrompt.markPromptedThisSession();
+        setState(() => _showNotifPrompt = true);
+      }
+    } catch (_) {}
+  }
+
+  void _onNotifEnable() {
+    setState(() => _showNotifPrompt = false);
+    unawaited(_grantNotifPermission());
+  }
+
+  // iOS izni bir kez reddedilince istemi bir daha göstermez; düğme sessiz
+  // kalırdı ve politika izni "verildi" sayıp kartı bir daha göstermezdi.
+  // Artık izin gerçekten verildiyse kaydedilir; verilmediyse Ayarlar'daki
+  // açıklama penceresi gösterilir ve bu sorma hakkından düşer.
+  Future<void> _grantNotifPermission() async {
+    final policy = _notifPolicy;
+    if (policy == null) return;
+    try {
+      final ns = await NotificationService.load();
+      await ns.setEnabled(true);
+      if (await ns.hasSystemPermission()) {
+        await policy.recordGranted();
+        return;
+      }
+      await policy.recordLater();
+      if (!mounted) return;
+      await showDialog<void>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: Text(context.t(K.notifPermDenied)),
+          content: Text(context.t(K.notifPermDeniedBody)),
+          actions: [
+            FilledButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: Text(context.t(K.ok)),
+            ),
+          ],
+        ),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'notif prompt enable');
+    }
+  }
+
+  void _onNotifLater() {
+    setState(() => _showNotifPrompt = false);
+    final policy = _notifPolicy;
+    if (policy != null) unawaited(policy.recordLater());
   }
 
   Future<void> _deliverResult() async {
@@ -505,10 +627,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final playerIds = widget.room.players
         .map((player) => player.id?.trim() ?? '')
         .toList(growable: false);
+    // Kalabalık odada 2..kapasite oyuncu olur. "Tam iki oyuncu" şartı
+    // yüzünden kalabalık oda sonucu hiç onaylanmıyor, biten oda her soğuk
+    // açılışta yeniden çıkıyordu (simülatör denemesi 2026-10-17).
+    final countOk = widget.room.isCrowd
+        ? playerIds.length >= 2 && playerIds.length <= widget.room.maxPlayers
+        : playerIds.length == 2;
     final hasValidPlayers =
-        playerIds.length == 2 &&
+        countOk &&
         playerIds.every((id) => id.isNotEmpty) &&
-        playerIds.toSet().length == 2 &&
+        playerIds.toSet().length == playerIds.length &&
         playerIds.where((id) => id == ownerId).length == 1;
     if (widget.room.status == RoomStatus.finished && hasValidPlayers) {
       return true;
@@ -548,6 +676,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   Future<void> _claimContestReward() async {
     final id = widget.contestId;
     if (id == null) return;
+    // Günün yarışması oynandı: bugünkü 19:00 hatırlatması susar.
+    unawaited(NotificationService.noteContestPlayed());
     try {
       // Skoru kaydet + sıralama; sonra rank/badge ödülünü talep et.
       await repository.submitContestEntry(
@@ -566,6 +696,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   // Sunucu RPC'siyle eşitliği bekçili tek kaynak; üç ayrı kopya vardı.
   static const _streakFreezeCost = CoinPrices.streakFreeze;
 
+  /// Alıştırma turunun seri sonucu: kayıt yok, yalnız görünen seri.
+  ///
+  /// Kusur: yanlış tekrarı turu da `recordPlay` çağırıyordu; bir kullanıcı
+  /// günde yalnız kendi yanlışlarını gözden geçirerek (ödül, cevap baskısı ve
+  /// yeni soru olmadan) seri biriktirebiliyor, hatta kırılacak seri için
+  /// jeton dondurma teklifi alıyordu. Sessizdi: seri zaten "oynadı" diye
+  /// artıyordu, hata üretmiyordu.
+  _StreakOutcome _practiceStreak(StreakStore store) =>
+      _StreakOutcome(streak: store.effectiveStreak(), isNewDay: false);
+
   /// Karar adımı hata verdiyse seri yine de kaydedilmeli.
   ///
   /// Aksi hâlde ilerlemeye `streak: 0` giderdi ve rozet/görev hesabı, hiç
@@ -574,6 +714,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   /// yoldaki davranışın aynısı uygulanır.
   Future<_StreakOutcome> _fallbackStreak() async {
     final store = await StreakStore.load();
+    if (practice) return _practiceStreak(store);
     final today = DateTime.now();
     final todayKey =
         '${today.year.toString().padLeft(4, '0')}-'
@@ -608,6 +749,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   }) async {
     final premium = context.read<PremiumService>();
     final streakStore = await StreakStore.load();
+    // Alıştırma (yanlış tekrarı) seriyi ne uzatır ne de dondurma teklifi
+    // açar: aynı sorular tekrar çözülüyor, yeni bir oyun günü değil.
+    if (practice) return _practiceStreak(streakStore);
     final today = DateTime.now();
     final todayKey =
         '${today.year.toString().padLeft(4, '0')}-'
@@ -843,10 +987,28 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     );
   }
 
+  /// Günün turu sonucunu sunucuya yazan iş; pano bunu BEKLER (yoksa kendi
+  /// satırın listede görünmez). Aynı ekranda bir kez çalışır. Hata fırlatmaz:
+  /// sıralama yalnız gösterimdir, tur sonu ekranı bozulmaz.
+  Future<void>? _dailyBoardReady;
+
+  Future<void> _submitDailyEventResult() async {
+    try {
+      final totalMs = answerRecords.fold<int>(
+        0,
+        (sum, record) => sum + (record.responseMs ?? 0),
+      );
+      await repository.submitDailyEventResult(
+        correct: correctCount,
+        total: totalQuestions,
+        seconds: (totalMs / 1000).round(),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'daily event submit');
+    }
+  }
+
   Future<void> _recordProgress(_StreakOutcome streakOutcome) async {
-    // Dil, await'lerden önce okunur: bildirim metni async boşluğun
-    // ötesinde `context`e dokunmadan seçilsin.
-    final isKuNow = context.isKu;
     // Seri kararı bu adımdan ÖNCE, kritik bölümün dışında verildi ve
     // uygulandı. Buradan sonrası yalnız otomatik yerel yazımlardır.
     final streak = streakOutcome.streak;
@@ -878,8 +1040,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     await badgeService.evaluateQuestionBadges(
       achievementStore.answeredQuestions,
     );
-    await badgeService.evaluatePerfectGame(correctCount, totalQuestions);
-    if (totalQuestions > 0) {
+    // Beceri rozetleri yalnız gerçek turlara: alıştırma, çok kısa tur ve
+    // süre aşımı olan tur sayılmaz (bkz. [BadgeService.isSkillRound]).
+    final skillRound = BadgeService.isSkillRound(
+      practice: practice,
+      totalQuestions: totalQuestions,
+      unanswered: answerRecords.where((r) => r.isUnanswered).length,
+    );
+    if (skillRound) {
+      await badgeService.evaluatePerfectGame(correctCount, totalQuestions);
       final totalResponseMs = answerRecords.fold<int>(
         0,
         (sum, record) => sum + (record.responseMs ?? 0),
@@ -922,13 +1091,24 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       streakAlive: streak > 0,
     );
     // XP ve Seviye Hesaplaması
-    int earnedXP = (correctCount * 10) + 50;
-    if (isNewDay) earnedXP += 30;
-    earnedXP += completedMissions.fold(
-      0,
-      (sum, mission) => sum + mission.xpReward,
-    );
-    earnedXP += promotions.length * 200;
+    //
+    // Çevrimiçi odada XP'yi sunucu yazar: award_room_xp oda puanını (0..2000)
+    // verir. İstemci kendi formülüyle (+50, görev, terfi) daha büyük bir sayı
+    // gösterip cihaza yazıyordu; sonuç "+190 XP" derken hesap 141 alıyordu
+    // (simülatör denemesi 2026-10-17). Odada ekran ve cihaz sunucuyla aynı
+    // sayıyı kullanır; tek oyunculu tur bugünkü formülde kalır.
+    final isOnlineRoom = (widget.room.id?.trim() ?? '').isNotEmpty;
+    int earnedXP;
+    if (isOnlineRoom) {
+      earnedXP = score.clamp(0, 2000);
+    } else {
+      earnedXP = (correctCount * 10) + 50;
+      if (isNewDay) earnedXP += 30;
+      // Tamamlanan görevlerin XP'si tur XP'sine EKLENMEZ: ödül ana ekranda
+      // "Ödülü al" ile alınırken verilir. İkisinde de eklemek her görevi iki
+      // kez ödüllendiriyordu (bkz. test/mission_xp_single_grant_test.dart).
+      earnedXP += promotions.length * 200;
+    }
 
     final xpStore = await XPStore.load();
     final leveledUp = await xpStore.addXP(earnedXP);
@@ -959,14 +1139,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final reviewService = await ReviewService.load();
     await reviewService.recordQuizCompletion(accuracyPercent: accuracyPercent);
 
-    // Bugün oynandı: akşamki "hiç oynamadın" uyarısı susar, yarınki kurulur.
-    // Uyarı `DateTimeComponents.time` ile her gün tekrarladığı ve gövdesi
-    // koşulsuz olduğu için, iptal edilmezse oynanan günlerde de yalan
-    // söylerdi (2026-07-31 denetimi).
-    await NotificationService.instance?.refreshStreakWarningAfterPlay(
-      isKu: isKuNow,
-    );
-
     AnalyticsService.instance.logQuizComplete(
       category: room.category,
       correctCount: correctCount,
@@ -986,6 +1158,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     for (final achievement in newAchievements) {
       AnalyticsService.instance.logBadgeEarned(achievement.id);
     }
+    // Seri, rozet, ustalık ve tekrar kuyruğu bu turda değişti: kayıtlı
+    // hesapta kısa bir gecikmeyle sunucuya eşitlenir (misafirde no-op).
+    ProgressSyncService.markDirty();
 
     if (mounted) {
       setState(() {
@@ -1010,6 +1185,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         if (!mounted) return;
         if (leveledUp) {
           _showLevelUpDialog(context, xpStore.currentLevel);
+        } else {
+          // Misafire üç oyunda bir "hesabını kaydet" önerisi. Seviye atlama
+          // kutusunun üstüne binmesin diye o turda sayılmaz; sonuç animasyonu
+          // otursun diye kısa gecikmeyle açılır. Oyunu asla engellemez.
+          unawaited(GuestSavePrompt.afterGame(context));
         }
       });
     }
@@ -1036,7 +1216,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         if (sahneMotionReduced(context)) {
           return FadeTransition(opacity: anim1, child: dialog);
         }
-        final curve = CurvedAnimation(parent: anim1, curve: Curves.easeOutBack);
+        final curve = CurveTween(curve: Curves.easeOutBack).animate(anim1);
         return ScaleTransition(
           scale: curve,
           child: FadeTransition(opacity: anim1, child: dialog),
@@ -1089,6 +1269,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         isKu: context.isKu,
         roomWord: context.t(K.roomWord),
         raceWord: raceWord,
+        crowdTitle: context.t(K.crowdRoomTitle),
       );
       roundLabel = title == raceWord ? null : title;
     } else {
@@ -1096,16 +1277,41 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     }
 
     final isOnlineRoom = room.id != null;
-    final nextActionLabel = context.t(isOnlineRoom ? K.home : K.playAgain);
-    final nextActionIcon = isOnlineRoom
+    // Yalnız ÖZEL oda tekrar oynanabilir (sunucu kuralı); hızlı düello ve
+    // rastgele eşleşmede düğme çıkmaz.
+    final canRematch = isOnlineRoom && room.isCustom;
+    final nextActionLabel = context.t(
+      isOnlineRoom && !canRematch ? K.home : K.playAgain,
+    );
+    final nextActionIcon = isOnlineRoom && !canRematch
         ? AppIcons.house
         : AppIcons.arrowRotateLeft;
+
+    void goHome() {
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      // Puanlama isteği yalnız ana sayfaya dönüşte (sonuç ekranı okunurken
+      // değil): bir sonraki karede, yani rota kapanmaya başladıktan sonra.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        unawaited(
+          ReviewService.load().then((service) => service.requestIfDue()),
+        );
+      });
+    }
 
     void completeResultAction() {
       // Quiz rotası sonuç ekranıyla değiştirilir; çevrimiçi turda tek `pop`
       // bitmiş RoomScreen'i yeniden gösteriyordu. İlk rotaya dönmek solo
       // tekrar davranışını korurken çevrimiçi odanın eski rotasını temizler.
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      //
+      // Öğrenme turunda (öğrenme/ders/profil/ana sayfa kartından açılan)
+      // "Devam" X ve çıkış diyaloğuyla tutarlı olmalı: tek `pop` kullanıcıyı
+      // turu açtığı ekrana döndürür. Eskiden her durumda ilk rotaya atıyor,
+      // dersin ortasındaki öğrenciyi ana sayfaya fırlatıyordu.
+      if (isLearningExperience && !isOnlineRoom) {
+        Navigator.of(context).pop();
+        return;
+      }
+      goHome();
     }
 
     Future<void> openReview(List<AnswerRecord> records) async {
@@ -1152,7 +1358,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     }
 
     Future<void> shareResult() async {
-      await ResultSharer.share(
+      final shared = await ResultSharer.share(
         context,
         isKu: context.isKu,
         score: score,
@@ -1161,15 +1367,23 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         bestStreak: bestStreak,
         // Karışık turda ekrandaki başlıkla aynı: tek bir kategori adı
         // turu yanlış anlatırdı.
-        category: isMixedCategoryRound ? room.name : room.category,
+        category: roundLabel ?? room.category,
         results: [for (final record in answerRecords) record.isCorrect],
         // 1v1 galibiyetinde kart "pêşbirkê bi ser ketim" satırını yazar.
-        duelWin: opponents.length == 1 && score > opponents.first.score,
+        duelWin:
+            !room.isCrowd &&
+            opponents.length == 1 &&
+            score > opponents.first.score,
       );
-      final earned = await ResultSharer.claimDailyShareReward();
+      // Paylaşım sayfası kapatılırsa (iptal) ödül verilmez.
+      if (!shared) return;
+      // Gün, sunucu ödülü verdikten SONRA işaretlenir (bkz.
+      // test/share_reward_scope_and_order_test.dart).
+      final earned = await ResultSharer.settleDailyShareReward(
+        awardCoins: repository.awardSpinCoins,
+      );
       if (earned && context.mounted) {
         HapticFeedback.mediumImpact();
-        unawaited(repository.awardSpinCoins());
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.t(K.shareRewardEarned)),
@@ -1182,6 +1396,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final learningContinue = isLearningExperience && !isOnlineRoom;
     final primaryResultKey = learningContinue
         ? 'result-primary-learning-continue'
+        : canRematch
+        ? 'result-room-rematch-button'
         : isOnlineRoom
         ? 'result-primary-home'
         : 'result-play-again-button';
@@ -1223,7 +1439,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           label: context.t(K.reviewMistakes),
           onTap: () => openReview(wrongRecords),
         ),
-      if (isOnlineRoom)
+      // "Tekrar oyna" dock'ta birincil, "Ana sayfa" ikincil olunca "Paylaş"
+      // buraya iner (dock'ta yalnız iki eylem durur).
+      if (canRematch)
+        _ResultAction(
+          key: const ValueKey('result-share-button'),
+          icon: AppIcons.shareNodes,
+          label: context.t(K.share),
+          onTap: shareResult,
+        ),
+      // Özel odada "Tekrar oyna" aynı işi görür (aynı ayarla yeni lobi);
+      // ikinci bir "Yeni oda" kafa karıştırır.
+      if (isOnlineRoom && !canRematch)
         _ResultAction(
           key: const ValueKey('result-new-room-button'),
           icon: AppIcons.circlePlus,
@@ -1232,7 +1459,25 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ),
     ];
 
-    final is1v1 = opponents.length == 1;
+    // Kalabalık odada (erken bitip iki oyuncuya inmiş olsa bile) düello
+    // dili kullanılmaz: sıra, sunucunun verdiği sıralamadandır.
+    final crowdStanding = room.isCrowd
+        ? crowdStandings(
+            room.players,
+          ).where((s) => s.player.id == widget.resultOwnerUserId).firstOrNull
+        : null;
+    final crowdRank = crowdStanding?.player.rank ?? crowdStanding?.rank;
+    // Herkes birinciyse (ör. hepsi 0 puan) "Kazandın!" yanlış olur; simülatör
+    // denemesinde 0/5 bitiren ev sahibine kazanma başlığı ve kutlama çıkıyordu.
+    final crowdActive = room.isCrowd
+        ? crowdStandings(room.players).where((s) => !s.player.left).toList()
+        : const [];
+    final crowdAllTied =
+        room.isCrowd &&
+        crowdActive.length > 1 &&
+        crowdActive.every((s) => (s.player.rank ?? s.rank) == 1);
+    final crowdWin = crowdRank == 1 && !crowdAllTied && score > 0;
+    final is1v1 = !room.isCrowd && opponents.length == 1;
     bool isWinner = false;
     bool isDraw = false;
     if (is1v1) {
@@ -1249,7 +1494,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // beraberlik ve kaybetme nötr; yarış kimliği Boyax kilim şeridindedir.
     // Eski yeşil/kırmızı başlık gradyanları kalktı (bkz.
     // `quiz_result_header_contrast_test.dart`).
-    final duelOutcome = !is1v1
+    final duelOutcome = room.isCrowd
+        ? (crowdRank == null
+              ? null
+              : crowdAllTied
+              ? _DuelOutcome.draw
+              : crowdWin
+              ? _DuelOutcome.win
+              : crowdRank <= 3
+              ? _DuelOutcome.podium
+              : _DuelOutcome.loss)
+        : !is1v1
         ? null
         : isWinner
         ? _DuelOutcome.win
@@ -1257,14 +1512,27 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ? _DuelOutcome.draw
         : _DuelOutcome.loss;
 
+    // 2026-10-21: sonucun tonu doğruluğa göre (bkz. [SahneResultMood]);
+    // düello/oda sonuçları kendi kazanma/kaybetme diliyle anlatılır.
+    final mood = duelOutcome == null
+        ? SahneResultMood.fromAccuracy(accuracy)
+        : SahneResultMood.high;
+    final lowMood = mood == SahneResultMood.low;
+
     final headerTitle = isLearningExperience
-        ? context.t(K.learningResultTitle)
+        // Düşük puanda "Öğrenme tamamlandı" kutlaması yersiz; var olan
+        // "Tekrar dene" dizesi cesaretlendirir.
+        ? (lowMood ? context.t(K.retry) : context.t(K.learningResultTitle))
         : is1v1
         ? (isWinner
               ? context.t(K.youWon)
               : isDraw
               ? context.t(K.draw)
               : context.t(K.youLost))
+        : crowdAllTied
+        ? context.t(K.draw)
+        : crowdWin
+        ? context.t(K.youWon)
         : context.t(K.raceFinished);
 
     // Kutlama (sonuç ışınları) yalnız kutlanacak bir sonuç varken çizilir:
@@ -1280,7 +1548,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         : accuracy >= 50
         ? 2
         : 1;
-    final celebrate = is1v1 ? isWinner : starsEarned == 3;
+    final celebrate = room.isCrowd
+        ? crowdWin
+        : is1v1
+        ? isWinner
+        : starsEarned == 3;
 
     final accuracyText =
         '${context.percent(accuracy)} ${context.t(K.accuracyLower)}';
@@ -1333,23 +1605,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // 2026-10-01 (A6): kahraman, sayımlar ve ödül ortak sonuç şablonundan
     // ([SahneResultScaffold]) gelir; burada yalnız bu ekrana özgü bölümler
     // sıralanır. Sıra artık şablonun sırası: kahraman → sayımlar → ödül.
-    final sections = <Widget>[
-      if (opponents.isNotEmpty)
-        _RaceStandings(
-          userScore: score,
-          userIdentity: room.players.isNotEmpty ? room.players.first : null,
-          opponents: opponents,
-        ),
+    final outcomeSection = <Widget>[
       if (answerRecords.isNotEmpty) ...[
-        if (breakdown.isNotEmpty) ...[
-          SahneSectionHeader(title: context.t(K.resultLearnedTitle)),
-          _CategoryLearnings(breakdown: breakdown),
-          // Yorumu olmayan kart çizilmez (bkz. [LearningOutcomeCard]): boşluk
-          // da onunla birlikte gider.
-          if (learningOutcome.hasSpotlight)
-            const SizedBox(height: SahneSpace.cardGap),
-        ] else
-          const SizedBox(height: SahneSpace.sectionTop),
+        // Kurul 3. tur (2026-10-20): "Nerelerde zorlandın?" kartı sayım
+        // karolarının hemen altına alındı. Konu listesinin altında kalınca
+        // 390x844'te yapışkan alt perdenin arkasında kesiliyordu (68/200,
+        // üç turdur tekrar eden bulgu). Yorum önce, ayrıntı sonra okunur.
+        // Şablon ödülden sonra 8 ekler; 12 ile toplam 20 (kart ritmi).
+        const SizedBox(height: SahneSpace.x3),
         LearningOutcomeCard(
           outcome: learningOutcome,
           // Kategori listesi gösteriliyorsa sayımlar orada: kart yalnız
@@ -1359,10 +1622,51 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               ? null
               : () => openReview(learningOutcome.reviewRecords),
         ),
+        if (breakdown.isNotEmpty) ...[
+          SahneSectionHeader(title: context.t(K.resultLearnedTitle)),
+          _CategoryLearnings(breakdown: breakdown),
+        ],
       ],
+    ];
+
+    final sections = <Widget>[
+      // Düşük puanda "Nerelerde zorlandın?" ve tekrar akışı en üste çıkar:
+      // oyuncunun bir sonraki adımı önce okunur.
+      if (lowMood) ...outcomeSection,
+      if (room.isCrowd)
+        _CrowdStandings(
+          players: room.players,
+          ownId: widget.resultOwnerUserId,
+          repository: repository,
+        )
+      else if (opponents.isNotEmpty)
+        _RaceStandings(
+          userScore: score,
+          userIdentity: room.players.isNotEmpty ? room.players.first : null,
+          opponents: opponents,
+        ),
+      if (!lowMood) ...outcomeSection,
+      // Günün turu: sonuç sunucuya yazılır, ardından "Bugünün sıralaması"
+      // (ilk üç, kendi sıran, dünün birincisi, yeni tura geri sayım).
+      if (dailyQuiz)
+        DailyEventBoardCard(
+          key: const ValueKey('result-daily-board'),
+          repository: repository,
+          ready: _dailyBoardReady ??= _submitDailyEventResult(),
+        ),
       if (secondaryResultActions.isNotEmpty) ...[
         const SizedBox(height: SahneSpace.cardGap),
         _SecondaryActions(actions: secondaryResultActions),
+      ],
+      if (_showNotifPrompt) ...[
+        const SizedBox(height: SahneSpace.cardGap),
+        NotificationPromptCard(
+          // Günün turunda düello vaadi ("sıra sende") değil, yarınki turun
+          // hatırlatması sorulur.
+          dailyContest: dailyQuiz || widget.contestId != null,
+          onEnable: _onNotifEnable,
+          onLater: _onNotifLater,
+        ),
       ],
       if (hasGains)
         _RoundGains(
@@ -1381,7 +1685,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       _AllExplanationsCard(records: answerRecords),
       const SizedBox(height: SahneSpace.sectionTop),
       _MoreOptions(
-        onHome: () => Navigator.of(context).popUntil((route) => route.isFirst),
+        onHome: goHome,
         onLeaderboard: () {
           Navigator.of(
             context,
@@ -1392,6 +1696,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     ];
 
     final scaffold = SahneResultScaffold(
+      mood: mood,
+      // Sahne rengi modun rengi: öğrenme Zimrût, yarış Boyax.
+      accent: isLearningExperience ? SahneRole.learn : SahneRole.race,
       // Çevrimiçi turda kapatmak da ana eylem gibi ilk rotaya döner; solo
       // turda yalnız sonuç rotası kapanır (`PopScope` aşağıda).
       onClose: isOnlineRoom ? completeResultAction : null,
@@ -1404,17 +1711,38 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       ].join(' • '),
       hero: SahneResultHero(
         key: const ValueKey('result-score-header'),
-        emblem: switch (duelOutcome) {
-          null => SizedBox(height: 44, child: _ScoreStars(earned: starsEarned)),
-          _DuelOutcome.win => const SahneResultEmblem.win(),
-          _DuelOutcome.draw => const SahneResultEmblem.state(
-            icon: AppIcons.scaleBalanced,
-          ),
-          _DuelOutcome.loss => const SahneResultEmblem.state(
-            icon: AppIcons.flag,
-          ),
-        },
+        emblem: is1v1 && !isLearningExperience
+            ? _DuelFaceOff(
+                me: room.players.isNotEmpty ? room.players.first : null,
+                opponent: opponents.first,
+                emblem: isWinner
+                    ? const SahneResultEmblem.win()
+                    : SahneResultEmblem.state(
+                        icon: isDraw ? AppIcons.scaleBalanced : AppIcons.flag,
+                      ),
+              )
+            : switch (duelOutcome) {
+                null => SizedBox(
+                  height: 70,
+                  child: _ScoreStars(earned: starsEarned, calm: lowMood),
+                ),
+                _DuelOutcome.win => const SahneResultEmblem.win(),
+                _DuelOutcome.draw => const SahneResultEmblem.state(
+                  icon: AppIcons.scaleBalanced,
+                ),
+                _DuelOutcome.loss => const SahneResultEmblem.state(
+                  icon: AppIcons.flag,
+                ),
+                _DuelOutcome.podium => const SahneResultEmblem.state(
+                  icon: AppIcons.medal,
+                ),
+              },
         title: headerTitle,
+        // 1v1: skor karşılaştırması ("Sen 5 – 3 Rojda") büyük puanın altında.
+        subtitle: is1v1 && !isLearningExperience
+            ? '${context.t(K.you)} $score – ${opponents.first.score} '
+                  '${context.playerDisplayName(opponents.first.name, tag: opponents.first.tag)}'
+            : null,
         titleRole: duelOutcome == _DuelOutcome.win ? SahneRole.gold : null,
         // Öğrenme turunda puan üretilmez (`score` hep 0); büyük sayı "0"
         // yazınca 3 doğru yapan kullanıcıya başarısız gibi görünüyordu
@@ -1426,6 +1754,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             ? accuracyText
             : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
         celebrate: celebrate,
+        lightGlow: mood == SahneResultMood.high && starsEarned >= 2,
+        calm: lowMood,
         tone: duelOutcome == null
             ? SahneResultTone.reward
             : SahneResultTone.race,
@@ -1439,6 +1769,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       ),
       rewards: hasRewards
           ? SahneResultRewards(
+              label: context.t(K.kazanildi),
               coins: coinsAwarded,
               coinLabel: '+$coinsAwarded',
               coinSemanticLabel: '+$coinsAwarded ${context.t(K.coinWord)}',
@@ -1463,14 +1794,22 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         key: ValueKey(primaryResultKey),
         label: primaryResultLabel,
         icon: learningContinue ? null : nextActionIcon,
-        onPressed: completeResultAction,
+        loading: canRematch && _newRoomLoading,
+        onPressed: canRematch ? _rematch : completeResultAction,
       ),
-      secondary: SahneResultAction(
-        key: const ValueKey('result-share-button'),
-        label: context.t(K.share),
-        icon: AppIcons.shareNodes,
-        onPressed: shareResult,
-      ),
+      secondary: canRematch
+          ? SahneResultAction(
+              key: const ValueKey('result-primary-home'),
+              label: context.t(K.home),
+              icon: AppIcons.house,
+              onPressed: completeResultAction,
+            )
+          : SahneResultAction(
+              key: const ValueKey('result-share-button'),
+              label: context.t(K.share),
+              icon: AppIcons.shareNodes,
+              onPressed: shareResult,
+            ),
       overlay: _showConfetti
           ? ConfettiOverlay(
               onFinished: () {
@@ -1492,9 +1831,46 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   }
 }
 
-enum _DuelOutcome { win, draw, loss }
+enum _DuelOutcome { win, draw, loss, podium }
 
-/// Kahramanın üç puan yıldızı: 32 · 44 · 32, alta hizalı, 8 aralık.
+/// 1v1 kahramanının amblem yuvası: iki oyuncu yüz yüze, ortada sonucun
+/// amblemi (taç / terazi / bayrak).
+///
+/// Kusur (kurul, 2026-10-20): 1v1 sonucu rakibi hiç göstermiyordu; kazanma
+/// anı yalnız bir taçtı ve "kime karşı" sorusu aşağıdaki listeye kalıyordu.
+/// Avatarlar sonucu ilk bakışta kişiye bağlar ("sen ↔ Rojda").
+class _DuelFaceOff extends StatelessWidget {
+  const _DuelFaceOff({
+    required this.me,
+    required this.opponent,
+    required this.emblem,
+  });
+
+  final Player? me;
+  final Player opponent;
+  final Widget emblem;
+
+  @override
+  Widget build(BuildContext context) {
+    final mine = me ?? const Player(name: '', score: 0, state: '');
+    return Row(
+      key: const ValueKey('result-duel-faceoff'),
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _avatarOf(mine.copyWith(name: context.t(K.you)), radius: 24),
+        const SizedBox(width: SahneSpace.x3),
+        emblem,
+        const SizedBox(width: SahneSpace.x3),
+        _avatarOf(opponent, radius: 24),
+      ],
+    );
+  }
+}
+
+/// Kahramanın üç puan yıldızı: 20 · 28 · 20, alta hizalı, 8 aralık.
+///
+/// 2026-10-19 sadeleşme (ikinci tur): 32 · 44 · 32 idi; puan ekranın tek
+/// büyük öğesi olsun diye yıldızlar küçüldü (dekoratif, sayı zaten söylüyor).
 ///
 /// ## Kusur (tarih)
 ///
@@ -1504,12 +1880,19 @@ enum _DuelOutcome { win, draw, loss }
 /// yıldız DOLU Zêr glif, kazanılmayan Ray (`s3`) tonunda — ayrımı renk
 /// değil doluluk taşır (bkz. `quiz_result_star_fill_test.dart`).
 class _ScoreStars extends StatelessWidget {
-  const _ScoreStars({required this.earned});
+  const _ScoreStars({required this.earned, this.calm = false});
 
   final int earned;
 
+  /// Düşük sonuç: kazanılan yıldız altın değil sönük nötr.
+  final bool calm;
+
   @override
   Widget build(BuildContext context) {
+    // 2026-10-20 renk ve canlılık: renkli sahnede yıldızlar büyür
+    // (50 · 70 · 50, kazanılan altın); kazanılmayan yıldız beyaz %16 DOLU
+    // (doluluk yine ayrımı taşır).
+    final scenic = SahneResultScene.maybeOf(context) != null;
     return Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -1518,8 +1901,18 @@ class _ScoreStars extends StatelessWidget {
           if (i > 0) const SizedBox(width: SahneSpace.x2),
           SahneGlyph(
             SahneGlyphKind.star,
-            size: i == 1 ? 44 : 32,
+            size: scenic ? (i == 1 ? 70 : 50) : (i == 1 ? 28 : 20),
             filled: i < earned,
+            color: scenic && i >= earned
+                ? SahneVivid.starEmpty
+                : calm
+                ? SahneTokens.of(context).tx2.withValues(alpha: 0.55)
+                : null,
+            // Kazanılmayan yıldızın koyu konturu bordo zeminde sert
+            // duruyordu (kurul 2026-10-20): kontur yok, yalnız cam dolgu.
+            edgeColor: scenic && (i >= earned || calm)
+                ? Colors.transparent
+                : null,
           ),
         ],
       ],
@@ -1582,27 +1975,41 @@ class ResultStatTiles extends StatelessWidget {
     final t = SahneTokens.of(context);
     return SahneResultStats(
       stats: [
+        // Renkli çipler (2026-10-20): doğru yeşil, yanlış kırmızı, boş nötr,
+        // seri altın; ton dolgu renkli sahnenin üstünde %18.
         SahneResultStat(
           leading: Icon(AppIcons.check, size: 20, color: t.okTx),
           value: correct,
           label: context.t(K.correct),
           showWhenZero: true,
+          tint: SahneVivid.chipOkTint,
+          accent: SahneVivid.chipOkTx,
         ),
         SahneResultStat(
-          leading: Icon(AppIcons.xmark, size: 20, color: t.errTx),
+          leading: const Icon(
+            AppIcons.xmark,
+            size: 20,
+            color: SahneVivid.chipErrTx,
+          ),
           value: wrong,
           label: context.t(K.wrong),
           showWhenZero: true,
+          tint: SahneVivid.chipErrTint,
+          accent: SahneVivid.chipErrTx,
         ),
         SahneResultStat(
           leading: Icon(AppIcons.hourglass, size: 20, color: t.tx2),
           value: unanswered,
           label: context.t(K.blank),
+          tint: SahneVivid.chipBlankTint,
+          accent: SahneVivid.chipBlankTx,
         ),
         SahneResultStat(
           leading: const SahneGlyph(SahneGlyphKind.flame),
           value: streak,
           label: context.t(K.streakLabel),
+          tint: SahneVivid.chipGoldTint,
+          accent: SahneVivid.chipGoldTx,
         ),
       ],
     );
@@ -1621,40 +2028,130 @@ class _CategoryLearnings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isKu = context.isKu;
-    return SahneListGroup(
-      children: [
-        for (final tally in breakdown)
-          _categoryRow(
-            context,
-            tally,
-            CategoryNames.localized(tally.category, isKu),
-          ),
-      ],
+    // Konu renginde satırlar (2026-10-20 renk ve canlılık): solda konu
+    // renginde şerit, konu renginde dolu ikon kutusu ve konu renginde mini
+    // çubuk. Gri liste satırları konuyu rengiyle söylemiyordu.
+    return SahneSurfaceCard(
+      key: const ValueKey('result-category-learnings'),
+      color: SahneVivid.sheet,
+      edgeColor: SahneVivid.sheetEdge,
+      padding: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (var i = 0; i < breakdown.length; i++) ...[
+            if (i > 0)
+              const Divider(
+                height: 1,
+                thickness: 1,
+                color: SahneVivid.sheetEdge,
+              ),
+            _categoryRow(
+              context,
+              breakdown[i],
+              CategoryNames.localized(breakdown[i].category, isKu),
+            ),
+          ],
+        ],
+      ),
     );
   }
 
   Widget _categoryRow(BuildContext context, CategoryTally tally, String name) {
+    final t = SahneTokens.of(context);
+    final night = SahneResultScene.maybeOf(context)?.night ?? true;
     final ok = tally.correct * 2 >= tally.answered;
     final statusLabel = context.t(ok ? K.correct : K.wrong);
     final fraction = '${tally.correct}/${tally.answered}';
-    final trailing = Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SahneRowValue(fraction),
-        const SizedBox(width: SahneSpace.x3),
-        SahneStatusBadge.square(correct: ok, label: statusLabel),
-      ],
-    );
+    final tone = CategoryVisuals.tone(tally.category);
+    final fill = tone.fill(night: night);
+    final mark = CategoryVisuals.mark(tally.category);
+    final ratio = tally.answered == 0
+        ? 0.0
+        : (tally.correct / tally.answered).clamp(0.0, 1.0);
     final semantic = '$name, $fraction, $statusLabel';
-    // 2026-09-29 doğallık (K1): liste satırında çizim yok; kategori kendi
-    // tonu + ikonuyla çizimsiz küçüğe düşer (bkz. matchmaking `_categoryRow`).
-    return SahneListRow.thumb(
-      image: null,
-      icon: CategoryVisuals.icon(tally.category),
-      tone: CategoryVisuals.tone(tally.category),
-      title: name,
-      trailing: trailing,
-      semanticLabel: semantic,
+    final showBar =
+        MediaQuery.sizeOf(context).width >= 360 &&
+        MediaQuery.textScalerOf(context).scale(16) < 21;
+    return Semantics(
+      container: true,
+      label: semantic,
+      excludeSemantics: true,
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ColoredBox(color: tone.detail, child: const SizedBox(width: 4)),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SahneSpace.x3,
+                  vertical: SahneSpace.x3,
+                ),
+                child: Row(
+                  children: [
+                    DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: fill,
+                        shape: SahneShape.m,
+                      ),
+                      child: SizedBox.square(
+                        dimension: 40,
+                        child: mark == null
+                            ? Icon(
+                                CategoryVisuals.icon(tally.category),
+                                size: 22,
+                                color: SahneVivid.onFill,
+                              )
+                            : CustomPaint(
+                                painter: SahneCategoryGlyphPainter(
+                                  mark: mark,
+                                  tone: SahneCategoryTone(
+                                    ground: fill,
+                                    deep: fill,
+                                    detail: SahneVivid.onFill,
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x3),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        name,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x2),
+                    // Mini çubuk dar ekranda / büyük yazıda çizilmez: ad
+                    // harf harf bölünmesin (320 px, %200).
+                    if (showBar)
+                      Expanded(
+                        flex: 2,
+                        child: ClipPath(
+                          clipper: const ShapeBorderClipper(
+                            shape: StadiumBorder(),
+                          ),
+                          child: LinearProgressIndicator(
+                            value: ratio,
+                            minHeight: 6,
+                            color: tone.detail,
+                            backgroundColor: SahneVivid.glassTrack,
+                          ),
+                        ),
+                      ),
+                    const SizedBox(width: SahneSpace.x3),
+                    SahneRowValue(fraction),
+                    const SizedBox(width: SahneSpace.x3),
+                    SahneStatusBadge.square(correct: ok, label: statusLabel),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -1737,8 +2234,8 @@ class _SecondaryActions extends StatelessWidget {
 }
 
 /// Satırın 36'lık avatar yuvası: oyuncunun seçtiği kimlik.
-Widget _avatarOf(Player player) => PlayerAvatar(
-  radius: 18,
+Widget _avatarOf(Player player, {double radius = 18}) => PlayerAvatar(
+  radius: radius,
   photoUrl: player.avatarUrl,
   iconId: player.avatarIcon,
   colorHex: player.avatarColor,
@@ -1776,7 +2273,7 @@ class _RaceStandings extends StatelessWidget {
     final summary = leader.state == 'Player'
         ? context.t(K.finishedAtRank, {'rank': '$userRank'})
         : context.t(K.leaderFinishedFirst, {
-            'leader': context.playerDisplayName(leader.name),
+            'leader': context.playerDisplayName(leader.name, tag: leader.tag),
             'rank': '$userRank',
           });
 
@@ -1805,10 +2302,10 @@ class _RaceStandings extends StatelessWidget {
         blocks.add(
           SahneListRow.me(
             rank: i + 1,
-            title: player.name,
+            title: context.playerDisplayName(player.name, tag: player.tag),
             avatar: userIdentity == null ? null : _avatarOf(player),
             subtitle: streakLine,
-            trailing: SahneRowValue('${player.score}'),
+            trailing: SahneRowValue(groupThousands(player.score)),
           ),
         );
       } else {
@@ -1816,14 +2313,14 @@ class _RaceStandings extends StatelessWidget {
         pending.add(
           SahneListRow.rank(
             rank: i + 1,
-            title: context.playerDisplayName(player.name),
+            title: context.playerDisplayName(player.name, tag: player.tag),
             initial: name.isEmpty ? null : context.playerInitial(player.name),
             icon: AppIcons.user,
             // Oyuncunun kendi kimliği (fotoğraf, ikon, renk, çerçeve)
             // satırın 36'lık avatar yuvasında.
             avatar: _avatarOf(player),
             subtitle: streakLine,
-            trailing: SahneRowValue('${player.score}'),
+            trailing: SahneRowValue(groupThousands(player.score)),
           ),
         );
       }
@@ -1836,6 +2333,186 @@ class _RaceStandings extends StatelessWidget {
         SahneSectionHeader(title: context.t(K.compareRivals)),
         Text(summary, style: SahneType.body.copyWith(color: t.tx2)),
         const SizedBox(height: SahneSpace.x3),
+        ...blocks,
+      ],
+    );
+  }
+}
+
+/// Kalabalık oda sıralaması: sunucunun verdiği sıra (eşit skor aynı numarayı
+/// paylaşır), ilk üç madalyalı, "Sen" satırı vurgulu, ayrılanlar en sonda.
+///
+/// `_RaceStandings` bot yarışının rakiplerini listeler ve sırayı skordan
+/// yeniden üretir; burada sıra sunucudan gelir (`Player.rank`) ve 50 satıra
+/// kadar uzar. Yapı aynıdır: "Sen" satırı iki liste grubunun arasında tek
+/// başına durur, ardışık rakipler tek grupta toplanır.
+class _CrowdStandings extends StatelessWidget {
+  const _CrowdStandings({
+    required this.players,
+    required this.ownId,
+    required this.repository,
+  });
+
+  final List<Player> players;
+  final String? ownId;
+  final ZanKurdRepository repository;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final standings = crowdStandings(players);
+    final leavers = [
+      for (final player in players)
+        if (player.left) player,
+    ];
+    final own = standings.where((s) => s.player.id == ownId).firstOrNull;
+    final summary = own == null
+        ? null
+        : context.t(K.crowdFinishedAtRank, {
+            'rank': '${own.player.rank ?? own.rank}',
+            'total': '${standings.length}',
+          });
+
+    Widget scoreOf(CrowdStanding standing) {
+      final rank = standing.player.rank ?? standing.rank;
+      final value = SahneRowValue(groupThousands(standing.player.score));
+      if (rank > 3) return SahneInlineTrailing(child: value);
+      // İlk üç: madalya simgesi (renk + ŞEKİL; yalnız renkle ayrışmaz).
+      return SahneInlineTrailing(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ExcludeSemantics(
+              child: Icon(AppIcons.medal, size: 18, color: t.goldTx),
+            ),
+            const SizedBox(width: SahneSpace.x1),
+            value,
+          ],
+        ),
+      );
+    }
+
+    final blocks = <Widget>[];
+    var pending = <Widget>[];
+    void flush() {
+      if (pending.isEmpty) return;
+      if (blocks.isNotEmpty) {
+        blocks.add(const SizedBox(height: SahneSpace.x2));
+      }
+      blocks.add(SahneListGroup(children: pending));
+      pending = <Widget>[];
+    }
+
+    for (final standing in standings) {
+      final player = standing.player;
+      final rank = player.rank ?? standing.rank;
+      final streakLine = player.streak > 0
+          ? '${context.t(K.streakLabel)} ${player.streak}'
+          : null;
+      if (player.id == ownId) {
+        flush();
+        if (blocks.isNotEmpty) {
+          blocks.add(const SizedBox(height: SahneSpace.x2));
+        }
+        blocks.add(
+          SahneListRow.me(
+            key: ValueKey('crowd-standing-me-$rank'),
+            rank: rank,
+            title: context.t(K.you),
+            avatar: _avatarOf(player),
+            subtitle: streakLine,
+            trailing: scoreOf(standing),
+          ),
+        );
+      } else {
+        final name = player.name.trim();
+        pending.add(
+          SahneListRow.rank(
+            key: ValueKey('crowd-standing-${player.id}'),
+            rank: rank,
+            title: context.playerDisplayName(player.name, tag: player.tag),
+            // Sonuçta rakibe dokununca Arkadaş ekle / Bildir / Engelle
+            // (kimliği olmayan ya da kendi satırı hariç).
+            onTap: player.id == null || player.id!.isEmpty
+                ? null
+                : () => showPlayerModerationSheet(
+                    context: context,
+                    repository: repository,
+                    playerId: player.id!,
+                    playerName: context.playerDisplayName(
+                      player.name,
+                      tag: player.tag,
+                    ),
+                  ),
+            initial: name.isEmpty ? null : context.playerInitial(player.name),
+            icon: AppIcons.user,
+            avatar: _avatarOf(player),
+            subtitle: streakLine,
+            trailing: scoreOf(standing),
+          ),
+        );
+      }
+    }
+    flush();
+
+    if (leavers.isNotEmpty) {
+      blocks.add(const SizedBox(height: SahneSpace.x2));
+      blocks.add(
+        SahneListGroup(
+          children: [
+            for (final player in leavers)
+              SahneListRow.leading(
+                key: ValueKey('crowd-left-${player.id}'),
+                // Sıra numarası yerine tire: ayrılan oyuncu sıralamaya girmez.
+                // Genişlik 24: ayırıcı, sıra satırlarındaki gibi avatarın
+                // hizasından başlar.
+                leadingWidth: 24,
+                leading: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: 24,
+                      child: Text(
+                        '–',
+                        textAlign: TextAlign.center,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx3),
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x3),
+                    SizedBox.square(
+                      dimension: 36,
+                      child: Center(child: _avatarOf(player)),
+                    ),
+                  ],
+                ),
+                // Odadan ayrılan ben isem (sonuç ana ekranda ya da sonradan
+                // açıldı) satır "Sen" der: sıralamaya girmedim ama kendi
+                // puanımı ve son durumu görürüm.
+                title: player.id == ownId
+                    ? context.t(K.you)
+                    : context.playerDisplayName(player.name, tag: player.tag),
+                subtitle: context.t(K.crowdLeftBadge),
+                trailing: SahneInlineTrailing(
+                  child: SahneRowValue.meta(groupThousands(player.score)),
+                ),
+              ),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SahneSectionHeader(title: context.t(K.crowdStandingsTitle)),
+        if (summary != null) ...[
+          Text(
+            summary,
+            key: const ValueKey('crowd-standings-summary'),
+            style: SahneType.body.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x3),
+        ],
         ...blocks,
       ],
     );
@@ -1897,9 +2574,11 @@ class _RoundGains extends StatelessWidget {
                 icon: AppIcons.listCheck,
                 role: SahneRole.gold,
                 title: context.t(K.gorevTamamlandi),
+                // XP burada verilmez, ana ekranda alınır; toplamda
+                // görünmeyen bir "+100 XP" yazmak yanlış olurdu.
                 subtitle:
                     '${context.isKu ? mission.labelKu : mission.labelTr}'
-                    ' — +${mission.xpReward} XP',
+                    ' — ${context.t(K.missionClaimAction)}',
               ),
             if (dailyStreak > 0)
               SahneListRow.icon(

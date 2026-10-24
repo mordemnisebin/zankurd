@@ -46,11 +46,12 @@ void main() {
     'Playwright smoke güncel tek sayfalık onboarding sözleşmesini izler',
     () {
       final source = File('tools/playwright/smoke.mjs').readAsStringSync();
-      expect(source, contains("Ez ji 13 salî mezintir im"));
-      expect(source, contains('await ageGate.click();'));
-      expect(source, contains("await ageGate.waitFor({ state: 'visible'"));
-      expect(source, contains("aria-checked"));
-      expect(source, isNot(contains('ageGate.check()')));
+      // 2026-10-24: yaş kutusu kalktı; varsayılan dil Türkçe olduğundan
+      // smoke önce karşılamanın dil seçicisinden Kurmancî'yi seçer.
+      expect(source, isNot(contains('ageGate')));
+      expect(source, isNot(contains("Ez 13 salî an jî mezintir im")));
+      expect(source, contains("name: 'Kurmancî', exact: true"));
+      expect(source, contains('await kuLanguage.click();'));
       expect(source, contains("clickText('Bidomîne')"));
       expect(source, contains("clickText('Dest pê bike')"));
       // 2026-09-29 doğallık: ilk ders etiketi cümle düzeninde ("Dersa
@@ -67,7 +68,7 @@ void main() {
       expect(source, contains("Pêşkêşkar negihîştbar e"));
       expect(
         source,
-        contains("getByRole('button', { name: /Pêşbirka bilez/ })"),
+        contains("getByRole('button', { name: /Pêşbirka zindî/ })"),
       );
       expect(source, contains('await quickDuel.isEnabled()'));
       expect(source, isNot(contains("Rojbaş, Rojda!")));
@@ -79,8 +80,9 @@ void main() {
     final source = File(
       'tools/playwright/learning-focus.mjs',
     ).readAsStringSync();
-    expect(source, contains("Ez ji 13 salî mezintir im"));
-    expect(source, contains("Wek mêvan bidomîne"));
+    expect(source, isNot(contains('ageGate')));
+    expect(source, contains("click('Kurmancî')"));
+    expect(source, contains("Niha bilîze"));
     expect(source, contains("click('Bidomîne')"));
     expect(source, contains("Hînbûn temam bû"));
     expect(source, contains('ZANKURD_AUDIT_DIR'));

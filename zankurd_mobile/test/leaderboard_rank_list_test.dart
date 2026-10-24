@@ -1,3 +1,4 @@
+// Tasarım kurulu tüm ekranlar 2026-10-20: bildir bayrağı satırdan ⋯ menüsüne.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-09-30 canlı: satır alt metninde oyun sayısının birimi "oda" değil
 // "yarış" (bkz. `canli_veri_2026_09_30_test.dart`).
@@ -218,12 +219,19 @@ void main() {
   testWidgets('kendi satırında bildir düğmesi yok', (tester) async {
     await _pump(tester, _Repo(count: 12, selfIndex: 5));
     expect(
-      find.byKey(const ValueKey('leaderboard-report-user')),
+      find.byKey(const ValueKey('leaderboard-more-user')),
       findsNothing,
       reason: 'kişi kendini bildiremez',
     );
-    // Başkalarınınki durur.
-    expect(find.byKey(const ValueKey('leaderboard-report-other-6')), findsOne);
+    // Başkalarınınki durur; bildir ⋯ menüsünde.
+    expect(find.byKey(const ValueKey('leaderboard-more-other-6')), findsOne);
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('leaderboard-more-other-6')),
+    );
+    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('leaderboard-more-other-6')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('player-report-action')), findsOne);
   });
 
   testWidgets('kendi satırı vurgu için turuncuya boyanmaz', (tester) async {
@@ -360,7 +368,7 @@ void main() {
 
   testWidgets('bildir düğmesi 48dp dokunma hedefini korur', (tester) async {
     await _pump(tester, _Repo(count: 12));
-    final button = find.byKey(const ValueKey('leaderboard-report-other-4'));
+    final button = find.byKey(const ValueKey('leaderboard-more-other-4'));
     expect(button, findsOneWidget);
     final size = tester.getSize(button);
     expect(size.height, greaterThanOrEqualTo(48));

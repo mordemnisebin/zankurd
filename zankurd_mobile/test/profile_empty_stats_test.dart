@@ -1,3 +1,4 @@
+// Kurul 5. tur 2026-10-20: seviye+XP+jeton kimlik başlığında; boş durumda "Adını belirle" ve birincil başla düğmesi.
 /// Profilin boş istatistik durumu: bağlamsal ikon + tek cümle + tek eylem.
 ///
 /// ## Kusur
@@ -61,7 +62,9 @@ void main() {
     );
     expect(icon, findsOneWidget);
     final iconWidget = tester.widget<Icon>(icon);
-    expect(iconWidget.size, 32);
+    // 2026-10-19 sadeleşme (ikinci tur): boş durum küçük tek satırlık şerit,
+    // ikon 32 yerine 20 ve eylem metin bağlantısı (kart 190 px'ti).
+    expect(iconWidget.size, 20);
     expect(iconWidget.color, SahneTokens.of(tester.element(icon)).tx3);
     expect(
       find.ancestor(of: icon, matching: find.byType(ExcludeSemantics)),
@@ -89,7 +92,8 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
     }
     expect(rewards, findsOneWidget);
-    expect(find.byKey(const ValueKey('profile-level-card')), findsNothing);
+    // Kurul 5. tur 2026-10-20: seviye + XP kimlik başlığına taşındı.
+    expect(find.byKey(const ValueKey('profile-set-name-cta')), findsOneWidget);
     expect(
       find.descendant(of: rewards, matching: find.byType(SahneProgressBar)),
       findsNothing,

@@ -74,12 +74,26 @@ void main() {
       'expansion0819': fromJson(
         'assets/data/expansion_2026_08_19_questions.json',
       ),
+      'expansion0928': fromJson(
+        'assets/data/expansion_2026_09_28_questions.json',
+      ),
+      'deepseekVerified': fromJson(
+        'assets/data/deepseek_verified_2026_09_30_questions.json',
+      ),
+      'bilim': fromJson('assets/data/bilim_2026_09_30_questions.json'),
+      'altkonu': fromJson('assets/data/altkonu_2026_10_01_questions.json'),
+      'ders1': fromJson('assets/data/ders_2026_10_01_questions.json'),
       // 2026-10-02: boşluk bankası (121 soru) kalite bekçilerine de bağlı.
       'bosluk': fromJson('assets/data/bosluk_2026_10_02_questions.json'),
       // 2026-10-02: son dört sunucu dersinin etiketli soruları (32).
       'ders2': fromJson('assets/data/ders_2026_10_02_questions.json'),
+      'baslangic': fromJson('assets/data/baslangic_2026_10_06_questions.json'),
+      'dersler2': fromJson('assets/data/dersler2_2026_10_08_questions.json'),
       // 2026-10-08: alt konu hattı (128 kaynaklı soru) kalite bekçilerine bağlı.
       'hat': fromJson('assets/data/hat_2026_10_07_questions.json'),
+      'dersler3': fromJson('assets/data/dersler3_2026_10_08_questions.json'),
+      // 2026-10-19: kolay havuz takviyesi (36 zorluk-1 soru).
+      'kolay': fromJson('assets/data/kolay_2026_10_19_questions.json'),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
@@ -101,7 +115,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla yirmi bir kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla yirmi iki kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -147,6 +161,8 @@ void main() {
         ...fromJson('assets/data/hat_2026_10_07_questions.json'),
         // 2026-10-08: başlangıç yolu III (124).
         ...fromJson('assets/data/dersler3_2026_10_08_questions.json'),
+        // 2026-10-19: kolay havuz takviyesi (36).
+        ...fromJson('assets/data/kolay_2026_10_19_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;
@@ -342,10 +358,26 @@ void main() {
     // anlatan bir açıklama örnek vermeden yazılamaz. Ölçer örnekleri
     // sayıp cümleyi Kurmancî sanıyor.
     //
+    // 2026-10-16: `questionBankAssets` içindeki kalan 8 çalışma zamanı bankası
+    // (`expansion0928`, `deepseekVerified`, `bilim`, `altkonu`, `ders1`,
+    // `baslangic`, `dersler2`, `dersler3` — toplam 1.547 soru) `banks`
+    // haritasına bağlandı. Düşen 25 kaydın tamamı tek tek okunarak doğrulandı;
+    // hepsi Türkçe cümledir ve yalnız Kurmancî özel ad veya dilbilgisi örneği
+    // içerdiği için `detectSentenceLanguage` tarafından `'ku'` sanılmaktadır:
+    //
+    //   ex28_dastangotin_002, ex28_dastangotin_007 (Mem û Zîn / Feqiyê Teyran)
+    //   deepseekVerified: ds_dirok_0018, ds_ziman_1266, ds_ziman_1269,
+    //                     ds_ziman_1280, ds_edebiyat_0127 (deepseek ile aynı 5 kayıt)
+    //   baslangic_2026_10_06_0023 ("Dizanim" bilmek fiilindendir...)
+    //   dersler2_2026_10_08_0042, 0046, 0058, 0059, 0060, 0063, 0064, 0096,
+    //                       0099, 0121 (dawên/pêlav/kursî/mase/metbex/serşok örnekleri)
+    //   dersler3_2026_10_08_0021, 0035, 0040, 0060, 0073, 0075, 0095
+    //                       (Li ku ye / Ev çend e / pirtûk / kursî / em diçin örnekleri)
+    //
     // Tavan bir BORÇ sayacıdır, hedef değil. Büyümesi ancak her yeni
     // kaydın burada gerekçesi yazılarak kabul edilir; gerekçesiz
     // yükseltme bekçiyi sessizce kapatmaktır.
-    const ceiling = 14;
+    const ceiling = 39;
 
     final offenders = <String>[];
     banks.forEach((name, questions) {
@@ -541,7 +573,9 @@ void main() {
   //
   // Ölçüt tipe duyarlı: aynı sözcüğü hem görselden hem çeviriden sormak
   // kopya değil, iki ayrı alıştırmadır — `offline_0005` (görsel «av») ile
-  // `offline_5031` (çeviri «av») bu yüzden ikisi de durur.
+  // `offline_5031` (çeviri «av») bu yüzden ikisi de durur. Farklı derslere
+  // (`learningLessonId`) etiketlenmiş ders sonu alıştırmaları da kendi
+  // derslerinin bağımsız mini-quiz havuzuna aittir (ör. `school_1` vs `jobs_1`).
   //
   // Tek bilinçli istisna Teknolojî'de: «malper» çifti duruyor, çünkü onu da
   // silmek kategoriyi 40 soruluk yayın tabanının altına düşürüp kategoriyi
@@ -559,6 +593,7 @@ void main() {
           name,
           question.category,
           question.type.name,
+          question.metadata?.learningLessonId ?? '',
           term.trim().toLowerCase(),
           question.correctAnswer.trim().toLowerCase(),
         ].join('\u0000');

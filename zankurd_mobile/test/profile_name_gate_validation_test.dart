@@ -18,7 +18,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: MockZanKurdRepository(),
-          onCompleted: () {},
+          onCompleted: () async {},
         ),
       ),
     );
@@ -55,7 +55,7 @@ void main() {
           testShell(
             child: ProfileNameGateScreen(
               repository: MockZanKurdRepository(),
-              onCompleted: () {},
+              onCompleted: () async {},
             ),
           ),
         );
@@ -107,7 +107,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: _KaydetmeyenDepo(),
-          onCompleted: () {},
+          onCompleted: () async {},
         ),
       ),
     );
@@ -136,7 +136,7 @@ void main() {
         testShell(
           child: ProfileNameGateScreen(
             repository: repository,
-            onCompleted: () {},
+            onCompleted: () async {},
           ),
         ),
       );
@@ -162,7 +162,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: repository,
-          onCompleted: () {},
+          onCompleted: () async {},
         ),
       ),
     );

@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -77,13 +78,17 @@ void main() {
   test('language provider persists selected language', () async {
     SharedPreferences.setMockInitialValues({});
 
+    // 2026-10-24: yeni kurulumda varsayılan Türkçe; kayıtlı seçim korunur.
     final provider = await LanguageProvider.load();
-    expect(provider.lang, 'ku');
+    expect(provider.lang, 'tr');
 
-    provider.setLang('tr');
+    provider.setLang('ku');
 
     final restored = await LanguageProvider.load();
-    expect(restored.lang, 'tr');
+    expect(restored.lang, 'ku');
+
+    SharedPreferences.setMockInitialValues({'zankurd.language': 'ku'});
+    expect((await LanguageProvider.load()).lang, 'ku');
   });
 
   testWidgets('shows auth screen before guest sign in', (tester) async {
@@ -100,7 +105,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
-    expect(find.text('Misafir olarak devam et'), findsOneWidget);
+    expect(find.text('Hemen oyna'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -151,17 +156,16 @@ void main() {
 
     final chipFinder = find.byKey(const ValueKey('sign-in-language-chip-KU'));
     expect(chipFinder, findsOneWidget);
-    final chip = tester.widget<SahneRailChip>(
-      find.descendant(of: chipFinder, matching: find.byType(SahneRailChip)),
+    // Tur 8: dil seçici tek bitişik segment (SahneRailChip değil); seçili
+    // durum anlamsal ağaçta okunur.
+    bool selectedOf(Finder f) =>
+        tester.getSemantics(f).getSemanticsData().flagsCollection.isSelected ==
+        ui.Tristate.isTrue;
+    expect(selectedOf(chipFinder), isTrue);
+    expect(
+      selectedOf(find.byKey(const ValueKey('sign-in-language-chip-TR'))),
+      isFalse,
     );
-    expect(chip.selected, isTrue);
-    final other = tester.widget<SahneRailChip>(
-      find.descendant(
-        of: find.byKey(const ValueKey('sign-in-language-chip-TR')),
-        matching: find.byType(SahneRailChip),
-      ),
-    );
-    expect(other.selected, isFalse);
     expect(
       tester
           .getSemantics(chipFinder)
@@ -217,7 +221,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: repository,
-          onCompleted: () {},
+          onCompleted: () async {},
         ),
       ),
     );
@@ -242,7 +246,7 @@ void main() {
 
     expect(find.text('Google ile giriş yap'), findsOneWidget);
     expect(find.text('Apple ile giriş yap'), findsOneWidget);
-    expect(find.text('Misafir olarak devam et'), findsOneWidget);
+    expect(find.text('Hemen oyna'), findsOneWidget);
     expect(find.text('Veya e-posta ile'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
@@ -250,7 +254,7 @@ void main() {
   testWidgets(
     'desteklenen giriş ekranında Apple seçeneği görünür ve akışı başlatır',
     (tester) async {
-      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       addTearDown(() => debugDefaultTargetPlatformOverride = null);
 
       final authProvider = _AppleAuthProvider();
@@ -271,10 +275,23 @@ void main() {
     },
   );
 
+  // 2026-10-23: Android/web'deki Apple tarayıcı akışı Supabase'teki 6 aylık
+  // Apple anahtarına bağlı; süresi dolunca sessizce kırılır. Apple yalnız
+  // iOS'ta (yerleşik pencere) gösterilir.
+  testWidgets('Android giriş ekranında Apple seçeneği yok', (tester) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    addTearDown(() => debugDefaultTargetPlatformOverride = null);
+    await tester.pumpWidget(testShell(child: const SignInScreen()));
+    await tester.pumpAndSettle();
+    final appleButton = find.text('Apple ile giriş yap');
+    debugDefaultTargetPlatformOverride = null;
+    expect(appleButton, findsNothing);
+  });
+
   testWidgets('OAuth tarayıcı açılışı tamamlanmış login olarak ölçülmez', (
     tester,
   ) async {
-    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
 
     final loginMethods = <String>[];
@@ -398,24 +415,15 @@ void main() {
         );
         expect(googleLabel.style?.color?.computeLuminance(), lessThan(0.3));
 
-        // Misafir bağlantısı context yüzeyi kullanır: light'ta koyu metin,
-        // dark'ta açık metin.
-        //
-        // 2026-07-25: misafir eylemi tam boy konturlu butondan metin
-        // bağlantısına indirildi (Google beyaz + Apple siyah + misafir
-        // turuncu = ekranda üç birincil eylem görünüyordu). Bağlantı rengi
-        // artık hafif saydam olduğu için `== Colors.white` kimlik
-        // karşılaştırması kırılıyordu; testin asıl iddiası okunabilirlik,
-        // o yüzden parlaklıkla ölçülür.
-        final guestLabel = tester.widget<Text>(
-          find.text('Misafir olarak devam et'),
+        // "Hemen oyna" artık dolgulu birincil düğmedir (yazı rengi tema
+        // belirtecinden gelir, burada elle ölçülmez); okunurluğu Şahnê düğme
+        // bekçileri korur. Burada yalnız varlığı ve ikincil girişin ayrı
+        // olduğu sabitlenir.
+        expect(find.byKey(const ValueKey('sign-in-play-now')), findsOneWidget);
+        expect(
+          find.byKey(const ValueKey('sign-in-have-account')),
+          findsOneWidget,
         );
-        final guestLuminance = guestLabel.style?.color?.computeLuminance() ?? 0;
-        if (mode == ThemeMode.light) {
-          expect(guestLuminance, lessThan(0.4));
-        } else {
-          expect(guestLuminance, greaterThan(0.6));
-        }
       }
     },
   );
@@ -438,13 +446,17 @@ void main() {
     // isLoading true iken onPressed null'a düşer; IgnorePointer bu durumda
     // butonu tamamen hit-test dışı bırakmalı (yalnızca InkWell'in örtük
     // null-onTap davranışına güvenmemeli). Bulunamaması bunun kanıtıdır.
-    expect(find.text('Misafir olarak devam et').hitTestable(), findsNothing);
+    // "Hemen oyna" Şahnê düğmesidir: yükleme sürerken dokunuş alır ama
+    // onPressed null olduğundan hiçbir şey yapmaz.
+    await tester.tap(find.text('Hemen oyna'), warnIfMissed: false);
+    await tester.pump();
+    expect(authProvider.isAuthenticated, isFalse);
 
     authProvider.isLoadingForTest = false;
     await tester.pump();
 
     // Yükleme bitince buton tekrar normal çalışmalı (regresyon önlemi).
-    await tester.tap(find.text('Misafir olarak devam et').hitTestable());
+    await tester.tap(find.text('Hemen oyna').hitTestable());
     await tester.pumpAndSettle();
 
     expect(authProvider.isAuthenticated, isTrue);
@@ -506,7 +518,7 @@ void main() {
           (hi > lo ? hi + 0.05 : lo + 0.05) / (hi > lo ? lo + 0.05 : hi + 0.05);
       expect(contrast, greaterThanOrEqualTo(4.5));
 
-      expect(find.text('Misafir olarak devam et'), findsOneWidget);
+      expect(find.text('Hemen oyna'), findsOneWidget);
       expect(tester.takeException(), isNull);
     }
   });
@@ -541,7 +553,7 @@ void main() {
           child: testShell(
             child: ProfileNameGateScreen(
               repository: repository,
-              onCompleted: () {},
+              onCompleted: () async {},
             ),
             themeProvider: ThemeProvider(initialMode: mode),
           ),
@@ -565,7 +577,7 @@ void main() {
       testShell(
         child: ProfileNameGateScreen(
           repository: repository,
-          onCompleted: () {},
+          onCompleted: () async {},
         ),
         languageProvider: kurmanciLang(),
       ),
@@ -596,7 +608,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final guestButton = find.text('Misafir olarak devam et');
+    final guestButton = find.text('Hemen oyna');
     expect(guestButton, findsOneWidget);
     expect(tester.getBottomRight(guestButton).dy, lessThan(844));
   });
@@ -611,7 +623,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
-    expect(find.text('Günün soruları'), findsNothing);
+    expect(find.text('Günün turu'), findsNothing);
   });
 
   testWidgets('first launch shows onboarding before auth screen', (
@@ -637,8 +649,6 @@ void main() {
     expect(find.text('Atla'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
-    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-    await tester.pump();
     await tester.tap(find.text('Atla'));
     await tester.pumpAndSettle();
 
@@ -766,17 +776,12 @@ void main() {
     final languageRect = tester.getRect(language);
     expect(skipRect.right, lessThanOrEqualTo(surface.right));
     expect(languageRect.left, greaterThanOrEqualTo(surface.left));
-    expect(
-      skipRect.left,
-      greaterThanOrEqualTo(languageRect.right),
-      reason: 'XXXL başlıkta dil seçici ile "Atla" üst üste binmemeli.',
-    );
+    // 2026-10-24: dil seçici üst çubuktan çıkıp ilk sayfanın tepesine (büyük,
+    // tam adlı) taşındı; "Atla"nın altında durur, çakışmaz ve ekranda kalır.
+    expect(languageRect.right, lessThanOrEqualTo(surface.right));
+    expect(languageRect.top, greaterThanOrEqualTo(skipRect.bottom - 1));
     expect(find.text('Kurmancî hîn bibe, pêş bikeve.'), findsNothing);
-    for (final finder in [
-      find.text('Hîn bibe'),
-      find.byKey(const ValueKey('onboarding-age-gate')),
-      find.text('Bidomîne'),
-    ]) {
+    for (final finder in [find.text('Hîn bibe'), find.text('Bidomîne')]) {
       expect(finder, findsOneWidget);
       final rect = tester.getRect(finder);
       expect(rect.left, greaterThanOrEqualTo(surface.left));
@@ -785,19 +790,13 @@ void main() {
       expect(rect.bottom, lessThanOrEqualTo(surface.bottom));
     }
 
-    final ageGate = tester.getRect(
-      find.byKey(const ValueKey('onboarding-age-gate')),
-    );
-    final cta = tester.getRect(find.text('Bidomîne'));
-    expect(ageGate.bottom, lessThanOrEqualTo(cta.top));
-
     // Metin bandı kısa içerikte ortalanır, taşan içerikte aşağıdan kayar
     // (`ConstrainedBox(minHeight)` + `Column(mainAxisSize: min)`,
     // 2026-09-25 SE düzeltmesi). Sözleşme widget tipi değil davranış:
     // günlük ders maddesi kaydırarak görünür hale gelmeli.
     final pageScroll = find.byType(SingleChildScrollView);
     final dailyBullet = find.text(
-      'Di dersa rojê de dem tune, şîroveya her pirsê heye.',
+      'Di pirsên rojê de dem tune, şîroveya her pirsê heye.',
     );
     final pageScrollable = find.descendant(
       of: pageScroll,
@@ -817,7 +816,7 @@ void main() {
     final dailyRect = tester.getRect(dailyBullet);
     expect(afterScrollY, lessThan(beforeScrollY));
     expect(dailyRect.top, greaterThanOrEqualTo(scrollRect.top));
-    // 2026-09-29 doğallık: madde metni "Di dersa rojê de dem tune, şîroveya
+    // 2026-09-29 doğallık: madde metni "Di pirsên rojê de dem tune, şîroveya
     // her pirsê heye." uzadı; 2x ölçekte 288 px yüksekliğinde, SE'nin
     // 219 px'lik kaydırma alanından büyük. Sözleşme "madde bir bakışta
     // tamamen sığar" değil "madde kaydırarak TAMAMEN okunabilir" olarak
@@ -931,14 +930,14 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Misafir olarak devam et'));
+    await tester.ensureVisible(find.text('Hemen oyna'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Misafir olarak devam et'));
+    await tester.tap(find.text('Hemen oyna'));
     await tester.pumpAndSettle();
 
     expect(find.byType(HomeScreen), findsOneWidget);
     // Ana ekranın tek birincil eylemi günün dersidir.
-    expect(find.text('Günün dersi'), findsOneWidget);
+    expect(find.text('Günün soruları'), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-duel-row')), findsNothing);
 
@@ -1120,7 +1119,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Oyundaki adın ne olsun?'), findsOneWidget);
-    expect(find.text('Günün dersi'), findsNothing);
+    expect(find.text('Günün soruları'), findsNothing);
 
     await tester.enterText(
       find.byKey(const ValueKey('player-name-field')),
@@ -1130,7 +1129,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.savedName, 'Rojda Test');
-    expect(find.text('Günün dersi'), findsOneWidget);
+    expect(find.text('Günün soruları'), findsOneWidget);
   });
 
   test('unsupported provider auth error is user friendly', () {
@@ -1143,10 +1142,7 @@ void main() {
       ),
     );
 
-    expect(
-      message,
-      'Google girişi şu anda etkin değil. Supabase panelinde Google sağlayıcısını aç.',
-    );
+    expect(message, K.authErrProviderDisabled);
   });
 
   test('network auth error points to connection or DNS', () {
@@ -1156,7 +1152,7 @@ void main() {
       Exception('ClientException: Failed host lookup'),
     );
 
-    expect(message, 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.');
+    expect(message, K.authErrNetwork);
   });
 
   test('network auth exception points to connection or DNS', () {
@@ -1166,7 +1162,7 @@ void main() {
       const AuthException('net::ERR_NAME_NOT_RESOLVED'),
     );
 
-    expect(message, 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.');
+    expect(message, K.authErrNetwork);
   });
 
   testWidgets('landscape auth actions can be scrolled into view', (
@@ -1180,7 +1176,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final guestButton = find.text('Misafir olarak devam et');
+    final guestButton = find.text('Hemen oyna');
     expect(guestButton, findsOneWidget);
     final beforeDragY = tester.getTopLeft(guestButton).dy;
 
@@ -1206,7 +1202,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final guestButton = find.text('Misafir olarak devam et');
+    final guestButton = find.text('Hemen oyna');
     expect(guestButton, findsOneWidget);
     expect(tester.getBottomRight(guestButton).dy, lessThan(390));
   });
@@ -1247,7 +1243,7 @@ void main() {
       'Navnîşana e-nameyê',
       'Şîfre',
       'Te şîfre ji bîr kir?',
-      'Têkeve',
+      'Hesabê min heye · Têkeve',
       'Tomar bibe',
     ]) {
       final finder = find.text(label);
@@ -1281,7 +1277,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    for (final label in ['Wek mêvan bidomîne', 'An jî bi e-nameyê']) {
+    for (final label in ['Niha bilîze', 'An jî bi e-nameyê']) {
       final finder = find.text(label);
       expect(finder, findsOneWidget, reason: label);
       final paragraph = tester.renderObject<RenderParagraph>(finder);
@@ -1307,6 +1303,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Bi xêr hatî ZanKurdê'), findsOneWidget);
-    expect(find.text('Wek mêvan bidomîne'), findsOneWidget);
+    expect(find.text('Niha bilîze'), findsOneWidget);
   });
 }

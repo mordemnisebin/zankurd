@@ -1,0 +1,590 @@
+[
+ {
+  "id": "s001",
+  "ku": "Da xelk nebêjin ku Ekrad bê me'rifet in, bê esl û binyad.",
+  "tr": "Elâlem, Kürtler irfansız, köksüz ve temelsizdir demesin diye.",
+  "kaynak": "Ehmedê Xanî — Mem û Zîn",
+  "tema": "dil ve kimlik"
+ },
+ {
+  "id": "s002",
+  "ku": "Enwa'ê milel xwedan kitêb in, Kurmanc tenê di bê hesêb in.",
+  "tr": "Milletlerin kitabı vardır; bir tek Kürtler hesaba katılmaz.",
+  "kaynak": "Ehmedê Xanî — Mem û Zîn",
+  "tema": "dil ve kimlik"
+ },
+ {
+  "id": "s003",
+  "ku": "Ger dê hebûwa me îtîfaqek / Vêkra bikira me inqiyadek.",
+  "tr": "Aramızda bir birlik olsaydı, hep birlikte bir önderin ardından gitseydik.",
+  "kaynak": "Ehmedê Xanî — Mem û Zîn",
+  "tema": "birlik ve dayanışma"
+ },
+ {
+  "id": "s004",
+  "ku": "Ez mame di hikmeta Xwedê de / Kurmanc di dewleta cihan de.",
+  "tr": "Şaşıp kaldım Tanrı'nın hikmetine; dünya düzeninde Kürtlerin hâline.",
+  "kaynak": "Ehmedê Xanî — Mem û Zîn",
+  "tema": "dil ve kimlik"
+ },
+ {
+  "id": "s005",
+  "ku": "Mala bê jin ava nabe.",
+  "tr": "Kadınsız ev kurulmaz.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "kadın"
+ },
+ {
+  "id": "s006",
+  "ku": "Ava kanîya xwe şîrîn e.",
+  "tr": "Kendi pınarının suyu tatlıdır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "vatan"
+ },
+ {
+  "id": "s007",
+  "ku": "Kevir li cihê xwe giran e.",
+  "tr": "Taş yerinde ağırdır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "vatan"
+ },
+ {
+  "id": "s008",
+  "ku": "Berf dihele, çiya dimîne.",
+  "tr": "Kar erir, dağ durur.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "vatan"
+ },
+ {
+  "id": "s009",
+  "ku": "Namûs ji can bihatir e.",
+  "tr": "Onur candan değerlidir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve onur"
+ },
+ {
+  "id": "s010",
+  "ku": "Navê qenc ji zêr çêtir e.",
+  "tr": "İyi ad altından yeğdir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve onur"
+ },
+ {
+  "id": "s011",
+  "ku": "Zêr di axê de jî zêr e.",
+  "tr": "Altın toprakta da altındır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve onur"
+ },
+ {
+  "id": "s012",
+  "ku": "Destê tenê deng jê naye.",
+  "tr": "Tek elden ses çıkmaz.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "birlik ve dayanışma"
+ },
+ {
+  "id": "s013",
+  "ku": "Axa welêt ji zêrê xelkê çêtir e.",
+  "tr": "Vatanın toprağı elin altınından değerlidir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "vatan ve toprak"
+ },
+ {
+  "id": "s014",
+  "ku": "Şeva tarî bê sibeh namîne.",
+  "tr": "Karanlık gece sabahsız kalmaz.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve onur"
+ },
+ {
+  "id": "s015",
+  "ku": "Çavê li deriyan, xwelî li seriyan.",
+  "tr": "Gözü başkasının kapısında kalanın başına kül yağsın.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "emek ve onur"
+ },
+ {
+  "id": "s016",
+  "ku": "Heta serî sax be, hêvî namire.",
+  "tr": "Baş sağ oldukça umut ölmez.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve onur"
+ },
+ {
+  "id": "s017",
+  "ku": "Agir bi agir nayê vemirandin.",
+  "tr": "Ateş ateşle söndürülmez.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "barış"
+ },
+ {
+  "id": "s018",
+  "ku": "Bi yek gulê bihar nabe.",
+  "tr": "Bir çiçekle bahar olmaz.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "birlik ve dayanışma"
+ },
+ {
+  "id": "s019",
+  "ku": "Dest destê dişo, herdu dest rû dişon.",
+  "tr": "El eli yıkar, iki el de yüzü yıkar.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dayanışma"
+ },
+ {
+  "id": "s020",
+  "ku": "Her çûk bi zimanê xwe dixwîne.",
+  "tr": "Her kuş kendi dilinde öter.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dil ve kimlik"
+ },
+ {
+  "id": "s021",
+  "ku": "Mal bi jinê mal e.",
+  "tr": "Ev, kadınla ev olur.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "kadın"
+ },
+ {
+  "id": "s022",
+  "ku": "Xwîn bi xwînê nayê şûştin.",
+  "tr": "Kan kanla yıkanmaz.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "barış"
+ },
+ {
+  "id": "s023",
+  "ku": "Welat ji dê şêrîntir e.",
+  "tr": "Yurt anneden daha tatlıdır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dil/kimlik ve yurt"
+ },
+ {
+  "id": "s024",
+  "ku": "Her giya li ser koka xwe şîn tê.",
+  "tr": "Her ot kendi kökü üzerinde yeşerir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dil/kimlik ve yurt"
+ },
+ {
+  "id": "s025",
+  "ku": "Bi ewtîna seyan, ji rê namîne karwan.",
+  "tr": "Köpekler havlıyor diye kervan yolundan kalmaz.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve sabır"
+ },
+ {
+  "id": "s026",
+  "ku": "Behr bi devê se pîs nabe.",
+  "tr": "Deniz, köpeğin ağzıyla kirlenmez.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve sabır"
+ },
+ {
+  "id": "s027",
+  "ku": "Giya di bin kevir de namîne.",
+  "tr": "Ot, taşın altında kalmaz.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve sabır"
+ },
+ {
+  "id": "s028",
+  "ku": "Çiya çiqas bilind be wê rê pê keve.",
+  "tr": "Dağ ne kadar yüksek olursa olsun, yol ona ulaşır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve sabır"
+ },
+ {
+  "id": "s029",
+  "ku": "Bi derziyê bîr nayê kolan.",
+  "tr": "İğneyle kuyu kazılmaz.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve sabır"
+ },
+ {
+  "id": "s030",
+  "ku": "Hûrik hûrik dagire tûrik.",
+  "tr": "Azar azar heybe dolar.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve sabır"
+ },
+ {
+  "id": "s031",
+  "ku": "Berf diçe erd dimîne.",
+  "tr": "Kar gider, toprak kalır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "umut"
+ },
+ {
+  "id": "s032",
+  "ku": "Avê ku da ser serî çi buhustek çi du buhust.",
+  "tr": "Su baştan aşınca bir karış ne, iki karış ne.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve sabır"
+ },
+ {
+  "id": "s033",
+  "ku": "Tirs berê mirinê nagire.",
+  "tr": "Korku, ölümü engellemez.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve sabır"
+ },
+ {
+  "id": "s034",
+  "ku": "Dilê şivan bixwaze dikare ji nêrî şîr derxe.",
+  "tr": "Çobanın gönlü isterse koçtan bile süt çıkarır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "umut"
+ },
+ {
+  "id": "s035",
+  "ku": "Cîh heye rev ji mêraniyê çêtir e.",
+  "tr": "Yeri gelir, kaçmak yiğitlikten iyidir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "direniş ve sabır"
+ },
+ {
+  "id": "s036",
+  "ku": "Kevirên mezin, bi yên biçûk disekinin.",
+  "tr": "Büyük taşlar, küçük taşlarla ayakta durur.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dayanışma"
+ },
+ {
+  "id": "s037",
+  "ku": "Yek heye bi sedî, sed heye ne bi yekî.",
+  "tr": "Yüze bedel bir kişi vardır, bire değmeyen yüz kişi vardır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dayanışma"
+ },
+ {
+  "id": "s038",
+  "ku": "Hestiyê bê minet, çêtir e ji goştê bi minet.",
+  "tr": "Minnetle yenen etten, minnetsiz kemik yeğdir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "özgürlük"
+ },
+ {
+  "id": "s039",
+  "ku": "Biçûkê salê, gula malê.",
+  "tr": "Evin küçüğü, evin gülüdür.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "kadın"
+ },
+ {
+  "id": "s040",
+  "ku": "Şêr şêr e; çi jin e çi mêr e.",
+  "tr": "Aslan aslandır; ister kadın ister erkek.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "kadın"
+ },
+ {
+  "id": "s041",
+  "ku": "Mêvanê yekî, mêvanê gundek î.",
+  "tr": "Bir kişinin misafiri, köyün misafiridir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dayanışma"
+ },
+ {
+  "id": "s042",
+  "ku": "Çiqas sax bimînî, ewqas ecêban dibînî.",
+  "tr": "Ne kadar yaşarsan o kadar şaşırtıcı şey görürsün.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "umut"
+ },
+ {
+  "id": "s043",
+  "ku": "Hemî çêlek tên dotin, hemî gotin nayên gotin.",
+  "tr": "Her inek sağılır ama her söz söylenmez.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgi ve öğrenme"
+ },
+ {
+  "id": "s044",
+  "ku": "Min xelk hîn kir govendê, êdî kesî bi destê min negirt.",
+  "tr": "Ben insanlara govend öğrettim, artık kimse elimi tutmadı.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgi ve öğrenme"
+ },
+ {
+  "id": "s045",
+  "ku": "Deriyê xwe bigir cîranê xwe meke diz.",
+  "tr": "Kapını kapat, komşunu hırsız çıkarma.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dostluk"
+ },
+ {
+  "id": "s046",
+  "ku": "Bi nermî mar ji qulê tê der.",
+  "tr": "Tatlı dil yılanı deliğinden çıkarır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dostluk"
+ },
+ {
+  "id": "s047",
+  "ku": "Dewar bi benan, mirov bi sozan tên girêdan.",
+  "tr": "Hayvan iple, insan sözle bağlanır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dostluk"
+ },
+ {
+  "id": "s048",
+  "ku": "Dîwaro ji te re dibêm, bûkê tu fêm bike.",
+  "tr": "Duvar sana diyorum, gelin sen anla.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgi ve öğrenme"
+ },
+ {
+  "id": "s049",
+  "ku": "Mal vedigere can venagere.",
+  "tr": "Mal geri gelir, can gelmez.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgi ve öğrenme"
+ },
+ {
+  "id": "s050",
+  "ku": "Mirov bi pirsê diçe Xursê.",
+  "tr": "İnsan sora sora Xurs'a gider (sora sora Bağdat bulunur).",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgi ve öğrenme"
+ },
+ {
+  "id": "s051",
+  "ku": "Aqilê sivik barê giran e.",
+  "tr": "Hafif akıl ağır bir yüktür.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgi ve öğrenme"
+ },
+ {
+  "id": "s052",
+  "ku": "Mirov nekev govendê, ku ketê divê xwe bileqîne.",
+  "tr": "Halaya girmeyesin; girdinse oynayacaksın.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "emek"
+ },
+ {
+  "id": "s053",
+  "ku": "Dengê defê ji dûr ve xweş tê.",
+  "tr": "Davulun sesi uzaktan hoş gelir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgi ve öğrenme"
+ },
+ {
+  "id": "s054",
+  "ku": "Dev dixwe rû fedî dike.",
+  "tr": "Ağız yer, yüz utanır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgi ve öğrenme"
+ },
+ {
+  "id": "s055",
+  "ku": "Kaniya ku tu avê jê vexwî kevra navêjyê.",
+  "tr": "Su içtiğin pınara taş atma.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "doğa"
+ },
+ {
+  "id": "s056",
+  "ku": "Temûz dipêje, tebax dirêje.",
+  "tr": "Temmuz pişirir, Ağustos uzatır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "doğa"
+ },
+ {
+  "id": "s057",
+  "ku": "Hezar dost kêm in, dijminek pir e.",
+  "tr": "Bin dost azdır, bir düşman çoktur.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dostluk"
+ },
+ {
+  "id": "s058",
+  "ku": "Çiqas bibî mîr xwe neke ji bîr.",
+  "tr": "Ne kadar bey olursan ol, kendini unutma.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgi ve öğrenme"
+ },
+ {
+  "id": "s059",
+  "ku": "Dibê deve çima stûyê te xwar e, dibê çiyê min li kar e.",
+  "tr": "Deveye \"boynun neden eğri\" demişler, \"nerem doğru ki\" demiş.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgi ve öğrenme"
+ },
+ {
+  "id": "s060",
+  "ku": "Heyfa ciwaniyê pîrî li pê ye.",
+  "tr": "Gençliğe yazık, ardında yaşlılık var.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgi ve öğrenme"
+ },
+ {
+  "id": "s061",
+  "ku": "Çiya bi çiya nagihêjin hev, mirov bi mirov digihêjin hev.",
+  "tr": "Dağ dağa kavuşmaz, insan insana kavuşur.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dostluk"
+ },
+ {
+  "id": "s062",
+  "ku": "Heval di roja teng de tê naskirin.",
+  "tr": "Dost dar günde tanınır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dostluk"
+ },
+ {
+  "id": "s063",
+  "ku": "Hevalê qenc ji birayê xirab çêtir e.",
+  "tr": "İyi dost, kötü kardeşten yeğdir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dostluk"
+ },
+ {
+  "id": "s064",
+  "ku": "Hevalê rê birayê rê ye.",
+  "tr": "Yol arkadaşı, yolun kardeşidir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dostluk"
+ },
+ {
+  "id": "s065",
+  "ku": "Hevalê xirab ji neyar xirabtir e.",
+  "tr": "Kötü dost düşmandan beterdir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dostluk"
+ },
+ {
+  "id": "s066",
+  "ku": "Mêvan mêvanê Xwedê ye.",
+  "tr": "Konuk, Tanrı'nın konuğudur.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dostluk"
+ },
+ {
+  "id": "s067",
+  "ku": "Mêvan hat, bereket hat.",
+  "tr": "Konuk geldi, bereket geldi.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dostluk"
+ },
+ {
+  "id": "s068",
+  "ku": "Cîranê qenc ji xaniyê qenc çêtir e.",
+  "tr": "İyi komşu, iyi evden yeğdir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "dostluk"
+ },
+ {
+  "id": "s069",
+  "ku": "Bê xwêdan nan nayê dest.",
+  "tr": "Alın teri akmadan ekmek ele gelmez.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "emek"
+ },
+ {
+  "id": "s070",
+  "ku": "Tu çi biçînî, wê bidirî.",
+  "tr": "Ne ekersen onu biçersin.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "emek"
+ },
+ {
+  "id": "s071",
+  "ku": "Karê îro nehêle sibê.",
+  "tr": "Bugünün işini yarına bırakma.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "emek"
+ },
+ {
+  "id": "s072",
+  "ku": "Nanê hişk ji yê birçî re şîrîn e.",
+  "tr": "Kuru ekmek aç olana tatlı gelir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "emek"
+ },
+ {
+  "id": "s073",
+  "ku": "Yê ku napirse rê winda dike.",
+  "tr": "Sormayan yolunu şaşırır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgelik"
+ },
+ {
+  "id": "s074",
+  "ku": "Gotina rast tal e.",
+  "tr": "Doğru söz acıdır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgelik"
+ },
+ {
+  "id": "s075",
+  "ku": "Tu tişt di bin kaş de namîne.",
+  "tr": "Saman altında hiçbir şey gizli kalmaz.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgelik"
+ },
+ {
+  "id": "s076",
+  "ku": "Peyv wekî tîr e, ji dev derket venagere.",
+  "tr": "Söz oktur; ağızdan çıktı mı geri dönmez.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgelik"
+ },
+ {
+  "id": "s077",
+  "ku": "Derew lingekî wê kurt e.",
+  "tr": "Yalanın bir ayağı kısadır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgelik"
+ },
+ {
+  "id": "s078",
+  "ku": "Rastî wekî rojê ye, nayê veşartin.",
+  "tr": "Doğruluk güneş gibidir, gizlenmez.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgelik"
+ },
+ {
+  "id": "s079",
+  "ku": "Sebir mifteya rehetiyê ye.",
+  "tr": "Sabır rahatlığın anahtarıdır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgelik"
+ },
+ {
+  "id": "s080",
+  "ku": "Lez û bez karê şeytan in.",
+  "tr": "Acele şeytan işidir.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgelik"
+ },
+ {
+  "id": "s081",
+  "ku": "Gul bê stirî nabe.",
+  "tr": "Gül dikensiz olmaz.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgelik"
+ },
+ {
+  "id": "s082",
+  "ku": "Çiya çiqas bilind be, rê heye.",
+  "tr": "Dağ ne kadar yüksek olsa yolu vardır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgelik"
+ },
+ {
+  "id": "s083",
+  "ku": "Av diçe, kevir dimîne.",
+  "tr": "Su gider, taş kalır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgelik"
+ },
+ {
+  "id": "s084",
+  "ku": "Mirov dimire, navê wî dimîne.",
+  "tr": "İnsan ölür, adı kalır.",
+  "kaynak": "Gotina pêşiyan",
+  "tema": "bilgelik"
+ }
+]

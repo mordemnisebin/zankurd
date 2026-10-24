@@ -53,6 +53,10 @@ void main() {
     for (final f in Directory('assets/data').listSync().whereType<File>()) {
       if (f.path.endsWith('.json')) haystack.write(f.readAsStringSync());
     }
+    // Ses kayıtlarına atıf dizinlerinden gelir (RecordedClipCatalog);
+    // dizinde olmayan bir .m4a yine öksüz sayılır.
+    final audioIndex = File('assets/audio/ku/index.json');
+    if (audioIndex.existsSync()) haystack.write(audioIndex.readAsStringSync());
     final text = haystack.toString();
 
     final orphans = <String>[];
@@ -183,6 +187,7 @@ void main() {
       final expected = {
         ...questionBankAssets,
         'assets/data/image_credits.json',
+        'assets/data/gotin_roje.json', // Günün sözü derlemi (soru bankası değil)
       };
       expect(
         dataDeclared,
@@ -196,7 +201,11 @@ void main() {
 
     test('diskteki her veri dosyası ya pakette ya bilinçli karantinada', () {
       const quarantined = {'deepseek_2026_08_18_questions.json'};
-      final shipped = {...questionBankAssets, 'assets/data/image_credits.json'};
+      final shipped = {
+        ...questionBankAssets,
+        'assets/data/image_credits.json',
+        'assets/data/gotin_roje.json',
+      };
       final stray = <String>[
         for (final f in Directory('assets/data').listSync().whereType<File>())
           if (f.path.endsWith('.json') &&

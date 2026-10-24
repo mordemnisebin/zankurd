@@ -40,12 +40,24 @@ class SahneShortfallNote extends StatelessWidget {
     super.key,
     required this.missing,
     this.alert = false,
+    this.warn = false,
     this.center = false,
+    this.fee,
   });
+
+  /// Verilirse not hangi ücrete ait olduğunu söyler: TR "50 jeton için 40
+  /// jeton eksik", KU "Ji bo 50 zêran 40 zêr kêm in". Ücret hazır bir etiket
+  /// olarak birleştirilmez; Kurmancîde sözcük sırası farklıdır (önce "Ji bo").
+  final int? fee;
 
   /// Eksik jeton sayısı (> 0).
   final int missing;
   final bool alert;
+
+  /// Uyarı (kehribar, `shortfallTx`): hata değil, "yetmiyor ama çözümü var"
+  /// (tur 8: oda ücretinde kırmızı "40 jeton eksik" hata gibi okunuyordu).
+  /// [alert]'ten öncelikli.
+  final bool warn;
 
   /// Satırı ortala (diyalog içinde).
   final bool center;
@@ -53,8 +65,10 @@ class SahneShortfallNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final color = alert ? t.errTx : t.tx2;
-    final label = context.t(K.coinsShort, {'coins': '$missing'});
+    final color = warn ? t.shortfallTx : (alert ? t.errTx : t.tx2);
+    final label = fee == null
+        ? context.t(K.coinsShort, {'coins': '$missing'})
+        : context.t(K.coinsShortForFee, {'fee': '$fee', 'coins': '$missing'});
     return Semantics(
       container: true,
       label: label,
@@ -72,7 +86,9 @@ class SahneShortfallNote extends StatelessWidget {
             // ikonudur; aynı ikon iki satırda tekrarlanmasın diye eksik sözü
             // durum ikonunu taşır.
             child: Icon(
-              alert ? AppIcons.triangleExclamation : AppIcons.circleInfo,
+              (alert || warn)
+                  ? AppIcons.triangleExclamation
+                  : AppIcons.circleInfo,
               size: 16,
               color: color,
             ),

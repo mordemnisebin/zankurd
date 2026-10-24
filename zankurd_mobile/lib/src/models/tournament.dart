@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+import 'public_profile.dart';
+
 @immutable
 class TournamentMatch {
   final String id;
@@ -22,6 +24,11 @@ class TournamentMatch {
   /// oynamalıyım" hiçbir yerde görünmüyordu (2026-08-14 denetimi).
   final DateTime? deadline;
 
+  /// İki oyuncunun herkese açık kimliği (depo gerçek turnuvada tamamlar;
+  /// bot/yerel şemada null: eski deterministik simge/renk çizilir).
+  final PublicProfile? playerOneProfile;
+  final PublicProfile? playerTwoProfile;
+
   const TournamentMatch({
     required this.id,
     required this.playerOneId,
@@ -35,6 +42,8 @@ class TournamentMatch {
     this.questionCategory = '',
     this.questionsAnswered = 0,
     this.deadline,
+    this.playerOneProfile,
+    this.playerTwoProfile,
   });
 
   TournamentMatch copyWith({
@@ -50,6 +59,8 @@ class TournamentMatch {
     String? questionCategory,
     int? questionsAnswered,
     DateTime? deadline,
+    PublicProfile? playerOneProfile,
+    PublicProfile? playerTwoProfile,
   }) => TournamentMatch(
     id: id ?? this.id,
     playerOneId: playerOneId ?? this.playerOneId,
@@ -63,6 +74,8 @@ class TournamentMatch {
     questionCategory: questionCategory ?? this.questionCategory,
     questionsAnswered: questionsAnswered ?? this.questionsAnswered,
     deadline: deadline ?? this.deadline,
+    playerOneProfile: playerOneProfile ?? this.playerOneProfile,
+    playerTwoProfile: playerTwoProfile ?? this.playerTwoProfile,
   );
 
   factory TournamentMatch.fromJson(Map<String, dynamic> json) =>
@@ -123,7 +136,12 @@ class TournamentRound {
 
   factory TournamentRound.fromJson(Map<String, dynamic> json) =>
       TournamentRound(
-        roundNumber: json['roundNumber'] as int? ?? 0,
+        // Sunucu (`get_tournament_bracket`) tur numarasını 'round' adıyla
+        // gönderir; 'roundNumber' yerel/eski biçimdir. İkisi de kabul edilir.
+        roundNumber:
+            (json['round'] as num?)?.toInt() ??
+            (json['roundNumber'] as num?)?.toInt() ??
+            0,
         matches:
             (json['matches'] as List?)
                 ?.map(
@@ -231,12 +249,16 @@ class TournamentStandings {
   final int totalScore;
   final String status; // 'champion', 'finalist', 'eliminated'
 
+  /// Herkese açık kimlik (fotoğraf/simge/kod); gerçek turnuvada dolar.
+  final PublicProfile? profile;
+
   const TournamentStandings({
     required this.rank,
     required this.playerId,
     required this.playerName,
     this.totalScore = 0,
     required this.status,
+    this.profile,
   });
 
   TournamentStandings copyWith({
@@ -245,12 +267,14 @@ class TournamentStandings {
     String? playerName,
     int? totalScore,
     String? status,
+    PublicProfile? profile,
   }) => TournamentStandings(
     rank: rank ?? this.rank,
     playerId: playerId ?? this.playerId,
     playerName: playerName ?? this.playerName,
     totalScore: totalScore ?? this.totalScore,
     status: status ?? this.status,
+    profile: profile ?? this.profile,
   );
 
   factory TournamentStandings.fromJson(Map<String, dynamic> json) =>

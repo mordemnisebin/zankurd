@@ -49,6 +49,7 @@ class KilimProgressBar extends StatelessWidget {
       SahneRole.learn => t.learnBar,
       SahneRole.gold => t.gold,
       SahneRole.race => t.race,
+      SahneRole.social => t.nil,
       SahneRole.neutral => c,
     };
   }
@@ -57,7 +58,9 @@ class KilimProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final progress = value.clamp(0.0, 1.0);
-    final shape = height <= 28 ? SahneShape.s : SahneShape.m;
+    final shape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(height / 2),
+    );
     final border = borderColor;
 
     return Semantics(

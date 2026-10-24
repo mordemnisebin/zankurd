@@ -1,3 +1,5 @@
+import 'public_profile.dart';
+
 class Player {
   /// Oyuncunun odada hazır olduğunu bildiren `state` değeri.
   ///
@@ -19,6 +21,9 @@ class Player {
     this.avatarUrl,
     this.avatarFrame,
     this.showcaseTitle,
+    this.tag,
+    this.rank,
+    this.left = false,
   });
 
   final String? id;
@@ -35,12 +40,69 @@ class Player {
   final String? avatarFrame;
   final String? showcaseTitle;
 
+  /// Oyuncu kodu (`profiles.player_tag`); adsız oyuncuda "Oyuncu ZK-XXXX".
+  final String? tag;
+
+  /// Kalabalık odanın sunucu sıralaması (1'den başlar; eşit skor aynı sırayı
+  /// paylaşır). Yalnız sonuç yükünde gelir; ayrılan oyuncuda ve eski
+  /// (1v1) odalarda `null`.
+  final int? rank;
+
+  /// Kalabalık odada oyun sürerken ayrılan ya da hazır olmadığı için düşen
+  /// oyuncu (`room_players.left_at` dolu). Satır silinmez: skoru kalır,
+  /// ama sıralamaya girmez ve oda onu beklemez.
+  final bool left;
+
+  /// Herkese açık profille tamamlanmış kopya: boş/yer tutucu olmayan ad,
+  /// fotoğraf, simge, renk, çerçeve, unvan ve oyuncu kodu profilden gelir.
+  /// Profil yoksa aynı oyuncu döner.
+  Player withProfile(PublicProfile? profile) {
+    if (profile == null) return this;
+    final profileName = profile.displayName?.trim() ?? '';
+    final a = profile.avatar;
+    return Player(
+      id: id,
+      name: profileName.isEmpty ? name : profileName,
+      score: score,
+      state: state,
+      streak: streak,
+      avatarIcon: a.iconId ?? avatarIcon,
+      avatarColor: a.colorHex ?? avatarColor,
+      avatarUrl: a.photoUrl ?? avatarUrl,
+      avatarFrame: a.frameId ?? avatarFrame,
+      showcaseTitle: a.showcaseTitle ?? showcaseTitle,
+      tag: profile.playerTag ?? tag,
+      rank: rank,
+      left: left,
+    );
+  }
+
+  /// Aynı oyuncunun [other] kaydındaki kimlik alanlarıyla zenginleştirilmiş
+  /// kopyası (canlı skor akışı eski, kimliği eksik kaydı ezmesin diye).
+  Player mergeIdentity(Player other) => Player(
+    id: id ?? other.id,
+    name: name,
+    score: score,
+    state: state,
+    streak: streak,
+    avatarIcon: other.avatarIcon ?? avatarIcon,
+    avatarColor: other.avatarColor ?? avatarColor,
+    avatarUrl: other.avatarUrl ?? avatarUrl,
+    avatarFrame: other.avatarFrame ?? avatarFrame,
+    showcaseTitle: other.showcaseTitle ?? showcaseTitle,
+    tag: other.tag ?? tag,
+    rank: rank,
+    left: left,
+  );
+
   Player copyWith({
     String? id,
     String? name,
     int? score,
     String? state,
     int? streak,
+    int? rank,
+    bool? left,
   }) {
     return Player(
       id: id ?? this.id,
@@ -53,6 +115,9 @@ class Player {
       avatarUrl: avatarUrl,
       avatarFrame: avatarFrame,
       showcaseTitle: showcaseTitle,
+      tag: tag,
+      rank: rank ?? this.rank,
+      left: left ?? this.left,
     );
   }
 }

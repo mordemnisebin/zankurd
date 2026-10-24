@@ -800,7 +800,7 @@
     "promptTr": "Dengbejlerin kilamları ne anlatır?",
     "answers": [
       "Rêbaza çêkirina nan",
-      "Qaîdeyên rêziman",
+      "Qaîdeyên rêzimanê",
       "Encamên maçan",
       "Çîrokên evîn û şer"
     ],
@@ -832,7 +832,7 @@
     "category": "Çand",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Kesê ku bi dengê xwe kilam dibêje çi ye?",
+    "prompt": "Kesê ku bi dengê xwe kilaman dibêje kî ye?",
     "promptTr": "Sesiyle kilam söyleyen kişiye ne denir?",
     "answers": [
       "Mamoste",
@@ -849,7 +849,7 @@
     "correctAnswer": "Dengbêj",
     "correctAnswerTr": "Dengbej",
     "explanation": "Sesiyle kilam söyleyen kişi dengbejdir.",
-    "explanationKu": "Kesê ku bi dengê xwe kilam dibêje dengbêj e.",
+    "explanationKu": "Kesê ku bi dengê xwe kilaman dibêje dengbêj e.",
     "explanationTr": "Sesiyle kilam söyleyen kişi dengbejdir.",
     "metadata": {
       "dialect": "kurmanci",

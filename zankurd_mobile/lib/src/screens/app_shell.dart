@@ -1,7 +1,8 @@
+import '../utils/profile_tab_request.dart';
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show kIsWeb, visibleForTesting;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,12 +11,16 @@ import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/async_duel.dart';
 import '../models/room.dart';
+import '../models/room_invite.dart';
 import '../providers/auth_provider.dart';
 import '../providers/remote_availability.dart';
 import '../providers/repository_holder.dart';
 import '../data/offline_zankurd_repository.dart';
 import '../widgets/sahne/sahne.dart';
+import '../services/notification_service.dart';
+import '../services/notification_sync.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/join_deep_link.dart';
@@ -26,8 +31,14 @@ import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
 import 'onboarding_screen.dart';
 import '../services/analytics_service.dart';
+import '../services/foreground_push_center.dart';
+import '../services/push_messaging_gateway.dart';
 import '../services/push_tap_router.dart';
+import '../services/social_push_prompt.dart';
+import '../services/room_result_presentation.dart';
 import '../services/push_token_sync.dart';
+import 'async_duel/async_duel_inbox.dart';
+import 'async_duel/async_duel_play_screen.dart';
 import 'friends_screen.dart';
 import 'password_recovery_screen.dart';
 import 'profile_name_gate_screen.dart';
@@ -161,11 +172,18 @@ class _AppShellState extends State<AppShell>
     WidgetsBinding.instance.addObserver(this);
     JoinDeepLink.incoming.addListener(_onIncomingJoinLink);
     PushTapRouter.pending.addListener(_onPushTapTarget);
+    ProfileTabRequest.pending.addListener(_onProfileTabRequest);
+    _foregroundPushSub = ForegroundPushCenter.events.listen(
+      _refreshForForegroundPush,
+    );
+    SocialPushPrompt.tokenSync = widget.pushTokenSync;
     _homeScrollController = ScrollController();
     _profileScrollController = ScrollController();
     _loadOnboardingState();
     _initConnectivity();
     unawaited(widget.pushTokenSync?.sync());
+    unawaited(NotificationService.syncStreakWarning());
+    unawaited(NotificationSync.run(_repository));
   }
 
   @override
@@ -174,6 +192,15 @@ class _AppShellState extends State<AppShell>
     // Rota kontrolünden ÖNCE okunmalı: rota aynıysa erken dönüldüğünde
     // depo takası hiç izlenmezdi.
     _repositoryHolder = RepositoryHolder.read(context);
+    // Sosyal kilit kalkınca bekleyen davet kodu açılır. Kabuğun kendi
+    // çizimi buna güvenilir şekilde uyanmaz (bant yalnız alt ağaçta
+    // izliyor), bu yüzden doğrudan dinlenir.
+    final availability = RemoteAvailability.read(context);
+    if (!identical(availability, _availability)) {
+      _availability?.removeListener(_onAvailabilityChanged);
+      _availability = availability;
+      availability?.addListener(_onAvailabilityChanged);
+    }
     final route = ModalRoute.of<dynamic>(context);
     if (identical(route, _shellRoute)) return;
     final previous = _shellRoute;
@@ -289,6 +316,16 @@ class _AppShellState extends State<AppShell>
     if (state == AppLifecycleState.resumed) {
       _wakeRoomResumeForCurrentUser();
       unawaited(widget.pushTokenSync?.sync());
+      // Seri uyarısı tek atıştır: öne gelişte bir sonraki akşama yeniden kurulur.
+      unawaited(NotificationService.syncStreakWarning());
+      unawaited(NotificationSync.run(_repository));
+      // Ön plana dönüşte görünen sekme tazelenir. Ana ekranın düello kartı
+      // yalnız tazeleme işareti (`_homeRefresh`) değişince yeniden okur;
+      // uygulama arka plandayken biten bir düello (rakip oynadı, bildirim
+      // geldi) kullanıcı uygulamayı açınca eski haliyle görünüyordu.
+      // Üstte bir sayfa (maç, sonuç) açıksa dokunulmaz: o sayfaya dönülünce
+      // sayfa gözlemcisi zaten tazeler.
+      if (_shellIsTopRoute) _refreshVisibleTab();
       // Arkaya atılmış bir deneme ön plana dönüşle tazelenir: kullanıcı
       // uygulamayı açtığında "sunucuya ulaşılamadı" bandı, bir sonraki
       // geriçekilmeyi (60 sn'ye kadar) beklemeden kalkabilir.
@@ -337,6 +374,11 @@ class _AppShellState extends State<AppShell>
         (_) => _consumePushTapTarget(),
       );
     }
+    // Maç sürerken gelen davet bağlantısı da burada, kabuk yeniden en
+    // üstteyken açılır.
+    if (_pendingJoinCode != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _tryOpenJoinCode());
+    }
     // Kabuğun üstüne itilmiş HERHANGİ bir rotadan dönüldü — diyalog ve alt
     // sayfa dâhil. Burada yalnız oda devamı uyandırılır.
     //
@@ -374,13 +416,26 @@ class _AppShellState extends State<AppShell>
     _considerRemoteUpgrade();
   }
 
+  RemoteAvailability? _availability;
+
+  void _onAvailabilityChanged() {
+    if (_pendingJoinCode == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _tryOpenJoinCode());
+  }
+
   @override
   void dispose() {
+    _availability?.removeListener(_onAvailabilityChanged);
     appRouteObserver.unsubscribe(this);
     appPageRouteObserver.unsubscribe(_tabRefreshAware);
     WidgetsBinding.instance.removeObserver(this);
     JoinDeepLink.incoming.removeListener(_onIncomingJoinLink);
     PushTapRouter.pending.removeListener(_onPushTapTarget);
+    ProfileTabRequest.pending.removeListener(_onProfileTabRequest);
+    unawaited(_foregroundPushSub?.cancel());
+    if (identical(SocialPushPrompt.tokenSync, widget.pushTokenSync)) {
+      SocialPushPrompt.tokenSync = null;
+    }
     _connectivitySub?.cancel();
     _homeScrollController.dispose();
     _profileScrollController.dispose();
@@ -392,20 +447,63 @@ class _AppShellState extends State<AppShell>
   }
 
   Future<void> _loadOnboardingState() async {
-    final preferences = await SharedPreferences.getInstance();
+    // Okuma başarısız olursa (bozuk depo) yükleyici sonsuza dek kalmasın:
+    // güvenli varsayılan, tanıtımı göstermektir.
+    var show = true;
+    try {
+      final preferences = await SharedPreferences.getInstance();
+      show = preferences.getBool(_onboardingSeenKey) != true;
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'onboarding state load failed',
+      );
+    }
     if (!mounted) return;
     setState(() {
-      _showOnboarding = preferences.getBool(_onboardingSeenKey) != true;
+      _showOnboarding = show;
       _checkingOnboarding = false;
     });
   }
 
   Future<void> _completeOnboarding() async {
-    final preferences = await SharedPreferences.getInstance();
-    await preferences.setBool(_onboardingSeenKey, true);
+    try {
+      final preferences = await SharedPreferences.getInstance();
+      await preferences.setBool(_onboardingSeenKey, true);
+    } catch (error, stack) {
+      // Yazılamasa da kullanıcıyı tanıtımda kilitleme; bellekte ilerle.
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'onboarding flag write failed',
+      );
+    }
     AnalyticsService.instance.logOnboardingCompleted();
     if (!mounted) return;
     setState(() => _showOnboarding = false);
+  }
+
+  bool _wasAuthenticated = false;
+
+  /// Oturumlu → oturumsuz GEÇİŞİNDE kabuğun üstündeki rotaları kapatır.
+  ///
+  /// Hesap silme ya da uzaktan oturum kapanması giriş ekranını kabuğun
+  /// YERİNE çizer; üstteki Ayarlar gibi itilmiş rotalar yığında kalır ve
+  /// kullanıcı giriş yerine takılı bir sayfaya bakardı (bkz.
+  /// `test/app_shell_signed_out_pops_routes_test.dart`). Yalnız geçiş
+  /// tetikler: hiç girmemiş kullanıcının açtığı Kayıt ol gibi sayfalara
+  /// dokunulmaz.
+  void _popRoutesWhenSignedOut(bool authenticated) {
+    final wasAuthenticated = _wasAuthenticated;
+    _wasAuthenticated = authenticated;
+    if (!wasAuthenticated || authenticated) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final shellRoute = _shellRoute;
+      if (shellRoute == null) return;
+      Navigator.of(context).popUntil((route) => identical(route, shellRoute));
+    });
   }
 
   /// Etkin depo.
@@ -427,9 +525,16 @@ class _AppShellState extends State<AppShell>
           ? _normalizedUserId(_repository.currentUserId)
           : null,
     );
+    _popRoutesWhenSignedOut(authProvider.isAuthenticated);
 
     if (_checkingOnboarding) {
       return const Scaffold(body: BrandedLoaderCenter());
+    }
+
+    // Kurtarma kapısı tanıtımdan ÖNCE: sıfırlama bağlantısını yeni bir
+    // tarayıcıda açan kişi önce örnek sorularla karşılaşıyordu (2026-10-23).
+    if (authProvider.needsPasswordRecovery) {
+      return const PasswordRecoveryScreen();
     }
 
     if (_showOnboarding) {
@@ -466,9 +571,6 @@ class _AppShellState extends State<AppShell>
     //
     // İtilmiş bir rota yerine build kapısı olması bilinçli: geri tuşu
     // ya da web'de tarayıcı geri düğmesi kurtarmayı atlayamasın.
-    if (authProvider.needsPasswordRecovery) {
-      return const PasswordRecoveryScreen();
-    }
 
     final activeUserId = _repository.currentUserId;
     if (_profileCheckedUserId != activeUserId) {
@@ -630,23 +732,54 @@ class _AppShellState extends State<AppShell>
     return RemoteAvailability.socialLockedWatch(context) || _isOffline;
   }
 
+  /// Kabuk kapıları (onboarding, giriş, isim) geçildi ve davet bağlantıları
+  /// işlenebilir.
   bool _joinDeepLinkScheduled = false;
 
+  /// Açılmayı bekleyen davet kodu. Kod YALNIZ açılırken silinir: kabuk
+  /// sosyal kilitteyken (sunucuya erişilemiyor) ya da üstünde bir maç/lobi
+  /// açıkken kod kaybolmaz, uygun an gelince ([_scheduleJoinDeepLink] her
+  /// çizimde, [didPopNext] dönüşte) açılır.
+  String? _pendingJoinCode;
+  bool _joinConsumeQueued = false;
+
   void _scheduleJoinDeepLink() {
-    if (_joinDeepLinkScheduled) return;
-    _joinDeepLinkScheduled = true;
+    if (!_joinDeepLinkScheduled) {
+      _joinDeepLinkScheduled = true;
+      // Soğuk açılış bağlantısı bir kez okunur ve bekleyen koda alınır.
+      _pendingJoinCode ??= JoinDeepLink.consumeInitialRoute();
+    }
+    if (_pendingJoinCode == null && JoinDeepLink.incoming.value == null) {
+      return;
+    }
+    if (_joinConsumeQueued) return;
+    _joinConsumeQueued = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      unawaited(_consumeJoinDeepLink());
+      _joinConsumeQueued = false;
+      _tryOpenJoinCode();
     });
   }
 
-  Future<void> _consumeJoinDeepLink() async {
-    if (!mounted) return;
-    if (RemoteAvailability.socialLockedIn(context)) return;
-    final code =
-        JoinDeepLink.consumeInitialRoute() ?? JoinDeepLink.takeIncoming();
+  /// Bekleyen kodu, koşullar uygunsa açar; değilse bekletir.
+  ///
+  /// ## Kusur
+  ///
+  /// Soğuk açılışta sosyal yüzeyler kilitliyse (`socialLockedIn`) eski kod
+  /// erken dönüyordu ama `_joinDeepLinkScheduled` doğru kaldığı için bir daha
+  /// hiç denenmiyordu: kilit kalktığında davet sessizce kayboluyordu. Sıcak
+  /// açılışta ise kod, üstte canlı bir maç ya da lobi varken bile rotayı
+  /// üstüne itiyordu (bildirim dokunuşu bunu zaten bekliyordu). Hatalar da
+  /// yalnız ErrorReporter'a gidiyordu; oyuncu bağlantıya dokunup hiçbir şey
+  /// olmadığını görüyordu.
+  void _tryOpenJoinCode() {
+    if (!mounted || !_joinDeepLinkScheduled) return;
+    _pendingJoinCode ??= JoinDeepLink.takeIncoming();
+    final code = _pendingJoinCode;
     if (code == null) return;
-    await _joinOnlineRoomAndOpen(code);
+    if (RemoteAvailability.socialLockedIn(context)) return;
+    if (!_shellIsTopRoute) return;
+    _pendingJoinCode = null;
+    unawaited(_openJoinCode(code));
   }
 
   /// Uygulama açıkken gelen davet (sıcak açılış). Bağlantıyı
@@ -654,24 +787,44 @@ class _AppShellState extends State<AppShell>
   /// [JoinDeepLink.incoming] kanalına koyar; kabuk buradan tüketir.
   ///
   /// Kabuk henüz ana arayüze ulaşmadıysa (açılış, giriş, isim kapısı) kod
-  /// kanalda bekler; ana arayüz kurulunca [_consumeJoinDeepLink] alır.
-  /// Sosyal yüzeyler kilitliyken (sunucuya erişilemiyor) davet yok sayılır —
-  /// soğuk açılıştaki sözleşmeyle aynı.
-  void _onIncomingJoinLink() {
-    if (!mounted || !_joinDeepLinkScheduled) return;
-    if (JoinDeepLink.incoming.value == null) return;
-    if (RemoteAvailability.socialLockedIn(context)) {
-      JoinDeepLink.takeIncoming();
-      return;
+  /// kanalda bekler; ana arayüz kurulunca [_scheduleJoinDeepLink] alır.
+  void _onIncomingJoinLink() => _tryOpenJoinCode();
+
+  /// `/join/<kod>` bağlantısının iki türü: `D…` meydan okuma kodu ya da
+  /// `ZK-…` oda kodu ([JoinDeepLink.isChallengeCode] ikisini kesin ayırır).
+  Future<void> _openJoinCode(String code) {
+    if (JoinDeepLink.isChallengeCode(code)) {
+      return _acceptChallengeAndOpen(code);
     }
-    final code = JoinDeepLink.takeIncoming();
-    if (code == null) return;
-    unawaited(_joinOnlineRoomAndOpen(code));
+    return _joinOnlineRoomAndOpen(code);
+  }
+
+  /// Meydan okumayı kabul edip 7 soruluk oyun ekranını açar. Kabul
+  /// (`accept_async_duel_challenge`), hesabı olmayan misafir için oturumu da
+  /// kendisi açar; hatalar (süresi dolmuş, başkası almış, kendi bağlantım…)
+  /// oyun ekranında dürüst, yerelleştirilmiş bir metinle ve "Kapat" ile
+  /// gösterilir — çıkmaz sokak yok.
+  Future<void> _acceptChallengeAndOpen(String code) async {
+    try {
+      _selectTab(1);
+      if (!mounted) return;
+      await Navigator.of(context).push(
+        AppRoute.to(
+          AsyncDuelPlayScreen(
+            repository: _repository,
+            entry: AsyncDuelEntry.acceptChallenge(code),
+          ),
+        ),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'challenge deep link failed');
+      if (mounted) _showJoinFailure(asyncDuelStartErrorMessage(context, error));
+    }
   }
 
   /// [code] ile oda katılımını dener, başarılıysa [RoomScreen] açar.
   ///
-  /// Soğuk açılış (`_consumeJoinDeepLink`) ve sıcak açılış
+  /// Soğuk açılış (`_tryOpenJoinCode`) ve sıcak açılış
   /// (`didPushRouteInformation`) aynı katılma gövdesini paylaşır; ikisinin
   /// farkı yalnız KODUN NEREDEN geldiğidir.
   Future<void> _joinOnlineRoomAndOpen(String code) async {
@@ -683,7 +836,17 @@ class _AppShellState extends State<AppShell>
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'join deep link failed');
+      // Oda katılma menüsüyle AYNI hata metinleri (dolu oda, başka odada,
+      // bulunamadı ...): bağlantıya dokunup hiçbir şey olmaması yerine
+      // sebep söylenir.
+      if (mounted) _showJoinFailure(context.t(joinRoomErrorKey(error)));
     }
+  }
+
+  void _showJoinFailure(String message) {
+    ScaffoldMessenger.maybeOf(
+      context,
+    )?.showSnackBar(SnackBar(content: Text(message)));
   }
 
   bool _pushTapScheduled = false;
@@ -721,6 +884,25 @@ class _AppShellState extends State<AppShell>
     _applyPushTapTarget(target);
   }
 
+  StreamSubscription<ForegroundPush>? _foregroundPushSub;
+
+  /// Uygulama açıkken gelen push'un ilgili yüzeyini tazeler: arkadaşlık
+  /// isteği/kabulü → Sıralama (arkadaş rozeti) ve Yarış; oda daveti → Ana
+  /// ("Odaya davet" kartı); düello → Yarış ("Düellolarım"). Bant iletiyi
+  /// gösterir, bu ise ardındaki sayacı bayat bırakmaz.
+  void _refreshForForegroundPush(ForegroundPush push) {
+    if (!mounted) return;
+    switch (push.kind) {
+      case 'friend_request' || 'friend_accept':
+        _leaderboardRefresh.value++;
+        _playRefresh.value++;
+      case 'room_invite':
+        _homeRefresh.value++;
+      case 'async_duel_invite' || 'async_duel_turn' || 'async_duel_result':
+        _playRefresh.value++;
+    }
+  }
+
   /// Kabuğun üstünde bir sayfa ya da diyalog (ör. canlı bir oda maçı) açık
   /// mı? Açıksa bildirim hedefi BEKLER: arkadaşlar ekranını bir maçın üstüne
   /// itmek, arkada sayacı işleyen oyunu oyuncunun elinden alırdı. Hedef
@@ -729,8 +911,19 @@ class _AppShellState extends State<AppShell>
 
   void _applyPushTapTarget(PushTapTarget target) {
     switch (target) {
+      case PushTapTarget.home:
+        _selectTab(0);
       case PushTapTarget.playTab:
         _selectTab(1);
+      case PushTapTarget.duelInbox:
+        _selectTab(1);
+        unawaited(
+          Navigator.of(
+            context,
+          ).push(AppRoute.to(AsyncDuelListScreen(repository: _repository))),
+        );
+      case PushTapTarget.roomInvite:
+        unawaited(_openRoomInviteFromPush());
       case PushTapTarget.friends:
         _selectTab(2);
         unawaited(
@@ -738,6 +931,40 @@ class _AppShellState extends State<AppShell>
             context,
           ).push(AppRoute.to(FriendsScreen(repository: _repository))),
         );
+    }
+  }
+
+  /// `room_invite` bildirimine dokunuş: tek bekleyen davet varsa kabul edilip
+  /// mevcut oda katılma yolundan girilir (bağlantıyla gelen davetle aynı
+  /// davranış); birden çoksa ya da hiç yoksa Ana ekran açılır, "Odaya davet"
+  /// kartı orada bekler. Süresi dolmuş davet sessiz kalmaz.
+  Future<void> _openRoomInviteFromPush() async {
+    _selectTab(0);
+    try {
+      final invites = await _repository.loadMyRoomInvites(throwOnError: true);
+      if (!mounted || invites.length != 1) {
+        if (mounted) _homeRefresh.value++;
+        return;
+      }
+      final code = await _repository.respondRoomInvite(
+        invites.single.id,
+        accept: true,
+      );
+      if (code == null || !mounted) return;
+      await _joinOnlineRoomAndOpen(code);
+    } on RoomInviteException catch (error) {
+      if (mounted) {
+        _showJoinFailure(
+          context.t(
+            error.reason == RoomInviteFailure.expired
+                ? K.roomInviteExpired
+                : K.roomInviteFailed,
+          ),
+        );
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'room invite push tap');
+      if (mounted) _showJoinFailure(context.t(K.roomInviteFailed));
     }
   }
 
@@ -768,6 +995,12 @@ class _AppShellState extends State<AppShell>
       ),
       _ => const SizedBox.shrink(),
     };
+  }
+
+  /// Arkadaşlar ekranındaki misafir daveti "Hesabını kaydet" diyor: Profil
+  /// sekmesi (kaydetme satırının yeri) açılır.
+  void _onProfileTabRequest() {
+    if (mounted) _selectTab(3);
   }
 
   void _selectTab(int i) {
@@ -839,7 +1072,7 @@ class _AppShellState extends State<AppShell>
             key: _homeNavKey,
             child: const Icon(_learnIcon),
           ),
-          label: Text(context.t(K.home)),
+          label: Text(context.t(K.navLearn)),
         ),
         NavigationRailDestination(
           icon: KeyedSubtree(key: _playNavKey, child: const Icon(_playIcon)),
@@ -873,58 +1106,140 @@ class _AppShellState extends State<AppShell>
   /// bürünüyordu. Artık her yerde TEK görünüş; üstte yalnız 1 px çizgi.
   Widget _buildBottomNav(BuildContext context, bool ku) {
     final t = SahneTokens.of(context);
+    final decoration = BoxDecoration(
+      color: t.nav,
+      border: Border(top: BorderSide(color: t.line)),
+    );
+    // İki dilli etiket (2026-10-20): her sekme adının altında öbür dildeki
+    // adı, 10/12 ([SahneBilingualLabel.compact]). `NavigationDestination`
+    // yalnız düz metin etiket alır; küçük satır çubuğun altındaki ayrı bir
+    // sırada, her sekmenin tam altında durur ve dokunulunca aynı sekmeyi
+    // açar. Ekran okuyucu yalnız asıl adı okur. Büyük yazıda (10 → 15'i
+    // aşınca) satır hiç çizilmez: çubuk uzar ve sekme adlarıyla yarışırdı.
+    final seconds = [for (final key in _navLabelKeys) context.secondLabel(key)];
+    final showSeconds =
+        seconds.any((label) => label != null) &&
+        MediaQuery.textScalerOf(context).scale(10) <= 15;
+    if (!showSeconds) {
+      return DecoratedBox(
+        decoration: decoration,
+        child: _buildNavigationBar(context),
+      );
+    }
+    // Küçük satır asıl adın hemen altına otursun: çubuk 64 yerine 60
+    // (ikon plaketi 32 + 4 + ad 20 = 56 yine sığar), altında 12'lik sıra.
+    // Toplam 72: ana sayfada ilk konu satırı 390×844'te ilk ekranda kalır
+    // (bekçi: `manzara_seridi_test.dart`).
+    final bar = _buildNavigationBar(context, height: 60);
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: t.nav,
-        border: Border(top: BorderSide(color: t.line)),
+      decoration: decoration,
+      child: SafeArea(
+        top: false,
+        // Üst dolgu da silinir: `NavigationBar` kendi `SafeArea`sıyla durum
+        // çubuğu payını (iPhone'da ~62) ekliyordu; iki dilli satır açıkken
+        // çubuk 60 yerine 122 çiziliyor, içerik üstünde boş bir bantta
+        // kesiliyordu (2026-10-22 simülatör, bekçi: nav_yukseklik_test).
+        child: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          removeBottom: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              bar,
+              Row(
+                key: const ValueKey('nav-second-labels'),
+                children: [
+                  for (var i = 0; i < seconds.length; i++)
+                    Expanded(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        excludeFromSemantics: true,
+                        onTap: () => _selectTab(i),
+                        child: SizedBox(
+                          height: 12,
+                          child: seconds[i] == null
+                              ? null
+                              : Center(
+                                  child: SahneBilingualLabel(
+                                    seconds[i]!,
+                                    compact: true,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
-      child: NavigationBar(
-        selectedIndex: _tab,
-        onDestinationSelected: _selectTab,
-        // Sekme hedefleri dile bağımlı metinle değil, sabit anahtarla
-        // bulunur — etiketler ("Yarış") ekran içeriğinde de geçebiliyor.
-        destinations: [
-          NavigationDestination(
-            key: const ValueKey('nav-learn'),
-            icon: const Icon(_learnIcon),
-            selectedIcon: KeyedSubtree(
-              key: _homeNavKey,
-              child: const Icon(_learnIcon),
-            ),
-            label: context.t(K.home),
+    );
+  }
+
+  /// Alt sekmelerin metin anahtarları, sekme sırasıyla.
+  static const _navLabelKeys = [
+    K.navLearn,
+    K.navPlay,
+    K.navLeaderboard,
+    K.navProfile,
+  ];
+
+  Widget _buildNavigationBar(BuildContext context, {double? height}) {
+    return NavigationBar(
+      height: height,
+      selectedIndex: _tab,
+      onDestinationSelected: _selectTab,
+      // Sekme hedefleri dile bağımlı metinle değil, sabit anahtarla
+      // bulunur — etiketler ("Yarış") ekran içeriğinde de geçebiliyor.
+      destinations: [
+        NavigationDestination(
+          key: const ValueKey('nav-learn'),
+          icon: const Icon(_learnIcon),
+          selectedIcon: KeyedSubtree(
+            key: _homeNavKey,
+            child: const Icon(_learnIcon),
           ),
-          NavigationDestination(
-            key: const ValueKey('nav-play'),
-            icon: KeyedSubtree(key: _playNavKey, child: const Icon(_playIcon)),
-            selectedIcon: const Icon(_playIcon),
-            label: context.t(K.navPlay),
+          label: context.t(K.navLearn),
+        ),
+        NavigationDestination(
+          key: const ValueKey('nav-play'),
+          icon: KeyedSubtree(key: _playNavKey, child: const Icon(_playIcon)),
+          selectedIcon: const Icon(_playIcon),
+          label: context.t(K.navPlay),
+        ),
+        NavigationDestination(
+          key: const ValueKey('nav-leaderboard'),
+          icon: const Icon(_leaderboardIcon),
+          selectedIcon: const Icon(_leaderboardIcon),
+          label: context.t(K.navLeaderboard),
+        ),
+        NavigationDestination(
+          key: const ValueKey('nav-profile'),
+          icon: KeyedSubtree(
+            key: _profileNavKey,
+            child: const Icon(_profileIcon),
           ),
-          NavigationDestination(
-            key: const ValueKey('nav-leaderboard'),
-            icon: const Icon(_leaderboardIcon),
-            selectedIcon: const Icon(_leaderboardIcon),
-            label: context.t(K.navLeaderboard),
-          ),
-          NavigationDestination(
-            key: const ValueKey('nav-profile'),
-            icon: KeyedSubtree(
-              key: _profileNavKey,
-              child: const Icon(_profileIcon),
-            ),
-            selectedIcon: const Icon(_profileIcon),
-            label: context.t(K.navProfile),
-          ),
-        ],
-      ),
+          selectedIcon: const Icon(_profileIcon),
+          label: context.t(K.navProfile),
+        ),
+      ],
     );
   }
 
   Future<void> _loadProfileNameState(String? userId) async {
     setState(() => _checkingProfileName = true);
     final offlineMode = context.read<AuthProvider>().isOfflineMode;
-    final preferences = await SharedPreferences.getInstance();
-    final key = _profileNameCompletionKey(userId, offlineMode: offlineMode);
-    final completed = key != null && preferences.getBool(key) == true;
+    var completed = false;
+    try {
+      final preferences = await SharedPreferences.getInstance();
+      final key = _profileNameCompletionKey(userId, offlineMode: offlineMode);
+      completed = key != null && preferences.getBool(key) == true;
+    } catch (error, stack) {
+      // Okunamazsa kapı gösterilir (güvenli varsayılan); yükleyici kapanır.
+      ErrorReporter.record(error, stack, reason: 'profile name state failed');
+    }
 
     // Bu kapı yalnız oyuncunun adı başarıyla kaydettiğini belirten yerel
     // ve kullanıcıya özel bayrağa dayanır. Global bir bayrak hesap değişiminde
@@ -940,12 +1255,17 @@ class _AppShellState extends State<AppShell>
 
   Future<void> _completeProfileName() async {
     final offlineMode = context.read<AuthProvider>().isOfflineMode;
-    final preferences = await SharedPreferences.getInstance();
-    final key = _profileNameCompletionKey(
-      _repository.currentUserId,
-      offlineMode: offlineMode,
-    );
-    if (key != null) await preferences.setBool(key, true);
+    try {
+      final preferences = await SharedPreferences.getInstance();
+      final key = _profileNameCompletionKey(
+        _repository.currentUserId,
+        offlineMode: offlineMode,
+      );
+      if (key != null) await preferences.setBool(key, true);
+    } catch (error, stack) {
+      // Yazılamasa da kullanıcıyı içeride kilitleme; bellekte ilerle.
+      ErrorReporter.record(error, stack, reason: 'profile name flag failed');
+    }
     if (!mounted) return;
     setState(() {
       _profileNameComplete = true;
@@ -1023,7 +1343,9 @@ class _AppShellState extends State<AppShell>
               repository: _repository,
               room: snapshot.room,
               questions: questions,
-              is1v1: true,
+              // Kalabalık oda 1v1 düello yolunu kullanmaz (oda türü
+              // `snapshot.room`dan okunur).
+              is1v1: !snapshot.room.isCrowd,
               resumeSnapshot: snapshot,
             );
           case RoomStatus.finished:
@@ -1037,6 +1359,15 @@ class _AppShellState extends State<AppShell>
       final pending = await _repository.loadMyPendingRoomResult();
       if (!_continueRoomResumeOrDefer(userId, epoch)) return;
       if (pending == null) {
+        _roomResumeCheckedUsers.add(userId);
+        return;
+      }
+      // Odadan KENDİ isteğiyle ayrılan oyuncunun bekleyen sonucu yoktur.
+      // Sunucu kalabalık odada ayrılana da son durumu döndürüyordu; oda
+      // sonradan bitince (kimi zaman bir dakika sonra, uygulama başka
+      // sekmedeyken) "0 puan" sonuç ekranı kendiliğinden açılıyordu (iki
+      // simülatör turu, 2026-10-21). Ayrılan oyuncuya sonuç sunulmaz.
+      if (pendingResultOwnerLeft(pending, userId)) {
         _roomResumeCheckedUsers.add(userId);
         return;
       }
@@ -1135,19 +1466,13 @@ class _AppShellState extends State<AppShell>
 
   bool _isValidPendingRoomResult(RoomResultSnapshot snapshot, String userId) {
     final roomId = snapshot.room.id?.trim();
-    final playerIds = snapshot.room.players
-        .map((player) => player.id?.trim() ?? '')
-        .toList(growable: false);
     return roomId != null &&
         roomId.isNotEmpty &&
         snapshot.ownPlayerId.trim() == userId &&
         snapshot.room.status == RoomStatus.finished &&
         snapshot.endedReason.trim().toLowerCase() == 'completed' &&
         snapshot.forfeitedBy == null &&
-        playerIds.length == 2 &&
-        playerIds.every((id) => id.isNotEmpty) &&
-        playerIds.toSet().length == 2 &&
-        playerIds.where((id) => id == userId).length == 1;
+        roomResultHasValidPlayers(snapshot, userId);
   }
 
   void _syncRoomResumeAccount(String? userId) {
@@ -1212,4 +1537,13 @@ class _TabRefreshRouteAware extends RouteAware {
 
   @override
   void didPopNext() => onReturnedToShell();
+}
+
+/// Bekleyen oda sonucunda sonuç sahibi odadan ayrılmış mı?
+@visibleForTesting
+bool pendingResultOwnerLeft(RoomResultSnapshot snapshot, String userId) {
+  for (final player in snapshot.room.players) {
+    if (player.id == userId) return player.left;
+  }
+  return false;
 }

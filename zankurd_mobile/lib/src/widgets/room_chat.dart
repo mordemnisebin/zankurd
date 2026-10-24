@@ -8,6 +8,7 @@ import '../l10n/strings.dart';
 import '../models/room_message.dart';
 import '../services/chat_moderation_policy.dart';
 import '../utils/error_reporter.dart';
+import '../utils/player_identity.dart';
 import '../theme/app_icons.dart';
 import 'player_avatar.dart';
 import 'sahne/sahne.dart';
@@ -50,13 +51,20 @@ class _RoomChatState extends State<RoomChat> {
   final Set<String> _hiddenMessageIds = <String>{};
 
   /// Ekranda gösterilecek mesajlar.
-  List<RoomMessage> get _visibleMessages => _messages
-      .where(
-        (m) =>
-            !_blockedSenderIds.contains(m.senderId) &&
-            !_hiddenMessageIds.contains(m.id),
-      )
-      .toList();
+  ///
+  /// Sıra burada da kurulur (eski üstte, yeni altta): akıştan gelen sıraya
+  /// güvenmek, `order` varsayılanının azalan olması yüzünden sohbeti
+  /// ters çevirmişti.
+  List<RoomMessage> get _visibleMessages {
+    final list = _messages
+        .where(
+          (m) =>
+              !_blockedSenderIds.contains(m.senderId) &&
+              !_hiddenMessageIds.contains(m.id),
+        )
+        .toList();
+    return orderChatMessages(list);
+  }
 
   @override
   void initState() {
@@ -245,7 +253,7 @@ class _RoomChatState extends State<RoomChat> {
     // kendi mesajın Zêr tonu ("Sen" altındır), ötekiler Kulis. Giriş alanı
     // temanın girdi alanıdır; gönder ikonu Agir metni (bağlantı rengi).
     final t = SahneTokens.of(context);
-    const topBevel = BeveledRectangleBorder(
+    const topBevel = RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(SahneShape.lValue),
         topRight: Radius.circular(SahneShape.lValue),
@@ -335,7 +343,8 @@ class _RoomChatState extends State<RoomChat> {
                             container: true,
                             button: !isMine,
                             enabled: !isMine,
-                            label: '${msg.senderName}: ${msg.text}',
+                            label:
+                                '${PlayerIdentity.resolveNameWithTag(msg.senderName, isKu: context.isKu, tag: msg.senderProfile?.playerTag)}: ${msg.text}',
                             onLongPress: isMine
                                 ? null
                                 : () => _showModerationSheet(msg),
@@ -429,6 +438,15 @@ class _MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    // Gönderen adı da tek kural: sunucudan gelen ham "ZanKurd Oyuncusu"
+    // gönderene göre farklı görünüyordu (iki simülatör turu, 2026-10-21).
+    // Adsız gönderen lobideki gibi "Oyuncu ZK-XXXX" (2026-10-22: sohbette
+    // yalnız "Oyuncu" görünüyordu).
+    final senderName = PlayerIdentity.resolveNameWithTag(
+      message.senderName,
+      isKu: ku,
+      tag: message.senderProfile?.playerTag,
+    );
     return Padding(
       padding: const EdgeInsets.only(bottom: SahneSpace.x2),
       child: Row(
@@ -438,10 +456,11 @@ class _MessageBubble extends StatelessWidget {
             : MainAxisAlignment.start,
         children: [
           if (!isMine) ...[
-            PlayerAvatar(
+            PlayerAvatar.fromIdentity(
               radius: 14,
-              colorHex: message.senderAvatarColor,
-              displayName: message.senderName,
+              identity: message.senderProfile?.avatar,
+              fallbackColorHex: message.senderAvatarColor,
+              displayName: senderName,
             ),
             const SizedBox(width: SahneSpace.x2),
           ],
@@ -466,7 +485,7 @@ class _MessageBubble extends StatelessWidget {
                 children: [
                   if (!isMine)
                     Text(
-                      message.senderName,
+                      senderName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: SahneType.captionStrong.copyWith(color: t.tx2),
@@ -488,14 +507,27 @@ class _MessageBubble extends StatelessWidget {
           ),
           if (isMine) ...[
             const SizedBox(width: SahneSpace.x2),
-            PlayerAvatar(
+            PlayerAvatar.fromIdentity(
               radius: 14,
-              colorHex: message.senderAvatarColor,
-              displayName: message.senderName,
+              identity: message.senderProfile?.avatar,
+              fallbackColorHex: message.senderAvatarColor,
+              displayName: senderName,
             ),
           ],
         ],
       ),
     );
   }
+}
+
+/// Sohbeti klasik sıraya dizer: en eski üstte, en yeni altta. Eşit
+/// zamanlılar kimliğe göre, sıra kararlı kalsın diye.
+@visibleForTesting
+List<RoomMessage> orderChatMessages(List<RoomMessage> messages) {
+  final sorted = List<RoomMessage>.of(messages);
+  sorted.sort((a, b) {
+    final byTime = a.createdAt.compareTo(b.createdAt);
+    return byTime != 0 ? byTime : a.id.compareTo(b.id);
+  });
+  return sorted;
 }

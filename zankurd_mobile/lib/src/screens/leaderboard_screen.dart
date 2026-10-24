@@ -14,6 +14,7 @@ import '../models/league_tier.dart';
 import '../providers/remote_availability.dart';
 import '../utils/app_route.dart';
 import '../utils/player_identity.dart';
+import '../widgets/player_moderation_button.dart';
 import '../widgets/app_state.dart';
 import '../widgets/leaderboard_podium.dart';
 import '../widgets/player_avatar.dart';
@@ -21,7 +22,7 @@ import '../widgets/sahne/sahne.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
-import '../widgets/dialog_action_pair.dart';
+import '../utils/number_format.dart';
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({
@@ -87,6 +88,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     widget.refreshSignal?.addListener(_loadData);
   }
 
+  @override
+  void didUpdateWidget(covariant LeaderboardScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.refreshSignal != widget.refreshSignal) {
+      oldWidget.refreshSignal?.removeListener(_loadData);
+      widget.refreshSignal?.addListener(_loadData);
+    }
+  }
+
   void _onTabChanged() {
     if (_tabController.indexIsChanging) return;
     final periods = [
@@ -141,6 +151,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     bool ku,
   ) {
     final uid = widget.repository.currentUserId;
+    // Sıra kaynağın sırasına değil `rank` alanına bağlanır: podyum "1" yazan
+    // kaideye listedeki İLK kaydı koyar, kaynak sırasız dönerse ad ile sıra
+    // rakamı ayrışırdı (kurul 2026-10-20, MiniMax). Kararlı sıralama.
+    final indexed = entries.indexed.toList()
+      ..sort((a, b) {
+        final byRank = a.$2.rank.compareTo(b.$2.rank);
+        return byRank != 0 ? byRank : a.$1.compareTo(b.$1);
+      });
+    entries = [for (final e in indexed) e.$2];
 
     Widget listOf(List<LeaderboardEntry> rows) => KeyedSubtree(
       key: const ValueKey('leaderboard-rank-list'),
@@ -156,7 +175,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
               // Kişi kendini bildiremez. Liste eskiden kendi satırında da
               // bildir düğmesi çiziyordu, çünkü satırın kime ait olduğu
               // sorulmuyordu (2026-08-04).
-              onReport: e.playerId == uid ? null : () => _reportProfile(e),
+              onReport: e.playerId == uid || e.playerId.isEmpty
+                  ? null
+                  : () => _openPlayerSheet(e),
             ),
         ],
       ),
@@ -188,10 +209,19 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                 isKu: ku,
                 selfId: uid,
                 colorOverrides: avatarColorOverrides,
-                onReport: _reportProfile,
+                onReport: _openPlayerSheet,
               ),
               if (entries.length > 3) ...[
-                const SizedBox(height: SahneSpace.cardGap),
+                // 7. kurul: kürsü ile liste birbirinden kopuktu; kürsü
+                // altında 24 boşluk + ince ayraç, sonra liste.
+                const SizedBox(height: SahneSpace.x6),
+                Divider(
+                  key: const ValueKey('leaderboard-podium-divider'),
+                  height: 1,
+                  thickness: 1,
+                  color: SahneTokens.of(context).line,
+                ),
+                const SizedBox(height: SahneSpace.x4),
                 listOf(entries.skip(3).toList(growable: false)),
               ],
             ] else
@@ -316,54 +346,28 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     }
   }
 
-  /// Bir oyuncunun profilini (avatar + görünen ad) bildirir.
+  /// Bir oyuncunun alt sayfasını açar: Arkadaş ekle + Bildir + Engelle.
   ///
-  /// Sunucu bildirimi kaydeder VE bildiren kullanıcı için engeli kurar:
-  /// kişi bildirdiği avatarı bir daha görmek zorunda kalmamalı. Karar
-  /// (içeriğin kaldırılması) moderasyon tarafındadır; istemci karar vermez —
-  /// `report_room_message` de aynı deseni izliyor.
-  Future<void> _reportProfile(LeaderboardEntry entry) async {
-    final confirmed = await showDialog<bool>(
+  /// Bildirme sunucuda bildiren için engeli de kurar; bu yüzden liste
+  /// bildirimden ve engelden sonra yeniden okunur. Karar (içeriğin
+  /// kaldırılması) moderasyon tarafındadır; istemci karar vermez.
+  ///
+  /// 2026-10-23: sıralamadaki satır eskiden yalnız "bildir" sunuyordu;
+  /// sıralamada karşılaşılan biri arkadaş eklenemiyordu. Giriş artık
+  /// odalarla AYNI alt sayfa ([showPlayerModerationSheet]).
+  Future<void> _openPlayerSheet(LeaderboardEntry entry) {
+    return showPlayerModerationSheet(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        key: const ValueKey('report-profile-dialog'),
-        title: Text(dialogContext.t(K.reportProfileTitle)),
-        content: Text(
-          Tr.forKu(K.reportProfileBodyP, dialogContext.isKu, {
-            'p0': PlayerIdentity.resolveName(
-              entry.displayName,
-              isKu: dialogContext.isKu,
-            ),
-          }),
-        ),
-        actions: [
-          DialogActionPair(
-            cancel: TextButton(
-              onPressed: () => Navigator.pop(dialogContext, false),
-              child: Text(dialogContext.t(K.cancel)),
-            ),
-            confirm: FilledButton(
-              key: const ValueKey('report-profile-confirm'),
-              onPressed: () => Navigator.pop(dialogContext, true),
-              child: Text(dialogContext.t(K.reportAction)),
-            ),
-          ),
-        ],
-      ),
-    );
-    if (confirmed != true || !mounted) return;
-
-    final ok = await widget.repository.reportPlayerProfile(
+      repository: widget.repository,
       playerId: entry.playerId,
-      reason: 'profile_avatar_or_name',
-    );
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(context.t(ok ? K.reportProfileDone : K.errorOccurred)),
+      playerName: PlayerIdentity.resolveNameWithTag(
+        entry.displayName,
+        isKu: context.isKu,
+        tag: entry.playerTag,
       ),
+      onBlocked: _loadData,
+      onReported: _loadData,
     );
-    if (ok) _loadData();
   }
 
   /// 30 saniyelik yenileme yalnız uygulama ÖNDEYKEN çalışır.
@@ -511,6 +515,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       scroll = SahneTabPage(
         controller: widget.scrollController,
         title: context.t(K.leaderboardTitle),
+        titleEyebrow: context.secondLabel(K.leaderboardTitle),
         stats: [actions],
         children: top,
       );
@@ -966,7 +971,8 @@ class _HeaderAction extends StatelessWidget {
 // ─── Dönem rayı ─────────────────────────────────────────────────────────────
 
 /// Gün / Hafta / Ay / Arkadaş — sığan seçim rayı ([SahneRail.fit]); seçili
-/// çip Zêr (ödül) tonu. Kısa etiketler: 4 eşit çip 320 px'te de sığar.
+/// çip ortak seçili biçimdir (`selFill`/`selLine`; kurul 3. tur: eskiden
+/// çağrıdaki `role: gold` hiç uygulanmıyordu, belge yanlış söylüyordu). Kısa etiketler: 4 eşit çip 320 px'te de sığar.
 class _PeriodRail extends StatelessWidget {
   const _PeriodRail({required this.controller, required this.ku});
 
@@ -998,7 +1004,6 @@ class _PeriodRail extends StatelessWidget {
                 child: SahneRailChip(
                   label: labels[i],
                   selected: controller.index == i,
-                  role: SahneRole.gold,
                   onTap: () => controller.index = i,
                 ),
               ),
@@ -1083,7 +1088,11 @@ class _RankRow extends StatelessWidget {
   /// Görünen ad: sunucunun yer tutucu adı ("ZanKurd Oyuncusu") ham
   /// basılmaz, dile göre "Oyuncu" / "Lîstikvan" olur (satırda "ZanKurd
   /// Oyu…" diye kesiliyordu). Avatar rengi ham addan türer (değişmez).
-  String get _name => PlayerIdentity.resolveName(entry.displayName, isKu: isKu);
+  String get _name => PlayerIdentity.resolveNameWithTag(
+    entry.displayName,
+    isKu: isKu,
+    tag: entry.playerTag,
+  );
 
   /// Alt metindeki sayı `get_leaderboard`ın `count(distinct room_id)`
   /// değeridir: oyuncunun BİTMİŞ çevrimiçi yarış (oda) sayısı. Birim
@@ -1105,12 +1114,12 @@ class _RankRow extends StatelessWidget {
         ? (Tr.forKu(K.seninSiranPP, isKu, {
             'p0': '${entry.rank}',
             'p1': _name,
-            'p2': '${entry.totalScore}',
+            'p2': groupThousands(entry.totalScore),
           }))
         : (Tr.forKu(K.pPPPuan, isKu, {
             'p0': '${entry.rank}',
             'p1': _name,
-            'p2': '${entry.totalScore}',
+            'p2': groupThousands(entry.totalScore),
           }));
 
     if (highlight && !grouped) {
@@ -1136,7 +1145,22 @@ class _RankRow extends StatelessWidget {
       key: ValueKey('leaderboard-rank-row-${entry.rank}'),
       container: true,
       label: label,
-      child: _buildRow(context),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        excludeFromSemantics: true,
+        // Satıra dokunmak da, uzun basmak da aynı alt sayfayı açar; görünür
+        // yol satırdaki ⋯ düğmesi (Apple 1.2: yalnız uzun basma DEĞİL).
+        onTap: onReport,
+        onLongPress: onReport,
+        // Kendi satırın Zêr tonlu zemin taşır (2026-10-20 B): vurgu yalnız
+        // rakam rengi değil, satırın kendisidir.
+        child: highlight
+            ? ColoredBox(
+                color: SahneTokens.of(context).goldTint,
+                child: _buildRow(context),
+              )
+            : _buildRow(context),
+      ),
     );
   }
 
@@ -1144,7 +1168,7 @@ class _RankRow extends StatelessWidget {
     constraints: const BoxConstraints(maxWidth: 72),
     child: FittedBox(
       fit: BoxFit.scaleDown,
-      child: SahneRowValue('${entry.totalScore}'),
+      child: SahneRowValue(groupThousands(entry.totalScore)),
     ),
   );
 
@@ -1241,11 +1265,11 @@ class _RankRow extends StatelessWidget {
                 child: _score(),
               ),
             ),
-            // Bildir düğmesi GÖRÜNÜRDÜR. Sohbetteki bildir/engelle yalnız
-            // keşfedilemez bir uzun basmayla erişilebiliyordu ve denetimde
-            // bu ayrıca kusur sayılmıştı. Kendi satırında düğme yok ama
-            // LİSTE İÇİNDE yeri durur: aksi hâlde puan sağa kayıyor ve
-            // listenin sağ kenarı en çok bakılan satırda kırılıyordu.
+            // "Daha fazla" düğmesi görünür kalır (Apple 1.2: bildirme yolu
+            // yalnız uzun basma değil); bayrak simgesi ise her satırda
+            // gürültüydü (kurul 2026-10-20). Bildir menüde; satıra uzun
+            // basmak da aynı menüyü açar. Kendi satırında düğme yok ama
+            // LİSTE İÇİNDE yeri durur: aksi hâlde puan sağa kayıyor.
             if (onReport == null)
               if (grouped)
                 const SizedBox(width: 48)
@@ -1256,9 +1280,9 @@ class _RankRow extends StatelessWidget {
                 button: true,
                 label: Tr.forKu(K.reportProfileTitle, isKu),
                 child: IconButton(
-                  key: ValueKey('leaderboard-report-${entry.playerId}'),
+                  key: ValueKey('leaderboard-more-${entry.playerId}'),
                   onPressed: onReport,
-                  icon: const Icon(AppIcons.flag, size: 16),
+                  icon: const Icon(AppIcons.ellipsisVertical, size: 18),
                   color: t.tx3,
                   // Android dokunma hedefi: 48 dp altına düşmez.
                   constraints: const BoxConstraints(
@@ -1324,9 +1348,10 @@ class _FriendRankRow extends StatelessWidget {
               dimension: 40,
               child: Stack(
                 children: [
-                  PlayerAvatar(
+                  PlayerAvatar.fromIdentity(
                     radius: 18,
-                    colorHex: friend.friendAvatarColor,
+                    identity: friend.friendAvatar,
+                    fallbackColorHex: friend.friendAvatarColor,
                     displayName: friend.friendName,
                   ),
                   PositionedDirectional(
@@ -1355,7 +1380,11 @@ class _FriendRankRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    PlayerIdentity.resolveName(friend.friendName, isKu: isKu),
+                    PlayerIdentity.resolveNameWithTag(
+                      friend.friendName,
+                      isKu: isKu,
+                      tag: friend.friendTag,
+                    ),
                     style: SahneType.bodyStrong.copyWith(color: t.tx),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -1379,7 +1408,7 @@ class _FriendRankRow extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  '${friend.totalScore}',
+                  groupThousands(friend.totalScore),
                   style: SahneType.bodyStrong.copyWith(
                     color: t.tx,
                     fontFeatures: const [FontFeature.tabularFigures()],

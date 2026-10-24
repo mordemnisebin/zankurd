@@ -30,16 +30,15 @@ final _outDir =
 final GlobalKey _boundaryKey = GlobalKey();
 
 const _images = [
-  'assets/question_images/cat_ziman.webp',
-  'assets/question_images/cat_cand.webp',
-  'assets/question_images/cat_dirok.webp',
-  'assets/question_images/cat_muzik.webp',
-  'assets/question_images/cat_edebiyat.webp',
+  'assets/question_images/cirok.webp',
+  'assets/question_images/cilubergen_kurdi.webp',
+  'assets/question_images/arkeoloji.webp',
+  'assets/question_images/tembur.webp',
+  'assets/question_images/anlatici.webp',
   'assets/zankurd_icon.webp',
 ];
 
-AssetImage _img(String name) =>
-    AssetImage('assets/question_images/cat_$name.webp');
+AssetImage _img(String name) => AssetImage('assets/question_images/$name.webp');
 
 String _flutterSdkRoot() {
   var dir = File(Platform.resolvedExecutable).parent;
@@ -428,7 +427,7 @@ Widget _lists() => Column(
     SahneListGroup(
       children: [
         SahneListRow.thumb(
-          image: _img('cand'),
+          image: _img('cilubergen_kurdi'),
           title: 'Çay evinde',
           subtitle: 'Li çayxanê',
           trailing: const SahneRowValue.meta('4 dk'),
@@ -436,7 +435,7 @@ Widget _lists() => Column(
           onTap: _noop,
         ),
         SahneListRow.thumb(
-          image: _img('ziman'),
+          image: _img('cirok'),
           title: 'Dil',
           trailing: const Row(
             mainAxisSize: MainAxisSize.min,
@@ -448,7 +447,7 @@ Widget _lists() => Column(
           ),
         ),
         SahneListRow.thumb(
-          image: _img('dirok'),
+          image: _img('arkeoloji'),
           title: 'Tarih',
           trailing: const Row(
             mainAxisSize: MainAxisSize.min,
@@ -509,14 +508,14 @@ Widget _jewels() => Column(
               SahneJewelTile(
                 name: 'Dil',
                 otherName: 'Ziman',
-                image: _img('ziman'),
+                image: _img('cirok'),
                 onTap: _noop,
               ),
               const SizedBox(width: 12),
               SahneJewelTile(
                 name: 'Kültür',
                 otherName: 'Çand',
-                image: _img('cand'),
+                image: _img('cilubergen_kurdi'),
                 mastered: true,
                 masteredLabel: 'Ustalık',
                 onTap: _noop,
@@ -525,7 +524,7 @@ Widget _jewels() => Column(
               SahneJewelTile(
                 name: 'Tarih',
                 otherName: 'Dîrok',
-                image: _img('dirok'),
+                image: _img('arkeoloji'),
                 onTap: _noop,
               ),
             ],
@@ -541,13 +540,13 @@ Widget _jewels() => Column(
         SahneJewelTile(
           name: 'Müzik',
           otherName: 'Muzîk',
-          image: _img('muzik'),
+          image: _img('tembur'),
           onTap: _noop,
         ),
         SahneJewelTile(
           name: 'Kültür',
           otherName: 'Çand',
-          image: _img('cand'),
+          image: _img('cilubergen_kurdi'),
           mastered: true,
           masteredLabel: 'Ustalık',
           onTap: _noop,
@@ -764,14 +763,14 @@ Widget _tabPage() => SahneTabPage(
               SahneJewelTile(
                 name: 'Dil',
                 otherName: 'Ziman',
-                image: _img('ziman'),
+                image: _img('cirok'),
                 onTap: _noop,
               ),
               const SizedBox(width: 12),
               SahneJewelTile(
                 name: 'Kültür',
                 otherName: 'Çand',
-                image: _img('cand'),
+                image: _img('cilubergen_kurdi'),
                 mastered: true,
                 onTap: _noop,
               ),
@@ -779,7 +778,7 @@ Widget _tabPage() => SahneTabPage(
               SahneJewelTile(
                 name: 'Tarih',
                 otherName: 'Dîrok',
-                image: _img('dirok'),
+                image: _img('arkeoloji'),
                 onTap: _noop,
               ),
             ],
@@ -916,7 +915,7 @@ Widget _pushedPage() => SahnePushedPage(
           SahneListGroup(
             children: [
               SahneListRow.thumb(
-                image: _img('cand'),
+                image: _img('cilubergen_kurdi'),
                 title: 'Çay evinde',
                 subtitle: 'Li çayxanê',
                 trailing: const SahneRowValue.meta('4 dk'),
@@ -924,7 +923,7 @@ Widget _pushedPage() => SahnePushedPage(
                 onTap: _noop,
               ),
               SahneListRow.thumb(
-                image: _img('edebiyat'),
+                image: _img('anlatici'),
                 title: 'Kendini tanıtma',
                 subtitle: 'Xwe nasandin',
                 trailing: const SahneRowValue.meta('3 dk'),
@@ -946,7 +945,7 @@ Widget _question({
   required bool jokers,
 }) => SahneStageScaffold(
   onClose: _noop,
-  backdrop: _img('ziman'),
+  backdrop: _img('cirok'),
   center: SahneTimerDiamond(
     secondsLeft: hot ? 4 : 17,
     fraction: (hot ? 4 : 17) / 20,

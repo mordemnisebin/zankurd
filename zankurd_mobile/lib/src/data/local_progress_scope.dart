@@ -26,10 +26,13 @@ class LocalProgressScope {
     'zankurd.badges.unlocked',
     'zankurd.level.played',
     'zankurd.learning_goal.v1',
+    'zankurd.storyMeta.v1',
+    'zankurd.wordList.v1',
   };
 
   static const prefixes = <String>[
     'zankurd.streak.',
+    'zankurd.contest.',
     'zankurd.mastery.',
     'zankurd.masteryAnswered.',
     'zankurd.masteryEvidenceCorrect.',

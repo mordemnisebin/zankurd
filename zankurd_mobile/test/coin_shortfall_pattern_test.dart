@@ -1,3 +1,7 @@
+// Tasarım kurulu tüm ekranlar 2026-10-20: yetmeyen mağaza ürünü çip değil,
+// ortak pasif fiyat düğmesi + eksik miktar taşır.
+// Kurul 5. tur 2026-10-20: eksik notu gündüz koyu kehribar (≥ 4.5:1).
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -101,47 +105,48 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    testWidgets('yetmeyen ürün düğme değil, eksik miktarlı durum çipi taşır', (
-      tester,
-    ) async {
-      await pumpShop(tester, 200);
+    testWidgets(
+      'yetmeyen ürün pasif (ortak pasif biçim) fiyat düğmesi ve eksik miktar taşır',
+      (tester) async {
+        await pumpShop(tester, 200);
 
-      // 120 jetonluk ürüne 200 yeter: gerçek satın alma düğmesi.
-      final affordable = find.byKey(
-        const ValueKey('shop-item-surface-spin_wheel_extra'),
-      );
-      expect(
-        find.descendant(of: affordable, matching: find.byType(FilledButton)),
-        findsOneWidget,
-      );
-      expect(
-        find.byKey(const ValueKey('shop-short-spin_wheel_extra')),
-        findsNothing,
-      );
-
-      // 480 ve 350 jetonluk çerçeveler ve 720'lik rozet yetmiyor.
-      for (final (id, cost) in [
-        ('avatar_frame_gold', 480),
-        ('avatar_frame_neon', 350),
-        ('profile_badge_vip', 720),
-      ]) {
-        final chip = find.byKey(ValueKey('shop-short-$id'));
-        expect(chip, findsOneWidget, reason: '$id yetmiyor ama çip yok');
-        expect(find.text('${cost - 200} jeton eksik'), findsOneWidget);
-        expect(
-          find.descendant(
-            of: find.ancestor(
-              of: chip,
-              matching: find.byType(SahneSurfaceCard),
-            ),
-            matching: find.byType(FilledButton),
-          ),
-          findsNothing,
-          reason: '$id için etkin görünen bir satın alma düğmesi kalmış',
+        // 120 jetonluk ürüne 200 yeter: gerçek satın alma düğmesi.
+        final affordable = find.byKey(
+          const ValueKey('shop-item-surface-spin_wheel_extra'),
         );
-      }
-      expect(tester.takeException(), isNull);
-    });
+        expect(
+          find.descendant(of: affordable, matching: find.byType(FilledButton)),
+          findsOneWidget,
+        );
+        expect(
+          find.byKey(const ValueKey('shop-short-spin_wheel_extra')),
+          findsNothing,
+        );
+
+        // 480 ve 350 jetonluk çerçeveler ve 720'lik rozet yetmiyor.
+        for (final (id, cost) in [
+          ('avatar_frame_gold', 480),
+          ('avatar_frame_neon', 350),
+          ('profile_badge_vip', 720),
+        ]) {
+          final chip = find.byKey(ValueKey('shop-short-$id'));
+          expect(
+            chip,
+            findsOneWidget,
+            reason: '$id yetmiyor ama pasif düğme yok',
+          );
+          expect(find.text('${cost - 200} jeton eksik'), findsOneWidget);
+          // Kurul 4. tur: kilitli fiyat kutusuz metindir; düğme ya da
+          // dokunulur öğe yok, etkin görünen satın alma eylemi de yok.
+          expect(
+            find.descendant(of: chip, matching: find.byType(FilledButton)),
+            findsNothing,
+            reason: '$id için düğme görünümlü kutu kalmış',
+          );
+        }
+        expect(tester.takeException(), isNull);
+      },
+    );
 
     testWidgets(
       'yetmeyen ürünün penceresinde pasif "Satın al" yok, "Jeton kazan" birincil',
@@ -212,29 +217,38 @@ void main() {
         testShell(child: PlayHubScreen(repository: _Repo(coins))),
       );
       await tester.pumpAndSettle();
+      await openRoomSheet(tester);
       await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
       await tester.pumpAndSettle();
     }
 
-    testWidgets('ücrete yetmeyince eksik miktar yazar, "Odayı aç" yerine '
-        '"Jeton kazan" gelir', (tester) async {
+    testWidgets('ücrete yetmeyince eksik miktar yazar, "Jeton kazan" ikincil '
+        'bağlantı olur, "Odayı aç" birincil kalır', (tester) async {
       await openSheet(tester, 10);
 
       // Ücretsiz seçenek varsayılan: oda açılabilir.
       expect(find.byKey(const ValueKey('custom-room-open')), findsOneWidget);
       expect(find.byKey(const ValueKey('custom-room-shortfall')), findsNothing);
 
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('custom-room-settings-row')),
+      );
+
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
+      await tester.pumpAndSettle();
       final fee = find.byKey(const ValueKey('custom-room-fee-25'));
       await tester.ensureVisible(fee);
+      await tester.pumpAndSettle();
       await tester.tap(fee);
       await tester.pumpAndSettle();
 
-      expect(find.text('15 jeton eksik'), findsOneWidget);
-      expect(find.byKey(const ValueKey('custom-room-open')), findsNothing);
+      expect(find.text('25 jeton için 15 jeton eksik'), findsOneWidget);
+      expect(find.byKey(const ValueKey('custom-room-open')), findsOneWidget);
       final earn = find.byKey(const ValueKey('custom-room-earn-coins'));
       expect(earn, findsOneWidget);
       await tester.ensureVisible(earn);
-      expect(tester.widget<FilledButton>(earn).onPressed, isNotNull);
+      await tester.pumpAndSettle();
 
       await tester.tap(earn);
       await tester.pumpAndSettle();
@@ -310,5 +324,17 @@ void main() {
         expect(find.byType(SpinWheelScreen), findsOneWidget);
       },
     );
+  });
+
+  test('eksik notu rengi her iki temada kartta ≥ 4.5:1', () {
+    double c(Color a, Color b) {
+      final la = a.computeLuminance(), lb = b.computeLuminance();
+      return ((la > lb ? la : lb) + 0.05) / ((la > lb ? lb : la) + 0.05);
+    }
+
+    for (final t in [SahneTokens.day, SahneTokens.night]) {
+      expect(c(t.shortfallTx, t.s1), greaterThanOrEqualTo(4.5));
+      expect(c(t.shortfallTx, t.bg), greaterThanOrEqualTo(4.5));
+    }
   });
 }

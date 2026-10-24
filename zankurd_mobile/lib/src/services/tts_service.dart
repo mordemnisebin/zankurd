@@ -104,7 +104,11 @@ class TtsService {
   }
 
   Future<void> _detectKurdishSupport() async {
-    if (kIsWeb) {
+    // iOS'ta Kurmancî ses hiç yok (AVSpeechSynthesis desteklemez), yani
+    // sorgu hiçbir zaman işe yaramaz; üstelik eklenti dilleri ANA iş
+    // parçacığında eşzamanlı sayar ve simülatörde her quiz başında uygulamayı
+    // kilitledi (eşleşme ekranında "Dest pê dike…"da donma, 2026-10-17).
+    if (kIsWeb || defaultTargetPlatform == TargetPlatform.iOS) {
       _kurdishAvailable = false;
       return;
     }

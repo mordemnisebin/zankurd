@@ -27,7 +27,7 @@ Widget _wrap({
   required bool isKu,
   required bool isDark,
   required double textScale,
-  Size size = const Size(390, 844),
+  Size size = const Size(440, 844),
 }) {
   return ChangeNotifierProvider<LanguageProvider>(
     key: ValueKey('language-$isKu-$isDark-$textScale'),
@@ -65,7 +65,7 @@ void main() {
   testWidgets(
     'placement keeps the full text action at normal scale and a compact accessible action at large scale',
     (tester) async {
-      await tester.binding.setSurfaceSize(const Size(390, 844));
+      await tester.binding.setSurfaceSize(const Size(440, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
       for (final isKu in [false, true]) {
@@ -79,7 +79,7 @@ void main() {
             expect(tester.takeException(), isNull);
             expect(find.byType(SahneStageScaffold), findsOneWidget);
             expect(
-              find.text(isKu ? 'Asta xwe diyar bike' : 'Seviyeni belirle'),
+              find.byKey(const ValueKey('quiz-stage-kicker')),
               findsOneWidget,
             );
             expect(
@@ -108,7 +108,13 @@ void main() {
   testWidgets(
     'placement actions and title stay within real bounds without clipping',
     (tester) async {
-      for (final size in [const Size(390, 844), const Size(360, 800)]) {
+      // 402: iPhone 17 Pro. Tam etiket 430 altında kompakt simgeye geçer; başlık
+      // ("Siyaset · Pi…") kırpılmasın diye (2026-10-21 simülatör düğme turu).
+      for (final size in [
+        const Size(440, 844),
+        const Size(402, 874),
+        const Size(360, 800),
+      ]) {
         await tester.binding.setSurfaceSize(size);
         for (final isKu in [false, true]) {
           for (final isDark in [false, true]) {
@@ -123,11 +129,9 @@ void main() {
               );
               await tester.pumpAndSettle();
 
-              final title = find.text(
-                isKu ? 'Asta xwe diyar bike' : 'Seviyeni belirle',
-              );
+              final title = find.byKey(const ValueKey('quiz-stage-kicker'));
               final skipLabel = isKu ? 'Paşê bike' : 'Şimdilik geç';
-              final isFullLabel = size.width == 390 && textScale == 1.0;
+              final isFullLabel = size.width == 440 && textScale == 1.0;
               final action = find.byKey(
                 ValueKey(
                   isFullLabel ? 'placement-skip' : 'placement-skip-compact',
@@ -191,7 +195,7 @@ void main() {
     },
   );
 
-  testWidgets('placement skip still reports null and marks the attempt', (
+  testWidgets('placement skip reports null but never hides the card for good', (
     tester,
   ) async {
     var finished = false;
@@ -217,6 +221,6 @@ void main() {
 
     expect(finished, isTrue);
     final store = await PlacementStore.load();
-    expect(store.skipped, isTrue);
+    expect(store.skipped, isFalse);
   });
 }

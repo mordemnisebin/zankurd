@@ -32,6 +32,13 @@
 ///
 /// 2026-09-30 simülatör: "dört sütun" bekçisi gerçek yazı tipiyle koşar
 /// (ızgara sütun sayısını yazı genişliğinden çıkarır); davranış aynı.
+///
+/// 2026-10-19 SADELEŞME (bu dosya güncellendi): konu karoları artık yatay
+/// karodur (küçük konu işareti + yalnız geçerli dilde ad; `SahneJewelTile`
+/// değil). Kimlik korunur: işaret ve ton `CategoryKickerMark` ile soru
+/// künyesindeki aynı silüet/tondur. Izgara iki sütundur (11 kategori → 6
+/// satır). Günün dersi kartı sakin yüzey kartıdır (`SahneSurfaceCard`),
+/// gece sahne kartı (`SahneStageCard`) değil.
 library;
 
 import 'package:flutter/material.dart';
@@ -41,7 +48,6 @@ import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
-import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
@@ -95,33 +101,27 @@ void main() {
     freshMockRepository();
   });
 
-  testWidgets('kapılar rol taşır: öğrenme Zimrût, yarış Boyax; degrade yok', (
-    tester,
-  ) async {
-    await _pumpHome(tester);
-    for (final (key, role) in [
-      ('home-door-learn', SahneRole.learn),
-      ('home-door-play', SahneRole.race),
-    ]) {
-      final finder = find.byKey(ValueKey(key));
-      expect(finder, findsOneWidget, reason: key);
-      final tile = tester.widget<HomeDoorTile>(finder);
-      expect(tile.role, role, reason: key);
-      expect(
-        find.descendant(of: finder, matching: find.byType(SahneListRow)),
-        findsOneWidget,
-        reason: '$key liste satırı olmalı',
-      );
-      expect(
-        find.descendant(of: finder, matching: find.byType(Ink)),
-        findsNothing,
-        reason: '$key degrade dolgulu kart olmamalı',
-      );
-    }
-  });
+  testWidgets(
+    'kapılar rol taşır: öğrenme Zimrût, yarış Boyax (dolu mod kartı)',
+    (tester) async {
+      await _pumpHome(tester);
+      for (final (key, role) in [
+        ('home-door-learn', SahneRole.learn),
+        ('home-door-play', SahneRole.race),
+      ]) {
+        final finder = find.byKey(ValueKey(key));
+        expect(finder, findsOneWidget, reason: key);
+        // 2026-10-22 tasarım kurulu (ChatGPT + Claude Opus): kapılar artık
+        // rolün dolu renginde mod kartıdır (Yarış sekmesiyle aynı dil).
+        final tile = tester.widget<SahneModeTile>(finder);
+        expect(tile.role, role, reason: key);
+      }
+    },
+  );
 
   testWidgets(
-    'her görünür kategori çizimsiz mücevher karodur: kendi ikonu, kendi tonu',
+    'her görünür kategori yatay karodur: kendi işareti, kendi tonu, öbür '
+    'dil yalnız küçük satırda',
     (tester) async {
       await _pumpHome(tester);
       final repo = freshMockRepository();
@@ -130,77 +130,90 @@ void main() {
       for (final category in repo.categories) {
         final finder = find.byKey(ValueKey('home-topic-$category'));
         expect(finder, findsOneWidget, reason: category);
-        final tile = tester.widget<SahneJewelTile>(
-          find.descendant(of: finder, matching: find.byType(SahneJewelTile)),
-        );
-        // Karoda KISA ad yazılır (Bilim ve Düşünce -> Bilim).
-        expect(tile.name, CategoryNames.tile(category, false));
-        // İki ad aynıysa (Siyaset) ikinci satırın SÖZÜ yazılmaz (satırın yeri
-        // ayrılır): aynı sözü iki kez yazmak gürültü olur
-        // (`_HomeTopicTile`: `other == name ? null`).
-        final other = CategoryNames.tile(category, true);
+        // Karoda KISA ad yazılır (Bilim ve Düşünce -> Bilim); öteki dilin adı
+        // yok.
         expect(
-          tile.otherName,
-          other == tile.name ? isNull : other,
+          find.descendant(
+            of: finder,
+            matching: find.text(CategoryNames.tile(category, false)),
+          ),
+          findsOneWidget,
           reason: category,
         );
-
-        // Üretilmiş kategori çizimleri ızgarada yok; konu adı, ikonu ve
-        // kendi renk ailesiyle ayrılır.
-        expect(tile.image, isNull, reason: category);
-        expect(tile.tone, CategoryVisuals.tone(category), reason: category);
-        // 2026-09-30 kimlik: silüeti olan konu ikon yerine K3 silüetini
-        // çizer. Görünür her konunun silüeti var (Siyaset, Paradigma ve
-        // Teknolojî de; eskiden ikonda kalıyorlardı, yan yana tutarsızdı).
-        // İkon dalı yalnız işaretsiz (bilinmeyen) kategori için durur.
+        // 2026-10-20 iki dilli etiket: öbür dildeki ad YALNIZ küçük satır
+        // bileşeninde durur; asıl ad gibi büyük yazılmaz.
+        final other = CategoryNames.tile(category, true);
+        if (other != CategoryNames.tile(category, false)) {
+          for (final e
+              in find
+                  .descendant(of: finder, matching: find.text(other))
+                  .evaluate()) {
+            expect(
+              e.widget.key,
+              SahneBilingualLabel.valueKey,
+              reason: '$category: öteki dil adı yalnız küçük satırda',
+            );
+          }
+        }
+        // Mücevher karo (kare, büyük silüet) yok.
+        expect(
+          find.descendant(of: finder, matching: find.byType(SahneJewelTile)),
+          findsNothing,
+          reason: category,
+        );
+        // İşaret = soru künyesindeki ile aynı bileşen, aynı ton.
         final mark = CategoryVisuals.mark(category);
         expect(mark, isNotNull, reason: '$category: silüetsiz karo kalmamalı');
-        expect(tile.mark, mark, reason: category);
+        // 2026-10-20 renk ve canlılık: karo konunun renginde DOLU; işaret
+        // BEYAZ silüet (iç ayrıntı karonun kendi renginde), sağ altta ayrıca
+        // soluk beyaz filigran (aynı silüet). Renk kimliği karonun zeminidir
+        // (`SahneCategoryTone.fill`), silüet rengi değil.
+        final fill = CategoryVisuals.tone(category).fill(night: false);
         final glyphs = find.descendant(
           of: finder,
           matching: find.byWidgetPredicate(
-            (w) => w is CustomPaint && w.painter is SahneCategoryGlyphPainter,
+            (w) =>
+                w is CustomPaint &&
+                w.painter is SahneCategoryGlyphPainter &&
+                (w.painter! as SahneCategoryGlyphPainter).mark == mark &&
+                (w.painter! as SahneCategoryGlyphPainter).tone.ground == fill &&
+                (w.painter! as SahneCategoryGlyphPainter).tone.detail ==
+                    const Color(0xFFFFFFFF),
           ),
         );
-        final icon = find.descendant(
+        expect(glyphs, findsOneWidget, reason: '$category beyaz işareti');
+        final watermarks = find.descendant(
           of: finder,
-          matching: find.byIcon(CategoryVisuals.icon(category)),
+          matching: find.byWidgetPredicate(
+            (w) =>
+                w is CustomPaint &&
+                w.painter is SahneCategoryGlyphPainter &&
+                (w.painter! as SahneCategoryGlyphPainter).mark == mark &&
+                (w.painter! as SahneCategoryGlyphPainter).tone.detail ==
+                    const Color(0x1FFFFFFF),
+          ),
         );
-        if (mark == null) {
-          expect(glyphs, findsNothing, reason: category);
-          expect(icon, findsOneWidget, reason: '$category ikonda kalmalı');
-        } else {
-          expect(glyphs, findsOneWidget, reason: '$category silüeti çizmeli');
-          expect(icon, findsNothing, reason: '$category ikon çizmemeli');
-        }
+        expect(watermarks, findsOneWidget, reason: '$category filigranı');
       }
     },
   );
 
-  testWidgets(
-    'konu ızgarası 390 pt ekranda sözü bölmeyen sütun sayısını seçer',
-    (tester) async {
-      await _pumpHome(tester);
-      final repo = freshMockRepository();
-      final tops = <double>{
-        for (final c in repo.categories)
-          tester.getTopLeft(find.byKey(ValueKey('home-topic-$c'))).dy,
-      };
-      // 2026-09-30: Paradigma, Siyaset ve Teknolojî geri gelince 10 kategori
-      // oldu ve en uzun söz olan kalın "Paradigma" (~81 pt) 390 pt ekranda 4
-      // sütunun karosuna (~80 pt) sığmadığı için ızgara 3 sütuna iniyordu
-      // (3 + 3 + 3 + 1). Aynı gün Paradigma "Bilim ve Düşünce / Zanist û
-      // Raman" adını aldı: ad iki satıra sarılır ama en uzun TEK söz artık
-      // "Coğrafya" / "Erdnîgarî" (4 sütuna sığar), böylece ızgara 4 sütuna
-      // döndü (`_columnsFor`): 10 kategori → 4 + 4 + 2.
-      // 2026-09-30: 'Cîhan / Dünya' (nötr genel bilgi) on birinci kategori
-      // olarak geldi: 11 kategori → 4 + 4 + 3 (yine ceil(11 / 4) satır).
-      expect(repo.categories.length, 11);
-      expect(tops.length, (repo.categories.length / 4).ceil());
-    },
-  );
+  testWidgets('konu ızgarası 390 pt ekranda iki sütunludur', (tester) async {
+    await _pumpHome(tester);
+    final repo = freshMockRepository();
+    final tops = <double>{
+      for (final c in repo.categories)
+        tester.getTopLeft(find.byKey(ValueKey('home-topic-$c'))).dy,
+    };
+    // 2026-10-19: 11 kategori, iki sütun → ceil(11 / 2) = 6 satır. (Eskiden
+    // dört sütun, 4 + 4 + 3.) En uzun ad 390 pt'te yarım sütuna sığar.
+    expect(repo.categories.length, 11);
+    expect(tops.length, (repo.categories.length / 2).ceil());
+  });
 
-  testWidgets('günün dersi kartında maskot yok', (tester) async {
+  testWidgets('günün dersi kartında maskot yok; sakin yüzey kartı', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.light(),
@@ -216,6 +229,7 @@ void main() {
       ),
     );
     expect(find.byType(RojMascot), findsNothing);
-    expect(find.byType(SahneStageCard), findsOneWidget);
+    expect(find.byType(SahneStageCard), findsNothing);
+    expect(find.byType(SahneSurfaceCard), findsOneWidget);
   });
 }

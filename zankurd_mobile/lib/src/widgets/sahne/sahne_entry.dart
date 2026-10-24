@@ -53,6 +53,7 @@ class SahneEntryScaffold extends StatelessWidget {
     this.aboveAction,
     required this.primary,
     this.secondary,
+    this.primaryFirstWhenFlowing = false,
     this.surfaceKey,
     this.dockKey = const ValueKey('entry-dock'),
   }) : assert(
@@ -88,6 +89,12 @@ class SahneEntryScaffold extends StatelessWidget {
 
   /// İkincil metin eylemi (geri, "hesabın var mı?").
   final Widget? secondary;
+
+  /// Perde sabitlenemeyip (kısa/yatay/klavye/büyük yazı) içeriğin ALTINA
+  /// aktığında birincil eylem içerikten ÖNCE gelir. Giriş ekranında birincil
+  /// eylem "Hemen oyna"dır; formun altında kalırsa yatay telefonda ilk
+  /// ekranın dışına düşüyordu.
+  final bool primaryFirstWhenFlowing;
 
   /// Sayfa zemininin anahtarı (testler zemini bulur).
   final Key? surfaceKey;
@@ -150,8 +157,12 @@ class SahneEntryScaffold extends StatelessWidget {
                 final main = Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    if (!anchored && primaryFirstWhenFlowing) ...[
+                      dockContent,
+                      const SizedBox(height: SahneSpace.x4),
+                    ],
                     ?content,
-                    if (!anchored) ...[
+                    if (!anchored && !primaryFirstWhenFlowing) ...[
                       const SizedBox(height: SahneSpace.x4),
                       dockContent,
                     ],
@@ -176,11 +187,13 @@ class SahneEntryScaffold extends StatelessWidget {
                         ],
                       );
                 return SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(
+                  // Sabit perde varken alt pay büyür: kartın son satırı
+                  // perdenin altında kalıp kesik görünmesin (kurul 2026-10-20).
+                  padding: EdgeInsets.fromLTRB(
                     SahneSpace.page,
                     SahneSpace.x2,
                     SahneSpace.page,
-                    SahneSpace.x6,
+                    anchored ? SahneSpace.x8 : SahneSpace.x6,
                   ),
                   child: limited(laidOut),
                 );
@@ -191,7 +204,38 @@ class SahneEntryScaffold extends StatelessWidget {
                   limited(
                     _TopBar(leading: leading, skip: skip, progress: progress),
                   ),
-                  Expanded(child: paged ?? scrollBody()),
+                  Expanded(
+                    child: paged != null
+                        ? paged!
+                        : Stack(
+                            children: [
+                              Positioned.fill(child: scrollBody()),
+                              if (anchored)
+                                // Perdenin hemen üstünde zemin rengine
+                                // sönen şerit: kart kesik değil, kayıyor.
+                                Positioned(
+                                  left: 0,
+                                  right: 0,
+                                  bottom: 0,
+                                  height: SahneSpace.x6,
+                                  child: IgnorePointer(
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            t.bg.withValues(alpha: 0),
+                                            t.bg,
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                  ),
                   if (anchored)
                     DecoratedBox(
                       key: dockKey,

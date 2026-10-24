@@ -1,0 +1,15 @@
+Kaynak: /tmp/zankurd-20261021-full-tests.log
+SHA256: 66983e081bdae60b965134b7d3837894665d2f662ad3fe2bd5c756b64aa54371
+
+[Analytics] quiz_complete {category: Ziman, correct: 1, total: 2, xp: 30}
+[Analytics] activation_step {step: online_match_completed}
+[Analytics] activation_step {step: first_quiz_completed}
+[Analytics] badge_earned {badge_id: first_game}
++4932 ~5: /Users/kocer/Projects/zankurd/zankurd_mobile/test/room_result_recovery_screen_test.dart: QuizRewardSettlementState.unresolved sonucu state ile birlikte result açar
+[Analytics] language_change {lang: tr}
+[Analytics] quiz_complete {category: Ziman, correct: 1, total: 2, xp: 30}
+[Analytics] activation_step {step: online_match_completed}
+[Analytics] activation_step {step: first_quiz_completed}
+[Analytics] badge_earned {badge_id: first_game}
++4933 ~5: 5 skipped tests.
++4933 ~5: All other tests passed!

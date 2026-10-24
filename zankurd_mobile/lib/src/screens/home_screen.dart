@@ -1,3 +1,4 @@
+import '../widgets/doza_widgets.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -12,11 +13,15 @@ import '../data/streak_store.dart';
 import '../data/xp_award_publisher.dart';
 import '../data/xp_store.dart';
 import '../widgets/progress_summary.dart';
+import '../widgets/streak_calendar.dart';
 import '../widgets/streak_panel.dart';
+import '../widgets/streak_repair_card.dart';
 import '../data/question_bank_loader.dart';
+import '../data/offline_zankurd_repository.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/contest.dart' show DailyEventEntry;
 import '../providers/reduced_motion_provider.dart';
 import '../providers/sound_provider.dart';
 import '../widgets/sahne/sahne.dart';
@@ -37,15 +42,18 @@ import 'quiz_screen.dart';
 import 'contest_screen.dart';
 import 'home/daily_tour_card.dart';
 import 'home/today_task_card.dart';
+import 'home/room_invite_card.dart';
 import 'home/home_rows.dart';
 import 'home/home_sections.dart';
 import 'home/daily_missions_card.dart';
+import 'home/daily_quote_card.dart';
 import 'shop_screen.dart';
 import '../data/mastery_store.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/player_identity.dart';
 import '../services/analytics_service.dart';
 import '../widgets/learning_goal_chooser.dart';
+import '../utils/number_format.dart';
 
 /// [MistakeStore.readyIds] içindeki kimlikleri gerçekten açılabilir
 /// (`playableQuestions`) sorularla kesiştirir.
@@ -75,6 +83,7 @@ class HomeScreen extends StatefulWidget {
     this.onOpenLearning,
     this.onOpenPlay,
     this.onOpenCategory,
+    this.clock,
     super.key,
   });
 
@@ -109,6 +118,10 @@ class HomeScreen extends StatefulWidget {
   /// her kategoriyi doğrudan açtığı için o liste kaldırıldı.
   final Future<void> Function(String category)? onOpenCategory;
 
+  /// Testte sabit an: günün turu kartı "bugün bitti mi" ve geri sayımı
+  /// için (İstanbul günü; bkz. `contestDayKey`).
+  final DateTime Function()? clock;
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -132,15 +145,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   /// Sırayla düellolardan görülmemiş sonuç sayısı: Yarış kısayolunda rozet.
   int _duelResultsReady = 0;
 
+  /// Bana gelen meydan okuma ya da yarım bıraktığım tur ("Sıra sende").
+  int _duelMyTurn = 0;
+
+  /// Bugünkü turdaki sıram (pano verisi); gelmezse null, kart yalnız bitişi
+  /// söyler.
+  DailyEventEntry? _tourEntry;
+
   /// Bugün doğru cevaplanan soru sayısı — "bugünün görevi" ilerlemesi.
   int _todayAnswered = 0;
   int _todayTarget = 10;
   bool _firstSession = true;
 
   /// Konu ızgarasının verisi: her kategorinin ustalık ilerlemesi ve
-  /// oynanabilir soru sayısı.
+  /// (soru sayısı 2026-10-19'da karodan kalktı).
   Map<String, CategoryProgress> _topicProgress = const {};
-  Map<String, int> _topicCounts = const {};
+  int _completedLessonsCount = 0;
   LearningGoal? _learningGoal;
   bool _learningGoalLoaded = false;
   late AnimationController _loadAnimationController;
@@ -178,8 +198,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // DEĞİŞİMİ tetiklemiyor — kullanıcı başka bir sekmeye gidip dönene
     // kadar bölüm hep boş kalıyordu (2026-08-14 denetimi).
     _refreshProgress();
-    _refreshTopicCounts();
     widget.refreshSignal?.addListener(_handleRefreshSignal);
+  }
+
+  @override
+  void didUpdateWidget(covariant HomeScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.refreshSignal != widget.refreshSignal) {
+      oldWidget.refreshSignal?.removeListener(_handleRefreshSignal);
+      widget.refreshSignal?.addListener(_handleRefreshSignal);
+    }
+    if (oldWidget.repository != widget.repository) {
+      _handleRefreshSignal();
+    }
   }
 
   @override
@@ -226,9 +257,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _refreshTourState() async {
     try {
       final store = await AchievementStore.load();
-      final done = store.dailyQuizDoneOn(DateTime.now());
+      // İstanbul günü: `dailyQuizDoneOn` içeride `contestDayString` kullanır.
+      final done = store.dailyQuizDoneOn(_now());
       if (mounted && done != _tourDoneToday) {
         setState(() => _tourDoneToday = done);
+      }
+      if (!done && mounted && _tourEntry != null) {
+        setState(() => _tourEntry = null);
+      }
+      if (done) {
+        // Sıra yalnız pano gelirse yazılır; gelmezse kart yalnız "bitirdin" der.
+        try {
+          final board = await repo.loadDailyEventBoard();
+          if (mounted) setState(() => _tourEntry = board?.me);
+        } catch (_) {}
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home tour done flag');
@@ -237,12 +279,31 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     try {
       final duels = await repo.loadMyAsyncDuels();
       final ready = duels.where((d) => d.outcome != null && !d.seen).length;
-      if (mounted && ready != _duelResultsReady) {
-        setState(() => _duelResultsReady = ready);
+      final myTurn = duels
+          .where(
+            (d) =>
+                (d.incomingChallenge && d.challengeCode != null) || d.canResume,
+          )
+          .length;
+      if (mounted && (ready != _duelResultsReady || myTurn != _duelMyTurn)) {
+        setState(() {
+          _duelResultsReady = ready;
+          _duelMyTurn = myTurn;
+        });
       }
     } catch (_) {
       // Rozet yalnız ipucudur; Yarış sekmesi gerçek listeyi gösterir.
     }
+  }
+
+  DateTime _now() => widget.clock?.call() ?? DateTime.now();
+
+  /// Yarış kısayolunun rozeti: bekleyen hamle sonuçtan önemlidir
+  /// ("Sıra sende" > "Sonuç hazır"). Ayrı düello satırı yok (2026-10-24).
+  String? _playBadge(BuildContext context) {
+    if (_duelMyTurn > 0) return context.t(K.challengeYourTurn);
+    if (_duelResultsReady > 0) return context.t(K.homeDoorPlayReady);
+    return null;
   }
 
   Future<void> _refreshXpLevel() async {
@@ -261,7 +322,52 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Future<void> _refreshStreak() async {
     final store = await StreakStore.load();
+    unawaited(store.markFirstSeen());
     if (mounted) setState(() => _streak = store.effectiveStreak());
+    unawaited(_maybeOfferStreakRepair(store));
+  }
+
+  bool _repairSheetOpen = false;
+
+  /// Seri son 24 saatte kırıldıysa, kırılmadan sonraki İLK açılışta tek
+  /// kez onarım sayfasını açar. Çevrimdışı depoda sunulmaz (ödeme yapılamaz)
+  /// ve başka bir sayfa üstteyken kesmez; gösterim işareti sayfa açılmadan
+  /// ÖNCE yazılır, böylece kapatılan sayfa bir daha çıkmaz.
+  Future<void> _maybeOfferStreakRepair(StreakStore store) async {
+    final offer = store.repairOffer();
+    if (offer == null ||
+        _repairSheetOpen ||
+        store.repairOfferSeen(offer) ||
+        !mounted ||
+        repo is OfflineZanKurdRepository ||
+        ModalRoute.of(context)?.isCurrent != true) {
+      return;
+    }
+    _repairSheetOpen = true;
+    try {
+      await store.markRepairOfferSeen(offer);
+      if (!mounted) return;
+      await showStreakRepairSheet(
+        context: context,
+        store: store,
+        repository: repo,
+        offer: offer,
+        onRepaired: _onStreakRepaired,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'streak_repair_sheet');
+    } finally {
+      _repairSheetOpen = false;
+    }
+  }
+
+  void _onStreakRepaired(int days) {
+    unawaited(_refreshStreak());
+    unawaited(_refreshCoins());
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(context.t(K.streakRepairDone, {'days': '$days'}))),
+    );
   }
 
   Future<void> _refreshFirstSession() async {
@@ -377,6 +483,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     try {
       final mastery = await MasteryStore.load();
       final learningGoalStore = await LearningGoalStore.load();
+      final completedLessons = await repo.loadCompletedLessonIds();
       final progress = {
         for (final category in repo.categories)
           category: CategoryProgress(
@@ -388,23 +495,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       if (mounted) {
         setState(() {
           _topicProgress = progress;
+          _completedLessonsCount = completedLessons.length;
           _learningGoal = learningGoalStore.goal;
           _learningGoalLoaded = true;
         });
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home mastery load failed');
-    }
-  }
-
-  /// Konu karolarındaki soru sayıları. Süs bilgisidir: gelmezse karo
-  /// yalnız adıyla kalır, ekran beklemez.
-  Future<void> _refreshTopicCounts() async {
-    try {
-      final counts = await repo.loadCategoryQuestionCounts();
-      if (mounted && counts.isNotEmpty) setState(() => _topicCounts = counts);
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'home topic counts failed');
     }
   }
 
@@ -484,6 +581,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
     final t = SahneTokens.of(context);
 
+    final narrow = !isWide && !_firstSession;
+    // Ana sayfa günün tek bakışta okunabilen özeti olmalı. Kompakt
+    // görünüm iki aktif görevi ve kalan sayısını gösterir.
+    final missionsCard = DailyMissionsCard(
+      isKu: ku,
+      missions: _missions,
+      compact: true,
+      onClaimReward: _claimMissionReward,
+    );
+    final progressCard = SahneSurfaceCard(
+      child: ProgressSummary(
+        key: const ValueKey('home-progress-summary'),
+        level: _level,
+        xpInLevel: _xpInLevel,
+        xpNeeded: _xpNeeded,
+        levelLabel: context.t(K.progressLevelLabel),
+      ),
+    );
+
     final primary = _buildAnimatedCard(
       _heroFadeAnimation(0),
       Column(
@@ -499,6 +615,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
             const SizedBox(height: SahneSpace.x2),
           ],
+          // Tarihî gün şeridi: yalnız o gün (21 Şubat, 8/16/21 Mart, 15 Mayıs).
+          if (DozaDay.today() case final day?) DozaDayStrip(day: day),
           // İlk oturum hâlâ 5 soruluk, süresiz, açıklamalı ilk derstir:
           // yeni gelene ilk dakikada süreli tur vermek yerine önce nasıl
           // oynandığı öğretilir. İlk ders bitince kart günün turuna döner.
@@ -516,9 +634,57 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               isKu: ku,
               loading: _roomActionLoading,
               doneToday: _tourDoneToday,
+              myEntry: _tourEntry,
+              now: _now(),
               onStart: _openTour,
               onPractice: _startPractice,
             ),
+          // Düello kartı: sırayla düello vaadi ya da "Sonuç hazır · N"
+          // dönüş kancası. Bayrak kapalı/çevrimdışıyken kendini çizmez
+          // (üstündeki aralık da kartın içindedir, boşluk kalmaz).
+          // Bir arkadaşın odaya daveti varsa kart düello kartının ÜSTÜNDE
+          // çıkar (zaman duyarlı: 30 dk); yoksa hiç yer kaplamaz.
+          RoomInviteCard(repository: repo, refreshToken: _refreshCounter),
+          // Erişim haritası (2026-10-21): kapılar konu ızgarasının ÜSTÜNDE.
+          // 2026-10-22: kapılar düello kartının hemen altına çıktı. Görev,
+          // ilerleme, tekrar ve hedef kartları olan oyuncuda (simülatör A)
+          // öğren kapısı yine ilk ekranın altına düşüyordu.
+          // Öğren kapısı ızgaranın altında, ekranın en dibinde duruyordu;
+          // oyuncu Kurmancî öğrenme alanını ancak sonuna kadar kaydırınca
+          // buluyordu. Konular ana içerik olarak hemen ardından gelir.
+          //
+          // Öğrenme alanı ve yarış: tek liste grubunda iki satır. Yarış
+          // kapısı ilk oturumda da görünür: uygulamanın ikinci yüzü budur
+          // ve yeni gelen onu ancak burada görürse arar.
+          const SizedBox(height: SahneSpace.cardGap),
+          // Tasarım kurulu 2026-10-22 (ChatGPT + Claude Opus): öğren ve oyna
+          // kapıları liste satırıydı ("ayarlar menüsü" görünümü); artık yan
+          // yana iki dolu mod kartı (Zimrût / Boyax), Yarış sekmesindeki
+          // kartlarla aynı dil.
+          SahneModeGrid(
+            children: [
+              SahneModeTile(
+                key: const ValueKey('home-door-learn'),
+                icon: AppIcons.graduationCap,
+                role: SahneRole.learn,
+                title: context.t(K.learnKurmanci),
+                subtitle: context.t(K.homeDoorLearnSub),
+                badge: _completedLessonsCount > 0
+                    ? groupThousands(_completedLessonsCount)
+                    : null,
+                onTap: widget.onOpenLearning == null ? null : _openLearning,
+              ),
+              SahneModeTile(
+                key: const ValueKey('home-door-play'),
+                icon: AppIcons.gamepad,
+                role: SahneRole.race,
+                title: context.t(K.homeDoorPlayTitle),
+                subtitle: context.t(K.homeDoorPlaySub),
+                badge: _playBadge(context),
+                onTap: widget.onOpenPlay,
+              ),
+            ],
+          ),
           // İlk oturumda seviye çubuğu ("Seviye 1 · 0/1000") yeni gelen için
           // anlamsız bir sayıdır; yerine bir şey konmaz. 2026-09-30 doğallık:
           // buraya konan "3 adımda ZanKurd" kartı hemen üstteki Günün dersini
@@ -528,17 +694,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // İlerleme özeti günlük görevin ALTINDA durur: turuncu "Başla"
           // ekranın ilk ve en güçlü eylemi kalmalı. Coin burada YOK:
           // marka satırında zaten kalıcı bir jeton çipi ve mağaza girişi var.
-          if (!_firstSession) ...[
+          // Dar düzende günlük görevler Günün dersinin hemen altında durur
+          // (eskiden sayfa dibindeydi: görev var mı diye kimse bakmıyordu);
+          // ilerleme özeti ve Pro sayfa sonuna iner.
+          if (narrow) ...[
             const SizedBox(height: SahneSpace.cardGap),
-            SahneSurfaceCard(
-              child: ProgressSummary(
-                key: const ValueKey('home-progress-summary'),
-                level: _level,
-                xpInLevel: _xpInLevel,
-                xpNeeded: _xpNeeded,
-                levelLabel: context.t(K.progressLevelLabel),
-              ),
-            ),
+            missionsCard,
+          ],
+          if (!_firstSession && !narrow) ...[
+            const SizedBox(height: SahneSpace.cardGap),
+            progressCard,
           ],
           if (_reviewReadyCount > 0) ...[
             const SizedBox(height: SahneSpace.cardGap),
@@ -566,39 +731,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onSelected: _selectLearningGoal,
             ),
           ],
-          SahneSectionHeader(title: context.t(K.homeTopicsTitle)),
+          // Günün sözü kapıların ALTINDA: Günün dersi ile kapılar arasına
+          // konunca öğren kapısını 390×844'te alt çubuğun altına itiyordu
+          // (manzara_seridi_test).
+          DailyQuoteCard(isKu: ku),
+          SahneSectionHeader(
+            title: context.t(K.homeTopicsTitle),
+            // İki dilli etiket: öbür dilde aynı anahtar (bkz.
+            // [SahneBilingualLabel]).
+            eyebrow: context.secondLabel(K.homeTopicsTitle),
+          ),
           HomeTopicGrid(
             isKu: ku,
             categories: repo.categories,
             progress: _topicProgress,
-            questionCounts: _topicCounts,
             onOpen: _openCategory,
           ),
-          const SizedBox(height: SahneSpace.x6),
-          // Öğrenme alanı ve yarış: tek liste grubunda iki satır. Yarış
-          // kapısı ilk oturumda da görünür: uygulamanın ikinci yüzü budur
-          // ve yeni gelen onu ancak burada görürse arar.
-          HomeDoors(
-            learn: HomeDoorTile(
-              key: const ValueKey('home-door-learn'),
-              icon: AppIcons.graduationCap,
-              role: SahneRole.learn,
-              title: context.t(K.learnKurmanci),
-              subtitle: context.t(K.homeDoorLearnSub),
-              onTap: widget.onOpenLearning == null ? null : _openLearning,
-            ),
-            play: HomeDoorTile(
-              key: const ValueKey('home-door-play'),
-              icon: AppIcons.gamepad,
-              role: SahneRole.race,
-              title: context.t(K.homeDoorPlayTitle),
-              subtitle: context.t(K.homeDoorPlaySub),
-              badge: _duelResultsReady > 0
-                  ? context.t(K.homeDoorPlayReady)
-                  : null,
-              onTap: widget.onOpenPlay,
-            ),
-          ),
+          // Slogan satırı (S1): dokununca "Doza me" sayfası.
+          const DozaSloganLine(),
         ],
       ),
     );
@@ -608,15 +758,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Ana sayfa günün tek bakışta okunabilen özeti olmalı. Kompakt
-          // görünüm iki aktif görevi ve kalan sayısını gösterir; tüm görevler
-          // ekranın altına taşınıp konuları gömmez.
-          DailyMissionsCard(
-            isKu: ku,
-            missions: _missions,
-            compact: true,
-            onClaimReward: _claimMissionReward,
-          ),
+          if (!narrow) missionsCard,
+          if (narrow) progressCard,
 
           // ── Abonelik girişi ────────────────────────────────────────────
           //
@@ -634,7 +777,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // (2026-09-05 canlı turu).
           Consumer<PremiumService>(
             builder: (context, premium, _) {
-              if (premium.isPremium || !AppConfig.hasRevenuecatConfig) {
+              // Satılabilir paket yoksa da gizli: ödeme sözleşmesi/satıcı
+              // hesabı eksikken paywall boş geliyordu (2026-10-23).
+              if (premium.isPremium || !premium.canSell) {
                 return const SizedBox.shrink();
               }
               return Padding(
@@ -678,6 +823,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return SahneTabPage(
       controller: widget.scrollController,
       title: _greeting(context, ku),
+      titleEyebrow: _greetingSecondLabel(context, ku),
       stats: [_buildHeaderControls(context, ku)],
       children: [content],
     );
@@ -691,25 +837,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     if (PlayerIdentity.isPlaceholderDisplayName(currentName)) {
       return context.t(K.homeGreetingAnon);
     }
-    final hour = DateTime.now().hour;
-    final String greeting;
-    if (isFlutterTestEnvironment) {
-      // Testte saat sabit değil; selam sabit kalsın.
-      greeting = context.t(K.homeGreetDay);
-    } else if (hour >= 5 && hour < 12) {
-      greeting = context.t(K.homeGreetMorning);
-    } else if (hour >= 12 && hour < 17) {
-      greeting = context.t(K.homeGreetDay);
-    } else if (hour >= 17 && hour < 22) {
-      greeting = context.t(K.homeGreetEvening);
-    } else {
-      greeting = context.t(K.homeGreetNight);
-    }
+    final greeting = context.t(_greetingKey());
     // Ad çözümlemesi profil ekranıyla aynı kaynaktan gelir; aksi halde
     // "ZanKurd" (ana ekran) ile "Lîstikvanê ZanKurd" (profil) gibi iki
     // ayrı kimlik oluşuyordu.
     final shortName = PlayerIdentity.resolveShortName(currentName, isKu: ku);
     return context.t(K.homeGreeting, {'greeting': greeting, 'name': shortName});
+  }
+
+  /// Günün saatine göre selam anahtarı.
+  String _greetingKey() {
+    // Testte saat sabit değil; selam sabit kalsın.
+    if (isFlutterTestEnvironment) return K.homeGreetDay;
+    final hour = DateTime.now().hour;
+    if (hour >= 5 && hour < 12) return K.homeGreetMorning;
+    if (hour >= 12 && hour < 17) return K.homeGreetDay;
+    if (hour >= 17 && hour < 22) return K.homeGreetEvening;
+    return K.homeGreetNight;
+  }
+
+  /// Selamın öbür dildeki karşılığı — iki dilli etiketin küçük satırı.
+  ///
+  /// Yeni metin yazılmaz: aynı anahtarların öbür dildeki değerleri
+  /// ([BuildContext.secondLabel]) ve adın o dildeki kısa biçimi birleştirilir.
+  /// Ayar kapalıysa ya da karşılık yoksa `null` (satır çizilmez).
+  String? _greetingSecondLabel(BuildContext context, bool ku) {
+    final currentName = _displayName ?? widget.displayName;
+    if (PlayerIdentity.isPlaceholderDisplayName(currentName)) {
+      return context.secondLabel(K.homeGreetingAnon);
+    }
+    final greeting = context.secondLabel(_greetingKey());
+    if (greeting == null) return null;
+    // Kalıp ("{greeting}, {name}!") iki dilde aynıdır; farkı selam taşır.
+    return Tr.forKu(K.homeGreeting, !ku, {
+      'greeting': greeting,
+      'name': PlayerIdentity.resolveShortName(currentName, isKu: !ku),
+    });
   }
 
   /// Marka satırının sağı: seri, jeton (stat çipleri) ve dil düğmesi.
@@ -735,15 +898,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           SahneStatChip(
             leading: const SahneGlyph(SahneGlyphKind.flame),
             label: '$_streak ${context.t(K.streakDayUnit)}',
+            // Renkli çip: seri Agir tonlu, jeton Zêr tonlu (2026-10-20).
+            tint: SahneTokens.of(context).selFill,
+            foreground: SahneTokens.of(context).selTx,
             semanticLabel: context.t(K.dailyStreakDays, {'days': '$_streak'}),
             onTap: () => _showStreakFreezeBottomSheet(context),
           ),
         if (_coinBalance > 0)
           SahneStatChip(
             leading: const SahneGlyph(SahneGlyphKind.coin),
-            label: '$_coinBalance',
+            label: groupThousands(_coinBalance),
+            gold: true,
             semanticLabel:
-                '${context.t(K.shop)}. $_coinBalance ${context.t(K.coinWord)}',
+                '${context.t(K.shop)}. ${groupThousands(_coinBalance)} '
+                '${context.t(K.coinWord)}',
             onTap: () async {
               await Navigator.of(
                 context,
@@ -791,7 +959,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   /// gün, o günde en az bir cevap bulunan gündür. Uydurma yok: veri yoksa
   /// gün "kaçırıldı" değil, olduğu gibi boş kalır ve bugünden sonrası
   /// `upcoming` olarak işaretlenir.
-  Future<List<StreakDayState>> _loadStreakWeek() async {
+  Future<List<StreakDayState>> _loadStreakWeek(StreakStore streak) async {
     final store = await MistakeStore.load();
     final history = store.getLast7DaysHistory();
     final today = DateTime.now();
@@ -807,7 +975,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       if (entry.key == todayKey) {
         states.add(played ? StreakDayState.completed : StreakDayState.today);
       } else {
-        states.add(played ? StreakDayState.completed : StreakDayState.missed);
+        // İlk görülen günden önceki boş gün "kaçırıldı ✕" değil, nötr boş:
+        // yeni hesapta haftanın geri kalanı başarısızlık gibi görünüyordu.
+        final day = DateTime.parse(entry.key);
+        states.add(
+          played
+              ? StreakDayState.completed
+              : streak.markFor(day) == StreakCalendarMark.blank
+              ? StreakDayState.blank
+              : StreakDayState.missed,
+        );
       }
     }
     return states;
@@ -858,67 +1035,76 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // döndürme) hafta ve seri deposu diskten yeniden okunuyor ve sayfa
     // yükleniyor görünümüne geri düşüyordu.
     final streakFuture = () async {
-      final week = await _loadStreakWeek();
       final store = await StreakStore.load();
+      final week = await _loadStreakWeek(store);
       return (week, store);
     }();
     // Biçim temadan gelir (Perde, üstte L pah).
-    showModalBottomSheet(
+    // Kurul 3. tur (2026-10-20): ortak alt sayfa kabuğu; başlık kabukta.
+    showSahneSheet<void>(
       context: context,
+      title: Tr.forKu(K.gunlukSeriStreak, isKu),
       builder: (ctx) {
         // Bilgilendirme sayfası değil, seriyi KORUMAK için gereken bilgi:
         // haftalık ritim, sonraki milestone ve freeze durumu tek yüzeyde.
         // Önceki hâli ikon + başlık + paragraf + bilgi kartıydı; oyuncu
         // hangi günleri kaçırdığını göremiyordu (2026-08-04).
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(SahneSpace.x6),
-            child: FutureBuilder<(List<StreakDayState>, StreakStore)>(
-              future: streakFuture,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: SahneSpace.x8),
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                }
-                final (week, store) = snapshot.data!;
-                final freezeState = _freezeStateFor(store);
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Semantics(
-                      header: true,
-                      child: Text(
-                        Tr.forKu(K.gunlukSeriStreak, isKu),
-                        style: SahneType.headline.copyWith(
-                          color: SahneTokens.of(context).tx,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: SahneSpace.x4),
-                    StreakPanel(
-                      current: _streak,
-                      days: week,
-                      freezeState: freezeState,
-                      freezeLabel: _freezeLabel(context, freezeState),
-                      dayLabels: context.t(K.streakWeekdays).split(','),
-                      dayUnitLabel: context.t(K.streakDayUnit),
-                      nextMilestone: _nextStreakMilestone(_streak),
-                      freezeCost: store.freezeCount > 0
-                          ? null
-                          : _streakFreezeCost,
-                      freezeActionLabel: context.t(K.streakProtectAction),
-                      // Dondurma sonuç ekranında, ödül akışının içinde
-                      // uygulanıyor; buradan tetiklemek ikinci bir yol
-                      // açar ve idempotency anahtarını bağlamsız bırakır.
-                      onFreeze: null,
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
+        return FutureBuilder<(List<StreakDayState>, StreakStore)>(
+          future: streakFuture,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Padding(
+                padding: EdgeInsets.symmetric(vertical: SahneSpace.x8),
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
+            final (week, store) = snapshot.data!;
+            final freezeState = _freezeStateFor(store);
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                StreakPanel(
+                  current: _streak,
+                  days: week,
+                  freezeState: freezeState,
+                  freezeLabel: _freezeLabel(context, freezeState),
+                  dayLabels: () {
+                    final names = context.t(K.streakWeekdays).split(',');
+                    return names.length == 7
+                        ? streakWeekLabels(names, DateTime.now())
+                        : names;
+                  }(),
+                  dayUnitLabel: context.t(K.streakDayUnit),
+                  nextMilestone: _nextStreakMilestone(_streak),
+                  freezeCost: store.freezeCount > 0 ? null : _streakFreezeCost,
+                  freezeActionLabel: context.t(K.streakProtectAction),
+                  // Dondurma sonuç ekranında, ödül akışının içinde
+                  // uygulanıyor; buradan tetiklemek ikinci bir yol
+                  // açar ve idempotency anahtarını bağlamsız bırakır.
+                  onFreeze: null,
+                ),
+                // Son 24 saatte kırılan seri: aynı sayfada geri alınabilir.
+                if (store.repairOffer() case final offer?) ...[
+                  const SizedBox(height: SahneSpace.x3),
+                  StreakRepairCard(
+                    store: store,
+                    repository: repo,
+                    offer: offer,
+                    onRepaired: (days) {
+                      Navigator.of(context).pop();
+                      _onStreakRepaired(days);
+                    },
+                  ),
+                ],
+                const SizedBox(height: SahneSpace.x4),
+                StreakCalendar(
+                  markFor: (day) => store.markFor(day),
+                  today: DateTime.now(),
+                ),
+                const SizedBox(height: SahneSpace.x4),
+              ],
+            );
+          },
         );
       },
     );
@@ -935,12 +1121,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Animation<double> _heroFadeAnimation(int index) {
     final startTime = (index * 0.1).clamp(0.0, 1.0).toDouble();
     final endTime = (startTime + 0.3).clamp(startTime, 1.0).toDouble();
-    return Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _loadAnimationController,
-        curve: Interval(startTime, endTime, curve: Curves.easeOut),
-      ),
-    );
+    return CurveTween(
+      curve: Interval(startTime, endTime, curve: Curves.easeOut),
+    ).animate(_loadAnimationController);
   }
 
   /// Günün turunu açar (kahraman kartın "Başla"sı) ve dönüşte tazeler:
@@ -971,7 +1154,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       // günlük depodan daha geniş bir aday havuzu isteriz. Quiz yine 5/10
       // soruda kalır; havuz küçükse saf seçici kalan sorularla doldurur.
       final candidateLimit = goal == null ? questionLimit : questionLimit * 3;
-      final candidates = await repo.loadDailyQuestions(limit: candidateLimit);
+      // Bugün zaten cevap verilmişse ("Devam et"/"Tekrar oyna") günün sabit
+      // seti değil, görülmemiş sorular gelir.
+      final candidates = await repo.loadDailyQuestions(
+        limit: candidateLimit,
+        replay: _todayAnswered > 0,
+      );
       final questions = selectDailyQuestionsForGoal(
         candidates: candidates,
         goal: goal,

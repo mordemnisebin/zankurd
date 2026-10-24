@@ -23,10 +23,18 @@ import 'sahne/sahne.dart';
 /// artık bileşenin kendisi verir ([SahneIconButton]); ekran okuyucu tek bir
 /// 48'lik düğme görür.
 class ZkBackButton extends StatelessWidget {
-  const ZkBackButton({super.key, this.onPressed, this.color});
+  const ZkBackButton({
+    super.key,
+    this.onPressed,
+    this.color,
+    this.glass = false,
+  });
 
   final VoidCallback? onPressed;
   final Color? color;
+
+  /// Renkli başlık bandında (konu rengi) yarı saydam cam plaka.
+  final bool glass;
 
   /// Dokunma kutusunun kenarı.
   static const double tapTarget = sahneTapTarget;
@@ -35,6 +43,7 @@ class ZkBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SahneIconButton(
       icon: AppIcons.arrowLeft,
+      glass: glass,
       semanticLabel: context.t(K.back),
       onPressed: onPressed ?? () => Navigator.maybePop(context),
     );
@@ -56,6 +65,7 @@ PreferredSizeWidget zkAppBar(
   Key? key,
   Widget? title,
   Widget? subtitle,
+  String? titleSecondary,
   List<Widget>? actions,
   Color? backgroundColor,
   double? elevation,
@@ -65,8 +75,16 @@ PreferredSizeWidget zkAppBar(
   IconThemeData? iconTheme,
   bool? centerTitle,
   SystemUiOverlayStyle? systemOverlayStyle,
+  Color? foregroundColor,
+  Color? subtitleColor,
+
+  /// İki dilli küçük satırın rengi (renkli bantta okunur renk); verilmezse
+  /// ikincil metin.
+  Color? secondaryColor,
+  bool glassBack = false,
 }) {
   final t = SahneTokens.of(context);
+  final titleColor = foregroundColor ?? t.tx;
   final showDefaultLeading = automaticallyImplyLeading && leading == null;
   final hasLeading = leading != null || showDefaultLeading;
   // Başlık metinse sözleri bölünmeden sarar ([SahneUnbrokenText]) ve çubuk
@@ -84,7 +102,7 @@ PreferredSizeWidget zkAppBar(
       ? title
       : Text(
           titleText.data!,
-          style: SahneType.headline.copyWith(color: t.tx),
+          style: SahneType.headline.copyWith(color: titleColor),
           maxLines: _titleMaxLines,
           softWrap: true,
           overflow: TextOverflow.clip,
@@ -95,9 +113,21 @@ PreferredSizeWidget zkAppBar(
             MediaQuery.textScalerOf(context),
           ),
         );
+  // İki dilli etiketin küçük satırı (başlığın üstünde): yalnız sığarsa
+  // çizilir ve çubuk yalnız o zaman uzar.
+  final secondary = titleSecondary != null && shownTitle != null
+      ? titleSecondary
+      : null;
+  final secondaryFits =
+      secondary != null &&
+      _fitsOneLine(context, secondary, SahneType.caption, titleRoom);
   final toolbarHeight = _barHeight(
     context,
     title: titleText?.data,
+    extraHeight: secondaryFits
+        ? MediaQuery.textScalerOf(context).scale(SahneType.caption.fontSize!) *
+              SahneType.caption.height!
+        : 0,
     subtitle: subtitle is Text ? subtitle.data : null,
     subtitleMaxLines: subtitle is Text ? subtitle.maxLines : null,
     hasSubtitle: subtitle != null,
@@ -114,18 +144,23 @@ PreferredSizeWidget zkAppBar(
       ? null
       : Semantics(
           header: true,
-          child: subtitle == null
+          child: subtitle == null && !secondaryFits
               ? shownTitle
               : Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (secondaryFits)
+                      SahneBilingualLabel(secondary, color: secondaryColor),
                     shownTitle,
-                    DefaultTextStyle.merge(
-                      style: SahneType.caption.copyWith(color: t.tx2),
-                      softWrap: true,
-                      child: subtitle,
-                    ),
+                    if (subtitle != null)
+                      DefaultTextStyle.merge(
+                        style: SahneType.caption.copyWith(
+                          color: subtitleColor ?? t.tx2,
+                        ),
+                        softWrap: true,
+                        child: subtitle,
+                      ),
                   ],
                 ),
         );
@@ -142,7 +177,7 @@ PreferredSizeWidget zkAppBar(
     toolbarHeight: toolbarHeight,
     title: heading,
     titleSpacing: hasLeading ? SahneSpace.x3 : SahneSpace.page,
-    titleTextStyle: SahneType.headline.copyWith(color: t.tx),
+    titleTextStyle: SahneType.headline.copyWith(color: titleColor),
     // Son eylemin görsel kenarı, geri plakasının sol kenarı gibi sayfa
     // kenarından 16 içeride durur. Eskiden sabit 8'lik boşluk vardı: mağaza
     // çubuğunda jeton çipi sağ kenara ~8 px, geri plakası sola 16 px
@@ -156,7 +191,7 @@ PreferredSizeWidget zkAppBar(
     surfaceTintColor: Colors.transparent,
     elevation: elevation ?? 0,
     scrolledUnderElevation: scrolledUnderElevation ?? 0,
-    iconTheme: iconTheme ?? IconThemeData(color: t.tx),
+    iconTheme: iconTheme ?? IconThemeData(color: titleColor),
     centerTitle: centerTitle ?? false,
     systemOverlayStyle: systemOverlayStyle,
     automaticallyImplyLeading: showDefaultLeading,
@@ -170,9 +205,9 @@ PreferredSizeWidget zkAppBar(
     leading:
         leading ??
         (showDefaultLeading
-            ? const Padding(
-                padding: EdgeInsetsDirectional.only(start: _backInset),
-                child: Center(child: ZkBackButton()),
+            ? Padding(
+                padding: const EdgeInsetsDirectional.only(start: _backInset),
+                child: Center(child: ZkBackButton(glass: glassBack)),
               )
             : null),
   );
@@ -264,6 +299,7 @@ double _barHeight(
   BuildContext context, {
   required String? title,
   required String? subtitle,
+  double extraHeight = 0,
   int? subtitleMaxLines,
   required bool hasSubtitle,
   required bool hasLeading,
@@ -306,5 +342,33 @@ double _barHeight(
   if (hasSubtitle) {
     h += measure(subtitle, SahneType.caption, maxLines: subtitleMaxLines);
   }
-  return math.max(64, h + SahneSpace.x4);
+  h += extraHeight;
+  // Alt satırlı başlıkta dikey pay 24: 16'da ad çubuğun üst kenarına,
+  // alt satır altındaki çizgiye yapışık okunuyordu (kurul 4. tur 2026-10-20).
+  return math.max(
+    64,
+    h + (hasSubtitle || extraHeight > 0 ? SahneSpace.x6 : SahneSpace.x4),
+  );
+}
+
+/// [text] [room] genişliğine tek satırda sığıyor mu (iki dilli küçük satır).
+bool _fitsOneLine(
+  BuildContext context,
+  String text,
+  TextStyle style,
+  double room,
+) {
+  final merged = DefaultTextStyle.of(context).style.merge(style);
+  final painter = TextPainter(
+    text: TextSpan(
+      text: text,
+      style: merged.copyWith(fontFamily: merged.fontFamily ?? SahneType.text),
+    ),
+    textDirection: Directionality.maybeOf(context) ?? TextDirection.ltr,
+    textScaler: MediaQuery.textScalerOf(context),
+    maxLines: 1,
+  )..layout();
+  final fits = painter.width <= room;
+  painter.dispose();
+  return fits;
 }

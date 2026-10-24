@@ -5,6 +5,8 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../screens/learner_lexicon_screen.dart';
 import '../utils/app_route.dart';
+import 'lexicon_speak_button.dart';
+import 'word_save_button.dart';
 import 'sahne/sahne.dart';
 
 /// Hangi sözcükler sözlük için dokunulabilir?
@@ -214,11 +216,22 @@ class LexiconText extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
               child: Text(
                 word,
+                // Flutter yer tutucu çocuğu metnin ölçeğiyle zaten büyütür;
+                // içteki metin MediaQuery ölçeğini bir daha uygularsa büyük
+                // yazıda sözcük komşularının iki katı çıkıyordu (2026-10-22
+                // simülatör, bkz. lexicon_text_scale_test).
+                textScaler: TextScaler.noScaling,
                 style: style.copyWith(
                   decoration: TextDecoration.underline,
                   decorationStyle: TextDecorationStyle.dotted,
-                  decorationColor: t.learnTx,
-                  decorationThickness: 2,
+                  // Çizgi metnin KENDİ renginden türer (~%45 alfa): renkli
+                  // soru sahnesinde (beyaz yazı) her sözcüğün altında yeşil
+                  // nokta gürültü yapıyordu; açık zeminli ders slaytında da
+                  // koyu yazının sakin bir izi kalır (2026-10-21 simülatör).
+                  decorationColor: (style.color ?? t.tx).withValues(
+                    alpha: 0.45,
+                  ),
+                  decorationThickness: 1.2,
                 ),
               ),
             ),
@@ -233,8 +246,11 @@ class LexiconText extends StatelessWidget {
 /// "Sözlükte aç".
 Future<void> showLexiconEntrySheet(
   BuildContext context,
-  LearnerLexiconEntry entry,
-) {
+  LearnerLexiconEntry entry, {
+  // Sözlük ekranının kendi içinden açılınca "Sözlükte aç" aynı ekranı bir
+  // kez daha üst üste açardı.
+  bool showOpenInLexicon = true,
+}) {
   final t = SahneTokens.of(context);
   final isKu = context.isKu;
   final source = LearnerLexicon.sourceFor(entry);
@@ -257,12 +273,20 @@ Future<void> showLexiconEntrySheet(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Semantics(
-            header: true,
-            child: Text(
-              entry.termKu,
-              style: SahneType.headline.copyWith(color: t.tx),
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Semantics(
+                  header: true,
+                  child: Text(
+                    entry.termKu,
+                    style: SahneType.headline.copyWith(color: t.tx),
+                  ),
+                ),
+              ),
+              LexiconSpeakButton(text: entry.termKu),
+              WordSaveButton(entryId: entry.id),
+            ],
           ),
           const SizedBox(height: SahneSpace.x1),
           Text(entry.meaningTr, style: SahneType.body.copyWith(color: t.tx2)),
@@ -279,19 +303,20 @@ Future<void> showLexiconEntrySheet(
             style: SahneType.captionStrong.copyWith(color: t.learnTx),
           ),
           const SizedBox(height: SahneSpace.x4),
-          SahneButton.secondary(
-            buttonKey: const ValueKey('lexicon-sheet-open'),
-            label: context.t(K.lexiconOpen),
-            expand: true,
-            onPressed: () {
-              Navigator.of(sheetContext).pop();
-              Navigator.of(context).push(
-                AppRoute(
-                  page: LearnerLexiconScreen(initialQuery: entry.termKu),
-                ),
-              );
-            },
-          ),
+          if (showOpenInLexicon)
+            SahneButton.secondary(
+              buttonKey: const ValueKey('lexicon-sheet-open'),
+              label: context.t(K.lexiconOpen),
+              expand: true,
+              onPressed: () {
+                Navigator.of(sheetContext).pop();
+                Navigator.of(context).push(
+                  AppRoute(
+                    page: LearnerLexiconScreen(initialQuery: entry.termKu),
+                  ),
+                );
+              },
+            ),
         ],
       ),
     ),

@@ -1,0 +1,85 @@
+{
+  "reviewed": 183,
+  "qualityGateIssuesUnchanged": 183,
+  "byDecision": {
+    "intentional_variation": 166,
+    "needs_editorial_review": 7,
+    "redundant_repeat": 10
+  },
+  "byCheck": {
+    "near_duplicate_candidate": 183
+  },
+  "bySeverity": {
+    "warning": 183
+  },
+  "bySource": {
+    "assets/data/baslangic_2026_10_06_questions.json": 20,
+    "assets/data/bosluk_2026_10_02_questions.json": 1,
+    "assets/data/deepseek_verified_2026_09_30_questions.json": 111,
+    "assets/data/dersler2_2026_10_08_questions.json": 8,
+    "assets/data/dersler3_2026_10_08_questions.json": 14,
+    "assets/data/editorial_questions.json": 7,
+    "assets/data/expansion_2026_08_questions.json": 1,
+    "assets/data/expansion_2026_09_28_questions.json": 1,
+    "assets/data/hat_2026_10_07_questions.json": 11,
+    "assets/data/offline_questions.json": 5,
+    "assets/data/restore_2026_08_07_questions.json": 3,
+    "assets/data/source_first_2026_08_questions.json": 1
+  },
+  "byCategory": {
+    "Ziman": 51,
+    "Cografya": 20,
+    "Cîhan": 60,
+    "Muzîk": 5,
+    "Teknolojî": 18,
+    "Çand": 15,
+    "Dîrok": 7,
+    "Siyaset": 3,
+    "Edebiyat": 3,
+    "Sînema": 1
+  },
+  "byLearningLesson": {
+    "alphabet_1": 6,
+    "greetings_2": 1,
+    "intro_1": 1,
+    "family_1": 7,
+    "food_2": 1,
+    "animals_1": 2,
+    "animals_2": 2,
+    "unlinked": 136,
+    "body_1": 5,
+    "clothes_1": 1,
+    "home_1": 2,
+    "past_1": 3,
+    "city_1": 1,
+    "shopping_1": 3,
+    "health_1": 2,
+    "school_1": 2,
+    "transport_1": 2,
+    "jobs_1": 1,
+    "geography_2": 5
+  },
+  "beginnerSourceReviewed": 42,
+  "beginnerSourceDecisions": {
+    "intentional_variation": 42
+  },
+  "firstSevenLocalLessonRelation": 28,
+  "baselinePasses": true,
+  "evidenceSha256": {
+    "assets/data/baslangic_2026_10_06_questions.json": "53e0b93c8086e26315c1f6033a5f90404c5766800eaa77a38d77752b29617a7c",
+    "assets/data/bosluk_2026_10_02_questions.json": "876a87dd469ba1d3ec4bde4c0f257e9d7a4d518a6c749cd0d44a0fec1f59fc8c",
+    "assets/data/deepseek_verified_2026_09_30_questions.json": "b95d30a92ccd1ce376f3d66092f05263736b8ac52a05a8c6c9d8030de8d26d67",
+    "assets/data/ders_2026_10_01_questions.json": "626adf6a4aa341202f492c3dc8933d295df418dbc796f619c9d5a730af7808ad",
+    "assets/data/dersler2_2026_10_08_questions.json": "107d5cbbfea634b1cb9f735cfd99e7e2053818c722c7da5ced63bf7512dc2462",
+    "assets/data/dersler3_2026_10_08_questions.json": "043c87cba19c87f867f4c25d70d3954f28719b66de3e52a85cd06db858f99d3d",
+    "assets/data/editorial_questions.json": "b3171c8d12c7f490c58b0359ccb6898104f134edbd49d8e9761c910e00af1fd5",
+    "assets/data/expansion_2026_08_questions.json": "c44a2f4ea0d177cde57beea40a08cd00a5f27ed2bb93776f47b218c605ff816f",
+    "assets/data/expansion_2026_09_28_questions.json": "caa9eb7f8b3ad5410cbc3ba9e6e10c81dfaaa065a5c21759f46ddf8dfe955dfe",
+    "assets/data/hat_2026_10_07_questions.json": "8898818a151cd6fc5a5e73660db2175f305a2b1578cb9723b9563cc0b36c84df",
+    "assets/data/offline_questions.json": "f899970bf09d31f11d985ae63cb1515d69f8a43aba58cbda5c9f19a27406a583",
+    "assets/data/restore_2026_08_07_questions.json": "46f668226886cb604a818a1a63a046219b6ea193c061f5d78946b9f5ef901d0b",
+    "assets/data/source_first_2026_08_questions.json": "773f65829fbc572fb8befe345627c54a123c4bde6a39ef11900b563153472709",
+    "tool/question_quality/baseline.json": "2e3d3070dac7eebdb54e4cdbc7d178a2d06170d80c62f9e160fd18a1764adc28",
+    "tool/question_quality/src/checks.dart": "a005bca875875c8e2d738d5b5be14afd584fdcd20c00d3b756d61c57a57c0ace"
+  }
+}

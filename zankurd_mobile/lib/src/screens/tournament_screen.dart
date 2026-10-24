@@ -10,13 +10,16 @@ import '../models/quiz_question.dart';
 import '../models/tournament.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/player_identity.dart';
 import '../widgets/arena_kit.dart';
 import '../widgets/app_state.dart';
+import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/tournament_bracket_widget.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../config/bot_names.dart';
+import '../utils/number_format.dart';
 
 bool tournamentMatchCompleted(Object? result) =>
     result is Map && result['completed'] == true;
@@ -281,6 +284,13 @@ class _TournamentScreenState extends State<TournamentScreen> {
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'tournament_join');
+      // Geçici hata sahte bot şemasına düşürmez (gerçek insan sözü); kullanıcı
+      // tekrar deneyebilsin diye lobide kalır.
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.checkConnection))));
+      return;
     }
     if (!mounted) return;
 
@@ -669,19 +679,8 @@ class _TournamentScreenState extends State<TournamentScreen> {
   /// uygulanamaz — gerçek turnuvanın final maçı "Çeyrek Final" diye
   /// etiketleniyordu (2026-08-14 denetimi). `totalRounds`, o an elde olan
   /// `bracket.rounds.length`dir.
-  List<String> _roundNames(bool ku, int totalRounds) {
-    final namesFromFinal = ku
-        ? const ['Fînal', 'Nîv-Fînal', 'Çaryeka Fînalê', 'Dawiya 16an']
-        : const ['Final', 'Yarı Final', 'Çeyrek Final', 'Son 16'];
-    return List.generate(totalRounds, (i) {
-      final distanceFromFinal = totalRounds - 1 - i;
-      if (distanceFromFinal < namesFromFinal.length) {
-        return namesFromFinal[distanceFromFinal];
-      }
-      // Bilinen 4 addan taşan (32+ oyuncu) erken turlar için genel yedek.
-      return Tr.forKu(K.tournamentRoundGeneric, ku, {'n': '${i + 1}'});
-    });
-  }
+  List<String> _roundNames(bool ku, int totalRounds) =>
+      tournamentRoundNames(ku, totalRounds);
 
   @override
   Widget build(BuildContext context) {
@@ -735,6 +734,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
     }
 
     return SahnePushedPage(
+      role: SahneRole.race,
       title: context.t(inBracket ? K.tournamentTitle : K.tournament),
       // Tur bilgisi yalnızca maç kartında gösterilir; burada tekrar
       // edilmez.
@@ -860,12 +860,23 @@ class _TournamentScreenState extends State<TournamentScreen> {
               for (final s in _standings)
                 SahneListRow.rank(
                   rank: s.rank,
-                  title: s.playerName,
+                  title: PlayerIdentity.resolveNameWithTag(
+                    s.profile?.displayName ?? s.playerName,
+                    isKu: ku,
+                    tag: s.profile?.playerTag,
+                  ),
+                  avatar: s.profile == null
+                      ? null
+                      : PlayerAvatar.fromIdentity(
+                          radius: 18,
+                          identity: s.profile!.avatar,
+                          displayName: s.profile!.displayName ?? s.playerName,
+                        ),
                   initial: s.playerName.trim().isEmpty
                       ? null
                       : SahneType.upperFor(s.playerName.trim()[0], isKu: ku),
                   icon: AppIcons.user,
-                  trailing: SahneRowValue('${s.totalScore}'),
+                  trailing: SahneRowValue(groupThousands(s.totalScore)),
                 ),
             ],
           ),
@@ -886,7 +897,13 @@ class _LobbyView extends StatelessWidget {
     // Kupanın ne zaman başlayacağı: kontenjan dolunca, dolmazsa 24 saat
     // sonunda eldeki oyuncularla. Eski "Her Cumartesi 20:00" metni bu
     // kuraldan önce yazılmıştı ve gerçeği anlatmıyordu (2026-07-27).
-    final scheduleText = context.t(K.cupStartsWhenFull);
+    // Kurul 2. tur 2026-10-20: başlama koşulu iki ayrı yerde, ikincisi
+    // yarım cümle olarak ("En geç 24 saat içinde, eldeki oyuncularla")
+    // durup kesilmiş gibi okunuyordu. İkisi kahramanın alt satırında TEK
+    // cümle; alt satır sarar, kesilmez.
+    final scheduleText =
+        '${context.t(K.cupStartsWhenFull)}; '
+        '${context.t(K.cupStartsLatest).toLowerCaseFirst()}';
 
     // Kupa kahramanı: durum, ödül ve ana eylem TEK yüzeyde (2026-08-04).
     //
@@ -1015,20 +1032,36 @@ class _CupFormatPanel extends StatelessWidget {
               ),
               const SizedBox(height: SahneSpace.x3),
               // Karolar sarar: %200 yazıda dar telefonda alt satıra iner.
-              Wrap(
-                spacing: SahneSpace.x2,
-                runSpacing: SahneSpace.x2,
-                children: [
-                  for (final item in items)
-                    _CupStat(icon: item.$1, value: item.$2, label: item.$3),
-                ],
-              ),
-              const SizedBox(height: SahneSpace.x3),
-              // Kupanın iki kuralı da burada durur.
-              Text(
-                '${Tr.forKu(K.botRaceHint, ku)}\n${Tr.forKu(K.cupStartsLatest, ku)}',
-                style: SahneType.caption.copyWith(color: t.tx2),
-              ),
+              // Kurul 4. tur (10): karolar yalnız solu dolduruyor, sağ yarı
+              // boş kalıyordu; normal yazıda satırı eşit paylaşırlar, büyük
+              // yazıda sarmaya döner.
+              if (MediaQuery.textScalerOf(context).scale(16) >= 24)
+                Wrap(
+                  spacing: SahneSpace.x2,
+                  runSpacing: SahneSpace.x2,
+                  children: [
+                    for (final item in items)
+                      _CupStat(icon: item.$1, value: item.$2, label: item.$3),
+                  ],
+                )
+              else
+                IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (var i = 0; i < items.length; i++) ...[
+                        if (i > 0) const SizedBox(width: SahneSpace.x2),
+                        Expanded(
+                          child: _CupStat(
+                            icon: items[i].$1,
+                            value: items[i].$2,
+                            label: items[i].$3,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
@@ -1579,4 +1612,11 @@ class _UserMatchCard extends StatelessWidget {
       ),
     );
   }
+}
+
+extension on String {
+  /// Birleşik cümlede ikinci parça küçük harfle başlar (Türkçe/Kurmancî
+  /// ilk harfleri `I`/`İ` ile karışmaz: cümleler `E` ve `H` ile başlar).
+  String toLowerCaseFirst() =>
+      isEmpty ? this : '${this[0].toLowerCase()}${substring(1)}';
 }

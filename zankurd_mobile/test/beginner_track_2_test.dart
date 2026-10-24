@@ -79,7 +79,7 @@ void main() {
     }
     expect(
       playable.where((q) => q.id.startsWith('dersler2_2026_10_08_')).length,
-      136, // 132 + 4 verbs_1 sorusu (2026-10-13)
+      136, // 132 + 4 verbs_1 (2026-10-13) - 6 çift boşluklu + 6 jüri onaylı yeni (2026-10-21)
     );
   });
 

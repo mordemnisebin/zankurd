@@ -39,6 +39,7 @@ import 'package:zankurd_mobile/main.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
 import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
@@ -193,7 +194,7 @@ void main() {
 
       // Yol yine de bir join koduna ÇÖZÜLÜR (true) — yalnız asıl katılma
       // (sosyal kilit yüzünden) tetiklenmez. Bu, mevcut soğuk açılış
-      // davranışıyla (`_consumeJoinDeepLink`) aynı sözleşmedir.
+      // davranışıyla (`_tryOpenJoinCode`) aynı sözleşmedir.
       expect(handled, isTrue);
       expect(repository.joinCalls, isEmpty);
       expect(find.byType(RoomScreen), findsNothing);
@@ -227,6 +228,71 @@ void main() {
 
     test('davet olmayan yol işlenmez', () {
       expect(JoinDeepLink.offer('/ayarlar'), isFalse);
+      expect(JoinDeepLink.takeIncoming(), isNull);
+    });
+  });
+
+  group('kod ve alan adı süzgeci (JoinDeepLink.parse)', () {
+    // Eskiden her `/join/<metin>` büyük harfe çevrilip doğrudan
+    // `join_room_by_code` RPC'sine gidiyordu; bozuk ya da yabancı alan adlı
+    // bir bağlantı sunucuya boşuna istek ve oyuncuya anlamsız "oda
+    // bulunamadı" hatası üretiyordu. Hiçbir test bunu yakalamıyordu çünkü
+    // bütün testler geçerli kodla çalışıyordu.
+    test('geçerli oda ve meydan okuma kodları kabul edilir', () {
+      expect(
+        JoinDeepLink.parse('https://www.zankurd.com/join/zk-abcdef0123'),
+        'ZK-ABCDEF0123',
+      );
+      expect(
+        JoinDeepLink.parse('https://zankurd.com/join/DK7M2Q9XA'),
+        'DK7M2Q9XA',
+      );
+      expect(JoinDeepLink.parse('/join/ZK-ABCDEF0123'), 'ZK-ABCDEF0123');
+    });
+
+    // Web'deki /join.html "Uygulamada aç" düğmesi App Links doğrulaması
+    // tutmadığında uygulamayı özel şemayla açar; yol https bağlantısıyla
+    // aynıdır ve aynı kuralla çözülmelidir (2026-10-18).
+    test('özel şemalı "uygulamada aç" bağlantısı da çözülür', () {
+      expect(
+        JoinDeepLink.parse('com.zankurd.app://zankurd.com/join/482913'),
+        '482913',
+      );
+      expect(
+        JoinDeepLink.parse('com.zankurd.app://evil.example/join/482913'),
+        isNull,
+      );
+    });
+
+    test('6 rakamlı oda kodu kabul edilir ve meydan okumayla karışmaz', () {
+      expect(
+        JoinDeepLink.parse('https://www.zankurd.com/join/482913'),
+        '482913',
+      );
+      expect(JoinDeepLink.isChallengeCode('482913'), isFalse);
+      expect(JoinDeepLink.isChallengeCode('DK7M2Q9XA'), isTrue);
+      // Rakamla başlayan kod hiçbir koşulda meydan okuma kodu değildir.
+      expect(JoinDeepLink.parse('/join/48291'), isNull);
+      expect(JoinDeepLink.parse('/join/4829131'), isNull);
+    });
+
+    test('biçimi tutmayan kod reddedilir', () {
+      expect(JoinDeepLink.parse('/join/MERHABA'), isNull);
+      expect(JoinDeepLink.parse('/join/ZK-'), isNull);
+      expect(JoinDeepLink.parse('/join/D'), isNull);
+      expect(JoinDeepLink.parse("/join/ZK-1';drop"), isNull);
+    });
+
+    test('yabancı alan adı reddedilir, web kendi adresine güvenir', () {
+      const foreign = 'https://evil.example/join/ZK-ABCDEF0123';
+      expect(JoinDeepLink.parse(foreign), isNull);
+      expect(JoinDeepLink.parse(foreign, anyHost: true), 'ZK-ABCDEF0123');
+    });
+
+    test('geçersiz kodlu /join/ yolu yutulur ama davet üretmez', () {
+      // `false` dönseydi WidgetsApp yolu pushNamed ile dener ve
+      // Crashlytics'e sahte "route bulunamadı" hatası düşerdi.
+      expect(JoinDeepLink.offer('/join/MERHABA'), isTrue);
       expect(JoinDeepLink.takeIncoming(), isNull);
     });
   });
@@ -289,6 +355,110 @@ void main() {
       expect(tester.takeException(), isNull);
       expect(repository.joinCalls, isEmpty);
       expect(find.byType(RoomScreen), findsNothing);
+    });
+  });
+
+  group('meydan okuma bağlantısı (/join/D…)', () {
+    // Oyun ekranının 20 sn'lik sayacı `pumpAndSettle`ı bitirmez; ekran
+    // görünene dek kısa adımlarla pompalanır.
+    Future<void> pumpUntilPlay(WidgetTester tester) async {
+      for (var i = 0; i < 40; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+        if (find.byType(AsyncDuelPlayScreen).evaluate().isNotEmpty) return;
+      }
+    }
+
+    // Oda kodu ile meydan okuma kodu AYNI /join/ yolunu paylaşır; yanlış
+    // ayrım bağlantıyı yanlış RPC'ye (oda katılımı) götürürdü.
+    testWidgets('sıcak açılış: kabul edilir, oda katılımına GİTMEZ', (
+      tester,
+    ) async {
+      freshMockRepository();
+      final repository = _JoinRepository()
+        ..addIncomingChallengeForTesting(friendChallenge: false);
+      await tester.pumpWidget(
+        JoinDeepLinkScope(
+          child: testShell(
+            authProvider: FakeAuthProvider(),
+            child: AppShell(
+              repository: repository,
+              connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final handled = await tester.binding.handlePushRoute('/join/dk7m2q9xa');
+      await pumpUntilPlay(tester);
+
+      expect(tester.takeException(), isNull);
+      expect(handled, isTrue);
+      expect(repository.joinCalls, isEmpty);
+      expect(find.byType(RoomScreen), findsNothing);
+      expect(find.byType(AsyncDuelPlayScreen), findsOneWidget);
+      final screen = tester.widget<AsyncDuelPlayScreen>(
+        find.byType(AsyncDuelPlayScreen),
+      );
+      expect(screen.entry?.code, 'DK7M2Q9XA');
+    });
+
+    testWidgets('soğuk açılış: kabul edilir, oda katılımına GİTMEZ', (
+      tester,
+    ) async {
+      freshMockRepository();
+      final repository = _JoinRepository()
+        ..addIncomingChallengeForTesting(friendChallenge: false);
+      tester.binding.platformDispatcher.defaultRouteNameTestValue =
+          '/join/DK7M2Q9XA';
+      addTearDown(() {
+        tester.binding.platformDispatcher.defaultRouteNameTestValue = '/';
+      });
+
+      await tester.pumpWidget(
+        ZanKurdApp(
+          repository: repository,
+          authProvider: FakeAuthProvider(),
+          languageProvider: turkishLang(),
+        ),
+      );
+      await pumpUntilPlay(tester);
+
+      expect(tester.takeException(), isNull);
+      expect(repository.joinCalls, isEmpty);
+      expect(find.byType(AsyncDuelPlayScreen), findsOneWidget);
+    });
+
+    testWidgets('henüz oturum yokken gelen bağlantı girişten sonra açılır', (
+      tester,
+    ) async {
+      freshMockRepository();
+      final repository = _JoinRepository()
+        ..addIncomingChallengeForTesting(friendChallenge: false);
+      final auth = GateAuthProvider();
+      tester.binding.platformDispatcher.defaultRouteNameTestValue =
+          '/join/DK7M2Q9XA';
+      addTearDown(() {
+        tester.binding.platformDispatcher.defaultRouteNameTestValue = '/';
+      });
+
+      await tester.pumpWidget(
+        ZanKurdApp(
+          repository: repository,
+          authProvider: auth,
+          languageProvider: turkishLang(),
+        ),
+      );
+      await tester.pumpAndSettle();
+      // Giriş kapısındayız: oyun ekranı da hata da yok, kod bekliyor.
+      expect(find.byType(AsyncDuelPlayScreen), findsNothing);
+      expect(tester.takeException(), isNull);
+
+      await auth.signInAsGuest();
+      await pumpUntilPlay(tester);
+
+      expect(find.byType(AsyncDuelPlayScreen), findsOneWidget);
+      expect(repository.joinCalls, isEmpty);
     });
   });
 }

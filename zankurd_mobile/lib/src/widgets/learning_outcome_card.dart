@@ -254,9 +254,103 @@ class LearningOutcomeCard extends StatelessWidget {
         : strongestName != null
         ? K.enGucluOldugunKategori
         : K.resultLearnedTitle;
+    // 2026-10-19 sadeleşme (ikinci tur): sonuç ekranında (`showCounts:
+    // false`) kart, kategori listesinin hemen altında TEK dokunulur satırdır:
+    // yeşil dolgulu, düğmeli büyük kart dar ekranda sıkışıp alt perdenin
+    // arkasında kalıyordu. Satırın tamamı "gözden geçir" eylemidir.
+    if (!showCounts) {
+      final review = reviewName == null
+          ? null
+          : context.t(
+              outcome.reviewAnswered == 1
+                  ? K.outcomeReviewOne
+                  : K.outcomeReview,
+              {
+                'name': reviewName,
+                'answered': '${outcome.reviewAnswered}',
+                'wrong': '${outcome.reviewWrong}',
+              },
+            );
+      final strong = strongestName == null
+          ? null
+          : context.t(K.outcomeStrong, {
+              'name': strongestName,
+              'answered': '${outcome.strongestAnswered}',
+              'correct': '${outcome.strongestCorrect}',
+            });
+      final canReview = outcome.reviewRecords.isNotEmpty && onReview != null;
+      final link = !canReview
+          ? null
+          : reviewName == null
+          ? context.t(K.outcomeReviewGeneric)
+          : context.t(K.outcomeReviewNamed, {'name': reviewName});
+      Widget lines(String text, {Color? color}) => Padding(
+        padding: const EdgeInsets.only(top: SahneSpace.x1),
+        child: Text(
+          text,
+          style: SahneType.caption.copyWith(color: color ?? t.tx2),
+        ),
+      );
+      final row = SahneSurfaceCard(
+        key: const ValueKey('learning-outcome-card'),
+        padding: const EdgeInsets.symmetric(
+          horizontal: SahneSpace.x4,
+          vertical: SahneSpace.x3,
+        ),
+        onTap: canReview ? onReview : null,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 7. kurul: çıplak 20 px ampul başlıkla hizasız yüzüyordu; 36 px
+            // öğrenme tonlu kutuda, başlıkla üstten hizalı.
+            DecoratedBox(
+              decoration: ShapeDecoration(
+                color: t.learnTint,
+                shape: SahneShape.forSize(36),
+              ),
+              child: SizedBox.square(
+                dimension: 36,
+                child: Icon(AppIcons.lightbulb, size: 20, color: t.learnTx),
+              ),
+            ),
+            const SizedBox(width: SahneSpace.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.t(title),
+                    style: SahneType.bodyStrong.copyWith(
+                      color: t.tx,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  if (strong != null) lines(strong),
+                  if (review != null) lines(review),
+                  if (link != null) lines(link, color: t.linkTx),
+                ],
+              ),
+            ),
+            if (canReview) ...[
+              const SizedBox(width: sahneChevronGuard),
+              SizedBox(
+                height: 36,
+                child: Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
+              ),
+            ],
+          ],
+        ),
+      );
+      return canReview
+          ? KeyedSubtree(
+              key: const ValueKey('learning-outcome-review'),
+              child: row,
+            )
+          : row;
+    }
     return AppPanel(
       key: const ValueKey('learning-outcome-card'),
-      color: t.learn,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

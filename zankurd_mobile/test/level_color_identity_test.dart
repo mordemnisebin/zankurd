@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -93,11 +94,11 @@ void main() {
           matching: find.text(title),
         );
         expect(inBar, findsOneWidget, reason: combo);
-        // 2026-09-30 izgara: başlık bantlıdır (kategori tonu, her temada
-        // gece zemini); ad gece metniyle yazılır, temaya göre değişmez.
+        // Kurul 2. tur 2026-10-20: başlık standart sayfa başlığıdır; ad
+        // temanın birincil metin rengiyle yazılır (koyu bant kalktı).
         expect(
           DefaultTextStyle.of(tester.element(inBar)).style.color,
-          SahneTokens.night.tx,
+          SahneVivid.onFill,
           reason: combo,
         );
         final gradients = find.byWidgetPredicate((widget) {
@@ -122,20 +123,36 @@ void main() {
             ),
           );
           await tester.pumpAndSettle();
+          // Kurul 4. tur: ilk kilitliden sonrası "+N seviye daha" satırında.
+          await tester.tap(find.byKey(const ValueKey('level-locked-more-3')));
+          await tester.pumpAndSettle();
 
+          // Aktif kart: koyuda sahne kartı, açıkta yüzey kartı (tur 6b).
           expect(
-            tester.widget(find.byKey(const ValueKey('level-card-1'))),
-            isA<SahneStageCard>(),
+            find.descendant(
+              of: find.byKey(const ValueKey('level-card-1')),
+              matching: find.byType(dark ? SahneStageCard : SahneSurfaceCard),
+            ),
+            findsOneWidget,
             reason: combo,
           );
-          // Sahne kartı her temada gece çizilir.
+          // 2026-10-20 (B): sıradaki seviye konunun DOLU renginde.
           expect(
             badgeColor(tester, 1),
-            SahneTokens.night.learnTint,
+            CategoryVisuals.tone(category).fill(night: dark),
             reason: combo,
           );
           for (final locked in [2, 3, 4, 5]) {
-            expect(badgeColor(tester, locked), t.s2, reason: '$combo $locked');
+            // D aşaması: kilitli rozet Kulis'ten konu rengine %16 kayık.
+            expect(
+              badgeColor(tester, locked),
+              Color.lerp(
+                t.s2,
+                CategoryVisuals.tone(category).fill(night: dark),
+                0.16,
+              ),
+              reason: '$combo $locked',
+            );
           }
         },
       );
@@ -157,6 +174,8 @@ void main() {
             ),
           );
           await tester.pumpAndSettle();
+          await tester.tap(find.byKey(const ValueKey('level-locked-more-4')));
+          await tester.pumpAndSettle();
 
           expect(badgeColor(tester, 1), t.goldTint, reason: combo);
           final star = tester.widget<SahneGlyph>(
@@ -168,13 +187,26 @@ void main() {
           expect(star.kind, SahneGlyphKind.star, reason: combo);
           expect(star.filled, isTrue, reason: combo);
 
+          // Aktif kart: koyuda sahne kartı, açıkta yüzey kartı (tur 6b).
           expect(
-            tester.widget(find.byKey(const ValueKey('level-card-2'))),
-            isA<SahneStageCard>(),
+            find.descendant(
+              of: find.byKey(const ValueKey('level-card-2')),
+              matching: find.byType(dark ? SahneStageCard : SahneSurfaceCard),
+            ),
+            findsOneWidget,
             reason: combo,
           );
           for (final locked in [3, 4, 5]) {
-            expect(badgeColor(tester, locked), t.s2, reason: '$combo $locked');
+            // D aşaması: kilitli rozet Kulis'ten konu rengine %16 kayık.
+            expect(
+              badgeColor(tester, locked),
+              Color.lerp(
+                t.s2,
+                CategoryVisuals.tone(category).fill(night: dark),
+                0.16,
+              ),
+              reason: '$combo $locked',
+            );
           }
         },
       );
@@ -213,6 +245,26 @@ void main() {
     final lo = math.min(l1, l2);
     return (hi + 0.05) / (lo + 0.05);
   }
+
+  test('D aşaması: kilitli rozet ikonu konu tonlu karoda >= 4.5:1', () {
+    for (final (theme, t, night) in [
+      ('gündüz', SahneTokens.day, false),
+      ('gece', SahneTokens.night, true),
+    ]) {
+      for (final category in SahneCategoryTone.byCategory.keys) {
+        final topic = CategoryVisuals.tone(category).fill(night: night);
+        final tile = Color.lerp(t.s2, topic, 0.16)!;
+        final icon = Color.lerp(t.tx2, topic, 0.4)!;
+        expect(
+          contrast(icon, tile),
+          greaterThanOrEqualTo(4.5),
+          reason: '$theme $category',
+        );
+        // Açık satırdan geride: kilit ikonu dolu konu renginden sönük.
+        expect(icon, isNot(topic));
+      }
+    }
+  });
 
   test('seviye ekranının renk çiftleri iki temada WCAG AA (4.5:1) geçer', () {
     for (final (theme, t) in [

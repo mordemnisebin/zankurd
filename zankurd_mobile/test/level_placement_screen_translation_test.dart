@@ -45,7 +45,7 @@ void main() {
     PlacementStore.resetInstance();
   });
 
-  testWidgets('Türkçe modda çevirisi olan soru Türkçe metinle gösterilir', (
+  testWidgets('Türkçe modda yönerge Türkçe, şıklar Kurmancî gösterilir', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -58,9 +58,14 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    // 2026-10-21: yönerge arayüz dilinde, ŞIKLAR kanonik Kurmancî kalır
+    // (Kurmancî seviyesini ölçen sınav; ders ekranıyla aynı kural,
+    // `localized(learning: true)`). Türkçe şık seviyeyi ölçmezdi.
     expect(find.text('Hangi kelime doğru?'), findsOneWidget);
-    expect(find.text('Doğru'), findsOneWidget);
+    expect(find.text('Rast'), findsOneWidget);
+    expect(find.text('Şaş'), findsOneWidget);
+    expect(find.text('Doğru'), findsNothing);
+    expect(find.text('Yanlış'), findsNothing);
     expect(find.text('Kîjan peyv rast e?'), findsNothing);
-    expect(find.text('Rast'), findsNothing);
   });
 }

@@ -22,7 +22,7 @@ Kısa, tutarlı UI ve soru metinleri için. Pirs benzeri quiz akışlarında net
 | Etkinlik | `Çalakî` | `Etkinlik` Ku dilinde |
 | Sıralama | `Pêşderçûn` | `Leaderboard` |
 | Eşleş | `li hev bîne` | `Eşleş` |
-| Hızlı düello | `Pêşbirka bilez` | `Duelo bi lez` |
+| Canlı düello | `Pêşbirka zindî` | `Duelo bi lez` |
 | Ders yolu | `Rêya dersan` | TR kelime Ku slot’ta |
 | Konu seç | `Mijar hilbijêre` | `Kategorî hilbijêre` (ana CTA’da) |
 

@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 2.0.1+22
+version: 2.1.1+36
 
 environment:
   sdk: ^3.12.1
@@ -139,16 +139,22 @@ flutter:
     - assets/zankurd.webp
     - assets/zankurd_icon.webp
     - assets/sounds/
-    # İkon yazı tipi lisansları lisans sayfasına koddan kaydedilir
+    # Ana dili Kurmancî olanların kayıtları (lib/src/services/recorded_clip_catalog.dart);
+    # liste: tool/ses/kayit_listesi.py. Dizin boşken yalnız index.json girer.
+    - assets/audio/ku/
+    # İkon ve metin yazı tipi lisansları lisans sayfasına koddan kaydedilir
     # (lib/src/utils/bundled_font_licenses.dart).
     - assets/fonts/LICENSE-FontAwesome.txt
     - assets/fonts/LICENSE-Lucide.txt
+    - assets/fonts/OFL-BricolageGrotesque.txt
+    - assets/fonts/OFL-Onest.txt
     # Veri bankaları TEK TEK sayılır; `assets/data/` klasörü bildirilmez.
     # Klasör bildirilince karantinadaki `deepseek_2026_08_18_questions.json`
     # (1,5 MB, çalışma zamanında hiç okunmaz) da pakete giriyordu. Yeni banka
     # eklerken `lib/src/data/question_bank_assets.dart` + buraya; unutulursa
     # `test/asset_usage_test.dart` kırılır.
     - assets/data/image_credits.json
+    - assets/data/gotin_roje.json
     - assets/data/sentence_building_questions.json
     - assets/data/fill_in_blank_2026_08_questions.json
     - assets/data/community_questions.json
@@ -169,6 +175,7 @@ flutter:
     - assets/data/baslangic_2026_10_06_questions.json
     - assets/data/dersler2_2026_10_08_questions.json
     - assets/data/hat_2026_10_07_questions.json
+    - assets/data/kolay_2026_10_19_questions.json
     - assets/data/dersler3_2026_10_08_questions.json
 
   # Şahnê yazı tipleri (OFL; lisans metinleri assets/fonts/OFL-*.txt).

@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, invalid_use_of_visible_for_testing_member
 import 'dart:async';
+import 'dart:math' as math;
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -9,7 +10,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
+import 'package:zankurd_mobile/src/data/daily_quote_store.dart';
+import 'package:zankurd_mobile/src/data/learning_goal_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/models/learning_goal.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/models/async_duel.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
@@ -19,11 +23,13 @@ import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/models/contest.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
+import 'package:zankurd_mobile/src/screens/doza_me_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/learn_home_screen.dart';
 import 'package:zankurd_mobile/src/screens/password_recovery_screen.dart';
@@ -41,6 +47,7 @@ import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
+import 'package:zankurd_mobile/src/widgets/notification_prompt_card.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
 import 'package:zankurd_mobile/src/screens/splash_screen.dart';
@@ -49,9 +56,13 @@ import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
+import 'package:zankurd_mobile/src/screens/my_words_screen.dart';
+import 'package:zankurd_mobile/src/screens/word_drill_screen.dart';
+import 'package:zankurd_mobile/src/data/word_list_store.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
@@ -148,6 +159,8 @@ final GlobalKey _boundaryKey = GlobalKey();
 /// dallanan ekranlar (ör. profil `width > 720` ile iki sütuna geçer) test
 /// görüntülerinde yanlış düzeni çizip taşma şeridi gösteriyordu. Doğrusu
 /// `tester.view` üzerinden fiziksel boyutu vermek.
+void _noop() {}
+
 void _applyViewport(WidgetTester tester, Size size, {double dpr = 3.0}) {
   tester.view.devicePixelRatio = dpr;
   tester.view.physicalSize = size * dpr;
@@ -161,6 +174,28 @@ void _applyViewport(WidgetTester tester, Size size, {double dpr = 3.0}) {
     tester.platformDispatcher.textScaleFactorTestValue = scale;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
   }
+}
+
+// Dar ekranda (320) ve büyük yazıda düğme ekranın altında kalır; görünür
+// kılmadan basılan dokunuş boşa düşer ve kare yanlış ekranı basar.
+Future<void> _tapShown(WidgetTester tester, Finder finder) async {
+  await tester.scrollUntilVisible(
+    finder,
+    200,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.ensureVisible(finder);
+  await tester.pump();
+  await tester.tap(finder);
+}
+
+/// Yarış sekmesi üç seçime inince (2026-10-24) oda eylemleri "Oda" kartının
+/// alt sayfasındadır: önce kart, sonra "Oda kur" satırı.
+Future<void> _tapRoomCreate(WidgetTester tester) async {
+  await _tapShown(tester, find.byKey(const ValueKey('play-hub-room')));
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 600));
+  await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
 }
 
 Future<void> _shoot(WidgetTester tester, String name) async {
@@ -322,12 +357,12 @@ Widget _resultScreen() {
 /// görür. Arkadaşları Diyar ve Berfin, isteği bekleyen Rojîn. Sıralamanın
 /// başı Rojda, Baran, Dilan.
 const _tourPlayerTag = '4F7K';
-const _tourRoomCode = 'ZK-7A41C29E0B';
+const _tourRoomCode = '482913';
 
 /// Oda yarışının puanı: `68_result` karesi ve sıralamadaki kendi satır.
 const _tourRaceScore = 240;
 
-enum _LobbyView { hostAlone, hostGuestNotReady, guest }
+enum _LobbyView { hostAlone, hostGuestNotReady, hostGuestReady, guest }
 
 /// Oda lobisinin ev sahibi / konuk durumları için tur deposu. Oyuncu
 /// kimliği `user`; ev sahibi olan odalarda `hostId` oyuncunun kendisidir,
@@ -364,6 +399,7 @@ class _LobbyTourRepository extends _TourRepository {
       players: switch (view) {
         _LobbyView.hostAlone => const [me],
         _LobbyView.hostGuestNotReady => const [me, berfinWaiting],
+        _LobbyView.hostGuestReady => const [me, berfin],
         _LobbyView.guest => const [berfin, me],
       },
       status: RoomStatus.lobby,
@@ -378,6 +414,28 @@ class _LobbyTourRepository extends _TourRepository {
   @override
   Stream<List<Player>> subscribeRoomPlayers(GameRoom room) =>
       Stream.value(room.players);
+}
+
+/// Kurul 3. tur 2026-10-20: ayarlar karelerinde öğrenme amacı SEÇİLİ gelir;
+/// seçimsiz kare "hiçbiri seçili değil" diye okunuyordu ve seçili hâli hiç
+/// göstermiyordu.
+Future<void> _pumpSettings(
+  WidgetTester t,
+  MockZanKurdRepository repository,
+  String name, {
+  bool dark = false,
+  bool ku = false,
+}) async {
+  LearningGoalStore.resetInstance();
+  await (await LearningGoalStore.load()).save(LearningGoal.learnKurmanci);
+  await _pump(
+    t,
+    SettingsScreen(repository: repository),
+    dark: dark,
+    ku: ku,
+  );
+  await _shoot(t, name);
+  LearningGoalStore.resetInstance();
 }
 
 class _TourRepository extends TestMockZanKurdRepository {
@@ -521,6 +579,9 @@ Widget _tourShell({
   );
 }
 
+/// Saat dönem kareleri (290–293) kendi saatini kurar; [_pump] ezmesin.
+bool _tourClockPinned = false;
+
 Future<void> _pump(
   WidgetTester tester,
   Widget child, {
@@ -530,6 +591,11 @@ Future<void> _pump(
   Size? size,
 }) async {
   _applyViewport(tester, size ?? _size);
+  // Manzara şeridi cihaz saatini izler: tur belirleyici kalsın diye açık
+  // kareler öğlen (gündüz), koyu kareler 22:00 (gece) basar.
+  if (!_tourClockPinned) {
+    SahneClock.now = () => DateTime(2026, 10, 21, dark ? 22 : 12);
+  }
   await tester.pumpWidget(
     _tourShell(
       child: child,
@@ -658,6 +724,11 @@ class _EmptyStateRepository extends MockZanKurdRepository {
 void main() {
   late MockZanKurdRepository repository;
 
+  tearDown(() {
+    _tourClockPinned = false;
+    SahneClock.now = DateTime.now;
+  });
+
   setUpAll(() async {
     // Yazı tipleri elle yüklenmezse test koşucusu her metni siyah bir kutu
     // olarak çizer: `flutter test` pubspec'teki font ailelerini kendiliğinden
@@ -778,7 +849,17 @@ void main() {
   // sonra çözülmeyen bir future yüzünden zaman aşımına düşüyor. Ekranlar
   // zaten aşağıda doğrudan açıldığı için kabuk turu kaldırıldı.
   testWidgets('01 ana ekran', (t) async {
-    await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+    await _pump(
+      t,
+      Scaffold(
+        body: HomeScreen(
+          repository: repository,
+          // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+          onOpenLearning: () async {},
+          onOpenPlay: () {},
+        ),
+      ),
+    );
     await _shoot(t, '01_home');
   }, tags: ['preview']);
 
@@ -828,8 +909,48 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('05 oyun merkezi', (t) async {
+    repository.sampleMyWeeklyRank = const LeaderboardEntry(
+      rank: 7,
+      playerId: 'tour',
+      displayName: 'Tour',
+      totalScore: 1240,
+      bestStreak: 3,
+      roomsPlayed: 5,
+    );
     await _pump(t, PlayHubScreen(repository: repository));
     await _shoot(t, '05_play_hub');
+  }, tags: ['preview']);
+
+  // 2026-10-24: Yarış üç seçim; rakip seçimi ve oda sayfaları.
+  testWidgets('05b canlı düello rakip seçimi', (t) async {
+    await _pump(t, PlayHubScreen(repository: repository));
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-quick-duel-cta')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    await _shoot(t, '05b_play_hub_live_opponent');
+  }, tags: ['preview']);
+
+  testWidgets('05c sırayla düello rakip seçimi (karanlık, Kurmancî)', (
+    t,
+  ) async {
+    await _pump(
+      t,
+      PlayHubScreen(repository: _TourRepository(), asyncDuelEnabled: true),
+      dark: true,
+      ku: true,
+    );
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-async-duel')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    await _shoot(t, '05c_play_hub_async_opponent_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('05d oda sayfası', (t) async {
+    await _pump(t, PlayHubScreen(repository: repository));
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-room')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    await _shoot(t, '05d_play_hub_room_sheet');
   }, tags: ['preview']);
 
   testWidgets('06 sıralama', (t) async {
@@ -843,8 +964,7 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('08 ayarlar', (t) async {
-    await _pump(t, SettingsScreen(repository: repository));
-    await _shoot(t, '08_settings');
+    await _pumpSettings(t, repository, '08_settings');
   }, tags: ['preview']);
 
   testWidgets('09 paywall', (t) async {
@@ -876,9 +996,14 @@ void main() {
   // kullanıcının en çok "şimdi ne olacak?" diye durakladığı noktalar
   // burasıdır, bu yüzden turda ana ekranlar kadar yer tutarlar.
   testWidgets('17 oda', (t) async {
+    // Kurul 2. tur: 17 de öteki lobi durumlarıyla aynı düzeni (ev sahibi
+    // rozeti, sohbet simgesi) göstersin diye gerçek lobi verisiyle basılır.
     await _pump(
       t,
-      RoomScreen(repository: repository, initialRoom: repository.createRoom()),
+      RoomScreen(
+        repository: _LobbyTourRepository(_LobbyView.hostGuestReady),
+        initialRoom: _LobbyTourRepository.room(_LobbyView.hostGuestReady),
+      ),
     );
     await _shoot(t, '17_room');
   }, tags: ['preview']);
@@ -889,7 +1014,7 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('19 mağaza', (t) async {
-    await _pump(t, ShopScreen(repository: repository));
+    await _pump(t, ShopScreen(repository: _BalanceTourRepository(300)));
     await _shoot(t, '19_shop');
   }, tags: ['preview']);
 
@@ -929,16 +1054,101 @@ void main() {
   // Tur bugüne dek yalnız açık temayı basıyordu; karanlık temada sabit
   // kalmış renkler (`Colors.white`, sabit siyah gölge) hiç ölçülmüyordu.
   // Aynı ekranlar ikinci kez, tema karanlıkken basılır.
+  // Manzara saat dilimleri (2026-10-21): aynı ana ekran dört saatte, açık
+  // temada; şerit temaya değil saate bakar.
+  for (final (name, hour) in [
+    ('290_home_dawn', 7),
+    ('291_home_day', 13),
+    ('292_home_dusk', 18),
+    ('293_home_night', 23),
+  ]) {
+    testWidgets('$name ana ekran saat dilimi', (t) async {
+      _tourClockPinned = true;
+      SahneClock.now = () => DateTime(2026, 10, 21, hour, 30);
+      await _pump(
+        t,
+        Scaffold(
+          body: HomeScreen(
+            repository: repository,
+            // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+            onOpenLearning: () async {},
+            onOpenPlay: () {},
+          ),
+        ),
+      );
+      await _shoot(t, name);
+    }, tags: ['preview']);
+  }
+
+  // Doza me / Davamız (2026-10-21): kimlik sayfası ve tarihî gün şeritleri.
+  testWidgets('300 Doza me (Türkçe)', (t) async {
+    await _pump(t, const DozaMeScreen(), size: Size(_size.width, 2600));
+    await _shoot(t, '300_doza_me');
+  }, tags: ['preview']);
+
+  testWidgets('301 Doza me (karanlık, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      const DozaMeScreen(),
+      dark: true,
+      ku: true,
+      size: Size(_size.width, 2600),
+    );
+    await _shoot(t, '301_doza_me_ku_dark');
+  }, tags: ['preview']);
+
+  for (final (name, month, day) in [
+    ('302_home_newroz', 3, 21),
+    ('303_home_halepce', 3, 16),
+  ]) {
+    testWidgets('$name ana ekran tarihî gün', (t) async {
+      _tourClockPinned = true;
+      SahneClock.now = () => DateTime(2027, month, day, 12);
+      await _pump(
+        t,
+        Scaffold(
+          body: HomeScreen(
+            repository: repository,
+            // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+            onOpenLearning: () async {},
+            onOpenPlay: () {},
+          ),
+        ),
+      );
+      await _shoot(t, name);
+    }, tags: ['preview']);
+  }
+
+  testWidgets('304 profil — Doza me girişi', (t) async {
+    await _pump(t, Scaffold(body: ProfileScreen(repository: repository)));
+    await _shoot(t, '304_profile_doza');
+  }, tags: ['preview']);
+
   testWidgets('20 ana ekran (karanlık)', (t) async {
     await _pump(
       t,
-      Scaffold(body: HomeScreen(repository: repository)),
+      Scaffold(
+        body: HomeScreen(
+          repository: repository,
+          // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+          onOpenLearning: () async {},
+          onOpenPlay: () {},
+        ),
+      ),
       dark: true,
     );
     await _shoot(t, '20_home_dark');
   }, tags: ['preview']);
 
   testWidgets('21 oyun merkezi (karanlık)', (t) async {
+    repository.sampleMyWeeklyRank = const LeaderboardEntry(
+      rank: 7,
+      playerId: 'tour',
+      displayName: 'Tour',
+      totalScore: 1240,
+      bestStreak: 3,
+      roomsPlayed: 5,
+    );
     await _pump(t, PlayHubScreen(repository: repository), dark: true);
     await _shoot(t, '21_play_hub_dark');
   }, tags: ['preview']);
@@ -953,7 +1163,11 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('23 mağaza (karanlık)', (t) async {
-    await _pump(t, ShopScreen(repository: repository), dark: true);
+    await _pump(
+      t,
+      ShopScreen(repository: _BalanceTourRepository(300)),
+      dark: true,
+    );
     await _shoot(t, '23_shop_dark');
   }, tags: ['preview']);
 
@@ -975,13 +1189,113 @@ void main() {
   testWidgets('26 ana ekran (Kurmancî)', (t) async {
     await _pump(
       t,
-      Scaffold(body: HomeScreen(repository: repository)),
+      Scaffold(
+        body: HomeScreen(
+          repository: repository,
+          // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+          onOpenLearning: () async {},
+          onOpenPlay: () {},
+        ),
+      ),
       ku: true,
     );
     await _shoot(t, '26_home_ku');
   }, tags: ['preview']);
 
+  // Günün sözü kartı (2026-10-21): ana ekranda Günün dersinin altında.
+  testWidgets('310 ana ekran günün sözü', (t) async {
+    await t.runAsync(DailyQuoteStore.load);
+    await _pump(
+      t,
+      Scaffold(
+        body: HomeScreen(
+          repository: repository,
+          // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+          onOpenLearning: () async {},
+          onOpenPlay: () {},
+        ),
+      ),
+    );
+    await _shoot(t, '310_home_quote');
+  }, tags: ['preview']);
+
+  testWidgets('311 ana ekran günün sözü (Kurmancî, karanlık)', (t) async {
+    await t.runAsync(DailyQuoteStore.load);
+    await _pump(
+      t,
+      Scaffold(
+        body: HomeScreen(
+          repository: repository,
+          // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+          onOpenLearning: () async {},
+          onOpenPlay: () {},
+        ),
+      ),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '311_home_quote_ku_dark');
+  }, tags: ['preview']);
+
+  // Kelimelerim ve kelime tekrarı (2026-10-24): kişisel liste, Leitner
+  // kutuları, bugünkü tekrar kartı ve tekrar sorusu.
+  Future<WordListStore> seedWords(WidgetTester t) async {
+    final store = await t.runAsync(() async {
+      WordListStore.resetInstance();
+      final store = await WordListStore.load();
+      final yesterday = DateTime.now().subtract(const Duration(days: 1));
+      for (final (i, id) in [
+        'rojbas',
+        'evarbas',
+        'q-deri',
+        'q-ronahi',
+      ].indexed) {
+        await store.add(id, now: yesterday.add(Duration(minutes: i)));
+      }
+      await store.recordReview('q-ronahi', correct: true);
+      return store;
+    });
+    return store!;
+  }
+
+  testWidgets('312 kelimelerim', (t) async {
+    final store = await seedWords(t);
+    await _pump(t, MyWordsScreen(store: store));
+    await _shoot(t, '312_my_words');
+  }, tags: ['preview']);
+
+  testWidgets('313 kelimelerim (Kurmancî, karanlık)', (t) async {
+    final store = await seedWords(t);
+    await _pump(t, MyWordsScreen(store: store), dark: true, ku: true);
+    await _shoot(t, '313_my_words_ku_dark');
+  }, tags: ['preview']);
+
+  testWidgets('314 kelime tekrarı sorusu', (t) async {
+    final store = await seedWords(t);
+    await _pump(t, WordDrillScreen(store: store, random: math.Random(4)));
+    await _shoot(t, '314_word_drill');
+  }, tags: ['preview']);
+
+  testWidgets('315 sözlük Türkçe > Kurmancî arama', (t) async {
+    await _pump(t, const LearnerLexiconScreen());
+    await t.tap(find.byKey(const ValueKey('lexicon-dir-tr-ku')));
+    await t.enterText(
+      find.byKey(const ValueKey('lexicon-search-field')),
+      'kapı',
+    );
+    await t.pumpAndSettle();
+    await _shoot(t, '315_lexicon_tr_ku');
+  }, tags: ['preview']);
+
   testWidgets('27 oyun merkezi (Kurmancî)', (t) async {
+    repository.sampleMyWeeklyRank = const LeaderboardEntry(
+      rank: 7,
+      playerId: 'tour',
+      displayName: 'Tour',
+      totalScore: 1240,
+      bestStreak: 3,
+      roomsPlayed: 5,
+    );
     await _pump(t, PlayHubScreen(repository: repository), ku: true);
     await _shoot(t, '27_play_hub_ku');
   }, tags: ['preview']);
@@ -996,13 +1310,16 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('29 mağaza (Kurmancî)', (t) async {
-    await _pump(t, ShopScreen(repository: repository), ku: true);
+    await _pump(
+      t,
+      ShopScreen(repository: _BalanceTourRepository(300)),
+      ku: true,
+    );
     await _shoot(t, '29_shop_ku');
   }, tags: ['preview']);
 
   testWidgets('30 ayarlar (Kurmancî)', (t) async {
-    await _pump(t, SettingsScreen(repository: repository), ku: true);
-    await _shoot(t, '30_settings_ku');
+    await _pumpSettings(t, repository, '30_settings_ku', ku: true);
   }, tags: ['preview']);
 
   testWidgets('31 yarışma (Kurmancî)', (t) async {
@@ -1105,6 +1422,26 @@ void main() {
   testWidgets('70 tur sonucu (Kurmancî)', (t) async {
     await _pump(t, _resultScreen(), ku: true);
     await _shoot(t, '70_result_ku');
+  }, tags: ['preview']);
+
+  // Bağlamsal bildirim izni kartı: bağımsız kart görseli.
+  Widget notifCard() => const SingleChildScrollView(
+    padding: EdgeInsets.all(16),
+    child: NotificationPromptCard(onEnable: _noop, onLater: _noop),
+  );
+  testWidgets('70a bildirim kartı', (t) async {
+    await _pump(t, notifCard());
+    await _shoot(t, '70a_notif_card');
+  }, tags: ['preview']);
+
+  testWidgets('70b bildirim kartı (karanlık)', (t) async {
+    await _pump(t, notifCard(), dark: true);
+    await _shoot(t, '70b_notif_card_dark');
+  }, tags: ['preview']);
+
+  testWidgets('70c bildirim kartı (Kurmancî)', (t) async {
+    await _pump(t, notifCard(), ku: true);
+    await _shoot(t, '70c_notif_card_ku');
   }, tags: ['preview']);
 
   // Bu iki ekran da tura hiç girmemişti: ikisi de menüden açılıyor ve
@@ -1210,7 +1547,7 @@ void main() {
   testWidgets('77 ad sorma', (t) async {
     await _pump(
       t,
-      ProfileNameGateScreen(repository: repository, onCompleted: () {}),
+      ProfileNameGateScreen(repository: repository, onCompleted: () async {}),
     );
     await _shoot(t, '77_name_gate');
   }, tags: ['preview']);
@@ -1221,8 +1558,7 @@ void main() {
   // kontrast kusuru çıkmıştı (öğrenme kartı). Kalan ekranlar da basılır:
   // ölçülmeyen yerde kusur görünmez.
   testWidgets('45 ayarlar (karanlık)', (t) async {
-    await _pump(t, SettingsScreen(repository: repository), dark: true);
-    await _shoot(t, '45_settings_dark');
+    await _pumpSettings(t, repository, '45_settings_dark', dark: true);
   }, tags: ['preview']);
 
   testWidgets('46 arkadaşlar (karanlık)', (t) async {
@@ -1247,7 +1583,12 @@ void main() {
   testWidgets('49 oda (karanlık)', (t) async {
     await _pump(
       t,
-      RoomScreen(repository: repository, initialRoom: repository.createRoom()),
+      // Kurul 4. tur: 49 sahte oda yerine 17 ile AYNI gerçek lobi verisini
+      // basar (ev sahibi rozeti, sohbet düğmesi); iki tema karşılaştırılabilir.
+      RoomScreen(
+        repository: _LobbyTourRepository(_LobbyView.hostGuestReady),
+        initialRoom: _LobbyTourRepository.room(_LobbyView.hostGuestReady),
+      ),
       dark: true,
     );
     await _shoot(t, '49_room_dark');
@@ -1309,6 +1650,20 @@ void main() {
   testWidgets('57 öğrenme (Kurmancî)', (t) async {
     await _pump(t, LearningScreen(repository: repository), ku: true);
     await _shoot(t, '57_learning_ku');
+  }, tags: ['preview']);
+
+  // "Seviyeni bul" daveti: depo tekil örneği sıfırlanır ki sınav hiç
+  // alınmamış taze kullanıcı görünsün (öteki karelerde de görünebilir).
+  testWidgets('57b öğrenme, seviye daveti (Kurmancî)', (t) async {
+    PlacementStore.resetInstance();
+    await _pump(t, LearningScreen(repository: repository), ku: true);
+    await _shoot(t, '57b_learning_placement_prompt_ku');
+  }, tags: ['preview']);
+
+  testWidgets('57c öğrenme, seviye daveti (karanlık)', (t) async {
+    PlacementStore.resetInstance();
+    await _pump(t, LearningScreen(repository: repository), dark: true);
+    await _shoot(t, '57c_learning_placement_prompt_dark');
   }, tags: ['preview']);
 
   testWidgets('58 seviye sınavı (Kurmancî)', (t) async {
@@ -1528,7 +1883,15 @@ void main() {
   // Öğrenme sekmesinin kökü. `HomeScreen`i sarar ve gezinme argümanlarını
   // bağlar; kendi başına hiç ölçülmemişti.
   testWidgets('81 öğrenme kökü', (t) async {
-    await _pump(t, LearnHomeScreen(repository: repository));
+    await _pump(
+      t,
+      LearnHomeScreen(
+        repository: repository,
+        // Uygulamadaki gibi kapılar dokunulur (null iken soluk çizilir).
+        onOpenLearning: () async {},
+        onOpenPlay: () {},
+      ),
+    );
     await _shoot(t, '81_learn_home');
   }, tags: ['preview']);
 
@@ -1635,20 +1998,20 @@ void main() {
   testWidgets('88 ad sorma (Kurmancî)', (t) async {
     await _pump(
       t,
-      ProfileNameGateScreen(repository: repository, onCompleted: () {}),
+      ProfileNameGateScreen(repository: repository, onCompleted: () async {}),
       ku: true,
     );
     await _shoot(t, '88_name_gate_ku');
   }, tags: ['preview']);
 
   testWidgets('89 ayarlar (Kurmancî, karanlık)', (t) async {
-    await _pump(
+    await _pumpSettings(
       t,
-      SettingsScreen(repository: repository),
+      repository,
+      '89_settings_ku_dark',
       ku: true,
       dark: true,
     );
-    await _shoot(t, '89_settings_ku_dark');
   }, tags: ['preview']);
 
   // ── 2026-08-19 Eklenen Yüzeyler ──────────────────────────────────
@@ -1657,14 +2020,7 @@ void main() {
   //    süre ve jeton bahsi seçimleri. Açık/TR, karanlık ve Kurmancî.
   testWidgets("90 oda kurma sheet'i", (t) async {
     await _pump(t, PlayHubScreen(repository: repository));
-    // Dar ekranda / büyük yazıda düğme kıvrımın altında kalır (tur
-    // `ZANKURD_SCREEN_TOUR_WIDTH/TEXT_SCALE` ile bu koşulu basabilir).
-    await t.scrollUntilVisible(
-      find.byKey(const ValueKey('play-hub-create-room')),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     await _shoot(t, '90_custom_room_sheet');
@@ -1672,14 +2028,7 @@ void main() {
 
   testWidgets("91 oda kurma sheet'i (karanlık)", (t) async {
     await _pump(t, PlayHubScreen(repository: repository), dark: true);
-    // Dar ekranda / büyük yazıda düğme kıvrımın altında kalır (tur
-    // `ZANKURD_SCREEN_TOUR_WIDTH/TEXT_SCALE` ile bu koşulu basabilir).
-    await t.scrollUntilVisible(
-      find.byKey(const ValueKey('play-hub-create-room')),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     await _shoot(t, '91_custom_room_sheet_dark');
@@ -1687,14 +2036,7 @@ void main() {
 
   testWidgets("92 oda kurma sheet'i (Kurmancî)", (t) async {
     await _pump(t, PlayHubScreen(repository: repository), ku: true);
-    // Dar ekranda / büyük yazıda düğme kıvrımın altında kalır (tur
-    // `ZANKURD_SCREEN_TOUR_WIDTH/TEXT_SCALE` ile bu koşulu basabilir).
-    await t.scrollUntilVisible(
-      find.byKey(const ValueKey('play-hub-create-room')),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     await _shoot(t, '92_custom_room_sheet_ku');
@@ -1735,18 +2077,10 @@ void main() {
   // 3. Çevrimiçi 1v1 maç sonu — galibiyet görünümü ve "Yeni Oda" düğmesi.
   testWidgets('94 1v1 maç sonu (galibiyet)', (t) async {
     await _pump(t, _result1v1VictoryScreen());
-    // Vakanın DERDİ "Yeni Oda" düğmesi; o düğme sayfanın altında ve ilk
-    // kadrajda görünmüyordu. Ekran görüntüsü, göstermek için var olduğu
-    // şeyi göstermezse tur o vakayı boşuna koşturur.
-    // `ensureVisible` YETMEZ: sonuç ekranı tembel kuran bir listedir ve
-    // eylem satırı henüz İNŞA EDİLMEMİŞTİR — bulucu hiçbir öğe bulamaz.
-    // Önce kaydırıp inşa ettirmek gerekir.
-    final action = find.byKey(const ValueKey('result-new-room-button'));
-    await t.scrollUntilVisible(
-      action,
-      240,
-      scrollable: find.byType(Scrollable).first,
-    );
+    // Kurul 2026-10-20: kare artık sayfanın TEPESİNDE çekilir (kazanma
+    // anı: avatarlar, "Kazandın!", skor). Eskiden "Yeni oda" düğmesini
+    // göstermek için kaydırılıyordu ve ekran görüntüsü "Yeni oda" ile
+    // açılıyordu; düğme artık ikincil eylemdir, varlığı testle korunur.
     await t.pump(const Duration(milliseconds: 400));
     await _shoot(t, '94_result_1v1_win');
   }, tags: ['preview']);
@@ -1772,6 +2106,137 @@ void main() {
     await t.tap(reveal);
     await t.pump();
     await _shoot(t, '96_lesson_recall');
+  }, tags: ['preview']);
+
+  // ── Ana ekran: düello kartı, "Sonuç hazır" durumu ──
+  //
+  // Kart varsayılan durumda `01`/`20`/`26` karelerinde görünür; dönüş
+  // kancası olan durum için rakibi bitirmiş, oyuncunun görmediği bir düello
+  // kurulur (Rojda'ya karşı 5–3, `101`/`103` karelerindeki düello).
+  testWidgets('247 ana ekran (düello sonucu hazır)', (t) async {
+    final repo = _TourRepository();
+    await t.runAsync(() => _seedRojdaDuel(repo));
+    await _pump(t, Scaffold(body: HomeScreen(repository: repo)));
+    await _shoot(t, '247_home_duel_ready');
+  }, tags: ['preview']);
+
+  testWidgets('248 ana ekran (düello sonucu hazır, karanlık, Kurmancî)', (
+    t,
+  ) async {
+    final repo = _TourRepository();
+    await t.runAsync(() => _seedRojdaDuel(repo));
+    await _pump(
+      t,
+      Scaffold(body: HomeScreen(repository: repo)),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '248_home_duel_ready_dark_ku');
+  }, tags: ['preview']);
+
+  // ── Arkadaşa meydan okuma (2026-10-13) ───────────────────────────────
+  Future<void> openChallengeSheet(WidgetTester t) async {
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-async-duel')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    await t.tap(find.byKey(const ValueKey('opponent-sheet-friend')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    expect(find.byKey(const ValueKey('challenge-sheet')), findsOneWidget);
+  }
+
+  testWidgets('249 meydan okuma seçim sayfası', (t) async {
+    final repo = _TourRepository();
+    await _pump(t, PlayHubScreen(repository: repo, asyncDuelEnabled: true));
+    await openChallengeSheet(t);
+    await _shoot(t, '249_challenge_sheet');
+  }, tags: ['preview']);
+
+  testWidgets('250 meydan okuma seçim sayfası (karanlık, Kurmancî, '
+      'arkadaşsız)', (t) async {
+    final repo = _TourRepository();
+    await _pump(
+      t,
+      PlayHubScreen(repository: repo, asyncDuelEnabled: true),
+      dark: true,
+      ku: true,
+    );
+    await openChallengeSheet(t);
+    await t.tap(find.byKey(const ValueKey('challenge-sheet-friend')));
+    await t.pump(const Duration(milliseconds: 600));
+    await _shoot(t, '250_challenge_sheet_no_friends_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('251 Düellolarım — gelen meydan okuma (Sıra sende)', (t) async {
+    final repo = _TourRepository();
+    await t.runAsync(() async {
+      await _playAsyncDuel(repo, correctCount: 5);
+      await _seedRojdaDuel(repo);
+      repo.addIncomingChallengeForTesting(creatorName: 'Rojda');
+    });
+    await _pump(t, PlayHubScreen(repository: repo, asyncDuelEnabled: true));
+    await t.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-async-duel-inbox')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.pump(const Duration(milliseconds: 300));
+    await _shoot(t, '251_inbox_incoming_challenge');
+  }, tags: ['preview']);
+
+  testWidgets('252 Düellolarım — gelen meydan okuma (karanlık, Kurmancî)', (
+    t,
+  ) async {
+    final repo = _TourRepository();
+    await t.runAsync(() async {
+      await _seedRojdaDuel(repo);
+      repo.addIncomingChallengeForTesting(creatorName: 'Rojda');
+    });
+    await _pump(
+      t,
+      PlayHubScreen(repository: repo, asyncDuelEnabled: true),
+      dark: true,
+      ku: true,
+    );
+    await t.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-async-duel-inbox')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.pump(const Duration(milliseconds: 300));
+    await _shoot(t, '252_inbox_incoming_challenge_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('253 ana ekran (Sıra sende)', (t) async {
+    final repo = _TourRepository();
+    await t.runAsync(
+      () async => repo.addIncomingChallengeForTesting(creatorName: 'Rojda'),
+    );
+    await _pump(t, Scaffold(body: HomeScreen(repository: repo)));
+    await _shoot(t, '253_home_duel_your_turn');
+  }, tags: ['preview']);
+
+  testWidgets('254 meydan okuma sonucu — Paylaş (karanlık, Kurmancî)', (
+    t,
+  ) async {
+    final repo = _TourRepository();
+    late AsyncDuelStart start;
+    await t.runAsync(() async {
+      start = await repo.createAsyncDuelChallenge();
+    });
+    await _pump(
+      t,
+      AsyncDuelResultScreen(
+        repository: repo,
+        view: AsyncDuelResultView.fromAnswer(
+          start,
+          const AsyncDuelResult(waiting: true, myCorrect: 5, myMs: 60000),
+        ),
+      ),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '254_challenge_result_share_dark_ku');
   }, tags: ['preview']);
 
   // ── Sırayla düello ekranları ────────────────────────────────────────
@@ -1864,6 +2329,82 @@ void main() {
     );
     await _shoot(t, '101_async_duel_result_win');
   }, tags: ['preview']);
+
+  // 2026-10-24: soru soru karşılaştırma + rövanş. Sunucu incelemesi
+  // (`get_async_duel_review`) sabitlenir: 7 soru, benim 5 doğrum, rakibin 3
+  // doğrusu, bir süre dolması; rakip arkadaş olduğundan rövanş açık.
+  for (final variant in const ['light', 'dark_ku']) {
+    testWidgets(
+      '${variant == 'dark_ku' ? 266 : 265} sırayla düello — soru soru karşılaştırma ($variant)',
+      (t) async {
+        final dark = variant == 'dark_ku';
+        final repo = MockZanKurdRepository();
+        late AsyncDuelSummary completedSummary;
+        await t.runAsync(() async {
+          await _seedRojdaDuel(repo);
+          final summaries = await repo.loadMyAsyncDuels();
+          completedSummary = summaries.firstWhere((s) => s.outcome != null);
+        });
+        AsyncDuelReviewAnswer answer(String choice, bool ok, int ms) =>
+            AsyncDuelReviewAnswer(choice: choice, correct: ok, ms: ms);
+        const prompts = [
+          'Paytexta Kurdistana Başûr kîjan bajar e?',
+          'Kîjan çem di nav Diyarbekirê re derbas dibe?',
+          'Peyva "silav" bi Tirkî çi ye?',
+          'Kîjan ji van hunermendan stranbêj e?',
+          'Çiyayê herî bilind ê Kurdistanê kîjan e?',
+          'Newroz di kîjan mehê de tê pîrozkirin?',
+          'Kîjan ji van peyvan navê ajalekî ye?',
+        ];
+        final review = AsyncDuelReview(
+          duelId: completedSummary.duelId,
+          isForfeit: false,
+          opponentId: 'rojda',
+          opponentName: 'Rojda',
+          opponentBlocked: false,
+          opponentIsFriend: true,
+          canRematch: true,
+          questions: [
+            for (var i = 0; i < 7; i++)
+              AsyncDuelReviewQuestion(
+                index: i,
+                prompt: prompts[i],
+                options: const {
+                  'A': 'Hewlêr',
+                  'B': 'Silêmanî',
+                  'C': 'Duhok',
+                  'D': 'Kerkûk',
+                },
+                correctOption: 'A',
+                mine: i < 5
+                    ? answer('A', true, 3200 + i * 450)
+                    : answer('B', false, 7800),
+                opponent: i == 3
+                    ? answer('TIMEOUT', false, 20000)
+                    : (i < 3 || i == 6)
+                    ? answer('A', true, 5100 + i * 300)
+                    : answer('C', false, 9400),
+              ),
+          ],
+        );
+        repo.asyncDuelReviewsForTesting[completedSummary.duelId] = review;
+        await _pump(
+          t,
+          AsyncDuelResultScreen(
+            repository: repo,
+            view: AsyncDuelResultView.fromSummary(completedSummary),
+          ),
+          dark: dark,
+          ku: dark,
+        );
+        await _shoot(
+          t,
+          '${variant == 'dark_ku' ? 266 : 265}_async_duel_review_$variant',
+        );
+      },
+      tags: ['preview'],
+    );
+  }
 
   testWidgets('102 sırayla düello — sonuç (rakip bekleniyor)', (t) async {
     final repo = MockZanKurdRepository();
@@ -1959,13 +2500,20 @@ void main() {
 
   testWidgets('109 oda kurma — ücrete yetmiyor', (t) async {
     await _pump(t, PlayHubScreen(repository: _BalanceTourRepository(10)));
-    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
+    // Kurul 3. tur: ücret grubu "Ayarlar" satırında katlı; önce açılır.
+    await t.ensureVisible(
+      find.byKey(const ValueKey('custom-room-settings-row')),
+    );
+    await t.tap(find.byKey(const ValueKey('custom-room-settings-row')));
+    await t.pumpAndSettle();
     final fee = find.byKey(const ValueKey('custom-room-fee-50'));
     await t.ensureVisible(fee);
+    await t.pumpAndSettle();
     await t.tap(fee);
-    await t.pump(const Duration(milliseconds: 400));
+    await t.pumpAndSettle();
     await _shoot(t, '109_custom_room_short');
   }, tags: ['preview']);
 
@@ -1978,13 +2526,20 @@ void main() {
       dark: true,
       ku: true,
     );
-    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
+    // Kurul 3. tur: ücret grubu "Ayarlar" satırında katlı; önce açılır.
+    await t.ensureVisible(
+      find.byKey(const ValueKey('custom-room-settings-row')),
+    );
+    await t.tap(find.byKey(const ValueKey('custom-room-settings-row')));
+    await t.pumpAndSettle();
     final fee = find.byKey(const ValueKey('custom-room-fee-50'));
     await t.ensureVisible(fee);
+    await t.pumpAndSettle();
     await t.tap(fee);
-    await t.pump(const Duration(milliseconds: 400));
+    await t.pumpAndSettle();
     await _shoot(t, '110_custom_room_short_dark_ku');
   }, tags: ['preview']);
 
@@ -2132,6 +2687,22 @@ void main() {
     );
     await finishPlacement(t);
     await _shoot(t, '209_placement_result_dark_ku');
+  }, tags: ['preview']);
+
+  // Düşük puan: sakin sahne (hale, ışın, altın puan yok) — 2026-10-21.
+  testWidgets('280 sonuç — düşük puan (gündüz)', (t) async {
+    await _pump(t, _resultVariant(wrong: 2, coins: 0));
+    await _shoot(t, '280_result_low_day');
+  }, tags: ['preview']);
+
+  testWidgets('281 sonuç — düşük puan (öğrenme, Kurmancî, gece)', (t) async {
+    await _pump(
+      t,
+      _resultVariant(isLearningExperience: true, coins: 0, wrong: 2),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '281_result_low_learning_dark_ku');
   }, tags: ['preview']);
 
   testWidgets('210 tur özeti — hepsi doğru (sıfır karo yok)', (t) async {
@@ -2446,6 +3017,313 @@ void main() {
     await t.pumpAndSettle();
     await _shoot(t, '232_lexicon_search_forms');
   }, tags: ['preview']);
+
+  // ── Kalabalık oda (2026-10-16): kur sayfası, lobi, oyun içi, sonuç ──────
+  //
+  // Hepsi aynı hikâyeyi anlatır: 16 kişilik "Hevalên Zanînê" odası, oyuncu
+  // üçüncü sırada. Lobi 7 kişi (kapasite 16), oyun başlığı 12 aktif oyuncu +
+  // 1 ayrılan, sonuç aynı 12 oyuncu (eşit birincilik, ayrılan sonda).
+  testWidgets('255 oda kurma — oyuncu sayısı', (t) async {
+    await _pump(t, PlayHubScreen(repository: _BalanceTourRepository(500)));
+    await _tapRoomCreate(t);
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    final chip = find.byKey(const ValueKey('custom-room-capacity-16'));
+    await t.ensureVisible(chip);
+    await t.tap(chip);
+    await t.pumpAndSettle();
+    await _shoot(t, '255_custom_room_capacity');
+  }, tags: ['preview']);
+
+  testWidgets('256 oda kurma — oyuncu sayısı (karanlık, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      PlayHubScreen(repository: _BalanceTourRepository(500)),
+      dark: true,
+      ku: true,
+    );
+    await _tapRoomCreate(t);
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    final chip = find.byKey(const ValueKey('custom-room-capacity-16'));
+    await t.ensureVisible(chip);
+    await t.tap(chip);
+    await t.pumpAndSettle();
+    await _shoot(t, '256_custom_room_capacity_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('257 kalabalık lobi — ev sahibi', (t) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: _CrowdLobbyTourRepository(host: true),
+        initialRoom: _CrowdLobbyTourRepository.room(host: true),
+      ),
+      size: Size(_size.width, 1500),
+    );
+    await _shoot(t, '257_crowd_lobby_host');
+  }, tags: ['preview']);
+
+  testWidgets('258 kalabalık lobi — ev sahibi (karanlık, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: _CrowdLobbyTourRepository(host: true),
+        initialRoom: _CrowdLobbyTourRepository.room(host: true, ku: true),
+      ),
+      dark: true,
+      ku: true,
+      size: Size(_size.width, 1500),
+    );
+    await _shoot(t, '258_crowd_lobby_host_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('259 kalabalık lobi — konuk', (t) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: _CrowdLobbyTourRepository(host: false),
+        initialRoom: _CrowdLobbyTourRepository.room(host: false),
+      ),
+      size: Size(_size.width, 1500),
+    );
+    await _shoot(t, '259_crowd_lobby_guest');
+  }, tags: ['preview']);
+
+  testWidgets('260 kalabalık lobi — konuk (karanlık, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: _CrowdLobbyTourRepository(host: false),
+        initialRoom: _CrowdLobbyTourRepository.room(host: false, ku: true),
+      ),
+      dark: true,
+      ku: true,
+      size: Size(_size.width, 1500),
+    );
+    await _shoot(t, '260_crowd_lobby_guest_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('261 kalabalık oyun — başlık (sıra ve ilk üç)', (t) async {
+    final crowd = _CrowdGameTourRepository();
+    await _pump(
+      t,
+      QuizScreen(
+        repository: crowd,
+        room: _CrowdGameTourRepository.room(),
+        questions: crowd.questions.take(5).toList(),
+      ),
+    );
+    await _shoot(t, '261_crowd_game_header');
+  }, tags: ['preview']);
+
+  testWidgets('262 kalabalık oyun — başlık (karanlık, Kurmancî)', (t) async {
+    final crowd = _CrowdGameTourRepository();
+    await _pump(
+      t,
+      QuizScreen(
+        repository: crowd,
+        room: _CrowdGameTourRepository.room(ku: true),
+        questions: crowd.questions.take(5).toList(),
+      ),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '262_crowd_game_header_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('263 kalabalık sonuç — sıralama', (t) async {
+    await _pump(t, _resultCrowdScreen(), size: Size(_size.width, 2400));
+    await _shoot(t, '263_crowd_result');
+  }, tags: ['preview']);
+
+  testWidgets('264 kalabalık sonuç — sıralama (karanlık, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      _resultCrowdScreen(ku: true),
+      dark: true,
+      ku: true,
+      size: Size(_size.width, 2400),
+    );
+    await _shoot(t, '264_crowd_result_dark_ku');
+  }, tags: ['preview']);
+}
+
+/// Kalabalık odanın tur oyuncuları: oyuncu (`user`) üçüncü, 2. sırada eşitlik.
+const _crowdTourNames = [
+  ('tour-rojda', 'Rojda', 520),
+  ('tour-baran', 'Baran', 470),
+  ('user', 'Sen', 470),
+  ('tour-dilan', 'Dilan', 430),
+  ('tour-diyar', 'Diyar', 380),
+  ('tour-evin', 'Evîn', 340),
+  ('tour-welat', 'Welat', 300),
+  ('tour-zozan', 'Zozan', 260),
+  ('tour-azad', 'Azad', 190),
+  ('tour-mazlum', 'Mazlum', 120),
+  ('tour-berfin', 'Berfîn', 70),
+  ('tour-rojin', 'Rojîn', 20),
+];
+
+/// Oyuncunun kendi adı turda dile göre doğal görünsün: depo kimliği `user`
+/// olan oyuncuya gerçek uygulamada profil adı yazılır; Kurmancî karelerde
+/// Türkçe "Sen" görünmesin ("Tu").
+String _crowdName(String name, bool ku) => ku && name == 'Sen' ? 'Tu' : name;
+
+/// Kalabalık lobi: 16 kişilik oda, 7 oyuncu; ev sahibi `user` ya da Rojda.
+class _CrowdLobbyTourRepository extends _TourRepository {
+  _CrowdLobbyTourRepository({required this.host});
+
+  final bool host;
+
+  static GameRoom room({required bool host, bool ku = false}) {
+    final players = <Player>[
+      for (final (id, name, _) in _crowdTourNames.take(7))
+        Player(
+          id: id,
+          name: _crowdName(name, ku),
+          score: 0,
+          state: Player.readyState,
+        ),
+    ];
+    return GameRoom(
+      id: 'tour-crowd-lobby',
+      name: 'crowd',
+      code: _tourRoomCode,
+      category: 'Ziman',
+      players: host
+          ? [players[2], ...players.where((p) => p.id != 'user')]
+          : players,
+      status: RoomStatus.lobby,
+      questionCount: 10,
+      secondsPerQuestion: 20,
+      hostId: host ? 'user' : 'tour-rojda',
+      maxPlayers: 16,
+      isCustom: true,
+    );
+  }
+
+  @override
+  Future<List<Player>> loadRoomPlayers(GameRoom room) async => room.players;
+
+  @override
+  Stream<List<Player>> subscribeRoomPlayers(GameRoom room) =>
+      Stream.value(room.players);
+}
+
+/// Kalabalık oyun: 12 aktif oyuncu + 1 ayrılan; başlıkta sıra "#2/12".
+class _CrowdGameTourRepository extends _TourRepository {
+  static GameRoom room({bool ku = false}) => GameRoom(
+    id: 'tour-crowd-game',
+    name: 'crowd',
+    code: _tourRoomCode,
+    category: 'Ziman',
+    players: [
+      for (final (id, name, score) in _crowdTourNames)
+        Player(
+          id: id,
+          name: _crowdName(name, ku),
+          score: score,
+          state: Player.readyState,
+          streak: id == 'user' ? 2 : 0,
+        ),
+      const Player(
+        id: 'tour-gone',
+        name: 'Şêro',
+        score: 640,
+        state: Player.readyState,
+        left: true,
+      ),
+    ],
+    status: RoomStatus.active,
+    questionCount: 5,
+    secondsPerQuestion: 20,
+    hostId: 'tour-rojda',
+    maxPlayers: 16,
+    isCustom: true,
+  );
+
+  @override
+  Future<List<Player>> loadRoomPlayers(GameRoom room) async => room.players;
+
+  @override
+  Stream<List<Player>> subscribeRoomPlayers(GameRoom room) =>
+      Stream.value(room.players);
+}
+
+/// Kalabalık odanın sonuç ekranı: oyuncu Rojda ile EŞİT BİRİNCİ (tur
+/// "Kazandın!" ve ortak 1. sırayı göstersin); Şêro ayrıldığı için sonda.
+Widget _resultCrowdScreen({bool ku = false}) {
+  final repository = _TourRepository();
+  final scores = [
+    ('user', 'Sen', 520, 1),
+    ('tour-rojda', 'Rojda', 520, 1),
+    ('tour-baran', 'Baran', 470, 3),
+    ('tour-dilan', 'Dilan', 430, 4),
+    ('tour-diyar', 'Diyar', 380, 5),
+    ('tour-evin', 'Evîn', 340, 6),
+    ('tour-welat', 'Welat', 300, 7),
+    ('tour-zozan', 'Zozan', 260, 8),
+    ('tour-azad', 'Azad', 190, 9),
+    ('tour-mazlum', 'Mazlum', 120, 10),
+    ('tour-berfin', 'Berfîn', 70, 11),
+    ('tour-rojin', 'Rojîn', 20, 12),
+  ];
+  final players = [
+    for (final (id, name, score, rank) in scores)
+      Player(
+        id: id,
+        name: _crowdName(name, ku),
+        score: score,
+        state: Player.readyState,
+        streak: id == 'user' ? 3 : 0,
+        rank: rank,
+      ),
+    const Player(
+      id: 'tour-gone',
+      name: 'Şêro',
+      score: 640,
+      state: Player.readyState,
+      left: true,
+    ),
+  ];
+  return QuizResultScreen(
+    repository: repository,
+    room: GameRoom(
+      id: 'tour-crowd-result',
+      name: 'crowd',
+      code: _tourRoomCode,
+      category: 'Ziman',
+      players: players,
+      status: RoomStatus.finished,
+      questionCount: 5,
+      secondsPerQuestion: 20,
+      hostId: 'tour-rojda',
+      maxPlayers: 16,
+      isCustom: true,
+    ),
+    score: 520,
+    correctCount: 4,
+    wrongCount: 1,
+    totalQuestions: 5,
+    bestStreak: 3,
+    coinsAwarded: 40,
+    opponents: players.where((p) => p.id != 'user').toList(),
+    resultOwnerUserId: 'user',
+    answerRecords: const [
+      AnswerRecord(
+        id: 'r1',
+        category: 'Ziman',
+        prompt: 'Peyva «av» bi Tirkî çi tê gotin?',
+        answers: ['su', 'ekmek', 'yol', 'dağ'],
+        correctAnswer: 'su',
+        selectedAnswer: 'su',
+        explanation: '«av» Türkçede «su» demektir.',
+        explanationKu: '«av» bi Tirkî dibe «su».',
+        explanationTr: '«av» Türkçede «su» demektir.',
+      ),
+    ],
+  );
 }
 
 /// Sonuç ekranı çeşitleri (A6 kareleri): aynı üç soruluk tur, ödül/mod

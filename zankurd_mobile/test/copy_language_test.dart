@@ -161,20 +161,20 @@ void main() {
   });
 
   test('hızlı düello bütün girişlerde aynı Kurmancî terimi kullanır', () {
-    expect(Tr.of(K.quickDuel, AppLanguage.ku), 'Pêşbirka bilez');
+    expect(Tr.of(K.quickDuel, AppLanguage.ku), 'Pêşbirka zindî');
     expect(Tr.of(K.playMore, AppLanguage.ku), 'Zêdetir');
     // Bekçi yalnız hub kartlarını görüyordu. Eşleşme başlığı ve tanıtım
     // maddesi "Şerê 1vs1" deyince aynı 1v1 iki adla duruyordu.
-    expect(Tr.of(K.duel1v1, AppLanguage.ku), 'Pêşbirka bilez');
-    expect(Tr.of(K.duel1v1Short, AppLanguage.ku), 'Pêşbirka bilez');
-    expect(Tr.of(K.onbDuelBullet, AppLanguage.ku), contains('Pêşbirka bilez'));
+    expect(Tr.of(K.duel1v1, AppLanguage.ku), 'Pêşbirka zindî');
+    expect(Tr.of(K.duel1v1Short, AppLanguage.ku), 'Pêşbirka zindî');
+    expect(Tr.of(K.onbDuelBullet, AppLanguage.ku), contains('Pêşbirka zindî'));
 
     final sereDuel = RegExp(r'şerê\s*1', caseSensitive: false);
     for (final key in Tr.keys) {
       expect(
         sereDuel.hasMatch(Tr.of(key, AppLanguage.ku)),
         isFalse,
-        reason: '$key: Kurmancî metinde "şerê 1"; karşılığı "pêşbirka bilez"',
+        reason: '$key: Kurmancî metinde "şerê 1"; karşılığı "pêşbirka zindî"',
       );
     }
   });
@@ -195,7 +195,7 @@ void main() {
     expect(Tr.of(K.explanationTitle, AppLanguage.ku), 'Şîrove');
     expect(
       Tr.of(K.onbDailyBullet, AppLanguage.ku),
-      'Di dersa rojê de dem tune, şîroveya her pirsê heye.',
+      'Di pirsên rojê de dem tune, şîroveya her pirsê heye.',
     );
     expect(
       Tr.of(K.quizTutorialUntimedBody, AppLanguage.ku),
@@ -303,9 +303,19 @@ void main() {
         .split('\n')
         .where((line) => !line.trimLeft().startsWith('//'))
         .join('\n');
+    // Kanal adı/açıklaması 2026-10-24'ten beri defterde (dile göre seçilir,
+    // bkz. test/notification_channel_language_test.dart).
     expect(notificationLive, contains('zankurd_streak_warning'));
-    expect(notificationLive, contains('ZanKurd Bîranîna Zincîrê'));
-    expect(notificationLive, contains('Bîranîna parastina zincîra rojane'));
+    expect(notificationLive, contains('K.notifChannelStreakName'));
+    expect(notificationLive, contains('K.notifChannelStreakDesc'));
+    expect(
+      Tr.of(K.notifChannelStreakName, AppLanguage.ku),
+      'ZanKurd Bîrxistina Zincîrê',
+    );
+    expect(
+      Tr.of(K.notifChannelStreakDesc, AppLanguage.ku),
+      'Bîrxistina parastina zincîra rojane',
+    );
     expect(notificationLive, isNot(contains('Bîranîna Rêzê')));
     expect(notificationLive, isNot(contains('rêza rojane')));
   });
@@ -390,11 +400,11 @@ void main() {
     // tek kök olmalı — uygulamanın sloganı da `hîn bibe` diyor.
     expect(
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.ku),
-      'Dersa rojê amade ye. Îro hînbûnê bidomîne.',
+      'Pirsên rojê amade ne. Îro hînbûnê bidomîne.',
     );
     expect(
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.tr),
-      'Günün dersi hazır. Bugün öğrenmeye devam et.',
+      'Günün soruları hazır. Bugün öğrenmeye devam et.',
     );
     expect(
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.tr).toLowerCase(),
@@ -409,7 +419,6 @@ void main() {
     // kûpayê digire!" diyordu. "Gerçek oyuncular" ifadesi turnuva kartında üç
     // kez geçiyordu: kimlik bandı alt metni, biçim satırı ve bu slogan. Bilgi
     // bir kez söylenir; slogan yalnız kendi taşıdığı bilgiyi bıraktı.
-    expect(Tr.of(K.botRaceHint, AppLanguage.ku), 'Şampiyon kûpayê digire.');
     expect(
       Tr.of(K.tournamentSub, AppLanguage.ku),
       contains('lîstikvanên rastî'),
@@ -672,7 +681,7 @@ void main() {
     expect(Tr.of(K.passwordHintMin6, AppLanguage.ku), 'Herî kêm 6 tîp');
     expect(
       Tr.of(K.roomCodeInvalid, AppLanguage.ku),
-      'Kodê kontrol bike. Mînak: ZK-ABCDEF0123',
+      'Kodê kontrol bike. Mînak: 482 913',
     );
 
     final karakter = RegExp(r'karakter', caseSensitive: false);
@@ -687,13 +696,11 @@ void main() {
     // Auth hataları defterde değil; zayıf şifre "6 karakter" deyince
     // ipucu `tîp` ile çelişir. Yorum satırları eski yalanı belgelemek
     // için kökü anabilir.
-    final authLive = File('lib/src/l10n/lang.dart')
-        .readAsStringSync()
-        .split('\n')
-        .where((line) => !line.trimLeft().startsWith('//'))
-        .join('\n');
-    expect(authLive, contains('herî kêm 6 tîp'));
-    expect(authLive, isNot(contains('herî kêm 6 karakter')));
+    // Auth hata iletileri artık metin anahtarı (K.authErr*), `lang.dart`taki
+    // elle eşleme kalktı; zayıf şifre iletisi defterde `tîp` demeli.
+    final weak = Tr.of(K.authErrWeakPassword, AppLanguage.ku);
+    expect(weak, contains('herî kêm 6 tîp'));
+    expect(weak, isNot(contains('karakter')));
   });
 
   test('bulut senkronu Kurmancîde ewr olarak kalır', () {
@@ -722,7 +729,8 @@ void main() {
     expect(Tr.of(K.coinWord, AppLanguage.ku), 'Zêr');
     expect(
       Tr.of(K.soloDailyCapReached, AppLanguage.ku),
-      'Sînorê zêran ê îro tije bû. Sibê ji nû ve dest pê dike.',
+      // 'tijî' (standart) — 2026-10-20 kurulu 4-2: 'tije' ağız biçimi.
+      'Sînorê zêran ê îro tijî bû. Sibê ji nû ve dest pê dike.',
     );
 
     final jeton = RegExp(r'jeton', caseSensitive: false);
@@ -765,6 +773,9 @@ void main() {
       // Kısa etiketler ("Boş", "Evet") bağlama göre haklı olarak ayrışabilir;
       // kural cümle uzunluğundaki metinler için anlamlı.
       if (turkish.length < 12) continue;
+      // Tekil/çoğul çiftleri: Türkçe aynı, Kurmancî sayıya göre çekimli
+      // ("di 1 pirsê de" / "di 3 pirsan de"; tur 9b kurul kararı).
+      if (key == K.outcomeReviewOne) continue;
       byTurkish.putIfAbsent(turkish, () => {})[key] = Tr.of(
         key,
         AppLanguage.ku,
@@ -848,7 +859,7 @@ void main() {
     // Etiket `Koda Vexwendinê` der (`K.enterReferralCode`). Misafir
     // yasağı "davetê" deyince oyuncu aynı kodu iki adla görür. Türkçe
     // `davet` kökü `contains('vexwend')` taramasını kör eder.
-    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Kodê binivîse');
+    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda xelatê têxe');
     expect(
       Tr.of(K.referralGuestBlocked, AppLanguage.ku),
       contains('Koda vexwendinê'),

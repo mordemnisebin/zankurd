@@ -77,7 +77,7 @@
     "prompt": "Hejmara atomê ya elementeke kîmyewî çi nîşan dide?",
     "promptTr": "Bir kimyasal elementin atom numarası neyi gösterir?",
     "answers": [
-      "Hejmara notronên di navikê de",
+      "Hejmara nêtronên di navikê de",
       "Hejmara protonên di navikê de",
       "Hejmara qatên elektronan",
       "Hejmara îzotopan"
@@ -149,7 +149,7 @@
     "answers": [
       "Oksîjen",
       "Azot",
-      "Karbondîoksît",
+      "Karbondîoksîd",
       "Hîdrojen"
     ],
     "answersTr": [
@@ -158,7 +158,7 @@
       "Karbondioksit",
       "Hidrojen"
     ],
-    "correctAnswer": "Karbondîoksît",
+    "correctAnswer": "Karbondîoksîd",
     "correctAnswerTr": "Karbondioksit",
     "explanation": "Fotosentezde bitkiler karbondioksit ve suyu, ışık enerjisinden yararlanarak organik maddelere dönüştürür; süreçte oksijen açığa çıkar.",
     "explanationKu": "Di fotosentezê de riwek karbondîoksît û avê, bi bikaranîna enerjiya ronahiyê vediguherînin madeyên organîk; di vê pêvajoyê de oksîjen derdikeve holê.",
@@ -179,7 +179,7 @@
     "category": "Paradigma",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Di DNAyê de baza adenîn bi normalî bi kîjan bazê re dibe cot?",
+    "prompt": "Di DNAyê de baza adenînê bi normalî bi kîjan bazê re dibe cot?",
     "promptTr": "DNA'da adenin normal olarak hangi bazla eşleşir?",
     "answers": [
       "Sîtozîn",
@@ -492,7 +492,7 @@
   {
     "id": "bilim_0015",
     "category": "Paradigma",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Hejmara berhemên felsefî yên Sokratês ku wî bi xwe nivîsandine û gihîştine roja me çend e?",
     "promptTr": "Sokrates'in günümüze ulaşmış, kendisinin yazdığı felsefi eser sayısı kaçtır?",
@@ -953,7 +953,7 @@
     "promptTr": "Kuvvetler ayrılığı modelinde devlet yetkileri geleneksel olarak hangi üç işleve ayrılır?",
     "answers": [
       "Navend, herêm û şaredarî",
-      "Bac, butçe û bazirganî",
+      "Bac, budçe û bazirganî",
       "Zagonsazî, cîbicîkirin û daraz",
       "Polîs, artêş û dîplomasî"
     ],
@@ -1022,7 +1022,7 @@
     "prompt": "Pênaseya herî giştî ya têgeha destûra bingehîn kîjan e?",
     "promptTr": "Anayasa kavramının en genel tanımı hangisidir?",
     "answers": [
-      "Belgeya ku tenê butçeya salane ya dewletê diyar dike",
+      "Belgeya ku tenê budçeya salane ya dewletê diyar dike",
       "Tevahiya biryarên ku rêxistinên navneteweyî wergirtine",
       "Tevahiya prensîb û rêgezên rêxistiniya bingehîn a dewletekê",
       "Zagona ku tenê sûcên cezayî rêz dike"
@@ -1052,7 +1052,7 @@
   {
     "id": "bilim_0031",
     "category": "Paradigma",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Danezana Gerdûnî ya Mafên Mirovan di kîjan dîrokê de ji aliyê Civata Giştî ya Neteweyên Yekbûyî ve hate îlankirin?",
     "promptTr": "İnsan Hakları Evrensel Beyannamesi Birleşmiş Milletler Genel Kurulu tarafından hangi tarihte ilan edildi?",
@@ -1192,7 +1192,7 @@
   {
     "id": "bilim_0035",
     "category": "Paradigma",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Konseya Ewlekariyê ya Neteweyên Yekbûyî bi giştî ji çend endaman pêk tê?",
     "promptTr": "Birleşmiş Milletler Güvenlik Konseyi toplam kaç üyeden oluşur?",
@@ -1264,7 +1264,7 @@
     "category": "Paradigma",
     "difficulty": 3,
     "type": "multipleChoice",
-    "prompt": "Statuya Dîwana Dadê ya Navneteweyî ya di nav sîstema NYyê de kîjan e?",
+    "prompt": "Statûya Dîwana Dadê ya Navneteweyî ya di nav sîstema NYyê de kîjan e?",
     "promptTr": "Uluslararası Adalet Divanı'nın BM sistemi içindeki statüsü hangisidir?",
     "answers": [
       "Organa zagonsaziyê ya Neteweyên Yekbûyî ye",
@@ -1472,7 +1472,7 @@
   {
     "id": "bilim_0043",
     "category": "Paradigma",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Rêxistina Tenduristiyê ya Cîhanê pêşniyar dike ku mezin xwarina xwê ya rojane di bin kîjan astê de bihêlin?",
     "promptTr": "Dünya Sağlık Örgütü yetişkinlerin günlük tuz tüketimini hangi düzeyin altında tutmasını önerir?",
@@ -1717,7 +1717,7 @@
   {
     "id": "bilim_0050",
     "category": "Paradigma",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Yek ji peywirên girîng ên daristanên mangrovê di ekosîstemên peravê de kîjan e?",
     "promptTr": "Mangrov ormanlarının kıyı ekosistemlerinde önemli işlevlerinden biri hangisidir?",
@@ -2312,7 +2312,7 @@
   {
     "id": "bilim_0067",
     "category": "Paradigma",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Gerstêrka ku di 1781'an de ji aliyê William Herschel ve hatiye keşfkirin kîjan e?",
     "promptTr": "1781'de William Herschel tarafından keşfedilen gezegen hangisidir?",
@@ -2419,7 +2419,7 @@
     "category": "Paradigma",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Çavdêriyên Alexander Fleming ên di sala 1928'an de, bi keşfa kîjan madeya antîbakteriyel re têkildar e?",
+    "prompt": "Çavdêriyên Alexander Fleming ên di sala 1928'an de, bi keşfa kîjan madeya antîbakteriyel re têkildar in?",
     "promptTr": "Alexander Fleming'in 1928'deki gözlemleri hangi antibakteriyel maddenin keşfiyle ilişkilidir?",
     "answers": [
       "Însulîn",

@@ -27,7 +27,7 @@ class DailyMissionStore {
   ///
   /// ## Kusur
   ///
-  /// Ana ekranın birincil kartı ("Erkê Îro / Dersê rojane") ilerlemesini
+  /// Ana ekranın birincil kartı ("Erkê Îro / Dersa rojê") ilerlemesini
   /// `MissionType.answerCorrect` görevinden ödünç alıyordu. Ama günün üç
   /// görevi on altı tanelik havuzdan gün tohumuyla çekiliyor ve havuzda o
   /// türden yalnız üç tanım var; çoğu gün seçilmiyor. O günlerde kart
@@ -44,6 +44,9 @@ class DailyMissionStore {
       LocalProgressScope.physical('zankurd.missions.answeredToday');
 
   static DailyMissionStore? _instance;
+  static Future<DailyMissionStore>? _loading;
+  static String? _loadingDateKey;
+  static int _loadGeneration = 0;
 
   final SharedPreferences? _prefs;
   final List<DailyMission> _missions;
@@ -70,6 +73,34 @@ class DailyMissionStore {
     final cached = _instance;
     if (cached != null && cached._loadedDateKey == todayKey) return cached;
 
+    if (_loadingDateKey == todayKey) {
+      final inFlight = _loading;
+      if (inFlight != null) return inFlight;
+    }
+
+    final generation = _loadGeneration;
+    _loadingDateKey = todayKey;
+    final loading = _loadFresh(today, todayKey).then((store) {
+      if (_loadGeneration == generation) {
+        return _instance = store;
+      }
+      return store;
+    });
+    _loading = loading;
+    try {
+      return await loading;
+    } finally {
+      if (identical(_loading, loading)) {
+        _loading = null;
+        _loadingDateKey = null;
+      }
+    }
+  }
+
+  static Future<DailyMissionStore> _loadFresh(
+    DateTime today,
+    String todayKey,
+  ) async {
     SharedPreferences? prefs;
     try {
       prefs = await SharedPreferences.getInstance();
@@ -105,18 +136,16 @@ class DailyMissionStore {
       answeredToday = prefs?.getInt(_answeredKey) ?? 0;
     }
 
-    return _instance = DailyMissionStore._(
-      prefs,
-      missions,
-      answeredToday,
-      todayKey,
-    );
+    return DailyMissionStore._(prefs, missions, answeredToday, todayKey);
   }
 
   @visibleForTesting
   static Future<DailyMissionStore> loadForTest(
     List<DailyMission> missions,
   ) async {
+    _loadGeneration++;
+    _loading = null;
+    _loadingDateKey = null;
     SharedPreferences? prefs;
     try {
       prefs = await SharedPreferences.getInstance();
@@ -135,7 +164,12 @@ class DailyMissionStore {
     );
   }
 
-  static void resetInstance() => _instance = null;
+  static void resetInstance() {
+    _loadGeneration++;
+    _instance = null;
+    _loading = null;
+    _loadingDateKey = null;
+  }
 
   Future<void> clear() async {
     await removePersistedPreferenceKeys(_prefs, [

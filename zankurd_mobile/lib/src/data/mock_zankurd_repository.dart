@@ -6,17 +6,21 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/async_duel.dart';
+import '../models/match_history.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
+import '../models/add_friend_outcome.dart';
 import '../models/friend.dart';
 import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
+import '../models/public_profile.dart';
 import '../models/quiz_level.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../game/speed_score.dart';
+import '../models/room_invite.dart';
 import '../models/room_message.dart';
 import '../utils/error_reporter.dart';
 import '../models/tournament.dart';
@@ -29,6 +33,7 @@ import 'question_bank_loader.dart';
 import 'seen_question_store.dart';
 import 'subcategory_level_plan.dart';
 import 'durable_write.dart';
+import 'local_progress_scope.dart';
 import 'zankurd_repository.dart';
 import '../config/category_visibility.dart';
 import '../services/question_set_policy.dart';
@@ -75,6 +80,11 @@ class _MockAsyncDuel {
     required this.expiresAt,
     this.otherCorrect,
     this.otherMs,
+    this.challengeCode,
+    this.invitedName,
+    this.incoming = false,
+    this.unclaimed = false,
+    this.forfeitIWon,
   });
 
   final String id;
@@ -85,7 +95,24 @@ class _MockAsyncDuel {
   final DateTime createdAt;
   final DateTime expiresAt;
 
+  /// Meydan okuma bağlantı kodu (`D…`); rastgele düellolarda null.
+  final String? challengeCode;
+
+  /// Davet ettiğim arkadaşın adı (yalnız arkadaşa meydan okumada).
+  final String? invitedName;
+
+  /// Bana gelen, henüz kabul etmediğim meydan okuma.
+  bool incoming;
+
+  /// Henüz kimsenin kabul etmediği, başkasından gelen meydan okuma:
+  /// [incoming] değilse (bağlantı meydan okuması) kabul edilene dek
+  /// "Düellolarım"da görünmez.
+  bool unclaimed;
+
   final Set<int> answeredIndices = {};
+
+  /// Soru sırası → benim sunucuya giden cevabım (inceleme için).
+  final Map<int, AsyncDuelReviewAnswer> myAnswers = {};
   int myCorrect = 0;
   int myMs = 0;
 
@@ -99,6 +126,11 @@ class _MockAsyncDuel {
   DateTime? completedAt;
   bool seen = false;
   bool xpAwarded = false;
+
+  /// Hükmen sonuç: `true` rakip 24 saatte oynamadı ben kazandım, `false`
+  /// ben oynamadım kaybettim, `null` hükmen yok (sunucu:
+  /// `async_duels.forfeit_loser_id`).
+  final bool? forfeitIWon;
 
   bool get myFinished => answeredIndices.length >= questions.length;
   bool get otherFinished => otherCorrect != null && otherMs != null;
@@ -166,6 +198,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
     : _levelSeed = levelSeed ?? Random().nextInt(0x7fffffff);
 
   final int _levelSeed;
+
+  /// Haftalık "benim sıram" örneği: ekran turu ve testler "Bu hafta" kartını
+  /// dolu görmek için verir. Varsayılan null (gerçek mock davranışı).
+  LeaderboardEntry? sampleMyWeeklyRank;
 
   /// Alt konu planları (kategori|alt konu → plan). Plan, soru listesi
   /// değişmedikçe aynıdır; `build` her çizimde çağrıldığı için ağır planı
@@ -349,7 +385,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Sahte depoda biten çevrimiçi oda yok; `loadLeaderboard` de boş
     // liste verdiği için dönemin sıralamasında satır yoktur. Sabit satır
     // ancak gerçekten dönem puanı geldiğinde çizilir (2026-09-30).
-    return null;
+    // [sampleMyWeeklyRank] yalnız ekran turu/testler içindir.
+    return period == LeaderboardPeriod.weekly ? sampleMyWeeklyRank : null;
   }
 
   @override
@@ -662,7 +699,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
   // düello kurar; bir SONRAKİ `startAsyncDuel` bunu tüketir.
 
   static const _asyncDuelQuestionCount = 7;
-  static const _asyncDuelDuration = Duration(hours: 48);
+  static const _asyncDuelDuration = asyncDuelWindow;
 
   int _asyncDuelSeq = 0;
   final Map<String, _MockAsyncDuel> _asyncDuels = {};
@@ -767,6 +804,43 @@ class MockZanKurdRepository implements ZanKurdRepository {
     );
   }
 
+  /// [presentAsyncDuelQuestion] çağrılarının kaydı (duelId#index).
+  final List<String> presentedAsyncDuelQuestions = [];
+  final Map<String, DateTime> _asyncDuelPresentedAt = {};
+
+  /// Testin, sunumdan bu yana geçen süreyi (ms) zorlaması için; null ise
+  /// gerçek saat farkı döner (ilk çağrıda 0).
+  @visibleForTesting
+  int? presentElapsedMsForTesting;
+
+  /// Testin sunucuda present RPC'sinin olmadığı (göç uygulanmamış) durumu
+  /// denemesi için.
+  @visibleForTesting
+  bool presentSupportedForTesting = true;
+
+  @override
+  Future<int?> presentAsyncDuelQuestion(
+    String duelId,
+    int questionIndex,
+  ) async {
+    if (!presentSupportedForTesting) return null;
+    final duel = _asyncDuels[duelId];
+    if (duel == null) throw StateError('Duel not found');
+    if (DateTime.now().toUtc().isAfter(duel.expiresAt)) {
+      throw StateError('Duel expired');
+    }
+    // Sunucu gibi: yalnız SIRADAKİ soru (önceki cevap sayısı) sunulabilir.
+    if (questionIndex != duel.answeredIndices.length ||
+        questionIndex >= duel.questions.length) {
+      throw StateError('Invalid index');
+    }
+    final key = '$duelId#$questionIndex';
+    presentedAsyncDuelQuestions.add(key);
+    final first = _asyncDuelPresentedAt.putIfAbsent(key, DateTime.now);
+    return presentElapsedMsForTesting ??
+        DateTime.now().difference(first).inMilliseconds;
+  }
+
   @override
   Future<AsyncDuelAnswer> answerAsyncDuel({
     required String duelId,
@@ -780,6 +854,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
       throw StateError('Duel expired');
     }
     if (questionIndex < 0 || questionIndex >= duel.questions.length) {
+      throw StateError('Invalid index');
+    }
+    // Sıra zorunluluğu (sunucu gibi): beklenen indeks = cevap sayısı; zaten
+    // cevaplanmış indeks aşağıdaki 'Already answered' yoluna düşer.
+    if (questionIndex != duel.answeredIndices.length &&
+        !duel.answeredIndices.contains(questionIndex)) {
       throw StateError('Invalid index');
     }
     // 'TIMEOUT': süre dolunca istemcinin gönderdiği anahtar. Sunucu onu
@@ -806,6 +886,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
     duel.answeredIndices.add(questionIndex);
     if (isCorrect) duel.myCorrect++;
     duel.myMs += _clampAsyncDuelResponseMs(responseMs);
+    duel.myAnswers[questionIndex] = AsyncDuelReviewAnswer(
+      choice: choice,
+      correct: isCorrect,
+      ms: _clampAsyncDuelResponseMs(responseMs),
+    );
 
     final answered = duel.answeredIndices.length;
     final total = duel.questions.length;
@@ -826,8 +911,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<List<AsyncDuelSummary>> loadMyAsyncDuels() async {
-    final entries = _asyncDuels.values.toList()
-      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    final entries =
+        _asyncDuels.values
+            .where((duel) => !duel.unclaimed || duel.incoming)
+            .toList()
+          ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
     return [
       for (final duel in entries)
         AsyncDuelSummary(
@@ -838,7 +926,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
           categoryName: duel.category,
           myCorrect: duel.myFinished ? duel.myCorrect : null,
           opponentCorrect: duel.otherCorrect,
-          outcome: (duel.myFinished && duel.otherFinished)
+          outcome: duel.forfeitIWon != null
+              ? (duel.forfeitIWon!
+                    ? AsyncDuelOutcome.win
+                    : AsyncDuelOutcome.loss)
+              : (duel.myFinished && duel.otherFinished)
               ? _asyncDuelOutcome(
                   myCorrect: duel.myCorrect,
                   myMs: duel.myMs,
@@ -846,9 +938,19 @@ class MockZanKurdRepository implements ZanKurdRepository {
                   otherMs: duel.otherMs!,
                 )
               : null,
+          expiresAt: duel.expiresAt,
+          isForfeit: duel.forfeitIWon != null,
+          lastNudgedAt: _asyncNudges[duel.id],
           createdAt: duel.createdAt,
           completedAt: duel.completedAt,
           seen: duel.seen,
+          challengeCode: duel.role == AsyncDuelRole.creator || duel.incoming
+              ? duel.challengeCode
+              : null,
+          incomingChallenge: duel.incoming,
+          invitedName: duel.role == AsyncDuelRole.creator
+              ? duel.invitedName
+              : null,
         ),
     ];
   }
@@ -856,6 +958,407 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<void> markAsyncDuelSeen(String duelId) async {
     _asyncDuels[duelId]?.seen = true;
+  }
+
+  /// Testin belirli bir düello için sunucu incelemesini sabitlemesi
+  /// (`get_async_duel_review` yanıtı). Yoksa [loadAsyncDuelReview] düelloyu
+  /// bellekteki cevaplardan türetir.
+  @visibleForTesting
+  final Map<String, AsyncDuelReview> asyncDuelReviewsForTesting = {};
+
+  /// Testin sunucuda inceleme RPC'sinin olmadığı (göç uygulanmamış)
+  /// durumu denemesi için.
+  @visibleForTesting
+  bool asyncDuelReviewSupportedForTesting = true;
+
+  /// [loadAsyncDuelReview] çağrıları (testler hangi düelloların açıldığını
+  /// buradan doğrular).
+  @visibleForTesting
+  final List<String> reviewedAsyncDuelIdsForTesting = [];
+
+  @override
+  Future<AsyncDuelReview?> loadAsyncDuelReview(String duelId) async {
+    if (!asyncDuelReviewSupportedForTesting) return null;
+    reviewedAsyncDuelIdsForTesting.add(duelId);
+    final pinned = asyncDuelReviewsForTesting[duelId];
+    if (pinned != null) return pinned;
+    final duel = _asyncDuels[duelId];
+    if (duel == null) throw StateError('Duel not found');
+    final finished =
+        duel.status == AsyncDuelStatus.completed ||
+        (duel.status == AsyncDuelStatus.expired && duel.forfeitIWon != null);
+    if (!finished) throw StateError('Duel not finished');
+    const letters = ['A', 'B', 'C', 'D'];
+    final otherCorrect = duel.otherCorrect ?? 0;
+    return AsyncDuelReview(
+      duelId: duelId,
+      isForfeit: duel.forfeitIWon != null,
+      // Sahte depoda gerçek bir ikinci oyuncu kimliği yok: rövanş kapalı.
+      opponentName: duel.opponentName,
+      opponentBlocked: false,
+      opponentIsFriend: false,
+      canRematch: false,
+      questions: [
+        for (var i = 0; i < duel.questions.length; i++)
+          AsyncDuelReviewQuestion(
+            index: i,
+            prompt: duel.questions[i].prompt,
+            options: {
+              for (var a = 0; a < duel.questions[i].answers.length; a++)
+                letters[a]: duel.questions[i].answers[a],
+            },
+            correctOption:
+                letters[duel.questions[i].answers
+                    .indexOf(duel.questions[i].correctAnswer)
+                    .clamp(0, 3)],
+            mine: duel.myAnswers[i],
+            opponent: duel.otherFinished
+                ? AsyncDuelReviewAnswer(
+                    choice: i < otherCorrect
+                        ? letters[duel.questions[i].answers
+                              .indexOf(duel.questions[i].correctAnswer)
+                              .clamp(0, 3)]
+                        : 'TIMEOUT',
+                    correct: i < otherCorrect,
+                    ms: 2500,
+                  )
+                : null,
+          ),
+      ],
+    );
+  }
+
+  // ─── Dürtme + profil maç geçmişi ──────────────────────────────────────
+
+  /// Duello kimliği → son dürtmem. Sunucudaki `async_duel_nudges` gibi
+  /// düello başına tek kayıt; 12 saat dolmadan ikinci dürtme reddedilir.
+  final Map<String, DateTime> _asyncNudges = {};
+
+  /// Dürtme sayısı (testler push'un gittiğini buradan doğrular).
+  @visibleForTesting
+  final List<String> nudgedDuelIdsForTesting = [];
+
+  @override
+  Future<DateTime> nudgeAsyncDuel(String duelId) async {
+    final duel = _asyncDuels[duelId];
+    if (duel == null) throw Exception('Duel not found');
+    final now = DateTime.now();
+    if (!duel.myFinished) throw Exception('Finish your turn first');
+    if (duel.otherFinished) throw Exception('Opponent already finished');
+    if (!now.isBefore(duel.expiresAt)) throw Exception('Duel closed');
+    final last = _asyncNudges[duelId];
+    if (last != null && now.difference(last) < asyncDuelNudgeCooldown) {
+      throw Exception('Nudge cooldown');
+    }
+    _asyncNudges[duelId] = now;
+    nudgedDuelIdsForTesting.add(duelId);
+    return now;
+  }
+
+  /// Profil geçmişi testleri için sahte son maçlar (sunucu
+  /// `list_my_recent_matches` yerine).
+  @visibleForTesting
+  List<RecentMatch> recentMatchesForTesting = [];
+
+  /// Profil rekorları testleri için sahte sunucu sayıları.
+  @visibleForTesting
+  ServerRecords serverRecordsForTesting = const ServerRecords();
+
+  @override
+  Future<List<RecentMatch>> loadMyRecentMatches({int limit = 10}) async {
+    final sorted = [...recentMatchesForTesting]
+      ..sort((a, b) => b.playedAt.compareTo(a.playedAt));
+    return sorted.take(limit).toList();
+  }
+
+  @override
+  Future<ServerRecords> loadMyServerRecords() async => serverRecordsForTesting;
+
+  // ─── Arkadaşa meydan okuma ───────────────────────────────────────────
+
+  /// Testin sunucuda meydan okuma RPC'lerinin olmadığı (göç uygulanmamış)
+  /// durumu denemesi için.
+  @visibleForTesting
+  bool challengeSupportedForTesting = true;
+
+  @override
+  Future<bool> supportsAsyncDuelChallenge() async =>
+      challengeSupportedForTesting;
+
+  // ─── Odaya arkadaş daveti ────────────────────────────────────────────
+
+  /// Testin sunucuda oda daveti RPC'lerinin olmadığı durumu denemesi için.
+  @visibleForTesting
+  bool roomInvitesSupportedForTesting = true;
+
+  /// [inviteFriendsToRoom]un kaydettiği (odaId -> alıcı kimlikleri).
+  final Map<String, Set<String>> _invitedByRoom = {};
+
+  /// [loadMyRoomInvites]ın döneceği davetler; testler doldurur.
+  final List<RoomInvite> _incomingRoomInvites = [];
+
+  /// [respondRoomInvite] bu sebeple fırlatsın (süresi dolmuş davet testi).
+  @visibleForTesting
+  RoomInviteFailure? respondRoomInviteFailureForTesting;
+
+  /// [loadMyRoomInvites] `throwOnError: true` ile bunu fırlatsın (push yolu).
+  @visibleForTesting
+  Object? loadMyRoomInvitesErrorForTesting;
+
+  @visibleForTesting
+  void seedRoomInviteForTesting(RoomInvite invite) =>
+      _incomingRoomInvites.add(invite);
+
+  @override
+  Future<bool> supportsRoomInvites() async => roomInvitesSupportedForTesting;
+
+  @override
+  Future<int> inviteFriendsToRoom(GameRoom room, List<String> friendIds) async {
+    final id = room.id ?? room.code;
+    final set = _invitedByRoom.putIfAbsent(id, () => <String>{});
+    final fresh = friendIds.toSet()..remove(currentUserId);
+    set.addAll(fresh);
+    return fresh.length;
+  }
+
+  @override
+  Future<Set<String>> loadRoomInvitedIds(GameRoom room) async =>
+      Set.of(_invitedByRoom[room.id ?? room.code] ?? const <String>{});
+
+  @override
+  Future<List<RoomInvite>> loadMyRoomInvites({
+    bool throwOnError = false,
+  }) async {
+    if (throwOnError && loadMyRoomInvitesErrorForTesting != null) {
+      throw loadMyRoomInvitesErrorForTesting!;
+    }
+    return List.of(_incomingRoomInvites);
+  }
+
+  @override
+  Future<String?> respondRoomInvite(
+    String inviteId, {
+    required bool accept,
+  }) async {
+    final failure = respondRoomInviteFailureForTesting;
+    if (failure != null) {
+      _incomingRoomInvites.removeWhere((i) => i.id == inviteId);
+      throw RoomInviteException(failure);
+    }
+    final index = _incomingRoomInvites.indexWhere((i) => i.id == inviteId);
+    if (index < 0) {
+      throw const RoomInviteException(RoomInviteFailure.expired);
+    }
+    final invite = _incomingRoomInvites.removeAt(index);
+    return accept ? invite.roomCode : null;
+  }
+
+  static const _challengeAlphabet = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';
+
+  String _nextChallengeCode() {
+    final rng = Random.secure();
+    return 'D${List.generate(8, (_) => _challengeAlphabet[rng.nextInt(_challengeAlphabet.length)]).join()}';
+  }
+
+  @override
+  Future<AsyncDuelStart> createAsyncDuelChallenge({
+    String? category,
+    String? friendId,
+  }) async {
+    String? invitedName;
+    if (friendId != null) {
+      final friends = await loadFriends();
+      final match = friends.where((f) => f.friendId == friendId);
+      if (match.isEmpty) throw StateError('Not a friend');
+      invitedName = match.first.friendName;
+    }
+    final openCount = _asyncDuels.values
+        .where((d) => d.role == AsyncDuelRole.creator && !d.myFinished)
+        .length;
+    if (openCount >= 5) throw StateError('Too many open duels');
+
+    final normalizedCategory = _normalizedAsyncDuelCategory(category);
+    final questions = _pickAsyncDuelQuestions(normalizedCategory);
+    final now = DateTime.now().toUtc();
+    final id = 'mock_async_duel_${++_asyncDuelSeq}';
+    final code = _nextChallengeCode();
+    final duel = _MockAsyncDuel(
+      id: id,
+      role: AsyncDuelRole.creator,
+      category: normalizedCategory,
+      questions: questions,
+      opponentName: null,
+      createdAt: now,
+      expiresAt: now.add(_asyncDuelDuration),
+      challengeCode: code,
+      invitedName: invitedName,
+    );
+    _asyncDuels[id] = duel;
+    return AsyncDuelStart(
+      duelId: id,
+      role: AsyncDuelRole.creator,
+      expiresAt: duel.expiresAt,
+      questions: duel.hiddenQuestions,
+      challengeCode: code,
+      invitedName: invitedName,
+    );
+  }
+
+  /// [resumeAsyncDuel]/[cancelAsyncDuel] çağrılarının kayıtları.
+  final List<String> resumedAsyncDuelIds = [];
+  final List<String> cancelledAsyncDuelIds = [];
+
+  @override
+  Future<AsyncDuelStart> resumeAsyncDuel(String duelId) async {
+    final duel = _asyncDuels[duelId];
+    if (duel == null) throw StateError('Duel not found');
+    if (duel.status == AsyncDuelStatus.expired) {
+      throw StateError('Duel expired');
+    }
+    resumedAsyncDuelIds.add(duelId);
+    return AsyncDuelStart(
+      duelId: duel.id,
+      role: duel.role,
+      opponentName: duel.opponentName,
+      expiresAt: duel.expiresAt,
+      questions: duel.hiddenQuestions,
+      challengeCode: duel.role == AsyncDuelRole.creator
+          ? duel.challengeCode
+          : null,
+      answeredCount: duel.answeredIndices.length,
+      alreadyFinished: duel.myFinished,
+    );
+  }
+
+  @override
+  Future<bool> cancelAsyncDuel(String duelId) async {
+    final duel = _asyncDuels[duelId];
+    if (duel == null || duel.role != AsyncDuelRole.creator) return false;
+    cancelledAsyncDuelIds.add(duelId);
+    _asyncDuels.remove(duelId);
+    return true;
+  }
+
+  @override
+  Future<AsyncDuelStart> acceptAsyncDuelChallenge(String code) async {
+    final normalized = code.trim().toUpperCase();
+    final matches = _asyncDuels.values.where(
+      (d) => d.challengeCode == normalized,
+    );
+    if (matches.isEmpty) throw StateError('Challenge not found');
+    final duel = matches.first;
+    if (duel.role == AsyncDuelRole.creator) throw StateError('Own challenge');
+    if (DateTime.now().toUtc().isAfter(duel.expiresAt)) {
+      throw StateError('Challenge expired');
+    }
+    // Kabul edilmiş (incoming=false) bir düelloyu aynı kişi yeniden açabilir.
+    duel.incoming = false;
+    duel.unclaimed = false;
+    return AsyncDuelStart(
+      duelId: duel.id,
+      role: AsyncDuelRole.opponent,
+      opponentName: duel.opponentName,
+      expiresAt: duel.expiresAt,
+      questions: duel.hiddenQuestions,
+      answeredCount: duel.answeredIndices.length,
+      alreadyFinished: duel.myFinished,
+    );
+  }
+
+  /// Testin sanki bir arkadaş (ya da bağlantı sahibi) turunu bitirip bana
+  /// meydan okumuş gibi bir GELEN meydan okuma kurmasını sağlar. Kabul
+  /// edilene dek "Düellolarım"da `incomingChallenge` olarak görünür;
+  /// [acceptAsyncDuelChallenge] [code] ile onu kabul eder.
+  @visibleForTesting
+  void addIncomingChallengeForTesting({
+    String code = 'DK7M2Q9XA',
+    String creatorName = 'Rojda',
+    int creatorCorrect = 5,
+    int creatorMs = 40000,
+    bool friendChallenge = true,
+    Duration expiresIn = asyncDuelWindow,
+  }) {
+    final now = DateTime.now().toUtc();
+    final id = 'mock_async_duel_${++_asyncDuelSeq}';
+    _asyncDuels[id] = _MockAsyncDuel(
+      id: id,
+      role: AsyncDuelRole.opponent,
+      category: null,
+      questions: _pickAsyncDuelQuestions(null),
+      opponentName: creatorName,
+      createdAt: now,
+      expiresAt: now.add(expiresIn),
+      otherCorrect: creatorCorrect,
+      otherMs: creatorMs,
+      challengeCode: code,
+      incoming: friendChallenge,
+      unclaimed: true,
+    );
+  }
+
+  /// Testin, 24 saati dolmuş ve HÜKMEN sonuçlanmış bir düello kurmasını
+  /// sağlar. [iWon] true: rakip oynamadı, ben turumu bitirmiştim
+  /// ([myCorrect] doğru) ve kazandım; false: ben oynamadım, rakip bitirmişti
+  /// ([creatorCorrect]) ve kaybettim (turum yok, XP yok).
+  @visibleForTesting
+  void addForfeitedAsyncDuelForTesting({
+    required bool iWon,
+    String opponentName = 'Rojda',
+    int myCorrect = 5,
+    int opponentCorrect = 3,
+  }) {
+    final now = DateTime.now().toUtc();
+    final id = 'mock_async_duel_${++_asyncDuelSeq}';
+    final questions = _pickAsyncDuelQuestions(null);
+    final duel = _MockAsyncDuel(
+      id: id,
+      role: iWon ? AsyncDuelRole.creator : AsyncDuelRole.opponent,
+      category: null,
+      questions: questions,
+      opponentName: opponentName,
+      createdAt: now.subtract(const Duration(hours: 25)),
+      expiresAt: now.subtract(const Duration(minutes: 5)),
+      otherCorrect: iWon ? null : opponentCorrect,
+      otherMs: iWon ? null : 30000,
+      forfeitIWon: iWon,
+    );
+    if (iWon) {
+      duel.answeredIndices.addAll(List.generate(questions.length, (i) => i));
+      duel.myCorrect = myCorrect;
+      duel.myMs = 30000;
+    }
+    _asyncDuels[id] = duel;
+  }
+
+  /// Testin belirli bir kalan süreyle "sırası bende" (turumu bitirmedim,
+  /// [myTurn] true) ya da "rakip bekleniyor" (turumu bitirdim, [myTurn]
+  /// false) bir düello kurmasını sağlar. Sıralama ve kalan süre sınamak
+  /// içindir.
+  @visibleForTesting
+  String addOpenAsyncDuelForTesting({
+    required Duration expiresIn,
+    bool myTurn = true,
+    String opponentName = 'Rojda',
+  }) {
+    final now = DateTime.now().toUtc();
+    final id = 'mock_async_duel_${++_asyncDuelSeq}';
+    final questions = _pickAsyncDuelQuestions(null);
+    final duel = _MockAsyncDuel(
+      id: id,
+      role: AsyncDuelRole.opponent,
+      category: null,
+      questions: questions,
+      opponentName: opponentName,
+      createdAt: now.subtract(const Duration(hours: 1)),
+      expiresAt: now.add(expiresIn),
+    );
+    if (!myTurn) {
+      duel.answeredIndices.addAll(List.generate(questions.length, (i) => i));
+      duel.myCorrect = 4;
+      duel.myMs = 40000;
+    }
+    _asyncDuels[id] = duel;
+    return id;
   }
 
   @override
@@ -874,7 +1377,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
     final otherCorrect = duel.otherCorrect;
     final otherMs = duel.otherMs;
-    final outcome = (otherCorrect != null && otherMs != null)
+    final outcome = duel.forfeitIWon == true
+        ? AsyncDuelOutcome.win
+        : (otherCorrect != null && otherMs != null)
         ? _asyncDuelOutcome(
             myCorrect: duel.myCorrect,
             myMs: duel.myMs,
@@ -916,8 +1421,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   /// Gün bazlı sabit tohum: aynı gün herkes aynı sırayı görür.
-  static int dailySeed() {
-    final now = DateTime.now().toUtc();
+  static int dailySeed([DateTime? at]) {
+    // İstanbul günü ([contestDayKey]): sunucu sıralaması, "bugün bitti"
+    // bayrağı ve geri sayımla AYNI sınır (UTC günü 00:00–03:00 arası dünün
+    // setini veriyordu).
+    final now = contestDayKey(at ?? DateTime.now());
     return now.year * 10000 + now.month * 100 + now.day;
   }
 
@@ -937,11 +1445,51 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
+  Future<List<QuizQuestion>> loadDailyQuestions({
+    int limit = 10,
+    bool replay = false,
+  }) async {
     final playable = _playableQuestions;
-    final seed = dailySeedFor(currentUserId);
+    // Tekrar turu (kart "Devam et"/"Tekrar oyna" diyorsa): günün sabit seti
+    // zaten oynandı; görülmemişler öne alınır.
+    if (replay) {
+      final fresh = await _selectFresh(playable, limit);
+      return _withBeginnerProduction(fresh, playable, limit, Random());
+    }
+    return _dailyBase(playable, limit, _dailyLessonSalt);
+  }
+
+  @override
+  Future<List<QuizQuestion>> loadDailyEventQuestions({int limit = 10}) async {
+    final playable = _playableQuestions;
+    // Günün dersinin ilk-oyun setini dışarıda bırak: iki giriş aynı 10 soruyu
+    // vermesin. Havuz bunu kaldıramayacak kadar darsa dışlama düşer.
+    final lessonIds = _dailyBase(
+      playable,
+      limit,
+      _dailyLessonSalt,
+    ).map((q) => q.id).toSet();
+    final rest = playable.where((q) => !lessonIds.contains(q.id)).toList();
+    final pool = rest.length >= limit ? rest : playable;
+    return _dailyBase(pool, limit, _dailyEventSalt);
+  }
+
+  static const _dailyLessonSalt = 0;
+  static const _dailyEventSalt = 0x5e11;
+
+  List<QuizQuestion> _dailyBase(
+    List<QuizQuestion> playable,
+    int limit,
+    int salt,
+  ) {
+    final seed = dailySeedFor(currentUserId) ^ salt;
     final pool = [...playable]..shuffle(Random(seed));
-    final daily = _withVisualBlend(pool.take(limit).toList(), playable, limit);
+    final daily = _withVisualBlend(
+      pool.take(limit).toList(),
+      playable,
+      limit,
+      Random(seed),
+    );
     // Günlük ders rastgele havuzdan çekilir; üretim soruları bankanın ~%3'ü
     // olduğundan yeni başlayan günlük derste hiç cümle kurma görmeyebilirdi.
     return _withBeginnerProduction(daily, playable, limit, Random(seed));
@@ -1139,24 +1687,53 @@ class MockZanKurdRepository implements ZanKurdRepository {
         }
       }
     }
-    return _withVisualBlend(selected, pool, limit);
+    return _withVisualBlend(selected, pool, limit, Random(), store);
   }
+
+  /// Turda en az iki görselli soru olsun diye havuzdan görselli soru ekler.
+  ///
+  /// ## Kusur
+  ///
+  /// Adaylar banka sırasıyla geziliyordu: görselli soru gerektiren her tur
+  /// havuzun aynı ilk iki fotoğraflı sorusunu getiriyordu; oyuncu her turda
+  /// aynı resimleri görüyordu. Testler yalnız "en az iki görselli" sayısına
+  /// baktığı için sessiz kaldı.
+  ///
+  /// ## Kural
+  ///
+  /// Adaylar turun [random]'ı ile karıştırılır, [seen] varsa görülmemişler
+  /// öne alınır; turda zaten olan soru bir daha eklenmez.
+  @visibleForTesting
+  List<QuizQuestion> withVisualBlendForTesting(
+    List<QuizQuestion> selected,
+    List<QuizQuestion> pool,
+    int limit,
+    Random random, [
+    SeenQuestionStore? seen,
+  ]) => _withVisualBlend(selected, pool, limit, random, seen);
 
   List<QuizQuestion> _withVisualBlend(
     List<QuizQuestion> selected,
     List<QuizQuestion> pool,
     int limit,
-  ) {
+    Random random, [
+    SeenQuestionStore? seen,
+  ]) {
     if (selected.length >= limit &&
         selected.where((q) => q.hasImage).length >= 2) {
       return selected;
     }
     final ids = selected.map((question) => question.id).toSet();
-    final visualCandidates = pool.where(
-      (question) => question.hasImage && !ids.contains(question.id),
-    );
+    final fresh = <QuizQuestion>[];
+    final stale = <QuizQuestion>[];
+    for (final question in pool) {
+      if (!question.hasImage || !ids.add(question.id)) continue;
+      (seen != null && seen.isSeen(question.id) ? stale : fresh).add(question);
+    }
+    fresh.shuffle(random);
+    stale.shuffle(random);
     final blended = [...selected];
-    for (final question in visualCandidates) {
+    for (final question in [...fresh, ...stale]) {
       if (blended.where((q) => q.hasImage).length >= 2) break;
       if (blended.length >= limit) {
         final replaceAt = blended.lastIndexWhere((q) => !q.hasImage);
@@ -1199,12 +1776,23 @@ class MockZanKurdRepository implements ZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   }) async {
+    // Yerel sahte oda "Tu" ve "Heval" yer tutucularıyla gelir; kapasite
+    // yalnız kalabalık ayrımını (başlık, hazır anahtarı yok) etkiler.
     return createRoom(category: category).copyWith(
       secondsPerQuestion: secondsPerQuestion,
       questionCount: questionCount,
       entryFee: entryFee,
+      maxPlayers: maxPlayers,
+      isCustom: true,
     );
+  }
+
+  @override
+  Future<GameRoom> createRoomRematch(String roomId) async {
+    // Yerel sahte oda: yeni (kimliği başka) özel lobi.
+    return createRoom().copyWith(id: 'rematch-$roomId', isCustom: true);
   }
 
   @override
@@ -1246,6 +1834,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
       forfeitedBy: null,
     );
   }
+
+  /// Testler kalabalık oda ilerlemesini buradan verir; varsayılan "yok".
+  RoomAnswerProgress? answerProgress;
+
+  @override
+  Future<RoomAnswerProgress?> loadRoomAnswerProgress(GameRoom room) async =>
+      answerProgress;
 
   @override
   Future<List<Player>> loadRoomPlayers(GameRoom room) async {
@@ -1311,11 +1906,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Stream<List<RoomMessage>> subscribeRoomMessages(String roomId) {
     final existing = _roomChatControllers[roomId];
     if (existing != null && !existing.isClosed) return existing.stream;
-    final controller = StreamController<List<RoomMessage>>.broadcast(
-      onCancel: () => _roomChatControllers.remove(roomId),
+    late final StreamController<List<RoomMessage>> controller;
+    controller = StreamController<List<RoomMessage>>.broadcast(
+      onListen: () => controller.add(List.of(_roomMessages)),
+      onCancel: () {
+        _roomChatControllers.remove(roomId);
+        unawaited(controller.close());
+      },
     );
     _roomChatControllers[roomId] = controller;
-    controller.add(List.of(_roomMessages));
     return controller.stream;
   }
 
@@ -1342,6 +1941,18 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<bool> blockPlayer(String playerId) async {
     _blockedPlayerIds.add(playerId);
+    return true;
+  }
+
+  /// Testler çıkarılan oyuncuları buradan okur.
+  final List<String> kickedPlayerIds = [];
+
+  @override
+  Future<bool> kickRoomPlayer({
+    required String roomId,
+    required String playerId,
+  }) async {
+    kickedPlayerIds.add(playerId);
     return true;
   }
 
@@ -1544,6 +2155,48 @@ class MockZanKurdRepository implements ZanKurdRepository {
     );
   }
 
+  /// Sahte onarım kaydı: ay -> kırılma günü (sunucudaki streak_repairs).
+  final Map<String, String> _streakRepairs = {};
+  bool _mockPushDuel = true;
+  bool _mockPushSocial = true;
+
+  @override
+  Future<StreakRepairResult> spendStreakRepair({
+    required String monthKey,
+    required String breakDay,
+    required bool premium,
+  }) async {
+    final existing = _streakRepairs[monthKey];
+    if (existing != null) {
+      return StreakRepairResult(
+        existing == breakDay
+            ? StreakRepairOutcome.alreadyRepaired
+            : StreakRepairOutcome.monthlyLimit,
+      );
+    }
+    if (!premium) {
+      if (_mockCoins < 100) {
+        return const StreakRepairResult(StreakRepairOutcome.insufficient);
+      }
+      _mockCoins -= 100;
+    }
+    _streakRepairs[monthKey] = breakDay;
+    return StreakRepairResult(
+      premium ? StreakRepairOutcome.free : StreakRepairOutcome.charged,
+    );
+  }
+
+  @override
+  Future<AccountFlags?> loadAccountFlags() async =>
+      AccountFlags(pushDuel: _mockPushDuel, pushSocial: _mockPushSocial);
+
+  @override
+  Future<bool> setPushPreferences({bool? duel, bool? social}) async {
+    _mockPushDuel = duel ?? _mockPushDuel;
+    _mockPushSocial = social ?? _mockPushSocial;
+    return true;
+  }
+
   @override
   Future<DurableCoinSpend> spendCoinsDurable(
     int amount,
@@ -1586,6 +2239,20 @@ class MockZanKurdRepository implements ZanKurdRepository {
     _mockCoins += 200;
     return 200;
   }
+
+  @override
+  Future<QuizRewardClaim> awardSoloQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+    required String clientRoundId,
+  }) => awardQuizCoins(
+    score: score,
+    correctCount: correctCount,
+    bestStreak: bestStreak,
+    totalQuestions: totalQuestions,
+  );
 
   @override
   Future<QuizRewardClaim> awardQuizCoins({
@@ -1653,7 +2320,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return const [];
   }
 
-  static const _avatarIdentityKey = 'zankurd.avatarIdentity';
+  /// Kullanıcıya göre ayrılır ([LocalProgressScope]): hesap B aynı cihaza
+  /// girince A'nın yerel avatar kimliğini görüp sunucuya yazmasın.
+  static String get _avatarIdentityKey =>
+      LocalProgressScope.physical('zankurd.avatarIdentity');
 
   @override
   Future<AvatarIdentity> loadAvatarIdentity() async {
@@ -1666,6 +2336,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
       ErrorReporter.record(error, stack, reason: 'mock_load_avatar_identity');
       return const AvatarIdentity();
     }
+  }
+
+  @override
+  Future<bool> updateAvatarIdentityConfirmed(AvatarIdentity identity) async {
+    await updateAvatarIdentity(identity);
+    return true;
   }
 
   @override
@@ -1683,15 +2359,25 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<String> uploadAvatarPhoto(Uint8List bytes, String contentType) async {
     // Mock modda gerçek depolama yok; kalıcı olmayan yerel bir işaret döner.
     avatarPhotoDeleted = false;
-    return 'mock://avatar/${bytes.length}';
+    return 'mock://avatar/${bytes.length}/${++_avatarUploadSeq}';
   }
 
   /// Testlerin "depodan silme gerçekten çağrıldı mı" sorusunu sorabilmesi
   /// için. Kusur tam olarak bu çağrının HİÇ yapılmamasıydı (2026-08-02).
   bool avatarPhotoDeleted = false;
 
+  /// Silme çağrılarında verilen URL'ler (iptal/değiştirme bekçileri okur).
+  final List<String> deletedAvatarUrls = [];
+  int _avatarUploadSeq = 0;
+
   @override
-  Future<void> deleteAvatarPhoto() async {
+  Future<void> deleteAvatarPhotoObjects(List<String> urls) async {
+    deletedAvatarUrls.addAll(urls);
+  }
+
+  @override
+  Future<void> deleteAvatarPhoto({List<String> urls = const []}) async {
+    deletedAvatarUrls.addAll(urls);
     // Çevrimdışı/mock modda silinecek uzak nesne yok; çağrının YAPILDIĞINI
     // kaydetmek yeterlidir — bekçi test bunu doğrular.
     avatarPhotoDeleted = true;
@@ -1706,6 +2392,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<Map<String, dynamic>> cancelMatchmaking() async {
     return const {'status': 'cancelled'};
   }
+
+  @override
+  Future<MatchmakingTouch> touchMatchmaking() async =>
+      const MatchmakingTouch.unknown();
 
   @override
   Stream<Map<String, dynamic>?> subscribeMatchmakingQueue() {
@@ -1786,6 +2476,26 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return const [];
   }
 
+  /// Günün yarışması panosu örneği: ekran turu ve testler dolu pano görmek
+  /// için verir. Varsayılan null = "okunamadı" (çevrimdışı davranışı).
+  DailyEventBoard? sampleDailyEventBoard;
+
+  /// `submitDailyEventResult` çağrıları (doğru, toplam, saniye), sırayla.
+  final List<(int, int, int)> dailyEventSubmissions = [];
+
+  @override
+  Future<bool> submitDailyEventResult({
+    required int correct,
+    required int total,
+    required int seconds,
+  }) async {
+    dailyEventSubmissions.add((correct, total, seconds));
+    return true;
+  }
+
+  @override
+  Future<DailyEventBoard?> loadDailyEventBoard() async => sampleDailyEventBoard;
+
   static const Map<String, List<Lesson>> _lessonsData = {
     'everyday': [
       Lesson(
@@ -1794,6 +2504,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Alfabe',
         titleTr: 'Alfabe',
         descriptionKu: 'Tîpên Kurmancî û dengên wan',
+        descriptionTr: 'Kurmancî harfleri ve sesleri',
         category: 'everyday',
         iconName: 'sort_by_alpha',
         order: 1,
@@ -1813,6 +2524,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Silav û rêzdarî 2',
         titleTr: 'Selamlaşma ve nezaket 2',
         descriptionKu: 'Silav, spas û xatirxwestin',
+        descriptionTr: 'Selam, teşekkür ve vedalaşma',
         category: 'everyday',
         iconName: 'forum',
         order: 3,
@@ -1832,6 +2544,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Xwe nasandin',
         titleTr: 'Kendini tanıtma',
         descriptionKu: 'Nav, temen, welat û pîşe',
+        descriptionTr: 'İsim, yaş, memleket ve meslek',
         category: 'everyday',
         iconName: 'badge',
         order: 5,
@@ -1842,6 +2555,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Malbat',
         titleTr: 'Aile',
         descriptionKu: 'Endamên malbatê',
+        descriptionTr: 'Aile bireyleri',
         category: 'everyday',
         iconName: 'family_restroom',
         order: 6,
@@ -1861,6 +2575,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Reng',
         titleTr: 'Renkler',
         descriptionKu: 'Rengên bingehîn û rengên din',
+        descriptionTr: 'Temel renkler ve diğer renkler',
         category: 'everyday',
         iconName: 'palette',
         order: 8,
@@ -1871,6 +2586,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Laşê mirov',
         titleTr: 'Vücut',
         descriptionKu: 'Beşên laş',
+        descriptionTr: 'Vücudun bölümleri',
         category: 'everyday',
         iconName: 'accessibility_new',
         order: 9,
@@ -1881,6 +2597,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Cil û berg',
         titleTr: 'Giysiler',
         descriptionKu: 'Cil û bergên rojane',
+        descriptionTr: 'Günlük giysiler',
         category: 'everyday',
         iconName: 'checkroom',
         order: 10,
@@ -1891,6 +2608,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Mal',
         titleTr: 'Ev',
         descriptionKu: 'Mal û tiştên malê',
+        descriptionTr: 'Ev ve ev eşyaları',
         category: 'everyday',
         iconName: 'home',
         order: 11,
@@ -1901,6 +2619,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Hewa',
         titleTr: 'Hava durumu',
         descriptionKu: 'Hewa çawa ye?',
+        descriptionTr: 'Hava nasıl?',
         category: 'everyday',
         iconName: 'cloud',
         order: 12,
@@ -1908,9 +2627,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'questions_1',
         slug: 'questions_1',
-        titleKu: 'Pirs',
+        titleKu: 'Peyvên pirsê',
         titleTr: 'Soru kelimeleri',
-        descriptionKu: 'Kî? Çi? Ku? Kengî?',
+        descriptionKu: 'Kî? Çi? Li ku? Kengî?',
+        descriptionTr: 'Kim? Ne? Nerede? Ne zaman?',
         category: 'everyday',
         iconName: 'help',
         order: 13,
@@ -1921,6 +2641,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Lêker',
         titleTr: 'Temel fiiller',
         descriptionKu: 'Lêkerên bingehîn',
+        descriptionTr: 'Temel fiiller',
         category: 'everyday',
         iconName: 'directions_run',
         order: 14,
@@ -1930,7 +2651,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
         slug: 'jobs_1',
         titleKu: 'Pîşe',
         titleTr: 'Meslekler',
-        descriptionKu: 'Pîşe çi ye?',
+        descriptionKu: 'Navên pîşeyan',
+        descriptionTr: 'Meslek isimleri',
         category: 'everyday',
         iconName: 'work',
         order: 15,
@@ -1941,6 +2663,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Bajar',
         titleTr: 'Şehir',
         descriptionKu: 'Cihên girîng ên bajêr',
+        descriptionTr: 'Şehrin önemli yerleri',
         category: 'everyday',
         iconName: 'location_city',
         order: 16,
@@ -1950,7 +2673,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
         slug: 'shopping_1',
         titleKu: 'Li dikanê',
         titleTr: 'Alışveriş',
-        descriptionKu: 'Silav li dikanê',
+        descriptionKu: 'Kirîn û firotin',
+        descriptionTr: 'Alım ve satım',
         category: 'everyday',
         iconName: 'shopping_cart',
         order: 17,
@@ -1961,6 +2685,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Tenduristî',
         titleTr: 'Sağlık',
         descriptionKu: 'Doktor û nexweşxane',
+        descriptionTr: 'Doktor ve hastane',
         category: 'everyday',
         iconName: 'favorite',
         order: 18,
@@ -1971,6 +2696,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Dibistan',
         titleTr: 'Okul',
         descriptionKu: 'Cihê xwendinê',
+        descriptionTr: 'Öğrenim yeri',
         category: 'everyday',
         iconName: 'school',
         order: 19,
@@ -1981,6 +2707,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Veguhestin',
         titleTr: 'Ulaşım',
         descriptionKu: 'Wesayît û bilêt',
+        descriptionTr: 'Taşıtlar ve biletler',
         category: 'everyday',
         iconName: 'directions_bus',
         order: 20,
@@ -1991,6 +2718,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleKu: 'Dema borî',
         titleTr: 'Geçmiş zaman',
         descriptionKu: 'Lêkerên dema borî',
+        descriptionTr: 'Geçmiş zaman fiilleri',
         category: 'everyday',
         iconName: 'history',
         order: 21,
@@ -2080,7 +2808,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'geography_1',
         slug: 'geography_1',
-        titleKu: 'Erdnîgarîya Kurdistanê',
+        titleKu: 'Erdnîgariya Kurdistanê',
         titleTr: 'Coğrafya',
         category: 'geography',
         iconName: 'map',
@@ -2145,7 +2873,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'alphabet_1',
         order: 1,
         contentKu:
-            'Alfabeya Kurmancî (Hawar) 31 tîp e:\n\nA B C Ç D E Ê F G H I Î J K L M N O P Q R S Ş T U Û V W X Y Z\n\nHeşt tîp dengdêr in, bîst û sê tîp dengdar in.\n\n• Alfabe: Alfabe\n• Tîp: Harf\n• Dengdêr: Ünlü harf\n• Dengdar: Ünsüz harf',
+            'Alfabeya Kurmancî (Hawar) 31 tîp e:\n\nA B C Ç D E Ê F G H I Î J K L M N O P Q R S Ş T U Û V W X Y Z\n\nHeşt tîp dengdêr in, bîst û sê tîp dengdar in.\n\n• Elîfbê: Alfabe\n• Tîp: Harf\n• Dengdêr: Ünlü harf\n• Dengdar: Ünsüz harf',
         contentTr:
             'Kurmancî (Hawar) alfabesi 31 harftir: 8 ünlü ve 23 ünsüz harf. Hawar alfabesi Latin harflerini kullanır.',
         exampleKu: 'A, B, C, Ç, D...',
@@ -2410,7 +3138,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'body_1',
         order: 4,
         contentKu:
-            'Hevokên Hêsan bi Laş:\n\nNiha em peyvan di hevokan de dibînin:\n\n• Çavên min reş in: Gözlerim siyahtır\n• Serê min diêşe: Başım ağrıyor\n• Ez destên xwe dişom: Ellerimi yıkıyorum\n• Diranên min spî ne: Dişlerim beyazdır\n• Lingê min diêşe: Bacağım, ayağım ağrıyor',
+            'Hevokên Hêsan bi Laş:\n\nNiha em peyvan di hevokan de dibînin:\n\n• Çavên min reş in: Gözlerim siyahtır\n• Serê min diêşe: Başım ağrıyor\n• Ez destên xwe dişom: Ellerimi yıkıyorum\n• Diranên min spî ne: Dişlerim beyazdır\n• Linga min diêşe: Bacağım, ayağım ağrıyor',
         contentTr:
             'Şimdi kelimeleri cümleler içinde görüyoruz:\n- Gözlerim siyahtır\n- Başım ağrıyor\n- Ellerimi yıkıyorum\n- Dişlerim beyazdır\n- Bacağım (ayağım) ağrıyor',
       ),
@@ -2562,7 +3290,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentKu:
             'Demsal û ez:\n\nEm dibêjin ez germ im an ez sar im.\n\n• bihar: ilkbahar\n• havîn: yaz\n• payîz: sonbahar\n• zivistan: kış\n• ez germ im: sıcağım, bana sıcak geliyor\n• ez sar im: üşüyorum, bana soğuk geliyor\n• Ez li malê me: Ben evdeyim',
         contentTr:
-            'Dört mevsim ve bûn fiili (olmak). Ez im (benim), tu yî (sensin), ew e (odur). Hava için e, kişi için im kullanırız: Hewa sar e. Ez sar im.',
+            'Dört mevsim ve bûn fiili (olmak). Ez im (benim), tu yî (sensin), ew e (odur). Ek, önündeki sözcüğün son sesine göre değişir: ünsüzden sonra e / im, ünlüden sonra ye / me. Hewa sar e. Ez sar im.',
       ),
     ],
     'questions_1': [
@@ -2667,7 +3395,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentKu:
             'Pîşe çi ye?\n\nPîşe karê mirovan e. Piştî dengdêrî: Ez mamoste me. Piştî dengdarî: Ez doktor im.\n\n• pîşe: meslek\n• kar: iş\n• ez: ben\n• tu: sen\n• ew: o\n• im/me: -ım, -im\n• e/ye: -dır, -dir',
         contentTr:
-            'Meslek insanların işidir. Sesliden sonra Ez mamoste me, sessizden sonra Ez doktor im deriz. Bu derste 12 meslek öğreneceğiz.',
+            'Meslek insanların işidir. Sesliden sonra Ez mamoste me, sessizden sonra Ez doktor im deriz. Bu derste 7 meslek öğreneceğiz.',
       ),
       LessonSlide(
         id: 'jobs_1_s2',
@@ -2888,7 +3616,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'school_1',
         order: 5,
         contentKu:
-            'Di Polê de:\n\nEm di polê de çi dikin? Em hîn dibin.\n\n• ez dixwînim: okuyorum\n• ez dinivîsim: yazıyorum\n• guhdar dike: dinliyor\n• dibêje: söylüyor\n• mezin: büyük\n• biçûk: küçük',
+            'Di Polê de:\n\nEm di polê de çi dikin? Em hîn dibin.\n\n• ez dixwînim: okuyorum\n• ez dinivîsim: yazıyorum\n• guhdarî dike: dinliyor\n• dibêje: söylüyor\n• mezin: büyük\n• biçûk: küçük',
         contentTr:
             'Sınıfta ne yaparız? Öğreniriz. Şimdiki zamanla çok basit cümleler kuruyoruz.',
       ),
@@ -3083,7 +3811,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'culture_1',
         order: 1,
         contentKu:
-            'Kevneşopiya Govendê:\n\n• Govend: Halay\n• Dilan: Düğün / Eğlence\n• Şahî: Şenlik',
+            'Kevneşopiya Govendê:\n\n• Govend: Halay\n• Dîlan: Düğün / Eğlence\n• Şahî: Şenlik',
         contentTr: 'Kürt halk kültürü ve halay gelenekleri.',
       ),
       LessonSlide(
@@ -3199,7 +3927,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'animals_2',
         order: 2,
         contentKu:
-            'Balindeyên esmanî:\n\n• Eylo: Kartal\n• Kevok: Güvercin\n• Qijak: Karga',
+            'Balindeyên esmanî:\n\n• Eylo: Kartal\n• Kevok: Güvercin\n• Qijik: Karga',
         contentTr: 'Kuş türleri.',
       ),
     ],
@@ -3355,8 +4083,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Set.of(_completedLessonIds);
 
   @override
-  Future<bool> addFriend(String friendId, String friendName) async {
-    return true;
+  Future<AddFriendOutcome> addFriend(String friendId, String friendName) async {
+    return AddFriendOutcome.sent;
   }
 
   String? lastFcmToken;
@@ -3364,6 +4092,46 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<void> setFcmToken(String token) async {
     lastFcmToken = token;
+  }
+
+  /// Çıkışta [clearFcmToken] çağrıldı mı (testler okur).
+  bool fcmTokenCleared = false;
+
+  @override
+  Future<void> clearFcmToken() async {
+    fcmTokenCleared = true;
+    lastFcmToken = null;
+  }
+
+  /// Gönderilmiş bekleyen istekler. `null` → sunucuda arkadaş yönetimi
+  /// RPC'leri yok (göç uygulanmamış): ekran silme/geri çekme eylemlerini
+  /// gizler. Testler listeyi doldurarak "desteklenir" duruma geçer.
+  @visibleForTesting
+  List<SentFriendRequest>? sentFriendRequestsForTesting;
+
+  /// [removeFriend]/[cancelFriendRequest] çağrılarının kayıtları.
+  final List<String> removedFriendIds = [];
+  final List<String> cancelledRequestTargets = [];
+
+  @override
+  Future<List<SentFriendRequest>?> loadSentFriendRequests() async {
+    final list = sentFriendRequestsForTesting;
+    return list == null ? null : List.of(list);
+  }
+
+  @override
+  Future<bool> removeFriend(String friendId) async {
+    removedFriendIds.add(friendId);
+    return true;
+  }
+
+  @override
+  Future<bool> cancelFriendRequest(String targetUserId) async {
+    cancelledRequestTargets.add(targetUserId);
+    sentFriendRequestsForTesting?.removeWhere(
+      (request) => request.toUserId == targetUserId,
+    );
+    return true;
   }
 
   @override
@@ -3386,6 +4154,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // zaten düzeltilmişti (2026-07-31 Antigravity eklentisi denetimi).
     return const [];
   }
+
+  @override
+  Future<Map<String, PublicProfile>> loadPublicProfiles(
+    Iterable<String> ids,
+  ) async => const {};
 
   @override
   Future<List<Friend>> loadFriends() async {

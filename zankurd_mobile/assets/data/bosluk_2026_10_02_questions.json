@@ -529,7 +529,7 @@
     "category": "Cîhan",
     "difficulty": 5,
     "type": "multipleChoice",
-    "prompt": "Johann Sebastian Bach, di sala 1721an de Şeş Konsertoyên Brandenburgê diyarî kê kir?",
+    "prompt": "Johann Sebastian Bach, di sala 1721an de Şeş Konsertoyên Brandenburgê diyarî kê kirin?",
     "promptTr": "Johann Sebastian Bach 1721'de Altı Brandenburg Konsertosu'nu kime ithaf etti?",
     "answers": [
       "Leopold, Mîrê Anhalt-Köthenê",
@@ -669,7 +669,7 @@
     "category": "Cîhan",
     "difficulty": 5,
     "type": "multipleChoice",
-    "prompt": "Di sala 1847an de li Nexweşxaneya Giştî ya Viyanayê, kîjan bijîşkî ji bo kêmkirina rêjeya mirina dayikan destşûştina bi kilsê klorî ferz kir?",
+    "prompt": "Di sala 1847an de li Nexweşxaneya Giştî ya Viyanayê, kîjan bijîşkî ji bo kêmkirina rêjeya mirina dayikan destşûştina bi kilsa klorî ferz kir?",
     "promptTr": "1847'de Viyana Genel Hastanesi'nde, lohusalık hummasına bağlı anne ölümlerini azaltmak için hekimlerin ellerini klorlu kireçle yıkamasını kim zorunlu kılmıştır?",
     "answers": [
       "Ferdinand von Hebra",
@@ -739,7 +739,7 @@
     "category": "Paradigma",
     "difficulty": 5,
     "type": "multipleChoice",
-    "prompt": "Albert A. Michelson û Edward W. Morley ezmûna eterê di kîjan salê de pêk anîn?",
+    "prompt": "Albert A. Michelson û Edward W. Morley ezmûna eterê di kîjan salê de pêk anî?",
     "promptTr": "Albert A. Michelson ve Edward W. Morley, eter hipotezini sınamak için yaptıkları ünlü deneyi hangi yıl gerçekleştirdi?",
     "answers": [
       "1879",
@@ -879,7 +879,7 @@
     "category": "Paradigma",
     "difficulty": 5,
     "type": "multipleChoice",
-    "prompt": "Barry Marshall û Robin Warren di sala 2005an de Xelata Nobelê ya Tibê ji bo keşfa kîjan bakteriyê wergirtin?",
+    "prompt": "Barry Marshall û Robin Warren di sala 2005an de Xelata Nobelê ya Tibê ji bo keşfa kîjan bakteriyê wergirt?",
     "promptTr": "Barry Marshall ve Robin Warren, hangi bakteriyi keşfettikleri için 2005 Nobel Tıp Ödülü'nü aldı?",
     "answers": [
       "Helicobacter pylori",
@@ -1024,7 +1024,7 @@
     "answers": [
       "Xala 61ê",
       "Xala 39an",
-      "Xala 40î",
+      "Xala 40ê",
       "Xala 12an"
     ],
     "answersTr": [
@@ -1297,7 +1297,7 @@
   {
     "id": "bosluk_0038",
     "category": "Siyaset",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîroka siyasî ya Japonyayê de Restorasyona Meijiyê di kîjan salê de pêk hatiye?",
     "promptTr": "Japonya siyasi tarihinde Meiji Restorasyonu hangi yıl gerçekleşmiştir?",
@@ -1332,7 +1332,7 @@
   {
     "id": "bosluk_0039",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîroka siyasî ya Macaristanê de, serhildana sala 1956an ji aliyê kîjan dewletê ve hat tepeserkirin?",
     "promptTr": "Macaristan siyasi tarihinde, 1956 ayaklanması hangi devlet tarafından bastırıldı?",
@@ -1351,7 +1351,7 @@
     "correctAnswer": "Yekîtiya Sovyetê",
     "correctAnswerTr": "Sovyetler Birliği",
     "explanation": "1956 yılında Sovyet askerleri ve tankları Macar ayaklanmasını şiddetle bastırdı; binlerce Macar yurt dışına kaçmak zorunda kaldı.",
-    "explanationKu": "Di sala 1956an de leşker û tankên Yekîtiya Sovyetê serhildana Macaristanê tepeser kirin û bi hezaran Macar neçar man birevin derveyî welêt.",
+    "explanationKu": "Di sala 1956an de leşker û tankên Yekîtiya Sovyetê serhildana Macaristanê tepeser kirin û bi hezaran Macar neçar man birevin derveyî welat.",
     "explanationTr": "1956 yılında Sovyet askerleri ve tankları Macar ayaklanmasını şiddetle bastırdı; binlerce Macar yurt dışına kaçmak zorunda kaldı.",
     "metadata": {
       "dialect": "kurmanci",
@@ -1367,7 +1367,7 @@
   {
     "id": "bosluk_0040",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîroka siyasî ya Fransayê de, di dema serhildana 1848an de kîjan qiralê Fransayê dest ji text berda û welat terikand?",
     "promptTr": "Fransız siyasi tarihinde, 1848 devrimleri sırasında tahttan feragat edip ülkeyi terk eden Fransa kralı kimdir?",
@@ -1402,9 +1402,9 @@
   {
     "id": "bosluk_0041",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
-    "prompt": "Di dîroka siyasî ya Çekoslovakyayê de, serokê Partiya Komûnîst ê ku di Bihara Pragê ya 1968an de dest bi reforman kir kî bû?",
+    "prompt": "Di dîroka siyasî ya Çekoslovakyayê de, serokê Partiya Komunîst ê ku di Bihara Pragê ya 1968an de dest bi reforman kir kî bû?",
     "promptTr": "Çekoslovakya siyasi tarihinde, 1968 Prag Baharı sırasında reformları başlatan Komünist Parti lideri kimdir?",
     "answers": [
       "Gustáv Husák",
@@ -1437,7 +1437,7 @@
   {
     "id": "bosluk_0042",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîroka siyasî ya Amerîkayê de kîjan partî di sala 1854an de hatiye avakirin?",
     "promptTr": "ABD siyasi tarihinde 1854 yılında kurulan parti hangisidir?",
@@ -1472,7 +1472,7 @@
   {
     "id": "bosluk_0043",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîroka siyasî ya Çînê de serhildana sala 1911an dawî li kîjan împeratoriyê aniye?",
     "promptTr": "Çin siyasi tarihinde 1911 ayaklanması hangi imparatorluğu sona erdirmiştir?",
@@ -1507,7 +1507,7 @@
   {
     "id": "bosluk_0044",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan partî di sala 1921ê de li Şanghayê hate damezrandin û di sala 1949an de li Çînê desthilatdarî girt?",
     "promptTr": "Hangi parti 1921'de Şanghay'da kuruldu ve 1949'da Çin'de iktidara geldi?",
@@ -1666,7 +1666,7 @@
     "correctAnswer": "Kwame Nkrumah",
     "correctAnswerTr": "Kwame Nkrumah",
     "explanation": "Gana, 6 Mart 1957'de Birleşik Krallık'tan bağımsızlığını kazandı ve Kwame Nkrumah ilk başbakan oldu; 1960'ta ise cumhurbaşkanlığı görevini üstlendi.",
-    "explanationKu": "Gana di 6ê adara 1957an de ji Brîtanyayê serxwebûna xwe girt û Kwame Nkrumah bû serokwezîrê yekem; wî piştre di sala 1960an de serokomariya welêt jî kir.",
+    "explanationKu": "Gana di 6ê adara 1957an de ji Brîtanyayê serxwebûna xwe girt û Kwame Nkrumah bû serokwezîrê yekem; wî piştre di sala 1960an de serokomariya welat jî kir.",
     "explanationTr": "Gana, 6 Mart 1957'de Birleşik Krallık'tan bağımsızlığını kazandı ve Kwame Nkrumah ilk başbakan oldu; 1960'ta ise cumhurbaşkanlığı görevini üstlendi.",
     "metadata": {
       "dialect": "kurmanci",
@@ -1892,7 +1892,7 @@
   {
     "id": "bosluk_0055",
     "category": "Siyaset",
-    "difficulty": 1,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di dîrokê de welatê yekem ê ku di hilbijartinan de mafê dengdanê daye jinan kîjan e?",
     "promptTr": "Tarihte seçimlerde kadınlara oy hakkını tanıyan ilk ülke hangisidir?",
@@ -2102,7 +2102,7 @@
   {
     "id": "bosluk_0061",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Yekemîn hilbijartina rasterast a Parlamentoya Ewropayê di kîjan salê de pêk hat?",
     "promptTr": "Avrupa Parlamentosu'nun ilk doğrudan seçimi hangi yılda yapılmıştır?",
@@ -2137,7 +2137,7 @@
   {
     "id": "bosluk_0062",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di siyaseta nûjen a Almanyayê de, di hilbijartinên Bundestagê de her hilbijêrek çend dengan dide?",
     "promptTr": "Almanya modern siyasetinde, Bundestag seçimlerinde her seçmen kaç oy kullanır?",
@@ -2172,7 +2172,7 @@
   {
     "id": "bosluk_0063",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di baskê jêrîn ê Parlamentoya Brîtanyayê (House of Commons) de çend kursî hene?",
     "promptTr": "Birleşik Krallık Parlamentosu'nun alt kanadı olan Avam Kamarası'nda (House of Commons) kaç sandalye vardır?",
@@ -2207,7 +2207,7 @@
   {
     "id": "bosluk_0064",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Navenda fermî ya Parlamentoya Ewropayê li kîjan bajarî ye?",
     "promptTr": "Avrupa Parlamentosu'nun resmî merkezi hangi şehirdir?",
@@ -2242,7 +2242,7 @@
   {
     "id": "bosluk_0065",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di siyaseta nûjen a Kanadayê de, senato ji çend endaman pêk tê?",
     "promptTr": "Kanada'nın modern siyasetinde, senato kaç üyeden oluşmaktadır?",
@@ -2277,7 +2277,7 @@
   {
     "id": "bosluk_0066",
     "category": "Siyaset",
-    "difficulty": 2,
+    "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Di siyaseta nûjen a Fransayê de, baskê jêrîn ê parlamentoyê (Assemblée nationale) xwedî çend kursiyan e?",
     "promptTr": "Fransa'nın modern siyasetinde, parlamentonun alt kanadı olan Ulusal Meclis'te (Assemblée nationale) kaç sandalye vardır?",
@@ -2912,7 +2912,7 @@
     "category": "Çand",
     "difficulty": 3,
     "type": "trueFalse",
-    "prompt": "Rast e an şaş e: Kovara kurdî \"Hawar\", di sala 1930î de li Şamê ji aliyê Celadet Alî Bedirxan ve hatiye derxistin.",
+    "prompt": "Rast e an şaş e: Kovara kurdî \"Hawar\", di sala 1930an de li Şamê ji aliyê Celadet Alî Bedirxan ve hatiye derxistin.",
     "promptTr": "Doğru mu yanlış mı: Kürtçe edebiyat dergisi \"Hawar\", 1930 yılında Şam'da Celadet Alî Bedirxan tarafından çıkarılmıştır.",
     "answers": [
       "Rast",
@@ -3067,7 +3067,7 @@
     "category": "Çand",
     "difficulty": 4,
     "type": "trueFalse",
-    "prompt": "Rast e an şaş e: Cejna Hanukayê têkoşîna Makabiyan a li dijî Împaratoriya Romayê bibîr tîne.",
+    "prompt": "Rast e an şaş e: Cejna Hanukayê têkoşîna Makabiyan a li dijî Împaratoriya Romayê bi bîr tîne.",
     "promptTr": "Doğru mu yanlış mı: Hanuka, Makabilerin Roma İmparatorluğu'na karşı verdiği mücadeleyi anar.",
     "answers": [
       "Rast",
@@ -3160,7 +3160,7 @@
     "category": "Dîrok",
     "difficulty": 1,
     "type": "trueFalse",
-    "prompt": "Rast e an şaş e: Şerê Hastingsê, ku Normanan Îngilistan pê dagir kirin, di sala 1068an de pêk hat.",
+    "prompt": "Rast e an şaş e: Şerê Hastingsê, ku Normanan Îngilistan pê dagir kir, di sala 1068an de pêk hat.",
     "promptTr": "Doğru mu yanlış mı: Normanların İngiltere'yi fethettiği Hastings Muharebesi 1068 yılında gerçekleşti.",
     "answers": [
       "Rast",
@@ -3669,7 +3669,7 @@
     "correctAnswer": "Şaş",
     "correctAnswerTr": "Yanlış",
     "explanation": "Hayır, Avustralya'nın başkenti Canberra'dır; Canberra 1913'te başkent ilan edilmiştir, Sidney ise ülkenin en büyük kenti olmakla birlikte başkent değildir.",
-    "explanationKu": "Na, paytexta Awistralyayê Kanbera ye; Kanbera di sala 1913an de wekî paytext hatiye ragihandin, Sydney tevî ku bajarê herî mezin ê welêt e jî ne paytext e.",
+    "explanationKu": "Na, paytexta Awistralyayê Kanbera ye; Kanbera di sala 1913an de wekî paytext hatiye ragihandin, Sydney tevî ku bajarê herî mezin ê welat e jî ne paytext e.",
     "explanationTr": "Hayır, Avustralya'nın başkenti Canberra'dır; Canberra 1913'te başkent ilan edilmiştir, Sidney ise ülkenin en büyük kenti olmakla birlikte başkent değildir.",
     "metadata": {
       "dialect": "kurmanci",
@@ -3718,7 +3718,7 @@
     "category": "Cografya",
     "difficulty": 2,
     "type": "trueFalse",
-    "prompt": "Rast e an şaş e: Çemê Firatê dirêje Deryaya Navîn.",
+    "prompt": "Rast e an şaş e: Çemê Firatê dirije Deryaya Navîn.",
     "promptTr": "Doğru mu yanlış mı: Fırat Nehri, Akdeniz'e dökülür.",
     "answers": [
       "Rast",
@@ -3873,7 +3873,7 @@
     "category": "Cografya",
     "difficulty": 3,
     "type": "trueFalse",
-    "prompt": "Rast e an şaş e: Gola Wanê bi riya rûbarekê dirêje deryayê.",
+    "prompt": "Rast e an şaş e: Gola Wanê bi riya rûbarekê dirije deryayê.",
     "promptTr": "Doğru mu yanlış mı: Van Gölü, bir akarsu vasıtasıyla denize dökülür.",
     "answers": [
       "Rast",

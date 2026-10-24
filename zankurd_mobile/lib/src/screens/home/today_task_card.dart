@@ -5,21 +5,30 @@ import '../../widgets/sahne/sahne.dart';
 
 /// Ana ekranın tek birincil eylemi: "bugün şunu yap".
 ///
-/// 2026-09-29 Şahnê: günlük görev bir **sahne kartıdır** (gece degradesi,
-/// Zimrût köşe radyali; gündüz temasında da gece). Maketteki "Günün dersi"
-/// kartının yapısı: üst etiket + manşet + açıklama solda, ders elması
-/// ("2/5") sağda, altında tam genişlik TEK birincil düğme (Agir, koyu
-/// metin). Eski hâl koyu yeşil elle yazılmış bir degrade, şafak dağı
-/// ressamı, maskot ve beyaz yazılı turuncu düğmeydi; hepsi kalktı.
-/// İlerleme kilim çubuğu yerine ders elmasıyla okunur.
+/// 2026-10-19 sadeleşme: kart artık **sakin bir yüzey kartıdır** (gündüz
+/// beyaz + 1 px #E3E7F0 kenar, gece Perde; degrade ve köşe radyali yok).
+/// Test edenler ana ekranı "kalabalık, gözü yoruyor" buldu; en büyük iki
+/// doygun dolgu (bu kart ve düello kartı) ekranın ilk bakışta bağırmasının
+/// sebebiydi. İlerleme 80 px'lik ders elması yerine ince 4 px çubuk ve
+/// küçük "0/5" metnidir. Turuncu YALNIZ "Başla" düğmesidir.
+///
+/// 2026-09-29 Şahnê (tarihçe): kart gece degradeli bir sahne kartıydı.
+/// Maketteki "Günün dersi" yapısı korunur: üst etiket + manşet + açıklama,
+/// altında tam genişlik TEK birincil düğme (Agir, koyu metin).
 ///
 /// 2026-09-29 doğallık (K8): üst etiket büyük harf + harf aralığıyla
 /// ("BUGÜNÜN GÖREVİ") bağırıyordu; artık kalın açıklama, cümle düzeni
 /// ("Bugünün görevi"). Büyük harf yalnız soru sahnesinin künyesinde kalır.
 /// Kilim şeridi de yok (K4: `SahneStageCard` varsayılanı kapalı).
 ///
-/// Kart `SahneStageCard.lesson` ile aynı yerleşimi kurar ama düğmeyi kendisi
-/// çizer: ekran okuyucu düğümü (`home-daily-task-start`) ve yükleniyor
+/// 2026-10-20 kimlik ("Çiya", kullanıcının açık tercihi): kartın tepesinde
+/// ALÇAK bir manzara şeridi ([SahneVistaStrip], 88 pt): logodaki dağ sırtı
+/// şafakta (gece yıldızlı gökte zirvede tek turuncu ışık). Şerit kartın
+/// ayrı bir satırıdır; metin ve düğme üstüne binmez. Kurulun tek itirazı
+/// konuların aşağı itilmesiydi; şerit bu yüzden alçak ve 390×844'te ilk
+/// konu satırı ilk ekranda kalır (bekçi: `manzara_seridi_test.dart`).
+///
+/// Kart düğmeyi kendisi çizer: ekran okuyucu düğümü (`home-daily-task-start`) ve yükleniyor
 /// hâli ana ekranın sözleşmesidir, bileşenin kendi düğmesi bunları taşımaz.
 class TodayTaskCard extends StatelessWidget {
   const TodayTaskCard({
@@ -65,9 +74,8 @@ class TodayTaskCard extends StatelessWidget {
     final goalInProgress = !firstSession && started && done < total;
     final remaining = total - done;
 
-    final title = goalInProgress
-        ? Tr.forKu(K.dailyGoalTitle, isKu)
-        : Tr.forKu(K.gununDersi, isKu);
+    final titleKey = goalInProgress ? K.dailyGoalTitle : K.gununDersi;
+    final title = Tr.forKu(titleKey, isKu);
     final meta = goalInProgress
         ? Tr.forKu(K.dailyGoalRemainingCorrect, isKu, {
             'n': '$remaining',
@@ -93,75 +101,80 @@ class TodayTaskCard extends StatelessWidget {
 
     return KeyedSubtree(
       key: const ValueKey('home-daily-task'),
-      child: SahneStageCard(
-        child: Builder(
-          builder: (context) {
-            final t = SahneTokens.of(context);
-            final texts = Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                KeyedSubtree(
-                  key: firstSession
-                      ? const ValueKey('home-first-session-badge')
-                      : null,
-                  child: Text(
-                    eyebrow,
-                    style: SahneType.captionStrong.copyWith(color: t.learnTx),
-                  ),
-                ),
-                const SizedBox(height: SahneSpace.x1),
-                Semantics(
-                  header: true,
-                  child: Text(
-                    title,
-                    style: SahneType.headline.copyWith(color: t.tx),
-                  ),
-                ),
-                const SizedBox(height: SahneSpace.x1),
-                Text(meta, style: SahneType.caption.copyWith(color: t.tx2)),
-              ],
-            );
-            final diamond = SahneLessonDiamond(
-              done: done.clamp(0, total < 0 ? 0 : total),
-              total: total,
-            );
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Metne en az altı manşet harfi kalmıyorsa (büyük yazı, dar
-                // ekran) ders elması metnin altına iner; başlık harf harf
-                // bölünmez (`SahneStageCard.lesson` ile aynı kural).
-                LayoutBuilder(
-                  builder: (context, c) {
-                    final room = c.maxWidth - 80 - SahneSpace.x4;
-                    final wide =
-                        room >= MediaQuery.textScalerOf(context).scale(22) * 6;
-                    if (wide) {
-                      return Row(
+      child: Builder(
+        builder: (context) {
+          final t = SahneTokens.of(context);
+          return SahneSurfaceCard(
+            // Zimrût tonlu kart (2026-10-20): öğrenme modunun rengi.
+            color: t.learnTint,
+            edgeColor: t.learnEdge,
+            // Manzara kenardan kenara; içerik kendi 16'lık boşluğunu taşır.
+            padding: EdgeInsets.zero,
+            child: Builder(
+              builder: (context) {
+                final safeTotal = total < 0 ? 0 : total;
+                final safeDone = done.clamp(0, safeTotal);
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SahneVistaStrip(),
+                    Padding(
+                      padding: const EdgeInsets.all(SahneSpace.x4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Expanded(child: texts),
-                          const SizedBox(width: SahneSpace.x4),
-                          diamond,
+                          KeyedSubtree(
+                            key: firstSession
+                                ? const ValueKey('home-first-session-badge')
+                                : null,
+                            child: Text(
+                              eyebrow,
+                              style: SahneType.captionStrong.copyWith(
+                                color: t.learnTx,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: SahneSpace.x1),
+                          Semantics(
+                            header: true,
+                            child: Text(
+                              title,
+                              style: SahneType.headline.copyWith(color: t.tx),
+                            ),
+                          ),
+                          const SizedBox(height: SahneSpace.x1),
+                          Text(
+                            meta,
+                            style: SahneType.caption.copyWith(color: t.tx2),
+                          ),
+                          const SizedBox(height: SahneSpace.x3),
+                          // İlerleme: ince 4 px çubuk + küçük "0/5". Eskiden 80 px'lik
+                          // ders elmasıydı (bkz. sınıf belgesi).
+                          SahneProgressBar(
+                            key: const ValueKey('home-daily-task-progress'),
+                            value: safeTotal == 0 ? 0 : safeDone / safeTotal,
+                            // Kalın (8 px) Zimrût çubuk, tonlu iz (2026-10-20).
+                            height: 8,
+                            trackColor: t.learnTrack,
+                            edgeColor: t.learnEdge,
+                            trailing: '$safeDone/$safeTotal',
+                            semanticLabel: title,
+                          ),
+                          const SizedBox(height: SahneSpace.x4),
+                          _StartButton(
+                            label: label,
+                            loading: loading,
+                            onTap: onStart,
+                          ),
                         ],
-                      );
-                    }
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        texts,
-                        const SizedBox(height: SahneSpace.x3),
-                        diamond,
-                      ],
-                    );
-                  },
-                ),
-                const SizedBox(height: SahneSpace.x4),
-                _StartButton(label: label, loading: loading, onTap: onStart),
-              ],
-            );
-          },
-        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }

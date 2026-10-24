@@ -79,7 +79,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 400));
 
       expect(find.byType(SignInScreen), findsOneWidget);
-      expect(find.text('Giriş yap'), findsWidgets);
+      expect(find.text('Hesabım var · Giriş yap'), findsWidgets);
       expect(find.textContaining('Sunucuya ulaşılamadı'), findsOneWidget);
       expect(
         find.text('İnternet bağlantısı yok. Kontrol ediliyor…'),

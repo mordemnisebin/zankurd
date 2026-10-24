@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show RenderAbstractViewport;
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,8 +18,7 @@ import '../data/sync_manager.dart';
 import '../providers/sound_provider.dart';
 import '../providers/untimed_mode_provider.dart';
 import '../data/daily_mission_store.dart';
-import '../data/xp_award_publisher.dart';
-import '../data/xp_store.dart';
+import '../data/free_wildcard_store.dart';
 import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';
@@ -26,31 +26,37 @@ import '../game/bot_opponent.dart';
 import '../models/answer_record.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
+import '../utils/free_text_answer_matcher.dart';
 import '../models/room.dart';
 import '../models/wildcard.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/analytics_service.dart';
+import '../services/crowd_standings.dart';
 import '../services/favorite_mutation_service.dart';
 import '../services/learning_productive_recall.dart';
 import '../services/question_audio_service.dart';
 import '../services/room_result_presentation.dart';
+import 'quiz/prompt_translation_reveal.dart';
+import '../services/wildcard_replacement.dart';
 import 'quiz/fill_in_blank_widget.dart';
 import 'quiz/word_ordering_widget.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
+import '../utils/client_round_id.dart';
 import '../utils/error_reporter.dart';
 import '../utils/player_identity.dart';
 import '../utils/question_timer_resume.dart';
 import '../utils/test_environment.dart';
-import '../widgets/category_kicker_mark.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/floating_reaction_overlay.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/player_avatar.dart';
+import '../widgets/quiz_top_bar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
 import '../widgets/lexicon_lookup.dart';
 import '../widgets/sahne/sahne.dart';
+import 'quiz/question_prompt_block.dart';
 import 'quiz/quiz_effects.dart';
 import 'quiz/quiz_feedback_overlay.dart';
 import 'quiz/quiz_option_tile.dart';
@@ -59,6 +65,7 @@ import 'quiz/quiz_wildcard_bar.dart';
 import 'quiz_result_screen.dart';
 import 'room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../utils/number_format.dart';
 import '../widgets/dialog_action_pair.dart';
 
 part 'quiz/quiz_layout_rules.dart';
@@ -126,6 +133,24 @@ class _QuizScreenState extends State<QuizScreen>
   bool get _isLearningExperience =>
       widget.experience == QuizExperience.learning;
 
+  /// Soru ekranının tek satırlık geçici bildirimi (joker ipucu, kilitli joker
+  /// nedeni). Alttaki SnackBar yerine üst çubuğun hemen altında gösterilir:
+  /// şıkları ve alt çubuğu örtmez, böylece alt pay küçük kalır.
+  String? _stageToast;
+  Key? _stageToastKey;
+  Timer? _stageToastTimer;
+
+  void _showStageToast(String text, {Key? key}) {
+    _stageToastTimer?.cancel();
+    setState(() {
+      _stageToast = text;
+      _stageToastKey = key;
+    });
+    _stageToastTimer = Timer(const Duration(seconds: 3), () {
+      if (mounted) setState(() => _stageToast = null);
+    });
+  }
+
   /// Sözcüğe dokununca sözlük anlamı: yalnız başkasına karşı puanlanmayan,
   /// tek kişilik oyunda. Kategori seviyesi, günün dersi ve yanlış çalışması
   /// `learning`; ödülsüz tekrar (`practice`) de öyle. Oda, hızlı düello,
@@ -140,6 +165,45 @@ class _QuizScreenState extends State<QuizScreen>
     contest: widget.contestId != null,
     versus: widget.versusBannerText != null,
   );
+
+  /// Bkz. [translationRevealAllowedFor].
+  bool get _translationRevealAllowed => translationRevealAllowedFor(
+    is1v1: widget.is1v1,
+    botRace: widget.botRace,
+    dailyQuiz: widget.dailyQuiz,
+    contest: widget.contestId != null,
+    versus: widget.versusBannerText != null,
+    onlineRoom: (widget.room.id?.trim() ?? '').isNotEmpty,
+  );
+
+  /// Bkz. [instantExplanationAllowedFor].
+  bool get _instantExplanationAllowed => instantExplanationAllowedFor(
+    is1v1: widget.is1v1,
+    botRace: widget.botRace,
+    dailyQuiz: widget.dailyQuiz,
+    contest: widget.contestId != null,
+    versus: widget.versusBannerText != null,
+    onlineRoom: (widget.room.id?.trim() ?? '').isNotEmpty,
+  );
+
+  /// Cevap yanlış mı (süre dolması dahil)? Karar kaydedilmiş değerlendirmeden;
+  /// kayıt henüz yoksa sorunun kendi eşleşme kuralından.
+  bool get _answerWasWrong {
+    if (!answered) return false;
+    return _currentAnswerAdjudication == false ||
+        (_currentAnswerAdjudication == null &&
+            !question.acceptsAnswer(selectedAnswer));
+  }
+
+  /// Yanlıştan sonra doğru cevap + açıklama kartı görünür mü?
+  ///
+  /// Gerilim tutuşu bitmeden ve açıklama denetleyicisi dolmadan görünmez
+  /// (`_showExplanation`): şık rengi ile kart aynı anda gelir.
+  bool get _wrongAnswerInsightVisible =>
+      _instantExplanationAllowed &&
+      _showExplanation &&
+      !_suspense &&
+      _answerWasWrong;
 
   /// Süresiz modun geçerli olabileceği tek yer: ödül üretmeyen tek kişilik
   /// turlar.
@@ -175,6 +239,7 @@ class _QuizScreenState extends State<QuizScreen>
   String get _quizModeLabel {
     if (_isLearningExperience) return 'learning';
     if (widget.practice) return 'practice';
+    if (_isCrowd) return 'crowd';
     if (widget.is1v1) return '1v1';
     if (widget.dailyQuiz) return 'daily';
     if (widget.botRace) return 'bot_race';
@@ -191,12 +256,43 @@ class _QuizScreenState extends State<QuizScreen>
   bool favorite = false;
   bool _favoriteTouched = false;
   bool _localSaveFailureShown = false;
+
+  /// Bu ekranın yanlış defteri oturum kimliği: bir quiz/tekrar ekranı = bir
+  /// oturum. Soru kuyruktan çıkmak için İKİ FARKLI oturumda doğru
+  /// cevaplanmalıdır (bkz. [MistakeStore]).
+  final String _mistakeSessionId =
+      'quiz-${DateTime.now().microsecondsSinceEpoch}';
   bool completing = false;
   Set<String> hiddenAnswers = const {};
   final List<AnswerRecord> answerRecords = [];
   late List<Player> livePlayers = widget.room.players;
   StreamSubscription<List<Player>>? _playersSub;
   StreamSubscription<Map<String, dynamic>>? _realtimeSub;
+
+  /// Sunucudaki engel listesi: engellediğim oyuncunun canlı tepkileri
+  /// çizilmez (C1). Liste okunana kadar ve okuma iki denemede de düşerse
+  /// uzak tepkiler BASTIRILIR (güvenli taraf).
+  Set<String> _blockedPlayerIds = const <String>{};
+  bool _blockedReady = false;
+
+  Future<void> _loadBlockedPlayers() async {
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        final ids = await widget.repository.loadBlockedPlayerIds();
+        if (!mounted) return;
+        _blockedPlayerIds = ids;
+        _blockedReady = true;
+        return;
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'quiz_load_blocked_players');
+        if (attempt == 0) {
+          await Future<void>.delayed(const Duration(seconds: 2));
+        }
+        if (!mounted) return;
+      }
+    }
+  }
+
   final FloatingReactionController _reactionController =
       FloatingReactionController();
   final Map<String, _OpponentAnswer> _opponentSelectedAnswers = {};
@@ -213,6 +309,11 @@ class _QuizScreenState extends State<QuizScreen>
   String _firstAttemptAnswer = '';
   Map<String, double>? _audiencePoll;
   int _coinBalance = 0;
+
+  /// Bugünkü bedava joker hakkı duruyor mu? Yalnız solo turda yüklenir;
+  /// ilk joker kullanımı jeton düşmez ve `spend_coins` çağrılmaz
+  /// ([FreeWildcardStore]).
+  bool _freeWildcardAvailable = false;
 
   // Timer ve animasyon durumları
   late final AnimationController _timerController;
@@ -244,6 +345,7 @@ class _QuizScreenState extends State<QuizScreen>
   double? _initialTimerFraction;
   bool _resumingOnlineSession = false;
   bool _exitInFlight = false;
+  bool _onlineLeaveFailed = false;
   bool _reconcileInFlight = false;
   int _reconcileGeneration = 0;
   bool _terminalHandling = false;
@@ -313,21 +415,20 @@ class _QuizScreenState extends State<QuizScreen>
   /// doğrusunu göremediği için tur öğretici olmaktan çıkıyordu
   /// (2026-07-25 canlı denetimi).
   void _revealCorrectAnswer() {
-    if (isFlutterTestEnvironment) return;
+    if (isFlutterTestEnvironment && !revealCorrectAnswerInTests) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final target = _correctAnswerKey.currentContext;
       if (target == null) return;
-      Scrollable.ensureVisible(
+      _revealKeepingPhoto(
         target,
+        photoKey: _photoKeyFor(index),
         duration: const Duration(milliseconds: 320),
-        curve: Curves.easeOutCubic,
         // Öğrenme akışında doğru şıkkın hemen altında açıklama kutusu
         // belirir ve asıl öğretici içerik odur; karo yukarı alınarak
         // açıklama da aynı ekranda kalır. Yarışma akışında açıklama yok,
         // bu yüzden karo daha rahat bir konumda ortalanır.
         alignment: _isLearningExperience ? 0.12 : 0.35,
-        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
       );
     });
   }
@@ -362,24 +463,30 @@ class _QuizScreenState extends State<QuizScreen>
           _explanationActionKey.currentContext ??
           _explanationKey.currentContext;
       if (target == null) return;
-      Scrollable.ensureVisible(
+      _revealKeepingPhoto(
         target,
+        photoKey: _photoKeyFor(index),
         duration: sahneMotionReduced(context)
             ? Duration.zero
             : const Duration(milliseconds: 320),
-        curve: Curves.easeOutCubic,
         // 1.0: hedefin ALT kenarı görünür alanın altına yaslanır. Kayan
         // alan alt perdenin üstünde biter (`extendBody` payı), yani satır
         // perdenin üstünde TAMAMEN görünür kalır. Kutu zaten içeriğin en
         // altındadır; hizayı yukarı çekmek soruyu gereksizce ekran dışına
         // itiyordu.
         alignment: 1.0,
-        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
       );
     });
   }
 
   final GlobalKey _explanationKey = GlobalKey();
+
+  /// Soru fotoğrafının anahtarı, soru sırasına göre. `AnimatedSwitcher`
+  /// geçişte eski ve yeni paneli birlikte yaşattığı için tek anahtar
+  /// paylaşılamaz (duplicate-GlobalKey); her soruya kendi anahtarı düşer.
+  final Map<int, GlobalKey> _photoKeys = {};
+  GlobalKey _photoKeyFor(int questionIndex) =>
+      _photoKeys.putIfAbsent(questionIndex, GlobalKey.new);
 
   /// Şıklı sorularda görünen "Açıklamayı gör" satırı ([_revealExplanation]).
   final GlobalKey _explanationActionKey = GlobalKey();
@@ -401,6 +508,17 @@ class _QuizScreenState extends State<QuizScreen>
 
   /// Gerçek online multiplayer: 1v1 veya takım oyunu (bot değil).
   bool get _isMultiplayer => widget.room.id != null;
+
+  /// Kalabalık oda (özel oda, kapasite > 2). 1v1 düello yolundan şu farklarla
+  /// ayrılır: cevap başına yayın YOK (N oyuncuda N² mesaj olurdu), rakibin
+  /// seçtiği şık gösterilmez, başlık sıra + ilk üç şeridi taşır, sonuç
+  /// sunucunun sıralı yükünden gelir ve yoklama seyrektir.
+  bool get _isCrowd => _isMultiplayer && widget.room.isCrowd;
+
+  /// Sonucu sunucudan tek kesin kayıt olarak okuyan yol (1v1 ve kalabalık);
+  /// öteki çok oyunculu odalar eski "takım" sonuç yolunda kalır.
+  bool get _usesExactResult => widget.is1v1 || _isCrowd;
+
   bool get _usesServerHiddenAnswers =>
       _isMultiplayer && widget.repository.usesServerHiddenAnswers;
 
@@ -461,12 +579,15 @@ class _QuizScreenState extends State<QuizScreen>
         (_isLearningExperience
                 ? LearningProductiveRecall.transform(question)
                 : question)
-            .localized(isKu: _isKu),
+            .localized(isKu: _isKu, learning: _isLearningExperience),
     ];
     _myId = widget.repository.currentUserId;
     _onlineResultOwnerId = widget.repository.currentUserId?.trim() ?? '';
     livePlayers = List<Player>.of(widget.room.players);
     _serverReadyWaiting = _usesServerHiddenAnswers;
+    // Online odada rehber hazır sinyalini tutmaz: yeni oyuncu rehberi
+    // kapatana kadar rakip boşa beklemesin (bkz. QuizTutorialOverlay.enabled).
+    if (_isMultiplayer) _tutorialGateReady = true;
     final initialResume = _matchingResumeSnapshot(widget.resumeSnapshot);
     if (initialResume != null && _questions.isNotEmpty) {
       _resumingOnlineSession = true;
@@ -486,6 +607,7 @@ class _QuizScreenState extends State<QuizScreen>
       });
     }
     _loadCoinBalance();
+    _loadFreeWildcard();
     AnalyticsService.instance.logQuizStart(
       category: widget.room.category,
       mode: _quizModeLabel,
@@ -549,6 +671,7 @@ class _QuizScreenState extends State<QuizScreen>
         // "Berfin"li maçta skor ve hazır sinyallerini tersine çeviriyordu.
         // Kimliksiz eski kayıtlarda [_isMe] ad yedeğini kullanır.
         _myId = widget.repository.currentUserId;
+        unawaited(_loadBlockedPlayers());
         _applyOwnAuthoritativePlayerState();
         _realtimeSub = widget.repository
             .subscribeRoomBroadcast(widget.room.id!)
@@ -569,16 +692,34 @@ class _QuizScreenState extends State<QuizScreen>
               if (payload['type'] == 'reaction') {
                 final text = payload['text'] as String?;
                 final sender = payload['sender_name'] as String? ?? senderName;
-                if (text != null && !isSelf) {
+                final blocked =
+                    !_blockedReady ||
+                    // Kimliği olmayan yayın kimin olduğu doğrulanamadığı için
+                    // engel süzgecinden kaçamaz: bastırılır.
+                    senderId == null ||
+                    _blockedPlayerIds.contains(senderId);
+                if (text != null && !isSelf && !blocked) {
                   _reactionController.triggerReaction(
                     text,
+                    // Adsız oyuncu her yerde "Oyuncu ZK-XXXX" (lobi, skor
+                    // tablosu); tepki bandında yalnız "Oyuncu" kalıyordu.
                     senderName: sender == null
                         ? null
-                        : PlayerIdentity.resolveName(sender, isKu: _isKu),
+                        : PlayerIdentity.resolveNameWithTag(
+                            sender,
+                            isKu: _isKu,
+                            tag: livePlayers
+                                .where((p) => p.id == senderId)
+                                .firstOrNull
+                                ?.tag,
+                          ),
                   );
                 }
                 return;
               }
+              // Kalabalık odada cevap/hazır yayını yoktur; tepki dışında
+              // gelen her şey (eski istemci, yabancı yayın) yok sayılır.
+              if (_isCrowd) return;
               if (!_usesServerHiddenAnswers &&
                   senderName != null &&
                   !isSelf &&
@@ -618,13 +759,21 @@ class _QuizScreenState extends State<QuizScreen>
                   final opponentIdx = livePlayers.indexWhere(
                     (player) => playersShareIdentity(player, incomingPlayer),
                   );
-                  final updatedOpponent = Player(
-                    id:
-                        senderId ??
-                        (opponentIdx != -1
-                            ? livePlayers[opponentIdx].id
-                            : null),
-                    name: senderName,
+                  // Yayın yalnız ad/skor taşır; fotoğraf, simge, renk, çerçeve
+                  // ve oyuncu kodu odadaki kayıttan (`room_players` + herkese
+                  // açık profil) gelir. Eskiden bu satır sıfırdan bir Player
+                  // kurup hepsini düşürüyordu: rakibin fotoğrafı ilk yayında
+                  // kayboluyor, sunucudan gelen gerçek ad da yayındaki
+                  // yer tutucu adla ("Oyuncu") eziliyordu.
+                  final existing = opponentIdx != -1
+                      ? livePlayers[opponentIdx]
+                      : null;
+                  final keepName =
+                      existing != null &&
+                      !PlayerIdentity.isPlaceholderDisplayName(existing.name);
+                  final updatedOpponent = (existing ?? incomingPlayer).copyWith(
+                    id: senderId ?? existing?.id,
+                    name: keepName ? existing.name : senderName,
                     score: (payload['score'] as num?)?.toInt() ?? 0,
                     streak: (payload['streak'] as num?)?.toInt() ?? 0,
                     state: payload['answered'] == true
@@ -642,8 +791,14 @@ class _QuizScreenState extends State<QuizScreen>
                       ? null
                       : payload['selected_answer'] as String?;
                   if (oppAnswer != null) {
+                    // Şık rozetinde de lobideki ad: adsız rakip
+                    // "Oyuncu ZK-XXXX" (kod odadaki kayıttan).
                     _opponentSelectedAnswers[senderKey] = _OpponentAnswer(
-                      name: senderName,
+                      name: PlayerIdentity.resolveNameWithTag(
+                        updatedOpponent.name,
+                        isKu: _isKu,
+                        tag: updatedOpponent.tag,
+                      ),
                       answer: oppAnswer,
                     );
                   } else if (payload['answered'] == false) {
@@ -669,7 +824,7 @@ class _QuizScreenState extends State<QuizScreen>
                 }
                 _checkMultiplayerSync();
               }
-            });
+            }, onError: _onRealtimeError);
 
         if (widget.is1v1) {
           if (!_resumingOnlineSession && !_usesServerHiddenAnswers) {
@@ -687,13 +842,28 @@ class _QuizScreenState extends State<QuizScreen>
                     );
                     final key = playerIdentityKey(id: p.id, legacyName: p.name);
                     if (idx != -1) {
-                      livePlayers[idx] = livePlayers[idx].copyWith(
-                        score: p.score,
-                        streak: p.streak,
-                        state: _answeredPlayerKeys.contains(key)
-                            ? Tr.forKu(K.answeredState, _isKu)
-                            : Tr.forKu(K.waitingAnswerState, _isKu),
-                      );
+                      // İlk anlık görüntü adı/fotoğrafı eksik olabilir; akış
+                      // daha zengin kimlik getirdiyse tamamlanır.
+                      final current = livePlayers[idx];
+                      livePlayers[idx] = current
+                          .copyWith(
+                            name:
+                                PlayerIdentity.isPlaceholderDisplayName(
+                                      current.name,
+                                    ) &&
+                                    !PlayerIdentity.isPlaceholderDisplayName(
+                                      p.name,
+                                    )
+                                ? p.name
+                                : null,
+                            score: p.score,
+                            streak: p.streak,
+                            left: p.left,
+                            state: _answeredPlayerKeys.contains(key)
+                                ? Tr.forKu(K.answeredState, _isKu)
+                                : Tr.forKu(K.waitingAnswerState, _isKu),
+                          )
+                          .mergeIdentity(p);
                     } else {
                       livePlayers.add(
                         p.copyWith(
@@ -706,8 +876,9 @@ class _QuizScreenState extends State<QuizScreen>
                   }
                   livePlayers.sort((a, b) => b.score.compareTo(a.score));
                 });
+                if (_isCrowd) _onCrowdPlayersChanged();
                 _checkMultiplayerSync();
-              });
+              }, onError: _onRealtimeError);
         }
       } else {
         if (widget.is1v1) {
@@ -755,7 +926,7 @@ class _QuizScreenState extends State<QuizScreen>
                   unawaited(_reconcileOnlineRoom());
                 }
               }
-            });
+            }, onError: _onRealtimeError);
       }
       _ensureRoomPolling();
       final binding = WidgetsBinding.instance;
@@ -1170,6 +1341,10 @@ class _QuizScreenState extends State<QuizScreen>
       } else {
         _startQuestionFlowOnce();
       }
+    } on RoomMemberLeftException {
+      // Hazır süresi dolunca kalabalık odadan düşürüldük: yeniden denemenin
+      // anlamı yok, oyun bizsiz sürüyor.
+      if (mounted) unawaited(_handleDroppedFromCrowd());
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'quiz client ready failed');
       if (mounted) _scheduleServerReadyRetry(retryReadyMark: true);
@@ -1270,6 +1445,15 @@ class _QuizScreenState extends State<QuizScreen>
     _maybeStartQuestionFlow();
   }
 
+  void _loadFreeWildcard() {
+    if (!_isSoloMode) return;
+    FreeWildcardStore.isAvailable().then((available) {
+      if (mounted && available) {
+        setState(() => _freeWildcardAvailable = true);
+      }
+    });
+  }
+
   void _loadCoinBalance() {
     widget.repository
         .loadCoinBalance()
@@ -1328,7 +1512,7 @@ class _QuizScreenState extends State<QuizScreen>
     _saveLocalProgress(() async {
       final store = await MistakeStore.load();
       return correct
-          ? store.markResolved(id)
+          ? store.markResolved(id, sessionId: _mistakeSessionId)
           : store.markMistake(id, category: category);
     }, reason: 'quiz mistake progress save failed');
   }
@@ -1366,7 +1550,7 @@ class _QuizScreenState extends State<QuizScreen>
     final id = question.id;
     await _trySaveLocalProgress(() async {
       final store = await MistakeStore.load();
-      return store.markResolvedSM2(id, score);
+      return store.markResolvedSM2(id, score, sessionId: _mistakeSessionId);
     }, reason: 'quiz practice rating save failed');
     await _next();
   }
@@ -1378,6 +1562,7 @@ class _QuizScreenState extends State<QuizScreen>
     _playersSub?.cancel();
     _realtimeSub?.cancel();
     _autoNextTimer?.cancel();
+    _stageToastTimer?.cancel();
     _revealTimer?.cancel();
     _revealTickTimer?.cancel();
     _opponentWaitTimer?.cancel();
@@ -1385,11 +1570,15 @@ class _QuizScreenState extends State<QuizScreen>
     _serverReadyRetryTimer?.cancel();
     _roomSub?.cancel();
     _pollTimer?.cancel();
+    _crowdRevealProbeTimer?.cancel();
     _readyPingTimer?.cancel();
     _readyTimeoutTimer?.cancel();
     _visualReadyFallbackTimer?.cancel();
     _timerController.dispose();
     _explanationController.dispose();
+    // Kaplama (FloatingReactionOverlay) dışarıdan verilen denetleyiciyi
+    // sahiplenmez; atmak bu ekranın işi. Atılmayan ChangeNotifier sızıntıdır.
+    _reactionController.dispose();
     _questionAudioService?.dispose();
     super.dispose();
   }
@@ -1496,24 +1685,69 @@ class _QuizScreenState extends State<QuizScreen>
     final expectedOwnerId = _onlineResultOwnerId;
     final expectedRoute = ModalRoute.of(context);
     if (!_canContinueExit(generation, expectedOwnerId, expectedRoute)) return;
+    if (_isMultiplayer && _onlineLeaveFailed) {
+      // Sunucu çıkışı bir kez başarısız oldu: onay penceresini ve yeniden
+      // denemeyi döngüye sokma, ağsız oyuncuyu yerelde çıkar. Terk, sunucu
+      // temizliği ve `get_my_resumable_room` ile kapanır.
+      unawaited(
+        widget.repository
+            .leaveOnlineRoom(widget.room)
+            .timeout(_onlineResultRequestTimeout)
+            .then<void>(
+              (_) {},
+              onError: (Object error, StackTrace stack) {
+                ErrorReporter.record(
+                  error,
+                  stack,
+                  reason: 'quiz online leave best effort',
+                );
+              },
+            ),
+      );
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      return;
+    }
     _exitInFlight = true;
     var leaveConfirmed = false;
     var leaveFailed = false;
     RoomLeaveOutcome? outcome;
     try {
+      // Çıkış diyaloğu açıkken tek kişilik turun soru sayacı DURUR: oyuncu
+      // "çık?" sorusunu düşünürken süre akıp soruyu yakıyordu. Çevrimiçi
+      // odada süreyi sunucu yönetir; orada istemci sayacı durdurulmaz.
+      final pauseForDialog =
+          !_isMultiplayer &&
+          _usesTimer &&
+          !answered &&
+          _timerController.isAnimating;
+      if (pauseForDialog) {
+        _timerController.stop();
+        _questionStopwatch.stop();
+      }
       final leave = await showDialog<bool>(
         context: context,
         builder: (_) => _QuizExitDialog(
           isLearning: _isLearningExperience,
           isMultiplayer: _isMultiplayer,
+          isCrowd: _isCrowd,
         ),
       );
+      if (pauseForDialog && leave != true && mounted && !answered) {
+        _timerController.reverse();
+        _questionStopwatch.start();
+      }
       if (leave != true ||
           !_canContinueExit(generation, expectedOwnerId, expectedRoute)) {
         return;
       }
       if (!mounted) return;
       leaveConfirmed = true;
+      // Kendi isteğiyle çıkan oyuncu "düşürüldün" görmez: ekran kapanırken
+      // kendi `left_at` satırı realtime ile gelir ve `_exitInFlight`
+      // `finally`'de sıfırlandığı için `_handleDroppedFromCrowd` "Zamanında
+      // hazır olmadığın için çıkarıldın" diyordu (iki simülatör turu,
+      // 2026-10-22: ana ekranda hükmen penceresi).
+      _crowdDropHandled = true;
 
       if (_isMultiplayer) {
         // Zaman aşımı, diğer çevrimiçi çağrılarla aynı bütçeyi kullanır.
@@ -1528,7 +1762,9 @@ class _QuizScreenState extends State<QuizScreen>
         }
         if (!mounted) return;
         outcome = leaveOutcome;
-        if (!outcome.completed) {
+        // Kalabalıkta ayrılan oyuncuya sonuç sunulmaz (sunucu yalnız
+        // aktif üyelere verir); oda kalanlarla bitmiş olsa da ana ekrana.
+        if (!outcome.completed || _isCrowd) {
           Navigator.of(context).popUntil((route) => route.isFirst);
         }
       } else {
@@ -1536,6 +1772,7 @@ class _QuizScreenState extends State<QuizScreen>
       }
     } catch (error, stack) {
       leaveFailed = true;
+      if (leaveConfirmed && _isMultiplayer) _onlineLeaveFailed = true;
       ErrorReporter.record(error, stack, reason: 'quiz online leave failed');
       if (!mounted) return;
       if (_canContinueExit(generation, expectedOwnerId, expectedRoute)) {
@@ -1549,7 +1786,7 @@ class _QuizScreenState extends State<QuizScreen>
           _canContinueExit(generation, expectedOwnerId, expectedRoute)) {
         final deferred = _deferredEndState;
         _deferredEndState = null;
-        if (outcome?.completed == true) {
+        if (outcome?.completed == true && !_isCrowd) {
           _scheduleTerminalAction(
             () => _completeMultiplayerResult(requestFinish: false),
           );
@@ -1618,6 +1855,7 @@ class _QuizScreenState extends State<QuizScreen>
       isKu: context.isKu,
       roomWord: context.t(K.roomWord),
       raceWord: context.t(K.raceWord),
+      crowdTitle: context.t(K.crowdRoomTitle),
     );
   }
 
@@ -1652,6 +1890,9 @@ class _QuizScreenState extends State<QuizScreen>
     // sormadan bitiriyordu (öğrenme alıştırması ve konu turu, 1/10). Tur
     // başlamış sayılır: ilk soruda da sorulur. Sonuç ekranında sorulmaz (o
     // ayrı ekran).
+    // Konu bandının rengi UYGULAMA temasından okunur (sahne teması her zaman
+    // gecedir; band ana sayfadaki dolu konu karosuyla aynı rengi taşımalı).
+    final appNight = Theme.of(context).brightness == Brightness.dark;
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
@@ -1687,13 +1928,18 @@ class _QuizScreenState extends State<QuizScreen>
                 onReady: _handleTutorialReady,
                 timerSeconds: widget.room.secondsPerQuestion,
                 timed: _usesTimer,
+                enabled: !_isMultiplayer,
                 child: SahneStageScaffold(
                   closeKey: const ValueKey('quiz-close'),
                   closeLabel: context.t(K.close),
                   light: _stageLight,
+                  band: CategoryVisuals.tone(
+                    question.category,
+                  ).fill(night: appNight),
+                  bandProgress: _buildBandProgress(context),
                   ridge: true,
                   center: _buildStageCenter(context),
-                  score: _buildScoreChip(context),
+                  score: _buildStageTrailing(context),
                   progress: _buildStageProgress(context),
                   dock: landscape ? null : _buildDock(context),
                   body: Stack(
@@ -1733,6 +1979,16 @@ class _QuizScreenState extends State<QuizScreen>
                               !_opponentClientReady &&
                               !_questionFlowStarted))
                         _OpponentWaitingOverlay(isKu: _isKu),
+                      if (_stageToast != null)
+                        PositionedDirectional(
+                          top: SahneSpace.x2,
+                          start: SahneSpace.page,
+                          end: SahneSpace.page,
+                          child: _StageToast(
+                            key: _stageToastKey ?? const ValueKey('quiz-toast'),
+                            text: _stageToast!,
+                          ),
+                        ),
                       // Canlı çok oyunculu reaksiyon baloncukları.
                       //
                       // Baloncuk çizimi burada ELDE yazılmaz: `room_screen`
@@ -1776,7 +2032,8 @@ class _QuizScreenState extends State<QuizScreen>
     if (!_isMultiplayer) return;
     final myIdx = livePlayers.indexWhere(_isMe);
     if (myIdx != -1) {
-      livePlayers[myIdx] = Player(
+      // copyWith: kendi fotoğrafım/simgem/çerçevem satırda kalsın.
+      livePlayers[myIdx] = livePlayers[myIdx].copyWith(
         id: _myId,
         name: _myName,
         score: score,
@@ -1786,6 +2043,9 @@ class _QuizScreenState extends State<QuizScreen>
             : Tr.forKu(K.waitingAnswerState, _isKu),
       );
     }
+    // Kalabalık odada cevap yayını yok: N oyuncu N² mesaj üretir. Skor ve
+    // sıra `room_players` akışından, "kimler cevapladı" sunucudan okunur.
+    if (_isCrowd) return;
     widget.repository
         .sendRoomBroadcast(widget.room.id!, {
           'sender': _myName,
@@ -1871,18 +2131,30 @@ class _QuizScreenState extends State<QuizScreen>
     // Server-hidden odada her iki üye de aynı expected-index CAS'ini
     // güvenle deneyebilir. Eski broadcast tabanlı odalarda mevcut host
     // koordinasyonu korunur.
-    _revealTimer = Timer(const Duration(seconds: revealDuration), () {
-      _revealTickTimer?.cancel();
-      if (mounted) {
-        if (_usesServerHiddenAnswers) {
-          unawaited(_advanceAuthoritativeIndex());
-        } else if (_isHost) {
-          unawaited(_next());
-        } else {
-          _requestAuthoritativeAdvance();
+    // Kalabalıkta herkes geri sayımı aynı saniyede bitirir ve aynı anda
+    // `advance_room_question` + `get_my_resumable_room` çağırırdı (50 kişide
+    // 100 eşzamanlı RPC). Ev sahibi hemen ilerletir; ötekiler 0,3–1,5 sn
+    // sonra dener — sunucu zaten tek bir ilerletmeyi kabul eder, gecikme
+    // yalnız gereksiz çağrıları `rooms` akışının getirdiği yeni indekse
+    // bırakır.
+    final advanceJitter = _isCrowd && !_isHost
+        ? Duration(milliseconds: 300 + Random().nextInt(1200))
+        : Duration.zero;
+    _revealTimer = Timer(
+      const Duration(seconds: revealDuration) + advanceJitter,
+      () {
+        _revealTickTimer?.cancel();
+        if (mounted) {
+          if (_usesServerHiddenAnswers) {
+            unawaited(_advanceAuthoritativeIndex());
+          } else if (_isHost) {
+            unawaited(_next());
+          } else {
+            _requestAuthoritativeAdvance();
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   Future<void> _sendLiveReaction(String text) async {
@@ -2103,14 +2375,116 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Future<void> _pollRoomIndex() async {
+    if (_isCrowd) unawaited(_refreshCrowdProgress());
     await _reconcileOnlineRoom();
+  }
+
+  /// Mevcut sorunun "x/N cevapladı" ilerlemesi (kalabalık oda). Sunucu
+  /// yalnız sayı verir; `null` ise (RPC yok) başlık eski bekleme metninde
+  /// kalır.
+  RoomAnswerProgress? _crowdProgress;
+  bool _crowdProgressInFlight = false;
+
+  /// Yalnız GÜNCEL soruya ait sayı gösterilir: cevap yolda gecikip başka
+  /// soruya geçilmişse eski sayı yanlış sorunun "kaç kişi cevapladı"sı olur.
+  RoomAnswerProgress? get _currentCrowdProgress {
+    final progress = _crowdProgress;
+    return progress != null && progress.questionIndex == index
+        ? progress
+        : null;
+  }
+
+  Future<void> _refreshCrowdProgress() async {
+    if (!_isCrowd || _crowdProgressInFlight || !mounted) return;
+    _crowdProgressInFlight = true;
+    try {
+      final progress = await widget.repository.loadRoomAnswerProgress(
+        widget.room,
+      );
+      if (!mounted || progress == null) return;
+      // Soru, istek uçarken değiştiyse sayı geçersizdir (render'da da
+      // kontrol edilir; burada yalnız gereksiz yeniden çizimi önler).
+      if (progress.questionIndex != index) return;
+      setState(() => _crowdProgress = progress);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'crowd answer progress');
+    } finally {
+      _crowdProgressInFlight = false;
+    }
+  }
+
+  /// Kalabalık odada yedek yoklama aralığı (1v1'de 4 sn).
+  static const _crowdPollInterval = Duration(seconds: 6);
+
+  bool _crowdDropHandled = false;
+  Timer? _crowdRevealProbeTimer;
+
+  /// `room_players` satırları değişti (kalabalık oda).
+  ///
+  /// İki anlam taşır: (1) skorlar yalnız bir soru AÇIKLANINCA yazılır — bu
+  /// yüzden cevabını vermiş ve beklemekte olan oyuncu için değişiklik
+  /// "açıklandı" işaretidir; cevap yayını olmadığından başka işaret yok.
+  /// (2) `left_at` dolduysa oyuncu düşmüştür (ayrıldı ya da zamanında hazır
+  /// olmadı).
+  ///
+  /// Açıklama yoklaması 0,1–0,7 sn rastgele geciktirilir: 50 istemcinin aynı
+  /// anda üçer sorgu atması (aynı olay hepsine aynı anda düşer) sunucuyu
+  /// gereksiz yere dalgalandırırdı.
+  void _onCrowdPlayersChanged() {
+    if (!mounted || !_isCrowd) return;
+    final me = livePlayers.where(_isMe).firstOrNull;
+    if (me != null && me.left) {
+      unawaited(_handleDroppedFromCrowd());
+      return;
+    }
+    if (answered &&
+        _mpPhase == _MultiplayerPhase.waiting &&
+        _crowdRevealProbeTimer == null) {
+      _crowdRevealProbeTimer = Timer(
+        Duration(milliseconds: 100 + Random().nextInt(600)),
+        () {
+          _crowdRevealProbeTimer = null;
+          if (mounted) unawaited(_reconcileOnlineRoom());
+        },
+      );
+    }
+  }
+
+  /// Bu oyuncu kalabalık odadan düşürüldü (hazır süresi doldu ya da başka
+  /// cihazdan ayrıldı). Oyun diğerleriyle sürer; burada yapılacak iş kalmadı:
+  /// durumu söyle ve ana ekrana dön.
+  Future<void> _handleDroppedFromCrowd() async {
+    // Kullanıcı kendisi çıkıyorsa (`_confirmExit`) o akış kendi yönlendirir.
+    if (_crowdDropHandled || _exitInFlight || completing) return;
+    _crowdDropHandled = true;
+    _terminalHandling = true;
+    _stopTerminalActivity();
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const _QuizForfeitDialog(bodyKey: K.crowdDroppedBody),
+    );
+    if (!mounted) return;
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
+  /// Gerçek zamanlı akış hatası (kanal düşmesi, sunucu hatası) yakalanmazsa
+  /// zone'a kaçar ve akış sessizce ölür. Kaydet; yedek yoklamayı garantile.
+  void _onRealtimeError(Object error, StackTrace stack) {
+    ErrorReporter.record(error, stack, reason: 'quiz realtime stream error');
+    if (mounted) _ensureRoomPolling();
   }
 
   void _ensureRoomPolling() {
     if (!_isMultiplayer || _pollTimer?.isActive == true) return;
-    _pollTimer = Timer.periodic(const Duration(seconds: 4), (_) {
-      _pollRoomIndex();
-    });
+    // Kalabalık odada her istemci her turda üç sorgu atar; 50 kişide 4 sn
+    // yoklama saniyede ~35 sorgu demek. Asıl uyarı `room_players` akışıdır.
+    _pollTimer = Timer.periodic(
+      _isCrowd ? _crowdPollInterval : const Duration(seconds: 4),
+      (_) {
+        _pollRoomIndex();
+      },
+    );
   }
 
   Future<void> _reconcileOnlineRoom() async {
@@ -2206,6 +2580,10 @@ class _QuizScreenState extends State<QuizScreen>
             _applyOwnAuthoritativePlayerState();
           }
         });
+        if (_isCrowd && livePlayers.any((p) => _isMe(p) && p.left)) {
+          unawaited(_handleDroppedFromCrowd());
+          return;
+        }
       }
 
       final state = endState;
@@ -2348,10 +2726,34 @@ class _QuizScreenState extends State<QuizScreen>
         ? K.youForfeitedMatch
         : K.opponentForfeitedMatch;
 
+    // Rakip hükmen çıktıysa kalan oyuncu verdiği cevapların performans
+    // payını alır (2026-10-22_rakip_cikinca_odul.sql). Eskiden bu dal ödülü
+    // hiç istemiyordu; "hükmen kazandın" diyen oyuncu 0 jeton alıyordu.
+    // Talep başarısızsa _settleCoins kuyruğa alır; pencere beklemez.
+    var forfeitCoins = 0;
+    if (_isMultiplayer &&
+        forfeitedBy != null &&
+        !userForfeited &&
+        reason == 'forfeit') {
+      try {
+        final settlement = await _settleCoins(
+          score: score,
+          correctCount: correctCount,
+          bestStreak: bestStreak,
+          totalQuestions: widget.questions.length,
+        ).timeout(_onlineResultRequestTimeout);
+        forfeitCoins = settlement.coinsAwarded;
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'forfeit win reward');
+      }
+      if (!mounted) return true;
+    }
+
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (_) => _QuizForfeitDialog(bodyKey: bodyKey),
+      builder: (_) =>
+          _QuizForfeitDialog(bodyKey: bodyKey, coinsAwarded: forfeitCoins),
     );
     if (!mounted) return true;
     if (!_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute)) {
@@ -2475,6 +2877,11 @@ class _QuizScreenState extends State<QuizScreen>
   /// Son turda ödül kuyruğa alındı mı? Sonuç ekranı bunu oyuncuya söyler.
   bool _rewardQueued = false;
 
+  /// Solo turun değişmez ödül kimliği: ilk denemede, kuyruğa alınan yeniden
+  /// gönderimde ve `_settleCoins`in tekrar çağrılarında AYNI kimlik gider;
+  /// sunucu (`claim_solo_reward`) ikinci talepte ödemez.
+  final String _soloRoundId = newClientRoundId();
+
   /// Son turun sıfır jetonu, günlük tavana varıldığı İÇİN müydü?
   ///
   /// Sonuç ekranı bunu bilmezse "+0 jeton" gösterip sebebini söylemez.
@@ -2526,13 +2933,21 @@ class _QuizScreenState extends State<QuizScreen>
     // ekranında görüldü.
     var awardFailed = false;
     try {
-      final claim = await widget.repository.awardQuizCoins(
-        score: score,
-        correctCount: correctCount,
-        bestStreak: bestStreak,
-        totalQuestions: totalQuestions,
-        room: widget.room,
-      );
+      final claim = widget.room.id == null
+          ? await widget.repository.awardSoloQuizCoins(
+              score: score,
+              correctCount: correctCount,
+              bestStreak: bestStreak,
+              totalQuestions: totalQuestions,
+              clientRoundId: _soloRoundId,
+            )
+          : await widget.repository.awardQuizCoins(
+              score: score,
+              correctCount: correctCount,
+              bestStreak: bestStreak,
+              totalQuestions: totalQuestions,
+              room: widget.room,
+            );
       amount = claim.amount;
       dailyCapReached = claim.dailyCapReached;
       durable = true;
@@ -2570,6 +2985,7 @@ class _QuizScreenState extends State<QuizScreen>
             bestStreak: bestStreak,
             totalQuestions: totalQuestions,
             roomId: widget.room.id,
+            clientRoundId: widget.room.id == null ? _soloRoundId : null,
           );
           rewardQueued = true;
           durable = true;
@@ -2641,7 +3057,7 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Future<void> _completeMultiplayerResult({required bool requestFinish}) {
-    if (widget.is1v1) {
+    if (_usesExactResult) {
       return _reconcileCompletedRoomResult(requestFinish: requestFinish);
     }
     return _finishLegacyMultiplayerResult(requestFinish: requestFinish);
@@ -2926,7 +3342,7 @@ class _QuizScreenState extends State<QuizScreen>
   Future<void> _reconcileCompletedRoomResult({
     bool requestFinish = false,
   }) async {
-    if (!_isMultiplayer || !widget.is1v1 || _onlineResultInFlight) return;
+    if (!_isMultiplayer || !_usesExactResult || _onlineResultInFlight) return;
     if (requestFinish) _onlineResultFinishRequired = true;
     final roomId = widget.room.id?.trim() ?? '';
     final expectedOwnerId = _onlineResultOwnerId;
@@ -3051,7 +3467,7 @@ class _QuizScreenState extends State<QuizScreen>
     }
     _onlineResultGeneration++;
     _onlineResultInFlight = false;
-    if (!widget.is1v1) _legacyResultGeneration++;
+    if (!_usesExactResult) _legacyResultGeneration++;
     _terminalHandling = true;
     completing = true;
     _stopTerminalActivity();
@@ -3076,7 +3492,7 @@ class _QuizScreenState extends State<QuizScreen>
       _enterOwnerChangedResultGate();
       return;
     }
-    if (!widget.is1v1) {
+    if (!_usesExactResult) {
       if (_legacyResultInFlight) {
         _legacyRetryRequested = true;
         return;
@@ -3094,7 +3510,7 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Future<void> _retryTeamOnlineResultGate() async {
-    if (!mounted || widget.is1v1 || _onlineResultInFlight) return;
+    if (!mounted || _usesExactResult || _onlineResultInFlight) return;
     if (!_hasExpectedOnlineOwner) {
       _enterOwnerChangedResultGate();
       return;
@@ -3177,6 +3593,8 @@ class _QuizScreenState extends State<QuizScreen>
     _advanceRetryTimer?.cancel();
     _serverReadyRetryTimer?.cancel();
     _pollTimer?.cancel();
+    _crowdRevealProbeTimer?.cancel();
+    _crowdRevealProbeTimer = null;
   }
 
   Map<String, dynamic> _completionResultFromPresentation(
@@ -3193,6 +3611,13 @@ class _QuizScreenState extends State<QuizScreen>
       'opponentScore': opponentScore,
     };
   }
+
+  /// Gerilim tutuşu TV-şovu ritmidir (yarış). Öğrenmede (tek kişilik,
+  /// cevap cihazda değerlendirilir) doğru/yanlış tepkisi dokunur dokunmaz
+  /// gelmeli: 520 ms tutuş + yerel değerlendirme beklemesi simülatörde
+  /// tepkiyi saniyeler sonraya itiyordu ve öğrenen cevabının alındığından
+  /// emin olamıyordu. Çevrimiçi odada sunucu cevabı zaten beklenir.
+  bool get _skipsSuspenseHold => _isLearningExperience && !_isMultiplayer;
 
   Future<void> _answer(String answer) async {
     if (answered) return;
@@ -3236,14 +3661,16 @@ class _QuizScreenState extends State<QuizScreen>
     final questionIndex = index;
     setState(() {
       selectedAnswer = answer;
-      _suspense = !isTimeout || _usesServerHiddenAnswers;
+      _suspense =
+          (!isTimeout || _usesServerHiddenAnswers) && !_skipsSuspenseHold;
     });
     final responseMs = _questionStopwatch.elapsedMilliseconds;
-    final hold =
-        widget.suspenseHold ??
-        (isFlutterTestEnvironment
-            ? Duration.zero
-            : const Duration(milliseconds: 520));
+    final hold = _skipsSuspenseHold
+        ? Duration.zero
+        : widget.suspenseHold ??
+              (isFlutterTestEnvironment
+                  ? Duration.zero
+                  : const Duration(milliseconds: 520));
     if (!isTimeout && hold > Duration.zero) {
       await Future.delayed(hold);
     }
@@ -3297,7 +3724,14 @@ class _QuizScreenState extends State<QuizScreen>
         });
         _syncMyDuelState(answeredNow: true);
         _startOpponentWaitTimer();
-        unawaited(_reconcileOnlineRoom());
+        // Kalabalıkta herkesin cevap anında 3 sorgu atması N×3 yük demek;
+        // açıklama `room_players` akışı, seyrek yoklama ve sunucu süresi
+        // (`_startOpponentWaitTimer`) ile yakalanır.
+        if (_isCrowd) {
+          unawaited(_refreshCrowdProgress());
+        } else {
+          unawaited(_reconcileOnlineRoom());
+        }
         return;
       }
 
@@ -3616,14 +4050,13 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Future<void> _reportQuestion() async {
-    final controller = TextEditingController(
-      text: context.t(K.reportReasonDefault),
-    );
+    // Denetleyiciyi diyalogun kendi State'i yönetir (kapanış animasyonu
+    // sürerken dışarıdan atmak çöküş riskiydi).
     final reason = await showDialog<String>(
       context: context,
-      builder: (_) => _QuizReportDialog(controller: controller),
+      builder: (_) =>
+          _QuizReportDialog(initialText: context.t(K.reportReasonDefault)),
     );
-    controller.dispose();
     if (reason == null) return;
 
     try {

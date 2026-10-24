@@ -190,7 +190,7 @@ class SahneStageCard extends StatelessWidget {
     final t = SahneTokens.of(context);
     final race = role == SahneRole.race;
     final metaColor = race ? SahneStageColors.raceSoft : t.tx2;
-    final eyebrowColor = race ? SahneStageColors.raceSoft : t.roleText(role);
+    final eyebrowColor = t.eyebrowTx;
 
     Widget texts({required double gap}) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -433,6 +433,8 @@ class SahneSurfaceCard extends StatelessWidget {
     this.padding = const EdgeInsets.all(SahneSpace.x4),
     this.onTap,
     this.semanticLabel,
+    this.color,
+    this.edgeColor,
   });
 
   final Widget child;
@@ -440,23 +442,42 @@ class SahneSurfaceCard extends StatelessWidget {
   final VoidCallback? onTap;
   final String? semanticLabel;
 
+  /// Mod tonlu kart (2026-10-20 renk ve canlılık işi): Günün dersi Zimrût
+  /// tonu, düello satırı Boyax tonu. Verilmezse beyaz/Perde yüzey ve nötr
+  /// kenar. Zemin ve kenar çifti çağıranın işidir; içerik metni ton zemin
+  /// üstünde ≥ 4.5:1 kalmalıdır.
+  final Color? color;
+  final Color? edgeColor;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final card = SahneTappable(
-      shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
-      color: t.s1,
+      shape: SahneShape.withSide(SahneShape.l, edgeColor ?? t.edge, width: 1),
+      color: color ?? t.s1,
       onTap: onTap,
       child: SahneOnSurface(
         child: Padding(padding: padding, child: child),
       ),
     );
-    if (semanticLabel == null && onTap == null) return card;
+    // Kart ayrımı (kurul 2026-10-20, 3 model): beyaz kart açık gri zeminde
+    // düz duruyordu. Gündüz çok hafif, kısa bir gölge (yayılmayan, 6 pt);
+    // gece kenar zaten ayırır.
+    final raised = color == null && t.bg.computeLuminance() > 0.5
+        ? DecoratedBox(
+            decoration: ShapeDecoration(
+              shape: SahneShape.l,
+              shadows: [t.cardShadow],
+            ),
+            child: card,
+          )
+        : card;
+    if (semanticLabel == null && onTap == null) return raised;
     return Semantics(
       container: true,
       button: onTap != null,
       label: semanticLabel,
-      child: card,
+      child: raised,
     );
   }
 }

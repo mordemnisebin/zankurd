@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import '../../l10n/strings.dart';
 import '../../l10n/lang.dart';
 import '../../models/quiz_question.dart';
+import '../../utils/free_text_answer_matcher.dart';
+import '../../theme/app_icons.dart';
 import '../../widgets/sahne/sahne.dart';
 
 /// Etkileşimli Cümle Kurma (Word Ordering / Rêzkirina Hevokan) bileşeni.
@@ -88,6 +90,13 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
     if (tokens.length > 1 && _isOriginalOrder(tokens)) {
       tokens.insert(0, tokens.removeLast());
     }
+    // Geri alınan kelimenin dönüş yeri = havuzdaki İLK görünür konumu.
+    // `shuffleRank` eskiden nesne yaratılırken (karıştırmadan ÖNCE, cevap
+    // sırasıyla) atanıyordu; geri alınan kelime bu yüzden özgün yerine değil
+    // cevap sırasına göre başka bir yere, çoğu kez sona düşüyordu.
+    for (final (position, token) in tokens.indexed) {
+      token.shuffleRank = position;
+    }
     _availableWords = tokens;
   }
 
@@ -138,15 +147,45 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
 
     // Cevap verildikten sonra kullanıcının gönderdiği cümle gösterilir;
     // yeniden düzenlemeye çalışmasın diye havuz ve buton kaldırılır.
-    final submitted = answered ? widget.selectedAnswer : null;
+    //
+    // Süre dolunca `selectedAnswer` bir cümle değil 'TIMEOUT' işaretçisidir;
+    // ham haliyle kutuya yazılıyordu. Oyuncunun süre dolmadan kurduğu parça
+    // cümle varsa o gösterilir, yoksa yerelleştirilmiş "süre doldu" durumu.
+    final timedOut = answered && widget.selectedAnswer == 'TIMEOUT';
+    final submitted = !answered
+        ? null
+        : timedOut
+        ? _selectedWords.map((w) => w.word).join(' ')
+        : widget.selectedAnswer;
     if (!answered) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _measurePool());
     }
+
+    // Kontrol sonrası oyuncunun kutusu kendi hükmünü taşır: doğruysa Rast
+    // tonu + ✓, yanlışsa Hata tonu + ✕ (çoktan seçmelideki yanlış şıkla aynı
+    // dil). Bunsuz kutu nötr kalıyor, yalnız alttaki yeşil "doğru cevap" notu
+    // görünüyordu ve oyuncu yanlış kurduğunu anlamıyordu (2026-10-21 simülatör).
+    // Süre dolması bir cevap sayılmaz; kutu nötr kalır.
+    final bool? verdict = answered && !timedOut && submitted != null
+        ? widget.question.matchAnswer(submitted) == FreeTextMatch.exact
+        : null;
+
+    // İpucu (ör. «"ez" sözcüğüyle başla.») bankada 126 soruda vardı ama hiçbir
+    // ekran göstermiyordu; cevap verilince anlamsız olduğundan yalnız öncesinde.
+    final hint = answered ? null : widget.question.hintFor(isKu: isKu);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (hint != null) ...[
+          Text(
+            hint,
+            key: const ValueKey('word-ordering-hint'),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x2),
+        ],
         // ============ SEÇİLEN KELİMELERİN CÜMLE ALANI ============
         // 88: tek satır çip (50) + dolgu (32) = 82; eskiden 80'di ve ilk
         // kelime seçilince alan 2 dp uzayıp düğmeyi kaydırıyordu.
@@ -154,13 +193,48 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
           constraints: const BoxConstraints(minHeight: 88),
           padding: const EdgeInsets.all(SahneSpace.x4),
           decoration: ShapeDecoration(
-            color: t.s1,
-            shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
+            color: switch (verdict) {
+              true => t.okTint,
+              false => t.errTint,
+              null => t.s1,
+            },
+            shape: switch (verdict) {
+              true => SahneShape.withSide(SahneShape.l, t.okTx, width: 2),
+              false => SahneShape.withSide(SahneShape.l, t.errTx, width: 2),
+              null => SahneShape.withSide(SahneShape.l, t.edge, width: 1),
+            },
           ),
-          child: submitted != null
+          child: timedOut && submitted!.isEmpty
               ? Text(
-                  submitted,
-                  style: SahneType.bodyStrong.copyWith(color: t.tx),
+                  Tr.forKu(K.sureDoldu, isKu),
+                  style: SahneType.bodyStrong.copyWith(color: t.tx2),
+                )
+              : submitted != null
+              ? Row(
+                  key: ValueKey(
+                    verdict == null
+                        ? 'word-ordering-submitted'
+                        : verdict
+                        ? 'word-ordering-correct'
+                        : 'word-ordering-wrong',
+                  ),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (verdict != null) ...[
+                      Icon(
+                        verdict ? AppIcons.check : AppIcons.xmark,
+                        color: verdict ? t.okTx : t.errTx,
+                        size: 24,
+                      ),
+                      const SizedBox(width: SahneSpace.x3),
+                    ],
+                    Expanded(
+                      child: Text(
+                        submitted,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
+                      ),
+                    ),
+                  ],
                 )
               : _selectedWords.isEmpty
               ? Center(
@@ -236,16 +310,14 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
 /// Havuzdaki tek bir kelime. Aynı kelime cümlede birden çok kez geçebildiği
 /// için kimlik dizinden değil bu nesneden gelir.
 class _Token {
-  _Token(this.index, this.word) : shuffleRank = _nextRank++;
-
-  static int _nextRank = 0;
+  _Token(this.index, this.word);
 
   /// Doğru cümledeki özgün sıra (yalnızca karıştırma kontrolü için).
   final int index;
   final String word;
 
   /// Havuzdaki karışık konumunu koruyan sıra numarası.
-  final int shuffleRank;
+  int shuffleRank = 0;
 }
 
 class _WordChip extends StatelessWidget {

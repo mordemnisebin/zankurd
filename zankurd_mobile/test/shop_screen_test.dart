@@ -1,3 +1,7 @@
+// Tasarım kurulu tüm ekranlar 2026-10-20: mağaza kartı = ikon, ad, açıklama,
+// fiyat düğmesi; VIP aynı çerçeve; yetmeyen ürün ortak pasif düğme.
+// 2026-10-19 sadeleşme: "sakin yüzey" bekçisi yuvarlak köşeli yüzey
+// kartını (`OutlinedBorder`) kabul eder; eskiden pahlı şekle cast ediyordu.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-09-29 doğallık (G3): fiyat etiketi "120j" değil "120" (birimi jeton
 // glifi söyler, K10); ürün adları cümle düzeninde ("Neon çerçeve"). Bu
@@ -7,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/durable_write.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/avatar_identity.dart';
@@ -15,6 +20,7 @@ import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 
@@ -74,6 +80,17 @@ class _FailingEffectShopRepository extends _ShopRepository {
     if (failEffect) throw StateError('avatar identity persist failed');
     identity = next;
   }
+}
+
+class _OfflineSpendShopRepository extends _ShopRepository {
+  _OfflineSpendShopRepository() : super(coins: 1000);
+
+  @override
+  Future<DurableCoinSpend> spendCoinsDurable(
+    int amount,
+    String reason,
+    String idempotencyKey,
+  ) async => throw const RetryableWriteException('network down');
 }
 
 class _SpinWheelShopRepository extends _ShopRepository {
@@ -165,10 +182,13 @@ void main() {
   testWidgets(
     'neon çerçeve satın alınca depoya yazılan kimlikte frameId "neon" olur',
     (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 1400));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
       final repository = _ShopRepository(coins: 1000);
       await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
       await tester.pumpAndSettle();
 
+      await tester.ensureVisible(find.text('Neon çerçeve'));
       await tester.tap(find.text('Neon çerçeve'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Satın al'));
@@ -181,10 +201,13 @@ void main() {
   testWidgets(
     'kozmetik alındıktan sonra kuşanma kaydı bozulursa tekrar coin harcanmaz',
     (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 1400));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
       final repository = _FailingEffectShopRepository();
       await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
       await tester.pumpAndSettle();
 
+      await tester.ensureVisible(find.text('Neon çerçeve'));
       await tester.tap(find.text('Neon çerçeve'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Satın al'));
@@ -211,6 +234,66 @@ void main() {
       expect(find.text('Tebrikler!'), findsOneWidget);
     },
   );
+
+  // Bekçi (2026-10-15): bağlantı koptuğunda satın alma kuyruğa alınıyor
+  // (`queueCoinSpend`), ama çerçeve/VIP etkisi yalnız anlık yoldan uygulanıyordu;
+  // kuyruk boşalınca oyuncu parasını verip çerçevesini hiç göremiyordu. Testler
+  // hep anlık başarıyı denediği için sessizdi. Şimdi kuyruğa alınan ürün
+  // işaretlenir ve sunucu satın almayı onaylayınca mağaza açılışında uygulanır;
+  // işaretsiz ürün (oyuncunun sonradan seçtiği çerçeve) ezilmez.
+  testWidgets(
+    'kuyruktan sonra onaylanan satın almanın etkisi açılışta uygulanır',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 1400));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      SharedPreferences.setMockInitialValues({
+        'shop_pending_purchase_effects': ['avatar_frame_neon'],
+      });
+      final repository = _FailingEffectShopRepository()
+        ..failEffect = false
+        ..purchased.addAll({'avatar_frame_neon', 'avatar_frame_gold'});
+      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+      await tester.pumpAndSettle();
+
+      expect(repository.identity.frameId, 'neon');
+      expect(repository.effectWriteCalls, 1);
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getStringList('shop_pending_purchase_effects'), isEmpty);
+    },
+  );
+
+  testWidgets('kuyruğa alınan çerçeve satın alması etkisi için işaretlenir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _OfflineSpendShopRepository();
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Neon çerçeve'));
+    await tester.tap(find.text('Neon çerçeve'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Satın al'));
+    await tester.pumpAndSettle();
+
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getStringList('shop_pending_purchase_effects'), [
+      'avatar_frame_neon',
+    ]);
+  });
+
+  testWidgets('işaretsiz satın alınmış ürün açılışta kimliği ezmez', (
+    tester,
+  ) async {
+    final repository = _FailingEffectShopRepository()
+      ..failEffect = false
+      ..purchased.addAll({'avatar_frame_neon', 'avatar_frame_gold'});
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(repository.effectWriteCalls, 0);
+  });
 
   // 2026-07-31: katalog 13 ürün tanımlıyordu ama yalnız 3'ü yayınlanıyordu;
   // kalan 10'u ölü veriydi ve `_supportedItemIds`e yanlışlıkla eklenirlerse
@@ -251,7 +334,7 @@ void main() {
       final t = SahneTokens.of(tester.element(card));
       expect(material.color, t.s1);
       expect(material.elevation, 0);
-      final shape = material.shape! as BeveledRectangleBorder;
+      final shape = material.shape! as OutlinedBorder;
       expect(shape.side.color, t.edge);
       expect(
         find
@@ -277,47 +360,103 @@ void main() {
     );
   });
 
-  testWidgets('mağazada yalnız hero satın alma eylemi primary CTA olur', (
-    tester,
-  ) async {
+  // Kurul 2. tur 2026-10-20: alınabilir fiyat = turuncu çerçeveli açık düğme
+  // (hero dahil); pasif düğme gri dolgu + kilit. İkisi bir bakışta ayrılır;
+  // eskiden alınabilir olan da gri dolguydu ve pasif görünüyordu.
+  testWidgets(
+    'alınabilir fiyat turuncu çerçeveli, yetmeyen gri dolgulu ve kilitli',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      final repository = _ShopRepository(coins: 500);
+
+      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+      await tester.pumpAndSettle();
+
+      final t = SahneTokens.of(tester.element(find.byType(ShopScreen)));
+      final affordable = find.byKey(
+        const ValueKey('shop-buy-spin_wheel_extra'),
+      );
+      expect(affordable, findsOneWidget);
+      // Kurul 4. tur 2026-10-20: alınabilir fiyat DOLU turuncu birincil
+      // düğme; kilitli fiyat kutusuz düz metin (gri kutu düğme gibi okunuyor,
+      // alınabilen ürün ondan zayıf kalıyordu).
+      final filled = tester.widget<FilledButton>(
+        find.descendant(of: affordable, matching: find.byType(FilledButton)),
+      );
+      expect(filled.onPressed, isNotNull);
+      expect(t.act.computeLuminance(), greaterThan(0.2));
+
+      final short = find.byKey(const ValueKey('shop-short-profile_badge_vip'));
+      expect(short, findsOneWidget);
+      expect(
+        find.descendant(of: short, matching: find.byIcon(AppIcons.lock)),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(of: short, matching: find.byType(OutlinedButton)),
+        findsNothing,
+      );
+      expect(
+        find.descendant(of: short, matching: find.byType(FilledButton)),
+        findsNothing,
+        reason: 'kilitli fiyat kutu/düğme değil düz metin',
+      );
+      // Tur 9b: eksik söz sağ sütundan sol metin sütununa (açıklamanın altına)
+      // taşındı; sağ sütunda yalnız kilitli fiyat kalır.
+      expect(
+        find.descendant(
+          of: short,
+          matching: find.textContaining('jeton eksik'),
+        ),
+        findsNothing,
+      );
+      final note = tester.widget<Text>(
+        find.byKey(const ValueKey('shop-short-note-profile_badge_vip')),
+      );
+      expect(note.style?.color, t.goldTx, reason: 'eksik söz sıcak ton');
+    },
+  );
+
+  testWidgets('VIP kartı yatay ve kompakt (eskiden ~490 mp)', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
-    final repository = _ShopRepository(coins: 1000);
-
-    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: _ShopRepository(coins: 1000))),
+    );
     await tester.pumpAndSettle();
-
-    final heroButtonFinder = find.ancestor(
-      of: find.text('720'),
-      matching: find.byType(FilledButton),
+    final hero = tester.getSize(
+      find.byKey(const ValueKey('shop-hero-surface')),
     );
-    final gridButtonFinder = find.ancestor(
-      of: find.text('120'),
-      matching: find.byType(FilledButton),
-    );
-    expect(heroButtonFinder, findsOneWidget);
-    expect(gridButtonFinder, findsOneWidget);
+    // Tur 6: Kurmancî olmayan Türkçe açıklama dar sütunda 3 satıra iner;
+    // kart yine kompakt (eskiden ~490 mp).
+    expect(hero.height, lessThanOrEqualTo(230));
+  });
 
-    final heroPrimary = AppTheme.primaryCtaColor(
-      tester.element(heroButtonFinder),
+  // Tur 6: tüm ürünler aynı tam genişlik yatay satır (bkz.
+  // tur6a_magaza_esit_kart_bekcisi_test).
+  testWidgets('tüm ürün kartları tam genişlik ve alt alta dizilir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: _ShopRepository(coins: 300))),
     );
-    final gridPrimary = AppTheme.primaryCtaColor(
-      tester.element(gridButtonFinder),
+    await tester.pumpAndSettle();
+    final first = tester.getRect(
+      find.byKey(const ValueKey('shop-item-surface-spin_wheel_extra')),
     );
-
-    // 2026-09-29 Şahnê: birincil düğme dolgusunu temadan alır (düğmenin
-    // kendi `style`ında değil); ölçülen, çizilen ETKİN dolgudur.
-    Color? fill(Finder button) => tester
-        .widget<Material>(
-          find.descendant(of: button, matching: find.byType(Material)).first,
-        )
-        .color;
-
-    expect(fill(heroButtonFinder), heroPrimary);
-    expect(fill(gridButtonFinder), isNot(gridPrimary));
+    final last = tester.getRect(
+      find.byKey(const ValueKey('shop-item-surface-avatar_frame_neon')),
+    );
+    expect(last.width, first.width);
+    expect(last.top, greaterThan(first.bottom - 1));
   });
 
   testWidgets('mağaza bakiyeyi ve ürünleri listeler', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
     final repository = _ShopRepository(coins: 500);
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
@@ -445,39 +584,86 @@ void main() {
     expect(find.text('30 jeton'), findsOneWidget);
   });
 
-  testWidgets('dar kart açıklamayı gizler, ürüne dokununca ayrıntıyı açar', (
+  testWidgets(
+    'kart açıklamayı göstermez, ürüne dokununca onay penceresi açıklamayı gösterir',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      final repository = _ShopRepository(coins: 500);
+      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+      await tester.pumpAndSettle();
+
+      const description = 'Bugün çarkı tekrar çevirmek için ekstra hak verir.';
+      // AZ SÖZ 2026-10-20: kart yalnız ikon, ad ve fiyat/eylem taşır;
+      // açıklama yalnız onay penceresinde okunur.
+      expect(find.text(description), findsNothing);
+      await tester.ensureVisible(find.text('Ekstra çevirme'));
+      await tester.tap(find.text('Ekstra çevirme'));
+      await tester.pumpAndSettle();
+      expect(find.text(description), findsOneWidget);
+      expect(find.text('Satın al'), findsOneWidget);
+    },
+  );
+
+  // Tur 10b kusuru: metin sütunu fiyat/eylem sütunuyla genişliği paylaşıyordu;
+  // ad 2, açıklama 3-4 satıra kırılıyordu. Sessiz kaldı çünkü hiçbir şey
+  // taşmıyor, yalnız kart uzuyordu. Bekçi: metin kartın tam genişliğini alır
+  // ve fiyat/eylem satırı metnin ALTINDA, sağa yaslı durur.
+  testWidgets('mağaza kartı: metin tam genişlik, eylem altta sağa yaslı', (
     tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _ShopRepository(coins: 300);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    final card = find.byKey(
+      const ValueKey('shop-item-surface-spin_wheel_extra'),
+    );
+    final title = find.descendant(
+      of: card,
+      matching: find.text('Ekstra çevirme'),
+    );
+    final buy = find.byKey(const ValueKey('shop-buy-spin_wheel_extra'));
+    final cardRect = tester.getRect(card);
+    // Ad tek satır (açıklama satırı AZ SÖZ turunda kaldırıldı).
+    expect(tester.getSize(title).height, lessThan(26));
+    // Eylem metnin altında ve sağa yaslı, standart düğme boyu (dokunma hedefi kuralı 40 altına inmeye izin vermez).
+    expect(
+      tester.getRect(buy).top,
+      greaterThanOrEqualTo(tester.getRect(title).bottom),
+    );
+    expect(tester.getRect(buy).right, greaterThan(cardRect.right - 20));
+    expect(tester.getSize(buy).height, inInclusiveRange(44, 52));
+    // Kilitli üründe eksik notu eylem satırında, kilitli fiyatın solunda.
+    final note = find.byKey(
+      const ValueKey('shop-short-note-profile_badge_vip'),
+    );
+    final locked = find.byKey(const ValueKey('shop-short-profile_badge_vip'));
+    expect(
+      tester.getRect(note).right,
+      lessThanOrEqualTo(tester.getRect(locked).left),
+    );
+    expect(tester.getRect(locked).right, greaterThan(cardRect.right - 40));
+  });
+
+  testWidgets('satın alma eylemleri düz ve gölgesizdir', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     final repository = _ShopRepository(coins: 500);
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    const description = 'Bugün çarkı tekrar çevirmek için ekstra hak verir.';
-    expect(find.text(description), findsNothing);
-    await tester.ensureVisible(find.text('Ekstra çevirme'));
-    await tester.tap(find.text('Ekstra çevirme'));
-    await tester.pumpAndSettle();
-    expect(find.text(description), findsOneWidget);
-    expect(find.text('Satın al'), findsOneWidget);
-  });
-
-  testWidgets('satın alma eylemleri düz ve gölgesizdir', (tester) async {
-    final repository = _ShopRepository(coins: 500);
-    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
-    await tester.pumpAndSettle();
-
-    await tester.ensureVisible(find.text('120'));
+    await tester.ensureVisible(find.text('Satın al · 120'));
     await tester.pumpAndSettle();
     final button = tester.widget<FilledButton>(
-      find.ancestor(of: find.text('120'), matching: find.byType(FilledButton)),
+      find.ancestor(
+        of: find.text('Satın al · 120'),
+        matching: find.byType(FilledButton),
+      ),
     );
-    expect(button.style?.elevation?.resolve(<WidgetState>{}), 0);
-    expect(
-      button.style?.shadowColor?.resolve(<WidgetState>{}),
-      Colors.transparent,
-    );
+    expect(button.style?.elevation?.resolve(<WidgetState>{}) ?? 0, 0);
   });
 
   testWidgets('bakiye yetersizse uyarı çıkar ve coin harcanmaz', (
@@ -509,9 +695,9 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120'));
+    await tester.ensureVisible(find.text('Satın al · 120'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120'));
+    await tester.tap(find.text('Satın al · 120'));
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın al"
     await tester.tap(find.text('Satın al'));
@@ -551,7 +737,7 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.text('120'), findsOneWidget);
+    expect(find.text('Satın al · 120'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -562,9 +748,9 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120'));
+    await tester.ensureVisible(find.text('Satın al · 120'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120'));
+    await tester.tap(find.text('Satın al · 120'));
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın al"
     await tester.tap(find.text('Satın al'));
@@ -619,6 +805,8 @@ void main() {
   // Şerit kaldırıldı; karşılamayı kimlik kartının alt başlığı taşır.
   // Maskot onboarding, liderlik ve boş durumlarda görünmeye devam eder.
   testWidgets('mağaza başlığı tek karşılama gösterir', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
     final repository = _ShopRepository(coins: 500);
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();

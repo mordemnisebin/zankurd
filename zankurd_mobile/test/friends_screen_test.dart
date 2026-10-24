@@ -1,3 +1,4 @@
+// Kurul 5. tur 2026-10-20: "+N seviye daha" kilidi ikincil renk; reddet ✗ görünür kenar + birincil renk.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -6,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/models/add_friend_outcome.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -111,6 +113,19 @@ class _SearchFailsRepository extends MockZanKurdRepository {
   }
 }
 
+/// `addFriend` verilen sonucu döner (C3: sonuç ayrıştırılır).
+class _OutcomeRepository extends _TestFriendsRepository {
+  _OutcomeRepository(this.outcome);
+
+  final AddFriendOutcome outcome;
+
+  @override
+  Future<AddFriendOutcome> addFriend(
+    String friendId,
+    String friendName,
+  ) async => outcome;
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -185,9 +200,11 @@ void main() {
         find.byKey(const ValueKey('friend-action-KurdBot')),
         findsOneWidget,
       );
-      // Düğmenin sözü ile işi aynı olmalı: oyun başlatmıyor, oda kurup
-      // kodu paylaştırıyor.
-      expect(find.text('Odaya çağır'), findsNWidgets(2));
+      // Düğmenin sözü ile işi aynı olmalı: oyun başlatmıyor. Birincil eylem
+      // sırayla meydan okuma (2026-10-14, bkz. friends_challenge_primary_
+      // test.dart); satırda simge düğmesi (7. kurul), canlı oda daveti "⋯"
+      // menüsünde.
+      expect(find.byIcon(AppIcons.swords), findsNWidgets(2));
       expect(find.text('Oyna'), findsNothing);
     });
 
@@ -275,6 +292,36 @@ void main() {
       expect(find.byIcon(AppIcons.circleCheck), findsOneWidget);
       expect(find.text('İstek gönderildi'), findsOneWidget);
     });
+
+    for (final (outcome, text) in [
+      (AddFriendOutcome.alreadyFriends, 'Zaten arkadaşsınız'),
+      (AddFriendOutcome.alreadyPending, 'İstek zaten gönderilmiş'),
+      (AddFriendOutcome.blocked, 'Bu oyuncuya istek gönderilemez'),
+      (
+        AddFriendOutcome.rateLimited,
+        'Çok fazla istek gönderildi. Biraz bekleyip tekrar dene.',
+      ),
+      (AddFriendOutcome.autoAccepted, 'Arkadaş eklendi'),
+      (AddFriendOutcome.failed, 'İstek gönderilemedi'),
+    ]) {
+      testWidgets('ekleme sonucu $outcome doğru cümleyi gösterir', (
+        tester,
+      ) async {
+        repository = _OutcomeRepository(outcome);
+        await tester.pumpWidget(createTestWidget());
+        await tester.pumpAndSettle();
+
+        await tester.enterText(find.byType(TextField), 'roj');
+        await tester.tap(find.text('Ara'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Ekle').first);
+        await tester.pumpAndSettle();
+
+        expect(find.text(text), findsOneWidget);
+        // Başarısız/ret sonuçlarında "istek gönderildi" asla yazmaz.
+        expect(find.text('İstek gönderildi'), findsNothing);
+      });
+    }
 
     testWidgets('istek reddetme akisi calisir', (tester) async {
       await tester.pumpWidget(createTestWidget());

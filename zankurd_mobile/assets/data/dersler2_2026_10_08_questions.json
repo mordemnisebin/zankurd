@@ -1074,22 +1074,18 @@
     "prompt": "Hevokê temam bike: \"___ min diêşe.\" (\"Bacağım, ayağım ağrıyor.\")",
     "promptTr": "Cümleyi tamamla: \"___ min diêşe.\" (\"Bacağım, ayağım ağrıyor.\")",
     "answers": [
-      "Lingê"
+      "Linga"
     ],
     "answersTr": [
-      "Lingê"
+      "Linga"
     ],
-    "correctAnswer": "Lingê",
-    "correctAnswerTr": "Lingê",
-    "acceptedAnswers": [
-      "Linge"
-    ],
-    "acceptedAnswersTr": [
-      "Linge"
-    ],
-    "explanation": "Doğru cümle: \"Lingê min diêşe.\" (Bacağım, ayağım ağrıyor.)",
-    "explanationKu": "Hevoka rast ev e: \"Lingê min diêşe.\"",
-    "explanationTr": "Doğru cümle: \"Lingê min diêşe.\" (Bacağım, ayağım ağrıyor.)",
+    "correctAnswer": "Linga",
+    "correctAnswerTr": "Linga",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Linga min diêşe.\" (Bacağım, ayağım ağrıyor.)",
+    "explanationKu": "Hevoka rast ev e: \"Linga min diêşe.\"",
+    "explanationTr": "Doğru cümle: \"Linga min diêşe.\" (Bacağım, ayağım ağrıyor.)",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: body_1",
@@ -1314,7 +1310,7 @@
     "correctAnswer": "kiras",
     "correctAnswerTr": "kiras",
     "explanation": "kiras gömlek demektir.",
-    "explanationKu": "kiras tê wateya gömlekê.",
+    "explanationKu": "\"Kiras\" tê wateya \"gömlek\".",
     "explanationTr": "kiras gömlek demektir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -1350,7 +1346,7 @@
     "correctAnswer": "pêlav",
     "correctAnswerTr": "pêlav",
     "explanation": "pêlav ayakkabı demektir.",
-    "explanationKu": "pêlav tê wateya ayakkabiyê.",
+    "explanationKu": "\"Pêlav\" tê wateya \"ayakkabı\".",
     "explanationTr": "pêlav ayakkabı demektir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -1386,7 +1382,7 @@
     "correctAnswer": "gore",
     "correctAnswerTr": "gore",
     "explanation": "gore çorap demektir.",
-    "explanationKu": "gore tê wateya çorapê.",
+    "explanationKu": "\"Gore\" tê wateya \"çorap\".",
     "explanationTr": "gore çorap demektir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -1422,7 +1418,7 @@
     "correctAnswer": "dawên",
     "correctAnswerTr": "dawên",
     "explanation": "dawên etek demektir.",
-    "explanationKu": "dawên tê wateya etekê.",
+    "explanationKu": "\"Dawên\" tê wateya \"etek\".",
     "explanationTr": "dawên etek demektir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -1458,7 +1454,7 @@
     "correctAnswer": "berçavk",
     "correctAnswerTr": "berçavk",
     "explanation": "berçavk gözlük demektir.",
-    "explanationKu": "berçavk tê wateya gözlükê.",
+    "explanationKu": "\"Berçavk\" tê wateya \"gözlük\".",
     "explanationTr": "berçavk gözlük demektir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -1757,8 +1753,8 @@
     "category": "Ziman",
     "type": "fillInBlank",
     "difficulty": 1,
-    "prompt": "Hevokê temam bike: \"Ev ___ e, ez li serê xwe dikim.\" (\"Bu bir şapkadır, başıma takıyorum.\")",
-    "promptTr": "Cümleyi tamamla: \"Ev ___ e, ez li serê xwe dikim.\" (\"Bu bir şapkadır, başıma takıyorum.\")",
+    "prompt": "Hevokê temam bike: \"Ev ___ ye, ez li serê xwe dikim.\" (\"Bu bir şapkadır, başıma takıyorum.\")",
+    "promptTr": "Cümleyi tamamla: \"Ev ___ ye, ez li serê xwe dikim.\" (\"Bu bir şapkadır, başıma takıyorum.\")",
     "answers": [
       "şapke"
     ],
@@ -1769,9 +1765,9 @@
     "correctAnswerTr": "şapke",
     "acceptedAnswers": [],
     "acceptedAnswersTr": [],
-    "explanation": "Doğru cümle: \"Ev şapke e, ez li serê xwe dikim.\" (Bu bir şapkadır, başıma takıyorum.)",
-    "explanationKu": "Hevoka rast ev e: \"Ev şapke e, ez li serê xwe dikim.\"",
-    "explanationTr": "Doğru cümle: \"Ev şapke e, ez li serê xwe dikim.\" (Bu bir şapkadır, başıma takıyorum.)",
+    "explanation": "Doğru cümle: \"Ev şapke ye, ez li serê xwe dikim.\" (Bu bir şapkadır, başıma takıyorum.)",
+    "explanationKu": "Hevoka rast ev e: \"Ev şapke ye, ez li serê xwe dikim.\"",
+    "explanationTr": "Doğru cümle: \"Ev şapke ye, ez li serê xwe dikim.\" (Bu bir şapkadır, başıma takıyorum.)",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
@@ -2198,19 +2194,19 @@
     "prompt": "Cil û kinc li ku derê ne?",
     "promptTr": "Giysiler nerededir?",
     "answers": [
-      "mase",
-      "kursî",
-      "nivîn",
-      "dolab"
+      "li ser maseyê",
+      "li ser kursiyê",
+      "li ser nivînê",
+      "di dolabê de"
     ],
     "answersTr": [
-      "masa",
-      "sandalye",
-      "yatak",
-      "dolap"
+      "masanın üstünde",
+      "sandalyenin üstünde",
+      "yatağın üstünde",
+      "dolapta"
     ],
-    "correctAnswer": "dolab",
-    "correctAnswerTr": "dolap",
+    "correctAnswer": "di dolabê de",
+    "correctAnswerTr": "dolapta",
     "explanation": "Dolab giysiler içindir. Giysiler dolaptadır.",
     "explanationKu": "Dolab ji bo cilan e. Cil di dolabê de ne.",
     "explanationTr": "Dolab giysiler içindir. Giysiler dolaptadır.",
@@ -3085,7 +3081,10 @@
       "lastContentCheckAt": "2026-10-08",
       "qualityVersion": 2,
       "learningLessonId": "weather_1"
-    }
+    },
+    "acceptedAnswers": [
+      "îro hewa xweş e"
+    ]
   },
   {
     "id": "dersler2_2026_10_08_0092",
@@ -3318,7 +3317,7 @@
     "category": "Ziman",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Tu dixwazî sedemî bizanibî. Kîjan pirs rast e?",
+    "prompt": "Tu dixwazî sedemê bizanibî. Kîjan pirs rast e?",
     "promptTr": "Sebebini öğrenmek istiyorsun. Hangi soru doğrudur?",
     "answers": [
       "Tu li ku yî?",
@@ -3481,206 +3480,6 @@
     "explanation": "Tanınmayan kişi kî ile sorulur. Kî sadece insanlar içindir.",
     "explanationKu": "Mirovên nenas bi kî tê pirsîn. Kî tenê ji bo mirovan e.",
     "explanationTr": "Tanınmayan kişi kî ile sorulur. Kî sadece insanlar içindir.",
-    "metadata": {
-      "dialect": "Kurmancî",
-      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
-      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
-      "reviewStatus": "approved",
-      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
-      "reviewedAt": "2026-10-08",
-      "lastContentCheckAt": "2026-10-08",
-      "qualityVersion": 2,
-      "learningLessonId": "questions_1"
-    }
-  },
-  {
-    "id": "dersler2_2026_10_08_0104",
-    "category": "Ziman",
-    "type": "fillInBlank",
-    "difficulty": 1,
-    "prompt": "Hevokê temam bike: \"Tu ___ yî? (Ez Azad im.)\" (\"Sen ___sin? (Ben Azad'ım.)\")",
-    "promptTr": "Cümleyi tamamla: \"Tu ___ yî? (Ez Azad im.)\" (\"Sen ___sin? (Ben Azad'ım.)\")",
-    "answers": [
-      "kî"
-    ],
-    "answersTr": [
-      "kî"
-    ],
-    "correctAnswer": "kî",
-    "correctAnswerTr": "kî",
-    "acceptedAnswers": [
-      "ki"
-    ],
-    "acceptedAnswersTr": [
-      "ki"
-    ],
-    "explanation": "Doğru cümle: \"Tu kî yî? (Ez Azad im.)\" (Sen ___sin? (Ben Azad'ım.))",
-    "explanationKu": "Hevoka rast ev e: \"Tu kî yî? (Ez Azad im.)\"",
-    "explanationTr": "Doğru cümle: \"Tu kî yî? (Ez Azad im.)\" (Sen ___sin? (Ben Azad'ım.))",
-    "metadata": {
-      "dialect": "Kurmancî",
-      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
-      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
-      "reviewStatus": "approved",
-      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
-      "reviewedAt": "2026-10-08",
-      "lastContentCheckAt": "2026-10-08",
-      "qualityVersion": 2,
-      "learningLessonId": "questions_1"
-    }
-  },
-  {
-    "id": "dersler2_2026_10_08_0105",
-    "category": "Ziman",
-    "type": "fillInBlank",
-    "difficulty": 1,
-    "prompt": "Hevokê temam bike: \"Ev ___ ye? (Ev pirtûk e.)\" (\"Bu ___dir? (Bu kitaptır.)\")",
-    "promptTr": "Cümleyi tamamla: \"Ev ___ ye? (Ev pirtûk e.)\" (\"Bu ___dir? (Bu kitaptır.)\")",
-    "answers": [
-      "çi"
-    ],
-    "answersTr": [
-      "çi"
-    ],
-    "correctAnswer": "çi",
-    "correctAnswerTr": "çi",
-    "acceptedAnswers": [],
-    "acceptedAnswersTr": [],
-    "explanation": "Doğru cümle: \"Ev çi ye? (Ev pirtûk e.)\" (Bu ___dir? (Bu kitaptır.))",
-    "explanationKu": "Hevoka rast ev e: \"Ev çi ye? (Ev pirtûk e.)\"",
-    "explanationTr": "Doğru cümle: \"Ev çi ye? (Ev pirtûk e.)\" (Bu ___dir? (Bu kitaptır.))",
-    "metadata": {
-      "dialect": "Kurmancî",
-      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
-      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
-      "reviewStatus": "approved",
-      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
-      "reviewedAt": "2026-10-08",
-      "lastContentCheckAt": "2026-10-08",
-      "qualityVersion": 2,
-      "learningLessonId": "questions_1"
-    }
-  },
-  {
-    "id": "dersler2_2026_10_08_0106",
-    "category": "Ziman",
-    "type": "fillInBlank",
-    "difficulty": 1,
-    "prompt": "Hevokê temam bike: \"Tu li ___ yî? (Ez li malê me.)\" (\"Sen ___sin? (Ben evdeyim.)\")",
-    "promptTr": "Cümleyi tamamla: \"Tu li ___ yî? (Ez li malê me.)\" (\"Sen ___sin? (Ben evdeyim.)\")",
-    "answers": [
-      "ku"
-    ],
-    "answersTr": [
-      "ku"
-    ],
-    "correctAnswer": "ku",
-    "correctAnswerTr": "ku",
-    "acceptedAnswers": [],
-    "acceptedAnswersTr": [],
-    "explanation": "Doğru cümle: \"Tu li ku yî? (Ez li malê me.)\" (Sen ___sin? (Ben evdeyim.))",
-    "explanationKu": "Hevoka rast ev e: \"Tu li ku yî? (Ez li malê me.)\"",
-    "explanationTr": "Doğru cümle: \"Tu li ku yî? (Ez li malê me.)\" (Sen ___sin? (Ben evdeyim.))",
-    "metadata": {
-      "dialect": "Kurmancî",
-      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
-      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
-      "reviewStatus": "approved",
-      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
-      "reviewedAt": "2026-10-08",
-      "lastContentCheckAt": "2026-10-08",
-      "qualityVersion": 2,
-      "learningLessonId": "questions_1"
-    }
-  },
-  {
-    "id": "dersler2_2026_10_08_0107",
-    "category": "Ziman",
-    "type": "fillInBlank",
-    "difficulty": 1,
-    "prompt": "Hevokê temam bike: \"Tu ___ têyî? (Ez sibê têm.)\" (\"Sen ___ geliyorsun? (Ben yarın geliyorum.)\")",
-    "promptTr": "Cümleyi tamamla: \"Tu ___ têyî? (Ez sibê têm.)\" (\"Sen ___ geliyorsun? (Ben yarın geliyorum.)\")",
-    "answers": [
-      "kengî"
-    ],
-    "answersTr": [
-      "kengî"
-    ],
-    "correctAnswer": "kengî",
-    "correctAnswerTr": "kengî",
-    "acceptedAnswers": [
-      "kengi"
-    ],
-    "acceptedAnswersTr": [
-      "kengi"
-    ],
-    "explanation": "Doğru cümle: \"Tu kengî têyî? (Ez sibê têm.)\" (Sen ___ geliyorsun? (Ben yarın geliyorum.))",
-    "explanationKu": "Hevoka rast ev e: \"Tu kengî têyî? (Ez sibê têm.)\"",
-    "explanationTr": "Doğru cümle: \"Tu kengî têyî? (Ez sibê têm.)\" (Sen ___ geliyorsun? (Ben yarın geliyorum.))",
-    "metadata": {
-      "dialect": "Kurmancî",
-      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
-      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
-      "reviewStatus": "approved",
-      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
-      "reviewedAt": "2026-10-08",
-      "lastContentCheckAt": "2026-10-08",
-      "qualityVersion": 2,
-      "learningLessonId": "questions_1"
-    }
-  },
-  {
-    "id": "dersler2_2026_10_08_0108",
-    "category": "Ziman",
-    "type": "fillInBlank",
-    "difficulty": 1,
-    "prompt": "Hevokê temam bike: \"Tu ___ salî yî? (Ez pênc salî me.)\" (\"Sen ___ yaşındasın? (Ben beş yaşındayım.)\")",
-    "promptTr": "Cümleyi tamamla: \"Tu ___ salî yî? (Ez pênc salî me.)\" (\"Sen ___ yaşındasın? (Ben beş yaşındayım.)\")",
-    "answers": [
-      "çend"
-    ],
-    "answersTr": [
-      "çend"
-    ],
-    "correctAnswer": "çend",
-    "correctAnswerTr": "çend",
-    "acceptedAnswers": [],
-    "acceptedAnswersTr": [],
-    "explanation": "Doğru cümle: \"Tu çend salî yî? (Ez pênc salî me.)\" (Sen ___ yaşındasın? (Ben beş yaşındayım.))",
-    "explanationKu": "Hevoka rast ev e: \"Tu çend salî yî? (Ez pênc salî me.)\"",
-    "explanationTr": "Doğru cümle: \"Tu çend salî yî? (Ez pênc salî me.)\" (Sen ___ yaşındasın? (Ben beş yaşındayım.))",
-    "metadata": {
-      "dialect": "Kurmancî",
-      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
-      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
-      "reviewStatus": "approved",
-      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
-      "reviewedAt": "2026-10-08",
-      "lastContentCheckAt": "2026-10-08",
-      "qualityVersion": 2,
-      "learningLessonId": "questions_1"
-    }
-  },
-  {
-    "id": "dersler2_2026_10_08_0109",
-    "category": "Ziman",
-    "type": "fillInBlank",
-    "difficulty": 1,
-    "prompt": "Hevokê temam bike: \"Tu ___ yî? (Ez baş im.)\" (\"Sen ___sın? (Ben iyiyim.)\")",
-    "promptTr": "Cümleyi tamamla: \"Tu ___ yî? (Ez baş im.)\" (\"Sen ___sın? (Ben iyiyim.)\")",
-    "answers": [
-      "çawa"
-    ],
-    "answersTr": [
-      "çawa"
-    ],
-    "correctAnswer": "çawa",
-    "correctAnswerTr": "çawa",
-    "acceptedAnswers": [],
-    "acceptedAnswersTr": [],
-    "explanation": "Doğru cümle: \"Tu çawa yî? (Ez baş im.)\" (Sen ___sın? (Ben iyiyim.))",
-    "explanationKu": "Hevoka rast ev e: \"Tu çawa yî? (Ez baş im.)\"",
-    "explanationTr": "Doğru cümle: \"Tu çawa yî? (Ez baş im.)\" (Sen ___sın? (Ben iyiyim.))",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
@@ -4066,7 +3865,7 @@
     "category": "Ziman",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Tu îro dibistanê. Kîjan bersiv neyînî ye?",
+    "prompt": "Tu îro ___ dibistanê. Kîjan bersiv neyînî ye?",
     "promptTr": "Sen bugün okula ... Hangi cevap olumsuzdur?",
     "answers": [
       "naçî",
@@ -4144,12 +3943,8 @@
     ],
     "correctAnswer": "tê",
     "correctAnswerTr": "tê",
-    "acceptedAnswers": [
-      "te"
-    ],
-    "acceptedAnswersTr": [
-      "te"
-    ],
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
     "explanation": "Doğru cümle: \"Ew tê malê.\" (O eve geliyor.)",
     "explanationKu": "Hevoka rast ev e: \"Ew tê malê.\"",
     "explanationTr": "Doğru cümle: \"Ew tê malê.\" (O eve geliyor.)",
@@ -4593,6 +4388,210 @@
       "lastContentCheckAt": "2026-10-08",
       "qualityVersion": 2,
       "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0137",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Tu ___ yî? (Ez Azad im.)\" (\"Ben Azad'ım.\")",
+    "promptTr": "Cümleyi tamamla: \"Tu ___ yî? (Ez Azad im.)\" (\"Ben Azad'ım.\")",
+    "answers": [
+      "kî"
+    ],
+    "answersTr": [
+      "kî"
+    ],
+    "correctAnswer": "kî",
+    "correctAnswerTr": "kî",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Tu kî yî?\"",
+    "explanationKu": "Hevoka rast ev e: \"Tu kî yî?\"",
+    "explanationTr": "Doğru cümle: \"Tu kî yî?\"",
+    "hintKu": "Kes nas bike.",
+    "hintTr": "Kişiyi soran sözcük.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1",
+      "reviewStatus": "approved",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1",
+      "reviewedBy": "jury:kimi-k3+deepseek-v4.1",
+      "reviewedAt": "2026-10-21",
+      "lastContentCheckAt": "2026-10-21"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0138",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ev ___ ye? (Ev pênûs e.)\" (\"Bu kalemdir.\")",
+    "promptTr": "Cümleyi tamamla: \"Ev ___ ye? (Ev pênûs e.)\" (\"Bu kalemdir.\")",
+    "answers": [
+      "çi"
+    ],
+    "answersTr": [
+      "çi"
+    ],
+    "correctAnswer": "çi",
+    "correctAnswerTr": "çi",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Ev çi ye?\"",
+    "explanationKu": "Hevoka rast ev e: \"Ev çi ye?\"",
+    "explanationTr": "Doğru cümle: \"Ev çi ye?\"",
+    "hintKu": "Tişt nas bike.",
+    "hintTr": "Nesneyi soran sözcük.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1",
+      "reviewStatus": "approved",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1",
+      "reviewedBy": "jury:kimi-k3+deepseek-v4.1",
+      "reviewedAt": "2026-10-21",
+      "lastContentCheckAt": "2026-10-21"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0139",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Tu li ___ yî? (Ez li Stenbolê me.)\" (\"Ben İstanbul'dayım.\")",
+    "promptTr": "Cümleyi tamamla: \"Tu li ___ yî? (Ez li Stenbolê me.)\" (\"Ben İstanbul'dayım.\")",
+    "answers": [
+      "ku"
+    ],
+    "answersTr": [
+      "ku"
+    ],
+    "correctAnswer": "ku",
+    "correctAnswerTr": "ku",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Tu li ku yî?\"",
+    "explanationKu": "Hevoka rast ev e: \"Tu li ku yî?\"",
+    "explanationTr": "Doğru cümle: \"Tu li ku yî?\"",
+    "hintKu": "Cih nas bike.",
+    "hintTr": "Yeri soran sözcük.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1",
+      "reviewStatus": "approved",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1",
+      "reviewedBy": "jury:kimi-k3+deepseek-v4.1",
+      "reviewedAt": "2026-10-21",
+      "lastContentCheckAt": "2026-10-21"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0140",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Tu ___ têyî? (Ez sibê têm.)\" (\"Ben yarın geliyorum.\")",
+    "promptTr": "Cümleyi tamamla: \"Tu ___ têyî? (Ez sibê têm.)\" (\"Ben yarın geliyorum.\")",
+    "answers": [
+      "kengî"
+    ],
+    "answersTr": [
+      "kengî"
+    ],
+    "correctAnswer": "kengî",
+    "correctAnswerTr": "kengî",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Tu kengî têyî?\"",
+    "explanationKu": "Hevoka rast ev e: \"Tu kengî têyî?\"",
+    "explanationTr": "Doğru cümle: \"Tu kengî têyî?\"",
+    "hintKu": "Dem nas bike.",
+    "hintTr": "Zamanı soran sözcük.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1",
+      "reviewStatus": "approved",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1",
+      "reviewedBy": "jury:kimi-k3+deepseek-v4.1",
+      "reviewedAt": "2026-10-21",
+      "lastContentCheckAt": "2026-10-21"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0141",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Tu ___ salî yî? (Ez bîst salî me.)\" (\"Ben yirmi yaşındayım.\")",
+    "promptTr": "Cümleyi tamamla: \"Tu ___ salî yî? (Ez bîst salî me.)\" (\"Ben yirmi yaşındayım.\")",
+    "answers": [
+      "çend"
+    ],
+    "answersTr": [
+      "çend"
+    ],
+    "correctAnswer": "çend",
+    "correctAnswerTr": "çend",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Tu çend salî yî?\"",
+    "explanationKu": "Hevoka rast ev e: \"Tu çend salî yî?\"",
+    "explanationTr": "Doğru cümle: \"Tu çend salî yî?\"",
+    "hintKu": "Hejmar nas bike.",
+    "hintTr": "Sayıyı soran sözcük.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1",
+      "reviewStatus": "approved",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1",
+      "reviewedBy": "jury:kimi-k3+deepseek-v4.1",
+      "reviewedAt": "2026-10-21",
+      "lastContentCheckAt": "2026-10-21"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0142",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Tu ___ yî? (Ez baş im.)\" (\"Ben iyiyim.\")",
+    "promptTr": "Cümleyi tamamla: \"Tu ___ yî? (Ez baş im.)\" (\"Ben iyiyim.\")",
+    "answers": [
+      "çawa"
+    ],
+    "answersTr": [
+      "çawa"
+    ],
+    "correctAnswer": "çawa",
+    "correctAnswerTr": "çawa",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Tu çawa yî?\"",
+    "explanationKu": "Hevoka rast ev e: \"Tu çawa yî?\"",
+    "explanationTr": "Doğru cümle: \"Tu çawa yî?\"",
+    "hintKu": "Rewş nas bike.",
+    "hintTr": "Durumu soran sözcük.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1",
+      "reviewStatus": "approved",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1",
+      "reviewedBy": "jury:kimi-k3+deepseek-v4.1",
+      "reviewedAt": "2026-10-21",
+      "lastContentCheckAt": "2026-10-21"
     }
   }
 ]

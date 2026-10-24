@@ -224,7 +224,7 @@
     "difficulty": 2,
     "id": "comm_muz_0003",
     "category": "Muzîk",
-    "prompt": "Kîjan hunermend gotiye: hemû çek, tank û topan bihelînin em cumbûşê çêkin?",
+    "prompt": "Kîjan hunermendî gotiye: hemû çek, tank û topan bihelînin em cumbûşê çêkin?",
     "promptTr": "Bütün silahları, tankları ve topları eritip cümbüş yapalım diyen sanatçımız kimdir?",
     "answers": [
       "Aram Tigran",
@@ -752,7 +752,7 @@
     "difficulty": 3,
     "id": "comm_dir_0003",
     "category": "Dîrok",
-    "prompt": "Şehîda fedaî ya ku bi ruhê Kobanê re bûye yek kî ye?",
+    "prompt": "Şehîda fedayî ya ku bi ruhê Kobanê re bûye yek kî ye?",
     "promptTr": "Kobanê ruhuyla bütünleşen fedai şehidimiz kimdir?",
     "answers": [
       "Arîn Mîrkan",
@@ -992,7 +992,7 @@
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceTitle": "Kongra Star institutional publications + supporting research",
-      "sourceReference": "https://kongra-star.org/eng/about/; Cambridge History of the Kurds, Kurdish Women’s Freedom Movement chapter",
+      "sourceReference": "https://kongra-star.org/eng/about/; Cambridge History of the Kurds, Kurdish Women's Freedom Movement chapter",
       "reviewedAt": "2026-09-02",
       "qualityVersion": 2
     }
@@ -1188,7 +1188,7 @@
     "difficulty": 3,
     "id": "comm_sin_0107",
     "category": "Sînema",
-    "prompt": "Fîlmên \"Fotoğraf\", \"Bahoz\" û \"Zer\" ji hêla kîjan derhêner ve hatine çêkirin?",
+    "prompt": "Fîlmên \"Fotoğraf\", \"Bahoz\" û \"Zer\" ji hêla kîjan derhênerî ve hatine çêkirin?",
     "promptTr": "\"Fotoğraf\", \"Bahoz\" ve \"Zer\" filmleri hangi yönetmene aittir?",
     "answers": [
       "Kazım Öz",
@@ -1343,7 +1343,7 @@
     "difficulty": 3,
     "id": "comm_sin_0112",
     "category": "Sînema",
-    "prompt": "Derhêner Bahman Ghobadi ji kîjan perçeyê Kurdistanê ye?",
+    "prompt": "Derhêner Bahman Ghobadi ji kîjan parçeyê Kurdistanê ye?",
     "promptTr": "Yönetmen Bahman Ghobadi Kürdistan'ın hangi parçasındandır?",
     "answers": [
       "Rojhilatê Kurdistanê",

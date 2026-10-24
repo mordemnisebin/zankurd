@@ -1,4 +1,5 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -19,6 +20,7 @@ class _FailingRoomRepository extends MockZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   }) {
     return Future<GameRoom>.error(StateError('online room unavailable'));
   }
@@ -59,9 +61,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('nav-play')));
       await tester.pumpAndSettle();
 
-      await tester.ensureVisible(
-        find.byKey(const ValueKey('play-hub-create-room')),
-      );
+      await openRoomSheet(tester);
       await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
       await tester.pumpAndSettle();
 
@@ -101,6 +101,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
     await tester.enterText(
@@ -142,6 +143,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Katıl'));
@@ -170,6 +172,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
     await tester.enterText(
@@ -180,7 +183,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.joinCalls, 0);
-    expect(find.text('Kodu kontrol et. Örnek: ZK-ABCDEF0123'), findsOneWidget);
+    expect(find.text('Kodu kontrol et. Örnek: 482 913'), findsOneWidget);
     expect(find.byType(RoomScreen), findsNothing);
   });
 
@@ -202,13 +205,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await openRoomSheet(tester);
     final joinRoom = find.byKey(const ValueKey('play-hub-join-room'));
-    await tester.scrollUntilVisible(
-      joinRoom,
-      200,
-      scrollable: find.byType(Scrollable),
-    );
-    await tester.pumpAndSettle();
     await tester.tap(joinRoom);
     await tester.pumpAndSettle();
 
@@ -227,7 +225,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.joinCalls, 0);
-    const fullError = 'Kodê kontrol bike. Mînak: ZK-ABCDEF0123';
+    const fullError = 'Kodê kontrol bike. Mînak: 482 913';
     final error = find.text(fullError);
     expect(error, findsOneWidget);
     await tester.ensureVisible(error);

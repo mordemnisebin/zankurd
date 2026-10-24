@@ -46,22 +46,23 @@ Future<void> _pump(
 
 void main() {
   for (final (isKu, firstSession, label) in const [
-    (false, true, 'İlk ders'),
+    (false, true, 'Bugünün görevi'),
     (false, false, 'Bugünün görevi'),
-    (true, true, 'Dersa yekem'),
+    (true, true, 'Erkê îro'),
     (true, false, 'Erkê îro'),
   ]) {
-    testWidgets('kart etiketi "$label" kalın açıklama, büyük harf değil', (
-      tester,
-    ) async {
-      await _pump(tester, isKu: isKu, firstSession: firstSession);
-      final text = tester.widget<Text>(find.text(label));
-      expect(text.style?.fontSize, SahneType.captionStrong.fontSize);
-      expect(text.style?.fontWeight, SahneType.captionStrong.fontWeight);
-      // Künye stili (başlık ailesi, 800) değil, açıklama kalını (metin ailesi):
-      // eyebrow 2026-10-01'de harf aralığını da bıraktı, ayrım artık aile.
-      expect(text.style?.fontFamily, isNot(SahneType.eyebrow.fontFamily));
-      expect(find.text(label.toUpperCase()), findsNothing);
-    });
+    testWidgets(
+      'kart etiketi "$label" (ilk oturum: $firstSession) kalın açıklama, büyük harf değil',
+      (tester) async {
+        await _pump(tester, isKu: isKu, firstSession: firstSession);
+        final text = tester.widget<Text>(find.text(label));
+        expect(text.style?.fontSize, SahneType.captionStrong.fontSize);
+        expect(text.style?.fontWeight, SahneType.captionStrong.fontWeight);
+        // Künye stili (başlık ailesi, 800) değil, açıklama kalını (metin ailesi):
+        // eyebrow 2026-10-01'de harf aralığını da bıraktı, ayrım artık aile.
+        expect(text.style?.fontFamily, isNot(SahneType.eyebrow.fontFamily));
+        expect(find.text(label.toUpperCase()), findsNothing);
+      },
+    );
   }
 }

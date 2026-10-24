@@ -42,6 +42,51 @@ void main() {
     }
   });
 
+  test('6 rakamlı kod her yazım biçiminden aynı koda çevrilir', () {
+    for (final typed in [
+      '482913',
+      '482 913',
+      '482-913',
+      ' 482  913 ',
+      '482–913', // uzun tire
+      'https://www.zankurd.com/join/482913',
+      'zankurd.com/join/482913?x=1',
+    ]) {
+      expect(normalizeRoomCode(typed), '482913', reason: typed);
+      expect(isSupportedRoomCode(typed), isTrue, reason: typed);
+    }
+  });
+
+  test('6 rakam dışı rakam girişi geçerli sayılmaz', () {
+    for (final typed in ['4829', '48291', '4829131', '12345678']) {
+      expect(isSupportedRoomCode(typed), isFalse, reason: typed);
+    }
+    // 10 rakam: soneki yalnız rakam olan eski onaltılık kod.
+    expect(normalizeRoomCode('0123456789'), 'ZK-0123456789');
+    expect(isSupportedRoomCode('0123456789'), isTrue);
+  });
+
+  test('alan rakamı gruplar, 6 haneye keser ve sabit noktadır', () {
+    expect(formatRoomCodeInput('4'), '4');
+    expect(formatRoomCodeInput('482'), '482');
+    expect(formatRoomCodeInput('4829'), '482 9');
+    expect(formatRoomCodeInput('482913'), '482 913');
+    expect(formatRoomCodeInput('4829131'), '482 913');
+    expect(formatRoomCodeInput('482 913'), '482 913');
+    expect(formatRoomCodeInput('482 '), '482');
+    expect(displayRoomCode('482913'), '482 913');
+    expect(displayRoomCode('ZK-ABCDEF0123'), 'ZK-ABCDEF0123');
+  });
+
+  test('üretilen yeni kod 6 rakamdır, ilk hane 1-9 ve sabit noktadır', () {
+    for (var i = 0; i < 500; i++) {
+      final code = generateRoomCode();
+      expect(code, matches(RegExp(r'^[1-9][0-9]{5}$')));
+      expect(normalizeRoomCode(code), code);
+      expect(normalizeRoomCode(displayRoomCode(code)), code);
+    }
+  });
+
   test('üretilen kod normalleştirmeden geçince değişmez', () {
     // Kanonik biçim sabit noktadır; yoksa biçimlendirici alanı her tuşta
     // yeniden yazar ve imleç zıplar.
@@ -70,7 +115,8 @@ void main() {
     expect(isCanonicalRoomCode('ZK-X8WY'), isFalse);
     expect(isSupportedRoomCode('ZK-X8WY'), isTrue);
     expect(isSupportedRoomCode('x8wy'), isTrue);
-    expect(isCanonicalRoomCode('ZK-ABCDEF0123'), isTrue);
+    // Eski 13 karakterlik kod artık kanonik değil ama katılımda desteklenir.
+    expect(isCanonicalRoomCode('ZK-ABCDEF0123'), isFalse);
     expect(isCanonicalRoomCode('zk-abcdef0123'), isFalse);
     expect(isCanonicalRoomCode('ABCDEF0123'), isFalse);
     expect(isSupportedRoomCode('zk-abcdef0123'), isTrue);

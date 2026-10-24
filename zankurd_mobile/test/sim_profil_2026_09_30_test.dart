@@ -24,6 +24,7 @@ import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/subcategory_screen.dart';
@@ -54,6 +55,18 @@ class _ScoredRepository extends MockZanKurdRepository {
     totalScore: 1250,
     bestStreak: 3,
     roomsPlayed: 4,
+  );
+
+  @override
+  Future<LeaderboardEntry?> getMyLeaderboardRank(
+    LeaderboardPeriod period,
+  ) async => const LeaderboardEntry(
+    rank: 7,
+    playerId: 'me',
+    displayName: 'Lîstikvan',
+    totalScore: 300,
+    bestStreak: 3,
+    roomsPlayed: 2,
   );
 }
 
@@ -217,7 +230,8 @@ void main() {
     }
     await tester.pump(const Duration(milliseconds: 1200));
 
-    expect(find.text('Sıralama'), findsOneWidget);
+    // Karo Yarış sekmesindeki haftalık sırayı gösterir ("Bu hafta #7").
+    expect(find.text('Bu hafta'), findsOneWidget);
     expect(find.text('Toplam puan'), findsOneWidget);
     expect(find.text('Henüz yok'), findsNothing);
   });

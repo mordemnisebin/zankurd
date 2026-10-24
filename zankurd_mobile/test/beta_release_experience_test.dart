@@ -12,7 +12,6 @@ import 'package:zankurd_mobile/src/services/analytics_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
-import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
 
@@ -20,9 +19,12 @@ class _TrackingRepository extends MockZanKurdRepository {
   int? dailyQuestionLimit;
 
   @override
-  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
+  Future<List<QuizQuestion>> loadDailyQuestions({
+    int limit = 10,
+    bool replay = false,
+  }) async {
     dailyQuestionLimit = limit;
-    return super.loadDailyQuestions(limit: limit);
+    return super.loadDailyQuestions(limit: limit, replay: replay);
   }
 }
 
@@ -200,11 +202,9 @@ void main() {
       isTrue,
     );
     expect(find.byType(KilimDivider), findsNothing);
-    expect(find.byType(ScreenIdentityHeader), findsNothing);
 
     await tester.pumpWidget(testShell(child: StoryScreen(story: cayxaneStory)));
     await tester.pumpAndSettle();
-    expect(find.byType(ScreenIdentityHeader), findsNothing);
     expect(find.text(cayxaneStory.titleTr), findsOneWidget);
     expect(find.byKey(const ValueKey('story-text-ku')), findsOneWidget);
     expect(tester.takeException(), isNull);

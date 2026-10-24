@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
@@ -8,6 +10,9 @@ import '../../utils/percent_format.dart';
 import '../../utils/player_identity.dart';
 import '../../widgets/lexicon_lookup.dart';
 import '../../widgets/sahne/sahne.dart';
+
+/// Şık çubuğunun en az yüksekliği (tur 8: 52 → 56).
+const double quizOptionMinHeight = 56;
 
 /// Şık çubuğu — Şahnê'nin "8 · Şık çubuğu" bileşeni (maketteki `.sh-ans`).
 ///
@@ -55,6 +60,7 @@ class QuizOptionTile extends StatelessWidget {
     this.fixedHeight,
     this.optionCount = 4,
     this.dimmed = false,
+    this.tone,
     super.key,
   });
 
@@ -86,6 +92,10 @@ class QuizOptionTile extends StatelessWidget {
   /// Açıklanmada seçilmeyen ve doğru olmayan şıklar ya da elenen şık:
   /// sönük (Perde + üçüncül metin).
   final bool dimmed;
+
+  /// Soru sahnesinin konu tonu: boştaki şıkta dolgu ve kenar ona doğru ölçülü
+  /// kayar. Doğru/yanlış/kontrol/sönük durumları değişmez; harf renksizdir.
+  final SahneCategoryTone? tone;
 
   @override
   Widget build(BuildContext context) {
@@ -121,19 +131,26 @@ class QuizOptionTile extends StatelessWidget {
       _OptionState.wrong => t.errFill,
       _ => null,
     };
-    final Color base = state == _OptionState.dimmed ? t.s1 : t.s2;
+    final tn = tone;
+    final Color base = state == _OptionState.dimmed
+        ? t.s1
+        : (tn != null && state == _OptionState.idle
+              ? t.optionFillFor(tn)
+              : t.optionFill);
     final Color ring = switch (state) {
       _OptionState.correct => t.okTx,
       _OptionState.wrong => t.errTx,
       _OptionState.checking => t.tx,
+      _OptionState.idle => tn == null ? t.optionEdge : t.optionEdgeFor(tn),
       _ => Colors.transparent,
     };
+    final double ringWidth = state == _OptionState.idle ? 1 : SahneRing.r2;
     final Color textColor = state == _OptionState.dimmed ? t.tx3 : t.tx;
     final Color letterBg = switch (state) {
       _OptionState.correct => t.okTx,
       _OptionState.wrong => t.errTx,
       _OptionState.dimmed => t.s2,
-      _ => t.s3,
+      _ => t.optionLetterFill,
     };
     final Color letterFg = switch (state) {
       _OptionState.correct => t.onOk,
@@ -210,7 +227,7 @@ class QuizOptionTile extends StatelessWidget {
       ),
     );
 
-    return Semantics(
+    final tile = Semantics(
       button: true,
       enabled: !disabled,
       selected: selected,
@@ -232,7 +249,7 @@ class QuizOptionTile extends StatelessWidget {
                 shape: SahneShape.withSide(
                   SahneShape.m,
                   ring,
-                  width: SahneRing.r2,
+                  width: ringWidth,
                 ),
               ),
               child: ClipPath(
@@ -245,8 +262,10 @@ class QuizOptionTile extends StatelessWidget {
                   width: double.infinity,
                   constraints: BoxConstraints(
                     minHeight: fixedHeight == null
-                        ? 52
-                        : (fixedHeight! < 52 ? 52 : fixedHeight!),
+                        ? quizOptionMinHeight
+                        : (fixedHeight! < quizOptionMinHeight
+                              ? quizOptionMinHeight
+                              : fixedHeight!),
                   ),
                   decoration: BoxDecoration(
                     color: base,
@@ -276,6 +295,24 @@ class QuizOptionTile extends StatelessWidget {
           child: content,
         ),
       ),
+    );
+    // Doğru cevapta kısa ödül sekmesi (tasarım oylaması 2026-10-22, 19/19
+    // EVET): YALNIZ oyuncunun seçtiği şık doğruysa bir kez %4 büyüyüp
+    // döner; hareketi azaltta yok. Anahtar duruma bağlı: aynı soruda
+    // yeniden çizim tekrar oynatmaz.
+    if (!(selected && state == _OptionState.correct) || reducedMotion) {
+      return tile;
+    }
+    return TweenAnimationBuilder<double>(
+      key: const ValueKey('quiz-option-correct-bounce'),
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 360),
+      builder: (context, v, child) => Transform.scale(
+        // 0 → 1 → 0 yarım sinüs: 1.00 → 1.04 → 1.00.
+        scale: 1 + 0.04 * math.sin(v * math.pi),
+        child: child,
+      ),
+      child: tile,
     );
   }
 
@@ -431,7 +468,7 @@ class _HatchPainter extends CustomPainter {
 }
 
 /// Soru metni — Şahnê'de soru sahnenin kendisinde durur (maketteki
-/// `.sh-q`): Başlık 28/32, birincil metin.
+/// `.sh-q`): Soru 24/30 (2026-10-19; eskiden Başlık 28/32), birincil metin.
 ///
 /// ## Boy kuralı
 ///
@@ -461,10 +498,10 @@ class QuizQuestionPrompt extends StatelessWidget {
   /// Telefon-yatay gibi dar dikey alanda hep Manşet 22.
   final bool forceHeadline;
 
-  /// Başlık 28/32'de en çok bu kadar satır.
+  /// Soru 24/30'da en çok bu kadar satır.
   static const int maxTitleLines = 4;
 
-  /// Bu soruda Başlık 28/32'ye izin verilen en çok satır.
+  /// Bu soruda Soru 24/30'a izin verilen en çok satır.
   ///
   /// Düelloda üstteki puan kartı (~120 pt) şıkların bütçesinden yer yer.
   /// 2026-09-30 canlı: dört satırlık soru + dört şıkta D şıkkı alt perdenin
@@ -483,7 +520,10 @@ class QuizQuestionPrompt extends StatelessWidget {
     final t = SahneTokens.of(context);
     final headline = SahneType.headline.copyWith(color: t.tx);
     if (forceHeadline || !maxWidth.isFinite || maxWidth <= 0) return headline;
-    final title = SahneType.title.copyWith(color: t.tx, letterSpacing: -0.28);
+    final title = SahneType.question.copyWith(
+      color: t.tx,
+      letterSpacing: -0.24,
+    );
     final painter = TextPainter(
       text: TextSpan(
         text: text,

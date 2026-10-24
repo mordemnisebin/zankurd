@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
@@ -74,6 +75,9 @@ void main() {
     testWidgets('$name temada Apple düğmesinin gövdesi zeminden ayrılır', (
       tester,
     ) async {
+      // Apple girişi yalnız iOS'ta çizilir (2026-10-23).
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      addTearDown(() => debugDefaultTargetPlatformOverride = null);
       await tester.pumpWidget(
         testShell(
           child: const SignInScreen(),
@@ -100,6 +104,8 @@ void main() {
         greaterThanOrEqualTo(4.5),
         reason: '$name temada Apple düğmesinin yazısı gövdesinde okunmuyor.',
       );
+      // Flutter, test bitmeden geçersiz kılmanın kaldırılmasını ister.
+      debugDefaultTargetPlatformOverride = null;
     });
   }
 }

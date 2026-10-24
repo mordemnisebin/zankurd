@@ -65,3 +65,11 @@ opencode.json.*
 .qoder/
 .zcode/
 .agents/
+
+# Mağaza yükleme anahtarları (tool/yayinla.sh): Play servis hesabı JSON'u ve
+# App Store Connect .p8 dosyaları depo DIŞINDA durur; yanlışlıkla girmesin.
+*service-account*.json
+play-*.json
+AuthKey_*.p8
+*.p8
+zankurd_mobile/build/ios/ipa/

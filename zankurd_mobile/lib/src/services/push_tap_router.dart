@@ -7,9 +7,19 @@ import '../utils/error_reporter.dart';
 /// Bildirime dokununca oynanacak hedef ekran.
 ///
 /// `async_duel_result` → [playTab] (Yarış sekmesi, "Düellolarım" sonucu
-/// orada görünür). `friend_request` → [friends] (Liderlik sekmesi +
+/// orada görünür). `async_duel_invite` / `async_duel_turn` ("sıra sende":
+/// bir arkadaş meydan okudu) → [duelInbox]: Yarış sekmesi + üstüne açılan
+/// tam "Düellolarım" listesi; gelen meydan okuma listenin başında "Sıra
+/// sende" satırıdır. `friend_request` → [friends] (Liderlik sekmesi +
 /// üstüne açılan Arkadaşlar ekranı).
-enum PushTapTarget { playTab, friends }
+///
+/// `room_invite` (bir arkadaş beni odasına çağırdı) → [roomInvite]: tek
+/// bekleyen davet varsa doğrudan odaya katılınır, birden çoksa Ana ekranın
+/// "Odaya davet" kartı açılır.
+///
+/// [home] yerel bildirimlerden gelir (günlük hatırlatıcı, seri uyarısı):
+/// Öğren sekmesi, günün dersi kartı en üstte.
+enum PushTapTarget { playTab, duelInbox, friends, home, roomInvite }
 
 /// Bildirime dokunan oyuncuyu doğru ekrana yönlendirir.
 ///
@@ -29,7 +39,10 @@ class PushTapRouter {
   static PushTapTarget? targetForKind(String? kind) {
     return switch (kind) {
       'async_duel_result' => PushTapTarget.playTab,
-      'friend_request' => PushTapTarget.friends,
+      'async_duel_invite' || 'async_duel_turn' => PushTapTarget.duelInbox,
+      // `friend_accept` (2026-10-23): isteğim kabul edildi → arkadaş listesi.
+      'friend_request' || 'friend_accept' => PushTapTarget.friends,
+      'room_invite' => PushTapTarget.roomInvite,
       _ => null,
     };
   }
@@ -50,12 +63,18 @@ class PushTapRouter {
     final kind = data['kind'];
     final target = targetForKind(kind is String ? kind : null);
     if (target == null) return false;
+    offerTarget(target);
+    return true;
+  }
+
+  /// Çözülmüş bir hedefi doğrudan bekleyen kanala yazar (yerel bildirim
+  /// dokunuşları da buradan geçer).
+  static void offerTarget(PushTapTarget target) {
     // Aynı hedef PENDING'DE dururken yeniden gelirse de dinleyici uyansın
     // diye önce boşaltılır (ValueNotifier aynı değerde bildirim yapmaz) —
     // bkz. `JoinDeepLink.offer`deki aynı desen.
     pending.value = null;
     pending.value = target;
-    return true;
   }
 
   /// Bekleyen hedefi alır ve kanalı boşaltır.

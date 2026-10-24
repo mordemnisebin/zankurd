@@ -47,6 +47,10 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+  # Davet bağlantısı: uygulamaya yönlendiren statik sayfa. Tarayıcıda
+  # oynamak isteyen (?web=1) doğrudan Flutter web'e düşer.
+  RewriteCond %{QUERY_STRING} !(^|&)web=1(&|$)
+  RewriteRule ^join/[A-Za-z0-9-]{1,16}/?$ join.html [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^ index.html [L]

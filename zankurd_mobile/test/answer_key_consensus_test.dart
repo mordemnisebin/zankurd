@@ -209,6 +209,8 @@ void main() {
     // `capraz_kontrol.json`daki bu 45 hüküm yeni yazıma taşındı. Yukarıdaki
     // `ds_dirok_0338` aşması da aynı nedenle yeni yazıma (`dije-firoke` →
     // `qedexeya firînê`) taşındı.
+    // 2026-10-14: «welêt→welat» yazım düzeltmesi `ds_dirok_0320` hükmünü de
+    // aynı biçimde eskitti; hüküm yeni yazıma taşındı.
     final contradicting = <String>[];
     for (final question in generated) {
       final given = verdicts[question['id']] as String?;

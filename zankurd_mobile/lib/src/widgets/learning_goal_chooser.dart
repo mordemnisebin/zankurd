@@ -90,10 +90,13 @@ class _GoalChoice extends StatelessWidget {
     // metni. Seçim ekran
     // okuyucuya da söylenir. Seçili değil: Kulis tonu + ikincil metin.
     final t = SahneTokens.of(context);
-    final fg = selected ? t.learnTx : t.tx2;
+    // Kurul 2. tur 2026-10-20 (Argon, iki kez): seçili amaç yeşil tonla
+    // ayırt edilemiyordu; ekranın öteki seçim çipleriyle (SahneRailChip)
+    // AYNI seçili biçim: turuncu ton + halka, ayrıca onay simgesi.
+    final fg = selected ? t.selTx : t.tx;
     final shape = selected
-        ? SahneShape.withSide(SahneShape.m, t.learnTx, width: SahneRing.r2)
-        : SahneShape.withSide(SahneShape.m, t.edge, width: 1);
+        ? SahneShape.withSide(SahneShape.m, t.selLine, width: SahneRing.r2)
+        : SahneShape.withSide(SahneShape.m, t.tx3, width: 1);
     return Semantics(
       container: true,
       selected: selected,
@@ -103,9 +106,10 @@ class _GoalChoice extends StatelessWidget {
       excludeSemantics: true,
       child: SahneTappable(
         shape: shape,
-        // Seçili değilken Kulis (`s2`): seçici genelde bir yüzey kartının
-        // (Perde) içinde durur; Perde üstünde Perde çip görünmez olur.
-        color: selected ? t.learnTint : t.s2,
+        // Kurul 3. tur 2026-10-20: seçili değilken ŞEFFAF + görünür çerçeve
+        // (ortak seçim çipi, `SahnePickChip`). Eskiden Kulis dolgusu pasif
+        // düğmeye benziyordu ve hiçbiri seçili okunmuyordu.
+        color: selected ? t.selFill : Colors.transparent,
         onTap: onTap,
         child: ConstrainedBox(
           // 48: erişilebilirlik kılavuzu testinin dokunma alt sınırı.
@@ -118,12 +122,15 @@ class _GoalChoice extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(icon, size: 20, color: fg),
+                Icon(selected ? AppIcons.check : icon, size: 20, color: fg),
                 const SizedBox(width: SahneSpace.x2),
                 Flexible(
                   child: Text(
                     label,
-                    style: SahneType.captionStrong.copyWith(color: fg),
+                    style: SahneType.captionStrong.copyWith(
+                      color: fg,
+                      fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
+                    ),
                   ),
                 ),
               ],

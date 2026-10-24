@@ -78,7 +78,10 @@ void main() {
   const scrollKey = ValueKey('quiz-portrait-scroll');
   const progressKey = ValueKey('quiz-progress-bar');
   const nextKey = ValueKey('quiz-next-button');
-  const explanationKey = ValueKey('quiz-view-explanation');
+  // 2026-10-24: yanlıştan sonra "Açıklamayı gör" kapısının yerini doğru cevap
+  // + açıklama kartı aldı; aynı kayma kuralı (alt perdenin üstünde tamamen
+  // görünür) artık kart için geçerli.
+  const explanationKey = ValueKey('quiz-wrong-answer-insight');
   final boundaryKey = GlobalKey();
 
   Future<void> pumpQuiz(
@@ -415,8 +418,9 @@ void main() {
             );
             await tester.pumpAndSettle();
 
-            final title = find.text(
-              ku ? 'Asta xwe diyar bike' : 'Seviyeni belirle',
+            final title = // Kurul 2. tur: ortak üst satır (kategori · soru n/N).
+            find.byKey(
+              const ValueKey('quiz-stage-kicker'),
             );
             expect(title, findsOneWidget);
             final progress = find.byType(SahneProgressBar);

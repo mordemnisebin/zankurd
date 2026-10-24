@@ -3,7 +3,7 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne_topic_marks.dart';
 
-/// Kategori bazlı görsel kaynak (ikon + arka plan görseli + renk) için tek
+/// Kategori bazlı görsel kaynak (ikon + silüet + renk) için tek
 /// doğruluk kaynağı.
 ///
 /// Renkler daha önce `AppTheme.categoryGradient(index)` ile **sıraya** göre
@@ -103,25 +103,6 @@ class CategoryVisuals {
     'Cîhan': AppIcons.compass,
   };
 
-  static const Map<String, String> _imagePaths = {
-    'Ziman': 'assets/question_images/cat_ziman.webp',
-    'Çand': 'assets/question_images/cat_cand.webp',
-    'Dîrok': 'assets/question_images/cat_dirok.webp',
-    'Edebiyat': 'assets/question_images/cat_edebiyat.webp',
-    'Cografya': 'assets/question_images/cat_cografya.webp',
-    'Muzîk': 'assets/question_images/cat_muzik.webp',
-    'Siyaset': 'assets/question_images/cat_siyaset.webp',
-    'Paradigma': 'assets/question_images/cat_paradigma.webp',
-    // Henüz ayrı teknoloji görseli yok; mevcut soyut paradigma görseli
-    // kategori kartında güvenli geçici kaynak olarak kullanılır.
-    'Teknolojî': 'assets/question_images/cat_paradigma.webp',
-    // Sînema için henüz ayrı görsel yok; kültür görseli geçici kaynaktır.
-    'Sînema': 'assets/question_images/cat_cand.webp',
-    // Cîhan'ın da kendi görseli yok; kimlik karosu silüet + ton taşır,
-    // `ownImagePath` null döner (ödünç görsel yanlış konuyu anlatırdı).
-    'Cîhan': 'assets/question_images/cat_cografya.webp',
-  };
-
   /// Konunun görsel dili: ana sayfa karosundaki K3 silüeti ve alt konu
   /// bandındaki K1 kilim motifi TEK yerden eşlenir (2026-09-30 kimlik).
   ///
@@ -155,44 +136,4 @@ class CategoryVisuals {
     final key = _resolveKey(category);
     return _icons[key] ?? AppIcons.tableCells;
   }
-
-  static String imagePath(String category) {
-    final key = _resolveKey(category);
-    return _imagePaths[key] ?? 'assets/question_images/cat_ziman.webp';
-  }
-
-  /// Kendi kimlik fotoğrafı olan kategoriler.
-  ///
-  /// `_imagePaths` içinde Sînema ve Teknolojî BAŞKA bir kategorinin
-  /// görselini ödünç alır (Sînema, Çand'ın çay/kilim fotoğrafını gösterir —
-  /// henüz kendi görseli çekilmedi). Bir kimlik karosunda ödünç görsel
-  /// yanlış konuyu anlatır; "modern" görünmek için yanlış bilgi vermek
-  /// takas değildir. O iki kategori bu yüzden fotoğraf yerine kendi
-  /// ikonunu büyük çizer (2026-09-27: sahibi renkli ve modern görünüm
-  /// istedi, ama karo kimliği ödünç görsele feda edilmez).
-  ///
-  /// 2026-09-29 doğallık (K1): Ziman, Siyaset ve Paradigma da çıktı. Üç
-  /// çizim üretilmiş görsel izini en çok taşıyanlardı (soyut, konudan
-  /// kopuk); o kategoriler çizimsiz karoya ([SahneCategoryTone] zemini +
-  /// kendi ikonu) düşer. `cat_ziman`, `cat_siyaset`, `cat_paradigma` hiçbir
-  /// yerde çizilmez.
-  static const Set<String> _ownImageCategories = {
-    'Çand',
-    'Dîrok',
-    'Edebiyat',
-    'Cografya',
-    'Muzîk',
-  };
-
-  static bool hasOwnImage(String category) =>
-      _ownImageCategories.contains(_resolveKey(category));
-
-  /// Kategorinin KENDİ çizimi; yoksa `null` (çizimsiz karo ya da düz ton).
-  ///
-  /// [imagePath] her kategoriye bir yol döndürür (ödünç ya da kaldırılmış
-  /// çizim dahil); çizimi yalnız bu yolla almak, K1'de çıkarılan
-  /// çizimlerin (`cat_ziman`, `cat_siyaset`, `cat_paradigma`) bir ekranda
-  /// yeniden belirmesini önler.
-  static String? ownImagePath(String category) =>
-      hasOwnImage(category) ? imagePath(category) : null;
 }

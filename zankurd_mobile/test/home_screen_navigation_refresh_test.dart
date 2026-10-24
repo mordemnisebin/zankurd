@@ -1,3 +1,5 @@
+// 2026-10-19 sadeleşme: konu karosunda boş (%0) ilerleme izi artık yok; ilerleme
+// yokken bütün konular yine görünür ama çubuksuz (bkz. ilgili test).
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -178,13 +180,19 @@ void main() {
         reason: category,
       );
     }
-    // 2026-09-30 izgara: ilerleme çizgisi HER karoda durur (oynanmamışta boş
-    // iz); hiçbirinin dolgusu yoktur.
-    final bars = tester.widgetList<LinearProgressIndicator>(
-      find.byType(LinearProgressIndicator),
-    );
-    expect(bars.length, repo.categories.length);
-    expect(bars.every((b) => b.value == 0), isTrue);
+    // 2026-10-19 sadeleşme: ince çubuk YALNIZ ilerleme > 0 olan konuda çizilir
+    // (eskiden her karoda boş iz vardı); ilerleme yokken hiçbir konuda çubuk
+    // yok.
+    for (final category in repo.categories) {
+      expect(
+        find.byKey(
+          ValueKey('home-topic-progress-$category'),
+          skipOffstage: false,
+        ),
+        findsNothing,
+        reason: category,
+      );
+    }
   });
 
   testWidgets('konu karosu dokunulan kategoriyi açar', (tester) async {

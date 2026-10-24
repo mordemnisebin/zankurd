@@ -1,3 +1,4 @@
+// Kurul 3. tur 2026-10-20: kilitli dersler 3'ten sonra "+N ders daha" satırında toplanır.
 // 2026-09-29 doğallık (K5, K7): ders yolunda elmas düğüm ve ikon karosu yok.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
@@ -12,12 +13,12 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/lesson.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/services/lesson_listening_speaker.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
-import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -174,6 +175,9 @@ class _FakeLessonListeningSpeaker implements LessonListeningSpeaker {
   final bool available;
 
   @override
+  bool availableFor(String text) => available;
+
+  @override
   final ValueNotifier<bool> speakingListenable = ValueNotifier(false);
 
   final List<String> spoken = [];
@@ -226,6 +230,34 @@ class _PlacementRepository extends MockZanKurdRepository {
 }
 
 void main() {
+  testWidgets(
+    'kilitli dersler üçten sonra tek "+N ders daha" satırında toplanır',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 3000));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        wrap(LearningScreen(repository: _PlacementRepository(const {}))),
+      );
+      await tester.pumpAndSettle();
+
+      final rows = find.byWidgetPredicate(
+        (w) =>
+            w.key is ValueKey<String> &&
+            (w.key as ValueKey<String>).value.startsWith('learning-path-node-'),
+      );
+      final more = find.byKey(const ValueKey('learning-locked-more'));
+      // Etkin ders + 3 kilitli görünür; kalanı tek satırda.
+      final total = _placementLessons.length;
+      expect(rows, findsNWidgets(4));
+      expect(more, findsOneWidget);
+      expect(find.text('+${total - 4} ders daha'), findsOneWidget);
+      await tester.tap(more);
+      await tester.pumpAndSettle();
+      expect(more, findsNothing);
+      expect(rows, findsNWidgets(total));
+    },
+  );
+
   testWidgets('öğrenme yolu kart değil doğrudan rota durakları kullanır', (
     tester,
   ) async {
@@ -318,7 +350,6 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.byType(ScreenIdentityHeader), findsNothing);
       expect(find.byKey(const ValueKey('learning-scene-header')), findsNothing);
       expect(find.text('Kurmancî öğren'), findsOneWidget);
       expect(
@@ -416,11 +447,12 @@ void main() {
     expect(find.byType(LessonDetailScreen), findsOneWidget);
   });
 
-  // 2026-09-29 Şahnê: etkin ders artık turuncu dolu bir satır değil, gece
-  // sahne kartıdır (`SahneStageCard.lesson`); Agir (turuncu) yalnız kartın
-  // içindeki TEK birincil düğmededir ve üstündeki metin koyu `onAct`tır.
-  // Ekranda başka Agir dolgu yoktur.
-  testWidgets('önerilen ders sahne kartında tek birincil Agir düğme taşır', (
+  // 2026-10-19 sadeleşme (ikinci tur): etkin ders gece sahne kartı
+  // (`SahneStageCard.lesson`) değil sakin yüzey kartıdır (`SahneSurfaceCard`:
+  // rozet + kapsül ilerleme + ince çubuk + tek birincil düğme). Agir
+  // (turuncu) yine yalnız kartın içindeki TEK birincil düğmededir ve
+  // üstündeki metin koyu `onAct`tır; ekranda başka Agir dolgu yoktur.
+  testWidgets('önerilen ders yüzey kartında tek birincil Agir düğme taşır', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -430,14 +462,27 @@ void main() {
 
     final nextStep = find.byKey(const ValueKey('learning-next-step'));
     expect(
+      find.descendant(of: nextStep, matching: find.byType(SahneSurfaceCard)),
+      findsOneWidget,
+    );
+    expect(
       find.descendant(of: nextStep, matching: find.byType(SahneStageCard)),
+      findsNothing,
+    );
+    expect(
+      find.descendant(of: nextStep, matching: find.byType(SahneLessonDiamond)),
+      findsNothing,
+      reason: 'elmas yalnız soru ilerlemesi; ders sayacı kapsül',
+    );
+    expect(
+      find.byKey(const ValueKey('learning-progress-capsule')),
       findsOneWidget,
     );
     final title = tester.widget<Text>(
       find.descendant(of: nextStep, matching: find.text('Alfabe')),
     );
-    // Sahne kartı gündüz temasında da gece çizilir.
-    expect(title.style?.color, SahneTokens.night.tx);
+    // 2026-10-22: dolu Zimrût kartta başlık beyaz.
+    expect(title.style?.color, SahneVivid.onFill);
 
     final primary = find.descendant(
       of: nextStep,
@@ -447,11 +492,14 @@ void main() {
     final fill = tester.widget<Material>(
       find.descendant(of: primary, matching: find.byType(Material)).first,
     );
-    expect(fill.color, SahneTokens.night.act);
+    expect(fill.color, SahneTokens.of(tester.element(nextStep)).act);
     final label = tester.widget<RichText>(
       find.descendant(of: primary, matching: find.byType(RichText)).first,
     );
-    expect(label.text.style?.color, SahneTokens.night.onAct);
+    expect(
+      label.text.style?.color,
+      SahneTokens.of(tester.element(nextStep)).onAct,
+    );
 
     // Tek birincil: yoldaki kartın dışında Agir dolgulu düğme yok.
     final agirButtons = tester
@@ -647,7 +695,6 @@ void main() {
       ),
     );
     expect(chip('learning-tab-everyday').selected, isTrue);
-    expect(chip('learning-tab-everyday').role, SahneRole.learn);
     expect(chip('learning-tab-grammar').selected, isFalse);
 
     final label = tester.widget<Text>(
@@ -656,7 +703,8 @@ void main() {
         matching: find.text('Gündelik hayat'),
       ),
     );
-    expect(label.style?.color, SahneTokens.day.learnTx);
+    // Kurul incelemesi 2026-10-19: tek seçili stil (turuncu ton).
+    expect(label.style?.color, SahneVivid.onFill);
     final other = tester.widget<Text>(
       find.descendant(
         of: find.byKey(const ValueKey('learning-tab-grammar')),
@@ -1269,6 +1317,11 @@ void main() {
     expect(find.text('Rojbaş'), findsOneWidget);
     expect(find.text('Günaydın / İyi günler'), findsNothing);
 
+    // Slayt içeriği 2026-10-22'den beri kelime kartları: kart aşağı iner.
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('lesson-recall-reveal')),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('lesson-recall-reveal')));
     await tester.pump();
     expect(find.text('Günaydın / İyi günler'), findsOneWidget);
@@ -1444,4 +1497,43 @@ void main() {
     expect(find.byKey(const ValueKey('lesson-recall-answer')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets(
+    'Soru çöz seçili konunun ders sorularını önceliklendirir ve oda adını '
+    'konu adıyla açar',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({});
+      PlacementStore.resetInstance();
+      addTearDown(PlacementStore.resetInstance);
+
+      await tester.pumpWidget(
+        wrap(LearningScreen(repository: MockZanKurdRepository())),
+      );
+      await tester.pumpAndSettle();
+
+      final foodTab = find.byKey(const ValueKey('learning-tab-food'));
+      await tester.ensureVisible(foodTab);
+      await tester.tap(foodTab);
+      await tester.pumpAndSettle();
+
+      final practice = find.descendant(
+        of: find.byKey(const ValueKey('learning-topic-practice')),
+        matching: find.byType(FilledButton),
+      );
+      await tester.ensureVisible(practice);
+      await tester.tap(practice);
+      await tester.pumpAndSettle();
+
+      final quiz = tester.widget<QuizScreen>(find.byType(QuizScreen));
+      expect(quiz.room.name, 'Yemek');
+      expect(
+        quiz.questions.any(
+          (q) =>
+              (q.metadata?.learningLessonId ?? '').startsWith('food') ||
+              q.id.contains('food'),
+        ),
+        isTrue,
+      );
+    },
+  );
 }

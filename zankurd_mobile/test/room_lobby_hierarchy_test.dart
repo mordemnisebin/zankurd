@@ -1,3 +1,6 @@
+// Tasarım kurulu tüm ekranlar 2026-10-20: sohbet başlıkta ikon düğmesi.
+// Kurul 2. tur 2026-10-20: her lobi durumu aynı kart düzeni (davet düğmesi
+// yalnızken de düz bağlantı, ev sahibi rozeti sabit).
 /// Oda lobisinin görsel hiyerarşisi (A7, 2026-10-01).
 ///
 /// ## Kusur
@@ -16,6 +19,13 @@
 /// kopyalanıyor, davet paylaşıyor). "Bu ekranda kaç şey birbirine
 /// rakip?" sorusunu soran hiçbir test yoktu; ekran yeni bir eylem aldıkça
 /// kimse ötekini geri çekmedi.
+///
+/// ## 2026-10-19 sadeleşme (ikinci tur)
+///
+/// Kahraman Boyax degradeli `SahneStageCard` değil sakin yüzey kartıdır
+/// (`room-hero`); tepki rayı ve sohbet TEK "Sohbet" düğmesinin arkasında
+/// (kapalıyken lobide yok); "Hazırım" anahtarı ayrı kart değil yerel
+/// oyuncunun kendi satırındadır. Bekçiler bunları sorar.
 ///
 /// Bu dosya hiyerarşiyi ölçülebilir kurallara bağlar: kartın boyu, kartın
 /// içindeki düğme türü, ev sahibi işaretinin sayısı, oyuncu sayısı,
@@ -96,7 +106,7 @@ void main() {
       tester,
       _LobbyRepository(userId: 'host-user', players: [_me, _guest]),
     );
-    final hero = tester.getRect(find.byType(SahneStageCard));
+    final hero = tester.getRect(find.byKey(const ValueKey('room-hero')));
     expect(
       hero.height,
       lessThanOrEqualTo(300),
@@ -113,7 +123,7 @@ void main() {
       tester,
       _LobbyRepository(userId: 'host-user', players: [_me, _guest]),
     );
-    final hero = find.byType(SahneStageCard);
+    final hero = find.byKey(const ValueKey('room-hero'));
     expect(
       find.descendant(of: hero, matching: find.byType(SahneButton)),
       findsNothing,
@@ -197,28 +207,43 @@ void main() {
       tester,
       _LobbyRepository(userId: 'host-user', players: [_me, _guest]),
     );
+    // Tepkiler "Sohbet" düğmesinin arkasında: kapalıyken lobide yok.
+    expect(find.byType(SahneRailChip), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('room-chat-toggle')));
+    await tester.pump(const Duration(milliseconds: 300));
     expect(find.byType(SahneRailChip), findsWidgets);
   });
 
-  testWidgets('sohbet satırı yüzeysiz metin eylemi, kart içinde değil', (
-    tester,
-  ) async {
-    await _open(
-      tester,
-      _LobbyRepository(userId: 'host-user', players: [_me, _guest]),
-    );
-    final toggle = find.byKey(const ValueKey('room-chat-toggle'));
-    expect(toggle, findsOneWidget);
-    expect(
-      find.ancestor(of: toggle, matching: find.byType(SahneListGroup)),
-      findsNothing,
-      reason: 'Sohbet "Hazırım" kartıyla aynı yüzey ağırlığındaydı.',
-    );
-    expect(
-      find.ancestor(of: toggle, matching: find.byType(SahneSurfaceCard)),
-      findsNothing,
-    );
-  });
+  testWidgets(
+    'sohbet başlıkta küçük ikon düğmesi, tam genişlik ikincil düğme değil',
+    (tester) async {
+      await _open(
+        tester,
+        _LobbyRepository(userId: 'host-user', players: [_me, _guest]),
+      );
+      final toggle = find.byKey(const ValueKey('room-chat-toggle'));
+      expect(toggle, findsOneWidget);
+      expect(
+        find.ancestor(of: toggle, matching: find.byType(SahneListGroup)),
+        findsNothing,
+        reason: 'Sohbet "Hazırım" kartıyla aynı yüzey ağırlığındaydı.',
+      );
+      expect(
+        find.ancestor(of: toggle, matching: find.byType(SahneSurfaceCard)),
+        findsNothing,
+      );
+      expect(
+        tester.getSize(toggle).width,
+        lessThanOrEqualTo(64),
+        reason:
+            'Sohbet pasif "Yarışı başlat"la karışan tam genişlik düğme değil.',
+      );
+      expect(
+        find.descendant(of: toggle, matching: find.byType(FilledButton)),
+        findsNothing,
+      );
+    },
+  );
 
   testWidgets('konuğun alt perdesi ölü düğme değil, bekleme satırı', (
     tester,
@@ -259,5 +284,26 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.byKey(const ValueKey('room-code')), findsOneWidget);
     expect(find.byKey(const ValueKey('room-player-count')), findsOneWidget);
+  });
+
+  testWidgets('ev sahibi yalnızken de kart ve rozet öteki durumlarla aynı', (
+    tester,
+  ) async {
+    await _open(tester, _LobbyRepository(userId: 'host-user', players: [_me]));
+    final hero = find.byKey(const ValueKey('room-hero'));
+    expect(
+      find.descendant(of: hero, matching: find.byType(SahneButton)),
+      findsNothing,
+      reason:
+          'Yalnızken davet turuncu dolu düğmeye dönüp kartı ötekilerden '
+          'farklı yapıyordu; durumlar arası bileşen kayması.',
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('room-player-tile-1')),
+        matching: find.text('Ev sahibi'),
+      ),
+      findsOneWidget,
+    );
   });
 }

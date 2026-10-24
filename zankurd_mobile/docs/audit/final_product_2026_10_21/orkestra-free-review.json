@@ -1,0 +1,36 @@
+{
+  "profile": "free",
+  "members": [
+    "or-lightning"
+  ],
+  "requested_members": 1,
+  "role": "kod",
+  "max_calls": 1,
+  "parallel": 2,
+  "quota": false,
+  "sources": [
+    {
+      "path": "lib/src/widgets/todays_review_card.dart",
+      "start": 130,
+      "end": 185,
+      "sha256": "65d6370c4647345ce5244bcc213d8511084b357aaaccc00a009372a67db2b3d0"
+    }
+  ],
+  "synthesis_member": null,
+  "id": "20261021-113408-a8e71d82",
+  "question": "Kısa kod denetimi. Bu async işlevde çift dokunma, widget dispose ve hata sonrası yeniden deneme için en fazla 1 somut regresyon bul. Yoksa bulgu yok yaz. Yalnız verilen kodu değerlendir, 100 kelime sınır.",
+  "results": [
+    {
+      "id": "or-lightning",
+      "status": "incomplete",
+      "text": "",
+      "diagnostic": "Yanıt tamamlanmadı: length",
+      "returncode": 0,
+      "seconds": 45.227,
+      "model": "openrouter/nvidia/nemotron-3.5-lightning:free",
+      "verified": false
+    }
+  ],
+  "synthesis": null,
+  "complete": false
+}

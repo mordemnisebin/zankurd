@@ -14,7 +14,7 @@ import 'sahne/sahne.dart';
   return (base: t.s2, highlight: t.s3);
 }
 
-BeveledRectangleBorder _shapeFor(double radius) => radius >= SahneShape.lValue
+OutlinedBorder _shapeFor(double radius) => radius >= SahneShape.lValue
     ? SahneShape.l
     : radius >= SahneShape.mValue
     ? SahneShape.m

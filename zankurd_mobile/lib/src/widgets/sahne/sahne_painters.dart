@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -327,24 +328,16 @@ class SahneStagePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final box = Offset.zero & size;
-    final base = race
-        ? const LinearGradient(
-            // CSS 155°: aşağı ve biraz sağa.
-            begin: Alignment(-0.47, -1),
-            end: Alignment(0.47, 1),
-            colors: [
-              SahneStageColors.race1,
-              SahneStageColors.race2,
-              SahneStageColors.race3,
-            ],
-            stops: [0, 0.52, 1],
-          )
-        : const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [SahneStageColors.top, SahneStageColors.bottom],
-          );
-    canvas.drawRect(box, Paint()..shader = base.createShader(box));
+    // 2026-10-19 sadeleşme (ikinci tur): büyük koyu kartlarda degrade
+    // yok. Eski doğrusal degrade (yarışta üç duraklı lal, öğrenmede
+    // çivit) koyu temada kartı "ışıklı panel" gibi gösteriyor ve ana
+    // ekrandaki sakin yüzeylerle çelişiyordu; artık düz dolgu (yarış: orta
+    // lal `race2`, öteki: sahne kartı üst tonu). Rol radyali (ince köşe ışığı)
+    // aynen kalır.
+    canvas.drawRect(
+      box,
+      Paint()..color = race ? SahneStageColors.race2 : SahneStageColors.top,
+    );
     final g = glow;
     if (g != null) {
       paintEllipseGlow(
@@ -510,6 +503,210 @@ class SahneRidgePainter extends CustomPainter {
       oldDelegate.color != color;
 }
 
+/// Günün dersi kartının tepesindeki manzara ("Çiya", 2026-10-20).
+///
+/// Uygulamanın dağ sırtı ([SahneRidgePainter.ridgeLine], logodaki dağ)
+/// büyür ve manzaraya döner: gökyüzü degradesi, üç katman sırt (uzak açık,
+/// orta = logo sırtı, yakın koyu taban) ve güneş. Gecede gökte yıldızlar,
+/// güneş yerine zirvede TEK turuncu ışık. Renkler belirteçtir
+/// ([SahneTokens.vistaSkyTop] …); degrade yalnız gökte, bulanıklık ve
+/// `saveLayer` yok. Metin ve düğme manzaranın üstüne binmez: şerit kartın
+/// ayrı bir satırıdır.
+class SahneVistaPainter extends CustomPainter {
+  const SahneVistaPainter(this.palette);
+
+  SahneVistaPainter.of(SahneVistaPhase phase)
+    : this(SahneVistaPalette.of(phase));
+
+  final SahneVistaPalette palette;
+
+  /// Uzak sırt (maketteki açık katman), 0–1 ızgarasında.
+  static const List<Offset> farLine = [
+    Offset(0.00, 0.40),
+    Offset(0.08, 0.30),
+    Offset(0.14, 0.35),
+    Offset(0.22, 0.18),
+    Offset(0.27, 0.24),
+    Offset(0.33, 0.12),
+    Offset(0.40, 0.27),
+    Offset(0.48, 0.22),
+    Offset(0.55, 0.33),
+    Offset(0.63, 0.15),
+    Offset(0.70, 0.21),
+    Offset(0.76, 0.08),
+    Offset(0.83, 0.25),
+    Offset(0.90, 0.19),
+    Offset(1.00, 0.34),
+  ];
+
+  /// Gece yıldızları (sabit, 0–1 ızgarasında; zirvenin çevresi boş).
+  static const List<Offset> stars = [
+    Offset(0.06, 0.14),
+    Offset(0.13, 0.32),
+    Offset(0.21, 0.08),
+    Offset(0.30, 0.22),
+    Offset(0.37, 0.06),
+    Offset(0.62, 0.10),
+    Offset(0.69, 0.28),
+    Offset(0.78, 0.07),
+    Offset(0.86, 0.20),
+    Offset(0.94, 0.09),
+  ];
+
+  static Path _line(List<Offset> line, Rect box) {
+    final path = Path()..moveTo(box.left, box.bottom);
+    for (final p in line) {
+      path.lineTo(box.left + p.dx * box.width, box.top + p.dy * box.height);
+    }
+    return path
+      ..lineTo(box.right, box.bottom)
+      ..close();
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.isEmpty) return;
+    final rect = Offset.zero & size;
+    canvas.drawRect(
+      rect,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [palette.skyTop, palette.skyBottom],
+        ).createShader(rect),
+    );
+    final h = size.height;
+    final w = size.width;
+    // Orta sırt (logo sırtı) şeridin %25'inden başlar; zirvesi oradadır.
+    final midBox = Rect.fromLTWH(0, h * 0.25, w, h * 0.75);
+    final peak = Offset(
+      midBox.left + 0.50 * midBox.width,
+      midBox.top + 0.00 * midBox.height,
+    );
+    if (palette.stars) {
+      final starPaint = Paint()..color = palette.star.withValues(alpha: 0.7);
+      for (final p in stars) {
+        canvas.drawCircle(Offset(p.dx * w, p.dy * h), 1.1, starPaint);
+      }
+    } else {
+      // Güneş zirvenin sağ arkasında, sırtın ardından doğar.
+      final c = Offset(w * palette.sunX, h * palette.sunY);
+      final r = h * palette.sunR;
+      final sun = palette.sun;
+      canvas.drawCircle(
+        c,
+        r * 1.5,
+        Paint()..color = sun.withValues(alpha: 0.22),
+      );
+      // 21 ışınlı Roj (Kürt güneşi; tasarım oylaması 2026-10-22, 19 modelden
+      // 15'i EVET): ince üçgen ışınlar diskin çevresinde. Gece paletinde
+      // güneş yoktur (yıldızlar + zirvede tek ışık), ışınlar da yoktur.
+      final rays = Path();
+      const count = 21;
+      for (var i = 0; i < count; i++) {
+        final a = -math.pi / 2 + i * 2 * math.pi / count;
+        const half = math.pi / count * 0.42;
+        final inner = r * 1.12;
+        final outer = r * 1.62;
+        rays
+          ..moveTo(
+            c.dx + inner * math.cos(a - half),
+            c.dy + inner * math.sin(a - half),
+          )
+          ..lineTo(c.dx + outer * math.cos(a), c.dy + outer * math.sin(a))
+          ..lineTo(
+            c.dx + inner * math.cos(a + half),
+            c.dy + inner * math.sin(a + half),
+          )
+          ..close();
+      }
+      canvas.drawPath(rays, Paint()..color = sun.withValues(alpha: 0.85));
+      canvas.drawCircle(c, r, Paint()..color = sun);
+    }
+    canvas.drawPath(
+      _line(farLine, Rect.fromLTWH(0, h * 0.40, w, h * 0.60)),
+      Paint()..color = palette.ridgeFar,
+    );
+    canvas.drawPath(
+      SahneRidgePainter.ridgePath(midBox),
+      Paint()..color = palette.ridgeMid,
+    );
+    // Yakın taban: alçak, dalgasız koyu şerit.
+    canvas.drawPath(
+      _line(const [
+        Offset(0.00, 0.30),
+        Offset(0.20, 0.45),
+        Offset(0.42, 0.25),
+        Offset(0.66, 0.50),
+        Offset(0.86, 0.20),
+        Offset(1.00, 0.35),
+      ], Rect.fromLTWH(0, h * 0.80, w, h * 0.20)),
+      Paint()..color = palette.ridgeNear,
+    );
+    if (palette.stars) {
+      final sun = palette.sun;
+      // Zirvede TEK turuncu ışık: küçük hale + nokta.
+      canvas.drawCircle(peak, 6, Paint()..color = sun.withValues(alpha: 0.25));
+      canvas.drawCircle(peak, 2.5, Paint()..color = sun);
+    }
+  }
+
+  @override
+  bool shouldRepaint(SahneVistaPainter old) => old.palette != palette;
+}
+
+/// Manzara şeridi: kartın tepesinde tam genişlik, en çok [maxHeight].
+/// Dekoratiftir, ekran okuyucuya görünmez.
+class SahneVistaStrip extends StatefulWidget {
+  const SahneVistaStrip({super.key, this.height = defaultHeight});
+
+  /// Kurulun tek itirazı manzaranın kartı büyütüp konuları aşağı itmesiydi:
+  /// şerit ALÇAKTIR (≤ [maxHeight]); 390×844'te konu ızgarasının ilk satırı
+  /// ilk ekranda kalır (bekçi: `manzara_seridi_test.dart`).
+  static const double defaultHeight = 88;
+  static const double maxHeight = 100;
+
+  final double height;
+
+  @override
+  State<SahneVistaStrip> createState() => _SahneVistaStripState();
+}
+
+/// Dönemi cihaz saatinden alır ([SahneClock]); açıkken dakikada bir bakar,
+/// dönem değişirse (19:59→20:00) yeniden çizer. Tema dönemi etkilemez.
+class _SahneVistaStripState extends State<SahneVistaStrip> {
+  late SahneVistaPhase _phase = SahneVistaPhase.now();
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(minutes: 1), (_) {
+      final next = SahneVistaPhase.now();
+      if (next != _phase && mounted) setState(() => _phase = next);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ExcludeSemantics(
+      child: SizedBox(
+        key: const ValueKey('sahne-vista-strip'),
+        height: widget.height.clamp(0, SahneVistaStrip.maxHeight),
+        width: double.infinity,
+        child: CustomPaint(painter: SahneVistaPainter.of(_phase)),
+      ),
+    );
+  }
+}
+
 /// Sonuç kahramanının arkası: sonuç ışınları + dağ sırtı ufku (solo ve
 /// düello sonucu).
 ///
@@ -536,12 +733,19 @@ class SahneResultBackdropPainter extends CustomPainter {
     required this.raysCenterY,
     required this.bg,
     required this.ridge,
+    this.tinted = false,
   });
 
   final bool rays;
   final double raysCenterY;
   final Color bg;
   final Color ridge;
+
+  /// Renkli sahnede ([SahneStageScaffold.scene]) ışınlar düz zemine değil
+  /// gradyana düşer: kenarlarda `bg` rengiyle örtmek yerine ışının KENDİ
+  /// opaklığı merkezden dışa söner; dağ sırtı opak bir bant değil %16 siyah
+  /// gölgedir (maketteki gibi).
+  final bool tinted;
 
   static const double _raysRadius = 300;
   static const double _rayDegrees = 5;
@@ -552,7 +756,38 @@ class SahneResultBackdropPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (rays) {
+    if (rays && tinted) {
+      final center = Offset(size.width / 2, raysCenterY);
+      final rect = Rect.fromCircle(center: center, radius: _raysRadius);
+      canvas
+        ..saveLayer(rect, Paint())
+        ..clipPath(Path()..addOval(rect));
+      const period = _rayPeriodDegrees * math.pi / 180;
+      const on = _rayDegrees / _rayPeriodDegrees;
+      // Hafif ışınlar: düşük saydamlıkta sıcak altın.
+      const ray = SahneVivid.sceneRay;
+      canvas
+        ..drawRect(
+          rect,
+          Paint()
+            ..shader = const SweepGradient(
+              endAngle: period,
+              tileMode: TileMode.repeated,
+              colors: [ray, ray, Colors.transparent, Colors.transparent],
+              stops: [0, on, on, 1],
+            ).createShader(rect),
+        )
+        ..drawRect(
+          rect,
+          Paint()
+            ..blendMode = BlendMode.dstIn
+            ..shader = const RadialGradient(
+              colors: [SahneVivid.onFill, Colors.transparent],
+              stops: [0.16, 0.74],
+            ).createShader(rect),
+        )
+        ..restore();
+    } else if (rays) {
       final center = Offset(size.width / 2, raysCenterY);
       final rect = Rect.fromCircle(center: center, radius: _raysRadius);
       canvas.save();
@@ -593,6 +828,20 @@ class SahneResultBackdropPainter extends CustomPainter {
       ridgeHeight,
     );
     final path = SahneRidgePainter.ridgePath(box, floor: SahneSpace.x3);
+    if (tinted) {
+      // %16 siyah gölge, dibe doğru söner: kahramanın altında sert bir
+      // yatay kenar kalmasın.
+      canvas.drawPath(
+        path,
+        Paint()
+          ..shader = const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [SahneVivid.sceneRidge, Colors.transparent],
+          ).createShader(box),
+      );
+      return;
+    }
     canvas.drawPath(path, Paint()..color = bg);
     canvas.drawPath(path, Paint()..color = ridge.withValues(alpha: 0.4));
   }
@@ -602,6 +851,7 @@ class SahneResultBackdropPainter extends CustomPainter {
       old.rays != rays ||
       old.raysCenterY != raysCenterY ||
       old.bg != bg ||
+      old.tinted != tinted ||
       old.ridge != ridge;
 }
 

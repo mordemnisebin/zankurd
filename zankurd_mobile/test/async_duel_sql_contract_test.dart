@@ -315,7 +315,9 @@ void main() {
       expect(body, contains('coalesce(v_correct_option = p_choice, false)'));
     });
 
-    test('rakip eşleşince kendi 48 saatini alır', () {
+    // Tarihsel göç (2026-09-28): 48 saat. 24 saate 2026-10-24_duello_sirasi.sql
+    // indirdi (bekçi: duello_sirasi_sql_test.dart); bu dosya ESKİ göçü sabitler.
+    test('rakip eşleşince kendi 48 saatini alır (2026-09-28 göçü)', () {
       final body = functionBody('start_async_duel');
       expect(
         body,

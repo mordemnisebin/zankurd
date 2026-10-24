@@ -37,8 +37,6 @@ void main() {
     expect(find.text('Başla'), findsOneWidget);
     expect(find.text('Sonraki'), findsNothing);
 
-    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-    await tester.pump();
     await tester.tap(find.text('Başla'));
     expect(completed, 1);
   });
@@ -96,6 +94,8 @@ void main() {
   testWidgets('onboarding her adımda sahne kartı kimliğini kullanır', (
     tester,
   ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(
       ChangeNotifierProvider(
         create: (_) => LanguageProvider()..setLang('tr'),
@@ -175,8 +175,13 @@ void main() {
         ValueKey('onboarding-language-tr'),
       ]) {
         final chip = tester.getSize(find.byKey(key));
-        expect(chip.width, lessThanOrEqualTo(72));
-        expect(chip.height, lessThanOrEqualTo(64));
+        // Dil seçici büyük hedeflidir (56 yüksek, sütunun yarısı) ama başlık
+        // alanının tamamına yayılmaz.
+        expect(
+          chip.width,
+          lessThanOrEqualTo(SahneEntryScaffold.columnWidth / 2),
+        );
+        expect(chip.height, inInclusiveRange(56, 64));
         expect(
           tester
               .getSemantics(find.byKey(key))

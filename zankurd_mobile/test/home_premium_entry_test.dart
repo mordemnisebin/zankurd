@@ -7,7 +7,6 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/paywall_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
-import 'package:zankurd_mobile/src/widgets/app_row_card.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -41,6 +40,7 @@ void main() {
     AchievementStore.resetInstance();
     // Satın alınabilirlik kapısı derleme bayrağıdır; testte düğmeyle açılır.
     AppConfig.debugHasRevenuecatConfig = true;
+    PremiumService.debugCanSell = true;
     SharedPreferences.setMockInitialValues({
       'zankurd.onboarding.seen': true,
       'zankurd.profileName.completed.user': true,
@@ -51,6 +51,7 @@ void main() {
 
   tearDown(() {
     AppConfig.debugHasRevenuecatConfig = null;
+    PremiumService.debugCanSell = null;
   });
 
   Future<void> pumpHome(
@@ -79,11 +80,6 @@ void main() {
       reason:
           'Satın alma ekranına ana ekrandan giriş yok; tek yol yine ayarların '
           'en altı demektir.',
-    );
-    expect(
-      tester.widget(row),
-      isNot(isA<AppRowCard>()),
-      reason: 'Premium girişi Home üzerinde ayrı bir kart gibi yarışmamalı.',
     );
     expect(
       find.byKey(const ValueKey('home-premium-flat-surface')),
@@ -139,5 +135,14 @@ void main() {
       findsNothing,
       reason: 'Satın alınabilir ürün yokken satış satırı çiziliyor.',
     );
+  });
+
+  // 2026-10-23: satılabilir paket yokken (ödeme sözleşmesi/satıcı hesabı
+  // eksik) satır gizli; paywall "paketler henüz aktif değil" diyen çıkmaz
+  // sokaktı.
+  testWidgets('satılabilir paket yoksa Pro satırı görünmez', (tester) async {
+    PremiumService.debugCanSell = false;
+    await pumpHome(tester);
+    expect(find.byKey(const ValueKey('home-premium-row')), findsNothing);
   });
 }

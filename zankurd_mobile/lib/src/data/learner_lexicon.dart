@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+import '../utils/kurmanci_text_key.dart';
+
 @immutable
 class LearnerLexiconSource {
   const LearnerLexiconSource({
@@ -75,14 +77,14 @@ class LearnerLexicon {
       id: 'grammar_1',
       titleKu: 'Cînavkên kesane',
       titleTr: 'Şahıs zamirleri',
-      categoryKu: 'Gramer',
+      categoryKu: 'Rêziman',
       categoryTr: 'Dilbilgisi',
     ),
     'grammar_2': LearnerLexiconSource(
       id: 'grammar_2',
       titleKu: 'Tewandin',
       titleTr: 'Büküm (hal çekimi)',
-      categoryKu: 'Gramer',
+      categoryKu: 'Rêziman',
       categoryTr: 'Dilbilgisi',
     ),
     'culture_1': LearnerLexiconSource(
@@ -129,7 +131,7 @@ class LearnerLexicon {
     ),
     'geography_1': LearnerLexiconSource(
       id: 'geography_1',
-      titleKu: 'Erdnîgarîya Kurdistanê',
+      titleKu: 'Erdnîgariya Kurdistanê',
       titleTr: 'Coğrafya',
       categoryKu: 'Erdnîgarî',
       categoryTr: 'Coğrafya',
@@ -159,14 +161,14 @@ class LearnerLexicon {
       id: 'time_1',
       titleKu: 'Roj û meh',
       titleTr: 'Günler & aylar',
-      categoryKu: 'Demjimêr',
+      categoryKu: 'Dem',
       categoryTr: 'Zaman',
     ),
     'time_2': LearnerLexiconSource(
       id: 'time_2',
       titleKu: 'Serdem û demjimêr',
       titleTr: 'Zaman dilimleri',
-      categoryKu: 'Demjimêr',
+      categoryKu: 'Dem',
       categoryTr: 'Zaman',
     ),
     'alphabet_1': LearnerLexiconSource(
@@ -234,7 +236,7 @@ class LearnerLexicon {
     ),
     'questions_1': LearnerLexiconSource(
       id: 'questions_1',
-      titleKu: 'Pirs',
+      titleKu: 'Peyvên pirsê',
       titleTr: 'Soru kelimeleri',
       categoryKu: 'Jiyana rojane',
       categoryTr: 'Gündelik hayat',
@@ -309,7 +311,7 @@ class LearnerLexicon {
       id: 'grammar_bun',
       titleKu: 'Lêkera "bûn"',
       titleTr: 'Olmak fiili',
-      categoryKu: 'Gramer',
+      categoryKu: 'Rêziman',
       categoryTr: 'Dilbilgisi',
     ),
     'culture_dengbeji': LearnerLexiconSource(
@@ -323,7 +325,7 @@ class LearnerLexicon {
       id: 'time_seasons',
       titleKu: 'Demsal',
       titleTr: 'Mevsimler',
-      categoryKu: 'Demjimêr',
+      categoryKu: 'Dem',
       categoryTr: 'Zaman',
     ),
     'questions': LearnerLexiconSource(
@@ -465,7 +467,7 @@ class LearnerLexicon {
     ),
     LearnerLexiconEntry(
       id: 'dilan',
-      termKu: 'Dilan',
+      termKu: 'Dîlan',
       meaningTr: 'Düğün / Eğlence',
       sourceId: 'culture_1',
     ),
@@ -614,7 +616,7 @@ class LearnerLexicon {
       termKu: 'Şêr',
       meaningTr: 'Aslan',
       sourceId: 'animals_2',
-      forms: ['şerê', 'serî', 'seran', 'şerên', 'şerek', 'şerekî'],
+      forms: ['şêrê', 'şêrî', 'şêran', 'şêrên', 'şêrek', 'şêrekî'],
     ),
     LearnerLexiconEntry(
       id: 'gur',
@@ -648,7 +650,7 @@ class LearnerLexicon {
     ),
     LearnerLexiconEntry(
       id: 'qijak',
-      termKu: 'Qijak',
+      termKu: 'Qijik',
       meaningTr: 'Karga',
       sourceId: 'animals_2',
       forms: ['qijik'],
@@ -856,7 +858,7 @@ class LearnerLexicon {
     ),
     LearnerLexiconEntry(
       id: 'alfabe',
-      termKu: 'Alfabe',
+      termKu: 'Elîfbê',
       meaningTr: 'Alfabe',
       sourceId: 'alphabet_1',
       forms: ['alfabeya'],
@@ -993,19 +995,6 @@ class LearnerLexicon {
       termKu: 'Bi xêr hatî',
       meaningTr: 'Hoş geldin',
       sourceId: 'greetings_2',
-      forms: [
-        'hatî',
-        'hatin',
-        'hat',
-        'hate',
-        'tên',
-        'têt',
-        'têm',
-        'nayê',
-        'nayên',
-        'were',
-        'werin',
-      ],
     ),
     LearnerLexiconEntry(
       id: 'sibeha-te-bi-xer',
@@ -1474,7 +1463,7 @@ class LearnerLexicon {
       termKu: 'Çar',
       meaningTr: 'Dört',
       sourceId: 'numbers_1',
-      forms: ['cara', 'carê', 'caran'],
+      forms: ['çaran', 'çarê'],
     ),
     LearnerLexiconEntry(
       id: 'penc',
@@ -1700,7 +1689,6 @@ class LearnerLexicon {
       termKu: 'Re',
       meaningTr: 'ile, -le',
       sourceId: 'questions',
-      forms: ['riya', 'rêya', 'rêyê', 'rêyan'],
     ),
     LearnerLexiconEntry(
       id: 'q-film',
@@ -2107,7 +2095,7 @@ class LearnerLexicon {
       termKu: 'Cih',
       meaningTr: 'yer, mekân',
       sourceId: 'questions',
-      forms: ['cihê', 'cihan', 'cihekî', 'cîhanê', 'cîhana'],
+      forms: ['cihê', 'cihî', 'cihan', 'cihekî'],
     ),
     LearnerLexiconEntry(
       id: 'q-diyar',
@@ -2368,7 +2356,6 @@ class LearnerLexicon {
       termKu: 'Din',
       meaningTr: 'diğer, başka',
       sourceId: 'questions',
-      forms: ['dînê', 'dînî'],
     ),
     LearnerLexiconEntry(
       id: 'q-minak',
@@ -2394,7 +2381,6 @@ class LearnerLexicon {
       termKu: 'Heman',
       meaningTr: 'aynı',
       sourceId: 'questions',
-      forms: ['hêmanê', 'hêmanên', 'hêmanan'],
     ),
     LearnerLexiconEntry(
       id: 'q-yekjimar',
@@ -2724,7 +2710,7 @@ class LearnerLexicon {
       termKu: 'Têlefon',
       meaningTr: 'telefon',
       sourceId: 'questions',
-      forms: ['têlefona', 'têlefonan', 'têlefoneke', 'telefonê'],
+      forms: ['têlefona', 'têlefonê', 'têlefonan', 'têlefoneke'],
     ),
     LearnerLexiconEntry(
       id: 'q-belgefilm',
@@ -2875,7 +2861,7 @@ class LearnerLexicon {
       termKu: 'Derbarê',
       meaningTr: 'hakkında',
       sourceId: 'questions',
-      forms: ['barê'],
+      forms: ['derbarê'],
     ),
     LearnerLexiconEntry(
       id: 'q-tegih',
@@ -3178,7 +3164,7 @@ class LearnerLexicon {
       termKu: 'Derî',
       meaningTr: 'kapı',
       sourceId: 'questions',
-      forms: ['derîyê', 'deriyan'],
+      forms: ['deriyê', 'deriyan'],
     ),
     LearnerLexiconEntry(
       id: 'q-internet',
@@ -3284,7 +3270,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-xwestin',
       termKu: 'Xwestin',
-      meaningTr: 'istiyor',
+      meaningTr: 'istemek',
       sourceId: 'questions',
       forms: [
         'dixwaze',
@@ -3312,7 +3298,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-herikin',
       termKu: 'Herikîn',
-      meaningTr: 'akışı',
+      meaningTr: 'akmak, akış',
       sourceId: 'questions',
       forms: ['herikîna', 'herikînê', 'diherike', 'herikî', 'biherike'],
     ),
@@ -3326,7 +3312,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-guherin',
       termKu: 'Guherîn',
-      meaningTr: 'değişimi',
+      meaningTr: 'değişmek, değişim',
       sourceId: 'questions',
       forms: ['guherîna', 'guherînê', 'diguhere'],
     ),
@@ -3396,7 +3382,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-bilindahi',
       termKu: 'Bilindahî',
-      meaningTr: 'yüksekliği',
+      meaningTr: 'yükseklik',
       sourceId: 'questions',
       forms: ['bilindahiya', 'bilindahiyê'],
     ),
@@ -3818,7 +3804,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-veguherandin',
       termKu: 'Veguherandin',
-      meaningTr: 'dönüştürür',
+      meaningTr: 'dönüştürmek',
       sourceId: 'questions',
       forms: ['vediguherîne', 'vediguherînin'],
     ),
@@ -3887,7 +3873,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-hilgirtin',
       termKu: 'Hilgirtin',
-      meaningTr: 'taşır, içerir',
+      meaningTr: 'taşımak, kaldırmak, içermek',
       sourceId: 'questions',
       forms: ['hildigire', 'hilgire'],
     ),
@@ -4349,7 +4335,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-gihandin',
       termKu: 'Gihandin',
-      meaningTr: 'ulaştırır, birleştirir',
+      meaningTr: 'ulaştırmak, birleştirmek',
       sourceId: 'questions',
       forms: ['digihîne'],
     ),
@@ -5145,7 +5131,7 @@ class LearnerLexicon {
     ),
     LearnerLexiconEntry(
       id: 'q-tije',
-      termKu: 'Tije',
+      termKu: 'Tijî',
       meaningTr: 'dolu',
       sourceId: 'questions',
     ),
@@ -5402,7 +5388,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-pirsin',
       termKu: 'Pirsîn',
-      meaningTr: 'sorarsa',
+      meaningTr: 'sormak',
       sourceId: 'questions',
       forms: ['dipirse', 'bipirse'],
     ),
@@ -5550,18 +5536,23 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-hatin',
       termKu: 'Hatin',
-      meaningTr: 'edilmek',
+      meaningTr: 'gelmek (edilgen yardımcı fiil: edilmek)',
       sourceId: 'questions',
       forms: [
         'hat',
         'hate',
+        'tê',
         'tên',
         'têt',
         'têm',
+        'têne',
         'nayê',
         'nayên',
         'were',
         'werin',
+        'hatî',
+        'hatiye',
+        'dihat',
       ],
     ),
     LearnerLexiconEntry(
@@ -5952,7 +5943,7 @@ class LearnerLexicon {
     ),
     LearnerLexiconEntry(
       id: 'linge_min_diese',
-      termKu: 'Lingê min diêşe',
+      termKu: 'Linga min diêşe',
       meaningTr: 'Bacağım, ayağım ağrıyor',
       sourceId: 'body_1',
     ),
@@ -7414,7 +7405,7 @@ class LearnerLexicon {
     ),
     LearnerLexiconEntry(
       id: 'guhdar_dike',
-      termKu: 'guhdar dike',
+      termKu: 'guhdarî dike',
       meaningTr: 'dinliyor',
       sourceId: 'school_1',
     ),
@@ -7754,6 +7745,92 @@ class LearnerLexicon {
       sourceId: 'questions',
       forms: ['diajo', 'naajo', 'ajo'],
     ),
+    LearnerLexiconEntry(
+      id: 'q-de',
+      termKu: 'De',
+      meaningTr: '-de, -da (di ... de: içinde)',
+      sourceId: 'questions',
+    ),
+    LearnerLexiconEntry(
+      id: 'q-ser-bas',
+      termKu: 'Ser',
+      meaningTr: 'baş; üst (li ser: üzerinde)',
+      sourceId: 'questions',
+      forms: ['serê'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-re-yol',
+      termKu: 'Rê',
+      meaningTr: 'yol',
+      sourceId: 'questions',
+      forms: ['rêya', 'rêyê', 'rêyan'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-ser-savas',
+      termKu: 'Şer',
+      meaningTr: 'savaş',
+      sourceId: 'questions',
+      forms: ['şerê', 'şerên'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-cihan',
+      termKu: 'Cîhan',
+      meaningTr: 'dünya',
+      sourceId: 'questions',
+      forms: ['cîhanê', 'cîhana'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-car-kez',
+      termKu: 'Car',
+      meaningTr: 'kez, defa',
+      sourceId: 'questions',
+      forms: ['cara', 'carê', 'caran'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-din-inanc',
+      termKu: 'Dîn',
+      meaningTr: 'din, inanç',
+      sourceId: 'questions',
+      forms: ['dînê', 'dînî'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-heman-unsur',
+      termKu: 'Hêman',
+      meaningTr: 'unsur, element',
+      sourceId: 'questions',
+      forms: ['hêmanê', 'hêmanên', 'hêmanan'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-nisan-isaret',
+      termKu: 'Nîşan',
+      meaningTr: 'işaret, belirti',
+      sourceId: 'questions',
+      forms: ['nîşana', 'nîşanê', 'nîşaneya'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-we-disil',
+      termKu: 'Wê',
+      meaningTr: 'o (dişil, eğik hâl)',
+      sourceId: 'questions',
+    ),
+    LearnerLexiconEntry(
+      id: 'q-ji-de',
+      termKu: 'Jî',
+      meaningTr: 'de, da, dahi',
+      sourceId: 'questions',
+    ),
+    LearnerLexiconEntry(
+      id: 'q-bikaranin',
+      termKu: 'Bikaranîn',
+      meaningTr: 'kullanma, kullanım',
+      sourceId: 'questions',
+    ),
+    LearnerLexiconEntry(
+      id: 'q-ber-on',
+      termKu: 'Ber',
+      meaningTr: 'ön, yan (ji ber: yüzünden)',
+      sourceId: 'questions',
+    ),
   ];
 
   static LearnerLexiconSource sourceFor(LearnerLexiconEntry entry) {
@@ -7762,10 +7839,22 @@ class LearnerLexicon {
     return source!;
   }
 
+  static Map<String, List<LearnerLexiconEntry>>? _bySource;
+
+  /// Kaynağın maddeleri; kaynağa göre dizin bir kez kurulur (kelime tekrarı
+  /// her soruda çağırır).
   static List<LearnerLexiconEntry> entriesForSource(String sourceId) {
-    return List.unmodifiable(
-      entries.where((entry) => entry.sourceId == sourceId),
-    );
+    final index = _bySource ??= () {
+      final map = <String, List<LearnerLexiconEntry>>{};
+      for (final entry in entries) {
+        map.putIfAbsent(entry.sourceId, () => []).add(entry);
+      }
+      return <String, List<LearnerLexiconEntry>>{
+        for (final item in map.entries)
+          item.key: List<LearnerLexiconEntry>.unmodifiable(item.value),
+      };
+    }();
+    return index[sourceId] ?? const <LearnerLexiconEntry>[];
   }
 
   /// Aramada KARŞILAŞTIRMA için katlanmış biçim: büyük/küçük harf, Türkçe ve
@@ -7777,6 +7866,9 @@ class LearnerLexicon {
   /// Eskiden yalnız `toLowerCase()` vardı: Türkçe klavyeyle yazılan `cay`
   /// `Çay` maddesini bulmuyordu; öğrenen sözcüğün yazımını bilmediği için
   /// aratıyor, yazımı bilmeden doğru yazımı yazması isteniyordu.
+  static final RegExp _whitespacePattern = RegExp(r'\s+');
+  static final RegExp _nonLetterPattern = RegExp(r'[^\p{L}]', unicode: true);
+
   static String foldForSearch(String value) {
     final lowered = value
         .trim()
@@ -7791,7 +7883,7 @@ class LearnerLexicon {
       final char = String.fromCharCode(rune);
       buffer.write(_accentFold[char] ?? char);
     }
-    return buffer.toString().replaceAll(RegExp(r'\s+'), ' ');
+    return buffer.toString().replaceAll(_whitespacePattern, ' ');
   }
 
   static const Map<String, String> _accentFold = {
@@ -7808,19 +7900,45 @@ class LearnerLexicon {
     'ğ': 'g',
   };
 
+  /// Dokunarak sözcük eşlemede KULLANILAN anahtar: küçük harf, birleştirici
+  /// işaretler tek harfe birleşir (`e` + U+0302 -> `ê`, `s` + U+0327 -> `ş`),
+  /// harf olmayanlar atılır, Kurmancî aksanları KORUNUR. Türkçe klavyenin
+  /// noktasız `ı`'sı yine `i`'nin gölgesi sayılır (Kurmancîde `ı` yoktur).
+  ///
+  /// ## Kusur (2026-10-14)
+  ///
+  /// Dokunma eşlemesi de [foldForSearch] ile anahtarlanıyordu: `ê/e`, `î/i`,
+  /// `û/u`, `ş/s`, `ç/c` aynı anahtara düşüyor, `putIfAbsent` sözlükte ilk
+  /// geleni tutuyordu. Oysa bunlar Kurmancîde AYRI harflerdir ve ayrı sözcük
+  /// kurar: `şêr` (aslan) / `şer` (savaş) / `ser` (baş), `çar` (dört) / `car`
+  /// (kez), `dîn` (din) / `din` (öteki), `rê` (yol) / `re`, `cîhan` (dünya) /
+  /// `cih` (yer). Cümlede `ser`e ya da `caran`a dokunan öğrenen "Aslan" ya da
+  /// "Dört" görüyordu.
+  ///
+  /// ## Niçin sessizdi
+  ///
+  /// Balon HER ZAMAN bir anlam gösteriyordu; yanlış sözcüğün anlamı da düzgün
+  /// görünür. Boş balon ya da hata yoktu, öğrenenin ne beklediğini de kimse
+  /// ölçmüyordu. Arama kutusunda katlama doğru (kullanıcı aksansız yazar), ama
+  /// metindeki sözcük zaten doğru yazılmıştır: orada katlama yalnız çarpışma
+  /// üretir. Ses anahtarı (`kurmanciTextKey`) bu harfleri baştan ayrı tutuyordu.
+  static String strictWordKey(String word) {
+    return normalizeKurmanciText(
+      word,
+    ).replaceAll('ı', 'i').replaceAll(_nonLetterPattern, '');
+  }
+
   /// Metindeki TEK bir sözcükten sözlük maddesine: dokununca anlam balonu.
   ///
-  /// Sıra: (1) katlanmış tam eşleşme (terim ya da biçim; `Kûçik / Seg`
-  /// terimi iki ayrı sözcük sayılır), (2) tam eşleşme yoksa sözcüğün BAŞINI
+  /// Sıra: (1) AKSANLARI KORUYAN ([strictWordKey]) tam eşleşme (terim ya da
+  /// biçim; `Kûçik / Seg` terimi iki ayrı sözcük sayılır), (2) tam eşleşme yoksa sözcüğün BAŞINI
   /// oluşturan en uzun sözlük sözcüğü (>= 4 harf, geriye en çok 3 harflik ek
   /// kalmalı; `welatê` → `Welat`: kök + ek. Ek sınırı 2026-10-07'de geldi:
   /// `Dest` (el) sözcüğü `destpêk`, `destûr` gibi başka sözcükleri yanlış
   /// anlamla açıyordu). Tek harfli ya da kısa sözcükler yalnız tam eşleşir (`ez`, `tu`).
   /// Eşleşmezse `null`: sözcük dokunulabilir görünmez.
   static LearnerLexiconEntry? lookup(String token) {
-    final key = foldForSearch(
-      token,
-    ).replaceAll(RegExp(r"[^\p{L}]", unicode: true), '');
+    final key = strictWordKey(token);
     if (key.isEmpty) return null;
     final index = _wordIndex ??= _buildWordIndex();
     final exact = index[key];
@@ -7845,9 +7963,7 @@ class LearnerLexicon {
   static Map<String, LearnerLexiconEntry> _buildWordIndex() {
     final index = <String, LearnerLexiconEntry>{};
     void add(String word, LearnerLexiconEntry entry) {
-      final key = foldForSearch(
-        word,
-      ).replaceAll(RegExp(r"[^\p{L}]", unicode: true), '');
+      final key = strictWordKey(word);
       if (key.isNotEmpty) index.putIfAbsent(key, () => entry);
     }
 
@@ -7864,6 +7980,38 @@ class LearnerLexicon {
     return index;
   }
 
+  static List<
+    ({
+      LearnerLexiconEntry entry,
+      String term,
+      List<String> forms,
+      String meaning,
+    })
+  >?
+  _searchIndex;
+
+  static List<
+    ({
+      LearnerLexiconEntry entry,
+      String term,
+      List<String> forms,
+      String meaning,
+    })
+  >
+  _buildSearchIndex() {
+    return List.unmodifiable([
+      for (final entry in entries)
+        (
+          entry: entry,
+          term: foldForSearch(entry.termKu),
+          forms: List<String>.unmodifiable([
+            for (final form in entry.forms) foldForSearch(form),
+          ]),
+          meaning: foldForSearch(entry.meaningTr),
+        ),
+    ]);
+  }
+
   /// Arama: terim, anlam ve biçimlerde aksansız eşleşme; sonuçlar önce tam
   /// eşleşen, sonra öneki eşleşen, sonra içinde geçen maddeler olarak
   /// sıralanır (eşit derecede olanlar sözlük sırasını korur).
@@ -7871,19 +8019,101 @@ class LearnerLexicon {
     final needle = foldForSearch(query);
     if (needle.isEmpty) return entries;
 
+    final searchEntries = _searchIndex ??= _buildSearchIndex();
     final ranked = <(int, int, LearnerLexiconEntry)>[];
-    for (final (index, entry) in entries.indexed) {
-      final term = foldForSearch(entry.termKu);
-      final forms = [for (final form in entry.forms) foldForSearch(form)];
-      final meaning = foldForSearch(entry.meaningTr);
-      final rank = _rank(needle, term, forms, meaning);
-      if (rank != null) ranked.add((rank, index, entry));
+    for (final (index, item) in searchEntries.indexed) {
+      final rank = _rank(needle, item.term, item.forms, item.meaning);
+      if (rank != null) ranked.add((rank, index, item.entry));
     }
     ranked.sort((a, b) {
       final byRank = a.$1.compareTo(b.$1);
       return byRank != 0 ? byRank : a.$2.compareTo(b.$2);
     });
     return List.unmodifiable([for (final item in ranked) item.$3]);
+  }
+
+  static Map<String, LearnerLexiconEntry>? _byId;
+
+  /// Kimliğe göre madde (kayıtlı kelimeler kimlikle saklanır); yoksa `null`.
+  ///
+  /// Kelime listesi metni değil KİMLİĞİ saklar: sözlükte bir anlam
+  /// düzeltilirse kullanıcının listesi de düzelir; maddesi kaldırılmış bir
+  /// kimlik sessizce yok sayılır.
+  static LearnerLexiconEntry? byId(String id) {
+    final index = _byId ??= {for (final entry in entries) entry.id: entry};
+    return index[id];
+  }
+
+  static List<_MeaningItem>? _meaningIndex;
+
+  /// Tembel, BİR KEZ kurulan anlam dizini: katlanmış anlam, parçalar ve
+  /// sözcükler. Eskiden her tuş vuruşunda bütün sözlük bölünüp katlanıyordu.
+  static List<_MeaningItem> _buildMeaningIndex() {
+    return List.unmodifiable([
+      for (final entry in entries)
+        _MeaningItem(
+          entry: entry,
+          meaning: foldForSearch(entry.meaningTr),
+          parts: [
+            for (final part in entry.meaningTr.split(_meaningSplit))
+              if (part.trim().isNotEmpty) foldForSearch(part),
+          ],
+          words: foldForSearch(entry.meaningTr).split(' '),
+        ),
+    ]);
+  }
+
+  /// Arama sonuçlarının üst sınırı (boş olmayan sorgu); ekran binlerce
+  /// kartı bir anda kurmasın.
+  static const int meaningSearchLimit = 100;
+
+  /// Anlam ayraçları: `Günaydın / İyi günler`, `ön, yan (ji ber: ...)`.
+  static final RegExp _meaningSplit = RegExp(r'\s*[/,;()]\s*');
+
+  /// Türkçe -> Kurmancî arama: yalnız TÜRKÇE anlamlarda arar, eşleşen
+  /// Kurmancî maddeleri döndürür.
+  ///
+  /// ## Kusur / niçin ayrı
+  ///
+  /// [search] terim, biçim ve anlamı tek sıralamada karıştırır; anlam en
+  /// sona düşer. `kapı` yazan öğrenen `Derî`yi bulur ama önüne terim
+  /// içinde `kapi` geçen her şey girebilir. Ters yönde amaç açık: yalnız
+  /// anlamlar taranır.
+  ///
+  /// ## Kural
+  ///
+  /// Katlama [foldForSearch] ile aynıdır: büyük/küçük harf, Türkçe `İ/ı`,
+  /// `ş`, `ğ`, `ç`, `ö`, `ü` yok sayılır (`KAPI`, `kapi`, `Kapı` aynı).
+  /// Sıra: (0) anlamın bir PARÇASI (`/`, `,`, `;`, parantez ayraçlı) aramaya
+  /// eşit, (1) bir parça aramayla BAŞLIYOR, (2) bir SÖZCÜK aramayla
+  /// başlıyor (`Bu kapıdır` <- `kapı`), (3) anlamın herhangi bir yerinde
+  /// geçiyor. Eşit derecede olanlar sözlük sırasını korur.
+  static List<LearnerLexiconEntry> searchByMeaning(String query) {
+    final needle = foldForSearch(query);
+    if (needle.isEmpty) return entries;
+    final index = _meaningIndex ??= _buildMeaningIndex();
+    final ranked = <(int, int, LearnerLexiconEntry)>[];
+    for (final (position, item) in index.indexed) {
+      if (!item.meaning.contains(needle)) continue;
+      final int rank;
+      if (item.parts.contains(needle)) {
+        rank = 0;
+      } else if (item.parts.any((part) => part.startsWith(needle))) {
+        rank = 1;
+      } else if (item.words.any((word) => word.startsWith(needle))) {
+        rank = 2;
+      } else {
+        rank = 3;
+      }
+      ranked.add((rank, position, item.entry));
+    }
+    ranked.sort((a, b) {
+      final byRank = a.$1.compareTo(b.$1);
+      return byRank != 0 ? byRank : a.$2.compareTo(b.$2);
+    });
+    return List.unmodifiable([
+      for (final item in ranked.take(meaningSearchLimit)) item.$3,
+    ]);
   }
 
   static int? _rank(
@@ -7902,4 +8132,18 @@ class LearnerLexicon {
     if (meaning.contains(needle)) return 3;
     return null;
   }
+}
+
+class _MeaningItem {
+  const _MeaningItem({
+    required this.entry,
+    required this.meaning,
+    required this.parts,
+    required this.words,
+  });
+
+  final LearnerLexiconEntry entry;
+  final String meaning;
+  final List<String> parts;
+  final List<String> words;
 }

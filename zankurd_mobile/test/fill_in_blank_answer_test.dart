@@ -37,7 +37,10 @@ void main() {
         reason: '${entry.value} → ${entry.key}',
       );
     }
-    expect(question('pirtûk').acceptsAnswer('pirtuk'), isFalse);
+    // 2026-10-15: 'pirtuk' eskiden reddediliyordu (inceltmesiz yazım yalnız
+    // soru bazında listelenirse kabuldü); artık inceltmesi eksik yazım
+    // kabul edilir ve ekran doğru yazımı gösterir. Başka harf hâlâ yanlış.
+    expect(question('pirtûk').acceptsAnswer('pirtuk'), isTrue);
     expect(question('pirtûk').acceptsAnswer('pirtik'), isFalse);
   });
 
@@ -88,8 +91,12 @@ void main() {
   });
 
   test('farklı Kurmancî sözcükler ASCII katlamasıyla birleşmez', () {
+    // `şer` (savaş) ve `ser` (baş) gerçek sözcüklerdir, `şêr` (aslan) değil.
     expect(question('şêr').acceptsAnswer('ser'), isFalse);
-    expect(question('şev').acceptsAnswer('sev'), isFalse);
+    expect(question('şêr').acceptsAnswer('şer'), isFalse);
+    // Bilinen başka sözcüğe denk gelmeyen inceltmesiz yazım katlanır
+    // (2026-10-15; eskiden bu da reddediliyordu).
+    expect(question('şev').acceptsAnswer('sev'), isTrue);
   });
 
   test('editörün açıkça verdiği alternatif yanıt da kabul edilir', () {

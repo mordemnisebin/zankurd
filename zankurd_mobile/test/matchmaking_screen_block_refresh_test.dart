@@ -66,7 +66,13 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('player-moderation-button')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('player-block-action')));
-    await tester.pumpAndSettle();
+    // Zafer geçişi (1500 ms) dolmadan kalmak için sabit kısa adımlar:
+    // onay penceresi araya girdi, `pumpAndSettle` süreyi aşardı.
+    await tester.pump(const Duration(milliseconds: 150));
+    await tester.pump(const Duration(milliseconds: 150));
+    await tester.tap(find.byKey(const ValueKey('player-moderation-confirm')));
+    await tester.pump(const Duration(milliseconds: 60));
+    await tester.pump(const Duration(milliseconds: 60));
 
     expect(
       find.text('Rojda'),

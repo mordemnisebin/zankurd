@@ -6,7 +6,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../widgets/app_logo.dart';
-import '../widgets/language_toggle.dart';
+import '../widgets/language_picker.dart';
 import '../widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -23,13 +23,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     with SingleTickerProviderStateMixin {
   final _controller = PageController();
   int _page = 0;
-  bool _ageConfirmed = false;
-  // "Başla"ya kutu işaretsizken basılınca eskiden bir SnackBar çıkıyordu:
-  // ne yapılacağını söylemiyordu VE ekranın altındaki "Başla" düğmesini
-  // örtüyordu (2026-09-27 canlı gezinti). Artık kutunun yanında satır içi
-  // gösterilir; yalnız bir başarısız denemeden sonra görünür, kutu
-  // işaretlenince hemen kaybolur.
-  bool _showAgeGateHint = false;
   late final AnimationController _brandController;
   late final Animation<double> _brandScale;
   late final Animation<double> _brandOpacity;
@@ -58,20 +51,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     super.dispose();
   }
 
-  void _completeIfAgeOk() {
-    if (!_ageConfirmed) {
-      setState(() => _showAgeGateHint = true);
-      return;
-    }
-    widget.onComplete();
-  }
-
   @override
   Widget build(BuildContext context) {
     if (ReducedMotionProvider.isReducedIn(context)) {
       _brandController.value = 1;
     }
-    final t = SahneTokens.of(context);
     final reduce = sahneMotionReduced(context);
     final pages = _pages(context);
     final last = _page == pages.length - 1;
@@ -104,22 +88,18 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         final wide = constraints.maxWidth >= 720;
         return SahneEntryScaffold(
           surfaceKey: const ValueKey('onboarding-surface'),
-          // Dil seçimi ilk ekranda görünür olmalı: uygulama doğrudan Kurmancî
-          // açılıyor ve Türkçe okuyan kullanıcı, tanıtımı hiç anlamadan geçmek
-          // zorunda kalıyordu (2026-07-25 canlı denetimi).
-          leading: const LanguageToggle(
-            kuKey: ValueKey('onboarding-language-ku'),
-            trKey: ValueKey('onboarding-language-tr'),
-          ),
+          // Dil seçici artık ilk sayfanın tepesinde, tam adlı ve büyük
+          // ([LanguagePicker]); küçük KU|TR hapı yalnız ikinci sayfada gerekmiyor.
           skip: SahneButton.text(
             label: context.t(K.skip),
             arrow: false,
-            onPressed: _completeIfAgeOk,
+            onPressed: widget.onComplete,
           ),
           progress: pages.length > 1
               ? ExcludeSemantics(
                   child: SahneProgressBar(
                     key: const ValueKey('onboarding-progress'),
+                    tone: SahneProgressTone.action,
                     value: (_page + 1) / pages.length,
                     trailing: '${_page + 1}/${pages.length}',
                   ),
@@ -142,97 +122,24 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               ),
             ),
           ),
-          // Başarısız bir "Başla" denemesinden sonra kutu satırı Şaş halkasıyla
-          // vurgulanır; hemen altında ne yapılacağını söyleyen metin durur (bkz.
-          // [K.ageGateHint]).
-          aboveAction: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              DecoratedBox(
-                decoration: ShapeDecoration(
-                  shape: SahneShape.withSide(
-                    SahneShape.m,
-                    _showAgeGateHint ? t.errTx : Colors.transparent,
-                    width: SahneRing.r2,
-                  ),
-                ),
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: CheckboxListTile(
-                    key: const ValueKey('onboarding-age-gate'),
-                    value: _ageConfirmed,
-                    onChanged: (value) => setState(() {
-                      _ageConfirmed = value ?? false;
-                      if (_ageConfirmed) _showAgeGateHint = false;
-                    }),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: SahneSpace.x1,
-                    ),
-                    shape: SahneShape.m,
-                    title: Text(
-                      context.t(K.ageGateLabel),
-                      style: SahneType.body.copyWith(color: t.tx),
-                    ),
-                  ),
-                ),
-              ),
-              if (_showAgeGateHint) ...[
-                const SizedBox(height: SahneSpace.x1),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: SahneSpace.x2,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 2),
-                        child: Icon(
-                          AppIcons.triangleExclamation,
-                          size: 16,
-                          color: t.errTx,
-                        ),
-                      ),
-                      const SizedBox(width: SahneSpace.x2),
-                      Expanded(
-                        child: Text(
-                          context.t(K.ageGateHint),
-                          key: const ValueKey('onboarding-age-gate-hint'),
-                          style: SahneType.captionStrong.copyWith(
-                            color: t.errTx,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ],
-          ),
-          // Son sayfada kutu işaretsizken "Başla" PASİF görünür (Perde +
-          // üçüncül metin): eskiden tam etkin görünüp basınca hata veriyordu.
-          // Pasif düğmeye basılırsa yine satır içi ipucu çıkar
-          // ([_completeIfAgeOk]) — oyuncu ne eksik olduğunu öğrenir;
-          // doğrulama değişmedi.
-          primary: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: last && !_ageConfirmed ? _completeIfAgeOk : null,
-            child: SahneButton.primary(
-              expand: true,
-              onPressed: last
-                  ? (_ageConfirmed ? _completeIfAgeOk : null)
-                  : () {
-                      _controller.nextPage(
-                        duration: reduce
-                            ? const Duration(milliseconds: 1)
-                            : const Duration(milliseconds: 250),
-                        curve: Curves.easeOutCubic,
-                      );
-                    },
-              label: last ? context.t(K.start) : context.t(K.next),
-            ),
+          // 2026-10-24: yaş kutusu kalktı. Onay kutusu "Sonraki"yi pasif yapıp
+          // ilk ekranda hata gösteriyordu ve kullanıcıların çoğu ilk ekrandaki
+          // çizimi gerçek soru sanıp şıklara dokunuyordu. Yaş şartı artık
+          // Kullanım Şartları'nda (web/terms.html) ve giriş ekranındaki kabul
+          // satırında durur. "Sonraki/Başla" her zaman etkindir.
+          primary: SahneButton.primary(
+            expand: true,
+            onPressed: last
+                ? widget.onComplete
+                : () {
+                    _controller.nextPage(
+                      duration: reduce
+                          ? const Duration(milliseconds: 1)
+                          : const Duration(milliseconds: 250),
+                      curve: Curves.easeOutCubic,
+                    );
+                  },
+            label: last ? context.t(K.start) : context.t(K.next),
           ),
           // "Geri" her yerde alttaki ikincil metin eylemidir (kayıtta da öyle);
           // ilk sayfada geri yok.
@@ -265,10 +172,12 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         // 2026-09-29 Şahnê: öğrenme slaytı Zimrût rolünü taşır; turuncu
         // yalnız alttaki tek birincil düğmede kalır.
         role: SahneRole.learn,
-        // 2026-09-29 doğallık: üç eğik kategori çizimi yerine bankadan
-        // gerçek bir soru — bkz. [OnboardingSampleQuestion].
-        question: OnboardingSampleQuestion.learn,
+        // 2026-10-24: sahte soru kartı kalktı (kullanıcılar şıklara
+        // dokunuyordu); yerine dokunulmaz, soruya benzemeyen bir çizim.
+        icons: const [AppIcons.graduationCap],
+        languagePicker: true,
         title: context.t(K.onbLearnTitle),
+        slogan: context.t(K.dozaSlogan),
         body: context.t(K.onbLearnBody),
         bullets: [
           // Sayı sabit yazılıydı ve Sînema kategorisi eklenince yanlışa
@@ -284,10 +193,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       // kimliği yarışın Boyax sahnesiyle ayrışır.
       _OnboardingData(
         role: SahneRole.race,
-        // 2026-09-29 doğallık: VS amblemi (iki elmas avatar) yerine yarış
-        // sorusu: üstte soru ilerlemesi — elmasın iki anlamından biri.
-        question: OnboardingSampleQuestion.race,
-        showProgress: true,
+        icons: const [AppIcons.swords, AppIcons.trophy],
         title: context.t(K.onbCompeteTitle),
         body: context.t(K.onbCompeteBody),
         bullets: [context.t(K.onbDuelBullet), context.t(K.onbRewardBullet)],
@@ -327,68 +233,33 @@ class _AnimatedBrandLockup extends StatelessWidget {
   }
 }
 
-/// Tanıtım kartındaki soru maketinin verisi.
-///
-/// Uydurma soru değildir: soru bankasında gerçekten bulunan bir sorunun
-/// ([id]) metni ve şıkları, arayüz diline göre. İki soru da "kelimenin
-/// Türkçesi" sorusudur; şıklar iki dilde aynıdır. Bekçi:
-/// `test/onboarding_hero_art_test.dart` metnin ve şıkların bankadakiyle
-/// aynı kaldığını denetler — banka değişirse maket sessizce yalana dönmez.
-@visibleForTesting
-class OnboardingSampleQuestion {
-  const OnboardingSampleQuestion({
-    required this.id,
-    required this.promptKu,
-    required this.promptTr,
-    required this.answers,
-  });
-
-  /// `assets/data/editorial_questions.json` — kolay bir Ziman sorusu.
-  static const learn = OnboardingSampleQuestion(
-    id: 'edit_ziman_0021',
-    promptKu: 'Peyva "dar" bi Tirkî çi ye?',
-    promptTr: '"dar" Türkçede ne demektir?',
-    answers: ['taş', 'yol', 'kapı', 'ağaç'],
-  );
-
-  /// `assets/data/expansion_2026_08_questions.json` — yarış slaytının
-  /// sorusu (yine kolay bir Ziman sorusu).
-  static const race = OnboardingSampleQuestion(
-    id: 'ziman_x_0026',
-    promptKu: 'Rengê "reş" bi tirkî çi ye?',
-    promptTr: '"Reş" rengi Türkçede nedir?',
-    answers: ['Beyaz', 'Siyah', 'Yeşil', 'Sarı'],
-  );
-
-  final String id;
-  final String promptKu;
-  final String promptTr;
-  final List<String> answers;
-}
-
 class _OnboardingData {
   const _OnboardingData({
     required this.role,
-    required this.question,
+    required this.icons,
     required this.title,
     required this.body,
-    this.showProgress = false,
+    this.languagePicker = false,
     this.bullets = const [],
+    this.slogan,
   });
 
   /// Slaytın Şahnê rolü: sahne kartının zemini, kilim şeridi, madde
   /// noktaları ve sayfa göstergesi bu rolün rengini taşır.
   final SahneRole role;
 
-  /// Kahraman kartındaki soru maketi. Sayfa numarasına göre değil
-  /// sayfanın verisinde durur: sıra değişirse maket yanlış sayfaya kaymaz.
-  final OnboardingSampleQuestion question;
+  /// Kahraman kartındaki çizimin simgeleri (öğren: tek, yarış: kılıçlar +
+  /// kupa). Soru ya da şık içermez; dokunulmaz.
+  final List<IconData> icons;
 
-  /// Yarış slaytı: sorunun üstünde soru ilerlemesi elmasları.
-  final bool showProgress;
+  /// Yalnız ilk sayfa: tepede büyük dil seçici.
+  final bool languagePicker;
   final String title;
   final String body;
   final List<String> bullets;
+
+  /// Başlığın altında küçük, vurgulu söz (yalnız ilk ekran: S1).
+  final String? slogan;
 }
 
 class _OnboardingPage extends StatelessWidget {
@@ -423,6 +294,7 @@ class _OnboardingPage extends StatelessWidget {
   /// Kahraman kartın boy tavanı; logo kartın içindeyken ikincisi.
   static const double _heroCap = 296;
   static const double _brandHeroCap = 340;
+  static const double _pickerReserve = 96;
 
   @override
   Widget build(BuildContext context) {
@@ -471,7 +343,9 @@ class _OnboardingPage extends StatelessWidget {
   ) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final room = (maxHeight - gap) * heroShare;
+        // Dil seçici (etiket + 56'lık segment) kahramanın payından düşer.
+        final pickerReserve = data.languagePicker ? _pickerReserve : 0.0;
+        final room = (maxHeight - gap - pickerReserve) * heroShare;
         // Logo kartın içindeyse (yer varsa) tavan logonun yüksekliği kadar
         // artar: eskiden logo kartın DIŞINDA, 88–148 px'lik üst yığındaydı;
         // net dikey kullanım aynı kalır.
@@ -485,21 +359,29 @@ class _OnboardingPage extends StatelessWidget {
                 0.0,
                 showBrand ? _brandHeroCap : _heroCap,
               );
-        // Dört şık alt alta ~260pt ister; daha dar tavanda şıklar ikişerli
-        // iki sıraya dizilir, kalan fark ölçeklenerek kapanır. Yarış
-        // slaytında şıklar her zaman ikişerli: üstteki ilerleme sırasına
-        // yer açar ve iki slayt bir bakışta ayrışır.
-        final grid = data.showProgress || heroMax < 260;
         final mockWidth = (constraints.maxWidth - SahneSpace.x4 * 2).clamp(
           0.0,
           420.0,
         );
         // Kahraman ile metin sayfanın TEPESİNDEN başlar (giriş, kayıt ve ad
         // ekranlarıyla aynı hiza); aralarında yalnız [gap] kalır.
+        //
+        // Tur 10a: içerik kısaysa artan boşluk (yaş onayının üstünde ~100 pt)
+        // tek yerde (altta) birikmesin diye `spaceEvenly` ile dört eşit paya
+        // bölünür: üst 1, kart-metin 2 (araya konan sıfır boyutlu çocuk), alt 1.
+        // İçerik sığmıyorsa boşluk 0'dır ve düzen aynıdır.
         return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            if (data.languagePicker)
+              const Padding(
+                padding: EdgeInsets.only(bottom: SahneSpace.x3),
+                child: LanguagePicker(
+                  kuKey: ValueKey('onboarding-language-ku'),
+                  trKey: ValueKey('onboarding-language-tr'),
+                ),
+              ),
             if (heroMax > 0)
               Center(
                 child: ConstrainedBox(
@@ -540,13 +422,7 @@ class _OnboardingPage extends StatelessWidget {
                                   Center(child: brand),
                                   const SizedBox(height: SahneSpace.x3),
                                 ],
-                                _QuestionMock(
-                                  question: data.question,
-                                  grid: grid,
-                                  // Kısa ekranda ilerleme sırası düşer: soru
-                                  // ve şıklar okunur boyda kalsın.
-                                  progress: data.showProgress && heroMax >= 190,
-                                ),
+                                _SceneArt(icons: data.icons),
                               ],
                             ),
                           ),
@@ -556,13 +432,16 @@ class _OnboardingPage extends StatelessWidget {
                   ),
                 ),
               ),
-            if (heroMax > 0) SizedBox(height: gap),
+            if (heroMax > 0) const SizedBox.shrink(),
             Flexible(
               // Kısa içerik kendi boyundadır; uzun içerikte (büyük yazı, uzun
               // çeviri) bant kalan yüksekliğe sınırlanır ve aşağıdan kayar.
               // `auth_onboarding_test` bunu SE + %200 yazıda sözleşme olarak
               // kilitler.
-              child: _OnboardingTextBand(data: data, compact: compact),
+              child: Padding(
+                padding: EdgeInsets.only(top: heroMax > 0 ? gap : 0),
+                child: _OnboardingTextBand(data: data, compact: compact),
+              ),
             ),
           ],
         );
@@ -625,6 +504,17 @@ class _OnboardingTextBandState extends State<_OnboardingTextBand> {
               body: data.body,
               compact: compact,
             ),
+            if (data.slogan != null) ...[
+              const SizedBox(height: SahneSpace.x2),
+              Text(
+                data.slogan!,
+                key: const ValueKey('onboarding-slogan'),
+                style: SahneType.bodyStrong.copyWith(
+                  color: t.roleText(data.role),
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
             if (data.bullets.isNotEmpty) ...[
               SizedBox(height: compact ? SahneSpace.x3 : SahneSpace.x4),
               for (final bullet in data.bullets) ...[
@@ -673,131 +563,44 @@ class _BulletRow extends StatelessWidget {
   }
 }
 
-/// Kahraman kartının içeriği: bankadaki gerçek bir sorunun statik maketi —
-/// soru metni ve dört şık, soru ekranının şık diliyle.
+/// Kahraman kartının içeriği: soru DEĞİL, dokunulmaz bir sahne çizimi.
 ///
-/// 2026-09-29 doğallık: eskiden burada üç kategori çizimi eğik bir yelpaze
-/// hâlinde duruyordu (2026-09-27 kararı). Denetimde en çok "üretilmiş"
-/// görünen yer orasıydı: çizim kolajı neyin oynanacağını söylemiyordu,
-/// yalnız süstü. Maket ilk ekrandan uygulamanın asıl işini gösterir: kısa
-/// bir soru ve dört şık (GORSEL_KARARLAR K1).
-///
-/// [grid]: şıklar ikişerli iki sıraya dizilir (yarış slaytı, dar tavan).
-class _QuestionMock extends StatelessWidget {
-  const _QuestionMock({
-    required this.question,
-    required this.grid,
-    required this.progress,
-  });
+/// 2026-10-24: eskiden burada bankadan gerçek bir soru ve dört şık duruyordu;
+/// ilk açılışta kullanıcılar onu gerçek soru sanıp şıklara dokunuyordu
+/// (canlı gözlem). Şimdi yalnız rolün simgeleri: öğrenmede başlık kep,
+/// yarışta kılıçlar ve kupa. Şık, harf karosu ya da soru cümlesi yoktur;
+/// bekçi `test/onboarding_hero_art_test.dart`.
+class _SceneArt extends StatelessWidget {
+  const _SceneArt({required this.icons});
 
-  final OnboardingSampleQuestion question;
-  final bool grid;
-  final bool progress;
+  final List<IconData> icons;
 
   @override
   Widget build(BuildContext context) {
-    // Sahne kartının içi gece belirteçleridir.
     final t = SahneTokens.of(context);
-    final ku = context.isKu;
-    final answers = question.answers;
-    Widget option(int i) => _MockOption(letter: 'ABCD'[i], text: answers[i]);
-    const rowGap = SahneSpace.x2;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
+    return Row(
+      key: const ValueKey('onboarding-scene-art'),
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (progress) ...[
-          // Yarışın soru ilerlemesi: ikisi cevaplandı, üçüncüsü sürüyor.
-          const Center(
-            child: SahneDiamondRow(
-              states: [
-                SahneDiamondState.correct,
-                SahneDiamondState.wrong,
-                SahneDiamondState.pending,
-                SahneDiamondState.pending,
-                SahneDiamondState.pending,
-              ],
-              currentIndex: 2,
-              semanticLabel: '',
-            ),
-          ),
-          const SizedBox(height: SahneSpace.x3),
-        ],
-        Text(
-          ku ? question.promptKu : question.promptTr,
-          // İkişerli dizilişte kart dar tavandadır: soru bir basamak
-          // küçük yazılır ki ölçeklenip okunmaz hâle gelmesin.
-          style: (grid ? SahneType.bodyStrong : SahneType.headline).copyWith(
-            color: t.tx,
-          ),
-        ),
-        const SizedBox(height: SahneSpace.x3),
-        if (grid)
-          for (var row = 0; row < 2; row++) ...[
-            if (row > 0) const SizedBox(height: rowGap),
-            Row(
-              children: [
-                Expanded(child: option(row * 2)),
-                const SizedBox(width: rowGap),
-                Expanded(child: option(row * 2 + 1)),
-              ],
-            ),
-          ]
-        else
-          for (var i = 0; i < answers.length; i++) ...[
-            if (i > 0) const SizedBox(height: rowGap),
-            option(i),
-          ],
-      ],
-    );
-  }
-}
-
-/// Maketin tek şıkkı: soru ekranındaki şık çubuğunun sakin hâli (Kulis
-/// zemin, M pah, renksiz harf karosu) — cevaptan önce hiçbir şıkta renk
-/// yoktur. Dokunulmaz; yalnız görünüştür.
-class _MockOption extends StatelessWidget {
-  const _MockOption({required this.letter, required this.text});
-
-  final String letter;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return DecoratedBox(
-      decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: SahneSpace.x2,
-          vertical: 6,
-        ),
-        child: Row(
-          children: [
-            DecoratedBox(
-              decoration: ShapeDecoration(color: t.s3, shape: SahneShape.s),
-              child: SizedBox.square(
-                dimension: 28,
-                child: Center(
-                  child: Text(
-                    letter,
-                    style: SahneType.captionStrong.copyWith(color: t.tx),
-                  ),
+        for (var i = 0; i < icons.length; i++) ...[
+          if (i > 0) const SizedBox(width: SahneSpace.x4),
+          DecoratedBox(
+            decoration: ShapeDecoration(
+              color: Colors.white.withValues(alpha: 0.10),
+              shape: CircleBorder(
+                side: BorderSide(
+                  color: Colors.white.withValues(alpha: 0.22),
+                  width: 1,
                 ),
               ),
             ),
-            const SizedBox(width: SahneSpace.x3),
-            Expanded(
-              child: Text(
-                text,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: SahneType.bodyStrong.copyWith(color: t.tx),
-              ),
+            child: SizedBox.square(
+              dimension: 88,
+              child: Icon(icons[i], size: 44, color: t.tx),
             ),
-          ],
-        ),
-      ),
+          ),
+        ],
+      ],
     );
   }
 }

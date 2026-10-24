@@ -54,12 +54,13 @@ class LegalLinksRow extends StatelessWidget {
     return Wrap(
       alignment: _wrapAlignment,
       crossAxisAlignment: WrapCrossAlignment.center,
-      spacing: SahneSpace.x2,
+      // Ayraç ("·") yok: Wrap ayracı ayrı çocuk saydığı için dar satırda
+      // (320 px / 2x yazı) iki bağlantı alt alta düşünce "·" tek başına bir
+      // satıra kalıyordu (2026-10-21 simülatör turu). Bağlantılar zaten altı
+      // çizili ve 48 px hedefli; boşluk ayırmaya yeter.
+      spacing: SahneSpace.x4,
       children: [
         link(context.t(K.privacyPolicy), AppConfig.privacyPolicyUrl),
-        ExcludeSemantics(
-          child: Text('·', style: SahneType.caption.copyWith(color: t.tx3)),
-        ),
         link(context.t(K.termsOfUse), AppConfig.termsOfServiceUrl),
       ],
     );

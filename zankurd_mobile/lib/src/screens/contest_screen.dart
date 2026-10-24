@@ -11,7 +11,9 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
 import '../widgets/arena_kit.dart';
+import '../widgets/daily_event_board.dart';
 import '../widgets/sahne/sahne.dart';
+import '../widgets/skeleton_loader.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -90,7 +92,6 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
   void _loadContest() {
     _contestFuture = widget.repository.loadTodayContest().timeout(
       const Duration(seconds: 8),
-      onTimeout: () => null,
     );
   }
 
@@ -98,10 +99,9 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
     if (_starting) return;
     setState(() => _starting = true);
     try {
-      // Günlük etkinlik, tema/kategori etiketinden bağımsız olarak ortak
-      // günlük havuzdan beslenir. Repository bu havuzu UTC gün seed'i ile
-      // seçtiği için aynı gün tüm oyuncular aynı soruları görür.
-      var questions = await widget.repository.loadDailyQuestions(
+      // Etkinlik, tema/kategori etiketinden bağımsız günlük havuzdan beslenir;
+      // "Günün dersi"nden ayrı tohumla, onun setini dışlayarak seçilir.
+      var questions = await widget.repository.loadDailyEventQuestions(
         limit: contest.questionCount,
       );
       if (questions.isEmpty) {
@@ -155,8 +155,8 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
     // satırı artık çubukta; içerikte kimlik başlığı tekrar edilmez. Eski
     // alt kenardaki üçgen kilim deseni kalktı (desen yalnız sahne kartının
     // üst şeridi). Sayfa adı oyun merkezindeki girişle aynı kalır.
-    final t = SahneTokens.of(context);
     return SahnePushedPage(
+      role: SahneRole.race,
       title: context.t(K.dailyEvent),
       backLabel: context.t(K.back),
       slivers: [
@@ -165,11 +165,11 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
           builder: (ctx, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 !snapshot.hasData) {
-              return SliverFillRemaining(
-                child: Center(
-                  child: CircularProgressIndicator(color: t.raceTx),
-                ),
-              );
+              // Yükleniyor: yüklenmiş içerikle AYNI sarmalayıcıda ve aynı
+              // ölçüde iskelet. Ortada dönen bir gösterge kartı ekranın
+              // ortasına, yüklenmiş kartı üst üçte bire koyuyordu: kart
+              // geldiğinde sayfa zıplıyor, üstte geniş bir boşluk kalıyordu.
+              return _alignedContent(const _ContestSkeleton());
             }
             if (snapshot.hasError) {
               return SliverFillRemaining(
@@ -207,28 +207,22 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
             // `SliverFillRemaining(hasScrollBody: false)` kullanılamaz:
             // içerik bir `LayoutBuilder` taşıyor (geniş ekran düzeni) ve
             // o iç boyut hesabını desteklemiyor.
-            return SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
-              sliver: SliverLayoutBuilder(
-                builder: (context, sliver) => SliverToBoxAdapter(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: sliver.remainingPaintExtent,
-                    ),
-                    child: Align(
-                      alignment: const Alignment(0, -0.6),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: _ContestContent(
-                          contest: contest,
-                          doneToday: _doneToday,
-                          starting: _starting,
-                          onStart: () => _startQuiz(contest),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+            return _alignedContent(
+              _ContestContent(
+                contest: contest,
+                doneToday: _doneToday,
+                starting: _starting,
+                onStart: () => _startQuiz(contest),
+                // Tur bugün bitmişse "Bugünün sıralaması" açılır. Bitmemişse
+                // sıra hiç gösterilmez: oynamadan başkalarının skorunu görmek
+                // hem turu bozar hem "ödül yok, yalnız ilerleme" sözüyle
+                // çelişir (bkz. `daily_event_security_ui_test`).
+                board: _doneToday
+                    ? DailyEventBoardCard(
+                        key: const ValueKey('contest-board'),
+                        repository: widget.repository,
+                      )
+                    : null,
               ),
             );
           },
@@ -236,7 +230,67 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
       ],
     );
   }
+
+  /// İçeriği (ya da onun iskeletini) kalan alanın üst üçte birine koyar.
+  /// Yükleniyor ve yüklendi aynı yerleşimi paylaşır; yoksa kart gelince
+  /// sayfa zıplar.
+  Widget _alignedContent(Widget child) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+      sliver: SliverLayoutBuilder(
+        builder: (context, sliver) => SliverToBoxAdapter(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: sliver.remainingPaintExtent),
+            child: Align(
+              alignment: const Alignment(0, -0.6),
+              child: SizedBox(width: double.infinity, child: child),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
+
+/// Günün soruları kartı yüklenirken gösterilen iskelet: kahraman kart,
+/// "Kısa bilgi" başlığı ve iki çip — gerçek düzenin yerleri ve boyları.
+class _ContestSkeleton extends StatelessWidget {
+  const _ContestSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      key: const ValueKey('contest-skeleton'),
+      label: context.t(K.preparingShort),
+      liveRegion: true,
+      excludeSemantics: true,
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SkeletonLine(height: _kHeroSkeletonHeight, borderRadius: 16),
+          SizedBox(height: SahneSpace.sectionTop),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: SkeletonLine(width: 120, height: 20),
+          ),
+          SizedBox(height: SahneSpace.x2),
+          Wrap(
+            spacing: SahneSpace.x2,
+            runSpacing: SahneSpace.x2,
+            children: [
+              SkeletonLine(width: 112, height: 44),
+              SkeletonLine(width: 112, height: 44),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Kahraman kartın yüklenmiş hâldeki yüksekliği (iskelet bununla aynı yeri
+/// tutsun; `contest_skeleton_test` ölçüp kilitler).
+const double _kHeroSkeletonHeight = 204;
 
 class _ContestContent extends StatelessWidget {
   const _ContestContent({
@@ -244,7 +298,11 @@ class _ContestContent extends StatelessWidget {
     required this.starting,
     required this.onStart,
     this.doneToday = false,
+    this.board,
   });
+
+  /// Bugünün sıralaması (yalnız tur bugün bitmişse).
+  final Widget? board;
 
   final Contest contest;
   final bool doneToday;
@@ -275,7 +333,6 @@ class _ContestContent extends StatelessWidget {
     // yarış biçimidir, rengi Boyax'tır.
     final hero = ArenaHero(
       title: context.t(K.dailyEventCardTitle),
-      subtitle: context.t(K.dailyEventCardBody),
       accent: SahneTokens.of(context).race,
       icon: AppIcons.champagneGlasses,
       tokens: [
@@ -309,6 +366,13 @@ class _ContestContent extends StatelessWidget {
       ],
     );
 
+    final boardSection = board == null
+        ? null
+        : Padding(
+            padding: const EdgeInsets.only(bottom: SahneSpace.x4),
+            child: board,
+          );
+
     return LayoutBuilder(
       builder: (context, constraints) {
         // Geniş ekranda gerçek iki sütun: solda bugünün etkinliği ve
@@ -331,6 +395,7 @@ class _ContestContent extends StatelessWidget {
                       offset: const Offset(0, -SahneSpace.sectionTop),
                       child: quickInfo,
                     ),
+                    ?boardSection,
                   ],
                 ),
               ),
@@ -339,7 +404,7 @@ class _ContestContent extends StatelessWidget {
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [hero, quickInfo],
+          children: [hero, quickInfo, ?boardSection],
         );
       },
     );

@@ -1,5 +1,7 @@
+import '../widgets/doza_widgets.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +12,10 @@ import '../l10n/lang.dart';
 import '../utils/player_identity.dart';
 import '../l10n/strings.dart';
 import '../utils/app_route.dart';
+import '../utils/external_link.dart';
+import '../utils/confirm_word.dart';
 import 'level_placement_screen.dart';
+import '../providers/bilingual_labels_provider.dart';
 import '../providers/auth_provider.dart';
 import '../providers/analytics_consent_provider.dart';
 import '../providers/reduced_motion_provider.dart';
@@ -18,11 +23,11 @@ import '../providers/untimed_mode_provider.dart';
 import '../providers/sound_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/notification_service.dart';
+import '../services/notification_sync.dart';
 import '../services/analytics_service.dart';
 import '../services/premium_service.dart';
 import '../services/tts_service.dart';
 import '../utils/percent_format.dart';
-import '../utils/external_link.dart';
 
 import '../config/app_config.dart';
 import '../models/friend.dart';
@@ -69,6 +74,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   NotificationService? _notificationService;
   bool _notificationsEnabled = false;
   String _notificationTime = '19:00';
+  // Bildirim türü tercihleri (varsayılan açık); ana anahtar açıkken görünür.
+  bool _dailyOn = true;
+  bool _contestOn = true;
+  bool _streakOn = true;
+  bool _duelOn = true;
+  bool _socialOn = true;
   bool _systemPermissionDenied = false;
 
   @override
@@ -167,17 +178,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
   ///
   /// Apple 1.2, UGC barındıran uygulamada iletişim bilgisinin
   /// yayımlanmasını şart koşar ve kullanıcı ona uygulamadan ulaşabilmeli.
-  Future<void> _openAbuseReport() => openExternalUri(
-    context,
+  Future<void> _openAbuseReport() => _openMail(
     AppConfig.abuseReportUri(subject: context.t(K.abuseMailSubject)),
     reason: 'abuse report mailto',
   );
 
-  Future<void> _openBetaFeedback() => openExternalUri(
-    context,
+  Future<void> _openBetaFeedback() => _openMail(
     AppConfig.feedbackUri(subject: context.t(K.betaMailSubject)),
     reason: 'beta feedback mailto',
   );
+
+  /// `mailto:` açılamazsa (cihazda posta uygulaması yok) yalnız "Bağlantı
+  /// açılamadı" demek kullanıcıyı çıkışsız bırakıyordu; adres panoya
+  /// kopyalanır ve SnackBar adresi gösterir (2026-10-21 simülatör turu).
+  Future<void> _openMail(Uri uri, {required String reason}) async {
+    final opened = await tryOpenExternalUri(uri, reason: reason);
+    if (opened || !mounted) return;
+    final copiedText = context.t(K.roomCodeCopied, {
+      'code': AppConfig.supportEmail,
+    });
+    try {
+      await Clipboard.setData(
+        const ClipboardData(text: AppConfig.supportEmail),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: '$reason clipboard');
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.linkOpenFailed))));
+      return;
+    }
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(copiedText)));
+  }
 
   Future<void> _setAnalyticsConsent(bool enabled) async {
     final saved = await context.read<AnalyticsConsentProvider>().setEnabled(
@@ -208,7 +244,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     // Bölümler tek biçimli [SahneSectionHeader]; satırlar liste grubu.
     return Scaffold(
       backgroundColor: t.bg,
-      appBar: zkAppBar(context, title: Text(context.t(K.settings))),
+      appBar: zkAppBar(
+        context,
+        title: Text(context.t(K.settings)),
+        titleSecondary: context.secondLabel(K.settings),
+      ),
       body: SafeArea(
         top: false,
         // 2026-10-02: bu sayfa tembel `ListView` idi. Tembel liste, ekran
@@ -281,9 +321,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     future: _placementStoreFuture,
                     builder: (context, snap) {
                       final level = snap.data?.level;
-                      final String sub;
+                      final String? sub;
                       if (level == null) {
-                        sub = context.t(K.retakePlacementSub);
+                        sub = null;
                       } else {
                         final name = ku ? level.labelKu : level.labelTr;
                         sub = context.t(K.currentLevel, {'name': name});
@@ -327,7 +367,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     SahneListRow.plain(
                       key: const ValueKey('settings-beta-feedback'),
                       title: context.t(K.betaFeedback),
-                      subtitle: context.t(K.betaFeedbackSub),
                       chevron: true,
                       onTap: _openBetaFeedback,
                     ),
@@ -391,6 +430,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   // yolu bulunmalı. Öğrenme ve tekrar akışları zaten
                   // sayaçsızdı; kategori ve alıştırma turunda kapatmanın
                   // hiçbir yolu yoktu.
+                  // İki dilli etiketler (2026-10-20): varsayılan açık.
+                  // Sağlayıcısız ağaçta (eski testler) satır yoktur.
+                  if (_hasProvider<BilingualLabelsProvider>(context))
+                    Consumer<BilingualLabelsProvider>(
+                      builder: (context, bilingual, _) => SahneListRow.plain(
+                        title: context.t(K.bilingualLabels),
+                        trailing: Switch(
+                          key: const ValueKey('bilingual-labels-switch'),
+                          value: bilingual.enabled,
+                          onChanged: (v) => bilingual.setEnabled(v),
+                        ),
+                      ),
+                    ),
                   Consumer<UntimedModeProvider>(
                     builder: (context, untimed, _) => SahneListRow.plain(
                       title: context.t(K.untimedSolo),
@@ -428,12 +480,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      // Ana anahtar: bildirim izni/onayı. Türler altında.
                       SahneListRow.plain(
-                        title: context.t(K.dailyReminder),
-                        subtitle: context.t(K.dailyReminderAt, {
-                          'time': _notificationTime,
-                        }),
+                        title: context.t(K.notifMasterTitle),
+                        subtitle: context.t(K.notifMasterSub),
                         trailing: Switch(
+                          key: const ValueKey('settings-notif-master'),
                           value: _notificationsEnabled,
                           onChanged: _toggleNotifications,
                         ),
@@ -446,14 +498,85 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                     ],
                   ),
-                  if (_notificationsEnabled)
+                  if (_notificationsEnabled) ...[
                     SahneListRow.plain(
-                      title: context.t(K.changeTime, {
+                      title: context.t(K.dailyReminder),
+                      subtitle: context.t(K.dailyReminderAt, {
                         'time': _notificationTime,
                       }),
-                      chevron: true,
-                      onTap: _pickNotificationTime,
+                      trailing: Switch(
+                        key: const ValueKey('settings-notif-daily'),
+                        value: _dailyOn,
+                        onChanged: (v) => _setPref(
+                          v,
+                          apply: (service) => service.setDailyOn(v),
+                          assign: () => _dailyOn = v,
+                        ),
+                      ),
                     ),
+                    if (_dailyOn)
+                      SahneListRow.plain(
+                        title: context.t(K.changeTime, {
+                          'time': _notificationTime,
+                        }),
+                        chevron: true,
+                        onTap: _pickNotificationTime,
+                      ),
+                    SahneListRow.plain(
+                      title: context.t(K.dailyContest),
+                      subtitle: context.t(K.notifContestSub),
+                      trailing: Switch(
+                        key: const ValueKey('settings-notif-contest'),
+                        value: _contestOn,
+                        onChanged: (v) => _setPref(
+                          v,
+                          apply: (service) => service.setContestOn(v),
+                          assign: () => _contestOn = v,
+                        ),
+                      ),
+                    ),
+                    SahneListRow.plain(
+                      title: context.t(K.notifStreakTitle),
+                      subtitle: context.t(K.notifStreakSub),
+                      trailing: Switch(
+                        key: const ValueKey('settings-notif-streak'),
+                        value: _streakOn,
+                        onChanged: (v) => _setPref(
+                          v,
+                          apply: (service) => service.setStreakOn(v),
+                          assign: () => _streakOn = v,
+                        ),
+                      ),
+                    ),
+                    SahneListRow.plain(
+                      title: context.t(K.notifDuelTitle),
+                      subtitle: context.t(K.notifDuelSub),
+                      trailing: Switch(
+                        key: const ValueKey('settings-notif-duel'),
+                        value: _duelOn,
+                        onChanged: (v) => _setPref(
+                          v,
+                          apply: (service) => service.setDuelOn(v),
+                          assign: () => _duelOn = v,
+                          syncServer: true,
+                        ),
+                      ),
+                    ),
+                    SahneListRow.plain(
+                      title: context.t(K.notifSocialTitle),
+                      subtitle: context.t(K.notifSocialSub),
+                      trailing: Switch(
+                        key: const ValueKey('settings-notif-social'),
+                        value: _socialOn,
+                        onChanged: (v) => _setPref(
+                          v,
+                          apply: (service) => service.setSocialOn(v),
+                          assign: () => _socialOn = v,
+                          syncServer: true,
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
 
@@ -481,7 +604,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Consumer<PremiumService>(
                 builder: (context, premium, _) {
                   final isPremium = premium.isPremium;
-                  if (!isPremium && !AppConfig.hasRevenuecatConfig) {
+                  // Satılabilir paket yoksa da gizli (2026-10-23).
+                  if (!isPremium && !premium.canSell) {
                     return const SizedBox.shrink();
                   }
                   return Column(
@@ -523,6 +647,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // ============ HAKKINDA / ABOUT ============
               SahneSectionHeader(title: context.t(K.secAbout)),
+              SahneListGroup(
+                children: [
+                  SahneListRow.icon(
+                    key: const ValueKey('settings-doza-row'),
+                    icon: AppIcons.flag,
+                    role: SahneRole.learn,
+                    title: context.t(K.dozaTitle),
+                    subtitle: context.t(K.dozaSlogan),
+                    chevron: true,
+                    onTap: () => openDozaMe(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: SahneSpace.cardGap),
               SahneListGroup(
                 dividerIndent: _rowTextInset,
                 children: [
@@ -633,9 +771,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (mounted) {
         setState(() {
           _notificationService = service;
-          _notificationsEnabled = service.enabled;
-          _notificationTime = service.timeDisplay;
+          _applyServicePrefs(service);
         });
+        // Düello/arkadaş tercihi sunucuda yaşar: kirli yerel değişikliği
+        // yazar, değilse sunucudaki değeri alır.
+        await PushPrefsSync.reconcile(service, widget.repository);
+        if (mounted) setState(() => _applyServicePrefs(service));
         if (service.enabled) {
           // Uygulama içi tercih açık ama sistem izni kapatılmış olabilir
           // (kullanıcı sistem ayarlarından engellemiştir) — uyarı göster.
@@ -651,10 +792,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  void _applyServicePrefs(NotificationService service) {
+    _notificationsEnabled = service.enabled;
+    _notificationTime = service.timeDisplay;
+    _dailyOn = service.dailyOn;
+    _contestOn = service.contestOn;
+    _streakOn = service.streakOn;
+    _duelOn = service.duelOn;
+    _socialOn = service.socialOn;
+  }
+
+  /// Tür tercihini yazar: önce arayüz (anında geri bildirim), sonra servis;
+  /// düello/arkadaş tercihleri ayrıca sunucuya gider (başarısızsa kirli
+  /// kalır, sonraki açılışta yeniden denenir).
+  Future<void> _setPref(
+    bool value, {
+    required Future<void> Function(NotificationService service) apply,
+    required VoidCallback assign,
+    bool syncServer = false,
+  }) async {
+    final service = _notificationService;
+    if (service == null) return;
+    setState(assign);
+    await apply(service);
+    if (syncServer) {
+      await PushPrefsSync.push(service, widget.repository);
+    }
+  }
+
   Future<void> _toggleNotifications(bool value) async {
     final service = _notificationService;
     if (service == null) return;
     await service.setEnabled(value);
+    if (value) {
+      // Ana anahtar açılınca seri uyarısı ve yarışma hatırlatması da kurulur
+      // (açılış eşitlemesi beklenmez).
+      await NotificationService.syncStreakWarning();
+      await NotificationSync.run(widget.repository);
+    }
     if (!mounted) return;
     setState(() {
       _notificationsEnabled = value;
@@ -712,7 +887,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(context.t(K.deleteConfirmTitle)),
-        content: Text(context.t(K.deleteConfirmBody)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(context.t(K.deleteConfirmBody)),
+            // Mağaza aboneliği hesapla birlikte iptal olmaz; söylenmezse
+            // kullanıcı hesabı silip faturalanmaya devam eder.
+            const SizedBox(height: 12),
+            Text(
+              context.t(K.deleteSubscriptionNote),
+              key: const ValueKey('delete-subscription-note'),
+            ),
+          ],
+        ),
         // 2026-10-02 uçtan uca QA: yıkıcı eylem "Devam et" adıyla turuncu
         // birincil düğmeydi; göz oraya gidiyor, "Devam et" silmeyi
         // söylemiyordu. Şimdi güvenli eylem ("Vazgeç") varsayılan dolgulu
@@ -788,73 +976,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  Future<bool?> _showFinalDeleteConfirmation() async {
-    final controller = TextEditingController();
+  Future<bool?> _showFinalDeleteConfirmation() {
     final confirmWord = context.t(K.deleteWord);
-    final result = await showDialog<bool>(
+    // Yazı denetleyicisini diyalogun kendi State'i yönetir. Eskiden burada
+    // yaratılıp `await showDialog` sonrası bir kare sonra atılıyordu; oysa
+    // kapanış animasyonu onlarca kare sürer ve alan atılmış denetleyiciyi
+    // dinlerdi ("used after being disposed").
+    return showDialog<bool>(
       context: context,
-      builder: (dialogContext) {
-        var canDelete = false;
-        return StatefulBuilder(
-          builder: (context, setDialogState) {
-            return AlertDialog(
-              title: Text(context.t(K.finalConfirm)),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(context.t(K.deleteTypeWord, {'word': confirmWord})),
-                  const SizedBox(height: 12),
-                  SahneField(
-                    key: const ValueKey('delete-confirm-field'),
-                    controller: controller,
-                    textCapitalization: TextCapitalization.characters,
-                    hintText: confirmWord,
-                    semanticLabel: confirmWord,
-                    onChanged: (value) {
-                      setDialogState(
-                        () => canDelete = value.trim() == confirmWord,
-                      );
-                    },
-                  ),
-                ],
-              ),
-              actions: [
-                DialogActionPair(
-                  cancel: OutlinedButton(
-                    onPressed: () => Navigator.pop(dialogContext, false),
-                    child: Text(context.t(K.cancel)),
-                  ),
-                  confirm: FilledButton(
-                    key: const ValueKey('delete-forever'),
-                    onPressed: canDelete
-                        ? () => Navigator.pop(dialogContext, true)
-                        : null,
-                    // Geri alınamaz eylem: turuncu birincil değil hata tonu.
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Theme.of(
-                        dialogContext,
-                      ).colorScheme.error,
-                      foregroundColor: Theme.of(
-                        dialogContext,
-                      ).colorScheme.onError,
-                      disabledBackgroundColor: SahneTokens.of(dialogContext).s1,
-                      disabledForegroundColor: SahneTokens.of(
-                        dialogContext,
-                      ).tx3,
-                    ),
-                    child: Text(context.t(K.deleteForever)),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
-      },
+      builder: (_) => _FinalDeleteDialog(confirmWord: confirmWord),
     );
-    // StatefulBuilder rebuild akışının tamamlanması için bir sonraki frame'de dispose.
-    WidgetsBinding.instance.addPostFrameCallback((_) => controller.dispose());
-    return result;
   }
 
   Future<void> _deleteAccount() async {
@@ -869,6 +1000,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         discardPendingRewards: true,
         pendingRewardsOwnerId: deletedUserId,
       );
+      // Giriş ekranı kabuğun yerine çizilir ama Ayarlar rotası yığında
+      // kalırdı ve `_deleting` göstergesi sonsuza dek dönerdi. Kabuk da
+      // oturum kapanınca yığını boşaltır (AppShell); bu, kabuksuz
+      // kullanımlar için ikinci güvence.
+      if (!mounted) return;
+      Navigator.of(context).popUntil((route) => route.isFirst);
     } on AccountLocalCleanupException catch (error, stack) {
       ErrorReporter.record(
         error,
@@ -888,6 +1025,78 @@ class _SettingsScreenState extends State<SettingsScreen> {
         context,
       ).showSnackBar(SnackBar(content: Text(context.t(K.accountDeleteFailed))));
     }
+  }
+}
+
+/// Hesap silmenin son onayı: kullanıcı onay sözcüğünü yazmadan "Sil" açılmaz.
+///
+/// Denetleyici bu State'e aittir (bkz. [_SettingsScreenState._showFinalDeleteConfirmation]).
+class _FinalDeleteDialog extends StatefulWidget {
+  const _FinalDeleteDialog({required this.confirmWord});
+
+  final String confirmWord;
+
+  @override
+  State<_FinalDeleteDialog> createState() => _FinalDeleteDialogState();
+}
+
+class _FinalDeleteDialogState extends State<_FinalDeleteDialog> {
+  final TextEditingController _controller = TextEditingController();
+  bool _canDelete = false;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final confirmWord = widget.confirmWord;
+    return AlertDialog(
+      title: Text(context.t(K.finalConfirm)),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(context.t(K.deleteTypeWord, {'word': confirmWord})),
+          const SizedBox(height: 12),
+          SahneField(
+            key: const ValueKey('delete-confirm-field'),
+            controller: _controller,
+            textCapitalization: TextCapitalization.characters,
+            hintText: confirmWord,
+            semanticLabel: confirmWord,
+            onChanged: (value) {
+              setState(
+                () => _canDelete = ConfirmWord.matches(value, confirmWord),
+              );
+            },
+          ),
+        ],
+      ),
+      actions: [
+        DialogActionPair(
+          cancel: OutlinedButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(context.t(K.cancel)),
+          ),
+          confirm: FilledButton(
+            key: const ValueKey('delete-forever'),
+            onPressed: _canDelete ? () => Navigator.pop(context, true) : null,
+            // Geri alınamaz eylem: turuncu birincil değil hata tonu.
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Theme.of(context).colorScheme.onError,
+              // Ortak pasif jetonlar (kurul 2026-10-20).
+              disabledBackgroundColor: SahneTokens.of(context).disabledFill,
+              disabledForegroundColor: SahneTokens.of(context).disabledFg,
+            ),
+            child: Text(context.t(K.deleteForever)),
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -1326,5 +1535,15 @@ class _BlockedUsersSectionState extends State<_BlockedUsersSection> {
         );
       },
     );
+  }
+}
+
+/// Ağaçta [T] sağlayıcısı var mı (dinlemeden).
+bool _hasProvider<T>(BuildContext context) {
+  try {
+    Provider.of<T>(context, listen: false);
+    return true;
+  } on ProviderNotFoundException {
+    return false;
   }
 }

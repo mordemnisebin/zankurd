@@ -23,7 +23,9 @@ QuizResultScreen _resultScreen(
   return QuizResultScreen(
     repository: repository,
     room: room,
-    score: 1000,
+    // Seviye atlatmayan puan: çevrimiçi odada XP = oda puanı (sunucu kuralı);
+    // 1000 seviye penceresi açtırıyor ve bu test geri gezinmeyi sınıyor.
+    score: 100,
     correctCount: 10,
     wrongCount: 0,
     totalQuestions: 10,

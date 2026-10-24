@@ -97,6 +97,42 @@ class LearningLessonAliases {
   static List<String> bankIdsFor(String lessonKey) =>
       bySlug[lessonKey] ?? [lessonKey];
 
+  /// Slaytları karşılaştırılarak onaylanan tamamlama eşdeğerlikleri.
+  ///
+  /// [bySlug] yalnız soru konusunu eşler; tek öğeli olması bile dersin
+  /// kapsamının aynı olduğunu kanıtlamaz. Buraya sıra, içerik ve örnekleri
+  /// aynı olan dersler veya yalnız açıkça denetlenmiş alan farkları eklenir.
+  /// `greetings_2` ek bir kelime öğretir; `intro_1` çift noktayı düzeltir.
+  /// Bekçi: `lesson_completion_alias_sync_test` içindeki tam alan karşılığı
+  /// ve bu iki farkın ders/sıra/alan/SQL/yerel literal izinlistesi.
+  static const Map<String, String> _completionSlugs = {
+    // 2026-10-06_baslangic_lessons.sql: Alfabe 6, Malbat 4 slayt.
+    'alphabet_1': 'alfabe',
+    'family_1': 'malbat',
+    // İki denetlenmiş fark dışında aynı kapsam; üretim slaytları korunur.
+    'greetings_2': 'silav-u-rezdari',
+    'intro_1': 'xwe-nasandin',
+    // 2026-10-08_dersler2_lessons.sql: her biri beş aynı slayt.
+    'colors_1': 'reng',
+    'body_1': 'las',
+    'clothes_1': 'cil',
+    'home_1': 'mal',
+    'weather_1': 'hewa',
+    'questions_1': 'pirs',
+    'verbs_1': 'leker',
+    // 2026-10-08_dersler3_lessons.sql: her biri beş aynı slayt.
+    'jobs_1': 'pise',
+    'city_1': 'bajar',
+    'shopping_1': 'kirin',
+    'health_1': 'tenduristi',
+    'school_1': 'dibistan',
+    'transport_1': 'veguhestin',
+    'past_1': 'dema-bori',
+  };
+
+  static String? completionSlugFor(String localLessonId) =>
+      _completionSlugs[localLessonId];
+
   /// [lessonKey] (yerel kimlik ya da sunucu slug'ı) dersinin sözlük çiftleri.
   ///
   /// Hatırlama ve dinleme kartları bunu kullanır. Eskiden ders ekranı

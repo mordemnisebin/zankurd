@@ -1,3 +1,15 @@
+// 2026-10-20 iki dilli etiket: öbür dildeki ad karoya küçük satır olarak
+// döndü (kullanıcı geri bildirimi: oyuncu konuyu bulamıyordu). A1 artık
+// asıl adın tek ve kesilmez olduğunu, öbür dilin YALNIZ küçük satır
+// bileşeninde ve aynı anahtardan geldiğini sabitler.
+//
+// 2026-10-19 SADELEŞME (bu başlık güncellendi): konu karosu artık YATAY
+// karodur (küçük konu işareti + YALNIZ geçerli dilde ad). Öteki dildeki ad,
+// soru sayısı ve boş ilerleme çubuğu kalktı; ince çubuk yalnız ilerleme > 0
+// ise çizilir; sütun sayısı 2, ad sığmazsa 1. Aşağıdaki A1 grubu bu yeni
+// sözleşmeyi sabitler (eskisi "her karoda aynı dört satırlık blok"u
+// sabitliyordu ve tam tersini şart koşuyordu). A3 (seviye ekranı) olduğu gibi.
+//
 // 2026-09-30 maket (A1 + A3): ana ekran konu ızgarası etiket sistemi ve
 // konu akışının ortak başlığı.
 //
@@ -86,9 +98,6 @@ Widget _grid({required bool ku, required double scale, bool dark = true}) =>
                 threshold: 10,
               ),
             },
-            questionCounts: {
-              for (final (i, c) in _categories.indexed) c: 82 + i * 37,
-            },
             onOpen: (_) {},
           ),
         ),
@@ -106,12 +115,12 @@ void main() {
     LevelProgressStore.resetInstance();
   });
 
-  group('A1: konu karosu etiket sistemi', () {
+  group('A1: konu karosu (yatay, yalnız geçerli dil)', () {
     for (final size in [const Size(320, 640), const Size(390, 844)]) {
       for (final scale in [1.0, 1.5, 2.35]) {
         for (final ku in [false, true]) {
           testWidgets(
-            'her karo aynı boyda; hiçbir etiket sarmaz ya da kesilmez '
+            'ad tek satır, kesilmez; öteki dil, sayı ve boş çubuk yok '
             '(${size.width.toInt()} px, x$scale, ${ku ? 'ku' : 'tr'})',
             (tester) async {
               _size(tester, size);
@@ -119,57 +128,107 @@ void main() {
               await tester.pumpAndSettle();
               expect(tester.takeException(), isNull);
 
-              // 1) Bütün karolar aynı yükseklikte (oynanmış ve oynanmamış,
-              // iki dilde aynı adlı Siyaset, uzun adlı Bilim dahil).
-              final heights = {
-                for (final c in _categories)
-                  c: tester
-                      .getSize(find.byKey(ValueKey('home-topic-$c')))
-                      .height,
-              };
-              expect(
-                heights.values.toSet().length,
-                1,
-                reason: 'karo boyları eşit değil: $heights',
-              );
-
               for (final c in _categories) {
                 final tile = find.byKey(ValueKey('home-topic-$c'));
-                // 2) Etiket satırlarının hiçbiri sarmaz ya da kesilmez: her
-                // metin tek satırdır (yüksekliği tek satır yüksekliğinde).
-                for (final element
-                    in find
-                        .descendant(of: tile, matching: find.byType(RichText))
-                        .evaluate()) {
-                  final p = element.renderObject! as RenderParagraph;
-                  final text = p.text.toPlainText();
+                // 1) Tek ASIL metin: geçerli dildeki kısa ad. Soru sayısı
+                // yok. 2026-10-20 iki dilli etiket: öbür dildeki ad YALNIZ
+                // küçük satır bileşeninde ([SahneBilingualLabel]) durabilir
+                // ve aynı anahtarın öbür dil değeridir; asıl adla karışmaz.
+                final second = find.descendant(
+                  of: tile,
+                  matching: find.byKey(SahneBilingualLabel.valueKey),
+                );
+                for (final e in second.evaluate()) {
                   expect(
-                    p.didExceedMaxLines,
-                    isFalse,
-                    reason: '$c: "$text" kesildi',
-                  );
-                  expect(
-                    p.getFullHeightForCaret(const TextPosition(offset: 0)) *
-                            1.5 >
-                        p.size.height,
-                    isTrue,
-                    reason: '$c: "$text" birden çok satıra sardı',
+                    (e.widget as Text).data,
+                    CategoryNames.tile(c, !ku),
+                    reason: '$c: küçük satır öbür dilin adı değil',
                   );
                 }
-                // 3) İlerleme çizgisi HER karoda var (oynanmamışta boş iz).
-                final bar = tester.widget<LinearProgressIndicator>(
-                  find.descendant(
-                    of: tile,
-                    matching: find.byType(LinearProgressIndicator),
+                final texts = find.descendant(
+                  of: tile,
+                  matching: find.byWidgetPredicate(
+                    (w) =>
+                        w is RichText &&
+                        !second.evaluate().any(
+                          (e) =>
+                              e.widget is Text &&
+                              (e.widget as Text).data == w.text.toPlainText(),
+                        ),
                   ),
                 );
-                expect(bar.value, c == 'Çand' ? greaterThan(0) : 0, reason: c);
+                expect(
+                  texts.evaluate().length,
+                  1,
+                  reason: '$c: karoda ad dışında metin var',
+                );
+                final p =
+                    texts.evaluate().single.renderObject! as RenderParagraph;
+                final text = p.text.toPlainText();
+                expect(text, CategoryNames.tile(c, ku), reason: c);
+                if (CategoryNames.tile(c, !ku) != text) {
+                  expect(text, isNot(contains(CategoryNames.tile(c, !ku))));
+                }
+                expect(p.didExceedMaxLines, isFalse, reason: '$c: kesildi');
+                expect(
+                  p.getFullHeightForCaret(const TextPosition(offset: 0)) * 1.5 >
+                      p.size.height,
+                  isTrue,
+                  reason: '$c: "$text" birden çok satıra sardı',
+                );
+                // 2) İlerleme çubuğu YALNIZ ilerleme > 0 olan konuda.
+                final bar = find.descendant(
+                  of: tile,
+                  matching: find.byType(LinearProgressIndicator),
+                );
+                if (c == 'Çand') {
+                  expect(bar, findsOneWidget, reason: c);
+                  expect(
+                    tester.widget<LinearProgressIndicator>(bar).value,
+                    greaterThan(0),
+                  );
+                } else {
+                  expect(bar, findsNothing, reason: '$c: boş çubuk çizildi');
+                }
+                // 3) Dokunma alanı en az 48.
+                expect(
+                  tester.getSize(tile).height,
+                  greaterThanOrEqualTo(48),
+                  reason: c,
+                );
               }
             },
           );
         }
       }
     }
+
+    testWidgets('iki sütun; ad sığmayan dar/büyük yazıda tek sütun', (
+      tester,
+    ) async {
+      _size(tester, const Size(390, 844));
+      await tester.pumpWidget(_grid(ku: false, scale: 1.0));
+      await tester.pumpAndSettle();
+      final a = tester.getTopLeft(
+        find.byKey(const ValueKey('home-topic-Ziman')),
+      );
+      final b = tester.getTopLeft(
+        find.byKey(const ValueKey('home-topic-Çand')),
+      );
+      expect(a.dy, b.dy, reason: 'ilk iki karo aynı satırda (2 sütun)');
+      expect(b.dx, greaterThan(a.dx));
+
+      _size(tester, const Size(320, 640));
+      await tester.pumpWidget(_grid(ku: true, scale: 2.35));
+      await tester.pumpAndSettle();
+      final c = tester.getTopLeft(
+        find.byKey(const ValueKey('home-topic-Ziman')),
+      );
+      final d = tester.getTopLeft(
+        find.byKey(const ValueKey('home-topic-Çand')),
+      );
+      expect(d.dy, greaterThan(c.dy), reason: 'büyük yazıda tek sütun');
+    });
 
     testWidgets('Bilim ve Düşünce karoda kısa adla yazılır, tam ad ekran '
         'okuyucuda kalır', (tester) async {
@@ -180,8 +239,7 @@ void main() {
         await tester.pumpAndSettle();
         final tile = find.byKey(const ValueKey('home-topic-Paradigma'));
         final full = CategoryNames.localized('Paradigma', ku);
-        final fullOther = CategoryNames.localized('Paradigma', !ku);
-        // Karoda kısa ad ve kısa öteki ad.
+        // Karoda kısa ad.
         expect(
           find.descendant(
             of: tile,
@@ -194,11 +252,8 @@ void main() {
           findsNothing,
           reason: 'tam ad karoya sığmaz; karoda kısa ad yazılır',
         );
-        // Ekran okuyucu tam adı okur.
-        expect(
-          find.bySemanticsLabel(RegExp('^$full, $fullOther')),
-          findsOneWidget,
-        );
+        // Ekran okuyucu tam adı okur (yalnız geçerli dil).
+        expect(find.bySemanticsLabel(RegExp('^$full\$')), findsOneWidget);
       }
       semantics.dispose();
     });
@@ -264,6 +319,10 @@ void main() {
             dark: false,
           ),
         );
+        await tester.pumpAndSettle();
+
+        // Kurul 4. tur: ilk kilitli seviyeden sonrası "+N seviye daha" satırında.
+        await tester.tap(find.byKey(const ValueKey('level-locked-more-3')));
         await tester.pumpAndSettle();
         // 2. seviyeden itibaren kilitli: koşul bir önceki seviyeyi söyler.
         for (var n = 2; n <= 5; n++) {

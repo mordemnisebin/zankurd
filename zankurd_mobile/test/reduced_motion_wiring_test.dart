@@ -98,7 +98,8 @@ void main() {
       // `repeat()` çağıran her yer.
       const owners = {
         'lib/src/screens/matchmaking_screen.dart': 'radar ve nabız',
-        'lib/src/screens/quiz/quiz_timer_widget.dart': 'sayaç nabzı',
+        // 2026-10-19 sadeleşme: `quiz_timer_widget.dart` artık nabızlı elmas
+        // değil düz saniye metni çiziyor (`repeat()` yok); girdi kalktı.
       };
       owners.forEach((path, what) {
         expect(

@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/models/public_profile.dart';
 import 'package:zankurd_mobile/src/models/room_message.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -90,5 +91,42 @@ void main() {
     await tester.pump();
     expect(repository.sent, ['Ez baş im']);
     expect(tester.takeException(), isNull);
+  });
+
+  // 2026-10-22 iki simülatör turu: adsız gönderen lobide "Oyuncu ZK-R5C4"
+  // iken sohbet balonunda yalnız "Oyuncu" yazıyordu.
+  testWidgets('adsız gönderen sohbette oyuncu koduyla görünür', (tester) async {
+    final repository = _ChatRepository();
+    addTearDown(repository.messages.close);
+    await tester.pumpWidget(
+      _shell(
+        Scaffold(
+          body: SizedBox(
+            height: 320,
+            child: RoomChat(
+              repository: repository,
+              roomId: 'room-1',
+              visible: true,
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    repository.messages.add([
+      RoomMessage(
+        id: 'm1',
+        roomId: 'room-1',
+        senderId: 'opponent',
+        senderName: '',
+        senderAvatarColor: '#E94560',
+        text: 'Silav',
+        createdAt: DateTime.utc(2026, 10, 22, 12),
+        senderProfile: const PublicProfile(id: 'opponent', playerTag: 'R5C4'),
+      ),
+    ]);
+    await tester.pump();
+    await tester.pump();
+    expect(find.text('Oyuncu ZK-R5C4'), findsOneWidget);
   });
 }

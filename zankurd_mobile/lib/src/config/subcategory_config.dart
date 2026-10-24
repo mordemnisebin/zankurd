@@ -860,10 +860,9 @@ class SubcategoryConfig {
     // bir ritim sorusunun çeldiricisinde "stran" geçince dengbêjliğe
     // düşüyordu (2026-09-28 ölçümü: 150'yi aşkın soru yalnız bir
     // çeldirici yüzünden bir alt kategoriye yazılmıştı).
-    final haystack = [
-      question.prompt,
-      question.correctAnswer,
-    ].join(' ').toLowerCase();
+    final texts = [question.prompt, question.correctAnswer];
+    final lowered = [for (final text in texts) text.toLowerCase()];
+    final tokens = [for (final text in lowered) _tokenize(text)];
 
     SubcategoryInfo? best;
     var bestScore = 0;
@@ -872,7 +871,7 @@ class SubcategoryConfig {
       if (words == null) continue;
       var score = 0;
       for (final word in words) {
-        if (haystack.contains(word)) score++;
+        if (_matchesKeyword(word, lowered, tokens)) score++;
       }
       if (score > bestScore) {
         bestScore = score;
@@ -880,6 +879,87 @@ class SubcategoryConfig {
       }
     }
     return best;
+  }
+
+  static final Map<String, List<String>?> _compiledKeywords = {};
+
+  static final RegExp _wordPattern = RegExp(r'[\p{L}\p{N}]+', unicode: true);
+
+  static final RegExp _punctuation = RegExp(
+    r"[^\p{L}\p{N} \-']",
+    unicode: true,
+  );
+
+  static List<String> _tokenize(String lowered) => [
+    for (final match in _wordPattern.allMatches(lowered)) match.group(0)!,
+  ];
+
+  /// Kurmancî ad çekim ekleri: kısa bir anahtar kelime (`wate`, `çiya`,
+  /// `maf`) yalnız bu eklerden biriyle uzayabilir.
+  static const List<String> _inflections = [
+    'a',
+    'ê',
+    'î',
+    'an',
+    'ên',
+    'ya',
+    'yê',
+    'yên',
+    'ek',
+    'eke',
+    'ekê',
+    'ekî',
+  ];
+
+  /// Bu uzunluğun altındaki anahtar kelime TÜM sözcük olmak zorundadır (ya da
+  /// [_inflections] ekiyle); bu uzunlukta ve üstü sözcük BAŞI eşleşir.
+  ///
+  /// ## Kusur
+  ///
+  /// Eşleşme ham alt dizeydi: `med` Amed, Ehmed, Mihemed ve "Runnymede"de de
+  /// bulunur — "Dîroka Kevn"in 56 sorusunun yaklaşık yarısı Medlerle değil bu
+  /// adlarla oraya düşüyordu; `dem` "serdem"i, `hevok` başka köklerin içini
+  /// yakalıyordu. Çıktı hep geçerli bir alt kategoriydi, hata vermedi; ancak
+  /// kartın altında konu dışı sorular çıktığını görmeden anlaşılmıyordu.
+  ///
+  /// ## Kural
+  ///
+  /// Metin sözcüklere bölünür. Uzun anahtar sözcük başında eşleşir (çekimli
+  /// biçimler "ronahiyê", "dnayê" kök anahtarla yakalanır); kısa anahtar
+  /// sözcüğün TAMAMIdır. Birden çok sözcüklü anahtar art arda gelen sözcükler
+  /// olarak aranır. Noktalama taşıyan anahtar ("; ew çi") ham alt dize kalır.
+  static const int _prefixMatchMinLength = 5;
+
+  static bool _matchesKeyword(
+    String keyword,
+    List<String> lowered,
+    List<List<String>> tokens,
+  ) {
+    // Anahtar sözcüklerin ayrıştırması soru başına değil bir kez yapılır
+    // (`null`: noktalama taşıyan, ham alt dize aranan anahtar).
+    final parts = _compiledKeywords.putIfAbsent(
+      keyword,
+      () => _punctuation.hasMatch(keyword) ? null : _tokenize(keyword),
+    );
+    if (parts == null) return lowered.any((text) => text.contains(keyword));
+    if (parts.isEmpty) return false;
+    for (final text in tokens) {
+      for (var i = 0; i + parts.length <= text.length; i++) {
+        var ok = true;
+        for (var j = 0; j < parts.length && ok; j++) {
+          ok = _tokenMatches(parts[j], text[i + j]);
+        }
+        if (ok) return true;
+      }
+    }
+    return false;
+  }
+
+  static bool _tokenMatches(String keyword, String token) {
+    if (token == keyword) return true;
+    if (!token.startsWith(keyword)) return false;
+    if (keyword.length >= _prefixMatchMinLength) return true;
+    return _inflections.contains(token.substring(keyword.length));
   }
 }
 

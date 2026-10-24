@@ -4,11 +4,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/async_duel.dart';
 import '../models/contest.dart';
+import '../models/match_history.dart';
+import '../models/add_friend_outcome.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/referral_result.dart';
 import '../models/room.dart';
 import '../models/tournament.dart';
+import 'lesson_completion_store.dart';
 import 'local_progress_scope.dart';
 import 'mock_zankurd_repository.dart';
 import 'zankurd_repository.dart';
@@ -19,8 +22,6 @@ import 'zankurd_repository.dart';
 /// olgunlaştırdığı için onları yeniden kullanır; fakat test/demoya özgü uzak
 /// kimlikleri ve sunucu yazımlarındaki sahte başarıları özellikle kapatır.
 class OfflineZanKurdRepository extends MockZanKurdRepository {
-  static String get _completedLessonIdsKey =>
-      LocalProgressScope.physical('zankurd.offline.completedLessonIds');
   static String get _favoriteQuestionIdsKey =>
       LocalProgressScope.physical('zankurd.offline.favoriteQuestionIds');
   static String get _profileNameKey =>
@@ -61,7 +62,13 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   }) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<GameRoom> createRoomRematch(String roomId) async {
     throw StateError('Remote service unavailable.');
   }
 
@@ -72,6 +79,14 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
 
   @override
   Future<AsyncDuelStart> startAsyncDuel({String? category}) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<int?> presentAsyncDuelQuestion(
+    String duelId,
+    int questionIndex,
+  ) async {
     throw StateError('Remote service unavailable.');
   }
 
@@ -96,9 +111,48 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<DateTime> nudgeAsyncDuel(String duelId) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<List<RecentMatch>> loadMyRecentMatches({int limit = 10}) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<ServerRecords> loadMyServerRecords() async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
   Future<int> claimAsyncDuelXp(String duelId) async {
     throw StateError('Remote service unavailable.');
   }
+
+  @override
+  Future<AsyncDuelStart> createAsyncDuelChallenge({
+    String? category,
+    String? friendId,
+  }) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<AsyncDuelStart> acceptAsyncDuelChallenge(String code) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<AsyncDuelReview?> loadAsyncDuelReview(String duelId) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<bool> supportsAsyncDuelChallenge() async => false;
+
+  @override
+  Future<bool> supportsRoomInvites() async => false;
 
   @override
   Future<GameRoom> loadRoomSnapshot(String roomId) async {
@@ -131,6 +185,11 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<MatchmakingTouch> touchMatchmaking() async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
   Future<void> acknowledgeRoomResult(GameRoom room) async {
     throw StateError('Remote service unavailable.');
   }
@@ -152,6 +211,10 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room) async {
     throw StateError('Remote service unavailable.');
   }
+
+  @override
+  Future<RoomAnswerProgress?> loadRoomAnswerProgress(GameRoom room) async =>
+      null;
 
   @override
   Future<void> updateReady(GameRoom room, bool isReady) async {
@@ -211,7 +274,10 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }) async => const [];
 
   @override
-  Future<bool> addFriend(String friendId, String friendName) async => false;
+  Future<AddFriendOutcome> addFriend(
+    String friendId,
+    String friendName,
+  ) async => AddFriendOutcome.failed;
 
   @override
   Future<void> setFcmToken(String token) async {
@@ -234,6 +300,12 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
 
   @override
   Future<bool> blockPlayer(String playerId) async => false;
+
+  @override
+  Future<bool> kickRoomPlayer({
+    required String roomId,
+    required String playerId,
+  }) async => false;
 
   @override
   Future<bool> unblockPlayer(String playerId) async => false;
@@ -340,6 +412,19 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<StreakRepairResult> spendStreakRepair({
+    required String monthKey,
+    required String breakDay,
+    required bool premium,
+  }) async => const StreakRepairResult(StreakRepairOutcome.failed);
+
+  @override
+  Future<AccountFlags?> loadAccountFlags() async => null;
+
+  @override
+  Future<bool> setPushPreferences({bool? duel, bool? social}) async => false;
+
+  @override
   Future<int> claimMissionReward({
     required String missionKey,
     required int fallbackReward,
@@ -408,7 +493,12 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<void> deleteAvatarPhoto() async {
+  Future<void> deleteAvatarPhoto({List<String> urls = const []}) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<void> deleteAvatarPhotoObjects(List<String> urls) async {
     throw StateError('Remote service unavailable.');
   }
 
@@ -418,21 +508,10 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<bool> markLessonCompleted(String lessonId) async {
-    final preferences = await SharedPreferences.getInstance();
-    final ids =
-        preferences.getStringList(_completedLessonIdsKey)?.toSet() ??
-        <String>{};
-    ids.add(lessonId);
-    final sortedIds = ids.toList()..sort();
-    return preferences.setStringList(_completedLessonIdsKey, sortedIds);
-  }
+  Future<bool> markLessonCompleted(String lessonId) =>
+      LessonCompletionStore.addPending(lessonId);
 
   @override
-  Future<Set<String>> loadCompletedLessonIds() async {
-    final preferences = await SharedPreferences.getInstance();
-    return (preferences.getStringList(_completedLessonIdsKey) ??
-            const <String>[])
-        .toSet();
-  }
+  Future<Set<String>> loadCompletedLessonIds() =>
+      LessonCompletionStore.loadLocal();
 }

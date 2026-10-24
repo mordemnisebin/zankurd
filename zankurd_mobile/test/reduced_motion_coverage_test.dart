@@ -7,11 +7,10 @@ import 'package:flutter_test/flutter_test.dart';
 ///
 /// `ReducedMotionProvider` ve Ayarlar'daki anahtar zaten vardı ve bazı
 /// yerlerde doğru uygulanıyordu (konfeti, kilim, iskelet yükleyici, quiz
-/// zamanlayıcı). Ama en çok hareket üreten dört kaynak onu HİÇ okumuyordu:
+/// zamanlayıcı). Ama en çok hareket üreten üç kaynak onu HİÇ okumuyordu:
 ///
 ///   * quiz şık kartlarının sarsıntı/zıplama animasyonu — uygulamanın en
 ///     çok görülen ekranı,
-///   * `BouncingButton` — uygulamanın her yerinde,
 ///   * `AppRoute` sayfa geçişleri — her gezinmede,
 ///   * çarkın 3.8 saniyelik dönüşü.
 ///
@@ -26,7 +25,6 @@ void main() {
   /// Animasyon üreten ve tercihi okumak zorunda olan dosyalar.
   const mustHonour = <String>[
     'lib/src/screens/quiz/quiz_option_tile.dart',
-    'lib/src/widgets/bouncing_button.dart',
     'lib/src/utils/app_route.dart',
     'lib/src/screens/spin_wheel_screen.dart',
     'lib/src/screens/splash_screen.dart',
@@ -38,7 +36,6 @@ void main() {
     'lib/src/widgets/skeleton_loader.dart',
     'lib/src/screens/quiz/quiz_effects.dart',
     'lib/src/widgets/weekly_performance_chart.dart',
-    'lib/src/widgets/kilim_reveal.dart',
   ];
 
   for (final path in mustHonour) {

@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import '../../theme/app_icons.dart';
 import '../../theme/sahne.dart';
 import 'sahne_foundation.dart';
-import 'sahne_painters.dart';
+import 'sahne_topic_marks.dart';
+
+/// Satır metni ile sağdaki ok simgesi arasındaki en az boşluk (7. kurul).
+const double sahneChevronGuard = 16;
 
 /// Eski ad. 2026-09-29 doğallık (K5): avatar elmas değil pahlı kare;
 /// çağıranlar kırılmasın diye ad [SahneAvatar]a yönlenir.
@@ -120,6 +123,20 @@ class SahneRowValue extends StatelessWidget {
   }
 }
 
+/// Sağdaki değerin büyük yazıda da satırın SAĞINDA, aynı satırda kalmasını
+/// ister. Varsayılan: ≥ 1.5 ölçekte değer metnin altına iner (rozet gibi
+/// uzun öğeler başlığı ezmesin). Kısa sayısal değerde (sıralama puanı) bu
+/// kural puanı adın altına atıp sıralamayı okunmaz kılıyordu (kalabalık
+/// sonuç, 320 px / 2×); ad sarar, puan sağda kalır.
+class SahneInlineTrailing extends StatelessWidget {
+  const SahneInlineTrailing({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => child;
+}
+
 enum _RowKind { standard, info, rank, me, custom, plain }
 
 /// Liste satırı — maketteki "5 · Liste satırı" (`.sh-row`).
@@ -162,8 +179,11 @@ class SahneListRow extends StatelessWidget {
     this.enabled = true,
     this.semanticLabel,
     this.destructive = false,
+    this.footer,
   }) : _kind = _RowKind.standard,
+       dense = false,
        tone = SahneCategoryTone.fallback,
+       mark = null,
        image = null,
        rank = null,
        initial = null,
@@ -183,7 +203,10 @@ class SahneListRow extends StatelessWidget {
     this.onTap,
     this.semanticLabel,
     this.tone = SahneCategoryTone.fallback,
+    this.mark,
   }) : _kind = _RowKind.info,
+       footer = null,
+       dense = false,
        role = SahneRole.neutral,
        enabled = true,
        rank = null,
@@ -191,7 +214,7 @@ class SahneListRow extends StatelessWidget {
        avatar = null,
        destructive = false,
        leadingWidget = null,
-       leadingWidth = 36;
+       leadingWidth = 44;
 
   /// Serbest öncüllü satır (ör. `PlayerAvatar`): [leadingWidth] ayırıcı
   /// hizası içindir (öncülün genişliği).
@@ -207,8 +230,11 @@ class SahneListRow extends StatelessWidget {
     this.enabled = true,
     this.semanticLabel,
     this.destructive = false,
+    this.footer,
   }) : _kind = _RowKind.custom,
+       dense = false,
        tone = SahneCategoryTone.fallback,
+       mark = null,
        leadingWidget = leading,
        icon = null,
        image = null,
@@ -221,6 +247,7 @@ class SahneListRow extends StatelessWidget {
   /// Satırın tamamı dokunulur; sağda ok ya da değer, ikisi birden değil.
   const SahneListRow.plain({
     super.key,
+    this.dense = false,
     required this.title,
     this.subtitle,
     this.trailing,
@@ -234,7 +261,9 @@ class SahneListRow extends StatelessWidget {
          'İkonsuz satırın sağında ok YA DA değer durur, ikisi birden değil.',
        ),
        _kind = _RowKind.plain,
+       footer = null,
        tone = SahneCategoryTone.fallback,
+       mark = null,
        icon = null,
        image = null,
        role = SahneRole.neutral,
@@ -256,7 +285,10 @@ class SahneListRow extends StatelessWidget {
     this.onTap,
     this.semanticLabel,
   }) : _kind = _RowKind.rank,
+       footer = null,
+       dense = false,
        tone = SahneCategoryTone.fallback,
+       mark = null,
        image = null,
        role = SahneRole.gold,
        chevron = false,
@@ -276,7 +308,10 @@ class SahneListRow extends StatelessWidget {
     this.onTap,
     this.semanticLabel,
   }) : _kind = _RowKind.me,
+       footer = null,
+       dense = false,
        tone = SahneCategoryTone.fallback,
+       mark = null,
        image = null,
        initial = null,
        role = SahneRole.gold,
@@ -305,8 +340,22 @@ class SahneListRow extends StatelessWidget {
   /// Yıkıcı eylem satırı (Şaş metni).
   final bool destructive;
 
+  /// Alt satırın ALTINA eklenen serbest parça (yalnız [SahneListRow.icon] ve
+  /// [SahneListRow.leading]): düello satırında "18 sa kaldı" + kalan süre
+  /// çubuğu. Metinle birlikte sarar; ekran okuyucu satırın etiketinde
+  /// okumaz (çağıran [semanticLabel]e katar).
+  final Widget? footer;
+
   /// Bilgi satırının çizimsiz küçüğünün kategori tonu.
   final SahneCategoryTone tone;
+
+  /// Bilgi satırında konunun ana sayfa karosundaki çizimi (tek kaynak:
+  /// `CategoryVisuals.mark`). Verilirse ikonlu düz küçük yerine bu çizilir.
+  ///
+  /// Kusur (kurul, 2026-10-20): ana sayfa kategoriyi çizimle, eşleşme ve
+  /// sonuç satırları başka bir çizgi ikon takımıyla çiziyordu; "Kültür" üç
+  /// ayrı biçimde görünüyordu. Çizim artık her yerde aynı.
+  final SahneTopicMark? mark;
 
   /// Sıra/"Sen" satırında avatarın yerine (36'lık yuva).
   final Widget? avatar;
@@ -317,11 +366,15 @@ class SahneListRow extends StatelessWidget {
   /// Öncülün genişliği (ayırıcı hizası).
   final double leadingWidth;
 
+  /// Yalnız [SahneListRow.plain]: sıkı satır (48). Kilitli ders listesi gibi
+  /// soluk, sıralı satırlar 56 yüksekliğinde yer tutmasın.
+  final bool dense;
+
   /// Grup ayırıcısının sol boşluğu: standart ve bilgi satırında metnin,
   /// sıra satırında avatarın hizası (12 + öncül + 12).
   double get dividerIndent => switch (_kind) {
     _RowKind.standard => SahneSpace.x3 + 44 + SahneSpace.x3,
-    _RowKind.info => SahneSpace.x3 + 36 + SahneSpace.x3,
+    _RowKind.info => SahneSpace.x3 + 44 + SahneSpace.x3,
     _RowKind.rank || _RowKind.me => SahneSpace.x3 + 24 + SahneSpace.x3,
     _RowKind.custom => SahneSpace.x3 + leadingWidth + SahneSpace.x3,
     _RowKind.plain => SahneSpace.x4,
@@ -330,7 +383,8 @@ class SahneListRow extends StatelessWidget {
   double get _minHeight => switch (_kind) {
     _RowKind.standard || _RowKind.me || _RowKind.custom => 64,
     _RowKind.info => 52,
-    _RowKind.rank || _RowKind.plain => 56,
+    _RowKind.rank => 56,
+    _RowKind.plain => dense ? 48 : 56,
   };
 
   @override
@@ -339,16 +393,21 @@ class SahneListRow extends StatelessWidget {
     final isMe = _kind == _RowKind.me;
 
     // Çizimsiz kategori küçüğü: kategorinin düz tonu + ikon, 36.
-    Widget noArt() => SizedBox.square(
-      dimension: 36,
-      child: CustomPaint(
-        painter: SahneNoArtPainter(tone: tone),
-        child: Center(
-          child: Icon(
-            icon ?? AppIcons.clapperboard,
-            size: 18,
-            color: SahneTokens.night.tx,
-          ),
+    // 2026-10-20 renk ve canlılık (B): küçük artık konunun DOLU rengidir
+    // (ana sayfadaki karo ve konu bandıyla aynı renk), beyaz ikon.
+    Widget noArt() => DecoratedBox(
+      decoration: ShapeDecoration(
+        color: tone.fill(
+          night: Theme.of(context).brightness == Brightness.dark,
+        ),
+        shape: SahneShape.m,
+      ),
+      child: SizedBox.square(
+        dimension: 44,
+        child: Icon(
+          icon ?? AppIcons.clapperboard,
+          size: 24,
+          color: SahneVivid.onFill,
         ),
       ),
     );
@@ -356,9 +415,13 @@ class SahneListRow extends StatelessWidget {
     Widget? leading;
     switch (_kind) {
       case _RowKind.standard:
+        // 2026-10-20 renk ve canlılık (B): mod rolleri (öğrenme, yarış,
+        // sosyal) ikon karosunda DOLU renk + beyaz ikon taşır; nötr ve Zêr
+        // ton zemininde kalır.
+        final vividFill = destructive || !enabled ? null : t.roleFill(role);
         leading = DecoratedBox(
           decoration: ShapeDecoration(
-            color: destructive ? t.errTint : t.roleTint(role),
+            color: destructive ? t.errTint : (vividFill ?? t.roleTint(role)),
             shape: SahneShape.m,
           ),
           child: SizedBox.square(
@@ -370,7 +433,7 @@ class SahneListRow extends StatelessWidget {
                   ? t.tx3
                   : destructive
                   ? t.errTx
-                  : t.roleText(role),
+                  : (vividFill != null ? SahneVivid.onFill : t.roleText(role)),
             ),
           ),
         );
@@ -388,8 +451,8 @@ class SahneListRow extends StatelessWidget {
                   decoration: BoxDecoration(color: tone.ground),
                   child: Image(
                     image: img,
-                    width: 36,
-                    height: 36,
+                    width: 44,
+                    height: 44,
                     fit: BoxFit.cover,
                     excludeFromSemantics: true,
                     errorBuilder: (_, _, _) => noArt(),
@@ -429,6 +492,14 @@ class SahneListRow extends StatelessWidget {
         );
     }
 
+    // Kilitli (pasif) satır: başlık ve açıklama [SahneTokens.disabledFg]
+    // (üçüncül metin) — hâlâ belli ölçüde soluk ama AA'yı geçer.
+    //
+    // Kusur (kurul tur 6b): kilitli satır önce ikincil metin ×0,6 saydamlıkla
+    // çiziliyordu (2. tur kararı); gündüz kartta ≈ #9AA0B8 gibi bir griye
+    // iniyor, "kilitli ders" başlıkları okunmuyordu (2 denetçi). Saydamlık
+    // kalktı, renk belirteçten gelir; kilitli olduğu kilit ikonundan ve
+    // etkin satırın tam koyu metninden ayırt edilir.
     final text = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -437,20 +508,27 @@ class SahneListRow extends StatelessWidget {
           title,
           style: SahneType.bodyStrong.copyWith(
             color: !enabled
-                ? t.tx2
+                ? t.disabledFg
                 : destructive
                 ? t.errTx
                 : t.tx,
           ),
         ),
         if (subtitle != null)
-          Text(subtitle!, style: SahneType.caption.copyWith(color: t.tx2)),
+          Text(
+            subtitle!,
+            style: SahneType.caption.copyWith(
+              color: enabled ? t.tx2 : t.disabledFg,
+            ),
+          ),
+        if (footer != null) ...[const SizedBox(height: SahneSpace.x1), footer!],
       ],
     );
-
     // Büyük yazı ölçeğinde (≥ 1.5) sağdaki rozet/değer metnin altına
     // iner: başlık dar bir sütunda harf harf bölünmesin.
-    final stacked = MediaQuery.textScalerOf(context).scale(16) >= 24;
+    final stacked =
+        MediaQuery.textScalerOf(context).scale(16) >= 24 &&
+        trailing is! SahneInlineTrailing;
     final Widget? trail = trailing == null
         ? null
         : DefaultTextStyle.merge(
@@ -495,7 +573,10 @@ class SahneListRow extends StatelessWidget {
               trail,
             ],
             if (chevron) ...[
-              const SizedBox(width: SahneSpace.x1),
+              // 7. kurul (Opus + ChatGPT): uzun Kurmancî alt satır ok
+              // simgesine yapışıyordu (27_play_hub_ku); metin ile chevron
+              // arası en az 16 px koruma boşluğu.
+              const SizedBox(width: sahneChevronGuard),
               ExcludeSemantics(
                 child: Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
               ),
@@ -574,7 +655,7 @@ class SahneListGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return Material(
+    final group = Material(
       color: t.s1,
       shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       clipBehavior: Clip.antiAlias,
@@ -610,6 +691,12 @@ class SahneListGroup extends StatelessWidget {
           ],
         ),
       ),
+    );
+    // Kart ayrımı: gündüz çok hafif gölge (bkz. SahneSurfaceCard).
+    if (t.bg.computeLuminance() <= 0.5) return group;
+    return DecoratedBox(
+      decoration: ShapeDecoration(shape: SahneShape.l, shadows: [t.cardShadow]),
+      child: group,
     );
   }
 }

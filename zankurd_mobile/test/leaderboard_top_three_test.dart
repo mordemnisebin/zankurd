@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
-import 'package:zankurd_mobile/src/widgets/kilim_reveal.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -90,6 +90,20 @@ Color? _rankDigitColor(WidgetTester tester, int rank) {
   return tester.widget<Text>(digit).style?.color;
 }
 
+/// Kaynak sırasız döndürür (3., 1., 2.).
+class _ShuffledRepo extends _Repo {
+  _ShuffledRepo() : super(count: 4);
+
+  @override
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    int limit = 20,
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async {
+    final all = await super.loadLeaderboard(limit: limit, period: period);
+    return [all[2], all[0], all[3], all[1]];
+  }
+}
+
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
@@ -141,7 +155,6 @@ void main() {
         .widgetList<SahneGlyph>(find.byType(SahneGlyph))
         .where((g) => g.kind == SahneGlyphKind.crown);
     expect(crowns, hasLength(1), reason: 'taç yalnız birincide');
-    expect(find.byType(KilimReveal), findsNothing);
   });
 
   testWidgets('tam üç oyuncuda liste yüzeyi çizilmez', (tester) async {
@@ -164,17 +177,80 @@ void main() {
     }
   });
 
-  testWidgets('podyumdaki oyuncu da bildirilebilir (görünür düğme)', (
+  // Tasarım kurulu tüm ekranlar 2026-10-20: podyumda bayrak yok (gürültü);
+  // sütuna dokununca menü açılır ve bildir yolu orada durur (Apple 1.2).
+  // Tasarım kurulu tüm ekranlar 2026-10-20 (MiniMax: "adlar sıralarla
+  // eşleşmiyor"): her kaide kendi sırasının adını/puanını taşır, kaynak
+  // sırasız gelse bile.
+  testWidgets('podyum her sırayı doğru ad ve puanla eşler (sırasız kaynak)', (
+    tester,
+  ) async {
+    await _pump(tester, _ShuffledRepo());
+    const expected = {
+      1: ('Rojda', '8.420'),
+      2: ('Baran', '7.520'),
+      3: ('Dilan', '6.620'),
+    };
+    for (final e in expected.entries) {
+      final column = find.byKey(ValueKey('leaderboard-rank-row-${e.key}'));
+      expect(column, findsOneWidget);
+      expect(
+        find.descendant(of: column, matching: find.text(e.value.$1)),
+        findsOneWidget,
+        reason: 'sıra ${e.key}: ad',
+      );
+      expect(
+        find.descendant(of: column, matching: find.text(e.value.$2)),
+        findsOneWidget,
+        reason: 'sıra ${e.key}: puan',
+      );
+    }
+    // 4. oyuncu podyumda değil, listede.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('leaderboard-podium')),
+        matching: find.text('Zelal'),
+      ),
+      findsNothing,
+    );
+  });
+
+  testWidgets('üçten az oyuncuda podyum yok, boş kart da yok', (tester) async {
+    await _pump(tester, _Repo(count: 2));
+    expect(find.byKey(const ValueKey('leaderboard-podium')), findsNothing);
+    expect(find.text('Rojda'), findsOneWidget);
+    expect(find.text('Baran'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('podyumda bayrak yok; sütuna dokununca bildir menüsü açılır', (
     tester,
   ) async {
     await _pump(tester, _Repo(count: 4));
-    for (final id in ['p0', 'p1', 'p2']) {
+    expect(find.byIcon(AppIcons.flag), findsNothing);
+    expect(find.byKey(const ValueKey('player-report-action')), findsNothing);
+    for (final (_, rank) in [('p0', 1), ('p1', 2), ('p2', 3)]) {
+      await tester.tap(find.byKey(ValueKey('leaderboard-rank-row-$rank')));
+      await tester.pumpAndSettle();
       expect(
-        find.byKey(ValueKey('leaderboard-report-$id')),
+        find.byKey(const ValueKey('player-report-action')),
         findsOneWidget,
-        reason: '$id podyumda bildirilebilmeli (Apple 1.2)',
+        reason: '$rank. sıra podyumda bildirilebilmeli (Apple 1.2)',
       );
+      await tester.tapAt(const Offset(5, 5)); // menüyü kapat
+      await tester.pumpAndSettle();
     }
+  });
+
+  testWidgets('podyum basamaklı: 1. kaide 2.den, 2. kaide 3.den yüksek', (
+    tester,
+  ) async {
+    await _pump(tester, _Repo(count: 4));
+    double h(int rank) => tester
+        .getSize(find.byKey(ValueKey('leaderboard-rank-row-$rank')))
+        .height;
+    expect(h(1), greaterThan(h(2)));
+    expect(h(2), greaterThan(h(3)));
   });
 
   testWidgets('320 px ve uzun adlar: taşma yok, adlar tam okunur', (
@@ -251,6 +327,29 @@ void main() {
         find.byKey(ValueKey('leaderboard-rank-row-$rank')),
         findsOneWidget,
       );
+    }
+  });
+
+  // Kurul 3. tur 2026-10-20 (06): kaideler liste grubuyla aynı kart işleme;
+  // birinciye özel altın dolgu yok (üç ayrı vurgu dili çıkıyordu).
+  testWidgets('2026-10-20 (B): kaideler Zêr/gümüş/bronz madalya tonunu taşır', (
+    tester,
+  ) async {
+    await _pump(tester, _Repo(count: 5));
+    final podium = find.byKey(const ValueKey('leaderboard-podium'));
+    final t = SahneTokens.of(tester.element(podium));
+    final fills = tester
+        .widgetList<DecoratedBox>(
+          find.descendant(of: podium, matching: find.byType(DecoratedBox)),
+        )
+        .map((d) => d.decoration)
+        .whereType<ShapeDecoration>()
+        .map((d) => d.color)
+        .whereType<Color>();
+    // Zêr ilk üç: her kaide kendi madalya tonunda (renk bekçisi:
+    // renk_canlilik_test.dart).
+    for (var place = 0; place < 3; place++) {
+      expect(fills, contains(t.medalTint(place)), reason: 'kaide ${place + 1}');
     }
   });
 

@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/local_progress_scope.dart';
 import '../l10n/strings.dart';
 import '../widgets/share_story_card.dart';
 import 'error_reporter.dart';
@@ -17,7 +18,10 @@ import 'percent_format.dart';
 /// paylaşılır. Görsel üretimi herhangi bir nedenle başarısız olursa,
 /// güvenli biçimde metin paylaşımına düşülür (her platformda çalışır).
 class ResultSharer {
-  static const _shareRewardDateKey = 'zankurd.shareReward.lastDate';
+  /// Kullanıcıya özel: aynı cihazda hesap değişince A'nın aldığı ödül B'yi
+  /// kilitlemesin (bkz. `LocalProgressScope`).
+  static String get _shareRewardDateKey =>
+      LocalProgressScope.physical('zankurd.shareReward.lastDate');
 
   /// Günlük ilk paylaşım ödülü verilebilir mi?
   static Future<bool> canClaimDailyShareReward([DateTime? now]) async {
@@ -27,20 +31,61 @@ class ResultSharer {
     return last != today;
   }
 
-  /// Günlük paylaşım ödülünü işaretler; ödül hak edildiyse true döner.
-  static Future<bool> claimDailyShareReward([DateTime? now]) async {
+  /// Günü "ödül alındı" diye işaretler. YALNIZ sunucu ödülü gerçekten
+  /// verdikten sonra çağrılır; önce işaretlemek, sunucu isteği düşerse
+  /// oyuncuyu gün boyu ödülsüz bırakırdı.
+  static Future<void> markDailyShareRewardClaimed([DateTime? now]) =>
+      _mark(_shareRewardDateKey, _dateKey(now ?? DateTime.now()));
+
+  static Future<void> _mark(String physicalKey, String day) async {
     final prefs = await SharedPreferences.getInstance();
-    final today = _dateKey(now ?? DateTime.now());
-    final last = prefs.getString(_shareRewardDateKey);
-    if (last == today) return false;
-    await prefs.setString(_shareRewardDateKey, today);
-    return true;
+    await prefs.setString(physicalKey, day);
+  }
+
+  /// Devam eden işlemler: "fiziksel anahtar|gün" başına TEK uçuş.
+  static final Set<String> _inFlight = <String>{};
+
+  /// Günlük paylaşım ödülünü tek adımda çözer: hak varsa [awardCoins]
+  /// çağrılır, miktar > 0 ise gün işaretlenir ve `true` döner. Hata ya da 0
+  /// (sunucu vermedi) günü YAKMAZ; sonraki paylaşımda yeniden denenir.
+  ///
+  /// Kullanıcıya özel anahtar ve gün işlem BAŞINDA sabitlenir: istek sürerken
+  /// hesap değişirse işaret yanlış kullanıcıya yazılmaz. Aynı anahtar+gün için
+  /// eşzamanlı ikinci çağrı sunucuya gitmeden `false` döner (çift ödül yok).
+  static Future<bool> settleDailyShareReward({
+    required Future<int> Function() awardCoins,
+    DateTime? now,
+  }) async {
+    final physicalKey = _shareRewardDateKey;
+    final day = _dateKey(now ?? DateTime.now());
+    final flightKey = '$physicalKey|$day';
+    if (!_inFlight.add(flightKey)) return false;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (prefs.getString(physicalKey) == day) return false;
+      final int amount;
+      try {
+        amount = await awardCoins();
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'share_reward_award');
+        return false;
+      }
+      if (amount <= 0) return false;
+      await _mark(physicalKey, day);
+      return true;
+    } finally {
+      _inFlight.remove(flightKey);
+    }
   }
 
   static String _dateKey(DateTime date) =>
       '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 
-  static Future<void> share(
+  /// Paylaşım gerçekten yapıldıysa true. `dismissed` (kullanıcı iptal etti)
+  /// false döner; `unavailable` (iOS bazı sürümlerde sonucu bildirmez, web vb.)
+  /// true sayılır: sonuç bilinemeyen platformda ödülü kesmek sürekli
+  /// "ödül yok" demek olurdu, o yüzden kullanıcı lehine.
+  static Future<bool> share(
     BuildContext context, {
     required bool isKu,
     required int score,
@@ -93,15 +138,23 @@ class ResultSharer {
           for (var i = 0; i < images.length; i++)
             XFile.fromData(images[i], mimeType: 'image/png', name: names[i]),
         ];
-        await SharePlus.instance.share(ShareParams(text: text, files: files));
-        return;
+        final result = await SharePlus.instance.share(
+          ShareParams(text: text, files: files),
+        );
+        return statusCounts(result.status);
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'result_share_capture');
       // Görsel paylaşımı başarısız — metne düş.
     }
-    await SharePlus.instance.share(ShareParams(text: text));
+    final result = await SharePlus.instance.share(ShareParams(text: text));
+    return statusCounts(result.status);
   }
+
+  /// Ödüle sayılan paylaşım durumu (bekçi testi bunu doğrudan sınar).
+  @visibleForTesting
+  static bool statusCounts(ShareResultStatus status) =>
+      status != ShareResultStatus.dismissed;
 
   /// Verilen widget'ı ekran dışında render edip PNG byte'larına çevirir.
   static Future<Uint8List?> _captureCard(

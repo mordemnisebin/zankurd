@@ -13,7 +13,7 @@ import '../../theme/sahne.dart';
 /// Renk yalnız rol taşır (bkz. [SahneTokens]): öğrenme Zimrût, yarış Boyax,
 /// ödül Zêr; nötr Kulis tonudur. İkon karosu, seçili çip, rozet ve kilim
 /// şeridi rengini buradan alır — bileşen renk parametresi almaz.
-enum SahneRole { learn, race, gold, neutral }
+enum SahneRole { learn, race, social, gold, neutral }
 
 /// Rolün belirteçlerdeki karşılıkları.
 extension SahneRoleTokens on SahneTokens {
@@ -21,6 +21,7 @@ extension SahneRoleTokens on SahneTokens {
   Color roleText(SahneRole role) => switch (role) {
     SahneRole.learn => learnTx,
     SahneRole.race => raceTx,
+    SahneRole.social => nilTx,
     SahneRole.gold => goldTx,
     SahneRole.neutral => tx,
   };
@@ -29,14 +30,33 @@ extension SahneRoleTokens on SahneTokens {
   Color roleTint(SahneRole role) => switch (role) {
     SahneRole.learn => learnTint,
     SahneRole.race => raceTint,
+    SahneRole.social => nilTint,
     SahneRole.gold => goldTint,
     SahneRole.neutral => s2,
+  };
+
+  /// Rolün DOLU yüzeyi (kahraman, sayfa bandı; üstünde beyaz yazı ≥ 4,5:1).
+  /// Zêr ve nötr rolün dolu yüzeyi yoktur (Zêr yalnız ödüldür).
+  Color? roleFill(SahneRole role) => switch (role) {
+    SahneRole.learn => learnFill,
+    SahneRole.race => raceFill,
+    SahneRole.social => nilFill,
+    SahneRole.gold || SahneRole.neutral => null,
+  };
+
+  /// Dolu yüzeyin gradyan sonundaki koyu uç.
+  Color? roleDeep(SahneRole role) => switch (role) {
+    SahneRole.learn => learnDeep,
+    SahneRole.race => raceDeep,
+    SahneRole.social => nilDeep,
+    SahneRole.gold || SahneRole.neutral => null,
   };
 
   /// Sahne kartının köşe radyali: rol renginin %20'si (`--stage-learn`).
   Color roleGlow(SahneRole role) => switch (role) {
     SahneRole.learn => learn.withValues(alpha: 0.2),
     SahneRole.race => race.withValues(alpha: 0.2),
+    SahneRole.social => nil.withValues(alpha: 0.2),
     SahneRole.gold => gold.withValues(alpha: 0.2),
     SahneRole.neutral => tx3.withValues(alpha: 0.12),
   };

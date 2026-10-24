@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../game/avatar_frames.dart';
 import '../l10n/strings.dart';
 import '../models/leaderboard_entry.dart';
-import '../theme/app_icons.dart';
 import '../utils/player_identity.dart';
 import 'player_avatar.dart';
 import 'sahne/sahne.dart';
+import '../utils/number_format.dart';
 
 /// Sıralamanın ilk üçü: ortada birinci (en uzun kaide), solda ikinci,
 /// sağda üçüncü.
@@ -28,9 +29,11 @@ import 'sahne/sahne.dart';
 ///   liste satırı olarak kalır; adlar kırpılmaz.
 /// * Rakam her zaman yazılıdır (kaidenin üstünde); sıra yalnız renkle ya da
 ///   yükseklikle anlatılmaz.
-/// * "Bildir" düğmesi GÖRÜNÜRDÜR (Apple 1.2): liste satırındaki aynı
-///   anahtar (`leaderboard-report-<id>`) ve aynı etiket; kendi kaidende
-///   düğme yerine "Sen" rozeti durur.
+/// * Kaide (2026-10-20 kurul): avatar kaidenin ÜSTÜNDE oturur; ad ve puan
+///   kaidenin içinde, rakamın altında. Yükseklikler açık basamaklı
+///   (1 > 2 > 3). Bayrak simgesi yok: sütuna dokununca (`onReport`: oyuncu alt sayfası)
+///   "Profili bildir" menüsü açılır (Apple 1.2 yolu korunur). Kendi
+///   kaidende menü yok, "Sen" rozeti durur.
 class LeaderboardPodium extends StatelessWidget {
   const LeaderboardPodium({
     super.key,
@@ -114,10 +117,14 @@ class _PodiumColumn extends StatelessWidget {
 
   /// Kaide yükseklikleri: birinci en uzun. Dört katı; büyük yazıda kaide
   /// içeriğiyle birlikte uzar (en az bu kadar).
-  static const _pedestal = [104.0, 92.0, 80.0];
+  static const _pedestal = [152.0, 124.0, 100.0];
   static const _avatarRadius = [32.0, 24.0, 24.0];
 
-  String get _name => PlayerIdentity.resolveName(entry.displayName, isKu: isKu);
+  String get _name => PlayerIdentity.resolveNameWithTag(
+    entry.displayName,
+    isKu: isKu,
+    tag: entry.playerTag,
+  );
 
   Color _rankColor(SahneTokens t) {
     if (isSelf) return t.goldTx;
@@ -134,26 +141,39 @@ class _PodiumColumn extends StatelessWidget {
     final label = Tr.forKu(isSelf ? K.seninSiranPP : K.pPPPuan, isKu, {
       'p0': '${entry.rank}',
       'p1': _name,
-      'p2': '${entry.totalScore}',
+      'p2': groupThousands(entry.totalScore),
     });
     final first = place == 0;
-    final pedestalShape = first
-        ? SahneShape.withSide(SahneShape.l, t.gold, width: SahneRing.r1)
-        : SahneShape.withSide(SahneShape.l, t.edge, width: 1);
+    // Kurul 3. tur (2026-10-20, 06): kaideler liste grubuyla AYNI kart
+    // işleme (Perde + 1 px kenar + L pah). Eskiden birinci kaide altın
+    // dolgu ve altın halkaydı; liste ise nötr kartta kalıyor, sıralama
+    // sekmesi (turuncu seçili) ile üç ayrı vurgu dili çıkıyordu. Birinciyi
+    // artık yalnız taç ve altın rakam ayırır.
     final pedestal = ConstrainedBox(
       constraints: BoxConstraints(minHeight: _pedestal[place]),
       child: DecoratedBox(
+        // Zêr ilk üç (2026-10-20 B): kaide madalya tonunda, üstte madalya
+        // renginde şerit; kendi satırın altın vurgusu aşağıda sürer.
         decoration: ShapeDecoration(
-          color: first ? t.goldTint : t.s1,
-          shape: pedestalShape,
+          color: t.medalTint(place),
+          shape: SahneShape.withSide(
+            SahneShape.l,
+            t.medalBar(place),
+            width: 1.5,
+          ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: SahneSpace.x2),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ExcludeSemantics(
-                child: Text(
+          padding: const EdgeInsets.fromLTRB(
+            SahneSpace.x1,
+            SahneSpace.x2,
+            SahneSpace.x1,
+            SahneSpace.x2,
+          ),
+          child: ExcludeSemantics(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
                   '${entry.rank}',
                   maxLines: 1,
                   style: SahneType.title.copyWith(
@@ -161,65 +181,7 @@ class _PodiumColumn extends StatelessWidget {
                     fontFeatures: const [FontFeature.tabularFigures()],
                   ),
                 ),
-              ),
-              if (isSelf)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: SahneSpace.x2),
-                  child: SahneBadge(
-                    label: Tr.forKu(K.you, isKu),
-                    tone: SahneBadgeTone.gold,
-                  ),
-                )
-              else
-                Semantics(
-                  button: true,
-                  label: Tr.forKu(K.reportProfileTitle, isKu),
-                  child: IconButton(
-                    key: ValueKey('leaderboard-report-${entry.playerId}'),
-                    onPressed: onReport,
-                    icon: const Icon(AppIcons.flag, size: 16),
-                    color: t.tx3,
-                    // Android dokunma hedefi: 48 dp altına düşmez.
-                    constraints: const BoxConstraints(
-                      minWidth: 48,
-                      minHeight: 48,
-                    ),
-                    padding: EdgeInsets.zero,
-                    tooltip: Tr.forKu(K.reportProfileTitle, isKu),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-
-    return Semantics(
-      key: ValueKey('leaderboard-rank-row-${entry.rank}'),
-      container: true,
-      label: label,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ExcludeSemantics(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (first) ...[
-                  const SahneGlyph(SahneGlyphKind.crown, size: 28),
-                  const SizedBox(height: SahneSpace.x1),
-                ],
-                PlayerAvatar(
-                  radius: _avatarRadius[place],
-                  photoUrl: entry.avatarUrl,
-                  iconId: entry.avatarIcon,
-                  colorHex: entry.avatarColor,
-                  frameId: entry.avatarFrame,
-                  displayName: entry.displayName,
-                  colorOverride: colorOverride,
-                ),
-                const SizedBox(height: SahneSpace.x2),
+                const SizedBox(height: SahneSpace.x1),
                 _PodiumName(name: _name),
                 const SizedBox(height: SahneSpace.x1),
                 SizedBox(
@@ -227,7 +189,7 @@ class _PodiumColumn extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      '${entry.totalScore}',
+                      groupThousands(entry.totalScore),
                       maxLines: 1,
                       style: SahneType.bodyStrong.copyWith(
                         color: isSelf ? t.goldTx : t.tx,
@@ -236,12 +198,87 @@ class _PodiumColumn extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: SahneSpace.x2),
+                if (isSelf) ...[
+                  const SizedBox(height: SahneSpace.x1),
+                  SahneBadge(
+                    label: Tr.forKu(K.you, isKu),
+                    tone: SahneBadgeTone.gold,
+                  ),
+                ],
               ],
             ),
           ),
-          pedestal,
-        ],
+        ),
+      ),
+    );
+
+    final column = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ExcludeSemantics(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (first) ...[
+                const SahneGlyph(SahneGlyphKind.crown, size: 28),
+                const SizedBox(height: SahneSpace.x1),
+              ],
+              // Madalya halkası (7. kurul): ilk üçün avatarı altın / gümüş /
+              // bronz ince halkayla ayrışır. Halka avatarın kendi pahlı
+              // şeklini izler (yuvarlak değil); oyuncunun seçtiği çerçeve
+              // içeride aynen kalır.
+              DecoratedBox(
+                key: ValueKey('podium-medal-ring-${place + 1}'),
+                decoration: ShapeDecoration(
+                  shape: SahneShape.withSide(
+                    SahneShape.forSize(_avatarRadius[place] * 2 + 8),
+                    frameColor(
+                      const [
+                        AvatarFrame.gold,
+                        AvatarFrame.silver,
+                        AvatarFrame.bronze,
+                      ][place],
+                    ),
+                    width: 2,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: PlayerAvatar(
+                    radius: _avatarRadius[place],
+                    photoUrl: entry.avatarUrl,
+                    iconId: entry.avatarIcon,
+                    colorHex: entry.avatarColor,
+                    frameId: entry.avatarFrame,
+                    displayName: entry.displayName,
+                    colorOverride: colorOverride,
+                  ),
+                ),
+              ),
+              const SizedBox(height: SahneSpace.x2),
+            ],
+          ),
+        ),
+        pedestal,
+      ],
+    );
+
+    final onReport = this.onReport;
+    return Semantics(
+      key: ValueKey('leaderboard-rank-row-${entry.rank}'),
+      container: true,
+      label: label,
+      button: onReport != null,
+      onTap: onReport,
+      onLongPress: onReport,
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        excludeFromSemantics: true,
+        onTap: onReport,
+        onLongPress: onReport,
+        child: column,
       ),
     );
   }

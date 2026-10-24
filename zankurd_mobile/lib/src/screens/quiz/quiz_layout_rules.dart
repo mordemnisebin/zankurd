@@ -38,6 +38,56 @@ const double _compactLandscapeMinWidth = 700.0;
 /// kalır ve dikey akışı kullanır.
 const double _compactLandscapeMaxHeight = 600.0;
 
+/// Test ortamında da doğru şıkkı kaydıran `_revealCorrectAnswer`ı açar.
+///
+/// Kaydırma test koşucusunda kapalıdır (yerleşim testleri sabit konuma
+/// güvenir); ama tam o yüzden fotoğrafı ekran dışına iten kaydırma hiçbir
+/// testte çalışmıyordu. Yalnız bunu ölçen testler açar.
+@visibleForTesting
+bool revealCorrectAnswerInTests = false;
+
+/// Cevaptan sonraki kaydırmada soru fotoğrafından görünür kalması gereken
+/// en az yükseklik (pt).
+const double _questionPhotoMinVisible = 64.0;
+
+/// [target]'ı kayan gövdede [alignment] hizasına getirir, ama soru
+/// fotoğrafını [_questionPhotoMinVisible]'dan aşağı kaybettirmez.
+///
+/// `Scrollable.ensureVisible` yalnız "hedef görünsün" der; fotoğraf gövdenin
+/// ilk öğesi olduğundan hedef aşağıdaysa fotoğraf üst kenarın arkasına kayıp
+/// ince bir şeride (ya da hiç) iniyordu. Burada hedef konum, fotoğrafın
+/// alt kenarından [_questionPhotoMinVisible] pt görünür kalacak konumla
+/// sınırlanır; oyuncu zaten daha aşağı kaydırmışsa onu geri çekmeyiz.
+void _revealKeepingPhoto(
+  BuildContext target, {
+  required GlobalKey photoKey,
+  required double alignment,
+  required Duration duration,
+  Curve curve = Curves.easeOutCubic,
+}) {
+  final renderObject = target.findRenderObject();
+  if (renderObject == null || !renderObject.attached) return;
+  final scrollable = Scrollable.maybeOf(target);
+  final viewport = RenderAbstractViewport.maybeOf(renderObject);
+  if (scrollable == null || viewport == null) return;
+  final position = scrollable.position;
+
+  var offset = viewport.getOffsetToReveal(renderObject, alignment).offset;
+  final photo = photoKey.currentContext?.findRenderObject();
+  if (photo is RenderBox && photo.attached && photo.hasSize) {
+    final photoTop = viewport.getOffsetToReveal(photo, 0).offset;
+    final keep = min(photo.size.height, _questionPhotoMinVisible);
+    final cap = photoTop + photo.size.height - keep;
+    offset = min(offset, max(cap, position.pixels));
+  }
+  offset = offset.clamp(position.minScrollExtent, position.maxScrollExtent);
+  if (duration == Duration.zero) {
+    position.jumpTo(offset);
+  } else {
+    unawaited(position.animateTo(offset, duration: duration, curve: curve));
+  }
+}
+
 /// Terminal 1v1 çağrısı sonsuza dek bekleyip geri dönüşü kilitlememeli.
 const Duration _onlineResultRequestTimeout = Duration(seconds: 15);
 

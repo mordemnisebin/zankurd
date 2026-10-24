@@ -153,6 +153,9 @@ class AppIcons {
   /// Lucide `dice-5`.
   static const IconData dice = IconData(0xe28b, fontFamily: 'Lucide');
 
+  /// Lucide `ferris-wheel`.
+  static const IconData ferrisWheel = IconData(0xe47f, fontFamily: 'Lucide');
+
   /// Lucide `door-open`.
   static const IconData doorOpen = IconData(0xe3d6, fontFamily: 'Lucide');
 
@@ -176,6 +179,15 @@ class AppIcons {
 
   /// Lucide `flag`.
   static const IconData flag = IconData(0xe0d1, fontFamily: 'Lucide');
+
+  /// Lucide `ellipsis` (yatay üç nokta, "daha fazla" menüsü).
+  static const IconData ellipsis = IconData(0xe0b6, fontFamily: 'Lucide');
+
+  /// Lucide `ellipsis-vertical`.
+  static const IconData ellipsisVertical = IconData(
+    0xe0b7,
+    fontFamily: 'Lucide',
+  );
 
   /// Lucide `save`.
   static const IconData floppyDisk = IconData(0xe14d, fontFamily: 'Lucide');

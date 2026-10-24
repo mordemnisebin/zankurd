@@ -1,4 +1,5 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+import 'support/play_hub_nav.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ class _RoomConfigRepository extends MockZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   }) async {
     capturedEntryFee = entryFee;
     return super.createOnlineRoom(
@@ -49,6 +51,7 @@ class _RoomConfigRepository extends MockZanKurdRepository {
       secondsPerQuestion: secondsPerQuestion,
       questionCount: questionCount,
       entryFee: entryFee,
+      maxPlayers: maxPlayers,
     );
   }
 }
@@ -168,6 +171,14 @@ void main() {
             await tester.pumpAndSettle();
             await tester.tap(createRoom);
             await tester.pumpAndSettle();
+            await tester.ensureVisible(
+              find.byKey(const ValueKey('custom-room-settings-row')),
+            );
+            await tester.pumpAndSettle();
+            await tester.tap(
+              find.byKey(const ValueKey('custom-room-settings-row')),
+            );
+            await tester.pumpAndSettle();
 
             final feeLabels = <String>[
               locale == 'ku' ? 'Bêpere (0)' : 'Ücretsiz (0)',
@@ -185,6 +196,7 @@ void main() {
               final chip = find.byKey(ValueKey('custom-room-fee-$fee'));
               expect(chip, findsOneWidget, reason: '$fee chip missing');
               await tester.ensureVisible(chip);
+              await tester.pumpAndSettle();
               await tester.pump();
               final chipRect = tester.getRect(chip);
               expect(chipRect.left, greaterThanOrEqualTo(0));
@@ -217,11 +229,21 @@ void main() {
       testShell(child: PlayHubScreen(repository: repository)),
     );
     await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('custom-room-settings-row')),
+    );
+
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
     await tester.pumpAndSettle();
 
     final fee = find.byKey(const ValueKey('custom-room-fee-100'));
     await tester.ensureVisible(fee);
+    await tester.pumpAndSettle();
     await tester.tap(fee);
     await tester.pumpAndSettle();
     expect(
@@ -231,6 +253,7 @@ void main() {
 
     final openRoom = find.text('Odayı aç');
     await tester.ensureVisible(openRoom);
+    await tester.pumpAndSettle();
     await tester.pump();
     await tester.tap(openRoom);
     await tester.pumpAndSettle();

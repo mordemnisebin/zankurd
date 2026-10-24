@@ -12,6 +12,14 @@
 ///   Android kılavuzu), sözü var.
 /// * C: gündüz temasında da GECE; orta yuva (sayaç) yan öğeler farklı
 ///   genişlikte olsa da tam ortada durur.
+///
+/// 2026-10-19 SADELEŞME (bu dosya güncellendi): (1) ışık huzmesi varsayılan
+/// KAPALI (`beam: false`; test edenler "gözü yoruyor" dedi): kategori ışığı
+/// ve varsayılan sahne testleri huzmeyi açıkça isteyip rengini ölçer,
+/// varsayılanda huzme olmadığını da sabitler; (2) üst satır 68 → 56 px ve
+/// orta yuva, sağ grup soldan geniş olunca iki yan arasındaki boşluğa kayar
+/// (künye metni sıkışmasın); yan öğeler simetriğe yakınken eskisi gibi TAM
+/// ortada. Sayaç testi bu yüzden daha kısa bir skor etiketi kullanır.
 library;
 
 import 'package:flutter/material.dart';
@@ -136,7 +144,7 @@ void main() {
         const SahneStageScaffold(
           onClose: noop,
           closeLabel: 'Bigire',
-          backdrop: AssetImage('assets/question_images/cat_ziman.webp'),
+          backdrop: AssetImage('assets/question_images/cirok.webp'),
           center: SahneTimerDiamond(
             key: Key('timer'),
             secondsLeft: 4,
@@ -145,8 +153,8 @@ void main() {
           ),
           score: SahneStatChip(
             leading: SahneGlyph(SahneGlyphKind.star),
-            label: '1240',
-            semanticLabel: '1240 xal',
+            label: '120',
+            semanticLabel: '120 xal',
           ),
           progress: SahneDiamondRow(
             states: [SahneDiamondState.correct, SahneDiamondState.pending],
@@ -187,7 +195,9 @@ void main() {
       expect(scaffold.backgroundColor, SahneTokens.night.bg);
 
       final timer = tester.getCenter(find.byKey(const Key('timer')));
-      expect(timer.dx, closeTo(kNarrow.width / 2, 0.5));
+      // Sayaç ile sağ grup arasında en az 12 px (2026-10-19): kalabalık
+      // satırda sayaç tam ortadan en çok 4 px kayabilir.
+      expect(timer.dx, closeTo(kNarrow.width / 2, 4));
 
       expect(find.bySemanticsLabel('Bigire'), findsOneWidget);
       expect(find.bySemanticsLabel('4 çirke mane'), findsOneWidget);
@@ -224,6 +234,7 @@ void main() {
         tester,
         const SahneStageScaffold(
           onClose: noop,
+          beam: true,
           light: SahneCategoryLight.ziman,
           ridge: true,
           body: SahneStageBody(children: [Text('Pirs')]),
@@ -253,13 +264,25 @@ void main() {
       expect(ridgePainter.color, SahneTokens.night.s1.withValues(alpha: 0.4));
     });
 
-    testWidgets('$name: C ışık ve sırt istenmezse varsayılan sahne', (
-      tester,
-    ) async {
+    testWidgets('$name: C huzme varsayılan kapalı; istenirse varsayılan '
+        'renkte', (tester) async {
       await pumpSahne(
         tester,
         const SahneStageScaffold(
           onClose: noop,
+          body: SahneStageBody(children: [Text('Pirs')]),
+        ),
+        dark: dark,
+        page: true,
+      );
+      expect(find.byKey(const ValueKey('sahne-stage-beam')), findsNothing);
+      expect(find.byKey(const ValueKey('sahne-stage-ridge')), findsNothing);
+
+      await pumpSahne(
+        tester,
+        const SahneStageScaffold(
+          onClose: noop,
+          beam: true,
           body: SahneStageBody(children: [Text('Pirs')]),
         ),
         dark: dark,

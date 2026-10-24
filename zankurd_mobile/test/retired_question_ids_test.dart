@@ -72,7 +72,12 @@ void main() {
     // 2026-09-30 altıncı dalga (son olgu doğrulaması, Gemini 3.1 Pro + Grok
     // 4.7 ikisi de onayladı): Teknolojî ilk kez listeye girdi (3 soru).
     // Aynı gün `Cîhan` kategorisine 99 sinema/coğrafya/edebiyat kaydı döndü
-    // ve hiçbiri artık bu listede değil — `Cîhan` burada ÇIKMAMALI.
+    // ve hiçbiri «Kürt bağı yok» gerekçesiyle bu listede değil.
+    // 2026-10-17: yakın tekrar (aynı olgunun iki sorusu, iki modelce
+    // onaylı) 3 `Cîhan` sorusunu BAŞKA bir gerekçeyle emekliye ayırdı
+    // (`ds_cografya_0133`, `ds_dirok_0091`, `ds_muzik_0144`; her birinin
+    // eşi `Cîhan`da oynanır kaldı). `Cîhan` bu yüzden listede ancak o üç
+    // kimlikle bulunabilir; kategori emekli edilmedi.
     expect(categories, {
       'Teknolojî',
       'Sînema',
@@ -84,6 +89,22 @@ void main() {
       'Çand',
       'Paradigma',
       'Siyaset',
+      'Cîhan',
     });
+    expect(
+      {
+        for (final id in retiredQuestionIds)
+          if (byId[id]?.category == 'Cîhan') id,
+      },
+      // 2026-10-19: iki festival sorusu (`sf_cin_0007/0008`) öznesiz olduğu
+      // için (hangi festival?) dış içerik denetimiyle eklendi.
+      {
+        'ds_cografya_0133',
+        'ds_dirok_0091',
+        'ds_muzik_0144',
+        'sf_cin_0007',
+        'sf_cin_0008',
+      },
+    );
   });
 }

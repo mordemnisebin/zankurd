@@ -36,6 +36,8 @@ const _appleTeamId = 'M43VHXMRDR';
 const _bundleId = 'com.zankurd.app';
 const _uploadKeyFingerprint =
     '80:59:2E:73:81:FE:05:2B:0C:E1:49:F2:09:06:0F:32:CC:7B:53:F3:5B:92:E2:FC:39:58:DD:19:32:E8:98:B3';
+const _playSigningFingerprint =
+    'F4:05:FB:96:6A:E2:71:BE:0C:5E:0D:51:1C:79:D7:E1:10:5E:04:6E:82:5F:F0:F9:59:81:72:DC:7C:29:94:96';
 
 void main() {
   group('iOS associated domains', () {
@@ -112,31 +114,23 @@ void main() {
     });
 
     // JSON yorum taşıyamadığı için Play App Signing notu BURADA yaşar:
-    // uygulama Google Play'e ilk kez çıktığında Play, APK'yi KENDİ
-    // anahtarıyla yeniden imzalar (Play App Signing) — o zaman gerçek
-    // dağıtılan APK'nin imza parmak izi burada listelenenden (upload
-    // anahtarı) FARKLI olur. Play Console > Release > Setup > App
-    // integrity'deki "App signing key certificate" SHA-256'sı bu diziye
-    // upload anahtarının YANINA eklenmeli (onun yerine değil — Play
-    // Console'a doğrudan yüklenen debug/internal test APK'leri hâlâ
-    // upload anahtarıyla imzalanır). Bu README'de "henüz Play'de değil"
-    // diye not edilen boşluk; kapatılmadan otomatik doğrulama üretim
-    // Play APK'sinde başarısız kalır (App Links "Yalnız bu uygulamayla
-    // aç" diyaloğunu göstermeyip her zaman tarayıcıya düşer).
-    test('Play App Signing parmak izi henüz eklenmedi (bilinçli boşluk)', () {
+    // Play, Play'den dağıtılan APK'yi KENDİ anahtarıyla yeniden imzalar
+    // (Play App Signing); gerçek kullanıcının telefonundaki imza upload
+    // anahtarı değil bu anahtardır. Bu parmak izi eksikken App Links
+    // doğrulaması Play sürümünde başarısız kalıyor ve oda paylaşım
+    // bağlantısı uygulama yerine web sitesini açıyordu (test kullanıcıları,
+    // 2026-10-18). Upload anahtarı da kalır: doğrudan kurulan yerel
+    // derlemeler hâlâ onunla imzalanır. Değer Play Console > Uygulama
+    // imzalama > "Digital Asset Links JSON" parçasından alındı.
+    test('Play App Signing parmak izini upload anahtarının yanında taşır', () {
       final json = jsonDecode(file.readAsStringSync()) as List;
       final target =
           (json.single as Map<String, dynamic>)['target']
               as Map<String, dynamic>;
       final fingerprints = target['sha256_cert_fingerprints'] as List;
-      expect(
-        fingerprints,
-        hasLength(1),
-        reason:
-            'Uygulama Play\'e çıkınca Play App Signing parmak izi buraya '
-            'İKİNCİ satır olarak eklenmeli; bu test o an bilinçli olarak '
-            'kızaracak ve güncelleme unutulmayacak.',
-      );
+      expect(fingerprints, hasLength(2));
+      expect(fingerprints, contains(_playSigningFingerprint));
+      expect(fingerprints, contains(_uploadKeyFingerprint));
     });
   });
 

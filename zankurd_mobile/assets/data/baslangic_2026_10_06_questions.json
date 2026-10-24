@@ -112,7 +112,7 @@
     "category": "Ziman",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Kîjan tîp di alfabeya Kurmancî ya Hawar de tune ye?",
+    "prompt": "Kîjan tîp di alfabeya Kurmancî ya Hawarê de tune ye?",
     "promptTr": "Hangi harf Hawar Kurmancî alfabesinde yoktur?",
     "answers": [
       "ğ",
@@ -2350,12 +2350,8 @@
     ],
     "correctAnswer": "dê",
     "correctAnswerTr": "dê",
-    "acceptedAnswers": [
-      "de"
-    ],
-    "acceptedAnswersTr": [
-      "de"
-    ],
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
     "explanation": "Doğru cümle: \"Ev dê ye.\" (Bu anne.) \"Dê\" ünlüyle bittiği için \"ye\" gelir.",
     "explanationKu": "Hevoka rast ev e: \"Ev dê ye.\" Peyva \"dê\" bi dengdêrekê diqede, ji ber vê yekê \"ye\" tê.",
     "explanationTr": "Doğru cümle: \"Ev dê ye.\" (Bu anne.) \"Dê\" ünlüyle bittiği için \"ye\" gelir.",
@@ -3294,12 +3290,8 @@
     ],
     "correctAnswer": "şêr",
     "correctAnswerTr": "şêr",
-    "acceptedAnswers": [
-      "şer"
-    ],
-    "acceptedAnswersTr": [
-      "şer"
-    ],
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
     "explanation": "Doğru cümle: \"Ev şêr e.\" (Bu aslan.)",
     "explanationKu": "Hevoka rast ev e: \"Ev şêr e.\"",
     "explanationTr": "Doğru cümle: \"Ev şêr e.\" (Bu aslan.)",
@@ -4968,6 +4960,9 @@
       "lastContentCheckAt": "2026-10-06",
       "qualityVersion": 2,
       "learningLessonId": "time_2"
-    }
+    },
+    "acceptedAnswers": [
+      "ez îro baş im"
+    ]
   }
 ]

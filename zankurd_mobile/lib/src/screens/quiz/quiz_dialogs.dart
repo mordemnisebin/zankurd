@@ -12,10 +12,14 @@ class _QuizExitDialog extends StatelessWidget {
   const _QuizExitDialog({
     required this.isLearning,
     required this.isMultiplayer,
+    this.isCrowd = false,
   });
 
   final bool isLearning;
   final bool isMultiplayer;
+
+  /// Kalabalık odada ayrılmak "hükmen yenilgi" değil: oyun diğerleriyle sürer.
+  final bool isCrowd;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,9 @@ class _QuizExitDialog extends StatelessWidget {
         isLearning ? context.t(K.leaveLessonQ) : context.t(K.leaveRaceQ),
       ),
       content: Text(
-        isMultiplayer
+        isCrowd
+            ? context.t(K.leaveCrowdMatchBody)
+            : isMultiplayer
             ? context.t(K.leaveOnlineMatchBody)
             : isLearning
             ? context.t(K.leaveLessonBody)
@@ -56,15 +62,23 @@ class _QuizExitDialog extends StatelessWidget {
 }
 
 class _QuizForfeitDialog extends StatelessWidget {
-  const _QuizForfeitDialog({required this.bodyKey});
+  const _QuizForfeitDialog({required this.bodyKey, this.coinsAwarded = 0});
 
   final String bodyKey;
 
+  /// Rakip hükmen çıkınca kazanılan jeton; 0 ise satır çizilmez.
+  final int coinsAwarded;
+
   @override
   Widget build(BuildContext context) {
+    final body = context.t(bodyKey);
     return AlertDialog(
       title: Text(context.t(K.matchForfeitedTitle)),
-      content: Text(context.t(bodyKey)),
+      content: Text(
+        coinsAwarded > 0
+            ? '$body\n\n${context.t(K.wheelWonPlus, {'amount': '$coinsAwarded'})}'
+            : body,
+      ),
       actions: [
         FilledButton(
           onPressed: () => Navigator.of(context).pop(),
@@ -75,17 +89,39 @@ class _QuizForfeitDialog extends StatelessWidget {
   }
 }
 
-class _QuizReportDialog extends StatelessWidget {
-  const _QuizReportDialog({required this.controller});
+/// Soru bildirme diyaloğu. Denetleyiciyi KENDİ State'i yaratır ve atar.
+///
+/// Eskiden denetleyiciyi `_reportQuestion` yaratıp `await showDialog`
+/// döner dönmez atıyordu; ama diyalogun kapanış animasyonu onlarca kare
+/// sürer ve bu sürede `SahneField` hâlâ atılmış denetleyiciyi dinlerdi
+/// ("used after being disposed"). State'in ömrü route'un ömrüne bağlıdır:
+/// route tamamen sökülünce `dispose` çalışır.
+class _QuizReportDialog extends StatefulWidget {
+  const _QuizReportDialog({required this.initialText});
 
-  final TextEditingController controller;
+  final String initialText;
+
+  @override
+  State<_QuizReportDialog> createState() => _QuizReportDialogState();
+}
+
+class _QuizReportDialogState extends State<_QuizReportDialog> {
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialText,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(context.t(K.reportQuestion)),
       content: SahneField(
-        controller: controller,
+        controller: _controller,
         minLines: 2,
         maxLines: 4,
         keyboardType: TextInputType.multiline,
@@ -98,7 +134,7 @@ class _QuizReportDialog extends StatelessWidget {
             child: Text(context.t(K.cancel)),
           ),
           confirm: FilledButton(
-            onPressed: () => Navigator.of(context).pop(controller.text),
+            onPressed: () => Navigator.of(context).pop(_controller.text),
             child: Text(context.t(K.sendAction)),
           ),
         ),

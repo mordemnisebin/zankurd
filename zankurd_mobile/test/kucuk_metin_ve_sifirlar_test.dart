@@ -56,8 +56,6 @@ void main() {
       K.streakLabel: 'Zincîr',
       K.joinByCode: 'Bi kodê têkeve',
       K.soruCoz: 'Bersiv bide',
-      K.kolaydanZoraDogruIlerle:
-          'Ji hêsan ber bi dijwar ve biçe, pûan kom bike.',
       K.nameGateQuestion: 'Navê te çi be?',
       K.finishQuizHint: 'Pêşbirkê qedîne, zêr bigire, alîkariyan veke',
       K.recommendedForYou: 'Dersa dorê',

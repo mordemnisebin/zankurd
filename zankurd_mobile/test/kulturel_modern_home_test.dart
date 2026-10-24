@@ -1,3 +1,8 @@
+// 2026-10-19 sadeleşme: günün görevi artık gece sahne kartı değil sakin yüzey
+// kartıdır (`SahneSurfaceCard`); "ana sahne hero" testi bunu bekler. Turuncu
+// yine yalnız ana düğmedir ve ekrandaki TEK Agir dolgudur; düello kartı artık
+// tek kompakt ikincil düğme taşır (Kulis tonu, açık `backgroundColor`).
+//
 // 2026-09-29 Şahnê: başlık A iskeletinin marka satırıdır (`SahneTabPage`),
 // günün görevi gece sahne kartı; kapılar konu ızgarasının altında tek liste
 // grubunda (dokunmadan önce görünür olana dek kaydırılır).
@@ -238,7 +243,7 @@ void main() {
     expect(
       find.descendant(
         of: find.byKey(const ValueKey('home-daily-task')),
-        matching: find.byType(SahneStageCard),
+        matching: find.byType(SahneSurfaceCard),
       ),
       findsOneWidget,
     );
@@ -249,7 +254,20 @@ void main() {
       ),
       findsOneWidget,
     );
-    expect(find.byType(FilledButton), findsOneWidget);
+    // 2026-10-13: düello kartı (`home-duel-card`) iki ikincil düğme taşır
+    // (Kulis tonu, açık `backgroundColor`). Agir dolgu temadan gelir
+    // (`backgroundColor` yazılmaz) ve ekranda hâlâ TEK tanedir.
+    final agirFills = tester
+        .widgetList<FilledButton>(find.byType(FilledButton))
+        .where((b) => b.style?.backgroundColor == null);
+    expect(agirFills, hasLength(1));
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('home-daily-task')),
+        matching: find.byType(FilledButton),
+      ),
+      findsOneWidget,
+    );
   });
 
   for (final size in <Size>[

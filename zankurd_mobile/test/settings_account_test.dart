@@ -1,3 +1,4 @@
+import 'dart:ui' show Tristate;
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
@@ -122,14 +123,16 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    SahneRailChip chip(String key) => tester.widget<SahneRailChip>(
-      find.descendant(
-        of: find.byKey(ValueKey(key)),
-        matching: find.byType(SahneRailChip),
-      ),
-    );
-    expect(chip('settings-language-tr').selected, isTrue);
-    expect(chip('settings-language-ku').selected, isFalse);
+    // Tur 8: dil seçici tek bitişik segment; seçili durum anlamsal ağaçta.
+    bool selectedOf(String key) =>
+        tester
+            .getSemantics(find.byKey(ValueKey(key)))
+            .getSemanticsData()
+            .flagsCollection
+            .isSelected ==
+        Tristate.isTrue;
+    expect(selectedOf('settings-language-tr'), isTrue);
+    expect(selectedOf('settings-language-ku'), isFalse);
   });
 
   testWidgets('ayarlar hakkında kartı marka işaretini ve sürümü taşır', (
@@ -326,6 +329,45 @@ void main() {
     expect(find.textContaining('1.8.0+10'), findsNothing);
   });
 
+  /// Son silme onayının yazı denetleyicisi diyalogun kendi State'ine aittir.
+  ///
+  /// ## Kusur
+  ///
+  /// `_showFinalDeleteConfirmation` denetleyiciyi yaratıp diyalog kapandıktan
+  /// BİR kare sonra atıyordu; oysa kapanış animasyonu onlarca kare sürer ve
+  /// `SahneField` bu sürede atılmış denetleyiciyi dinlerdi ("used after being
+  /// disposed"). Sessizdi: başarılı silme testleri `pump(300ms)` ile
+  /// yetiniyor, istisna hiçbir yerde sorgulanmıyordu.
+  testWidgets('son silme onayı Vazgeç ile kapanırken çökmez', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    final deleteAction = await _scrollToDeleteAction(tester);
+    await tester.tap(deleteAction);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('delete-confirm-field')), findsOneWidget);
+    await tester.enterText(
+      find.byKey(const ValueKey('delete-confirm-field')),
+      'SI',
+    );
+    // Odaklanmış alan: çökme yalnız odağı/imleci olan alanda görülür.
+    await tester.tap(find.byKey(const ValueKey('delete-confirm-field')));
+    await tester.pump();
+
+    await tester.tap(find.text('Vazgeç'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('delete-confirm-field')), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('successful account deletion signs out to the auth gate', (
     tester,
   ) async {
@@ -360,6 +402,87 @@ void main() {
     expect(authProvider.signOutCalls, 1);
     expect(authProvider.discardPendingRewards, isTrue);
     expect(authProvider.discardedRewardsOwnerId, 'user');
+  });
+
+  testWidgets('Turkish keyboard "SİL" enables delete and the dialog warns '
+      'about store subscriptions', (tester) async {
+    final repository = _DeleteTrackingRepository();
+    final authProvider = _SignOutTrackingAuthProvider();
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(
+        child: SettingsScreen(repository: repository),
+        authProvider: authProvider,
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final deleteAction = await _scrollToDeleteAction(tester);
+    await tester.tap(deleteAction);
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('delete-subscription-note')),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
+    await tester.pumpAndSettle();
+
+    FilledButton button() => tester.widget<FilledButton>(
+      find.byKey(const ValueKey('delete-forever')),
+    );
+    expect(button().onPressed, isNull);
+    await tester.enterText(
+      find.byKey(const ValueKey('delete-confirm-field')),
+      'SİL',
+    );
+    await tester.pump();
+    expect(button().onPressed, isNotNull);
+  });
+
+  testWidgets('A3: başarılı hesap silme Ayarlar rotasını yığından atar '
+      '(sonsuz gösterge kalmaz)', (tester) async {
+    final repository = _DeleteTrackingRepository();
+    final authProvider = _SignOutTrackingAuthProvider();
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(
+        authProvider: authProvider,
+        child: Builder(
+          builder: (context) => Scaffold(
+            body: TextButton(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => SettingsScreen(repository: repository),
+                ),
+              ),
+              child: const Text('ayarları-aç'),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.text('ayarları-aç'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(await _scrollToDeleteAction(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('delete-confirm-field')),
+      'SIL',
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Kalıcı olarak sil'));
+    await tester.pumpAndSettle();
+
+    expect(authProvider.signOutCalls, 1);
+    expect(find.byType(SettingsScreen), findsNothing);
+    expect(find.text('ayarları-aç'), findsOneWidget);
   });
 
   testWidgets('deleted account reports local cleanup failure accurately', (

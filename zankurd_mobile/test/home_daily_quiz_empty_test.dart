@@ -11,8 +11,10 @@ import 'support/widget_test_helpers.dart';
 /// Öğren birincil CTA’sı boş havuzda sessizce return ediyordu.
 class _EmptyDailyRepository extends MockZanKurdRepository {
   @override
-  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async =>
-      const [];
+  Future<List<QuizQuestion>> loadDailyQuestions({
+    int limit = 10,
+    bool replay = false,
+  }) async => const [];
 }
 
 void main() {

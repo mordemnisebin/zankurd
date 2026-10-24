@@ -113,7 +113,7 @@ class _LiveScoreRow extends StatelessWidget {
           const SizedBox(width: SahneSpace.x2),
           Expanded(
             child: Text(
-              context.playerDisplayName(player.name),
+              context.playerDisplayName(player.name, tag: player.tag),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: SahneType.bodyStrong.copyWith(color: t.tx),
@@ -121,7 +121,7 @@ class _LiveScoreRow extends StatelessWidget {
           ),
           const SizedBox(width: SahneSpace.x2),
           Text(
-            '${player.score}',
+            groupThousands(player.score),
             style: SahneType.captionStrong.copyWith(
               color: t.goldTx,
               fontFeatures: const [FontFeature.tabularFigures()],
@@ -155,6 +155,7 @@ class QuizQuestionImage extends StatelessWidget {
 
 class _QuestionImage extends StatelessWidget {
   const _QuestionImage({
+    super.key,
     required this.url,
     this.alt,
     this.isCompact = false,
@@ -338,7 +339,7 @@ class _QuestionImageFallback extends StatelessWidget {
 ///
 /// ## Soru metninin boyu (Şahnê)
 ///
-/// Soru Başlık 28/32'dir; dört satırı aşarsa Manşet 22/28'e iner — ölçerek,
+/// Soru 24/30'dur (2026-10-19; eskiden Başlık 28/32); dört satırı aşarsa Manşet 22/28'e iner — ölçerek,
 /// karakter sayarak değil (bkz. [QuizQuestionPrompt]).
 ///
 /// ## Şıklar doğal boylarında
@@ -346,6 +347,55 @@ class _QuestionImageFallback extends StatelessWidget {
 /// Şık çubuğu en az 52'dir ve içerikle büyür; kalan alanı doldurmak için
 /// şişirilmez. Şahnê'de soru ile şıkların altında kalan yer boş bir karta
 /// değil sahneye (zemin çizimi, huzme, ufuk) açılır.
+/// Soru metni ile şık grubu arası (şıklar alta oturan düzende). 24-32 aralığı
+/// kurul kararıdır; 28 başparmak bölgesinde soruyu şıklara bağlar ama
+/// birbirine yapıştırmaz.
+const double quizPromptToAnswersGap = 28;
+
+/// Şıklar arası dikey boşluk (tur 8: 8 → 12; koyu temada şıklar birbirine
+/// yapışık okunuyordu).
+const double quizOptionGap = 12;
+
+/// Soru+şık grubunun altında bırakılan pay (48). Eskiden 160'tı: joker ipucu
+/// tostu alttan açıldığı için son şıkkı örtmesin diye pay ayrılıyor, grup
+/// "yukarıda, altı boş" kalıyordu (8. kurul: Codex + ChatGPT). Tost artık
+/// üst çubuğun hemen altında ([_StageToast]); alt pay yalnız nefes boşluğu.
+/// Grup, üst çubuk ile bu pay arasındaki alanda DİKEYDE ORTALANIR.
+const double quizAnchorNoticeReserve = 48;
+
+/// Soru ekranının üst çubuğun altındaki geçici bildirimi.
+class _StageToast extends StatelessWidget {
+  const _StageToast({super.key, required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Semantics(
+      liveRegion: true,
+      container: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: t.s3,
+          shape: SahneShape.withSide(SahneShape.m, t.tx3, width: 1),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: SahneSpace.x3,
+            vertical: SahneSpace.x2,
+          ),
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: SahneType.caption.copyWith(color: t.tx),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _QuestionTextAndAnswers extends StatelessWidget {
   const _QuestionTextAndAnswers({
     required this.promptText,
@@ -356,15 +406,18 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     required this.hiddenAnswers,
     required this.firstAttemptAnswer,
     required this.showExplanation,
+    this.wrongAnswerInsight = false,
     required this.suspense,
     required this.onAnswer,
     this.lexiconEnabled = false,
+    this.translationEnabled = false,
     this.forceHeadline = false,
     this.titleLineBudget = QuizQuestionPrompt.maxTitleLines,
     this.audiencePoll,
     this.opponentSelectedAnswers,
     this.isCompact = false,
     this.twoColumn = false,
+    this.minBodyHeight,
     this.answerAreaKey,
     this.correctAnswerKey,
     this.explanationKey,
@@ -379,6 +432,9 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   /// Sözlük dokunuşu: yalnız öğrenme modunda (günün dersi, ders kısa testi,
   /// alıştırma); yarış, oda ve düelloda KAPALI.
   final bool lexiconEnabled;
+
+  /// Açılır Türkçe çeviri şeridi (bkz. [translationRevealAllowedFor]).
+  final bool translationEnabled;
   final QuizQuestion question;
   final String selectedAnswer;
   final bool? adjudicatedCorrect;
@@ -387,6 +443,11 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final String firstAttemptAnswer;
   final Map<String, double>? audiencePoll;
   final bool showExplanation;
+
+  /// Yanlış cevaptan sonra doğru cevap + açıklama kartı (bkz.
+  /// [instantExplanationAllowedFor]). Doluyken "Açıklamayı gör" kapısının
+  /// yerini alır: aynı açıklama iki yerde durmaz.
+  final bool wrongAnswerInsight;
   final Map<String, _OpponentAnswer>? opponentSelectedAnswers;
   final bool isCompact;
 
@@ -394,7 +455,11 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final bool forceHeadline;
   final bool twoColumn;
 
-  /// Sorunun Başlık 28/32 ile çizilebileceği en çok satır (düelloda 3).
+  /// Doluysa soru+şık bloğu en az bu boydadır; fazlalık soru ile şıklar
+  /// arasına girer (şıklar alta oturur).
+  final double? minBodyHeight;
+
+  /// Sorunun Soru 24/30 ile çizilebileceği en çok satır (düelloda 3).
   final int titleLineBudget;
 
   /// Quiz turu için cevap alanını hedef gösteren GlobalKey.
@@ -437,57 +502,136 @@ class _QuestionTextAndAnswers extends StatelessWidget {
         final showListen =
             canListen && onListen != null && listeningListenable != null;
 
+        final translation = _revealableTranslation(context);
+        final promptLine = Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Dinleme düğmesi (48) soru metninin yanında durur; boy
+            // kararı metne kalan genişlikte ölçülür.
+            Expanded(child: _promptWidget(context)),
+            if (showListen) ...[
+              const SizedBox(width: SahneSpace.x2),
+              _ListenButton(
+                onTap: onListen!,
+                listeningListenable: listeningListenable!,
+              ),
+            ],
+          ],
+        );
+        final Widget promptRow = translation == null
+            ? promptLine
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  promptLine,
+                  const SizedBox(height: SahneSpace.x2),
+                  PromptTranslationReveal(
+                    key: ValueKey('prompt-tr-reveal-${question.id}'),
+                    translation: translation,
+                  ),
+                ],
+              );
+        final rest = <Widget>[
+          SizedBox(height: isCompact ? SahneSpace.x3 : SahneSpace.x4),
+          Container(key: answerAreaKey, child: _answerArea(context)),
+          _AnswerRevealFallback(
+            question: question,
+            isKu: context.isKu,
+            // Yalnız YANLIŞTA (ya da süre dolunca): doğru kuran oyuncunun
+            // kutusu zaten ✓ ile yeşil; aynı cümleyi bir daha yazmak gürültü.
+            visible:
+                showExplanation &&
+                needsAnswerRevealFallback(question.type) &&
+                question.matchAnswer(selectedAnswer) != FreeTextMatch.exact,
+            revealKey: showExplanation ? explanationKey : null,
+          ),
+          if (wrongAnswerInsight)
+            _WrongAnswerInsight(key: explanationActionKey, question: question)
+          else if (showExplanation && answered)
+            _LearningExplanationAction(
+              key: explanationActionKey,
+              question: question,
+            ),
+        ];
+        // Kısa soru: şıklar alt perdenin hemen üstüne (baş parmak bölgesi)
+        // oturur, soru üstte kalır (kurul incelemesi 2026-10-19). Min boy
+        // Column'a verilir: içerik daha uzunsa hiçbir şey olmaz, kayar.
+        final minHeight = minBodyHeight;
+        if (minHeight != null && minHeight > 0) {
+          return ConstrainedBox(
+            key: const ValueKey('quiz-answers-anchored'),
+            constraints: BoxConstraints(minHeight: minHeight),
+            // Soru + şıklar TEK dikey grup, alanda ORTALANIR (tur 8b): artan
+            // boşluk grubun üstüne ve altına eşit bölünür; soru şıkların
+            // hemen üstünde durur. Eskiden spaceBetween boşluğu soru üstü ve soru-şık arası
+            // eşit bölüyordu: soru ekranın ortasında yüzüyor, şıklardan
+            // ~150 pt uzakta kalıyordu (kurul, 2026-10-20).
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                promptRow,
+                const SizedBox(height: quizPromptToAnswersGap),
+                // `rest[0]` bitişik düzenin 16'lık aralığıdır; burada yerini
+                // yukarıdaki sabit aralık alır.
+                ...rest.skip(1),
+              ],
+            ),
+          );
+        }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Dinleme düğmesi (48) soru metninin yanında durur; boy
-                // kararı metne kalan genişlikte ölçülür.
-                Expanded(
-                  child: QuizQuestionPrompt(
-                    promptText,
-                    lexicon: LexiconTapPolicy.forQuestion(
-                      enabled: lexiconEnabled,
-                      isKu: context.isKu,
-                      answered: answered,
-                      type: question.type.name,
-                      promptText: promptText,
-                      correctAnswer: question.correctAnswer,
-                    ),
-                    forceHeadline: forceHeadline,
-                    titleLineBudget: titleLineBudget,
-                  ),
-                ),
-                if (showListen) ...[
-                  const SizedBox(width: SahneSpace.x2),
-                  _ListenButton(
-                    onTap: onListen!,
-                    listeningListenable: listeningListenable!,
-                  ),
-                ],
-              ],
-            ),
-            SizedBox(height: isCompact ? SahneSpace.x3 : SahneSpace.x4),
-            Container(key: answerAreaKey, child: _answerArea(context)),
-            _AnswerRevealFallback(
-              question: question,
-              isKu: context.isKu,
-              visible:
-                  showExplanation && needsAnswerRevealFallback(question.type),
-              revealKey: showExplanation ? explanationKey : null,
-            ),
-            if (showExplanation && answered)
-              _LearningExplanationAction(
-                key: explanationActionKey,
-                question: question,
-              ),
-          ],
+          children: [promptRow, ...rest],
         );
       },
     );
+  }
+
+  /// Kurmancî oynayana açılır Türkçe çeviri (2026-10-23, kullanıcı geri
+  /// bildirimi: "hiç bilmeyen birine altta kapalı, basınca çevirisini
+  /// gösteren bir şey"). Yalnız rakipsiz tek kişilik turda
+  /// ([translationEnabled]). Yalnız soru metni çevrilir: şık çevirisi
+  /// kelime sorularında cevabı ele verir.
+  /// Boşluk doldurma ve kelime sıralama kendi çevirisini zaten taşır.
+  String? _revealableTranslation(BuildContext context) {
+    if (!translationEnabled || !context.isKu) return null;
+    if (question.type == QuestionType.fillInBlank ||
+        question.type == QuestionType.wordOrdering) {
+      return null;
+    }
+    final tr = question.promptTr?.trim();
+    if (tr == null || tr.isEmpty || tr == promptText.trim()) return null;
+    return tr;
+  }
+
+  /// Soru başlığı. Boşluk doldurma ve kelime sıralama `Yönerge: "cümle"
+  /// ("çeviri")` kalıbındaysa dört role ayrılır; kalıba uymayan her soru
+  /// (ve her şıklı soru) eski tek parça başlıkla çizilir.
+  Widget _promptWidget(BuildContext context) {
+    final lexicon = LexiconTapPolicy.forQuestion(
+      enabled: lexiconEnabled,
+      isKu: context.isKu,
+      answered: answered,
+      type: question.type.name,
+      promptText: promptText,
+      correctAnswer: question.correctAnswer,
+    );
+    return QuestionPromptBlock.tryBuild(
+          question: question,
+          promptText: promptText,
+          lexicon: lexicon,
+          forceHeadline: forceHeadline,
+          titleLineBudget: titleLineBudget,
+        ) ??
+        QuizQuestionPrompt(
+          promptText,
+          lexicon: lexicon,
+          forceHeadline: forceHeadline,
+          titleLineBudget: titleLineBudget,
+        );
   }
 
   Widget _answerArea(BuildContext context) {
@@ -518,7 +662,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     }
 
     final answers = question.displayAnswers;
-    const gap = SahneSpace.x2;
+    const gap = quizOptionGap;
 
     Widget item(int index, String answer) {
       final hidden = hiddenAnswers.contains(answer);
@@ -600,6 +744,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       opponentNamesWhoSelected: opps,
       isCompact: isCompact,
       optionCount: question.displayAnswers.length,
+      tone: CategoryVisuals.tone(question.category),
       // Açıklanmada renk yalnız anlam taşır: doğru Rast, seçilen yanlış
       // Şaş; geri kalan şıklar söner.
       dimmed:
@@ -620,6 +765,74 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   }
 }
 
+/// Yanlış cevaptan HEMEN sonra: doğru cevap + 1–2 cümlelik açıklama.
+///
+/// ## Kural değişikliği (2026-10-24, ürün sahibi onayı)
+///
+/// 2026-07-26 kuralı "tur sırasında açıklama yok, hepsi sonuçta" idi ve
+/// ritmi korumak içindi. Yanlış yapan oyuncu ise tam o anda öğrenmeye en
+/// açıktır; sonuçta aynı soruya dönmek zorunda kalıyordu. Yeni kural dardır:
+/// yalnız YANLIŞTA, yalnız rakipsiz turda ([instantExplanationAllowedFor]);
+/// doğru cevapta ritim aynen sürer.
+///
+/// Açıklaması olmayan soruda (3750 sorudan 12'si) yalnız doğru cevap yazılır.
+/// Sıralama türlerinde doğru cevabı zaten [_AnswerRevealFallback] basar; burada
+/// tekrar edilmez.
+class _WrongAnswerInsight extends StatelessWidget {
+  const _WrongAnswerInsight({super.key, required this.question});
+
+  final QuizQuestion question;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final explanation = question.getLocalizedExplanation(context.isKu).trim();
+    // Yazılı (boşluk doldurma) soruda doğru cevabı alanın kendisi zaten
+    // yazar; sıralamada yedek kutu yazar. İkisinde de tekrar edilmez.
+    final showAnswer =
+        !needsAnswerRevealFallback(question.type) &&
+        question.type != QuestionType.fillInBlank;
+    if (!showAnswer && explanation.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(top: SahneSpace.x4),
+      child: SahneSurfaceCard(
+        key: const ValueKey('quiz-wrong-answer-insight'),
+        padding: const EdgeInsets.all(SahneSpace.x3),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (showAnswer)
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '${context.t(K.correctAnswerLabel)}: ',
+                      style: SahneType.captionStrong.copyWith(color: t.learnTx),
+                    ),
+                    TextSpan(
+                      text: question.correctAnswer,
+                      style: SahneType.bodyStrong.copyWith(color: t.tx),
+                    ),
+                  ],
+                ),
+                key: const ValueKey('quiz-wrong-answer-correct'),
+              ),
+            if (showAnswer && explanation.isNotEmpty)
+              const SizedBox(height: SahneSpace.x2),
+            if (explanation.isNotEmpty)
+              Text(
+                explanation,
+                key: const ValueKey('quiz-wrong-answer-explanation'),
+                style: SahneType.body.copyWith(color: t.tx),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// Öğrenme notu — cevaptan sonra açıklamaya giden kapı (Zimrût ton zemini,
 /// L pah, kitap ikonu; maketteki `.sh-note`).
 ///
@@ -634,47 +847,14 @@ class _LearningExplanationAction extends StatelessWidget {
   final QuizQuestion question;
 
   void _open(BuildContext context, String explanation) {
-    showModalBottomSheet<void>(
+    // Kurul 3. tur (2026-10-20): ortak alt sayfa kabuğu (tutamaç + başlık
+    // + kapat). Ku modda engel-kapatma etiketi de kabuktan yerelleşir.
+    showSahneSheet<void>(
       context: context,
-      showDragHandle: true,
-      // Ku modda engel-kapatma etiketi Türkçe Material varsayılanından
-      // ("Kapat") gelmesin diye açıkça yerelleştirildi (2026-09-25 web turu).
-      barrierLabel: context.t(K.close),
+      title: context.t(K.explanationTitle),
       builder: (sheetContext) {
         final t = SahneTokens.of(sheetContext);
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              SahneSpace.page,
-              SahneSpace.x1,
-              SahneSpace.page,
-              SahneSpace.x6,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(AppIcons.bookOpen, color: t.learnTx, size: 24),
-                    const SizedBox(width: SahneSpace.x2),
-                    Expanded(
-                      child: Semantics(
-                        header: true,
-                        child: Text(
-                          sheetContext.t(K.explanationTitle),
-                          style: SahneType.headline.copyWith(color: t.tx),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: SahneSpace.x3),
-                Text(explanation, style: SahneType.body.copyWith(color: t.tx)),
-              ],
-            ),
-          ),
-        );
+        return Text(explanation, style: SahneType.body.copyWith(color: t.tx));
       },
     );
   }
@@ -686,8 +866,12 @@ class _LearningExplanationAction extends StatelessWidget {
     final t = SahneTokens.of(context);
     final label = context.t(K.viewExplanation);
 
+    // Kurul 2. tur (2026-10-20, ekran 84): koyu yeşil dolgulu tam genişlik
+    // düğme beşinci bir şık ya da "doğru cevap" gibi okunuyordu. Artık
+    // ÇERÇEVELİ, dolgusuz, ortalı metin düğmesi: şıklardan (dolgulu çubuk)
+    // biçimce ayrılır ve üstündeki boşluk daha geniştir.
     return Padding(
-      padding: const EdgeInsets.only(top: SahneSpace.x2),
+      padding: const EdgeInsets.only(top: SahneSpace.x4),
       child: Semantics(
         button: true,
         label: label,
@@ -695,33 +879,369 @@ class _LearningExplanationAction extends StatelessWidget {
         excludeSemantics: true,
         child: SahneTappable(
           key: const ValueKey('quiz-view-explanation'),
-          shape: SahneShape.l,
-          color: t.learnTint,
+          shape: RoundedRectangleBorder(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(SahneShape.lValue),
+            ),
+            side: BorderSide(color: t.learnTx, width: 1.5),
+          ),
+          color: Colors.transparent,
           onTap: () => _open(context, explanation),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              SahneSpace.x3,
-              SahneSpace.x3,
-              SahneSpace.x3,
-              SahneSpace.x3,
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.x3,
+              vertical: SahneSpace.x3,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(AppIcons.bookOpen, color: t.learnTx, size: 24),
-                const SizedBox(width: SahneSpace.x3),
-                Expanded(
+                Icon(AppIcons.bookOpen, color: t.learnTx, size: 20),
+                const SizedBox(width: SahneSpace.x2),
+                Flexible(
                   child: Text(
                     label,
-                    style: SahneType.bodyStrong.copyWith(color: t.tx),
+                    textAlign: TextAlign.center,
+                    style: SahneType.bodyStrong.copyWith(color: t.learnTx),
                   ),
                 ),
-                const SizedBox(width: SahneSpace.x2),
-                Icon(AppIcons.chevronRight, color: t.learnTx, size: 20),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+// ─── Kalabalık oda kartı ─────────────────────────────────────────────────────
+
+/// Kalabalık odada (3+ kişi) soru ekranının başlık kartı: sol üstte kendi
+/// avatarın ve puanın, sağ üstte sıran ("#3/12"), altta ilk üç şeridi.
+///
+/// Düello kartı (`_DuelScoreHeader`) iki kişiyi yan yana koyar; 50 kişiyi
+/// yan yana koymak olmaz. Burada herkesin puanı değil, oyuncunun bilmek
+/// istediği iki şey vardır: nerede olduğu ve önünde kimlerin olduğu.
+/// Sıra, eşit puanda aynı numarayı paylaşır (bkz. `crowdStandings`).
+class _CrowdScoreHeader extends StatelessWidget {
+  const _CrowdScoreHeader({
+    required this.player,
+    required this.rank,
+    required this.total,
+    required this.top,
+    this.progress,
+  });
+
+  final Player player;
+
+  /// Oyuncunun sırası; sıralamaya henüz girmediyse (liste yüklenmedi) null.
+  final int? rank;
+
+  /// Sıralamadaki (ayrılmayan) oyuncu sayısı.
+  final int total;
+
+  /// İlk üç satır (eşitlikte aynı numara görünür).
+  final List<CrowdStanding> top;
+
+  /// Mevcut sorunun "x/N cevapladı" sayısı; sunucu vermiyorsa null.
+  final RoomAnswerProgress? progress;
+
+  static const progressKey = ValueKey('quiz-crowd-progress');
+  static const rankKey = ValueKey('quiz-crowd-rank');
+  static const topKey = ValueKey('quiz-crowd-top3');
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final stacked = MediaQuery.textScalerOf(context).scale(16) >= 24;
+    final colorOverrides = resolveAvatarColors([
+      for (final p in {player, ...top.map((s) => s.player)})
+        (id: p.id ?? p.name, displayName: p.name, colorHex: p.avatarColor),
+    ]);
+    final rankText = rank == null ? '—' : '#$rank/$total';
+    final scoreText =
+        '${groupThousands(player.score)} ${context.t(K.scoreWord).toLowerCase()}';
+
+    final me = Row(
+      children: [
+        PlayerAvatar(
+          radius: 16,
+          photoUrl: player.avatarUrl,
+          iconId: player.avatarIcon,
+          colorHex: player.avatarColor,
+          frameId: player.avatarFrame,
+          displayName: player.name,
+          colorOverride: colorOverrides[player.id ?? player.name],
+        ),
+        const SizedBox(width: SahneSpace.x2),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                context.playerDisplayName(player.name, tag: player.tag),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: SahneType.captionStrong.copyWith(color: t.tx),
+              ),
+              Text(
+                scoreText,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: SahneType.captionStrong.copyWith(
+                  color: t.goldTx,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+
+    final rankLabel = Text(
+      context.t(K.crowdRankLabel),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: SahneType.eyebrow.copyWith(color: t.tx2),
+    );
+    final rankValue = Text(
+      rankText,
+      key: rankKey,
+      maxLines: 1,
+      style: SahneType.headline.copyWith(
+        color: t.raceTx,
+        fontFeatures: const [FontFeature.tabularFigures()],
+      ),
+    );
+    // Büyük yazıda etiket ve sıra TEK satıra iner: iki satırlık sütun
+    // başlığı 320 px / 2×'te soruyu aşağı itiyordu.
+    final rankBlock = stacked
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Flexible(child: rankLabel),
+              const SizedBox(width: SahneSpace.x2),
+              rankValue,
+            ],
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [rankLabel, rankValue],
+          );
+
+    Widget cell(CrowdStanding standing) {
+      final isMe = playersShareIdentity(standing.player, player);
+      return DecoratedBox(
+        decoration: ShapeDecoration(
+          color: isMe ? t.goldTint : t.s2,
+          shape: SahneShape.s,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: SahneSpace.x2,
+            vertical: SahneSpace.x1 + 2,
+          ),
+          child: Row(
+            children: [
+              Text(
+                '${standing.rank}',
+                style: SahneType.captionStrong.copyWith(
+                  color: isMe ? t.goldTx : t.tx2,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+              const SizedBox(width: SahneSpace.x2),
+              // Büyük yazıda ad ve puan aynı satırda (puan sağda): üç
+              // iki-satırlık kutu başlığı ekranın yarısını yiyordu.
+              if (stacked) ...[
+                Expanded(
+                  child: Text(
+                    context.playerDisplayName(
+                      standing.player.name,
+                      tag: standing.player.tag,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: SahneType.caption.copyWith(color: t.tx),
+                  ),
+                ),
+                const SizedBox(width: SahneSpace.x2),
+                Text(
+                  groupThousands(standing.player.score),
+                  maxLines: 1,
+                  style: SahneType.captionStrong.copyWith(
+                    color: t.goldTx,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
+                ),
+              ] else
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        context.playerDisplayName(
+                          standing.player.name,
+                          tag: standing.player.tag,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: SahneType.caption.copyWith(color: t.tx),
+                      ),
+                      Text(
+                        groupThousands(standing.player.score),
+                        maxLines: 1,
+                        style: SahneType.captionStrong.copyWith(
+                          color: t.goldTx,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final strip = stacked
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var i = 0; i < top.length; i++) ...[
+                if (i > 0) const SizedBox(height: SahneSpace.x1),
+                cell(top[i]),
+              ],
+            ],
+          )
+        : Row(
+            children: [
+              for (var i = 0; i < top.length; i++) ...[
+                if (i > 0) const SizedBox(width: SahneSpace.x1),
+                Expanded(child: cell(top[i])),
+              ],
+            ],
+          );
+
+    return Semantics(
+      container: true,
+      label:
+          '${context.t(K.crowdRankLabel)}: $rankText, '
+          '${player.score} ${context.t(K.scoreWord).toLowerCase()}',
+      child: SahneSurfaceCard(
+        key: const ValueKey('quiz-crowd-header'),
+        padding: const EdgeInsets.all(SahneSpace.x3),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (stacked) ...[
+              me,
+              const SizedBox(height: SahneSpace.x2),
+              Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: rankBlock,
+              ),
+            ] else
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: me),
+                  const SizedBox(width: SahneSpace.x3),
+                  rankBlock,
+                ],
+              ),
+            if (progress != null) ...[
+              const SizedBox(height: SahneSpace.x2),
+              Text(
+                context.t(K.crowdAnsweredCount, {
+                  'answered': '${progress!.answered}',
+                  'active': '${progress!.active}',
+                }),
+                key: progressKey,
+                style: SahneType.captionStrong.copyWith(
+                  color: t.tx2,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+            ],
+            if (top.isNotEmpty && stacked) ...[
+              const SizedBox(height: SahneSpace.x2),
+              _CollapsibleTop(
+                title: context.t(K.crowdTopThree),
+                child: KeyedSubtree(key: topKey, child: strip),
+              ),
+            ] else if (top.isNotEmpty) ...[
+              const SizedBox(height: SahneSpace.x3),
+              Padding(
+                padding: const EdgeInsets.only(bottom: SahneSpace.x1),
+                child: Text(
+                  context.t(K.crowdTopThree),
+                  style: SahneType.eyebrow.copyWith(color: t.tx2),
+                ),
+              ),
+              KeyedSubtree(key: topKey, child: strip),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Büyük yazıda "İlk üç" şeridi kapalı başlar: başlık satırına dokununca
+/// açılır. Kapalıyken soru ekranda kalır (320 px / 2×'te şerit tek başına
+/// ekranın üçte birini alıyordu); sıra ve puan zaten başlığın üstünde.
+class _CollapsibleTop extends StatefulWidget {
+  const _CollapsibleTop({required this.title, required this.child});
+
+  final String title;
+  final Widget child;
+
+  @override
+  State<_CollapsibleTop> createState() => _CollapsibleTopState();
+}
+
+class _CollapsibleTopState extends State<_CollapsibleTop> {
+  bool _open = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Semantics(
+          button: true,
+          expanded: _open,
+          child: InkWell(
+            key: const ValueKey('quiz-crowd-top3-toggle'),
+            onTap: () => setState(() => _open = !_open),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: sahneTapTarget),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      widget.title,
+                      style: SahneType.eyebrow.copyWith(color: t.tx2),
+                    ),
+                  ),
+                  Icon(
+                    _open ? AppIcons.chevronUp : AppIcons.chevronDown,
+                    size: 18,
+                    color: t.tx2,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        if (_open) widget.child,
+      ],
     );
   }
 }
@@ -790,7 +1310,7 @@ class _DuelScoreHeader extends StatelessWidget {
               : CrossAxisAlignment.start,
           children: [
             Text(
-              context.playerDisplayName(p.name),
+              context.playerDisplayName(p.name, tag: p.tag),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: SahneType.captionStrong.copyWith(color: t.tx),
@@ -798,7 +1318,7 @@ class _DuelScoreHeader extends StatelessWidget {
             Text(
               // 2026-09-30 canlı: "pts" İngilizce kısaltmaydı; terim sözlüğü
               // puan/pûan der, kelime `K.scoreWord`tan gelir.
-              '${p.score} ${context.t(K.scoreWord).toLowerCase()}',
+              '${groupThousands(p.score)} ${context.t(K.scoreWord).toLowerCase()}',
               style: SahneType.captionStrong.copyWith(
                 color: t.goldTx,
                 fontFeatures: const [FontFeature.tabularFigures()],
@@ -1007,9 +1527,19 @@ class _AnswerRevealFallback extends StatelessWidget {
 
 /// Çok oyunculuda cevap kaydedildi, öteki oyuncu bekleniyor.
 class _MultiplayerWaitingOverlay extends StatelessWidget {
-  const _MultiplayerWaitingOverlay({required this.isKu});
+  const _MultiplayerWaitingOverlay({
+    required this.isKu,
+    this.crowd = false,
+    this.progress,
+  });
 
   final bool isKu;
+
+  /// Kalabalık odada bekleyen tek bir rakip değil, "diğerleri"dir.
+  final bool crowd;
+
+  /// Kalabalıkta biliniyorsa "x/N cevapladı"; yoksa genel bekleme metni.
+  final RoomAnswerProgress? progress;
 
   @override
   Widget build(BuildContext context) {
@@ -1034,7 +1564,17 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
                     style: SahneType.bodyStrong.copyWith(color: t.tx),
                   ),
                   Text(
-                    Tr.forKu(K.digerOyuncuBekleniyor, isKu),
+                    progress != null
+                        ? Tr.forKu(K.crowdAnsweredCount, isKu, {
+                            'answered': '${progress!.answered}',
+                            'active': '${progress!.active}',
+                          })
+                        : Tr.forKu(
+                            crowd
+                                ? K.crowdWaitingOthers
+                                : K.digerOyuncuBekleniyor,
+                            isKu,
+                          ),
                     style: SahneType.caption.copyWith(color: t.tx2),
                   ),
                 ],
@@ -1301,13 +1841,21 @@ class _CoinBalanceLine extends StatelessWidget {
   const _CoinBalanceLine({
     required this.balance,
     this.hint,
-    this.showHint = true,
+    this.showHint = false,
   });
 
   final int balance;
+
+  /// Açıklayıcı cümle. 2026-10-19 sadeleşme: ekranda YAZILMAZ (iki satırlık
+  /// "Yarışı bitir, jeton kazan, jokerleri aç" alt perdeyi büyütüyor, her
+  /// soruda aynı cümleyi tekrar okutuyordu); yalnız ekran okuyucuya gider ve
+  /// jetonu yetmeyen jokere dokununca tost olarak açılır.
   final String? hint;
 
-  /// İpucu ekranda mı? `false` ise yalnız ekran okuyucuya gider.
+  /// İpucu ekranda da yazılsın mı? Yalnız günlük bedava joker ipucu için
+  /// `true`: kısa ("Bugün 1 joker bedava"), tek bilgi ve oyuncunun jetonu
+  /// yetmese bile jokerin açık olmasının TEK nedeni; yazılmazsa kilitsiz
+  /// jokerler açıklamasız kalır.
   final bool showHint;
 
   @override
@@ -1323,17 +1871,18 @@ class _CoinBalanceLine extends StatelessWidget {
           const SahneGlyph(SahneGlyphKind.coin, size: 16),
           const SizedBox(width: SahneSpace.x1),
           Text(
-            '$balance',
+            groupThousands(balance),
             style: SahneType.captionStrong.copyWith(
               color: t.goldTx,
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
-          if (hint != null && showHint) ...[
+          if (showHint && hint != null) ...[
             const SizedBox(width: SahneSpace.x2),
             Flexible(
               child: Text(
-                hint!,
+                '· $hint',
+                key: const ValueKey('quiz-free-wildcard-hint'),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: SahneType.caption.copyWith(color: t.tx2),
@@ -1341,6 +1890,77 @@ class _CoinBalanceLine extends StatelessWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// Hiçbir jokere jetonu yetmeyen oyuncunun tek sönük satırı (kurul 4. tur
+/// 2026-10-20): kilit + jeton + bakiye + "Yetersiz bakiye". Dört kilitli çip
+/// yerine geçer; dokunulabilir (48 yüksek) ve nedenini tostla söyler.
+class _CollapsedWildcardLine extends StatelessWidget {
+  const _CollapsedWildcardLine({required this.balance, required this.onTap});
+
+  final int balance;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final label = context.t(K.wildcardNoCoins);
+    return Semantics(
+      button: true,
+      label: '$balance ${context.t(K.coinWord)}. $label',
+      excludeSemantics: true,
+      onTap: onTap,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: sahneTapTarget),
+          child: Center(
+            // Hap: koyu zeminde yalın satır kayboluyordu (tur 7, Gemini).
+            // Hafif saydam dolgu + 1 px kenar satırı okunur bir nesne yapar.
+            child: DecoratedBox(
+              key: const ValueKey('quiz-collapsed-wildcard-pill'),
+              decoration: ShapeDecoration(
+                color: t.optionFill.withValues(alpha: 0.7),
+                shape: StadiumBorder(side: BorderSide(color: t.optionEdge)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SahneSpace.x3,
+                  vertical: SahneSpace.x1,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(AppIcons.lock, size: 16, color: t.tx2),
+                    const SizedBox(width: SahneSpace.x2),
+                    const SahneGlyph(SahneGlyphKind.coin, size: 16),
+                    const SizedBox(width: SahneSpace.x1),
+                    Text(
+                      groupThousands(balance),
+                      style: SahneType.captionStrong.copyWith(
+                        color: t.goldTx,
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x2),
+                    Flexible(
+                      child: Text(
+                        label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: SahneType.captionStrong.copyWith(color: t.tx),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

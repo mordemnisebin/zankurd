@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -12,6 +13,14 @@ import 'support/widget_test_helpers.dart';
 /// ama odası varsayılan `Ziman` ile kurulur. Ekranın tepesinde "Ziman"
 /// yazarken ilk soru "Çand" etiketiyle geliyordu — başlık, içeriği
 /// yalanlıyordu.
+///
+/// 2026-10-19 SADELEŞME (bu dosya güncellendi): soru ekranının üst satırı
+/// tek künyedir: "Soru n/N · Kategori". Tur adı ("Günün dersi", oda kodu) üst
+/// satırdan kalktı; çünkü künye zaten SORUNUN kendi kategorisini söyler ve
+/// satırda iki başlığa yer yok (kalabalık, gözü yoruyor). Korunan kural
+/// aynı: başlık içeriği yalanlamaz — odanın varsayılan kategorisi ("Dil")
+/// değil sorunun kategorisi yazılır. Eski "adı olan tur adını gösterir"
+/// testi tam tersini bekliyordu: ad GÖSTERİLMEZ, künye gösterilir.
 void main() {
   late MockZanKurdRepository repository;
 
@@ -42,28 +51,32 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
   }
 
-  testWidgets('adı olan tur başlıkta kendi adını gösterir', (tester) async {
+  testWidgets('adı olan turda üst satır turun adını değil sorunun künyesini '
+      'gösterir', (tester) async {
     await pump(tester, roomName: 'Günün dersi');
 
-    expect(find.text('Günün dersi'), findsOneWidget);
-    expect(find.text('Dil'), findsNothing);
+    final first = repository.questions.first;
+    final name = CategoryNames.localized(first.category, false);
+    expect(find.text('Günün dersi'), findsNothing);
+    expect(find.byKey(const ValueKey('quiz-stage-kicker')), findsOneWidget);
+    expect(find.text('Soru 1/2 · $name'), findsOneWidget);
+    // Odanın varsayılan kategorisi künyeyi yalanlamaz.
+    expect(find.text('Dil'), name == 'Dil' ? findsWidgets : findsNothing);
   });
 
-  testWidgets('adsız turda kategoriye düşülür', (tester) async {
-    // Karşı taraf: kategori başlığı tümüyle kaldırılmamalı. Adsız turda
-    // başlık bir kategoriyi söylemeye devam eder.
+  testWidgets('adsız turda da künye sorunun kategorisini söyler', (
+    tester,
+  ) async {
+    // Karşı taraf: kategori başlığı tümüyle kaldırılmamalı.
     //
     // 2026-09-29 doğallık (K2): o kategori ODANIN değil ŞU ANKİ SORUNUN
     // kategorisidir. Oda "Ziman" (Dil) iken ilk soru Siyaset olunca başlık
-    // "Dil", gövde künyesi "Siyaset · Soru 1/2" diyordu; bu bekçi eskiden
-    // "Dil"i, yani tam o çelişkiyi sabitliyordu. Başlık ile künye artık
-    // aynı adı taşır.
+    // "Dil", künye "Siyaset · Soru 1/2" diyordu (şimdi "Soru 1/2 · Siyaset"); artık tek künye var.
     await pump(tester, roomName: 'Hevalên Zanînê');
 
     final first = repository.questions.first;
     final name = CategoryNames.localized(first.category, false);
-    expect(find.text(name), findsOneWidget);
-    // Gövde künyesi aynı adı cümle düzeniyle taşır ("Siyaset · Soru 1/2").
-    expect(find.textContaining('$name · Soru 1/'), findsOneWidget);
+    expect(find.text('Soru 1/2 · $name'), findsOneWidget);
+    expect(find.text(name), findsNothing, reason: 'künye tek parça metin');
   });
 }

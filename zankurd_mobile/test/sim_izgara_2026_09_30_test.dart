@@ -1,3 +1,12 @@
+// 2026-10-19 sadeleşme (ikinci tur): S9 sonuç sayımları artık tek kartta;
+// bekçi tek kartı ve bölünmeyen sözleri sorar.
+// 2026-10-19 SADELEŞME (bu başlık güncellendi): L5 + S10 grubu yeni konu
+// karosuna göre yeniden yazıldı. Karo yatay ve iki sütunludur (yalnız
+// geçerli dilde ad); soru sayısı ve boş çubuk kalktı. "Sütun sayısı düşer"
+// bekçisi artık 2 → 1 düşüşünü ölçer; S10 (soru sayısı durur, boylar eşit)
+// yerine "çubuk yalnız ilerleme > 0 ise" ve "ad bölünmez" geçti. Öteki
+// gruplar (L4, L10, L13, L14, S2, S8, S9, S12) olduğu gibi.
+//
 // 2026-09-30 simülatör: ızgara ve yerleşim kusurları (L4, L5, L10, L13, L14,
 // S2, S8, S9, S10).
 //
@@ -149,15 +158,6 @@ void main() {
                 threshold: 10,
               ),
             },
-            questionCounts: const {
-              'Ziman': 241,
-              'Çand': 214,
-              'Dîrok': 138,
-              'Wêje': 151,
-              'Cografya': 245,
-              'Muzîk': 120,
-              'Sînema': 71,
-            },
             onOpen: (_) {},
           ),
         ),
@@ -185,50 +185,43 @@ void main() {
       }
     }
 
-    testWidgets('büyük yazıda sütun sayısı düşer', (tester) async {
+    testWidgets('büyük yazıda sütun sayısı 2 → 1 düşer', (tester) async {
       _setSize(tester, _sizes.first);
       await tester.pumpWidget(grid(isKu: true, scale: 1.0));
       await tester.pumpAndSettle();
       double leftOf(String c) =>
           tester.getTopLeft(find.byKey(ValueKey('home-topic-$c'))).dx;
-      final normalColumns = _categories.map(leftOf).toSet().length;
-      expect(normalColumns, greaterThanOrEqualTo(3));
+      expect(_categories.map(leftOf).toSet().length, 2);
 
       await tester.pumpWidget(grid(isKu: true, scale: 2.35));
       await tester.pumpAndSettle();
-      final largeColumns = _categories.map(leftOf).toSet().length;
-      expect(largeColumns, lessThan(normalColumns));
+      expect(_categories.map(leftOf).toSet().length, 1);
+      expect(tester.takeException(), isNull);
     });
 
     testWidgets(
-      'S10: oynanmış ve oynanmamış karoda soru sayısı durur, boylar eşit',
+      'S10: ince çubuk yalnız ilerleme > 0 olan karoda; soru sayısı yok',
       (tester) async {
         _setSize(tester, _sizes.last);
         await tester.pumpWidget(grid(isKu: false, scale: 1.0));
         await tester.pumpAndSettle();
-        // Oynanmış (Çand, Dîrok) ve oynanmamış (Ziman, Wêje) karoların
-        // hepsinde sayı satırı var; çubuk yalnız oynanmışlarda.
         for (final c in _categories) {
           final tile = find.byKey(ValueKey('home-topic-$c'));
           expect(
             find.descendant(of: tile, matching: find.textContaining(' soru')),
-            findsOneWidget,
-            reason: '$c karosunda soru sayısı yok',
+            findsNothing,
+            reason: '$c karosunda soru sayısı olmamalı',
           );
         }
-        // 2026-09-30 izgara: çubuk HER karoda (oynanmamışta boş iz); dolu
-        // olanlar yalnız oynanmışlar.
-        final bars = tester.widgetList<LinearProgressIndicator>(
-          find.byType(LinearProgressIndicator),
-        );
-        expect(bars.length, _categories.length);
-        expect(bars.where((b) => (b.value ?? 0) > 0).length, 2);
-        // Aynı satırdaki karolar (Ziman oynanmamış, Çand ve Dîrok oynanmış) eşit yükseklikte.
-        final heights = ['Ziman', 'Çand', 'Dîrok']
-            .map((c) => tester.getSize(find.byKey(ValueKey('home-topic-$c'))))
-            .map((s) => s.height)
-            .toSet();
-        expect(heights.length, 1, reason: 'karo boyları eşit değil: $heights');
+        final bars = tester
+            .widgetList<LinearProgressIndicator>(
+              find.byType(LinearProgressIndicator),
+            )
+            .toList();
+        // Yalnız oynanmış iki konu (Çand, Dîrok) çubuk taşır; hepsi dolu.
+        expect(bars.length, 2);
+        expect(bars.every((b) => (b.value ?? 0) > 0), isTrue);
+        expect(bars.every((b) => b.minHeight == 4), isTrue);
       },
     );
   });
@@ -263,12 +256,9 @@ void main() {
               .evaluate()
               .map((e) => tester.getTopLeft(find.byWidget(e.widget)).dx)
               .toSet();
-          if (scale > 2) {
-            expect(lefts.length, 1, reason: 'büyük yazıda tek sütun olmalı');
-          } else {
-            expect(lefts.length, 2, reason: 'normal yazıda iki sütun');
-          }
-          _expectNoMidWordBreaks(find.byType(GridView), 'mağaza ızgarası');
+          // Tur 6: her ürün tam genişlik satır; hep tek sütun.
+          expect(lefts.length, 1, reason: 'ürünler tek sütun olmalı');
+          _expectNoMidWordBreaks(find.byType(ListView), 'mağaza listesi');
         });
       }
     }
@@ -300,23 +290,49 @@ void main() {
           );
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull);
-          final cards = find.descendant(
-            of: find.byType(ResultStatTiles),
-            matching: find.byType(SahneSurfaceCard),
+          // 2026-10-20 renk ve canlılık: sayımlar artık tek gri kart değil,
+          // her biri kendi renginde ton dolgulu ÇİPTİR (Doğru yeşil, Yanlış
+          // kırmızı, Üst üste altın). Bekçi aynı değişmezi ölçer: taşma yok,
+          // sözler bölünmüyor, aynı satırdaki çipler eşit yükseklikte.
+          expect(
+            find.descendant(
+              of: find.byType(ResultStatTiles),
+              matching: find.byType(SahneSurfaceCard),
+            ),
+            findsNothing,
           );
-          expect(cards, findsNWidgets(3));
-          final rows = <int, Set<double>>{};
-          for (var i = 0; i < 3; i++) {
-            final top = tester.getTopLeft(cards.at(i)).dy.round();
-            rows
-                .putIfAbsent(top, () => {})
-                .add(tester.getSize(cards.at(i)).height);
+          final chips = tester
+              .widgetList<DecoratedBox>(
+                find.descendant(
+                  of: find.byType(ResultStatTiles),
+                  matching: find.byType(DecoratedBox),
+                ),
+              )
+              .where((d) => d.decoration is ShapeDecoration)
+              .toList();
+          expect(chips.length, 3, reason: 'doğru, yanlış, üst üste çipleri');
+          final rows = <double, List<double>>{};
+          for (final chip
+              in find
+                  .descendant(
+                    of: find.byType(ResultStatTiles),
+                    matching: find.byWidgetPredicate(
+                      (w) =>
+                          w is DecoratedBox &&
+                          w.decoration is ShapeDecoration &&
+                          (w.decoration as ShapeDecoration).color != null,
+                    ),
+                  )
+                  .evaluate()) {
+            final box = chip.renderObject! as RenderBox;
+            final top = box.localToGlobal(Offset.zero).dy.roundToDouble();
+            rows.putIfAbsent(top, () => []).add(box.size.height);
           }
-          for (final entry in rows.entries) {
+          for (final heights in rows.values) {
             expect(
-              entry.value.length,
-              1,
-              reason: 'satır ${entry.key}: boylar ${entry.value}',
+              heights.every((h) => (h - heights.first).abs() < 0.5),
+              isTrue,
+              reason: 'aynı satırdaki çipler eşit yükseklikte: $heights',
             );
           }
           _expectNoMidWordBreaks(find.byType(ResultStatTiles), 'karolar');

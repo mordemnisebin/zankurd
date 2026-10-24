@@ -115,6 +115,9 @@ void main() {
     // birlikte değişti.
     // 2026-10-01: offline_tf_cog_0003 (Rast) bilgi yanlışı olduğu için
     // emekliye ayrıldı: Rast 94 -> 93 (toplam 167, Rast payı %55,7).
+    // 2026-10-19: dış içerik denetimi iki Şaş sorusunu (`offline_tf_ede_0019`,
+    // `offline_tf_siy_0040`; anahtar yaygın tanımla çelişiyor) emekliye
+    // ayırdı: Şaş 74 -> 72 (toplam 165, Rast payı %56,4).
     expect(
       rast,
       93,
@@ -122,7 +125,7 @@ void main() {
     );
     expect(
       sas,
-      74,
+      72,
       reason: 'Oynanabilir Şaş sayısı değişti (bkz. yukarıdaki yorum).',
     );
   });

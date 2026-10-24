@@ -5,6 +5,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/mini_guide.dart';
 import '../models/story.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -34,10 +35,20 @@ class _StoryScreenState extends State<StoryScreen> {
     _restore();
   }
 
+  /// Seçim/yeniden başlatma sürerken ikinci dokunuş yok sayılır (çift
+  /// dokunuş iki kez ilerletiyordu).
+  bool _busy = false;
+
   Future<void> _restore() async {
-    final store = await StoryProgressStore.load();
-    final savedId = store.currentNodeId(widget.story.id);
-    final node = widget.story.node(savedId) ?? widget.story.start;
+    var node = widget.story.start;
+    try {
+      final store = await StoryProgressStore.load();
+      final savedId = store.currentNodeId(widget.story.id);
+      node = widget.story.node(savedId) ?? widget.story.start;
+    } catch (error, stack) {
+      // Kayıt okunamazsa yükleyici sonsuza dek kalmasın: baştan başla.
+      ErrorReporter.record(error, stack, reason: 'story restore failed');
+    }
     if (mounted) {
       setState(() {
         _node = node;
@@ -47,10 +58,20 @@ class _StoryScreenState extends State<StoryScreen> {
   }
 
   Future<void> _choose(StoryChoice choice) async {
+    if (_busy) return;
     final next = widget.story.follow(_node!, choice);
     if (next == null) return; // koruma
-    final store = await StoryProgressStore.load();
-    await store.saveNode(widget.story.id, next.id);
+    _busy = true;
+    try {
+      final store = await StoryProgressStore.load();
+      await store.saveNode(widget.story.id, next.id);
+      if (next.isEnding) await store.markCompleted(widget.story.id);
+    } catch (error, stack) {
+      // Kayıt yazılamasa da hikâye bellekte ilerler.
+      ErrorReporter.record(error, stack, reason: 'story saveNode failed');
+    } finally {
+      _busy = false;
+    }
     if (!mounted) return;
     setState(() {
       _node = next;
@@ -60,8 +81,16 @@ class _StoryScreenState extends State<StoryScreen> {
   }
 
   Future<void> _restart() async {
-    final store = await StoryProgressStore.load();
-    await store.restart(widget.story.id);
+    if (_busy) return;
+    _busy = true;
+    try {
+      final store = await StoryProgressStore.load();
+      await store.restart(widget.story.id, widget.story.start.id);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'story restart failed');
+    } finally {
+      _busy = false;
+    }
     if (!mounted) return;
     setState(() {
       _node = widget.story.start;
@@ -177,7 +206,7 @@ class _StoryScreenState extends State<StoryScreen> {
                   children: [
                     Text(
                       context.t(K.storyWord),
-                      style: SahneType.eyebrow.copyWith(color: s.learnTx),
+                      style: SahneType.eyebrow.copyWith(color: s.eyebrowTx),
                     ),
                     const SizedBox(height: SahneSpace.x2),
                     Text(
@@ -322,7 +351,7 @@ class _MiniGuideView extends StatelessWidget {
             const SizedBox(height: SahneSpace.x5),
             SahneButton.primary(
               onPressed: () => Navigator.of(context).maybePop(),
-              label: Tr.forKu(K.derseBasla, isKu),
+              label: Tr.forKu(K.anladim, isKu),
               expand: true,
             ),
           ],
@@ -338,7 +367,7 @@ class _MiniGuideView extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: SahneSpace.x1),
       child: Text(
         text,
-        style: SahneType.captionStrong.copyWith(color: t.learnTx),
+        style: SahneType.captionStrong.copyWith(color: t.eyebrowTx),
       ),
     );
   }

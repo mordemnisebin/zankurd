@@ -90,15 +90,23 @@ void main() {
     });
   });
 
-  test('consent is off by default and persists when enabled', () async {
+  // 2026-10-23: varsayılan açık (sahibin kararı); kapalıyken kimse açmıyordu
+  // ve çökme raporları da gelmiyordu. Bilerek kapatanın seçimi korunur.
+  test('seçim yokken açık; kapatma kalıcı', () async {
     SharedPreferences.setMockInitialValues({});
 
     final provider = await AnalyticsConsentProvider.load();
-    expect(provider.enabled, isFalse);
+    expect(provider.enabled, isTrue);
 
-    await provider.setEnabled(true);
+    await provider.setEnabled(false);
     final reloaded = await AnalyticsConsentProvider.load();
-    expect(reloaded.enabled, isTrue);
+    expect(reloaded.enabled, isFalse);
+  });
+
+  test('daha önce kapatılmış seçim yeni varsayılana ezilmez', () async {
+    SharedPreferences.setMockInitialValues({'zankurd.analyticsConsent': false});
+    final provider = await AnalyticsConsentProvider.load();
+    expect(provider.enabled, isFalse);
   });
 
   test(
@@ -130,12 +138,13 @@ void main() {
     },
   );
 
-  test('analytics consent defaults to off and persists a user choice', () {
+  test('analytics consent defaults to on and persists a user choice', () {
     final provider = File(
       'lib/src/providers/analytics_consent_provider.dart',
     ).readAsStringSync();
 
-    expect(provider, contains("prefs.getBool(_storageKey) ?? false"));
+    expect(provider, contains('prefs.getBool(_storageKey) ?? defaultEnabled'));
+    expect(provider, contains('static const defaultEnabled = true;'));
     expect(provider, contains('setBool(_storageKey, value)'));
   });
 

@@ -7,10 +7,14 @@ import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
+import 'package:zankurd_mobile/src/utils/number_format.dart';
 
 import 'support/widget_test_helpers.dart';
 
 /// Sıralama puanı büyük yazıda okunur kalır.
+///
+/// Puan binlik ayraçla yazılır (`5.000`, bkz. `number_grouping_test`);
+/// bekçi artık ayraçlı metni arar.
 ///
 /// %200 yazıda puan "50/00" gibi iki satıra bölünüyordu. Sayı bir sözcük
 /// değildir: bölününce anlamını kaybeder ve birinciyle üçüncüyü
@@ -110,14 +114,14 @@ void main() {
   testWidgets('%200 yazıda sıra puanı tek satırda kalır', (tester) async {
     await _pump(tester, size: _narrow);
     expect(tester.takeException(), isNull);
-    _expectSingleLineScores(tester, '5000');
+    _expectSingleLineScores(tester, '5.000');
   });
 
   for (final score in const [9999, 87654]) {
     testWidgets('$score puanı %200 yazıda bölünmez', (tester) async {
       await _pump(tester, size: _narrow, score: score);
       expect(tester.takeException(), isNull);
-      _expectSingleLineScores(tester, '$score');
+      _expectSingleLineScores(tester, groupThousands(score));
     });
   }
 
@@ -125,7 +129,7 @@ void main() {
     testWidgets('$count oyuncuyla sıra puanı bozulmaz', (tester) async {
       await _pump(tester, size: _phone, count: count);
       expect(tester.takeException(), isNull);
-      _expectSingleLineScores(tester, '5000');
+      _expectSingleLineScores(tester, '5.000');
       // Sahte oyuncu eklenmedi: yalnız var olan satırlar çizilir.
       expect(
         find.byKey(const ValueKey('leaderboard-rank-row-3')),
@@ -137,19 +141,19 @@ void main() {
   testWidgets('iPad ve %200 yazıda puan bölünmez', (tester) async {
     await _pump(tester, size: _ipad);
     expect(tester.takeException(), isNull);
-    _expectSingleLineScores(tester, '5000');
+    _expectSingleLineScores(tester, '5.000');
   });
 
   testWidgets('karanlık temada puan bölünmez', (tester) async {
     await _pump(tester, size: _narrow, mode: ThemeMode.dark);
     expect(tester.takeException(), isNull);
-    _expectSingleLineScores(tester, '5000');
+    _expectSingleLineScores(tester, '5.000');
   });
 
   testWidgets('normal yazıda da puan tam değeriyle görünür', (tester) async {
     // Kısaltma yok: `FittedBox` yalnız KÜÇÜLTÜR, değeri değiştirmez.
     await _pump(tester, size: _phone, textScale: 1.0, score: 87654);
-    expect(find.text('87654'), findsWidgets);
+    expect(find.text('87.654'), findsWidgets);
     expect(find.textContaining('…'), findsNothing);
   });
 }

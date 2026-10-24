@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/data/mastery_store.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
@@ -145,6 +146,35 @@ void main() {
     expect(find.text('Altın lig'), findsNothing);
   });
 
+  testWidgets('profil sırası Yarış sekmesindeki haftalık sıra ile aynıdır', (
+    tester,
+  ) async {
+    // Profil "#1" derken Yarış "Bu hafta #10" diyordu: profil toplam XP
+    // sırasını (getPlayerStats), Yarış haftalık sırayı gösteriyordu.
+    MistakeStore.resetInstance();
+    SharedPreferences.setMockInitialValues({});
+    final store = await MistakeStore.load();
+    await store.markMistake('rank-q1', category: 'Ziman');
+    await store.markResolved('rank-q1');
+
+    await tester.pumpWidget(
+      testShell(
+        child: Scaffold(
+          body: ProfileScreen(repository: _WeeklyRankRepository()),
+        ),
+      ),
+    );
+    await tester.pump();
+    for (var i = 0; i < 40 && find.text('Bu hafta').evaluate().isEmpty; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+    await tester.pump(const Duration(milliseconds: 1500));
+
+    expect(find.text('Bu hafta'), findsOneWidget);
+    expect(find.text('#10'), findsOneWidget);
+    expect(find.text('#85'), findsNothing);
+  });
+
   testWidgets(
     'Türkçe detaylı istatistikte güçlü ve zayıf kategori rozetleri yerelleştirilir',
     (tester) async {
@@ -205,5 +235,30 @@ class _ZeroScoreRepository extends MockZanKurdRepository {
     totalScore: 0,
     bestStreak: 0,
     roomsPlayed: 0,
+  );
+}
+
+/// Toplam sırası 85, haftalık sırası 10 olan oyuncu.
+class _WeeklyRankRepository extends MockZanKurdRepository {
+  @override
+  Future<LeaderboardEntry?> getPlayerStats() async => const LeaderboardEntry(
+    rank: 85,
+    playerId: 'me',
+    displayName: 'Lîstikvan',
+    totalScore: 300,
+    bestStreak: 1,
+    roomsPlayed: 3,
+  );
+
+  @override
+  Future<LeaderboardEntry?> getMyLeaderboardRank(
+    LeaderboardPeriod period,
+  ) async => const LeaderboardEntry(
+    rank: 10,
+    playerId: 'me',
+    displayName: 'Lîstikvan',
+    totalScore: 120,
+    bestStreak: 1,
+    roomsPlayed: 2,
   );
 }

@@ -123,10 +123,18 @@ void main() {
 
       final rank = await repository.getMyLeaderboardRank(entry.key);
 
-      expect(client.requestedPaths, [
-        '/rest/v1/rpc/get_my_leaderboard_rank',
-      ], reason: '${entry.key} için tek çağrı bu RPC olmalı');
-      expect(client.requestBodies.single, {'p_days': entry.value});
+      // Sıra RPC'si + oyuncu kodu için tek herkese açık profil çağrısı
+      // (2026-10-21: adsız oyuncu "Oyuncu ZK-XXXX" yazılsın). Başka hiçbir
+      // yol (view/leaderboard RPC'si) çağrılmamalı.
+      expect(
+        client.requestedPaths,
+        [
+          '/rest/v1/rpc/get_my_leaderboard_rank',
+          '/rest/v1/rpc/get_public_profiles',
+        ],
+        reason: '${entry.key} için sıra RPC\'si + profil kodu',
+      );
+      expect(client.requestBodies.first, {'p_days': entry.value});
 
       expect(rank, isNotNull);
       expect(rank!.rank, 12);

@@ -1,3 +1,4 @@
+// kurul 3. tur 2026-10-20: öğrenme kartı sayımların hemen altında, kaydırmadan görünür.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:math' as math;
 
@@ -7,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
@@ -418,6 +420,28 @@ void main() {
     );
   });
 
+  testWidgets('kurul 3. tur: öğrenme kartı dinlenmede alt perdenin üstünde', (
+    tester,
+  ) async {
+    // Kusur (68/200, üç tur): kart konu listesinin altında kaldığı için
+    // yapışkan alt perde onu kesiyordu. Kart artık sayımların hemen
+    // altında; dinlenme halinde tamamı perdenin üstünde olmalı.
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+
+    final card = find.byKey(const ValueKey('learning-outcome-card'));
+    final primary = find.byKey(const ValueKey('result-play-again-button'));
+    expect(card, findsOneWidget);
+    expect(
+      tester.getRect(card).bottom,
+      lessThanOrEqualTo(tester.getRect(primary).top),
+      reason: 'kart kaydırmadan, alt perdenin arkasına girmeden görünür',
+    );
+  });
+
   testWidgets('dar sonuçta öğrenme özeti ikincil eylemlerden önce gelir', (
     tester,
   ) async {
@@ -505,6 +529,8 @@ void main() {
   ) async {
     SharedPreferences.setMockInitialValues({});
     XPStore.resetInstance();
+    StreakStore.resetInstance();
+    addTearDown(StreakStore.resetInstance);
     await XPStore.loadForTest(0);
     addTearDown(XPStore.resetInstance);
 

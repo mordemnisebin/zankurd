@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../providers/bilingual_labels_provider.dart';
 import '../services/analytics_service.dart';
 import 'strings.dart';
 
@@ -24,7 +25,11 @@ enum AppLanguage {
 }
 
 class LanguageProvider extends ChangeNotifier {
-  LanguageProvider({String initialLang = 'ku', SharedPreferences? preferences})
+  // Yeni kurulumda varsayılan Türkçe (2026-10-24, sahip kararı): ilk açılışta
+  // çoğu kullanıcı Kurmancî arayüzde takılıp çıkıyordu; Kurmancî dili
+  // karşılama ekranındaki seçiciden bir dokunuşla seçilir. Kayıtlı seçim
+  // olduğu gibi korunur.
+  LanguageProvider({String initialLang = 'tr', SharedPreferences? preferences})
     : this.fromLanguage(AppLanguage.fromCode(initialLang), preferences);
 
   LanguageProvider.fromLanguage(
@@ -36,7 +41,7 @@ class LanguageProvider extends ChangeNotifier {
 
   static Future<LanguageProvider> load() async {
     final preferences = await SharedPreferences.getInstance();
-    final storedCode = preferences.getString(_storageKey) ?? 'ku';
+    final storedCode = preferences.getString(_storageKey) ?? 'tr';
     return LanguageProvider.fromLanguage(
       AppLanguage.fromCode(storedCode),
       preferences,
@@ -125,51 +130,45 @@ extension LangContext on BuildContext {
     return Tr.of(key, language, params);
   }
 
-  /// Translates Supabase Auth Turkish error messages to Kurdish if active.
-  String translateAuthError(String turkishMessage) {
-    if (!isKu) return turkishMessage;
-    switch (turkishMessage) {
-      case 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.':
-        return 'Girêdan çênebû. Înternet an DNS kontrol bike.';
-      case 'Beklenmeyen bir hata oluştu.':
-        return 'Şaşiyeke nediyar çêbû.';
-      case 'Google girişi şu anda etkin değil. Supabase panelinde Google sağlayıcısını aç.':
-        return 'Têketina Google niha ne çalak e. Google di panela Supabase de çalak bike.';
-      // 2026-08-14 denetimi: profil ekranındaki Google hesabı bağlama
-      // hatası bu sözlükten hiç geçmiyordu VE bu iki mesajın Kurmancî
-      // karşılığı da yoktu — Kurmancî kullanıcı Türkçe hata görüyordu.
-      case 'Bu Google hesabı zaten başka bir hesaba bağlı.':
-        return 'Ev hesabê Google jixwe bi hesabek din ve girêdayî ye.';
-      case 'Hesap bağlama şu anda kapalı. Supabase panelinde manuel bağlamayı aç.':
-        return 'Girêdana hesaban niha girtî ye. Di panela Supabase de girêdana destan veke.';
-      case 'Giriş bağlantısı doğrulanamadı. Uygulama yönlendirme ayarlarını kontrol et.':
-        return 'Girêdana têketinê nehate piştrastkirin. Saziyên arastekirina sepanê kontrol bike.';
-      case 'E-posta veya parola hatalı.':
-        return 'E-name an şîfre şaş e.';
-      case 'Bu e-posta zaten kullanılıyor.':
-        return 'Ev e-name jixwe tê bikaranîn.';
-      case 'Parola çok zayıf (en az 6 karakter).':
-        return 'Şîfre pir qels e (herî kêm 6 tîp).';
-      case 'Geçersiz e-posta adresi.':
-        return 'Navnîşana e-nameyê ya nederbasdar.';
-      case 'E-posta adresin henüz doğrulanmamış. Gelen kutunu kontrol et.':
-        return 'Navnîşana e-nameya te hîna nehatiye piştrastkirin. Sindoqa xwe ya nameyan kontrol bike.';
-      case 'Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.':
-        return 'Pir ceribandin hatin kirin. Hinekî bisekine û dîsa biceribîne.';
-      case 'Misafir girişi şu anda kapalı.':
-        return 'Têketina mêvanan niha girtî ye.';
-      case 'Bir hata oluştu. Lütfen tekrar deneyin.':
-        return 'Çewtiyek rû da. Ji kerema xwe dîsa biceribîne.';
-      // 2026-09-25 denetimi: bilinmeyen hata mesajı olduğu gibi Türkçe
-      // geri veriliyordu, yani Kurmancî modda Türkçe sızıntısı
-      // garantîydi. Supabase yeni bir mesaj eklediğinde Kurmancî kullanıcı
-      // İngilizce/Türkçe ham metni görüyordu. Artık hiçbir eşleşme
-      // bulunamazsa genel bir Kurmancî cümle dönüyor; ayrıntı gerekirse
-      // çağıran ayrıca loglar.
-      default:
-        return 'Çewtiyek nediyar çêbû. Ji kerema xwe dîsa biceribîne.';
+  /// İki dilli etiketin küçük satırı: [key]in öbür dildeki karşılığı.
+  ///
+  /// Ayar kapalıysa ([BilingualLabelsProvider]) ya da öbür dilde ayrı bir
+  /// karşılık yoksa `null`. Tek kaynak budur: sekme, başlık ve konu kartı
+  /// hepsi buradan okur (bkz. [Tr.counterpart]).
+  String? secondLabel(String key, [Map<String, String>? params]) {
+    final bool ku;
+    try {
+      ku = isKu;
+    } on ProviderNotFoundException {
+      return null;
     }
+    return secondLabelFor(this, key, isKu: ku, params: params);
   }
+
+  /// Kimlik sağlayıcısının hata dizgisini geçerli dile çevirir.
+  ///
+  /// `AuthProvider.errorMessage` artık bir metin ANAHTARIDIR (`K.authErr*`).
+  /// Eskiden sağlayıcı sabit Türkçe metin döndürüyor, bu sözlük de o metni
+  /// Kurmancîye eşliyordu: yeni bir hata eklemek iki yerde birbirine bağlı
+  /// bir dizgi gerektiriyordu ve eşleşmeyen her şey sessizce genel cümleye
+  /// düşüyordu. Anahtar olmayan dizgi (eski/üçüncü taraf ham metin) Türkçede
+  /// olduğu gibi gösterilir, Kurmancîde genel hata cümlesine iner.
+  String translateAuthError(String message) {
+    if (Tr.hasKey(message)) return t(message);
+    return isKu ? t(K.authErrGeneric) : message;
+  }
+}
+
+/// [BuildContext.secondLabel]in dili parametre olarak taşıyan bileşenler
+/// (`isKu` alan kartlar) için eşi: aynı ayar, aynı kaynak.
+String? secondLabelFor(
+  BuildContext context,
+  String key, {
+  required bool isKu,
+  Map<String, String>? params,
+}) {
+  if (!BilingualLabelsProvider.isEnabledIn(context)) return null;
+  return Tr.counterpart(key, isKu: isKu, params: params);
 }
 
 /// Category names in both languages. Görünen ad [Tr] tablosundadır.
@@ -196,9 +195,28 @@ class CategoryNames {
     return Tr.of(key, AppLanguage.tr);
   }
 
+  /// Depo/sunucu kimlikleri: oyuncuya ham gösterilmez (2026-10-21 "crowd •
+  /// 10 soru"). Karışık/rastgele kategori "Tevlihev/Karışık"tır, kalabalık
+  /// odası "Pêşbirka komê/Grup yarışı".
+  static const Map<String, String> _slugKeys = {
+    'mixed': K.catTevlihev,
+    'random': K.catTevlihev,
+    'crowd': K.crowdRoomTitle,
+  };
+
   static String localized(String kuName, bool isKu) {
-    final key = _keys[kuName];
-    if (key == null) return kuName;
+    final key = _keys[kuName] ?? _slugKeys[kuName.trim().toLowerCase()];
+    if (key == null) {
+      // Çoklu kategorili oda etiketi: adlar `, ` ile birleşik gelir; her
+      // biri ayrı yerelleştirilir.
+      if (kuName.contains(', ')) {
+        return kuName
+            .split(', ')
+            .map((part) => localized(part, isKu))
+            .join(', ');
+      }
+      return kuName;
+    }
     return Tr.forKu(key, isKu);
   }
 
@@ -212,6 +230,10 @@ class CategoryNames {
 
   /// Karoda yazılan ad: kısa adı varsa o, yoksa [localized]. Tam ad başka
   /// her yerde ([localized]) olduğu gibi kalır.
+  /// Karoda yazılan adın metin anahtarı ([tile] ile aynı seçim); bilinmeyen
+  /// konuda `null`. İki dilli etiket öbür dili bu anahtardan okur.
+  static String? tileKey(String kuName) => _tileKeys[kuName] ?? _keys[kuName];
+
   static String tile(String kuName, bool isKu) {
     final key = _tileKeys[kuName];
     if (key == null) return localized(kuName, isKu);

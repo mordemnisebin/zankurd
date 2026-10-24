@@ -59,9 +59,10 @@ void main() {
     );
   });
 
-  test('ortak alanın çerçevesi pahlı, yuvarlak kutu yok', () {
+  test('ortak alanın çerçevesi yuvarlak köşeli (12), çizgi kutu yok', () {
     final source = code(File(shared).readAsStringSync());
-    expect(source, contains('BeveledRectangleBorder'));
+    // 2026-10-19 sadeleşme: pahlı (Beveled) değil, SahneShape.m yarıçapı (12).
+    expect(source, contains('RoundedRectangleBorder'));
     expect(source, isNot(contains('OutlineInputBorder')));
     expect(source, isNot(contains('BorderRadius.circular')));
     // Odak Agir, hata Şaş: ham renk değil belirteç.

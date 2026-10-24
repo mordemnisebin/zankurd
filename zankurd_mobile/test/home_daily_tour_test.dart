@@ -17,11 +17,43 @@ import 'package:zankurd_mobile/main.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/async_duel.dart';
+import 'package:zankurd_mobile/src/models/contest.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_tour_card.dart';
+import 'package:zankurd_mobile/src/screens/home/home_duel_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'support/widget_test_helpers.dart';
+
+class _BoardRepository extends MockZanKurdRepository {
+  @override
+  Future<DailyEventBoard?> loadDailyEventBoard() async => const DailyEventBoard(
+    me: DailyEventEntry(
+      rank: 7,
+      name: 'Ben',
+      correct: 7,
+      total: 10,
+      seconds: 80,
+      isMe: true,
+    ),
+    participants: 12,
+  );
+}
+
+class _MyTurnRepository extends MockZanKurdRepository {
+  @override
+  Future<List<AsyncDuelSummary>> loadMyAsyncDuels() async => [
+    AsyncDuelSummary(
+      duelId: 'd2',
+      status: AsyncDuelStatus.matched,
+      role: AsyncDuelRole.opponent,
+      incomingChallenge: true,
+      challengeCode: 'abc',
+      createdAt: DateTime(2026, 10, 24),
+      seen: false,
+    ),
+  ];
+}
 
 class _ReadyDuelRepository extends MockZanKurdRepository {
   @override
@@ -42,6 +74,7 @@ class _ReadyDuelRepository extends MockZanKurdRepository {
 /// Oyuncuyu "ilk oturum" dışına alır; [tourDone] ise bugünün turunu bitirir.
 Future<MockZanKurdRepository> _seed({
   required bool tourDone,
+  DateTime? doneAt,
   MockZanKurdRepository? repository,
 }) async {
   final repo = repository ?? freshMockRepository();
@@ -62,6 +95,7 @@ Future<MockZanKurdRepository> _seed({
       dailyStreak: 1,
       userScore: 600,
       dailyQuiz: true,
+      now: doneAt,
     );
   }
   return repo;
@@ -73,6 +107,7 @@ Future<void> _pumpHome(
   bool ku = false,
   Size size = const Size(390, 844),
   double textScale = 1.0,
+  DateTime? clock,
 }) async {
   tester.view.devicePixelRatio = 3.0;
   tester.view.physicalSize = size * 3;
@@ -87,6 +122,7 @@ Future<void> _pumpHome(
             repository: repo,
             onOpenLearning: () async {},
             onOpenPlay: () {},
+            clock: clock == null ? null : () => clock,
           ),
         ),
       ),
@@ -150,38 +186,71 @@ void main() {
       expect(quiz.experience, QuizExperience.learning);
     });
 
-    testWidgets('geri sayım bir sonraki yerel gün başına göredir', (
+    testWidgets('geri sayım İstanbul gece yarısına göredir', (tester) async {
+      final repo = await _seed(
+        tourDone: true,
+        doneAt: DateTime.utc(2026, 10, 24, 12),
+      );
+      // 15:00 İstanbul: gece yarısına 9 saat.
+      await _pumpHome(tester, repo, clock: DateTime.utc(2026, 10, 24, 12));
+      expect(find.text('Yeni tur 9 sa 0 dk sonra'), findsOneWidget);
+    });
+
+    testWidgets('KIRMIZI: 22:30Z = İstanbul 25 Ekim 01:30, tur yeniden açıktır', (
       tester,
     ) async {
+      // Cihaz UTC gününde 24 Ekim'dir ama sunucu/soru/sıralama günü İstanbul'dur:
+      // dünün tamamlanması bugüne taşınmamalı.
+      final repo = await _seed(
+        tourDone: true,
+        doneAt: DateTime.utc(2026, 10, 24, 12),
+      );
+      await _pumpHome(tester, repo, clock: DateTime.utc(2026, 10, 24, 22, 30));
       expect(
-        DailyTourCard.untilNextTour(DateTime(2026, 10, 24, 20, 48)),
-        const Duration(hours: 3, minutes: 12),
+        find.byKey(const ValueKey('home-daily-task-start')),
+        findsOneWidget,
       );
-      await tester.pumpWidget(
-        testShell(
-          child: Scaffold(
-            body: DailyTourCard(
-              isKu: false,
-              loading: false,
-              doneToday: true,
-              onStart: () {},
-              onPractice: () {},
-              now: DateTime(2026, 10, 24, 20, 48),
-            ),
-          ),
-        ),
+      expect(find.text('Bugünkü turu bitirdin'), findsNothing);
+      // Bitirmiş olsaydı sayaç 22 sa 30 dk olurdu (İstanbul gece yarısı).
+      expect(
+        DailyTourCard(
+          isKu: false,
+          loading: false,
+          doneToday: true,
+          onStart: () {},
+          onPractice: () {},
+          now: DateTime.utc(2026, 10, 24, 22, 30),
+        ).now,
+        isNotNull,
       );
-      await tester.pump();
-      expect(find.text('Yeni tur 3 sa 12 dk sonra'), findsOneWidget);
+      final left = contestResetCountdown(DateTime.utc(2026, 10, 24, 22, 30));
+      expect((left.hours, left.minutes), (22, 30));
+    });
+
+    testWidgets('bitti + pano geldiyse kendi sıram yazılır, ödül sözü yok', (
+      tester,
+    ) async {
+      final repo = await _seed(tourDone: true, repository: _BoardRepository());
+      await _pumpHome(tester, repo);
+      expect(find.text('Bugün #7 · 7/10'), findsOneWidget);
+      expect(find.textContaining('ödül'), findsNothing);
+    });
+
+    testWidgets('pano gelmezse yalnız "bitirdin" yazılır', (tester) async {
+      final repo = await _seed(tourDone: true);
+      await _pumpHome(tester, repo);
+      expect(find.text('Bugünkü turu bitirdin'), findsOneWidget);
+      expect(find.byKey(const ValueKey('home-daily-task-rank')), findsNothing);
     });
 
     testWidgets('Kurmancî: ad ve geri sayım', (tester) async {
       final repo = await _seed(tourDone: true);
       await _pumpHome(tester, repo, ku: true);
-      expect(find.text('Te dora îro qedand'), findsOneWidget);
-      expect(find.textContaining('Dora nû piştî'), findsOneWidget);
+      expect(find.text('Te gera îro qedand'), findsOneWidget);
+      expect(find.textContaining('Gera nû piştî'), findsOneWidget);
       expect(find.text('Pratîk bike'), findsOneWidget);
       expect(find.text('Pirsên rojê'), findsNothing);
+      expect(find.textContaining('Dora'), findsNothing);
     });
   });
 
@@ -231,6 +300,22 @@ void main() {
       expect(find.text('Arkadaşınla yarış'), findsNothing);
       expect(find.textContaining('Sırayla düello'), findsNothing);
       expect(find.text('Sonuç hazır'), findsNothing);
+    });
+
+    testWidgets('sıra bendeyse kapıda "Sıra sende", ayrı düello kartı yok', (
+      tester,
+    ) async {
+      final repo = await _seed(
+        tourDone: false,
+        repository: _MyTurnRepository(),
+      );
+      await _pumpHome(tester, repo);
+      final door = find.byKey(const ValueKey('home-door-play'));
+      expect(
+        find.descendant(of: door, matching: find.text('Sıra sende')),
+        findsOneWidget,
+      );
+      expect(find.byType(HomeDuelCard), findsNothing);
     });
 
     testWidgets('düello sonucu hazırsa kapıda rozet, ayrı satır yok', (

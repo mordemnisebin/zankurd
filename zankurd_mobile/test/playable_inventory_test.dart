@@ -87,7 +87,8 @@ void main() {
       // `hat_2026_10_07` (128).
       // 3613 -> 3734 (+121): 2026-10-08 `dersler3_2026_10_08`.
       // 3734 -> 3759 (+25): 2026-10-13 derse bağlı 25 çoktan seçmeli (dersler3 +21, dersler2 +4).
-      3759,
+      // 3759 -> 3795 (+36): 2026-10-19 `kolay_2026_10_19`.
+      3795,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -173,7 +174,20 @@ void main() {
       // emekliye ayrıldı.
       // 3143 -> 3264 (+121): 2026-10-08 `dersler3_2026_10_08`, hepsi `approved`.
       // 3264 -> 3289 (+25): 2026-10-13 ders çoktan seçmelileri, hepsi `approved`.
-      3289,
+      // 3289 -> 3284 (-5): 2026-10-17 yakın tekrar, 5 soru emekliye ayrıldı
+      // (iki modelce "aynı olgu" bulunan çiftlerin zayıf yarısı).
+      // 3284 -> 3277 (-7): 2026-10-19 dış içerik denetimi; yerelde
+      // karşılığı olan 7 soru emekli (4 kimlik yalnız sunucuda).
+      // 3277 -> 3313 (+36): 2026-10-19 `kolay_2026_10_19`, hepsi `approved`.
+      // 3313 -> 3305 (-8): 2026-10-21 biçimi bozuk 8 soru emekliye ayrıldı
+      // (dersler2 0104–0109 çift boşluk, offline_5016/5225 "di-" şıkkı).
+      // 3305 -> 3311 (+6): 2026-10-21 jüri onaylı 6 yeni boşluk doldurma
+      // (dersler2 0137–0142); eski 0104–0109 dosyadan tamamen çıktı.
+      // 3311 -> 3306 (-5): 2026-10-22 yakın tekrar emeklisi (hat_0043,
+      // hat_0109, hat_0112, hat_0118, baslangic_2026_10_06_0068).
+      // 3306 -> 3304 (-2): 2026-10-23 soru kalitesi taraması emeklisi
+      // (offline_2818 cevabı ele veriyor, edit_ziman_0003 yinelenen bilgi).
+      3304,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -241,13 +255,19 @@ void main() {
       //   Sînema 102 - 79 + 2 = 25; Cografya 67 - 19 + 2 = 50;
       //   Edebiyat 16 - 1 + 8 = 23; Dîrok 36 + 7 = 43; Muzîk 22 + 5 = 27;
       //   Çand 32 + 9 = 41; Teknolojî 0 + 3 = 3; Siyaset 68 + 2 = 70.
-      'retired=Sînema': 25,
-      'retired=Cografya': 51,
-      'retired=Edebiyat': 23,
-      'retired=Dîrok': 43,
-      'retired=Muzîk': 27,
+      'retired=Sînema': 26, // 2026-10-22 yakın tekrar +1 (hat_0043)
+      'retired=Cografya': 52, // 2026-10-23 offline_2818
+      'retired=Edebiyat': 25, // 2026-10-19 içerik denetimi +2
+      // 43 -> 45: 2026-10-17 yakın tekrar (`ds_dirok_0029`, `offline_2668`).
+      'retired=Dîrok': 45,
+      // 2026-10-17 yakın tekrar: `ds_cografya_0133`, `ds_dirok_0091`, `ds_muzik_0144`.
+      'retired=Cîhan': 5, // 2026-10-19: +sf_cin_0007/0008
+      'retired=Muzîk': 28, // 2026-10-19 içerik denetimi +1
       // 2026-09-30: 36 -> 37 (`offline_0120`, görsel "pîr" gösteriyor).
-      'retired=Ziman': 37,
+      // 45 -> 39: 2026-10-21 emekli 0104–0109 dosyadan silindi (yerine
+      // 0137–0142 geldi), artık envanterde sayılmıyor.
+      'retired=Ziman':
+          41, // 2026-10-22 yakın tekrar +1; 2026-10-23 edit_ziman_0003
       // 41 -> 42: 2026-10-08 `ds_cand_0285` (cevap soru metninde) emekliye ayrıldı.
       'retired=Çand': 42,
       // 2026-09-30 altıncı dalga: Teknolojî'den iki modelce onaylanan 3 soru.
@@ -259,7 +279,7 @@ void main() {
       // 2026-09-30 beşinci dalga (ChatGPT ikinci geçişi): Siyaset 51 -> 68
       // (+17: 8 çoktan seçmeli + 9 doğru/yanlış). Paradigma değişmedi.
       // 2026-09-30 altıncı dalga: +2 (68 -> 70).
-      'retired=Siyaset': 70,
+      'retired=Siyaset': 75, // 2026-10-19 +2; 2026-10-22 yakın tekrar +3
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });
 

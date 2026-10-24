@@ -7,6 +7,11 @@ import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 /// Tipografi ölçeğinin bekçisi.
 ///
+/// 2026-10-19 sadeleşme: ölçeğe YALNIZ soru metni için tek ek boyut girdi,
+/// `SahneType.question` 26/32 (eskiden soru 28/32 `title` idi). Beş boyutlu
+/// ölçek (64/28/22/16/14) değişmedi; yeni boyut `scale` listesine girmez,
+/// ayrı bir test onu sabitler.
+///
 /// ## Kusur
 ///
 /// `AppTypography` düzgün bir ölçek tanımlıyor — display, heading1,
@@ -120,6 +125,21 @@ void main() {
     // olarak kalır.
     expect(SahneType.eyebrow.fontSize, SahneType.caption.fontSize);
   });
+
+  test(
+    'soru metni boyutu: 26/32, 700 (tur 8: 800 den hafifledi), ölçeğin dışında tek istisna',
+    () {
+      expect(SahneType.question.fontSize, 26);
+      expect(SahneType.question.height, 32 / 26);
+      expect(SahneType.question.fontWeight, FontWeight.w700);
+      expect(SahneType.question.fontFamily, SahneType.display);
+      expect(SahneType.question.fontSize, lessThan(SahneType.title.fontSize!));
+      expect(
+        SahneType.question.fontSize,
+        greaterThan(SahneType.headline.fontSize!),
+      );
+    },
+  );
 
   test('yazı tipi ailesi tek yerden geliyor', () {
     // `CustomPainter` içinde çizilen metin temadan aile almaz; aile

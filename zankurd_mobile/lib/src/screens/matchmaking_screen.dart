@@ -81,8 +81,18 @@ class MatchmakingScreen extends StatefulWidget {
     required this.repository,
     this.metrics,
     this.asyncDuelEnabled = kAsyncDuelEnabled,
+    this.loadRetryDelays = defaultLoadRetryDelays,
     super.key,
   });
+
+  /// Eşleşmeden sonra oda/snapshot/soru yüklemesi başarısız olursa her
+  /// yeniden deneme öncesi beklenen süreler (uzunluk = yeniden deneme sayısı).
+  static const defaultLoadRetryDelays = [
+    Duration(milliseconds: 300),
+    Duration(milliseconds: 800),
+    Duration(milliseconds: 1500),
+  ];
+  final List<Duration> loadRetryDelays;
 
   final ZanKurdRepository repository;
   final MatchmakingMetrics? metrics;
@@ -117,6 +127,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   /// Bot rakipte `null` kalır: bot bildirilebilir bir kullanıcı değildir
   /// ve sunucuya gönderilecek bir kimliği yoktur.
   String? _opponentId;
+  String? _opponentTag;
 
   /// Rakip bu oturumda engellendi mi; VS kartındaki fotoğraf/ad bunun
   /// yerine geçer.
@@ -158,7 +169,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     final name = _opponentName;
     return name == null
         ? null
-        : PlayerIdentity.resolveName(name, isKu: context.isKu);
+        : PlayerIdentity.resolveNameWithTag(
+            name,
+            isKu: context.isKu,
+            tag: _opponentTag,
+          );
   }
 
   bool _isCancelled = false;
@@ -190,6 +205,17 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
   StreamSubscription? _matchmakingSub;
   Timer? _statusTimer;
+  Timer? _touchTimer;
+  bool _touchInFlight = false;
+  bool _touchErrorReported = false;
+
+  /// Sunucuda üyesi olduğum ama henüz quiz'e geçmediğim oda.
+  ///
+  /// Bu doluyken ekrandan çıkmak (geri, çökme, hata) odayı terk etmeden
+  /// bırakır ve rakip boş bir maçı bekler.
+  String? _receivedRoomId;
+  bool _roomOpening = false;
+  bool _navigatedToQuiz = false;
   int _secondsElapsed = 0;
   final Stopwatch _matchmakingClock = Stopwatch()..start();
   late final MatchmakingMetrics _matchmakingMetrics;
@@ -242,9 +268,15 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   void dispose() {
     _radarController.dispose();
     _pulseController.dispose();
-    _matchmakingSub?.cancel();
-    _statusTimer?.cancel();
-    if (_searchingStarted && !_isCancelled && !_found) {
+    _stopWaiting();
+    final strandedRoomId = _navigatedToQuiz || _isCancelled
+        ? null
+        : _receivedRoomId;
+    if (strandedRoomId != null) {
+      _receivedRoomId = null;
+      _cancelRequested = true;
+      unawaited(_leaveRoomBestEffort(strandedRoomId, widget.repository));
+    } else if (_searchingStarted && !_isCancelled && !_found) {
       _cancelRequested = true;
       final cleanupGeneration = ++_matchmakingAttempt;
       unawaited(
@@ -315,10 +347,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     // olarak sürdür.
     if (_cancelFailed) {
       _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
-      _matchmakingSub?.cancel();
-      _matchmakingSub = null;
-      _statusTimer?.cancel();
-      _statusTimer = null;
+      _stopWaiting();
       unawaited(_bestEffortCancel(pendingJoin, repository, cleanupGeneration));
       if (mounted) {
         setState(() {
@@ -336,10 +365,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       _statusTextTr = 'İptal ediliyor...';
     });
 
-    _matchmakingSub?.cancel();
-    _matchmakingSub = null;
-    _statusTimer?.cancel();
-    _statusTimer = null;
+    _stopWaiting();
 
     var joinTimedOut = false;
     try {
@@ -400,6 +426,60 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         _cancelling = false;
       });
       Navigator.of(context).pop();
+    }
+  }
+
+  void _stopWaiting() {
+    _matchmakingSub?.cancel();
+    _matchmakingSub = null;
+    _statusTimer?.cancel();
+    _statusTimer = null;
+    _touchTimer?.cancel();
+    _touchTimer = null;
+  }
+
+  Future<void> _leaveRoomBestEffort(
+    String roomId,
+    ZanKurdRepository repository,
+  ) async {
+    try {
+      await repository
+          .leaveOnlineRoom(_roomReference(roomId))
+          .timeout(_joinSettleTimeout);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'matchmaking_leave_stranded');
+    }
+  }
+
+  /// Eşleşme sonrası yükleme kalıcı biçimde başarısız oldu: sunucu üyeliğini
+  /// bırak (rakip boş maçı beklemesin), beklemeyi durdur, hatayı göster.
+  Future<void> _abandonMatchedRoom(int attempt, String message) async {
+    _stopWaiting();
+    final roomId = _receivedRoomId;
+    _receivedRoomId = null;
+    if (roomId != null) {
+      await _leaveRoomBestEffort(roomId, widget.repository);
+    }
+    _roomOpening = false;
+    if (!_isAttemptActive(attempt)) return;
+    setState(() {
+      _found = false;
+      _matchmakingErrorMessage = message;
+    });
+  }
+
+  Future<T> _withLoadRetry<T>(int attempt, Future<T> Function() load) async {
+    for (var i = 0; ; i++) {
+      try {
+        return await load();
+      } catch (error, stack) {
+        if (i >= widget.loadRetryDelays.length || !_isAttemptActive(attempt)) {
+          rethrow;
+        }
+        ErrorReporter.record(error, stack, reason: 'matchmaking_load_retry');
+        await Future<void>.delayed(widget.loadRetryDelays[i]);
+        if (!_isAttemptActive(attempt)) rethrow;
+      }
     }
   }
 
@@ -516,6 +596,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     // sonra başlatılan aramada iptal hâlâ "ateşle-unut" kalır ve hayalet
     // kuyruğa karşı koruma sessizce kaybolurdu.
     _cancelFailed = false;
+    _stopWaiting();
+    _roomOpening = false;
+    _receivedRoomId = null;
+    _navigatedToQuiz = false;
+    _touchErrorReported = false;
     _matchmakingMetrics.start();
     AnalyticsService.instance.logActivationStep('matchmaking_started');
     // Eşleşme akışı asenkron: rakip adı yer tutucusu, `context` async
@@ -530,6 +615,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       _matchmakingErrorMessage = null;
       _opponentIdentity = const AvatarIdentity();
       _opponentId = null;
+      _opponentTag = null;
       // Yeni arama yeni bir rakip getirir; önceki rakibin engeli bu
       // ekranın yerel görüntüsünde kalıcı değil (gerçek engel sunucuda
       // duruyor, bir sonraki eşleşmede yine rakip olmaz zaten — bkz.
@@ -552,8 +638,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
       if (matchRes['status'] == 'matched') {
         // Matched immediately!
-        var matchedName = matchRes['opponent_name'] as String? ?? 'Raqîb';
-        var opponentIdentity = const AvatarIdentity();
+        final matchedName = matchRes['opponent_name'] as String? ?? 'Raqîb';
         // C-2: null-safe cast — Supabase schema hatası veya edge-case'de
         // String? null dönebilir; null ise navigasyon iptal edilir.
         final roomId = matchRes['room_id'] as String?;
@@ -561,40 +646,20 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
           return; // beklenmedik schema yanıtı
         }
-        final matchedRoom = await _loadMatchedRoom(roomId);
-        if (!_isAttemptActive(attempt)) return;
-        final opponent = selectOpponentPlayer(
-          matchedRoom.players,
-          currentPlayerId: widget.repository.currentUserId,
-          currentName: _myName,
-          preferredName: matchedName,
-        );
-        if (opponent != null) {
-          matchedName = opponent.name;
-          opponentIdentity = _identityFromPlayer(opponent);
-        }
-
-        await _onMatched(
-          matchedName,
-          opponentIdentity,
-          matchedRoom,
+        await _openReceivedRoom(
+          roomId,
           chosenCategory,
           ku,
+          opponentPlaceholder,
           attempt,
-          opponentId: opponent?.id,
+          preferredName: matchedName,
         );
       } else {
         // Status is waiting. Let's subscribe to matchmaking_queue changes.
-        _matchmakingSub = widget.repository.subscribeMatchmakingQueue().listen((
-          entry,
-        ) async {
-          if (!_isAttemptActive(attempt)) return;
-          if (entry != null && entry['room_id'] != null) {
-            _matchmakingSub?.cancel();
-            _matchmakingSub = null;
-            _statusTimer?.cancel();
-            _statusTimer = null;
-
+        _matchmakingSub = widget.repository.subscribeMatchmakingQueue().listen(
+          (entry) {
+            if (!_isAttemptActive(attempt)) return;
+            if (entry == null || entry['room_id'] == null) return;
             // C-2: null-safe cast — subscription yanıtı beklenmedik türde
             // olursa crash yerine sessizce çıkar.
             final roomId = entry['room_id'] as String?;
@@ -602,45 +667,29 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
               return;
             }
-            try {
-              // Fetch opponent display name
-              String matchedName = opponentPlaceholder;
-              var opponentIdentity = const AvatarIdentity();
-              final matchedRoom = await _loadMatchedRoom(roomId);
-              if (!_isAttemptActive(attempt)) return;
-              final opponent = selectOpponentPlayer(
-                matchedRoom.players,
-                currentPlayerId: widget.repository.currentUserId,
-                currentName: _myName,
-              );
-              if (opponent != null) {
-                matchedName = opponent.name;
-                opponentIdentity = _identityFromPlayer(opponent);
-              }
-
-              await _onMatched(
-                matchedName,
-                opponentIdentity,
-                matchedRoom,
+            // Akış ve yoklama aynı odayı verebilir; `_openReceivedRoom`
+            // ikincisini yok sayar. Akış/zamanlayıcı quiz'e GEÇİLENE kadar
+            // açık kalır: yükleme düşerse kurtarma yolu elde olsun.
+            unawaited(
+              _openReceivedRoom(
+                roomId,
                 chosenCategory,
                 ku,
+                opponentPlaceholder,
                 attempt,
-                opponentId: opponent?.id,
-              );
-            } catch (error, stack) {
-              ErrorReporter.record(
-                error,
-                stack,
-                reason: 'matchmaking_load_room_snapshot',
-              );
-              if (!_isAttemptActive(attempt)) return;
-              setState(() {
-                _found = false;
-                _matchmakingErrorMessage = context.t(K.matchFailed);
-              });
-            }
-          }
-        });
+              ),
+            );
+          },
+          onError: (Object error, StackTrace stack) {
+            // Sessiz kalan tek yol buydu (2026-10-15); yoklama devralır.
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'matchmaking_queue_stream',
+            );
+          },
+        );
+        _startTouchPolling(attempt, chosenCategory, ku, opponentPlaceholder);
 
         // Periodically update the status text and count to 30s
         _statusTimer = Timer.periodic(const Duration(seconds: 1), (
@@ -658,7 +707,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           // 0-12sn "aranıyor", 12-20sn "henüz bulunamadı", 20sn'de bot
           // teklifi. Havuz büyüdüğünde bu değer yeniden uzatılabilir.
           if (_secondsElapsed >= 20) {
+            // Oda açılırken bot teklifi/iptal araya girmesin.
+            if (_roomOpening) return;
             timer.cancel();
+            _touchTimer?.cancel();
+            _touchTimer = null;
             _matchmakingSub?.cancel();
             _matchmakingSub = null;
             Map<String, dynamic> cancellation;
@@ -683,7 +736,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             try {
               final matchedRoomId = _matchedRoomId(cancellation);
               if (matchedRoomId != null) {
-                await _openMatchedRoom(
+                await _openReceivedRoom(
                   matchedRoomId,
                   chosenCategory,
                   ku,
@@ -779,8 +832,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       ErrorReporter.record(error, stack, reason: 'matchmaking_start');
       if (!_isAttemptActive(attempt)) return;
       _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
-      _matchmakingSub?.cancel();
-      _statusTimer?.cancel();
+      _stopWaiting();
       setState(() {
         _found = false;
         _matchmakingErrorMessage = context.t(K.matchFailed);
@@ -929,30 +981,117 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     questionCount: 10,
   );
 
-  Future<void> _openMatchedRoom(
+  void _startTouchPolling(
+    int attempt,
+    String category,
+    bool ku,
+    String opponentPlaceholder,
+  ) {
+    Future<void> tick() async {
+      if (_touchInFlight || _roomOpening) return;
+      if (!_isAttemptActive(attempt)) {
+        _touchTimer?.cancel();
+        return;
+      }
+      _touchInFlight = true;
+      try {
+        final result = await widget.repository.touchMatchmaking();
+        if (!_isAttemptActive(attempt)) return;
+        final roomId = result.roomId;
+        if (result.status == MatchmakingTouchStatus.matched && roomId != null) {
+          unawaited(
+            _openReceivedRoom(
+              roomId,
+              category,
+              ku,
+              opponentPlaceholder,
+              attempt,
+            ),
+          );
+        } else if (result.status == MatchmakingTouchStatus.none) {
+          // Uygulama 12 sn'den uzun arka planda kaldıysa satır bayat diye
+          // silinmiştir; yeniden girmezse oyuncu boş kuyrukta bekler.
+          final rejoin = await widget.repository.joinMatchmaking(category);
+          if (!_isAttemptActive(attempt)) return;
+          final rejoinedRoomId = rejoin['room_id'] as String?;
+          if (rejoin['status'] == 'matched' && rejoinedRoomId != null) {
+            unawaited(
+              _openReceivedRoom(
+                rejoinedRoomId,
+                category,
+                ku,
+                opponentPlaceholder,
+                attempt,
+                preferredName: rejoin['opponent_name'] as String?,
+              ),
+            );
+          }
+        }
+      } catch (error, stack) {
+        if (!_touchErrorReported) {
+          _touchErrorReported = true;
+          ErrorReporter.record(error, stack, reason: 'matchmaking_touch');
+        }
+      } finally {
+        _touchInFlight = false;
+      }
+    }
+
+    _touchTimer?.cancel();
+    unawaited(tick());
+    _touchTimer = Timer.periodic(const Duration(seconds: 3), (_) => tick());
+  }
+
+  /// Sunucudan oda kimliği geldi (join, akış, yoklama ya da 20 sn iptali):
+  /// odayı yükle ve quiz'e geç. Tek giriş kapısıdır; aynı oda ikinci kez
+  /// açılmaz.
+  Future<void> _openReceivedRoom(
     String roomId,
     String category,
     bool ku,
     String opponentPlaceholder,
-    int attempt,
-  ) async {
-    final room = await _loadMatchedRoom(roomId);
-    if (!_isAttemptActive(attempt)) return;
-    final opponent = selectOpponentPlayer(
-      room.players,
-      currentPlayerId: widget.repository.currentUserId,
-      currentName: _myName,
-    );
-    final matchedName = opponent?.name ?? opponentPlaceholder;
-    await _onMatched(
-      matchedName,
-      opponent == null ? const AvatarIdentity() : _identityFromPlayer(opponent),
-      room,
-      category,
-      ku,
-      attempt,
-      opponentId: opponent?.id,
-    );
+    int attempt, {
+    String? preferredName,
+  }) async {
+    if (_roomOpening || !_isAttemptActive(attempt)) return;
+    _roomOpening = true;
+    _receivedRoomId = roomId;
+    try {
+      final room = await _withLoadRetry(
+        attempt,
+        () => _loadMatchedRoom(roomId),
+      );
+      if (!_isAttemptActive(attempt)) return;
+      final opponent = selectOpponentPlayer(
+        room.players,
+        currentPlayerId: widget.repository.currentUserId,
+        currentName: _myName,
+        preferredName: preferredName,
+      );
+      final matchedName =
+          opponent?.name ?? preferredName ?? opponentPlaceholder;
+      await _onMatched(
+        matchedName,
+        opponent == null
+            ? const AvatarIdentity()
+            : _identityFromPlayer(opponent),
+        room,
+        category,
+        ku,
+        attempt,
+        opponentId: opponent?.id,
+        opponentTag: opponent?.tag,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'matchmaking_load_room_snapshot',
+      );
+      if (!mounted || !_isAttemptActive(attempt)) return;
+      _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
+      await _abandonMatchedRoom(attempt, context.t(K.matchFailed));
+    }
   }
 
   Future<void> _onMatched(
@@ -963,6 +1102,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     bool ku,
     int attempt, {
     String? opponentId,
+    String? opponentTag,
     // `null` = gerçek rakip, gerçek seviye verisi yok → rozet gizlenir.
     // Yalnız bot dalı gerçek bir sayı geçer (bkz. `_opponentLevelKnown`).
     int? opponentLevel,
@@ -979,7 +1119,12 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       if (opponentLevel != null) _opponentLevel = opponentLevel;
       _opponentIdentity = opponentIdentity;
       _opponentId = opponentId;
-      final shownName = PlayerIdentity.resolveName(matchedName, isKu: ku);
+      _opponentTag = opponentTag;
+      final shownName = PlayerIdentity.resolveNameWithTag(
+        matchedName,
+        isKu: ku,
+        tag: opponentTag,
+      );
       _statusTextKu = 'Lîstikvanek hat dîtin: $shownName!';
       _statusTextTr = 'Rakip bulundu: $shownName!';
     });
@@ -1027,27 +1172,28 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
     List<QuizQuestion> matchQuestions = const [];
     if (roomId != null) {
-      try {
+      final hidden = widget.repository.usesServerHiddenAnswers;
+      Future<List<QuizQuestion>> loadQuestions() async {
         final roomQuestions = await widget.repository.loadRoomQuestions(room);
-        if (roomQuestions.isNotEmpty) {
-          matchQuestions = roomQuestions;
-        } else if (widget.repository.usesServerHiddenAnswers) {
+        if (roomQuestions.isEmpty && hidden) {
           throw StateError('Real room has no playable questions.');
         }
+        return roomQuestions;
+      }
+
+      try {
+        matchQuestions = hidden
+            ? await _withLoadRetry(attempt, loadQuestions)
+            : await loadQuestions();
       } catch (error, stack) {
         ErrorReporter.record(
           error,
           stack,
           reason: 'matchmaking_load_room_questions',
         );
-        if (widget.repository.usesServerHiddenAnswers) {
-          setState(() {
-            _found = false;
-          });
-          if (!_cancelRequested && !_isCancelled && mounted) {
-            setState(() {
-              _matchmakingErrorMessage = context.t(K.gameStartFailed);
-            });
+        if (hidden) {
+          if (mounted && _isAttemptActive(attempt)) {
+            await _abandonMatchedRoom(attempt, context.t(K.gameStartFailed));
           }
           return;
         }
@@ -1088,6 +1234,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     }
 
     if (!mounted) return;
+    _navigatedToQuiz = true;
+    _receivedRoomId = null;
+    _stopWaiting();
     Navigator.of(context).pushReplacement(
       AppRoute.to(
         QuizScreen(
@@ -1163,6 +1312,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     }
 
     return SahnePushedPage(
+      role: SahneRole.race,
       // Ekranın kimliği artık B iskeletinin çubuğudur (başlık + alt satır);
       // eski kimlik başlığının anahtarı çubuğu taşıyan sayfadadır.
       key: const ValueKey('matchmaking-selection-header'),
@@ -1199,6 +1349,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       image: null,
       icon: CategoryVisuals.icon(category),
       tone: CategoryVisuals.tone(category),
+      mark: CategoryVisuals.mark(category),
       title: title,
       subtitle: subtitle,
       chevron: true,
@@ -1613,7 +1764,7 @@ class _RandomMatchCard extends StatelessWidget {
               // Kenarlık yok: dikdörtgen kenarlık pah kırpıcısında köşeleri
               // kesik bir çerçeve bırakıyordu.
               decoration: BoxDecoration(
-                color: t.s1,
+                color: t.raceTint,
                 boxShadow: const <BoxShadow>[],
               ),
               padding: const EdgeInsets.all(SahneSpace.x4),
@@ -1623,12 +1774,16 @@ class _RandomMatchCard extends StatelessWidget {
                     // İkon karosu nötr (Kulis): kartın tek renkli öğesi
                     // sağdaki Agir ok karosudur.
                     decoration: ShapeDecoration(
-                      color: t.s2,
+                      color: t.raceFill,
                       shape: SahneShape.m,
                     ),
-                    child: SizedBox.square(
+                    child: const SizedBox.square(
                       dimension: 44,
-                      child: Icon(AppIcons.shuffle, color: t.tx2, size: 24),
+                      child: Icon(
+                        AppIcons.shuffle,
+                        color: SahneVivid.onFill,
+                        size: 24,
+                      ),
                     ),
                   ),
                   const SizedBox(width: SahneSpace.x3),
@@ -1639,10 +1794,6 @@ class _RandomMatchCard extends StatelessWidget {
                         Text(
                           context.t(K.randomMatch),
                           style: SahneType.button.copyWith(color: t.tx),
-                        ),
-                        Text(
-                          context.t(K.randomMatchSub),
-                          style: SahneType.caption.copyWith(color: t.tx2),
                         ),
                       ],
                     ),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -23,6 +24,27 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Avatar/çerçeve/unvan düzenleyici. Kaydet ile repository'ye yazar ve
 /// pop(true) döner; çağıran ekran görünümünü tazeler.
+
+/// Yüklenecek avatarın içerik türü BAYTLARDAN belirlenir: dosya adı
+/// (iOS'ta `image_picker_XXXX.jpg` ya da HEIC kökenli adlar) güvenilir
+/// değil. PNG imzası `89 50 4E 47`; aksi hâlde image_picker boyutlandırıp
+/// JPEG'e çevirdiği için JPEG. Kova yalnız jpeg/png/webp kabul eder.
+@visibleForTesting
+String avatarContentTypeFor(List<int> bytes) {
+  const png = [0x89, 0x50, 0x4E, 0x47];
+  if (bytes.length >= 4) {
+    var isPng = true;
+    for (var i = 0; i < 4; i++) {
+      if (bytes[i] != png[i]) {
+        isPng = false;
+        break;
+      }
+    }
+    if (isPng) return 'image/png';
+  }
+  return 'image/jpeg';
+}
+
 class AvatarEditorScreen extends StatefulWidget {
   const AvatarEditorScreen({
     required this.repository,
@@ -70,6 +92,17 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
   /// (2026-08-14 denetimi).
   bool _uploadedNewPhotoThisSession = false;
 
+  /// Ekran açıldığında profilin işaret ettiği KAYITLI fotoğraf.
+  ///
+  /// Yükleme artık zaman damgalı yeni bir yola gider; kayıtlı nesneye
+  /// kaydedilene kadar dokunulmaz. Eskiden hepsi `avatar.jpg` üstüne
+  /// yazıldığı için fotoğraf değiştirip vazgeçmek kayıtlı fotoğrafı
+  /// siliyordu.
+  String? _originalPhotoUrl;
+
+  /// Bu oturumda yüklenip henüz profile yazılmamış (yetim adayı) nesneler.
+  final List<String> _sessionUploads = [];
+
   /// `_save()` başarıyla tamamlandı mı? `dispose()`teki yetim temizliği
   /// yalnız kullanıcı GERÇEKTEN kaydetmeden ekrandan ayrılırsa çalışır.
   bool _savedSuccessfully = false;
@@ -84,11 +117,16 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
   void dispose() {
     // Kaydedilmeden ekrandan çıkılırsa (geri tuşu, kaydırma, vb. — hepsi
     // `dispose()`u tetikler) bu oturumda yüklenip hiç saklanmamış
-    // fotoğrafı temizle. `deleteAvatarPhoto` var olmayan yolu sorun
-    // etmediği için burada `_identity.photoUrl` durumuna bakmaya gerek
-    // yok: kaydedilmemişse zaten hiçbir profil satırı ona işaret etmiyor.
+    // fotoğrafı temizle. Kaydedilmemişse hiçbir profil satırı geçici
+    // yüklemelere işaret etmiyor; kayıtlı fotoğraf ise listede olmadığından
+    // yerinde kalır.
     if (_uploadedNewPhotoThisSession && !_savedSuccessfully) {
-      widget.repository.deleteAvatarPhoto().catchError((error, stack) {
+      // YALNIZ bu oturumun geçici yüklemeleri: kayıtlı fotoğraf
+      // (`_originalPhotoUrl`) listede yoktur ve dokunulmaz.
+      widget.repository.deleteAvatarPhotoObjects(_sessionUploads).catchError((
+        error,
+        stack,
+      ) {
         ErrorReporter.record(
           error,
           stack,
@@ -97,6 +135,14 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       });
     }
     super.dispose();
+  }
+
+  Future<void> _deleteQuietly(List<String> urls, String reason) async {
+    try {
+      await widget.repository.deleteAvatarPhotoObjects(urls);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: reason);
+    }
   }
 
   /// `hasPurchased` artık ağ hatasında yukarı fırlatıyor (shop_screen'in
@@ -123,6 +169,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
     try {
       final identity = await widget.repository.loadAvatarIdentity();
       _hadPhotoOnOpen = identity.photoUrl != null;
+      _originalPhotoUrl = identity.photoUrl;
       final name = await widget.repository.getProfileName();
       final masteryStore = await MasteryStore.load();
       final achievementStore = await AchievementStore.load();
@@ -197,9 +244,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
         _showSnack(tooLargeMessage);
         return;
       }
-      final contentType = file.name.toLowerCase().endsWith('.png')
-          ? 'image/png'
-          : 'image/jpeg';
+      final contentType = avatarContentTypeFor(bytes);
       final url = await widget.repository.uploadAvatarPhoto(
         Uint8List.fromList(bytes),
         contentType,
@@ -208,6 +253,15 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       // `dispose()` bunu görüp temizleyebilsin diye `mounted` kontrolünden
       // ÖNCE işaretlenir.
       _uploadedNewPhotoThisSession = true;
+      // Aynı oturumda ikinci seçim: ilk geçici nesne artık kimseye
+      // bağlı değil. Kayıtlı fotoğraf (`_originalPhotoUrl`) bu listede
+      // olmadığından ASLA silinmez.
+      if (_sessionUploads.isNotEmpty) {
+        final previous = List<String>.of(_sessionUploads);
+        _sessionUploads.clear();
+        unawaited(_deleteQuietly(previous, 'avatar replaced temp cleanup'));
+      }
+      _sessionUploads.add(url);
       if (!mounted) return;
       setState(() => _identity = _identity.copyWith(photoUrl: url));
     } catch (error, stack) {
@@ -246,10 +300,31 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       // (2026-08-14 denetimi).
       if (_identity.photoUrl == null &&
           (_hadPhotoOnOpen || _uploadedNewPhotoThisSession)) {
-        await widget.repository.deleteAvatarPhoto();
+        await widget.repository.deleteAvatarPhoto(
+          urls: [?_originalPhotoUrl, ..._sessionUploads],
+        );
       }
-      await widget.repository.updateAvatarIdentity(_identity);
+      final confirmed = await widget.repository.updateAvatarIdentityConfirmed(
+        _identity,
+      );
       _savedSuccessfully = true;
+      // Kayıt GEÇTİKTEN sonra: artık profilin işaret etmediği nesneler
+      // (değiştirilen eski fotoğraf, seçilip bırakılan geçici yüklemeler)
+      // silinir. Başarısızlık kaydı bozmaz; en kötü yetim bir nesne kalır.
+      final kept = _identity.photoUrl;
+      // Eski nesne YALNIZ sunucu profil satırının yeni URL'ye geçtiğini
+      // onayladıysa silinir; push kuyruğa alındıysa profil hâlâ eskiyi
+      // gösterir ve silmek avatarı herkes için kırardı (yetim dosya daha iyi).
+      if (kept != null && confirmed) {
+        final stale = <String>[
+          ..._sessionUploads.where((u) => u != kept),
+          if (_originalPhotoUrl != null && _originalPhotoUrl != kept)
+            _originalPhotoUrl!,
+        ];
+        if (stale.isNotEmpty) {
+          unawaited(_deleteQuietly(stale, 'avatar replaced photo cleanup'));
+        }
+      }
       if (mounted) Navigator.of(context).pop(true);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'avatar save failed');

@@ -70,7 +70,13 @@ class _PaywallScreenState extends State<PaywallScreen> {
     _loadOfferings();
   }
 
-  Future<void> _loadOfferings() async {
+  /// [manual]: kullanıcı "Tekrar dene"ye bastı. Ağ hemen yine hata verirse
+  /// yükleme göstergesi bir karede kaybolur ve aynı hata kartı yeniden
+  /// çizilir; kullanıcı bastığını anlamaz (2026-10-21 simülatör turu).
+  /// Bu yüzden elle denemede gösterge en az [_minRetrySpinner] görünür.
+  static const _minRetrySpinner = Duration(milliseconds: 600);
+
+  Future<void> _loadOfferings({bool manual = false}) async {
     if (!_paywallViewLogged) {
       _paywallViewLogged = true;
       AnalyticsService.instance.logPaywallView();
@@ -78,7 +84,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
     setState(() => _loading = true);
     final premium = context.read<PremiumService>();
     final pkgs = <Package>[];
+    final started = DateTime.now();
     final result = await premium.fetchOfferings();
+    if (manual) {
+      final left = _minRetrySpinner - DateTime.now().difference(started);
+      if (left > Duration.zero) await Future<void>.delayed(left);
+    }
     if (result case OfferingsFetchSuccess(:final offerings)) {
       for (final offering in offerings) {
         pkgs.addAll(offering.availablePackages);
@@ -128,11 +139,16 @@ class _PaywallScreenState extends State<PaywallScreen> {
     }
   }
 
+  bool _restoring = false;
+
   Future<void> _restore() async {
+    if (_restoring) return;
     final premium = context.read<PremiumService>();
+    setState(() => _restoring = true);
     final outcome = await premium.restorePurchases();
     AnalyticsService.instance.logRestoreOutcome(outcome.name);
     if (!mounted) return;
+    setState(() => _restoring = false);
     switch (outcome) {
       case RestoreOutcome.restored:
         Navigator.of(context).pop();
@@ -195,9 +211,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 child: BrandedLoaderCenter(),
               )
             else if (_offeringsLoadFailed)
-              _OfferingsLoadError(onRetry: _loadOfferings)
+              _OfferingsLoadError(onRetry: () => _loadOfferings(manual: true))
             else if (_packages.isEmpty)
-              _EmptyOfferings(isKu: ku, onRetry: _loadOfferings)
+              _EmptyOfferings(
+                isKu: ku,
+                onRetry: () => _loadOfferings(manual: true),
+              )
             else
               _PackageList(
                 packages: _packages,
@@ -221,6 +240,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
               _FooterActions(
                 isKu: ku,
                 onRestore: _restore,
+                restoring: _restoring,
                 showRenewalTerms: _packages.isNotEmpty,
               ),
             ],
@@ -528,9 +548,13 @@ class _FooterActions extends StatelessWidget {
     required this.isKu,
     required this.onRestore,
     required this.showRenewalTerms,
+    this.restoring = false,
   });
   final bool isKu;
   final VoidCallback onRestore;
+
+  /// Geri yükleme sürerken düğmenin yerinde gösterge durur (aynı yükseklik).
+  final bool restoring;
 
   /// Satın alınabilir paket varken true: yenileme koşulları yalnız o zaman
   /// yazılır.
@@ -543,11 +567,17 @@ class _FooterActions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Center(
-          child: SahneButton.text(
-            label: Tr.forKu(K.restorePurchases, isKu),
-            arrow: false,
-            onPressed: onRestore,
-          ),
+          child: restoring
+              ? const SizedBox(
+                  key: ValueKey('paywall-restore-progress'),
+                  height: 48,
+                  child: BrandedLoaderCenter(size: 24),
+                )
+              : SahneButton.text(
+                  label: Tr.forKu(K.restorePurchases, isKu),
+                  arrow: false,
+                  onPressed: onRestore,
+                ),
         ),
         const SizedBox(height: SahneSpace.x2),
         if (showRenewalTerms) ...[

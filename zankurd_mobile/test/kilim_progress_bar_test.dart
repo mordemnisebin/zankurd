@@ -14,6 +14,10 @@ import 'package:zankurd_mobile/src/widgets/kilim_progress_bar.dart';
 /// testin yanlış güveni bunun fark edilmemesine yol açmıştı.
 ///
 /// Kontroller artık motifi kendi anahtarıyla arar.
+///
+/// 2026-10-19 sadeleşme: çubuğun ucu pahlı (S) değil TAM YUVARLAK (kapsül,
+/// yarıçap = boy / 2). Pahlı uç "kalabalık" izlenimi veriyordu; ilk test
+/// bu yüzden `SahneShape.s` yerine kapsül biçimini bekler.
 void main() {
   Widget wrap(Widget child, {bool dark = true}) {
     return MaterialApp(
@@ -27,8 +31,8 @@ void main() {
   // 2026-09-29 Şahnê: kilim deseni çubuktan kaldırıldı — Şahnê'de tek
   // sahiplenilmiş motif göz şerididir ve yalnız sahne kartının üst
   // kenarında ve sonuç puanının altında durur. Motif bekçileri yerine
-  // çubuğun Şahnê sözleşmesi sabitlenir: S pah, iz Ray, dolgu rol rengi.
-  testWidgets('Şahnê ilerleme çubuğu: S pah, Ray iz, öğrenme dolgusu', (
+  // çubuğun Şahnê sözleşmesi sabitlenir: kapsül uç (2026-10-19; eskiden S pah), iz Ray, dolgu rol rengi.
+  testWidgets('Şahnê ilerleme çubuğu: kapsül uç, Ray iz, öğrenme dolgusu', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -48,7 +52,10 @@ void main() {
     );
     final decoration = track.decoration! as ShapeDecoration;
     expect(decoration.color, t.s3);
-    expect(decoration.shape, SahneShape.s);
+    expect(
+      decoration.shape,
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+    );
     final fill = tester.widget<DecoratedBox>(
       find.descendant(
         of: find.byKey(const ValueKey('kilim-progress-fill')),

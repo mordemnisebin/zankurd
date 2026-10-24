@@ -26,7 +26,11 @@ abstract interface class SoloQuizPort {
     required String learningLessonId,
     int limit = 5,
   });
-  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10});
+  Future<List<QuizQuestion>> loadDailyQuestions({
+    int limit = 10,
+    bool replay = false,
+  });
+  Future<List<QuizQuestion>> loadDailyEventQuestions({int limit = 10});
   Future<bool> toggleFavoriteQuestion(QuizQuestion question, bool favorite);
   Future<bool> isFavoriteQuestion(QuizQuestion question);
   Future<void> reportQuestion(QuizQuestion question, String reason);
@@ -60,11 +64,16 @@ abstract interface class LivePlayPort {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   });
   Future<GameRoom> joinOnlineRoom(String code);
 
+  /// Biten ÖZEL odanın aynı ayarlarla yeni lobisi (sunucu `create_room_rematch`).
+  Future<GameRoom> createRoomRematch(String roomId);
+
   // ─── Sırayla düello (async 1v1) — bkz. `ZanKurdRepository` doc'u ──────
   Future<AsyncDuelStart> startAsyncDuel({String? category});
+  Future<int?> presentAsyncDuelQuestion(String duelId, int questionIndex);
   Future<AsyncDuelAnswer> answerAsyncDuel({
     required String duelId,
     required int questionIndex,
@@ -74,6 +83,12 @@ abstract interface class LivePlayPort {
   Future<List<AsyncDuelSummary>> loadMyAsyncDuels();
   Future<void> markAsyncDuelSeen(String duelId);
   Future<int> claimAsyncDuelXp(String duelId);
+  Future<AsyncDuelStart> createAsyncDuelChallenge({
+    String? category,
+    String? friendId,
+  });
+  Future<AsyncDuelStart> acceptAsyncDuelChallenge(String code);
+  Future<bool> supportsAsyncDuelChallenge();
 
   Future<GameRoom> loadRoomSnapshot(String roomId);
   Future<RoomResumeSnapshot?> loadMyResumableRoom();
@@ -86,6 +101,10 @@ abstract interface class LivePlayPort {
     required int expectedQuestionIndex,
   });
   Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room);
+
+  /// Kalabalık odada mevcut sorunun cevap ilerlemesi ("x/N cevapladı").
+  /// Sunucuda RPC yoksa ya da cevap okunamazsa `null`.
+  Future<RoomAnswerProgress?> loadRoomAnswerProgress(GameRoom room);
   Future<List<Player>> loadRoomPlayers(GameRoom room);
   Future<RoomStatus> loadRoomStatus(GameRoom room);
   Future<RoomEndState> loadRoomEndState(GameRoom room);
@@ -102,6 +121,10 @@ abstract interface class LivePlayPort {
   });
   Future<Map<String, dynamic>> joinMatchmaking(String categoryName);
   Future<Map<String, dynamic>> cancelMatchmaking();
+
+  /// Bekleyen oyuncunun kalp atışı; eşleşme olmuşsa onu da döndürür.
+  Future<MatchmakingTouch> touchMatchmaking();
+
   Stream<Map<String, dynamic>?> subscribeMatchmakingQueue();
   Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId);
   Future<void> sendRoomBroadcast(String roomId, Map<String, dynamic> payload);

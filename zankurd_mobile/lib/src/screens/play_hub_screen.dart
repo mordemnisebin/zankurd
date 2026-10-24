@@ -1,3 +1,4 @@
+import 'home/room_invite_card.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import '../config/feature_flags.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/leaderboard_entry.dart';
+import '../models/leaderboard_period.dart';
 import '../models/room.dart';
 import '../providers/remote_availability.dart';
 import '../widgets/sahne/sahne.dart';
@@ -14,15 +17,18 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../services/analytics_service.dart';
 import '../widgets/app_panel.dart';
+import 'async_duel/async_duel_challenge_sheet.dart';
 import 'async_duel/async_duel_inbox.dart';
 import 'async_duel/async_duel_play_screen.dart';
 import 'contest_screen.dart';
+import 'friends_screen.dart';
 import 'matchmaking_screen.dart';
 import 'room_screen.dart';
 import 'spin_wheel_screen.dart';
 import 'tournament_screen.dart';
 import 'home/home_rows.dart' show TabStatChips;
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../services/social_push_prompt.dart';
 
 class PlayHubScreen extends StatefulWidget {
   const PlayHubScreen({
@@ -60,6 +66,47 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     _asyncDuelInboxRefresh,
   ]);
 
+  /// Sunucuda meydan okuma RPC'leri var mı (sonuç gelene dek `false`:
+  /// giriş noktası çizilip sonra kaybolmasın).
+  bool _challengeAvailable = false;
+
+  /// Bekleyen arkadaşlık isteği sayısı; "Arkadaşlar" satırında rozet olur.
+  int _pendingRequests = 0;
+
+  /// Rozet bir iyileştirmedir: başarısızlık sessizdir, satır yine açılır.
+  Future<void> _refreshPendingRequests() async {
+    try {
+      final requests = await widget.repository.loadPendingFriendRequests();
+      if (!mounted || requests.length == _pendingRequests) return;
+      setState(() => _pendingRequests = requests.length);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'play_hub_pending_requests');
+    }
+  }
+
+  Future<void> _openFriends() async {
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(FriendsScreen(repository: widget.repository)));
+    if (!mounted) return;
+    await _refreshPendingRequests();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(_refreshPendingRequests());
+    unawaited(_refreshModeBadges());
+    _asyncDuelInboxSignal.addListener(_refreshModeBadges);
+    if (widget.asyncDuelEnabled) {
+      unawaited(
+        asyncDuelChallengeAvailable(widget.repository).then((available) {
+          if (mounted && available) setState(() => _challengeAvailable = true);
+        }),
+      );
+    }
+  }
+
   /// Oda kodu alanının denetleyicisi. Ömrü sayfaya değil EKRANA bağlıdır.
   ///
   /// Sayfaya bağlıyken (her açılışta `TextEditingController()`, kapanışta
@@ -74,6 +121,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
   @override
   void dispose() {
+    _asyncDuelInboxSignal.removeListener(_refreshModeBadges);
     _joinCodeController.dispose();
     _asyncDuelInboxRefresh.dispose();
     super.dispose();
@@ -95,7 +143,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     }
   }
 
-  Future<void> _createOnlineRoom() async {
+  /// [friendDuel]: "Canlı düello → Arkadaş". İki kişilik özel oda kurulur
+  /// ve oda açılınca arkadaş davet sayfası kendiliğinden açılır (oda daveti
+  /// akışı aynen yeniden kullanılır; sunucuda davet yoksa kod paylaşımı
+  /// düğmesi odada durur).
+  Future<void> _createOnlineRoom({bool friendDuel = false}) async {
     if (_roomActionLoading) return;
 
     List<String> availableCategories = widget.repository.categories;
@@ -127,6 +179,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       builder: (sheetCtx) => _CustomRoomBottomSheet(
         availableCategories: availableCategories,
         coinBalance: coinBalance,
+        fixedMaxPlayers: friendDuel ? 2 : null,
       ),
     );
 
@@ -147,10 +200,13 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         secondsPerQuestion: config.duration,
         questionCount: config.questionCount,
         entryFee: config.entryFee,
+        maxPlayers: config.maxPlayers,
       );
       if (!mounted) return;
       AnalyticsService.instance.logActivationStep('room_created');
-      _openRoom(room);
+      await SocialPushPrompt.maybeAsk(context);
+      if (!mounted) return;
+      _openRoom(room, autoInvite: friendDuel);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'play hub create room failed');
       if (!mounted) return;
@@ -166,17 +222,103 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     await Navigator.of(context).push(
       AppRoute<void>(page: SpinWheelScreen(repository: widget.repository)),
     );
+    if (mounted) unawaited(_refreshModeBadges());
   }
 
-  void _openRoom(GameRoom room) {
+  /// Mod kartlarının durum rozetleri (tasarım oylaması 2026-10-22, 15/15
+  /// EVET, en çok seçilen öneri): çark bugün çevrilebiliyorsa "Hazır!",
+  /// sırası bende olan düello varsa nötr "Yeni düello" (aynı düello üstte
+  /// "Sıra sende" satırı olarak zaten durur). Rozet bir iyileştirmedir:
+  /// okunamazsa kart rozetsiz çizilir.
+  bool _spinReady = false;
+  int _duelsMyTurn = 0;
+
+  Future<void> _refreshModeBadges() async {
+    try {
+      final ready = await widget.repository.canSpinToday();
+      if (mounted && ready != _spinReady) setState(() => _spinReady = ready);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'play_hub_spin_badge');
+    }
+    if (!widget.asyncDuelEnabled) return;
+    try {
+      final duels = await widget.repository.loadMyAsyncDuels();
+      final mine = duels
+          .where((d) => d.incomingChallenge || d.canResume)
+          .length;
+      if (mounted && mine != _duelsMyTurn) setState(() => _duelsMyTurn = mine);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'play_hub_duel_badge');
+    }
+  }
+
+  void _openRoom(GameRoom room, {bool autoInvite = false}) {
     Navigator.of(context).push(
-      AppRoute.to(RoomScreen(repository: widget.repository, initialRoom: room)),
+      AppRoute.to(
+        RoomScreen(
+          repository: widget.repository,
+          initialRoom: room,
+          autoInvite: autoInvite,
+        ),
+      ),
     );
+  }
+
+  /// Üç oyun seçiminden ilk ikisinin "rakip seçimi" sayfası: Rastgele ya da
+  /// Arkadaş. Eskiden dört ayrı kart vardı (hızlı düello, sırayla düello,
+  /// arkadaşına meydan oku, oda); "kiminle?" sorusu artık tek yerde sorulur,
+  /// "nasıl?" (canlı ya da sırayla) kart seçer.
+  Future<void> _pickOpponent(_PlayMode mode) async {
+    final friendAvailable =
+        mode == _PlayMode.live ||
+        (widget.asyncDuelEnabled && _challengeAvailable);
+    final choice = await showSahneSheet<_Opponent>(
+      context: context,
+      title: context.t(K.pickOpponent),
+      chromeKey: ValueKey('play-hub-opponent-sheet-${mode.name}'),
+      builder: (sheetContext) =>
+          _OpponentSheet(mode: mode, friendAvailable: friendAvailable),
+    );
+    if (choice == null || !mounted) return;
+    switch ((mode, choice)) {
+      case (_PlayMode.live, _Opponent.random):
+        await Navigator.of(
+          context,
+        ).push(AppRoute.to(MatchmakingScreen(repository: widget.repository)));
+      case (_PlayMode.live, _Opponent.friend):
+        await _createOnlineRoom(friendDuel: true);
+      case (_PlayMode.async, _Opponent.random):
+        await Navigator.of(
+          context,
+        ).push(AppRoute.to(AsyncDuelPlayScreen(repository: widget.repository)));
+        if (mounted) _asyncDuelInboxRefresh.value++;
+      case (_PlayMode.async, _Opponent.friend):
+        await showAsyncDuelChallengeSheet(context, widget.repository);
+        if (mounted) _asyncDuelInboxRefresh.value++;
+    }
+  }
+
+  /// "Oda" (3+ kişi): oda kur ya da kodla katıl.
+  Future<void> _openRoomSheet() async {
+    final choice = await showSahneSheet<_RoomChoice>(
+      context: context,
+      title: context.t(K.roomWord),
+      chromeKey: const ValueKey('play-hub-room-sheet'),
+      builder: (sheetContext) => const _RoomSheet(),
+    );
+    if (choice == null || !mounted) return;
+    switch (choice) {
+      case _RoomChoice.create:
+        await _createOnlineRoom();
+      case _RoomChoice.join:
+        await _showJoinSheet();
+    }
   }
 
   Future<void> _showJoinSheet() async {
     final controller = _joinCodeController..clear();
     final formKey = GlobalKey<FormState>();
+    var joining = false;
     final inputTextStyle = SahneType.bodyStrong.copyWith(
       color: SahneTokens.of(context).tx,
       letterSpacing: 1.4,
@@ -226,9 +368,12 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                       label: context.t(K.roomCode),
                       controller: controller,
                       textCapitalization: TextCapitalization.characters,
-                      // Yazarken kanonik biçime çeker: kullanıcı yalnız soneki
-                      // yazsa da alanda `ZK-ABCDEF0123` görünür, yani gönderilen
-                      // kodun doğru olduğunu göndermeden önce görür.
+                      // Yeni kod 6 rakamdır: sayı klavyesi açılır. Eski `ZK-…`
+                      // kodu ya da bağlantı yapıştırılırsa biçimlendirici
+                      // yine kabul eder (klavye türü yapıştırmayı engellemez).
+                      keyboardType: TextInputType.number,
+                      // Yazarken gösterim biçimine çeker: "482913" alanda
+                      // "482 913" görünür; eski kodlarda kanonik `ZK-…`.
                       inputFormatters: const [_RoomCodeInputFormatter()],
                       inputTextStyle: inputTextStyle,
                       prefixIcon: AppIcons.doorOpen,
@@ -243,55 +388,73 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                       },
                     ),
                     const SizedBox(height: SahneSpace.x4),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton.icon(
-                        onPressed: () async {
-                          if (!formKey.currentState!.validate()) return;
-                          try {
-                            final room = await widget.repository.joinOnlineRoom(
-                              normalizeRoomCode(controller.text),
-                            );
-                            if (!sheetCtx.mounted) return;
-                            AnalyticsService.instance.logActivationStep(
-                              'room_joined',
-                            );
-                            Navigator.of(sheetCtx).pop();
-                            if (mounted) _openRoom(room);
-                          } catch (error, stack) {
-                            ErrorReporter.record(
-                              error,
-                              stack,
-                              reason: 'play hub join room failed',
-                            );
-                            if (!sheetCtx.mounted) return;
-                            Navigator.of(sheetCtx).pop();
-                            if (!mounted) return;
-                            // Ücretli odaya jetonu yetmeyen oyuncuya "tekrar
-                            // dene" demek yalandı: tekrar denemek sonucu
-                            // değiştirmez. Mesajın yanında gerçek sonraki
-                            // adım (jeton kazan) durur.
-                            final short =
-                                error is RoomJoinException &&
-                                error.reason ==
-                                    RoomJoinFailureReason.insufficientCoins;
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  context.t(joinRoomErrorKey(error)),
-                                ),
-                                action: short
-                                    ? SnackBarAction(
-                                        label: context.t(K.earnCoins),
-                                        onPressed: _openSpinWheel,
-                                      )
-                                    : null,
-                              ),
-                            );
-                          }
-                        },
-                        icon: const Icon(AppIcons.rightToBracket),
-                        label: Text(context.t(K.joinAction)),
+                    // Katıl beklerken düğme kilitlenir ve dönen gösterge
+                    // görünür: 1–2 sn hiçbir geri bildirim yoktu, oyuncu
+                    // tekrar dokunuyordu (Android turu, 2026-10-22).
+                    StatefulBuilder(
+                      builder: (btnCtx, setBtn) => SizedBox(
+                        width: double.infinity,
+                        child: FilledButton.icon(
+                          key: const ValueKey('play-hub-join-submit'),
+                          onPressed: joining
+                              ? null
+                              : () async {
+                                  if (!formKey.currentState!.validate()) return;
+                                  setBtn(() => joining = true);
+                                  try {
+                                    final room = await widget.repository
+                                        .joinOnlineRoom(
+                                          normalizeRoomCode(controller.text),
+                                        );
+                                    if (!sheetCtx.mounted) return;
+                                    AnalyticsService.instance.logActivationStep(
+                                      'room_joined',
+                                    );
+                                    Navigator.of(sheetCtx).pop();
+                                    if (mounted) _openRoom(room);
+                                  } catch (error, stack) {
+                                    ErrorReporter.record(
+                                      error,
+                                      stack,
+                                      reason: 'play hub join room failed',
+                                    );
+                                    if (!sheetCtx.mounted) return;
+                                    Navigator.of(sheetCtx).pop();
+                                    if (!mounted) return;
+                                    // Ücretli odaya jetonu yetmeyen oyuncuya "tekrar
+                                    // dene" demek yalandı: tekrar denemek sonucu
+                                    // değiştirmez. Mesajın yanında gerçek sonraki
+                                    // adım (jeton kazan) durur.
+                                    final short =
+                                        error is RoomJoinException &&
+                                        error.reason ==
+                                            RoomJoinFailureReason
+                                                .insufficientCoins;
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          context.t(joinRoomErrorKey(error)),
+                                        ),
+                                        action: short
+                                            ? SnackBarAction(
+                                                label: context.t(K.earnCoins),
+                                                onPressed: _openSpinWheel,
+                                              )
+                                            : null,
+                                      ),
+                                    );
+                                  }
+                                },
+                          icon: joining
+                              ? const SizedBox.square(
+                                  dimension: 18,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : const Icon(AppIcons.rightToBracket),
+                          label: Text(context.t(K.joinAction)),
+                        ),
                       ),
                     ),
                   ],
@@ -353,54 +516,67 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     // ikincil düğme. Kodun biçimi katılma sayfasındaki alan ve doğrulama
     // mesajında yazılı. Kilitliyken açıklama satırı DEĞİŞMEZ (2026-09-30: sunucu
     // durumunu üstteki şerit söyler).
-    final createRoom = KeyedSubtree(
-      key: const ValueKey('play-hub-create-room'),
-      child: _lockedTap(
-        locked,
-        SahneButton.secondary(
-          icon: AppIcons.peopleGroup,
-          label: context.t(K.createRoom),
-          // Anahtarın kendi ekran okuyucu düğümü olsun (düğme + dokunma).
-          semanticLabel: context.t(K.createRoom),
-          loading: _roomActionLoading,
-          expand: true,
-          onPressed: locked ? null : _createOnlineRoom,
-        ),
-      ),
-    );
-    final joinRoom = KeyedSubtree(
-      key: const ValueKey('play-hub-join-room'),
-      child: _lockedTap(
-        locked,
-        SahneButton.secondary(
-          icon: AppIcons.hashtag,
-          label: context.t(K.joinByCode),
-          semanticLabel: context.t(K.joinByCode),
-          expand: true,
-          onPressed: locked ? null : _showJoinSheet,
-        ),
+    final dailyContest = _lockedTap(
+      locked,
+      SahneModeTile(
+        key: const ValueKey('play-hub-daily-contest'),
+        icon: AppIcons.calendarDays,
+        role: SahneRole.race,
+        // Hızlı düello ve sırayla düelloyla aynı kırmızı alt alta karışıyordu.
+        deep: true,
+        // İkincil satır (2026-10-24): üç büyük kart artık yalnız oyun
+        // seçimleridir; günün turu çarkın yanında sade kart.
+        compact: true,
+        title: context.t(K.dailyContest),
+        loading: _dailyLoading,
+        onTap: locked || _dailyLoading ? null : _openDailyQuiz,
+        semanticLabel:
+            '${context.t(K.dailyContest)}. ${context.t(K.tenQuestions)}',
       ),
     );
 
-    final dailyContestRow = SahneListRow.icon(
-      key: const ValueKey('play-hub-daily-contest'),
-      icon: AppIcons.calendarDays,
-      role: SahneRole.race,
-      title: context.t(K.dailyContest),
-      subtitle: context.t(K.tenQuestions),
-      // 2026-09-29 doğallık (K7): sağdaki "Bugün" rozeti kalktı; satırın
-      // adı zaten "Günün soruları", rozet aynı sözü ikinci kez söylüyordu.
-      trailing: _dailyLoading ? const _RowSpinner() : null,
-      chevron: !locked && !_dailyLoading,
-      enabled: !locked,
-      onTap: locked || _dailyLoading ? null : _openDailyQuiz,
+    // Çark: günlük jeton kazanma yeri. Eskiden yalnız mağazadan ve "jeton
+    // yetmedi" iletisinden bulunuyordu; Yarış sekmesinde tek dokunuşta durur.
+    final wheelTile = SahneModeTile(
+      key: const ValueKey('play-hub-spin-wheel'),
+      icon: AppIcons.dice,
+      role: SahneRole.gold,
+      // İkincil, günde bir kez: sade tek satırlık kart (rengi korunur).
+      compact: true,
+      title: context.t(K.wheelTitle),
       semanticLabel:
-          '${context.t(K.dailyContest)}. ${context.t(K.tenQuestions)}',
+          '${context.t(K.wheelTitle)}. ${context.t(K.wheelOncePerDay)}',
+      badge: _spinReady ? context.t(K.wheelReadyBadge) : null,
+      onTap: _openSpinWheel,
     );
-    final dailyContest = _lockedTap(locked, dailyContestRow);
+
+    // Arkadaşlar: istek göndermek/yanıtlamak için tek dokunuş (Nîl, sosyal).
+    // Sıralama ekranındaki yalnız-simge düğmesi de durur.
+    final friendsRow = _lockedTap(
+      locked,
+      SahneListRow.icon(
+        key: const ValueKey('play-hub-friends'),
+        icon: AppIcons.userPlus,
+        role: SahneRole.social,
+        title: context.t(K.friendsScreen),
+        trailing: _pendingRequests > 0 && !locked
+            ? SahneBadge(label: '$_pendingRequests', tone: SahneBadgeTone.learn)
+            : null,
+        chevron: !locked && _pendingRequests == 0,
+        enabled: !locked,
+        onTap: locked ? null : _openFriends,
+        semanticLabel: _pendingRequests > 0
+            ? context.t(K.friendRequestsPendingA11y, {
+                'count': '$_pendingRequests',
+              })
+            : context.t(K.friendsScreen),
+      ),
+    );
 
     return SahneTabPage(
       title: context.t(K.playTitle),
+      // İki dilli etiket: öbür dilde aynı anahtar ("Pêşbirk" / "Yarış").
+      titleEyebrow: context.secondLabel(K.playTitle),
       stats: [
         TabStatChips(
           repository: widget.repository,
@@ -408,127 +584,155 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         ),
       ],
       children: [
+        if (!locked)
+          RoomInviteCard(
+            repository: widget.repository,
+            refreshSignal: widget.refreshSignal,
+            topGap: false,
+          ),
+        if (widget.asyncDuelEnabled && !locked)
+          AsyncDuelTurnSection(
+            repository: widget.repository,
+            refreshSignal: _asyncDuelInboxSignal,
+          ),
         _QuickDuelHero(
+          repository: widget.repository,
           onLockedTap: locked ? _notifyLocked : null,
-          onTap: locked
-              ? null
-              : () {
-                  Navigator.of(context).push(
-                    AppRoute.to(
-                      MatchmakingScreen(repository: widget.repository),
-                    ),
-                  );
-                },
+          onTap: locked ? null : () => unawaited(_pickOpponent(_PlayMode.live)),
         ),
-        // Sırayla düello (async 1v1): rakibin aynı anda çevrimiçi
-        // olmasını istemez — oyuncu şimdi oynar, rakip kendi
-        // zamanında. Sunucu göçü uygulanana dek bayrakla kapalı; kapalıyken
-        // "Etkinlikler" grubunda "Yakında" satırı olarak durur.
-        if (widget.asyncDuelEnabled) ...[
-          const SizedBox(height: SahneSpace.cardGap),
-          SahneListGroup(
-            children: [
+        // Üç oyun seçimi (2026-10-24, sahibin kararı "Hepsi şimdi"): Canlı
+        // düello (yukarıdaki kahraman), Sırayla düello ve Oda. Eskiden
+        // "Arkadaşına meydan oku" ve "Oda kur / Kodla katıl" ayrı kartlardı;
+        // arkadaşla oynamak artık canlı ve sırayla düellonun İÇİNDE "Arkadaş"
+        // seçeneğidir. Sırayla düello bayrakla kapalıyken "Etkinlikler"
+        // grubunda "Yakında" satırı olarak durur.
+        const SizedBox(height: SahneSpace.cardGap),
+        SahneModeGrid(
+          children: [
+            if (widget.asyncDuelEnabled)
               _lockedTap(
                 locked,
-                SahneListRow.icon(
+                SahneModeTile(
                   key: const ValueKey('play-hub-async-duel'),
                   icon: AppIcons.hourglass,
                   role: SahneRole.race,
                   title: context.t(K.asyncDuel),
                   subtitle: context.t(K.asyncDuelSub),
-                  chevron: !locked,
-                  enabled: !locked,
-                  semanticLabel:
-                      '${context.t(K.asyncDuel)}. ${context.t(K.asyncDuelSub)}',
+                  // Sırası bende düello üstteki sıra bölümünde ZATEN
+                  // listelenir; kart "Sıra sende" diye tekrarlamaz, işini
+                  // söyler: yeni düello başlatmak (2026-10-24).
+                  badge: _duelsMyTurn > 0 && !locked
+                      ? context.t(K.asyncDuelStartNew)
+                      : null,
                   onTap: locked
                       ? null
-                      : () async {
-                          await Navigator.of(context).push(
-                            AppRoute.to(
-                              AsyncDuelPlayScreen(
-                                repository: widget.repository,
-                              ),
-                            ),
-                          );
-                          if (mounted) _asyncDuelInboxRefresh.value++;
-                        },
+                      : () => unawaited(_pickOpponent(_PlayMode.async)),
                 ),
               ),
-            ],
-          ),
-          if (!locked) ...[
-            const SizedBox(height: SahneSpace.x2),
-            AsyncDuelInboxSection(
-              repository: widget.repository,
-              refreshSignal: _asyncDuelInboxSignal,
+            _lockedTap(
+              locked,
+              SahneModeTile(
+                key: const ValueKey('play-hub-room'),
+                icon: AppIcons.peopleGroup,
+                // Oda çok oyunculu sosyal moddur: Nîl.
+                role: SahneRole.social,
+                title: context.t(K.roomWord),
+                subtitle: context.t(K.roomTileSub),
+                loading: _roomActionLoading,
+                onTap: locked || _roomActionLoading
+                    ? null
+                    : () => unawaited(_openRoomSheet()),
+                semanticLabel:
+                    '${context.t(K.roomWord)}. ${context.t(K.roomTileSub)}',
+              ),
             ),
           ],
-        ],
-        SahneSectionHeader(title: context.t(K.withFriends)),
-        _RoomActions(
-          note: context.t(K.createRoomSub),
-          createRoom: createRoom,
-          joinRoom: joinRoom,
         ),
-        SahneSectionHeader(title: context.t(K.events)),
-        SahneListGroup(
-          children: [
-            dailyContest,
-            if (!widget.asyncDuelEnabled)
-              SahneListRow.icon(
-                key: const ValueKey('play-hub-async-duel-soon'),
-                icon: AppIcons.shuffle,
-                title: context.t(K.asyncDuel),
-                subtitle: context.t(K.asyncDuelSub),
-                enabled: false,
-                trailing: SahneBadge(
-                  label: context.t(K.yakinda),
-                  tone: SahneBadgeTone.soon,
-                ),
-              ),
-            // Turnuva kalabalık bir kitle bekliyor; o kitle gelene dek
-            // bayrakla kapalı (bkz. `kTournamentEnabled`). Açıkken de ilk
-            // bakışta yok: benzer uygulamalarda indirme/tekrar sebebi "şimdi
-            // oyna" + günlük dönüş; eleme modu ikinci katman.
-            if (kTournamentEnabled) ...[
-              if (!_moreOpen)
+        // İkincil modlar (günün turu, günün çarkı): sade tek satırlık
+        // kartlar; renk kimliği korunur.
+        const SizedBox(height: SahneSpace.x3),
+        SahneModeGrid(children: [dailyContest, wheelTile]),
+        const SizedBox(height: SahneSpace.x3),
+        SahneListGroup(children: [friendsRow]),
+        if (!widget.asyncDuelEnabled || kTournamentEnabled) ...[
+          const SizedBox(height: SahneSpace.x5),
+          SahneListGroup(
+            children: [
+              if (!widget.asyncDuelEnabled)
                 SahneListRow.icon(
-                  key: const ValueKey('play-hub-more'),
-                  icon: AppIcons.chevronDown,
-                  title: context.t(K.playMore),
-                  subtitle: context.t(K.playMoreSub),
-                  semanticLabel:
-                      '${context.t(K.playMore)}. ${context.t(K.playMoreSub)}',
-                  onTap: () => setState(() => _moreOpen = true),
-                ),
-              if (_moreOpen)
-                _lockedTap(
-                  locked,
-                  SahneListRow.icon(
-                    key: const ValueKey('play-hub-tournament'),
-                    icon: AppIcons.trophy,
-                    role: SahneRole.gold,
-                    title: context.t(K.tournament),
-                    subtitle: context.t(K.tournamentSub),
-                    chevron: !locked,
-                    enabled: !locked,
-                    semanticLabel:
-                        '${context.t(K.tournament)}. '
-                        '${context.t(K.tournamentSub)}',
-                    onTap: locked
-                        ? null
-                        : () {
-                            Navigator.of(context).push(
-                              AppRoute.to(
-                                TournamentScreen(repository: widget.repository),
-                              ),
-                            );
-                          },
+                  key: const ValueKey('play-hub-async-duel-soon'),
+                  icon: AppIcons.shuffle,
+                  title: context.t(K.asyncDuel),
+                  enabled: false,
+                  trailing: SahneBadge(
+                    label: context.t(K.yakinda),
+                    tone: SahneBadgeTone.soon,
                   ),
                 ),
+              // Turnuva kalabalık bir kitle bekliyor; o kitle gelene dek
+              // bayrakla kapalı (bkz. `kTournamentEnabled`). Açıkken de ilk
+              // bakışta yok: benzer uygulamalarda indirme/tekrar sebebi "şimdi
+              // oyna" + günlük dönüş; eleme modu ikinci katman.
+              if (kTournamentEnabled) ...[
+                if (!_moreOpen)
+                  SahneListRow.icon(
+                    key: const ValueKey('play-hub-more'),
+                    icon: AppIcons.chevronDown,
+                    title: context.t(K.playMore),
+                    subtitle: context.t(K.playMoreSub),
+                    semanticLabel:
+                        '${context.t(K.playMore)}. ${context.t(K.playMoreSub)}',
+                    onTap: () => setState(() => _moreOpen = true),
+                  ),
+                if (_moreOpen)
+                  _lockedTap(
+                    locked,
+                    SahneListRow.icon(
+                      key: const ValueKey('play-hub-tournament'),
+                      icon: AppIcons.trophy,
+                      role: SahneRole.gold,
+                      title: context.t(K.tournament),
+                      subtitle: context.t(K.tournamentSub),
+                      chevron: !locked,
+                      enabled: !locked,
+                      semanticLabel:
+                          '${context.t(K.tournament)}. '
+                          '${context.t(K.tournamentSub)}',
+                      onTap: locked
+                          ? null
+                          : () {
+                              Navigator.of(context).push(
+                                AppRoute.to(
+                                  TournamentScreen(
+                                    repository: widget.repository,
+                                  ),
+                                ),
+                              );
+                            },
+                    ),
+                  ),
+              ],
             ],
-          ],
-        ),
+          ),
+        ],
+        // 'Bu hafta' kartı düellolarım kutusunun ALTINDA durur: üstte olunca
+        // yüksekliği kutuyu tembel listede ekran dışına itiyordu.
+        if (widget.asyncDuelEnabled && !locked)
+          AsyncDuelInboxSection(
+            repository: widget.repository,
+            refreshSignal: _asyncDuelInboxSignal,
+            excludeNeedsAttention: true,
+          ),
+        if (!locked) ...[
+          const SizedBox(height: SahneSpace.x5),
+          ThisWeekCard(
+            repository: widget.repository,
+            refreshSignal: widget.refreshSignal,
+            onStart: () => Navigator.of(context).push(
+              AppRoute.to(MatchmakingScreen(repository: widget.repository)),
+            ),
+          ),
+        ],
         // Mağaza satırı buradan kaldırıldı: aynı ekrana Yarış
         // sekmesinden, profilden ve kendi rotasından olmak üzere üç
         // ayrı giriş vardı ve "burası neresi?" hissi yaratıyordu
@@ -538,76 +742,91 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   }
 }
 
-/// Arkadaşlarla oynamanın iki yolu: tek açıklama satırı + yan yana iki
-/// ikincil düğme. Sığmazlarsa (dar ekran, büyük yazı) alt alta dizilir;
-/// "Kodla katıl" Kurmancîde ("Bi kodê têkeve") yarım genişliğe iki
-/// satırdan fazla düşmesin diye eşik yazı ölçeğine de bakar.
-class _RoomActions extends StatelessWidget {
-  const _RoomActions({
-    required this.note,
-    required this.createRoom,
-    required this.joinRoom,
-  });
+enum _PlayMode { live, async }
 
-  final String note;
-  final Widget createRoom;
-  final Widget joinRoom;
+enum _Opponent { random, friend }
+
+enum _RoomChoice { create, join }
+
+/// "Rakip seçimi" sayfasının içeriği: Rastgele ya da Arkadaş. Aynı iki satır
+/// canlı ve sırayla düelloda durur; yalnız açıklamalar kipe göre değişir.
+class _OpponentSheet extends StatelessWidget {
+  const _OpponentSheet({required this.mode, required this.friendAvailable});
+
+  final _PlayMode mode;
+
+  /// Sırayla düelloda sunucuda meydan okuma RPC'leri yoksa "Arkadaş" gizlenir.
+  final bool friendAvailable;
 
   @override
   Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    final live = mode == _PlayMode.live;
+    return SahneListGroup(
       children: [
-        Text(note, style: SahneType.caption.copyWith(color: t.tx2)),
-        const SizedBox(height: SahneSpace.x3),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            final largeText = MediaQuery.textScalerOf(context).scale(16) > 20;
-            if (constraints.maxWidth < 320 || largeText) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  createRoom,
-                  const SizedBox(height: SahneSpace.x2),
-                  joinRoom,
-                ],
-              );
-            }
-            return IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(child: createRoom),
-                  const SizedBox(width: SahneSpace.x3),
-                  Expanded(child: joinRoom),
-                ],
-              ),
-            );
-          },
+        SahneListRow.icon(
+          key: const ValueKey('opponent-sheet-random'),
+          icon: AppIcons.shuffle,
+          role: SahneRole.race,
+          title: context.t(K.opponentRandom),
+          subtitle: context.t(live ? K.quickDuelHeadline : K.asyncDuelSub),
+          chevron: true,
+          onTap: () => Navigator.of(context).pop(_Opponent.random),
+        ),
+        if (friendAvailable)
+          SahneListRow.icon(
+            key: const ValueKey('opponent-sheet-friend'),
+            icon: AppIcons.userPlus,
+            role: SahneRole.social,
+            title: context.t(K.opponentFriend),
+            subtitle: context.t(
+              live ? K.opponentFriendLiveSub : K.opponentFriendAsyncSub,
+            ),
+            chevron: true,
+            onTap: () => Navigator.of(context).pop(_Opponent.friend),
+          ),
+      ],
+    );
+  }
+}
+
+/// "Oda" sayfasının içeriği: oda kur ya da kodla katıl.
+class _RoomSheet extends StatelessWidget {
+  const _RoomSheet();
+
+  @override
+  Widget build(BuildContext context) {
+    return SahneListGroup(
+      children: [
+        SahneListRow.icon(
+          key: const ValueKey('play-hub-create-room'),
+          icon: AppIcons.peopleGroup,
+          role: SahneRole.social,
+          title: context.t(K.createRoom),
+          subtitle: context.t(K.createRoomSub),
+          chevron: true,
+          onTap: () => Navigator.of(context).pop(_RoomChoice.create),
+        ),
+        SahneListRow.icon(
+          key: const ValueKey('play-hub-join-room'),
+          icon: AppIcons.hashtag,
+          role: SahneRole.social,
+          title: context.t(K.joinByCode),
+          chevron: true,
+          onTap: () => Navigator.of(context).pop(_RoomChoice.join),
         ),
       ],
     );
   }
 }
 
-/// Satır sağındaki yükleniyor göstergesi (oda kuruluyor, etkinlik açılıyor).
-class _RowSpinner extends StatelessWidget {
-  const _RowSpinner();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: 16,
-      child: CircularProgressIndicator(
-        strokeWidth: 2,
-        color: SahneTokens.of(context).tx2,
-      ),
-    );
-  }
-}
-
-/// Ekranın tek birincil eylemi — bir YARIŞMA SAHNESİ.
+/// Ekranın tek birincil eylemi — sakin bir yüzey kartı.
+///
+/// 2026-10-19 sadeleşme (ikinci tur): kart Boyax sahne degradeli gece
+/// kartıydı; ana ekranın "Günün dersi" kartı sadeleşince Yarış sekmesinin
+/// bu kartı ekranın en doygun, en büyük lekesi kalmıştı. Artık gündüz
+/// beyaz / gece Perde yüzey kartı; kimliği yarış tonundaki üst etiket
+/// taşır, turuncu yalnız "Rakip bul". Anahtarlar ve ekran okuyucu düğümü
+/// değişmedi.
 ///
 /// 2026-09-29 Şahnê: düello sahne kartı (Boyax sahne degradesi, gündüzde de
 /// gece). Üstte "Hızlı düello" etiketi, manşet ve bilgi satırı; altında tam
@@ -630,17 +849,57 @@ class _RowSpinner extends StatelessWidget {
 /// düğme "bozuk" sanılıyordu). 2026-09-30 simülatör: manşet ve alt satırlar
 /// artık "Sunucuya ulaşılamadı" demez; bunu üstteki şerit tek başına söyler
 /// (eskiden aynı cümle Yarış sekmesinde dört kez yazılıyordu).
-class _QuickDuelHero extends StatelessWidget {
-  const _QuickDuelHero({required this.onTap, this.onLockedTap});
+class _QuickDuelHero extends StatefulWidget {
+  const _QuickDuelHero({
+    required this.onTap,
+    required this.repository,
+    this.onLockedTap,
+  });
 
   final VoidCallback? onTap;
+  final ZanKurdRepository repository;
 
   /// Kilitliyken düğmeye dokunulunca çağrılır (geri bildirim); düğme yine
   /// pasif görünür ve ekran okuyucuya tıklanabilir bildirilmez.
   final VoidCallback? onLockedTap;
 
   @override
+  State<_QuickDuelHero> createState() => _QuickDuelHeroState();
+}
+
+class _QuickDuelHeroState extends State<_QuickDuelHero> {
+  /// Oyuncunun adının baş harfleri ("SK" göstergesi); ad yoksa kişi ikonu.
+  String? _initials;
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(_loadInitials());
+  }
+
+  Future<void> _loadInitials() async {
+    try {
+      final name = (await widget.repository.getProfileName()).trim();
+      if (!mounted || name.isEmpty) return;
+      final parts = name
+          .split(RegExp(r'\s+'))
+          .where((p) => p.isNotEmpty)
+          .toList();
+      final letters = parts.length >= 2
+          ? '${parts.first.characters.first}${parts.last.characters.first}'
+          : name.characters.take(2).toString();
+      setState(
+        () => _initials = SahneType.upperFor(letters, isKu: context.isKu),
+      );
+    } catch (error, stack) {
+      // Ad okunamazsa kişi ikonu kalır; gösterge süstür, akış değil.
+      ErrorReporter.record(error, stack, reason: 'play_hub_vs_initials');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final onTap = widget.onTap;
     final enabled = onTap != null;
     final title = context.t(K.quickDuelHeadline);
     // Eşleşme odası 10 soruyla kurulur (`MatchmakingScreen`, `limit: 10`).
@@ -654,51 +913,287 @@ class _QuickDuelHero extends StatelessWidget {
       button: true,
       enabled: enabled,
       excludeSemantics: true,
-      label: '${context.t(K.quickDuel)}. ${context.t(K.findOpponent)}',
+      label: '${context.t(K.quickDuel)}. ${context.t(K.pickOpponent)}',
       onTap: onTap,
-      child: SahneStageCard(
-        role: SahneRole.race,
-        child: Builder(
-          builder: (context) {
-            final t = SahneTokens.of(context);
-            return Column(
+      // Boyax DOLU kahraman (2026-10-20 renk ve canlılık): yarış kimliği tek
+      // bakışta. Sadeleştirme beyaz bir karta indirmişti; Boyax ekranda
+      // neredeyse görünmüyordu.
+      child: SahneRaceHeroSurface(
+        kilimKey: const ValueKey('play-hub-kilim-strip'),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            SahneSpace.x4,
+            SahneSpace.x4,
+            SahneSpace.x4,
+            SahneSpace.x3,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                context.t(K.quickDuel),
+                style: SahneType.captionStrong.copyWith(
+                  color: SahneVivid.heroEyebrow,
+                ),
+              ),
+              const SizedBox(height: SahneSpace.x1),
+              Text(
+                title,
+                style: SahneType.headline.copyWith(color: SahneVivid.onFill),
+              ),
+              const SizedBox(height: SahneSpace.x2),
+              LayoutBuilder(
+                builder: (context, c) {
+                  // Dar ekran / büyük yazıda "SK vs ?" göstergesi çizilmez
+                  // (süs; metin ve düğme önceliklidir).
+                  final showVs =
+                      c.maxWidth >= 300 &&
+                      MediaQuery.textScalerOf(context).scale(16) < 22;
+                  // Spacer yok: Flexible + Spacer genişliği yarı yarıya
+                  // bölüyordu ve çip yazısı FittedBox'ta ~10 pt'ye
+                  // küçülüyordu; çip önce kendi doğal genişliğini alır.
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: DecoratedBox(
+                          decoration: const ShapeDecoration(
+                            color: SahneVivid.glass,
+                            shape: SahneShape.m,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: SahneSpace.x3,
+                              vertical: SahneSpace.x1,
+                            ),
+                            // Tek satır: sığmazsa yazı küçülür, sarmaz
+                            // ("10 soru · ~2 dakika").
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                meta,
+                                key: const ValueKey('play-hub-quick-duel-meta'),
+                                maxLines: 1,
+                                style: SahneType.captionStrong.copyWith(
+                                  color: SahneVivid.onFill,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (showVs) ...[
+                        const SizedBox(width: SahneSpace.x3),
+                        SahneVsIndicator(initials: _initials),
+                      ],
+                    ],
+                  );
+                },
+              ),
+              const SizedBox(height: SahneSpace.x4),
+              KeyedSubtree(
+                key: const ValueKey('play-hub-quick-duel-cta'),
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  excludeFromSemantics: true,
+                  onTap: onTap == null ? widget.onLockedTap : null,
+                  child: SahneButton.primary(
+                    label: context.t(K.pickOpponent),
+                    onPressed: onTap,
+                    expand: true,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// "Bu hafta" kartı: YALNIZ gerçek veri — `getMyLeaderboardRank(weekly)`
+/// (haftalık lig sırası, hafta puanı, hafta içinde biten çevrimiçi yarış
+/// sayısı). Sunucuda "bu hafta kazanılan düello" sayısı yoktur; uydurulmaz.
+/// Değeri 0 olan hücre (puan, yarış) gösterilmez. Oyuncunun haftalık
+/// kaydı yoksa sayı yerine kısa bir çağrı ve "Yarışa başla" durur.
+class ThisWeekCard extends StatefulWidget {
+  const ThisWeekCard({
+    super.key,
+    required this.repository,
+    required this.onStart,
+    this.refreshSignal,
+  });
+
+  final ZanKurdRepository repository;
+  final VoidCallback onStart;
+  final Listenable? refreshSignal;
+
+  @override
+  State<ThisWeekCard> createState() => _ThisWeekCardState();
+}
+
+class _ThisWeekCardState extends State<ThisWeekCard> {
+  bool _loaded = false;
+  LeaderboardEntry? _entry;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.refreshSignal?.addListener(_load);
+    _load();
+  }
+
+  @override
+  void dispose() {
+    widget.refreshSignal?.removeListener(_load);
+    super.dispose();
+  }
+
+  Future<void> _load() async {
+    LeaderboardEntry? entry;
+    try {
+      entry = await widget.repository.getMyLeaderboardRank(
+        LeaderboardPeriod.weekly,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'play_hub_this_week');
+    }
+    if (!mounted) return;
+    setState(() {
+      _entry = entry;
+      _loaded = true;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Yüklenene dek hiçbir şey çizilmez: boş durum parlayıp kaybolmasın.
+    if (!_loaded) return const SizedBox.shrink();
+    final t = SahneTokens.of(context);
+    final entry = _entry;
+    final hasData = entry != null && entry.rank > 0;
+    final cells = <(String, String)>[
+      if (hasData) (context.t(K.statRank), '#${entry.rank}'),
+      if (hasData && entry.totalScore > 0)
+        (context.t(K.scoreWord), '${entry.totalScore}'),
+      if (hasData && entry.roomsPlayed > 0)
+        (context.t(K.raceWord), '${entry.roomsPlayed}'),
+    ];
+    final night = Theme.of(context).brightness == Brightness.dark;
+    return SahneSurfaceCard(
+      key: const ValueKey('play-hub-this-week'),
+      child: hasData
+          // Zêr sıra bloğu + renkli ikonlu sayılar (2026-10-20): sıra altın,
+          // puan şimşek (Zêr tonu), yarış kupa (Boyax tonu).
+          ? IntrinsicHeight(
+              key: const ValueKey('play-hub-this-week-stats'),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: SahneGoldBlock(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            context.t(K.thisWeek),
+                            style: SahneType.captionStrong.copyWith(
+                              color: t.goldTx,
+                            ),
+                          ),
+                          Text(
+                            cells.first.$2,
+                            style: SahneType.title.copyWith(color: t.goldTx),
+                          ),
+                          Text(
+                            cells.first.$1,
+                            style: SahneType.caption.copyWith(color: t.tx2),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(
+                    flex: 6,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        for (var i = 1; i < cells.length; i++) ...[
+                          if (i > 1) const SizedBox(height: SahneSpace.x2),
+                          Row(
+                            children: [
+                              DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: i == 1 ? t.goldTint : t.raceTint,
+                                  shape: SahneShape.m,
+                                ),
+                                child: SizedBox.square(
+                                  dimension: 32,
+                                  child: Icon(
+                                    i == 1 ? AppIcons.bolt : AppIcons.trophy,
+                                    size: 18,
+                                    color: i == 1
+                                        ? t.goldTx
+                                        : night
+                                        ? t.raceTx
+                                        : t.race,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: SahneSpace.x2),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      cells[i].$2,
+                                      style: SahneType.bodyStrong.copyWith(
+                                        color: t.tx,
+                                      ),
+                                    ),
+                                    Text(
+                                      cells[i].$1,
+                                      style: SahneType.caption.copyWith(
+                                        color: t.tx2,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  context.t(K.quickDuel),
-                  style: SahneType.captionStrong.copyWith(
-                    color: SahneStageColors.raceSoft,
-                  ),
+                  context.t(K.thisWeek),
+                  style: SahneType.captionStrong.copyWith(color: t.goldTx),
                 ),
-                const SizedBox(height: SahneSpace.x1),
-                Text(title, style: SahneType.headline.copyWith(color: t.tx)),
-                const SizedBox(height: SahneSpace.x1),
+                const SizedBox(height: SahneSpace.x2),
                 Text(
-                  meta,
-                  key: const ValueKey('play-hub-quick-duel-meta'),
-                  style: SahneType.caption.copyWith(
-                    color: SahneStageColors.raceSoft,
-                  ),
+                  context.t(K.buHaftaYarisLige),
+                  key: const ValueKey('play-hub-this-week-empty'),
+                  style: SahneType.caption.copyWith(color: t.tx2),
                 ),
-                const SizedBox(height: SahneSpace.x4),
-                KeyedSubtree(
-                  key: const ValueKey('play-hub-quick-duel-cta'),
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    excludeFromSemantics: true,
-                    onTap: onTap == null ? onLockedTap : null,
-                    child: SahneButton.primary(
-                      label: context.t(K.findOpponent),
-                      onPressed: onTap,
-                      expand: true,
-                    ),
-                  ),
+                SahneButton.text(
+                  key: const ValueKey('play-hub-this-week-start'),
+                  label: context.t(K.startRaceAction),
+                  onPressed: widget.onStart,
                 ),
               ],
-            );
-          },
-        ),
-      ),
+            ),
     );
   }
 }
@@ -719,6 +1214,7 @@ String joinRoomErrorKey(Object error) {
     RoomJoinFailureReason.full => K.roomFull,
     RoomJoinFailureReason.alreadyInAnotherRoom => K.roomAlreadyInAnotherRoom,
     RoomJoinFailureReason.insufficientCoins => K.insufficientCoins,
+    RoomJoinFailureReason.tooManyAttempts => K.roomCodeTooManyAttempts,
     RoomJoinFailureReason.unknown => K.roomJoinFailed,
   };
 }
@@ -756,46 +1252,294 @@ class _EarnCoinsRequest {
 
 class _CustomRoomConfig {
   const _CustomRoomConfig({
+    /// Seçilen kategoriler tek dizgede: Karışık = `Tevlihev`, tek kategori =
+    /// adı, çoklu = adlar `, ` ile (sunucudaki `room_category_label` biçimi).
     required this.category,
     required this.duration,
     required this.questionCount,
     required this.entryFee,
+    required this.maxPlayers,
   });
 
   final String category;
   final int duration;
   final int questionCount;
   final int entryFee;
+
+  /// Oda kapasitesi (2 = bugünkü iki kişilik oda; > 2 = kalabalık oda).
+  final int maxPlayers;
+}
+
+/// Eşit sütunlu seçim ızgarası (konu, soru sayısı, süre, oyuncu, ücret).
+///
+/// 2026-10-19 sadeleşme (ikinci tur): seçenekler `Wrap` içinde doğal
+/// genişlikte dizildiği için satırlar tırtıklı, seçili/seçilmemiş çipler
+/// birbirine benziyordu. Artık her hücre eşit genişlikte ve çip hücreyi
+/// doldurur; seçili çip DOLU renk, seçilmemiş çip yalnız çerçevedir.
+/// Sığmayınca (dar ekran, büyük yazı) sütun sayısı düşer (en az 1).
+class _ChoiceGrid extends StatelessWidget {
+  const _ChoiceGrid({
+    required this.columns,
+    required this.children,
+    this.minCellWidth,
+    this.fallbackColumns,
+    this.gap = SahneSpace.x2,
+  });
+
+  final int columns;
+
+  /// Verilirse hücre en az bu genişlikte (ölçeksiz) olmalıdır; yoksa yazı
+  /// ölçeğine göre 72 kullanılır. Yalnız rakam çipleri için.
+  final double? minCellWidth;
+
+  /// [columns] sığmazsa düşülecek sütun sayısı. Ardışık azaltma tek çipi
+  /// yetim satıra atar (6 -> 5 = 5+1); bu yüzden doğrudan 3'e (2x3) iner.
+  final int? fallbackColumns;
+
+  /// Çipler arası boşluk (satır ve sütun).
+  final double gap;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final minCell =
+            minCellWidth ?? MediaQuery.textScalerOf(context).scale(72);
+        var cols = columns;
+        double cell(int c) => (constraints.maxWidth - gap * (c - 1)) / c;
+        if (fallbackColumns != null && cell(cols) < minCell) {
+          cols = fallbackColumns!;
+        }
+        while (cols > 1 && cell(cols) < minCell) {
+          cols--;
+        }
+        final width = cell(cols);
+        // Satır satır kurulur: her satırda bütün çipler en uzununun boyunu
+        // alır (büyük yazıda biri iki satıra sarsa bile satır eşit kalır).
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var i = 0; i < children.length; i += cols) ...[
+              if (i > 0) SizedBox(height: gap),
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var j = 0; j < cols; j++) ...[
+                      if (j > 0) SizedBox(width: gap),
+                      SizedBox(
+                        width: width,
+                        child: i + j < children.length
+                            ? children[i + j]
+                            : const SizedBox.shrink(),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ],
+        );
+      },
+    );
+  }
+}
+
+Widget _choiceChip(
+  BuildContext context, {
+  required Key key,
+  required String label,
+  required bool selected,
+  required VoidCallback onTap,
+  Widget? avatar,
+  String? semanticLabel,
+  bool locked = false,
+  bool looked = false,
+}) => SahnePickChip(
+  minHeight: _roomChipHeight,
+  key: key,
+  label: label,
+  semanticLabel: semanticLabel,
+  selected: selected,
+  onTap: onTap,
+  leading: avatar,
+  locked: locked,
+  looked: looked,
+);
+
+Widget _filterChip(
+  BuildContext context, {
+  required Key key,
+  required String label,
+  required bool selected,
+  required VoidCallback onTap,
+  String? semanticLabel,
+}) => SahnePickChip(
+  minHeight: _roomChipHeight,
+  key: key,
+  label: label,
+  semanticLabel: semanticLabel,
+  selected: selected,
+  onTap: onTap,
+);
+
+/// Oda kurma sayfasındaki çiplerin yüksekliği (tur 8b: 48 → 44; 44 dokunma
+/// tabanıdır). Sayfa 390×844'te kaydırmadan sığsın diye.
+const double _roomChipHeight = 44;
+
+/// Katlanır "Ayarlar" satırı: başlık + güncel değerlerin özeti + ok.
+class _SettingsSummaryRow extends StatelessWidget {
+  const _SettingsSummaryRow({
+    super.key,
+    required this.title,
+    required this.summary,
+    required this.open,
+    required this.onTap,
+  });
+
+  final String title;
+  final String summary;
+  final bool open;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Semantics(
+      container: true,
+      button: true,
+      expanded: open,
+      label: '$title, $summary',
+      onTap: onTap,
+      excludeSemantics: true,
+      child: SahneTappable(
+        shape: SahneShape.withSide(SahneShape.m, t.tx3, width: 1),
+        color: Colors.transparent,
+        onTap: onTap,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: sahneTapTarget),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.x3,
+              vertical: SahneSpace.x2,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
+                      ),
+                      Text(
+                        summary,
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: SahneSpace.x2),
+                Icon(
+                  open ? AppIcons.chevronUp : AppIcons.chevronDown,
+                  size: 20,
+                  color: t.tx2,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _CustomRoomBottomSheet extends StatefulWidget {
   const _CustomRoomBottomSheet({
     required this.availableCategories,
     required this.coinBalance,
+    this.fixedMaxPlayers,
   });
 
   final List<String> availableCategories;
   final int coinBalance;
+
+  /// Doluysa kapasite seçimi gizlenir ve oda bu kişi sayısıyla kurulur
+  /// ("Canlı düello → Arkadaş": iki kişilik özel oda).
+  final int? fixedMaxPlayers;
 
   @override
   State<_CustomRoomBottomSheet> createState() => _CustomRoomBottomSheetState();
 }
 
 class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
-  late String _selectedCategory;
+  /// Seçili kategori adları. Boş küme = Karışık (hepsi). En az bir seçim
+  /// her zaman vardır: Karışık da bir seçimdir.
+  final Set<String> _selectedCategories = <String>{};
+  bool _mixed = true;
   int _selectedDuration = GameRoom.defaultSecondsPerQuestion;
   int _selectedQuestionCount = 10;
   int _selectedEntryFee = 0;
 
+  /// Jetonu yetmediği için seçilemeyen ve dokunulan ücret; "N jeton eksik"
+  /// notu ile "Jeton kazan" yolunu açar. Seçim ASLA bakiyeyi aşmaz.
+  int? _blockedFee;
+  int _selectedMaxPlayers = GameRoom.defaultCrowdCapacity;
+  bool _settingsOpen = false;
+  final ScrollController _scroll = ScrollController();
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  /// Ayarlar açılınca açılan gruplar görünsün diye içeriğin sonuna kaydırır.
+  /// Eskiden "Ayarlar" satırı görünür alanın tepesine hizalanıp altına boş
+  /// "kuyruk" eklenirdi; bu, ücret ızgarası ile alt bant arasında ~180 pt ölü
+  /// boşluk bırakıyordu (tur 9a). Artık son grubun altında yalnız normal boşluk.
+  void _revealSettings() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_scroll.hasClients) return;
+      unawaited(
+        _scroll.animateTo(
+          _scroll.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOutCubic,
+        ),
+      );
+    });
+  }
+
+  /// "10 soru · 20 sn · ücretsiz": kapalı Ayarlar satırının özeti.
+  String _settingsSummary(BuildContext context) =>
+      '$_selectedQuestionCount ${context.t(K.soru)} · '
+      '$_selectedDuration ${context.t(K.secondsShortUnit)} · '
+      '${_selectedEntryFee == 0 ? context.t(K.freeEntry) : '$_selectedEntryFee ${context.t(K.coinWord)}'}';
+
   @override
   void initState() {
     super.initState();
-    _selectedCategory = widget.availableCategories.firstOrNull ?? 'Ziman';
+    _selectedMaxPlayers = widget.fixedMaxPlayers ?? _selectedMaxPlayers;
+    _selectedEntryFee = _affordableFee(_selectedEntryFee);
+  }
+
+  /// [fee] bakiyeyi aşıyorsa yetebilen en yüksek izinli ücret (en az 0).
+  int _affordableFee(int fee) {
+    if (fee <= widget.coinBalance) return fee;
+    var best = 0;
+    for (final f in GameRoom.allowedEntryFees) {
+      if (f <= widget.coinBalance && f > best) best = f;
+    }
+    return best;
   }
 
   @override
   Widget build(BuildContext context) {
-    final hasEnoughCoins = widget.coinBalance >= _selectedEntryFee;
+    final blockedFee = _blockedFee;
+    final hasEnoughCoins = blockedFee == null;
 
     final t = SahneTokens.of(context);
     // 2026-10-02 uçtan uca QA: bu sayfa kapatılamıyordu. İçerik (dört seçim
@@ -839,18 +1583,26 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
               const SizedBox(height: SahneSpace.x3),
               Row(
                 children: [
-                  // Yarış rolünün ikon karosu (Boyax tonu, M pah).
-                  DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: t.raceTint,
-                      shape: SahneShape.m,
+                  // Yarış rolünün ikon karosu (Boyax tonu, M pah). Büyük
+                  // yazıda (≥ %150) karo kalkar: başlık "oluştu / r" diye
+                  // sözcüğün ortasından kırılıyordu (320 px, x2).
+                  if (MediaQuery.textScalerOf(context).scale(14) < 21) ...[
+                    DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: t.raceTint,
+                        shape: SahneShape.m,
+                      ),
+                      child: SizedBox.square(
+                        dimension: 44,
+                        child: Icon(
+                          AppIcons.gamepad,
+                          color: t.raceTx,
+                          size: 24,
+                        ),
+                      ),
                     ),
-                    child: SizedBox.square(
-                      dimension: 44,
-                      child: Icon(AppIcons.gamepad, color: t.raceTx, size: 24),
-                    ),
-                  ),
-                  const SizedBox(width: SahneSpace.x3),
+                    const SizedBox(width: SahneSpace.x3),
+                  ],
                   Expanded(
                     child: Text(
                       context.t(K.customRoomTitle),
@@ -865,195 +1617,394 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                   ),
                 ],
               ),
-              const SizedBox(height: SahneSpace.x4),
+              const SizedBox(height: SahneSpace.x2),
+              // Başlığın altında net ayraç: kaydırılan içerik başlığın altından
+              // "yarım kesik çip" olarak görünmesin.
+              Divider(
+                key: const ValueKey('custom-room-header-divider'),
+                height: 1,
+                thickness: 1,
+                color: t.tx3.withValues(alpha: 0.35),
+              ),
+              const SizedBox(height: SahneSpace.x2),
               Flexible(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Kategori Seçimi
-                      Text(
-                        context.t(K.selectCategory),
-                        style: SahneType.bodyStrong.copyWith(
-                          color: SahneTokens.of(context).tx,
-                        ),
-                      ),
-                      const SizedBox(height: SahneSpace.x2),
-                      Wrap(
-                        spacing: SahneSpace.x2,
-                        runSpacing: SahneSpace.x2,
-                        children: [
-                          for (final cat in widget.availableCategories)
-                            ChoiceChip(
-                              key: ValueKey('custom-room-cat-$cat'),
-                              label: Text(
-                                CategoryNames.localized(cat, context.isKu),
+                child: SahneBottomFade(
+                  key: const ValueKey('custom-room-bottom-fade'),
+                  color: SahneTokens.of(context).s1,
+                  // Tur 8: 24 px solma son ücret satırını soluk/bozuk
+                  // gösteriyordu; 8 px'e indi, üstte 8 px bant.
+                  height: 8,
+                  topHeight: 8,
+                  // `shrinkWrap`: kısa içerikte sayfa içeriğe göre boyutlanır
+                  // (tur 9a: `SingleChildScrollView` her zaman izin verilen
+                  // yüksekliği doldurup ücret ızgarası ile alt bant arasında
+                  // ~180 pt ölü boşluk bırakıyordu); uzun içerikte %90 sınırı
+                  // içinde kaydırır.
+                  child: CustomScrollView(
+                    controller: _scroll,
+                    shrinkWrap: true,
+                    slivers: [
+                      SliverPadding(
+                        // Alt boşluk: son satır (oyuncu sayısı/ücret) kaydırınca
+                        // ayracın ve düğmenin tam üstüne rahatça çıkar.
+                        padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                        sliver: SliverToBoxAdapter(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Kategori Seçimi
+                              Text(
+                                context.t(K.selectCategory),
+                                style: SahneType.bodyStrong.copyWith(
+                                  color: SahneTokens.of(context).tx,
+                                ),
                               ),
-                              selected: _selectedCategory == cat,
-                              onSelected: (_) =>
-                                  setState(() => _selectedCategory = cat),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: SahneSpace.x4),
-
-                      // Soru Sayısı Seçimi
-                      Text(
-                        context.t(K.questionCountLabel),
-                        style: SahneType.bodyStrong.copyWith(
-                          color: SahneTokens.of(context).tx,
-                        ),
-                      ),
-                      const SizedBox(height: SahneSpace.x2),
-                      Wrap(
-                        spacing: SahneSpace.x2,
-                        runSpacing: SahneSpace.x2,
-                        children: [
-                          for (final count in GameRoom.allowedQuestionCounts)
-                            ChoiceChip(
-                              key: ValueKey('custom-room-count-$count'),
-                              label: Text('$count ${context.t(K.soru)}'),
-                              selected: _selectedQuestionCount == count,
-                              onSelected: (_) => setState(
-                                () => _selectedQuestionCount = count,
-                              ),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: SahneSpace.x4),
-
-                      // Soru Başına Süre
-                      Text(
-                        context.t(K.secondsPerQuestion),
-                        style: SahneType.bodyStrong.copyWith(
-                          color: SahneTokens.of(context).tx,
-                        ),
-                      ),
-                      const SizedBox(height: SahneSpace.x2),
-                      Wrap(
-                        spacing: SahneSpace.x2,
-                        runSpacing: SahneSpace.x2,
-                        children: [
-                          for (final seconds in GameRoom.allowedDurations)
-                            ChoiceChip(
-                              key: ValueKey('custom-room-duration-$seconds'),
-                              label: Text(
-                                '$seconds ${context.t(K.secondsShortUnit)}',
-                              ),
-                              selected: _selectedDuration == seconds,
-                              onSelected: (_) =>
-                                  setState(() => _selectedDuration = seconds),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: SahneSpace.x4),
-
-                      // Bahis / Giriş Ücreti
-                      // İki metin de esnek: dar ekranda ve Kurmancî'de etiketler
-                      // uzuyor ve sabit genişlikli `Row` sağdan 192 piksel taşıyordu
-                      // (`home_room_failures_test` yakaladı). `spaceBetween` tek
-                      // başına taşmayı önlemez — çocuklar doğal boyutlarını ister.
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              context.t(K.entryFeeLabel),
-                              style: SahneType.bodyStrong.copyWith(
-                                color: SahneTokens.of(context).tx,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: SahneSpace.x2),
-                          Flexible(
-                            child: Text(
-                              context.t(K.yourBalance, {
-                                'coins': widget.coinBalance.toString(),
-                              }),
-                              textAlign: TextAlign.end,
-                              style: SahneType.caption.copyWith(
-                                color: SahneTokens.of(context).tx2,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: SahneSpace.x2),
-                      Wrap(
-                        spacing: SahneSpace.x2,
-                        runSpacing: SahneSpace.x2,
-                        children: [
-                          for (final fee in GameRoom.allowedEntryFees)
-                            ChoiceChip(
-                              key: ValueKey('custom-room-fee-$fee'),
-                              avatar: fee > 0
-                                  ? const ExcludeSemantics(
-                                      child: SahneGlyph(
-                                        SahneGlyphKind.coin,
-                                        size: 16,
-                                      ),
-                                    )
-                                  : null,
-                              label: Text(
-                                fee == 0
-                                    ? context.t(K.freeEntry)
-                                    : '$fee ${context.t(K.coinWord)}',
-                              ),
-                              selected: _selectedEntryFee == fee,
-                              onSelected: (_) =>
-                                  setState(() => _selectedEntryFee = fee),
-                            ),
-                        ],
-                      ),
-                      if (!hasEnoughCoins) ...[
-                        const SizedBox(height: SahneSpace.x2),
-                        // Eksik miktar yazılır ("N jeton eksik"); düz "Jetonun
-                        // yetmiyor" ne kadar eksik olduğunu söylemiyordu.
-                        SahneShortfallNote(
-                          key: const ValueKey('custom-room-shortfall'),
-                          missing: coinShortfall(
-                            cost: _selectedEntryFee,
-                            balance: widget.coinBalance,
-                          ),
-                          alert: true,
-                        ),
-                      ],
-                      const SizedBox(height: SahneSpace.x6),
-
-                      // Ücrete yetilmiyorsa "Oda aç" pasif bırakılmaz: yerine jeton
-                      // kazanma yolu gelir. Ücretsiz seçenek yukarıda her zaman açık.
-                      // Sayfanın düğmesi `FilledButton` kalır: ekranın tek `SahneButton.
-                      // primary`si hızlı düellodur (bkz. `brand_accent_guard_test`).
-                      SizedBox(
-                        width: double.infinity,
-                        child: hasEnoughCoins
-                            ? FilledButton(
-                                key: const ValueKey('custom-room-open'),
-                                onPressed: () {
-                                  Navigator.of(context).pop(
-                                    _CustomRoomConfig(
-                                      category: _selectedCategory,
-                                      duration: _selectedDuration,
-                                      questionCount: _selectedQuestionCount,
-                                      entryFee: _selectedEntryFee,
+                              const SizedBox(height: SahneSpace.x2),
+                              _ChoiceGrid(
+                                columns: 3,
+                                children: [
+                                  // Karışık: bütün kategoriler. Seçilince tekil
+                                  // seçimler temizlenir; bir kategori seçilince
+                                  // Karışık kalkar.
+                                  _filterChip(
+                                    context,
+                                    key: const ValueKey(
+                                      'custom-room-cat-mixed',
                                     ),
-                                  );
-                                },
-                                child: Text(context.t(K.openRoom)),
-                              )
-                            : FilledButton.icon(
-                                key: const ValueKey('custom-room-earn-coins'),
-                                onPressed: () => Navigator.of(
-                                  context,
-                                ).pop(const _EarnCoinsRequest()),
-                                icon: const Icon(AppIcons.dice),
-                                label: Text(context.t(K.earnCoins)),
+                                    label: CategoryNames.tile(
+                                      'Tevlihev',
+                                      context.isKu,
+                                    ),
+                                    semanticLabel: CategoryNames.localized(
+                                      'Tevlihev',
+                                      context.isKu,
+                                    ),
+                                    selected: _mixed,
+                                    onTap: () => setState(() {
+                                      _mixed = true;
+                                      _selectedCategories.clear();
+                                    }),
+                                  ),
+                                  for (final cat in widget.availableCategories)
+                                    _filterChip(
+                                      context,
+                                      key: ValueKey('custom-room-cat-$cat'),
+                                      label: CategoryNames.tile(
+                                        cat,
+                                        context.isKu,
+                                      ),
+                                      semanticLabel: CategoryNames.localized(
+                                        cat,
+                                        context.isKu,
+                                      ),
+                                      selected: _selectedCategories.contains(
+                                        cat,
+                                      ),
+                                      onTap: () => setState(() {
+                                        if (!_selectedCategories.remove(cat)) {
+                                          _selectedCategories.add(cat);
+                                        }
+                                        // Son kategori kaldırılırsa Karışık'a dön:
+                                        // seçimsiz oda kurulamaz.
+                                        _mixed = _selectedCategories.isEmpty;
+                                      }),
+                                    ),
+                                ],
                               ),
+                              const SizedBox(height: SahneSpace.x3),
+
+                              // Arkadaşla canlı düelloda kapasite 2'ye SABİTTİR; seçim gizlenir.
+                              if (widget.fixedMaxPlayers == null) ...[
+                                // Oyuncu sayısı (kapasite). 2 = bugünkü iki kişilik oda;
+                                // daha fazlası kalabalık oda: ev sahibi >= 2 kişiyle
+                                // başlatır, sonuç sıralı gelir.
+                                Text(
+                                  context.t(K.roomCapacityLabel),
+                                  style: SahneType.bodyStrong.copyWith(
+                                    color: SahneTokens.of(context).tx,
+                                  ),
+                                ),
+                                const SizedBox(height: SahneSpace.x2),
+                                // TEK satır, yalnız rakamlar ("Oyuncu sayısı" başlığı
+                                // birimi söyler; ekran okuyucu "N kişi" okur). İkinci
+                                // satırın yarısı sabit "Odayı aç" altında kaldığında
+                                // "boş çerçeve" gibi okunuyordu (iki tasarım turu).
+                                // 320'de 6x48 sığmaz: 2x3'e iner, hiç yetim çip yok.
+                                _ChoiceGrid(
+                                  columns: GameRoom.allowedMaxPlayers.length,
+                                  minCellWidth: sahneTapTarget,
+                                  fallbackColumns: 3,
+                                  // 6 çip 390 pt telefonda 48'e ancak 6 pt aralıkla sığar.
+                                  gap: 6,
+                                  children: [
+                                    for (final capacity
+                                        in GameRoom.allowedMaxPlayers)
+                                      _choiceChip(
+                                        context,
+                                        key: ValueKey(
+                                          'custom-room-capacity-$capacity',
+                                        ),
+                                        label: '$capacity',
+                                        semanticLabel: context.t(
+                                          K.roomCapacityOption,
+                                          {'n': '$capacity'},
+                                        ),
+                                        selected:
+                                            _selectedMaxPlayers == capacity,
+                                        onTap: () => setState(
+                                          () => _selectedMaxPlayers = capacity,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                if (_selectedMaxPlayers > 2) ...[
+                                  const SizedBox(height: SahneSpace.x2),
+                                  Text(
+                                    context.t(K.roomCapacityHint),
+                                    key: const ValueKey(
+                                      'custom-room-capacity-hint',
+                                    ),
+                                    style: SahneType.caption.copyWith(
+                                      color: SahneTokens.of(context).tx2,
+                                    ),
+                                  ),
+                                ],
+                                const SizedBox(height: SahneSpace.x3),
+                              ],
+
+                              // Kurul 3. tur 2026-10-20: üç ikincil grup (soru sayısı,
+                              // süre, ücret) tek "Ayarlar" satırında toplandı; özet
+                              // güncel değerleri gösterir, dokununca satır içinde açılır.
+                              _SettingsSummaryRow(
+                                key: const ValueKey('custom-room-settings-row'),
+                                title: context.t(K.settings),
+                                summary: _settingsSummary(context),
+                                open: _settingsOpen,
+                                onTap: () {
+                                  setState(() {
+                                    _settingsOpen = !_settingsOpen;
+                                  });
+                                  if (_settingsOpen) _revealSettings();
+                                },
+                              ),
+                              if (_settingsOpen) ...[
+                                const SizedBox(height: SahneSpace.x3),
+                                // Soru Sayısı Seçimi
+                                Text(
+                                  context.t(K.questionCountLabel),
+                                  style: SahneType.bodyStrong.copyWith(
+                                    color: SahneTokens.of(context).tx,
+                                  ),
+                                ),
+                                const SizedBox(height: SahneSpace.x2),
+                                _ChoiceGrid(
+                                  columns: 3,
+                                  children: [
+                                    for (final count
+                                        in GameRoom.allowedQuestionCounts)
+                                      _choiceChip(
+                                        context,
+                                        key: ValueKey(
+                                          'custom-room-count-$count',
+                                        ),
+                                        label: '$count ${context.t(K.soru)}',
+                                        selected:
+                                            _selectedQuestionCount == count,
+                                        onTap: () => setState(
+                                          () => _selectedQuestionCount = count,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                const SizedBox(height: SahneSpace.x3),
+
+                                // Soru Başına Süre
+                                Text(
+                                  context.t(K.secondsPerQuestion),
+                                  style: SahneType.bodyStrong.copyWith(
+                                    color: SahneTokens.of(context).tx,
+                                  ),
+                                ),
+                                const SizedBox(height: SahneSpace.x2),
+                                _ChoiceGrid(
+                                  columns: 4,
+                                  children: [
+                                    for (final seconds
+                                        in GameRoom.allowedDurations)
+                                      _choiceChip(
+                                        context,
+                                        key: ValueKey(
+                                          'custom-room-duration-$seconds',
+                                        ),
+                                        label:
+                                            '$seconds ${context.t(K.secondsShortUnit)}',
+                                        selected: _selectedDuration == seconds,
+                                        onTap: () => setState(
+                                          () => _selectedDuration = seconds,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                const SizedBox(height: SahneSpace.x3),
+
+                                // Bahis / Giriş Ücreti
+                                // İki metin de esnek: dar ekranda ve Kurmancî'de etiketler
+                                // uzuyor ve sabit genişlikli `Row` sağdan 192 piksel taşıyordu
+                                // (`home_room_failures_test` yakaladı). `spaceBetween` tek
+                                // başına taşmayı önlemez — çocuklar doğal boyutlarını ister.
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        context.t(K.entryFeeLabel),
+                                        style: SahneType.bodyStrong.copyWith(
+                                          color: SahneTokens.of(context).tx,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: SahneSpace.x2),
+                                    Flexible(
+                                      child: Text(
+                                        context.t(K.yourBalance, {
+                                          'coins': widget.coinBalance
+                                              .toString(),
+                                        }),
+                                        textAlign: TextAlign.end,
+                                        style: SahneType.caption.copyWith(
+                                          color: SahneTokens.of(context).tx2,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: SahneSpace.x2),
+                                _ChoiceGrid(
+                                  // 2x2: tek satırda çip ~80 pt'e daralıp yazı
+                                  // küçülüyordu (tur 10a); 14 pt yazı için geniş hücre.
+                                  columns: 2,
+                                  children: [
+                                    for (final fee in GameRoom.allowedEntryFees)
+                                      _choiceChip(
+                                        context,
+                                        key: ValueKey('custom-room-fee-$fee'),
+                                        avatar: fee > 0
+                                            ? const ExcludeSemantics(
+                                                child: SahneGlyph(
+                                                  SahneGlyphKind.coin,
+                                                  size: 16,
+                                                ),
+                                              )
+                                            : null,
+                                        label: fee == 0
+                                            ? context.t(K.freeEntry)
+                                            : '$fee ${context.t(K.coinWord)}',
+                                        selected: _selectedEntryFee == fee,
+                                        locked: fee > widget.coinBalance,
+                                        looked: _blockedFee == fee,
+                                        semanticLabel: fee > widget.coinBalance
+                                            ? '${'$fee ${context.t(K.coinWord)}'}, '
+                                                  '${context.t(K.coinsShort, {'coins': '${coinShortfall(cost: fee, balance: widget.coinBalance)}'})}'
+                                            : null,
+                                        onTap: () {
+                                          setState(() {
+                                            if (fee > widget.coinBalance) {
+                                              // Yetmeyen ücret seçilmez: seçim kalır,
+                                              // eksik miktar alt notta söylenir.
+                                              _blockedFee = fee;
+                                            } else {
+                                              _selectedEntryFee = fee;
+                                              _blockedFee = null;
+                                            }
+                                          });
+                                          // Not satırı görünür alanı kısaltır: ızgara kesilmeden görünsün.
+                                          _revealSettings();
+                                        },
+                                      ),
+                                  ],
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
+                ),
+              ),
+              // Alt çubuğun üstünde ince ayraç: kaydırılan içerik düğmenin
+              // altında "kesilmiş" görünmesin.
+              Divider(
+                key: const ValueKey('custom-room-footer-divider'),
+                height: SahneSpace.x2 * 2 + 1,
+                thickness: 1,
+                color: t.tx3.withValues(alpha: 0.35),
+              ),
+
+              // Yetmeyen bir ücrete dokunulduğunda: not + ikincil "Jeton kazan"
+              // bağlantısı, kaydırma alanının DIŞINDA, birincil düğmenin hemen
+              // üstünde. Birincil düğme HEP "Oda oluştur"dur ve seçili (yetebilen)
+              // ücretle açar; not yalnız dokunulan kilitli ücretin bağlamında
+              // görünür, yetebilen bir ücrete dokunmak onu kapatır (tur 9a).
+              if (!hasEnoughCoins)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                  child: Row(
+                    key: const ValueKey('custom-room-shortfall-row'),
+                    children: [
+                      Expanded(
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: SahneShortfallNote(
+                            key: const ValueKey('custom-room-shortfall'),
+                            missing: coinShortfall(
+                              cost: blockedFee,
+                              balance: widget.coinBalance,
+                            ),
+                            fee: blockedFee,
+                            warn: true,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: SahneSpace.x2),
+                      SahneButton.text(
+                        buttonKey: const ValueKey('custom-room-earn-coins'),
+                        label: context.t(K.earnCoins),
+                        icon: AppIcons.dice,
+                        arrow: false,
+                        onPressed: () => Navigator.of(
+                          context,
+                        ).pop(const _EarnCoinsRequest()),
+                      ),
+                    ],
+                  ),
+                ),
+              // 2026-10-19: düğme kaydırma alanının DIŞINDA, sayfanın altında SABİT;
+              // uzun seçim listesinde "Oda kur" hiç kaybolmaz. Seçili ücret her
+              // zaman yetebilen bir ücrettir (bkz. `_affordableFee`).
+              // Sayfanın düğmesi `FilledButton` kalır: ekranın tek `SahneButton.
+              // primary`si hızlı düellodur (bkz. `brand_accent_guard_test`).
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  key: const ValueKey('custom-room-open'),
+                  onPressed: () {
+                    Navigator.of(context).pop(
+                      _CustomRoomConfig(
+                        category: _mixed
+                            ? 'Tevlihev'
+                            : _selectedCategories.join(', '),
+                        duration: _selectedDuration,
+                        questionCount: _selectedQuestionCount,
+                        entryFee: _selectedEntryFee,
+                        maxPlayers: _selectedMaxPlayers,
+                      ),
+                    );
+                  },
+                  child: Text(context.t(K.openRoom)),
                 ),
               ),
             ],

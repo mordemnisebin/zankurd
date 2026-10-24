@@ -1,9 +1,10 @@
 // 2026-09-29 doğallık (K7): oda eylemleri ikincil düğme, günün etkinliğinde
 // adını tekrarlayan rozet yok.
 // 2026-09-29 Şahnê: ana ekranın kapıları ve oyun merkezinin öteki yolları
-// `ModeCard`/degrade kart değil, liste satırıdır (`SahneListRow`); bekçi
+// degrade kart değil, liste satırıdır (`SahneListRow`); bekçi
 // "tek birincil (turuncu) eylem, öteki yollar sakin ve erişilebilir"
 // kuralını bu dilde sorar.
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -20,13 +21,15 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
-import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/mode_card.dart';
 
-Widget _homeShell({required bool isKu, required bool isDark}) {
+Widget _homeShell({
+  required bool isKu,
+  required bool isDark,
+  MockZanKurdRepository? repository,
+}) {
   return MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -42,7 +45,7 @@ Widget _homeShell({required bool isKu, required bool isDark}) {
       key: ValueKey('home-$isKu-$isDark'),
       theme: isDark ? AppTheme.dark() : AppTheme.light(),
       home: HomeScreen(
-        repository: MockZanKurdRepository(),
+        repository: repository ?? MockZanKurdRepository(),
         onOpenLearning: () async {},
         onOpenPlay: () {},
       ),
@@ -113,17 +116,12 @@ void main() {
             // 2026-09-29 Şahnê: kapı bir liste satırıdır ve rolü Agir
             // değildir (Agir bir rol değil, tek birincil eylemin rengidir);
             // satırda dolgulu düğme yok.
-            final tile = tester.widget<HomeDoorTile>(finder);
+            final tile = tester.widget<SahneModeTile>(finder);
             expect(tile.role, isNot(SahneRole.neutral), reason: door);
             expect(
               find.descendant(of: finder, matching: find.byType(FilledButton)),
               findsNothing,
               reason: 'Turuncu yalnız günün dersi düğmesine ayrılmış: $door',
-            );
-            expect(
-              find.descendant(of: finder, matching: find.byType(ModeCard)),
-              findsNothing,
-              reason: 'Kapı ikinci bir kampanya kartı olmamalı: $door',
             );
           }
 
@@ -181,29 +179,37 @@ void main() {
           // 2026-09-29 doğallık (K7): "Oda kur" ve "Kodla katıl" yan yana iki
           // İKİNCİL düğmedir (Kulis tonu, Agir değil); günün etkinliğinin
           // "Bugün" rozeti kalktı (satırın adı zaten "Günün soruları").
-          for (final key in ['play-hub-create-room', 'play-hub-join-room']) {
+          // 2026-10-24: "Oda kur" / "Kodla katıl" düğmeleri alt sayfaya
+          // taşındı; ekranda Oda, Nîl (sosyal) rolünde bir mod kartıdır ve
+          // dolgulu düğme (Agir) taşımaz.
+          for (final key in ['play-hub-room']) {
             final finder = find.byKey(ValueKey(key));
             expect(finder, findsOneWidget, reason: key);
-            final button = tester.widget<FilledButton>(
-              find.descendant(of: finder, matching: find.byType(FilledButton)),
-            );
-            final t = SahneTokens.of(tester.element(finder));
+            expect(tester.widget(finder), isA<SahneModeTile>(), reason: key);
             expect(
-              button.style?.backgroundColor?.resolve(<WidgetState>{}),
-              t.s2,
-              reason: '$key ikincil (Kulis) olmalı, Agir değil',
+              (tester.widget(finder) as SahneModeTile).role,
+              SahneRole.social,
+              reason: '$key Nîl (sosyal) rolünde olmalı',
+            );
+            expect(
+              find.descendant(of: finder, matching: find.byType(FilledButton)),
+              findsNothing,
+              reason: '$key Agir düğme taşımaz',
             );
             _expectActionSemantics(tester, key);
+          }
+          for (final key in ['play-hub-create-room', 'play-hub-join-room']) {
+            expect(find.byKey(ValueKey(key)), findsNothing, reason: key);
           }
           for (final key in ['play-hub-daily-contest']) {
             final finder = find.byKey(ValueKey(key));
+            // Meydan okuma satırı (2026-10-13) günün etkinliğini tembel
+            // listenin kurulu bölgesinden çıkardı.
+            await tester.scrollUntilVisible(finder, 200);
             expect(finder, findsOneWidget);
-            expect(tester.widget(finder), isA<SahneListRow>(), reason: key);
-            expect(
-              find.descendant(of: finder, matching: find.byType(Ink)),
-              findsNothing,
-              reason: key,
-            );
+            // 2026-10-22 tasarım kurulu: günün turu Boyax mod kartıdır
+            // (dolu rol rengi; Agir değil, birincil düğme taşımaz).
+            expect(tester.widget(finder), isA<SahneModeTile>(), reason: key);
             expect(
               find.descendant(of: finder, matching: find.byType(FilledButton)),
               findsNothing,
@@ -211,7 +217,7 @@ void main() {
             );
             _expectActionSemantics(tester, key);
           }
-          final daily = tester.widget<SahneListRow>(
+          final daily = tester.widget<SahneModeTile>(
             find.byKey(const ValueKey('play-hub-daily-contest')),
           );
           expect(daily.role, SahneRole.race);
@@ -245,32 +251,6 @@ void main() {
     },
   );
 
-  testWidgets('mode card without an action is announced as disabled', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: AppTheme.light(),
-        home: const Scaffold(
-          body: ModeCard(
-            icon: Icons.lock_outline,
-            accent: AppTheme.playGreen,
-            title: 'Ode kilitli',
-            subtitle: 'Sunucuya ulaşılamıyor',
-            onTap: null,
-            emphasis: ModeCardEmphasis.secondary,
-          ),
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    final data = tester.getSemantics(find.byType(ModeCard)).getSemanticsData();
-    expect(data.flagsCollection.isButton, isTrue);
-    expect(data.flagsCollection.isEnabled, ui.Tristate.isFalse);
-    expect(data.hasAction(ui.SemanticsAction.tap), isFalse);
-  });
-
   // "Daha fazla" katmanı yalnız turnuva bayrağı açıkken çizilir.
   testWidgets(
     'play more keeps button semantics without a nested header role',
@@ -286,6 +266,41 @@ void main() {
           .getSemanticsData();
       expect(data.flagsCollection.isHeader, isFalse);
       expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+    },
+  );
+
+  testWidgets(
+    'öğren kapısı tamamlanan ders sayısını sıfırdan büyükken gösterir',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      final repo = MockZanKurdRepository();
+      await tester.pumpWidget(_homeShell(isKu: false, isDark: false));
+      await tester.pump(const Duration(seconds: 1));
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('home-door-learn')),
+          matching: find.byIcon(AppIcons.check),
+        ),
+        findsNothing,
+      );
+
+      await repo.markLessonCompleted('alphabet_1');
+      await repo.markLessonCompleted('everyday_1');
+      await tester.pumpWidget(
+        _homeShell(isKu: false, isDark: true, repository: repo),
+      );
+      await tester.pump(const Duration(seconds: 1));
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('home-door-learn')),
+          matching: find.text('2'),
+        ),
+        findsOneWidget,
+      );
+      // 2026-10-22: kapı dolu mod kartı; sayı sağ üstte rozet olarak durur
+      // (tik ikonu artık yok).
     },
   );
 }

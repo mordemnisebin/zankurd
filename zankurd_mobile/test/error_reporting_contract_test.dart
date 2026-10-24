@@ -210,6 +210,9 @@ void main() {
         'matchmaking_late_join_cleanup',
         'matchmaking_load_categories',
         'matchmaking_load_room_snapshot',
+        'matchmaking_load_retry',
+        'matchmaking_leave_stranded',
+        'matchmaking_touch',
         'matchmaking_timeout_cancel',
         'matchmaking_timeout_matched_room',
         'matchmaking_start',
@@ -217,7 +220,7 @@ void main() {
         'matchmaking_load_questions',
       }),
     );
-    expect(matchmakingCatches, hasLength(15));
+    expect(matchmakingCatches, hasLength(18));
 
     expect(
       missionCatches.expand((block) => block.reasons).toSet(),

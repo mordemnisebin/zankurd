@@ -68,3 +68,18 @@ Future<void> openExternalUri(
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(failed)));
   }
 }
+
+/// Sonucu çağırana bırakan hâli: açılamazsa SnackBar göstermez, yalnız
+/// `false` döner. Çağıranın kendi yedeği varsa kullanılır (ör. Ayarlar'da
+/// `mailto:` açılamazsa destek adresini panoya kopyalamak).
+Future<bool> tryOpenExternalUri(
+  Uri uri, {
+  String reason = 'external link',
+}) async {
+  try {
+    return await launchUrl(uri, mode: LaunchMode.externalApplication);
+  } catch (error, stack) {
+    ErrorReporter.record(error, stack, reason: '$reason: $uri');
+    return false;
+  }
+}

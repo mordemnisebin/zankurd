@@ -1,0 +1,48 @@
+{
+  "profile": "free",
+  "members": [
+    "claude"
+  ],
+  "requested_members": 1,
+  "role": "kod",
+  "max_calls": 1,
+  "parallel": 2,
+  "quota": true,
+  "sources": [
+    {
+      "path": "lib/src/data/learning_lesson_aliases.dart",
+      "start": 100,
+      "end": 136,
+      "sha256": "8d6458bbceb420eb0f43ba2d6c02e46ba0f4a8768031bb122a8fb4e05bdc53d1"
+    },
+    {
+      "path": "lib/src/data/supabase_zankurd_repository.dart",
+      "start": 2993,
+      "end": 3021,
+      "sha256": "696a2b906b3a9895b7096b6ef54e979172ad74550b3f0ac8e06b4265d46651a9"
+    },
+    {
+      "path": "test/lesson_completion_alias_sync_test.dart",
+      "start": 1,
+      "end": 255,
+      "sha256": "384b4c5f37fb8c2560fe6c5e68ec90f90920be61cea8abcb4b501fdf8c41e292"
+    }
+  ],
+  "synthesis_member": null,
+  "id": "20261021-114737-f87a507d",
+  "question": "Son küçük kod denetimi: offline ders tamamlaması doğrudan UUID/slug korunarak yalnız 16 açık izinli yerel ders için sunucu slug lookup fallback yapıyor. Ölçme eşlemesi tek başına yeterli bulunmadı; local/SQL 16 slayt parite testi eklendi, farklı içerikli greetings_2/intro_1 ve eski konu aliasları kapalı. Verilen gerçek kodda somut P1/P2 regresyon var mı? En fazla1bulgu veya bulgu yok. Test çalıştırdığını iddia etme.150kelime.",
+  "results": [
+    {
+      "id": "claude",
+      "status": "ok",
+      "text": "**Bulgu yok (P1/P2).**\n\nVerilen kodda somut bir regresyon görmüyorum:\n\n- `supabase_zankurd_repository.dart:2997-3015`: Sıra doğru. Önce UUID kontrol ediliyor, sonra doğrudan slug, alias en son deneniyor. Mevcut slug davranışı korunuyor; testler (`:131`, `:137`) bunu kapsıyor.\n- `learning_lesson_aliases.dart:106-126`: Liste 16 dersten oluşuyor ve test `seedSources` (`:170-193`) ile birebir aynı. `greetings_2`, `intro_1` ve konu aliasları listede yok; `:156-168` bunun tek lookup ile `false` döndüğünü doğruluyor.\n- Parite testi `order/ku/tr/example` alanlarını tam karşılaştırıyor. Satır sayısı da sabitlendiği için regex bir satırı sessizce atlarsa test yakalar.\n\n**P3 notu:** Mock tüm slug'lara aynı `_lessonUuid` değerini dönüyor. Bu yüzden alias'ın yanlış sunucu dersine gitmesi testte ayırt edilemez. En küçük düzeltme: mock'ta `alfabe` ve `reng` için farklı UUID'ler dönmek ve `completions` içinde doğru UUID'yi beklemek.\n\n**EKSİK KANIT:** Kalıcı olarak `null` dönen kimliklerin (`unknown`) kuyrukta sonsuza kadar bekleyip beklemediği `SyncManager` kodu verilmediği için doğrulanamadı.",
+      "diagnostic": "",
+      "returncode": 0,
+      "seconds": 17.06,
+      "model": "CLI default",
+      "verified": false
+    }
+  ],
+  "synthesis": null,
+  "complete": true
+}

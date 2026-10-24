@@ -546,7 +546,7 @@
   {
     "id": "ds_cografya_0109",
     "category": "Cîhan",
-    "prompt": "Paytextê Brezîlyayê kîjan bajar e?",
+    "prompt": "Paytexta Brezîlyayê kîjan bajar e?",
     "answers": [
       "Rio de Janeiro",
       "Sao Paulo",
@@ -562,7 +562,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Brasília",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -580,7 +580,7 @@
   {
     "id": "ds_cografya_0111",
     "category": "Cîhan",
-    "prompt": "Paytextê Îtalyayê kîjan bajar e?",
+    "prompt": "Paytexta Îtalyayê kîjan bajar e?",
     "answers": [
       "Mîlano",
       "Napolî",
@@ -596,7 +596,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Rome",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -614,7 +614,7 @@
   {
     "id": "ds_cografya_0113",
     "category": "Cîhan",
-    "prompt": "Paytextê Spanyayê kîjan bajar e?",
+    "prompt": "Paytexta Spanyayê kîjan bajar e?",
     "answers": [
       "Barselona",
       "Madrîd",
@@ -630,7 +630,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Madrid",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -648,7 +648,7 @@
   {
     "id": "ds_cografya_0115",
     "category": "Cîhan",
-    "prompt": "Paytextê Meksîkê kîjan bajar e?",
+    "prompt": "Paytexta Meksîkê kîjan bajar e?",
     "answers": [
       "Guadalajara",
       "Monterrey",
@@ -664,7 +664,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Mexico_City",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -682,7 +682,7 @@
   {
     "id": "ds_cografya_0119",
     "category": "Cîhan",
-    "prompt": "Paytextê Arjantînê kîjan bajar e?",
+    "prompt": "Paytexta Arjantînê kîjan bajar e?",
     "answers": [
       "Córdoba",
       "Buenos Aires",
@@ -698,7 +698,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Buenos_Aires",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -716,7 +716,7 @@
   {
     "id": "ds_cografya_0125",
     "category": "Cîhan",
-    "prompt": "Paytextê Nîjeryayê kîjan bajar e?",
+    "prompt": "Paytexta Nîjeryayê kîjan bajar e?",
     "answers": [
       "Abuja",
       "Lagos",
@@ -732,7 +732,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Abuja",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -794,7 +794,7 @@
     "correctAnswer": "Projeksiyona Robinson",
     "explanation": "Robinson Projeksiyonu, yüzey, şekil ve mesafe arasında bir denge kurduğu için yüzeyleri gösteren dünya haritalarında kullanılır. Mercator Projeksiyonu yüzeyleri büyütür ve navigasyon içindir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -862,7 +862,7 @@
     "correctAnswer": "Azîmût",
     "explanation": "Azimut, kuzey yönünden saat yönünde, yatay düzlemde ölçülen açıdır. Enlem ve boylam ise koordinattır, açı değil.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1056,7 +1056,7 @@
   {
     "id": "ds_cografya_0207",
     "category": "Cografya",
-    "prompt": "Kîjan bajar paytextê herêma Kurdistanê ya Iraqê ye?",
+    "prompt": "Kîjan bajar paytexta herêma Kurdistanê ya Iraqê ye?",
     "answers": [
       "Hewlêr",
       "Silêmanî",
@@ -1072,7 +1072,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Erbil",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -1270,7 +1270,7 @@
     "correctAnswer": "Karahrûd (nêzî Qumê)",
     "explanation": "Şerefhan Bitlisi 1543'te Kum yakınlarındaki Karahrud'da doğdu; Bitlis beyleri ailesindendi ve adını o beylikten alır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1294,7 +1294,7 @@
   {
     "id": "ds_dirok_0010",
     "category": "Dîrok",
-    "prompt": "Şerefxanê Bidlîsî ji kîjan dînî bû?",
+    "prompt": "Şerefxanê Bidlîsî ji kîjan mezhebî bû?",
     "answers": [
       "Şîa",
       "Elewî",
@@ -1304,7 +1304,7 @@
     "correctAnswer": "Sunnî",
     "explanation": "Şerefhan Bitlisi Sünni bir Müslümandı. Kitabında Kürtlerin din ve inancından da bahseder.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1314,7 +1314,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Şerefhan Bitlisi hangi dinden idi?",
+    "promptTr": "Şerefhan Bitlisi hangi mezhebe mensuptu?",
     "answersTr": [
       "Şii",
       "Alevi",
@@ -1372,7 +1372,7 @@
     "correctAnswer": "Împaratoriya Osmanî",
     "explanation": "Şerefhan önce Safevî sarayında yetişti, sonra Osmanlı tarafına geçti ve Bitlis beyi olarak Şerefname'yi orada yazdı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1406,7 +1406,7 @@
     "correctAnswer": "1603",
     "explanation": "Şerefxanê Bidlîsî'nin ölümü kaynaklarda 1603-04 olarak verilir; Şerefname'yi 1597'de tamamlamıştı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1440,7 +1440,7 @@
     "correctAnswer": "Her du dewletan",
     "explanation": "Şerefxanê Bidlîsî, hem Osmanlı İmparatorluğu hem de Safevi İmparatorluğu için çalışmıştır. İki devlet arasında manevra yapmıştır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1780,7 +1780,7 @@
     "correctAnswer": "Nippur",
     "explanation": "Nippur, Enlil tapınağının bulunduğu Sümerlerin kutsal şehriydi. Ur, Uruk ve Lagaş da önemli şehirlerdi, ancak Nippur Enlil için biliniyordu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1814,7 +1814,7 @@
     "correctAnswer": "Uruk",
     "explanation": "Uruk, Sümerlerin en önemli tanrıçalarından biri olan İnanna'nın (İştar) tapınağının merkezi olan şehirdi. Ur, Nippur ve Eridu da diğer şehirlerdi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1848,7 +1848,7 @@
     "correctAnswer": "Akkad",
     "explanation": "Sargon tarafından kurulan Akkad İmparatorluğu, Mezopotamya'yı birleştiren ilk imparatorluktu. Sümer, Babil ve Asur daha sonra geldi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2042,7 +2042,7 @@
   {
     "id": "ds_dirok_0065",
     "category": "Cîhan",
-    "prompt": "Kîjan padîşahê Babîlê qanûnên ku bi navê wî têne zanîn nivîsand?",
+    "prompt": "Kîjan padîşahê Babîlê qanûnên ku bi navê wî têne zanîn nivîsandin?",
     "answers": [
       "Nebukadnezar I",
       "Nabopolassar",
@@ -2058,7 +2058,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Code_of_Hammurabi",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -2086,7 +2086,7 @@
     "correctAnswer": "Ur",
     "explanation": "Ur, Basra Körfezi'ne bağlı olduğu için deniz ticareti yapılan bir şehirdi. Uruk, Eridu ve Lagash da önemli şehirlerdi, ancak Ur ticaretiyle tanınıyordu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2154,7 +2154,7 @@
     "correctAnswer": "Akkadî",
     "explanation": "Eski Babil döneminde resmî belgeler Akadca yazılıyordu. Aramice ise çok daha sonra, Yeni Babil döneminden itibaren yaygınlaştı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2188,7 +2188,7 @@
     "correctAnswer": "Ekbatan",
     "explanation": "Ekbatan, yani günümüzdeki Hemedan, Medlerin başkentiydi ve tarihçiler tarafından onların siyasi merkezi olarak kabul edilir.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2371,11 +2371,11 @@
     "promptTr": "Kurdistan gazetesi hangi Kürtçe lehçesiyle çıkıyordu?",
     "answersTr": [
       "Türkçe",
-      "Kurmancça",
+      "Kurmancî",
       "Arapça",
       "Farsça"
     ],
-    "correctAnswerTr": "Kurmancça",
+    "correctAnswerTr": "Kurmancî",
     "explanationKu": "Rojnameya Kurdistanê bi kurmancî derdiket; di 31 hejmarên xwe de tirkiya osmanî jî hat bikaranîn.",
     "explanationTr": "Kurdistan gazetesi Kurmancî yayımlandı; 31 sayılık yayın hayatında Osmanlı Türkçesi de kullanıldı."
   },
@@ -2392,7 +2392,7 @@
     "correctAnswer": "Qahîre",
     "explanation": "Kurdistan gazetesinin ilk sayısı 1898'de Kahire'de basıldı; sonraki sayılar Cenevre, Londra ve Folkestone gibi merkezlere taşındı.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2521,7 +2521,7 @@
     "prompt": "Kîjan şer di sala 1066'an de li Îngilîstanê qewimî?",
     "answers": [
       "Şerê Trafalgarê",
-      "Şerê Waterlooê",
+      "Şerê Waterlooyê",
       "Şerê Azincourtê",
       "Şerê Hastingsê"
     ],
@@ -2534,7 +2534,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Battle_of_Hastings",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -2630,7 +2630,7 @@
     "correctAnswer": "John Cabot",
     "explanation": "Venedikli Giovanni Caboto — İngilizcede John Cabot — 1497'de İngiltere adına Kuzey Amerika kıyılarına ulaştı. İngiliz değil, İngiltere hizmetinde çalışan bir İtalyandı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2858,7 +2858,7 @@
   {
     "id": "ds_dirok_0291",
     "category": "Cîhan",
-    "prompt": "Di Riya Îpekê de kîjan tişt ji Çînê dihat?",
+    "prompt": "Di riya bazirganiyê ya dîrokî ya ku Çîn bi Rojava ve girê dida de, kîjan berhem ji Çînê dihat?",
     "answers": [
       "Hevrîşim",
       "Zêr",
@@ -2874,7 +2874,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Silk_Road",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -2892,7 +2892,7 @@
   {
     "id": "ds_dirok_0294",
     "category": "Cîhan",
-    "prompt": "Di Riya Îpekê de kîjan tişt ji Hindistanê dihat?",
+    "prompt": "Di Riya Hevrîşimê de kîjan tişt ji Hindistanê dihat?",
     "answers": [
       "Biharat",
       "Hevrîşim",
@@ -2908,7 +2908,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Silk_Road",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -3028,7 +3028,7 @@
   {
     "id": "ds_edebiyat_0082",
     "category": "Cîhan",
-    "prompt": "Di destana \"Beowulf\" de, Beowulf bi kîjan dijmin re şer dike?",
+    "prompt": "Di destana \"Beowulf\" de, Beowulf bi kîjan dijminî re şer dike?",
     "answers": [
       "Aşîl",
       "Rustem",
@@ -3044,7 +3044,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Beowulf",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -3174,7 +3174,7 @@
     "correctAnswer": "Nexweşiya romantîk û nerazîbûna xwe",
     "explanation": "Emma Bovary, sıradan hayatından duyduğu memnuniyetsizlik ve romantik hayalleriyle tanınır. Hayallerinin içinde yaşar ve gerçek hayatından kaçar.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3235,9 +3235,9 @@
     "prompt": "Kîjan roman ji aliyê Charles Dickens ve hatiye nivîsandin?",
     "answers": [
       "Hêviyên Mezin",
-      "Mîzrab",
-      "Bekirê Londonê",
-      "Karderî"
+      "Kûzê Notre-Dameê",
+      "Nobedarê Londonê",
+      "Birayên Karamazov"
     ],
     "correctAnswer": "Hêviyên Mezin",
     "explanation": "Büyük Umutlar (Great Expectations), Charles Dickens tarafından yazılmıştır. Onun en ünlü romanlarından biridir ve Pip'in büyümesi ile hayallerini anlatır.",
@@ -3270,7 +3270,7 @@
     "answers": [
       "Bilindahiyên Wuthering",
       "Jane Eyre",
-      "Pîrika",
+      "Jinên Biçûk",
       "Hêviyên Mezin"
     ],
     "correctAnswer": "Bilindahiyên Wuthering",
@@ -3310,7 +3310,7 @@
     "correctAnswer": "Li dibistanekê",
     "explanation": "Jane önce Lowood Okulu'nda öğretmenlik yapar; oradan ayrıldıktan sonra Thornfield'da mürebbiye olarak çalışır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3372,7 +3372,7 @@
     "answers": [
       "Oliver Twist",
       "David Copperfield",
-      "Pîrika",
+      "Jinên Biçûk",
       "Huckleberry Finn"
     ],
     "correctAnswer": "Huckleberry Finn",
@@ -3474,7 +3474,7 @@
     "answers": [
       "Anna Karenina",
       "Oliver Twist",
-      "Pîrika",
+      "Jinên Biçûk",
       "Madame Bovary"
     ],
     "correctAnswer": "Madame Bovary",
@@ -3507,7 +3507,7 @@
     "prompt": "Kîjan roman ji aliyê Charlotte Brontë ve hatiye nivîsandin?",
     "answers": [
       "Bilindahiyên Wuthering",
-      "Pîrika",
+      "Jinên Biçûk",
       "Madame Bovary",
       "Jane Eyre"
     ],
@@ -3577,9 +3577,9 @@
       "Îmge",
       "Metn",
       "Serhatî",
-      "Rîtim"
+      "Rîtm"
     ],
-    "correctAnswer": "Rîtim",
+    "correctAnswer": "Rîtm",
     "explanation": "Ritim, şiirde seslerin dizilişidir; ahenk için kullanılır.",
     "type": "multipleChoice",
     "difficulty": 1,
@@ -3588,7 +3588,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Rhythm",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -3650,7 +3650,7 @@
     "correctAnswer": "Herta Müller",
     "explanation": "Herta Müller, 2009'da Nobel Edebiyat Ödülü'nü kazandı. Komünist diktatörlük altındaki yaşamı anlatan romanlarıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3684,7 +3684,7 @@
     "correctAnswer": "J.M. Coetzee",
     "explanation": "J.M. Coetzee, 2003'te Nobel Edebiyat Ödülü'nü kazandı. Yaşamın zorluklarını ve ahlakı anlatan romanlarıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3718,7 +3718,7 @@
     "correctAnswer": "Doris Lessing",
     "explanation": "Doris Lessing, 2007'de Nobel Edebiyat Ödülü'nü kazandı. Farklı toplumlardaki kadınların yaşamını anlatan romanlarıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3752,7 +3752,7 @@
     "correctAnswer": "Abdulrazak Gurnah",
     "explanation": "Abdulrazak Gurnah, 2021'de Nobel Edebiyat Ödülü'nü kazandı. Sömürgecilik ve göç üzerine romanlarıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3786,7 +3786,7 @@
     "correctAnswer": "José Saramago",
     "explanation": "José Saramago, 1998'de Nobel Edebiyat Ödülü'nü kazandı. Alegorik tarzdaki romanlarıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3820,7 +3820,7 @@
     "correctAnswer": "Ivo Andrić",
     "explanation": "Ivo Andrić, 1961'de Nobel Edebiyat Ödülü'nü kazandı. \"Drina Köprüsü\" adlı romanıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3854,7 +3854,7 @@
     "correctAnswer": "W.B. Yeats",
     "explanation": "W.B. Yeats, 1923'te Nobel Edebiyat Ödülü'nü kazandı. İrlanda kimliğini konu alan şiirleriyle tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3888,7 +3888,7 @@
     "correctAnswer": "Samuel Beckett",
     "explanation": "Samuel Beckett, 1969'da Nobel Edebiyat Ödülü'nü kazandı. \"Godot\"yu Beklerken' adlı eseriyle tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3922,7 +3922,7 @@
     "correctAnswer": "Nadine Gordimer",
     "explanation": "Nadine Gordimer, 1991'de Nobel Edebiyat Ödülü'nü kazandı. Apartheid hakkındaki romanlarıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5010,7 +5010,7 @@
     "correctAnswer": "1809",
     "explanation": "Haydn, 31 Mayıs 1809'da Viyana'da vefat etmiştir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5102,7 +5102,7 @@
   {
     "id": "ds_muzik_0162",
     "category": "Cîhan",
-    "prompt": "Kîjan celeb muzîkê di salên 1990yan de li Seattle derketiye?",
+    "prompt": "Kîjan celebê muzîkê di salên 1990yan de li Seattle derketiye?",
     "answers": [
       "Pop",
       "Grunge",
@@ -5118,7 +5118,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Grunge",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -5272,7 +5272,7 @@
   {
     "id": "ds_muzik_0190",
     "category": "Cîhan",
-    "prompt": "Kîjan bestekar bi opera xwe ya \"Carmen\" tê naskirin?",
+    "prompt": "Kîjan bestekar bi operaya xwe ya \"Carmen\" tê naskirin?",
     "answers": [
       "Wolfgang Amadeus Mozart",
       "Ludwig van Beethoven",
@@ -5288,7 +5288,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Carmen",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -5724,7 +5724,7 @@
     "correctAnswer": "The 400 Blows",
     "explanation": "\"The 400 Blows\" (Les Quatre Cents Coups) 1959'da François Truffaut tarafından çekilmiş ve Fransız Yeni Dalgası'nın temel filmlerinden biri olarak kabul edilir. Film, Antoine Doinel adlı bir gencin hikayesini anlatır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5758,7 +5758,7 @@
     "correctAnswer": "Rome, Open City",
     "explanation": "\"Rome, Open City\" 1945'te Roberto Rossellini tarafından çekilmiş ve İtalyan neorealizminin ilk filmlerinden biri olarak kabul edilir. Film, İtalyanların Nazilere karşı direnişini konu alır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5792,7 +5792,7 @@
     "correctAnswer": "Breathless",
     "explanation": "\"Breathless\" (À bout de souffle) 1960'ta Jean-Luc Godard tarafından çekilmiş ve Fransız Yeni Dalgası'nın en ünlü filmlerinden biridir. Film, \"jump cut\" tekniğiyle tanınır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5816,7 +5816,7 @@
   {
     "id": "ds_sinema_0201",
     "category": "Cîhan",
-    "prompt": "Kîjan derhênerê amerîkî fîlma \"Pulp Fiction\" di sala 1994an de derxist?",
+    "prompt": "Kîjan derhênerê amerîkî fîlmê \"Pulp Fiction\" di sala 1994an de derxist?",
     "answers": [
       "Steven Spielberg",
       "Quentin Tarantino",
@@ -5832,7 +5832,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Pulp_Fiction",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -5850,7 +5850,7 @@
   {
     "id": "ds_sinema_0204",
     "category": "Cîhan",
-    "prompt": "Di fîlma \"Pulp Fiction\" de, kîjan aktor rola Jules Winnfield lîstiye?",
+    "prompt": "Di fîlmê \"Pulp Fiction\" de, kîjan aktorî rola Jules Winnfield lîstiye?",
     "answers": [
       "John Travolta",
       "Bruce Willis",
@@ -5866,7 +5866,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Pulp_Fiction",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -6030,7 +6030,7 @@
     "correctAnswer": "IPsec",
     "explanation": "IPsec, farklı ağlar arasındaki verileri şifreleyen ve güvenlik sağlayan bir protokoldür.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6472,7 +6472,7 @@
     "correctAnswer": "Veguhestina pêşverû",
     "explanation": "İleri yayılım (forward propagation), giriş verilerinin sinir ağının katmanlarından geçtiği ve her katmanda nihai çıktı oluşana kadar dönüştürüldüğü süreçtir. Bu süreç, modelin tahminlerini hesaplamanın temelidir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6506,7 +6506,7 @@
     "correctAnswer": "Veguhestina paşverû",
     "explanation": "Geri yayılım (backpropagation), modelin tahmini ile doğru sonuç arasındaki hatanın hesaplandığı ve bu hatanın son katmandan ilk katmana doğru yayıldığı bir yöntemdir. Bu süreçte, hatayı azaltmak için model parametreleri düzeltilir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6540,7 +6540,7 @@
     "correctAnswer": "Fêrbûna bêçavdêrî",
     "explanation": "Denetimsiz öğrenme (unsupervised learning), modelin etiketsiz verilerden öğrenip verilerdeki yapıyı veya düzeni keşfettiği bir süreçtir. Bu yöntem, örüntüleri bulmak ve verileri gruplamak için kullanılır.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6734,7 +6734,7 @@
   {
     "id": "ds_teknoloji_0194",
     "category": "Teknolojî",
-    "prompt": "Kîjan têgeh ji bo pêvajoya ku têlefon bi komputerê ve tê girêdan û daneyan vediguhezîne tê bikaranîn?",
+    "prompt": "Kîjan têgeh ji bo pêvajoya ku têlefon bi komputerê ve tê girêdan û daneyan vediguhêze tê bikaranîn?",
     "answers": [
       "HDMI",
       "Ethernet",
@@ -6750,7 +6750,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/USB",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -7113,7 +7113,7 @@
       "Enerjiya nukleer",
       "Enerjiya kîmyayî",
       "Enerjiya germî",
-      "Enerjiya mekanîk"
+      "Enerjiya mekanîkî"
     ],
     "correctAnswer": "Enerjiya nukleer",
     "explanation": "Nükleer enerji, atom çekirdeğinde depolanır ve nükleer reaksiyonlar sırasında açığa çıkar. Kimyasal enerji kimyasal bağlardadır, termal enerji sıcaklıkla ilgilidir ve mekanik enerji ise cisimlerin hareketi veya konumuyla ilgilidir.",
@@ -7124,7 +7124,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Nuclear_energy",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -7142,7 +7142,7 @@
   {
     "id": "ds_teknoloji_0276",
     "category": "Teknolojî",
-    "prompt": "Hejmara ku bi tenê bi xwe û bi yekê ve tê dabeşkirin, bi kurdî çi tê gotin?",
+    "prompt": "Ji hejmara ku bi tenê bi xwe û bi yekê ve tê dabeşkirin re bi kurdî çi tê gotin?",
     "answers": [
       "Hejmara cot",
       "Hejmara seretayî",
@@ -7158,7 +7158,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Prime_number",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -7278,7 +7278,7 @@
   {
     "id": "ds_cand_0035",
     "category": "Çand",
-    "prompt": "Kîjan peyv di Kurmancî de ji bo \"bridegroom\" tê bikaranîn?",
+    "prompt": "Kîjan peyv di Kurmancî de ji bo mêrê ku dizewice tê bikaranîn?",
     "answers": [
       "Bûk",
       "Xesû",
@@ -7286,7 +7286,7 @@
       "Zava"
     ],
     "correctAnswer": "Zava",
-    "explanation": "Zava, Kurmanci'de evlenen kişidir. Düğünde damat özel kıyafetlerle süslenir ve birçok geleneksel uygulamada merkezi bir rol oynar.",
+    "explanation": "Zava, Kurmancî'de evlenen kişidir. Düğünde damat özel kıyafetlerle süslenir ve birçok geleneksel uygulamada merkezi bir rol oynar.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -7298,7 +7298,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmanci'de \"damat\" için hangi kelime kullanılır?",
+    "promptTr": "Kurmancî'de \"damat\" için hangi kelime kullanılır?",
     "answersTr": [
       "Bûk",
       "Xesû",
@@ -7307,7 +7307,7 @@
     ],
     "correctAnswerTr": "Zava",
     "explanationKu": "Zava di Kurmancî de ew kes e ku dizewice. Di dawetê de zava bi kincên taybet tê xemilandin û di gelek kevneşopiyan de roleke navendî dilîze.",
-    "explanationTr": "Zava, Kurmanci'de evlenen kişidir. Düğünde damat özel kıyafetlerle süslenir ve birçok geleneksel uygulamada merkezi bir rol oynar."
+    "explanationTr": "Zava, Kurmancî'de evlenen kişidir. Düğünde damat özel kıyafetlerle süslenir ve birçok geleneksel uygulamada merkezi bir rol oynar."
   },
   {
     "id": "ds_ziman_0188",
@@ -7400,7 +7400,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmanci'de \"mêr\" (eril) için hangi izafe dizilimi doğrudur?",
+    "promptTr": "Kurmancî'de \"mêr\" (eril) için hangi izafe dizilimi doğrudur?",
     "answersTr": [
       "mêra min",
       "mêrê min",
@@ -7434,7 +7434,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci), \"xwişk\" (dişil) için hangi izafe eki doğrudur?",
+    "promptTr": "Kürtçede (Kurmancî), \"xwişk\" (dişil) için hangi izafe eki doğrudur?",
     "answersTr": [
       "xwişkê min",
       "xwişkên min",
@@ -7468,7 +7468,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci), \"kitêb\" (dişil) kelimesinin çoğulu için hangi izafe eki doğrudur?",
+    "promptTr": "Kürtçede (Kurmancî), \"kitêb\" (dişil) kelimesinin çoğulu için hangi izafe eki doğrudur?",
     "answersTr": [
       "kitêba min",
       "kitêbê min",
@@ -7490,7 +7490,7 @@
       "Dema raborî"
     ],
     "correctAnswer": "Dema bê",
-    "explanation": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmanci'de bu zaman \"ê\" veya \"dê\" yardımcı fiili ve mastar ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\".",
+    "explanation": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmancî'de bu zaman \"ê\" veya \"dê\" yardımcı fiili ve mastar ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\".",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -7511,7 +7511,7 @@
     ],
     "correctAnswerTr": "Gelecek zaman",
     "explanationKu": "Dema bê ji bo kiryarên ku dê di pêşerojê de biqewimin tê bikaranîn. Di kurmancî de ev dem bi alîkariya \"ê\" an \"dê\" û raweya bilanî tê avakirin, wek \"ez ê biçim\" an \"ew dê bê\".",
-    "explanationTr": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmanci'de bu zaman \"ê\" veya \"dê\" yardımcı fiili ve mastar ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\"."
+    "explanationTr": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmancî'de bu zaman \"ê\" veya \"dê\" yardımcı fiili ve mastar ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\"."
   },
   {
     "id": "ds_ziman_0031",
@@ -7558,7 +7558,7 @@
       "Min zilam dît."
     ],
     "correctAnswer": "Min zilam dît.",
-    "explanation": "Kurmanci'de, geçişli fiillerin geçmiş zamanı ergatif yapıyla kurulur. Özne oblik formdadır (min) ve nesne yalın formda kalır (zilam). Fiil de nesneyle uyumludur, bu yüzden \"min zilam dît\" doğrudur.",
+    "explanation": "Kurmancî'de, geçişli fiillerin geçmiş zamanı ergatif yapıyla kurulur. Özne oblik formdadır (min) ve nesne yalın formda kalır (zilam). Fiil de nesneyle uyumludur, bu yüzden \"min zilam dît\" doğrudur.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -7570,7 +7570,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci), \"I saw the man\" için hangi cümle doğrudur?",
+    "promptTr": "Kürtçede (Kurmancî), \"I saw the man\" için hangi cümle doğrudur?",
     "answersTr": [
       "Ez zilamî dibînim.",
       "Min zilamî dît.",
@@ -7579,12 +7579,12 @@
     ],
     "correctAnswerTr": "Min zilam dît.",
     "explanationKu": "Di kurmancî de, dema borî ya gerguhêz bi ergatîfê tê avakirin. Kirde di forma oblik de ye (min) û bireser di forma xwerû de dimîne (zilam). Lêker jî bi bireserê re hevdeng e, ji ber vê yekê \"min zilam dît\" rast e.",
-    "explanationTr": "Kurmanci'de, geçişli fiillerin geçmiş zamanı ergatif yapıyla kurulur. Özne oblik formdadır (min) ve nesne yalın formda kalır (zilam). Fiil de nesneyle uyumludur, bu yüzden \"min zilam dît\" doğrudur."
+    "explanationTr": "Kurmancî'de, geçişli fiillerin geçmiş zamanı ergatif yapıyla kurulur. Özne oblik formdadır (min) ve nesne yalın formda kalır (zilam). Fiil de nesneyle uyumludur, bu yüzden \"min zilam dît\" doğrudur."
   },
   {
     "id": "ds_ziman_1176",
     "category": "Ziman",
-    "prompt": "Kîjan peyva kurmancî ji bo \"dayika bav\" tê bikaranîn?",
+    "prompt": "Kîjan peyva kurmancî ji bo \"dayika bavî\" tê bikaranîn?",
     "answers": [
       "Dapîr",
       "Xatûn",
@@ -7600,7 +7600,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Grandparent",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -7962,7 +7962,7 @@
     "answers": [
       "Keman",
       "Tembûr",
-      "Pîyano",
+      "Piyano",
       "Gîtar"
     ],
     "correctAnswer": "Tembûr",
@@ -7974,7 +7974,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Tembur",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -8148,7 +8148,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmancicede \"xwendin\" fiili için şimdiki zaman nedir?",
+    "promptTr": "Kurmancîde \"xwendin\" fiili için şimdiki zaman nedir?",
     "answersTr": [
       "dixwîne",
       "xwend",
@@ -8182,7 +8182,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmancicede \"nivîsîn\" fiili için şimdiki zaman nasıl yazılır?",
+    "promptTr": "Kurmancîde \"nivîsîn\" fiili için şimdiki zaman nasıl yazılır?",
     "answersTr": [
       "nivîsand",
       "dinivîse",
@@ -8216,7 +8216,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmancicede \"dan\" fiili için şimdiki zaman nedir?",
+    "promptTr": "Kurmancîde \"dan\" fiili için şimdiki zaman nedir?",
     "answersTr": [
       "dide",
       "da",
@@ -8250,7 +8250,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmancicede \"kirin\" fiili için şimdiki zaman nasıl yazılır?",
+    "promptTr": "Kurmancîde \"kirin\" fiili için şimdiki zaman nasıl yazılır?",
     "answersTr": [
       "kir",
       "dike",
@@ -8284,7 +8284,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmancicede \"vekirin\" fiili için şimdiki zaman nedir?",
+    "promptTr": "Kurmancîde \"vekirin\" fiili için şimdiki zaman nedir?",
     "answersTr": [
       "vekir",
       "vedikir",
@@ -8318,7 +8318,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmancicede \"şandin\" fiili için şimdiki zaman nasıl yazılır?",
+    "promptTr": "Kurmancîde \"şandin\" fiili için şimdiki zaman nasıl yazılır?",
     "answersTr": [
       "şand",
       "dişand",
@@ -8352,7 +8352,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmanci şimdiki zaman için hangi form doğrudur?",
+    "promptTr": "Kurmancî şimdiki zaman için hangi form doğrudur?",
     "answersTr": [
       "ez çûm",
       "ez diçûm",
@@ -8386,7 +8386,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "\"Hatin\" fiilinin Kurmanci şimdiki zamanı için hangi form doğrudur?",
+    "promptTr": "\"Hatin\" fiilinin Kurmancî şimdiki zamanı için hangi form doğrudur?",
     "answersTr": [
       "hat",
       "tê",
@@ -8420,7 +8420,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "\"Girtin\" fiilinin Kurmanci şimdiki zamanı için hangi form doğrudur?",
+    "promptTr": "\"Girtin\" fiilinin Kurmancî şimdiki zamanı için hangi form doğrudur?",
     "answersTr": [
       "girt",
       "digirt",
@@ -8454,7 +8454,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "\"Anîn\" fiilinin Kurmanci şimdiki zamanı için hangi form doğrudur?",
+    "promptTr": "\"Anîn\" fiilinin Kurmancî şimdiki zamanı için hangi form doğrudur?",
     "answersTr": [
       "anî",
       "dianî",
@@ -8488,7 +8488,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmanccada hangi cümle olumlu biçimde yazılmıştır?",
+    "promptTr": "Kurmancîde hangi cümle olumlu biçimde yazılmıştır?",
     "answersTr": [
       "O şehre gitmiyor",
       "O eve gitmiyor",
@@ -8574,7 +8574,7 @@
     "answers": [
       "Kefçî",
       "Kêr",
-      "Çetel",
+      "Çengal",
       "Sênî"
     ],
     "correctAnswer": "Kêr",
@@ -8586,7 +8586,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Knife",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -8608,7 +8608,7 @@
     "answers": [
       "Serşok",
       "Odeya razanê",
-      "Bexçe",
+      "Baxçe",
       "Metbex"
     ],
     "correctAnswer": "Metbex",
@@ -8620,7 +8620,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Kitchen",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -8677,7 +8677,7 @@
       "Dolaba xwarinê",
       "Serşok",
       "Odeya razanê",
-      "Bexçe"
+      "Baxçe"
     ],
     "correctAnswer": "Dolaba xwarinê",
     "explanation": "Yiyecek dolabı yiyecek saklamak içindir; banyo, yatak odası ve bahçe saklamak için değildir.",
@@ -8688,7 +8688,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Pantry",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -8711,7 +8711,7 @@
       "Dolaba kincan",
       "Metbex",
       "Serşok",
-      "Bexçe"
+      "Baxçe"
     ],
     "correctAnswer": "Dolaba kincan",
     "explanation": "Elbise dolabı kıyafetler içindir; mutfak, banyo ve bahçe kıyafetler için değildir.",
@@ -8722,7 +8722,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Wardrobe",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -8774,7 +8774,7 @@
   {
     "id": "ds_ziman_0116",
     "category": "Ziman",
-    "prompt": "Ji bo danîna pirtûkan, kîjan mobîlya tê bikaranîn?",
+    "prompt": "Ji bo danîna pirtûkan, kîjan moble tê bikaranîn?",
     "answers": [
       "Kursî",
       "Dolaba pirtûkan",
@@ -8790,7 +8790,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Bookshelf",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -9224,7 +9224,7 @@
       "Çima"
     ],
     "correctAnswer": "Kengî",
-    "explanation": "Kurmanccada \"kengî\" kelimesi zamanı sormak için kullanılır ve geçmiş zaman da buna dahildir. \"Çi\" nesneler için, \"kî\" kişiler için ve \"çima\" sebep için kullanılır.",
+    "explanation": "Kurmancîde \"kengî\" kelimesi zamanı sormak için kullanılır ve geçmiş zaman da buna dahildir. \"Çi\" nesneler için, \"kî\" kişiler için ve \"çima\" sebep için kullanılır.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -9236,7 +9236,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmanccada geçmiş zamanı sormak için hangi soru kelimesi kullanılır?",
+    "promptTr": "Kurmancîde geçmiş zamanı sormak için hangi soru kelimesi kullanılır?",
     "answersTr": [
       "Ne zaman",
       "Ne",
@@ -9245,7 +9245,7 @@
     ],
     "correctAnswerTr": "Ne zaman",
     "explanationKu": "Peyva \"kengî\" di kurmancî de ji bo pirsîna demê tê bikaranîn, û dema borî jî di nav de ye. \"Çi\" ji bo tiştan, \"kî\" ji bo kesan û \"çima\" ji bo sedemê tê bikaranîn.",
-    "explanationTr": "Kurmanccada \"kengî\" kelimesi zamanı sormak için kullanılır ve geçmiş zaman da buna dahildir. \"Çi\" nesneler için, \"kî\" kişiler için ve \"çima\" sebep için kullanılır."
+    "explanationTr": "Kurmancîde \"kengî\" kelimesi zamanı sormak için kullanılır ve geçmiş zaman da buna dahildir. \"Çi\" nesneler için, \"kî\" kişiler için ve \"çima\" sebep için kullanılır."
   },
   {
     "id": "ds_ziman_0222",
@@ -9326,7 +9326,7 @@
       "xwerû"
     ],
     "correctAnswer": "lezgîn",
-    "explanation": "\"Lezgîn\" sıfatı Kürtçede (Kurmanci) hızlı ve çevik kişiler için kullanılır. \"Hêdî\" ve \"tembel\" zıttıdır, \"xwerû\" ise farklı bir anlama gelir.",
+    "explanation": "\"Lezgîn\" sıfatı Kürtçede (Kurmancî) hızlı ve çevik kişiler için kullanılır. \"Hêdî\" ve \"tembel\" zıttıdır, \"xwerû\" ise farklı bir anlama gelir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -9338,7 +9338,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci) hızlı hareket eden biri için hangi sıfat kullanılır?",
+    "promptTr": "Kürtçede (Kurmancî) hızlı hareket eden biri için hangi sıfat kullanılır?",
     "answersTr": [
       "hêdî",
       "lezgîn",
@@ -9347,7 +9347,7 @@
     ],
     "correctAnswerTr": "lezgîn",
     "explanationKu": "Rengdêra \"lezgîn\" di kurmancî de ji bo kesên bi lez û bez tê bikaranîn. \"Hêdî\" û \"tembel\" dijberên wê ne, \"xwerû\" jî wateyeke din e.",
-    "explanationTr": "\"Lezgîn\" sıfatı Kürtçede (Kurmanci) hızlı ve çevik kişiler için kullanılır. \"Hêdî\" ve \"tembel\" zıttıdır, \"xwerû\" ise farklı bir anlama gelir."
+    "explanationTr": "\"Lezgîn\" sıfatı Kürtçede (Kurmancî) hızlı ve çevik kişiler için kullanılır. \"Hêdî\" ve \"tembel\" zıttıdır, \"xwerû\" ise farklı bir anlama gelir."
   },
   {
     "id": "ds_ziman_0256",
@@ -9360,7 +9360,7 @@
       "girîn"
     ],
     "correctAnswer": "hişyar bûn",
-    "explanation": "\"Çavên xwe vekirin\" Kurmanci'de mecazi anlamda uyanık olmak veya dikkatli olmak demektir. Bu deyim, gözleri açmanın gerçek anlamıyla ilgili değildir.",
+    "explanation": "\"Çavên xwe vekirin\" Kurmancî'de mecazi anlamda uyanık olmak veya dikkatli olmak demektir. Bu deyim, gözleri açmanın gerçek anlamıyla ilgili değildir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -9372,7 +9372,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci) \"çavên xwe vekirin\" deyiminin mecazi anlamı nedir?",
+    "promptTr": "Kürtçede (Kurmancî) \"çavên xwe vekirin\" deyiminin mecazi anlamı nedir?",
     "answersTr": [
       "uyku getirmek",
       "uyanık olmak",
@@ -9381,7 +9381,7 @@
     ],
     "correctAnswerTr": "uyanık olmak",
     "explanationKu": "\"Çavên xwe vekirin\" di kurmancî de bi wateya mecazî tê wateya hişyar bûn an jî baldar bûn. Ev gotin bi wateya rastîn a vekirina çavan re têkildar nîne.",
-    "explanationTr": "\"Çavên xwe vekirin\" Kurmanci'de mecazi anlamda uyanık olmak veya dikkatli olmak demektir. Bu deyim, gözleri açmanın gerçek anlamıyla ilgili değildir."
+    "explanationTr": "\"Çavên xwe vekirin\" Kurmancî'de mecazi anlamda uyanık olmak veya dikkatli olmak demektir. Bu deyim, gözleri açmanın gerçek anlamıyla ilgili değildir."
   },
   {
     "id": "ds_ziman_0257",
@@ -9394,7 +9394,7 @@
       "ji bo xwe spartina qederê"
     ],
     "correctAnswer": "ji bo xwe spartina qederê",
-    "explanation": "\"Xwe avêtin ber bayî\" Kurmanci'de kaderine razı olmak veya kendini kaderine bırakmak anlamına gelir. Bu deyim, kendini atmanın gerçek anlamıyla ilgili değildir.",
+    "explanation": "\"Xwe avêtin ber bayî\" Kurmancî'de kaderine razı olmak veya kendini kaderine bırakmak anlamına gelir. Bu deyim, kendini atmanın gerçek anlamıyla ilgili değildir.",
     "type": "multipleChoice",
     "difficulty": 3,
     "metadata": {
@@ -9406,7 +9406,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci) \"xwe avêtin ber bayî\" deyimi hangi durum için kullanılır?",
+    "promptTr": "Kürtçede (Kurmancî) \"xwe avêtin ber bayî\" deyimi hangi durum için kullanılır?",
     "answersTr": [
       "koşmak için",
       "kaçmak için",
@@ -9415,7 +9415,7 @@
     ],
     "correctAnswerTr": "kaderine razı olmak için",
     "explanationKu": "\"Xwe avêtin ber bayî\" di kurmancî de tê wateya xwe spartina qederê an jî xwe berdan ser çarenivîsê. Ev gotin bi wateya rastîn a avêtina xwe re têkildar nîne.",
-    "explanationTr": "\"Xwe avêtin ber bayî\" Kurmanci'de kaderine razı olmak veya kendini kaderine bırakmak anlamına gelir. Bu deyim, kendini atmanın gerçek anlamıyla ilgili değildir."
+    "explanationTr": "\"Xwe avêtin ber bayî\" Kurmancî'de kaderine razı olmak veya kendini kaderine bırakmak anlamına gelir. Bu deyim, kendini atmanın gerçek anlamıyla ilgili değildir."
   },
   {
     "id": "ds_ziman_0266",
@@ -9428,7 +9428,7 @@
       "girîn"
     ],
     "correctAnswer": "axaftin",
-    "explanation": "\"Devê xwe vekirin\" Kurmanci'de mecazi anlamda konuşmak veya konuşmaya başlamak demektir. Bu deyim, ağzını açmanın gerçek anlamıyla ilgili değildir.",
+    "explanation": "\"Devê xwe vekirin\" Kurmancî'de mecazi anlamda konuşmak veya konuşmaya başlamak demektir. Bu deyim, ağzını açmanın gerçek anlamıyla ilgili değildir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -9440,7 +9440,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci) \"devê xwe vekirin\" deyiminin mecazi anlamı nedir?",
+    "promptTr": "Kürtçede (Kurmancî) \"devê xwe vekirin\" deyiminin mecazi anlamı nedir?",
     "answersTr": [
       "konuşmak",
       "yemek yemek",
@@ -9449,7 +9449,7 @@
     ],
     "correctAnswerTr": "konuşmak",
     "explanationKu": "\"Devê xwe vekirin\" di kurmancî de bi wateya mecazî tê wateya axaftin an jî dest bi axaftinê kirin. Ev gotin bi wateya rastîn a vekirina devê xwe re têkildar nîne.",
-    "explanationTr": "\"Devê xwe vekirin\" Kurmanci'de mecazi anlamda konuşmak veya konuşmaya başlamak demektir. Bu deyim, ağzını açmanın gerçek anlamıyla ilgili değildir."
+    "explanationTr": "\"Devê xwe vekirin\" Kurmancî'de mecazi anlamda konuşmak veya konuşmaya başlamak demektir. Bu deyim, ağzını açmanın gerçek anlamıyla ilgili değildir."
   },
   {
     "id": "ds_ziman_0272",
@@ -9462,7 +9462,7 @@
       "girîn"
     ],
     "correctAnswer": "bêdeng bûn",
-    "explanation": "\"Devê xwe girtin\" Kurmanci'de mecazi anlamda sessiz olmak veya konuşmamak demektir. Bu deyim, ağzını kapatmanın gerçek anlamıyla ilgili değildir.",
+    "explanation": "\"Devê xwe girtin\" Kurmancî'de mecazi anlamda sessiz olmak veya konuşmamak demektir. Bu deyim, ağzını kapatmanın gerçek anlamıyla ilgili değildir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -9474,7 +9474,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci) \"devê xwe girtin\" deyiminin mecazi anlamı nedir?",
+    "promptTr": "Kürtçede (Kurmancî) \"devê xwe girtin\" deyiminin mecazi anlamı nedir?",
     "answersTr": [
       "konuşmak",
       "gülmek",
@@ -9483,7 +9483,7 @@
     ],
     "correctAnswerTr": "sessiz olmak",
     "explanationKu": "\"Devê xwe girtin\" di kurmancî de bi wateya mecazî tê wateya bêdeng bûn an jî neaxaftin. Ev gotin bi wateya rastîn a girtina devê xwe re têkildar nîne.",
-    "explanationTr": "\"Devê xwe girtin\" Kurmanci'de mecazi anlamda sessiz olmak veya konuşmamak demektir. Bu deyim, ağzını kapatmanın gerçek anlamıyla ilgili değildir."
+    "explanationTr": "\"Devê xwe girtin\" Kurmancî'de mecazi anlamda sessiz olmak veya konuşmamak demektir. Bu deyim, ağzını kapatmanın gerçek anlamıyla ilgili değildir."
   },
   {
     "id": "ds_cand_0001",
@@ -9898,7 +9898,7 @@
     "category": "Çand",
     "prompt": "Kîjan xwarina kurdî bi hevîrê savarê û goştê hûrkirî tê çêkirin?",
     "answers": [
-      "Birinç",
+      "Birinc",
       "Kutilk",
       "Şorbeya nîskê",
       "Fasûlî"
@@ -9912,7 +9912,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Kubba",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -10623,7 +10623,7 @@
     "metadata": {
       "reviewStatus": "approved",
       "sourceReference": "https://www.festival-cannes.com/en/2017/yol-the-full-version-in-cannes-classics-the-birth-of-the-palme-dor-1982/",
-      "sourceTitle": "Yol - The full version in Cannes Classics, the birth of the Palme d’or 1982",
+      "sourceTitle": "Yol - The full version in Cannes Classics, the birth of the Palme d'or 1982",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -10799,7 +10799,7 @@
       "Gera tûrîstên dewlemend li ser peravên deryayê",
       "Pêşketina şîrketên komputerê di qada firotina serhêl de",
       "Perwerdehiya pîlotên balafiran di akademiyên leşkerî de",
-      "Kuştinên karkeran di qada înşatê de û bêewlehiya jiyana karkerên koçber"
+      "Kuştinên karkeran di qada avakirinê de û bêewlehiya jiyana karkerên koçber"
     ],
     "answersTr": [
       "Lüks kıyı otellerinde tatil yapan yabancı turistlerin maceralarını",
@@ -10807,7 +10807,7 @@
       "Askeri havacılık akademisinde savaş pilotu yetiştirme aşamalarını",
       "İnşaat sektöründeki iş cinayetlerini ve taşradan gelen işçilerin güvencesizliğini"
     ],
-    "correctAnswer": "Kuştinên karkeran di qada înşatê de û bêewlehiya jiyana karkerên koçber",
+    "correctAnswer": "Kuştinên karkeran di qada avakirinê de û bêewlehiya jiyana karkerên koçber",
     "correctAnswerTr": "İnşaat sektöründeki iş cinayetlerini ve taşradan gelen işçilerin güvencesizliğini",
     "explanation": "Karkerê bi navê Îbrahîm bi penceşêrê ketiye û li înşata luks hewl dide ji bo malbata xwe tezmînatê bihêle.",
     "explanationKu": "Karkerê bi navê Îbrahîm bi penceşêrê ketiye û li înşata luks hewl dide ji bo malbata xwe tezmînatê bihêle.",
@@ -10816,7 +10816,7 @@
       "reviewStatus": "approved",
       "sourceReference": "https://www.narfilm.com/en/my-father-s-wings",
       "sourceTitle": "My Father's Wings",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
@@ -10857,7 +10857,7 @@
     "id": "ds_sinema_0286",
     "category": "Sînema",
     "difficulty": 5,
-    "prompt": "Di fîlmên Bahman Ghobadi de çima \"têlên strîdar\" (dikenli teller) di gelek dîmenan de dubare dibin?",
+    "prompt": "Di fîlmên Bahman Ghobadi de çima \"têlên strîdar\" di gelek dîmenan de dubare dibin?",
     "promptTr": "Bahman Ghobadi filmlerinde kadraja sık sık giren \"dikenli teller\" görsel olarak neyi vurgular?",
     "answers": [
       "Tenê ji bo xemilandina dîmenên kamerayê di dema rojavabûnê de",
@@ -10911,7 +10911,7 @@
     "metadata": {
       "reviewStatus": "approved",
       "sourceReference": "https://www.festival-cannes.com/en/2017/yol-the-full-version-in-cannes-classics-the-birth-of-the-palme-dor-1982/",
-      "sourceTitle": "Yol - The full version in Cannes Classics, the birth of the Palme d’or 1982",
+      "sourceTitle": "Yol - The full version in Cannes Classics, the birth of the Palme d'or 1982",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11103,7 +11103,7 @@
     "metadata": {
       "reviewStatus": "approved",
       "sourceReference": "https://dergipark.org.tr/en/pub/eyp/article/1504699",
-      "sourceTitle": "Louis Althusser’in Devletin İdeolojik Aygıtları Bağlamında Şark Islahat Planı",
+      "sourceTitle": "Louis Althusser'in Devletin İdeolojik Aygıtları Bağlamında Şark Islahat Planı",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11310,7 +11310,7 @@
     "answers": [
       "Zimanê kurdî wekî tekane zimanê fermî yê tevahiya dewletê hate ragihandin",
       "Hemû partiyên siyasî yên herêmî bi temamî hatin qedexekirin",
-      "Ereb û kurd di avakirina welêt de wekî du şirîkên sereke hatin qebûlkirin",
+      "Ereb û kurd di avakirina welat de wekî du şirîkên sereke hatin qebûlkirin",
       "Herêmên kurdan ji axa dewleta Iraqê bi temamî hatin veqetandin"
     ],
     "answersTr": [
@@ -11319,7 +11319,7 @@
       "Kürtlerin ve Arapların Irak ortak vatanında eşit ortak olduğu maddesi",
       "Kürt bölgelerinin Irak devlet sınırlarından tamamen çıkarılması"
     ],
-    "correctAnswer": "Ereb û kurd di avakirina welêt de wekî du şirîkên sereke hatin qebûlkirin",
+    "correctAnswer": "Ereb û kurd di avakirina welat de wekî du şirîkên sereke hatin qebûlkirin",
     "correctAnswerTr": "Kürtlerin ve Arapların Irak ortak vatanında eşit ortak olduğu maddesi",
     "explanation": "1958 Geçici Anayasası'nın 3. maddesinde \"Araplar ve Kürtler bu vatanda ortaktır\" hükmü yer almış ve Barzani sürgünden dönmüştür.",
     "explanationTr": "1958 Geçici Anayasası'nın 3. maddesinde \"Araplar ve Kürtler bu vatanda ortaktır\" hükmü yer almış ve Barzani sürgünden dönmüştür.",
@@ -11566,7 +11566,7 @@
     "answers": [
       "Tenê girtina çend serokên partiyan bêyî têkdana jiyana gundiyan",
       "Pêşxistina çandiniya nûjen bi rêya belavkirina tovên berhemdar li gundan",
-      "Valkirina gundan, têkbirina berxwedana çiyayî û tunekirina komkî ya xelkê",
+      "Valakirina gundan, têkbirina berxwedana çiyayî û tunekirina komkî ya xelkê",
       "Avakirina xetên nû yên trenê di navbera Silêmanî û Helebê de"
     ],
     "answersTr": [
@@ -11575,7 +11575,7 @@
       "Kırsalı boşaltmak, peşmerge lojistiğini kesmek ve direnişi katliamla kırmak",
       "Süleymaniye ile Halep arasına yeni demiryolu bağlantısı kurmak"
     ],
-    "correctAnswer": "Valkirina gundan, têkbirina berxwedana çiyayî û tunekirina komkî ya xelkê",
+    "correctAnswer": "Valakirina gundan, têkbirina berxwedana çiyayî û tunekirina komkî ya xelkê",
     "correctAnswerTr": "Kırsalı boşaltmak, peşmerge lojistiğini kesmek ve direnişi katliamla kırmak",
     "explanation": "Ali Hasan el-Mecid komutasındaki Enfal operasyonlarında binlerce köy yok edildi, kimyasal silahlar kullanıldı ve 100 bini aşkın sivil katledildi.",
     "explanationTr": "Ali Hasan el-Mecid komutasındaki Enfal operasyonlarında binlerce köy yok edildi, kimyasal silahlar kullanıldı ve 100 bini aşkın sivil katledildi.",
@@ -11584,7 +11584,7 @@
       "reviewStatus": "approved",
       "sourceReference": "https://www.hrw.org/report/1992/12/01/anfal-campaign-iraqi-kurdistan/destruction-koreme",
       "sourceTitle": "The Anfal Campaign in Iraqi Kurdistan: The Destruction of Koreme",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
@@ -11758,7 +11758,7 @@
     "answers": [
       "Sîstema girtina germiyê û daxistina leza frekansa navendên pêvajoyê",
       "Pêşbîniya çiqilan (branch prediction) û meşandina texmînî ya fermanan",
-      "Bikaranîna navnîşanên bîrgehê yên statîk di dema xebata bernamen de",
+      "Bikaranîna navnîşanên bîrgehê yên statîk di dema xebata bernameyan de",
       "Rakirina bîrgeha lezgîn a asta yekem ji bo kêmkirina lêçûna fîzîkî"
     ],
     "answersTr": [
@@ -11776,7 +11776,7 @@
       "reviewStatus": "approved",
       "sourceReference": "https://www.spectreattack.com/spectre.pdf",
       "sourceTitle": "Spectre Attacks: Exploiting Speculative Execution",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
@@ -11791,7 +11791,7 @@
       "Hemû tiştên di bîrgehê de hatine çêkirin heta dawiya bernameyê dijîn",
       "Tiştên kevn ji yên nû zûtir tên jêbirin ji ber ku bîrgehê dagir dikin",
       "Bîrgeha çalak her tim bi awayekî wekhev di navbera tiştan de tê parvekirin",
-      "Piranîya tiştên nûhatî (objects) di demeke pir kin de bêkêr dibin û dimirin"
+      "Piraniya tiştên nûhatî (objects) di demeke pir kin de bêkêr dibin û dimirin"
     ],
     "answersTr": [
       "Bellekte tahsis edilen tüm nesnelerin program sonuna kadar yaşamaya devam etmesi",
@@ -11799,7 +11799,7 @@
       "Aktif bellek alanının her zaman nesneler arasında eşit boyutta bölünmesi",
       "Yeni oluşturulan nesnelerin büyük çoğunluğunun ömrünün çok kısa olması"
     ],
-    "correctAnswer": "Piranîya tiştên nûhatî (objects) di demeke pir kin de bêkêr dibin û dimirin",
+    "correctAnswer": "Piraniya tiştên nûhatî (objects) di demeke pir kin de bêkêr dibin û dimirin",
     "correctAnswerTr": "Yeni oluşturulan nesnelerin büyük çoğunluğunun ömrünün çok kısa olması",
     "explanation": "Zayıf Kuşaksal Hipotez'e göre nesnelerin çoğu tahsis edildikten hemen sonra ölür; bu yüzden genç kuşak (Young/Eden) sık taranır.",
     "explanationKu": "Li gorî vê hîpotezê (Weak Generational Hypothesis), tiştên nû zû dimirin; ji ber vê yekê tenê kontrolkirina qada ciwan (Eden) lêçûnê kêm dike.",
@@ -11808,7 +11808,7 @@
       "reviewStatus": "approved",
       "sourceReference": "https://docs.oracle.com/en/java/javase/12/gctuning/garbage-collector-implementation.html",
       "sourceTitle": "Garbage Collector Implementation",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
@@ -11980,7 +11980,7 @@
     "prompt": "Di nivîsandina algorîtmayên krîptografîk de armanca bikaranîna rêbaza \"Constant-Time\" çi ye?",
     "promptTr": "Kriptografik yazılımlarda \"Constant-Time\" (Sabit Zamanlı) kod yazımının temel güvenlik amacı nedir?",
     "answers": [
-      "Ji bo zêdekirina leza hesabkirinê li ser her cûre pêvajoyera kevn",
+      "Ji bo zêdekirina leza hesabkirinê li ser her cure pêvajoyera kevn",
       "Ji bo rêgirtina li êrîşên kanala alî yên li ser bingeha pîvandina demê",
       "Ji bo kêmkirina enerjiya ku ji aliyê pîlê cîhazê ve tê xerckirin",
       "Ji bo hêsankirina xwendina koda çavkaniyê ji aliyê bernameçêkeran ve"
@@ -12000,7 +12000,7 @@
       "reviewStatus": "approved",
       "sourceReference": "https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/secure-coding/mitigate-timing-side-channel-crypto-implementation.html",
       "sourceTitle": "Guidelines for Mitigating Timing Side Channels Against Cryptographic Implementations",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
@@ -12009,7 +12009,7 @@
     "id": "ds_teknoloji_0315",
     "category": "Teknolojî",
     "difficulty": 5,
-    "prompt": "Di mekanîzmaya baldarîyê ya Transformeran de (Self-Attention), aloziya hejmartinê li gorî dirêjahiya rêzê (N) çawa zêde dibe?",
+    "prompt": "Di mekanîzmaya baldariyê ya Transformeran de (Self-Attention), aloziya hejmartinê li gorî dirêjahiya rêzê (N) çawa zêde dibe?",
     "promptTr": "Transformer mimarisindeki standart Öz-Dikkat (Self-Attention) mekanizmasının hesaplama karmaşıklığı dizi uzunluğuna (N) göre nasıl ölçeklenir?",
     "answers": [
       "Bi awayekî xêzî O(N) dimîne bêyî ku girêdayî hejmara nîşanan be",
@@ -12032,7 +12032,7 @@
       "reviewStatus": "approved",
       "sourceReference": "https://arxiv.org/abs/2006.04768",
       "sourceTitle": "Linformer: Self-Attention with Linear Complexity",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
@@ -13262,7 +13262,7 @@
     "answers": [
       "Ji ber ku di vê hevokê de wekî kirdeyê sereke hatiye destnîşankirin",
       "Ji ber ku lêkera dîtin di dema niha de her tim navdêran ditewîne",
-      "Ji ber ku ketiye navbera daçeka hevedudanî ya cîhî \"li ser ...\"",
+      "Ji ber ku ketiye navbera daçeka hevedudanî ya cihî \"li ser ...\"",
       "Ji ber ku peyva mase navdêreke nêr e û li pêşiya bireserê ye"
     ],
     "answersTr": [
@@ -13271,7 +13271,7 @@
       "\"Li ser ...\" yer bildiren bileşik edatının etkisi altında kaldığı için",
       "Mase kelimesi eril bir isim olup nesnenin önünde yer aldığı için"
     ],
-    "correctAnswer": "Ji ber ku ketiye navbera daçeka hevedudanî ya cîhî \"li ser ...\"",
+    "correctAnswer": "Ji ber ku ketiye navbera daçeka hevedudanî ya cihî \"li ser ...\"",
     "correctAnswerTr": "\"Li ser ...\" yer bildiren bileşik edatının etkisi altında kaldığı için",
     "explanation": "\"Mase\" dişil bir isimdir ve \"li ser\" edatının yönetimi altına girdiği için \"-ê\" bükün ekini almıştır.",
     "explanationTr": "\"Mase\" dişil bir isimdir ve \"li ser\" edatının yönetimi altına girdiği için \"-ê\" bükün ekini almıştır.",
@@ -13280,7 +13280,7 @@
       "reviewStatus": "approved",
       "sourceReference": "https://agorism.dev/book/kurdish/kurmanji_1_grammar.pdf",
       "sourceTitle": "—Kurmanji Kurdish—",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
@@ -13289,7 +13289,7 @@
     "id": "ds_ziman_1249",
     "category": "Ziman",
     "difficulty": 4,
-    "prompt": "Cudahiya wateyî ya di navbera daçeka \"ji ... re\" û \"ji ... ve\" de çi ye?",
+    "prompt": "Cudahiya wateyî ya di navbera daçekên \"ji ... re\" û \"ji ... ve\" de çi ye?",
     "promptTr": "\"Ji ... re\" ve \"ji ... ve\" edat kalıpları arasındaki anlamsal fark nedir?",
     "answers": [
       "\"Ji ... re\" tenê ji bo amûran e; \"ji ... ve\" tenê ji bo dema bê ye",
@@ -13312,7 +13312,7 @@
       "reviewStatus": "approved",
       "sourceReference": "https://agorism.dev/book/kurdish/kurmanji_1_grammar.pdf",
       "sourceTitle": "—Kurmanji Kurdish—",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
@@ -13321,7 +13321,7 @@
     "id": "ds_ziman_1250",
     "category": "Ziman",
     "difficulty": 4,
-    "prompt": "Di daçeka \"bi ... re\" û \"bi ... ve\" de kîjan vebijêrk cudahiya hevaltî û pêvebûnê rast nîşan dide?",
+    "prompt": "Di daçekên \"bi ... re\" û \"bi ... ve\" de kîjan vebijêrk cudahiya hevaltî û pêvebûnê rast nîşan dide?",
     "promptTr": "\"Bi ... re\" ve \"bi ... ve\" edatlarında birliktelik ve bitişiklik/araç farkı hangi seçenekte doğrudur?",
     "answers": [
       "\"Bi ... re\" hevaltî/tevgerê nîşan dide, \"bi ... ve\" pêvebûn/girêdanê nîşan dide",
@@ -13344,7 +13344,7 @@
       "reviewStatus": "approved",
       "sourceReference": "https://ezdixan.de/en/wiki/grammatik",
       "sourceTitle": "Grammar Tables · Êzdîxan",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
@@ -13439,7 +13439,7 @@
     "metadata": {
       "reviewStatus": "approved",
       "sourceReference": "https://dergipark.org.tr/en/pub/kurdiname/article/1290937",
-      "sourceTitle": "Pêşgira Dariştinê ya ‘Ve-’ yê û Fonksîyonên Wê yên Morfosemantîk di Berhemên Klasîk ên Kurmancîya Jorîn da",
+      "sourceTitle": "Pêşgira Dariştinê ya 'Ve-' yê û Fonksîyonên Wê yên Morfosemantîk di Berhemên Klasîk ên Kurmancîya Jorîn da",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13545,7 +13545,7 @@
     "id": "ds_ziman_1263",
     "category": "Ziman",
     "difficulty": 5,
-    "prompt": "Di navbera zaravayê kurmancî û soranî de cudahiya sereke ya di warê zayenda rêzimanî de çi ye?",
+    "prompt": "Di navbera zaravayên kurmancî û soranî de cudahiya sereke ya di warê zayenda rêzimanî de çi ye?",
     "promptTr": "Kurmancî ile Soranî lehçeleri arasında dilbilgisel cinsiyet (gender) konusundaki temel fark nedir?",
     "answers": [
       "Soranî sê zayendan diparêze lê di kurmancî de qet zayend nîne",
@@ -13568,7 +13568,7 @@
       "reviewStatus": "approved",
       "sourceReference": "https://iranian-languages.arizona.edu/node/2",
       "sourceTitle": "Sorani Kurdish Iranian languages Catalogue | Iranian Languages",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
@@ -13833,11 +13833,11 @@
     "id": "ds_ziman_1283",
     "category": "Ziman",
     "difficulty": 4,
-    "prompt": "Di kurmancî de ferqa di navbera lêkera hevedudanî ya \"dest pê kirin\" û \"dest jê berdan\" de ji aliyê daçekê ve çi ye?",
+    "prompt": "Di kurmancî de ferqa di navbera lêkerên hevedudanî yên \"dest pê kirin\" û \"dest jê berdan\" de ji aliyê daçekê ve çi ye?",
     "promptTr": "Kurmancîde \"dest pê kirin\" ve \"dest jê berdan\" bileşik fiilleri arasındaki edat yapısı farkı nedir?",
     "answers": [
       "Her du lêker jî tenê bi daçeka \"tê\" (di wê de) tên avakirin",
-      "Di ya yekem de ti daçek nîne lê di ya duyem de daçeka cîhî heye",
+      "Di ya yekem de ti daçek nîne lê di ya duyem de daçeka cihî heye",
       "Di ya yekem de daçeka \"pê\" (bi wê), di ya duyem de \"jê\" (ji wê) hatiye bikaranîn",
       "Daçek tenê ji bo çêkirina neyîniyê di lêkera duyem de heye"
     ],
@@ -13856,7 +13856,7 @@
       "reviewStatus": "approved",
       "sourceReference": "https://sites.fas.harvard.edu/~iranian/Kurmanji/kurmanji_1_grammar.pdf",
       "sourceTitle": "Kurmanji Kurdish: A Reference Grammar with Selected Readings",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
@@ -14057,7 +14057,7 @@
     "id": "ds_ziman_1294",
     "category": "Ziman",
     "difficulty": 5,
-    "prompt": "Di hevoka \"Min nanê xwe xwar\" û \"Wî nanê xwe xwar\" de çima cînavê vegerok ê \"xwe\" neguherî ye?",
+    "prompt": "Di hevokên \"Min nanê xwe xwar\" û \"Wî nanê xwe xwar\" de çima cînavê vegerok ê \"xwe\" neguheriye?",
     "promptTr": "\"Min nanê xwe xwar\" ve \"Wî nanê xwe xwar\" cümlelerinde \"xwe\" dönüşlü zamiri neden değişmemiştir?",
     "answers": [
       "Ji ber ku \"xwe\" ji bo hemû kesan cînavê xwedîtiyê yê gerdûnî ye",
@@ -14080,7 +14080,7 @@
       "reviewStatus": "approved",
       "sourceReference": "https://multicast.aspra.uni-bamberg.de/data/pubs/Haig2018_Northern-Kurdish_Kurmanji.pdf",
       "sourceTitle": "Northern Kurdish (Kurmanjî)",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-15, dördüncü dalga (Kurmancî): Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık vetosu uyguladı; hangi şıkkın doğru olduğu değişmedi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
@@ -14164,7 +14164,7 @@
     "correctAnswer": "Başûr",
     "explanation": "Kandil Dağı, Kürdistan'ın güneyinde, Irak ve İran sınırındadır ve tarihi dağlık merkezidir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -14334,7 +14334,7 @@
     "correctAnswer": "Zapê Biçûk",
     "explanation": "Küçük Zap, Zagros Dağları'ndan doğar ve Musul'un güneyinde Dicle'ye bağlanır. Fırat, Zagros'tan doğmaz ve Dicle'ye Irak'ın güneyinde bağlanır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -14674,7 +14674,7 @@
     "correctAnswer": "Canberra",
     "explanation": "Canberra, Avustralya'nın başkentidir. Sidney, Melbourne ve Perth büyük şehirlerdir ancak başkent değildirler.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -14732,12 +14732,12 @@
   {
     "id": "ds_cografya_0106",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Parîs e?",
+    "prompt": "Paytexta kîjan welatî Parîs e?",
     "answers": [
       "Almanya",
       "Fransa",
       "Spanya",
-      "Portekîz"
+      "Portûgal"
     ],
     "correctAnswer": "Fransa",
     "explanation": "Paris, Fransa'nın başkentidir. Almanya Berlin, İspanya Madrid ve Portekiz Lizbon'u başkent olarak kullanır.",
@@ -14766,7 +14766,7 @@
   {
     "id": "ds_cografya_0107",
     "category": "Cîhan",
-    "prompt": "Paytextê Rûsyayê kîjan bajar e?",
+    "prompt": "Paytexta Rûsyayê kîjan bajar e?",
     "answers": [
       "Sankt Petersburg",
       "Novosîbîrsk",
@@ -14800,7 +14800,7 @@
   {
     "id": "ds_cografya_0108",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Londra ye?",
+    "prompt": "Paytexta kîjan welatî London e?",
     "answers": [
       "Îngilistan",
       "Skotland",
@@ -14834,7 +14834,7 @@
   {
     "id": "ds_cografya_0110",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Washington D.C. ye?",
+    "prompt": "Paytexta kîjan welatî Washington D.C. ye?",
     "answers": [
       "Kanada",
       "Meksîk",
@@ -14868,7 +14868,7 @@
   {
     "id": "ds_cografya_0112",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Berlîn e?",
+    "prompt": "Paytexta kîjan welatî Berlîn e?",
     "answers": [
       "Awistirya",
       "Swîsre",
@@ -14902,7 +14902,7 @@
   {
     "id": "ds_cografya_0114",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Pekîn e?",
+    "prompt": "Paytexta kîjan welatî Pekîn e?",
     "answers": [
       "Japonya",
       "Korêya Bakur",
@@ -14936,7 +14936,7 @@
   {
     "id": "ds_cografya_0116",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Atîna ye?",
+    "prompt": "Paytexta kîjan welatî Atîna ye?",
     "answers": [
       "Tirkiye",
       "Îtalya",
@@ -14970,7 +14970,7 @@
   {
     "id": "ds_cografya_0117",
     "category": "Cîhan",
-    "prompt": "Paytextê Hindistanê kîjan bajar e?",
+    "prompt": "Paytexta Hindistanê kîjan bajar e?",
     "answers": [
       "Mumbaî",
       "Delhiya Nû",
@@ -15004,7 +15004,7 @@
   {
     "id": "ds_cografya_0118",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Seûl e?",
+    "prompt": "Paytexta kîjan welatî Seûl e?",
     "answers": [
       "Korêya Bakur",
       "Japonya",
@@ -15038,7 +15038,7 @@
   {
     "id": "ds_cografya_0120",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Viyana ye?",
+    "prompt": "Paytexta kîjan welatî Viyana ye?",
     "answers": [
       "Almanya",
       "Swîsre",
@@ -15072,7 +15072,7 @@
   {
     "id": "ds_cografya_0121",
     "category": "Cîhan",
-    "prompt": "Paytextê îdarî yê Afrîkaya Başûr kîjan bajar e?",
+    "prompt": "Paytexta îdarî ya Afrîkaya Başûr kîjan bajar e?",
     "answers": [
       "Pretoria",
       "Johannesburg",
@@ -15082,7 +15082,7 @@
     "correctAnswer": "Pretoria",
     "explanation": "Güney Afrika'nın üç başkenti vardır: Pretoria idari, Cape Town yasama, Bloemfontein yargı başkentidir.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15106,7 +15106,7 @@
   {
     "id": "ds_cografya_0122",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Stockholm e?",
+    "prompt": "Paytexta kîjan welatî Stockholm e?",
     "answers": [
       "Norwêc",
       "Danîmarka",
@@ -15140,7 +15140,7 @@
   {
     "id": "ds_cografya_0123",
     "category": "Cîhan",
-    "prompt": "Paytextê Polonyayê kîjan bajar e?",
+    "prompt": "Paytexta Polonyayê kîjan bajar e?",
     "answers": [
       "Varşova",
       "Kraków",
@@ -15174,7 +15174,7 @@
   {
     "id": "ds_cografya_0124",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Tehran e?",
+    "prompt": "Paytexta kîjan welatî Tehran e?",
     "answers": [
       "Iraq",
       "Efxanistan",
@@ -15660,7 +15660,7 @@
     "correctAnswer": "Projeksiyona Peters",
     "explanation": "Peters Projeksiyonu kıtaların yüzeylerini gerçek oranlarıyla gösterir, ancak şekillerini bozar. Mercator yüzeyleri büyütür, Robinson ise bir denge kurar.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15694,7 +15694,7 @@
     "correctAnswer": "Xetên îzolîn",
     "explanation": "İzolin (kontur) çizgileri, topografik haritada eşit yükseklikteki noktaları gösteren çizgilerdir. Paraleller ve meridyenler koordinattır, yükseklik değil.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15728,7 +15728,7 @@
     "correctAnswer": "Projeksiyona Robinson",
     "explanation": "Robinson Projeksiyonu yüzeyleri ve şekilleri dengeli bir şekilde gösterir, bu yüzden dünya haritası için kullanılır. Mercator yüzeyleri büyütür, Peters ise şekilleri bozar.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15755,11 +15755,11 @@
     "prompt": "Kîjan têgih ji bo xeta ku hêlîpan û hêlîdirêjan li ser nexşeyê nîşan dide tê bikaranîn?",
     "answers": [
       "Xeta îzolîn",
-      "Tora koordînat",
+      "Tora koordînatan",
       "Xeta paralel",
-      "Xeta merîdyen"
+      "Xeta merîdyenê"
     ],
-    "correctAnswer": "Tora koordînat",
+    "correctAnswer": "Tora koordînatan",
     "explanation": "Koordinat ağı (graticule), haritada enlem ve boylamları gösteren çizgilerdir. İzolin çizgisi ise yüksekliği gösterir.",
     "type": "multipleChoice",
     "difficulty": 2,
@@ -15956,17 +15956,17 @@
   {
     "id": "ds_dirok_0016",
     "category": "Dîrok",
-    "prompt": "Şerefxanê Bidlîsî ji kîjan mîrektiyê bû?",
+    "prompt": "Nivîskarê Şerefnameyê ji kîjan mîrektiyê bû?",
     "answers": [
       "Mîrektiya Cizîrê",
       "Mîrektiya Botanê",
-      "Mîrektiya Hekarîyê",
+      "Mîrektiya Hekariyê",
       "Mîrektiya Bidlîsê"
     ],
     "correctAnswer": "Mîrektiya Bidlîsê",
     "explanation": "Şerefxanê Bidlîsî, Bitlis Beyliği'ndendi. Bu beyliğin mir ailesine mensuptu ve daha sonra kendisi de Bitlis beyi oldu.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -15976,7 +15976,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Şerefxanê Bidlîsî hangi beylikten idi?",
+    "promptTr": "Şerefname'nin yazarı hangi beyliktendi?",
     "answersTr": [
       "Cizre Beyliği",
       "Botan Beyliği",
@@ -16034,7 +16034,7 @@
     "correctAnswer": "1932",
     "explanation": "Hawar, 15 Mayıs 1932'de yayın hayatına başladı. 1943 yılına kadar aralıklarla yayımlandı.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16102,7 +16102,7 @@
     "correctAnswer": "Stenbol",
     "explanation": "Celadet Ali Bedirhan 1893 yılında İstanbul'da doğdu. Bedirhani ailesindendi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16238,7 +16238,7 @@
     "correctAnswer": "Aşurbanipal",
     "explanation": "Aşurbanipal, içinde binlerce çivi yazılı metin bulunan ünlü Ninova Kütüphanesi'ni inşa ettirdi. Sargon II, Sennacherib ve Tiglath-Pileser III ise diğer krallardı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16306,7 +16306,7 @@
     "correctAnswer": "Sedsala 6'an berî zayînê",
     "explanation": "MÖ 6. yüzyılda Kyros, Astyages'i yenip Medleri de içine alan Ahameniş İmparatorluğu'nu kurdu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16340,7 +16340,7 @@
     "correctAnswer": "Mîrên xwecihî yên herêmê",
     "explanation": "Hakkari Emirliği, Hakkari Emirleri olarak bilinen yerel emirler tarafından yönetiliyordu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16374,7 +16374,7 @@
     "correctAnswer": "Girît",
     "explanation": "Bedirhan Paşa, 1847'deki isyanının başarısız olmasının ardından tüm ailesiyle birlikte Girit Adaları'na sürgün edildi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16398,7 +16398,7 @@
   {
     "id": "ds_dirok_0124",
     "category": "Dîrok",
-    "prompt": "Kîjan mîrektiya kurdan di sedsala 16an de li herêma çiyayî ya di navbera Wan û Musilê de hukum dikir?",
+    "prompt": "Kîjan mîrektiya kurdan di sedsala 16an de li herêma çiyayî ya di navbera Wan û Mûsilê de hukum dikir?",
     "answers": [
       "Mîrektiya Botanê",
       "Mîrektiya Colemêrgê",
@@ -16408,7 +16408,7 @@
     "correctAnswer": "Mîrektiya Colemêrgê",
     "explanation": "Hakkari Emirliği, 16. yüzyılda Hakkari bölgesinde hüküm sürdü ve Osmanlılar ile Safeviler arasında önemli bir rol oynadı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16442,7 +16442,7 @@
     "correctAnswer": "1898",
     "explanation": "Kürdistan, ilk Kürtçe gazete olarak 1898'de Mîqdad Mîdhat Bedirhan tarafından Kahire'de yayımlandı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16476,7 +16476,7 @@
     "correctAnswer": "Mîqdad Mîdhat Bedirxan",
     "explanation": "Bedirhan Paşa'nın oğlu Mîqdad Mîdhat Bedirhan, 1898'de Kürdistan'ı Kahire'de çıkardı ve bu ilk Kürtçe gazete oldu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16777,7 +16777,7 @@
       "Malbata Babanan",
       "Malbata Soran",
       "Malbata Bedirxaniyan",
-      "Malbata Hakkariyê"
+      "Malbata Hekariyê"
     ],
     "correctAnswer": "Malbata Bedirxaniyan",
     "explanation": "Kurdistan gazetesi, ünlü bir Kürt ailesi olan Bedirhani ailesi tarafından çıkarıldı.",
@@ -16884,7 +16884,7 @@
     "correctAnswer": "Mîqdad Mîdhat û Ebdurehman Bedirxan",
     "explanation": "Kurdistan gazetesi, Mikdad Midhat ve Abdurrahman Bedirhan kardeşler tarafından yönetildi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -16986,7 +16986,7 @@
     "correctAnswer": "1815",
     "explanation": "Waterloo Savaşı 18 Haziran 1815'te gerçekleşti. Bu savaşta Wellington ve Blücher liderliğindeki İngiliz ve Prusya kuvvetleri, Napolyon Bonapart'ı yendi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17012,15 +17012,15 @@
     "category": "Cîhan",
     "prompt": "Di kîjan serdemê de Şerê Sed Salan qewimî?",
     "answers": [
-      "Sedsala 12'an û 13'an",
-      "Sedsala 13'an û 14'an",
-      "Sedsala 14'an û 15'an",
-      "Sedsala 15'an û 16'an"
+      "Sedsalên 12'an û 13'an",
+      "Sedsalên 13'an û 14'an",
+      "Sedsalên 14'an û 15'an",
+      "Sedsalên 15'an û 16'an"
     ],
-    "correctAnswer": "Sedsala 14'an û 15'an",
+    "correctAnswer": "Sedsalên 14'an û 15'an",
     "explanation": "Yüz Yıl Savaşları 1337 ile 1453 yılları arasında, yani 14. ve 15. yüzyılda gerçekleşti. Bu savaş İngiltere ve Fransa arasında yapıldı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17122,7 +17122,7 @@
     "correctAnswer": "1916",
     "explanation": "Verdun Savaşı 21 Şubat 1916'da başladı ve 18 Aralık 1916'ya kadar sürdü. Bu savaş, Birinci Dünya Savaşı'nın en uzun ve en kanlı savaşlarından biriydi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17156,7 +17156,7 @@
     "correctAnswer": "Şerê Trafalgarê",
     "explanation": "Trafalgar Savaşı 21 Ekim 1805'te gerçekleşti. Bu savaşta Amiral Horatio Nelson liderliğindeki İngiliz donanması, Fransa ve İspanya donanmalarına karşı zafer kazandı, ancak Nelson savaşta öldürüldü.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17248,7 +17248,7 @@
   {
     "id": "ds_dirok_0173",
     "category": "Cîhan",
-    "prompt": "Kîjan şer di navbera 1950 û 1953'an de li Nîvgirava Koreyê qewimî?",
+    "prompt": "Kîjan şer di navbera 1950 û 1953'an de li Asyaya Rojhilat qewimî?",
     "answers": [
       "Şerê Koreyê",
       "Şerê Viyetnamê",
@@ -17268,7 +17268,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "1950 ile 1953 yılları arasında Kore Yarımadası'nda hangi savaş gerçekleşti?",
+    "promptTr": "1950 ile 1953 yılları arasında Doğu Asya'da hangi savaş gerçekleşti?",
     "answersTr": [
       "Kore Savaşı",
       "Vietnam Savaşı",
@@ -17520,7 +17520,7 @@
   {
     "id": "ds_dirok_0190",
     "category": "Cîhan",
-    "prompt": "Kîjan kesayetî wek \"Bavê Tibê\" tê zanîn?",
+    "prompt": "Kîjan kesayetî wek \"Bavê Bijîşkiyê\" tê zanîn?",
     "answers": [
       "Galen",
       "Aristoteles",
@@ -17564,7 +17564,7 @@
     "correctAnswer": "Şerê Cannaeyê",
     "explanation": "Cannae Savaşı, MÖ 216 yılının 2 Ağustos'unda yapıldı. Hannibal, kuşatma taktiğiyle Roma ordusunu yendi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17632,7 +17632,7 @@
     "correctAnswer": "Portûgal",
     "explanation": "Portekiz, Vasco da Gama gibi kaşiflerin önderliğinde Hindistan'a giden deniz yolunu ilk kez 1498'de buldu. Bu, Portekiz'in deniz ticaretindeki üstünlüğünün başlangıcı oldu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17666,7 +17666,7 @@
     "correctAnswer": "Bartolomeu Dias",
     "explanation": "Bartolomeu Dias, 1488'de Ümit Burnu'nu ilk kez geçti. Bu, Hindistan'a giden deniz yolunun önünü açtı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17768,7 +17768,7 @@
     "correctAnswer": "James Watt",
     "explanation": "James Watt, 1769'da fabrikalar ve ulaşım için enerji sağlayan ve Sanayi Devrimi'ni hızlandıran gelişmiş buhar makinesini yaptı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17930,7 +17930,7 @@
     "category": "Cîhan",
     "prompt": "Kîjan bûyer di sala 1811'an de li Brîtanyayê qewimî û tê de karkeran makîne hilweşandin?",
     "answers": [
-      "Serhildana Chartîstan",
+      "Serhildana Çartîstan",
       "Serhildana Luddîtan",
       "Serhildana Swing",
       "Serhildana Peterloo"
@@ -17938,7 +17938,7 @@
     "correctAnswer": "Serhildana Luddîtan",
     "explanation": "Luddite İsyanı 1811'de Britanya'da meydana geldi; makineler yüzünden işlerini kaybeden işçiler makineleri tahrip etmeye başladı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -17972,7 +17972,7 @@
     "correctAnswer": "Adam Smith",
     "explanation": "Adam Smith, 1776'da \"Ulusların Zenginliği\" kitabını yazdı; bu kitap klasik ekonominin temelini attı ve Sanayi Devrimi'ni etkiledi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18006,7 +18006,7 @@
     "correctAnswer": "Manchester",
     "explanation": "Manchester, Sanayi Devrimi'nde tekstilin merkeziydi çünkü orada birçok eğirme ve dokuma fabrikası kuruldu.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18040,7 +18040,7 @@
     "correctAnswer": "Eli Whitney",
     "explanation": "Eli Whitney, 1793'te pamuğu tohumundan ayırmak için kullanılan çırçır makinesini icat etti; bu da pamuk üretimini artırdı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18142,7 +18142,7 @@
     "correctAnswer": "Wendabûna wateyê di wergerê de",
     "explanation": "Sözlü tarih bir dilden başka bir dile çevrildiğinde, anlatıcının özgün anlamı kaybolabilir veya değişebilir; bu da bilgilerin doğruluğunu azaltır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18176,7 +18176,7 @@
     "correctAnswer": "Pirsên vekirî yên ku çîrokbêj azad dihêlin",
     "explanation": "Açık uçlu sorular anlatıcının serbestçe konuşmasını sağlar ve beklenmedik, derin bilgilerin ortaya çıkmasına olanak tanır; bu da sözlü tarih için daha faydalıdır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18234,7 +18234,7 @@
   {
     "id": "ds_dirok_0275",
     "category": "Cîhan",
-    "prompt": "Tora bazirganiyê ya Riya Hevirmêşê bi piranî bi kîjan xanedanê ve tê girêdan?",
+    "prompt": "Tora bazirganiyê ya Riya Hevrîşimê bi piranî bi kîjan xanedanê ve tê girêdan?",
     "answers": [
       "Xanedana Ming",
       "Xanedana Han",
@@ -18244,7 +18244,7 @@
     "correctAnswer": "Xanedana Han",
     "explanation": "Organize İpek Yolu ağı MÖ 2. yüzyılda Han hanedanı döneminde kuruldu; Tang döneminde yeniden canlandı.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18268,7 +18268,7 @@
   {
     "id": "ds_dirok_0293",
     "category": "Cîhan",
-    "prompt": "Ewlehiya Riya Hevirmêşê di kîjan serdemê de bi \"Pax Mongolica\" ve zêde bû?",
+    "prompt": "Ewlehiya Riya Hevrîşimê di kîjan serdemê de herî zêde bû?",
     "answers": [
       "Serdema Kevir",
       "Serdema Bronz",
@@ -18278,7 +18278,7 @@
     "correctAnswer": "Serdema Mongol",
     "explanation": "Moğol egemenliği döneminde (13.-14. yy) tek bir siyasal çatı altında yol güvenliği arttı; buna Pax Mongolica denir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18288,7 +18288,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "İpek Yolu'nun güvenliği hangi dönemde \"Pax Mongolica\" ile arttı?",
+    "promptTr": "İpek Yolu'nun güvenliği hangi dönemde en üst düzeye ulaştı?",
     "answersTr": [
       "Taş Devri",
       "Tunç Devri",
@@ -18302,7 +18302,7 @@
   {
     "id": "ds_dirok_0276",
     "category": "Cîhan",
-    "prompt": "Kîjan welat wekî destpêka Riya Hevirmêşê tê zanîn?",
+    "prompt": "Kîjan welat wekî destpêka Riya Hevrîşimê tê zanîn?",
     "answers": [
       "Hindistan",
       "Misir",
@@ -18336,7 +18336,7 @@
   {
     "id": "ds_dirok_0277",
     "category": "Cîhan",
-    "prompt": "Riya Hevirmêşê navê xwe ji kîjan berhemê digire?",
+    "prompt": "Riya bazirganiyê ya dîrokî ya ku Çîn bi Rojava ve girê dida, navê xwe ji kîjan berhemê digire?",
     "answers": [
       "Zêr",
       "Hevrîşim",
@@ -18380,7 +18380,7 @@
     "correctAnswer": "Semerkand",
     "explanation": "Semerkant, Buhara ve Merv gibi Orta Asya şehirleri İpek Yolu'nun başlıca merkezlerindendi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18404,12 +18404,12 @@
   {
     "id": "ds_dirok_0287",
     "category": "Cîhan",
-    "prompt": "Di Riya Îpekê de kîjan rêbaza veguhestinê dihat bikaranîn?",
+    "prompt": "Di Riya Hevrîşimê de kîjan rêbaza veguhestinê dihat bikaranîn?",
     "answers": [
       "Karwanên deveyan",
       "Trenên elektrîkê",
       "Balafirên bazirganî",
-      "Keştiyên buharê"
+      "Keştiyên hilmê"
     ],
     "correctAnswer": "Karwanên deveyan",
     "explanation": "İpek Yolu'nda deve kervanları kullanılıyordu çünkü develer çölde kolayca yürüyor ve yük taşıyorlardı.",
@@ -18438,7 +18438,7 @@
   {
     "id": "ds_dirok_0282",
     "category": "Cîhan",
-    "prompt": "Kîjan kesayetî bi Riya Îpekê re têkildar e?",
+    "prompt": "Kîjan kesayetî bi Riya Hevrîşimê re têkildar e?",
     "answers": [
       "Julius Caesar",
       "Napoleon",
@@ -18550,7 +18550,7 @@
     "correctAnswer": "Aşîl",
     "explanation": "İlyada Destanı'nda Aşil, Truva'ya karşı öfkesi ve savaşıyla tanınan ana kahramandır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18613,7 +18613,7 @@
       "Şer û Aştî",
       "Tawan û Ceza",
       "Anna Karenina",
-      "Karderî"
+      "Bav û Kur"
     ],
     "correctAnswer": "Tawan û Ceza",
     "explanation": "Suç ve Ceza, Fyodor Dostoyevski tarafından yazılmıştır. Yazarın en çok okunan romanlarındandır ve suç, vicdan ve kurtuluş üzerinedir.",
@@ -18633,7 +18633,7 @@
       "Savaş ve Barış",
       "Suç ve Ceza",
       "Anna Karenina",
-      "Karamazov Kardeşler"
+      "Babalar ve Oğullar"
     ],
     "correctAnswerTr": "Suç ve Ceza",
     "explanationKu": "Tawan û Ceza ji aliyê Fyodor Dostoyevskî ve hatiye nivîsandin. Ew romana wî ya herî navdar e û li ser tawan, wijdan û xilasiyê ye.",
@@ -18652,7 +18652,7 @@
     "correctAnswer": "Şerê Napoleon ê li Rûsyayê",
     "explanation": "Savaş ve Barış, Napolyon'un Rusya Seferi'nin arka planında geçer. Tolstoy bu romanda savaş sırasında Rus toplumunun yaşamını anlatır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -18714,7 +18714,7 @@
     "answers": [
       "Şer û Aştî",
       "Tawan û Ceza",
-      "Karderî",
+      "Birayên Karamazov",
       "Sefîl"
     ],
     "correctAnswer": "Sefîl",
@@ -18781,7 +18781,7 @@
     "prompt": "Kîjan roman ji aliyê Herman Melville ve hatiye nivîsandin?",
     "answers": [
       "Moby-Dick",
-      "Pîrika",
+      "Jinên Biçûk",
       "Jane Eyre",
       "Wuthering Heights"
     ],
@@ -18883,7 +18883,7 @@
     "prompt": "Di berhemên Shakespeare de, \"To be or not to be\" tê çi wateyê?",
     "answers": [
       "Evîn an nefret",
-      "Şer an aşitî",
+      "Şer an aştî",
       "Jiyan an mirin",
       "Xewn an rastî"
     ],
@@ -18992,7 +18992,7 @@
     "correctAnswer": "Trajedî",
     "explanation": "Kral Lear, yaşlılık, güç ve aile ilişkilerini konu alan bir trajedidir. Lear, gücünü kızlarına devreden bir kraldır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19026,7 +19026,7 @@
     "correctAnswer": "Komedî",
     "explanation": "Bir Yaz Gecesi Rüyası, aşkı ve hayalleri konu alan bir komedidir. Shakespeare'in en ünlü komedilerinden biridir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19060,7 +19060,7 @@
     "correctAnswer": "Komedî",
     "explanation": "Venedik Taciri, Antonio adında bir taciri anlatan bir komedidir. Trajik yönleri de olan bir komedidir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19094,7 +19094,7 @@
     "correctAnswer": "The Merchant of Venice",
     "explanation": "Venedik Taciri, Antonio adında bir taciri anlatır. Borç ve cezaları konu alan bir komedidir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19128,7 +19128,7 @@
     "correctAnswer": "Sêhrbazê The Tempestê",
     "explanation": "Prospero, Fırtına'nın büyücüsüdür. Bir adada yaşar ve büyüsüyle bir fırtına koparır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19190,13 +19190,13 @@
     "answers": [
       "Qafiye",
       "Îmge",
-      "Kêş (Vezin)",
+      "Kêş",
       "Rîwayet"
     ],
-    "correctAnswer": "Kêş (Vezin)",
+    "correctAnswer": "Kêş",
     "explanation": "Metr, şiirde ölçüdür; ahenk için kullanılır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19210,10 +19210,10 @@
     "answersTr": [
       "Kafiye",
       "İmge",
-      "Metr",
+      "Vezin",
       "Rivayet"
     ],
-    "correctAnswerTr": "Metr",
+    "correctAnswerTr": "Vezin",
     "explanationKu": "Kêş (vezin) pîvana ahengê ye; Ehmedê Xanî di helbestên xwe de kêşa erûzê bi kar aniye.",
     "explanationTr": "Metr, şiirde ölçüdür; ahenk için kullanılır."
   },
@@ -19264,7 +19264,7 @@
     "correctAnswer": "Herikîna hiş",
     "explanation": "Joyce, \"Ulysses\"te bilinç akışı tekniğini kullanır; bu da modernizmin bir özelliğidir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19298,7 +19298,7 @@
     "correctAnswer": "Mrs Dalloway",
     "explanation": "Woolf'un \"Mrs Dalloway\"i bilinç akışı tekniğiyle tanınır ve modernizmin eserlerinden biridir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19332,7 +19332,7 @@
     "correctAnswer": "The Metamorphosis",
     "explanation": "Kafka'nın \"Dönüşüm\"ü gerçeküstü ve modernist bakış açısıyla tanınır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -19560,7 +19560,7 @@
   {
     "id": "ds_muzik_0023",
     "category": "Muzîk",
-    "prompt": "Dengbêj bi piranî kilamên xwe bi kîjan awayî ji ber dibêjin?",
+    "prompt": "Dengbêj bi piranî kilamên xwe bi kîjan awayî dibêjin?",
     "answers": [
       "Bi ezber",
       "Bi nivîsê",
@@ -19580,7 +19580,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Dengbêjler kilamlarını çoğunlukla nasıl ezberden söylerler?",
+    "promptTr": "Dengbêjler kilamlarını çoğunlukla hangi şekilde söylerler?",
     "answersTr": [
       "Ezberleyerek",
       "Yazarak",
@@ -19597,11 +19597,11 @@
     "prompt": "Kîjan amûr di performansa dengbêjiyê de bi gelemperî tê bikaranîn?",
     "answers": [
       "Tembûr",
-      "Ti amûrek nîne",
+      "Tu amûrek nîne",
       "Keman",
       "Ney"
     ],
-    "correctAnswer": "Ti amûrek nîne",
+    "correctAnswer": "Tu amûrek nîne",
     "explanation": "Dengbêjlik performansında genellikle hiçbir enstrüman kullanılmaz; dengbêj kilamı sadece sesiyle söyler. Tembur, keman ve ney dengbêjlere özgü enstrümanlar değildir.",
     "type": "multipleChoice",
     "difficulty": 1,
@@ -19670,7 +19670,7 @@
       "Erebî"
     ],
     "correctAnswer": "Kurmancî",
-    "explanation": "Dengbêjlik geleneğinde kilamlar çoğunlukla Kürtçe (Kurmanci) söylenir. Türkçe, Farsça ve Arapça bu geleneğin ana dili değildir.",
+    "explanation": "Dengbêjlik geleneğinde kilamlar çoğunlukla Kürtçe (Kurmancî) söylenir. Türkçe, Farsça ve Arapça bu geleneğin ana dili değildir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -19686,12 +19686,12 @@
     "answersTr": [
       "Türkçe",
       "Farsça",
-      "Kürtçe (Kurmanci)",
+      "Kürtçe (Kurmancî)",
       "Arapça"
     ],
-    "correctAnswerTr": "Kürtçe (Kurmanci)",
+    "correctAnswerTr": "Kürtçe (Kurmancî)",
     "explanationKu": "Kilam di nav kevneşopiya dengbêjiyê de bi piranî bi Kurmancî tê gotin. Tirkî, Farisî û Erebî ne zimanên sereke yên vê kevneşopiyê ne.",
-    "explanationTr": "Dengbêjlik geleneğinde kilamlar çoğunlukla Kürtçe (Kurmanci) söylenir. Türkçe, Farsça ve Arapça bu geleneğin ana dili değildir."
+    "explanationTr": "Dengbêjlik geleneğinde kilamlar çoğunlukla Kürtçe (Kurmancî) söylenir. Türkçe, Farsça ve Arapça bu geleneğin ana dili değildir."
   },
   {
     "id": "ds_muzik_0011",
@@ -19866,7 +19866,7 @@
   {
     "id": "ds_muzik_0103",
     "category": "Cîhan",
-    "prompt": "Di muzîkê de, rêjdana dengan li gorî demê çi ye?",
+    "prompt": "Di muzîkê de, rêzkirina dengan li gorî demê çi ye?",
     "answers": [
       "Rîtm",
       "Nota",
@@ -19978,7 +19978,7 @@
     "correctAnswer": "Fidelio",
     "explanation": "Beethoven sadece bir opera yazmıştır, adı \"Fidelio\"dur ve en ünlü operalarından biridir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20046,7 +20046,7 @@
     "correctAnswer": "104",
     "explanation": "Haydn yaklaşık 104 senfoni yazmıştır ve bu nedenle \"senfoninin babası\" olarak bilinir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20080,7 +20080,7 @@
     "correctAnswer": "Joseph Haydn",
     "explanation": "Joseph Haydn, klasik müzik formları üzerindeki etkisi nedeniyle \"Klasik Müziğin Babası\" olarak bilinir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20318,7 +20318,7 @@
     "correctAnswer": "Arya",
     "explanation": "Arya, operada tek bir solist için yazılmış bağımsız vokal parçadır; orkestra eşliği bulunur.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20352,7 +20352,7 @@
     "correctAnswer": "Çar beşan",
     "explanation": "Senfoni çoğunlukla dört bölümden oluşur. Bu bölümler hızlarıyla birbirinden ayrılır: birincisi hızlı, ikincisi yavaş, üçüncüsü dans ve dördüncüsü hızlıdır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20469,16 +20469,16 @@
       "Ritim",
       "Tempo",
       "Dinamik",
-      "Pitch"
+      "Perde"
     ],
-    "correctAnswerTr": "Pitch",
+    "correctAnswerTr": "Perde",
     "explanationKu": "Perde bilindahiya dengan diyar dike. Rîtm demê, tempo lezê û dînamîk jî bihêzbûna dengan nîşan dide.",
     "explanationTr": "Pitch, seslerin yüksekliğini ifade eder. Ritim zamanı, tempo hızı ve dinamik de seslerin gücünü gösterir."
   },
   {
     "id": "ds_sinema_0045",
     "category": "Sînema",
-    "prompt": "Di fîlma \"Klama Dayîka Min\" (Erol Mintaş) de diya ku ji Tarlabaşiyê hatiye koçberkirin li kîjan tiştî digere?",
+    "prompt": "Di fîlma \"Klama Dayika Min\" (Erol Mintaş) de diya ku ji Tarlabaşiyê hatiye koçberkirin li kîjan tiştî digere?",
     "answers": [
       "Malbateke dewlemend ku alîkariya wan a aborî bike",
       "Klameke winda û bîra çandî ya cihê ku lê jiya ye",
@@ -20522,7 +20522,7 @@
     "correctAnswer": "1895",
     "explanation": "\"La Sortie de l\"usine Lumière à Lyon' filmi 1895'te Lumière kardeşler tarafından çekildi. Bu film tarihin ilk filmlerinden biridir ve sinemanın başlangıcını gösterir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20556,7 +20556,7 @@
     "correctAnswer": "1948",
     "explanation": "Bu İtalyan Yeni Gerçekçilik filmi 1948'de gösterime girdi ve bu akımın en önemli eserlerinden biri olarak kabul edilir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20624,7 +20624,7 @@
     "correctAnswer": "Alfred Hitchcock",
     "explanation": "Alfred Hitchcock, 1927'de gösterime giren bu sessiz filmin yönetmenidir ve onun ilk dönem işlerinden biri olarak kabul edilir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20692,7 +20692,7 @@
     "correctAnswer": "Akira Kurosawa",
     "explanation": "Akira Kurosawa, 1950'de gösterime giren bu filmin yönetmenidir ve Japon sinemasını dünyaya tanıtmıştır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20726,7 +20726,7 @@
     "correctAnswer": "Asghar Farhadi",
     "explanation": "Asghar Farhadi, 2011'de gösterime giren bu filmin yönetmenidir ve film En İyi Yabancı Film Oscar'ını kazanmıştır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20760,7 +20760,7 @@
     "correctAnswer": "Alejandro González Iñárritu",
     "explanation": "Alejandro González Iñárritu, 2014'te gösterime giren bu filmin yönetmenidir ve En İyi Yönetmen Oscar'ını kazanmıştır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20930,7 +20930,7 @@
     "correctAnswer": "Vittorio De Sica",
     "explanation": "\"Bicycle Thieves\", 1948'de Vittorio De Sica tarafından çekilen ünlü bir neorealizm filmidir. Bu film, çalınan bir bisikletin peşine düşen bir baba ve oğlunun hikayesini anlatır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20964,7 +20964,7 @@
     "correctAnswer": "Roberto Rossellini",
     "explanation": "\"Rome, Open City\" 1945'te Roberto Rossellini tarafından çekilmiş ve İtalyan neorealizminin temel filmlerinden biri olarak kabul edilir. Film, İtalyanların Nazi işgaline karşı direnişini konu alır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -20998,7 +20998,7 @@
     "correctAnswer": "1960",
     "explanation": "\"Breathless\" 1960'ta Jean-Luc Godard tarafından çekilmiştir. Bu film, Fransız Yeni Dalgası'nın en ünlü filmlerinden biridir ve \"jump cut\" tekniğiyle tanınır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -21032,7 +21032,7 @@
     "correctAnswer": "Xortekî bi navê Antoine Doinel",
     "explanation": "\"The 400 Blows\", Paris'te yaşayan ve birçok sorunla karşı karşıya kalan Antoine Doinel adlı bir gencin hikayesini anlatır. Film, Fransız Yeni Dalgası'nın temel filmlerinden biridir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -21066,7 +21066,7 @@
     "correctAnswer": "Vittorio De Sica",
     "explanation": "\"Umberto D.\" 1952'de Vittorio De Sica tarafından çekilmiştir. Bu film, İtalyan neorealizminin son filmlerinden biridir ve yaşlı bir adam ile köpeğinin hikayesini anlatır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -21100,7 +21100,7 @@
     "correctAnswer": "Teknîka \"jump cut\"",
     "explanation": "\"Breathless\", \"jump cut\" tekniğiyle tanınır. Bu teknikte görüntüler aniden ve süreklilik olmadan kesilir ve Fransız Yeni Dalgası'nın işaretlerinden biri haline gelmiştir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -21134,7 +21134,7 @@
     "correctAnswer": "Bavekî û kurê wî",
     "explanation": "\"Bicycle Thieves\", çalınan bir bisikletin peşine düşen bir baba ve oğlunun hikayesini anlatır. Bu film, İtalyan neorealizminin en ünlü filmlerinden biridir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -21168,7 +21168,7 @@
     "correctAnswer": "François Truffaut",
     "explanation": "\"Jules and Jim\" 1962'de François Truffaut tarafından çekilmiştir. Bu film, Fransız Yeni Dalgası'nın ünlü filmlerinden biridir ve üç arkadaşın hikayesini anlatır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -21430,7 +21430,7 @@
   {
     "id": "ds_sinema_0179",
     "category": "Cîhan",
-    "prompt": "Kîjan derhênerî fîlmê belgefîlm ê \"Waltz with Bashir\" derxist?",
+    "prompt": "Kîjan derhênerî belgefîlmê \"Waltz with Bashir\" derxist?",
     "answers": [
       "Werner Herzog",
       "Errol Morris",
@@ -21440,7 +21440,7 @@
     "correctAnswer": "Ari Folman",
     "explanation": "İsrailli yönetmen Ari Folman, \"Waltz with Bashir\" belgesel filmini yayınladı. Bu film animasyon tekniğiyle yapılmıştır ve Folman'ın Lübnan Savaşı'ndaki deneyimleri hakkındadır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -21508,7 +21508,7 @@
     "correctAnswer": "Werner Herzog",
     "explanation": "Alman yönetmen Werner Herzog, \"Grizzly Man\" filmini yayınladı. Bu belgesel, boz ayılarla birlikte yaşayan Timothy Treadwell'in hayatı hakkındadır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -21702,7 +21702,7 @@
   {
     "id": "ds_sinema_0194",
     "category": "Cîhan",
-    "prompt": "Fîlmê belgefîlm ê \"Senna\" li ser jiyana kîjan ajokarê pêşbirkê ye?",
+    "prompt": "Belgefîlma Asif Kapadia ya sala 2010an li ser jiyana kîjan ajokarê pêşbirkê ye?",
     "answers": [
       "Ayrton Senna",
       "Michael Schumacher",
@@ -21722,7 +21722,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "\"Senna\" belgesel filmi hangi yarış pilotunun hayatı hakkındadır?",
+    "promptTr": "Asif Kapadia'nın 2010 tarihli belgeseli hangi yarış pilotunun hayatı hakkındadır?",
     "answersTr": [
       "Ayrton Senna",
       "Michael Schumacher",
@@ -21838,7 +21838,7 @@
   {
     "id": "ds_teknoloji_0073",
     "category": "Teknolojî",
-    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe komek nirxan tê bikaranîn?",
+    "prompt": "Di bernamekirinê de, kîjan struktur ji bo hilanîna çend nirxên bêdubare û bê rêz tê bikaranîn?",
     "answers": [
       "Guherbar",
       "Xelek",
@@ -21858,7 +21858,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Programlamada, bir değerler kümesi olabilen bir değeri saklamak için hangi kavram kullanılır?",
+    "promptTr": "Programlamada, birden fazla benzersiz ve sırasız değeri saklamak için hangi yapı kullanılır?",
     "answersTr": [
       "Değişken",
       "Döngü",
@@ -21906,7 +21906,7 @@
   {
     "id": "ds_teknoloji_0068",
     "category": "Teknolojî",
-    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe rast an derew tê bikaranîn?",
+    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekî ku dikare bibe rast an derew tê bikaranîn?",
     "answers": [
       "Guherbar",
       "Xelek",
@@ -21940,7 +21940,7 @@
   {
     "id": "ds_teknoloji_0071",
     "category": "Teknolojî",
-    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe navnîşek tîpan tê bikaranîn?",
+    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekî ku dikare bibe navnîşek tîpan tê bikaranîn?",
     "answers": [
       "Nivîs",
       "Guherbar",
@@ -22008,7 +22008,7 @@
   {
     "id": "ds_teknoloji_0060",
     "category": "Teknolojî",
-    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya rast an derew tê bikaranîn?",
+    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekî rast an derew tê bikaranîn?",
     "answers": [
       "Guherbar",
       "Xelek",
@@ -22086,7 +22086,7 @@
     "correctAnswer": "JOIN",
     "explanation": "JOIN, SQL'de bir koşula göre birden çok tablodan veri birleştirmek için kullanılır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -22154,7 +22154,7 @@
     "correctAnswer": "Lîsteya duqat-girêdayî",
     "explanation": "Çift bağlı liste, her öğede iki bağlantı içerir: biri önceki öğeye, diğeri sonraki öğeye.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -22290,7 +22290,7 @@
     "correctAnswer": "Dara duduyî",
     "explanation": "İkili ağaç, her düğümün en fazla iki çocuğa sahip olduğu bir ağaç türüdür.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -22426,7 +22426,7 @@
     "correctAnswer": "Derxistina taybetmendiyan",
     "explanation": "Özellik çıkarımı (feature extraction), modelin ham verilerden temel özellikleri otomatik olarak çıkardığı süreçtir. Derin öğrenmede, bu süreç sinir ağı katmanlarıyla yapılır ve manuel özellik çıkarımı ihtiyacını ortadan kaldırır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -22494,7 +22494,7 @@
     "correctAnswer": "Path",
     "explanation": "Yol (path), URL'de belirli bir sayfanın konumunu gösterir. Protokol erişim yöntemi, Alan Adı web sitesi adresi, Bağlantı Noktası ise iletişim kapısıdır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -22522,8 +22522,8 @@
     "answers": [
       "Bîra xebitandinê",
       "Bîra hundirîn",
-      "Pêvajoyê",
-      "Bataryayê"
+      "Pêvajo",
+      "Batarya"
     ],
     "correctAnswer": "Bîra hundirîn",
     "explanation": "Dahili bellek (depolama), görüntülerin, dosyaların ve uygulamaların kalıcı olarak saklanması için kullanılır. RAM geçicidir, işlemci hesaplamaları yapar ve pil enerji sağlar.",
@@ -22588,12 +22588,12 @@
     "category": "Teknolojî",
     "prompt": "Di têlefoneke jîr de, kîjan beş ji bo nîşandana wêneyan tê bikaranîn?",
     "answers": [
-      "Bataryayê",
-      "Pêvajoyê",
-      "Ekranê",
+      "Batarya",
+      "Pêvajo",
+      "Ekran",
       "Bîra hundirîn"
     ],
-    "correctAnswer": "Ekranê",
+    "correctAnswer": "Ekran",
     "explanation": "Ekran, görüntülerin ve metinlerin gösterilmesi için kullanılır. Pil enerji sağlar, işlemci hesaplamaları yapar ve dahili bellek verileri saklar.",
     "type": "multipleChoice",
     "difficulty": 1,
@@ -22656,10 +22656,10 @@
     "category": "Teknolojî",
     "prompt": "Di têlefoneke jîr de, kîjan sepan ji bo wergirtina nûçeyan tê bikaranîn?",
     "answers": [
-      "Calculator",
+      "Hesabker",
       "BBC News",
-      "Compass",
-      "Flashlight"
+      "Pûsûle",
+      "Çira"
     ],
     "correctAnswer": "BBC News",
     "explanation": "BBC News haber almak için kullanılan bir uygulamadır. Hesap makinesi hesaplar içindir, pusula yön bulma içindir ve fener ışık içindir.",
@@ -22692,7 +22692,7 @@
     "answers": [
       "Kamera",
       "Mîkrofon",
-      "Speaker",
+      "Bilindbêj",
       "Sensora tiliyan"
     ],
     "correctAnswer": "Kamera",
@@ -22824,7 +22824,7 @@
   {
     "id": "ds_teknoloji_0205",
     "category": "Teknolojî",
-    "prompt": "Di sala 1945an de, kîjan kes pêşniyar kir ku bername û dane di heman bîra komputerê de bêne hilanîn?",
+    "prompt": "Di sala 1945an de, kîjan kesî pêşniyar kir ku bername û dane di heman bîra komputerê de bêne hilanîn?",
     "answers": [
       "John von Neumann",
       "Alan Turing",
@@ -22834,7 +22834,7 @@
     "correctAnswer": "John von Neumann",
     "explanation": "John von Neumann, 1945'te programların ve verilerin aynı bilgisayar belleğinde saklanmasını önerdi; bu, von Neumann mimarisi olarak bilinir. Turing ve Zuse de bu alanda önemlidir, ancak bu kavramı kapsamlı bir şekilde von Neumann ortaya koymuştur.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -22868,7 +22868,7 @@
     "correctAnswer": "Ada Lovelace",
     "explanation": "Ada Lovelace, 1843'te Analitik Motor için ilk bilgisayar programı olarak kabul edilen bir algoritma yazdı. Babbage makineyi tasarladı, ancak algoritmayı Lovelace yazdı. Turing ve Hopper daha sonra geldi.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -23038,7 +23038,7 @@
     "correctAnswer": "Inertiya",
     "explanation": "Eylemsizlik, bir cismin hareket durumundaki değişime karşı direnç gösterme özelliğidir. Kütle bir cisimdeki madde miktarıdır, ağırlık yerçekimi kuvvetidir ve momentum ise kütle ile hızın çarpımıdır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -23140,7 +23140,7 @@
     "correctAnswer": "Momentûm",
     "explanation": "Momentum, bir cismin kütlesi ile hızının çarpımıdır ve p = mv olarak hesaplanır. Ağırlık yerçekimi kuvvetidir, kütle madde miktarıdır ve eylemsizlik ise hareket değişimine karşı dirençtir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -23242,7 +23242,7 @@
     "correctAnswer": "Qanûna termodînamîkê ya yekem",
     "explanation": "Termodinamiğin birinci yasası, enerjinin korunumu yasası olarak da bilinir ve enerjinin yoktan var edilemeyeceğini veya yok edilemeyeceğini, yalnızca dönüştürülebileceğini belirtir. Termodinamiğin ikinci yasası entropi ile ilgilidir ve Newton yasaları ise hareket ve kuvvetlerle ilgilidir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -23310,7 +23310,7 @@
     "correctAnswer": "Kondansator",
     "explanation": "Kondansatör, elektrik enerjisini iki plakası arasındaki elektrik alanında depolar ve daha sonra serbest bırakabilir. Direnç enerjiyi ısı olarak harcar, indüktör enerjiyi manyetik alanda depolar ve transformatör ise voltajı değiştirir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -23402,7 +23402,7 @@
   {
     "id": "ds_teknoloji_0281",
     "category": "Teknolojî",
-    "prompt": "Kîjan têgeh di matematîkê de ji bo rêjeya di navbera dora çemberê û çapa wê tê bikaranîn?",
+    "prompt": "Kîjan têgeh di matematîkê de ji bo rêjeya di navbera dora çemberê û çapa wê de tê bikaranîn?",
     "answers": [
       "Euler",
       "Fibonacci",
@@ -23480,7 +23480,7 @@
     "correctAnswer": "Tanjant",
     "explanation": "Teğet (tangent), bir çembere tek bir noktada değen doğrudur. Genellikle açıların oluşturulmasında kullanılır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -23504,7 +23504,7 @@
   {
     "id": "ds_cand_0033",
     "category": "Çand",
-    "prompt": "Kîjan peyv di Kurmancî de ji bo \"wedding\" tê bikaranîn?",
+    "prompt": "Kîjan peyv di Kurmancî de ji bo merasîma zewacê tê bikaranîn?",
     "answers": [
       "Dawet",
       "Cejn",
@@ -23512,7 +23512,7 @@
       "Pîroz"
     ],
     "correctAnswer": "Dawet",
-    "explanation": "Dawet, Kurmanci'de evliliğin kutlandığı törendir. Bu kelime özellikle evlilik töreni için kullanılır ve Kürt kültüründe önemli bir yere sahiptir.",
+    "explanation": "Dawet, Kurmancî'de evliliğin kutlandığı törendir. Bu kelime özellikle evlilik töreni için kullanılır ve Kürt kültüründe önemli bir yere sahiptir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -23524,7 +23524,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmanci'de \"düğün\" için hangi kelime kullanılır?",
+    "promptTr": "Kurmancî'de \"düğün\" için hangi kelime kullanılır?",
     "answersTr": [
       "Dawet",
       "Cejn",
@@ -23533,7 +23533,7 @@
     ],
     "correctAnswerTr": "Dawet",
     "explanationKu": "Dawet di Kurmancî de ew merasîm e ku zewac tê de tê pîrozkirin. Ev peyv bi taybetî ji bo merasîma zewacê tê bikaranîn û di çanda kurdî de cihekî girîng digire.",
-    "explanationTr": "Dawet, Kurmanci'de evliliğin kutlandığı törendir. Bu kelime özellikle evlilik töreni için kullanılır ve Kürt kültüründe önemli bir yere sahiptir."
+    "explanationTr": "Dawet, Kurmancî'de evliliğin kutlandığı törendir. Bu kelime özellikle evlilik töreni için kullanılır ve Kürt kültüründe önemli bir yere sahiptir."
   },
   {
     "id": "ds_cand_0039",
@@ -23592,7 +23592,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci), şimdiki zaman (süreklilik) için hangi fiil formu doğrudur?",
+    "promptTr": "Kürtçede (Kurmancî), şimdiki zaman (süreklilik) için hangi fiil formu doğrudur?",
     "answersTr": [
       "Ez çûm",
       "Ez diçim",
@@ -23626,7 +23626,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci), \"kirin\" fiilinin gelecek zamanı nasıldır?",
+    "promptTr": "Kürtçede (Kurmancî), \"kirin\" fiilinin gelecek zamanı nasıldır?",
     "answersTr": [
       "Ez dikim",
       "Ez ê bikim",
@@ -23946,11 +23946,11 @@
   {
     "id": "ds_cand_0265",
     "category": "Çand",
-    "prompt": "Di çanda kurdî de, kîjan xwarin bi gelemperî ji bo jina ku nû zayîye tê çêkirin?",
+    "prompt": "Di çanda kurdî de, kîjan xwarin bi gelemperî ji bo jina ku nû zayî ye tê çêkirin?",
     "answers": [
       "Kutilk",
       "Şorbe",
-      "Birinç",
+      "Birinc",
       "Nan"
     ],
     "correctAnswer": "Şorbe",
@@ -24090,7 +24090,7 @@
       "Malek"
     ],
     "correctAnswer": "Mala",
-    "explanation": "\"Mala\" dişil tekil izafedir. Kurmancicede, dişil bir isim bir sıfatla bağlandığında \"-a\" izafesi kullanılır. Örnek: \"mala mezin\" (büyük ev).",
+    "explanation": "\"Mala\" dişil tekil izafedir. Kurmancîde, dişil bir isim bir sıfatla bağlandığında \"-a\" izafesi kullanılır. Örnek: \"mala mezin\" (büyük ev).",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -24111,7 +24111,7 @@
     ],
     "correctAnswerTr": "Mala",
     "explanationKu": "\"Mala\" îzafeya mê a yekjimar e. Di kurmancî de, dema navdêrekî mê bi rengdêrekê ve tê girêdan, îzafeya \"-a\" tê bikaranîn. Mînak: \"mala mezin\" (büyük ev).",
-    "explanationTr": "\"Mala\" dişil tekil izafedir. Kurmancicede, dişil bir isim bir sıfatla bağlandığında \"-a\" izafesi kullanılır. Örnek: \"mala mezin\" (büyük ev)."
+    "explanationTr": "\"Mala\" dişil tekil izafedir. Kurmancîde, dişil bir isim bir sıfatla bağlandığında \"-a\" izafesi kullanılır. Örnek: \"mala mezin\" (büyük ev)."
   },
   {
     "id": "ds_ziman_1029",
@@ -24136,7 +24136,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Hangi cümle Kurmanci şimdiki zamanı gösterir?",
+    "promptTr": "Hangi cümle Kurmancî şimdiki zamanı gösterir?",
     "answersTr": [
       "Ew nanî dixwe",
       "Ew nanî xwar",
@@ -24753,7 +24753,7 @@
       "Kapı kapatılır",
       "Yemek hazırlanır",
       "Işık söndürülür",
-      "Cami okunur"
+      "Mevlit okunur"
     ],
     "correctAnswerTr": "Yemek hazırlanır",
     "explanationKu": "Di mêvanperweriya kurdî de, xwarin bi gelemperî ji bo mêvanan tê amadekirin da ku ew baş werin pêşwazîkirin. Derî girtin, çira vemirandin û mewlûd xwendin ne adetên mêvanperweriyê ne.",
@@ -24830,7 +24830,7 @@
   {
     "id": "ds_cand_0227",
     "category": "Çand",
-    "prompt": "Kîjan cejn bi gelemperî di 21ê Adarê de tê pîrozkirin? /",
+    "prompt": "Kîjan cejn bi gelemperî di 21ê Adarê de tê pîrozkirin?",
     "answers": [
       "Newroz",
       "Sersal",
@@ -24864,7 +24864,7 @@
   {
     "id": "ds_cand_0235",
     "category": "Çand",
-    "prompt": "Kîjan cejn bi gelemperî di 10ê Zilhicceyê de tê pîrozkirin? /",
+    "prompt": "Kîjan cejn bi gelemperî di 10ê Zilhicceyê de tê pîrozkirin?",
     "answers": [
       "Cejna Qurbanê",
       "Cejna Remezanê",
@@ -24898,7 +24898,7 @@
   {
     "id": "ds_cand_0233",
     "category": "Çand",
-    "prompt": "Kîjan cejn bi gelemperî ji bo bîranîna Îbrahîm Pêxember tê pîrozkirin? /",
+    "prompt": "Kîjan cejn bi gelemperî ji bo bîranîna Îbrahîm Pêxember tê pîrozkirin?",
     "answers": [
       "Cejna Qurbanê",
       "Cejna Remezanê",
@@ -24966,7 +24966,7 @@
   {
     "id": "ds_cand_0239",
     "category": "Çand",
-    "prompt": "Cejna Remezanê di kîjan meha qemerî de tê pîrozkirin? /",
+    "prompt": "Cejna Remezanê di kîjan meha qemerî de tê pîrozkirin?",
     "answers": [
       "Meha Şewalê",
       "Meha Remezanê",
@@ -25004,7 +25004,7 @@
     "prompt": "Bandora sereke ya dîrokî ya beşa kurdî ya Radyoya Êrîvanê (1955) li ser bîra muzîka kurdî çi bû?",
     "promptTr": "1955'te yayına başlayan Erivan Radyosu Kürtçe Servisi'nin müzik mirası üzerindeki en büyük tarihsel etkisi neydi?",
     "answers": [
-      "Qedexekirina amûrên gelerî û tenê bikaranîna muzîka klasîk a rûsî",
+      "Qedexekirina amûrên gelêrî û tenê bikaranîna muzîka klasîk a rûsî",
       "Qeydkirina kilamên devkî bi orkestrasyonê û belavkirina wan a li seranserê herêmê",
       "Tenê çêkirina operayên bi zimanê ermenî li ser dîroka kevnar",
       "Rakirina kevneşopiya dengbêjiyê û anîna muzîka elektronîk a rojavayî"
@@ -25036,9 +25036,9 @@
     "prompt": "Di salên 1990î de bandora komên wekî \"Koma Dengê Azadî\" û \"Koma Amed\" li ser muzîka nûjen a kurdî çi bû?",
     "promptTr": "1990'lı yıllarda Koma Dengê Azadî ve Koma Amed gibi müzik gruplarının Kürt müziğindeki yapısal yeniliği neydi?",
     "answers": [
-      "Têkelkirina melodiyên gelerî bi polîfonî û amûrên nûjen ên rojavayî re",
+      "Têkelkirina melodiyên gelêrî bi polîfonî û amûrên nûjen ên rojavayî re",
       "Rakirina zimanê kurdî û tenê gotina stranên îngilîzî",
-      "Qedexekirina tembûrê û tenê bikaranîna mûzîka elektronîk a bê peyv",
+      "Qedexekirina tembûrê û tenê bikaranîna muzîka elektronîk a bê peyv",
       "Tenê xwendina metnên dînî yên serdema navîn li mizgeftan"
     ],
     "answersTr": [
@@ -25047,7 +25047,7 @@
       "Bağlamayı yasaklayıp yalnızca sözsüz elektronik tekno müzik yapmak",
       "Yalnızca camilerde ortaçağ dini ilahilerini koro halinde okumak"
     ],
-    "correctAnswer": "Têkelkirina melodiyên gelerî bi polîfonî û amûrên nûjen ên rojavayî re",
+    "correctAnswer": "Têkelkirina melodiyên gelêrî bi polîfonî û amûrên nûjen ên rojavayî re",
     "correctAnswerTr": "Geleneksel halk melodilerini çokseslilik ve modern Batı enstrümanlarıyla sentezlemek",
     "explanation": "Koman di salên 90î de mûzîka kurdî bi rêbazên nûjen û polîfonîk ji nû ve ava kirin.",
     "explanationKu": "Koman di salên 90î de mûzîka kurdî bi rêbazên nûjen û polîfonîk ji nû ve ava kirin.",
@@ -25229,7 +25229,7 @@
     "promptTr": "Çağdaş Kürt sineması senaryolarında neden sık sık dengbêj anlatılarından ve figürlerinden beslenir?",
     "answers": [
       "Ji ber ku muzîka dengbêjiyê bi hêsanî bi piyanoyê tê guhertin",
-      "Ji ber ku qanûnên sînemayê bikaranîna zimanên din qedexe dike",
+      "Ji ber ku qanûnên sînemayê bikaranîna zimanên din qedexe dikin",
       "Ji ber ku di dengbêjiyê de tenê qala çîrokên zanistî tê kirin",
       "Ji ber ku bîra dîrokî û çavkaniya herî xurt a dramatîk a devkî ye"
     ],
@@ -25260,7 +25260,7 @@
     "prompt": "Fîlma kurt a \"Ax\" (Toprak, 1999) a \"Kazım Öz\" çîroka kalekî li gundekî valakirî çawa vedibêje?",
     "promptTr": "Kazım Öz'ün \"Ax\" (Toprak, 1999) kısa filminde boşaltılmış köyde tek başına kalan yaşlı adamın dramı nasıl anlatılır?",
     "answers": [
-      "Şahiya cejnekê ya li gundekî qelebalix bi mûzîk û reqsan",
+      "Şahiya cejnekê ya li gundekî qelebalix bi muzîk û reqsan",
       "Dîroka avakirina bendaveke mezin li ser rûbarê Firatê",
       "Pêşbirkeke çandiniyê di navbera cotkarên herêmê de",
       "Tenêtiya giran a mirovekî ku xaka xwe bernade li hemberî hilweşîn û bêdengiyê"
@@ -25293,7 +25293,7 @@
     "promptTr": "Haşim Aydemir'in \"14 Tîrmeh\" (2017) filminde cezaevi sahnelerindeki sinematografik dil neye dayanır?",
     "answers": [
       "Klostrofobiya zindanê, êşa giran a laşî û biryardariya îradeya mirov",
-      "Dîmenên geş ên peravên deryayê bi mûzîka şad",
+      "Dîmenên geş ên peravên deryayê bi muzîka şad",
       "Gera li nav muzexaneyên mezin ên Ewropayê bi hevalan re",
       "Fîlmeke komedî ya li ser jiyana karsazên li otêlên luks"
     ],
@@ -25311,7 +25311,7 @@
     "metadata": {
       "reviewStatus": "approved",
       "sourceReference": "https://bianet.org/haber/diyarbakir-cezaevi-nde-direnisin-oykusu-14-temmuz-188876",
-      "sourceTitle": "Diyarbakır Cezaevi’nde Direnişin Öyküsü: 14 Temmuz",
+      "sourceTitle": "Diyarbakır Cezaevi'nde Direnişin Öyküsü: 14 Temmuz",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -25375,7 +25375,7 @@
     "metadata": {
       "reviewStatus": "approved",
       "sourceReference": "https://doi.org/10.4000/ejts.4064",
-      "sourceTitle": "The Shared Political Production of ‘the East’ as a ‘Resistant’ Territory and Cultural Sphere in the Kemalist Era, 1923-1938",
+      "sourceTitle": "The Shared Political Production of 'the East' as a 'Resistant' Territory and Cultural Sphere in the Kemalist Era, 1923-1938",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -25455,7 +25455,7 @@
       "Hemû firokeyên şer ên pêwîst ji aliyê eşîra Barzan ve ji derve hatin anîn",
       "Sîstema aborî ya komarê tenê bi rêya bazirganiya petrola Barzan pêk hat",
       "Mele Mistefa Barzanî û pêşmergeyên wî bûn bingeha hêza leşkerî ya komarê",
-      "Hemû qanûnên destûra komarê ji aliyê rûspiyên Barzan ve hatin nivîsandin /"
+      "Hemû qanûnên destûra komarê ji aliyê rûspiyên Barzan ve hatin nivîsandin"
     ],
     "answersTr": [
       "Gerekli tüm savaş uçaklarının Barzan aşireti tarafından yurt dışından temin edilmesi",
@@ -25487,7 +25487,7 @@
       "Sînorên navdewletî yên Iraqê ji nû ve bi fermî guhert",
       "Herêma qedexeya firînê li bakur ava kir û vegera penaberan hêsantir kir",
       "Hemû rêveberiyên herêmî bi fermî betal kir",
-      "Kontrola hemû dergehên sînorî rasterast girt destê xwe /"
+      "Kontrola hemû dergehên sînorî rasterast girt destê xwe"
     ],
     "answersTr": [
       "Irak'ın uluslararası sınırlarını resmen yeniden belirledi",
@@ -25677,7 +25677,7 @@
     "promptTr": "\"Event Sourcing\" mimarisinde bir nesnenin veya sistemin güncel durumu (state) nasıl elde edilir?",
     "answers": [
       "Bi xwendina yek qeyda herî dawî ya ku di tabloyeke statîk a SQLê de maye",
-      "Bi texmînkirina encamê bi riya modelekî fêrbûna makîneyê ya hêsan",
+      "Bi texmînkirina encamê bi riya modeleke fêrbûna makîneyê ya hêsan",
       "Bi girtina kopiyeke fîzîkî ya hemû bîrgeha RAMê li ser dîskeke derve",
       "Bi ji nû ve meşandina hemû bûyerên dîrokî yên ku heta niha li pey hev qewimîne"
     ],
@@ -26225,7 +26225,7 @@
       "Hard disk",
       "RAM",
       "CPU",
-      "Karta dengê"
+      "Karta dengî"
     ],
     "correctAnswer": "Hard disk",
     "explanation": "Sabit disk, verileri kalıcı olarak depolamak için kullanılır. RAM, bilgisayar kapatıldığında boşalan geçici bellektir, CPU işlem yapar ve ses kartı ses içindir.",
@@ -26392,7 +26392,7 @@
     "category": "Teknolojî",
     "prompt": "Kîjan cîhaz ji bo girêdana komputerê bi înternetê re tê bikaranîn?",
     "answers": [
-      "Karta dengê",
+      "Karta dengî",
       "Karta grafîkê",
       "Karta bîrê",
       "Karta torê"
@@ -26667,9 +26667,9 @@
       "Tora neuralî ya pêşverû",
       "Tora neuralî ya dubare",
       "Tora neuralî ya belavbûyî",
-      "Tora neuralî ya konvulsiyonî"
+      "Tora neuralî ya konvolusyonî"
     ],
-    "correctAnswer": "Tora neuralî ya konvulsiyonî",
+    "correctAnswer": "Tora neuralî ya konvolusyonî",
     "explanation": "Evrişimli sinir ağı (CNN) özellikle görüntü işleme için tasarlanmıştır. Evrişim katmanlarını kullanarak kenarlar ve şekiller gibi görsel özellikleri görüntülerden çıkarır ve görüntü tanıma için çok etkilidir.",
     "type": "multipleChoice",
     "difficulty": 2,
@@ -26696,7 +26696,7 @@
   {
     "id": "ds_sinema_0200",
     "category": "Cîhan",
-    "prompt": "Kîjan belgeselvanê amerîkî fîlma \"The Act of Killing\" derxist?",
+    "prompt": "Kîjan belgefîlmçêkerê amerîkî fîlma \"The Act of Killing\" derxist?",
     "answers": [
       "Joshua Oppenheimer",
       "Adam Curtis",
@@ -26764,7 +26764,7 @@
   {
     "id": "ds_sinema_0208",
     "category": "Cîhan",
-    "prompt": "Di fîlma \"Schindler's List\" a Steven Spielberg de, kîjan aktor rola Oskar Schindler lîstiye?",
+    "prompt": "Di fîlma \"Schindler's List\" a Steven Spielberg de, kîjan aktorî rola Oskar Schindler lîstiye?",
     "answers": [
       "Liam Neeson",
       "Ben Kingsley",
@@ -26808,7 +26808,7 @@
     "correctAnswer": "1950",
     "explanation": "\"Rashomon\" filmi 1950'de gösterime girdi ve sinema tarihinin en önemli filmlerinden biri oldu. Bu film, hikayeyi farklı bakış açılarından anlatma konusundaki yenilikçi tekniğiyle tanınır. Kurosawa bu filmle Venedik Film Festivali'nde Altın Aslan Ödülü'nü kazandı.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -26842,7 +26842,7 @@
     "correctAnswer": "Flashforward",
     "explanation": "İleri sıçrama, gelecekte meydana gelmiş bir olayı gösterir. Geriye dönüş geçmişi gösterir, gelişme çatışma aşamasıdır ve sonsöz ise sondur.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -26852,7 +26852,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Gelecekte meydana gelmiş bir olayı göstermek için hangi terim kullanılır?",
+    "promptTr": "Gelecekte meydana gelecek bir olayı göstermek için hangi terim kullanılır?",
     "answersTr": [
       "Geriye dönüş",
       "Gelişme",
@@ -26876,7 +26876,7 @@
     "correctAnswer": "UDP",
     "explanation": "UDP (Kullanıcı Veri Birimi Protokolü), verileri hızlı bir şekilde iletmek için kullanılır, ancak tüm paketlerin hedefe ulaşacağını garanti etmez. TCP güvenilirdir, IP adresleme ve HTTP web siteleri içindir.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -26904,7 +26904,7 @@
     "answers": [
       "Resolver tenê navnîşanên MAC tomar dike, Authoritative daneyên HTTP dişîne",
       "Resolver tenê di komputerên kesane de heye, Authoritative routera herêmî ye",
-      "Resolver geroka înternetê bixwe ye, Authoritative kerta tora bêtêl e",
+      "Resolver geroka înternetê bixwe ye, Authoritative karta tora bêtêl e",
       "Resolver li ser navê klîentê hiyerarşiyê digere, Authoritative qeyda teqez a navê domênê digire"
     ],
     "correctAnswer": "Resolver li ser navê klîentê hiyerarşiyê digere, Authoritative qeyda teqez a navê domênê digire",
@@ -26971,8 +26971,8 @@
     "prompt": "Kîjan teknolojî ji bo girêdana bêtêl a înternetê tê bikaranîn?",
     "answers": [
       "Ethernet",
-      "Fiber optic",
-      "Coaxial cable",
+      "Fîbera optîkî",
+      "Kabloya koaksîyel",
       "Wi-Fi"
     ],
     "correctAnswer": "Wi-Fi",
@@ -27046,7 +27046,7 @@
     "correctAnswer": "Sertîfîkaya dîjîtal",
     "explanation": "Dijital sertifika, kullanıcının veya sunucunun kimliğini doğrular ve veri güvenliği için kullanılır.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -27148,7 +27148,7 @@
     "correctAnswer": "Ciphertext",
     "explanation": "Ciphertext şifrelenmiş veridir; yetkisiz kişiler için okunamaz.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 3,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",

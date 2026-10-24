@@ -56,30 +56,23 @@ await page.waitForFunction(
   () => document.querySelectorAll('flutter-view').length > 0,
   { timeout: 30_000 },
 );
+// 2026-10-24: yeni kurulumda varsayılan dil Türkçe; karşılamanın tepesindeki
+// "Uygulama dili · Zimanê sepanê" seçicisinden Kurmancî seçilir. Yaş kutusu
+// kalktı: "Sonraki/Bidomîne" ilk dokunuşta etkindir.
+await expectText('Uygulama dili · Zimanê sepanê');
+const kuLanguage = page.getByRole('button', { name: 'Kurmancî', exact: true });
+await kuLanguage.waitFor({ state: 'visible', timeout: 15_000 });
+await kuLanguage.click();
 // Slogan (onbTagline) kalktı; ilk sayfanın gövde cümlesi (onbLearnBody).
 await expectText('Bi pirsên kurt peyvan hîn bibe, çandê nas bike.');
 await screenshot('01-onboarding');
 
-const ageGateLabel = 'Ez ji 13 salî mezintir im';
-const ageGate = page.getByRole('checkbox', { name: ageGateLabel });
-await ageGate.waitFor({ state: 'visible', timeout: 15_000 });
-await ageGate.click();
-await page.waitForFunction(
-  (label) =>
-    [...document.querySelectorAll('[role="checkbox"]')].some(
-      (node) =>
-        node.getAttribute('aria-label') === label &&
-        node.getAttribute('aria-checked') === 'true',
-    ),
-  ageGateLabel,
-  { timeout: 15_000 },
-);
 await clickText('Bidomîne');
 await clickText('Dest pê bike');
 await expectText('Bi xêr hatî ZanKurdê');
 await screenshot('02-sign-in');
 
-await clickText('Wek mêvan bidomîne');
+await clickText('Niha bilîze');
 await expectText('Navê te di lîstikê de çi be?');
 const nameInput = page.getByRole('textbox');
 if ((await nameInput.count()) !== 1) {
@@ -122,20 +115,24 @@ await screenshot('06-topics');
 // yanlış sekmeye gitmeyi yakalar.
 await page.mouse.click(145, 808);
 await page.waitForTimeout(1_200);
-await expectContains('Pêşbirka bilez');
+await expectContains('Pêşbirka zindî');
 if (expectSocialBackend) {
-  const quickDuel = page.getByRole('button', { name: /Pêşbirka bilez/ });
+  const quickDuel = page.getByRole('button', { name: /Pêşbirka zindî/ });
   await quickDuel.waitFor({ state: 'visible', timeout: 15_000 });
   await quickDuel.click();
+  // Canlı düello artık önce rakip seçtirir: Rasthatî = eski hızlı eşleşme.
+  const randomOpponent = page.getByRole('button', { name: /Rasthatî/ });
+  await randomOpponent.waitFor({ state: 'visible', timeout: 15_000 });
+  await randomOpponent.click();
   await page.waitForTimeout(900);
   await expectContains('Hevrikiya rasthatî');
   await screenshot('07-matchmaking');
   await page.mouse.click(20, 28);
   await page.waitForTimeout(900);
-  await expectContains('Pêşbirka bilez');
+  await expectContains('Pêşbirka zindî');
 } else {
   await expectContains('Pêşkêşkar negihîştbar e');
-  const quickDuel = page.getByRole('button', { name: /Pêşbirka bilez/ });
+  const quickDuel = page.getByRole('button', { name: /Pêşbirka zindî/ });
   await quickDuel.waitFor({ state: 'visible', timeout: 15_000 });
   if (await quickDuel.isEnabled()) {
     throw new Error('Çevrimdışı smoke turunda hızlı düello etkin olmamalı.');

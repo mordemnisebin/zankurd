@@ -13,6 +13,14 @@
 /// kartının alt satırı hiçbir yerde `find.text` ile aranmıyordu; kontrast
 /// hiçbir yerde ölçülmüyordu.
 ///
+/// ## 2026-10-19 sadeleşme (ikinci tur):
+///
+/// Düello kartı sahne kartı (Boyax degrade) değil sakin yüzey kartı
+/// (`SahneSurfaceCard`); yarış kimliği üst etiketin rengindedir. Oda
+/// eylemlerinin açıklama satırı ("Arkadaşlarını kodla çağır") kalktı: iki
+/// düğme ("Oda kur", "Kodla katıl") kendini anlatıyor. Bekçiler artık
+/// bunların YOKLUĞUNU sabitler.
+///
 /// ## 2026-09-29 Şahnê:
 ///
 /// 2026-09-27'deki yeşil degrade + ışık hüzmesi/konfeti sahnesi Şahnê'ye
@@ -84,10 +92,26 @@ void main() {
 
           final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
           expect(hero, findsOneWidget, reason: why);
-          final card = tester.widget<SahneStageCard>(
-            find.descendant(of: hero, matching: find.byType(SahneStageCard)),
+          // 2026-10-20 renk ve canlılık: Boyax gradyanlı DOLU kahraman
+          // (beyaz yüzey kartı değil).
+          expect(
+            find.descendant(of: hero, matching: find.byType(SahneSurfaceCard)),
+            findsNothing,
+            reason: why,
           );
-          expect(card.role, SahneRole.race, reason: why);
+          expect(
+            find.descendant(
+              of: hero,
+              matching: find.byWidgetPredicate(
+                (w) =>
+                    w is DecoratedBox &&
+                    w.decoration is BoxDecoration &&
+                    (w.decoration as BoxDecoration).gradient is LinearGradient,
+              ),
+            ),
+            findsOneWidget,
+            reason: why,
+          );
           expect(
             find.descendant(of: hero, matching: find.byType(SahneVsEmblem)),
             findsNothing,
@@ -107,7 +131,7 @@ void main() {
           expect(
             find.descendant(
               of: hero,
-              matching: find.text(isKu ? 'Pêşbirka bilez' : 'Hızlı düello'),
+              matching: find.text(isKu ? 'Pêşbirka zindî' : 'Canlı düello'),
             ),
             findsOneWidget,
             reason: why,
@@ -182,7 +206,7 @@ void main() {
       final note = isKu
           ? 'Hevalên xwe bi kodê vexwîne'
           : 'Arkadaşlarını kodla çağır';
-      expect(find.text(note), findsOneWidget, reason: 'ku=$isKu');
+      expect(find.text(note), findsNothing, reason: 'ku=$isKu');
     }
 
     // 2026-09-30 simülatör: kilitliyken açıklama satırları normal kalır;
@@ -195,7 +219,7 @@ void main() {
         find.text(
           isKu ? 'Hevalên xwe bi kodê vexwîne' : 'Arkadaşlarını kodla çağır',
         ),
-        findsOneWidget,
+        findsNothing,
       );
       expect(
         find.text(isKu ? 'Pêşkêşkar negihîştbar e' : 'Sunucuya ulaşılamadı'),
@@ -205,14 +229,13 @@ void main() {
     }
   });
 
-  // 2026-09-30 simülatör: kilitliyken "Rakip bul", "Oda kur", "Kodla katıl" ve
+  // 2026-09-30 simülatör: kilitliyken "Rakip bul", "Oda" ve
   // "Günün soruları" dokunulunca hiçbir şey yapmıyordu (sessiz ölü düğme).
   // Bekçi: dördü de pasif kalır (tıklanabilir bildirilmez) ve dokunulunca
   // kısa bir SnackBar "Sunucuya ulaşılamadı" der.
   for (final key in [
     'play-hub-quick-duel-cta',
-    'play-hub-create-room',
-    'play-hub-join-room',
+    'play-hub-room',
     'play-hub-daily-contest',
   ]) {
     testWidgets('kilitliyken $key dokunulunca geri bildirim verir', (
@@ -266,7 +289,8 @@ void main() {
       await tester.pumpAndSettle();
 
       final key = find.byKey(const ValueKey('play-hub-daily-contest'));
-      expect(tester.widget<SahneListRow>(key).role, SahneRole.race);
+      await tester.scrollUntilVisible(key, 200);
+      expect(tester.widget<SahneModeTile>(key).role, SahneRole.race);
       expect(
         find.descendant(of: key, matching: find.byType(SahneBadge)),
         findsNothing,

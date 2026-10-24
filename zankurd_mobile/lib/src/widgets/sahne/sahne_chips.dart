@@ -21,7 +21,15 @@ class SahneStatChip extends StatelessWidget {
     this.semanticLabel,
     this.onTap,
     this.gold = false,
+    this.tint,
+    this.foreground,
   });
+
+  /// Renkli çip (2026-10-20 renk ve canlılık işi): üst çubuktaki seri alevi
+  /// ve jeton çipi nötr gri yüzeyde duruyordu; verilirse dolgu ve yazı bu
+  /// renklerle çizilir ([gold]un yerine geçer).
+  final Color? tint;
+  final Color? foreground;
 
   /// Glif (genelde `SahneGlyph`, 20).
   final Widget leading;
@@ -34,8 +42,8 @@ class SahneStatChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final visual = SahneTappable(
-      shape: SahneShape.m,
-      color: gold ? t.goldTint : t.s2,
+      shape: SahneShape.chamferM,
+      color: tint ?? (gold ? t.goldTint : t.s2),
       onTap: onTap,
       child: ConstrainedBox(
         // a11y-tap-target: noninteractive — görsel çip tabanı; dokunma
@@ -55,7 +63,7 @@ class SahneStatChip extends StatelessWidget {
                 child: Text(
                   label,
                   style: SahneType.captionStrong.copyWith(
-                    color: gold ? t.goldTx : t.tx,
+                    color: foreground ?? (gold ? t.goldTx : t.tx),
                     fontFeatures: const [FontFeature.tabularFigures()],
                   ),
                 ),
@@ -211,18 +219,26 @@ class _FitRailScope extends InheritedWidget {
 /// rol rengi. Ekran okuyucu seçili durumunu okur. Metin sığmazsa sarar,
 /// çip uzar.
 class SahneRailChip extends StatelessWidget {
+  /// Seçili ve seçilmemiş çipin halka kalınlığı (ikisi AYNI: boyut oynamaz).
+  static const double railChipRing = 1;
+
   const SahneRailChip({
     super.key,
     required this.label,
     required this.selected,
     required this.onTap,
     this.role = SahneRole.learn,
+    this.vivid = false,
   });
 
   final String label;
   final bool selected;
   final VoidCallback? onTap;
   final SahneRole role;
+
+  /// Seçili çip rolün DOLU renginde ve beyaz yazılı olur (2026-10-20 renk ve
+  /// canlılık, B): öğrenme konu rayı Zimrût.
+  final bool vivid;
 
   /// Dokunma kutusunun görselden her yandaki payı.
   static const double inset = (sahneTapTarget - 44) / 2;
@@ -232,15 +248,24 @@ class SahneRailChip extends StatelessWidget {
     final t = SahneTokens.of(context);
     final fitted = SahneRail.isFitted(context);
     final onSurface = SahneOnSurface.of(context);
+    final roleFill = vivid ? t.roleFill(role) : null;
     final text = Text(
       label,
       textAlign: TextAlign.center,
       maxLines: fitted ? 1 : null,
       style: SahneType.captionStrong.copyWith(
-        color: selected ? t.roleText(role) : t.tx2,
+        color: selected
+            ? (roleFill != null ? SahneVivid.onFill : t.selTx)
+            : t.tx2,
+        fontWeight: selected ? FontWeight.w800 : FontWeight.w700,
       ),
     );
-    final fill = selected ? t.roleTint(role) : (onSurface ? t.s2 : t.s1);
+    // Tur 10b (Gemini + ChatGPT): seçili olmayan çip s1 (kartla aynı beyaz)
+    // idi, düz metin gibi duruyordu; seçili olan da ders çerçevesi ve Başla
+    // ile aynı güçlü turuncuyu (2 px) paylaşıyordu. Seçilmemiş çip artık
+    // nötr dolgulu (s2); seçili çip turuncu metin + açık turuncu dolgu + 1 px
+    // çerçeve: ana eylemden sakin.
+    final fill = selected ? (roleFill ?? t.selFill) : (onSurface ? t.s3 : t.s2);
     // Seçili olmayan çip de AYNI kalınlıkta halka taşır; halkası kendi
     // zeminin rengindedir (görünmez). Eskiden 1 px'lik soluk bir kenar vardı:
     // gündüzde sayfa zeminiyle birleşip beyaz alanı küçültüyor, seçilince
@@ -248,8 +273,8 @@ class SahneRailChip extends StatelessWidget {
     // İki hâlde de dolu alan aynı 44'ü kaplar; fark yalnız halkanın rengi.
     final shape = SahneShape.withSide(
       SahneShape.m,
-      selected ? t.roleText(role) : fill,
-      width: SahneRing.r2,
+      selected ? (roleFill ?? t.selLine) : fill,
+      width: railChipRing,
     );
     return Semantics(
       container: true,
@@ -322,7 +347,7 @@ class SahneBadge extends StatelessWidget {
     final t = SahneTokens.of(context);
     final (bg, fg) = switch (tone) {
       SahneBadgeTone.race => (t.raceTint, t.raceTx),
-      SahneBadgeTone.learn => (t.learnTint, t.learnTx),
+      SahneBadgeTone.learn => (t.eyebrowFill, t.eyebrowTx),
       SahneBadgeTone.gold => (t.goldTint, t.goldTx),
       SahneBadgeTone.soon => (t.s2, t.tx2),
     };
@@ -340,8 +365,13 @@ class SahneBadge extends StatelessWidget {
             child: Center(
               widthFactor: 1,
               heightFactor: 1,
+              // Rozet tek satırdır: dar satırda "Mêv/anda/r" diye harf harf
+              // kırılıyordu (2026-10-23 simülatör, oda lobisi). Sığmazsa kısalır.
               child: Text(
                 label,
+                maxLines: 1,
+                softWrap: false,
+                overflow: TextOverflow.ellipsis,
                 style: SahneType.captionStrong.copyWith(color: fg),
               ),
             ),
@@ -395,16 +425,16 @@ class SahneStatusBadge extends StatelessWidget {
       false => (t.errTint, t.errTx, AppIcons.xmark),
       null => (t.s2, t.tx2, AppIcons.hourglass),
     };
-    final icon = Icon(glyph, size: 16, color: fg);
+    final icon = Icon(glyph, size: square ? 22 : 16, color: fg);
     final Widget body;
     if (square) {
       body = DecoratedBox(
         decoration: ShapeDecoration(color: bg, shape: SahneShape.s),
-        child: SizedBox.square(dimension: 28, child: Center(child: icon)),
+        child: SizedBox.square(dimension: 36, child: Center(child: icon)),
       );
     } else {
       body = DecoratedBox(
-        decoration: ShapeDecoration(color: bg, shape: SahneShape.m),
+        decoration: ShapeDecoration(color: bg, shape: SahneShape.chamferM),
         child: ConstrainedBox(
           // a11y-tap-target: noninteractive — durum rozeti; salt görsel,
           // dokunma hedefi değil.
@@ -432,5 +462,254 @@ class SahneStatusBadge extends StatelessWidget {
       );
     }
     return Semantics(label: label, excludeSemantics: true, child: body);
+  }
+}
+
+/// Seçim çipi — bir gruptan seçme (oda kurma: konu, soru sayısı, süre,
+/// oyuncu, ücret). Seçili = ortak seçili stili (`SahneTokens.selFill/selLine/selTx`: turuncu ton + çizgi + koyu turuncu metin); seçilmemiş = saydam
+/// zemin + ince çerçeve.
+///
+/// 2026-10-19 sadeleşme (ikinci tur): Material `ChoiceChip`/`FilterChip`
+/// seçili ve seçilmemiş hâli yalnız ton farkıyla ayırıyor, doğal genişlikte
+/// tırtıklı satırlar çiziyordu. Bu bileşen bulunduğu hücreyi doldurur
+/// (çağıran eşit sütunlu ızgara kurar), en az 48 yüksekliktedir, metin
+/// ortalanır. 2026-10-19 son rötuş: metin tek satırdır (uzun ad küçülerek
+/// sığar; "Bilim ve Düşünce" iki satıra sarıp satırı uzatıyordu); yalnız
+/// büyük yazıda (≥ %150) iki satıra izin verilir ve çağıranın ızgarası aynı
+/// satırdaki bütün çipleri eşit boya getirir. Ekran okuyucu seçili durumu okur.
+class SahnePickChip extends StatelessWidget {
+  const SahnePickChip({
+    super.key,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+    this.leading,
+    this.semanticLabel,
+    this.locked = false,
+    this.looked = false,
+    this.minHeight = sahneTapTarget,
+  });
+
+  /// "Bakılan" kilitli seçenek: dokunulup eksik notu açıkken kehribar çerçeve
+  /// (seçili DEĞİL; seçili çip yine ayrı kalır). Not kapanınca söner.
+  final bool looked;
+
+  final String label;
+
+  /// En az yükseklik (varsayılan 48). Yoğun sayfalarda (oda kurma) 44'e
+  /// inilir; 44 dokunma tabanıdır.
+  final double minHeight;
+
+  /// Kilitli seçenek (ör. jetonu yetmeyen oda ücreti): seçilemez ama okunur.
+  /// Önünde kilit ikonu, gri (`tx3`) metin ve çerçeve; dokunuş yine
+  /// [onTap]'a gider (çağıran "N jeton eksik" bilgisini gösterir).
+  final bool locked;
+
+  /// Ekran okuyucunun okuyacağı tam ad; [label] kısaltılmışsa verilir.
+  final String? semanticLabel;
+  final bool selected;
+  final VoidCallback? onTap;
+
+  /// Metnin önündeki küçük glif (ör. jeton).
+  final Widget? leading;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final large = MediaQuery.textScalerOf(context).scale(14) >= 21;
+    final shape = SahneShape.withSide(
+      SahneShape.m,
+      // Seçilmemiş çerçeve ikincil metin tonu (tx3 değil): tx3 çerçeve ve
+      // yazı birlikte "devre dışı" okunuyordu (tur 6, 5 denetçi). Yazı tam
+      // opak ana metin rengi, yükseklik >= 48 (>= 44 mantıksal).
+      selected
+          ? t.selLine
+          : (looked ? t.shortfallTx : (locked ? t.tx3 : t.tx2)),
+      width: (selected || looked) ? SahneRing.r2 : 1,
+    );
+    return Semantics(
+      container: true,
+      button: true,
+      selected: selected,
+      label: semanticLabel ?? label,
+      onTap: onTap,
+      excludeSemantics: true,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: minHeight),
+        child: SahneTappable(
+          shape: shape,
+          color: selected ? t.selFill : Colors.transparent,
+          onTap: onTap,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SahneSpace.x2,
+                  vertical: SahneSpace.x2,
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (locked) ...[
+                        ExcludeSemantics(
+                          child: Icon(
+                            AppIcons.lock,
+                            size: 14,
+                            color: t.disabledFg,
+                          ),
+                        ),
+                        const SizedBox(width: SahneSpace.x1),
+                      ] else if (leading != null) ...[
+                        leading!,
+                        const SizedBox(width: SahneSpace.x1),
+                      ],
+                      Flexible(
+                        child: () {
+                          final text = Text(
+                            label,
+                            textAlign: TextAlign.center,
+                            maxLines: large ? 2 : 1,
+                            softWrap: large,
+                            overflow: TextOverflow.ellipsis,
+                            style: SahneType.captionStrong.copyWith(
+                              color: selected
+                                  ? t.selTx
+                                  : (locked ? t.disabledFg : t.tx),
+                              fontWeight: selected
+                                  ? FontWeight.w800
+                                  : FontWeight.w600,
+                            ),
+                          );
+                          // Normal yazıda tek satır: uzun ad ("Bilim ve Düşünce")
+                          // küçülerek sığar, satır boyu bozulmaz.
+                          return large
+                              ? text
+                              : FittedBox(fit: BoxFit.scaleDown, child: text);
+                        }(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              if (selected)
+                // Kurul 4. tur: seçili hâl renge ek olarak ✓ ile de söylenir.
+                PositionedDirectional(
+                  top: 4,
+                  end: 4,
+                  child: Icon(AppIcons.check, size: 12, color: t.selTx),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Kaydırma alanının alt kenarında 24 px'lik yumuşak solma: ayracın hemen
+/// üstünde yarım kalan satır (oyuncu sayısı çipleri) "kesilmiş" değil
+/// "kayıyor" diye okunur. Renk, sayfa yüzeyi ([color] (AppPanel dolgusu)) ile aynıdır. Dokunuşu geçirir.
+///
+/// 2026-10-19 cila: solma yalnız altta GERÇEKTEN içerik kaldıkça çizilir.
+/// Sona gelince de çizilince sondaki ipucu metni ("Oda sahibi en az 2
+/// oyuncuyla…") yüzeye karışıp soluk, düşük karşıtlıklı okunuyordu.
+class SahneBottomFade extends StatefulWidget {
+  const SahneBottomFade({
+    super.key,
+    required this.child,
+    required this.color,
+    this.height = 24,
+    this.topHeight = 0,
+  });
+
+  final Widget child;
+
+  /// Üst kenarda içerik başlığın altına girerken çizilen opak-saydam bant
+  /// (0 = yok). Yarım kesik çip satırının ince kenarını söndürür.
+  final double topHeight;
+
+  /// Kaydırma alanının arkasındaki yüzey rengi.
+  final Color color;
+
+  /// Solma bandının yüksekliği (varsayılan 24).
+  final double height;
+
+  @override
+  State<SahneBottomFade> createState() => _SahneBottomFadeState();
+}
+
+class _SahneBottomFadeState extends State<SahneBottomFade> {
+  bool _more = true;
+  bool _before = false;
+
+  bool _onMetrics(ScrollMetrics m) {
+    final more = m.extentAfter > 1;
+    final before = m.extentBefore > 1;
+    if (more != _more || before != _before) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          setState(() {
+            _more = more;
+            _before = before;
+          });
+        }
+      });
+    }
+    return false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final surface = widget.color;
+    return NotificationListener<ScrollMetricsNotification>(
+      onNotification: (n) => _onMetrics(n.metrics),
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (n) => _onMetrics(n.metrics),
+        child: Stack(
+          children: [
+            widget.child,
+            if (_before && widget.topHeight > 0)
+              Positioned(
+                key: const ValueKey('sahne-fade-top'),
+                left: 0,
+                right: 0,
+                top: 0,
+                height: widget.topHeight,
+                child: IgnorePointer(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [surface, surface.withValues(alpha: 0)],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            if (_more)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: widget.height,
+                child: IgnorePointer(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [surface.withValues(alpha: 0), surface],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
   }
 }

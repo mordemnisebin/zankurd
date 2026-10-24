@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart' show CustomSemanticsAction;
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -10,6 +11,7 @@ import '../l10n/strings.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
+import '../models/avatar_identity.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/room_chat.dart';
 import '../utils/app_route.dart';
@@ -21,7 +23,10 @@ import '../widgets/player_moderation_button.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
+import 'room/room_invite_friends_sheet.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../utils/number_format.dart';
+import '../services/social_push_prompt.dart';
 
 /// Aynı kimlikli oyuncuyu TEK satıra indirir.
 ///
@@ -69,15 +74,24 @@ class RoomScreen extends StatefulWidget {
   const RoomScreen({
     required this.repository,
     required this.initialRoom,
+    this.autoInvite = false,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final GameRoom initialRoom;
 
+  /// "Canlı düello → Arkadaş" ile kurulan oda: lobi açılınca arkadaş davet
+  /// sayfası kendiliğinden açılır (sunucuda oda daveti yoksa açılmaz; kod
+  /// paylaşımı düğmesi lobide durur).
+  final bool autoInvite;
+
   @override
   State<RoomScreen> createState() => _RoomScreenState();
 }
+
+/// Lobide görünen boş koltuk satırı üst sınırı.
+const int _kMaxEmptySeatRows = 4;
 
 class _RoomScreenState extends State<RoomScreen> {
   /// Sohbet paneli açık mı. Kapalı başlar: aa42044'ün kalabalık kaygısı
@@ -139,6 +153,7 @@ class _RoomScreenState extends State<RoomScreen> {
   bool starting = false;
   bool quizOpened = false;
   bool _leaving = false;
+  bool _leaveFailed = false;
   bool _terminalHandled = false;
   StreamSubscription? _playersSub;
   StreamSubscription? _statusSub;
@@ -206,7 +221,14 @@ class _RoomScreenState extends State<RoomScreen> {
   bool _playersRefreshing = false;
 
   static const _pollInterval = Duration(seconds: 3);
+
+  /// Kalabalık lobide her istemci aynı tabloları yokladığı için (50 kişi =
+  /// saniyede ~8 sorgu) yedek yoklama seyrelir; asıl kaynak realtime'dır.
+  static const _crowdPollInterval = Duration(seconds: 6);
   static const _maxPollsBeforePause = 20; // ~60s, yalnızca >=2 oyuncu varken
+
+  Duration get _currentPollInterval =>
+      room.isCrowd ? _crowdPollInterval : _pollInterval;
 
   @override
   void initState() {
@@ -215,6 +237,8 @@ class _RoomScreenState extends State<RoomScreen> {
     // başlar. Odayla birlikte gelen liste ilk veridir; o varsa dönen daire
     // hiç çizilmez.
     _playersRefreshing = widget.initialRoom.players.isEmpty;
+    unawaited(_probeRoomInvites());
+    unawaited(_loadBlockedPlayers());
     _startSubscriptions();
     _startPolling();
     _startStatusPolling();
@@ -308,24 +332,84 @@ class _RoomScreenState extends State<RoomScreen> {
 
     final roomId = room.id;
     if (roomId != null && _broadcastSub == null) {
-      _broadcastSub = widget.repository.subscribeRoomBroadcast(roomId).listen((
-        payload,
-      ) {
-        if (!mounted || generation != _subscriptionGeneration) return;
-        if (payload['type'] == 'reaction') {
-          final text = payload['text'] as String?;
-          final senderId = payload['sender_id'] as String?;
-          final senderName = payload['sender_name'] as String?;
-          if (text != null && senderId != _currentUserId) {
-            _reactionController.triggerReaction(
-              text,
-              senderName: senderName == null
-                  ? null
-                  : PlayerIdentity.resolveName(senderName, isKu: context.isKu),
-            );
-          }
+      _broadcastSub = widget.repository
+          .subscribeRoomBroadcast(roomId)
+          .listen(
+            (payload) {
+              if (!mounted || generation != _subscriptionGeneration) return;
+              if (payload['type'] == 'reaction') {
+                final text = payload['text'] as String?;
+                final senderId = payload['sender_id'] as String?;
+                final senderName = payload['sender_name'] as String?;
+                // Engellediğim oyuncunun tepkisi çizilmez.
+                final blocked =
+                    !_blockedReady ||
+                    // Kimliği olmayan yayın kimin olduğu doğrulanamadığı için
+                    // engel süzgecinden kaçamaz: bastırılır.
+                    senderId == null ||
+                    _blockedPlayerIds.contains(senderId);
+                if (text != null && senderId != _currentUserId && !blocked) {
+                  _reactionController.triggerReaction(
+                    text,
+                    // Adsız oyuncu lobi satırındaki gibi "Oyuncu ZK-XXXX".
+                    senderName: senderName == null
+                        ? null
+                        : PlayerIdentity.resolveNameWithTag(
+                            senderName,
+                            isKu: context.isKu,
+                            tag: room.players
+                                .where((p) => p.id == senderId)
+                                .firstOrNull
+                                ?.tag,
+                          ),
+                  );
+                }
+              }
+            },
+            onError: (Object err, StackTrace stack) {
+              // Yakalanmayan akış hatası zone'a kaçar; tepki yayını sessizce
+              // ölür. Kaydet ve yedek yoklamayı sürdür.
+              ErrorReporter.record(
+                err,
+                stack,
+                reason: 'room broadcast stream error',
+              );
+              if (!mounted || _leaving || _terminalHandled) return;
+              _startPolling();
+              _startStatusPolling();
+            },
+          );
+    }
+  }
+
+  /// Engel listesi sunucudan okundu mu? Okunana kadar uzak tepkiler
+  /// BASTIRILIR: liste gelmeden gösterilen tepki engellinin mesajını sızdırır.
+  bool _blockedReady = false;
+
+  /// Sunucudaki engel listesini yükler (C1).
+  ///
+  /// `_blockedPlayerIds` yalnız bu oturumda verilen engelleri tutuyordu;
+  /// önceden engellenen oyuncu yeni odada yine görünüyordu (bkz.
+  /// test/room_blocked_players_server_test.dart). Okuma düşerse bir kez
+  /// yeniden denenir; yine olmazsa tepkiler bastırılmaya devam eder (güvenli
+  /// taraf), satırlar ve oyun akışı etkilenmez.
+  Future<void> _loadBlockedPlayers() async {
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        final ids = await widget.repository.loadBlockedPlayerIds();
+        if (!mounted) return;
+        setState(() {
+          _blockedPlayerIds.addAll(ids);
+          _blockedReady = true;
+        });
+        return;
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'room_load_blocked_players');
+        if (attempt == 0) {
+          await Future<void>.delayed(const Duration(seconds: 2));
         }
-      });
+        if (!mounted) return;
+      }
     }
   }
 
@@ -334,9 +418,52 @@ class _RoomScreenState extends State<RoomScreen> {
     _realtimeEventSeq++;
   }
 
+  /// Oda sahibi lobide başka bir oyuncuyu çıkarabilir (2026-10-22).
+  /// Oyun başladıktan sonra çıkarma yok: hükmen/havuz kuralları bozulmasın.
+  Future<bool> Function()? _kickHandlerFor(Player player) {
+    final id = player.id;
+    final roomId = room.id;
+    if (!_isHost ||
+        room.hostId == null ||
+        room.status != RoomStatus.lobby ||
+        id == null ||
+        roomId == null ||
+        id == _currentUserId) {
+      return null;
+    }
+    return () async {
+      final ok = await widget.repository.kickRoomPlayer(
+        roomId: roomId,
+        playerId: id,
+      );
+      if (ok && mounted) {
+        setState(
+          () => room = room.copyWith(
+            players: room.players.where((p) => p.id != id).toList(),
+          ),
+        );
+      }
+      return ok;
+    };
+  }
+
+  /// Kendi satırımı lobide bir kez gördüm mü? Katılırken ilk liste kendi
+  /// satırımdan önce gelebilir; çıkarılma ancak görüldükten sonra sayılır.
+  bool _sawSelfInLobby = false;
+
   void _applyPlayerList(List<Player> players) {
     if (!mounted || _leaving || _terminalHandled || quizOpened) return;
     final unique = dedupeRoomPlayers(players);
+    final me = _currentUserId;
+    if (room.status == RoomStatus.lobby && me != null && unique.isNotEmpty) {
+      final present = unique.any((p) => p.id == me);
+      if (present) {
+        _sawSelfInLobby = true;
+      } else if (_sawSelfInLobby && room.hostId != me) {
+        _handleKickedFromLobby();
+        return;
+      }
+    }
     setState(() {
       room = room.copyWith(players: unique);
       // Liste elde: yenileme (ilk yükleme) bitti, gösterge iner. Sonraki
@@ -345,6 +472,49 @@ class _RoomScreenState extends State<RoomScreen> {
       _playersRefreshing = false;
     });
     _syncPollingForLobby(unique.length);
+    _refreshHostIfMissing(unique);
+  }
+
+  bool _hostRefreshInFlight = false;
+
+  /// Kalabalık lobide host çıkınca sunucu odayı kapatmaz, host'u en erken
+  /// katılan aktif oyuncuya devreder. Oyuncu listesi yeni host'u söylemez
+  /// (yalnız host'un satırının kaybolduğunu gösterir); bu yüzden host satırı
+  /// listeden düştüğünde oda satırı bir kez yeniden okunur. Olay güdümlüdür:
+  /// 50 istemcinin hepsi saniyede bir `rooms` sorgulamaz.
+  void _refreshHostIfMissing(List<Player> players) {
+    final hostId = room.hostId;
+    final roomId = room.id;
+    if (!room.isCrowd ||
+        roomId == null ||
+        hostId == null ||
+        players.isEmpty ||
+        _hostRefreshInFlight ||
+        players.any((player) => player.id == hostId)) {
+      return;
+    }
+    _hostRefreshInFlight = true;
+    widget.repository
+        .loadRoomSnapshot(roomId)
+        .then((fresh) {
+          if (!mounted || _leaving || _terminalHandled || quizOpened) return;
+          final newHostId = fresh.hostId;
+          if (newHostId == null || newHostId == room.hostId) return;
+          final becameHost =
+              newHostId == _currentUserId && room.hostId != _currentUserId;
+          setState(() => room = room.copyWith(hostId: newHostId));
+          if (becameHost) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(content: Text(context.t(K.hostTransferredToYou))),
+              );
+          }
+        })
+        .catchError((Object error, StackTrace stack) {
+          ErrorReporter.record(error, stack, reason: 'room_host_refresh');
+        })
+        .whenComplete(() => _hostRefreshInFlight = false);
   }
 
   /// Lobide yedek yoklama AÇIK kalır; yalnız yarış başlayınca durur.
@@ -382,14 +552,17 @@ class _RoomScreenState extends State<RoomScreen> {
   void _startPolling() {
     if (_leaving || _terminalHandled || quizOpened) return;
     _pollTimer?.cancel();
-    _pollTimer = Timer.periodic(_pollInterval, (_) => _pollPlayersOnce());
+    _pollTimer = Timer.periodic(
+      _currentPollInterval,
+      (_) => _pollPlayersOnce(),
+    );
   }
 
   void _startStatusPolling() {
     if (_leaving || _terminalHandled || quizOpened) return;
     _statusPollTimer?.cancel();
     _statusPollTimer = Timer.periodic(
-      _pollInterval,
+      _currentPollInterval,
       (_) => _pollRoomStatusOnce(),
     );
   }
@@ -483,6 +656,18 @@ class _RoomScreenState extends State<RoomScreen> {
 
   Future<void> _leaveRoom() async {
     if (_leaving || _terminalHandled) return;
+    if (_leaveFailed && room.id != null) {
+      // Bir çıkış zaten başarısız oldu: ağsız oyuncunun tek çıkışı uygulamayı
+      // öldürmek olmasın. Yerelde çık; sunucu tarafı en iyi çabayla ve
+      // `get_my_resumable_room` / sunucu temizliğiyle kapanır.
+      _terminalHandled = true;
+      _cancelSubscriptionsBestEffort('room_leave_subscription_cancel_failed');
+      _pausePolling();
+      _pauseStatusPolling();
+      unawaited(_bestEffortLeave());
+      _returnToPreviousRoute();
+      return;
+    }
     setState(() {
       _leaving = true;
     });
@@ -498,6 +683,7 @@ class _RoomScreenState extends State<RoomScreen> {
             .timeout(_roomLeaveTimeout);
       } catch (error, stack) {
         ErrorReporter.record(error, stack, reason: 'room_leave_failed');
+        _leaveFailed = true;
         if (!mounted) return;
         setState(() => _leaving = false);
         _resumeLobbyMonitoring();
@@ -523,6 +709,14 @@ class _RoomScreenState extends State<RoomScreen> {
 
     if (!mounted) return;
     _returnToPreviousRoute();
+  }
+
+  Future<void> _bestEffortLeave() async {
+    try {
+      await widget.repository.leaveOnlineRoom(room).timeout(_roomLeaveTimeout);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'room_leave_best_effort');
+    }
   }
 
   /// "Hazırım" anahtarına dokunuşu sunucuya yazar.
@@ -583,9 +777,10 @@ class _RoomScreenState extends State<RoomScreen> {
   Future<void> _sendReaction(String text) async {
     final roomId = room.id;
     final me = room.players.where((p) => p.id == _currentUserId).firstOrNull;
-    final myName = PlayerIdentity.resolveName(
+    final myName = PlayerIdentity.resolveNameWithTag(
       me?.name ?? 'Tu',
       isKu: context.isKu,
+      tag: me?.tag,
     );
     _reactionController.triggerReaction(text, senderName: myName);
     if (roomId == null) return;
@@ -619,6 +814,26 @@ class _RoomScreenState extends State<RoomScreen> {
     // Widget bir test/yerleştirme kabında kök rota olarak açılmışsa
     // güvenli bir geri hedef yoktur; ekranı kilitli bırakma.
     setState(() => _leaving = false);
+  }
+
+  /// Oda sahibi beni lobiden çıkardı: kendi satırım listeden düştü ama oda
+  /// hâlâ lobide. Sessizce kalırsam "hazır" anahtarı ölü bir odaya yazardı.
+  void _handleKickedFromLobby() {
+    if (!mounted || quizOpened || _leaving || _terminalHandled) return;
+    _terminalHandled = true;
+    _cancelSubscriptionsBestEffort('room_kicked_subscription_cancel_failed');
+    _pausePolling();
+    _pauseStatusPolling();
+    final message = context.t(K.roomKickedYou);
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) navigator.pop();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!messenger.mounted) return;
+      messenger
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(message)));
+    });
   }
 
   void _handleLobbyFinished() {
@@ -657,14 +872,61 @@ class _RoomScreenState extends State<RoomScreen> {
     await Clipboard.setData(ClipboardData(text: room.code));
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(context.t(K.roomCodeCopied, {'code': room.code}))),
+      SnackBar(
+        content: Text(
+          context.t(K.roomCodeCopied, {'code': displayRoomCode(room.code)}),
+        ),
+      ),
+    );
+  }
+
+  /// Sunucuda oda daveti RPC'leri var mı (göç uygulanmamışsa düğme yok).
+  /// Sonuç gelene dek `false`: düğme çizilip sonra kaybolmasın.
+  bool _roomInvitesSupported = false;
+
+  bool get _canInviteFriends =>
+      _roomInvitesSupported &&
+      room.id != null &&
+      room.isCustom &&
+      room.status == RoomStatus.lobby;
+
+  Future<void> _probeRoomInvites() async {
+    try {
+      final ok = await widget.repository.supportsRoomInvites();
+      if (mounted && ok) setState(() => _roomInvitesSupported = true);
+      if (mounted && ok && widget.autoInvite && _canInviteFriends) {
+        unawaited(_inviteFriends());
+      }
+    } catch (_) {
+      // Belirsiz: düğme gizli kalır, paylaşım yolu zaten var.
+    }
+  }
+
+  /// Kabul edilmiş arkadaşları kod girmeden davet eden sayfayı açar.
+  Future<void> _inviteFriends() async {
+    final count = await showRoomInviteFriendsSheet(
+      context,
+      widget.repository,
+      room,
+    );
+    if (!mounted || count == null) return;
+    if (count > 0) await SocialPushPrompt.maybeAsk(context);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          count > 0
+              ? context.t(K.roomInviteSent, {'n': '$count'})
+              : context.t(K.roomInviteNoneSent),
+        ),
+      ),
     );
   }
 
   /// Odayı paylaşım sayfasıyla (WhatsApp, Telegram, SMS…) paylaşır.
   ///
-  /// Oda kodu `ZK-` + on karakterdir; bir arkadaşa bunu sesli okumak ya da
-  /// elle yazdırmak odayı fiilen kilitliyordu. Kod kopyalama tek yoldu ve
+  /// Oda kodu eskiden `ZK-` + on karakterdi; bir arkadaşa bunu sesli okumak
+  /// ya da elle yazdırmak odayı fiilen kilitliyordu (şimdi 6 rakam). Kod kopyalama tek yoldu ve
   /// kopyalanan kodun nereye yapıştırılacağını oyuncu kendisi bulmalıydı.
   /// Paylaşılan metin `zankurd.com/join/<kod>` bağlantısını taşır: web
   /// sürümü bu yolu açınca odaya doğrudan katılır (`JoinDeepLink`), yani
@@ -673,7 +935,7 @@ class _RoomScreenState extends State<RoomScreen> {
   Future<void> _shareRoomInvite(Rect? origin) async {
     final text = context.t(K.roomInviteShareText, {
       'link': JoinDeepLink.shareUrl(room.code),
-      'code': room.code,
+      'code': displayRoomCode(room.code),
     });
     try {
       await SharePlus.instance.share(
@@ -686,17 +948,52 @@ class _RoomScreenState extends State<RoomScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(context.t(K.roomCodeCopied, {'code': room.code})),
+          content: Text(
+            context.t(K.roomCodeCopied, {'code': displayRoomCode(room.code)}),
+          ),
         ),
       );
     }
   }
 
+  /// Kalabalık odada boş koltuklar (tur 11): en çok [_kMaxEmptySeatRows]
+  /// satır, fazlası tek "+N" satırı. Satır sayısı oda kapasitesinden gelir.
+  List<Widget> _emptySeatRows(int seats, {required int firstRank}) {
+    if (seats <= 0) return const [];
+    final shown = seats > _kMaxEmptySeatRows ? _kMaxEmptySeatRows : seats;
+    final more = seats - shown;
+    return [
+      for (var k = 0; k < shown; k++)
+        _EmptySeatRow(
+          key: ValueKey('room-empty-seat-${k + 1}'),
+          label: '${firstRank + k}',
+        ),
+      if (more > 0)
+        _EmptySeatRow(
+          key: const ValueKey('room-empty-seat-more'),
+          label: '+$more',
+        ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final sorted = [...room.players]
-      ..sort((a, b) => b.score.compareTo(a.score));
+    final crowd = room.isCrowd;
+    // Kalabalık lobide herkes 0 puandadır: sıralamak katılış sırasını
+    // karıştırır (Dart'ın sort'u kararlı değil) ve satırlar yerinden oynar.
+    final sorted = [...room.players];
+    if (!crowd || room.status != RoomStatus.lobby) {
+      sorted.sort((a, b) => b.score.compareTo(a.score));
+    }
+    // Lobide ev sahibi listenin başındadır (ev sahibi el değiştirince de):
+    // iki simülatör turunda sahip ikinci sırada kalıyordu. Yalnız lobi;
+    // oyun başlayınca sıra puan sırasıdır.
+    final lobbyHostId = room.hostId;
+    if (room.status == RoomStatus.lobby && lobbyHostId != null) {
+      final at = sorted.indexWhere((p) => p.id == lobbyHostId);
+      if (at > 0) sorted.insert(0, sorted.removeAt(at));
+    }
     // `room.players` (yukarıdaki `sorted`) kasten süzülmez: oda üyeliği,
     // `canStart`/`allPlayersReady` gibi oyun mantığı hâlâ GERÇEK listeye
     // bakmalı. Yalnız EKRANDA çizilen satırlar süzülür.
@@ -704,6 +1001,12 @@ class _RoomScreenState extends State<RoomScreen> {
         .where((p) => p.id == null || !_blockedPlayerIds.contains(p.id))
         .toList();
     final isHost = _isHost;
+    // "Hazırım" anahtarı yerel oyuncunun satırındadır: kimliği eşleşen (ya da
+    // henüz kimliği olmayan) İLK satır. Sahte depolarda birden çok satırın
+    // kimliği boştur; anahtar yalnız bir kez çizilir.
+    final selfRowIndex = visiblePlayers.indexWhere(
+      (p) => p.id == null || p.id == widget.repository.currentUserId,
+    );
     final allPlayersReady = room.players.every(
       (player) => player.state == Player.readyState,
     );
@@ -711,13 +1014,18 @@ class _RoomScreenState extends State<RoomScreen> {
     // SEBEBİ yazılır. Tek satırlık uyarı şeridi eskiden yalnız "2 oyuncu
     // gerekli" diyordu; katılan hazır olmadan başlanamadığı hâlde ev
     // sahibi kapalı düğmeye bakıp niçinini bilemiyordu.
-    final waitingForReady = room.players.length >= 2 && !allPlayersReady;
-    final canStart =
-        isHost &&
-        ready &&
-        !starting &&
-        room.players.length >= 2 &&
-        allPlayersReady;
+    final waitingForReady =
+        !crowd && room.players.length >= 2 && !allPlayersReady;
+    // Kalabalık oda: "herkes hazır" şartı yok, host en az 2 aktif oyuncuyla
+    // başlatır (sunucu kuralı `start_room_game`).
+    final activePlayerCount = room.players.where((p) => !p.left).length;
+    final canStart = crowd
+        ? isHost && !starting && activePlayerCount >= 2
+        : isHost &&
+              ready &&
+              !starting &&
+              room.players.length >= 2 &&
+              allPlayersReady;
     final t = SahneTokens.of(context);
     if (_leaving) {
       return Scaffold(
@@ -812,7 +1120,10 @@ class _RoomScreenState extends State<RoomScreen> {
                 const SizedBox(width: SahneSpace.x3),
                 Expanded(
                   child: Text(
-                    context.t(K.waitingHost),
+                    context.t(
+                      crowd ? K.crowdStartsWhenHostStarts : K.waitingHost,
+                    ),
+                    key: const ValueKey('room-waiting-host'),
                     style: SahneType.captionStrong.copyWith(color: t.tx2),
                   ),
                 ),
@@ -832,6 +1143,12 @@ class _RoomScreenState extends State<RoomScreen> {
           key: const ValueKey('room-ready-hint'),
           icon: AppIcons.circleCheck,
           text: context.t(ready ? K.waitingOpponentReady : K.tapReadyToStart),
+        ),
+      if (crowd && isHost && activePlayerCount >= 2)
+        _RoomNotice(
+          key: const ValueKey('room-crowd-start-hint'),
+          icon: AppIcons.circleCheck,
+          text: context.t(K.crowdHostStartHint),
         ),
       if (room.players.length < 2)
         // Tek uyarı şeridi: "2 oyuncu gerekli" yalnız burada görünür.
@@ -882,12 +1199,29 @@ class _RoomScreenState extends State<RoomScreen> {
           controller: _reactionController,
           placement: FloatingReactionPlacement.roomHeader,
           child: SafeArea(
+            top: false,
             child: Column(
               children: [
                 _RoomBar(
                   title: context.t(K.roomLobbyTitle),
                   leaveLabel: context.t(K.leaveRoom),
                   onLeave: _leaving ? null : _leaveRoom,
+                  // Kurul 2026-10-20 (Opus, DeepSeek): tam genişlik ikincil
+                  // "Sohbet" düğmesi pasif "Yarışı başlat"la aynı
+                  // görünüyordu. Sohbet artık başlıkta küçük ikon düğmesi.
+                  // Yalnızken kimseyle konuşulmaz: gizli (kurul 2026-10-19).
+                  trailing:
+                      room.id != null && (room.players.length >= 2 || _chatOpen)
+                      ? SahneIconButton(
+                          key: const ValueKey('room-chat-toggle'),
+                          glass: true,
+                          icon: AppIcons.comment,
+                          semanticLabel: context.t(K.chat),
+                          selected: _chatOpen,
+                          onPressed: () =>
+                              setState(() => _chatOpen = !_chatOpen),
+                        )
+                      : null,
                 ),
                 Expanded(
                   child: ListView(
@@ -908,6 +1242,14 @@ class _RoomScreenState extends State<RoomScreen> {
                                   room: room,
                                   onCopy: () => _copyRoomCode(context, ku),
                                   onShare: _shareRoomInvite,
+                                  // Kurul 2. tur 2026-10-20: davet düğmesi her
+                                  // lobi durumunda aynı sakin biçimde; yalnızken
+                                  // turuncu dolu düğmeye dönüşüp kartı
+                                  // öteki durumlardan farklı yapıyordu.
+                                  inviteFirst: false,
+                                  onInviteFriends: _canInviteFriends
+                                      ? _inviteFriends
+                                      : null,
                                 ),
                               ),
                               padded(
@@ -977,6 +1319,16 @@ class _RoomScreenState extends State<RoomScreen> {
                                               showScore:
                                                   room.status !=
                                                   RoomStatus.lobby,
+                                              showReadyState: !crowd,
+                                              quietModeration: crowd,
+                                              // "Hazırım" anahtarı yalnız
+                                              // 1v1/2 kişilik odada ve YEREL
+                                              // oyuncunun kendi satırında.
+                                              onReadyChanged:
+                                                  !crowd && i == selfRowIndex
+                                                  ? _toggleReady
+                                                  : null,
+                                              readyValue: ready,
                                               repository: widget.repository,
                                               isSelf:
                                                   visiblePlayers[i].id ==
@@ -997,53 +1349,86 @@ class _RoomScreenState extends State<RoomScreen> {
                                                       _blockedPlayerIds.add(id),
                                                 );
                                               },
+                                              onKick: _kickHandlerFor(
+                                                visiblePlayers[i],
+                                              ),
                                             ),
-                                          if (visiblePlayers.length < 2)
-                                            _WaitingPlayerTile(isKu: ku),
+                                          if (crowd)
+                                            ..._emptySeatRows(
+                                              room.maxPlayers -
+                                                  visiblePlayers.length,
+                                              firstRank:
+                                                  visiblePlayers.length + 1,
+                                            )
+                                          else if (visiblePlayers.length < 2)
+                                            _WaitingPlayerTile(
+                                              isKu: ku,
+                                              onInvite: _canInviteFriends
+                                                  ? _inviteFriends
+                                                  : null,
+                                            ),
                                         ],
                                       ),
                               ),
-                              const SizedBox(height: SahneSpace.cardGap),
-                              padded(
-                                SahneSurfaceCard(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    SahneSpace.x4,
-                                    SahneSpace.x1,
-                                    SahneSpace.x2,
-                                    SahneSpace.x1,
+                              // Yerel oyuncunun satırı listede yoksa (depo kimliği
+                              // eşleşmiyor) anahtar kaybolmasın: eski kartın yerine
+                              // tek satırlık yedek.
+                              if (!crowd && selfRowIndex < 0) ...[
+                                const SizedBox(height: SahneSpace.cardGap),
+                                padded(
+                                  SahneSurfaceCard(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: SahneSpace.x4,
+                                      vertical: SahneSpace.x1,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            context.t(K.imReady),
+                                            style: SahneType.bodyStrong
+                                                .copyWith(color: t.tx),
+                                          ),
+                                        ),
+                                        Switch(
+                                          key: const ValueKey(
+                                            'room-ready-switch',
+                                          ),
+                                          value: ready,
+                                          onChanged: _toggleReady,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  child: Column(
+                                ),
+                              ],
+                              // Bilgi şeritleri (hazır değil, 2 oyuncu gerekli…): "Hazırım"
+                              // anahtarı artık oyuncunun kendi satırında, ayrı kart yok.
+                              if (notices.isNotEmpty) ...[
+                                const SizedBox(height: SahneSpace.cardGap),
+                                padded(
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
-                                      SwitchListTile(
-                                        value: ready,
-                                        onChanged: _toggleReady,
-                                        title: Text(
-                                          context.t(K.imReady),
-                                          style: SahneType.bodyStrong.copyWith(
-                                            color: t.tx,
-                                          ),
-                                        ),
-                                        contentPadding: EdgeInsets.zero,
-                                      ),
-                                      for (final notice in notices) ...[
-                                        notice,
-                                        const SizedBox(height: SahneSpace.x3),
+                                      for (
+                                        var i = 0;
+                                        i < notices.length;
+                                        i++
+                                      ) ...[
+                                        if (i > 0)
+                                          const SizedBox(height: SahneSpace.x2),
+                                        notices[i],
                                       ],
                                     ],
                                   ),
                                 ),
-                              ),
-                              // Tepkiler yalnız karşıda biri varken anlamlı;
-                              // tek başına bekleyen ev sahibine ikinci bir
-                              // eylem yığını göstermenin yararı yok.
-                              if (room.players.length >= 2) ...[
-                                const SizedBox(height: SahneSpace.x4),
-                                _buildQuickReactionChips(context),
                               ],
-
-                              // ── Oda sohbeti ───────────────────────
+                              // 2026-10-19 sadeleşme (ikinci tur): hızlı tepkiler ve
+                              // sohbet TEK kompakt düğmenin ("Sohbet") arkasında;
+                              // lobi varsayılanda yalnız kod, oyuncular ve başlat
+                              // düğmesidir. Tepkiler yalnız karşıda biri varken
+                              // anlamlıdır.
                               //
                               // Sohbet 2026-07-31'de moderasyonuyla (Apple
                               // 1.2: gönderimde süzgeç, uzun basınca
@@ -1052,19 +1437,16 @@ class _RoomScreenState extends State<RoomScreen> {
                               // katlanabilir bir panel olarak geri geldi;
                               // kalabalık kaygısı kapalı başlayarak
                               // karşılanıyor.
-                              if (room.id != null) ...[
+                              // Sohbet düğmesi artık başlıkta ([_RoomBar.trailing]);
+                              // burada yalnız açıkken panel durur.
+                              if (room.id != null && _chatOpen) ...[
                                 const SizedBox(height: SahneSpace.cardGap),
-                                // Kapalıyken dış satır, açıkken RoomChat'in
-                                // KENDİ başlığı görünür — ikisi asla aynı
-                                // anda değil (2026-08-01, iOS simülatörü:
-                                // alt alta iki "Sohbet" başlığı).
-                                if (!_chatOpen)
-                                  _ChatToggleRow(
-                                    open: _chatOpen,
-                                    onToggle: () =>
-                                        setState(() => _chatOpen = !_chatOpen),
-                                  ),
-                                if (_chatOpen)
+                                if (_chatOpen && room.players.length >= 2) ...[
+                                  const SizedBox(height: SahneSpace.x2),
+                                  _buildQuickReactionChips(context),
+                                ],
+                                if (_chatOpen && room.id != null) ...[
+                                  const SizedBox(height: SahneSpace.x2),
                                   padded(
                                     RoomChat(
                                       key: const ValueKey('room-chat'),
@@ -1076,6 +1458,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                       ),
                                     ),
                                   ),
+                                ],
                               ],
                             ],
                           ),
@@ -1096,6 +1479,7 @@ class _RoomScreenState extends State<RoomScreen> {
     setState(() => starting = true);
     try {
       await widget.repository.startGame(room);
+      if (!mounted) return;
       _navigateToQuiz();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'startGame failed');
@@ -1108,7 +1492,7 @@ class _RoomScreenState extends State<RoomScreen> {
   }
 
   Future<void> _navigateToQuiz() async {
-    if (quizOpened) return;
+    if (!mounted || quizOpened) return;
     _pausePolling();
     _pauseStatusPolling();
     setState(() {
@@ -1167,7 +1551,9 @@ class _RoomScreenState extends State<RoomScreen> {
           questions: questions.isEmpty
               ? widget.repository.playableQuestions
               : questions,
-          is1v1: room.id != null && room.players.length == 2,
+          // Kalabalık oda 1v1 düello yoluna girmez: o yolun başlığı, hazır
+          // el sıkışması ve cevap yayını iki kişiye göre yazılmıştır.
+          is1v1: room.id != null && room.players.length == 2 && !room.isCrowd,
         ),
       ),
     );
@@ -1221,16 +1607,21 @@ class _RoomBar extends StatelessWidget {
     required this.title,
     required this.leaveLabel,
     required this.onLeave,
+    this.trailing,
   });
 
   final String title;
   final String leaveLabel;
   final VoidCallback? onLeave;
 
+  /// Başlığın sağındaki küçük eylem (lobide sohbet).
+  final Widget? trailing;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return ConstrainedBox(
+    // 2026-10-20 renk ve canlılık (B): oda sosyal moddur; çubuk Nîl.
+    final bar = ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 64),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(
@@ -1242,6 +1633,7 @@ class _RoomBar extends StatelessWidget {
         child: Row(
           children: [
             SahneIconButton(
+              glass: true,
               icon: AppIcons.arrowLeft,
               semanticLabel: leaveLabel,
               onPressed: onLeave,
@@ -1252,12 +1644,20 @@ class _RoomBar extends StatelessWidget {
                 header: true,
                 child: SahneUnbrokenText(
                   title,
-                  style: SahneType.headline.copyWith(color: t.tx),
+                  style: SahneType.headline.copyWith(color: SahneVivid.onFill),
                 ),
               ),
             ),
+            ?trailing,
           ],
         ),
+      ),
+    );
+    return ColoredBox(
+      color: t.nilFill,
+      child: Padding(
+        padding: EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
+        child: bar,
       ),
     );
   }
@@ -1278,19 +1678,38 @@ class _RoomHero extends StatelessWidget {
     required this.room,
     required this.onCopy,
     required this.onShare,
+    this.onInviteFriends,
+    this.inviteFirst = false,
   });
+
+  /// Ev sahibi odada TEK başına: davet bağlantısı sayfanın birincil
+  /// (dolu) düğmesi olur (kurul incelemesi 2026-10-19). Yarışı başlatmak
+  /// henüz mümkün değildir; asıl iş birini çağırmaktır.
+  final bool inviteFirst;
 
   final GameRoom room;
   final VoidCallback onCopy;
   final Future<void> Function(Rect? origin) onShare;
 
+  /// Arkadaş listesinden davet; `null` ise (sunucuda göç yok, oda henüz
+  /// sunucuda değil, lobi değil) düğme çizilmez.
+  final VoidCallback? onInviteFriends;
+
   @override
   Widget build(BuildContext context) {
-    return SahneStageCard(
-      role: SahneRole.race,
+    // 2026-10-19 sadeleşme (ikinci tur): kahraman Boyax degradeli büyük
+    // sahne kartıydı (lobinin en doygun lekesi; kod kutusu içinde kutu).
+    // Artık TEK sakin yüzey kartı: oda adı + künye, yuvarlak kod kutusu,
+    // kopyala / paylaş / arkadaşlarımdan davet et. Renk rolü yalnız
+    // simgelerde (yarış tonu).
+    final nil = SahneTokens.of(context);
+    return SahneSurfaceCard(
+      key: const ValueKey('room-hero'),
+      // 2026-10-20 renk ve canlılık (B): oda sosyal moddur; kart Nîl tonlu.
+      color: nil.nilTint,
+      edgeColor: nil.nilFill.withValues(alpha: 0.3),
       child: Builder(
         builder: (context) {
-          // Sahne kartının içi gece belirteçleridir.
           final t = SahneTokens.of(context);
           final meta = <(IconData, String)>[
             (
@@ -1339,17 +1758,20 @@ class _RoomHero extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: SahneSpace.x3),
-                  _PlayerCount(count: room.players.length),
+                  _PlayerCount(
+                    count: room.players.length,
+                    max: room.isCrowd ? room.maxPlayers : null,
+                  ),
                 ],
               ),
               const SizedBox(height: SahneSpace.x2),
               Semantics(
                 header: true,
                 child: Text(
-                  room.name,
+                  room.isCrowd ? context.t(K.crowdRoomTitle) : room.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: SahneType.title.copyWith(color: t.tx),
+                  style: SahneType.headline.copyWith(color: t.tx),
                 ),
               ),
               const SizedBox(height: SahneSpace.x2),
@@ -1372,12 +1794,9 @@ class _RoomHero extends StatelessWidget {
                 button: true,
                 hint: context.t(K.roomCodeTapCopy),
                 child: Material(
-                  color: t.bg,
-                  shape: SahneShape.withSide(
-                    SahneShape.m,
-                    SahneStageColors.raceSoft.withValues(alpha: 0.4),
-                    width: SahneRing.r1,
-                  ),
+                  color: t.s1,
+                  // Kod kutusu YUVARLAK (pahlı köşe yalnız rozet ve avatar).
+                  shape: SahneShape.withSide(SahneShape.m, t.edge, width: 1),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     key: const ValueKey('room-code-copy'),
@@ -1402,18 +1821,19 @@ class _RoomHero extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: SahneSpace.x1),
-                                // Kod hiçbir genişlikte kısaltılmaz: 13
-                                // karakter 320 px'te de tam okunur.
+                                // Kod hiçbir genişlikte kısaltılmaz: "482 913"
+                                // (eski odalarda 13 karakter) 320 px'te de
+                                // tam okunur.
                                 FittedBox(
                                   fit: BoxFit.scaleDown,
                                   alignment: AlignmentDirectional.centerStart,
                                   child: Text(
-                                    room.code,
+                                    displayRoomCode(room.code),
                                     key: const ValueKey('room-code'),
                                     maxLines: 1,
                                     softWrap: false,
                                     style: SahneType.title.copyWith(
-                                      color: t.gold,
+                                      color: t.tx,
                                       letterSpacing: 3,
                                       fontFeatures: const [
                                         FontFeature.tabularFigures(),
@@ -1426,11 +1846,7 @@ class _RoomHero extends StatelessWidget {
                           ),
                           const SizedBox(width: SahneSpace.x3),
                           ExcludeSemantics(
-                            child: Icon(
-                              AppIcons.copy,
-                              color: t.goldTx,
-                              size: 22,
-                            ),
+                            child: Icon(AppIcons.copy, color: t.tx2, size: 22),
                           ),
                         ],
                       ),
@@ -1439,9 +1855,20 @@ class _RoomHero extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: SahneSpace.x1),
-              _RoomInviteButton(
-                label: context.t(K.roomInviteAction),
-                onShare: onShare,
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  _RoomInviteButton(
+                    label: context.t(K.roomInviteAction),
+                    onShare: onShare,
+                    primary: inviteFirst,
+                  ),
+                  if (onInviteFriends != null)
+                    _RoomInviteFriendsButton(
+                      label: context.t(K.roomInviteFriendsAction),
+                      onPressed: onInviteFriends!,
+                    ),
+                ],
               ),
             ],
           );
@@ -1454,30 +1881,31 @@ class _RoomHero extends StatelessWidget {
 /// Oyuncu sayısı: kart başlığının sağında "kişi simgesi + sayı". Yalnız
 /// simge ve rakamdır; ekran okuyucu "Oyuncular: 2" duyar.
 class _PlayerCount extends StatelessWidget {
-  const _PlayerCount({required this.count});
+  const _PlayerCount({required this.count, this.max});
 
   static const anchorKey = ValueKey('room-player-count');
 
   final int count;
 
+  /// Kalabalık odanın kapasitesi: doluysa "3/8", değilse yalnız "3".
+  final int? max;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    final text = max == null ? '$count' : '$count/$max';
     return Semantics(
       key: anchorKey,
-      label: '${context.t(K.playersWord)}: $count',
+      label: '${context.t(K.playersWord)}: $text',
       excludeSemantics: true,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            AppIcons.peopleGroup,
-            size: 18,
-            color: SahneStageColors.raceSoft,
-          ),
+          Icon(AppIcons.peopleGroup, size: 18, color: t.raceTx),
           const SizedBox(width: SahneSpace.x1),
           Text(
-            '$count',
+            text,
+            key: const ValueKey('room-player-count-text'),
             style: SahneType.bodyStrong.copyWith(
               color: t.tx,
               fontFeatures: const [FontFeature.tabularFigures()],
@@ -1502,7 +1930,7 @@ class _MetaItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: SahneStageColors.raceSoft, size: 16),
+        Icon(icon, color: t.raceTx, size: 16),
         const SizedBox(width: SahneSpace.x1 + 2),
         Flexible(
           child: Text(
@@ -1522,22 +1950,51 @@ class _MetaItem extends StatelessWidget {
 /// Paylaşım sayfası iPad'de bir çıkış noktası ister; düğmenin kendi
 /// konumu [onShare]'e verilir. Telefonlarda yok sayılır.
 class _RoomInviteButton extends StatelessWidget {
-  const _RoomInviteButton({required this.label, required this.onShare});
+  const _RoomInviteButton({
+    required this.label,
+    required this.onShare,
+    this.primary = false,
+  });
 
   final String label;
+
+  /// Dolu birincil düğme olarak çizilir (ev sahibi tek başınayken).
+  final bool primary;
   final Future<void> Function(Rect? origin) onShare;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    if (primary) {
+      return Padding(
+        padding: const EdgeInsets.only(top: SahneSpace.x2),
+        child: SahneButton.primary(
+          key: const ValueKey('room-invite-share'),
+          expand: true,
+          label: label,
+          icon: AppIcons.shareNodes,
+          arrow: false,
+          onPressed: () {
+            HapticFeedback.selectionClick();
+            final box = context.findRenderObject() as RenderBox?;
+            final origin = box == null || !box.hasSize
+                ? null
+                : box.localToGlobal(Offset.zero) & box.size;
+            onShare(origin);
+          },
+        ),
+      );
+    }
     return Align(
       alignment: AlignmentDirectional.centerStart,
       child: TextButton.icon(
         key: const ValueKey('room-invite-share'),
-        icon: Icon(AppIcons.shareNodes, size: 18, color: t.actTx),
+        // Metin bağlantısı rengi tek belirteçtir (`linkTx`); dolgulu birincil
+        // düğme (Agir dolgusu) ile karışmaz, çünkü biri dolgu biri metindir.
+        icon: Icon(AppIcons.shareNodes, size: 18, color: t.linkTx),
         label: Text(
           label,
-          style: SahneType.captionStrong.copyWith(color: t.actTx),
+          style: SahneType.captionStrong.copyWith(color: t.linkTx),
         ),
         style: TextButton.styleFrom(
           minimumSize: const Size(sahneTapTarget, sahneTapTarget),
@@ -1553,6 +2010,40 @@ class _RoomInviteButton extends StatelessWidget {
           onShare(origin);
         },
       ),
+    );
+  }
+}
+
+/// "Arkadaşlarımdan davet et": [_RoomInviteButton] ile aynı sakin metin
+/// düğmesi; kodsuz, arkadaş listesinden davet sayfasını açar.
+class _RoomInviteFriendsButton extends StatelessWidget {
+  const _RoomInviteFriendsButton({
+    required this.label,
+    required this.onPressed,
+  });
+
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return TextButton.icon(
+      key: const ValueKey('room-invite-friends'),
+      icon: Icon(AppIcons.userPlus, size: 18, color: t.linkTx),
+      label: Text(
+        label,
+        style: SahneType.captionStrong.copyWith(color: t.linkTx),
+      ),
+      style: TextButton.styleFrom(
+        minimumSize: const Size(sahneTapTarget, sahneTapTarget),
+        shape: SahneShape.m,
+        padding: const EdgeInsetsDirectional.only(end: SahneSpace.x3),
+      ),
+      onPressed: () {
+        HapticFeedback.selectionClick();
+        onPressed();
+      },
     );
   }
 }
@@ -1622,8 +2113,22 @@ class _RoomPlayerRow extends StatelessWidget {
     required this.isSelf,
     this.isHost = false,
     this.showScore = true,
+    this.showReadyState = true,
+    this.quietModeration = false,
     this.onBlocked,
+    this.onKick,
+    this.onReadyChanged,
+    this.readyValue = false,
   });
+
+  /// Yalnız YEREL oyuncunun satırında verilir: "Hazırım" anahtarı kendi
+  /// satırındadır (2026-10-19 sadeleşme: ayrı "Hazırım" kartı kalktı; durum
+  /// rozeti ve onu değiştiren anahtar aynı satırda).
+  final ValueChanged<bool>? onReadyChanged;
+  final bool readyValue;
+
+  /// Oda sahibinin lobide bu oyuncuyu çıkarması; yalnız sahibe verilir.
+  final Future<bool> Function()? onKick;
 
   /// Ayırıcının sol boşluğu: avatarın hizası (12 + 24 + 12).
   static const double indent = SahneSpace.x3 + 24 + SahneSpace.x3;
@@ -1636,6 +2141,16 @@ class _RoomPlayerRow extends StatelessWidget {
   /// Puan ve seri sütunu. Salon (lobby) aşamasında herkes 0'dadır; sıfırlar
   /// bilgi vermez, yalnız gürültü ekler — oyun başlayınca görünür.
   final bool showScore;
+
+  /// "✓ Hazır" / "Bekliyor" satırı. Kalabalık odada hazır olma şartı yok,
+  /// durum bilgi vermez; satır yalnız ad ve (varsa) ev sahibi rozetini taşır.
+  final bool showReadyState;
+
+  /// Kalabalık odada bayrak yerine sessiz üç nokta (yalnız başkalarının
+  /// satırında): 7–50 satırda bayrak tekrarlanınca liste gürültüye
+  /// dönüyordu (2026-10-17). Bildir/engelle App Store 1.2 gereği görünür
+  /// kalır; ayrıca uzun basış ve ekran okuyucu özel eylemi aynı sayfayı açar.
+  final bool quietModeration;
 
   /// Bildir/engelle için; yeni bir backend yok, mevcut RPC'ler kullanılır.
   final ZanKurdRepository repository;
@@ -1655,7 +2170,11 @@ class _RoomPlayerRow extends StatelessWidget {
   String _displayName(BuildContext context) =>
       player.name == 'Tu' && player.id == null
       ? context.t(K.you)
-      : PlayerIdentity.resolveName(player.name, isKu: isKu);
+      : PlayerIdentity.resolveNameWithTag(
+          player.name,
+          isKu: isKu,
+          tag: player.tag,
+        );
 
   /// Depodan gelen durum metni Türkçe sabittir; KU modunda burada çevrilir.
   String _localizedState(String state) {
@@ -1673,7 +2192,6 @@ class _RoomPlayerRow extends StatelessWidget {
     final t = SahneTokens.of(context);
     final isReady = player.state == Player.readyState;
     final stacked = MediaQuery.textScalerOf(context).scale(16) >= 24;
-
     final nameText = Text(
       _displayName(context),
       maxLines: 1,
@@ -1681,37 +2199,40 @@ class _RoomPlayerRow extends StatelessWidget {
       style: SahneType.bodyStrong.copyWith(color: t.tx),
     );
 
-    // İkinci satır: durum ("✓ Hazır" / kum saati + söz) ve ev sahibi
-    // rozeti. `Wrap`: dar satırda ya da büyük yazıda rozet alt satıra iner;
-    // ad sütununu ezmez, harf harf bölünmez (eski satır 7 px taşıyordu,
-    // 2026-08-19).
-    final state = Wrap(
-      spacing: SahneSpace.x2,
-      runSpacing: SahneSpace.x1,
-      crossAxisAlignment: WrapCrossAlignment.center,
+    // Ev sahibi rozeti adın SAĞINDA aynı satırdadır: altına inince bu satır
+    // ötekilerden uzun oluyordu. `Wrap`: ad + rozet sığmazsa (dar ekran,
+    // büyük yazı) rozet alt satıra iner; ad harf harf bölünmez.
+    final hostBadge = isHost
+        ? SahneBadge(label: Tr.forKu(K.host, isKu), tone: SahneBadgeTone.gold)
+        : null;
+    final nameLine = hostBadge == null
+        ? nameText
+        : Wrap(
+            spacing: SahneSpace.x2,
+            runSpacing: SahneSpace.x1,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [nameText, hostBadge],
+          );
+
+    // İkinci satır yalnız hazır durumu ("✓ Hazır" / kum saati + söz) içindir.
+    final state = Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              isReady ? AppIcons.check : AppIcons.hourglass,
-              size: 14,
-              color: isReady ? t.okTx : t.tx2,
-            ),
-            const SizedBox(width: SahneSpace.x1),
-            Flexible(
-              child: Text(
-                _localizedState(player.state),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: (isReady ? SahneType.captionStrong : SahneType.caption)
-                    .copyWith(color: isReady ? t.okTx : t.tx2),
-              ),
-            ),
-          ],
+        Icon(
+          isReady ? AppIcons.check : AppIcons.hourglass,
+          size: 14,
+          color: isReady ? t.okTx : t.tx2,
         ),
-        if (isHost)
-          SahneBadge(label: Tr.forKu(K.host, isKu), tone: SahneBadgeTone.gold),
+        const SizedBox(width: SahneSpace.x1),
+        Flexible(
+          child: Text(
+            _localizedState(player.state),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: (isReady ? SahneType.captionStrong : SahneType.caption)
+                .copyWith(color: isReady ? t.okTx : t.tx2),
+          ),
+        ),
       ],
     );
 
@@ -1722,7 +2243,7 @@ class _RoomPlayerRow extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          '${player.score}',
+          groupThousands(player.score),
           style: SahneType.bodyStrong.copyWith(
             color: t.tx,
             fontFeatures: const [FontFeature.tabularFigures()],
@@ -1735,76 +2256,157 @@ class _RoomPlayerRow extends StatelessWidget {
       ],
     );
 
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 64),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(
-          SahneSpace.x3,
-          SahneSpace.x2,
-          SahneSpace.x1,
-          SahneSpace.x2,
-        ),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 24,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  '$rank',
-                  maxLines: 1,
-                  style: SahneType.bodyStrong.copyWith(
-                    color: isHost ? t.goldTx : t.tx2,
-                    fontFeatures: const [FontFeature.tabularFigures()],
+    // Yerel oyuncunun hazır anahtarı: etiket + Switch. Büyük yazıda satırın
+    // altına iner (adın yanında sıkışmasın).
+    final readyToggle = onReadyChanged == null
+        ? null
+        : Semantics(
+            container: true,
+            label: context.t(K.imReady),
+            toggled: readyValue,
+            excludeSemantics: true,
+            onTap: () => onReadyChanged!(!readyValue),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  child: Text(
+                    context.t(K.imReady),
+                    style: SahneType.captionStrong.copyWith(color: t.tx),
                   ),
                 ),
-              ),
+                const SizedBox(width: SahneSpace.x2),
+                Switch(
+                  key: const ValueKey('room-ready-switch'),
+                  value: readyValue,
+                  onChanged: onReadyChanged,
+                ),
+              ],
             ),
-            const SizedBox(width: SahneSpace.x3),
-            PlayerAvatar(
-              radius: 18,
-              photoUrl: player.avatarUrl,
-              iconId: player.avatarIcon,
-              colorHex: player.avatarColor,
-              frameId: player.avatarFrame,
-              displayName: _displayName(context),
+          );
+
+    // Hazır anahtarı dar satırda (< 340 px; telefon 320) ya da büyük yazıda
+    // adın ALTINA iner; adın yanında sıkışınca ad harf harf bölünüyordu.
+    // Ölçü ekranın değil SATIRIN genişliğidir (MediaQuery testte ve
+    // bölünmüş ekranda satırın gerçek genişliğini vermez).
+    final row = LayoutBuilder(
+      builder: (context, constraints) {
+        final toggleBelow = stacked || constraints.maxWidth < 340;
+        return ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 64),
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(
+              SahneSpace.x3,
+              SahneSpace.x2,
+              SahneSpace.x1,
+              SahneSpace.x2,
             ),
-            const SizedBox(width: SahneSpace.x3),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  nameText,
-                  const SizedBox(height: 2),
-                  state,
-                  if (stacked && showScore) ...[
-                    const SizedBox(height: SahneSpace.x1),
-                    score,
-                  ],
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 24,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      '$rank',
+                      maxLines: 1,
+                      style: SahneType.bodyStrong.copyWith(
+                        color: isHost ? t.goldTx : t.tx2,
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: SahneSpace.x3),
+                // Avatara HAM ad verilir: "Oyuncu ZK-XXXX" yer tutucu sayılmaz
+                // ve baş harf "O" çıkardı; yer tutucuda simge, renk tohumu
+                // dilden bağımsız kalır.
+                PlayerAvatar.fromIdentity(
+                  radius: 18,
+                  identity: AvatarIdentity(
+                    iconId: player.avatarIcon,
+                    colorHex: player.avatarColor,
+                    photoUrl: player.avatarUrl,
+                    frameId: player.avatarFrame,
+                  ),
+                  displayName: player.name == 'Tu' && player.id == null
+                      ? _displayName(context)
+                      : player.name,
+                ),
+                const SizedBox(width: SahneSpace.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      nameLine,
+                      // Yerel oyuncunun satırında durumu "Hazırım" anahtarı söyler;
+                      // rozet aynı bilgiyi tekrarlıyordu (kurul 2026-10-19).
+                      if (showReadyState && onReadyChanged == null) ...[
+                        const SizedBox(height: 2),
+                        state,
+                      ],
+                      if (stacked && showScore) ...[
+                        const SizedBox(height: SahneSpace.x1),
+                        score,
+                      ],
+                      if (toggleBelow && readyToggle != null) ...[
+                        const SizedBox(height: SahneSpace.x1),
+                        readyToggle,
+                      ],
+                    ],
+                  ),
+                ),
+                if (!toggleBelow && readyToggle != null) ...[
+                  const SizedBox(width: SahneSpace.x2),
+                  readyToggle,
                 ],
-              ),
+                if (!stacked && showScore) ...[
+                  const SizedBox(width: SahneSpace.x2),
+                  score,
+                ],
+                // Yabancı bir oyuncunun avatarı ve adı bu satırda da
+                // gösteriliyor; bildir/engelle burada (2026-08-06 denetimi).
+                // Satırın SONUNDA: 48 dp'lik hedef metin sütununu uzatırsa
+                // birincil eylem katlamanın altına iniyordu.
+                PlayerModerationButton(
+                  repository: repository,
+                  playerId: player.id,
+                  playerName: _displayName(context),
+                  isSelf: isSelf,
+                  compact: true,
+                  quiet: quietModeration,
+                  onBlocked: onBlocked,
+                  onKick: onKick,
+                ),
+                if (isSelf || player.id == null)
+                  const SizedBox(width: SahneSpace.x3),
+              ],
             ),
-            if (!stacked && showScore) ...[
-              const SizedBox(width: SahneSpace.x2),
-              score,
-            ],
-            // Yabancı bir oyuncunun avatarı ve adı bu satırda da
-            // gösteriliyor; bildir/engelle burada (2026-08-06 denetimi).
-            // Satırın SONUNDA: 48 dp'lik hedef metin sütununu uzatırsa
-            // birincil eylem katlamanın altına iniyordu.
-            PlayerModerationButton(
-              repository: repository,
-              playerId: player.id,
-              playerName: _displayName(context),
-              isSelf: isSelf,
-              compact: true,
-              onBlocked: onBlocked,
-            ),
-            if (isSelf || player.id == null)
-              const SizedBox(width: SahneSpace.x3),
-          ],
-        ),
+          ),
+        );
+      },
+    );
+
+    final id = player.id;
+    if (!quietModeration || isSelf || id == null) return row;
+    final name = _displayName(context);
+    void open() => showPlayerModerationSheet(
+      context: context,
+      repository: repository,
+      playerId: id,
+      playerName: name,
+      onBlocked: onBlocked,
+      onKick: onKick,
+    );
+    return Semantics(
+      customSemanticsActions: {
+        CustomSemanticsAction(label: context.t(K.reportProfileTitle)): open,
+      },
+      child: InkWell(
+        key: ValueKey('room-player-moderation-$id'),
+        onLongPress: open,
+        child: row,
       ),
     );
   }
@@ -1812,7 +2414,10 @@ class _RoomPlayerRow extends StatelessWidget {
 
 /// Henüz katılmamış 2. oyuncu için boş yuva satırı.
 class _WaitingPlayerTile extends StatelessWidget {
-  const _WaitingPlayerTile({required this.isKu});
+  const _WaitingPlayerTile({required this.isKu, this.onInvite});
+
+  /// Boş yuvadaki ikincil eylem: arkadaş daveti (kurul 5. tur 2026-10-20).
+  final VoidCallback? onInvite;
 
   /// Bekçinin tutunacağı çapa.
   ///
@@ -1857,45 +2462,41 @@ class _WaitingPlayerTile extends StatelessWidget {
               ),
             ),
             const SizedBox(width: SahneSpace.x3),
+            // Kurul 5. tur 2026-10-20 (Opus, Gemini): "Rakip bekleniyor…" iki
+            // satıra sarıyor ve "Henüz yok" rozeti aynı şeyi yineliyordu.
+            // Rozet kalktı; metin tek satır; boşalan yere davet eylemi geldi.
             Expanded(
-              child: Text(
-                context.t(K.waitingOpponent),
-                style: SahneType.bodyStrong.copyWith(color: t.tx2),
-              ),
-            ),
-            const SizedBox(width: SahneSpace.x2),
-            // Alt satırdaki ikinci "Henüz yok" kaldırıldı: yuva aynı iki
-            // kelimeyi iki kez basıyordu; kum saatli rozet daha çok şey
-            // söylüyor.
-            Flexible(
-              child: DecoratedBox(
-                decoration: ShapeDecoration(
-                  color: t.goldTint,
-                  shape: SahneShape.s,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: SahneSpace.x2,
-                    vertical: 2,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(AppIcons.hourglass, size: 14, color: t.goldTx),
-                      const SizedBox(width: SahneSpace.x1),
-                      Flexible(
-                        child: Text(
-                          context.t(K.statPending),
-                          style: SahneType.captionStrong.copyWith(
-                            color: t.goldTx,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  context.t(K.waitingOpponent),
+                  maxLines: 1,
+                  style: SahneType.bodyStrong.copyWith(color: t.tx2),
                 ),
               ),
             ),
+            if (onInvite != null) ...[
+              const SizedBox(width: SahneSpace.x2),
+              Semantics(
+                button: true,
+                label: context.t(K.inviteFriends),
+                excludeSemantics: true,
+                child: SahneTappable(
+                  key: const ValueKey('room-waiting-invite'),
+                  shape: SahneShape.m,
+                  color: Colors.transparent,
+                  onTap: onInvite!,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      minHeight: sahneTapTarget,
+                      minWidth: sahneTapTarget,
+                    ),
+                    child: Icon(AppIcons.shareNodes, size: 20, color: t.actTx),
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),
@@ -1919,40 +2520,77 @@ class _ReactionChip extends StatelessWidget {
   );
 }
 
-/// Sohbet panelini açıp kapatan satır.
-///
-/// Sohbet kapalı başlar ve bu satır onun var olduğunu söyler. aa42044
-/// odayı seyreltmek için sohbeti tamamen kaldırmıştı; kalabalık kaygısı
-/// haklıydı ama çözüm silmek değil katlamaktı (2026-07-31).
-///
-/// 2026-10-01: kartlı liste satırı kalktı. Lobinin en az önemli eylemi
-/// "Hazırım" kartı ve başlat düğmesiyle aynı yüzey ağırlığını taşıyordu;
-/// artık yüzeysiz, ortalı bir metin eylemi (simge + söz).
-class _ChatToggleRow extends StatelessWidget {
-  const _ChatToggleRow({required this.open, required this.onToggle});
+/// Boş koltuk: kesik çizgili soluk elmas + sıra numarası (ya da "+N").
+/// Metin yok: yeni Kurmancî anahtarı gerektirmesin diye ikon ve sayı.
+class _EmptySeatRow extends StatelessWidget {
+  const _EmptySeatRow({super.key, required this.label});
 
-  final bool open;
-  final VoidCallback onToggle;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return Center(
-      child: TextButton.icon(
-        key: const ValueKey('room-chat-toggle'),
-        onPressed: onToggle,
-        icon: Icon(AppIcons.comment, size: 18, color: t.tx2),
-        label: Text(
-          context.t(K.chat),
-          style: SahneType.captionStrong.copyWith(color: t.tx2),
-        ),
-        iconAlignment: IconAlignment.start,
-        style: TextButton.styleFrom(
-          minimumSize: const Size(sahneTapTarget, sahneTapTarget),
-          shape: SahneShape.m,
-          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x4),
+    return ExcludeSemantics(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 56),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(
+            SahneSpace.x3,
+            SahneSpace.x1,
+            SahneSpace.x4,
+            SahneSpace.x1,
+          ),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 24,
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  style: SahneType.caption.copyWith(color: t.tx3),
+                ),
+              ),
+              const SizedBox(width: SahneSpace.x3),
+              CustomPaint(
+                painter: _DashedDiamondPainter(t.tx3.withValues(alpha: 0.6)),
+                child: SizedBox.square(
+                  dimension: 36,
+                  child: Icon(
+                    AppIcons.userPlus,
+                    size: 16,
+                    color: t.tx3.withValues(alpha: 0.6),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+class _DashedDiamondPainter extends CustomPainter {
+  _DashedDiamondPainter(this.color);
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final path = SahneShape.diamond(36).getOuterPath(Offset.zero & size);
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5;
+    for (final m in path.computeMetrics()) {
+      var d = 0.0;
+      while (d < m.length) {
+        canvas.drawPath(m.extractPath(d, d + 4), paint);
+        d += 8;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_DashedDiamondPainter old) => old.color != color;
 }

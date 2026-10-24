@@ -48,12 +48,13 @@ void main() {
       'zankurd.mistakeQuestionIds': [
         'offline_0005',
         'offline_0010',
-        'offline_0014',
+        // 0014 oynanabilir değil; kart onu artık saymaz (2026-10-15).
+        'offline_0015',
       ],
     });
     await pump(tester);
     expect(find.byKey(const ValueKey('todays-review-card')), findsOneWidget);
-    expect(find.text('3 soru tekrara hazır'), findsOneWidget);
+    expect(find.text('Tekrar edilecek 3 soru'), findsOneWidget);
     final statusRow = find.byKey(const ValueKey('todays-review-status-row'));
     expect(statusRow, findsOneWidget);
     expect(
@@ -109,6 +110,21 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  test('tekrar başlığı sorunun konusunu taşır, karışıksa Karışık', () {
+    // Simülatör gezisi 2026-10-21: Siyaset sorusunun tekrarında başlık
+    // createRoom() varsayılanıyla "Ziman · 1 pirs" yazıyordu.
+    QuizQuestion q(String id, String category) => QuizQuestion(
+      id: id,
+      category: category,
+      prompt: 'p',
+      answers: const ['a', 'b'],
+      correctAnswer: 'a',
+      explanation: '',
+    );
+    expect(reviewRoomCategory([q('1', 'Siyaset')]), 'Siyaset');
+    expect(reviewRoomCategory([q('1', 'Dîrok'), q('2', 'Ziman')]), 'mixed');
+  });
+
   testWidgets('karta dokununca hazır sorularla tekrar başlar', (tester) async {
     SharedPreferences.setMockInitialValues({
       'zankurd.mistakeQuestionIds': ['offline_0005', 'offline_0010'],
@@ -141,7 +157,7 @@ void main() {
     expect(data.flagsCollection.isEnabled, ui.Tristate.isTrue);
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
     expect(data.label, contains('Bugünkü tekrarlar'));
-    expect(data.label, contains('2 soru tekrara hazır'));
+    expect(data.label, contains('Tekrar edilecek 2 soru'));
     expect(data.label, contains('Hafızanı pekiştir'));
     semantics.dispose();
   });
@@ -176,9 +192,76 @@ void main() {
     expect(data.flagsCollection.isButton, isTrue);
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
     expect(data.label, contains('Dubarekirinên îro'));
-    expect(data.label, contains('1 pirs ji bo dubarekirinê amade ne'));
+    expect(data.label, contains('1 pirs ji bo dubarekirinê'));
     expect(data.label, contains('Bîra xwe xurt bike'));
     semantics.dispose();
+  });
+
+  testWidgets('aynı karede iki dokunuş tek tekrar oturumu başlatır', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.mistakeQuestionIds': ['offline_0005'],
+    });
+    var starts = 0;
+    await pump(tester, onStart: (_) => starts++);
+    final tap = tester
+        .widget<InkWell>(
+          find.descendant(
+            of: find.byKey(const ValueKey('todays-review-card')),
+            matching: find.byType(InkWell),
+          ),
+        )
+        .onTap!;
+    tap();
+    tap();
+    await tester.pumpAndSettle();
+    expect(starts, 1);
+    await tester.tap(find.byKey(const ValueKey('todays-review-card')));
+    await tester.pumpAndSettle();
+    expect(
+      starts,
+      2,
+      reason: 'Biten başlatma kilidi sonraki oturumu engellemez',
+    );
+  });
+
+  testWidgets('başka akışta tüketilen tekrar bayat kartı tazeler', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.mistakeQuestionIds': ['offline_0005'],
+    });
+    var starts = 0;
+    await pump(tester, onStart: (_) => starts++);
+    await (await MistakeStore.load()).clear();
+    await tester.tap(find.byKey(const ValueKey('todays-review-card')));
+    await tester.pumpAndSettle();
+    expect(starts, 0);
+    expect(find.byKey(const ValueKey('todays-review-card')), findsNothing);
+    expect(find.byKey(const ValueKey('todays-review-empty')), findsOneWidget);
+  });
+
+  testWidgets('tekrar başlatma hatası yakalanır ve yeniden denenebilir', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.mistakeQuestionIds': ['offline_0005'],
+    });
+    var starts = 0;
+    await pump(
+      tester,
+      onStart: (_) {
+        if (++starts == 1) throw StateError('start failed');
+      },
+    );
+    await tester.tap(find.byKey(const ValueKey('todays-review-card')));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    expect(find.text('Quiz yüklenemedi'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('todays-review-card')));
+    await tester.pumpAndSettle();
+    expect(starts, 2);
   });
 
   testWidgets('tablet boyutunda overflow oluşmaz', (tester) async {
@@ -212,13 +295,13 @@ void main() {
       });
       await pump(tester);
       expect(
-        find.text('3 soru tekrara hazır'),
+        find.text('Tekrar edilecek 3 soru'),
         findsNothing,
         reason:
             'Rozet açılamayacak soruları sayarsa kullanıcıya olmayan bir iş '
             'vaat eder',
       );
-      expect(find.text('1 soru tekrara hazır'), findsOneWidget);
+      expect(find.text('Tekrar edilecek 1 soru'), findsOneWidget);
     });
 
     testWidgets('yalnız UUID varsa kart sahte rozet göstermez', (tester) async {
@@ -246,7 +329,7 @@ void main() {
       List<QuizQuestion>? started;
       await pump(tester, onStart: (q) => started = q);
 
-      expect(find.text('2 soru tekrara hazır'), findsOneWidget);
+      expect(find.text('Tekrar edilecek 2 soru'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('todays-review-card')));
       await tester.pumpAndSettle();
 

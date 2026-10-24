@@ -91,6 +91,9 @@ void main() {
       packages.addAll(entry.packages);
     }
     expect(packages, contains('Font Awesome Free (Brands)'));
+    expect(packages, contains('Lucide'));
+    expect(packages, contains('Bricolage Grotesque'));
+    expect(packages, contains('Onest'));
   });
 }
 
