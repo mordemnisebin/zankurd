@@ -534,10 +534,18 @@ class _UnifiedRewardsSection extends StatelessWidget {
     required this.badgeUnlocked,
     required this.showProgress,
     required this.isKu,
+    this.progress = const {},
+    this.unlockedOn = const {},
   });
 
   final List<Achievement> achievements;
   final Set<String> badgeUnlocked;
+
+  /// Başarı/rozet kimliği -> ilerleme (kilitli satırda çubuk ve `x/y`).
+  final Map<String, RewardProgress> progress;
+
+  /// Başarı/rozet kimliği -> açılış günü (açılmış satırda tarih).
+  final Map<String, DateTime> unlockedOn;
 
   /// "X/Y" ilerleme çubuğu. İlk turdan önce `false`: "0/13" ve boş çubuk
   /// yeni gelene yalnız eksiğini sayıyordu (2026-09-29 doğallık, K6); kart
@@ -607,6 +615,9 @@ class _UnifiedRewardsSection extends StatelessWidget {
                                   unlocked: achievements.any(
                                     (a) => a.id == def.id,
                                   ),
+                                  progress: progress[def.id],
+                                  unlockedOn: unlockedOn[def.id],
+                                  isKu: isKu,
                                 ),
                             ],
                           ),
@@ -645,6 +656,8 @@ class _UnifiedRewardsSection extends StatelessWidget {
                                 iconName: data['icon'] ?? 'badge',
                                 isUnlocked: badgeUnlocked.contains(entry.key),
                                 isKu: isKu,
+                                progress: progress[entry.key],
+                                unlockedOn: unlockedOn[entry.key],
                               );
                             },
                           ),
@@ -895,21 +908,36 @@ class _AchievementRow extends StatelessWidget {
     required this.title,
     required this.description,
     required this.unlocked,
+    required this.isKu,
+    this.progress,
+    this.unlockedOn,
   });
 
   final IconData icon;
   final String title;
   final String description;
   final bool unlocked;
+  final bool isKu;
+  final RewardProgress? progress;
+  final DateTime? unlockedOn;
 
   @override
   Widget build(BuildContext context) {
+    // Açılmış: `Kazanıldı: 24.10.2026`. Kilitli: Zêr çubuk + `63/100 soru`.
+    // Satır `enabled: unlocked` ile sönük çizilir; ilerleme çubuğu o söndürme
+    // içinde de okunur kalır (altın dolgu, metin ayrıca yazılı).
+    final Widget? footer = unlocked
+        ? RewardUnlockedLabel(unlockedOn: unlockedOn, isKu: isKu)
+        : (progress == null
+              ? null
+              : RewardProgressMeter(progress: progress!, isKu: isKu));
     return SahneListRow.icon(
       icon: icon,
       role: unlocked ? SahneRole.gold : SahneRole.neutral,
       title: title,
       subtitle: description,
       enabled: unlocked,
+      footer: footer,
     );
   }
 }

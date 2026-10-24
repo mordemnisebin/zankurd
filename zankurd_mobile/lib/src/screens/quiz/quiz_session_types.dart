@@ -37,6 +37,31 @@ bool translationRevealAllowedFor({
   required bool onlineRoom,
 }) => !(is1v1 || botRace || dailyQuiz || contest || versus || onlineRoom);
 
+/// Yanlış cevaptan HEMEN sonra doğru cevap + açıklama gösterilsin mi?
+///
+/// Kural [translationRevealAllowedFor] ile AYNIDIR ve bilerek ona bağlı:
+/// rakibin olmadığı her tek kişilik tur (solo, öğrenme, alıştırma). Düello,
+/// bot yarışı, günün turu, yarışma ve çevrimiçi odada KAPALIDIR — orada
+/// cevap, rakibe karşı puanlanan bir turun içindedir ve anında açıklama
+/// hem ritmi keser hem de (sunucu cevabı gizlediği odalarda) cevabı sızdırır.
+/// Kuralı ikiye bölmek, çeviri açıkken açıklamanın kapalı kalması gibi
+/// tutarsız bir ürün çıkarırdı; bekçi: `test/wrong_answer_insight_test.dart`.
+bool instantExplanationAllowedFor({
+  required bool is1v1,
+  required bool botRace,
+  required bool dailyQuiz,
+  required bool contest,
+  required bool versus,
+  required bool onlineRoom,
+}) => translationRevealAllowedFor(
+  is1v1: is1v1,
+  botRace: botRace,
+  dailyQuiz: dailyQuiz,
+  contest: contest,
+  versus: versus,
+  onlineRoom: onlineRoom,
+);
+
 /// Ödül üretmeyen tek kişilik tur: süre tercihi yalnız burada geçerlidir.
 bool isRewardNeutralSoloQuiz({
   required bool is1v1,

@@ -3108,6 +3108,45 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<bool> submitDailyEventResult({
+    required int correct,
+    required int total,
+    required int seconds,
+  }) async {
+    try {
+      final res = await client
+          .rpc(
+            'submit_daily_event_result',
+            params: {
+              'p_correct': correct,
+              'p_total': total,
+              'p_seconds': seconds,
+            },
+          )
+          .timeout(const Duration(seconds: 8));
+      return res == true;
+    } catch (e, s) {
+      // Sıralama yalnız gösterimdir: yazılamayan sonuç turu bozmaz.
+      _recordError(e, s, reason: 'submitDailyEventResult failed');
+      return false;
+    }
+  }
+
+  @override
+  Future<DailyEventBoard?> loadDailyEventBoard() async {
+    try {
+      if (client.auth.currentUser == null) return null;
+      final res = await client
+          .rpc('get_daily_event_board')
+          .timeout(const Duration(seconds: 8));
+      return DailyEventBoard.tryParse(res);
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadDailyEventBoard failed');
+      return null;
+    }
+  }
+
+  @override
   Future<List<Lesson>> loadLessonsByCategory(String category) async {
     try {
       final res =

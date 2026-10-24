@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/strings.dart';
+import '../models/achievement.dart';
 import '../theme/app_icons.dart';
+import 'reward_progress_view.dart';
 import 'sahne/sahne.dart';
 
 /// Rozet görsel widget'ı — profil ekranında ve sonuç ekranında kullanılır.
@@ -15,6 +17,8 @@ class BadgeWidget extends StatelessWidget {
     required this.iconName,
     required this.isUnlocked,
     required this.isKu,
+    this.progress,
+    this.unlockedOn,
     super.key,
   });
 
@@ -26,6 +30,13 @@ class BadgeWidget extends StatelessWidget {
   final String iconName;
   final bool isUnlocked;
   final bool isKu;
+
+  /// Kilitliyken kilit simgesinin altında çubuk + `x/y` (bkz.
+  /// [RewardProgressMeter]). Verilmezse yalnız kilit.
+  final RewardProgress? progress;
+
+  /// Açılmışsa açılış günü (chip'in altında `24.10.2026`); kayıt yoksa null.
+  final DateTime? unlockedOn;
 
   String get title => isKu ? titleKu : titleTr;
   String get description => isKu ? descriptionKu : descriptionTr;
@@ -136,8 +147,27 @@ class BadgeWidget extends StatelessWidget {
                       ),
                     ),
                   )
-                else
+                else ...[
                   Icon(AppIcons.lock, size: 16, color: t.tx3),
+                  if (progress != null) ...[
+                    const SizedBox(height: SahneSpace.x1),
+                    RewardProgressMeter(
+                      progress: progress!,
+                      isKu: isKu,
+                      compact: true,
+                      centered: true,
+                    ),
+                  ],
+                ],
+                if (isUnlocked && unlockedOn != null) ...[
+                  const SizedBox(height: SahneSpace.x1),
+                  Text(
+                    formatRewardDate(unlockedOn!),
+                    key: const ValueKey('badge-unlocked-date'),
+                    textAlign: TextAlign.center,
+                    style: SahneType.caption.copyWith(color: t.tx2),
+                  ),
+                ],
               ],
             ),
           ),

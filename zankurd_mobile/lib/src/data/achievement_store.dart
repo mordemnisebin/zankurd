@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
@@ -27,6 +29,8 @@ class AchievementStore {
     this._playedCategories,
     this._dailyQuizCompletions,
     this._dailyQuizLastDay,
+    this._unlockedAt,
+    this._bestRoundStreak,
   );
 
   static const requiredCategories = [
@@ -51,6 +55,16 @@ class AchievementStore {
 
   static String get _dailyQuizDayKey =>
       LocalProgressScope.physical('zankurd.achievements.dailyQuizLastDay');
+
+  /// Açılış günleri (`id -> yyyy-MM-dd`, JSON). Rozet ekranı "Kazanıldı:
+  /// 24.10.2026" yazsın diye tutulur; bu anahtar eklenmeden önce açılan
+  /// rozetlerin tarihi yoktur (gösterilmez, uydurulmaz).
+  static String get _unlockedAtKey =>
+      LocalProgressScope.physical('zankurd.achievements.unlockedAt');
+
+  /// Bir turda yapılmış en uzun doğru serisi ("10 doğru üst üste" ilerlemesi).
+  static String get _bestRoundStreakKey =>
+      LocalProgressScope.physical('zankurd.achievements.bestRoundStreak');
 
   static AchievementStore? _instance;
 
@@ -165,7 +179,25 @@ class AchievementStore {
       preferences?.getStringList(_categoriesKey)?.toSet() ?? <String>{},
       preferences?.getInt(_dailyQuizKey) ?? 0,
       preferences?.getString(_dailyQuizDayKey),
+      _decodeUnlockedAt(preferences?.getString(_unlockedAtKey)),
+      preferences?.getInt(_bestRoundStreakKey) ?? 0,
     );
+  }
+
+  static Map<String, String> _decodeUnlockedAt(String? raw) {
+    if (raw == null || raw.isEmpty) return <String, String>{};
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is! Map) return <String, String>{};
+      return {
+        for (final entry in decoded.entries)
+          if (entry.key is String && entry.value is String)
+            entry.key as String: entry.value as String,
+      };
+    } catch (_) {
+      // Bozuk kayıt rozeti kaybettirmez; yalnız tarih gösterilmez.
+      return <String, String>{};
+    }
   }
 
   static void resetInstance() {
@@ -181,12 +213,16 @@ class AchievementStore {
       _categoriesKey,
       _dailyQuizKey,
       _dailyQuizDayKey,
+      _unlockedAtKey,
+      _bestRoundStreakKey,
     ]);
     _unlockedIds.clear();
     _answeredQuestions = 0;
     _playedCategories.clear();
     _dailyQuizCompletions = 0;
     _dailyQuizLastDay = null;
+    _unlockedAt.clear();
+    _bestRoundStreak = 0;
   }
 
   final SharedPreferences? _preferences;
@@ -195,6 +231,8 @@ class AchievementStore {
   final Set<String> _playedCategories;
   int _dailyQuizCompletions;
   String? _dailyQuizLastDay;
+  final Map<String, String> _unlockedAt;
+  int _bestRoundStreak;
 
   static String _dayString(DateTime day) =>
       '${day.year}-${day.month.toString().padLeft(2, '0')}-'
@@ -223,6 +261,87 @@ class AchievementStore {
 
   bool isUnlocked(String id) => _unlockedIds.contains(id);
 
+  /// Başarının açıldığı gün; tarih kaydı yoksa (eski rozet) null.
+  DateTime? unlockedAt(String id) {
+    final raw = _unlockedAt[id];
+    if (raw == null) return null;
+    final parts = raw.split('-');
+    if (parts.length != 3) return null;
+    final y = int.tryParse(parts[0]);
+    final m = int.tryParse(parts[1]);
+    final d = int.tryParse(parts[2]);
+    if (y == null || m == null || d == null) return null;
+    return DateTime(y, m, d);
+  }
+
+  /// Bir turda yapılmış en uzun doğru serisi.
+  int get bestRoundStreak => _bestRoundStreak;
+
+  /// Günün turunun (yerel günde en çok bir kez sayılan) tamamlanma sayısı.
+  int get dailyQuizCompletions => _dailyQuizCompletions;
+
+  /// Oynanmış gerekli konu sayısı.
+  int get playedRequiredCategoryCount =>
+      requiredCategories.where(_playedCategories.contains).length;
+
+  /// [id] başarısının açılmasına ne kadar kaldığı.
+  ///
+  /// YALNIZ GÖSTERİM: açılma kuralları [recordQuizResult] içinde aynen
+  /// durur; buradaki hedefler onlarla aynı sayıdır (100 soru, 10 seri, 8
+  /// konu, 7 gün, 5 tur). [dailyStreak] günlük zincir uzunluğudur
+  /// (`StreakStore.effectiveStreak`); depo bilmediği için çağıran verir.
+  /// Sayaç tutulmayan tek seferlik başarılar `0/1` olur.
+  RewardProgress? progressFor(String id, {int dailyStreak = 0}) {
+    final unlocked = isUnlocked(id);
+    RewardProgress done(int target, RewardUnit unit) =>
+        RewardProgress(current: target, target: target, unit: unit);
+    switch (id) {
+      case AchievementIds.firstGame:
+        return RewardProgress(current: unlocked ? 1 : 0, target: 1);
+      case AchievementIds.tenStreak:
+        return unlocked
+            ? done(10, RewardUnit.none)
+            : RewardProgress(current: _bestRoundStreak, target: 10);
+      case AchievementIds.hundredQuestions:
+        return unlocked
+            ? done(100, RewardUnit.question)
+            : RewardProgress(
+                current: _answeredQuestions,
+                target: 100,
+                unit: RewardUnit.question,
+              );
+      case AchievementIds.allCategories:
+        final total = requiredCategories.length;
+        return unlocked
+            ? done(total, RewardUnit.topic)
+            : RewardProgress(
+                current: playedRequiredCategoryCount,
+                target: total,
+                unit: RewardUnit.topic,
+              );
+      case AchievementIds.sevenDayStreak:
+        return unlocked
+            ? done(7, RewardUnit.day)
+            : RewardProgress(
+                current: dailyStreak,
+                target: 7,
+                unit: RewardUnit.day,
+              );
+      case AchievementIds.mistakesCleared:
+      case AchievementIds.botWinner:
+        return RewardProgress(current: unlocked ? 1 : 0, target: 1);
+      case AchievementIds.dailyQuizFive:
+        return unlocked
+            ? done(5, RewardUnit.round)
+            : RewardProgress(
+                current: _dailyQuizCompletions,
+                target: 5,
+                unit: RewardUnit.round,
+              );
+    }
+    return null;
+  }
+
   Future<List<Achievement>> recordQuizResult({
     required String category,
     required int totalQuestions,
@@ -237,6 +356,7 @@ class AchievementStore {
     DateTime? now,
   }) async {
     _answeredQuestions += totalQuestions;
+    if (bestStreak > _bestRoundStreak) _bestRoundStreak = bestStreak;
     if (requiredCategories.contains(category)) {
       _playedCategories.add(category);
     }
@@ -258,6 +378,7 @@ class AchievementStore {
     void unlockWhen(bool condition, String id) {
       if (!condition || _unlockedIds.contains(id)) return;
       _unlockedIds.add(id);
+      _unlockedAt[id] = _dayString(now ?? DateTime.now());
       newlyUnlocked.add(definitions.firstWhere((item) => item.id == id));
     }
 
@@ -297,6 +418,8 @@ class AchievementStore {
       _playedCategories.toList(),
     );
     await _preferences?.setInt(_dailyQuizKey, _dailyQuizCompletions);
+    await _preferences?.setInt(_bestRoundStreakKey, _bestRoundStreak);
+    await _preferences?.setString(_unlockedAtKey, jsonEncode(_unlockedAt));
     final lastDay = _dailyQuizLastDay;
     if (lastDay != null) {
       await _preferences?.setString(_dailyQuizDayKey, lastDay);

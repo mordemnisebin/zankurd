@@ -2355,6 +2355,26 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return const [];
   }
 
+  /// Günün yarışması panosu örneği: ekran turu ve testler dolu pano görmek
+  /// için verir. Varsayılan null = "okunamadı" (çevrimdışı davranışı).
+  DailyEventBoard? sampleDailyEventBoard;
+
+  /// `submitDailyEventResult` çağrıları (doğru, toplam, saniye), sırayla.
+  final List<(int, int, int)> dailyEventSubmissions = [];
+
+  @override
+  Future<bool> submitDailyEventResult({
+    required int correct,
+    required int total,
+    required int seconds,
+  }) async {
+    dailyEventSubmissions.add((correct, total, seconds));
+    return true;
+  }
+
+  @override
+  Future<DailyEventBoard?> loadDailyEventBoard() async => sampleDailyEventBoard;
+
   static const Map<String, List<Lesson>> _lessonsData = {
     'everyday': [
       Lesson(

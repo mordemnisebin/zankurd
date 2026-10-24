@@ -228,6 +228,115 @@ class ContestLeaderboardRow {
       );
 }
 
+/// "Bugünün sıralaması" satırı: yalnız herkese açık gösterim verisi.
+@immutable
+class DailyEventEntry {
+  const DailyEventEntry({
+    required this.rank,
+    required this.name,
+    required this.correct,
+    required this.total,
+    required this.seconds,
+    this.isMe = false,
+  });
+
+  final int rank;
+  final String name;
+  final int correct;
+  final int total;
+  final int seconds;
+  final bool isMe;
+
+  static DailyEventEntry? tryParse(Object? raw) {
+    if (raw is! Map) return null;
+    final json = Map<String, dynamic>.from(raw);
+    // Sunucudan gelen veri: yanlış tipli alan fırlatmaz, satırı atlatır.
+    int? asInt(Object? v) => v is num ? v.toInt() : null;
+    final rank = asInt(json['rank']);
+    final correct = asInt(json['correct']);
+    final total = asInt(json['total']);
+    if (rank == null || correct == null || total == null) return null;
+    final rawName = json['name'];
+    final name = rawName is String ? rawName.trim() : null;
+    return DailyEventEntry(
+      rank: rank,
+      name: (name == null || name.isEmpty) ? 'Oyuncu' : name,
+      correct: correct,
+      total: total,
+      seconds: asInt(json['seconds']) ?? 0,
+      isMe: json['is_me'] == true,
+    );
+  }
+
+  /// `m:ss` (62 sn -> `1:02`).
+  String get timeLabel =>
+      '${seconds ~/ 60}:${(seconds % 60).toString().padLeft(2, '0')}';
+}
+
+/// Günün yarışmasının sonuç panosu (`get_daily_event_board`).
+@immutable
+class DailyEventBoard {
+  const DailyEventBoard({
+    this.top = const [],
+    this.me,
+    this.yesterdayWinner,
+    this.participants = 0,
+  });
+
+  /// Bugünün ilk üçü (sıra sırasıyla).
+  final List<DailyEventEntry> top;
+
+  /// Çağıranın bugünkü satırı; bugün bitirmediyse null.
+  final DailyEventEntry? me;
+
+  /// Dünün birincisi; dün kimse bitirmediyse null.
+  final DailyEventEntry? yesterdayWinner;
+  final int participants;
+
+  static DailyEventBoard? tryParse(Object? raw) {
+    if (raw is! Map) return null;
+    final json = Map<String, dynamic>.from(raw);
+    final topRaw = json['top'];
+    return DailyEventBoard(
+      top: [
+        if (topRaw is List)
+          for (final item in topRaw) ?DailyEventEntry.tryParse(item),
+      ],
+      me: DailyEventEntry.tryParse(json['me']),
+      yesterdayWinner: DailyEventEntry.tryParse(json['yesterday']),
+      participants: switch (json['participants']) {
+        final num n => n.toInt(),
+        _ => 0,
+      },
+    );
+  }
+}
+
+/// Günün yarışmasının bir sonraki sıfırlanma anı (UTC).
+///
+/// Sunucu günü `app_today()` = Europe/Istanbul takvim günüdür
+/// (`2026-10-24_gunun_yarismasi_sonuc.sql`); Türkiye yıl boyu UTC+3'tür
+/// (yaz saati yok), yani sınır her gün 21:00 UTC'dir. Cihazın saat dilimi
+/// bilerek kullanılmaz: Almanya'daki oyuncu için de sıralama Türkiye
+/// gece yarısı kapanır.
+DateTime nextContestResetAt(DateTime now) {
+  final shifted = now.toUtc().add(const Duration(hours: 3));
+  final nextMidnight = DateTime.utc(
+    shifted.year,
+    shifted.month,
+    shifted.day + 1,
+  );
+  return nextMidnight.subtract(const Duration(hours: 3));
+}
+
+/// [now]'dan sıfırlanmaya kalan süre, dakikaya YUKARI yuvarlanmış: kalan
+/// "0 sa 0 dk" gösterilmez, 59 sn kala "1 dk" denir.
+({int hours, int minutes}) contestResetCountdown(DateTime now) {
+  final left = nextContestResetAt(now).difference(now.toUtc());
+  final totalMinutes = (left.inSeconds + 59) ~/ 60;
+  return (hours: totalMinutes ~/ 60, minutes: totalMinutes % 60);
+}
+
 /// Contest rozeti (badge)
 @immutable
 class ContestBadge {

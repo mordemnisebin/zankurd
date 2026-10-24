@@ -16,9 +16,14 @@ import 'support/widget_test_helpers.dart';
 /// işaretlenmez altında bir paragraf açılıyor, tur duruyor ve okuma yükü
 /// oyunun ritmini kesiyordu. Kural değişti:
 ///
-/// * tur sırasında **yalnız doğru cevap** görünür;
+/// * tur sırasında **doğru cevapta** açıklama metni AÇILMAZ (ritim);
 /// * açıklamaların tamamı sorular bittiğinde sonuç ekranında **bir arada**
 ///   gelir (`_AllExplanationsCard`).
+///
+/// 2026-10-24 (ürün sahibi onayı): kuralın TEK istisnası **yanlış cevap**
+/// — rakipsiz turda doğru cevap + açıklama hemen altta açılır. Onun
+/// bekçisi `wrong_answer_insight_test.dart`; burada yalnız "doğru cevapta
+/// açılmaz" tarafı korunur.
 ///
 /// İki taraf birlikte sabitleniyor. Yalnız birini yazmak kuralı yarım
 /// bırakır: açıklamayı turdan kaldırıp sonuca koymayı unutmak, öğrenme
@@ -78,19 +83,18 @@ void main() {
     );
   }
 
-  testWidgets('tur sırasında yalnız doğru cevap gösterilir', (tester) async {
+  testWidgets('yanlışta doğru şık karoda işaretlenir ve açıklama açılır', (
+    tester,
+  ) async {
     await pumpQuiz(tester, MockZanKurdRepository());
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('ekmek'));
-    // Açıklama kutusu 800 ms'lik bir denetleyicinin sonunda açılırdı; o süre
-    // dolduktan sonra bile metin görünmemeli.
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
-    expect(find.text('«av» Türkçede «su» demektir.'), findsNothing);
-    // Geri bildirim KARODAN gelir, ayrı bir kutudan değil.
+    // Geri bildirim KARODAN gelir; altındaki kart açıklamayı taşır.
     expect(dogruSikIsaretli(tester, 'su'), isTrue);
-    expect(find.text('Doğru cevap'), findsNothing);
+    expect(find.text('«av» Türkçede «su» demektir.'), findsOneWidget);
   });
 
   testWidgets('doğru cevapta da açıklama metni açılmaz', (tester) async {
@@ -105,13 +109,13 @@ void main() {
     expect(find.text('Doğru cevap'), findsNothing);
   });
 
-  testWidgets('öğrenme modunda açıklama cevap ekranından açılabilir', (
+  testWidgets('doğru cevapta açıklama kapıdan (Açıklamayı gör) açılabilir', (
     tester,
   ) async {
     await pumpQuiz(tester, MockZanKurdRepository());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('ekmek'));
+    await tester.tap(find.text('su'));
     await tester.pumpAndSettle(const Duration(seconds: 2));
     final explanationAction = find.byKey(
       const ValueKey('quiz-view-explanation'),

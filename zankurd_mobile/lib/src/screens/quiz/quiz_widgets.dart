@@ -406,6 +406,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     required this.hiddenAnswers,
     required this.firstAttemptAnswer,
     required this.showExplanation,
+    this.wrongAnswerInsight = false,
     required this.suspense,
     required this.onAnswer,
     this.lexiconEnabled = false,
@@ -442,6 +443,11 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final String firstAttemptAnswer;
   final Map<String, double>? audiencePoll;
   final bool showExplanation;
+
+  /// Yanlış cevaptan sonra doğru cevap + açıklama kartı (bkz.
+  /// [instantExplanationAllowedFor]). Doluyken "Açıklamayı gör" kapısının
+  /// yerini alır: aynı açıklama iki yerde durmaz.
+  final bool wrongAnswerInsight;
   final Map<String, _OpponentAnswer>? opponentSelectedAnswers;
   final bool isCompact;
 
@@ -540,7 +546,9 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                 question.matchAnswer(selectedAnswer) != FreeTextMatch.exact,
             revealKey: showExplanation ? explanationKey : null,
           ),
-          if (showExplanation && answered)
+          if (wrongAnswerInsight)
+            _WrongAnswerInsight(key: explanationActionKey, question: question)
+          else if (showExplanation && answered)
             _LearningExplanationAction(
               key: explanationActionKey,
               question: question,
@@ -754,6 +762,74 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       return ShakeWrapper(trigger: 1, child: button);
     }
     return button;
+  }
+}
+
+/// Yanlış cevaptan HEMEN sonra: doğru cevap + 1–2 cümlelik açıklama.
+///
+/// ## Kural değişikliği (2026-10-24, ürün sahibi onayı)
+///
+/// 2026-07-26 kuralı "tur sırasında açıklama yok, hepsi sonuçta" idi ve
+/// ritmi korumak içindi. Yanlış yapan oyuncu ise tam o anda öğrenmeye en
+/// açıktır; sonuçta aynı soruya dönmek zorunda kalıyordu. Yeni kural dardır:
+/// yalnız YANLIŞTA, yalnız rakipsiz turda ([instantExplanationAllowedFor]);
+/// doğru cevapta ritim aynen sürer.
+///
+/// Açıklaması olmayan soruda (3750 sorudan 12'si) yalnız doğru cevap yazılır.
+/// Sıralama türlerinde doğru cevabı zaten [_AnswerRevealFallback] basar; burada
+/// tekrar edilmez.
+class _WrongAnswerInsight extends StatelessWidget {
+  const _WrongAnswerInsight({super.key, required this.question});
+
+  final QuizQuestion question;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final explanation = question.getLocalizedExplanation(context.isKu).trim();
+    // Yazılı (boşluk doldurma) soruda doğru cevabı alanın kendisi zaten
+    // yazar; sıralamada yedek kutu yazar. İkisinde de tekrar edilmez.
+    final showAnswer =
+        !needsAnswerRevealFallback(question.type) &&
+        question.type != QuestionType.fillInBlank;
+    if (!showAnswer && explanation.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(top: SahneSpace.x4),
+      child: SahneSurfaceCard(
+        key: const ValueKey('quiz-wrong-answer-insight'),
+        padding: const EdgeInsets.all(SahneSpace.x3),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (showAnswer)
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '${context.t(K.correctAnswerLabel)}: ',
+                      style: SahneType.captionStrong.copyWith(color: t.learnTx),
+                    ),
+                    TextSpan(
+                      text: question.correctAnswer,
+                      style: SahneType.bodyStrong.copyWith(color: t.tx),
+                    ),
+                  ],
+                ),
+                key: const ValueKey('quiz-wrong-answer-correct'),
+              ),
+            if (showAnswer && explanation.isNotEmpty)
+              const SizedBox(height: SahneSpace.x2),
+            if (explanation.isNotEmpty)
+              Text(
+                explanation,
+                key: const ValueKey('quiz-wrong-answer-explanation'),
+                style: SahneType.body.copyWith(color: t.tx),
+              ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

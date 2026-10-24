@@ -33,6 +33,8 @@ import '../widgets/skeleton_loader.dart';
 import '../models/avatar_identity.dart';
 import '../data/badge_service.dart';
 import '../widgets/badge_widget.dart';
+import '../widgets/reward_progress_view.dart';
+import '../data/reward_progress_snapshot.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/rolling_count.dart';
 import '../widgets/strength_map_section.dart';
@@ -133,6 +135,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int _xpNeeded = 1000;
   double? _accuracyPercent;
   Set<String> _badgeUnlocked = {};
+  Map<String, RewardProgress> _rewardProgress = const {};
+  Map<String, DateTime> _rewardUnlockedOn = const {};
 
   /// Tüm modlarda cevaplanan toplam soru sayısı. "Oyun" karosu daha önce
   /// `roomsPlayed` gösteriyordu; o yalnız çevrimiçi oda sayısıdır, solo quiz
@@ -285,6 +289,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // profil gridinde gösterilmiyor, quiz üst barında görünüyor.
       final mistakeStore = await MistakeStore.load();
       final badgeService = await BadgeService.load();
+      final rewardView = await RewardProgressSnapshot.load(
+        achievements: achievementStore,
+        badges: badgeService,
+      );
       int? coins;
       try {
         coins = await widget.repository.loadCoinBalance();
@@ -301,6 +309,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _avatarIdentity = avatarIdentity;
           _achievements = achievementStore.unlockedAchievements;
           _badgeUnlocked = badgeService.unlockedBadges;
+          _rewardProgress = rewardView.progress;
+          _rewardUnlockedOn = rewardView.unlockedOn;
           _masteryStore = masteryStore;
           _level = xpStore.currentLevel;
           _xpInLevel = xpStore.xpInCurrentLevel;
@@ -616,6 +626,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _UnifiedRewardsSection(
           achievements: _achievements,
           badgeUnlocked: _badgeUnlocked,
+          progress: _rewardProgress,
+          unlockedOn: _rewardUnlockedOn,
           showProgress: _hasPlayed,
           isKu: ku,
         ),
