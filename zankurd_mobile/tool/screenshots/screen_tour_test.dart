@@ -188,6 +188,15 @@ Future<void> _tapShown(WidgetTester tester, Finder finder) async {
   await tester.tap(finder);
 }
 
+/// Yarış sekmesi üç seçime inince (2026-10-24) oda eylemleri "Oda" kartının
+/// alt sayfasındadır: önce kart, sonra "Oda kur" satırı.
+Future<void> _tapRoomCreate(WidgetTester tester) async {
+  await _tapShown(tester, find.byKey(const ValueKey('play-hub-room')));
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 600));
+  await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
+}
+
 Future<void> _shoot(WidgetTester tester, String name) async {
   // Yakalama VE dosya yazımı `runAsync` içinde kalmalı: test bağlayıcısının
   // sahte zaman dilimi içinde gerçek bir I/O Future'ı asla tamamlanmaz ve
@@ -864,6 +873,38 @@ void main() {
     );
     await _pump(t, PlayHubScreen(repository: repository));
     await _shoot(t, '05_play_hub');
+  }, tags: ['preview']);
+
+  // 2026-10-24: Yarış üç seçim; rakip seçimi ve oda sayfaları.
+  testWidgets('05b canlı düello rakip seçimi', (t) async {
+    await _pump(t, PlayHubScreen(repository: repository));
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-quick-duel-cta')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    await _shoot(t, '05b_play_hub_live_opponent');
+  }, tags: ['preview']);
+
+  testWidgets('05c sırayla düello rakip seçimi (karanlık, Kurmancî)', (
+    t,
+  ) async {
+    await _pump(
+      t,
+      PlayHubScreen(repository: _TourRepository(), asyncDuelEnabled: true),
+      dark: true,
+      ku: true,
+    );
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-async-duel')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    await _shoot(t, '05c_play_hub_async_opponent_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('05d oda sayfası', (t) async {
+    await _pump(t, PlayHubScreen(repository: repository));
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-room')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    await _shoot(t, '05d_play_hub_room_sheet');
   }, tags: ['preview']);
 
   testWidgets('06 sıralama', (t) async {
@@ -1933,14 +1974,7 @@ void main() {
   //    süre ve jeton bahsi seçimleri. Açık/TR, karanlık ve Kurmancî.
   testWidgets("90 oda kurma sheet'i", (t) async {
     await _pump(t, PlayHubScreen(repository: repository));
-    // Dar ekranda / büyük yazıda düğme kıvrımın altında kalır (tur
-    // `ZANKURD_SCREEN_TOUR_WIDTH/TEXT_SCALE` ile bu koşulu basabilir).
-    await t.scrollUntilVisible(
-      find.byKey(const ValueKey('play-hub-create-room')),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     await _shoot(t, '90_custom_room_sheet');
@@ -1948,14 +1982,7 @@ void main() {
 
   testWidgets("91 oda kurma sheet'i (karanlık)", (t) async {
     await _pump(t, PlayHubScreen(repository: repository), dark: true);
-    // Dar ekranda / büyük yazıda düğme kıvrımın altında kalır (tur
-    // `ZANKURD_SCREEN_TOUR_WIDTH/TEXT_SCALE` ile bu koşulu basabilir).
-    await t.scrollUntilVisible(
-      find.byKey(const ValueKey('play-hub-create-room')),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     await _shoot(t, '91_custom_room_sheet_dark');
@@ -1963,14 +1990,7 @@ void main() {
 
   testWidgets("92 oda kurma sheet'i (Kurmancî)", (t) async {
     await _pump(t, PlayHubScreen(repository: repository), ku: true);
-    // Dar ekranda / büyük yazıda düğme kıvrımın altında kalır (tur
-    // `ZANKURD_SCREEN_TOUR_WIDTH/TEXT_SCALE` ile bu koşulu basabilir).
-    await t.scrollUntilVisible(
-      find.byKey(const ValueKey('play-hub-create-room')),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     await _shoot(t, '92_custom_room_sheet_ku');
@@ -2070,10 +2090,10 @@ void main() {
 
   // ── Arkadaşa meydan okuma (2026-10-13) ───────────────────────────────
   Future<void> openChallengeSheet(WidgetTester t) async {
-    await _tapShown(
-      t,
-      find.byKey(const ValueKey('play-hub-async-duel-challenge')),
-    );
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-async-duel')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    await t.tap(find.byKey(const ValueKey('opponent-sheet-friend')));
     await t.pump();
     await t.pump(const Duration(milliseconds: 600));
     expect(find.byKey(const ValueKey('challenge-sheet')), findsOneWidget);
@@ -2434,7 +2454,7 @@ void main() {
 
   testWidgets('109 oda kurma — ücrete yetmiyor', (t) async {
     await _pump(t, PlayHubScreen(repository: _BalanceTourRepository(10)));
-    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     // Kurul 3. tur: ücret grubu "Ayarlar" satırında katlı; önce açılır.
@@ -2460,7 +2480,7 @@ void main() {
       dark: true,
       ku: true,
     );
-    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     // Kurul 3. tur: ücret grubu "Ayarlar" satırında katlı; önce açılır.
@@ -2959,7 +2979,7 @@ void main() {
   // 1 ayrılan, sonuç aynı 12 oyuncu (eşit birincilik, ayrılan sonda).
   testWidgets('255 oda kurma — oyuncu sayısı', (t) async {
     await _pump(t, PlayHubScreen(repository: _BalanceTourRepository(500)));
-    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     final chip = find.byKey(const ValueKey('custom-room-capacity-16'));
@@ -2976,7 +2996,7 @@ void main() {
       dark: true,
       ku: true,
     );
-    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     final chip = find.byKey(const ValueKey('custom-room-capacity-16'));

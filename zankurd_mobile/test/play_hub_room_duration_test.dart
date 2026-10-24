@@ -3,6 +3,7 @@
 // 2026-10-19 son rötuş: çipler tek satır ("Bilim ve Düşünce" iki satıra sarıp satırı uzatıyordu); büyük yazıda iki satıra izin var ama aynı satırdaki çipler eşit boyda; alt çubuğun üstünde ayraç var.
 // 2026-10-19 6. tur: oyuncu sayısı TEK satırda rakam çipi ("2 4 8 16 30 50"); ikinci satırın yarısı sabit "Odayı aç" altında kalınca iki tasarım turu onu "boş çerçeve" sandı. Dar ekranda 2x3 (yetim çip yok); "N kişi" ekran okuyucuda.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -52,12 +53,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      await tester.scrollUntilVisible(
-        find.byKey(const ValueKey('play-hub-create-room')),
-
-        200,
-      );
-
+      await openRoomSheet(tester);
       await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
       await tester.pumpAndSettle();
 
@@ -91,7 +87,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      await tester.scrollUntilVisible(find.text('Oda kur'), 200);
+      await openRoomSheet(tester);
 
       await tester.tap(find.text('Oda kur'));
       await tester.pumpAndSettle();
@@ -145,7 +141,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.scrollUntilVisible(find.text('Oda kur'), 200);
+    await openRoomSheet(tester);
 
     await tester.tap(find.text('Oda kur'));
     await tester.pumpAndSettle();
@@ -176,12 +172,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('play-hub-create-room')),
-
-      200,
-    );
-
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
     await tester.ensureVisible(
@@ -205,17 +196,7 @@ void main() {
       testShell(child: PlayHubScreen(repository: repository)),
     );
     await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('play-hub-create-room')),
-      200,
-    );
-    // 320 pt + 2x yazıda liste satırları ok boşluğu (16) yüzünden bir satır
-    // daha sarar; `scrollUntilVisible` düğmeyi görünür ilan edip kenarda
-    // bırakabiliyor. Dokunmadan önce tam görünür kıl.
-    await tester.ensureVisible(
-      find.byKey(const ValueKey('play-hub-create-room')),
-    );
-    await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
   }
@@ -494,6 +475,7 @@ void main() {
       testShell(child: PlayHubScreen(repository: MockZanKurdRepository())),
     );
     await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
 

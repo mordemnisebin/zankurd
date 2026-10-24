@@ -1,6 +1,7 @@
 // Tasarım kurulu tüm ekranlar 2026-10-20: yetmeyen mağaza ürünü çip değil,
 // ortak pasif fiyat düğmesi + eksik miktar taşır.
 // Kurul 5. tur 2026-10-20: eksik notu gündüz koyu kehribar (≥ 4.5:1).
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -216,6 +217,7 @@ void main() {
         testShell(child: PlayHubScreen(repository: _Repo(coins))),
       );
       await tester.pumpAndSettle();
+      await openRoomSheet(tester);
       await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
       await tester.pumpAndSettle();
     }

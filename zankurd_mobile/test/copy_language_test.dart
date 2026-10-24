@@ -161,20 +161,20 @@ void main() {
   });
 
   test('hızlı düello bütün girişlerde aynı Kurmancî terimi kullanır', () {
-    expect(Tr.of(K.quickDuel, AppLanguage.ku), 'Pêşbirka bilez');
+    expect(Tr.of(K.quickDuel, AppLanguage.ku), 'Pêşbirka zindî');
     expect(Tr.of(K.playMore, AppLanguage.ku), 'Zêdetir');
     // Bekçi yalnız hub kartlarını görüyordu. Eşleşme başlığı ve tanıtım
     // maddesi "Şerê 1vs1" deyince aynı 1v1 iki adla duruyordu.
-    expect(Tr.of(K.duel1v1, AppLanguage.ku), 'Pêşbirka bilez');
-    expect(Tr.of(K.duel1v1Short, AppLanguage.ku), 'Pêşbirka bilez');
-    expect(Tr.of(K.onbDuelBullet, AppLanguage.ku), contains('Pêşbirka bilez'));
+    expect(Tr.of(K.duel1v1, AppLanguage.ku), 'Pêşbirka zindî');
+    expect(Tr.of(K.duel1v1Short, AppLanguage.ku), 'Pêşbirka zindî');
+    expect(Tr.of(K.onbDuelBullet, AppLanguage.ku), contains('Pêşbirka zindî'));
 
     final sereDuel = RegExp(r'şerê\s*1', caseSensitive: false);
     for (final key in Tr.keys) {
       expect(
         sereDuel.hasMatch(Tr.of(key, AppLanguage.ku)),
         isFalse,
-        reason: '$key: Kurmancî metinde "şerê 1"; karşılığı "pêşbirka bilez"',
+        reason: '$key: Kurmancî metinde "şerê 1"; karşılığı "pêşbirka zindî"',
       );
     }
   });

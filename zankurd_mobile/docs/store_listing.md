@@ -368,7 +368,7 @@ Teknolojî û Zanist û Raman zanîna giştî ne û ji kategoriyên kurdî cuda 
 
 PÊŞBIRK
 
-• Pêşbirka bilez: bi hevrikekî rasthatî re 1v1 rasterast.
+• Pêşbirka zindî: bi hevrikekî rasthatî re 1v1 rasterast.
 • Pêşbirka bi dorê: ne pêwist e hevrikê te di heman demê de serhêl be.
   Tu niha dilîzî, ew paşê; encam di "Pêşbirkên min" de xuya dibe.
 • Ode ava bike: girêdana vexwendinê parve bike, bila hevalên te bi yek

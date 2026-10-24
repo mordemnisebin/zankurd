@@ -1,4 +1,5 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -60,9 +61,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('nav-play')));
       await tester.pumpAndSettle();
 
-      await tester.ensureVisible(
-        find.byKey(const ValueKey('play-hub-create-room')),
-      );
+      await openRoomSheet(tester);
       await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
       await tester.pumpAndSettle();
 
@@ -102,6 +101,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
     await tester.enterText(
@@ -143,6 +143,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Katıl'));
@@ -171,6 +172,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
     await tester.enterText(
@@ -203,13 +205,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await openRoomSheet(tester);
     final joinRoom = find.byKey(const ValueKey('play-hub-join-room'));
-    await tester.scrollUntilVisible(
-      joinRoom,
-      200,
-      scrollable: find.byType(Scrollable),
-    );
-    await tester.pumpAndSettle();
     await tester.tap(joinRoom);
     await tester.pumpAndSettle();
 

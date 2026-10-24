@@ -13,6 +13,7 @@
 // Testler sayfayı hep SEÇİM yapıp "Odayı aç" diyerek kapatıyordu; kapatmadan
 // çıkışı (perde, çekme, düğme) kimse denemiyordu. Test yüzeyi 800x600 iken
 // de sayfa zaten ekranı doldurduğundan kusur testte "normal" görünürdü.
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -29,11 +30,7 @@ Future<void> _openSheet(WidgetTester tester) async {
   await tester.pumpAndSettle();
   // Sırayla düello grubuna "Arkadaşına meydan oku" satırı eklenince oda
   // eylemleri tembel listenin kurulu bölgesinden çıktı (2026-10-13).
-  await tester.scrollUntilVisible(
-    find.byKey(const ValueKey('play-hub-create-room')),
-    200,
-  );
-  await tester.pump();
+  await openRoomSheet(tester);
   await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
   await tester.pumpAndSettle();
   expect(find.byKey(const ValueKey('custom-room-open')), findsOneWidget);

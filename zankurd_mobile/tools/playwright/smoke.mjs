@@ -115,20 +115,24 @@ await screenshot('06-topics');
 // yanlış sekmeye gitmeyi yakalar.
 await page.mouse.click(145, 808);
 await page.waitForTimeout(1_200);
-await expectContains('Pêşbirka bilez');
+await expectContains('Pêşbirka zindî');
 if (expectSocialBackend) {
-  const quickDuel = page.getByRole('button', { name: /Pêşbirka bilez/ });
+  const quickDuel = page.getByRole('button', { name: /Pêşbirka zindî/ });
   await quickDuel.waitFor({ state: 'visible', timeout: 15_000 });
   await quickDuel.click();
+  // Canlı düello artık önce rakip seçtirir: Rasthatî = eski hızlı eşleşme.
+  const randomOpponent = page.getByRole('button', { name: /Rasthatî/ });
+  await randomOpponent.waitFor({ state: 'visible', timeout: 15_000 });
+  await randomOpponent.click();
   await page.waitForTimeout(900);
   await expectContains('Hevrikiya rasthatî');
   await screenshot('07-matchmaking');
   await page.mouse.click(20, 28);
   await page.waitForTimeout(900);
-  await expectContains('Pêşbirka bilez');
+  await expectContains('Pêşbirka zindî');
 } else {
   await expectContains('Pêşkêşkar negihîştbar e');
-  const quickDuel = page.getByRole('button', { name: /Pêşbirka bilez/ });
+  const quickDuel = page.getByRole('button', { name: /Pêşbirka zindî/ });
   await quickDuel.waitFor({ state: 'visible', timeout: 15_000 });
   if (await quickDuel.isEnabled()) {
     throw new Error('Çevrimdışı smoke turunda hızlı düello etkin olmamalı.');

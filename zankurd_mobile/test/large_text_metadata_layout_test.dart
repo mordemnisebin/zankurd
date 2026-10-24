@@ -1,4 +1,5 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+import 'support/play_hub_nav.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -228,6 +229,7 @@ void main() {
       testShell(child: PlayHubScreen(repository: repository)),
     );
     await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
 

@@ -11,6 +11,7 @@
 // nerede durduğuna ve okunur olup olmadığına değil; kesik çizim yalnız ekran
 // görüntüsünde görünür. Bu bekçi notun kaydırma alanının DIŞINDA, düğmenin
 // hemen üstünde durduğunu ve başlık ayracının var olduğunu sabitler.
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,6 +38,7 @@ void main() {
         testShell(child: PlayHubScreen(repository: _Repo())),
       );
       await tester.pumpAndSettle();
+      await openRoomSheet(tester);
       await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
       await tester.pumpAndSettle();
       await tester.ensureVisible(

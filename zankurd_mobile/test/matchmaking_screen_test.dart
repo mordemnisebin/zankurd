@@ -566,7 +566,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Hızlı düello'), findsOneWidget);
+    expect(find.text('Canlı düello'), findsOneWidget);
     expect(find.text('Rastgele eşleşme'), findsOneWidget);
     expect(
       find.byKey(const ValueKey('matchmaking-selection-header')),

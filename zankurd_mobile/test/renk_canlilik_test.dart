@@ -250,19 +250,18 @@ void main() {
             .first;
         expect(gradient.colors, [t.raceFill, t.raceDeep]);
 
-        for (final key in ['play-hub-create-room', 'play-hub-join-room']) {
-          final button = tester.widget<FilledButton>(
-            find.descendant(
-              of: find.byKey(ValueKey(key)),
-              matching: find.byType(FilledButton),
-            ),
-          );
-          expect(
-            button.style?.backgroundColor?.resolve(<WidgetState>{}),
-            t.nilTint,
-            reason: '$key Nîl tonlu olmalı',
-          );
-        }
+        // Oda kartı Nîl (sosyal) DOLU rol rengindedir (oda eylemleri alt
+        // sayfaya taşındı, 2026-10-24).
+        final room = find.byKey(const ValueKey('play-hub-room'));
+        expect(
+          tester
+              .widget<SahneTappable>(
+                find.descendant(of: room, matching: find.byType(SahneTappable)),
+              )
+              .color,
+          t.nilFill,
+          reason: 'Oda kartı Nîl dolgulu olmalı',
+        );
       });
     }
   });

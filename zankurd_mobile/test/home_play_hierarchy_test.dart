@@ -179,25 +179,27 @@ void main() {
           // 2026-09-29 doğallık (K7): "Oda kur" ve "Kodla katıl" yan yana iki
           // İKİNCİL düğmedir (Kulis tonu, Agir değil); günün etkinliğinin
           // "Bugün" rozeti kalktı (satırın adı zaten "Günün soruları").
-          for (final key in ['play-hub-create-room', 'play-hub-join-room']) {
+          // 2026-10-24: "Oda kur" / "Kodla katıl" düğmeleri alt sayfaya
+          // taşındı; ekranda Oda, Nîl (sosyal) rolünde bir mod kartıdır ve
+          // dolgulu düğme (Agir) taşımaz.
+          for (final key in ['play-hub-room']) {
             final finder = find.byKey(ValueKey(key));
             expect(finder, findsOneWidget, reason: key);
-            final button = tester.widget<FilledButton>(
-              find.descendant(of: finder, matching: find.byType(FilledButton)),
-            );
-            // 2026-10-20 renk ve canlılık: oda düğmeleri çerçeveli gri değil,
-            // Nîl (sosyal mod) TON düğmedir; yine Agir değil.
-            final tokens = SahneTokens.of(tester.element(finder));
-            final fill = button.style?.backgroundColor?.resolve(
-              <WidgetState>{},
+            expect(tester.widget(finder), isA<SahneModeTile>(), reason: key);
+            expect(
+              (tester.widget(finder) as SahneModeTile).role,
+              SahneRole.social,
+              reason: '$key Nîl (sosyal) rolünde olmalı',
             );
             expect(
-              fill,
-              tokens.nilTint,
-              reason: '$key Nîl tonlu ikincil olmalı',
+              find.descendant(of: finder, matching: find.byType(FilledButton)),
+              findsNothing,
+              reason: '$key Agir düğme taşımaz',
             );
-            expect(fill, isNot(tokens.act), reason: '$key Agir olmamalı');
             _expectActionSemantics(tester, key);
+          }
+          for (final key in ['play-hub-create-room', 'play-hub-join-room']) {
+            expect(find.byKey(ValueKey(key)), findsNothing, reason: key);
           }
           for (final key in ['play-hub-daily-contest']) {
             final finder = find.byKey(ValueKey(key));

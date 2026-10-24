@@ -328,7 +328,11 @@ class _SahneModeTileState extends State<SahneModeTile> {
       container: true,
       button: true,
       enabled: enabled,
-      label: semanticLabel ?? [title, ?subtitle].join('. '),
+      // Kompakt kartta rozet görsel olarak yalnız noktadır; metni okunur.
+      label: [
+        semanticLabel ?? [title, ?subtitle].join('. '),
+        if (compact && badge != null) badge,
+      ].join('. '),
       excludeSemantics: true,
       onTap: onTap,
       child: Listener(
@@ -389,34 +393,21 @@ class _SahneModeTileState extends State<SahneModeTile> {
                                 ),
                               )
                             else if (badge != null)
-                              Flexible(
-                                flex: 2,
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.only(
-                                    start: SahneSpace.x2,
+                              // Kompakt kartta rozet METİN değil küçük bir
+                              // nokta göstergesidir: yarım genişlikte "Hazır!"
+                              // "H…" diye kesiliyordu (2026-10-24 ekran turu).
+                              // Anlamı ekran okuyucu etiketi taşır (aşağıda).
+                              Padding(
+                                padding: const EdgeInsetsDirectional.only(
+                                  start: SahneSpace.x2,
+                                ),
+                                child: DecoratedBox(
+                                  key: const ValueKey('mode-tile-badge-dot'),
+                                  decoration: ShapeDecoration(
+                                    color: gold ? t.onZer : SahneVivid.onFill,
+                                    shape: const CircleBorder(),
                                   ),
-                                  child: DecoratedBox(
-                                    decoration: ShapeDecoration(
-                                      color: gold
-                                          ? t.zerChip
-                                          : SahneVivid.onFill,
-                                      shape: const StadiumBorder(),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: SahneSpace.x2,
-                                        vertical: 2,
-                                      ),
-                                      child: Text(
-                                        badge,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: SahneType.captionStrong.copyWith(
-                                          color: gold ? t.goldTx : fill,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  child: const SizedBox.square(dimension: 12),
                                 ),
                               ),
                           ],

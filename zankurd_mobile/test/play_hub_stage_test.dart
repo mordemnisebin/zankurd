@@ -131,7 +131,7 @@ void main() {
           expect(
             find.descendant(
               of: hero,
-              matching: find.text(isKu ? 'Pêşbirka bilez' : 'Hızlı düello'),
+              matching: find.text(isKu ? 'Pêşbirka zindî' : 'Canlı düello'),
             ),
             findsOneWidget,
             reason: why,
@@ -229,14 +229,13 @@ void main() {
     }
   });
 
-  // 2026-09-30 simülatör: kilitliyken "Rakip bul", "Oda kur", "Kodla katıl" ve
+  // 2026-09-30 simülatör: kilitliyken "Rakip bul", "Oda" ve
   // "Günün soruları" dokunulunca hiçbir şey yapmıyordu (sessiz ölü düğme).
   // Bekçi: dördü de pasif kalır (tıklanabilir bildirilmez) ve dokunulunca
   // kısa bir SnackBar "Sunucuya ulaşılamadı" der.
   for (final key in [
     'play-hub-quick-duel-cta',
-    'play-hub-create-room',
-    'play-hub-join-room',
+    'play-hub-room',
     'play-hub-daily-contest',
   ]) {
     testWidgets('kilitliyken $key dokunulunca geri bildirim verir', (

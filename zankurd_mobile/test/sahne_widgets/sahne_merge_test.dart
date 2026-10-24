@@ -593,7 +593,7 @@ void main() {
         meta: '~2 deqe',
         actionLabel: 'Hevrik bibîne',
         actionKey: const Key('cta'),
-        semanticLabel: 'Pêşbirka bilez',
+        semanticLabel: 'Pêşbirka zindî',
         emblem: const SahneVsEmblem(),
         onAction: () => taps++,
       ),
@@ -602,7 +602,7 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(tester.widget(find.byKey(const Key('cta'))), isA<FilledButton>());
     expect(
-      find.bySemanticsLabel('Pêşbirka bilez. Hevrik bibîne'),
+      find.bySemanticsLabel('Pêşbirka zindî. Hevrik bibîne'),
       findsOneWidget,
     );
     await tester.tap(find.byKey(const Key('cta')));

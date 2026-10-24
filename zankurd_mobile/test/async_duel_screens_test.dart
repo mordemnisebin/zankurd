@@ -33,6 +33,7 @@
 ///   kart `kAsyncDuelEnabled` bayrağına bağlı.
 library;
 
+import 'support/play_hub_nav.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -98,7 +99,8 @@ class _NeverStartsRepository extends MockZanKurdRepository {
 /// `pumpAndSettle` KULLANILMAZ — o, sayaç sıfıra inene kadar (20 sn'lik
 /// sahte zaman) pompalamaya devam eder ve istemeden bir TIMEOUT tetikler.
 Future<void> _openAsyncDuelFromHub(WidgetTester tester) async {
-  await tester.tap(find.byKey(const ValueKey('play-hub-async-duel')));
+  await openAsyncOpponentSheet(tester);
+  await tester.tap(find.byKey(const ValueKey('opponent-sheet-random')));
   await tester.pump();
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 300));
@@ -383,7 +385,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const ValueKey('play-hub-async-duel')));
+      await openAsyncOpponentSheet(tester);
+      await tester.tap(find.byKey(const ValueKey('opponent-sheet-random')));
       await tester.pump();
       await tester.pump();
       await tester.pumpAndSettle();

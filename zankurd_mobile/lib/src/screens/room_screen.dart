@@ -74,11 +74,17 @@ class RoomScreen extends StatefulWidget {
   const RoomScreen({
     required this.repository,
     required this.initialRoom,
+    this.autoInvite = false,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final GameRoom initialRoom;
+
+  /// "Canlı düello → Arkadaş" ile kurulan oda: lobi açılınca arkadaş davet
+  /// sayfası kendiliğinden açılır (sunucuda oda daveti yoksa açılmaz; kod
+  /// paylaşımı düğmesi lobide durur).
+  final bool autoInvite;
 
   @override
   State<RoomScreen> createState() => _RoomScreenState();
@@ -888,6 +894,9 @@ class _RoomScreenState extends State<RoomScreen> {
     try {
       final ok = await widget.repository.supportsRoomInvites();
       if (mounted && ok) setState(() => _roomInvitesSupported = true);
+      if (mounted && ok && widget.autoInvite && _canInviteFriends) {
+        unawaited(_inviteFriends());
+      }
     } catch (_) {
       // Belirsiz: düğme gizli kalır, paylaşım yolu zaten var.
     }
