@@ -1075,7 +1075,7 @@ class Tr {
     K.pGorevTamam: {'ku': '{p0} erk temam bûn', 'tr': '{p0} görev tamam'},
     // "Bugün" paneli (2026-10-24): seri + görevler tek yüzeyde, tek özet.
     K.todaySummary: {
-      'ku': 'Îro {done}/{total} temam',
+      'ku': 'Îro {done}/{total} temam bû',
       'tr': 'Bugün {done}/{total} tamam',
     },
     K.tumGorevlerTamam: {

@@ -233,7 +233,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Îro'), findsOneWidget);
-    expect(find.text('Îro 2/4 temam'), findsOneWidget);
+    expect(find.text('Îro 2/4 temam bû'), findsOneWidget);
     expect(find.text('5 roj'), findsOneWidget);
   });
 
