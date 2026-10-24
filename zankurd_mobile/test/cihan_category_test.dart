@@ -174,8 +174,18 @@ void main() {
             'correctAnswerTr',
           },
           'ds_teknoloji_0130': {'answers', 'correctAnswer'},
-          'ds_cand_0033': {'prompt'},
-          'ds_cand_0035': {'prompt'},
+          'ds_cand_0033': {
+            'explanation',
+            'explanationTr',
+            'prompt',
+            'promptTr',
+          },
+          'ds_cand_0035': {
+            'explanation',
+            'explanationTr',
+            'prompt',
+            'promptTr',
+          },
           'ds_cand_0159': {'answersTr'},
           'ds_dirok_0010': {'prompt', 'promptTr'},
           'ds_dirok_0016': {'prompt', 'promptTr'},
@@ -200,6 +210,43 @@ void main() {
           'ds_teknoloji_0073': {'prompt', 'promptTr'},
           'ds_teknoloji_0195': {'answers'},
           'ds_teknoloji_0197': {'answers'},
+          // 2026-10-24 yazım taraması: «Kurmanci/Kurmancça/Kurmancicede» →
+          // «Kurmancî/Kurmancîde» (id, alan) çiftlerine tek tek; doğru şıkkın
+          // kimliği korunur. Sunucu göçü: supabase/2026-10-24_icerik_yazim.sql.
+          'ds_dirok_0128': {'answersTr', 'correctAnswerTr'},
+          'ds_muzik_0008': {
+            'answersTr',
+            'correctAnswerTr',
+            'explanation',
+            'explanationTr',
+          },
+          'ds_muzik_0249': {'answers', 'correctAnswer'},
+          'ds_ziman_0007': {'promptTr'},
+          'ds_ziman_0011': {'promptTr'},
+          'ds_ziman_0018': {'explanation', 'explanationTr'},
+          'ds_ziman_0025': {'promptTr'},
+          'ds_ziman_0027': {'promptTr'},
+          'ds_ziman_0028': {'explanation', 'explanationTr'},
+          'ds_ziman_0029': {'promptTr'},
+          'ds_ziman_0030': {'promptTr'},
+          'ds_ziman_0032': {'promptTr'},
+          'ds_ziman_0035': {'promptTr'},
+          'ds_ziman_0039': {'promptTr'},
+          'ds_ziman_0044': {'promptTr'},
+          'ds_ziman_0052': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_0206': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_0256': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_0257': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_0266': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_0272': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_0278': {'promptTr'},
+          'ds_ziman_0292': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_ziman_1028': {'promptTr'},
+          'ds_ziman_1029': {'promptTr'},
+          'ds_ziman_1031': {'promptTr'},
+          'ds_ziman_1034': {'promptTr'},
+          'ds_ziman_1036': {'promptTr'},
+          'ds_ziman_1038': {'promptTr'},
         };
         for (final c in copies) {
           final o = original[c['id']];
@@ -258,7 +305,10 @@ void main() {
                 reason: '${c['id']}.answers kümesi değişmiş',
               );
             }
-          } else if (c['explanation'] != o['explanation']) {
+          } else if (c['explanation'] != o['explanation'] &&
+              !(editorialFixes[c['id']]?.contains('explanation') ?? false)) {
+            // (2026-10-24: `explanation`ı Türkçe olan kayıtların yazım
+            // düzeltmesi `editorialFixes`te açıkça bildirilir.)
             // Bazı DeepSeek kayıtlarında `explanation` Türkçe değil Kurmancî
             // açıklamanın kopyasıdır; düzeltme ikisine birlikte uygulanır.
             expect(o['explanation'], o['explanationKu'], reason: '${c['id']}');
