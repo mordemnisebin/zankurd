@@ -72,57 +72,70 @@ void main() {
   });
 
   group('Günlük görev kartı', () {
-    testWidgets('kırpılan açık görevler sayaçla tutarlı biçimde belirtilir', (
-      tester,
-    ) async {
-      // Belirti: başlık "0/3 tamamlandı" diyordu ama kartta yalnız 2 görev
-      // vardı; üçüncü satır kayıp gibi görünüyordu.
-      final missions = <DailyMission>[
-        DailyMission(
-          type: MissionType.answerCorrect,
-          target: 10,
-          coinReward: 50,
-        ),
-        DailyMission(type: MissionType.completeQuiz, target: 3, coinReward: 60),
-        DailyMission(type: MissionType.useWildcard, target: 2, coinReward: 40),
-      ];
+    testWidgets(
+      'kompakt panel bütün görevleri tek listede ve tek özetle verir',
+      (tester) async {
+        // Belirti (2026-07-25): başlık "0/3" diyordu ama kartta yalnız 2
+        // görev vardı. 2026-10-24 "Bugün" paneli: kırpma yok; bütün satırlar
+        // görünür ve özet satırlarla birebir tutar.
+        final missions = <DailyMission>[
+          DailyMission(
+            type: MissionType.answerCorrect,
+            target: 10,
+            coinReward: 50,
+          ),
+          DailyMission(
+            type: MissionType.completeQuiz,
+            target: 3,
+            coinReward: 60,
+          ),
+          DailyMission(
+            type: MissionType.useWildcard,
+            target: 2,
+            coinReward: 40,
+          ),
+        ];
 
-      await tester.pumpWidget(
-        _shell(
-          Scaffold(
-            body: SingleChildScrollView(
-              child: DailyMissionsCard(isKu: false, missions: missions),
+        await tester.pumpWidget(
+          _shell(
+            Scaffold(
+              body: SingleChildScrollView(
+                child: DailyMissionsCard(isKu: false, missions: missions),
+              ),
             ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
+        );
+        await tester.pumpAndSettle();
 
-      expect(find.text('0/3 tamamlandı'), findsOneWidget);
-      // Görünmeyen üçüncü görev artık açıkça sayılır.
-      expect(find.textContaining('1 görev daha'), findsOneWidget);
-      expect(
-        find.descendant(
-          of: find.byType(DailyMissionsCard),
-          matching: find.byType(AppPanel),
-        ),
-        findsNothing,
-        reason: 'Home compact görev özeti dış kart kabuğu taşımamalı.',
-      );
-      expect(
-        find.byKey(const ValueKey('home-missions-compact-section')),
-        findsOneWidget,
-      );
-      final firstFlatMission = find.byKey(
-        const ValueKey('home-mission-row-answerCorrect'),
-      );
-      expect(firstFlatMission, findsOneWidget);
-      expect(
-        tester.widget(firstFlatMission),
-        isA<Padding>(),
-        reason: 'Kompakt görev satırları mini kart kabuğu taşımamalı.',
-      );
-    });
+        expect(find.text('Bugün 0/3 tamam'), findsOneWidget);
+        expect(find.textContaining('görev daha'), findsNothing);
+        for (final type in ['answerCorrect', 'completeQuiz', 'useWildcard']) {
+          expect(
+            find.byKey(ValueKey('home-mission-row-$type')),
+            findsOneWidget,
+          );
+        }
+        expect(
+          find.descendant(
+            of: find.byType(DailyMissionsCard),
+            matching: find.byType(AppPanel),
+          ),
+          findsNothing,
+          reason: 'Home compact görev özeti dış kart kabuğu taşımamalı.',
+        );
+        expect(
+          find.byKey(const ValueKey('home-missions-compact-section')),
+          findsOneWidget,
+        );
+        expect(
+          tester.widget(
+            find.byKey(const ValueKey('home-mission-row-answerCorrect')),
+          ),
+          isA<Padding>(),
+          reason: 'Kompakt görev satırları mini kart kabuğu taşımamalı.',
+        );
+      },
+    );
 
     testWidgets(
       'görev özeti halka ve altın hero yerine sakin ilerleme kullanır',

@@ -34,6 +34,8 @@ import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dar
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/doza_me_screen.dart';
+import 'package:zankurd_mobile/src/data/daily_mission_store.dart';
+import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/learn_home_screen.dart';
 import 'package:zankurd_mobile/src/screens/password_recovery_screen.dart';
@@ -901,6 +903,36 @@ void main() {
     await homeAfterFirstSession(t, tourDone: true);
     await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
     await _shoot(t, '01c_home_tour_done');
+  }, tags: ['preview']);
+
+  // "Bugün" paneli (2026-10-24): seri + günlük hedef + görevler tek listede.
+  // Seri 5, bugün 6 doğru cevap, bir görev tamam ama ödülü alınmamış.
+  Future<void> homeTodayPanel(WidgetTester t) async {
+    await homeAfterFirstSession(t, tourDone: false);
+    final streak = await StreakStore.load();
+    await streak.recordPlay();
+    final missions = await DailyMissionStore.load();
+    await missions.reportQuizCompleted(
+      correctAnswers: 6,
+      category: 'Ziman',
+      streakAlive: true,
+    );
+  }
+
+  testWidgets('01e ana ekran: Bugün paneli', (t) async {
+    await homeTodayPanel(t);
+    await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+    await _shoot(t, '01e_home_today_panel');
+  }, tags: ['preview']);
+
+  testWidgets('01f ana ekran: Bugün paneli (Kurmancî)', (t) async {
+    await homeTodayPanel(t);
+    await _pump(
+      t,
+      Scaffold(body: HomeScreen(repository: repository)),
+      ku: true,
+    );
+    await _shoot(t, '01f_home_today_panel_ku');
   }, tags: ['preview']);
 
   testWidgets('01d ana ekran: Günün turu (bitti, Kurmancî)', (t) async {

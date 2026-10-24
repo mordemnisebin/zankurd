@@ -589,6 +589,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       missions: _missions,
       compact: true,
       onClaimReward: _claimMissionReward,
+      // "Bugün" paneli: seri çipi panelin en üstünde (üst çubuktan taşındı,
+      // aynı sayı iki yerde durmasın) ve günlük hedef listenin bir satırı.
+      streak: _streak,
+      streakSemanticLabel: context.t(K.dailyStreakDays, {'days': '$_streak'}),
+      onStreakTap: () => _showStreakFreezeBottomSheet(context),
+      goalDone: _todayAnswered,
+      goalTarget: _todayTarget,
     );
     final progressCard = SahneSurfaceCard(
       child: ProgressSummary(
@@ -892,18 +899,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       runSpacing: SahneSpace.x1,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        // Dokunulabilir stat çipleri: görsel 36, dokunma kutusu 48 (bileşen
-        // verir).
-        if (_streak > 0)
-          SahneStatChip(
-            leading: const SahneGlyph(SahneGlyphKind.flame),
-            label: '$_streak ${context.t(K.streakDayUnit)}',
-            // Renkli çip: seri Agir tonlu, jeton Zêr tonlu (2026-10-20).
-            tint: SahneTokens.of(context).selFill,
-            foreground: SahneTokens.of(context).selTx,
-            semanticLabel: context.t(K.dailyStreakDays, {'days': '$_streak'}),
-            onTap: () => _showStreakFreezeBottomSheet(context),
-          ),
+        // Seri çipi buradan kalktı: "Bugün" panelinin en üstünde durur
+        // (DailyMissionsCard.streak). Jeton ve dil çipi burada kalır;
+        // görsel 36, dokunma kutusu 48 (bileşen verir).
         if (_coinBalance > 0)
           SahneStatChip(
             leading: const SahneGlyph(SahneGlyphKind.coin),

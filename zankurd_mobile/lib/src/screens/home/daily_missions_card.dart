@@ -23,6 +23,11 @@ class DailyMissionsCard extends StatelessWidget {
     this.loading = false,
     this.compact = true,
     this.onClaimReward,
+    this.streak = 0,
+    this.streakSemanticLabel,
+    this.onStreakTap,
+    this.goalDone,
+    this.goalTarget,
     super.key,
   });
 
@@ -32,23 +37,45 @@ class DailyMissionsCard extends StatelessWidget {
   final bool compact;
   final void Function(DailyMission mission)? onClaimReward;
 
+  /// Seri (gün). Yalnız kompakt "Bugün" panelinde, panelin en üstünde çip
+  /// olarak durur; 0 iken çizilmez (sıfır sayaç bilgi değil, boş kalıptır).
+  final int streak;
+  final String? streakSemanticLabel;
+  final VoidCallback? onStreakTap;
+
+  /// Günlük hedef (bugünkü doğru cevap sayısı / hedef). Ayrı bir sayaç
+  /// DEĞİL, listenin bir satırıdır; ödülü yoktur. Günün görevlerinden biri
+  /// zaten "N doğru cevap ver" ise o görev hedefin kendisidir ve ikinci bir
+  /// satır eklenmez (aynı sayı iki kez görünmesin).
+  final int? goalDone;
+  final int? goalTarget;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final completedCount = missions.where((m) => m.completed).length;
-    final totalProgress = missions.isEmpty
-        ? 0.0
-        : completedCount / missions.length;
-    final pending = missions.where((m) => !m.completed || !m.claimed).toList();
-    final visible = compact ? pending.take(2).toList() : missions;
-    final hiddenDone = compact
-        ? missions.where((m) => m.completed && m.claimed).length
-        : 0;
-    // Compact modda yalnız 2 açık görev çizilir. Başlıktaki sayaç ise tüm
-    // görevleri sayar; üçüncü görev listede yokken başlık "0/3" diyor ve
-    // eksik satır kayıp gibi görünüyordu (2026-07-25 canlı denetimi).
-    // Kırpılan açık görevler artık sayılıp ayrıca belirtilir.
-    final hiddenPending = compact ? pending.length - visible.length : 0;
+    // Günlük hedef listenin bir satırı olur (bkz. [goalDone]).
+    final hasAnswerMission = missions.any(
+      (m) => m.type == MissionType.answerCorrect,
+    );
+    final goalTargetValue = goalTarget ?? 0;
+    final goalRow =
+        compact && !hasAnswerMission && goalDone != null && goalTargetValue > 0
+        ? DailyMission(
+            type: MissionType.answerCorrect,
+            target: goalTargetValue,
+            coinReward: 0,
+            progress: goalDone!.clamp(0, goalTargetValue),
+            completed: goalDone! >= goalTargetValue,
+            claimed: true,
+          )
+        : null;
+    final all = [?goalRow, ...missions];
+    final completedCount = all.where((m) => m.completed).length;
+    final totalProgress = all.isEmpty ? 0.0 : completedCount / all.length;
+    // Kompakt "Bugün" panelinde bütün satırlar görünür: tek liste, tek
+    // özet. Eskiden yalnız 2 açık görev çizilip kalanı "N görev daha"
+    // diye sayılıyordu; sayaç ve liste hep ayrı okunuyordu.
+    final visible = compact ? all : missions;
 
     final body = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -56,12 +83,34 @@ class DailyMissionsCard extends StatelessWidget {
         if (loading)
           const SkeletonLoader(count: 2, height: 44, borderRadius: 8)
         else ...[
+          if (compact && streak > 0) ...[
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: SahneStatChip(
+                key: const ValueKey('home-today-streak'),
+                leading: const SahneGlyph(SahneGlyphKind.flame),
+                label: '$streak ${Tr.forKu(K.streakDayUnit, isKu)}',
+                tint: t.selFill,
+                foreground: t.selTx,
+                semanticLabel: streakSemanticLabel,
+                onTap: onStreakTap,
+              ),
+            ),
+            const SizedBox(height: SahneSpace.x2),
+          ],
           SahneProgressBar(
             key: const ValueKey('daily-missions-overall-progress'),
             value: totalProgress,
-            trailing:
-                '$completedCount/${missions.length} ${Tr.forKu(K.tamamlandi, isKu)}',
-            semanticLabel: Tr.forKu(K.gunlukGorevler, isKu),
+            trailing: compact
+                ? Tr.forKu(K.todaySummary, isKu, {
+                    'done': '$completedCount',
+                    'total': '${all.length}',
+                  })
+                : '$completedCount/${all.length} ${Tr.forKu(K.tamamlandi, isKu)}',
+            semanticLabel: Tr.forKu(
+              compact ? K.contestToday : K.gunlukGorevler,
+              isKu,
+            ),
           ),
           if (visible.isNotEmpty) ...[
             for (final m in visible)
@@ -70,38 +119,23 @@ class DailyMissionsCard extends StatelessWidget {
                 isKu: isKu,
                 compact: compact,
                 onClaim: onClaimReward,
+                isGoal: identical(m, goalRow),
               ),
-            if (hiddenDone > 0 || hiddenPending > 0)
-              Text(
-                [
-                  if (hiddenDone > 0)
-                    Tr.forKu(K.pGorevTamam, isKu, {'p0': '$hiddenDone'}),
-                  if (hiddenPending > 0)
-                    isKu
-                        // Kurmancî'de sayı tekilse ad da tekil olur:
-                        // "1 erkên din" yanlış, "1 erkê din" doğru.
-                        ? (hiddenPending == 1
-                              ? '1 erkê din'
-                              : '$hiddenPending erkên din')
-                        : '$hiddenPending görev daha',
-                ].join(' · '),
-                style: SahneType.caption.copyWith(color: t.tx2),
-              ),
-          ] else if (missions.isNotEmpty) ...[
-            const SizedBox(height: SahneSpace.x3),
-            // Durum yalnız renkle verilmez: ✓ + söz birlikte.
-            Row(
-              children: [
-                Icon(AppIcons.circleCheck, size: 16, color: t.okTx),
-                const SizedBox(width: SahneSpace.x2),
-                Flexible(
-                  child: Text(
-                    Tr.forKu(K.tumGorevlerTamam, isKu),
-                    style: SahneType.captionStrong.copyWith(color: t.okTx),
+            if (compact && completedCount == all.length) ...[
+              const SizedBox(height: SahneSpace.x3),
+              Row(
+                children: [
+                  Icon(AppIcons.circleCheck, size: 16, color: t.okTx),
+                  const SizedBox(width: SahneSpace.x2),
+                  Flexible(
+                    child: Text(
+                      Tr.forKu(K.tumGorevlerTamam, isKu),
+                      style: SahneType.captionStrong.copyWith(color: t.okTx),
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ],
         ],
       ],
@@ -112,7 +146,7 @@ class DailyMissionsCard extends StatelessWidget {
         key: const ValueKey('home-missions-compact-section'),
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SahneSectionHeader(title: Tr.forKu(K.gunlukGorevler, isKu)),
+          SahneSectionHeader(title: Tr.forKu(K.contestToday, isKu)),
           SahneSurfaceCard(child: body),
         ],
       );
@@ -173,7 +207,11 @@ class _MissionTile extends StatelessWidget {
     required this.isKu,
     this.compact = false,
     this.onClaim,
+    this.isGoal = false,
   });
+
+  /// Günlük hedef satırı: ödülsüz, alınacak bir şey yok.
+  final bool isGoal;
 
   final DailyMission mission;
   final bool isKu;
@@ -200,7 +238,9 @@ class _MissionTile extends StatelessWidget {
     final canClaim = isDone && !mission.claimed && onClaim != null;
 
     final Widget trailing;
-    if (!isDone) {
+    if (isGoal) {
+      trailing = const SizedBox.shrink();
+    } else if (!isDone) {
       trailing = SahneBadge(
         label: '+${mission.xpReward} XP',
         tone: SahneBadgeTone.gold,
@@ -270,7 +310,7 @@ class _MissionTile extends StatelessWidget {
         ExcludeSemantics(
           child: SahneProgressBar(
             value: ratio,
-            trailing: compact
+            trailing: compact && mission.target <= 1
                 ? null
                 : '${mission.progress.clamp(0, mission.target)} / ${mission.target}',
           ),
