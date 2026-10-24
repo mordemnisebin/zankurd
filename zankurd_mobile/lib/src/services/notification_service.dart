@@ -385,11 +385,15 @@ class NotificationService {
     try {
       await _gateway.cancel(0);
 
-      const AndroidNotificationDetails androidDetails =
+      // Kanal adı Android sistem ayarlarında görünür; gövdeyle aynı dilde
+      // olmalı (bkz. test/notification_channel_language_test.dart).
+      final channelIsKu =
+          (_preferences?.getString('zankurd.language') ?? 'ku') != 'tr';
+      final AndroidNotificationDetails androidDetails =
           AndroidNotificationDetails(
             'zankurd_daily_reminder',
-            'ZanKurd Bîranîna Rojane',
-            channelDescription: 'Bîranîna çalakiya rojane ya ZanKurd',
+            Tr.forKu(K.notifChannelDailyName, channelIsKu),
+            channelDescription: Tr.forKu(K.notifChannelDailyDesc, channelIsKu),
             importance: Importance.max,
             priority: Priority.high,
             // Siluet ikonu sistemin gri tonuyla çizilir; marka rengi
@@ -397,7 +401,7 @@ class NotificationService {
             color: _accent,
           );
       const DarwinNotificationDetails iosDetails = DarwinNotificationDetails();
-      const NotificationDetails details = NotificationDetails(
+      final NotificationDetails details = NotificationDetails(
         android: androidDetails,
         iOS: iosDetails,
       );
@@ -448,17 +452,17 @@ class NotificationService {
       final title = Tr.forKu(K.zanaDiyorKiYeni, isKu);
       final body = Tr.forKu(K.huhuPSeninleYarismak, isKu, {'p0': fromName});
 
-      const androidDetails = AndroidNotificationDetails(
+      final androidDetails = AndroidNotificationDetails(
         'zankurd_friend_requests',
-        'ZanKurd Daxwazên Hevaltiyê',
-        channelDescription: 'Daxwazên hevaltiyê yên nû',
+        Tr.forKu(K.notifChannelFriendName, isKu),
+        channelDescription: Tr.forKu(K.notifChannelFriendDesc, isKu),
         color: _accent,
         importance: Importance.high,
         priority: Priority.high,
       );
-      const details = NotificationDetails(
+      final details = NotificationDetails(
         android: androidDetails,
-        iOS: DarwinNotificationDetails(),
+        iOS: const DarwinNotificationDetails(),
       );
 
       await _localNotificationsPlugin.show(
@@ -585,16 +589,16 @@ class NotificationService {
     // Günlük seri zincîr'dir; `Rêz` tur içi doğru cevap dizisidir.
     // Kanal adı Android ayarlarında görünür; gövde zincîr derken
     // kanal "Bîranîna Rêzê" deyince oyuncu iki kavramı karıştırır.
-    const androidDetails = AndroidNotificationDetails(
+    final androidDetails = AndroidNotificationDetails(
       'zankurd_streak_warning',
-      'ZanKurd Bîranîna Zincîrê',
-      channelDescription: 'Bîranîna parastina zincîra rojane',
+      Tr.forKu(K.notifChannelStreakName, _isKu),
+      channelDescription: Tr.forKu(K.notifChannelStreakDesc, _isKu),
       importance: Importance.defaultImportance,
       priority: Priority.defaultPriority,
     );
-    const details = NotificationDetails(
+    final details = NotificationDetails(
       android: androidDetails,
-      iOS: DarwinNotificationDetails(),
+      iOS: const DarwinNotificationDetails(),
     );
     await _preferences?.setString(
       _streakNextFireKey,
@@ -644,16 +648,16 @@ class NotificationService {
   Future<void> showFriendAccepted(String friendName, {bool isKu = true}) async {
     if (kIsWeb || !_enabled) return;
     try {
-      const androidDetails = AndroidNotificationDetails(
+      final androidDetails = AndroidNotificationDetails(
         'zankurd_friend_requests',
-        'ZanKurd Daxwazên Hevaltiyê',
-        channelDescription: 'Daxwazên hevaltiyê yên nû',
+        Tr.forKu(K.notifChannelFriendName, isKu),
+        channelDescription: Tr.forKu(K.notifChannelFriendDesc, isKu),
         importance: Importance.high,
         priority: Priority.high,
       );
-      const details = NotificationDetails(
+      final details = NotificationDetails(
         android: androidDetails,
-        iOS: DarwinNotificationDetails(),
+        iOS: const DarwinNotificationDetails(),
       );
 
       await _localNotificationsPlugin.show(

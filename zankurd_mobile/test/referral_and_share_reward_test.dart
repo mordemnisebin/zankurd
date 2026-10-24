@@ -23,16 +23,34 @@ void main() {
       expect(await ResultSharer.canClaimDailyShareReward(now), isTrue);
 
       // İlk talep: başarılı
-      expect(await ResultSharer.claimDailyShareReward(now), isTrue);
+      expect(
+        await ResultSharer.settleDailyShareReward(
+          awardCoins: () async => 10,
+          now: now,
+        ),
+        isTrue,
+      );
 
       // Aynı gün tekrar talep: reddedilir
       expect(await ResultSharer.canClaimDailyShareReward(now), isFalse);
-      expect(await ResultSharer.claimDailyShareReward(now), isFalse);
+      expect(
+        await ResultSharer.settleDailyShareReward(
+          awardCoins: () async => 10,
+          now: now,
+        ),
+        isFalse,
+      );
 
       // Ertesi gün: yeniden hak edilir
       final nextDay = DateTime(2026, 9, 3, 9, 0);
       expect(await ResultSharer.canClaimDailyShareReward(nextDay), isTrue);
-      expect(await ResultSharer.claimDailyShareReward(nextDay), isTrue);
+      expect(
+        await ResultSharer.settleDailyShareReward(
+          awardCoins: () async => 10,
+          now: nextDay,
+        ),
+        isTrue,
+      );
       expect(await ResultSharer.canClaimDailyShareReward(nextDay), isFalse);
     });
   });

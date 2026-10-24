@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/models/add_friend_outcome.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
 import 'package:zankurd_mobile/src/models/referral_result.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
@@ -46,9 +47,9 @@ class _CodeRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<bool> addFriend(String friendId, String friendName) async {
+  Future<AddFriendOutcome> addFriend(String friendId, String friendName) async {
     sentTo.add(friendId);
-    return !failRequest;
+    return failRequest ? AddFriendOutcome.failed : AddFriendOutcome.sent;
   }
 
   @override

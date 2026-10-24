@@ -9,6 +9,7 @@ import '../models/async_duel.dart';
 import '../models/match_history.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
+import '../models/add_friend_outcome.dart';
 import '../models/friend.dart';
 import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
@@ -3941,8 +3942,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Set.of(_completedLessonIds);
 
   @override
-  Future<bool> addFriend(String friendId, String friendName) async {
-    return true;
+  Future<AddFriendOutcome> addFriend(String friendId, String friendName) async {
+    return AddFriendOutcome.sent;
   }
 
   String? lastFcmToken;

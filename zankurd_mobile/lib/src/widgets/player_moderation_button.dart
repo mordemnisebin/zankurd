@@ -202,7 +202,7 @@ Future<void> showPlayerModerationSheet({
     final failText = context.t(K.requestFailed);
     bool ok;
     try {
-      ok = await repository.addFriend(playerId, playerName);
+      ok = (await repository.addFriend(playerId, playerName)).isSuccess;
     } catch (_) {
       ok = false;
     }

@@ -441,6 +441,50 @@ void main() {
     expect(button().onPressed, isNotNull);
   });
 
+  testWidgets('A3: başarılı hesap silme Ayarlar rotasını yığından atar '
+      '(sonsuz gösterge kalmaz)', (tester) async {
+    final repository = _DeleteTrackingRepository();
+    final authProvider = _SignOutTrackingAuthProvider();
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(
+        authProvider: authProvider,
+        child: Builder(
+          builder: (context) => Scaffold(
+            body: TextButton(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => SettingsScreen(repository: repository),
+                ),
+              ),
+              child: const Text('ayarları-aç'),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.text('ayarları-aç'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(await _scrollToDeleteAction(tester));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('delete-confirm-field')),
+      'SIL',
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Kalıcı olarak sil'));
+    await tester.pumpAndSettle();
+
+    expect(authProvider.signOutCalls, 1);
+    expect(find.byType(SettingsScreen), findsNothing);
+    expect(find.text('ayarları-aç'), findsOneWidget);
+  });
+
   testWidgets('deleted account reports local cleanup failure accurately', (
     tester,
   ) async {

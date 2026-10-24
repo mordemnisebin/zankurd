@@ -110,12 +110,22 @@ class StreakStore {
   bool playedToday({DateTime? now}) =>
       _lastDay == _dayKey(now ?? DateTime.now());
 
+  /// [lastDay] bugünden SONRA mı? Cihaz saati geri alınınca ya da saat
+  /// dilimi batıya kayınca kayıtlı gün gelecekte kalır. Anahtarlar
+  /// `yyyy-MM-dd` olduğundan sözlük sırası takvim sırasıdır. Böyle bir gün
+  /// "bugün" sayılır; yoksa seri hiç atlanmamış bir günden dolayı kırılırdı
+  /// (bkz. test/streak_clock_backward_test.dart).
+  static bool _isFuture(String lastDay, DateTime now) =>
+      lastDay.compareTo(_dayKey(now)) > 0;
+
   /// Görünen seri: bugün ya da dün oynanmışsa sürer, yoksa 0'dır.
   int effectiveStreak({DateTime? now}) {
     final today = now ?? DateTime.now();
     final lastDay = _lastDay;
     if (lastDay == null) return 0;
-    if (lastDay == _dayKey(today) || _isYesterday(lastDay, today)) {
+    if (lastDay == _dayKey(today) ||
+        _isYesterday(lastDay, today) ||
+        _isFuture(lastDay, today)) {
       return _current;
     }
     return 0;
@@ -127,7 +137,9 @@ class StreakStore {
     final today = now ?? DateTime.now();
     final lastDay = _lastDay;
     if (lastDay == null || _current <= 0) return false;
-    return lastDay != _dayKey(today) && !_isYesterday(lastDay, today);
+    return lastDay != _dayKey(today) &&
+        !_isYesterday(lastDay, today) &&
+        !_isFuture(lastDay, today);
   }
 
   /// Kırılacak seri elde jeton varken dondurulabilir mi?
@@ -184,6 +196,12 @@ class StreakStore {
       // uyarının sonradan (bildirim açılınca) bugüne kurulmuş olmasına karşı
       // güvenceyi korur.
       await NotificationService.noteStreakActivity();
+      return _current;
+    }
+    if (lastDay != null && _isFuture(lastDay, today)) {
+      // Saat geri alınmış: seri korunur ve `lastDay` ASLA geriye taşınmaz.
+      // Geriye yazmak 24→23→24'te aynı gerçek günde seriyi iki kez
+      // artırır, 24→22→24'te kırardı (bkz. test/streak_clock_backward_test).
       return _current;
     }
     if (lastDay != null && _isYesterday(lastDay, today)) {

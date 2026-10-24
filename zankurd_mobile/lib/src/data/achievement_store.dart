@@ -234,14 +234,24 @@ class AchievementStore {
     bool practice = false,
     int remainingMistakes = 0,
     List<Player> opponents = const [],
+    DateTime? now,
   }) async {
     _answeredQuestions += totalQuestions;
     if (requiredCategories.contains(category)) {
       _playedCategories.add(category);
     }
     if (dailyQuiz) {
-      _dailyQuizCompletions += 1;
-      _dailyQuizLastDay = _dayString(DateTime.now());
+      // Günün soruları aynı gün tekrar oynanabilir; sayaç yerel günde EN
+      // ÇOK bir kez artar, yoksa "5 kez" rozeti tek günde açılırdı (bkz.
+      // test/daily_quiz_badge_once_per_day_test.dart).
+      // Yalnız kayıtlı son günden İLERİ tarih sayılır: saat 24→23→24
+      // oynatılınca `!=` kontrolü aynı takvim gününü yeniden sayıyordu.
+      final today = _dayString(now ?? DateTime.now());
+      final last = _dailyQuizLastDay;
+      if (last == null || today.compareTo(last) > 0) {
+        _dailyQuizCompletions += 1;
+        _dailyQuizLastDay = today;
+      }
     }
 
     final newlyUnlocked = <Achievement>[];

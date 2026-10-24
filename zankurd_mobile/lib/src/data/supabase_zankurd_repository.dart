@@ -10,6 +10,7 @@ import '../models/async_duel.dart';
 import '../models/match_history.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
+import '../models/add_friend_outcome.dart';
 import '../models/friend.dart';
 import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
@@ -3232,13 +3233,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<bool> addFriend(String friendId, String friendName) async {
+  Future<AddFriendOutcome> addFriend(String friendId, String friendName) async {
     try {
       final response = await client.rpc<dynamic>(
         'add_friend',
         params: {'p_friend_id': friendId, 'p_friend_name': friendName},
       );
-      return (_firstRow(response)?['success'] as bool?) ?? false;
+      final row = _firstRow(response);
+      return AddFriendOutcome.fromServer(
+        success: (row?['success'] as bool?) ?? false,
+        message: row?['message'] as String?,
+      );
     } catch (e, s) {
       _recordError(e, s, reason: 'addFriend failed');
       // SUNUCUYA YAZILAMADIYSA BAŞARI BİLDİRME.
@@ -3256,7 +3261,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // Arayüz zaten doğru yazılmış: `K.acceptFailed` / `K.rejectFailed`
       // metinleri vardı ama hiç görünmüyordu, çünkü depo hep true
       // dönüyordu (2026-08-02 denetimi).
-      return false;
+      return AddFriendOutcome.failed;
     }
   }
 
@@ -3478,7 +3483,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }).toList();
     } catch (e, s) {
       _recordError(e, s, reason: 'loadFriends failed');
-      return _offline.loadFriends();
+      // Hata "arkadaşın yok" DEĞİLDİR: boş liste dönmek ekranın hata +
+      // "tekrar dene" durumunu hiç tetiklemiyordu (bkz.
+      // test/friend_read_errors_test.dart).
+      rethrow;
     }
   }
 
@@ -3490,7 +3498,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return friends;
     } catch (e, s) {
       _recordError(e, s, reason: 'loadFriendsLeaderboard failed');
-      return _offline.loadFriendsLeaderboard();
+      rethrow;
     }
   }
 
@@ -3525,7 +3533,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       ];
     } catch (e, s) {
       _recordError(e, s, reason: 'loadPendingFriendRequests failed');
-      return _offline.loadPendingFriendRequests();
+      // Bkz. loadFriends: hata "bekleyen istek yok" anlamına gelmez.
+      rethrow;
     }
   }
 

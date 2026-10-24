@@ -1079,10 +1079,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     } else {
       earnedXP = (correctCount * 10) + 50;
       if (isNewDay) earnedXP += 30;
-      earnedXP += completedMissions.fold(
-        0,
-        (sum, mission) => sum + mission.xpReward,
-      );
+      // Tamamlanan görevlerin XP'si tur XP'sine EKLENMEZ: ödül ana ekranda
+      // "Ödülü al" ile alınırken verilir. İkisinde de eklemek her görevi iki
+      // kez ödüllendiriyordu (bkz. test/mission_xp_single_grant_test.dart).
       earnedXP += promotions.length * 200;
     }
 
@@ -1348,17 +1347,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       );
       // Paylaşım sayfası kapatılırsa (iptal) ödül verilmez.
       if (!shared) return;
-      final earned = await ResultSharer.claimDailyShareReward();
+      // Gün, sunucu ödülü verdikten SONRA işaretlenir (bkz.
+      // test/share_reward_scope_and_order_test.dart).
+      final earned = await ResultSharer.settleDailyShareReward(
+        awardCoins: repository.awardSpinCoins,
+      );
       if (earned && context.mounted) {
-        // Ödül ancak sunucu yazdıysa duyurulur (0 = yazılamadı); eskiden
-        // `unawaited` ile hemen "kazanıldı" deniyor, hata yutuluyordu.
-        var awarded = 0;
-        try {
-          awarded = await repository.awardSpinCoins();
-        } catch (error, stack) {
-          ErrorReporter.record(error, stack, reason: 'share awardSpinCoins');
-        }
-        if (awarded <= 0 || !context.mounted) return;
         HapticFeedback.mediumImpact();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -2539,9 +2533,11 @@ class _RoundGains extends StatelessWidget {
                 icon: AppIcons.listCheck,
                 role: SahneRole.gold,
                 title: context.t(K.gorevTamamlandi),
+                // XP burada verilmez, ana ekranda alınır; toplamda
+                // görünmeyen bir "+100 XP" yazmak yanlış olurdu.
                 subtitle:
                     '${context.isKu ? mission.labelKu : mission.labelTr}'
-                    ' — +${mission.xpReward} XP',
+                    ' — ${context.t(K.missionClaimAction)}',
               ),
             if (dailyStreak > 0)
               SahneListRow.icon(

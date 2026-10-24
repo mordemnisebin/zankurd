@@ -18,8 +18,6 @@ import '../data/sync_manager.dart';
 import '../providers/sound_provider.dart';
 import '../providers/untimed_mode_provider.dart';
 import '../data/daily_mission_store.dart';
-import '../data/xp_award_publisher.dart';
-import '../data/xp_store.dart';
 import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';
@@ -240,6 +238,31 @@ class _QuizScreenState extends State<QuizScreen>
   late List<Player> livePlayers = widget.room.players;
   StreamSubscription<List<Player>>? _playersSub;
   StreamSubscription<Map<String, dynamic>>? _realtimeSub;
+
+  /// Sunucudaki engel listesi: engellediğim oyuncunun canlı tepkileri
+  /// çizilmez (C1). Liste okunana kadar ve okuma iki denemede de düşerse
+  /// uzak tepkiler BASTIRILIR (güvenli taraf).
+  Set<String> _blockedPlayerIds = const <String>{};
+  bool _blockedReady = false;
+
+  Future<void> _loadBlockedPlayers() async {
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        final ids = await widget.repository.loadBlockedPlayerIds();
+        if (!mounted) return;
+        _blockedPlayerIds = ids;
+        _blockedReady = true;
+        return;
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'quiz_load_blocked_players');
+        if (attempt == 0) {
+          await Future<void>.delayed(const Duration(seconds: 2));
+        }
+        if (!mounted) return;
+      }
+    }
+  }
+
   final FloatingReactionController _reactionController =
       FloatingReactionController();
   final Map<String, _OpponentAnswer> _opponentSelectedAnswers = {};
@@ -612,6 +635,7 @@ class _QuizScreenState extends State<QuizScreen>
         // "Berfin"li maçta skor ve hazır sinyallerini tersine çeviriyordu.
         // Kimliksiz eski kayıtlarda [_isMe] ad yedeğini kullanır.
         _myId = widget.repository.currentUserId;
+        unawaited(_loadBlockedPlayers());
         _applyOwnAuthoritativePlayerState();
         _realtimeSub = widget.repository
             .subscribeRoomBroadcast(widget.room.id!)
@@ -632,7 +656,10 @@ class _QuizScreenState extends State<QuizScreen>
               if (payload['type'] == 'reaction') {
                 final text = payload['text'] as String?;
                 final sender = payload['sender_name'] as String? ?? senderName;
-                if (text != null && !isSelf) {
+                final blocked =
+                    !_blockedReady ||
+                    (senderId != null && _blockedPlayerIds.contains(senderId));
+                if (text != null && !isSelf && !blocked) {
                   _reactionController.triggerReaction(
                     text,
                     // Adsız oyuncu her yerde "Oyuncu ZK-XXXX" (lobi, skor

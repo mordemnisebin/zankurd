@@ -737,6 +737,46 @@ class Tr {
     },
     K.requestSent: {'ku': 'Daxwaz hat şandin', 'tr': 'İstek gönderildi'},
     K.requestFailed: {'ku': 'Daxwaz nehat şandin', 'tr': 'İstek gönderilemedi'},
+    K.notifChannelDailyName: {
+      'ku': 'ZanKurd Bîrxistina Rojane',
+      'tr': 'ZanKurd Günlük Hatırlatıcı',
+    },
+    K.notifChannelDailyDesc: {
+      'ku': 'Bîrxistina çalakiya rojane ya ZanKurdê',
+      'tr': 'ZanKurd günlük etkinlik hatırlatıcısı',
+    },
+    K.notifChannelFriendName: {
+      'ku': 'ZanKurd Daxwazên Hevaltiyê',
+      'tr': 'ZanKurd Arkadaşlık İstekleri',
+    },
+    K.notifChannelFriendDesc: {
+      'ku': 'Daxwazên hevaltiyê yên nû',
+      'tr': 'Yeni arkadaşlık istekleri',
+    },
+    K.notifChannelStreakName: {
+      'ku': 'ZanKurd Bîrxistina Zincîrê',
+      'tr': 'ZanKurd Seri Hatırlatıcısı',
+    },
+    K.notifChannelStreakDesc: {
+      'ku': 'Bîrxistina parastina zincîra rojane',
+      'tr': 'Günlük seriyi koruma hatırlatıcısı',
+    },
+    K.friendAlreadyFriends: {
+      'ku': 'Hûn jixwe heval in',
+      'tr': 'Zaten arkadaşsınız',
+    },
+    K.friendRequestAlreadyPending: {
+      'ku': 'Daxwaz jixwe hatiye şandin',
+      'tr': 'İstek zaten gönderilmiş',
+    },
+    K.friendRequestBlocked: {
+      'ku': 'Ji vî lîstikvanî re daxwaz nayê şandin',
+      'tr': 'Bu oyuncuya istek gönderilemez',
+    },
+    K.friendRequestRateLimited: {
+      'ku': 'Pir zêde daxwaz hatin şandin. Hinekî bisekine û dîsa biceribîne.',
+      'tr': 'Çok fazla istek gönderildi. Biraz bekleyip tekrar dene.',
+    },
     K.requestAccepted: {'ku': 'Heval hat zêdekirin', 'tr': 'Arkadaş eklendi'},
     K.acceptFailed: {
       'ku': 'Daxwaz nehat qebûlkirin.',
@@ -2144,6 +2184,10 @@ class Tr {
     K.authErrRateLimit: {
       'ku': 'Pir ceribandin hatin kirin. Hinekî bisekine û dîsa biceribîne.',
       'tr': 'Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.',
+    },
+    K.authErrSamePassword: {
+      'ku': 'Şîfreya nû divê ji ya kevin cuda be.',
+      'tr': 'Yeni parola eskisinden farklı olmalı.',
     },
     K.authErrGuestDisabled: {
       'ku': 'Têketina mêvanan niha girtî ye.',
@@ -3843,6 +3887,16 @@ class K {
   static const searchFailed = 'friends.searchFailed';
   static const requestSent = 'friends.requestSent';
   static const requestFailed = 'friends.requestFailed';
+  static const notifChannelDailyName = 'notif.channel.daily.name';
+  static const notifChannelDailyDesc = 'notif.channel.daily.desc';
+  static const notifChannelFriendName = 'notif.channel.friend.name';
+  static const notifChannelFriendDesc = 'notif.channel.friend.desc';
+  static const notifChannelStreakName = 'notif.channel.streak.name';
+  static const notifChannelStreakDesc = 'notif.channel.streak.desc';
+  static const friendAlreadyFriends = 'friends.alreadyFriends';
+  static const friendRequestAlreadyPending = 'friends.requestAlreadyPending';
+  static const friendRequestBlocked = 'friends.requestBlocked';
+  static const friendRequestRateLimited = 'friends.requestRateLimited';
   static const requestAccepted = 'friends.requestAccepted';
   static const acceptFailed = 'friends.acceptFailed';
   static const requestRejected = 'friends.requestRejected';
@@ -4379,6 +4433,7 @@ class K {
   static const authErrInvalidEmail = 'auth.err.invalidEmail';
   static const authErrEmailNotConfirmed = 'auth.err.emailNotConfirmed';
   static const authErrRateLimit = 'auth.err.rateLimit';
+  static const authErrSamePassword = 'auth.err.samePassword';
   static const authErrGuestDisabled = 'auth.err.guestDisabled';
   static const authErrGeneric = 'auth.err.generic';
   static const premiumErrPurchaseNotConfigured =

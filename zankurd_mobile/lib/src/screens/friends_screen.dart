@@ -16,6 +16,7 @@ import '../models/referral_result.dart';
 import '../utils/player_identity.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/add_friend_outcome.dart';
 import '../models/friend.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -231,26 +232,45 @@ class _FriendsScreenState extends State<FriendsScreen>
   Future<void> _sendRequest(PlayerSearchResult player) async {
     if (!_busyIds.add(player.id)) return;
     setState(() {});
-    bool success;
+    AddFriendOutcome outcome;
     try {
-      success = await widget.repository.addFriend(
+      outcome = await widget.repository.addFriend(
         player.id,
         player.displayName,
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'friend_request_send');
-      success = false;
+      outcome = AddFriendOutcome.failed;
     } finally {
       _busyIds.remove(player.id);
     }
     if (!mounted) return;
-    if (success) {
-      setState(() {
-        _sentRequests.add(player.id);
-        // Karşı taraf bize zaten istek göndermişse sunucu isteği kabul eder
-        // (arkadaş olunur); durum sunucudan yeniden okunur.
-        _loadFriends();
-      });
+    // Sunucunun cevabı ayrıştırılır; her sonuç kendi cümlesini alır (bkz.
+    // test/friend_request_outcome_test.dart). Karşılıklı istek sunucuda
+    // otomatik kabul edilirse "istek gönderildi" demek yanlış olurdu.
+    if (outcome == AddFriendOutcome.alreadyFriends) {
+      _showMessage(context.t(K.friendAlreadyFriends));
+      return;
+    }
+    if (outcome == AddFriendOutcome.alreadyPending) {
+      setState(() => _sentRequests.add(player.id));
+      _showMessage(context.t(K.friendRequestAlreadyPending));
+      return;
+    }
+    if (outcome == AddFriendOutcome.blocked) {
+      _showMessage(context.t(K.friendRequestBlocked));
+      return;
+    }
+    if (outcome == AddFriendOutcome.rateLimited) {
+      _showMessage(context.t(K.friendRequestRateLimited));
+      return;
+    }
+    if (outcome.isSuccess) {
+      setState(() => _sentRequests.add(player.id));
+      if (outcome == AddFriendOutcome.autoAccepted) {
+        // Arkadaşlık kuruldu: liste ve istekler tazelenir.
+        setState(_loadFriends);
+      }
       widget.repository
           .logAnalyticsEvent('friend_request_sent', null)
           .catchError((error, stack) {
@@ -261,7 +281,13 @@ class _FriendsScreenState extends State<FriendsScreen>
             );
             return false;
           });
-      _showMessage(context.t(K.requestSent));
+      _showMessage(
+        context.t(
+          outcome == AddFriendOutcome.autoAccepted
+              ? K.requestAccepted
+              : K.requestSent,
+        ),
+      );
       await SocialPushPrompt.maybeAsk(context);
     } else {
       _showMessage(context.t(K.requestFailed));

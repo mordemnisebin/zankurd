@@ -885,6 +885,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         discardPendingRewards: true,
         pendingRewardsOwnerId: deletedUserId,
       );
+      // Giriş ekranı kabuğun yerine çizilir ama Ayarlar rotası yığında
+      // kalırdı ve `_deleting` göstergesi sonsuza dek dönerdi. Kabuk da
+      // oturum kapanınca yığını boşaltır (AppShell); bu, kabuksuz
+      // kullanımlar için ikinci güvence.
+      if (!mounted) return;
+      Navigator.of(context).popUntil((route) => route.isFirst);
     } on AccountLocalCleanupException catch (error, stack) {
       ErrorReporter.record(
         error,

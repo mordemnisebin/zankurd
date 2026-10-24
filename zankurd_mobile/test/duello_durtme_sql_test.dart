@@ -323,10 +323,10 @@ void main() {
     });
   });
 
-  test('applied.md satırı "bekliyor"', () {
+  test('applied.md satırı uygulandı olarak işli', () {
     final line = applied
         .split('\n')
         .firstWhere((l) => l.contains('2026-10-24_duello_durtme.sql'));
-    expect(line, contains('bekliyor'));
+    expect(line, contains('✅'));
   });
 }

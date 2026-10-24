@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/models/add_friend_outcome.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
@@ -40,9 +41,9 @@ class _Repo extends MockZanKurdRepository {
   final List<(String, String)> added = [];
 
   @override
-  Future<bool> addFriend(String friendId, String friendName) async {
+  Future<AddFriendOutcome> addFriend(String friendId, String friendName) async {
     added.add((friendId, friendName));
-    return true;
+    return AddFriendOutcome.sent;
   }
 
   @override
