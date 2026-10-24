@@ -3,9 +3,12 @@
 -- reddedilir · 3 süren düello reddedilir (açık, eşleşmiş) · 4 engelli çiftte
 -- rakip kimliği/adı/cevapları gizli, kendi incelemem açık · 5 hükmen düello
 -- (kaybeden cevapsız) · 6 rövanş uygunluğu (arkadaş / arkadaş değil) ·
--- 7 anon çalıştıramaz, authenticated çalıştırır · 8 kontrol: rövanş
--- `create_async_duel_challenge(null, arkadaş)` davetli kaydeder, engelli
--- arkadaşa 'Not a friend' (mevcut davranış; göçle değişmez).
+-- 7 anon çalıştıramaz, authenticated çalıştırır · 8 rövanş daveti:
+-- arkadaşa kaydedilir (kontrol), engelli arkadaşa 'Not a friend' (kontrol),
+-- ARKADAŞ OLMAYAN ama son 7 günde birlikte düello bitirdiğimiz kişiye göçten
+-- sonra kabul (önce 'Not a friend'), hiç oynamadığımız arkadaş olmayana yine
+-- 'Not a friend', aynı kişiye 24 saatte 4. davet 'Too many invites', engelli
+-- ve 7 günden eski düello rövanş açmaz.
 --
 -- CANLIYA KALICI YAZMAZ: tek transaction, sonda rollback. Göçten ÖNCE ve
 -- SONRA aynı betik çalıştırılır; her bulgu için bir satır basar:
@@ -172,6 +175,13 @@ begin
   perform pg_temp.cevapla(x, u1, 7, 5);
   perform pg_temp.cevapla(x, u4, 7, 2);
   insert into _d values ('arkadassiz', x);
+
+  -- 7 günden ESKİ, arkadaş olmayan (2 ve 4) bitmiş düello.
+  x := pg_temp.duello(u2, u4, 'completed');
+  perform pg_temp.cevapla(x, u2, 7, 4);
+  perform pg_temp.cevapla(x, u4, 7, 3);
+  execute 'update public.async_duels set completed_at = now() - interval ''8 days'', created_at = now() - interval ''9 days'' where id = $1' using x;
+  insert into _d values ('eski', x);
 exception when others then
   insert into _kanit values (0, 'kurulum', '-', '-', 'HATA: ' || sqlerrm);
 end $$;
@@ -215,11 +225,11 @@ begin
   insert into _kanit values (8, '(5b) hükmen kaybeden kendi (boş) incelemesini açar',
     'RPC yok', 'q=7,my=0,opp=7,corr=7,opp_id=var,name=var,blocked=false,forfeit=true,rematch=true',
     pg_temp.gor(u2, x_hukmen));
-  insert into _kanit values (9, '(6) arkadaş olmayan rakip: rövanş kapalı',
-    'RPC yok', 'q=7,my=7,opp=7,corr=7,opp_id=var,name=var,blocked=false,forfeit=false,rematch=false',
+  insert into _kanit values (9, '(6) arkadaş olmayan ama son 7 günde birlikte oynanmış rakip: rövanş açık',
+    'RPC yok', 'q=7,my=7,opp=7,corr=7,opp_id=var,name=var,blocked=false,forfeit=false,rematch=true',
     pg_temp.gor(u1, x_ark));
-  insert into _kanit values (10, '(6b) arkadaş olmayan rakip kendi tarafından da kapalı',
-    'RPC yok', 'q=7,my=7,opp=7,corr=7,opp_id=var,name=var,blocked=false,forfeit=false,rematch=false',
+  insert into _kanit values (10, '(6b) aynı düello rakip tarafından da açık',
+    'RPC yok', 'q=7,my=7,opp=7,corr=7,opp_id=var,name=var,blocked=false,forfeit=false,rematch=true',
     pg_temp.gor(u4, x_ark));
 exception when others then
   insert into _kanit values (7, '(5,6)', '-', '-', 'HATA: ' || sqlerrm);
@@ -245,6 +255,54 @@ begin
     'davetli kaydedildi', 'davetli kaydedildi', r);
 exception when others then
   insert into _kanit values (11, '(8a)', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- ------------------------------------------------------------ 8c..8f
+-- Arkadaş olmayan rövanş (1 → 4: x_ark ile birlikte oynadılar; 1 → 3: hiç
+-- oynamadılar). Davetler kullanıcı 1'den; 4. davet günlük sınırı aşar.
+do $$
+declare
+  u1 uuid := pg_temp.uid(1); u2 uuid := pg_temp.uid(2);
+  u3 uuid := pg_temp.uid(3); u4 uuid := pg_temp.uid(4);
+  x_eski uuid := (select id from _d where k = 'eski');
+  r text; v jsonb; i int; v_ok boolean;
+begin
+  perform set_config('request.jwt.claims', json_build_object('sub', u1)::text, true);
+
+  begin
+    perform public.create_async_duel_challenge(null, u3);
+    r := 'kabul edildi';
+  exception when others then r := sqlerrm;
+  end;
+  insert into _kanit values (17, '(8c) arkadaş olmayan, hiç oynamadığımız kişiye davet',
+    'Not a friend', 'Not a friend', r);
+
+  for i in 1..3 loop
+    begin
+      v := public.create_async_duel_challenge(null, u4);
+      r := case when exists (
+        select 1 from public.async_duels
+        where id = (v->>'duel_id')::uuid and invited_id = u4 and creator_id = u1
+      ) then 'davetli kaydedildi' else 'davetli yok' end;
+    exception when others then r := sqlerrm;
+    end;
+    insert into _kanit values (17 + i, '(8d' || i || ') arkadaş olmayan ama birlikte oynadığımız kişiye ' || i || '. davet',
+      'Not a friend', 'davetli kaydedildi', r);
+  end loop;
+
+  begin
+    perform public.create_async_duel_challenge(null, u4);
+    r := 'kabul edildi';
+  exception when others then r := sqlerrm;
+  end;
+  insert into _kanit values (21, '(8e) aynı arkadaş olmayana 24 saatte 4. davet',
+    'Not a friend', 'Too many invites', r);
+
+  insert into _kanit values (22, '(8f) 7 günden eski birlikte düello: rövanş kapalı',
+    'RPC yok', 'q=7,my=7,opp=7,corr=7,opp_id=var,name=var,blocked=false,forfeit=false,rematch=false',
+    pg_temp.gor(u2, x_eski));
+exception when others then
+  insert into _kanit values (17, '(8c..f)', '-', '-', 'HATA: ' || sqlerrm);
 end $$;
 
 -- ------------------------------------------------------------ 4 + 8b (engel)
@@ -274,6 +332,20 @@ begin
   end;
   insert into _kanit values (14, '(8b) kontrol: engelli arkadaşa meydan okuma',
     'Not a friend', 'Not a friend', r);
+
+  -- 4, 1'i engeller: birlikte oynamış arkadaş olmayan, ama engelli → ret.
+  insert into public.blocked_users (blocker_id, blocked_id) values (pg_temp.uid(4), u1);
+  perform set_config('request.jwt.claims', json_build_object('sub', u1)::text, true);
+  begin
+    perform public.create_async_duel_challenge(null, pg_temp.uid(4));
+    r := 'kabul edildi';
+  exception when others then r := sqlerrm;
+  end;
+  insert into _kanit values (23, '(8g) engelli, birlikte oynanmış arkadaş olmayan: davet',
+    'Not a friend', 'Not a friend', r);
+  insert into _kanit values (24, '(8h) engelli, birlikte oynanmış arkadaş olmayan: rövanş kapalı',
+    'RPC yok', 'q=7,my=7,opp=0,corr=7,opp_id=null,name=null,blocked=true,forfeit=false,rematch=false',
+    pg_temp.gor(u1, (select id from _d where k = 'arkadassiz')));
 exception when others then
   insert into _kanit values (12, '(4)', '-', '-', 'HATA: ' || sqlerrm);
 end $$;

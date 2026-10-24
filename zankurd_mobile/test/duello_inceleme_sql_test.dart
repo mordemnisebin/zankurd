@@ -53,13 +53,120 @@ void main() {
     expect(lower.trimRight(), endsWith('commit;'));
   });
 
-  test('yalnız YENİ fonksiyon: başka bir gövde yeniden kurulmaz', () {
+  test('üç fonksiyon: yardımcı, rövanş davetı, inceleme', () {
     final creates = RegExp(
       r'create or replace function ([a-z_.]+)\(',
     ).allMatches(lower).map((m) => m.group(1)).toList();
-    expect(creates, ['public.get_async_duel_review']);
-    // create_async_duel_challenge (rövanşın kullandığı RPC) DEĞİŞMEZ.
-    expect(lower, isNot(contains('create_async_duel_challenge(')));
+    expect(creates, [
+      'public.async_duel_recent_pair',
+      'public.create_async_duel_challenge',
+      'public.get_async_duel_review',
+    ]);
+  });
+
+  /// Bir fonksiyonun gövdesi (sonraki `create or replace`e kadar).
+  String bodyOf(String name) {
+    final start = lower.indexOf('create or replace function public.$name(');
+    final next = lower.indexOf(
+      'create or replace function public.',
+      start + 10,
+    );
+    return lower.substring(start, next == -1 ? lower.length : next);
+  }
+
+  group('async_duel_recent_pair', () {
+    final fn = bodyOf('async_duel_recent_pair');
+    test('bitmiş, rakipli, iki yönlü, son 7 gün; istemciye kapalı', () {
+      expect(fn, contains("d.status in ('completed', 'expired')"));
+      expect(fn, contains('d.opponent_id is not null'));
+      expect(fn, contains('d.creator_id = p_a and d.opponent_id = p_b'));
+      expect(fn, contains('d.creator_id = p_b and d.opponent_id = p_a'));
+      expect(fn, contains("interval '7 days'"));
+      expect(fn, contains("set search_path to 'public', 'pg_temp'"));
+      expect(
+        lower,
+        contains(
+          'revoke all on function public.async_duel_recent_pair(uuid, uuid)\n'
+          '  from public, anon, authenticated;',
+        ),
+      );
+    });
+  });
+
+  group('create_async_duel_challenge (rövanş istisnası)', () {
+    final fn = bodyOf('create_async_duel_challenge');
+    test('canlı gövde korunur: sınırlar, soru seçimi, dönüş', () {
+      expect(
+        fn,
+        contains(
+          "raise exception 'not authenticated'"
+              .replaceFirst('not authenticated', 'Not authenticated')
+              .toLowerCase(),
+        ),
+      );
+      expect(fn, contains('v_open_count >= 5'));
+      expect(fn, contains("raise exception 'too many open duels'"));
+      expect(fn, contains('public.weighted_question_pick'));
+      expect(
+        fn,
+        contains("'invited_id', case when v_invited_name is not null"),
+      );
+      expect(fn, contains("set search_path to 'public', 'pg_temp'"));
+    });
+
+    test('engel iki yönde HER ZAMAN reddeder, istisnadan önce', () {
+      final block = fn.indexOf(
+        'b.blocker_id = v_uid and b.blocked_id = p_friend_id',
+      );
+      final exception = fn.indexOf(
+        'async_duel_recent_pair(v_uid, p_friend_id)',
+      );
+      expect(block, greaterThan(0));
+      expect(exception, greaterThan(block));
+      expect(
+        fn,
+        contains('b.blocker_id = p_friend_id and b.blocked_id = v_uid'),
+      );
+    });
+
+    test('arkadaş değilse yalnız son 7 günde birlikte oynadıysa geçer', () {
+      expect(
+        fn,
+        contains(
+          'if not public.async_duel_recent_pair(v_uid, p_friend_id) then',
+        ),
+      );
+      expect(fn, contains("raise exception 'not a friend'"));
+      expect(fn, contains('v_non_friend := true'));
+    });
+
+    test('arkadaş olmayana günde en çok 3 davet, kilitten sonra', () {
+      final lock = fn.indexOf('pg_advisory_xact_lock');
+      final limit = fn.indexOf("raise exception 'too many invites'");
+      final open = fn.indexOf('v_open_count >= 5');
+      expect(limit, greaterThan(lock));
+      expect(limit, lessThan(open));
+      expect(fn, contains("d.created_at > now() - interval '24 hours'"));
+      expect(fn, contains('if v_non_friend then'));
+      expect(fn, contains('v_recent_invites >= 3'));
+    });
+
+    test('yetkiler: anon kapalı, authenticated açık', () {
+      expect(
+        lower,
+        contains(
+          'revoke all on function public.create_async_duel_challenge(text, uuid)\n'
+          '  from public, anon;',
+        ),
+      );
+      expect(
+        lower,
+        contains(
+          'grant execute on function public.create_async_duel_challenge(text, uuid)\n'
+          '  to authenticated;',
+        ),
+      );
+    });
   });
 
   group('get_async_duel_review', () {
@@ -112,18 +219,21 @@ void main() {
       expect(lower, contains("'opponent_id', v_show_other"));
       expect(lower, contains("'opponent_blocked', v_blocked"));
       // Engelde ad hiç okunmaz: select, `if not v_blocked` içindedir.
-      final block = lower.indexOf('if not v_blocked then');
-      final nameRead = lower.indexOf('select p.display_name');
+      final fnr = bodyOf('get_async_duel_review');
+      final block = fnr.indexOf('if not v_blocked then');
+      final nameRead = fnr.indexOf('select p.display_name');
       expect(block, greaterThan(0));
       expect(nameRead, greaterThan(block));
     });
 
-    test('rövanş uygunluğu: rakip var + engel yok + kabul edilmiş arkadaş', () {
+    test('rövanş uygunluğu: rakip var + engel yok + (arkadaş ya da 7 gün)', () {
       expect(lower, contains('from public.friends f'));
       expect(lower, contains('f.user_id = v_uid and f.friend_id = v_other'));
       expect(
         lower,
-        contains("'can_rematch', (v_show_other is not null and v_friend)"),
+        contains(
+          "'can_rematch', (v_show_other is not null and (v_friend or v_recent))",
+        ),
       );
     });
 
@@ -201,6 +311,11 @@ void main() {
       expect(proof, contains('opp_id=null,name=null,blocked=true'));
       expect(proof, contains('(7a) anon çalıştıramaz'));
       expect(proof, contains('(8b) kontrol: engelli arkadaşa meydan okuma'));
+      expect(proof, contains('(8c) arkadaş olmayan, hiç oynamadığımız'));
+      expect(proof, contains("'Not a friend', 'davetli kaydedildi'"));
+      expect(proof, contains("'Not a friend', 'Too many invites'"));
+      expect(proof, contains('(8g) engelli, birlikte oynanmış'));
+      expect(proof, contains('(8f) 7 günden eski'));
     });
   });
 

@@ -142,7 +142,13 @@ class AsyncDuelResultView {
     final myCorrect = summary.myCorrect;
     // Hükmen sonuç `myCorrect == null`dan ÖNCE okunur: hükmen kaybeden
     // turunu bitirmemiştir ama "Yarım kaldı" değil "Kaybettin · hükmen" der.
-    if (summary.isForfeit && summary.outcome != null) {
+    // Rakibin skoru olmayan sonuç da hükmendir: rakip turunu bitirmedi, ya
+    // da eski sunucu `forfeit` bayrağını göndermedi. "5–null" yazmaktansa
+    // hükmen metni gösterilir.
+    if (summary.outcome != null &&
+        (summary.isForfeit ||
+            summary.opponentCorrect == null ||
+            myCorrect == null)) {
       return AsyncDuelResultView._(
         duelId: summary.duelId,
         kind: AsyncDuelResultKind.completed,

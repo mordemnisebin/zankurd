@@ -256,7 +256,9 @@ AsyncDuelChallengeError classifyAsyncDuelChallengeError(Object error) {
     return AsyncDuelChallengeError.notReady;
   }
   if (text.contains('Not a friend')) return AsyncDuelChallengeError.notAFriend;
-  if (text.contains('Too many open duels')) {
+  // 'Too many invites': arkadaş olmayan aynı kişiye 24 saatte 4. rövanş.
+  if (text.contains('Too many open duels') ||
+      text.contains('Too many invites')) {
     return AsyncDuelChallengeError.tooMany;
   }
   if (text.contains('No questions')) return AsyncDuelChallengeError.noQuestions;

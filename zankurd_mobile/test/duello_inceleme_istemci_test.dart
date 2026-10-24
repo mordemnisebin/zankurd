@@ -388,6 +388,63 @@ void main() {
     });
   });
 
+  group('hükmen kazanma etiketi (null yazmaz)', () {
+    // Eski sunucu `forfeit` bayrağını göndermez; kazanılmış ama rakibin
+    // skoru olmayan düello "Kazandın · 5–null" diye okunuyordu.
+    AsyncDuelSummary win({bool forfeit = false}) => AsyncDuelSummary(
+      duelId: 'd',
+      status: AsyncDuelStatus.expired,
+      role: AsyncDuelRole.creator,
+      opponentName: 'Rojda',
+      myCorrect: 5,
+      opponentCorrect: null,
+      outcome: AsyncDuelOutcome.win,
+      isForfeit: forfeit,
+      createdAt: DateTime.utc(2026, 10, 24),
+      seen: true,
+    );
+
+    testWidgets('rakip skoru yoksa durum etiketi hükmen metni', (tester) async {
+      late String label;
+      await tester.pumpWidget(
+        testShell(
+          child: Builder(
+            builder: (context) {
+              label = asyncDuelStatusLabel(
+                context,
+                AsyncDuelResultView.fromSummary(win()),
+              );
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      );
+      expect(label, 'Kazandın · hükmen');
+      expect(label, isNot(contains('null')));
+    });
+
+    testWidgets('sonuç ekranı da "null" yazmaz', (tester) async {
+      await tester.pumpWidget(
+        testShell(
+          child: AsyncDuelResultScreen(
+            repository: _ReviewRepository(),
+            view: AsyncDuelResultView.fromSummary(win()),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.textContaining('null'), findsNothing);
+      expect(find.text('Kazandın · hükmen'), findsOneWidget);
+    });
+
+    test('bayraklı hükmen de aynı', () {
+      expect(
+        AsyncDuelResultView.fromSummary(win(forfeit: true)).isForfeit,
+        isTrue,
+      );
+    });
+  });
+
   group('ekran', () {
     Future<void> open(
       WidgetTester tester,
