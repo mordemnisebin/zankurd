@@ -415,6 +415,13 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// soruyu söyler.
   Future<AsyncDuelStart> resumeAsyncDuel(String duelId);
 
+  /// Bitmiş bir düellonun soru soru karşılaştırması
+  /// (`get_async_duel_review`, 2026-10-24). `null`: sunucuda bu RPC yok
+  /// (göç uygulanmadı) — ekran bölümü ve rövanş düğmesini gizler. Süren
+  /// düello, katılımcı olmama ya da bağlantı hatasında fırlatır; sınıf için
+  /// [classifyAsyncDuelReviewError].
+  Future<AsyncDuelReview?> loadAsyncDuelReview(String duelId);
+
   /// Kimsenin katılmadığı kendi açık düellomu geri çeker
   /// (`cancel_my_async_duel`). Başarısızlıkta `false`; RPC yoksa
   /// [isMissingRpcError] fırlatır.

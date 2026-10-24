@@ -144,6 +144,11 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<AsyncDuelReview?> loadAsyncDuelReview(String duelId) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
   Future<bool> supportsAsyncDuelChallenge() async => false;
 
   @override

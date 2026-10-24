@@ -20,6 +20,7 @@ import '../../widgets/player_avatar.dart';
 import '../../widgets/dialog_action_pair.dart';
 import '../../widgets/sahne/sahne.dart';
 import 'async_duel_play_screen.dart';
+import 'async_duel_review.dart';
 
 /// Sonuç ekranının dört bitiş durumu.
 ///
@@ -282,11 +283,74 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
   /// simülatör turu, 2026-10-22).
   String? _myName;
 
+  /// Soru soru karşılaştırma (2026-10-24, `get_async_duel_review`). Yalnız
+  /// bitmiş düelloda ([AsyncDuelResultKind.completed], hükmen dahil)
+  /// istenir. `null` + [_reviewLoading] false + [_reviewFailed] false =
+  /// bölüm yok (sunucu göçü uygulanmamış ya da düello incelenemez): ne
+  /// bölüm ne de rövanş düğmesi çizilir — uygunluğu bilmeden düğme
+  /// göstermek boşa basılan bir düğme olurdu.
+  AsyncDuelReview? _review;
+  bool _reviewLoading = false;
+  bool _reviewFailed = false;
+  bool _rematchStarted = false;
+
   @override
   void initState() {
     super.initState();
     unawaited(_runSideEffectsOnce());
     unawaited(_loadMyIdentity());
+    if (widget.view.kind == AsyncDuelResultKind.completed) {
+      unawaited(_loadReview());
+    }
+  }
+
+  Future<void> _loadReview() async {
+    setState(() {
+      _reviewLoading = true;
+      _reviewFailed = false;
+    });
+    try {
+      final review = await widget.repository.loadAsyncDuelReview(
+        widget.view.duelId,
+      );
+      if (!mounted) return;
+      setState(() {
+        _review = review;
+        _reviewLoading = false;
+      });
+    } catch (error, stack) {
+      if (!mounted) return;
+      // "Henüz bitmedi / katılımcı değilsin" beklenen reddir: bölüm sessizce
+      // yoktur. Gerisi geçici hata sayılır ve "Yeniden dene" gösterilir.
+      final expected =
+          classifyAsyncDuelReviewError(error) ==
+          AsyncDuelReviewError.notAvailable;
+      if (!expected) {
+        ErrorReporter.record(error, stack, reason: 'async duel review failed');
+      }
+      setState(() {
+        _reviewLoading = false;
+        _reviewFailed = !expected;
+      });
+    }
+  }
+
+  /// Rövanş: aynı rakibe arkadaş meydan okuması açar ve oyuna geçer. Sunucu
+  /// `can_rematch` demeden düğme zaten kapalıdır; yine de çift dokunuş tek
+  /// düello açar.
+  void _startRematch(String opponentId) {
+    if (_rematchStarted) return;
+    _rematchStarted = true;
+    unawaited(
+      Navigator.of(context).pushReplacement(
+        AppRoute.to(
+          AsyncDuelPlayScreen(
+            repository: widget.repository,
+            entry: AsyncDuelEntry.createChallenge(friendId: opponentId),
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> _loadMyIdentity() async {
@@ -363,12 +427,16 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
       case AsyncDuelResultKind.completed:
         final outcome = view.outcome ?? AsyncDuelOutcome.draw;
         final win = outcome == AsyncDuelOutcome.win;
-        final rawOpponentName = view.opponentName;
+        // Aramızda engel varsa rakibin adı ve fotoğrafı gizlenir (sunucu da
+        // incelemede kimliği vermez); düello sonucu yine görünür.
+        final blocked = _review?.opponentBlocked ?? false;
+        final rawOpponentName = blocked ? null : view.opponentName;
+        final opponentProfile = blocked ? null : view.opponentProfile;
         final opponentName = rawOpponentName == null
             ? context.t(K.asyncDuelOpponent)
             : context.playerDisplayName(
                 rawOpponentName,
-                tag: view.opponentProfile?.playerTag,
+                tag: opponentProfile?.playerTag,
               );
         xp = _completedXp(view);
         if (view.isForfeit) {
@@ -407,7 +475,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
               outcome: outcome,
               myIdentity: _myIdentity,
               myRawName: _myName,
-              opponentProfile: view.opponentProfile,
+              opponentProfile: opponentProfile,
               opponentRawName: rawOpponentName,
             ),
           );
@@ -508,6 +576,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
             )
           : null,
       sections: [
+        ..._reviewSections(context, view),
         if (view.canCancel)
           Padding(
             padding: const EdgeInsets.only(top: SahneSpace.x3),
@@ -543,6 +612,93 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
           : close,
       secondary: canStartNew ? close : null,
     );
+  }
+
+  /// Rövanş düğmesi + soru soru karşılaştırma. Yalnız bitmiş düelloda;
+  /// yüklenirken başlık + gösterge, hatada "Yeniden dene", RPC yoksa hiçbiri.
+  List<Widget> _reviewSections(BuildContext context, AsyncDuelResultView view) {
+    if (view.kind != AsyncDuelResultKind.completed) return const [];
+    final t = SahneTokens.of(context);
+    final review = _review;
+    if (_reviewLoading) {
+      return [
+        SahneSectionHeader(title: context.t(K.asyncDuelReviewTitle)),
+        const Center(
+          child: SizedBox.square(
+            dimension: 24,
+            child: CircularProgressIndicator(
+              key: ValueKey('async-duel-review-loading'),
+              strokeWidth: 2,
+            ),
+          ),
+        ),
+      ];
+    }
+    if (_reviewFailed) {
+      return [
+        SahneSectionHeader(title: context.t(K.asyncDuelReviewTitle)),
+        Text(
+          context.t(K.asyncDuelReviewLoadFailed),
+          key: const ValueKey('async-duel-review-failed'),
+          style: SahneType.caption.copyWith(color: t.tx2),
+        ),
+        const SizedBox(height: SahneSpace.x2),
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: SahneButton.text(
+            key: const ValueKey('async-duel-review-retry'),
+            label: context.t(K.retry),
+            arrow: false,
+            onPressed: () => unawaited(_loadReview()),
+          ),
+        ),
+      ];
+    }
+    if (review == null) return const [];
+
+    final opponentId = review.opponentId;
+    final canRematch = review.canRematch && opponentId != null;
+    final String? whyNot = canRematch
+        ? null
+        : (review.opponentBlocked || opponentId == null)
+        ? context.t(K.asyncDuelRematchUnavailable)
+        : context.t(K.asyncDuelRematchFriendsOnly);
+    final rawName = review.opponentBlocked
+        ? null
+        : (review.opponentName ?? widget.view.opponentName);
+    final opponentLabel = rawName == null
+        ? context.t(K.asyncDuelOpponent)
+        : context.playerDisplayName(
+            rawName,
+            tag: widget.view.opponentProfile?.playerTag,
+          );
+    return [
+      Padding(
+        padding: const EdgeInsets.only(top: SahneSpace.x3),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SahneButton.secondary(
+              buttonKey: const ValueKey('async-duel-result-rematch'),
+              label: context.t(K.asyncDuelRematch),
+              icon: AppIcons.arrowsRotate,
+              expand: true,
+              onPressed: canRematch ? () => _startRematch(opponentId) : null,
+            ),
+            if (whyNot != null) ...[
+              const SizedBox(height: SahneSpace.x2),
+              Text(
+                whyNot,
+                key: const ValueKey('async-duel-result-rematch-why'),
+                textAlign: TextAlign.center,
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+            ],
+          ],
+        ),
+      ),
+      AsyncDuelReviewSection(review: review, opponentLabel: opponentLabel),
+    ];
   }
 
   /// Kimsenin katılmadığı düelloyu onaydan sonra geri çeker ve ekranı

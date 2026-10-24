@@ -2264,6 +2264,82 @@ void main() {
     await _shoot(t, '101_async_duel_result_win');
   }, tags: ['preview']);
 
+  // 2026-10-24: soru soru karşılaştırma + rövanş. Sunucu incelemesi
+  // (`get_async_duel_review`) sabitlenir: 7 soru, benim 5 doğrum, rakibin 3
+  // doğrusu, bir süre dolması; rakip arkadaş olduğundan rövanş açık.
+  for (final variant in const ['light', 'dark_ku']) {
+    testWidgets(
+      '${variant == 'dark_ku' ? 266 : 265} sırayla düello — soru soru karşılaştırma ($variant)',
+      (t) async {
+        final dark = variant == 'dark_ku';
+        final repo = MockZanKurdRepository();
+        late AsyncDuelSummary completedSummary;
+        await t.runAsync(() async {
+          await _seedRojdaDuel(repo);
+          final summaries = await repo.loadMyAsyncDuels();
+          completedSummary = summaries.firstWhere((s) => s.outcome != null);
+        });
+        AsyncDuelReviewAnswer answer(String choice, bool ok, int ms) =>
+            AsyncDuelReviewAnswer(choice: choice, correct: ok, ms: ms);
+        const prompts = [
+          'Paytexta Kurdistana Başûr kîjan bajar e?',
+          'Kîjan çem di nav Diyarbekirê re derbas dibe?',
+          'Peyva "silav" bi Tirkî çi ye?',
+          'Kîjan ji van hunermendan stranbêj e?',
+          'Çiyayê herî bilind ê Kurdistanê kîjan e?',
+          'Newroz di kîjan mehê de tê pîrozkirin?',
+          'Kîjan ji van peyvan navê ajalekî ye?',
+        ];
+        final review = AsyncDuelReview(
+          duelId: completedSummary.duelId,
+          isForfeit: false,
+          opponentId: 'rojda',
+          opponentName: 'Rojda',
+          opponentBlocked: false,
+          opponentIsFriend: true,
+          canRematch: true,
+          questions: [
+            for (var i = 0; i < 7; i++)
+              AsyncDuelReviewQuestion(
+                index: i,
+                prompt: prompts[i],
+                options: const {
+                  'A': 'Hewlêr',
+                  'B': 'Silêmanî',
+                  'C': 'Duhok',
+                  'D': 'Kerkûk',
+                },
+                correctOption: 'A',
+                mine: i < 5
+                    ? answer('A', true, 3200 + i * 450)
+                    : answer('B', false, 7800),
+                opponent: i == 3
+                    ? answer('TIMEOUT', false, 20000)
+                    : (i < 3 || i == 6)
+                    ? answer('A', true, 5100 + i * 300)
+                    : answer('C', false, 9400),
+              ),
+          ],
+        );
+        repo.asyncDuelReviewsForTesting[completedSummary.duelId] = review;
+        await _pump(
+          t,
+          AsyncDuelResultScreen(
+            repository: repo,
+            view: AsyncDuelResultView.fromSummary(completedSummary),
+          ),
+          dark: dark,
+          ku: dark,
+        );
+        await _shoot(
+          t,
+          '${variant == 'dark_ku' ? 266 : 265}_async_duel_review_$variant',
+        );
+      },
+      tags: ['preview'],
+    );
+  }
+
   testWidgets('102 sırayla düello — sonuç (rakip bekleniyor)', (t) async {
     final repo = MockZanKurdRepository();
     late AsyncDuelSummary waitingSummary;

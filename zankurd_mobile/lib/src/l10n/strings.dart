@@ -3358,6 +3358,32 @@ class Tr {
       'ku': 'Bersivên rast wekhev in; yê zûtir bersivand bi ser ket.',
       'tr': 'Doğru sayısı eşit; daha hızlı cevaplayan kazandı.',
     },
+    // 2026-10-24 düello incelemesi + rövanş. Kurmancî: `pêşbirk` (düello,
+    // mevcut), `bersiv` (cevap), `pirs` (soru), `asteng kirin` (K.secBlocked
+    // ailesi). `Pêşbirka vegerê` = spordaki dönüş/rövanş maçı; seçenekler
+    // `Dîsa pêşbirk`, `Dîsa bilîze`. Jüri kontrolünden geçmeli.
+    K.asyncDuelReviewTitle: {
+      'ku': 'Berhevdana pirsan',
+      'tr': 'Soru karşılaştırması',
+    },
+    K.asyncDuelReviewNoAnswer: {'ku': 'Bê bersiv', 'tr': 'Cevap yok'},
+    K.asyncDuelReviewLoadFailed: {
+      'ku': 'Berhevdana pirsan nehat barkirin.',
+      'tr': 'Soru karşılaştırması yüklenemedi.',
+    },
+    K.asyncDuelReviewBlockedNote: {
+      'ku': 'Hevrik hate astengkirin; tenê bersivên te tên nîşandan.',
+      'tr': 'Rakip engelli; yalnız senin cevapların gösteriliyor.',
+    },
+    K.asyncDuelRematch: {'ku': 'Pêşbirka vegerê', 'tr': 'Rövanş'},
+    K.asyncDuelRematchFriendsOnly: {
+      'ku': 'Pêşbirka vegerê tenê bi hevalan re ye.',
+      'tr': 'Rövanş yalnız arkadaşlarla açılır.',
+    },
+    K.asyncDuelRematchUnavailable: {
+      'ku': 'Bi vî hevrikî re pêşbirk nayê vekirin.',
+      'tr': 'Bu rakiple düello açılamaz.',
+    },
 
     // ── Arkadaşa meydan okuma (bağlantı / arkadaş seç) ────────────────
     // "Meydan oku" için yerleşik bir Kurmancî karşılık yoktu; dosyada
@@ -5075,6 +5101,17 @@ class K {
 
   /// Eşit doğruda süreyle belirlenen sonucun açıklaması.
   static const asyncDuelTieBreak = 'duel.async.tieBreak';
+
+  /// Düello sonucundaki soru soru karşılaştırma bölümü (2026-10-24).
+  static const asyncDuelReviewTitle = 'duel.async.review.title';
+  static const asyncDuelReviewNoAnswer = 'duel.async.review.noAnswer';
+  static const asyncDuelReviewLoadFailed = 'duel.async.review.loadFailed';
+  static const asyncDuelReviewBlockedNote = 'duel.async.review.blocked';
+
+  /// Aynı rakibe arkadaş meydan okumasıyla rövanş düğmesi ve kapalı nedenleri.
+  static const asyncDuelRematch = 'duel.async.rematch';
+  static const asyncDuelRematchFriendsOnly = 'duel.async.rematch.friendsOnly';
+  static const asyncDuelRematchUnavailable = 'duel.async.rematch.unavailable';
 
   /// Oyun sekmesi satırı, ana ekran düğmesi ve seçim sayfasının başlığı.
   static const challengeEntry = 'duel.challenge.entry';

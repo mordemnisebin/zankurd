@@ -4498,6 +4498,27 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<AsyncDuelReview?> loadAsyncDuelReview(String duelId) async {
+    try {
+      final response = await client.rpc(
+        'get_async_duel_review',
+        params: {'p_duel_id': duelId},
+      );
+      return AsyncDuelReview.fromJson(
+        _requiredJsonObject(response, 'get_async_duel_review'),
+      );
+    } catch (error, stack) {
+      // Göç uygulanmamış sunucuda RPC yok: bölüm gizlenir, hata sayılmaz.
+      if (isMissingRpcError(error)) return null;
+      // "Henüz bitmedi / katılımcı değilsin" beklenen reddir, rapora düşmez.
+      if (classifyAsyncDuelReviewError(error) == AsyncDuelReviewError.other) {
+        _recordError(error, stack, reason: 'loadAsyncDuelReview failed');
+      }
+      rethrow;
+    }
+  }
+
+  @override
   Future<bool> cancelAsyncDuel(String duelId) async {
     try {
       final response = await client.rpc(
