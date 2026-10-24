@@ -264,7 +264,8 @@ void main() {
         of: find.byKey(ValueKey('word-review-option-$index')),
         matching: find.byType(Text),
       );
-      return tester.widget<Text>(finder.first).data!;
+      // Şık çubuğunda ilk Text harf karosudur (A/B/C/D); anlam ikincidir.
+      return tester.widget<Text>(finder.at(1)).data!;
     }
 
     testWidgets('doğru cevap kutuyu artırır, yanlış 1e düşürür, skor yazılır', (

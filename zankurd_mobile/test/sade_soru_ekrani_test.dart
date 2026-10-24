@@ -19,6 +19,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/free_wildcard_store.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
@@ -68,7 +69,7 @@ void main() {
 
     expect(find.byKey(const ValueKey('quiz-close')), findsOneWidget);
     expect(find.byKey(const ValueKey('quiz-stage-kicker')), findsOneWidget);
-    expect(find.textContaining(' · Soru 1/2'), findsOneWidget);
+    expect(find.textContaining('Soru 1/2 · '), findsOneWidget);
     expect(find.byKey(const ValueKey('quiz-circular-timer')), findsOneWidget);
     expect(find.byKey(const ValueKey('stage-timer-seconds')), findsOneWidget);
     expect(find.byKey(const ValueKey('quiz-more-menu')), findsOneWidget);
@@ -125,6 +126,15 @@ void main() {
     've nedenini söyler',
     (tester) async {
       final semantics = tester.ensureSemantics();
+      // Bugünkü bedava joker hakkı harcanmış: kilitli durumu bu koşulda
+      // sınanır (hak varken satır açıktır, bkz. `free_wildcard_quiz_test`).
+      SharedPreferences.setMockInitialValues({
+        'zankurd.quiz_tutorial.seen': true,
+        'zankurd.navTour.seen': true,
+        'zankurd.missions.freeWildcardDay': FreeWildcardStore.dayKey(
+          DateTime.now(),
+        ),
+      });
       await pump(tester, timer: false);
 
       // Açıklama cümlesi ekranda yazılmaz (ekran okuyucuda durur).

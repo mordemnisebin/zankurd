@@ -1891,6 +1891,11 @@ class Tr {
       'ku': 'Heke ev tîp li ser klavyeya te tune bin, ji vir zêde bike',
       'tr': 'Klavyende bu harfler yoksa buradan ekleyebilirsin',
     },
+    // Günlük bedava joker ipucu (2026-10-24): jeton satırının yanında.
+    K.freeWildcardToday: {
+      'ku': 'Îro 1 alîkarî belaş e',
+      'tr': 'Bugün 1 joker bedava',
+    },
     K.wildcardNoCoins: {
       'ku': 'Ji bo alîkariyê zêrên te têr nakin',
       'tr': 'Joker için jeton yetmiyor',
@@ -4339,6 +4344,7 @@ class K {
   static const showTurkishTranslation = 'quiz.showTurkishTranslation';
   static const diacriticHint = 'quiz.diacriticHint';
   static const wildcardNoCoins = 'quiz.wildcard.no.coins';
+  static const freeWildcardToday = 'quiz.wildcard.free.today';
   static const wheelTitle = 'wheel.title';
   static const wheelOncePerDay = 'wheel.oncePerDay';
   static const wheelWonAmount = 'wheel.wonAmount';

@@ -18,6 +18,7 @@ import '../data/sync_manager.dart';
 import '../providers/sound_provider.dart';
 import '../providers/untimed_mode_provider.dart';
 import '../data/daily_mission_store.dart';
+import '../data/free_wildcard_store.dart';
 import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';
@@ -308,6 +309,11 @@ class _QuizScreenState extends State<QuizScreen>
   String _firstAttemptAnswer = '';
   Map<String, double>? _audiencePoll;
   int _coinBalance = 0;
+
+  /// Bugünkü bedava joker hakkı duruyor mu? Yalnız solo turda yüklenir;
+  /// ilk joker kullanımı jeton düşmez ve `spend_coins` çağrılmaz
+  /// ([FreeWildcardStore]).
+  bool _freeWildcardAvailable = false;
 
   // Timer ve animasyon durumları
   late final AnimationController _timerController;
@@ -601,6 +607,7 @@ class _QuizScreenState extends State<QuizScreen>
       });
     }
     _loadCoinBalance();
+    _loadFreeWildcard();
     AnalyticsService.instance.logQuizStart(
       category: widget.room.category,
       mode: _quizModeLabel,
@@ -1436,6 +1443,15 @@ class _QuizScreenState extends State<QuizScreen>
       _opponentClientReady = true;
     }
     _maybeStartQuestionFlow();
+  }
+
+  void _loadFreeWildcard() {
+    if (!_isSoloMode) return;
+    FreeWildcardStore.isAvailable().then((available) {
+      if (mounted && available) {
+        setState(() => _freeWildcardAvailable = true);
+      }
+    });
   }
 
   void _loadCoinBalance() {

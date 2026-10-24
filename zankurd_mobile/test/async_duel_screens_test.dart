@@ -122,14 +122,14 @@ Future<void> _answerCurrentQuestion(
   await tester.pump();
 }
 
-/// Üst satırın "Kategori · Soru n/N" etiketinden yalnız "n/N" (kurul 2. tur:
-/// sıra artık ortak üst satırda, kategoriyle birlikte).
+/// Üst satırın "Soru n/N · Kategori" etiketinden yalnız "n/N" (sayaç başta:
+/// kısaltma kategori adını yer, sayacı değil).
 ({String? data}) _progressText(WidgetTester tester) => (
   data: tester
       .widget<Text>(find.byKey(const ValueKey('async-duel-progress')))
       .data
       ?.split(' ')
-      .last,
+      .elementAtOrNull(1),
 );
 
 void main() {

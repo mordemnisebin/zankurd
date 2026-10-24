@@ -12,7 +12,7 @@ import 'sahne/sahne.dart';
 /// ayrı ayrı kuruyordu — kategori/sıra kimisinde ortada, kimisinde gövdede
 /// ayrı satırdı, düelloda hiç yoktu. Dokuz modelli panelin üçü aynı şeyi
 /// söyledi: "aynı uygulamada dört soru ekranı gibi". Tek bileşen:
-/// `[kategori işareti] Kategori · Soru n/N`; kapat solda, sayaç ve ⋯ menüsü
+/// `[kategori işareti] Soru n/N · Kategori`; kapat solda, sayaç ve ⋯ menüsü
 /// sağda, altında 4 px'lik ilerleme çubuğu [SahneStageScaffold] üzerinden
 /// her modda aynıdır.
 class QuizStageCenter extends StatelessWidget {
@@ -55,10 +55,23 @@ class QuizStageCenter extends StatelessWidget {
       'index': '${index + 1}',
       'total': '$total',
     });
+    // SIRA: sayaç BAŞTA, kategori sonda. Tek satırda kısaltma sondan yer;
+    // "Teknoloji · Sor…" biçiminde kesilen şey sayaç oluyordu (kaçıncı soruda
+    // olduğunu göstermek kategori adından önemli). İki `Text`li `Row`
+    // denendi: orta yuva `_RenderGameBar` içinde kuru yerleşim ölçülür ve
+    // `FittedBox`/sınırsız genişlikte `Row` istisna fırlatıyordu; tek `Text`
+    // hem güvenli hem testlerin okuduğu tek künyedir
+    // (`quiz_stage_center_counter_test`).
     // Büyük yazıda (≥ 1.5) künye işareti düşer: 320 px @2.0'da işaret +
     // saniye + ⋯ yanında kategori adı "Siya…" diye kesiliyor ve "Soru 1/5"
     // hiç görünmüyordu. Ad ve sıra, işaretten önemli.
-    final compact = MediaQuery.textScalerOf(context).scale(16) >= 24;
+    //
+    // Dar telefonda (≤ 340 dp) da düşer: kapat + skor + saniye + ⋯ yanında
+    // 32 px'lik işaret, sayacın son harflerini yiyordu. Büyük yazıda künye
+    // iki satıra inebilir: sayaç ilk satırda kalır, kısaltma yalnız ikinci
+    // satırdaki kategori adına düşer.
+    final largeText = MediaQuery.textScalerOf(context).scale(16) >= 24;
+    final compact = largeText || MediaQuery.sizeOf(context).width <= 340;
     return KeyedSubtree(
       key: keyed,
       child: Semantics(
@@ -85,9 +98,9 @@ class QuizStageCenter extends StatelessWidget {
             ],
             Flexible(
               child: Text(
-                '$name · $progress',
+                '$progress · $name',
                 key: textKey,
-                maxLines: 1,
+                maxLines: largeText ? 2 : 1,
                 overflow: TextOverflow.ellipsis,
                 style: SahneType.eyebrow.copyWith(
                   color: onBand ? SahneVivid.onFill : t.tx,

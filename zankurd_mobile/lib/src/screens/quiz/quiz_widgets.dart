@@ -1838,7 +1838,11 @@ class _QuizAnswerBoard extends StatelessWidget {
 /// alabileceğini bilmesi için bakiye aynı bakışta görünmeli. Ekran
 /// okuyucu "120 jeton" okur.
 class _CoinBalanceLine extends StatelessWidget {
-  const _CoinBalanceLine({required this.balance, this.hint});
+  const _CoinBalanceLine({
+    required this.balance,
+    this.hint,
+    this.showHint = false,
+  });
 
   final int balance;
 
@@ -1847,6 +1851,12 @@ class _CoinBalanceLine extends StatelessWidget {
   /// soruda aynı cümleyi tekrar okutuyordu); yalnız ekran okuyucuya gider ve
   /// jetonu yetmeyen jokere dokununca tost olarak açılır.
   final String? hint;
+
+  /// İpucu ekranda da yazılsın mı? Yalnız günlük bedava joker ipucu için
+  /// `true`: kısa ("Bugün 1 joker bedava"), tek bilgi ve oyuncunun jetonu
+  /// yetmese bile jokerin açık olmasının TEK nedeni; yazılmazsa kilitsiz
+  /// jokerler açıklamasız kalır.
+  final bool showHint;
 
   @override
   Widget build(BuildContext context) {
@@ -1867,6 +1877,18 @@ class _CoinBalanceLine extends StatelessWidget {
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
+          if (showHint && hint != null) ...[
+            const SizedBox(width: SahneSpace.x2),
+            Flexible(
+              child: Text(
+                '· $hint',
+                key: const ValueKey('quiz-free-wildcard-hint'),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+            ),
+          ],
         ],
       ),
     );
