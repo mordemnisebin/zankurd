@@ -433,7 +433,7 @@ class Tr {
     K.wordsAdd: {'ku': 'Li lîsteya min zêde bike', 'tr': 'Listeme ekle'},
     K.wordsRemove: {'ku': 'Ji lîsteya min rake', 'tr': 'Listemden çıkar'},
     K.wordsCount: {'ku': '{count} peyv', 'tr': '{count} kelime'},
-    K.wordsEmptyTitle: {'ku': 'Hê peyv tune', 'tr': 'Henüz kelime yok'},
+    K.wordsEmptyTitle: {'ku': 'Hêj peyv tune', 'tr': 'Henüz kelime yok'},
     K.wordsEmptyBody: {
       'ku':
           'Di ferhengê de peyvekê bi nîşanê tomar bike, ew ê li vir xuya bibe.',
@@ -445,7 +445,7 @@ class Tr {
       'tr': 'Tekrar edilecek {count} kelime',
     },
     K.wordsDueNone: {
-      'ku': 'Îro peyvên dubarekirinê tune',
+      'ku': 'Îro peyvên dubarekirinê tune ne',
       'tr': 'Bugün tekrar edilecek kelime yok',
     },
     K.wordsReviewPrompt: {
@@ -458,10 +458,10 @@ class Tr {
     },
     K.wordsBox: {'ku': 'Qutiya {box}/5', 'tr': 'Kutu {box}/5'},
     K.wordsDueBadge: {'ku': 'Amade', 'tr': 'Hazır'},
-    K.lexiconDirection: {'ku': 'Alîya lêgerînê', 'tr': 'Arama yönü'},
+    K.lexiconDirection: {'ku': 'Aliyê lêgerînê', 'tr': 'Arama yönü'},
     K.lexiconDirKuTr: {'ku': 'Kurmancî > Tirkî', 'tr': 'Kurmancî > Türkçe'},
     K.lexiconDirTrKu: {'ku': 'Tirkî > Kurmancî', 'tr': 'Türkçe > Kurmancî'},
-    K.lexiconSearchHintTr: {'ku': 'Bi Tirkî bigere…', 'tr': 'Türkçe ara…'},
+    K.lexiconSearchHintTr: {'ku': 'Bi Tirkî lê bigere…', 'tr': 'Türkçe ara…'},
     K.loadFailedShort: {'ku': 'Nehat barkirin', 'tr': 'Yüklenemedi'},
     K.lessonsLoadFail: {
       'ku': 'Ders nehatin barkirin',
