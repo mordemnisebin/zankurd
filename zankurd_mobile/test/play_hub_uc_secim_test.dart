@@ -181,6 +181,47 @@ void main() {
     );
   });
 
+  // Kompakt "Günün çarkı" kartında "Hazır!" rozeti "H…" diye kesiliyordu.
+  // Artık rozet nokta göstergesidir; metin ekran okuyucuda kalır.
+  for (final scale in [1.0, 2.0]) {
+    for (final ku in [false, true]) {
+      testWidgets(
+        'çark rozeti kesilmez: 320 pt, yazı x$scale, ${ku ? 'ku' : 'tr'}',
+        (tester) async {
+          final semantics = tester.ensureSemantics();
+          await tester.binding.setSurfaceSize(const Size(320, 900));
+          addTearDown(() => tester.binding.setSurfaceSize(null));
+          await tester.pumpWidget(
+            testShell(
+              child: MediaQuery(
+                data: MediaQueryData(textScaler: TextScaler.linear(scale)),
+                child: PlayHubScreen(repository: _Repo()),
+              ),
+              languageProvider: ku ? kurmanciLang() : turkishLang(),
+            ),
+          );
+          await tester.pumpAndSettle();
+          final wheel = find.byKey(const ValueKey('play-hub-spin-wheel'));
+          await tester.scrollUntilVisible(wheel, 200);
+          expect(
+            find.descendant(
+              of: wheel,
+              matching: find.byKey(const ValueKey('mode-tile-badge-dot')),
+            ),
+            findsOneWidget,
+          );
+          expect(find.textContaining('…'), findsNothing);
+          expect(
+            tester.getSemantics(wheel).label,
+            contains(ku ? 'Amade ye!' : 'Hazır!'),
+          );
+          expect(tester.takeException(), isNull);
+          semantics.dispose();
+        },
+      );
+    }
+  }
+
   testWidgets('eski "Arkadaşına meydan oku" kartı yok', (tester) async {
     await _pump(tester);
     expect(
