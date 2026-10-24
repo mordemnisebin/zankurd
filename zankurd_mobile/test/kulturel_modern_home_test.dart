@@ -21,6 +21,7 @@ import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
+import 'package:zankurd_mobile/src/screens/home/daily_tour_card.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -136,7 +137,10 @@ void main() {
     );
 
     // Tek birincil eylem.
-    expect(find.byType(TodayTaskCard), findsOneWidget);
+    // Ilk oturum dışında kahraman kart Günün turudur (TodayTaskCard yalnız
+    // ilk derste; bkz. home_daily_tour_test.dart).
+    expect(find.byType(DailyTourCard), findsOneWidget);
+    expect(find.byType(TodayTaskCard), findsNothing);
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task-start')), findsOneWidget);
 

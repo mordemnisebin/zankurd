@@ -313,7 +313,7 @@ void main() {
     expect(fills, everyElement(isNot(act)));
   });
 
-  testWidgets('Ana ekranda kart "Günün dersi" kartının hemen altındadır', (
+  testWidgets('Ana ekranda ayrı düello kartı yok (Yarış kapısı rozet taşır)', (
     tester,
   ) async {
     await _useSurface(tester);
@@ -322,32 +322,12 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
 
-    final lesson = tester.getRect(
-      find.byKey(const ValueKey('home-daily-task')),
-    );
-    final duel = tester.getRect(find.byKey(const ValueKey('home-duel-card')));
-    final topics = tester.getRect(
-      find.byKey(const ValueKey('home-topic-grid')),
-    );
-    // Günün sözü kartı (2026-10-22) öğren/oyna kapılarının ALTINDA, konu
-    // ızgarasının üstündedir: dersle düello arasına konunca öğren kapısını
-    // ilk ekrandan itiyordu (manzara_seridi_test). Düello yine dersin hemen
-    // altındadır.
-    final quote = tester.getRect(
-      find.byKey(const ValueKey('home-daily-quote')),
-    );
-    expect(duel.top, greaterThanOrEqualTo(lesson.bottom));
-    expect(duel.top - lesson.bottom, lessThan(32), reason: 'hemen altında');
-    expect(quote.top, greaterThan(duel.bottom));
-    expect(topics.top, greaterThan(quote.bottom));
-    // Turuncu yine yalnız günün dersinde.
-    expect(
-      find.descendant(
-        of: find.byKey(const ValueKey('home-daily-task')),
-        matching: find.byType(FilledButton),
-      ),
-      findsOneWidget,
-    );
+    // 2026-10-24 sahibin kararı: "Sırayla düello" satırı ile "Yarış" kapısı
+    // aynı yere gidiyordu; düello durumu ("Sıra sende", "Sonuç hazır") artık
+    // Yarış kapısının rozetidir. Kartın kendisi başka yerlerde kullanılır
+    // (bu dosyanın öteki testleri).
+    expect(find.byKey(const ValueKey('home-duel-card')), findsNothing);
+    expect(find.byKey(const ValueKey('home-door-play')), findsOneWidget);
   });
 
   testWidgets('Ana ekran, çevrimdışıyken kartı çizmez (boşluk da kalmaz)', (

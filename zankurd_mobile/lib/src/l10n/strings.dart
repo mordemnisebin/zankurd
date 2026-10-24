@@ -43,7 +43,9 @@ class Tr {
     K.close: {'ku': 'Bigire', 'tr': 'Kapat'},
 
     // ── Gezinme ──────────────────────────────────────────────────────
-    K.navLearn: {'ku': 'Hîn bibe', 'tr': 'Öğren'},
+    // Anahtar adı eski ("Öğren"); 2026-10-24'ten beri birinci sekme genel
+    // ana sayfayı açar, adı K.home ile aynı söz.
+    K.navLearn: {'ku': 'Rûpela sereke', 'tr': 'Ana sayfa'},
     K.navPlay: {'ku': 'Pêşbirk', 'tr': 'Yarış'},
     K.navLeaderboard: {'ku': 'Rêzbendî', 'tr': 'Sıralama'},
     K.navProfile: {'ku': 'Profîl', 'tr': 'Profil'},
@@ -1087,7 +1089,7 @@ class Tr {
       'ku': '{p0} pirs · nêzîkî {p1} deqe',
       'tr': '{p0} soru · yaklaşık {p1} dakika',
     },
-    K.gununDersi: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
+    K.gununDersi: {'ku': 'Pratîk', 'tr': 'Pratik'},
     K.pSoruYaklasikP: {
       'ku': '{p0} pirs · nêzîkî {p1} deqe',
       'tr': '{p0} soru · yaklaşık {p1} dakika',
@@ -2480,21 +2482,31 @@ class Tr {
       'ku': 'Ders, çîrok û ferheng',
       'tr': 'Ders, hikâye ve sözlük',
     },
-    K.homeDoorPlayTitle: {
-      'ku': 'Bi hevalan re bilîze',
-      'tr': 'Arkadaşınla yarış',
-    },
+    // Yarış kısayolu: tek, kısa ad (sekmenin adıyla aynı). Eskiden
+    // "Arkadaşınla yarış" idi ve düello satırıyla aynı kapıyı iki adla
+    // anıyordu (2026-10-24).
+    K.homeDoorPlayTitle: {'ku': 'Pêşbirk', 'tr': 'Yarış'},
     K.homeDoorPlaySub: {
-      'ku': 'Ode ava bike an hevrikekî bibîne',
-      'tr': 'Oda kur ya da rakip bul',
+      'ku': 'Ode ava bike, hevrikekî bibîne an bi dorê bilîze',
+      'tr': 'Oda kur, rakip bul ya da sırayla oyna',
     },
+    K.homeDoorPlayReady: {'ku': 'Encam amade ye', 'tr': 'Sonuç hazır'},
+    K.homeTourDoneTitle: {
+      'ku': 'Te gera rojê qedand',
+      'tr': 'Bugünkü turu bitirdin',
+    },
+    K.homeTourMyRank: {
+      'ku': 'Îro #{rank} · {correct}/{total}',
+      'tr': 'Bugün #{rank} · {correct}/{total}',
+    },
+    K.homePractice: {'ku': 'Pratîk bike', 'tr': 'Pratik yap'},
     K.homeTopicsTitle: {'ku': 'Mijar', 'tr': 'Konular'},
     // Ayar: iki dilli etiketler (2026-10-20). Kurmancî karşılık Kurmancî
     // kurulunda (Grok 4.7 + Muse Spark, birebir aynı öneri) onaylandı.
     K.bilingualLabels: {'ku': 'Etîketên duzimanî', 'tr': 'İki dilli etiketler'},
     K.language: {'ku': 'Ziman', 'tr': 'Dil'},
     K.languageCode: {'ku': 'KU', 'tr': 'TR'},
-    K.dailyLesson: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
+    K.dailyLesson: {'ku': 'Pratîk', 'tr': 'Pratik'},
     K.learningGoalTitle: {
       'ku': 'Îro tu dixwazî li ser çi bisekinî?',
       'tr': 'Bugün neye odaklanmak istersin?',
@@ -4853,6 +4865,10 @@ class K {
   static const homeDoorLearnSub = 'home.door.learn.sub';
   static const homeDoorPlayTitle = 'home.door.play.title';
   static const homeDoorPlaySub = 'home.door.play.sub';
+  static const homeDoorPlayReady = 'home.door.play.ready';
+  static const homeTourDoneTitle = 'home.tour.doneTitle';
+  static const homeTourMyRank = 'home.tour.myRank';
+  static const homePractice = 'home.practice';
 
   /// Ana ekrandaki konu ızgarası.
   static const homeTopicsTitle = 'home.topics.title';

@@ -937,7 +937,7 @@ void main() {
 
     expect(find.byType(HomeScreen), findsOneWidget);
     // Ana ekranın tek birincil eylemi günün dersidir.
-    expect(find.text('Günün soruları'), findsOneWidget);
+    expect(find.text('Pratik'), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-duel-row')), findsNothing);
 
@@ -992,9 +992,16 @@ void main() {
       reason: 'Profil/seri araçları kompakt hesap başlığı içinde kalmalı.',
     );
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
-    // "Yarış" sekme etiketi tektir; ana ekrandaki yarış kapısı kendi
-    // başlığını ("Arkadaşınla yarış") taşır.
-    expect(find.text('Yarış'), findsOneWidget);
+    // 2026-10-24: yarış kapısı sekmeyle aynı kısa adı taşır ("Yarış"), tek
+    // giriş olarak; sekme etiketi kendi düğümünde tektir.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('nav-play')),
+        matching: find.text('Yarış'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Arkadaşınla yarış'), findsNothing);
     expect(find.text('Profil'), findsOneWidget);
 
     // Tema düğmesi 2026-09-27'de başlıktan kalktı (güneş simgesi ayar
@@ -1112,7 +1119,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Oyundaki adın ne olsun?'), findsOneWidget);
-    expect(find.text('Günün soruları'), findsNothing);
+    expect(find.text('Pratik'), findsNothing);
 
     await tester.enterText(
       find.byKey(const ValueKey('player-name-field')),
@@ -1122,7 +1129,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.savedName, 'Rojda Test');
-    expect(find.text('Günün soruları'), findsOneWidget);
+    expect(find.text('Pratik'), findsOneWidget);
   });
 
   test('unsupported provider auth error is user friendly', () {

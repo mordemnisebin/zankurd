@@ -52,7 +52,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Öğren'), findsOneWidget);
+    // Birinci sekme 2026-10-24'ten beri "Ana sayfa" (eskiden "Öğren").
+    expect(find.text('Ana sayfa'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

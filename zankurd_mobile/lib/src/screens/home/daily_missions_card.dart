@@ -248,7 +248,22 @@ class _MissionTile extends StatelessWidget {
             ),
             const SizedBox(width: SahneSpace.x2),
             // Ödül al düğmesi kendi düğümünü taşır; satırın özetine girmez.
-            if (canClaim) trailing else ExcludeSemantics(child: trailing),
+            //
+            // Sağ öğe satırın en çok yarısını alır, sığmazsa küçülür:
+            // 320 px + yazı ölçeği 2'de "Ödül al" çipi ikon + etiketle
+            // kendi doğal genişliğinde kalıp satırı 14 px taşırıyordu
+            // (2026-10-24; ilk oturum bu kartı göstermediği için taşma
+            // ana ekran taşma testlerinde sessiz kalmıştı).
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.sizeOf(context).width * 0.4,
+              ),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.centerEnd,
+                child: canClaim ? trailing : ExcludeSemantics(child: trailing),
+              ),
+            ),
           ],
         ),
         const SizedBox(height: SahneSpace.x2),

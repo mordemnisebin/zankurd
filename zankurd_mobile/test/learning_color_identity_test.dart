@@ -95,7 +95,7 @@ void main() {
         final selectedText = tester.widget<Text>(
           find.descendant(
             of: find.byKey(const ValueKey('learning-tab-everyday')),
-            matching: find.text(isKu ? 'Rojane' : 'Günlük'),
+            matching: find.text(isKu ? 'Jiyana rojane' : 'Gündelik hayat'),
           ),
         );
         // 2026-10-20 renk ve canlılık (B): öğrenme konu rayında seçili çip
