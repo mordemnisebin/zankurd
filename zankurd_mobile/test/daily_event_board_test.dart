@@ -271,7 +271,7 @@ void main() {
 
       expect(find.text('Rêzbendiya îroyê'), findsOneWidget);
       expect(find.text('Yekemînê duh: Hevi · 10/10'), findsOneWidget);
-      expect(find.text('Gera nû piştî 2 saet 30 deqe'), findsOneWidget);
+      expect(find.text('Gera nû piştî 2 saet û 30 deqeyan'), findsOneWidget);
       expect(find.text('Tu'), findsOneWidget);
     });
 
