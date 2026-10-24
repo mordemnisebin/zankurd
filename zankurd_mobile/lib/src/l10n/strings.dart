@@ -294,7 +294,7 @@ class Tr {
     },
     K.guestSaveBody: {
       'ku':
-          'XP, zêr û rozetên te bi te re bimînin, heta ku amûrê biguherînî jî.',
+          'XP, zêr û rozetên te bi te re bimînin, heke tu amûra xwe biguherînî jî.',
       'tr': 'XP, jeton ve rozetlerin cihaz değiştirsen bile seninle kalsın.',
     },
     K.guestSaveEmail: {
