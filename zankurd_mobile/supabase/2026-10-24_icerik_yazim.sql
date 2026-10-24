@@ -140,3 +140,12 @@ begin
 end $$;
 
 commit;
+
+-- Ek (2026-10-24, ana ajan): yalnız sunucuda bulunan bir soruda aynı yazım
+-- hatası (yerel bankada eşi yok, tarama listesine girmemişti).
+begin;
+update questions set
+  explanation_tr = 'Uzun, romanlarını Kurmancî yazarak modern Kürt romanını geliştirdi.'
+where id = 'aba93d60-c718-485e-82cc-11826f36eaad'
+  and explanation_tr = 'Uzun, romanlarını Kurmanci yazarak modern Kürt romanını geliştirdi.';
+commit;
