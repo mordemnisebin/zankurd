@@ -3122,7 +3122,7 @@ class Tr {
     },
     K.recentMatchesTitle: {'ku': 'Pêşbirkên dawî', 'tr': 'Son maçlar'},
     K.recentMatchesEmpty: {
-      'ku': 'Hîn pêşbirk tune. Pêşbirka xwe ya yekem dest pê bike.',
+      'ku': 'Hîn pêşbirk tune. Dest bi pêşbirka xwe ya yekem bike.',
       'tr': 'Henüz maç yok. İlk düellonu başlat.',
     },
     K.matchResultWin: {'ku': 'Bi ser ketî', 'tr': 'Kazandın'},
@@ -3134,7 +3134,7 @@ class Tr {
       'tr': 'En uzun günlük seri',
     },
     K.recordBestQuizStreak: {
-      'ku': 'Rêzeya rast a herî dirêj',
+      'ku': 'Zincîra rast a herî dirêj',
       'tr': 'En uzun doğru serisi',
     },
     K.recordBestContest: {
