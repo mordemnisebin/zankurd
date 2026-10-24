@@ -144,10 +144,9 @@ class StreakStore {
       return _current;
     }
     if (lastDay != null && _isFuture(lastDay, today)) {
-      // Saat geri alınmış: seri korunur, gün bugüne çekilir ki saat
-      // düzelince ertesi gün +1 devam etsin.
-      _lastDay = todayKey;
-      await _persist();
+      // Saat geri alınmış: seri korunur ve `lastDay` ASLA geriye taşınmaz.
+      // Geriye yazmak 24→23→24'te aynı gerçek günde seriyi iki kez
+      // artırır, 24→22→24'te kırardı (bkz. test/streak_clock_backward_test).
       return _current;
     }
     if (lastDay != null && _isYesterday(lastDay, today)) {

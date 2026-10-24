@@ -319,7 +319,8 @@ class _RoomScreenState extends State<RoomScreen> {
           final senderName = payload['sender_name'] as String?;
           // Engellediğim oyuncunun tepkisi çizilmez.
           final blocked =
-              senderId != null && _blockedPlayerIds.contains(senderId);
+              !_blockedReady ||
+              (senderId != null && _blockedPlayerIds.contains(senderId));
           if (text != null && senderId != _currentUserId && !blocked) {
             _reactionController.triggerReaction(
               text,
@@ -333,19 +334,34 @@ class _RoomScreenState extends State<RoomScreen> {
     }
   }
 
+  /// Engel listesi sunucudan okundu mu? Okunana kadar uzak tepkiler
+  /// BASTIRILIR: liste gelmeden gösterilen tepki engellinin mesajını sızdırır.
+  bool _blockedReady = false;
+
   /// Sunucudaki engel listesini yükler (C1).
   ///
   /// `_blockedPlayerIds` yalnız bu oturumda verilen engelleri tutuyordu;
   /// önceden engellenen oyuncu yeni odada yine görünüyordu (bkz.
-  /// test/room_blocked_players_server_test.dart). Okunamazsa ekran bozulmaz:
-  /// liste boş kalır, anlık engeller çalışmaya devam eder.
+  /// test/room_blocked_players_server_test.dart). Okuma düşerse bir kez
+  /// yeniden denenir; yine olmazsa tepkiler bastırılmaya devam eder (güvenli
+  /// taraf), satırlar ve oyun akışı etkilenmez.
   Future<void> _loadBlockedPlayers() async {
-    try {
-      final ids = await widget.repository.loadBlockedPlayerIds();
-      if (!mounted || ids.isEmpty) return;
-      setState(() => _blockedPlayerIds.addAll(ids));
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'room_load_blocked_players');
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        final ids = await widget.repository.loadBlockedPlayerIds();
+        if (!mounted) return;
+        setState(() {
+          _blockedPlayerIds.addAll(ids);
+          _blockedReady = true;
+        });
+        return;
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'room_load_blocked_players');
+        if (attempt == 0) {
+          await Future<void>.delayed(const Duration(seconds: 2));
+        }
+        if (!mounted) return;
+      }
     }
   }
 

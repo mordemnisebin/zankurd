@@ -12,7 +12,7 @@
 //
 // ## Kural
 // Gelecekteki `lastDay` "bugün" sayılır: seri korunur, `recordPlay`
-// sıfırlamaz ve `lastDay` bugüne çekilir, böylece ertesi gün +1 devam eder.
+// sıfırlamaz ve `lastDay` ASLA geriye taşınmaz (geçmiş/eşit günde artış yok).
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
@@ -51,11 +51,34 @@ void main() {
     expect(store.best, 3);
   });
 
-  test('saat düzelince seri ertesi gün +1 devam eder', () async {
-    final store = await storeWithStreakEndingOn20th();
-    await store.recordPlay(now: DateTime(2026, 6, 18, 9));
-    // lastDay bugüne (18) çekildi; ertesi gün (19) dünün devamıdır.
-    final next = await store.recordPlay(now: DateTime(2026, 6, 19, 9));
-    expect(next, 4);
+  test(
+    'geri alınmış günde lastDay geriye taşınmaz; saat düzelince devam eder',
+    () async {
+      final store = await storeWithStreakEndingOn20th();
+      await store.recordPlay(now: DateTime(2026, 6, 18, 9));
+      expect(store.lastDay, '2026-06-20', reason: 'lastDay asla geri gitmez');
+      // Hâlâ geçmiş/eşit günler: artış yok.
+      expect(await store.recordPlay(now: DateTime(2026, 6, 19, 9)), 3);
+      expect(await store.recordPlay(now: DateTime(2026, 6, 20, 9)), 3);
+      // lastDay'in ertesi günü dünün devamıdır.
+      expect(await store.recordPlay(now: DateTime(2026, 6, 21, 9)), 4);
+    },
+  );
+
+  test('24→23→24 aynı gerçek günde seri iki kez artmaz', () async {
+    final store = await StreakStore.load();
+    await store.recordPlay(now: DateTime(2026, 6, 22, 12));
+    await store.recordPlay(now: DateTime(2026, 6, 23, 12));
+    expect(await store.recordPlay(now: DateTime(2026, 6, 24, 12)), 3);
+    expect(await store.recordPlay(now: DateTime(2026, 6, 23, 18)), 3);
+    expect(await store.recordPlay(now: DateTime(2026, 6, 24, 18)), 3);
+  });
+
+  test('24→22→24 seriyi kırmaz', () async {
+    final store = await StreakStore.load();
+    await store.recordPlay(now: DateTime(2026, 6, 23, 12));
+    expect(await store.recordPlay(now: DateTime(2026, 6, 24, 12)), 2);
+    expect(await store.recordPlay(now: DateTime(2026, 6, 22, 12)), 2);
+    expect(await store.recordPlay(now: DateTime(2026, 6, 24, 20)), 2);
   });
 }

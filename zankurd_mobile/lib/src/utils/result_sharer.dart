@@ -34,29 +34,48 @@ class ResultSharer {
   /// Günü "ödül alındı" diye işaretler. YALNIZ sunucu ödülü gerçekten
   /// verdikten sonra çağrılır; önce işaretlemek, sunucu isteği düşerse
   /// oyuncuyu gün boyu ödülsüz bırakırdı.
-  static Future<void> markDailyShareRewardClaimed([DateTime? now]) async {
+  static Future<void> markDailyShareRewardClaimed([DateTime? now]) =>
+      _mark(_shareRewardDateKey, _dateKey(now ?? DateTime.now()));
+
+  static Future<void> _mark(String physicalKey, String day) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_shareRewardDateKey, _dateKey(now ?? DateTime.now()));
+    await prefs.setString(physicalKey, day);
   }
+
+  /// Devam eden işlemler: "fiziksel anahtar|gün" başına TEK uçuş.
+  static final Set<String> _inFlight = <String>{};
 
   /// Günlük paylaşım ödülünü tek adımda çözer: hak varsa [awardCoins]
   /// çağrılır, miktar > 0 ise gün işaretlenir ve `true` döner. Hata ya da 0
   /// (sunucu vermedi) günü YAKMAZ; sonraki paylaşımda yeniden denenir.
+  ///
+  /// Kullanıcıya özel anahtar ve gün işlem BAŞINDA sabitlenir: istek sürerken
+  /// hesap değişirse işaret yanlış kullanıcıya yazılmaz. Aynı anahtar+gün için
+  /// eşzamanlı ikinci çağrı sunucuya gitmeden `false` döner (çift ödül yok).
   static Future<bool> settleDailyShareReward({
     required Future<int> Function() awardCoins,
     DateTime? now,
   }) async {
-    if (!await canClaimDailyShareReward(now)) return false;
-    final int amount;
+    final physicalKey = _shareRewardDateKey;
+    final day = _dateKey(now ?? DateTime.now());
+    final flightKey = '$physicalKey|$day';
+    if (!_inFlight.add(flightKey)) return false;
     try {
-      amount = await awardCoins();
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'share_reward_award');
-      return false;
+      final prefs = await SharedPreferences.getInstance();
+      if (prefs.getString(physicalKey) == day) return false;
+      final int amount;
+      try {
+        amount = await awardCoins();
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'share_reward_award');
+        return false;
+      }
+      if (amount <= 0) return false;
+      await _mark(physicalKey, day);
+      return true;
+    } finally {
+      _inFlight.remove(flightKey);
     }
-    if (amount <= 0) return false;
-    await markDailyShareRewardClaimed(now);
-    return true;
   }
 
   static String _dateKey(DateTime date) =>

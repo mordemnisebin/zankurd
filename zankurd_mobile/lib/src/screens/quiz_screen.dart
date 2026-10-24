@@ -197,16 +197,26 @@ class _QuizScreenState extends State<QuizScreen>
   StreamSubscription<Map<String, dynamic>>? _realtimeSub;
 
   /// Sunucudaki engel listesi: engellediğim oyuncunun canlı tepkileri
-  /// çizilmez (C1). Okunamazsa boş kalır, tepkiler gelmeye devam eder.
+  /// çizilmez (C1). Liste okunana kadar ve okuma iki denemede de düşerse
+  /// uzak tepkiler BASTIRILIR (güvenli taraf).
   Set<String> _blockedPlayerIds = const <String>{};
+  bool _blockedReady = false;
 
   Future<void> _loadBlockedPlayers() async {
-    try {
-      final ids = await widget.repository.loadBlockedPlayerIds();
-      if (!mounted) return;
-      _blockedPlayerIds = ids;
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'quiz_load_blocked_players');
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        final ids = await widget.repository.loadBlockedPlayerIds();
+        if (!mounted) return;
+        _blockedPlayerIds = ids;
+        _blockedReady = true;
+        return;
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'quiz_load_blocked_players');
+        if (attempt == 0) {
+          await Future<void>.delayed(const Duration(seconds: 2));
+        }
+        if (!mounted) return;
+      }
     }
   }
 
@@ -584,7 +594,8 @@ class _QuizScreenState extends State<QuizScreen>
                 final text = payload['text'] as String?;
                 final sender = payload['sender_name'] as String? ?? senderName;
                 final blocked =
-                    senderId != null && _blockedPlayerIds.contains(senderId);
+                    !_blockedReady ||
+                    (senderId != null && _blockedPlayerIds.contains(senderId));
                 if (text != null && !isSelf && !blocked) {
                   _reactionController.triggerReaction(
                     text,
