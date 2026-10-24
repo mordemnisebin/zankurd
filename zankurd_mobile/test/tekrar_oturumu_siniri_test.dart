@@ -82,7 +82,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('$kReviewSessionCap soru tekrara hazır'), findsOneWidget);
+    expect(
+      find.text('Tekrar edilecek $kReviewSessionCap soru'),
+      findsOneWidget,
+    );
     await tester.tap(find.byKey(const ValueKey('todays-review-card')));
     await tester.pumpAndSettle();
 

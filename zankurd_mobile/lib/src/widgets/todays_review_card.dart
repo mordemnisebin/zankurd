@@ -205,7 +205,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   // Gövde 700; chevron üçüncül.
   //
   // 2026-09-29 doğallık (K7): sağda sayıyı ikinci kez yazan Zimrût rozeti
-  // vardı ("3 soru tekrara hazır" + "3"). Sayı yalnız cümlede kalır.
+  // vardı ("Tekrar edilecek 3 soru" + "3"). Sayı yalnız cümlede kalır.
   Widget _tile(SahneTokens t, IconData icon) => DecoratedBox(
     decoration: ShapeDecoration(color: t.learnTint, shape: SahneShape.m),
     child: SizedBox.square(

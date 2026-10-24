@@ -54,7 +54,7 @@ void main() {
     });
     await pump(tester);
     expect(find.byKey(const ValueKey('todays-review-card')), findsOneWidget);
-    expect(find.text('3 soru tekrara hazır'), findsOneWidget);
+    expect(find.text('Tekrar edilecek 3 soru'), findsOneWidget);
     final statusRow = find.byKey(const ValueKey('todays-review-status-row'));
     expect(statusRow, findsOneWidget);
     expect(
@@ -157,7 +157,7 @@ void main() {
     expect(data.flagsCollection.isEnabled, ui.Tristate.isTrue);
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
     expect(data.label, contains('Bugünkü tekrarlar'));
-    expect(data.label, contains('2 soru tekrara hazır'));
+    expect(data.label, contains('Tekrar edilecek 2 soru'));
     expect(data.label, contains('Hafızanı pekiştir'));
     semantics.dispose();
   });
@@ -192,7 +192,7 @@ void main() {
     expect(data.flagsCollection.isButton, isTrue);
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
     expect(data.label, contains('Dubarekirinên îro'));
-    expect(data.label, contains('1 pirs ji bo dubarekirinê amade ne'));
+    expect(data.label, contains('1 pirs ji bo dubarekirinê'));
     expect(data.label, contains('Bîra xwe xurt bike'));
     semantics.dispose();
   });
@@ -295,13 +295,13 @@ void main() {
       });
       await pump(tester);
       expect(
-        find.text('3 soru tekrara hazır'),
+        find.text('Tekrar edilecek 3 soru'),
         findsNothing,
         reason:
             'Rozet açılamayacak soruları sayarsa kullanıcıya olmayan bir iş '
             'vaat eder',
       );
-      expect(find.text('1 soru tekrara hazır'), findsOneWidget);
+      expect(find.text('Tekrar edilecek 1 soru'), findsOneWidget);
     });
 
     testWidgets('yalnız UUID varsa kart sahte rozet göstermez', (tester) async {
@@ -329,7 +329,7 @@ void main() {
       List<QuizQuestion>? started;
       await pump(tester, onStart: (q) => started = q);
 
-      expect(find.text('2 soru tekrara hazır'), findsOneWidget);
+      expect(find.text('Tekrar edilecek 2 soru'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('todays-review-card')));
       await tester.pumpAndSettle();
 

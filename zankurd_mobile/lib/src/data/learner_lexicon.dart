@@ -7839,10 +7839,22 @@ class LearnerLexicon {
     return source!;
   }
 
+  static Map<String, List<LearnerLexiconEntry>>? _bySource;
+
+  /// Kaynağın maddeleri; kaynağa göre dizin bir kez kurulur (kelime tekrarı
+  /// her soruda çağırır).
   static List<LearnerLexiconEntry> entriesForSource(String sourceId) {
-    return List.unmodifiable(
-      entries.where((entry) => entry.sourceId == sourceId),
-    );
+    final index = _bySource ??= () {
+      final map = <String, List<LearnerLexiconEntry>>{};
+      for (final entry in entries) {
+        map.putIfAbsent(entry.sourceId, () => []).add(entry);
+      }
+      return <String, List<LearnerLexiconEntry>>{
+        for (final item in map.entries)
+          item.key: List<LearnerLexiconEntry>.unmodifiable(item.value),
+      };
+    }();
+    return index[sourceId] ?? const <LearnerLexiconEntry>[];
   }
 
   /// Aramada KARŞILAŞTIRMA için katlanmış biçim: büyük/küçük harf, Türkçe ve
@@ -8020,6 +8032,90 @@ class LearnerLexicon {
     return List.unmodifiable([for (final item in ranked) item.$3]);
   }
 
+  static Map<String, LearnerLexiconEntry>? _byId;
+
+  /// Kimliğe göre madde (kayıtlı kelimeler kimlikle saklanır); yoksa `null`.
+  ///
+  /// Kelime listesi metni değil KİMLİĞİ saklar: sözlükte bir anlam
+  /// düzeltilirse kullanıcının listesi de düzelir; maddesi kaldırılmış bir
+  /// kimlik sessizce yok sayılır.
+  static LearnerLexiconEntry? byId(String id) {
+    final index = _byId ??= {for (final entry in entries) entry.id: entry};
+    return index[id];
+  }
+
+  static List<_MeaningItem>? _meaningIndex;
+
+  /// Tembel, BİR KEZ kurulan anlam dizini: katlanmış anlam, parçalar ve
+  /// sözcükler. Eskiden her tuş vuruşunda bütün sözlük bölünüp katlanıyordu.
+  static List<_MeaningItem> _buildMeaningIndex() {
+    return List.unmodifiable([
+      for (final entry in entries)
+        _MeaningItem(
+          entry: entry,
+          meaning: foldForSearch(entry.meaningTr),
+          parts: [
+            for (final part in entry.meaningTr.split(_meaningSplit))
+              if (part.trim().isNotEmpty) foldForSearch(part),
+          ],
+          words: foldForSearch(entry.meaningTr).split(' '),
+        ),
+    ]);
+  }
+
+  /// Arama sonuçlarının üst sınırı (boş olmayan sorgu); ekran binlerce
+  /// kartı bir anda kurmasın.
+  static const int meaningSearchLimit = 100;
+
+  /// Anlam ayraçları: `Günaydın / İyi günler`, `ön, yan (ji ber: ...)`.
+  static final RegExp _meaningSplit = RegExp(r'\s*[/,;()]\s*');
+
+  /// Türkçe -> Kurmancî arama: yalnız TÜRKÇE anlamlarda arar, eşleşen
+  /// Kurmancî maddeleri döndürür.
+  ///
+  /// ## Kusur / niçin ayrı
+  ///
+  /// [search] terim, biçim ve anlamı tek sıralamada karıştırır; anlam en
+  /// sona düşer. `kapı` yazan öğrenen `Derî`yi bulur ama önüne terim
+  /// içinde `kapi` geçen her şey girebilir. Ters yönde amaç açık: yalnız
+  /// anlamlar taranır.
+  ///
+  /// ## Kural
+  ///
+  /// Katlama [foldForSearch] ile aynıdır: büyük/küçük harf, Türkçe `İ/ı`,
+  /// `ş`, `ğ`, `ç`, `ö`, `ü` yok sayılır (`KAPI`, `kapi`, `Kapı` aynı).
+  /// Sıra: (0) anlamın bir PARÇASI (`/`, `,`, `;`, parantez ayraçlı) aramaya
+  /// eşit, (1) bir parça aramayla BAŞLIYOR, (2) bir SÖZCÜK aramayla
+  /// başlıyor (`Bu kapıdır` <- `kapı`), (3) anlamın herhangi bir yerinde
+  /// geçiyor. Eşit derecede olanlar sözlük sırasını korur.
+  static List<LearnerLexiconEntry> searchByMeaning(String query) {
+    final needle = foldForSearch(query);
+    if (needle.isEmpty) return entries;
+    final index = _meaningIndex ??= _buildMeaningIndex();
+    final ranked = <(int, int, LearnerLexiconEntry)>[];
+    for (final (position, item) in index.indexed) {
+      if (!item.meaning.contains(needle)) continue;
+      final int rank;
+      if (item.parts.contains(needle)) {
+        rank = 0;
+      } else if (item.parts.any((part) => part.startsWith(needle))) {
+        rank = 1;
+      } else if (item.words.any((word) => word.startsWith(needle))) {
+        rank = 2;
+      } else {
+        rank = 3;
+      }
+      ranked.add((rank, position, item.entry));
+    }
+    ranked.sort((a, b) {
+      final byRank = a.$1.compareTo(b.$1);
+      return byRank != 0 ? byRank : a.$2.compareTo(b.$2);
+    });
+    return List.unmodifiable([
+      for (final item in ranked.take(meaningSearchLimit)) item.$3,
+    ]);
+  }
+
   static int? _rank(
     String needle,
     String term,
@@ -8036,4 +8132,18 @@ class LearnerLexicon {
     if (meaning.contains(needle)) return 3;
     return null;
   }
+}
+
+class _MeaningItem {
+  const _MeaningItem({
+    required this.entry,
+    required this.meaning,
+    required this.parts,
+    required this.words,
+  });
+
+  final LearnerLexiconEntry entry;
+  final String meaning;
+  final List<String> parts;
+  final List<String> words;
 }

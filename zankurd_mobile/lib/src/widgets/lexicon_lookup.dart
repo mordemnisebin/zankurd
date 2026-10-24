@@ -6,6 +6,7 @@ import '../l10n/strings.dart';
 import '../screens/learner_lexicon_screen.dart';
 import '../utils/app_route.dart';
 import 'lexicon_speak_button.dart';
+import 'word_save_button.dart';
 import 'sahne/sahne.dart';
 
 /// Hangi sözcükler sözlük için dokunulabilir?
@@ -284,6 +285,7 @@ Future<void> showLexiconEntrySheet(
                 ),
               ),
               LexiconSpeakButton(text: entry.termKu),
+              WordSaveButton(entryId: entry.id),
             ],
           ),
           const SizedBox(height: SahneSpace.x1),

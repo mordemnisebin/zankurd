@@ -9,6 +9,7 @@ import '../data/learner_lexicon.dart';
 import '../data/lesson_completion_store.dart';
 import '../data/learning_lesson_aliases.dart';
 import '../data/sync_manager.dart';
+import '../data/word_list_store.dart';
 import '../data/placement_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -33,6 +34,7 @@ import '../widgets/story_catalog.dart';
 import '../widgets/todays_review_card.dart';
 import '../widgets/zk_back_button.dart';
 import 'learner_lexicon_screen.dart';
+import 'my_words_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -144,6 +146,8 @@ class _LearningScreenState extends State<LearningScreen> {
   PlacementLevel? _placementLevel;
   bool _placementPrompt = false;
   bool _lessonsLoading = false;
+  int _wordCount = 0;
+  int _wordDue = 0;
 
   @override
   void initState() {
@@ -151,6 +155,23 @@ class _LearningScreenState extends State<LearningScreen> {
     _loadLessons();
     _refreshCompleted();
     _loadPlacementLevel();
+    _loadWordList();
+  }
+
+  /// "Kelimelerim" satırının alt yazısı: vadesi gelen kelime varsa onu,
+  /// yoksa kayıtlı kelime sayısını gösterir; ikisi de yoksa alt yazı yok.
+  Future<void> _loadWordList() async {
+    try {
+      final store = await WordListStore.load();
+      if (mounted) {
+        setState(() {
+          _wordCount = store.count;
+          _wordDue = store.dueCount();
+        });
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'learning_word_list');
+    }
   }
 
   Future<void> _loadPlacementLevel() async {
@@ -338,6 +359,19 @@ class _LearningScreenState extends State<LearningScreen> {
                       title: context.t(K.lexiconTitle),
                       chevron: true,
                       onTap: _openLexicon,
+                    ),
+                    SahneListRow.icon(
+                      key: const ValueKey('learning-my-words-entry'),
+                      icon: AppIcons.bookmark,
+                      role: SahneRole.learn,
+                      title: context.t(K.wordsTitle),
+                      subtitle: _wordDue > 0
+                          ? context.t(K.wordsDueCount, {'count': '$_wordDue'})
+                          : _wordCount > 0
+                          ? context.t(K.wordsCount, {'count': '$_wordCount'})
+                          : null,
+                      chevron: true,
+                      onTap: _openMyWords,
                     ),
                     // Seviye testi: yalnızca ilk açılış kartında ve
                     // Ayarlar'ın derinindeydi; kart kapatılınca öğrenme
@@ -693,10 +727,17 @@ class _LearningScreenState extends State<LearningScreen> {
     return _currentLessons[index < 0 ? _currentLessons.length - 1 : index];
   }
 
-  Future<void> _openLexicon() {
-    return Navigator.of(
+  Future<void> _openLexicon() async {
+    await Navigator.of(
       context,
     ).push(AppRoute(page: const LearnerLexiconScreen()));
+    // Sözlükte kelime kaydedilmiş olabilir.
+    if (mounted) await _loadWordList();
+  }
+
+  Future<void> _openMyWords() async {
+    await Navigator.of(context).push(AppRoute(page: const MyWordsScreen()));
+    if (mounted) await _loadWordList();
   }
 
   Future<void> _openCategoryLessonDetail({

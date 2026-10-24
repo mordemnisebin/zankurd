@@ -428,6 +428,40 @@ class Tr {
       'ku': 'Bi peyveke din an bi wateya wê dîsa bigere.',
       'tr': 'Başka bir kelime veya anlamla tekrar ara.',
     },
+    // ── Kelimelerim, aralıklı kelime tekrarı, çift yönlü sözlük ──
+    K.wordsTitle: {'ku': 'Peyvên min', 'tr': 'Kelimelerim'},
+    K.wordsAdd: {'ku': 'Li lîsteya min zêde bike', 'tr': 'Listeme ekle'},
+    K.wordsRemove: {'ku': 'Ji lîsteya min rake', 'tr': 'Listemden çıkar'},
+    K.wordsCount: {'ku': '{count} peyv', 'tr': '{count} kelime'},
+    K.wordsEmptyTitle: {'ku': 'Hêj peyv tune', 'tr': 'Henüz kelime yok'},
+    K.wordsEmptyBody: {
+      'ku':
+          'Di ferhengê de peyvekê bi nîşanê tomar bike, ew ê li vir xuya bibe.',
+      'tr': 'Sözlükte bir kelimeyi yer işaretiyle kaydet, burada görünür.',
+    },
+    K.wordsReviewTitle: {'ku': 'Dubarekirina îro', 'tr': 'Bugünkü tekrar'},
+    K.wordsDueCount: {
+      'ku': '{count} peyv ji bo dubarekirinê',
+      'tr': 'Tekrar edilecek {count} kelime',
+    },
+    K.wordsDueNone: {
+      'ku': 'Îro peyvên dubarekirinê tune ne',
+      'tr': 'Bugün tekrar edilecek kelime yok',
+    },
+    K.wordsReviewPrompt: {
+      'ku': 'Wateya vê peyvê çi ye?',
+      'tr': 'Bu kelimenin anlamı nedir?',
+    },
+    K.wordsReviewScore: {
+      'ku': 'Rast: {correct}/{total}',
+      'tr': 'Doğru: {correct}/{total}',
+    },
+    K.wordsBox: {'ku': 'Qutiya {box}/5', 'tr': 'Kutu {box}/5'},
+    K.wordsDueBadge: {'ku': 'Amade', 'tr': 'Hazır'},
+    K.lexiconDirection: {'ku': 'Aliyê lêgerînê', 'tr': 'Arama yönü'},
+    K.lexiconDirKuTr: {'ku': 'Kurmancî > Tirkî', 'tr': 'Kurmancî > Türkçe'},
+    K.lexiconDirTrKu: {'ku': 'Tirkî > Kurmancî', 'tr': 'Türkçe > Kurmancî'},
+    K.lexiconSearchHintTr: {'ku': 'Bi Tirkî lê bigere…', 'tr': 'Türkçe ara…'},
     K.loadFailedShort: {'ku': 'Nehat barkirin', 'tr': 'Yüklenemedi'},
     K.lessonsLoadFail: {
       'ku': 'Ders nehatin barkirin',
@@ -2725,8 +2759,8 @@ class Tr {
     // ── Bugünkü tekrarlar kartı ───────────────────────────────────
     K.todaysReviews: {'ku': 'Dubarekirinên îro', 'tr': 'Bugünkü tekrarlar'},
     K.todaysReviewsCount: {
-      'ku': '{count} pirs ji bo dubarekirinê amade ne',
-      'tr': '{count} soru tekrara hazır',
+      'ku': '{count} pirs ji bo dubarekirinê',
+      'tr': 'Tekrar edilecek {count} soru',
     },
     K.strengthenMemory: {'ku': 'Bîra xwe xurt bike', 'tr': 'Hafızanı pekiştir'},
     K.reviewsDone: {'ku': 'Dubarekirin temam', 'tr': 'Tekrarlar tamam'},
@@ -3609,6 +3643,23 @@ class K {
   static const lexiconWordHint = 'learn.lexicon.wordHint';
   static const lexiconEmptyTitle = 'learn.lexicon.emptyTitle';
   static const lexiconEmptyBody = 'learn.lexicon.emptyBody';
+  static const wordsTitle = 'words.title';
+  static const wordsAdd = 'words.add';
+  static const wordsRemove = 'words.remove';
+  static const wordsCount = 'words.count';
+  static const wordsEmptyTitle = 'words.emptyTitle';
+  static const wordsEmptyBody = 'words.emptyBody';
+  static const wordsReviewTitle = 'words.review.title';
+  static const wordsDueCount = 'words.review.dueCount';
+  static const wordsDueNone = 'words.review.dueNone';
+  static const wordsReviewPrompt = 'words.review.prompt';
+  static const wordsReviewScore = 'words.review.score';
+  static const wordsBox = 'words.box';
+  static const wordsDueBadge = 'words.dueBadge';
+  static const lexiconDirection = 'learn.lexicon.direction';
+  static const lexiconDirKuTr = 'learn.lexicon.dirKuTr';
+  static const lexiconDirTrKu = 'learn.lexicon.dirTrKu';
+  static const lexiconSearchHintTr = 'learn.lexicon.searchHintTr';
   static const loadFailedShort = 'common.loadFailed.short';
   static const lessonsLoadFail = 'learn.lessons.loadFail';
   static const retryShort = 'common.retry.short';

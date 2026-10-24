@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, invalid_use_of_visible_for_testing_member
 import 'dart:async';
+import 'dart:math' as math;
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -58,6 +59,9 @@ import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
+import 'package:zankurd_mobile/src/screens/my_words_screen.dart';
+import 'package:zankurd_mobile/src/screens/word_drill_screen.dart';
+import 'package:zankurd_mobile/src/data/word_list_store.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
@@ -1144,6 +1148,56 @@ void main() {
       ku: true,
     );
     await _shoot(t, '311_home_quote_ku_dark');
+  }, tags: ['preview']);
+
+  // Kelimelerim ve kelime tekrarı (2026-10-24): kişisel liste, Leitner
+  // kutuları, bugünkü tekrar kartı ve tekrar sorusu.
+  Future<WordListStore> seedWords(WidgetTester t) async {
+    final store = await t.runAsync(() async {
+      WordListStore.resetInstance();
+      final store = await WordListStore.load();
+      final yesterday = DateTime.now().subtract(const Duration(days: 1));
+      for (final (i, id) in [
+        'rojbas',
+        'evarbas',
+        'q-deri',
+        'q-ronahi',
+      ].indexed) {
+        await store.add(id, now: yesterday.add(Duration(minutes: i)));
+      }
+      await store.recordReview('q-ronahi', correct: true);
+      return store;
+    });
+    return store!;
+  }
+
+  testWidgets('312 kelimelerim', (t) async {
+    final store = await seedWords(t);
+    await _pump(t, MyWordsScreen(store: store));
+    await _shoot(t, '312_my_words');
+  }, tags: ['preview']);
+
+  testWidgets('313 kelimelerim (Kurmancî, karanlık)', (t) async {
+    final store = await seedWords(t);
+    await _pump(t, MyWordsScreen(store: store), dark: true, ku: true);
+    await _shoot(t, '313_my_words_ku_dark');
+  }, tags: ['preview']);
+
+  testWidgets('314 kelime tekrarı sorusu', (t) async {
+    final store = await seedWords(t);
+    await _pump(t, WordDrillScreen(store: store, random: math.Random(4)));
+    await _shoot(t, '314_word_drill');
+  }, tags: ['preview']);
+
+  testWidgets('315 sözlük Türkçe > Kurmancî arama', (t) async {
+    await _pump(t, const LearnerLexiconScreen());
+    await t.tap(find.byKey(const ValueKey('lexicon-dir-tr-ku')));
+    await t.enterText(
+      find.byKey(const ValueKey('lexicon-search-field')),
+      'kapı',
+    );
+    await t.pumpAndSettle();
+    await _shoot(t, '315_lexicon_tr_ku');
   }, tags: ['preview']);
 
   testWidgets('27 oyun merkezi (Kurmancî)', (t) async {

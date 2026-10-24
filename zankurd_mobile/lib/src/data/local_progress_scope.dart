@@ -27,6 +27,7 @@ class LocalProgressScope {
     'zankurd.level.played',
     'zankurd.learning_goal.v1',
     'zankurd.storyMeta.v1',
+    'zankurd.wordList.v1',
   };
 
   static const prefixes = <String>[

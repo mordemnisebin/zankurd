@@ -18,6 +18,16 @@ import '../utils/error_reporter.dart';
 /// Doğru cevaplandığında kullanıcının zorluk derecelendirmesine (Zor, Orta, Kolay)
 /// göre aralık ve easeFactor formülle güncellenir.
 /// LocalDataStorage yoksa bellek-içi çalışır.
+///
+/// ## Tekrar kuyruğu (akıllı yanlış tekrarı)
+///
+/// Yanlış cevaplanan soru kuyruğa girer. Soru, FARKLI İKİ oturumda doğru
+/// cevaplanınca kuyruktan çıkar ([_graduationSessions]); yanlış cevap sayacı
+/// sıfırlar. Tek oturumda art arda doğru cevap sayılmaz: kullanıcı cevabı
+/// az önce gördüğü için "iki doğru" gerçek hatırlama kanıtı değildir.
+/// Oturum kimliğini çağıran verir (bir quiz/tekrar ekranı = bir oturum);
+/// verilmezse her çağrı ayrı oturum sayılır. Tekrar oturumu en çok
+/// gecikenden, eşitte en çok kaçırılandan başlar.
 class MistakeStore {
   MistakeStore._(this._storage, this._ids, this._metadata, this._history);
 
@@ -32,10 +42,8 @@ class MistakeStore {
   /// "uzun vadeli hatırlama" ufkudur.
   static const _maxIntervalDays = 365;
 
-  /// Madde "yanlışlarım" listesinden bu eşiklerden birine ulaşınca çıkar.
-  /// Eski değerler (5 tekrar / 30 gün) uzun kuyruğu tamamen kesiyordu.
-  static const _graduationRepetitions = 8;
-  static const _graduationIntervalDays = 180;
+  /// Soru kuyruktan bu kadar FARKLI oturumda doğru cevaplanınca çıkar.
+  static const _graduationSessions = 2;
 
   static MistakeStore? _instance;
   static Future<MistakeStore>? _loading;
@@ -142,18 +150,38 @@ class MistakeStore {
   double? easeFactorForTest(String id) =>
       (_metadata[id]?['easeFactor'] as num?)?.toDouble();
 
-  /// Tekrar zamanı gelmiş kimlikler, en çok gecikenden başlayarak.
+  @visibleForTesting
+  int? missCountForTest(String id) =>
+      (_metadata[id]?['missCount'] as num?)?.toInt();
+
+  /// Tekrar zamanı gelmiş kimlikler: önce EN ESKİ (tam gün olarak en çok
+  /// gecikmiş), eşitse EN ÇOK KAÇIRILAN, sonra gecikme anı.
   /// Üst verisi olmayan eski kayıtlar en eski sayılır (hemen tekrar).
+  ///
+  /// Gecikme tam güne yuvarlanır; yoksa aynı gün içindeki dakikalık
+  /// farklar "en çok kaçırılan" ölçütünü hiç devreye sokmazdı.
   List<String> get readyIdsMostOverdueFirst {
     final ready = _ids.where(isReadyForReview).toList();
+    final now = DateTime.now().millisecondsSinceEpoch;
+    const dayMs = 24 * 60 * 60 * 1000;
     int due(String id) => (_metadata[id]?['nextReview'] as int?) ?? 0;
+    int overdueDays(String id) => ((now - due(id)) / dayMs).floor();
+    int missed(String id) =>
+        (_metadata[id]?['missCount'] as num?)?.toInt() ?? 1;
     final order = {for (var i = 0; i < ready.length; i++) ready[i]: i};
     ready.sort((a, b) {
+      final byAge = overdueDays(b).compareTo(overdueDays(a));
+      if (byAge != 0) return byAge;
+      final byMissed = missed(b).compareTo(missed(a));
+      if (byMissed != 0) return byMissed;
       final byDue = due(a).compareTo(due(b));
       return byDue != 0 ? byDue : order[a]!.compareTo(order[b]!);
     });
     return ready;
   }
+
+  /// Kuyrukta bekleyen (henüz iki ayrı oturumda doğru yapılmamış) soru sayısı.
+  int get queueCount => _ids.length;
 
   int get readyCount => _ids.where((id) => isReadyForReview(id)).length;
   Set<String> get readyIds => _ids.where((id) => isReadyForReview(id)).toSet();
@@ -170,6 +198,8 @@ class MistakeStore {
     final resolvedCategory = category ?? existingCategory;
 
     // Incorrect answer: reset repetitions to 0, interval to 1 day, reduce easeFactor
+    final previous = _metadata[id];
+    final nowMs = DateTime.now().millisecondsSinceEpoch;
     _metadata[id] = {
       'nextReview': DateTime.now()
           .add(const Duration(days: 1))
@@ -177,6 +207,11 @@ class MistakeStore {
       'intervalDays': 1,
       'repetitions': 0,
       'easeFactor': math.max(1.3, currentEF - 0.2),
+      // Kuyruk çıkış sayacı sıfırlanır; kaçırma sayısı ve ilk kaçırma
+      // anı ise birikir (öncelik sırası bunlara bakar).
+      'correctSessions': 0,
+      'missCount': ((previous?['missCount'] as num?)?.toInt() ?? 0) + 1,
+      'firstMissAt': (previous?['firstMissAt'] as num?)?.toInt() ?? nowMs,
       // ignore: use_null_aware_elements
       if (resolvedCategory != null) 'category': resolvedCategory,
     };
@@ -184,8 +219,8 @@ class MistakeStore {
   }
 
   /// Normal quizler veya varsayılan çözümler için (Orta zorluk - q = 4).
-  Future<bool> markResolved(String id) async {
-    return markResolvedSM2(id, 4);
+  Future<bool> markResolved(String id, {String? sessionId}) async {
+    return markResolvedSM2(id, 4, sessionId: sessionId);
   }
 
   /// SM-2 formülüne göre dereceli çözüm.
@@ -193,7 +228,16 @@ class MistakeStore {
   /// 3 = Zor (Kürtçe: Zor, Türkçe: Zor)
   /// 4 = Orta (Kürtçe: Navîn, Türkçe: Orta)
   /// 5 = Kolay (Kürtçe: Hêsan, Türkçe: Kolay)
-  Future<bool> markResolvedSM2(String id, int score) async {
+  ///
+  /// [sessionId]: bu cevabın ait olduğu oturum (bir quiz ya da tekrar
+  /// ekranı). Kuyruktan çıkmak için doğru cevabın İKİ FARKLI oturumda
+  /// verilmesi gerekir; aynı oturumda tekrar gelen doğru cevap sayılmaz.
+  /// Verilmezse bu çağrı kendi başına bir oturum sayılır.
+  Future<bool> markResolvedSM2(
+    String id,
+    int score, {
+    String? sessionId,
+  }) async {
     await _recordAnswer(true);
     if (!_ids.contains(id)) {
       // Erken çıkış BURADA diske yazmadan yapılıyordu. `_recordAnswer`
@@ -257,6 +301,20 @@ class MistakeStore {
     // madde sistemden çıkıyor, uzun vadeli hatırlama hiç ölçülmüyordu.
     intervalDays = intervalDays.clamp(1, _maxIntervalDays);
 
+    // Ayrı oturum sayacı: yanlış (score < 3) sıfırlar; doğru cevap yalnız
+    // son doğru cevaptan FARKLI bir oturumdaysa sayılır.
+    final session =
+        sessionId ?? 'auto-${DateTime.now().microsecondsSinceEpoch}';
+    var correctSessions = (meta?['correctSessions'] as num?)?.toInt() ?? 0;
+    var lastCorrectSession = meta?['lastCorrectSession'] as String?;
+    if (score < 3) {
+      correctSessions = 0;
+      lastCorrectSession = null;
+    } else if (lastCorrectSession != session) {
+      correctSessions += 1;
+      lastCorrectSession = session;
+    }
+
     final nextMeta = <String, dynamic>{
       'nextReview': DateTime.now()
           .add(Duration(days: intervalDays))
@@ -264,13 +322,17 @@ class MistakeStore {
       'intervalDays': intervalDays,
       'repetitions': repetitions,
       'easeFactor': easeFactor,
+      'correctSessions': correctSessions,
+      // ignore: use_null_aware_elements
+      if (lastCorrectSession != null) 'lastCorrectSession': lastCorrectSession,
+      if (meta?['missCount'] != null) 'missCount': meta!['missCount'],
+      if (meta?['firstMissAt'] != null) 'firstMissAt': meta!['firstMissAt'],
       // ignore: use_null_aware_elements
       if (meta != null && meta.containsKey('category'))
         'category': meta['category'],
     };
 
-    if (repetitions >= _graduationRepetitions ||
-        intervalDays >= _graduationIntervalDays) {
+    if (correctSessions >= _graduationSessions) {
       // Madde "yanlışlarım" listesinden çıkar ama SRS geçmişi SİLİNMEZ:
       // aynı soru ileride tekrar yanlış cevaplanırsa easeFactor sıfırdan
       // (2.5) değil, kullanıcının gerçek geçmişinden devam eder.
