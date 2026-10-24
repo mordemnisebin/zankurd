@@ -251,7 +251,14 @@ class SahneModeTile extends StatefulWidget {
     this.loading = false,
     this.semanticLabel,
     this.deep = false,
+    this.compact = false,
   });
+
+  /// Sade, tek satırlık küçük kart: yalnız ikon + ad (+ rozet). Rol rengi
+  /// AYNEN korunur (sadeleştirme rengi öldürmesin); büyüklük ve filigran
+  /// gider. Seyrek kullanılan ikincil modlar içindir (Yarış sekmesinde altı
+  /// büyük renkli kart aynı anda dikkat istiyordu, 2026-10-24).
+  final bool compact;
 
   /// Rolün koyu tonu (şimdilik yalnız Boyax): aynı roldeki kartlar alt alta
   /// gelince birbirine karışmasın (kurul 2. tur, Claude Opus + ChatGPT).
@@ -269,6 +276,7 @@ class SahneModeTile extends StatefulWidget {
   final String? semanticLabel;
 
   static const double minHeight = 112;
+  static const double compactMinHeight = 56;
 
   @override
   State<SahneModeTile> createState() => _SahneModeTileState();
@@ -294,6 +302,7 @@ class _SahneModeTileState extends State<SahneModeTile> {
     final loading = widget.loading;
     final semanticLabel = widget.semanticLabel;
     final deep = widget.deep;
+    final compact = widget.compact;
     final t = SahneTokens.of(context);
     final gold = role == SahneRole.gold;
     final fill = switch (role) {
@@ -345,43 +354,47 @@ class _SahneModeTileState extends State<SahneModeTile> {
               color: fill,
               onTap: onTap,
               child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  minHeight: SahneModeTile.minHeight,
+                constraints: BoxConstraints(
+                  minHeight: compact
+                      ? SahneModeTile.compactMinHeight
+                      : SahneModeTile.minHeight,
                 ),
-                child: Stack(
-                  children: [
-                    PositionedDirectional(
-                      end: -10,
-                      bottom: -14,
-                      child: IgnorePointer(
-                        child: Transform.rotate(
-                          angle: -10 * math.pi / 180,
-                          child: Icon(icon, size: 76, color: watermark),
+                child: compact
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: SahneSpace.x3,
+                          vertical: SahneSpace.x2,
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(SahneSpace.x4),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(icon, size: 26, color: ink),
-                              const SizedBox(width: SahneSpace.x2),
-                              const Spacer(),
-                              if (loading)
-                                SizedBox.square(
-                                  dimension: 18,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: ink,
+                        child: Row(
+                          children: [
+                            Icon(icon, size: 22, color: ink),
+                            const SizedBox(width: SahneSpace.x2),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: SahneType.bodyStrong.copyWith(
+                                  color: ink,
+                                ),
+                              ),
+                            ),
+                            if (loading)
+                              SizedBox.square(
+                                dimension: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: ink,
+                                ),
+                              )
+                            else if (badge != null)
+                              Flexible(
+                                flex: 2,
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                    start: SahneSpace.x2,
                                   ),
-                                )
-                              else if (badge != null)
-                                Flexible(
-                                  flex: 6,
                                   child: DecoratedBox(
                                     decoration: ShapeDecoration(
                                       color: gold
@@ -405,29 +418,97 @@ class _SahneModeTileState extends State<SahneModeTile> {
                                     ),
                                   ),
                                 ),
-                            ],
-                          ),
-                          const SizedBox(height: SahneSpace.x3),
-                          Text(
-                            title,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: SahneType.bodyStrong.copyWith(color: ink),
-                          ),
-                          if (subtitle != null) ...[
-                            const SizedBox(height: 2),
-                            Text(
-                              subtitle,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: SahneType.caption.copyWith(color: soft),
-                            ),
+                              ),
                           ],
+                        ),
+                      )
+                    : Stack(
+                        children: [
+                          PositionedDirectional(
+                            end: -10,
+                            bottom: -14,
+                            child: IgnorePointer(
+                              child: Transform.rotate(
+                                angle: -10 * math.pi / 180,
+                                child: Icon(icon, size: 76, color: watermark),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(SahneSpace.x4),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(icon, size: 26, color: ink),
+                                    const SizedBox(width: SahneSpace.x2),
+                                    const Spacer(),
+                                    if (loading)
+                                      SizedBox.square(
+                                        dimension: 18,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: ink,
+                                        ),
+                                      )
+                                    else if (badge != null)
+                                      Flexible(
+                                        flex: 6,
+                                        child: DecoratedBox(
+                                          decoration: ShapeDecoration(
+                                            color: gold
+                                                ? t.zerChip
+                                                : SahneVivid.onFill,
+                                            shape: const StadiumBorder(),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: SahneSpace.x2,
+                                              vertical: 2,
+                                            ),
+                                            child: Text(
+                                              badge,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: SahneType.captionStrong
+                                                  .copyWith(
+                                                    color: gold
+                                                        ? t.goldTx
+                                                        : fill,
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                const SizedBox(height: SahneSpace.x3),
+                                Text(
+                                  title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: SahneType.bodyStrong.copyWith(
+                                    color: ink,
+                                  ),
+                                ),
+                                if (subtitle != null) ...[
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    subtitle,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: SahneType.caption.copyWith(
+                                      color: soft,
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
               ),
             ),
           ),

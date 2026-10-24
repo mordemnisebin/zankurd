@@ -606,6 +606,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           repository: widget.repository,
           refreshSignal: widget.refreshSignal,
           remote: remoteMatches,
+          // Yeni oyuncunun boş rekor kartı oyuna götürür; üstteki boş
+          // istatistik kartı zaten "Bugün başla" taşıyorsa tekrarlanmaz.
+          onStartPlay: _stats == null && _answeredTotal == 0
+              ? null
+              : _startQuickRace,
         ),
         ProfileMatchHistorySection(
           repository: widget.repository,

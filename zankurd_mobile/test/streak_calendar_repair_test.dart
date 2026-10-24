@@ -107,6 +107,45 @@ void main() {
       },
     );
 
+    test(
+      'yeni hesap: ilk görülen günden önceki günler boş, kaçırıldı değil',
+      () async {
+        final store = await _store();
+        // Hiç oynamadı; yalnız 22'sinde uygulamayı ilk kez gördü.
+        await store.markFirstSeen(now: DateTime(2026, 10, 22, 9));
+        expect(store.firstSeenDay, '2026-10-22');
+        expect(
+          store.markFor(DateTime(2026, 10, 21), now: today),
+          StreakCalendarMark.blank,
+          reason: 'kurulumdan önceki gün ✕ değil nötr',
+        );
+        expect(
+          store.markFor(DateTime(2026, 10, 1), now: today),
+          StreakCalendarMark.blank,
+        );
+        expect(
+          store.markFor(DateTime(2026, 10, 22), now: today),
+          StreakCalendarMark.missed,
+          reason: 'kurulumdan sonra oynanmayan gün gerçekten kaçırılmıştır',
+        );
+
+        // İlk gün yeniden yazılmaz ve yeniden yüklemede korunur.
+        await store.markFirstSeen(now: DateTime(2026, 10, 24));
+        StreakStore.resetInstance();
+        final reloaded = await StreakStore.load();
+        expect(reloaded.firstSeenDay, '2026-10-22');
+      },
+    );
+
+    test('ilk görülen gün yoksa en eski oynanan gün sınırdır', () async {
+      final store = await _store();
+      await store.recordPlay(now: DateTime(2026, 10, 23, 9));
+      expect(
+        store.markFor(DateTime(2026, 10, 22), now: today),
+        StreakCalendarMark.blank,
+      );
+    });
+
     test('eski kurulum: yalnız son gün varsa o gün takvimde görünür', () async {
       final store = await _store({
         'zankurd.streak.current': 4,

@@ -83,7 +83,11 @@ void main() {
     // Renk tek kanal olamaz: "kaçırdım" ile "henüz gelmedi" arasındaki fark
     // yalnız tonla anlatılırsa renk körü oyuncu için kaybolur.
     final icons = <IconData>{};
-    for (final state in StreakDayState.values) {
+    // `blank` bilerek işaretsizdir (başlangıçtan önceki nötr gün).
+    final marked = StreakDayState.values.where(
+      (s) => s != StreakDayState.blank,
+    );
+    for (final state in marked) {
       await tester.pumpWidget(_wrap(_panel(days: [state])));
       icons.add(
         tester.widgetList<Icon>(find.byType(Icon)).map((i) => i.icon!).last,
@@ -91,9 +95,36 @@ void main() {
     }
     expect(
       icons,
-      hasLength(StreakDayState.values.length),
+      hasLength(marked.length),
       reason: 'iki gün durumu aynı ikonu paylaşırsa renk tek kanal olur',
     );
+  });
+
+  testWidgets('başlangıçtan önceki gün işaret taşımaz, kaçırıldı denmez', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(_panel(days: const [StreakDayState.blank, StreakDayState.missed])),
+    );
+    final iconCount = tester.widgetList<Icon>(find.byType(Icon)).length;
+    await tester.pumpWidget(
+      _wrap(_panel(days: const [StreakDayState.missed, StreakDayState.missed])),
+    );
+    expect(
+      tester.widgetList<Icon>(find.byType(Icon)).length,
+      iconCount + 1,
+      reason: 'blank ikon çizmez; missed ✕ çizer',
+    );
+    await tester.pumpWidget(_wrap(_panel(days: const [StreakDayState.blank])));
+    final label = tester
+        .getSemantics(
+          find.byWidgetPredicate(
+            (w) =>
+                w is Semantics && (w.properties.label ?? '').startsWith('Pt'),
+          ),
+        )
+        .label;
+    expect(label, isNot(contains('Kaçırıldı')));
   });
 
   testWidgets('her freeze durumu kendi etiketini gösterir', (tester) async {

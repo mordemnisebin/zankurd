@@ -23,6 +23,7 @@ class StreakStore {
     this._lostValue,
     this._lostLastDay,
     this._offerSeenFor,
+    this._firstSeen,
   ) {
     // Takvim geçmişi bu sürümde eklendi: eski kurulumda yalnız son gün var.
     final last = _lastDay;
@@ -50,6 +51,8 @@ class StreakStore {
       LocalProgressScope.physical('zankurd.streak.lostValue');
   static String get _lostLastDayKey =>
       LocalProgressScope.physical('zankurd.streak.lostLastDay');
+  static String get _firstSeenKey =>
+      LocalProgressScope.physical('zankurd.streak.firstSeen');
   static String get _offerSeenKey =>
       LocalProgressScope.physical('zankurd.streak.repairOfferSeenFor');
 
@@ -107,6 +110,7 @@ class StreakStore {
       preferences?.getInt(_lostValueKey) ?? 0,
       preferences?.getString(_lostLastDayKey),
       preferences?.getString(_offerSeenKey),
+      preferences?.getString(_firstSeenKey),
     );
   }
 
@@ -128,6 +132,7 @@ class StreakStore {
   int _lostValue;
   String? _lostLastDay;
   String? _offerSeenFor;
+  String? _firstSeen;
 
   int get best => _best;
   String? get lastDay => _lastDay;
@@ -236,6 +241,7 @@ class StreakStore {
     final today = now ?? DateTime.now();
     final todayKey = _dayKey(today);
     final lastDay = _lastDay;
+    await markFirstSeen(now: today);
 
     if (lastDay == todayKey) {
       _playedDays.add(todayKey);
@@ -284,6 +290,30 @@ class StreakStore {
     return _playedDays.reduce((a, b) => a.compareTo(b) <= 0 ? a : b);
   }
 
+  /// Bu kullanıcının uygulamayı ilk gördüğü gün (`yyyy-MM-dd`); yoksa null.
+  String? get firstSeenDay => _firstSeen;
+
+  /// İlk görülen günü bir kez yazar (varsa dokunmaz).
+  ///
+  /// Yeni hesapta takvimin geçmiş günleri "kaçırıldı ✕" çiziliyordu: hiç
+  /// oynamamış kişiye ayın önceki günleri için başarısızlık işareti hem
+  /// yanlış hem moral bozucu. Oyun/yükleme günü bu kayıtla sınır olur.
+  Future<void> markFirstSeen({DateTime? now}) async {
+    if (_firstSeen != null) return;
+    _firstSeen = _dayKey(now ?? DateTime.now());
+    await _persist();
+  }
+
+  /// Takvimde "kaçırıldı" sayılabilecek ilk gün: ilk görülen gün ile en
+  /// eski oynanan günden eskisi; ikisi de yoksa null (hepsi boş).
+  String? get _missedFrom {
+    final a = _firstSeen;
+    final b = firstDay;
+    if (a == null) return b;
+    if (b == null) return a;
+    return a.compareTo(b) <= 0 ? a : b;
+  }
+
   /// Verilen günün takvim işareti. Saf okuma; saat [now] ile enjekte edilir.
   StreakCalendarMark markFor(DateTime day, {DateTime? now}) {
     final today = now ?? DateTime.now();
@@ -297,8 +327,8 @@ class StreakStore {
     if (key.compareTo(todayKey) > 0) return StreakCalendarMark.upcoming;
     if (_playedDays.contains(key)) return StreakCalendarMark.played;
     if (_frozenDays.contains(key)) return StreakCalendarMark.frozen;
-    final first = firstDay;
-    if (first != null && key.compareTo(first) > 0) {
+    final first = _missedFrom;
+    if (first != null && key.compareTo(first) >= 0) {
       return StreakCalendarMark.missed;
     }
     return StreakCalendarMark.blank;
@@ -416,6 +446,7 @@ class StreakStore {
     await _setOrRemove(preferences, _repairMonthKey, _repairMonth);
     await _setOrRemove(preferences, _lostLastDayKey, _lostLastDay);
     await _setOrRemove(preferences, _offerSeenKey, _offerSeenFor);
+    await _setOrRemove(preferences, _firstSeenKey, _firstSeen);
     await preferences.setInt(_lostValueKey, _lostValue);
   }
 
@@ -451,6 +482,7 @@ class StreakStore {
       _lostValueKey,
       _lostLastDayKey,
       _offerSeenKey,
+      _firstSeenKey,
     ]);
     _current = 0;
     _best = 0;
@@ -462,6 +494,7 @@ class StreakStore {
     _lostValue = 0;
     _lostLastDay = null;
     _offerSeenFor = null;
+    _firstSeen = null;
   }
 }
 

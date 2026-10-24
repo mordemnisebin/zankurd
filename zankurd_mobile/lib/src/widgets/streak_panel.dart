@@ -12,7 +12,10 @@ import 'sahne/sahne.dart';
 /// Renk tek kanal değildir: her durumun kendi şekli/ikonu da vardır, çünkü
 /// "kaçırdım" ile "henüz gelmedi" arasındaki fark yalnız tonla anlatılırsa
 /// renk körü oyuncu için kaybolur.
-enum StreakDayState { completed, today, missed, upcoming, frozen }
+///
+/// `blank`: uygulamayı ilk gördüğü günden ÖNCEKİ gün; "kaçırıldı" değildir,
+/// işaretsiz nötr kalır.
+enum StreakDayState { completed, today, missed, upcoming, frozen, blank }
 
 /// Gün durumunun ekran okuyucu anonsu için l10n anahtarı.
 ///
@@ -26,6 +29,7 @@ String streakDayStateKey(StreakDayState state) => switch (state) {
   StreakDayState.missed => K.streakDayStateMissed,
   StreakDayState.upcoming => K.streakDayStateUpcoming,
   StreakDayState.frozen => K.streakDayStateFrozen,
+  StreakDayState.blank => K.streakDayStateBlank,
 };
 
 /// Streak-freeze'in o andaki durumu.
@@ -225,7 +229,7 @@ class _DayMark extends StatelessWidget {
     // 2026-09-29 doğallık (K5): günler elmastı. Elmas yalnız soru
     // ilerlemesi ve ders sayacında kalır; gün, boyuna uygun pahlı kare
     // ([SahneShape.forSize], 32 → M).
-    final (Color bg, Color fg, IconData icon, Color? ring) = switch (state) {
+    final (Color bg, Color fg, IconData? icon, Color? ring) = switch (state) {
       StreakDayState.completed => (t.gold, t.onGold, AppIcons.check, null),
       StreakDayState.today => (
         t.goldTint,
@@ -238,6 +242,8 @@ class _DayMark extends StatelessWidget {
       // Dondurulmuş gün: seri korunmuş ama oynanmamış. Tamamlanmışla aynı
       // görünmemeli, kaçırılmışla da.
       StreakDayState.frozen => (t.s2, t.tx, AppIcons.shield, null),
+      // İşaretsiz: yalnız silik boş karo.
+      StreakDayState.blank => (t.s1, t.tx3, null, t.s3),
     };
 
     return Semantics(
@@ -259,7 +265,7 @@ class _DayMark extends StatelessWidget {
                           width: SahneRing.r2,
                         ),
                 ),
-                child: Icon(icon, size: 14, color: fg),
+                child: icon == null ? null : Icon(icon, size: 14, color: fg),
               ),
             ),
             const SizedBox(height: SahneSpace.x1),
