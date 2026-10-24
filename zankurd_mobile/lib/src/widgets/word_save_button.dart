@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/local_progress_scope.dart';
 import '../data/word_list_store.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
@@ -36,10 +37,20 @@ class _WordSaveButtonState extends State<WordSaveButton> {
     _attach();
   }
 
+  /// Düğme ilk kurulduğundaki mağaza kullanıcıya bağlıdır; hesap değişince
+  /// eski kullanıcının listesine bağlı KALMASIN diye her çizimde kapsam
+  /// anahtarı denetlenir ve değiştiyse mağaza yeniden yüklenir.
+  bool _staleScope() =>
+      widget.store == null &&
+      _store != null &&
+      _store!.physicalKey !=
+          LocalProgressScope.physical(WordListStore.logicalKey);
+
   Future<void> _attach() async {
     try {
       final store = widget.store ?? await WordListStore.load();
       if (!mounted) return;
+      _store?.removeListener(_changed);
       store.addListener(_changed);
       setState(() => _store = store);
     } catch (error, stack) {
@@ -59,6 +70,12 @@ class _WordSaveButtonState extends State<WordSaveButton> {
 
   @override
   Widget build(BuildContext context) {
+    if (_staleScope()) {
+      // Eski kullanıcının durumu bir kare bile gösterilmesin.
+      _store?.removeListener(_changed);
+      _store = null;
+      _attach();
+    }
     final store = _store;
     final saved = store?.contains(widget.entryId) ?? false;
     return SahneIconButton(

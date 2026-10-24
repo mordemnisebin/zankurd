@@ -42,6 +42,7 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
   int _index = 0;
   int _correct = 0;
   String? _picked;
+  bool _saveFailed = false;
 
   @override
   void initState() {
@@ -83,11 +84,31 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
       _picked = option;
       if (correct) _correct++;
     });
+    // Kayıt yazılamadıysa ilerleme DURUR: yoksa kullanıcı "tekrar ettim"
+    // sanır, kutu/vade diske geçmez ve kelime yarın yine aynı kutuda gelir.
+    var saved = true;
     try {
-      await _store?.recordReview(question.entry.id, correct: correct);
+      final store = _store;
+      if (store != null && store.contains(question.entry.id)) {
+        saved = await store.recordReview(question.entry.id, correct: correct);
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'word_review_record');
+      saved = false;
     }
+    if (mounted && !saved) setState(() => _saveFailed = true);
+  }
+
+  /// Bellekteki cevap zaten işlendi; yalnız diske yazmayı yeniden dener
+  /// (cevabı ikinci kez saymaz).
+  Future<void> _retrySave() async {
+    var saved = false;
+    try {
+      saved = await (_store?.persist() ?? Future.value(true));
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'word_review_retry');
+    }
+    if (mounted && saved) setState(() => _saveFailed = false);
   }
 
   void _next() {
@@ -215,13 +236,30 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
               ),
             ),
             const SizedBox(height: SahneSpace.x3),
-            SahneButton.primary(
-              key: const ValueKey('word-review-next'),
-              label: context.t(isLast ? K.finish : K.lessonRecallNext),
-              expand: true,
-              arrow: !isLast,
-              onPressed: _next,
-            ),
+            if (_saveFailed) ...[
+              Semantics(
+                liveRegion: true,
+                child: Text(
+                  context.t(K.saveFailed),
+                  key: const ValueKey('word-review-save-failed'),
+                  style: SahneType.bodyStrong.copyWith(color: t.errTx),
+                ),
+              ),
+              const SizedBox(height: SahneSpace.x2),
+              SahneButton.secondary(
+                key: const ValueKey('word-review-retry'),
+                label: context.t(K.retry),
+                expand: true,
+                onPressed: _retrySave,
+              ),
+            ] else
+              SahneButton.primary(
+                key: const ValueKey('word-review-next'),
+                label: context.t(isLast ? K.finish : K.lessonRecallNext),
+                expand: true,
+                arrow: !isLast,
+                onPressed: _next,
+              ),
           ],
         ],
       ),

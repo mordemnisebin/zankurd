@@ -31,76 +31,40 @@ void main() {
     expect(identical(stores[0], stores[2]), isTrue);
   });
 
-  // 2026-07-25 denetim bulgusu: eski mezuniyet eşiği (5 tekrar / 30 gün)
-  // maddeyi 3-4 doğru cevaptan sonra sistemden tamamen siliyordu. SM-2'nin
-  // değeri aylar süren aralıklardadır; eşikler 8 tekrar / 180 güne çekildi
-  // ve mezun olan maddenin SRS geçmişi (easeFactor) korunuyor.
-  // (2026-10-24: bu üç test AYNI oturumda cevap verir; iki ayrı oturum kuralı
-  // aşağıdaki 'tekrar kuyruğu' grubunda sınanır, burada yalnız SM-2 aralık
-  // ve eşik güvencesi kalır.)
-  test('SM-2 Kolay (q = 5) aralığı büyütür ama maddeyi erken silmez', () async {
+  // 2026-07-25 denetim bulgusu: eski mezuniyet eşiği maddeyi 3-4 doğru
+  // cevaptan sonra sistemden tamamen siliyordu. 2026-10-24: mezuniyet YALNIZ
+  // ayrı oturum sayısına bağlıdır (iki oturum); eski tekrar sayısı / aralık
+  // eşikleri kalktı, çünkü aynı oturumda yeterince doğru cevap soruyu
+  // gerçek hatırlama kanıtı olmadan çıkarıyordu. SM-2 yalnız ZAMANLAR.
+  test('aynı oturumda kaç doğru olursa olsun madde kuyruktan çıkmaz', () async {
     final store = await MistakeStore.load();
-
     await store.markMistake('q1');
-    expect(store.count, 1);
-
-    // Reps 1 → 1 gün, Reps 2 → 6 gün, Reps 3 → ~15 gün, Reps 4 → ~39 gün.
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 12; i++) {
       await store.markResolvedSM2('q1', 5, sessionId: 'tek');
-      expect(
-        store.count,
-        1,
-        reason: '${i + 1}. tekrardan sonra madde silinmemeli',
-      );
+      expect(store.count, 1, reason: '${i + 1}. doğru, hep aynı oturum');
     }
-
-    // Reps 5 → ~105 gün: hâlâ 180 günün altında.
-    await store.markResolvedSM2('q1', 5, sessionId: 'tek');
-    expect(store.count, 1);
-
-    // Reps 6 → aralık 180 günü aşar, madde "yanlışlarım" listesinden çıkar.
-    await store.markResolvedSM2('q1', 5, sessionId: 'tek');
+    for (var i = 0; i < 12; i++) {
+      await store.markResolvedSM2('q1', 3, sessionId: 'tek');
+      expect(store.count, 1, reason: 'Zor ${i + 1}, hep aynı oturum');
+    }
+    await store.markResolvedSM2('q1', 3, sessionId: 'ikinci');
     expect(store.count, 0);
   });
-
-  test(
-    'SM-2 Zor (q = 3) daha yavaş ilerler ve 8 tekrarda mezun olur',
-    () async {
-      final store = await MistakeStore.load();
-
-      await store.markMistake('q1');
-
-      // Zor cevaplarda easeFactor düşer; aralık 180 güne ulaşmadan önce
-      // tekrar sayısı eşiği (8) devreye girer.
-      for (var i = 0; i < 7; i++) {
-        await store.markResolvedSM2('q1', 3, sessionId: 'tek');
-        expect(
-          store.count,
-          1,
-          reason: '${i + 1}. tekrardan sonra madde silinmemeli',
-        );
-      }
-
-      await store.markResolvedSM2('q1', 3, sessionId: 'tek');
-      expect(store.count, 0);
-    },
-  );
 
   test('mezun olan maddenin SRS geçmişi silinmez', () async {
     final store = await MistakeStore.load();
 
-    await store.markMistake('q1');
-    for (var i = 0; i < 8; i++) {
-      await store.markResolvedSM2('q1', 5, sessionId: 'tek');
-    }
+    await store.markMistake('q1'); // easeFactor 2.3
+    await store.markMistake('q1'); // 2.1
+    await store.markResolvedSM2('q1', 5, sessionId: 'a');
+    await store.markResolvedSM2('q1', 5, sessionId: 'b');
     expect(store.count, 0);
 
-    // Aynı soru ileride tekrar yanlış cevaplanırsa easeFactor 2.5'ten
-    // değil, kullanıcının gerçek geçmişinden devam etmeli. Geçmiş
-    // silinseydi easeFactor 2.5 - 0.2 = 2.3 olurdu.
+    // Aynı soru ileride tekrar yanlış cevaplanırsa easeFactor 2.5'ten değil,
+    // kullanıcının gerçek geçmişinden devam etmeli (geçmiş silinseydi 2.3).
     await store.markMistake('q1');
     expect(store.count, 1);
-    expect(store.easeFactorForTest('q1'), greaterThan(2.3));
+    expect(store.easeFactorForTest('q1'), closeTo(2.1, 0.001));
   });
 
   test('daily history counts correct and wrong answers', () async {

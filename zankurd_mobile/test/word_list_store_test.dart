@@ -74,10 +74,7 @@ void main() {
       final word = restored.wordFor('rojbas')!;
       expect(word.box, 2);
       expect(word.reviews, 1);
-      expect(
-        word.dueAtMs,
-        t0.add(const Duration(days: 2)).millisecondsSinceEpoch,
-      );
+      expect(word.dueAtMs, addCalendarDays(t0, 2).millisecondsSinceEpoch);
     });
 
     test(
@@ -157,9 +154,9 @@ void main() {
           expect(word.box, box);
           expect(
             word.dueAtMs,
-            at.add(Duration(days: days)).millisecondsSinceEpoch,
+            addCalendarDays(at, days).millisecondsSinceEpoch,
           );
-          at = at.add(Duration(days: days));
+          at = addCalendarDays(at, days);
         }
       },
     );
@@ -175,10 +172,7 @@ void main() {
       await store.recordReview('rojbas', correct: false, now: t0);
       final word = store.wordFor('rojbas')!;
       expect(word.box, 1);
-      expect(
-        word.dueAtMs,
-        t0.add(const Duration(days: 1)).millisecondsSinceEpoch,
-      );
+      expect(word.dueAtMs, addCalendarDays(t0, 1).millisecondsSinceEpoch);
     });
 
     test('listede olmayan kelime için tekrar kaydı yok sayılır', () async {
@@ -198,8 +192,8 @@ void main() {
       await store.recordReview('rojbas', correct: true, now: t0); // +2 gün
       await store.recordReview('evarbas', correct: false, now: t0); // +1 gün
       expect(store.dueCount(now: t0), 1);
-      expect(store.dueCount(now: t0.add(const Duration(days: 1))), 2);
-      expect(store.dueCount(now: t0.add(const Duration(days: 2))), 3);
+      expect(store.dueCount(now: addCalendarDays(t0, 1)), 2);
+      expect(store.dueCount(now: addCalendarDays(t0, 2)), 3);
     });
 
     test('oturum en çok 10 kelime, en çok geciken başta', () async {
@@ -208,11 +202,11 @@ void main() {
       for (var i = 0; i < ids.length; i++) {
         await store.add(ids[i], now: t0.add(Duration(minutes: i)));
       }
-      final session = store.sessionWords(now: t0.add(const Duration(days: 1)));
+      final session = store.sessionWords(now: addCalendarDays(t0, 1));
       expect(WordListStore.sessionCap, 10);
       expect(session.length, 10);
       expect(session.first.entryId, ids.first);
-      expect(store.dueCount(now: t0.add(const Duration(days: 1))), 14);
+      expect(store.dueCount(now: addCalendarDays(t0, 1)), 14);
     });
   });
 
@@ -241,4 +235,60 @@ void main() {
       }
     });
   });
+
+  group('yazma sırası ve takvim günü (dış inceleme 2026-10-24)', () {
+    // ## Kusur
+    //
+    // `_persist()` beklenmiyordu ve yazmalar örtüşebiliyordu: yavaş bir ilk
+    // yazma (yalnız "a" var) ikincisinden SONRA bitince diskte eski JSON
+    // kalıyor, kullanıcı "b"yi ve ilerlemesini kaybediyordu.
+    //
+    // ## Niçin sessiz kalırdı
+    //
+    // Bellekteki durum doğrudur; kayıp yalnız uygulama kapanıp açılınca
+    // görünür.
+    //
+    // ## Kural
+    //
+    // Yazmalar tek kuyrukta sırayla yapılır; son durum her zaman diskte kalır.
+    test('örtüşen yazmalar sıraya girer, son durum diskte kalır', () async {
+      final slow = _SlowFirstWriteStorage();
+      final store = await WordListStore.load(storage: slow);
+      await Future.wait([
+        store.add('rojbas', now: t0),
+        store.add('evarbas', now: t0),
+        store.recordReview('rojbas', correct: true, now: t0),
+      ]);
+      WordListStore.resetInstance();
+      final restored = await WordListStore.load(storage: slow);
+      expect(restored.contains('rojbas'), isTrue);
+      expect(restored.contains('evarbas'), isTrue);
+      expect(restored.wordFor('rojbas')!.box, 2);
+    });
+
+    test('vade yerel TAKVİM gününe göre hesaplanır (24 saat değil)', () async {
+      final store = await WordListStore.load(storage: storage);
+      // Avrupa'da 2026-03-29 yaz saatine geçiş günü; TZ=Europe/Berlin ile
+      // koşunca 24 saatlik toplama duvar saatini bir saat kaydırır.
+      final at = DateTime(2026, 3, 28, 9);
+      await store.add('rojbas', now: at);
+      await store.recordReview('rojbas', correct: true, now: at); // 2 gün
+      expect(
+        store.wordFor('rojbas')!.dueAtMs,
+        DateTime(2026, 3, 30, 9).millisecondsSinceEpoch,
+      );
+    });
+  });
+}
+
+/// İlk yazma yavaş, sonrakiler hızlı: sıraya alınmazsa ilk yazma en son biter.
+class _SlowFirstWriteStorage extends InMemoryDataStorage {
+  var _calls = 0;
+
+  @override
+  Future<bool> setString(String key, String value) async {
+    final slow = _calls++ == 0;
+    if (slow) await Future<void>.delayed(const Duration(milliseconds: 60));
+    return super.setString(key, value);
+  }
 }

@@ -33,6 +33,20 @@ class LeitnerSchedule {
   static int intervalForBox(int box) => intervalDays[clampBox(box) - 1];
 }
 
+/// [from]a yerel TAKVİM günü ekler, duvar saati aynı kalır.
+///
+/// `Duration(days: n)` 24 saat ekler; yaz saati geçişini aşan bir aralıkta
+/// vade bir saat kayar ve kelime "yarın sabah" yerine bir saat erken/geç
+/// gelir. `DateTime(y, m, d + n, h, min)` gün taşmasını kendisi çözer.
+DateTime addCalendarDays(DateTime from, int days) => DateTime(
+  from.year,
+  from.month,
+  from.day + days,
+  from.hour,
+  from.minute,
+  from.second,
+);
+
 /// Kullanıcının listesindeki tek kelime ve Leitner durumu.
 @immutable
 class SavedWord {
@@ -166,7 +180,6 @@ class WordListStore extends ChangeNotifier {
   final Map<String, SavedWord> _words;
 
   /// Bu örneğin yazdığı fiziksel anahtar (kullanıcı kapsamını gösterir).
-  @visibleForTesting
   String get physicalKey => _key;
 
   bool contains(String entryId) => _words.containsKey(entryId);
@@ -251,9 +264,10 @@ class WordListStore extends ChangeNotifier {
     final box = LeitnerSchedule.boxAfter(word.box, correct: correct);
     _words[entryId] = word.copyWith(
       box: box,
-      dueAtMs: at
-          .add(Duration(days: LeitnerSchedule.intervalForBox(box)))
-          .millisecondsSinceEpoch,
+      dueAtMs: addCalendarDays(
+        at,
+        LeitnerSchedule.intervalForBox(box),
+      ).millisecondsSinceEpoch,
       reviews: word.reviews + 1,
     );
     notifyListeners();
@@ -266,7 +280,23 @@ class WordListStore extends ChangeNotifier {
     return _persist();
   }
 
-  Future<bool> _persist() async {
+  /// Yazma kuyruğunun SON halkası. Her yazma öncekinin bitmesini bekler:
+  /// örtüşen yazmalarda yavaş olan ilk yazma en son bitip diskte eski JSON'u
+  /// bırakabiliyordu (kelime/ilerleme kaybı). JSON yazma anında, o ana dek
+  /// birikmiş EN GÜNCEL durumdan üretilir.
+  Future<bool> _writeChain = Future<bool>.value(true);
+
+  /// Bekleyen yazmaların hepsi bitince tamamlanır; yazma başarısızsa tekrar
+  /// denemek için de çağrılır (tekrar oturumunun "yeniden dene" düğmesi).
+  Future<bool> persist() => _persist();
+
+  Future<bool> _persist() {
+    final next = _writeChain.then((_) => _write());
+    _writeChain = next;
+    return next;
+  }
+
+  Future<bool> _write() async {
     final storage = _storage;
     if (storage == null) return false;
     try {

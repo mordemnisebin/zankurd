@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+// (kapsam testi: aynı widget örneği yeniden çizilmesin diye const değil)
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ import 'package:zankurd_mobile/src/data/word_list_store.dart';
 import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
 import 'package:zankurd_mobile/src/screens/my_words_screen.dart';
 import 'package:zankurd_mobile/src/screens/word_drill_screen.dart';
+import 'package:zankurd_mobile/src/widgets/word_save_button.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -160,6 +163,27 @@ void main() {
     });
   });
 
+  group('kelime listesine ekle: kullanıcı değişimi', () {
+    testWidgets('kapsam değişince düğme yeni kullanıcının listesini gösterir', (
+      tester,
+    ) async {
+      LocalProgressScope.bind('kullanici-1');
+      final first = await WordListStore.load();
+      await first.add('rojbas');
+      await pumpAt(tester, WordSaveButton(entryId: 'rojbas'));
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(find.bySemanticsLabel('Listemden çıkar'), findsOneWidget);
+
+      LocalProgressScope.bind('kullanici-2');
+      await tester.pumpWidget(
+        testShell(child: WordSaveButton(entryId: 'rojbas')),
+      );
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(find.bySemanticsLabel('Listeme ekle'), findsOneWidget);
+    });
+  });
+
   group('Kelimelerim', () {
     testWidgets('boş liste boş durum gösterir', (tester) async {
       final store = await WordListStore.load(storage: InMemoryDataStorage());
@@ -287,6 +311,46 @@ void main() {
       expect(store.dueCount(), 0);
     });
 
+    testWidgets(
+      'kayıt yazılamazsa ilerleme durur, yeniden dene devam ettirir',
+      (tester) async {
+        final flaky = _FlakyStorage();
+        final store = await WordListStore.load(storage: flaky);
+        await store.add(
+          'rojbas',
+          now: DateTime.now().subtract(const Duration(days: 1)),
+        );
+        flaky.fail = true;
+        await pumpAt(
+          tester,
+          WordDrillScreen(store: store, random: math.Random(3)),
+        );
+        await tester.tap(
+          find.text(LearnerLexicon.byId('rojbas')!.meaningTr).first,
+        );
+        await tester.pump();
+        await tester.pump();
+        expect(
+          find.byKey(const ValueKey('word-review-save-failed')),
+          findsOneWidget,
+        );
+        expect(find.byKey(const ValueKey('word-review-next')), findsNothing);
+
+        flaky.fail = false;
+        await tester.tap(find.byKey(const ValueKey('word-review-retry')));
+        await tester.pump();
+        await tester.pump();
+        expect(
+          find.byKey(const ValueKey('word-review-save-failed')),
+          findsNothing,
+        );
+        expect(find.byKey(const ValueKey('word-review-next')), findsOneWidget);
+        WordListStore.resetInstance();
+        final restored = await WordListStore.load(storage: flaky);
+        expect(restored.wordFor('rojbas')!.box, 2);
+      },
+    );
+
     testWidgets('cevaptan sonra şıklar kilitlenir', (tester) async {
       final store = await seededStore(['rojbas']);
       await pumpAt(
@@ -353,3 +417,13 @@ void main() {
 
 /// Test içi dil seçici (iki arayüz dili).
 enum LanguageProviderKind { tr, ku }
+
+class _FlakyStorage extends InMemoryDataStorage {
+  bool fail = false;
+
+  @override
+  Future<bool> setString(String key, String value) async {
+    if (fail) return false;
+    return super.setString(key, value);
+  }
+}

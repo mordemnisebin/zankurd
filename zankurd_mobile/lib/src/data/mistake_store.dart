@@ -42,13 +42,8 @@ class MistakeStore {
   /// "uzun vadeli hatırlama" ufkudur.
   static const _maxIntervalDays = 365;
 
-  /// Madde "yanlışlarım" listesinden bu eşiklerden birine ulaşınca çıkar.
-  /// Eski değerler (5 tekrar / 30 gün) uzun kuyruğu tamamen kesiyordu.
-  static const _graduationRepetitions = 8;
-
   /// Soru kuyruktan bu kadar FARKLI oturumda doğru cevaplanınca çıkar.
   static const _graduationSessions = 2;
-  static const _graduationIntervalDays = 180;
 
   static MistakeStore? _instance;
   static Future<MistakeStore>? _loading;
@@ -337,9 +332,7 @@ class MistakeStore {
         'category': meta['category'],
     };
 
-    if (correctSessions >= _graduationSessions ||
-        repetitions >= _graduationRepetitions ||
-        intervalDays >= _graduationIntervalDays) {
+    if (correctSessions >= _graduationSessions) {
       // Madde "yanlışlarım" listesinden çıkar ama SRS geçmişi SİLİNMEZ:
       // aynı soru ileride tekrar yanlış cevaplanırsa easeFactor sıfırdan
       // (2.5) değil, kullanıcının gerçek geçmişinden devam eder.

@@ -7839,10 +7839,22 @@ class LearnerLexicon {
     return source!;
   }
 
+  static Map<String, List<LearnerLexiconEntry>>? _bySource;
+
+  /// Kaynağın maddeleri; kaynağa göre dizin bir kez kurulur (kelime tekrarı
+  /// her soruda çağırır).
   static List<LearnerLexiconEntry> entriesForSource(String sourceId) {
-    return List.unmodifiable(
-      entries.where((entry) => entry.sourceId == sourceId),
-    );
+    final index = _bySource ??= () {
+      final map = <String, List<LearnerLexiconEntry>>{};
+      for (final entry in entries) {
+        map.putIfAbsent(entry.sourceId, () => []).add(entry);
+      }
+      return <String, List<LearnerLexiconEntry>>{
+        for (final item in map.entries)
+          item.key: List<LearnerLexiconEntry>.unmodifiable(item.value),
+      };
+    }();
+    return index[sourceId] ?? const <LearnerLexiconEntry>[];
   }
 
   /// Aramada KARŞILAŞTIRMA için katlanmış biçim: büyük/küçük harf, Türkçe ve
@@ -8032,10 +8044,28 @@ class LearnerLexicon {
     return index[id];
   }
 
-  static List<
-    ({LearnerLexiconEntry entry, String meaning, List<String> parts})
-  >?
-  _meaningIndex;
+  static List<_MeaningItem>? _meaningIndex;
+
+  /// Tembel, BİR KEZ kurulan anlam dizini: katlanmış anlam, parçalar ve
+  /// sözcükler. Eskiden her tuş vuruşunda bütün sözlük bölünüp katlanıyordu.
+  static List<_MeaningItem> _buildMeaningIndex() {
+    return List.unmodifiable([
+      for (final entry in entries)
+        _MeaningItem(
+          entry: entry,
+          meaning: foldForSearch(entry.meaningTr),
+          parts: [
+            for (final part in entry.meaningTr.split(_meaningSplit))
+              if (part.trim().isNotEmpty) foldForSearch(part),
+          ],
+          words: foldForSearch(entry.meaningTr).split(' '),
+        ),
+    ]);
+  }
+
+  /// Arama sonuçlarının üst sınırı (boş olmayan sorgu); ekran binlerce
+  /// kartı bir anda kurmasın.
+  static const int meaningSearchLimit = 100;
 
   /// Anlam ayraçları: `Günaydın / İyi günler`, `ön, yan (ji ber: ...)`.
   static final RegExp _meaningSplit = RegExp(r'\s*[/,;()]\s*');
@@ -8061,38 +8091,29 @@ class LearnerLexicon {
   static List<LearnerLexiconEntry> searchByMeaning(String query) {
     final needle = foldForSearch(query);
     if (needle.isEmpty) return entries;
-    final index = _meaningIndex ??= List.unmodifiable([
-      for (final entry in entries)
-        (
-          entry: entry,
-          meaning: foldForSearch(entry.meaningTr),
-          parts: [
-            for (final part in entry.meaningTr.split(_meaningSplit))
-              if (part.trim().isNotEmpty) foldForSearch(part),
-          ],
-        ),
-    ]);
+    final index = _meaningIndex ??= _buildMeaningIndex();
     final ranked = <(int, int, LearnerLexiconEntry)>[];
     for (final (position, item) in index.indexed) {
-      int? rank;
+      if (!item.meaning.contains(needle)) continue;
+      final int rank;
       if (item.parts.contains(needle)) {
         rank = 0;
       } else if (item.parts.any((part) => part.startsWith(needle))) {
         rank = 1;
-      } else if (item.meaning
-          .split(' ')
-          .any((word) => word.startsWith(needle))) {
+      } else if (item.words.any((word) => word.startsWith(needle))) {
         rank = 2;
-      } else if (item.meaning.contains(needle)) {
+      } else {
         rank = 3;
       }
-      if (rank != null) ranked.add((rank, position, item.entry));
+      ranked.add((rank, position, item.entry));
     }
     ranked.sort((a, b) {
       final byRank = a.$1.compareTo(b.$1);
       return byRank != 0 ? byRank : a.$2.compareTo(b.$2);
     });
-    return List.unmodifiable([for (final item in ranked) item.$3]);
+    return List.unmodifiable([
+      for (final item in ranked.take(meaningSearchLimit)) item.$3,
+    ]);
   }
 
   static int? _rank(
@@ -8111,4 +8132,18 @@ class LearnerLexicon {
     if (meaning.contains(needle)) return 3;
     return null;
   }
+}
+
+class _MeaningItem {
+  const _MeaningItem({
+    required this.entry,
+    required this.meaning,
+    required this.parts,
+    required this.words,
+  });
+
+  final LearnerLexiconEntry entry;
+  final String meaning;
+  final List<String> parts;
+  final List<String> words;
 }

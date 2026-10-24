@@ -36,15 +36,29 @@ class WordReviewQuestion {
     final taken = <String>{..._parts(entry.meaningTr)};
     final distractors = <String>[];
 
-    void pick(Iterable<LearnerLexiconEntry> pool) {
-      final shuffled = pool.toList()..shuffle(rng);
-      for (final candidate in shuffled) {
-        if (distractors.length >= optionCount - 1) return;
-        if (candidate.id == entry.id) continue;
+    // Havuzu kopyalayıp karıştırmak her soruda binlerce madde demekti; yalnız
+    // gereken çeldirici kadar RASTGELE örnek alınır: rastgele indeksler
+    // denenir, yetmezse (küçük/çarpışmalı havuz) rastgele bir başlangıçtan
+    // tek turluk doğrusal tarama yapılır.
+    void pick(List<LearnerLexiconEntry> pool) {
+      if (pool.isEmpty) return;
+      bool tryAdd(LearnerLexiconEntry candidate) {
+        if (candidate.id == entry.id) return false;
         final parts = _parts(candidate.meaningTr);
-        if (parts.isEmpty || parts.any(taken.contains)) continue;
+        if (parts.isEmpty || parts.any(taken.contains)) return false;
         taken.addAll(parts);
         distractors.add(candidate.meaningTr);
+        return true;
+      }
+
+      final need = optionCount - 1;
+      for (var i = 0; i < need * 8 && distractors.length < need; i++) {
+        tryAdd(pool[rng.nextInt(pool.length)]);
+      }
+      if (distractors.length >= need) return;
+      final start = rng.nextInt(pool.length);
+      for (var i = 0; i < pool.length && distractors.length < need; i++) {
+        tryAdd(pool[(start + i) % pool.length]);
       }
     }
 
