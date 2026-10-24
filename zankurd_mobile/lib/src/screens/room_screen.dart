@@ -338,7 +338,10 @@ class _RoomScreenState extends State<RoomScreen> {
                 // Engellediğim oyuncunun tepkisi çizilmez.
                 final blocked =
                     !_blockedReady ||
-                    (senderId != null && _blockedPlayerIds.contains(senderId));
+                    // Kimliği olmayan yayın kimin olduğu doğrulanamadığı için
+                    // engel süzgecinden kaçamaz: bastırılır.
+                    senderId == null ||
+                    _blockedPlayerIds.contains(senderId);
                 if (text != null && senderId != _currentUserId && !blocked) {
                   _reactionController.triggerReaction(
                     text,

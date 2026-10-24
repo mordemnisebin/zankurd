@@ -687,7 +687,10 @@ class _QuizScreenState extends State<QuizScreen>
                 final sender = payload['sender_name'] as String? ?? senderName;
                 final blocked =
                     !_blockedReady ||
-                    (senderId != null && _blockedPlayerIds.contains(senderId));
+                    // Kimliği olmayan yayın kimin olduğu doğrulanamadığı için
+                    // engel süzgecinden kaçamaz: bastırılır.
+                    senderId == null ||
+                    _blockedPlayerIds.contains(senderId);
                 if (text != null && !isSelf && !blocked) {
                   _reactionController.triggerReaction(
                     text,

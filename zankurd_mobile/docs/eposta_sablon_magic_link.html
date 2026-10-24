@@ -1,116 +1,26 @@
 <!--
-  Supabase > Authentication > Emails > "Magic link" şablonu (2026-10-24).
-
-  NEDEN: Uygulamadaki "E-postanı doğrula" akışı `signInWithOtp(email,
-  shouldCreateUser: false)` ile 6 haneli kod yollar. Supabase, kodu ancak
-  şablonda {{ .Token }} geçiyorsa e-postaya koyar; varsayılan şablon yalnız
-  {{ .ConfirmationURL }} (bağlantı) taşır ve kod GİTMEZ. Bu dosya o şablonun
-  iki dilli (Kurmancî + Türkçe) hâlidir; koordinatör Dashboard'a yapıştırır
-  (uygulama kodu Dashboard'a dokunmaz).
-
-  KONU (Subject): ZanKurd · Koda te / Doğrulama kodun
-
-  AYAR: Authentication > Providers > Email > "OTP length" = 6 olmalı (varsayılan).
-  Kod geçerlilik süresi "Email OTP Expiration" (varsayılan 3600 sn; 600 sn
-  önerilir). Metin süreyi sayıyla vermez, böylece ayar değişse de yalan
-  söylemez. Ayrıca mark_my_email_verified, kodla girişin son 15 dakika içinde
-  olmasını ister (amr penceresi).
-
-  KULLANILAN DEĞİŞKENLER: {{ .Token }} (6 haneli kod). Bağlantı
-  ({{ .ConfirmationURL }}) bilerek KONMADI: bağlantıya dokunmak oturumu
-  tarayıcıda açar ve uygulamadaki kodla doğrulama akışını atlatır.
+  Supabase > Authentication > Emails > "Magic link or OTP" şablonu (2026-10-24, canlıda kayıtlı).
+  Konu: ZanKurd · Koda e-nameyê · E-posta kodun
+  NEDEN: "E-postanı doğrula" akışı signInWithOtp ile 6 haneli kod yollar; kod
+  ancak şablonda {{ .Token }} geçerse e-postaya konur. Bağlantı ({{ .ConfirmationURL }})
+  bilerek yok: dokunmak oturumu tarayıcıda açıp uygulamadaki kod akışını atlatır.
+  KU metin jüri onaylı (Grok + Gemini Flash): "piştrastkirin" (doğrulama).
+  Dashboard'a yapıştırırken Türkçe karakterler bozulmasın diye HTML varlıklarına
+  çevrilerek (&#...;) yapıştırıldı.
 -->
-<!DOCTYPE html>
-<html lang="ku">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ZanKurd</title>
-  </head>
-  <body
-    style="margin:0;padding:0;background:#f4f4f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1c1c21;"
-  >
-    <table
-      role="presentation"
-      width="100%"
-      cellpadding="0"
-      cellspacing="0"
-      style="background:#f4f4f6;padding:24px 12px;"
-    >
-      <tr>
-        <td align="center">
-          <table
-            role="presentation"
-            width="100%"
-            cellpadding="0"
-            cellspacing="0"
-            style="max-width:480px;background:#ffffff;border-radius:16px;padding:28px 24px;"
-          >
-            <tr>
-              <td style="font-size:20px;font-weight:700;color:#c2560e;">
-                ZanKurd
-              </td>
-            </tr>
-
-            <!-- Kurmancî -->
-            <tr>
-              <td style="padding-top:20px;font-size:16px;line-height:24px;">
-                <strong>Koda e-nameyê ya te</strong><br />
-                Ji bo rastkirina e-nameya xwe, vê kodê di sepana ZanKurdê de
-                binivîse:
-              </td>
-            </tr>
-
-            <tr>
-              <td align="center" style="padding:20px 0;">
-                <div
-                  style="display:inline-block;background:#fff3ea;border:1px solid #f0c9ad;border-radius:12px;padding:14px 22px;font-size:32px;font-weight:700;letter-spacing:8px;color:#9e3f00;font-family:'SF Mono',Menlo,Consolas,monospace;"
-                >
-                  {{ .Token }}
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td style="font-size:14px;line-height:21px;color:#55555e;">
-                Kod demeke kurt derbasdar e. Heke te ev daxwaz nekiribe, tu dikarî
-                vê e-nameyê paşguh bikî; tu tiştî nayê guhertin.
-              </td>
-            </tr>
-
-            <tr>
-              <td style="padding:20px 0;">
-                <hr style="border:none;border-top:1px solid #e4e4ea;margin:0;" />
-              </td>
-            </tr>
-
-            <!-- Türkçe -->
-            <tr>
-              <td style="font-size:16px;line-height:24px;">
-                <strong>E-posta doğrulama kodun</strong><br />
-                E-postanı doğrulamak için bu kodu ZanKurd uygulamasına yaz:
-              </td>
-            </tr>
-
-            <tr>
-              <td align="center" style="padding:20px 0;">
-                <div
-                  style="display:inline-block;background:#fff3ea;border:1px solid #f0c9ad;border-radius:12px;padding:14px 22px;font-size:32px;font-weight:700;letter-spacing:8px;color:#9e3f00;font-family:'SF Mono',Menlo,Consolas,monospace;"
-                >
-                  {{ .Token }}
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td style="font-size:14px;line-height:21px;color:#55555e;">
-                Kod kısa süre geçerlidir. Bu isteği sen yapmadıysan bu e-postayı
-                yok sayabilirsin; hesabında hiçbir şey değişmez.
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-  </body>
-</html>
+<div style="background:#F6F3EE;padding:24px 12px;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+<div style="max-width:520px;margin:0 auto;background:#FFFFFF;border-radius:16px;overflow:hidden">
+<div style="background:#E86F24;padding:18px 24px;color:#FFFFFF;font-size:22px;font-weight:700;letter-spacing:.3px">ZanKurd</div>
+<div style="padding:24px">
+<h1 style="margin:0 0 14px;font-size:20px;color:#0E1433">Koda e-nameyê</h1>
+<p style="margin:0 0 12px;font-size:16px;line-height:1.5;color:#0E1433">Ji bo piştrastkirina e-nameya xwe, vê kodê di sepana ZanKurdê de binivîse:</p>
+<p style="margin:20px 0;text-align:center"><span style="display:inline-block;font-size:30px;font-weight:700;letter-spacing:8px;color:#0E1433;background:#F6F3EE;border-radius:12px;padding:12px 20px">{{ .Token }}</span></p>
+<p style="margin:16px 0 0;font-size:13px;line-height:1.5;color:#5A6077">Heke te ev daxwaz nekiribe, vê e-nameyê paşguh bike.</p>
+<hr style="border:none;border-top:1px solid #ECE7DF;margin:24px 0">
+<h2 style="margin:0 0 12px;font-size:17px;color:#0E1433">E-posta kodun</h2>
+<p style="margin:0 0 12px;font-size:16px;line-height:1.5;color:#0E1433">E-postanı doğrulamak için bu kodu ZanKurd uygulamasına yaz:</p>
+<p style="margin:20px 0;text-align:center"><span style="display:inline-block;font-size:30px;font-weight:700;letter-spacing:8px;color:#0E1433;background:#F6F3EE;border-radius:12px;padding:12px 20px">{{ .Token }}</span></p>
+<p style="margin:16px 0 0;font-size:13px;line-height:1.5;color:#5A6077">Bu isteği sen yapmadıysan bu e-postayı yok sayabilirsin.</p>
+</div></div>
+<p style="max-width:520px;margin:12px auto 0;font-size:12px;color:#5A6077;text-align:center">ZanKurd · iletisim@zankurd.com</p>
+</div>

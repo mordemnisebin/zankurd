@@ -206,11 +206,11 @@ void main() {
     }
   });
 
-  test('applied.md satırı bekliyor durumundadır', () {
+  test('applied.md satırı uygulandı durumundadır', () {
     final applied = _read('supabase/applied.md');
     expect(
       applied,
-      contains('| 2026-10-24_bildirim_seri_eposta.sql | bekliyor |'),
+      contains('| 2026-10-24_bildirim_seri_eposta.sql | ✅ |'),
     );
   });
 
@@ -218,9 +218,9 @@ void main() {
     final html = _read('docs/eposta_sablon_magic_link.html');
     expect('{{ .Token }}'.allMatches(html).length, greaterThanOrEqualTo(2));
     // Yorum bloğunun dışında bağlantı değişkeni kullanılmaz.
-    final body = html.substring(html.indexOf('<!DOCTYPE html>'));
+    final body = html.substring(html.indexOf('-->') + 3);
     expect(body, isNot(contains('ConfirmationURL')));
     expect(body, contains('Koda e-nameyê'));
-    expect(body, contains('E-posta doğrulama kodun'));
+    expect(body, contains('E-posta kodun'));
   });
 }

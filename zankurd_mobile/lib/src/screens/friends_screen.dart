@@ -245,6 +245,11 @@ class _FriendsScreenState extends State<FriendsScreen>
       _busyIds.remove(player.id);
     }
     if (!mounted) return;
+    // Meşgul durumu kalktı: düğme her sonuçta yeniden çizilsin. Erken dönen
+    // dallar (zaten arkadaş, engelli, hız sınırı) setState çağırmıyordu ve
+    // düğme başka bir çizime kadar "yükleniyor" kalıyordu (2026-10-24 dış
+    // inceleme, iki model uyuştu).
+    setState(() {});
     // Sunucunun cevabı ayrıştırılır; her sonuç kendi cümlesini alır (bkz.
     // test/friend_request_outcome_test.dart). Karşılıklı istek sunucuda
     // otomatik kabul edilirse "istek gönderildi" demek yanlış olurdu.
