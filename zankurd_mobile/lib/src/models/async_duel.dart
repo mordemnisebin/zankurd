@@ -15,11 +15,22 @@ enum AsyncDuelRole { creator, opponent }
 /// `open`: yalnız açan oynadı, rakip henüz katılmadı.
 /// `matched`: bir rakip katıldı (oynamayı bitirmiş olabilir ya da olmayabilir).
 /// `completed`: iki taraf da bitirdi, sonuç kesinleşti.
-/// `expired`: 48 saatlik süre doldu ve rakip hiç çıkmadı.
+/// `expired`: 24 saatlik süre doldu. Rakip hiç çıkmadıysa kayıpsız kapanır;
+/// biri turunu bitirip öteki bitirmediyse HÜKMEN sonuçlanır
+/// ([AsyncDuelSummary.isForfeit]: `outcome` win/loss olur).
 enum AsyncDuelStatus { open, matched, completed, expired }
 
 /// Bitmiş bir düellonun kazananı — daima ÇAĞIRANIN bakış açısından.
 enum AsyncDuelOutcome { win, loss, draw }
+
+/// Sırayla düellonun süre penceresi: yaratma, eşleşme ve kabulden 24 saat
+/// (sunucu: `supabase/2026-10-24_duello_sirasi.sql`). Kalan süre çubuğunun
+/// paydasıdır; eski 48 saatlik düellolar çubukta dolu görünür (üst sınır 1).
+const Duration asyncDuelWindow = Duration(hours: 24);
+
+/// Süreye bu kadar kala "acele" tonu (kırmızı metin/çubuk) ve sunucu
+/// hatırlatması devreye girer (`expire_async_duels`: 4 saat).
+const Duration asyncDuelUrgentWithin = Duration(hours: 4);
 
 AsyncDuelRole _asyncDuelRoleFromJson(Object? value) {
   return switch (value) {
@@ -380,6 +391,8 @@ class AsyncDuelSummary {
     this.challengeCode,
     this.incomingChallenge = false,
     this.invitedName,
+    this.expiresAt,
+    this.isForfeit = false,
   });
 
   final String duelId;
@@ -398,6 +411,14 @@ class AsyncDuelSummary {
   final AsyncDuelOutcome? outcome;
   final DateTime createdAt;
   final DateTime? completedAt;
+
+  /// Düellonun bitiş anı (`list_my_async_duels.expires_at`, 2026-10-24).
+  /// Sunucu göçü uygulanmadıysa null: satır kalan süre göstermez.
+  final DateTime? expiresAt;
+
+  /// Hükmen sonuç: süre doldu, bir taraf turunu bitirmedi. [outcome] bu
+  /// durumda win/loss'tur ama karşı tarafın skoru olmayabilir (bitirmedi).
+  final bool isForfeit;
 
   /// Bu satırın "sonuç hazır" rozeti için görülüp görülmediği
   /// (`mark_async_duel_seen`).
@@ -425,7 +446,34 @@ class AsyncDuelSummary {
   bool get canResume =>
       myCorrect == null &&
       !incomingChallenge &&
+      (status == AsyncDuelStatus.open || status == AsyncDuelStatus.matched) &&
+      // Sunucu süpürmesi (10 dk) gelmeden saati geçmiş düello da devam
+      // edilemez: dokununca 'Duel expired' hatasına çarpmasın.
+      !isPastDeadline(DateTime.now());
+
+  /// "Sıra sende": benden bir hamle bekleniyor — gelen meydan okuma ya da
+  /// yarım kalan turum. Gelen kutusunda ve ana kartta en üstte durur.
+  bool get isMyTurn => incomingChallenge || canResume;
+
+  /// Turumu bitirdim, rakip henüz bitirmedi ("Rakip bekleniyor").
+  bool get isWaitingOpponent =>
+      myCorrect != null &&
+      outcome == null &&
       (status == AsyncDuelStatus.open || status == AsyncDuelStatus.matched);
+
+  /// Bitiş anı [now]dan önceyse true; bitiş bilinmiyorsa false.
+  bool isPastDeadline(DateTime now) {
+    final end = expiresAt;
+    return end != null && !now.isBefore(end);
+  }
+
+  /// Kalan süre; bitiş bilinmiyorsa ya da geçtiyse null.
+  Duration? timeLeft(DateTime now) {
+    final end = expiresAt;
+    if (end == null) return null;
+    final left = end.difference(now);
+    return left > Duration.zero ? left : null;
+  }
 
   /// Benim açtığım, kimsenin katılmadığı ve turumu bitirdiğim açık düello:
   /// geri çekilebilir ([ZanKurdRepository.cancelAsyncDuel]).
@@ -468,6 +516,10 @@ class AsyncDuelSummary {
       challengeCode: json['challenge_code'] as String?,
       incomingChallenge: json['incoming_challenge'] as bool? ?? false,
       invitedName: json['invited_name'] as String?,
+      expiresAt: json['expires_at'] == null
+          ? null
+          : DateTime.parse(json['expires_at'] as String),
+      isForfeit: json['forfeit'] as bool? ?? false,
     );
   }
 
@@ -494,5 +546,7 @@ class AsyncDuelSummary {
     challengeCode: challengeCode,
     incomingChallenge: incomingChallenge,
     invitedName: invitedName ?? invited?.displayName,
+    expiresAt: expiresAt,
+    isForfeit: isForfeit,
   );
 }

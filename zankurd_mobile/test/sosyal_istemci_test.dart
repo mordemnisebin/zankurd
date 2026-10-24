@@ -374,7 +374,10 @@ void main() {
 
       final summary = (await repository.loadMyAsyncDuels()).single;
       expect(summary.canResume, isTrue);
-      expect(find.text('Devam et'), findsOneWidget);
+      // 2026-10-24: rozet "Devam et" değil "Sıra sende" der ve satır kalan
+      // süreyi gösterir (24 saatlik pencere, yeni düello).
+      expect(find.text('Sıra sende'), findsOneWidget);
+      expect(find.text('24 sa kaldı'), findsOneWidget);
 
       await tester.tap(find.byKey(ValueKey('async-duel-row-${start.duelId}')));
       await tester.pump();

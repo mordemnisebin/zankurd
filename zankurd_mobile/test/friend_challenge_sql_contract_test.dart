@@ -359,7 +359,8 @@ void main() {
       expect(body, contains('r.player_id = v_duel.creator_id'));
     });
 
-    test('kabul: rakip + matched + 48 saat, start_async_duel gibi', () {
+    // Tarihsel göç (2026-10-13): 48 saat; 24'e 2026-10-24_duello_sirasi.sql indirdi.
+    test('kabul: rakip + matched + 48 saat (2026-10-13 göçü), start gibi', () {
       expect(body, contains('set opponent_id = v_uid'));
       expect(body, contains("status = 'matched'"));
       expect(body, contains('matched_at = now()'));

@@ -179,6 +179,7 @@ class SahneListRow extends StatelessWidget {
     this.enabled = true,
     this.semanticLabel,
     this.destructive = false,
+    this.footer,
   }) : _kind = _RowKind.standard,
        dense = false,
        tone = SahneCategoryTone.fallback,
@@ -204,6 +205,7 @@ class SahneListRow extends StatelessWidget {
     this.tone = SahneCategoryTone.fallback,
     this.mark,
   }) : _kind = _RowKind.info,
+       footer = null,
        dense = false,
        role = SahneRole.neutral,
        enabled = true,
@@ -228,6 +230,7 @@ class SahneListRow extends StatelessWidget {
     this.enabled = true,
     this.semanticLabel,
     this.destructive = false,
+    this.footer,
   }) : _kind = _RowKind.custom,
        dense = false,
        tone = SahneCategoryTone.fallback,
@@ -258,6 +261,7 @@ class SahneListRow extends StatelessWidget {
          'İkonsuz satırın sağında ok YA DA değer durur, ikisi birden değil.',
        ),
        _kind = _RowKind.plain,
+       footer = null,
        tone = SahneCategoryTone.fallback,
        mark = null,
        icon = null,
@@ -281,6 +285,7 @@ class SahneListRow extends StatelessWidget {
     this.onTap,
     this.semanticLabel,
   }) : _kind = _RowKind.rank,
+       footer = null,
        dense = false,
        tone = SahneCategoryTone.fallback,
        mark = null,
@@ -303,6 +308,7 @@ class SahneListRow extends StatelessWidget {
     this.onTap,
     this.semanticLabel,
   }) : _kind = _RowKind.me,
+       footer = null,
        dense = false,
        tone = SahneCategoryTone.fallback,
        mark = null,
@@ -333,6 +339,12 @@ class SahneListRow extends StatelessWidget {
 
   /// Yıkıcı eylem satırı (Şaş metni).
   final bool destructive;
+
+  /// Alt satırın ALTINA eklenen serbest parça (yalnız [SahneListRow.icon] ve
+  /// [SahneListRow.leading]): düello satırında "18 sa kaldı" + kalan süre
+  /// çubuğu. Metinle birlikte sarar; ekran okuyucu satırın etiketinde
+  /// okumaz (çağıran [semanticLabel]e katar).
+  final Widget? footer;
 
   /// Bilgi satırının çizimsiz küçüğünün kategori tonu.
   final SahneCategoryTone tone;
@@ -509,6 +521,7 @@ class SahneListRow extends StatelessWidget {
               color: enabled ? t.tx2 : t.disabledFg,
             ),
           ),
+        if (footer != null) ...[const SizedBox(height: SahneSpace.x1), footer!],
       ],
     );
     // Büyük yazı ölçeğinde (≥ 1.5) sağdaki rozet/değer metnin altına

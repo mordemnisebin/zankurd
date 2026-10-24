@@ -15,23 +15,41 @@ import '../../widgets/sahne/sahne.dart';
 import '../../widgets/zk_back_button.dart';
 import 'async_duel_play_screen.dart';
 import 'async_duel_result_screen.dart';
+import 'async_duel_time.dart';
 
-/// Bana gelen (kabul edilmemiş) meydan okumalar listenin BAŞINDA: bekleyen
-/// bir hamle, bitmiş sonuçlardan önce görülmeli. Kalan sıra sunucunun
-/// (yeniden eskiye) sırasıdır.
+/// "Sıra sende" satırları (gelen meydan okuma + yarım kalan turum) listenin
+/// BAŞINDA ve en YAKIN bitişten başlayarak: bekleyen bir hamle, bitmiş
+/// sonuçlardan önce görülmeli; süresi en az kalan en üstte. Bitişi bilinmeyen
+/// (eski sunucu) satırlar bu grubun sonuna, sunucu sırasıyla düşer. Kalan
+/// satırlar sunucunun (yeniden eskiye) sırasındadır.
 List<AsyncDuelSummary> asyncDuelInboxOrder(List<AsyncDuelSummary> items) {
-  return [
-    ...items.where((s) => s.incomingChallenge),
-    ...items.where((s) => !s.incomingChallenge),
+  final turn = <MapEntry<int, AsyncDuelSummary>>[
+    for (var i = 0; i < items.length; i++)
+      if (items[i].isMyTurn) MapEntry(i, items[i]),
   ];
+  // List.sort kararlı değildir: eşit bitişte sunucu sırası dizinle korunur.
+  turn.sort((a, b) {
+    final ea = a.value.expiresAt;
+    final eb = b.value.expiresAt;
+    if (ea != null && eb != null) {
+      final byExpiry = ea.compareTo(eb);
+      if (byExpiry != 0) return byExpiry;
+    } else if (ea != null) {
+      return -1;
+    } else if (eb != null) {
+      return 1;
+    }
+    return a.key.compareTo(b.key);
+  });
+  return [for (final e in turn) e.value, ...items.where((s) => !s.isMyTurn)];
 }
 
-/// Oyuncunun HEMEN yapacağı bir şey var mı: sırası gelen meydan okuma
-/// ("Sıra sende") ya da sonucu hazır, görülmemiş düello. Yarış sekmesinde
-/// bu satırlar kahramanın ÜSTÜNDE durur; "Düellolarım" kutusu onları
-/// tekrarlamaz.
+/// Oyuncunun HEMEN yapacağı bir şey var mı: "Sıra sende" (gelen meydan okuma
+/// ya da yarım kalan turum) ya da sonucu hazır, görülmemiş düello. Yarış
+/// sekmesinde bu satırlar kahramanın ÜSTÜNDE durur; "Düellolarım" kutusu
+/// onları tekrarlamaz.
 bool asyncDuelNeedsAttention(AsyncDuelSummary s) =>
-    s.incomingChallenge || (s.outcome != null && !s.seen);
+    s.isMyTurn || (s.outcome != null && !s.seen);
 
 /// Bir gelen kutusu satırına dokunma: gelen meydan okumayı kabul edip oyna,
 /// diğerlerinde sonucu aç. Dönüşte çağıran listeyi tazeler.
@@ -169,12 +187,7 @@ class _AsyncDuelInboxSectionState extends State<AsyncDuelInboxSection> {
     // Okunmamış = sonucu hazır ve görülmemiş VEYA sırası bende olan
     // meydan okuma.
     final unreadCount = all
-        .where(
-          (s) =>
-              s.incomingChallenge ||
-              s.canResume ||
-              (s.outcome != null && !s.seen),
-        )
+        .where((s) => s.isMyTurn || (s.outcome != null && !s.seen))
         .length;
 
     // 2026-09-29 Şahnê: tek bölüm başlığı (`SahneSectionHeader`), satırlar
@@ -465,11 +478,46 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
         incoming ||
         resumable ||
         (view.kind == AsyncDuelResultKind.completed && !summary.seen);
+    // "Sıra sende" (yarım kalan turum) rozeti: eskiden "Devam et" diyordu;
+    // oyuncuya asıl söylenmesi gereken, hamlenin ondan beklendiği ve süresi.
     final readyLabel = incoming
         ? context.t(K.challengePlay)
         : resumable
-        ? context.t(K.asyncDuelResume)
+        ? context.t(K.challengeYourTurn)
         : context.t(K.asyncDuelReady);
+    // Kalan süre: sırası bende olan satırda metin + ince çubuk, rakip
+    // beklenen satırda yalnız metin. Süre bilinmiyorsa (eski sunucu) yok.
+    final left = summary.timeLeft(DateTime.now());
+    final timeLabel = asyncDuelTimeLeftLabel(context, left);
+    final forfeitReason =
+        summary.isForfeit && view.kind == AsyncDuelResultKind.completed
+        ? (view.outcome == AsyncDuelOutcome.win
+              ? context.t(K.asyncDuelForfeitOpponentReason, {
+                  'name': knownOpponent ?? context.t(K.asyncDuelOpponent),
+                })
+              : context.t(K.asyncDuelForfeitMyReason))
+        : null;
+    final Widget? footer;
+    if (forfeitReason != null) {
+      footer = Text(
+        forfeitReason,
+        key: const ValueKey('async-duel-forfeit-reason'),
+        style: SahneType.caption.copyWith(color: SahneTokens.of(context).tx2),
+      );
+    } else if (summary.isMyTurn && left != null) {
+      footer = AsyncDuelTimeLeft(
+        key: const ValueKey('async-duel-time-left'),
+        left: left,
+        showBar: true,
+      );
+    } else if (summary.isWaitingOpponent && left != null) {
+      footer = AsyncDuelTimeLeft(
+        key: const ValueKey('async-duel-time-left'),
+        left: left,
+      );
+    } else {
+      footer = null;
+    }
     final icon = switch (view.kind) {
       _ when incoming => AppIcons.peopleGroup,
       AsyncDuelResultKind.completed => AppIcons.trophy,
@@ -481,6 +529,8 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
     final semanticLabel = [
       title,
       ?subtitle,
+      ?forfeitReason,
+      if (footer != null && forfeitReason == null) ?timeLabel,
       if (showReadyChip) readyLabel,
     ].join('. ');
     final trailing = showReadyChip
@@ -507,6 +557,7 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
         semanticLabel: semanticLabel,
         chevron: !showReadyChip,
         trailing: trailing,
+        footer: footer,
         onTap: onTap,
       );
     }
@@ -518,6 +569,7 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
       semanticLabel: semanticLabel,
       chevron: !showReadyChip,
       trailing: trailing,
+      footer: footer,
       onTap: onTap,
     );
   }

@@ -4010,6 +4010,26 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<int?> presentAsyncDuelQuestion(
+    String duelId,
+    int questionIndex,
+  ) async {
+    try {
+      final response = await client.rpc(
+        'present_async_duel_question',
+        params: {'p_duel_id': duelId, 'p_question_index': questionIndex},
+      );
+      final json = _requiredJsonObject(response, 'present_async_duel_question');
+      return (json['elapsed_ms'] as num?)?.toInt() ?? 0;
+    } catch (error, stack) {
+      // Göç uygulanmamış sunucu: cevap eski ölçümle sürer, hata değil.
+      if (isMissingRpcError(error)) return null;
+      _recordError(error, stack, reason: 'presentAsyncDuelQuestion failed');
+      rethrow;
+    }
+  }
+
+  @override
   Future<AsyncDuelAnswer> answerAsyncDuel({
     required String duelId,
     required int questionIndex,

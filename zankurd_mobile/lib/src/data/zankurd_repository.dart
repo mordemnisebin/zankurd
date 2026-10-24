@@ -302,6 +302,13 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// [category] `categories.name` iledir; `null` ise herhangi bir kategori.
   Future<AsyncDuelStart> startAsyncDuel({String? category});
 
+  /// Soruyu ekrana koyduğum anı sunucuya kaydeder (ilk çağrıda yazılır, sonra
+  /// DEĞİŞMEZ). Dönüş: sunumdan bu yana geçen ms — yarım bırakıp dönülen
+  /// soruda sunucu saati işlemeye devam etmiştir. `null`: sunucuda bu RPC
+  /// yok (göç uygulanmadı); cevap eski ölçümle sürer. Yalnız oyuncunun
+  /// SIRADAKİ sorusu sunulabilir.
+  Future<int?> presentAsyncDuelQuestion(String duelId, int questionIndex);
+
   /// Tek bir soruyu cevaplar. Aynı [questionIndex] ikinci kez
   /// gönderilemez — sunucu ilk cevabı kilitler.
   Future<AsyncDuelAnswer> answerAsyncDuel({

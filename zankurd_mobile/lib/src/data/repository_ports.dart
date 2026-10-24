@@ -73,6 +73,7 @@ abstract interface class LivePlayPort {
 
   // ─── Sırayla düello (async 1v1) — bkz. `ZanKurdRepository` doc'u ──────
   Future<AsyncDuelStart> startAsyncDuel({String? category});
+  Future<int?> presentAsyncDuelQuestion(String duelId, int questionIndex);
   Future<AsyncDuelAnswer> answerAsyncDuel({
     required String duelId,
     required int questionIndex,
