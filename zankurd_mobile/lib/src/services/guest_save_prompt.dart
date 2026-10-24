@@ -48,30 +48,52 @@ class GuestSavePromptService {
     return GuestSavePromptService._(prefs, userId, now ?? DateTime.now);
   }
 
-  /// Bir oyun bitti. Sayfa şimdi gösterilmeli ise true döner ve gösterimi
-  /// kaydeder (kullanıcı nasıl kapatırsa kapatsın bekleme başlar).
-  Future<bool> recordGame() async {
+  /// Bir oyun bitti: yalnız sayar (sayfayı göstermez, gösterimi kaydetmez).
+  Future<void> countGame() async {
+    final prefs = _prefs;
+    if (prefs == null) return;
+    try {
+      await prefs.setInt(_gamesKey, (prefs.getInt(_gamesKey) ?? 0) + 1);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'guest_save_prompt');
+    }
+  }
+
+  /// Sayaç ve bekleme kuralları sayfayı şimdi gösterir mi? Salt okuma.
+  bool get isDue {
     final prefs = _prefs;
     if (prefs == null) return false;
     try {
-      final games = (prefs.getInt(_gamesKey) ?? 0) + 1;
-      await prefs.setInt(_gamesKey, games);
-      final shows = prefs.getInt(_showsKey) ?? 0;
-      if (games < triggerGames || shows >= maxShows) return false;
+      if ((prefs.getInt(_gamesKey) ?? 0) < triggerGames) return false;
+      if ((prefs.getInt(_showsKey) ?? 0) >= maxShows) return false;
       final lastMs = prefs.getInt(_lastKey);
-      final now = _now();
-      if (lastMs != null &&
-          now.difference(DateTime.fromMillisecondsSinceEpoch(lastMs)) <
-              cooldown) {
-        return false;
-      }
-      await prefs.setInt(_showsKey, shows + 1);
-      await prefs.setInt(_lastKey, now.millisecondsSinceEpoch);
-      return true;
+      return lastMs == null ||
+          _now().difference(DateTime.fromMillisecondsSinceEpoch(lastMs)) >=
+              cooldown;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'guest_save_prompt');
       return false;
     }
+  }
+
+  /// Sayfa gösterildi: bekleme başlar (kullanıcı nasıl kapatırsa kapatsın).
+  Future<void> markShown() async {
+    final prefs = _prefs;
+    if (prefs == null) return;
+    try {
+      await prefs.setInt(_showsKey, (prefs.getInt(_showsKey) ?? 0) + 1);
+      await prefs.setInt(_lastKey, _now().millisecondsSinceEpoch);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'guest_save_prompt');
+    }
+  }
+
+  /// Sayar ve şimdi gösterilmeli ise gösterimi kaydedip true döner.
+  Future<bool> recordGame() async {
+    await countGame();
+    if (!isDue) return false;
+    await markShown();
+    return true;
   }
 }
 
@@ -80,6 +102,48 @@ class GuestSavePromptService {
 /// sayfa kapatılabilir ("Şimdi değil", kaydırma, dış dokunuş).
 class GuestSavePrompt {
   const GuestSavePrompt._();
+
+  /// Oyun BİTTİĞİ anda yalnız sayar; sayfayı göstermez. Sayaç ekrana değil
+  /// oyuna bağlıdır: seviye atlatan ya da hemen kapatılan sonuç ekranı da
+  /// oyunu düşürmez. Sonra [presentIfDue] çağrılır.
+  static Future<GuestSavePromptService?> countGame(
+    BuildContext context, {
+    DateTime Function()? now,
+  }) async {
+    try {
+      final auth = context.read<AuthProvider>();
+      if (!auth.isGuest) return null;
+      final service = await GuestSavePromptService.load(
+        auth.guestSaveUserId ?? 'local',
+        now: now,
+      );
+      await service.countGame();
+      return service;
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'guest_save_prompt');
+      return null;
+    }
+  }
+
+  /// [countGame]in döndürdüğü servisle, kurallar izin veriyorsa sayfayı açar.
+  static Future<void> presentIfDue(
+    BuildContext context,
+    GuestSavePromptService? service,
+  ) async {
+    try {
+      if (service == null || !context.mounted || !service.isDue) return;
+      await service.markShown();
+      if (!context.mounted) return;
+      await showModalBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (_) => const GuestSaveSheet(),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'guest_save_prompt');
+    }
+  }
 
   static Future<void> afterGame(
     BuildContext context, {
