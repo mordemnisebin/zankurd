@@ -1066,7 +1066,7 @@ class Tr {
       'ku': '{p0} pirs · nêzîkî {p1} deqe',
       'tr': '{p0} soru · yaklaşık {p1} dakika',
     },
-    K.gununDersi: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
+    K.gununDersi: {'ku': 'Pratîk', 'tr': 'Pratik'},
     K.pSoruYaklasikP: {
       'ku': '{p0} pirs · nêzîkî {p1} deqe',
       'tr': '{p0} soru · yaklaşık {p1} dakika',

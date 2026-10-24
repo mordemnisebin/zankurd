@@ -937,7 +937,7 @@ void main() {
 
     expect(find.byType(HomeScreen), findsOneWidget);
     // Ana ekranın tek birincil eylemi günün dersidir.
-    expect(find.text('Günün soruları'), findsOneWidget);
+    expect(find.text('Pratik'), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-duel-row')), findsNothing);
 
@@ -1119,7 +1119,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Oyundaki adın ne olsun?'), findsOneWidget);
-    expect(find.text('Günün soruları'), findsNothing);
+    expect(find.text('Pratik'), findsNothing);
 
     await tester.enterText(
       find.byKey(const ValueKey('player-name-field')),
@@ -1129,7 +1129,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.savedName, 'Rojda Test');
-    expect(find.text('Günün soruları'), findsOneWidget);
+    expect(find.text('Pratik'), findsOneWidget);
   });
 
   test('unsupported provider auth error is user friendly', () {
