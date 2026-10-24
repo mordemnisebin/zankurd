@@ -860,9 +860,9 @@
     ],
     "correctAnswer": "Ehmedê Xanî",
     "correctAnswerTr": "Ehmedê Xanî",
-    "explanation": "Bu eser 1692 yılında uzun bir mesnevi olarak yazılmış ve Kurmanci edebiyatının simgesi olmuştur.",
+    "explanation": "Bu eser 1692 yılında uzun bir mesnevi olarak yazılmış ve Kurmancî edebiyatının simgesi olmuştur.",
     "explanationKu": "Ev berhem di sala 1692an de wekî mesnewiyeke dirêj hatiye nivîsîn û bûye sembola edebiyata Kurmancî.",
-    "explanationTr": "Bu eser 1692 yılında uzun bir mesnevi olarak yazılmış ve Kurmanci edebiyatının simgesi olmuştur.",
+    "explanationTr": "Bu eser 1692 yılında uzun bir mesnevi olarak yazılmış ve Kurmancî edebiyatının simgesi olmuştur.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "ku.wikipedia.org",
@@ -965,9 +965,9 @@
     ],
     "correctAnswer": "Nûbihara Biçûkan",
     "correctAnswerTr": "Nûbihara Biçûkan",
-    "explanation": "Bu eser Arapça-Kurmanci bir sözlüktür ve \"Mem û Zîn\"in yazarı tarafından kaleme alınmıştır.",
+    "explanation": "Bu eser Arapça-Kurmancî bir sözlüktür ve \"Mem û Zîn\"in yazarı tarafından kaleme alınmıştır.",
     "explanationKu": "Ev berhem ferhengeke Erebî-Kurmancî ye û ji aliyê xwediyê \"Mem û Zîn\"ê ve hatiye nivîsîn.",
-    "explanationTr": "Bu eser Arapça-Kurmanci bir sözlüktür ve \"Mem û Zîn\"in yazarı tarafından kaleme alınmıştır.",
+    "explanationTr": "Bu eser Arapça-Kurmancî bir sözlüktür ve \"Mem û Zîn\"in yazarı tarafından kaleme alınmıştır.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "ku.wikipedia.org",
@@ -985,7 +985,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "prompt": "Kîjan helbestvan wekî yekemîn helbestvanê edebiyata klasîk a Kurmancî tê qebûlkirin?",
-    "promptTr": "Hangi şair Kurmanci klasik edebiyatının ilk şairi olarak kabul edilir?",
+    "promptTr": "Hangi şair Kurmancî klasik edebiyatının ilk şairi olarak kabul edilir?",
     "answers": [
       "Melayê Cizîrî",
       "Elî Herîrî",
@@ -1099,12 +1099,12 @@
     ],
     "answersTr": [
       "Sorani",
-      "Kurmanci",
+      "Kurmancî",
       "Zazaca",
       "Hevrami"
     ],
     "correctAnswer": "Kurmancî",
-    "correctAnswerTr": "Kurmanci",
+    "correctAnswerTr": "Kurmancî",
     "explanation": "Yazarı, Kürtlerin kendi dilleriyle okuyup yazması için bilinçli olarak bu lehçeyi seçmiştir.",
     "explanationKu": "Nivîskarê wê bi zanebûn ev zarava hilbijartiye da ku kurd bi zimanê xwe bixwînin û binivîsin.",
     "explanationTr": "Yazarı, Kürtlerin kendi dilleriyle okuyup yazması için bilinçli olarak bu lehçeyi seçmiştir.",

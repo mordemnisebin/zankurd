@@ -2371,11 +2371,11 @@
     "promptTr": "Kurdistan gazetesi hangi Kürtçe lehçesiyle çıkıyordu?",
     "answersTr": [
       "Türkçe",
-      "Kurmancça",
+      "Kurmancî",
       "Arapça",
       "Farsça"
     ],
-    "correctAnswerTr": "Kurmancça",
+    "correctAnswerTr": "Kurmancî",
     "explanationKu": "Rojnameya Kurdistanê bi kurmancî derdiket; di 31 hejmarên xwe de tirkiya osmanî jî hat bikaranîn.",
     "explanationTr": "Kurdistan gazetesi Kurmancî yayımlandı; 31 sayılık yayın hayatında Osmanlı Türkçesi de kullanıldı."
   },
@@ -7286,7 +7286,7 @@
       "Zava"
     ],
     "correctAnswer": "Zava",
-    "explanation": "Zava, Kurmanci'de evlenen kişidir. Düğünde damat özel kıyafetlerle süslenir ve birçok geleneksel uygulamada merkezi bir rol oynar.",
+    "explanation": "Zava, Kurmancî'de evlenen kişidir. Düğünde damat özel kıyafetlerle süslenir ve birçok geleneksel uygulamada merkezi bir rol oynar.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -7298,7 +7298,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmanci'de \"damat\" için hangi kelime kullanılır?",
+    "promptTr": "Kurmancî'de \"damat\" için hangi kelime kullanılır?",
     "answersTr": [
       "Bûk",
       "Xesû",
@@ -7307,7 +7307,7 @@
     ],
     "correctAnswerTr": "Zava",
     "explanationKu": "Zava di Kurmancî de ew kes e ku dizewice. Di dawetê de zava bi kincên taybet tê xemilandin û di gelek kevneşopiyan de roleke navendî dilîze.",
-    "explanationTr": "Zava, Kurmanci'de evlenen kişidir. Düğünde damat özel kıyafetlerle süslenir ve birçok geleneksel uygulamada merkezi bir rol oynar."
+    "explanationTr": "Zava, Kurmancî'de evlenen kişidir. Düğünde damat özel kıyafetlerle süslenir ve birçok geleneksel uygulamada merkezi bir rol oynar."
   },
   {
     "id": "ds_ziman_0188",
@@ -7400,7 +7400,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmanci'de \"mêr\" (eril) için hangi izafe dizilimi doğrudur?",
+    "promptTr": "Kurmancî'de \"mêr\" (eril) için hangi izafe dizilimi doğrudur?",
     "answersTr": [
       "mêra min",
       "mêrê min",
@@ -7434,7 +7434,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci), \"xwişk\" (dişil) için hangi izafe eki doğrudur?",
+    "promptTr": "Kürtçede (Kurmancî), \"xwişk\" (dişil) için hangi izafe eki doğrudur?",
     "answersTr": [
       "xwişkê min",
       "xwişkên min",
@@ -7468,7 +7468,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci), \"kitêb\" (dişil) kelimesinin çoğulu için hangi izafe eki doğrudur?",
+    "promptTr": "Kürtçede (Kurmancî), \"kitêb\" (dişil) kelimesinin çoğulu için hangi izafe eki doğrudur?",
     "answersTr": [
       "kitêba min",
       "kitêbê min",
@@ -7490,7 +7490,7 @@
       "Dema raborî"
     ],
     "correctAnswer": "Dema bê",
-    "explanation": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmanci'de bu zaman \"ê\" veya \"dê\" yardımcı fiili ve mastar ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\".",
+    "explanation": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmancî'de bu zaman \"ê\" veya \"dê\" yardımcı fiili ve mastar ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\".",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -7511,7 +7511,7 @@
     ],
     "correctAnswerTr": "Gelecek zaman",
     "explanationKu": "Dema bê ji bo kiryarên ku dê di pêşerojê de biqewimin tê bikaranîn. Di kurmancî de ev dem bi alîkariya \"ê\" an \"dê\" û raweya bilanî tê avakirin, wek \"ez ê biçim\" an \"ew dê bê\".",
-    "explanationTr": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmanci'de bu zaman \"ê\" veya \"dê\" yardımcı fiili ve mastar ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\"."
+    "explanationTr": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmancî'de bu zaman \"ê\" veya \"dê\" yardımcı fiili ve mastar ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\"."
   },
   {
     "id": "ds_ziman_0031",
@@ -7558,7 +7558,7 @@
       "Min zilam dît."
     ],
     "correctAnswer": "Min zilam dît.",
-    "explanation": "Kurmanci'de, geçişli fiillerin geçmiş zamanı ergatif yapıyla kurulur. Özne oblik formdadır (min) ve nesne yalın formda kalır (zilam). Fiil de nesneyle uyumludur, bu yüzden \"min zilam dît\" doğrudur.",
+    "explanation": "Kurmancî'de, geçişli fiillerin geçmiş zamanı ergatif yapıyla kurulur. Özne oblik formdadır (min) ve nesne yalın formda kalır (zilam). Fiil de nesneyle uyumludur, bu yüzden \"min zilam dît\" doğrudur.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -7570,7 +7570,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci), \"I saw the man\" için hangi cümle doğrudur?",
+    "promptTr": "Kürtçede (Kurmancî), \"I saw the man\" için hangi cümle doğrudur?",
     "answersTr": [
       "Ez zilamî dibînim.",
       "Min zilamî dît.",
@@ -7579,7 +7579,7 @@
     ],
     "correctAnswerTr": "Min zilam dît.",
     "explanationKu": "Di kurmancî de, dema borî ya gerguhêz bi ergatîfê tê avakirin. Kirde di forma oblik de ye (min) û bireser di forma xwerû de dimîne (zilam). Lêker jî bi bireserê re hevdeng e, ji ber vê yekê \"min zilam dît\" rast e.",
-    "explanationTr": "Kurmanci'de, geçişli fiillerin geçmiş zamanı ergatif yapıyla kurulur. Özne oblik formdadır (min) ve nesne yalın formda kalır (zilam). Fiil de nesneyle uyumludur, bu yüzden \"min zilam dît\" doğrudur."
+    "explanationTr": "Kurmancî'de, geçişli fiillerin geçmiş zamanı ergatif yapıyla kurulur. Özne oblik formdadır (min) ve nesne yalın formda kalır (zilam). Fiil de nesneyle uyumludur, bu yüzden \"min zilam dît\" doğrudur."
   },
   {
     "id": "ds_ziman_1176",
@@ -8148,7 +8148,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmancicede \"xwendin\" fiili için şimdiki zaman nedir?",
+    "promptTr": "Kurmancîde \"xwendin\" fiili için şimdiki zaman nedir?",
     "answersTr": [
       "dixwîne",
       "xwend",
@@ -8182,7 +8182,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmancicede \"nivîsîn\" fiili için şimdiki zaman nasıl yazılır?",
+    "promptTr": "Kurmancîde \"nivîsîn\" fiili için şimdiki zaman nasıl yazılır?",
     "answersTr": [
       "nivîsand",
       "dinivîse",
@@ -8216,7 +8216,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmancicede \"dan\" fiili için şimdiki zaman nedir?",
+    "promptTr": "Kurmancîde \"dan\" fiili için şimdiki zaman nedir?",
     "answersTr": [
       "dide",
       "da",
@@ -8250,7 +8250,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmancicede \"kirin\" fiili için şimdiki zaman nasıl yazılır?",
+    "promptTr": "Kurmancîde \"kirin\" fiili için şimdiki zaman nasıl yazılır?",
     "answersTr": [
       "kir",
       "dike",
@@ -8284,7 +8284,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmancicede \"vekirin\" fiili için şimdiki zaman nedir?",
+    "promptTr": "Kurmancîde \"vekirin\" fiili için şimdiki zaman nedir?",
     "answersTr": [
       "vekir",
       "vedikir",
@@ -8318,7 +8318,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmancicede \"şandin\" fiili için şimdiki zaman nasıl yazılır?",
+    "promptTr": "Kurmancîde \"şandin\" fiili için şimdiki zaman nasıl yazılır?",
     "answersTr": [
       "şand",
       "dişand",
@@ -8352,7 +8352,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmanci şimdiki zaman için hangi form doğrudur?",
+    "promptTr": "Kurmancî şimdiki zaman için hangi form doğrudur?",
     "answersTr": [
       "ez çûm",
       "ez diçûm",
@@ -8386,7 +8386,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "\"Hatin\" fiilinin Kurmanci şimdiki zamanı için hangi form doğrudur?",
+    "promptTr": "\"Hatin\" fiilinin Kurmancî şimdiki zamanı için hangi form doğrudur?",
     "answersTr": [
       "hat",
       "tê",
@@ -8420,7 +8420,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "\"Girtin\" fiilinin Kurmanci şimdiki zamanı için hangi form doğrudur?",
+    "promptTr": "\"Girtin\" fiilinin Kurmancî şimdiki zamanı için hangi form doğrudur?",
     "answersTr": [
       "girt",
       "digirt",
@@ -8454,7 +8454,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "\"Anîn\" fiilinin Kurmanci şimdiki zamanı için hangi form doğrudur?",
+    "promptTr": "\"Anîn\" fiilinin Kurmancî şimdiki zamanı için hangi form doğrudur?",
     "answersTr": [
       "anî",
       "dianî",
@@ -8488,7 +8488,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmanccada hangi cümle olumlu biçimde yazılmıştır?",
+    "promptTr": "Kurmancîde hangi cümle olumlu biçimde yazılmıştır?",
     "answersTr": [
       "O şehre gitmiyor",
       "O eve gitmiyor",
@@ -9224,7 +9224,7 @@
       "Çima"
     ],
     "correctAnswer": "Kengî",
-    "explanation": "Kurmanccada \"kengî\" kelimesi zamanı sormak için kullanılır ve geçmiş zaman da buna dahildir. \"Çi\" nesneler için, \"kî\" kişiler için ve \"çima\" sebep için kullanılır.",
+    "explanation": "Kurmancîde \"kengî\" kelimesi zamanı sormak için kullanılır ve geçmiş zaman da buna dahildir. \"Çi\" nesneler için, \"kî\" kişiler için ve \"çima\" sebep için kullanılır.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -9236,7 +9236,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmanccada geçmiş zamanı sormak için hangi soru kelimesi kullanılır?",
+    "promptTr": "Kurmancîde geçmiş zamanı sormak için hangi soru kelimesi kullanılır?",
     "answersTr": [
       "Ne zaman",
       "Ne",
@@ -9245,7 +9245,7 @@
     ],
     "correctAnswerTr": "Ne zaman",
     "explanationKu": "Peyva \"kengî\" di kurmancî de ji bo pirsîna demê tê bikaranîn, û dema borî jî di nav de ye. \"Çi\" ji bo tiştan, \"kî\" ji bo kesan û \"çima\" ji bo sedemê tê bikaranîn.",
-    "explanationTr": "Kurmanccada \"kengî\" kelimesi zamanı sormak için kullanılır ve geçmiş zaman da buna dahildir. \"Çi\" nesneler için, \"kî\" kişiler için ve \"çima\" sebep için kullanılır."
+    "explanationTr": "Kurmancîde \"kengî\" kelimesi zamanı sormak için kullanılır ve geçmiş zaman da buna dahildir. \"Çi\" nesneler için, \"kî\" kişiler için ve \"çima\" sebep için kullanılır."
   },
   {
     "id": "ds_ziman_0222",
@@ -9326,7 +9326,7 @@
       "xwerû"
     ],
     "correctAnswer": "lezgîn",
-    "explanation": "\"Lezgîn\" sıfatı Kürtçede (Kurmanci) hızlı ve çevik kişiler için kullanılır. \"Hêdî\" ve \"tembel\" zıttıdır, \"xwerû\" ise farklı bir anlama gelir.",
+    "explanation": "\"Lezgîn\" sıfatı Kürtçede (Kurmancî) hızlı ve çevik kişiler için kullanılır. \"Hêdî\" ve \"tembel\" zıttıdır, \"xwerû\" ise farklı bir anlama gelir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -9338,7 +9338,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci) hızlı hareket eden biri için hangi sıfat kullanılır?",
+    "promptTr": "Kürtçede (Kurmancî) hızlı hareket eden biri için hangi sıfat kullanılır?",
     "answersTr": [
       "hêdî",
       "lezgîn",
@@ -9347,7 +9347,7 @@
     ],
     "correctAnswerTr": "lezgîn",
     "explanationKu": "Rengdêra \"lezgîn\" di kurmancî de ji bo kesên bi lez û bez tê bikaranîn. \"Hêdî\" û \"tembel\" dijberên wê ne, \"xwerû\" jî wateyeke din e.",
-    "explanationTr": "\"Lezgîn\" sıfatı Kürtçede (Kurmanci) hızlı ve çevik kişiler için kullanılır. \"Hêdî\" ve \"tembel\" zıttıdır, \"xwerû\" ise farklı bir anlama gelir."
+    "explanationTr": "\"Lezgîn\" sıfatı Kürtçede (Kurmancî) hızlı ve çevik kişiler için kullanılır. \"Hêdî\" ve \"tembel\" zıttıdır, \"xwerû\" ise farklı bir anlama gelir."
   },
   {
     "id": "ds_ziman_0256",
@@ -9360,7 +9360,7 @@
       "girîn"
     ],
     "correctAnswer": "hişyar bûn",
-    "explanation": "\"Çavên xwe vekirin\" Kurmanci'de mecazi anlamda uyanık olmak veya dikkatli olmak demektir. Bu deyim, gözleri açmanın gerçek anlamıyla ilgili değildir.",
+    "explanation": "\"Çavên xwe vekirin\" Kurmancî'de mecazi anlamda uyanık olmak veya dikkatli olmak demektir. Bu deyim, gözleri açmanın gerçek anlamıyla ilgili değildir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -9372,7 +9372,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci) \"çavên xwe vekirin\" deyiminin mecazi anlamı nedir?",
+    "promptTr": "Kürtçede (Kurmancî) \"çavên xwe vekirin\" deyiminin mecazi anlamı nedir?",
     "answersTr": [
       "uyku getirmek",
       "uyanık olmak",
@@ -9381,7 +9381,7 @@
     ],
     "correctAnswerTr": "uyanık olmak",
     "explanationKu": "\"Çavên xwe vekirin\" di kurmancî de bi wateya mecazî tê wateya hişyar bûn an jî baldar bûn. Ev gotin bi wateya rastîn a vekirina çavan re têkildar nîne.",
-    "explanationTr": "\"Çavên xwe vekirin\" Kurmanci'de mecazi anlamda uyanık olmak veya dikkatli olmak demektir. Bu deyim, gözleri açmanın gerçek anlamıyla ilgili değildir."
+    "explanationTr": "\"Çavên xwe vekirin\" Kurmancî'de mecazi anlamda uyanık olmak veya dikkatli olmak demektir. Bu deyim, gözleri açmanın gerçek anlamıyla ilgili değildir."
   },
   {
     "id": "ds_ziman_0257",
@@ -9394,7 +9394,7 @@
       "ji bo xwe spartina qederê"
     ],
     "correctAnswer": "ji bo xwe spartina qederê",
-    "explanation": "\"Xwe avêtin ber bayî\" Kurmanci'de kaderine razı olmak veya kendini kaderine bırakmak anlamına gelir. Bu deyim, kendini atmanın gerçek anlamıyla ilgili değildir.",
+    "explanation": "\"Xwe avêtin ber bayî\" Kurmancî'de kaderine razı olmak veya kendini kaderine bırakmak anlamına gelir. Bu deyim, kendini atmanın gerçek anlamıyla ilgili değildir.",
     "type": "multipleChoice",
     "difficulty": 3,
     "metadata": {
@@ -9406,7 +9406,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci) \"xwe avêtin ber bayî\" deyimi hangi durum için kullanılır?",
+    "promptTr": "Kürtçede (Kurmancî) \"xwe avêtin ber bayî\" deyimi hangi durum için kullanılır?",
     "answersTr": [
       "koşmak için",
       "kaçmak için",
@@ -9415,7 +9415,7 @@
     ],
     "correctAnswerTr": "kaderine razı olmak için",
     "explanationKu": "\"Xwe avêtin ber bayî\" di kurmancî de tê wateya xwe spartina qederê an jî xwe berdan ser çarenivîsê. Ev gotin bi wateya rastîn a avêtina xwe re têkildar nîne.",
-    "explanationTr": "\"Xwe avêtin ber bayî\" Kurmanci'de kaderine razı olmak veya kendini kaderine bırakmak anlamına gelir. Bu deyim, kendini atmanın gerçek anlamıyla ilgili değildir."
+    "explanationTr": "\"Xwe avêtin ber bayî\" Kurmancî'de kaderine razı olmak veya kendini kaderine bırakmak anlamına gelir. Bu deyim, kendini atmanın gerçek anlamıyla ilgili değildir."
   },
   {
     "id": "ds_ziman_0266",
@@ -9428,7 +9428,7 @@
       "girîn"
     ],
     "correctAnswer": "axaftin",
-    "explanation": "\"Devê xwe vekirin\" Kurmanci'de mecazi anlamda konuşmak veya konuşmaya başlamak demektir. Bu deyim, ağzını açmanın gerçek anlamıyla ilgili değildir.",
+    "explanation": "\"Devê xwe vekirin\" Kurmancî'de mecazi anlamda konuşmak veya konuşmaya başlamak demektir. Bu deyim, ağzını açmanın gerçek anlamıyla ilgili değildir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -9440,7 +9440,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci) \"devê xwe vekirin\" deyiminin mecazi anlamı nedir?",
+    "promptTr": "Kürtçede (Kurmancî) \"devê xwe vekirin\" deyiminin mecazi anlamı nedir?",
     "answersTr": [
       "konuşmak",
       "yemek yemek",
@@ -9449,7 +9449,7 @@
     ],
     "correctAnswerTr": "konuşmak",
     "explanationKu": "\"Devê xwe vekirin\" di kurmancî de bi wateya mecazî tê wateya axaftin an jî dest bi axaftinê kirin. Ev gotin bi wateya rastîn a vekirina devê xwe re têkildar nîne.",
-    "explanationTr": "\"Devê xwe vekirin\" Kurmanci'de mecazi anlamda konuşmak veya konuşmaya başlamak demektir. Bu deyim, ağzını açmanın gerçek anlamıyla ilgili değildir."
+    "explanationTr": "\"Devê xwe vekirin\" Kurmancî'de mecazi anlamda konuşmak veya konuşmaya başlamak demektir. Bu deyim, ağzını açmanın gerçek anlamıyla ilgili değildir."
   },
   {
     "id": "ds_ziman_0272",
@@ -9462,7 +9462,7 @@
       "girîn"
     ],
     "correctAnswer": "bêdeng bûn",
-    "explanation": "\"Devê xwe girtin\" Kurmanci'de mecazi anlamda sessiz olmak veya konuşmamak demektir. Bu deyim, ağzını kapatmanın gerçek anlamıyla ilgili değildir.",
+    "explanation": "\"Devê xwe girtin\" Kurmancî'de mecazi anlamda sessiz olmak veya konuşmamak demektir. Bu deyim, ağzını kapatmanın gerçek anlamıyla ilgili değildir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -9474,7 +9474,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci) \"devê xwe girtin\" deyiminin mecazi anlamı nedir?",
+    "promptTr": "Kürtçede (Kurmancî) \"devê xwe girtin\" deyiminin mecazi anlamı nedir?",
     "answersTr": [
       "konuşmak",
       "gülmek",
@@ -9483,7 +9483,7 @@
     ],
     "correctAnswerTr": "sessiz olmak",
     "explanationKu": "\"Devê xwe girtin\" di kurmancî de bi wateya mecazî tê wateya bêdeng bûn an jî neaxaftin. Ev gotin bi wateya rastîn a girtina devê xwe re têkildar nîne.",
-    "explanationTr": "\"Devê xwe girtin\" Kurmanci'de mecazi anlamda sessiz olmak veya konuşmamak demektir. Bu deyim, ağzını kapatmanın gerçek anlamıyla ilgili değildir."
+    "explanationTr": "\"Devê xwe girtin\" Kurmancî'de mecazi anlamda sessiz olmak veya konuşmamak demektir. Bu deyim, ağzını kapatmanın gerçek anlamıyla ilgili değildir."
   },
   {
     "id": "ds_cand_0001",
@@ -19670,7 +19670,7 @@
       "Erebî"
     ],
     "correctAnswer": "Kurmancî",
-    "explanation": "Dengbêjlik geleneğinde kilamlar çoğunlukla Kürtçe (Kurmanci) söylenir. Türkçe, Farsça ve Arapça bu geleneğin ana dili değildir.",
+    "explanation": "Dengbêjlik geleneğinde kilamlar çoğunlukla Kürtçe (Kurmancî) söylenir. Türkçe, Farsça ve Arapça bu geleneğin ana dili değildir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -19686,12 +19686,12 @@
     "answersTr": [
       "Türkçe",
       "Farsça",
-      "Kürtçe (Kurmanci)",
+      "Kürtçe (Kurmancî)",
       "Arapça"
     ],
-    "correctAnswerTr": "Kürtçe (Kurmanci)",
+    "correctAnswerTr": "Kürtçe (Kurmancî)",
     "explanationKu": "Kilam di nav kevneşopiya dengbêjiyê de bi piranî bi Kurmancî tê gotin. Tirkî, Farisî û Erebî ne zimanên sereke yên vê kevneşopiyê ne.",
-    "explanationTr": "Dengbêjlik geleneğinde kilamlar çoğunlukla Kürtçe (Kurmanci) söylenir. Türkçe, Farsça ve Arapça bu geleneğin ana dili değildir."
+    "explanationTr": "Dengbêjlik geleneğinde kilamlar çoğunlukla Kürtçe (Kurmancî) söylenir. Türkçe, Farsça ve Arapça bu geleneğin ana dili değildir."
   },
   {
     "id": "ds_muzik_0011",
@@ -23512,7 +23512,7 @@
       "Pîroz"
     ],
     "correctAnswer": "Dawet",
-    "explanation": "Dawet, Kurmanci'de evliliğin kutlandığı törendir. Bu kelime özellikle evlilik töreni için kullanılır ve Kürt kültüründe önemli bir yere sahiptir.",
+    "explanation": "Dawet, Kurmancî'de evliliğin kutlandığı törendir. Bu kelime özellikle evlilik töreni için kullanılır ve Kürt kültüründe önemli bir yere sahiptir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -23524,7 +23524,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurmanci'de \"düğün\" için hangi kelime kullanılır?",
+    "promptTr": "Kurmancî'de \"düğün\" için hangi kelime kullanılır?",
     "answersTr": [
       "Dawet",
       "Cejn",
@@ -23533,7 +23533,7 @@
     ],
     "correctAnswerTr": "Dawet",
     "explanationKu": "Dawet di Kurmancî de ew merasîm e ku zewac tê de tê pîrozkirin. Ev peyv bi taybetî ji bo merasîma zewacê tê bikaranîn û di çanda kurdî de cihekî girîng digire.",
-    "explanationTr": "Dawet, Kurmanci'de evliliğin kutlandığı törendir. Bu kelime özellikle evlilik töreni için kullanılır ve Kürt kültüründe önemli bir yere sahiptir."
+    "explanationTr": "Dawet, Kurmancî'de evliliğin kutlandığı törendir. Bu kelime özellikle evlilik töreni için kullanılır ve Kürt kültüründe önemli bir yere sahiptir."
   },
   {
     "id": "ds_cand_0039",
@@ -23592,7 +23592,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci), şimdiki zaman (süreklilik) için hangi fiil formu doğrudur?",
+    "promptTr": "Kürtçede (Kurmancî), şimdiki zaman (süreklilik) için hangi fiil formu doğrudur?",
     "answersTr": [
       "Ez çûm",
       "Ez diçim",
@@ -23626,7 +23626,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kürtçede (Kurmanci), \"kirin\" fiilinin gelecek zamanı nasıldır?",
+    "promptTr": "Kürtçede (Kurmancî), \"kirin\" fiilinin gelecek zamanı nasıldır?",
     "answersTr": [
       "Ez dikim",
       "Ez ê bikim",
@@ -24090,7 +24090,7 @@
       "Malek"
     ],
     "correctAnswer": "Mala",
-    "explanation": "\"Mala\" dişil tekil izafedir. Kurmancicede, dişil bir isim bir sıfatla bağlandığında \"-a\" izafesi kullanılır. Örnek: \"mala mezin\" (büyük ev).",
+    "explanation": "\"Mala\" dişil tekil izafedir. Kurmancîde, dişil bir isim bir sıfatla bağlandığında \"-a\" izafesi kullanılır. Örnek: \"mala mezin\" (büyük ev).",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -24111,7 +24111,7 @@
     ],
     "correctAnswerTr": "Mala",
     "explanationKu": "\"Mala\" îzafeya mê a yekjimar e. Di kurmancî de, dema navdêrekî mê bi rengdêrekê ve tê girêdan, îzafeya \"-a\" tê bikaranîn. Mînak: \"mala mezin\" (büyük ev).",
-    "explanationTr": "\"Mala\" dişil tekil izafedir. Kurmancicede, dişil bir isim bir sıfatla bağlandığında \"-a\" izafesi kullanılır. Örnek: \"mala mezin\" (büyük ev)."
+    "explanationTr": "\"Mala\" dişil tekil izafedir. Kurmancîde, dişil bir isim bir sıfatla bağlandığında \"-a\" izafesi kullanılır. Örnek: \"mala mezin\" (büyük ev)."
   },
   {
     "id": "ds_ziman_1029",
@@ -24136,7 +24136,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Hangi cümle Kurmanci şimdiki zamanı gösterir?",
+    "promptTr": "Hangi cümle Kurmancî şimdiki zamanı gösterir?",
     "answersTr": [
       "Ew nanî dixwe",
       "Ew nanî xwar",
@@ -25100,7 +25100,7 @@
     "prompt": "Karapêtê Xaço di dîroka dengbêjiya kurdî de çima wekî pireke çandî ya bêhempa tê hesibandin?",
     "promptTr": "Dengbêj Karapêtê Xaço'nun Kürt sözlü müzik tarihindeki benzersiz köprü rolü nedir?",
     "answers": [
-      "Ermeniyek bû ku kilamên herî kevn ên Serhed û Botanê bi kurmanciyeke resen parastin",
+      "Ermeniyek bû ku kilamên herî kevn ên Serhed û Botanê bi kurmancîyeke resen parastin",
       "Yekem kes bû ku kilamên kurdî li Amerîkayê di pirtûkxaneyekê de çap kirin",
       "Tenê li ser zimanê rûsî berhemên folklorîk nivîsandin",
       "Hostayê yekem ê çêkirina tembûrên elektronîk bû li Ewropayê"
@@ -25111,7 +25111,7 @@
       "Yalnızca Rusça dilinde folklorik müzik incelemeleri kaleme alması",
       "Avrupa'da elektro bağlama üreten ilk luthier ustası olması"
     ],
-    "correctAnswer": "Ermeniyek bû ku kilamên herî kevn ên Serhed û Botanê bi kurmanciyeke resen parastin",
+    "correctAnswer": "Ermeniyek bû ku kilamên herî kevn ên Serhed û Botanê bi kurmancîyeke resen parastin",
     "correctAnswerTr": "Ermeni kökenli olup Serhed ve Botan'ın en eski kilamlarını kusursuz bir Kurmancî ile koruyup aktarması",
     "explanation": "Karapêtê Xaço bi eslê xwe ermenî bû lê wekî dengbêjekî mezin kilamên dîrokî yên kurdî gihandin nifşên nû.",
     "explanationKu": "Karapêtê Xaço bi eslê xwe ermenî bû lê wekî dengbêjekî mezin kilamên dîrokî yên kurdî gihandin nifşên nû.",
