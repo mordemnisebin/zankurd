@@ -4,7 +4,9 @@
 -- reddi · f rakibi bitirmiş düello reddi · g kendi turunu bitirmemiş reddi ·
 -- h 12 saat geçince yeniden dürtme · i list_my_async_duels `my_nudged_at` ·
 -- j list_my_recent_matches kazanılan düelloyu verir · k get_my_records
--- galibiyeti sayar.
+-- galibiyeti sayar · l aynı alıcıya FARKLI düellolardan 4. dürtme reddi ·
+-- m en uzun doğru serisi (8 doğru + 1 yanlış + 2 doğru -> 8) · n kalabalık
+-- odada hükmen: terk eden dışındakilere otomatik 'win' yok (puan sırası).
 --
 -- CANLIYA KALICI YAZMAZ: tek transaction, sonda rollback. Göçten ÖNCE ve
 -- SONRA aynı betik çalıştırılır; her bulgu için bir satır basar:
@@ -158,7 +160,7 @@ begin
 
   -- (h) 12 saat geçince yeniden dürtülebilir (tablo yoksa dürtme zaten 'RPC yok').
   if to_regclass('public.async_duel_nudges') is not null then
-    execute 'update public.async_duel_nudges set last_nudged_at = now() - interval ''13 hours'' where duel_id = $1 and sender_id = $2'
+    execute 'update public.async_duel_nudges set nudged_at = nudged_at - interval ''13 hours'' where duel_id = $1 and sender_id = $2'
       using x, a;
   end if;
   r := pg_temp.durt(x, a);
@@ -223,6 +225,120 @@ begin
          then (v1::int - v0::int)::text else v1 end);
 exception when others then
   insert into _kanit values (99, '(genel)', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- ---------------------------------------------------------------- (l)
+-- Aynı gönderici (C) -> aynı alıcı (D), dört FARKLI düello: 12 saatte en çok 3.
+do $$
+declare
+  c uuid := pg_temp.uid(3); d uuid := pg_temp.uid(4);
+  x uuid; r text; i int; ok_n int := 0; r4 text;
+begin
+  for i in 1..4 loop
+    x := pg_temp.duello(c, d, 'matched');
+    perform pg_temp.bitir(x, c, 4);
+    r := pg_temp.durt(x, c);
+    if i <= 3 and r = 'ok' then ok_n := ok_n + 1; end if;
+    if i = 4 then r4 := r; end if;
+  end loop;
+  insert into _kanit values (14, '(l1) farklı düellolardan ilk 3 dürtme geçti',
+    'RPC yok', '3', case when r4 = 'RPC yok' then 'RPC yok' else ok_n::text end);
+  insert into _kanit values (15, '(l2) aynı alıcıya farklı düellodan 4. dürtme',
+    'RPC yok', 'Nudge limit', r4);
+exception when others then
+  insert into _kanit values (14, '(l)', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- Odalar için yardımcılar: oyuncu başına tek satır, cevap sırası dizgesi
+-- ('1'=doğru, '0'=yanlış) soru sırasıyla player_answers'a yazılır.
+create function pg_temp.oda(
+  p_max int, p_reason text, p_forfeited_by uuid
+) returns uuid
+language plpgsql as $f$
+declare v_id uuid;
+begin
+  insert into public.rooms (
+    code, host_id, status, max_players, ended_reason, forfeited_by,
+    finished_at, question_count
+  ) values (
+    'K' || substr(md5(random()::text), 1, 7), pg_temp.uid(1), 'finished',
+    p_max, p_reason, p_forfeited_by, now(), 11
+  ) returning id into v_id;
+  return v_id;
+end $f$;
+
+-- ---------------------------------------------------------------- (m)
+-- 8 doğru + 1 yanlış + 2 doğru: anlık seri (room_players.streak) 2'de biter,
+-- rekor 8 olmalı.
+do $$
+declare
+  a uuid; e uuid := pg_temp.uid(5);
+  room uuid; qs uuid[]; flags text := '11111111011'; i int; v text;
+begin
+  -- Canlı odalarında hiç kaydı olmayan bir profil: eski serileri sonucu bozmaz.
+  select pr.id into a from public.profiles pr
+  where pr.id not in (select id from _p)
+    and not exists (select 1 from public.room_players rp where rp.player_id = pr.id)
+  order by pr.id limit 1;
+  if a is null then
+    insert into _kanit values (16, '(m) en uzun doğru serisi', 'RPC yok', '8',
+      'oda geçmişsiz profil yok');
+    return;
+  end if;
+  select array_agg(id) into qs from (
+    select id from public.questions where is_approved = true limit 11
+  ) q;
+  room := pg_temp.oda(2, 'completed', null);
+  insert into public.room_players (room_id, player_id, score, streak)
+  values (room, a, 100, 2), (room, e, 50, 0);
+  for i in 1..11 loop
+    insert into public.room_questions (room_id, question_id, question_index)
+    values (room, qs[i], i - 1);
+  end loop;
+  -- Cevap ekleme tetikleyicisi canlı oda akışını denetler; bu işlemde kapatılır.
+  execute 'alter table public.player_answers disable trigger player_answers_current_question_trg';
+  for i in 1..11 loop
+    insert into public.player_answers (room_id, question_id, player_id, selected_option, is_correct)
+    values (room, qs[i], a, 'A', substr(flags, i, 1) = '1');
+  end loop;
+  begin
+    perform set_config('request.jwt.claims', json_build_object('sub', a)::text, true);
+    execute $q$ select public.get_my_records()->>'best_quiz_streak' $q$ into v;
+  exception
+    when undefined_function then v := 'RPC yok';
+    when others then v := 'HATA: ' || sqlerrm;
+  end;
+  insert into _kanit values (16, '(m) 8 doğru + 1 yanlış + 2 doğru -> en uzun doğru serisi',
+    'RPC yok', '8', coalesce(v, 'null'));
+exception when others then
+  insert into _kanit values (16, '(m)', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- ---------------------------------------------------------------- (n)
+-- 4 kişilik odada C terk etti; A (10 puan) ikinci değil: eski mantık 'win'
+-- verirdi, yenisi puan sırasına göre 'loss'.
+do $$
+declare
+  a uuid := pg_temp.uid(1); b uuid := pg_temp.uid(2); c uuid := pg_temp.uid(3);
+  room uuid; v text;
+begin
+  room := pg_temp.oda(4, 'forfeit', c);
+  insert into public.room_players (room_id, player_id, score, streak)
+  values (room, a, 10, 0), (room, b, 20, 0), (room, c, 5, 0);
+  begin
+    perform set_config('request.jwt.claims', json_build_object('sub', a)::text, true);
+    execute $q$
+      select j->>'result' from public.list_my_recent_matches(50) j
+      where (j->>'id')::uuid = $1
+    $q$ into v using room;
+  exception
+    when undefined_function then v := 'RPC yok';
+    when others then v := 'HATA: ' || sqlerrm;
+  end;
+  insert into _kanit values (17, '(n) kalabalık oda hükmen: terk eden dışındaki ikinci oyuncunun sonucu',
+    'RPC yok', 'loss', coalesce(v, 'satır yok'));
+exception when others then
+  insert into _kanit values (17, '(n)', '-', '-', 'HATA: ' || sqlerrm);
 end $$;
 
 select bulgu, beklenen_once, beklenen_sonra, gozlenen,

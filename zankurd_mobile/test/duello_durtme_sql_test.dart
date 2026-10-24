@@ -101,7 +101,19 @@ void main() {
       expect(low, contains("interval '12 hours'"));
       expect(fn, contains("raise exception 'Nudge cooldown'"));
       expect(low, contains('from public.async_duel_nudges n'));
-      expect(low, contains('on conflict (duel_id, sender_id)'));
+      expect(
+        low,
+        contains(
+          'insert into public.async_duel_nudges (duel_id, sender_id, recipient_id',
+        ),
+      );
+    });
+
+    test('gönderici→alıcı başına 12 saatte en çok 3 (düellolar arası)', () {
+      expect(low, contains('n.recipient_id = v_target'));
+      expect(low, contains('if v_pair >= 3 then'));
+      expect(fn, contains("raise exception 'Nudge limit'"));
+      expect(low, contains('pg_advisory_xact_lock'));
     });
 
     test('push: async_duel_turn, from_user_id, iki dilli KU · TR', () {
@@ -136,7 +148,8 @@ void main() {
         lower,
         contains('create table if not exists public.async_duel_nudges'),
       );
-      expect(lower, contains('primary key (duel_id, sender_id)'));
+      expect(lower, contains('recipient_id uuid not null'));
+      expect(lower, contains('(sender_id, recipient_id, nudged_at desc)'));
       expect(
         lower,
         contains(
@@ -158,8 +171,9 @@ void main() {
 
     test('yeni anahtar ve birleşim eklendi', () {
       expect(fn, contains("'my_nudged_at', nud.last_nudged_at"));
-      expect(fn, contains('left join public.async_duel_nudges nud'));
-      expect(fn, contains('nud.sender_id = v_uid'));
+      expect(fn, contains('from public.async_duel_nudges n'));
+      expect(fn, contains(') nud on true'));
+      expect(fn, contains('n.sender_id = v_uid'));
     });
 
     test('canlı gövdedeki hiçbir şey düşürülmedi', () {
@@ -183,7 +197,7 @@ void main() {
       expect(
         lower,
         contains(
-          'revoke all on function public.my_match_history(uuid)\n  from public, anon, authenticated;',
+          'revoke all on function public.my_match_history(uuid, integer)\n  from public, anon, authenticated;',
         ),
       );
       expect(
@@ -196,12 +210,13 @@ void main() {
       final recent = body('list_my_recent_matches');
       expect(recent, contains('auth.uid()'));
       expect(recent, contains("raise exception 'Not authenticated'"));
-      expect(recent, contains('my_match_history(v_uid)'));
+      expect(recent, contains('my_match_history(v_uid, v_limit)'));
       expect(recent, contains('least(coalesce(p_limit, 10), 50)'));
       final records = body('get_my_records');
       expect(records, contains('auth.uid()'));
-      expect(records, contains('my_match_history(v_uid)'));
-      expect(records, contains("h.kind in ('async', 'room_1v1')"));
+      expect(records, contains('my_duel_tally(v_uid)'));
+      // Rekorlar tüm geçmişi satır satır üretmez.
+      expect(records, isNot(contains('from public.my_match_history')));
       // Parametre olarak kullanıcı kimliği KABUL ETMEZ.
       expect(recent, isNot(contains('p_uid')));
       expect(records, isNot(contains('p_uid')));
@@ -214,6 +229,44 @@ void main() {
       expect(h, contains("r.status = 'finished'"));
       expect(h, contains("r.ended_reason in ('completed', 'forfeit')"));
       expect(h, contains("'room_1v1'"));
+    });
+
+    test('her kaynak kendi sorgusunda sıralanıp limitlenir', () {
+      final h = body('my_match_history');
+      expect(
+        RegExp(
+          r'order by coalesce\(d\.completed_at, d\.expires_at\) desc\s+limit v_limit',
+        ).hasMatch(h),
+        isTrue,
+      );
+      expect(
+        RegExp(
+          r'order by coalesce\(r\.finished_at, r\.created_at\) desc\s+limit v_limit',
+        ).hasMatch(h),
+        isTrue,
+      );
+    });
+
+    test('kalabalık odada hükmen herkese win vermez; rekora girmez', () {
+      final h = body('my_match_history');
+      expect(
+        h,
+        contains(
+          'r.max_players = 2\n               and r.ended_reason = \'forfeit\'',
+        ),
+      );
+      final tally = body('my_duel_tally');
+      expect(tally, contains('and r.max_players = 2'));
+    });
+
+    test('en uzun doğru serisi: boşluk-ada, son 100 oda, anlık seri değil', () {
+      final records = body('get_my_records');
+      expect(
+        records,
+        contains('partition by pa.room_id order by rq.question_index'),
+      );
+      expect(records, contains('limit 100'));
+      expect(records, isNot(contains('max(rp.streak)')));
     });
 
     test('anon kapalı, authenticated açık', () {
@@ -238,7 +291,7 @@ void main() {
     expect(
       lower,
       contains(
-        "has_function_privilege('authenticated', 'public.my_match_history(uuid)'",
+        "has_function_privilege('authenticated', 'public.my_match_history(uuid, integer)'",
       ),
     );
   });
@@ -258,6 +311,9 @@ void main() {
         '(d) katılımcı olmayan',
         '(e) engelli çiftte dürtme',
         '(f) rakibi bitirmiş düelloda dürtme',
+        '(l2) aynı alıcıya farklı düellodan 4. dürtme',
+        '(m) 8 doğru + 1 yanlış + 2 doğru',
+        '(n) kalabalık oda hükmen',
       ]) {
         expect(proof, contains(needle));
       }

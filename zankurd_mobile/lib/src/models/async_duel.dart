@@ -371,11 +371,13 @@ const Duration asyncDuelNudgeCooldown = Duration(hours: 12);
 
 /// `nudge_async_duel` reddinin sınıfı. Metin PostgREST `message` alanından
 /// gelir (`toString()` taşır); tanınmayan her şey [other].
-enum AsyncDuelNudgeError { cooldown, blocked, closed, notAllowed, other }
+enum AsyncDuelNudgeError { cooldown, limit, blocked, closed, notAllowed, other }
 
 AsyncDuelNudgeError classifyAsyncDuelNudgeError(Object error) {
   final text = error.toString();
   if (text.contains('Nudge cooldown')) return AsyncDuelNudgeError.cooldown;
+  // Aynı alıcıya farklı düellolardan 12 saatte 3'ten fazla dürtme.
+  if (text.contains('Nudge limit')) return AsyncDuelNudgeError.limit;
   if (text.contains('Blocked')) return AsyncDuelNudgeError.blocked;
   if (text.contains('Duel closed') || text.contains('Duel not found')) {
     return AsyncDuelNudgeError.closed;

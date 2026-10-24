@@ -170,6 +170,7 @@ void main() {
         c('PostgrestException(message: Nudge cooldown)'),
         AsyncDuelNudgeError.cooldown,
       );
+      expect(c('Nudge limit'), AsyncDuelNudgeError.limit);
       expect(c('Blocked'), AsyncDuelNudgeError.blocked);
       expect(c('Duel closed'), AsyncDuelNudgeError.closed);
       expect(c('Not a duel player'), AsyncDuelNudgeError.notAllowed);
