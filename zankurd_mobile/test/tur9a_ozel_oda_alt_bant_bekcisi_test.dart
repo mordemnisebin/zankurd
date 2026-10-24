@@ -12,6 +12,7 @@
 // kilitli ücrete dokunulunca not + ikincil "Jeton kazan" belirir ama birincil
 // düğme yine "Odayı aç" kalır; yetebilen ücrete dönünce not kaybolur; son ücret
 // satırı ile alt ayraç arası dar.
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,6 +37,7 @@ void main() {
       testShell(child: PlayHubScreen(repository: _Repo())),
     );
     await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
     final row = find.byKey(const ValueKey('custom-room-settings-row'));

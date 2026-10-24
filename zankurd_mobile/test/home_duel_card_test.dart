@@ -23,6 +23,7 @@
 // yapar ve menü yanındaki ⋯ düğmesindedir (`home-duel-more`). Yani eskiden
 // kartta doğrudan görünen "Yeni düello" ve "Hızlı düello" metin düğmeleri
 // artık menüdedir; testler önce menüyü açar. İşlev kaybı yok, ağırlık azaldı.
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -119,10 +120,10 @@ void main() {
     // Kompakt kart: tek ikincil düğme; üç yol menüde.
     expect(find.text('Oyna'), findsOneWidget);
     expect(find.text('Yeni düello'), findsNothing);
-    expect(find.text('Hızlı düello'), findsNothing);
+    expect(find.text('Canlı düello'), findsNothing);
     await _openMenu(tester);
     expect(find.text('Yeni düello'), findsOneWidget);
-    expect(find.text('Hızlı düello'), findsOneWidget);
+    expect(find.text('Canlı düello'), findsOneWidget);
     expect(find.textContaining('Sonuç hazır'), findsNothing);
   });
 
@@ -261,7 +262,8 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('play-hub-async-duel')));
+    await openAsyncOpponentSheet(tester);
+    await tester.tap(find.byKey(const ValueKey('opponent-sheet-random')));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.byType(AsyncDuelPlayScreen), findsOneWidget);

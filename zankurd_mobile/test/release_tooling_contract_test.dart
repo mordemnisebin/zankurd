@@ -68,7 +68,7 @@ void main() {
       expect(source, contains("Pêşkêşkar negihîştbar e"));
       expect(
         source,
-        contains("getByRole('button', { name: /Pêşbirka bilez/ })"),
+        contains("getByRole('button', { name: /Pêşbirka zindî/ })"),
       );
       expect(source, contains('await quickDuel.isEnabled()'));
       expect(source, isNot(contains("Rojbaş, Rojda!")));

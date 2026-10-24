@@ -86,35 +86,44 @@ void main() {
     );
   });
 
-  testWidgets('ikincil modlar (çark) sade; üç ana kart büyük kalır', (
-    tester,
-  ) async {
-    await _pumpHub(tester, pendingDuel: false);
-    final big = tester.getSize(
-      find.byKey(const ValueKey('play-hub-async-duel')),
-    );
-    final daily = tester.getSize(
-      find.byKey(const ValueKey('play-hub-daily-contest')),
-    );
-    final wheel = tester.getSize(
-      find.byKey(const ValueKey('play-hub-spin-wheel')),
-    );
-    expect(big.height, greaterThanOrEqualTo(SahneModeTile.minHeight));
-    expect(daily.height, greaterThanOrEqualTo(SahneModeTile.minHeight));
-    expect(
-      wheel.height,
-      lessThan(SahneModeTile.minHeight * 0.7),
-      reason: 'çark tek satırlık sade kart',
-    );
-    // Renk kimliği korunur: çark hâlâ Zêr dolgulu.
-    final fill = tester
-        .widget<SahneTappable>(
-          find.descendant(
-            of: find.byKey(const ValueKey('play-hub-spin-wheel')),
-            matching: find.byType(SahneTappable),
-          ),
-        )
-        .color;
-    expect(fill, isNotNull);
-  });
+  testWidgets(
+    'ikincil modlar (çark) sade; büyük kartlar yalnız oyun seçimleri',
+    (tester) async {
+      await _pumpHub(tester, pendingDuel: false);
+      final big = tester.getSize(
+        find.byKey(const ValueKey('play-hub-async-duel')),
+      );
+      final daily = tester.getSize(
+        find.byKey(const ValueKey('play-hub-daily-contest')),
+      );
+      final wheel = tester.getSize(
+        find.byKey(const ValueKey('play-hub-spin-wheel')),
+      );
+      final room = tester.getSize(find.byKey(const ValueKey('play-hub-room')));
+      expect(big.height, greaterThanOrEqualTo(SahneModeTile.minHeight));
+      expect(room.height, greaterThanOrEqualTo(SahneModeTile.minHeight));
+      // 2026-10-24: büyük kartlar yalnız oyun seçimleri (canlı düello,
+      // sırayla düello, oda); günün turu ve çarkı sade tek satır.
+      expect(
+        daily.height,
+        lessThan(SahneModeTile.minHeight * 0.7),
+        reason: 'günün turu tek satırlık sade kart',
+      );
+      expect(
+        wheel.height,
+        lessThan(SahneModeTile.minHeight * 0.7),
+        reason: 'çark tek satırlık sade kart',
+      );
+      // Renk kimliği korunur: çark hâlâ Zêr dolgulu.
+      final fill = tester
+          .widget<SahneTappable>(
+            find.descendant(
+              of: find.byKey(const ValueKey('play-hub-spin-wheel')),
+              matching: find.byType(SahneTappable),
+            ),
+          )
+          .color;
+      expect(fill, isNotNull);
+    },
+  );
 }

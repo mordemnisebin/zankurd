@@ -25,6 +25,7 @@
 /// çizilmediği ve "Hızlı düello"nun durduğu yine sabit.
 library;
 
+import 'support/play_hub_nav.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -106,9 +107,8 @@ Future<void> _playAllSeven(WidgetTester tester) async {
 }
 
 Future<void> _openChallengeSheetFromHub(WidgetTester tester) async {
-  final row = find.byKey(const ValueKey('play-hub-async-duel-challenge'));
-  await tester.ensureVisible(row);
-  await tester.tap(row);
+  await openAsyncOpponentSheet(tester);
+  await tester.tap(find.byKey(const ValueKey('opponent-sheet-friend')));
   await tester.pumpAndSettle();
 }
 
@@ -254,7 +254,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text('Arkadaşına meydan oku'), findsOneWidget);
+      // Eski ayrı kart yok; giriş rakip seçimi sayfasındaki "Arkadaş" satırıdır.
+      expect(find.text('Arkadaşına meydan oku'), findsNothing);
 
       await _openChallengeSheetFromHub(tester);
 
@@ -767,13 +768,20 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      // Eski ayrı kart hiçbir durumda çizilmez; "Arkadaş" rakip seçimi
+      // sayfasında yalnız RPC varken durur.
       expect(
         find.byKey(const ValueKey('play-hub-async-duel-challenge')),
         findsNothing,
       );
       expect(find.text('Arkadaşına meydan oku'), findsNothing);
-      // Mevcut düello akışı bozulmaz.
-      expect(find.byKey(const ValueKey('play-hub-async-duel')), findsOneWidget);
+      // Mevcut düello akışı bozulmaz: rastgele rakip yine seçilebilir.
+      await openAsyncOpponentSheet(tester);
+      expect(
+        find.byKey(const ValueKey('opponent-sheet-random')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('opponent-sheet-friend')), findsNothing);
     });
 
     testWidgets('ana ekran kartında düğme çizilmez', (tester) async {
@@ -792,7 +800,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('home-duel-primary')));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('home-duel-challenge')), findsNothing);
-      expect(find.text('Hızlı düello'), findsOneWidget);
+      expect(find.text('Canlı düello'), findsOneWidget);
     });
 
     test('Supabase deposu: create PGRST202 alırsa destek "yok" olur', () async {

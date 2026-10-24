@@ -8,6 +8,7 @@
 //
 // Niçin sessiz kaldı: testler "dokununca not çıkar" diyordu; seçili
 // görünümü, kilidi, notun tonunu ve solma yüksekliğini hiçbiri ölçmüyordu.
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,6 +35,7 @@ void main() {
       testShell(child: PlayHubScreen(repository: _Repo())),
     );
     await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
     final row = find.byKey(const ValueKey('custom-room-settings-row'));

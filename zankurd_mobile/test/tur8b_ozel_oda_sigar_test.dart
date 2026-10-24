@@ -7,6 +7,7 @@
 // görünür. Burada 390×844'te (dpr 1) kapalı sayfanın kaydırmasız sığdığı,
 // Ayarlar açılınca içeriğin sona kaydığı ve en alt satırın (50/100 jeton)
 // kesilmeden görünür alanın içinde kaldığı ölçülür.
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,6 +33,7 @@ void main() {
       testShell(child: PlayHubScreen(repository: _Repo())),
     );
     await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
     final scrollable = find.descendant(

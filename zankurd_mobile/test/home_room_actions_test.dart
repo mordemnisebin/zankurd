@@ -1,4 +1,5 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+import 'support/play_hub_nav.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -59,10 +60,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(PlayHubScreen), findsOneWidget);
 
-    await tester.ensureVisible(
-      find.byKey(const ValueKey('play-hub-create-room')),
-    );
-    await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
 
@@ -165,6 +163,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
+    await openRoomSheet(tester);
     expect(find.text('Bi kodê têkeve'), findsOneWidget);
     expect(find.text('Bi Kodê Tevlî Bibe'), findsNothing);
     expect(find.text('Bi Kodê Bikeve'), findsNothing);
@@ -188,10 +187,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(
-      find.byKey(const ValueKey('play-hub-join-room')),
-    );
-    await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
 
@@ -220,10 +216,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(
-      find.byKey(const ValueKey('play-hub-join-room')),
-    );
-    await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
 
@@ -255,9 +248,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(
-      find.byKey(const ValueKey('play-hub-join-room')),
-    );
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
 
@@ -292,9 +283,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(
-      find.byKey(const ValueKey('play-hub-join-room')),
-    );
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
 
@@ -328,9 +317,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(
-      find.byKey(const ValueKey('play-hub-join-room')),
-    );
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
     await tester.enterText(

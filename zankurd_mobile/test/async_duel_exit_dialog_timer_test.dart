@@ -13,6 +13,7 @@
 /// kalan saniye değişmemeli; "Devam et"ten sonra kaldığı yerden akmalı.
 library;
 
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:async';
@@ -58,7 +59,8 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('play-hub-async-duel')));
+    await openAsyncOpponentSheet(tester);
+    await tester.tap(find.byKey(const ValueKey('opponent-sheet-random')));
     await tester.pump();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
@@ -106,7 +108,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const ValueKey('play-hub-async-duel')));
+      await openAsyncOpponentSheet(tester);
+      await tester.tap(find.byKey(const ValueKey('opponent-sheet-random')));
       await tester.pump();
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 300));

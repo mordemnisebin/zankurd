@@ -407,7 +407,7 @@ class Tr {
       'ku': 'Kûpa û modên din li vir in.',
       'tr': 'Turnuva ve diğer modlar burada.',
     },
-    K.quickDuel: {'ku': 'Pêşbirka bilez', 'tr': 'Hızlı düello'},
+    K.quickDuel: {'ku': 'Pêşbirka zindî', 'tr': 'Canlı düello'},
     // Düello sahne kartının manşeti ve süre satırı ayrı dizgelerdir:
     // eskiden `quickDuelSub` " · " ayracından bölünüyordu (çeviri ayracı
     // değiştirirse kart tek satıra düşerdi).
@@ -417,6 +417,24 @@ class Tr {
     },
     K.quickDuelDuration: {'ku': '~2 deqe', 'tr': '~2 dakika'},
     K.findOpponent: {'ku': 'Hevrik bibîne', 'tr': 'Rakip bul'},
+    // Yarış sekmesi üç seçime indi (canlı düello, sırayla düello, oda).
+    // İlk ikisi "rakip seçimi" sayfasını açar: Rastgele ya da Arkadaş.
+    // Jüri bekliyor (2026-10-24): zindî = canlı (`Pûana zindî` ile aynı kök).
+    K.pickOpponent: {'ku': 'Hevrik hilbijêre', 'tr': 'Rakip seç'},
+    K.opponentRandom: {'ku': 'Rasthatî', 'tr': 'Rastgele'},
+    K.opponentFriend: {'ku': 'Heval', 'tr': 'Arkadaş'},
+    K.opponentFriendLiveSub: {
+      'ku': 'Odeyeke du kesî ava bike, hevalê xwe vexwîne',
+      'tr': 'İki kişilik oda kur, arkadaşını davet et',
+    },
+    K.opponentFriendAsyncSub: {
+      'ku': 'Bi girêdan an ji navnîşa hevalan vexwîne',
+      'tr': 'Bağlantıyla ya da listeden meydan oku',
+    },
+    K.roomTileSub: {
+      'ku': 'Ji 3 kesî zêdetir, bi kodê',
+      'tr': '3 kişi ve üstü, kodla',
+    },
     K.roomOpenFailed: {
       'ku': 'Ode nehat vekirin. Girêdana xwe kontrol bike.',
       'tr': 'Oda açılamadı. Bağlantını kontrol et.',
@@ -1594,11 +1612,11 @@ class Tr {
     },
     K.no: {'ku': 'Na', 'tr': 'Hayır'},
     K.yes: {'ku': 'Belê', 'tr': 'Evet'},
-    // Hub kartı `Pêşbirka bilez` der (`K.quickDuel`).
+    // Hub kartı `Pêşbirka zindî` der (`K.quickDuel`).
     // Eşleşme başlığı "Şerê 1vs1" deyince oyuncu aynı 1v1'i iki adla
     // görür. `şer` doğru Kurmancîdir; tek üründe tek kök.
-    K.duel1v1Short: {'ku': 'Pêşbirka bilez', 'tr': 'Hızlı düello'},
-    K.duel1v1: {'ku': 'Pêşbirka bilez', 'tr': 'Hızlı düello'},
+    K.duel1v1Short: {'ku': 'Pêşbirka zindî', 'tr': 'Canlı düello'},
+    K.duel1v1: {'ku': 'Pêşbirka zindî', 'tr': 'Canlı düello'},
     K.randomMatch: {'ku': 'Lihevanîna rasthatî', 'tr': 'Rastgele eşleşme'},
     K.matchByCategory: {
       'ku': 'Li gorî mijarê li hev bîne',
@@ -2585,8 +2603,8 @@ class Tr {
       'tr': 'Düello yap ya da oda kurup arkadaşlarını çağır.',
     },
     K.onbDuelBullet: {
-      'ku': 'Pêşbirka bilez û gera rojê',
-      'tr': 'Hızlı düello ve günün turu',
+      'ku': 'Pêşbirka zindî û gera rojê',
+      'tr': 'Canlı düello ve günün turu',
     },
     // Quiz ipucu `alîkariyan` der (`K.finishQuizHint`). Tanıtım
     // "joker" deyince oyuncu aynı yardımcıyı Türkçe adla görür.
@@ -2833,7 +2851,7 @@ class Tr {
     // `contains('nîv')` taramasını kör eder — turnûva ile aynı sınıf.
     K.howToPlayBody: {
       'ku':
-          '• Pêşbirka bilez: tavilê 10 pirsan bibersivîne.\n• Gera rojê: '
+          '• Pêşbirka zindî: tavilê 10 pirsan bibersivîne.\n• Gera rojê: '
           'her roj 10 pirsan bibersivîne û pêşketina xwe '
           'bibîne.\n• Ode ava bike: girêdana vexwendinê bi hevalên xwe '
           're parve bike û bi hev re bilîzin.\n• Mijar û ast: mijarekê '
@@ -2841,7 +2859,7 @@ class Tr {
           'radike.\n• Bersivên rast pûan û zêr didin; bersivên rast ên '
           'li pey hev pûanên zêde didin.',
       'tr':
-          '• Hızlı düello: hemen 10 soru cevapla.\n• Günün turu: '
+          '• Canlı düello: hemen 10 soru cevapla.\n• Günün turu: '
           'her gün 10 soruyu cevapla ve ilerlemeni gör.\n• Oda kur: '
           'davet bağlantısını arkadaşlarınla paylaş, birlikte '
           'yarışın.\n• Konu ve seviye: bir konu ve 5 seviyeden birini '
@@ -3947,6 +3965,12 @@ class K {
   static const quickDuelHeadline = 'play.quickDuel.headline';
   static const quickDuelDuration = 'play.quickDuel.duration';
   static const findOpponent = 'play.findOpponent';
+  static const pickOpponent = 'play.pickOpponent';
+  static const opponentRandom = 'play.opponent.random';
+  static const opponentFriend = 'play.opponent.friend';
+  static const opponentFriendLiveSub = 'play.opponent.friend.liveSub';
+  static const opponentFriendAsyncSub = 'play.opponent.friend.asyncSub';
+  static const roomTileSub = 'play.room.tileSub';
   static const roomOpenFailed = 'play.roomOpenFailed';
 
   // ── Öğrenme ekranı ─────────────────────────────────────────────────

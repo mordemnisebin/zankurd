@@ -390,11 +390,10 @@ void main() {
     });
   });
 
-  test('applied.md satırı bekliyor olarak işli', () {
+  test('applied.md satırı canlıda uygulandı olarak işli', () {
     final line = applied
         .split('\n')
         .firstWhere((l) => l.contains('2026-10-24_duello_inceleme_rovans.sql'));
-    expect(line, contains('bekliyor'));
-    expect(line, isNot(contains('✅')));
+    expect(line, contains('✅'));
   });
 }

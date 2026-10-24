@@ -9,6 +9,7 @@
 // ücret ve alt bant 390x844'te Ayarlar açıkken birlikte görünür; dokunulan
 // kilitli çip not açıkken kehribar çerçeveli "bakılan" olur ve not hangi
 // ücrete ait olduğunu söyler.
+import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,6 +39,7 @@ void main() {
       testShell(child: PlayHubScreen(repository: _Repo())),
     );
     await tester.pumpAndSettle();
+    await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));

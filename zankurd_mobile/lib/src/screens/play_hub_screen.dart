@@ -143,7 +143,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     }
   }
 
-  Future<void> _createOnlineRoom() async {
+  /// [friendDuel]: "Canlı düello → Arkadaş". İki kişilik özel oda kurulur
+  /// ve oda açılınca arkadaş davet sayfası kendiliğinden açılır (oda daveti
+  /// akışı aynen yeniden kullanılır; sunucuda davet yoksa kod paylaşımı
+  /// düğmesi odada durur).
+  Future<void> _createOnlineRoom({bool friendDuel = false}) async {
     if (_roomActionLoading) return;
 
     List<String> availableCategories = widget.repository.categories;
@@ -175,6 +179,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       builder: (sheetCtx) => _CustomRoomBottomSheet(
         availableCategories: availableCategories,
         coinBalance: coinBalance,
+        fixedMaxPlayers: friendDuel ? 2 : null,
       ),
     );
 
@@ -201,7 +206,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       AnalyticsService.instance.logActivationStep('room_created');
       await SocialPushPrompt.maybeAsk(context);
       if (!mounted) return;
-      _openRoom(room);
+      _openRoom(room, autoInvite: friendDuel);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'play hub create room failed');
       if (!mounted) return;
@@ -247,10 +252,67 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     }
   }
 
-  void _openRoom(GameRoom room) {
+  void _openRoom(GameRoom room, {bool autoInvite = false}) {
     Navigator.of(context).push(
-      AppRoute.to(RoomScreen(repository: widget.repository, initialRoom: room)),
+      AppRoute.to(
+        RoomScreen(
+          repository: widget.repository,
+          initialRoom: room,
+          autoInvite: autoInvite,
+        ),
+      ),
     );
+  }
+
+  /// Üç oyun seçiminden ilk ikisinin "rakip seçimi" sayfası: Rastgele ya da
+  /// Arkadaş. Eskiden dört ayrı kart vardı (hızlı düello, sırayla düello,
+  /// arkadaşına meydan oku, oda); "kiminle?" sorusu artık tek yerde sorulur,
+  /// "nasıl?" (canlı ya da sırayla) kart seçer.
+  Future<void> _pickOpponent(_PlayMode mode) async {
+    final friendAvailable =
+        mode == _PlayMode.live ||
+        (widget.asyncDuelEnabled && _challengeAvailable);
+    final choice = await showSahneSheet<_Opponent>(
+      context: context,
+      title: context.t(K.pickOpponent),
+      chromeKey: ValueKey('play-hub-opponent-sheet-${mode.name}'),
+      builder: (sheetContext) =>
+          _OpponentSheet(mode: mode, friendAvailable: friendAvailable),
+    );
+    if (choice == null || !mounted) return;
+    switch ((mode, choice)) {
+      case (_PlayMode.live, _Opponent.random):
+        await Navigator.of(
+          context,
+        ).push(AppRoute.to(MatchmakingScreen(repository: widget.repository)));
+      case (_PlayMode.live, _Opponent.friend):
+        await _createOnlineRoom(friendDuel: true);
+      case (_PlayMode.async, _Opponent.random):
+        await Navigator.of(
+          context,
+        ).push(AppRoute.to(AsyncDuelPlayScreen(repository: widget.repository)));
+        if (mounted) _asyncDuelInboxRefresh.value++;
+      case (_PlayMode.async, _Opponent.friend):
+        await showAsyncDuelChallengeSheet(context, widget.repository);
+        if (mounted) _asyncDuelInboxRefresh.value++;
+    }
+  }
+
+  /// "Oda" (3+ kişi): oda kur ya da kodla katıl.
+  Future<void> _openRoomSheet() async {
+    final choice = await showSahneSheet<_RoomChoice>(
+      context: context,
+      title: context.t(K.roomWord),
+      chromeKey: const ValueKey('play-hub-room-sheet'),
+      builder: (sheetContext) => const _RoomSheet(),
+    );
+    if (choice == null || !mounted) return;
+    switch (choice) {
+      case _RoomChoice.create:
+        await _createOnlineRoom();
+      case _RoomChoice.join:
+        await _showJoinSheet();
+    }
   }
 
   Future<void> _showJoinSheet() async {
@@ -454,39 +516,6 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     // ikincil düğme. Kodun biçimi katılma sayfasındaki alan ve doğrulama
     // mesajında yazılı. Kilitliyken açıklama satırı DEĞİŞMEZ (2026-09-30: sunucu
     // durumunu üstteki şerit söyler).
-    final createRoom = KeyedSubtree(
-      key: const ValueKey('play-hub-create-room'),
-      child: _lockedTap(
-        locked,
-        SahneButton.tonal(
-          tint: SahneTokens.of(context).nilTint,
-          foreground: SahneTokens.of(context).nilTx,
-          icon: AppIcons.peopleGroup,
-          label: context.t(K.createRoom),
-          // Anahtarın kendi ekran okuyucu düğümü olsun (düğme + dokunma).
-          semanticLabel: context.t(K.createRoom),
-          loading: _roomActionLoading,
-          expand: true,
-          onPressed: locked ? null : _createOnlineRoom,
-        ),
-      ),
-    );
-    final joinRoom = KeyedSubtree(
-      key: const ValueKey('play-hub-join-room'),
-      child: _lockedTap(
-        locked,
-        SahneButton.tonal(
-          tint: SahneTokens.of(context).nilTint,
-          foreground: SahneTokens.of(context).nilTx,
-          icon: AppIcons.hashtag,
-          label: context.t(K.joinByCode),
-          semanticLabel: context.t(K.joinByCode),
-          expand: true,
-          onPressed: locked ? null : _showJoinSheet,
-        ),
-      ),
-    );
-
     final dailyContest = _lockedTap(
       locked,
       SahneModeTile(
@@ -495,8 +524,10 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         role: SahneRole.race,
         // Hızlı düello ve sırayla düelloyla aynı kırmızı alt alta karışıyordu.
         deep: true,
+        // İkincil satır (2026-10-24): üç büyük kart artık yalnız oyun
+        // seçimleridir; günün turu çarkın yanında sade kart.
+        compact: true,
         title: context.t(K.dailyContest),
-        subtitle: context.t(K.tenQuestions),
         loading: _dailyLoading,
         onTap: locked || _dailyLoading ? null : _openDailyQuiz,
         semanticLabel:
@@ -567,27 +598,14 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         _QuickDuelHero(
           repository: widget.repository,
           onLockedTap: locked ? _notifyLocked : null,
-          onTap: locked
-              ? null
-              : () {
-                  Navigator.of(context).push(
-                    AppRoute.to(
-                      MatchmakingScreen(repository: widget.repository),
-                    ),
-                  );
-                },
+          onTap: locked ? null : () => unawaited(_pickOpponent(_PlayMode.live)),
         ),
-        // Sırayla düello (async 1v1): rakibin aynı anda çevrimiçi
-        // olmasını istemez — oyuncu şimdi oynar, rakip kendi
-        // zamanında. Sunucu göçü uygulanana dek bayrakla kapalı; kapalıyken
-        // "Etkinlikler" grubunda "Yakında" satırı olarak durur.
-        // Tasarım kurulu 2026-10-22 (ChatGPT, Gemini 3.1 Pro, Claude Opus;
-        // rakip kıyası TRT Bil Bakalım, Trivia Crack, Kahoot): üç model de
-        // liste satırlarının büyük renkli mod kartlarına dönmesini istedi.
-        // Hızlı düello kahramanı üstte kalır; altında 2×2 mod kartı:
-        // Sırayla düello (Boyax), Arkadaşına meydan oku (Nîl), Günün turu
-        // (Boyax), Günün çarkı (Zêr). Oda kur / Kodla katıl ve Arkadaşlar
-        // aşağıda kompakt kalır. Turuncu yalnız "Rakip bul"da.
+        // Üç oyun seçimi (2026-10-24, sahibin kararı "Hepsi şimdi"): Canlı
+        // düello (yukarıdaki kahraman), Sırayla düello ve Oda. Eskiden
+        // "Arkadaşına meydan oku" ve "Oda kur / Kodla katıl" ayrı kartlardı;
+        // arkadaşla oynamak artık canlı ve sırayla düellonun İÇİNDE "Arkadaş"
+        // seçeneğidir. Sırayla düello bayrakla kapalıyken "Etkinlikler"
+        // grubunda "Yakında" satırı olarak durur.
         const SizedBox(height: SahneSpace.cardGap),
         SahneModeGrid(
           children: [
@@ -608,57 +626,32 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                       : null,
                   onTap: locked
                       ? null
-                      : () async {
-                          await Navigator.of(context).push(
-                            AppRoute.to(
-                              AsyncDuelPlayScreen(
-                                repository: widget.repository,
-                              ),
-                            ),
-                          );
-                          if (mounted) _asyncDuelInboxRefresh.value++;
-                        },
+                      : () => unawaited(_pickOpponent(_PlayMode.async)),
                 ),
               ),
-            dailyContest,
+            _lockedTap(
+              locked,
+              SahneModeTile(
+                key: const ValueKey('play-hub-room'),
+                icon: AppIcons.peopleGroup,
+                // Oda çok oyunculu sosyal moddur: Nîl.
+                role: SahneRole.social,
+                title: context.t(K.roomWord),
+                subtitle: context.t(K.roomTileSub),
+                loading: _roomActionLoading,
+                onTap: locked || _roomActionLoading
+                    ? null
+                    : () => unawaited(_openRoomSheet()),
+                semanticLabel:
+                    '${context.t(K.roomWord)}. ${context.t(K.roomTileSub)}',
+              ),
+            ),
           ],
         ),
-        // İkincil, seyrek modlar (arkadaşa meydan oku, günün çarkı): sade
-        // tek satırlık kartlar; renk kimliği (Nîl, Zêr) korunur. Üç büyük
-        // kart (hızlı düello, sırayla düello, günün turu) öne çıkar.
+        // İkincil modlar (günün turu, günün çarkı): sade tek satırlık
+        // kartlar; renk kimliği korunur.
         const SizedBox(height: SahneSpace.x3),
-        SahneModeGrid(
-          children: [
-            if (widget.asyncDuelEnabled && _challengeAvailable)
-              _lockedTap(
-                locked,
-                SahneModeTile(
-                  key: const ValueKey('play-hub-async-duel-challenge'),
-                  icon: AppIcons.peopleGroup,
-                  // Arkadaşa meydan okumak sosyal moddur: Nîl.
-                  role: SahneRole.social,
-                  compact: true,
-                  title: context.t(K.challengeEntry),
-                  onTap: locked
-                      ? null
-                      : () async {
-                          await showAsyncDuelChallengeSheet(
-                            context,
-                            widget.repository,
-                          );
-                          if (mounted) _asyncDuelInboxRefresh.value++;
-                        },
-                ),
-              ),
-            wheelTile,
-          ],
-        ),
-        // Kurul 2026-10-20 (GLM, Nemotron): sayfa yarı boş duruyordu. Yeni
-        // öğe eklenmedi; "Günün soruları" zaten görünür. Gruplar arası
-        // dikey ritim bir kademe açıldı (cardGap → x5) ki içerik yukarıya
-        // yığılmış değil, sayfaya yayılmış okunsun.
-        const SizedBox(height: SahneSpace.x5),
-        _RoomActions(createRoom: createRoom, joinRoom: joinRoom),
+        SahneModeGrid(children: [dailyContest, wheelTile]),
         const SizedBox(height: SahneSpace.x3),
         SahneListGroup(children: [friendsRow]),
         if (!widget.asyncDuelEnabled || kTournamentEnabled) ...[
@@ -749,45 +742,77 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   }
 }
 
-/// Arkadaşlarla oynamanın iki yolu: tek açıklama satırı + yan yana iki
-/// ikincil düğme. Sığmazlarsa (dar ekran, büyük yazı) alt alta dizilir;
-/// "Kodla katıl" Kurmancîde ("Bi kodê têkeve") yarım genişliğe iki
-/// satırdan fazla düşmesin diye eşik yazı ölçeğine de bakar.
-class _RoomActions extends StatelessWidget {
-  const _RoomActions({required this.createRoom, required this.joinRoom});
+enum _PlayMode { live, async }
 
-  final Widget createRoom;
-  final Widget joinRoom;
+enum _Opponent { random, friend }
+
+enum _RoomChoice { create, join }
+
+/// "Rakip seçimi" sayfasının içeriği: Rastgele ya da Arkadaş. Aynı iki satır
+/// canlı ve sırayla düelloda durur; yalnız açıklamalar kipe göre değişir.
+class _OpponentSheet extends StatelessWidget {
+  const _OpponentSheet({required this.mode, required this.friendAvailable});
+
+  final _PlayMode mode;
+
+  /// Sırayla düelloda sunucuda meydan okuma RPC'leri yoksa "Arkadaş" gizlenir.
+  final bool friendAvailable;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    final live = mode == _PlayMode.live;
+    return SahneListGroup(
       children: [
-        LayoutBuilder(
-          builder: (context, constraints) {
-            final largeText = MediaQuery.textScalerOf(context).scale(16) > 20;
-            if (constraints.maxWidth < 320 || largeText) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  createRoom,
-                  const SizedBox(height: SahneSpace.x2),
-                  joinRoom,
-                ],
-              );
-            }
-            return IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(child: createRoom),
-                  const SizedBox(width: SahneSpace.x3),
-                  Expanded(child: joinRoom),
-                ],
-              ),
-            );
-          },
+        SahneListRow.icon(
+          key: const ValueKey('opponent-sheet-random'),
+          icon: AppIcons.shuffle,
+          role: SahneRole.race,
+          title: context.t(K.opponentRandom),
+          subtitle: context.t(live ? K.quickDuelHeadline : K.asyncDuelSub),
+          chevron: true,
+          onTap: () => Navigator.of(context).pop(_Opponent.random),
+        ),
+        if (friendAvailable)
+          SahneListRow.icon(
+            key: const ValueKey('opponent-sheet-friend'),
+            icon: AppIcons.userPlus,
+            role: SahneRole.social,
+            title: context.t(K.opponentFriend),
+            subtitle: context.t(
+              live ? K.opponentFriendLiveSub : K.opponentFriendAsyncSub,
+            ),
+            chevron: true,
+            onTap: () => Navigator.of(context).pop(_Opponent.friend),
+          ),
+      ],
+    );
+  }
+}
+
+/// "Oda" sayfasının içeriği: oda kur ya da kodla katıl.
+class _RoomSheet extends StatelessWidget {
+  const _RoomSheet();
+
+  @override
+  Widget build(BuildContext context) {
+    return SahneListGroup(
+      children: [
+        SahneListRow.icon(
+          key: const ValueKey('play-hub-create-room'),
+          icon: AppIcons.peopleGroup,
+          role: SahneRole.social,
+          title: context.t(K.createRoom),
+          subtitle: context.t(K.createRoomSub),
+          chevron: true,
+          onTap: () => Navigator.of(context).pop(_RoomChoice.create),
+        ),
+        SahneListRow.icon(
+          key: const ValueKey('play-hub-join-room'),
+          icon: AppIcons.hashtag,
+          role: SahneRole.social,
+          title: context.t(K.joinByCode),
+          chevron: true,
+          onTap: () => Navigator.of(context).pop(_RoomChoice.join),
         ),
       ],
     );
@@ -888,7 +913,7 @@ class _QuickDuelHeroState extends State<_QuickDuelHero> {
       button: true,
       enabled: enabled,
       excludeSemantics: true,
-      label: '${context.t(K.quickDuel)}. ${context.t(K.findOpponent)}',
+      label: '${context.t(K.quickDuel)}. ${context.t(K.pickOpponent)}',
       onTap: onTap,
       // Boyax DOLU kahraman (2026-10-20 renk ve canlılık): yarış kimliği tek
       // bakışta. Sadeleştirme beyaz bir karta indirmişti; Boyax ekranda
@@ -973,7 +998,7 @@ class _QuickDuelHeroState extends State<_QuickDuelHero> {
                   excludeFromSemantics: true,
                   onTap: onTap == null ? widget.onLockedTap : null,
                   child: SahneButton.primary(
-                    label: context.t(K.findOpponent),
+                    label: context.t(K.pickOpponent),
                     onPressed: onTap,
                     expand: true,
                   ),
@@ -1435,10 +1460,15 @@ class _CustomRoomBottomSheet extends StatefulWidget {
   const _CustomRoomBottomSheet({
     required this.availableCategories,
     required this.coinBalance,
+    this.fixedMaxPlayers,
   });
 
   final List<String> availableCategories;
   final int coinBalance;
+
+  /// Doluysa kapasite seçimi gizlenir ve oda bu kişi sayısıyla kurulur
+  /// ("Canlı düello → Arkadaş": iki kişilik özel oda).
+  final int? fixedMaxPlayers;
 
   @override
   State<_CustomRoomBottomSheet> createState() => _CustomRoomBottomSheetState();
@@ -1492,6 +1522,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
   @override
   void initState() {
     super.initState();
+    _selectedMaxPlayers = widget.fixedMaxPlayers ?? _selectedMaxPlayers;
     _selectedEntryFee = _affordableFee(_selectedEntryFee);
   }
 
@@ -1683,60 +1714,64 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                               ),
                               const SizedBox(height: SahneSpace.x3),
 
-                              // Oyuncu sayısı (kapasite). 2 = bugünkü iki kişilik oda;
-                              // daha fazlası kalabalık oda: ev sahibi >= 2 kişiyle
-                              // başlatır, sonuç sıralı gelir.
-                              Text(
-                                context.t(K.roomCapacityLabel),
-                                style: SahneType.bodyStrong.copyWith(
-                                  color: SahneTokens.of(context).tx,
-                                ),
-                              ),
-                              const SizedBox(height: SahneSpace.x2),
-                              // TEK satır, yalnız rakamlar ("Oyuncu sayısı" başlığı
-                              // birimi söyler; ekran okuyucu "N kişi" okur). İkinci
-                              // satırın yarısı sabit "Odayı aç" altında kaldığında
-                              // "boş çerçeve" gibi okunuyordu (iki tasarım turu).
-                              // 320'de 6x48 sığmaz: 2x3'e iner, hiç yetim çip yok.
-                              _ChoiceGrid(
-                                columns: GameRoom.allowedMaxPlayers.length,
-                                minCellWidth: sahneTapTarget,
-                                fallbackColumns: 3,
-                                // 6 çip 390 pt telefonda 48'e ancak 6 pt aralıkla sığar.
-                                gap: 6,
-                                children: [
-                                  for (final capacity
-                                      in GameRoom.allowedMaxPlayers)
-                                    _choiceChip(
-                                      context,
-                                      key: ValueKey(
-                                        'custom-room-capacity-$capacity',
-                                      ),
-                                      label: '$capacity',
-                                      semanticLabel: context.t(
-                                        K.roomCapacityOption,
-                                        {'n': '$capacity'},
-                                      ),
-                                      selected: _selectedMaxPlayers == capacity,
-                                      onTap: () => setState(
-                                        () => _selectedMaxPlayers = capacity,
-                                      ),
-                                    ),
-                                ],
-                              ),
-                              if (_selectedMaxPlayers > 2) ...[
-                                const SizedBox(height: SahneSpace.x2),
+                              // Arkadaşla canlı düelloda kapasite 2'ye SABİTTİR; seçim gizlenir.
+                              if (widget.fixedMaxPlayers == null) ...[
+                                // Oyuncu sayısı (kapasite). 2 = bugünkü iki kişilik oda;
+                                // daha fazlası kalabalık oda: ev sahibi >= 2 kişiyle
+                                // başlatır, sonuç sıralı gelir.
                                 Text(
-                                  context.t(K.roomCapacityHint),
-                                  key: const ValueKey(
-                                    'custom-room-capacity-hint',
-                                  ),
-                                  style: SahneType.caption.copyWith(
-                                    color: SahneTokens.of(context).tx2,
+                                  context.t(K.roomCapacityLabel),
+                                  style: SahneType.bodyStrong.copyWith(
+                                    color: SahneTokens.of(context).tx,
                                   ),
                                 ),
+                                const SizedBox(height: SahneSpace.x2),
+                                // TEK satır, yalnız rakamlar ("Oyuncu sayısı" başlığı
+                                // birimi söyler; ekran okuyucu "N kişi" okur). İkinci
+                                // satırın yarısı sabit "Odayı aç" altında kaldığında
+                                // "boş çerçeve" gibi okunuyordu (iki tasarım turu).
+                                // 320'de 6x48 sığmaz: 2x3'e iner, hiç yetim çip yok.
+                                _ChoiceGrid(
+                                  columns: GameRoom.allowedMaxPlayers.length,
+                                  minCellWidth: sahneTapTarget,
+                                  fallbackColumns: 3,
+                                  // 6 çip 390 pt telefonda 48'e ancak 6 pt aralıkla sığar.
+                                  gap: 6,
+                                  children: [
+                                    for (final capacity
+                                        in GameRoom.allowedMaxPlayers)
+                                      _choiceChip(
+                                        context,
+                                        key: ValueKey(
+                                          'custom-room-capacity-$capacity',
+                                        ),
+                                        label: '$capacity',
+                                        semanticLabel: context.t(
+                                          K.roomCapacityOption,
+                                          {'n': '$capacity'},
+                                        ),
+                                        selected:
+                                            _selectedMaxPlayers == capacity,
+                                        onTap: () => setState(
+                                          () => _selectedMaxPlayers = capacity,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                if (_selectedMaxPlayers > 2) ...[
+                                  const SizedBox(height: SahneSpace.x2),
+                                  Text(
+                                    context.t(K.roomCapacityHint),
+                                    key: const ValueKey(
+                                      'custom-room-capacity-hint',
+                                    ),
+                                    style: SahneType.caption.copyWith(
+                                      color: SahneTokens.of(context).tx2,
+                                    ),
+                                  ),
+                                ],
+                                const SizedBox(height: SahneSpace.x3),
                               ],
-                              const SizedBox(height: SahneSpace.x3),
 
                               // Kurul 3. tur 2026-10-20: üç ikincil grup (soru sayısı,
                               // süre, ücret) tek "Ayarlar" satırında toplandı; özet
