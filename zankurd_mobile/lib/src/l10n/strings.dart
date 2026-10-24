@@ -3372,13 +3372,17 @@ class Tr {
       'tr': 'Soru karşılaştırması yüklenemedi.',
     },
     K.asyncDuelReviewBlockedNote: {
-      'ku': 'Hevrik hate astengkirin; tenê bersivên te tên nîşandan.',
+      'ku': 'Hevrik astengkirî ye; tenê bersivên te tên nîşandan.',
       'tr': 'Rakip engelli; yalnız senin cevapların gösteriliyor.',
     },
     K.asyncDuelRematch: {'ku': 'Pêşbirka vegerê', 'tr': 'Rövanş'},
     K.asyncDuelRematchFriendsOnly: {
-      'ku': 'Pêşbirka vegerê tenê bi hevalan re ye.',
-      'tr': 'Rövanş yalnız arkadaşlarla açılır.',
+      'ku':
+          'Pêşbirka vegerê tenê bi hevalan û hevrikên ku te di heft rojên '
+          'dawî de bi wan re lîstiye re tê vekirin.',
+      'tr':
+          'Rövanş yalnız arkadaşlarla ve son 7 günde birlikte oynadığın '
+          'rakiplerle açılır.',
     },
     K.asyncDuelRematchUnavailable: {
       'ku': 'Bi vî hevrikî re pêşbirk nayê vekirin.',

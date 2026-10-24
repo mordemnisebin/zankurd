@@ -655,7 +655,7 @@ void main() {
         find.byKey(const ValueKey('async-duel-result-rematch')),
       );
       expect(rematch.onPressed, isNull);
-      expect(find.text('Rövanş yalnız arkadaşlarla açılır.'), findsOneWidget);
+      expect(find.text('Rövanş yalnız arkadaşlarla ve son 7 günde birlikte oynadığın rakiplerle açılır.'), findsOneWidget);
     });
 
     testWidgets('rakip kimliği yok (silinmiş profil): rövanş kapalı', (
