@@ -428,11 +428,11 @@ class Tr {
       'tr': 'İki kişilik oda kur, arkadaşını davet et',
     },
     K.opponentFriendAsyncSub: {
-      'ku': 'Bi girêdan an ji navnîşa hevalan vexwîne',
+      'ku': 'Bi girêdanê an jî ji navnîşa hevalan vexwîne',
       'tr': 'Bağlantıyla ya da listeden meydan oku',
     },
     K.roomTileSub: {
-      'ku': 'Ji 3 kesî zêdetir, bi kodê',
+      'ku': '3 kes û zêdetir, bi kodê',
       'tr': '3 kişi ve üstü, kodla',
     },
     K.roomOpenFailed: {
