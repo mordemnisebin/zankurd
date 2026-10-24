@@ -1335,8 +1335,8 @@ class Tr {
     K.kulturelNot: {'ku': 'Nota çandî', 'tr': 'Kültürel not'},
     K.derseBasla: {'ku': 'Dest bi dersê bike', 'tr': 'Derse başla'},
     K.huhuGununSorulukEtkinligi: {
-      'ku': 'Pirsên rojê amade ne. Îro hînbûnê bidomîne.',
-      'tr': 'Günün soruları hazır. Bugün öğrenmeye devam et.',
+      'ku': 'Gera rojê amade ye. Îro hînbûnê bidomîne.',
+      'tr': 'Günün turu hazır. Bugün öğrenmeye devam et.',
     },
     K.zanaDiyorKiYeni: {
       'ku': 'Zana dibêje: hevalekî nû',
@@ -2629,8 +2629,8 @@ class Tr {
     // oyuncu aynı açıklamayı iki adla görür; çekim `Şîroveyê
     // bibihîze` ile aynıdır.
     K.onbDailyBullet: {
-      'ku': 'Di pirsên rojê de dem tune, şîroveya her pirsê heye.',
-      'tr': 'Günün sorularında süre yok, her sorunun açıklaması var.',
+      'ku': 'Di Pratîkê de dem tune, şîroveya her pirsê heye.',
+      'tr': 'Pratikte süre yok, her sorunun açıklaması var.',
     },
     K.onbCompeteTitle: {
       'ku': 'Bi hevalên xwe re pêşbirkê bike',

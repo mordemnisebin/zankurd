@@ -195,7 +195,7 @@ void main() {
     expect(Tr.of(K.explanationTitle, AppLanguage.ku), 'Şîrove');
     expect(
       Tr.of(K.onbDailyBullet, AppLanguage.ku),
-      'Di pirsên rojê de dem tune, şîroveya her pirsê heye.',
+      'Di Pratîkê de dem tune, şîroveya her pirsê heye.',
     );
     expect(
       Tr.of(K.quizTutorialUntimedBody, AppLanguage.ku),
@@ -400,11 +400,11 @@ void main() {
     // tek kök olmalı — uygulamanın sloganı da `hîn bibe` diyor.
     expect(
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.ku),
-      'Pirsên rojê amade ne. Îro hînbûnê bidomîne.',
+      'Gera rojê amade ye. Îro hînbûnê bidomîne.',
     );
     expect(
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.tr),
-      'Günün soruları hazır. Bugün öğrenmeye devam et.',
+      'Günün turu hazır. Bugün öğrenmeye devam et.',
     );
     expect(
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.tr).toLowerCase(),

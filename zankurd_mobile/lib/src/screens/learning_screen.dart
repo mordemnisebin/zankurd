@@ -938,18 +938,31 @@ class _TopicActions extends StatelessWidget {
       key: const ValueKey('learning-topic-actions'),
       builder: (context, constraints) {
         final largeText = MediaQuery.textScalerOf(context).scale(16) > 20;
-        if (constraints.maxWidth < 320 || largeText) {
+        // Yan yana yalnız iki etiket de TEK satıra sığıyorsa: Kurmancî
+        // "Bi kartan bixwîne" yarım genişlikte iki satıra inip yanındaki
+        // tek satırlık düğmeden farklı görünüyordu (tur 37, 2026-10-24).
+        // Sığmıyorsa alt alta, tam genişlikte durur.
+        if (constraints.maxWidth < 320 ||
+            largeText ||
+            !_fitsOneLine(context, constraints.maxWidth)) {
+          // Alt alta dururken de iki düğme aynı boyda: biri iki satıra
+          // inerken öteki tek satır kalınca çift dengesiz görünüyordu.
+          final height = _stackedHeight(context, constraints.maxWidth);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              practice,
+              ConstrainedBox(
+                constraints: BoxConstraints(minHeight: height),
+                child: practice,
+              ),
               const SizedBox(height: SahneSpace.x2),
-              flashcards,
+              ConstrainedBox(
+                constraints: BoxConstraints(minHeight: height),
+                child: flashcards,
+              ),
             ],
           );
         }
-        // İki düğme aynı boyda: Kurmancîde "Pirsan bibersivîne" iki satıra
-        // inerken yanındaki tek satırlık düğme kısa kalıyordu.
         return IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -962,6 +975,55 @@ class _TopicActions extends StatelessWidget {
         );
       },
     );
+  }
+
+  /// Alt alta düğmelerin ortak yüksekliği: en uzun etiketin satır sayısına
+  /// göre (dikey boşluk 12+12, kenar 3, en az 52).
+  double _stackedHeight(BuildContext context, double maxWidth) {
+    final room = maxWidth - 2 * (SahneSpace.x3 + 1.5) - 20 - SahneSpace.x2;
+    final scaler = MediaQuery.textScalerOf(context);
+    var tallest = 0.0;
+    for (final key in [K.soruCoz, K.flasKart]) {
+      final painter = TextPainter(
+        text: TextSpan(
+          text: Tr.forKu(key, isKu),
+          style: SahneType.button.copyWith(
+            fontFamily: SahneType.button.fontFamily,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+        textScaler: scaler,
+        textAlign: TextAlign.center,
+      )..layout(maxWidth: room > 0 ? room : 1);
+      tallest = math.max(tallest, painter.height);
+      painter.dispose();
+    }
+    return math.max(52, tallest + 2 * SahneSpace.x3 + 3);
+  }
+
+  /// İki etiket de yarım genişlikteki düğmenin içinde tek satıra sığar mı?
+  /// Düğme: yan boşluk 12 + 1,5 kenar, 20 px ikon + 8 px aralık.
+  bool _fitsOneLine(BuildContext context, double maxWidth) {
+    final half = (maxWidth - SahneSpace.x3) / 2;
+    final room = half - 2 * (SahneSpace.x3 + 1.5) - 20 - SahneSpace.x2;
+    final scaler = MediaQuery.textScalerOf(context);
+    for (final key in [K.soruCoz, K.flasKart]) {
+      final painter = TextPainter(
+        text: TextSpan(
+          text: Tr.forKu(key, isKu),
+          style: SahneType.button.copyWith(
+            fontFamily: SahneType.button.fontFamily,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      final width = painter.width;
+      painter.dispose();
+      if (width > room) return false;
+    }
+    return true;
   }
 }
 

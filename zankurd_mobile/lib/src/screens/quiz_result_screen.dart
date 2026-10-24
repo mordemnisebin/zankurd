@@ -1013,6 +1013,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // uygulandı. Buradan sonrası yalnız otomatik yerel yazımlardır.
     final streak = streakOutcome.streak;
     final isNewDay = streakOutcome.isNewDay;
+    // Misafir sayacı oyunun bittiği anda, ilerleme yazımından BAĞIMSIZ
+    // sayılır (ekran kapansa ya da seviye atlansa oyun düşmesin).
+    final guestSaveCount = GuestSavePrompt.countGame(context);
     final mistakeStore = await MistakeStore.load();
     final achievementStore = await AchievementStore.load();
     final newAchievements = await achievementStore.recordQuizResult(
@@ -1187,9 +1190,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           _showLevelUpDialog(context, xpStore.currentLevel);
         } else {
           // Misafire üç oyunda bir "hesabını kaydet" önerisi. Seviye atlama
-          // kutusunun üstüne binmesin diye o turda sayılmaz; sonuç animasyonu
-          // otursun diye kısa gecikmeyle açılır. Oyunu asla engellemez.
-          unawaited(GuestSavePrompt.afterGame(context));
+          // kutusunun üstüne binmesin diye o turda gösterilmez (oyun yine
+          // sayılır; öneri bir sonraki oyunda gelir). Oyunu asla engellemez.
+          unawaited(
+            guestSaveCount.then((service) {
+              if (!mounted) return null;
+              return GuestSavePrompt.presentIfDue(context, service);
+            }),
+          );
         }
       });
     }

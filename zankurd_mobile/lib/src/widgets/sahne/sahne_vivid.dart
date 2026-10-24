@@ -488,7 +488,9 @@ class _SahneModeTileState extends State<SahneModeTile> {
                                   const SizedBox(height: 2),
                                   Text(
                                     subtitle,
-                                    maxLines: 2,
+                                    // Dört satıra kadar: Kurmancî "Yarış" kapısı iki
+                                    // satırda "…" ile kesiliyordu (tur 37).
+                                    maxLines: 4,
                                     overflow: TextOverflow.ellipsis,
                                     style: SahneType.caption.copyWith(
                                       color: soft,
