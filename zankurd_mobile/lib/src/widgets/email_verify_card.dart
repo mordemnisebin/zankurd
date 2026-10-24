@@ -16,7 +16,7 @@ import 'sahne/sahne.dart';
 /// durumda kullanıcıyı rahatsız etmek yerine susar. Oyun ve sıralama bu karta
 /// BAĞLI DEĞİLDİR.
 ///
-/// Akış: düğme koda gönderir → alt sayfada 6 haneli kod girilir →
+/// Akış: düğme koda gönderir → alt sayfada e-postadaki kod girilir →
 /// `verifyCode` + `markVerified`. Tekrar gönderme [resendCooldown] (60 sn)
 /// bekler; sayfa kapatılıp kart yeniden dokunulsa da bekleme sürerken yeni
 /// e-posta GİTMEZ, aynı sayfa açılır.
@@ -225,7 +225,7 @@ class _CodeSheetState extends State<_CodeSheet> {
 
   Future<void> _confirm() async {
     final code = _controller.text.trim();
-    if (_busy || code.length != 6) return;
+    if (_busy || !isPlausibleEmailCode(code)) return;
     setState(() {
       _busy = true;
       _errorKey = null;
@@ -256,7 +256,7 @@ class _CodeSheetState extends State<_CodeSheet> {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final canConfirm = !_busy && _controller.text.trim().length == 6;
+    final canConfirm = !_busy && isPlausibleEmailCode(_controller.text.trim());
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.viewInsetsOf(context).bottom + SahneSpace.x4,
@@ -282,7 +282,7 @@ class _CodeSheetState extends State<_CodeSheet> {
             enableSuggestions: false,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
-              LengthLimitingTextInputFormatter(6),
+              LengthLimitingTextInputFormatter(10),
             ],
             onChanged: (_) => setState(() => _errorKey = null),
             onSubmitted: (_) => _confirm(),

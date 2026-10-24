@@ -6,7 +6,7 @@
 // noktası düşer ya da tarihî gün şeridi yanlış günde çıkarsa hiçbir derleme
 // hatası olmaz — yalnız uygulamanın kimliği sessizce eksilir. Bekçi:
 //   * sayfa KU ve TR'de giriş, sekiz madde, kapanış ve paylaş düğmesini çizer;
-//   * paylaş düğmesi kapanış metni + zankurd.com bağlantısını verir;
+//   * paylaş düğmesi kapanış metni + mağaza bağlantılarını verir (zankurd.com değil);
 //   * profil, ayarlar, ana sayfa slogan satırı ve onboarding girişi vardır;
 //   * şerit YALNIZ 21 Şubat, 8/16/21 Mart ve 15 Mayıs'ta görünür
 //     ([SahneClock] ile sabitlenir);
@@ -114,25 +114,26 @@ void main() {
     });
   }
 
-  testWidgets(
-    'paylaş düğmesi kapanış metni ve zankurd.com bağlantısını verir',
-    (tester) async {
-      String? shared;
-      await tester.pumpWidget(
-        testShell(
-          languageProvider: kurmanciLang(),
-          child: DozaMeScreen(onShare: (text) async => shared = text),
-        ),
-      );
-      await tester.pump();
-      await tester.tap(find.byKey(const ValueKey('doza-share-button')));
-      await tester.pump();
-      expect(
-        shared,
-        '${Tr.of(K.dozaClosing, AppLanguage.ku)}\nhttps://zankurd.com',
-      );
-    },
-  );
+  testWidgets('paylaş düğmesi kapanış metni ve mağaza bağlantılarını verir', (
+    tester,
+  ) async {
+    String? shared;
+    await tester.pumpWidget(
+      testShell(
+        languageProvider: kurmanciLang(),
+        child: DozaMeScreen(onShare: (text) async => shared = text),
+      ),
+    );
+    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('doza-share-button')));
+    await tester.pump();
+    expect(
+      shared,
+      '${Tr.of(K.dozaClosing, AppLanguage.ku)}\n${DozaMeScreen.appLink}',
+    );
+    expect(shared, contains('apps.apple.com'));
+    expect(shared, isNot(contains('zankurd.com')));
+  });
 
   testWidgets('profilde Doza me girişi var ve sayfayı açar', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 1600));

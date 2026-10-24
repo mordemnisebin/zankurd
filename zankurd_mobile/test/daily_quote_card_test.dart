@@ -155,7 +155,14 @@ void main() {
     await pumpCard(t, ku: false, quotes: quotes, onShare: shared.add);
     await t.tap(find.byKey(const ValueKey('home-daily-quote-share')));
     final q = DailyQuoteStore.pick(quotes)!;
-    expect(shared, ['“${q.ku}” — ${q.tr}\n${q.source}\nZanKurd · zankurd.com']);
+    expect(shared, [DailyQuoteCard.shareText(q)]);
+    expect(
+      shared.single,
+      startsWith('“${q.ku}” — ${q.tr}\n${q.source}\nZanKurd\n'),
+    );
+    expect(shared.single, contains('apps.apple.com'));
+    expect(shared.single, contains('play.google.com'));
+    expect(shared.single, isNot(contains('zankurd.com')));
   });
 
   for (final ku in [false, true]) {

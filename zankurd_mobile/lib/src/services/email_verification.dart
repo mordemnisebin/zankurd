@@ -2,7 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../utils/error_reporter.dart';
 
-/// Nazik e-posta doğrulamasının arka ucu (6 haneli kod).
+/// Nazik e-posta doğrulamasının arka ucu (e-posta kodu; uzunluğu sunucu belirler).
 ///
 /// ## Niçin ayrı bir kapı
 ///
@@ -27,7 +27,7 @@ abstract class EmailVerificationGateway {
   /// Sunucudaki doğrulama durumu; bilinmiyorsa (çevrimdışı) null.
   Future<bool?> isVerified();
 
-  /// Adrese 6 haneli kodu yollar.
+  /// Adrese doğrulama kodunu yollar.
   Future<void> sendCode();
 
   /// Kodu doğrular. Hata `EmailVerificationException` fırlatır.
@@ -159,3 +159,11 @@ class SupabaseEmailVerificationGateway implements EmailVerificationGateway {
     }
   }
 }
+
+/// E-posta kodu girişi kabul edilebilir mi: 6–10 rakam.
+///
+/// Supabase panelindeki "Email OTP Length" 6 ile 10 arasında ayarlanabilir;
+/// 2026-10-25'te proje 8 haneli kod yollarken uygulama tam 6 hane istiyordu
+/// ve doğrulama hiç bitmiyordu (TestFlight 37). Uzunluğu sunucu belirler;
+/// uygulama yalnız makul aralığı süzer, yanlış kodu sunucu reddeder.
+bool isPlausibleEmailCode(String code) => RegExp(r'^\d{6,10}$').hasMatch(code);

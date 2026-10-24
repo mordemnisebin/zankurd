@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../config/app_config.dart';
 import '../../data/daily_quote_store.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
@@ -41,9 +42,15 @@ class DailyQuoteCard extends StatefulWidget {
   /// geri bildiriminde "yanlış yerde" diye bildirildi (2026-10-23).
   static String quoted(String text) => '“$text”';
 
-  /// Paylaşım metni.
-  static String shareText(DailyQuote q) =>
-      '${quoted(q.ku)} — ${q.tr}\n${q.source}\nZanKurd · zankurd.com';
+  /// Paylaşım metni. Sondaki bağlantılar mağazaya gider; zankurd.com web
+  /// sürümüne götürüyordu (2026-10-25).
+  static String shareText(DailyQuote q) => [
+    '${quoted(q.ku)} — ${q.tr}',
+    q.source,
+    'ZanKurd',
+    'App Store: ${AppConfig.appStoreUrl}',
+    'Google Play: ${AppConfig.playStoreUrl}',
+  ].join('\n');
 
   @override
   State<DailyQuoteCard> createState() => _DailyQuoteCardState();

@@ -1081,11 +1081,15 @@
     ],
     "correctAnswer": "Linga",
     "correctAnswerTr": "Linga",
-    "acceptedAnswers": [],
-    "acceptedAnswersTr": [],
-    "explanation": "Doğru cümle: \"Linga min diêşe.\" (Bacağım, ayağım ağrıyor.)",
-    "explanationKu": "Hevoka rast ev e: \"Linga min diêşe.\"",
-    "explanationTr": "Doğru cümle: \"Linga min diêşe.\" (Bacağım, ayağım ağrıyor.)",
+    "acceptedAnswers": [
+      "Lingê"
+    ],
+    "acceptedAnswersTr": [
+      "Lingê"
+    ],
+    "explanation": "Doğru cümle: \"Linga min diêşe.\" (Bacağım ağrıyor.) \"Lingê min\" de doğrudur; ağızdan ağıza değişir.",
+    "explanationKu": "Hevoka rast ev e: \"Linga min diêşe.\" \"Lingê min\" jî rast e; li gorî herêmê diguhere.",
+    "explanationTr": "Doğru cümle: \"Linga min diêşe.\" (Bacağım ağrıyor.) \"Lingê min\" de doğrudur; ağızdan ağıza değişir.",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: body_1",

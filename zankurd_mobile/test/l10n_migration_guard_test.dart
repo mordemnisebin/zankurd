@@ -237,12 +237,20 @@ void main() {
       );
       expect(
         Tr.of(K.inviteShareText, AppLanguage.ku, {'tag': 'ZK-TEST'}),
-        'Ez li ZanKurdê bi Kurmancî hîn dibim! Koda min a vexwendinê: ZK-TEST. Tu jî were: https://zankurd.com',
+        'Ez li ZanKurdê bi Kurmancî hîn dibim! Koda min a vexwendinê: ZK-TEST. Tu jî were:',
       );
       expect(
         Tr.of(K.inviteShareText, AppLanguage.tr, {'tag': 'ZK-TEST'}),
-        'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: ZK-TEST. Sen de katıl: https://zankurd.com',
+        'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: ZK-TEST. Sen de katıl:',
       );
+      // TestFlight 37 (2026-10-25): davet metnindeki zankurd.com alıcıyı web
+      // sürümüne götürüyordu; mağaza bağlantıları (K.inviteStoreLinks) yeter.
+      for (final lang in AppLanguage.values) {
+        expect(
+          Tr.of(K.inviteShareText, lang, {'tag': 'ZK-TEST'}),
+          isNot(contains('zankurd.com')),
+        );
+      }
       expect(
         Tr.of(K.resultShareText, AppLanguage.ku, {
           'score': '120',

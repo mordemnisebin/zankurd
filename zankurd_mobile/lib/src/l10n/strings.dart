@@ -906,16 +906,16 @@ class Tr {
       'tr': 'E-postanı doğrula',
     },
     K.emailVerifyCardBody: {
-      'ku': 'Koda 6 hejmarî ya ku li e-nameya te tê, hesabê te ewle dike.',
-      'tr': 'E-postana gelen 6 haneli kod hesabını güvenceye alır.',
+      'ku': 'Koda ku li e-nameya te tê, hesabê te ewle dike.',
+      'tr': 'E-postana gelen kod hesabını güvenceye alır.',
     },
     K.emailVerifyCardAction: {'ku': 'Kodê bişîne', 'tr': 'Kodu gönder'},
     K.emailVerifySheetTitle: {'ku': 'Koda e-nameyê', 'tr': 'E-posta kodu'},
     K.emailVerifySentTo: {
-      'ku': 'Koda 6 hejmarî ji {email} re hat şandin.',
-      'tr': '6 haneli kod {email} adresine gönderildi.',
+      'ku': 'Kod ji {email} re hat şandin.',
+      'tr': 'Kod {email} adresine gönderildi.',
     },
-    K.emailVerifyCodeLabel: {'ku': 'Koda 6 hejmarî', 'tr': '6 haneli kod'},
+    K.emailVerifyCodeLabel: {'ku': 'Kod', 'tr': 'Kod'},
     K.emailVerifyConfirm: {'ku': 'Piştrast bike', 'tr': 'Doğrula'},
     K.emailVerifyResend: {'ku': 'Dîsa bişîne', 'tr': 'Tekrar gönder'},
     K.emailVerifyResendIn: {
@@ -1010,9 +1010,9 @@ class Tr {
     },
     K.inviteShareText: {
       'ku':
-          'Ez li ZanKurdê bi Kurmancî hîn dibim! Koda min a vexwendinê: {tag}. Tu jî were: https://zankurd.com',
+          'Ez li ZanKurdê bi Kurmancî hîn dibim! Koda min a vexwendinê: {tag}. Tu jî were:',
       'tr':
-          'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: {tag}. Sen de katıl: https://zankurd.com',
+          'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: {tag}. Sen de katıl:',
     },
     K.enterReferralCode: {'ku': 'Koda xelatê têxe', 'tr': 'Ödül kodu gir'},
     // 2026-09-30 simülatör: kod GİRME diyaloğu paylaşma cümlesini

@@ -157,6 +157,7 @@ void main() {
           isNot(equals(q.correctAnswer)),
           reason: '${q.id}: varyant kanonik yazımın kopyası',
         );
+        if (_juriOnayliAgizFarki[q.id]?.contains(accepted) ?? false) continue;
         expect(
           toTurkishKeyboard(q.correctAnswer),
           accepted,
@@ -169,3 +170,16 @@ void main() {
     }
   });
 }
+
+/// Klavye kolaylığı OLMAYAN, jüri onaylı ağız farkı cevapları.
+///
+/// Her satır kanıtıyla girer; liste büyüyorsa `acceptedAnswers` eşanlamlı
+/// çöplüğüne dönüyor demektir.
+///
+/// * `dersler2_2026_10_08_0032` «Lingê»: standart Kurmancîde `ling` eril
+///   ("lingê min"), birçok ağızda dişil ("linga min"). TestFlight 37'de
+///   sahibi «Lingê» yazıp yanlış sayıldı; Gemini 3.8 Flash ve Grok 4.7
+///   ikisinin de kabulünü önerdi (2026-10-25).
+const _juriOnayliAgizFarki = <String, Set<String>>{
+  'dersler2_2026_10_08_0032': {'Lingê'},
+};

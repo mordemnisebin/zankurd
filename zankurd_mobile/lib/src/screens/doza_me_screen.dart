@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../config/app_config.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_icons.dart';
@@ -23,8 +24,10 @@ class DozaMeScreen extends StatelessWidget {
   /// Paylaşım kancası (testler); verilmezse sistem paylaşım sayfası açılır.
   final Future<void> Function(String text)? onShare;
 
-  /// Paylaşılan metnin sonundaki uygulama bağlantısı.
-  static const appLink = 'https://zankurd.com';
+  /// Paylaşılan metnin sonundaki mağaza bağlantıları. zankurd.com web
+  /// sürümüne götürüyordu; alıcı uygulamayı mağazadan kursun (2026-10-25).
+  static const appLink =
+      'App Store: ${AppConfig.appStoreUrl}\nGoogle Play: ${AppConfig.playStoreUrl}';
 
   static const _items = <_Item>[
     _Item(K.dozaM1Head, K.dozaM1Body, AppIcons.bookOpenReader),

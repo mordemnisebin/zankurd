@@ -1,4 +1,4 @@
-/// Nazik e-posta doğrulama (6 haneli kod): profil kartı ve kod sayfası.
+/// Nazik e-posta doğrulama (e-postaya gelen kod): profil kartı ve kod sayfası.
 ///
 /// ## Kusur
 ///
@@ -219,14 +219,38 @@ void main() {
       expect(gateway.calls, ['send']);
     });
 
-    testWidgets('yalnız rakam kabul edilir ve 6 haneyle sınırlıdır', (
+    testWidgets('yalnız rakam kabul edilir ve 10 haneyle sınırlıdır', (
       tester,
     ) async {
       await _open(tester, _FakeGateway());
-      await tester.enterText(find.byKey(_code), '12ab34567890');
+      await tester.enterText(find.byKey(_code), '12ab3456789012');
       await tester.pump();
       final field = tester.widget<EditableText>(find.byType(EditableText));
-      expect(field.controller.text, '123456');
+      expect(field.controller.text, '1234567890');
+    });
+
+    // TestFlight 37 (2026-10-25): Supabase 8 haneli kod yolladı, alan 6'da
+    // kesiyordu ve doğrulama hiç bitmiyordu. Kod uzunluğunu sunucu belirler.
+    testWidgets('8 haneli kod da gönderilir', (tester) async {
+      final gateway = _FakeGateway();
+      await _open(tester, gateway);
+
+      await tester.enterText(find.byKey(_code), '12345678');
+      await tester.pump();
+      await tester.tap(find.byKey(_confirm));
+      await tester.pump();
+      await tester.pump();
+
+      expect(gateway.calls, contains('verify:12345678'));
+    });
+
+    test('isPlausibleEmailCode yalnız 6-10 rakamı kabul eder', () {
+      expect(isPlausibleEmailCode('12345'), isFalse);
+      expect(isPlausibleEmailCode('123456'), isTrue);
+      expect(isPlausibleEmailCode('12345678'), isTrue);
+      expect(isPlausibleEmailCode('1234567890'), isTrue);
+      expect(isPlausibleEmailCode('12345678901'), isFalse);
+      expect(isPlausibleEmailCode('12a456'), isFalse);
     });
 
     testWidgets('gönderim hatasında kod sayfası açılmaz', (tester) async {
