@@ -490,13 +490,13 @@ class Tr {
     K.tekrarQuestionsOnly: {'ku': '{count} pirs', 'tr': '{count} soru'},
     K.tekrarNone: {'ku': 'Îro dubarekirin tune', 'tr': 'Bugün tekrar yok'},
     K.tekrarNoneHint: {
-      'ku': 'Peyvên nû fêr bibe an bilîze.',
+      'ku': 'Fêrî peyvên nû bibe an bilîze.',
       'tr': 'Yeni kelimeler öğren ya da oyna.',
     },
     K.tekrarOpenLexicon: {'ku': 'Li ferhengê binêre', 'tr': 'Sözlüğe göz at'},
     K.tekrarWordsDone: {'ku': 'Peyv temam bûn', 'tr': 'Kelimeler tamam'},
     K.tekrarToQuestions: {
-      'ku': 'Biçe pirsan · {count}',
+      'ku': 'Derbasî pirsan bibe · {count}',
       'tr': 'Sorulara geç · {count}',
     },
     K.lexiconDirection: {'ku': 'Aliyê lêgerînê', 'tr': 'Arama yönü'},
@@ -530,7 +530,7 @@ class Tr {
     // kaldırıldı: Kelimelerim/Tekrar ile karışıyordu (2026-10-24, tek
     // "Tekrar" girişi kararı). Tur sonu cevap incelemesindeki görünüm
     // `K.flashcards` = "Soru kartları" (kartlar kelime değil soru taşır).
-    K.flashcardMode: {'ku': 'Bi kartan bixebite', 'tr': 'Kartlarla çalış'},
+    K.flashcardMode: {'ku': 'Bi kartan bixwîne', 'tr': 'Kartlarla çalış'},
     K.slidesLoadFail: {
       'ku': 'Slaytên dersê nehatin barkirin',
       'tr': 'Slaytlar yüklenemedi',
@@ -1138,7 +1138,7 @@ class Tr {
     },
     K.pPPPuan: {'ku': '{p0}. {p1}, {p2} pûan', 'tr': '{p0}. {p1}, {p2} puan'},
     K.soruCoz: {'ku': 'Bersiv bide', 'tr': 'Soru çöz'},
-    K.flasKart: {'ku': 'Bi kartan bixebite', 'tr': 'Kartlarla çalış'},
+    K.flasKart: {'ku': 'Bi kartan bixwîne', 'tr': 'Kartlarla çalış'},
     K.ceviriIcinDokun: {
       'ku': 'Ji bo wergerê bitikîne',
       'tr': 'Çeviri için dokun',
