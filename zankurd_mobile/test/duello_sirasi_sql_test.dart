@@ -448,7 +448,7 @@ void main() {
   });
 
   group('uygulama manifesti', () {
-    test('iki göç applied.md\'de "bekliyor" olarak kayıtlı', () {
+    test('iki göç applied.md\'de kayıtlı (bekliyor ya da uygulandı)', () {
       for (final f in [
         '2026-10-24_duello_sirasi.sql',
         '2026-10-24_duello_sirasi_cron.sql',
@@ -457,7 +457,12 @@ void main() {
             .split('\n')
             .firstWhere((l) => l.startsWith('| $f '), orElse: () => '');
         expect(row, isNotEmpty, reason: '$f satırı yok');
-        expect(row, contains('bekliyor'), reason: f);
+        // Uygulandıktan sonra satır ✅ olur (6321f912); kayıt var olmalı.
+        expect(
+          row.contains('bekliyor') || row.contains('✅'),
+          isTrue,
+          reason: f,
+        );
       }
     });
   });

@@ -13,6 +13,7 @@ import '../../widgets/app_state.dart';
 import '../../widgets/player_avatar.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../../widgets/zk_back_button.dart';
+import 'async_duel_nudge_button.dart';
 import 'async_duel_play_screen.dart';
 import 'async_duel_result_screen.dart';
 import 'async_duel_time.dart';
@@ -252,6 +253,8 @@ class _AsyncDuelInboxSectionState extends State<AsyncDuelInboxSection> {
                   _AsyncDuelSummaryRow(
                     key: ValueKey('async-duel-row-${summary.duelId}'),
                     summary: summary,
+                    repository: widget.repository,
+                    onNudged: _reload,
                     onTap: () => _openResult(summary),
                   ),
               ],
@@ -416,11 +419,20 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
   const _AsyncDuelSummaryRow({
     required this.summary,
     required this.onTap,
+    this.repository,
+    this.onNudged,
     super.key,
   });
 
   final AsyncDuelSummary summary;
   final VoidCallback onTap;
+
+  /// Verilirse "Rakip bekleniyor" satırında "Dürt" düğmesi çizilir
+  /// ([AsyncDuelSummary.canNudge]); verilmezse satır eskisi gibidir.
+  final ZanKurdRepository? repository;
+
+  /// Dürtme gitti ya da sunucu durumu değişti: liste tazelenir.
+  final VoidCallback? onNudged;
 
   @override
   Widget build(BuildContext context) {
@@ -511,10 +523,27 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
         showBar: true,
       );
     } else if (summary.isWaitingOpponent && left != null) {
-      footer = AsyncDuelTimeLeft(
+      final timeLeftText = AsyncDuelTimeLeft(
         key: const ValueKey('async-duel-time-left'),
         left: left,
       );
+      // Rakibin sırası: süre metninin altında "Dürt". Düğme kendi alt
+      // ağacında yaşar; satır dokunuşu (sonuç ekranı) ondan ayrıdır.
+      footer = repository != null && summary.canNudge(DateTime.now())
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                timeLeftText,
+                AsyncDuelNudgeButton(
+                  key: ValueKey('async-duel-nudge-${summary.duelId}'),
+                  repository: repository!,
+                  summary: summary,
+                  onChanged: onNudged,
+                ),
+              ],
+            )
+          : timeLeftText;
     } else {
       footer = null;
     }
@@ -652,6 +681,8 @@ class _AsyncDuelListScreenState extends State<AsyncDuelListScreen> {
                       _AsyncDuelSummaryRow(
                         key: ValueKey('async-duel-row-${summary.duelId}'),
                         summary: summary,
+                        repository: widget.repository,
+                        onNudged: _reload,
                         onTap: () => _openResult(summary),
                       ),
                   ],

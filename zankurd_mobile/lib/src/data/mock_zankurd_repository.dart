@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/async_duel.dart';
+import '../models/match_history.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/friend.dart';
@@ -930,6 +931,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
               : null,
           expiresAt: duel.expiresAt,
           isForfeit: duel.forfeitIWon != null,
+          lastNudgedAt: _asyncNudges[duel.id],
           createdAt: duel.createdAt,
           completedAt: duel.completedAt,
           seen: duel.seen,
@@ -948,6 +950,52 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<void> markAsyncDuelSeen(String duelId) async {
     _asyncDuels[duelId]?.seen = true;
   }
+
+  // ─── Dürtme + profil maç geçmişi ──────────────────────────────────────
+
+  /// Duello kimliği → son dürtmem. Sunucudaki `async_duel_nudges` gibi
+  /// düello başına tek kayıt; 12 saat dolmadan ikinci dürtme reddedilir.
+  final Map<String, DateTime> _asyncNudges = {};
+
+  /// Dürtme sayısı (testler push'un gittiğini buradan doğrular).
+  @visibleForTesting
+  final List<String> nudgedDuelIdsForTesting = [];
+
+  @override
+  Future<DateTime> nudgeAsyncDuel(String duelId) async {
+    final duel = _asyncDuels[duelId];
+    if (duel == null) throw Exception('Duel not found');
+    final now = DateTime.now();
+    if (!duel.myFinished) throw Exception('Finish your turn first');
+    if (duel.otherFinished) throw Exception('Opponent already finished');
+    if (!now.isBefore(duel.expiresAt)) throw Exception('Duel closed');
+    final last = _asyncNudges[duelId];
+    if (last != null && now.difference(last) < asyncDuelNudgeCooldown) {
+      throw Exception('Nudge cooldown');
+    }
+    _asyncNudges[duelId] = now;
+    nudgedDuelIdsForTesting.add(duelId);
+    return now;
+  }
+
+  /// Profil geçmişi testleri için sahte son maçlar (sunucu
+  /// `list_my_recent_matches` yerine).
+  @visibleForTesting
+  List<RecentMatch> recentMatchesForTesting = [];
+
+  /// Profil rekorları testleri için sahte sunucu sayıları.
+  @visibleForTesting
+  ServerRecords serverRecordsForTesting = const ServerRecords();
+
+  @override
+  Future<List<RecentMatch>> loadMyRecentMatches({int limit = 10}) async {
+    final sorted = [...recentMatchesForTesting]
+      ..sort((a, b) => b.playedAt.compareTo(a.playedAt));
+    return sorted.take(limit).toList();
+  }
+
+  @override
+  Future<ServerRecords> loadMyServerRecords() async => serverRecordsForTesting;
 
   // ─── Arkadaşa meydan okuma ───────────────────────────────────────────
 

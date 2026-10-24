@@ -365,6 +365,32 @@ class AsyncDuelResult {
   }
 }
 
+/// Aynı düelloda aynı rakibi yeniden dürtmek için beklenecek süre
+/// (sunucu: `nudge_async_duel`, düello+gönderici başına 12 saatte 1).
+const Duration asyncDuelNudgeCooldown = Duration(hours: 12);
+
+/// `nudge_async_duel` reddinin sınıfı. Metin PostgREST `message` alanından
+/// gelir (`toString()` taşır); tanınmayan her şey [other].
+enum AsyncDuelNudgeError { cooldown, limit, blocked, closed, notAllowed, other }
+
+AsyncDuelNudgeError classifyAsyncDuelNudgeError(Object error) {
+  final text = error.toString();
+  if (text.contains('Nudge cooldown')) return AsyncDuelNudgeError.cooldown;
+  // Aynı alıcıya farklı düellolardan 12 saatte 3'ten fazla dürtme.
+  if (text.contains('Nudge limit')) return AsyncDuelNudgeError.limit;
+  if (text.contains('Blocked')) return AsyncDuelNudgeError.blocked;
+  if (text.contains('Duel closed') || text.contains('Duel not found')) {
+    return AsyncDuelNudgeError.closed;
+  }
+  if (text.contains('Not a duel player') ||
+      text.contains('Finish your turn first') ||
+      text.contains('Opponent already finished') ||
+      text.contains('No opponent to nudge')) {
+    return AsyncDuelNudgeError.notAllowed;
+  }
+  return AsyncDuelNudgeError.other;
+}
+
 /// `list_my_async_duels`teki tek bir satır — "Düellolarım" kutusunun
 /// gösterdiği özet.
 ///
@@ -393,6 +419,7 @@ class AsyncDuelSummary {
     this.invitedName,
     this.expiresAt,
     this.isForfeit = false,
+    this.lastNudgedAt,
   });
 
   final String duelId;
@@ -419,6 +446,11 @@ class AsyncDuelSummary {
   /// Hükmen sonuç: süre doldu, bir taraf turunu bitirmedi. [outcome] bu
   /// durumda win/loss'tur ama karşı tarafın skoru olmayabilir (bitirmedi).
   final bool isForfeit;
+
+  /// Bu düelloda rakibi EN SON ne zaman dürttüğüm
+  /// (`list_my_async_duels.my_nudged_at`, 2026-10-24); hiç dürtmediysem ya da
+  /// sunucu göçü uygulanmadıysa null.
+  final DateTime? lastNudgedAt;
 
   /// Bu satırın "sonuç hazır" rozeti için görülüp görülmediği
   /// (`mark_async_duel_seen`).
@@ -460,6 +492,25 @@ class AsyncDuelSummary {
       myCorrect != null &&
       outcome == null &&
       (status == AsyncDuelStatus.open || status == AsyncDuelStatus.matched);
+
+  /// "Dürt" gösterilir mi: turumu bitirdim, rakip bitirmedi, süre dolmadı ve
+  /// dürtülecek biri (eşleşmiş rakip ya da davetli arkadaş) var. Kimsenin
+  /// almadığı bağlantı meydan okumasında dürtülecek kimse yoktur.
+  bool canNudge(DateTime now) =>
+      isWaitingOpponent &&
+      !isPastDeadline(now) &&
+      (opponentId != null ||
+          opponentName != null ||
+          invitedId != null ||
+          invitedName != null);
+
+  /// Sonraki dürtmeye kalan süre; dürtebiliyorsam null.
+  Duration? nudgeCooldownLeft(DateTime now) {
+    final last = lastNudgedAt;
+    if (last == null) return null;
+    final left = last.add(asyncDuelNudgeCooldown).difference(now);
+    return left > Duration.zero ? left : null;
+  }
 
   /// Bitiş anı [now]dan önceyse true; bitiş bilinmiyorsa false.
   bool isPastDeadline(DateTime now) {
@@ -520,6 +571,9 @@ class AsyncDuelSummary {
           ? null
           : DateTime.parse(json['expires_at'] as String),
       isForfeit: json['forfeit'] as bool? ?? false,
+      lastNudgedAt: json['my_nudged_at'] == null
+          ? null
+          : DateTime.parse(json['my_nudged_at'] as String),
     );
   }
 
@@ -548,5 +602,31 @@ class AsyncDuelSummary {
     invitedName: invitedName ?? invited?.displayName,
     expiresAt: expiresAt,
     isForfeit: isForfeit,
+    lastNudgedAt: lastNudgedAt,
+  );
+
+  /// Dürtme sonrası yerel kopya (sunucu listesi gelene dek bekleme sürer).
+  AsyncDuelSummary withNudgedAt(DateTime at) => AsyncDuelSummary(
+    duelId: duelId,
+    status: status,
+    role: role,
+    opponentName: opponentName,
+    opponentId: opponentId,
+    invitedId: invitedId,
+    opponentProfile: opponentProfile,
+    invitedProfile: invitedProfile,
+    categoryName: categoryName,
+    myCorrect: myCorrect,
+    opponentCorrect: opponentCorrect,
+    outcome: outcome,
+    createdAt: createdAt,
+    completedAt: completedAt,
+    seen: seen,
+    challengeCode: challengeCode,
+    incomingChallenge: incomingChallenge,
+    invitedName: invitedName,
+    expiresAt: expiresAt,
+    isForfeit: isForfeit,
+    lastNudgedAt: at,
   );
 }
