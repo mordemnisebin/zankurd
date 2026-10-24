@@ -246,7 +246,7 @@ void main() {
     testWidgets('Kurmancî: ad ve geri sayım', (tester) async {
       final repo = await _seed(tourDone: true);
       await _pumpHome(tester, repo, ku: true);
-      expect(find.text('Te gera îro qedand'), findsOneWidget);
+      expect(find.text('Te gera rojê qedand'), findsOneWidget);
       expect(find.textContaining('Gera nû piştî'), findsOneWidget);
       expect(find.text('Pratîk bike'), findsOneWidget);
       expect(find.text('Pirsên rojê'), findsNothing);

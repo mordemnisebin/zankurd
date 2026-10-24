@@ -2469,7 +2469,7 @@ class Tr {
     },
     K.homeDoorPlayReady: {'ku': 'Encam amade ye', 'tr': 'Sonuç hazır'},
     K.homeTourDoneTitle: {
-      'ku': 'Te gera îro qedand',
+      'ku': 'Te gera rojê qedand',
       'tr': 'Bugünkü turu bitirdin',
     },
     K.homeTourMyRank: {
