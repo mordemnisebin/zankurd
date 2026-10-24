@@ -349,6 +349,24 @@ begin
   -- Aynı kullanıcının eşzamanlı iki denemesi sıraya girer.
   perform pg_advisory_xact_lock(hashtextextended(v_uid::text, 0));
 
+  -- Aynı kırılma günü için önceki onarım, AY FARK ETMEKSİZİN önce aranır:
+  -- 31 Ekim'de yapılan onarım 1 Kasım'da tekrar çağrılırsa ay anahtarı
+  -- değiştiği için aşağıdaki aylık arama onu bulamaz ve 100 zêr yeniden
+  -- kesilirdi (2026-10-24 ikinci tur dış inceleme, iki model uyuştu).
+  select * into v_existing
+  from public.streak_repairs
+  where player_id = v_uid
+    and break_day::text = btrim(coalesce(p_break_day, ''))
+  order by created_at desc nulls last
+  limit 1;
+  if found then
+    select coalesce(sum(amount), 0)::integer into v_balance
+    from public.coin_transactions where player_id = v_uid;
+    return jsonb_build_object(
+      'success', true, 'already_repaired', true,
+      'paid', v_existing.paid, 'balance', v_balance);
+  end if;
+
   -- Mevcut kayıt tarih denetimlerinden ÖNCE: aynı parametreyle geç tekrar
   -- (gece yarısı geçmiş olsa da) ücret kesmeden 'already_repaired' döner.
   select * into v_existing

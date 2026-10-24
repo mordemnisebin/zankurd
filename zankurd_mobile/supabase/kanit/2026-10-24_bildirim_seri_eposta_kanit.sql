@@ -261,6 +261,33 @@ begin
   insert into _kanit values (17, '(i2) geç tekrar ücret kesmedi',
     '0', '0', (pg_temp.bakiye(a) - b1)::text);
 
+  -- (i3) Ay geçişi: kayıt önceki aya aitmiş gibi (31 Ekim onarımı, 1 Kasım
+  -- tekrarı). Aynı kırılma günüyle tekrar ücret KESMEMELİ. Sonra ay geri
+  -- alınır ki aşağıdaki aylık sınır satırları etkilenmesin.
+  if to_regclass('public.streak_repairs') is not null then
+    execute 'update public.streak_repairs set month_key = to_char((now() at time zone ''Europe/Istanbul'') - interval ''1 month'', ''YYYY-MM''), break_day = $2 where player_id = $1'
+      using a, bugun - 1;
+    update public.coin_transactions
+       set reason = 'streak_repair:' || to_char((now() at time zone 'Europe/Istanbul') - interval '1 month', 'YYYY-MM')
+     where player_id = a and reason = 'streak_repair:' || ay;
+  end if;
+  b1 := pg_temp.bakiye(a);
+  r := pg_temp.rpc(format('select public.spend_streak_repair(%L, %L, false)::text', ay, gun), a);
+  insert into _kanit values (171, '(i3) ay geçişinde aynı kırılma günü tekrarı ücret kesmez',
+    '0', '0', (pg_temp.bakiye(a) - b1)::text);
+  if to_regclass('public.streak_repairs') is not null then
+    execute 'update public.streak_repairs set month_key = $2, break_day = $3 where player_id = $1'
+      using a, ay, bugun - 5;
+    delete from public.coin_transactions
+     where player_id = a and reason = 'streak_repair:' || ay
+       and created_at > now() - interval '1 minute'
+       and exists (select 1 from public.coin_transactions c2 where c2.player_id = a
+                   and c2.reason = 'streak_repair:' || to_char((now() at time zone 'Europe/Istanbul') - interval '1 month', 'YYYY-MM'));
+    update public.coin_transactions
+       set reason = 'streak_repair:' || ay
+     where player_id = a and reason = 'streak_repair:' || to_char((now() at time zone 'Europe/Istanbul') - interval '1 month', 'YYYY-MM');
+  end if;
+
   sql2 := format('select public.spend_streak_repair(%L, %L, false)::text', ay, gun2);
   r := pg_temp.rpc(sql2, a);
   insert into _kanit values (18, '(j) aynı ay başka kırılma günü reddedilir',
