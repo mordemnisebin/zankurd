@@ -42,6 +42,7 @@ Orkestra (çok modelli çalışma; şef hangi araçtaysa — Claude Code, Antigr
   - Kurmancî denetim: Gemini 3.8 Flash (agy) + Grok 4.7 (cursor-agent). Taslak: Muse Spark (OpenCode).
   - Bilgi doğrulama: Gemini 4 Argon + MiMo (web araması) çapraz.
   - Mekanik iş: Gemini 3.8 Flash; çıktıyı mutlaka doğrula.
+  - Gemini CLI (`gemini`) KULLANILAMAZ: ücretsiz bireysel plan bu istemciyi kapattı, Antigravity'ye yönlendiriyor (2026-10-25).
   - KULLANMA: Space Bunny, gpt-oss, NVIDIA (gemma/nemotron/glm/kimi) — Kurmancî ve bilgide zayıf. Cursor'da Opus/GPT-5.6 kotası 2026-11-19'a kadar dolu.
 - Çağrılar (hep `< /dev/null`; salt metin işi BOŞ bir klasörde, kod işi ayrı git worktree'de):
   - `agy --model gemini-3.8-flash-high -p "<istem>" < /dev/null` (`--model`, `-p`'den ÖNCE).
