@@ -2,26 +2,34 @@ import 'package:flutter/material.dart';
 
 import '../data/learner_lexicon.dart';
 import '../data/word_list_store.dart';
+import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_icons.dart';
-import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
 import '../widgets/lexicon_lookup.dart';
 import '../widgets/lexicon_speak_button.dart';
 import '../widgets/sahne/sahne.dart';
+import '../widgets/todays_review_card.dart';
 import '../widgets/word_save_button.dart';
 import '../widgets/zk_back_button.dart';
-import 'word_drill_screen.dart';
 
 /// "Kelimelerim": kullanıcının kaydettiği sözlük maddeleri, her kelimenin
-/// Leitner kutusu ve "Bugünkü tekrar" kartı.
+/// Leitner kutusu ve tek "Tekrar · bugün N" girişi.
+///
+/// Tekrar başlatma burada ayrı bir mekanizma DEĞİLDİR: kart, öğrenme
+/// ekranındakiyle aynı [TodaysReviewCard]dır (kelime + yanlış sorusu tek
+/// oturum). Eskiden burada yalnız kelimeleri açan ikinci bir "Bugünkü
+/// tekrar" kartı vardı; kullanıcı ikisini ayıramıyordu (2026-10-24).
 ///
 /// Liste [WordListStore]u dinler: kelime yer işaretiyle çıkarılınca satır
 /// anında kaybolur; tekrar oturumundan dönünce sayılar tazelenir.
 class MyWordsScreen extends StatefulWidget {
-  const MyWordsScreen({this.store, super.key});
+  const MyWordsScreen({required this.repository, this.store, super.key});
+
+  /// Tekrar oturumunun soru aşaması için.
+  final ZanKurdRepository repository;
 
   /// Testlerde verilir; yoksa kullanıcının paylaşılan listesi.
   final WordListStore? store;
@@ -66,13 +74,6 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
   void dispose() {
     _store?.removeListener(_changed);
     super.dispose();
-  }
-
-  Future<void> _startReview() async {
-    await Navigator.of(
-      context,
-    ).push(AppRoute(page: WordDrillScreen(store: _store)));
-    if (mounted) setState(() {});
   }
 
   @override
@@ -122,34 +123,13 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
   }
 
   Widget _reviewCard(BuildContext context, SahneTokens t, WordListStore store) {
-    final due = store.dueCount();
     return SahneSurfaceCard(
       key: const ValueKey('my-words-review-card'),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            context.t(K.wordsReviewTitle),
-            style: SahneType.captionStrong.copyWith(color: t.learnTx),
-          ),
-          const SizedBox(height: SahneSpace.x1),
-          Text(
-            due > 0
-                ? context.t(K.wordsDueCount, {'count': '$due'})
-                : context.t(K.wordsDueNone),
-            key: const ValueKey('my-words-due-count'),
-            style: SahneType.bodyStrong.copyWith(color: t.tx),
-          ),
-          if (due > 0) ...[
-            const SizedBox(height: SahneSpace.x3),
-            SahneButton.primary(
-              key: const ValueKey('my-words-review-start'),
-              label: context.t(K.start),
-              expand: true,
-              onPressed: _startReview,
-            ),
-          ],
-        ],
+      child: TodaysReviewCard(
+        repository: widget.repository,
+        isKu: context.isKu,
+        wordStore: store,
+        refreshSignal: store,
       ),
     );
   }

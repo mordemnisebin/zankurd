@@ -477,6 +477,28 @@ class Tr {
     },
     K.wordsBox: {'ku': 'Qutiya {box}/5', 'tr': 'Kutu {box}/5'},
     K.wordsDueBadge: {'ku': 'Amade', 'tr': 'Hazır'},
+    // ── Tek "Tekrar" girişi: kelime (Leitner) + yanlış sorusu (2 oturum) ──
+    K.tekrarTitle: {'ku': 'Dubarekirin', 'tr': 'Tekrar'},
+    K.tekrarTodayLine: {
+      'ku': 'Dubarekirin · îro {count}',
+      'tr': 'Tekrar · bugün {count}',
+    },
+    K.tekrarBreakdown: {
+      'ku': '{words} peyv · {questions} pirs',
+      'tr': '{words} kelime · {questions} soru',
+    },
+    K.tekrarQuestionsOnly: {'ku': '{count} pirs', 'tr': '{count} soru'},
+    K.tekrarNone: {'ku': 'Îro dubarekirin tune', 'tr': 'Bugün tekrar yok'},
+    K.tekrarNoneHint: {
+      'ku': 'Peyvên nû fêr bibe an bilîze.',
+      'tr': 'Yeni kelimeler öğren ya da oyna.',
+    },
+    K.tekrarOpenLexicon: {'ku': 'Li ferhengê binêre', 'tr': 'Sözlüğe göz at'},
+    K.tekrarWordsDone: {'ku': 'Peyv temam bûn', 'tr': 'Kelimeler tamam'},
+    K.tekrarToQuestions: {
+      'ku': 'Biçe pirsan · {count}',
+      'tr': 'Sorulara geç · {count}',
+    },
     K.lexiconDirection: {'ku': 'Aliyê lêgerînê', 'tr': 'Arama yönü'},
     K.lexiconDirKuTr: {'ku': 'Kurmancî > Tirkî', 'tr': 'Kurmancî > Türkçe'},
     K.lexiconDirTrKu: {'ku': 'Tirkî > Kurmancî', 'tr': 'Türkçe > Kurmancî'},
@@ -503,11 +525,12 @@ class Tr {
       'tr': 'Bu ders için henüz kısa test yok. Dersi tamamlayabilirsin.',
     },
     K.translation: {'ku': 'Werger', 'tr': 'Çeviri'},
-    // Aynı görünümün adı zaten `K.flashcards` ("Kartên Hînbûnê" /
-    // "Hafıza Kartları"). Tooltip "Flashcard modu" deyince Türkçe
-    // arayüzde çıplak İngilizce kalıyordu; Kurmancî "Moda kartan" ile
-    // de aynı kavram iki adla duruyordu.
-    K.flashcardMode: {'ku': 'Kartên peyvan', 'tr': 'Kelime kartları'},
+    // Konu ekranındaki "Kartlarla çalış" düğmesi ile ders içindeki kart kipi
+    // tooltip'i aynı eylemdir, aynı adı taşır. "Kelime kartları" adı
+    // kaldırıldı: Kelimelerim/Tekrar ile karışıyordu (2026-10-24, tek
+    // "Tekrar" girişi kararı). Tur sonu cevap incelemesindeki görünüm
+    // `K.flashcards` = "Soru kartları" (kartlar kelime değil soru taşır).
+    K.flashcardMode: {'ku': 'Bi kartan bixebite', 'tr': 'Kartlarla çalış'},
     K.slidesLoadFail: {
       'ku': 'Slaytên dersê nehatin barkirin',
       'tr': 'Slaytlar yüklenemedi',
@@ -570,7 +593,7 @@ class Tr {
     K.share: {'ku': 'Parve bike', 'tr': 'Paylaş'},
     K.home: {'ku': 'Rûpela sereke', 'tr': 'Ana sayfa'},
     K.reviewMistakes: {'ku': 'Şaşiyan binirxîne', 'tr': 'Yanlışları incele'},
-    K.flashcards: {'ku': 'Kartên peyvan', 'tr': 'Kelime kartları'},
+    K.flashcards: {'ku': 'Kartên pirsan', 'tr': 'Soru kartları'},
     K.listView: {'ku': 'Lîste', 'tr': 'Liste'},
     K.moreOptions: {'ku': 'Vebijarkên din', 'tr': 'Diğer seçenekler'},
     K.leaderboardLink: {'ku': 'Rêzbendî', 'tr': 'Sıralama'},
@@ -1115,7 +1138,7 @@ class Tr {
     },
     K.pPPPuan: {'ku': '{p0}. {p1}, {p2} pûan', 'tr': '{p0}. {p1}, {p2} puan'},
     K.soruCoz: {'ku': 'Bersiv bide', 'tr': 'Soru çöz'},
-    K.flasKart: {'ku': 'Kartên peyvan', 'tr': 'Kelime kartları'},
+    K.flasKart: {'ku': 'Bi kartan bixebite', 'tr': 'Kartlarla çalış'},
     K.ceviriIcinDokun: {
       'ku': 'Ji bo wergerê bitikîne',
       'tr': 'Çeviri için dokun',
@@ -3975,6 +3998,15 @@ class K {
   static const wordsReviewScore = 'words.review.score';
   static const wordsBox = 'words.box';
   static const wordsDueBadge = 'words.dueBadge';
+  static const tekrarTitle = 'tekrar.title';
+  static const tekrarTodayLine = 'tekrar.todayLine';
+  static const tekrarBreakdown = 'tekrar.breakdown';
+  static const tekrarQuestionsOnly = 'tekrar.questionsOnly';
+  static const tekrarNone = 'tekrar.none';
+  static const tekrarNoneHint = 'tekrar.noneHint';
+  static const tekrarOpenLexicon = 'tekrar.openLexicon';
+  static const tekrarWordsDone = 'tekrar.wordsDone';
+  static const tekrarToQuestions = 'tekrar.toQuestions';
   static const lexiconDirection = 'learn.lexicon.direction';
   static const lexiconDirKuTr = 'learn.lexicon.dirKuTr';
   static const lexiconDirTrKu = 'learn.lexicon.dirTrKu';

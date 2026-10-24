@@ -141,8 +141,8 @@ void main() {
               }
             } else {
               final modeLabel = locale == 'ku'
-                  ? 'Kartên peyvan'
-                  : 'Kelime kartları';
+                  ? 'Kartên pirsan'
+                  : 'Soru kartları';
               final scrollable = find.byType(Scrollable).first;
               final mode = find.text(modeLabel);
               await tester.scrollUntilVisible(

@@ -24,7 +24,26 @@ import 'quiz/quiz_option_tile.dart';
 /// Yanlış cevaplanan kelime bu oturumda yeniden sorulmaz; 1. kutuya döner ve
 /// yarın tekrar gelir. Ses düğmesi yalnız o ifade için kayıt/TTS varsa çizilir.
 class WordDrillScreen extends StatefulWidget {
-  const WordDrillScreen({this.store, this.random, super.key});
+  const WordDrillScreen({
+    this.store,
+    this.random,
+    this.words,
+    this.onDone,
+    this.doneLabel,
+    super.key,
+  });
+
+  /// Tek "Tekrar" oturumu kelime kısmını kendi seçtiği kelimelerle açar
+  /// ([TekrarPlan]); verilmezse eski davranış: vadesi gelen en çok 10.
+  /// Kutu/vade kuralı değişmez: her cevap yine `recordReview`dan geçer.
+  final List<SavedWord>? words;
+
+  /// Bitiş düğmesi ekranı kapatmak yerine bunu çağırır (Tekrar oturumunda
+  /// sıradaki aşama: sorular).
+  final VoidCallback? onDone;
+
+  /// Bitiş düğmesinin yazısı; verilmezse "Tamamla".
+  final String? doneLabel;
 
   /// Testlerde verilir; yoksa kullanıcının paylaşılan listesi.
   final WordListStore? store;
@@ -56,7 +75,7 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
       final store = widget.store ?? await WordListStore.load();
       final rng = widget.random ?? math.Random();
       final questions = <WordReviewQuestion>[];
-      for (final word in store.sessionWords()) {
+      for (final word in widget.words ?? store.sessionWords()) {
         final entry = LearnerLexicon.byId(word.entryId);
         if (entry != null) {
           questions.add(WordReviewQuestion.build(entry, random: rng));
@@ -124,7 +143,7 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
     final t = SahneTokens.of(context);
     return Scaffold(
       backgroundColor: t.bg,
-      appBar: zkAppBar(context, title: Text(context.t(K.wordsReviewTitle))),
+      appBar: zkAppBar(context, title: Text(context.t(K.tekrarTitle))),
       body: SafeArea(
         top: false,
         child: _loading
@@ -154,7 +173,11 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
           Icon(AppIcons.circleCheck, size: 48, color: t.okTx),
           const SizedBox(height: SahneSpace.x3),
           Text(
-            context.t(K.reviewsDone),
+            // Sorular sürüyorsa "Tekrarlar tamam" yalan olurdu: yalnız
+            // kelime aşaması bitti.
+            context.t(
+              widget.onDone != null ? K.tekrarWordsDone : K.reviewsDone,
+            ),
             textAlign: TextAlign.center,
             style: SahneType.headline.copyWith(color: t.tx),
           ),
@@ -171,10 +194,10 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
           const SizedBox(height: SahneSpace.x5),
           SahneButton.primary(
             key: const ValueKey('word-review-finish'),
-            label: context.t(K.finish),
+            label: widget.doneLabel ?? context.t(K.finish),
             expand: true,
-            arrow: false,
-            onPressed: () => Navigator.of(context).maybePop(),
+            arrow: widget.onDone != null,
+            onPressed: widget.onDone ?? () => Navigator.of(context).maybePop(),
           ),
         ],
       ),
@@ -194,7 +217,7 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
           SahneProgressBar(
             value: _index / total,
             trailing: '${_index + 1}/$total',
-            semanticLabel: context.t(K.wordsReviewTitle),
+            semanticLabel: context.t(K.tekrarTitle),
           ),
           const SizedBox(height: SahneSpace.x5),
           Text(
