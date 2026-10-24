@@ -208,10 +208,7 @@ void main() {
 
   test('applied.md satırı uygulandı durumundadır', () {
     final applied = _read('supabase/applied.md');
-    expect(
-      applied,
-      contains('| 2026-10-24_bildirim_seri_eposta.sql | ✅ |'),
-    );
+    expect(applied, contains('| 2026-10-24_bildirim_seri_eposta.sql | ✅ |'));
   });
 
   test('Magic link şablonu kodu iki dilde taşır, bağlantı taşımaz', () {
