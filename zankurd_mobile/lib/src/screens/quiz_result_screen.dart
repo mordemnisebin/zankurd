@@ -1655,6 +1655,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       if (_showNotifPrompt) ...[
         const SizedBox(height: SahneSpace.cardGap),
         NotificationPromptCard(
+          // Günün turunda düello vaadi ("sıra sende") değil, yarınki turun
+          // hatırlatması sorulur.
+          dailyContest: dailyQuiz || widget.contestId != null,
           onEnable: _onNotifEnable,
           onLater: _onNotifLater,
         ),

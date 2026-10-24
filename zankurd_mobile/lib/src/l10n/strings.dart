@@ -1052,7 +1052,7 @@ class Tr {
     // metnini çağırandan alır; anahtarlar burada durur.
     K.progressLevelLabel: {'ku': 'Ast', 'tr': 'Seviye'},
     K.streakFreezeAvailable: {'ku': 'Amade', 'tr': 'Kullanılabilir'},
-    K.streakFreezeNotNeeded: {'ku': 'Ne hewce ye', 'tr': 'Gerekmiyor'},
+    K.streakFreezeNotNeeded: {'ku': 'Zincîr ewle ye', 'tr': 'Seri güvende'},
     K.streakFreezeNoCoins: {'ku': 'Zêr têrê nake', 'tr': 'Jeton yetersiz'},
     K.streakFreezeApplying: {'ku': 'Tê sepandin', 'tr': 'Uygulanıyor'},
     K.streakFreezeApplied: {'ku': 'Hate parastin', 'tr': 'Korundu'},
@@ -1080,6 +1080,7 @@ class Tr {
     K.streakDayStateMissed: {'ku': 'Winda bû', 'tr': 'Kaçırıldı'},
     K.streakDayStateUpcoming: {'ku': 'Hîn nehatiye', 'tr': 'Henüz gelmedi'},
     K.streakDayStateFrozen: {'ku': 'Hate cemidandin', 'tr': 'Donduruldu'},
+    K.streakDayStateBlank: {'ku': 'Beriya destpêkê', 'tr': 'Başlangıçtan önce'},
     K.buHaftakiSiranP: {
       'ku': 'Rêza te ya heftane: #{p0}',
       'tr': 'Bu haftaki sıran: #{p0}',
@@ -3327,6 +3328,23 @@ class Tr {
     K.matchResultLoss: {'ku': 'Te winda kir', 'tr': 'Kaybettin'},
     K.matchResultDraw: {'ku': 'Beramberî', 'tr': 'Berabere'},
     K.recordsTitle: {'ku': 'Rekorên min', 'tr': 'Rekorlarım'},
+    K.recordsEmptyTitle: {
+      'ku': 'Rekora xwe ya yekem bişkîne',
+      'tr': 'İlk rekorunu kır',
+    },
+    K.recordsEmptyBody: {
+      'ku':
+          'Bilîze; rekorên te yên zincîr, pêşbirk û gera rojê li vir kom dibin.',
+      'tr': 'Oyna; seri, düello ve günün turu rekorların burada toplanır.',
+    },
+    K.recordsEmptyAction: {
+      'ku': 'Dest bi lîstinê bike',
+      'tr': 'Oynamaya başla',
+    },
+    K.recordsMoreHint: {
+      'ku': 'Her ku tu bilîzî, rekorên nû li vir xuya dibin.',
+      'tr': 'Oynadıkça yeni rekorlar burada belirir.',
+    },
     K.recordBestDayStreak: {
       'ku': 'Zincîra rojane ya herî dirêj',
       'tr': 'En uzun günlük seri',
@@ -3410,6 +3428,7 @@ class Tr {
       'ku': 'Dema dora {name} were, ew ê agahdarî bistîne.',
       'tr': '{name} sırası gelince bildirim alacak.',
     },
+    K.asyncDuelStartNew: {'ku': 'Pêşbirka nû', 'tr': 'Yeni düello'},
     K.challengeYourTurn: {'ku': 'Dora te ye', 'tr': 'Sıra sende'},
     K.challengeIncomingBy: {
       'ku': '{name} tu vexwendî pêşbirkê',
@@ -3471,6 +3490,21 @@ class Tr {
           'Bir arkadaşın sana meydan okuduğunda ya da sırayla düelloda sıra '
           "sana geldiğinde bildirim gönderelim. İstediğin zaman Ayarlar'dan "
           'kapatabilirsin.',
+    },
+    // Günün turu sonucunda sorulan bildirim izni (2026-10-24): düello
+    // vaadi değil yarınki turun hatırlatması. KU: "gera rojê" yerleşik
+    // `K.dailyContest` adı; yerli göz incelemesi bekliyor.
+    K.notifPromptDailyTitle: {
+      'ku': 'Sibê gera rojê bi bîr bixin?',
+      'tr': 'Yarın günün turunu hatırlatalım mı?',
+    },
+    K.notifPromptDailyBody: {
+      'ku':
+          'Her roj gereke nû vedibe. Heke tu bixwazî, em dikarin te bi bîr '
+          'bixin; tu dikarî her dem ji Mîhengan bigirî.',
+      'tr':
+          'Her gün yeni bir tur açılır. İstersen sana hatırlatalım; '
+          "istediğin zaman Ayarlar'dan kapatabilirsin.",
     },
     K.notifPromptEnable: {'ku': 'Agahdariyan veke', 'tr': 'Bildirimleri aç'},
     K.notifPromptLater: {'ku': 'Niha na', 'tr': 'Şimdi değil'},
@@ -4167,6 +4201,7 @@ class K {
   static const streakDayStateMissed = 'streak.day.state.missed';
   static const streakDayStateUpcoming = 'streak.day.state.upcoming';
   static const streakDayStateFrozen = 'streak.day.state.frozen';
+  static const streakDayStateBlank = 'streak.day.state.blank';
   static const buHaftakiSiranP = 'screen.buHaftakiSiranP';
   static const thisWeek = 'screen.thisWeek';
   static const buHaftaYarisLige = 'screen.buHaftaYarisLige';
@@ -5052,6 +5087,10 @@ class K {
   static const matchResultLoss = 'profile.match.loss';
   static const matchResultDraw = 'profile.match.draw';
   static const recordsTitle = 'profile.records.title';
+  static const recordsEmptyTitle = 'profile.records.empty.title';
+  static const recordsEmptyBody = 'profile.records.empty.body';
+  static const recordsEmptyAction = 'profile.records.empty.action';
+  static const recordsMoreHint = 'profile.records.moreHint';
   static const recordBestDayStreak = 'profile.records.dayStreak';
   static const recordBestQuizStreak = 'profile.records.quizStreak';
   static const recordBestContest = 'profile.records.contest';
@@ -5101,6 +5140,7 @@ class K {
   static const challengeFriendWaitBody = 'duel.challenge.friendWait';
 
   /// Ana ekran kartı ve gelen kutusu: bana gelen meydan okuma.
+  static const asyncDuelStartNew = 'asyncDuel.startNew';
   static const challengeYourTurn = 'duel.challenge.yourTurn';
   static const challengeIncomingBy = 'duel.challenge.incomingBy';
 
@@ -5122,6 +5162,8 @@ class K {
   static const challengeFriendActionA11y = 'duel.challenge.friendAction.a11y';
   static const notifPromptTitle = 'notif.prompt.title';
   static const notifPromptBody = 'notif.prompt.body';
+  static const notifPromptDailyTitle = 'notif.prompt.daily.title';
+  static const notifPromptDailyBody = 'notif.prompt.daily.body';
   static const notifPromptEnable = 'notif.prompt.enable';
   static const notifPromptLater = 'notif.prompt.later';
   static const socialPushTitle = 'notif.socialPush.title';

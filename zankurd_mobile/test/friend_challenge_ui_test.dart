@@ -608,16 +608,16 @@ void main() {
         find.byKey(const ValueKey('play-hub-async-duel-turn')),
       );
 
-      // 2026-10-22: "Sıra sende" hem düello bölümünün başlığında hem de
-      // Sırayla düello mod kartının durum rozetinde görünür.
-      expect(find.text('Sıra sende'), findsNWidgets(2));
+      // 2026-10-24: "Sıra sende" yalnız üstteki sıra bölümünde; mod kartı
+      // aynı bilgiyi tekrarlamaz (play_hub_duel_tekrar_test.dart).
+      expect(find.text('Sıra sende'), findsOneWidget);
       expect(
         find.descendant(
           of: find.byKey(const ValueKey('play-hub-async-duel')),
           matching: find.text('Sıra sende'),
         ),
-        findsOneWidget,
-        reason: 'mod kartı rozeti',
+        findsNothing,
+        reason: 'mod kartı rozeti tekrar etmez',
       );
       expect(find.text('Rojda seni düelloya çağırdı'), findsOneWidget);
       expect(find.text('Oyna'), findsOneWidget);

@@ -222,7 +222,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
   /// Mod kartlarının durum rozetleri (tasarım oylaması 2026-10-22, 15/15
   /// EVET, en çok seçilen öneri): çark bugün çevrilebiliyorsa "Hazır!",
-  /// sırası bende olan düello varsa "Sıra sende". Rozet bir iyileştirmedir:
+  /// sırası bende olan düello varsa nötr "Yeni düello" (aynı düello üstte
+  /// "Sıra sende" satırı olarak zaten durur). Rozet bir iyileştirmedir:
   /// okunamazsa kart rozetsiz çizilir.
   bool _spinReady = false;
   int _duelsMyTurn = 0;
@@ -509,8 +510,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       key: const ValueKey('play-hub-spin-wheel'),
       icon: AppIcons.dice,
       role: SahneRole.gold,
+      // İkincil, günde bir kez: sade tek satırlık kart (rengi korunur).
+      compact: true,
       title: context.t(K.wheelTitle),
-      subtitle: context.t(K.wheelOncePerDay),
+      semanticLabel:
+          '${context.t(K.wheelTitle)}. ${context.t(K.wheelOncePerDay)}',
       badge: _spinReady ? context.t(K.wheelReadyBadge) : null,
       onTap: _openSpinWheel,
     );
@@ -596,8 +600,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                   role: SahneRole.race,
                   title: context.t(K.asyncDuel),
                   subtitle: context.t(K.asyncDuelSub),
+                  // Sırası bende düello üstteki sıra bölümünde ZATEN
+                  // listelenir; kart "Sıra sende" diye tekrarlamaz, işini
+                  // söyler: yeni düello başlatmak (2026-10-24).
                   badge: _duelsMyTurn > 0 && !locked
-                      ? context.t(K.challengeYourTurn)
+                      ? context.t(K.asyncDuelStartNew)
                       : null,
                   onTap: locked
                       ? null
@@ -613,6 +620,15 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                         },
                 ),
               ),
+            dailyContest,
+          ],
+        ),
+        // İkincil, seyrek modlar (arkadaşa meydan oku, günün çarkı): sade
+        // tek satırlık kartlar; renk kimliği (Nîl, Zêr) korunur. Üç büyük
+        // kart (hızlı düello, sırayla düello, günün turu) öne çıkar.
+        const SizedBox(height: SahneSpace.x3),
+        SahneModeGrid(
+          children: [
             if (widget.asyncDuelEnabled && _challengeAvailable)
               _lockedTap(
                 locked,
@@ -621,6 +637,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                   icon: AppIcons.peopleGroup,
                   // Arkadaşa meydan okumak sosyal moddur: Nîl.
                   role: SahneRole.social,
+                  compact: true,
                   title: context.t(K.challengeEntry),
                   onTap: locked
                       ? null
@@ -633,7 +650,6 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                         },
                 ),
               ),
-            dailyContest,
             wheelTile,
           ],
         ),

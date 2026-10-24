@@ -262,14 +262,25 @@ class _MatchRow extends StatelessWidget {
 
 /// Profildeki "Rekorlarım": en uzun günlük seri (yerel), canlı oda doğru
 /// serisi, günlük yarış en çok doğru, düello galibiyeti ve kazanma oranı
-/// (sunucu). Bilinmeyen/yok değer "—" gösterir; sıfır uydurulmaz.
+/// (sunucu). Sıfır uydurulmaz.
+///
+/// ## Niçin "—" listesi değil
+///
+/// Yeni oyuncuda beş satırın hepsi "—" idi: boş bir tablo hem bilgi vermez
+/// hem "eksik/bozuk" izlenimi bırakır (2026-10-24 simülatör turu). Artık:
+/// hiçbiri bilinmiyorsa davetkâr boş durum ("İlk rekorunu kır" + oyna
+/// düğmesi); bazısı biliniyorsa yalnız bilinenler + küçük ipucu.
 class ProfileRecordsSection extends StatefulWidget {
   const ProfileRecordsSection({
     required this.repository,
     this.refreshSignal,
     this.remote = true,
+    this.onStartPlay,
     super.key,
   });
+
+  /// Boş durumdaki "oynamaya başla" düğmesi; yoksa düğme çizilmez.
+  final VoidCallback? onStartPlay;
 
   final ZanKurdRepository repository;
   final Listenable? refreshSignal;
@@ -283,6 +294,10 @@ class _ProfileRecordsSectionState extends State<ProfileRecordsSection> {
   int? _bestDayStreak;
   ServerRecords? _server;
   int _epoch = 0;
+
+  /// Yerel + (varsa) sunucu okuması bitti mi. Bitmeden boş durum çizilirse
+  /// sunucu sayıları gelince ekran "boş"tan "dolu"ya zıplıyordu.
+  bool _settled = false;
 
   @override
   void initState() {
@@ -321,14 +336,18 @@ class _ProfileRecordsSectionState extends State<ProfileRecordsSection> {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'profile records streak');
     }
-    if (!widget.remote) return;
-    try {
-      final server = await widget.repository.loadMyServerRecords();
-      if (!mounted || epoch != _epoch) return;
-      setState(() => _server = server);
-    } catch (error, stack) {
-      // Sunucu sayıları gelmediyse ilgili satırlar "—" kalır.
-      ErrorReporter.record(error, stack, reason: 'profile records server');
+    if (widget.remote) {
+      try {
+        final server = await widget.repository.loadMyServerRecords();
+        if (!mounted || epoch != _epoch) return;
+        setState(() => _server = server);
+      } catch (error, stack) {
+        // Sunucu sayıları gelmediyse ilgili satırlar hiç çizilmez.
+        ErrorReporter.record(error, stack, reason: 'profile records server');
+      }
+    }
+    if (mounted && epoch == _epoch && !_settled) {
+      setState(() => _settled = true);
     }
   }
 
@@ -375,6 +394,63 @@ class _ProfileRecordsSectionState extends State<ProfileRecordsSection> {
       ),
     ];
     final t = SahneTokens.of(context);
+    if (!_settled) {
+      return const SizedBox.shrink(key: ValueKey('profile-records'));
+    }
+    final known = [
+      for (final row in rows)
+        if (row.value != '—') row,
+    ];
+    if (known.isEmpty) {
+      return Column(
+        key: const ValueKey('profile-records'),
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SahneSectionHeader(title: context.t(K.recordsTitle)),
+          SahneSurfaceCard(
+            key: const ValueKey('profile-records-empty'),
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.x4,
+              vertical: SahneSpace.x3,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: ExcludeSemantics(
+                    child: Icon(AppIcons.trophy, size: 20, color: t.goldTx),
+                  ),
+                ),
+                const SizedBox(width: SahneSpace.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        context.t(K.recordsEmptyTitle),
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
+                      ),
+                      const SizedBox(height: SahneSpace.x1),
+                      Text(
+                        context.t(K.recordsEmptyBody),
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                      ),
+                      if (widget.onStartPlay != null)
+                        SahneButton.text(
+                          buttonKey: const ValueKey('profile-records-start'),
+                          label: context.t(K.recordsEmptyAction),
+                          onPressed: widget.onStartPlay,
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
     return Column(
       key: const ValueKey('profile-records'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -382,7 +458,7 @@ class _ProfileRecordsSectionState extends State<ProfileRecordsSection> {
         SahneSectionHeader(title: context.t(K.recordsTitle)),
         SahneListGroup(
           children: [
-            for (final row in rows)
+            for (final row in known)
               SahneListRow.icon(
                 key: ValueKey('profile-record-${row.key}'),
                 icon: row.icon,
@@ -399,6 +475,15 @@ class _ProfileRecordsSectionState extends State<ProfileRecordsSection> {
               ),
           ],
         ),
+        if (known.length < rows.length)
+          Padding(
+            padding: const EdgeInsets.only(top: SahneSpace.x2),
+            child: Text(
+              context.t(K.recordsMoreHint),
+              key: const ValueKey('profile-records-hint'),
+              style: SahneType.caption.copyWith(color: t.tx3),
+            ),
+          ),
       ],
     );
   }

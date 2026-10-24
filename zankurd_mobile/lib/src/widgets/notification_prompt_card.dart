@@ -19,7 +19,15 @@ class NotificationPromptCard extends StatelessWidget {
     super.key,
     required this.onEnable,
     required this.onLater,
+    this.dailyContest = false,
   });
+
+  /// Günün turu sonucunda mı gösteriliyor. O bağlamda "Sıra sende olunca"
+  /// (düello/arkadaş) metni YANLIŞ vaattir: oyuncu az önce tek başına bir
+  /// tur bitirdi, sırasını bekleyen bir rakip yok (2026-10-24 simülatör
+  /// turu). Orada söz verilebilecek tek şey yarınki turun hatırlatılmasıdır.
+  /// Düello metni düello bağlamında ([SocialPushPrompt]) kalır.
+  final bool dailyContest;
 
   final VoidCallback onEnable;
   final VoidCallback onLater;
@@ -44,7 +52,9 @@ class NotificationPromptCard extends StatelessWidget {
               const SizedBox(width: SahneSpace.x3),
               Expanded(
                 child: Text(
-                  context.t(K.notifPromptTitle),
+                  context.t(
+                    dailyContest ? K.notifPromptDailyTitle : K.notifPromptTitle,
+                  ),
                   style: SahneType.headline.copyWith(color: t.tx),
                 ),
               ),
@@ -52,7 +62,9 @@ class NotificationPromptCard extends StatelessWidget {
           ),
           const SizedBox(height: SahneSpace.x2),
           Text(
-            context.t(K.notifPromptBody),
+            context.t(
+              dailyContest ? K.notifPromptDailyBody : K.notifPromptBody,
+            ),
             style: SahneType.body.copyWith(color: t.tx2),
           ),
           const SizedBox(height: SahneSpace.x4),

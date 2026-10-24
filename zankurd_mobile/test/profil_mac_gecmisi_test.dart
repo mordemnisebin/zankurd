@@ -20,8 +20,9 @@
 ///   skor ve tarih; en çok 10 satır, yeniden eskiye.
 /// * Boş durum oynamaya çağırır; sunucu hatasında "yüklenemedi" + tekrar dene
 ///   ("henüz maç yok" DEMEZ); çevrimdışı/yerel misafirde sunucuya sorulmaz.
-/// * Rekorlar: bilinmeyen/yok değer "—", sıfır uydurulmaz; kazanma oranı
-///   yalnız düello oynanmışsa.
+/// * Rekorlar: hiçbiri bilinmiyorsa "İlk rekorunu kır" + oyna düğmesi (beş
+///   satırlık "—" tablosu YOK); bazısı biliniyorsa yalnız bilinenler + ipucu;
+///   sıfır uydurulmaz; kazanma oranı yalnız düello oynanmışsa.
 /// * 320 px ve %200 yazıda (TR + KU) taşma yok.
 library;
 
@@ -317,7 +318,35 @@ void main() {
   });
 
   group('Rekorlarım', () {
-    testWidgets('bilinmeyen değerler "—", oran ve galibiyet de', (
+    testWidgets('hiçbiri bilinmiyorsa "—" tablosu yok, davetkâr boş durum', (
+      tester,
+    ) async {
+      var starts = 0;
+      await tester.pumpWidget(
+        testShell(
+          child: Scaffold(
+            body: SingleChildScrollView(
+              child: ProfileRecordsSection(
+                repository: freshMockRepository(),
+                onStartPlay: () => starts++,
+              ),
+            ),
+          ),
+        ),
+      );
+      await _settle(tester);
+      expect(find.text('Rekorlarım'), findsOneWidget);
+      expect(find.text('—'), findsNothing);
+      expect(
+        find.byKey(const ValueKey('profile-record-day-streak')),
+        findsNothing,
+      );
+      expect(find.text('İlk rekorunu kır'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('profile-records-start')));
+      expect(starts, 1);
+    });
+
+    testWidgets('boş durumda oyna düğmesi çağıran vermediyse çizilmez', (
       tester,
     ) async {
       await tester.pumpWidget(
@@ -330,8 +359,93 @@ void main() {
         ),
       );
       await _settle(tester);
-      expect(find.text('Rekorlarım'), findsOneWidget);
-      expect(find.text('—'), findsNWidgets(5));
+      expect(
+        find.byKey(const ValueKey('profile-records-empty')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('profile-records-start')), findsNothing);
+    });
+
+    testWidgets('bazısı biliniyorsa yalnız bilinenler + ipucu', (tester) async {
+      final repo = freshMockRepository()
+        ..serverRecordsForTesting = const ServerRecords(bestQuizStreak: 4);
+      await tester.pumpWidget(
+        testShell(
+          child: Scaffold(
+            body: SingleChildScrollView(
+              child: ProfileRecordsSection(repository: repo),
+            ),
+          ),
+        ),
+      );
+      await _settle(tester);
+      expect(
+        find.byKey(const ValueKey('profile-record-quiz-streak')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('profile-record-contest')),
+        findsNothing,
+      );
+      expect(
+        find.byKey(const ValueKey('profile-record-win-rate')),
+        findsNothing,
+      );
+      expect(find.text('—'), findsNothing);
+      expect(
+        find.byKey(const ValueKey('profile-records-hint')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('profile-records-empty')), findsNothing);
+    });
+
+    testWidgets('hepsi biliniyorsa ipucu yok', (tester) async {
+      final repo = freshMockRepository()
+        ..serverRecordsForTesting = const ServerRecords(
+          duelWins: 1,
+          bestQuizStreak: 2,
+          bestContestCorrect: 3,
+        );
+      final streak = await StreakStore.load();
+      await streak.recordPlay();
+      await tester.pumpWidget(
+        testShell(
+          child: Scaffold(
+            body: SingleChildScrollView(
+              child: ProfileRecordsSection(repository: repo),
+            ),
+          ),
+        ),
+      );
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('profile-records-hint')), findsNothing);
+    });
+
+    testWidgets('320 px + %200 yazıda boş durum taşmaz', (tester) async {
+      tester.view.devicePixelRatio = 1.0;
+      tester.view.physicalSize = const Size(320, 1200);
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        testShell(
+          child: Builder(
+            builder: (context) => MediaQuery(
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: const TextScaler.linear(2.0)),
+              child: Scaffold(
+                body: SingleChildScrollView(
+                  child: ProfileRecordsSection(
+                    repository: freshMockRepository(),
+                    onStartPlay: () {},
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await _settle(tester);
+      expect(tester.takeException(), isNull);
     });
 
     testWidgets('gerçek değerler: seri (yerel) + sunucu sayıları', (
@@ -432,7 +546,11 @@ void main() {
         ),
         findsOneWidget,
       );
-      expect(find.text('—'), findsNWidgets(4));
+      expect(find.text('—'), findsNothing);
+      expect(
+        find.byKey(const ValueKey('profile-record-quiz-streak')),
+        findsNothing,
+      );
     });
 
     testWidgets('çevrimdışı: sunucuya sorulmaz', (tester) async {

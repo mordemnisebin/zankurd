@@ -61,6 +61,7 @@ StreakPanel _panel({
 );
 
 void main() {
+  _weekLabelTests();
   testWidgets('gün durumu anonsu ham enum adını değil çevrilmiş etiketi okur '
       '(2026-08-14)', (tester) async {
     // `Semantics.label` eskiden '$label: ${state.name}' üretiyordu — yani
@@ -83,7 +84,11 @@ void main() {
     // Renk tek kanal olamaz: "kaçırdım" ile "henüz gelmedi" arasındaki fark
     // yalnız tonla anlatılırsa renk körü oyuncu için kaybolur.
     final icons = <IconData>{};
-    for (final state in StreakDayState.values) {
+    // `blank` bilerek işaretsizdir (başlangıçtan önceki nötr gün).
+    final marked = StreakDayState.values.where(
+      (s) => s != StreakDayState.blank,
+    );
+    for (final state in marked) {
       await tester.pumpWidget(_wrap(_panel(days: [state])));
       icons.add(
         tester.widgetList<Icon>(find.byType(Icon)).map((i) => i.icon!).last,
@@ -91,9 +96,36 @@ void main() {
     }
     expect(
       icons,
-      hasLength(StreakDayState.values.length),
+      hasLength(marked.length),
       reason: 'iki gün durumu aynı ikonu paylaşırsa renk tek kanal olur',
     );
+  });
+
+  testWidgets('başlangıçtan önceki gün işaret taşımaz, kaçırıldı denmez', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(_panel(days: const [StreakDayState.blank, StreakDayState.missed])),
+    );
+    final iconCount = tester.widgetList<Icon>(find.byType(Icon)).length;
+    await tester.pumpWidget(
+      _wrap(_panel(days: const [StreakDayState.missed, StreakDayState.missed])),
+    );
+    expect(
+      tester.widgetList<Icon>(find.byType(Icon)).length,
+      iconCount + 1,
+      reason: 'blank ikon çizmez; missed ✕ çizer',
+    );
+    await tester.pumpWidget(_wrap(_panel(days: const [StreakDayState.blank])));
+    final label = tester
+        .getSemantics(
+          find.byWidgetPredicate(
+            (w) =>
+                w is Semantics && (w.properties.label ?? '').startsWith('Pt'),
+          ),
+        )
+        .label;
+    expect(label, isNot(contains('Kaçırıldı')));
   });
 
   testWidgets('her freeze durumu kendi etiketini gösterir', (tester) async {
@@ -226,5 +258,31 @@ void main() {
     ]) {
       expect(home, contains(key), reason: '$key kullanilmiyor');
     }
+  });
+}
+
+void _weekLabelTests() {
+  group('haftalık şerit gün harfleri gerçek hafta gününden gelir', () {
+    const tr = ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pz'];
+    const ku = ['Du', 'Se', 'Çar', 'Pen', 'În', 'Şem', 'Yek'];
+
+    test('bugün Çarşamba: son kutu "Ça", ilki Perşembe', () {
+      // 2026-10-21 Çarşamba.
+      final labels = streakWeekLabels(tr, DateTime(2026, 10, 21, 9));
+      expect(labels.last, 'Ça');
+      expect(labels, ['Pe', 'Cu', 'Ct', 'Pz', 'Pt', 'Sa', 'Ça']);
+    });
+
+    test('Kurmancî kısaltmalarıyla, bugün Pazar', () {
+      final labels = streakWeekLabels(ku, DateTime(2026, 10, 25));
+      expect(labels.last, 'Yek');
+      expect(labels.first, 'Du');
+    });
+
+    test('ay/yıl sınırı: 1 Ocak 2027 Cuma', () {
+      final labels = streakWeekLabels(tr, DateTime(2027, 1, 1));
+      expect(labels.last, 'Cu');
+      expect(labels.first, 'Ct'); // 26 Aralık 2026 Cumartesi
+    });
   });
 }

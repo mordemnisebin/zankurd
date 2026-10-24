@@ -241,6 +241,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Future<void> _refreshStreak() async {
     final store = await StreakStore.load();
+    unawaited(store.markFirstSeen());
     if (mounted) setState(() => _streak = store.effectiveStreak());
     unawaited(_maybeOfferStreakRepair(store));
   }
@@ -863,7 +864,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   /// gün, o günde en az bir cevap bulunan gündür. Uydurma yok: veri yoksa
   /// gün "kaçırıldı" değil, olduğu gibi boş kalır ve bugünden sonrası
   /// `upcoming` olarak işaretlenir.
-  Future<List<StreakDayState>> _loadStreakWeek() async {
+  Future<List<StreakDayState>> _loadStreakWeek(StreakStore streak) async {
     final store = await MistakeStore.load();
     final history = store.getLast7DaysHistory();
     final today = DateTime.now();
@@ -879,7 +880,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       if (entry.key == todayKey) {
         states.add(played ? StreakDayState.completed : StreakDayState.today);
       } else {
-        states.add(played ? StreakDayState.completed : StreakDayState.missed);
+        // İlk görülen günden önceki boş gün "kaçırıldı ✕" değil, nötr boş:
+        // yeni hesapta haftanın geri kalanı başarısızlık gibi görünüyordu.
+        final day = DateTime.parse(entry.key);
+        states.add(
+          played
+              ? StreakDayState.completed
+              : streak.markFor(day) == StreakCalendarMark.blank
+              ? StreakDayState.blank
+              : StreakDayState.missed,
+        );
       }
     }
     return states;
@@ -930,8 +940,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // döndürme) hafta ve seri deposu diskten yeniden okunuyor ve sayfa
     // yükleniyor görünümüne geri düşüyordu.
     final streakFuture = () async {
-      final week = await _loadStreakWeek();
       final store = await StreakStore.load();
+      final week = await _loadStreakWeek(store);
       return (week, store);
     }();
     // Biçim temadan gelir (Perde, üstte L pah).
@@ -963,7 +973,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   days: week,
                   freezeState: freezeState,
                   freezeLabel: _freezeLabel(context, freezeState),
-                  dayLabels: context.t(K.streakWeekdays).split(','),
+                  dayLabels: () {
+                    final names = context.t(K.streakWeekdays).split(',');
+                    return names.length == 7
+                        ? streakWeekLabels(names, DateTime.now())
+                        : names;
+                  }(),
                   dayUnitLabel: context.t(K.streakDayUnit),
                   nextMilestone: _nextStreakMilestone(_streak),
                   freezeCost: store.freezeCount > 0 ? null : _streakFreezeCost,
