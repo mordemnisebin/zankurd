@@ -228,6 +228,12 @@ class _QuizScreenState extends State<QuizScreen>
   bool favorite = false;
   bool _favoriteTouched = false;
   bool _localSaveFailureShown = false;
+
+  /// Bu ekranın yanlış defteri oturum kimliği: bir quiz/tekrar ekranı = bir
+  /// oturum. Soru kuyruktan çıkmak için İKİ FARKLI oturumda doğru
+  /// cevaplanmalıdır (bkz. [MistakeStore]).
+  final String _mistakeSessionId =
+      'quiz-${DateTime.now().microsecondsSinceEpoch}';
   bool completing = false;
   Set<String> hiddenAnswers = const {};
   final List<AnswerRecord> answerRecords = [];
@@ -1431,7 +1437,7 @@ class _QuizScreenState extends State<QuizScreen>
     _saveLocalProgress(() async {
       final store = await MistakeStore.load();
       return correct
-          ? store.markResolved(id)
+          ? store.markResolved(id, sessionId: _mistakeSessionId)
           : store.markMistake(id, category: category);
     }, reason: 'quiz mistake progress save failed');
   }
@@ -1469,7 +1475,7 @@ class _QuizScreenState extends State<QuizScreen>
     final id = question.id;
     await _trySaveLocalProgress(() async {
       final store = await MistakeStore.load();
-      return store.markResolvedSM2(id, score);
+      return store.markResolvedSM2(id, score, sessionId: _mistakeSessionId);
     }, reason: 'quiz practice rating save failed');
     await _next();
   }

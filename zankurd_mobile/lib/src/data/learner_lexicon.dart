@@ -8020,6 +8020,81 @@ class LearnerLexicon {
     return List.unmodifiable([for (final item in ranked) item.$3]);
   }
 
+  static Map<String, LearnerLexiconEntry>? _byId;
+
+  /// Kimliğe göre madde (kayıtlı kelimeler kimlikle saklanır); yoksa `null`.
+  ///
+  /// Kelime listesi metni değil KİMLİĞİ saklar: sözlükte bir anlam
+  /// düzeltilirse kullanıcının listesi de düzelir; maddesi kaldırılmış bir
+  /// kimlik sessizce yok sayılır.
+  static LearnerLexiconEntry? byId(String id) {
+    final index = _byId ??= {for (final entry in entries) entry.id: entry};
+    return index[id];
+  }
+
+  static List<
+    ({LearnerLexiconEntry entry, String meaning, List<String> parts})
+  >?
+  _meaningIndex;
+
+  /// Anlam ayraçları: `Günaydın / İyi günler`, `ön, yan (ji ber: ...)`.
+  static final RegExp _meaningSplit = RegExp(r'\s*[/,;()]\s*');
+
+  /// Türkçe -> Kurmancî arama: yalnız TÜRKÇE anlamlarda arar, eşleşen
+  /// Kurmancî maddeleri döndürür.
+  ///
+  /// ## Kusur / niçin ayrı
+  ///
+  /// [search] terim, biçim ve anlamı tek sıralamada karıştırır; anlam en
+  /// sona düşer. `kapı` yazan öğrenen `Derî`yi bulur ama önüne terim
+  /// içinde `kapi` geçen her şey girebilir. Ters yönde amaç açık: yalnız
+  /// anlamlar taranır.
+  ///
+  /// ## Kural
+  ///
+  /// Katlama [foldForSearch] ile aynıdır: büyük/küçük harf, Türkçe `İ/ı`,
+  /// `ş`, `ğ`, `ç`, `ö`, `ü` yok sayılır (`KAPI`, `kapi`, `Kapı` aynı).
+  /// Sıra: (0) anlamın bir PARÇASI (`/`, `,`, `;`, parantez ayraçlı) aramaya
+  /// eşit, (1) bir parça aramayla BAŞLIYOR, (2) bir SÖZCÜK aramayla
+  /// başlıyor (`Bu kapıdır` <- `kapı`), (3) anlamın herhangi bir yerinde
+  /// geçiyor. Eşit derecede olanlar sözlük sırasını korur.
+  static List<LearnerLexiconEntry> searchByMeaning(String query) {
+    final needle = foldForSearch(query);
+    if (needle.isEmpty) return entries;
+    final index = _meaningIndex ??= List.unmodifiable([
+      for (final entry in entries)
+        (
+          entry: entry,
+          meaning: foldForSearch(entry.meaningTr),
+          parts: [
+            for (final part in entry.meaningTr.split(_meaningSplit))
+              if (part.trim().isNotEmpty) foldForSearch(part),
+          ],
+        ),
+    ]);
+    final ranked = <(int, int, LearnerLexiconEntry)>[];
+    for (final (position, item) in index.indexed) {
+      int? rank;
+      if (item.parts.contains(needle)) {
+        rank = 0;
+      } else if (item.parts.any((part) => part.startsWith(needle))) {
+        rank = 1;
+      } else if (item.meaning
+          .split(' ')
+          .any((word) => word.startsWith(needle))) {
+        rank = 2;
+      } else if (item.meaning.contains(needle)) {
+        rank = 3;
+      }
+      if (rank != null) ranked.add((rank, position, item.entry));
+    }
+    ranked.sort((a, b) {
+      final byRank = a.$1.compareTo(b.$1);
+      return byRank != 0 ? byRank : a.$2.compareTo(b.$2);
+    });
+    return List.unmodifiable([for (final item in ranked) item.$3]);
+  }
+
   static int? _rank(
     String needle,
     String term,

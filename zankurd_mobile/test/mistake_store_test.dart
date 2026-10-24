@@ -35,6 +35,9 @@ void main() {
   // maddeyi 3-4 doğru cevaptan sonra sistemden tamamen siliyordu. SM-2'nin
   // değeri aylar süren aralıklardadır; eşikler 8 tekrar / 180 güne çekildi
   // ve mezun olan maddenin SRS geçmişi (easeFactor) korunuyor.
+  // (2026-10-24: bu üç test AYNI oturumda cevap verir; iki ayrı oturum kuralı
+  // aşağıdaki 'tekrar kuyruğu' grubunda sınanır, burada yalnız SM-2 aralık
+  // ve eşik güvencesi kalır.)
   test('SM-2 Kolay (q = 5) aralığı büyütür ama maddeyi erken silmez', () async {
     final store = await MistakeStore.load();
 
@@ -43,7 +46,7 @@ void main() {
 
     // Reps 1 → 1 gün, Reps 2 → 6 gün, Reps 3 → ~15 gün, Reps 4 → ~39 gün.
     for (var i = 0; i < 4; i++) {
-      await store.markResolvedSM2('q1', 5);
+      await store.markResolvedSM2('q1', 5, sessionId: 'tek');
       expect(
         store.count,
         1,
@@ -52,11 +55,11 @@ void main() {
     }
 
     // Reps 5 → ~105 gün: hâlâ 180 günün altında.
-    await store.markResolvedSM2('q1', 5);
+    await store.markResolvedSM2('q1', 5, sessionId: 'tek');
     expect(store.count, 1);
 
     // Reps 6 → aralık 180 günü aşar, madde "yanlışlarım" listesinden çıkar.
-    await store.markResolvedSM2('q1', 5);
+    await store.markResolvedSM2('q1', 5, sessionId: 'tek');
     expect(store.count, 0);
   });
 
@@ -70,7 +73,7 @@ void main() {
       // Zor cevaplarda easeFactor düşer; aralık 180 güne ulaşmadan önce
       // tekrar sayısı eşiği (8) devreye girer.
       for (var i = 0; i < 7; i++) {
-        await store.markResolvedSM2('q1', 3);
+        await store.markResolvedSM2('q1', 3, sessionId: 'tek');
         expect(
           store.count,
           1,
@@ -78,7 +81,7 @@ void main() {
         );
       }
 
-      await store.markResolvedSM2('q1', 3);
+      await store.markResolvedSM2('q1', 3, sessionId: 'tek');
       expect(store.count, 0);
     },
   );
@@ -88,7 +91,7 @@ void main() {
 
     await store.markMistake('q1');
     for (var i = 0; i < 8; i++) {
-      await store.markResolvedSM2('q1', 5);
+      await store.markResolvedSM2('q1', 5, sessionId: 'tek');
     }
     expect(store.count, 0);
 
@@ -297,5 +300,112 @@ void main() {
     expect(restored.contains('m1'), isTrue);
     expect(restored.totalCorrect, 1);
     expect(restored.totalWrong, 1);
+  });
+
+  group('tekrar kuyruğu: iki ayrı oturumda doğru -> kuyruktan çıkar', () {
+    // ## Kusur
+    //
+    // Yanlış cevaplanan soru ancak 6-8 doğru tekrar (ya da 180 günlük aralık)
+    // sonra kuyruktan çıkıyordu; kullanıcı iki kez doğru yaptığı soruyu
+    // haftalarca "tekrar edilecek" listesinde görüyordu.
+    //
+    // ## Niçin sessiz kalırdı
+    //
+    // Soru kuyrukta kaldıkça hiçbir hata görünmez; yalnız rozet şişer.
+    //
+    // ## Kural
+    //
+    // Soru, FARKLI iki oturumda doğru cevaplanınca çıkar. Aynı oturumdaki
+    // ikinci doğru sayılmaz; yanlış cevap sayacı sıfırlar.
+    test('iki ayrı oturumdaki doğru cevap soruyu kuyruktan çıkarır', () async {
+      final store = await MistakeStore.load();
+      await store.markMistake('q1');
+      expect(store.queueCount, 1);
+
+      await store.markResolved('q1', sessionId: 'oturum-1');
+      expect(store.contains('q1'), isTrue, reason: 'tek doğru yetmez');
+
+      await store.markResolved('q1', sessionId: 'oturum-2');
+      expect(store.contains('q1'), isFalse);
+      expect(store.queueCount, 0);
+    });
+
+    test('aynı oturumdaki ikinci doğru cevap sayılmaz', () async {
+      final store = await MistakeStore.load();
+      await store.markMistake('q1');
+      await store.markResolved('q1', sessionId: 'oturum-1');
+      await store.markResolved('q1', sessionId: 'oturum-1');
+      expect(store.contains('q1'), isTrue);
+
+      await store.markResolved('q1', sessionId: 'oturum-2');
+      expect(store.contains('q1'), isFalse);
+    });
+
+    test('araya giren yanlış cevap sayacı sıfırlar', () async {
+      final store = await MistakeStore.load();
+      await store.markMistake('q1');
+      await store.markResolved('q1', sessionId: 'oturum-1');
+      await store.markMistake('q1');
+      await store.markResolved('q1', sessionId: 'oturum-2');
+      expect(store.contains('q1'), isTrue, reason: 'sayaç sıfırlanmıştı');
+
+      await store.markResolved('q1', sessionId: 'oturum-3');
+      expect(store.contains('q1'), isFalse);
+    });
+
+    test('oturum kimliği verilmezse her çağrı ayrı oturumdur', () async {
+      final store = await MistakeStore.load();
+      await store.markMistake('q1');
+      await store.markResolved('q1');
+      await Future<void>.delayed(const Duration(milliseconds: 2));
+      await store.markResolved('q1');
+      expect(store.contains('q1'), isFalse);
+    });
+
+    test('sayaç uygulama yeniden açılınca korunur', () async {
+      final store = await MistakeStore.load();
+      await store.markMistake('q1');
+      await store.markResolved('q1', sessionId: 'oturum-1');
+
+      MistakeStore.resetInstance();
+      final restored = await MistakeStore.load();
+      expect(restored.contains('q1'), isTrue);
+      await restored.markResolved('q1', sessionId: 'oturum-2');
+      expect(restored.contains('q1'), isFalse);
+    });
+  });
+
+  group('tekrar kuyruğu: öncelik sırası', () {
+    test('en eski gecikme önce, eşitse en çok kaçırılan önce', () async {
+      final storage = InMemoryDataStorage();
+      final now = DateTime.now().millisecondsSinceEpoch;
+      const day = 24 * 60 * 60 * 1000;
+      // Kapsam bağlı değil: fiziksel anahtar mantıksal adın kendisidir.
+      await storage.setStringList('zankurd.mistakeQuestionIds', [
+        'yeni-az',
+        'yeni-cok',
+        'eski',
+      ]);
+      await storage.setString(
+        'zankurd.mistakeMetadata',
+        '{"yeni-az":{"nextReview":${now - 2 * day - 1000},"missCount":1},'
+            '"yeni-cok":{"nextReview":${now - 2 * day - 500},"missCount":4},'
+            '"eski":{"nextReview":${now - 9 * day},"missCount":1}}',
+      );
+      final store = await MistakeStore.load(storage: storage);
+      expect(store.readyIdsMostOverdueFirst, ['eski', 'yeni-cok', 'yeni-az']);
+    });
+
+    test('kaçırma sayısı yanlışla birikir ve mezuniyette korunur', () async {
+      final store = await MistakeStore.load();
+      await store.markMistake('q1');
+      await store.markMistake('q1');
+      await store.markResolved('q1', sessionId: 'a');
+      await store.markResolved('q1', sessionId: 'b');
+      expect(store.contains('q1'), isFalse);
+      await store.markMistake('q1');
+      expect(store.contains('q1'), isTrue);
+      expect(store.missCountForTest('q1'), 3);
+    });
   });
 }
