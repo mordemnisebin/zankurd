@@ -1,3 +1,4 @@
+import '../utils/profile_tab_request.dart';
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -170,6 +171,7 @@ class _AppShellState extends State<AppShell>
     WidgetsBinding.instance.addObserver(this);
     JoinDeepLink.incoming.addListener(_onIncomingJoinLink);
     PushTapRouter.pending.addListener(_onPushTapTarget);
+    ProfileTabRequest.pending.addListener(_onProfileTabRequest);
     _foregroundPushSub = ForegroundPushCenter.events.listen(
       _refreshForForegroundPush,
     );
@@ -426,6 +428,7 @@ class _AppShellState extends State<AppShell>
     WidgetsBinding.instance.removeObserver(this);
     JoinDeepLink.incoming.removeListener(_onIncomingJoinLink);
     PushTapRouter.pending.removeListener(_onPushTapTarget);
+    ProfileTabRequest.pending.removeListener(_onProfileTabRequest);
     unawaited(_foregroundPushSub?.cancel());
     if (identical(SocialPushPrompt.tokenSync, widget.pushTokenSync)) {
       SocialPushPrompt.tokenSync = null;
@@ -966,6 +969,12 @@ class _AppShellState extends State<AppShell>
       ),
       _ => const SizedBox.shrink(),
     };
+  }
+
+  /// Arkadaşlar ekranındaki misafir daveti "Hesabını kaydet" diyor: Profil
+  /// sekmesi (kaydetme satırının yeri) açılır.
+  void _onProfileTabRequest() {
+    if (mounted) _selectTab(3);
   }
 
   void _selectTab(int i) {

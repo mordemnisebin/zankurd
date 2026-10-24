@@ -16,7 +16,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  testWidgets('390x844: metin bandı ile yaş onayı arası en çok 48 pt', (
+  testWidgets('390x844: metin bandı ile birincil düğme arası en çok 112 pt', (
     tester,
   ) async {
     tester.view.devicePixelRatio = 1;
@@ -29,10 +29,10 @@ void main() {
     final text = tester.getRect(
       find.byKey(const ValueKey('onboarding-text-scrollbar')),
     );
-    final gate = tester.getRect(
-      find.byKey(const ValueKey('onboarding-age-gate')),
-    );
-    expect(text.bottom, lessThanOrEqualTo(gate.top));
-    expect(gate.top - text.bottom, lessThanOrEqualTo(48));
+    // 2026-10-24: yaş kutusu kalktı; metin bandının altındaki ilk öğe artık
+    // birincil "Sonraki" düğmesidir.
+    final next = tester.getRect(find.text('Sonraki'));
+    expect(text.bottom, lessThanOrEqualTo(next.top));
+    expect(next.top - text.bottom, lessThanOrEqualTo(48 + 64));
   });
 }

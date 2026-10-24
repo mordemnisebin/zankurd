@@ -2694,10 +2694,7 @@ class Tr {
     },
 
     // ── Yasal bağlantılar ─────────────────────────────────────────
-    K.privacyPolicy: {
-      'ku': 'Politîkaya nepenîtiyê',
-      'tr': 'Gizlilik politikası',
-    },
+    K.privacyPolicy: {'ku': 'Polîtîkaya nepeniyê', 'tr': 'Gizlilik politikası'},
     K.termsOfUse: {'ku': 'Mercên bikaranînê', 'tr': 'Kullanım koşulları'},
 
     // ── Oda sohbeti ───────────────────────────────────────────────
@@ -2858,20 +2855,38 @@ class Tr {
           'Üst üste doğru cevaplar ek puan kazandırır. Cevapladıktan '
           'sonra buradan sonraki soruya geç.',
     },
-    K.ageGateLabel: {
-      'ku': 'Ez 13 salî an jî mezintir im',
-      'tr': '13 yaşında veya daha büyüğüm',
+    // 2026-10-24: karşılama ekranının tepesindeki dil seçicinin etiketi. İKİ
+    // dilde birlikte yazılır, çünkü seçici tam da yanlış dilde açılan
+    // kullanıcıya doğru dili buldurmak içindir; iki dilde de aynı metindir.
+    K.languagePickerLabel: {
+      'ku': 'Uygulama dili · Zimanê sepanê',
+      'tr': 'Uygulama dili · Zimanê sepanê',
     },
-    // 2026-09-27 canlı gezinti: kutu işaretsizken kuralın kendisi ("ZanKurd
-    // 13 yaş ve üzeri içindir.") bir SnackBar'da çıkıyordu — oyuncu ne
-    // yapacağını anlamıyordu ve SnackBar ekranın altındaki "Başla" düğmesini
-    // örtüyordu. Bu metin kutunun yanında satır içi durur ve ne YAPILACAĞINI
-    // söyler; kuralı kutunun kendi etiketi zaten söylüyor.
-    K.ageGateHint: {
+    // Giriş/kayıt düğmelerinin altındaki kabul satırı. `[...]` içindeki iki söz
+    // bağlantıdır (sırayla şartlar, gizlilik); bkz. widgets/consent_line.dart.
+    K.signInConsent: {
       'ku':
-          'Ji bo berdewamiyê qutiya "Ez 13 salî an jî mezintir im" nîşan bike.',
+          'Bi berdewamkirinê, tu [Mercên bikaranînê] û [Polîtîkaya nepeniyê] '
+          'qebûl dikî.',
       'tr':
-          'Devam etmek için "13 yaşında veya daha büyüğüm" kutusunu işaretle.',
+          'Devam ederek [Kullanım Şartları] ve [Gizlilik Politikası]\'nı '
+          'kabul edersin.',
+    },
+    // Arkadaşlar ekranındaki davet kartı (2026-10-24: kullanıcı kendi kodunu
+    // bulamıyordu).
+    K.inviteCardTitle: {
+      'ku': 'Hevalê xwe vexwîne',
+      'tr': 'Arkadaşını davet et',
+    },
+    K.inviteYourCode: {'ku': 'Koda te', 'tr': 'Kodun'},
+    K.inviteCopyCode: {'ku': 'Kodê kopî bike', 'tr': 'Kodu kopyala'},
+    K.inviteGuestSave: {
+      'ku': 'Ji bo koda vexwendinê hesabê xwe tomar bike',
+      'tr': 'Davet kodu için hesabını kaydet',
+    },
+    K.inviteStoreLinks: {
+      'ku': 'App Store: {ios}\nGoogle Play: {play}',
+      'tr': 'App Store: {ios}\nGoogle Play: {play}',
     },
     // Etiket `Koda Vexwendinê` der (`K.enterReferralCode`). Misafir
     // yasağı "davetê" deyince oyuncu aynı kodu iki adla görür. Türkçe
@@ -4533,10 +4548,13 @@ class K {
   static const quizTutorialUntimedBody = 'quiz.tutorial.untimed.body';
   static const quizTutorialNextTitle = 'quiz.tutorial.next.title';
   static const quizTutorialNextBody = 'quiz.tutorial.next.body';
-  static const ageGateLabel = 'nameGate.age.label';
-
-  /// Yaş kutusu işaretsiz kalınca kutunun yanında satır içi gösterilir.
-  static const ageGateHint = 'nameGate.age.hint';
+  static const languagePickerLabel = 'onboarding.languagePickerLabel';
+  static const signInConsent = 'auth.signInConsent';
+  static const inviteCardTitle = 'friends.invite.cardTitle';
+  static const inviteYourCode = 'friends.invite.yourCode';
+  static const inviteCopyCode = 'friends.invite.copyCode';
+  static const inviteGuestSave = 'friends.invite.guestSave';
+  static const inviteStoreLinks = 'friends.invite.storeLinks';
   static const referralGuestBlocked = 'friends.referral.guestBlocked';
   static const imageCreditsEmpty = 'credits.images.empty';
   static const imageCreditsFailed = 'credits.images.failed';

@@ -11,6 +11,7 @@ import '../providers/reduced_motion_provider.dart';
 import '../services/analytics_service.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_logo.dart';
+import '../widgets/consent_line.dart';
 import '../widgets/language_toggle.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/sahne/sahne.dart';
@@ -353,6 +354,12 @@ class _SignInScreenState extends State<SignInScreen>
               ),
               title: context.t(K.welcomeTitle),
               content: panel,
+              // 2026-10-24: karşılamadaki yaş kutusu kalktı; şartlar ve
+              // gizlilik kabulü birincil düğmenin hemen ÜSTÜNDE düz metin
+              // bağlantıdır. Altında değil: birincil düğmenin dört giriş
+              // ekranında aynı yerde durması sözleşmedir
+              // (`entry_scaffold_test.dart`); üstteki satır onu kaydırmaz.
+              aboveAction: const ConsentLine(),
               primary: FadeTransition(
                 opacity: LoadAnimationSequence.buttonFadeAnimation(
                   _animationController,

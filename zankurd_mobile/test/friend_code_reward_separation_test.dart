@@ -90,7 +90,7 @@ void main() {
       tester.getTopLeft(search).dy,
       lessThan(tester.getTopLeft(reward).dy),
     );
-    expect(find.text('Davet ödülü'), findsOneWidget);
+    expect(find.text('Arkadaşını davet et'), findsOneWidget);
   });
 
   testWidgets('anonim oyuncu kodla arkadaş ister, ödül RPCsine gitmez', (

@@ -25,7 +25,11 @@ enum AppLanguage {
 }
 
 class LanguageProvider extends ChangeNotifier {
-  LanguageProvider({String initialLang = 'ku', SharedPreferences? preferences})
+  // Yeni kurulumda varsayılan Türkçe (2026-10-24, sahip kararı): ilk açılışta
+  // çoğu kullanıcı Kurmancî arayüzde takılıp çıkıyordu; Kurmancî dili
+  // karşılama ekranındaki seçiciden bir dokunuşla seçilir. Kayıtlı seçim
+  // olduğu gibi korunur.
+  LanguageProvider({String initialLang = 'tr', SharedPreferences? preferences})
     : this.fromLanguage(AppLanguage.fromCode(initialLang), preferences);
 
   LanguageProvider.fromLanguage(
@@ -37,7 +41,7 @@ class LanguageProvider extends ChangeNotifier {
 
   static Future<LanguageProvider> load() async {
     final preferences = await SharedPreferences.getInstance();
-    final storedCode = preferences.getString(_storageKey) ?? 'ku';
+    final storedCode = preferences.getString(_storageKey) ?? 'tr';
     return LanguageProvider.fromLanguage(
       AppLanguage.fromCode(storedCode),
       preferences,

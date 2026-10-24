@@ -224,6 +224,12 @@ class AppConfig {
   static const privacyPolicyUrl = 'https://www.zankurd.com/privacy.html';
   static const termsOfServiceUrl = 'https://www.zankurd.com/terms.html';
 
+  // ── Mağaza bağlantıları (davet mesajı) ─────────────────────────────────
+  // App Store kimliği web/join.js ile aynıdır (bekçi: friends_invite testi).
+  static const appStoreUrl = 'https://apps.apple.com/app/id6797175984';
+  static const playStoreUrl =
+      'https://play.google.com/store/apps/details?id=com.zankurd.app';
+
   // ── Abonelik adı (Apple 3.1.2 şartı) ───────────────────────────────────
   //
   // Apple, otomatik yenilenen aboneliğin BAŞLIĞININ satın alma ekranında

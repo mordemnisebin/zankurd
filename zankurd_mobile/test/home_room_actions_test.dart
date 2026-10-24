@@ -157,7 +157,7 @@ void main() {
       ZanKurdApp(
         repository: repository,
         authProvider: FakeAuthProvider(),
-        languageProvider: LanguageProvider(),
+        languageProvider: LanguageProvider(initialLang: 'ku'),
       ),
     );
     await tester.pumpAndSettle();

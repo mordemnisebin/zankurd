@@ -6,7 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../config/app_config.dart';
 import '../providers/auth_provider.dart';
+import '../utils/profile_tab_request.dart';
 
 import '../data/zankurd_repository.dart';
 import '../config/feature_flags.dart';
@@ -477,7 +479,7 @@ class _FriendsScreenState extends State<FriendsScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      context.t(K.referralRewardTitle),
+                      context.t(K.inviteCardTitle),
                       style: SahneType.bodyStrong.copyWith(
                         color: SahneVivid.onFill,
                       ),
@@ -540,9 +542,11 @@ class _FriendsScreenState extends State<FriendsScreen>
                         expand: true,
                         onPressed: () {
                           HapticFeedback.selectionClick();
-                          final text = context.t(K.inviteShareText, {
-                            'tag': tag,
-                          });
+                          // Davet metni mağaza bağlantılarını da taşır: alıcı
+                          // kodu görüp uygulamayı nereden bulacağını bilsin.
+                          final text =
+                              '${context.t(K.inviteShareText, {'tag': tag})}'
+                              '\n${context.t(K.inviteStoreLinks, {'ios': AppConfig.appStoreUrl, 'play': AppConfig.playStoreUrl})}';
                           SharePlus.instance.share(ShareParams(text: text));
                         },
                       )
@@ -564,7 +568,36 @@ class _FriendsScreenState extends State<FriendsScreen>
                 // reddediyordu (2026-10-21 iki simülatör turu). Ölü düğme
                 // yerine misafirde hiç çizilmez; hesabı kaydetme yolu
                 // Profil'dedir.
-                if (_isGuestSession(context)) return share ?? const SizedBox();
+                // Misafirin kodu yok: ödül yalnız doğrulanmış hesaba yazılır,
+                // kod göstermek ölü bir vaat olurdu. Yerine hesabı kaydetme
+                // yolu (Profil sekmesindeki "Hesabını kaydet") gösterilir.
+                if (_isGuestSession(context)) {
+                  return Column(
+                    key: const ValueKey('friends-invite-guest'),
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        context.t(K.inviteGuestSave),
+                        style: SahneType.bodyStrong.copyWith(
+                          color: SahneVivid.onFill,
+                        ),
+                      ),
+                      const SizedBox(height: SahneSpace.x3),
+                      SahneButton.tonal(
+                        tint: SahneVivid.onFill,
+                        foreground: t.nilOnWhite,
+                        key: const ValueKey('friends-invite-save-account'),
+                        label: context.t(K.saveAccount),
+                        icon: AppIcons.userPlus,
+                        expand: true,
+                        onPressed: () {
+                          Navigator.of(context).popUntil((r) => r.isFirst);
+                          ProfileTabRequest.request();
+                        },
+                      ),
+                    ],
+                  );
+                }
                 if (share == null) return enter;
                 // İki düğme HER ZAMAN alt alta: yan yana yarım genişlikte
                 // "Koda vexwendinê" iki satıra kırılıyordu (2026-09-30
@@ -573,11 +606,73 @@ class _FriendsScreenState extends State<FriendsScreen>
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    _buildInviteCodeRow(tag!),
+                    const SizedBox(height: SahneSpace.x3),
                     share,
                     const SizedBox(height: SahneSpace.x2),
                     enter,
                   ],
                 );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Kullanıcının KENDİ davet kodu: büyük, okunur ve tek dokunuşla kopyalanır.
+  ///
+  /// Kusur: kod yalnız "Paylaş · ZK-4F7K" düğmesinin etiketinde yaşıyordu;
+  /// kullanıcılar kodlarını bulamadıklarını söyledi (2026-10-24). Panoya
+  /// kopyalama profil rozetindeki gibi `K.playerTagCopied` ile bildirilir.
+  Widget _buildInviteCodeRow(String tag) {
+    return DecoratedBox(
+      key: const ValueKey('friends-invite-code-row'),
+      decoration: const ShapeDecoration(
+        color: SahneVivid.glass,
+        shape: SahneShape.m,
+      ),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.only(
+          start: SahneSpace.x4,
+          top: SahneSpace.x1,
+          bottom: SahneSpace.x1,
+          end: SahneSpace.x1,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.t(K.inviteYourCode),
+                    style: SahneType.caption.copyWith(
+                      color: SahneVivid.onFillSoft,
+                    ),
+                  ),
+                  Text(
+                    tag,
+                    key: const ValueKey('friends-invite-code-text'),
+                    style: SahneType.headline.copyWith(
+                      color: SahneVivid.onFill,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              key: const ValueKey('friends-copy-code-button'),
+              tooltip: context.t(K.inviteCopyCode),
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+              color: SahneVivid.onFill,
+              icon: const Icon(AppIcons.copy),
+              onPressed: () async {
+                HapticFeedback.selectionClick();
+                await Clipboard.setData(ClipboardData(text: tag));
+                if (!mounted) return;
+                _showMessage(context.t(K.playerTagCopied));
               },
             ),
           ],
