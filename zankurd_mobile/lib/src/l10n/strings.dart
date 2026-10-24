@@ -1073,6 +1073,11 @@ class Tr {
     K.gunlukGorevler: {'ku': 'Erkên rojane', 'tr': 'Günlük görevler'},
     K.tamamlandi: {'ku': 'Temam bû', 'tr': 'tamamlandı'},
     K.pGorevTamam: {'ku': '{p0} erk temam bûn', 'tr': '{p0} görev tamam'},
+    // "Bugün" paneli (2026-10-24): seri + görevler tek yüzeyde, tek özet.
+    K.todaySummary: {
+      'ku': 'Îro {done}/{total} temam',
+      'tr': 'Bugün {done}/{total} tamam',
+    },
     K.tumGorevlerTamam: {
       'ku': 'Hemû erk temam bûn!',
       'tr': 'Tüm görevler tamam!',
@@ -4289,6 +4294,7 @@ class K {
   static const tamamlandi = 'screen.tamamlandi';
   static const pGorevTamam = 'screen.pGorevTamam';
   static const tumGorevlerTamam = 'screen.tumGorevlerTamam';
+  static const todaySummary = 'screen.todaySummary';
   static const bugununGorevi = 'screen.bugununGorevi';
   static const missionClaimAction = 'home.mission.claimAction';
   static const missionClaimed = 'home.mission.claimed';
