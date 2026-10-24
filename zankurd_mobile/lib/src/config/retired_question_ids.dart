@@ -774,8 +774,13 @@ const Set<String> retiredQuestionIds = <String>{
   // ---------------------------------------------------------------------
   // 2026-10-24: ds_cografya_0017 ile aynı bilgiyi (Musul'dan geçen Dicle
   // nehrini) ölçtüğü için emekli. Kalan eş parantezde.
+  // Aynı gün: hat_0062 ve hat_0071 de ds_cografya_0007 ile aynı bilgiyi
+  // (Amed/Diyarbakır'dan geçen Dicle nehrini) ölçtüğü için emekli
+  // (Gemini 3.8 Flash + Grok 4.7 ortak onayı).
   // ---------------------------------------------------------------------
   'ds_cografya_0030', // kalan: ds_cografya_0017
+  'hat_0062', // kalan: ds_cografya_0007
+  'hat_0071', // kalan: ds_cografya_0007
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

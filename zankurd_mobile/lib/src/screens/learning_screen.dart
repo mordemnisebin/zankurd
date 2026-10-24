@@ -346,11 +346,16 @@ class _LearningScreenState extends State<LearningScreen> {
                   width: double.infinity,
                   child: StoryCatalog(
                     isKu: ku,
-                    onOpen: (story, guide) => Navigator.of(context).push(
-                      AppRoute(
-                        page: StoryScreen(story: story, guide: guide),
-                      ),
-                    ),
+                    onOpen: (story, guide) async {
+                      await Navigator.of(context).push(
+                        AppRoute(
+                          page: StoryScreen(story: story, guide: guide),
+                        ),
+                      );
+                      if (!mounted) return;
+                      _reviewRefresh.value++;
+                      await _loadWordList();
+                    },
                   ),
                 ),
               ),
@@ -699,7 +704,10 @@ class _LearningScreenState extends State<LearningScreen> {
           ),
         ),
       );
-      _refreshCompleted();
+      if (!mounted) return;
+      _reviewRefresh.value++;
+      await _refreshCompleted();
+      if (mounted) await _loadWordList();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'learning_category_practice');
       if (mounted) {
@@ -741,14 +749,18 @@ class _LearningScreenState extends State<LearningScreen> {
       context,
     ).push(AppRoute(page: const LearnerLexiconScreen()));
     // Sözlükte kelime kaydedilmiş olabilir.
-    if (mounted) await _loadWordList();
+    if (!mounted) return;
+    _reviewRefresh.value++;
+    await _loadWordList();
   }
 
   Future<void> _openMyWords() async {
     await Navigator.of(
       context,
     ).push(AppRoute(page: MyWordsScreen(repository: widget.repository)));
-    if (mounted) await _loadWordList();
+    if (!mounted) return;
+    _reviewRefresh.value++;
+    await _loadWordList();
   }
 
   Future<void> _openCategoryLessonDetail({
@@ -765,7 +777,10 @@ class _LearningScreenState extends State<LearningScreen> {
         ),
       ),
     );
-    _refreshCompleted();
+    if (!mounted) return;
+    _reviewRefresh.value++;
+    await _refreshCompleted();
+    if (mounted) await _loadWordList();
   }
 
   String _categoryLabel(String cat, bool ku) {

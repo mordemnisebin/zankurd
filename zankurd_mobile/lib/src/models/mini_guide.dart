@@ -74,7 +74,7 @@ const MiniGuide shoppingGuide = MiniGuide(
   titleTr: 'Alışverişte',
   newWords: [
     GuidePair('dikan', 'dükkân'),
-    GuidePair('bihâ', 'fiyat'),
+    GuidePair('biha', 'fiyat'),
     GuidePair('çend', 'ne kadar'),
     GuidePair('kîlo', 'kilo'),
   ],

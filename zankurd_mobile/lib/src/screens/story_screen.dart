@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../data/learner_lexicon.dart';
 import '../data/story_progress_store.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/mini_guide.dart';
 import '../models/story.dart';
 import '../utils/error_reporter.dart';
+import '../widgets/lexicon_speak_button.dart';
 import '../widgets/sahne/sahne.dart';
+import '../widgets/word_save_button.dart';
 import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -210,9 +213,18 @@ class _StoryScreenState extends State<StoryScreen> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      context.t(K.storyWord),
-                      style: SahneType.eyebrow.copyWith(color: s.eyebrowTx),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            context.t(K.storyWord),
+                            style: SahneType.eyebrow.copyWith(
+                              color: s.eyebrowTx,
+                            ),
+                          ),
+                        ),
+                        LexiconSpeakButton(text: node.textKu),
+                      ],
                     ),
                     const SizedBox(height: SahneSpace.x2),
                     Text(
@@ -232,7 +244,37 @@ class _StoryScreenState extends State<StoryScreen> {
           ),
         ),
         const SizedBox(height: SahneSpace.x4),
-        if (node.isEnding)
+        if (node.isEnding) ...[
+          if (widget.guide != null && widget.guide!.newWords.isNotEmpty) ...[
+            SahneSurfaceCard(
+              key: const ValueKey('story-ending-words'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.t(K.yeniKelimeler),
+                    style: SahneType.captionStrong.copyWith(color: t.eyebrowTx),
+                  ),
+                  const SizedBox(height: SahneSpace.x2),
+                  for (final w in widget.guide!.newWords)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '• ${w.ku} — ${w.tr}',
+                            style: SahneType.body.copyWith(color: t.tx),
+                          ),
+                        ),
+                        LexiconSpeakButton(text: w.ku),
+                        if (LearnerLexicon.lookup(w.ku) case final entry?)
+                          WordSaveButton(entryId: entry.id),
+                      ],
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: SahneSpace.x4),
+          ],
           SahneButton.primary(
             key: const ValueKey('story-ending-restart'),
             onPressed: _busy ? null : _restart,
@@ -240,8 +282,8 @@ class _StoryScreenState extends State<StoryScreen> {
             arrow: false,
             label: context.t(K.playAgain),
             expand: true,
-          )
-        else
+          ),
+        ] else
           // Seçenekler tek liste grubunda: Kurmancî cümle önde, çevirisi
           // altında. Gövde her zaman Kurmancî cümleyi üstte gösterir; şık da
           // aynı biçimi alır — Türkçe arayüzde öğrenci Kurmancî okuyup
@@ -346,14 +388,26 @@ class _MiniGuideView extends StatelessWidget {
             const SizedBox(height: SahneSpace.x4),
             _label(context, Tr.forKu(K.yeniKelimeler, isKu)),
             for (final w in guide.newWords)
-              Text('• ${w.ku} — ${w.tr}', style: item),
+              Row(
+                children: [
+                  Expanded(child: Text('• ${w.ku} — ${w.tr}', style: item)),
+                  LexiconSpeakButton(text: w.ku),
+                  if (LearnerLexicon.lookup(w.ku) case final entry?)
+                    WordSaveButton(entryId: entry.id),
+                ],
+              ),
             const SizedBox(height: SahneSpace.x3),
             _label(context, Tr.forKu(K.dilbilgisi, isKu)),
             Text(isKu ? guide.grammarKu : guide.grammarTr, style: note),
             const SizedBox(height: SahneSpace.x3),
             _label(context, Tr.forKu(K.ornekler, isKu)),
             for (final e in guide.examples)
-              Text('• ${e.ku} — ${e.tr}', style: item),
+              Row(
+                children: [
+                  Expanded(child: Text('• ${e.ku} — ${e.tr}', style: item)),
+                  LexiconSpeakButton(text: e.ku),
+                ],
+              ),
             const SizedBox(height: SahneSpace.x3),
             _label(context, Tr.forKu(K.kulturelNot, isKu)),
             Text(isKu ? guide.cultureKu : guide.cultureTr, style: note),

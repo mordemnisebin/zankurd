@@ -341,7 +341,7 @@ const Map<String, String> reviewedNearDuplicates = {
   '6fe51ca036cc17484fdef3852b28ccfe':
       "ex28_yilmaz_guney_005 ~ hat_0043: aynı bilgi; biri emekli (Grok + ana ajan)",
   '86df564c81b1fb0f753ee591ee03ae8f':
-      "ds_cografya_0007 ~ hat_0062: farklı bilgi: doğru cevaplar farklı",
+      "ds_cografya_0007 ~ hat_0062: aynı bilgi (Amed'den geçen Dicle nehri); hat_0062 emekli (2026-10-24)",
   '52bb4a9643b9b5fb989142ebb338542b':
       "ds_cografya_0030 ~ hat_0071: farklı bilgi (Grok + ana ajan)",
   '5cd623ee48f1dc24049ce25c4c872918':
@@ -374,4 +374,380 @@ const Map<String, String> reviewedNearDuplicates = {
       "sf_nat_0006 ~ sf_nat_0007: farklı bilgi: doğru cevaplar farklı",
   '1ed6b714dfc51753f8a6d3021b0ec73b':
       "baslangic_2026_10_06_0002 ~ ziman_x_0005: farklı bilgi (dengdêr sayısı 8 / bütün tîp sayısı 31)",
+  'e60fb2262bd3849e0ccd66cd62e032e0':
+      "ds_edebiyat_0114 ~ ds_edebiyat_0116: farklı bilgi: doğru cevaplar farklı",
+  '0683940f0d5bf8ae79d809a3d2bbfaf8':
+      "ds_edebiyat_0114 ~ ds_edebiyat_0122: farklı bilgi: doğru cevaplar farklı",
+  '1281d6f7da8e8e3d2380367509e6b6a9':
+      "ds_edebiyat_0116 ~ ds_edebiyat_0122: farklı bilgi: doğru cevaplar farklı",
+  '651c995833beec23fc70f482449bfcc5':
+      "ds_edebiyat_0114 ~ ds_edebiyat_0124: farklı bilgi: doğru cevaplar farklı",
+  '50f72bc063e7c96eb413d95e1ca3e3da':
+      "ds_edebiyat_0116 ~ ds_edebiyat_0124: farklı bilgi: doğru cevaplar farklı",
+  'e59a72613af975dec54d41e8856d073a':
+      "ds_edebiyat_0122 ~ ds_edebiyat_0124: farklı bilgi: doğru cevaplar farklı",
+  '367ca8fdc949433223be7e979c48e100':
+      "ds_edebiyat_0210 ~ ds_edebiyat_0214: farklı bilgi: doğru cevaplar farklı",
+  'd208906fe06a86d5636b4c1b350922f7':
+      "ds_edebiyat_0214 ~ ds_edebiyat_0218: farklı bilgi: doğru cevaplar farklı",
+  '79cdb932c860dcd498b79ee0d42a6a30':
+      "ds_edebiyat_0210 ~ ds_edebiyat_0218: farklı bilgi: doğru cevaplar farklı",
+  '1364b57ea8cede901d5df242c8f3190a':
+      "ds_edebiyat_0214 ~ ds_edebiyat_0220: farklı bilgi: doğru cevaplar farklı",
+  'e07756cd29e44033d478e6fc638ba437':
+      "ds_edebiyat_0210 ~ ds_edebiyat_0220: farklı bilgi: doğru cevaplar farklı",
+  '75b200333563dfba4e3ebcb291a87ac2':
+      "ds_edebiyat_0218 ~ ds_edebiyat_0220: farklı bilgi: doğru cevaplar farklı",
+  '56b9d41cc72ff6c4eca0d86eabe6a7e7':
+      "ds_edebiyat_0213 ~ ds_edebiyat_0221: farklı bilgi: doğru cevaplar farklı",
+  '699e214b9e76deee33d856b5ba088aab':
+      "ds_edebiyat_0214 ~ ds_edebiyat_0222: farklı bilgi: doğru cevaplar farklı",
+  '942d909ac7a107981b8f3617fc537fed':
+      "ds_edebiyat_0218 ~ ds_edebiyat_0222: farklı bilgi: doğru cevaplar farklı",
+  '2761ff18679a3d817e7fc9ba89cf6948':
+      "ds_edebiyat_0210 ~ ds_edebiyat_0222: farklı bilgi: doğru cevaplar farklı",
+  '914cfc3965dd6235e90845e48e726c38':
+      "ds_edebiyat_0220 ~ ds_edebiyat_0222: farklı bilgi: doğru cevaplar farklı",
+  '5cc14b6463dd963aa5929d7e0e5d74df':
+      "ds_edebiyat_0220 ~ ds_edebiyat_0224: farklı bilgi: doğru cevaplar farklı",
+  '8e6f32ba09d1cdbbb4a1dad2575307b2':
+      "ds_edebiyat_0214 ~ ds_edebiyat_0224: farklı bilgi: doğru cevaplar farklı",
+  '5ec008e08301602b0f8deb712ea137f6':
+      "ds_edebiyat_0218 ~ ds_edebiyat_0224: farklı bilgi: doğru cevaplar farklı",
+  'e86b331c22c86f040f189b5a24cee1aa':
+      "ds_edebiyat_0222 ~ ds_edebiyat_0224: farklı bilgi: doğru cevaplar farklı",
+  '72660eab12659342e14fd4bd66b294ab':
+      "ds_edebiyat_0210 ~ ds_edebiyat_0224: farklı bilgi: doğru cevaplar farklı",
+  '1cff84a06fd902d9fda0450dbc2d290e':
+      "ds_muzik_0043 ~ ds_muzik_0047: farklı bilgi: doğru cevaplar farklı",
+  '2db6533164659eadc15387c820a41036':
+      "ds_muzik_0110 ~ ds_muzik_0112: farklı bilgi: doğru cevaplar farklı",
+  'cda94a81ef2a6a3dabfbb1bd81aa6550':
+      "ds_muzik_0131 ~ ds_muzik_0134: farklı bilgi: doğru cevaplar farklı",
+  'b8251a6df177c1362ab65072597dc8cc':
+      "ds_muzik_0131 ~ ds_muzik_0145: farklı bilgi: doğru cevaplar farklı",
+  'a8371a15aaff0f1bc61c1b06c9efcaf8':
+      "ds_muzik_0135 ~ ds_muzik_0143: farklı bilgi: doğru cevaplar farklı",
+  'f012f00ca21e723e3a822c400f69c785':
+      "ds_teknoloji_0087 ~ ds_teknoloji_0093: farklı bilgi: doğru cevaplar farklı",
+  '9c96e1ff4e9f96b9cb7dc48d06c0f1bd':
+      "ds_cografya_0111 ~ ds_cografya_0113: farklı bilgi: doğru cevaplar farklı",
+  '3816e5f7b2356f656d44bff42239c506':
+      "ds_cografya_0113 ~ ds_cografya_0115: farklı bilgi: doğru cevaplar farklı",
+  'a849bdd896cea071d676358d0038f4d8':
+      "ds_cografya_0111 ~ ds_cografya_0115: farklı bilgi: doğru cevaplar farklı",
+  'f498fbc2b30975a0ac5ad70f809588da':
+      "ds_cografya_0113 ~ ds_cografya_0119: farklı bilgi: doğru cevaplar farklı",
+  'd0750adaae96b9c629d3d4041f5b4675':
+      "ds_cografya_0115 ~ ds_cografya_0119: farklı bilgi: doğru cevaplar farklı",
+  '0cfa48ed6fd09e36f4450203217ea11c':
+      "ds_cografya_0111 ~ ds_cografya_0119: farklı bilgi: doğru cevaplar farklı",
+  '3544f9d9a7c9c9461233dfe98fafd700':
+      "ds_cografya_0119 ~ ds_cografya_0125: farklı bilgi: doğru cevaplar farklı",
+  '6e82d020c73a74b1a9128c390ef1f935':
+      "ds_cografya_0113 ~ ds_cografya_0125: farklı bilgi: doğru cevaplar farklı",
+  'c81634f051e92601adc8254e9564d00c':
+      "ds_cografya_0115 ~ ds_cografya_0125: farklı bilgi: doğru cevaplar farklı",
+  'b152aba291a8964da2757b8a8031f361':
+      "ds_cografya_0111 ~ ds_cografya_0125: farklı bilgi: doğru cevaplar farklı",
+  'd1ffdbc560a77bfdf9c046afad5d1208':
+      "ds_ziman_0110 ~ ds_ziman_0114: farklı bilgi: doğru cevaplar farklı",
+  'a593933a3c2545c710ba13844749832c':
+      "ds_ziman_0110 ~ ds_ziman_0121: farklı bilgi: doğru cevaplar farklı",
+  '12a42f7b9daeda491d6847cd47343739':
+      "ds_ziman_0114 ~ ds_ziman_0121: farklı bilgi: doğru cevaplar farklı",
+  'd559980f8934f84fb34eca9ada089e51':
+      "ds_cand_0011 ~ ds_cand_0021: farklı bilgi: doğru cevaplar farklı",
+  '54aebd5254680dcbaed69714ae45fc0d':
+      "ds_cand_1165 ~ ds_cand_0251: farklı bilgi: doğru cevaplar farklı",
+  '5ca966ef154bd6eb1936117a18f7f530':
+      "ds_cand_0242 ~ ds_cand_0240: farklı bilgi: doğru cevaplar farklı",
+  'feeb7eaa78f9844df023a34f4016446d':
+      "ds_cand_0238 ~ ds_cand_0240: farklı bilgi: doğru cevaplar farklı",
+  '84e1dd5df236e681ba2fcc27f918d9b0':
+      "ds_cografya_0007 ~ ds_cografya_0017: farklı bilgi (Orkestra denetimi)",
+  '0d6a9277e735836df7293a1df5698aa5':
+      "ds_cografya_0111 ~ ds_cografya_0101: farklı bilgi: doğru cevaplar farklı",
+  'e7c4c129717a2d114b8dc095c886cda9':
+      "ds_cografya_0113 ~ ds_cografya_0101: farklı bilgi: doğru cevaplar farklı",
+  'c86a5d7e8de8748dbd543a71874e1c95':
+      "ds_cografya_0125 ~ ds_cografya_0101: farklı bilgi: doğru cevaplar farklı",
+  'ff3e0fb5ce3d87d9aebae4b69a086092':
+      "ds_cografya_0115 ~ ds_cografya_0101: farklı bilgi: doğru cevaplar farklı",
+  '0458dd4cdaf13decad3c7b4ce603d062':
+      "ds_cografya_0119 ~ ds_cografya_0101: farklı bilgi: doğru cevaplar farklı",
+  '161bf78ffcb61b16fed8c2a934c267e4':
+      "ds_cografya_0119 ~ ds_cografya_0103: farklı bilgi: doğru cevaplar farklı",
+  '8bd9d7d735399da74c42f259eb30518b':
+      "ds_cografya_0101 ~ ds_cografya_0103: farklı bilgi: doğru cevaplar farklı",
+  '4f20a3bd8df934a30e12790377a77473':
+      "ds_cografya_0111 ~ ds_cografya_0103: farklı bilgi: doğru cevaplar farklı",
+  'c05e74c9765b4e9b6c4220235b4c354b':
+      "ds_cografya_0113 ~ ds_cografya_0103: farklı bilgi: doğru cevaplar farklı",
+  '6f57d6efd581fc736dab23ba9e5e6ff8':
+      "ds_cografya_0115 ~ ds_cografya_0103: farklı bilgi: doğru cevaplar farklı",
+  '4721682a4bf801379ef53f3d5d921ec7':
+      "ds_cografya_0125 ~ ds_cografya_0103: farklı bilgi: doğru cevaplar farklı",
+  '84a9787de54d323a917f40a66eb33b8f':
+      "ds_cografya_0113 ~ ds_cografya_0107: farklı bilgi: doğru cevaplar farklı",
+  'ab109a28d5655b3060ace313beea928d':
+      "ds_cografya_0103 ~ ds_cografya_0107: farklı bilgi: doğru cevaplar farklı",
+  '05e1b023eb8121e234461a7b98861ab1':
+      "ds_cografya_0125 ~ ds_cografya_0107: farklı bilgi: doğru cevaplar farklı",
+  'd6ef88c067cdeb9c11fd688441fc5df7':
+      "ds_cografya_0111 ~ ds_cografya_0107: farklı bilgi: doğru cevaplar farklı",
+  'fe388e9aca2add96386e46bb3da5c544':
+      "ds_cografya_0115 ~ ds_cografya_0107: farklı bilgi: doğru cevaplar farklı",
+  'dea591c991ff8182ca78ea56864af793':
+      "ds_cografya_0101 ~ ds_cografya_0107: farklı bilgi: doğru cevaplar farklı",
+  '1a99143eb47e1ae34a02302f9999dc2a':
+      "ds_cografya_0119 ~ ds_cografya_0107: farklı bilgi: doğru cevaplar farklı",
+  'a567d272d47753d8179255169acbd817':
+      "ds_cografya_0108 ~ ds_cografya_0112: farklı bilgi: doğru cevaplar farklı",
+  '783abdb8f682e26e2da7dc776c950062':
+      "ds_cografya_0108 ~ ds_cografya_0114: farklı bilgi: doğru cevaplar farklı",
+  'ccb674e68003fdbb813aa77c81ff3418':
+      "ds_cografya_0112 ~ ds_cografya_0114: farklı bilgi: doğru cevaplar farklı",
+  'fd12876ff09c0e3dbe491442914239d0':
+      "ds_cografya_0125 ~ ds_cografya_0117: farklı bilgi: doğru cevaplar farklı",
+  'ef1888fe93a64b1d87b3992f17cad8ac':
+      "ds_cografya_0111 ~ ds_cografya_0117: farklı bilgi: doğru cevaplar farklı",
+  '01e176bd51daeaa52171d87aa58e3502':
+      "ds_cografya_0101 ~ ds_cografya_0117: farklı bilgi: doğru cevaplar farklı",
+  '8c9f92fc75478a29b6fd23585b555287':
+      "ds_cografya_0115 ~ ds_cografya_0117: farklı bilgi: doğru cevaplar farklı",
+  '12d8f317da9a09d28315d2799affd270':
+      "ds_cografya_0107 ~ ds_cografya_0117: farklı bilgi: doğru cevaplar farklı",
+  '7945959983a72457a2160f69cbdbfb0c':
+      "ds_cografya_0103 ~ ds_cografya_0117: farklı bilgi: doğru cevaplar farklı",
+  '58e0cb5abb82bd9a3c0a86c071042a81':
+      "ds_cografya_0119 ~ ds_cografya_0117: farklı bilgi: doğru cevaplar farklı",
+  '7ca9da260725ce41a74d8c1f3d187c2a':
+      "ds_cografya_0113 ~ ds_cografya_0117: farklı bilgi: doğru cevaplar farklı",
+  '0dced9279b4e8da1f82375e079e3be66':
+      "ds_cografya_0108 ~ ds_cografya_0118: farklı bilgi: doğru cevaplar farklı",
+  'c801c6c4703037da3fe0bae331be1342':
+      "ds_cografya_0112 ~ ds_cografya_0118: farklı bilgi: doğru cevaplar farklı",
+  '6d0a53d7f779d27c75672bdbd8cee7bb':
+      "ds_cografya_0114 ~ ds_cografya_0118: farklı bilgi: doğru cevaplar farklı",
+  '4718126ae78df0d0c76b6e77c04eccde':
+      "ds_cografya_0118 ~ ds_cografya_0122: farklı bilgi: doğru cevaplar farklı",
+  '2326a2efe8fa478fd0137415e984890a':
+      "ds_cografya_0114 ~ ds_cografya_0122: farklı bilgi: doğru cevaplar farklı",
+  'ddb6fdd87cbd964ce89d6a5090665ded':
+      "ds_cografya_0108 ~ ds_cografya_0122: farklı bilgi: doğru cevaplar farklı",
+  'b181e432dd629991f8e56ecf7233f189':
+      "ds_cografya_0112 ~ ds_cografya_0122: farklı bilgi: doğru cevaplar farklı",
+  'ec349aaa1203db4efbda2df7640f6d6a':
+      "ds_cografya_0101 ~ ds_cografya_0123: farklı bilgi: doğru cevaplar farklı",
+  '058fd0e3dd168522520b86850fb10202':
+      "ds_cografya_0113 ~ ds_cografya_0123: farklı bilgi: doğru cevaplar farklı",
+  'f24b9446bc0de16e8bd5adabed6c8cee':
+      "ds_cografya_0125 ~ ds_cografya_0123: farklı bilgi: doğru cevaplar farklı",
+  '44d0ce25cde57f443e740446006278c4':
+      "ds_cografya_0111 ~ ds_cografya_0123: farklı bilgi: doğru cevaplar farklı",
+  '51cf8120e0838ab8e25165fda379647c':
+      "ds_cografya_0103 ~ ds_cografya_0123: farklı bilgi: doğru cevaplar farklı",
+  '760229e9b31bc4fac04253355173c96d':
+      "ds_cografya_0115 ~ ds_cografya_0123: farklı bilgi: doğru cevaplar farklı",
+  '3169bde24b7307d1fba47dd38edf0cfc':
+      "ds_cografya_0107 ~ ds_cografya_0123: farklı bilgi: doğru cevaplar farklı",
+  '1a04f574fb28104b532c9d9f4b080dd1':
+      "ds_cografya_0119 ~ ds_cografya_0123: farklı bilgi: doğru cevaplar farklı",
+  'e715e3c5795e525e0dd3aeaef7f38a11':
+      "ds_cografya_0117 ~ ds_cografya_0123: farklı bilgi: doğru cevaplar farklı",
+  'e80c32ee79b65c9be9be852ed3490a1d':
+      "ds_cografya_0114 ~ ds_cografya_0124: farklı bilgi: doğru cevaplar farklı",
+  'b9bfa0874e772df83910fe63a7934a09':
+      "ds_cografya_0118 ~ ds_cografya_0124: farklı bilgi: doğru cevaplar farklı",
+  'e6546bdea12edf85664c53248f61438e':
+      "ds_cografya_0122 ~ ds_cografya_0124: farklı bilgi: doğru cevaplar farklı",
+  'd6bd33f7908b2009a33d20598b90e150':
+      "ds_cografya_0112 ~ ds_cografya_0124: farklı bilgi: doğru cevaplar farklı",
+  '0f7dbe2ad0dc5efc282737b984d35d3e':
+      "ds_cografya_0108 ~ ds_cografya_0124: farklı bilgi: doğru cevaplar farklı",
+  '5f5ede00f24fc09ffa314b3da4dff3f3':
+      "ds_cografya_0223 ~ ds_cografya_0218: farklı bilgi: doğru cevaplar farklı",
+  'a798e95ec39c3b444e16870c1d1e7b6d':
+      "ds_edebiyat_0116 ~ ds_edebiyat_0110: farklı bilgi: doğru cevaplar farklı",
+  'e0949e6431f63a4747721c300a06e666':
+      "ds_edebiyat_0124 ~ ds_edebiyat_0110: farklı bilgi: doğru cevaplar farklı",
+  'c9a16c504142a6cd743200570b6693c8':
+      "ds_edebiyat_0114 ~ ds_edebiyat_0110: farklı bilgi: doğru cevaplar farklı",
+  'f24d0816a829d91433dd305c715678d5':
+      "ds_edebiyat_0122 ~ ds_edebiyat_0110: farklı bilgi: doğru cevaplar farklı",
+  'c9c171c744f3aab491c8fff90bb04d51':
+      "ds_edebiyat_0122 ~ ds_edebiyat_0112: farklı bilgi: doğru cevaplar farklı",
+  '560fae0d496155ad2e2e98319c722224':
+      "ds_edebiyat_0124 ~ ds_edebiyat_0112: farklı bilgi: doğru cevaplar farklı",
+  'ae5296fafcb81fef3614dc0205b37d17':
+      "ds_edebiyat_0110 ~ ds_edebiyat_0112: farklı bilgi: doğru cevaplar farklı",
+  'c80836fc073df176059f9cb61de41c63':
+      "ds_edebiyat_0116 ~ ds_edebiyat_0112: farklı bilgi: doğru cevaplar farklı",
+  '8701b37acc8f798b77f699f5fdb56f6e':
+      "ds_edebiyat_0114 ~ ds_edebiyat_0112: farklı bilgi: doğru cevaplar farklı",
+  '58054baf63d71a2c9cd4d36ca2563b3e':
+      "ds_edebiyat_0214 ~ ds_edebiyat_0206: farklı bilgi: doğru cevaplar farklı",
+  '0ef2a76a85c7261b6e46a0f19e55b87f':
+      "ds_edebiyat_0210 ~ ds_edebiyat_0206: farklı bilgi: doğru cevaplar farklı",
+  '7be0b413d74dfaa827f28873afa23dfd':
+      "ds_edebiyat_0224 ~ ds_edebiyat_0206: farklı bilgi: doğru cevaplar farklı",
+  '54d33dccb68ca1998fd4781f874c2431':
+      "ds_edebiyat_0220 ~ ds_edebiyat_0206: farklı bilgi: doğru cevaplar farklı",
+  'd139748f1cc90192f651be1378def9f2':
+      "ds_edebiyat_0218 ~ ds_edebiyat_0206: farklı bilgi: doğru cevaplar farklı",
+  '86a62f2657d72b0fda91b57173bd5bba':
+      "ds_edebiyat_0222 ~ ds_edebiyat_0206: farklı bilgi: doğru cevaplar farklı",
+  '79a5fcdea736398b10cf27b9802d7056':
+      "ds_muzik_0004 ~ ds_muzik_0023: farklı bilgi: doğru cevaplar farklı",
+  '221f9a8eeb8318b592737eb41d379865':
+      "ds_dirok_0067 ~ ds_dirok_0091: farklı bilgi: doğru cevaplar farklı",
+  'bc2eea8445594bd78188b2723736e547':
+      "ds_dirok_0072 ~ ds_dirok_0091: farklı bilgi: doğru cevaplar farklı",
+  'b8601c4f480aa892a966e1d118cb70f8':
+      "ds_teknoloji_0068 ~ ds_teknoloji_0071: farklı bilgi: doğru cevaplar farklı",
+  '2c6fee753a906684088087b7e4222b3a':
+      "ds_teknoloji_0071 ~ ds_teknoloji_0060: farklı bilgi: doğru cevaplar farklı",
+  'bdcfbf8a9649544f0bc765faf892ae1b':
+      "ds_teknoloji_0068 ~ ds_teknoloji_0060: farklı bilgi: doğru cevaplar farklı",
+  '8bfbe3a4f57875b0d9c3b8d1b6684610':
+      "ds_teknoloji_0066 ~ ds_teknoloji_0055: farklı bilgi: doğru cevaplar farklı",
+  'df7bea989f40313981d3f0b910d060eb':
+      "ds_teknoloji_0060 ~ ds_teknoloji_0055: farklı bilgi: doğru cevaplar farklı",
+  'd35b5039dfc3fc9a702b7a7232cad15a':
+      "ds_teknoloji_0071 ~ ds_teknoloji_0055: farklı bilgi: doğru cevaplar farklı",
+  '50985c4c764efd59d1673401c9bcbc38':
+      "ds_teknoloji_0082 ~ ds_teknoloji_0084: farklı bilgi: doğru cevaplar farklı",
+  'a2359f86abd2d18b1dbcb0345811d751':
+      "ds_teknoloji_0084 ~ ds_teknoloji_0088: farklı bilgi: doğru cevaplar farklı",
+  'b0aa128a6f69c802c6ef99d29452e3fb':
+      "ds_teknoloji_0187 ~ ds_teknoloji_0189: farklı bilgi: doğru cevaplar farklı",
+  '5e07eeea5103f9880d7f9d20289dc312':
+      "ds_teknoloji_0189 ~ ds_teknoloji_0191: farklı bilgi: doğru cevaplar farklı",
+  'd7794e82be10c3396e12e1b96f51888c':
+      "ds_teknoloji_0187 ~ ds_teknoloji_0191: farklı bilgi: doğru cevaplar farklı",
+  'e3ba97c10454c8ef4fe3fe375659bb37':
+      "ds_teknoloji_0177 ~ ds_teknoloji_0191: farklı bilgi: doğru cevaplar farklı",
+  '9ea842e540fbb8bbbe5b1360f5140137':
+      "ds_teknoloji_0191 ~ ds_teknoloji_0195: farklı bilgi: doğru cevaplar farklı",
+  'd463e0f95d34c40406cfad245244b93a':
+      "ds_teknoloji_0189 ~ ds_teknoloji_0195: farklı bilgi: doğru cevaplar farklı",
+  '34909976156215821458235fe08646e5':
+      "ds_teknoloji_0187 ~ ds_teknoloji_0197: farklı bilgi: doğru cevaplar farklı",
+  '9c0d369fa4238c84989e5bd7df33db86':
+      "ds_teknoloji_0195 ~ ds_teknoloji_0197: farklı bilgi: doğru cevaplar farklı",
+  'e5b4b59af4949d0808fed23cfafef49e':
+      "ds_teknoloji_0191 ~ ds_teknoloji_0197: farklı bilgi: doğru cevaplar farklı",
+  '4af28151cbf586353bfd23126343c805':
+      "ds_teknoloji_0189 ~ ds_teknoloji_0197: farklı bilgi: doğru cevaplar farklı",
+  '294f1c9b3cad0862b2badec8b7488676':
+      "ds_teknoloji_0262 ~ ds_teknoloji_0266: farklı bilgi: doğru cevaplar farklı",
+  'a7b283d26d25a1c70c80cd78659603a8':
+      "ds_cand_0035 ~ ds_cand_0033: farklı bilgi: doğru cevaplar farklı",
+  '00dd0301dea0cabda1df46d2a66ad5d7':
+      "ds_cografya_0085 ~ ds_cografya_0087: farklı bilgi: doğru cevaplar farklı",
+  '0efd2683e55a54db1d58865dd4651cca':
+      "ds_ziman_0153 ~ ds_ziman_0152: farklı bilgi: doğru cevaplar farklı",
+  '5a3bde6cb052b7ffbc037bf73f638861':
+      "ds_cand_0079 ~ ds_cand_0092: farklı bilgi: doğru cevaplar farklı",
+  '19701b8b0ac9e15b85bf13a8c64d74c3':
+      "ds_cand_1165 ~ ds_cand_0159: farklı bilgi: doğru cevaplar farklı",
+  '5d8264aafb47874b1e73781dbd3629a9':
+      "ds_cand_0251 ~ ds_cand_0159: farklı bilgi: doğru cevaplar farklı",
+  'ce9fded35a2ed25588d6a4edf6211eb8':
+      "ds_cand_0227 ~ ds_cand_0235: farklı bilgi: doğru cevaplar farklı",
+  '9e7ab52712e3cf7bf977194369ded2d0':
+      "ds_edebiyat_0114 ~ ds_edebiyat_0108: farklı bilgi: doğru cevaplar farklı",
+  '1fe94249881c317d3a2b16fb3a198eb2':
+      "ds_edebiyat_0124 ~ ds_edebiyat_0108: farklı bilgi: doğru cevaplar farklı",
+  '625435e352fb21c6778dda84026aaf69':
+      "ds_edebiyat_0122 ~ ds_edebiyat_0108: farklı bilgi: doğru cevaplar farklı",
+  'ef9f609d000d2c46476e0f332c5645e9':
+      "ds_edebiyat_0116 ~ ds_edebiyat_0108: farklı bilgi: doğru cevaplar farklı",
+  '452517876f7e1675239d505ae570474d':
+      "ds_edebiyat_0112 ~ ds_edebiyat_0108: farklı bilgi: doğru cevaplar farklı",
+  '263949050cb61edfd6a42e902c1dea71':
+      "ds_edebiyat_0110 ~ ds_edebiyat_0108: farklı bilgi: doğru cevaplar farklı",
+  'dfb25b3542106aad02bc5736b910c3c9':
+      "dersler2_2026_10_08_0021 ~ dersler2_2026_10_08_0022: farklı bilgi: doğru cevaplar farklı",
+  '78dd532a061667a8597e5497d52e1cc0':
+      "dersler2_2026_10_08_0021 ~ dersler2_2026_10_08_0023: farklı bilgi: doğru cevaplar farklı",
+  'e1d5e7de54961b2b85c5c09a76652b4d':
+      "dersler2_2026_10_08_0021 ~ dersler2_2026_10_08_0024: farklı bilgi: doğru cevaplar farklı",
+  'c97033c8fc3dc21a83d3f6dc810dcfa0':
+      "dersler2_2026_10_08_0023 ~ dersler2_2026_10_08_0024: farklı bilgi: doğru cevaplar farklı",
+  '427a1e301337f4583ec7516441b4bb93':
+      "dersler2_2026_10_08_0021 ~ dersler2_2026_10_08_0025: farklı bilgi: doğru cevaplar farklı",
+  '9f06c2e5eae24fe502b63c8e56c5cb70':
+      "dersler2_2026_10_08_0023 ~ dersler2_2026_10_08_0025: farklı bilgi: doğru cevaplar farklı",
+  '6edcba7f1f265d62201a211989ddb195':
+      "dersler2_2026_10_08_0024 ~ dersler2_2026_10_08_0025: farklı bilgi: doğru cevaplar farklı",
+  '2e6f38e06079ea809b276e900344256c':
+      "dersler3_2026_10_08_0108 ~ dersler3_2026_10_08_0109: farklı bilgi: doğru cevaplar farklı",
+  '2947378c4c9e6a6f8c85fee9461aed9e':
+      "edit_cografya_0028 ~ edit_cografya_0033: farklı bilgi: doğru cevaplar farklı",
+  'e4d8984d19f6c7641218a347dfde4fda':
+      "edit_cografya_0028 ~ edit_cografya_0037: farklı bilgi: doğru cevaplar farklı",
+  '8458efefc78580d0e21eeaa5712f17e7':
+      "edit_cografya_0033 ~ edit_cografya_0037: farklı bilgi: doğru cevaplar farklı",
+  'f56de240460a0346f5a6f49f69265bba':
+      "edit_cografya_0033 ~ edit_cografya_0013: farklı bilgi: doğru cevaplar farklı",
+  '2c6e5cdb0a537b604ee722cf5f752cdb':
+      "edit_cografya_0028 ~ edit_cografya_0013: farklı bilgi: doğru cevaplar farklı",
+  '1e6feda6cc0b3565e9811307da9a82e8':
+      "edit_cografya_0037 ~ edit_cografya_0013: farklı bilgi: doğru cevaplar farklı",
+  'd0f217d97637fd0b88dff32a8b4200df':
+      "edit_cografya_0028 ~ edit_cografya_0014: farklı bilgi (Orkestra denetimi)",
+  '449c68abae51ca9120abd44474b7ec04':
+      "edit_cografya_0033 ~ edit_cografya_0014: farklı bilgi: doğru cevaplar farklı",
+  'd2833d9190bdf8bca8f8250b84a51204':
+      "edit_cografya_0037 ~ edit_cografya_0014: farklı bilgi: doğru cevaplar farklı",
+  '806a3a8a5b225b15c3e343d11c8945fa':
+      "ds_cografya_0017 ~ hat_0062: farklı bilgi: doğru cevaplar farklı",
+  'cff5e8ec30e66307b15985b71e3cbfda':
+      "ds_cografya_0007 ~ hat_0071: aynı bilgi (Amed/Diyarbakır'dan geçen Dicle nehri); hat_0062 ve hat_0071 emekli (2026-10-24)",
+  '9bd0fb293784af3959fb06986c6e480f':
+      "ds_cografya_0017 ~ hat_0071: farklı bilgi: doğru cevaplar farklı",
+  '76c58fcab59a592b4a08fd4c46a6f36c':
+      "hat_0062 ~ hat_0071: aynı bilgi (Amed/Diyarbakır'dan geçen Dicle nehri); hat_0062 ve hat_0071 emekli (2026-10-24)",
+  'c2b9feaeecb8a2e1c13d7718a24b2fd1':
+      "hat_0005 ~ hat_0007: farklı bilgi: doğru cevaplar farklı",
+  '60bd7e33c807bc1bf043284c73cff377':
+      "hat_0003 ~ hat_0007: farklı bilgi: doğru cevaplar farklı",
+  '109f793de8c8f3fb26589921ff59cba4':
+      "hat_0004 ~ hat_0007: farklı bilgi: doğru cevaplar farklı",
+  'e91687743de60e2d74e67fd86ad58196':
+      "edit_cografya_0013 ~ offline_2354: farklı bilgi: doğru cevaplar farklı",
+  '12ce4ee96460c66e3e7db3e0462465cf':
+      "edit_cografya_0033 ~ offline_2354: farklı bilgi: doğru cevaplar farklı",
+  'c42f930b5b78e3a46d4a917b5677620c':
+      "edit_cografya_0014 ~ offline_2354: farklı bilgi: doğru cevaplar farklı",
+  '12d9bf76395595a9434b42eb181a5633':
+      "edit_cografya_0037 ~ offline_2354: farklı bilgi (Orkestra denetimi)",
+  '9002f5f28ac16174683f18f3a82cb95e':
+      "edit_cografya_0028 ~ offline_2354: farklı bilgi: doğru cevaplar farklı",
+  '7880aca470f34de1f2fc341cb56d0102':
+      "edit_cografya_0028 ~ offline_2175: farklı bilgi (Orkestra denetimi)",
+  '918ccb0c5a3730d7d80a4850793b12bb':
+      "edit_cografya_0033 ~ offline_2175: farklı bilgi: doğru cevaplar farklı",
+  'bfbbd1c95961791ce0dfdc184c4191e7':
+      "offline_2354 ~ offline_2175: farklı bilgi: doğru cevaplar farklı",
+  'd21c2f3dd7b8c31fe6b081dee86e9f84':
+      "edit_cografya_0014 ~ offline_2175: farklı bilgi (Orkestra denetimi)",
+  'a1c7c13a100439349a5eebb480ea2e49':
+      "edit_cografya_0037 ~ offline_2175: farklı bilgi: doğru cevaplar farklı",
+  '90737604c148835463f123ec37971ab4':
+      "edit_cografya_0013 ~ offline_2175: farklı bilgi: doğru cevaplar farklı",
+  '6b21b957569f601d05cac783ea69f132':
+      "edit_cografya_0028 ~ restore_2026_08_07_0014: farklı bilgi: doğru cevaplar farklı",
+  '5f2cd58c3e465558c8d590b1d9d07e2e':
+      "edit_cografya_0013 ~ restore_2026_08_07_0014: farklı bilgi: doğru cevaplar farklı",
+  '5d7ce42b3311cea9ca0620cbc54418cf':
+      "edit_cografya_0033 ~ restore_2026_08_07_0014: farklı bilgi: doğru cevaplar farklı",
+  'a11e5e71d8e372dc0ec61af548d64473':
+      "offline_2354 ~ restore_2026_08_07_0014: farklı bilgi: doğru cevaplar farklı",
+  '6d627488734a8e39c90147d8f4b5cbff':
+      "offline_2175 ~ restore_2026_08_07_0014: farklı bilgi: doğru cevaplar farklı",
+  'c7facd9a105810aae1feada9aaa56d83':
+      "edit_cografya_0037 ~ restore_2026_08_07_0014: farklı bilgi: doğru cevaplar farklı",
 };

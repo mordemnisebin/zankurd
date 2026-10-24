@@ -44,10 +44,20 @@ haftalik as (
         and d.completed_at <  date_trunc('day', now()) - h.n * interval '7 days') as biten_duello,
     (select count(*) from public.user_lesson_progress p
       where p.completed_at >= date_trunc('day', now()) - (h.n + 1) * interval '7 days'
-        and p.completed_at <  date_trunc('day', now()) - h.n * interval '7 days') as biten_ders
+        and p.completed_at <  date_trunc('day', now()) - h.n * interval '7 days') as biten_ders,
+    (select count(*) from public.analytics_events a
+      where a.event_name = 'quiz_start'
+        and a.event_timestamp >= date_trunc('day', now()) - (h.n + 1) * interval '7 days'
+        and a.event_timestamp <  date_trunc('day', now()) - h.n * interval '7 days') as tur_bas,
+    (select count(*) from public.analytics_events a
+      where a.event_name = 'quiz_complete'
+        and a.event_timestamp >= date_trunc('day', now()) - (h.n + 1) * interval '7 days'
+        and a.event_timestamp <  date_trunc('day', now()) - h.n * interval '7 days') as tur_bit
   from hafta h
 )
 select bas as hafta_basi, aktif, yeni, donen,
   case when yeni > 0 and n > 0 then round(100.0 * donen / yeni) end as donus_yuzde,
-  oda, biten_oda, duello, biten_duello, biten_ders
+  oda, biten_oda, duello, biten_duello, biten_ders,
+  tur_bas, tur_bit,
+  case when tur_bas > 0 then round(100.0 * tur_bit / tur_bas) end as tur_bitis_yuzde
 from haftalik order by bas desc;

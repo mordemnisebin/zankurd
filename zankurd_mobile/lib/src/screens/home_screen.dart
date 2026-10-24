@@ -703,20 +703,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // kelimesi kelimesine tekrarlıyordu, gerisini de sekme çubuğu zaten
           // gösteriyor. İlk turdan sonra ilerleme özeti geri gelir.
           //
-          // İlerleme özeti günlük görevin ALTINDA durur: turuncu "Başla"
-          // ekranın ilk ve en güçlü eylemi kalmalı. Coin burada YOK:
-          // marka satırında zaten kalıcı bir jeton çipi ve mağaza girişi var.
-          // Dar düzende günlük görevler Günün dersinin hemen altında durur
-          // (eskiden sayfa dibindeydi: görev var mı diye kimse bakmıyordu);
-          // ilerleme özeti ve Pro sayfa sonuna iner.
-          if (narrow) ...[
-            const SizedBox(height: SahneSpace.cardGap),
-            missionsCard,
-          ],
-          if (!_firstSession && !narrow) ...[
-            const SizedBox(height: SahneSpace.cardGap),
-            progressCard,
-          ],
+          // Bekleyen tekrar (yanlış soru ya da vadesi gelmiş kelime) varsa
+          // öğren/oyna kapılarının hemen altında, görev ve ilerleme kartlarının
+          // üstünde durur: geri dönen kullanıcı kaydırmadan tekrar çağrısını
+          // görür, öğren kapısı da ilk ekranda kalır (manzara_seridi_test).
           if (_reviewReadyCount > 0) ...[
             const SizedBox(height: SahneSpace.cardGap),
             // Altın yalnız ödül/ilerleme sayılarına ayrılmış; tekrar
@@ -731,6 +721,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               }),
               onTap: _openLearning,
             ),
+          ],
+          // İlerleme özeti günlük görevin ALTINDA durur: turuncu "Başla"
+          // ekranın ilk ve en güçlü eylemi kalmalı. Coin burada YOK:
+          // marka satırında zaten kalıcı bir jeton çipi ve mağaza girişi var.
+          // Dar düzende günlük görevler Günün dersinin hemen altında durur
+          // (eskiden sayfa dibindeydi: görev var mı diye kimse bakmıyordu);
+          // ilerleme özeti ve Pro sayfa sonuna iner.
+          if (narrow) ...[
+            const SizedBox(height: SahneSpace.cardGap),
+            missionsCard,
+          ],
+          if (!_firstSession && !narrow) ...[
+            const SizedBox(height: SahneSpace.cardGap),
+            progressCard,
           ],
           if (!_firstSession &&
               _learningGoalLoaded &&

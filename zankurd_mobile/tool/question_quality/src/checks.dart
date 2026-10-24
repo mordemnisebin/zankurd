@@ -403,8 +403,14 @@ Set<String> _tokensFromNormalized(String value) => value
     .toSet();
 
 String _firstQuotedFocus(String prompt) {
-  final match = RegExp(r'"([^"]+)"|“([^”]+)”').firstMatch(prompt);
-  return normalizeText(match?.group(1) ?? match?.group(2) ?? '');
+  final focuses =
+      RegExp(r'"([^"]+)"|“([^”]+)”')
+          .allMatches(prompt)
+          .map((match) => normalizeText(match.group(1) ?? match.group(2) ?? ''))
+          .where((text) => text.isNotEmpty)
+          .toList()
+        ..sort();
+  return focuses.join('|');
 }
 
 double _jaccardSets(Set<String> a, Set<String> b) {

@@ -188,7 +188,8 @@ void main() {
       // 3306 -> 3304 (-2): 2026-10-23 soru kalitesi taraması emeklisi
       // (offline_2818 cevabı ele veriyor, edit_ziman_0003 yinelenen bilgi).
       // 3304 -> 3303 (-1): 2026-10-24 ds_cografya_0030 yakın tekrar emeklisi.
-      3303,
+      // 3303 -> 3301 (-2): 2026-10-24 hat_0062 ve hat_0071 yakın tekrar emeklisi.
+      3301,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -258,7 +259,7 @@ void main() {
       //   Çand 32 + 9 = 41; Teknolojî 0 + 3 = 3; Siyaset 68 + 2 = 70.
       'retired=Sînema': 26, // 2026-10-22 yakın tekrar +1 (hat_0043)
       'retired=Cografya':
-          53, // 2026-10-23 offline_2818, 2026-10-24 ds_cografya_0030
+          55, // 2026-10-23 offline_2818, 2026-10-24 ds_cografya_0030 + hat_0062/0071
       'retired=Edebiyat': 25, // 2026-10-19 içerik denetimi +2
       // 43 -> 45: 2026-10-17 yakın tekrar (`ds_dirok_0029`, `offline_2668`).
       'retired=Dîrok': 45,
