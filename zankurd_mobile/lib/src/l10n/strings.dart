@@ -3490,7 +3490,7 @@ class Tr {
     K.rewardUnitQuestion: {'ku': 'pirs', 'tr': 'soru'},
     K.rewardUnitDay: {'ku': 'roj', 'tr': 'gün'},
     K.rewardUnitTopic: {'ku': 'mijar', 'tr': 'konu'},
-    K.rewardUnitRound: {'ku': 'gera', 'tr': 'tur'},
+    K.rewardUnitRound: {'ku': 'ger', 'tr': 'tur'},
     K.rewardUnlockedOn: {
       'ku': 'Hat qezenckirin: {date}',
       'tr': 'Kazanıldı: {date}',
@@ -3503,11 +3503,11 @@ class Tr {
       'tr': 'Dünün birincisi: {name} · {score}',
     },
     K.contestNextIn: {
-      'ku': 'Gera nû piştî {h} saet {m} deqe',
+      'ku': 'Gera nû piştî {h} saet û {m} deqeyan',
       'tr': 'Yeni tur {h} sa {m} dk sonra',
     },
     K.contestBoardUnavailable: {
-      'ku': 'Rêzbendî niha nayê barkirin.',
+      'ku': 'Rêzbendî niha nehat barkirin.',
       'tr': 'Sıralama şu an yüklenemedi.',
     },
   };
