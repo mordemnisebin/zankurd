@@ -1345,8 +1345,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   /// Gün bazlı sabit tohum: aynı gün herkes aynı sırayı görür.
-  static int dailySeed() {
-    final now = DateTime.now().toUtc();
+  static int dailySeed([DateTime? at]) {
+    // İstanbul günü ([contestDayKey]): sunucu sıralaması, "bugün bitti"
+    // bayrağı ve geri sayımla AYNI sınır (UTC günü 00:00–03:00 arası dünün
+    // setini veriyordu).
+    final now = contestDayKey(at ?? DateTime.now());
     return now.year * 10000 + now.month * 100 + now.day;
   }
 
@@ -2354,6 +2357,26 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<List<UserContestBadge>> loadUserContestBadges() async {
     return const [];
   }
+
+  /// Günün yarışması panosu örneği: ekran turu ve testler dolu pano görmek
+  /// için verir. Varsayılan null = "okunamadı" (çevrimdışı davranışı).
+  DailyEventBoard? sampleDailyEventBoard;
+
+  /// `submitDailyEventResult` çağrıları (doğru, toplam, saniye), sırayla.
+  final List<(int, int, int)> dailyEventSubmissions = [];
+
+  @override
+  Future<bool> submitDailyEventResult({
+    required int correct,
+    required int total,
+    required int seconds,
+  }) async {
+    dailyEventSubmissions.add((correct, total, seconds));
+    return true;
+  }
+
+  @override
+  Future<DailyEventBoard?> loadDailyEventBoard() async => sampleDailyEventBoard;
 
   static const Map<String, List<Lesson>> _lessonsData = {
     'everyday': [

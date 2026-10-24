@@ -653,6 +653,10 @@ extension _QuizScreenUI on _QuizScreenState {
           ? context.t(K.waitingOpponent)
           : isLastQuestion
           ? context.t(K.finishAction)
+          // Yanlıştan sonra açıklama kartı açıkken eylem "Devam": oyuncu
+          // önce okur, sonra devam eder (bkz. [_WrongAnswerInsight]).
+          : _wrongAnswerInsightVisible
+          ? context.t(K.continueAction)
           : context.t(K.next),
       // Beklerken kum saati; son soruda bayrak; yoksa ok (→).
       icon: waiting
@@ -1149,6 +1153,7 @@ extension _QuizScreenUI on _QuizScreenState {
       firstAttemptAnswer: _firstAttemptAnswer,
       audiencePoll: _audiencePoll,
       showExplanation: showExplanation ?? _showExplanation,
+      wrongAnswerInsight: _wrongAnswerInsightVisible,
       suspense: _suspense,
       opponentSelectedAnswers: _opponentSelectedAnswers,
       isCompact: isCompact,

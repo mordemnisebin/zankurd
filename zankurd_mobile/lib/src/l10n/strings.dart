@@ -3485,6 +3485,31 @@ class Tr {
       'tr': 'Dünya Kadınlar Günü: Jin, Jiyan, Azadî.',
     },
     K.dozaG5Date: {'ku': '8ê Adarê', 'tr': '8 Mart'},
+
+    // ── Rozet ilerlemesi (2026-10-24): kilitli rozette "63/100 soru" ──
+    K.rewardUnitQuestion: {'ku': 'pirs', 'tr': 'soru'},
+    K.rewardUnitDay: {'ku': 'roj', 'tr': 'gün'},
+    K.rewardUnitTopic: {'ku': 'mijar', 'tr': 'konu'},
+    K.rewardUnitRound: {'ku': 'ger', 'tr': 'tur'},
+    K.rewardUnlockedOn: {
+      'ku': 'Hat qezenckirin: {date}',
+      'tr': 'Kazanıldı: {date}',
+    },
+
+    // ── Günün yarışması sonucu (2026-10-24) ──
+    K.contestBoardTitle: {'ku': 'Rêzbendiya îroyê', 'tr': 'Bugünün sıralaması'},
+    K.contestYesterdayWinner: {
+      'ku': 'Yekemînê duh: {name} · {score}',
+      'tr': 'Dünün birincisi: {name} · {score}',
+    },
+    K.contestNextIn: {
+      'ku': 'Gera nû piştî {h} saet û {m} deqeyan',
+      'tr': 'Yeni tur {h} sa {m} dk sonra',
+    },
+    K.contestBoardUnavailable: {
+      'ku': 'Rêzbendî niha nehat barkirin.',
+      'tr': 'Sıralama şu an yüklenemedi.',
+    },
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.
@@ -4978,4 +5003,13 @@ class K {
   static const dozaG4Date = 'doza.g4.date';
   static const dozaG5Text = 'doza.g5.text';
   static const dozaG5Date = 'doza.g5.date';
+  static const rewardUnitQuestion = 'reward.unit.question';
+  static const rewardUnitDay = 'reward.unit.day';
+  static const rewardUnitTopic = 'reward.unit.topic';
+  static const rewardUnitRound = 'reward.unit.round';
+  static const rewardUnlockedOn = 'reward.unlockedOn';
+  static const contestBoardTitle = 'contest.board.title';
+  static const contestYesterdayWinner = 'contest.board.yesterdayWinner';
+  static const contestNextIn = 'contest.board.nextIn';
+  static const contestBoardUnavailable = 'contest.board.unavailable';
 }

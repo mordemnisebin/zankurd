@@ -629,6 +629,19 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Kullanıcının kazandığı contest rozetlerini yükler.
   Future<List<UserContestBadge>> loadUserContestBadges();
 
+  /// Günün yarışması sonucunu sunucuya yazar (bugünün İLK bitişi sayılır).
+  ///
+  /// Yalnız GÖSTERİM için: ödül/XP/jeton bağlanmaz. Hata fırlatmaz; yazıldı
+  /// mı bilgisini döndürür (çevrimdışı ya da ikinci bitiş false).
+  Future<bool> submitDailyEventResult({
+    required int correct,
+    required int total,
+    required int seconds,
+  });
+
+  /// "Bugünün sıralaması" panosu; çevrimdışı/okunamazsa null.
+  Future<DailyEventBoard?> loadDailyEventBoard();
+
   /// Kategori ders listesini yükler.
   Future<List<Lesson>> loadLessonsByCategory(String category);
 

@@ -31,6 +31,7 @@ import '../models/daily_mission.dart';
 import '../models/quiz_question.dart';
 import '../models/player.dart';
 import '../models/room.dart';
+import '../widgets/daily_event_board.dart';
 import '../widgets/learning_outcome_card.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
@@ -983,6 +984,27 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     );
   }
 
+  /// Günün turu sonucunu sunucuya yazan iş; pano bunu BEKLER (yoksa kendi
+  /// satırın listede görünmez). Aynı ekranda bir kez çalışır. Hata fırlatmaz:
+  /// sıralama yalnız gösterimdir, tur sonu ekranı bozulmaz.
+  Future<void>? _dailyBoardReady;
+
+  Future<void> _submitDailyEventResult() async {
+    try {
+      final totalMs = answerRecords.fold<int>(
+        0,
+        (sum, record) => sum + (record.responseMs ?? 0),
+      );
+      await repository.submitDailyEventResult(
+        correct: correctCount,
+        total: totalQuestions,
+        seconds: (totalMs / 1000).round(),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'daily event submit');
+    }
+  }
+
   Future<void> _recordProgress(_StreakOutcome streakOutcome) async {
     // Seri kararı bu adımdan ÖNCE, kritik bölümün dışında verildi ve
     // uygulandı. Buradan sonrası yalnız otomatik yerel yazımlardır.
@@ -1616,6 +1638,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           opponents: opponents,
         ),
       if (!lowMood) ...outcomeSection,
+      // Günün turu: sonuç sunucuya yazılır, ardından "Bugünün sıralaması"
+      // (ilk üç, kendi sıran, dünün birincisi, yeni tura geri sayım).
+      if (dailyQuiz)
+        DailyEventBoardCard(
+          key: const ValueKey('result-daily-board'),
+          repository: repository,
+          ready: _dailyBoardReady ??= _submitDailyEventResult(),
+        ),
       if (secondaryResultActions.isNotEmpty) ...[
         const SizedBox(height: SahneSpace.cardGap),
         _SecondaryActions(actions: secondaryResultActions),

@@ -209,16 +209,21 @@ void main() {
     await tester.pump(const Duration(milliseconds: 1600));
   }
 
+  // 2026-10-24 (ürün sahibi onayı): kural yanlış cevap için DAR bir istisna
+  // aldı — rakipsiz turda yanlışın hemen altında doğru cevap + açıklama
+  // açılır (`wrong_answer_insight_test.dart`). Doğru cevapta ve yarış
+  // modlarında (günün turu, düello, oda, bot) açıklama hâlâ turda açılmaz.
+  //
   // 2026-07-26: kural tersine döndü. Açıklama artık **hiçbir modda** cevabın
   // hemen altında gösterilmez; tur sırasında yalnız doğru cevap görünür,
   // açıklamaların tamamı sonuç ekranında bir arada gelir. Uygulama sahibi
   // bunu birkaç kez sorun olarak bildirdi: şık işaretlenir işaretlenmez
   // altında paragraf açılıyor ve turun ritmi kesiliyordu.
-  testWidgets('öğrenme akışında açıklama cevabın altında açılmaz', (
+  testWidgets('öğrenme akışında YANLIŞ cevabın altında açıklama açılır', (
     tester,
   ) async {
     await answerFirst(tester, QuizExperience.learning);
-    expect(find.text('Bu acikllamanin gorunmesi gerekir.'), findsNothing);
+    expect(find.text('Bu acikllamanin gorunmesi gerekir.'), findsOneWidget);
     // 2026-08-19: "Doğru cevap" kutusu çoktan seçmeli sorulardan
     // kaldırıldı — doğru şık zaten yeşile dönüp tik alıyordu, kutu aynı
     // bilgiyi ikinci kez söyleyip kıt olan dikey alanı kaplıyordu
@@ -229,9 +234,11 @@ void main() {
     expect(find.text('Doğru cevap'), findsNothing);
   });
 
-  testWidgets('yarışma akışında da açıklama gösterilmez', (tester) async {
+  testWidgets('rakipsiz yarış akışında da yanlışta açıklama açılır', (
+    tester,
+  ) async {
     await answerFirst(tester, QuizExperience.competition);
-    expect(find.text('Bu acikllamanin gorunmesi gerekir.'), findsNothing);
+    expect(find.text('Bu acikllamanin gorunmesi gerekir.'), findsOneWidget);
   });
 
   testWidgets('öğrenme akışında rehberin ilk adımı süreden söz etmez', (

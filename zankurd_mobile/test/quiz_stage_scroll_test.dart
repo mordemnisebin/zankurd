@@ -78,7 +78,10 @@ void main() {
   const scrollKey = ValueKey('quiz-portrait-scroll');
   const progressKey = ValueKey('quiz-progress-bar');
   const nextKey = ValueKey('quiz-next-button');
-  const explanationKey = ValueKey('quiz-view-explanation');
+  // 2026-10-24: yanlıştan sonra "Açıklamayı gör" kapısının yerini doğru cevap
+  // + açıklama kartı aldı; aynı kayma kuralı (alt perdenin üstünde tamamen
+  // görünür) artık kart için geçerli.
+  const explanationKey = ValueKey('quiz-wrong-answer-insight');
   final boundaryKey = GlobalKey();
 
   Future<void> pumpQuiz(

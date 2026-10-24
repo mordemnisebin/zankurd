@@ -175,6 +175,35 @@ class _QuizScreenState extends State<QuizScreen>
     onlineRoom: (widget.room.id?.trim() ?? '').isNotEmpty,
   );
 
+  /// Bkz. [instantExplanationAllowedFor].
+  bool get _instantExplanationAllowed => instantExplanationAllowedFor(
+    is1v1: widget.is1v1,
+    botRace: widget.botRace,
+    dailyQuiz: widget.dailyQuiz,
+    contest: widget.contestId != null,
+    versus: widget.versusBannerText != null,
+    onlineRoom: (widget.room.id?.trim() ?? '').isNotEmpty,
+  );
+
+  /// Cevap yanlış mı (süre dolması dahil)? Karar kaydedilmiş değerlendirmeden;
+  /// kayıt henüz yoksa sorunun kendi eşleşme kuralından.
+  bool get _answerWasWrong {
+    if (!answered) return false;
+    return _currentAnswerAdjudication == false ||
+        (_currentAnswerAdjudication == null &&
+            !question.acceptsAnswer(selectedAnswer));
+  }
+
+  /// Yanlıştan sonra doğru cevap + açıklama kartı görünür mü?
+  ///
+  /// Gerilim tutuşu bitmeden ve açıklama denetleyicisi dolmadan görünmez
+  /// (`_showExplanation`): şık rengi ile kart aynı anda gelir.
+  bool get _wrongAnswerInsightVisible =>
+      _instantExplanationAllowed &&
+      _showExplanation &&
+      !_suspense &&
+      _answerWasWrong;
+
   /// Süresiz modun geçerli olabileceği tek yer: ödül üretmeyen tek kişilik
   /// turlar.
   ///

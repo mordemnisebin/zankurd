@@ -11,6 +11,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
 import '../widgets/arena_kit.dart';
+import '../widgets/daily_event_board.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/skeleton_loader.dart';
 import '../widgets/styled_button.dart';
@@ -212,6 +213,16 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
                 doneToday: _doneToday,
                 starting: _starting,
                 onStart: () => _startQuiz(contest),
+                // Tur bugün bitmişse "Bugünün sıralaması" açılır. Bitmemişse
+                // sıra hiç gösterilmez: oynamadan başkalarının skorunu görmek
+                // hem turu bozar hem "ödül yok, yalnız ilerleme" sözüyle
+                // çelişir (bkz. `daily_event_security_ui_test`).
+                board: _doneToday
+                    ? DailyEventBoardCard(
+                        key: const ValueKey('contest-board'),
+                        repository: widget.repository,
+                      )
+                    : null,
               ),
             );
           },
@@ -287,7 +298,11 @@ class _ContestContent extends StatelessWidget {
     required this.starting,
     required this.onStart,
     this.doneToday = false,
+    this.board,
   });
+
+  /// Bugünün sıralaması (yalnız tur bugün bitmişse).
+  final Widget? board;
 
   final Contest contest;
   final bool doneToday;
@@ -351,6 +366,13 @@ class _ContestContent extends StatelessWidget {
       ],
     );
 
+    final boardSection = board == null
+        ? null
+        : Padding(
+            padding: const EdgeInsets.only(bottom: SahneSpace.x4),
+            child: board,
+          );
+
     return LayoutBuilder(
       builder: (context, constraints) {
         // Geniş ekranda gerçek iki sütun: solda bugünün etkinliği ve
@@ -373,6 +395,7 @@ class _ContestContent extends StatelessWidget {
                       offset: const Offset(0, -SahneSpace.sectionTop),
                       child: quickInfo,
                     ),
+                    ?boardSection,
                   ],
                 ),
               ),
@@ -381,7 +404,7 @@ class _ContestContent extends StatelessWidget {
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [hero, quickInfo],
+          children: [hero, quickInfo, ?boardSection],
         );
       },
     );
