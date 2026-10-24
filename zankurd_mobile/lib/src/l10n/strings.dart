@@ -691,6 +691,30 @@ class Tr {
     },
     K.requestSent: {'ku': 'Daxwaz hat şandin', 'tr': 'İstek gönderildi'},
     K.requestFailed: {'ku': 'Daxwaz nehat şandin', 'tr': 'İstek gönderilemedi'},
+    K.notifChannelDailyName: {
+      'ku': 'ZanKurd Bîranîna Rojane',
+      'tr': 'ZanKurd Günlük Hatırlatıcı',
+    },
+    K.notifChannelDailyDesc: {
+      'ku': 'Bîranîna çalakiya rojane ya ZanKurdê',
+      'tr': 'ZanKurd günlük etkinlik hatırlatıcısı',
+    },
+    K.notifChannelFriendName: {
+      'ku': 'ZanKurd Daxwazên Hevaltiyê',
+      'tr': 'ZanKurd Arkadaşlık İstekleri',
+    },
+    K.notifChannelFriendDesc: {
+      'ku': 'Daxwazên hevaltiyê yên nû',
+      'tr': 'Yeni arkadaşlık istekleri',
+    },
+    K.notifChannelStreakName: {
+      'ku': 'ZanKurd Bîranîna Zincîrê',
+      'tr': 'ZanKurd Seri Hatırlatıcısı',
+    },
+    K.notifChannelStreakDesc: {
+      'ku': 'Bîranîna parastina zincîra rojane',
+      'tr': 'Günlük seriyi koruma hatırlatıcısı',
+    },
     K.friendAlreadyFriends: {
       'ku': 'Hûn jixwe heval in',
       'tr': 'Zaten arkadaşsınız',
@@ -3111,6 +3135,12 @@ class K {
   static const searchFailed = 'friends.searchFailed';
   static const requestSent = 'friends.requestSent';
   static const requestFailed = 'friends.requestFailed';
+  static const notifChannelDailyName = 'notif.channel.daily.name';
+  static const notifChannelDailyDesc = 'notif.channel.daily.desc';
+  static const notifChannelFriendName = 'notif.channel.friend.name';
+  static const notifChannelFriendDesc = 'notif.channel.friend.desc';
+  static const notifChannelStreakName = 'notif.channel.streak.name';
+  static const notifChannelStreakDesc = 'notif.channel.streak.desc';
   static const friendAlreadyFriends = 'friends.alreadyFriends';
   static const friendRequestAlreadyPending = 'friends.requestAlreadyPending';
   static const friendRequestBlocked = 'friends.requestBlocked';

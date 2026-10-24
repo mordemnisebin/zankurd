@@ -303,9 +303,19 @@ void main() {
         .split('\n')
         .where((line) => !line.trimLeft().startsWith('//'))
         .join('\n');
+    // Kanal adı/açıklaması 2026-10-24'ten beri defterde (dile göre seçilir,
+    // bkz. test/notification_channel_language_test.dart).
     expect(notificationLive, contains('zankurd_streak_warning'));
-    expect(notificationLive, contains('ZanKurd Bîranîna Zincîrê'));
-    expect(notificationLive, contains('Bîranîna parastina zincîra rojane'));
+    expect(notificationLive, contains('K.notifChannelStreakName'));
+    expect(notificationLive, contains('K.notifChannelStreakDesc'));
+    expect(
+      Tr.of(K.notifChannelStreakName, AppLanguage.ku),
+      'ZanKurd Bîranîna Zincîrê',
+    );
+    expect(
+      Tr.of(K.notifChannelStreakDesc, AppLanguage.ku),
+      'Bîranîna parastina zincîra rojane',
+    );
     expect(notificationLive, isNot(contains('Bîranîna Rêzê')));
     expect(notificationLive, isNot(contains('rêza rojane')));
   });
