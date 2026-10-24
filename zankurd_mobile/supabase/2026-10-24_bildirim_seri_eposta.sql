@@ -350,7 +350,7 @@ begin
   perform pg_advisory_xact_lock(hashtextextended(v_uid::text, 0));
 
   -- Aynı kırılma günü için önceki onarım, AY FARK ETMEKSİZİN önce aranır:
-  -- 31 Ekim'de yapılan onarım 1 Kasım'da tekrar çağrılırsa ay anahtarı
+  -- ayın son günü yapılan onarım ertesi ayın ilk günü tekrar çağrılırsa ay anahtarı
   -- değiştiği için aşağıdaki aylık arama onu bulamaz ve 100 zêr yeniden
   -- kesilirdi (2026-10-24 ikinci tur dış inceleme, iki model uyuştu).
   select * into v_existing
