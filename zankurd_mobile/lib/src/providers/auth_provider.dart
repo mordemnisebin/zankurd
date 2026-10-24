@@ -112,6 +112,10 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     return client == null ? null : SupabaseEmailVerificationGateway(client);
   }
 
+  /// Misafir hatırlatma sayacının anahtarı: oturumun kullanıcı kimliği
+  /// (çevrimdışı yerel misafirde kimlik yoktur → null).
+  String? get guestSaveUserId => _currentUser?.id;
+
   /// Uzak kimlik servisi başlatılamadığı için yerel misafir modunda mı?
   bool get isOfflineMode => _offlineMode;
 

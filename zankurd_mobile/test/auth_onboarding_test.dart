@@ -105,7 +105,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
-    expect(find.text('Misafir olarak devam et'), findsOneWidget);
+    expect(find.text('Hemen oyna'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -246,7 +246,7 @@ void main() {
 
     expect(find.text('Google ile giriş yap'), findsOneWidget);
     expect(find.text('Apple ile giriş yap'), findsOneWidget);
-    expect(find.text('Misafir olarak devam et'), findsOneWidget);
+    expect(find.text('Hemen oyna'), findsOneWidget);
     expect(find.text('Veya e-posta ile'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
@@ -415,24 +415,15 @@ void main() {
         );
         expect(googleLabel.style?.color?.computeLuminance(), lessThan(0.3));
 
-        // Misafir bağlantısı context yüzeyi kullanır: light'ta koyu metin,
-        // dark'ta açık metin.
-        //
-        // 2026-07-25: misafir eylemi tam boy konturlu butondan metin
-        // bağlantısına indirildi (Google beyaz + Apple siyah + misafir
-        // turuncu = ekranda üç birincil eylem görünüyordu). Bağlantı rengi
-        // artık hafif saydam olduğu için `== Colors.white` kimlik
-        // karşılaştırması kırılıyordu; testin asıl iddiası okunabilirlik,
-        // o yüzden parlaklıkla ölçülür.
-        final guestLabel = tester.widget<Text>(
-          find.text('Misafir olarak devam et'),
+        // "Hemen oyna" artık dolgulu birincil düğmedir (yazı rengi tema
+        // belirtecinden gelir, burada elle ölçülmez); okunurluğu Şahnê düğme
+        // bekçileri korur. Burada yalnız varlığı ve ikincil girişin ayrı
+        // olduğu sabitlenir.
+        expect(find.byKey(const ValueKey('sign-in-play-now')), findsOneWidget);
+        expect(
+          find.byKey(const ValueKey('sign-in-have-account')),
+          findsOneWidget,
         );
-        final guestLuminance = guestLabel.style?.color?.computeLuminance() ?? 0;
-        if (mode == ThemeMode.light) {
-          expect(guestLuminance, lessThan(0.4));
-        } else {
-          expect(guestLuminance, greaterThan(0.6));
-        }
       }
     },
   );
@@ -455,13 +446,17 @@ void main() {
     // isLoading true iken onPressed null'a düşer; IgnorePointer bu durumda
     // butonu tamamen hit-test dışı bırakmalı (yalnızca InkWell'in örtük
     // null-onTap davranışına güvenmemeli). Bulunamaması bunun kanıtıdır.
-    expect(find.text('Misafir olarak devam et').hitTestable(), findsNothing);
+    // "Hemen oyna" Şahnê düğmesidir: yükleme sürerken dokunuş alır ama
+    // onPressed null olduğundan hiçbir şey yapmaz.
+    await tester.tap(find.text('Hemen oyna'), warnIfMissed: false);
+    await tester.pump();
+    expect(authProvider.isAuthenticated, isFalse);
 
     authProvider.isLoadingForTest = false;
     await tester.pump();
 
     // Yükleme bitince buton tekrar normal çalışmalı (regresyon önlemi).
-    await tester.tap(find.text('Misafir olarak devam et').hitTestable());
+    await tester.tap(find.text('Hemen oyna').hitTestable());
     await tester.pumpAndSettle();
 
     expect(authProvider.isAuthenticated, isTrue);
@@ -523,7 +518,7 @@ void main() {
           (hi > lo ? hi + 0.05 : lo + 0.05) / (hi > lo ? lo + 0.05 : hi + 0.05);
       expect(contrast, greaterThanOrEqualTo(4.5));
 
-      expect(find.text('Misafir olarak devam et'), findsOneWidget);
+      expect(find.text('Hemen oyna'), findsOneWidget);
       expect(tester.takeException(), isNull);
     }
   });
@@ -613,7 +608,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final guestButton = find.text('Misafir olarak devam et');
+    final guestButton = find.text('Hemen oyna');
     expect(guestButton, findsOneWidget);
     expect(tester.getBottomRight(guestButton).dy, lessThan(844));
   });
@@ -935,9 +930,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Misafir olarak devam et'));
+    await tester.ensureVisible(find.text('Hemen oyna'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Misafir olarak devam et'));
+    await tester.tap(find.text('Hemen oyna'));
     await tester.pumpAndSettle();
 
     expect(find.byType(HomeScreen), findsOneWidget);
@@ -1174,7 +1169,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final guestButton = find.text('Misafir olarak devam et');
+    final guestButton = find.text('Hemen oyna');
     expect(guestButton, findsOneWidget);
     final beforeDragY = tester.getTopLeft(guestButton).dy;
 
@@ -1200,7 +1195,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final guestButton = find.text('Misafir olarak devam et');
+    final guestButton = find.text('Hemen oyna');
     expect(guestButton, findsOneWidget);
     expect(tester.getBottomRight(guestButton).dy, lessThan(390));
   });
@@ -1241,7 +1236,7 @@ void main() {
       'Navnîşana e-nameyê',
       'Şîfre',
       'Te şîfre ji bîr kir?',
-      'Têkeve',
+      'Hesabê min heye · Têkeve',
       'Tomar bibe',
     ]) {
       final finder = find.text(label);
@@ -1275,7 +1270,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    for (final label in ['Wek mêvan bidomîne', 'An jî bi e-nameyê']) {
+    for (final label in ['Niha bilîze', 'An jî bi e-nameyê']) {
       final finder = find.text(label);
       expect(finder, findsOneWidget, reason: label);
       final paragraph = tester.renderObject<RenderParagraph>(finder);
@@ -1301,6 +1296,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Bi xêr hatî ZanKurdê'), findsOneWidget);
-    expect(find.text('Wek mêvan bidomîne'), findsOneWidget);
+    expect(find.text('Niha bilîze'), findsOneWidget);
   });
 }
