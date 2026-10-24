@@ -199,8 +199,8 @@ class _SignInScreenState extends State<SignInScreen>
 
     // 2026-10-01 giriş iskeleti: dil seçici solda, kahraman kart (logo),
     // sola yaslı başlık, tek yüzey kartında sosyal girişler + e-posta formu;
-    // ekranın TEK birincil eylemi "Giriş Yap" alt perdede sabit, "Kaydol"
-    // altında ikincil metin eylemi (bkz. [SahneEntryScaffold]). Eskiden
+    // ekranın TEK birincil eylemi "Hemen oyna" (misafir, önce oyna hesap
+    // sonra) alt perdede sabit, "Kaydol" altında ikincil metin eylemi (bkz. [SahneEntryScaffold]). Eskiden
     // "Giriş Yap" kartın ortasında kayıyor, dil seçici sağ üstte duruyor,
     // başlık kahraman kartın İÇİNDE ortalanıyordu — kayıt ve ad ekranı başka
     // bir yerleşimdi.
@@ -242,7 +242,7 @@ class _SignInScreenState extends State<SignInScreen>
                         return null;
                       },
                     ),
-                    SizedBox(height: denseWide ? SahneSpace.x2 : SahneSpace.x4),
+                    SizedBox(height: denseWide ? SahneSpace.x2 : SahneSpace.x3),
                     FadeTransition(
                       opacity: LoadAnimationSequence.formField2FadeAnimation(
                         _animationController,
@@ -310,19 +310,20 @@ class _SignInScreenState extends State<SignInScreen>
                     ),
                     SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
                   ],
-                  // Misafir girişi bir kaçış yolu: metin bağlantısı olarak
-                  // sosyal girişlerden ayrılır.
-                  Center(
-                    child: _GuestSignInLink(
-                      onPressed: loading
-                          ? null
-                          : () => _signInAsGuest(authProvider),
-                    ),
-                  ),
-                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
                   const _EmailSectionDivider(),
-                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x3),
+                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
                   form,
+                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
+                  // Hesabı olan için ikincil yol: dolgulu birincil eylem
+                  // artık "Hemen oyna"dır (alt perde).
+                  SahneButton.secondary(
+                    key: const ValueKey('sign-in-have-account'),
+                    label: context.t(K.signInHaveAccount),
+                    icon: AppIcons.rightToBracket,
+                    arrow: false,
+                    expand: true,
+                    onPressed: loading ? null : () => _signIn(authProvider),
+                  ),
                 ],
               ),
             );
@@ -338,9 +339,9 @@ class _SignInScreenState extends State<SignInScreen>
                   key: const ValueKey('sign-in-hero-banner'),
                   padding: const EdgeInsets.fromLTRB(
                     SahneSpace.x4,
-                    SahneSpace.x6,
+                    SahneSpace.x3,
                     SahneSpace.x4,
-                    SahneSpace.x5,
+                    SahneSpace.x3,
                   ),
                   child: Center(
                     child: ScaleTransition(
@@ -360,6 +361,7 @@ class _SignInScreenState extends State<SignInScreen>
               // ekranında aynı yerde durması sözleşmedir
               // (`entry_scaffold_test.dart`); üstteki satır onu kaydırmaz.
               aboveAction: const ConsentLine(),
+              primaryFirstWhenFlowing: true,
               primary: FadeTransition(
                 opacity: LoadAnimationSequence.buttonFadeAnimation(
                   _animationController,
@@ -369,11 +371,14 @@ class _SignInScreenState extends State<SignInScreen>
                     _animationController,
                   ),
                   child: SahneButton.primary(
-                    label: context.t(K.signIn),
-                    icon: AppIcons.rightToBracket,
+                    key: const ValueKey('sign-in-play-now'),
+                    label: context.t(K.signInPlayNow),
+                    icon: AppIcons.play,
                     arrow: false,
                     expand: true,
-                    onPressed: loading ? null : () => _signIn(authProvider),
+                    onPressed: loading
+                        ? null
+                        : () => _signInAsGuest(authProvider),
                   ),
                 ),
               ),
@@ -572,50 +577,6 @@ class _AppleSignInButton extends StatelessWidget {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Misafir girişi: ikincil eylem olarak altı çizili metin bağlantısı.
-/// Sosyal giriş bulunmayan Apple platformlarında da ana akış açık kalır.
-///
-/// Misafir girişi bir *kaçış yolu*, üçüncü bir teklif değil. Turuncu
-/// konturlu tam boy buton olarak Google (beyaz) ve Apple (siyah)
-/// düğmeleriyle aynı ağırlıktaydı; ekranda üç birincil eylem görünüyor ve
-/// hangisinin beklenen yol olduğu belirsiz kalıyordu (2026-07-25 canlı
-/// denetimi). 2026-09-29 Şahnê: birincil metin rengi (Agir değil — Agir
-/// ekranın tek birincil eylemine, "Giriş Yap"a ait), 48 dokunma alanı.
-class _GuestSignInLink extends StatelessWidget {
-  const _GuestSignInLink({required this.onPressed});
-
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final enabled = onPressed != null;
-    final fg = enabled ? t.tx : t.tx3;
-    return IgnorePointer(
-      ignoring: !enabled,
-      child: TextButton.icon(
-        onPressed: onPressed,
-        icon: Icon(AppIcons.user, size: 18, color: fg),
-        label: Text(
-          context.t(K.continueGuest),
-          textAlign: TextAlign.center,
-          style: SahneType.captionStrong.copyWith(
-            color: fg,
-            decoration: TextDecoration.underline,
-            decorationColor: fg,
-          ),
-        ),
-        style: TextButton.styleFrom(
-          foregroundColor: fg,
-          minimumSize: const Size(48, 48),
-          shape: SahneShape.m,
-          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x4),
         ),
       ),
     );

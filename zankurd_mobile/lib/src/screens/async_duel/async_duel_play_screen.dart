@@ -10,6 +10,7 @@ import '../../l10n/strings.dart';
 import '../../models/async_duel.dart';
 import '../../models/avatar_identity.dart';
 import '../../models/quiz_question.dart';
+import '../../services/guest_save_prompt.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/player_identity.dart';
@@ -390,11 +391,20 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     final view = result == null
         ? AsyncDuelResultView.unknownAfterFinish(duel.duelId)
         : AsyncDuelResultView.fromAnswer(duel, result);
-    Navigator.of(context).pushReplacement(
+    final navigator = Navigator.of(context);
+    navigator.pushReplacement(
       AppRoute.to(
         AsyncDuelResultScreen(repository: widget.repository, view: view),
       ),
     );
+    // Misafire üç oyunda bir "hesabını kaydet" önerisi (düello de sayılır).
+    // Bu ekran kapandığı için sayfa gezginin kendi bağlamından, sonuç
+    // ekranının ilk karesinden sonra açılır. Oyunu asla engellemez.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (navigator.mounted) {
+        unawaited(GuestSavePrompt.afterGame(navigator.context));
+      }
+    });
   }
 
   Future<void> _confirmExit() async {

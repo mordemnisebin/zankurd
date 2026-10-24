@@ -283,6 +283,25 @@ class Tr {
       'tr': 'Misafir olarak devam et',
     },
     K.orWithEmail: {'ku': 'An jî bi e-nameyê', 'tr': 'Veya e-posta ile'},
+    K.signInPlayNow: {'ku': 'Niha bilîze', 'tr': 'Hemen oyna'},
+    K.signInHaveAccount: {
+      'ku': 'Hesabê min heye · Têkeve',
+      'tr': 'Hesabım var · Giriş yap',
+    },
+    K.guestSaveTitle: {
+      'ku': 'Pêşketina xwe winda neke — hesabê xwe tomar bike',
+      'tr': 'İlerlemeni kaybetme — hesabını kaydet',
+    },
+    K.guestSaveBody: {
+      'ku':
+          'XP, zêr û rozetên te bi te re bimînin, heke tu amûra xwe biguherînî jî.',
+      'tr': 'XP, jeton ve rozetlerin cihaz değiştirsen bile seninle kalsın.',
+    },
+    K.guestSaveEmail: {
+      'ku': 'Bi e-nameyê tomar bike',
+      'tr': 'E-posta ile kaydet',
+    },
+    K.guestSaveNotNow: {'ku': 'Ne niha', 'tr': 'Şimdi değil'},
 
     // ── Kayıt ekranı ─────────────────────────────────────────────────
     K.allFieldsRequired: {
@@ -4666,6 +4685,12 @@ class K {
   static const premiumErrUnavailable = 'premium.err.unavailable';
   static const premiumErrOtherAccount = 'premium.err.otherAccount';
   static const premiumErrGeneric = 'premium.err.generic';
+  static const signInPlayNow = 'auth.signInPlayNow';
+  static const signInHaveAccount = 'auth.signInHaveAccount';
+  static const guestSaveTitle = 'guestSave.title';
+  static const guestSaveBody = 'guestSave.body';
+  static const guestSaveEmail = 'guestSave.email';
+  static const guestSaveNotNow = 'guestSave.notNow';
   static const accountSaved = 'profile.accountSaved';
   static const connectingGoogle = 'common.connectingGoogle';
   static const signOut = 'common.signOut';

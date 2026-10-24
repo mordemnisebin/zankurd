@@ -45,6 +45,7 @@ import '../services/analytics_service.dart';
 import '../services/notification_prompt_policy.dart';
 import '../services/notification_service.dart';
 import '../widgets/notification_prompt_card.dart';
+import '../services/guest_save_prompt.dart';
 import '../services/review_service.dart';
 import '../utils/result_sharer.dart';
 import '../widgets/confetti_overlay.dart';
@@ -1184,6 +1185,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         if (!mounted) return;
         if (leveledUp) {
           _showLevelUpDialog(context, xpStore.currentLevel);
+        } else {
+          // Misafire üç oyunda bir "hesabını kaydet" önerisi. Seviye atlama
+          // kutusunun üstüne binmesin diye o turda sayılmaz; sonuç animasyonu
+          // otursun diye kısa gecikmeyle açılır. Oyunu asla engellemez.
+          unawaited(GuestSavePrompt.afterGame(context));
         }
       });
     }

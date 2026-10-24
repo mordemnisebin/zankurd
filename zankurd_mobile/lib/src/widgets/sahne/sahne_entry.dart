@@ -53,6 +53,7 @@ class SahneEntryScaffold extends StatelessWidget {
     this.aboveAction,
     required this.primary,
     this.secondary,
+    this.primaryFirstWhenFlowing = false,
     this.surfaceKey,
     this.dockKey = const ValueKey('entry-dock'),
   }) : assert(
@@ -88,6 +89,12 @@ class SahneEntryScaffold extends StatelessWidget {
 
   /// İkincil metin eylemi (geri, "hesabın var mı?").
   final Widget? secondary;
+
+  /// Perde sabitlenemeyip (kısa/yatay/klavye/büyük yazı) içeriğin ALTINA
+  /// aktığında birincil eylem içerikten ÖNCE gelir. Giriş ekranında birincil
+  /// eylem "Hemen oyna"dır; formun altında kalırsa yatay telefonda ilk
+  /// ekranın dışına düşüyordu.
+  final bool primaryFirstWhenFlowing;
 
   /// Sayfa zemininin anahtarı (testler zemini bulur).
   final Key? surfaceKey;
@@ -150,8 +157,12 @@ class SahneEntryScaffold extends StatelessWidget {
                 final main = Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    if (!anchored && primaryFirstWhenFlowing) ...[
+                      dockContent,
+                      const SizedBox(height: SahneSpace.x4),
+                    ],
                     ?content,
-                    if (!anchored) ...[
+                    if (!anchored && !primaryFirstWhenFlowing) ...[
                       const SizedBox(height: SahneSpace.x4),
                       dockContent,
                     ],

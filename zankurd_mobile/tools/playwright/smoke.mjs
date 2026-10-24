@@ -72,7 +72,7 @@ await clickText('Dest pê bike');
 await expectText('Bi xêr hatî ZanKurdê');
 await screenshot('02-sign-in');
 
-await clickText('Wek mêvan bidomîne');
+await clickText('Niha bilîze');
 await expectText('Navê te di lîstikê de çi be?');
 const nameInput = page.getByRole('textbox');
 if ((await nameInput.count()) !== 1) {
