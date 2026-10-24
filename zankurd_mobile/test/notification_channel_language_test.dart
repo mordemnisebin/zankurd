@@ -2,7 +2,7 @@
 //
 // ## Kusur
 // `AndroidNotificationDetails` kanal adı ve açıklaması Kurmancî sabitti
-// ('ZanKurd Bîranîna Rojane', 'Daxwazên Hevaltiyê'...). Gövde ve başlık
+// ('ZanKurd Bîrxistina Rojane', 'Daxwazên Hevaltiyê'...). Gövde ve başlık
 // [Tr.forKu] ile dile göre seçilirken Android sistem ayarlarında görünen
 // kanal adı Türkçe kullanıcıya hep Kurmancî görünüyordu.
 //
@@ -112,8 +112,8 @@ void main() {
     await s.showFriendRequest('Berfin', isKu: true);
 
     final found = channels();
-    expect(found.any((c) => c.$1 == 'ZanKurd Bîranîna Rojane'), isTrue);
-    expect(found.any((c) => c.$1 == 'ZanKurd Bîranîna Zincîrê'), isTrue);
+    expect(found.any((c) => c.$1 == 'ZanKurd Bîrxistina Rojane'), isTrue);
+    expect(found.any((c) => c.$1 == 'ZanKurd Bîrxistina Zincîrê'), isTrue);
     expect(found.any((c) => c.$1 == 'ZanKurd Daxwazên Hevaltiyê'), isTrue);
   });
 }

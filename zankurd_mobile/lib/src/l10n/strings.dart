@@ -692,11 +692,11 @@ class Tr {
     K.requestSent: {'ku': 'Daxwaz hat şandin', 'tr': 'İstek gönderildi'},
     K.requestFailed: {'ku': 'Daxwaz nehat şandin', 'tr': 'İstek gönderilemedi'},
     K.notifChannelDailyName: {
-      'ku': 'ZanKurd Bîranîna Rojane',
+      'ku': 'ZanKurd Bîrxistina Rojane',
       'tr': 'ZanKurd Günlük Hatırlatıcı',
     },
     K.notifChannelDailyDesc: {
-      'ku': 'Bîranîna çalakiya rojane ya ZanKurdê',
+      'ku': 'Bîrxistina çalakiya rojane ya ZanKurdê',
       'tr': 'ZanKurd günlük etkinlik hatırlatıcısı',
     },
     K.notifChannelFriendName: {
@@ -708,11 +708,11 @@ class Tr {
       'tr': 'Yeni arkadaşlık istekleri',
     },
     K.notifChannelStreakName: {
-      'ku': 'ZanKurd Bîranîna Zincîrê',
+      'ku': 'ZanKurd Bîrxistina Zincîrê',
       'tr': 'ZanKurd Seri Hatırlatıcısı',
     },
     K.notifChannelStreakDesc: {
-      'ku': 'Bîranîna parastina zincîra rojane',
+      'ku': 'Bîrxistina parastina zincîra rojane',
       'tr': 'Günlük seriyi koruma hatırlatıcısı',
     },
     K.friendAlreadyFriends: {
@@ -720,7 +720,7 @@ class Tr {
       'tr': 'Zaten arkadaşsınız',
     },
     K.friendRequestAlreadyPending: {
-      'ku': 'Daxwaz jixwe hat şandin',
+      'ku': 'Daxwaz jixwe hatiye şandin',
       'tr': 'İstek zaten gönderilmiş',
     },
     K.friendRequestBlocked: {
@@ -728,7 +728,7 @@ class Tr {
       'tr': 'Bu oyuncuya istek gönderilemez',
     },
     K.friendRequestRateLimited: {
-      'ku': 'Pir daxwaz hatin şandin. Hinekî bisekine û dîsa biceribîne.',
+      'ku': 'Pir zêde daxwaz hatin şandin. Hinekî bisekine û dîsa biceribîne.',
       'tr': 'Çok fazla istek gönderildi. Biraz bekleyip tekrar dene.',
     },
     K.requestAccepted: {'ku': 'Heval hat zêdekirin', 'tr': 'Arkadaş eklendi'},

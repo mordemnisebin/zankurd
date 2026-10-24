@@ -310,11 +310,11 @@ void main() {
     expect(notificationLive, contains('K.notifChannelStreakDesc'));
     expect(
       Tr.of(K.notifChannelStreakName, AppLanguage.ku),
-      'ZanKurd Bîranîna Zincîrê',
+      'ZanKurd Bîrxistina Zincîrê',
     );
     expect(
       Tr.of(K.notifChannelStreakDesc, AppLanguage.ku),
-      'Bîranîna parastina zincîra rojane',
+      'Bîrxistina parastina zincîra rojane',
     );
     expect(notificationLive, isNot(contains('Bîranîna Rêzê')));
     expect(notificationLive, isNot(contains('rêza rojane')));
