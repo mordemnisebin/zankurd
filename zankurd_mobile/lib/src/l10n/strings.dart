@@ -3324,12 +3324,12 @@ class Tr {
     K.matchResultDraw: {'ku': 'Beramberî', 'tr': 'Berabere'},
     K.recordsTitle: {'ku': 'Rekorên min', 'tr': 'Rekorlarım'},
     K.recordsEmptyTitle: {
-      'ku': 'Rekora xwe ya yekem tomar bike',
+      'ku': 'Rekora xwe ya yekem bişkîne',
       'tr': 'İlk rekorunu kır',
     },
     K.recordsEmptyBody: {
       'ku':
-          'Bilîze; rekorên te yên zincîr, pêşbirk û tura rojê li vir kom dibin.',
+          'Bilîze; rekorên te yên zincîr, pêşbirk û gera rojê li vir kom dibin.',
       'tr': 'Oyna; seri, düello ve günün turu rekorların burada toplanır.',
     },
     K.recordsEmptyAction: {
@@ -3495,8 +3495,8 @@ class Tr {
     },
     K.notifPromptDailyBody: {
       'ku':
-          'Her roj gerek nû vedibe. Em dikarin te bi bîr bixin; tu dikarî her '
-          'dem ji Mîhengan bigirî.',
+          'Her roj gereke nû vedibe. Heke tu bixwazî, em dikarin te bi bîr '
+          'bixin; tu dikarî her dem ji Mîhengan bigirî.',
       'tr':
           'Her gün yeni bir tur açılır. İstersen sana hatırlatalım; '
           "istediğin zaman Ayarlar'dan kapatabilirsin.",
