@@ -13,6 +13,7 @@ import '../widgets/app_state.dart';
 import '../widgets/lexicon_speak_button.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
+import 'quiz/quiz_option_tile.dart';
 
 /// Kelime tekrarı oturumu: Kurmancî sözcük -> dört Türkçe anlamdan doğrusu.
 ///
@@ -266,44 +267,35 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
     );
   }
 
-  /// Cevaptan sonra doğru şık yeşil, yanlış seçilen kırmızı tonludur; renk
-  /// tek başına işaret olmasın diye geri bildirim metni ayrıca yazılır.
+  /// Cevaptan sonra doğru şık Rast (yeşil + ✓), yanlış seçilen Şaş (kırmızı +
+  /// çapraz tarama + ✗), ötekiler sönük görünür: quiz'in şık çubuğunun
+  /// ([QuizOptionTile]) aynı durumları. Geri bildirim metni ayrıca yazılır;
+  /// durum yalnız renkle verilmez.
+  ///
+  /// Eskiden cevaptan sonra şıklar `onPressed: null` ile pasifleştiriliyordu
+  /// ve pasif `SahneButton` ton dolgusunu değil ortak soluk dolguyu çizer:
+  /// işaretleme hiç görünmüyor, dört şık aynı gri kalıyordu (bekçi:
+  /// `word_drill_option_states_test`).
   Widget _option(
     BuildContext context,
     SahneTokens t,
     WordReviewQuestion question,
     String option,
   ) {
-    final key = ValueKey(
-      'word-review-option-${question.options.indexOf(option)}',
-    );
-    if (_answered && question.isCorrect(option)) {
-      return SahneButton.tonal(
-        buttonKey: key,
-        label: option,
-        tint: t.okTint,
-        foreground: t.okTx,
-        edge: t.okTx,
-        expand: true,
-        onPressed: null,
-      );
-    }
-    if (_answered && option == _picked) {
-      return SahneButton.tonal(
-        buttonKey: key,
-        label: option,
-        tint: t.errTint,
-        foreground: t.errTx,
-        edge: t.errTx,
-        expand: true,
-        onPressed: null,
-      );
-    }
-    return SahneButton.secondary(
-      buttonKey: key,
-      label: option,
-      expand: true,
-      onPressed: _answered ? null : () => _answer(option),
+    final index = question.options.indexOf(option);
+    final isRight = question.isCorrect(option);
+    final isPicked = option == _picked;
+    return KeyedSubtree(
+      key: ValueKey('word-review-option-$index'),
+      child: QuizOptionTile(
+        index: index,
+        answer: option,
+        selected: isPicked,
+        correct: _answered && isRight,
+        disabled: _answered,
+        dimmed: _answered && !isRight && !isPicked,
+        onTap: _answered ? null : () => _answer(option),
+      ),
     );
   }
 }

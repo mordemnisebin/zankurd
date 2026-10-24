@@ -1,7 +1,7 @@
 // Tasarım kurulu 2. tur 2026-10-20 (9 model, 35 ekran): ortak bulgular.
 //
 // 1. Üst satır her soru modunda aynı bileşendir (`QuizStageCenter`):
-//    "Kategori · Soru n/N". Eskiden kimi modda ortada, kimi modda ayrı
+//    "Soru n/N · Kategori". Eskiden kimi modda ortada, kimi modda ayrı
 //    satırda, düelloda hiç yoktu.
 // 2. Jetonu yetmeyen joker kilit simgesi taşır; soluk dolgu tek başına
 //    "etkin" okunmasını engellemiyordu (ekran 16, üç model).
@@ -29,7 +29,7 @@ void main() {
     final text = t.widget<Text>(
       find.byKey(const ValueKey('quiz-stage-kicker')),
     );
-    expect(text.data, endsWith('3/7'));
+    expect(text.data, startsWith('Soru 3/7'));
     expect(text.data, contains('·'));
   });
 

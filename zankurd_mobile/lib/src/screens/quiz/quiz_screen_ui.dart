@@ -713,7 +713,7 @@ extension _QuizScreenUI on _QuizScreenState {
     final noneAffordable =
         jokers.isNotEmpty &&
         jokers.every(
-          (type) => !_wildcard.isUsed(type) && _coinBalance < type.coinCost,
+          (type) => !_wildcard.isUsed(type) && !_canPayWildcard(type),
         );
     if (noneAffordable) {
       return KeyedSubtree(
@@ -739,9 +739,12 @@ extension _QuizScreenUI on _QuizScreenState {
           // gibi görünmesin: jetonun nereden kazanılacağını söyle (ekranda
           // yazılmaz; ekran okuyucuya gider ve kilitli jokere dokununca tost
           // olur).
-          hint: _coinBalance == 0 && index == 0
-              ? context.t(K.finishQuizHint)
-              : null,
+          showHint: _freeWildcardAvailable,
+          hint: _freeWildcardAvailable
+              ? context.t(K.freeWildcardToday)
+              : (_coinBalance == 0 && index == 0
+                    ? context.t(K.finishQuizHint)
+                    : null),
         ),
         const SizedBox(height: SahneSpace.x2),
         // Adlar ekranda yazmadığı için (ikon + fiyat) dört joker her
@@ -761,7 +764,7 @@ extension _QuizScreenUI on _QuizScreenState {
     final used = _wildcard.isUsed(type);
     // doubleAnswer "kullanıldı" = aktive edildi: görsel olarak vurgulanır
     final isActive = type == WildcardType.doubleAnswer && used;
-    final canAfford = _coinBalance >= type.coinCost;
+    final canAfford = _canPayWildcard(type);
     final isEnabled = !used && canAfford && !answered;
 
     return WildcardButton(
@@ -861,6 +864,28 @@ extension _QuizScreenUI on _QuizScreenState {
   bool get _supportsDoubleAnswer =>
       !_supportsOptionWildcards || question.answers.length >= 4;
 
+  /// Joker için ödeme yolu var mı: bedava günlük hak YA DA yeterli jeton.
+  ///
+  /// Yeni oyuncunun jetonu (8–19) en ucuz jokerin fiyatının (20) altındaydı;
+  /// joker satırı her soruda kilitli kalıyor ve özellik hiç denenemiyordu.
+  /// Günde bir kez, solo turda ilk kullanım bedavadır (bekçi:
+  /// `free_wildcard_store_test`, `free_wildcard_quiz_test`).
+  bool _canPayWildcard(WildcardType type) =>
+      _freeWildcardAvailable || _coinBalance >= type.coinCost;
+
+  /// Bedava hakkı bu kullanımda harcar; harcandıysa `true`.
+  ///
+  /// Bayrak HEMEN düşer (ikinci dokunuş aynı karede bedava saymasın), kalıcı
+  /// yazım arkadan gider. Bedava kullanımda `_chargeWildcard` ÇAĞRILMAZ:
+  /// sunucuya `spend_coins` gitmez, bakiye yerelde de düşmez. Sunucu jeton
+  /// mantığı değişmedi.
+  bool _takeFreeWildcard() {
+    if (!_freeWildcardAvailable) return false;
+    _freeWildcardAvailable = false;
+    unawaited(FreeWildcardStore.consume());
+    return true;
+  }
+
   Future<void> _trackWildcardMission() async {
     final store = await DailyMissionStore.load();
     final completed = await store.reportWildcardUsed();
@@ -943,18 +968,18 @@ extension _QuizScreenUI on _QuizScreenState {
   }
 
   void _useFiftyFifty() {
-    final cost = WildcardType.fiftyFifty.coinCost;
     if (!_supportsEliminationWildcards ||
         _wildcard.fiftyFiftyUsed ||
-        _coinBalance < cost ||
+        !_canPayWildcard(WildcardType.fiftyFifty) ||
         answered) {
       return;
     }
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
     _trackWildcardMission();
+    final free = _takeFreeWildcard();
     setState(() {
-      _coinBalance -= cost;
+      if (!free) _coinBalance -= WildcardType.fiftyFifty.coinCost;
       _wildcard = _wildcard.copyWith(fiftyFiftyUsed: true);
       // Gizlenecek yanlışlar rastgele seçilir; hep ilk ikisi gizlenirse
       // dikkatli oyuncu örüntüyü ezberler.
@@ -964,26 +989,26 @@ extension _QuizScreenUI on _QuizScreenState {
               .take(2)
               .toSet();
     });
-    unawaited(_chargeWildcard(WildcardType.fiftyFifty));
+    if (!free) unawaited(_chargeWildcard(WildcardType.fiftyFifty));
   }
 
   void _useAudience() {
-    final cost = WildcardType.audience.coinCost;
     if (!_supportsOptionWildcards ||
         _wildcard.audienceUsed ||
-        _coinBalance < cost ||
+        !_canPayWildcard(WildcardType.audience) ||
         answered) {
       return;
     }
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
     _trackWildcardMission();
+    final free = _takeFreeWildcard();
     setState(() {
-      _coinBalance -= cost;
+      if (!free) _coinBalance -= WildcardType.audience.coinCost;
       _wildcard = _wildcard.copyWith(audienceUsed: true);
       _audiencePoll = _buildAudiencePoll();
     });
-    unawaited(_chargeWildcard(WildcardType.audience));
+    if (!free) unawaited(_chargeWildcard(WildcardType.audience));
   }
 
   Map<String, double> _buildAudiencePoll() {
@@ -1015,10 +1040,9 @@ extension _QuizScreenUI on _QuizScreenState {
   }
 
   void _activateDoubleAnswer() {
-    final cost = WildcardType.doubleAnswer.coinCost;
     if (!_supportsDoubleAnswer ||
         _wildcard.doubleAnswerActivated ||
-        _coinBalance < cost ||
+        !_canPayWildcard(WildcardType.doubleAnswer) ||
         answered ||
         _firstAttemptAnswer.isNotEmpty) {
       return;
@@ -1026,18 +1050,18 @@ extension _QuizScreenUI on _QuizScreenState {
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
     _trackWildcardMission();
+    final free = _takeFreeWildcard();
     setState(() {
-      _coinBalance -= cost;
+      if (!free) _coinBalance -= WildcardType.doubleAnswer.coinCost;
       _wildcard = _wildcard.copyWith(doubleAnswerActivated: true);
     });
-    unawaited(_chargeWildcard(WildcardType.doubleAnswer));
+    if (!free) unawaited(_chargeWildcard(WildcardType.doubleAnswer));
   }
 
   void _changeQuestion() {
-    final cost = WildcardType.changeQuestion.coinCost;
     if (!_isSoloMode ||
         _wildcard.changeQuestionUsed ||
-        _coinBalance < cost ||
+        !_canPayWildcard(WildcardType.changeQuestion) ||
         answered) {
       return;
     }
@@ -1063,8 +1087,9 @@ extension _QuizScreenUI on _QuizScreenState {
     _trackWildcardMission();
     final replacement = candidates[Random().nextInt(candidates.length)];
 
+    final free = _takeFreeWildcard();
     setState(() {
-      _coinBalance -= cost;
+      if (!free) _coinBalance -= WildcardType.changeQuestion.coinCost;
       _wildcard = _wildcard.copyWith(changeQuestionUsed: true);
       // `.localized()` ÇAĞRISI ŞART. initState turdaki bütün soruları bir
       // kez seçili dile yansıtıyor (quiz_screen.dart:301); yedek soru ise
@@ -1096,7 +1121,7 @@ extension _QuizScreenUI on _QuizScreenState {
     _markQuestionSeen();
     _loadFavoriteState();
     _startTimer();
-    unawaited(_chargeWildcard(WildcardType.changeQuestion));
+    if (!free) unawaited(_chargeWildcard(WildcardType.changeQuestion));
   }
 
   // ─── Soru paneli ─────────────────────────────────────────────────────────

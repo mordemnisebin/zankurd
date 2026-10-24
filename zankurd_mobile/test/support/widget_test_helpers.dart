@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/data/badge_service.dart';
 import 'package:zankurd_mobile/src/data/daily_mission_store.dart';
+import 'package:zankurd_mobile/src/data/free_wildcard_store.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mastery_store.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
@@ -194,6 +195,12 @@ MockZanKurdRepository freshMockRepository() {
     'zankurd.onboarding.seen': true,
     'zankurd.profileName.completed.user': true,
     'zankurd.quiz_tutorial.seen': true,
+    // Günlük bedava joker hakkı TÜKENMİŞ başlar: eski joker testleri jeton
+    // düşüşünü ve `spend_coins` çağrısını ölçer. Bedava hakkı sınayan testler
+    // (`free_wildcard_quiz_test`) bu anahtarı kendileri siler.
+    'zankurd.missions.freeWildcardDay': FreeWildcardStore.dayKey(
+      DateTime.now(),
+    ),
   });
   // Tekil örneği olan HER store sıfırlanır. Bu liste bir zamanlar dörttü ve
   // eksikliği sessizdi: `LevelProgressStore` testler arasında yaşadığı için
