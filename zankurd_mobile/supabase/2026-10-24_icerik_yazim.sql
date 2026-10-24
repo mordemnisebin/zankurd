@@ -31,12 +31,6 @@ update questions set
 where id = 'c91f3540-ce5f-5748-9c98-640ddcf85fa4'
   and explanation_tr = 'Dengbêjlik geleneğinde kilamlar çoğunlukla Kürtçe (Kurmanci) söylenir. Türkçe, Farsça ve Arapça bu geleneğin ana dili değildir.';
 
--- yerel: ds_muzik_0249
-update questions set
-  option_a = 'Ermeniyek bû ku kilamên herî kevn ên Serhed û Botanê bi kurmancîyeke resen parastin'
-where id = '74d14987-404d-532d-ac54-23a6d0035f3f'
-  and option_a = 'Ermeniyek bû ku kilamên herî kevn ên Serhed û Botanê bi kurmanciyeke resen parastin';
-
 -- yerel: ds_ziman_0018
 update questions set
   explanation_tr = '"Mala" dişil tekil izafedir. Kurmancîde, dişil bir isim bir sıfatla bağlandığında "-a" izafesi kullanılır. Örnek: "mala mezin" (büyük ev).'
@@ -93,7 +87,7 @@ where id = '8d31b1e7-941f-5dce-8ef3-3dc9ef4462e2'
 
 -- yerel: edit_ziman_0019
 update questions set
-  explanation_ku = 'Hawar di 1932an de li Şamê dest pê kir û alfabeya kurdî ya latînî belav kir. Bi xebatên xwe yên zimanî ew bû dibistana Kurmancîya nûjen.'
+  explanation_ku = 'Hawar di 1932an de li Şamê dest pê kir û alfabeya kurdî ya latînî belav kir. Bi xebatên xwe yên zimanî ew bû dibistana kurmanciya nûjen.'
 where id = '35d6e71b-ca12-59a4-b378-fa71da37c752'
   and explanation_ku = 'Hawar di 1932an de li Şamê dest pê kir û alfabeya kurdî ya latînî belav kir. Bi xebatên xwe yên zimanî ew bû dibistana Kurmanciya nûjen.';
 
@@ -139,7 +133,6 @@ begin
   select count(*) into n from questions
    where id in ('78abbb10-0bc6-5e69-a7f5-8dcd76631e78', 'af986efe-4565-5cb3-8c59-44765c19848f', 'c91f3540-ce5f-5748-9c98-640ddcf85fa4', '74d14987-404d-532d-ac54-23a6d0035f3f', 'ae407a2a-8e39-57be-b806-228442d5cf20', '13217793-3be5-5486-a640-4dfbce8294cc', 'a3e53ee1-1bfe-5453-aeb0-f5eee97dc531', 'ee933f3c-9662-5997-9c3f-f05be676ffef', '1b8e0a84-0705-543f-bec6-db95ab55f81f', '6de8d265-d6fb-533e-b6cd-ad4d3ceafa37', '6f8d52ec-5dcc-58a2-b5f5-0876acd5e481', '1b1b7fb6-ef29-564d-b64b-cf3cc7f771e4', '8d31b1e7-941f-5dce-8ef3-3dc9ef4462e2', '35d6e71b-ca12-59a4-b378-fa71da37c752', 'de7496bc-19ae-52c2-932d-92d4d73c5407', '672e9e72-58b5-56ce-a45f-3aca1f4cd1a2', '4a484b38-5b44-47e1-a208-ec138afc7a07', 'a6852f09-771c-574f-818a-cddc222eb46d', '386c015e-da07-5084-862b-27285a900089', '48a9f9f0-3eb7-58e3-8a0b-469815b2cead')
      and (explanation_tr ~ 'Kurmanc(i|ça|ca|icede|cca)(?![a-zçşğıöüâêîû])'
-          or option_a = 'Ermeniyek bû ku kilamên herî kevn ên Serhed û Botanê bi kurmanciyeke resen parastin'
           or explanation_ku ~ 'Kurmanciya');
   if n <> 0 then
     raise exception 'beklenen 0 eski yazım kaldı, bulunan %', n;
