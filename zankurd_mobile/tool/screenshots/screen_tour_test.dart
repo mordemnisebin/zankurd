@@ -1,6 +1,10 @@
 // ignore_for_file: avoid_print, invalid_use_of_visible_for_testing_member
 import 'dart:async';
 import 'dart:math' as math;
+
+import 'package:zankurd_mobile/src/data/learner_lexicon.dart';
+import 'package:zankurd_mobile/src/data/local_data_storage.dart';
+import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -60,6 +64,7 @@ import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
 import 'package:zankurd_mobile/src/screens/my_words_screen.dart';
+import 'package:zankurd_mobile/src/screens/tekrar_screen.dart';
 import 'package:zankurd_mobile/src/screens/word_drill_screen.dart';
 import 'package:zankurd_mobile/src/data/word_list_store.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
@@ -1207,6 +1212,14 @@ void main() {
         await store.add(id, now: yesterday.add(Duration(minutes: i)));
       }
       await store.recordReview('q-ronahi', correct: true);
+      // Tek "Tekrar" girişi: kart kelimeyle birlikte yanlış sorularını da
+      // sayar (3 kelime + 2 soru = "Tekrar · bugün 5").
+      // (markMistake yarına erteler; hazır sayılması için kimlikler doğrudan
+      // yazılır.)
+      SharedPreferences.setMockInitialValues({
+        'zankurd.mistakeQuestionIds': ['offline_0005', 'offline_0010'],
+      });
+      MistakeStore.resetInstance();
       return store;
     });
     return store!;
@@ -1214,13 +1227,21 @@ void main() {
 
   testWidgets('312 kelimelerim', (t) async {
     final store = await seedWords(t);
-    await _pump(t, MyWordsScreen(store: store));
+    await _pump(
+      t,
+      MyWordsScreen(repository: MockZanKurdRepository(), store: store),
+    );
     await _shoot(t, '312_my_words');
   }, tags: ['preview']);
 
   testWidgets('313 kelimelerim (Kurmancî, karanlık)', (t) async {
     final store = await seedWords(t);
-    await _pump(t, MyWordsScreen(store: store), dark: true, ku: true);
+    await _pump(
+      t,
+      MyWordsScreen(repository: MockZanKurdRepository(), store: store),
+      dark: true,
+      ku: true,
+    );
     await _shoot(t, '313_my_words_ku_dark');
   }, tags: ['preview']);
 
@@ -1228,6 +1249,70 @@ void main() {
     final store = await seedWords(t);
     await _pump(t, WordDrillScreen(store: store, random: math.Random(4)));
     await _shoot(t, '314_word_drill');
+  }, tags: ['preview']);
+
+  testWidgets('318 tekrar: kelime aşaması (tek oturum)', (t) async {
+    final store = await seedWords(t);
+    await _pump(
+      t,
+      TekrarScreen(
+        repository: MockZanKurdRepository(),
+        isKu: false,
+        wordStore: store,
+        mistakeStore: await t.runAsync(MistakeStore.load),
+      ),
+    );
+    await _shoot(t, '318_tekrar_kelime_asamasi');
+  }, tags: ['preview']);
+
+  testWidgets('316 tekrar: kelimeler bitti, sorulara geç (Kurmancî)', (
+    t,
+  ) async {
+    final store = await seedWords(t);
+    await _pump(
+      t,
+      TekrarScreen(
+        repository: MockZanKurdRepository(),
+        isKu: true,
+        wordStore: store,
+        mistakeStore: await t.runAsync(MistakeStore.load),
+      ),
+      ku: true,
+    );
+    for (var i = 0; i < 3; i++) {
+      final term = t.widget<Text>(
+        find.byKey(const ValueKey('word-review-term')),
+      );
+      final entry = LearnerLexicon.entries.firstWhere(
+        (e) => e.termKu == term.data,
+      );
+      await t.tap(find.text(entry.meaningTr).first);
+      await t.pump();
+      await t.tap(find.byKey(const ValueKey('word-review-next')));
+      await t.pump();
+    }
+    await _shoot(t, '316_tekrar_sorulara_gec_ku');
+  }, tags: ['preview']);
+
+  testWidgets('317 tekrar: bugün tekrar yok', (t) async {
+    await t.runAsync(() async {
+      WordListStore.resetInstance();
+      MistakeStore.resetInstance();
+    });
+    await _pump(
+      t,
+      TekrarScreen(
+        repository: MockZanKurdRepository(),
+        isKu: false,
+        wordStore: await t.runAsync(
+          () => WordListStore.load(storage: InMemoryDataStorage()),
+        ),
+        mistakeStore: await t.runAsync(
+          () => MistakeStore.load(storage: InMemoryDataStorage()),
+        ),
+      ),
+    );
+    await _shoot(t, '317_tekrar_bos');
   }, tags: ['preview']);
 
   testWidgets('315 sözlük Türkçe > Kurmancî arama', (t) async {

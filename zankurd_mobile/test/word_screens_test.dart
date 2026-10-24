@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/learner_lexicon.dart';
 import 'package:zankurd_mobile/src/data/local_data_storage.dart';
 import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
+import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/word_list_store.dart';
 import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
 import 'package:zankurd_mobile/src/screens/my_words_screen.dart';
@@ -187,25 +188,29 @@ void main() {
   group('Kelimelerim', () {
     testWidgets('boş liste boş durum gösterir', (tester) async {
       final store = await WordListStore.load(storage: InMemoryDataStorage());
-      await pumpAt(tester, MyWordsScreen(store: store));
+      await pumpAt(
+        tester,
+        MyWordsScreen(repository: MockZanKurdRepository(), store: store),
+      );
       expect(find.byKey(const ValueKey('my-words-empty')), findsOneWidget);
       expect(find.text('Henüz kelime yok'), findsOneWidget);
     });
 
-    testWidgets('sayılar, bugünkü tekrar kartı ve kutu görünür', (
-      tester,
-    ) async {
+    testWidgets('sayılar, tek Tekrar kartı ve kutu görünür', (tester) async {
       final store = await seededStore(['rojbas', 'evarbas', 'sevbas']);
       await store.recordReview('sevbas', correct: true);
-      await pumpAt(tester, MyWordsScreen(store: store));
+      await pumpAt(
+        tester,
+        MyWordsScreen(repository: MockZanKurdRepository(), store: store),
+      );
 
       expect(find.text('3 kelime'), findsOneWidget);
-      expect(find.text('Tekrar edilecek 2 kelime'), findsOneWidget);
-      expect(find.text('Bugünkü tekrar'), findsOneWidget);
-      expect(
-        find.byKey(const ValueKey('my-words-review-start')),
-        findsOneWidget,
-      );
+      // Tek giriş: eski kelime-yalnız kartı ("Bugünkü tekrar" + Başla)
+      // gitti; yerinde birleşik "Tekrar · bugün N" kartı durur.
+      expect(find.text('Tekrar · bugün 2'), findsOneWidget);
+      expect(find.byKey(const ValueKey('todays-review-card')), findsOneWidget);
+      expect(find.text('Bugünkü tekrar'), findsNothing);
+      expect(find.byKey(const ValueKey('my-words-review-start')), findsNothing);
       expect(find.text('Kutu 2/5'), findsOneWidget);
       expect(find.text('Kutu 1/5'), findsNWidgets(2));
     });
@@ -214,19 +219,28 @@ void main() {
       tester,
     ) async {
       final store = await seededStore(['rojbas', 'evarbas']);
-      await pumpAt(tester, MyWordsScreen(store: store));
+      await pumpAt(
+        tester,
+        MyWordsScreen(repository: MockZanKurdRepository(), store: store),
+      );
       await tester.tap(find.byKey(const ValueKey('word-save-rojbas')));
       await tester.pump();
       expect(find.byKey(const ValueKey('my-word-rojbas')), findsNothing);
-      expect(find.text('1 kelime'), findsOneWidget);
+      expect(
+        tester.widget<Text>(find.byKey(const ValueKey('my-words-count'))).data,
+        '1 kelime',
+      );
     });
 
-    testWidgets('vadesi gelen yoksa başlat düğmesi yok', (tester) async {
+    testWidgets('vadesi gelen yoksa "Bugün tekrar yok" durumu', (tester) async {
       final store = await seededStore(['rojbas'], at: DateTime.now());
       await store.recordReview('rojbas', correct: true);
-      await pumpAt(tester, MyWordsScreen(store: store));
-      expect(find.text('Bugün tekrar edilecek kelime yok'), findsOneWidget);
-      expect(find.byKey(const ValueKey('my-words-review-start')), findsNothing);
+      await pumpAt(
+        tester,
+        MyWordsScreen(repository: MockZanKurdRepository(), store: store),
+      );
+      expect(find.text('Bugün tekrar yok'), findsOneWidget);
+      expect(find.byKey(const ValueKey('todays-review-card')), findsNothing);
     });
 
     testWidgets('320 dp + %200 yazıda iki dilde taşmaz', (tester) async {
@@ -236,7 +250,7 @@ void main() {
       for (final lang in LanguageProviderKind.values) {
         await pumpAt(
           tester,
-          MyWordsScreen(store: store),
+          MyWordsScreen(repository: MockZanKurdRepository(), store: store),
           width: 320,
           scale: 2,
           lang: lang,
@@ -245,13 +259,16 @@ void main() {
       }
     });
 
-    testWidgets('Başla düğmesi tekrar oturumunu açar', (tester) async {
+    testWidgets('Tekrar kartı tek oturumu açar', (tester) async {
       final store = await seededStore(['rojbas', 'evarbas']);
-      await pumpAt(tester, MyWordsScreen(store: store));
-      await tester.ensureVisible(
-        find.byKey(const ValueKey('my-words-review-start')),
+      await pumpAt(
+        tester,
+        MyWordsScreen(repository: MockZanKurdRepository(), store: store),
       );
-      await tester.tap(find.byKey(const ValueKey('my-words-review-start')));
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('todays-review-card')),
+      );
+      await tester.tap(find.byKey(const ValueKey('todays-review-card')));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       expect(find.byKey(const ValueKey('word-review-term')), findsOneWidget);

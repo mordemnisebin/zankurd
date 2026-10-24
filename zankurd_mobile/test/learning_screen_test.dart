@@ -299,7 +299,7 @@ void main() {
     );
     expect(find.byKey(const ValueKey('learning-mode-strip')), findsNothing);
     expect(find.bySemanticsLabel('Dersler'), findsNothing);
-    for (final label in ['Soru çöz', 'Kelime kartları']) {
+    for (final label in ['Soru çöz', 'Kartlarla çalış']) {
       final action = find.bySemanticsLabel(label);
       expect(action, findsOneWidget, reason: label);
       expect(
@@ -919,7 +919,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final flashcards = find.text('Kelime kartları');
+    final flashcards = find.text('Kartlarla çalış');
     await tester.ensureVisible(flashcards);
     await tester.tap(flashcards);
     await tester.pumpAndSettle();

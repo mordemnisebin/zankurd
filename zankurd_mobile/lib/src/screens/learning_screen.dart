@@ -147,7 +147,6 @@ class _LearningScreenState extends State<LearningScreen> {
   bool _placementPrompt = false;
   bool _lessonsLoading = false;
   int _wordCount = 0;
-  int _wordDue = 0;
 
   @override
   void initState() {
@@ -166,7 +165,6 @@ class _LearningScreenState extends State<LearningScreen> {
       if (mounted) {
         setState(() {
           _wordCount = store.count;
-          _wordDue = store.dueCount();
         });
       }
     } catch (error, stack) {
@@ -365,9 +363,9 @@ class _LearningScreenState extends State<LearningScreen> {
                       icon: AppIcons.bookmark,
                       role: SahneRole.learn,
                       title: context.t(K.wordsTitle),
-                      subtitle: _wordDue > 0
-                          ? context.t(K.wordsDueCount, {'count': '$_wordDue'})
-                          : _wordCount > 0
+                      // Vadesi gelen sayısı burada DEĞİL: tekrar girişi tektir
+                      // ("Tekrar · bugün N" kartı), Kelimelerim yalnız liste.
+                      subtitle: _wordCount > 0
                           ? context.t(K.wordsCount, {'count': '$_wordCount'})
                           : null,
                       chevron: true,
@@ -736,7 +734,9 @@ class _LearningScreenState extends State<LearningScreen> {
   }
 
   Future<void> _openMyWords() async {
-    await Navigator.of(context).push(AppRoute(page: const MyWordsScreen()));
+    await Navigator.of(
+      context,
+    ).push(AppRoute(page: MyWordsScreen(repository: widget.repository)));
     if (mounted) await _loadWordList();
   }
 

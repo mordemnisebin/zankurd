@@ -345,10 +345,10 @@ void main() {
   test('kart görünümü İngilizce flashcard taşımaz', () {
     // Özellik adı `K.flashcards` ile zaten yerel; kip tooltip'i
     // "Flashcard modu" deyince aynı ekranda iki dil duruyordu.
-    expect(Tr.of(K.flashcardMode, AppLanguage.ku), 'Kartên peyvan');
-    expect(Tr.of(K.flashcardMode, AppLanguage.tr), 'Kelime kartları');
-    expect(Tr.of(K.flashcards, AppLanguage.ku), 'Kartên peyvan');
-    expect(Tr.of(K.flashcards, AppLanguage.tr), 'Kelime kartları');
+    expect(Tr.of(K.flashcardMode, AppLanguage.ku), 'Bi kartan bixwîne');
+    expect(Tr.of(K.flashcardMode, AppLanguage.tr), 'Kartlarla çalış');
+    expect(Tr.of(K.flashcards, AppLanguage.ku), 'Kartên pirsan');
+    expect(Tr.of(K.flashcards, AppLanguage.tr), 'Soru kartları');
   });
 
   test('günlük zincîr başlığı İngilizce streak taşımaz', () {

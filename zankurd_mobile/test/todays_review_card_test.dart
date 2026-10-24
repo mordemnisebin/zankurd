@@ -54,7 +54,7 @@ void main() {
     });
     await pump(tester);
     expect(find.byKey(const ValueKey('todays-review-card')), findsOneWidget);
-    expect(find.text('Tekrar edilecek 3 soru'), findsOneWidget);
+    expect(find.text('Tekrar · bugün 3'), findsOneWidget);
     final statusRow = find.byKey(const ValueKey('todays-review-status-row'));
     expect(statusRow, findsOneWidget);
     expect(
@@ -62,7 +62,7 @@ void main() {
       isA<Padding>(),
       reason: 'Günlük tekrar durumu ayrı bir kart kabuğu oluşturmamalı.',
     );
-    final titleFinder = find.text('Bugünkü tekrarlar');
+    final titleFinder = find.text('Tekrar · bugün 3');
     final title = tester.widget<Text>(titleFinder);
     // 2026-09-29 Şahnê: öğrenme rolünün okunur metni belirteçten gelir
     // (`learnTx`, AA ölçülmüş); eski `readableAccent(playGreen)` hesabı
@@ -85,10 +85,12 @@ void main() {
     final statusRow = find.byKey(const ValueKey('todays-review-status-row'));
     expect(statusRow, findsOneWidget);
     expect(tester.widget(statusRow), isA<Padding>());
-    expect(find.text('Tekrarlar tamam'), findsOneWidget);
-    expect(find.text('Bugün tekrar edilecek soru yok'), findsNothing);
+    expect(find.text('Bugün tekrar yok'), findsOneWidget);
+    expect(find.text('Yeni kelimeler öğren ya da oyna.'), findsOneWidget);
     expect(
-      find.bySemanticsLabel('Tekrarlar tamam. Bugün tekrar edilecek soru yok'),
+      find.bySemanticsLabel(
+        'Bugün tekrar yok. Yeni kelimeler öğren ya da oyna.',
+      ),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);
@@ -156,8 +158,8 @@ void main() {
     expect(data.flagsCollection.isButton, isTrue);
     expect(data.flagsCollection.isEnabled, ui.Tristate.isTrue);
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
-    expect(data.label, contains('Bugünkü tekrarlar'));
-    expect(data.label, contains('Tekrar edilecek 2 soru'));
+    expect(data.label, contains('Tekrar · bugün 2'));
+    expect(data.label, contains('2 soru'));
     expect(data.label, contains('Hafızanı pekiştir'));
     semantics.dispose();
   });
@@ -191,8 +193,8 @@ void main() {
         .getSemanticsData();
     expect(data.flagsCollection.isButton, isTrue);
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
-    expect(data.label, contains('Dubarekirinên îro'));
-    expect(data.label, contains('1 pirs ji bo dubarekirinê'));
+    expect(data.label, contains('Dubarekirin · îro 1'));
+    expect(data.label, contains('1 pirs'));
     expect(data.label, contains('Bîra xwe xurt bike'));
     semantics.dispose();
   });
@@ -295,13 +297,13 @@ void main() {
       });
       await pump(tester);
       expect(
-        find.text('Tekrar edilecek 3 soru'),
+        find.text('Tekrar · bugün 3'),
         findsNothing,
         reason:
             'Rozet açılamayacak soruları sayarsa kullanıcıya olmayan bir iş '
             'vaat eder',
       );
-      expect(find.text('Tekrar edilecek 1 soru'), findsOneWidget);
+      expect(find.text('Tekrar · bugün 1'), findsOneWidget);
     });
 
     testWidgets('yalnız UUID varsa kart sahte rozet göstermez', (tester) async {
@@ -329,7 +331,7 @@ void main() {
       List<QuizQuestion>? started;
       await pump(tester, onStart: (q) => started = q);
 
-      expect(find.text('Tekrar edilecek 2 soru'), findsOneWidget);
+      expect(find.text('Tekrar · bugün 2'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('todays-review-card')));
       await tester.pumpAndSettle();
 

@@ -141,7 +141,7 @@ void main() {
         _wrap(const ReviewScreen(records: records, room: _room)),
       );
 
-      await tester.tap(find.text('Kelime kartları'));
+      await tester.tap(find.text('Soru kartları'));
       await tester.pumpAndSettle();
 
       // 2026-09-29 doğallık: kategori rozeti (`SahneBadge`) artık cümle
@@ -175,7 +175,7 @@ void main() {
     await tester.pumpWidget(
       _wrap(const ReviewScreen(records: records, room: _room)),
     );
-    await tester.tap(find.text('Kelime kartları'));
+    await tester.tap(find.text('Soru kartları'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('review-flashcard')));
     await tester.pumpAndSettle();
@@ -206,7 +206,7 @@ void main() {
     await tester.pumpWidget(
       _wrap(const ReviewScreen(records: records, room: _room)),
     );
-    await tester.tap(find.text('Kelime kartları'));
+    await tester.tap(find.text('Soru kartları'));
     await tester.pumpAndSettle();
 
     final card = find.byKey(const ValueKey('review-flashcard'));
@@ -263,7 +263,7 @@ void main() {
         ),
       ),
     );
-    await tester.tap(find.text('Kartên peyvan'));
+    await tester.tap(find.text('Kartên pirsan'));
     await tester.pumpAndSettle();
 
     final card = find.byKey(const ValueKey('review-flashcard'));
