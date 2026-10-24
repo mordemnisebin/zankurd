@@ -3385,7 +3385,8 @@ class Tr {
           'rakiplerle açılır.',
     },
     K.asyncDuelRematchLimit: {
-      'ku': 'Îro tenê 3 vexwendin dikarin biçin; sibe dîsa biceribîne.',
+      'ku':
+          'Îro herî zêde 3 vexwendinên pêşbirka vegerê dikarin bên şandin; sibe dîsa biceribîne.',
       'tr': 'Bugün en fazla 3 rövanş daveti gider; yarın tekrar dene.',
     },
     K.asyncDuelRematchUnavailable: {
