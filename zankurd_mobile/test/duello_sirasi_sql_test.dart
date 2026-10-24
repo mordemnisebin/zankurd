@@ -196,8 +196,14 @@ void main() {
       expect(b, contains('public.award_xp_delta(v_cc * 20 + 30)'));
       // award_xp_delta auth.uid() okur: kimlik işlem içinde taklit edilir.
       expect(b, contains("'request.jwt.claims'"));
-      // Tek oyuncunun XP hatası cron'u düşürmez.
+      // Tek oyuncunun XP hatası cron'u düşürmez, yutulmaz: sunucuda görünür
+      // (raise notice) ve xp_awarded işaretlenmez → sonraki koşu yeniden dener.
       expect(b, contains('exception when others then'));
+      expect(b, contains("raise notice 'duello hukmen xp hatasi"));
+      expect(b, isNot(contains('null;\n    end;')));
+      // Yeniden deneme: bu koşuda kapananlar değil, son 7 günün hükmenleri.
+      expect(b, contains("d.expires_at >= now() - interval '7 days'"));
+      expect(b, contains('and d.forfeit_loser_id is not null'));
     });
 
     test('yalnız service_role çalıştırabilir', () {
@@ -364,6 +370,27 @@ void main() {
         expect(b, contains('v_max_ms constant integer := 20000'));
       },
     );
+
+    test('answer: sıra zorunluluğu — atlayarak cevap reddedilir', () {
+      final b = body('answer_async_duel');
+      expect(b, contains('p_question_index <> v_prior_answers'));
+      // Cevaplanmış indeks reddedilmez: eski 'Already answered' yolu korunur.
+      expect(b, contains('and pa.question_index = p_question_index'));
+      expect(b, contains("raise exception 'Already answered'"));
+      expect(
+        b.indexOf('p_question_index <> v_prior_answers'),
+        lessThan(b.indexOf('insert into public.async_duel_answers')),
+      );
+    });
+
+    test('answer: normal tamamlanma push\'u engelli çifte gitmez', () {
+      final b = body('answer_async_duel');
+      final i = b.indexOf("'async_duel_result'");
+      expect(i, greaterThan(0));
+      final tail = b.substring(i);
+      expect(tail, contains('public.blocked_users b'));
+      expect(tail, contains('where not exists ('));
+    });
 
     test('answer: kilitten sonra duvar saatiyle durum+süre doğrulaması', () {
       final b = body('answer_async_duel');

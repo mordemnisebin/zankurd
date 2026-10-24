@@ -851,6 +851,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
     if (questionIndex < 0 || questionIndex >= duel.questions.length) {
       throw StateError('Invalid index');
     }
+    // Sıra zorunluluğu (sunucu gibi): beklenen indeks = cevap sayısı; zaten
+    // cevaplanmış indeks aşağıdaki 'Already answered' yoluna düşer.
+    if (questionIndex != duel.answeredIndices.length &&
+        !duel.answeredIndices.contains(questionIndex)) {
+      throw StateError('Invalid index');
+    }
     // 'TIMEOUT': süre dolunca istemcinin gönderdiği anahtar. Sunucu onu
     // geçerli ama YANLIŞ bir cevap sayar — soru kilitlenir, süre toplama
     // eklenir. Reddedilseydi süresi dolan oyuncu o soruda takılı kalırdı.

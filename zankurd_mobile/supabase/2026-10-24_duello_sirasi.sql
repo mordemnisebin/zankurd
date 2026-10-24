@@ -573,6 +573,7 @@ declare
   v_response_ms integer;
   v_prev_at timestamptz;
   v_baseline timestamptz;
+  v_prior_answers integer;
   v_started_at timestamptz;
   v_elapsed_ms integer;
   v_late boolean := false;
@@ -625,6 +626,25 @@ begin
   if p_question_index is null
      or p_question_index < 0
      or p_question_index >= v_total then
+    raise exception 'Invalid index';
+  end if;
+
+  -- SIRA ZORUNLULUĞU (2026-10-24): cevap, oyuncunun beklenen sıradaki
+  -- indeksine (mevcut cevap sayısı) gelmeli; atlayarak cevap 'Invalid
+  -- index'. Zaten cevaplanmış bir indekse tekrar cevap eski 'Already
+  -- answered' yoluna düşer (istemci yeniden gönderimi buna güvenir). 2.1.0
+  -- istemcisi sırayla cevapladığı için uyumludur.
+  select count(*)::integer into v_prior_answers
+  from public.async_duel_answers pa
+  where pa.duel_id = p_duel_id and pa.player_id = v_uid;
+
+  if p_question_index <> v_prior_answers
+     and not exists (
+       select 1 from public.async_duel_answers pa
+       where pa.duel_id = p_duel_id
+         and pa.player_id = v_uid
+         and pa.question_index = p_question_index
+     ) then
     raise exception 'Invalid index';
   end if;
 
@@ -777,13 +797,18 @@ begin
       -- oyuncuya tek seferlik bildirim kuyruklanır (enqueue_friend_request_push
       -- ile aynı desen: bkz. 2026-08-26_fcm_token.sql).
       if v_completed_now then
+        -- Engelli çifte (iki yönde) bildirim gitmez (2026-10-24).
         insert into public.push_outbox (to_user_id, kind, title, body)
-        values (
+        select
           v_other_id,
           'async_duel_result',
           'ZanKurd',
           -- Sunucu alıcının arayüz dilini bilmiyor; metin iki dilli.
           'Pêşbirka te qediya — encamê bibîne · Düellon bitti — sonucu gör'
+        where not exists (
+          select 1 from public.blocked_users b
+          where (b.blocker_id = v_uid and b.blocked_id = v_other_id)
+             or (b.blocker_id = v_other_id and b.blocked_id = v_uid)
         );
       end if;
     else
@@ -1039,7 +1064,8 @@ $function$;
 --   * Rakip yok (rakipsiz rastgele düello, kimsenin almadığı bağlantı,
 --     KABUL EDİLMEMİŞ arkadaş daveti) ya da kimse bitirmedi → kayıpsız
 --     'expired'; yaratıcı "Rakip çıkmadı" doğru başına XP'sini alır.
---   * Kazanan +30'lu tam XP'yi (doğru × 20 + 30) SUNUCUDA alır: sonuç
+--   * Kazanan +30'lu tam XP'yi (doğru × 20 + 30) SUNUCUDA alır (her koşuda
+--     son 7 günün ödenmemiş hükmenleri yeniden denenir): sonuç
 --     satırının `xp_awarded` işareti claim_async_duel_xp ile ORTAKTIR, yani
 --     istemci sonradan claim ederse çift verilmez. award_xp_delta
 --     auth.uid() okuduğu için kimlik işlem içinde taklit edilir.
@@ -1052,10 +1078,8 @@ set search_path to 'public', 'pg_temp'
 as $function$
 declare
   v_count integer := 0;
-  v_ids uuid[] := '{}';
-  v_winners uuid[] := '{}';
   v_cc integer;
-  i integer;
+  rec record;
 begin
   -- (a) Süresi dolanları kapat; hükmen kaybedeni işle; iki tarafa sonuç
   -- bildirimi kuyrukla.
@@ -1138,42 +1162,43 @@ begin
       and not c.blocked
     returning 1
   )
-  select
-    count(*)::integer,
-    coalesce(array_agg(c.id) filter (where c.loser_id is not null),
-             '{}'::uuid[]),
-    coalesce(
-      array_agg(
-        case when c.loser_id = c.creator_id then c.other_id
-             else c.creator_id end
-      ) filter (where c.loser_id is not null),
-      '{}'::uuid[]
-    )
-  into v_count, v_ids, v_winners
-  from closed c;
+  select count(*)::integer into v_count from closed c;
 
-  -- (a2) Hükmen kazananın XP'si sunucuda, tek seferlik (xp_awarded).
-  for i in 1 .. coalesce(array_length(v_ids, 1), 0) loop
+  -- (a2) Hükmen kazananın XP'si sunucuda, tek seferlik (xp_awarded). Bu
+  -- koşuda kapananlar DEĞİL, son 7 günün hükmen kapanmış bütün düelloları
+  -- taranır: ödeme hatası bir sonraki koşuda yeniden denenir (idempotent:
+  -- yalnız kazananın xp_awarded'ı false olanlar).
+  for rec in
+    select
+      d.id as duel_id,
+      case when d.forfeit_loser_id = d.creator_id then d.opponent_id
+           else d.creator_id end as winner_id
+    from public.async_duels d
+    where d.status = 'expired'
+      and d.forfeit_loser_id is not null
+      and d.expires_at >= now() - interval '7 days'
+  loop
     begin
       update public.async_duel_results r
       set xp_awarded = true
-      where r.duel_id = v_ids[i]
-        and r.player_id = v_winners[i]
+      where r.duel_id = rec.duel_id
+        and r.player_id = rec.winner_id
         and r.xp_awarded = false
       returning r.correct_count into v_cc;
 
       if found then
         perform set_config(
           'request.jwt.claims',
-          json_build_object('sub', v_winners[i])::text,
+          json_build_object('sub', rec.winner_id)::text,
           true
         );
         perform public.award_xp_delta(v_cc * 20 + 30);
       end if;
     exception when others then
-      -- Tek oyuncunun XP hatası bütün cron koşusunu düşürmesin; alt blok
-      -- geri alınır (xp_awarded da), istemci claim'i yine verebilir.
-      null;
+      -- Alt blok geri alınır: xp_awarded İŞARETLENMEZ, sonraki koşu yeniden
+      -- dener. Hata sunucu günlüğünde görünür ama cron durmaz.
+      raise notice 'duello hukmen xp hatasi: % (duel %, kazanan %)',
+        sqlerrm, rec.duel_id, rec.winner_id;
     end;
   end loop;
   perform set_config('request.jwt.claims', '{}', true);

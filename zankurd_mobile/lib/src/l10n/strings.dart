@@ -2991,10 +2991,9 @@ class Tr {
       'tr': '{name} 24 saatte oynamadı',
     },
     // Yarım bırakılıp dönülen soru: sunucu saati işlemeye devam etti.
-    // Kurmancî taslak (jüri bekliyor): `nîvco ma` (K.asyncDuelUnfinished),
-    // `dem` (K.timerSecondsLeft ailesi), `berdewam` (K.asyncDuelResume).
+    // Kurmancî: jüri kararı (Flash + Opus 5; yazım Grok + Opus).
     K.asyncDuelResumedQuestionNote: {
-      'ku': 'Pirsa nîvco ma, dem berdewam dike.',
+      'ku': 'Di pirsa nîvco mayî de dem didome.',
       'tr': 'Yarım kalan soruda süre işlemeye devam ediyor.',
     },
     K.asyncDuelForfeitMyReason: {

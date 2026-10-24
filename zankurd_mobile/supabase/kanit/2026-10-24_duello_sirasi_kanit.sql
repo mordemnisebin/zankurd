@@ -3,7 +3,9 @@
 -- f hükmen bildirimi · g dönüşte yarım soru yanlış, sonrakiler temiz ·
 -- h liste alanları · i cron · j süre dolunca cevap reddi · k/l/m soru sunumu
 -- (başlangıç değişmez, 30 sn gecikme yanlış, sıra dışı indeks) · n hükmen XP
--- sunucuda, claim çift vermez · o ardışık expire'da hatırlatma tek.
+-- sunucuda, claim çift vermez · o ardışık expire'da hatırlatma tek ·
+-- p engelli çiftte normal sonuç push'u yok · q ödenmemiş hükmen XP'si yeniden
+-- denenir · r sıra dışı cevap indeksi reddi.
 --
 -- CANLIYA KALICI YAZMAZ: tek transaction, sonda rollback. Göçten ÖNCE ve
 -- SONRA aynı betik çalıştırılır; her bulgu için bir satır basar:
@@ -391,9 +393,88 @@ exception when others then
   insert into _kanit values (23, '(o)', '-', '-', 'HATA: ' || sqlerrm);
 end $$;
 
+-- ---------------------------------------------------------------- (p)
+-- Normal tamamlanma sonuç push'u: engelli çiftte YOK (p), engelsiz kontrolde
+-- VAR (p0). Yaratıcı bitirmiş, rakip 7 soruyu sırayla cevaplar.
+do $$
+declare
+  c1 uuid := pg_temp.uid(5); c2 uuid := pg_temp.uid(3); u uuid := pg_temp.uid(6);
+  x uuid; i int; v_n int;
+begin
+  insert into public.blocked_users (blocker_id, blocked_id) values (c1, u);
+  perform set_config('request.jwt.claims', json_build_object('sub', u)::text, true);
+
+  x := pg_temp.duello(c1, u, null, 'matched', interval '1 hour', interval '23 hours');
+  perform pg_temp.bitir(x, c1);
+  for i in 0..6 loop perform public.answer_async_duel(x, i, 'A', 0); end loop;
+  select count(*) into v_n from public.push_outbox
+  where to_user_id = c1 and kind = 'async_duel_result' and created_at >= now();
+  insert into _kanit values (25, '(p) engelli çiftte normal tamamlanma push''u', '1', '0', v_n::text);
+
+  x := pg_temp.duello(c2, u, null, 'matched', interval '1 hour', interval '23 hours');
+  perform pg_temp.bitir(x, c2);
+  for i in 0..6 loop perform public.answer_async_duel(x, i, 'A', 0); end loop;
+  select count(*) into v_n from public.push_outbox
+  where to_user_id = c2 and kind = 'async_duel_result' and created_at >= now();
+  insert into _kanit values (26, '(p0) kontrol: engelsiz çiftte push var', '1', '1', v_n::text);
+exception when others then
+  insert into _kanit values (25, '(p)', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- ---------------------------------------------------------------- (q)
+-- XP ödemesi başarısız kalmış eski hükmen düello (xp_awarded=false): bir
+-- sonraki expire koşusu öder, ikincisi çift ödemez.
+do $$
+declare
+  w uuid := pg_temp.uid(4); l uuid := pg_temp.uid(2);
+  x uuid; v0 int; v1 int; v2 int;
+begin
+  if not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'async_duels'
+      and column_name = 'forfeit_loser_id'
+  ) then
+    insert into _kanit values (27, '(q1) ödenmemiş hükmen: expire ödedi (XP farkı)', 'kolon yok', '130', 'kolon yok');
+    insert into _kanit values (28, '(q2) ikinci expire çift ödemedi (XP farkı)', 'kolon yok', '0', 'kolon yok');
+    return;
+  end if;
+  x := pg_temp.duello(w, l, null, 'expired', interval '30 hours', interval '-1 minute');
+  perform pg_temp.bitir(x, w);
+  execute 'update public.async_duels set forfeit_loser_id = $2 where id = $1' using x, l;
+  select coalesce(xp, 0) into v0 from public.profiles where id = w;
+  perform public.expire_async_duels();
+  select coalesce(xp, 0) into v1 from public.profiles where id = w;
+  perform public.expire_async_duels();
+  select coalesce(xp, 0) into v2 from public.profiles where id = w;
+  insert into _kanit values (27, '(q1) ödenmemiş hükmen: expire ödedi (XP farkı)', 'kolon yok', '130', (v1 - v0)::text);
+  insert into _kanit values (28, '(q2) ikinci expire çift ödemedi (XP farkı)', 'kolon yok', '0', (v2 - v1)::text);
+exception when others then
+  insert into _kanit values (27, '(q)', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
+-- ---------------------------------------------------------------- (r)
+-- Sıra dışı cevap indeksi: hiç cevap yokken 4. soruya cevap reddedilir.
+do $$
+declare
+  a uuid := pg_temp.uid(1); u uuid := pg_temp.uid(6);
+  x uuid; r text;
+begin
+  perform set_config('request.jwt.claims', json_build_object('sub', u)::text, true);
+  x := pg_temp.duello(a, u, null, 'matched', interval '1 hour', interval '23 hours');
+  perform pg_temp.bitir(x, a);
+  begin
+    perform public.answer_async_duel(x, 3, 'A', 0);
+    r := 'kabul edildi';
+  exception when others then r := sqlerrm;
+  end;
+  insert into _kanit values (29, '(r) sıra dışı cevap indeksi', 'kabul edildi', 'Invalid index', r);
+exception when others then
+  insert into _kanit values (29, '(r)', '-', '-', 'HATA: ' || sqlerrm);
+end $$;
+
 -- ---------------------------------------------------------------- (i)
 insert into _kanit
-select 24, '(i) expire-async-duels cron takvimi', '37 * * * *', '*/10 * * * *',
+select 30, '(i) expire-async-duels cron takvimi', '37 * * * *', '*/10 * * * *',
        coalesce((select schedule from cron.job where jobname = 'expire-async-duels'),
                 'iş yok');
 
