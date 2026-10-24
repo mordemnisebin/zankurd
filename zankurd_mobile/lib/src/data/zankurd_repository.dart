@@ -42,6 +42,50 @@ enum StreakFreezeChargeOutcome {
   failed,
 }
 
+/// Seri onarımının sonucu (`spend_streak_repair`).
+///
+/// [charged] ve [free] bu çağrıda yeni bir onarım kaydı yazıldığını,
+/// [alreadyRepaired] aynı ay + aynı kırılma günü için kaydın zaten
+/// bulunduğunu söyler (ücret yeniden KESİLMEZ). Üçü de "onarım sunucuda
+/// geçerli": çağıran seriyi yerelde geri yükler. [monthlyLimit] bu ay başka
+/// bir kırılma için hak kullanıldığını, [failed] ise ağ/sunucu hatasını
+/// (ücretin kesilip kesilmediği bilinmez; aynı çağrı güvenle tekrarlanır).
+enum StreakRepairOutcome {
+  charged,
+  free,
+  alreadyRepaired,
+  insufficient,
+  monthlyLimit,
+  failed,
+}
+
+class StreakRepairResult {
+  const StreakRepairResult(this.outcome);
+
+  final StreakRepairOutcome outcome;
+
+  bool get succeeded =>
+      outcome == StreakRepairOutcome.charged ||
+      outcome == StreakRepairOutcome.free ||
+      outcome == StreakRepairOutcome.alreadyRepaired;
+}
+
+/// Sunucuda tutulan hesap bayrakları (`get_my_account_flags`): bildirim
+/// tercihleri ve nazik e-posta doğrulaması.
+class AccountFlags {
+  const AccountFlags({
+    required this.pushDuel,
+    required this.pushSocial,
+    this.emailVerifiedAt,
+  });
+
+  final bool pushDuel;
+  final bool pushSocial;
+  final DateTime? emailVerifiedAt;
+
+  bool get emailVerified => emailVerifiedAt != null;
+}
+
 class StreakFreezeChargeResult {
   const StreakFreezeChargeResult({
     required this.outcome,
@@ -489,6 +533,23 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   Future<StreakFreezeChargeResult> spendStreakFreeze({
     required String idempotencyKey,
   });
+
+  /// Seri onarımını IDEMPOTENT biçimde işler: ay ([monthKey], `yyyy-MM`) ve
+  /// kırılma günü ([breakDay], `yyyy-MM-dd`) aynıysa ikinci çağrı ücreti
+  /// yeniden kesmez. [premium] true ise ücretsizdir (abonelik istemcide
+  /// bilinir; sunucu beyanı kabul eder, bkz. göç notu).
+  Future<StreakRepairResult> spendStreakRepair({
+    required String monthKey,
+    required String breakDay,
+    required bool premium,
+  });
+
+  /// Sunucudaki hesap bayrakları; ulaşılamıyorsa (çevrimdışı, göç yok) null.
+  Future<AccountFlags?> loadAccountFlags();
+
+  /// Sunucu tarafı bildirim tercihlerini yazar (null = değişmez). Başarıyı
+  /// döner; başarısızsa çağıran yerel tercihi korur ve sonra yeniden dener.
+  Future<bool> setPushPreferences({bool? duel, bool? social});
 
   /// Belirli bir ürün kimliğinin daha önce satın alınıp alınmadığını kontrol eder.
   Future<bool> hasPurchased(String itemId);

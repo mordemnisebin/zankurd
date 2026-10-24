@@ -22,6 +22,7 @@ import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/league_tier.dart';
 import '../providers/auth_provider.dart';
+import '../widgets/email_verify_card.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../providers/remote_availability.dart';
 import '../utils/app_route.dart';
@@ -778,6 +779,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
         ],
       ),
+      // Nazik e-posta doğrulaması: yalnız doğrulanmamış e-posta hesabında
+      // çizilir; oyun ve sıralama buna bağlı değildir.
+      if (!auth.isGuest && auth.canUseRemoteActions)
+        if (auth.emailVerificationGateway case final gateway?)
+          EmailVerifyCard(gateway: gateway),
       SahneSectionHeader(title: context.t(K.secAccount)),
       SahneListGroup(
         children: [

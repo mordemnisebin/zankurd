@@ -761,6 +761,125 @@ class Tr {
       'ku': 'Bîrxistina parastina zincîra rojane',
       'tr': 'Günlük seriyi koruma hatırlatıcısı',
     },
+    K.notifMasterTitle: {'ku': 'Agahdarî', 'tr': 'Bildirimler'},
+    K.notifMasterSub: {
+      'ku': 'Bîrxistin û agahdariyên ZanKurdê',
+      'tr': 'ZanKurd hatırlatmaları ve bildirimleri',
+    },
+    K.notifContestSub: {
+      'ku': 'Heke te îro nelîstibe, di demjimêr 19:00 de bîr tîne',
+      'tr': 'Bugün oynamadıysan 19:00\'da hatırlatır',
+    },
+    K.notifStreakTitle: {'ku': 'Bîrxistina zincîrê', 'tr': 'Seri uyarısı'},
+    K.notifStreakSub: {
+      'ku': 'Heke zincîra te bikeve metirsiyê, êvarê bîr tîne',
+      'tr': 'Serin tehlikedeyse akşam uyarır',
+    },
+    K.notifDuelTitle: {'ku': 'Pêşbirk', 'tr': 'Düello'},
+    K.notifDuelSub: {
+      'ku': 'Dor, bîrxistin û encamên pêşbirkê',
+      'tr': 'Sıra, hatırlatma, sonuç ve dürtme',
+    },
+    K.notifSocialTitle: {
+      'ku': 'Heval û vexwendinên odeyê',
+      'tr': 'Arkadaşlar ve oda davetleri',
+    },
+    K.notifSocialSub: {
+      'ku': 'Daxwazên hevaltiyê û vexwendinên odeyê',
+      'tr': 'Arkadaşlık istekleri ve oda davetleri',
+    },
+    K.notifChannelContestName: {
+      'ku': 'ZanKurd Bîrxistina Gera Rojê',
+      'tr': 'ZanKurd Günün Turu Hatırlatıcısı',
+    },
+    K.notifChannelContestDesc: {
+      'ku': 'Bîrxistina gera rojê ya ZanKurdê',
+      'tr': 'Günün turu hatırlatıcısı',
+    },
+    K.notifContestTitle: {
+      'ku': 'Gera rojê li benda te ye',
+      'tr': 'Günün turu seni bekliyor',
+    },
+    K.notifContestBody: {
+      'ku': 'Îro hê te nelîstiye. 10 pirs û xelat li benda te ne.',
+      'tr': 'Bugün henüz oynamadın. 10 soru ve ödül seni bekliyor.',
+    },
+    K.streakCalendarTitle: {'ku': 'Salnameya zincîrê', 'tr': 'Seri takvimi'},
+    K.streakCalPrevMonth: {'ku': 'Meha berê', 'tr': 'Önceki ay'},
+    K.streakCalNextMonth: {'ku': 'Meha bê', 'tr': 'Sonraki ay'},
+    K.streakMonthNames: {
+      'ku':
+          'Çile,Sibat,Adar,Nîsan,Gulan,Hezîran,Tîrmeh,Tebax,Îlon,Çirîya Pêşîn,Çirîya Paşîn,Kanûn',
+      'tr':
+          'Ocak,Şubat,Mart,Nisan,Mayıs,Haziran,Temmuz,Ağustos,Eylül,Ekim,Kasım,Aralık',
+    },
+    K.streakRepairTitle: {'ku': 'Zincîra te şikest', 'tr': 'Serin bozuldu'},
+    K.streakRepairBody: {
+      'ku':
+          'Zincîra te ya {days} rojî di 24 demjimêrên dawî de şikest. Tu dikarî wê vegerînî.',
+      'tr': '{days} günlük serin son 24 saatte bozuldu. Geri alabilirsin.',
+    },
+    K.streakRepairAction: {
+      'ku': 'Zincîrê vegerîne · {cost} zêr',
+      'tr': 'Seriyi geri al · {cost} jeton',
+    },
+    K.streakRepairActionFree: {
+      'ku': 'Zincîrê vegerîne · belaş',
+      'tr': 'Seriyi geri al · ücretsiz',
+    },
+    K.streakRepairHint: {
+      'ku': 'Mehê carekê dikare were bikaranîn. Premium belaş e.',
+      'tr': 'Ayda bir kez kullanılabilir. Premium için ücretsiz.',
+    },
+    K.streakRepairDone: {
+      'ku': 'Zincîra te vegeriya: {days} roj',
+      'tr': 'Serin geri geldi: {days} gün',
+    },
+    K.streakRepairFailed: {
+      'ku': 'Zincîr nehat vegerandin. Dîsa biceribîne.',
+      'tr': 'Seri geri alınamadı. Tekrar dene.',
+    },
+    K.streakRepairMonthly: {
+      'ku': 'Mafê vê mehê jixwe hatiye bikaranîn.',
+      'tr': 'Bu ayın hakkı zaten kullanıldı.',
+    },
+    K.emailVerifyCardTitle: {
+      'ku': 'E-nameya xwe rast bike',
+      'tr': 'E-postanı doğrula',
+    },
+    K.emailVerifyCardBody: {
+      'ku': 'Koda 6 hejmarî ya ku li e-nameya te tê, hesabê te ewle dike.',
+      'tr': 'E-postana gelen 6 haneli kod hesabını güvenceye alır.',
+    },
+    K.emailVerifyCardAction: {'ku': 'Kodê bişîne', 'tr': 'Kodu gönder'},
+    K.emailVerifySheetTitle: {'ku': 'Koda e-nameyê', 'tr': 'E-posta kodu'},
+    K.emailVerifySentTo: {
+      'ku': 'Koda 6 hejmarî ji {email} re hat şandin.',
+      'tr': '6 haneli kod {email} adresine gönderildi.',
+    },
+    K.emailVerifyCodeLabel: {'ku': 'Koda 6 hejmarî', 'tr': '6 haneli kod'},
+    K.emailVerifyConfirm: {'ku': 'Rast bike', 'tr': 'Doğrula'},
+    K.emailVerifyResend: {'ku': 'Dîsa bişîne', 'tr': 'Tekrar gönder'},
+    K.emailVerifyResendIn: {
+      'ku': 'Dîsa bişîne ({seconds} çirk)',
+      'tr': 'Tekrar gönder ({seconds} sn)',
+    },
+    K.emailVerifyDone: {
+      'ku': 'E-nameya te hat rastkirin',
+      'tr': 'E-postan doğrulandı',
+    },
+    K.emailVerifyWrongCode: {
+      'ku': 'Kod şaş e an jî dema wê qediya.',
+      'tr': 'Kod hatalı ya da süresi doldu.',
+    },
+    K.emailVerifySendFailed: {
+      'ku': 'Kod nehat şandin. Piştre dîsa biceribîne.',
+      'tr': 'Kod gönderilemedi. Sonra tekrar dene.',
+    },
+    K.emailVerifyGenericFailed: {
+      'ku': 'Rastkirin neqediya. Dîsa biceribîne.',
+      'tr': 'Doğrulama tamamlanamadı. Tekrar dene.',
+    },
     K.friendAlreadyFriends: {
       'ku': 'Hûn jixwe heval in',
       'tr': 'Zaten arkadaşsınız',
@@ -3893,6 +4012,44 @@ class K {
   static const notifChannelFriendDesc = 'notif.channel.friend.desc';
   static const notifChannelStreakName = 'notif.channel.streak.name';
   static const notifChannelStreakDesc = 'notif.channel.streak.desc';
+  static const notifMasterTitle = 'settings.notif.master';
+  static const notifMasterSub = 'settings.notif.master.sub';
+  static const notifContestSub = 'settings.notif.contest.sub';
+  static const notifStreakTitle = 'settings.notif.streak';
+  static const notifStreakSub = 'settings.notif.streak.sub';
+  static const notifDuelTitle = 'settings.notif.duel';
+  static const notifDuelSub = 'settings.notif.duel.sub';
+  static const notifSocialTitle = 'settings.notif.social';
+  static const notifSocialSub = 'settings.notif.social.sub';
+  static const notifChannelContestName = 'notif.channel.contest.name';
+  static const notifChannelContestDesc = 'notif.channel.contest.desc';
+  static const notifContestTitle = 'notif.contest.title';
+  static const notifContestBody = 'notif.contest.body';
+  static const streakCalendarTitle = 'streak.calendar.title';
+  static const streakCalPrevMonth = 'streak.calendar.prev';
+  static const streakCalNextMonth = 'streak.calendar.next';
+  static const streakMonthNames = 'streak.calendar.months';
+  static const streakRepairTitle = 'streak.repair.title';
+  static const streakRepairBody = 'streak.repair.body';
+  static const streakRepairAction = 'streak.repair.action';
+  static const streakRepairActionFree = 'streak.repair.actionFree';
+  static const streakRepairHint = 'streak.repair.hint';
+  static const streakRepairDone = 'streak.repair.done';
+  static const streakRepairFailed = 'streak.repair.failed';
+  static const streakRepairMonthly = 'streak.repair.monthly';
+  static const emailVerifyCardTitle = 'profile.emailVerify.title';
+  static const emailVerifyCardBody = 'profile.emailVerify.body';
+  static const emailVerifyCardAction = 'profile.emailVerify.action';
+  static const emailVerifySheetTitle = 'profile.emailVerify.sheetTitle';
+  static const emailVerifySentTo = 'profile.emailVerify.sentTo';
+  static const emailVerifyCodeLabel = 'profile.emailVerify.codeLabel';
+  static const emailVerifyConfirm = 'profile.emailVerify.confirm';
+  static const emailVerifyResend = 'profile.emailVerify.resend';
+  static const emailVerifyResendIn = 'profile.emailVerify.resendIn';
+  static const emailVerifyDone = 'profile.emailVerify.done';
+  static const emailVerifyWrongCode = 'profile.emailVerify.wrongCode';
+  static const emailVerifySendFailed = 'profile.emailVerify.sendFailed';
+  static const emailVerifyGenericFailed = 'profile.emailVerify.genericFailed';
   static const friendAlreadyFriends = 'friends.alreadyFriends';
   static const friendRequestAlreadyPending = 'friends.requestAlreadyPending';
   static const friendRequestBlocked = 'friends.requestBlocked';

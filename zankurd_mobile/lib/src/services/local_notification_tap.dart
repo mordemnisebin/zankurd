@@ -11,6 +11,9 @@ abstract final class LocalNotificationPayload {
 
   /// Akşam seri uyarısı: "Bugün hiç oynamadın".
   static const streakWarning = 'zankurd.local.streak_warning';
+
+  /// Günün yarışması: "Bugünkü tur seni bekliyor" (19:00, oynanmadıysa).
+  static const contestReminder = 'zankurd.local.contest_reminder';
 }
 
 /// Yerel bildirim dokunuşunu [PushTapRouter]in bekleyen-hedef kanalına çevirir.
@@ -21,11 +24,14 @@ abstract final class LocalNotificationPayload {
 /// başlattıysa) aynı kanal kullanılır.
 abstract final class LocalNotificationTapRouter {
   /// [payload] bilinen bir yerel bildirime aitse hedef, değilse `null`.
-  /// İki bildirim de bugünün dersinin durduğu ana sayfaya (Öğren sekmesi) gider.
+  /// Günlük hatırlatıcı ve seri uyarısı bugünün dersinin durduğu ana sayfaya
+  /// (Öğren sekmesi), yarışma hatırlatması Yarış sekmesine gider.
   static PushTapTarget? targetForPayload(String? payload) {
     return switch (payload) {
       LocalNotificationPayload.dailyReminder ||
       LocalNotificationPayload.streakWarning => PushTapTarget.home,
+      // Günün yarışması Yarış sekmesindedir.
+      LocalNotificationPayload.contestReminder => PushTapTarget.playTab,
       _ => null,
     };
   }

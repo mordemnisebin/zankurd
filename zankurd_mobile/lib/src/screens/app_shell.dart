@@ -20,6 +20,7 @@ import '../providers/repository_holder.dart';
 import '../data/offline_zankurd_repository.dart';
 import '../widgets/sahne/sahne.dart';
 import '../services/notification_service.dart';
+import '../services/notification_sync.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/join_deep_link.dart';
@@ -182,6 +183,7 @@ class _AppShellState extends State<AppShell>
     _initConnectivity();
     unawaited(widget.pushTokenSync?.sync());
     unawaited(NotificationService.syncStreakWarning());
+    unawaited(NotificationSync.run(_repository));
   }
 
   @override
@@ -316,6 +318,7 @@ class _AppShellState extends State<AppShell>
       unawaited(widget.pushTokenSync?.sync());
       // Seri uyarısı tek atıştır: öne gelişte bir sonraki akşama yeniden kurulur.
       unawaited(NotificationService.syncStreakWarning());
+      unawaited(NotificationSync.run(_repository));
       // Ön plana dönüşte görünen sekme tazelenir. Ana ekranın düello kartı
       // yalnız tazeleme işareti (`_homeRefresh`) değişince yeniden okur;
       // uygulama arka plandayken biten bir düello (rakip oynadı, bildirim

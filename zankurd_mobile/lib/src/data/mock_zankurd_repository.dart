@@ -2076,6 +2076,48 @@ class MockZanKurdRepository implements ZanKurdRepository {
     );
   }
 
+  /// Sahte onarım kaydı: ay -> kırılma günü (sunucudaki streak_repairs).
+  final Map<String, String> _streakRepairs = {};
+  bool _mockPushDuel = true;
+  bool _mockPushSocial = true;
+
+  @override
+  Future<StreakRepairResult> spendStreakRepair({
+    required String monthKey,
+    required String breakDay,
+    required bool premium,
+  }) async {
+    final existing = _streakRepairs[monthKey];
+    if (existing != null) {
+      return StreakRepairResult(
+        existing == breakDay
+            ? StreakRepairOutcome.alreadyRepaired
+            : StreakRepairOutcome.monthlyLimit,
+      );
+    }
+    if (!premium) {
+      if (_mockCoins < 100) {
+        return const StreakRepairResult(StreakRepairOutcome.insufficient);
+      }
+      _mockCoins -= 100;
+    }
+    _streakRepairs[monthKey] = breakDay;
+    return StreakRepairResult(
+      premium ? StreakRepairOutcome.free : StreakRepairOutcome.charged,
+    );
+  }
+
+  @override
+  Future<AccountFlags?> loadAccountFlags() async =>
+      AccountFlags(pushDuel: _mockPushDuel, pushSocial: _mockPushSocial);
+
+  @override
+  Future<bool> setPushPreferences({bool? duel, bool? social}) async {
+    _mockPushDuel = duel ?? _mockPushDuel;
+    _mockPushSocial = social ?? _mockPushSocial;
+    return true;
+  }
+
   @override
   Future<DurableCoinSpend> spendCoinsDurable(
     int amount,
