@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
+import 'progress_sync.dart';
 
 import '../services/placement_scoring.dart';
 import '../utils/error_reporter.dart';
@@ -96,12 +97,13 @@ class PlacementStore {
     await _stamp();
   }
 
-  Future<void> _stamp() =>
-      _preferences?.setInt(
-        updatedAtKey,
-        DateTime.now().millisecondsSinceEpoch,
-      ) ??
-      Future.value();
+  Future<void> _stamp() async {
+    await _preferences?.setInt(
+      updatedAtKey,
+      DateTime.now().millisecondsSinceEpoch,
+    );
+    ProgressSyncService.markDirty();
+  }
 
   /// "Şimdilik geç": ilk kullanımda bir daha otomatik sorulmaz.
   Future<void> markSkipped() async {

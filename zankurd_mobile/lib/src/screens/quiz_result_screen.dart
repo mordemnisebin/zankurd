@@ -671,12 +671,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     return 'solo';
   }
 
+  /// Analitik `round_id`: boşlukları kırpılmış açık kimlik.
+  String? get _effectiveRoundId {
+    final explicit = widget.roundId?.trim();
+    if (explicit != null && explicit.isNotEmpty) return explicit;
+    return null;
+  }
+
   Future<void> _recordProgressAndAnalytics(
     _StreakOutcome? streakOutcome,
   ) async {
     await _recordProgress(streakOutcome ?? await _fallbackStreak());
     try {
-      final roundId = widget.roundId;
+      final roundId = _effectiveRoundId;
       await repository.logAnalyticsEvent('quiz_complete', {
         'category': widget.room.category,
         'mode': _quizModeLabel,
@@ -1162,7 +1169,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     AnalyticsService.instance.logQuizComplete(
       category: room.category,
       mode: _quizModeLabel,
-      roundId: widget.roundId,
+      roundId: _effectiveRoundId,
       correctCount: correctCount,
       totalQuestions: totalQuestions,
       xpEarned: earnedXP,

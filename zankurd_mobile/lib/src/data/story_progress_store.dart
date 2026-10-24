@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
+import 'progress_sync.dart';
 
 import '../utils/error_reporter.dart';
 
@@ -110,6 +111,7 @@ class StoryProgressStore {
       metaKey,
       jsonEncode({'at': _at, 'done': _done.toList()..sort()}),
     );
+    ProgressSyncService.markDirty();
   }
 
   Future<void> saveNode(String storyId, String nodeId) async {

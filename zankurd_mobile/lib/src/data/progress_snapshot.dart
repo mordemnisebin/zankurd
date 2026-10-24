@@ -268,15 +268,96 @@ class SnapshotStreak {
     this.best = 0,
     this.lastDay,
     this.freeze = 0,
+    this.playedDays = const {},
+    this.frozenDays = const {},
+    this.repairMonth,
+    this.firstSeen,
   });
+
+  /// Takvimde tutulan en fazla gün sayısı (`StreakStore.maxHistoryDays`).
+  static const maxHistoryDays = 400;
+
+  static final RegExp _dayKeyPattern = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+  static final RegExp _monthKeyPattern = RegExp(r'^\d{4}-\d{2}$');
+
+  static bool isValidDayKey(String? value) {
+    if (value == null || !_dayKeyPattern.hasMatch(value)) return false;
+    final y = int.tryParse(value.substring(0, 4));
+    final m = int.tryParse(value.substring(5, 7));
+    final d = int.tryParse(value.substring(8, 10));
+    if (y == null || m == null || d == null) return false;
+    if (y < 2000 || y > 2100 || m < 1 || m > 12 || d < 1 || d > 31) {
+      return false;
+    }
+    final dt = DateTime.utc(y, m, d);
+    return dt.year == y && dt.month == m && dt.day == d;
+  }
+
+  static bool isValidMonthKey(String? value) {
+    if (value == null || !_monthKeyPattern.hasMatch(value)) return false;
+    final y = int.tryParse(value.substring(0, 4));
+    final m = int.tryParse(value.substring(5, 7));
+    if (y == null || m == null) return false;
+    return y >= 2000 && y <= 2100 && m >= 1 && m <= 12;
+  }
+
+  /// Kronolojik sıralı en yeni [maxHistoryDays] geçerli günü döner.
+  static Set<String> trimDays(Iterable<String> days) {
+    final sorted = days.where(isValidDayKey).toSet().toList()..sort();
+    final trimmed = sorted.length <= maxHistoryDays
+        ? sorted
+        : sorted.sublist(sorted.length - maxHistoryDays);
+    return Set<String>.unmodifiable(trimmed);
+  }
+
+  /// Oynanmış ve dondurulmuş günleri birlikte normalize eder:
+  /// önce tam geçerli kümelerde `played` baskın kılınır, ardından toplam
+  /// takvim penceresi en yeni [maxHistoryDays] güne kırpılır.
+  static (Set<String> played, Set<String> frozen) normalizeCalendarDays(
+    Iterable<String> rawPlayed,
+    Iterable<String> rawFrozen,
+  ) {
+    final validPlayed = rawPlayed.where(isValidDayKey).toSet();
+    final validFrozen = rawFrozen
+        .where(isValidDayKey)
+        .where((d) => !validPlayed.contains(d))
+        .toSet();
+    final allDays = {...validPlayed, ...validFrozen}.toList()..sort();
+    if (allDays.length <= maxHistoryDays) {
+      return (
+        Set<String>.unmodifiable(validPlayed.toList()..sort()),
+        Set<String>.unmodifiable(validFrozen.toList()..sort()),
+      );
+    }
+    final window = allDays.sublist(allDays.length - maxHistoryDays).toSet();
+    return (
+      Set<String>.unmodifiable(
+        validPlayed.where(window.contains).toList()..sort(),
+      ),
+      Set<String>.unmodifiable(
+        validFrozen.where(window.contains).toList()..sort(),
+      ),
+    );
+  }
 
   final int current;
   final int best;
   final String? lastDay;
   final int freeze;
+  final Set<String> playedDays;
+  final Set<String> frozenDays;
+  final String? repairMonth;
+  final String? firstSeen;
 
   bool get isEmpty =>
-      current == 0 && best == 0 && lastDay == null && freeze == 0;
+      current == 0 &&
+      best == 0 &&
+      lastDay == null &&
+      freeze == 0 &&
+      playedDays.isEmpty &&
+      frozenDays.isEmpty &&
+      repairMonth == null &&
+      firstSeen == null;
 
   Map<String, dynamic> toJson() => {
     'current': current,
@@ -284,20 +365,42 @@ class SnapshotStreak {
     // ignore: use_null_aware_elements
     if (lastDay != null) 'lastDay': lastDay,
     'freeze': freeze,
+    if (playedDays.isNotEmpty) 'playedDays': _sorted(playedDays),
+    if (frozenDays.isNotEmpty) 'frozenDays': _sorted(frozenDays),
+    // ignore: use_null_aware_elements
+    if (repairMonth != null) 'repairMonth': repairMonth,
+    // ignore: use_null_aware_elements
+    if (firstSeen != null) 'firstSeen': firstSeen,
   };
 
   static SnapshotStreak fromJson(Object? raw) {
     if (raw is! Map) return const SnapshotStreak();
     final day = raw['lastDay'];
+    final (played, frozen) = normalizeCalendarDays(
+      _strings(raw['playedDays']),
+      _strings(raw['frozenDays']),
+    );
+    final rawRepairMonth = raw['repairMonth'];
+    final rawFirstSeen = raw['firstSeen'];
     return SnapshotStreak(
       current: _int(raw['current']),
       best: _int(raw['best']),
       lastDay: day is String && day.isNotEmpty ? day : null,
       freeze: _int(raw['freeze']),
+      playedDays: played,
+      frozenDays: frozen,
+      repairMonth: rawRepairMonth is String && isValidMonthKey(rawRepairMonth)
+          ? rawRepairMonth
+          : null,
+      firstSeen: rawFirstSeen is String && isValidDayKey(rawFirstSeen)
+          ? rawFirstSeen
+          : null,
     );
   }
 
   /// Son oynama günü yeni olan kayıt kazanır; aynı gündeyse büyük seri.
+  /// Takvim geçmişi (`playedDays`, `frozenDays`) birleşir; aynı gün hem
+  /// oynanmış hem dondurulmuşsa `playedDays` baskındır.
   static SnapshotStreak merge(SnapshotStreak a, SnapshotStreak b) {
     final cmp = _compareDays(a.lastDay, b.lastDay);
     final winner = cmp > 0
@@ -307,11 +410,33 @@ class SnapshotStreak {
         : (a.current >= b.current ? a : b);
     final current = winner.current;
     final best = [a.best, b.best, current].reduce((x, y) => x > y ? x : y);
+    final (played, frozen) = normalizeCalendarDays(
+      {...a.playedDays, ...b.playedDays},
+      {...a.frozenDays, ...b.frozenDays},
+    );
+    final rmA = isValidMonthKey(a.repairMonth) ? a.repairMonth : null;
+    final rmB = isValidMonthKey(b.repairMonth) ? b.repairMonth : null;
+    final repairMonth = _compareDays(rmA, rmB) >= 0 ? rmA : rmB;
+    final fsCandidates = <String>[
+      if (isValidDayKey(a.firstSeen)) a.firstSeen!,
+      if (isValidDayKey(b.firstSeen)) b.firstSeen!,
+      ...played,
+      ...frozen,
+    ];
+    String? firstSeen;
+    if (fsCandidates.isNotEmpty) {
+      fsCandidates.sort();
+      firstSeen = fsCandidates.first;
+    }
     return SnapshotStreak(
       current: current,
       best: best,
       lastDay: winner.lastDay,
       freeze: a.freeze > b.freeze ? a.freeze : b.freeze,
+      playedDays: played,
+      frozenDays: frozen,
+      repairMonth: repairMonth,
+      firstSeen: firstSeen,
     );
   }
 

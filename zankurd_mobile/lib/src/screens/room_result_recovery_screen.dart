@@ -25,6 +25,7 @@ class RoomResultRecoveryScreen extends StatefulWidget {
     required this.snapshot,
     required this.expectedUserId,
     this.rewardSettlementService,
+    this.roundId,
     super.key,
   });
 
@@ -32,6 +33,7 @@ class RoomResultRecoveryScreen extends StatefulWidget {
   final RoomResultSnapshot snapshot;
   final String expectedUserId;
   final QuizRewardSettlementService? rewardSettlementService;
+  final String? roundId;
 
   @override
   State<RoomResultRecoveryScreen> createState() =>
@@ -146,6 +148,14 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
     }
   }
 
+  String? _effectiveRoundId(String? roomId) {
+    final explicit = widget.roundId?.trim();
+    if (explicit != null && explicit.isNotEmpty) return explicit;
+    final fallback = roomId?.trim();
+    if (fallback != null && fallback.isNotEmpty) return fallback;
+    return null;
+  }
+
   void _openResult(
     RoomResultPresentation presentation,
     QuizRewardSettlement settlement,
@@ -167,6 +177,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
             sourceQuestions: questions,
             opponents: presentation.opponents,
             rewardQueued: settlement.state == QuizRewardSettlementState.queued,
+            roundId: _effectiveRoundId(presentation.room.id),
             resultOwnerUserId: _expectedUserId,
             rewardSettlementState: settlement.state,
           ),

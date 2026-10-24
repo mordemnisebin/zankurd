@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
+import 'progress_sync.dart';
 
 import '../services/notification_service.dart';
 import '../utils/error_reporter.dart';
@@ -244,7 +245,14 @@ class StreakStore {
     await markFirstSeen(now: today);
 
     if (lastDay == todayKey) {
-      _playedDays.add(todayKey);
+      if (_playedDays.add(todayKey)) {
+        try {
+          await _persist();
+        } catch (_) {
+          _playedDays.remove(todayKey);
+          rethrow;
+        }
+      }
       // Bugün zaten işlenmişti; uyarı o zaman susturuldu. Yine de ucuzdur ve
       // uyarının sonradan (bildirim açılınca) bugüne kurulmuş olmasına karşı
       // güvenceyi korur.
@@ -448,6 +456,7 @@ class StreakStore {
     await _setOrRemove(preferences, _offerSeenKey, _offerSeenFor);
     await _setOrRemove(preferences, _firstSeenKey, _firstSeen);
     await preferences.setInt(_lostValueKey, _lostValue);
+    ProgressSyncService.markDirty();
   }
 
   static Future<void> _setOrRemove(

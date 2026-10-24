@@ -100,6 +100,8 @@ void main() {
       expect(snapshot.streak.best, 2);
       expect(snapshot.streak.lastDay, '2026-10-15');
       expect(snapshot.streak.freeze, 1);
+      expect(snapshot.streak.playedDays, {'2026-10-14', '2026-10-15'});
+      expect(snapshot.streak.firstSeen, '2026-10-14');
       expect(snapshot.badges, {'perfect_game'});
       expect(snapshot.mastery['Ziman']!.correct, 7);
       expect(snapshot.mastery['Ziman']!.answered, 10);

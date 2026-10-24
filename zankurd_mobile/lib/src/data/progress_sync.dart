@@ -25,6 +25,10 @@ class LocalProgressSnapshot {
   static const _streakBest = 'zankurd.streak.best';
   static const _streakLastDay = 'zankurd.streak.lastDay';
   static const _streakFreeze = 'zankurd.streak.freeze';
+  static const _streakPlayedDays = 'zankurd.streak.playedDays';
+  static const _streakFrozenDays = 'zankurd.streak.frozenDays';
+  static const _streakRepairMonth = 'zankurd.streak.repairMonth';
+  static const _streakFirstSeen = 'zankurd.streak.firstSeen';
   static const _badges = 'zankurd.badges.unlocked';
   static const _achUnlocked = 'zankurd.achievements.unlocked';
   static const _achAnswered = 'zankurd.achievements.answeredQuestions';
@@ -102,6 +106,12 @@ class LocalProgressSnapshot {
     }
 
     final placement = prefs.getString(_k(_placementLevel));
+    final (playedDays, frozenDays) = SnapshotStreak.normalizeCalendarDays(
+      prefs.getStringList(_k(_streakPlayedDays)) ?? const [],
+      prefs.getStringList(_k(_streakFrozenDays)) ?? const [],
+    );
+    final rawRepairMonth = prefs.getString(_k(_streakRepairMonth));
+    final rawFirstSeen = prefs.getString(_k(_streakFirstSeen));
     return ProgressSnapshot(
       xp: prefs.getInt(_k(_xp)) ?? 0,
       streak: SnapshotStreak(
@@ -109,6 +119,14 @@ class LocalProgressSnapshot {
         best: prefs.getInt(_k(_streakBest)) ?? 0,
         lastDay: prefs.getString(_k(_streakLastDay)),
         freeze: prefs.getInt(_k(_streakFreeze)) ?? 0,
+        playedDays: playedDays,
+        frozenDays: frozenDays,
+        repairMonth: SnapshotStreak.isValidMonthKey(rawRepairMonth)
+            ? rawRepairMonth
+            : null,
+        firstSeen: SnapshotStreak.isValidDayKey(rawFirstSeen)
+            ? rawFirstSeen
+            : null,
       ),
       badges: (prefs.getStringList(_k(_badges)) ?? const []).toSet(),
       achievements: SnapshotAchievements(
@@ -170,6 +188,10 @@ class LocalProgressSnapshot {
     await setInt(_streakBest, snapshot.streak.best);
     await setInt(_streakFreeze, snapshot.streak.freeze);
     await setString(_streakLastDay, snapshot.streak.lastDay);
+    await setList(_streakPlayedDays, snapshot.streak.playedDays);
+    await setList(_streakFrozenDays, snapshot.streak.frozenDays);
+    await setString(_streakRepairMonth, snapshot.streak.repairMonth);
+    await setString(_streakFirstSeen, snapshot.streak.firstSeen);
     await setList(_badges, snapshot.badges);
     await setList(_achUnlocked, snapshot.achievements.unlocked);
     await setInt(_achAnswered, snapshot.achievements.answered);

@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../data/learner_lexicon.dart';
 import '../data/story_progress_store.dart';
+import '../data/streak_store.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/mini_guide.dart';
@@ -71,6 +74,7 @@ class _StoryScreenState extends State<StoryScreen> {
       await store.saveNode(widget.story.id, next.id);
       if (next.isEnding) {
         await store.markCompleted(widget.story.id);
+        unawaited(StreakStore.recordActivity());
         AnalyticsService.instance.logStoryComplete(
           storyId: widget.story.id,
           nodeId: next.id,

@@ -148,6 +148,103 @@ void main() {
       expect(SnapshotStreak.merge(empty, empty).isEmpty, isTrue);
     });
 
+    test(
+      'takvim geçmişi (playedDays, frozenDays, repairMonth, firstSeen) birleşir ve playedDays baskındır',
+      () {
+        const a = SnapshotStreak(
+          current: 2,
+          best: 5,
+          lastDay: '2026-10-14',
+          playedDays: {'2026-10-13', '2026-10-14'},
+          frozenDays: {'2026-10-12'},
+          repairMonth: '2026-09',
+          firstSeen: '2026-10-10',
+        );
+        const b = SnapshotStreak(
+          current: 3,
+          best: 4,
+          lastDay: '2026-10-15',
+          playedDays: {'2026-10-12', '2026-10-15'},
+          frozenDays: {'2026-10-11', '2026-10-14'},
+          repairMonth: '2026-10',
+          firstSeen: '2026-10-08',
+        );
+        for (final m in [
+          SnapshotStreak.merge(a, b),
+          SnapshotStreak.merge(b, a),
+        ]) {
+          expect(m.playedDays, {
+            '2026-10-12',
+            '2026-10-13',
+            '2026-10-14',
+            '2026-10-15',
+          });
+          // 2026-10-12 ve 2026-10-14 oynandığı için frozenDays'ten düşer.
+          expect(m.frozenDays, {'2026-10-11'});
+          expect(m.repairMonth, '2026-10');
+          expect(m.firstSeen, '2026-10-08');
+        }
+      },
+    );
+
+    test('takvim geçmişi 400 günü aşarsa en yeni 400 gün korunur', () {
+      final days = {
+        for (var i = 0; i < 450; i++)
+          DateTime(
+            2025,
+            1,
+            1,
+          ).add(Duration(days: i)).toIso8601String().substring(0, 10),
+      };
+      final merged = SnapshotStreak.merge(
+        SnapshotStreak(playedDays: days),
+        const SnapshotStreak(),
+      );
+      expect(merged.playedDays.length, SnapshotStreak.maxHistoryDays);
+      final sorted = days.toList()..sort();
+      expect(merged.playedDays.contains(sorted.first), isFalse);
+      expect(merged.playedDays.contains(sorted.last), isTrue);
+      expect(
+        merged.firstSeen,
+        sorted[sorted.length - SnapshotStreak.maxHistoryDays],
+      );
+    });
+
+    test(
+      'geçersiz takvim tarihleri (2026-99-99, 2026-02-31, 2026-99) dışlanır ve eski oynanmış gün kırpılsa da donmuş güne dönüşmez',
+      () {
+        const oldPlayed = '2024-01-01';
+        final recentPlayed = {
+          for (var i = 0; i < 400; i++)
+            DateTime.utc(
+              2025,
+              1,
+              1,
+            ).add(Duration(days: i)).toIso8601String().substring(0, 10),
+        };
+        final merged = SnapshotStreak.merge(
+          SnapshotStreak(
+            playedDays: {
+              oldPlayed,
+              ...recentPlayed,
+              '2026-99-99',
+              '2026-02-31',
+            },
+            repairMonth: '2026-99',
+          ),
+          const SnapshotStreak(
+            frozenDays: {oldPlayed, '2026-13-01'},
+            repairMonth: '2026-10',
+          ),
+        );
+        expect(merged.playedDays.contains(oldPlayed), isFalse);
+        expect(merged.frozenDays.contains(oldPlayed), isFalse);
+        expect(merged.playedDays.contains('2026-99-99'), isFalse);
+        expect(merged.playedDays.contains('2026-02-31'), isFalse);
+        expect(merged.repairMonth, '2026-10');
+      },
+    );
+
     test('günlük sınav sayacı en yeni güne ait kayıttan gelir', () {
       const a = SnapshotAchievements(dailyQuiz: 9, dailyQuizDay: '2026-10-01');
       const b = SnapshotAchievements(dailyQuiz: 2, dailyQuizDay: '2026-10-14');

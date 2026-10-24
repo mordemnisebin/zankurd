@@ -5,20 +5,31 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/config/retired_question_ids.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/data/learner_lexicon.dart';
+import 'package:zankurd_mobile/src/data/learning_goal_store.dart';
 import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/data/story_progress_store.dart';
+import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/data/word_list_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/models/learning_goal.dart';
 import 'package:zankurd_mobile/src/models/mini_guide.dart';
+import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/question_metadata.dart';
+import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/models/story.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
+import 'package:zankurd_mobile/src/screens/room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/screens/story_screen.dart';
 import 'package:zankurd_mobile/src/screens/word_drill_screen.dart';
 import 'package:zankurd_mobile/src/services/analytics_service.dart';
+import 'package:zankurd_mobile/src/services/placement_scoring.dart';
+import 'package:zankurd_mobile/src/services/quiz_reward_settlement_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 import '../tool/question_quality/src/checks.dart';
@@ -43,6 +54,9 @@ void main() {
     freshMockRepository();
     LocalProgressScope.debugReset();
     StoryProgressStore.resetInstance();
+    StreakStore.resetInstance();
+    PlacementStore.resetInstance();
+    LearningGoalStore.resetInstance();
     WordListStore.resetInstance();
     AchievementStore.resetInstance();
   });
@@ -206,11 +220,13 @@ void main() {
       expect(find.byKey(const ValueKey('word-save-spas')), findsOneWidget);
       final storyComplete = events.firstWhere((e) => e.$1 == 'story_complete');
       expect(storyComplete.$2, {'story_id': 'cayxane', 'node_id': 'end_warm'});
+      final streak = await StreakStore.load();
+      expect(streak.playedToday(), isTrue);
     },
   );
 
   testWidgets(
-    'WordDrillScreen oturumu bitirince review_complete olayı üretir',
+    'WordDrillScreen oturumu bitirince review_complete olayı üretir ve günlük seriyi işler',
     (tester) async {
       final events = <(String, Map<String, Object>?)>[];
       AnalyticsService.instance.debugEventSink = (name, params) {
@@ -232,6 +248,111 @@ void main() {
         (e) => e.$1 == 'review_complete',
       );
       expect(reviewComplete.$2, {'correct': 1, 'total': 1});
+      final streak = await StreakStore.load();
+      expect(streak.playedToday(), isTrue);
+    },
+  );
+
+  testWidgets(
+    'RoomResultRecoveryScreen roundId değerini QuizResultScreen ekranına taşır ve boşsa room.id yedeğine düşer',
+    (tester) async {
+      final repo = _FixedQuestionsMockRepo(const [
+        QuizQuestion(
+          id: 'q1',
+          category: 'Ziman',
+          prompt: 'Av',
+          promptTr: 'Su',
+          answers: ['A', 'B', 'C', 'D'],
+          answersTr: ['A', 'B', 'C', 'D'],
+          correctAnswer: 'A',
+          correctAnswerTr: 'A',
+          explanation: 'Ravekirin',
+        ),
+      ]);
+      final userId = repo.currentUserId!;
+      final snapshot = RoomResultSnapshot(
+        room: GameRoom(
+          id: 'room-online-42',
+          code: '123456',
+          name: 'Oda',
+          category: 'Ziman',
+          status: RoomStatus.finished,
+          questionCount: 1,
+          secondsPerQuestion: 15,
+          players: [
+            Player(id: userId, name: 'Ez', score: 10, state: Player.readyState),
+            const Player(
+              id: 'opp-1',
+              name: 'Hevrik',
+              score: 0,
+              state: Player.readyState,
+            ),
+          ],
+        ),
+        ownPlayerId: userId,
+        questionIds: const ['q1'],
+        answers: const [
+          ResumedAnswer(
+            questionId: 'q1',
+            questionIndex: 0,
+            selectedOptionKey: 'A',
+            correctOptionKey: 'A',
+            isCorrect: true,
+            pointsAwarded: 10,
+            responseMs: 800,
+          ),
+        ],
+        winnerId: userId,
+        endedReason: 'completed',
+        forfeitedBy: null,
+        finishedAt: DateTime.utc(2026, 10, 24),
+      );
+      final events = <(String, Map<String, Object>?)>[];
+      AnalyticsService.instance.debugEventSink = (name, params) {
+        events.add((name, params));
+      };
+
+      await tester.pumpWidget(
+        testShell(
+          child: RoomResultRecoveryScreen(
+            repository: repo,
+            snapshot: snapshot,
+            expectedUserId: userId,
+            roundId: '   ',
+            rewardSettlementService: QuizRewardSettlementService(
+              repository: repo,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final result = tester.widget<QuizResultScreen>(
+        find.byType(QuizResultScreen),
+      );
+      expect(result.roundId, 'room-online-42');
+      final complete = events.firstWhere((e) => e.$1 == 'quiz_complete');
+      expect(complete.$2?['round_id'], 'room-online-42');
+      expect(complete.$2?['mode'], '1v1');
+    },
+  );
+
+  test(
+    'StoryProgressStore, PlacementStore ve LearningGoalStore kayıtları doğru saklanır',
+    () async {
+      final story = await StoryProgressStore.load();
+      await story.saveNode('cayxane', 'n2');
+      await story.markCompleted('cayxane');
+      expect(story.currentNodeId('cayxane'), 'n2');
+      expect(story.isCompleted('cayxane'), isTrue);
+
+      final placement = await PlacementStore.load();
+      await placement.saveResult(PlacementLevel.navin);
+      expect(placement.level, PlacementLevel.navin);
+
+      final goal = await LearningGoalStore.load();
+      expect(await goal.save(LearningGoal.learnKurmanci), isTrue);
+      expect(goal.goal, LearningGoal.learnKurmanci);
     },
   );
 
@@ -274,4 +395,14 @@ void main() {
       expect(reviewTop, lessThan(missionsTop));
     },
   );
+}
+
+class _FixedQuestionsMockRepo extends MockZanKurdRepository {
+  _FixedQuestionsMockRepo(this._questions);
+
+  final List<QuizQuestion> _questions;
+
+  @override
+  Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async =>
+      _questions;
 }

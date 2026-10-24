@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
 import '../data/learner_lexicon.dart';
+import '../data/streak_store.dart';
 import '../data/word_list_store.dart';
 import '../data/word_drill.dart';
 import '../l10n/lang.dart';
@@ -137,7 +139,8 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
       _index++;
       _picked = null;
     });
-    if (_finished) {
+    if (_finished && _questions.isNotEmpty) {
+      unawaited(StreakStore.recordActivity());
       AnalyticsService.instance.logReviewComplete(
         correctCount: _correct,
         totalCount: _questions.length,

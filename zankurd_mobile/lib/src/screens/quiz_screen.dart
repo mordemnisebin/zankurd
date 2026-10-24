@@ -611,14 +611,14 @@ class _QuizScreenState extends State<QuizScreen>
     AnalyticsService.instance.logQuizStart(
       category: widget.room.category,
       mode: _quizModeLabel,
-      roundId: _soloRoundId,
+      roundId: _analyticsRoundId,
     );
     unawaited(
       widget.repository
           .logAnalyticsEvent('quiz_start', {
             'category': widget.room.category,
             'mode': _quizModeLabel,
-            'round_id': _soloRoundId,
+            'round_id': _analyticsRoundId,
           })
           .catchError((error, stack) {
             ErrorReporter.record(error, stack, reason: 'quiz start analytics');
@@ -2895,6 +2895,16 @@ class _QuizScreenState extends State<QuizScreen>
   /// sunucu (`claim_solo_reward`) ikinci talepte ödemez.
   final String _soloRoundId = newClientRoundId();
 
+  /// Analitik `round_id` değeri: çevrimiçi odalarda (`room.id != null`)
+  /// deterministik oda kimliği kullanılır ki `RoomResultRecoveryScreen` ya da
+  /// soğuk başlangıç (`AppShell`) kurtarmasında da `quiz_start` ile
+  /// `quiz_complete` birebir eşleşsin; çevrimdışı/solo turlarda [_soloRoundId].
+  String get _analyticsRoundId {
+    final roomId = widget.room.id?.trim();
+    if (roomId != null && roomId.isNotEmpty) return roomId;
+    return _soloRoundId;
+  }
+
   /// Son turun sıfır jetonu, günlük tavana varıldığı İÇİN müydü?
   ///
   /// Sonuç ekranı bunu bilmezse "+0 jeton" gösterip sebebini söylemez.
@@ -3295,7 +3305,7 @@ class _QuizScreenState extends State<QuizScreen>
             dailyQuiz: widget.dailyQuiz,
             isLearningExperience: _isLearningExperience,
             contestId: widget.contestId,
-            roundId: _soloRoundId,
+            roundId: _analyticsRoundId,
           ),
         ),
         result: _completionResult(),
@@ -3433,6 +3443,7 @@ class _QuizScreenState extends State<QuizScreen>
             repository: widget.repository,
             snapshot: snapshot,
             expectedUserId: expectedOwnerId,
+            roundId: _analyticsRoundId,
           ),
         ),
         result: _completionResultFromPresentation(presentation),
@@ -3953,7 +3964,7 @@ class _QuizScreenState extends State<QuizScreen>
             dailyQuiz: widget.dailyQuiz,
             isLearningExperience: _isLearningExperience,
             contestId: widget.contestId,
-            roundId: _soloRoundId,
+            roundId: _analyticsRoundId,
           ),
         ),
         // Yarıda çıkıştan (null) ayırt etmek için tamamlanma sinyali.
