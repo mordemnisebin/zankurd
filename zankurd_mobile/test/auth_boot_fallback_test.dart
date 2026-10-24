@@ -111,7 +111,8 @@ void main() {
 
     expect(find.textContaining('Sunucuya ulaşılamadı'), findsOneWidget);
 
-    await tester.tap(find.text('Yarış'));
+    // Etiket yerine sabit anahtar: ana ekranın yarış kapısı da "Yarış" der.
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
 

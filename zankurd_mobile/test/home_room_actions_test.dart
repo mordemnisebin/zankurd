@@ -90,9 +90,9 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Günün soruları'));
+    await tester.ensureVisible(find.text('Günün turu'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Günün soruları'));
+    await tester.tap(find.text('Günün turu'));
     await tester.pumpAndSettle();
 
     // Mock her gün etkinlik döner → etkinlik lobisi; oradan quiz başlar.

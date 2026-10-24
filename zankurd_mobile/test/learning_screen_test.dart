@@ -299,7 +299,7 @@ void main() {
       final data = tester.getSemantics(tab).getSemanticsData();
       expect(data.flagsCollection.isButton, isTrue);
       expect(data.flagsCollection.isSelected, ui.Tristate.isTrue);
-      expect(data.label, 'Günlük');
+      expect(data.label, 'Gündelik hayat');
       expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
       semantics.dispose();
     },
@@ -653,7 +653,7 @@ void main() {
     final label = tester.widget<Text>(
       find.descendant(
         of: find.byKey(const ValueKey('learning-tab-everyday')),
-        matching: find.text('Günlük'),
+        matching: find.text('Gündelik hayat'),
       ),
     );
     expect(label.style?.color, SahneTokens.day.learnTx);

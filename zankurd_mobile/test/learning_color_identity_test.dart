@@ -95,7 +95,7 @@ void main() {
         final selectedText = tester.widget<Text>(
           find.descendant(
             of: find.byKey(const ValueKey('learning-tab-everyday')),
-            matching: find.text(isKu ? 'Rojane' : 'Günlük'),
+            matching: find.text(isKu ? 'Jiyana rojane' : 'Gündelik hayat'),
           ),
         );
         expect(selectedText.style?.color, t.learnTx, reason: combo);

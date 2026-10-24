@@ -993,9 +993,16 @@ void main() {
       reason: 'Profil/seri araçları kompakt hesap başlığı içinde kalmalı.',
     );
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
-    // "Yarış" sekme etiketi tektir; ana ekrandaki yarış kapısı kendi
-    // başlığını ("Arkadaşınla yarış") taşır.
-    expect(find.text('Yarış'), findsOneWidget);
+    // 2026-10-24: yarış kapısı sekmeyle aynı kısa adı taşır ("Yarış"), tek
+    // giriş olarak; sekme etiketi kendi düğümünde tektir.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('nav-play')),
+        matching: find.text('Yarış'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Arkadaşınla yarış'), findsNothing);
     expect(find.text('Profil'), findsOneWidget);
 
     // Tema düğmesi 2026-09-27'de başlıktan kalktı (güneş simgesi ayar

@@ -118,10 +118,10 @@ class AchievementStore {
     ),
     const Achievement(
       id: AchievementIds.dailyQuizFive,
-      titleKu: '5 pirsên rojê',
-      titleTr: 'Günün soruları x5',
-      descriptionKu: 'Te pirsên rojê pênc caran qedandin.',
-      descriptionTr: 'Günün sorularını 5 kez tamamladın.',
+      titleKu: '5 dorên rojê',
+      titleTr: 'Günün turu x5',
+      descriptionKu: 'Te dora rojê pênc caran qedand.',
+      descriptionTr: 'Günün turunu 5 kez tamamladın.',
       icon: AppIcons.bolt,
     ),
   ];
@@ -174,9 +174,9 @@ class AchievementStore {
       '${day.year}-${day.month.toString().padLeft(2, '0')}-'
       '${day.day.toString().padLeft(2, '0')}';
 
-  /// Günün soruları turu [day] günü BİTİRİLDİ mi?
+  /// Günün turu [day] günü BİTİRİLDİ mi?
   ///
-  /// 2026-09-30 canlı: tur bittikten sonra Yarış > Pirsên rojê sayfası hâlâ
+  /// 2026-09-30 canlı: tur bittikten sonra Yarış > Dora rojê sayfası hâlâ
   /// "Bugün" ve "Başla" diyordu, çünkü tamamlanma hiçbir yerde günle
   /// birlikte tutulmuyordu; yalnız toplam sayaç ([_dailyQuizCompletions],
   /// "5 kez" rozeti için) vardı. Gün, yerel takvim günüdür (görev

@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/models/async_duel.dart';
@@ -779,6 +780,51 @@ void main() {
   testWidgets('01 ana ekran', (t) async {
     await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
     await _shoot(t, '01_home');
+  }, tags: ['preview']);
+
+  // Ana ekranın ilk oturum SONRASI hâlleri: kahraman kart Günün turudur
+  // (2026-10-24). Oynanmadı / bugün bitti (TR) ve bitti (KU).
+  Future<void> homeAfterFirstSession(
+    WidgetTester t, {
+    required bool tourDone,
+  }) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('zankurd.achievements.unlocked', ['first_game']);
+    AchievementStore.resetInstance();
+    if (tourDone) {
+      final store = await AchievementStore.load();
+      await store.recordQuizResult(
+        category: 'Tevlihev',
+        totalQuestions: 10,
+        correctCount: 7,
+        bestStreak: 4,
+        dailyStreak: 1,
+        userScore: 600,
+        dailyQuiz: true,
+      );
+    }
+  }
+
+  testWidgets('01b ana ekran: Günün turu (oynanmadı)', (t) async {
+    await homeAfterFirstSession(t, tourDone: false);
+    await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+    await _shoot(t, '01b_home_tour_open');
+  }, tags: ['preview']);
+
+  testWidgets('01c ana ekran: Günün turu (bitti)', (t) async {
+    await homeAfterFirstSession(t, tourDone: true);
+    await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+    await _shoot(t, '01c_home_tour_done');
+  }, tags: ['preview']);
+
+  testWidgets('01d ana ekran: Günün turu (bitti, Kurmancî)', (t) async {
+    await homeAfterFirstSession(t, tourDone: true);
+    await _pump(
+      t,
+      Scaffold(body: HomeScreen(repository: repository)),
+      ku: true,
+    );
+    await _shoot(t, '01d_home_tour_done_ku');
   }, tags: ['preview']);
 
   testWidgets('05 oyun merkezi', (t) async {

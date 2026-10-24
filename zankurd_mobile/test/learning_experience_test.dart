@@ -28,10 +28,10 @@ void main() {
     });
   });
 
-  test('günün dersi öğrenme akışı olarak başlatılır', () {
+  test('pratik oturumu öğrenme akışı olarak başlatılır', () {
     final source = File('lib/src/screens/home_screen.dart').readAsStringSync();
-    final start = source.indexOf('Future<void> _startDailyQuiz()');
-    expect(start, greaterThan(-1), reason: '_startDailyQuiz bulunamadı');
+    final start = source.indexOf('Future<void> _startPractice()');
+    expect(start, greaterThan(-1), reason: '_startPractice bulunamadı');
     final nextMethod = source.indexOf('\n  Future<void> ', start + 1);
     final body = source.substring(
       start,
@@ -41,7 +41,7 @@ void main() {
     expect(
       body,
       contains('experience: QuizExperience.learning'),
-      reason: 'Günün Dersi yarışma modunda açılıyor',
+      reason: 'Pratik yarışma modunda açılıyor',
     );
     expect(body, contains('enableTimer: false'));
   });

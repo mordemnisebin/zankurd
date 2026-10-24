@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../config/app_config.dart';
 import '../config/coin_prices.dart';
+import '../config/feature_flags.dart';
 import '../data/mistake_store.dart';
 import '../data/learning_goal_store.dart';
 import '../data/streak_store.dart';
@@ -33,6 +34,8 @@ import '../services/premium_service.dart';
 import '../services/daily_question_selector.dart';
 import 'paywall_screen.dart';
 import 'quiz_screen.dart';
+import 'contest_screen.dart';
+import 'home/daily_tour_card.dart';
 import 'home/today_task_card.dart';
 import 'home/home_rows.dart';
 import 'home/home_sections.dart';
@@ -122,6 +125,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List<DailyMission> _missions = [];
   int _reviewReadyCount = 0;
 
+  /// Günün turu bugün bitirildi mi (yerel takvim günü; bkz.
+  /// [AchievementStore.dailyQuizDoneOn], `ContestScreen` ile aynı kaynak).
+  bool _tourDoneToday = false;
+
+  /// Sırayla düellolardan görülmemiş sonuç sayısı: Yarış kısayolunda rozet.
+  int _duelResultsReady = 0;
+
   /// Bugün doğru cevaplanan soru sayısı — "bugünün görevi" ilerlemesi.
   int _todayAnswered = 0;
   int _todayTarget = 10;
@@ -160,6 +170,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _refreshFirstSession();
     _refreshXpLevel();
     _refreshReviewCount();
+    _refreshTourState();
     // "Kaldığın yer" ilk açılışta hiç çağrılmıyordu — yalnız
     // `_handleRefreshSignal` içinden tetikleniyordu, o da yalnız sekmeye
     // TEKRAR basıldığında çalışır. Öğren zaten açılış sekmesi olduğu için
@@ -188,6 +199,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _refreshStreak();
     _refreshProgress();
     _refreshReviewCount();
+    _refreshTourState();
     setState(() => _refreshCounter++);
   }
 
@@ -204,6 +216,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _openCategory(String category) async {
     await widget.onOpenCategory?.call(category);
     if (mounted) _handleRefreshSignal();
+  }
+
+  /// Günün turu "bitti" bayrağını ve Yarış kısayolunun rozetini tazeler.
+  ///
+  /// İkisi de süs/durum bilgisidir: okunamazsa kart "oynanmadı" ve rozetsiz
+  /// kalır, ekran beklemez (düello listesi ağdan gelir; hata sessizdir —
+  /// depo hatayı zaten kaydeder).
+  Future<void> _refreshTourState() async {
+    try {
+      final store = await AchievementStore.load();
+      final done = store.dailyQuizDoneOn(DateTime.now());
+      if (mounted && done != _tourDoneToday) {
+        setState(() => _tourDoneToday = done);
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'home tour done flag');
+    }
+    if (!kAsyncDuelEnabled) return;
+    try {
+      final duels = await repo.loadMyAsyncDuels();
+      final ready = duels.where((d) => d.outcome != null && !d.seen).length;
+      if (mounted && ready != _duelResultsReady) {
+        setState(() => _duelResultsReady = ready);
+      }
+    } catch (_) {
+      // Rozet yalnız ipucudur; Yarış sekmesi gerçek listeyi gösterir.
+    }
   }
 
   Future<void> _refreshXpLevel() async {
@@ -460,14 +499,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
             const SizedBox(height: SahneSpace.x2),
           ],
-          TodayTaskCard(
-            isKu: ku,
-            loading: _roomActionLoading,
-            done: _todayAnswered,
-            total: _firstSession ? 5 : _todayTarget,
-            firstSession: _firstSession,
-            onStart: _startDailyQuiz,
-          ),
+          // İlk oturum hâlâ 5 soruluk, süresiz, açıklamalı ilk derstir:
+          // yeni gelene ilk dakikada süreli tur vermek yerine önce nasıl
+          // oynandığı öğretilir. İlk ders bitince kart günün turuna döner.
+          if (_firstSession)
+            TodayTaskCard(
+              isKu: ku,
+              loading: _roomActionLoading,
+              done: _todayAnswered,
+              total: 5,
+              firstSession: true,
+              onStart: _startPractice,
+            )
+          else
+            DailyTourCard(
+              isKu: ku,
+              loading: _roomActionLoading,
+              doneToday: _tourDoneToday,
+              onStart: _openTour,
+              onPractice: _startPractice,
+            ),
           // İlk oturumda seviye çubuğu ("Seviye 1 · 0/1000") yeni gelen için
           // anlamsız bir sayıdır; yerine bir şey konmaz. 2026-09-30 doğallık:
           // buraya konan "3 adımda ZanKurd" kartı hemen üstteki Günün dersini
@@ -542,6 +593,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               role: SahneRole.race,
               title: context.t(K.homeDoorPlayTitle),
               subtitle: context.t(K.homeDoorPlaySub),
+              badge: _duelResultsReady > 0
+                  ? context.t(K.homeDoorPlayReady)
+                  : null,
               onTap: widget.onOpenPlay,
             ),
           ),
@@ -889,9 +943,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// "Dersê rojane" kartı: hedefe göre önceliklendirilmiş günlük solo quiz.
-  /// (Kart 10 soru vaat eder; ders ağacına değil gerçek quize gider.)
-  Future<void> _startDailyQuiz() async {
+  /// Günün turunu açar (kahraman kartın "Başla"sı) ve dönüşte tazeler:
+  /// tur bitince kart "Bugünkü turu bitirdin" durumuna geçer.
+  Future<void> _openTour() async {
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(ContestScreen(repository: repo)));
+    if (mounted) _handleRefreshSignal();
+  }
+
+  /// "Pratik": hedefe göre önceliklendirilmiş süresiz, açıklamalı solo quiz.
+  /// Günün turundan AYRIDIR ve tur sayılmaz (`dailyQuiz` açılmaz); günlük
+  /// hedef/seri hesabı oyun sonu kaydından yine işler.
+  Future<void> _startPractice() async {
     if (_roomActionLoading) return;
     setState(() => _roomActionLoading = true);
     try {

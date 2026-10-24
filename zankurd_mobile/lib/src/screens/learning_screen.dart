@@ -561,7 +561,7 @@ class _LearningScreenState extends State<LearningScreen> {
 
   String _categoryLabel(String cat, bool ku) {
     const labels = {
-      'everyday': ('Rojane', 'Günlük'),
+      'everyday': ('Jiyana rojane', 'Gündelik hayat'),
       // Ürünün geri kalanı dilbilgisine `Rêziman` diyor (K.dilbilgisi).
       'grammar': ('Rêziman', 'Dilbilgisi'),
       'culture': ('Çand', 'Kültür'),

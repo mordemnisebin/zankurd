@@ -43,7 +43,6 @@ class Tr {
     K.close: {'ku': 'Bigire', 'tr': 'Kapat'},
 
     // ── Gezinme ──────────────────────────────────────────────────────
-    K.navLearn: {'ku': 'Hîn bibe', 'tr': 'Öğren'},
     K.navPlay: {'ku': 'Pêşbirk', 'tr': 'Yarış'},
     K.navLeaderboard: {'ku': 'Rêzbendî', 'tr': 'Sıralama'},
     K.navProfile: {'ku': 'Profîl', 'tr': 'Profil'},
@@ -365,7 +364,7 @@ class Tr {
     },
     K.joinByCode: {'ku': 'Bi kodê têkeve', 'tr': 'Kodla katıl'},
     K.events: {'ku': 'Her roj', 'tr': 'Her gün'},
-    K.dailyContest: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
+    K.dailyContest: {'ku': 'Dora rojê', 'tr': 'Günün turu'},
     K.tenQuestions: {'ku': '10 pirs', 'tr': '10 soru'},
     K.tournament: {'ku': 'Kûpa', 'tr': 'Turnuva'},
     // Kontenjan sunucu tarafında ayarlanır (`tournaments.size`); metne sayı
@@ -1290,20 +1289,20 @@ class Tr {
     // ── Etkinlik / çark / eşleşme ────────────────────────────────────
     K.noQuestionsFound: {'ku': 'Pirs nehatin dîtin.', 'tr': 'Soru bulunamadı.'},
     K.contestStartFailed: {
-      'ku': 'Pirsên rojê dest pê nekirin. Dîsa biceribîne.',
-      'tr': 'Günün soruları başlatılamadı. Tekrar dene.',
+      'ku': 'Dora rojê dest pê nekir. Dîsa biceribîne.',
+      'tr': 'Günün turu başlatılamadı. Tekrar dene.',
     },
     K.contestLoadFailed: {
-      'ku': 'Pirsên rojê nehatin barkirin.',
-      'tr': 'Günün soruları yüklenemedi.',
+      'ku': 'Dora rojê nehat barkirin.',
+      'tr': 'Günün turu yüklenemedi.',
     },
     K.retryTiny: {'ku': 'Dîsa', 'tr': 'Tekrar'},
     K.contestNoneToday: {
-      'ku': 'Pirsên rojê hîn amade nînin. Paşê dîsa were.',
-      'tr': 'Günün soruları henüz hazır değil. Daha sonra tekrar gel.',
+      'ku': 'Dora rojê hîn ne amade ye. Paşê dîsa were.',
+      'tr': 'Günün turu henüz hazır değil. Daha sonra tekrar gel.',
     },
     K.goHome: {'ku': 'Vegere rûpela sereke', 'tr': 'Ana sayfaya dön'},
-    K.dailyEvent: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
+    K.dailyEvent: {'ku': 'Dora rojê', 'tr': 'Günün turu'},
     K.dailyEventCardTitle: {'ku': 'Pirsên tevlihev', 'tr': 'Karışık sorular'},
     K.dailyEventCardBody: {
       'ku': 'Ji mijarên cuda pirsên tevlihev bibersivîne.',
@@ -1957,18 +1956,28 @@ class Tr {
       'ku': 'Ders, çîrok û ferheng',
       'tr': 'Ders, hikâye ve sözlük',
     },
-    K.homeDoorPlayTitle: {
-      'ku': 'Bi hevalan re bilîze',
-      'tr': 'Arkadaşınla yarış',
-    },
+    // Yarış kısayolu: tek, kısa ad (sekmenin adıyla aynı). Eskiden
+    // "Arkadaşınla yarış" idi ve düello satırıyla aynı kapıyı iki adla
+    // anıyordu (2026-10-24).
+    K.homeDoorPlayTitle: {'ku': 'Pêşbirk', 'tr': 'Yarış'},
     K.homeDoorPlaySub: {
-      'ku': 'Ode ava bike an hevrikekî bibîne',
-      'tr': 'Oda kur ya da rakip bul',
+      'ku': 'Ode ava bike, hevrikekî bibîne an bi dorê bilîze',
+      'tr': 'Oda kur, rakip bul ya da sırayla oyna',
     },
+    K.homeDoorPlayReady: {'ku': 'Encam amade ye', 'tr': 'Sonuç hazır'},
+    K.homeTourDoneTitle: {
+      'ku': 'Te dora îro qedand',
+      'tr': 'Bugünkü turu bitirdin',
+    },
+    K.homeTourNext: {
+      'ku': 'Dora nû piştî {h} saet û {m} deqe',
+      'tr': 'Yeni tur {h} sa {m} dk sonra',
+    },
+    K.homePractice: {'ku': 'Pratîk bike', 'tr': 'Pratik yap'},
     K.homeTopicsTitle: {'ku': 'Mijar', 'tr': 'Konular'},
     K.language: {'ku': 'Ziman', 'tr': 'Dil'},
     K.languageCode: {'ku': 'KU', 'tr': 'TR'},
-    K.dailyLesson: {'ku': 'Dersa rojê', 'tr': 'Günün dersi'},
+    K.dailyLesson: {'ku': 'Pratîk', 'tr': 'Pratik'},
     K.learningGoalTitle: {
       'ku': 'Îro tu dixwazî li ser çi bisekinî?',
       'tr': 'Bugün neye odaklanmak istersin?',
@@ -2338,7 +2347,7 @@ class Tr {
     // `contains('nîv')` taramasını kör eder — turnûva ile aynı sınıf.
     K.howToPlayBody: {
       'ku':
-          '• Pêşbirka bilez: tavilê 10 pirsan bibersivîne.\n• Pirsên '
+          '• Pêşbirka bilez: tavilê 10 pirsan bibersivîne.\n• Dora '
           'rojê: her roj 10 pirsan bibersivîne û pêşketina xwe '
           'bibîne.\n• Ode ava bike: girêdana vexwendinê bi hevalên xwe '
           're parve bike û bi hev re bilîzin.\n• Mijar û ast: mijarekê '
@@ -2346,7 +2355,7 @@ class Tr {
           'radike.\n• Bersivên rast pûan û zêr didin; bersivên rast ên '
           'li pey hev pûanên zêde didin.',
       'tr':
-          '• Hızlı düello: hemen 10 soru cevapla.\n• Günün soruları: '
+          '• Hızlı düello: hemen 10 soru cevapla.\n• Günün turu: '
           'her gün 10 soruyu cevapla ve ilerlemeni gör.\n• Oda kur: '
           'davet bağlantısını arkadaşlarınla paylaş, birlikte '
           'yarışın.\n• Konu ve seviye: bir konu ve 5 seviyeden birini '
@@ -2826,7 +2835,6 @@ class K {
   static const retry = 'common.retry';
   static const close = 'common.close';
 
-  static const navLearn = 'nav.learn';
   static const navPlay = 'nav.play';
   static const navLeaderboard = 'nav.leaderboard';
   static const navProfile = 'nav.profile';
@@ -3639,6 +3647,10 @@ class K {
   static const homeDoorLearnSub = 'home.door.learn.sub';
   static const homeDoorPlayTitle = 'home.door.play.title';
   static const homeDoorPlaySub = 'home.door.play.sub';
+  static const homeDoorPlayReady = 'home.door.play.ready';
+  static const homeTourDoneTitle = 'home.tour.doneTitle';
+  static const homeTourNext = 'home.tour.next';
+  static const homePractice = 'home.practice';
 
   /// Ana ekrandaki konu ızgarası.
   static const homeTopicsTitle = 'home.topics.title';

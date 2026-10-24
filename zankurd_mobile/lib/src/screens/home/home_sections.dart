@@ -44,6 +44,7 @@ class HomeDoorTile extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.onTap,
+    this.badge,
     super.key,
   });
 
@@ -53,6 +54,9 @@ class HomeDoorTile extends StatelessWidget {
   final String subtitle;
   final VoidCallback? onTap;
 
+  /// Kısa durum rozeti ("Sonuç hazır"); yoksa yalnız chevron.
+  final String? badge;
+
   @override
   Widget build(BuildContext context) {
     return SahneListRow.icon(
@@ -60,10 +64,15 @@ class HomeDoorTile extends StatelessWidget {
       role: role,
       title: title,
       subtitle: subtitle,
-      chevron: true,
+      chevron: badge == null,
+      trailing: badge == null
+          ? null
+          : SahneBadge(label: badge!, tone: SahneBadgeTone.race),
       enabled: onTap != null,
       onTap: onTap,
-      semanticLabel: '$title. $subtitle',
+      semanticLabel: badge == null
+          ? '$title. $subtitle'
+          : '$title. $badge. $subtitle',
     );
   }
 }

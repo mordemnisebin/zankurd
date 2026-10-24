@@ -839,7 +839,7 @@ class _AppShellState extends State<AppShell>
             key: _homeNavKey,
             child: const Icon(_learnIcon),
           ),
-          label: Text(context.t(K.navLearn)),
+          label: Text(context.t(K.home)),
         ),
         NavigationRailDestination(
           icon: KeyedSubtree(key: _playNavKey, child: const Icon(_playIcon)),
@@ -891,7 +891,7 @@ class _AppShellState extends State<AppShell>
               key: _homeNavKey,
               child: const Icon(_learnIcon),
             ),
-            label: context.t(K.navLearn),
+            label: context.t(K.home),
           ),
           NavigationDestination(
             key: const ValueKey('nav-play'),

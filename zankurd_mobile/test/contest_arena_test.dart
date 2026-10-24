@@ -166,7 +166,7 @@ void main() {
   testWidgets('ekranın adı oyun merkezindeki girişle eşleşir', (tester) async {
     // Kimlik bandı kalır: hero "Karışık sorular" der, bant ekranın adını.
     await _pump(tester);
-    expect(find.text('Günün soruları'), findsWidgets);
+    expect(find.text('Günün turu'), findsWidgets);
   });
 
   // ── Durumlar ────────────────────────────────────────────────────────────
@@ -181,7 +181,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 700));
     await tester.pump(const Duration(milliseconds: 700));
     expect(find.byType(ArenaHero), findsNothing);
-    expect(find.text('Günün soruları'), findsOneWidget);
+    expect(find.text('Günün turu'), findsOneWidget);
   });
 
   // ── Dayanıklılık ────────────────────────────────────────────────────────
