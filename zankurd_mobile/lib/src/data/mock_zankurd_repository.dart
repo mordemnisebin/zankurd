@@ -110,6 +110,9 @@ class _MockAsyncDuel {
   bool unclaimed;
 
   final Set<int> answeredIndices = {};
+
+  /// Soru sırası → benim sunucuya giden cevabım (inceleme için).
+  final Map<int, AsyncDuelReviewAnswer> myAnswers = {};
   int myCorrect = 0;
   int myMs = 0;
 
@@ -883,6 +886,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
     duel.answeredIndices.add(questionIndex);
     if (isCorrect) duel.myCorrect++;
     duel.myMs += _clampAsyncDuelResponseMs(responseMs);
+    duel.myAnswers[questionIndex] = AsyncDuelReviewAnswer(
+      choice: choice,
+      correct: isCorrect,
+      ms: _clampAsyncDuelResponseMs(responseMs),
+    );
 
     final answered = duel.answeredIndices.length;
     final total = duel.questions.length;
@@ -950,6 +958,74 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<void> markAsyncDuelSeen(String duelId) async {
     _asyncDuels[duelId]?.seen = true;
+  }
+
+  /// Testin belirli bir düello için sunucu incelemesini sabitlemesi
+  /// (`get_async_duel_review` yanıtı). Yoksa [loadAsyncDuelReview] düelloyu
+  /// bellekteki cevaplardan türetir.
+  @visibleForTesting
+  final Map<String, AsyncDuelReview> asyncDuelReviewsForTesting = {};
+
+  /// Testin sunucuda inceleme RPC'sinin olmadığı (göç uygulanmamış)
+  /// durumu denemesi için.
+  @visibleForTesting
+  bool asyncDuelReviewSupportedForTesting = true;
+
+  /// [loadAsyncDuelReview] çağrıları (testler hangi düelloların açıldığını
+  /// buradan doğrular).
+  @visibleForTesting
+  final List<String> reviewedAsyncDuelIdsForTesting = [];
+
+  @override
+  Future<AsyncDuelReview?> loadAsyncDuelReview(String duelId) async {
+    if (!asyncDuelReviewSupportedForTesting) return null;
+    reviewedAsyncDuelIdsForTesting.add(duelId);
+    final pinned = asyncDuelReviewsForTesting[duelId];
+    if (pinned != null) return pinned;
+    final duel = _asyncDuels[duelId];
+    if (duel == null) throw StateError('Duel not found');
+    final finished =
+        duel.status == AsyncDuelStatus.completed ||
+        (duel.status == AsyncDuelStatus.expired && duel.forfeitIWon != null);
+    if (!finished) throw StateError('Duel not finished');
+    const letters = ['A', 'B', 'C', 'D'];
+    final otherCorrect = duel.otherCorrect ?? 0;
+    return AsyncDuelReview(
+      duelId: duelId,
+      isForfeit: duel.forfeitIWon != null,
+      // Sahte depoda gerçek bir ikinci oyuncu kimliği yok: rövanş kapalı.
+      opponentName: duel.opponentName,
+      opponentBlocked: false,
+      opponentIsFriend: false,
+      canRematch: false,
+      questions: [
+        for (var i = 0; i < duel.questions.length; i++)
+          AsyncDuelReviewQuestion(
+            index: i,
+            prompt: duel.questions[i].prompt,
+            options: {
+              for (var a = 0; a < duel.questions[i].answers.length; a++)
+                letters[a]: duel.questions[i].answers[a],
+            },
+            correctOption:
+                letters[duel.questions[i].answers
+                    .indexOf(duel.questions[i].correctAnswer)
+                    .clamp(0, 3)],
+            mine: duel.myAnswers[i],
+            opponent: duel.otherFinished
+                ? AsyncDuelReviewAnswer(
+                    choice: i < otherCorrect
+                        ? letters[duel.questions[i].answers
+                              .indexOf(duel.questions[i].correctAnswer)
+                              .clamp(0, 3)]
+                        : 'TIMEOUT',
+                    correct: i < otherCorrect,
+                    ms: 2500,
+                  )
+                : null,
+          ),
+      ],
+    );
   }
 
   // ─── Dürtme + profil maç geçmişi ──────────────────────────────────────

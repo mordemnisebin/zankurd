@@ -256,7 +256,9 @@ AsyncDuelChallengeError classifyAsyncDuelChallengeError(Object error) {
     return AsyncDuelChallengeError.notReady;
   }
   if (text.contains('Not a friend')) return AsyncDuelChallengeError.notAFriend;
-  if (text.contains('Too many open duels')) {
+  // 'Too many invites': arkadaş olmayan aynı kişiye 24 saatte 4. rövanş.
+  if (text.contains('Too many open duels') ||
+      text.contains('Too many invites')) {
     return AsyncDuelChallengeError.tooMany;
   }
   if (text.contains('No questions')) return AsyncDuelChallengeError.noQuestions;
@@ -629,4 +631,172 @@ class AsyncDuelSummary {
     isForfeit: isForfeit,
     lastNudgedAt: at,
   );
+}
+
+/// Düello incelemesindeki tek bir oyuncunun tek bir soruya cevabı.
+///
+/// [choice]: 'A'..'D' ya da `TIMEOUT` (20 sn doldu; sunucu her zaman yanlış
+/// sayar). Cevaplanmamış soru için bu nesne HİÇ kurulmaz
+/// ([AsyncDuelReviewQuestion.mine] / [AsyncDuelReviewQuestion.opponent]
+/// null olur) — "yanlış" ile "hiç oynamadı" karışmasın diye.
+class AsyncDuelReviewAnswer {
+  const AsyncDuelReviewAnswer({
+    required this.choice,
+    required this.correct,
+    required this.ms,
+  });
+
+  final String choice;
+  final bool correct;
+  final int ms;
+
+  /// Süre dolduğu için verilen boş cevap: şık yok, süre değeri anlamsız.
+  bool get timedOut => choice == 'TIMEOUT';
+
+  factory AsyncDuelReviewAnswer.fromJson(Map<String, dynamic> json) {
+    return AsyncDuelReviewAnswer(
+      choice: json['choice'] as String,
+      correct: json['correct'] as bool,
+      ms: (json['ms'] as num).toInt(),
+    );
+  }
+}
+
+/// `get_async_duel_review` içindeki tek soru: metin, şıklar, doğru şık ve iki
+/// tarafın cevabı.
+class AsyncDuelReviewQuestion {
+  const AsyncDuelReviewQuestion({
+    required this.index,
+    required this.prompt,
+    required this.options,
+    required this.correctOption,
+    this.mine,
+    this.opponent,
+  });
+
+  /// 0..6, düellodaki soru sırası.
+  final int index;
+  final String prompt;
+
+  /// Dolu şıklar: harf ('A'..'D') → metin, sunucudaki sırayla. Boş ya da
+  /// '-' şık yoktur (doğru/yanlış sorusunda yalnız A ve B).
+  final Map<String, String> options;
+  final String correctOption;
+  final AsyncDuelReviewAnswer? mine;
+
+  /// Engelli çiftte ya da rakip o soruyu hiç cevaplamadıysa null.
+  final AsyncDuelReviewAnswer? opponent;
+
+  /// Doğru şıkkın metni; bilinmiyorsa harf.
+  String get correctText => options[correctOption] ?? correctOption;
+
+  /// [answer]ın seçtiği şıkkın metni; süre dolduysa null.
+  String? choiceText(AsyncDuelReviewAnswer answer) =>
+      answer.timedOut ? null : (options[answer.choice] ?? answer.choice);
+
+  factory AsyncDuelReviewQuestion.fromJson(Map<String, dynamic> json) {
+    final options = <String, String>{};
+    for (final letter in const ['A', 'B', 'C', 'D']) {
+      final raw = json['option_${letter.toLowerCase()}'] as String?;
+      if (raw != null && raw.trim().isNotEmpty && raw.trim() != '-') {
+        options[letter] = raw;
+      }
+    }
+    final rawMine = json['my'];
+    final rawOpp = json['opp'];
+    return AsyncDuelReviewQuestion(
+      index: (json['index'] as num).toInt(),
+      prompt: json['prompt'] as String,
+      options: Map.unmodifiable(options),
+      correctOption: (json['correct_option'] as String).trim(),
+      mine: rawMine == null
+          ? null
+          : AsyncDuelReviewAnswer.fromJson(
+              Map<String, dynamic>.from(rawMine as Map),
+            ),
+      opponent: rawOpp == null
+          ? null
+          : AsyncDuelReviewAnswer.fromJson(
+              Map<String, dynamic>.from(rawOpp as Map),
+            ),
+    );
+  }
+}
+
+/// `get_async_duel_review(p_duel_id)` yanıtı: BİTMİŞ bir düellonun soru soru
+/// karşılaştırması (`supabase/2026-10-24_duello_inceleme_rovans.sql`).
+///
+/// Sunucu yalnız katılımcıya ve yalnız bitmiş düelloda döner; süren
+/// düelloda hiçbir cevap açılmaz. Aramızda engel varsa [opponentBlocked]
+/// true, [opponentId] / [opponentName] null ve her sorunun
+/// [AsyncDuelReviewQuestion.opponent]ı null gelir — kendi incelemem yine
+/// açıktır.
+class AsyncDuelReview {
+  AsyncDuelReview({
+    required this.duelId,
+    required this.isForfeit,
+    required this.opponentBlocked,
+    required this.opponentIsFriend,
+    required this.canRematch,
+    this.rematchLimitReached = false,
+    required List<AsyncDuelReviewQuestion> questions,
+    this.opponentId,
+    this.opponentName,
+  }) : questions = List.unmodifiable(questions);
+
+  final String duelId;
+  final bool isForfeit;
+  final String? opponentId;
+  final String? opponentName;
+  final bool opponentBlocked;
+  final bool opponentIsFriend;
+
+  /// Sunucunun hesabı: rakip var, engel yok ve kabul edilmiş arkadaş
+  /// (`create_async_duel_challenge` arkadaş olmayana 'Not a friend' verir).
+  final bool canRematch;
+
+  /// Arkadaş olmayan rakibe bugünkü 3 rövanş daveti doldu: düğme kapalı,
+  /// "yarın tekrar dene" der.
+  final bool rematchLimitReached;
+  final List<AsyncDuelReviewQuestion> questions;
+
+  /// Rakibin en az bir cevabı görünür mü (engelde ya da hiç oynamadıysa
+  /// değil): sütun yalnız o zaman çizilir.
+  bool get hasOpponentAnswers => questions.any((q) => q.opponent != null);
+
+  factory AsyncDuelReview.fromJson(Map<String, dynamic> json) {
+    final rawQuestions = json['questions'] as List;
+    return AsyncDuelReview(
+      duelId: json['duel_id'] as String,
+      isForfeit: json['forfeit'] as bool? ?? false,
+      opponentId: json['opponent_id'] as String?,
+      opponentName: json['opponent_name'] as String?,
+      opponentBlocked: json['opponent_blocked'] as bool? ?? false,
+      opponentIsFriend: json['opponent_is_friend'] as bool? ?? false,
+      canRematch: json['can_rematch'] as bool? ?? false,
+      rematchLimitReached: json['rematch_limit_reached'] as bool? ?? false,
+      questions: rawQuestions
+          .map(
+            (row) => AsyncDuelReviewQuestion.fromJson(
+              Map<String, dynamic>.from(row as Map),
+            ),
+          )
+          .toList(growable: false),
+    );
+  }
+}
+
+/// `get_async_duel_review` reddinin sınıfı. [notAvailable]: düello henüz
+/// bitmedi / ben katılımcı değilim / düello yok — ekran bölümü sessizce
+/// gizler. [other]: geçici hata, "Yeniden dene" gösterilir.
+enum AsyncDuelReviewError { notAvailable, other }
+
+AsyncDuelReviewError classifyAsyncDuelReviewError(Object error) {
+  final text = error.toString();
+  if (text.contains('Duel not finished') ||
+      text.contains('Not a duel player') ||
+      text.contains('Duel not found')) {
+    return AsyncDuelReviewError.notAvailable;
+  }
+  return AsyncDuelReviewError.other;
 }
