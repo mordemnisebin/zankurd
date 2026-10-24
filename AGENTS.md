@@ -39,9 +39,10 @@ Orkestra (çok modelli çalışma; şef hangi araçtaysa — Claude Code, Antigr
   - Şef / kod yazma: Claude Opus 5.5 High (agy) → Claude Sonnet 5.5 High (agy) → Codex `gpt-6.1-sol` → MiMo (OpenCode, ücretsiz, ayrı worktree'de).
   - (2026-10-25 agy listesi: gemini-4-argon-*, gemini-3.8-flash-*, claude-opus-5-5-*, claude-sonnet-5-5-*, gpt-oss; Gemini 3.1 Pro ve Opus 4.6 KALKTI. Gemini 4 Argon yeni, sınanmadı: önce ikinci göz olarak kullan, sonucunu buraya yaz.)
   - Kod inceleme / zor hata: Codex `gpt-6-astra` ya da `gpt-6.1-sol` → Gemini 4 Argon High (agy).
-  - Kurmancî denetim: Gemini 3.8 Flash (agy) + Grok 4.7 (cursor-agent). Taslak: Muse Spark (OpenCode).
+  - Kurmancî denetim: Gemini 3.8 Flash (agy) + Grok 4.7 (cursor-agent). Taslak / üçüncü oy: DeepSeek V4.1 Flash (OpenCode, ücretsiz).
   - Bilgi doğrulama: Gemini 4 Argon + MiMo (web araması) çapraz.
   - Mekanik iş: Gemini 3.8 Flash; çıktıyı mutlaka doğrula.
+  - OpenCode ücretsiz (2026-10-25 sınavı, 4 bilinen Kurmancî maddesi): DeepSeek V4.1 Flash 4/4, 13 sn — en iyi ücretsiz işçi (Kurmancî, bilgi, kod). Nemotron 3 Ultra ve Inkling (openrouter) 3/4; GLM 5.3 Flash ~2/4; MiMo 2/4 ve 5 dk (yalnız kod); Beam ve Flint her şeye OK diyor → KULLANMA. Muse Spark ve Space Bunny listeden kalktı.
   - Gemini CLI (`gemini`) KULLANILAMAZ: ücretsiz bireysel plan bu istemciyi kapattı, Antigravity'ye yönlendiriyor (2026-10-25).
   - KULLANMA: Space Bunny, gpt-oss, NVIDIA (gemma/nemotron/glm/kimi) — Kurmancî ve bilgide zayıf. Cursor'da Opus/GPT-5.6 kotası 2026-11-19'a kadar dolu.
 - Çağrılar (hep `< /dev/null`; salt metin işi BOŞ bir klasörde, kod işi ayrı git worktree'de):
