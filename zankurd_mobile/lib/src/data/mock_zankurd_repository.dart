@@ -1345,8 +1345,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   /// Gün bazlı sabit tohum: aynı gün herkes aynı sırayı görür.
-  static int dailySeed() {
-    final now = DateTime.now().toUtc();
+  static int dailySeed([DateTime? at]) {
+    // İstanbul günü ([contestDayKey]): sunucu sıralaması, "bugün bitti"
+    // bayrağı ve geri sayımla AYNI sınır (UTC günü 00:00–03:00 arası dünün
+    // setini veriyordu).
+    final now = contestDayKey(at ?? DateTime.now());
     return now.year * 10000 + now.month * 100 + now.day;
   }
 

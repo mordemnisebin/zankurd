@@ -5,6 +5,7 @@ import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
 
 import '../models/achievement.dart';
+import '../models/contest.dart';
 import '../models/player.dart';
 import '../utils/error_reporter.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -243,10 +244,11 @@ class AchievementStore {
   /// 2026-09-30 canlı: tur bittikten sonra Yarış > Pirsên rojê sayfası hâlâ
   /// "Bugün" ve "Başla" diyordu, çünkü tamamlanma hiçbir yerde günle
   /// birlikte tutulmuyordu; yalnız toplam sayaç ([_dailyQuizCompletions],
-  /// "5 kez" rozeti için) vardı. Gün, yerel takvim günüdür (görev
-  /// deposuyla aynı); yarım bırakılan tur sonuç ekranına varmadığı için
+  /// "5 kez" rozeti için) vardı. Gün, İstanbul takvim günüdür
+  /// ([contestDayKey]; sunucu sıralaması ve soru tohumuyla aynı); yarım bırakılan tur sonuç ekranına varmadığı için
   /// yazılmaz.
-  bool dailyQuizDoneOn(DateTime day) => _dailyQuizLastDay == _dayString(day);
+  bool dailyQuizDoneOn(DateTime day) =>
+      _dailyQuizLastDay == contestDayString(day);
 
   Set<String> get unlockedIds => Set.unmodifiable(_unlockedIds);
   List<Achievement> get unlockedAchievements => definitions
@@ -277,7 +279,7 @@ class AchievementStore {
   /// Bir turda yapılmış en uzun doğru serisi.
   int get bestRoundStreak => _bestRoundStreak;
 
-  /// Günün turunun (yerel günde en çok bir kez sayılan) tamamlanma sayısı.
+  /// Günün turunun (İstanbul gününde en çok bir kez sayılan) tamamlanma sayısı.
   int get dailyQuizCompletions => _dailyQuizCompletions;
 
   /// Oynanmış gerekli konu sayısı.
@@ -361,12 +363,12 @@ class AchievementStore {
       _playedCategories.add(category);
     }
     if (dailyQuiz) {
-      // Günün soruları aynı gün tekrar oynanabilir; sayaç yerel günde EN
+      // Günün soruları aynı gün tekrar oynanabilir; sayaç İstanbul gününde EN
       // ÇOK bir kez artar, yoksa "5 kez" rozeti tek günde açılırdı (bkz.
       // test/daily_quiz_badge_once_per_day_test.dart).
       // Yalnız kayıtlı son günden İLERİ tarih sayılır: saat 24→23→24
       // oynatılınca `!=` kontrolü aynı takvim gününü yeniden sayıyordu.
-      final today = _dayString(now ?? DateTime.now());
+      final today = contestDayString(now ?? DateTime.now());
       final last = _dailyQuizLastDay;
       if (last == null || today.compareTo(last) > 0) {
         _dailyQuizCompletions += 1;

@@ -312,6 +312,25 @@ class DailyEventBoard {
   }
 }
 
+/// Günün turunun TEK gün anahtarı: [now] anının Europe/Istanbul takvim günü
+/// (UTC gece yarısı olarak). Türkiye UTC+3 sabittir, yaz saati uygulamaz.
+///
+/// Soru tohumu, "bugün bitti" bayrağı, geri sayım ve sunucunun `app_today()`
+/// günü bunu paylaşır; biri UTC, biri cihaz günü olunca 00:00–03:00 arası
+/// dünün seti bugünün sıralamasına giriyordu (bkz. `contest_day_key_test`).
+DateTime contestDayKey(DateTime now) {
+  final istanbul = now.toUtc().add(const Duration(hours: 3));
+  return DateTime.utc(istanbul.year, istanbul.month, istanbul.day);
+}
+
+/// [contestDayKey] için `yyyy-MM-dd`.
+String contestDayString(DateTime now) {
+  final d = contestDayKey(now);
+  return '${d.year.toString().padLeft(4, '0')}-'
+      '${d.month.toString().padLeft(2, '0')}-'
+      '${d.day.toString().padLeft(2, '0')}';
+}
+
 /// Günün yarışmasının bir sonraki sıfırlanma anı (UTC).
 ///
 /// Sunucu günü `app_today()` = Europe/Istanbul takvim günüdür
