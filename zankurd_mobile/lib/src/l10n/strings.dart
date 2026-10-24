@@ -2694,10 +2694,7 @@ class Tr {
     },
 
     // ── Yasal bağlantılar ─────────────────────────────────────────
-    K.privacyPolicy: {
-      'ku': 'Politîkaya nepenîtiyê',
-      'tr': 'Gizlilik politikası',
-    },
+    K.privacyPolicy: {'ku': 'Polîtîkaya nepeniyê', 'tr': 'Gizlilik politikası'},
     K.termsOfUse: {'ku': 'Mercên bikaranînê', 'tr': 'Kullanım koşulları'},
 
     // ── Oda sohbeti ───────────────────────────────────────────────
@@ -2869,7 +2866,7 @@ class Tr {
     // bağlantıdır (sırayla şartlar, gizlilik); bkz. widgets/consent_line.dart.
     K.signInConsent: {
       'ku':
-          'Bi berdewamiyê, tu [Mercên bikaranînê] û [Politîkaya nepenîtiyê] '
+          'Bi berdewamkirinê, tu [Mercên bikaranînê] û [Polîtîkaya nepeniyê] '
           'qebûl dikî.',
       'tr':
           'Devam ederek [Kullanım Şartları] ve [Gizlilik Politikası]\'nı '
