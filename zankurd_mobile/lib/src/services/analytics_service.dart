@@ -69,8 +69,15 @@ class AnalyticsService {
   }
 
   /// Quiz başlatma olayı.
-  Future<void> logQuizStart({required String category, required String mode}) =>
-      logEvent('quiz_start', {'category': category, 'mode': mode});
+  Future<void> logQuizStart({
+    required String category,
+    required String mode,
+    String? roundId,
+  }) => logEvent('quiz_start', {
+    'category': category,
+    'mode': mode,
+    if (roundId != null && roundId.isNotEmpty) 'round_id': roundId,
+  });
 
   /// Quiz tamamlama olayı.
   Future<void> logQuizComplete({
@@ -79,12 +86,29 @@ class AnalyticsService {
     required int totalQuestions,
     required int xpEarned,
     String mode = 'solo',
+    String? roundId,
   }) => logEvent('quiz_complete', {
     'category': category,
     'mode': mode,
+    if (roundId != null && roundId.isNotEmpty) 'round_id': roundId,
     'correct': correctCount,
     'total': totalQuestions,
     'xp': xpEarned,
+  });
+
+  /// Hikâye sonuna ulaşma olayı.
+  Future<void> logStoryComplete({
+    required String storyId,
+    required String nodeId,
+  }) => logEvent('story_complete', {'story_id': storyId, 'node_id': nodeId});
+
+  /// Kelime tekrarı oturumu tamamlama olayı.
+  Future<void> logReviewComplete({
+    required int correctCount,
+    required int totalCount,
+  }) => logEvent('review_complete', {
+    'correct': correctCount,
+    'total': totalCount,
   });
 
   /// Rozet kazanma olayı.

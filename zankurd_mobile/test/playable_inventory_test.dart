@@ -189,7 +189,11 @@ void main() {
       // (offline_2818 cevabı ele veriyor, edit_ziman_0003 yinelenen bilgi).
       // 3304 -> 3303 (-1): 2026-10-24 ds_cografya_0030 yakın tekrar emeklisi.
       // 3303 -> 3301 (-2): 2026-10-24 hat_0062 ve hat_0071 yakın tekrar emeklisi.
-      3301,
+      // 3301 -> 3304 (+3): 2026-10-24 community_questions.json içindeki 28
+      // needsReview sorusu iki model (Gemini 3.8 Flash + Grok 4.7) ve ikinci göz
+      // (Codex gpt-6.1-sol + Grok 4.7) uzlaşısıyla karara bağlandı: 3 soru
+      // kaynaklanıp approved oldu, 25 soru rejected olarak işaretlendi.
+      3304,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -227,10 +231,6 @@ void main() {
     }
 
     expect(byReason, {
-      // 37 -> 28: 2026-09-02 yedi curated Kurmancî yeniden yazıldı;
-      // Amed ve YPJ kaynaklanıp onaylandı. 12 sinema kaydı mevcut
-      // bankalarla yakın tekrar; 16 künyesiz topluluk + 14 rejected duruyor.
-      'reviewStatus=${ReviewStatus.needsReview}': 28,
       // 14 -> 13: reddedilmiş bir kayıt gizlenen kategorilerden birinde;
       // gizli kategori gerekçesiyle sayılıyordu.
       // 13 -> 14: 2026-09-30 üç kategori yeniden açıldı, o kayıt yine
@@ -238,7 +238,9 @@ void main() {
       // 14 -> 13: 2026-09-30 dördüncü dalga; reddedilmiş o kayıt
       // Paradigma'nın emekli listesine de girdi ve gerekçe olarak
       // `retired` önce sayıldığı için artık oradan sayılıyor.
-      'reviewStatus=${ReviewStatus.rejected}': 13,
+      // 13 -> 38 (+25): 2026-10-24 community_questions.json içindeki 28
+      // needsReview sorudan 3'ü approved, 25'i rejected oldu (needsReview=0).
+      'reviewStatus=${ReviewStatus.rejected}': 38,
       // 2026-09-27 içerik denetimi: Kürtlerle bağı olmayan dünya bilgisi.
       // 2026-09-27 ikinci denetim: `offline_tf_` tanım takası kalıbında
       // farklı türden çift (87) + Ziman'da hiç "Rast" örneği olmayan kalıp

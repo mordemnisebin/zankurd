@@ -6,6 +6,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/mini_guide.dart';
 import '../models/story.dart';
+import '../services/analytics_service.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/lexicon_speak_button.dart';
 import '../widgets/sahne/sahne.dart';
@@ -68,7 +69,13 @@ class _StoryScreenState extends State<StoryScreen> {
     try {
       final store = await StoryProgressStore.load();
       await store.saveNode(widget.story.id, next.id);
-      if (next.isEnding) await store.markCompleted(widget.story.id);
+      if (next.isEnding) {
+        await store.markCompleted(widget.story.id);
+        AnalyticsService.instance.logStoryComplete(
+          storyId: widget.story.id,
+          nodeId: next.id,
+        );
+      }
     } catch (error, stack) {
       // Kayıt yazılamasa da hikâye bellekte ilerler.
       ErrorReporter.record(error, stack, reason: 'story saveNode failed');

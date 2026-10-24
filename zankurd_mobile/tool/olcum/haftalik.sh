@@ -32,8 +32,8 @@ rows = json.loads(t[t.index("{"):]).get("rows", [])
 if not rows:
     print("(kayıt yok)")
     sys.exit(0)
-cols = ["mod","baslayan_tur","biten_tur","bitis_baslangic_yuzde","baslayan_kisi","bitiren_kisi"]
-head = ["mod","başlangıç","bitiş","bitiş/baş%","başlayan kişi","bitiren kişi"]
+cols = ["mod","baslayan_tur","biten_tur","eslesen_tur","bitis_baslangic_yuzde","baslayan_kisi","bitiren_kisi"]
+head = ["mod","başlangıç","bitiş","eşleşen tur","bitiş/baş%","başlayan kişi","bitiren kişi"]
 w = [max(len(h), *(len(str(r.get(c) if r.get(c) is not None else "-")) for r in rows)) for h, c in zip(head, cols)]
 print("  ".join(h.rjust(x) for h, x in zip(head, w)))
 for r in rows:

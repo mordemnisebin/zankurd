@@ -5,6 +5,7 @@ import 'package:zankurd_mobile/src/data/learner_lexicon.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/models/lesson.dart';
+import 'package:zankurd_mobile/src/models/mini_guide.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 
@@ -216,7 +217,14 @@ void main() {
       final seed = File(
         'supabase/2026-07-06_lesson_seed.sql',
       ).readAsStringSync();
-      corpus = ' ${_tokens('$slideText $questionText $seed').join(' ')} ';
+      final guideKu = [
+        for (final guide in everydayGuides.values) ...[
+          for (final w in guide.newWords) w.ku,
+          for (final e in guide.examples) e.ku,
+        ],
+      ].join(' ');
+      corpus =
+          ' ${_tokens('$slideText $questionText $seed $guideKu').join(' ')} ';
     });
 
     test('derslerde öğretilen her çift sözlükte vardır', () async {

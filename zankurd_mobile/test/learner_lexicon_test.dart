@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/learner_lexicon.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
+import 'package:zankurd_mobile/src/models/mini_guide.dart';
 
 void main() {
   test('öğrenen sözlüğü benzersiz ve kaynaklı kayıtlar içerir', () {
@@ -53,11 +54,16 @@ void main() {
         'time_seasons',
       };
       // 'questions' (Sorulardan): sözcükler ders değil soru bankasından
-      // gelir; terim ya da biçimlerinden biri bankada geçmelidir.
-      final bank = QuestionBankLoader.instance.allQuestions
-          .map((q) => '${q.prompt} ${q.explanationKu} ${q.explanation}')
-          .join(' ')
-          .toLowerCase();
+      // ve hikâye mini rehberlerinin Kurmancî alanlarından gelir; terim ya da
+      // biçimlerinden biri bankada ya da rehberde geçmelidir.
+      final guideKuText = [
+        for (final guide in everydayGuides.values) ...[
+          for (final w in guide.newWords) w.ku,
+          for (final e in guide.examples) e.ku,
+        ],
+      ].join(' ').toLowerCase();
+      final bank =
+          '${QuestionBankLoader.instance.allQuestions.map((q) => '${q.prompt} ${q.explanationKu} ${q.explanation}').join(' ').toLowerCase()} $guideKuText';
       final seed = File(
         'supabase/2026-07-06_lesson_seed.sql',
       ).readAsStringSync().toLowerCase();
@@ -108,4 +114,32 @@ void main() {
     expect(covered, hasLength(40));
     expect(covered.contains('time_1'), isTrue);
   });
+
+  test(
+    'hikâye mini rehberlerindeki her yeni sözcük (everydayGuides.newWords) sözlükte karşılık bulur',
+    () {
+      for (final entry in everydayGuides.entries) {
+        for (final word in entry.value.newWords) {
+          final match = LearnerLexicon.lookup(word.ku);
+          expect(
+            match,
+            isNotNull,
+            reason:
+                '${entry.key} rehberindeki "${word.ku}" (${word.tr}) sözlükte eşleşmedi',
+          );
+          final wordKey = LearnerLexicon.strictWordKey(word.ku);
+          final entryKeys = [
+            match!.termKu,
+            ...match.forms,
+          ].map(LearnerLexicon.strictWordKey);
+          expect(
+            entryKeys,
+            contains(wordKey),
+            reason:
+                '${entry.key} rehberindeki "${word.ku}" yalnız önek ile değil tam biçimle eşleşmeli',
+          );
+        }
+      }
+    },
+  );
 }

@@ -7,14 +7,18 @@ import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/data/learner_lexicon.dart';
 import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/data/story_progress_store.dart';
 import 'package:zankurd_mobile/src/data/word_list_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/mini_guide.dart';
+import 'package:zankurd_mobile/src/models/question_metadata.dart';
 import 'package:zankurd_mobile/src/models/story.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/story_screen.dart';
+import 'package:zankurd_mobile/src/screens/word_drill_screen.dart';
+import 'package:zankurd_mobile/src/services/analytics_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 import '../tool/question_quality/src/checks.dart';
@@ -43,12 +47,71 @@ void main() {
     AchievementStore.resetInstance();
   });
 
-  test('shoppingGuide standart Kurmancî "biha" yazar ve sözlükle eşleşir', () {
-    final words = shoppingGuide.newWords.map((w) => w.ku).toList();
-    expect(words, contains('biha'));
-    expect(words, isNot(contains('bihâ')));
-    expect(LearnerLexicon.lookup('biha')?.id, 'biha');
+  tearDown(() => AnalyticsService.instance.debugEventSink = null);
+
+  test(
+    'shoppingGuide ve tüm everydayGuides kelimeleri (15/15) sözlükle eşleşir',
+    () {
+      final words = shoppingGuide.newWords.map((w) => w.ku).toList();
+      expect(words, contains('biha'));
+      expect(words, isNot(contains('bihâ')));
+      expect(LearnerLexicon.lookup('biha')?.id, 'biha');
+      expect(LearnerLexicon.lookup('şekir')?.id, 'q-sekir');
+      expect(LearnerLexicon.lookup('xizmetkar')?.id, 'q-xizmetkar');
+      expect(LearnerLexicon.lookup('kîlo')?.id, 'q-kilo');
+      expect(LearnerLexicon.lookup('li kêleka')?.id, 'q-li-keleka');
+      for (final guide in everydayGuides.values) {
+        for (final w in guide.newWords) {
+          expect(LearnerLexicon.lookup(w.ku), isNotNull, reason: w.ku);
+        }
+      }
+    },
+  );
+
+  test('soru bankasında needsReview durumunda bekleyen soru kalmaz', () {
+    final pending = QuestionBankLoader.instance.allQuestions
+        .where((q) => q.metadata?.reviewStatus == ReviewStatus.needsReview)
+        .map((q) => q.id)
+        .toList();
+    expect(pending, isEmpty);
   });
+
+  test(
+    'logQuizStart ve logQuizComplete round_id parametresini taşır',
+    () async {
+      final events = <(String, Map<String, Object>?)>[];
+      AnalyticsService.instance.debugEventSink = (name, params) {
+        events.add((name, params));
+      };
+      await AnalyticsService.instance.logQuizStart(
+        category: 'Ziman',
+        mode: 'solo',
+        roundId: 'r-123',
+      );
+      await AnalyticsService.instance.logQuizComplete(
+        category: 'Ziman',
+        mode: 'solo',
+        roundId: 'r-123',
+        correctCount: 4,
+        totalQuestions: 5,
+        xpEarned: 90,
+      );
+      expect(events.map((e) => e.$1).toList(), ['quiz_start', 'quiz_complete']);
+      expect(events[0].$2, {
+        'category': 'Ziman',
+        'mode': 'solo',
+        'round_id': 'r-123',
+      });
+      expect(events[1].$2, {
+        'category': 'Ziman',
+        'mode': 'solo',
+        'round_id': 'r-123',
+        'correct': 4,
+        'total': 5,
+        'xp': 90,
+      });
+    },
+  );
 
   test('hat_0062 ve hat_0071 emekli, ds_cografya_0007 oynanabilir kalır', () {
     expect(isQuestionRetired('hat_0062'), isTrue);
@@ -102,25 +165,36 @@ void main() {
   );
 
   testWidgets(
-    'StoryScreen mini rehberde ve bitiş ekranında kelimeleri WordListStore kuyruğuna kaydeder',
+    'StoryScreen mini rehberde ve bitiş ekranında kelimeleri WordListStore kuyruğuna kaydeder ve story_complete üretir',
     (tester) async {
+      final events = <(String, Map<String, Object>?)>[];
+      AnalyticsService.instance.debugEventSink = (name, params) {
+        events.add((name, params));
+      };
       await tester.pumpWidget(
         _wrap(StoryScreen(story: cayxaneStory, guide: cayxaneGuide)),
       );
       await tester.pumpAndSettle();
 
-      // Mini rehberi aç ve "çay" kelimesini kaydet.
+      // Mini rehberi aç; 5 kelimenin tamamında (şekir ve xizmetkar dahil) kaydet düğmesi görünür.
       await tester.tap(find.byKey(const ValueKey('story-open-guide')));
       await tester.pumpAndSettle();
       final saveCayInGuide = find.byKey(const ValueKey('word-save-cay'));
       expect(saveCayInGuide, findsOneWidget);
+      expect(find.byKey(const ValueKey('word-save-q-sekir')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('word-save-q-xizmetkar')),
+        findsOneWidget,
+      );
       await tester.tap(saveCayInGuide);
       await tester.pumpAndSettle();
 
       final store = await WordListStore.load();
       expect(store.contains('cay'), isTrue);
 
-      // Rehberi kapat, hikâyeyi son düğüme ilerlet ve bitiş kelime kartını doğrula.
+      // Rehberi kapat, hikâyeyi son düğüme ilerlet ve bitiş kelime kartını + story_complete olayını doğrula.
+      await tester.ensureVisible(find.text('Anladım'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Anladım'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Bir çay, lütfen.'));
@@ -130,6 +204,34 @@ void main() {
 
       expect(find.byKey(const ValueKey('story-ending-words')), findsOneWidget);
       expect(find.byKey(const ValueKey('word-save-spas')), findsOneWidget);
+      final storyComplete = events.firstWhere((e) => e.$1 == 'story_complete');
+      expect(storyComplete.$2, {'story_id': 'cayxane', 'node_id': 'end_warm'});
+    },
+  );
+
+  testWidgets(
+    'WordDrillScreen oturumu bitirince review_complete olayı üretir',
+    (tester) async {
+      final events = <(String, Map<String, Object>?)>[];
+      AnalyticsService.instance.debugEventSink = (name, params) {
+        events.add((name, params));
+      };
+      final store = await WordListStore.load();
+      await store.add('av', now: DateTime(2026, 10, 20));
+
+      await tester.pumpWidget(_wrap(WordDrillScreen(store: store)));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Su'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('word-review-next')));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('word-review-done')), findsOneWidget);
+      final reviewComplete = events.firstWhere(
+        (e) => e.$1 == 'review_complete',
+      );
+      expect(reviewComplete.$2, {'correct': 1, 'total': 1});
     },
   );
 

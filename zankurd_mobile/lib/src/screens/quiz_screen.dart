@@ -611,6 +611,19 @@ class _QuizScreenState extends State<QuizScreen>
     AnalyticsService.instance.logQuizStart(
       category: widget.room.category,
       mode: _quizModeLabel,
+      roundId: _soloRoundId,
+    );
+    unawaited(
+      widget.repository
+          .logAnalyticsEvent('quiz_start', {
+            'category': widget.room.category,
+            'mode': _quizModeLabel,
+            'round_id': _soloRoundId,
+          })
+          .catchError((error, stack) {
+            ErrorReporter.record(error, stack, reason: 'quiz start analytics');
+            return false;
+          }),
     );
 
     _initializeQuestionAudio();
@@ -3282,6 +3295,7 @@ class _QuizScreenState extends State<QuizScreen>
             dailyQuiz: widget.dailyQuiz,
             isLearningExperience: _isLearningExperience,
             contestId: widget.contestId,
+            roundId: _soloRoundId,
           ),
         ),
         result: _completionResult(),
@@ -3939,6 +3953,7 @@ class _QuizScreenState extends State<QuizScreen>
             dailyQuiz: widget.dailyQuiz,
             isLearningExperience: _isLearningExperience,
             contestId: widget.contestId,
+            roundId: _soloRoundId,
           ),
         ),
         // Yarıda çıkıştan (null) ayırt etmek için tamamlanma sinyali.

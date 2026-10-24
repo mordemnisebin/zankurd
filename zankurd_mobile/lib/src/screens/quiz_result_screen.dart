@@ -97,6 +97,7 @@ class QuizResultScreen extends StatefulWidget {
     this.dailyQuiz = false,
     this.isLearningExperience = false,
     this.contestId,
+    this.roundId,
     this.resultOwnerUserId,
     this.rewardSettlementState,
     this.receiptRunner,
@@ -146,6 +147,7 @@ class QuizResultScreen extends StatefulWidget {
   final bool dailyQuiz;
   final bool isLearningExperience;
   final String? contestId;
+  final String? roundId;
 
   /// Yalnız sunucudan geri kazanılan/tamamlanan online sonuç tesliminde
   /// kullanılır. Eski solo ve online çağrılar bu alanları vermeden çalışır.
@@ -674,9 +676,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   ) async {
     await _recordProgress(streakOutcome ?? await _fallbackStreak());
     try {
+      final roundId = widget.roundId;
       await repository.logAnalyticsEvent('quiz_complete', {
         'category': widget.room.category,
         'mode': _quizModeLabel,
+        if (roundId != null && roundId.isNotEmpty) 'round_id': roundId,
         'correct_count': widget.correctCount,
         'total_questions': widget.totalQuestions,
         'score': widget.score,
@@ -1158,6 +1162,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     AnalyticsService.instance.logQuizComplete(
       category: room.category,
       mode: _quizModeLabel,
+      roundId: widget.roundId,
       correctCount: correctCount,
       totalQuestions: totalQuestions,
       xpEarned: earnedXP,

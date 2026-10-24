@@ -7,6 +7,7 @@ import '../data/word_list_store.dart';
 import '../data/word_drill.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../services/analytics_service.dart';
 import '../theme/app_icons.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
@@ -136,6 +137,12 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
       _index++;
       _picked = null;
     });
+    if (_finished) {
+      AnalyticsService.instance.logReviewComplete(
+        correctCount: _correct,
+        totalCount: _questions.length,
+      );
+    }
   }
 
   @override

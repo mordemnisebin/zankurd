@@ -7831,6 +7831,34 @@ class LearnerLexicon {
       meaningTr: 'ön, yan (ji ber: yüzünden)',
       sourceId: 'questions',
     ),
+    LearnerLexiconEntry(
+      id: 'q-sekir',
+      termKu: 'Şekir',
+      meaningTr: 'şeker',
+      sourceId: 'questions',
+      forms: ['şekirê'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-xizmetkar',
+      termKu: 'Xizmetkar',
+      meaningTr: 'garson, hizmet çalışanı',
+      sourceId: 'questions',
+      forms: ['xizmetkarê', 'xizmetkaran'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-kilo',
+      termKu: 'Kîlo',
+      meaningTr: 'kilo',
+      sourceId: 'questions',
+      forms: ['kîloyek', 'kîloyê'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-li-keleka',
+      termKu: 'Li kêleka',
+      meaningTr: 'yanında',
+      sourceId: 'questions',
+      forms: ['li kêleka'],
+    ),
   ];
 
   static LearnerLexiconSource sourceFor(LearnerLexiconEntry entry) {
