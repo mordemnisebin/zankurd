@@ -973,7 +973,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   days: week,
                   freezeState: freezeState,
                   freezeLabel: _freezeLabel(context, freezeState),
-                  dayLabels: context.t(K.streakWeekdays).split(','),
+                  dayLabels: () {
+                    final names = context.t(K.streakWeekdays).split(',');
+                    return names.length == 7
+                        ? streakWeekLabels(names, DateTime.now())
+                        : names;
+                  }(),
                   dayUnitLabel: context.t(K.streakDayUnit),
                   nextMilestone: _nextStreakMilestone(_streak),
                   freezeCost: store.freezeCount > 0 ? null : _streakFreezeCost,

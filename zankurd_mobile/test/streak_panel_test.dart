@@ -61,6 +61,7 @@ StreakPanel _panel({
 );
 
 void main() {
+  _weekLabelTests();
   testWidgets('gün durumu anonsu ham enum adını değil çevrilmiş etiketi okur '
       '(2026-08-14)', (tester) async {
     // `Semantics.label` eskiden '$label: ${state.name}' üretiyordu — yani
@@ -257,5 +258,31 @@ void main() {
     ]) {
       expect(home, contains(key), reason: '$key kullanilmiyor');
     }
+  });
+}
+
+void _weekLabelTests() {
+  group('haftalık şerit gün harfleri gerçek hafta gününden gelir', () {
+    const tr = ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pz'];
+    const ku = ['Du', 'Se', 'Çar', 'Pen', 'În', 'Şem', 'Yek'];
+
+    test('bugün Çarşamba: son kutu "Ça", ilki Perşembe', () {
+      // 2026-10-21 Çarşamba.
+      final labels = streakWeekLabels(tr, DateTime(2026, 10, 21, 9));
+      expect(labels.last, 'Ça');
+      expect(labels, ['Pe', 'Cu', 'Ct', 'Pz', 'Pt', 'Sa', 'Ça']);
+    });
+
+    test('Kurmancî kısaltmalarıyla, bugün Pazar', () {
+      final labels = streakWeekLabels(ku, DateTime(2026, 10, 25));
+      expect(labels.last, 'Yek');
+      expect(labels.first, 'Du');
+    });
+
+    test('ay/yıl sınırı: 1 Ocak 2027 Cuma', () {
+      final labels = streakWeekLabels(tr, DateTime(2027, 1, 1));
+      expect(labels.last, 'Cu');
+      expect(labels.first, 'Ct'); // 26 Aralık 2026 Cumartesi
+    });
   });
 }

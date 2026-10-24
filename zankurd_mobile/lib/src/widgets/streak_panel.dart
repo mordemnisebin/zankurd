@@ -32,6 +32,17 @@ String streakDayStateKey(StreakDayState state) => switch (state) {
   StreakDayState.blank => K.streakDayStateBlank,
 };
 
+/// Son yedi günün kutu harfleri, en eskiden bugüne.
+///
+/// [mondayFirst] Pazartesi'den başlayan yedi kısaltmadır. Şerit KAYAN son 7
+/// gündür; harfler eskiden konumla (0 = Pazartesi) eşleniyordu, bu yüzden
+/// Çarşamba günü son kutu "Pz" yazıyordu. Her kutunun harfi artık o günün
+/// gerçek hafta gününden gelir.
+List<String> streakWeekLabels(List<String> mondayFirst, DateTime today) => [
+  for (var i = 6; i >= 0; i--)
+    mondayFirst[DateTime(today.year, today.month, today.day - i).weekday - 1],
+];
+
 /// Streak-freeze'in o andaki durumu.
 ///
 /// Sekiz ayrı durum var ve altısı "düğme sönük" olarak çiziliyordu; oyuncu
