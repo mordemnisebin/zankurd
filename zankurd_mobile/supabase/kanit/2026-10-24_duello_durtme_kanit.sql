@@ -259,10 +259,10 @@ declare v_id uuid;
 begin
   insert into public.rooms (
     code, host_id, status, max_players, ended_reason, forfeited_by,
-    finished_at, question_count
+    finished_at, question_count, is_custom
   ) values (
     'K' || substr(md5(random()::text), 1, 7), pg_temp.uid(1), 'finished',
-    p_max, p_reason, p_forfeited_by, now(), 11
+    p_max, p_reason, p_forfeited_by, now(), 11, p_max > 2
   ) returning id into v_id;
   return v_id;
 end $f$;
@@ -298,8 +298,8 @@ begin
   -- Cevap ekleme tetikleyicisi canlı oda akışını denetler; bu işlemde kapatılır.
   execute 'alter table public.player_answers disable trigger player_answers_current_question_trg';
   for i in 1..11 loop
-    insert into public.player_answers (room_id, question_id, player_id, selected_option, is_correct)
-    values (room, qs[i], a, 'A', substr(flags, i, 1) = '1');
+    insert into public.player_answers (room_id, question_id, player_id, selected_option, is_correct, response_ms)
+    values (room, qs[i], a, 'A', substr(flags, i, 1) = '1', 3000);
   end loop;
   begin
     perform set_config('request.jwt.claims', json_build_object('sub', a)::text, true);
