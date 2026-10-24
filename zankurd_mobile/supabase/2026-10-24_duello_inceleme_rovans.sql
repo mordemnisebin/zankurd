@@ -4,8 +4,14 @@
 -- oyuncu 7 sorunun her birini yan yana görür — soru, doğru cevap, benim
 -- cevabım (✓/✗, süre) ve rakibin cevabı (✓/✗, süre). Sonuç ekranındaki
 -- "Rövanş" düğmesi aynı rakibe arkadaş meydan okuması açar
--- (`create_async_duel_challenge`, DEĞİŞMEZ); düğmenin açık olup olmadığını
--- bu RPC'nin `can_rematch` alanı söyler.
+-- (`create_async_duel_challenge`, aşağıdaki istisna dışında aynı); düğmenin
+-- açık olup olmadığını bu RPC'nin `can_rematch` alanı söyler.
+--
+-- GERİ ALMA: supabase/geri_al/2026-10-24_duello_inceleme_rovans_geri.sql
+-- create_async_duel_challenge'ın ÖNCEKİ CANLI gövdesini (2026-10-24,
+-- pg_get_functiondef) geri yükler; get_async_duel_review ve
+-- async_duel_recent_pair'i düşürür. İstemci RPC yoksa bölümü ve rövanşı
+-- gizler, arkadaş olmayana davet yine 'Not a friend' olur.
 --
 -- NEDEN SUNUCU: `async_duel_answers` / `async_duels` istemciye tamamen
 -- kapalı (RLS + REVOKE); `questions.correct_option` ham dönmez. Bu RPC yeni
@@ -27,13 +33,19 @@
 -- `pg_get_functiondef` ile okunup kopyalandı; değişen yalnız (1) arkadaş
 -- olmayan davetlide `async_duel_recent_pair` istisnası, (2) o yolda aynı
 -- kişiye 24 saatte en çok 3 davet ('Too many invites'), (3) search_path'e
--- 'pg_temp'. Engel, açık düello sınırı (5), soru seçimi aynen.
+-- 'pg_temp', (4) engel/arkadaşlık/son-7-gün/günlük sınır denetimi advisory
+-- kilidi ALDIKTAN SONRA yapılır (kilit beklerken konan engel davet
+-- oluşturmasın). Açık düello sınırı (5), soru seçimi aynen.
+-- `can_rematch` ayrıca: arkadaş olmayan rakibe bugünkü 3 davet dolduysa false
+-- (`rematch_limit_reached` true) ve rakibin profili yoksa (silinmiş hesap)
+-- rakip gösterilmez, rövanş kapalı.
 -- (Sunucuda bot rakibi yoktur: sırayla düello yalnız gerçek profillerle
 -- eşleşir; "bot/bilinmeyen" = rakip kimliği boş.)
 --
 -- Yanıt:
 --   { duel_id, status, forfeit, opponent_id, opponent_name,
 --     opponent_blocked, opponent_is_friend, can_rematch,
+--     rematch_limit_reached,
 --     questions: [ { index, prompt, option_a..option_d, question_type,
 --                    correct_option,
 --                    my:  { choice, correct, ms } | null,
@@ -45,13 +57,10 @@
 -- Hata metinleri: 'Not authenticated', 'Duel not found', 'Not a duel
 -- player', 'Duel not finished'.
 --
--- Yeni fonksiyon (mevcut gövdelere dokunulmaz): canlı gövde kopyalamaya gerek
--- yok. İdempotent. Uygulama:
+-- İdempotent. Uygulama:
 --   supabase db query --linked -f supabase/2026-10-24_duello_inceleme_rovans.sql
 -- Kanıt (göçten önce ve sonra, kalıcı yazmaz):
 --   supabase db query --linked -f supabase/kanit/2026-10-24_duello_inceleme_rovans_kanit.sql
--- Geri alma: `drop function public.get_async_duel_review(uuid);` (istemci
--- RPC yoksa bölümü gizler; başka hiçbir şey bağlı değil).
 
 begin;
 
@@ -116,7 +125,13 @@ begin
     end if;
   end if;
 
-  -- Davet edilecek kişi: KABUL EDİLMİŞ arkadaş (friends tablosunda iki
+  -- start_async_duel ile AYNI advisory kilit: ikisinin açık-düello sayımı
+  -- aynı oyuncu için sıraya girer (çift dokunuş / iki RPC yarışı 5 sınırını
+  -- aşamasın).
+  perform pg_advisory_xact_lock(hashtextextended('async-duel:' || v_uid::text, 0));
+
+  -- Davet edilecek kişi (KİLİTTEN SONRA denetlenir: kilit beklenirken konan
+  -- engel ya da kalkan arkadaşlık güncel okunur): KABUL EDİLMİŞ arkadaş (friends tablosunda iki
   -- satır tutulur, benim satırım yeter) ve iki yönde de engelsiz. Engel,
   -- 2026-10-02_blocking_enforcement.sql ile aynı ilkeyle ifşa edilmez:
   -- engelli de arkadaş değil gibi 'Not a friend' alır.
@@ -148,12 +163,11 @@ begin
     select p.display_name into v_invited_name
     from public.profiles p
     where p.id = p_friend_id;
+    -- Profili olmayan (silinmiş) hesaba davet olmaz.
+    if not found then
+      raise exception 'Not a friend';
+    end if;
   end if;
-
-  -- start_async_duel ile AYNI advisory kilit: ikisinin açık-düello sayımı
-  -- aynı oyuncu için sıraya girer (çift dokunuş / iki RPC yarışı 5 sınırını
-  -- aşamasın).
-  perform pg_advisory_xact_lock(hashtextextended('async-duel:' || v_uid::text, 0));
 
   -- Sahte "geçmiş düello" ile spam olmasın: arkadaş olmayan aynı kişiye
   -- son 24 saatte en çok 3 davet (arkadaşlar için yeni sınır YOK).
@@ -167,6 +181,7 @@ begin
       raise exception 'Too many invites';
     end if;
   end if;
+
 
   -- Süresi dolmuş ama henüz süpürülmemiş düellolar sayılmaz (2026-10-15).
   select count(*) into v_open_count
@@ -270,6 +285,7 @@ declare
   v_blocked boolean := false;
   v_friend boolean := false;
   v_recent boolean := false;
+  v_limit boolean := false;
   v_other_name text := null;
   v_show_other uuid := null;
   v_questions jsonb;
@@ -312,7 +328,11 @@ begin
          or (b.blocker_id = v_other and b.blocked_id = v_uid)
     ) into v_blocked;
 
-    if not v_blocked then
+    -- Profili olmayan (silinmiş) rakip gösterilmez: kimlik/ad/cevap yok,
+    -- rövanş kapalı.
+    if not v_blocked and exists (
+      select 1 from public.profiles p where p.id = v_other
+    ) then
       v_show_other := v_other;
       select p.display_name into v_other_name
       from public.profiles p
@@ -324,6 +344,16 @@ begin
       ) into v_friend;
 
       v_recent := public.async_duel_recent_pair(v_uid, v_other);
+
+      -- Arkadaş olmayana bugünkü 3 davet dolduysa rövanş kapalı (sunucu
+      -- 'Too many invites' derdi; düğme boşuna basılmasın).
+      if not v_friend and v_recent then
+        select count(*) >= 3 into v_limit
+        from public.async_duels d
+        where d.creator_id = v_uid
+          and d.invited_id = v_other
+          and d.created_at > now() - interval '24 hours';
+      end if;
     end if;
   end if;
 
@@ -376,7 +406,12 @@ begin
     'opponent_name', v_other_name,
     'opponent_blocked', v_blocked,
     'opponent_is_friend', v_friend,
-    'can_rematch', (v_show_other is not null and (v_friend or v_recent)),
+    'can_rematch', (
+      v_show_other is not null
+      and (v_friend or v_recent)
+      and not v_limit
+    ),
+    'rematch_limit_reached', v_limit,
     'questions', v_questions
   );
 end;

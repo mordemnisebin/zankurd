@@ -3384,6 +3384,10 @@ class Tr {
           'Rövanş yalnız arkadaşlarla ve son 7 günde birlikte oynadığın '
           'rakiplerle açılır.',
     },
+    K.asyncDuelRematchLimit: {
+      'ku': 'Îro tenê 3 vexwendin dikarin biçin; sibe dîsa biceribîne.',
+      'tr': 'Bugün en fazla 3 rövanş daveti gider; yarın tekrar dene.',
+    },
     K.asyncDuelRematchUnavailable: {
       'ku': 'Bi vî hevrikî re pêşbirk nayê vekirin.',
       'tr': 'Bu rakiple düello açılamaz.',
@@ -5115,6 +5119,7 @@ class K {
   /// Aynı rakibe arkadaş meydan okumasıyla rövanş düğmesi ve kapalı nedenleri.
   static const asyncDuelRematch = 'duel.async.rematch';
   static const asyncDuelRematchFriendsOnly = 'duel.async.rematch.friendsOnly';
+  static const asyncDuelRematchLimit = 'duel.async.rematch.limit';
   static const asyncDuelRematchUnavailable = 'duel.async.rematch.unavailable';
 
   /// Oyun sekmesi satırı, ana ekran düğmesi ve seçim sayfasının başlığı.

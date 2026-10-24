@@ -129,6 +129,24 @@ void main() {
       );
     });
 
+    test('engel/arkadaşlık/7 gün/günlük sınır advisory kilitten SONRA', () {
+      final lock = fn.indexOf('pg_advisory_xact_lock');
+      for (final marker in [
+        'b.blocker_id = v_uid and b.blocked_id = p_friend_id',
+        'from public.friends f',
+        'async_duel_recent_pair(v_uid, p_friend_id)',
+        "raise exception 'too many invites'",
+      ]) {
+        expect(
+          fn.indexOf(marker),
+          greaterThan(lock),
+          reason: '$marker kilitten önce denetleniyor',
+        );
+      }
+      // Profili olmayan (silinmiş) hesaba davet yok.
+      expect(fn, contains('if not found then'));
+    });
+
     test('arkadaş değilse yalnız son 7 günde birlikte oynadıysa geçer', () {
       expect(
         fn,
@@ -220,7 +238,7 @@ void main() {
       expect(lower, contains("'opponent_blocked', v_blocked"));
       // Engelde ad hiç okunmaz: select, `if not v_blocked` içindedir.
       final fnr = bodyOf('get_async_duel_review');
-      final block = fnr.indexOf('if not v_blocked then');
+      final block = fnr.indexOf('if not v_blocked and exists (');
       final nameRead = fnr.indexOf('select p.display_name');
       expect(block, greaterThan(0));
       expect(nameRead, greaterThan(block));
@@ -231,9 +249,7 @@ void main() {
       expect(lower, contains('f.user_id = v_uid and f.friend_id = v_other'));
       expect(
         lower,
-        contains(
-          "'can_rematch', (v_show_other is not null and (v_friend or v_recent))",
-        ),
+        contains('v_show_other is not null\n      and (v_friend or v_recent)'),
       );
     });
 
@@ -269,6 +285,60 @@ void main() {
           'grant execute on function public.get_async_duel_review(uuid)\n'
           '  to authenticated;',
         ),
+      );
+    });
+  });
+
+  group('geri alma', () {
+    final back = File(
+      'supabase/geri_al/2026-10-24_duello_inceleme_rovans_geri.sql',
+    ).readAsStringSync().toLowerCase();
+    test('önceki canlı gövdeyi yükler, yeni fonksiyonları düşürür', () {
+      expect(back.trimLeft(), startsWith('--'));
+      expect(back, contains('\nbegin;'));
+      expect(back.trimRight(), endsWith('commit;'));
+      expect(
+        back,
+        contains(
+          'create or replace function public.create_async_duel_challenge',
+        ),
+      );
+      expect(back, contains("set search_path to 'public'\n"));
+      expect(back, isNot(contains('async_duel_recent_pair(v_uid')));
+      expect(back, isNot(contains('too many invites')));
+      expect(back, contains('weighted_question_pick'));
+      expect(
+        back,
+        contains('drop function if exists public.get_async_duel_review(uuid);'),
+      );
+      expect(
+        back,
+        contains(
+          'drop function if exists public.async_duel_recent_pair(uuid, uuid);',
+        ),
+      );
+    });
+    test('göç başlığı geri almayı gösterir', () {
+      expect(
+        sql,
+        contains('supabase/geri_al/2026-10-24_duello_inceleme_rovans_geri.sql'),
+      );
+      expect(sql, isNot(contains('mevcut gövdelere dokunulmaz')));
+    });
+  });
+
+  group('can_rematch sınırı ve silinmiş profil', () {
+    final fn = bodyOf('get_async_duel_review');
+    test('arkadaş olmayana 3 davet dolduysa false', () {
+      expect(fn, contains('if not v_friend and v_recent then'));
+      expect(fn, contains('select count(*) >= 3 into v_limit'));
+      expect(fn, contains('and not v_limit'));
+      expect(fn, contains("'rematch_limit_reached', v_limit"));
+    });
+    test('profili olmayan rakip gösterilmez', () {
+      expect(
+        fn,
+        contains('select 1 from public.profiles p where p.id = v_other'),
       );
     });
   });
@@ -316,6 +386,7 @@ void main() {
       expect(proof, contains("'Not a friend', 'Too many invites'"));
       expect(proof, contains('(8g) engelli, birlikte oynanmış'));
       expect(proof, contains('(8f) 7 günden eski'));
+      expect(proof, contains('(8i) 3. davetten sonra can_rematch kapanır'));
     });
   });
 

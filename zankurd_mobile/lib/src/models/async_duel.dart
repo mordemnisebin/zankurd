@@ -738,6 +738,7 @@ class AsyncDuelReview {
     required this.opponentBlocked,
     required this.opponentIsFriend,
     required this.canRematch,
+    this.rematchLimitReached = false,
     required List<AsyncDuelReviewQuestion> questions,
     this.opponentId,
     this.opponentName,
@@ -753,6 +754,10 @@ class AsyncDuelReview {
   /// Sunucunun hesabı: rakip var, engel yok ve kabul edilmiş arkadaş
   /// (`create_async_duel_challenge` arkadaş olmayana 'Not a friend' verir).
   final bool canRematch;
+
+  /// Arkadaş olmayan rakibe bugünkü 3 rövanş daveti doldu: düğme kapalı,
+  /// "yarın tekrar dene" der.
+  final bool rematchLimitReached;
   final List<AsyncDuelReviewQuestion> questions;
 
   /// Rakibin en az bir cevabı görünür mü (engelde ya da hiç oynamadıysa
@@ -769,6 +774,7 @@ class AsyncDuelReview {
       opponentBlocked: json['opponent_blocked'] as bool? ?? false,
       opponentIsFriend: json['opponent_is_friend'] as bool? ?? false,
       canRematch: json['can_rematch'] as bool? ?? false,
+      rematchLimitReached: json['rematch_limit_reached'] as bool? ?? false,
       questions: rawQuestions
           .map(
             (row) => AsyncDuelReviewQuestion.fromJson(

@@ -8,7 +8,9 @@
 -- ARKADAŞ OLMAYAN ama son 7 günde birlikte düello bitirdiğimiz kişiye göçten
 -- sonra kabul (önce 'Not a friend'), hiç oynamadığımız arkadaş olmayana yine
 -- 'Not a friend', aynı kişiye 24 saatte 4. davet 'Too many invites', engelli
--- ve 7 günden eski düello rövanş açmaz.
+-- ve 7 günden eski düello rövanş açmaz; 3 davetten sonra can_rematch=false.
+-- Kilit SONRASI engel denetimi tek oturumda yarış kurulamadığı için engel
+-- satırlarıyla (8g) dolaylı doğrulanır; sıra bekçi testinde (kilit önce).
 --
 -- CANLIYA KALICI YAZMAZ: tek transaction, sonda rollback. Göçten ÖNCE ve
 -- SONRA aynı betik çalıştırılır; her bulgu için bir satır basar:
@@ -297,6 +299,11 @@ begin
   end;
   insert into _kanit values (21, '(8e) aynı arkadaş olmayana 24 saatte 4. davet',
     'Not a friend', 'Too many invites', r);
+
+  -- 3 davet doldu: inceleme rövanşı kapalı gösterir (sunucu 4.'yü reddederdi).
+  insert into _kanit values (25, '(8i) 3. davetten sonra can_rematch kapanır',
+    'RPC yok', 'q=7,my=7,opp=7,corr=7,opp_id=var,name=var,blocked=false,forfeit=false,rematch=false',
+    pg_temp.gor(u1, (select id from _d where k = 'arkadassiz')));
 
   insert into _kanit values (22, '(8f) 7 günden eski birlikte düello: rövanş kapalı',
     'RPC yok', 'q=7,my=7,opp=7,corr=7,opp_id=var,name=var,blocked=false,forfeit=false,rematch=false',

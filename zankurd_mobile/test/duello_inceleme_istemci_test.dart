@@ -655,7 +655,33 @@ void main() {
         find.byKey(const ValueKey('async-duel-result-rematch')),
       );
       expect(rematch.onPressed, isNull);
-      expect(find.text('Rövanş yalnız arkadaşlarla ve son 7 günde birlikte oynadığın rakiplerle açılır.'), findsOneWidget);
+      expect(
+        find.text(
+          'Rövanş yalnız arkadaşlarla ve son 7 günde birlikte oynadığın rakiplerle açılır.',
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('günlük 3 davet doldu: rövanş kapalı, nedeni yazar', (
+      tester,
+    ) async {
+      final json = _reviewJson(canRematch: false, friend: false)
+        ..['rematch_limit_reached'] = true;
+      final repo = _ReviewRepository(review: AsyncDuelReview.fromJson(json));
+      await open(tester, repo);
+      expect(
+        tester
+            .widget<ButtonStyleButton>(
+              find.byKey(const ValueKey('async-duel-result-rematch')),
+            )
+            .onPressed,
+        isNull,
+      );
+      expect(
+        find.text('Bugün en fazla 3 rövanş daveti gider; yarın tekrar dene.'),
+        findsOneWidget,
+      );
     });
 
     testWidgets('rakip kimliği yok (silinmiş profil): rövanş kapalı', (

@@ -666,6 +666,8 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
     final canRematch = review.canRematch && opponentId != null;
     final String? whyNot = canRematch
         ? null
+        : review.rematchLimitReached
+        ? context.t(K.asyncDuelRematchLimit)
         : (review.opponentBlocked || opponentId == null)
         ? context.t(K.asyncDuelRematchUnavailable)
         : context.t(K.asyncDuelRematchFriendsOnly);
