@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/async_duel.dart';
 import '../models/contest.dart';
+import '../models/match_history.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/referral_result.dart';
@@ -105,6 +106,21 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
 
   @override
   Future<void> markAsyncDuelSeen(String duelId) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<DateTime> nudgeAsyncDuel(String duelId) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<List<RecentMatch>> loadMyRecentMatches({int limit = 10}) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<ServerRecords> loadMyServerRecords() async {
     throw StateError('Remote service unavailable.');
   }
 

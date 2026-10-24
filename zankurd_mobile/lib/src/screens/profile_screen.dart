@@ -50,6 +50,8 @@ import '../utils/percent_format.dart';
 import '../utils/player_identity.dart';
 import '../utils/number_format.dart';
 
+import 'profile/profile_matches_section.dart';
+
 part 'profile/profile_widgets.dart';
 
 // 2026-07-23 M18: misafir hesap yükseltme dialog'unun üç olası çıkışı —
@@ -373,6 +375,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final ku = context.isKu;
     final width = MediaQuery.sizeOf(context).width;
     final isWide = width > 720;
+    final remoteMatches = context.watch<AuthProvider>().canUseRemoteActions;
 
     // 2026-09-29 Şahnê A iskeleti: marka satırı → "Profil" → kimlik
     // (avatar + ad + kod) → seviye kartı → bölümler (tek bölüm
@@ -586,6 +589,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
+        // 2026-10-24: kişisel rekorlar ve son maçlar. Çevrimdışı/yerel
+        // misafirde sunucuya sorulmaz; yerel seri yine görünür.
+        ProfileRecordsSection(
+          repository: widget.repository,
+          refreshSignal: widget.refreshSignal,
+          remote: remoteMatches,
+        ),
+        ProfileMatchHistorySection(
+          repository: widget.repository,
+          refreshSignal: widget.refreshSignal,
+          remote: remoteMatches,
+          // Üstteki boş istatistik kartı zaten "Bugün başla" düğmesini
+          // taşır; aynı eylem iki kez çizilmez.
+          onStartPlay: _stats == null && _answeredTotal == 0
+              ? null
+              : _startQuickRace,
+        ),
       ],
     );
 

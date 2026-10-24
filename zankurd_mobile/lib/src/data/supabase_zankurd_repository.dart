@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'durable_write.dart';
 import '../models/async_duel.dart';
+import '../models/match_history.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/friend.dart';
@@ -4094,6 +4095,55 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       await client.rpc('mark_async_duel_seen', params: {'p_duel_id': duelId});
     } catch (error, stack) {
       _recordError(error, stack, reason: 'markAsyncDuelSeen failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<DateTime> nudgeAsyncDuel(String duelId) async {
+    try {
+      final response = await client.rpc(
+        'nudge_async_duel',
+        params: {'p_duel_id': duelId},
+      );
+      final json = _requiredJsonObject(response, 'nudge_async_duel');
+      return DateTime.parse(json['nudged_at'] as String);
+    } catch (error, stack) {
+      // Bekleme/engel gibi BEKLENEN retler hata raporuna düşmez; ekran
+      // sınıflandırıp oyuncuya söyler (classifyAsyncDuelNudgeError).
+      if (classifyAsyncDuelNudgeError(error) == AsyncDuelNudgeError.other) {
+        _recordError(error, stack, reason: 'nudgeAsyncDuel failed');
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<RecentMatch>> loadMyRecentMatches({int limit = 10}) async {
+    try {
+      final response = await client.rpc<List<dynamic>>(
+        'list_my_recent_matches',
+        params: {'p_limit': limit},
+      );
+      return [
+        for (final row in response)
+          ?RecentMatch.tryParse(Map<String, dynamic>.from(row as Map)),
+      ];
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadMyRecentMatches failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ServerRecords> loadMyServerRecords() async {
+    try {
+      final response = await client.rpc('get_my_records');
+      return ServerRecords.fromJson(
+        _requiredJsonObject(response, 'get_my_records'),
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadMyServerRecords failed');
       rethrow;
     }
   }

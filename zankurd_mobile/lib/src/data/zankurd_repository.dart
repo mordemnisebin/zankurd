@@ -9,6 +9,7 @@ import '../models/friend.dart';
 import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
+import '../models/match_history.dart';
 import '../models/player.dart';
 import '../models/public_profile.dart';
 import '../models/quiz_level.dart';
@@ -324,6 +325,20 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   /// Bir düello sonucunu "görüldü" işaretler ("Sonuç hazır" rozeti buna göre iner).
   Future<void> markAsyncDuelSeen(String duelId);
+
+  /// Rakibi dürter (`nudge_async_duel`): rakibe "sıra sende" bildirimi gider.
+  /// Dönüş: sunucunun kaydettiği dürtme anı. Reddedilirse fırlatır; sınıf için
+  /// [classifyAsyncDuelNudgeError] (ör. 12 saat dolmadan ikinci dürtme).
+  Future<DateTime> nudgeAsyncDuel(String duelId);
+
+  /// Profildeki "Son maçlar": çağıranın bitmiş son [limit] maçı (sırayla
+  /// düello + canlı oda), yeniden eskiye. Sunucuya ulaşılamazsa fırlatır;
+  /// boş liste "henüz maç yok" demektir.
+  Future<List<RecentMatch>> loadMyRecentMatches({int limit = 10});
+
+  /// Profildeki "Rekorlarım" için sunucu sayıları. Sunucuya (ya da bu RPC'ye)
+  /// ulaşılamazsa fırlatır; ekran o zaman yerel değerlerle "—" gösterir.
+  Future<ServerRecords> loadMyServerRecords();
 
   /// Bitmiş (ya da süresi dolmuş) bir düellonun XP'sini talep eder;
   /// idempotenttir — ikinci çağrı yeniden XP eklemez.

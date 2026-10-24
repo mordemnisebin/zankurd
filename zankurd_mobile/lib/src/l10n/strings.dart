@@ -3101,6 +3101,48 @@ class Tr {
       'ku': 'Pêşbirk nehatin barkirin.',
       'tr': 'Düellolar yüklenemedi.',
     },
+    // 2026-10-24 dürtme + profil maç geçmişi/rekorlar. Kurmancî sözcükler
+    // mevcut metinlerden: `Dora te ye` (K.challengeYourTurn), `li benda` ,
+    // `Bi ser ketî` (K.youWon), `Te winda kir` (K.youLost), `Beramberî`
+    // (K.draw), `saet`/`deqe` (K.asyncDuelTimeLeft*), `herî dirêj`, `herî
+    // zêde` (K.passwordHintMin6 / K.asyncDuel*). Jüri kontrolünden geçmeli.
+    K.nudgeAction: {'ku': 'Bîr bixe', 'tr': 'Dürt'},
+    K.nudgeCooldownHours: {
+      'ku': 'Piştî {n} saetan dîsa',
+      'tr': '{n} sa sonra tekrar',
+    },
+    K.nudgeCooldownMinutes: {
+      'ku': 'Piştî {n} deqeyan dîsa',
+      'tr': '{n} dk sonra tekrar',
+    },
+    K.nudgeSent: {'ku': 'Bîrxistin hat şandin', 'tr': 'Dürtme gönderildi'},
+    K.nudgeFailed: {
+      'ku': 'Bîrxistin nehat şandin',
+      'tr': 'Dürtme gönderilemedi',
+    },
+    K.recentMatchesTitle: {'ku': 'Pêşbirkên dawî', 'tr': 'Son maçlar'},
+    K.recentMatchesEmpty: {
+      'ku': 'Hîn pêşbirk tune. Pêşbirka xwe ya yekem dest pê bike.',
+      'tr': 'Henüz maç yok. İlk düellonu başlat.',
+    },
+    K.matchResultWin: {'ku': 'Bi ser ketî', 'tr': 'Kazandın'},
+    K.matchResultLoss: {'ku': 'Te winda kir', 'tr': 'Kaybettin'},
+    K.matchResultDraw: {'ku': 'Beramberî', 'tr': 'Berabere'},
+    K.recordsTitle: {'ku': 'Rekorên min', 'tr': 'Rekorlarım'},
+    K.recordBestDayStreak: {
+      'ku': 'Zincîra rojane ya herî dirêj',
+      'tr': 'En uzun günlük seri',
+    },
+    K.recordBestQuizStreak: {
+      'ku': 'Rêzeya rast a herî dirêj',
+      'tr': 'En uzun doğru serisi',
+    },
+    K.recordBestContest: {
+      'ku': 'Di pêşbirka rojane de herî zêde rast',
+      'tr': 'Günlük yarışta en çok doğru',
+    },
+    K.recordDuelWins: {'ku': 'Serkeftinên pêşbirkê', 'tr': 'Düello galibiyeti'},
+    K.recordWinRate: {'ku': 'Rêjeya serkeftinê', 'tr': 'Kazanma oranı'},
     K.asyncDuelAnswerFailed: {
       'ku': 'Bersiv nehat şandin.',
       'tr': 'Cevap gönderilemedi.',
@@ -4710,6 +4752,22 @@ class K {
 
   /// `loadMyAsyncDuels` hatası.
   static const asyncDuelLoadFailed = 'duel.async.loadFailed';
+  static const nudgeAction = 'duel.async.nudge';
+  static const nudgeCooldownHours = 'duel.async.nudge.cooldownHours';
+  static const nudgeCooldownMinutes = 'duel.async.nudge.cooldownMinutes';
+  static const nudgeSent = 'duel.async.nudge.sent';
+  static const nudgeFailed = 'duel.async.nudge.failed';
+  static const recentMatchesTitle = 'profile.recentMatches.title';
+  static const recentMatchesEmpty = 'profile.recentMatches.empty';
+  static const matchResultWin = 'profile.match.win';
+  static const matchResultLoss = 'profile.match.loss';
+  static const matchResultDraw = 'profile.match.draw';
+  static const recordsTitle = 'profile.records.title';
+  static const recordBestDayStreak = 'profile.records.dayStreak';
+  static const recordBestQuizStreak = 'profile.records.quizStreak';
+  static const recordBestContest = 'profile.records.contest';
+  static const recordDuelWins = 'profile.records.duelWins';
+  static const recordWinRate = 'profile.records.winRate';
 
   /// `answerAsyncDuel` hatası; yanında K.retry düğmesi çıkar.
   static const asyncDuelAnswerFailed = 'duel.async.answerFailed';
