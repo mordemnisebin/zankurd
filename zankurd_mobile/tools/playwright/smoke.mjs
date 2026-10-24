@@ -56,24 +56,17 @@ await page.waitForFunction(
   () => document.querySelectorAll('flutter-view').length > 0,
   { timeout: 30_000 },
 );
+// 2026-10-24: yeni kurulumda varsayılan dil Türkçe; karşılamanın tepesindeki
+// "Uygulama dili · Zimanê sepanê" seçicisinden Kurmancî seçilir. Yaş kutusu
+// kalktı: "Sonraki/Bidomîne" ilk dokunuşta etkindir.
+await expectText('Uygulama dili · Zimanê sepanê');
+const kuLanguage = page.getByRole('button', { name: 'Kurmancî', exact: true });
+await kuLanguage.waitFor({ state: 'visible', timeout: 15_000 });
+await kuLanguage.click();
 // Slogan (onbTagline) kalktı; ilk sayfanın gövde cümlesi (onbLearnBody).
 await expectText('Bi pirsên kurt peyvan hîn bibe, çandê nas bike.');
 await screenshot('01-onboarding');
 
-const ageGateLabel = 'Ez 13 salî an jî mezintir im';
-const ageGate = page.getByRole('checkbox', { name: ageGateLabel });
-await ageGate.waitFor({ state: 'visible', timeout: 15_000 });
-await ageGate.click();
-await page.waitForFunction(
-  (label) =>
-    [...document.querySelectorAll('[role="checkbox"]')].some(
-      (node) =>
-        node.getAttribute('aria-label') === label &&
-        node.getAttribute('aria-checked') === 'true',
-    ),
-  ageGateLabel,
-  { timeout: 15_000 },
-);
 await clickText('Bidomîne');
 await clickText('Dest pê bike');
 await expectText('Bi xêr hatî ZanKurdê');

@@ -115,8 +115,6 @@ void main() {
   ) async {
     await _open(tester, _entries.first);
     final page0 = _primaryRect(tester);
-    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-    await tester.pump();
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('onboarding-back')), findsOneWidget);
@@ -153,7 +151,14 @@ void main() {
       // Üst çubuğun (en az 56) hemen altında; ilerleme çubuğu olan
       // ekranlarda onun da altında.
       expect(rect.top, greaterThanOrEqualTo(SahneEntryScaffold.barHeight));
-      expect(rect.top, lessThan(110), reason: e.name);
+      // Karşılamanın ilk sayfasında kahramanın üstünde büyük dil seçici durur
+      // (2026-10-24: etiket + 56'lık segment); öteki ekranlarda kart hemen
+      // üst çubuğun altındadır.
+      expect(
+        rect.top,
+        lessThan(e.name == 'karşılama' ? 250 : 110),
+        reason: e.name,
+      );
       await tester.pumpWidget(const SizedBox.shrink());
     }
   });
@@ -185,8 +190,6 @@ void main() {
     (tester) async {
       // Karşılama 2. sayfa.
       await _open(tester, _entries.first);
-      await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-      await tester.pump();
       await tester.tap(find.text('Sonraki'));
       await tester.pumpAndSettle();
       var primary = _primaryRect(tester);

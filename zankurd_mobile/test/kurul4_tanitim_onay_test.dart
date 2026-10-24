@@ -1,10 +1,7 @@
 // Kurul 5. tur 2026-10-20: yaş kutusu standart yuvarlak kare (sekizgen kalktı).
 // Kurul 4. tur 2026-10-20 (Opus, AI Studio): tanıtımda pasif "Sonraki"
-// bozuk sanılıyordu. Bu bekçi dördünü sabitler: (1) pasif etiket ≥ 4.5:1 her
-// iki temada, (2) "Atla" yaş onayını DELMEZ (kusur olasılığı: Atla doğrudan
-// onComplete çağırırsa 13 yaş kutusu atlanır), (3) bütün onay satırı ≥ 48
-// yüksek dokunma hedefi ve kutu büyütülmüş, (4) kutu işaretlenene kadar
-// nedeni altında yazar.
+// bozuk sanılıyordu. Pasif etiket ≥ 4.5:1 her iki temada hâlâ sabittir
+// (başka ekranların pasif düğmeleri de bunu kullanır).
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -40,58 +37,23 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('"Atla" yaş kutusu işaretsizken tanıtımı bitirmez', (
+  // 2026-10-24: yaş kutusu kalktı (sahip kararı). Eski bekçi "Atla"nın kutuyu
+  // delmemesini sınıyordu; artık kutu olmadığından "Atla" ve "Başla" doğrudan
+  // tamamlar, ekranda hiçbir onay kutusu ya da uyarı kalmaz. Yaş şartı
+  // Kullanım Şartları'nda ve giriş ekranındaki kabul satırında durur.
+  testWidgets('"Atla" ilk dokunuşta tanıtımı bitirir; kutu ve uyarı yok', (
     tester,
   ) async {
     var completed = false;
     await pump(tester, () => completed = true);
 
-    await tester.tap(find.text('Atla'));
-    await tester.pumpAndSettle();
-    expect(completed, isFalse, reason: 'Atla yaş onayını delmemeli');
-    expect(
-      find.byKey(const ValueKey('onboarding-age-gate-hint')),
-      findsOneWidget,
-    );
+    expect(find.byKey(const ValueKey('onboarding-age-gate')), findsNothing);
+    expect(find.byKey(const ValueKey('onboarding-age-checkbox')), findsNothing);
+    expect(find.byType(Checkbox), findsNothing);
+    expect(find.textContaining('13 yaş'), findsNothing);
 
-    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-    await tester.pump();
     await tester.tap(find.text('Atla'));
     await tester.pumpAndSettle();
     expect(completed, isTrue);
   });
-
-  testWidgets(
-    'onay satırı ≥ 48 yüksek, kutu büyütülmüş; neden yalnız denemeden sonra yazar',
-    (tester) async {
-      await pump(tester, () {});
-      final row = tester.getSize(
-        find.byKey(const ValueKey('onboarding-age-gate')),
-      );
-      expect(row.height, greaterThanOrEqualTo(48));
-      // Kurul 5. tur 2026-10-20: kutu standart yuvarlak kare (sekizgen
-      // Material Checkbox kalktı), ≥ 28 px.
-      final box = tester.getSize(
-        find.byKey(const ValueKey('onboarding-age-checkbox')),
-      );
-      expect(box.width, greaterThanOrEqualTo(28));
-      expect(find.byType(Checkbox), findsNothing);
-      // Tur 8: neden baştan DEĞİL, yalnız "Sonraki"ye basılınca yazar (hiçbir
-      // şeye dokunulmadan hata gibi duruyordu).
-      expect(
-        find.text(
-          'Devam etmek için "13 yaşında veya daha büyüğüm" kutusunu işaretle.',
-        ),
-        findsNothing,
-      );
-      await tester.tap(find.text('Sonraki'));
-      await tester.pumpAndSettle();
-      expect(
-        find.text(
-          'Devam etmek için "13 yaşında veya daha büyüğüm" kutusunu işaretle.',
-        ),
-        findsOneWidget,
-      );
-    },
-  );
 }

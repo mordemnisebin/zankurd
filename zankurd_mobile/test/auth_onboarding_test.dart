@@ -78,13 +78,17 @@ void main() {
   test('language provider persists selected language', () async {
     SharedPreferences.setMockInitialValues({});
 
+    // 2026-10-24: yeni kurulumda varsayılan Türkçe; kayıtlı seçim korunur.
     final provider = await LanguageProvider.load();
-    expect(provider.lang, 'ku');
+    expect(provider.lang, 'tr');
 
-    provider.setLang('tr');
+    provider.setLang('ku');
 
     final restored = await LanguageProvider.load();
-    expect(restored.lang, 'tr');
+    expect(restored.lang, 'ku');
+
+    SharedPreferences.setMockInitialValues({'zankurd.language': 'ku'});
+    expect((await LanguageProvider.load()).lang, 'ku');
   });
 
   testWidgets('shows auth screen before guest sign in', (tester) async {
@@ -650,8 +654,6 @@ void main() {
     expect(find.text('Atla'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
-    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-    await tester.pump();
     await tester.tap(find.text('Atla'));
     await tester.pumpAndSettle();
 
@@ -680,8 +682,6 @@ void main() {
       lessThanOrEqualTo(390),
     );
 
-    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-    await tester.pump();
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
 
@@ -709,8 +709,6 @@ void main() {
       lessThanOrEqualTo(844),
     );
 
-    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-    await tester.pump();
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
 
@@ -783,17 +781,12 @@ void main() {
     final languageRect = tester.getRect(language);
     expect(skipRect.right, lessThanOrEqualTo(surface.right));
     expect(languageRect.left, greaterThanOrEqualTo(surface.left));
-    expect(
-      skipRect.left,
-      greaterThanOrEqualTo(languageRect.right),
-      reason: 'XXXL başlıkta dil seçici ile "Atla" üst üste binmemeli.',
-    );
+    // 2026-10-24: dil seçici üst çubuktan çıkıp ilk sayfanın tepesine (büyük,
+    // tam adlı) taşındı; "Atla"nın altında durur, çakışmaz ve ekranda kalır.
+    expect(languageRect.right, lessThanOrEqualTo(surface.right));
+    expect(languageRect.top, greaterThanOrEqualTo(skipRect.bottom - 1));
     expect(find.text('Kurmancî hîn bibe, pêş bikeve.'), findsNothing);
-    for (final finder in [
-      find.text('Hîn bibe'),
-      find.byKey(const ValueKey('onboarding-age-gate')),
-      find.text('Bidomîne'),
-    ]) {
+    for (final finder in [find.text('Hîn bibe'), find.text('Bidomîne')]) {
       expect(finder, findsOneWidget);
       final rect = tester.getRect(finder);
       expect(rect.left, greaterThanOrEqualTo(surface.left));
@@ -801,12 +794,6 @@ void main() {
       expect(rect.top, greaterThanOrEqualTo(surface.top));
       expect(rect.bottom, lessThanOrEqualTo(surface.bottom));
     }
-
-    final ageGate = tester.getRect(
-      find.byKey(const ValueKey('onboarding-age-gate')),
-    );
-    final cta = tester.getRect(find.text('Bidomîne'));
-    expect(ageGate.bottom, lessThanOrEqualTo(cta.top));
 
     // Metin bandı kısa içerikte ortalanır, taşan içerikte aşağıdan kayar
     // (`ConstrainedBox(minHeight)` + `Column(mainAxisSize: min)`,
@@ -879,8 +866,6 @@ void main() {
       lessThanOrEqualTo(800),
     );
 
-    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-    await tester.pump();
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
 

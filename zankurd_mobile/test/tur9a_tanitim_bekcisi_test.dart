@@ -37,14 +37,11 @@ void main() {
     expect(bar.tone, SahneProgressTone.action);
   });
 
-  testWidgets('yaş etiketi tam 13 yaşındakini içerir', (tester) async {
+  // 2026-10-24: yaş kutusu kalktı; iki etiket testi de onunla gitti.
+  testWidgets('yaş etiketi hiçbir dilde çizilmez', (tester) async {
     await pump(tester, 'tr');
-    expect(find.text('13 yaşında veya daha büyüğüm'), findsOneWidget);
-    expect(find.textContaining('yaşından büyük'), findsNothing);
-  });
-
-  testWidgets('Kurmancî yaş etiketi tam 13 yaşındakini içerir', (tester) async {
+    expect(find.textContaining('13 yaş'), findsNothing);
     await pump(tester, 'ku');
-    expect(find.text('Ez 13 salî an jî mezintir im'), findsOneWidget);
+    expect(find.textContaining('13 salî'), findsNothing);
   });
 }

@@ -9,6 +9,7 @@ import '../providers/reduced_motion_provider.dart';
 import '../services/analytics_service.dart';
 import '../services/display_name_policy.dart';
 import '../widgets/app_logo.dart';
+import '../widgets/consent_line.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -212,6 +213,7 @@ class _SignUpScreenState extends State<SignUpScreen>
               child: _buildStepContent(context),
             ),
           ),
+          aboveAction: _currentStep == 2 ? const ConsentLine() : null,
           primary: SahneButton.primary(
             label: _currentStep == 2
                 ? context.t(K.createAccount)

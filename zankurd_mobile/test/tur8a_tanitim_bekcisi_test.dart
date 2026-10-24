@@ -28,41 +28,39 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  const hint =
-      'Devam etmek için "13 yaşında veya daha büyüğüm" kutusunu işaretle.';
-
-  testWidgets('uyarı yalnız kutu işaretsizken "Sonraki"ye basılınca görünür', (
+  testWidgets('yaş kutusu yok: "Sonraki" ilk dokunuşta ilerler, uyarı çıkmaz', (
     tester,
   ) async {
     await pump(tester);
-    expect(find.text(hint), findsNothing, reason: 'dokunmadan görünmemeli');
+    // 2026-10-24: yaş onayı kalktı (kutu "Sonraki"yi kilitliyor, ilk ekranda
+    // kırmızı hata gösteriyordu). Hiçbir aşamada uyarı metni olmamalı.
+    expect(find.textContaining('13 yaş'), findsNothing);
+    expect(find.byKey(const ValueKey('onboarding-age-gate')), findsNothing);
 
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
-    expect(find.text(hint), findsOneWidget);
-
-    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-    await tester.pumpAndSettle();
-    expect(find.text(hint), findsNothing, reason: 'işaretlenince kaybolur');
+    expect(find.text('Başla'), findsOneWidget, reason: 'ikinci sayfaya geçti');
+    expect(find.textContaining('13 yaş'), findsNothing);
   });
 
-  testWidgets('KU/TR tek bitişik segment: ortak kenar, iki yarı yan yana', (
+  testWidgets('dil seçici: tek bitişik segment, Kurmancî solda Türkçe sağda', (
     tester,
   ) async {
     await pump(tester);
-    final segment = find.byKey(const ValueKey('language-toggle-segment'));
-    expect(segment, findsOneWidget);
+    final picker = find.byKey(const ValueKey('language-picker'));
+    expect(picker, findsOneWidget);
     final ku = tester.getRect(
       find.byKey(const ValueKey('onboarding-language-ku')),
     );
     final tr = tester.getRect(
       find.byKey(const ValueKey('onboarding-language-tr')),
     );
-    final box = tester.getRect(segment);
+    final box = tester.getRect(picker);
     // Bitişik: aralarında boşluk yok (yalnız 1 px ayraç), ikisi de kabın içinde.
+    expect(ku.left, lessThan(tr.left), reason: 'Kurmancî ÖNCE');
     expect(tr.left - ku.right, lessThanOrEqualTo(1.0));
     expect(ku.left, greaterThanOrEqualTo(box.left));
     expect(tr.right, lessThanOrEqualTo(box.right));
-    expect(ku.height, box.height);
+    expect(ku.height, greaterThanOrEqualTo(56));
   });
 }

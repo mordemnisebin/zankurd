@@ -68,8 +68,8 @@ Future<void> _pumpOnboarding(
 }
 
 void main() {
-  group('1) Tanıtımda iki parçalı KU|TR seçici', () {
-    testWidgets('her iki dil de aynı anda görünür — yalnız o anki dil değil', (
+  group('1) Tanıtımda büyük, tam adlı dil seçici (Kurmancî önce)', () {
+    testWidgets('iki dil tam adıyla ve aynı anda görünür, Kurmancî solda', (
       tester,
     ) async {
       await _pumpOnboarding(tester, lang: 'ku');
@@ -82,99 +82,55 @@ void main() {
         find.byKey(const ValueKey('onboarding-language-tr')),
         findsOneWidget,
       );
-      // Eski tek hap yalnız TEK etiket gösterirdi (o anki dil); şimdi
-      // ikisi de aynı anda ekranda — karşı dile nasıl geçileceği görünür.
-      expect(find.text('KU'), findsOneWidget);
-      expect(find.text('TR'), findsOneWidget);
+      expect(find.text('Kurmancî'), findsOneWidget);
+      expect(find.text('Türkçe'), findsOneWidget);
+      expect(find.text('Uygulama dili · Zimanê sepanê'), findsOneWidget);
+      expect(
+        tester.getTopLeft(find.text('Kurmancî')).dx,
+        lessThan(tester.getTopLeft(find.text('Türkçe')).dx),
+      );
     });
 
-    testWidgets('TR çipine dokununca tanıtım gerçekten Türkçeye geçer', (
-      tester,
-    ) async {
-      await _pumpOnboarding(tester, lang: 'ku');
-      expect(find.text('Bidomîne'), findsOneWidget);
+    testWidgets(
+      'Türkçe seçeneğine dokununca tanıtım gerçekten Türkçeye geçer',
+      (tester) async {
+        await _pumpOnboarding(tester, lang: 'ku');
+        expect(find.text('Bidomîne'), findsOneWidget);
 
-      await tester.tap(find.byKey(const ValueKey('onboarding-language-tr')));
-      await tester.pumpAndSettle();
+        await tester.tap(find.byKey(const ValueKey('onboarding-language-tr')));
+        await tester.pumpAndSettle();
 
-      expect(find.text('Sonraki'), findsOneWidget);
-      expect(find.text('Bidomîne'), findsNothing);
-    });
+        expect(find.text('Sonraki'), findsOneWidget);
+        expect(find.text('Bidomîne'), findsNothing);
 
-    test('giriş ekranındaki seçiciyle aynı bileşeni paylaşır', () {
-      // Regresyon: iki ekran aynı kararı iki ayrı kopyada uygulamasın diye
-      // `LanguageToggle` `lib/src/widgets/` altına çıkarıldı.
+        await tester.tap(find.byKey(const ValueKey('onboarding-language-ku')));
+        await tester.pumpAndSettle();
+        expect(find.text('Bidomîne'), findsOneWidget);
+      },
+    );
+
+    test('ekran küçük KU|TR hapını değil LanguagePicker kullanır', () {
       final source = File(
         'lib/src/screens/onboarding_screen.dart',
       ).readAsStringSync();
       expect(source, isNot(contains('class _OnboardingLanguageToggle')));
-      expect(source, contains("import '../widgets/language_toggle.dart';"));
+      expect(source, contains("import '../widgets/language_picker.dart';"));
     });
   });
 
-  group('2) Yaş uyarısı satır içi ve yönlendirici', () {
-    testWidgets(
-      'kutu işaretsizken "Başla" SnackBar değil satır içi ipucu gösterir',
-      (tester) async {
-        await tester.binding.setSurfaceSize(const Size(390, 844));
-        addTearDown(() => tester.binding.setSurfaceSize(null));
-        var completed = false;
-        await _pumpOnboarding(tester, onComplete: () => completed = true);
-        await tester.fling(find.byType(PageView), const Offset(-400, 0), 1000);
-        await tester.pumpAndSettle();
-
-        // Tur 8: neden baştan YAZMAZ (hiçbir şeye dokunulmadan hata gibi
-        // duruyordu); yalnız başarısız denemeden sonra Şaş tonunda görünür.
-        expect(
-          find.byKey(const ValueKey('onboarding-age-gate-hint')),
-          findsNothing,
-          reason: 'henüz hiçbir deneme yokken ipucu görünmemeli',
-        );
-        expect(
-          find.text(
-            'Devam etmek için "13 yaşında veya daha büyüğüm" kutusunu işaretle.',
-          ),
-          findsNothing,
-        );
-
-        await tester.tap(find.text('Başla'));
-        await tester.pumpAndSettle();
-
-        // Ne YAPILACAĞI artık söyleniyor...
-        expect(
-          find.text(
-            'Devam etmek için "13 yaşında veya daha büyüğüm" kutusunu işaretle.',
-          ),
-          findsOneWidget,
-        );
-        // ...bir SnackBar'da DEĞİL (SnackBar "Başla"nın üstüne oturuyordu).
-        expect(find.byType(SnackBar), findsNothing);
-        expect(completed, isFalse);
-      },
-    );
-
-    testWidgets('kutu işaretlenince ipucu hemen kaybolur ve akış tamamlanır', (
+  group('2) Yaş kutusu yok: "Başla" ilk dokunuşta tamamlar', () {
+    testWidgets('son sayfada "Başla" kutu/uyarı olmadan akışı bitirir', (
       tester,
     ) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
       var completed = false;
       await _pumpOnboarding(tester, onComplete: () => completed = true);
       await tester.fling(find.byType(PageView), const Offset(-400, 0), 1000);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Başla'));
-      await tester.pumpAndSettle();
-      expect(
-        find.byKey(const ValueKey('onboarding-age-gate-hint')),
-        findsOneWidget,
-      );
 
-      await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-      await tester.pump();
-
-      expect(
-        find.byKey(const ValueKey('onboarding-age-gate-hint')),
-        findsNothing,
-        reason: 'kutu işaretlenince uyarı oyalamaya devam etmemeli',
-      );
+      expect(find.textContaining('13 yaş'), findsNothing);
+      expect(find.byType(SnackBar), findsNothing);
 
       await tester.tap(find.text('Başla'));
       await tester.pumpAndSettle();
@@ -405,8 +361,6 @@ void main() {
             .getTopLeft(find.byKey(const ValueKey('entry-dock')))
             .dy;
 
-        await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
-        await tester.pump();
         await tester.tap(find.text('Sonraki'));
         await tester.pumpAndSettle();
 
