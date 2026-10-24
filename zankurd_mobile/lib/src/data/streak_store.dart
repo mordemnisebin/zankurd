@@ -342,15 +342,16 @@ class StreakStore {
     int lost;
     String breakDay;
     bool playedToday;
+    // Kırılan gün = kaçırılan gün (dün). Sunucu bunu bugünden en çok 1 gün
+    // önce kabul eder (24 saat kuralı) ve ayı kendi saatiyle belirler.
+    breakDay = _dayKey(DateTime(today.year, today.month, today.day - 1));
     if (lastDay == twoAgo && _current > 0) {
       lost = _current;
-      breakDay = lastDay;
       playedToday = false;
     } else if (lastDay == todayKey &&
         _lostLastDay == twoAgo &&
         _lostValue > 0) {
       lost = _lostValue;
-      breakDay = twoAgo;
       playedToday = true;
     } else {
       return null;
@@ -480,7 +481,7 @@ class StreakRepairOffer {
   /// Geri alınacak seri değeri.
   final int lostStreak;
 
-  /// Kırılmadan önce son oynanan gün (`yyyy-MM-dd`); sunucu tekilliği.
+  /// Kaçırılan (kırılan) gün, dün (`yyyy-MM-dd`); sunucu tekilliği.
   final String breakDay;
 
   /// Onarım hakkının ayı (`yyyy-MM`); idempotency anahtarı parçası.

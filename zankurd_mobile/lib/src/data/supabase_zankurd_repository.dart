@@ -2255,7 +2255,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         params: {
           'p_month': monthKey,
           'p_break_day': breakDay,
-          'p_premium': premium,
+          // Sunucu p_premium'u yok sayar (2.2'ye kadar); imza için gönderilir.
+          'p_premium': false,
         },
       );
       if (response is Map<String, dynamic>) {
@@ -2300,6 +2301,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           emailVerifiedAt: DateTime.tryParse(
             (response['email_verified_at'] as String?) ?? '',
           ),
+          emailVerifiedAddress: response['email_verified_address'] as String?,
         );
       }
       return null;

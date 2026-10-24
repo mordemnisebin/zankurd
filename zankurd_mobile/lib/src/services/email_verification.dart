@@ -89,7 +89,14 @@ class SupabaseEmailVerificationGateway implements EmailVerificationGateway {
     try {
       final response = await _client.rpc('get_my_account_flags');
       if (response is Map<String, dynamic> && response['success'] == true) {
-        return response['email_verified_at'] != null;
+        // Doğrulanmış sayılması için kayıtlı adres MEVCUT e-postayla aynı
+        // olmalı: e-posta değişince doğrulama kendiliğinden düşer.
+        final verified = (response['email_verified_address'] as String?)
+            ?.trim()
+            .toLowerCase();
+        return verified != null &&
+            verified.isNotEmpty &&
+            verified == email?.toLowerCase();
       }
       return null;
     } catch (_) {

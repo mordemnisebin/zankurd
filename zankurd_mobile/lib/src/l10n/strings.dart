@@ -809,7 +809,7 @@ class Tr {
     K.streakCalNextMonth: {'ku': 'Meha bê', 'tr': 'Sonraki ay'},
     K.streakMonthNames: {
       'ku':
-          'Çile,Sibat,Adar,Nîsan,Gulan,Hezîran,Tîrmeh,Tebax,Îlon,Çirîya Pêşîn,Çirîya Paşîn,Kanûn',
+          'Çile,Sibat,Adar,Nîsan,Gulan,Hezîran,Tîrmeh,Tebax,Îlon,Çiriya Pêşîn,Çiriya Paşîn,Kanûn',
       'tr':
           'Ocak,Şubat,Mart,Nisan,Mayıs,Haziran,Temmuz,Ağustos,Eylül,Ekim,Kasım,Aralık',
     },
@@ -823,13 +823,9 @@ class Tr {
       'ku': 'Zincîrê vegerîne · {cost} zêr',
       'tr': 'Seriyi geri al · {cost} jeton',
     },
-    K.streakRepairActionFree: {
-      'ku': 'Zincîrê vegerîne · belaş',
-      'tr': 'Seriyi geri al · ücretsiz',
-    },
     K.streakRepairHint: {
-      'ku': 'Mehê carekê dikare were bikaranîn. Premium belaş e.',
-      'tr': 'Ayda bir kez kullanılabilir. Premium için ücretsiz.',
+      'ku': 'Mehê carekê dikare were bikaranîn.',
+      'tr': 'Ayda bir kez kullanılabilir.',
     },
     K.streakRepairDone: {
       'ku': 'Zincîra te vegeriya: {days} roj',
@@ -844,7 +840,7 @@ class Tr {
       'tr': 'Bu ayın hakkı zaten kullanıldı.',
     },
     K.emailVerifyCardTitle: {
-      'ku': 'E-nameya xwe rast bike',
+      'ku': 'E-nameya xwe piştrast bike',
       'tr': 'E-postanı doğrula',
     },
     K.emailVerifyCardBody: {
@@ -858,14 +854,14 @@ class Tr {
       'tr': '6 haneli kod {email} adresine gönderildi.',
     },
     K.emailVerifyCodeLabel: {'ku': 'Koda 6 hejmarî', 'tr': '6 haneli kod'},
-    K.emailVerifyConfirm: {'ku': 'Rast bike', 'tr': 'Doğrula'},
+    K.emailVerifyConfirm: {'ku': 'Piştrast bike', 'tr': 'Doğrula'},
     K.emailVerifyResend: {'ku': 'Dîsa bişîne', 'tr': 'Tekrar gönder'},
     K.emailVerifyResendIn: {
-      'ku': 'Dîsa bişîne ({seconds} çirk)',
+      'ku': 'Dîsa bişîne ({seconds} çirke)',
       'tr': 'Tekrar gönder ({seconds} sn)',
     },
     K.emailVerifyDone: {
-      'ku': 'E-nameya te hat rastkirin',
+      'ku': 'E-nameya te hat piştrastkirin',
       'tr': 'E-postan doğrulandı',
     },
     K.emailVerifyWrongCode: {
@@ -877,7 +873,7 @@ class Tr {
       'tr': 'Kod gönderilemedi. Sonra tekrar dene.',
     },
     K.emailVerifyGenericFailed: {
-      'ku': 'Rastkirin neqediya. Dîsa biceribîne.',
+      'ku': 'Piştrastkirin neqediya. Dîsa biceribîne.',
       'tr': 'Doğrulama tamamlanamadı. Tekrar dene.',
     },
     K.friendAlreadyFriends: {
@@ -4032,7 +4028,6 @@ class K {
   static const streakRepairTitle = 'streak.repair.title';
   static const streakRepairBody = 'streak.repair.body';
   static const streakRepairAction = 'streak.repair.action';
-  static const streakRepairActionFree = 'streak.repair.actionFree';
   static const streakRepairHint = 'streak.repair.hint';
   static const streakRepairDone = 'streak.repair.done';
   static const streakRepairFailed = 'streak.repair.failed';

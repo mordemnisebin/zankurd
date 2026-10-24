@@ -24,7 +24,8 @@
 ///   kullanılmamış seri için sunulur.
 /// * Yerel seri, sunucu onayından SONRA geri yüklenir; yetersiz bakiye ve
 ///   hata yerel seriye dokunmaz; aynı çağrı ikinci kez ücret kesmez.
-/// * Premium onarım ücretsizdir.
+/// * Premium ücretsizliği abonelik sunucuda doğrulanana dek (2.2) kapalı:
+///   onarım herkes için 100 jeton.
 library;
 
 import 'package:flutter/material.dart';
@@ -164,7 +165,7 @@ void main() {
       final store = await broken();
       final offer = store.repairOffer(now: today)!;
       expect(offer.lostStreak, 6);
-      expect(offer.breakDay, '2026-10-22');
+      expect(offer.breakDay, '2026-10-23', reason: 'kaçırılan gün = dün');
       expect(offer.monthKey, '2026-10');
       expect(offer.playedToday, isFalse);
       expect(offer.restoredStreak, 6);
@@ -285,7 +286,6 @@ void main() {
         repository: repo,
         store: store,
         offer: offer,
-        premium: false,
         now: today,
       );
 
@@ -302,7 +302,6 @@ void main() {
         repository: repo,
         store: store,
         offer: offer,
-        premium: false,
         now: today,
       );
 
@@ -316,21 +315,16 @@ void main() {
       );
     });
 
-    test('PREMIUM ücretsiz: bakiye düşmez, seri geri gelir', () async {
-      final (store, repo) = await setup(coins: 10);
+    test('p_premium gönderilmez/yok sayılır: herkes 100 öder', () async {
+      final (store, repo) = await setup(coins: 250);
       final offer = store.repairOffer(now: today)!;
-
-      final outcome = await StreakRepairService.repair(
+      await StreakRepairService.repair(
         repository: repo,
         store: store,
         offer: offer,
-        premium: true,
         now: today,
       );
-
-      expect(outcome, StreakRepairOutcome.free);
-      expect(await repo.loadCoinBalance(), 10);
-      expect(store.effectiveStreak(now: today), 6);
+      expect(await repo.loadCoinBalance(), 150);
     });
 
     test('aynı çağrının tekrarı ikinci kez ücret KESMEZ', () async {
@@ -378,7 +372,6 @@ void main() {
         repository: repo,
         store: store,
         offer: offer,
-        premium: false,
         now: DateTime(2026, 10, 26, 9),
       );
       expect(outcome, StreakRepairOutcome.failed);
@@ -457,7 +450,7 @@ void main() {
   });
 
   group('onarım kartı', () {
-    testWidgets('düğme etiketi bedeli, premium\'da "ücretsiz" gösterir', (
+    testWidgets('düğme etiketi bedeli gösterir, "ücretsiz/Premium" yok', (
       tester,
     ) async {
       final store = await _store({
@@ -466,15 +459,13 @@ void main() {
         'zankurd.streak.lastDay': '2026-10-22',
       });
       final offer = store.repairOffer(now: today)!;
-      final repo = MockZanKurdRepository();
 
       await tester.pumpWidget(
         _wrap(
           StreakRepairCard(
             store: store,
-            repository: repo,
+            repository: MockZanKurdRepository(),
             offer: offer,
-            premium: false,
             now: today,
             onRepaired: (_) {},
           ),
@@ -482,20 +473,8 @@ void main() {
       );
       expect(find.text('Seriyi geri al · 100 jeton'), findsOneWidget);
       expect(find.textContaining('6 günlük serin'), findsOneWidget);
-
-      await tester.pumpWidget(
-        _wrap(
-          StreakRepairCard(
-            store: store,
-            repository: repo,
-            offer: offer,
-            premium: true,
-            now: today,
-            onRepaired: (_) {},
-          ),
-        ),
-      );
-      expect(find.text('Seriyi geri al · ücretsiz'), findsOneWidget);
+      expect(find.textContaining('Premium'), findsNothing);
+      expect(find.textContaining('ücretsiz'), findsNothing);
     });
 
     testWidgets('yetersiz bakiyede hata görünür, geri çağrı çalışmaz', (
@@ -515,7 +494,6 @@ void main() {
             store: store,
             repository: MockZanKurdRepository(),
             offer: offer,
-            premium: false,
             now: today,
             onRepaired: (_) => repaired = true,
           ),
@@ -547,7 +525,6 @@ void main() {
             store: store,
             repository: repo,
             offer: offer,
-            premium: false,
             now: today,
             onRepaired: (days) => restored = days,
           ),
@@ -577,7 +554,6 @@ void main() {
               store: store,
               repository: MockZanKurdRepository(),
               offer: store.repairOffer(now: today)!,
-              premium: false,
               onLater: () {},
               onRepaired: (_) {},
             ),

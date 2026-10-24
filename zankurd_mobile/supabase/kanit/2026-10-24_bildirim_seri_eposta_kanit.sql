@@ -3,9 +3,10 @@
 -- push'u TESLİM edilir · c push_duel kapalıyken düello push'u atlanır · d push_duel kapalıyken arkadaş push'u etkilenmez · e push_social
 -- kapalıyken friend_request atlanır · f push_social kapalıyken room_invite
 -- atlanır · g set_my_push_prefs null = değişmez · h seri onarımı ilk çağrı
--- 100 jeton keser · i aynı ay + aynı kırılma günüyle ikinci çağrı ÜCRET KESMEZ ·
--- j aynı ay başka kırılma günü monthly_limit · k premium onarım ücretsiz ·
--- l yetersiz bakiyede ücret/kayıt yok · m mark_my_email_verified parola
+-- 100 jeton keser (ay sunucuda) · i aynı gün ikinci çağrı ÜCRET KESMEZ · i2 geç
+-- tekrar already_repaired · j aynı ay başka kırılma günü monthly_limit · k p_premium
+-- yok sayılır · l0 24 saat dışı gün reddi · l yetersiz bakiyede ücret/kayıt yok · o2
+-- gelecek amr · o3 telefon OTP · q guard tetikleyici bağları · m mark_my_email_verified parola
 -- oturumunu REDDEDER · n taze OTP oturumunu kabul eder · o bayat OTP oturumunu
 -- reddeder · p istemci email_verified_at'i doğrudan yazamaz (guard).
 --
@@ -209,61 +210,88 @@ exception when others then
 end $$;
 
 -- ------------------------------------------------------------ (h)..(l)
--- Seri onarımı. Kırılma günü: iki gün önce (yerel gün, UTC payı içinde).
+-- Seri onarımı. Ay ve gün SUNUCUDA (Europe/Istanbul); kırılan gün dün.
 do $$
 declare
   a uuid := pg_temp.uid(1); b uuid := pg_temp.uid(2); c uuid := pg_temp.uid(3);
-  ay text := to_char((now() at time zone 'utc'), 'YYYY-MM');
-  gun text := to_char((now() at time zone 'utc')::date - 2, 'YYYY-MM-DD');
-  gun2 text := to_char((now() at time zone 'utc')::date - 1, 'YYYY-MM-DD');
+  bugun date := (now() at time zone 'Europe/Istanbul')::date;
+  ay text := to_char(now() at time zone 'Europe/Istanbul', 'YYYY-MM');
+  gun text := to_char(bugun - 1, 'YYYY-MM-DD');
+  gun2 text := to_char(bugun, 'YYYY-MM-DD');
+  eski text := to_char(bugun - 5, 'YYYY-MM-DD');
   b0 int; b1 int; b2 int; r text;
   sql1 text; sql2 text;
 begin
-  -- A: 500 jeton yükle, bakiye ölç.
   insert into public.coin_transactions (player_id, amount, reason)
   values (a, 500, 'kanit_yukleme');
   b0 := pg_temp.bakiye(a);
 
-  sql1 := format('select public.spend_streak_repair(%L, %L, false)::text', ay, gun);
+  -- p_month bilerek SAÇMA: sunucu yok sayar, kendi ayını kullanır.
+  sql1 := format('select public.spend_streak_repair(%L, %L, false)::text', '1999-01', gun);
   r := pg_temp.rpc(sql1, a);
   b1 := pg_temp.bakiye(a);
-  insert into _kanit values (12, '(h) ilk onarım çağrısı bakiyeyi düşürür',
+  insert into _kanit values (12, '(h) ilk onarım çağrısı bakiyeyi düşürür (p_month yok sayılır)',
     '0', '-100', (b1 - b0)::text);
+  select count(*)::text into r from public.coin_transactions
+   where player_id = a and reason = 'streak_repair:' || ay;
+  insert into _kanit values (13, '(h) ücret sunucu ayıyla yazıldı (streak_repair:<ay>)',
+    '0', '1', r);
 
   r := pg_temp.rpc(sql1, a);
   b2 := pg_temp.bakiye(a);
-  insert into _kanit values (13, '(i) aynı ay + aynı gün ikinci çağrı ücret kesmez',
+  insert into _kanit values (14, '(i) aynı gün ikinci çağrı ücret kesmez',
     '0', '0', (b2 - b1)::text);
-  insert into _kanit values (14, '(i) ikinci çağrı yanıtı already_repaired',
+  insert into _kanit values (15, '(i) ikinci çağrı yanıtı already_repaired',
     'RPC yok', 'true',
     case when r like 'HATA:%' or r = 'RPC yok' then r
          else coalesce((r::jsonb)->>'already_repaired', 'yok') end);
 
+  -- (i2) Gece yarısı geçmiş gibi: kayıtlı kırılma günü 5 gün öncesine çekilir;
+  -- aynı eski parametreyle tekrar, tarih denetiminden ÖNCE bakılıp
+  -- already_repaired döner, ücret kesilmez.
+  if to_regclass('public.streak_repairs') is not null then
+    execute 'update public.streak_repairs set break_day = $1 where player_id = $2'
+      using bugun - 5, a;
+  end if;
+  r := pg_temp.rpc(format('select public.spend_streak_repair(%L, %L, false)::text', ay, eski), a);
+  insert into _kanit values (16, '(i2) geç tekrar (eski gün) already_repaired',
+    'RPC yok', 'true',
+    case when r like 'HATA:%' or r = 'RPC yok' then r
+         else coalesce((r::jsonb)->>'already_repaired', 'yok') end);
+  insert into _kanit values (17, '(i2) geç tekrar ücret kesmedi',
+    '0', '0', (pg_temp.bakiye(a) - b1)::text);
+
   sql2 := format('select public.spend_streak_repair(%L, %L, false)::text', ay, gun2);
   r := pg_temp.rpc(sql2, a);
-  b2 := pg_temp.bakiye(a);
-  insert into _kanit values (15, '(j) aynı ay başka kırılma günü reddedilir',
+  insert into _kanit values (18, '(j) aynı ay başka kırılma günü reddedilir',
     'RPC yok', 'monthly_limit',
     case when r like 'HATA:%' or r = 'RPC yok' then r
          else coalesce((r::jsonb)->>'error', 'yok') end);
-  insert into _kanit values (16, '(j) reddedilen çağrı ücret kesmedi',
-    '0', '0', (b2 - b1)::text);
+  insert into _kanit values (19, '(j) reddedilen çağrı ücret kesmedi',
+    '0', '0', (pg_temp.bakiye(a) - b1)::text);
 
-  -- (k) premium: ücretsiz.
+  -- (k) p_premium=true YOK SAYILIR: B yine 100 öder.
   insert into public.coin_transactions (player_id, amount, reason)
   values (b, 500, 'kanit_yukleme');
   b0 := pg_temp.bakiye(b);
   r := pg_temp.rpc(format(
     'select public.spend_streak_repair(%L, %L, true)::text', ay, gun), b);
-  b1 := pg_temp.bakiye(b);
-  insert into _kanit values (17, '(k) premium onarım ücretsiz (bakiye farkı)',
-    '0', '0', (b1 - b0)::text);
-  insert into _kanit values (18, '(k) premium onarım başarı',
-    'RPC yok', 'true',
-    case when r like 'HATA:%' or r = 'RPC yok' then r
-         else coalesce((r::jsonb)->>'success', 'yok') end);
+  insert into _kanit values (20, '(k) p_premium=true yok sayılır: bakiye farkı',
+    '0', '-100', (pg_temp.bakiye(b) - b0)::text);
 
-  -- (l) yetersiz bakiye: C'nin bakiyesini sıfıra çek (negatif hareket).
+  -- (l0) aralık dışı kırılma günü (3 gün önce) reddedilir, ücret yok.
+  b0 := pg_temp.bakiye(c);
+  r := pg_temp.rpc(format(
+    'select public.spend_streak_repair(%L, %L, false)::text', ay,
+    to_char(bugun - 3, 'YYYY-MM-DD')), c);
+  insert into _kanit values (21, '(l0) 24 saat dışı kırılma günü reddedilir',
+    'RPC yok', 'break day out of range',
+    case when r like 'HATA:%' or r = 'RPC yok' then r
+         else coalesce((r::jsonb)->>'error', 'yok') end);
+  insert into _kanit values (22, '(l0) reddedilen çağrı ücret kesmedi',
+    '0', '0', (pg_temp.bakiye(c) - b0)::text);
+
+  -- (l) yetersiz bakiye: C'nin bakiyesini sıfıra çek.
   b0 := pg_temp.bakiye(c);
   if b0 > 0 then
     insert into public.coin_transactions (player_id, amount, reason)
@@ -271,12 +299,12 @@ begin
   end if;
   r := pg_temp.rpc(format(
     'select public.spend_streak_repair(%L, %L, false)::text', ay, gun), c);
-  insert into _kanit values (19, '(l) yetersiz bakiyede hata',
+  insert into _kanit values (23, '(l) yetersiz bakiyede hata',
     'RPC yok', 'insufficient balance',
     case when r like 'HATA:%' or r = 'RPC yok' then r
          else coalesce((r::jsonb)->>'error', 'yok') end);
-  insert into _kanit values (20, '(l) yetersiz bakiyede ücret kesilmedi',
-    '0', '0', (pg_temp.bakiye(c) - 0)::text);
+  insert into _kanit values (24, '(l) yetersiz bakiyede ücret kesilmedi',
+    '0', '0', pg_temp.bakiye(c)::text);
 exception when others then
   insert into _kanit values (12, '(h..l)', '-', '-', 'HATA: ' || sqlerrm);
 end $$;
@@ -292,7 +320,7 @@ begin
   -- (m) parola oturumu reddedilir.
   r := pg_temp.rpc(sql, a, jsonb_build_array(
     jsonb_build_object('method', 'password', 'timestamp', simdi)));
-  insert into _kanit values (21, '(m) parola oturumu doğrulama sayılmaz',
+  insert into _kanit values (30, '(m) parola oturumu doğrulama sayılmaz',
     'RPC yok', 'otp session required',
     case when r like 'HATA:%' or r = 'RPC yok' then r
          else coalesce((r::jsonb)->>'error', 'yok') end);
@@ -300,16 +328,34 @@ begin
   -- (o) bayat OTP (1 saat önce) reddedilir.
   r := pg_temp.rpc(sql, a, jsonb_build_array(
     jsonb_build_object('method', 'otp', 'timestamp', simdi - 3600)));
-  insert into _kanit values (22, '(o) bayat OTP oturumu reddedilir',
+  insert into _kanit values (31, '(o) bayat OTP oturumu reddedilir',
     'RPC yok', 'otp session required',
     case when r like 'HATA:%' or r = 'RPC yok' then r
          else coalesce((r::jsonb)->>'error', 'yok') end);
 
-  -- (n) taze OTP kabul edilir ve satır yazılır.
+  -- (o2) gelecek zaman damgalı OTP reddedilir.
+  r := pg_temp.rpc(sql, a, jsonb_build_array(
+    jsonb_build_object('method', 'otp', 'timestamp', simdi + 3600)));
+  insert into _kanit values (32, '(o2) gelecek zaman damgalı OTP reddedilir',
+    'RPC yok', 'otp session required',
+    case when r like 'HATA:%' or r = 'RPC yok' then r
+         else coalesce((r::jsonb)->>'error', 'yok') end);
+
+  -- (o3) telefon OTP'si: auth.users.phone dolu hesap reddedilir (geri alınır).
+  update auth.users set phone = '+900000000000' where id = b;
+  r := pg_temp.rpc(sql, b, jsonb_build_array(
+    jsonb_build_object('method', 'otp', 'timestamp', simdi)));
+  update auth.users set phone = null where id = b;
+  insert into _kanit values (33, '(o3) telefonu dolu hesapta OTP kabul edilmez',
+    'RPC yok', 'email mismatch',
+    case when r like 'HATA:%' or r = 'RPC yok' then r
+         else coalesce((r::jsonb)->>'error', 'yok') end);
+
+  -- (n) taze OTP kabul edilir; adres saklanır.
   r := pg_temp.rpc(sql, a, jsonb_build_array(
     jsonb_build_object('method', 'password', 'timestamp', simdi - 7200),
     jsonb_build_object('method', 'otp', 'timestamp', simdi)));
-  insert into _kanit values (23, '(n) taze OTP oturumu kabul edilir',
+  insert into _kanit values (34, '(n) taze OTP oturumu kabul edilir',
     'RPC yok', 'true',
     case when r like 'HATA:%' or r = 'RPC yok' then r
          else coalesce((r::jsonb)->>'success', 'yok') end);
@@ -319,29 +365,63 @@ begin
   else
     v := 'sütun yok';
   end if;
-  insert into _kanit values (24, '(n) email_verified_at yazıldı',
+  insert into _kanit values (35, '(n) email_verified_at yazıldı',
     'sütun yok', 'true', v);
+  if pg_temp.sutun_var('email_verified_address') then
+    execute 'select (email_verified_address = (select email from _p where id = $1))::text from public.profiles where id = $1'
+      into v using a;
+  else
+    v := 'sütun yok';
+  end if;
+  insert into _kanit values (36, '(n) email_verified_address mevcut e-postayla aynı',
+    'sütun yok', 'true', coalesce(v, 'null'));
 
   -- (p) istemci doğrudan yazamaz: B authenticated rolüyle kendi satırını günceller.
   if pg_temp.sutun_var('email_verified_at') then
     perform pg_temp.kimlik(b);
     set local role authenticated;
     begin
-      execute 'update public.profiles set email_verified_at = now() where id = $1' using b;
+      execute 'update public.profiles set email_verified_at = now(), email_verified_address = ''x@y.z'' where id = $1' using b;
     exception when others then null;
     end;
     reset role;
-    execute 'select (email_verified_at is null)::text from public.profiles where id = $1'
+    execute 'select (email_verified_at is null and email_verified_address is null)::text from public.profiles where id = $1'
       into v using b;
   else
     v := 'sütun yok';
   end if;
-  insert into _kanit values (25, '(p) istemci email_verified_at''i doğrudan yazamaz (hâlâ boş)',
+  insert into _kanit values (37, '(p) istemci email_verified_at/address yazamaz (hâlâ boş)',
     'sütun yok', 'true', v);
 exception when others then
   reset role;
-  insert into _kanit values (21, '(m..p)', '-', '-', 'HATA: ' || sqlerrm);
+  insert into _kanit values (30, '(m..p)', '-', '-', 'HATA: ' || sqlerrm);
 end $$;
+
+-- ------------------------------------------------------------------ (q)
+-- Guard tetikleyicileri: UPDATE guard'ı ve INSERT yetki tetikleyicisi bağlı
+-- ve ikisi de email_verified_at/address'i dondurur ya da sıfırlar.
+insert into _kanit
+select 40, '(q) profiles_client_write_guard_trg UPDATE için bağlı', 'true', 'true',
+  coalesce((select ((tgtype & 16) = 16 and (tgtype & 1) = 1 and tgenabled <> 'D')::text
+            from pg_trigger where tgrelid = 'public.profiles'::regclass
+              and tgname = 'profiles_client_write_guard_trg'), 'yok');
+insert into _kanit
+select 41, '(q) profiles_client_insert_authority_trg INSERT için bağlı', 'true', 'true',
+  coalesce((select ((tgtype & 4) = 4 and (tgtype & 1) = 1 and tgenabled <> 'D')::text
+            from pg_trigger where tgrelid = 'public.profiles'::regclass
+              and tgname = 'profiles_client_insert_authority_trg'), 'yok');
+insert into _kanit
+select 42, '(q) UPDATE guard gövdesi email_verified_at/address dondurur', 'false', 'true',
+  (pg_get_functiondef('public.profiles_client_write_guard()'::regprocedure)
+     like '%new.email_verified_at := old.email_verified_at%'
+   and pg_get_functiondef('public.profiles_client_write_guard()'::regprocedure)
+     like '%new.email_verified_address := old.email_verified_address%')::text;
+insert into _kanit
+select 43, '(q) INSERT tetikleyici gövdesi email_verified_at/address sıfırlar', 'false', 'true',
+  (pg_get_functiondef('public.profiles_client_insert_authority()'::regprocedure)
+     like '%new.email_verified_at := null%'
+   and pg_get_functiondef('public.profiles_client_insert_authority()'::regprocedure)
+     like '%new.email_verified_address := null%')::text;
 
 select bulgu, beklenen_once, beklenen_sonra, gozlenen,
        case when gozlenen = beklenen_sonra then 'SONRA-OK'

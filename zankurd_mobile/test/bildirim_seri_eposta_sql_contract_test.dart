@@ -102,6 +102,47 @@ void main() {
     expect(RegExp('push_duel').allMatches(migration).length, greaterThan(3));
   });
 
+  test('onarım: ay/gün sunucuda, premium yok sayılır, mevcut kayıt önce', () {
+    expect(migration, contains("'Europe/Istanbul'"));
+    expect(migration, isNot(contains('+ 31')));
+    expect(migration, isNot(contains('- 31')));
+    expect(migration, contains('v_break < v_today - 1 or v_break > v_today'));
+    // Mevcut kayıt sorgusu, tarih/aralık denetiminden ÖNCE gelir.
+    final existing = migration.indexOf(
+      'from public.streak_repairs\n  where player_id = v_uid and month_key = v_month',
+    );
+    final range = migration.indexOf("'break day out of range'");
+    expect(existing, greaterThan(0));
+    expect(existing, lessThan(range));
+    // p_premium gövdede okunmaz (yalnız imza ve yorum).
+    final body = migration.substring(
+      migration.indexOf(
+        'create or replace function public.spend_streak_repair',
+      ),
+      migration.indexOf('-- B3: e-posta doğrulama işareti'),
+    );
+    expect(RegExp(r'coalesce\(p_premium').hasMatch(body), isFalse);
+  });
+
+  test('e-posta kanıtı: telefon boş, gelecek amr yok, adres saklanır', () {
+    expect(migration, contains("coalesce(u.phone, '') = ''"));
+    expect(migration, contains('extract(epoch from now()) + 60'));
+    expect(migration, contains('email_verified_address = v_address'));
+    expect(
+      migration,
+      contains('new.email_verified_address := old.email_verified_address;'),
+    );
+    expect(migration, contains('new.email_verified_address := null;'));
+    expect(
+      migration,
+      contains(
+        'CREATE OR REPLACE FUNCTION public.profiles_client_insert_authority()',
+      ),
+    );
+    final gateway = _read('lib/src/services/email_verification.dart');
+    expect(gateway, contains("response['email_verified_address']"));
+  });
+
   test('SECURITY DEFINER gövdeleri search_path sabitler', () {
     final definers = RegExp(
       r'security definer\s+set search_path to .public., .pg_temp.',

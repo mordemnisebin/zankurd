@@ -4,7 +4,6 @@ import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
-import '../services/premium_service.dart';
 import '../services/streak_repair_service.dart';
 import '../theme/app_icons.dart';
 import 'sahne/sahne.dart';
@@ -21,7 +20,6 @@ class StreakRepairCard extends StatefulWidget {
     required this.offer,
     required this.onRepaired,
     this.onLater,
-    this.premium,
     this.now,
     super.key,
   });
@@ -34,9 +32,6 @@ class StreakRepairCard extends StatefulWidget {
   /// Verilirse "Niha na" düğmesi çizilir (açılış sayfasında).
   final VoidCallback? onLater;
 
-  /// Premium bayrağı; verilmezse [PremiumService] okunur (testte enjekte).
-  final bool? premium;
-
   final DateTime? now;
 
   @override
@@ -46,9 +41,6 @@ class StreakRepairCard extends StatefulWidget {
 class _StreakRepairCardState extends State<StreakRepairCard> {
   bool _busy = false;
   String? _errorKey;
-
-  bool get _premium =>
-      widget.premium ?? (PremiumService.instance?.isPremium ?? false);
 
   Future<void> _repair() async {
     if (_busy) return;
@@ -60,7 +52,6 @@ class _StreakRepairCardState extends State<StreakRepairCard> {
       repository: widget.repository,
       store: widget.store,
       offer: widget.offer,
-      premium: _premium,
       now: widget.now,
     );
     if (!mounted) return;
@@ -91,11 +82,11 @@ class _StreakRepairCardState extends State<StreakRepairCard> {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final label = _premium
-        ? context.t(K.streakRepairActionFree)
-        : context.t(K.streakRepairAction, {
-            'cost': '${StreakStore.repairCost}',
-          });
+    // Premium ücretsizliği abonelik sunucuda doğrulanınca (2.2); şimdilik
+    // onarım herkes için StreakStore.repairCost jeton.
+    final label = context.t(K.streakRepairAction, {
+      'cost': '${StreakStore.repairCost}',
+    });
     return SahneSurfaceCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -177,7 +168,6 @@ Future<void> showStreakRepairSheet({
   required ZanKurdRepository repository,
   required StreakRepairOffer offer,
   required ValueChanged<int> onRepaired,
-  bool? premium,
   DateTime? now,
 }) {
   return showSahneSheet<void>(
@@ -189,7 +179,6 @@ Future<void> showStreakRepairSheet({
         store: store,
         repository: repository,
         offer: offer,
-        premium: premium,
         now: now,
         onLater: () => Navigator.of(sheetContext).pop(),
         onRepaired: (days) {

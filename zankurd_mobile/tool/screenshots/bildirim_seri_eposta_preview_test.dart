@@ -186,7 +186,6 @@ void main() {
                   store: store,
                   repository: MockZanKurdRepository(),
                   offer: store.repairOffer(now: today)!,
-                  premium: false,
                   now: today,
                   onLater: () {},
                   onRepaired: (_) {},

@@ -23,7 +23,6 @@ class StreakRepairService {
     required ZanKurdRepository repository,
     required StreakStore store,
     required StreakRepairOffer offer,
-    required bool premium,
     DateTime? now,
   }) async {
     final current = store.repairOffer(now: now);
@@ -33,7 +32,8 @@ class StreakRepairService {
     final result = await repository.spendStreakRepair(
       monthKey: offer.monthKey,
       breakDay: offer.breakDay,
-      premium: premium,
+      // Sunucu p_premium'u yok sayar; abonelik doğrulaması gelene dek hep false.
+      premium: false,
     );
     if (result.succeeded) {
       await store.applyRepair(offer, now: now);

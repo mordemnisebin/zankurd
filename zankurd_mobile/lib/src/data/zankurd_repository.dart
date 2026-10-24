@@ -77,11 +77,16 @@ class AccountFlags {
     required this.pushDuel,
     required this.pushSocial,
     this.emailVerifiedAt,
+    this.emailVerifiedAddress,
   });
 
   final bool pushDuel;
   final bool pushSocial;
   final DateTime? emailVerifiedAt;
+
+  /// Doğrulanan adres (küçük harf); mevcut e-postayla eşleşmiyorsa
+  /// doğrulama düşmüş sayılır.
+  final String? emailVerifiedAddress;
 
   bool get emailVerified => emailVerifiedAt != null;
 }

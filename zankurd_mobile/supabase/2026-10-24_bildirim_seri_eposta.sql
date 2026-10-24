@@ -22,10 +22,13 @@
 --     (kullanıcı başına AY başına en çok 1 onarım). Aynı ay + aynı kırılma
 --     günüyle ikinci çağrı yeniden ücret KESMEZ, 'already_repaired' döner;
 --     aynı ay başka bir kırılma günüyle çağrı 'monthly_limit' ile reddedilir.
---     Premium bayrağı (p_premium) istemcinin beyanıdır: sunucuda abonelik
---     bilgisi yok (RevenueCat istemcide). Kötüye kullanımın azami getirisi
---     ayda bir kez, yerelde tutulan bir seri değerini geri almaktır (jeton
---     ya da sıralama etkisi yok); bu kabul edildi ve belgelendi.
+--     Ay ve kırılma günü SUNUCUDA belirlenir (Europe/Istanbul now()); p_month
+--     yalnız imza uyumu için yok sayılır. Kırılan gün (kaçırılan gün) bugünden
+--     en çok 1 gün önce olabilir (24 saat kuralı). Mevcut kayıt tarih
+--     denetimlerinden ÖNCE bakılır: aynı parametreyle geç tekrar
+--     'already_repaired' döner. p_premium da yok sayılır (imza kalsın):
+--     ödeme şu an kapalı, onarım herkes için 100 zêr. Premium ücretsizliği
+--     abonelik sunucuda doğrulanınca (2.2).
 --
 -- B3  Nazik e-posta doğrulama
 --     profiles.email_verified_at (istemci YAZAMAZ: profiles_client_write_guard
@@ -34,7 +37,13 @@
 --     içinde başlamış bir 'otp' (ya da 'magiclink') yöntemi olmalı — yani
 --     kullanıcı e-postasına gelen kodu GERÇEKTEN girmiş. E-posta/parola
 --     girişi 'password' amr'si taşır ve REDDEDİLİR. Ek olarak JWT `email`
---     talebi auth.users.email ile eşleşmeli; anonim oturum reddedilir.
+--     talebi auth.users.email ile eşleşmeli; anonim oturum reddedilir; amr
+--     'otp' telefon OTP'si de olabileceğinden auth.users.phone boş olmalı;
+--     gelecek zaman damgalı amr kabul edilmez. Doğrulanan adres
+--     profiles.email_verified_address'te saklanır: istemci "doğrulanmış"
+--     saymak için bunu mevcut e-postayla karşılaştırır (e-posta değişince
+--     doğrulama kendiliğinden düşer). Guard hem UPDATE (profiles_client_write_guard)
+--     hem INSERT (profiles_client_insert_authority) tetikleyicisinde.
 --     NOT: e-posta/parola hesapları "Confirm email KAPALI" olduğu için
 --     auth.users.email_confirmed_at doğrulama kanıtı DEĞİLDİR (kayıtta
 --     otomatik dolar); bu yüzden amr kullanıldı.
@@ -53,7 +62,8 @@ begin;
 alter table public.profiles
   add column if not exists push_duel boolean not null default true,
   add column if not exists push_social boolean not null default true,
-  add column if not exists email_verified_at timestamptz;
+  add column if not exists email_verified_at timestamptz,
+  add column if not exists email_verified_address text;
 
 comment on column public.profiles.push_duel is
   'Düello bildirimleri (async_duel_*) açık mı. Varsayılan açık.';
@@ -61,6 +71,9 @@ comment on column public.profiles.push_social is
   'Arkadaş ve oda daveti bildirimleri (friend_request, friend_accept, room_invite) açık mı. Varsayılan açık.';
 comment on column public.profiles.email_verified_at is
   'Nazik e-posta doğrulaması (6 haneli kod) tamamlanma zamanı. Yalnız mark_my_email_verified() yazar; oyun ya da sıralama bununla KAPILANMAZ.';
+
+comment on column public.profiles.email_verified_address is
+  'Doğrulanan e-posta adresi (küçük harf). İstemci doğrulanmış saymak için mevcut e-postayla karşılaştırır.';
 
 -- B3: istemci email_verified_at'i yazamaz --------------------------------
 CREATE OR REPLACE FUNCTION public.profiles_client_write_guard()
@@ -85,6 +98,36 @@ begin
     -- E-posta dogrulamasi yalnizca mark_my_email_verified() ile yazilir
     -- (2026-10-24): istemci kendini "dogrulanmis" yapamaz.
     new.email_verified_at := old.email_verified_at;
+    new.email_verified_address := old.email_verified_address;
+  end if;
+  return new;
+end;
+$function$;
+
+-- INSERT tetikleyicisi (canlı gövde + iki satır): istemci doğrulanmış bir
+-- profil satırı EKLEYEMEZ.
+CREATE OR REPLACE FUNCTION public.profiles_client_insert_authority()
+ RETURNS trigger
+ LANGUAGE plpgsql
+ SET search_path TO 'public'
+AS $function$
+begin
+  -- security definer fonksiyonlar (postgres olarak calisir) serbesttir;
+  -- yalnizca dogrudan REST/istemci eklemeleri kisitlanir. Mevcut UPDATE
+  -- guard'iyla ayni kosul, ayni gerekce.
+  if current_user in ('authenticated', 'anon') then
+    -- Coin bakiyesi ve rating hicbir zaman istemciden yazilmaz.
+    new.coins := 0;
+    new.rating := 1000;
+    -- XP yalnizca award_xp_delta() RPC'si uzerinden yazilir.
+    new.xp := 0;
+    new.xp_daily_total := 0;
+    new.xp_daily_date := null;
+    -- Davet bilgisi istemciden eklenemez (H1).
+    new.referred_by := null;
+    -- E-posta dogrulamasi istemciden eklenemez (2026-10-24).
+    new.email_verified_at := null;
+    new.email_verified_address := null;
   end if;
   return new;
 end;
@@ -113,7 +156,8 @@ begin
     'success', true,
     'push_duel', v_row.push_duel,
     'push_social', v_row.push_social,
-    'email_verified_at', v_row.email_verified_at
+    'email_verified_at', v_row.email_verified_at,
+    'email_verified_address', v_row.email_verified_address
   );
 end;
 $function$;
@@ -287,9 +331,11 @@ as $function$
 declare
   v_uid uuid := auth.uid();
   v_cost constant integer := 100;
-  v_now_utc date := (now() at time zone 'utc')::date;
+  -- Ay ve gün SUNUCU saatiyle (Europe/Istanbul) belirlenir; p_month ve
+  -- p_premium yok sayılır (imza uyumu için duruyor).
+  v_today date := (now() at time zone 'Europe/Istanbul')::date;
+  v_month text := to_char(now() at time zone 'Europe/Istanbul', 'YYYY-MM');
   v_break date;
-  v_month text := nullif(btrim(coalesce(p_month, '')), '');
   v_reason text;
   v_existing public.streak_repairs%rowtype;
   v_balance integer;
@@ -298,14 +344,26 @@ begin
     return jsonb_build_object('success', false, 'error', 'not authenticated');
   end if;
 
-  -- Ay anahtarı yalnız yyyy-mm; saat dilimi payı için geçen/şimdiki/gelecek ay.
-  if v_month is null or v_month !~ '^[0-9]{4}-(0[1-9]|1[0-2])$'
-     or v_month not in (
-       to_char(v_now_utc - 31, 'YYYY-MM'),
-       to_char(v_now_utc, 'YYYY-MM'),
-       to_char(v_now_utc + 31, 'YYYY-MM')
-     ) then
-    return jsonb_build_object('success', false, 'error', 'invalid month');
+  v_reason := 'streak_repair:' || v_month;
+
+  -- Aynı kullanıcının eşzamanlı iki denemesi sıraya girer.
+  perform pg_advisory_xact_lock(hashtextextended(v_uid::text, 0));
+
+  -- Mevcut kayıt tarih denetimlerinden ÖNCE: aynı parametreyle geç tekrar
+  -- (gece yarısı geçmiş olsa da) ücret kesmeden 'already_repaired' döner.
+  select * into v_existing
+  from public.streak_repairs
+  where player_id = v_uid and month_key = v_month;
+  if found then
+    select coalesce(sum(amount), 0)::integer into v_balance
+    from public.coin_transactions where player_id = v_uid;
+    if v_existing.break_day::text = btrim(coalesce(p_break_day, '')) then
+      return jsonb_build_object(
+        'success', true, 'already_repaired', true,
+        'paid', v_existing.paid, 'balance', v_balance);
+    end if;
+    return jsonb_build_object(
+      'success', false, 'error', 'monthly_limit', 'balance', v_balance);
   end if;
 
   begin
@@ -313,29 +371,9 @@ begin
   exception when others then
     return jsonb_build_object('success', false, 'error', 'invalid break day');
   end;
-  -- Onarım "son 24 saatte kırılan" seri içindir: kırılma günü yakın olmalı.
-  if v_break < v_now_utc - 4 or v_break > v_now_utc + 1 then
+  -- Kırılan (kaçırılan) gün dün ya da bugün: "son 24 saatte kırıldı" kuralı.
+  if v_break < v_today - 1 or v_break > v_today then
     return jsonb_build_object('success', false, 'error', 'break day out of range');
-  end if;
-
-  v_reason := 'streak_repair:' || v_month;
-
-  -- Aynı kullanıcının eşzamanlı iki denemesi sıraya girer.
-  perform pg_advisory_xact_lock(hashtextextended(v_uid::text, 0));
-
-  select * into v_existing
-  from public.streak_repairs
-  where player_id = v_uid and month_key = v_month;
-  if found then
-    select coalesce(sum(amount), 0)::integer into v_balance
-    from public.coin_transactions where player_id = v_uid;
-    if v_existing.break_day = v_break then
-      return jsonb_build_object(
-        'success', true, 'already_repaired', true,
-        'paid', v_existing.paid, 'balance', v_balance);
-    end if;
-    return jsonb_build_object(
-      'success', false, 'error', 'monthly_limit', 'balance', v_balance);
   end if;
 
   perform 1 from public.profiles where id = v_uid for update;
@@ -345,14 +383,6 @@ begin
 
   select coalesce(sum(amount), 0)::integer into v_balance
   from public.coin_transactions where player_id = v_uid;
-
-  if coalesce(p_premium, false) then
-    insert into public.streak_repairs (player_id, month_key, break_day, paid)
-    values (v_uid, v_month, v_break, false);
-    return jsonb_build_object(
-      'success', true, 'already_repaired', false, 'paid', false,
-      'amount', 0, 'balance', v_balance);
-  end if;
 
   if v_balance < v_cost then
     return jsonb_build_object(
@@ -383,6 +413,7 @@ declare
   v_email text := lower(nullif(btrim(coalesce(v_claims->>'email', '')), ''));
   v_otp_fresh boolean;
   v_verified_at timestamptz;
+  v_address text;
 begin
   if v_uid is null then
     return jsonb_build_object('success', false, 'error', 'not authenticated');
@@ -403,21 +434,27 @@ begin
     where a->>'method' in ('otp', 'magiclink')
       and (a->>'timestamp') ~ '^[0-9]+$'
       and (a->>'timestamp')::numeric >= extract(epoch from now()) - 900
+      -- Gelecek zaman damgası kabul edilmez (60 sn saat payı).
+      and (a->>'timestamp')::numeric <= extract(epoch from now()) + 60
   ) into v_otp_fresh;
   if not v_otp_fresh then
     return jsonb_build_object('success', false, 'error', 'otp session required');
   end if;
 
-  -- Kod, bu hesabın kayıtlı adresine gitmiş olmalı.
-  if not exists (
-    select 1 from auth.users u
-    where u.id = v_uid and lower(u.email) = v_email
-  ) then
+  -- Kod, bu hesabın kayıtlı adresine gitmiş olmalı; amr 'otp' telefon
+  -- OTP'si de olabilir, bu projede telefon girişi yok: telefon boş olmalı.
+  select lower(u.email) into v_address
+  from auth.users u
+  where u.id = v_uid
+    and lower(u.email) = v_email
+    and coalesce(u.phone, '') = '';
+  if v_address is null then
     return jsonb_build_object('success', false, 'error', 'email mismatch');
   end if;
 
   update public.profiles
-  set email_verified_at = coalesce(email_verified_at, now())
+  set email_verified_at = now(),
+      email_verified_address = v_address
   where id = v_uid
   returning email_verified_at into v_verified_at;
   if not found then
