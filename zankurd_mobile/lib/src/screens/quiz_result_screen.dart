@@ -675,6 +675,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   Future<void> _claimContestReward() async {
     final id = widget.contestId;
     if (id == null) return;
+    // Günün yarışması oynandı: bugünkü 19:00 hatırlatması susar.
+    unawaited(NotificationService.noteContestPlayed());
     try {
       // Skoru kaydet + sıralama; sonra rank/badge ödülünü talep et.
       await repository.submitContestEntry(

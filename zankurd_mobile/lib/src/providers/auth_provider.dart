@@ -1,3 +1,4 @@
+import '../services/email_verification.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -103,6 +104,13 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
   bool get isGuest =>
       (_currentUser?.isAnonymous ?? false) ||
       (_offlineMode && _mockAuthenticated);
+
+  /// Nazik e-posta doğrulaması için uç; Supabase bağlı değilse (çevrimdışı,
+  /// test) null — profil kartı o zaman hiç çizilmez.
+  EmailVerificationGateway? get emailVerificationGateway {
+    final client = _client;
+    return client == null ? null : SupabaseEmailVerificationGateway(client);
+  }
 
   /// Uzak kimlik servisi başlatılamadığı için yerel misafir modunda mı?
   bool get isOfflineMode => _offlineMode;

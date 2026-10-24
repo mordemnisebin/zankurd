@@ -17,7 +17,17 @@ class StreakStore {
     this._best,
     this._lastDay,
     this._freeze,
-  );
+    this._playedDays,
+    this._frozenDays,
+    this._repairMonth,
+    this._lostValue,
+    this._lostLastDay,
+    this._offerSeenFor,
+  ) {
+    // Takvim geçmişi bu sürümde eklendi: eski kurulumda yalnız son gün var.
+    final last = _lastDay;
+    if (last != null && !_playedDays.contains(last)) _playedDays.add(last);
+  }
 
   static String get _currentKey =>
       LocalProgressScope.physical('zankurd.streak.current');
@@ -27,6 +37,28 @@ class StreakStore {
       LocalProgressScope.physical('zankurd.streak.lastDay');
   static String get _freezeKey =>
       LocalProgressScope.physical('zankurd.streak.freeze');
+  // Takvim geçmişi ve onarım durumu (2026-10-24). `zankurd.streak.` öneki
+  // [LocalProgressScope.prefixes]te olduğundan kullanıcı kapsamına ve eski
+  // kurulum taşımasına kendiliğinden girer.
+  static String get _playedDaysKey =>
+      LocalProgressScope.physical('zankurd.streak.playedDays');
+  static String get _frozenDaysKey =>
+      LocalProgressScope.physical('zankurd.streak.frozenDays');
+  static String get _repairMonthKey =>
+      LocalProgressScope.physical('zankurd.streak.repairMonth');
+  static String get _lostValueKey =>
+      LocalProgressScope.physical('zankurd.streak.lostValue');
+  static String get _lostLastDayKey =>
+      LocalProgressScope.physical('zankurd.streak.lostLastDay');
+  static String get _offerSeenKey =>
+      LocalProgressScope.physical('zankurd.streak.repairOfferSeenFor');
+
+  /// Takvimde tutulan en fazla gün sayısı (≈ 13 ay); sonsuz büyümesin.
+  static const maxHistoryDays = 400;
+
+  /// Seri onarımının jeton bedeli (sunucudaki `spend_streak_repair` ile
+  /// aynı; bekçi: `streak_repair_contract_test.dart`).
+  static const repairCost = 100;
 
   /// Aynı anda tutulabilecek en fazla dondurma jetonu.
   static const maxFreeze = 2;
@@ -69,6 +101,12 @@ class StreakStore {
       preferences?.getInt(_bestKey) ?? 0,
       preferences?.getString(_lastDayKey),
       preferences?.getInt(_freezeKey) ?? 0,
+      preferences?.getStringList(_playedDaysKey)?.toSet() ?? <String>{},
+      preferences?.getStringList(_frozenDaysKey)?.toSet() ?? <String>{},
+      preferences?.getString(_repairMonthKey),
+      preferences?.getInt(_lostValueKey) ?? 0,
+      preferences?.getString(_lostLastDayKey),
+      preferences?.getString(_offerSeenKey),
     );
   }
 
@@ -84,6 +122,12 @@ class StreakStore {
   int _best;
   String? _lastDay;
   int _freeze;
+  final Set<String> _playedDays;
+  final Set<String> _frozenDays;
+  String? _repairMonth;
+  int _lostValue;
+  String? _lostLastDay;
+  String? _offerSeenFor;
 
   int get best => _best;
   String? get lastDay => _lastDay;
@@ -164,7 +208,9 @@ class StreakStore {
     _freeze -= 1;
     _current += 1;
     if (_current > _best) _best = _current;
+    _markBridgedDays(_lastDay, today);
     _lastDay = _dayKey(today);
+    _playedDays.add(_lastDay!);
     await _persist();
     await NotificationService.noteStreakActivity();
     return _current;
@@ -192,6 +238,7 @@ class StreakStore {
     final lastDay = _lastDay;
 
     if (lastDay == todayKey) {
+      _playedDays.add(todayKey);
       // Bugün zaten işlenmişti; uyarı o zaman susturuldu. Yine de ucuzdur ve
       // uyarının sonradan (bildirim açılınca) bugüne kurulmuş olmasına karşı
       // güvenceyi korur.
@@ -207,12 +254,150 @@ class StreakStore {
     if (lastDay != null && _isYesterday(lastDay, today)) {
       _current += 1;
     } else {
+      // Seri kırıldı: değeri onarım için sakla (son 24 saatte geri alınabilir).
+      if (lastDay != null && _current > 0) {
+        _lostValue = _current;
+        _lostLastDay = lastDay;
+      }
       _current = 1;
     }
     if (_current > _best) _best = _current;
     _lastDay = todayKey;
+    _playedDays.add(todayKey);
     await _persist();
     await NotificationService.noteStreakActivity();
+    return _current;
+  }
+
+  // ── Takvim ──────────────────────────────────────────────────────────
+
+  /// Oynanan günlerin anahtarları (`yyyy-MM-dd`), değiştirilemez görünüm.
+  Set<String> get playedDays => Set.unmodifiable(_playedDays);
+
+  /// Dondurma ya da onarımla korunan günler.
+  Set<String> get frozenDays => Set.unmodifiable(_frozenDays);
+
+  /// Bilinen en eski oynanmış gün; öncesi takvimde boş bırakılır (veri
+  /// yokken "kaçırdı" uydurulmaz).
+  String? get firstDay {
+    if (_playedDays.isEmpty) return null;
+    return _playedDays.reduce((a, b) => a.compareTo(b) <= 0 ? a : b);
+  }
+
+  /// Verilen günün takvim işareti. Saf okuma; saat [now] ile enjekte edilir.
+  StreakCalendarMark markFor(DateTime day, {DateTime? now}) {
+    final today = now ?? DateTime.now();
+    final key = _dayKey(day);
+    final todayKey = _dayKey(today);
+    if (key == todayKey) {
+      return _playedDays.contains(key)
+          ? StreakCalendarMark.played
+          : StreakCalendarMark.today;
+    }
+    if (key.compareTo(todayKey) > 0) return StreakCalendarMark.upcoming;
+    if (_playedDays.contains(key)) return StreakCalendarMark.played;
+    if (_frozenDays.contains(key)) return StreakCalendarMark.frozen;
+    final first = firstDay;
+    if (first != null && key.compareTo(first) > 0) {
+      return StreakCalendarMark.missed;
+    }
+    return StreakCalendarMark.blank;
+  }
+
+  /// Dondurmayla köprülenen günleri (son oynanan ile bugün arası) işaretler.
+  void _markBridgedDays(String? lastDay, DateTime today) {
+    if (lastDay == null) return;
+    final from = DateTime.tryParse(lastDay);
+    if (from == null) return;
+    var day = DateTime(from.year, from.month, from.day + 1);
+    final end = DateTime(today.year, today.month, today.day);
+    var guard = 0;
+    while (day.isBefore(end) && guard++ < 31) {
+      _frozenDays.add(_dayKey(day));
+      day = DateTime(day.year, day.month, day.day + 1);
+    }
+  }
+
+  // ── Seri onarımı ────────────────────────────────────────────────────
+
+  /// Ay anahtarı (`yyyy-MM`): onarım hakkı ve sunucu tekilliği bununla.
+  static String monthKey(DateTime day) =>
+      '${day.year.toString().padLeft(4, '0')}-'
+      '${day.month.toString().padLeft(2, '0')}';
+
+  /// Şu an sunulabilecek onarım; yoksa null.
+  ///
+  /// Kural: seri SON 24 SAATTE kırıldı (son oynanan gün = iki gün önce, yani
+  /// kırılma bu sabah gece yarısı), değeri en az 2 gün, bu takvim ayında
+  /// onarım hakkı kullanılmamış. İki durum vardır: bugün henüz oynanmadı
+  /// (değer `_current`te durur) ya da bugün oynandı ve seri 1'e düştü (değer
+  /// [recordPlay]in sakladığı `_lostValue`da).
+  StreakRepairOffer? repairOffer({DateTime? now}) {
+    final today = now ?? DateTime.now();
+    if (_repairMonth == monthKey(today)) return null;
+    final lastDay = _lastDay;
+    if (lastDay == null) return null;
+    final twoAgo = _dayKey(DateTime(today.year, today.month, today.day - 2));
+    final todayKey = _dayKey(today);
+    int lost;
+    String breakDay;
+    bool playedToday;
+    // Kırılan gün = kaçırılan gün (dün). Sunucu bunu bugünden en çok 1 gün
+    // önce kabul eder (24 saat kuralı) ve ayı kendi saatiyle belirler.
+    breakDay = _dayKey(DateTime(today.year, today.month, today.day - 1));
+    if (lastDay == twoAgo && _current > 0) {
+      lost = _current;
+      playedToday = false;
+    } else if (lastDay == todayKey &&
+        _lostLastDay == twoAgo &&
+        _lostValue > 0) {
+      lost = _lostValue;
+      playedToday = true;
+    } else {
+      return null;
+    }
+    if (lost < 2) return null;
+    return StreakRepairOffer(
+      lostStreak: lost,
+      breakDay: breakDay,
+      monthKey: monthKey(today),
+      playedToday: playedToday,
+    );
+  }
+
+  /// Bu kırılma için açılış sayfası daha önce gösterildi mi?
+  bool repairOfferSeen(StreakRepairOffer offer) =>
+      _offerSeenFor == offer.breakDay;
+
+  /// Açılış sayfasını bu kırılma için bir daha gösterme.
+  Future<void> markRepairOfferSeen(StreakRepairOffer offer) async {
+    _offerSeenFor = offer.breakDay;
+    await _persist();
+  }
+
+  /// Sunucu onarımı onayladıktan SONRA seriyi geri yükler ve hakkı işler.
+  ///
+  /// Aradaki (kaçırılan) gün dondurulmuş sayılır; seri kırılmamış gibi
+  /// sürer. Hak işlendiği için [repairOffer] bu ay artık null döner.
+  Future<int> applyRepair(StreakRepairOffer offer, {DateTime? now}) async {
+    final today = now ?? DateTime.now();
+    final yesterday = DateTime(today.year, today.month, today.day - 1);
+    _frozenDays.add(_dayKey(yesterday));
+    if (offer.playedToday) {
+      _current = offer.lostStreak + 1;
+      _lastDay = _dayKey(today);
+    } else {
+      _current = offer.lostStreak;
+      _lastDay = _dayKey(yesterday);
+    }
+    if (_current > _best) _best = _current;
+    _repairMonth = offer.monthKey;
+    _lostValue = 0;
+    _lostLastDay = null;
+    _offerSeenFor = offer.breakDay;
+    await _persist();
+    // Uyarıyı yeni duruma göre kur (bugün oynandıysa yarına).
+    await NotificationService.syncStreakWarning(now: today);
     return _current;
   }
 
@@ -226,6 +411,32 @@ class StreakStore {
     if (lastDay != null) {
       await preferences.setString(_lastDayKey, lastDay);
     }
+    await preferences.setStringList(_playedDaysKey, _trimmed(_playedDays));
+    await preferences.setStringList(_frozenDaysKey, _trimmed(_frozenDays));
+    await _setOrRemove(preferences, _repairMonthKey, _repairMonth);
+    await _setOrRemove(preferences, _lostLastDayKey, _lostLastDay);
+    await _setOrRemove(preferences, _offerSeenKey, _offerSeenFor);
+    await preferences.setInt(_lostValueKey, _lostValue);
+  }
+
+  static Future<void> _setOrRemove(
+    SharedPreferences preferences,
+    String key,
+    String? value,
+  ) async {
+    if (value == null) {
+      await preferences.remove(key);
+    } else {
+      await preferences.setString(key, value);
+    }
+  }
+
+  /// En yeni [maxHistoryDays] gün, sıralı (anahtarlar `yyyy-MM-dd`).
+  static List<String> _trimmed(Set<String> days) {
+    final sorted = days.toList()..sort();
+    return sorted.length <= maxHistoryDays
+        ? sorted
+        : sorted.sublist(sorted.length - maxHistoryDays);
   }
 
   Future<void> clear() async {
@@ -234,10 +445,51 @@ class StreakStore {
       _bestKey,
       _lastDayKey,
       _freezeKey,
+      _playedDaysKey,
+      _frozenDaysKey,
+      _repairMonthKey,
+      _lostValueKey,
+      _lostLastDayKey,
+      _offerSeenKey,
     ]);
     _current = 0;
     _best = 0;
     _lastDay = null;
     _freeze = 0;
+    _playedDays.clear();
+    _frozenDays.clear();
+    _repairMonth = null;
+    _lostValue = 0;
+    _lostLastDay = null;
+    _offerSeenFor = null;
   }
+}
+
+/// Takvimdeki bir günün durumu. Renk tek kanal değildir: oynanan dolu
+/// turuncu, dondurulan mavi, kaçırılan kesik çizgi (bkz. StreakCalendar).
+enum StreakCalendarMark { played, frozen, missed, today, upcoming, blank }
+
+/// Sunulabilir seri onarımı: ne kaybedildi, hangi gün kırıldı, hangi ay.
+class StreakRepairOffer {
+  const StreakRepairOffer({
+    required this.lostStreak,
+    required this.breakDay,
+    required this.monthKey,
+    required this.playedToday,
+  });
+
+  /// Geri alınacak seri değeri.
+  final int lostStreak;
+
+  /// Kaçırılan (kırılan) gün, dün (`yyyy-MM-dd`); sunucu tekilliği.
+  final String breakDay;
+
+  /// Onarım hakkının ayı (`yyyy-MM`); idempotency anahtarı parçası.
+  final String monthKey;
+
+  /// Bugün oynandı mı (seri 1'e düşmüştü; onarım `lostStreak + 1` yapar).
+  final bool playedToday;
+
+  /// Onarım sonrası seri değeri.
+  int get restoredStreak => playedToday ? lostStreak + 1 : lostStreak;
 }

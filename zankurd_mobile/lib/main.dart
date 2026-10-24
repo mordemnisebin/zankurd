@@ -40,6 +40,7 @@ import 'src/screens/app_shell.dart';
 import 'src/screens/splash_screen.dart';
 import 'src/services/analytics_service.dart';
 import 'src/services/notification_service.dart';
+import 'src/services/notification_sync.dart';
 import 'src/services/premium_service.dart';
 import 'src/services/foreground_push_center.dart';
 import 'src/services/push_tap_router.dart';
@@ -347,9 +348,11 @@ Future<void> main() async {
       }
       startInBackground(
         // Servis kurulunca seri uyarısı bir sonraki akşama kurulur (tek atış).
-        NotificationService.load().then(
-          (_) => NotificationService.syncStreakWarning(),
-        ),
+        NotificationService.load().then((_) async {
+          await NotificationService.syncStreakWarning();
+          // Tercihler sunucuyla eşitlenir, günün yarışması hatırlatması kurulur.
+          await NotificationSync.run(repositoryHolder.repository);
+        }),
         'notifications load',
       );
       // Zamanlanmış bildirim metinleri zamanlama anındaki dilde donar; dil

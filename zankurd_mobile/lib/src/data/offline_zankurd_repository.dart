@@ -407,6 +407,19 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<StreakRepairResult> spendStreakRepair({
+    required String monthKey,
+    required String breakDay,
+    required bool premium,
+  }) async => const StreakRepairResult(StreakRepairOutcome.failed);
+
+  @override
+  Future<AccountFlags?> loadAccountFlags() async => null;
+
+  @override
+  Future<bool> setPushPreferences({bool? duel, bool? social}) async => false;
+
+  @override
   Future<int> claimMissionReward({
     required String missionKey,
     required int fallbackReward,

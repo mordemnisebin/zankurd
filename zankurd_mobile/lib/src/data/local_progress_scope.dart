@@ -32,6 +32,7 @@ class LocalProgressScope {
 
   static const prefixes = <String>[
     'zankurd.streak.',
+    'zankurd.contest.',
     'zankurd.mastery.',
     'zankurd.masteryAnswered.',
     'zankurd.masteryEvidenceCorrect.',

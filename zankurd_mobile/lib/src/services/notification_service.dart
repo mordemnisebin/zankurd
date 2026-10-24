@@ -9,6 +9,7 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../l10n/strings.dart';
+import '../data/contest_play_store.dart';
 import '../data/streak_store.dart';
 import '../utils/error_reporter.dart';
 import 'local_notification_tap.dart';
@@ -138,6 +139,24 @@ class NotificationService {
   static const _minuteKey = 'zankurd.notifications.minute';
   static const _nextFireKey = 'zankurd.notifications.nextFireAt';
   static const _streakNextFireKey = 'zankurd.notifications.streakNextFireAt';
+  static const _contestNextFireKey = 'zankurd.notifications.contestNextFireAt';
+
+  // Tercihler (2026-10-24): hepsi varsayılan AÇIK. Ana anahtar [enabled]
+  // (izin onayı) kapalıyken hiçbiri çalışmaz; tercih yalnız ana anahtar
+  // açıkken neyin geleceğini seçer. Düello ve arkadaş tercihleri ayrıca
+  // sunucuya yazılır (claim_push_outbox süzer); burada yerel kopyadır.
+  static const _prefDailyKey = 'zankurd.notifications.pref.daily';
+  static const _prefContestKey = 'zankurd.notifications.pref.contest';
+  static const _prefStreakKey = 'zankurd.notifications.pref.streak';
+  static const _prefDuelKey = 'zankurd.notifications.pref.duel';
+  static const _prefSocialKey = 'zankurd.notifications.pref.social';
+
+  /// Sunucuya yazılamayan tercih var mı (çevrimdışıyken değiştirildi);
+  /// bir sonraki açılışta yeniden denenir.
+  static const prefsDirtyKey = 'zankurd.notifications.pref.serverDirty';
+
+  /// Günün yarışması hatırlatmasının saati (yerel).
+  static const contestReminderHour = 19;
 
   static NotificationService? _instance;
   static Future<NotificationService>? _loading;
@@ -192,7 +211,7 @@ class NotificationService {
       gateway,
     );
     await service._initNotifications();
-    if (service.enabled) {
+    if (service.enabled && service.dailyOn) {
       await service._scheduleDaily();
     }
     return service;
@@ -221,6 +240,16 @@ class NotificationService {
       (_preferences?.getString('zankurd.language') ?? 'ku') != 'tr';
 
   bool get enabled => _enabled;
+
+  bool _pref(String key) => _preferences?.getBool(key) ?? true;
+
+  /// Günlük hatırlatma, günün yarışması, seri uyarısı, düello, arkadaşlar:
+  /// ana anahtardan bağımsız saklanan tercihler (varsayılan açık).
+  bool get dailyOn => _pref(_prefDailyKey);
+  bool get contestOn => _pref(_prefContestKey);
+  bool get streakOn => _pref(_prefStreakKey);
+  bool get duelOn => _pref(_prefDuelKey);
+  bool get socialOn => _pref(_prefSocialKey);
   int get hour => _hour;
   int get minute => _minute;
   String get timeDisplay =>
@@ -297,10 +326,12 @@ class NotificationService {
             AndroidFlutterLocalNotificationsPlugin
           >()
           ?.createNotificationChannel(
-            const AndroidNotificationChannel(
+            // Kanal adı Android ayarlarında görünür; sabit Kurmancî yazılınca
+            // Türkçe arayüzde de öyle görünüyordu (2026-10-24).
+            AndroidNotificationChannel(
               pushChannelId,
-              'ZanKurd Daxwazên Hevaltiyê',
-              description: 'Daxwazên hevaltiyê yên nû',
+              Tr.forKu(K.notifChannelFriendName, _isKu),
+              description: Tr.forKu(K.notifChannelFriendDesc, _isKu),
               importance: Importance.high,
             ),
           );
@@ -360,10 +391,75 @@ class NotificationService {
     await _preferences?.setBool(_enabledKey, value);
     if (value) {
       await _requestPermissions();
-      await _scheduleDaily();
+      if (dailyOn) await _scheduleDaily();
     } else {
       await _cancelAll();
     }
+  }
+
+  // ── Tercihler ───────────────────────────────────────────────────────
+
+  /// Günlük hatırlatmayı açar/kapatır; öteki bildirimlere dokunmaz. Ana
+  /// anahtar [enabled] kapalıysa yalnız tercih saklanır.
+  Future<void> setDailyOn(bool value) async {
+    await _preferences?.setBool(_prefDailyKey, value);
+    if (!_enabled) return;
+    if (value) {
+      await _scheduleDaily();
+    } else {
+      await _cancelDaily();
+    }
+  }
+
+  /// Seri uyarısını açar/kapatır; kapatınca kurulu uyarı hemen iptal edilir.
+  Future<void> setStreakOn(bool value) async {
+    await _preferences?.setBool(_prefStreakKey, value);
+    if (!_enabled) return;
+    if (value) {
+      await syncStreakWarning();
+    } else {
+      await cancelStreakWarning();
+      await _preferences?.remove(_streakNextFireKey);
+    }
+  }
+
+  /// Günün yarışması hatırlatmasını açar/kapatır.
+  Future<void> setContestOn(bool value) async {
+    await _preferences?.setBool(_prefContestKey, value);
+    if (!_enabled) return;
+    if (!value) await _cancelContestReminder();
+    // Açılınca bir sonraki eşitleme (açılış / öne gelme) kurar: yarışmanın
+    // bugün var olup olmadığı depodan öğrenilir, burada bilinmez.
+  }
+
+  /// Düello bildirimleri (sunucu süzer; burada yerel kopya).
+  Future<void> setDuelOn(bool value) async {
+    await _preferences?.setBool(_prefDuelKey, value);
+    await _preferences?.setBool(prefsDirtyKey, true);
+  }
+
+  /// Arkadaş ve oda daveti bildirimleri (sunucu süzer; yerel kopya).
+  Future<void> setSocialOn(bool value) async {
+    await _preferences?.setBool(_prefSocialKey, value);
+    await _preferences?.setBool(prefsDirtyKey, true);
+  }
+
+  /// Yerel düello/arkadaş tercihi sunucuya yazılamadı mı.
+  bool get serverPrefsDirty => _preferences?.getBool(prefsDirtyKey) ?? false;
+
+  Future<void> markServerPrefsSynced() async =>
+      _preferences?.remove(prefsDirtyKey);
+
+  /// Sunucudan okunan değerleri yerele alır (sunucu tercihinin kaynağıdır;
+  /// başka cihazda yapılan değişiklik de gelir). Kirli yerel değişiklik
+  /// varsa EZİLMEZ.
+  Future<void> adoptServerPrefs({
+    required bool duel,
+    required bool social,
+  }) async {
+    if (serverPrefsDirty) return;
+    await _preferences?.setBool(_prefDuelKey, duel);
+    await _preferences?.setBool(_prefSocialKey, social);
   }
 
   Future<void> setTime(int hour, int minute) async {
@@ -371,7 +467,7 @@ class NotificationService {
     _minute = minute;
     await _preferences?.setInt(_hourKey, hour);
     await _preferences?.setInt(_minuteKey, minute);
-    if (_enabled) {
+    if (_enabled && dailyOn) {
       await _scheduleDaily();
     }
   }
@@ -424,9 +520,20 @@ class NotificationService {
     }
   }
 
+  Future<void> _cancelDaily() async {
+    await _preferences?.remove(_nextFireKey);
+    if (kIsWeb) return;
+    try {
+      await _gateway.cancel(0);
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService cancel daily');
+    }
+  }
+
   Future<void> _cancelAll() async {
     await _preferences?.remove(_nextFireKey);
     await _preferences?.remove(_streakNextFireKey);
+    await _preferences?.remove(_contestNextFireKey);
     if (kIsWeb) return;
     try {
       await _gateway.cancelAll();
@@ -505,7 +612,7 @@ class NotificationService {
   /// Seri etkinliği kaydedilince çağrılır: bugünün uyarısı susar, yarınki
   /// kurulur. Seriyi yazan HER yol bunu çağırır ([noteStreakActivity]).
   Future<void> refreshStreakWarningAfterPlay() async {
-    if (kIsWeb || !_enabled) return;
+    if (kIsWeb || !_enabled || !streakOn) return;
     await cancelStreakWarning();
     await scheduleStreakWarning(startTomorrow: true);
   }
@@ -542,7 +649,7 @@ class NotificationService {
     bool startTomorrow = false,
     DateTime? now,
   }) async {
-    if (kIsWeb || !_enabled) return;
+    if (kIsWeb || !_enabled || !streakOn) return;
     try {
       await _scheduleStreakWarningAt(
         streakWarningTime(now ?? DateTime.now(), playedToday: startTomorrow),
@@ -577,6 +684,11 @@ class NotificationService {
     DateTime? now,
   }) async {
     if (kIsWeb || !_enabled) return;
+    if (!streakOn) {
+      await cancelStreakWarning();
+      await _preferences?.remove(_streakNextFireKey);
+      return;
+    }
     if (!hasLiveStreak) {
       await cancelStreakWarning();
       await _preferences?.remove(_streakNextFireKey);
@@ -624,7 +736,8 @@ class NotificationService {
     if (_languageIsKu == isKu) return;
     _languageIsKu = isKu;
     if (kIsWeb || !_enabled) return;
-    await _scheduleDaily();
+    if (dailyOn) await _scheduleDaily();
+    await _rearmContestReminderForLanguage();
     final raw = _preferences?.getString(_streakNextFireKey);
     final armed = raw == null ? null : DateTime.tryParse(raw);
     if (armed == null) return;
@@ -636,6 +749,151 @@ class NotificationService {
       await _scheduleStreakWarningAt(armed);
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService streak lang');
+    }
+  }
+
+  // ── Günün yarışması hatırlatması ────────────────────────────────────
+
+  static const int _contestId = 4;
+
+  /// Hatırlatmanın çalacağı an: bugün 19:00 (bugünün yarışması oynanmadıysa
+  /// ve saat henüz gelmediyse), değilse yarın 19:00. Saf işlev; saat
+  /// enjekte edilir.
+  static DateTime contestReminderTime(
+    DateTime now, {
+    required bool playedToday,
+  }) {
+    final tonight = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      contestReminderHour,
+      0,
+    );
+    if (!playedToday && tonight.isAfter(now)) return tonight;
+    return DateTime(now.year, now.month, now.day + 1, contestReminderHour, 0);
+  }
+
+  /// Hatırlatmayı kurar ya da kaldırır.
+  ///
+  /// Yarışma bugün yoksa ya da tercih kapalıysa hiçbir şey kurulmaz ve kurulu
+  /// olan iptal edilir. Bugün oynandıysa bugünün hatırlatması bir daha
+  /// ÇALMAZ: tek atış yarın 19:00'a kurulur. Tek atıştır; her açılışta ve
+  /// her yarışma sonunda yeniden kurulur (seri uyarısıyla aynı desen).
+  Future<void> armContestReminder({
+    required bool contestAvailable,
+    required bool playedToday,
+    DateTime? now,
+  }) async {
+    if (kIsWeb || !_enabled) return;
+    if (!contestOn || !contestAvailable) {
+      await _cancelContestReminder();
+      return;
+    }
+    try {
+      await _scheduleContestAt(
+        contestReminderTime(now ?? DateTime.now(), playedToday: playedToday),
+      );
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService contest');
+    }
+  }
+
+  Future<void> _cancelContestReminder() async {
+    await _preferences?.remove(_contestNextFireKey);
+    if (kIsWeb) return;
+    try {
+      await _gateway.cancel(_contestId);
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService contest cancel');
+    }
+  }
+
+  Future<void> _scheduleContestAt(DateTime scheduledTime) async {
+    final androidDetails = AndroidNotificationDetails(
+      'zankurd_contest_reminder',
+      Tr.forKu(K.notifChannelContestName, _isKu),
+      channelDescription: Tr.forKu(K.notifChannelContestDesc, _isKu),
+      importance: Importance.defaultImportance,
+      priority: Priority.defaultPriority,
+      color: _accent,
+    );
+    final details = NotificationDetails(
+      android: androidDetails,
+      iOS: const DarwinNotificationDetails(),
+    );
+    await _preferences?.setString(
+      _contestNextFireKey,
+      scheduledTime.toIso8601String(),
+    );
+    await _gateway.cancel(_contestId);
+    await _gateway.zonedSchedule(
+      id: _contestId,
+      title: Tr.forKu(K.notifContestTitle, _isKu),
+      body: Tr.forKu(K.notifContestBody, _isKu),
+      at: scheduledTime,
+      details: details,
+      payload: LocalNotificationPayload.contestReminder,
+      repeatDaily: false,
+    );
+  }
+
+  /// Dil değişince kurulu hatırlatmayı (zamanını koruyarak) yeni dille kurar.
+  Future<void> _rearmContestReminderForLanguage() async {
+    final raw = _preferences?.getString(_contestNextFireKey);
+    final armed = raw == null ? null : DateTime.tryParse(raw);
+    if (armed == null || !armed.isAfter(DateTime.now())) return;
+    try {
+      await _scheduleContestAt(armed);
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService contest lang');
+    }
+  }
+
+  /// Uygulama açılışında/öne gelişinde çağrılır. [contestAvailable] bugünün
+  /// yarışmasının var olup olmadığını söyler; `null` (bilinmiyor / ağ yok)
+  /// ise mevcut kurulum OLDUĞU GİBİ kalır. Servis kurulu değilse sessizce
+  /// hiçbir şey yapmaz.
+  static Future<void> syncContestReminder({
+    Future<bool?> Function()? contestAvailable,
+    DateTime? now,
+  }) async {
+    try {
+      final service = _instance;
+      if (service == null) return;
+      if (!service.enabled || !service.contestOn) {
+        // Ana anahtar ya da tercih kapalı: kurulu kalmış hatırlatma kalkar.
+        if (service._preferences?.getString(_contestNextFireKey) != null) {
+          await service._cancelContestReminder();
+        }
+        return;
+      }
+      final available = contestAvailable == null
+          ? true
+          : await contestAvailable();
+      if (available == null) return;
+      final played = await ContestPlayStore.playedToday(now: now);
+      await service.armContestReminder(
+        contestAvailable: available,
+        playedToday: played,
+        now: now,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'contest_reminder_sync');
+    }
+  }
+
+  /// Bugünün yarışması oynandı: bugünkü hatırlatma susar, yarınki kurulur.
+  static Future<void> noteContestPlayed({DateTime? now}) async {
+    try {
+      await ContestPlayStore.markPlayed(now: now);
+      await _instance?.armContestReminder(
+        contestAvailable: true,
+        playedToday: true,
+        now: now,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'contest_reminder_played');
     }
   }
 

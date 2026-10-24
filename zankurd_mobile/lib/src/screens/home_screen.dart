@@ -12,8 +12,11 @@ import '../data/streak_store.dart';
 import '../data/xp_award_publisher.dart';
 import '../data/xp_store.dart';
 import '../widgets/progress_summary.dart';
+import '../widgets/streak_calendar.dart';
 import '../widgets/streak_panel.dart';
+import '../widgets/streak_repair_card.dart';
 import '../data/question_bank_loader.dart';
+import '../data/offline_zankurd_repository.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
@@ -239,6 +242,50 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _refreshStreak() async {
     final store = await StreakStore.load();
     if (mounted) setState(() => _streak = store.effectiveStreak());
+    unawaited(_maybeOfferStreakRepair(store));
+  }
+
+  bool _repairSheetOpen = false;
+
+  /// Seri son 24 saatte kırıldıysa, kırılmadan sonraki İLK açılışta tek
+  /// kez onarım sayfasını açar. Çevrimdışı depoda sunulmaz (ödeme yapılamaz)
+  /// ve başka bir sayfa üstteyken kesmez; gösterim işareti sayfa açılmadan
+  /// ÖNCE yazılır, böylece kapatılan sayfa bir daha çıkmaz.
+  Future<void> _maybeOfferStreakRepair(StreakStore store) async {
+    final offer = store.repairOffer();
+    if (offer == null ||
+        _repairSheetOpen ||
+        store.repairOfferSeen(offer) ||
+        !mounted ||
+        repo is OfflineZanKurdRepository ||
+        ModalRoute.of(context)?.isCurrent != true) {
+      return;
+    }
+    _repairSheetOpen = true;
+    try {
+      await store.markRepairOfferSeen(offer);
+      if (!mounted) return;
+      await showStreakRepairSheet(
+        context: context,
+        store: store,
+        repository: repo,
+        offer: offer,
+        onRepaired: _onStreakRepaired,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'streak_repair_sheet');
+    } finally {
+      _repairSheetOpen = false;
+    }
+  }
+
+  void _onStreakRepaired(int days) {
+    unawaited(_refreshStreak());
+    unawaited(_refreshCoins());
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(context.t(K.streakRepairDone, {'days': '$days'}))),
+    );
   }
 
   Future<void> _refreshFirstSession() async {
@@ -926,6 +973,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   // açar ve idempotency anahtarını bağlamsız bırakır.
                   onFreeze: null,
                 ),
+                // Son 24 saatte kırılan seri: aynı sayfada geri alınabilir.
+                if (store.repairOffer() case final offer?) ...[
+                  const SizedBox(height: SahneSpace.x3),
+                  StreakRepairCard(
+                    store: store,
+                    repository: repo,
+                    offer: offer,
+                    onRepaired: (days) {
+                      Navigator.of(context).pop();
+                      _onStreakRepaired(days);
+                    },
+                  ),
+                ],
+                const SizedBox(height: SahneSpace.x4),
+                StreakCalendar(
+                  markFor: (day) => store.markFor(day),
+                  today: DateTime.now(),
+                ),
+                const SizedBox(height: SahneSpace.x4),
               ],
             );
           },

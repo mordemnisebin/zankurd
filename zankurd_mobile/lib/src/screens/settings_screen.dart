@@ -23,6 +23,7 @@ import '../providers/untimed_mode_provider.dart';
 import '../providers/sound_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/notification_service.dart';
+import '../services/notification_sync.dart';
 import '../services/analytics_service.dart';
 import '../services/premium_service.dart';
 import '../services/tts_service.dart';
@@ -73,6 +74,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   NotificationService? _notificationService;
   bool _notificationsEnabled = false;
   String _notificationTime = '19:00';
+  // Bildirim türü tercihleri (varsayılan açık); ana anahtar açıkken görünür.
+  bool _dailyOn = true;
+  bool _contestOn = true;
+  bool _streakOn = true;
+  bool _duelOn = true;
+  bool _socialOn = true;
   bool _systemPermissionDenied = false;
 
   @override
@@ -473,12 +480,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      // Ana anahtar: bildirim izni/onayı. Türler altında.
                       SahneListRow.plain(
-                        title: context.t(K.dailyReminder),
-                        subtitle: context.t(K.dailyReminderAt, {
-                          'time': _notificationTime,
-                        }),
+                        title: context.t(K.notifMasterTitle),
+                        subtitle: context.t(K.notifMasterSub),
                         trailing: Switch(
+                          key: const ValueKey('settings-notif-master'),
                           value: _notificationsEnabled,
                           onChanged: _toggleNotifications,
                         ),
@@ -491,14 +498,85 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                     ],
                   ),
-                  if (_notificationsEnabled)
+                  if (_notificationsEnabled) ...[
                     SahneListRow.plain(
-                      title: context.t(K.changeTime, {
+                      title: context.t(K.dailyReminder),
+                      subtitle: context.t(K.dailyReminderAt, {
                         'time': _notificationTime,
                       }),
-                      chevron: true,
-                      onTap: _pickNotificationTime,
+                      trailing: Switch(
+                        key: const ValueKey('settings-notif-daily'),
+                        value: _dailyOn,
+                        onChanged: (v) => _setPref(
+                          v,
+                          apply: (service) => service.setDailyOn(v),
+                          assign: () => _dailyOn = v,
+                        ),
+                      ),
                     ),
+                    if (_dailyOn)
+                      SahneListRow.plain(
+                        title: context.t(K.changeTime, {
+                          'time': _notificationTime,
+                        }),
+                        chevron: true,
+                        onTap: _pickNotificationTime,
+                      ),
+                    SahneListRow.plain(
+                      title: context.t(K.dailyContest),
+                      subtitle: context.t(K.notifContestSub),
+                      trailing: Switch(
+                        key: const ValueKey('settings-notif-contest'),
+                        value: _contestOn,
+                        onChanged: (v) => _setPref(
+                          v,
+                          apply: (service) => service.setContestOn(v),
+                          assign: () => _contestOn = v,
+                        ),
+                      ),
+                    ),
+                    SahneListRow.plain(
+                      title: context.t(K.notifStreakTitle),
+                      subtitle: context.t(K.notifStreakSub),
+                      trailing: Switch(
+                        key: const ValueKey('settings-notif-streak'),
+                        value: _streakOn,
+                        onChanged: (v) => _setPref(
+                          v,
+                          apply: (service) => service.setStreakOn(v),
+                          assign: () => _streakOn = v,
+                        ),
+                      ),
+                    ),
+                    SahneListRow.plain(
+                      title: context.t(K.notifDuelTitle),
+                      subtitle: context.t(K.notifDuelSub),
+                      trailing: Switch(
+                        key: const ValueKey('settings-notif-duel'),
+                        value: _duelOn,
+                        onChanged: (v) => _setPref(
+                          v,
+                          apply: (service) => service.setDuelOn(v),
+                          assign: () => _duelOn = v,
+                          syncServer: true,
+                        ),
+                      ),
+                    ),
+                    SahneListRow.plain(
+                      title: context.t(K.notifSocialTitle),
+                      subtitle: context.t(K.notifSocialSub),
+                      trailing: Switch(
+                        key: const ValueKey('settings-notif-social'),
+                        value: _socialOn,
+                        onChanged: (v) => _setPref(
+                          v,
+                          apply: (service) => service.setSocialOn(v),
+                          assign: () => _socialOn = v,
+                          syncServer: true,
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
 
@@ -693,9 +771,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (mounted) {
         setState(() {
           _notificationService = service;
-          _notificationsEnabled = service.enabled;
-          _notificationTime = service.timeDisplay;
+          _applyServicePrefs(service);
         });
+        // Düello/arkadaş tercihi sunucuda yaşar: kirli yerel değişikliği
+        // yazar, değilse sunucudaki değeri alır.
+        await PushPrefsSync.reconcile(service, widget.repository);
+        if (mounted) setState(() => _applyServicePrefs(service));
         if (service.enabled) {
           // Uygulama içi tercih açık ama sistem izni kapatılmış olabilir
           // (kullanıcı sistem ayarlarından engellemiştir) — uyarı göster.
@@ -711,10 +792,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  void _applyServicePrefs(NotificationService service) {
+    _notificationsEnabled = service.enabled;
+    _notificationTime = service.timeDisplay;
+    _dailyOn = service.dailyOn;
+    _contestOn = service.contestOn;
+    _streakOn = service.streakOn;
+    _duelOn = service.duelOn;
+    _socialOn = service.socialOn;
+  }
+
+  /// Tür tercihini yazar: önce arayüz (anında geri bildirim), sonra servis;
+  /// düello/arkadaş tercihleri ayrıca sunucuya gider (başarısızsa kirli
+  /// kalır, sonraki açılışta yeniden denenir).
+  Future<void> _setPref(
+    bool value, {
+    required Future<void> Function(NotificationService service) apply,
+    required VoidCallback assign,
+    bool syncServer = false,
+  }) async {
+    final service = _notificationService;
+    if (service == null) return;
+    setState(assign);
+    await apply(service);
+    if (syncServer) {
+      await PushPrefsSync.push(service, widget.repository);
+    }
+  }
+
   Future<void> _toggleNotifications(bool value) async {
     final service = _notificationService;
     if (service == null) return;
     await service.setEnabled(value);
+    if (value) {
+      // Ana anahtar açılınca seri uyarısı ve yarışma hatırlatması da kurulur
+      // (açılış eşitlemesi beklenmez).
+      await NotificationService.syncStreakWarning();
+      await NotificationSync.run(widget.repository);
+    }
     if (!mounted) return;
     setState(() {
       _notificationsEnabled = value;

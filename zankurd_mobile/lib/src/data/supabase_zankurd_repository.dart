@@ -2242,6 +2242,95 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<StreakRepairResult> spendStreakRepair({
+    required String monthKey,
+    required String breakDay,
+    required bool premium,
+  }) async {
+    try {
+      final _ = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+      final response = await client.rpc(
+        'spend_streak_repair',
+        params: {
+          'p_month': monthKey,
+          'p_break_day': breakDay,
+          // Sunucu p_premium'u yok sayar (2.2'ye kadar); imza için gönderilir.
+          'p_premium': false,
+        },
+      );
+      if (response is Map<String, dynamic>) {
+        if (response['success'] == true) {
+          if (response['already_repaired'] == true) {
+            return const StreakRepairResult(
+              StreakRepairOutcome.alreadyRepaired,
+            );
+          }
+          return StreakRepairResult(
+            response['paid'] == true
+                ? StreakRepairOutcome.charged
+                : StreakRepairOutcome.free,
+          );
+        }
+        return StreakRepairResult(switch (response['error']) {
+          'insufficient balance' => StreakRepairOutcome.insufficient,
+          'monthly_limit' => StreakRepairOutcome.monthlyLimit,
+          _ => StreakRepairOutcome.failed,
+        });
+      }
+      return const StreakRepairResult(StreakRepairOutcome.failed);
+    } catch (error, stack) {
+      // Göç uygulanmamışsa onarım sunulmaz: idempotent olmayan yedek yol
+      // YOK (çift çekim riski). Çağıran "şu an kullanılamıyor" gösterir.
+      if (!_isMissingFunction(error)) {
+        _recordError(error, stack, reason: 'spendStreakRepair failed');
+      }
+      return const StreakRepairResult(StreakRepairOutcome.failed);
+    }
+  }
+
+  @override
+  Future<AccountFlags?> loadAccountFlags() async {
+    try {
+      if (client.auth.currentUser == null) return null;
+      final response = await client.rpc('get_my_account_flags');
+      if (response is Map<String, dynamic> && response['success'] == true) {
+        return AccountFlags(
+          pushDuel: response['push_duel'] != false,
+          pushSocial: response['push_social'] != false,
+          emailVerifiedAt: DateTime.tryParse(
+            (response['email_verified_at'] as String?) ?? '',
+          ),
+          emailVerifiedAddress: response['email_verified_address'] as String?,
+        );
+      }
+      return null;
+    } catch (error, stack) {
+      if (!_isMissingFunction(error) && !isLikelyOfflineError(error)) {
+        _recordError(error, stack, reason: 'loadAccountFlags failed');
+      }
+      return null;
+    }
+  }
+
+  @override
+  Future<bool> setPushPreferences({bool? duel, bool? social}) async {
+    try {
+      if (client.auth.currentUser == null) return false;
+      final response = await client.rpc(
+        'set_my_push_prefs',
+        params: {'p_duel': duel, 'p_social': social},
+      );
+      return response is Map<String, dynamic> && response['success'] == true;
+    } catch (error, stack) {
+      if (!_isMissingFunction(error) && !isLikelyOfflineError(error)) {
+        _recordError(error, stack, reason: 'setPushPreferences failed');
+      }
+      return false;
+    }
+  }
+
+  @override
   Future<bool> hasPurchased(String itemId) async {
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
