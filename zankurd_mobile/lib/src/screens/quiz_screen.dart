@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show RenderAbstractViewport;
+import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -647,6 +648,8 @@ class _QuizScreenState extends State<QuizScreen>
       _timerController.addStatusListener((status) {
         if (status == AnimationStatus.dismissed) {
           if (!answered) {
+            // Ekran okuyucu süre dolduğunu bilsin (2026-10-25, Opus karar 5).
+            _announce(context.t(K.sureDoldu));
             _handleQuestionDeadline();
           }
         }
@@ -661,6 +664,9 @@ class _QuizScreenState extends State<QuizScreen>
             if (remaining > 0 && [5, 3, 1].contains(remaining)) {
               HapticFeedback.lightImpact();
               context.read<SoundProvider>().playTick();
+              if (remaining == 5) {
+                _announce(context.t(K.timerSecondsLeft, {'n': '$remaining'}));
+              }
             }
           }
         }
@@ -1572,6 +1578,19 @@ class _QuizScreenState extends State<QuizScreen>
       return store.markResolvedSM2(id, score, sessionId: _mistakeSessionId);
     }, reason: 'quiz practice rating save failed');
     await _next();
+  }
+
+  /// Ekran okuyucuya kısa bir duyuru (süre uyarıları). Görünüm yoksa sessiz.
+  void _announce(String message) {
+    if (!mounted) return;
+    final view = View.maybeOf(context);
+    if (view == null) return;
+    SemanticsService.sendAnnouncement(
+      view,
+      message,
+      Directionality.of(context),
+      assertiveness: Assertiveness.assertive,
+    );
   }
 
   @override
