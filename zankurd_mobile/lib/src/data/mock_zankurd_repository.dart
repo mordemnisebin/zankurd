@@ -2091,12 +2091,6 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey) async {
-    final total = await awardXp(delta);
-    return ServerXpWrite(total: total, retryable: false);
-  }
-
-  @override
   Future<int> awardRoomXp(String roomId) async {
     if (roomId.trim().isEmpty) return awardedXpTotal;
     awardedRoomXpCalls.add(roomId);

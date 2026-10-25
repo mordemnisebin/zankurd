@@ -2538,39 +2538,6 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   bool get xpAwardIsServerTotal => true;
 
   @override
-  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey) async {
-    final key = idempotencyKey.trim();
-    if (key.isEmpty) {
-      final total = await awardXp(delta);
-      return ServerXpWrite(total: total, retryable: false);
-    }
-    try {
-      final response = await client.rpc<dynamic>(
-        'award_xp_delta_once',
-        params: {'p_delta': delta, 'p_idempotency_key': key},
-      );
-      if (response is int) {
-        return ServerXpWrite(total: response, retryable: true);
-      }
-      if (response is num) {
-        return ServerXpWrite(total: response.toInt(), retryable: true);
-      }
-      throw StateError('award_xp_delta_once returned an unreadable total.');
-    } on PostgrestException catch (error, stack) {
-      if (_isMissingFunction(error)) {
-        final total = await awardXp(delta);
-        return ServerXpWrite(total: total, retryable: false);
-      }
-      _recordError(error, stack, reason: 'award_xp_delta_once failed');
-      throw RetryableWriteException(error);
-    } catch (error, stack) {
-      if (error is RetryableWriteException) rethrow;
-      _recordError(error, stack, reason: 'award_xp_delta_once failed');
-      throw RetryableWriteException(error);
-    }
-  }
-
-  @override
   Future<DurableCoinSpend> spendCoinsDurable(
     int amount,
     String reason,

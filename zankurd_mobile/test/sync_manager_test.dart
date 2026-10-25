@@ -8,7 +8,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:zankurd_mobile/src/data/durable_write.dart';
 import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/xp_store.dart';
@@ -157,12 +156,6 @@ class _ServerXpRepository extends SupabaseZanKurdRepository {
   }
 
   @override
-  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey) async {
-    final awarded = await awardXp(delta);
-    return ServerXpWrite(total: awarded, retryable: true);
-  }
-
-  @override
   Future<int> awardRoomXp(String roomId) async {
     roomXpCalls += 1;
     return total;
@@ -201,12 +194,6 @@ class _ReconcileXpRepository extends SupabaseZanKurdRepository {
     if (failAward) throw StateError('xp award failed');
     serverXp += delta;
     return serverXp;
-  }
-
-  @override
-  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey) async {
-    final awarded = await awardXp(delta);
-    return ServerXpWrite(total: awarded, retryable: true);
   }
 }
 

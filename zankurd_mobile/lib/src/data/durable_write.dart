@@ -1,14 +1,3 @@
-/// Sunucu yazımının yeniden denenip denenmeyeceği.
-///
-/// [retryable] yalnız idempotent fonksiyon varken ağ hatasında doğrudur.
-/// Fonksiyon yoksa eski çağrı bir kez yapılır ve kuyruğa girmez.
-class ServerXpWrite {
-  const ServerXpWrite({required this.total, required this.retryable});
-
-  final int total;
-  final bool retryable;
-}
-
 class DurableCoinSpend {
   const DurableCoinSpend({required this.success, required this.retryable});
 
