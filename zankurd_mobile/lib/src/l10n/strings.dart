@@ -135,10 +135,8 @@ class Tr {
     },
     K.premiumCta: {'ku': 'Premium bibe', 'tr': 'Premium ol'},
     K.premiumPerks: {
-      'ku':
-          'Parastina xweber a zincîrê, pratîka peyvan a azad û piştgiriya ji bo ZanKurdê',
-      'tr':
-          "Otomatik seri koruması, serbest kelime pratiği ve ZanKurd'a destek",
+      'ku': 'Parastina xweber a zincîrê û piştgiriya ji bo ZanKurdê',
+      'tr': "Otomatik seri koruması ve ZanKurd'a destek",
     },
     // 2026-09-30 canlı: rozetler büyük harfle kayıtlıydı ve ekrandaki tek
     // bağıran etiketti (metin kararı: büyük harf yok).
@@ -510,8 +508,7 @@ class Tr {
       'tr': 'Harfleri dizerek Kurmancîsini yaz.',
     },
     K.wordsReviewUndo: {'ku': 'Tîpa dawî jê bibe', 'tr': 'Son harfi sil'},
-    // Pro serbest pratik (2026-10-25). Kurul: Gemini Flash + Grok; açıklama
-    // ve ayarlar özetinde hakem Gemini 4 Argon (li ser … xebitîn, ji bo).
+    // Serbest pratik (2026-10-25, herkese açık). Kurul: Gemini Flash + Grok.
     K.wordsPracticeTitle: {'ku': 'Pratîka azad', 'tr': 'Serbest pratik'},
     K.wordsPracticeHint: {
       'ku': 'Qutî naguherin; çiqas bixwazî bixebite.',
@@ -519,16 +516,6 @@ class Tr {
     },
     K.wordsPracticeAll: {'ku': 'Hemû peyvên min', 'tr': 'Tüm kelimelerim'},
     K.wordsPracticeWeak: {'ku': 'Peyvên min ên zehmet', 'tr': 'Zorlandıklarım'},
-    K.paywallPerkPractice: {
-      'ku': 'Pratîka peyvan a azad',
-      'tr': 'Serbest kelime pratiği',
-    },
-    K.paywallPerkPracticeBody: {
-      'ku':
-          'Bêyî ku li benda dema wan bimînî, kengî bixwazî li ser hemû peyvên xwe an tenê yên zehmet bixebite.',
-      'tr':
-          'Vadesini beklemeden tüm kelimelerini ya da yalnız zorlandıklarını istediğin an çalış.',
-    },
     K.wordsReviewScore: {
       'ku': 'Rast: {correct}/{total}',
       'tr': 'Doğru: {correct}/{total}',
@@ -2736,6 +2723,14 @@ class Tr {
     },
     // "ji bo": kullanıcı ZanKurd'u destekler; "Piştgiriya ZanKurdê"
     // ZanKurd'un verdiği destek diye okunuyordu (hakem Gemini 4 Argon).
+    // Kurul: Gemini Flash + Grok "digire"yi reddetti; hakem Gemini 4 Argon:
+    // ragirtin (radigire), "her kesî" ayrı yazılır.
+    K.paywallFreeForAll: {
+      'ku':
+          'Hemû ders û lîstik ji bo her kesî belaş dimînin; Pro ZanKurdê li ser piyan radigire.',
+      'tr':
+          "Tüm dersler ve oyunlar herkese ücretsiz kalır; Pro ZanKurd'u ayakta tutar.",
+    },
     K.paywallPerkSupport: {
       'ku': 'Piştgiriya ji bo ZanKurdê',
       'tr': "ZanKurd'a destek",
@@ -4099,8 +4094,7 @@ class K {
   static const wordsPracticeHint = 'words.practice.hint';
   static const wordsPracticeAll = 'words.practice.all';
   static const wordsPracticeWeak = 'words.practice.weak';
-  static const paywallPerkPractice = 'paywall.perk.practice';
-  static const paywallPerkPracticeBody = 'paywall.perk.practiceBody';
+  static const paywallFreeForAll = 'paywall.freeForAll';
   static const learningUnit = 'learning.unit';
   static const lastSevenDays = 'profile.lastSevenDays';
   static const wordsReviewScore = 'words.review.score';

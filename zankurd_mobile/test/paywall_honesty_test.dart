@@ -177,8 +177,7 @@ void main() {
       K.paywallPerkStreakBody,
       K.paywallPerkSupport,
       K.paywallPerkSupportBody,
-      K.paywallPerkPractice,
-      K.paywallPerkPracticeBody,
+      K.paywallFreeForAll,
       K.premiumPerks,
       K.premiumActive,
     ];
@@ -214,17 +213,20 @@ void main() {
       }
     });
 
-    test('"serbest kelime pratiği" Kelimelerim ekranında gerçekten var', () {
+    test('serbest pratik herkese açık, Pro faydası diye anılmaz', () {
+      // 2026-10-25 sahip ilkesi: öğrenme herkese. Paywall öğrenme özelliğini
+      // satarsa "Tüm dersler herkese ücretsiz" cümlesi yalan olur.
       final screen = File(
         'lib/src/screens/my_words_screen.dart',
       ).readAsStringSync();
-      expect(screen, contains('premium.isPremium'));
-      expect(screen, contains('practice: true'));
-      final drill = File(
-        'lib/src/screens/word_drill_screen.dart',
-      ).readAsStringSync();
-      // Pratik kutu/vade yazmaz.
-      expect(drill, contains('!widget.practice'));
+      expect(screen, isNot(contains('isPremium')));
+      for (final key in copyKeys) {
+        for (final lang in AppLanguage.values) {
+          final text = Tr.of(key, lang).toLowerCase();
+          expect(text, isNot(contains('pratik')), reason: '$key ($lang)');
+          expect(text, isNot(contains('pratîk')), reason: '$key ($lang)');
+        }
+      }
     });
 
     test('"otomatik seri koruması" sonuç ekranında gerçekten uygulanır', () {

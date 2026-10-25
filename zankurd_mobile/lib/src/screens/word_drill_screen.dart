@@ -38,7 +38,7 @@ class WordDrillScreen extends StatefulWidget {
     super.key,
   });
 
-  /// Serbest pratik (Pro): cevaplar kutu/vade YAZMAZ. Vadesi gelmemiş
+  /// Serbest pratik: cevaplar kutu/vade YAZMAZ. Vadesi gelmemiş
   /// kelimeyi erken çalışmak kutusunu ilerletirse Leitner aralıkları bozulur
   /// (kurul 2026-10-25: Gemini 4 Argon uyarısı).
   final bool practice;

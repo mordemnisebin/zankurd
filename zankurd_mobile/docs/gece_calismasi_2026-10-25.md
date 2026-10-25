@@ -27,22 +27,31 @@ yekem!`, `Ev wate bi Kurmancî kîjan peyv e?`, `Guhdarî bike û nivîsîna ras
 hilbijêre.`, `Tîpan rêz bike û peyva Kurmancî binivîse.`, `Tîpa dawî jê
 bibe`, `Beşa {n}`, `7 rojên dawî`.
 
-## Pro paketi (öğleden sonra, kurul kararı)
+## Pro kararı (sahip ilkesi: öğrenme ayrım gözetmeden herkese)
 
-- Eklendi: **Serbest kelime pratiği** (Kelimelerim): tüm kelimeler ya da
-  yalnız zorlandıkların (1. kutu), oturum 15 kelime, kutu/vade değişmez.
-  Yalnız aboneye görünür; paywall'da fayda olarak yazılı.
-- Reddedildi: Pro'ya fazladan joker (tek kişilik XP sıralamaya yazıldığı
-  için parayla sıralama avantajı), Pro çerçevesi (sunucu çerçeve listesi
-  kısıtı; canlı göç ister), Kelimelerim'de kilitli satış satırı (paywall'a
-  üçüncü giriş App Review yol tarifini bozar).
-- Metin bekçisi "sınırsız/bêsînor" sözünü yasaklıyor; fayda "Serbest kelime
-  pratiği" adıyla yazıldı.
+- **Serbest kelime pratiği herkese açık** (Kelimelerim): tüm kelimeler ya da
+  zorlandıkların, oturum 15 kelime, kutu/vade değişmez. Önce Pro'ya
+  kilitlenmişti; sahibin ilkesi üzerine geri alındı. Kurulda Codex "herkese
+  aç", Gemini 4 Argon "günde 1 + ikinci oturumda paywall" dedi; şef A'yı
+  seçti: paywall'a yeni giriş App Review yol tarifi yüzünden yapılamıyor,
+  günde 1 sınırı gelir getirmeden yalnız kısıt olurdu.
+- **Pro = destekçi aboneliği**: otomatik seri koruması + uygulamayı ayakta
+  tutmak. Paywall'da "Tüm dersler ve oyunlar herkese ücretsiz kalır; Pro
+  ZanKurd'u ayakta tutar." satırı.
+- Reddedildi: Pro'ya fazladan joker (tek kişilik XP sıralamaya yazılır),
+  Pro çerçevesi (sunucu çerçeve listesi göçü ister).
+
+### Geliri büyütmek için mağaza ayarları (App Store Connect / RevenueCat, sahip)
+
+1. **Bölgesel fiyat**: Türkiye ve bölgede düşük katman; AB/ABD/İngiltere
+   diasporası için yerel alım gücüne göre (ör. aylık 2,99–3,99 €).
+2. **Aile Paylaşımı**: tek abonelik hanedeki herkese.
+3. **Tanışma teklifi**: yıllık planda 7 gün ücretsiz deneme.
 
 ## Sahibin kararı gereken öneriler
 
-1. **Pro'yu güçlendirmek** için sıradaki adaylar sunucu ister: Pro'ya özel
-   çerçeve (çerçeve listesi göçü), çevrimdışı ders paketi.
+1. **Destekçiye kimlik**: Pro'ya özel "Destekçi" çerçevesi/rozeti (öğrenmeyi
+   kısıtlamadan teşekkür); sunucu çerçeve listesi göçü ister.
 2. **Mağaza kataloğu**: 4 ürün. Yeni kozmetikler ekonomi kararı.
 3. **Soru öner → "Önerilerim"** (durum: alındı/inceleniyor/yayında): sunucu
    tablosu/RPC gerektirir.

@@ -12,21 +12,15 @@ import 'package:zankurd_mobile/src/services/premium_service.dart';
 
 import 'support/widget_test_helpers.dart';
 
-/// Pro serbest kelime pratiği (2026-10-25).
-///
-/// ## Kusur
-///
-/// Pro yalnız otomatik seri koruma veriyordu; öğrenme değeri olan bir
-/// fayda yoktu. Fazladan joker reddedildi: tek kişilik oyunun XP'si
-/// sıralamaya yazıldığından parayla sıralama avantajı olurdu.
+/// Serbest kelime pratiği (2026-10-25).
 ///
 /// ## Kural
 ///
-/// * Abone: "Tüm kelimelerim" / "Zorlandıklarım" pratiği açar; pratik kutu
-///   ve vadeyi DEĞİŞTİRMEZ (Leitner aralıkları bozulmasın).
-/// * Abone değil: bölüm hiç çizilmez. Kilitli satış satırı paywall'a
-///   üçüncü giriş olurdu (App Review yol tarifi, bkz.
-///   `subscription_disclosure_test`); fayda paywall'da tanıtılır.
+/// * Herkese açık: sahibin ilkesi öğrenmenin ayrım gözetmeden herkese
+///   açık olması. Önce Pro'ya kilitlenmişti; geri alındı. Abone olmayan
+///   da "Tüm kelimelerim" / "Zorlandıklarım" pratiğini açar.
+/// * Pratik kutu ve vadeyi DEĞİŞTİRMEZ (Leitner aralıkları bozulmasın).
+/// * Paywall bu özelliği Pro faydası diye anmaz.
 void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({});
@@ -67,10 +61,10 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('abone: pratik açılır ve kutular değişmez', (tester) async {
+  testWidgets('abone olmayan da pratik açar, kutular değişmez', (tester) async {
     final store = await seed();
     final before = {for (final w in store.words) w.entryId: w.box};
-    await pump(tester, store, PremiumService.premiumForTesting());
+    await pump(tester, store, PremiumService.fallback());
 
     expect(find.byKey(const ValueKey('my-words-practice')), findsOneWidget);
     expect(find.byKey(const ValueKey('my-words-practice-weak')), findsOne);
@@ -87,14 +81,5 @@ void main() {
     await tester.pumpAndSettle();
     final after = {for (final w in store.words) w.entryId: w.box};
     expect(after, before);
-  });
-
-  testWidgets("abone değilse bölüm yok (paywall'a yeni giriş açılmaz)", (
-    tester,
-  ) async {
-    PremiumService.debugCanSell = true;
-    final store = await seed();
-    await pump(tester, store, PremiumService.fallback());
-    expect(find.byKey(const ValueKey('my-words-practice')), findsNothing);
   });
 }

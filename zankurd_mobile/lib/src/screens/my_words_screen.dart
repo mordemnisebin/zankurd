@@ -1,14 +1,12 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../data/learner_lexicon.dart';
 import '../data/word_list_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
-import '../services/premium_service.dart';
 import '../utils/app_route.dart';
 import '../theme/app_icons.dart';
 import '../utils/error_reporter.dart';
@@ -141,16 +139,15 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
     );
   }
 
-  /// Serbest pratik (Pro): vadesini beklemeden tüm kelimeler ya da yalnız
+  /// Serbest pratik: vadesini beklemeden tüm kelimeler ya da yalnız
   /// zorlandıkların (1. kutu). Kutular değişmez (bkz.
-  /// [WordDrillScreen.practice]). Yalnız aboneye görünür: kilitli bir satış
-  /// satırı paywall'a üçüncü bir giriş olurdu ve App Review notlarındaki yol
-  /// tarifini bozardı (`subscription_disclosure_test`). Fayda paywall'da
-  /// tanıtılır.
+  /// [WordDrillScreen.practice]).
   ///
-  /// 2026-10-25 kurul (Codex + Gemini 4 Argon): Pro yalnız seri koruma
-  /// veriyordu; fazladan joker sıralamaya XP taşıyacağı için reddedildi,
-  /// öğrenme değeri olan bu fayda seçildi.
+  /// Herkese açık (2026-10-25 sahip ilkesi: öğrenme ayrım gözetmeden
+  /// herkese). Önce Pro'ya kilitlenmişti; kurulda Codex "herkese aç",
+  /// Gemini 4 Argon "günde 1" dedi. Şef kararı: günde 1 sınırının gelir
+  /// getiren yarısı (ikinci oturumda paywall) App Review yol tarifi
+  /// yüzünden yapılamıyor; geriye yalnız kısıt kalıyordu.
   Widget _practiceSection(
     BuildContext context,
     SahneTokens t,
@@ -160,61 +157,55 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
       for (final w in words)
         if (w.box <= 1) w,
     ];
-    return Consumer<PremiumService>(
-      builder: (context, premium, _) {
-        if (!premium.isPremium) return const SizedBox.shrink();
-        Widget row({
-          required Key key,
-          required String title,
-          required List<SavedWord> pool,
-        }) {
-          return SahneListRow.icon(
-            key: key,
-            icon: AppIcons.play,
-            role: SahneRole.learn,
-            title: title,
-            subtitle: '${pool.length}',
-            trailing: const SahneBadge(label: 'Pro', tone: SahneBadgeTone.gold),
-            chevron: true,
-            onTap: () => _startPractice(context, pool),
-          );
-        }
+    Widget row({
+      required Key key,
+      required String title,
+      required List<SavedWord> pool,
+    }) {
+      return SahneListRow.icon(
+        key: key,
+        icon: AppIcons.play,
+        role: SahneRole.learn,
+        title: title,
+        subtitle: '${pool.length}',
+        chevron: true,
+        onTap: () => _startPractice(context, pool),
+      );
+    }
 
-        return Padding(
-          padding: const EdgeInsets.only(top: SahneSpace.x4),
-          child: Column(
-            key: const ValueKey('my-words-practice'),
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Padding(
+      padding: const EdgeInsets.only(top: SahneSpace.x4),
+      child: Column(
+        key: const ValueKey('my-words-practice'),
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            context.t(K.wordsPracticeTitle),
+            style: SahneType.bodyStrong.copyWith(color: t.tx),
+          ),
+          const SizedBox(height: SahneSpace.x1),
+          Text(
+            context.t(K.wordsPracticeHint),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x2),
+          SahneListGroup(
             children: [
-              Text(
-                context.t(K.wordsPracticeTitle),
-                style: SahneType.bodyStrong.copyWith(color: t.tx),
+              row(
+                key: const ValueKey('my-words-practice-all'),
+                title: context.t(K.wordsPracticeAll),
+                pool: words,
               ),
-              const SizedBox(height: SahneSpace.x1),
-              Text(
-                context.t(K.wordsPracticeHint),
-                style: SahneType.caption.copyWith(color: t.tx2),
-              ),
-              const SizedBox(height: SahneSpace.x2),
-              SahneListGroup(
-                children: [
-                  row(
-                    key: const ValueKey('my-words-practice-all'),
-                    title: context.t(K.wordsPracticeAll),
-                    pool: words,
-                  ),
-                  if (weak.isNotEmpty)
-                    row(
-                      key: const ValueKey('my-words-practice-weak'),
-                      title: context.t(K.wordsPracticeWeak),
-                      pool: weak,
-                    ),
-                ],
-              ),
+              if (weak.isNotEmpty)
+                row(
+                  key: const ValueKey('my-words-practice-weak'),
+                  title: context.t(K.wordsPracticeWeak),
+                  pool: weak,
+                ),
             ],
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 

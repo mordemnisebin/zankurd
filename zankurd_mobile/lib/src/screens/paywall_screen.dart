@@ -217,6 +217,32 @@ class _PaywallScreenState extends State<PaywallScreen> {
             // verildiği yer ilk bakışta görünüyor.
             SahneSectionHeader(title: context.t(K.paywallFeatures)),
             _Benefits(isKu: ku),
+            // Sahibin ilkesi (2026-10-25): öğrenme herkese açıktır; Pro bir
+            // destekçi aboneliğidir. Bunu açıkça söylemek hem dürüst hem
+            // destekçiyi ikna eden asıl cümle.
+            Padding(
+              padding: const EdgeInsets.only(top: SahneSpace.x3),
+              child: Row(
+                key: const ValueKey('paywall-free-for-all'),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    AppIcons.circleCheck,
+                    size: 18,
+                    color: SahneTokens.of(context).okTx,
+                  ),
+                  const SizedBox(width: SahneSpace.x2),
+                  Expanded(
+                    child: Text(
+                      context.t(K.paywallFreeForAll),
+                      style: SahneType.caption.copyWith(
+                        color: SahneTokens.of(context).tx2,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(height: SahneSpace.x6),
             if (_loading)
               const Padding(
@@ -279,14 +305,6 @@ class _Benefits extends StatelessWidget {
           role: SahneRole.gold,
           title: Tr.forKu(K.paywallPerkStreak, isKu),
           subtitle: Tr.forKu(K.paywallPerkStreakBody, isKu),
-        ),
-        // Kelimelerim > Serbest pratik (gerçekten çalışan fayda).
-        SahneListRow.icon(
-          key: const ValueKey('paywall-perk-practice'),
-          icon: AppIcons.bookOpen,
-          role: SahneRole.learn,
-          title: Tr.forKu(K.paywallPerkPractice, isKu),
-          subtitle: Tr.forKu(K.paywallPerkPracticeBody, isKu),
         ),
         SahneListRow.icon(
           icon: AppIcons.heart,
