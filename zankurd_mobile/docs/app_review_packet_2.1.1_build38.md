@@ -73,18 +73,12 @@ Suggested review path:
 8. Open Profile and Settings. Account deletion is available at
    Settings → Account → Delete Account. The public fallback instructions are
    https://zankurd.com/delete-account.html.
-9. Open the optional subscription screen. The shortest entry point is the
-   "ZanKurd Pro" row at the bottom of the Home tab (it is hidden for users
-   who already subscribe). It can also be reached from the Profile tab
-   (rightmost tab in the bottom tab bar) → the "Ayarlar" / "Settings" row in
-   the menu list (gear icon) → the "Premium" section → the card in that
-   section. Those are the only two entry points. That screen carries every
-   item Guideline 3.1.2
-   requires: the subscription name "ZanKurd Pro", the length (monthly /
-   yearly), the localized price and the monthly equivalent of the yearly
-   plan, the auto-renewal terms, and functional Privacy Policy and Terms of
-   Use links. The basic learning flow is usable without a subscription;
-   Restore Purchases is available when store products are configured.
+9. Subscription: in this build the optional "ZanKurd Pro" subscription is
+   NOT offered. Its Home tab row and its Settings → Premium section are hidden
+   (feature flag `kProEnabled = false`, 2026-10-25). No purchase flow is
+   reachable from the app; all learning content, games and the "Pratik"
+   practice are free. Reviewers should not look for a paywall in this build.
+   Restore Purchases is not exposed in this build.
 
 The app uses Supabase Auth, Postgres, Storage, and Realtime for optional
 account synchronization, multiplayer rooms, turn-based duels,
@@ -324,7 +318,7 @@ build'de de geçerlidir ve değişmedi; ayrıntı için o pakete bak.
 | Leaderboard/friends | Leaderboard tab (Sıralama) | Internet and an anonymous/authenticated session |
 | Learning screen | Home tab → learning shortcut: lesson path, stories, word cards, Sözlük | Packaged content |
 | Chat/moderation | Inside an online room | Report and Block are available |
-| Subscription | Home tab "ZanKurd Pro" row; Profile → Settings → Premium | Optional; basic learning is not paywalled |
+| Subscription | Not offered in this build (hidden, `kProEnabled = false`) | No purchase flow reachable |
 | Sign in with Apple | First screen → "Apple ile giriş yap" | Native provider sheet; no external browser on iOS |
 | Sign in with Google | First screen → "Google ile giriş yap" | Native provider sheet on iOS |
 | E-mail sign-in | First screen → e-mail and password form | Optional; create an account from the sign-up screen |
@@ -408,7 +402,7 @@ open/licensed imagery. It does not claim ownership of third-party imagery.
 - Retake the store screenshots with the new design (the current set predates
   it; see `docs/store_listing.md`).
 - Capture a physical-device video beginning at launch and showing the guest
-  flow, solo quiz, a turn-based duel, account deletion, subscription screen,
+  flow, solo quiz, a turn-based duel, account deletion,
   user-generated chat, and Report/Block controls.
 - If Apple requires a non-anonymous account for any online feature, provide a
   disposable review account in App Store Connect only; do not put its password

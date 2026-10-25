@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/config/feature_flags.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:zankurd_mobile/src/config/app_config.dart';
@@ -162,6 +163,15 @@ void main() {
       final packet = File(
         'docs/app_review_packet_${version.group(1)}_build${version.group(2)}.md',
       ).readAsStringSync();
+
+      // Pro kapalıyken (kProEnabled=false, 2026-10-25) yol yoktur; paket bunu
+      // açıkça söylemeli ve bayrağı anmalı. Açılınca aşağıdaki yol kontrolü
+      // devreye girer.
+      if (!kProEnabled) {
+        expect(packet, contains('NOT offered'));
+        expect(packet, contains('kProEnabled = false'));
+        return;
+      }
 
       // Yolun iki durağı da yazılı olmalı: hangi sekmeden girileceği ve
       // hangi bölüme inileceği. Yalnız "Settings" demek yetmez — ayarlar
