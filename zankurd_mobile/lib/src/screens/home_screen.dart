@@ -27,6 +27,7 @@ import '../models/contest.dart' show DailyEventEntry;
 import '../providers/reduced_motion_provider.dart';
 import '../providers/sound_provider.dart';
 import '../widgets/sahne/sahne.dart';
+import '../widgets/sync_failed_notice.dart';
 import '../utils/app_route.dart';
 import '../utils/boot_diagnostics.dart';
 import '../utils/error_reporter.dart';
@@ -627,6 +628,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
             const SizedBox(height: SahneSpace.x2),
           ],
+          // Başarısız senkron ödülü: otomatik yeniden denenmez; kullanıcı
+          // buradan (ya da Profil'den) elle yeniden dener (2026-10-25).
+          const SyncFailedNotice(),
           // Tarihî gün şeridi: yalnız o gün (21 Şubat, 8/16/21 Mart, 15 Mayıs).
           if (DozaDay.today() case final day?) DozaDayStrip(day: day),
           // İlk oturum hâlâ 5 soruluk, süresiz, açıklamalı ilk derstir:
@@ -795,7 +799,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             builder: (context, premium, _) {
               // Satılabilir paket yoksa da gizli: ödeme sözleşmesi/satıcı
               // hesabı eksikken paywall boş geliyordu (2026-10-23).
-              if (premium.isPremium || !premium.canSell) {
+              if (!kProEnabled || premium.isPremium || !premium.canSell) {
                 return const SizedBox.shrink();
               }
               return Padding(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/config/feature_flags.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/config/app_config.dart';
@@ -73,18 +74,24 @@ void main() {
   ) async {
     await pumpHome(tester);
 
+    // Pro kapalıyken (kProEnabled=false, 2026-10-25) ana ekranda satın alma
+    // girişi yoktur; açılınca bu test girişin bulunduğunu doğrular.
     final row = find.byKey(const ValueKey('home-premium-row'));
     expect(
       row,
-      findsOneWidget,
-      reason:
-          'Satın alma ekranına ana ekrandan giriş yok; tek yol yine ayarların '
-          'en altı demektir.',
+      kProEnabled ? findsOneWidget : findsNothing,
+      reason: kProEnabled
+          ? 'Satın alma ekranına ana ekrandan giriş yok; tek yol yine ayarların '
+                'en altı demektir.'
+          : 'Pro kapalı: ana ekranda satın alma girişi görünmemeli.',
     );
     expect(
       find.byKey(const ValueKey('home-premium-flat-surface')),
-      findsOneWidget,
+      kProEnabled ? findsOneWidget : findsNothing,
     );
+    // Pro kapalıyken satın alma akışının geri kalanı (metin, dokunuş,
+    // paywall açılışı) ulaşılamaz; açılınca aşağıdakiler çalışır.
+    if (!kProEnabled) return;
     // Satırda mağaza kaydındaki ad yazmalı — "Premium" gibi genel bir
     // özellik adı değil (bkz. `subscription_disclosure_test.dart`).
     expect(

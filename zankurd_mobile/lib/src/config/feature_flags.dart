@@ -40,3 +40,10 @@ const kWeeklyLeagueEnabled = false;
 /// BİRLEŞTİRİLMEMELİDİR; aksi hâlde yayınlanan sürümde kart açık, sunucuda
 /// RPC yok olur.
 const kAsyncDuelEnabled = true;
+
+/// Pro (destekçi aboneliği) ana ekranda ve ayarlarda görünür mü?
+///
+/// 2026-10-25 (sahip kararı): kapalı. Öğrenme herkese ücretsiz; Pro ancak
+/// fiyat, katman, mağaza ürünleri ve sözleşme/vergi/banka tamamlanınca
+/// açılır. Kapalıyken paywall'a giden hiçbir giriş görünmez.
+const kProEnabled = false;

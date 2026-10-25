@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../data/placement_store.dart';
 import '../data/learning_goal_store.dart';
 import '../data/zankurd_repository.dart';
+import '../config/feature_flags.dart';
 import '../l10n/lang.dart';
 import '../utils/player_identity.dart';
 import '../l10n/strings.dart';
@@ -605,7 +606,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 builder: (context, premium, _) {
                   final isPremium = premium.isPremium;
                   // Satılabilir paket yoksa da gizli (2026-10-23).
-                  if (!isPremium && !premium.canSell) {
+                  if (!kProEnabled || (!isPremium && !premium.canSell)) {
                     return const SizedBox.shrink();
                   }
                   return Column(
