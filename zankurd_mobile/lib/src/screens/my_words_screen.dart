@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../data/learner_lexicon.dart';
 import '../data/word_list_store.dart';
@@ -10,6 +11,7 @@ import '../l10n/strings.dart';
 import '../utils/app_route.dart';
 import '../theme/app_icons.dart';
 import '../utils/error_reporter.dart';
+import '../utils/word_csv.dart';
 import '../widgets/app_state.dart';
 import '../widgets/lexicon_lookup.dart';
 import '../widgets/lexicon_speak_button.dart';
@@ -87,7 +89,20 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
     final words = store?.words ?? const <SavedWord>[];
     return Scaffold(
       backgroundColor: t.bg,
-      appBar: zkAppBar(context, title: Text(context.t(K.wordsTitle))),
+      appBar: zkAppBar(
+        context,
+        title: Text(context.t(K.wordsTitle)),
+        actions: words.isEmpty
+            ? null
+            : [
+                SahneIconButton(
+                  key: const ValueKey('my-words-share'),
+                  icon: AppIcons.shareNodes,
+                  semanticLabel: context.t(K.share),
+                  onPressed: () => _shareCsv(words),
+                ),
+              ],
+      ),
       body: SafeArea(
         top: false,
         child: _loading
@@ -125,6 +140,37 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
               ),
       ),
     );
+  }
+
+  /// Listeyi CSV olarak paylaşır (Excel'de açılır). Sözlük kimliği
+  /// bulunamayan kayıtlar atlanır; liste boşsa düğme gösterilmez.
+  Future<void> _shareCsv(List<SavedWord> words) async {
+    final rows = [
+      for (final word in words)
+        if (LearnerLexicon.byId(word.entryId) case final entry?)
+          WordCsvRow(
+            termKu: entry.termKu,
+            meaningTr: entry.meaningTr,
+            box: word.box,
+            reviews: word.reviews,
+          ),
+    ];
+    final bytes = buildWordCsvBytes(rows);
+    try {
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [
+            XFile.fromData(
+              bytes,
+              mimeType: 'text/csv',
+              name: 'zankurd_kelimeler.csv',
+            ),
+          ],
+        ),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'my_words_csv_share');
+    }
   }
 
   Widget _reviewCard(BuildContext context, SahneTokens t, WordListStore store) {
