@@ -541,10 +541,13 @@ class ProgressSyncService with WidgetsBindingObserver {
       // Kapsam başka kullanıcıya geçtiyse (hızlı hesap değişimi) dokunma.
       if (LocalProgressScope.activeUserId != userId) return;
       final prefs = _preferences ?? await SharedPreferences.getInstance();
-      final local = LocalProgressSnapshot.read(prefs);
 
       final row = await remote.fetch();
       if (_closed || LocalProgressScope.activeUserId != userId) return;
+      // Yerel görüntü ağ cevabından SONRA okunur: fetch beklenirken oynanan
+      // gün (seri takvimi), XP ya da rozet, birleşik hal yazılınca eski
+      // kopyanın altında kalıp siliniyordu (2026-10-25 Codex incelemesi).
+      final local = LocalProgressSnapshot.read(prefs);
 
       ProgressSnapshot merged = local;
       ProgressSnapshot? remoteSnapshot;

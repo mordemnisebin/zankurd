@@ -11,6 +11,8 @@
 /// sabitler.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/widgets.dart' show AppLifecycleState;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,6 +52,18 @@ class _FakeRemote implements ProgressRemote {
     if (error != null) throw error;
     lastSaved = snapshot;
     row = RemoteProgress(snapshot: snapshot);
+  }
+}
+
+class _GatedRemote extends _FakeRemote {
+  _GatedRemote(this._gate, RemoteProgress row) : super(row: row);
+
+  final Future<void> _gate;
+
+  @override
+  Future<RemoteProgress?> fetch() async {
+    await _gate;
+    return super.fetch();
   }
 }
 
@@ -196,6 +210,35 @@ void main() {
         debounce: debounce,
       );
     }
+
+    // Codex incelemesi (2026-10-25): yerel görüntü fetch'ten ÖNCE
+    // okunuyordu; ağ cevabı beklenirken oynanan gün, birleşik hal
+    // yazılınca eski kopyanın altında kalıp siliniyordu.
+    test('fetch beklenirken oynanan gün eşitlemede silinmez', () async {
+      final gate = Completer<void>();
+      final remote = _GatedRemote(
+        gate.future,
+        RemoteProgress(
+          snapshot: const ProgressSnapshot(
+            xp: 50,
+            streak: SnapshotStreak(current: 1, best: 1, lastDay: '2026-10-14'),
+            badges: {'speed_demon'},
+          ).toJson(),
+        ),
+      );
+      final service = await bind(remote);
+
+      final sync = service.syncNow();
+      await Future<void>.delayed(Duration.zero);
+      await (await StreakStore.load()).recordPlay(now: DateTime(2026, 10, 15));
+      gate.complete();
+      await sync;
+
+      final prefs = await SharedPreferences.getInstance();
+      final local = LocalProgressSnapshot.read(prefs);
+      expect(local.streak.playedDays, contains('2026-10-15'));
+      expect(local.badges, contains('speed_demon'));
+    });
 
     test('yeni cihaz: sunucudaki ilerleme yerele iner', () async {
       final remote = _FakeRemote(
