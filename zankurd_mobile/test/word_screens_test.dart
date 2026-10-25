@@ -196,6 +196,24 @@ void main() {
       expect(find.text('Henüz kelime yok'), findsOneWidget);
     });
 
+    // 2026-10-25: CSV paylaş düğmesi yalnız kelime varken görünür; boş
+    // listede düğme yoktur (paylaşılacak bir şey yok).
+    testWidgets('paylaş düğmesi yalnız kelime varken çıkar', (tester) async {
+      final empty = await WordListStore.load(storage: InMemoryDataStorage());
+      await pumpAt(
+        tester,
+        MyWordsScreen(repository: MockZanKurdRepository(), store: empty),
+      );
+      expect(find.byKey(const ValueKey('my-words-share')), findsNothing);
+
+      final store = await seededStore(['rojbas']);
+      await pumpAt(
+        tester,
+        MyWordsScreen(repository: MockZanKurdRepository(), store: store),
+      );
+      expect(find.byKey(const ValueKey('my-words-share')), findsOneWidget);
+    });
+
     testWidgets('sayılar, tek Tekrar kartı ve kutu görünür', (tester) async {
       final store = await seededStore(['rojbas', 'evarbas', 'sevbas']);
       await store.recordReview('sevbas', correct: true);
