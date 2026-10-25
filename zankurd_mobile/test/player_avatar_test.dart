@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/models/avatar_identity.dart';
 import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
@@ -128,4 +129,111 @@ void main() {
       );
     });
   }
+
+  // 2026-10-25: arkadaş VIP ve neon çerçeve aldı, başkalarının gözünde
+  // hiçbir şey değişmedi — çerçeve bronzla aynı 3 px kenardı, VIP yalnız
+  // profil metniydi.
+  group('satın alınan görünüm', () {
+    for (final id in ['gold', 'neon']) {
+      testWidgets('$id çerçeve çift kontur çizer', (tester) async {
+        await tester.pumpWidget(
+          shell(PlayerAvatar(radius: 18, frameId: id, displayName: 'Zana')),
+        );
+        expect(
+          find.byKey(const ValueKey('avatar-frame-premium')),
+          findsOneWidget,
+        );
+        expect(find.byKey(const ValueKey('avatar-frame-ring')), findsOneWidget);
+      });
+    }
+
+    testWidgets('bronz çerçeve tek halka kalır', (tester) async {
+      await tester.pumpWidget(
+        shell(
+          const PlayerAvatar(
+            radius: 18,
+            frameId: 'bronze',
+            displayName: 'Zana',
+          ),
+        ),
+      );
+      expect(find.byKey(const ValueKey('avatar-frame-premium')), findsNothing);
+      expect(find.byKey(const ValueKey('avatar-frame-ring')), findsOneWidget);
+    });
+
+    testWidgets('büyük avatarda VIP yazılı rozet', (tester) async {
+      await tester.pumpWidget(
+        shell(
+          const PlayerAvatar(
+            radius: 32,
+            showcaseTitle: 'VIP',
+            displayName: 'Zana',
+          ),
+        ),
+      );
+      expect(find.byKey(const ValueKey('avatar-vip-badge')), findsOneWidget);
+      expect(find.text('VIP'), findsOneWidget);
+    });
+
+    testWidgets('küçük avatarda yazısız VIP mührü', (tester) async {
+      await tester.pumpWidget(
+        shell(
+          const PlayerAvatar(
+            radius: 14,
+            showcaseTitle: 'VIP',
+            displayName: 'Zana',
+          ),
+        ),
+      );
+      expect(find.byKey(const ValueKey('avatar-vip-badge')), findsOneWidget);
+      expect(find.text('VIP'), findsNothing);
+      expect(find.byIcon(AppIcons.gem), findsOneWidget);
+    });
+
+    testWidgets('başka unvanda VIP rozeti yok', (tester) async {
+      await tester.pumpWidget(
+        shell(
+          const PlayerAvatar(
+            radius: 32,
+            showcaseTitle: 'Pispor',
+            displayName: 'Zana',
+          ),
+        ),
+      );
+      expect(find.byKey(const ValueKey('avatar-vip-badge')), findsNothing);
+    });
+
+    testWidgets('çok küçük premium avatar tek halkaya düşer', (tester) async {
+      for (final r in [1.0, 4.0, 9.0]) {
+        await tester.pumpWidget(
+          shell(PlayerAvatar(radius: r, frameId: 'gold', displayName: 'Z')),
+        );
+        expect(tester.takeException(), isNull);
+        expect(
+          find.byKey(const ValueKey('avatar-frame-premium')),
+          findsNothing,
+        );
+      }
+    });
+
+    testWidgets('fromIdentity VIP unvanını taşır', (tester) async {
+      await tester.pumpWidget(
+        shell(
+          PlayerAvatar.fromIdentity(
+            radius: 18,
+            identity: const AvatarIdentity(
+              frameId: 'neon',
+              showcaseTitle: 'VIP',
+            ),
+            displayName: 'Zana',
+          ),
+        ),
+      );
+      expect(find.byKey(const ValueKey('avatar-vip-badge')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('avatar-frame-premium')),
+        findsOneWidget,
+      );
+    });
+  });
 }

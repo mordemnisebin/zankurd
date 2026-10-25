@@ -1,4 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+
+import '../data/learner_lexicon.dart';
+import '../utils/error_reporter.dart';
 
 import '../theme/sahne.dart';
 import 'lexicon_lookup.dart';
@@ -228,37 +233,313 @@ class _VocabTileState extends State<_VocabTile> {
   }
 }
 
-class _LetterTiles extends StatelessWidget {
+/// Harf karosuna dokununca seslendirilen örnek kelime. Hepsi öğrenen
+/// sözlüğünde (anlam oradan okunur, burada çeviri üretilmez) ve
+/// `assets/audio/ku` kayıtlarında bulunan sözcüklerdir; cihaz TTS'i iOS ve
+/// web'de olmadığından tek güvenilir ses kaynağı bu kayıtlardır. I ve U ile
+/// başlayan kayıtlı sözcük olmadığından o harfi İÇEREN sözcük seçildi;
+/// panel harfi sözcük içinde vurgular (Gemini Flash denetimi: "Jin"
+/// J sesiyle başlar, öğrenen harfi nerede duyacağını görmeli).
+///
+/// 2026-10-25 ekran turu: ızgara yalnız görseldi, harfe dokununca hiçbir
+/// şey olmuyordu (kurul: Codex + Gemini 4 Argon, alfabe 8–9/10).
+const Map<String, String> kAlphabetExampleWords = {
+  'A': 'Av',
+  'B': 'Bav',
+  'C': 'Cil',
+  'Ç': 'çav',
+  'D': 'Dar',
+  'E': 'Ev',
+  'Ê': 'Êvar',
+  'F': 'Fêkî',
+  'G': 'Gul',
+  'H': 'hêk',
+  'I': 'Jin',
+  'Î': 'Îro',
+  'J': 'Jiyan',
+  'K': 'Keç',
+  'L': 'Lêv',
+  'M': 'Mal',
+  'N': 'Nan',
+  'O': 'otêl',
+  'P': 'Pez',
+  'Q': 'Qelem',
+  'R': 'Roj',
+  'S': 'Sêv',
+  'Ş': 'Şêr',
+  'T': 'Tîp',
+  'U': 'Du',
+  'Û': 'Û',
+  'V': 'Vekirî',
+  'W': 'War',
+  'X': 'Xew',
+  'Y': 'Yek',
+  'Z': 'Zarok',
+};
+
+/// Hawar alfabesinde sesi yakın, işaretiyle ayrılan harf çiftleri.
+const Map<String, String> kHawarLetterPairs = {
+  'E': 'Ê',
+  'Ê': 'E',
+  'I': 'Î',
+  'Î': 'I',
+  'U': 'Û',
+  'Û': 'U',
+  'C': 'Ç',
+  'Ç': 'C',
+  'S': 'Ş',
+  'Ş': 'S',
+};
+
+class _LetterTiles extends StatefulWidget {
   const _LetterTiles({required this.letters});
 
   final List<String> letters;
 
   @override
+  State<_LetterTiles> createState() => _LetterTilesState();
+}
+
+class _LetterTilesState extends State<_LetterTiles> {
+  Widget _exampleRow(
+    SahneTokens t,
+    String letter,
+    String word, {
+    bool muted = false,
+  }) {
+    final meaning = LearnerLexicon.lookup(word)?.meaningTr;
+    return Row(
+      children: [
+        Text(
+          '$letter ${letter.toLowerCase()}',
+          style: SahneType.headline.copyWith(color: muted ? t.tx2 : t.learnTx),
+        ),
+        const SizedBox(width: SahneSpace.x3),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _HighlightedWord(
+                word: word,
+                letter: letter,
+                style: SahneType.bodyStrong.copyWith(color: t.tx),
+                highlight: muted ? t.tx2 : t.learnTx,
+              ),
+              if (meaning != null)
+                Text(meaning, style: SahneType.caption.copyWith(color: t.tx2)),
+            ],
+          ),
+        ),
+        LexiconSpeakButton(text: word, speaker: _speaker),
+      ],
+    );
+  }
+
+  LessonListeningSpeaker? _speaker = LessonAudio.loaded;
+  String? _selected;
+
+  @override
+  void initState() {
+    super.initState();
+    if (_speaker == null) {
+      LessonAudio.shared().then((s) {
+        if (mounted) setState(() => _speaker = s);
+      }, onError: (_) {});
+    }
+  }
+
+  void _select(String letter) {
+    setState(() => _selected = letter);
+    final word = kAlphabetExampleWords[letter];
+    final speaker = _speaker;
+    if (word != null && speaker != null && speaker.availableFor(word)) {
+      unawaited(
+        speaker.speak(word).catchError((Object error, StackTrace stack) {
+          ErrorReporter.record(error, stack, reason: 'alphabet letter speak');
+        }),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    // Ortalı: sola yaslı karolar dar ekranda sağda boş şerit bırakıyordu
-    // (simülatör, 2026-10-22).
-    return Wrap(
-      key: const ValueKey('lesson-letter-tiles'),
-      alignment: WrapAlignment.center,
-      spacing: SahneSpace.x1,
-      runSpacing: SahneSpace.x1,
+    final selected = _selected;
+    final word = selected == null ? null : kAlphabetExampleWords[selected];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final letter in letters)
-          Container(
-            width: 40,
-            height: 44,
-            alignment: Alignment.center,
-            decoration: ShapeDecoration(
-              color: t.learnTint,
-              shape: SahneShape.withSide(SahneShape.s, t.learnEdge, width: 1),
-            ),
-            child: Text(
-              letter,
-              style: SahneType.headline.copyWith(color: t.learnTx),
+        // Ortalı: sola yaslı karolar dar ekranda sağda boş şerit bırakıyordu
+        // (simülatör, 2026-10-22).
+        Wrap(
+          key: const ValueKey('lesson-letter-tiles'),
+          alignment: WrapAlignment.center,
+          spacing: SahneSpace.x1,
+          runSpacing: SahneSpace.x1,
+          children: [
+            for (final letter in widget.letters)
+              _LetterTile(
+                letter: letter,
+                selected: letter == selected,
+                onTap: kAlphabetExampleWords.containsKey(letter)
+                    ? () => _select(letter)
+                    : null,
+              ),
+          ],
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 180),
+          alignment: Alignment.topCenter,
+          child: selected == null || word == null
+              ? const SizedBox(width: double.infinity)
+              : Padding(
+                  padding: const EdgeInsets.only(top: SahneSpace.x3),
+                  child: Container(
+                    key: const ValueKey('lesson-letter-example'),
+                    padding: const EdgeInsets.fromLTRB(
+                      SahneSpace.x3,
+                      SahneSpace.x2,
+                      SahneSpace.x1,
+                      SahneSpace.x2,
+                    ),
+                    decoration: ShapeDecoration(
+                      color: t.learnTint,
+                      shape: SahneShape.withSide(
+                        SahneShape.m,
+                        t.learnTx,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _exampleRow(t, selected, word),
+                        // Hawar çifti (e/ê, i/î, u/û, c/ç, s/ş): eşinin
+                        // örneği de dinlenir; öğrenen iki sesi yan yana
+                        // karşılaştırır (kurul: e/ê ayırt etme önerisi).
+                        if (kHawarLetterPairs[selected] case final pair?)
+                          if (kAlphabetExampleWords[pair]
+                              case final pairWord?) ...[
+                            Divider(height: SahneSpace.x3, color: t.learnEdge),
+                            KeyedSubtree(
+                              key: const ValueKey('lesson-letter-pair'),
+                              child: _exampleRow(
+                                t,
+                                pair,
+                                pairWord,
+                                muted: true,
+                              ),
+                            ),
+                          ],
+                      ],
+                    ),
+                  ),
+                ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LetterTile extends StatelessWidget {
+  const _LetterTile({
+    required this.letter,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String letter;
+  final bool selected;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final tile = AnimatedContainer(
+      duration: const Duration(milliseconds: 160),
+      // Dokunulabilir oldu: Android'in 48x48 hedef alt sınırı; büyük
+      // yazıda harfle birlikte büyür.
+      constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+      padding: const EdgeInsets.symmetric(
+        horizontal: SahneSpace.x1,
+        vertical: SahneSpace.x1,
+      ),
+      decoration: ShapeDecoration(
+        color: selected ? t.learnTx : t.learnTint,
+        shape: SahneShape.withSide(
+          SahneShape.s,
+          selected ? t.learnTx : t.learnEdge,
+          width: 1,
+        ),
+      ),
+      child: Align(
+        widthFactor: 1,
+        heightFactor: 1,
+        child: Text(
+          letter,
+          style: SahneType.headline.copyWith(
+            color: selected ? t.learnTint : t.learnTx,
+          ),
+        ),
+      ),
+    );
+    if (onTap == null) return tile;
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: letter,
+      onTap: onTap,
+      excludeSemantics: true,
+      child: GestureDetector(
+        key: ValueKey('lesson-letter-$letter'),
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: tile,
+      ),
+    );
+  }
+}
+
+/// Örnek sözcük, baş harfi büyük; seçili harfin İLK geçtiği yer vurgulu
+/// (altı çizili, öğrenme renginde).
+class _HighlightedWord extends StatelessWidget {
+  const _HighlightedWord({
+    required this.word,
+    required this.letter,
+    required this.style,
+    required this.highlight,
+  });
+
+  final String word;
+  final String letter;
+  final TextStyle style;
+  final Color highlight;
+
+  @override
+  Widget build(BuildContext context) {
+    final shown = word.isEmpty
+        ? word
+        : SahneType.upperFor(word[0], isKu: true) + word.substring(1);
+    final at = shown.toLowerCase().indexOf(letter.toLowerCase());
+    if (at < 0) return Text(shown, style: style);
+    return Text.rich(
+      key: const ValueKey('lesson-letter-example-word'),
+      TextSpan(
+        style: style,
+        children: [
+          TextSpan(text: shown.substring(0, at)),
+          TextSpan(
+            text: shown.substring(at, at + letter.length),
+            style: TextStyle(
+              color: highlight,
+              fontWeight: FontWeight.w800,
+              decoration: TextDecoration.underline,
+              decorationColor: highlight,
             ),
           ),
-      ],
+          TextSpan(text: shown.substring(at + letter.length)),
+        ],
+      ),
     );
   }
 }

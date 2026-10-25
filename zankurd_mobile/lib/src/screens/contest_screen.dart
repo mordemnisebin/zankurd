@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -214,7 +216,8 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
                 starting: _starting,
                 onStart: () => _startQuiz(contest),
                 // Tur bugün bitmişse "Bugünün sıralaması" açılır. Bitmemişse
-                // sıra hiç gösterilmez: oynamadan başkalarının skorunu görmek
+                // yalnız önizleme (katılımcı sayısı, dünün birincisi, geri
+                // sayım); bugünün sırası hiç gösterilmez: oynamadan başkalarının skorunu görmek
                 // hem turu bozar hem "ödül yok, yalnız ilerleme" sözüyle
                 // çelişir (bkz. `daily_event_security_ui_test`).
                 board: _doneToday
@@ -222,7 +225,11 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
                         key: const ValueKey('contest-board'),
                         repository: widget.repository,
                       )
-                    : null,
+                    : DailyEventBoardCard(
+                        key: const ValueKey('contest-teaser'),
+                        repository: widget.repository,
+                        teaser: true,
+                      ),
               ),
             );
           },
@@ -238,13 +245,19 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
       sliver: SliverLayoutBuilder(
+        // Üst boşluk iskeletin sabit yüksekliğinden hesaplanır (eski
+        // `Alignment(0, -0.6)` ile aynı nokta): altına önizleme ya da
+        // sıralama eklendiğinde kahraman kart yerinden kaymaz.
         builder: (context, sliver) => SliverToBoxAdapter(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: sliver.remainingPaintExtent),
-            child: Align(
-              alignment: const Alignment(0, -0.6),
-              child: SizedBox(width: double.infinity, child: child),
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: math.max(
+                0,
+                (sliver.remainingPaintExtent - _kSkeletonContentHeight) * 0.2,
+              ),
+              bottom: SahneSpace.x4,
             ),
+            child: SizedBox(width: double.infinity, child: child),
           ),
         ),
       ),
@@ -282,6 +295,10 @@ class _ContestSkeleton extends StatelessWidget {
               SkeletonLine(width: 112, height: 44),
             ],
           ),
+          // Önizleme satırı (geri sayım) ve alt boşluğu.
+          SizedBox(height: SahneSpace.x3),
+          SkeletonLine(width: 220, height: 20),
+          SizedBox(height: SahneSpace.x4),
         ],
       ),
     );
@@ -291,6 +308,10 @@ class _ContestSkeleton extends StatelessWidget {
 /// Kahraman kartın yüklenmiş hâldeki yüksekliği (iskelet bununla aynı yeri
 /// tutsun; `contest_skeleton_test` ölçüp kilitler).
 const double _kHeroSkeletonHeight = 204;
+
+/// İskeletin toplam yüksekliği: kahraman + bölüm boşluğu + başlık + çipler.
+const double _kSkeletonContentHeight =
+    _kHeroSkeletonHeight + SahneSpace.sectionTop + 20 + SahneSpace.x2 + 44;
 
 class _ContestContent extends StatelessWidget {
   const _ContestContent({

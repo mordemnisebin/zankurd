@@ -53,6 +53,7 @@ import '../utils/percent_format.dart';
 import '../utils/player_identity.dart';
 import '../utils/number_format.dart';
 
+import 'profile/profile_week_strip.dart';
 import 'profile/profile_matches_section.dart';
 
 part 'profile/profile_widgets.dart';
@@ -424,6 +425,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           alignment: AlignmentDirectional.centerStart,
           child: _SyncStatusChip(),
         ),
+        const SizedBox(height: SahneSpace.x2),
+        const ProfileWeekStrip(),
         // Kimlik ve değerler sayfası: profilin altında belirgin giriş.
         const SizedBox(height: SahneSpace.x2),
         const DozaMeEntryCard(),

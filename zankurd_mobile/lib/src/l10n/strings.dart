@@ -491,6 +491,23 @@ class Tr {
       'ku': 'Wateya vê peyvê çi ye?',
       'tr': 'Bu kelimenin anlamı nedir?',
     },
+    // Kutu ilerledikçe değişen tekrar türleri (2026-10-25). Kurul: Gemini
+    // Flash + Grok; spell uyuşmazlığında hakem Gemini 4 Argon (rêz kirin).
+    K.learningUnit: {'ku': 'Beşa {n}', 'tr': 'Ünite {n}'},
+    K.lastSevenDays: {'ku': '7 rojên dawî', 'tr': 'Son 7 gün'},
+    K.wordsReviewPromptReverse: {
+      'ku': 'Ev wate bi Kurmancî kîjan peyv e?',
+      'tr': 'Bu anlamın Kurmancîsi hangisi?',
+    },
+    K.wordsReviewPromptListen: {
+      'ku': 'Guhdarî bike û nivîsîna rast hilbijêre.',
+      'tr': 'Dinle ve doğru yazılışı seç.',
+    },
+    K.wordsReviewPromptSpell: {
+      'ku': 'Tîpan rêz bike û peyva Kurmancî binivîse.',
+      'tr': 'Harfleri dizerek Kurmancîsini yaz.',
+    },
+    K.wordsReviewUndo: {'ku': 'Tîpa dawî jê bibe', 'tr': 'Son harfi sil'},
     K.wordsReviewScore: {
       'ku': 'Rast: {correct}/{total}',
       'tr': 'Doğru: {correct}/{total}',
@@ -2061,7 +2078,7 @@ class Tr {
     K.avatarIconCihan: {'ku': 'Cîhan', 'tr': 'Dünya'},
     K.avatarIconMertal: {'ku': 'Mertal', 'tr': 'Kalkan'},
     K.avatarIconTac: {'ku': 'Tac', 'tr': 'Taç'},
-    K.avatarIconGul: {'ku': 'Gul', 'tr': 'Fidan'},
+    K.avatarIconGul: {'ku': 'Şitil', 'tr': 'Fidan'},
     K.avatarIconDar: {'ku': 'Dar', 'tr': 'Ağaç'},
     K.avatarIconCav: {'ku': 'Çav', 'tr': 'Göz'},
     K.avatarIconBirusk: {'ku': 'Birûsk', 'tr': 'Şimşek'},
@@ -2079,7 +2096,7 @@ class Tr {
     K.avatarColor4: {'ku': 'Binefşî', 'tr': 'Erik moru'}, // #6B3A7A
     K.avatarColor5: {'ku': 'Rengê kermîdê', 'tr': 'Kiremit rengi'}, // #C67A5C
     K.avatarColor6: {'ku': 'Şîna deryayê', 'tr': 'Deniz mavisi'}, // #2B4F7E
-    K.avatarColor7: {'ku': 'Pembeyê gulê', 'tr': 'Gül pembesi'}, // #D4789E
+    K.avatarColor7: {'ku': 'Pembeya gulê', 'tr': 'Gül pembesi'}, // #D4789E
     // ── Oda sohbeti moderasyonu (Apple 1.2 / Google Play UGC) ────────
     K.chatBlockedWord: {
       'ku': 'Ev peyam nayê şandin: gotinên nebaş tê de hene.',
@@ -3772,6 +3789,21 @@ class Tr {
       'ku': 'Gera nû piştî {h} saet û {m} deqeyan',
       'tr': 'Yeni tur {h} sa {m} dk sonra',
     },
+    // Oynamadan önceki önizleme (2026-10-25). Kurul: Gemini Flash + Grok;
+    // 0 kişi cümlesinde uyuşmazlık, hakem Gemini 4 Argon. Ergatif: geçişli
+    // geçmişte özne bükünlü (kesan / kesekî / tu kesî); 1 kişi ayrı cümle.
+    K.contestTeaserParticipants: {
+      'ku': 'Îro {count} kesan ev ger qedand.',
+      'tr': 'Bugün {count} kişi bu turu bitirdi.',
+    },
+    K.contestTeaserOne: {
+      'ku': 'Îro kesekî ev ger qedand.',
+      'tr': 'Bugün 1 kişi bu turu bitirdi.',
+    },
+    K.contestTeaserBeFirst: {
+      'ku': 'Îro hîn tu kesî neqedandiye. Bibe yekem!',
+      'tr': 'Bugün henüz kimse bitirmedi. İlk sen ol!',
+    },
     K.contestBoardUnavailable: {
       'ku': 'Rêzbendî niha nehat barkirin.',
       'tr': 'Sıralama şu an yüklenemedi.',
@@ -4036,6 +4068,12 @@ class K {
   static const wordsDueCount = 'words.review.dueCount';
   static const wordsDueNone = 'words.review.dueNone';
   static const wordsReviewPrompt = 'words.review.prompt';
+  static const wordsReviewPromptReverse = 'words.review.prompt.reverse';
+  static const wordsReviewPromptListen = 'words.review.prompt.listen';
+  static const wordsReviewPromptSpell = 'words.review.prompt.spell';
+  static const wordsReviewUndo = 'words.review.undo';
+  static const learningUnit = 'learning.unit';
+  static const lastSevenDays = 'profile.lastSevenDays';
   static const wordsReviewScore = 'words.review.score';
   static const wordsBox = 'words.box';
   static const wordsDueBadge = 'words.dueBadge';
@@ -5361,5 +5399,8 @@ class K {
   static const contestBoardTitle = 'contest.board.title';
   static const contestYesterdayWinner = 'contest.board.yesterdayWinner';
   static const contestNextIn = 'contest.board.nextIn';
+  static const contestTeaserParticipants = 'contest.teaser.participants';
+  static const contestTeaserOne = 'contest.teaser.one';
+  static const contestTeaserBeFirst = 'contest.teaser.beFirst';
   static const contestBoardUnavailable = 'contest.board.unavailable';
 }

@@ -61,6 +61,36 @@ Color frameColor(AvatarFrame frame) => switch (frame) {
   AvatarFrame.neon => const Color(0xFF2ED3B7),
 };
 
+/// Mağaza çerçeveleri (altın, neon) tek renk 3 px kenarla kazanılan
+/// bronz/gümüşten ayırt edilmiyordu; arkadaşın satın aldığı çerçeve
+/// başkalarının gözünde "değişmedi" (2026-10-25). Bunlar çift kontur
+/// çizer: gradyanlı dış halka, koyu ayırıcı, ince iç tel. Blur yok.
+bool isPremiumFrame(AvatarFrame frame) =>
+    frame == AvatarFrame.gold || frame == AvatarFrame.neon;
+
+const Color premiumFrameSeparator = Color(0xFF142326);
+
+LinearGradient premiumFrameGradient(AvatarFrame frame) => LinearGradient(
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+  colors: frame == AvatarFrame.neon
+      ? const [Color(0xFFA4FFEF), Color(0xFF2ED3B7), Color(0xFF098F86)]
+      : const [Color(0xFFFFF1B8), Color(0xFFE6AD32), Color(0xFFA86B12)],
+);
+
+Color premiumFrameInner(AvatarFrame frame) => frame == AvatarFrame.neon
+    ? const Color(0xFFB8FFF4)
+    : const Color(0xFFFFE29A);
+
+/// Dış halka kalınlığı: küçük avatarda (çap < 32) 3, üstünde 4. Ayırıcı ve
+/// iç tel 1'er piksel. 2'de kazanılan bronzun 3 px dolu halkası satın
+/// alınan çerçeveden baskın görünüyordu (önizleme, 2026-10-25).
+double premiumFrameOuterWidth(double size) => size < 32 ? 3 : 4;
+
+/// Vitrin unvanı VIP mi? Sunucu `VIP` unvanını yalnız satın alana yazdırır
+/// (2026-07-29_release_readiness_hardening.sql).
+bool isVipTitle(String? title) => title?.trim() == 'VIP';
+
 /// Editörde kilitli çerçevenin yanında gösterilecek kazanım koşulu.
 ///
 /// Metinler anahtar defterinde durur: satır içi olsalardı Kurmancî alfabe

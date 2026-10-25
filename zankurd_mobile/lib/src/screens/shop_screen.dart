@@ -305,13 +305,18 @@ class _ShopScreenState extends State<ShopScreen> {
 
   static bool _isFrameItem(String id) => id.startsWith('avatar_frame_');
 
+  /// Avatarın üzerinde görünen ürünler: çerçeveler ve VIP rozeti. Önizleme
+  /// oyuncunun kendi avatarını satın alınmış hâliyle gösterir.
+  static bool _isAvatarLookItem(String id) =>
+      _isFrameItem(id) || id == 'profile_badge_vip';
+
   /// Ürün önizleme karosu. Çerçeve ürünlerinde karoda boş bir yıldız ya da
   /// sihirli değnek değil, oyuncunun KENDİ avatarı o çerçeveyle durur:
   /// satın alınan şeyin neye benzeyeceğini gösterir (2026-09-29 doğallık,
   /// GORSEL_KARARLAR K10). Avatar yüklenemediyse ürün ikonuna düşer.
   Widget _preview(ShopItem item, {required double size, bool dim = false}) {
     final avatar = _avatar;
-    if (avatar == null || !_isFrameItem(item.id)) {
+    if (avatar == null || !_isAvatarLookItem(item.id)) {
       return _PreviewTile(
         icon: item.icon,
         size: size,
@@ -331,6 +336,7 @@ class _ShopScreenState extends State<ShopScreen> {
         iconId: framed.iconId,
         colorHex: framed.colorHex,
         frameId: framed.frameId,
+        showcaseTitle: framed.showcaseTitle,
         displayName: _profileName,
       ),
     );
@@ -418,7 +424,7 @@ class _ShopScreenState extends State<ShopScreen> {
 
       AvatarIdentity? avatar;
       String? profileName;
-      if (dynamicItems.any((item) => _isFrameItem(item.id))) {
+      if (dynamicItems.any((item) => _isAvatarLookItem(item.id))) {
         try {
           avatar = await widget.repository.loadAvatarIdentity();
           profileName = await widget.repository.getProfileName();

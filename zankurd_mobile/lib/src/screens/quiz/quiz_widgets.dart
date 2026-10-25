@@ -107,6 +107,7 @@ class _LiveScoreRow extends StatelessWidget {
             iconId: player.avatarIcon,
             colorHex: player.avatarColor,
             frameId: player.avatarFrame,
+            showcaseTitle: player.showcaseTitle,
             displayName: player.name,
             colorOverride: colorOverride,
           ),
@@ -969,6 +970,7 @@ class _CrowdScoreHeader extends StatelessWidget {
           iconId: player.avatarIcon,
           colorHex: player.avatarColor,
           frameId: player.avatarFrame,
+          showcaseTitle: player.showcaseTitle,
           displayName: player.name,
           colorOverride: colorOverrides[player.id ?? player.name],
         ),
@@ -1289,6 +1291,7 @@ class _DuelScoreHeader extends StatelessWidget {
       iconId: player.avatarIcon,
       colorHex: player.avatarColor,
       frameId: player.avatarFrame,
+      showcaseTitle: player.showcaseTitle,
       displayName: player.name,
       colorOverride: playerColor,
     );
@@ -1298,6 +1301,7 @@ class _DuelScoreHeader extends StatelessWidget {
       iconId: opponent.avatarIcon,
       colorHex: opponent.avatarColor,
       frameId: opponent.avatarFrame,
+      showcaseTitle: opponent.showcaseTitle,
       displayName: opponent.name,
       colorOverride: opponentColor,
     );

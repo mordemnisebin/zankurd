@@ -322,6 +322,46 @@ void main() {
       expect(find.text('Bugünün sıralaması'), findsNothing);
     });
 
+    testWidgets('günün turu ekranı: bitmediyse önizleme var, skor yok', (
+      tester,
+    ) async {
+      await tester.binding.setSurfaceSize(const Size(390, 1200));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      freshMockRepository();
+      final repo = MockZanKurdRepository()
+        ..sampleDailyEventBoard = const DailyEventBoard(
+          top: [
+            DailyEventEntry(
+              rank: 1,
+              name: 'Rojda',
+              correct: 10,
+              total: 10,
+              seconds: 62,
+            ),
+          ],
+          participants: 4,
+          yesterdayWinner: DailyEventEntry(
+            rank: 1,
+            name: 'Baran',
+            correct: 9,
+            total: 10,
+            seconds: 70,
+          ),
+        );
+
+      await tester.pumpWidget(
+        testShell(child: ContestScreen(repository: repo)),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('daily-event-teaser')), findsOneWidget);
+      expect(find.text('Bugün 4 kişi bu turu bitirdi.'), findsOneWidget);
+      expect(find.byKey(const ValueKey('daily-event-yesterday')), findsOne);
+      expect(find.byKey(const ValueKey('daily-event-countdown')), findsOne);
+      // Bugünün skoru oynamadan görünmez.
+      expect(find.text('Rojda'), findsNothing);
+    });
+
     testWidgets('günün turu ekranı: bugün bitirdiyse sıralama açılır', (
       tester,
     ) async {

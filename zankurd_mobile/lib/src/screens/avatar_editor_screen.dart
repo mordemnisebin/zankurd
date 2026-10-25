@@ -379,6 +379,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                       iconId: _identity.iconId,
                       colorHex: _identity.colorHex,
                       frameId: _identity.frameId,
+                      showcaseTitle: _identity.showcaseTitle,
                       // Profil ekranıyla aynı iki girdi: çözülmüş ad ve
                       // dilden bağımsız renk tohumu. 2026-09-30 simülatör:
                       // düzenleyici ham adı, profil tohumu kullandığı için

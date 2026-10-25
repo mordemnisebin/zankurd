@@ -251,6 +251,7 @@ class _PodiumColumn extends StatelessWidget {
                     iconId: entry.avatarIcon,
                     colorHex: entry.avatarColor,
                     frameId: entry.avatarFrame,
+                    showcaseTitle: entry.showcaseTitle,
                     displayName: entry.displayName,
                     colorOverride: colorOverride,
                   ),

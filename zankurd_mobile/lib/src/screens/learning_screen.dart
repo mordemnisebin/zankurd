@@ -82,6 +82,9 @@ int learningRecommendedIndex({
 /// Etkin dersten sonra görünen kilitli ders sayısı; kalanı "+N ders daha".
 const int _kVisibleLockedLessons = 3;
 
+/// Ders yolunda bir ünitedeki ders sayısı.
+const int _kLessonsPerUnit = 5;
+
 /// Ders kilitli mi: tamamlanmamış ve önerilen dersin ARKASINDA olan kilitlidir.
 /// Önerilene kadar (kendisi dahil) her ders açıktır; tamamlananlar açık kalır.
 /// [recommendedIndex] -1 ise hepsi tamamlanmıştır, hiçbiri kilitli değildir.
@@ -513,6 +516,12 @@ class _LearningScreenState extends State<LearningScreen> {
         // "+N ders daha" satırında toplanır, dokununca açılır.
         var lockedShown = 0;
         var lockedHidden = 0;
+        // 2026-10-25 (kurul: Codex + Gemini 4 Argon, ders yolu 9–10/10):
+        // 20 derslik düz liste "bitmeyen liste" gibi görünüyordu. Dersler
+        // beşerli ünitelere ayrılır; her ünitenin başında numara ve
+        // ilerleme durur (Busuu/Babbel ünite kalıbı).
+        var unitHeaderShown = -1;
+        final unitCount = (lessons.length / _kLessonsPerUnit).ceil();
         for (var i = 0; i < lessons.length; i++) {
           final isLocked = learningLessonLocked(
             index: i,
@@ -525,6 +534,24 @@ class _LearningScreenState extends State<LearningScreen> {
               continue;
             }
             lockedShown++;
+          }
+          final unit = i ~/ _kLessonsPerUnit;
+          if (unitCount > 1 && unit != unitHeaderShown) {
+            unitHeaderShown = unit;
+            closeRun();
+            final from = unit * _kLessonsPerUnit;
+            final to = math.min(from + _kLessonsPerUnit, lessons.length);
+            final done = [
+              for (var j = from; j < to; j++) lessons[j],
+            ].where((l) => _completedIds.contains(l.id)).length;
+            blocks.add(
+              _UnitHeader(
+                key: ValueKey('learning-unit-${unit + 1}'),
+                number: unit + 1,
+                done: done,
+                total: to - from,
+              ),
+            );
           }
           final stop = _pathStop(
             ctx,
@@ -2232,6 +2259,50 @@ class _LessonStepMark extends StatelessWidget {
                 '$step',
                 style: SahneType.captionStrong.copyWith(color: ink),
               ),
+      ),
+    );
+  }
+}
+
+/// Ünite başlığı: "Ünite 2" + ince ilerleme çubuğu ve "3/5".
+class _UnitHeader extends StatelessWidget {
+  const _UnitHeader({
+    required this.number,
+    required this.done,
+    required this.total,
+    super.key,
+  });
+
+  final int number;
+  final int done;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final complete = done >= total;
+    return Padding(
+      padding: const EdgeInsets.only(top: SahneSpace.x2),
+      child: Row(
+        children: [
+          if (complete) ...[
+            Icon(AppIcons.circleCheck, size: 18, color: t.okTx),
+            const SizedBox(width: SahneSpace.x2),
+          ],
+          Text(
+            context.t(K.learningUnit, {'n': '$number'}),
+            style: SahneType.eyebrow.copyWith(color: t.learnTx),
+          ),
+          const SizedBox(width: SahneSpace.x3),
+          Expanded(
+            child: SahneProgressBar(
+              value: total == 0 ? 0 : done / total,
+              height: 4,
+              trailing: '$done/$total',
+              semanticLabel: context.t(K.learningUnit, {'n': '$number'}),
+            ),
+          ),
+        ],
       ),
     );
   }

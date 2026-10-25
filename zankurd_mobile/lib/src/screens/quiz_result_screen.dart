@@ -2274,6 +2274,7 @@ Widget _avatarOf(Player player, {double radius = 18}) => PlayerAvatar(
   iconId: player.avatarIcon,
   colorHex: player.avatarColor,
   frameId: player.avatarFrame,
+  showcaseTitle: player.showcaseTitle,
   displayName: player.name,
 );
 

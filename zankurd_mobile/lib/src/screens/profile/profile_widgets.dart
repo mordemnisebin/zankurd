@@ -134,6 +134,7 @@ class _ProfileHeroCard extends StatelessWidget {
                         iconId: avatarIdentity.iconId,
                         colorHex: avatarIdentity.colorHex,
                         frameId: avatarIdentity.frameId,
+                        showcaseTitle: avatarIdentity.showcaseTitle,
                         displayName: displayName,
                         colorSeed: PlayerIdentity.resolveColorSeed(displayName),
                       ),

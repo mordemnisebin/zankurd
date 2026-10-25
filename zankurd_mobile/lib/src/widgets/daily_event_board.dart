@@ -38,9 +38,15 @@ class DailyEventBoardCard extends StatefulWidget {
     required this.repository,
     this.ready,
     this.clock,
+    this.teaser = false,
   });
 
   final ZanKurdRepository repository;
+
+  /// Oynamadan ÖNCEKİ hâl: bugünün skorları ve sıralar gösterilmez (turu
+  /// bozmaz), yalnız kaç kişinin bitirdiği, dünün birincisi ve geri sayım.
+  /// 2026-10-25 ekran turu: tur başlamadan sayfanın %60'ı boştu.
+  final bool teaser;
 
   /// Panonun okunmasından ÖNCE tamamlanması gereken iş (sonucu yazmak).
   final Future<void>? ready;
@@ -103,6 +109,7 @@ class _DailyEventBoardCardState extends State<DailyEventBoardCard> {
   @override
   Widget build(BuildContext context) {
     final isKu = context.isKu;
+    if (widget.teaser) return _buildTeaser(context, isKu);
     return Column(
       key: const ValueKey('daily-event-board'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -144,6 +151,57 @@ class _DailyEventBoardCardState extends State<DailyEventBoardCard> {
           },
         ),
         const SizedBox(height: SahneSpace.x3),
+        _Countdown(now: _now(), isKu: isKu),
+      ],
+    );
+  }
+}
+
+extension on _DailyEventBoardCardState {
+  Widget _buildTeaser(BuildContext context, bool isKu) {
+    return Column(
+      key: const ValueKey('daily-event-teaser'),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: SahneSpace.x3),
+        FutureBuilder<DailyEventBoard?>(
+          future: _board,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const SkeletonLine(height: 48, borderRadius: 16);
+            }
+            final board = snapshot.data;
+            if (board == null) return const SizedBox.shrink();
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _InfoLine(
+                  key: const ValueKey('daily-event-participants'),
+                  icon: AppIcons.user,
+                  text: switch (board.participants) {
+                    <= 0 => Tr.forKu(K.contestTeaserBeFirst, isKu),
+                    1 => Tr.forKu(K.contestTeaserOne, isKu),
+                    final n => Tr.forKu(K.contestTeaserParticipants, isKu, {
+                      'count': '$n',
+                    }),
+                  },
+                ),
+                if (board.yesterdayWinner case final winner?) ...[
+                  const SizedBox(height: SahneSpace.x3),
+                  _InfoLine(
+                    key: const ValueKey('daily-event-yesterday'),
+                    icon: AppIcons.trophy,
+                    text: Tr.forKu(K.contestYesterdayWinner, isKu, {
+                      'name': winner.name,
+                      'score': '${winner.correct}/${winner.total}',
+                    }),
+                  ),
+                ],
+                const SizedBox(height: SahneSpace.x3),
+              ],
+            );
+          },
+        ),
         _Countdown(now: _now(), isKu: isKu),
       ],
     );

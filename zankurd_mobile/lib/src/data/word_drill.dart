@@ -4,19 +4,191 @@ import 'package:flutter/foundation.dart';
 
 import 'learner_lexicon.dart';
 
-/// Kelime tekrarı sorusu: Kurmancî sözcük + dört Türkçe anlam şıkkı.
+/// Tekrar alıştırmasının türü. Kelime kutusu ilerledikçe tanımadan
+/// hatırlamaya geçilir (Memrise/Duolingo kalıbı; kurul 2026-10-25:
+/// Codex + Gemini 4 Argon, kelime tekrarı 10/10):
+///
+/// * [meaning]: Kurmancî sözcük → Türkçe anlam (tanıma).
+/// * [reverse]: Türkçe anlam → Kurmancî sözcük (geri çağırma).
+/// * [listen]: ses → doğru Hawar yazılışı; şıklarda e/ê, i/î, u/û, c/ç,
+///   s/ş karışık yazımlar da bulunur (harf–ses köprüsü).
+/// * [spell]: Türkçe anlam → harfleri dizerek Kurmancî yazım (üretim).
+enum WordReviewMode { meaning, reverse, listen, spell }
+
+/// Kelime tekrarı sorusu.
 @immutable
 class WordReviewQuestion {
-  const WordReviewQuestion({required this.entry, required this.options});
+  const WordReviewQuestion({
+    required this.entry,
+    required this.options,
+    this.mode = WordReviewMode.meaning,
+    this.letters = const [],
+  });
 
   final LearnerLexiconEntry entry;
 
-  /// Dört (sözlük küçükse daha az) Türkçe anlam; biri doğrudur.
+  /// [WordReviewMode.meaning]: dört Türkçe anlam. [reverse]/[listen]: dört
+  /// Kurmancî yazım. [spell]: boş (harfler [letters]'ta).
   final List<String> options;
+
+  final WordReviewMode mode;
+
+  /// [WordReviewMode.spell] için karışık harfler (küçük harf).
+  final List<String> letters;
 
   String get correctMeaning => entry.meaningTr;
 
-  bool isCorrect(String option) => option == entry.meaningTr;
+  /// Beklenen cevap: anlam sorusunda Türkçe anlam, ötekilerde Kurmancî
+  /// sözcük.
+  String get answer =>
+      mode == WordReviewMode.meaning ? entry.meaningTr : entry.termKu;
+
+  /// Yazımda harf İŞARETLERİ önemlidir (e ≠ ê): yalnız büyük/küçük harf
+  /// yok sayılır.
+  bool isCorrect(String option) => mode == WordReviewMode.meaning
+      ? option == entry.meaningTr
+      : option.trim().toLowerCase() == entry.termKu.trim().toLowerCase();
+
+  /// Harf dizme yalnız tek sözcüklü, 2–9 harfli maddelerde sorulur.
+  static bool canSpell(LearnerLexiconEntry entry) {
+    final term = entry.termKu.trim();
+    return term.length >= 2 &&
+        term.length <= 9 &&
+        RegExp(r'^\p{L}+$', unicode: true).hasMatch(term);
+  }
+
+  /// Kutuya göre tür. Ses yoksa dinleme yerine geri çağırma sorulur.
+  static WordReviewMode modeForBox(
+    int box, {
+    required LearnerLexiconEntry entry,
+    required bool canListen,
+  }) {
+    if (box <= 1) return WordReviewMode.meaning;
+    if (box == 2) return WordReviewMode.reverse;
+    if (box == 3) {
+      return canListen ? WordReviewMode.listen : WordReviewMode.reverse;
+    }
+    if (canSpell(entry)) return WordReviewMode.spell;
+    return canListen ? WordReviewMode.listen : WordReviewMode.reverse;
+  }
+
+  /// [mode] türünde soru kurar.
+  static WordReviewQuestion buildFor(
+    LearnerLexiconEntry entry,
+    WordReviewMode mode, {
+    math.Random? random,
+  }) {
+    final rng = random ?? math.Random();
+    switch (mode) {
+      case WordReviewMode.meaning:
+        return build(entry, random: rng);
+      case WordReviewMode.reverse:
+        return WordReviewQuestion(
+          entry: entry,
+          mode: mode,
+          options: _termOptions(entry, rng, const []),
+        );
+      case WordReviewMode.listen:
+        return WordReviewQuestion(
+          entry: entry,
+          mode: mode,
+          options: _termOptions(entry, rng, hawarVariants(entry.termKu)),
+        );
+      case WordReviewMode.spell:
+        final letters = entry.termKu.trim().toLowerCase().split('');
+        final shuffled = [...letters];
+        // Harfler doğru sırada gelmesin (tek harf tekrarı dışında).
+        for (var i = 0; i < 6; i++) {
+          shuffled.shuffle(rng);
+          if (shuffled.join() != letters.join()) break;
+        }
+        return WordReviewQuestion(
+          entry: entry,
+          mode: mode,
+          options: const [],
+          letters: shuffled,
+        );
+    }
+  }
+
+  static const Map<String, String> _hawarPairs = {
+    'e': 'ê',
+    'ê': 'e',
+    'i': 'î',
+    'î': 'i',
+    'u': 'û',
+    'û': 'u',
+    'c': 'ç',
+    'ç': 'c',
+    's': 'ş',
+    'ş': 's',
+    'E': 'Ê',
+    'Ê': 'E',
+    'I': 'Î',
+    'Î': 'I',
+    'U': 'Û',
+    'Û': 'U',
+    'C': 'Ç',
+    'Ç': 'C',
+    'S': 'Ş',
+    'Ş': 'S',
+  };
+
+  /// Sözcüğün tek harfi Hawar çiftiyle değiştirilmiş yazımları (`şêr` →
+  /// `sêr`, `şer`). Dinleme sorusunda çeldiricidir: öğrenen duyduğu sesi
+  /// doğru işaretli harfle eşlemeyi öğrenir.
+  static List<String> hawarVariants(String term) {
+    final out = <String>[];
+    final chars = term.split('');
+    for (var i = 0; i < chars.length; i++) {
+      final swap = _hawarPairs[chars[i]];
+      if (swap == null) continue;
+      final replaced = [...chars]..[i] = swap;
+      final variant = replaced.join();
+      if (variant.toLowerCase() != term.toLowerCase() &&
+          !out.contains(variant)) {
+        out.add(variant);
+      }
+    }
+    return out;
+  }
+
+  /// Doğru Kurmancî yazım + en çok iki Hawar varyantı + sözlükten gerçek
+  /// çeldiriciler (toplam dört). Gerçek çeldiricinin anlamı doğru anlamla
+  /// parça paylaşamaz (iki doğru şık olmasın).
+  static List<String> _termOptions(
+    LearnerLexiconEntry entry,
+    math.Random rng,
+    List<String> variants,
+  ) {
+    const count = 4;
+    final term = entry.termKu.trim();
+    final taken = <String>{term.toLowerCase()};
+    final picked = <String>[];
+    final shuffledVariants = [...variants]..shuffle(rng);
+    for (final v in shuffledVariants.take(2)) {
+      if (taken.add(v.toLowerCase())) picked.add(v);
+    }
+    final meaningParts = _parts(entry.meaningTr);
+    void pick(List<LearnerLexiconEntry> pool) {
+      if (pool.isEmpty) return;
+      final start = rng.nextInt(pool.length);
+      for (var i = 0; i < pool.length && picked.length < count - 1; i++) {
+        final candidate = pool[(start + i) % pool.length];
+        if (candidate.id == entry.id) continue;
+        final candidateTerm = candidate.termKu.trim();
+        if (candidateTerm.isEmpty || candidateTerm.contains(' ')) continue;
+        if (_parts(candidate.meaningTr).any(meaningParts.contains)) continue;
+        if (taken.add(candidateTerm.toLowerCase())) picked.add(candidateTerm);
+      }
+    }
+
+    pick(LearnerLexicon.entriesForSource(entry.sourceId));
+    if (picked.length < count - 1) pick(LearnerLexicon.entries);
+    final options = [...picked];
+    options.insert(rng.nextInt(options.length + 1), term);
+    return options;
+  }
 
   /// [entry] için soru kurar; çeldiriciler sözlükten gelir.
   ///

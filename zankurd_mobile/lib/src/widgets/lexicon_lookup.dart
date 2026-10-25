@@ -120,6 +120,9 @@ class LexiconText extends StatelessWidget {
 
   static final _word = RegExp(r'[\p{L}̧̂]+', unicode: true);
 
+  /// Sözcüğe bitişik kapanış noktalaması (boşluk ve harf olmayan).
+  static final _tailPunct = RegExp(r'[.,;:!?…”»")\]]+');
+
   @override
   Widget build(BuildContext context) {
     if (!policy.enabled) return Text(text, style: style, textAlign: textAlign);
@@ -132,23 +135,26 @@ class LexiconText extends StatelessWidget {
       final line = lines[li];
       final skip = skipLinePattern?.hasMatch(line) ?? false;
       var cursor = 0;
-      for (final match in _word.allMatches(line)) {
-        // Aradaki ayraçlar: tırnak durumunu izle.
-        final gap = line.substring(cursor, match.start);
-        for (final ch in gap.runes) {
+      void trackQuotes(String chars) {
+        for (final ch in chars.runes) {
           final c = String.fromCharCode(ch);
-          if (c == '"' || c == '“' || c == '”' || c == '«' || c == '»') {
-            if (c == '"') {
-              inQuote = !inQuote;
-              if (inQuote) quoteIndex++;
-            } else if (c == '“' || c == '«') {
-              inQuote = true;
-              quoteIndex++;
-            } else {
-              inQuote = false;
-            }
+          if (c == '"') {
+            inQuote = !inQuote;
+            if (inQuote) quoteIndex++;
+          } else if (c == '“' || c == '«') {
+            inQuote = true;
+            quoteIndex++;
+          } else if (c == '”' || c == '»') {
+            inQuote = false;
           }
         }
+      }
+
+      for (final match in _word.allMatches(line)) {
+        if (match.start < cursor) continue;
+        // Aradaki ayraçlar: tırnak durumunu izle.
+        final gap = line.substring(cursor, match.start);
+        trackQuotes(gap);
         if (gap.isNotEmpty) spans.add(TextSpan(text: gap));
         cursor = match.end;
         final word = match.group(0)!;
@@ -169,22 +175,18 @@ class LexiconText extends StatelessWidget {
           spans.add(TextSpan(text: word));
           continue;
         }
-        spans.add(_tappable(context, t, word, entry));
+        // Sözcüğe bitişik noktalama (". , ! ?" ve kapanan tırnak) aynı
+        // parçaya alınır: yer tutucudan sonraki metin satır kırılımına
+        // açıktı ve nokta tek başına alt satıra düşüyordu (2026-10-25
+        // simülatör, alfabe dersi "dengdar in" / ".").
+        final tail = _tailPunct.matchAsPrefix(line, cursor)?.group(0) ?? '';
+        trackQuotes(tail);
+        cursor += tail.length;
+        spans.add(_tappable(context, t, word, entry, tail: tail));
       }
       final rest = line.substring(cursor);
       // Satır sonundaki tırnaklar da durumu etkiler.
-      for (final ch in rest.runes) {
-        final c = String.fromCharCode(ch);
-        if (c == '"') {
-          inQuote = !inQuote;
-          if (inQuote) quoteIndex++;
-        } else if (c == '”' || c == '»') {
-          inQuote = false;
-        } else if (c == '“' || c == '«') {
-          inQuote = true;
-          quoteIndex++;
-        }
-      }
+      trackQuotes(rest);
       if (rest.isNotEmpty) spans.add(TextSpan(text: rest));
       if (li < lines.length - 1) spans.add(const TextSpan(text: '\n'));
     }
@@ -198,8 +200,9 @@ class LexiconText extends StatelessWidget {
     BuildContext context,
     SahneTokens t,
     String word,
-    LearnerLexiconEntry entry,
-  ) {
+    LearnerLexiconEntry entry, {
+    String tail = '',
+  }) {
     return WidgetSpan(
       alignment: PlaceholderAlignment.middle,
       child: Semantics(
@@ -211,11 +214,23 @@ class LexiconText extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             onTap: () => showLexiconEntrySheet(context, entry),
             child: Padding(
-              // Dokunma alanı sözcükten biraz büyük: satır yüksekliğini
-              // şişirmeden elin rahat isabet ettirmesi için.
-              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
-              child: Text(
-                word,
+              // Dokunma alanı sözcükten biraz büyük. 2026-10-25 ekran turu:
+              // 2'lik yatay dolgu sözcükler ve noktalama arasına fazladan
+              // boşluk sokuyordu ("in ,", "Tu  çi"); 6'lık dikey dolgu
+              // satır aralığını iki katına çıkarıyordu. Yatay dolgu yok,
+              // dikey dolgu satırı şişirmeyecek kadar.
+              padding: const EdgeInsets.symmetric(vertical: 2),
+              child: Text.rich(
+                TextSpan(
+                  text: word,
+                  children: [
+                    if (tail.isNotEmpty)
+                      TextSpan(
+                        text: tail,
+                        style: const TextStyle(decoration: TextDecoration.none),
+                      ),
+                  ],
+                ),
                 // Flutter yer tutucu çocuğu metnin ölçeğiyle zaten büyütür;
                 // içteki metin MediaQuery ölçeğini bir daha uygularsa büyük
                 // yazıda sözcük komşularının iki katı çıkıyordu (2026-10-22

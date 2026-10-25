@@ -1256,8 +1256,11 @@ class _QuizScreenState extends State<QuizScreen>
       _timerController.stop();
       _timerController.value = initialFraction ?? 1.0;
       if (_timerController.value <= 0) {
+        final deadlineIndex = index;
         scheduleMicrotask(() {
-          if (mounted && !answered) _handleQuestionDeadline();
+          if (mounted && !answered && index == deadlineIndex) {
+            _handleQuestionDeadline();
+          }
         });
         return;
       }
@@ -1294,11 +1297,14 @@ class _QuizScreenState extends State<QuizScreen>
   /// başlar, 1v1 online'da ise karşı tarafın da hazır olması beklenir.
   void _handleTutorialReady() {
     _tutorialGateReady = true;
+    final flowWasStarted = _questionFlowStarted;
     _maybeStartQuestionFlow();
     // Tutorial açıkken oda index senkronu sayacı ertelediyse şimdi başlat.
+    // Akış henüz başlamadıysa sayacı görsel/rakip kapıları başlatır; burada
+    // ikinci kez başlatmak kalan süreyi sıfırlar ve kapıları atlar.
     if (_timerDeferredForTutorial && !_usesServerHiddenAnswers) {
       _timerDeferredForTutorial = false;
-      if (!answered) _startTimer();
+      if (flowWasStarted && !answered) _startTimer();
     }
   }
 

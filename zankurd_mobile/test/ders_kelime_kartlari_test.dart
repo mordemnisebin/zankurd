@@ -9,9 +9,14 @@
 /// ve METNİN kaybolmadığını (terim + anlam ikisi de ekranda) doğrular.
 library;
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/learner_lexicon.dart';
 import 'package:zankurd_mobile/src/services/lesson_listening_speaker.dart';
 import 'package:zankurd_mobile/src/widgets/lesson_vocab_tiles.dart';
 import 'package:zankurd_mobile/src/widgets/lexicon_lookup.dart';
@@ -87,5 +92,79 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('lesson-vocab-tile')));
     await tester.pump();
     expect(speaker.spoken, ['spî']);
+  });
+
+  // 2026-10-25: harf ızgarası yalnız görseldi; dokununca hiçbir şey olmuyordu.
+  testWidgets('harfe dokununca örnek kelime seslenir ve anlamı görünür', (
+    tester,
+  ) async {
+    final speaker = _Speaker();
+    LessonAudio.overrideForTesting(speaker);
+    addTearDown(() => LessonAudio.overrideForTesting(null));
+    await pump(tester, 'A B C Ç D E Ê F G H I Î J K');
+    expect(find.byKey(const ValueKey('lesson-letter-example')), findsNothing);
+
+    await tester.tap(find.byKey(const ValueKey('lesson-letter-Ç')));
+    await tester.pumpAndSettle();
+    expect(speaker.spoken, ['çav']);
+    expect(find.byKey(const ValueKey('lesson-letter-example')), findsOneWidget);
+    expect(find.text('göz'), findsOneWidget);
+  });
+
+  testWidgets('Hawar çifti olan harfte eşinin örneği de görünür', (
+    tester,
+  ) async {
+    final speaker = _Speaker();
+    LessonAudio.overrideForTesting(speaker);
+    addTearDown(() => LessonAudio.overrideForTesting(null));
+    await pump(tester, 'A B C Ç D E Ê F G H I Î J K');
+    await tester.tap(find.byKey(const ValueKey('lesson-letter-E')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('lesson-letter-pair')), findsOneWidget);
+    expect(find.text('Akşam'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('lesson-letter-B')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('lesson-letter-pair')), findsNothing);
+  });
+
+  testWidgets('harf karosu ekran okuyucuda dokunulabilir düğme', (
+    tester,
+  ) async {
+    final speaker = _Speaker();
+    LessonAudio.overrideForTesting(speaker);
+    addTearDown(() => LessonAudio.overrideForTesting(null));
+    final handle = tester.ensureSemantics();
+    await pump(tester, 'A B C Ç D E Ê F G H I Î J K');
+    final node = tester.getSemantics(
+      find.byKey(const ValueKey('lesson-letter-B')),
+    );
+    expect(node.getSemanticsData().hasAction(SemanticsAction.tap), isTrue);
+    handle.dispose();
+  });
+
+  test('her harfin örnek kelimesi sözlükte ve ses kaydında var', () {
+    final index =
+        (jsonDecode(File('assets/audio/ku/index.json').readAsStringSync())
+                as List)
+            .map((e) => (e as Map)['text'].toString().toLowerCase())
+            .toSet();
+    const alphabet =
+        'A B C Ç D E Ê F G H I Î J K L M N O P Q R S Ş T U Û V W X Y Z';
+    expect(kAlphabetExampleWords.keys.toSet(), alphabet.split(' ').toSet());
+    kAlphabetExampleWords.forEach((letter, word) {
+      expect(
+        word.toLowerCase().contains(letter.toLowerCase()),
+        isTrue,
+        reason: '$letter harfi $word içinde yok',
+      );
+      final entry = LearnerLexicon.lookup(word);
+      expect(entry, isNotNull, reason: '$word sözlükte yok');
+      expect(entry!.termKu.toLowerCase(), word.toLowerCase());
+      expect(
+        index.contains(word.toLowerCase()),
+        isTrue,
+        reason: '$word kaydı yok',
+      );
+    });
   });
 }

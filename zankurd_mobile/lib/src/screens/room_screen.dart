@@ -2328,6 +2328,7 @@ class _RoomPlayerRow extends StatelessWidget {
                     colorHex: player.avatarColor,
                     photoUrl: player.avatarUrl,
                     frameId: player.avatarFrame,
+                    showcaseTitle: player.showcaseTitle,
                   ),
                   displayName: player.name == 'Tu' && player.id == null
                       ? _displayName(context)

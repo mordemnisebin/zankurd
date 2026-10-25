@@ -1456,6 +1456,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               iconId: _myIdentity.iconId,
               colorHex: _myIdentity.colorHex,
               frameId: _myIdentity.frameId,
+              showcaseTitle: _myIdentity.showcaseTitle,
               displayName: _myName,
             ),
           ),
@@ -1494,6 +1495,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               iconId: _opponentIdentity.iconId,
               colorHex: _opponentIdentity.colorHex,
               frameId: _opponentIdentity.frameId,
+              showcaseTitle: _opponentIdentity.showcaseTitle,
               displayName: _opponentName,
             ),
           );
