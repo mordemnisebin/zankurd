@@ -1011,7 +1011,20 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         } else if (result.status == MatchmakingTouchStatus.none) {
           // Uygulama 12 sn'den uzun arka planda kaldıysa satır bayat diye
           // silinmiştir; yeniden girmezse oyuncu boş kuyrukta bekler.
-          final rejoin = await widget.repository.joinMatchmaking(category);
+          // İstek `_joinRequest` ile izlenir: bu sırada iptal/dispose olursa
+          // iptal yolu önce bu isteğin sonucunu bekler, sonra
+          // `cancelMatchmaking` kuyruk satırını siler ya da eşleşilen odayı
+          // bildirir ve oda terk edilir (zaman aşımında `_cleanupLateJoin`).
+          // İzlenmezse iptal "idle" dönüp geç gelen join hayalet kuyruk/oda
+          // üyeliği bırakıyordu.
+          final request = widget.repository.joinMatchmaking(category);
+          _joinRequest = request;
+          late final Map<String, dynamic> rejoin;
+          try {
+            rejoin = await request;
+          } finally {
+            if (identical(_joinRequest, request)) _joinRequest = null;
+          }
           if (!_isAttemptActive(attempt)) return;
           final rejoinedRoomId = rejoin['room_id'] as String?;
           if (rejoin['status'] == 'matched' && rejoinedRoomId != null) {

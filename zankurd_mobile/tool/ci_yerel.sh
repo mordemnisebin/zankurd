@@ -29,9 +29,17 @@ adim "soru kalitesi kapısı"
 dart run tool/question_quality/question_quality_audit.dart gate
 
 adim "şık kalite taraması"
-python3 tool/content_authoring/sik_kalite_taramasi.py
-# Tarama bulgu dosyasını her koşuda yeniden yazar; temizken değişiklik bırakmasın.
-git checkout -q -- docs/content_batches/sik_kalite_bulgulari.json 2>/dev/null || true
+# Tarama bulgu dosyasını her koşuda yeniden yazar. `git checkout` ile geri
+# almak commit edilmemiş elle değişikliği de siliyordu; önceki hâli aynen
+# geri konur.
+sik_bulgu=docs/content_batches/sik_kalite_bulgulari.json
+sik_yedek=$(mktemp)
+cp "$sik_bulgu" "$sik_yedek"
+sik_durum=0
+python3 tool/content_authoring/sik_kalite_taramasi.py || sik_durum=$?
+cp "$sik_yedek" "$sik_bulgu"
+rm -f "$sik_yedek"
+[ "$sik_durum" -eq 0 ] || exit "$sik_durum"
 
 adim "dokunma hedefi taraması"
 python3 tool/a11y/tap_target_taramasi.py

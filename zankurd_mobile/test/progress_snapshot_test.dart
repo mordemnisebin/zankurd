@@ -290,6 +290,50 @@ void main() {
       expect(SnapshotMistakes.merge(b, a).meta['q']!['repetitions'], 5);
     });
 
+    // 2026-10-25: ustalaşılıp kuyruktan çıkan soru, sunucudaki eski anlık
+    // görüntüyle birleşince ("erken vade kazanır") geri geliyordu.
+    test('ustalaşılan soru eski anlık görüntüyle geri gelmez (simetrik)', () {
+      final local = SnapshotMistakes(
+        meta: {
+          'q': {...meta(9000, reps: 2), 'missCount': 1, 'graduated': true},
+        },
+      );
+      final server = SnapshotMistakes(
+        ids: {'q'},
+        meta: {
+          'q': {...meta(1000), 'missCount': 1},
+        },
+      );
+      for (final m in [
+        SnapshotMistakes.merge(local, server),
+        SnapshotMistakes.merge(server, local),
+      ]) {
+        expect(m.ids, isEmpty);
+        expect(m.meta['q']!['graduated'], isTrue);
+      }
+    });
+
+    test('ustalaşmadan sonraki yeni yanlış kaybolmaz (simetrik)', () {
+      final graduated = SnapshotMistakes(
+        meta: {
+          'q': {...meta(9000, reps: 2), 'missCount': 1, 'graduated': true},
+        },
+      );
+      final missedAgain = SnapshotMistakes(
+        ids: {'q'},
+        meta: {
+          'q': {...meta(2000), 'missCount': 2},
+        },
+      );
+      for (final m in [
+        SnapshotMistakes.merge(graduated, missedAgain),
+        SnapshotMistakes.merge(missedAgain, graduated),
+      ]) {
+        expect(m.ids, {'q'});
+        expect(m.meta['q']!['missCount'], 2);
+      }
+    });
+
     test('günlük performans günü gün en yüksek', () {
       const a = SnapshotMistakes(
         history: {

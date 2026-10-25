@@ -79,21 +79,50 @@ class _StoryScreenState extends State<StoryScreen> {
   /// dokunuş iki kez ilerletiyordu).
   bool _busy = false;
 
+  /// Geçmiş başlangıçtan kesintisiz biliniyor mu? Yolu olmayan eski bir
+  /// kayıttan devam edilince yalnız yeni seçimler tam yol gibi yazılıp
+  /// sonraki açılışta yanlış geri oynatılıyordu (Codex incelemesi
+  /// 2026-10-25); bilinmiyorsa yol hiç yazılmaz.
+  bool _pathKnown = true;
+
   Future<void> _restore() async {
     var node = widget.story.start;
+    final history = <_StoryTurn>[];
+    var pathKnown = true;
     try {
       final store = await StoryProgressStore.load();
       final savedId = store.currentNodeId(widget.story.id);
       node = widget.story.node(savedId) ?? widget.story.start;
+      // Kaldığı yerden açılınca önceki konuşma da görünsün (2026-10-25:
+      // yalnız son düğüm geri geliyordu). Yol kayıtlı düğüme varmazsa
+      // (eski kayıt, başka cihazdan eşitleme) akış boş başlar.
+      var walk = widget.story.start;
+      for (final i in store.path(widget.story.id) ?? const <int>[]) {
+        if (i < 0 || i >= walk.choices.length) break;
+        final choice = walk.choices[i];
+        final next = widget.story.follow(walk, choice);
+        if (next == null) break;
+        history.add((node: walk, choice: choice));
+        walk = next;
+      }
+      if (walk.id != node.id) history.clear();
+      pathKnown = walk.id == node.id;
     } catch (error, stack) {
       // Kayıt okunamazsa yükleyici sonsuza dek kalmasın: baştan başla.
       ErrorReporter.record(error, stack, reason: 'story restore failed');
+      history.clear();
+      pathKnown = node.id == widget.story.start.id;
     }
     if (mounted) {
       setState(() {
         _node = node;
+        _pathKnown = pathKnown;
+        _history
+          ..clear()
+          ..addAll(history);
         _loading = false;
       });
+      if (history.isNotEmpty) _scrollToEnd();
     }
   }
 
@@ -102,9 +131,17 @@ class _StoryScreenState extends State<StoryScreen> {
     final next = widget.story.follow(_node!, choice);
     if (next == null) return; // koruma
     setState(() => _busy = true);
+    final path = [
+      for (final turn in _history) turn.node.choices.indexOf(turn.choice),
+      _node!.choices.indexOf(choice),
+    ];
     try {
       final store = await StoryProgressStore.load();
-      await store.saveNode(widget.story.id, next.id);
+      await store.saveNode(
+        widget.story.id,
+        next.id,
+        path: _pathKnown ? path : null,
+      );
       if (next.isEnding) {
         await store.markCompleted(widget.story.id);
         unawaited(StreakStore.recordActivity());
@@ -149,6 +186,7 @@ class _StoryScreenState extends State<StoryScreen> {
     if (!mounted) return;
     setState(() {
       _history.clear();
+      _pathKnown = true;
       _node = widget.story.start;
       _feedbackKu = null;
       _feedbackTr = null;

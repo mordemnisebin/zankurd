@@ -24,6 +24,7 @@ import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';
 import '../game/bot_opponent.dart';
+import '../game/speed_score.dart';
 import '../models/answer_record.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
@@ -67,6 +68,7 @@ import 'quiz_result_screen.dart';
 import 'room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
+import '../utils/room_reactions.dart';
 import '../widgets/dialog_action_pair.dart';
 
 part 'quiz/quiz_layout_rules.dart';
@@ -257,6 +259,10 @@ class _QuizScreenState extends State<QuizScreen>
   bool favorite = false;
   bool _favoriteTouched = false;
   bool _localSaveFailureShown = false;
+
+  /// Alıştırma zorluk puanı kaydedilirken ikinci dokunuş SM-2'yi iki kez
+  /// ilerletip bir soruyu atlatıyordu; kayıt + geçiş bitene dek kilitli.
+  bool _ratingInFlight = false;
 
   /// Bu ekranın yanlış defteri oturum kimliği: bir quiz/tekrar ekranı = bir
   /// oturum. Soru kuyruktan çıkmak için İKİ FARKLI oturumda doğru
@@ -709,8 +715,15 @@ class _QuizScreenState extends State<QuizScreen>
                 legacyName: name,
               );
               if (payload['type'] == 'reaction') {
-                final text = payload['text'] as String?;
-                final sender = payload['sender_name'] as String? ?? senderName;
+                // Yalnız hazır tepkiler, alıcının dilinde; ad yükten değil
+                // oyuncu listesinden (bkz. [localizedRoomReaction]).
+                final text = localizedRoomReaction(
+                  payload['text'],
+                  isKu: _isKu,
+                );
+                final senderPlayer = livePlayers
+                    .where((p) => p.id == senderId)
+                    .firstOrNull;
                 final blocked =
                     !_blockedReady ||
                     // Kimliği olmayan yayın kimin olduğu doğrulanamadığı için
@@ -722,15 +735,12 @@ class _QuizScreenState extends State<QuizScreen>
                     text,
                     // Adsız oyuncu her yerde "Oyuncu ZK-XXXX" (lobi, skor
                     // tablosu); tepki bandında yalnız "Oyuncu" kalıyordu.
-                    senderName: sender == null
+                    senderName: senderPlayer == null
                         ? null
                         : PlayerIdentity.resolveNameWithTag(
-                            sender,
+                            senderPlayer.name,
                             isKu: _isKu,
-                            tag: livePlayers
-                                .where((p) => p.id == senderId)
-                                .firstOrNull
-                                ?.tag,
+                            tag: senderPlayer.tag,
                           ),
                   );
                 }
@@ -1524,6 +1534,25 @@ class _QuizScreenState extends State<QuizScreen>
       final store = await SeenQuestionStore.load();
       return store.markSeen([id]);
     }, reason: 'quiz seen-question save failed');
+    _precacheNextQuestionVisual();
+  }
+
+  /// Sıradaki sorunun görselini şimdiden yükler. Görsel kapısı
+  /// (`_questionVisualReady`) yalnız ilk soruyu bekletiyor; sonraki
+  /// görselli sorularda sayaç görsel gelmeden başlıyordu (2026-10-25).
+  /// Hata sessizce yutulur: görsel yine çizimde yüklenmeyi dener.
+  void _precacheNextQuestionVisual() {
+    final nextIndex = index + 1;
+    if (nextIndex >= _questions.length) return;
+    final next = _questions[nextIndex];
+    if (!next.hasImage) return;
+    final provider = _questionImageProvider(next.imageUrl!);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      unawaited(
+        precacheImage(provider, context, onError: (error, stackTrace) {}),
+      );
+    });
   }
 
   /// Yanlış cevabı yanlış defterine ekler, doğru cevap kaydı düşürür.
@@ -1531,7 +1560,13 @@ class _QuizScreenState extends State<QuizScreen>
     final id = question.id;
     final category = question.category;
     if (widget.practice && correct) {
-      // In mistake practice, correct reviews are handled by the rating buttons
+      // Alıştırmada SM-2 puanı zorluk düğmesine kalır; ama düğmeye basmadan
+      // çıkılırsa doğru cevap hiç sayılmıyordu (2026-10-25). Günlük geçmiş
+      // hemen yazılır, düğme onu ikinci kez saymaz.
+      _saveLocalProgress(() async {
+        final store = await MistakeStore.load();
+        return store.recordCorrectAnswer();
+      }, reason: 'quiz practice answer save failed');
       return;
     }
     _saveLocalProgress(() async {
@@ -1571,13 +1606,27 @@ class _QuizScreenState extends State<QuizScreen>
     ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
   }
 
-  Future<void> _submitPracticeRating(int score) async {
+  Future<void> _submitPracticeRating(int score, int questionIndex) async {
+    // Kayıt bitip yeni soru çizilmeden önce eski düğmeye gelen dokunuş da
+    // yok sayılır: puan yalnız düğmenin ait olduğu soruya yazılır.
+    if (_ratingInFlight || questionIndex != index) return;
+    setState(() => _ratingInFlight = true);
     final id = question.id;
-    await _trySaveLocalProgress(() async {
-      final store = await MistakeStore.load();
-      return store.markResolvedSM2(id, score, sessionId: _mistakeSessionId);
-    }, reason: 'quiz practice rating save failed');
-    await _next();
+    try {
+      await _trySaveLocalProgress(() async {
+        final store = await MistakeStore.load();
+        return store.markResolvedSM2(
+          id,
+          score,
+          sessionId: _mistakeSessionId,
+          countAnswer: false,
+        );
+      }, reason: 'quiz practice rating save failed');
+      if (!mounted) return;
+      await _next();
+    } finally {
+      if (mounted) setState(() => _ratingInFlight = false);
+    }
   }
 
   /// Ekran okuyucuya kısa bir duyuru (süre uyarıları). Görünüm yoksa sessiz.
@@ -3730,6 +3779,13 @@ class _QuizScreenState extends State<QuizScreen>
 
     final optionKey = question.optionKeyForAnswer(answer);
 
+    // Süresiz tek kişilik turda düşünerek verilen doğru cevap hız
+    // sınırını aşıp 0 puan alıyordu (2026-10-25). Burada hız yarışı
+    // yok: doğru cevap taban puanı (100) alır. Kayıttaki süre gerçektir.
+    // Çevrimdışı yedek puan da aynı süreyle hesaplanır (aşağıdaki catch).
+    final scoredResponseMs = !_usesTimer && !_isMultiplayer
+        ? max(0, widget.room.secondsPerQuestion * 1000 - 1)
+        : responseMs;
     try {
       // Zaman aşımı: ağ takılırsa gerilim tutuşu sonsuza dek sürmez;
       // catch bloğundaki yerel değerlendirme devreye girer.
@@ -3747,7 +3803,7 @@ class _QuizScreenState extends State<QuizScreen>
             room: widget.room,
             question: question,
             selectedOptionOptionKey: optionKey,
-            responseMs: responseMs,
+            responseMs: scoredResponseMs,
           )
           .timeout(
             _isMultiplayer
@@ -3909,7 +3965,13 @@ class _QuizScreenState extends State<QuizScreen>
           streak += 1;
           bestStreak = bestStreak < streak ? streak : bestStreak;
           correctCount += 1;
-          final points = 100 + (streak * 10).clamp(0, 50);
+          // Normal yolla aynı puan: eski yedek `100 + seri bonusu` hızı
+          // yok sayıyordu, çevrimdışı tur başka ölçekle puanlanıyordu.
+          final points = SpeedScore.calculate(
+            responseMs: scoredResponseMs,
+            limitSeconds: widget.room.secondsPerQuestion,
+            correct: true,
+          );
           score += points;
           if (streak >= 5 && streak % 5 == 0) {
             _showConfetti = true;
@@ -3926,7 +3988,7 @@ class _QuizScreenState extends State<QuizScreen>
           answer,
           isCorrect: correct,
           responseMs: responseMs,
-          pointsEarned: correct ? (100 + (streak * 10).clamp(0, 50)) : 0,
+          pointsEarned: correct ? _lastPointsEarned : 0,
         );
         _advanceBots();
         _syncMyDuelState(answeredNow: true);

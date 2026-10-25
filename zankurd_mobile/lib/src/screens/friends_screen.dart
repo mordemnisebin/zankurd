@@ -22,6 +22,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
+import '../widgets/player_moderation_button.dart';
 import '../widgets/sahne/sahne.dart';
 import 'async_duel/async_duel_challenge_sheet.dart';
 import 'room_screen.dart';
@@ -116,12 +117,30 @@ class _FriendsScreenState extends State<FriendsScreen>
         : Future<bool>.value(false);
     _loadFriends();
     WidgetsBinding.instance.addObserver(this);
+    _startPolling();
+  }
+
+  void _startPolling() {
+    _pollTimer?.cancel();
     _pollTimer = Timer.periodic(_pollInterval, (_) => unawaited(_reload()));
   }
 
+  /// Arka planda yoklama durur (pil, veri, Supabase kotası); dönüşte bir
+  /// kez tazelenir ve döngü yeniden kurulur (bkz. leaderboard_screen).
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) unawaited(_reload());
+    switch (state) {
+      case AppLifecycleState.resumed:
+        unawaited(_reload());
+        _startPolling();
+      case AppLifecycleState.paused:
+      case AppLifecycleState.hidden:
+      case AppLifecycleState.detached:
+        _pollTimer?.cancel();
+        _pollTimer = null;
+      case AppLifecycleState.inactive:
+        break;
+    }
   }
 
   /// Listeleri sunucudan yeniden okur. Uçuştaki istek varken ikincisi
@@ -401,6 +420,26 @@ class _FriendsScreenState extends State<FriendsScreen>
     } else {
       _showMessage(context.t(K.friendRemoveFailed));
     }
+  }
+
+  /// Arkadaş ya da istek gönderen için bildir/engelle alt sayfası (Apple
+  /// 1.2: araç içeriğin karşılaşıldığı yerde). Engel/bildirim sonrası
+  /// listeler yeniden okunur.
+  void _openModeration(String playerId, String playerName) {
+    void refresh() {
+      if (mounted) setState(_loadFriends);
+    }
+
+    unawaited(
+      showPlayerModerationSheet(
+        context: context,
+        repository: widget.repository,
+        playerId: playerId,
+        playerName: playerName,
+        onBlocked: refresh,
+        onReported: refresh,
+      ),
+    );
   }
 
   /// Arkadaşla oynamak için özel oda açar; oda kodu arkadaşla paylaşılır.
@@ -932,6 +971,13 @@ class _FriendsScreenState extends State<FriendsScreen>
                     busy: _busyIds.contains(req.id),
                     onAccept: () => _acceptRequest(req.id),
                     onReject: () => _rejectRequest(req.id),
+                    onModerate: () => _openModeration(
+                      req.fromUserId,
+                      context.playerDisplayName(
+                        req.fromUserName,
+                        tag: req.fromProfile?.playerTag,
+                      ),
+                    ),
                   ),
               ],
             ),
@@ -1006,6 +1052,13 @@ class _FriendsScreenState extends State<FriendsScreen>
                     onRemove: _managementSupported
                         ? () => unawaited(_confirmRemoveFriend(friend))
                         : null,
+                    onModerate: () => _openModeration(
+                      friend.friendId,
+                      context.playerDisplayName(
+                        friend.friendName,
+                        tag: friend.friendTag,
+                      ),
+                    ),
                   ),
               ],
             );
@@ -1210,9 +1263,13 @@ class _FriendRow extends StatelessWidget {
     required this.busy,
     this.onChallenge,
     this.onRemove,
+    this.onModerate,
   });
 
   final Friend friend;
+
+  /// Bildir/engelle alt sayfası (Apple 1.2); `null` → menüde görünmez.
+  final VoidCallback? onModerate;
 
   /// Arkadaşlıktan çıkar; `null` → sunucuda `remove_friend` yok, eylem
   /// görünmez.
@@ -1311,7 +1368,9 @@ class _FriendRow extends StatelessWidget {
               icon: busy ? AppIcons.hourglass : null,
               onPressed: busy ? null : onPlay,
             ),
-          if (onChallenge != null || onRemove != null) ...[
+          if (onChallenge != null ||
+              onRemove != null ||
+              onModerate != null) ...[
             const SizedBox(width: SahneSpace.x1),
             SahneIconButton(
               key: ValueKey('friend-more-${friend.friendName}'),
@@ -1358,6 +1417,16 @@ class _FriendRow extends StatelessWidget {
                   onRemove!();
                 },
               ),
+            if (onModerate != null)
+              SahneListRow.icon(
+                key: ValueKey('friend-moderate-${friend.friendName}'),
+                icon: AppIcons.flag,
+                title: context.t(K.reportProfileTitle),
+                onTap: () {
+                  Navigator.of(sheetContext).pop();
+                  onModerate!();
+                },
+              ),
           ],
         ),
       ),
@@ -1371,12 +1440,17 @@ class _FriendRequestRow extends StatelessWidget {
     required this.busy,
     required this.onAccept,
     required this.onReject,
+    this.onModerate,
   });
 
   final FriendRequest request;
   final bool busy;
   final VoidCallback onAccept;
   final VoidCallback onReject;
+
+  /// Bildir/engelle alt sayfası (Apple 1.2): istek gönderenin avatarı ve
+  /// adı da kullanıcı içeriğidir.
+  final VoidCallback? onModerate;
 
   @override
   Widget build(BuildContext context) {
@@ -1385,58 +1459,65 @@ class _FriendRequestRow extends StatelessWidget {
       if (!busy) onReject();
     }
 
-    final actions = Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Reddet: Kulis karo + ✗, 48'lik dokunma kutusu (görsel 44). Şaş
-        // (yanlış) tonu bir cevap durumudur, bir eylemin rengi değil.
-        Tooltip(
-          message: context.t(K.rejectAction),
-          excludeFromSemantics: true,
-          child: Semantics(
-            button: true,
-            label: context.t(K.rejectAction),
+    final actions = <Widget>[
+      if (onModerate != null) ...[
+        SahneIconButton(
+          key: ValueKey('friend-request-more-${request.id}'),
+          icon: AppIcons.ellipsis,
+          quiet: true,
+          semanticLabel: context.t(K.reportProfileTitle),
+          onPressed: onModerate,
+        ),
+        const SizedBox(width: SahneSpace.x1),
+      ],
+      // Reddet: Kulis karo + ✗, 48'lik dokunma kutusu (görsel 44). Şaş
+      // (yanlış) tonu bir cevap durumudur, bir eylemin rengi değil.
+      Tooltip(
+        message: context.t(K.rejectAction),
+        excludeFromSemantics: true,
+        child: Semantics(
+          button: true,
+          label: context.t(K.rejectAction),
+          onTap: reject,
+          excludeSemantics: true,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: reject,
-            excludeSemantics: true,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: reject,
-              child: SizedBox.square(
-                dimension: 48,
-                child: Center(
-                  child: SahneTappable(
-                    // Kurul 5. tur 2026-10-20 (Grok): gri ✗ gri karoda
-                    // görünmüyordu; birincil renk + görünür kenar.
-                    shape: SahneShape.withSide(
-                      SahneShape.m,
-                      t.secondaryEdge,
-                      width: 1.5,
-                    ),
-                    color: t.s2,
-                    onTap: reject,
-                    child: SizedBox.square(
-                      dimension: 44,
-                      child: Icon(AppIcons.xmark, size: 20, color: t.tx),
-                    ),
+            child: SizedBox.square(
+              dimension: 48,
+              child: Center(
+                child: SahneTappable(
+                  // Kurul 5. tur 2026-10-20 (Grok): gri ✗ gri karoda
+                  // görünmüyordu; birincil renk + görünür kenar.
+                  shape: SahneShape.withSide(
+                    SahneShape.m,
+                    t.secondaryEdge,
+                    width: 1.5,
+                  ),
+                  color: t.s2,
+                  onTap: reject,
+                  child: SizedBox.square(
+                    dimension: 44,
+                    child: Icon(AppIcons.xmark, size: 20, color: t.tx),
                   ),
                 ),
               ),
             ),
           ),
         ),
-        const SizedBox(width: SahneSpace.x2),
-        // Kurul 2026-10-20 (Opus): Kabul bekleyen isteğin ASIL eylemidir,
-        // reddet ikon düğmesi yanında sessiz kalır; bu yüzden birincil
-        // (turuncu). Eskiden ikincildi (bir listede birden çok istek olur
-        // gerekçesiyle) ve "Reddet"le aynı gri yüzeydeydi.
-        SahneButton.primary(
-          label: context.t(K.acceptAction),
-          icon: AppIcons.check,
-          arrow: false,
-          onPressed: busy ? null : onAccept,
-        ),
-      ],
-    );
+      ),
+      const SizedBox(width: SahneSpace.x2),
+      // Kurul 2026-10-20 (Opus): Kabul bekleyen isteğin ASIL eylemidir,
+      // reddet ikon düğmesi yanında sessiz kalır; bu yüzden birincil
+      // (turuncu). Eskiden ikincildi (bir listede birden çok istek olur
+      // gerekçesiyle) ve "Reddet"le aynı gri yüzeydeydi.
+      SahneButton.primary(
+        label: context.t(K.acceptAction),
+        icon: AppIcons.check,
+        arrow: false,
+        onPressed: busy ? null : onAccept,
+      ),
+    ];
     return LayoutBuilder(
       builder: (context, constraints) {
         final textScale = MediaQuery.textScalerOf(context).scale(1);
@@ -1451,7 +1532,16 @@ class _FriendRequestRow extends StatelessWidget {
             request.fromUserName,
             tag: request.fromProfile?.playerTag,
           ),
-          trailing: actions,
+          // Büyük metinde "⋯" + Reddet + Kabul dar ekrana sığmayabilir:
+          // alt satıra sarılır, taşmaz.
+          trailing: stackActions
+              ? Wrap(
+                  alignment: WrapAlignment.end,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  runSpacing: SahneSpace.x2,
+                  children: actions,
+                )
+              : Row(mainAxisSize: MainAxisSize.min, children: actions),
           stackTrailing: stackActions,
         );
       },

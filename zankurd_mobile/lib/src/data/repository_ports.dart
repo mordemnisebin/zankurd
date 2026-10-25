@@ -42,6 +42,7 @@ abstract interface class SoloQuizPort {
     required int totalQuestions,
     GameRoom? room,
   });
+  @Deprecated('Solo XP sunucuya yazılmaz; oda XP için awardRoomXp.')
   Future<int> awardXp(int delta);
   Future<int> awardRoomXp(String roomId);
   Future<List<Lesson>> loadLessonsByCategory(String category);

@@ -94,6 +94,8 @@ void main() {
       'dersler3': fromJson('assets/data/dersler3_2026_10_08_questions.json'),
       // 2026-10-19: kolay havuz takviyesi (36 zorluk-1 soru).
       'kolay': fromJson('assets/data/kolay_2026_10_19_questions.json'),
+      // 2026-10-25: dil bilgisi derinliği (76 derse etiketli soru).
+      'dersler4': fromJson('assets/data/dersler4_2026_10_25_questions.json'),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
@@ -115,7 +117,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla yirmi iki kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla yirmi üç kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -163,6 +165,8 @@ void main() {
         ...fromJson('assets/data/dersler3_2026_10_08_questions.json'),
         // 2026-10-19: kolay havuz takviyesi (36).
         ...fromJson('assets/data/kolay_2026_10_19_questions.json'),
+        // 2026-10-25: dil bilgisi derinliği (76).
+        ...fromJson('assets/data/dersler4_2026_10_25_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;

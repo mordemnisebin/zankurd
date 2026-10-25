@@ -28,7 +28,7 @@ class AnalyticsConsentProvider extends ChangeNotifier {
   /// `SupabaseZanKurdRepository.logAnalyticsEvent` gibi veri katmanı
   /// sınıfları `BuildContext`i olmadığı için Provider ağacını okuyamaz.
   ///
-  /// Anahtar kapalıyken (varsayılan da kapalı) yalnız Firebase Analytics
+  /// Anahtar kapalıyken (varsayılan açık; bkz. [defaultEnabled]) yalnız Firebase Analytics
   /// durduruluyordu; ikinci ölçüm yolu — bu depo metodu — kullanıcı
   /// kimliğiyle birlikte Supabase'e yazmaya devam ediyordu. Her tur/ders/
   /// arkadaşlık isteği/turnuva olayı, anahtar kapalı olsa bile sunucuya

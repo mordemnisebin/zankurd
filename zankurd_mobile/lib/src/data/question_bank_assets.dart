@@ -165,4 +165,10 @@ const questionBankAssets = <String>[
   // taslağı, iki bağımsız jüri (Gemini 3.1 Pro + Grok/ChatGPT) ikisi de KABUL
   // dediği 57 zorluk-1 soru. Sunucu eşi: `supabase/2026-10-19_kolay_ekle.sql`.
   'assets/data/kolay_2026_10_19_questions.json',
+  // 2026-10-25: DİL BİLGİSİ DERİNLİĞİ. Dört yeni ders (izafe, gelecek zaman,
+  // emir kipi, aylar) için derse etiketli 32 çoktan seçmeli, 24 boşluk
+  // doldurma ve 20 cümle kurma sorusu (`learningLessonId`). Kurmancî Gemini
+  // 3.8 Flash + Grok 4.7 okumasından geçti. Bekçi:
+  // `test/beginner_track_4_test.dart`.
+  'assets/data/dersler4_2026_10_25_questions.json',
 ];

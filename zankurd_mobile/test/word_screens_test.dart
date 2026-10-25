@@ -337,6 +337,16 @@ void main() {
       await tester.pump();
       expect(find.text('Yanlış'), findsOneWidget);
       expect(store.wordFor('evarbas')!.box, 1);
+      // Yanlış kelime oturum sonunda bir kez daha sorulur (2026-10-25):
+      // bu yüzden 2. soru son değil, düğme hâlâ "Sonraki".
+      expect(find.text('Tamamla'), findsNothing);
+      await tester.tap(find.byKey(const ValueKey('word-review-next')));
+      await tester.pump();
+
+      // Tekrar sorusu: cevap verilir, kutu YAZILMAZ, skor değişmez.
+      await tester.tap(find.byKey(const ValueKey('word-review-option-0')));
+      await tester.pump();
+      expect(store.wordFor('evarbas')!.box, 1);
       expect(find.text('Tamamla'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('word-review-next')));
       await tester.pump();
@@ -444,6 +454,19 @@ void main() {
         );
         await tester.tap(find.byKey(const ValueKey('word-review-next')));
         await tester.pump();
+        // Yanlış cevapta kelime oturum sonunda bir kez daha sorulur.
+        if (find.byKey(const ValueKey('word-review-done')).evaluate().isEmpty) {
+          await tester.ensureVisible(
+            find.byKey(const ValueKey('word-review-option-0')),
+          );
+          await tester.tap(find.byKey(const ValueKey('word-review-option-0')));
+          await tester.pump();
+          await tester.ensureVisible(
+            find.byKey(const ValueKey('word-review-next')),
+          );
+          await tester.tap(find.byKey(const ValueKey('word-review-next')));
+          await tester.pump();
+        }
         expect(find.byKey(const ValueKey('word-review-done')), findsOneWidget);
         expect(tester.takeException(), isNull, reason: 'sonuç $lang');
       }

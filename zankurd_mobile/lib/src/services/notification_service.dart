@@ -472,6 +472,37 @@ class NotificationService {
     }
   }
 
+  bool _dailyTimeZoneRefreshPending = false;
+
+  /// Cihazın saat dilimini yeniden çözer; değiştiyse günlük hatırlatmayı
+  /// yeni dilimde yeniden kurar ve `true` döner.
+  ///
+  /// Dilim yalnız açılışta çözülüyordu: seyahat eden (diaspora ↔ memleket)
+  /// kullanıcı uygulama arka planda kaldıkça hatırlatmayı eski dilimin
+  /// saatinde alıyordu (2026-10-25). Öne gelişte çağrılır; seri uyarısı
+  /// zaten hemen ardından yeniden kurulur.
+  Future<bool> refreshTimeZone() async {
+    if (kIsWeb) return false;
+    try {
+      final name = (await _timeZoneResolver.resolve())?.trim();
+      final changed = name != null && name.isNotEmpty && name != tz.local.name;
+      if (changed) {
+        tz.setLocalLocation(tz.getLocation(name));
+        _dailyTimeZoneRefreshPending = true;
+      }
+      // Yeniden kurma yarıda kalırsa dilim "aynı" görünse de bir sonraki
+      // öne gelişte tekrar denenir (Codex incelemesi 2026-10-25).
+      if (_dailyTimeZoneRefreshPending) {
+        if (_enabled && dailyOn) await _scheduleDaily();
+        _dailyTimeZoneRefreshPending = false;
+      }
+      return changed;
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'notification_timezone');
+      return false;
+    }
+  }
+
   /// Günlük hatırlatıcının bir sonraki anını hesaplayıp zamanlar.
   Future<void> _scheduleDaily() async {
     final next = nextFireTime();

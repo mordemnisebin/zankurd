@@ -154,6 +154,23 @@ class QuizQuestionImage extends StatelessWidget {
   Widget build(BuildContext context) => _QuestionImage(url: url, alt: alt);
 }
 
+/// Soru görselinin kod çözme genişliği tavanı (bkz. `_QuestionImage`).
+const int _questionImageMemCacheWidth = 1080;
+
+/// `_QuestionImage`'ın çizdiği görselle AYNI önbellek anahtarını veren
+/// sağlayıcı: sıradaki sorunun görseli önceden yüklenirken
+/// (`_precacheNextQuestionVisual`) çizimde yeniden indirilmesin.
+ImageProvider _questionImageProvider(String url) {
+  if (url.startsWith('asset://')) {
+    return AssetImage(url.replaceFirst('asset://', ''));
+  }
+  return ResizeImage.resizeIfNeeded(
+    _questionImageMemCacheWidth,
+    null,
+    CachedNetworkImageProvider(url),
+  );
+}
+
 class _QuestionImage extends StatelessWidget {
   const _QuestionImage({
     super.key,
@@ -210,7 +227,7 @@ class _QuestionImage extends StatelessWidget {
             // JPEG, ekranda 350 px görünse bile ~16 MB RGBA tutar. Soru
             // kartı hiçbir zaman 1080 px'ten geniş çizilmiyor
             // (2026-07-31 denetimi).
-            memCacheWidth: 1080,
+            memCacheWidth: _questionImageMemCacheWidth,
             placeholder: (context, url) => const _QuestionImagePlaceholder(),
             imageBuilder: (context, imageProvider) {
               _notifyReady();

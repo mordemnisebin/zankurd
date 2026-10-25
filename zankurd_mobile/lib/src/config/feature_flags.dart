@@ -33,12 +33,11 @@ const kWeeklyLeagueEnabled = false;
 /// başlatılamadı" ile düşer — oyuncu kırık bir özellik görür. Göç
 /// uygulanıp `applied.md`ye işlenince bu bayrak `true` yapılır.
 ///
-/// 2026-09-30: `true`. DİKKAT: bu değişiklik `async/ac` dalındadır ve
-/// dört göç (`2026-09-22_xp_and_coin_idempotency`, `2026-09-28_async_duels`,
-/// `_async_duels_cron`, `_hidden_categories_inactive`) canlıya uygulanıp
-/// `2026-09-30_async_duels_verify.sql` temiz geçmeden ANA DALA
-/// BİRLEŞTİRİLMEMELİDİR; aksi hâlde yayınlanan sürümde kart açık, sunucuda
-/// RPC yok olur.
+/// 2026-09-30: `true`. Dört göç (`2026-09-22_xp_and_coin_idempotency`,
+/// `2026-09-28_async_duels`, `_async_duels_cron`,
+/// `_hidden_categories_inactive`) 2026-09-30'da canlıya uygulandı ve
+/// `2026-09-30_async_duels_verify.sql` temiz geçti (bkz. `supabase/applied.md`);
+/// eski "ana dala birleştirme" uyarısı kalktı.
 const kAsyncDuelEnabled = true;
 
 /// Pro (destekçi aboneliği) ana ekranda ve ayarlarda görünür mü?

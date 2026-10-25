@@ -137,7 +137,9 @@ void main() {
               // 2026-10-08: başlangıç yolu II (132) da tohumun dışındadır.
               !q.id.startsWith('dersler2_2026_10_08_') &&
               // 2026-10-08: başlangıç yolu III (121) da tohumun dışındadır.
-              !q.id.startsWith('dersler3_2026_10_08_'),
+              !q.id.startsWith('dersler3_2026_10_08_') &&
+              // 2026-10-25: dil bilgisi derinliği (76) de tohumun dışındadır.
+              !q.id.startsWith('dersler4_2026_10_25_'),
         )
         .map((q) => q.id)
         .toSet();
@@ -277,51 +279,45 @@ void main() {
     }
   });
 
-  test(
-    'all 17 packaged lessons have explicit aligned mini-quiz coverage',
-    () async {
-      SharedPreferences.setMockInitialValues({});
-      final repository = MockZanKurdRepository();
-      const categories = <String, String>{
-        'everyday': 'Ziman',
-        'grammar': 'Ziman',
-        'culture': 'Çand',
-        'food': 'Ziman',
-        'animals': 'Ziman',
-        'geography': 'Cografya',
-        'emotions': 'Ziman',
-        'time': 'Ziman',
-      };
-      var lessonCount = 0;
+  test('all 17 packaged lessons have explicit aligned mini-quiz coverage', () async {
+    SharedPreferences.setMockInitialValues({});
+    final repository = MockZanKurdRepository();
+    const categories = <String, String>{
+      'everyday': 'Ziman',
+      'grammar': 'Ziman',
+      'culture': 'Çand',
+      'food': 'Ziman',
+      'animals': 'Ziman',
+      'geography': 'Cografya',
+      'emotions': 'Ziman',
+      'time': 'Ziman',
+    };
+    var lessonCount = 0;
 
-      for (final entry in categories.entries) {
-        final lessons = await repository.loadLessonsByCategory(entry.key);
-        lessonCount += lessons.length;
-        for (final lesson in lessons) {
-          final questions = await repository.loadLearningQuizQuestions(
-            category: entry.value,
-            learningLessonId: lesson.id,
-            limit: 5,
-          );
+    for (final entry in categories.entries) {
+      final lessons = await repository.loadLessonsByCategory(entry.key);
+      lessonCount += lessons.length;
+      for (final lesson in lessons) {
+        final questions = await repository.loadLearningQuizQuestions(
+          category: entry.value,
+          learningLessonId: lesson.id,
+          limit: 5,
+        );
 
-          expect(
-            questions,
-            isNotEmpty,
-            reason: '${lesson.id} quizsiz kalmamalı',
-          );
-          expect(
-            questions.every(
-              (question) => question.metadata?.learningLessonId == lesson.id,
-            ),
-            isTrue,
-            reason: '${lesson.id} geniş kategori filler almamalı',
-          );
-        }
+        expect(questions, isNotEmpty, reason: '${lesson.id} quizsiz kalmamalı');
+        expect(
+          questions.every(
+            (question) => question.metadata?.learningLessonId == lesson.id,
+          ),
+          isTrue,
+          reason: '${lesson.id} geniş kategori filler almamalı',
+        );
       }
+    }
 
-      // 2026-10-06: +4 başlangıç dersi (alphabet_1, greetings_2, intro_1, family_1).
-      // 2026-10-08: +7 başlangıç II dersi (colors_1 ... verbs_1), +7 başlangıç III (jobs_1 ... past_1).
-      expect(lessonCount, 35);
-    },
-  );
+    // 2026-10-06: +4 başlangıç dersi (alphabet_1, greetings_2, intro_1, family_1).
+    // 2026-10-08: +7 başlangıç II dersi (colors_1 ... verbs_1), +7 başlangıç III (jobs_1 ... past_1).
+    // 2026-10-25: +4 dil bilgisi/zaman dersi (izafe_1, future_1, imperative_1, months_1).
+    expect(lessonCount, 39);
+  });
 }

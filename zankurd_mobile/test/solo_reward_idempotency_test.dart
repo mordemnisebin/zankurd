@@ -21,6 +21,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:zankurd_mobile/src/data/durable_write.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
@@ -286,6 +287,84 @@ void main() {
       expect(repo.roomCalls, 1);
       expect(repo.soloIds, isEmpty);
     });
+
+    test(
+      'kimliksiz eski solo kayda kalıcı kimlik yazılır, tekil yoldan gider',
+      () async {
+        // Kimlik alanı eklenmeden önce kuyruğa girmiş kayıt.
+        SharedPreferences.setMockInitialValues({
+          'zankurd.syncQueue.v2.solo-user': jsonEncode([
+            {
+              'queueId': 'legacy-1',
+              'type': 'sync_quiz_reward',
+              'score': 100,
+              'correctCount': 5,
+              'bestStreak': 2,
+              'totalQuestions': 10,
+              'roomId': null,
+              'playerId': 'solo-user',
+              'timestamp': 1,
+              'retries': 0,
+            },
+          ]),
+        });
+        // İlk yanıt kaybolur: kayıt kuyrukta kalır, kimliği diskte durur.
+        final repo = _RecordingRepo()..failSolo = true;
+        final sync = await SyncManager.initialize(
+          repo,
+          connectivityMonitor: _OnlineMonitor(),
+        );
+
+        await sync.sync();
+        expect(repo.soloIds, isNotEmpty);
+        final id = repo.soloIds.first;
+        expect(isClientRoundId(id), isTrue);
+        final prefs = await SharedPreferences.getInstance();
+        expect(
+          prefs.getString('zankurd.syncQueue.v2.solo-user'),
+          contains('"clientRoundId":"$id"'),
+        );
+
+        repo.failSolo = false;
+        await sync.sync();
+        expect(repo.soloIds.toSet(), {id});
+        expect(repo.plainSoloCalls, 0);
+        expect(sync.pendingCount, 0);
+      },
+    );
+  });
+
+  group('SyncManager kalıcı coin reddi', () {
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      await SyncManager.resetForTesting();
+    });
+    tearDown(() => SyncManager.resetForTesting());
+
+    test(
+      'yetersiz bakiye sessizce düşmez, başarısız listesine girer',
+      () async {
+        final repo = _RecordingRepo()
+          ..spendResult = const DurableCoinSpend(
+            success: false,
+            retryable: false,
+          );
+        final sync = await SyncManager.initialize(
+          repo,
+          connectivityMonitor: _OnlineMonitor(),
+        );
+        await sync.queueCoinSpend(
+          amount: 500,
+          reason: 'purchase_avatar_frame_gold',
+          idempotencyKey: 'purchase_avatar_frame_gold_1',
+        );
+        await sync.sync();
+
+        expect(repo.spendKeys, ['purchase_avatar_frame_gold_1']);
+        expect(sync.pendingCount, 0);
+        expect(sync.failedCount, 1);
+      },
+    );
   });
 }
 
@@ -315,7 +394,14 @@ class _RecordingRepo extends SupabaseZanKurdRepository {
       );
 
   final soloIds = <String>[];
+  final spendKeys = <String>[];
   int roomCalls = 0;
+  int plainSoloCalls = 0;
+  bool failSolo = false;
+  DurableCoinSpend spendResult = const DurableCoinSpend(
+    success: true,
+    retryable: false,
+  );
 
   @override
   String? get currentUserId => 'solo-user';
@@ -329,7 +415,18 @@ class _RecordingRepo extends SupabaseZanKurdRepository {
     required String clientRoundId,
   }) async {
     soloIds.add(clientRoundId);
+    if (failSolo) throw StateError('yanıt kayboldu');
     return (amount: 9, dailyCapReached: false);
+  }
+
+  @override
+  Future<DurableCoinSpend> spendCoinsDurable(
+    int amount,
+    String reason,
+    String idempotencyKey,
+  ) async {
+    spendKeys.add(idempotencyKey);
+    return spendResult;
   }
 
   @override
@@ -340,7 +437,11 @@ class _RecordingRepo extends SupabaseZanKurdRepository {
     required int totalQuestions,
     GameRoom? room,
   }) async {
-    if (room != null) roomCalls++;
+    if (room != null) {
+      roomCalls++;
+    } else {
+      plainSoloCalls++;
+    }
     return (amount: 9, dailyCapReached: false);
   }
 }

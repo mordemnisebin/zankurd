@@ -2129,6 +2129,12 @@ class Tr {
       'ku': 'Peyam nehat şandin. Dîsa biceribîne.',
       'tr': 'Mesaj gönderilemedi. Tekrar dene.',
     },
+    // Sunucu hız sınırı (supabase/2026-10-25_sohbet_hiz_siniri.sql): 10 sn'de
+    // 5 mesaj. KU iki model onaylı (Gemini 3.8 Flash + Grok 4.7, 2026-10-25).
+    K.chatRateLimited: {
+      'ku': 'Tu pir zû peyaman dişînî. Hinekî bisekine.',
+      'tr': 'Çok hızlı mesaj gönderiyorsun. Biraz bekle.',
+    },
     K.chatReport: {'ku': 'Peyamê gilî bike', 'tr': 'Mesajı bildir'},
     K.chatReportSub: {
       'ku': 'Ji bo lêkolînê tê şandin.',
@@ -4757,6 +4763,7 @@ class K {
   static const chatTooLong = 'chat.rejected.tooLong';
   static const chatSpam = 'chat.rejected.spam';
   static const chatSendFailed = 'chat.sendFailed';
+  static const chatRateLimited = 'chat.rateLimited';
   static const chatReport = 'chat.report';
   static const chatReportSub = 'chat.report.sub';
   static const chatBlock = 'chat.block';

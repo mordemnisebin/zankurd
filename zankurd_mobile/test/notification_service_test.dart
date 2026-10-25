@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:timezone/timezone.dart' as tz;
 import 'package:zankurd_mobile/src/services/notification_service.dart';
 
 class _FakeTimeZoneResolver implements TimeZoneResolver {
@@ -24,6 +25,13 @@ class _BlockingTimeZoneResolver implements TimeZoneResolver {
     await release.future;
     return 'Europe/Istanbul';
   }
+}
+
+class _ChangingTimeZoneResolver implements TimeZoneResolver {
+  String value = 'Europe/Berlin';
+
+  @override
+  Future<String?> resolve() async => value;
 }
 
 void main() {
@@ -182,5 +190,19 @@ void main() {
         expect(next, DateTime(2026, 6, 21, 8, 30));
       });
     });
+  });
+
+  // 2026-10-25: dilim yalnız açılışta çözülüyordu; seyahat eden kullanıcı
+  // hatırlatmayı eski dilimin saatinde alıyordu.
+  test('öne gelişte değişen saat dilimi yenilenir', () async {
+    final resolver = _ChangingTimeZoneResolver();
+    final service = await NotificationService.load(timeZoneResolver: resolver);
+    expect(tz.local.name, 'Europe/Berlin');
+
+    expect(await service.refreshTimeZone(), isFalse, reason: 'değişmedi');
+
+    resolver.value = 'Europe/Istanbul';
+    expect(await service.refreshTimeZone(), isTrue);
+    expect(tz.local.name, 'Europe/Istanbul');
   });
 }

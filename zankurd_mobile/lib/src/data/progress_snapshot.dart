@@ -625,12 +625,26 @@ class SnapshotMistakes {
       } else if (mb == null) {
         meta[key] = ma;
       } else {
-        // Daha erken vade: tekrar kuyruğunda öne alınan, unutulmayan kazanır.
-        // Eşitlikte tekrar sayısı büyük olan (daha çok emek), o da eşitse
-        // kararlı bir sıra için JSON dizgisi küçük olan.
+        // Önce yanlış döngüsü: kaçırma sayısı büyük olan daha yeni bir
+        // yanlışı taşır, kazanır. Eşitse kuyruktan çıkmış (graduated) taraf
+        // kazanır; yoksa sunucudaki eski anlık görüntü, ustalaşılan soruyu
+        // "erken vade" kuralıyla kuyruğa geri getiriyordu (2026-10-25).
+        // Eşit sayaçlı eşzamanlı yeni yanlış bu alanlarla ayırt edilemez.
+        //
+        // Sonra daha erken vade: tekrar kuyruğunda öne alınan, unutulmayan
+        // kazanır. Eşitlikte tekrar sayısı büyük olan (daha çok emek), o da
+        // eşitse kararlı bir sıra için JSON dizgisi küçük olan.
+        final missA = _int(ma['missCount']);
+        final missB = _int(mb['missCount']);
+        final gradA = ma['graduated'] == true;
+        final gradB = mb['graduated'] == true;
         final da = _due(ma);
         final db = _due(mb);
-        if (da != db) {
+        if (missA != missB) {
+          meta[key] = missA > missB ? ma : mb;
+        } else if (gradA != gradB) {
+          meta[key] = gradA ? ma : mb;
+        } else if (da != db) {
           meta[key] = da < db ? ma : mb;
         } else {
           final ra = (ma['repetitions'] as num?)?.toInt() ?? 0;
@@ -658,7 +672,10 @@ class SnapshotMistakes {
         },
     };
     return SnapshotMistakes(
-      ids: {...a.ids, ...b.ids},
+      ids: {
+        for (final id in {...a.ids, ...b.ids})
+          if (meta[id]?['graduated'] != true) id,
+      },
       meta: meta,
       history: history,
     );

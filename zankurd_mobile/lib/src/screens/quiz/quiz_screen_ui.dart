@@ -673,11 +673,14 @@ extension _QuizScreenUI on _QuizScreenState {
   /// Alıştırma turunda doğru cevaptan sonra zorluk puanı: üç eşit ikincil
   /// düğme. Hiçbiri "birincil" değil — üçü de eşit seçimdir.
   Widget _buildRatingBar(BuildContext context) {
+    final questionIndex = index;
     Widget rate(String key, int value) => Expanded(
       child: SahneButton.secondary(
         label: context.t(key),
         expand: true,
-        onPressed: () => _submitPracticeRating(value),
+        onPressed: _ratingInFlight
+            ? null
+            : () => _submitPracticeRating(value, questionIndex),
       ),
     );
     return Row(
@@ -921,18 +924,24 @@ extension _QuizScreenUI on _QuizScreenState {
   /// çevrimdışı hatayı yukarı taşır ve son bilinen bakiye, uçak modunda
   /// "bakiyen bitti" göstermekten iyidir (bkz. o metodun 2026-08-14 notu).
   Future<void> _chargeWildcard(WildcardType type) async {
+    // Anahtar turu da taşır: yalnız soru+tür olunca aynı soru başka bir
+    // turda (tekrar kuyruğu, ertesi gün) yeniden çıktığında sunucu "zaten
+    // ödendi" deyip jokeri bedava veriyordu (2026-10-25). Aynı turdaki
+    // yeniden denemeler ve kuyruk aynı anahtarı kullanır.
+    final idempotencyKey =
+        'wildcard:$_analyticsRoundId:${question.id}:${type.name}';
     bool charged;
     try {
       final result = await widget.repository.spendCoinsDurable(
         type.coinCost,
         type.spendReason,
-        'wildcard:${question.id}:${type.name}',
+        idempotencyKey,
       );
       if (!result.success && result.retryable) {
         await SyncManager.maybeInstance?.queueCoinSpend(
           amount: type.coinCost,
           reason: type.spendReason,
-          idempotencyKey: 'wildcard:${question.id}:${type.name}',
+          idempotencyKey: idempotencyKey,
         );
       }
       charged = result.success || result.retryable;
@@ -945,7 +954,7 @@ extension _QuizScreenUI on _QuizScreenState {
       await SyncManager.maybeInstance?.queueCoinSpend(
         amount: type.coinCost,
         reason: type.spendReason,
-        idempotencyKey: 'wildcard:${question.id}:${type.name}',
+        idempotencyKey: idempotencyKey,
       );
       charged = true;
     } catch (error, stack) {

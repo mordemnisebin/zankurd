@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/config/retired_question_ids.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 
@@ -87,6 +88,9 @@ void main() {
     for (final q in questions) {
       expect(q.type, QuestionType.wordOrdering, reason: '${q.id} yanlış tipte');
       expect(_policy.validate(q), isEmpty, reason: q.id);
+      // Bilinçli emekli (2026-10-25: `wo-ku-001`, dersler2 bankasında birebir
+      // kopyası oynanıyor) sessiz eleme değildir; yalnız o kimlikler atlanır.
+      if (isQuestionRetired(q.id)) continue;
       expect(
         _policy.isPlayable(q),
         isTrue,

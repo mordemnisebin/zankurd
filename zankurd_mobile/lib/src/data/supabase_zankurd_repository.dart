@@ -2594,37 +2594,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  /// `award_xp_delta` `authenticated` rolünden geri alındı (canlıda
+  /// doğrulandı, 2026-10-25); istemci solo deltayı sunucuya yazamaz. Hiçbir
+  /// çağıran yok — ölü RPC çağrısı yerine onaylanmamış yazım olarak fırlatır.
+  @Deprecated('Solo XP sunucuya yazılmaz; oda XP için awardRoomXp.')
   @override
   Future<int> awardXp(int delta) async {
-    if (delta <= 0) return 0;
-    try {
-      final user = client.auth.currentUser ?? await signInAnonymously();
-      await ensureProfile();
-      if (currentUserId?.trim() != user.id) {
-        throw StateError('XP award user changed before the write.');
-      }
-      final response = await client.rpc<dynamic>(
-        'award_xp_delta',
-        params: {'p_delta': delta},
-      );
-      if (response is int) return response;
-      if (response is num) return response.toInt();
-      throw StateError('award_xp_delta returned an unreadable total.');
-    } on PostgrestException catch (error, stack) {
-      // Göç uygulanmamışsa fonksiyon yoktur (42883). Kuyruk bunu kalıcı
-      // düşürür; 0 dönmek sunucu toplamı sanılıp çubuğu siler.
-      _recordError(
-        error,
-        stack,
-        reason: error.code == '42883'
-            ? 'award_xp_delta missing — migration not applied yet'
-            : 'award_xp_delta failed',
-      );
-      rethrow;
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'award_xp_delta failed');
-      rethrow;
-    }
+    throw StateError('Solo XP award is not accepted by the server.');
   }
 
   @override
@@ -2939,7 +2915,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // Eski leaderboard_entries görünümü profiles.xp'ye dayanabilir ve
       // geçmişte istemci deltasından etkilenmiş olabilir. Yetkili RPC
       // okunamıyorsa güvenilir olmayan rekabetçi puanı göstermeyiz.
-      return const [];
+      //
+      // Boş liste de dönmeyiz: ekran boş listeyi "Henüz puan yok" diye
+      // çiziyordu; okunamayan sıralama boş sıralama değildir. Hata yukarı
+      // taşınır, ekran kendi hata durumunu (K.boardLoadFailed) gösterir.
+      rethrow;
     }
   }
 

@@ -104,6 +104,8 @@ void main() {
         'ds_muzik_0144',
         'sf_cin_0007',
         'sf_cin_0008',
+        // 2026-10-25: birebir kopya; eşi `bilim_0001` (Paradigma) oynanır.
+        'sf_nat_0005',
       },
     );
   });

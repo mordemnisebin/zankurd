@@ -91,4 +91,21 @@ void main() {
     final reloaded = await XPStore.load();
     expect(reloaded.totalXP, 0);
   });
+
+  test('applyServerTotal yerel XP\'yi düşürmez, yalnız yükseltir', () async {
+    // Oda maçından sonra `profiles.xp` (yalnız oda/düello) yerel toplamı
+    // (solo + görev + terfi) eziyordu (2026-10-25).
+    final store = await XPStore.load();
+    await store.addXP(500);
+
+    expect(await store.applyServerTotal(120), isFalse);
+    expect(store.totalXP, 500);
+
+    await store.applyServerTotal(700);
+    expect(store.totalXP, 700);
+
+    XPStore.resetInstance();
+    final reloaded = await XPStore.load();
+    expect(reloaded.totalXP, 700);
+  });
 }

@@ -68,6 +68,11 @@ const _productionLessons = <String, String>{
   'dibistan': 'everyday',
   'veguhestin': 'everyday',
   'dema-bori': 'everyday',
+  // 2026-10-25: dil bilgisi derinliği (supabase/2026-10-25_dersler4_lessons.sql).
+  'izafe': 'grammar',
+  'dema-be': 'grammar',
+  'fermani': 'grammar',
+  'mehen-sale': 'time',
 };
 
 void main() {

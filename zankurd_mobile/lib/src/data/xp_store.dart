@@ -117,10 +117,15 @@ class XPStore {
     return level;
   }
 
-  /// Sunucu toplamını önbelleğe yazar. Yerel eklemenin üstüne binmez.
+  /// Sunucu toplamını önbelleğe yazar. Yerel eklemenin üstüne binmez:
+  /// `profiles.xp` yalnız oda/düello XP'sini tutar, yerel toplam ise solo,
+  /// görev ve terfi XP'sini de içerir. Daha düşük sunucu değeri yereli
+  /// ezince oda maçından sonra seviye çubuğu geri düşüyordu (2026-10-25);
+  /// aynı kural [XpCachePlan.decide] ile eşitlemede de geçerli.
   Future<bool> applyServerTotal(int total) async {
+    if (total <= _totalXP) return false;
     final levelBefore = currentLevel;
-    _totalXP = math.max(0, total);
+    _totalXP = total;
     await _preferences?.setInt(_totalXPKey, _totalXP);
     return currentLevel > levelBefore;
   }

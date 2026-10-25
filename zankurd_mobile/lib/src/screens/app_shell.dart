@@ -317,7 +317,11 @@ class _AppShellState extends State<AppShell>
       _wakeRoomResumeForCurrentUser();
       unawaited(widget.pushTokenSync?.sync());
       // Seri uyarısı tek atıştır: öne gelişte bir sonraki akşama yeniden kurulur.
-      unawaited(NotificationService.syncStreakWarning());
+      // Önce saat dilimi tazelenir (seyahat): uyarı yeni dilimde kurulsun.
+      unawaited(() async {
+        await NotificationService.instance?.refreshTimeZone();
+        await NotificationService.syncStreakWarning();
+      }());
       unawaited(NotificationSync.run(_repository));
       // Ön plana dönüşte görünen sekme tazelenir. Ana ekranın düello kartı
       // yalnız tazeleme işareti (`_homeRefresh`) değişince yeniden okur;

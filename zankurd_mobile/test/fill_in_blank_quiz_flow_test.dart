@@ -146,7 +146,9 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('fill-in-blank-submit')));
       await tester.pumpAndSettle();
 
-      expect(find.text('110'), findsOneWidget);
+      // Yedek puan da SpeedScore'dur (2026-10-25); süresiz solo turda taban
+      // 100. Eski yedek `100 + seri bonusu` 110 verirdi.
+      expect(find.text('100'), findsOneWidget);
     },
   );
 

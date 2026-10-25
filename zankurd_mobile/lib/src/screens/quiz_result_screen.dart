@@ -1098,10 +1098,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             (correctByCategory[record.category] ?? 0) + 1;
       }
     }
+    // Alıştırma (yanlışları tekrar) ustalık terfisi, görev ilerlemesi ve
+    // tur bonusu vermez: aynı yanlışları sonsuz tekrar ederek XP ve
+    // "uzman" rozeti kasılıyordu (2026-10-25). Jeton ve seri zaten
+    // alıştırmayı dışlıyordu.
     final promotions = <String, MasteryLevel>{};
-    for (final entry in correctByCategory.entries) {
-      final newLevel = await masteryStore.addCorrect(entry.key, entry.value);
-      if (newLevel != null) promotions[entry.key] = newLevel;
+    if (!practice) {
+      for (final entry in correctByCategory.entries) {
+        final newLevel = await masteryStore.addCorrect(entry.key, entry.value);
+        if (newLevel != null) promotions[entry.key] = newLevel;
+      }
     }
     for (final entry in answeredByCategory.entries) {
       await masteryStore.recordAnswered(
@@ -1112,11 +1118,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     }
 
     final missionStore = await DailyMissionStore.load();
-    final completedMissions = await missionStore.reportQuizCompleted(
-      correctAnswers: correctCount,
-      category: room.category,
-      streakAlive: streak > 0,
-    );
+    final completedMissions = practice
+        ? const <DailyMission>[]
+        : await missionStore.reportQuizCompleted(
+            correctAnswers: correctCount,
+            category: room.category,
+            streakAlive: streak > 0,
+          );
     // XP ve Seviye Hesaplaması
     //
     // Çevrimiçi odada XP'yi sunucu yazar: award_room_xp oda puanını (0..2000)
@@ -1128,8 +1136,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     int earnedXP;
     if (isOnlineRoom) {
       earnedXP = score.clamp(0, 2000);
+    } else if (practice) {
+      earnedXP = correctCount * 5;
     } else {
-      earnedXP = (correctCount * 10) + 50;
+      // Taban bonus yalnız en az bir doğruyla: süre dolarak geçen tur da
+      // +50 alıyordu.
+      earnedXP = correctCount > 0 ? (correctCount * 10) + 50 : 0;
       if (isNewDay) earnedXP += 30;
       // Tamamlanan görevlerin XP'si tur XP'sine EKLENMEZ: ödül ana ekranda
       // "Ödülü al" ile alınırken verilir. İkisinde de eklemek her görevi iki

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "createdDate": "2026-10-24",
+  "createdDate": "2026-10-26",
   "manifestVersion": 1,
   "sourceFingerprints": {
     "assets/data/altkonu_2026_10_01_questions.json": "91d2f1a42fc9444c9f557ca68c817d8403be562d0d89667e19dbdd0767be2076",
@@ -13,6 +13,7 @@
     "assets/data/ders_2026_10_02_questions.json": "b8daf6a2d132fce96ff980a9b2c85df6e71a467e09a842bac1bd226b219c36c8",
     "assets/data/dersler2_2026_10_08_questions.json": "f1d247cab3a8782a9d637781f138e6edf65f5804bd11f33e841253d3dcd15d0b",
     "assets/data/dersler3_2026_10_08_questions.json": "043c87cba19c87f867f4c25d70d3954f28719b66de3e52a85cd06db858f99d3d",
+    "assets/data/dersler4_2026_10_25_questions.json": "28bf434c1582ae574228f3315007d39b78525a1097517772e1fbe0dd5be7c9b6",
     "assets/data/editorial_questions.json": "4e60a30f82ebda67f91f10133faaaba260591fc7f534d26e63556d27740a5128",
     "assets/data/expansion_2026_08_19_questions.json": "3a6de3dc469f4ed175c3aa9484a228d60ba942f18f516b4fa374162e74e131cf",
     "assets/data/expansion_2026_08_questions.json": "0248aea14dce1a4a5e5b0192af29147b5bcdf1da3a2ea3439d8df9de4b52e1f3",
@@ -32,15 +33,15 @@
   "issueFingerprints": [],
   "metrics": {
     "manifestVersion": 1,
-    "sourceCount": 23,
+    "sourceCount": 24,
     "unknownSourceCount": 0,
     "missingProductionSourceCount": 0,
-    "reportPhysicalRecords": 3795,
-    "reportParsedRecords": 3756,
-    "reportCanonicalUniqueRecords": 3756,
-    "gatePhysicalRecords": 3795,
-    "gateParsedRecords": 3756,
-    "gateCanonicalUniqueRecords": 3756,
+    "reportPhysicalRecords": 3871,
+    "reportParsedRecords": 3832,
+    "reportCanonicalUniqueRecords": 3832,
+    "gatePhysicalRecords": 3871,
+    "gateParsedRecords": 3832,
+    "gateCanonicalUniqueRecords": 3832,
     "crossSourceCopyGroups": 1,
     "crossSourceDivergences": 0,
     "severity": {

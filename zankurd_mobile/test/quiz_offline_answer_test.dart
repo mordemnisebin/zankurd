@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/offline_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/game/speed_score.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
@@ -111,4 +112,43 @@ void main() {
       );
     }
   }
+
+  // 2026-10-25: depo cevap vermeyince yedek puan `100 + seri bonusu`ydu;
+  // normal yol SpeedScore kullanıyor. Yedek yol da aynı puanı vermeli ve
+  // süresiz solo turda taban puan kuralı (limit-1 ms → 100) orada da geçerli.
+  testWidgets('takılan depo: yedek puan SpeedScore ile aynı (süresiz tur)', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.quiz_tutorial.seen': true,
+      'zankurd.navTour.seen': true,
+    });
+    final repository = _HangingRepository();
+    final room = repository.createRoom();
+    await tester.pumpWidget(
+      testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: room,
+          questions: const [_question],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('su'));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+
+    final expected = SpeedScore.calculate(
+      responseMs: room.secondsPerQuestion * 1000 - 1,
+      limitSeconds: room.secondsPerQuestion,
+      correct: true,
+    );
+    expect(expected, 100);
+    expect(find.text('$expected'), findsWidgets);
+    // Eski yedek formül: 100 + (1 * 10) = 110.
+    expect(find.text('110'), findsNothing);
+  });
 }

@@ -30,7 +30,7 @@ final List<_Rule> _rules = [
     (m) => 'Peyva "${m[1]}" tê wateya "${m[2]}".',
   ),
   // 'Doğru yanıt: doğru.'
-  _Rule(RegExp(r'^Doğru yanıt: ([^.]+)\.$'), (m) => 'Bersivên rast: ${m[1]}.'),
+  _Rule(RegExp(r'^Doğru yanıt: ([^.]+)\.$'), (m) => 'Bersiva rast: ${m[1]}.'),
   // ''çîrok' Kurmancîde hikâye/anlatı anlamına gelir.'
   _Rule(
     RegExp(r"^'([^']+)' Kurmancîde ([^.]+) anlamına gelir\.$"),
@@ -179,7 +179,7 @@ final List<_Rule> _rules = [
     (m) =>
         '${m[1]} di lêkolînên dîroka Kurd û Kurdistanê de wek "${m[2]}" tê bikaranîn.',
   ),
-  _Rule(RegExp(r'^Doğru açıklama: (.+)\.$'), (m) => 'Şiroveya rast: ${m[1]}.'),
+  _Rule(RegExp(r'^Doğru açıklama: (.+)\.$'), (m) => 'Şîroveya rast: ${m[1]}.'),
   _Rule(
     RegExp(
       r'^Tarih; kültür, ekonomi, dil, göç, kaynak ve gündelik yaşamı da inceler\.$',

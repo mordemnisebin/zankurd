@@ -569,7 +569,10 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Günlük görev ödülünü talep eder; kazanılan miktarı döner.
   ///
   /// Miktarı sunucu tarifesi belirler ([missionKey] üzerinden);
-  /// [fallbackReward] yalnızca çevrimdışı/mock modda kullanılır.
+  /// [fallbackReward] yalnızca mock modda kullanılır.
+  ///
+  /// Canlı `claim_mission_reward` her zaman 0 + `verification_required`
+  /// döner (2026-10-25); uygulama bu yöntemi artık çağırmaz.
   Future<int> claimMissionReward({
     required String missionKey,
     required int fallbackReward,
@@ -635,6 +638,10 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   /// Bu çağrı oyuncuyu BEKLETMEZ. Sunucu yazımı onaylanmazsa fırlatır;
   /// çağıran deltayı kuyruğa alır. Dönüş, yazım onaylandıysa sunucu toplamıdır.
+  ///
+  /// Supabase'de `award_xp_delta` `authenticated`tan geri alındı; üretimde
+  /// çağıran yok. Mock düello XP'si için arayüzde duruyor.
+  @Deprecated('Solo XP sunucuya yazılmaz; oda XP için awardRoomXp.')
   Future<int> awardXp(int delta);
   Future<int> awardRoomXp(String roomId);
 

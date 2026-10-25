@@ -142,8 +142,12 @@ class MistakeStore {
     if (meta == null) return true; // Legacy, review immediately
     final nextReview = meta['nextReview'] as int?;
     if (nextReview == null) return true;
-    return DateTime.now().millisecondsSinceEpoch >= nextReview;
+    return clock().millisecondsSinceEpoch >= nextReview;
   }
+
+  /// Vade hesabı saati; testler zamanı ileri almak için değiştirir.
+  @visibleForTesting
+  static DateTime Function() clock = DateTime.now;
 
   /// Testlerde SRS geçmişinin korunduğunu doğrulamak için.
   @visibleForTesting
@@ -162,7 +166,7 @@ class MistakeStore {
   /// farklar "en çok kaçırılan" ölçütünü hiç devreye sokmazdı.
   List<String> get readyIdsMostOverdueFirst {
     final ready = _ids.where(isReadyForReview).toList();
-    final now = DateTime.now().millisecondsSinceEpoch;
+    final now = clock().millisecondsSinceEpoch;
     const dayMs = 24 * 60 * 60 * 1000;
     int due(String id) => (_metadata[id]?['nextReview'] as int?) ?? 0;
     int overdueDays(String id) => ((now - due(id)) / dayMs).floor();
@@ -199,11 +203,9 @@ class MistakeStore {
 
     // Incorrect answer: reset repetitions to 0, interval to 1 day, reduce easeFactor
     final previous = _metadata[id];
-    final nowMs = DateTime.now().millisecondsSinceEpoch;
+    final nowMs = clock().millisecondsSinceEpoch;
     _metadata[id] = {
-      'nextReview': DateTime.now()
-          .add(const Duration(days: 1))
-          .millisecondsSinceEpoch,
+      'nextReview': clock().add(const Duration(days: 1)).millisecondsSinceEpoch,
       'intervalDays': 1,
       'repetitions': 0,
       'easeFactor': math.max(1.3, currentEF - 0.2),
@@ -233,12 +235,17 @@ class MistakeStore {
   /// ekranı). Kuyruktan çıkmak için doğru cevabın İKİ FARKLI oturumda
   /// verilmesi gerekir; aynı oturumda tekrar gelen doğru cevap sayılmaz.
   /// Verilmezse bu çağrı kendi başına bir oturum sayılır.
+  ///
+  /// [countAnswer]: `false` ise cevap günlük geçmişe yeniden yazılmaz —
+  /// [recordCorrectAnswer] ile zaten sayılmış doğru cevabın zorluk puanı
+  /// için.
   Future<bool> markResolvedSM2(
     String id,
     int score, {
     String? sessionId,
+    bool countAnswer = true,
   }) async {
-    await _recordAnswer(true);
+    if (countAnswer) await _recordAnswer(true);
     if (!_ids.contains(id)) {
       // Erken çıkış BURADA diske yazmadan yapılıyordu. `_recordAnswer`
       // yalnız bellekteki günlük geçmişi güncelliyor; kalıcılığı
@@ -255,6 +262,20 @@ class MistakeStore {
     }
 
     final meta = _metadata[id];
+
+    // Vadesi gelmeden verilen İKİNCİ doğru oturum sayılmaz: sonuç ekranından
+    // art arda "yanlışları tekrar et" ile soru aynı gün kuyruktan çıkıyordu
+    // (2026-10-25). İlk tekrar oturumu serbest kalır (yanlış kaydı zaten
+    // +1 gün vadeli); yanlış cevabın sıfırlaması da her zaman işler.
+    final priorCorrectSessions =
+        (meta?['correctSessions'] as num?)?.toInt() ?? 0;
+    final dueAt = (meta?['nextReview'] as num?)?.toInt();
+    if (score >= 3 &&
+        priorCorrectSessions >= 1 &&
+        dueAt != null &&
+        clock().millisecondsSinceEpoch < dueAt) {
+      return _persist();
+    }
 
     // Extract current parameters
     double easeFactor = 2.5;
@@ -316,7 +337,7 @@ class MistakeStore {
     }
 
     final nextMeta = <String, dynamic>{
-      'nextReview': DateTime.now()
+      'nextReview': clock()
           .add(Duration(days: intervalDays))
           .millisecondsSinceEpoch,
       'intervalDays': intervalDays,
@@ -341,6 +362,14 @@ class MistakeStore {
     } else {
       _metadata[id] = nextMeta;
     }
+    return _persist();
+  }
+
+  /// Doğru cevabı yalnız günlük geçmişe işler; SM-2 durumuna dokunmaz.
+  /// Alıştırmada zorluk düğmesine basılmadan çıkılsa da doğru cevap
+  /// sayılsın diye (puan sonra `markResolvedSM2(countAnswer: false)` ile).
+  Future<bool> recordCorrectAnswer() async {
+    await _recordAnswer(true);
     return _persist();
   }
 
@@ -386,7 +415,7 @@ class MistakeStore {
   }
 
   Future<void> _recordAnswer(bool correct) async {
-    final todayKey = _dayKey(DateTime.now());
+    final todayKey = _dayKey(clock());
     final dayData = _history.putIfAbsent(
       todayKey,
       () => {'correct': 0, 'wrong': 0},
@@ -412,7 +441,7 @@ class MistakeStore {
     final Map<String, Map<String, int>> result = {};
     for (int i = 6; i >= 0; i--) {
       // Takvim günü aritmetiği (24 saatlik çıkarma saat geçişinde günü kaçırır).
-      final now = DateTime.now();
+      final now = clock();
       final day = DateTime(now.year, now.month, now.day - i);
       final key = _dayKey(day);
       result[key] = _history[key] ?? {'correct': 0, 'wrong': 0};

@@ -292,6 +292,12 @@ void main() {
       'transport_1': 'veguhestin',
       'past_1': 'dema-bori',
     },
+    'supabase/2026-10-25_dersler4_lessons.sql': {
+      'izafe_1': 'izafe',
+      'future_1': 'dema-be',
+      'imperative_1': 'fermani',
+      'months_1': 'mehen-sale',
+    },
   };
   for (final source in seedSources.entries) {
     for (final lesson in source.value.entries) {

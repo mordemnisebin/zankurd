@@ -26,6 +26,7 @@ import 'quiz_screen.dart';
 import 'room/room_invite_friends_sheet.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
+import '../utils/room_reactions.dart';
 import '../services/social_push_prompt.dart';
 
 /// Aynı kimlikli oyuncuyu TEK satıra indirir.
@@ -93,7 +94,7 @@ class RoomScreen extends StatefulWidget {
 /// Lobide görünen boş koltuk satırı üst sınırı.
 const int _kMaxEmptySeatRows = 4;
 
-class _RoomScreenState extends State<RoomScreen> {
+class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
   /// Sohbet paneli açık mı. Kapalı başlar: aa42044'ün kalabalık kaygısı
   /// haklıydı, ama çözümü sohbeti silmek değil katlamaktı.
   bool _chatOpen = false;
@@ -239,6 +240,7 @@ class _RoomScreenState extends State<RoomScreen> {
     _playersRefreshing = widget.initialRoom.players.isEmpty;
     unawaited(_probeRoomInvites());
     unawaited(_loadBlockedPlayers());
+    WidgetsBinding.instance.addObserver(this);
     _startSubscriptions();
     _startPolling();
     _startStatusPolling();
@@ -338,9 +340,16 @@ class _RoomScreenState extends State<RoomScreen> {
             (payload) {
               if (!mounted || generation != _subscriptionGeneration) return;
               if (payload['type'] == 'reaction') {
-                final text = payload['text'] as String?;
+                // Yalnız hazır tepkiler, alıcının dilinde; ad yükten değil
+                // oyuncu listesinden (bkz. [localizedRoomReaction]).
+                final text = localizedRoomReaction(
+                  payload['text'],
+                  isKu: context.isKu,
+                );
                 final senderId = payload['sender_id'] as String?;
-                final senderName = payload['sender_name'] as String?;
+                final sender = room.players
+                    .where((p) => p.id == senderId)
+                    .firstOrNull;
                 // Engellediğim oyuncunun tepkisi çizilmez.
                 final blocked =
                     !_blockedReady ||
@@ -352,15 +361,12 @@ class _RoomScreenState extends State<RoomScreen> {
                   _reactionController.triggerReaction(
                     text,
                     // Adsız oyuncu lobi satırındaki gibi "Oyuncu ZK-XXXX".
-                    senderName: senderName == null
+                    senderName: sender == null
                         ? null
                         : PlayerIdentity.resolveNameWithTag(
-                            senderName,
+                            sender.name,
                             isKu: context.isKu,
-                            tag: room.players
-                                .where((p) => p.id == senderId)
-                                .firstOrNull
-                                ?.tag,
+                            tag: sender.tag,
                           ),
                   );
                 }
@@ -550,7 +556,7 @@ class _RoomScreenState extends State<RoomScreen> {
 
   /// Realtime yetersizse host, 2. oyuncuyu polling ile görür.
   void _startPolling() {
-    if (_leaving || _terminalHandled || quizOpened) return;
+    if (_leaving || _terminalHandled || quizOpened || _appInBackground) return;
     _pollTimer?.cancel();
     _pollTimer = Timer.periodic(
       _currentPollInterval,
@@ -559,7 +565,7 @@ class _RoomScreenState extends State<RoomScreen> {
   }
 
   void _startStatusPolling() {
-    if (_leaving || _terminalHandled || quizOpened) return;
+    if (_leaving || _terminalHandled || quizOpened || _appInBackground) return;
     _statusPollTimer?.cancel();
     _statusPollTimer = Timer.periodic(
       _currentPollInterval,
@@ -645,8 +651,41 @@ class _RoomScreenState extends State<RoomScreen> {
     _statusPollTimer = null;
   }
 
+  /// Uygulama arka plandayken lobi yoklaması durur (pil, veri, Supabase
+  /// kotası). Realtime abonelikleri olduğu gibi kalır; yalnız periyodik
+  /// yoklama zamanlayıcıları kapanır. Bayrak açıkken `_startPolling` /
+  /// `_startStatusPolling` hiçbir yoldan (realtime hatası, 15 sn kısıt
+  /// dönüşü) zamanlayıcı kurmaz. Dönüşte bir kez yoklanır ve döngü yeniden
+  /// kurulur; quiz açılmış ya da oda bitmişse yeniden başlatılmaz.
+  bool _appInBackground = false;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.hidden:
+      case AppLifecycleState.detached:
+        _appInBackground = true;
+        _pausePolling();
+        _pauseStatusPolling();
+      case AppLifecycleState.resumed:
+        if (!_appInBackground) return;
+        _appInBackground = false;
+        if (!mounted || _leaving || _terminalHandled || quizOpened) return;
+        _pollThrottled = false;
+        _pollCount = 0;
+        unawaited(_pollPlayersOnce());
+        unawaited(_pollRoomStatusOnce());
+        _startPolling();
+        _startStatusPolling();
+      case AppLifecycleState.inactive:
+        break;
+    }
+  }
+
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _cancelSubscriptionsBestEffort('room_dispose_subscription_cancel_failed');
     _pausePolling();
     _pauseStatusPolling();

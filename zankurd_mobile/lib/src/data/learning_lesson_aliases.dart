@@ -35,7 +35,7 @@ class LearningLessonAliases {
 
   /// Sunucu slug'ı -> yerel ölçme bankası ders kimlikleri.
   ///
-  /// Kaynak: üretim `lessons` tablosu (2026-10-02, 15 satır; 2026-10-06'dan sonra +4 başlangıç dersi; 2026-10-08'den sonra +7 daha).
+  /// Kaynak: üretim `lessons` tablosu (2026-10-02, 15 satır; 2026-10-06'dan sonra +4 başlangıç dersi; 2026-10-08'den sonra +7 daha; 2026-10-25 göçüyle +4).
   static const Map<String, List<String>> bySlug = {
     'silav-u-nasin': ['everyday_1', 'everyday_2'],
     'cinavk': ['grammar_1'],
@@ -81,6 +81,11 @@ class LearningLessonAliases {
     'dibistan': ['school_1'],
     'veguhestin': ['transport_1'],
     'dema-bori': ['past_1'],
+    // 2026-10-25: dil bilgisi derinliği (`supabase/2026-10-25_dersler4_lessons.sql`).
+    'izafe': ['izafe_1'],
+    'dema-be': ['future_1'],
+    'fermani': ['imperative_1'],
+    'mehen-sale': ['months_1'],
   };
 
   /// Yerel bankada konusunu ölçen soru bulunmayan sunucu dersleri.
@@ -128,6 +133,11 @@ class LearningLessonAliases {
     'school_1': 'dibistan',
     'transport_1': 'veguhestin',
     'past_1': 'dema-bori',
+    // 2026-10-25_dersler4_lessons.sql: her biri beş aynı slayt.
+    'izafe_1': 'izafe',
+    'future_1': 'dema-be',
+    'imperative_1': 'fermani',
+    'months_1': 'mehen-sale',
   };
 
   static String? completionSlugFor(String localLessonId) =>

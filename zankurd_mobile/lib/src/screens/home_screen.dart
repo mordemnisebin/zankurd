@@ -450,19 +450,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ErrorReporter.record(error, stack, reason: 'home_claim_mission_xp');
     }
 
-    try {
-      final coins = await repo.claimMissionReward(
-        missionKey: mission.missionKey,
-        fallbackReward: mission.coinReward,
-      );
-      if (coins > 0) {
-        final newBalance = await repo.loadCoinBalance();
-        if (mounted) setState(() => _coinBalance = newBalance);
-      }
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'home_claim_mission_coins');
-    }
-
+    // `claim_mission_reward` canlıda her zaman 0 döner (görev sunucuda
+    // doğrulanamaz; 2026-10-25 canlı tanım okundu). Görev ödülü yalnız XP'dir;
+    // coin RPC'si boşuna çağrılmaz.
     if (mounted) {
       setState(() {
         _missions = List.from(missionStore.missions);

@@ -2737,6 +2737,39 @@ class MockZanKurdRepository implements ZanKurdRepository {
         iconName: 'sort_by_alpha',
         order: 2,
       ),
+      Lesson(
+        id: 'izafe_1',
+        slug: 'izafe_1',
+        titleKu: 'Îzafe',
+        titleTr: 'İzafe (tamlama)',
+        descriptionKu: 'Veqetandekên -a, -ê û -ên',
+        descriptionTr: '-a, -ê ve -ên ekleri',
+        category: 'grammar',
+        iconName: 'link',
+        order: 3,
+      ),
+      Lesson(
+        id: 'future_1',
+        slug: 'future_1',
+        titleKu: 'Dema bê',
+        titleTr: 'Gelecek zaman',
+        descriptionKu: 'Lêkerên dema bê',
+        descriptionTr: 'Gelecek zaman fiilleri',
+        category: 'grammar',
+        iconName: 'schedule',
+        order: 4,
+      ),
+      Lesson(
+        id: 'imperative_1',
+        slug: 'imperative_1',
+        titleKu: 'Fermanî',
+        titleTr: 'Emir kipi',
+        descriptionKu: 'Were, rûne, bixwe',
+        descriptionTr: 'Gel, otur, ye',
+        category: 'grammar',
+        iconName: 'directions_run',
+        order: 5,
+      ),
     ],
     'culture': [
       Lesson(
@@ -2856,6 +2889,17 @@ class MockZanKurdRepository implements ZanKurdRepository {
         category: 'time',
         iconName: 'schedule',
         order: 2,
+      ),
+      Lesson(
+        id: 'months_1',
+        slug: 'months_1',
+        titleKu: 'Mehên salê',
+        titleTr: 'Yılın ayları',
+        descriptionKu: 'Diwanzdeh mehên salê',
+        descriptionTr: 'Yılın on iki ayı',
+        category: 'time',
+        iconName: 'calendar_month',
+        order: 3,
       ),
     ],
   };
@@ -3707,6 +3751,194 @@ class MockZanKurdRepository implements ZanKurdRepository {
             'Di Jiyana Rojane de:\n\nEm bi hevokên kurt dipeyivin. Mînak:\n\n• Duh ez çûm dibistanê: Dün okula gittim\n• Tu hatî malê: Eve geldin\n• Min nan xwar: Ekmek yedim\n• Te çay vexwar: Çay içtin\n• Ew mamoste bû: O öğretmendi',
         contentTr:
             'Kısa cümlelerle konuşuruz. Örnek: Duh ez çûm dibistanê: Dün okula gittim / Tu hatî malê: Eve geldin / Min nan xwar: Ekmek yedim / Te çay vexwar: Çay içtin / Ew mamoste bû: O öğretmendi',
+      ),
+    ],
+    'izafe_1': [
+      LessonSlide(
+        id: 'izafe_1_s1',
+        lessonId: 'izafe_1',
+        order: 1,
+        contentKu:
+            'Îzafe Çi Ye?\n\nÎzafe du peyvan bi hev ve girê dide. Pêşî tişt tê, paşê xwedî. Mînak:\n\n• mal: ev\n• mala min: evim\n• bav: baba\n• bavê te: baban\n• heval: arkadaş\n• hevalên me: arkadaşlarımız',
+        contentTr:
+            'İzafe iki kelimeyi birbirine bağlar. Türkçedeki tamlamanın tersine önce sahip olunan şey, sonra sahibi gelir: mal (ev) + min (ben) = mala min (evim). Ek, ilk kelimenin cinsine ve sayısına göre -a, -ê ya da -ên olur.',
+      ),
+      LessonSlide(
+        id: 'izafe_1_s2',
+        lessonId: 'izafe_1',
+        order: 2,
+        contentKu:
+            'Navên Mê (-a):\n\nNavdêrên mê di îzafeyê de -a digirin. Mînak:\n\n• keç: kız\n• keça min: kızım\n• pirtûka te: kitabın\n• dibistana me: okulumuz\n• xwişka wî: onun kız kardeşi\n• mala wan: onların evi',
+        contentTr:
+            'Dişil (mê) isimler izafede -a alır: keç → keça min (kızım), pirtûk → pirtûka te (kitabın). İkinci kelime zamirse bükümlü biçim gelir: min, te, wî, wê, me, we, wan.',
+      ),
+      LessonSlide(
+        id: 'izafe_1_s3',
+        lessonId: 'izafe_1',
+        order: 3,
+        contentKu:
+            'Navên Nêr (-ê):\n\nNavdêrên nêr di îzafeyê de -ê digirin. Mînak:\n\n• kur: oğul\n• kurê min: oğlum\n• bavê wê: onun babası\n• gundê me: köyümüz\n• bajarê wan: onların şehri\n• hevalê te: arkadaşın',
+        contentTr:
+            'Eril (nêr) isimler izafede -ê alır: kur → kurê min (oğlum), gund → gundê me (köyümüz). Kelimenin eril mi dişil mi olduğunu kelimeyle birlikte öğrenmek gerekir.',
+      ),
+      LessonSlide(
+        id: 'izafe_1_s4',
+        lessonId: 'izafe_1',
+        order: 4,
+        contentKu:
+            'Pirjimar (-ên):\n\nDi pirjimariyê de her du zayend -ên digirin. Piştî dengdêran y tê. Mînak:\n\n• hevalên min: arkadaşlarım\n• pirtûkên me: kitaplarımız\n• kurên wê: onun oğulları\n• birayê min: erkek kardeşim\n• mamosteya me: öğretmenimiz (kadın)\n• mamosteyên te: öğretmenlerin',
+        contentTr:
+            'Çoğulda eril ve dişil isimler aynı eki alır: -ên. Kelime ünlüyle bitiyorsa araya y girer: bira → birayê min, mamoste → mamosteya me, mamosteyên te.',
+      ),
+      LessonSlide(
+        id: 'izafe_1_s5',
+        lessonId: 'izafe_1',
+        order: 5,
+        contentKu:
+            'Rengdêr û Nediyar:\n\nRengdêr jî bi îzafeyê tê girêdan. Di nediyariyê de -eke (mê) û -ekî (nêr) tê. Mînak:\n\n• keça baş: iyi kız\n• kurê mezin: büyük oğul\n• hevalên baş: iyi arkadaşlar\n• ava sar: soğuk su\n• keçeke baş: iyi bir kız\n• kurekî mezin: büyük bir oğul\n• pirtûkeke nû: yeni bir kitap',
+        contentTr:
+            'Sıfat da izafeyle bağlanır: keça baş (iyi kız), kurê mezin (büyük oğul). Belirsiz isimde ek dişilde -eke, erilde -ekî olur: keçeke baş (iyi bir kız), kurekî mezin (büyük bir oğul).',
+      ),
+    ],
+    'future_1': [
+      LessonSlide(
+        id: 'future_1_s1',
+        lessonId: 'future_1',
+        order: 1,
+        contentKu:
+            'Dema Bê Çi Ye?\n\nDema bê ji bo karên ku hê nebûne û dê paşê bibin e. Mînak:\n\n• sibe: yarın\n• paşê: sonra\n• hefteya bê: gelecek hafta\n• sala bê: gelecek yıl\n• ez ê biçim: gideceğim\n• ez ê bixwim: yiyeceğim',
+        contentTr:
+            'Gelecek zaman, henüz olmamış ve ileride olacak işler içindir. sibe (yarın), paşê (sonra), hefteya bê (gelecek hafta) gibi zaman sözcükleriyle sık kullanılır.',
+      ),
+      LessonSlide(
+        id: 'future_1_s2',
+        lessonId: 'future_1',
+        order: 2,
+        contentKu:
+            'Ê û Bi-:\n\nDema bê: cînavk + ê + bi- + reh + paşgir. Mînak:\n\n• ez ê biçim: gideceğim\n• tu yê biçî: gideceksin\n• ew ê biçe: gidecek\n• em ê biçin: gideceğiz\n• hûn ê biçin: gideceksiniz\n• ew ê biçin: gidecekler',
+        contentTr:
+            'Gelecek zaman: zamir + ê + bi- + fiil kökü + kişi eki. Zamir ünlüyle bitince ê, yê olur: tu yê biçî. Kişi ekleri şimdiki zamandakiyle aynıdır: -im, -î, -e, -in.',
+      ),
+      LessonSlide(
+        id: 'future_1_s3',
+        lessonId: 'future_1',
+        order: 3,
+        contentKu:
+            'Kurt û bi Dê:\n\nÊ dikare bi cînavkê ve were nivîsîn. Li hin herêman dê tê gotin. Mînak:\n\n• ezê bixwim: yiyeceğim\n• tuyê bixwî: yiyeceksin\n• ewê bixwe: yiyecek\n• emê bixwin: yiyeceğiz\n• ez dê bixwim: yiyeceğim\n• ew dê bixwe: yiyecek',
+        contentTr:
+            'ê zamire bitişik de yazılabilir: ez ê = ezê, tu yê = tuyê. Bazı yörelerde ê yerine dê kullanılır: ez dê bixwim. Üçü de aynı anlamdadır.',
+      ),
+      LessonSlide(
+        id: 'future_1_s4',
+        lessonId: 'future_1',
+        order: 4,
+        contentKu:
+            'Hatin û Kirin:\n\nHin lêker di dema bê de bi awayekî din in. Mînak:\n\n• ez ê bêm: geleceğim\n• tu yê bêyî: geleceksin\n• ew ê bê: gelecek\n• ez ê bikim: yapacağım\n• ew ê bike: yapacak\n• ez ê bixwînim: okuyacağım\n• em ê vexwin: içeceğiz',
+        contentTr:
+            'Bazı fiiller farklıdır: hatin (gelmek) bi- almaz, kökü bê olur: ez ê bêm. Önekli fiiller de bi- almaz: vexwarin → em ê vexwin. kirin (yapmak) → ez ê bikim.',
+      ),
+      LessonSlide(
+        id: 'future_1_s5',
+        lessonId: 'future_1',
+        order: 5,
+        contentKu:
+            'Neyînî û Hevok:\n\nDi forma neyînî de ne- li şûna bi- tê. Mînak:\n\n• ez ê neçim: gitmeyeceğim\n• tu yê nexwî: yemeyeceksin\n• ew ê neyê: gelmeyecek\n• ez ê nekim: yapmayacağım\n• Sibe ez ê biçim dibistanê: Yarın okula gideceğim\n• Hefteya bê em ê bên: Gelecek hafta geleceğiz',
+        contentTr:
+            'Olumsuzda bi- yerine ne- gelir: ez ê biçim → ez ê neçim (gitmeyeceğim). hatin için ew ê neyê (gelmeyecek) denir.',
+      ),
+    ],
+    'imperative_1': [
+      LessonSlide(
+        id: 'imperative_1_s1',
+        lessonId: 'imperative_1',
+        order: 1,
+        contentKu:
+            'Fermanî Çi Ye?\n\nBi fermanî em ji kesekî tiştekî dixwazin. Pêşî bi- tê, paşê reh û -e. Mînak:\n\n• bixwe: ye\n• bike: yap\n• bixwîne: oku\n• binêre: bak\n• bide: ver\n• bibêje: söyle',
+        contentTr:
+            'Emir kipiyle birinden bir şey isteriz. Tekil emir: bi- + fiil kökü + -e. xwarin (yemek) → bixwe (ye), kirin (yapmak) → bike (yap), nêrîn (bakmak) → binêre (bak).',
+      ),
+      LessonSlide(
+        id: 'imperative_1_s2',
+        lessonId: 'imperative_1',
+        order: 2,
+        contentKu:
+            'Yek û Gelek (-e, -in):\n\nJi yek kesî re -e, ji gelek kesan re -in tê. Mînak:\n\n• bixwe: ye\n• bixwin: yiyin\n• bike: yap\n• bikin: yapın\n• binêre: bak\n• binêrin: bakın\n• bixwînin: okuyun',
+        contentTr:
+            'Tek kişiye -e, birden çok kişiye -in eklenir: bixwe (ye) → bixwin (yiyin), bike (yap) → bikin (yapın).',
+      ),
+      LessonSlide(
+        id: 'imperative_1_s3',
+        lessonId: 'imperative_1',
+        order: 3,
+        contentKu:
+            'Were, Here, Rûne:\n\nHin lêker di fermanê de bi awayekî din in. Mînak:\n\n• were: gel\n• werin: gelin\n• here: git\n• herin: gidin\n• rûne: otur\n• rabe: kalk\n• vexwe: iç',
+        contentTr:
+            'Bazı fiillerin emri farklıdır: hatin (gelmek) → were, çûn (gitmek) → here (biçe de denir), rûniştin (oturmak) → rûne, rabûn (kalkmak) → rabe. Önekli fiiller bi- almaz: vexwarin → vexwe (iç).',
+      ),
+      LessonSlide(
+        id: 'imperative_1_s4',
+        lessonId: 'imperative_1',
+        order: 4,
+        contentKu:
+            'Neyînî (me-):\n\nFermana neyînî bi me- çêdibe. Mînak:\n\n• mexwe: yeme\n• mexwin: yemeyin\n• meke: yapma\n• mekin: yapmayın\n• meçe: gitme\n• mebêje: söyleme',
+        contentTr:
+            'Olumsuz emirde bi- yerine me- gelir: bixwe (ye) → mexwe (yeme), bike (yap) → meke (yapma). çûn için meçe (gitme) denir.',
+      ),
+      LessonSlide(
+        id: 'imperative_1_s5',
+        lessonId: 'imperative_1',
+        order: 5,
+        contentKu:
+            'Bi Nezaket:\n\nJi bo nezaketê em dibêjin: ji kerema xwe. Mînak:\n\n• Ji kerema xwe were: Lütfen gel\n• Ji kerema xwe rûne: Lütfen otur\n• Ji kerema xwe binêre: Lütfen bak\n• Avê vexwe: Suyu iç\n• Werin vir: Buraya gelin\n• Tu meke, ez ê bikim: Sen yapma, ben yapacağım',
+        contentTr:
+            'Kibar istek için emirle birlikte ji kerema xwe (lütfen) söylenir: Ji kerema xwe rûne (Lütfen otur).',
+      ),
+    ],
+    'months_1': [
+      LessonSlide(
+        id: 'months_1_s1',
+        lessonId: 'months_1',
+        order: 1,
+        contentKu:
+            'Meh û Sal:\n\nSal diwanzdeh meh e. Her mehê navekî xwe heye. Mînak:\n\n• sal: yıl\n• meh: ay\n• diwanzdeh: on iki\n• ev meh: bu ay\n• meha bê: gelecek ay\n• meha borî: geçen ay',
+        contentTr:
+            'Bir yıl on iki aydır. Kurmancîde ayların iki ad takımı vardır; bu derste ikisini de öğreneceğiz. meha bê gelecek ay, meha borî geçen ay demektir.',
+      ),
+      LessonSlide(
+        id: 'months_1_s2',
+        lessonId: 'months_1',
+        order: 2,
+        contentKu:
+            'Şeş Mehên Pêşîn:\n\nNavên şeş mehên pêşîn ên salê. Mînak:\n\n• Rêbendan: Ocak\n• Reşemî: Şubat\n• Adar: Mart\n• Avrêl: Nisan\n• Gulan: Mayıs\n• Pûşper: Haziran',
+        contentTr:
+            'Yılın ilk altı ayının Kurmancî adları. Adar ayı Nevruz’un ayıdır.',
+      ),
+      LessonSlide(
+        id: 'months_1_s3',
+        lessonId: 'months_1',
+        order: 3,
+        contentKu:
+            'Şeş Mehên Dawî:\n\nNavên şeş mehên dawî yên salê. Mînak:\n\n• Tîrmeh: Temmuz\n• Gelawêj: Ağustos\n• Rezber: Eylül\n• Kewçêr: Ekim\n• Sermawez: Kasım\n• Berfanbar: Aralık',
+        contentTr:
+            'Yılın son altı ayının Kurmancî adları. Berfanbar yılın son ayıdır.',
+      ),
+      LessonSlide(
+        id: 'months_1_s4',
+        lessonId: 'months_1',
+        order: 4,
+        contentKu:
+            'Navên Din:\n\nLi bakur navên din jî pir tên bikaranîn. Adar, Gulan û Tîrmeh di her du rêzan de wek hev in. Mînak:\n\n• Çile: Ocak\n• Sibat: Şubat\n• Hezîran: Haziran\n• Tebax: Ağustos\n• Îlon: Eylül\n• Cotmeh: Ekim\n• Mijdar: Kasım\n• Kanûn: Aralık',
+        contentTr:
+            'Kuzeyde ikinci bir ad takımı da çok yaygındır. Adar, Gulan ve Tîrmeh iki takımda da aynıdır; Nisan için Nîsan da denir. Ekim ve Kasım için Çiriya Pêşîn ve Çiriya Paşîn adları da kullanılır.',
+      ),
+      LessonSlide(
+        id: 'months_1_s5',
+        lessonId: 'months_1',
+        order: 5,
+        contentKu:
+            'Meh di Hevokê de:\n\nDi hevokê de navê mehê -ê digire. Mînak:\n\n• meha Gulanê: Mayıs ayı\n• di meha Gulanê de: Mayıs ayında\n• di Adarê de: Mart’ta\n• Newroz di 21ê Adarê de ye: Nevruz 21 Mart’tadır\n• Ev meh Kewçêr e: Bu ay Ekim’dir\n• Rojbûna min di Tîrmehê de ye: Doğum günüm Temmuz’dadır',
+        contentTr:
+            'Cümlede ay adı -ê eki alır: Gulan → di meha Gulanê de (Mayıs ayında), Adar → di 21ê Adarê de (21 Mart’ta). Tarihte sayıya da -ê eklenir: 21ê.',
       ),
     ],
     'everyday_1': [

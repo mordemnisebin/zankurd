@@ -7,10 +7,19 @@ import 'package:zankurd_mobile/src/data/mistake_store.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  // Kuyruktan çıkaran ikinci doğru oturum ancak vade gelince sayılır;
+  // testler oturumlar arasında zamanı ileri alır.
+  var gunKaydirma = 0;
+  void gunGecir([int gun = 2]) => gunKaydirma += gun;
+
   setUp(() {
     SharedPreferences.setMockInitialValues({});
     MistakeStore.resetInstance();
+    gunKaydirma = 0;
+    MistakeStore.clock = () => DateTime.now().add(Duration(days: gunKaydirma));
   });
+
+  tearDown(() => MistakeStore.clock = DateTime.now);
 
   test('wrong answers are stored once', () async {
     final store = await MistakeStore.load();
@@ -47,6 +56,7 @@ void main() {
       await store.markResolvedSM2('q1', 3, sessionId: 'tek');
       expect(store.count, 1, reason: 'Zor ${i + 1}, hep aynı oturum');
     }
+    gunGecir();
     await store.markResolvedSM2('q1', 3, sessionId: 'ikinci');
     expect(store.count, 0);
   });
@@ -57,6 +67,7 @@ void main() {
     await store.markMistake('q1'); // easeFactor 2.3
     await store.markMistake('q1'); // 2.1
     await store.markResolvedSM2('q1', 5, sessionId: 'a');
+    gunGecir();
     await store.markResolvedSM2('q1', 5, sessionId: 'b');
     expect(store.count, 0);
 
@@ -289,6 +300,7 @@ void main() {
       await store.markResolved('q1', sessionId: 'oturum-1');
       expect(store.contains('q1'), isTrue, reason: 'tek doğru yetmez');
 
+      gunGecir();
       await store.markResolved('q1', sessionId: 'oturum-2');
       expect(store.contains('q1'), isFalse);
       expect(store.queueCount, 0);
@@ -301,6 +313,7 @@ void main() {
       await store.markResolved('q1', sessionId: 'oturum-1');
       expect(store.contains('q1'), isTrue);
 
+      gunGecir();
       await store.markResolved('q1', sessionId: 'oturum-2');
       expect(store.contains('q1'), isFalse);
     });
@@ -313,6 +326,7 @@ void main() {
       await store.markResolved('q1', sessionId: 'oturum-2');
       expect(store.contains('q1'), isTrue, reason: 'sayaç sıfırlanmıştı');
 
+      gunGecir();
       await store.markResolved('q1', sessionId: 'oturum-3');
       expect(store.contains('q1'), isFalse);
     });
@@ -321,9 +335,34 @@ void main() {
       final store = await MistakeStore.load();
       await store.markMistake('q1');
       await store.markResolved('q1');
-      await Future<void>.delayed(const Duration(milliseconds: 2));
+      gunGecir();
       await store.markResolved('q1');
       expect(store.contains('q1'), isFalse);
+    });
+
+    // 2026-10-25: sonuç ekranından art arda "yanlışları tekrar et" iki ayrı
+    // oturum sayılıp soruyu AYNI GÜN kuyruktan çıkarıyordu.
+    test('vadesi gelmeden ikinci oturum soruyu çıkarmaz', () async {
+      final store = await MistakeStore.load();
+      await store.markMistake('q1');
+      await store.markResolved('q1', sessionId: 'oturum-1');
+      await store.markResolved('q1', sessionId: 'oturum-2');
+      await store.markResolved('q1', sessionId: 'oturum-3');
+      expect(store.contains('q1'), isTrue, reason: 'aynı gün mezuniyet yok');
+
+      gunGecir();
+      await store.markResolved('q1', sessionId: 'oturum-4');
+      expect(store.contains('q1'), isFalse);
+    });
+
+    test('vadeden önce yanlış derece sayacı yine sıfırlar', () async {
+      final store = await MistakeStore.load();
+      await store.markMistake('q1');
+      await store.markResolved('q1', sessionId: 'oturum-1');
+      await store.markResolvedSM2('q1', 2, sessionId: 'oturum-2');
+      gunGecir();
+      await store.markResolved('q1', sessionId: 'oturum-3');
+      expect(store.contains('q1'), isTrue, reason: 'sayaç sıfırlanmıştı');
     });
 
     test('sayaç uygulama yeniden açılınca korunur', () async {
@@ -334,6 +373,7 @@ void main() {
       MistakeStore.resetInstance();
       final restored = await MistakeStore.load();
       expect(restored.contains('q1'), isTrue);
+      gunGecir();
       await restored.markResolved('q1', sessionId: 'oturum-2');
       expect(restored.contains('q1'), isFalse);
     });
@@ -365,6 +405,7 @@ void main() {
       await store.markMistake('q1');
       await store.markMistake('q1');
       await store.markResolved('q1', sessionId: 'a');
+      gunGecir();
       await store.markResolved('q1', sessionId: 'b');
       expect(store.contains('q1'), isFalse);
       await store.markMistake('q1');

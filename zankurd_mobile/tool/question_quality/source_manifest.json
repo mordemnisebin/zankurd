@@ -967,6 +967,21 @@
    "columns": {}
   },
   {
+   "id": "kopya_soru_emekli_sql",
+   "description": "2026-10-25 emeklilik: 3 birebir kopya soru is_approved=false (göç dosyası, veri değil)",
+   "path": "supabase/2026-10-25_kopya_soru_emekli.sql",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 1000,
+   "expectedRecordCount": null,
+   "notes": "Only flips is_approved on two existing server rows; holds no question data",
+   "columns": {}
+  },
+  {
    "id": "retired_question_ids",
    "description": "Retired general-knowledge question id list (2026-09-27 content audit)",
    "path": "lib/src/config/retired_question_ids.dart",
@@ -2822,6 +2837,35 @@
    "precedence": 994,
    "expectedRecordCount": 36,
    "notes": "DeepSeek V4.1 taslağı; iki bağımsız jüri (Gemini 3.1 Pro + Grok/ChatGPT) ikisi de KABUL dedi.",
+   "columns": {
+    "id": "id",
+    "category": "category",
+    "prompt": "prompt",
+    "options": "answers",
+    "correct": "correctAnswer",
+    "explanation": "explanationKu",
+    "difficulty": "difficulty",
+    "type": "type",
+    "dialect": "metadata.dialect",
+    "sourceTitle": "metadata.sourceTitle",
+    "sourceUrl": "metadata.sourceReference",
+    "reviewedAt": "metadata.reviewedAt",
+    "locale": "ku-kmr"
+   }
+  },
+  {
+   "id": "dersler4_2026_10_25",
+   "description": "2026-10-25: dil bilgisi derinliği (izafe, gelecek zaman, emir kipi, aylar): 76 derse etiketli soru",
+   "path": "assets/data/dersler4_2026_10_25_questions.json",
+   "role": "runtime_secondary",
+   "parser": "json",
+   "canonicalGroup": "runtime_questions",
+   "reportIncluded": true,
+   "gateIncluded": true,
+   "productionLike": true,
+   "precedence": 993,
+   "expectedRecordCount": 76,
+   "notes": "Sözcükler dersin kendi slaytlarından. Kurmancî inceleme Gemini 3.8 Flash ve Grok 4.7.",
    "columns": {
     "id": "id",
     "category": "category",

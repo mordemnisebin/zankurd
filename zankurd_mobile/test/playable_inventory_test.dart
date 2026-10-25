@@ -88,7 +88,8 @@ void main() {
       // 3613 -> 3734 (+121): 2026-10-08 `dersler3_2026_10_08`.
       // 3734 -> 3759 (+25): 2026-10-13 derse bağlı 25 çoktan seçmeli (dersler3 +21, dersler2 +4).
       // 3759 -> 3795 (+36): 2026-10-19 `kolay_2026_10_19`.
-      3795,
+      // 3795 -> 3871 (+76): 2026-10-25 `dersler4_2026_10_25`.
+      3871,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -193,7 +194,11 @@ void main() {
       // needsReview sorusu iki model (Gemini 3.8 Flash + Grok 4.7) ve ikinci göz
       // (Codex gpt-6.1-sol + Grok 4.7) uzlaşısıyla karara bağlandı: 3 soru
       // kaynaklanıp approved oldu, 25 soru rejected olarak işaretlendi.
-      3304,
+      // 3304 -> 3301 (-3): 2026-10-25 kaynaklar arası birebir kopya emeklisi
+      // (kolay_dirok_08, sf_nat_0005, wo-ku-001).
+      // 3301 -> 3377 (+76): 2026-10-25 `dersler4_2026_10_25`, hepsi `approved`
+      // (izafe, gelecek zaman, emir kipi, aylar; bkz. `beginner_track_4_test`).
+      3377,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -264,15 +269,18 @@ void main() {
           55, // 2026-10-23 offline_2818, 2026-10-24 ds_cografya_0030 + hat_0062/0071
       'retired=Edebiyat': 25, // 2026-10-19 içerik denetimi +2
       // 43 -> 45: 2026-10-17 yakın tekrar (`ds_dirok_0029`, `offline_2668`).
-      'retired=Dîrok': 45,
+      // 45 -> 46: 2026-10-25 birebir kopya `kolay_dirok_08`.
+      'retired=Dîrok': 46,
       // 2026-10-17 yakın tekrar: `ds_cografya_0133`, `ds_dirok_0091`, `ds_muzik_0144`.
-      'retired=Cîhan': 5, // 2026-10-19: +sf_cin_0007/0008
+      // 2026-10-19: +sf_cin_0007/0008; 2026-10-25 birebir kopya +sf_nat_0005.
+      'retired=Cîhan': 6,
       'retired=Muzîk': 28, // 2026-10-19 içerik denetimi +1
       // 2026-09-30: 36 -> 37 (`offline_0120`, görsel "pîr" gösteriyor).
       // 45 -> 39: 2026-10-21 emekli 0104–0109 dosyadan silindi (yerine
       // 0137–0142 geldi), artık envanterde sayılmıyor.
+      // 41 -> 42: 2026-10-25 birebir kopya `wo-ku-001`.
       'retired=Ziman':
-          41, // 2026-10-22 yakın tekrar +1; 2026-10-23 edit_ziman_0003
+          42, // 2026-10-22 yakın tekrar +1; 2026-10-23 edit_ziman_0003
       // 41 -> 42: 2026-10-08 `ds_cand_0285` (cevap soru metninde) emekliye ayrıldı.
       'retired=Çand': 42,
       // 2026-09-30 altıncı dalga: Teknolojî'den iki modelce onaylanan 3 soru.

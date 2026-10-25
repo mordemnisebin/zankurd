@@ -17,6 +17,10 @@ enum FreeTextMatch {
 /// (aslan) demek istememiştir. Liste elle durur; `fill_in_blank_fold_test`
 /// bankadaki her yeni çakışmayı yakalayıp burada eksik olanı bildirir.
 const Set<String> kFoldDistinctWords = {
+  // 2026-10-25: gelecek zaman ön eki ve «bê» (gelmek) ayrı sözcükler;
+  // yalnız inceltmeyle farklılar (dersler3/4 ve baslangic bankası).
+  'ê',
+  'be',
   'cil',
   'çil',
   'de',

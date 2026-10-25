@@ -82,8 +82,10 @@ void main() {
           'Hikâye başa döndü; ilerleme ya kaydedilmiyor ya da açılışta '
           'okunmuyor. Kullanıcı her açılışta baştan başlar.',
     );
+    // Seçilen cümle artık geçmiş balonunda görünür (2026-10-25); başlangıç
+    // düğümünün ŞIK düğmesi ise görünmemeli.
     expect(
-      find.text('Bir çay, lütfen.'),
+      find.byKey(const ValueKey('story-choice-ku-tea')),
       findsNothing,
       reason: 'Başlangıç düğümünün şıkları hâlâ ekranda — devam edilmemiş.',
     );

@@ -114,29 +114,44 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
                 title: context.t(K.wordsEmptyTitle),
                 message: context.t(K.wordsEmptyBody),
               )
-            : ListView(
-                key: const ValueKey('my-words-list'),
-                padding: const EdgeInsets.fromLTRB(
-                  SahneSpace.page,
-                  SahneSpace.x2,
-                  SahneSpace.page,
-                  SahneSpace.x6,
-                ),
-                children: [
-                  _reviewCard(context, t, store!),
-                  _practiceSection(context, t, words),
-                  const SizedBox(height: SahneSpace.x4),
-                  Text(
-                    context.t(K.wordsCount, {'count': '${words.length}'}),
-                    key: const ValueKey('my-words-count'),
-                    style: SahneType.captionStrong.copyWith(color: t.tx2),
-                  ),
-                  const SizedBox(height: SahneSpace.x2),
-                  for (final word in words) ...[
-                    _wordCard(context, t, word, store),
+            : Builder(
+                builder: (context) {
+                  // Kelime listesi sınırsız büyür; kartlar tembel çizilir
+                  // (yalnız görünenler). Üst bölüm sabit birkaç parçadır.
+                  final header = [
+                    _reviewCard(context, t, store!),
+                    _practiceSection(context, t, words),
+                    const SizedBox(height: SahneSpace.x4),
+                    Text(
+                      context.t(K.wordsCount, {'count': '${words.length}'}),
+                      key: const ValueKey('my-words-count'),
+                      style: SahneType.captionStrong.copyWith(color: t.tx2),
+                    ),
                     const SizedBox(height: SahneSpace.x2),
-                  ],
-                ],
+                  ];
+                  return ListView.builder(
+                    key: const ValueKey('my-words-list'),
+                    padding: const EdgeInsets.fromLTRB(
+                      SahneSpace.page,
+                      SahneSpace.x2,
+                      SahneSpace.page,
+                      SahneSpace.x6,
+                    ),
+                    itemCount: header.length + words.length,
+                    itemBuilder: (context, index) {
+                      if (index < header.length) return header[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                        child: _wordCard(
+                          context,
+                          t,
+                          words[index - header.length],
+                          store,
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
       ),
     );

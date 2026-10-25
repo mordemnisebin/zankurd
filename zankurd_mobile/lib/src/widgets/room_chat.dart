@@ -107,11 +107,39 @@ class _RoomChatState extends State<RoomChat> {
               stack,
               reason: 'room chat realtime stream failed',
             );
+            _scheduleResubscribe();
           },
+          onDone: _scheduleResubscribe,
         );
   }
 
+  /// Akış hata verince ya da kapanınca sohbet donmasın: abonelik bırakılır
+  /// ve kısa bir gecikmeyle yeniden açılır. Yeni abonelik ilk anlık
+  /// görüntüyü kendisi getirir; ayrıca mesaj yüklemeye gerek yok.
+  ///
+  /// Gecikme + tek bekleyen zamanlayıcı, hemen kapanan bir akışın hızlı
+  /// bir döngüye girmesini engeller. Bekleme sürerken `_subscribed` açık
+  /// kalır; panel gizlenince ya da dispose'da `_stopListening` zamanlayıcıyı
+  /// da iptal eder.
+  static const _resubscribeDelay = Duration(seconds: 3);
+  Timer? _resubscribeTimer;
+
+  void _scheduleResubscribe() {
+    _subscription?.cancel();
+    _subscription = null;
+    if (!mounted || !_subscribed || _resubscribeTimer != null) return;
+    _resubscribeTimer = Timer(_resubscribeDelay, () {
+      _resubscribeTimer = null;
+      if (!mounted || !_subscribed) return;
+      // Panel gizliyse bayrak kapanır ki görününce yeniden abone olunabilsin.
+      _subscribed = false;
+      if (widget.visible) _startListening();
+    });
+  }
+
   void _stopListening() {
+    _resubscribeTimer?.cancel();
+    _resubscribeTimer = null;
     _subscription?.cancel();
     _subscription = null;
     _subscribed = false;
@@ -166,6 +194,7 @@ class _RoomChatState extends State<RoomChat> {
 
     setState(() => _sending = true);
     final sendFailed = context.t(K.chatSendFailed);
+    final rateLimited = context.t(K.chatRateLimited);
     try {
       await widget.repository.sendRoomMessage(
         roomId: widget.roomId,
@@ -173,11 +202,18 @@ class _RoomChatState extends State<RoomChat> {
       );
       _messageController.clear();
     } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'room chat send failed');
+      // Sunucu hız sınırı (10 sn'de 5 mesaj) beklenen bir kullanıcı
+      // durumudur: hata raporuna yazılmaz, yazı alanı korunur.
+      final limited = error.toString().contains('chat_rate_limited');
+      if (!limited) {
+        ErrorReporter.record(error, stack, reason: 'room chat send failed');
+      }
       if (mounted) {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
-          ..showSnackBar(SnackBar(content: Text(sendFailed)));
+          ..showSnackBar(
+            SnackBar(content: Text(limited ? rateLimited : sendFailed)),
+          );
       }
     } finally {
       if (mounted) setState(() => _sending = false);

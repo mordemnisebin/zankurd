@@ -153,6 +153,59 @@ void main() {
       expect(find.text('çav'), findsOneWidget);
     });
 
+    // 2026-10-25: yanlış kelime oturumda bir daha hiç görülmüyordu. Artık
+    // oturum sonunda bir kez daha sorulur; ikinci deneme kutuyu değiştirmez,
+    // skor ve özet yalnız ilk denemeyi sayar.
+    testWidgets('yanlış kelime oturum sonunda bir kez daha, kutuya yazmadan', (
+      tester,
+    ) async {
+      tester.view.devicePixelRatio = 3.0;
+      tester.view.physicalSize = const Size(390, 900) * 3;
+      addTearDown(tester.view.reset);
+      final store = await WordListStore.load(storage: InMemoryDataStorage());
+      await store.add('cav');
+      await tester.pumpWidget(
+        testShell(
+          languageProvider: turkishLang(),
+          child: WordDrillScreen(store: store, random: math.Random(5)),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(find.byKey(const ValueKey('word-review-mode-meaning')), findsOne);
+      final first = WordReviewQuestion.buildFor(
+        entry('cav'),
+        WordReviewMode.meaning,
+        random: math.Random(5),
+      );
+      await tester.tap(
+        find.text(first.options.firstWhere((o) => !first.isCorrect(o))),
+      );
+      await tester.pumpAndSettle();
+      expect(store.wordFor('cav')!.box, 1);
+      expect(store.wordFor('cav')!.reviews, 1);
+
+      await tester.tap(find.byKey(const ValueKey('word-review-next')));
+      await tester.pumpAndSettle();
+      // Aynı kelime yeniden: oturum 2 soruya uzadı.
+      expect(find.byKey(const ValueKey('word-review-done')), findsNothing);
+      expect(find.text('2/2'), findsOneWidget);
+      await tester.tap(find.text('göz'));
+      await tester.pumpAndSettle();
+      expect(find.text('Doğru'), findsOneWidget);
+      // İkinci deneme kutu/vade yazmaz.
+      expect(store.wordFor('cav')!.box, 1);
+      expect(store.wordFor('cav')!.reviews, 1);
+
+      await tester.tap(find.byKey(const ValueKey('word-review-next')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('word-review-done')), findsOne);
+      final score = tester.widget<Text>(
+        find.byKey(const ValueKey('word-review-score')),
+      );
+      expect(score.data, 'Doğru: 0/1');
+    });
+
     testWidgets('kutu 4: harfleri dizerek yazılır', (tester) async {
       await pump(tester, saved('cav', 4));
       expect(find.byKey(const ValueKey('word-review-mode-spell')), findsOne);

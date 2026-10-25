@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/utils/client_round_id.dart';
 import 'package:zankurd_mobile/src/utils/error_reporter.dart';
+import 'package:zankurd_mobile/src/utils/network_error.dart';
 import 'lesson_completion_store.dart';
 import 'local_progress_scope.dart';
 import 'xp_cache_plan.dart';
@@ -771,11 +772,7 @@ class SyncManager {
   /// Onaylanmayan, sunucuda doğrulanabilir oda XP yazımını kuyruğa alır.
   /// Solo delta cihazdaki öğrenme ilerlemesidir ve sunucu sıralamasına
   /// gönderilmez.
-  Future<void> queueXpAward({
-    int? delta,
-    String? roomId,
-    String? idempotencyKey,
-  }) async {
+  Future<void> queueXpAward({String? roomId}) async {
     final currentUserId = _normalizedUserId(_repository.currentUserId);
     if (!_acceptingItems ||
         _ownerUserId == null ||
@@ -1120,6 +1117,24 @@ class SyncManager {
           final room = (item['roomId'] as String?) == null
               ? null
               : repo.createRoom().copyWith(id: item['roomId'] as String?);
+          // Tur kimliği taşımayan eski solo kayıt tekil olmayan yola
+          // gidiyordu: yanıtı kaybolan çağrı yeniden gönderimde ikinci kez
+          // ödenebilirdi. Kimlik bir kez üretilir ve RPC'den ÖNCE kalıcı
+          // yazılır; sonraki denemeler aynı kimliği taşır.
+          final storedRoundId = item['clientRoundId'];
+          if (room == null &&
+              !isClientRoundId(
+                storedRoundId is String ? storedRoundId : null,
+              )) {
+            item['clientRoundId'] = newClientRoundId();
+            try {
+              await _saveQueue(propagateFailure: true);
+            } catch (_) {
+              // Diske yazılmamış kimlikle RPC gitmez.
+              item.remove('clientRoundId');
+              rethrow;
+            }
+          }
           // Bu kontrol ile aşağıdaki çağrı arasında await yoktur; hesap
           // değişimi event loop'a dönmeden RPC'ye sızamaz.
           if (_normalizedUserId(repo.currentUserId) != ownerUserId) {
@@ -1272,23 +1287,35 @@ class SyncManager {
             if (!result.success && result.retryable) {
               throw StateError('Coin spend was not acknowledged.');
             }
+            // Kalıcı ret (ör. yetersiz bakiye) sessizce düşmez: kullanıcı
+            // "senkronize edilemedi" listesinde görür.
+            if (!result.success) {
+              developer.log(
+                'Coin spend permanently rejected; moving to failed list.',
+                name: 'SyncManager',
+              );
+              await _recordExhaustedItem(item);
+            }
           }
         }
       } on PostgrestException catch (e, stack) {
-        // 42883 = function does not exist → migration henüz uygulanmamış.
-        // Sonsuz döngüyü önlemek için anında düşür ve bir kez raporla.
-        if (e.code == '42883') {
+        // 42883 (Postgres) / PGRST202 (PostgREST) = fonksiyon yok → göç
+        // henüz uygulanmamış. Sonsuz döngüyü önlemek için kuyruktan çıkar,
+        // ama SESSİZCE SİLME: "senkronize edilemedi" listesine yaz ki
+        // kullanıcı görsün ve göç gelince elle yeniden denesin (2026-10-25).
+        if (e.code == '42883' || e.code == 'PGRST202') {
           ErrorReporter.record(
             e,
             stack,
             reason:
                 'SyncManager: RPC does not exist (migration missing). '
-                'Dropping item permanently.',
+                'Moving item to failed list.',
           );
           developer.log(
-            'RPC not found (42883). Dropping item: $item',
+            'RPC not found (${e.code}). Moving item to failed list: $item',
             name: 'SyncManager',
           );
+          await _recordExhaustedItem(item);
           continue;
         }
         final retries = ((item['retries'] as num?) ?? 0).toInt() + 1;
@@ -1310,6 +1337,18 @@ class SyncManager {
           failedItems.add(item);
         }
       } catch (e, stack) {
+        // Ağ hatası kaydın kusuru değil: deneme hakkı yakmadan bu ve kalan
+        // kayıtlar kuyrukta bekler, tur biter. Kısa bir kesinti (sahte
+        // Wi-Fi, otel ağı) ödülleri beş denemede "senkronize edilemedi"
+        // listesine düşürüyordu (2026-10-25).
+        if (e is TimeoutException || isLikelyOfflineError(e)) {
+          developer.log(
+            'Network error while syncing; keeping remaining items: $e',
+            name: 'SyncManager',
+          );
+          failedItems.addAll(batch.skip(index));
+          break;
+        }
         final retries = ((item['retries'] as num?) ?? 0).toInt() + 1;
         if (retries >= _maxRetries) {
           ErrorReporter.record(

@@ -10,12 +10,20 @@ import '../utils/error_reporter.dart';
 /// Hikâye ilerlemesini (mevcut düğüm id'si) yerelde tutar; devam etme ve
 /// yeniden başlatmayı destekler. `SharedPreferences` yoksa bellek-içi çalışır.
 class StoryProgressStore {
-  StoryProgressStore._(this._preferences, this._nodes, this._at, this._done);
+  StoryProgressStore._(
+    this._preferences,
+    this._nodes,
+    this._at,
+    this._done,
+    this._paths,
+  );
 
   static String get _prefix => LocalProgressScope.physical('zankurd.story.');
 
   /// Zaman damgaları ve "bitirildi" kümesi tek JSON anahtarında:
-  /// `{"at": {hikâye: ms}, "done": [hikâye, ...]}`. Düğüm anahtarlarının
+  /// `{"at": {hikâye: ms}, "done": [hikâye, ...]}`. İsteğe bağlı `"path":
+  /// {hikâye: [seçim sırası, ...]}` başlangıçtan kayıtlı düğüme seçilen yolu
+  /// tutar (2026-10-25; eski kayıtlarda yoktur). Düğüm anahtarlarının
   /// (`zankurd.story.<id>`) önek taramasına karışmasın diye ayrı adlı.
   static String get metaKey =>
       LocalProgressScope.physical('zankurd.storyMeta.v1');
@@ -27,6 +35,7 @@ class StoryProgressStore {
   final Map<String, String> _nodes;
   final Map<String, int> _at;
   final Set<String> _done;
+  final Map<String, List<int>> _paths;
 
   static Future<StoryProgressStore> load() async {
     final cached = _instance;
@@ -68,6 +77,7 @@ class StoryProgressStore {
     }
     final at = <String, int>{};
     final done = <String>{};
+    final paths = <String, List<int>>{};
     final rawMeta = preferences?.getString(metaKey);
     if (rawMeta != null) {
       try {
@@ -83,12 +93,20 @@ class StoryProgressStore {
           if (rawDone is List) {
             done.addAll(rawDone.whereType<String>());
           }
+          final rawPath = decoded['path'];
+          if (rawPath is Map) {
+            rawPath.forEach((k, v) {
+              if (k is String && v is List && v.every((i) => i is int)) {
+                paths[k] = v.cast<int>();
+              }
+            });
+          }
         }
       } catch (error, stack) {
         ErrorReporter.record(error, stack, reason: 'story_progress_meta');
       }
     }
-    return StoryProgressStore._(preferences, map, at, done);
+    return StoryProgressStore._(preferences, map, at, done, paths);
   }
 
   static void resetInstance() {
@@ -100,6 +118,10 @@ class StoryProgressStore {
   /// Kayıtlı düğüm id'si; hiç başlanmadıysa null.
   String? currentNodeId(String storyId) => _nodes[storyId];
 
+  /// Başlangıçtan kayıtlı düğüme seçilen yol (her adımda seçimin sırası);
+  /// bilinmiyorsa (eski kayıt, başka cihazdan eşitleme) null.
+  List<int>? path(String storyId) => _paths[storyId];
+
   /// Hikâye bir kez sonuna ulaştı mı. "Yeniden oyna" bunu silmez.
   bool isCompleted(String storyId) => _done.contains(storyId);
 
@@ -109,13 +131,27 @@ class StoryProgressStore {
   Future<void> _writeMeta() async {
     await _preferences?.setString(
       metaKey,
-      jsonEncode({'at': _at, 'done': _done.toList()..sort()}),
+      jsonEncode({
+        'at': _at,
+        'done': _done.toList()..sort(),
+        if (_paths.isNotEmpty) 'path': _paths,
+      }),
     );
     ProgressSyncService.markDirty();
   }
 
-  Future<void> saveNode(String storyId, String nodeId) async {
+  /// [path] verilmezse o hikâyenin yolu bilinmez sayılır (silinir).
+  Future<void> saveNode(
+    String storyId,
+    String nodeId, {
+    List<int>? path,
+  }) async {
     _nodes[storyId] = nodeId;
+    if (path == null) {
+      _paths.remove(storyId);
+    } else {
+      _paths[storyId] = List.unmodifiable(path);
+    }
     _at[storyId] = DateTime.now().millisecondsSinceEpoch;
     await _preferences?.setString('$_prefix$storyId', nodeId);
     await _writeMeta();
@@ -134,7 +170,7 @@ class StoryProgressStore {
   /// (silinmiş kayıt ile hiç yazılmamış kayıt ayırt edilemez). "Bitirildi"
   /// işareti korunur.
   Future<void> restart(String storyId, String startNodeId) =>
-      saveNode(storyId, startNodeId);
+      saveNode(storyId, startNodeId, path: const []);
 
   /// Hesap değişiminde önceki kullanıcının hikâye ilerlemesini cihazda bırakmaz.
   Future<void> clear() async {
@@ -147,5 +183,6 @@ class StoryProgressStore {
     await removePersistedPreferenceKeys(_preferences, [metaKey]);
     _at.clear();
     _done.clear();
+    _paths.clear();
   }
 }

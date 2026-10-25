@@ -781,6 +781,18 @@ const Set<String> retiredQuestionIds = <String>{
   'ds_cografya_0030', // kalan: ds_cografya_0017
   'hat_0062', // kalan: ds_cografya_0007
   'hat_0071', // kalan: ds_cografya_0007
+  // ---------------------------------------------------------------------
+  // 2026-10-25: kaynaklar arası birebir kopya — normalleştirilmiş soru
+  // metni aynı, aynı bilgiyi soruyor, iki kayıtta da doğru cevap doğru.
+  // Doğru cevabı ve açıklaması daha sağlam olan kaldı (parantezde).
+  // "Ez diçim malê" çiftinde cevap ve açıklamalar eşdeğer; derse bağlı
+  // (`verbs_1`) kayıt kaldı, yoksa ders cümle kurma havuzu 5'in altına
+  // düşerdi (`beginner_track_2_test`).
+  // Bekçi: `test/playable_prompt_uniqueness_test.dart`.
+  // ---------------------------------------------------------------------
+  'kolay_dirok_08', // "Ehmedê Xanî kî bû?" (offline_curated_20304)
+  'sf_nat_0005', // Sîstema Rojê gerstêrk sayısı (bilim_0001, NASA kaynaklı)
+  'wo-ku-001', // "Ez diçim malê" sıralama (dersler2_2026_10_08_0128)
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

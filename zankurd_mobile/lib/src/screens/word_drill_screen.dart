@@ -25,8 +25,9 @@ import 'quiz/quiz_option_tile.dart';
 /// kelimedir ve açılışta SABİTLENİR: cevap verdikçe kelimenin vadesi
 /// ileri gittiği için listeyi her adımda yeniden hesaplamak sırayı bozardı.
 /// Her cevap hemen yerelde saklanır (yarıda çıkılırsa işlenenler kaybolmaz).
-/// Yanlış cevaplanan kelime bu oturumda yeniden sorulmaz; 1. kutuya döner ve
-/// yarın tekrar gelir. Ses düğmesi yalnız o ifade için kayıt/TTS varsa çizilir.
+/// Yanlış cevaplanan kelime 1. kutuya döner ve yarın tekrar gelir; oturum
+/// sonunda bir kez daha sorulur, ama bu ikinci deneme kutu/vade YAZMAZ ve
+/// skor/özet yalnız ilk denemeyi sayar. Ses düğmesi yalnız o ifade için kayıt/TTS varsa çizilir.
 class WordDrillScreen extends StatefulWidget {
   const WordDrillScreen({
     this.store,
@@ -71,6 +72,11 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
   bool _loading = true;
   int _index = 0;
   int _correct = 0;
+
+  /// Oturumun asıl kelime sayısı; bunun ötesindeki sorular yanlış
+  /// cevaplanan kelimelerin oturum sonu tekrarıdır (kayıt yazmaz, sayılmaz).
+  int _firstPassCount = 0;
+  math.Random _rng = math.Random();
   String? _picked;
   bool _saveFailed = false;
 
@@ -125,6 +131,8 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
         _store = store;
         _speaker ??= speaker;
         _questions = questions;
+        _firstPassCount = questions.length;
+        _rng = rng;
         _loading = false;
       });
       _autoPlayIfListening();
@@ -141,13 +149,28 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
     if (_answered || _finished) return;
     final question = _questions[_index];
     final correct = question.isCorrect(option);
+    final retry = _index >= _firstPassCount;
     setState(() {
       _picked = option;
       _saveFailed = false;
+      if (retry) return;
       _saving = true;
       if (correct) _correct++;
       _results.add((question: question, correct: correct));
+      if (!correct) {
+        // Öğrenme açısından yanlış kelime oturum bitmeden bir kez daha
+        // görülür (2026-10-25); yalnız bir kez, ve kutuya yazılmadan.
+        _questions = [
+          ..._questions,
+          WordReviewQuestion.buildFor(
+            question.entry,
+            question.mode,
+            random: _rng,
+          ),
+        ];
+      }
     });
+    if (retry) return;
     // Kayıt yazılamadıysa ilerleme DURUR: yoksa kullanıcı "tekrar ettim"
     // sanır, kutu/vade diske geçmez ve kelime yarın yine aynı kutuda gelir.
     var saved = true;
@@ -219,7 +242,7 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
       unawaited(StreakStore.recordActivity());
       AnalyticsService.instance.logReviewComplete(
         correctCount: _correct,
-        totalCount: _questions.length,
+        totalCount: _firstPassCount,
       );
     }
   }
@@ -271,7 +294,7 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
           Text(
             context.t(K.wordsReviewScore, {
               'correct': '$_correct',
-              'total': '${_questions.length}',
+              'total': '$_firstPassCount',
             }),
             key: const ValueKey('word-review-score'),
             textAlign: TextAlign.center,

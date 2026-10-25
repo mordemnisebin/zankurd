@@ -327,8 +327,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         // karşılamaz (A-05 -> P1-008).
         //
         // Sunucu tarafında da süzülür (`leaderboard_visible` RPC'si);
-        // buradaki kopya derinlemesine savunmadır ve engel listesi
-        // okunamadığında bile listeyi boşaltmaz.
+        // buradaki kopya derinlemesine savunmadır. Engel listesi
+        // okunamazsa (`loadBlockedPlayerIds` hatayı taşır) liste süzgeçsiz
+        // gösterilmez: son başarılı liste kalır, yoksa hata durumu çizilir.
         _future =
             Future.wait([
               widget.repository.loadLeaderboard(limit: 10, period: _period),

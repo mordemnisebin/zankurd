@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/public_profile.dart';
@@ -43,6 +44,16 @@ class _ChatRepository extends MockZanKurdRepository {
         createdAt: DateTime.utc(2026, 7, 13, 12),
       ),
     ]);
+  }
+}
+
+class _RateLimitedChatRepository extends _ChatRepository {
+  @override
+  Future<void> sendRoomMessage({
+    required String roomId,
+    required String text,
+  }) async {
+    throw const PostgrestException(message: 'chat_rate_limited', code: 'P0001');
   }
 }
 
@@ -128,5 +139,38 @@ void main() {
     await tester.pump();
     await tester.pump();
     expect(find.text('Oyuncu ZK-R5C4'), findsOneWidget);
+  });
+
+  // 2026-10-25: sunucu hız sınırı (10 sn'de 5 mesaj) genel "gönderilemedi"
+  // yerine ne yapılacağını söyler.
+  testWidgets('hız sınırında "biraz bekle" uyarısı çıkar', (tester) async {
+    final repository = _RateLimitedChatRepository();
+    addTearDown(repository.messages.close);
+    await tester.pumpWidget(
+      _shell(
+        Scaffold(
+          body: SizedBox(
+            height: 320,
+            child: RoomChat(
+              repository: repository,
+              roomId: 'room-1',
+              visible: true,
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    await tester.enterText(find.byType(TextField), 'Silav');
+    await tester.tap(find.byIcon(AppIcons.paperPlane));
+    await tester.pump();
+    await tester.pump();
+
+    expect(
+      find.text('Çok hızlı mesaj gönderiyorsun. Biraz bekle.'),
+      findsOneWidget,
+    );
+    expect(find.text('Mesaj gönderilemedi. Tekrar dene.'), findsNothing);
   });
 }

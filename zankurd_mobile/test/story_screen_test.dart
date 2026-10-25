@@ -66,6 +66,54 @@ void main() {
     expect(find.text('Anladım'), findsOneWidget);
   });
 
+  // 2026-10-25: kaldığı yerden açılan hikâyede yalnız son düğüm geliyordu;
+  // önceki konuşma (anlatı + seçilen cümle) kayboluyordu.
+  testWidgets('kaldığı yerden açılınca önceki adımlar görünür', (tester) async {
+    await tester.pumpWidget(wrap(StoryScreen(story: cayxaneStory)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Bir çay, lütfen.'));
+    await tester.pumpAndSettle();
+
+    // Ekran kapanır, depo diskten yeniden okunur.
+    await tester.pumpWidget(const SizedBox());
+    StoryProgressStore.resetInstance();
+    await tester.pumpWidget(wrap(StoryScreen(story: cayxaneStory)));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Şeker ister misin'), findsOneWidget);
+    expect(find.byKey(const ValueKey('story-history-0')), findsOneWidget);
+    expect(find.text('Bir çay, lütfen.'), findsOneWidget);
+  });
+
+  testWidgets('yolu kayıtlı olmayan eski kayıt bugünkü gibi açılır', (
+    tester,
+  ) async {
+    final store = await StoryProgressStore.load();
+    await store.saveNode(cayxaneStory.id, 'tea');
+    StoryProgressStore.resetInstance();
+    await tester.pumpWidget(wrap(StoryScreen(story: cayxaneStory)));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Şeker ister misin'), findsOneWidget);
+    expect(find.byKey(const ValueKey('story-history-0')), findsNothing);
+  });
+
+  // Codex incelemesi (2026-10-25): yolu bilinmeyen kayıttan devam edilince
+  // yalnız yeni seçim tam yol gibi yazılıyor, sonraki açılışta yanlış geri
+  // oynatılıyordu.
+  testWidgets('yolu bilinmeyen kayıttan devam yol uydurmaz', (tester) async {
+    final store = await StoryProgressStore.load();
+    await store.saveNode(cayxaneStory.id, 'tea');
+    StoryProgressStore.resetInstance();
+    await tester.pumpWidget(wrap(StoryScreen(story: cayxaneStory)));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Evet, teşekkürler.'));
+    await tester.pumpAndSettle();
+
+    final reloaded = await StoryProgressStore.load();
+    expect(reloaded.path(cayxaneStory.id), isNull);
+  });
+
   testWidgets('yeniden başlatma başa döner', (tester) async {
     await tester.pumpWidget(wrap(StoryScreen(story: cayxaneStory)));
     await tester.pumpAndSettle();

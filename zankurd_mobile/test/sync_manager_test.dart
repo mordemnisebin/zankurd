@@ -305,6 +305,26 @@ class _AlwaysFailingRewardRepository extends SupabaseZanKurdRepository {
   }
 }
 
+class _ScriptedFailureRewardRepository extends _AlwaysFailingRewardRepository {
+  _ScriptedFailureRewardRepository({
+    required super.userId,
+    required this.error,
+  });
+
+  final Object error;
+
+  @override
+  Future<QuizRewardClaim> awardQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+    GameRoom? room,
+  }) async {
+    throw error;
+  }
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -1292,5 +1312,71 @@ void main() {
     expect(manager.pendingCount, 1);
     expect(SyncManager.failedCountNotifier.value, 0);
     expect(prefs.getString('zankurd.syncQueue.v2.user-a'), contains('room-1'));
+  });
+
+  Map<String, dynamic> queuedReward(String id, {int retries = 0}) => {
+    'queueId': id,
+    'type': 'sync_quiz_reward',
+    'score': 100,
+    'correctCount': 1,
+    'bestStreak': 1,
+    'totalQuestions': 1,
+    'roomId': 'room-$id',
+    'playerId': 'user-a',
+    'timestamp': 1,
+    'retries': retries,
+  };
+
+  // 2026-10-25: ağ hatası da deneme hakkı yakıyordu; kısa kesintide ödüller
+  // beş turda "senkronize edilemedi" listesine düşüyordu.
+  test('ağ hatası deneme hakkı yakmaz, kayıtlar kuyrukta bekler', () async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.syncQueue.v2.user-a': jsonEncode([
+        queuedReward('n1', retries: 4),
+        queuedReward('n2'),
+      ]),
+    });
+    final repository = _ScriptedFailureRewardRepository(
+      userId: 'user-a',
+      error: const SocketException('Failed host lookup'),
+    );
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+
+    for (var i = 0; i < 6; i++) {
+      await manager.sync();
+    }
+
+    expect(manager.failedCount, 0);
+    expect(manager.pendingCount, 2);
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString('zankurd.syncQueue.v2.user-a')!;
+    expect(raw, contains('"retries":4'));
+  });
+
+  // 2026-10-25: eksik RPC (PGRST202) tanınmıyor, 42883'te ise kayıt iz
+  // bırakmadan siliniyordu.
+  test('eksik RPC kaydı silinmez, "senkronize edilemedi" olur', () async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.syncQueue.v2.user-a': jsonEncode([queuedReward('m1')]),
+    });
+    final repository = _ScriptedFailureRewardRepository(
+      userId: 'user-a',
+      error: const PostgrestException(
+        message: 'Could not find the function',
+        code: 'PGRST202',
+      ),
+    );
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+
+    await manager.sync();
+
+    expect(manager.pendingCount, 0);
+    expect(manager.failedCount, 1);
   });
 }
