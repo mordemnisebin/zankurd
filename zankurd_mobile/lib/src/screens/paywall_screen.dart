@@ -280,6 +280,14 @@ class _Benefits extends StatelessWidget {
           title: Tr.forKu(K.paywallPerkStreak, isKu),
           subtitle: Tr.forKu(K.paywallPerkStreakBody, isKu),
         ),
+        // Kelimelerim > Serbest pratik (gerçekten çalışan fayda).
+        SahneListRow.icon(
+          key: const ValueKey('paywall-perk-practice'),
+          icon: AppIcons.bookOpen,
+          role: SahneRole.learn,
+          title: Tr.forKu(K.paywallPerkPractice, isKu),
+          subtitle: Tr.forKu(K.paywallPerkPracticeBody, isKu),
+        ),
         SahneListRow.icon(
           icon: AppIcons.heart,
           title: Tr.forKu(K.paywallPerkSupport, isKu),

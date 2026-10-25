@@ -34,8 +34,14 @@ class WordDrillScreen extends StatefulWidget {
     this.words,
     this.onDone,
     this.doneLabel,
+    this.practice = false,
     super.key,
   });
+
+  /// Serbest pratik (Pro): cevaplar kutu/vade YAZMAZ. Vadesi gelmemiş
+  /// kelimeyi erken çalışmak kutusunu ilerletirse Leitner aralıkları bozulur
+  /// (kurul 2026-10-25: Gemini 4 Argon uyarısı).
+  final bool practice;
 
   /// Tek "Tekrar" oturumu kelime kısmını kendi seçtiği kelimelerle açar
   /// ([TekrarPlan]); verilmezse eski davranış: vadesi gelen en çok 10.
@@ -147,7 +153,9 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
     var saved = true;
     try {
       final store = _store;
-      if (store != null && store.contains(question.entry.id)) {
+      if (!widget.practice &&
+          store != null &&
+          store.contains(question.entry.id)) {
         saved = await store.recordReview(question.entry.id, correct: correct);
       }
     } catch (error, stack) {

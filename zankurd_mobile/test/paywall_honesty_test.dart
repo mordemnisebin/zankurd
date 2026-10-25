@@ -177,6 +177,8 @@ void main() {
       K.paywallPerkStreakBody,
       K.paywallPerkSupport,
       K.paywallPerkSupportBody,
+      K.paywallPerkPractice,
+      K.paywallPerkPracticeBody,
       K.premiumPerks,
       K.premiumActive,
     ];
@@ -210,6 +212,19 @@ void main() {
           }
         }
       }
+    });
+
+    test('"serbest kelime pratiği" Kelimelerim ekranında gerçekten var', () {
+      final screen = File(
+        'lib/src/screens/my_words_screen.dart',
+      ).readAsStringSync();
+      expect(screen, contains('premium.isPremium'));
+      expect(screen, contains('practice: true'));
+      final drill = File(
+        'lib/src/screens/word_drill_screen.dart',
+      ).readAsStringSync();
+      // Pratik kutu/vade yazmaz.
+      expect(drill, contains('!widget.practice'));
     });
 
     test('"otomatik seri koruması" sonuç ekranında gerçekten uygulanır', () {

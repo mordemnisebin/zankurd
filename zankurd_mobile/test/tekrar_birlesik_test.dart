@@ -393,9 +393,23 @@ void main() {
     for (final file in Directory('lib').listSync(recursive: true)) {
       if (file is! File || !file.path.endsWith('.dart')) continue;
       final text = file.readAsStringSync();
-      if (text.contains('WordDrillScreen(') &&
-          !file.path.endsWith('word_drill_screen.dart') &&
-          !file.path.endsWith('tekrar_screen.dart')) {
+      if (file.path.endsWith('word_drill_screen.dart') ||
+          file.path.endsWith('tekrar_screen.dart')) {
+        continue;
+      }
+      // Pro serbest pratik (2026-10-25) tekrar DEĞİLDİR: kutu/vade yazmaz,
+      // yalnız aboneye ayrı başlıkla görünür. Bu yüzden başka ekranlardan
+      // yalnız `practice: true` ile açılabilir; vadesi gelen kelimelerin
+      // tekrarı yine tek kapıdan (TekrarScreen) geçer.
+      var at = text.indexOf('WordDrillScreen(');
+      var bad = false;
+      while (at >= 0) {
+        final end = text.indexOf(';', at);
+        final call = text.substring(at, end < 0 ? text.length : end);
+        if (!call.contains('practice: true')) bad = true;
+        at = text.indexOf('WordDrillScreen(', at + 1);
+      }
+      if (bad) {
         offenders.add(file.path);
       }
     }

@@ -75,7 +75,12 @@ void main() {
   });
 
   test('paywall Kurmancî eylem ve durum metinleri doğaldır', () {
-    expect(Tr.of(K.paywallPerkSupport, AppLanguage.ku), 'Piştgiriya ZanKurdê');
+    // 2026-10-25: "ji bo" eklendi; yalın tamlama ZanKurd'un verdiği destek
+    // diye okunuyordu (Grok bulgusu, hakem Gemini 4 Argon).
+    expect(
+      Tr.of(K.paywallPerkSupport, AppLanguage.ku),
+      'Piştgiriya ji bo ZanKurdê',
+    );
     expect(Tr.of(K.cancelAnytime, AppLanguage.ku), 'Her gav dikarî betal bikî');
     expect(Tr.of(K.buyAction, AppLanguage.ku), 'Bikire');
     expect(

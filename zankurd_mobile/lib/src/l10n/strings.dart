@@ -135,8 +135,10 @@ class Tr {
     },
     K.premiumCta: {'ku': 'Premium bibe', 'tr': 'Premium ol'},
     K.premiumPerks: {
-      'ku': 'Parastina xweber a zincîrê û piştgiriya ZanKurdê',
-      'tr': "Otomatik seri koruması ve ZanKurd'a destek",
+      'ku':
+          'Parastina xweber a zincîrê, pratîka peyvan a azad û piştgiriya ji bo ZanKurdê',
+      'tr':
+          "Otomatik seri koruması, serbest kelime pratiği ve ZanKurd'a destek",
     },
     // 2026-09-30 canlı: rozetler büyük harfle kayıtlıydı ve ekrandaki tek
     // bağıran etiketti (metin kararı: büyük harf yok).
@@ -508,6 +510,25 @@ class Tr {
       'tr': 'Harfleri dizerek Kurmancîsini yaz.',
     },
     K.wordsReviewUndo: {'ku': 'Tîpa dawî jê bibe', 'tr': 'Son harfi sil'},
+    // Pro serbest pratik (2026-10-25). Kurul: Gemini Flash + Grok; açıklama
+    // ve ayarlar özetinde hakem Gemini 4 Argon (li ser … xebitîn, ji bo).
+    K.wordsPracticeTitle: {'ku': 'Pratîka azad', 'tr': 'Serbest pratik'},
+    K.wordsPracticeHint: {
+      'ku': 'Qutî naguherin; çiqas bixwazî bixebite.',
+      'tr': 'Kutular değişmez; istediğin kadar çalış.',
+    },
+    K.wordsPracticeAll: {'ku': 'Hemû peyvên min', 'tr': 'Tüm kelimelerim'},
+    K.wordsPracticeWeak: {'ku': 'Peyvên min ên zehmet', 'tr': 'Zorlandıklarım'},
+    K.paywallPerkPractice: {
+      'ku': 'Pratîka peyvan a azad',
+      'tr': 'Serbest kelime pratiği',
+    },
+    K.paywallPerkPracticeBody: {
+      'ku':
+          'Bêyî ku li benda dema wan bimînî, kengî bixwazî li ser hemû peyvên xwe an tenê yên zehmet bixebite.',
+      'tr':
+          'Vadesini beklemeden tüm kelimelerini ya da yalnız zorlandıklarını istediğin an çalış.',
+    },
     K.wordsReviewScore: {
       'ku': 'Rast: {correct}/{total}',
       'tr': 'Doğru: {correct}/{total}',
@@ -2713,8 +2734,10 @@ class Tr {
       // coin"); virgül özneyi ayırır (2026-07-27).
       'tr': 'Günlük serin, jeton harcamadan otomatik korunur.',
     },
+    // "ji bo": kullanıcı ZanKurd'u destekler; "Piştgiriya ZanKurdê"
+    // ZanKurd'un verdiği destek diye okunuyordu (hakem Gemini 4 Argon).
     K.paywallPerkSupport: {
-      'ku': 'Piştgiriya ZanKurdê',
+      'ku': 'Piştgiriya ji bo ZanKurdê',
       'tr': "ZanKurd'a destek",
     },
     K.paywallPerkSupportBody: {
@@ -4072,6 +4095,12 @@ class K {
   static const wordsReviewPromptListen = 'words.review.prompt.listen';
   static const wordsReviewPromptSpell = 'words.review.prompt.spell';
   static const wordsReviewUndo = 'words.review.undo';
+  static const wordsPracticeTitle = 'words.practice.title';
+  static const wordsPracticeHint = 'words.practice.hint';
+  static const wordsPracticeAll = 'words.practice.all';
+  static const wordsPracticeWeak = 'words.practice.weak';
+  static const paywallPerkPractice = 'paywall.perk.practice';
+  static const paywallPerkPracticeBody = 'paywall.perk.practiceBody';
   static const learningUnit = 'learning.unit';
   static const lastSevenDays = 'profile.lastSevenDays';
   static const wordsReviewScore = 'words.review.score';

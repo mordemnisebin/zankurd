@@ -27,11 +27,22 @@ yekem!`, `Ev wate bi Kurmancî kîjan peyv e?`, `Guhdarî bike û nivîsîna ras
 hilbijêre.`, `Tîpan rêz bike û peyva Kurmancî binivîse.`, `Tîpa dawî jê
 bibe`, `Beşa {n}`, `7 rojên dawî`.
 
+## Pro paketi (öğleden sonra, kurul kararı)
+
+- Eklendi: **Serbest kelime pratiği** (Kelimelerim): tüm kelimeler ya da
+  yalnız zorlandıkların (1. kutu), oturum 15 kelime, kutu/vade değişmez.
+  Yalnız aboneye görünür; paywall'da fayda olarak yazılı.
+- Reddedildi: Pro'ya fazladan joker (tek kişilik XP sıralamaya yazıldığı
+  için parayla sıralama avantajı), Pro çerçevesi (sunucu çerçeve listesi
+  kısıtı; canlı göç ister), Kelimelerim'de kilitli satış satırı (paywall'a
+  üçüncü giriş App Review yol tarifini bozar).
+- Metin bekçisi "sınırsız/bêsînor" sözünü yasaklıyor; fayda "Serbest kelime
+  pratiği" adıyla yazıldı.
+
 ## Sahibin kararı gereken öneriler
 
-1. **Pro paketi**: şu an yalnız otomatik seri koruma + destek. Kurul,
-   karşılaştırma tablosu ve gerçek Pro faydaları öneriyor (ör. Pro'ya özel
-   çerçeve, sınırsız tekrar, çevrimdışı paket). Gelir kararı.
+1. **Pro'yu güçlendirmek** için sıradaki adaylar sunucu ister: Pro'ya özel
+   çerçeve (çerçeve listesi göçü), çevrimdışı ders paketi.
 2. **Mağaza kataloğu**: 4 ürün. Yeni kozmetikler ekonomi kararı.
 3. **Soru öner → "Önerilerim"** (durum: alındı/inceleniyor/yayında): sunucu
    tablosu/RPC gerektirir.
