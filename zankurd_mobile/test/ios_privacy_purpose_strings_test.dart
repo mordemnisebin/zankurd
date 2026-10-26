@@ -100,9 +100,21 @@ void main() {
     );
   });
 
-  test('mikrofon istenmediği için dizesi de yok', () {
-    // Bekçinin kendi kör noktası: "her izin için dize ekle" diye
-    // genelleştirilirse istenmeyen izinler beyan edilmiş olurdu.
-    expect(plist, isNot(contains('NSMicrophoneUsageDescription')));
+  test('telaffuz kaydı varsa mikrofon dizesi de var ve doğruyu söyler', () {
+    // 2026-10-27: telaffuz atölyesi `record` ile mikrofon kullanıyor.
+    // Eskiden bu bekçi tersini (dize yok) koruyordu; izin gerçekten
+    // istenince dize zorunlu, yoksa iOS kayıtta uygulamayı öldürür.
+    if (!pubspec.contains('record:')) {
+      expect(plist, isNot(contains('NSMicrophoneUsageDescription')));
+      return;
+    }
+    final match = RegExp(
+      '<key>NSMicrophoneUsageDescription</key>\\s*<string>(.*?)</string>',
+      dotAll: true,
+    ).firstMatch(plist);
+    expect(match, isNotNull, reason: 'mikrofon amaç dizesi yok');
+    final value = match!.group(1)!;
+    expect(value, contains('ZanKurd'));
+    expect(value, contains('telaffuz'));
   });
 }

@@ -15,6 +15,7 @@ import '../utils/word_csv.dart';
 import '../widgets/app_state.dart';
 import '../widgets/lexicon_lookup.dart';
 import '../widgets/lexicon_speak_button.dart';
+import '../widgets/pronunciation_sheet.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/todays_review_card.dart';
 import '../widgets/word_save_button.dart';
@@ -339,6 +340,7 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
             ),
           ),
           LexiconSpeakButton(text: entry.termKu),
+          PronunciationButton(text: entry.termKu),
           WordSaveButton(entryId: entry.id, store: store),
         ],
       ),

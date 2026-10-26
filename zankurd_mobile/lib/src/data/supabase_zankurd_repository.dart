@@ -243,6 +243,14 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   /// Oda başına tek realtime kanalı; gönderme ve dinleme paylaşır.
   /// Dinleyici referans sayısı tutulur; tek abonelik iptalinde ortak kanal
   /// kapatılmaz.
+  ///
+  /// Kanal bilerek herkese açık (private değil; 2026-10-26 kararı): üstünden
+  /// yalnız hazır bayrağı, skor/seri ipucu, ilerleme isteği ve hazır tepkiler
+  /// geçer. Puan sunucuda hesaplanır, kanaldan gelen hiçbir şey sonuç
+  /// yazmaz; kanala ulaşmak da odanın tahmin edilemez uuid'ini bilmeyi
+  /// gerektirir. Private kanala geçmek eski derlemelerle (37/38) karışık
+  /// oyunu kırar; ancak iki cihazlı sürüm-karışık test ve RLS politikasıyla
+  /// birlikte yapılmalı.
   final Map<String, _ManagedRoomChannel> _roomChannels = {};
 
   _ManagedRoomChannel _ensureRoomChannel(String roomId) {

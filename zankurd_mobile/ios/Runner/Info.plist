@@ -117,6 +117,8 @@
 	-->
 	<key>NSCameraUsageDescription</key>
 	<string>ZanKurd kamerayı kullanmaz; bu izin yalnızca fotoğraf seçici bileşeninin sistem gereksinimidir.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>ZanKurd, telaffuz çalışmasında kendi sesini kaydedip dinleyebilmen için mikrofonu kullanır. Kayıt yalnız cihazında kalır ve hiçbir yere gönderilmez.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>ZanKurd, profil fotoğrafınızı seçebilmek için fotoğraf arşivinize erişir.</string>
 	<key>UIApplicationSceneManifest</key>

@@ -348,6 +348,10 @@ the abuse-report route: iletisim@zankurd.com.
 - RevenueCat: optional subscription offerings, entitlement state, and restore
   purchases.
 - Firebase Crashlytics: crash and stability diagnostics.
+- Microphone (new, 2026-10-26): used only by the optional pronunciation
+  practice in Dictionary / My Words. The recording stays on the device in a
+  temporary file, is never uploaded, and is deleted when the sheet closes.
+  No audio data is collected.
 - Firebase Analytics: product analytics is enabled when no saved preference exists. Users can disable it in Settings; a saved disabled preference is respected.
 - Firebase Cloud Messaging: device push token for friend-request and duel
   notifications; stored on the user's profile.

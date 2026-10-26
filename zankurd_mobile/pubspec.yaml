@@ -84,6 +84,7 @@ dependencies:
 
   # Ağ görseli önbellekleme
   cached_network_image: ^3.4.1
+  record: ^7.1.2
 
   # Lucide ikon yazı tipi paket olarak DEĞİL, `assets/fonts/Lucide.ttf` olarak
   # taşınır: `lucide_icons_flutter` paketi 6 ağırlıklı değişken yazı tipini

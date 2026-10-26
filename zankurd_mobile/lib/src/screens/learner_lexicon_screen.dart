@@ -7,6 +7,7 @@ import '../theme/app_icons.dart';
 import '../widgets/app_state.dart';
 import '../widgets/lexicon_lookup.dart';
 import '../widgets/lexicon_speak_button.dart';
+import '../widgets/pronunciation_sheet.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/word_save_button.dart';
 import '../widgets/zk_back_button.dart';
@@ -236,6 +237,7 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
                                 ),
                               ),
                               LexiconSpeakButton(text: entry.termKu),
+                              PronunciationButton(text: entry.termKu),
                               WordSaveButton(entryId: entry.id),
                             ],
                           ),

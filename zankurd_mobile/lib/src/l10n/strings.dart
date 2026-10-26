@@ -1556,6 +1556,31 @@ class Tr {
       'tr': 'Bugünün jeton sınırına ulaştın. Yarın sıfırlanır.',
     },
     K.stopAction: {'ku': 'Rawestîne', 'tr': 'Durdur'},
+    // 2026-10-26 telaffuz atölyesi. KU: Gemini 3.8 Flash + Grok 4.7; 5 ve 7
+    // uyuşmazlığında hakem Codex (gpt-6.1-sol), çoğunluk uygulandı.
+    K.pronunciationTitle: {'ku': 'Bilêvkirin', 'tr': 'Telaffuz'},
+    K.pronunciationTry: {
+      'ku': 'Bilêvkirinê biceribîne',
+      'tr': 'Telaffuzu dene',
+    },
+    K.pronunciationPlayMine: {
+      'ku': 'Li dengê xwe guhdarî bike',
+      'tr': 'Sesimi dinle',
+    },
+    K.pronunciationHint: {
+      'ku': 'Pêşî guhdarî bike, paşê dengê xwe tomar bike û bide ber hev.',
+      'tr': 'Önce dinle, sonra kendi sesini kaydet ve karşılaştır.',
+    },
+    K.pronunciationPrivacy: {
+      'ku':
+          'Tomara te tenê li ser vê amûrê dimîne û gava rûpel bê girtin tê jêbirin.',
+      'tr': 'Kaydın yalnız bu cihazda kalır ve sayfa kapanınca silinir.',
+    },
+    K.pronunciationMicDenied: {
+      'ku': 'Destûra mîkrofonê tune. Tu dikarî ji Mîhengan destûrê bidî.',
+      'tr': 'Mikrofon izni yok. Ayarlardan izin verebilirsin.',
+    },
+    K.pronunciationRecording: {'ku': 'Tê tomarkirin…', 'tr': 'Kaydediliyor…'},
     K.listenQuestion: {'ku': 'Guh bide pirsê', 'tr': 'Soruyu dinle'},
     K.doubleAnswerHint: {
       'ku': 'Bersiveke din bide',
@@ -4547,6 +4572,13 @@ class K {
   /// "+0 jeton" görüp sebebini öğrenemez.
   static const soloDailyCapReached = 'quiz.reward.soloDailyCap';
   static const stopAction = 'common.stop';
+  static const pronunciationTitle = 'pronunciation.title';
+  static const pronunciationTry = 'pronunciation.try';
+  static const pronunciationPlayMine = 'pronunciation.playMine';
+  static const pronunciationHint = 'pronunciation.hint';
+  static const pronunciationPrivacy = 'pronunciation.privacy';
+  static const pronunciationMicDenied = 'pronunciation.micDenied';
+  static const pronunciationRecording = 'pronunciation.recording';
   static const listenQuestion = 'quiz.listenQuestion';
   static const doubleAnswerHint = 'quiz.doubleAnswerHint';
   static const difficultyHard = 'quiz.difficulty.hard';
