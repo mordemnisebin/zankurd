@@ -297,8 +297,12 @@ class TournamentStandings {
 
 /// Daily tournament setup (16 players, 4 rounds, 4 questions per match)
 class TournamentConfig {
-  static const int totalPlayers = 16;
-  static const int roundCount = 4;
+  /// Canlı `tournaments.size` varsayılanıyla aynı (4; en az `min_size` 2
+  /// ile 24 saatte başlar). 2026-10-27'ye dek 16/4 idi: lobi "16 oyuncu ·
+  /// 4 tur · 16→8→4→2→1" diyordu, oysa gerçek kupa 4 kişilik ve 2 turdur
+  /// (simülatörde görüldü). Antrenman kupası da aynı biçimle oynanır.
+  static const int totalPlayers = 4;
+  static const int roundCount = 2;
   static const int questionsPerMatch = 4;
   // `submit_tournament_match` (2026-07-26_real_player_tournament.sql) maç
   // başına HİÇBİR coin ödemiyor — yalnız `claim_tournament_reward`
@@ -308,7 +312,7 @@ class TournamentConfig {
   static const int coinBonusChampion = 200;
   static const String tournamentCategory = 'Ziman';
 
-  /// Generate bracket structure: 16→8→4→2→1 (4 rounds)
+  /// Şema: [totalPlayers] oyuncu, her turda yarıya iner ([roundCount] tur).
   static List<TournamentRound> generateBracket() {
     final rounds = <TournamentRound>[];
     int matchesInRound = totalPlayers ~/ 2;

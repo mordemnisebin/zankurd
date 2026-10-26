@@ -98,24 +98,26 @@ void main() {
       expect(find.byIcon(AppIcons.trophy), findsAtLeast(1));
     });
 
-    testWidgets('baslangic butonuna basildiginda son 16 eslesmesi yukleniyor', (
-      tester,
-    ) async {
-      await tester.pumpWidget(createTestWidget());
-      await tester.pumpAndSettle();
+    testWidgets(
+      'baslangic butonuna basildiginda yari final eslesmesi yukleniyor',
+      (tester) async {
+        await tester.pumpWidget(createTestWidget());
+        await tester.pumpAndSettle();
 
-      await tester.ensureVisible(
-        find.byKey(const ValueKey('tournament-primary-cta')),
-      );
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const ValueKey('tournament-primary-cta')));
-      await tester.pumpAndSettle();
+        await tester.ensureVisible(
+          find.byKey(const ValueKey('tournament-primary-cta')),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(const ValueKey('tournament-primary-cta')));
+        await tester.pumpAndSettle();
 
-      // 16 oyunculu kupada ilk tur "Son 16"dır.
-      expect(find.text('Son 16'), findsAtLeast(1));
-      expect(find.text('Maçı başlat'), findsOneWidget);
-      // Bölüm başlığı standart stilde (all-caps patlaması kaldırıldı).
-      expect(find.text('Turnuva şeması'), findsOneWidget);
-    });
+        // 4 kişilik kupada (canlı `tournaments.size`) ilk tur yarı finaldir.
+        expect(find.text('Yarı Final'), findsAtLeast(1));
+        expect(find.text('Son 16'), findsNothing);
+        expect(find.text('Maçı başlat'), findsOneWidget);
+        // Bölüm başlığı standart stilde (all-caps patlaması kaldırıldı).
+        expect(find.text('Turnuva şeması'), findsOneWidget);
+      },
+    );
   });
 }

@@ -22,6 +22,7 @@ class AppEmptyState extends StatelessWidget {
     this.onAction,
     this.actionIcon,
     this.primaryAction = true,
+    this.footer,
   });
 
   final IconData icon;
@@ -35,6 +36,11 @@ class AppEmptyState extends StatelessWidget {
   /// ekranda başka bir birincil eylem varken.
   final bool primaryAction;
 
+  /// Eylemin hemen altındaki ikincil satır (ör. metin düğmesi "Yenile").
+  /// 2026-10-27: turnuva bekleme ekranında yenileme düğmesi ekranın dibine
+  /// itilmişti; burada eylemle birlikte durur.
+  final Widget? footer;
+
   @override
   Widget build(BuildContext context) {
     return _AppStateScaffold(
@@ -45,6 +51,7 @@ class AppEmptyState extends StatelessWidget {
       onAction: onAction,
       actionIcon: actionIcon,
       primaryAction: primaryAction,
+      footer: footer,
     );
   }
 }
@@ -138,6 +145,7 @@ class _AppStateScaffold extends StatelessWidget {
     this.actionLabel,
     this.onAction,
     this.actionIcon,
+    this.footer,
   });
 
   final IconData icon;
@@ -147,6 +155,7 @@ class _AppStateScaffold extends StatelessWidget {
   final VoidCallback? onAction;
   final IconData? actionIcon;
   final bool primaryAction;
+  final Widget? footer;
 
   /// Durum ikonunun kenarı.
   static const double iconSize = 32;
@@ -241,6 +250,7 @@ class _AppStateScaffold extends StatelessWidget {
                   icon: actionIcon,
                 ),
         ],
+        if (footer != null) ...[const SizedBox(height: SahneSpace.x2), footer!],
       ],
     );
   }

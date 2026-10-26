@@ -85,13 +85,17 @@ void main() {
     expect(find.text('${TournamentConfig.roundCount}'), findsWidgets);
   });
 
-  testWidgets('kupa yolu 16→8→4→2→1 basamaklarını gösterir', (tester) async {
+  // 2026-10-27: canlı kupa 4 kişilik (tournaments.size); lobi eskiden
+  // 16→8→4→2→1 diyordu.
+  testWidgets('kupa yolu 4→2→1 basamaklarını gösterir', (tester) async {
     await _pump(tester);
     // Merdiven `generateBracket` ile aynı bölme mantığından türer; sabit
     // dizi yazılsaydı ikisi sessizce ayrışabilirdi.
-    for (final step in const ['16', '8', '4', '2', '1']) {
+    for (final step in const ['4', '2', '1']) {
       expect(find.text(step), findsWidgets, reason: '$step basamağı yok');
     }
+    expect(find.text('16'), findsNothing);
+    expect(find.text('8'), findsNothing);
   });
 
   // ── Dürüstlük ───────────────────────────────────────────────────────────

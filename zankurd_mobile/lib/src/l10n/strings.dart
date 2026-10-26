@@ -1570,9 +1570,9 @@ class Tr {
     K.faqCoinsQ: {'ku': 'Zêr ji bo çi ye?', 'tr': 'Jeton ne işe yarar?'},
     K.faqCoinsA: {
       'ku':
-          'Bi zêr dikarî ji Dukanê alîkar, çarçove û mafên zêde yên zivirandina çerxê bikirî û zincîra xwe biparêzî. Zêr ji bersivên rast, peywiran û çerxa rojê tê bidestxistin.',
+          'Ji bo bikaranîna alîkariyê di dema pirsê de (her roj yek belaş e), kirîna çarçoveyê, rozeta VIP û mafê zêde yê gerandina çerxê li Dukanê û parastina zincîra te bikêr tê. Zêr ji bersivên rast, peywiran û çerxa rojê tê bidestxistin.',
       'tr':
-          'Jokerleri, çerçeveleri ve ek çark hakkını Mağaza\'dan almaya ve serini korumaya yarar. Jeton doğru cevaplardan, görevlerden ve günün çarkından gelir.',
+          'Soru sırasında joker kullanmaya (her gün biri bedava), Mağaza\'da çerçeve, VIP rozeti ve ek çark hakkı almaya ve serini korumaya yarar. Jeton doğru cevaplardan, görevlerden ve günün çarkından gelir.',
     },
     K.faqReportQ: {
       'ku': 'Min di pirsekê de çewtiyek dît, çi bikim?',

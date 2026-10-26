@@ -676,13 +676,21 @@ class _TournamentScreenState extends State<TournamentScreen> {
           });
     }
 
-    final stages = ['quarter', 'semi', 'final', 'won'];
+    // Kaydedilen aşama, turu bitirince ULAŞILAN aşamadır ve SONDAN sayılır
+    // (tur adları gibi): 2 turlu kupada ilk tur bitince finale çıkılır;
+    // baştan sayan liste bunu "quarter" diye yazıyordu.
+    final nextRemaining = bracket.rounds.length - roundIndex - 1;
+    final stage = isFinal
+        ? 'won'
+        : switch (nextRemaining) {
+            1 => 'final',
+            2 => 'semi',
+            _ => 'quarter',
+          };
     unawaited(
       TournamentProgressPublisher.publish(
         repository: widget.repository,
-        stage: userLost
-            ? 'lost'
-            : stages[roundIndex.clamp(0, stages.length - 1)],
+        stage: userLost ? 'lost' : stage,
         userScore: userScore,
         opponentScore: opponentScore,
         botWinners: winners.map((winner) => winner.name).toList(),
@@ -733,29 +741,22 @@ class _TournamentScreenState extends State<TournamentScreen> {
       // Beklerken antrenman kupası (botlarla, ödülsüz) açıkça sunulur;
       // gerçek kupadaki kayıt sürer (2026-10-27).
       body = SliverFillRemaining(
-        child: Column(
-          children: [
-            Expanded(
-              child: AppEmptyState(
-                key: const ValueKey('tournament-waiting'),
-                icon: AppIcons.hourglass,
-                title: context.t(K.tournamentWaitingTitle),
-                message: context.t(K.tournamentWaitingBody),
-                actionLabel: context.t(K.tournamentPractice),
-                actionIcon: AppIcons.trophy,
-                onAction: _startingNewTournament
-                    ? null
-                    : () => unawaited(_startPracticeCup()),
-              ),
-            ),
-            SahneButton.text(
-              key: const ValueKey('tournament-waiting-refresh'),
-              label: context.t(K.retry),
-              arrow: false,
-              onPressed: _load,
-            ),
-            const SizedBox(height: SahneSpace.x6),
-          ],
+        child: AppEmptyState(
+          key: const ValueKey('tournament-waiting'),
+          icon: AppIcons.hourglass,
+          title: context.t(K.tournamentWaitingTitle),
+          message: context.t(K.tournamentWaitingBody),
+          actionLabel: context.t(K.tournamentPractice),
+          actionIcon: AppIcons.trophy,
+          onAction: _startingNewTournament
+              ? null
+              : () => unawaited(_startPracticeCup()),
+          footer: SahneButton.text(
+            key: const ValueKey('tournament-waiting-refresh'),
+            label: context.t(K.retry),
+            arrow: false,
+            onPressed: _load,
+          ),
         ),
       );
     } else {

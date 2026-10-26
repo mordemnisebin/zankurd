@@ -755,7 +755,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       SahneListGroup(
         children: [
           SahneListRow.icon(
-            icon: AppIcons.bookmark,
+            // Yıldız: Pratik merkezindeki aynı girişle aynı ikon; yer imi
+            // Kelimelerim'indir (2026-10-27).
+            icon: AppIcons.star,
             role: SahneRole.learn,
             title: context.t(K.savedQuestions),
             chevron: true,
