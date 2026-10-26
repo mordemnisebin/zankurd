@@ -107,6 +107,45 @@ void main() {
     });
   });
 
+  // 2026-10-26: jeton birleşimi max() idi; bir cihazda harcanan jeton
+  // sunucudaki eski kopyayla geri geliyor, satın alınan jeton da eski kayıt
+  // kazanırsa kayboluyordu. Zaman damgası olan en yeni değişiklik kazanır.
+  group('seri dondurma jetonu: en yeni değişiklik', () {
+    test('harcanan jeton eski (damgasız) kopyayla geri gelmez', () {
+      const spent = SnapshotStreak(freeze: 1, freezeAt: 2000);
+      const legacy = SnapshotStreak(freeze: 2);
+      expect(SnapshotStreak.merge(spent, legacy).freeze, 1);
+      expect(SnapshotStreak.merge(legacy, spent).freeze, 1);
+    });
+
+    test('yeni satın alınan jeton eski damgalı kopyaya kaybolmaz', () {
+      const bought = SnapshotStreak(freeze: 2, freezeAt: 2000);
+      const older = SnapshotStreak(freeze: 1, freezeAt: 1000);
+      expect(SnapshotStreak.merge(bought, older).freeze, 2);
+      expect(SnapshotStreak.merge(older, bought).freezeAt, 2000);
+    });
+
+    test('başka cihazdaki daha yeni harcama kazanır', () {
+      const local = SnapshotStreak(freeze: 2, freezeAt: 2000);
+      const remote = SnapshotStreak(freeze: 1, freezeAt: 3000);
+      expect(SnapshotStreak.merge(local, remote).freeze, 1);
+    });
+
+    test('iki tarafta da damga yoksa eski davranış: büyük olan', () {
+      const a = SnapshotStreak(freeze: 1);
+      const b = SnapshotStreak(freeze: 2);
+      expect(SnapshotStreak.merge(a, b).freeze, 2);
+      expect(SnapshotStreak.merge(a, b).freezeAt, isNull);
+    });
+
+    test('damga JSON gidiş-dönüşünde korunur', () {
+      const s = SnapshotStreak(freeze: 1, freezeAt: 1234567890123);
+      final back = SnapshotStreak.fromJson(s.toJson());
+      expect(back.freeze, 1);
+      expect(back.freezeAt, 1234567890123);
+    });
+  });
+
   group('seri: son oynama günü yeni olan kayıt', () {
     const older = SnapshotStreak(
       current: 12,

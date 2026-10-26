@@ -39,6 +39,11 @@ class StreakStore {
       LocalProgressScope.physical('zankurd.streak.lastDay');
   static String get _freezeKey =>
       LocalProgressScope.physical('zankurd.streak.freeze');
+
+  /// Jeton sayısının son değiştiği an; eşitleme en yeniyi seçer
+  /// (bkz. `SnapshotStreak.merge`).
+  static String get _freezeAtKey =>
+      LocalProgressScope.physical('zankurd.streak.freezeAt');
   // Takvim geçmişi ve onarım durumu (2026-10-24). `zankurd.streak.` öneki
   // [LocalProgressScope.prefixes]te olduğundan kullanıcı kapsamına ve eski
   // kurulum taşımasına kendiliğinden girer.
@@ -199,6 +204,7 @@ class StreakStore {
   Future<int> addFreeze() async {
     if (_freeze >= maxFreeze) return _freeze;
     _freeze += 1;
+    await _stampFreeze();
     await _persist();
     return _freeze;
   }
@@ -212,6 +218,7 @@ class StreakStore {
       return recordPlay(now: today);
     }
     _freeze -= 1;
+    await _stampFreeze();
     _current += 1;
     if (_current > _best) _best = _current;
     _markBridgedDays(_lastDay, today);
@@ -439,6 +446,13 @@ class StreakStore {
     return _current;
   }
 
+  Future<void> _stampFreeze() async {
+    await _preferences?.setInt(
+      _freezeAtKey,
+      DateTime.now().millisecondsSinceEpoch,
+    );
+  }
+
   Future<void> _persist() async {
     final preferences = _preferences;
     if (preferences == null) return;
@@ -485,6 +499,7 @@ class StreakStore {
       _bestKey,
       _lastDayKey,
       _freezeKey,
+      _freezeAtKey,
       _playedDaysKey,
       _frozenDaysKey,
       _repairMonthKey,

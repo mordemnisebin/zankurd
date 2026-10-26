@@ -25,6 +25,7 @@ class LocalProgressSnapshot {
   static const _streakBest = 'zankurd.streak.best';
   static const _streakLastDay = 'zankurd.streak.lastDay';
   static const _streakFreeze = 'zankurd.streak.freeze';
+  static const _streakFreezeAt = 'zankurd.streak.freezeAt';
   static const _streakPlayedDays = 'zankurd.streak.playedDays';
   static const _streakFrozenDays = 'zankurd.streak.frozenDays';
   static const _streakRepairMonth = 'zankurd.streak.repairMonth';
@@ -119,6 +120,7 @@ class LocalProgressSnapshot {
         best: prefs.getInt(_k(_streakBest)) ?? 0,
         lastDay: prefs.getString(_k(_streakLastDay)),
         freeze: prefs.getInt(_k(_streakFreeze)) ?? 0,
+        freezeAt: prefs.getInt(_k(_streakFreezeAt)),
         playedDays: playedDays,
         frozenDays: frozenDays,
         repairMonth: SnapshotStreak.isValidMonthKey(rawRepairMonth)
@@ -187,6 +189,8 @@ class LocalProgressSnapshot {
     await setInt(_streakCurrent, snapshot.streak.current);
     await setInt(_streakBest, snapshot.streak.best);
     await setInt(_streakFreeze, snapshot.streak.freeze);
+    final freezeAt = snapshot.streak.freezeAt;
+    if (freezeAt != null) await setInt(_streakFreezeAt, freezeAt);
     await setString(_streakLastDay, snapshot.streak.lastDay);
     await setList(_streakPlayedDays, snapshot.streak.playedDays);
     await setList(_streakFrozenDays, snapshot.streak.frozenDays);

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/progress_sync.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
 
 void main() {
@@ -85,6 +86,25 @@ void main() {
     // Üst sınır maxFreeze; üstüne çıkmaz.
     expect(await store.addFreeze(), StreakStore.maxFreeze);
     expect(store.freezeCount, StreakStore.maxFreeze);
+  });
+
+  // 2026-10-26: jeton değişince damga yazılır; eşitleme en yeniyi seçer
+  // (SnapshotStreak.merge). Damga yoksa harcanan jeton geri gelebilirdi.
+  test('jeton satın alma ve harcama değişiklik zamanını damgalar', () async {
+    final store = await StreakStore.load();
+    final prefs = await SharedPreferences.getInstance();
+    expect(LocalProgressSnapshot.read(prefs).streak.freezeAt, isNull);
+    await store.addFreeze();
+    final bought = LocalProgressSnapshot.read(prefs).streak.freezeAt;
+    expect(bought, isNotNull);
+
+    await store.recordPlay(now: DateTime(2026, 6, 12));
+    await store.recordPlay(now: DateTime(2026, 6, 13));
+    await Future<void>.delayed(const Duration(milliseconds: 2));
+    await store.freezeAndRecordPlay(now: DateTime(2026, 6, 15));
+    final spent = LocalProgressSnapshot.read(prefs).streak;
+    expect(spent.freeze, 0);
+    expect(spent.freezeAt, greaterThan(bought!));
   });
 
   test('willBreakOnPlay only true when a live streak skipped a day', () async {

@@ -268,6 +268,7 @@ class SnapshotStreak {
     this.best = 0,
     this.lastDay,
     this.freeze = 0,
+    this.freezeAt,
     this.playedDays = const {},
     this.frozenDays = const {},
     this.repairMonth,
@@ -344,6 +345,10 @@ class SnapshotStreak {
   final int best;
   final String? lastDay;
   final int freeze;
+
+  /// Jeton sayısının son değiştiği an (epoch ms). Birleştirmede en yeni
+  /// değişiklik kazanır; eski kayıtlarda yoktur (o zaman büyük olan alınır).
+  final int? freezeAt;
   final Set<String> playedDays;
   final Set<String> frozenDays;
   final String? repairMonth;
@@ -354,6 +359,7 @@ class SnapshotStreak {
       best == 0 &&
       lastDay == null &&
       freeze == 0 &&
+      freezeAt == null &&
       playedDays.isEmpty &&
       frozenDays.isEmpty &&
       repairMonth == null &&
@@ -365,6 +371,8 @@ class SnapshotStreak {
     // ignore: use_null_aware_elements
     if (lastDay != null) 'lastDay': lastDay,
     'freeze': freeze,
+    // ignore: use_null_aware_elements
+    if (freezeAt != null) 'freezeAt': freezeAt,
     if (playedDays.isNotEmpty) 'playedDays': _sorted(playedDays),
     if (frozenDays.isNotEmpty) 'frozenDays': _sorted(frozenDays),
     // ignore: use_null_aware_elements
@@ -387,6 +395,9 @@ class SnapshotStreak {
       best: _int(raw['best']),
       lastDay: day is String && day.isNotEmpty ? day : null,
       freeze: _int(raw['freeze']),
+      freezeAt: raw['freezeAt'] is num && (raw['freezeAt'] as num) > 0
+          ? (raw['freezeAt'] as num).toInt()
+          : null,
       playedDays: played,
       frozenDays: frozen,
       repairMonth: rawRepairMonth is String && isValidMonthKey(rawRepairMonth)
@@ -423,6 +434,21 @@ class SnapshotStreak {
       ...played,
       ...frozen,
     ];
+    // Jeton: max() harcanan jetonu geri getiriyor, satın alınanı da
+    // kaybettirebiliyordu (2026-10-26). Zaman damgası olan en yeni
+    // değişiklik kazanır; ikisinde de yoksa (eski kayıt) büyük olan.
+    final int freeze;
+    final int? freezeAt;
+    if (a.freezeAt != null || b.freezeAt != null) {
+      final aAt = a.freezeAt ?? -1;
+      final bAt = b.freezeAt ?? -1;
+      final newer = aAt >= bAt ? a : b;
+      freeze = newer.freeze;
+      freezeAt = newer.freezeAt;
+    } else {
+      freeze = a.freeze > b.freeze ? a.freeze : b.freeze;
+      freezeAt = null;
+    }
     String? firstSeen;
     if (fsCandidates.isNotEmpty) {
       fsCandidates.sort();
@@ -432,7 +458,8 @@ class SnapshotStreak {
       current: current,
       best: best,
       lastDay: winner.lastDay,
-      freeze: a.freeze > b.freeze ? a.freeze : b.freeze,
+      freeze: freeze,
+      freezeAt: freezeAt,
       playedDays: played,
       frozenDays: frozen,
       repairMonth: repairMonth,
