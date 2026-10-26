@@ -200,7 +200,9 @@ void main() {
       // (izafe, gelecek zaman, emir kipi, aylar; bkz. `beginner_track_4_test`).
       // 3377 -> 3376 (-1): 2026-10-26 `ds_cand_0041` (def/tembûr genellemesi
       // kaynaksız) emekliye ayrıldı.
-      3376,
+      // 3376 -> 3375 (-1): 2026-10-26 `visual_2026_08_07_0016` (def görseli
+      // okunaksız, soru görsele bağlı) emekli.
+      3375,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -276,7 +278,8 @@ void main() {
       // 2026-10-17 yakın tekrar: `ds_cografya_0133`, `ds_dirok_0091`, `ds_muzik_0144`.
       // 2026-10-19: +sf_cin_0007/0008; 2026-10-25 birebir kopya +sf_nat_0005.
       'retired=Cîhan': 6,
-      'retired=Muzîk': 28, // 2026-10-19 içerik denetimi +1
+      // 28 -> 29: 2026-10-26 `visual_2026_08_07_0016` (def görseli okunaksız).
+      'retired=Muzîk': 29, // 2026-10-19 içerik denetimi +1
       // 2026-09-30: 36 -> 37 (`offline_0120`, görsel "pîr" gösteriyor).
       // 45 -> 39: 2026-10-21 emekli 0104–0109 dosyadan silindi (yerine
       // 0137–0142 geldi), artık envanterde sayılmıyor.

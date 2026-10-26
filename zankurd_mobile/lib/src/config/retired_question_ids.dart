@@ -801,6 +801,13 @@ const Set<String> retiredQuestionIds = <String>{
   // Ayrıntı: docs/content_batches/ds_cand_0041_kaynak_incelemesi_2026_10_26.md
   // ---------------------------------------------------------------------
   'ds_cand_0041', // def + tembûr genellemesi, kaynaksız
+  // ---------------------------------------------------------------------
+  // 2026-10-26: görsel taraması ZAYIF listesinden. Soru doğrudan görsele
+  // dayanıyor ("Di wêneyê de…") ama görsel küçük, düşük çözünürlüklü ve
+  // okunaksız; görseli kaldırmak soruyu anlamsızlaştırır, yeniden yazmak
+  // yeni Kurmancî metin ister. Emekli.
+  // ---------------------------------------------------------------------
+  'visual_2026_08_07_0016', // def görseli okunaksız, soru görsele bağlı
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

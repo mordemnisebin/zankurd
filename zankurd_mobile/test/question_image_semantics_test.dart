@@ -44,9 +44,11 @@ void main() {
   });
 
   test('görselli soru var ve her biri bir etiket üretebiliyor', () {
+    // 2026-10-26: görsel taramasının ZAYIF listesinden 26 yanıltıcı görsel
+    // kaldırıldı (yanlış yer/çalgı/olay, görünmeyen nesne); eşik 100 -> 80.
     expect(
       visual.length,
-      greaterThan(100),
+      greaterThan(80),
       reason: 'Görselli soru sayısı beklenmedik biçimde düştü',
     );
 

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "createdDate": "2026-10-26",
+  "createdDate": "2026-10-27",
   "manifestVersion": 1,
   "sourceFingerprints": {
     "assets/data/altkonu_2026_10_01_questions.json": "91d2f1a42fc9444c9f557ca68c817d8403be562d0d89667e19dbdd0767be2076",
@@ -21,7 +21,7 @@
     "assets/data/fill_in_blank_2026_08_questions.json": "0bb341e6966474e91754695fcea433e51c78783ab29087b555a829c6171d6b5c",
     "assets/data/hat_2026_10_07_questions.json": "1cae99c2fa5472561befcaa185c6a5148dcde6a1a56b91b7f28e3b86818c2ff9",
     "assets/data/kolay_2026_10_19_questions.json": "5f78a323605d475f1f3d143ddb4843a8770977138270568cc3b439e57dfe17ba",
-    "assets/data/offline_questions.json": "4e54d531a16163d6646f43b563f0742163407885d2715512be96879778392dae",
+    "assets/data/offline_questions.json": "1c459c503419e727328524e0795d80e07ef2008e7cbaadd2da4b7a3e4278b5f3",
     "assets/data/restore_2026_08_07_questions.json": "46f668226886cb604a818a1a63a046219b6ea193c061f5d78946b9f5ef901d0b",
     "assets/data/sentence_building_questions.json": "5e770157578541426a3d75b433ef985ada70be8209453a193de594e2c7ba247a",
     "assets/data/source_first_2026_08_questions.json": "8954e5b13703de77e997c06f0bc72148e791cc073509e045136449ad0a35cc48",

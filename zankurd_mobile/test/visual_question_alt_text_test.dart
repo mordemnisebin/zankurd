@@ -74,7 +74,9 @@ void main() {
     // döngü hiç soru gezmez ve bekçi anlamsızca yeşil kalır. 2026-09-28
     // denetiminde 126 görselli soru vardı; eşik onu delmeyecek kadar
     // yüksek, gelecekteki büyümeyi engellemeyecek kadar gevşek.
-    expect(imageQuestions.length, greaterThan(100));
+    // 2026-10-26: 26 yanıltıcı görsel kaldırıldı (görsel taraması ZAYIF
+    // listesi); eşik 100 -> 80.
+    expect(imageQuestions.length, greaterThan(80));
   });
 
   test(
