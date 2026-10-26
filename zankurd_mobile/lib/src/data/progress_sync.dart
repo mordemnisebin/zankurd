@@ -350,7 +350,13 @@ abstract class ProgressRemote {
   /// Kayıtlı anlık görüntü; yoksa `null`.
   Future<RemoteProgress?> fetch();
 
-  Future<void> save(Map<String, dynamic> snapshot);
+  /// Kaydeder. [expectedUpdatedAt] okunan sürümdür; sunucudaki kayıt o
+  /// andan beri değiştiyse YAZILMAZ ve `false` döner (çakışma). Yazıldıysa
+  /// `true`.
+  Future<bool> save(
+    Map<String, dynamic> snapshot, {
+    DateTime? expectedUpdatedAt,
+  });
 }
 
 /// RPC sunucuda yok (göç uygulanmamış): eşitleme oturum boyunca kapanır.
@@ -385,13 +391,38 @@ class SupabaseProgressRemote implements ProgressRemote {
     }
   }
 
+  /// `save_my_progress_v2` (sürüm denetimli, 2026-10-26) yoksa oturum
+  /// boyunca eski koşulsuz `save_my_progress`'e düşülür.
+  static bool _v2Missing = false;
+
   @override
-  Future<void> save(Map<String, dynamic> snapshot) async {
+  Future<bool> save(
+    Map<String, dynamic> snapshot, {
+    DateTime? expectedUpdatedAt,
+  }) async {
+    if (!_v2Missing) {
+      try {
+        final response = await _client.rpc<dynamic>(
+          'save_my_progress_v2',
+          params: {
+            'p_snapshot': snapshot,
+            'p_expected_updated_at': expectedUpdatedAt
+                ?.toUtc()
+                .toIso8601String(),
+          },
+        );
+        return !(response is Map && response['conflict'] == true);
+      } on PostgrestException catch (error) {
+        if (!_isMissing(error)) rethrow;
+        _v2Missing = true;
+      }
+    }
     try {
       await _client.rpc<dynamic>(
         'save_my_progress',
         params: {'p_snapshot': snapshot},
       );
+      return true;
     } on PostgrestException catch (error) {
       if (_isMissing(error)) throw const ProgressRemoteMissing();
       rethrow;
@@ -546,42 +577,51 @@ class ProgressSyncService with WidgetsBindingObserver {
       if (LocalProgressScope.activeUserId != userId) return;
       final prefs = _preferences ?? await SharedPreferences.getInstance();
 
-      final row = await remote.fetch();
-      if (_closed || LocalProgressScope.activeUserId != userId) return;
-      // Yerel görüntü ağ cevabından SONRA okunur: fetch beklenirken oynanan
-      // gün (seri takvimi), XP ya da rozet, birleşik hal yazılınca eski
-      // kopyanın altında kalıp siliniyordu (2026-10-25 Codex incelemesi).
-      final local = LocalProgressSnapshot.read(prefs);
+      // Sunucu kaydı okunduktan sonra başka bir cihaz yazdıysa kayıt
+      // reddedilir (çakışma); yeniden okunup birleştirilip bir kez daha
+      // denenir. İkinci çakışma bir sonraki eşitlemeye kalır.
+      for (var attempt = 0; attempt < 2; attempt++) {
+        final row = await remote.fetch();
+        if (_closed || LocalProgressScope.activeUserId != userId) return;
+        // Yerel görüntü ağ cevabından SONRA okunur: fetch beklenirken oynanan
+        // gün (seri takvimi), XP ya da rozet, birleşik hal yazılınca eski
+        // kopyanın altında kalıp siliniyordu (2026-10-25 Codex incelemesi).
+        final local = LocalProgressSnapshot.read(prefs);
 
-      ProgressSnapshot merged = local;
-      ProgressSnapshot? remoteSnapshot;
-      if (row != null) {
-        remoteSnapshot = ProgressSnapshot.tryParse(row.snapshot);
-        if (remoteSnapshot == null) {
-          // Daha yeni sürüm ya da bozuk kayıt: üzerine yazma, birleştirme.
-          return;
+        ProgressSnapshot merged = local;
+        ProgressSnapshot? remoteSnapshot;
+        if (row != null) {
+          remoteSnapshot = ProgressSnapshot.tryParse(row.snapshot);
+          if (remoteSnapshot == null) {
+            // Daha yeni sürüm ya da bozuk kayıt: üzerine yazma, birleştirme.
+            return;
+          }
+          merged = ProgressSnapshot.merge(local, remoteSnapshot);
         }
-        merged = ProgressSnapshot.merge(local, remoteSnapshot);
-      }
 
-      if (merged != local) {
-        if (await LocalProgressSnapshot.write(prefs, merged)) {
-          onLocalChanged?.call();
-        } else {
-          ErrorReporter.record(
-            StateError('Merged progress was not persisted locally.'),
-            StackTrace.current,
-            reason: 'progress_sync_local_write',
-          );
-          return;
+        if (merged != local) {
+          if (await LocalProgressSnapshot.write(prefs, merged)) {
+            onLocalChanged?.call();
+          } else {
+            ErrorReporter.record(
+              StateError('Merged progress was not persisted locally.'),
+              StackTrace.current,
+              reason: 'progress_sync_local_write',
+            );
+            return;
+          }
         }
-      }
 
-      if (merged.isEmpty) return;
-      if (remoteSnapshot != null && merged == remoteSnapshot) return;
-      final json = _compact(merged);
-      if (json == null) return;
-      await remote.save(json);
+        if (merged.isEmpty) return;
+        if (remoteSnapshot != null && merged == remoteSnapshot) return;
+        final json = _compact(merged);
+        if (json == null) return;
+        final saved = await remote.save(
+          json,
+          expectedUpdatedAt: row?.updatedAt,
+        );
+        if (saved) return;
+      }
     } on ProgressRemoteMissing {
       _disabled = true;
     } catch (error, stack) {

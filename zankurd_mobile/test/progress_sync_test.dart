@@ -45,13 +45,29 @@ class _FakeRemote implements ProgressRemote {
     return row;
   }
 
+  /// Bir sonraki kayıt bu kadar kez "çakışma" dönsün (araya başka cihaz
+  /// yazmış gibi): her çakışmada [conflictRow] sunucu kaydı olur.
+  int conflictsLeft = 0;
+  RemoteProgress? conflictRow;
+  final expectations = <DateTime?>[];
+
   @override
-  Future<void> save(Map<String, dynamic> snapshot) async {
+  Future<bool> save(
+    Map<String, dynamic> snapshot, {
+    DateTime? expectedUpdatedAt,
+  }) async {
     saves++;
+    expectations.add(expectedUpdatedAt);
     final error = saveError;
     if (error != null) throw error;
+    if (conflictsLeft > 0) {
+      conflictsLeft--;
+      row = conflictRow;
+      return false;
+    }
     lastSaved = snapshot;
-    row = RemoteProgress(snapshot: snapshot);
+    row = RemoteProgress(snapshot: snapshot, updatedAt: DateTime.now());
+    return true;
   }
 }
 
@@ -239,6 +255,46 @@ void main() {
       expect(local.streak.playedDays, contains('2026-10-15'));
       expect(local.badges, contains('speed_demon'));
     });
+
+    // 2026-10-26: kayıt sürüm denetimli. Okumadan sonra başka cihaz
+    // yazdıysa kayıt reddedilir; eşitleme yeniden okuyup birleştirir ve
+    // ikinci denemede iki cihazın verisini birlikte yazar.
+    test(
+      'çakışmada yeniden okunur, iki cihazın verisi birlikte yazılır',
+      () async {
+        final prefs = await SharedPreferences.getInstance();
+        await LocalProgressSnapshot.write(
+          prefs,
+          const ProgressSnapshot(xp: 100, badges: {'first_game'}),
+        );
+        final t0 = DateTime.utc(2026, 10, 26, 10);
+        final remote =
+            _FakeRemote(
+                row: RemoteProgress(
+                  snapshot: const ProgressSnapshot(xp: 50).toJson(),
+                  updatedAt: t0,
+                ),
+              )
+              ..conflictsLeft = 1
+              ..conflictRow = RemoteProgress(
+                snapshot: const ProgressSnapshot(
+                  xp: 300,
+                  badges: {'speed_demon'},
+                ).toJson(),
+                updatedAt: t0.add(const Duration(seconds: 5)),
+              );
+        final service = await bind(remote);
+
+        await service.syncNow();
+
+        expect(remote.saves, 2);
+        expect(remote.expectations.first, t0);
+        expect(remote.expectations.last, t0.add(const Duration(seconds: 5)));
+        final saved = ProgressSnapshot.tryParse(remote.lastSaved!)!;
+        expect(saved.xp, 300);
+        expect(saved.badges, {'first_game', 'speed_demon'});
+      },
+    );
 
     test('yeni cihaz: sunucudaki ilerleme yerele iner', () async {
       final remote = _FakeRemote(
