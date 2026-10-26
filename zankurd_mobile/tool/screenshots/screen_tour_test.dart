@@ -48,6 +48,8 @@ import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
+import 'package:zankurd_mobile/src/screens/my_suggestions_screen.dart';
+import 'package:zankurd_mobile/src/models/my_suggestion.dart';
 import 'package:zankurd_mobile/src/screens/image_credits_screen.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
@@ -1079,6 +1081,14 @@ void main() {
   testWidgets('39 soru öner', (t) async {
     await _pump(t, SuggestQuestionScreen(repository: repository));
     await _shoot(t, '39_suggest_question');
+  }, tags: ['preview']);
+
+  testWidgets('319 önerilerim', (t) async {
+    final repo = _SuggestionsTourRepository();
+    await _pump(t, MySuggestionsScreen(repository: repo));
+    await _shoot(t, '319_my_suggestions');
+    await _pump(t, MySuggestionsScreen(repository: repo), dark: true, ku: true);
+    await _shoot(t, '320_my_suggestions_ku_dark');
   }, tags: ['preview']);
 
   testWidgets('40 seviye sınavı', (t) async {
@@ -3667,3 +3677,32 @@ RoomResultSnapshot _recoverySnapshot() => RoomResultSnapshot(
   forfeitedBy: null,
   finishedAt: DateTime.utc(2026, 8, 16),
 );
+
+/// "Önerilerim" turu: üç durum da (bekleyen, onaylanan, notlu ret) görünsün.
+class _SuggestionsTourRepository extends MockZanKurdRepository {
+  @override
+  Future<List<MySuggestion>?> loadMySuggestions() async => [
+    MySuggestion(
+      id: 's1',
+      category: 'Ziman',
+      prompt: 'Peyva "dar" bi Tirkî çi ye?',
+      status: MySuggestionStatus.pending,
+      createdAt: DateTime(2026, 10, 26),
+    ),
+    MySuggestion(
+      id: 's2',
+      category: 'Dîrok',
+      prompt: 'Mem û Zîn ji aliyê kê ve hatiye nivîsandin?',
+      status: MySuggestionStatus.approved,
+      createdAt: DateTime(2026, 10, 20),
+    ),
+    MySuggestion(
+      id: 's3',
+      category: 'Cografya',
+      prompt: 'Çiyayê herî bilind ê Kurdistanê kîjan e?',
+      status: MySuggestionStatus.rejected,
+      createdAt: DateTime(2026, 10, 18),
+      reviewNote: 'Bersiv li gorî çavkaniyan diguhere.',
+    ),
+  ];
+}

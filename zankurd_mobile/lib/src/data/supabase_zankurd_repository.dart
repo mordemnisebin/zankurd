@@ -8,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'durable_write.dart';
 import '../models/async_duel.dart';
 import '../models/match_history.dart';
+import '../models/my_suggestion.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/add_friend_outcome.dart';
@@ -4015,6 +4016,26 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     } catch (e, stack) {
       _recordError(e, stack, reason: 'submitSuggestedQuestion failed');
       return false;
+    }
+  }
+
+  @override
+  Future<List<MySuggestion>?> loadMySuggestions() async {
+    try {
+      final userId = currentUserId;
+      if (userId == null) return const [];
+      // `suggested_questions_read_own` yalnız kendi satırlarını okutur;
+      // `eq` yine de yazılır ki sorgu politikaya yaslanmadan doğru olsun.
+      final rows = await client
+          .from('suggested_questions')
+          .select('id, category, prompt, status, created_at, review_note')
+          .eq('user_id', userId)
+          .order('created_at', ascending: false)
+          .limit(100);
+      return [for (final row in rows) MySuggestion.fromRow(row)];
+    } catch (e, stack) {
+      _recordError(e, stack, reason: 'loadMySuggestions failed');
+      return null;
     }
   }
 

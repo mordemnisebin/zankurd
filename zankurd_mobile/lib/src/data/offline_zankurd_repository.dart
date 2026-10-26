@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/async_duel.dart';
 import '../models/contest.dart';
 import '../models/match_history.dart';
+import '../models/my_suggestion.dart';
 import '../models/add_friend_outcome.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
@@ -334,6 +335,9 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
     String? explanation,
     int difficulty = 3,
   }) async => false;
+
+  @override
+  Future<List<MySuggestion>?> loadMySuggestions() async => null;
 
   @override
   Future<bool> saveTournamentProgress(

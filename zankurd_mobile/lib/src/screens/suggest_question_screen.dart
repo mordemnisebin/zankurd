@@ -6,6 +6,7 @@ import '../l10n/strings.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
+import 'my_suggestions_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Kullanıcıların yeni soru önerebileceği ekran.
@@ -97,6 +98,14 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
     }
   }
 
+  void _openMine() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => MySuggestionsScreen(repository: widget.repository),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
@@ -129,6 +138,14 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
               Text(
                 context.t(K.suggestIntro),
                 style: SahneType.body.copyWith(color: t.tx2),
+              ),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: SahneButton.text(
+                  key: const ValueKey('suggest-my-suggestions'),
+                  label: context.t(K.mySuggestions),
+                  onPressed: _openMine,
+                ),
               ),
               const SizedBox(height: SahneSpace.x4),
               SahneSurfaceCard(
@@ -343,6 +360,13 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                     style: SahneType.body.copyWith(color: t.tx2),
                   ),
                   const SizedBox(height: SahneSpace.x6),
+                  SahneButton.secondary(
+                    key: const ValueKey('suggest-success-mine'),
+                    label: context.t(K.mySuggestions),
+                    expand: true,
+                    onPressed: _openMine,
+                  ),
+                  const SizedBox(height: SahneSpace.x2),
                   SahneButton.primary(
                     label: context.t(K.goBack),
                     arrow: false,

@@ -11,6 +11,7 @@ import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/match_history.dart';
+import '../models/my_suggestion.dart';
 import '../models/player.dart';
 import '../models/public_profile.dart';
 import '../models/quiz_level.dart';
@@ -918,6 +919,10 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
     String? explanation,
     int difficulty = 3,
   });
+
+  /// Kullanıcının kendi soru önerileri, en yenisi önce ("Önerilerim").
+  /// Yüklenemezse `null` (boş liste ile karışmasın diye).
+  Future<List<MySuggestion>?> loadMySuggestions();
 
   /// Davet / referans kodunu kullanır ve ödül verir.
   Future<ReferralResult> redeemReferralCode(String code);

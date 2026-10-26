@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/async_duel.dart';
 import '../models/match_history.dart';
+import '../models/my_suggestion.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/add_friend_outcome.dart';
@@ -4533,10 +4534,26 @@ class MockZanKurdRepository implements ZanKurdRepository {
     String? explanation,
     int difficulty = 3,
   }) async {
-    // Mock: her zaman başarılı olarak dön.
+    // Mock: her zaman başarılı; "Önerilerim"de bekleyen olarak görünür.
     // Canlı ortamda Supabase 'suggested_questions' tablosuna yazılır.
+    _mockSuggestions.insert(
+      0,
+      MySuggestion(
+        id: 'mock-${_mockSuggestions.length + 1}',
+        category: category,
+        prompt: prompt,
+        status: MySuggestionStatus.pending,
+        createdAt: DateTime.now(),
+      ),
+    );
     return true;
   }
+
+  final List<MySuggestion> _mockSuggestions = [];
+
+  @override
+  Future<List<MySuggestion>?> loadMySuggestions() async =>
+      List.unmodifiable(_mockSuggestions);
 
   bool _mockReferralUsed = false;
 
