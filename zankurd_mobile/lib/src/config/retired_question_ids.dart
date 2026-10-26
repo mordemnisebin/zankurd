@@ -793,6 +793,14 @@ const Set<String> retiredQuestionIds = <String>{
   'kolay_dirok_08', // "Ehmedê Xanî kî bû?" (offline_curated_20304)
   'sf_nat_0005', // Sîstema Rojê gerstêrk sayısı (bilim_0001, NASA kaynaklı)
   'wo-ku-001', // "Ez diçim malê" sıralama (dersler2_2026_10_08_0128)
+  // ---------------------------------------------------------------------
+  // 2026-10-26: def/tembûr sorusu. "Düğünde tembûra genellikle def eşlik
+  // eder" ve "diğer aletler geleneksel değildir" genellemeleri kaynakla
+  // doğrulanamadı; Horasan Kürt düğünlerinde keman/kamança topluluğu var
+  // (Encyclopaedia Iranica). Anlamı değiştiren düzeltme yerine emekli.
+  // Ayrıntı: docs/content_batches/ds_cand_0041_kaynak_incelemesi_2026_10_26.md
+  // ---------------------------------------------------------------------
+  'ds_cand_0041', // def + tembûr genellemesi, kaynaksız
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

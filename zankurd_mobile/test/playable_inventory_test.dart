@@ -198,7 +198,9 @@ void main() {
       // (kolay_dirok_08, sf_nat_0005, wo-ku-001).
       // 3301 -> 3377 (+76): 2026-10-25 `dersler4_2026_10_25`, hepsi `approved`
       // (izafe, gelecek zaman, emir kipi, aylar; bkz. `beginner_track_4_test`).
-      3377,
+      // 3377 -> 3376 (-1): 2026-10-26 `ds_cand_0041` (def/tembûr genellemesi
+      // kaynaksız) emekliye ayrıldı.
+      3376,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -282,7 +284,8 @@ void main() {
       'retired=Ziman':
           42, // 2026-10-22 yakın tekrar +1; 2026-10-23 edit_ziman_0003
       // 41 -> 42: 2026-10-08 `ds_cand_0285` (cevap soru metninde) emekliye ayrıldı.
-      'retired=Çand': 42,
+      // 42 -> 43: 2026-10-26 `ds_cand_0041` (def/tembûr genellemesi kaynaksız).
+      'retired=Çand': 43,
       // 2026-09-30 altıncı dalga: Teknolojî'den iki modelce onaylanan 3 soru.
       'retired=Teknolojî': 3,
       // 2026-09-30 dördüncü dalga: tartışmalı siyasi görüşü doğru cevap diye

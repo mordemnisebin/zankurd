@@ -98,7 +98,14 @@ void main() {
       find.byKey(const ValueKey('leaderboard-rank-row-3')),
       findsOneWidget,
     );
+    expect(find.byType(LeaderboardScreen), findsOneWidget);
     await capture('native_leaderboard');
+
+    // ZanKurdApp `MaterialApp`ın Navigator anahtarını kökte paylaşır; başka
+    // bir ekran örneğine geçerken test ağacını sökmeden pumpWidget aynı rotayı
+    // bırakabilir. İkinci native görüntü önceki ekranın aynısı çıkmıştı.
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
 
     await tester.pumpWidget(
       ZanKurdApp(
@@ -109,6 +116,7 @@ void main() {
     );
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
+    expect(find.byType(SpinWheelScreen), findsOneWidget);
     await capture('native_spin_wheel');
   });
 }

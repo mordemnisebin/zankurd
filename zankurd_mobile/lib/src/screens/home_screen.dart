@@ -710,9 +710,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               icon: AppIcons.arrowsRotate,
               role: SahneRole.learn,
               title: context.t(K.homeReviewTime),
-              subtitle: context.t(K.homeReviewTimeSub, {
-                'count': '$_reviewReadyCount',
-              }),
+              subtitle: _reviewReadyCount == 1
+                  ? context.t(K.homeReviewTimeSubOne)
+                  : context.t(K.homeReviewTimeSub, {
+                      'count': '$_reviewReadyCount',
+                    }),
               onTap: _openLearning,
             ),
           ],

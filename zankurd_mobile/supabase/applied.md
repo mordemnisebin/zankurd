@@ -264,3 +264,4 @@
 | 2026-10-25_seri_onarimi_gun_toleransi.sql | ✅ | 2026-10-25, motor uyguladı: saat dilimi hatası düzeltmesi; yalnız alt sınır v_today-2. Dry-run ve tanım doğrulaması geçti. |
 | 2026-10-25_kopya_soru_emekli.sql | ✅ | 2026-10-25, motor uyguladı: önce canlı durum okundu (iki hedef onaylı, kalan eşler onaylı); dry-run; sonra 199f99ef ve 0db6534f is_approved=false, kalan iki eş true (doğrulandı). Geri alma: aynı id'lerde true. |
 | 2026-10-25_dersler4_lessons.sql | ✅ | 2026-10-25, motor uyguladı: dry-run + kanıt (4 ders izafe, dema-be, fermani, mehen-sale; her biri 5 slayt; sıra grammar 3–5, time 3); uygulama sonrası salt okunur doğrulama aynı. |
+| 2026-10-26_def_tembur_emekli.sql | ✅ | 2026-10-26, motor uyguladı: önce canlı durum okundu (2a1f76a9 onaylı); dry-run; sonra is_approved=false (doğrulandı). Yerelde retired_question_ids.dart'ta ds_cand_0041. Geri alma: aynı id'de true. |

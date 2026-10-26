@@ -2502,9 +2502,13 @@ class Tr {
       'tr': 'Konular yüklenemedi. Tekrar dene.',
     },
     K.homeReviewTime: {'ku': 'Dema dubarekirinê', 'tr': 'Tekrar zamanı'},
+    K.homeReviewTimeSubOne: {
+      'ku': '1 tişt li benda te ye',
+      'tr': '1 öğe seni bekliyor',
+    },
     K.homeReviewTimeSub: {
-      'ku': '{count} pirs li benda te ne',
-      'tr': '{count} soru seni bekliyor',
+      'ku': '{count} tişt li benda te ne',
+      'tr': '{count} öğe seni bekliyor',
     },
     K.homePathNext: {'ku': 'Li dorê: {name}', 'tr': 'Sıradaki: {name}'},
     K.homeGreeting: {'ku': '{greeting}, {name}!', 'tr': '{greeting}, {name}!'},
@@ -4915,6 +4919,7 @@ class K {
   static const genericErrorBody = 'error.generic.body';
   static const categoriesLoadFail = 'categories.loadFail';
   static const homeReviewTime = 'home.reviewTime';
+  static const homeReviewTimeSubOne = 'home.reviewTime.subOne';
   static const homeReviewTimeSub = 'home.reviewTime.sub';
   static const homePathNext = 'home.path.next';
 

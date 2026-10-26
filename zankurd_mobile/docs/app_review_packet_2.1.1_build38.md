@@ -348,7 +348,7 @@ the abuse-report route: iletisim@zankurd.com.
 - RevenueCat: optional subscription offerings, entitlement state, and restore
   purchases.
 - Firebase Crashlytics: crash and stability diagnostics.
-- Firebase Analytics: product analytics only after the user enables analytics.
+- Firebase Analytics: product analytics is enabled when no saved preference exists. Users can disable it in Settings; a saved disabled preference is respected.
 - Firebase Cloud Messaging: device push token for friend-request and duel
   notifications; stored on the user's profile.
 - Apple system services: App Store purchase and review flows; no custom

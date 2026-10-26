@@ -4,6 +4,7 @@ import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/word_list_store.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/widgets/todays_review_card.dart';
 
@@ -21,21 +22,49 @@ void main() {
     LocalProgressScope.debugReset();
   });
 
-  Future<void> pump(WidgetTester tester, Widget screen) async {
+  Future<void> pump(
+    WidgetTester tester,
+    Widget screen, {
+    String lang = 'tr',
+  }) async {
     tester.view.physicalSize = const Size(480, 1600);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(testShell(child: screen));
+    await tester.pumpWidget(
+      testShell(
+        child: screen,
+        languageProvider: LanguageProvider(initialLang: lang),
+      ),
+    );
     await tester.pumpAndSettle();
   }
 
-  testWidgets('home shows word-only due repeats', (tester) async {
-    final words = await WordListStore.load();
-    await words.add('rojbas');
-    await pump(tester, HomeScreen(repository: MockZanKurdRepository()));
-    expect(find.byKey(const ValueKey('home-review-row')), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
+  for (final lang in ['tr', 'ku']) {
+    for (final count in [1, 2]) {
+      testWidgets('home labels $count due words as items in $lang', (
+        tester,
+      ) async {
+        final words = await WordListStore.load();
+        await words.add('rojbas');
+        if (count == 2) await words.add('spas');
+        await pump(
+          tester,
+          HomeScreen(repository: MockZanKurdRepository()),
+          lang: lang,
+        );
+        final row = find.byKey(const ValueKey('home-review-row'));
+        expect(row, findsOneWidget);
+        final text = lang == 'tr'
+            ? '$count öğe seni bekliyor'
+            : '$count tişt li benda te ${count == 1 ? 'ye' : 'ne'}';
+        expect(
+          find.descendant(of: row, matching: find.text(text)),
+          findsOneWidget,
+        );
+        expect(tester.takeException(), isNull);
+      });
+    }
+  }
 
   testWidgets('lesson return refreshes the same review card plan', (
     tester,
