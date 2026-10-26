@@ -7,10 +7,13 @@ Flutter, Supabase, Firebase ve RevenueCat ile çalışır.
 
 **Altın yol:** Öğren sekmesi (günün dersi) → solo quiz. Ana ekrandaki iki
 kapı öğrenme alanına (Kurmancî öğren) ve Yarış'a (hızlı düello, davet
-bağlantılı arkadaş odası) açılır. Hikâye, arkadaşlar, günlük çark ve
-yerleştirme ikinci katmandadır (Kurmancî öğren ekranı, Liderlik, Mağaza,
-Ayarlar). Turnuva ve haftalık lig `lib/src/config/feature_flags.dart` ile
-kapalıdır; kitle büyüyünce açılır.
+bağlantılı arkadaş odası) açılır. Hikâye, pratik merkezi (tekrar, sözlük,
+alfabe ve telaffuz, kelimelerim, kaydedilen sorular), arkadaşlar, günlük çark
+ve yerleştirme ikinci katmandadır (Kurmancî öğren ekranı, Yarış, Mağaza,
+Ayarlar). Turnuva (`kTournamentEnabled`, 2026-10-27'den beri açık) Yarış'ta
+doğrudan bir satırdır: 4 kişilik kupa, en geç 24 saatte en az 2 kişiyle
+başlar; beklerken ödülsüz botlu antrenman kupası. Haftalık lig
+`lib/src/config/feature_flags.dart` ile kapalıdır (az oyuncuyla anlamsız).
 
 Kabuk sekmeleri: Öğren, Yarış, Liderlik, Profil.
 

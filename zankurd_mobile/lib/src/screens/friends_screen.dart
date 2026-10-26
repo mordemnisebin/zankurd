@@ -29,6 +29,7 @@ import 'room_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
 import '../services/social_push_prompt.dart';
+import '../services/app_haptics.dart';
 
 /// Arkadaş listesi, oyuncu arama ve istek yönetimi ekranı.
 class FriendsScreen extends StatefulWidget {
@@ -611,7 +612,7 @@ class _FriendsScreenState extends State<FriendsScreen>
                         icon: AppIcons.shareNodes,
                         expand: true,
                         onPressed: () {
-                          HapticFeedback.selectionClick();
+                          AppHaptics.selection();
                           // Davet metni mağaza bağlantılarını da taşır: alıcı
                           // kodu görüp uygulamayı nereden bulacağını bilsin.
                           final text =
@@ -739,7 +740,7 @@ class _FriendsScreenState extends State<FriendsScreen>
               color: SahneVivid.onFill,
               icon: const Icon(AppIcons.copy),
               onPressed: () async {
-                HapticFeedback.selectionClick();
+                AppHaptics.selection();
                 await Clipboard.setData(ClipboardData(text: tag));
                 if (!mounted) return;
                 _showMessage(context.t(K.playerTagCopied));
@@ -770,7 +771,7 @@ class _FriendsScreenState extends State<FriendsScreen>
     );
     if (result == null || !mounted) return;
     if (result.isSuccess) {
-      HapticFeedback.mediumImpact();
+      AppHaptics.medium();
       _showMessage(context.t(K.referralCodeApplied));
     } else {
       final msg = switch (result.status) {

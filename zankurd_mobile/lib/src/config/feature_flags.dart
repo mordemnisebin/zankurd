@@ -5,15 +5,15 @@ library;
 /// Davet ödülü kartı açıktır.
 const kReferralRewardsEnabled = true;
 
-/// Eleme turnuvası (16 oyuncu, 4 tur) Yarış sekmesinde görünür mü?
+/// Eleme turnuvası Yarış sekmesinde görünür mü?
 ///
-/// 2026-09-27: kapatıldı. Turnuva kontenjan dolunca başlıyor; kullanıcı
-/// sayısı az olan bir uygulamada kontenjan günlerce dolmuyor ve oyuncu
-/// "boş bir salona" bakıyor. Benzer uygulamalarda da (Pirs, Quizduell)
-/// küçük kitleyi tutan şey arkadaşla oda ve sırayla oynanan düellodur,
-/// kalabalık bekleyen modlar değil. Kod ve sunucu tarafı yerinde duruyor;
-/// kitle büyüyünce bu bayrak açılır.
-const kTournamentEnabled = false;
+/// 2026-09-27'de "kalabalık bekliyor" diye kapatılmıştı. 2026-10-27'de
+/// açıldı: canlı sunucuda kupa 4 kişilik ve en geç 24 saatte en az 2
+/// kişiyle başlıyor (`get_tournament_bracket` bekleyen başlatma ve süresi
+/// dolan maçları kendisi yürütür), yani arkadaş çevresinde de oynanır.
+/// Kontenjan beklerken oyuncuya açıkça "botlarla, ödülsüz" antrenman
+/// kupası sunulur.
+const kTournamentEnabled = true;
 
 /// Haftalık lig (Bronz/Gümüş/Altın) sıralamada ve profilde görünür mü?
 ///

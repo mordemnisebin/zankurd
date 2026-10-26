@@ -116,9 +116,9 @@ void main() {
     semantics.dispose();
   });
 
-  // "Daha fazla" yalnız turnuva bayrağı açıkken çizilir (kTournamentEnabled).
+  // 2026-10-27: turnuva "Daha fazla" ardından çıktı, doğrudan satır.
   testWidgets(
-    'daha fazla eylemi ekran okuyucuda tek kez duyurulur',
+    'turnuva satırı ekran okuyucuda tek kez duyurulur',
     skip: !kTournamentEnabled,
     (tester) async {
       final semantics = tester.ensureSemantics();
@@ -128,10 +128,12 @@ void main() {
         _shell(PlayHubScreen(repository: MockZanKurdRepository())),
       );
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.byKey(const ValueKey('play-hub-more')));
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('play-hub-tournament')),
+      );
       await tester.pumpAndSettle();
 
-      expect(find.bySemanticsLabel(RegExp(r'^Daha fazla')), findsOneWidget);
+      expect(find.bySemanticsLabel(RegExp(r'^Turnuva\.')), findsOneWidget);
       semantics.dispose();
     },
   );
@@ -181,12 +183,10 @@ void main() {
       findsOneWidget,
     );
     expect(find.byKey(const ValueKey('play-hub-spin-wheel')), findsOneWidget);
-    expect(find.byKey(const ValueKey('play-hub-tournament')), findsNothing);
-    if (kTournamentEnabled) {
-      expect(find.byKey(const ValueKey('play-hub-more')), findsOneWidget);
-    } else {
-      expect(find.byKey(const ValueKey('play-hub-more')), findsNothing);
-    }
+    expect(
+      find.byKey(const ValueKey('play-hub-tournament')),
+      kTournamentEnabled ? findsOneWidget : findsNothing,
+    );
     expect(find.byKey(const ValueKey('play-hub-shop-card')), findsNothing);
     expect(find.text('Turnuva ve sıralama'), findsNothing);
     expect(tester.takeException(), isNull);

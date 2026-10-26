@@ -398,11 +398,6 @@ class Tr {
       'ku': 'Elemeya bi lîstikvanên rastîn',
       'tr': 'Gerçek oyuncularla eleme',
     },
-    K.playMore: {'ku': 'Zêdetir', 'tr': 'Daha fazla'},
-    K.playMoreSub: {
-      'ku': 'Kûpa û modên din li vir in.',
-      'tr': 'Turnuva ve diğer modlar burada.',
-    },
     K.quickDuel: {'ku': 'Pêşbirka zindî', 'tr': 'Canlı düello'},
     // Düello sahne kartının manşeti ve süre satırı ayrı dizgelerdir:
     // eskiden `quickDuelSub` " · " ayracından bölünüyordu (çeviri ayracı
@@ -512,6 +507,7 @@ class Tr {
     K.wordsDueBadge: {'ku': 'Amade', 'tr': 'Hazır'},
     // ── Tek "Tekrar" girişi: kelime (Leitner) + yanlış sorusu (2 oturum) ──
     K.tekrarTitle: {'ku': 'Dubarekirin', 'tr': 'Tekrar'},
+    K.practiceSection: {'ku': 'Pratîk', 'tr': 'Pratik'},
     K.tekrarTodayLine: {
       'ku': 'Dubarekirin · îro {count}',
       'tr': 'Tekrar · bugün {count}',
@@ -655,7 +651,14 @@ class Tr {
     // Kurmancî karşılık "Kûpa"dır; iki dil için aynı metin ("Bot turnuva")
     // yazılmıştı ve Türkçe sözcük Kurmancî arayüze sızıyordu. Terim
     // tutarlılığı testi bunu göç sırasında yakaladı (2026-07-25).
-    K.botTournament: {'ku': 'Kûpaya herêmî', 'tr': 'Yerel turnuva'},
+    K.botTournament: {
+      'ku': 'Kûpaya meşqê · bi botan re',
+      'tr': 'Antrenman kupası · botlarla',
+    },
+    K.tournamentPractice: {
+      'ku': 'Dema li bendê yî, bi botan re meşq bike',
+      'tr': 'Beklerken botlarla antrenman yap',
+    },
     K.bracket: {'ku': 'Şemaya kûpayê', 'tr': 'Turnuva şeması'},
     K.standings: {'ku': 'Rêzbendî', 'tr': 'Sıralama'},
     K.cupStartsWhenFull: {
@@ -1543,6 +1546,139 @@ class Tr {
     K.stopAction: {'ku': 'Rawestîne', 'tr': 'Durdur'},
     // 2026-10-26 telaffuz atölyesi. KU: Gemini 3.8 Flash + Grok 4.7; 5 ve 7
     // uyuşmazlığında hakem Codex (gpt-6.1-sol), çoğunluk uygulandı.
+    K.faqTitle: {'ku': 'Pirsên pir tên kirin', 'tr': 'Sık sorulan sorular'},
+    K.faqSyncQ: {
+      'ku': 'Pêşketina min derbasî cîhazekî din dibe?',
+      'tr': 'İlerlemem başka cihaza taşınır mı?',
+    },
+    K.faqSyncA: {
+      'ku':
+          'Heke hesabê xwe bi e-nameyê, Apple an Google tomar bikî, pêşketina te li ser pêşkêşkarê tê parastin; li cîhazekî din bi heman hesabî têkevî, pêşketina te vedigere. Pêşketina hesabê mêvan tenê li ser vî cîhazî ye.',
+      'tr':
+          'Hesabını kaydedersen (e-posta, Apple ya da Google) ilerlemen sunucuda saklanır; başka cihazda aynı hesapla girince geri gelir. Misafir hesabın ilerlemesi yalnız bu cihazdadır.',
+    },
+    K.faqStreakQ: {
+      'ku': 'Heke zincîra min biqete çi dibe?',
+      'tr': 'Serim kırılırsa ne olur?',
+    },
+    K.faqStreakA: {
+      'ku':
+          'Her roj herî kêm dorekê an dersekê biqedînî, zincîra te dirêj dibe. Heke rojekê derbas bikî, berî ku zincîra te sifir bibe, vebijarka parastina wê bi zêr derdikeve.',
+      'tr':
+          'Her gün en az bir tur ya da ders bitirince serin büyür. Bir gün kaçırırsan, serin sıfırlanmadan önce onu jetonla koruma seçeneği çıkar.',
+    },
+    K.faqCoinsQ: {'ku': 'Zêr ji bo çi ye?', 'tr': 'Jeton ne işe yarar?'},
+    K.faqCoinsA: {
+      'ku':
+          'Bi zêr dikarî ji Dukanê alîkar, çarçove û mafên zêde yên zivirandina çerxê bikirî û zincîra xwe biparêzî. Zêr ji bersivên rast, peywiran û çerxa rojê tê bidestxistin.',
+      'tr':
+          'Jokerleri, çerçeveleri ve ek çark hakkını Mağaza\'dan almaya ve serini korumaya yarar. Jeton doğru cevaplardan, görevlerden ve günün çarkından gelir.',
+    },
+    K.faqReportQ: {
+      'ku': 'Min di pirsekê de çewtiyek dît, çi bikim?',
+      'tr': 'Bir soruda hata gördüm, ne yapayım?',
+    },
+    K.faqReportA: {
+      'ku':
+          'Li jorê rastê yê ekrana pirsê, ji menûya ••• li «Pirsê ragihîne» bitikîne. Her ragihandin tê vekolîn.',
+      'tr':
+          'Soru ekranının sağ üstündeki ••• menüsünden "Soruyu bildir"e dokun. Her bildirim incelenir.',
+    },
+    K.faqFriendsQ: {
+      'ku': 'Ez çawa bi hevalê xwe re bilîzim?',
+      'tr': 'Arkadaşımla nasıl oynarım?',
+    },
+    K.faqFriendsA: {
+      'ku':
+          'Ji beşa Pêşbirkê odeyekê çêke û girêdana vexwendinê parve bike. Heke hûn nikaribin di heman demê de bilîzin, dest bi duelekê bi dorê bike; hevalê te dema guncaw be dora xwe dilîze.',
+      'tr':
+          'Yarış sekmesinden oda kur ve davet bağlantısını paylaş. Aynı anda oynayamıyorsanız sırayla düello başlat; arkadaşın uygun olduğunda kendi turunu oynar.',
+    },
+    K.faqAudioQ: {
+      'ku': 'Çima dengê hin peyvan tune ye?',
+      'tr': 'Bazı sözcüklerin sesi niçin yok?',
+    },
+    K.faqAudioA: {
+      'ku':
+          'Tomarên dengê peyv bi peyv tên zêdekirin. Li cem peyvên bi deng bişkojka hoparlorê xuya dibe; bi bişkojka kûsiyê dikarî hêdî jî guhdarî dengî bikî.',
+      'tr':
+          'Ses kayıtları sözcük sözcük ekleniyor. Kaydı olan sözcüklerde hoparlör düğmesi görünür; kaplumbağa düğmesiyle sesi yavaş da dinleyebilirsin.',
+    },
+    K.faqDeleteQ: {
+      'ku': 'Ez çawa hesabê xwe jê bibim?',
+      'tr': 'Hesabımı nasıl silerim?',
+    },
+    K.faqDeleteA: {
+      'ku':
+          'Ji rêza «Hesabê min jê bibe» ya li dawiya Mîhengê. Hesabê te û daneyên te yên li ser pêşkêşkarê tên jêbirin.',
+      'tr':
+          'Ayarlar\'ın en altındaki "Hesabımı sil" satırından. Hesabın ve sunucudaki verilerin silinir.',
+    },
+    K.faqContactQ: {
+      'ku': 'Ez çawa bi we re têkilî daynim?',
+      'tr': 'Size nasıl ulaşırım?',
+    },
+    K.faqContactA: {
+      'ku':
+          'Ji navnîşana iletisim@zankurd.com re binivîse an rêza «Ramanên xwe parve bike» ya di Mîhengê de bi kar bîne.',
+      'tr':
+          'iletisim@zankurd.com adresine yaz ya da Ayarlar\'daki "Geri bildirim gönder" satırını kullan.',
+    },
+    K.exportData: {
+      'ku': 'Daneyên pêşketina min derxîne',
+      'tr': 'İlerleme verilerimi dışa aktar',
+    },
+    K.exportDataSub: {
+      'ku': 'Zincîr, rozet, ders û peyvên te wekî pelekî JSON tên parvekirin.',
+      'tr':
+          'Serin, rozetlerin, derslerin ve kelimelerin tek bir JSON dosyası '
+          'olarak paylaşılır.',
+    },
+    K.alphabetTitle: {'ku': 'Elîfbê û deng', 'tr': 'Alfabe ve sesler'},
+    K.alphabetIntro: {
+      'ku':
+          'Li tîpekê bitikîne û li peyveke mînak guhdarî bike. Tîpên bê nîşe '
+          'wekî di Tirkî de tên xwendin.',
+      'tr':
+          'Bir harfe dokun, örnek kelimeyi dinle. Notu olmayan harfler '
+          'Türkçedeki gibi okunur.',
+    },
+    K.alphabetHintE: {
+      'ku': 'Wekî "e"ya Tirkî, hinekî vekirîtir.',
+      'tr': 'Türkçedeki e gibi, biraz daha açık.',
+    },
+    K.alphabetHintEe: {
+      'ku':
+          '"Ê" dirêj û girtî ye; ji "e"ya Tirkî girtîtir û dirêjtir tê gotin.',
+      'tr': 'Uzun ve kapalı e; Türkçedeki e\'den daha kapalı ve uzun söylenir.',
+    },
+    K.alphabetHintI: {
+      'ku': '"i"ya kurt; wekî "i"ya Tirkî ye, lê hinekî vekirîtir û sisttir e.',
+      'tr': "Kısa i; Türkçedeki i'den biraz daha açık ve gevşek.",
+    },
+    K.alphabetHintIi: {
+      'ku': '"I"ya dirêj; wekî "i"ya Tirkî.',
+      'tr': 'Uzun i; Türkçedeki i gibi.',
+    },
+    K.alphabetHintU: {'ku': '"U"ya kurt.', 'tr': 'Kısa u.'},
+    K.alphabetHintUu: {'ku': '"U"ya dirêj.', 'tr': 'Uzun u.'},
+    K.alphabetHintQ: {
+      'ku':
+          'Dengê "q"yê wekî "k"yeke stûr e; bi paşiya zimanî li ber zimanokê tê gotin.',
+      'tr': 'Dilin en arkasından, küçük dile yakın söylenen kalın k.',
+    },
+    K.alphabetHintW: {
+      'ku': 'Wekî "w"ya Îngilîzî; lêv girover dibin.',
+      'tr': 'İngilizcedeki w gibi; dudaklar yuvarlanır.',
+    },
+    K.alphabetHintX: {
+      'ku':
+          'Dengekî bi xirxir e ku bi paşiya zimanî tê gotin; wekî "ch"ya peyva Almanî "Bach".',
+      'tr':
+          'Dilin arkasından hırıltıyla çıkan ses; Almanca Bach\'taki ch gibi.',
+    },
+    K.hapticsSetting: {'ku': 'Lerizîn', 'tr': 'Titreşim'},
+    K.slowListen: {'ku': 'Hêdî guhdarî bike', 'tr': 'Yavaş dinle'},
     K.pronunciationTitle: {'ku': 'Bilêvkirin', 'tr': 'Telaffuz'},
     K.pronunciationTry: {
       'ku': 'Bilêvkirinê biceribîne',
@@ -2615,6 +2751,10 @@ class Tr {
       'tr': '{name} yanlışlarını gözden geçir',
     },
     K.storyCatalogTitle: {'ku': 'Çîrokên rojane', 'tr': 'Günlük hikâyeler'},
+    K.storyCatalogAll: {
+      'ku': 'Hemû çîrok ({count})',
+      'tr': 'Tüm hikâyeler ({count})',
+    },
     K.storyStatusDone: {'ku': 'Qediya', 'tr': 'Tamamlandı'},
     K.storyStatusStart: {'ku': 'Dest pê bike', 'tr': 'Başla'},
     K.storyStatusContinue: {'ku': 'Bidomîne', 'tr': 'Devam et'},
@@ -4044,8 +4184,6 @@ class K {
   static const tenQuestions = 'play.tenQuestions';
   static const tournament = 'play.tournament';
   static const tournamentSub = 'play.tournament.sub';
-  static const playMore = 'play.more';
-  static const playMoreSub = 'play.more.sub';
   static const quickDuel = 'play.quickDuel';
   static const quickDuelHeadline = 'play.quickDuel.headline';
   static const quickDuelDuration = 'play.quickDuel.duration';
@@ -4092,6 +4230,7 @@ class K {
   static const wordsReviewScore = 'words.review.score';
   static const wordsBox = 'words.box';
   static const wordsDueBadge = 'words.dueBadge';
+  static const practiceSection = 'learning.practice.section';
   static const tekrarTitle = 'tekrar.title';
   static const tekrarTodayLine = 'tekrar.todayLine';
   static const tekrarBreakdown = 'tekrar.breakdown';
@@ -4529,6 +4668,39 @@ class K {
   /// "+0 jeton" görüp sebebini öğrenemez.
   static const soloDailyCapReached = 'quiz.reward.soloDailyCap';
   static const stopAction = 'common.stop';
+  static const faqTitle = 'faq.Title';
+  static const faqSyncQ = 'faq.SyncQ';
+  static const faqSyncA = 'faq.SyncA';
+  static const faqStreakQ = 'faq.StreakQ';
+  static const faqStreakA = 'faq.StreakA';
+  static const faqCoinsQ = 'faq.CoinsQ';
+  static const faqCoinsA = 'faq.CoinsA';
+  static const faqReportQ = 'faq.ReportQ';
+  static const faqReportA = 'faq.ReportA';
+  static const faqFriendsQ = 'faq.FriendsQ';
+  static const faqFriendsA = 'faq.FriendsA';
+  static const faqAudioQ = 'faq.AudioQ';
+  static const faqAudioA = 'faq.AudioA';
+  static const faqDeleteQ = 'faq.DeleteQ';
+  static const faqDeleteA = 'faq.DeleteA';
+  static const faqContactQ = 'faq.ContactQ';
+  static const faqContactA = 'faq.ContactA';
+  static const exportData = 'settings.exportData';
+  static const exportDataSub = 'settings.exportData.sub';
+  static const tournamentPractice = 'tournament.practice';
+  static const alphabetTitle = 'alphabet.title';
+  static const alphabetIntro = 'alphabet.intro';
+  static const alphabetHintE = 'alphabet.hint.e';
+  static const alphabetHintEe = 'alphabet.hint.ee';
+  static const alphabetHintI = 'alphabet.hint.i';
+  static const alphabetHintIi = 'alphabet.hint.ii';
+  static const alphabetHintU = 'alphabet.hint.u';
+  static const alphabetHintUu = 'alphabet.hint.uu';
+  static const alphabetHintQ = 'alphabet.hint.q';
+  static const alphabetHintW = 'alphabet.hint.w';
+  static const alphabetHintX = 'alphabet.hint.x';
+  static const hapticsSetting = 'settings.haptics';
+  static const slowListen = 'audio.slowListen';
   static const pronunciationTitle = 'pronunciation.title';
   static const pronunciationTry = 'pronunciation.try';
   static const pronunciationPlayMine = 'pronunciation.playMine';
@@ -4957,6 +5129,7 @@ class K {
   static const outcomeEmpty = 'outcome.empty';
   static const outcomeReviewGeneric = 'outcome.review.generic';
   static const outcomeReviewNamed = 'outcome.review.named';
+  static const storyCatalogAll = 'story.catalog.all';
   static const storyCatalogTitle = 'story.catalog.title';
   static const storyStatusDone = 'story.status.done';
   static const storyStatusStart = 'story.status.start';

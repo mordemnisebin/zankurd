@@ -7,7 +7,9 @@ import '../models/story.dart';
 import '../theme/app_icons.dart';
 import 'sahne/sahne.dart';
 
-typedef StoryOpenCallback = Future<void> Function(Story story, MiniGuide guide);
+/// [guide] yalnız ilk dört hikâyede var; yenilerde `null` (rehbersiz açılır).
+typedef StoryOpenCallback =
+    Future<void> Function(Story story, MiniGuide? guide);
 
 /// Günlük hikâyeleri ve her birinin yerel ilerleme durumunu gösterir.
 class StoryCatalog extends StatefulWidget {
@@ -15,12 +17,25 @@ class StoryCatalog extends StatefulWidget {
     required this.isKu,
     required this.onOpen,
     this.compact = false,
+    this.limit,
+    this.onShowAll,
+    this.showHeader = true,
     super.key,
   });
+
+  /// Bölüm başlığı; kendi sayfasında (başlık çubukta) çizilmez.
+  final bool showHeader;
 
   final bool isKu;
   final StoryOpenCallback onOpen;
   final bool compact;
+
+  /// Doluysa liste en çok bu kadar satır gösterir (yarım kalanlar, sonra
+  /// başlanmamışlar, en son bitenler) ve altına "Tüm hikâyeler" satırı
+  /// koyar. 2026-10-27: hikâye sayısı 4'ten 12'ye çıkınca öğrenme sayfası
+  /// uzun bir listeye dönüyordu.
+  final int? limit;
+  final Future<void> Function()? onShowAll;
 
   @override
   State<StoryCatalog> createState() => _StoryCatalogState();
@@ -52,9 +67,9 @@ class _StoryCatalogState extends State<StoryCatalog> {
   }
 
   Future<void> _open(Story story) async {
-    final guide = everydayGuides[story.id];
-    if (guide == null) return;
-    await widget.onOpen(story, guide);
+    // Rehberi olmayan hikâye eskiden SESSİZCE açılmıyordu (dönüş); rehber
+    // isteğe bağlıdır.
+    await widget.onOpen(story, everydayGuides[story.id]);
     await _loadProgress();
   }
 
@@ -69,14 +84,16 @@ class _StoryCatalogState extends State<StoryCatalog> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // 2026-09-29 Şahnê: bölüm başlığı dili — Manşet 22 + Açıklama.
-        Semantics(
-          header: true,
-          child: Text(
-            Tr.forKu(K.storyCatalogTitle, widget.isKu),
-            style: SahneType.headline.copyWith(color: t.tx),
+        if (widget.showHeader) ...[
+          Semantics(
+            header: true,
+            child: Text(
+              Tr.forKu(K.storyCatalogTitle, widget.isKu),
+              style: SahneType.headline.copyWith(color: t.tx),
+            ),
           ),
-        ),
-        const SizedBox(height: SahneSpace.x3),
+          const SizedBox(height: SahneSpace.x3),
+        ],
         if (widget.compact)
           SizedBox(
             height: compactRailHeight,
@@ -110,7 +127,7 @@ class _StoryCatalogState extends State<StoryCatalog> {
           // ayırıcı metin hizasından (16) başlar.
           SahneListGroup(
             children: [
-              for (final story in everydayStories)
+              for (final story in _visibleStories())
                 _StoryCatalogCard(
                   key: ValueKey('story-card-${story.id}'),
                   story: story,
@@ -120,10 +137,49 @@ class _StoryCatalogState extends State<StoryCatalog> {
                   compact: false,
                   onTap: () => _open(story),
                 ),
+              if (_truncated && widget.onShowAll != null)
+                SahneListRow.plain(
+                  key: const ValueKey('story-catalog-all'),
+                  title: Tr.forKu(K.storyCatalogAll, widget.isKu, {
+                    'count': '${everydayStories.length}',
+                  }),
+                  chevron: true,
+                  onTap: () async {
+                    await widget.onShowAll!();
+                    // Tüm hikâyeler sayfasında ilerleme değişmiş olabilir.
+                    await _loadProgress();
+                  },
+                ),
             ],
           ),
       ],
     );
+  }
+
+  bool get _truncated {
+    final limit = widget.limit;
+    return limit != null && everydayStories.length > limit;
+  }
+
+  /// Sıra: yarım kalan → başlanmamış → biten; aynı grupta katalog sırası.
+  List<Story> _visibleStories() {
+    final limit = widget.limit;
+    if (limit == null || everydayStories.length <= limit) {
+      return everydayStories;
+    }
+    int rank(Story story) {
+      if (_done.contains(story.id)) return 2;
+      final node = _progress[story.id];
+      final started = node != null && node != story.start.id;
+      return started ? 0 : 1;
+    }
+
+    final indexed = everydayStories.indexed.toList()
+      ..sort((a, b) {
+        final byRank = rank(a.$2).compareTo(rank(b.$2));
+        return byRank != 0 ? byRank : a.$1.compareTo(b.$1);
+      });
+    return [for (final (_, story) in indexed.take(limit)) story];
   }
 }
 

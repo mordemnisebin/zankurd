@@ -118,7 +118,8 @@ abstract interface class VerifiedQuestionAudioPlayer {
   bool get isPlaying;
   ValueListenable<bool> get playingListenable;
 
-  Future<void> play(VerifiedQuestionAudioClip clip);
+  /// [rate]: çalma hızı (1 = normal; yavaş dinleme için daha küçük).
+  Future<void> play(VerifiedQuestionAudioClip clip, {double rate = 1.0});
   Future<void> stop();
   void dispose();
 }
@@ -156,7 +157,7 @@ class AudioplayersVerifiedQuestionAudioPlayer
   ValueListenable<bool> get playingListenable => _playing;
 
   @override
-  Future<void> play(VerifiedQuestionAudioClip clip) async {
+  Future<void> play(VerifiedQuestionAudioClip clip, {double rate = 1.0}) async {
     final source = switch (clip.location) {
       VerifiedAudioLocation.asset => AssetSource(
         clip.source.startsWith('assets/')
@@ -165,7 +166,13 @@ class AudioplayersVerifiedQuestionAudioPlayer
       ),
       VerifiedAudioLocation.network => UrlSource(clip.source),
     };
-    await _player.play(source);
+    // Oynatıcı paylaşılır: hız her çalışta yeniden kurulur, yoksa bir
+    // yavaş dinlemeden sonra normal ses de yavaş kalırdı.
+    final player = _player;
+    await player.stop();
+    await player.setSource(source);
+    await player.setPlaybackRate(rate);
+    await player.resume();
   }
 
   @override
@@ -196,7 +203,10 @@ class NoopVerifiedQuestionAudioPlayer implements VerifiedQuestionAudioPlayer {
   ValueListenable<bool> get playingListenable => _playing;
 
   @override
-  Future<void> play(VerifiedQuestionAudioClip clip) async {}
+  Future<void> play(
+    VerifiedQuestionAudioClip clip, {
+    double rate = 1.0,
+  }) async {}
 
   @override
   Future<void> stop() async {}

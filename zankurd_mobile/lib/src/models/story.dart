@@ -5,6 +5,8 @@
 /// bağlama uygun geri bildirim kullanılır ([StoryChoice.feedbackKu]).
 library;
 
+import 'stories_2026_10.dart';
+
 class StoryChoice {
   const StoryChoice({
     required this.labelKu,
@@ -375,4 +377,6 @@ final List<Story> everydayStories = [
   introducingYourselfStory,
   shoppingStory,
   askingDirectionsStory,
+  // 2026-10-27: sekiz yeni hikâye (bkz. stories_2026_10.dart).
+  ...moreEverydayStories,
 ];

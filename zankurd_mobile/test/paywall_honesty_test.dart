@@ -183,10 +183,9 @@ void main() {
     ];
 
     test('kapalı ya da olmayan özellikleri vaat eden söz yok', () {
-      // `kTournamentEnabled` ve `kWeeklyLeagueEnabled` kapalıyken Premium
-      // bu özellikleri anarsa kullanıcı olmayan bir şey için öder. Bayrak
-      // açılırsa bu bekçi bilerek yeniden yazılmalı.
-      expect(kTournamentEnabled, isFalse);
+      // Haftalık lig kapalı; Premium onu anarsa kullanıcı olmayan bir şey
+      // için öder. Turnuva 2026-10-27'den beri açık ama HERKESE ücretsiz:
+      // Premium onu da "ayrıcalık" diye vaat edemez, bu yüzden yasak kalır.
       expect(kWeeklyLeagueEnabled, isFalse);
       const banned = [
         'turnuva', 'tournament', 'lig', 'league', // kapalı bayraklar

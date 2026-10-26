@@ -24,6 +24,7 @@ import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
 import '../utils/number_format.dart';
+import '../services/app_haptics.dart';
 
 /// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
 /// Statik yedek listedeki (`ShopItem.catalog`) her ikon burada da
@@ -629,7 +630,7 @@ class _ShopScreenState extends State<ShopScreen> {
 
   Future<void> _purchase(ShopItem item) async {
     if (_coinBalance < item.cost) {
-      HapticFeedback.vibrate();
+      AppHaptics.vibrate();
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(context.t(K.insufficientBalance))));
@@ -685,7 +686,7 @@ class _ShopScreenState extends State<ShopScreen> {
           return;
         }
         _retryPurchaseEffectItem = null;
-        HapticFeedback.lightImpact();
+        AppHaptics.light();
         try {
           context.read<SoundProvider>().playCorrect();
         } catch (error, stack) {
@@ -697,7 +698,7 @@ class _ShopScreenState extends State<ShopScreen> {
         }
         _showPurchaseCelebrationDialog(item);
       } else {
-        HapticFeedback.vibrate();
+        AppHaptics.vibrate();
         setState(() => _purchaseErrorMessage = context.t(K.purchaseFailed));
       }
     } on RetryableWriteException catch (error, stack) {
@@ -779,7 +780,7 @@ class _ShopScreenState extends State<ShopScreen> {
       _retryPurchaseEffectItem = null;
       _retryPurchaseItem = null;
     });
-    HapticFeedback.lightImpact();
+    AppHaptics.light();
     _showPurchaseCelebrationDialog(item);
   }
 

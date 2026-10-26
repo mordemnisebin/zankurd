@@ -183,7 +183,7 @@ class _FakeLessonListeningSpeaker implements LessonListeningSpeaker {
   final List<String> spoken = [];
 
   @override
-  Future<void> speak(String text) async {
+  Future<void> speak(String text, {bool slow = false}) async {
     spoken.add(text);
   }
 

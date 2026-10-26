@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show RenderAbstractViewport;
 import 'package:flutter/semantics.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -70,6 +69,7 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
 import '../utils/room_reactions.dart';
 import '../widgets/dialog_action_pair.dart';
+import '../services/app_haptics.dart';
 
 part 'quiz/quiz_layout_rules.dart';
 part 'quiz/quiz_session_types.dart';
@@ -668,7 +668,7 @@ class _QuizScreenState extends State<QuizScreen>
           if (remaining != lastTickSecond) {
             lastTickSecond = remaining;
             if (remaining > 0 && [5, 3, 1].contains(remaining)) {
-              HapticFeedback.lightImpact();
+              AppHaptics.light();
               context.read<SoundProvider>().playTick();
               if (remaining == 5) {
                 _announce(context.t(K.timerSecondsLeft, {'n': '$remaining'}));
@@ -3720,7 +3720,7 @@ class _QuizScreenState extends State<QuizScreen>
 
   Future<void> _answer(String answer) async {
     if (answered) return;
-    HapticFeedback.selectionClick();
+    AppHaptics.selection();
 
     _timerController.stop();
 
@@ -3733,7 +3733,7 @@ class _QuizScreenState extends State<QuizScreen>
         _wildcard.doubleAnswerActivated &&
         _firstAttemptAnswer.isEmpty &&
         !question.acceptsAnswer(answer)) {
-      HapticFeedback.heavyImpact();
+      AppHaptics.heavy();
       setState(() => _firstAttemptAnswer = answer);
       // Geri sayımı SÜRDÜR. `_answer` en başta `_timerController.stop()`
       // çağırıyor; bu erken çıkış onu yeniden başlatmadığı için ilk yanlış
@@ -3858,10 +3858,10 @@ class _QuizScreenState extends State<QuizScreen>
       }
 
       if (result['is_correct'] == true) {
-        HapticFeedback.mediumImpact();
+        AppHaptics.medium();
         context.read<SoundProvider>().playCorrect();
       } else {
-        HapticFeedback.vibrate();
+        AppHaptics.vibrate();
         context.read<SoundProvider>().playWrong();
       }
 
@@ -3953,10 +3953,10 @@ class _QuizScreenState extends State<QuizScreen>
       final correct = question.acceptsAnswer(answer);
       _trackMistake(correct);
       if (correct) {
-        HapticFeedback.mediumImpact();
+        AppHaptics.medium();
         context.read<SoundProvider>().playCorrect();
       } else {
-        HapticFeedback.vibrate();
+        AppHaptics.vibrate();
         context.read<SoundProvider>().playWrong();
       }
       setState(() {

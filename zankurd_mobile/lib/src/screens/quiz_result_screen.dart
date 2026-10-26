@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -58,6 +57,7 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
 import '../utils/number_format.dart';
 import '../services/social_push_prompt.dart';
+import '../services/app_haptics.dart';
 
 /// Seri kararının sonucu.
 ///
@@ -1429,7 +1429,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         awardCoins: repository.awardSpinCoins,
       );
       if (earned && context.mounted) {
-        HapticFeedback.mediumImpact();
+        AppHaptics.medium();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.t(K.shareRewardEarned)),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../config/app_config.dart';
@@ -9,6 +8,7 @@ import '../../l10n/strings.dart';
 import '../../providers/bilingual_labels_provider.dart';
 import '../../theme/app_icons.dart';
 import '../../widgets/sahne/sahne.dart';
+import '../../services/app_haptics.dart';
 
 /// Ana ekranın "Gotina rojê / Günün sözü" kartı.
 ///
@@ -71,7 +71,7 @@ class _DailyQuoteCardState extends State<DailyQuoteCard> {
   }
 
   void _share(DailyQuote q) {
-    HapticFeedback.selectionClick();
+    AppHaptics.selection();
     final text = DailyQuoteCard.shareText(q);
     final cb = widget.onShare;
     if (cb != null) {

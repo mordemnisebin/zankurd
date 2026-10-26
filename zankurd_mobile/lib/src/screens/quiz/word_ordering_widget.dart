@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../l10n/strings.dart';
 import '../../l10n/lang.dart';
@@ -7,6 +6,7 @@ import '../../models/quiz_question.dart';
 import '../../utils/free_text_answer_matcher.dart';
 import '../../theme/app_icons.dart';
 import '../../widgets/sahne/sahne.dart';
+import '../../services/app_haptics.dart';
 
 /// Etkileşimli Cümle Kurma (Word Ordering / Rêzkirina Hevokan) bileşeni.
 /// Kullanıcının kelime parçalarını seçerek doğru cümle dizilimini oluşturmasını sağlar.
@@ -109,7 +109,7 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
 
   void _selectWord(_Token token) {
     if (widget.disabled) return;
-    HapticFeedback.lightImpact();
+    AppHaptics.light();
     setState(() {
       _availableWords.remove(token);
       _selectedWords.add(token);
@@ -118,7 +118,7 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
 
   void _unselectWord(_Token token) {
     if (widget.disabled) return;
-    HapticFeedback.lightImpact();
+    AppHaptics.light();
     setState(() {
       _selectedWords.remove(token);
       // Kelime havuzdaki özgün karışık konumuna geri döner; sona eklenirse

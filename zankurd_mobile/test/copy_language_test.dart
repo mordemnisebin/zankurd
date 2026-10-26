@@ -162,7 +162,6 @@ void main() {
 
   test('hızlı düello bütün girişlerde aynı Kurmancî terimi kullanır', () {
     expect(Tr.of(K.quickDuel, AppLanguage.ku), 'Pêşbirka zindî');
-    expect(Tr.of(K.playMore, AppLanguage.ku), 'Zêdetir');
     // Bekçi yalnız hub kartlarını görüyordu. Eşleşme başlığı ve tanıtım
     // maddesi "Şerê 1vs1" deyince aynı 1v1 iki adla duruyordu.
     expect(Tr.of(K.duel1v1, AppLanguage.ku), 'Pêşbirka zindî');

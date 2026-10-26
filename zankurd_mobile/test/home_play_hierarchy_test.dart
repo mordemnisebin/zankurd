@@ -159,18 +159,16 @@ void main() {
             find.byKey(const ValueKey('play-hub-quick-duel')),
             findsOneWidget,
           );
-          // Turnuva `kTournamentEnabled` ile kapalı: ne kendisi ne de onu
-          // açan "Daha fazla" katmanı çizilir. Bayrak açılırsa aşağıdaki
-          // blok turnuva kartının altın/olay rolünü yine denetler.
+          // Turnuva `kTournamentEnabled` açıkken doğrudan satırdır (2026-10-27;
+          // eskiden "Daha fazla" ardındaydı). Aşağıdaki blok altın rolünü
+          // denetler.
           if (!kTournamentEnabled) {
-            expect(find.byKey(const ValueKey('play-hub-more')), findsNothing);
             expect(
               find.byKey(const ValueKey('play-hub-tournament')),
               findsNothing,
             );
           } else {
-            expect(find.byKey(const ValueKey('play-hub-more')), findsOneWidget);
-            _expectActionSemantics(tester, 'play-hub-more');
+            _expectActionSemantics(tester, 'play-hub-tournament');
           }
           // 2026-09-29 Şahnê: öteki yollar liste satırıdır (liste grubunda);
           // degrade, gölge ve dolgulu düğme taşımazlar. Günün etkinliği
@@ -233,10 +231,8 @@ void main() {
             continue;
           }
           await tester.ensureVisible(
-            find.byKey(const ValueKey('play-hub-more')),
+            find.byKey(const ValueKey('play-hub-tournament')),
           );
-          await tester.tap(find.byKey(const ValueKey('play-hub-more')));
-          await tester.pumpAndSettle();
           final tournament = find.byKey(const ValueKey('play-hub-tournament'));
           expect(tournament, findsOneWidget);
           expect(
@@ -253,7 +249,7 @@ void main() {
 
   // "Daha fazla" katmanı yalnız turnuva bayrağı açıkken çizilir.
   testWidgets(
-    'play more keeps button semantics without a nested header role',
+    'tournament row keeps button semantics without a nested header role',
     skip: !kTournamentEnabled,
     (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -261,9 +257,10 @@ void main() {
       await tester.pumpWidget(_playShell(isKu: false, isDark: false));
       await tester.pumpAndSettle();
 
-      final data = tester
-          .getSemantics(find.byKey(const ValueKey('play-hub-more')))
-          .getSemanticsData();
+      final row = find.byKey(const ValueKey('play-hub-tournament'));
+      await tester.ensureVisible(row);
+      await tester.pumpAndSettle();
+      final data = tester.getSemantics(row).getSemanticsData();
       expect(data.flagsCollection.isHeader, isFalse);
       expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
     },

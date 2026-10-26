@@ -20,6 +20,7 @@ class _FakeTts implements LessonListeningSpeaker {
   @override
   final bool available;
   final List<String> spoken = [];
+  final List<bool> slows = [];
   int stops = 0;
 
   @override
@@ -29,7 +30,10 @@ class _FakeTts implements LessonListeningSpeaker {
   final ValueNotifier<bool> speakingListenable = ValueNotifier(false);
 
   @override
-  Future<void> speak(String text) async => spoken.add(text);
+  Future<void> speak(String text, {bool slow = false}) async {
+    spoken.add(text);
+    slows.add(slow);
+  }
 
   @override
   Future<void> stop() async => stops++;
@@ -39,6 +43,7 @@ class _FakePlayer implements VerifiedQuestionAudioPlayer {
   _FakePlayer({this.fail = false});
   final bool fail;
   final List<VerifiedQuestionAudioClip> played = [];
+  final List<double> rates = [];
 
   @override
   bool get isPlaying => false;
@@ -47,9 +52,10 @@ class _FakePlayer implements VerifiedQuestionAudioPlayer {
   final ValueNotifier<bool> playingListenable = ValueNotifier(false);
 
   @override
-  Future<void> play(VerifiedQuestionAudioClip clip) async {
+  Future<void> play(VerifiedQuestionAudioClip clip, {double rate = 1.0}) async {
     if (fail) throw StateError('çözücü hatası');
     played.add(clip);
+    rates.add(rate);
   }
 
   @override
@@ -91,6 +97,25 @@ void main() {
     await speaker.speak('Rojbaş');
     expect(player.played.single.source, endsWith('.m4a'));
     expect(tts.spoken, isEmpty);
+  });
+
+  // Yavaş dinleme (2026-10-27): kayıt 0,7 hızla, kayıt yoksa TTS yavaş
+  // bayrağıyla çalınır; normal dinleme hızı 1'e geri döner.
+  test('yavaş dinleme kayıtta hızı, TTS\'te bayrağı taşır', () async {
+    final tts = _FakeTts(available: true);
+    final player = _FakePlayer();
+    final speaker = RecordedFirstLessonListeningSpeaker(
+      catalog: _catalog(['Rojbaş']),
+      player: player,
+      fallback: tts,
+    );
+
+    await speaker.speak('Rojbaş', slow: true);
+    await speaker.speak('Rojbaş');
+    expect(player.rates, [kSlowPlaybackRate, 1.0]);
+
+    await speaker.speak('Êvarbaş', slow: true);
+    expect(tts.slows, [true]);
   });
 
   test('kayıt yoksa TTS kullanılır', () async {

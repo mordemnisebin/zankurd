@@ -52,6 +52,7 @@ import 'src/utils/app_route.dart';
 import 'src/utils/error_reporter.dart';
 import 'src/widgets/foreground_push_banner.dart';
 import 'src/widgets/responsive_wrapper.dart';
+import 'src/services/app_haptics.dart';
 
 /// Açılış penceresinde ısıtılan iş.
 ///
@@ -166,6 +167,11 @@ Future<void> main() async {
         UntimedModeProvider.load(),
         reason: 'UntimedModeProvider load',
         fallback: UntimedModeProvider.new,
+      );
+      // Titreşim ayarı (yoksa açık); hata olursa varsayılan kalır.
+      final hapticsFuture = bootStepVoid(
+        AppHaptics.load(),
+        reason: 'AppHaptics load',
       );
       final analyticsConsentFuture = bootStep(
         AnalyticsConsentProvider.load(),
@@ -320,6 +326,7 @@ Future<void> main() async {
       final soundProvider = await soundFuture;
       final reducedMotionProvider = await reducedMotionFuture;
       final untimedModeProvider = await untimedModeFuture;
+      await hapticsFuture;
       final bilingualLabelsProvider = await bilingualLabelsFuture;
       final analyticsConsentProvider = await analyticsConsentFuture;
 

@@ -24,9 +24,18 @@ abstract interface class LessonListeningSpeaker {
 
   ValueListenable<bool> get speakingListenable;
 
-  Future<void> speak(String text);
+  /// [slow]: öğrenen için yavaş çalma ("kaplumbağa"). Kayıt
+  /// [kSlowPlaybackRate] hızla, TTS [kSlowSpeechFactor] kat yavaş okunur.
+  Future<void> speak(String text, {bool slow = false});
   Future<void> stop();
 }
+
+/// Yavaş dinlemede kaydın çalma hızı. 0,7'nin altında kayıt bozulmaya
+/// (perde/yankı) başlıyor; Duolingo'nun kaplumbağası da bu civarda.
+const double kSlowPlaybackRate = 0.7;
+
+/// Yavaş dinlemede TTS konuşma hızı çarpanı (kullanıcının hız ayarına göre).
+const double kSlowSpeechFactor = 0.6;
 
 class TtsLessonListeningSpeaker implements LessonListeningSpeaker {
   const TtsLessonListeningSpeaker(this._tts);
@@ -47,7 +56,8 @@ class TtsLessonListeningSpeaker implements LessonListeningSpeaker {
   ValueListenable<bool> get speakingListenable => _tts.speakingNotifier;
 
   @override
-  Future<void> speak(String text) => _tts.speak(text);
+  Future<void> speak(String text, {bool slow = false}) =>
+      _tts.speak(text, rateFactor: slow ? kSlowSpeechFactor : 1.0);
 
   @override
   Future<void> stop() => _tts.stop();
@@ -88,12 +98,15 @@ class RecordedFirstLessonListeningSpeaker implements LessonListeningSpeaker {
   ValueListenable<bool> get speakingListenable => _speaking;
 
   @override
-  Future<void> speak(String text) async {
+  Future<void> speak(String text, {bool slow = false}) async {
     final clip = catalog.clipForText(text);
     if (clip != null) {
       try {
         await fallback.stop();
-        await player.play(clip.toVerifiedClip());
+        await player.play(
+          clip.toVerifiedClip(),
+          rate: slow ? kSlowPlaybackRate : 1.0,
+        );
         return;
       } catch (error, stack) {
         ErrorReporter.record(
@@ -105,7 +118,7 @@ class RecordedFirstLessonListeningSpeaker implements LessonListeningSpeaker {
     }
     if (fallback.availableFor(text)) {
       await player.stop();
-      await fallback.speak(text);
+      await fallback.speak(text, slow: slow);
     }
   }
 

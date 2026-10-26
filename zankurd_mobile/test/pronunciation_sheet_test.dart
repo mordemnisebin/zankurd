@@ -23,6 +23,7 @@ class _FakeSpeaker implements LessonListeningSpeaker {
 
   final bool has;
   final spoken = <String>[];
+  final slows = <bool>[];
 
   @override
   bool get available => has;
@@ -34,7 +35,10 @@ class _FakeSpeaker implements LessonListeningSpeaker {
   ValueListenable<bool> get speakingListenable => ValueNotifier(false);
 
   @override
-  Future<void> speak(String text) async => spoken.add(text);
+  Future<void> speak(String text, {bool slow = false}) async {
+    spoken.add(text);
+    slows.add(slow);
+  }
 
   @override
   Future<void> stop() async {}
@@ -177,7 +181,9 @@ void main() {
       speaker: speaker,
     );
     await tapKey(tester, 'pronunciation-listen');
-    expect(speaker.spoken, ['Rojbaş']);
+    await tapKey(tester, 'pronunciation-listen-slow');
+    expect(speaker.spoken, ['Rojbaş', 'Rojbaş']);
+    expect(speaker.slows, [false, true]);
   });
 
   testWidgets('kaydet, durdur, sonra kendi sesini aynı dosyadan dinle', (

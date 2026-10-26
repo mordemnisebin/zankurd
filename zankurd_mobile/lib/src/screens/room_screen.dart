@@ -28,6 +28,7 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
 import '../utils/room_reactions.dart';
 import '../services/social_push_prompt.dart';
+import '../services/app_haptics.dart';
 
 /// Aynı kimlikli oyuncuyu TEK satıra indirir.
 ///
@@ -2014,7 +2015,7 @@ class _RoomInviteButton extends StatelessWidget {
           icon: AppIcons.shareNodes,
           arrow: false,
           onPressed: () {
-            HapticFeedback.selectionClick();
+            AppHaptics.selection();
             final box = context.findRenderObject() as RenderBox?;
             final origin = box == null || !box.hasSize
                 ? null
@@ -2041,7 +2042,7 @@ class _RoomInviteButton extends StatelessWidget {
           padding: const EdgeInsetsDirectional.only(end: SahneSpace.x3),
         ),
         onPressed: () {
-          HapticFeedback.selectionClick();
+          AppHaptics.selection();
           final box = context.findRenderObject() as RenderBox?;
           final origin = box == null || !box.hasSize
               ? null
@@ -2080,7 +2081,7 @@ class _RoomInviteFriendsButton extends StatelessWidget {
         padding: const EdgeInsetsDirectional.only(end: SahneSpace.x3),
       ),
       onPressed: () {
-        HapticFeedback.selectionClick();
+        AppHaptics.selection();
         onPressed();
       },
     );

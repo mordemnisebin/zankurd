@@ -8,14 +8,24 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('Story dallanma', () {
-    test('günlük yaşam kataloğu sabit ve benzersiz dört hikâye taşır', () {
+    // 2026-10-27: dört hikâyeye sekiz yenisi eklendi; eski sıra ve
+    // kimlikler değişmez (kayıtlı ilerleme kimliğe bağlı).
+    test('günlük yaşam kataloğu sabit ve benzersiz on iki hikâye taşır', () {
       expect(everydayStories.map((story) => story.id), [
         'cayxane',
         'xwe-nasandin',
         'kirin',
         'rê-pirsîn',
+        'bijisk',
+        'otobus',
+        'dawet',
+        'newroz',
+        'mevan',
+        'xwaringeh',
+        'telefon',
+        'dibistan',
       ]);
-      expect(everydayStories.map((story) => story.id).toSet().length, 4);
+      expect(everydayStories.map((story) => story.id).toSet().length, 12);
     });
 
     test('her günlük hikâyede bağlama özgü dallanma ve bitiş vardır', () {
@@ -127,18 +137,21 @@ void main() {
   });
 
   group('MiniGuide içeriği', () {
-    test('her günlük hikâyenin dolu ve eşleşen mini rehberi vardır', () {
+    // 2026-10-27: rehber isteğe bağlı (yeni sekiz hikâyede yok; geri
+    // bildirimli seçimler öğretir). İlk dört hikâyenin rehberi kalır ve her
+    // rehber dolu olmalı; rehberi olmayan hikâye de açılır (story_catalog).
+    test('ilk dört hikâyenin dolu ve eşleşen mini rehberi vardır', () {
       expect(everydayGuides.keys, {
         'cayxane',
         'xwe-nasandin',
         'kirin',
         'rê-pirsîn',
       });
-      for (final story in everydayStories) {
-        final guide = everydayGuides[story.id];
-        expect(guide, isNotNull, reason: story.id);
-        expect(guide!.newWords.length, greaterThanOrEqualTo(3));
-        expect(guide.examples.length, 2);
+      for (final id in everydayGuides.keys) {
+        expect(everydayStories.any((story) => story.id == id), isTrue);
+        final guide = everydayGuides[id]!;
+        expect(guide.newWords.length, greaterThanOrEqualTo(3), reason: id);
+        expect(guide.examples.length, 2, reason: id);
       }
     });
 

@@ -55,6 +55,7 @@ import '../utils/number_format.dart';
 
 import 'profile/profile_week_strip.dart';
 import 'profile/profile_matches_section.dart';
+import 'my_suggestions_screen.dart';
 
 part 'profile/profile_widgets.dart';
 
@@ -618,16 +619,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ? null
               : _startQuickRace,
         ),
-        ProfileMatchHistorySection(
-          repository: widget.repository,
-          refreshSignal: widget.refreshSignal,
-          remote: remoteMatches,
-          // Üstteki boş istatistik kartı zaten "Bugün başla" düğmesini
-          // taşır; aynı eylem iki kez çizilmez.
-          onStartPlay: _stats == null && _answeredTotal == 0
-              ? null
-              : _startQuickRace,
-        ),
       ],
     );
 
@@ -642,6 +633,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           unlockedOn: _rewardUnlockedOn,
           showProgress: _hasPlayed,
           isKu: ku,
+        ),
+        // 2026-10-27 (rakip kıyası): başarımlar maç geçmişinin ALTINDA,
+        // sayfanın dibine yakındı; Duolingo profilinde istatistiğin hemen
+        // ardından gelir. Geçmiş artık rozetlerin altında.
+        ProfileMatchHistorySection(
+          repository: widget.repository,
+          refreshSignal: widget.refreshSignal,
+          remote: remoteMatches,
+          // Üstteki boş istatistik kartı zaten "Bugün başla" düğmesini
+          // taşır; aynı eylem iki kez çizilmez.
+          onStartPlay: _stats == null && _answeredTotal == 0
+              ? null
+              : _startQuickRace,
         ),
         // Navigasyon kısayolları — iki adlandırılmış liste grubu
         ..._buildMenuSections(ku),
@@ -796,6 +800,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.of(context).push(
                   AppRoute.to(
                     SuggestQuestionScreen(repository: widget.repository),
+                  ),
+                );
+              },
+            ),
+          // Gönderilen önerilerin durumu (Trivia Crack'te soru fabrikasının
+          // yanında durur); eskiden yalnız öneri ekranının içindeydi.
+          if (auth.canUseRemoteActions)
+            SahneListRow.icon(
+              key: const ValueKey('profile-my-suggestions'),
+              icon: AppIcons.listCheck,
+              role: SahneRole.learn,
+              title: context.t(K.mySuggestions),
+              chevron: true,
+              onTap: () {
+                Navigator.of(context).push(
+                  AppRoute.to(
+                    MySuggestionsScreen(repository: widget.repository),
                   ),
                 );
               },

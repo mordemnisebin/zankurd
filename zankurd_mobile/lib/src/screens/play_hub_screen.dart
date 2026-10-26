@@ -55,7 +55,6 @@ class PlayHubScreen extends StatefulWidget {
 class _PlayHubScreenState extends State<PlayHubScreen> {
   bool _dailyLoading = false;
   bool _roomActionLoading = false;
-  bool _moreOpen = false;
 
   /// Düello akışından (oyun → sonuç) dönünce "Düellolarım"ı tazeler.
   /// Kabuğun [PlayHubScreen.refreshSignal]iyle birleştirilir; ekran kabuk
@@ -669,48 +668,35 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     tone: SahneBadgeTone.soon,
                   ),
                 ),
-              // Turnuva kalabalık bir kitle bekliyor; o kitle gelene dek
-              // bayrakla kapalı (bkz. `kTournamentEnabled`). Açıkken de ilk
-              // bakışta yok: benzer uygulamalarda indirme/tekrar sebebi "şimdi
-              // oyna" + günlük dönüş; eleme modu ikinci katman.
+              // Turnuva (bkz. `kTournamentEnabled`): 2026-10-27'ye dek
+              // "Daha fazla" satırının ARDINDAydı; rakiplerde (QuizDuel
+              // Arena, Quiz of Kings) modlar oyun ekranında doğrudan durur.
+              // Tek öğe için ara dokunuş gereksizdi.
               if (kTournamentEnabled) ...[
-                if (!_moreOpen)
+                _lockedTap(
+                  locked,
                   SahneListRow.icon(
-                    key: const ValueKey('play-hub-more'),
-                    icon: AppIcons.chevronDown,
-                    title: context.t(K.playMore),
-                    subtitle: context.t(K.playMoreSub),
+                    key: const ValueKey('play-hub-tournament'),
+                    icon: AppIcons.trophy,
+                    role: SahneRole.gold,
+                    title: context.t(K.tournament),
+                    subtitle: context.t(K.tournamentSub),
+                    chevron: !locked,
+                    enabled: !locked,
                     semanticLabel:
-                        '${context.t(K.playMore)}. ${context.t(K.playMoreSub)}',
-                    onTap: () => setState(() => _moreOpen = true),
+                        '${context.t(K.tournament)}. '
+                        '${context.t(K.tournamentSub)}',
+                    onTap: locked
+                        ? null
+                        : () {
+                            Navigator.of(context).push(
+                              AppRoute.to(
+                                TournamentScreen(repository: widget.repository),
+                              ),
+                            );
+                          },
                   ),
-                if (_moreOpen)
-                  _lockedTap(
-                    locked,
-                    SahneListRow.icon(
-                      key: const ValueKey('play-hub-tournament'),
-                      icon: AppIcons.trophy,
-                      role: SahneRole.gold,
-                      title: context.t(K.tournament),
-                      subtitle: context.t(K.tournamentSub),
-                      chevron: !locked,
-                      enabled: !locked,
-                      semanticLabel:
-                          '${context.t(K.tournament)}. '
-                          '${context.t(K.tournamentSub)}',
-                      onTap: locked
-                          ? null
-                          : () {
-                              Navigator.of(context).push(
-                                AppRoute.to(
-                                  TournamentScreen(
-                                    repository: widget.repository,
-                                  ),
-                                ),
-                              );
-                            },
-                    ),
-                  ),
+                ),
               ],
             ],
           ),

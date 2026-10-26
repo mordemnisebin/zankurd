@@ -288,7 +288,22 @@ class _TournamentScreenState extends State<TournamentScreen> {
         return;
       }
       if (!mounted) return;
+      await _startPracticeCup();
+    } finally {
+      if (mounted) setState(() => _startingNewTournament = false);
+    }
+  }
 
+  /// Antrenman kupası: botlarla, yerel, ÖDÜLSÜZ (ödül yalnız sunucu
+  /// şemasında talep edilir; bkz. [_CupRewardState.localOnly]).
+  ///
+  /// 2026-10-27: gerçek kupa kontenjanı (4 kişi; en geç 24 saatte en az 2
+  /// kişiyle) beklerken oyuncunun yapacak hiçbir şeyi yoktu. Antrenman
+  /// açıkça "botlarla" diye adlandırılır; gerçek insan sözü bozulmaz ve
+  /// oyuncu gerçek kupadaki kaydını kaybetmez.
+  Future<void> _startPracticeCup() async {
+    if (_userName.isEmpty) _userName = context.t(K.you);
+    try {
       final rounds = TournamentConfig.generateBracket();
       final firstRound = rounds.first;
       final seededMatches = <TournamentMatch>[];
@@ -320,6 +335,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
       }
 
       setState(() {
+        _serverBracket = false;
+        _waitingForPlayers = false;
+        _rewardState = _CupRewardState.none;
         _bracket = TournamentBracket(
           tournamentId: 'daily',
           userId: _userId,
@@ -712,15 +730,32 @@ class _TournamentScreenState extends State<TournamentScreen> {
       // Gerçek oyunculu turnuvanın kaçınılmaz hâli: kontenjan dolana dek
       // beklenir. Burada bot uydurmak "gerçek insanlar" sözünü bozardı
       // (2026-07-26).
+      // Beklerken antrenman kupası (botlarla, ödülsüz) açıkça sunulur;
+      // gerçek kupadaki kayıt sürer (2026-10-27).
       body = SliverFillRemaining(
-        child: AppEmptyState(
-          key: const ValueKey('tournament-waiting'),
-          icon: AppIcons.hourglass,
-          title: context.t(K.tournamentWaitingTitle),
-          message: context.t(K.tournamentWaitingBody),
-          actionLabel: context.t(K.retry),
-          actionIcon: AppIcons.arrowsRotate,
-          onAction: _load,
+        child: Column(
+          children: [
+            Expanded(
+              child: AppEmptyState(
+                key: const ValueKey('tournament-waiting'),
+                icon: AppIcons.hourglass,
+                title: context.t(K.tournamentWaitingTitle),
+                message: context.t(K.tournamentWaitingBody),
+                actionLabel: context.t(K.tournamentPractice),
+                actionIcon: AppIcons.trophy,
+                onAction: _startingNewTournament
+                    ? null
+                    : () => unawaited(_startPracticeCup()),
+              ),
+            ),
+            SahneButton.text(
+              key: const ValueKey('tournament-waiting-refresh'),
+              label: context.t(K.retry),
+              arrow: false,
+              onPressed: _load,
+            ),
+            const SizedBox(height: SahneSpace.x6),
+          ],
         ),
       );
     } else {
@@ -743,7 +778,12 @@ class _TournamentScreenState extends State<TournamentScreen> {
       title: context.t(inBracket ? K.tournamentTitle : K.tournament),
       // Tur bilgisi yalnızca maç kartında gösterilir; burada tekrar
       // edilmez.
-      subtitle: inBracket ? context.t(K.botTournament) : null,
+      // Yalnız yerel (botlu) şema "antrenman" diye etiketlenir; gerçek
+      // kupada bu etiket yanlış olurdu (2026-10-27'ye dek her şemada
+      // görünüyordu).
+      subtitle: inBracket && !_serverBracket
+          ? context.t(K.botTournament)
+          : null,
       backLabel: context.t(K.back),
       slivers: [body],
     );

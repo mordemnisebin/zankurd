@@ -983,7 +983,7 @@ extension _QuizScreenUI on _QuizScreenState {
         answered) {
       return;
     }
-    HapticFeedback.selectionClick();
+    AppHaptics.selection();
     context.read<SoundProvider>().playWildcard();
     _trackWildcardMission();
     final free = _takeFreeWildcard();
@@ -1008,7 +1008,7 @@ extension _QuizScreenUI on _QuizScreenState {
         answered) {
       return;
     }
-    HapticFeedback.selectionClick();
+    AppHaptics.selection();
     context.read<SoundProvider>().playWildcard();
     _trackWildcardMission();
     final free = _takeFreeWildcard();
@@ -1056,7 +1056,7 @@ extension _QuizScreenUI on _QuizScreenState {
         _firstAttemptAnswer.isNotEmpty) {
       return;
     }
-    HapticFeedback.selectionClick();
+    AppHaptics.selection();
     context.read<SoundProvider>().playWildcard();
     _trackWildcardMission();
     final free = _takeFreeWildcard();
@@ -1091,7 +1091,7 @@ extension _QuizScreenUI on _QuizScreenState {
 
     if (candidates.isEmpty) return; // değiştirilecek soru bulunamadı
 
-    HapticFeedback.selectionClick();
+    AppHaptics.selection();
     context.read<SoundProvider>().playWildcard();
     _trackWildcardMission();
     final replacement = candidates[Random().nextInt(candidates.length)];

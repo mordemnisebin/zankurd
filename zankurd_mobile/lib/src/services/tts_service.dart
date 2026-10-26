@@ -145,13 +145,18 @@ class TtsService {
 
   /// [text]'i seslendirir. Zaten konuşuyorsa kesip yeniden başlar.
   /// Servis kapalıysa veya dil desteklenmiyorsa hiçbir şey yapmaz.
-  Future<void> speak(String text) async {
+  /// [rateFactor] yalnız bu okuma için kullanıcının hızını ölçekler
+  /// (yavaş dinleme); kayıtlı ayar değişmez.
+  Future<void> speak(String text, {double rateFactor = 1.0}) async {
     if (!_enabled || !_kurdishAvailable || text.trim().isEmpty) return;
     try {
       if (speakingNotifier.value) {
         await _tts.stop();
       }
       await _applySettings();
+      if (rateFactor != 1.0) {
+        await _tts.setSpeechRate((_rate * rateFactor).clamp(0.05, 1.0));
+      }
       await _tts.speak(text);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'tts speak');

@@ -61,7 +61,10 @@ void main() {
         MaterialApp(
           theme: AppTheme.light(),
           home: Scaffold(
-            body: StoryCatalog(isKu: isKu, onOpen: (_, _) async {}),
+            // 12 hikâye ekrana sığmaz (2026-10-27): kaydırılır.
+            body: SingleChildScrollView(
+              child: StoryCatalog(isKu: isKu, onOpen: (_, _) async {}),
+            ),
           ),
         ),
       );

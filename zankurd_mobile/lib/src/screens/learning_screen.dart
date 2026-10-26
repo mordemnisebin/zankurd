@@ -37,6 +37,11 @@ import 'learner_lexicon_screen.dart';
 import 'my_words_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../services/app_haptics.dart';
+import 'alphabet_screen.dart';
+import 'stories_screen.dart';
+import 'tekrar_screen.dart';
+import 'favorite_questions_screen.dart';
 
 /// Öğrenme yolunda "şu an aktif/önerilen" düğümün indeksi.
 ///
@@ -340,6 +345,76 @@ class _LearningScreenState extends State<LearningScreen> {
                 ),
               ),
               const SizedBox(height: SahneSpace.sectionTop),
+              // Pratik merkezi (2026-10-27, rakip kıyası): Duolingo'da
+              // Practice, Busuu'da Review sekmesi gibi tekrar, kelimeler ve
+              // ses araçları tek yerde ve ders yolunun hemen ardında. Eskiden
+              // sözlük/alfabe/kelimelerim sayfanın dibindeydi, tekrar yalnız
+              // vadesi gelince görünüyordu, kaydedilen sorular yalnız
+              // Profil'deydi.
+              _page(SahneSectionHeader(title: context.t(K.practiceSection))),
+              _page(
+                SahneListGroup(
+                  key: const ValueKey('learning-practice-hub'),
+                  children: [
+                    SahneListRow.icon(
+                      key: const ValueKey('learning-practice-review'),
+                      icon: AppIcons.arrowsRotate,
+                      role: SahneRole.learn,
+                      title: context.t(K.tekrarTitle),
+                      chevron: true,
+                      onTap: _openTekrar,
+                    ),
+                    SahneListRow.icon(
+                      key: const ValueKey('learning-lexicon-entry'),
+                      icon: AppIcons.magnifyingGlass,
+                      role: SahneRole.learn,
+                      title: context.t(K.lexiconTitle),
+                      chevron: true,
+                      onTap: _openLexicon,
+                    ),
+                    // Alfabe ve sesler (2026-10-27): harf-ses başvurusu;
+                    // eskiden yalnız ilk dersin içindeydi.
+                    SahneListRow.icon(
+                      key: const ValueKey('learning-alphabet-entry'),
+                      icon: AppIcons.volumeHigh,
+                      role: SahneRole.learn,
+                      title: context.t(K.alphabetTitle),
+                      chevron: true,
+                      onTap: () => Navigator.of(
+                        context,
+                      ).push(AppRoute.to(const AlphabetScreen())),
+                    ),
+                    SahneListRow.icon(
+                      key: const ValueKey('learning-my-words-entry'),
+                      icon: AppIcons.bookmark,
+                      role: SahneRole.learn,
+                      title: context.t(K.wordsTitle),
+                      // Vadesi gelen sayısı burada DEĞİL: tekrar girişi tektir
+                      // ("Tekrar · bugün N" kartı), Kelimelerim yalnız liste.
+                      subtitle: _wordCount > 0
+                          ? context.t(K.wordsCount, {'count': '$_wordCount'})
+                          : null,
+                      chevron: true,
+                      onTap: _openMyWords,
+                    ),
+                    SahneListRow.icon(
+                      key: const ValueKey('learning-saved-questions'),
+                      icon: AppIcons.star,
+                      role: SahneRole.learn,
+                      title: context.t(K.savedQuestions),
+                      chevron: true,
+                      onTap: () => Navigator.of(context).push(
+                        AppRoute.to(
+                          FavoriteQuestionsScreen(
+                            repository: widget.repository,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: SahneSpace.sectionTop),
               // Metin tabanlı günlük hikâyeler: kendi bölüm başlığı ve liste
               // grubuyla gelir (ortak `StoryCatalog`); her satır kendi yerel
               // ilerlemesini gösterir ve dönüşte durumu yeniler.
@@ -349,6 +424,10 @@ class _LearningScreenState extends State<LearningScreen> {
                   width: double.infinity,
                   child: StoryCatalog(
                     isKu: ku,
+                    limit: 4,
+                    onShowAll: () => Navigator.of(
+                      context,
+                    ).push(AppRoute.to(const StoriesScreen())),
                     onOpen: (story, guide) async {
                       await Navigator.of(context).push(
                         AppRoute(
@@ -366,27 +445,6 @@ class _LearningScreenState extends State<LearningScreen> {
               _page(
                 SahneListGroup(
                   children: [
-                    SahneListRow.icon(
-                      key: const ValueKey('learning-lexicon-entry'),
-                      icon: AppIcons.magnifyingGlass,
-                      role: SahneRole.learn,
-                      title: context.t(K.lexiconTitle),
-                      chevron: true,
-                      onTap: _openLexicon,
-                    ),
-                    SahneListRow.icon(
-                      key: const ValueKey('learning-my-words-entry'),
-                      icon: AppIcons.bookmark,
-                      role: SahneRole.learn,
-                      title: context.t(K.wordsTitle),
-                      // Vadesi gelen sayısı burada DEĞİL: tekrar girişi tektir
-                      // ("Tekrar · bugün N" kartı), Kelimelerim yalnız liste.
-                      subtitle: _wordCount > 0
-                          ? context.t(K.wordsCount, {'count': '$_wordCount'})
-                          : null,
-                      chevron: true,
-                      onTap: _openMyWords,
-                    ),
                     // Seviye testi: yalnızca ilk açılış kartında ve
                     // Ayarlar'ın derinindeydi; kart kapatılınca öğrenme
                     // alanından bulunamıyordu (erişim haritası, 2026-10-21).
@@ -776,6 +834,18 @@ class _LearningScreenState extends State<LearningScreen> {
       context,
     ).push(AppRoute(page: const LearnerLexiconScreen()));
     // Sözlükte kelime kaydedilmiş olabilir.
+    if (!mounted) return;
+    _reviewRefresh.value++;
+    await _loadWordList();
+  }
+
+  /// Tekrar her zaman açılır; vadesi gelen yoksa ekran bunu söyler.
+  Future<void> _openTekrar() async {
+    await Navigator.of(context).push(
+      AppRoute.to(
+        TekrarScreen(repository: widget.repository, isKu: context.isKu),
+      ),
+    );
     if (!mounted) return;
     _reviewRefresh.value++;
     await _loadWordList();
@@ -1319,7 +1389,7 @@ class _LessonRowState extends State<_LessonRow> {
   int _nudge = 0;
 
   void _nudgeLock() {
-    HapticFeedback.selectionClick();
+    AppHaptics.selection();
     setState(() => _nudge++);
   }
 

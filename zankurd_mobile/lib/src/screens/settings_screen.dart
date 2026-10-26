@@ -47,6 +47,9 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'image_credits_screen.dart';
 import 'paywall_screen.dart';
 import '../widgets/dialog_action_pair.dart';
+import '../services/app_haptics.dart';
+import '../services/data_export.dart';
+import 'package:share_plus/share_plus.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
@@ -183,6 +186,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
     AppConfig.abuseReportUri(subject: context.t(K.abuseMailSubject)),
     reason: 'abuse report mailto',
   );
+
+  Future<void> _exportData() async {
+    try {
+      final bytes = await DataExport.build();
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [
+            XFile.fromData(
+              bytes,
+              mimeType: 'application/json',
+              name: DataExport.fileName,
+            ),
+          ],
+        ),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'settings_data_export');
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.genericError))));
+    }
+  }
 
   Future<void> _openBetaFeedback() => _openMail(
     AppConfig.feedbackUri(subject: context.t(K.betaMailSubject)),
@@ -380,6 +406,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SahneListGroup(
                 dividerIndent: _rowTextInset,
                 children: [
+                  SahneListRow.plain(
+                    key: const ValueKey('settings-export-data'),
+                    title: context.t(K.exportData),
+                    subtitle: context.t(K.exportDataSub),
+                    chevron: true,
+                    onTap: _exportData,
+                  ),
                   Consumer<AnalyticsConsentProvider>(
                     builder: (context, consent, _) => SahneListRow.plain(
                       title: context.t(K.analyticsConsent),
@@ -476,6 +509,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           value: sound.enabled,
                           onChanged: (_) => sound.toggle(),
                         ),
+                      ),
+                    ),
+                  // Titreşim (2026-10-27): web'de dokunsal geri bildirim yok.
+                  if (!kIsWeb)
+                    SahneListRow.plain(
+                      title: context.t(K.hapticsSetting),
+                      trailing: Switch(
+                        key: const ValueKey('settings-haptics'),
+                        value: AppHaptics.enabled,
+                        onChanged: (v) async {
+                          await AppHaptics.setEnabled(v);
+                          if (mounted) setState(() {});
+                          if (v) AppHaptics.selection();
+                        },
                       ),
                     ),
                   Column(
@@ -672,6 +719,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   _ExpandableRow(
                     title: context.t(K.privacy),
                     body: context.t(K.privacyBody),
+                  ),
+                ],
+              ),
+              // Sık sorulan sorular (2026-10-27): rakiplerde yardım merkezi
+              // zorunlu sayılıyor; en çok sorulan sekiz konu, son satır
+              // destek adresi. Cevaplar koddaki gerçek davranışı anlatır.
+              SahneSectionHeader(title: context.t(K.faqTitle)),
+              SahneListGroup(
+                key: const ValueKey('settings-faq'),
+                dividerIndent: _rowTextInset,
+                children: [
+                  _ExpandableRow(
+                    title: context.t(K.faqSyncQ),
+                    body: context.t(K.faqSyncA),
+                  ),
+                  _ExpandableRow(
+                    title: context.t(K.faqStreakQ),
+                    body: context.t(K.faqStreakA),
+                  ),
+                  _ExpandableRow(
+                    title: context.t(K.faqCoinsQ),
+                    body: context.t(K.faqCoinsA),
+                  ),
+                  _ExpandableRow(
+                    title: context.t(K.faqReportQ),
+                    body: context.t(K.faqReportA),
+                  ),
+                  _ExpandableRow(
+                    title: context.t(K.faqFriendsQ),
+                    body: context.t(K.faqFriendsA),
+                  ),
+                  _ExpandableRow(
+                    title: context.t(K.faqAudioQ),
+                    body: context.t(K.faqAudioA),
+                  ),
+                  _ExpandableRow(
+                    title: context.t(K.faqDeleteQ),
+                    body: context.t(K.faqDeleteA),
+                  ),
+                  _ExpandableRow(
+                    title: context.t(K.faqContactQ),
+                    body: context.t(K.faqContactA),
                   ),
                 ],
               ),

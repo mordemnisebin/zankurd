@@ -58,8 +58,8 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
     return candidates;
   }
 
-  Future<void> _play() async {
-    await widget.speaker.speak(_entry.termKu);
+  Future<void> _play({bool slow = false}) async {
+    await widget.speaker.speak(_entry.termKu, slow: slow);
     if (!mounted || _hasPlayed) return;
     setState(() => _hasPlayed = true);
   }
@@ -131,17 +131,32 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
           const SizedBox(height: SahneSpace.x3),
           ValueListenableBuilder<bool>(
             valueListenable: widget.speaker.speakingListenable,
-            builder: (context, speaking, _) => SahneButton.secondary(
-              key: const ValueKey('lesson-listening-play'),
-              onPressed: _play,
-              icon: speaking ? AppIcons.volumeHigh : AppIcons.play,
-              label: context.t(
-                speaking
-                    ? K.lessonListeningPlaying
-                    : _hasPlayed
-                    ? K.lessonListeningReplay
-                    : K.lessonListeningPlay,
-              ),
+            builder: (context, speaking, _) => Row(
+              children: [
+                Flexible(
+                  child: SahneButton.secondary(
+                    key: const ValueKey('lesson-listening-play'),
+                    onPressed: _play,
+                    icon: speaking ? AppIcons.volumeHigh : AppIcons.play,
+                    label: context.t(
+                      speaking
+                          ? K.lessonListeningPlaying
+                          : _hasPlayed
+                          ? K.lessonListeningReplay
+                          : K.lessonListeningPlay,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: SahneSpace.x2),
+                // Yavaş dinleme (rakiplerde "kaplumbağa"): öğrenen sesi
+                // ayırt edemezse 0,7 hızla yeniden dinler.
+                SahneIconButton(
+                  key: const ValueKey('lesson-listening-slow'),
+                  icon: AppIcons.turtle,
+                  semanticLabel: context.t(K.slowListen),
+                  onPressed: () => _play(slow: true),
+                ),
+              ],
             ),
           ),
           if (_hasPlayed) ...[

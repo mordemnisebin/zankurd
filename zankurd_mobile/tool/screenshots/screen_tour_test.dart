@@ -49,6 +49,8 @@ import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/my_suggestions_screen.dart';
+import 'package:zankurd_mobile/src/screens/alphabet_screen.dart';
+import 'package:zankurd_mobile/src/screens/stories_screen.dart';
 import 'package:zankurd_mobile/src/models/my_suggestion.dart';
 import 'package:zankurd_mobile/src/screens/image_credits_screen.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
@@ -1083,10 +1085,29 @@ void main() {
     await _shoot(t, '39_suggest_question');
   }, tags: ['preview']);
 
+  testWidgets('323 tüm hikâyeler', (t) async {
+    await _pump(t, const StoriesScreen());
+    await _shoot(t, '323_stories');
+  }, tags: ['preview']);
+
+  testWidgets('321 alfabe ve sesler', (t) async {
+    await _pump(t, const AlphabetScreen());
+    await _shoot(t, '321_alphabet');
+  }, tags: ['preview']);
+
+  testWidgets('322 alfabe ve sesler (KU, koyu)', (t) async {
+    await _pump(t, const AlphabetScreen(), dark: true, ku: true);
+    await _shoot(t, '322_alphabet_ku_dark');
+  }, tags: ['preview']);
+
   testWidgets('319 önerilerim', (t) async {
     final repo = _SuggestionsTourRepository();
     await _pump(t, MySuggestionsScreen(repository: repo));
     await _shoot(t, '319_my_suggestions');
+  }, tags: ['preview']);
+
+  testWidgets('320 önerilerim (KU, koyu)', (t) async {
+    final repo = _SuggestionsTourRepository();
     await _pump(t, MySuggestionsScreen(repository: repo), dark: true, ku: true);
     await _shoot(t, '320_my_suggestions_ku_dark');
   }, tags: ['preview']);

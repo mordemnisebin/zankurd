@@ -117,6 +117,26 @@ void main() {
     expect(find.textContaining('Bot'), findsNothing);
   });
 
+  // 2026-10-27: beklerken açıkça "botlarla" diye adlandırılan, ödülsüz
+  // antrenman kupası sunulur; gerçek kupadaki kayıt sürer.
+  testWidgets('beklerken antrenman kupası açılır ve öyle adlandırılır', (
+    tester,
+  ) async {
+    final repository = _RealTournamentRepository(_bracketWith(const []));
+    await tester.pumpWidget(
+      testShell(child: TournamentScreen(repository: repository)),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    await tester.tap(find.text('Beklerken botlarla antrenman yap'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(find.byKey(const ValueKey('tournament-waiting')), findsNothing);
+    expect(find.text('Antrenman kupası · botlarla'), findsOneWidget);
+  });
+
   testWidgets('sunucudan gelen şemada gerçek rakip adı görünür', (
     tester,
   ) async {
@@ -143,6 +163,9 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(find.textContaining('Rojda'), findsWidgets);
+    // Gerçek kupada "antrenman" etiketi yanlış olurdu (2026-10-27'ye dek
+    // her şemada "Yerel turnuva" yazıyordu).
+    expect(find.text('Antrenman kupası · botlarla'), findsNothing);
   });
 
   testWidgets('skorunu bildirip rakibi bekleyen oyuncuya durum söylenir', (
@@ -192,7 +215,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
     expect(
-      find.text('Yerel turnuva'),
+      find.text('Antrenman kupası · botlarla'),
       findsOneWidget,
       reason:
           'Bot benzetimi gerçek oyuncu turnuvası gibi görünmemeli; yerel '

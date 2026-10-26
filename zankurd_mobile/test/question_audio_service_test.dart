@@ -60,7 +60,7 @@ class _FakeVerifiedPlayer implements VerifiedQuestionAudioPlayer {
   ValueListenable<bool> get playingListenable => notifier;
 
   @override
-  Future<void> play(VerifiedQuestionAudioClip clip) async {
+  Future<void> play(VerifiedQuestionAudioClip clip, {double rate = 1.0}) async {
     played.add(clip);
     if (throwOnPlay) throw StateError('injected verified audio failure');
     notifier.value = true;

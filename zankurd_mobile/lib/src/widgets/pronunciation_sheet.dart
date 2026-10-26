@@ -254,12 +254,29 @@ class _PronunciationSheetState extends State<PronunciationSheet> {
             style: SahneType.body.copyWith(color: t.tx2),
           ),
           const SizedBox(height: SahneSpace.x4),
-          SahneButton.secondary(
-            key: const ValueKey('pronunciation-listen'),
-            label: context.t(K.lessonListeningPlay),
-            icon: AppIcons.volumeHigh,
-            expand: true,
-            onPressed: () => widget.speaker.speak(widget.text),
+          Row(
+            children: [
+              Expanded(
+                child: SahneButton.secondary(
+                  key: const ValueKey('pronunciation-listen'),
+                  label: context.t(K.lessonListeningPlay),
+                  icon: AppIcons.volumeHigh,
+                  expand: true,
+                  onPressed: () => widget.speaker.speak(widget.text),
+                ),
+              ),
+              const SizedBox(width: SahneSpace.x2),
+              Expanded(
+                child: SahneButton.secondary(
+                  key: const ValueKey('pronunciation-listen-slow'),
+                  label: context.t(K.slowListen),
+                  icon: AppIcons.turtle,
+                  expand: true,
+                  onPressed: () =>
+                      widget.speaker.speak(widget.text, slow: true),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: SahneSpace.x2),
           SahneButton.primary(

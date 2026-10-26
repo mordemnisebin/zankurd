@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../data/zankurd_repository.dart';
@@ -17,6 +16,7 @@ import '../widgets/app_state.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../services/app_haptics.dart';
 
 class SpinWheelScreen extends StatefulWidget {
   const SpinWheelScreen({required this.repository, super.key});
@@ -79,7 +79,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
         final currentSegment = (angle / segmentAngle).floor();
         if (currentSegment != _lastPlayedSegment) {
           _lastPlayedSegment = currentSegment;
-          HapticFeedback.selectionClick();
+          AppHaptics.selection();
         }
       }
     });
@@ -194,7 +194,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 
   Future<void> _spin() async {
     if (_spinning || !_canSpin) return;
-    HapticFeedback.mediumImpact();
+    AppHaptics.medium();
     setState(() {
       _spinning = true;
       _wonAmount = null;
@@ -240,7 +240,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     _spinController.reset();
     _lastPlayedSegment = -1;
     await _spinController.forward();
-    HapticFeedback.mediumImpact();
+    AppHaptics.medium();
 
     // Çark animasyonunun tam oturması için kısa nefes molası
     await Future<void>.delayed(const Duration(milliseconds: 300));

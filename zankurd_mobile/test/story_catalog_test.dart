@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/story_progress_store.dart';
+import 'package:zankurd_mobile/src/models/mini_guide.dart';
 import 'package:zankurd_mobile/src/models/story.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -20,27 +21,30 @@ void main() {
     StoryProgressStore.resetInstance();
   });
 
-  testWidgets('katalog dört hikâyeyi gösterir; başlanmamışta söz ve ok yok', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: AppTheme.light(),
-        home: Scaffold(
-          body: StoryCatalog(isKu: false, onOpen: (_, _) async {}),
+  testWidgets(
+    'katalog bütün hikâyeleri gösterir; başlanmamışta söz ve ok yok',
+    (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: AppTheme.light(),
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: StoryCatalog(isKu: false, onOpen: (_, _) async {}),
+            ),
+          ),
         ),
-      ),
-    );
-    await tester.pumpAndSettle();
+      );
+      await tester.pumpAndSettle();
 
-    expect(find.byKey(const ValueKey('story-catalog')), findsOneWidget);
-    for (final story in everydayStories) {
-      expect(find.byKey(ValueKey('story-card-${story.id}')), findsOneWidget);
-    }
-    expect(find.text('Başla'), findsNothing);
-    expect(find.byIcon(AppIcons.chevronRight), findsNothing);
-    expect(find.byIcon(AppIcons.bookOpenReader), findsNothing);
-  });
+      expect(find.byKey(const ValueKey('story-catalog')), findsOneWidget);
+      for (final story in everydayStories) {
+        expect(find.byKey(ValueKey('story-card-${story.id}')), findsOneWidget);
+      }
+      expect(find.text('Başla'), findsNothing);
+      expect(find.byIcon(AppIcons.chevronRight), findsNothing);
+      expect(find.byIcon(AppIcons.bookOpenReader), findsNothing);
+    },
+  );
 
   testWidgets('hikâye kartı ekran okuyucuda tek kez duyurulur', (tester) async {
     final semantics = tester.ensureSemantics();
@@ -48,7 +52,9 @@ void main() {
       MaterialApp(
         theme: AppTheme.light(),
         home: Scaffold(
-          body: StoryCatalog(isKu: false, onOpen: (_, _) async {}),
+          body: SingleChildScrollView(
+            child: StoryCatalog(isKu: false, onOpen: (_, _) async {}),
+          ),
         ),
       ),
     );
@@ -78,7 +84,9 @@ void main() {
       MaterialApp(
         theme: AppTheme.light(),
         home: Scaffold(
-          body: StoryCatalog(isKu: false, onOpen: (_, _) async {}),
+          body: SingleChildScrollView(
+            child: StoryCatalog(isKu: false, onOpen: (_, _) async {}),
+          ),
         ),
       ),
     );
@@ -109,7 +117,9 @@ void main() {
       MaterialApp(
         theme: AppTheme.dark(),
         home: Scaffold(
-          body: StoryCatalog(isKu: false, onOpen: (_, _) async {}),
+          body: SingleChildScrollView(
+            child: StoryCatalog(isKu: false, onOpen: (_, _) async {}),
+          ),
         ),
       ),
     );
@@ -195,7 +205,9 @@ void main() {
       MaterialApp(
         theme: AppTheme.light(),
         home: Scaffold(
-          body: StoryCatalog(isKu: false, onOpen: (_, _) async {}),
+          body: SingleChildScrollView(
+            child: StoryCatalog(isKu: false, onOpen: (_, _) async {}),
+          ),
         ),
       ),
     );
@@ -215,5 +227,73 @@ void main() {
       ),
       findsNothing,
     );
+  });
+
+  // 2026-10-27: hikâye sayısı artınca öğrenme sayfası en çok [limit] satır
+  // gösterir (yarım kalan önce) ve "Tüm hikâyeler (N)" satırı açar.
+  testWidgets('sınırlı katalog yarım kalanı öne alır ve tümünü açar', (
+    tester,
+  ) async {
+    final last = everydayStories.last;
+    final store = await StoryProgressStore.load();
+    final firstChoice = last.start.choices.first.nextNodeId;
+    await store.saveNode(last.id, firstChoice);
+    var showAll = 0;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light(),
+        home: Scaffold(
+          body: StoryCatalog(
+            isKu: false,
+            limit: 2,
+            onShowAll: () async => showAll++,
+            onOpen: (_, _) async {},
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final cards = find.byWidgetPredicate(
+      (w) =>
+          w.key is ValueKey<String> &&
+          (w.key! as ValueKey<String>).value.startsWith('story-card-'),
+    );
+    expect(cards, findsNWidgets(2));
+    expect(find.byKey(ValueKey('story-card-${last.id}')), findsOneWidget);
+    final all = find.byKey(const ValueKey('story-catalog-all'));
+    expect(
+      find.text('Tüm hikâyeler (${everydayStories.length})'),
+      findsOneWidget,
+    );
+    await tester.tap(all);
+    await tester.pumpAndSettle();
+    expect(showAll, 1);
+  });
+
+  testWidgets('rehberi olmayan hikâye de açılır', (tester) async {
+    final withoutGuide = everydayStories.firstWhere(
+      (story) => everydayGuides[story.id] == null,
+      orElse: () => everydayStories.first,
+    );
+    Story? opened;
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light(),
+        home: Scaffold(
+          body: SingleChildScrollView(
+            child: StoryCatalog(
+              isKu: false,
+              onOpen: (story, _) async => opened = story,
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(ValueKey('story-card-${withoutGuide.id}')));
+    await tester.pumpAndSettle();
+    expect(opened?.id, withoutGuide.id);
   });
 }

@@ -58,7 +58,7 @@ void main() {
     () {
       // README bir ara günün etkinliğini turnuvayla aynı "ikinci katman"
       // cümlesine koyuyordu. PlayHub'da etkinlik kartı her zaman görünür;
-      // turnuva `_moreOpen` arkasındadır. Hikâye LearningScreen, arkadaş
+      // turnuva bayrağa bağlı doğrudan satırdır. Hikâye LearningScreen, arkadaş
       // Liderlik, çark Mağaza, yerleştirme Ayarlar üzerindendir — ana yol
       // değil. Belge sessiz kalınca kapsam şişiyordu.
       final readme = File('README.md').readAsStringSync();
@@ -86,16 +86,19 @@ void main() {
         }
       }
 
+      // 2026-10-27: turnuva "Daha fazla" ardından çıktı; Yarış'ta bayrağa
+      // bağlı doğrudan satırdır.
       final playHub = File(
         'lib/src/screens/play_hub_screen.dart',
       ).readAsStringSync();
-      final moreIdx = playHub.indexOf('if (_moreOpen)');
+      expect(playHub, isNot(contains('_moreOpen')));
+      final flagIdx = playHub.indexOf('if (kTournamentEnabled)');
       final tourneyIdx = playHub.indexOf("ValueKey('play-hub-tournament')");
-      expect(moreIdx, greaterThanOrEqualTo(0));
+      expect(flagIdx, greaterThanOrEqualTo(0));
       expect(
         tourneyIdx,
-        greaterThan(moreIdx),
-        reason: 'turnuva kartı Daha fazla açılınca görünür',
+        greaterThan(flagIdx),
+        reason: 'turnuva satırı bayrağa bağlı',
       );
 
       expect(

@@ -26,9 +26,11 @@ Eski Vite prototipi `../docs/archive/web_prototype` altındadır; Play paketi bu
 - Firebase Crashlytics ile çökme raporlama
 - Çevrimdışı kuyruk quiz ödülünü taşır; XP sahte eşitlemesi yok
 
-Hikâye (Öğren → Kurmancî öğren), arkadaşlar (Liderlik), günlük çark (Mağaza)
-ve yerleştirme (Ayarlar) ikinci katmandadır. Turnuva ve haftalık lig
-`lib/src/config/feature_flags.dart` ile kapalıdır. Sırayla düello (sen şimdi
+Hikâye ve pratik merkezi (Öğren → Kurmancî öğren), arkadaşlar (Yarış,
+Liderlik), günlük çark (Yarış, Mağaza) ve yerleştirme (Kurmancî öğren,
+Ayarlar) ikinci katmandadır. Turnuva Yarış'ta doğrudan satırdır
+(`kTournamentEnabled` açık); haftalık lig `lib/src/config/feature_flags.dart`
+ile kapalıdır. Sırayla düello (sen şimdi
 oyna, rakibin sonra) `kAsyncDuelEnabled = true` ile açıktır; bu kaynak kod
 bayrağı canlı RPC sağlığının doğrulandığı anlamına gelmez.
 `lib/src/config/category_visibility.dart` içindeki `hiddenCategoryIds` boştur;

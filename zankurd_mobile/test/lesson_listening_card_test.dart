@@ -28,11 +28,13 @@ class _FakeSpeaker implements LessonListeningSpeaker {
   final ValueNotifier<bool> speakingListenable = ValueNotifier(false);
 
   final List<String> spoken = [];
+  final List<bool> slows = [];
   int stopCalls = 0;
 
   @override
-  Future<void> speak(String text) async {
+  Future<void> speak(String text, {bool slow = false}) async {
     spoken.add(text);
+    slows.add(slow);
   }
 
   @override
@@ -112,6 +114,25 @@ void main() {
     await tester.pump();
     expect(find.text('Rojbaş'), findsOneWidget);
     expect(find.text('Doğru'), findsOneWidget);
+  });
+
+  // Yavaş dinleme (2026-10-27): kaplumbağa aynı terimi yavaş çalar ve
+  // dinlenmiş sayılır (şıklar açılır).
+  testWidgets('kaplumbağa aynı terimi yavaş çalar ve şıkları açar', (
+    tester,
+  ) async {
+    final speaker = _FakeSpeaker();
+    await tester.pumpWidget(
+      _wrap(LessonListeningCard(entries: _entries, speaker: speaker)),
+    );
+    await tester.tap(find.byKey(const ValueKey('lesson-listening-slow')));
+    await tester.pumpAndSettle();
+    expect(speaker.spoken, ['Rojbaş']);
+    expect(speaker.slows, [true]);
+    expect(
+      find.byKey(const ValueKey('lesson-listening-option-rojbas')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('sonraki dinleme öğesi terimi yeniden gizler', (tester) async {

@@ -201,6 +201,9 @@ class AppIcons {
   /// Lucide `gamepad-2`.
   static const IconData gamepad = IconData(0xe0df, fontFamily: 'Lucide');
 
+  /// Lucide `turtle` — yavaş dinleme.
+  static const IconData turtle = IconData(0xe4f9, fontFamily: 'Lucide');
+
   /// Lucide `gauge`.
   static const IconData gaugeHigh = IconData(0xe1bf, fontFamily: 'Lucide');
 

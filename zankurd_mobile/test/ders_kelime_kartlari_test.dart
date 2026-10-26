@@ -32,7 +32,8 @@ class _Speaker implements LessonListeningSpeaker {
   @override
   ValueListenable<bool> get speakingListenable => ValueNotifier(false);
   @override
-  Future<void> speak(String text) async => spoken.add(text);
+  Future<void> speak(String text, {bool slow = false}) async =>
+      spoken.add(text);
   @override
   Future<void> stop() async {}
 }
