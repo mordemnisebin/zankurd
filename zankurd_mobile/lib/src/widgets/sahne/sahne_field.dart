@@ -37,7 +37,7 @@ class SahneField extends FormField<String> {
     this.textCapitalization = TextCapitalization.none,
     this.inputFormatters,
     this.obscureText = false,
-    this.autocorrect = true,
+    this.autocorrect = false,
     this.enableSuggestions = true,
     this.autofocus = false,
     this.minLines,
@@ -99,6 +99,13 @@ class SahneField extends FormField<String> {
   final TextCapitalization textCapitalization;
   final List<TextInputFormatter>? inputFormatters;
   final bool obscureText;
+
+  /// Otomatik düzeltme VARSAYILAN KAPALI (2026-10-27, çok simülatörlü
+  /// E2E): Türkçe/İngilizce iOS klavyesi Kürtçe adı alan odağını kaybedince
+  /// bilinen bir sözcüğe çeviriyordu — "Berfin" yazan oyuncunun adı
+  /// "Bergen" kaydedildi. Uygulamadaki metinlerin çoğu Kurmancî (ad, sohbet,
+  /// soru önerisi, kodlar); hiçbir klavye sözlüğü onları tanımaz. Öneri
+  /// çubuğu ([enableSuggestions]) açık kalır: o kendiliğinden değiştirmez.
   final bool autocorrect;
   final bool enableSuggestions;
   final bool autofocus;

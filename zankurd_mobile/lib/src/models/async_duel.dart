@@ -173,6 +173,30 @@ class AsyncDuelStart {
   );
 }
 
+/// `present_tournament_question` yanıtı (2026-10-27): sunucu saati ve
+/// sorunun İÇERİĞİ. Turnuvada içerik yalnız sunumda gelir; başlangıç
+/// yanıtındaki sunulmamış sorular yer tutucudur (önceden çözülüp anında
+/// cevaplanmasın diye).
+class TournamentPresent {
+  const TournamentPresent({required this.elapsedMs, this.question});
+
+  /// Sunumdan bu yana sunucuda geçen süre.
+  final int elapsedMs;
+
+  /// Sorunun gizli cevaplı içeriği; eski sunucu göndermezse null.
+  final QuizQuestion? question;
+
+  factory TournamentPresent.fromJson(Map<String, dynamic> json) {
+    final raw = json['question'];
+    return TournamentPresent(
+      elapsedMs: (json['elapsed_ms'] as num?)?.toInt() ?? 0,
+      question: raw is Map
+          ? QuizQuestion.fromServerRow(Map<String, dynamic>.from(raw))
+          : null,
+    );
+  }
+}
+
 /// Oyun ekranının düelloyu NASIL başlattığı.
 ///
 /// * [random]: `start_async_duel` — bekleyen açık düelloya katıl ya da yeni
@@ -183,37 +207,62 @@ class AsyncDuelStart {
 ///   bağlantısındaki ya da gelen kutusundaki kodla meydan okumayı kabul et.
 /// * [resume]: `resume_my_async_duel` — yarım bırakılan düelloya kaldığı
 ///   sorudan devam (gelen kutusundaki "Berdewam bike" satırı).
-enum AsyncDuelEntryKind { random, createChallenge, acceptChallenge, resume }
+/// * [tournament]: `start_tournament_match` — sunucu puanlı turnuva maçı
+///   (2026-10-27). Aynı oyun ekranı, aynı gizli cevap ve sunucu süre
+///   sözleşmesi; bitince sonuç ekranı yerine turnuva şemasına dönülür.
+enum AsyncDuelEntryKind {
+  random,
+  createChallenge,
+  acceptChallenge,
+  resume,
+  tournament,
+}
 
 class AsyncDuelEntry {
   const AsyncDuelEntry.random({this.category})
     : kind = AsyncDuelEntryKind.random,
       friendId = null,
       code = null,
-      duelId = null;
+      duelId = null,
+      roundLabel = null;
 
   const AsyncDuelEntry.createChallenge({this.category, this.friendId})
     : kind = AsyncDuelEntryKind.createChallenge,
       code = null,
-      duelId = null;
+      duelId = null,
+      roundLabel = null;
 
   const AsyncDuelEntry.acceptChallenge(String this.code)
     : kind = AsyncDuelEntryKind.acceptChallenge,
       category = null,
       friendId = null,
-      duelId = null;
+      duelId = null,
+      roundLabel = null;
 
   const AsyncDuelEntry.resume(String this.duelId)
     : kind = AsyncDuelEntryKind.resume,
       category = null,
       friendId = null,
+      code = null,
+      roundLabel = null;
+
+  /// Turnuva maçı: [duelId] maçın kimliğidir; [roundLabel] ("Yarı Final")
+  /// soru ekranında rakip satırının üstünde durur.
+  const AsyncDuelEntry.tournament(String matchId, {this.roundLabel})
+    : kind = AsyncDuelEntryKind.tournament,
+      duelId = matchId,
+      category = null,
+      friendId = null,
       code = null;
+
+  bool get isTournament => kind == AsyncDuelEntryKind.tournament;
 
   final AsyncDuelEntryKind kind;
   final String? category;
   final String? friendId;
   final String? code;
   final String? duelId;
+  final String? roundLabel;
 }
 
 /// Meydan okuma RPC'lerinin sunucu hata metinlerinin istemci sınıflaması

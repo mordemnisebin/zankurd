@@ -210,8 +210,10 @@ class _SingleAnimatedReactionBubbleState
         : (Random().nextDouble() - 0.5) * 60;
     _animController = AnimationController(
       vsync: this,
+      // Oda tepkisi 1,2 sn'de kayboluyordu: "Rojd: Başarılar!" okunmadan
+      // gidiyordu (2026-10-27, 4 cihazlı E2E). Rakiplerde 2–3 sn.
       duration: widget.placement == FloatingReactionPlacement.roomHeader
-          ? const Duration(milliseconds: 1200)
+          ? const Duration(milliseconds: 2600)
           : const Duration(milliseconds: 1800),
     );
 

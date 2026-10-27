@@ -44,8 +44,7 @@ class TournamentBracketWidget extends StatelessWidget {
   final bool ku;
   final void Function(TournamentMatch match, int roundIndex)? onTapMatch;
 
-  List<String> get _roundNames =>
-      tournamentRoundNames(ku, bracket.rounds.length);
+  List<String> get _roundNames => tournamentRoundNames(ku, bracket.totalRounds);
 
   @override
   Widget build(BuildContext context) {

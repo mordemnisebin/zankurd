@@ -118,7 +118,9 @@ void main() {
               'all at once makes the messages cover each other.',
         );
 
-        await tester.pump(const Duration(milliseconds: 1300));
+        // Oda başlığı balonu 2600 ms kalır (2026-10-27: 1200 ms'de öteki
+        // cihazdaki oyuncu tepkiyi okuyamadan kayboluyordu).
+        await tester.pump(const Duration(milliseconds: 2700));
         await tester.pump();
 
         expect(controller.activeBubbles, hasLength(2));

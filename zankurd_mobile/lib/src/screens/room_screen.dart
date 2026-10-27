@@ -1277,6 +1277,47 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
+                              // 2026-10-19 sadeleşme (ikinci tur): hızlı tepkiler ve
+                              // sohbet TEK kompakt düğmenin ("Sohbet") arkasında;
+                              // lobi varsayılanda yalnız kod, oyuncular ve başlat
+                              // düğmesidir. Tepkiler yalnız karşıda biri varken
+                              // anlamlıdır.
+                              //
+                              // Sohbet 2026-07-31'de moderasyonuyla (Apple
+                              // 1.2: gönderimde süzgeç, uzun basınca
+                              // bildir/engelle; sunucu karşılığı
+                              // supabase/2026-07-31_chat_moderation.sql)
+                              // katlanabilir bir panel olarak geri geldi;
+                              // kalabalık kaygısı kapalı başlayarak
+                              // karşılanıyor.
+                              // Sohbet düğmesi artık başlıkta ([_RoomBar.trailing]);
+                              // burada yalnız açıkken panel durur.
+                              // 2026-10-27 (4 cihazlı E2E): panel eskiden oyuncu
+                              // listesinin ALTINDAydı; 8 kişilik odada ekran
+                              // dışında açılıyor, düğmeye basan "hiçbir şey
+                              // olmadı" sanıp kapatıyordu. Artık çubuğun hemen
+                              // altında, göründüğü yerde açılır.
+                              if (room.id != null && _chatOpen) ...[
+                                if (_chatOpen && room.players.length >= 2) ...[
+                                  const SizedBox(height: SahneSpace.x2),
+                                  _buildQuickReactionChips(context),
+                                ],
+                                if (_chatOpen && room.id != null) ...[
+                                  const SizedBox(height: SahneSpace.x2),
+                                  padded(
+                                    RoomChat(
+                                      key: const ValueKey('room-chat'),
+                                      repository: widget.repository,
+                                      roomId: room.id!,
+                                      visible: true,
+                                      onToggle: () => setState(
+                                        () => _chatOpen = !_chatOpen,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                                const SizedBox(height: SahneSpace.cardGap),
+                              ],
                               padded(
                                 _RoomHero(
                                   room: room,
@@ -1463,42 +1504,6 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                                     ],
                                   ),
                                 ),
-                              ],
-                              // 2026-10-19 sadeleşme (ikinci tur): hızlı tepkiler ve
-                              // sohbet TEK kompakt düğmenin ("Sohbet") arkasında;
-                              // lobi varsayılanda yalnız kod, oyuncular ve başlat
-                              // düğmesidir. Tepkiler yalnız karşıda biri varken
-                              // anlamlıdır.
-                              //
-                              // Sohbet 2026-07-31'de moderasyonuyla (Apple
-                              // 1.2: gönderimde süzgeç, uzun basınca
-                              // bildir/engelle; sunucu karşılığı
-                              // supabase/2026-07-31_chat_moderation.sql)
-                              // katlanabilir bir panel olarak geri geldi;
-                              // kalabalık kaygısı kapalı başlayarak
-                              // karşılanıyor.
-                              // Sohbet düğmesi artık başlıkta ([_RoomBar.trailing]);
-                              // burada yalnız açıkken panel durur.
-                              if (room.id != null && _chatOpen) ...[
-                                const SizedBox(height: SahneSpace.cardGap),
-                                if (_chatOpen && room.players.length >= 2) ...[
-                                  const SizedBox(height: SahneSpace.x2),
-                                  _buildQuickReactionChips(context),
-                                ],
-                                if (_chatOpen && room.id != null) ...[
-                                  const SizedBox(height: SahneSpace.x2),
-                                  padded(
-                                    RoomChat(
-                                      key: const ValueKey('room-chat'),
-                                      repository: widget.repository,
-                                      roomId: room.id!,
-                                      visible: true,
-                                      onToggle: () => setState(
-                                        () => _chatOpen = !_chatOpen,
-                                      ),
-                                    ),
-                                  ),
-                                ],
                               ],
                             ],
                           ),

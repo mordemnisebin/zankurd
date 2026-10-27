@@ -63,14 +63,22 @@ bool instantExplanationAllowedFor({
 );
 
 /// Ödül üretmeyen tek kişilik tur: süre tercihi yalnız burada geçerlidir.
+///
+/// [versus] (turnuva maçı) bot yarışı kapalı olsa da rekabettir: süresiz
+/// tercih orada geçmez. Gerçek kupa 2026-10-27'den beri bot yarışsız açılır.
 bool isRewardNeutralSoloQuiz({
   required bool is1v1,
   required bool dailyQuiz,
   required bool botRace,
   required bool practice,
+  bool versus = false,
   String? roomId,
 }) {
-  return !is1v1 && !dailyQuiz && !botRace && (practice || roomId == null);
+  return !is1v1 &&
+      !dailyQuiz &&
+      !botRace &&
+      !versus &&
+      (practice || roomId == null);
 }
 
 /// Sayaç bu turda işlesin mi?

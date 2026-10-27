@@ -1007,7 +1007,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final roomId = _requiredString(room, const ['room_id']);
     final hostId = _requiredString(room, const ['host_id']);
     final players = await _loadRoomPlayersById(roomId);
-    final category = room['category_name'] as String? ?? 'Ziman';
+    // Kategorisiz oda (sunucuda category_id boş) KARIŞIKTIR. Eskiden 'Ziman'a
+    // düşülüyordu: karışık oda uygulama yeniden açılınca ya da katılan
+    // oyuncuda "Dil" görünüyordu (2026-10-27, 4 cihazlı E2E).
+    final category = room['category_name'] as String? ?? 'Tevlihev';
 
     final joined = createRoom(category: category).copyWith(
       id: roomId,
@@ -1069,7 +1072,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       id: row['id'] as String? ?? roomId,
       name: _roomDisplayName(rowMaxPlayers, rowIsCustom),
       code: row['code'] as String? ?? '',
-      category: category?['name'] as String? ?? 'Ziman',
+      // Kategorisiz oda karışıktır (bkz. joinOnlineRoom).
+      category: category?['name'] as String? ?? 'Tevlihev',
       players: players,
       status: _roomStatusFromValue(row['status']),
       questionCount: (row['question_count'] as num?)?.toInt() ?? 10,
@@ -3958,6 +3962,32 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<ChampionRewardClaim> claimChampionRewardStatus() async {
+    try {
+      final response = await client.rpc<dynamic>('claim_tournament_reward');
+      final json = response is Map
+          ? Map<String, dynamic>.from(response)
+          : const <String, dynamic>{};
+      final alreadyClaimed = json['already_claimed'] == true;
+      return ChampionRewardClaim(
+        amount: (json['amount'] as num?)?.toInt() ?? 0,
+        // Eski sunucu `paid_amount` göndermez: zaten alındıysa sabit ödül.
+        alreadyPaid: alreadyClaimed
+            ? (json['paid_amount'] as num?)?.toInt() ??
+                  TournamentConfig.coinBonusChampion
+            : 0,
+      );
+    } catch (e, s) {
+      if (_isMissingFunction(e)) {
+        _recordError(e, s, reason: 'claimChampionRewardStatus missing');
+        return const ChampionRewardClaim(amount: 0);
+      }
+      _recordError(e, s, reason: 'claimChampionRewardStatus failed');
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> claimTournamentChampionReward() async {
     try {
       // RPC alanı `amount`; burada `coins` okunuyordu ve şampiyon ödülü
@@ -4469,6 +4499,73 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'resumeAsyncDuel failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AsyncDuelStart> startTournamentMatch(String matchId) async {
+    try {
+      final response = await client.rpc(
+        'start_tournament_match',
+        params: {'p_match_id': matchId},
+      );
+      return _withDuelProfiles(
+        AsyncDuelStart.fromJson(
+          _requiredJsonObject(response, 'start_tournament_match'),
+        ),
+      );
+    } catch (error, stack) {
+      // Eski kupa ya da göç uygulanmamış sunucu: çağıran eski yola düşer.
+      if (!isMissingRpcError(error) &&
+          !error.toString().contains('Not server scored')) {
+        _recordError(error, stack, reason: 'startTournamentMatch failed');
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<TournamentPresent> presentTournamentQuestion(
+    String matchId,
+    int questionIndex,
+  ) async {
+    try {
+      final response = await client.rpc(
+        'present_tournament_question',
+        params: {'p_match_id': matchId, 'p_question_index': questionIndex},
+      );
+      return TournamentPresent.fromJson(
+        _requiredJsonObject(response, 'present_tournament_question'),
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'presentTournamentQuestion failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AsyncDuelAnswer> answerTournamentQuestion({
+    required String matchId,
+    required int questionIndex,
+    required String choice,
+  }) async {
+    try {
+      final response = await client.rpc(
+        'answer_tournament_question',
+        params: {
+          'p_match_id': matchId,
+          'p_question_index': questionIndex,
+          'p_choice': choice,
+        },
+      );
+      return AsyncDuelAnswer.fromJson(
+        _requiredJsonObject(response, 'answer_tournament_question'),
+      );
+    } catch (error, stack) {
+      if (!error.toString().contains('Already answered')) {
+        _recordError(error, stack, reason: 'answerTournamentQuestion failed');
+      }
       rethrow;
     }
   }

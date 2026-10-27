@@ -279,7 +279,18 @@ class AsyncDuelResultScreen extends StatefulWidget {
   State<AsyncDuelResultScreen> createState() => _AsyncDuelResultScreenState();
 }
 
-class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
+class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
+    with WidgetsBindingObserver {
+  /// Bekleme ekranı ("Rakibin oynayınca sonuç burada görünecek") sözünü
+  /// tutar: rakip bitirince ekran kendiliğinden sonuca geçer. Eskiden ekran
+  /// durağandı; iki simülatörlü turda rakip bitirdiği halde kum saati
+  /// kaldı (2026-10-27). Açıkken [_waitingPollInterval]'da bir ve uygulama
+  /// öne her geldiğinde düello listesine bakılır.
+  static const Duration _waitingPollInterval = Duration(seconds: 10);
+  Timer? _waitingPoll;
+  bool _waitingCheckInFlight = false;
+  bool _replacedByResult = false;
+
   /// Kendi fotoğrafım/simgem (skor kartında "Sen" avatarı). Yüklenene dek
   /// ya da okunamazsa null: baş harf/simge avatarı çizilir.
   AvatarIdentity? _myIdentity;
@@ -307,6 +318,58 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
     unawaited(_loadMyIdentity());
     if (widget.view.kind == AsyncDuelResultKind.completed) {
       unawaited(_loadReview());
+    }
+    if (widget.view.kind == AsyncDuelResultKind.waiting) {
+      WidgetsBinding.instance.addObserver(this);
+      _waitingPoll = Timer.periodic(
+        _waitingPollInterval,
+        (_) => unawaited(_checkOpponentFinished()),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _waitingPoll?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      unawaited(_checkOpponentFinished());
+    }
+  }
+
+  /// Rakip bitirdiyse bekleme ekranını sonuç ekranıyla değiştirir. Hata
+  /// sessizce bir sonraki denemeye bırakılır: bekleme ekranı zaten doğru
+  /// bir durum gösteriyor, ağ kesintisi onu bozmamalı.
+  Future<void> _checkOpponentFinished() async {
+    if (_waitingCheckInFlight || _replacedByResult) return;
+    _waitingCheckInFlight = true;
+    try {
+      final duels = await widget.repository.loadMyAsyncDuels();
+      if (!mounted || _replacedByResult) return;
+      for (final summary in duels) {
+        if (summary.duelId != widget.view.duelId) continue;
+        final view = AsyncDuelResultView.fromSummary(summary);
+        if (view.kind != AsyncDuelResultKind.completed) return;
+        _replacedByResult = true;
+        _waitingPoll?.cancel();
+        unawaited(
+          Navigator.of(context).pushReplacement(
+            AppRoute.to(
+              AsyncDuelResultScreen(repository: widget.repository, view: view),
+            ),
+          ),
+        );
+        return;
+      }
+    } catch (_) {
+      // Bir sonraki tıkta yeniden denenir.
+    } finally {
+      _waitingCheckInFlight = false;
     }
   }
 

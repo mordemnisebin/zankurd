@@ -870,8 +870,9 @@ void main() {
       await mountResult(tester, players: players);
 
       expect(find.text('Kazandın!'), findsOneWidget);
+      // 2026-10-27: birincilik paylaşılıyorsa bu söylenir.
       expect(
-        find.text('4 oyuncu arasında yarışı 1. sırada tamamladın.'),
+        find.text('4 oyuncu arasında 1. sırayı 2 kişi paylaştınız.'),
         findsOneWidget,
       );
       // Eşit skor → ikisi de 1.
@@ -960,6 +961,13 @@ void main() {
 
       expect(find.text('Kazandın!'), findsNothing);
       expect(find.text('Berabere!'), findsOneWidget);
+      // 2026-10-27: eşitlikte "1. sırada tamamladın" değil, paylaşıldığı
+      // söylenir (başlık "Berabere!" ile çelişmesin).
+      expect(
+        find.text('3 oyuncu arasında 1. sırayı 3 kişi paylaştınız.'),
+        findsOneWidget,
+      );
+      expect(find.textContaining('sırada tamamladın'), findsNothing);
     });
 
     testWidgets('birinci olmayan oyuncu "Kazandın" görmez, sırasını okur', (

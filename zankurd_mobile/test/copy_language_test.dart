@@ -61,9 +61,7 @@ void main() {
     // `\bscore\b` taramasını da kör eder — `maçê` ile aynı sınıf.
     // Kupa kartı "Puana dawî" deyince û düşer; `contains('skor')` onu
     // görmez.
-    expect(Tr.of(K.liveScore, AppLanguage.ku), 'Pûana zindî');
     expect(Tr.of(K.scoreWord, AppLanguage.ku), 'Pûan');
-    expect(Tr.of(K.cupFinalScore, AppLanguage.ku), 'Pûana dawî');
     expect(
       Tr.of(K.tournamentWaitingOpponent, AppLanguage.ku),
       contains('Pûana te'),

@@ -98,6 +98,7 @@ class QuizResultScreen extends StatefulWidget {
     this.isLearningExperience = false,
     this.contestId,
     this.roundId,
+    this.tournamentMatch = false,
     this.resultOwnerUserId,
     this.rewardSettlementState,
     this.receiptRunner,
@@ -146,6 +147,12 @@ class QuizResultScreen extends StatefulWidget {
   final bool practice;
   final bool dailyQuiz;
   final bool isLearningExperience;
+
+  /// Turnuva maçının sonucu (2026-10-27). Ana eylem "Tekrar oyna" değil
+  /// "Turnuvaya dön"dür ve oyuncuyu ana sayfaya değil şemaya geri götürür:
+  /// eskiden düğme ilk rotaya atıyor, oyuncu maçının ne olduğunu görmek için
+  /// turnuvayı yeniden açmak zorunda kalıyordu (4 simülatörlü tur).
+  final bool tournamentMatch;
   final String? contestId;
   final String? roundId;
 
@@ -1327,9 +1334,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // rastgele eşleşmede düğme çıkmaz.
     final canRematch = isOnlineRoom && room.isCustom;
     final nextActionLabel = context.t(
-      isOnlineRoom && !canRematch ? K.home : K.playAgain,
+      widget.tournamentMatch
+          ? K.backToTournament
+          : isOnlineRoom && !canRematch
+          ? K.home
+          : K.playAgain,
     );
-    final nextActionIcon = isOnlineRoom && !canRematch
+    final nextActionIcon = widget.tournamentMatch
+        ? AppIcons.trophy
+        : isOnlineRoom && !canRematch
         ? AppIcons.house
         : AppIcons.arrowRotateLeft;
 
@@ -1353,7 +1366,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       // "Devam" X ve çıkış diyaloğuyla tutarlı olmalı: tek `pop` kullanıcıyı
       // turu açtığı ekrana döndürür. Eskiden her durumda ilk rotaya atıyor,
       // dersin ortasındaki öğrenciyi ana sayfaya fırlatıyordu.
-      if (isLearningExperience && !isOnlineRoom) {
+      if ((isLearningExperience || widget.tournamentMatch) && !isOnlineRoom) {
         Navigator.of(context).pop();
         return;
       }
@@ -1903,7 +1916,14 @@ class _DuelFaceOff extends StatelessWidget {
       key: const ValueKey('result-duel-faceoff'),
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _avatarOf(mine.copyWith(name: context.t(K.you)), radius: 24),
+        // Avatar baş harfi oyuncunun GERÇEK adından gelir; "Sen" yazılınca
+        // herkes "S" görünüyordu (2026-10-27, iki cihazlı düello). Ekran
+        // okuyucu için "Sen" etiketi korunur.
+        Semantics(
+          label: context.t(K.you),
+          excludeSemantics: true,
+          child: _avatarOf(mine, radius: 24),
+        ),
         const SizedBox(width: SahneSpace.x3),
         emblem,
         const SizedBox(width: SahneSpace.x3),
@@ -2413,10 +2433,23 @@ class _CrowdStandings extends StatelessWidget {
         if (player.left) player,
     ];
     final own = standings.where((s) => s.player.id == ownId).firstOrNull;
+    // Eşit skor aynı sırayı paylaşır (sunucu). Paylaşılıyorsa bunu söyle:
+    // 4 kişi 0–0 bitirince herkes "1. sırada tamamladın" görüyordu, başlık
+    // ise "Berabere!" diyordu (2026-10-27, 4 cihazlı E2E).
+    final ownRank = own == null ? null : own.player.rank ?? own.rank;
+    final sharing = ownRank == null
+        ? 0
+        : standings.where((s) => (s.player.rank ?? s.rank) == ownRank).length;
     final summary = own == null
         ? null
+        : sharing > 1
+        ? context.t(K.crowdSharedRank, {
+            'rank': '$ownRank',
+            'count': '$sharing',
+            'total': '${standings.length}',
+          })
         : context.t(K.crowdFinishedAtRank, {
-            'rank': '${own.player.rank ?? own.rank}',
+            'rank': '$ownRank',
             'total': '${standings.length}',
           });
 

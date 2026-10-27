@@ -103,6 +103,37 @@ void main() {
       .widgetList<WildcardButton>(find.byType(WildcardButton))
       .firstWhere((b) => b.type == type);
 
+  // 2026-10-27: turnuva maçında iki oyuncu aynı dört soruyu oynar; "Soru
+  // değiştir" bunu bozuyor, jetonla 50/50 maçı parayla kazandırıyordu.
+  testWidgets('turnuva maçında (versus bandı) joker satırı yok', (
+    tester,
+  ) async {
+    final repository = _CountingRepository(500);
+    freshMockRepository();
+    SharedPreferences.setMockInitialValues({
+      'zankurd.onboarding.seen': true,
+      'zankurd.quiz_tutorial.seen': true,
+    });
+    await tester.pumpWidget(
+      testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: const [_question],
+          enableTimer: false,
+          versusBannerText: 'Yarı Final · Rakip: Rojda',
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 600));
+    expect(find.byType(WildcardButton), findsNothing);
+    expect(
+      find.byKey(const ValueKey('quiz-collapsed-wildcard-pill')),
+      findsNothing,
+    );
+  });
+
   testWidgets('jetonsuz yeni oyuncu: joker açık, ipucu yazar, kullanımda '
       'spend_coins çağrılmaz ve bakiye düşmez', (tester) async {
     final repository = _CountingRepository(8);

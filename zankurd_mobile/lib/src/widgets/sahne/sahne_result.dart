@@ -750,7 +750,10 @@ class SahneResultStats extends StatelessWidget {
     final chips = stats.any((stat) => stat.visible && stat.tint != null);
     final grid = LayoutBuilder(
       builder: (context, constraints) {
-        final minTile = MediaQuery.textScalerOf(context).scale(96);
+        // 96 dar geliyordu: iPhone Air'de (≈388 pt) dört sütuna inilince
+        // ikon + sayı + etiket sığmıyor, sözcük ortadan kırılıyordu
+        // ("Doğr/u", "Üst/üste"; 2026-10-27, iki cihazlı düello).
+        final minTile = MediaQuery.textScalerOf(context).scale(112);
         var perRow = items.length;
         // Büyük yazıda bile en az ikişerli; yalnız gerçekten dar kutuda
         // (< 240) tek sütuna inilir.

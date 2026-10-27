@@ -103,7 +103,43 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   Future<void>? _inFlight;
   bool _exitInFlight = false;
 
-  QuizQuestion get _currentQuestion => _duel!.questions[_index];
+  /// Oynanan sorular. Turnuvada sunulmamış soru yer tutucudur; içeriği
+  /// sunumda gelir ve buraya yazılır.
+  List<QuizQuestion> _questions = const [];
+
+  QuizQuestion get _currentQuestion => _questions[_index];
+
+  /// Turnuva: sorunun içeriği sunucudan bekleniyor (soru ve sayaç henüz
+  /// yok) ya da sunum başarısız oldu (yeniden dene).
+  bool _awaitingQuestion = false;
+  bool _presentFailed = false;
+
+  /// Sunucu puanlı turnuva maçı mı? (2026-10-27) Aynı oyun akışı; RPC'ler
+  /// turnuvanınkidir ve bitince sonuç ekranı yerine şemaya dönülür.
+  bool get _isTournament => widget.entry?.isTournament ?? false;
+
+  Future<AsyncDuelAnswer> _answer({
+    required String id,
+    required int index,
+    required String choice,
+    required int responseMs,
+  }) => _isTournament
+      ? widget.repository.answerTournamentQuestion(
+          matchId: id,
+          questionIndex: index,
+          choice: choice,
+        )
+      : widget.repository.answerAsyncDuel(
+          duelId: id,
+          questionIndex: index,
+          choice: choice,
+          responseMs: responseMs,
+        );
+
+  /// Turnuva maçından şemaya dönüş: çağıran şemayı yeniden okur.
+  void _popToTournament() {
+    Navigator.of(context).pop(<String, Object?>{'completed': true});
+  }
 
   @override
   void initState() {
@@ -138,7 +174,13 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   }
 
   void _reconcileTimerAfterResume() {
-    if (_duel == null || _phase != _Phase.idle || _exitInFlight) return;
+    if (_duel == null ||
+        _phase != _Phase.idle ||
+        _exitInFlight ||
+        _awaitingQuestion ||
+        _presentFailed) {
+      return;
+    }
     final elapsedMs = _elapsedMs;
     if (elapsedMs >= _questionDurationMs) {
       _handleTimeout();
@@ -170,8 +212,18 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         AsyncDuelEntryKind.resume => await widget.repository.resumeAsyncDuel(
           entry.duelId!,
         ),
+        AsyncDuelEntryKind.tournament =>
+          await widget.repository.startTournamentMatch(entry.duelId!),
       };
       if (!mounted) return;
+      // Turnuva maçını zaten bitirmişim (ör. son cevabın yanıtı kayboldu):
+      // oynanacak soru yok, şema durumu gösterir.
+      if (_isTournament &&
+          (start.alreadyFinished ||
+              start.answeredCount >= start.questions.length)) {
+        _popToTournament();
+        return;
+      }
       // Yeniden açılan kabul edilmiş meydan okumada 7 sorum zaten bitmiş:
       // oynanacak bir şey yok, sonuç listesine geç (hata/boş ekran yok).
       if (start.alreadyFinished ||
@@ -186,6 +238,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       final resumeAt = start.answeredCount;
       setState(() {
         _duel = start;
+        _questions = List.of(start.questions);
         _results = List<SahneDiamondState?>.filled(
           start.questions.length,
           null,
@@ -209,12 +262,74 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   }
 
   void _beginQuestion() {
+    if (_isTournament) {
+      unawaited(_presentTournamentQuestion());
+      return;
+    }
     _presentOffsetMs = 0;
     _stopwatch
       ..reset()
       ..start();
     _timerController.start();
     unawaited(_presentCurrentQuestion());
+  }
+
+  /// Turnuva: soru İÇERİĞİ sunumla gelir; soru ve sayaç ancak sunucu
+  /// sunumu kaydettikten sonra görünür (sunucu süreyi o andan ölçer).
+  /// Yarım bırakılıp dönülen soruda sunucu saati işlemiştir: sayaç buna
+  /// eşitlenir, süre geçmişse hemen TIMEOUT.
+  Future<void> _presentTournamentQuestion() async {
+    final duel = _duel;
+    if (duel == null) return;
+    final index = _index;
+    _timerController.pause();
+    _stopwatch
+      ..stop()
+      ..reset();
+    setState(() {
+      _awaitingQuestion = true;
+      _presentFailed = false;
+    });
+    final TournamentPresent presented;
+    try {
+      presented = await widget.repository.presentTournamentQuestion(
+        duel.duelId,
+        index,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'tournament present failed');
+      if (!mounted || _index != index || _exitInFlight) return;
+      setState(() {
+        _awaitingQuestion = false;
+        _presentFailed = true;
+      });
+      return;
+    }
+    if (!mounted || _index != index || _exitInFlight) return;
+    final question = presented.question;
+    setState(() {
+      if (question != null && index < _questions.length) {
+        _questions[index] = question;
+      }
+      _awaitingQuestion = false;
+    });
+    _presentOffsetMs = presented.elapsedMs;
+    _stopwatch.start();
+    _timerController.start();
+    if (presented.elapsedMs > 1500) {
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+        SnackBar(content: Text(context.t(K.asyncDuelResumedQuestionNote))),
+      );
+    }
+    if (presented.elapsedMs >= _questionDurationMs) {
+      _handleTimeout();
+      return;
+    }
+    if (presented.elapsedMs > 0) {
+      _timerController.sync(
+        (_questionDurationMs - presented.elapsedMs) / _questionDurationMs,
+      );
+    }
   }
 
   /// Soruyu ekrana koyduğumu sunucuya bildirir. Sunucu süreyi bu andan ölçer
@@ -260,7 +375,12 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   }
 
   void _handleAnswerTap(String answer) {
-    if (_phase != _Phase.idle || _exitInFlight) return;
+    if (_phase != _Phase.idle ||
+        _exitInFlight ||
+        _awaitingQuestion ||
+        _presentFailed) {
+      return;
+    }
     final responseMs = _elapsedMs;
     final choice = _currentQuestion.optionKeyForAnswer(answer);
     unawaited(
@@ -269,7 +389,12 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   }
 
   void _handleTimeout() {
-    if (_phase != _Phase.idle || _exitInFlight) return;
+    if (_phase != _Phase.idle ||
+        _exitInFlight ||
+        _awaitingQuestion ||
+        _presentFailed) {
+      return;
+    }
     unawaited(
       _submitAnswer(
         selected: null,
@@ -310,9 +435,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     final duelId = _duel!.duelId;
     final index = _index;
     try {
-      final response = await widget.repository.answerAsyncDuel(
-        duelId: duelId,
-        questionIndex: index,
+      final response = await _answer(
+        id: duelId,
+        index: index,
         choice: choice,
         responseMs: responseMs,
       );
@@ -365,7 +490,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   /// sonuç ekranı açabilmek için "bekleniyor" görünümüne düşülür; değilse
   /// sıradaki soruya geçilir.
   void _advanceOrFinishUnknown(int index) {
-    final total = _duel!.questions.length;
+    final total = _questions.length;
     if (index + 1 >= total) {
       _goToResult(null);
       return;
@@ -387,6 +512,10 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
 
   void _goToResult(AsyncDuelResult? result) {
     unawaited(StreakStore.recordActivity());
+    if (_isTournament) {
+      _popToTournament();
+      return;
+    }
     final duel = _duel!;
     final view = result == null
         ? AsyncDuelResultView.unknownAfterFinish(duel.duelId)
@@ -423,7 +552,11 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     final quit = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(dialogContext.t(K.asyncDuelQuitTitle)),
+        title: Text(
+          dialogContext.t(
+            _isTournament ? K.tournamentQuitTitle : K.asyncDuelQuitTitle,
+          ),
+        ),
         content: Text(dialogContext.t(K.asyncDuelQuitBody)),
         actions: [
           DialogActionPair(
@@ -475,24 +608,35 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       // beklemek yavaş ağda her RPC için 15 sn demekti; ekran dakikalarca
       // `_exitInFlight` ile tutuluyordu. Süre aşılırsa ekran yine kapanır;
       // ulaşmayan sorular sunucudaki süre dolumuyla tamamlanır.
-      final sends = <Future<void>>[];
-      for (var i = 0; i < duel.questions.length; i++) {
-        if (_confirmedIndices.contains(i)) continue;
+      Future<void> sendAt(int i) {
         final pendingChoice = _pendingChoice;
         final pendingMs = _pendingResponseMs;
         final resendPending =
             i == _index && pendingChoice != null && pendingMs != null;
-        sends.add(
-          _sendQuietly(
-            duelId: duel.duelId,
-            index: i,
-            choice: resendPending ? pendingChoice : 'TIMEOUT',
-            responseMs: resendPending ? pendingMs : _questionDurationMs,
-          ),
+        return _sendQuietly(
+          duelId: duel.duelId,
+          index: i,
+          choice: resendPending ? pendingChoice : 'TIMEOUT',
+          responseMs: resendPending ? pendingMs : _questionDurationMs,
         );
       }
+
+      final remaining = [
+        for (var i = 0; i < _questions.length; i++)
+          if (!_confirmedIndices.contains(i)) i,
+      ];
+      // Turnuva sunucusu cevabı SIRAYLA kabul eder (atlamalı 'Invalid
+      // index'): paralel gönderimde sırası kayan cevaplar düşer ve maç
+      // skorsuz kalırdı. Orada gönderimler sırayla, aynı toplam süreyle.
+      final Future<void> sends = _isTournament
+          ? () async {
+              for (final i in remaining) {
+                await sendAt(i);
+              }
+            }()
+          : Future.wait([for (final i in remaining) sendAt(i)]);
       try {
-        await Future.wait(sends).timeout(asyncDuelQuitSendTimeout);
+        await sends.timeout(asyncDuelQuitSendTimeout);
       } on TimeoutException {
         ErrorReporter.record(
           TimeoutException('async duel quit sends'),
@@ -502,6 +646,14 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       }
     }
     if (!mounted) return;
+    // Turnuvada bütün sorular sunucuya ulaştıysa skor yazılmıştır: şema
+    // "rakip bekleniyor"u göstersin diye tamamlandı bilgisi döner.
+    if (_isTournament &&
+        duel != null &&
+        _confirmedIndices.length >= _questions.length) {
+      _popToTournament();
+      return;
+    }
     Navigator.of(context).pop();
   }
 
@@ -514,9 +666,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     required int responseMs,
   }) async {
     try {
-      await widget.repository.answerAsyncDuel(
-        duelId: duelId,
-        questionIndex: index,
+      await _answer(
+        id: duelId,
+        index: index,
         choice: choice,
         responseMs: responseMs,
       );
@@ -546,7 +698,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         closeKey: const ValueKey('async-duel-loading-close'),
         closeLabel: context.t(K.close),
         onClose: () => Navigator.of(context).pop(),
-        center: Text(context.t(K.asyncDuel)),
+        center: Text(
+          context.t(_isTournament ? K.tournamentTitle : K.asyncDuel),
+        ),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
@@ -664,8 +818,18 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
             ],
           ),
         ),
-        // Cevap gönderilemediyse alt perdede TEK birincil: tekrar dene.
-        dock: _phase == _Phase.error
+        // Cevap gönderilemediyse (ya da turnuvada soru sunulamadıysa) alt
+        // perdede TEK birincil: tekrar dene.
+        dock: _presentFailed
+            ? SahneButton.primary(
+                key: const ValueKey('tournament-present-retry'),
+                label: context.t(K.retry),
+                icon: AppIcons.arrowsRotate,
+                arrow: false,
+                expand: true,
+                onPressed: () => unawaited(_presentTournamentQuestion()),
+              )
+            : _phase == _Phase.error
             ? SahneButton.primary(
                 label: context.t(K.retry),
                 icon: AppIcons.arrowsRotate,
@@ -677,127 +841,205 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         // Tek kaydırılabilir gövde: soru metni + şıklar birlikte kayar. Eski
         // Column + Expanded(ListView) düzeninde uzun bir soru %200 yazıda
         // şık listesine yer bırakmıyor, ekran alttan taşıyordu.
-        body: Builder(
-          builder: (context) {
-            final t = SahneTokens.of(context);
-            // Kurul 2026-10-20: şıklar alta (baş parmak bölgesi), soru boş
-            // alanda ortalanır — ders ve yarışma ekranıyla AYNI yerleşim.
-            return LayoutBuilder(
-              builder: (context, constraints) {
-                final reserve = quizAnswerBottomReserve(
-                  context,
-                  constraints.maxHeight,
-                );
-                return SahneStageScroll(
-                  scrollKey: const ValueKey('async-duel-scroll'),
-                  // Yeni soruda başa dön; üst kenar elmas şeridin altında sönsün.
-                  resetKey: _index,
-                  padding: EdgeInsets.fromLTRB(
-                    SahneSpace.page,
-                    SahneSpace.x4,
-                    SahneSpace.page,
-                    reserve,
-                  ),
-                  child: ConstrainedBox(
-                    key: const ValueKey('async-duel-answers-anchored'),
-                    constraints: BoxConstraints(
-                      minHeight: math.max(
-                        0.0,
-                        constraints.maxHeight - SahneSpace.x4 - reserve,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // Sıra ve kategori ortak üst satırda; burada yalnız
-                        // rakip bağlamı (boş yuva soruyu ortalar). Rakip adı
-                        // biliniyorsa avatarıyla birlikte ("Sen · Rojda"):
-                        // "Rojda'ya karşı" Türkçe ek uyumu gerektirdiği için
-                        // yeni cümle kurulmadı (NEEDS_JURY).
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: SahneSpace.x4),
-                          child: duel.role == AsyncDuelRole.opponent
-                              ? _RivalLine(
-                                  name: duel.opponentName == null
-                                      ? context.t(K.asyncDuelOpponent)
-                                      : context.playerDisplayName(
-                                          duel.opponentName,
-                                          tag: duel.opponentProfile?.playerTag,
-                                        ),
-                                  rawName: duel.opponentName,
-                                  identity: duel.opponentProfile?.avatar,
-                                  you: context.t(K.you),
-                                )
-                              : Text(
-                                  context.t(K.asyncDuelSub),
-                                  style: SahneType.caption.copyWith(
-                                    color: t.tx2,
-                                  ),
-                                ),
+        body: (_awaitingQuestion || _presentFailed)
+            // Turnuva: soru içeriği sunucudan gelene dek soru da şık da yok.
+            ? Center(
+                key: const ValueKey('tournament-question-pending'),
+                child: _presentFailed
+                    ? Padding(
+                        padding: const EdgeInsets.all(SahneSpace.page),
+                        child: Text(
+                          context.t(K.loadFailedShort),
+                          textAlign: TextAlign.center,
+                          style: SahneType.bodyStrong.copyWith(
+                            color: SahneTokens.of(context).tx2,
+                          ),
                         ),
-                        _QuestionText(text: question.promptText),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const SizedBox(height: SahneSpace.x4),
-                            if (_phase == _Phase.error) ...[
-                              Row(
-                                children: [
-                                  Icon(
-                                    AppIcons.triangleExclamation,
-                                    size: 20,
-                                    color: t.errTx,
-                                  ),
-                                  const SizedBox(width: SahneSpace.x2),
-                                  Expanded(
-                                    child: Text(
-                                      context.t(K.asyncDuelAnswerFailed),
-                                      style: SahneType.bodyStrong.copyWith(
-                                        color: t.errTx,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: SahneSpace.x3),
-                            ],
-                            for (final (i, answer) in answers.indexed)
+                      )
+                    : const CircularProgressIndicator(),
+              )
+            : Builder(
+                builder: (context) {
+                  final t = SahneTokens.of(context);
+                  // Kurul 2026-10-20: şıklar alta (baş parmak bölgesi), soru boş
+                  // alanda ortalanır — ders ve yarışma ekranıyla AYNI yerleşim.
+                  return LayoutBuilder(
+                    builder: (context, constraints) {
+                      final reserve = quizAnswerBottomReserve(
+                        context,
+                        constraints.maxHeight,
+                      );
+                      return SahneStageScroll(
+                        scrollKey: const ValueKey('async-duel-scroll'),
+                        // Yeni soruda başa dön; üst kenar elmas şeridin altında sönsün.
+                        resetKey: _index,
+                        padding: EdgeInsets.fromLTRB(
+                          SahneSpace.page,
+                          SahneSpace.x4,
+                          SahneSpace.page,
+                          reserve,
+                        ),
+                        child: ConstrainedBox(
+                          key: const ValueKey('async-duel-answers-anchored'),
+                          constraints: BoxConstraints(
+                            minHeight: math.max(
+                              0.0,
+                              constraints.maxHeight - SahneSpace.x4 - reserve,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Sıra ve kategori ortak üst satırda; burada yalnız
+                              // rakip bağlamı (boş yuva soruyu ortalar). Rakip adı
+                              // biliniyorsa avatarıyla birlikte ("Sen · Rojda"):
+                              // "Rojda'ya karşı" Türkçe ek uyumu gerektirdiği için
+                              // yeni cümle kurulmadı (NEEDS_JURY).
                               Padding(
                                 padding: const EdgeInsets.only(
-                                  bottom: SahneSpace.x2,
+                                  bottom: SahneSpace.x4,
                                 ),
-                                child: QuizOptionTile(
-                                  key: ValueKey('async-duel-option-$i'),
-                                  index: i,
-                                  answer: answer,
-                                  selected: _selectedAnswer == answer,
-                                  correct:
-                                      _revealedAnswerText != null &&
-                                      answer == _revealedAnswerText,
-                                  disabled: disabled,
-                                  suspense: suspenseVisual,
-                                  optionCount: answers.length,
-                                  tone: CategoryVisuals.tone(question.category),
-                                  dimmed:
-                                      _revealedAnswerText != null &&
-                                      answer != _revealedAnswerText &&
-                                      _selectedAnswer != answer,
-                                  onTap: () => _handleAnswerTap(answer),
-                                ),
+                                // Turnuva maçında rakip baştan bellidir: rolden
+                                // bağımsız rakip satırı, üstünde tur adı.
+                                child: _isTournament
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          if (widget.entry?.roundLabel != null)
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                bottom: SahneSpace.x1,
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Icon(
+                                                    AppIcons.trophy,
+                                                    size: 16,
+                                                    color: t.goldTx,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: SahneSpace.x1,
+                                                  ),
+                                                  Flexible(
+                                                    child: Text(
+                                                      widget.entry!.roundLabel!,
+                                                      key: const ValueKey(
+                                                        'tournament-match-round',
+                                                      ),
+                                                      style: SahneType
+                                                          .captionStrong
+                                                          .copyWith(
+                                                            color: t.goldTx,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          _RivalLine(
+                                            name: duel.opponentName == null
+                                                ? context.t(K.asyncDuelOpponent)
+                                                : context.playerDisplayName(
+                                                    duel.opponentName,
+                                                    tag: duel
+                                                        .opponentProfile
+                                                        ?.playerTag,
+                                                  ),
+                                            rawName: duel.opponentName,
+                                            identity:
+                                                duel.opponentProfile?.avatar,
+                                            you: context.t(K.you),
+                                          ),
+                                        ],
+                                      )
+                                    : duel.role == AsyncDuelRole.opponent
+                                    ? _RivalLine(
+                                        name: duel.opponentName == null
+                                            ? context.t(K.asyncDuelOpponent)
+                                            : context.playerDisplayName(
+                                                duel.opponentName,
+                                                tag: duel
+                                                    .opponentProfile
+                                                    ?.playerTag,
+                                              ),
+                                        rawName: duel.opponentName,
+                                        identity: duel.opponentProfile?.avatar,
+                                        you: context.t(K.you),
+                                      )
+                                    : Text(
+                                        context.t(K.asyncDuelSub),
+                                        style: SahneType.caption.copyWith(
+                                          color: t.tx2,
+                                        ),
+                                      ),
                               ),
-                          ],
+                              _QuestionText(text: question.promptText),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const SizedBox(height: SahneSpace.x4),
+                                  if (_phase == _Phase.error) ...[
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          AppIcons.triangleExclamation,
+                                          size: 20,
+                                          color: t.errTx,
+                                        ),
+                                        const SizedBox(width: SahneSpace.x2),
+                                        Expanded(
+                                          child: Text(
+                                            context.t(K.asyncDuelAnswerFailed),
+                                            style: SahneType.bodyStrong
+                                                .copyWith(color: t.errTx),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: SahneSpace.x3),
+                                  ],
+                                  for (final (i, answer) in answers.indexed)
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: SahneSpace.x2,
+                                      ),
+                                      child: QuizOptionTile(
+                                        key: ValueKey('async-duel-option-$i'),
+                                        index: i,
+                                        answer: answer,
+                                        selected: _selectedAnswer == answer,
+                                        correct:
+                                            _revealedAnswerText != null &&
+                                            answer == _revealedAnswerText,
+                                        disabled: disabled,
+                                        suspense: suspenseVisual,
+                                        optionCount: answers.length,
+                                        tone: CategoryVisuals.tone(
+                                          question.category,
+                                        ),
+                                        dimmed:
+                                            _revealedAnswerText != null &&
+                                            answer != _revealedAnswerText &&
+                                            _selectedAnswer != answer,
+                                        onTap: () => _handleAnswerTap(answer),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-        ),
+                      );
+                    },
+                  );
+                },
+              ),
       ),
     );
   }
@@ -825,7 +1067,13 @@ class _RivalLine extends StatelessWidget {
     return Row(
       key: const ValueKey('async-duel-rival-line'),
       mainAxisSize: MainAxisSize.min,
+      // "Sen vs [avatar] Rojda": avatar rakibindir, bu yüzden adının hemen
+      // önünde durur. Eski "[avatar] Sen · Rojda" dizilişi simülatörde
+      // "ben Rojda'yım" diye okundu (2026-10-27 E2E). "vs" Yarış kartındaki
+      // "RO vs ?" göstergesiyle aynı, dilden bağımsız işarettir.
       children: [
+        Text('$you vs', style: SahneType.caption.copyWith(color: t.tx2)),
+        const SizedBox(width: SahneSpace.x2),
         PlayerAvatar.fromIdentity(
           radius: 12,
           identity: identity,
@@ -834,7 +1082,7 @@ class _RivalLine extends StatelessWidget {
         const SizedBox(width: SahneSpace.x2),
         Flexible(
           child: Text(
-            '$you · $name',
+            name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: SahneType.caption.copyWith(color: t.tx2),

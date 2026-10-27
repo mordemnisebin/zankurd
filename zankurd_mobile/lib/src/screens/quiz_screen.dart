@@ -225,6 +225,7 @@ class _QuizScreenState extends State<QuizScreen>
     dailyQuiz: widget.dailyQuiz,
     botRace: widget.botRace,
     practice: widget.practice,
+    versus: widget.versusBannerText != null,
     roomId: widget.room.id,
   );
 
@@ -247,6 +248,7 @@ class _QuizScreenState extends State<QuizScreen>
     if (widget.is1v1) return '1v1';
     if (widget.dailyQuiz) return 'daily';
     if (widget.botRace) return 'bot_race';
+    if (widget.versusBannerText != null) return 'tournament';
     return 'solo';
   }
 
@@ -4064,6 +4066,7 @@ class _QuizScreenState extends State<QuizScreen>
             isLearningExperience: _isLearningExperience,
             contestId: widget.contestId,
             roundId: _analyticsRoundId,
+            tournamentMatch: widget.versusBannerText != null,
           ),
         ),
         // Yarıda çıkıştan (null) ayırt etmek için tamamlanma sinyali.

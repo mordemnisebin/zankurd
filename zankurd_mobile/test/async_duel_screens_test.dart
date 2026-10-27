@@ -298,6 +298,20 @@ void main() {
       find.descendant(of: line, matching: find.byType(PlayerAvatar)),
       findsOneWidget,
     );
+    // Avatar rakibindir: "Sen vs [avatar] ad". Eski "[avatar] Sen · ad"
+    // dizilişi simülatörde "ben o kişiyim" diye okundu (2026-10-27).
+    final you = find.descendant(of: line, matching: find.text('Sen vs'));
+    expect(you, findsOneWidget);
+    expect(
+      tester.getTopLeft(you).dx,
+      lessThan(
+        tester
+            .getTopLeft(
+              find.descendant(of: line, matching: find.byType(PlayerAvatar)),
+            )
+            .dx,
+      ),
+    );
   });
 
   testWidgets(

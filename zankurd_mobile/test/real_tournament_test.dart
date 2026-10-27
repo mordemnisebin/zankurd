@@ -22,7 +22,9 @@ import 'support/widget_test_helpers.dart';
 class _RealTournamentRepository extends MockZanKurdRepository {
   _RealTournamentRepository(this.bracket);
 
-  final TournamentBracket bracket;
+  /// Değiştirilebilir: sessiz yenileme testleri kontenjanın dolmasını
+  /// taklit eder.
+  TournamentBracket bracket;
 
   /// Şemadaki oyuncu kimliğiyle aynı olmalı: ekran "benim maçım"ı buna
   /// bakarak bulur.
@@ -115,6 +117,102 @@ void main() {
       reason: 'bekleme durumu gösterilmedi',
     );
     expect(find.textContaining('Bot'), findsNothing);
+  });
+
+  // 2026-10-27: bekleme ekranı doluluğu söyler ve kendini yeniler. Önceden
+  // ne kaç kişinin katıldığı görünüyordu ne de kontenjan dolunca ekran
+  // kendiliğinden şemaya geçiyordu (4 simülatörlü tur).
+  testWidgets('beklerken doluluk görünür, dolunca şema kendiliğinden gelir', (
+    tester,
+  ) async {
+    final repository = _RealTournamentRepository(
+      _bracketWith(const []).copyWith(entryCount: 1, size: 4),
+    );
+    await tester.pumpWidget(
+      testShell(child: TournamentScreen(repository: repository)),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.textContaining('1/4 oyuncu katıldı'), findsOneWidget);
+
+    repository.bracket = _bracketWith(
+      const [],
+    ).copyWith(entryCount: 3, size: 4);
+    await tester.pump(const Duration(seconds: 16));
+    await tester.pump();
+    expect(find.textContaining('3/4 oyuncu katıldı'), findsOneWidget);
+
+    repository.bracket = _bracketWith(const [
+      TournamentMatch(
+        id: 'm1',
+        playerOneId: 'me',
+        playerOneName: 'Ben',
+        playerTwoId: 'p2',
+        playerTwoName: 'Rojda',
+        playerOneScore: 0,
+        playerTwoScore: 0,
+        status: 'pending',
+        winnerId: '',
+      ),
+    ]);
+    await tester.pump(const Duration(seconds: 16));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.byKey(const ValueKey('tournament-waiting')), findsNothing);
+    expect(find.text('Rojda'), findsWidgets);
+  });
+
+  // 2026-10-27: sunucu ikinci turu ancak kazananlar belli olunca kurar.
+  // Tur adı `rounds.length`ten çıkınca 4 kişilik kupanın yarı finali
+  // "Final" yazıyordu (4 simülatörlü tur). Oyuncu sayısı esas alınır.
+  test('totalRounds oyuncu sayısından çıkar, eksik turları sayar', () {
+    final one = _bracketWith(const []);
+    expect(one.copyWith(entryCount: 4, size: 4).totalRounds, 2);
+    expect(one.copyWith(entryCount: 3, size: 4).totalRounds, 2);
+    expect(one.copyWith(entryCount: 2, size: 4).totalRounds, 1);
+    expect(one.totalRounds, 1, reason: 'sayı yoksa eldeki turlar');
+  });
+
+  testWidgets('ilk turu kurulmuş 4 kişilik kupada tur adı Yarı Final', (
+    tester,
+  ) async {
+    final repository = _RealTournamentRepository(
+      _bracketWith(const [
+        TournamentMatch(
+          id: 'm1',
+          playerOneId: 'me',
+          playerOneName: 'Ben',
+          playerTwoId: 'p2',
+          playerTwoName: 'Rojda',
+          playerOneScore: 0,
+          playerTwoScore: 0,
+          status: 'pending',
+          winnerId: '',
+        ),
+        TournamentMatch(
+          id: 'm2',
+          playerOneId: 'p3',
+          playerOneName: 'Bergen',
+          playerTwoId: 'p4',
+          playerTwoName: 'Berfîn',
+          playerOneScore: 0,
+          playerTwoScore: 0,
+          status: 'pending',
+          winnerId: '',
+        ),
+      ]).copyWith(entryCount: 4, size: 4),
+    );
+    await tester.binding.setSurfaceSize(const Size(400, 2400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      testShell(child: TournamentScreen(repository: repository)),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(find.textContaining('Yarı Final'), findsWidgets);
+    // Kurulmamış final de şeritte "sırada" görünür.
+    expect(find.text('Final'), findsWidgets);
   });
 
   // 2026-10-27: beklerken açıkça "botlarla" diye adlandırılan, ödülsüz
@@ -336,7 +434,7 @@ void main() {
     // (2026-08-14 denetimi).
     // Geniş ekranda iki sütunlu düzen aynı metni iki kez çizebilir
     // (bkz. bu dosyadaki diğer testlerdeki `findsWidgets` deseni).
-    expect(find.textContaining('Final puanı: 900'), findsWidgets);
+    expect(find.textContaining('Toplam puan: 900'), findsWidgets);
   });
 
   testWidgets(
@@ -359,7 +457,7 @@ void main() {
             status: 'completed',
             winnerId: 'p2',
           ),
-        ], status: 'eliminated'),
+        ], status: 'eliminated').copyWith(completedAt: DateTime(2026, 7, 27)),
       );
 
       await tester.pumpWidget(
@@ -382,6 +480,76 @@ void main() {
       expect(repository.joinCalls, 1);
     },
   );
+
+  // 2026-10-27 (4 simülatörlü tur): yarı finalde elenen oyuncuya final
+  // kurulunca "Final turunda elendin · 2/2" yazıyordu ve kupa sürerken
+  // basılınca hiçbir şey yapmayan "Turnuvaya katıl" düğmesi çıkıyordu.
+  testWidgets('kupa sürerken elenen: doğru tur, katıl düğmesi yok', (
+    tester,
+  ) async {
+    const semi = [
+      TournamentMatch(
+        id: 'm1',
+        playerOneId: 'p2',
+        playerOneName: 'Rojda',
+        playerTwoId: 'me',
+        playerTwoName: 'Ben',
+        playerOneScore: 245,
+        playerTwoScore: 0,
+        status: 'completed',
+        winnerId: 'p2',
+      ),
+      TournamentMatch(
+        id: 'm2',
+        playerOneId: 'p3',
+        playerOneName: 'Bergen',
+        playerTwoId: 'p4',
+        playerTwoName: 'Berfîn',
+        playerOneScore: 552,
+        playerTwoScore: 383,
+        status: 'completed',
+        winnerId: 'p3',
+      ),
+    ];
+    const finalMatch = [
+      TournamentMatch(
+        id: 'm3',
+        playerOneId: 'p2',
+        playerOneName: 'Rojda',
+        playerTwoId: 'p3',
+        playerTwoName: 'Bergen',
+        playerOneScore: 0,
+        playerTwoScore: 0,
+        status: 'pending',
+        winnerId: '',
+      ),
+    ];
+    final repository = _RealTournamentRepository(
+      _bracketWith(
+        semi,
+        secondRound: finalMatch,
+        // Sunucu elenen oyuncuya kupanın son turunu verir.
+        currentRound: 1,
+        status: 'eliminated',
+      ).copyWith(entryCount: 4, size: 4),
+    );
+    await tester.binding.setSurfaceSize(const Size(400, 2400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      testShell(child: TournamentScreen(repository: repository)),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(find.textContaining('Yarı Final'), findsWidgets);
+    expect(find.text('1/2'), findsOneWidget);
+    expect(find.text('2/2'), findsNothing);
+    expect(find.byKey(const ValueKey('tournament-join-new-cta')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('tournament-next-after-finish')),
+      findsOneWidget,
+    );
+  });
 
   testWidgets('şampiyon olmayan oyuncu ödül istemez', (tester) async {
     // Karşı taraf: her açılışta istemek, sunucunun "şampiyon değilsin"

@@ -697,10 +697,9 @@ class Tr {
       'ku': 'Ev kûpa herêmî ye, xelat nayê dayîn',
       'tr': 'Bu turnuva yerelde oynandı, ödül verilmez',
     },
-    // Quiz birimi `Pûan` (`K.scoreWord`, `K.liveScore`). Kupa kartı
+    // Quiz birimi `Pûan` (`K.scoreWord`). Kupa kartı
     // "Puana dawî" deyince û düşer ve Türkçe puan sızar; `contains('skor')`
     // bunu görmez — turnûva ile ters sınıf (eksik û).
-    K.cupFinalScore: {'ku': 'Pûana dawî', 'tr': 'Final puanı'},
     K.cupEliminatedRound: {
       'ku': 'Tu di gera {round} de derketî',
       'tr': '{round} turunda elendin',
@@ -1525,7 +1524,6 @@ class Tr {
     // zindî" deyince oyuncu aynı değeri iki adla görür. Türkçe `skor` +
     // `-a` çekimi İngilizce `\bscore\b` taramasını da kör eder — `maçê`
     // ve `serverê` ile aynı sınıf.
-    K.liveScore: {'ku': 'Pûana zindî', 'tr': 'Canlı puan'},
     K.imageLoadFailed: {
       'ku': 'Wêne nehat barkirin',
       'tr': 'Görsel yüklenemedi',
@@ -1755,6 +1753,17 @@ class Tr {
       'tr': 'Günün turu henüz hazır değil.',
     },
     K.goHome: {'ku': 'Vegere rûpela sereke', 'tr': 'Ana sayfaya dön'},
+    K.backToTournament: {'ku': 'Vegere kûpayê', 'tr': 'Turnuvaya dön'},
+    // KU düello çıkışıyla aynı ("pêşbirk" yarışma demektir, ikisine de
+    // uyar); TR'de "düello" turnuva maçında yanlış olurdu.
+    K.tournamentQuitTitle: {
+      'ku': 'Ji pêşbirkê derkevî?',
+      'tr': 'Maçtan çıkılsın mı?',
+    },
+    K.tournamentNextAfterFinish: {
+      'ku': 'Gava ev kûpa biqede, tu dikarî tevlî ya nû bibî.',
+      'tr': 'Bu turnuva bitince yenisine katılabilirsin.',
+    },
     K.dailyEvent: {'ku': 'Gera rojê', 'tr': 'Günün turu'},
     K.dailyEventCardTitle: {'ku': 'Pirsên tevlihev', 'tr': 'Karışık sorular'},
     K.questionCount: {'ku': '{count} pirs', 'tr': '{count} soru'},
@@ -2026,6 +2035,12 @@ class Tr {
       'tr': 'Yarış sıralaması',
     },
     K.crowdLeftBadge: {'ku': 'Derket', 'tr': 'Ayrıldı'},
+    K.crowdSharedRank: {
+      'ku':
+          'Di nav {total} lîstikvanan de, we wekî {count} kesan rêza '
+          '{rank}. parve kir.',
+      'tr': '{total} oyuncu arasında {rank}. sırayı {count} kişi paylaştınız.',
+    },
     K.crowdFinishedAtRank: {
       'ku':
           'Di nav {total} lîstikvanan de te pêşbirk di rêza {rank}. de qedand.',
@@ -2082,6 +2097,12 @@ class Tr {
       'tr':
           'Turnuva gerçek oyuncularla oynanır. Kontenjan dolunca eşleşmeler '
           'kurulur; en geç 24 saat içinde eldeki oyuncularla başlar.',
+    },
+    // KU fiilsiz: "tevlî bûn" çoğuldur, "1/4"te yanlış olurdu (jüri:
+    // Codex GPT-6.1-Sol + Gemini 3.8 Flash, 2026-10-27).
+    K.tournamentWaitingFill: {
+      'ku': 'Lîstikvanên beşdar: {count}/{size}',
+      'tr': '{count}/{size} oyuncu katıldı',
     },
     K.tournamentWaitingOpponent: {
       'ku': 'Pûana te hate tomarkirin; em li benda bersiva hevrikê te ne.',
@@ -4351,7 +4372,6 @@ class K {
   static const cupRewardGranted = 'tournament.rewardGranted';
   static const cupRewardUnverified = 'tournament.rewardUnverified';
   static const cupRewardLocal = 'tournament.rewardLocal';
-  static const cupFinalScore = 'tournament.finalScore';
   static const cupEliminatedRound = 'tournament.eliminatedRound';
   static const tournamentRoundGeneric = 'tournament.roundGeneric';
 
@@ -4673,7 +4693,6 @@ class K {
   static const sendAction = 'common.send';
   static const reportSent = 'quiz.report.sent';
   static const reportFailed = 'quiz.report.failed';
-  static const liveScore = 'quiz.liveScore';
   static const imageLoadFailed = 'quiz.imageLoadFailed';
   static const scoreWord = 'quiz.score';
   static const streakUnit = 'leaderboard.streak.unit';
@@ -4858,6 +4877,7 @@ class K {
   static const crowdDroppedBody = 'quiz.crowd.droppedBody';
   static const crowdStandingsTitle = 'result.crowd.standingsTitle';
   static const crowdLeftBadge = 'result.crowd.leftBadge';
+  static const crowdSharedRank = 'crowd.sharedRank';
   static const crowdFinishedAtRank = 'result.crowd.finishedAtRank';
   static const yourBalance = 'shop.yourBalance';
   static const earnCoins = 'shop.earnCoins';
@@ -4871,6 +4891,10 @@ class K {
   static const resultRecoveryOwnerChanged = 'result.recovery.ownerChanged';
   static const tournamentWaitingTitle = 'tournament.waitingTitle';
   static const tournamentWaitingBody = 'tournament.waitingBody';
+  static const tournamentWaitingFill = 'tournament.waitingFill';
+  static const backToTournament = 'tournament.backTo';
+  static const tournamentQuitTitle = 'tournament.quitTitle';
+  static const tournamentNextAfterFinish = 'tournament.nextAfterFinish';
   static const tournamentWaitingOpponent = 'tournament.waitingOpponent';
   static const championRewardGranted = 'tournament.championReward';
   static const tournamentMatchSubmitFailed = 'tournament.matchSubmitFailed';

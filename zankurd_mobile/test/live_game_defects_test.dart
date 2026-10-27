@@ -151,10 +151,12 @@ void main() {
       await tester.tap(find.text('mirov').first);
       await tester.pump(const Duration(milliseconds: 600));
 
-      // Üst kart + canlı liste: "Tu" ve "Zana" ikişer kez. Kusurlu
-      // sürümde "Tu" üç, "Zana" bir kez görünüyordu.
-      expect(find.text('Tu'), findsNWidgets(2));
-      expect(find.text('Zana'), findsNWidgets(2));
+      // Canlı liste: "Tu" ve "Zana" birer kez. Kusurlu sürümde rakip
+      // tarafına benim satırım yazılıyordu ("Tu" fazla, "Zana" eksik). Üst
+      // puan kartı 2026-10-27'de kalktı (aynı iki satırı ikinci kez
+      // gösteriyordu); sayılar bu yüzden ikiden bire indi.
+      expect(find.text('Tu'), findsOneWidget);
+      expect(find.text('Zana'), findsOneWidget);
       expect(find.text('ZanKurd Oyuncusu'), findsNothing);
       expect(tester.takeException(), isNull);
     });
@@ -208,9 +210,9 @@ void main() {
         );
         await _pumpDuel(tester, repository: _GuestRepository(), room: room);
 
-        // Üst kart + canlı liste.
-        expect(find.text('Berfin'), findsNWidgets(2));
-        expect(find.text('Lîstikvan'), findsNWidgets(2));
+        // Canlı liste (üst puan kartı 2026-10-27'de kalktı).
+        expect(find.text('Berfin'), findsOneWidget);
+        expect(find.text('Lîstikvan'), findsOneWidget);
         expect(find.text('ZanKurd Oyuncusu'), findsNothing);
         expect(find.text('230 pûan'), findsOneWidget);
       },

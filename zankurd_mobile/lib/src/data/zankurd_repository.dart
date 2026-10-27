@@ -423,6 +423,32 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// [classifyAsyncDuelReviewError].
   Future<AsyncDuelReview?> loadAsyncDuelReview(String duelId);
 
+  // ─── Sunucu puanlı turnuva maçı (2026-10-27) ─────────────────────────
+  //
+  // Sırayla düellonun sözleşmesiyle birebir: sorular sunucuda seçilir,
+  // doğru şık cevaptan sonra açıklanır, süre sunucuda ölçülür. Yanıt
+  // biçimleri de aynıdır, oyun ekranı ortaktır. Kupa sunucu puanlı değilse
+  // (`Not server scored`) çağıran eski istemci skorlu yola düşer.
+
+  /// Maçı açar ya da kaldığı sorudan sürdürür (`start_tournament_match`).
+  /// [AsyncDuelStart.duelId] burada maçın kimliğidir.
+  Future<AsyncDuelStart> startTournamentMatch(String matchId);
+
+  /// Soruyu sunar: sunucu süreyi bu andan ölçer ve sorunun içeriğini YALNIZ
+  /// burada verir. Fırlatırsa soru gösterilmez (yeniden dene).
+  Future<TournamentPresent> presentTournamentQuestion(
+    String matchId,
+    int questionIndex,
+  );
+
+  /// Tek soruyu cevaplar; puanı sunucu hesaplar. Son cevapta skor maça
+  /// yazılır ve iki taraf da bitirdiyse tur ilerler.
+  Future<AsyncDuelAnswer> answerTournamentQuestion({
+    required String matchId,
+    required int questionIndex,
+    required String choice,
+  });
+
   /// Kimsenin katılmadığı kendi açık düellomu geri çeker
   /// (`cancel_my_async_duel`). Başarısızlıkta `false`; RPC yoksa
   /// [isMissingRpcError] fırlatır.
@@ -905,6 +931,10 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   /// Turnuva ödülünü talep et (şampiyonluk).
   Future<int> claimTournamentChampionReward();
+
+  /// [claimTournamentChampionReward]in ayrıntılı hâli: daha önce ödenmiş
+  /// şampiyonluğu da söyler (ekran "ödül verildi" der, tekrar kutlamaz).
+  Future<ChampionRewardClaim> claimChampionRewardStatus();
 
   /// Kullanıcı tarafından önerilen soruyu Supabase 'suggested_questions'
   /// tablosuna kaydeder. Onaylandıktan sonra soru havuzuna eklenir.

@@ -6,6 +6,7 @@ import '../data/tournament_progress_publisher.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/async_duel.dart';
 import '../models/quiz_question.dart';
 import '../models/tournament.dart';
 import '../utils/app_route.dart';
@@ -16,6 +17,7 @@ import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/tournament_bracket_widget.dart';
+import 'async_duel/async_duel_play_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../config/bot_names.dart';
@@ -122,6 +124,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
   /// Turnuva doldu mu bekliyoruz?
   bool _waitingForPlayers = false;
 
+  /// Bekleme ekranındaki doluluk ("1/4 oyuncu katıldı"); sunucu sayıyı
+  /// göndermezse null ve satır çizilmez (2026-10-27).
+  ({int count, int size})? _waitingFill;
+
   /// Şampiyonluk ödülünün GERÇEK durumu.
   ///
   /// Kupayı kazanmak ödülün verildiği anlamına gelmez: ödülü sunucu verir
@@ -153,10 +159,62 @@ class _TournamentScreenState extends State<TournamentScreen> {
             _simulatedUserId)
       : _simulatedUserId;
 
+  /// Beklerken sessiz yenileme: kontenjan dolunca şema kendiliğinden gelir,
+  /// doluluk sayısı güncellenir; rakip maçını bitirince sonuç görünür.
+  /// Eskiden oyuncu "Tekrar dene"ye basmadıkça bekleme ekranında kalıyordu
+  /// (4 simülatörlü tur, 2026-10-27).
+  static const Duration _waitingPollInterval = Duration(seconds: 15);
+  Timer? _waitingPoll;
+
   @override
   void initState() {
     super.initState();
     _load();
+    _waitingPoll = Timer.periodic(
+      _waitingPollInterval,
+      (_) => unawaited(_pollWhileWaiting()),
+    );
+  }
+
+  @override
+  void dispose() {
+    _waitingPoll?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _pollWhileWaiting() async {
+    if (_loading) return;
+    // Puanımı gönderdim, rakip oynuyor: maç kapanınca (ve sonraki tur
+    // kurulunca) şema kendiliğinden yenilenir. Eskiden "rakibini
+    // bekliyoruz" kartı rakip bitirdikten sonra da kalıyordu (4 simülatörlü
+    // tur, 2026-10-27).
+    if (_serverBracket && _awaitingOpponent) {
+      final matchId = _userMatch?.id;
+      try {
+        final real = await widget.repository.loadRealTournamentBracket();
+        if (!mounted || real == null) return;
+        final stillOpen = real.rounds
+            .expand((round) => round.matches)
+            .any((m) => m.id == matchId && m.status != 'completed');
+        if (!stillOpen) await _load();
+      } catch (_) {
+        // Sonraki tıkta denenir.
+      }
+      return;
+    }
+    if (!_waitingForPlayers) return;
+    try {
+      final real = await widget.repository.loadRealTournamentBracket();
+      if (!mounted || !_waitingForPlayers) return;
+      if (real != null && _isSeeded(real)) {
+        await _load();
+        return;
+      }
+      final fill = _fillOf(real);
+      if (fill != _waitingFill) setState(() => _waitingFill = fill);
+    } catch (_) {
+      // Bekleme ekranı doğru durumu gösteriyor; sonraki tıkta denenir.
+    }
   }
 
   Future<void> _load() async {
@@ -200,6 +258,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             : null;
         _serverBracket = seeded && real != null;
         _waitingForPlayers = real != null && !_isSeeded(real);
+        _waitingFill = _fillOf(real);
         _standings = standings;
         _loading = false;
       });
@@ -274,6 +333,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             // Kontenjan dolmadıysa beklenir; bot uydurmak "gerçek insanlar"
             // sözünü bozardı.
             _waitingForPlayers = !seeded;
+            _waitingFill = _fillOf(joined);
           });
           return;
         }
@@ -390,17 +450,18 @@ class _TournamentScreenState extends State<TournamentScreen> {
   Future<void> _claimChampionReward() async {
     if (mounted) setState(() => _rewardState = _CupRewardState.claiming);
     try {
-      final amount = await widget.repository.claimTournamentChampionReward();
+      final claim = await widget.repository.claimChampionRewardStatus();
       if (!mounted) return;
-      // Sunucu sıfır döndüyse ödül VERİLMEDİ: hak ediş doğrulanmamış ya da
-      // aynı kupa için zaten talep edilmiş olabilir. "Verildi" demek yanlış
-      // olurdu.
+      // Sunucu ne ödedi ne de "zaten ödendi" dedi: hak ediş doğrulanmadı.
+      // Daha önce ödenmişse "verildi" görünür ama tekrar kutlanmaz
+      // (2026-10-27: ikinci açılışta "doğrulanmadı" yazıyordu).
       setState(() {
-        _rewardAmount = amount;
-        _rewardState = amount > 0
+        _rewardAmount = claim.shownAmount;
+        _rewardState = claim.granted
             ? _CupRewardState.granted
             : _CupRewardState.unverified;
       });
+      final amount = claim.amount;
       if (amount <= 0) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -458,6 +519,18 @@ class _TournamentScreenState extends State<TournamentScreen> {
 
   Future<void> _startMatch() async {
     if (_matchLoading) return;
+    final bracketNow = _bracket;
+    final matchNow = _userMatch;
+    // Sunucu puanlı kupa (2026-10-27): sorular, süre ve puan sunucuda;
+    // şampiyona ödül bu yüzden ödenir. Maç, sırayla düellonun sunucu
+    // sözleşmeli oyun ekranında oynanır ve bitince şemaya dönülür.
+    if (_serverBracket &&
+        matchNow != null &&
+        bracketNow != null &&
+        bracketNow.serverScored) {
+      await _startServerScoredMatch(bracketNow, matchNow);
+      return;
+    }
     setState(() => _matchLoading = true);
     try {
       final match = _userMatch;
@@ -497,7 +570,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             : match.playerOneName;
         final roundName = _roundNames(
           ku,
-          bracket.rounds.length,
+          bracket.totalRounds,
         )[bracket.currentRound];
         versusBanner = context.t(K.yourMatchVs, {
           'round': roundName,
@@ -510,7 +583,11 @@ class _TournamentScreenState extends State<TournamentScreen> {
             repository: widget.repository,
             room: widget.repository.createRoom(),
             questions: questions,
-            botRace: true,
+            // Bot yarışı yalnız antrenman kupasında: gerçek kupada sonuç
+            // ekranı "Hêlîn önde bitirdi" diye uydurma rakiplerle kıyas
+            // gösteriyordu (4 simülatörlü tur, 2026-10-27). Gerçek rakibin
+            // skoru şemadan okunur.
+            botRace: !_serverBracket,
             versusBannerText: versusBanner,
           ),
         ),
@@ -564,6 +641,35 @@ class _TournamentScreenState extends State<TournamentScreen> {
     } finally {
       if (mounted) setState(() => _matchLoading = false);
     }
+  }
+
+  Future<void> _startServerScoredMatch(
+    TournamentBracket bracket,
+    TournamentMatch match,
+  ) async {
+    final roundName = _roundNames(
+      context.isKu,
+      bracket.totalRounds,
+    )[bracket.currentRound];
+    // Çift dokunuş iki oyun ekranı açmasın.
+    setState(() => _matchLoading = true);
+    try {
+      final result = await Navigator.of(context).push<Object?>(
+        AppRoute.to(
+          AsyncDuelPlayScreen(
+            repository: widget.repository,
+            entry: AsyncDuelEntry.tournament(match.id, roundLabel: roundName),
+          ),
+        ),
+      );
+      if (!mounted) return;
+      // Skoru sunucu son cevapta yazdı; yalnız şema yeniden okunur. Yarıda
+      // çıkılan maçta da (kalanlar TIMEOUT) skor yazılmıştır.
+      if (tournamentMatchCompleted(result)) _submittedMatchIds.add(match.id);
+    } finally {
+      if (mounted) setState(() => _matchLoading = false);
+    }
+    await _load();
   }
 
   /// Maç sonrası gerçek quiz skoruna göre turu kapatır ve sonucu kaydeder.
@@ -698,6 +804,25 @@ class _TournamentScreenState extends State<TournamentScreen> {
     );
   }
 
+  /// Doluluk gövdenin önünde: oyuncu önce "ne kadar kaldı"yı görür.
+  String _waitingMessage(BuildContext context) {
+    final body = context.t(K.tournamentWaitingBody);
+    final fill = _waitingFill;
+    if (fill == null) return body;
+    final line = context.t(K.tournamentWaitingFill, {
+      'count': '${fill.count}',
+      'size': '${fill.size}',
+    });
+    return '$line\n\n$body';
+  }
+
+  static ({int count, int size})? _fillOf(TournamentBracket? bracket) {
+    final count = bracket?.entryCount;
+    final size = bracket?.size;
+    if (count == null || size == null || size <= 0) return null;
+    return (count: count, size: size);
+  }
+
   /// Tur adları SONDAN sayılır: son tur her zaman Final'dir.
   ///
   /// Gerçek turnuva `tournaments.size` varsayılanı 4 ile 2 tur (yarı final
@@ -745,7 +870,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
           key: const ValueKey('tournament-waiting'),
           icon: AppIcons.hourglass,
           title: context.t(K.tournamentWaitingTitle),
-          message: context.t(K.tournamentWaitingBody),
+          message: _waitingMessage(context),
           actionLabel: context.t(K.tournamentPractice),
           actionIcon: AppIcons.trophy,
           onAction: _startingNewTournament
@@ -793,7 +918,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
   Widget _buildBracket(BuildContext context, bool ku) {
     final bracket = _bracket!;
     final userMatch = _userMatch;
-    final roundNames = _roundNames(ku, bracket.rounds.length);
+    final roundNames = _roundNames(ku, bracket.totalRounds);
     final t = SahneTokens.of(context);
 
     return Column(
@@ -802,7 +927,12 @@ class _TournamentScreenState extends State<TournamentScreen> {
         // Durum kartı yalnızca turnuva aktif değilken (elendi/kazandı)
         // anlam taşır; aktif oyunda maç kartı zaten bağlamı verir.
         if (bracket.status != 'active')
-          _StatusCard(bracket: bracket, ku: ku, roundNames: roundNames),
+          _StatusCard(
+            bracket: bracket,
+            ku: ku,
+            roundNames: roundNames,
+            userId: _userId,
+          ),
         if (bracket.status == 'won') ...[
           const SizedBox(height: SahneSpace.cardGap),
           _ChampionBanner(
@@ -816,7 +946,20 @@ class _TournamentScreenState extends State<TournamentScreen> {
             rewardAmount: _rewardAmount,
           ),
         ],
-        if (bracket.status != 'active') ...[
+        // Kupa SÜRERKEN elenen oyuncuya katıl düğmesi gösterilmez:
+        // `join_tournament` hâlâ kayıtlı olduğu bu kupayı döndürür, düğme hiçbir
+        // şey yapmıyordu (4 simülatörlü tur, 2026-10-27). Yerine kupa bitince
+        // yenisine katılabileceği söylenir.
+        if (bracket.status != 'active' &&
+            _serverBracket &&
+            bracket.completedAt == null) ...[
+          const SizedBox(height: SahneSpace.x3),
+          Text(
+            context.t(K.tournamentNextAfterFinish),
+            key: const ValueKey('tournament-next-after-finish'),
+            style: SahneType.body.copyWith(color: t.tx2),
+          ),
+        ] else if (bracket.status != 'active') ...[
           // Turnuva bittikten sonra `get_tournament_bracket` kullanıcının
           // EN SON kaydını döndürmeye devam eder — biten turnuva sonsuza
           // kadar "en son" kalır. `_bracket` bu yüzden bir daha hiç null
@@ -1292,7 +1435,9 @@ class _RoundProgressStrip extends StatelessWidget {
       runSpacing: SahneSpace.x2,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        for (var i = 0; i < rounds.length && i < roundNames.length; i++) ...[
+        // Henüz kurulmamış turlar da (sunucu sonraki turu kazananlar belli
+        // olunca kurar) "sırada" olarak görünür: kupanın yolu baştan bellidir.
+        for (var i = 0; i < roundNames.length; i++) ...[
           if (i > 0)
             ExcludeSemantics(
               child: Icon(AppIcons.chevronRight, size: 16, color: t.tx3),
@@ -1302,7 +1447,7 @@ class _RoundProgressStrip extends StatelessWidget {
             // Durum GERÇEK tur verisinden gelir; sıra numarasından tahmin
             // edilmez. Turnuva bittiyse hiçbir tur "şu an oynanıyor" diye
             // işaretlenmez.
-            state: rounds[i].status == 'completed'
+            state: i < rounds.length && rounds[i].status == 'completed'
                 ? _RoundState.done
                 : (bracketStatus == 'active' && i == currentRound)
                 ? _RoundState.active
@@ -1377,11 +1522,13 @@ class _StatusCard extends StatelessWidget {
     required this.bracket,
     required this.ku,
     required this.roundNames,
+    required this.userId,
   });
 
   final TournamentBracket bracket;
   final bool ku;
   final List<String> roundNames;
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
@@ -1391,6 +1538,11 @@ class _StatusCard extends StatelessWidget {
       'eliminated' => context.t(K.eliminated),
       _ => context.t(K.ongoing),
     };
+    // Elenen oyuncunun turu kendi son maçından okunur; bkz.
+    // [TournamentBracket.lastRoundIndexOf].
+    final shownRound = bracket.status == 'eliminated'
+        ? bracket.lastRoundIndexOf(userId) ?? bracket.currentRound
+        : bracket.currentRound;
     return SahneSurfaceCard(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1414,10 +1566,10 @@ class _StatusCard extends StatelessWidget {
                 // Elenen oyuncuya HANGİ turda elendiği ve kaç puan aldığı
                 // söylenir; ikisi de şemada gerçekten duruyor.
                 if (bracket.status == 'eliminated' &&
-                    bracket.currentRound < roundNames.length)
+                    shownRound < roundNames.length)
                   Text(
                     Tr.forKu(K.cupEliminatedRound, ku, {
-                      'round': roundNames[bracket.currentRound],
+                      'round': roundNames[shownRound],
                     }),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -1425,7 +1577,7 @@ class _StatusCard extends StatelessWidget {
                   ),
                 if (bracket.totalScore > 0)
                   Text(
-                    '${Tr.forKu(K.cupFinalScore, ku)}: ${bracket.totalScore}',
+                    '${Tr.forKu(K.statTotalScore, ku)}: ${bracket.totalScore}',
                     maxLines: 1,
                     style: SahneType.captionStrong.copyWith(color: t.tx),
                   ),
@@ -1435,8 +1587,8 @@ class _StatusCard extends StatelessWidget {
           const SizedBox(width: SahneSpace.x2),
           SahneBadge(
             label:
-                '${(bracket.currentRound + 1).clamp(1, bracket.rounds.length)}'
-                '/${bracket.rounds.length}',
+                '${(shownRound + 1).clamp(1, bracket.totalRounds)}'
+                '/${bracket.totalRounds}',
             tone: SahneBadgeTone.gold,
           ),
         ],
@@ -1513,7 +1665,7 @@ class _ChampionBanner extends StatelessWidget {
       key: const ValueKey('tournament-champion'),
       title: context.t(K.championCongrats),
       // Final skoru GERÇEK şemadan gelir.
-      subtitle: '${context.t(K.cupFinalScore)}: $finalScore',
+      subtitle: '${context.t(K.statTotalScore)}: $finalScore',
       accent: SahneTokens.of(context).gold,
       icon: AppIcons.trophy,
       tokens: [

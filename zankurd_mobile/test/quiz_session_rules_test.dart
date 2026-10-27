@@ -48,6 +48,21 @@ void main() {
     );
   });
 
+  test('turnuva maçı (versus) bot yarışı olmasa da ödül-nötr değildir', () {
+    expect(
+      isRewardNeutralSoloQuiz(
+        is1v1: false,
+        dailyQuiz: false,
+        botRace: false,
+        practice: false,
+        versus: true,
+        roomId: null,
+      ),
+      isFalse,
+      reason: 'süresiz tercih turnuvada sayacı kapatmaz',
+    );
+  });
+
   test('çalışma veya çevrimdışı oda ödül-nötr solodur', () {
     expect(
       isRewardNeutralSoloQuiz(

@@ -70,16 +70,23 @@ FreeTextMatch matchFreeTextAnswer(
   if (!allowFolding || kFoldDistinctWords.contains(typed)) {
     return FreeTextMatch.none;
   }
-  final foldedTyped = foldFreeTextDiacritics(typed);
+  // Kurmancî cevapta noktasız `ı` da katlanır: Hawar alfabesinde `ı` yoktur,
+  // Türkçe klavyede `i` yerine kolayca çıkar (simülatörün Türkçe klavyesi
+  // `dikin`i `dıkın` yazdı ve cevap yanlış sayıldı, 2026-10-27). Türkçe
+  // cevapta `ı` gerçek harftir (`sık`/`sik`), orada katlanmaz.
+  String fold(String value) {
+    final folded = foldFreeTextDiacritics(value);
+    return isTurkish ? folded : folded.replaceAll('ı', 'i');
+  }
+
+  final foldedTyped = fold(typed);
   final rivalFolds = {
     for (final rival in rivals)
-      foldFreeTextDiacritics(
-        normalizeFreeTextAnswer(rival, isTurkish: isTurkish),
-      ),
+      fold(normalizeFreeTextAnswer(rival, isTurkish: isTurkish)),
   };
   if (rivalFolds.contains(foldedTyped)) return FreeTextMatch.none;
   final matches = normalizedOptions.any(
-    (option) => foldFreeTextDiacritics(option) == foldedTyped,
+    (option) => fold(option) == foldedTyped,
   );
   return matches ? FreeTextMatch.folded : FreeTextMatch.none;
 }
@@ -99,7 +106,9 @@ String normalizeFreeTextAnswer(String value, {bool isTurkish = false}) {
             .replaceAll('I\u0307', 'i')
             .replaceAll('İ', 'i')
             .replaceAll('I', 'ı')
-      : value;
+      // Kurmancîde `İ` yoktur; Türkçe klavyenin büyük `İ`si `i` sayılır
+      // (`toLowerCase` onu `i` + birleşik nokta yapardı).
+      : value.replaceAll('İ', 'i');
   return localeAwareValue
       .trim()
       .toLowerCase()

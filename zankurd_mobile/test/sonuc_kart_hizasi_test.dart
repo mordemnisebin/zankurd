@@ -9,6 +9,7 @@
 // geometriyi ölçer: sayım kartının iç boşluğu ≥ 16, ampul 36 px kutuda ve
 // başlıkla üst kenarı aynı hizada, başlık 15/600.
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -38,6 +39,45 @@ void main() {
     final card = tester.getRect(find.byType(ResultStatTiles));
     final icon = tester.getRect(find.byIcon(AppIcons.check));
     expect(icon.left - card.left, greaterThanOrEqualTo(16));
+  });
+
+  // 2026-10-27 (iki cihazlı düello, iPhone Air ≈ 388 pt içerik): dört kutu
+  // tek sıraya girince "Doğru" "Doğr/u" diye ortadan kırılıyordu. Dört kutu
+  // bu genişlikte ikişerli dizilir; hiçbir etiket ikinci satıra taşmaz.
+  testWidgets('dar telefonda dört kutu ikişerli, etiket kırılmaz', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(420, 900));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      _wrap(
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: ResultStatTiles(
+            correct: 2,
+            wrong: 1,
+            unanswered: 8,
+            streak: 1,
+          ),
+        ),
+      ),
+    );
+    final correct = tester.getRect(find.text('Doğru'));
+    final blank = tester.getRect(find.text('Boş'));
+    expect(
+      blank.top,
+      greaterThan(correct.bottom),
+      reason: 'ikişerli dizilmeli',
+    );
+    for (final label in ['Doğru', 'Yanlış', 'Boş', 'Üst üste']) {
+      final para = tester.renderObject<RenderParagraph>(find.text(label));
+      expect(para.didExceedMaxLines, isFalse, reason: label);
+      expect(
+        tester.getSize(find.text(label)).height,
+        lessThan(30),
+        reason: '$label tek satır olmalı',
+      );
+    }
   });
 
   testWidgets('zorlandın kartı: ampul 36 px kutuda, başlıkla üstten hizalı, '

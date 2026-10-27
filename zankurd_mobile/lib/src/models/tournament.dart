@@ -171,6 +171,50 @@ class TournamentBracket {
   final DateTime createdAt;
   final DateTime? completedAt;
 
+  /// Gerçek kupada kayıtlı oyuncu sayısı ve kontenjan (`get_tournament_bracket`
+  /// 2026-10-27). Bekleme ekranı "1/4 oyuncu katıldı" der; eski sunucu ya da
+  /// bot benzetimi göndermez (null) ve satır çizilmez.
+  final int? entryCount;
+  final int? size;
+
+  /// Maçlar sunucuda puanlanıyor mu (`get_tournament_bracket.serverScored`,
+  /// 2026-10-27). Öyleyse maç sunucu puanlı oyun ekranında oynanır ve
+  /// şampiyona ödül ödenir; değilse eski istemci skorlu yol sürer.
+  final bool serverScored;
+
+  /// Kupanın TOPLAM tur sayısı. Sunucu bir sonraki turun maçlarını ancak
+  /// kazananlar belli olunca kurar; `rounds.length`e bakmak 4 kişilik
+  /// kupanın yarı finalini "Final" diye adlandırıyordu (4 simülatörlü tur,
+  /// 2026-10-27). Oyuncu sayısı biliniyorsa tur sayısı ondan çıkar
+  /// (⌈log2 n⌉), yoksa eldeki turlara düşülür.
+  /// [playerId]in maç oynadığı SON turun dizini; hiç maçı yoksa null.
+  ///
+  /// Elenen oyuncunun elendiği tur budur. Sunucunun `currentRound`u elenen
+  /// oyuncu için kupanın en son kurulmuş turunu verir: yarı finalde elenen
+  /// Rojd'a final kurulunca "Final turunda elendin · 2/2" yazıyordu
+  /// (4 simülatörlü tur, 2026-10-27).
+  int? lastRoundIndexOf(String playerId) {
+    if (playerId.isEmpty) return null;
+    for (var i = rounds.length - 1; i >= 0; i--) {
+      final played = rounds[i].matches.any(
+        (m) => m.playerOneId == playerId || m.playerTwoId == playerId,
+      );
+      if (played) return i;
+    }
+    return null;
+  }
+
+  int get totalRounds {
+    final players = entryCount ?? size;
+    var needed = 0;
+    if (players != null && players > 1) {
+      while ((1 << needed) < players) {
+        needed++;
+      }
+    }
+    return needed > rounds.length ? needed : rounds.length;
+  }
+
   const TournamentBracket({
     required this.tournamentId,
     required this.userId,
@@ -181,6 +225,9 @@ class TournamentBracket {
     this.botWinners = const [],
     required this.createdAt,
     this.completedAt,
+    this.entryCount,
+    this.size,
+    this.serverScored = false,
   });
 
   TournamentBracket copyWith({
@@ -193,6 +240,9 @@ class TournamentBracket {
     List<String>? botWinners,
     DateTime? createdAt,
     DateTime? completedAt,
+    int? entryCount,
+    int? size,
+    bool? serverScored,
   }) => TournamentBracket(
     tournamentId: tournamentId ?? this.tournamentId,
     userId: userId ?? this.userId,
@@ -203,6 +253,9 @@ class TournamentBracket {
     botWinners: botWinners ?? this.botWinners,
     createdAt: createdAt ?? this.createdAt,
     completedAt: completedAt ?? this.completedAt,
+    entryCount: entryCount ?? this.entryCount,
+    size: size ?? this.size,
+    serverScored: serverScored ?? this.serverScored,
   );
 
   factory TournamentBracket.fromJson(Map<String, dynamic> json) =>
@@ -226,6 +279,9 @@ class TournamentBracket {
         completedAt: json['completedAt'] is String
             ? DateTime.parse(json['completedAt'] as String)
             : null,
+        entryCount: (json['entryCount'] as num?)?.toInt(),
+        size: (json['size'] as num?)?.toInt(),
+        serverScored: json['serverScored'] as bool? ?? false,
       );
 
   Map<String, dynamic> toJson() => {
@@ -238,6 +294,9 @@ class TournamentBracket {
     'botWinners': botWinners,
     'createdAt': createdAt.toIso8601String(),
     'completedAt': completedAt?.toIso8601String(),
+    if (entryCount != null) 'entryCount': entryCount,
+    if (size != null) 'size': size,
+    if (serverScored) 'serverScored': true,
   };
 }
 
@@ -293,6 +352,23 @@ class TournamentStandings {
     'totalScore': totalScore,
     'status': status,
   };
+}
+
+/// `claim_tournament_reward` sonucu (2026-10-27): bu çağrıda ödenen
+/// [amount] ve bu şampiyonluk için DAHA ÖNCE ödenmiş [alreadyPaid]. Eskiden
+/// yalnız miktar okunuyordu; ikinci açılışta 0 gelince ekran şampiyona
+/// "Ödül henüz doğrulanmadı" yazıyordu.
+@immutable
+class ChampionRewardClaim {
+  const ChampionRewardClaim({required this.amount, this.alreadyPaid = 0});
+
+  final int amount;
+  final int alreadyPaid;
+
+  bool get granted => amount > 0 || alreadyPaid > 0;
+
+  /// Ekranda gösterilecek ödül miktarı.
+  int get shownAmount => amount > 0 ? amount : alreadyPaid;
 }
 
 /// Daily tournament setup (16 players, 4 rounds, 4 questions per match)

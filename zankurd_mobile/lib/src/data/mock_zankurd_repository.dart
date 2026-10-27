@@ -1209,6 +1209,25 @@ class MockZanKurdRepository implements ZanKurdRepository {
   final List<String> resumedAsyncDuelIds = [];
   final List<String> cancelledAsyncDuelIds = [];
 
+  /// Sahte depoda turnuva bot benzetimidir, sunucu puanı yoktur: ekran eski
+  /// yola düşer. Sunucu yolunu sınayan testler bu üçünü ezer.
+  @override
+  Future<AsyncDuelStart> startTournamentMatch(String matchId) async =>
+      throw StateError('Not server scored');
+
+  @override
+  Future<TournamentPresent> presentTournamentQuestion(
+    String matchId,
+    int questionIndex,
+  ) async => const TournamentPresent(elapsedMs: 0);
+
+  @override
+  Future<AsyncDuelAnswer> answerTournamentQuestion({
+    required String matchId,
+    required int questionIndex,
+    required String choice,
+  }) async => throw StateError('Not server scored');
+
   @override
   Future<AsyncDuelStart> resumeAsyncDuel(String duelId) async {
     final duel = _asyncDuels[duelId];
@@ -4521,6 +4540,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
     _mockCoins += TournamentConfig.coinBonusChampion;
     return TournamentConfig.coinBonusChampion;
   }
+
+  @override
+  Future<ChampionRewardClaim> claimChampionRewardStatus() async =>
+      ChampionRewardClaim(amount: await claimTournamentChampionReward());
 
   @override
   Future<bool> submitSuggestedQuestion({

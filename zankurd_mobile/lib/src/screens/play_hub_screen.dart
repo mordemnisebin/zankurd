@@ -365,6 +365,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     SahneField(
                       key: const ValueKey('play-hub-join-room-code-field'),
                       label: context.t(K.roomCode),
+                      // Sayfa tek iş için açılır: kodu yazmak (2026-10-27 E2E).
+                      autofocus: true,
                       controller: controller,
                       textCapitalization: TextCapitalization.characters,
                       // Yeni kod 6 rakamdır: sayı klavyesi açılır. Eski `ZK-…`

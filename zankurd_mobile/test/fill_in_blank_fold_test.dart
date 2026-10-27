@@ -50,6 +50,23 @@ void main() {
     expect(q.matchAnswer('çaz'), FreeTextMatch.none);
   });
 
+  // 2026-10-27: Türkçe klavye `i` yerine `ı` yazdırdı (simülatör turu);
+  // Hawar alfabesinde `ı` yoktur. Kurmancî cevapta katlanır ve doğru yazım
+  // gösterilir; Türkçe cevapta `ı` gerçek harftir, katlanmaz.
+  test('Kurmancî cevapta ı ve İ katlanır, Türkçede ı korunur', () {
+    expect(matchFreeTextAnswer('dıkın', ['dikin']), FreeTextMatch.folded);
+    expect(matchFreeTextAnswer('DİKİN', ['dikin']), FreeTextMatch.exact);
+    expect(matchFreeTextAnswer('vedıxwî', ['vedixwî']), FreeTextMatch.folded);
+    expect(
+      matchFreeTextAnswer('sik', ['sık'], isTurkish: true),
+      FreeTextMatch.none,
+    );
+    expect(
+      matchFreeTextAnswer('sık', ['sik'], isTurkish: true),
+      FreeTextMatch.none,
+    );
+  });
+
   test('başka gerçek sözcük katlanmaz', () {
     expect(_fill('şêr').matchAnswer('şer'), FreeTextMatch.none);
     expect(_fill('şêr').matchAnswer('ser'), FreeTextMatch.none);

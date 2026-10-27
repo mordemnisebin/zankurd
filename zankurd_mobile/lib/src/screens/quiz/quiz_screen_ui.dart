@@ -29,7 +29,6 @@ extension _QuizScreenUI on _QuizScreenState {
   Widget _buildPortraitLayout(Size layoutSize) {
     // Yarışma modlarında (solo/1v1/oda) tur içinde açıklama gösterilmez.
     final showExpl = _isLearningExperience && _showExplanation;
-    final screenHeight = MediaQuery.sizeOf(context).height;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -93,10 +92,10 @@ extension _QuizScreenUI on _QuizScreenState {
                         : null,
                   ),
                   ..._buildRoundNotices(),
-                  if (widget.is1v1 && screenHeight >= 800) ...[
-                    const SizedBox(height: SahneSpace.cardGap),
-                    _LiveScoreboard(players: livePlayers),
-                  ],
+                  // 1v1'de "Canlı puan" kartı kaldırıldı (2026-10-27, iki
+                  // cihazlı E2E): üstteki VS kartı iki puanı zaten taşıyor;
+                  // alttaki kart onu tekrarlıyor ve oyuncu listesi eşleşme
+                  // anında tek kişiyle kalıyordu ("1 Bergen 0").
                 ],
               ),
             ),
@@ -117,6 +116,14 @@ extension _QuizScreenUI on _QuizScreenState {
     // Karşılaşma bandı / düello ve oda başlığı gövdenin içinde yer tutar.
     if (widget.versusBannerText != null) reserve += 56;
     if (widget.is1v1 || _isCrowd) reserve += 120;
+    // Çok oyunculu açıklamada "Süre doldu" kartı ile "Sonraki soru: N sn"
+    // çipi birlikte çıkar; tek uyarılık pay ikincisini alt çubuğun
+    // arkasına itiyordu (2026-10-27, iki cihazlı düello). İkinci uyarı payı.
+    if (_isMultiplayer &&
+        _mpPhase == _MultiplayerPhase.reveal &&
+        selectedAnswer == 'TIMEOUT') {
+      reserve += 56;
+    }
     if (question.hasImage) {
       final compact = layoutSize.height < 700;
       reserve +=
@@ -206,10 +213,6 @@ extension _QuizScreenUI on _QuizScreenState {
                             const SizedBox(height: SahneSpace.x3),
                           ],
                           _buildDock(context),
-                          if (widget.is1v1) ...[
-                            const SizedBox(height: SahneSpace.x3),
-                            _LiveScoreboard(players: livePlayers),
-                          ],
                         ],
                       ),
                     ),
@@ -592,8 +595,14 @@ extension _QuizScreenUI on _QuizScreenState {
           (record) => record.id == question.id && record.isCorrect,
         ) &&
         !completing;
+    // Turnuva maçında (versus bandı) joker yok: iki oyuncu AYNI dört soruyu
+    // oynar; "Soru değiştir" bunu bozar, jetonla 50/50 da maçı parayla
+    // kazandırır (4 simülatörlü tur, 2026-10-27).
     final showJokers =
-        !_isLearningExperience && !_usesServerHiddenAnswers && !answered;
+        !_isLearningExperience &&
+        !_usesServerHiddenAnswers &&
+        widget.versusBannerText == null &&
+        !answered;
 
     // Geniş ekranda eylemler de 800'lük içerik adasında kalır: tam genişlikte
     // bir "Sonraki" şıklardan kopuk ayrı bir şerit gibi okunurdu.
