@@ -201,6 +201,9 @@ class AppIcons {
   /// Lucide `gamepad-2`.
   static const IconData gamepad = IconData(0xe0df, fontFamily: 'Lucide');
 
+  /// Lucide `snowflake` — seri dondurma (mağaza).
+  static const IconData snowflake = IconData(0xe165, fontFamily: 'Lucide');
+
   /// Lucide `turtle` — yavaş dinleme.
   static const IconData turtle = IconData(0xe4f9, fontFamily: 'Lucide');
 

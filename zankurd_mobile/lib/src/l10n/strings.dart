@@ -1563,7 +1563,7 @@ class Tr {
     },
     K.faqStreakA: {
       'ku':
-          'Her roj herî kêm dorekê an dersekê biqedînî, zincîra te dirêj dibe. Heke rojekê derbas bikî, berî ku zincîra te sifir bibe, vebijarka parastina wê bi zêr derdikeve.',
+          'Her roj herî kêm dorekê an dersekê biqedînî, zincîra te dirêj dibe. Heke rojekê ji dest bidî, berî ku zincîra te sifir bibe, vebijarka parastina wê bi zêr derdikeve.',
       'tr':
           'Her gün en az bir tur ya da ders bitirince serin büyür. Bir gün kaçırırsan, serin sıfırlanmadan önce onu jetonla koruma seçeneği çıkar.',
     },
@@ -1580,7 +1580,7 @@ class Tr {
     },
     K.faqReportA: {
       'ku':
-          'Li jorê rastê yê ekrana pirsê, ji menûya ••• li «Pirsê ragihîne» bitikîne. Her ragihandin tê vekolîn.',
+          'Di menûya ••• ya li goşeya rastê ya jorîn a ekrana pirsê de, li «Pirsê ragihîne» bitikîne. Her ragihandin tê vekolîn.',
       'tr':
           'Soru ekranının sağ üstündeki ••• menüsünden "Soruyu bildir"e dokun. Her bildirim incelenir.',
     },
@@ -1600,7 +1600,7 @@ class Tr {
     },
     K.faqAudioA: {
       'ku':
-          'Tomarên dengê peyv bi peyv tên zêdekirin. Li cem peyvên bi deng bişkojka hoparlorê xuya dibe; bi bişkojka kûsiyê dikarî hêdî jî guhdarî dengî bikî.',
+          'Tomarên dengê peyv bi peyv tên zêdekirin. Li cem peyvên bi deng bişkojka hoparlorê xuya dibe; bi bişkojka kûsiyê dikarî hêdî jî li deng guhdarî bikî.',
       'tr':
           'Ses kayıtları sözcük sözcük ekleniyor. Kaydı olan sözcüklerde hoparlör düğmesi görünür; kaplumbağa düğmesiyle sesi yavaş da dinleyebilirsin.',
     },
@@ -1637,8 +1637,8 @@ class Tr {
     K.alphabetTitle: {'ku': 'Elîfbê û deng', 'tr': 'Alfabe ve sesler'},
     K.alphabetIntro: {
       'ku':
-          'Li tîpekê bitikîne û li peyveke mînak guhdarî bike. Tîpên bê nîşe '
-          'wekî di Tirkî de tên xwendin.',
+          'Li tîpekê bitikîne û li peyveke mînak guhdarî bike. Tîpên ku '
+          'têbîniya wan tune ye, wekî di Tirkî de tên xwendin.',
       'tr':
           'Bir harfe dokun, örnek kelimeyi dinle. Notu olmayan harfler '
           'Türkçedeki gibi okunur.',
@@ -1657,11 +1657,11 @@ class Tr {
       'tr': "Kısa i; Türkçedeki i'den biraz daha açık ve gevşek.",
     },
     K.alphabetHintIi: {
-      'ku': '"I"ya dirêj; wekî "i"ya Tirkî.',
+      'ku': '"Î"ya dirêj; wekî "i"ya Tirkî.',
       'tr': 'Uzun i; Türkçedeki i gibi.',
     },
     K.alphabetHintU: {'ku': '"U"ya kurt.', 'tr': 'Kısa u.'},
-    K.alphabetHintUu: {'ku': '"U"ya dirêj.', 'tr': 'Uzun u.'},
+    K.alphabetHintUu: {'ku': '"Û"ya dirêj.', 'tr': 'Uzun u.'},
     K.alphabetHintQ: {
       'ku':
           'Dengê "q"yê wekî "k"yeke stûr e; bi paşiya zimanî li ber zimanokê tê gotin.',
@@ -1698,7 +1698,7 @@ class Tr {
       'tr': 'Kaydın yalnız bu cihazda kalır ve sayfa kapanınca silinir.',
     },
     K.pronunciationMicDenied: {
-      'ku': 'Destûra mîkrofonê tune. Tu dikarî ji Mîhengan destûrê bidî.',
+      'ku': 'Destûra mîkrofonê tune. Tu dikarî di Mîhengê de destûrê bidî.',
       'tr': 'Mikrofon izni yok. Ayarlardan izin verebilirsin.',
     },
     K.pronunciationRecording: {'ku': 'Tê tomarkirin…', 'tr': 'Kaydediliyor…'},
@@ -2209,6 +2209,24 @@ class Tr {
     K.friendsScreen: {'ku': 'Heval', 'tr': 'Arkadaşlar'},
     // Neon çerçeve: ilerlemeyle değil mağazadan açılır.
     K.frameNeon: {'ku': 'Neon', 'tr': 'Neon'},
+    K.frameKilim: {'ku': 'Kilîm', 'tr': 'Kilim'},
+    K.frameNewroz: {'ku': 'Newroz', 'tr': 'Newroz'},
+    K.frameSev: {'ku': 'Şev', 'tr': 'Gece'},
+    K.shopFreezeTitle: {'ku': 'Cemidandina zincîrê', 'tr': 'Seri dondurma'},
+    K.shopFreezeDesc: {
+      'ku':
+          'Heke tu rojekê nelîzî, zincîra te naqete. Tu dikarî herî zêde 2 cemidandinan hilgirî.',
+      'tr': 'Bir gün oynamazsan serin bozulmaz. En çok 2 tane tutabilirsin.',
+    },
+    K.shopFreezeOwned: {'ku': 'Di destê te de: {n}/2', 'tr': 'Elinde: {n}/2'},
+    K.shopFreezeFull: {
+      'ku': 'Tu dikarî herî zêde 2 cemidandinan hilgirî',
+      'tr': 'En çok 2 dondurma tutabilirsin',
+    },
+    K.jokerStockHint: {
+      'ku': 'Di stokê de {n} alîkarî hene',
+      'tr': 'Stokta {n} joker',
+    },
 
     // ── Avatar sembol ve renk adları (ekran okuyucu) ─────────────────
     // Adlar koda zaten yazılıydı — ikon anahtarları Kurmancî sözcük,
@@ -4893,6 +4911,14 @@ class K {
   static const noFriendsAddHint = 'leaderboard.noFriendsHint';
   static const addFriend = 'leaderboard.addFriend';
   static const friendsScreen = 'leaderboard.friendsScreen';
+  static const frameKilim = 'shop2.frameKilim';
+  static const frameNewroz = 'shop2.frameNewroz';
+  static const frameSev = 'shop2.frameSev';
+  static const shopFreezeTitle = 'shop2.shopFreezeTitle';
+  static const shopFreezeDesc = 'shop2.shopFreezeDesc';
+  static const shopFreezeOwned = 'shop2.shopFreezeOwned';
+  static const shopFreezeFull = 'shop2.shopFreezeFull';
+  static const jokerStockHint = 'shop2.jokerStockHint';
   static const frameNeon = 'avatar.frame.neon';
   static const avatarIconTembur = 'avatar.icon.tembur';
   static const avatarIconDengbej = 'avatar.icon.dengbej';

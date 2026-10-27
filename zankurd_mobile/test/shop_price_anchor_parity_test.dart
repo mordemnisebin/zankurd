@@ -23,6 +23,8 @@ import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 /// Biri değişip öteki unutulursa test düşer.
 void main() {
   final migration = File('supabase/2026-08-12_shop_price_anchor.sql');
+  // 2026-10-27 mağaza genişlemesi: yeni ürünlerin fiyat çıpası.
+  final expansion = File('supabase/2026-10-27_magaza_genisleme.sql');
 
   test('göç dosyası duruyor', () {
     expect(
@@ -35,7 +37,8 @@ void main() {
   });
 
   test('göçteki fiyatlar statik katalogla birebir aynı', () {
-    final sql = migration.readAsStringSync();
+    final sql =
+        '${migration.readAsStringSync()}\n${expansion.readAsStringSync()}';
 
     // Göç yalnız `cost` sütununa dokunur; her ürün tek bir UPDATE satırıdır.
     //
@@ -46,7 +49,7 @@ void main() {
     // değiştirme riski taşıyordu. Bu bekçi de o yüzden UPDATE biçimini
     // bekler: göç yeniden genişlerse buradan düşer.
     final entries = RegExp(
-      r"update\s+public\.shop_items\s+set\s+cost\s*=\s*(\d+)\s+where\s+id\s*=\s*'([a-z_]+)'",
+      r"update\s+public\.shop_items\s+set\s+cost\s*=\s*(\d+)\s+where\s+id\s*=\s*'([a-z0-9_]+)'",
       caseSensitive: false,
     ).allMatches(sql);
 

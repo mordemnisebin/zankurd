@@ -178,6 +178,13 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       // hiçbir yerde açılmıyordu: 600 coin ödeyen oyuncu karşılığında
       // hiçbir şey görmüyordu. Altın çerçevenin birebir aynı deseni.
       final hasNeonFrame = await _safeHasPurchased('avatar_frame_neon');
+      // 2026-10-27: yeni mağaza çerçeveleri (kilim, newroz, şev).
+      final purchasedShopFrames = <AvatarFrame>{
+        for (final frame in shopFrames)
+          if (frame != AvatarFrame.neon &&
+              await _safeHasPurchased('avatar_frame_${frame.name}'))
+            frame,
+      };
       final hasVipBadge = await _safeHasPurchased('profile_badge_vip');
 
       final masteryByCategory = {
@@ -203,6 +210,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       );
       if (hasGoldFrame) frames.add(AvatarFrame.gold);
       if (hasNeonFrame) frames.add(AvatarFrame.neon);
+      frames.addAll(purchasedShopFrames);
 
       if (!mounted) return;
       setState(() {
@@ -504,6 +512,9 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                             AvatarFrame.gold => context.t(K.gold),
                             AvatarFrame.mamoste => 'Mamoste',
                             AvatarFrame.neon => context.t(K.frameNeon),
+                            AvatarFrame.kilim => context.t(K.frameKilim),
+                            AvatarFrame.newroz => context.t(K.frameNewroz),
+                            AvatarFrame.sev => context.t(K.frameSev),
                           },
                           locked: !_unlocked.contains(frame),
                           selected: _identity.frameId == frame.name,

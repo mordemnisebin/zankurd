@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/free_wildcard_store.dart';
+import 'package:zankurd_mobile/src/data/joker_stock_store.dart';
 import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
@@ -61,6 +62,7 @@ void main() {
     WidgetTester tester,
     MockZanKurdRepository repository, {
     String? freeDay,
+    int? jokerStock,
   }) async {
     freshMockRepository();
     SharedPreferences.setMockInitialValues({
@@ -69,6 +71,7 @@ void main() {
       'zankurd.wildcard_hint.fiftyFifty': true,
       'zankurd.wildcard_hint.audience': true,
       'zankurd.missions.freeWildcardDay': ?freeDay,
+      'zankurd.missions.jokerStock': ?jokerStock,
     });
     await tester.pumpWidget(
       testShell(
@@ -168,5 +171,28 @@ void main() {
     );
     await tap(tester, WildcardType.fiftyFifty);
     expect(repository.spends, isEmpty);
+  });
+
+  // Mağaza joker paketi (2026-10-27): bedava hak bittiyse joker önce
+  // stoktan ödenir; jeton düşmez, sunucuya gitmez, stok bir azalır.
+  testWidgets('joker stoğu: jetonsuzken joker açık, stoktan düşer', (
+    tester,
+  ) async {
+    final repository = _CountingRepository(8);
+    await pumpQuiz(
+      tester,
+      repository,
+      freeDay: FreeWildcardStore.dayKey(DateTime.now()),
+      jokerStock: 2,
+    );
+
+    expect(find.textContaining('Stokta 2 joker'), findsWidgets);
+    expect(button(tester, WildcardType.fiftyFifty).isEnabled, isTrue);
+
+    await tap(tester, WildcardType.fiftyFifty);
+
+    expect(repository.spends, isEmpty, reason: 'paket parası zaten alındı');
+    expect(find.text('8'), findsOneWidget, reason: 'bakiye 8 kalır');
+    expect(await JokerStockStore.count(), 1);
   });
 }

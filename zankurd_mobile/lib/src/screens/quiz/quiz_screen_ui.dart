@@ -742,9 +742,11 @@ extension _QuizScreenUI on _QuizScreenState {
           // gibi görünmesin: jetonun nereden kazanılacağını söyle (ekranda
           // yazılmaz; ekran okuyucuya gider ve kilitli jokere dokununca tost
           // olur).
-          showHint: _freeWildcardAvailable,
+          showHint: _freeWildcardAvailable || _jokerStock > 0,
           hint: _freeWildcardAvailable
               ? context.t(K.freeWildcardToday)
+              : _jokerStock > 0
+              ? context.t(K.jokerStockHint, {'n': '$_jokerStock'})
               : (_coinBalance == 0 && index == 0
                     ? context.t(K.finishQuizHint)
                     : null),
@@ -874,7 +876,9 @@ extension _QuizScreenUI on _QuizScreenState {
   /// Günde bir kez, solo turda ilk kullanım bedavadır (bekçi:
   /// `free_wildcard_store_test`, `free_wildcard_quiz_test`).
   bool _canPayWildcard(WildcardType type) =>
-      _freeWildcardAvailable || _coinBalance >= type.coinCost;
+      _freeWildcardAvailable ||
+      _jokerStock > 0 ||
+      _coinBalance >= type.coinCost;
 
   /// Bedava hakkı bu kullanımda harcar; harcandıysa `true`.
   ///
@@ -883,10 +887,19 @@ extension _QuizScreenUI on _QuizScreenState {
   /// sunucuya `spend_coins` gitmez, bakiye yerelde de düşmez. Sunucu jeton
   /// mantığı değişmedi.
   bool _takeFreeWildcard() {
-    if (!_freeWildcardAvailable) return false;
-    _freeWildcardAvailable = false;
-    unawaited(FreeWildcardStore.consume());
-    return true;
+    if (_freeWildcardAvailable) {
+      _freeWildcardAvailable = false;
+      unawaited(FreeWildcardStore.consume());
+      return true;
+    }
+    // Mağaza joker paketi (2026-10-27): parası paketle ödendi, burada
+    // `spend_coins` çağrılmaz; bayrak gibi sayaç da HEMEN düşer.
+    if (_jokerStock > 0) {
+      _jokerStock -= 1;
+      unawaited(JokerStockStore.consume());
+      return true;
+    }
+    return false;
   }
 
   Future<void> _trackWildcardMission() async {

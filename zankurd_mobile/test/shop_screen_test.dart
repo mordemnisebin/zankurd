@@ -23,6 +23,9 @@ import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
+import 'package:zankurd_mobile/src/data/joker_stock_store.dart';
+import 'package:zankurd_mobile/src/data/streak_store.dart';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 
 /// Bakiye ve satın alma durumunu deterministik kontrol eden sahte depo.
 class _ShopRepository extends MockZanKurdRepository {
@@ -49,6 +52,24 @@ class _ShopRepository extends MockZanKurdRepository {
   Future<bool> hasPurchased(String itemId) async {
     hasPurchasedCalls++;
     return purchased.contains(itemId);
+  }
+
+  @override
+  Future<StreakFreezeChargeResult> spendStreakFreeze({
+    required String idempotencyKey,
+  }) async {
+    if (coins < 50) {
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.insufficient,
+        idempotent: true,
+      );
+    }
+    coins -= 50;
+    spendReasons.add('streak_freeze');
+    return const StreakFreezeChargeResult(
+      outcome: StreakFreezeChargeOutcome.charged,
+      idempotent: true,
+    );
   }
 }
 
@@ -303,11 +324,17 @@ void main() {
   // Bu bekçinin işi: katalogda YAYINLANMAYAN ürün kalmaması. Yani liste
   // artık hem "ne yayınlanıyor" hem "ne tanımlı" sorusunun tek cevabı.
   test('mağaza yalnız gerçekten çalışan ürünleri yayınlar', () {
+    // 2026-10-27: joker paketi ve üç yeni çerçeve gerçekten teslim
+    // ediliyor (JokerStockStore, AvatarFrame.kilim/newroz/sev).
     expect(debugShopItems.map((item) => item.id).toSet(), {
       'spin_wheel_extra',
       'avatar_frame_gold',
       'avatar_frame_neon',
       'profile_badge_vip',
+      'joker_pack_3',
+      'avatar_frame_kilim',
+      'avatar_frame_newroz',
+      'avatar_frame_sev',
     });
   });
 
@@ -713,6 +740,9 @@ void main() {
   testWidgets('alınmış ürün "Alındı" görünür ve tekrar alınamaz', (
     tester,
   ) async {
+    // 2026-10-27: dokuz ürünle çerçeveler listenin altında; hepsi görünsün.
+    await tester.binding.setSurfaceSize(const Size(390, 2400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
     final repository = _ShopRepository(
       coins: 1000,
       purchased: {'avatar_frame_gold'},
@@ -792,6 +822,10 @@ void main() {
       'avatar_frame_gold': 480,
       'avatar_frame_neon': 350,
       'profile_badge_vip': 720,
+      'joker_pack_3': 90,
+      'avatar_frame_kilim': 300,
+      'avatar_frame_newroz': 400,
+      'avatar_frame_sev': 500,
     };
 
     final actualCosts = {for (final item in debugShopItems) item.id: item.cost};
@@ -865,6 +899,78 @@ void main() {
     );
     expect(find.text('Tekrar dene'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+  // ── 2026-10-27 mağaza genişlemesi ────────────────────────────────────────
+  //
+  // Bekçi: yeni çerçeveler alınınca gerçekten kuşanılır; joker paketi üç
+  // hakkı stoğa yazar (tekrar alınabilir); seri dondurma kartı eldeki
+  // miktarı söyler ve alınca StreakStore'a bir dondurma ekler.
+  for (final (title, frameId) in const [
+    ('Kilim çerçeve', 'kilim'),
+    ('Newroz çerçeve', 'newroz'),
+    ('Gece çerçeve', 'sev'),
+  ]) {
+    testWidgets('$title alınınca kuşanılır ($frameId)', (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 2400));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      final repository = _ShopRepository(coins: 1000);
+      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+      await tester.pumpAndSettle();
+
+      await tester.ensureVisible(find.text(title));
+      await tester.tap(find.text(title));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Satın al'));
+      await tester.pumpAndSettle();
+
+      expect((await repository.loadAvatarIdentity()).frameId, frameId);
+    });
+  }
+
+  testWidgets('joker paketi üç hakkı stoğa yazar ve yeniden alınabilir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 2400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _ShopRepository(coins: 1000);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    for (var i = 0; i < 2; i++) {
+      await tester.ensureVisible(find.text('Joker paketi (3)'));
+      await tester.tap(find.text('Joker paketi (3)'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Satın al'));
+      await tester.pumpAndSettle();
+      // Kutlama penceresini kapat.
+      await tester.tap(find.text('Anladım'));
+      await tester.pumpAndSettle();
+    }
+
+    expect(await JokerStockStore.count(), 6);
+    expect(
+      repository.spendReasons.where((r) => r == 'purchase_joker_pack_3'),
+      hasLength(2),
+    );
+  });
+
+  testWidgets('seri dondurma kartı eldekini söyler; alınınca stoğa eklenir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 2400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _ShopRepository(coins: 1000);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Elinde: 0/2'), findsOneWidget);
+    await tester.ensureVisible(find.text('Seri dondurma'));
+    await tester.tap(find.text('Seri dondurma'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Satın al'));
+    await tester.pumpAndSettle();
+
+    expect((await StreakStore.load()).freezeCount, 1);
   });
 }
 

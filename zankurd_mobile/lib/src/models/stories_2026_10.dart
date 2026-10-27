@@ -271,7 +271,7 @@ final Story dawetStory = Story(
           labelKu: 'Hûn herin, ez ê piştî çayê werim.',
           labelTr: 'Siz gidin, ben çaydan sonra geleceğim.',
           nextNodeId: 'nasin',
-          feedbackKu: 'Girtina bêhnê berî govendê baş e.',
+          feedbackKu: 'Bêhnvedana berî govendê baş e.',
           feedbackTr: 'Halaydan önce soluklanmak iyidir.',
         ),
       ],

@@ -70,6 +70,7 @@ import '../utils/number_format.dart';
 import '../utils/room_reactions.dart';
 import '../widgets/dialog_action_pair.dart';
 import '../services/app_haptics.dart';
+import '../data/joker_stock_store.dart';
 
 part 'quiz/quiz_layout_rules.dart';
 part 'quiz/quiz_session_types.dart';
@@ -321,6 +322,10 @@ class _QuizScreenState extends State<QuizScreen>
   /// ilk joker kullanımı jeton düşmez ve `spend_coins` çağrılmaz
   /// ([FreeWildcardStore]).
   bool _freeWildcardAvailable = false;
+
+  /// Mağazadan alınan, kalan joker hakları ([JokerStockStore]). Bedava
+  /// hak yoksa jokerler önce buradan, sonra jetondan ödenir.
+  int _jokerStock = 0;
 
   // Timer ve animasyon durumları
   late final AnimationController _timerController;
@@ -615,6 +620,7 @@ class _QuizScreenState extends State<QuizScreen>
     }
     _loadCoinBalance();
     _loadFreeWildcard();
+    _loadJokerStock();
     AnalyticsService.instance.logQuizStart(
       category: widget.room.category,
       mode: _quizModeLabel,
@@ -1478,6 +1484,12 @@ class _QuizScreenState extends State<QuizScreen>
       _opponentClientReady = true;
     }
     _maybeStartQuestionFlow();
+  }
+
+  void _loadJokerStock() {
+    JokerStockStore.count().then((count) {
+      if (mounted && count > 0) setState(() => _jokerStock = count);
+    });
   }
 
   void _loadFreeWildcard() {

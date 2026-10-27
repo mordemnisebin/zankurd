@@ -25,6 +25,9 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
 import '../utils/number_format.dart';
 import '../services/app_haptics.dart';
+import '../data/joker_stock_store.dart';
+import '../data/streak_store.dart';
+import '../config/coin_prices.dart';
 
 /// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
 /// Statik yedek listedeki (`ShopItem.catalog`) her ikon burada da
@@ -53,9 +56,23 @@ const Map<String, IconData> _shopIcons = {
 IconData shopIconForName(String? name) =>
     _shopIcons[name] ?? AppIcons.bagShopping;
 
+/// Mağaza çerçeve ürünleri → `profiles.avatar_frame` kimliği.
+const Map<String, String> shopFrameIds = {
+  'avatar_frame_gold': 'gold',
+  'avatar_frame_neon': 'neon',
+  'avatar_frame_kilim': 'kilim',
+  'avatar_frame_newroz': 'newroz',
+  'avatar_frame_sev': 'sev',
+};
+
 AvatarIdentity applyShopPurchaseEffect(String itemId, AvatarIdentity identity) {
   if (itemId == 'avatar_frame_gold') {
     return identity.copyWith(frameId: 'gold');
+  }
+  // 2026-10-27: kilim, newroz, şev (neon dalının genel hâli).
+  if (shopFrameIds[itemId] case final frameId?
+      when itemId != 'avatar_frame_neon') {
+    return identity.copyWith(frameId: frameId);
   }
   // Neon çerçeve satın alındığında kutlama dialog'u çıkıyor ama profile
   // dönünce hiçbir şey görünmüyordu: bu dal hiç yoktu, yani `frameId`
@@ -76,9 +93,7 @@ String get _pendingEffectsKey =>
     LocalProgressScope.physical('shop_pending_purchase_effects');
 
 bool _hasPurchaseEffect(String itemId) =>
-    itemId == 'avatar_frame_gold' ||
-    itemId == 'avatar_frame_neon' ||
-    itemId == 'profile_badge_vip';
+    shopFrameIds.containsKey(itemId) || itemId == 'profile_badge_vip';
 
 /// Sunucuya henüz ulaşmamış (kuyruğa alınmış) satın almaların kimlikleri. Kuyruk sonradan boşalınca etki mağaza
 /// açılışında uygulanır; kayıt yoksa oyuncu parasını verip çerçevesini
@@ -225,6 +240,52 @@ class ShopItem {
       themeColor: AppTheme.accent,
     ),
     ShopItem(
+      id: 'joker_pack_3',
+      titleKu: 'Paketa alîkariyê (3)',
+      titleTr: 'Joker paketi (3)',
+      descKu:
+          'Sê mafên alîkariyê: di dema pirsê de bêyî ku zêr kêm bibe tên '
+          'bikaranîn.',
+      descTr: 'Üç joker hakkı: soru sırasında jeton düşmeden kullanılır.',
+      cost: 90,
+      icon: AppIcons.wandMagicSparkles,
+      themeColor: AppTheme.accent,
+    ),
+    ShopItem(
+      id: 'avatar_frame_kilim',
+      titleKu: 'Çarçoveya kilîmê',
+      titleTr: 'Kilim çerçeve',
+      descKu:
+          'Bila avatarê te bi xelekeke sor û zêrîn a bi nexşên kilîmê bê '
+          'dorpêçkirin.',
+      descTr: 'Avatarın kilim desenli kırmızı-altın bir halkayla çevrilsin.',
+      cost: 300,
+      icon: AppIcons.palette,
+      themeColor: AppTheme.gold,
+    ),
+    ShopItem(
+      id: 'avatar_frame_newroz',
+      titleKu: 'Çarçoveya Newrozê',
+      titleTr: 'Newroz çerçeve',
+      descKu: 'Bila avatarê te bi rengên agirê Newrozê bibiriqe.',
+      descTr: 'Avatarın Newroz ateşinin renkleriyle parlasın.',
+      cost: 400,
+      icon: AppIcons.sun,
+      themeColor: AppTheme.gold,
+    ),
+    ShopItem(
+      id: 'avatar_frame_sev',
+      titleKu: 'Çarçoveya şevê',
+      titleTr: 'Gece çerçeve',
+      descKu:
+          'Bila avatarê te bi şîniya şevê û ronahiya stêrkan bê '
+          'dorpêçkirin.',
+      descTr: 'Avatarın gece mavisi ve yıldız ışığıyla çevrilsin.',
+      cost: 500,
+      icon: AppIcons.star,
+      themeColor: AppTheme.accent,
+    ),
+    ShopItem(
       id: 'profile_badge_vip',
       titleKu: 'Rozeta VIP',
       titleTr: 'VIP rozeti',
@@ -266,6 +327,10 @@ class _ShopScreenState extends State<ShopScreen> {
   final Set<String> _purchasedItemIds = {};
   List<ShopItem> _dynamicItems = const [];
 
+  /// Eldeki seri dondurma ve joker stoğu (kartta "Elinde n/2", "Stokta n").
+  int _freezeCount = 0;
+  int _jokerStock = 0;
+
   /// Çerçeve ürünlerinin önizlemesi için oyuncunun kendi avatarı ve adı.
   /// Yüklenemezse `null` kalır ve karo ürün ikonuna düşer; mağaza bu
   /// yüzden hata durumuna geçmez.
@@ -296,13 +361,30 @@ class _ShopScreenState extends State<ShopScreen> {
   //
   // Kural: bu kümeye bir kimlik eklemek, o ürünün gerçekten bir şey
   // yaptığı anlamına gelir.
+  //
+  // 2026-10-27 mağaza genişlemesi: joker paketi (JokerStockStore'a 3 hak)
+  // ve kilim/newroz/şev çerçeveleri gerçekten teslim ediliyor; seri
+  // dondurma katalog satırı değil, var olan `streak_freeze` yolundan
+  // satılan istemci ürünüdür ([_freezeItemId]).
   static const Set<String> _supportedItemIds = {
     'spin_wheel_extra',
     'avatar_frame_gold',
     'avatar_frame_neon',
     'profile_badge_vip',
+    'joker_pack_3',
+    'avatar_frame_kilim',
+    'avatar_frame_newroz',
+    'avatar_frame_sev',
   };
-  static const Set<String> _repeatableItemIds = {'spin_wheel_extra'};
+  static const Set<String> _repeatableItemIds = {
+    'spin_wheel_extra',
+    'joker_pack_3',
+    _freezeItemId,
+  };
+
+  /// Seri dondurma: sunucuda `spend_coins('streak_freeze')` ile ödenir
+  /// (bozulma anındaki teklifle aynı yol), sonra [StreakStore.addFreeze].
+  static const String _freezeItemId = 'streak_freeze';
 
   static bool _isFrameItem(String id) => id.startsWith('avatar_frame_');
 
@@ -423,6 +505,18 @@ class _ShopScreenState extends State<ShopScreen> {
       }
       await _applyPendingEffects(purchasedIds);
 
+      // Seri dondurma: katalog satırı değil, istemci ürünü (bkz.
+      // [_freezeItemId]); fiyat bozulma anındaki teklifle aynı.
+      dynamicItems = [...dynamicItems, _freezeItem];
+      var freezeCount = 0;
+      var jokerStock = 0;
+      try {
+        freezeCount = (await StreakStore.load()).freezeCount;
+        jokerStock = await JokerStockStore.count();
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'shop stock load');
+      }
+
       AvatarIdentity? avatar;
       String? profileName;
       if (dynamicItems.any((item) => _isAvatarLookItem(item.id))) {
@@ -444,6 +538,8 @@ class _ShopScreenState extends State<ShopScreen> {
           _profileName = profileName;
           _coinBalance = balance;
           _dynamicItems = dynamicItems;
+          _freezeCount = freezeCount;
+          _jokerStock = jokerStock;
           _purchasedItemIds.clear();
           _purchasedItemIds.addAll(purchasedIds);
           _loading = false;
@@ -628,7 +724,71 @@ class _ShopScreenState extends State<ShopScreen> {
     }
   }
 
+  ShopItem get _freezeItem => ShopItem(
+    id: _freezeItemId,
+    titleKu: Tr.of(K.shopFreezeTitle, AppLanguage.ku),
+    titleTr: Tr.of(K.shopFreezeTitle, AppLanguage.tr),
+    descKu: Tr.of(K.shopFreezeDesc, AppLanguage.ku),
+    descTr: Tr.of(K.shopFreezeDesc, AppLanguage.tr),
+    cost: CoinPrices.streakFreeze,
+    icon: AppIcons.snowflake,
+    themeColor: AppTheme.accent,
+  );
+
+  /// Seri dondurma satın alma: `spendStreakFreeze` (idempotent, bozulma
+  /// anındaki teklifle aynı sunucu yolu) → [StreakStore.addFreeze].
+  /// Üst sınır ([StreakStore.maxFreeze]) doluysa jeton hiç harcanmaz.
+  Future<void> _purchaseFreeze(ShopItem item) async {
+    if (_freezeCount >= StreakStore.maxFreeze) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.shopFreezeFull))));
+      return;
+    }
+    if (_coinBalance < item.cost) {
+      AppHaptics.vibrate();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.insufficientBalance))));
+      return;
+    }
+    setState(() {
+      _loading = true;
+      _purchaseErrorMessage = null;
+    });
+    try {
+      final charge = await widget.repository.spendStreakFreeze(
+        idempotencyKey: 'shop_freeze_${DateTime.now().microsecondsSinceEpoch}',
+      );
+      if (!mounted) return;
+      if (!charge.succeeded) {
+        AppHaptics.vibrate();
+        setState(() => _purchaseErrorMessage = context.t(K.purchaseFailed));
+        return;
+      }
+      final store = await StreakStore.load();
+      final count = await store.addFreeze();
+      if (!mounted) return;
+      setState(() => _freezeCount = count);
+      AppHaptics.light();
+      _showPurchaseCelebrationDialog(item);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'shop_freeze_purchase');
+      if (!mounted) return;
+      setState(() {
+        _purchaseErrorMessage = context.t(K.errorOccurred);
+        _purchaseOffline = isLikelyOfflineError(error);
+      });
+    } finally {
+      if (mounted) {
+        setState(() => _loading = false);
+        _loadBalance();
+      }
+    }
+  }
+
   Future<void> _purchase(ShopItem item) async {
+    if (item.id == _freezeItemId) return _purchaseFreeze(item);
     if (_coinBalance < item.cost) {
       AppHaptics.vibrate();
       ScaffoldMessenger.of(
@@ -736,6 +896,17 @@ class _ShopScreenState extends State<ShopScreen> {
     // hiç açılmıyordu, yani neon satın alan oyuncu için
     // `loadAvatarIdentity`/`updateAvatarIdentity` hiç çağrılmıyordu
     // (2026-08-14 denetimi).
+    // Joker paketi: üç hak yerel stoğa (bkz. JokerStockStore).
+    if (itemId == 'joker_pack_3') {
+      try {
+        final stock = await JokerStockStore.add(JokerStockStore.packSize);
+        if (mounted) setState(() => _jokerStock = stock);
+        return true;
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'shop joker stock add');
+        return false;
+      }
+    }
     if (!_hasPurchaseEffect(itemId)) return true;
     try {
       final identity = await widget.repository.loadAvatarIdentity();
@@ -989,7 +1160,16 @@ class _ShopScreenState extends State<ShopScreen> {
   // ────────────────────────────────────────────
   Widget _buildItemsList(BuildContext context, bool ku) {
     final heroItem = _dynamicItems.reduce((a, b) => b.cost > a.cost ? b : a);
-    final restItems = _dynamicItems.where((i) => i.id != heroItem.id).toList();
+    // Önce oyunda işe yarayanlar (dondurma, joker, ek çark), sonra
+    // kozmetikler; her grupta ucuzdan pahalıya (2026-10-27: dokuz ürünle
+    // çerçeveler ile tüketilenler karışık duruyordu).
+    final restItems = _dynamicItems.where((i) => i.id != heroItem.id).toList()
+      ..sort((a, b) {
+        final group = (_isAvatarLookItem(a.id) ? 1 : 0).compareTo(
+          _isAvatarLookItem(b.id) ? 1 : 0,
+        );
+        return group != 0 ? group : a.cost.compareTo(b.cost);
+      });
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(
@@ -1073,6 +1253,14 @@ class _ShopScreenState extends State<ShopScreen> {
           ),
         ],
       );
+      // Stoklu ürünlerde eldeki miktar (seri dondurma n/2, joker stoğu).
+      final stockLabel = switch (item.id) {
+        _freezeItemId => context.t(K.shopFreezeOwned, {'n': '$_freezeCount'}),
+        'joker_pack_3' when _jokerStock > 0 => context.t(K.jokerStockHint, {
+          'n': '$_jokerStock',
+        }),
+        _ => null,
+      };
       final note = missing > 0
           ? Text(
               context.t(K.coinsShort, {'coins': '$missing'}),
@@ -1083,7 +1271,13 @@ class _ShopScreenState extends State<ShopScreen> {
                 fontWeight: FontWeight.w500,
               ),
             )
-          : null;
+          : stockLabel == null
+          ? null
+          : Text(
+              stockLabel,
+              key: ValueKey('shop-stock-note-${item.id}'),
+              style: SahneType.caption.copyWith(color: t.tx2, fontSize: 13),
+            );
       final action = isPurchased
           ? _buildOwnedChip(expand: largeText)
           : _buildBuyButton(item, ku, expand: largeText);
@@ -1273,6 +1467,10 @@ class _PreviewTile extends StatelessWidget {
             'spin_wheel_extra' => (t.raceFill, SahneVivid.onFill),
             'profile_badge_vip' => (t.zerBand, t.onZer),
             'avatar_frame_neon' => (t.learnFill, SahneVivid.onFill),
+            'avatar_frame_kilim' => (t.raceFill, SahneVivid.onFill),
+            'avatar_frame_newroz' => (t.zerBand, t.onZer),
+            'joker_pack_3' => (t.learnFill, SahneVivid.onFill),
+            'streak_freeze' => (t.nilFill, SahneVivid.onFill),
             _ => (t.nilFill, SahneVivid.onFill),
           };
     return ExcludeSemantics(

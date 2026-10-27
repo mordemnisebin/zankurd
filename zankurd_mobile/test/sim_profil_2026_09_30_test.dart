@@ -172,6 +172,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(await selectedOf(colorKey), ui.Tristate.isTrue);
 
+    // Renk satırına kaydırınca simge yukarıda kalabilir (2026-10-27:
+    // üç yeni çerçeveyle sayfa uzadı); dokunmadan önce görünür yap.
+    await tester.ensureVisible(find.byKey(iconKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(iconKey));
     await tester.pumpAndSettle();
     expect(await selectedOf(iconKey), ui.Tristate.isTrue);
