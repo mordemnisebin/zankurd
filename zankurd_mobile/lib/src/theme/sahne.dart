@@ -852,6 +852,10 @@ class SahneVivid {
   /// Renkli yüzeyde cam çip dolgusu, iz ve ince çizgi (beyaz %16 / %18 / %12).
   static const glass = Color(0x29FFFFFF);
 
+  /// Zimrût ders kartındaki küçük beyaz yazılı rozetler: koyu cam,
+  /// açık/gece dolgu üstünde 4,5:1 üzeri kontrast için.
+  static const learnBadgeGlass = Color(0x33000000);
+
   /// Cam düğme (davet kodu gir): kart zemininden ayrışan yarı saydam beyaz
   /// dolgu (%22) ve ince beyaz kenar (%70); beyaz yazı Nîl kartta ≥ 4,5:1.
   static const glassButton = Color(0x1AFFFFFF);

@@ -483,6 +483,29 @@ void main() {
     );
     // 2026-10-22: dolu Zimrût kartta başlık beyaz.
     expect(title.style?.color, SahneVivid.onFill);
+    final meta = tester.widget<Text>(
+      find.byKey(const ValueKey('learning-active-meta')),
+    );
+    expect(meta.style?.color, SahneVivid.onFill);
+
+    // Beyaz yazılı iki rozette arka planın açılması kontrastı düşürüyordu.
+    for (final key in const [
+      'lesson-recommended-badge',
+      'learning-progress-capsule',
+    ]) {
+      final badge = tester.widget<DecoratedBox>(find.byKey(ValueKey(key)));
+      expect(
+        (badge.decoration as ShapeDecoration).color,
+        SahneVivid.learnBadgeGlass,
+      );
+      final badgeText = tester.widget<Text>(
+        find.descendant(
+          of: find.byKey(ValueKey(key)),
+          matching: find.byType(Text),
+        ),
+      );
+      expect(badgeText.style?.color, SahneVivid.onFill);
+    }
 
     final primary = find.descendant(
       of: nextStep,
@@ -511,6 +534,57 @@ void main() {
         )
         .where((m) => m.color == SahneTokens.day.act);
     expect(agirButtons.length, 1);
+  });
+
+  test(
+    'öğrenme rozetleri ve kart açıklaması iki temada AA kontrastındadır',
+    () {
+      for (final fill in [
+        SahneTokens.day.learnFill,
+        SahneTokens.night.learnFill,
+      ]) {
+        final background = Color.alphaBlend(SahneVivid.learnBadgeGlass, fill);
+        final contrast =
+            (SahneVivid.onFill.computeLuminance() + 0.05) /
+            (background.computeLuminance() + 0.05);
+        expect(contrast, greaterThanOrEqualTo(4.5));
+        final metaContrast =
+            (SahneVivid.onFill.computeLuminance() + 0.05) /
+            (fill.computeLuminance() + 0.05);
+        expect(metaContrast, greaterThanOrEqualTo(4.5));
+      }
+    },
+  );
+
+  testWidgets('öğrenme kartı iki temada ölçülen dolgu rengini kullanır', (
+    tester,
+  ) async {
+    for (final mode in [ThemeMode.light, ThemeMode.dark]) {
+      await tester.pumpWidget(
+        ChangeNotifierProvider(
+          create: (_) => LanguageProvider(initialLang: 'tr'),
+          child: MaterialApp(
+            theme: AppTheme.light(),
+            darkTheme: AppTheme.dark(),
+            themeMode: mode,
+            home: LearningScreen(repository: MockZanKurdRepository()),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final card = tester.widget<SahneSurfaceCard>(
+        find.descendant(
+          of: find.byKey(const ValueKey('learning-next-step')),
+          matching: find.byType(SahneSurfaceCard),
+        ),
+      );
+      expect(
+        card.color,
+        mode == ThemeMode.light
+            ? SahneTokens.day.learnFill
+            : SahneTokens.night.learnFill,
+      );
+    }
   });
 
   testWidgets('öğrenme yolu durumları Türkçe semantics ile adlandırılır', (

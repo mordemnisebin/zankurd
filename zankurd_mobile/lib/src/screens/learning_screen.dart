@@ -1256,12 +1256,11 @@ class _CurrentLessonCard extends StatelessWidget {
                         Flexible(
                           child: Align(
                             alignment: AlignmentDirectional.centerStart,
-                            // Dolu Zimrût üstünde cam çip, beyaz yazı
-                            // (turuncu rozet yazısı yeşilde okunmuyordu).
+                            // Dolu Zimrût üstünde koyu cam çip, beyaz yazı.
                             child: DecoratedBox(
                               key: const ValueKey('lesson-recommended-badge'),
                               decoration: const ShapeDecoration(
-                                color: SahneVivid.glass,
+                                color: SahneVivid.learnBadgeGlass,
                                 shape: StadiumBorder(),
                               ),
                               child: Padding(
@@ -1284,7 +1283,7 @@ class _CurrentLessonCard extends StatelessWidget {
                         DecoratedBox(
                           key: const ValueKey('learning-progress-capsule'),
                           decoration: const ShapeDecoration(
-                            color: SahneVivid.glass,
+                            color: SahneVivid.learnBadgeGlass,
                             shape: StadiumBorder(),
                           ),
                           child: Padding(
@@ -1319,8 +1318,9 @@ class _CurrentLessonCard extends StatelessWidget {
                       const SizedBox(height: SahneSpace.x1),
                       Text(
                         metaText,
+                        key: const ValueKey('learning-active-meta'),
                         style: SahneType.caption.copyWith(
-                          color: SahneVivid.onFillSoft,
+                          color: SahneVivid.onFill,
                         ),
                       ),
                     ],

@@ -61,6 +61,29 @@ void main() {
       findsOneWidget,
       reason: 'şampiyonluk ödülü görünmüyor',
     );
+    final reward = tester.widget<RewardToken>(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is RewardToken &&
+            widget.value == '${TournamentConfig.coinBonusChampion}',
+      ),
+    );
+    expect(reward.label, 'jeton · ödül');
+  });
+
+  testWidgets('Kurmancî kupada ödülün birimi zêr olarak okunur', (
+    tester,
+  ) async {
+    await _pump(tester, ku: true);
+    final reward = tester.widget<RewardToken>(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is RewardToken &&
+            widget.value == '${TournamentConfig.coinBonusChampion}',
+      ),
+    );
+    expect(reward.label, 'zêr · xelat');
+    expect(find.text('zêr · xelat'), findsOneWidget);
   });
 
   testWidgets('maç başı sahte bir ödül vaat edilmiyor', (tester) async {

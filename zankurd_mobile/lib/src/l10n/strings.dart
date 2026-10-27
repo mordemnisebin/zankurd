@@ -680,7 +680,7 @@ class Tr {
     K.joinTournament: {'ku': 'Tevlî kûpayê bibe', 'tr': 'Turnuvaya katıl'},
     K.cupPlayers: {'ku': 'lîstikvan', 'tr': 'oyuncu'},
     K.cupRounds: {'ku': 'ger', 'tr': 'tur'},
-    K.cupChampionReward: {'ku': 'şampiyon', 'tr': 'şampiyon'},
+    K.cupChampionReward: {'ku': 'zêr · xelat', 'tr': 'jeton · ödül'},
     K.cupLadder: {'ku': 'Rêya kûpayê', 'tr': 'Turnuva yolu'},
     K.cupFormatTitle: {'ku': 'Awa', 'tr': 'Format'},
     K.cupNotStarted: {'ku': 'Dest pê nekiriye', 'tr': 'Başlamadı'},
