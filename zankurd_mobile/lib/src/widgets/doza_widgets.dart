@@ -170,7 +170,9 @@ class DozaSloganLine extends StatelessWidget {
   }
 }
 
-/// Profil ekranındaki belirgin giriş kartı: dolu Zimrût, slogan altında.
+/// Profil ekranındaki giriş kartı: tonlu Zimrût (mod tonu, dolu değil),
+/// slogan altında. 2026-10-28 tur 3 T5: dolu doygun yeşil karttı; ekranın en
+/// ağır bloğu olmasın diye tonlu yüzey + zımni şerit.
 class DozaMeEntryCard extends StatelessWidget {
   const DozaMeEntryCard({super.key});
 
@@ -182,14 +184,14 @@ class DozaMeEntryCard extends StatelessWidget {
     final slogan = context.t(K.dozaSlogan);
     return SahneSurfaceCard(
       key: const ValueKey('profile-doza-entry'),
-      color: t.learnFill,
-      edgeColor: t.learnFill,
+      color: t.learnTint,
+      edgeColor: t.learn,
       onTap: () => openDozaMe(context),
       semanticLabel: '$title. $slogan',
       child: Row(
         children: [
-          const ExcludeSemantics(
-            child: Icon(AppIcons.flag, size: 28, color: SahneVivid.onFill),
+          ExcludeSemantics(
+            child: Icon(AppIcons.flag, size: 28, color: t.learnTx),
           ),
           const SizedBox(width: SahneSpace.x3),
           Expanded(
@@ -198,12 +200,12 @@ class DozaMeEntryCard extends StatelessWidget {
               children: [
                 Text(
                   second == null ? title : '$title · $second',
-                  style: SahneType.button.copyWith(color: SahneVivid.onFill),
+                  style: SahneType.button.copyWith(color: t.tx),
                 ),
                 Text(
                   slogan,
                   style: SahneType.caption.copyWith(
-                    color: SahneVivid.onFillSoft,
+                    color: t.tx2,
                     fontStyle: FontStyle.italic,
                   ),
                 ),
@@ -211,12 +213,8 @@ class DozaMeEntryCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: SahneSpace.x2),
-          const ExcludeSemantics(
-            child: Icon(
-              AppIcons.chevronRight,
-              size: 20,
-              color: SahneVivid.onFillSoft,
-            ),
+          ExcludeSemantics(
+            child: Icon(AppIcons.chevronRight, size: 20, color: t.tx2),
           ),
         ],
       ),

@@ -335,6 +335,15 @@ void main() {
       ),
     );
     await tester.pump(const Duration(seconds: 1));
+    // T14 (2026-10-28 tur 3): "Nerelerde zorlandın?" tek katlanan
+    // "Ayrıntılar" bölümünün içinde; önce açılır.
+    final details = find.descendant(
+      of: find.byKey(const ValueKey('result-details-section')),
+      matching: find.byKey(const ValueKey('result-collapsible-header')),
+    );
+    await tester.ensureVisible(details);
+    await tester.tap(details);
+    await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
       find.byKey(const ValueKey('learning-outcome-review')),
       250,

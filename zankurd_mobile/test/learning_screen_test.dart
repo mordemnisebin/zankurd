@@ -256,15 +256,15 @@ void main() {
       await tester.pumpWidget(wrap(LearningScreen(repository: repository)));
       await tester.pumpAndSettle();
 
-      Finder action(String key) => find.descendant(
-        of: find.byKey(ValueKey(key)),
-        matching: find.byType(FilledButton),
-      );
+      // T13 (2026-10-28 tur 3): iki eylem Pratik ızgarasının karosu; etkinlik
+      // karttaki `onTap`tır.
+      VoidCallback? onTapOf(String key) =>
+          tester.widget<SahneSurfaceCard>(find.byKey(ValueKey(key))).onTap;
       for (final key in [
         'learning-topic-practice',
         'learning-topic-flashcards',
       ]) {
-        expect(tester.widget<FilledButton>(action(key)).onPressed, isNotNull);
+        expect(onTapOf(key), isNotNull);
       }
 
       await tester.tap(find.byKey(const ValueKey('learning-tab-grammar')));
@@ -274,7 +274,7 @@ void main() {
         'learning-topic-practice',
         'learning-topic-flashcards',
       ]) {
-        expect(tester.widget<FilledButton>(action(key)).onPressed, isNull);
+        expect(onTapOf(key), isNull);
       }
 
       repository.nextGrammarLoad.completeError(StateError('offline'));
@@ -284,7 +284,7 @@ void main() {
         'learning-topic-practice',
         'learning-topic-flashcards',
       ]) {
-        expect(tester.widget<FilledButton>(action(key)).onPressed, isNull);
+        expect(onTapOf(key), isNull);
       }
 
       await tester.tap(find.text('Tekrar dene').first);
@@ -295,13 +295,13 @@ void main() {
         'learning-topic-practice',
         'learning-topic-flashcards',
       ]) {
-        expect(tester.widget<FilledButton>(action(key)).onPressed, isNotNull);
+        expect(onTapOf(key), isNotNull);
       }
     },
   );
 
   testWidgets(
-    'kilitli dersler üçten sonra tek "+N ders daha" satırında toplanır',
+    'kilitli dersler ikiden sonra tek "Tüm dersler (+N)" satırında toplanır',
     (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 3000));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -316,11 +316,12 @@ void main() {
             (w.key as ValueKey<String>).value.startsWith('learning-path-node-'),
       );
       final more = find.byKey(const ValueKey('learning-locked-more'));
-      // Etkin ders + 3 kilitli görünür; kalanı tek satırda.
+      // T13 (2026-10-28 tur 3): etkin ders + 2 kilitli görünür; kalanı tek
+      // "Tüm dersler (+N)" satırında.
       final total = _placementLessons.length;
-      expect(rows, findsNWidgets(4));
+      expect(rows, findsNWidgets(3));
       expect(more, findsOneWidget);
-      expect(find.text('+${total - 4} ders daha'), findsOneWidget);
+      expect(find.text('Tüm dersler (+${total - 3})'), findsOneWidget);
       await tester.tap(more);
       await tester.pumpAndSettle();
       expect(more, findsNothing);
@@ -365,7 +366,8 @@ void main() {
 
     expect(
       find.byKey(const ValueKey('learning-topic-actions')),
-      findsOneWidget,
+      findsNothing,
+      reason: 'ikili düğme çifti Pratik ızgarasına katıldı (T13)',
     );
     expect(find.byKey(const ValueKey('learning-mode-strip')), findsNothing);
     expect(find.bySemanticsLabel('Dersler'), findsNothing);
@@ -893,13 +895,14 @@ void main() {
     );
     expect(firstNode, findsOneWidget);
     expect(
-      find.byKey(const ValueKey('learning-path-node-everyday_2')),
+      find.byKey(const ValueKey('learning-path-node-everyday_1')),
       findsOneWidget,
     );
     // Yolun sonundaki "Konu ustalık hedefi" durağı 2026-09-27'de kalktı
     // (ne olduğu ekranda yazmıyordu). Yolun ardından konu eylemleri gelir.
     expect(find.byKey(const ValueKey('learning-mastery-goal')), findsNothing);
-    final actions = find.byKey(const ValueKey('learning-topic-actions'));
+    // T13 (2026-10-28 tur 3): konu eylemleri Pratik ızgarasında; yolun altında.
+    final actions = find.byKey(const ValueKey('learning-topic-practice'));
     await tester.ensureVisible(actions);
     expect(
       tester.getTopLeft(actions).dy,
@@ -1272,12 +1275,9 @@ void main() {
         'learning-topic-practice',
         'learning-topic-flashcards',
       ]) {
-        final button = find.descendant(
-          of: find.byKey(ValueKey(key)),
-          matching: find.byType(FilledButton),
-        );
+        final button = find.byKey(ValueKey(key));
         expect(
-          tester.widget<FilledButton>(button).onPressed,
+          tester.widget<SahneSurfaceCard>(button).onTap,
           isNull,
           reason: '$key ders yokken kapalı olmalı',
         );
@@ -1302,10 +1302,7 @@ void main() {
     await tester.pumpWidget(wrap(LearningScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    final flashcards = find.descendant(
-      of: find.byKey(const ValueKey('learning-topic-flashcards')),
-      matching: find.byType(FilledButton),
-    );
+    final flashcards = find.byKey(const ValueKey('learning-topic-flashcards'));
     await tester.ensureVisible(flashcards);
     await tester.pumpAndSettle();
     await tester.tap(flashcards);
@@ -1336,7 +1333,7 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.byKey(const ValueKey('learning-path-node-everyday_2')),
+      find.byKey(const ValueKey('learning-path-node-everyday_1')),
       findsOneWidget,
     );
 
@@ -1347,7 +1344,7 @@ void main() {
     // ikon karosu kalktı; kilitli ders tek işaret (kilit) taşır, öteki
     // dersler ikonsuz liste satırıdır.
     expect(find.byType(SahnePathNode), findsNothing);
-    final locked = find.byKey(const ValueKey('learning-route-stop-everyday_2'));
+    final locked = find.byKey(const ValueKey('learning-route-stop-everyday_1'));
     expect(
       find.descendant(of: locked, matching: find.byIcon(AppIcons.lock)),
       findsOneWidget,
@@ -1665,10 +1662,7 @@ void main() {
       await tester.tap(foodTab);
       await tester.pumpAndSettle();
 
-      final practice = find.descendant(
-        of: find.byKey(const ValueKey('learning-topic-practice')),
-        matching: find.byType(FilledButton),
-      );
+      final practice = find.byKey(const ValueKey('learning-topic-practice'));
       await tester.ensureVisible(practice);
       await tester.tap(practice);
       await tester.pumpAndSettle();

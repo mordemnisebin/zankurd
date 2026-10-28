@@ -5,6 +5,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/widgets/quiz_stage_kit.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -190,6 +191,37 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byKey(kart), findsNothing);
       expect(find.text('Peyva «nan» bi Tirkî çi tê gotin?'), findsOneWidget);
+    });
+
+    // 2026-10-28 tur 3 T4: "Doğru cevap: X" YALNIZ BİR yerde durur. Kusur:
+    // alt kırmızı şerit de aynı cümleyi yazıyor, içgörü kartı da; ekran aynı
+    // bilgiyi iki kez söylüyordu. Sessizdi: iki yerin de ayrı testi vardı,
+    // "toplamda bir kez" diye soran yoktu. Kart açıkken şerit yalnız "Yanlış"
+    // + eylemdir.
+    testWidgets('yanlışta "Doğru cevap" tek yerde: kart açıkken şerit yazmaz', (
+      tester,
+    ) async {
+      await pumpQuiz(tester);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('ekmek'));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
+
+      expect(find.byKey(kart), findsOneWidget);
+      expect(find.textContaining('Doğru cevap'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(QuizFeedbackStrip),
+          matching: find.textContaining('Doğru cevap'),
+        ),
+        findsNothing,
+      );
+      expect(
+        find.descendant(
+          of: find.byType(QuizFeedbackStrip),
+          matching: find.text('Yanlış'),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('doğru cevapta kart YOK, eylem "Sonraki" kalır', (

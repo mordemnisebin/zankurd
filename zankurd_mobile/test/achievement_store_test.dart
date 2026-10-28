@@ -4,6 +4,7 @@ import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 
 void main() {
+  achievementLabelGuard();
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
@@ -159,5 +160,21 @@ void main() {
     AchievementStore.resetInstance();
     final restored = await AchievementStore.load();
     expect(restored.isUnlocked(AchievementIds.firstGame), isFalse);
+  });
+}
+
+// 2026-10-28 tur 3 T12: profildeki rozet şeridinde etiket kesilmez ("Her konuda
+// o…"). Şerit dört dar sütundur; ad kısa kalmalı. Sessizdi: veri doğruydu,
+// kesilme yalnız dar sütunda görünürdü.
+void achievementLabelGuard() {
+  test('T12: başarı adları kısa (≤ 18 karakter, kelime ≤ 12)', () {
+    for (final a in AchievementStore.definitions.take(4)) {
+      for (final title in [a.titleTr, a.titleKu]) {
+        expect(title.length, lessThanOrEqualTo(18), reason: title);
+        for (final w in title.split(' ')) {
+          expect(w.length, lessThanOrEqualTo(12), reason: title);
+        }
+      }
+    }
   });
 }

@@ -520,10 +520,28 @@ class _TourRepository extends TestMockZanKurdRepository {
 /// Mağazada bakiyenin yetmediği ilk ürünün kilitli fiyat düğmesi. 2026-10-28
 /// (K11): hero yüzeyi ve ayrı "jeton eksik" satırı kalktı; yetmeyen ürün
 /// nötr/pasif fiyat gösterir ve dokunuş kartın pencere eylemine düşer.
-Finder _shortShopItem() => find.byWidgetPredicate((w) {
+Finder _shortShopItemAny() => find.byWidgetPredicate((w) {
   final key = w.key;
   return key is ValueKey<String> && key.value.startsWith('shop-short-');
-}).first;
+});
+
+/// Tembel listede henüz kurulmamış öğeyi bulana dek kaydırır (320 pt + 2×
+/// yazıda yetmeyen ürün ilk ekranın altında kalır; kurulmamış öğreye
+/// `tap` "No element" verirdi — 2026-10-28 tur 3).
+Future<void> _scrollTo(WidgetTester tester, Finder target) async {
+  final scrollable = find.byType(Scrollable).last;
+  for (var i = 0; i < 40 && target.evaluate().isEmpty; i++) {
+    await tester.drag(scrollable, const Offset(0, -240));
+    await tester.pump();
+  }
+}
+
+Future<void> _tapReached(WidgetTester tester, Finder target) async {
+  await _scrollTo(tester, target);
+  await tester.ensureVisible(target.first);
+  await tester.pumpAndSettle();
+  await tester.tap(target.first);
+}
 
 class _BalanceTourRepository extends _TourRepository {
   _BalanceTourRepository(this.coins);
@@ -2667,7 +2685,7 @@ void main() {
 
   testWidgets('107 mağaza — yetmeyen ürünün penceresi', (t) async {
     await _pump(t, ShopScreen(repository: _BalanceTourRepository(200)));
-    await t.tap(_shortShopItem());
+    await _tapReached(t, _shortShopItemAny());
     await t.pump();
     await t.pump(const Duration(milliseconds: 600));
     await _shoot(t, '107_shop_short_dialog');
@@ -2682,7 +2700,7 @@ void main() {
         dark: true,
         ku: true,
       );
-      await t.tap(_shortShopItem());
+      await _tapReached(t, _shortShopItemAny());
       await t.pump();
       await t.pump(const Duration(milliseconds: 600));
       await _shoot(t, '108_shop_short_dialog_dark_ku');
@@ -2696,15 +2714,13 @@ void main() {
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     // Kurul 3. tur: ücret grubu "Ayarlar" satırında katlı; önce açılır.
-    await t.ensureVisible(
+    await _tapReached(
+      t,
       find.byKey(const ValueKey('custom-room-settings-row')),
     );
-    await t.tap(find.byKey(const ValueKey('custom-room-settings-row')));
     await t.pumpAndSettle();
     final fee = find.byKey(const ValueKey('custom-room-fee-50'));
-    await t.ensureVisible(fee);
-    await t.pumpAndSettle();
-    await t.tap(fee);
+    await _tapReached(t, fee);
     await t.pumpAndSettle();
     await _shoot(t, '109_custom_room_short');
   }, tags: ['preview']);
@@ -2722,15 +2738,13 @@ void main() {
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     // Kurul 3. tur: ücret grubu "Ayarlar" satırında katlı; önce açılır.
-    await t.ensureVisible(
+    await _tapReached(
+      t,
       find.byKey(const ValueKey('custom-room-settings-row')),
     );
-    await t.tap(find.byKey(const ValueKey('custom-room-settings-row')));
     await t.pumpAndSettle();
     final fee = find.byKey(const ValueKey('custom-room-fee-50'));
-    await t.ensureVisible(fee);
-    await t.pumpAndSettle();
-    await t.tap(fee);
+    await _tapReached(t, fee);
     await t.pumpAndSettle();
     await _shoot(t, '110_custom_room_short_dark_ku');
   }, tags: ['preview']);

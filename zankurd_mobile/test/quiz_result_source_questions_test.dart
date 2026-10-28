@@ -7,6 +7,8 @@ import 'package:zankurd_mobile/src/screens/review_screen.dart';
 
 import 'support/widget_test_helpers.dart';
 
+import 'support/result_details.dart';
+
 const _runtimeQuestion = QuizQuestion(
   id: 'online-uuid-not-in-local-bank',
   category: 'Ziman',
@@ -55,6 +57,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('quiz-next-button')));
       await tester.pumpAndSettle();
 
+      await openResultDetails(tester);
       final review = find.byKey(const ValueKey('learning-outcome-review'));
       expect(review, findsOneWidget);
       await tester.ensureVisible(review);

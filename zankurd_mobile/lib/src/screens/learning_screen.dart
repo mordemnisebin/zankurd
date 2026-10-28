@@ -83,7 +83,7 @@ int learningRecommendedIndex({
 }
 
 /// Etkin dersten sonra görünen kilitli ders sayısı; kalanı "+N ders daha".
-const int _kVisibleLockedLessons = 3;
+const int _kVisibleLockedLessons = 2;
 
 /// Ders yolunda bir ünitedeki ders sayısı.
 const int _kLessonsPerUnit = 5;
@@ -292,19 +292,6 @@ class _LearningScreenState extends State<LearningScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Seviye belirlenmemiş ve geçilmemişse yumuşak, kapatılabilir
-              // davet. Ekranın tek birincil eylemi yoldaki etkin ders olduğu
-              // için düğme ikincildir.
-              if (_placementPrompt) ...[
-                _page(
-                  _PlacementPromptCard(
-                    isKu: ku,
-                    onStart: _openPlacement,
-                    onDismiss: _dismissPlacementPrompt,
-                  ),
-                ),
-                const SizedBox(height: SahneSpace.x3),
-              ],
               // Akıllı tekrar (SM-2) en üstte, ama yalnız gerçekten tekrar
               // bekliyorsa: vadesi gelmiş soru, yeni dersten daha acildir.
               // Hiç ders çözmemiş birine "Tekrarlar tamam" yazmak yapılmamış
@@ -333,18 +320,19 @@ class _LearningScreenState extends State<LearningScreen> {
               const SizedBox(height: SahneSpace.x4),
               // Ana ders yolu ilk ekranda görünür. Yardımcı içerikler aynı
               // kaydırma yüzeyinde, derslerin ardından gelir.
-              _page(_buildLessons(context, ku)),
-              const SizedBox(height: SahneSpace.sectionTop),
-              // Pratik bölümü (tur 11): iki düğme + hikâyeler + sözlük,
-              // ders listesinden belirgin boşlukla ayrı ve ikincil. Konuyu pekiştirmenin iki yolu ve
-              // adıyla: "Soru çöz" ve "Flaş kart". İkisi de ikincil (Kulis);
-              // ekranın TEK birincil eylemi yoldaki etkin derstir.
               _page(
-                _TopicActions(
-                  isKu: ku,
-                  enabled: !_lessonsLoading && _currentLessons.isNotEmpty,
-                  onPractice: _openCategoryPractice,
-                  onFlashcards: _openCategoryFlashcards,
+                _buildLessons(
+                  context,
+                  ku,
+                  // 2026-10-28 tur 3 T13: "Seviyeni bul" daveti kahramanın
+                  // ÜSTÜNDE değil ALTINDA: önce ne yapacağını gör.
+                  afterHero: _placementPrompt
+                      ? _PlacementPromptCard(
+                          isKu: ku,
+                          onStart: _openPlacement,
+                          onDismiss: _dismissPlacementPrompt,
+                        )
+                      : null,
                 ),
               ),
               const SizedBox(height: SahneSpace.sectionTop),
@@ -362,6 +350,25 @@ class _LearningScreenState extends State<LearningScreen> {
                 _PracticeGrid(
                   key: const ValueKey('learning-practice-hub'),
                   tiles: [
+                    // T13: "Soru çöz" / "Kartlarla çalış" ikili düğmesi
+                    // kalktı (aynı eylemler iki yerde, ders listesi ile
+                    // Pratik arasında); araç olarak ızgaraya katıldı.
+                    _PracticeTileData(
+                      key: const ValueKey('learning-topic-practice'),
+                      icon: AppIcons.circleQuestion,
+                      title: Tr.forKu(K.soruCoz, ku),
+                      onTap: !_lessonsLoading && _currentLessons.isNotEmpty
+                          ? _openCategoryPractice
+                          : null,
+                    ),
+                    _PracticeTileData(
+                      key: const ValueKey('learning-topic-flashcards'),
+                      icon: AppIcons.layerGroup,
+                      title: Tr.forKu(K.flasKart, ku),
+                      onTap: !_lessonsLoading && _currentLessons.isNotEmpty
+                          ? _openCategoryFlashcards
+                          : null,
+                    ),
                     _PracticeTileData(
                       key: const ValueKey('learning-practice-review'),
                       icon: AppIcons.arrowsRotate,
@@ -484,7 +491,7 @@ class _LearningScreenState extends State<LearningScreen> {
     return parts.join('. ');
   }
 
-  Widget _buildLessons(BuildContext context, bool ku) {
+  Widget _buildLessons(BuildContext context, bool ku, {Widget? afterHero}) {
     final t = SahneTokens.of(context);
     return FutureBuilder<List<Lesson>>(
       future: _lessonsFuture,
@@ -546,6 +553,7 @@ class _LearningScreenState extends State<LearningScreen> {
         // beşerli ünitelere ayrılır; her ünitenin başında numara ve
         // ilerleme durur (Busuu/Babbel ünite kalıbı).
         var unitHeaderShown = -1;
+        var heroPromptAdded = false;
         final unitCount = (lessons.length / _kLessonsPerUnit).ceil();
         for (var i = 0; i < lessons.length; i++) {
           final isLocked = learningLessonLocked(
@@ -589,6 +597,10 @@ class _LearningScreenState extends State<LearningScreen> {
           if (stop.current) {
             closeRun();
             blocks.add(stop.widget);
+            if (afterHero != null && !heroPromptAdded) {
+              heroPromptAdded = true;
+              blocks.add(afterHero);
+            }
           } else {
             run.add(stop.widget);
           }
@@ -598,7 +610,7 @@ class _LearningScreenState extends State<LearningScreen> {
             SahneListRow.plain(
               key: const ValueKey('learning-locked-more'),
               dense: true,
-              title: context.t(K.lessonsMoreCount, {'n': '$lockedHidden'}),
+              title: context.t(K.allLessonsMore, {'n': '$lockedHidden'}),
               onTap: () => setState(() => _showAllLocked = true),
               trailing: Icon(
                 AppIcons.lock,
@@ -611,6 +623,7 @@ class _LearningScreenState extends State<LearningScreen> {
           );
         }
         closeRun();
+        if (afterHero != null && !heroPromptAdded) blocks.add(afterHero);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -995,132 +1008,6 @@ class _PlacementPromptCard extends StatelessWidget {
   }
 }
 
-class _TopicActions extends StatelessWidget {
-  const _TopicActions({
-    required this.isKu,
-    required this.enabled,
-    required this.onPractice,
-    required this.onFlashcards,
-  });
-
-  final bool isKu;
-  final bool enabled;
-  final VoidCallback onPractice;
-  final VoidCallback onFlashcards;
-
-  @override
-  Widget build(BuildContext context) {
-    final practice = KeyedSubtree(
-      key: const ValueKey('learning-topic-practice'),
-      child: SahneButton.secondary(
-        icon: AppIcons.circleQuestion,
-        label: Tr.forKu(K.soruCoz, isKu),
-        onPressed: enabled ? onPractice : null,
-        expand: true,
-      ),
-    );
-    final flashcards = KeyedSubtree(
-      key: const ValueKey('learning-topic-flashcards'),
-      child: SahneButton.secondary(
-        icon: AppIcons.layerGroup,
-        label: Tr.forKu(K.flasKart, isKu),
-        onPressed: enabled ? onFlashcards : null,
-        expand: true,
-      ),
-    );
-    return LayoutBuilder(
-      key: const ValueKey('learning-topic-actions'),
-      builder: (context, constraints) {
-        final largeText = MediaQuery.textScalerOf(context).scale(16) > 20;
-        // Yan yana yalnız iki etiket de TEK satıra sığıyorsa: Kurmancî
-        // "Bi kartan bixwîne" yarım genişlikte iki satıra inip yanındaki
-        // tek satırlık düğmeden farklı görünüyordu (tur 37, 2026-10-24).
-        // Sığmıyorsa alt alta, tam genişlikte durur.
-        if (constraints.maxWidth < 320 ||
-            largeText ||
-            !_fitsOneLine(context, constraints.maxWidth)) {
-          // Alt alta dururken de iki düğme aynı boyda: biri iki satıra
-          // inerken öteki tek satır kalınca çift dengesiz görünüyordu.
-          final height = _stackedHeight(context, constraints.maxWidth);
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ConstrainedBox(
-                constraints: BoxConstraints(minHeight: height),
-                child: practice,
-              ),
-              const SizedBox(height: SahneSpace.x2),
-              ConstrainedBox(
-                constraints: BoxConstraints(minHeight: height),
-                child: flashcards,
-              ),
-            ],
-          );
-        }
-        return IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(child: practice),
-              const SizedBox(width: SahneSpace.x3),
-              Expanded(child: flashcards),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  /// Alt alta düğmelerin ortak yüksekliği: en uzun etiketin satır sayısına
-  /// göre (dikey boşluk 12+12, kenar 3, en az 52).
-  double _stackedHeight(BuildContext context, double maxWidth) {
-    final room = maxWidth - 2 * (SahneSpace.x3 + 1.5) - 20 - SahneSpace.x2;
-    final scaler = MediaQuery.textScalerOf(context);
-    var tallest = 0.0;
-    for (final key in [K.soruCoz, K.flasKart]) {
-      final painter = TextPainter(
-        text: TextSpan(
-          text: Tr.forKu(key, isKu),
-          style: SahneType.button.copyWith(
-            fontFamily: SahneType.button.fontFamily,
-          ),
-        ),
-        textDirection: TextDirection.ltr,
-        textScaler: scaler,
-        textAlign: TextAlign.center,
-      )..layout(maxWidth: room > 0 ? room : 1);
-      tallest = math.max(tallest, painter.height);
-      painter.dispose();
-    }
-    return math.max(52, tallest + 2 * SahneSpace.x3 + 3);
-  }
-
-  /// İki etiket de yarım genişlikteki düğmenin içinde tek satıra sığar mı?
-  /// Düğme: yan boşluk 12 + 1,5 kenar, 20 px ikon + 8 px aralık.
-  bool _fitsOneLine(BuildContext context, double maxWidth) {
-    final half = (maxWidth - SahneSpace.x3) / 2;
-    final room = half - 2 * (SahneSpace.x3 + 1.5) - 20 - SahneSpace.x2;
-    final scaler = MediaQuery.textScalerOf(context);
-    for (final key in [K.soruCoz, K.flasKart]) {
-      final painter = TextPainter(
-        text: TextSpan(
-          text: Tr.forKu(key, isKu),
-          style: SahneType.button.copyWith(
-            fontFamily: SahneType.button.fontFamily,
-          ),
-        ),
-        textDirection: TextDirection.ltr,
-        textScaler: scaler,
-        maxLines: 1,
-      )..layout();
-      final width = painter.width;
-      painter.dispose();
-      if (width > room) return false;
-    }
-    return true;
-  }
-}
-
 /// Konu rayının çipi: görsel 44, dokunma alanı 48 ([SahneRailChip]);
 /// ekran okuyucu tek bir "seçili / seçili değil" düğmesi görür.
 class _CategoryTab extends StatelessWidget {
@@ -1136,12 +1023,8 @@ class _CategoryTab extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) => SahneRailChip(
-    label: label,
-    selected: isSelected,
-    onTap: onTap,
-    vivid: true,
-  );
+  Widget build(BuildContext context) =>
+      SahneRailChip(label: label, selected: isSelected, onTap: onTap);
 }
 
 /// Yolun etkin durağı — sahne kartı (maketteki `SahneStageCard.lesson`):
@@ -1222,34 +1105,34 @@ class _CurrentLessonCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Row(
+                    // Rozet + sayaç sığmazsa alt alta sarar (320 pt, ×2; "0/21 ders"
+                    // etiketi 2026-10-28 tur 3'te uzadı).
+                    Wrap(
+                      alignment: WrapAlignment.spaceBetween,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: SahneSpace.x2,
+                      runSpacing: SahneSpace.x2,
                       children: [
-                        Flexible(
-                          child: Align(
-                            alignment: AlignmentDirectional.centerStart,
-                            // Dolu Zimrût üstünde koyu cam çip, beyaz yazı.
-                            child: DecoratedBox(
-                              key: const ValueKey('lesson-recommended-badge'),
-                              decoration: const ShapeDecoration(
-                                color: SahneVivid.learnBadgeGlass,
-                                shape: StadiumBorder(),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: SahneSpace.x3,
-                                  vertical: SahneSpace.x1,
-                                ),
-                                child: Text(
-                                  context.t(K.recommendedForYou),
-                                  style: SahneType.captionStrong.copyWith(
-                                    color: SahneVivid.onFill,
-                                  ),
-                                ),
+                        // Dolu Zimrût üstünde koyu cam çip, beyaz yazı.
+                        DecoratedBox(
+                          key: const ValueKey('lesson-recommended-badge'),
+                          decoration: const ShapeDecoration(
+                            color: SahneVivid.learnBadgeGlass,
+                            shape: StadiumBorder(),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: SahneSpace.x3,
+                              vertical: SahneSpace.x1,
+                            ),
+                            child: Text(
+                              context.t(K.recommendedForYou),
+                              style: SahneType.captionStrong.copyWith(
+                                color: SahneVivid.onFill,
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: SahneSpace.x2),
                         // Kapsül ilerleme "tamamlanan / toplam ders".
                         DecoratedBox(
                           key: const ValueKey('learning-progress-capsule'),
@@ -1263,7 +1146,10 @@ class _CurrentLessonCard extends StatelessWidget {
                               vertical: SahneSpace.x1,
                             ),
                             child: Text(
-                              '$done/$total',
+                              context.t(K.lessonCountProgress, {
+                                'done': '$done',
+                                'total': '$total',
+                              }),
                               style: SahneType.captionStrong.copyWith(
                                 color: SahneVivid.onFill,
                                 fontFeatures: const [
@@ -2318,6 +2204,47 @@ class _UnitHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final complete = done >= total;
+    final countLabel = context.t(K.lessonCountProgress, {
+      'done': '$done',
+      'total': '$total',
+    });
+    // Büyük yazıda (≥ %150) "Beşa 1" + "0/5 ders" + çubuk tek satıra sığmaz
+    // (320 pt, ×2: 30 pt taştı, 2026-10-28 tur 3): ad ve sayaç üstte, çubuk
+    // altta.
+    if (MediaQuery.textScalerOf(context).scale(14) >= 21) {
+      return Padding(
+        padding: const EdgeInsets.only(top: SahneSpace.x2),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                if (complete) ...[
+                  Icon(AppIcons.circleCheck, size: 18, color: t.okTx),
+                  const SizedBox(width: SahneSpace.x2),
+                ],
+                Expanded(
+                  child: Text(
+                    context.t(K.learningUnit, {'n': '$number'}),
+                    style: SahneType.eyebrow.copyWith(color: t.learnTx),
+                  ),
+                ),
+                Text(
+                  countLabel,
+                  style: SahneType.captionStrong.copyWith(color: t.tx),
+                ),
+              ],
+            ),
+            const SizedBox(height: SahneSpace.x1),
+            SahneProgressBar(
+              value: total == 0 ? 0 : done / total,
+              height: 4,
+              semanticLabel: context.t(K.learningUnit, {'n': '$number'}),
+            ),
+          ],
+        ),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.only(top: SahneSpace.x2),
       child: Row(
@@ -2335,7 +2262,7 @@ class _UnitHeader extends StatelessWidget {
             child: SahneProgressBar(
               value: total == 0 ? 0 : done / total,
               height: 4,
-              trailing: '$done/$total',
+              trailing: countLabel,
               semanticLabel: context.t(K.learningUnit, {'n': '$number'}),
             ),
           ),
@@ -2358,7 +2285,7 @@ class _PracticeTileData {
   final IconData icon;
   final String title;
   final String? subtitle;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 }
 
 /// Pratik araçları: iki sütunlu kompakt kartlar (rozet + ad). Büyük yazıda
@@ -2385,12 +2312,16 @@ class _PracticeGrid extends StatelessWidget {
             children: [
               DecoratedBox(
                 decoration: ShapeDecoration(
-                  color: t.learnFill,
+                  color: d.onTap == null ? t.disabledFill : t.learnTint,
                   shape: SahneShape.m,
                 ),
                 child: SizedBox.square(
                   dimension: 40,
-                  child: Icon(d.icon, size: 22, color: SahneVivid.onFill),
+                  child: Icon(
+                    d.icon,
+                    size: 22,
+                    color: d.onTap == null ? t.tx3 : t.learnTx,
+                  ),
                 ),
               ),
               const SizedBox(width: SahneSpace.x3),

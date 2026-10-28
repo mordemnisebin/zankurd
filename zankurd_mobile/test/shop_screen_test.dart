@@ -167,6 +167,13 @@ Future<void> _spinAndReturn(
   await tester.pumpAndSettle();
 }
 
+/// Üst çubuktaki bakiye çipi (2026-10-28 tur 3 T11: oyun merkezi ve profildeki
+/// nötr kapsülle aynı; yalnız sayı, birim ekran okuyucuda).
+Finder _balance(String amount) => find.descendant(
+  of: find.byKey(const ValueKey('shop-coin-chip')),
+  matching: find.text(amount),
+);
+
 void main() {
   // Neon/altın çerçeve satın alma `loadAvatarIdentity`/`updateAvatarIdentity`
   // üzerinden `SharedPreferences`e dokunur; mock'lanmazsa platform kanalı
@@ -415,13 +422,19 @@ void main() {
         find.descendant(of: affordable, matching: find.byType(FilledButton)),
       );
       expect(filled.onPressed, isNotNull);
-      // 2026-10-28 kurul turu 2 R7: fiyat düğmesi TURUNCU değil, jeton rengi
-      // Zêr (altın dolgu, koyu kahve yazı). Turuncu yalnız ana akışın tek
-      // birincil eylemidir; mağazada üç turuncu düğme bunu bozuyordu.
+      // 2026-10-28 tur 3 T16: fiyat düğmesi dolu altın değil, altın çerçeveli
+      // TONLU çip (açık altın zemin + altın kenar + jeton + sayı); turuncu
+      // yalnız ana akışın tek birincil eylemidir.
       final bg = filled.style!.backgroundColor!.resolve(<WidgetState>{})!;
-      expect(bg, t.zerBand, reason: 'fiyat düğmesi Zêr (altın)');
+      expect(bg, t.goldTint, reason: 'fiyat çipi tonlu altın zemin');
       expect(bg, isNot(t.act), reason: 'fiyat düğmesi turuncu olmamalı');
-      expect(filled.style!.foregroundColor!.resolve(<WidgetState>{}), t.onZer);
+      expect(bg, isNot(t.zerBand), reason: 'dolu altın değil');
+      expect(
+        filled.style!.side!.resolve(<WidgetState>{})!.color,
+        t.gold,
+        reason: 'altın çerçeve',
+      );
+      expect(filled.style!.foregroundColor!.resolve(<WidgetState>{}), t.goldTx);
 
       final short = find.byKey(const ValueKey('shop-short-profile_badge_vip'));
       expect(short, findsOneWidget);
@@ -505,6 +518,27 @@ void main() {
     expect(neon.top, greaterThan(tester.getRect(looks).bottom - 1));
   });
 
+  // 2026-10-28 tur 3 T11: bakiye çipi oyun merkezi ve profildekiyle aynı nötr
+  // kapsül (altın jeton glifi); koyu kahve dolgulu ayrı bir çip değil.
+  testWidgets('T11: bakiye çipi nötr stat çipi (dolgu rengi yok)', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: _ShopRepository(coins: 500))),
+    );
+    await tester.pumpAndSettle();
+    final chip = tester.widget<SahneStatChip>(
+      find.descendant(
+        of: find.byKey(const ValueKey('shop-coin-chip')),
+        matching: find.byType(SahneStatChip),
+      ),
+    );
+    expect(chip.tint, isNull);
+    expect(chip.foreground, isNull);
+  });
+
   testWidgets('mağaza bakiyeyi ve ürünleri listeler', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 1400));
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -512,7 +546,7 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.text('500 jeton'), findsOneWidget);
+    expect(_balance('500'), findsOneWidget);
     expect(find.text('Ekstra çevirme'), findsOneWidget);
     expect(find.text('Altın çerçeve'), findsOneWidget);
     expect(find.text('VIP rozeti'), findsOneWidget);
@@ -585,10 +619,10 @@ void main() {
     await tester.pumpAndSettle();
 
     final initialCatalogReads = repository.hasPurchasedCalls;
-    expect(find.text('0 jeton'), findsOneWidget);
+    expect(_balance('0'), findsOneWidget);
     await _spinAndReturn(tester, repository, 'shop-spin-wheel-entry');
 
-    expect(find.text('30 jeton'), findsOneWidget);
+    expect(_balance('30'), findsOneWidget);
     expect(repository.hasPurchasedCalls, initialCatalogReads);
   });
 
@@ -602,7 +636,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _spinAndReturn(tester, repository, 'shop-earn-coin-cta');
-    expect(find.text('30 jeton'), findsOneWidget);
+    expect(_balance('30'), findsOneWidget);
   });
 
   testWidgets('yetersiz bakiye dialogundaki Coin kazan çarkı sonrası yeniler', (
@@ -631,7 +665,7 @@ void main() {
     await tester.tap(find.byTooltip('Geri'));
     await tester.pumpAndSettle();
 
-    expect(find.text('30 jeton'), findsOneWidget);
+    expect(_balance('30'), findsOneWidget);
   });
 
   testWidgets(
@@ -752,7 +786,7 @@ void main() {
     expect(repository.spendReasons, ['purchase_spin_wheel_extra']);
     // 500 - 120 (yeni ekstra çevirme fiyatı) = 380
     expect(repository.coins, 380);
-    expect(find.text('380 jeton'), findsOneWidget);
+    expect(_balance('380'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -902,7 +936,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.loadCalls, 2);
-    expect(find.text('500 jeton'), findsOneWidget);
+    expect(_balance('500'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

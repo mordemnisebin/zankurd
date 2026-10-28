@@ -43,6 +43,7 @@ import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'support/result_details.dart';
 
 // `quiz_result_visual_test.dart`taki `wrap`/`wrapResult` ile birebir aynı:
 // sonuç ekranı bu sağlayıcılar olmadan kurulamıyor (dil, premium).
@@ -146,6 +147,7 @@ void main() {
       );
       await tester.pump(const Duration(seconds: 1));
       await tester.pumpAndSettle();
+      await openResultDetails(tester);
 
       expect(
         find.byKey(
@@ -184,6 +186,7 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
+    await openResultDetails(tester);
 
     expect(
       find.byKey(
@@ -213,6 +216,7 @@ void main() {
       );
       await tester.pump(const Duration(seconds: 1));
       await tester.pumpAndSettle();
+      await openResultDetails(tester);
 
       const sideActionKeys = [
         'result-review-mistakes-button',

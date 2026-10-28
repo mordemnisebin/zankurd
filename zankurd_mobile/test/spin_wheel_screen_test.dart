@@ -76,6 +76,37 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  // 2026-10-28 TUR 3 T1 — çark beyaz sayfada yüzen koyu kartı idi; soru ve
+  // sonuç ekranları gibi üst çubuğun altındaki BÜTÜN alan koyu sahne olur,
+  // çark ve "Çevir" sahnenin içindedir. Sessizdi: renk/yerleşim hata vermez,
+  // yalnız ölçülür.
+  testWidgets('T1: üst çubuğun altı tam koyu sahne; çark ve Çevir içinde', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      _shell(SpinWheelScreen(repository: _SpinRepository(canSpin: true))),
+    );
+    await tester.pump();
+    await tester.pump();
+    final stage = find.byKey(const ValueKey('sahne-pushed-stage'));
+    expect(stage, findsOneWidget);
+    expect(tester.widget<ColoredBox>(stage).color, SahneTokens.night.bg);
+    final rect = tester.getRect(stage);
+    expect(rect.width, 390, reason: 'sahne kenardan kenara');
+    expect(rect.bottom, 844, reason: 'sahne ekranın dibine kadar');
+    final dial = tester.getRect(find.byKey(const ValueKey('spin-wheel-dial')));
+    expect(rect.contains(dial.center), isTrue);
+    expect(
+      find.descendant(of: stage, matching: find.text('Çevir')),
+      findsOneWidget,
+    );
+    // Çark sahnenin yarıdan fazlasını ama tamamını değil kaplar.
+    expect(dial.height / rect.height, inInclusiveRange(0.45, 0.75));
+  });
+
   // Çevir butonu ve geri sayım, çark görselinin (320px) altında kalır;
   // varsayılan test viewport'unda ListView bu satırları hiç build etmez.
   Future<void> useTallPhoneViewport(WidgetTester tester) async {

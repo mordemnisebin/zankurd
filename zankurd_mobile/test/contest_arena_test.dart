@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/models/contest.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/widgets/arena_kit.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -160,7 +161,52 @@ void main() {
     expect(find.text('Turnuva yolu'), findsNothing);
     expect(find.textContaining('Eleme turnuvası'), findsNothing);
     // Kendi kimliği var: bugüne ait, doğrudan bir etkinlik.
-    expect(find.text('Bugün'), findsOneWidget);
+    // T3 (2026-10-28 tur 3): rozet açıkça "Bugün oynanabilir" der.
+    expect(find.text('Bugün oynanabilir'), findsOneWidget);
+  });
+
+  // 2026-10-28 tur 3 T3: "Başla" ekranın dibine sabit (tek turuncu), orta alan
+  // dağ sahnesi + günün önizlemesiyle dolu, oynanabilirlik açık. Kusur:
+  // düğme hero'nun içindeydi, altında ölü yarım ekran vardı; sayaç "Yeni tur X
+  // sonra" oynanabilir turla çelişiyordu.
+  testWidgets('T3: Başla dipte sabit, tek birincil; sahne var; çelişki yok', (
+    tester,
+  ) async {
+    await _pump(tester);
+    final start = tester.getRect(find.byKey(const ValueKey('contest-start')));
+    expect(
+      start.bottom,
+      greaterThan(844 - 60),
+      reason: 'Başla ekranın dibinde',
+    );
+    expect(
+      find.byWidgetPredicate((w) => w is SahneButton && w.isPrimary),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('contest-scene')), findsOneWidget);
+    expect(find.text('Bugün oynanabilir'), findsOneWidget);
+    // Oynanabilirken sayaç "biter" der, "Yeni tur" demez (çelişki).
+    expect(find.textContaining('biter'), findsOneWidget);
+    expect(find.textContaining('Yeni tur'), findsNothing);
+  });
+
+  testWidgets('T3: boş durumda dağ sahnesi ve tek satır dostça mesaj', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1.0;
+    tester.view.physicalSize = const Size(390, 844);
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      testShell(
+        languageProvider: turkishLang(),
+        child: ContestScreen(repository: _EmptyRepo()),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 700));
+    await tester.pump(const Duration(milliseconds: 700));
+    expect(find.byType(SahneEntryScene), findsOneWidget);
+    expect(find.text('Günün turu henüz hazır değil.'), findsOneWidget);
+    expect(find.byKey(const ValueKey('contest-start')), findsNothing);
   });
 
   testWidgets('ekranın adı oyun merkezindeki girişle eşleşir', (tester) async {

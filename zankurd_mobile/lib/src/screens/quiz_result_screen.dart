@@ -1681,28 +1681,62 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // 390x844'te yapışkan alt perdenin arkasında kesiliyordu (68/200,
         // üç turdur tekrar eden bulgu). Yorum önce, ayrıntı sonra okunur.
         // Şablon ödülden sonra 8 ekler; 12 ile toplam 20 (kart ritmi).
-        const SizedBox(height: SahneSpace.x3),
-        LearningOutcomeCard(
-          outcome: learningOutcome,
-          // Kategori listesi gösteriliyorsa sayımlar orada: kart yalnız
-          // yorumu taşır.
-          showCounts: breakdown.isEmpty,
-          onReview: learningOutcome.reviewRecords.isEmpty
-              ? null
-              : () => openReview(learningOutcome.reviewRecords),
-        ),
-        if (breakdown.isNotEmpty)
-          ResultCollapsibleSection(
-            key: const ValueKey('result-category-section'),
-            title: context.t(K.resultLearnedTitle),
-            // Tek satır özet: "Dil 1/1 · Tarih 0/1".
-            summary: [
-              for (final tally in breakdown)
-                '${CategoryNames.localized(tally.category, context.isKu)} '
-                    '${tally.correct}/${tally.answered}',
-            ].join(' · '),
-            child: _CategoryLearnings(breakdown: breakdown),
+        // 2026-10-28 tur 3 T14: "Nerelerde zorlandın?", "Konulara göre" ve
+        // yeni rozetler ÜÇ ayrı kart/başlıktı; ilk bakış bunlarla doluyordu.
+        // Artık tek katlanan "Ayrıntılar" bölümü: ilk görünüm yıldızlar,
+        // puan, sayımlar, ödül ve eylemlerdir.
+        ResultCollapsibleSection(
+          key: const ValueKey('result-details-section'),
+          title: context.t(K.resultDetails),
+          summary: [
+            for (final tally in breakdown)
+              '${CategoryNames.localized(tally.category, context.isKu)} '
+                  '${tally.correct}/${tally.answered}',
+          ].join(' · '),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              LearningOutcomeCard(
+                outcome: learningOutcome,
+                // Kategori listesi gösteriliyorsa sayımlar orada: kart
+                // yalnız yorumu taşır.
+                showCounts: breakdown.isEmpty,
+                onReview: learningOutcome.reviewRecords.isEmpty
+                    ? null
+                    : () => openReview(learningOutcome.reviewRecords),
+              ),
+              if (breakdown.isNotEmpty) ...[
+                const SizedBox(height: SahneSpace.cardGap),
+                KeyedSubtree(
+                  key: const ValueKey('result-category-section'),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        context.t(K.resultLearnedTitle),
+                        style: SahneType.bodyStrong.copyWith(
+                          color: SahneTokens.of(context).tx,
+                        ),
+                      ),
+                      const SizedBox(height: SahneSpace.x2),
+                      _CategoryLearnings(breakdown: breakdown),
+                    ],
+                  ),
+                ),
+              ],
+              if (hasGains) ...[
+                const SizedBox(height: SahneSpace.cardGap),
+                _RoundGains(
+                  achievements: _newAchievements,
+                  promotions: _promotions,
+                  missions: _completedMissions,
+                  dailyStreak: _dailyStreak,
+                  embedded: true,
+                ),
+              ],
+            ],
           ),
+        ),
       ],
     ];
 
@@ -1745,7 +1779,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           onLater: _onNotifLater,
         ),
       ],
-      if (hasGains)
+      if (hasGains && answerRecords.isEmpty)
         _RoundGains(
           achievements: _newAchievements,
           promotions: _promotions,
@@ -2723,8 +2757,11 @@ class _RoundGains extends StatelessWidget {
     required this.promotions,
     required this.missions,
     required this.dailyStreak,
+    this.embedded = false,
   });
 
+  /// "Ayrıntılar" bölümünün içinde: kendi katlanır başlığı olmaz.
+  final bool embedded;
   final List<Achievement> achievements;
   final Map<String, MasteryLevel> promotions;
   final List<DailyMission> missions;
@@ -2769,39 +2806,56 @@ class _RoundGains extends StatelessWidget {
     final summary = hasBadge
         ? all.join(' · ')
         : (all.length > 1 ? '+${all.length - 1}' : '');
+    final list = SahneListGroup(
+      children: [
+        for (final achievement in achievements)
+          SahneListRow.icon(
+            icon: achievement.icon,
+            role: SahneRole.gold,
+            title: achievement.title(ku),
+          ),
+        for (final (i, entry) in promotions.entries.indexed)
+          SahneListRow.icon(
+            icon: entry.value.icon,
+            role: SahneRole.gold,
+            title: promotionTitles[i],
+            subtitle: context.t(K.newTitleEarned),
+          ),
+        for (final (i, _) in missions.indexed)
+          SahneListRow.icon(
+            icon: AppIcons.listCheck,
+            role: SahneRole.gold,
+            title: missionTitles[i],
+          ),
+        if (streakTitle != null)
+          SahneListRow.icon(
+            icon: AppIcons.fire,
+            role: SahneRole.gold,
+            title: streakTitle,
+          ),
+      ],
+    );
+    if (embedded) {
+      return Column(
+        key: const ValueKey('result-gains-section'),
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            title,
+            style: SahneType.bodyStrong.copyWith(
+              color: SahneTokens.of(context).tx,
+            ),
+          ),
+          const SizedBox(height: SahneSpace.x2),
+          list,
+        ],
+      );
+    }
     return ResultCollapsibleSection(
       key: const ValueKey('result-gains-section'),
       title: title,
       summary: summary,
-      child: SahneListGroup(
-        children: [
-          for (final achievement in achievements)
-            SahneListRow.icon(
-              icon: achievement.icon,
-              role: SahneRole.gold,
-              title: achievement.title(ku),
-            ),
-          for (final (i, entry) in promotions.entries.indexed)
-            SahneListRow.icon(
-              icon: entry.value.icon,
-              role: SahneRole.gold,
-              title: promotionTitles[i],
-              subtitle: context.t(K.newTitleEarned),
-            ),
-          for (final (i, _) in missions.indexed)
-            SahneListRow.icon(
-              icon: AppIcons.listCheck,
-              role: SahneRole.gold,
-              title: missionTitles[i],
-            ),
-          if (streakTitle != null)
-            SahneListRow.icon(
-              icon: AppIcons.fire,
-              role: SahneRole.gold,
-              title: streakTitle,
-            ),
-        ],
-      ),
+      child: list,
     );
   }
 }

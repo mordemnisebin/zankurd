@@ -32,9 +32,10 @@ void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   test('Paradigma oyuncuya iki dilde yeni adıyla görünür', () {
-    expect(CategoryNames.localized('Paradigma', false), 'Bilim ve Düşünce');
-    expect(CategoryNames.localized('Paradigma', true), 'Zanist û Raman');
-    expect(CategoryNames.tr('Paradigma'), 'Bilim ve Düşünce');
+    // 2026-10-28 tur 3 T10: tek görünen ad (karodaki kısa ad).
+    expect(CategoryNames.localized('Paradigma', false), 'Bilim');
+    expect(CategoryNames.localized('Paradigma', true), 'Zanist');
+    expect(CategoryNames.tr('Paradigma'), 'Bilim');
   });
 
   test('eski ad hiçbir dilde görünmez', () {
@@ -122,10 +123,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(
-        find.text(lang == 'ku' ? 'Zanist û Raman' : 'Bilim ve Düşünce'),
-        findsOneWidget,
-      );
+      expect(find.text(lang == 'ku' ? 'Zanist' : 'Bilim'), findsOneWidget);
       expect(find.textContaining('Paradigma'), findsNothing);
       expect(find.textContaining('Paradîgma'), findsNothing);
     });

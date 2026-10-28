@@ -139,9 +139,13 @@ void main() {
     final repository = _CountingRepository(8);
     await pumpQuiz(tester, repository);
 
-    // K6 (2026-10-28): "Bugün 1 joker bedava" yazısı kalktı; jokerlerin
-    // üstünde küçük "Ücretsiz" rozeti var.
-    expect(find.byKey(const ValueKey('joker-free-badge')), findsWidgets);
+    // T2 (2026-10-28 tur 3): ücretsiz hak TEK altın çip; jokerlerde
+    // "Ücretsiz" rozeti yok (jokerler normal fiyatını taşır).
+    expect(
+      find.byKey(const ValueKey('quiz-free-wildcard-chip')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('joker-free-badge')), findsNothing);
     expect(
       find.byKey(const ValueKey('quiz-collapsed-wildcard-pill')),
       findsNothing,
@@ -195,9 +199,13 @@ void main() {
       freeDay: FreeWildcardStore.dayKey(yesterday),
     );
 
-    // K6 (2026-10-28): "Bugün 1 joker bedava" yazısı kalktı; jokerlerin
-    // üstünde küçük "Ücretsiz" rozeti var.
-    expect(find.byKey(const ValueKey('joker-free-badge')), findsWidgets);
+    // T2 (2026-10-28 tur 3): ücretsiz hak TEK altın çip; jokerlerde
+    // "Ücretsiz" rozeti yok (jokerler normal fiyatını taşır).
+    expect(
+      find.byKey(const ValueKey('quiz-free-wildcard-chip')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('joker-free-badge')), findsNothing);
     await tap(tester, WildcardType.fiftyFifty);
     expect(repository.spends, isEmpty);
   });

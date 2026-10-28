@@ -1908,25 +1908,21 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
               if (!hasEnoughCoins)
                 Padding(
                   padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                  child: Row(
-                    key: const ValueKey('custom-room-shortfall-row'),
-                    children: [
-                      Expanded(
-                        child: Align(
-                          alignment: AlignmentDirectional.centerStart,
-                          child: SahneShortfallNote(
-                            key: const ValueKey('custom-room-shortfall'),
-                            missing: coinShortfall(
-                              cost: blockedFee,
-                              balance: widget.coinBalance,
-                            ),
-                            fee: blockedFee,
-                            warn: true,
-                          ),
+                  // Büyük yazı/dar telefonda (≥ %150) not ve bağlantı alt alta:
+                  // yan yana 256 pt'lik panelde sağdan taşıyordu (2026-10-28
+                  // tur 3, 320 pt + 2× yazı turu).
+                  child: Builder(
+                    builder: (context) {
+                      final note = SahneShortfallNote(
+                        key: const ValueKey('custom-room-shortfall'),
+                        missing: coinShortfall(
+                          cost: blockedFee,
+                          balance: widget.coinBalance,
                         ),
-                      ),
-                      const SizedBox(width: SahneSpace.x2),
-                      SahneButton.text(
+                        fee: blockedFee,
+                        warn: true,
+                      );
+                      final earn = SahneButton.text(
                         buttonKey: const ValueKey('custom-room-earn-coins'),
                         label: context.t(K.earnCoins),
                         icon: AppIcons.dice,
@@ -1934,8 +1930,30 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         onPressed: () => Navigator.of(
                           context,
                         ).pop(const _EarnCoinsRequest()),
-                      ),
-                    ],
+                      );
+                      final stacked =
+                          MediaQuery.textScalerOf(context).scale(14) >= 21;
+                      if (stacked) {
+                        return Column(
+                          key: const ValueKey('custom-room-shortfall-row'),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [note, earn],
+                        );
+                      }
+                      return Row(
+                        key: const ValueKey('custom-room-shortfall-row'),
+                        children: [
+                          Expanded(
+                            child: Align(
+                              alignment: AlignmentDirectional.centerStart,
+                              child: note,
+                            ),
+                          ),
+                          const SizedBox(width: SahneSpace.x2),
+                          earn,
+                        ],
+                      );
+                    },
                   ),
                 ),
               // 2026-10-19: düğme kaydırma alanının DIŞINDA, sayfanın altında SABİT;

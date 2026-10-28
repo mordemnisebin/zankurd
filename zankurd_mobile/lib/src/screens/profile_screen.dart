@@ -489,9 +489,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         const SizedBox(height: SahneSpace.cardGap),
-        // Kimlik ve değerler sayfası: özetin altında, rekorların üstünde.
-        const DozaMeEntryCard(),
-        const SizedBox(height: SahneSpace.cardGap),
 
         // Detaylı analiz (grafik, kategori ustalığı, güçlü/zayıf yön) —
         // sadelik için varsayılan kapalı; başlıktaki bağlantı açar.
@@ -586,6 +583,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         // Navigasyon kısayolları — iki adlandırılmış liste grubu
         ..._buildMenuSections(ku),
+        // 2026-10-28 tur 3 T5: "Davamız" kartı dolu doygun yeşildi (ekranın
+        // en ağır bloğu, istatistiğin hemen altında); tonlu karta döndü ve
+        // Hesap'ın ardına, sayfanın sonuna taşındı. Hâlâ bir dokunuşla erişilir.
+        const SizedBox(height: SahneSpace.cardGap),
+        const DozaMeEntryCard(),
       ],
     );
 

@@ -19,6 +19,8 @@ import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
+import 'support/result_details.dart';
+
 Widget wrap(Widget child) => MultiProvider(
   providers: [
     ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang('tr')),
@@ -322,6 +324,7 @@ void main() {
         find.byKey(const ValueKey('result-primary-review-mistakes')),
         findsNothing,
       );
+      await openResultDetails(tester);
       expect(
         find.byKey(const ValueKey('learning-outcome-review')),
         findsOneWidget,
@@ -403,6 +406,7 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
+    await openResultDetails(tester);
     final primary = find.byKey(const ValueKey('result-play-again-button'));
     final outcome = find.byKey(
       const ValueKey('learning-outcome-card'),
@@ -420,27 +424,30 @@ void main() {
     );
   });
 
-  testWidgets('kurul 3. tur: öğrenme kartı dinlenmede alt perdenin üstünde', (
-    tester,
-  ) async {
-    // Kusur (68/200, üç tur): kart konu listesinin altında kaldığı için
-    // yapışkan alt perde onu kesiyordu. Kart artık sayımların hemen
-    // altında; dinlenme halinde tamamı perdenin üstünde olmalı.
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-    await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
-    await tester.pump(const Duration(seconds: 1));
-    await tester.pumpAndSettle();
+  testWidgets(
+    'T14: ayrıntılar tek katlı bölüm, dinlenmede alt perdenin üstünde',
+    (tester) async {
+      // 2026-10-28 tur 3 T14: "Nerelerde zorlandın?" + konulara göre + rozet
+      // tek katlanan "Ayrıntılar"da; ilk görünümde kart açılmamıştır ve bölüm
+      // başlığı kaydırmadan alt perdenin üstündedir.
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
-    final card = find.byKey(const ValueKey('learning-outcome-card'));
-    final primary = find.byKey(const ValueKey('result-play-again-button'));
-    expect(card, findsOneWidget);
-    expect(
-      tester.getRect(card).bottom,
-      lessThanOrEqualTo(tester.getRect(primary).top),
-      reason: 'kart kaydırmadan, alt perdenin arkasına girmeden görünür',
-    );
-  });
+      final header = find.byKey(const ValueKey('result-details-section'));
+      final primary = find.byKey(const ValueKey('result-play-again-button'));
+      expect(header, findsOneWidget);
+      expect(find.byKey(const ValueKey('learning-outcome-card')), findsNothing);
+      expect(
+        tester.getRect(header).bottom,
+        lessThanOrEqualTo(tester.getRect(primary).top),
+        reason:
+            'ayrıntılar başlığı kaydırmadan, perdenin arkasına girmeden görünür',
+      );
+    },
+  );
 
   testWidgets('dar sonuçta öğrenme özeti ikincil eylemlerden önce gelir', (
     tester,
@@ -454,6 +461,7 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
+    await openResultDetails(tester);
     final outcome = find.byKey(const ValueKey('learning-outcome-card'));
     final review = find.byKey(const ValueKey('result-review-mistakes-button'));
     final share = find.byKey(const ValueKey('result-share-button'));

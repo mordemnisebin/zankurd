@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../config/category_visuals.dart';
-import 'category_kicker_mark.dart';
+import 'category_band.dart' show CategoryIconTile;
 import 'quiz_stage_kit.dart';
 import 'sahne/sahne.dart';
 
@@ -93,11 +93,14 @@ class QuizStageCenter extends StatelessWidget {
               color: SahneVivid.onFill,
             )
           else
-            CategoryKickerMark(
+            // 2026-10-28 tur 3 T10: konu kimliği tek: ana sayfa karosu ve
+            // alt kategori satırıyla AYNI rozet ([CategoryIconTile]); eskiden
+            // burada silüet çizimi vardı ve Siyaset haki bir rozetti.
+            CategoryIconTile(
               key: const ValueKey('quiz-question-icon-badge'),
               category: category,
-              fallbackColor: t.tx2,
-              size: 24,
+              icon: CategoryVisuals.icon(category),
+              size: 28,
             ),
           const SizedBox(width: SahneSpace.x2),
         ],

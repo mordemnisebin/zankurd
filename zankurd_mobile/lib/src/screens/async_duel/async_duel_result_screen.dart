@@ -749,7 +749,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
           );
     return [
       Padding(
-        padding: const EdgeInsets.only(top: SahneSpace.x3),
+        padding: const EdgeInsets.only(top: SahneSpace.x1),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

@@ -202,7 +202,7 @@ extension on _DailyEventBoardCardState {
             );
           },
         ),
-        _Countdown(now: _now(), isKu: isKu),
+        _Countdown(now: _now(), isKu: isKu, ends: true),
       ],
     );
   }
@@ -285,8 +285,11 @@ class _Unavailable extends StatelessWidget {
 }
 
 class _Countdown extends StatelessWidget {
-  const _Countdown({required this.now, required this.isKu});
+  const _Countdown({required this.now, required this.isKu, this.ends = false});
 
+  /// Tur henüz oynanmadıysa "Bu tur X sonra biter" (oynanabilirlikle
+  /// çelişmez); bittiyse "Yeni tur X sonra".
+  final bool ends;
   final DateTime now;
   final bool isKu;
 
@@ -296,7 +299,7 @@ class _Countdown extends StatelessWidget {
     return _InfoLine(
       key: const ValueKey('daily-event-countdown'),
       icon: AppIcons.clock,
-      text: Tr.forKu(K.contestNextIn, isKu, {
+      text: Tr.forKu(ends ? K.contestEndsIn : K.contestNextIn, isKu, {
         'h': '${left.hours}',
         'm': '${left.minutes}',
       }),

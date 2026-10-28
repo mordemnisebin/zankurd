@@ -635,8 +635,10 @@ extension _QuizScreenUI on _QuizScreenState {
   /// açıklaması; yoksa yanlışta doğru cevap; doğruda boş.
   String? _feedbackDetail(BuildContext context) {
     if (_answerWasWrong) {
-      // Yanlışta açıklama gövdedeki karttadır; şerit yalnız doğru cevabı
-      // söyler (tekrar yok).
+      // 2026-10-28 tur 3 T4: "Doğru cevap: X" YALNIZ BİR yerde durur. Gövdede
+      // içgörü kartı açıksa (cevap + açıklama orada) şerit yalnız "Yanlış" +
+      // eylemdir; kart yoksa (süreli yarış vb.) cevabı şerit söyler.
+      if (_wrongAnswerInsightVisible) return null;
       // Yazılı/sıralama sorularında doğru cevabı gövdedeki yedek kutu
       // ([_AnswerRevealFallback]) zaten basar; şerit tekrarlamaz.
       if (needsAnswerRevealFallback(question.type) ||
@@ -762,6 +764,7 @@ extension _QuizScreenUI on _QuizScreenState {
           // gibi görünmesin: jetonun nereden kazanılacağını söyle (ekranda
           // yazılmaz; ekran okuyucuya gider ve kilitli jokere dokununca tost
           // olur).
+          freeToday: _freeWildcardAvailable,
           showHint: !_freeWildcardAvailable && _jokerStock > 0,
           hint: _freeWildcardAvailable
               ? context.t(K.freeWildcardToday)
@@ -800,7 +803,6 @@ extension _QuizScreenUI on _QuizScreenState {
       isAnswered: answered,
       isActive: isActive,
       cantAfford: !used && !canAfford && !answered,
-      free: _freeWildcardAvailable && !used,
       onTap: () => _onWildcardTap(type),
       onLockedTap: _explainLockedWildcard,
     );

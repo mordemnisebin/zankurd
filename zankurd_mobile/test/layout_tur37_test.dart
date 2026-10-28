@@ -10,8 +10,9 @@
 /// ## Kusur 2: "Soru çöz" / "Kartlarla çalış" çifti
 ///
 /// Kurmancî "Bi kartan bixwîne" yarım genişlikte iki satıra inip yanındaki
-/// tek satırlık düğmeden farklı duruyordu. Artık iki etiket de tek satıra
-/// sığmıyorsa düğmeler alt alta, tam genişlikte durur; yan yana ise eşit boy.
+/// tek satırlık düğmeden farklı duruyordu. 2026-10-28 tur 3 (T13): çift
+/// düğme kalktı, iki eylem Pratik ızgarasının karosu oldu; bekçi eşit boyu
+/// ve ≥ 48 dokunma hedefini korur. T15: mod kartı alt satırı tek satır.
 library;
 
 import 'package:flutter/material.dart';
@@ -115,10 +116,47 @@ void main() {
     }
   }
 
+  // 2026-10-28 tur 3 T15: mod kartı alt satırı TEK satır (TASARIM_DILI kuralı).
+  for (final isKu in [true, false]) {
+    testWidgets(
+      'mod kartı alt satırları tek satır (${isKu ? 'KU' : 'TR'}, 390)',
+      (tester) async {
+        await tester.binding.setSurfaceSize(const Size(390, 900));
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        await tester.pumpWidget(
+          _shell(
+            isKu: isKu,
+            scale: 1.0,
+            child: HomeScreen(
+              repository: MockZanKurdRepository(),
+              onOpenLearning: () async {},
+              onOpenPlay: () {},
+            ),
+          ),
+        );
+        await tester.pump(const Duration(seconds: 1));
+        for (final key in [K.homeDoorLearnSub, K.homeDoorPlaySub]) {
+          final finder = find.text(
+            Tr.of(key, isKu ? AppLanguage.ku : AppLanguage.tr),
+          );
+          await tester.ensureVisible(finder);
+          final p = tester.renderObject<RenderParagraph>(finder);
+          expect(
+            p.size.height,
+            lessThan((p.text.style?.fontSize ?? 14) * 1.6),
+            reason: '$key iki satıra indi',
+          );
+        }
+      },
+    );
+  }
+
+  // T13 (tur 3): "Soru çöz" / "Kartlarla çalış" ikili düğmesi kalktı; Pratik
+  // ızgarasının karoları oldu. Aynı satırdaki iki karo eşit boydadır.
   for (final isKu in [true, false]) {
     for (final width in [320.0, 360.0, 390.0]) {
       for (final scale in [1.0, 2.0]) {
-        testWidgets('konu düğmeleri eşit boy, etiket tek satır '
+        testWidgets('konu karoları (soru çöz / kartlar) eşit boy, taşmaz '
             '(${isKu ? 'KU' : 'TR'}, $width, ×$scale)', (tester) async {
           await tester.binding.setSurfaceSize(Size(width, 900));
           addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -136,20 +174,16 @@ void main() {
           await tester.pumpAndSettle();
           final ra = tester.getRect(a);
           final rb = tester.getRect(b);
-          final sideBySide = (ra.top - rb.top).abs() < 1;
-          expect(ra.height, closeTo(rb.height, 0.5), reason: 'eşit boy');
-          if (sideBySide) {
-            // Yan yana duruyorsa iki etiket de tek satırdır.
-            for (final f in [a, b]) {
-              final text = find.descendant(of: f, matching: find.byType(Text));
-              final p = tester.renderObject<RenderParagraph>(text.first);
-              expect(
-                p.size.height,
-                lessThan((p.text.style?.fontSize ?? 16) * scale * 1.9),
-                reason: 'etiket iki satıra indi',
-              );
-            }
+          if ((ra.top - rb.top).abs() < 1) {
+            expect(ra.height, closeTo(rb.height, 0.5), reason: 'eşit boy');
           }
+          expect(ra.height, greaterThanOrEqualTo(48));
+          expect(rb.height, greaterThanOrEqualTo(48));
+          expect(
+            find.byKey(const ValueKey('learning-topic-actions')),
+            findsNothing,
+            reason: 'eski ikili düğme çifti geri gelmemeli',
+          );
           expect(tester.takeException(), isNull);
         });
       }

@@ -197,9 +197,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       for (final cat in widget.repository.categories) {
         final level = masteryStore.levelFor(cat);
         if (level != MasteryLevel.none) {
-          titles.add(
-            '${level.titleKu} · ${CategoryNames.localized(cat, true)}',
-          );
+          titles.add('${level.titleKu} · ${CategoryNames.showcaseName(cat)}');
         }
       }
       if (hasVipBadge && !titles.contains('VIP')) titles.add('VIP');

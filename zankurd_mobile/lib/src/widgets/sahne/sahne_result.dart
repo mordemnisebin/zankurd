@@ -240,6 +240,13 @@ class SahneResultScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final short = stats == null && sections.isEmpty;
     final centered = short || balanced;
+    final night = Theme.of(context).brightness == Brightness.dark;
+    final scene = SahneResultScene(
+      accent: accent,
+      night: night,
+      mood: mood,
+      child: const SizedBox.shrink(),
+    );
     final body = LayoutBuilder(
       builder: (context, constraints) {
         final side = math.max(
@@ -263,7 +270,7 @@ class SahneResultScaffold extends StatelessWidget {
           if (rewards != null) ...[
             SizedBox(
               height: balanced
-                  ? SahneSpace.x4
+                  ? SahneSpace.x3
                   : short
                   ? SahneSpace.x3
                   : stats == null
@@ -273,7 +280,8 @@ class SahneResultScaffold extends StatelessWidget {
             rewards!,
           ],
           if (balanced)
-            const SizedBox(height: SahneSpace.x4)
+            // T7 (tur 3): 16 → 8; ilk görünümde alt perde içeriği örtmesin.
+            const SizedBox(height: SahneSpace.x2)
           else if (short && rewards != null)
             const SizedBox(height: SahneSpace.x6)
           else if (!short)
@@ -333,17 +341,39 @@ class SahneResultScaffold extends StatelessWidget {
         // durumu yalnız kırmızı ✗ karesiyle söylenir. Gövde perdenin
         // ÜSTÜNDE biter, yani liste dibi perde boyu kadar boşluk bırakır.
         final Widget scrolling = scroll;
-        return ClipRect(child: Stack(children: [scrolling, ?overlay]));
+        // 2026-10-28 tur 3 T14: içerik alt perdenin ALTINDAN kayarken sert
+        // kesilmesin; perdenin üstünde ince bir solma (yalnız kayan içerikte).
+        final floor = neutral ? SahneTokens.night.bg : scene.colors.last;
+        return ClipRect(
+          child: Stack(
+            children: [
+              scrolling,
+              if (!centered)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: SahneSpace.x6,
+                  child: IgnorePointer(
+                    child: DecoratedBox(
+                      key: const ValueKey('sahne-result-bottom-fade'),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [floor.withValues(alpha: 0), floor],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ?overlay,
+            ],
+          ),
+        );
       },
     );
 
-    final night = Theme.of(context).brightness == Brightness.dark;
-    final scene = SahneResultScene(
-      accent: accent,
-      night: night,
-      mood: mood,
-      child: const SizedBox.shrink(),
-    );
     return SahneResultScene(
       accent: accent,
       night: night,
@@ -635,7 +665,7 @@ class SahneResultHero extends StatelessWidget {
             end: 0,
             top: value != null ? (scenic ? 128 : 104) - 150 : 84 - 150,
             height: 300,
-            child: const _ScoreCelebration(),
+            child: _ScoreCelebration(aboveText: value == null),
           ),
         Padding(
           padding: const EdgeInsets.only(
@@ -655,7 +685,12 @@ class SahneResultHero extends StatelessWidget {
 /// dört noktada, kademeli belirir. Hareket azaltma açıkken ([sahneMotionReduced])
 /// animasyon yoktur: son kare durağan çizilir.
 class _ScoreCelebration extends StatefulWidget {
-  const _ScoreCelebration();
+  const _ScoreCelebration({this.aboveText = false});
+
+  /// Puansız kahramanda (düello "Kazandın!" + skor satırı) parıltılar
+  /// merkezin ÜSTÜNDE kalır: 2026-10-28 tur 3 T7, alttakiler skor satırının
+  /// üstüne biniyordu.
+  final bool aboveText;
 
   @override
   State<_ScoreCelebration> createState() => _ScoreCelebrationState();
@@ -725,12 +760,20 @@ class _ScoreCelebrationState extends State<_ScoreCelebration>
                     ),
                   ),
                 ),
-                for (final spark in const [
-                  (-118.0, -34.0, 20.0, 0.30),
-                  (112.0, -58.0, 24.0, 0.15),
-                  (-96.0, 52.0, 14.0, 0.45),
-                  (104.0, 46.0, 18.0, 0.0),
-                ])
+                for (final spark
+                    in widget.aboveText
+                        ? const [
+                            (-118.0, -62.0, 20.0, 0.30),
+                            (112.0, -84.0, 24.0, 0.15),
+                            (-88.0, -100.0, 14.0, 0.45),
+                            (98.0, -38.0, 18.0, 0.0),
+                          ]
+                        : const [
+                            (-118.0, -34.0, 20.0, 0.30),
+                            (112.0, -58.0, 24.0, 0.15),
+                            (-96.0, 52.0, 14.0, 0.45),
+                            (104.0, 46.0, 18.0, 0.0),
+                          ])
                   Transform.translate(
                     offset: Offset(spark.$1, spark.$2),
                     child: Transform.scale(

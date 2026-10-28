@@ -107,7 +107,7 @@ class AchievementStore {
     const Achievement(
       id: AchievementIds.allCategories,
       titleKu: 'Hemû mijar',
-      titleTr: 'Her konuda oyun',
+      titleTr: 'Tüm konular',
       descriptionKu: 'Di hemû mijaran de lîst.',
       descriptionTr: 'Tüm konularda yarış oynadın.',
       icon: AppIcons.tableCells,

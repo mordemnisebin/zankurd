@@ -270,12 +270,19 @@ void main() {
       reason: '"Konulara göre" varsayılan kapalı olmalı',
     );
     // (Önbellek alanındaki satırlar ekran dışı sayılır: skipOffstage kapalı.)
+    // T14 (2026-10-28 tur 3): zorlandın + konulara göre + rozet TEK katlı
+    // "Ayrıntılar" bölümünde.
+    expect(
+      find.byKey(const ValueKey('result-details-section'), skipOffstage: false),
+      findsOneWidget,
+    );
     expect(
       find.byKey(
         const ValueKey('result-category-section'),
         skipOffstage: false,
       ),
-      findsOneWidget,
+      findsNothing,
+      reason: 'kapalıyken içerik kurulmaz',
     );
     // Cevaplar varsayılan kapalı; "Cevapları gör" açar.
     expect(find.byType(ResultExplanationEntry), findsNothing);
@@ -327,7 +334,7 @@ void main() {
     expect(tester.getBottomLeft(play).dy, lessThanOrEqualTo(844));
     // Katlı başlık ≥ 48 yüksek, dokununca bölüm açılır.
     final header = find.descendant(
-      of: find.byKey(const ValueKey('result-category-section')),
+      of: find.byKey(const ValueKey('result-details-section')),
       matching: find.byKey(const ValueKey('result-collapsible-header')),
     );
     await tester.scrollUntilVisible(

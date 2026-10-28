@@ -61,6 +61,7 @@ import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
 import 'support/widget_test_helpers.dart';
+import 'support/result_details.dart';
 
 double _contrast(Color a, Color b) {
   final x = a.computeLuminance();
@@ -336,7 +337,12 @@ void main() {
         expect(rewardColor.r, greaterThan(rewardColor.b));
 
         // Maket "Nerelerde zorlandın" bölümünü çıkarmıştı; ürün kararıyla
-        // DURUR.
+        // DURUR — T14 (2026-10-28 tur 3): tek katlı "Ayrıntılar"ın içinde.
+        expect(
+          find.byKey(const ValueKey('result-details-section')),
+          findsOneWidget,
+        );
+        await openResultDetails(tester);
         expect(find.text('Nerelerde zorlandın?'), findsOneWidget);
       });
     }

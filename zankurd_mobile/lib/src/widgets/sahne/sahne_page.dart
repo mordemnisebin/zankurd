@@ -491,10 +491,17 @@ class SahnePushedPage extends StatelessWidget {
     this.controller,
     this.role,
     this.onRefresh,
+    this.stageBody,
   });
 
   final String title;
   final String? subtitle;
+
+  /// Verilirse üst çubuğun altındaki BÜTÜN alan koyu oyun sahnesi olur
+  /// (2026-10-28 tur 3 T1: çark, beyaz sayfada yüzen koyu kart değil, soru
+  /// ve sonuç gibi tam sahnedir). [stageBody] kaydırılmaz; [bottom] sahnenin
+  /// içinde, sahne renginde kalır. [children]/[slivers] yok sayılır.
+  final Widget? stageBody;
 
   /// Verilirse içerik aşağı çekilerek yenilenir. Kaydırılabilir alan içerik
   /// kısa olsa da çekilebilsin diye her durumda kaydırılabilir fizik alır.
@@ -601,6 +608,77 @@ class SahnePushedPage extends StatelessWidget {
         const SliverToBoxAdapter(child: SizedBox(height: SahneSpace.x6)),
       ],
     );
+
+    final stageContent = stageBody;
+    if (stageContent != null) {
+      return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: _overlayFor(Theme.of(context).brightness),
+        child: Scaffold(
+          backgroundColor: SahneTokens.night.bg,
+          body: SafeArea(
+            bottom: false,
+            child: Column(
+              children: [
+                ColoredBox(color: t.bg, child: bar),
+                if (accent != null) ZkAccentLine(color: accent),
+                Expanded(
+                  child: SahneStage(
+                    stage: AppTheme.stage,
+                    child: Builder(
+                      builder: (context) {
+                        final st = SahneTokens.of(context);
+                        return ColoredBox(
+                          key: const ValueKey('sahne-pushed-stage'),
+                          color: st.bg,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Stack(
+                                  children: [
+                                    Positioned.fill(
+                                      child: IgnorePointer(
+                                        child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            gradient: RadialGradient(
+                                              center: const Alignment(0, -0.1),
+                                              radius: 0.85,
+                                              colors: [
+                                                st.gold.withValues(alpha: 0.16),
+                                                st.gold.withValues(alpha: 0),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned.fill(child: stageContent),
+                                  ],
+                                ),
+                              ),
+                              if (bottom != null)
+                                SahneBottomDock(
+                                  color: st.bg,
+                                  padding: const EdgeInsets.fromLTRB(
+                                    SahneSpace.page,
+                                    SahneSpace.x2,
+                                    SahneSpace.page,
+                                    SahneSpace.x3,
+                                  ),
+                                  child: bottom!,
+                                ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayFor(Theme.of(context).brightness),

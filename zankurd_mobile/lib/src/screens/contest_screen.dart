@@ -14,7 +14,6 @@ import '../widgets/arena_kit.dart';
 import '../widgets/daily_event_board.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/skeleton_loader.dart';
-import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -155,79 +154,101 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
     // satırı artık çubukta; içerikte kimlik başlığı tekrar edilmez. Eski
     // alt kenardaki üçgen kilim deseni kalktı (desen yalnız sahne kartının
     // üst şeridi). Sayfa adı oyun merkezindeki girişle aynı kalır.
-    return SahnePushedPage(
-      role: SahneRole.race,
-      title: context.t(K.dailyEvent),
-      backLabel: context.t(K.back),
-      slivers: [
-        FutureBuilder<Contest?>(
-          future: _contestFuture,
-          builder: (ctx, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting &&
-                !snapshot.hasData) {
-              // Yükleniyor: yüklenmiş içerikle AYNI sarmalayıcıda ve aynı
-              // ölçüde iskelet. Ortada dönen bir gösterge kartı ekranın
-              // ortasına, yüklenmiş kartı üst üçte bire koyuyordu: kart
-              // geldiğinde sayfa zıplıyor, üstte geniş bir boşluk kalıyordu.
-              return _alignedContent(const _ContestSkeleton());
-            }
-            if (snapshot.hasError) {
-              return SliverFillRemaining(
-                child: AppErrorState(
-                  title: context.t(K.loadFailedShort),
-                  message: context.t(K.contestLoadFailed),
-                  retryLabel: context.t(K.retryTiny),
-                  onRetry: () => setState(_loadContest),
-                ),
-              );
-            }
-            final contest = snapshot.data;
-            if (contest == null) {
-              // Dürüst boş durum: net "yakında" mesajı + geri yolu.
-              // Kullanıcı ölü ekranda kalmaz (2026-07-19 canlı denetim P1
-              // bulgusu). Ekranın adı (Çalakiya Rojê) çubukta durur; boş
-              // durumun başlığı onu tekrar etmez, bugünün etkinliğinin
-              // kendisini ("Günün 10 Sorusu") anar.
-              return SliverFillRemaining(
-                child: AppEmptyState(
-                  icon: AppIcons.champagneGlasses,
-                  title: context.t(K.dailyEventCardTitle),
-                  message: context.t(K.contestNoneToday),
-                  actionLabel: context.t(K.goHome),
-                  actionIcon: AppIcons.house,
-                  onAction: () => Navigator.of(context).pop(),
-                ),
-              );
-            }
-            // `SliverFillRemaining(hasScrollBody: false)` kullanılamaz:
-            // içerik bir `LayoutBuilder` taşıyor (geniş ekran düzeni) ve
-            // o iç boyut hesabını desteklemiyor.
-            return _alignedContent(
-              _ContestContent(
-                contest: contest,
-                doneToday: _doneToday,
-                starting: _starting,
-                onStart: () => _startQuiz(contest),
-                // Tur bugün bitmişse "Bugünün sıralaması" açılır. Bitmemişse
-                // yalnız önizleme (katılımcı sayısı, dünün birincisi, geri
-                // sayım); bugünün sırası hiç gösterilmez: oynamadan başkalarının skorunu görmek
-                // hem turu bozar hem "ödül yok, yalnız ilerleme" sözüyle
-                // çelişir (bkz. `daily_event_security_ui_test`).
-                board: _doneToday
-                    ? DailyEventBoardCard(
-                        key: const ValueKey('contest-board'),
-                        repository: widget.repository,
-                      )
-                    : DailyEventBoardCard(
-                        key: const ValueKey('contest-teaser'),
-                        repository: widget.repository,
-                        teaser: true,
-                      ),
+    // 2026-10-28 tur 3 T3: "Başla" ekranın dibine sabit (tek turuncu); hero
+    // üstte kalır, orta alan dağ sahnesi + günün önizlemesiyle dolar.
+    return FutureBuilder<Contest?>(
+      future: _contestFuture,
+      builder: (ctx, snapshot) {
+        final contest = snapshot.data;
+        final loaded =
+            snapshot.connectionState != ConnectionState.waiting ||
+            snapshot.hasData;
+        final Widget content;
+        if (!loaded) {
+          // Yükleniyor: yüklenmiş içerikle AYNI sarmalayıcıda ve aynı ölçüde
+          // iskelet; kart geldiğinde sayfa zıplamaz.
+          content = _alignedContent(const _ContestSkeleton());
+        } else if (snapshot.hasError) {
+          content = SliverFillRemaining(
+            child: AppErrorState(
+              title: context.t(K.loadFailedShort),
+              message: context.t(K.contestLoadFailed),
+              retryLabel: context.t(K.retryTiny),
+              onRetry: () => setState(_loadContest),
+            ),
+          );
+        } else if (contest == null) {
+          // Dürüst boş durum: dağ sahnesi + tek satır dostça mesaj + geri
+          // yolu (2026-07-19 canlı denetim P1; tur 3 T3: boş ekran sahnesiz
+          // kalmasın). Başlık bugünün etkinliğini anar.
+          content = SliverFillRemaining(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                SahneSpace.page,
+                SahneSpace.x4,
+                SahneSpace.page,
+                0,
               ),
-            );
-          },
-        ),
-      ],
+              child: Column(
+                children: [
+                  const SahneEntryScene(),
+                  const SizedBox(height: SahneSpace.x4),
+                  Expanded(
+                    child: AppEmptyState(
+                      icon: AppIcons.champagneGlasses,
+                      title: context.t(K.dailyEventCardTitle),
+                      message: context.t(K.contestNoneToday),
+                      actionLabel: context.t(K.goHome),
+                      actionIcon: AppIcons.house,
+                      onAction: () => Navigator.of(context).pop(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        } else {
+          content = _alignedContent(
+            _ContestContent(
+              contest: contest,
+              doneToday: _doneToday,
+              // Tur bugün bitmişse "Bugünün sıralaması" açılır. Bitmemişse
+              // yalnız önizleme (katılımcı sayısı, dünün birincisi, geri
+              // sayım); oynamadan başkalarının skorunu görmek turu bozar
+              // (bkz. `daily_event_security_ui_test`).
+              board: _doneToday
+                  ? DailyEventBoardCard(
+                      key: const ValueKey('contest-board'),
+                      repository: widget.repository,
+                    )
+                  : DailyEventBoardCard(
+                      key: const ValueKey('contest-teaser'),
+                      repository: widget.repository,
+                      teaser: true,
+                    ),
+            ),
+          );
+        }
+        return SahnePushedPage(
+          role: SahneRole.race,
+          title: context.t(K.dailyEvent),
+          backLabel: context.t(K.back),
+          slivers: [content],
+          bottom: loaded && !snapshot.hasError && contest != null
+              ? SahneButton.primary(
+                  buttonKey: const ValueKey('contest-start'),
+                  label: _starting
+                      ? context.t(K.preparing)
+                      : context.t(_doneToday ? K.playAgain : K.startEvent),
+                  icon: AppIcons.play,
+                  arrow: false,
+                  expand: true,
+                  loading: _starting,
+                  onPressed: _starting ? null : () => _startQuiz(contest),
+                )
+              : null,
+        );
+      },
     );
   }
 
@@ -267,6 +288,9 @@ class _ContestSkeleton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SkeletonLine(height: _kHeroSkeletonHeight, borderRadius: 16),
+          // Dağ sahnesi (T3): yüklenen içerikte hero'nun hemen altında.
+          SizedBox(height: SahneSpace.cardGap),
+          SkeletonLine(height: SahneEntryScene.regularHeight, borderRadius: 16),
           SizedBox(height: SahneSpace.sectionTop),
           Align(
             alignment: AlignmentDirectional.centerStart,
@@ -293,13 +317,11 @@ class _ContestSkeleton extends StatelessWidget {
 
 /// Kahraman kartın yüklenmiş hâldeki yüksekliği (iskelet bununla aynı yeri
 /// tutsun; `contest_skeleton_test` ölçüp kilitler).
-const double _kHeroSkeletonHeight = 204;
+const double _kHeroSkeletonHeight = 128;
 
 class _ContestContent extends StatelessWidget {
   const _ContestContent({
     required this.contest,
-    required this.starting,
-    required this.onStart,
     this.doneToday = false,
     this.board,
   });
@@ -309,8 +331,6 @@ class _ContestContent extends StatelessWidget {
 
   final Contest contest;
   final bool doneToday;
-  final bool starting;
-  final VoidCallback onStart;
 
   @override
   Widget build(BuildContext context) {
@@ -344,20 +364,12 @@ class _ContestContent extends StatelessWidget {
         ArenaStatusChip(
           status: doneToday ? ArenaStatus.completed : ArenaStatus.live,
           label: context.t(
-            doneToday ? K.streakDayStateCompleted : K.contestToday,
+            doneToday ? K.streakDayStateCompleted : K.contestPlayableToday,
           ),
           onSolid: true,
           role: SahneRole.race,
         ),
       ],
-      action: GeometricGradientButton(
-        label: starting
-            ? (context.t(K.preparing))
-            : (context.t(doneToday ? K.playAgain : K.startEvent)),
-        icon: AppIcons.play,
-        isLoading: starting,
-        onPressed: starting ? null : onStart,
-      ),
     );
 
     final quickInfo = Column(
@@ -407,7 +419,13 @@ class _ContestContent extends StatelessWidget {
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [hero, quickInfo, ?boardSection],
+          children: [
+            hero,
+            const SizedBox(height: SahneSpace.cardGap),
+            const SahneEntryScene(key: ValueKey('contest-scene')),
+            quickInfo,
+            ?boardSection,
+          ],
         );
       },
     );

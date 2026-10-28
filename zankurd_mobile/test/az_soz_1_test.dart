@@ -97,12 +97,12 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Sırayla düello'), findsOneWidget);
-    expect(find.text('Sen şimdi oyna, rakibin sonra'), findsNothing);
+    expect(find.text('Sen oyna, rakip sonra'), findsNothing);
     expect(find.byKey(const ValueKey('home-duel-meta')), findsNothing);
 
     await tester.tap(find.byKey(const ValueKey('home-duel-primary')));
     await tester.pumpAndSettle();
-    expect(find.text('Sen şimdi oyna, rakibin sonra'), findsNothing);
+    expect(find.text('Sen oyna, rakip sonra'), findsNothing);
     expect(find.text('Bağlantı gönder, arkadaşın sonra oynasın'), findsNothing);
   });
 }

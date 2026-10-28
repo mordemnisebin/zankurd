@@ -150,6 +150,9 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
     }
     expect(entry, findsOneWidget);
+    // 2026-10-28 tur 3 T5: kart artık profilin SONUNDA (Hesap'ın ardından).
+    await tester.ensureVisible(entry);
+    await tester.pump();
     await tester.tap(entry);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));

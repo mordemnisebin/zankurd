@@ -204,6 +204,13 @@ class CategoryNames {
     'crowd': K.crowdRoomTitle,
   };
 
+  /// Vitrin unvanındaki konu adı. Sunucu unvan regex'i (`profil_veri.sql`)
+  /// bu adları SABİT listeler ve canlı veritabanında değiştirilemez; arayüzdeki
+  /// görünen ad kısaldığında ("Zanist") unvan reddedilirdi. 2026-10-28 tur 3
+  /// T10: görünen ad tek ve kısadır, unvan eski tam adı korur.
+  static String showcaseName(String kuName) =>
+      kuName == 'Paradigma' ? 'Zanist û Raman' : localized(kuName, true);
+
   static String localized(String kuName, bool isKu) {
     final key = _keys[kuName] ?? _slugKeys[kuName.trim().toLowerCase()];
     if (key == null) {
@@ -224,9 +231,7 @@ class CategoryNames {
   /// tek satırdır ve sarmaz; "Bilim ve Düşünce / Zanist û Raman" dört satıra
   /// sarıp ızgaranın satır boylarını bozuyordu (2026-09-30 simülatör).
   /// Burada olmayan konunun tam adı zaten kısadır.
-  static const Map<String, String> _tileKeys = {
-    'Paradigma': K.catParadigmaTile,
-  };
+  static const Map<String, String> _tileKeys = {};
 
   /// Karoda yazılan ad: kısa adı varsa o, yoksa [localized]. Tam ad başka
   /// her yerde ([localized]) olduğu gibi kalır.

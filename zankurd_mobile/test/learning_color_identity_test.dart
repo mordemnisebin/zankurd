@@ -98,15 +98,16 @@ void main() {
             matching: find.text(isKu ? 'Jiyana rojane' : 'Gündelik hayat'),
           ),
         );
-        // 2026-10-20 renk ve canlılık (B): öğrenme konu rayında seçili çip
-        // Zimrût DOLU, beyaz yazılı (mod rengi geri geldi).
-        expect(selectedText.style?.color, SahneVivid.onFill, reason: combo);
+        // 2026-10-28 tur 3 T8: seçim kuralı — seçili çip MÜREKKEP (selFill +
+        // selTx); yeşil dolgu hero kartın işi (iki yeşil blok yan yana
+        // yarışıyordu). Seçili olmayan ikincil metinde kalır.
+        expect(selectedText.style?.color, t.selTx, reason: combo);
         expect(
           materialColorIn(
             tester,
             find.byKey(const ValueKey('learning-tab-everyday')),
           ),
-          t.learnFill,
+          t.selFill,
           reason: combo,
         );
 
@@ -127,33 +128,36 @@ void main() {
         );
       });
 
-      testWidgets('konu eylemleri ikincil (Kulis), Agir tek birincilde '
-          '($combo)', (tester) async {
-        await tester.pumpWidget(pump(isKu: isKu, dark: dark));
-        await tester.pumpAndSettle();
+      testWidgets(
+        'pratik karoları (soru çöz, kartlar) düğme değil karodur, Agir '
+        'tek birincilde ($combo)',
+        (tester) async {
+          await tester.pumpWidget(pump(isKu: isKu, dark: dark));
+          await tester.pumpAndSettle();
 
-        for (final key in [
-          'learning-topic-practice',
-          'learning-topic-flashcards',
-        ]) {
-          final button = find.descendant(
-            of: find.byKey(ValueKey(key)),
+          // T13 (2026-10-28 tur 3): ikili düğme çifti kalktı; iki eylem Pratik
+          // ızgarasının karosu: dolu/Agir düğme taşımaz.
+          for (final key in [
+            'learning-topic-practice',
+            'learning-topic-flashcards',
+          ]) {
+            expect(find.byKey(ValueKey(key)), findsOneWidget, reason: key);
+            expect(
+              find.descendant(
+                of: find.byKey(ValueKey(key)),
+                matching: find.byType(FilledButton),
+              ),
+              findsNothing,
+              reason: '$combo $key',
+            );
+          }
+          final primary = find.descendant(
+            of: find.byKey(const ValueKey('learning-next-step')),
             matching: find.byType(FilledButton),
           );
-          // Kurul 3. tur 2026-10-20: ikincil düğme şeffaf + görünür kenar.
-          expect(
-            materialColorIn(tester, button),
-            Colors.transparent,
-            reason: '$combo $key',
-          );
-        }
-
-        final primary = find.descendant(
-          of: find.byKey(const ValueKey('learning-next-step')),
-          matching: find.byType(FilledButton),
-        );
-        expect(materialColorIn(tester, primary), t.act, reason: combo);
-      });
+          expect(materialColorIn(tester, primary), t.act, reason: combo);
+        },
+      );
     }
   }
 

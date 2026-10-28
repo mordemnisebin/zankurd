@@ -5,6 +5,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:zankurd_mobile/src/widgets/category_band.dart'
+    show CategoryIconTile;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -247,6 +249,13 @@ void main() {
     expect(
       find.byKey(const ValueKey('quiz-question-icon-badge')),
       findsOneWidget,
+    );
+    // 2026-10-28 tur 3 T10: konu kimliği tek — künye rozeti ana sayfa
+    // karosuyla AYNI bileşendir (CategoryIconTile), ayrı bir silüet çizimi
+    // değil; Siyaset'in haki rozeti bu ayrışmadan doğdu.
+    expect(
+      tester.widget(find.byKey(const ValueKey('quiz-question-icon-badge'))),
+      isA<CategoryIconTile>(),
     );
     // 2026-09-29 Şahnê: sorunun arkasındaki hayalet ikon kalktı; kategori
     // kimliği sahne zemininde (%14 çizim), huzmenin kategori ışığında ve

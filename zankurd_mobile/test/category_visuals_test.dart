@@ -68,7 +68,7 @@ void main() {
   test('category display labels use Kurmanci names', () {
     expect(CategoryNames.localized('Edebiyat', true), 'Wêje');
     expect(CategoryNames.localized('Cografya', true), 'Erdnîgarî');
-    expect(CategoryNames.localized('Paradigma', true), 'Zanist û Raman');
+    expect(CategoryNames.localized('Paradigma', true), 'Zanist');
     expect(CategoryNames.localized('Teknolojî', true), 'Teknolojî');
   });
 }

@@ -165,8 +165,7 @@ void main() {
     for (final cat in categories) {
       for (final level in MasteryLevel.values) {
         if (level == MasteryLevel.none) continue;
-        final title =
-            '${level.titleKu} · ${CategoryNames.localized(cat, true)}';
+        final title = '${level.titleKu} · ${CategoryNames.showcaseName(cat)}';
         expect(
           re.hasMatch(title),
           isTrue,

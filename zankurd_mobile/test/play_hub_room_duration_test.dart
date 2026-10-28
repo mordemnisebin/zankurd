@@ -211,7 +211,8 @@ void main() {
         find.descendant(of: chip, matching: find.text('Bilim')),
         findsOneWidget,
       );
-      expect(tester.getSemantics(chip).label, 'Bilim ve Düşünce');
+      // T10 (2026-10-28 tur 3): tek ad; anlamsal ad da "Bilim".
+      expect(tester.getSemantics(chip).label, 'Bilim');
     }
     expect(
       find.byKey(const ValueKey('custom-room-bottom-fade')),

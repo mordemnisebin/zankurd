@@ -43,12 +43,8 @@ class WildcardButton extends StatelessWidget {
     required this.onTap,
     this.cantAfford = false,
     this.onLockedTap,
-    this.free = false,
     super.key,
   });
-
-  /// Günlük ücretsiz hak açık: fiyat yerine "Ücretsiz" rozeti (K6).
-  final bool free;
 
   final WildcardType type;
   final bool isKu;
@@ -85,9 +81,10 @@ class WildcardButton extends StatelessWidget {
       WildcardType.doubleAnswer => context.t(K.wildcardDoubleHint),
       WildcardType.changeQuestion => context.t(K.wildcardChangeHint),
     };
-    final price = free
-        ? context.t(K.freeBadge)
-        : '${type.coinCost} ${context.t(K.coinWord)}';
+    // 2026-10-28 tur 3 T2: günlük ücretsiz hak TEK hak; jokerlerin üstüne
+    // dört "Ücretsiz" rozeti yapışmaz (jokerler normal fiyatını taşır), hak
+    // jokerlerin üstündeki tek altın çiple söylenir.
+    final price = '${type.coinCost} ${context.t(K.coinWord)}';
     final displayLabel = stateLabel == null
         ? '$typeLabel • $price'
         : '$typeLabel • $stateLabel';
@@ -108,9 +105,6 @@ class WildcardButton extends StatelessWidget {
         label: typeLabel,
         price: type.coinCost,
         semanticLabel: displayLabel,
-        freeLabel: free && !isUsed && !isActive && !isAnswered
-            ? context.t(K.freeBadge)
-            : null,
         // Bu soruda açılmış joker (Çift Cevap) seçili hâlde durur; jeton
         // yetmeyen joker pasif ama fiyatını gösterir (neden alınamadığı
         // görünsün).

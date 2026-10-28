@@ -27,6 +27,7 @@ import '../services/app_haptics.dart';
 import '../data/joker_stock_store.dart';
 import '../data/streak_store.dart';
 import '../config/coin_prices.dart';
+import 'home/home_rows.dart' show coinStatChip;
 
 /// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
 /// Statik yedek listedeki (`ShopItem.catalog`) her ikon burada da
@@ -1029,18 +1030,12 @@ class _ShopScreenState extends State<ShopScreen> {
       MediaQuery.textScalerOf(context).scale(16) >= 24 ||
       MediaQuery.sizeOf(context).width < 360;
 
-  /// Zêr bandındaki bakiye çipi: koyu kahve dolgu, altın jeton, açık yazı.
+  /// Bakiye çipi: oyun merkezi ve profildekiyle AYNI nötr kapsül + altın
+  /// jeton (2026-10-28 tur 3 T11; eskiden koyu kahve dolgu + "300 jeton").
   Widget _coinChip(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final coinLabel =
-        '${groupThousands(_coinBalance)} '
-        '${context.t(K.coinWord).toLowerCase()}';
-    return SahneStatChip(
+    return KeyedSubtree(
       key: const ValueKey('shop-coin-chip'),
-      leading: const SahneGlyph(SahneGlyphKind.coin),
-      label: coinLabel,
-      tint: t.zerChip,
-      foreground: SahneVivid.onFill,
+      child: coinStatChip(context, _coinBalance),
     );
   }
 
@@ -1434,8 +1429,13 @@ class _ShopScreenState extends State<ShopScreen> {
     final button = FilledButton(
       onPressed: _loading ? null : () => _confirmPurchase(item),
       style: FilledButton.styleFrom(
-        backgroundColor: t.zerBand,
-        foregroundColor: t.onZer,
+        // 2026-10-28 tur 3 T16: dolu altın fiyat düğmesi dört "hero" gibi
+        // bağırıyordu; artık altın çerçeveli TONLU çip (açık altın zemin +
+        // altın kenar + jeton + sayı): oyun merkezi/profil jeton kapsülüyle
+        // aynı dil. Alınamayan gri + kilit.
+        backgroundColor: t.goldTint,
+        foregroundColor: t.goldTx,
+        side: BorderSide(color: t.gold, width: 1.5),
         disabledBackgroundColor: t.disabledFill,
         disabledForegroundColor: t.disabledFg,
         minimumSize: const Size(0, _priceHeight),
@@ -1453,7 +1453,7 @@ class _ShopScreenState extends State<ShopScreen> {
             child: Text(
               label,
               style: SahneType.button.copyWith(
-                color: t.onZer,
+                color: t.goldTx,
                 fontFeatures: const [FontFeature.tabularFigures()],
               ),
             ),

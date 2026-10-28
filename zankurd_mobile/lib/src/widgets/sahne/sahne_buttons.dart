@@ -397,14 +397,9 @@ class SahneJokerButton extends StatelessWidget {
     this.semanticLabel,
     this.selected = false,
     this.unaffordable = false,
-    this.freeLabel,
   });
 
   final IconData icon;
-
-  /// Günlük ücretsiz hak varken fiyat yerine küçük rozet ("Ücretsiz").
-  /// Yalnız etkin ve seçili olmayan jokerde görünür (K6, 2026-10-28).
-  final String? freeLabel;
 
   /// Jokerin adı (ör. "Nîv bi Nîv"): Semantics ve uzun basış ipucu.
   final String label;
@@ -454,32 +449,10 @@ class SahneJokerButton extends StatelessWidget {
     final labelColor = selected
         ? t.goldTx
         : (enabled ? t.tx : t.tx2.withValues(alpha: 0.75));
-    final showFree = showPrice && freeLabel != null && enabled && showLabel;
-    // Fiyat/"Ücretsiz" AYRI bir hap: ad ile karışmaz (2026-10-28 tur 2 R3;
-    // eskiden ikon + rozet + fiyat tek satırda sıkışıyor, kapsül sığdırmak
-    // için küçülüyordu ve "Ücretsiz" okunmaz boya iniyordu).
+    // Fiyat AYRI bir hap: ad ile karışmaz. Günlük ücretsiz hak jokere değil
+    // jokerlerin üstündeki tek çipe aittir (2026-10-28 tur 3 T2).
     Widget? pricePill;
-    if (showFree) {
-      pricePill = DecoratedBox(
-        key: const ValueKey('joker-free-badge'),
-        decoration: ShapeDecoration(
-          color: t.okFill,
-          shape: const StadiumBorder(),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-          child: Text(
-            freeLabel!,
-            maxLines: 1,
-            style: SahneType.caption.copyWith(
-              color: t.tx,
-              fontSize: 12,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-        ),
-      );
-    } else if (showPrice) {
+    if (showPrice) {
       pricePill = DecoratedBox(
         decoration: ShapeDecoration(color: t.s1, shape: const StadiumBorder()),
         child: Padding(

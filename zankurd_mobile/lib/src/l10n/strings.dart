@@ -437,10 +437,7 @@ class Tr {
       'ku': 'Bi girêdanê an jî ji navnîşa hevalan vexwîne',
       'tr': 'Bağlantıyla ya da listeden meydan oku',
     },
-    K.roomTileSub: {
-      'ku': '3 kes û zêdetir, bi kodê',
-      'tr': '3 kişi ve üstü, kodla',
-    },
+    K.roomTileSub: {'ku': 'Bi kodê 3+ kes', 'tr': 'Kodla 3+ kişi'},
     K.roomOpenFailed: {
       'ku': 'Ode nehat vekirin. Girêdana xwe kontrol bike.',
       'tr': 'Oda açılamadı. Bağlantını kontrol et.',
@@ -2208,9 +2205,8 @@ class Tr {
       'tr': 'Bugün 1 joker bedava',
     },
     // K6/K7 (2026-10-28): soru ekranı mod çipi, ücretsiz joker rozeti, sonuçta
-    // katlanan cevap listesi. NEEDS_JURY (KU): bu dizeler yeni.
+    // katlanan cevap listesi. KU jüri onaylı (Gemini 3.8 Flash, Grok 4.7, GPT-6 Sol).
     K.modeLesson: {'ku': 'Ders', 'tr': 'Ders'},
-    K.freeBadge: {'ku': 'Belaş', 'tr': 'Ücretsiz'},
     K.seeAnswers: {'ku': 'Bersivan bibîne', 'tr': 'Cevapları gör'},
     K.hideAnswers: {'ku': 'Bersivan veşêre', 'tr': 'Cevapları gizle'},
     K.showAllOptions: {'ku': 'Hemû vebijarkan bibîne', 'tr': 'Tüm şıkları gör'},
@@ -2277,7 +2273,14 @@ class Tr {
     K.locked: {'ku': 'Girtî', 'tr': 'Kilitli'},
     // Kurul 3. tur 2026-10-20: kilitli dersleri tek satırda toplayan
     // düğme. Kurmancî metin jüri incelemesi bekliyor (NEEDS_JURY).
-    K.lessonsMoreCount: {'ku': '+{n} dersên din', 'tr': '+{n} ders daha'},
+    // 2026-10-28 tur 3 T13 (KU jüri onaylı: Gemini 3.8 Flash + GPT-6 Sol): tüm dersler satırı ve ders sayacı.
+    K.allLessonsMore: {'ku': 'Hemû ders (+{n})', 'tr': 'Tüm dersler (+{n})'},
+    K.lessonCountProgress: {
+      'ku': '{done}/{total} ders',
+      'tr': '{done}/{total} ders',
+    },
+    // T14 (KU jüri onaylı: Gemini 3.8 Flash + GPT-6 Sol): sonuç ekranı tek katlanan bölüm başlığı.
+    K.resultDetails: {'ku': 'Hûrgilî', 'tr': 'Ayrıntılar'},
     // NEEDS_JURY: Kurmancî "astên din" (seviye = ast; "dersên din" kalıbı).
     K.levelsMoreCount: {'ku': '+{n} astên din', 'tr': '+{n} seviye daha'},
     K.titleWord: {'ku': 'Nav û nîşan', 'tr': 'Unvan'},
@@ -2742,16 +2745,17 @@ class Tr {
     K.homeGreetNight: {'ku': 'Şevbaş', 'tr': 'İyi geceler'},
     // ── Ana ekranın bölümleri (2026-09-27 sade ilk deneyim) ──────────
     K.homeDoorLearnSub: {
-      'ku': 'Ders, çîrok û ferheng',
-      'tr': 'Ders, hikâye ve sözlük',
+      // 2026-10-28 tur 3 T15 (KU jüri onaylı: Gemini 3.8 Flash + GPT-6 Sol): kart alt satırı TEK satır.
+      'ku': 'Ders, çîrok, ferheng',
+      'tr': 'Ders, hikâye, sözlük',
     },
     // Yarış kısayolu: tek, kısa ad (sekmenin adıyla aynı). Eskiden
     // "Arkadaşınla yarış" idi ve düello satırıyla aynı kapıyı iki adla
     // anıyordu (2026-10-24).
     K.homeDoorPlayTitle: {'ku': 'Pêşbirk', 'tr': 'Yarış'},
     K.homeDoorPlaySub: {
-      'ku': 'Ode ava bike, hevrikekî bibîne an bi dorê bilîze',
-      'tr': 'Oda kur, rakip bul ya da sırayla oyna',
+      'ku': 'Pêşbirk, ode, kûpa',
+      'tr': 'Düello, oda, turnuva',
     },
     K.homeDoorPlayReady: {'ku': 'Encam amade ye', 'tr': 'Sonuç hazır'},
     K.homeTourDoneTitle: {
@@ -3465,10 +3469,9 @@ class Tr {
     // oyuncunun gördüğü ad 2026-09-30'da değişti: tek bir hareketin öğretisi
     // emekli edilince kalan nötr toplum bilimi, felsefe ve genel bilim
     // "paradigma" sözünün vaadini taşımıyordu.
-    K.catParadigma: {'ku': 'Zanist û Raman', 'tr': 'Bilim ve Düşünce'},
-    // Yalnız ana ekran karosunun dar yazı sütunu için kısa ad
-    // ([CategoryNames.tile]); tam ad her yerde ötekidir.
-    K.catParadigmaTile: {'ku': 'Zanist', 'tr': 'Bilim'},
+    // 2026-10-28 tur 3 T10: tek ad (ana sayfa karosundaki kısa ad); "Bilim ve
+    // Düşünce" eşleşme/künyede farklı yazılıyordu.
+    K.catParadigma: {'ku': 'Zanist', 'tr': 'Bilim'},
     K.catTeknoloji: {'ku': 'Teknolojî', 'tr': 'Teknoloji'},
     K.catSinema: {'ku': 'Sînema', 'tr': 'Sinema'},
     // 2026-09-30: Kürtlerle doğrudan bağı olmayan nötr genel bilgi (dünya
@@ -3488,8 +3491,8 @@ class Tr {
     // `lib/src/models/async_duel.dart`dadır.
     K.asyncDuel: {'ku': 'Pêşbirka bi dorê', 'tr': 'Sırayla düello'},
     K.asyncDuelSub: {
-      'ku': 'Tu niha bilîze, hevrikê te paşê',
-      'tr': 'Sen şimdi oyna, rakibin sonra',
+      'ku': 'Tu bilîze, hevrik paşê',
+      'tr': 'Sen oyna, rakip sonra',
     },
     // Eşleşme ekranında 20sn'de rakip bulunamayınca çıkan teklif diyaloğu
     // (bkz. `MatchmakingScreen._showBotPrompt`).
@@ -4017,6 +4020,15 @@ class Tr {
       'ku': 'Yekemînê duh: {name} · {score}',
       'tr': 'Dünün birincisi: {name} · {score}',
     },
+    // 2026-10-28 tur 3 T3 (KU jüri: "bê lîstin" Gemini 3.8 Flash + Argon; süre GPT-6 Sol azınlık): oynanabilirlik ve tur sonu.
+    K.contestPlayableToday: {
+      'ku': 'Îro dikare bê lîstin',
+      'tr': 'Bugün oynanabilir',
+    },
+    K.contestEndsIn: {
+      'ku': 'Ev ger piştî {h} saet û {m} deqeyan diqede',
+      'tr': 'Bu tur {h} sa {m} dk sonra biter',
+    },
     K.contestNextIn: {
       'ku': 'Gera nû piştî {h} saet û {m} deqeyan',
       'tr': 'Yeni tur {h} sa {m} dk sonra',
@@ -4423,6 +4435,8 @@ class K {
   // zorluk aralığını ve dört ödül basamağını taşıyordu; ekran hiçbirini
   // göstermiyordu ve tema adı yerine sabit bir başlık yazıyordu.
   static const contestToday = 'contest.today';
+  static const contestPlayableToday = 'contest.playableToday';
+  static const contestEndsIn = 'contest.endsIn';
   static const contestQuickInfo = 'contest.quickInfo';
   static const contestSeconds = 'contest.seconds';
   static const champion = 'tournament.champion';
@@ -4827,7 +4841,6 @@ class K {
   static const wildcardNoCoins = 'quiz.wildcard.no.coins';
   static const freeWildcardToday = 'quiz.wildcard.free.today';
   static const modeLesson = 'quiz.mode.lesson';
-  static const freeBadge = 'quiz.wildcard.free.badge';
   static const seeAnswers = 'result.seeAnswers';
   static const hideAnswers = 'result.hideAnswers';
   static const showAllOptions = 'review.showAllOptions';
@@ -4981,7 +4994,9 @@ class K {
   static const silver = 'avatar.silver';
   static const gold = 'avatar.gold';
   static const locked = 'common.locked';
-  static const lessonsMoreCount = 'learning.lessonsMoreCount';
+  static const resultDetails = 'result.details';
+  static const allLessonsMore = 'learning.allLessonsMore';
+  static const lessonCountProgress = 'learning.lessonCountProgress';
   static const levelsMoreCount = 'learning.levelsMoreCount';
   static const titleWord = 'avatar.titleWord';
   static const hideAction = 'common.hide';
@@ -5435,7 +5450,6 @@ class K {
   static const catMuzik = 'cat.muzik';
   static const catSiyaset = 'cat.siyaset';
   static const catParadigma = 'cat.paradigma';
-  static const catParadigmaTile = 'cat.paradigmaTile';
   static const catTeknoloji = 'cat.teknoloji';
   static const catSinema = 'cat.sinema';
   static const catCihan = 'cat.cihan';

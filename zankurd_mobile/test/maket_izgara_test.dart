@@ -226,8 +226,11 @@ void main() {
       expect(d.dy, greaterThan(c.dy), reason: 'büyük yazıda tek sütun');
     });
 
-    testWidgets('Bilim ve Düşünce karoda kısa adla yazılır, tam ad ekran '
-        'okuyucuda kalır', (tester) async {
+    // T10 (2026-10-28 tur 3): konunun TEK adı vardır; karo, eşleşme ve künye
+    // aynı kısa adı ("Bilim" / "Zanist") yazar, ikinci uzun ad yok.
+    testWidgets('Bilim karoda ve ekran okuyucuda aynı tek adla yazılır', (
+      tester,
+    ) async {
       final semantics = tester.ensureSemantics();
       _size(tester, const Size(390, 844));
       for (final ku in [false, true]) {
@@ -243,22 +246,20 @@ void main() {
           ),
           findsOneWidget,
         );
-        expect(
-          find.descendant(of: tile, matching: find.text(full)),
-          findsNothing,
-          reason: 'tam ad karoya sığmaz; karoda kısa ad yazılır',
-        );
+        expect(full, CategoryNames.tile('Paradigma', ku), reason: 'tek ad');
         // Ekran okuyucu tam adı okur (yalnız geçerli dil).
         expect(find.bySemanticsLabel(RegExp('^$full\$')), findsOneWidget);
       }
       semantics.dispose();
     });
 
-    test('kısa adlar yalnız gerekli konuda; tam ad olduğu gibi kalır', () {
+    test('her konuda karo adı ile görünen ad aynıdır (tek ad)', () {
       expect(CategoryNames.tile('Paradigma', false), 'Bilim');
       expect(CategoryNames.tile('Paradigma', true), 'Zanist');
-      expect(CategoryNames.localized('Paradigma', false), 'Bilim ve Düşünce');
-      expect(CategoryNames.localized('Paradigma', true), 'Zanist û Raman');
+      // T10 (2026-10-28 tur 3): kısa ad TEK addır; karo ile eşleşme/künye
+      // aynı yazar.
+      expect(CategoryNames.localized('Paradigma', false), 'Bilim');
+      expect(CategoryNames.localized('Paradigma', true), 'Zanist');
       for (final c in _categories.where((c) => c != 'Paradigma')) {
         expect(
           CategoryNames.tile(c, false),
