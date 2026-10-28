@@ -1489,8 +1489,8 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   void _loadJokerStock() {
-    JokerStockStore.count().then((count) {
-      if (mounted && count > 0) setState(() => _jokerStock = count);
+    JokerStockStore.syncFromServer(widget.repository).then((count) {
+      if (mounted && count != _jokerStock) setState(() => _jokerStock = count);
     });
   }
 
@@ -4153,13 +4153,16 @@ class _QuizScreenState extends State<QuizScreen>
     final nextFavorite = !favorite;
     _favoriteTouched = true;
     setState(() => favorite = nextFavorite);
+    // Yanıt gelmeden sonraki soruya geçilmişse geç gelen sonuç yeni sorunun
+    // yıldızını değiştirmesin.
+    final target = question;
     try {
       final saved = await FavoriteMutationService.setFavorite(
         repository: widget.repository,
-        question: question,
+        question: target,
         favorite: nextFavorite,
       );
-      if (!mounted) return;
+      if (!mounted || !identical(question, target)) return;
       setState(() => favorite = saved);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -4169,7 +4172,7 @@ class _QuizScreenState extends State<QuizScreen>
         ),
       );
     } catch (_) {
-      if (!mounted) return;
+      if (!mounted || !identical(question, target)) return;
       setState(() => favorite = !nextFavorite);
       ScaffoldMessenger.of(
         context,
@@ -4178,6 +4181,9 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Future<void> _reportQuestion() async {
+    // Diyalog açıkken çevrimiçi maç sonraki soruya geçebilir: şikâyet,
+    // diyaloğun açıldığı sorunun adına gider.
+    final reported = question;
     // Denetleyiciyi diyalogun kendi State'i yönetir (kapanış animasyonu
     // sürerken dışarıdan atmak çöküş riskiydi).
     final reason = await showDialog<String>(
@@ -4188,7 +4194,7 @@ class _QuizScreenState extends State<QuizScreen>
     if (reason == null) return;
 
     try {
-      await widget.repository.reportQuestion(question, reason);
+      await widget.repository.reportQuestion(reported, reason);
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,

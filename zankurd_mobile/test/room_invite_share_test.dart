@@ -58,7 +58,7 @@ void main() {
 
     final invite = find.byKey(const ValueKey('room-invite-share'));
     expect(invite, findsOneWidget);
-    expect(find.text('Arkadaşlarını davet et'), findsOneWidget);
+    expect(find.text('Davet bağlantısını paylaş'), findsOneWidget);
 
     await tester.ensureVisible(invite);
     await tester.tap(invite);

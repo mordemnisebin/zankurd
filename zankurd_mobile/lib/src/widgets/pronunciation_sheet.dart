@@ -169,6 +169,9 @@ class _PronunciationSheetState extends State<PronunciationSheet> {
       }
       await _playback.stop();
       await _deleteCurrent();
+      // Dosya gitti: yeni kayıt başlamazsa "dinle" düğmesi silinmiş
+      // dosyayı çalmaya kalkmasın.
+      if (mounted) setState(() => _path = null);
       final path =
           '${Directory.systemTemp.path}/$_filePrefix'
           '${DateTime.now().microsecondsSinceEpoch}.m4a';

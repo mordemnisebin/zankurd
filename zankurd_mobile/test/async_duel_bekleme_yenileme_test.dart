@@ -51,6 +51,15 @@ AsyncDuelSummary _summary({required bool done}) => AsyncDuelSummary(
   seen: false,
 );
 
+AsyncDuelSummary _expired() => AsyncDuelSummary(
+  duelId: 'd1',
+  status: AsyncDuelStatus.expired,
+  role: AsyncDuelRole.creator,
+  myCorrect: 2,
+  createdAt: DateTime.utc(2026, 10, 27),
+  seen: false,
+);
+
 void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({'zankurd.onboarding.seen': true});
@@ -86,5 +95,29 @@ void main() {
       findsNothing,
     );
     expect(find.textContaining('Kazandın'), findsWidgets);
+  });
+
+  testWidgets('rakip hiç oynamadan süre dolunca da bekleme biter', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 900));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repo = _ListRepository()..duels = [_summary(done: false)];
+    await tester.pumpWidget(
+      testShell(
+        child: AsyncDuelResultScreen(
+          repository: repo,
+          view: AsyncDuelResultView.fromSummary(_summary(done: false)),
+        ),
+      ),
+    );
+    await tester.pump();
+    repo.duels = [_expired()];
+    await tester.pump(const Duration(seconds: 11));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Rakibin oynayınca sonuç burada görünecek.'),
+      findsNothing,
+    );
   });
 }

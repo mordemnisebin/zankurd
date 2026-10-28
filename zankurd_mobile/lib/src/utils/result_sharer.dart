@@ -184,8 +184,12 @@ class ResultSharer {
       if (renderObject is! RenderRepaintBoundary) return null;
 
       final image = await renderObject.toImage(pixelRatio: 1);
-      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      return byteData?.buffer.asUint8List();
+      try {
+        final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+        return byteData?.buffer.asUint8List();
+      } finally {
+        image.dispose();
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'result_share_send');
       return null;

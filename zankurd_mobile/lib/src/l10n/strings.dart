@@ -665,9 +665,11 @@ class Tr {
       'ku': 'Gava hejmar temam bibe dest pê dike',
       'tr': 'Kontenjan dolunca başlar',
     },
+    // 2026-10-28 görsel kurul: "en geç 24 saat içinde, eldeki oyuncularla"
+    // fiilsiz kalıp yarım cümle okunuyordu.
     K.cupStartsLatest: {
-      'ku': 'Herî dereng di nav 24 saetan de, bi yên amade',
-      'tr': 'En geç 24 saat içinde, eldeki oyuncularla',
+      'ku': 'Ger temam nebe, di nav 24 saetan de bi yên amade dest pê dike',
+      'tr': 'Dolmazsa 24 saat içinde eldeki oyuncularla başlar',
     },
     K.botDailyCup: {'ku': 'Kûpaya palawtinê', 'tr': 'Eleme turnuvası'},
     // Ayrılma/hükmen bitiş metinleri aynı kavramı `pêşbirk` der.
@@ -680,7 +682,29 @@ class Tr {
     K.joinTournament: {'ku': 'Tevlî kûpayê bibe', 'tr': 'Turnuvaya katıl'},
     K.cupPlayers: {'ku': 'lîstikvan', 'tr': 'oyuncu'},
     K.cupRounds: {'ku': 'ger', 'tr': 'tur'},
-    K.cupChampionReward: {'ku': 'zêr · xelat', 'tr': 'jeton · ödül'},
+    // Ödül şampiyonundur (sunucu yalnız şampiyona öder); "ödül" kime
+    // gittiğini söylemiyordu (2026-10-28 görsel kurul).
+    K.cupChampionReward: {
+      'ku': 'zêr · ji şampiyon re',
+      'tr': 'jeton · şampiyona',
+    },
+    K.cupRuleSameQuestions: {
+      // Kurul 2026-10-28 (Gemini + Opus, 2/3): "pirs lîstin" çeviri kokuyor,
+      // özne öbeğinde "xwe" bağlanamaz.
+      'ku': 'Di her pêşbirkê de tu û hevrikê te bersiva heman 4 pirsan didin.',
+      'tr': 'Her maçta rakibinle aynı 4 soruyu oynarsın.',
+    },
+    K.cupRuleServerScore: {
+      'ku':
+          'Pûanê pêşkêşkar hesab dike: bersiva rast 100, bersiva bilez heta +50.',
+      'tr':
+          'Puanı sunucu hesaplar: doğru cevap 100, hızlı cevap +50\'ye kadar.',
+    },
+    K.cupRuleDeadline: {
+      'ku':
+          'Her gerê di nav 24 saetan de bilîze; heke nelîzî, tu pêşbirkê winda dikî.',
+      'tr': 'Her turu 24 saat içinde oyna; oynamazsan maçı kaybedersin.',
+    },
     K.cupLadder: {'ku': 'Rêya kûpayê', 'tr': 'Turnuva yolu'},
     K.cupFormatTitle: {'ku': 'Awa', 'tr': 'Format'},
     K.cupNotStarted: {'ku': 'Dest pê nekiriye', 'tr': 'Başlamadı'},
@@ -1635,11 +1659,13 @@ class Tr {
     K.alphabetTitle: {'ku': 'Elîfbê û deng', 'tr': 'Alfabe ve sesler'},
     K.alphabetIntro: {
       'ku':
-          'Li tîpekê bitikîne û li peyveke mînak guhdarî bike. Tîpên ku '
-          'têbîniya wan tune ye, wekî di Tirkî de tên xwendin.',
+          'Li tîpekê bitikîne û li peyveke mînak guhdarî bike. Kûsî hêdî '
+          'dixwîne; bi mîkrofonê dengê xwe tomar bike û berawird bike. Tîpên '
+          'ku têbîniya wan tune ye, wekî di Tirkî de tên xwendin.',
       'tr':
-          'Bir harfe dokun, örnek kelimeyi dinle. Notu olmayan harfler '
-          'Türkçedeki gibi okunur.',
+          'Bir harfe dokun, örnek kelimeyi dinle. Kaplumbağa yavaş okur; '
+          'mikrofonla kendi sesini kaydedip karşılaştırırsın. Notu olmayan '
+          'harfler Türkçedeki gibi okunur.',
     },
     K.alphabetHintE: {
       'ku': 'Wekî "e"ya Tirkî, hinekî vekirîtir.',
@@ -1870,15 +1896,18 @@ class Tr {
     K.host: {'ku': 'Mêvandar', 'tr': 'Ev sahibi'},
     // Oda daveti (2026-09-27). Bağlantı web sürümünde odaya doğrudan
     // katılır (`JoinDeepLink`); kod, uygulamadan elle girmek isteyen için.
+    // 2026-10-28 görsel kurul: "Arkadaşlarını davet et" ile
+    // "Arkadaşlarımdan davet et" neredeyse aynı okunuyordu; biri bağlantı
+    // paylaşır, öteki uygulamadaki arkadaş listesinden seçtirir.
     K.roomInviteAction: {
-      'ku': 'Hevalên xwe vexwîne',
-      'tr': 'Arkadaşlarını davet et',
+      'ku': 'Girêdana vexwendinê parve bike',
+      'tr': 'Davet bağlantısını paylaş',
     },
     // ── Odaya arkadaş daveti (2026-10-18). Kurmancî metinler yerli göz
     // incelemesi bekliyor (NEEDS_JURY).
     K.roomInviteFriendsAction: {
-      'ku': 'Ji hevalên xwe vexwîne',
-      'tr': 'Arkadaşlarımdan davet et',
+      'ku': 'Ji lîsteya hevalan vexwîne',
+      'tr': 'Arkadaş listesinden davet et',
     },
     K.roomInviteSheetTitle: {'ku': 'Hevalan vexwîne', 'tr': 'Arkadaş davet et'},
     K.roomInviteSheetSub: {
@@ -3567,10 +3596,12 @@ class Tr {
       'tr': 'Rakibin oynayınca sonuç burada görünecek.',
     },
     K.asyncDuelExpiredBody: {
+      // Ekran kazanılan XP'yi gösterirken "alırsın" geleceği söylüyordu
+      // (2026-10-28 görsel kurul).
       'ku':
-          'Di 24 saetan de hevrik derneket. Tu ji bo bersivên xwe yên rast '
-          'XP distînî.',
-      'tr': '24 saat içinde rakip çıkmadı. Doğru cevapların için XP alırsın.',
+          'Di 24 saetan de hevrik derneket. Te ji bo bersivên xwe yên rast '
+          'XP qezenc kir.',
+      'tr': '24 saat içinde rakip çıkmadı. Doğru cevapların için XP kazandın.',
     },
     K.asyncDuelUnfinishedBody: {
       'ku': 'Te hemû pirs nebersivandin; ev pêşbirk dê bi dawî bibe.',
@@ -4361,6 +4392,9 @@ class K {
   static const cupPlayers = 'tournament.players';
   static const cupRounds = 'tournament.rounds';
   static const cupChampionReward = 'tournament.championRewardLabel';
+  static const cupRuleSameQuestions = 'tournament.rule.sameQuestions';
+  static const cupRuleServerScore = 'tournament.rule.serverScore';
+  static const cupRuleDeadline = 'tournament.rule.deadline';
   static const cupLadder = 'tournament.ladder';
   static const cupFormatTitle = 'tournament.formatTitle';
   static const cupNotStarted = 'tournament.notStarted';

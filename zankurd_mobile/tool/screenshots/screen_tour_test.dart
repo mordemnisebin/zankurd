@@ -3047,7 +3047,7 @@ void main() {
       ku: true,
     );
     await _shoot(t, '236_lexicon_question_words');
-    await t.tap(find.byKey(const ValueKey('lexicon-word-wateya')).first);
+    await t.tap(find.byKey(const ValueKey('lexicon-word-wateye')).first);
     await t.pumpAndSettle();
     await _shoot(t, '237_lexicon_question_template_sheet');
   }, tags: ['preview']);

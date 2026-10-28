@@ -2500,8 +2500,8 @@
     "category": "Ziman",
     "type": "fillInBlank",
     "difficulty": 1,
-    "prompt": "Hevokê temam bike: \"Ew ___ e.\" (\"O kız (çocuk).\")",
-    "promptTr": "Cümleyi tamamla: \"Ew ___ e.\" (\"O kız (çocuk).\")",
+    "prompt": "Hevokê temam bike: \"Ew ___ e.\" (\"O bir kız çocuğu.\")",
+    "promptTr": "Cümleyi tamamla: \"Ew ___ e.\" (\"O bir kız çocuğu.\")",
     "answers": [
       "keç"
     ],
@@ -2512,9 +2512,9 @@
     "correctAnswerTr": "keç",
     "acceptedAnswers": [],
     "acceptedAnswersTr": [],
-    "explanation": "Doğru cümle: \"Ew keç e.\" (O kız (çocuk).)",
+    "explanation": "Doğru cümle: \"Ew keç e.\" (O bir kız çocuğu.)",
     "explanationKu": "Hevoka rast ev e: \"Ew keç e.\"",
-    "explanationTr": "Doğru cümle: \"Ew keç e.\" (O kız (çocuk).)",
+    "explanationTr": "Doğru cümle: \"Ew keç e.\" (O bir kız çocuğu.)",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: family_1",

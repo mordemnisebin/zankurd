@@ -512,7 +512,7 @@ class _ShopScreenState extends State<ShopScreen> {
       var jokerStock = 0;
       try {
         freezeCount = (await StreakStore.load()).freezeCount;
-        jokerStock = await JokerStockStore.count();
+        jokerStock = await JokerStockStore.syncFromServer(widget.repository);
       } catch (error, stack) {
         ErrorReporter.record(error, stack, reason: 'shop stock load');
       }
@@ -899,7 +899,11 @@ class _ShopScreenState extends State<ShopScreen> {
     // Joker paketi: üç hak yerel stoğa (bkz. JokerStockStore).
     if (itemId == 'joker_pack_3') {
       try {
-        final stock = await JokerStockStore.add(JokerStockStore.packSize);
+        // Sunucu satın almayı zaten saydı (`shop_purchases`); eşitleme
+        // hesaptaki toplamı getirir. Çevrimdışıysa yerel ekleme geçerlidir.
+        final local = await JokerStockStore.add(JokerStockStore.packSize);
+        final synced = await JokerStockStore.syncFromServer(widget.repository);
+        final stock = synced > local ? synced : local;
         if (mounted) setState(() => _jokerStock = stock);
         return true;
       } catch (error, stack) {

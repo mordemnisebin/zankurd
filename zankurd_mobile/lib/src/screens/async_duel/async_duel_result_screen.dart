@@ -354,7 +354,10 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
       for (final summary in duels) {
         if (summary.duelId != widget.view.duelId) continue;
         final view = AsyncDuelResultView.fromSummary(summary);
-        if (view.kind != AsyncDuelResultKind.completed) return;
+        // Bitti ya da süresi doldu (hükmen dahil): bekleme bitmiştir. Yalnız
+        // "bitti"ye bakmak, rakip hiç oynamadan süresi dolan düelloda kum
+        // saatini sonsuza dek bırakıyordu (2026-10-28 gece kod denetimi).
+        if (view.kind == AsyncDuelResultKind.waiting) return;
         _replacedByResult = true;
         _waitingPoll?.cancel();
         unawaited(
@@ -758,11 +761,19 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
             ),
             if (whyNot != null) ...[
               const SizedBox(height: SahneSpace.x2),
-              Text(
-                whyNot,
-                key: const ValueKey('async-duel-result-rematch-why'),
-                textAlign: TextAlign.center,
-                style: SahneType.caption.copyWith(color: t.tx2),
+              // Renk yazının DURDUĞU yerin temasından: sonuç gövdesi her
+              // temada gece sahnesidir. Ekranın (gündüz) jetonu bordo
+              // zeminde lacivert, okunmaz yazı veriyordu (2026-10-28 görsel
+              // kurul: GPT-6 Sol + Gemini).
+              Builder(
+                builder: (context) => Text(
+                  whyNot,
+                  key: const ValueKey('async-duel-result-rematch-why'),
+                  textAlign: TextAlign.center,
+                  style: SahneType.caption.copyWith(
+                    color: SahneTokens.of(context).tx2,
+                  ),
+                ),
               ),
             ],
           ],

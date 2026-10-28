@@ -905,7 +905,7 @@ extension _QuizScreenUI on _QuizScreenState {
     // `spend_coins` çağrılmaz; bayrak gibi sayaç da HEMEN düşer.
     if (_jokerStock > 0) {
       _jokerStock -= 1;
-      unawaited(JokerStockStore.consume());
+      unawaited(JokerStockStore.consumeWith(widget.repository));
       return true;
     }
     return false;

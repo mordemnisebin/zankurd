@@ -2654,18 +2654,18 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "prompt": "Kîjan hevok hewayê dipirse?",
-    "promptTr": "Havayı hangi cümle sorar?",
+    "promptTr": "Hangi cümle havanın nasıl olduğunu sorar?",
     "answers": [
       "Hewa çawa ye?",
-      "Hewa germ e.",
-      "Baran dibare.",
-      "Ez li mal im."
+      "Tu çawa yî?",
+      "Saet çend e?",
+      "Navê te çi ye?"
     ],
     "answersTr": [
       "Hava nasıl?",
-      "Hava sıcak.",
-      "Yağmur yağıyor.",
-      "Ben evdeyim."
+      "Sen nasılsın?",
+      "Saat kaç?",
+      "Adın ne?"
     ],
     "correctAnswer": "Hewa çawa ye?",
     "correctAnswerTr": "Hava nasıl?",
@@ -2679,7 +2679,7 @@
       "reviewStatus": "approved",
       "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
       "reviewedAt": "2026-10-08",
-      "lastContentCheckAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-28",
       "qualityVersion": 2,
       "learningLessonId": "weather_1"
     }

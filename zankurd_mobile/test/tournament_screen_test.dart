@@ -81,13 +81,20 @@ void main() {
       // (ikinci yarım cümle format kartından kalktı).
       expect(
         find.text(
-          'Kontenjan dolunca başlar; en geç 24 saat içinde, eldeki oyuncularla',
+          'Kontenjan dolunca başlar; dolmazsa 24 saat içinde eldeki oyuncularla başlar',
         ),
         findsOneWidget,
       );
       expect(
         find.text('En geç 24 saat içinde, eldeki oyuncularla'),
         findsNothing,
+      );
+      // 2026-10-28 görsel kurul: lobinin alt yarısı boştu, oyuncu sunucu
+      // puanlamasını ve 24 saat kuralını bilmiyordu.
+      expect(find.byKey(const ValueKey('tournament-rules')), findsOneWidget);
+      expect(
+        find.text('Her turu 24 saat içinde oyna; oynamazsan maçı kaybedersin.'),
+        findsOneWidget,
       );
       expect(find.text('Turnuvaya katıl'), findsOneWidget);
       final startButton = tester.widget(

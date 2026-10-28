@@ -54,7 +54,7 @@ void main() {
       );
       expect(
         s.progressFor(AchievementIds.allCategories),
-        const RewardProgress(current: 0, target: 8, unit: RewardUnit.topic),
+        const RewardProgress(current: 0, target: 11, unit: RewardUnit.topic),
       );
       expect(
         s.progressFor(AchievementIds.sevenDayStreak, dailyStreak: 3),
@@ -395,7 +395,7 @@ void main() {
       await openSheet(tester);
 
       expect(find.text('63/100 soru'), findsOneWidget);
-      expect(find.text('1/8 konu'), findsOneWidget);
+      expect(find.text('1/11 konu'), findsOneWidget);
       expect(find.text('Kazanıldı: 24.10.2026'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });

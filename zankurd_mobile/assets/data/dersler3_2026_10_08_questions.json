@@ -683,22 +683,22 @@
     "category": "Ziman",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Kîjan hevok ji bo pirsê rast e?",
-    "promptTr": "Soru sormak için hangi cümle doğrudur?",
+    "prompt": "Kîjan hevok cihê bazarê dipirse?",
+    "promptTr": "Hangi cümle çarşının nerede olduğunu sorar?",
     "answers": [
       "Bazar li ku ye?",
-      "Bazar li vir e.",
-      "Bazar nêzîk e.",
-      "Bazar dûr e."
+      "Bazar kengê vedibe?",
+      "Bazar çiqas dûr e?",
+      "Bazar çawa ye?"
     ],
     "answersTr": [
-      "Çarşı nerededir?",
-      "Çarşı buradadır.",
-      "Çarşı yakındır.",
-      "Çarşı uzaktır."
+      "Çarşı nerede?",
+      "Çarşı ne zaman açılır?",
+      "Çarşı ne kadar uzak?",
+      "Çarşı nasıl?"
     ],
     "correctAnswer": "Bazar li ku ye?",
-    "correctAnswerTr": "Çarşı nerededir?",
+    "correctAnswerTr": "Çarşı nerede?",
     "explanation": "Li ku ye nerededir demektir ve soru içindir.",
     "explanationKu": "Li ku ye tê wateya nerededir û ji bo pirsê ye.",
     "explanationTr": "Li ku ye nerededir demektir ve soru içindir.",
@@ -709,7 +709,7 @@
       "reviewStatus": "approved",
       "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
       "reviewedAt": "2026-10-08",
-      "lastContentCheckAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-28",
       "qualityVersion": 2,
       "learningLessonId": "city_1"
     }

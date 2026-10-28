@@ -34,6 +34,42 @@ ve mağaza metni onu aşmamalı.
 > Turnuva ve haftalık lig bayrakla kapalı (`kTournamentEnabled`,
 > `kWeeklyLeagueEnabled`); metinlerde geçmez.
 
+## Bu sürümde yenilikler — 2.1.1 (App Store "What's New" / Play "Sürüm notları")
+
+Yayındaki 2.1.0 (35)'ten beri değişenler. Türkçe metin ana dildir; Kurmancî
+metin Kurmancî kurulundan geçti (çeviri GPT-6 Sol; denetim Gemini 3.8 Flash
+ve Claude Opus 5.5; uyuşan düzeltmeler uygulandı, 2026-10-28).
+
+### Türkçe
+
+```text
+ZanKurd 2.1.1 ile gelenler:
+• Turnuva: Gerçek oyuncularla dört kişilik eleme kupası. Maçlar sunucuda puanlanır; şampiyon 200 jeton kazanır.
+• Telaffuz atölyesi: Kelimeyi dinle, kendi sesini kaydet, karşılaştır. Ücretsiz.
+• Pratik merkezi, alfabe ve sesler, 8 yeni hikâye ve 4 yeni dil bilgisi dersi.
+• Kelimelerim: aralıklı tekrarla kelime kutuları ve çift yönlü sözlük.
+• Sırayla düello: 24 saat süre, rakibi dürtme, soru soru karşılaştırma ve rövanş.
+• Oda: sohbet ve tepkiler en üstte, "Tekrar oyna" ve oyuncu sayısı seçimi.
+• Mağaza: joker paketi, seri koruması ve yeni çerçeveler.
+• Ana sayfada tek "Bugün" paneli ve "Günün turu".
+• Onlarca düzeltme ve iyileştirme.
+```
+
+### Kurmancî
+
+```text
+Nûbûnên ZanKurd 2.1.1:
+• Kûpa: Kûpayeke palawtinê ya çar kesî bi lîstikvanên rastîn. Pûanên pêşbirkan li ser pêşkêşkar tên hesabkirin; şampiyon 200 zêr qezenc dike.
+• Atolyeya bilêvkirinê: Guh bide peyvê, dengê xwe tomar bike û berawird bike. Belaş e.
+• Navenda pratîkê, elîfbê û deng, 8 çîrokên nû û 4 dersên nû yên rêzimanê.
+• Peyvên min: Qutiyên peyvan bi dubarekirina bi navber û ferhengeke dualî.
+• Pêşbirka bi dorê: Dema 24 saetan, bîrxistina hevrik, berawirdkirina pirs bi pirs û pêşbirka vegerê.
+• Ode: Sohbet û bertek li jor in, "Dîsa bilîze" û hilbijartina hejmara lîstikvanan.
+• Firotgeh: Pakêta jokeran, parastina rêzeyê û çarçoveyên nû.
+• Li rûpela sereke panela yekane ya "Îro" û "Gera rojê".
+• Bi dehan sererastkirin û çêtirkirin.
+```
+
 ## Mağaza ekran görüntüleri
 
 Mağaza önce **Kürtçe bilgi yarışması** olarak okunur (düello, oda, rastgele
@@ -138,16 +174,18 @@ kategorilerinden ayrı durur.
 
 YARIŞ
 
-• Hızlı düello: rastgele bir rakiple canlı 1v1.
+• Canlı düello: seviyene yakın bir rakiple canlı 1v1.
 • Sırayla düello: rakibin aynı anda çevrimiçi olması gerekmez. Sen şimdi
   oynarsın, o sonra; sonuç Düellolarım'da görünür.
 • Oda kur: davet bağlantısını paylaş, arkadaşların tek dokunuşla katılsın.
   Grup yarışında 50 kişiye kadar aynı anda yarışın, canlı sıralamayı izleyin.
+• Turnuva: gerçek oyuncularla dört kişilik eleme kupası. Maçları sunucu
+  puanlar; şampiyon 200 jeton kazanır.
 • Liderlik tablosu: gün, hafta, ay ve arkadaşlar arası sıralama.
 
 NASIL İŞLER
 
-• Günün dersi: her gün on soru, yaklaşık beş dakika.
+• Günün turu: her gün on soru, yaklaşık beş dakika.
 • Kategori ve seviye: her kategoride beş seviye, kolaydan zora.
 • Açıklamalar: tur bitince her sorunun niçin öyle olduğunu okursun.
 • Yanlışların takibi: yanlış yaptığın sorular geri gelir, öğrenene kadar.
@@ -156,8 +194,12 @@ NASIL İŞLER
 
 • Başlangıç yolu: alfabeden geçmiş zamana kısa dersler; ders sonunda
   boşluk doldurma, cümle kurma ve çoktan seçmeli alıştırmalar.
+• Alfabe ve sesler: her harf, örnek kelimesi ve sesiyle.
+• Telaffuz atölyesi: kelimeyi dinle, kendi sesini kaydet, karşılaştır.
+  Kayıt yalnız cihazında kalır.
 • Hikâye: Kurmancî bir sahnede seçim yaparak ilerlersin.
-• Kelime kartları: kelime ezberi için.
+• Kelimelerim: aralıklı tekrarla kelime kutuları; zorlandığın kelime
+  daha sık gelir.
 • Sözlük (Ferheng): 1.100'den fazla kelime, Kurmancî ya da Türkçe ara.
   Derste ya da soruda Kurmancî bir kelimeye dokununca anlamı açılır.
 
@@ -180,9 +222,8 @@ Metin/zemin kontrastları WCAG AA eşiğine göre ölçülür. Yazı boyutunu
 sistemden büyüttüğünde ekranlar taşmaz. Ekran okuyucu için düğmelerin
 adı vardır.
 
-ZanKurd ücretsizdir ve reklam içermez. İsteyen için bir abonelik vardır
-— otomatik seri koruması ve projeye destek. Oyunun tamamı aboneliksiz
-oynanır.
+ZanKurd ücretsizdir ve reklam içermez. Bütün dersler, yarışlar ve
+alıştırmalar ücretsizdir; jetonlar oyun içinde kazanılır.
 ```
 
 (1895 karakter)
@@ -246,16 +287,18 @@ kategorilerinden ayrı durur.
 
 Yarış
 
-• Hızlı düello: rastgele bir rakiple canlı 1v1.
+• Canlı düello: seviyene yakın bir rakiple canlı 1v1.
 • Sırayla düello: rakibin aynı anda çevrimiçi olması gerekmez. Sen şimdi
   oynarsın, o sonra; sonuç Düellolarım'da görünür.
 • Oda kur: davet bağlantısını paylaş, arkadaşların tek dokunuşla katılsın.
   Grup yarışında 50 kişiye kadar aynı anda yarışın, canlı sıralamayı izleyin.
+• Turnuva: gerçek oyuncularla dört kişilik eleme kupası. Maçları sunucu
+  puanlar; şampiyon 200 jeton kazanır.
 • Liderlik tablosu: gün, hafta, ay ve arkadaşlar arası sıralama.
 
 Nasıl işler
 
-• Günün dersi: her gün on soru, yaklaşık beş dakika.
+• Günün turu: her gün on soru, yaklaşık beş dakika.
 • Kategori ve seviye: her kategoride beş seviye, kolaydan zora.
 • Açıklamalar: tur bitince her sorunun niçin öyle olduğunu okursun.
 • Yanlışların takibi: yanlış yaptığın sorular geri gelir, öğrenene kadar.
@@ -264,8 +307,12 @@ Nasıl işler
 
 • Başlangıç yolu: alfabeden geçmiş zamana kısa dersler; ders sonunda
   boşluk doldurma, cümle kurma ve çoktan seçmeli alıştırmalar.
+• Alfabe ve sesler: her harf, örnek kelimesi ve sesiyle.
+• Telaffuz atölyesi: kelimeyi dinle, kendi sesini kaydet, karşılaştır.
+  Kayıt yalnız cihazında kalır.
 • Hikâye: Kurmancî bir sahnede seçim yaparak ilerlersin.
-• Kelime kartları: kelime ezberi için.
+• Kelimelerim: aralıklı tekrarla kelime kutuları; zorlandığın kelime
+  daha sık gelir.
 • Sözlük (Ferheng): 1.100'den fazla kelime, Kurmancî ya da Türkçe ara.
   Derste ya da soruda Kurmancî bir kelimeye dokununca anlamı açılır.
 
@@ -288,9 +335,8 @@ Metin/zemin kontrastları WCAG AA eşiğine göre ölçülür. Yazı boyutunu
 sistemden büyüttüğünde ekranlar taşmaz. Ekran okuyucu için düğmelerin
 adı vardır.
 
-ZanKurd ücretsizdir ve reklam içermez. İsteyen için bir abonelik vardır
-— otomatik seri koruması ve projeye destek. Oyunun tamamı aboneliksiz
-oynanır.
+ZanKurd ücretsizdir ve reklam içermez. Bütün dersler, yarışlar ve
+alıştırmalar ücretsizdir; jetonlar oyun içinde kazanılır.
 
 Kullanım Koşulları (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Kullanım koşulları: https://www.zankurd.com/terms.html
@@ -361,7 +407,7 @@ Teknolojî û Zanist û Raman zanîna giştî ne û ji kategoriyên kurdî cuda 
 
 ÇAWA DIXEBITE
 
-• Dersa rojê: her roj deh pirs, nêzîkî pênc deqe.
+• Gera rojê: her roj deh pirs, nêzîkî pênc deqe.
 • Kategorî û ast: di her kategoriyê de pênc ast, ji hêsan ber bi dijwar.
 • Ravekirin: gava tur diqede, tu dixwînî ka her bersiv çima wisa ye.
 • Şaşiyên te: pirsên ku te şaş kirine vedigerin, heta tu fêr bibî.
@@ -373,13 +419,19 @@ PÊŞBIRK
   Tu niha dilîzî, ew paşê; encam di "Pêşbirkên min" de xuya dibe.
 • Ode ava bike: girêdana vexwendinê parve bike, bila hevalên te bi yek
   tikandinê tevlî bibin.
+• Kûpa: kûpaya palawtinê ya çar kesî bi lîstikvanên rastîn. Pûanên
+  pêşbirkan li ser pêşkêşkar tên hesabkirin; şampiyon 200 zêr qezenc dike.
 • Tabloya pêşderiyan: roj, hefte, meh û di nav hevalan de.
 
 HÎN BIBE
 
 • Rêyên fêrbûnê: dersên kurt ên ku mijar bi mijar diçin.
+• Elîfbê û deng: her tîp bi peyva xwe ya mînak û bi dengê wê.
+• Atolyeya bilêvkirinê: guh bide peyvê, dengê xwe tomar bike û berawird
+  bike. Tomar tenê li ser amûra te dimîne.
 • Çîrok: di dîmeneke kurmancî de bi hilbijartinê pêş dikevî.
-• Kartên peyvan: ji bo bîrkirina peyvan.
+• Peyvên min: qutiyên peyvan bi dubarekirina bi navber; peyva ku tu pê
+  zehmetiyê dikişînî pirtir tê.
 • Ferheng: bi kurmancî an bi tirkî bigere.
 
 DU ZIMAN
@@ -395,9 +447,8 @@ dikarî bilîzî. Ast û pêşketina hînbûnê li ser amûrê tên parastin.
 Xala rêzkirinê li ser hesabê tê nivîsandin; pêşbirkên serhêl, karên
 coinan û taybetmendiyên hesabê înternetê dixwazin.
 
-ZanKurd belaş e û reklam tê de tune. Ji bo yên ku dixwazin abonetiyek
-heye — parastina xweber a zincîrê û piştgirî ji projeyê re. Lîstik bi
-temamî bêyî abonetiyê tê lîstin.
+ZanKurd belaş e û reklam tê de tune. Hemû ders, pêşbirk û rahênan belaş
+in; zêr di nava lîstikê de tên qezenckirin.
 ```
 
 (1797 karakter. App Store'da aynı metin kullanılır: başlıklar normal

@@ -1152,6 +1152,7 @@ class _LobbyView extends StatelessWidget {
 
     final format = _CupFormatPanel(ku: ku);
     final ladder = _CupLadder(ku: ku);
+    final rules = _CupRulesPanel(ku: ku);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -1175,7 +1176,7 @@ class _LobbyView extends StatelessWidget {
                   child: Column(
                     key: const ValueKey('tournament-wide-column'),
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [format, ladder],
+                    children: [format, ladder, rules],
                   ),
                 ),
               ),
@@ -1184,9 +1185,60 @@ class _LobbyView extends StatelessWidget {
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [hero, format, ladder],
+          children: [hero, format, ladder, rules],
         );
       },
+    );
+  }
+}
+
+/// "Nasıl oynanır?": kupanın üç kuralı (2026-10-28 görsel kurul — lobinin
+/// alt yarısı boştu ve oyuncu sunucu puanlamasını, süreyi bilmiyordu).
+/// Kurallar sunucuyla birebir: aynı sorular, 100 + en çok 50 hız puanı,
+/// 24 saatte oynanmayan maç hükmen.
+class _CupRulesPanel extends StatelessWidget {
+  const _CupRulesPanel({required this.ku});
+
+  final bool ku;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final rules = <(IconData, String)>[
+      (AppIcons.peopleGroup, Tr.forKu(K.cupRuleSameQuestions, ku)),
+      (AppIcons.bolt, Tr.forKu(K.cupRuleServerScore, ku)),
+      (AppIcons.clock, Tr.forKu(K.cupRuleDeadline, ku)),
+    ];
+    return Column(
+      key: const ValueKey('tournament-rules'),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SahneSectionHeader(title: Tr.forKu(K.howToPlay, ku)),
+        SahneSurfaceCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var i = 0; i < rules.length; i++) ...[
+                if (i > 0) const SizedBox(height: SahneSpace.x3),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(rules[i].$1, size: 20, color: t.goldTx),
+                    const SizedBox(width: SahneSpace.x3),
+                    Expanded(
+                      child: Text(
+                        rules[i].$2,
+                        style: SahneType.body.copyWith(color: t.tx),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

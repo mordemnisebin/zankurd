@@ -34,6 +34,10 @@ class AchievementStore {
     this._bestRoundStreak,
   );
 
+  /// Görünür on bir konunun hepsi: rozet "Tüm konularda" der. Liste
+  /// Teknoloji, Sinema ve Dünya eklenmeden önceki sekiz konuda kalmıştı;
+  /// ilerleme "x/8 konu" gösteriyordu (2026-10-28 gece kod denetimi).
+  /// Önceden kazanılan rozet kayıtlı olduğu için geri alınmaz.
   static const requiredCategories = [
     'Ziman',
     'Çand',
@@ -43,6 +47,9 @@ class AchievementStore {
     'Muzîk',
     'Siyaset',
     'Paradigma',
+    'Teknolojî',
+    'Sînema',
+    'Cîhan',
   ];
 
   static String get _unlockedKey =>

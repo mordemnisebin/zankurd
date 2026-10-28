@@ -262,7 +262,9 @@ class NotificationService {
     final now = from ?? DateTime.now();
     var candidate = DateTime(now.year, now.month, now.day, _hour, _minute);
     if (!candidate.isAfter(now)) {
-      candidate = candidate.add(const Duration(days: 1));
+      // Takvim günü olarak ilerlenir: `add(Duration(days: 1))` 24 saat
+      // ekler ve yaz/kış saati geçişinde hatırlatmayı bir saat kaydırır.
+      candidate = DateTime(now.year, now.month, now.day + 1, _hour, _minute);
     }
     return candidate;
   }

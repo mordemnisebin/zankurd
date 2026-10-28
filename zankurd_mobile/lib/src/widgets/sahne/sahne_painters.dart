@@ -66,6 +66,7 @@ class SahneKilimPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (size.isEmpty) return;
     const period = 16.0;
     final scale = size.height / 8;
     final step = period * scale;
@@ -311,7 +312,8 @@ class SahneDiamondTrackPainter extends CustomPainter {
       old.trail != trail ||
       old.fraction != fraction ||
       old.fromTop != fromTop ||
-      old.halo != halo;
+      old.halo != halo ||
+      old.haloSize != haloSize;
 }
 
 /// Sahne kartı zemini: gece degradesi (üst → alt) ya da yarış degradesi

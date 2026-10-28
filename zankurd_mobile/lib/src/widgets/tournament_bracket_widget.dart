@@ -357,6 +357,8 @@ class _BracketMatchCard extends StatelessWidget {
       // Text'leri ayrıca kendi semantics düğümünü ekleyip çift okumaya
       // yol açıyordu (M28 devamı).
       excludeSemantics: true,
+      // İç dokunuş dışlandı; ekran okuyucu eylemi buradan alır.
+      onTap: onTap,
       child: GestureDetector(
         onTap: onTap,
         // 350 ms kenarlık/gölge geçişi süsüdür. Tercih açıkken kart

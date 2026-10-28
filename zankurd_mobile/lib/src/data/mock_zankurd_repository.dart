@@ -1209,6 +1209,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
   final List<String> resumedAsyncDuelIds = [];
   final List<String> cancelledAsyncDuelIds = [];
 
+  /// Sahte depoda joker hakkı yalnız yereldir (sunucu yok).
+  @override
+  Future<int?> loadJokerStock() async => null;
+
+  @override
+  Future<void> consumeJokerStock() async {}
+
   /// Sahte depoda turnuva bot benzetimidir, sunucu puanı yoktur: ekran eski
   /// yola düşer. Sunucu yolunu sınayan testler bu üçünü ezer.
   @override

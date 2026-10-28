@@ -464,11 +464,15 @@ class _FlashcardViewState extends State<_FlashcardView> {
   Widget build(BuildContext context) {
     if (widget.records.isEmpty) return const SizedBox.shrink();
     final t = SahneTokens.of(context);
-    final record = widget.records[_currentIndex];
+    final record =
+        widget.records[_currentIndex.clamp(0, widget.records.length - 1)];
     final isKu = context.isKu;
-    final explanationText = isKu
-        ? (record.explanationKu ?? record.explanation)
-        : (record.explanationTr ?? record.explanation);
+    // Boş dil alanı ortak açıklamayı gölgelemesin (liste görünümü de
+    // boşluğu yok sayar).
+    final localized = isKu ? record.explanationKu : record.explanationTr;
+    final explanationText = (localized?.trim().isNotEmpty ?? false)
+        ? localized!
+        : record.explanation;
     final reduceMotion = sahneMotionReduced(context);
 
     return Column(

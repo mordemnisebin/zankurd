@@ -33,9 +33,26 @@ class _SignInScreenState extends State<SignInScreen>
   bool _obscurePassword = true;
   late AnimationController _animationController;
 
+  /// E-posta ve parola dolu mu? Doluysa form gönderimi ekranın birincil
+  /// eylemi olur ve "Hemen oyna" ikincile iner. Eskiden form doldurulsa da
+  /// tek dolgulu düğme "Hemen oyna" kalıyordu; giriş yapacak kişi yanlışlıkla
+  /// misafir olabiliyordu (2026-10-28 görsel kurul: GPT-6 Sol + Gemini).
+  bool _credentialsFilled = false;
+
+  void _onCredentialsChanged() {
+    final filled =
+        _emailController.text.trim().isNotEmpty &&
+        _passwordController.text.isNotEmpty;
+    if (filled != _credentialsFilled && mounted) {
+      setState(() => _credentialsFilled = filled);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    _emailController.addListener(_onCredentialsChanged);
+    _passwordController.addListener(_onCredentialsChanged);
     _animationController = AnimationController(
       // Kademeli giriş animasyonu içeriği süre*0.5–0.95 aralığında
       // gösteriyor; 900ms'de bu ~0.45–0.85sn boş ekran demekti. Faz 4:
@@ -316,14 +333,27 @@ class _SignInScreenState extends State<SignInScreen>
                   SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
                   // Hesabı olan için ikincil yol: dolgulu birincil eylem
                   // artık "Hemen oyna"dır (alt perde).
-                  SahneButton.secondary(
-                    key: const ValueKey('sign-in-have-account'),
-                    label: context.t(K.signInHaveAccount),
-                    icon: AppIcons.rightToBracket,
-                    arrow: false,
-                    expand: true,
-                    onPressed: loading ? null : () => _signIn(authProvider),
-                  ),
+                  _credentialsFilled
+                      ? SahneButton.primary(
+                          key: const ValueKey('sign-in-have-account'),
+                          label: context.t(K.signIn),
+                          icon: AppIcons.rightToBracket,
+                          arrow: false,
+                          expand: true,
+                          onPressed: loading
+                              ? null
+                              : () => _signIn(authProvider),
+                        )
+                      : SahneButton.secondary(
+                          key: const ValueKey('sign-in-have-account'),
+                          label: context.t(K.signInHaveAccount),
+                          icon: AppIcons.rightToBracket,
+                          arrow: false,
+                          expand: true,
+                          onPressed: loading
+                              ? null
+                              : () => _signIn(authProvider),
+                        ),
                 ],
               ),
             );
@@ -370,16 +400,27 @@ class _SignInScreenState extends State<SignInScreen>
                   scale: LoadAnimationSequence.buttonScaleAnimation(
                     _animationController,
                   ),
-                  child: SahneButton.primary(
-                    key: const ValueKey('sign-in-play-now'),
-                    label: context.t(K.signInPlayNow),
-                    icon: AppIcons.play,
-                    arrow: false,
-                    expand: true,
-                    onPressed: loading
-                        ? null
-                        : () => _signInAsGuest(authProvider),
-                  ),
+                  child: _credentialsFilled
+                      ? SahneButton.secondary(
+                          key: const ValueKey('sign-in-play-now'),
+                          label: context.t(K.signInPlayNow),
+                          icon: AppIcons.play,
+                          arrow: false,
+                          expand: true,
+                          onPressed: loading
+                              ? null
+                              : () => _signInAsGuest(authProvider),
+                        )
+                      : SahneButton.primary(
+                          key: const ValueKey('sign-in-play-now'),
+                          label: context.t(K.signInPlayNow),
+                          icon: AppIcons.play,
+                          arrow: false,
+                          expand: true,
+                          onPressed: loading
+                              ? null
+                              : () => _signInAsGuest(authProvider),
+                        ),
                 ),
               ),
               secondary: Wrap(

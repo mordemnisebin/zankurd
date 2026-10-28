@@ -200,7 +200,8 @@ class _RoomChatState extends State<RoomChat> {
         roomId: widget.roomId,
         text: text,
       );
-      _messageController.clear();
+      // Gönderim sürerken yazılmaya başlanan yeni taslak silinmesin.
+      if (_messageController.text.trim() == text) _messageController.clear();
     } catch (error, stack) {
       // Sunucu hız sınırı (10 sn'de 5 mesaj) beklenen bir kullanıcı
       // durumudur: hata raporuna yazılmaz, yazı alanı korunur.

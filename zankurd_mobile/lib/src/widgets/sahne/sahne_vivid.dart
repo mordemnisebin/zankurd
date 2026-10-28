@@ -328,10 +328,11 @@ class _SahneModeTileState extends State<SahneModeTile> {
       container: true,
       button: true,
       enabled: enabled,
-      // Kompakt kartta rozet görsel olarak yalnız noktadır; metni okunur.
+      // Alt düğümler dışlandığı için rozet (kompaktta yalnız nokta, normal
+      // kartta yazı) her iki biçimde de etikette okunur.
       label: [
         semanticLabel ?? [title, ?subtitle].join('. '),
-        if (compact && badge != null) badge,
+        ?badge,
       ].join('. '),
       excludeSemantics: true,
       onTap: onTap,
@@ -459,16 +460,22 @@ class _SahneModeTileState extends State<SahneModeTile> {
                                               horizontal: SahneSpace.x2,
                                               vertical: 2,
                                             ),
-                                            child: Text(
-                                              badge,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: SahneType.captionStrong
-                                                  .copyWith(
-                                                    color: gold
-                                                        ? t.goldTx
-                                                        : fill,
-                                                  ),
+                                            // Sığmazsa kesilmez, küçülür:
+                                            // "Sonuç hazır" yarım kartta
+                                            // "Sonuç ha…" okunuyordu
+                                            // (2026-10-28 görsel kurul).
+                                            child: FittedBox(
+                                              fit: BoxFit.scaleDown,
+                                              child: Text(
+                                                badge,
+                                                maxLines: 1,
+                                                style: SahneType.captionStrong
+                                                    .copyWith(
+                                                      color: gold
+                                                          ? t.goldTx
+                                                          : fill,
+                                                    ),
+                                              ),
                                             ),
                                           ),
                                         ),

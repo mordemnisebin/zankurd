@@ -68,7 +68,7 @@ void main() {
             widget.value == '${TournamentConfig.coinBonusChampion}',
       ),
     );
-    expect(reward.label, 'jeton · ödül');
+    expect(reward.label, 'jeton · şampiyona');
   });
 
   testWidgets('Kurmancî kupada ödülün birimi zêr olarak okunur', (
@@ -82,8 +82,8 @@ void main() {
             widget.value == '${TournamentConfig.coinBonusChampion}',
       ),
     );
-    expect(reward.label, 'zêr · xelat');
-    expect(find.text('zêr · xelat'), findsOneWidget);
+    expect(reward.label, 'zêr · ji şampiyon re');
+    expect(find.text('zêr · ji şampiyon re'), findsOneWidget);
   });
 
   testWidgets('maç başı sahte bir ödül vaat edilmiyor', (tester) async {

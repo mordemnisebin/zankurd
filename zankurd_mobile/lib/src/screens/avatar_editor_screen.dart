@@ -357,6 +357,13 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
     // seç" çubukta; eski mor kimlik kartı kalktı. Bölümler tek biçimli
     // bölüm başlığıyla; seçimler yüzey kartı ve liste grubunda. Tek
     // birincil eylem: Kaydet.
+    // Kaydetme sürerken geri çıkılamaz: `dispose` bu oturumun yüklemelerini
+    // "kaydedilmedi" sanıp siler, bir an sonra kayıt profili silinen
+    // fotoğrafa bağlardı (2026-10-28 gece kod denetimi: GPT-6 Sol).
+    return PopScope(canPop: !_saving, child: _buildScaffold(context, ku, t));
+  }
+
+  Widget _buildScaffold(BuildContext context, bool ku, SahneTokens t) {
     return Scaffold(
       backgroundColor: t.bg,
       appBar: zkAppBar(context, title: Text(context.t(K.myAvatar))),

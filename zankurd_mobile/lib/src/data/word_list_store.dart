@@ -152,13 +152,22 @@ class WordListStore extends ChangeNotifier {
         final decoded = jsonDecode(raw) as Map<String, dynamic>;
         decoded.forEach((id, value) {
           if (value is! Map<String, dynamic>) return;
-          words[id] = SavedWord(
-            entryId: id,
-            box: LeitnerSchedule.clampBox((value['box'] as num?)?.toInt() ?? 1),
-            dueAtMs: (value['due'] as num?)?.toInt() ?? 0,
-            addedAtMs: (value['added'] as num?)?.toInt() ?? 0,
-            reviews: (value['n'] as num?)?.toInt() ?? 0,
-          );
+          // Kayıt kayıt korunur: tek bozuk alan bütün döngüyü kesiyor,
+          // sonraki kaydetme de kalan kelimeleri silerek listeyi
+          // kısaltıyordu (2026-10-28 gece kod denetimi: GPT-6 Sol).
+          try {
+            words[id] = SavedWord(
+              entryId: id,
+              box: LeitnerSchedule.clampBox(
+                (value['box'] as num?)?.toInt() ?? 1,
+              ),
+              dueAtMs: (value['due'] as num?)?.toInt() ?? 0,
+              addedAtMs: (value['added'] as num?)?.toInt() ?? 0,
+              reviews: (value['n'] as num?)?.toInt() ?? 0,
+            );
+          } catch (error, stack) {
+            ErrorReporter.record(error, stack, reason: 'word_list_entry');
+          }
         });
       } catch (error, stack) {
         ErrorReporter.record(error, stack, reason: 'word_list_decode');

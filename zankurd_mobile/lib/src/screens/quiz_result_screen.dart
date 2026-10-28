@@ -2126,7 +2126,7 @@ class _CategoryLearnings extends StatelessWidget {
   Widget _categoryRow(BuildContext context, CategoryTally tally, String name) {
     final t = SahneTokens.of(context);
     final night = SahneResultScene.maybeOf(context)?.night ?? true;
-    final ok = tally.correct * 2 >= tally.answered;
+    final ok = tally.answered > 0 && tally.correct * 2 >= tally.answered;
     final statusLabel = context.t(ok ? K.correct : K.wrong);
     final fraction = '${tally.correct}/${tally.answered}';
     final tone = CategoryVisuals.tone(tally.category);

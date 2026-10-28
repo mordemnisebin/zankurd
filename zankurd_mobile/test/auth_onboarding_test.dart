@@ -428,6 +428,30 @@ void main() {
     },
   );
 
+  // 2026-10-28 görsel kurul: form doldurulunca "Giriş yap" birincil olur,
+  // "Hemen oyna" ikincile iner; boşken misafir yolu birincil kalır.
+  testWidgets('form dolunca giriş birincil, Hemen oyna ikincil', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      testShell(child: const SignInScreen(), authProvider: GateAuthProvider()),
+    );
+    await tester.pumpAndSettle();
+    bool isPrimary(String key) =>
+        tester.widget<SahneButton>(find.byKey(ValueKey(key))).isPrimary;
+    expect(isPrimary('sign-in-play-now'), isTrue);
+    expect(isPrimary('sign-in-have-account'), isFalse);
+    final fields = find.byType(TextField);
+    await tester.enterText(fields.at(0), 'a@b.co');
+    await tester.enterText(fields.at(1), 'parola123');
+    await tester.pump();
+    expect(isPrimary('sign-in-have-account'), isTrue);
+    expect(isPrimary('sign-in-play-now'), isFalse);
+    expect(find.text('Giriş yap'), findsWidgets);
+  });
+
   testWidgets('auth alternative buttons ignore taps while loading', (
     tester,
   ) async {

@@ -227,6 +227,10 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       });
       return;
     }
+    // Ödül isteği sürerken ekrandan çıkılmış olabilir: kapanmış denetleyiciye
+    // dokunmak hata fırlatırdı (2026-10-28 gece kod denetimi). Ödül
+    // sunucuda yazıldı; çark yeniden açılınca bakiye güncel görünür.
+    if (!mounted) return;
     final winnerIndex = rewards.contains(won) ? rewards.indexOf(won) : 0;
     final segment = 2 * math.pi / rewards.length;
     // işaretçi üstte (−90°); kazanan dilimin ortası işaretçiye gelsin.

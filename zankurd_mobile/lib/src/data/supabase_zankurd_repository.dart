@@ -4504,6 +4504,31 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<int?> loadJokerStock() async {
+    if (client.auth.currentUser == null) return null;
+    try {
+      final response = await client.rpc<dynamic>('get_joker_stock');
+      return (response as num?)?.toInt();
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) return null;
+      _recordError(error, stack, reason: 'loadJokerStock failed');
+      return null;
+    }
+  }
+
+  @override
+  Future<void> consumeJokerStock() async {
+    if (client.auth.currentUser == null) return;
+    try {
+      await client.rpc<dynamic>('consume_joker_stock');
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) return;
+      _recordError(error, stack, reason: 'consumeJokerStock failed');
+      rethrow;
+    }
+  }
+
+  @override
   Future<AsyncDuelStart> startTournamentMatch(String matchId) async {
     try {
       final response = await client.rpc(

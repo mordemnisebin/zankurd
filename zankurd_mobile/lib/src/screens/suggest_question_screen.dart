@@ -49,6 +49,8 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
   }
 
   Future<void> _submit() async {
+    // Aynı karede iki dokunuş aynı öneriyi iki kez göndermesin.
+    if (_submitting) return;
     if (!_formKey.currentState!.validate()) return;
     if (_selectedCategory == null) {
       ScaffoldMessenger.of(

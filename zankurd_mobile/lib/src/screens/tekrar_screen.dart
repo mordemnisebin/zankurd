@@ -81,6 +81,10 @@ class _TekrarScreenState extends State<TekrarScreen> {
   TekrarPlan? _plan;
   bool _loading = true;
 
+  /// 2026-10-28 kod denetimi: yükleme hatası "Bugün tekrar yok" diye
+  /// gösteriliyordu; oyuncu tekrarı bittiğini sanıyordu.
+  bool _loadFailed = false;
+
   @override
   void initState() {
     super.initState();
@@ -88,6 +92,7 @@ class _TekrarScreenState extends State<TekrarScreen> {
   }
 
   Future<void> _load() async {
+    if (_loadFailed) setState(() => _loadFailed = false);
     try {
       final words = widget.wordStore ?? await WordListStore.load();
       final mistakes = widget.mistakeStore ?? await MistakeStore.load();
@@ -115,7 +120,12 @@ class _TekrarScreenState extends State<TekrarScreen> {
       });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'tekrar_screen_load');
-      if (mounted) setState(() => _loading = false);
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _loadFailed = true;
+        });
+      }
     }
   }
 
@@ -140,6 +150,25 @@ class _TekrarScreenState extends State<TekrarScreen> {
         backgroundColor: t.bg,
         appBar: zkAppBar(context, title: Text(context.t(K.tekrarTitle))),
         body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (_loadFailed) {
+      return Scaffold(
+        backgroundColor: t.bg,
+        appBar: zkAppBar(context, title: Text(context.t(K.tekrarTitle))),
+        body: SafeArea(
+          top: false,
+          child: AppErrorState(
+            key: const ValueKey('tekrar-load-error'),
+            title: context.t(K.loadFailedShort),
+            message: context.t(K.genericErrorBody),
+            retryLabel: context.t(K.retryShort),
+            onRetry: () {
+              setState(() => _loading = true);
+              _load();
+            },
+          ),
+        ),
       );
     }
     if (plan == null || plan.isEmpty) {

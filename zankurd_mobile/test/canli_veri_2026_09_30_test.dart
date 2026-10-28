@@ -40,6 +40,7 @@ import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/suggest_question_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/arena_kit.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -233,7 +234,12 @@ void main() {
       expect(find.text('Başla'), findsNothing);
     });
 
-    testWidgets('sayfa içeriği ekranın üst kenarına yapışık kalmaz', (
+    // 2026-10-28 görsel kurul: 09-30'daki "alt yarı boş" şikâyetine kart
+    // aşağı itilerek çözülmüştü; bu kez başlığın altında ~200pt boşluk
+    // kaldı. Kart artık üstten başlar (öteki lobiler gibi); alt yarıyı
+    // canlıda günün önizlemesi (katılımcılar, dünün birincisi) doldurur.
+    // Bekçi: kart başlığa yapışmaz ama boşluk da bırakmaz.
+    testWidgets('sayfa içeriği üstten başlar, başlığa yapışmaz', (
       tester,
     ) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -243,9 +249,9 @@ void main() {
         testShell(child: ContestScreen(repository: MockZanKurdRepository())),
       );
       await tester.pumpAndSettle();
-      // Kart ve çipler kalan alanda ortalanır; alt yarı bomboş değildir.
-      final chip = tester.getBottomLeft(find.text('20 sn/soru'));
-      expect(chip.dy, greaterThan(430));
+      // Başlık bandı 64pt; kart onun 16–40pt altında başlar.
+      final heroTop = tester.getTopLeft(find.byType(ArenaHero)).dy;
+      expect(heroTop, inInclusiveRange(80, 104));
     });
   });
 

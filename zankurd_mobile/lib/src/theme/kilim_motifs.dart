@@ -127,6 +127,7 @@ class KilimPainter extends CustomPainter {
   }
 
   void _diamondTiling(Canvas canvas, Size size, Paint paint) {
+    if (size.isEmpty || count <= 0) return;
     final cell = size.width / count;
     final r = cell * 0.40;
     final stroke = Paint()

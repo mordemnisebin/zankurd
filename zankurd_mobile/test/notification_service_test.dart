@@ -170,6 +170,23 @@ void main() {
         expect(next, DateTime(2026, 6, 22, 19, 0));
       });
 
+      // 2026-10-28 kod denetimi: ertesi gün `add(Duration(days: 1))` ile
+      // bulunuyordu; yaz saatine geçilen gecede (yerel saat dilimi DST
+      // kullanıyorsa) hatırlatma 20.00'ye kayardı. Takvim günü ilerlenir.
+      test('ertesi gün takvimle bulunur; saat kaymaz, ay devrilir', () async {
+        final service = await NotificationService.load(
+          timeZoneResolver: const _FakeTimeZoneResolver('Europe/Berlin'),
+        );
+        await service.setTime(19, 0);
+        final dst = service.nextFireTime(from: DateTime(2026, 3, 28, 20, 0));
+        expect((dst.year, dst.month, dst.day), (2026, 3, 29));
+        expect((dst.hour, dst.minute), (19, 0));
+        final monthEnd = service.nextFireTime(
+          from: DateTime(2026, 10, 31, 21, 0),
+        );
+        expect(monthEnd, DateTime(2026, 11, 1, 19, 0));
+      });
+
       test('hedef saate tam denk gelirse yarını döner', () async {
         final service = await NotificationService.load(
           timeZoneResolver: const _FakeTimeZoneResolver('Europe/Berlin'),

@@ -54,13 +54,13 @@ class AppRoute<T> extends PageRouteBuilder<T> {
           // kılıyordu (2026-08-02 denetimi).
           if (ReducedMotionProvider.isReducedIn(context)) return child;
 
-          final incoming = CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeOutCubic,
+          // `CurvedAnimation` her yeniden çizimde üst animasyona dinleyici
+          // ekler ve atılmaz; `CurveTween` dinleyici bırakmaz.
+          final incoming = animation.drive(
+            CurveTween(curve: Curves.easeOutCubic),
           );
-          final outgoing = CurvedAnimation(
-            parent: secondaryAnimation,
-            curve: Curves.easeOut,
+          final outgoing = secondaryAnimation.drive(
+            CurveTween(curve: Curves.easeOut),
           );
           return SlideTransition(
             position: Tween<Offset>(

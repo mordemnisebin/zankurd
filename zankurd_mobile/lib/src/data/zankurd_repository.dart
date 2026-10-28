@@ -423,6 +423,15 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// [classifyAsyncDuelReviewError].
   Future<AsyncDuelReview?> loadAsyncDuelReview(String duelId);
 
+  // ─── Joker paketi hakları (2026-10-28) ────────────────────────────────
+
+  /// Hesaptaki kalan joker hakkı (`get_joker_stock`). Ulaşılamazsa null:
+  /// çağıran yerel önbellekle sürer.
+  Future<int?> loadJokerStock();
+
+  /// Hesaptan bir joker hakkı düşer (`consume_joker_stock`).
+  Future<void> consumeJokerStock();
+
   // ─── Sunucu puanlı turnuva maçı (2026-10-27) ─────────────────────────
   //
   // Sırayla düellonun sözleşmesiyle birebir: sorular sunucuda seçilir,
@@ -575,8 +584,9 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   /// Seri onarımını IDEMPOTENT biçimde işler: ay ([monthKey], `yyyy-MM`) ve
   /// kırılma günü ([breakDay], `yyyy-MM-dd`) aynıysa ikinci çağrı ücreti
-  /// yeniden kesmez. [premium] true ise ücretsizdir (abonelik istemcide
-  /// bilinir; sunucu beyanı kabul eder, bkz. göç notu).
+  /// yeniden kesmez. [premium] imza uyumu için durur: canlı sunucu onu YOK
+  /// SAYAR ve her onarımda 100 jeton keser (`2026-10-24_bildirim_seri_eposta`
+  /// sonrası; istemci beyanına güvenilmez).
   Future<StreakRepairResult> spendStreakRepair({
     required String monthKey,
     required String breakDay,

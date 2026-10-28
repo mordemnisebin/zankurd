@@ -110,6 +110,9 @@ class SahneButton extends StatelessWidget {
        expand = false;
 
   final _SahneButtonKind _kind;
+
+  /// Dolgulu birincil düğme mi (testlerde hiyerarşiyi doğrulamak için).
+  bool get isPrimary => _kind == _SahneButtonKind.primary;
   final String label;
 
   /// Yalnız tonal düğme: ton dolgusu ve etiket/ikon rengi.

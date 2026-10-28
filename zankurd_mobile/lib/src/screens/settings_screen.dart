@@ -959,6 +959,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
     if (picked != null && mounted) {
       await service.setTime(picked.hour, picked.minute);
+      if (!mounted) return;
       setState(() {
         _notificationTime = service.timeDisplay;
       });

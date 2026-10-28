@@ -652,6 +652,21 @@
    }
   },
   {
+   "id": "question_text_fix_sql",
+   "description": "Canlı soru metni düzeltme göçleri (yalnız id + eski metin eşleşen UPDATE)",
+   "glob": "supabase/*_soru_*.sql",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 100,
+   "expectedRecordCount": null,
+   "notes": "Kayıt değil, mevcut canlı soruların metin düzeltmesi; yerel kopyası assets/data altında taranır",
+   "columns": {}
+  },
+  {
    "id": "historical_question_sql",
    "description": "Historical question SQL snapshots",
    "glob": "supabase/*question*.sql",

@@ -76,7 +76,7 @@
   {
     "id": "offline_0015",
     "category": "Ziman",
-    "prompt": "Wêne \"mal\" dibêje — wateya rast kîjan e?",
+    "prompt": "Peyva \"mal\" a di wêneyê de tê çi wateyê?",
     "answers": [
       "gece",
       "ev",
@@ -90,7 +90,7 @@
     "imageAltKu": "Gundekî terikandî li ser girekî: avahiyên hinekî hilweşiyayî yên bi kemer û pencere.",
     "imageAltTr": "Tepede kemerli, pencereli, kısmen yıkılmış yapılardan oluşan terk edilmiş bir yerleşim.",
     "difficulty": 3,
-    "promptTr": "Görsel \"mal\" diyor — doğru anlam hangisi?",
+    "promptTr": "Görseldeki \"mal\" ne demek?",
     "answersTr": [
       "gece",
       "ev",
@@ -275,7 +275,7 @@
   {
     "id": "offline_0055",
     "category": "Ziman",
-    "prompt": "Wêne \"nan\" dibêje — wateya rast kîjan e?",
+    "prompt": "Peyva \"nan\" a di wêneyê de tê çi wateyê?",
     "answers": [
       "yol",
       "ekmek",
@@ -289,7 +289,7 @@
     "imageAltKu": "Ji nêzîk ve: hevîrên gilover ên bi neqşên kulîlkan bi dîwarê germ ê tenûrê ve zeliqî ne, li jêr agir dişewite.",
     "imageAltTr": "Yakın çekim: çiçek desenli yuvarlak hamurlar tandırın sıcak duvarına yapışmış, altta alevler yanıyor.",
     "difficulty": 1,
-    "promptTr": "Görsel \"nan\" diyor — doğru anlam hangisi?",
+    "promptTr": "Görseldeki \"nan\" ne demek?",
     "answersTr": [
       "yol",
       "ekmek",
@@ -410,7 +410,7 @@
   {
     "id": "offline_0070",
     "category": "Ziman",
-    "prompt": "Wêne \"xweş\" dibêje — wateya rast kîjan e?",
+    "prompt": "Peyva \"xweş\" a di wêneyê de tê çi wateyê?",
     "answers": [
       "soğuk",
       "gelmek",
@@ -424,7 +424,7 @@
     "imageAltKu": "Ji nêzîk ve: pitikek bi çavên girtî dikene; du diranên biçûk xuya dibin, li paş her tişt nezelal û ronî ye.",
     "imageAltTr": "Gözleri kapalı gülen bir bebek yüzü yakın çekimde; iki küçük diş görünüyor, arka plan bulanık ve aydınlık.",
     "difficulty": 4,
-    "promptTr": "Görsel \"xweş\" diyor — doğru anlam hangisi?",
+    "promptTr": "Görseldeki \"xweş\" ne demek?",
     "answersTr": [
       "soğuk",
       "gelmek",
@@ -462,7 +462,7 @@
   {
     "id": "offline_0080",
     "category": "Ziman",
-    "prompt": "Wêne \"biçûk\" dibêje — wateya rast kîjan e?",
+    "prompt": "Peyva \"biçûk\" a di wêneyê de tê çi wateyê?",
     "answers": [
       "kitap",
       "küçük",
@@ -476,7 +476,7 @@
     "imageAltKu": "Ji nêzîk ve: perçeyekî metalî yê gilover li ser zemînekî gewr; qeraxên wî xêzkirî ne, di navê de qulek heye.",
     "imageAltTr": "Gri fonda, kenarları tırtıklı, ortasında bir delik bulunan silindirik bir metal parçanın makro çekimi.",
     "difficulty": 1,
-    "promptTr": "Görsel \"biçûk\" diyor — doğru anlam hangisi?",
+    "promptTr": "Görseldeki \"biçûk\" ne demek?",
     "answersTr": [
       "kitap",
       "küçük",

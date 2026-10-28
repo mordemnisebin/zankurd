@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -201,11 +199,6 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
                 ),
               );
             }
-            // 2026-09-30 canlı: kart ve iki çip ekranın üst yarısında
-            // kalıyor, alt yarı bomboştu. İçerik artık kalan alanın
-            // üst üçte birinde durur (optik denge); uzun içerik ya da büyük
-            // yazıda alan yetmezse sayfa yine kayar.
-            //
             // `SliverFillRemaining(hasScrollBody: false)` kullanılamaz:
             // içerik bir `LayoutBuilder` taşıyor (geniş ekran düzeni) ve
             // o iç boyut hesabını desteklemiyor.
@@ -238,27 +231,20 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
     );
   }
 
-  /// İçeriği (ya da onun iskeletini) kalan alanın üst üçte birine koyar.
+  /// İçeriği (ya da onun iskeletini) sayfanın üstünden başlatır.
   /// Yükleniyor ve yüklendi aynı yerleşimi paylaşır; yoksa kart gelince
   /// sayfa zıplar.
   Widget _alignedContent(Widget child) {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
-      sliver: SliverLayoutBuilder(
-        // Üst boşluk iskeletin sabit yüksekliğinden hesaplanır (eski
-        // `Alignment(0, -0.6)` ile aynı nokta): altına önizleme ya da
-        // sıralama eklendiğinde kahraman kart yerinden kaymaz.
-        builder: (context, sliver) => SliverToBoxAdapter(
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: math.max(
-                0,
-                (sliver.remainingPaintExtent - _kSkeletonContentHeight) * 0.2,
-              ),
-              bottom: SahneSpace.x4,
-            ),
-            child: SizedBox(width: double.infinity, child: child),
-          ),
+      // 2026-10-28 görsel kurul: kartı kalan alanın üst beşte birine itmek
+      // telefonda başlığın altında ~200pt boşluk bırakıyordu; öteki lobiler
+      // (turnuva, düello) içeriği üstten başlatır. Boşluk artık sabit;
+      // iskelet ile yüklenen kart yine aynı yerde durur.
+      sliver: SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: SahneSpace.x4),
+          child: SizedBox(width: double.infinity, child: child),
         ),
       ),
     );
@@ -308,10 +294,6 @@ class _ContestSkeleton extends StatelessWidget {
 /// Kahraman kartın yüklenmiş hâldeki yüksekliği (iskelet bununla aynı yeri
 /// tutsun; `contest_skeleton_test` ölçüp kilitler).
 const double _kHeroSkeletonHeight = 204;
-
-/// İskeletin toplam yüksekliği: kahraman + bölüm boşluğu + başlık + çipler.
-const double _kSkeletonContentHeight =
-    _kHeroSkeletonHeight + SahneSpace.sectionTop + 20 + SahneSpace.x2 + 44;
 
 class _ContestContent extends StatelessWidget {
   const _ContestContent({
