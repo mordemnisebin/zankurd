@@ -546,15 +546,18 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   Future<void> _confirmExit() async {
     if (_exitInFlight) return;
     // Diyalog açıkken soru sayacı DURUR (2026-10-21): "Yarıştan çık?" sorusunu
-    // düşünen oyuncunun süresi akıp soruyu yakıyordu (19 → 7). Duvar saati
-    // (`_stopwatch`) da durur ki sunucuya giden `responseMs` ile ekrandaki
-    // sayaç ayrışmasın; cevap süresini sunucu yeniden hesaplamaz, istemci
-    // bildirir.
+    // düşünen oyuncunun süresi akıp soruyu yakıyordu (19 → 7). 2026-10-29:
+    // sunucu saati durmadığı için yalnız görsel sayaç durur (aşağıya bkz.).
     final pauseForDialog =
         _phase == _Phase.idle && _timerController.isAnimating;
+    // Yalnız GÖRSEL sayaç durur; duvar saati (`_stopwatch`) işlemeye devam
+    // eder. Süreyi sunucu sunum anından ölçer ve diyalog sırasında akar:
+    // kronometre durdurulunca dönüşte ekranda süre varmış gibi görünüp
+    // 25 sn'yi aşmış doğru cevap yanlış sayılıyordu (Codex denetimi
+    // 2026-10-29). Dönüşte `_reconcileTimerAfterResume` sayacı eşitler,
+    // süre dolmuşsa zaman aşımını işler.
     if (pauseForDialog) {
       _timerController.pause();
-      _stopwatch.stop();
     }
     final quit = await showDialog<bool>(
       context: context,
@@ -587,8 +590,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           mounted &&
           _phase == _Phase.idle &&
           !_exitInFlight) {
-        _stopwatch.start();
-        _timerController.resume();
+        _reconcileTimerAfterResume();
       }
       return;
     }

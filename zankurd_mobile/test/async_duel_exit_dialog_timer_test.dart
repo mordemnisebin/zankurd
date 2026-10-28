@@ -11,6 +11,14 @@
 /// Diyalog sayaçtan bağımsız bir rota; hiçbir test diyalog açıkken saati
 /// ilerletip sayacı okumuyordu. Bu bekçi diyalog açıkken 6 sn pompalar:
 /// kalan saniye değişmemeli; "Devam et"ten sonra kaldığı yerden akmalı.
+///
+/// ## 2026-10-29 (Codex denetimi, hata #7): sunucu saati durmuyor
+///
+/// Süreyi sunucu sunum anından ölçer ve diyalog sırasında akar. Yalnız
+/// görsel sayaç duruyor, kronometre de duruyordu: dönüşte ekranda süre
+/// varmış gibi görünüp sunucuda 25 sn'yi aşmış doğru cevap YANLIŞ
+/// sayılıyordu. Artık kronometre akar; dönüşte sayaç duvar saatine eşitlenir
+/// (ikinci testi bkz.).
 library;
 
 import 'support/play_hub_nav.dart';
@@ -127,4 +135,43 @@ void main() {
       expect(find.byKey(const ValueKey('play-hub-async-duel')), findsOneWidget);
     },
   );
+
+  testWidgets('diyalogda geçen gerçek süre dönüşte sayaca yansır', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = freshMockRepository();
+
+    await tester.pumpWidget(
+      testShell(
+        child: PlayHubScreen(repository: repository, asyncDuelEnabled: true),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await openAsyncOpponentSheet(tester);
+    await tester.tap(find.byKey(const ValueKey('opponent-sheet-random')));
+    await tester.pump();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    await tester.tap(find.byKey(const ValueKey('async-duel-quit')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    final frozen = _secondsLeft(tester);
+
+    // Duvar saati (sunucu saatinin istemcideki karşılığı) 3 sn ilerler.
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 3200)),
+    );
+    await tester.tap(find.text('Devam et'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(
+      _secondsLeft(tester),
+      lessThanOrEqualTo(frozen - 3),
+      reason: 'diyalogda akan sunucu süresi sayaca eklenmeli',
+    );
+    await tester.pumpWidget(const SizedBox());
+  });
 }

@@ -1585,6 +1585,16 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
       }
     }
     if (!mounted) return;
+    // Yükleme sürerken çıkış başladıysa (ya da oda başka yoldan sonlandıysa)
+    // quiz açılmaz: aksi halde çıkışın `pop()`u lobiyi değil quiz'i
+    // kapatıyor, lobi izlemesiz kalıyordu (Codex denetimi 2026-10-29).
+    if (_leaving || _terminalHandled) {
+      setState(() {
+        quizOpened = false;
+        starting = false;
+      });
+      return;
+    }
     _questionLoadAttempts = 0;
     _questionLoadExhausted = false;
     setState(() => starting = false);
