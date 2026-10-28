@@ -1533,6 +1533,7 @@ void main() {
     await _pump(
       t,
       ReviewScreen(
+        repository: repository,
         room: repository.createRoom(),
         records: const [
           AnswerRecord(
@@ -1959,6 +1960,7 @@ void main() {
     await _pump(
       t,
       ReviewScreen(
+        repository: repository,
         room: repository.createRoom(),
         records: const [
           AnswerRecord(

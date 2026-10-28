@@ -2,8 +2,11 @@ import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../data/thumb_rating_store.dart';
+import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../utils/error_reporter.dart';
 import '../models/answer_record.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
@@ -17,6 +20,7 @@ class ReviewScreen extends StatefulWidget {
     required this.records,
     required this.room,
     this.practiceAvailable = true,
+    this.repository,
     super.key,
   });
 
@@ -24,12 +28,70 @@ class ReviewScreen extends StatefulWidget {
   final GameRoom room;
   final bool practiceAvailable;
 
+  /// Soru puanlama için; `null` (ya da oturumsuz/çevrimdışı depo) ise puan
+  /// satırı hiç çizilmez.
+  final ZanKurdRepository? repository;
+
   @override
   State<ReviewScreen> createState() => _ReviewScreenState();
 }
 
 class _ReviewScreenState extends State<ReviewScreen> {
   bool _isFlashcardMode = false;
+  Map<String, int> _ratings = const {};
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.repository != null) {
+      QuestionRatingStore.readAll().then((all) {
+        if (mounted) setState(() => _ratings = all);
+      });
+    }
+  }
+
+  /// Puanlama yalnız oturumlu, uzak depoda anlamlıdır (çevrimdışı depo
+  /// `currentUserId == null` döner).
+  bool get _canRate {
+    final repository = widget.repository;
+    return repository != null && repository.currentUserId != null;
+  }
+
+  /// İyimser: seçim hemen görünür; RPC düşerse eski değere döner ve kısa
+  /// bir uyarı çıkar. Hata `ErrorReporter`a gider.
+  Future<void> _rate(AnswerRecord record, int rating) async {
+    final repository = widget.repository;
+    if (repository == null || record.id.isEmpty) return;
+    final previous = _ratings[record.id];
+    if (previous == rating) return;
+    setState(() => _ratings = {..._ratings, record.id: rating});
+    final messenger = ScaffoldMessenger.of(context);
+    final thanks = context.t(K.rateQuestionThanks);
+    final failed = context.t(K.rateQuestionFailed);
+    try {
+      await repository.rateQuestion(_questionStub(record), rating);
+      await QuestionRatingStore.write(record.id, rating);
+      messenger
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(thanks)));
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'rateQuestion failed');
+      if (mounted) {
+        setState(() {
+          final next = {..._ratings};
+          if (previous == null) {
+            next.remove(record.id);
+          } else {
+            next[record.id] = previous;
+          }
+          _ratings = next;
+        });
+      }
+      messenger
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(failed)));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +166,14 @@ class _ReviewScreenState extends State<ReviewScreen> {
                     _FlashcardView(records: widget.records)
                   else
                     for (var i = 0; i < widget.records.length; i++) ...[
-                      _ReviewCard(record: widget.records[i], index: i),
+                      _ReviewCard(
+                        record: widget.records[i],
+                        index: i,
+                        rating: _canRate && widget.records[i].id.isNotEmpty
+                            ? (_ratings[widget.records[i].id] ?? 0)
+                            : null,
+                        onRate: (value) => _rate(widget.records[i], value),
+                      ),
                       if (i != widget.records.length - 1)
                         const SizedBox(height: SahneSpace.cardGap),
                     ],
@@ -176,10 +245,19 @@ class _SummaryStrip extends StatelessWidget {
 }
 
 class _ReviewCard extends StatelessWidget {
-  const _ReviewCard({required this.record, required this.index});
+  const _ReviewCard({
+    required this.record,
+    required this.index,
+    this.rating,
+    this.onRate,
+  });
 
   final AnswerRecord record;
   final int index;
+
+  /// `null` → puan satırı yok; 0 → henüz puanlanmadı; ±1 → seçili.
+  final int? rating;
+  final ValueChanged<int>? onRate;
 
   @override
   Widget build(BuildContext context) {
@@ -282,8 +360,77 @@ class _ReviewCard extends StatelessWidget {
               ],
             ),
           ],
+          if (rating != null && onRate != null) ...[
+            const SizedBox(height: SahneSpace.x2),
+            SizedBox(height: 1, child: ColoredBox(color: t.line)),
+            const SizedBox(height: SahneSpace.x2),
+            _RatingRow(
+              key: ValueKey('rate-row-${record.id}'),
+              rating: rating!,
+              onRate: onRate!,
+            ),
+          ],
         ],
       ),
+    );
+  }
+}
+
+/// Puanlama RPC'si yalnız kimliği kullanır; kayıt (`AnswerRecord`) tam soruyu
+/// taşımadığından kimlikten yeterli bir soru nesnesi kurulur.
+QuizQuestion _questionStub(AnswerRecord record) => QuizQuestion(
+  id: record.id,
+  category: record.category,
+  prompt: record.prompt,
+  answers: record.answers,
+  correctAnswer: record.correctAnswer,
+  explanation: record.explanation,
+);
+
+/// "Bu soru nasıldı?" + iki başparmak. Metin sığmazsa alta iner (Wrap):
+/// 320 px / %200 yazıda taşmaz. Düğmeler [SahneIconButton] (görsel 44,
+/// dokunma 48); seçili durum ekran okuyucuya da söylenir.
+class _RatingRow extends StatelessWidget {
+  const _RatingRow({super.key, required this.rating, required this.onRate});
+
+  final int rating;
+  final ValueChanged<int> onRate;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final like = context.t(K.rateQuestionLike);
+    final dislike = context.t(K.rateQuestionDislike);
+    return Wrap(
+      alignment: WrapAlignment.spaceBetween,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: SahneSpace.x2,
+      runSpacing: SahneSpace.x1,
+      children: [
+        Text(
+          context.t(K.rateQuestionPrompt),
+          style: SahneType.captionStrong.copyWith(color: t.tx2),
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SahneIconButton(
+              key: const ValueKey('rate-like'),
+              icon: AppIcons.thumbsUp,
+              semanticLabel: like,
+              selected: rating == 1,
+              onPressed: () => onRate(1),
+            ),
+            SahneIconButton(
+              key: const ValueKey('rate-dislike'),
+              icon: AppIcons.thumbsDown,
+              semanticLabel: dislike,
+              selected: rating == -1,
+              onPressed: () => onRate(-1),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

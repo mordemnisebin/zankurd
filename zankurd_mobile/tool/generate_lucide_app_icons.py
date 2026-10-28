@@ -171,6 +171,8 @@ MAPPING = {
     "sun": "sun",
     "swords": "swords",  # Yarış sekmesi (düello)
     "tableCells": "layout-grid",
+    "thumbsDown": "thumbs-down",  # soru puanlama
+    "thumbsUp": "thumbs-up",
     "trashCan": "trash-2",
     "tree": "tree-pine",
     "triangleExclamation": "triangle-alert",

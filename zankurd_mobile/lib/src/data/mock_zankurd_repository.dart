@@ -2078,6 +2078,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
   final reportedQuestions = <({String id, String reason})>[];
 
   @override
+  Future<void> rateQuestion(QuizQuestion question, int rating) async {
+    ratedQuestions.add((id: question.id, rating: rating));
+  }
+
+  final ratedQuestions = <({String id, int rating})>[];
+
+  @override
   Future<List<QuizQuestion>> loadFavoriteQuestions() async {
     return questions.take(3).toList();
   }

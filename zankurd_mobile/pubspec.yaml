@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 2.1.1+39
+version: 2.1.1+40
 
 environment:
   sdk: ^3.12.1
@@ -85,6 +85,7 @@ dependencies:
   # Ağ görseli önbellekleme
   cached_network_image: ^3.4.1
   record: ^7.1.2
+  home_widget: ^0.10.0
 
   # Lucide ikon yazı tipi paket olarak DEĞİL, `assets/fonts/Lucide.ttf` olarak
   # taşınır: `lucide_icons_flutter` paketi 6 ağırlıklı değişken yazı tipini

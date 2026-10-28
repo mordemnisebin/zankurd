@@ -2016,6 +2016,23 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<void> rateQuestion(QuizQuestion question, int rating) async {
+    if (rating != 1 && rating != -1) {
+      throw ArgumentError.value(rating, 'rating', 'must be -1 or 1');
+    }
+    // Hata yutulmaz: arayüz seçimi geri alır ve kullanıcıya söyler.
+    try {
+      await client.rpc(
+        'rate_question',
+        params: {'p_question_id': question.id, 'p_rating': rating},
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'rateQuestion rpc failed');
+      rethrow;
+    }
+  }
+
+  @override
   Future<void> reportQuestion(QuizQuestion question, String reason) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
     await ensureProfile();

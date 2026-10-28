@@ -34,6 +34,10 @@ abstract interface class SoloQuizPort {
   Future<bool> toggleFavoriteQuestion(QuizQuestion question, bool favorite);
   Future<bool> isFavoriteQuestion(QuizQuestion question);
   Future<void> reportQuestion(QuizQuestion question, String reason);
+
+  /// Soruya +1 (beğendim) / -1 (beğenmedim) verir; kullanıcı başına tek oy,
+  /// yeni oy eskisini değiştirir (2026-10-28_soru_puani.sql).
+  Future<void> rateQuestion(QuizQuestion question, int rating);
   Future<List<QuizQuestion>> loadFavoriteQuestions();
   Future<QuizRewardClaim> awardQuizCoins({
     required int score,

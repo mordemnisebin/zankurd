@@ -1544,6 +1544,19 @@ class Tr {
       'ku': 'Ragihandin nehat şandin.',
       'tr': 'Rapor gönderilemedi.',
     },
+    // Soru puanlama (2026-10-28): cevap incelemesinde başparmak yukarı/aşağı.
+    K.rateQuestionPrompt: {'ku': 'Ev pirs çawa bû?', 'tr': 'Bu soru nasıldı?'},
+    K.widgetDailyQuestion: {'ku': 'Pirsa rojê', 'tr': 'Günün sorusu'},
+    K.rateQuestionLike: {'ku': 'Min eciband', 'tr': 'Beğendim'},
+    K.rateQuestionDislike: {'ku': 'Min neeciband', 'tr': 'Beğenmedim'},
+    K.rateQuestionThanks: {
+      'ku': 'Spas, nirxandina te hate tomarkirin.',
+      'tr': 'Teşekkürler, puanın kaydedildi.',
+    },
+    K.rateQuestionFailed: {
+      'ku': 'Nirxandin nehat tomarkirin.',
+      'tr': 'Puan kaydedilemedi.',
+    },
     // Quiz birimi zaten `Pûan` (`K.scoreWord`). Başlık "Skora
     // zindî" deyince oyuncu aynı değeri iki adla görür. Türkçe `skor` +
     // `-a` çekimi İngilizce `\bscore\b` taramasını da kör eder — `maçê`
@@ -4727,6 +4740,12 @@ class K {
   static const sendAction = 'common.send';
   static const reportSent = 'quiz.report.sent';
   static const reportFailed = 'quiz.report.failed';
+  static const rateQuestionPrompt = 'quiz.rate.prompt';
+  static const widgetDailyQuestion = 'widget.dailyQuestion';
+  static const rateQuestionLike = 'quiz.rate.like';
+  static const rateQuestionDislike = 'quiz.rate.dislike';
+  static const rateQuestionThanks = 'quiz.rate.thanks';
+  static const rateQuestionFailed = 'quiz.rate.failed';
   static const imageLoadFailed = 'quiz.imageLoadFailed';
   static const scoreWord = 'quiz.score';
   static const streakUnit = 'leaderboard.streak.unit';

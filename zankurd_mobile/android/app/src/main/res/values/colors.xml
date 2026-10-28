@@ -22,4 +22,10 @@
     <!-- Bildirim küçük simgesinin rengi (FCM `default_notification_color`):
          yerel bildirimlerdeki `NotificationService._accent` (Tîrêj) ile aynı. -->
     <color name="zk_notification_color">#C2560E</color>
+    <!-- Ana ekran widget'ı (SahneTokens.day): zemin bg-kart, metin tx/tx2, altın goldTx, vurgu act. -->
+    <color name="zk_widget_bg">#FFFFFF</color>
+    <color name="zk_widget_text">#0E1433</color>
+    <color name="zk_widget_text2">#454E79</color>
+    <color name="zk_widget_gold">#8A5A00</color>
+    <color name="zk_widget_accent">#9E3F00</color>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SahneTokens.night: s1 / tx / tx2 / gold / act -->
+    <color name="zk_widget_bg">#222328</color>
+    <color name="zk_widget_text">#F5F3EF</color>
+    <color name="zk_widget_text2">#D0D2D8</color>
+    <color name="zk_widget_gold">#F5C24C</color>
+    <color name="zk_widget_accent">#F08A4A</color>
+</resources>

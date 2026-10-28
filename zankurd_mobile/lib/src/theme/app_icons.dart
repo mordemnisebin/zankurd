@@ -399,6 +399,12 @@ class AppIcons {
   /// Lucide `layout-grid`.
   static const IconData tableCells = IconData(0xe0ff, fontFamily: 'Lucide');
 
+  /// Lucide `thumbs-down`.
+  static const IconData thumbsDown = IconData(0xe189, fontFamily: 'Lucide');
+
+  /// Lucide `thumbs-up`.
+  static const IconData thumbsUp = IconData(0xe18a, fontFamily: 'Lucide');
+
   /// Lucide `trash-2`.
   static const IconData trashCan = IconData(0xe18e, fontFamily: 'Lucide');
 

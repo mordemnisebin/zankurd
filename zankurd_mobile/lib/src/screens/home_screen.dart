@@ -40,6 +40,7 @@ import '../models/quiz_question.dart';
 import '../models/learning_goal.dart';
 import '../services/premium_service.dart';
 import '../services/daily_question_selector.dart';
+import '../services/home_widget_sync.dart';
 import 'paywall_screen.dart';
 import 'quiz_screen.dart';
 import 'contest_screen.dart';
@@ -329,6 +330,36 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     unawaited(store.markFirstSeen());
     if (mounted) setState(() => _streak = store.effectiveStreak());
     unawaited(_maybeOfferStreakRepair(store));
+    unawaited(_syncHomeWidget());
+  }
+
+  bool? _widgetSyncedKu;
+
+  /// Ana ekran widget'ına seri ve günün sorusunu yazar (bkz.
+  /// [HomeWidgetSync]). Süs bilgisidir: soru okunamazsa yalnız seri yazılır.
+  Future<void> _syncHomeWidget() async {
+    if (!mounted) return;
+    final ku = context.isKu;
+    _widgetSyncedKu = ku;
+    final streak = _streak;
+    String? prompt;
+    try {
+      final daily = await repo.loadDailyQuestions(limit: 1);
+      if (daily.isNotEmpty) prompt = daily.first.promptFor(isKu: ku);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'home_widget_prompt');
+    }
+    await HomeWidgetSync.sync(streak: streak, isKu: ku, dailyPrompt: prompt);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Dil değişince widget etiketleri de değişmeli.
+    final synced = _widgetSyncedKu;
+    if (synced != null && synced != context.isKu) {
+      unawaited(_syncHomeWidget());
+    }
   }
 
   bool _repairSheetOpen = false;

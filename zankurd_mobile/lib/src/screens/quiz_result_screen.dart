@@ -1388,6 +1388,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           ReviewScreen(
             records: records,
             room: room,
+            repository: repository,
             practiceAvailable: practiceQuestions.isNotEmpty,
           ),
         ),

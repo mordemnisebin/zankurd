@@ -512,6 +512,11 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<void> rateQuestion(QuizQuestion question, int rating) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
   Future<bool> markLessonCompleted(String lessonId) =>
       LessonCompletionStore.addPending(lessonId);
 
