@@ -43,6 +43,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/category_band.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -161,39 +162,38 @@ void main() {
           findsNothing,
           reason: category,
         );
-        // İşaret = soru künyesindeki ile aynı bileşen, aynı ton.
-        final mark = CategoryVisuals.mark(category);
-        expect(mark, isNotNull, reason: '$category: silüetsiz karo kalmamalı');
-        // 2026-10-20 renk ve canlılık: karo konunun renginde DOLU; işaret
-        // BEYAZ silüet (iç ayrıntı karonun kendi renginde), sağ altta ayrıca
-        // soluk beyaz filigran (aynı silüet). Renk kimliği karonun zeminidir
-        // (`SahneCategoryTone.fill`), silüet rengi değil.
+        // 2026-10-28 kurul K1: karo nötr; konu rengi 40 px rozet + 4 px
+        // şerit. Silik filigran ve beyaz silüet kalktı (bekçi:
+        // `konu_karosu_notr_test.dart`). Burada: rozet doğru konuya ait,
+        // şerit konu renginde, filigran çizimi yok.
         final fill = CategoryVisuals.tone(category).fill(night: false);
-        final glyphs = find.descendant(
-          of: finder,
-          matching: find.byWidgetPredicate(
-            (w) =>
-                w is CustomPaint &&
-                w.painter is SahneCategoryGlyphPainter &&
-                (w.painter! as SahneCategoryGlyphPainter).mark == mark &&
-                (w.painter! as SahneCategoryGlyphPainter).tone.ground == fill &&
-                (w.painter! as SahneCategoryGlyphPainter).tone.detail ==
-                    const Color(0xFFFFFFFF),
-          ),
+        expect(
+          tester
+              .widget<CategoryIconTile>(
+                find.byKey(ValueKey('home-topic-badge-$category')),
+              )
+              .category,
+          category,
         );
-        expect(glyphs, findsOneWidget, reason: '$category beyaz işareti');
-        final watermarks = find.descendant(
-          of: finder,
-          matching: find.byWidgetPredicate(
-            (w) =>
-                w is CustomPaint &&
-                w.painter is SahneCategoryGlyphPainter &&
-                (w.painter! as SahneCategoryGlyphPainter).mark == mark &&
-                (w.painter! as SahneCategoryGlyphPainter).tone.detail ==
-                    const Color(0x1FFFFFFF),
-          ),
+        expect(
+          tester
+              .widget<ColoredBox>(
+                find.byKey(ValueKey('home-topic-strip-$category')),
+              )
+              .color,
+          fill,
+          reason: '$category şeridi',
         );
-        expect(watermarks, findsOneWidget, reason: '$category filigranı');
+        expect(
+          find.descendant(
+            of: finder,
+            matching: find.byWidgetPredicate(
+              (w) => w is CustomPaint && w.painter is SahneCategoryGlyphPainter,
+            ),
+          ),
+          findsNothing,
+          reason: '$category filigranı kalkmalı',
+        );
       }
     },
   );

@@ -15,6 +15,7 @@ import '../theme/app_icons.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
 import '../widgets/lexicon_speak_button.dart';
+import '../widgets/pronunciation_sheet.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 import 'quiz/quiz_option_tile.dart';
@@ -539,6 +540,9 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
             ),
           ),
           LexiconSpeakButton(text: entry.termKu),
+          // K13: telaffuz denemesi liste satırından çalışmaya taşındı;
+          // cevap açıldığında doğru sözcüğü söyleyip deneyebilir.
+          PronunciationButton(text: entry.termKu),
         ],
       ),
     );

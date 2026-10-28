@@ -37,13 +37,18 @@ void main() {
     expect(find.textContaining('13 yaş'), findsNothing);
     expect(find.byKey(const ValueKey('onboarding-age-gate')), findsNothing);
 
-    await tester.tap(find.text('Sonraki'));
+    // 2026-10-28 K10: üç adım (dil, öğren, yarış); "Başla" 3. adımdadır.
+    await tester.tap(find.text('Devam'));
     await tester.pumpAndSettle();
-    expect(find.text('Başla'), findsOneWidget, reason: 'ikinci sayfaya geçti');
+    await tester.tap(find.text('Devam'));
+    await tester.pumpAndSettle();
+    expect(find.text('Başla'), findsOneWidget, reason: 'son adıma geçti');
     expect(find.textContaining('13 yaş'), findsNothing);
   });
 
-  testWidgets('dil seçici: tek bitişik segment, Kurmancî solda Türkçe sağda', (
+  // 2026-10-28 K10: "tek bitişik segment" kararı geçersiz; dil seçici yan
+  // yana İKİ BÜYÜK karttır (aralarında boşluk var, ≥ 96 yüksek).
+  testWidgets('dil seçici: iki büyük kart, Kurmancî solda Türkçe sağda', (
     tester,
   ) async {
     await pump(tester);
@@ -56,11 +61,10 @@ void main() {
       find.byKey(const ValueKey('onboarding-language-tr')),
     );
     final box = tester.getRect(picker);
-    // Bitişik: aralarında boşluk yok (yalnız 1 px ayraç), ikisi de kabın içinde.
     expect(ku.left, lessThan(tr.left), reason: 'Kurmancî ÖNCE');
-    expect(tr.left - ku.right, lessThanOrEqualTo(1.0));
+    expect(tr.left - ku.right, greaterThan(0));
     expect(ku.left, greaterThanOrEqualTo(box.left));
     expect(tr.right, lessThanOrEqualTo(box.right));
-    expect(ku.height, greaterThanOrEqualTo(56));
+    expect(ku.height, greaterThanOrEqualTo(96));
   });
 }

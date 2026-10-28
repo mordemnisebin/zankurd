@@ -8,6 +8,7 @@ import '../../theme/app_icons.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/sahne.dart';
 import '../brand_mark.dart';
+import '../zk_back_button.dart';
 import 'sahne_bilingual.dart';
 import 'sahne_foundation.dart';
 import 'sahne_painters.dart';
@@ -499,9 +500,10 @@ class SahnePushedPage extends StatelessWidget {
   /// kısa olsa da çekilebilsin diye her durumda kaydırılabilir fizik alır.
   final Future<void> Function()? onRefresh;
 
-  /// Çubuk bu rolün DOLU renginde olur (2026-10-20 renk ve canlılık, B):
-  /// öğrenme Zimrût, yarış Boyax, sosyal Nîl; beyaz başlık, cam geri düğmesi,
-  /// durum çubuğunun arkasına uzanır. `null` → sade çubuk.
+  /// Çubuk HER ZAMAN nötrdür (2026-10-28 kurul K2: dolu yeşil/bordo/sarı üst
+  /// bant kalktı; 2026-10-20 "dolu bant" kararı bilerek geri alındı). Rol
+  /// yalnız çubuğun altındaki 3 px'lik mod çizgisini boyar (öğrenme Zimrût,
+  /// yarış Boyax, sosyal Nîl). `null` → çizgi yok.
   final SahneRole? role;
 
   /// Varsayılan: `Navigator.maybePop`.
@@ -535,7 +537,7 @@ class SahnePushedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final back = backLabel ?? sahneBackLabel(context);
-    final band = role == null ? null : t.roleFill(role!);
+    final accent = role == null ? null : t.roleFill(role!);
     final bar = ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 64),
       child: Padding(
@@ -551,7 +553,6 @@ class SahnePushedPage extends StatelessWidget {
           children: [
             SahneIconButton(
               key: backKey,
-              glass: band != null,
               icon: AppIcons.arrowLeft,
               semanticLabel: back,
               onPressed: onBack ?? () => Navigator.maybePop(context),
@@ -566,17 +567,13 @@ class SahnePushedPage extends StatelessWidget {
                     header: true,
                     child: SahneUnbrokenText(
                       title,
-                      style: SahneType.headline.copyWith(
-                        color: band != null ? SahneVivid.onFill : t.tx,
-                      ),
+                      style: SahneType.headline.copyWith(color: t.tx),
                     ),
                   ),
                   if (subtitle != null)
                     Text(
                       subtitle!,
-                      style: SahneType.caption.copyWith(
-                        color: band != null ? SahneVivid.onFillSoft : t.tx2,
-                      ),
+                      style: SahneType.caption.copyWith(color: t.tx2),
                     ),
                 ],
               ),
@@ -606,28 +603,14 @@ class SahnePushedPage extends StatelessWidget {
     );
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _overlayFor(
-        band != null ? Brightness.dark : Theme.of(context).brightness,
-      ),
+      value: _overlayFor(Theme.of(context).brightness),
       child: Scaffold(
         backgroundColor: t.bg,
         body: SafeArea(
-          top: band == null,
           child: Column(
             children: [
-              if (band != null)
-                ColoredBox(
-                  key: const ValueKey('sahne-pushed-band'),
-                  color: band,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: MediaQuery.paddingOf(context).top,
-                    ),
-                    child: bar,
-                  ),
-                )
-              else
-                bar,
+              bar,
+              if (accent != null) ZkAccentLine(color: accent),
               Expanded(child: _wrapRefresh(t, scroll)),
             ],
           ),

@@ -122,7 +122,8 @@ void main() {
     // Dönem puanı ve döneme ait diğer sayılar satırda.
     expect(find.text('210'), findsOneWidget);
     expect(find.text('12'), findsOneWidget);
-    expect(find.text('3 yarış · 2 seri'), findsOneWidget);
+    // K18 (2026-10-28): yarış/seri alt satırı kalktı.
+    expect(find.text('3 yarış · 2 seri'), findsNothing);
     // Toplam XP satıra sızmamalı.
     expect(find.text('1143'), findsNothing);
     expect(find.text('40 yarış · 9 seri'), findsNothing);
@@ -164,7 +165,7 @@ void main() {
     // Sıra rakamı listedeki 1..10 aralığının dışında: 15 yalnız sabit
     // satırda olabilir.
     expect(find.text('15'), findsOneWidget);
-    expect(find.text('1 yarış · 1 seri'), findsOneWidget);
+    expect(find.text('1 yarış · 1 seri'), findsNothing);
     expect(find.text('210'), findsNothing);
     expect(find.text('1143'), findsNothing);
   });

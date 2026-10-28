@@ -1,3 +1,6 @@
+// 2026-10-28 K11 (kurul): mağazada ayrı "N jeton eksik" satırı ve "hepsi tek tam
+// genişlik satır" kararı geçersiz; yetmeyen ürün yalnız nötr fiyat hapı taşır,
+// çerçeve/rozet 2 sütun karodur (bkz. magaza_eksik_jeton_sol_sutun_test).
 // Tasarım kurulu tüm ekranlar 2026-10-20: yetmeyen mağaza ürünü çip değil,
 // ortak pasif fiyat düğmesi + eksik miktar taşır.
 // Kurul 5. tur 2026-10-20: eksik notu gündüz koyu kehribar (≥ 4.5:1).
@@ -135,7 +138,12 @@ void main() {
             findsOneWidget,
             reason: '$id yetmiyor ama pasif düğme yok',
           );
-          expect(find.text('${cost - 200} jeton eksik'), findsOneWidget);
+          // 2026-10-28 K11: ayrı "N jeton eksik" metni yok; hap tutarı gösterir.
+          expect(find.text('${cost - 200} jeton eksik'), findsNothing);
+          expect(
+            find.descendant(of: chip, matching: find.text('$cost')),
+            findsOneWidget,
+          );
           // Kurul 4. tur: kilitli fiyat kutusuz metindir; düğme ya da
           // dokunulur öğe yok, etkin görünen satın alma eylemi de yok.
           expect(

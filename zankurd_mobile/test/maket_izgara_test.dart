@@ -145,16 +145,12 @@ void main() {
                     reason: '$c: küçük satır öbür dilin adı değil',
                   );
                 }
+                // K1 (2026-10-28): rozetin ikonu da bir RichText çizer; ad
+                // metinleri `Text` ile sayılır (ikon `Text` değildir).
                 final texts = find.descendant(
                   of: tile,
                   matching: find.byWidgetPredicate(
-                    (w) =>
-                        w is RichText &&
-                        !second.evaluate().any(
-                          (e) =>
-                              e.widget is Text &&
-                              (e.widget as Text).data == w.text.toPlainText(),
-                        ),
+                    (w) => w is Text && w.key != SahneBilingualLabel.valueKey,
                   ),
                 );
                 expect(

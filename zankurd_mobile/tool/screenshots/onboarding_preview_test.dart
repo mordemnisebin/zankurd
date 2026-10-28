@@ -57,7 +57,8 @@ Future<void> _capture(
 
   // İkinci slayta geçmek için ileri düğmesine bas.
   for (var i = 0; i < page; i++) {
-    await tester.tap(find.text('Sonraki'));
+    // 2026-10-28 K10: alt düğme "Devam"/"Bidomîne" (üç adım).
+    await tester.tap(find.text(lang == 'ku' ? 'Bidomîne' : 'Devam'));
     await tester.pumpAndSettle();
   }
 

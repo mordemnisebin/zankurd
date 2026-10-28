@@ -201,12 +201,17 @@ class _ProfileHeroCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Row(
                   children: [
+                    // Küçülür, "S…" diye kesilmez (320 pt + %200 yazıda
+                    // seviye, kimlik kartının en önemli sayısıdır).
                     Flexible(
-                      child: Text(
-                        '${Tr.forKu(K.progressLevelLabel, ku)} $level',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: SahneType.captionStrong.copyWith(color: t.tx),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Text(
+                          '${Tr.forKu(K.progressLevelLabel, ku)} $level',
+                          maxLines: 1,
+                          style: SahneType.captionStrong.copyWith(color: t.tx),
+                        ),
                       ),
                     ),
                     if (coins != null) ...[

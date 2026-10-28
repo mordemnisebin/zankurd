@@ -4,6 +4,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../config/category_visuals.dart';
 import 'category_kicker_mark.dart';
+import 'quiz_stage_kit.dart';
 import 'sahne/sahne.dart';
 
 /// Bütün soru ekranlarının ORTAK üst satır ortası (kurul 2. tur, 2026-10-20).
@@ -25,9 +26,15 @@ class QuizStageCenter extends StatelessWidget {
     this.keyed,
     this.onBand = false,
     this.title,
+    this.modeLabel,
   });
 
   final String category;
+
+  /// Mod çipi ("Yarış", "Ders", "Düello"…): üst çubukta TEK küçük çip
+  /// (2026-10-28, jüri K6+). Dar ekranda ve büyük yazıda düşer; mod gövdede
+  /// ayrıca anlatılmaz.
+  final String? modeLabel;
 
   /// Konu adı yerine yazılacak başlık. Seviye testinde soru konusu
   /// ("Siyaset") değil testin adı okunur: konu etiketi testi genel kültür
@@ -72,43 +79,55 @@ class QuizStageCenter extends StatelessWidget {
     // satırdaki kategori adına düşer.
     final largeText = MediaQuery.textScalerOf(context).scale(16) >= 24;
     final compact = largeText || MediaQuery.sizeOf(context).width <= 340;
+    final chip = modeLabel;
+    final showChip = chip != null && chip.isNotEmpty && !compact;
+    final line = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (!compact) ...[
+          if (onBand)
+            Icon(
+              CategoryVisuals.icon(category),
+              key: const ValueKey('quiz-question-icon-badge'),
+              size: 22,
+              color: SahneVivid.onFill,
+            )
+          else
+            CategoryKickerMark(
+              key: const ValueKey('quiz-question-icon-badge'),
+              category: category,
+              fallbackColor: t.tx2,
+              size: 24,
+            ),
+          const SizedBox(width: SahneSpace.x2),
+        ],
+        Flexible(
+          child: Text(
+            '$progress · $name',
+            key: textKey,
+            maxLines: largeText ? 2 : 1,
+            overflow: TextOverflow.ellipsis,
+            style: SahneType.eyebrow.copyWith(
+              color: onBand ? SahneVivid.onFill : t.tx,
+            ),
+          ),
+        ),
+      ],
+    );
     return KeyedSubtree(
       key: keyed,
       child: Semantics(
         header: true,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (!compact) ...[
-              if (onBand)
-                Icon(
-                  CategoryVisuals.icon(category),
-                  key: const ValueKey('quiz-question-icon-badge'),
-                  size: 22,
-                  color: SahneVivid.onFill,
-                )
-              else
-                CategoryKickerMark(
-                  key: const ValueKey('quiz-question-icon-badge'),
-                  category: category,
-                  fallbackColor: t.tx2,
-                  size: 24,
-                ),
-              const SizedBox(width: SahneSpace.x2),
-            ],
-            Flexible(
-              child: Text(
-                '$progress · $name',
-                key: textKey,
-                maxLines: largeText ? 2 : 1,
-                overflow: TextOverflow.ellipsis,
-                style: SahneType.eyebrow.copyWith(
-                  color: onBand ? SahneVivid.onFill : t.tx,
-                ),
-              ),
-            ),
-          ],
-        ),
+        child: showChip
+            ? Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  QuizModeChip(label: chip),
+                  const SizedBox(height: SahneSpace.x1),
+                  line,
+                ],
+              )
+            : line,
       ),
     );
   }

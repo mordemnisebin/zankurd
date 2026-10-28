@@ -469,7 +469,40 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      // K7 (2026-10-28): karşılaştırma varsayılan KAPALI; bu yardımcı
+      // "Cevapları gör" ile açar (kapalı olduğunu `sonuç: karşılaştırma
+      // varsayılan kapalı` sınar).
+      final toggle = find.byKey(const ValueKey('async-duel-review-toggle'));
+      if (toggle.evaluate().isNotEmpty) {
+        await tester.ensureVisible(toggle);
+        await tester.pumpAndSettle();
+        await tester.tap(toggle);
+        await tester.pumpAndSettle();
+      }
     }
+
+    testWidgets('K7: karşılaştırma varsayılan kapalı', (tester) async {
+      final repo = _ReviewRepository(
+        review: AsyncDuelReview.fromJson(_reviewJson()),
+      );
+      tester.view.devicePixelRatio = 1.0;
+      tester.view.physicalSize = const Size(390, 2600);
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        testShell(
+          child: AsyncDuelResultScreen(
+            repository: repo,
+            view: AsyncDuelResultView.fromSummary(_completedSummary()),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('async-duel-review')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('async-duel-review-row-0')),
+        findsNothing,
+      );
+    });
 
     testWidgets('7 satır; soru, doğru cevap, ✓/✗ ve süre okunur', (
       tester,
@@ -524,7 +557,7 @@ void main() {
       );
     });
 
-    testWidgets('soru en çok 2 satır', (tester) async {
+    testWidgets('soru tek satır (K7)', (tester) async {
       final repo = _ReviewRepository(
         review: AsyncDuelReview.fromJson(
           _reviewJson(questions: [_questionJson(0, prompt: _longPrompt * 3)]),
@@ -534,7 +567,7 @@ void main() {
       final prompt = tester.widget<Text>(
         find.byKey(const ValueKey('async-duel-review-prompt-0')),
       );
-      expect(prompt.maxLines, 2);
+      expect(prompt.maxLines, 1);
       expect(prompt.overflow, TextOverflow.ellipsis);
     });
 
@@ -773,6 +806,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('async-duel-review-toggle')));
+      await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('async-duel-review')), findsOneWidget);
       expect(
         find.byKey(const ValueKey('async-duel-review-opp-0')),
@@ -844,7 +879,7 @@ void main() {
         // Altın satırlara kadar kaydır: hepsi taşmasız kurulur.
         await tester.dragUntilVisible(
           find.byKey(const ValueKey('async-duel-review-row-6')),
-          find.byType(ListView),
+          find.byType(SingleChildScrollView).first,
           const Offset(0, -300),
         );
         await tester.pump();

@@ -10,6 +10,8 @@
 // büyük yazıda taşma. Hiçbiri derleme hatası vermez.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/providers/bilingual_labels_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/daily_quote_store.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_quote_card.dart';
@@ -89,6 +91,7 @@ void main() {
     required List<DailyQuote> quotes,
     void Function(String)? onShare,
     double textScale = 1,
+    bool bilingual = false,
   }) async {
     SharedPreferences.setMockInitialValues({});
     await t.pumpWidget(
@@ -99,9 +102,16 @@ void main() {
             size: t.view.physicalSize / t.view.devicePixelRatio,
             textScaler: TextScaler.linear(textScale),
           ),
-          child: Scaffold(
-            body: SingleChildScrollView(
-              child: DailyQuoteCard(isKu: ku, quotes: quotes, onShare: onShare),
+          child: ChangeNotifierProvider(
+            create: (_) => BilingualLabelsProvider(initialEnabled: bilingual),
+            child: Scaffold(
+              body: SingleChildScrollView(
+                child: DailyQuoteCard(
+                  isKu: ku,
+                  quotes: quotes,
+                  onShare: onShare,
+                ),
+              ),
             ),
           ),
         ),
@@ -128,12 +138,26 @@ void main() {
   ) async {
     SahneClock.now = () => DateTime(2026, 10, 21);
     final quotes = [_q('g001'), _q('g002')];
-    await pumpCard(t, ku: true, quotes: quotes);
+    await pumpCard(t, ku: true, quotes: quotes, bilingual: true);
     final expected = DailyQuoteStore.pick(quotes)!;
     expect(find.text('Gotina rojê'), findsOneWidget);
     expect(find.text('“${expected.ku}”'), findsOneWidget);
     expect(find.text(expected.tr), findsOneWidget);
   });
+
+  testWidgets(
+    'Kurmancî arayüz, iki dilli etiketler kapalı: karşılık yine görünür',
+    (t) async {
+      // K14 istisnası (2026-10-28): sözün Türkçe karşılığı arayüz etiketi değil
+      // öğrenme içeriğidir; iki dilli etiket ayarı kapalıyken de kalır.
+      SahneClock.now = () => DateTime(2026, 10, 21);
+      final quotes = [_q('g001'), _q('g002')];
+      await pumpCard(t, ku: true, quotes: quotes);
+      final expected = DailyQuoteStore.pick(quotes)!;
+      expect(find.text('“${expected.ku}”'), findsOneWidget);
+      expect(find.text(expected.tr), findsOneWidget);
+    },
+  );
 
   testWidgets('gün değişince bir sonraki çizimde söz değişir', (t) async {
     final quotes = [_q('g001'), _q('g002')];

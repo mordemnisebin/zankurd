@@ -18,7 +18,7 @@
 ///
 /// ## Kural
 ///
-/// Karşılamada soru/şık/onay kutusu yoktur, "Sonraki" hemen etkindir; dil
+/// Karşılamada soru/şık/onay kutusu yoktur, "Devam" hemen etkindir; dil
 /// seçici Kurmancî önce gelir; yeni kurulum Türkçe başlar, kayıtlı seçim
 /// korunur; giriş ekranında şartlar ve gizlilik bağlantıdır; davet kartı
 /// kullanıcının kodunu gösterir, kopyalar, mağaza bağlantılarıyla paylaşır.
@@ -84,9 +84,7 @@ void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   group('karşılama', () {
-    testWidgets('soru/şık/yaş kutusu yok, "Sonraki" hemen etkin', (
-      tester,
-    ) async {
+    testWidgets('soru/şık/yaş kutusu yok, "Devam" hemen etkin', (tester) async {
       await _pumpOnboarding(tester);
 
       // Sahte soru ve şıklar.
@@ -99,8 +97,10 @@ void main() {
       expect(find.byKey(const ValueKey('onboarding-age-gate')), findsNothing);
       expect(find.textContaining('13 yaş'), findsNothing);
 
-      // "Sonraki" ilk dokunuşta ilerler.
-      await tester.tap(find.text('Sonraki'));
+      // "Devam" ilk dokunuşta ilerler (2026-10-28 K10: 3 adım, "Başla" sonda).
+      await tester.tap(find.text('Devam'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Devam'));
       await tester.pumpAndSettle();
       expect(find.text('Başla'), findsOneWidget);
       expect(find.textContaining('13 yaş'), findsNothing);
@@ -121,15 +121,15 @@ void main() {
       expect(find.text('Kurmancî'), findsOneWidget);
       expect(find.text('Türkçe'), findsOneWidget);
       expect(find.text('Uygulama dili · Zimanê sepanê'), findsOneWidget);
-      expect(tester.getSize(ku).height, greaterThanOrEqualTo(56));
+      expect(tester.getSize(ku).height, greaterThanOrEqualTo(96));
 
-      expect(find.text('Sonraki'), findsOneWidget);
+      expect(find.text('Devam'), findsOneWidget);
       await tester.tap(ku);
       await tester.pumpAndSettle();
       expect(find.text('Bidomîne'), findsOneWidget);
       await tester.tap(tr);
       await tester.pumpAndSettle();
-      expect(find.text('Sonraki'), findsOneWidget);
+      expect(find.text('Devam'), findsOneWidget);
     });
 
     for (final size in [const Size(320, 640), const Size(390, 844)]) {
@@ -138,9 +138,11 @@ void main() {
       ) async {
         await _pumpOnboarding(tester, size: size, textScale: 2);
         expect(tester.takeException(), isNull);
-        await tester.tap(find.text('Sonraki'));
-        await tester.pumpAndSettle();
-        expect(tester.takeException(), isNull);
+        for (var i = 0; i < 2; i++) {
+          await tester.tap(find.text('Devam'));
+          await tester.pumpAndSettle();
+          expect(tester.takeException(), isNull);
+        }
       });
     }
   });

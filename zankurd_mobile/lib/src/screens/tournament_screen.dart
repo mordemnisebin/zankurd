@@ -1126,20 +1126,17 @@ class _LobbyView extends StatelessWidget {
       accent: SahneTokens.of(context).gold,
       icon: AppIcons.trophy,
       tokens: [
-        ArenaStatusChip(
-          // Kupa henüz başlamadı: kontenjan dolunca başlar.
-          status: ArenaStatus.upcoming,
-          label: context.t(K.cupNotStarted),
-          onSolid: true,
-        ),
-        // Ödül GERÇEK sabitlerden gelir; uydurulmaz. Maç başı jeton
-        // kasıtlı olarak yok: sunucu maç başına hiçbir coin ödemiyor
-        // (2026-08-14 denetimi).
-        RewardToken(
-          kind: RewardKind.coin,
-          value: '${TournamentConfig.coinBonusChampion}',
-          label: context.t(K.cupChampionReward),
-          onSolid: true,
+        // Durum çipi ("Başlamadı") KALKTI (2026-10-28 kurul K16): hemen
+        // altındaki "Turnuvaya katıl" ile çelişiyordu; başlama koşulu alt
+        // başlıkta zaten yazılı.
+        //
+        // Ödül GERÇEK sabitten gelir ve açıkça "Ödül: 200 jeton" yazılır
+        // (şampiyona gittiği kurallarda). Maç başı jeton kasıtlı olarak yok:
+        // sunucu maç başına hiçbir coin ödemiyor (2026-08-14 denetimi).
+        _CupRewardLine(
+          text: context.t(K.cupRewardLine, {
+            'n': '${TournamentConfig.coinBonusChampion}',
+          }),
         ),
       ],
       action: SahneButton.primary(
@@ -1192,53 +1189,151 @@ class _LobbyView extends StatelessWidget {
   }
 }
 
+/// "Ödül: 200 jeton" çipi. [RewardToken] tek satıra kesiyordu (320 pt + %200
+/// yazıda "Ödül: 200 jet…"); ödül metni OKUNAKLI olmalı, bu yüzden sarar.
+class _CupRewardLine extends StatelessWidget {
+  const _CupRewardLine({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Semantics(
+      key: const ValueKey('tournament-reward'),
+      label: text,
+      child: ExcludeSemantics(
+        child: DecoratedBox(
+          decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.x3,
+              vertical: SahneSpace.x2,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SahneGlyph(SahneGlyphKind.coin, size: 20),
+                const SizedBox(width: SahneSpace.x2),
+                Flexible(
+                  child: Text(
+                    text,
+                    style: SahneType.captionStrong.copyWith(color: t.tx),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// "Nasıl oynanır?": kupanın üç kuralı (2026-10-28 görsel kurul — lobinin
 /// alt yarısı boştu ve oyuncu sunucu puanlamasını, süreyi bilmiyordu).
 /// Kurallar sunucuyla birebir: aynı sorular, 100 + en çok 50 hız puanı,
 /// 24 saatte oynanmayan maç hükmen.
-class _CupRulesPanel extends StatelessWidget {
+class _CupRulesPanel extends StatefulWidget {
   const _CupRulesPanel({required this.ku});
 
   final bool ku;
 
   @override
+  State<_CupRulesPanel> createState() => _CupRulesPanelState();
+}
+
+class _CupRulesPanelState extends State<_CupRulesPanel> {
+  bool _open = false;
+
+  @override
   Widget build(BuildContext context) {
+    final ku = widget.ku;
     final t = SahneTokens.of(context);
     final rules = <(IconData, String)>[
       (AppIcons.peopleGroup, Tr.forKu(K.cupRuleSameQuestions, ku)),
       (AppIcons.bolt, Tr.forKu(K.cupRuleServerScore, ku)),
       (AppIcons.clock, Tr.forKu(K.cupRuleDeadline, ku)),
     ];
-    return Column(
-      key: const ValueKey('tournament-rules'),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SahneSectionHeader(title: Tr.forKu(K.howToPlay, ku)),
-        SahneSurfaceCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (var i = 0; i < rules.length; i++) ...[
-                if (i > 0) const SizedBox(height: SahneSpace.x3),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(rules[i].$1, size: 20, color: t.goldTx),
-                    const SizedBox(width: SahneSpace.x3),
-                    Expanded(
-                      child: Text(
-                        rules[i].$2,
-                        style: SahneType.body.copyWith(color: t.tx),
-                      ),
+    // Katlanır (2026-10-28 kurul K16): kurallar üç satır ama her biri bir
+    // cümle; lobi ilk bakışta yalnız ödül + katıl + format söylesin,
+    // "Nasıl oynanır?" dokununca açılır.
+    return Padding(
+      padding: const EdgeInsets.only(top: SahneSpace.sectionTop),
+      child: SahneSurfaceCard(
+        key: const ValueKey('tournament-rules'),
+        padding: EdgeInsets.zero,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Semantics(
+              button: true,
+              expanded: _open,
+              excludeSemantics: true,
+              label: Tr.forKu(K.howToPlay, ku),
+              onTap: () => setState(() => _open = !_open),
+              child: InkWell(
+                key: const ValueKey('tournament-rules-toggle'),
+                onTap: () => setState(() => _open = !_open),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(minHeight: 52),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: SahneSpace.x4,
                     ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            Tr.forKu(K.howToPlay, ku),
+                            style: SahneType.bodyStrong.copyWith(color: t.tx),
+                          ),
+                        ),
+                        Icon(
+                          _open ? AppIcons.chevronUp : AppIcons.chevronDown,
+                          size: 20,
+                          color: t.tx3,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            if (_open)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  SahneSpace.x4,
+                  0,
+                  SahneSpace.x4,
+                  SahneSpace.x4,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var i = 0; i < rules.length; i++) ...[
+                      if (i > 0) const SizedBox(height: SahneSpace.x3),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(rules[i].$1, size: 20, color: t.goldTx),
+                          const SizedBox(width: SahneSpace.x3),
+                          Expanded(
+                            child: Text(
+                              rules[i].$2,
+                              style: SahneType.body.copyWith(color: t.tx),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ],
                 ),
-              ],
-            ],
-          ),
+              ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

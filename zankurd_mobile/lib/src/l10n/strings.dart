@@ -53,9 +53,20 @@ class Tr {
     // ── Ekran başlıkları ─────────────────────────────────────────────
     K.settings: {'ku': 'Mîheng', 'tr': 'Ayarlar'},
     K.shop: {'ku': 'Dukan', 'tr': 'Mağaza'},
+    // Mağaza grup başlıkları (2026-10-28 K11). KU: "Alîkar" (Paketa alîkariyê
+    // ile aynı kök), "Çarçove û rozet" (K.frame = Çarçove, Rozeta VIP).
+    K.shopGroupBoosters: {'ku': 'Xurtker', 'tr': 'Güçlendiriciler'},
+    K.shopGroupLooks: {'ku': 'Çarçove û rozet', 'tr': 'Çerçeve ve rozet'},
 
     // ── Ayarlar ekranı ───────────────────────────────────────────────
     K.secAccount: {'ku': 'Hesab', 'tr': 'Hesap'},
+    // 2026-10-28 K17: ayarlar 12 başlıktan 5 gruba indi (yeni başlıklar;
+    // KU parçaları mevcut sözcüklerden: Hesab, Nepenî, Dîmen, Deng,
+    // Agahdarî, Derbar, Alîkarî).
+    K.secAccountPrivacy: {'ku': 'Hesab û nepenî', 'tr': 'Hesap ve gizlilik'},
+    K.secAppSound: {'ku': 'Dîmen û deng', 'tr': 'Görünüm ve ses'},
+    K.secNotifications: {'ku': 'Agahdarî', 'tr': 'Bildirimler'},
+    K.secAboutHelp: {'ku': 'Agahî û alîkarî', 'tr': 'Hakkında ve yardım'},
     K.playerName: {'ku': 'Navê lîstikvanê', 'tr': 'Oyuncu adı'},
     K.playerNameHint: {'ku': 'Navê xwe binivîse…', 'tr': 'Oyundaki adını gir…'},
     K.secLearning: {'ku': 'Hînbûn', 'tr': 'Öğrenme'},
@@ -68,7 +79,6 @@ class Tr {
       'tr': 'Mevcut seviyen: {name}',
     },
     K.secSafety: {'ku': 'Ewlekarî', 'tr': 'Güvenlik'},
-    K.secPrivacy: {'ku': 'Nepenî û dane', 'tr': 'Gizlilik ve veri'},
     K.analyticsConsent: {'ku': 'Analîza bikaranînê', 'tr': 'Kullanım analizi'},
     K.analyticsConsentSub: {
       'ku': 'Ji bo em sepanê baştir bikin, daneyên bênav bişîne',
@@ -99,7 +109,6 @@ class Tr {
       'ku': 'Girêdan nehat vekirin.',
       'tr': 'Bağlantı açılamadı.',
     },
-    K.secAppearance: {'ku': 'Dîmen', 'tr': 'Görünüm'},
     K.appLanguage: {'ku': 'Zimanê sepanê', 'tr': 'Uygulama dili'},
     // 2026-09-30 simülatör: "Karanlık/Aydınlık mod" tek anahtarda hangi
     // yönün açık olduğunu söylemiyordu. Anahtar artık tek bir temayı adlandırır
@@ -142,7 +151,6 @@ class Tr {
     // bağıran etiketti (metin kararı: büyük harf yok).
     K.premiumBadgeOn: {'ku': 'Çalak', 'tr': 'Aktif'},
     K.premiumBadgeOff: {'ku': 'Dest pê bike', 'tr': 'Başla'},
-    K.secAbout: {'ku': 'Derbarê sepanê', 'tr': 'Uygulama hakkında'},
     K.howToPlay: {'ku': 'Çawa tê lîstin?', 'tr': 'Nasıl oynanır?'},
     K.privacy: {'ku': 'Nepenî', 'tr': 'Gizlilik'},
     K.version: {'ku': 'Guherto', 'tr': 'Sürüm'},
@@ -317,6 +325,8 @@ class Tr {
       'tr': 'Hesabın hazır. E-postana gelen bağlantıyla onayla.',
     },
     K.backStep: {'ku': 'Paş', 'tr': 'Geri'},
+    // Karşılama adımlarının alt düğmesi (2026-10-28 K10); KU metni K.next ile aynı.
+    K.onbContinue: {'ku': 'Bidomîne', 'tr': 'Devam'},
     K.createAccount: {'ku': 'Hesab biafirîne', 'tr': 'Hesap oluştur'},
     K.nextStep: {'ku': 'Pêş', 'tr': 'İleri'},
     K.haveAccountPrefix: {
@@ -504,7 +514,8 @@ class Tr {
       'tr': 'Doğru: {correct}/{total}',
     },
     K.wordsBox: {'ku': 'Qutiya {box}/5', 'tr': 'Kutu {box}/5'},
-    K.wordsDueBadge: {'ku': 'Amade', 'tr': 'Hazır'},
+    // 2026-10-28 K13: "Hazır" belirsizdi; küçük yeşil çip artık ne olduğunu söyler.
+    K.wordsDueBadge: {'ku': 'Dema dubarekirinê', 'tr': 'Tekrar zamanı'},
     // ── Tek "Tekrar" girişi: kelime (Leitner) + yanlış sorusu (2 oturum) ──
     K.tekrarTitle: {'ku': 'Dubarekirin', 'tr': 'Tekrar'},
     K.practiceSection: {'ku': 'Pratîk', 'tr': 'Pratik'},
@@ -682,12 +693,10 @@ class Tr {
     K.joinTournament: {'ku': 'Tevlî kûpayê bibe', 'tr': 'Turnuvaya katıl'},
     K.cupPlayers: {'ku': 'lîstikvan', 'tr': 'oyuncu'},
     K.cupRounds: {'ku': 'ger', 'tr': 'tur'},
-    // Ödül şampiyonundur (sunucu yalnız şampiyona öder); "ödül" kime
-    // gittiğini söylemiyordu (2026-10-28 görsel kurul).
-    K.cupChampionReward: {
-      'ku': 'zêr · ji şampiyon re',
-      'tr': 'jeton · şampiyona',
-    },
+    // 2026-10-28 kurul K16: ödül açıkça "Ödül: 200 jeton" yazılır. Yeni
+    // Kurmancî dize: `Xelat` (ödül, `K.cupRewardGranted`) + `zêr` (jeton,
+    // `K.coinWord`) mevcut onaylı sözcüklerdir; kalıp jüriye gider.
+    K.cupRewardLine: {'ku': 'Xelat: {n} zêr', 'tr': 'Ödül: {n} jeton'},
     K.cupRuleSameQuestions: {
       // Kurul 2026-10-28 (Gemini + Opus, 2/3): "pirs lîstin" çeviri kokuyor,
       // özne öbeğinde "xwe" bağlanamaz.
@@ -707,7 +716,6 @@ class Tr {
     },
     K.cupLadder: {'ku': 'Rêya kûpayê', 'tr': 'Turnuva yolu'},
     K.cupFormatTitle: {'ku': 'Awa', 'tr': 'Format'},
-    K.cupNotStarted: {'ku': 'Dest pê nekiriye', 'tr': 'Başlamadı'},
     K.cupRewardClaiming: {
       'ku': 'Xelat tê piştrastkirin…',
       'tr': 'Ödül doğrulanıyor…',
@@ -870,11 +878,6 @@ class Tr {
     K.notifChannelStreakDesc: {
       'ku': 'Bîrxistina parastina zincîra rojane',
       'tr': 'Günlük seriyi koruma hatırlatıcısı',
-    },
-    K.notifMasterTitle: {'ku': 'Agahdarî', 'tr': 'Bildirimler'},
-    K.notifMasterSub: {
-      'ku': 'Bîrxistin û agahdariyên ZanKurdê',
-      'tr': 'ZanKurd hatırlatmaları ve bildirimleri',
     },
     K.notifContestSub: {
       'ku': 'Heke te îro nelîstibe, di demjimêr 19:00 de bîr tîne',
@@ -1489,6 +1492,12 @@ class Tr {
     // Oda ekranının (B iskeleti) çubuk başlığı.
     K.roomLobbyTitle: {'ku': 'Lobiya odeyê', 'tr': 'Oda lobisi'},
     K.reportAction: {'ku': 'Ragihîne', 'tr': 'Bildir'},
+    // Sıralama satırı/podyum sütunu ipucu (2026-10-28, K18): görünür ⋮ kalktı,
+    // bildir/engelle yolu dokunuşa taşındı; ekran okuyucu yolu duyurur.
+    K.reportTapHint: {
+      'ku': 'Ji bo ragihandinê an astengkirinê bitikîne',
+      'tr': 'Bildir veya engelle için dokun',
+    },
     // 2026-08-02: avatar/ad da yabancılara gösterilen bir UGC yüzeyi;
     // bildirmenin hiçbir yolu yoktu (Apple 1.2).
     K.reportProfileTitle: {'ku': 'Profîlê ragihîne', 'tr': 'Profili bildir'},
@@ -2192,6 +2201,13 @@ class Tr {
       'ku': 'Îro 1 alîkarî belaş e',
       'tr': 'Bugün 1 joker bedava',
     },
+    // K6/K7 (2026-10-28): soru ekranı mod çipi, ücretsiz joker rozeti, sonuçta
+    // katlanan cevap listesi. NEEDS_JURY (KU): bu dizeler yeni.
+    K.modeLesson: {'ku': 'Ders', 'tr': 'Ders'},
+    K.freeBadge: {'ku': 'Belaş', 'tr': 'Ücretsiz'},
+    K.seeAnswers: {'ku': 'Bersivan bibîne', 'tr': 'Cevapları gör'},
+    K.hideAnswers: {'ku': 'Bersivan veşêre', 'tr': 'Cevapları gizle'},
+    K.showAllOptions: {'ku': 'Hemû vebijarkan bibîne', 'tr': 'Tüm şıkları gör'},
     K.wildcardNoCoins: {
       'ku': 'Ji bo alîkariyê zêrên te têr nakin',
       'tr': 'Joker için jeton yetmiyor',
@@ -2540,14 +2556,6 @@ class Tr {
     K.startToday: {'ku': 'Îro dest pê bike', 'tr': 'Bugün başla'},
     K.savedQuestions: {'ku': 'Pirsên tomarkirî', 'tr': 'Kaydedilen sorular'},
     K.myMistakes: {'ku': 'Şaşiyên min', 'tr': 'Yanlışlarım'},
-    K.noMistakes: {
-      'ku': 'Şaşiyek tune, aferîn!',
-      'tr': 'Hiç yanlışın yok, aferin!',
-    },
-    K.mistakeCounts: {
-      'ku': 'Ji bo dubarekirinê: {ready} / Tevahî: {total}',
-      'tr': 'Tekrar edilecek: {ready} / Toplam: {total}',
-    },
     K.suggestQuestion: {'ku': 'Pirs pêşniyar bike', 'tr': 'Soru öner'},
     K.suggestQuestionSub: {
       'ku': 'Pirsa xwe pêşniyar bike, bila piştî pejirandinê were zêdekirin',
@@ -2696,18 +2704,6 @@ class Tr {
       'tr':
           'Hesabından çıkmak istiyor musun? İlerlemen hesabına bağlı '
           'saklanır; tekrar giriş yapınca geri gelir.',
-    },
-    K.allMistakesWaiting: {
-      'ku':
-          'Hemû pirsên şaş li benda dema dubarekirinê ne. Paşê '
-          'biceribîne.',
-      'tr':
-          'Tüm yanlışların tekrar zamanı henüz gelmedi. Daha sonra '
-          'tekrar dene.',
-    },
-    K.noMistakesPlayFirst: {
-      'ku': 'Pirsên şaş tune. Pêşî pêşbirkekê bilîze.',
-      'tr': 'Tekrar edilecek yanlış yok. Önce bir yarış oyna.',
     },
 
     K.ttsVolume: {'ku': 'Bilindahiya deng', 'tr': 'Ses seviyesi'},
@@ -2876,10 +2872,6 @@ class Tr {
     K.onbLearnBody: {
       'ku': 'Bi pirsên kurt peyvan hîn bibe, çandê nas bike.',
       'tr': 'Kısa sorularla kelime öğren, kültürü tanı.',
-    },
-    K.onbCategoriesBullet: {
-      'ku': 'Ji ziman heta muzîkê {count} mijar',
-      'tr': 'Dilden müziğe {count} konu',
     },
     // Ürün terimi `Şîrove`. Tanıtım maddesi "ravekirinê" deyince
     // oyuncu aynı açıklamayı iki adla görür; çekim `Şîroveyê
@@ -3652,10 +3644,6 @@ class Tr {
       'tr': 'Dürtme gönderilemedi',
     },
     K.recentMatchesTitle: {'ku': 'Pêşbirkên dawî', 'tr': 'Son maçlar'},
-    K.recentMatchesEmpty: {
-      'ku': 'Hîn pêşbirk tune. Dest bi pêşbirka xwe ya yekem bike.',
-      'tr': 'Henüz maç yok. İlk düellonu başlat.',
-    },
     K.matchResultWin: {'ku': 'Bi ser ketî', 'tr': 'Kazandın'},
     K.matchResultLoss: {'ku': 'Te winda kir', 'tr': 'Kaybettin'},
     K.matchResultDraw: {'ku': 'Beramberî', 'tr': 'Berabere'},
@@ -4156,6 +4144,9 @@ class K {
 
   static const back = 'common.back';
   static const next = 'common.next';
+  static const shopGroupBoosters = 'shop.groupBoosters';
+  static const shopGroupLooks = 'shop.groupLooks';
+  static const onbContinue = 'common.onbContinue';
   static const skip = 'common.skip';
   static const start = 'common.start';
   static const save = 'common.save';
@@ -4173,13 +4164,16 @@ class K {
 
   // ── Ayarlar ekranı ─────────────────────────────────────────────────
   static const secAccount = 'settings.section.account';
+  static const secAccountPrivacy = 'settings.section.accountPrivacy';
+  static const secAppSound = 'settings.section.appSound';
+  static const secNotifications = 'settings.section.notifications';
+  static const secAboutHelp = 'settings.section.aboutHelp';
   static const playerName = 'settings.playerName';
   static const playerNameHint = 'settings.playerName.hint';
   static const secLearning = 'settings.section.learning';
   static const retakePlacement = 'settings.retakePlacement';
   static const currentLevel = 'settings.currentLevel';
   static const secSafety = 'settings.section.safety';
-  static const secPrivacy = 'settings.section.privacy';
   static const analyticsConsent = 'settings.analyticsConsent';
   static const analyticsConsentSub = 'settings.analyticsConsent.sub';
   static const reportAbuse = 'settings.reportAbuse';
@@ -4187,7 +4181,6 @@ class K {
   static const betaMailSubject = 'settings.betaMail.subject';
   static const abuseMailSubject = 'settings.abuseMail.subject';
   static const linkOpenFailed = 'settings.linkOpenFailed';
-  static const secAppearance = 'settings.section.appearance';
   static const appLanguage = 'settings.appLanguage';
   static const darkLightMode = 'settings.darkLightMode';
   static const reduceMotion = 'settings.reduceMotion';
@@ -4205,7 +4198,6 @@ class K {
   static const premiumPerks = 'settings.premium.perks';
   static const premiumBadgeOn = 'settings.premium.badgeOn';
   static const premiumBadgeOff = 'settings.premium.badgeOff';
-  static const secAbout = 'settings.section.about';
   static const howToPlay = 'settings.howToPlay';
   static const privacy = 'settings.privacy';
   static const version = 'settings.version';
@@ -4404,13 +4396,12 @@ class K {
   // ekranda hiç görünmüyordu; ödül de öyle.
   static const cupPlayers = 'tournament.players';
   static const cupRounds = 'tournament.rounds';
-  static const cupChampionReward = 'tournament.championRewardLabel';
+  static const cupRewardLine = 'tournament.rewardLine';
   static const cupRuleSameQuestions = 'tournament.rule.sameQuestions';
   static const cupRuleServerScore = 'tournament.rule.serverScore';
   static const cupRuleDeadline = 'tournament.rule.deadline';
   static const cupLadder = 'tournament.ladder';
   static const cupFormatTitle = 'tournament.formatTitle';
-  static const cupNotStarted = 'tournament.notStarted';
 
   // Sampiyonluk odulunun DURUMU (2026-08-04). Kupayi kazanmak odulun
   // verildigi anlamina gelmez: odulu sunucu verir ve benzetim modunda hic
@@ -4482,8 +4473,6 @@ class K {
   static const notifChannelFriendDesc = 'notif.channel.friend.desc';
   static const notifChannelStreakName = 'notif.channel.streak.name';
   static const notifChannelStreakDesc = 'notif.channel.streak.desc';
-  static const notifMasterTitle = 'settings.notif.master';
-  static const notifMasterSub = 'settings.notif.master.sub';
   static const notifContestSub = 'settings.notif.contest.sub';
   static const notifStreakTitle = 'settings.notif.streak';
   static const notifStreakSub = 'settings.notif.streak.sub';
@@ -4723,6 +4712,7 @@ class K {
   static const roomWord = 'quiz.room';
   static const roomLobbyTitle = 'room.lobbyTitle';
   static const reportAction = 'quiz.report';
+  static const reportTapHint = 'report.tapHint';
   static const reportProfileTitle = 'report.profileTitle';
   static const reportProfileBodyP = 'report.profileBody';
   static const reportProfileDone = 'report.profileDone';
@@ -4830,6 +4820,11 @@ class K {
   static const diacriticHint = 'quiz.diacriticHint';
   static const wildcardNoCoins = 'quiz.wildcard.no.coins';
   static const freeWildcardToday = 'quiz.wildcard.free.today';
+  static const modeLesson = 'quiz.mode.lesson';
+  static const freeBadge = 'quiz.wildcard.free.badge';
+  static const seeAnswers = 'result.seeAnswers';
+  static const hideAnswers = 'result.hideAnswers';
+  static const showAllOptions = 'review.showAllOptions';
   static const wheelTitle = 'wheel.title';
   static const wheelOncePerDay = 'wheel.oncePerDay';
   static const wheelWonAmount = 'wheel.wonAmount';
@@ -5086,8 +5081,6 @@ class K {
   static const startToday = 'profile.startToday';
   static const savedQuestions = 'profile.savedQuestions';
   static const myMistakes = 'profile.myMistakes';
-  static const noMistakes = 'profile.noMistakes';
-  static const mistakeCounts = 'profile.mistakeCounts';
   static const suggestQuestion = 'profile.suggestQuestion';
   static const suggestQuestionSub = 'profile.suggestQuestion.sub';
   static const saveAccount = 'profile.saveAccount';
@@ -5137,8 +5130,6 @@ class K {
   static const connectingGoogle = 'common.connectingGoogle';
   static const signOut = 'common.signOut';
   static const signOutConfirm = 'profile.signOut.confirm';
-  static const allMistakesWaiting = 'profile.mistakes.allWaiting';
-  static const noMistakesPlayFirst = 'profile.mistakes.playFirst';
 
   static const ttsVolume = 'settings.tts.volume';
 
@@ -5254,7 +5245,6 @@ class K {
   // ── Tanıtım turu ──────────────────────────────────────────────
   static const onbLearnTitle = 'onboarding.learn.title';
   static const onbLearnBody = 'onboarding.learn.body';
-  static const onbCategoriesBullet = 'onboarding.bullet.categories';
   static const onbDailyBullet = 'onboarding.bullet.daily';
   static const onbCompeteTitle = 'onboarding.compete.title';
   static const onbCompeteBody = 'onboarding.compete.body';
@@ -5549,7 +5539,6 @@ class K {
   static const nudgeSent = 'duel.async.nudge.sent';
   static const nudgeFailed = 'duel.async.nudge.failed';
   static const recentMatchesTitle = 'profile.recentMatches.title';
-  static const recentMatchesEmpty = 'profile.recentMatches.empty';
   static const matchResultWin = 'profile.match.win';
   static const matchResultLoss = 'profile.match.loss';
   static const matchResultDraw = 'profile.match.draw';

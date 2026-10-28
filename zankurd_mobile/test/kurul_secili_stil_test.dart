@@ -47,9 +47,14 @@ void main() {
     expect(fills.where((c) => c == SahneTokens.day.selFill).length, 2);
   });
 
-  test('seçili dolgu 4. tur tonlarında', () {
-    expect(SahneTokens.day.selFill, const Color(0xFFFFE1CC));
-    expect(SahneTokens.night.selFill, const Color(0xFF4A321F));
+  // 2026-10-28 kurul K15: turuncu ton dolgu (4. tur) KOYU MÜREKKEP dolguya
+  // çevrildi; eski ton `warmFill` olarak seçim dışı vurgularda kaldı.
+  // Ayrıntılı bekçi: `secili_murekkep_test.dart`.
+  test('seçili dolgu mürekkep; eski turuncu ton warmFill', () {
+    expect(SahneTokens.day.selFill, SahneTokens.day.tx);
+    expect(SahneTokens.night.selFill, SahneTokens.night.tx);
+    expect(SahneTokens.day.warmFill, const Color(0xFFFFE1CC));
+    expect(SahneTokens.night.warmFill, const Color(0xFF4A321F));
   });
 
   testWidgets('SahnePickChip seçiliyken ✓ taşır, seçili değilken taşımaz', (

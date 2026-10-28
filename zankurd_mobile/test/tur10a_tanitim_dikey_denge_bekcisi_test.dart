@@ -31,7 +31,7 @@ void main() {
     );
     // 2026-10-24: yaş kutusu kalktı; metin bandının altındaki ilk öğe artık
     // birincil "Sonraki" düğmesidir.
-    final next = tester.getRect(find.text('Sonraki'));
+    final next = tester.getRect(find.text('Devam'));
     expect(text.bottom, lessThanOrEqualTo(next.top));
     expect(next.top - text.bottom, lessThanOrEqualTo(48 + 64));
   });

@@ -1095,16 +1095,9 @@ class _RankRow extends StatelessWidget {
     tag: entry.playerTag,
   );
 
-  /// Alt metindeki sayı `get_leaderboard`ın `count(distinct room_id)`
-  /// değeridir: oyuncunun BİTMİŞ çevrimiçi yarış (oda) sayısı. Birim
-  /// eskiden "oda / ode" idi; oyuncu için bu bir yer değil oyun sayısı
-  /// olduğundan sözlükteki "yarış / pêşbirk" ([K.raceWord]) yazılır
-  /// (2026-09-30 canlı: "1 ode" anlaşılmıyordu). Bot düellosu ve günün
-  /// soruları oda açmadığı için bu sayıya girmez.
-  String get _meta => entry.showcaseTitle != null
-      ? '${entry.showcaseTitle} · ${entry.bestStreak} ${Tr.forKu(K.streakUnit, isKu)}'
-      : '${entry.roomsPlayed} ${Tr.forKu(K.raceWord, isKu).toLowerCase()}'
-            ' · ${entry.bestStreak} ${Tr.forKu(K.streakUnit, isKu)}';
+  // İkinci satır ("9 yarış · 6 seri") 2026-10-28 kurul K18 ile KALKTI: satır
+  // yalnız sıra · avatar · ad · puan. Yarış/seri sayısı sunucu verisi
+  // (`get_leaderboard`: bitmiş çevrimiçi oda sayısı) olarak modelde durur.
 
   @override
   Widget build(BuildContext context) {
@@ -1128,7 +1121,6 @@ class _RankRow extends StatelessWidget {
         key: const ValueKey('leaderboard-my-rank-row'),
         rank: entry.rank,
         title: _name,
-        subtitle: _meta,
         // "Sen" rozeti vurgunun sözlü kanalı: altın ton ve halka tek
         // başına renk körü oyuncuya yetmez.
         trailing: Row(
@@ -1146,19 +1138,41 @@ class _RankRow extends StatelessWidget {
       key: ValueKey('leaderboard-rank-row-${entry.rank}'),
       container: true,
       label: label,
+      // Bildir/engelle yolu ekran okuyucuya duyurulur (App Store 1.2).
+      hint: onReport == null ? null : Tr.forKu(K.reportTapHint, isKu),
+      button: onReport != null,
+      onTap: onReport,
+      onLongPress: onReport,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         excludeFromSemantics: true,
-        // Satıra dokunmak da, uzun basmak da aynı alt sayfayı açar; görünür
-        // yol satırdaki ⋯ düğmesi (Apple 1.2: yalnız uzun basma DEĞİL).
+        // Satıra dokunmak da, uzun basmak da aynı alt sayfayı (Bildir /
+        // Engelle) açar. Görünür ⋮ düğmesi 2026-10-28 kurul K18 ile kalktı.
         onTap: onReport,
         onLongPress: onReport,
         // Kendi satırın Zêr tonlu zemin taşır (2026-10-20 B): vurgu yalnız
         // rakam rengi değil, satırın kendisidir.
         child: highlight
-            ? ColoredBox(
-                color: SahneTokens.of(context).goldTint,
-                child: _buildRow(context),
+            ? Padding(
+                // İç boşluk: grup kırpıcısı yan kenarları keserdi.
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SahneSpace.x1,
+                  vertical: 2,
+                ),
+                child: DecoratedBox(
+                  key: const ValueKey('leaderboard-me-outline'),
+                  decoration: ShapeDecoration(
+                    color: SahneTokens.of(context).goldTint,
+                    // "Sen" satırı belirgin çerçeve (K18): renk tek başına
+                    // değil, 2 px altın kenar + "Sen" rozeti.
+                    shape: SahneShape.withSide(
+                      SahneShape.m,
+                      SahneTokens.of(context).goldTx,
+                      width: 2,
+                    ),
+                  ),
+                  child: _buildRow(context),
+                ),
               )
             : _buildRow(context),
       ),
@@ -1178,10 +1192,10 @@ class _RankRow extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 56),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(
+        padding: const EdgeInsetsDirectional.fromSTEB(
           SahneSpace.x3,
           SahneSpace.x1,
-          onReport == null && !grouped ? SahneSpace.x4 : 0,
+          SahneSpace.x4,
           SahneSpace.x1,
         ),
         child: Row(
@@ -1225,8 +1239,15 @@ class _RankRow extends StatelessWidget {
                     // birleşik etiketi "senin sıran" bilgisini zaten verir.
                     LayoutBuilder(
                       builder: (context, constraints) {
+                        // Rozet yazıyla büyür: eşik yazı ölçeğiyle birlikte
+                        // artar (320 pt + %200'de ⋮ kalkınca ad alanı
+                        // genişledi ve sabit 72 eşiği rozeti sığdırıp
+                        // taşırıyordu).
+                        final scale =
+                            MediaQuery.textScalerOf(context).scale(16) / 16;
                         final showSelfTag =
-                            highlight && constraints.maxWidth >= 72;
+                            highlight &&
+                            constraints.maxWidth >= 72 * scale + 24;
                         return Row(
                           children: [
                             Flexible(
@@ -1250,12 +1271,6 @@ class _RankRow extends StatelessWidget {
                         );
                       },
                     ),
-                    Text(
-                      _meta,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: SahneType.caption.copyWith(color: t.tx2),
-                    ),
                   ],
                 ),
               ),
@@ -1267,34 +1282,6 @@ class _RankRow extends StatelessWidget {
                 child: _score(),
               ),
             ),
-            // "Daha fazla" düğmesi görünür kalır (Apple 1.2: bildirme yolu
-            // yalnız uzun basma değil); bayrak simgesi ise her satırda
-            // gürültüydü (kurul 2026-10-20). Bildir menüde; satıra uzun
-            // basmak da aynı menüyü açar. Kendi satırında düğme yok ama
-            // LİSTE İÇİNDE yeri durur: aksi hâlde puan sağa kayıyor.
-            if (onReport == null)
-              if (grouped)
-                const SizedBox(width: 48)
-              else
-                const SizedBox.shrink()
-            else
-              Semantics(
-                button: true,
-                label: Tr.forKu(K.reportProfileTitle, isKu),
-                child: IconButton(
-                  key: ValueKey('leaderboard-more-${entry.playerId}'),
-                  onPressed: onReport,
-                  icon: const Icon(AppIcons.ellipsisVertical, size: 18),
-                  color: t.tx3,
-                  // Android dokunma hedefi: 48 dp altına düşmez.
-                  constraints: const BoxConstraints(
-                    minWidth: 48,
-                    minHeight: 48,
-                  ),
-                  padding: EdgeInsets.zero,
-                  tooltip: Tr.forKu(K.reportProfileTitle, isKu),
-                ),
-              ),
           ],
         ),
       ),

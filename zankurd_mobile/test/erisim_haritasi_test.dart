@@ -8,6 +8,8 @@
 // açılış kartında ve Ayarlar'ın derinindeydi. Sessizdi: hiçbir özellik
 // bozuk değildi, yalnız bulunamıyordu. Bu dosya her birini "kaç dokunuşta,
 // nerede" diye ölçer.
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +18,6 @@ import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
-import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
@@ -110,7 +111,10 @@ void main() {
     expect(play.dy, lessThan(grid.dy));
   });
 
-  testWidgets('seviye testi satırı öğrenme ekranında her zaman var', (
+  // 2026-10-28 kurul K8 (eski "her zaman var" kararı DEĞİŞTİ): "Seviyeni
+  // yeniden belirle" Öğren ekranından kalktı; Ayarlar'da durur, Öğren'de
+  // yalnız seviye hiç belirlenmediyse "Seviyeni bul" daveti çıkar.
+  testWidgets('seviye testi satırı öğrenme ekranında tekrar edilmez', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 2400));
@@ -120,14 +124,13 @@ void main() {
     );
     await _settle(tester);
 
-    final row = find.byKey(const ValueKey('learning-retake-placement'));
-    await tester.scrollUntilVisible(
-      row,
-      300,
-      scrollable: find.byType(Scrollable).first,
+    expect(
+      find.byKey(const ValueKey('learning-retake-placement')),
+      findsNothing,
     );
-    await tester.tap(row);
-    await _settle(tester);
-    expect(find.byType(LevelPlacementScreen), findsOneWidget);
+    final settings = File(
+      'lib/src/screens/settings_screen.dart',
+    ).readAsStringSync();
+    expect(settings.contains('K.retakePlacement'), isTrue);
   });
 }

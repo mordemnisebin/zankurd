@@ -1,4 +1,10 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+//
+// 2026-10-28 kurul K10 (geçersiz kılınan eski kararlar): karşılama 2 değil 3
+// adımdır (1. adım dil: iki büyük kart); alt düğme "Sonraki" değil "Devam";
+// kahraman sahne kartı (`onboarding-hero-panel`, kilim, koyu kutu) kalktı —
+// görsel düz zeminde rol tonlu rozettir; logo 40 değil 96 (dil adımında,
+// kutusuz). Hiyerarşi kuralı sürer: adım başına 1 başlık + ≤ 2 satır.
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -11,7 +17,7 @@ import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 void main() {
-  testWidgets('tanıtım öğrenme ve yarış değerini iki kısa adımda anlatır', (
+  testWidgets('tanıtım dil, öğrenme ve yarış değerini üç kısa adımda anlatır', (
     tester,
   ) async {
     var completed = 0;
@@ -25,17 +31,22 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Öğren'), findsOneWidget);
-    expect(find.text('Sonraki'), findsOneWidget);
+    expect(find.text('Uygulama dili · Zimanê sepanê'), findsOneWidget);
+    expect(find.text('Devam'), findsOneWidget);
     expect(find.text('Başla'), findsNothing);
-    expect(find.text('Arkadaşlarınla yarış'), findsNothing);
+    expect(find.text('Öğren'), findsNothing);
 
-    await tester.tap(find.text('Sonraki'));
+    await tester.tap(find.text('Devam'));
+    await tester.pumpAndSettle();
+    expect(find.text('Öğren'), findsOneWidget);
+    expect(find.text('Devam'), findsOneWidget);
+
+    await tester.tap(find.text('Devam'));
     await tester.pumpAndSettle();
 
     expect(find.text('Arkadaşlarınla yarış'), findsOneWidget);
     expect(find.text('Başla'), findsOneWidget);
-    expect(find.text('Sonraki'), findsNothing);
+    expect(find.text('Devam'), findsNothing);
 
     await tester.tap(find.text('Başla'));
     expect(completed, 1);
@@ -56,31 +67,6 @@ void main() {
 
     expect(find.bySemanticsLabel('Atla'), findsOneWidget);
     semantics.dispose();
-  });
-
-  testWidgets('onboarding ilk paneli metin hiyerarşisine alan bırakır', (
-    tester,
-  ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-
-    await tester.pumpWidget(
-      ChangeNotifierProvider(
-        create: (_) => LanguageProvider()..setLang('tr'),
-        child: MaterialApp(home: OnboardingScreen(onComplete: () {})),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    final hero = tester.getSize(
-      find.byKey(const ValueKey('onboarding-hero-panel')),
-    );
-    // 2026-10-01: logo üst yığından kartın içine taşındı; tavan 296'dan 340'a
-    // çıktı (net dikey kullanım aynı: üstteki 128–148 px'lik logo bloğu
-    // gitti). Korunan kural: kahraman sayfanın yarısını aşmaz, metne yer
-    // kalır.
-    expect(hero.height, lessThanOrEqualTo(340));
-    expect(hero.height, lessThan(844 / 2));
   });
 
   // 2026-09-29 Şahnê: bu iki bekçi Forest degradesini (hero ve seçili adım
@@ -104,19 +90,25 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    SahneStageCard hero() => tester.widget<SahneStageCard>(
-      find.descendant(
-        of: find.byKey(const ValueKey('onboarding-hero-panel')),
-        matching: find.byType(SahneStageCard),
-      ),
-    );
+    Color artColor() => tester
+        .widget<Icon>(
+          find
+              .descendant(
+                of: find.byKey(const ValueKey('onboarding-scene-art')),
+                matching: find.byType(Icon),
+              )
+              .first,
+        )
+        .color!;
+    const t = SahneTokens.day;
 
-    expect(hero().role, SahneRole.learn);
-
-    await tester.tap(find.text('Sonraki'));
+    await tester.tap(find.text('Devam'));
     await tester.pumpAndSettle();
+    expect(artColor(), t.learnTx);
 
-    expect(hero().role, SahneRole.race);
+    await tester.tap(find.text('Devam'));
+    await tester.pumpAndSettle();
+    expect(artColor(), t.raceTx);
   });
 
   // 2026-10-01 giriş iskeleti: sayfa göstergesi iki ayrı çubuk değil, kayıt
@@ -135,14 +127,17 @@ void main() {
     await tester.pumpAndSettle();
 
     final bar = find.byKey(const ValueKey('onboarding-progress'));
-    expect(tester.widget<SahneProgressBar>(bar).value, 0.5);
-    expect(tester.widget<SahneProgressBar>(bar).trailing, '1/2');
-    expect(find.text('1/2'), findsOneWidget);
+    expect(tester.widget<SahneProgressBar>(bar).value, closeTo(1 / 3, 1e-9));
+    expect(tester.widget<SahneProgressBar>(bar).trailing, '1/3');
+    expect(find.text('1/3'), findsOneWidget);
 
-    await tester.tap(find.text('Sonraki'));
+    await tester.tap(find.text('Devam'));
+    await tester.pumpAndSettle();
+    expect(tester.widget<SahneProgressBar>(bar).value, closeTo(2 / 3, 1e-9));
+    await tester.tap(find.text('Devam'));
     await tester.pumpAndSettle();
     expect(tester.widget<SahneProgressBar>(bar).value, 1.0);
-    expect(tester.widget<SahneProgressBar>(bar).trailing, '2/2');
+    expect(tester.widget<SahneProgressBar>(bar).trailing, '3/3');
   });
 
   testWidgets('onboarding dil düğmesi başlık alanına yayılmaz', (tester) async {
@@ -181,7 +176,8 @@ void main() {
           chip.width,
           lessThanOrEqualTo(SahneEntryScaffold.columnWidth / 2),
         );
-        expect(chip.height, inInclusiveRange(56, 64));
+        // K10: iki BÜYÜK kart (≥ 96 yüksek).
+        expect(chip.height, greaterThanOrEqualTo(96));
         expect(
           tester
               .getSemantics(find.byKey(key))
@@ -217,13 +213,14 @@ void main() {
       // 2026-10-01: logo üst yığından kahraman kartın İÇİNE taşındı (giriş,
       // kayıt ve ad ekranındaki kartlar da logo taşır) ve 40 genişliğinde.
       final logo = tester.widget<AppLogo>(find.byType(AppLogo));
-      expect(logo.width, 40);
+      expect(logo.width, 96);
       expect(
         find.ancestor(
           of: find.byType(AppLogo),
-          matching: find.byKey(const ValueKey('onboarding-hero-panel')),
+          matching: find.byType(SahneStageCard),
         ),
-        findsOneWidget,
+        findsNothing,
+        reason: 'K10: koyu kutu kalktı, logo düz zeminde',
       );
       expect(find.byType(RojMascot), findsNothing);
 

@@ -376,7 +376,9 @@ void main() {
       );
     }
 
-    expectCalmSurface(find.byKey(const ValueKey('shop-hero-surface')));
+    expectCalmSurface(
+      find.byKey(const ValueKey('shop-item-surface-profile_badge_vip')),
+    );
     expectCalmSurface(
       find.byKey(const ValueKey('shop-item-surface-spin_wheel_extra')),
     );
@@ -429,19 +431,23 @@ void main() {
         findsNothing,
         reason: 'kilitli fiyat kutu/düğme değil düz metin',
       );
-      // Tur 9b: eksik söz sağ sütundan sol metin sütununa (açıklamanın altına)
-      // taşındı; sağ sütunda yalnız kilitli fiyat kalır.
+      // 2026-10-28 K11: ayrı "N jeton eksik" satırı KALKTI (hap de kartın
+      // başka yerinde de); miktar yalnız ekran okuyucu etiketinde ve
+      // pencerede yaşar. Hap aynı sabit boydadır ve tutarı gösterir.
       expect(
-        find.descendant(
-          of: short,
-          matching: find.textContaining('jeton eksik'),
-        ),
+        find.descendant(of: short, matching: find.text('720')),
+        findsOneWidget,
+      );
+      expect(find.textContaining('jeton eksik'), findsNothing);
+      expect(
+        find.byKey(const ValueKey('shop-short-note-profile_badge_vip')),
         findsNothing,
       );
-      final note = tester.widget<Text>(
-        find.byKey(const ValueKey('shop-short-note-profile_badge_vip')),
+      expect(
+        tester.getSize(short).height,
+        tester.getSize(affordable).height,
+        reason: 'hap ile düğme aynı yükseklikte',
       );
-      expect(note.style?.color, t.goldTx, reason: 'eksik söz sıcak ton');
     },
   );
 
@@ -453,32 +459,43 @@ void main() {
     );
     await tester.pumpAndSettle();
     final hero = tester.getSize(
-      find.byKey(const ValueKey('shop-hero-surface')),
+      find.byKey(const ValueKey('shop-item-surface-profile_badge_vip')),
     );
     // Tur 6: Kurmancî olmayan Türkçe açıklama dar sütunda 3 satıra iner;
     // kart yine kompakt (eskiden ~490 mp).
     expect(hero.height, lessThanOrEqualTo(230));
   });
 
-  // Tur 6: tüm ürünler aynı tam genişlik yatay satır (bkz.
-  // tur6a_magaza_esit_kart_bekcisi_test).
-  testWidgets('tüm ürün kartları tam genişlik ve alt alta dizilir', (
+  // 2026-10-28 K11 (eski Tur 6 "hepsi aynı tam genişlik satır" kararı geçersiz):
+  // Güçlendiriciler tam genişlik satırlar, çerçeve ve rozet iki sütunlu
+  // ızgara karolarıdır; gruplar alt alta, başlıklarıyla.
+  testWidgets('güçlendiriciler tam genişlik satır, çerçeveler 2 sütun ızgara', (
     tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    await tester.binding.setSurfaceSize(const Size(390, 1800));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(
       _shell(ShopScreen(repository: _ShopRepository(coins: 300))),
     );
     await tester.pumpAndSettle();
-    final first = tester.getRect(
-      find.byKey(const ValueKey('shop-item-surface-spin_wheel_extra')),
-    );
-    final last = tester.getRect(
-      find.byKey(const ValueKey('shop-item-surface-avatar_frame_neon')),
-    );
-    expect(last.width, first.width);
-    expect(last.top, greaterThan(first.bottom - 1));
+    Rect r(String id) =>
+        tester.getRect(find.byKey(ValueKey('shop-item-surface-$id')));
+    final wheel = r('spin_wheel_extra');
+    final joker = r('joker_pack_3');
+    // Ucuzdan pahalıya: dondurma 50, joker 90, ekstra çevirme 120.
+    expect(joker.width, wheel.width);
+    expect(wheel.top, greaterThan(joker.bottom - 1));
+    final boosters = find.byKey(const ValueKey('shop-group-boosters'));
+    final looks = find.byKey(const ValueKey('shop-group-looks'));
+    expect(boosters, findsOneWidget);
+    expect(looks, findsOneWidget);
+    expect(tester.getRect(looks).top, greaterThan(wheel.bottom - 1));
+    final neon = r('avatar_frame_neon');
+    final gold = r('avatar_frame_kilim'); // (kilim, neon) aynı satır
+    expect(neon.width, lessThan(wheel.width * 0.6), reason: 'yarım genişlik');
+    expect(neon.top, gold.top, reason: 'ikisi aynı satırda');
+    expect(neon.left, isNot(gold.left));
+    expect(neon.top, greaterThan(tester.getRect(looks).bottom - 1));
   });
 
   testWidgets('mağaza bakiyeyi ve ürünleri listeler', (tester) async {
@@ -632,11 +649,9 @@ void main() {
     },
   );
 
-  // Tur 10b kusuru: metin sütunu fiyat/eylem sütunuyla genişliği paylaşıyordu;
-  // ad 2, açıklama 3-4 satıra kırılıyordu. Sessiz kaldı çünkü hiçbir şey
-  // taşmıyor, yalnız kart uzuyordu. Bekçi: metin kartın tam genişliğini alır
-  // ve fiyat/eylem satırı metnin ALTINDA, sağa yaslı durur.
-  testWidgets('mağaza kartı: metin tam genişlik, eylem altta sağa yaslı', (
+  // 2026-10-28 K11: eski Tur 10b düzeni ("metin tam genişlik, eylem altta")
+  // geçersiz; satır = ikon + ad + SAĞDA sabit boyutlu fiyat düğmesi.
+  testWidgets('mağaza satırı: ad solda, sabit boy fiyat düğmesi sağda', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 1400));
@@ -654,25 +669,24 @@ void main() {
     );
     final buy = find.byKey(const ValueKey('shop-buy-spin_wheel_extra'));
     final cardRect = tester.getRect(card);
-    // Ad tek satır (açıklama satırı AZ SÖZ turunda kaldırıldı).
-    expect(tester.getSize(title).height, lessThan(26));
-    // Eylem metnin altında ve sağa yaslı, standart düğme boyu (dokunma hedefi kuralı 40 altına inmeye izin vermez).
     expect(
-      tester.getRect(buy).top,
-      greaterThanOrEqualTo(tester.getRect(title).bottom),
+      tester.getSize(title).height,
+      lessThan(52),
+      reason: 'en çok iki satır',
+    );
+    expect(
+      tester.getRect(title).right,
+      lessThanOrEqualTo(tester.getRect(buy).left),
     );
     expect(tester.getRect(buy).right, greaterThan(cardRect.right - 20));
-    expect(tester.getSize(buy).height, inInclusiveRange(44, 52));
-    // Kilitli üründe eksik notu eylem satırında, kilitli fiyatın solunda.
-    final note = find.byKey(
-      const ValueKey('shop-short-note-profile_badge_vip'),
-    );
+    expect(tester.getSize(buy).height, inInclusiveRange(44, 56));
+    // Kilitli fiyat hapı aynı sabit genişlikte (ürünler arası hizalı).
+    final joker = find.byKey(const ValueKey('shop-short-joker_pack_3'));
+    if (joker.evaluate().isNotEmpty) {
+      expect(tester.getSize(joker).width, tester.getSize(buy).width);
+    }
     final locked = find.byKey(const ValueKey('shop-short-profile_badge_vip'));
-    expect(
-      tester.getRect(note).right,
-      lessThanOrEqualTo(tester.getRect(locked).left),
-    );
-    expect(tester.getRect(locked).right, greaterThan(cardRect.right - 40));
+    expect(tester.getSize(locked).height, tester.getSize(buy).height);
   });
 
   testWidgets('satın alma eylemleri düz ve gölgesizdir', (tester) async {
@@ -682,13 +696,11 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Satın al · 120'));
+    final buy = find.byKey(const ValueKey('shop-buy-spin_wheel_extra'));
+    await tester.ensureVisible(buy);
     await tester.pumpAndSettle();
     final button = tester.widget<FilledButton>(
-      find.ancestor(
-        of: find.text('Satın al · 120'),
-        matching: find.byType(FilledButton),
-      ),
+      find.descendant(of: buy, matching: find.byType(FilledButton)),
     );
     expect(button.style?.elevation?.resolve(<WidgetState>{}) ?? 0, 0);
   });
@@ -722,9 +734,10 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Satın al · 120'));
+    final buy = find.byKey(const ValueKey('shop-buy-spin_wheel_extra'));
+    await tester.ensureVisible(buy);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Satın al · 120'));
+    await tester.tap(buy);
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın al"
     await tester.tap(find.text('Satın al'));
@@ -767,7 +780,10 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.text('Satın al · 120'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('shop-buy-spin_wheel_extra')),
+      findsOneWidget,
+    );
     expect(tester.takeException(), isNull);
   });
 
@@ -778,9 +794,10 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Satın al · 120'));
+    final buy = find.byKey(const ValueKey('shop-buy-spin_wheel_extra'));
+    await tester.ensureVisible(buy);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Satın al · 120'));
+    await tester.tap(buy);
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın al"
     await tester.tap(find.text('Satın al'));

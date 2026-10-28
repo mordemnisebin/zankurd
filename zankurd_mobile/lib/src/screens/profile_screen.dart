@@ -117,10 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   /// İlk yükleme bitti mi; sonraki yüklemeler iskelet göstermez.
   bool _loadedOnce = false;
   bool _loadFailed = false;
-  bool _practiceLoading = false;
   AvatarIdentity _avatarIdentity = const AvatarIdentity();
-  int _mistakeCount = 0;
-  int _readyMistakeCount = 0;
   String? _currentName;
   LeaderboardEntry? _stats;
 
@@ -153,7 +150,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _load();
-    _refreshMistakes();
     widget.refreshSignal?.addListener(_handleRefreshSignal);
   }
 
@@ -176,7 +172,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _handleRefreshSignal() {
     if (!mounted) return;
     _load();
-    _refreshMistakes();
   }
 
   /// `store`teki kimlikleri GERÇEKTEN AÇILABİLECEK sorularla kesiştirir.
@@ -192,64 +187,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   /// oysa gerçek neden o sorunun artık hiçbir yerde bulunamamasıydı
   /// (2026-08-14 denetimi; `todays_review_card.dart`taki 2026-08-06
   /// düzeltmesiyle aynı kök neden).
-  Set<String> _launchableMistakeIds(Set<String> ids) {
-    final launchableIds = widget.repository.playableQuestions
-        .map((question) => question.id)
-        .toSet();
-    return ids.where(launchableIds.contains).toSet();
-  }
-
-  Future<void> _refreshMistakes() async {
-    final store = await MistakeStore.load();
-    if (mounted) {
-      setState(() {
-        _mistakeCount = _launchableMistakeIds(store.ids).length;
-        _readyMistakeCount = _launchableMistakeIds(store.readyIds).length;
-      });
-    }
-  }
-
-  Future<void> _startMistakePractice() async {
-    final store = await MistakeStore.load();
-    if (!mounted) return;
-    final mistakeIds = _launchableMistakeIds(store.readyIds);
-    final questions = widget.repository.playableQuestions
-        .where((question) => mistakeIds.contains(question.id))
-        .toList();
-    if (questions.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            _launchableMistakeIds(store.ids).isNotEmpty
-                ? (context.t(K.allMistakesWaiting))
-                : (context.t(K.noMistakesPlayFirst)),
-          ),
-        ),
-      );
-      return;
-    }
-    setState(() => _practiceLoading = true);
-    final practiceRoom = widget.repository.createRoom().copyWith(
-      name: context.t(K.myMistakes),
-      questionCount: questions.length,
-    );
-    await Navigator.of(context).push(
-      AppRoute.to(
-        QuizScreen(
-          repository: widget.repository,
-          room: practiceRoom,
-          questions: questions,
-          practice: true,
-          enableTimer: false,
-          experience: QuizExperience.learning,
-        ),
-      ),
-    );
-    if (!mounted) return;
-    setState(() => _practiceLoading = false);
-    _refreshMistakes();
-  }
-
   /// İstatistiği olmayan kullanıcıyı doğrudan hızlı yarışa götürür.
   Future<void> _startQuickRace() async {
     final questions = await widget.repository.loadQuestions(limit: 10);
@@ -428,9 +365,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         const SizedBox(height: SahneSpace.x2),
         const ProfileWeekStrip(),
-        // Kimlik ve değerler sayfası: profilin altında belirgin giriş.
-        const SizedBox(height: SahneSpace.x2),
-        const DozaMeEntryCard(),
         // Seviye + XP çubuğu + jeton artık kimlik başlığındadır (kurul 5. tur).
         // 2026-10-19 sadeleşme (ikinci tur): "Ayrıntılı istatistik" ayrı bir
         // açılır kart değil, başlığın yanındaki bağlantıdır; ayrıntılar
@@ -555,6 +489,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         const SizedBox(height: SahneSpace.cardGap),
+        // Kimlik ve değerler sayfası: özetin altında, rekorların üstünde.
+        const DozaMeEntryCard(),
+        const SizedBox(height: SahneSpace.cardGap),
 
         // Detaylı analiz (grafik, kategori ustalığı, güçlü/zayıf yön) —
         // sadelik için varsayılan kapalı; başlıktaki bağlantı açar.
@@ -671,7 +608,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       color: SahneTokens.of(context).tx,
       backgroundColor: SahneTokens.of(context).s2,
       onRefresh: () async {
-        await Future.wait([_load(), _refreshMistakes()]);
+        await _load();
       },
       child: SahneTabPage(
         controller: widget.scrollController,
@@ -769,28 +706,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               );
             },
           ),
-          SahneListRow.icon(
-            icon: AppIcons.graduationCap,
-            role: SahneRole.learn,
-            title: context.t(K.myMistakes),
-            subtitle: _mistakeCount == 0
-                ? (context.t(K.noMistakes))
-                : (context.t(K.mistakeCounts, {
-                    'ready': '$_readyMistakeCount',
-                    'total': '$_mistakeCount',
-                  })),
-            trailing: _practiceLoading
-                ? SizedBox.square(
-                    dimension: 16,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: SahneTokens.of(context).tx2,
-                    ),
-                  )
-                : null,
-            chevron: !_practiceLoading,
-            onTap: _practiceLoading ? null : _startMistakePractice,
-          ),
+          // "Yanlışlarım" buradan kalktı (2026-10-28 kurul K9): Öğren →
+          // Tekrar aynı yanlış sorulara götürür; Profil'de yalnız Kaydedilen,
+          // Soru öner ve Önerilerim kalır.
           if (auth.canUseRemoteActions)
             SahneListRow.icon(
               icon: AppIcons.circlePlus,

@@ -40,32 +40,41 @@ void main() {
       expect(repo.reportedProfileIds, contains('p1'));
     });
 
-    test('bildir düğmesi GÖRÜNÜR bir kontrol', () {
+    test('bildir/engelle yolu satıra dokunmayla açılır ve duyurulur', () {
       // Sohbette bildir/engelle yalnız keşfedilemez bir uzun basmayla
-      // erişilebiliyordu ve bu ayrıca kusur sayılmıştı. Liderlikte aynı
-      // hata tekrarlanmamalı.
-      // Tasarım kurulu tüm ekranlar 2026-10-20: bildir bayrağı satırdan
-      // menüye taşındı; 2026-10-23'ten beri ⋯ düğmesi, satıra dokunuş ve
-      // podyum sütunu odalarla AYNI alt sayfayı (`player-report-action`
-      // öğesi) açar.
-      final src =
-          File('lib/src/screens/leaderboard_screen.dart').readAsStringSync() +
-          File('lib/src/widgets/leaderboard_podium.dart').readAsStringSync();
+      // erişilebiliyordu ve bu ayrıca kusur sayılmıştı.
+      // Tasarım kurulu 2026-10-28, K18: sıralama satırındaki görünür ⋮
+      // düğmesi kalktı (satır yalnız sıra · avatar · ad · puan). Yol KALMADI
+      // değil, TAŞINDI: satıra ve podyum sütununa dokunmak (ve uzun basmak)
+      // odalarla AYNI alt sayfayı (`showPlayerModerationSheet`) açar; satır
+      // ekran okuyucuya "Bildir veya engelle için dokun" ipucuyla ve
+      // `button` rolüyle duyurulur. Yalnız uzun basmaya bağlanmak (ve
+      // ipucusuz) yine kusurdur; Apple 1.2 bildir/engelle'nin bulunabilir
+      // olmasını ister.
+      final board = File(
+        'lib/src/screens/leaderboard_screen.dart',
+      ).readAsStringSync();
+      final podium = File(
+        'lib/src/widgets/leaderboard_podium.dart',
+      ).readAsStringSync();
       expect(
-        src,
+        board,
         contains('showPlayerModerationSheet'),
-        reason: 'liderlik satırında bildir düğmesi yok',
+        reason: 'liderlik satırında bildir yolu yok',
       );
       expect(
-        src,
+        board + podium,
         isNot(contains('onLongPress: () => _reportProfile')),
         reason: 'bildirme yalnız uzun basmaya bağlanmış — keşfedilemez',
       );
-      expect(
-        src,
-        contains('minWidth: 48'),
-        reason: 'bildir düğmesi 48dp dokunma hedefini karşılamıyor',
-      );
+      for (final src in [board, podium]) {
+        expect(src, contains('onTap: onReport'), reason: 'dokunuşla açılmıyor');
+        expect(
+          src,
+          contains('K.reportTapHint'),
+          reason: 'bildir/engelle yolu ekran okuyucuya duyurulmuyor',
+        );
+      }
     });
   });
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../l10n/lang.dart';
 import '../../utils/percent_format.dart';
 import '../../config/category_visuals.dart';
+import '../../widgets/category_band.dart' show CategoryIconTile;
 import '../../widgets/sahne/sahne.dart';
 import 'home_rows.dart' show CategoryProgress;
 
@@ -32,6 +33,17 @@ import 'home_rows.dart' show CategoryProgress;
 /// Kurmancî ikinci satır, sağ altta beyaz %12 filigran. Gece aynı karo bir
 /// basamak koyu dolguyla kalır; griye dönmez.
 ///
+/// ## 2026-10-28 kurul K1 (sadelik)
+///
+/// Doygun dolu karo geri alındı (11 dolu karo yan yana ekranı bağırtıyordu;
+/// kurul 3 model): karo standart yüzey kartıdır (açık temada beyaz, koyu
+/// temada grafit [SahneTokens.s1]); konu rengi YALNIZ 40 px'lik ikon rozetinde
+/// ve karonun başındaki 4 px'lik kenar şeridinde. Ad normal metin rengindedir;
+/// ikinci dil yalnız "iki dilli etiketler" açıksa küçük soluk satır. Büyük
+/// silik filigran kalktı (metinle çakışıyordu). Konu→renk eşlemesi aynen
+/// [SahneCategoryTone]'dan gelir; rozet eşleme sayfasındaki satırla
+/// ([CategoryIconTile]) birebir aynıdır. Bekçi: `test/konu_karosu_notr_test.dart`.
+///
 /// Sütun sayısı 2'dir; en uzun ad bir sütuna tek satırda sığmıyorsa (dar
 /// ekran, büyük yazı) tek sütuna düşer — ad hiçbir zaman kelime ortasından
 /// bölünmez ya da "…" ile kesilmez (2026-09-30 simülatör bulgusu: büyük
@@ -58,9 +70,9 @@ class HomeTopicGrid extends StatelessWidget {
   static const double _pad = SahneSpace.x4;
   static const double _padV = SahneSpace.x3;
   static const double _gap = SahneSpace.x3;
-  static const double _mark = 28;
+  static const double _badge = 40;
+  static const double _strip = 4;
   static const double _minHeight = 96;
-  static const double _watermarkBox = 80;
 
   /// Sütun sayısı: 2; en uzun ad (gerçek biçem ve yazı ölçeğiyle ölçülür)
   /// sütundaki yazı alanına sığmazsa 1.
@@ -86,7 +98,7 @@ class HomeTopicGrid extends StatelessWidget {
     const columns = 2;
     final tile = (maxWidth - gap * (columns - 1)) / columns;
     // Ad ikonun ALTINDADIR (dolu karo): yazı alanı karonun iç genişliği.
-    final room = tile - _pad * 2;
+    final room = tile - _pad * 2 - _strip;
     return room >= widest + 1 ? columns : 1;
   }
 
@@ -136,33 +148,25 @@ class _HomeTopicTile extends StatelessWidget {
   final CategoryProgress? progress;
   final VoidCallback? onTap;
 
-  /// Karonun yazısı: beyaz; Kurmancî ikinci satır beyazın %92'si.
-  static const Color _onFill = SahneVivid.onFill;
-  static const Color _onFillSoft = SahneVivid.onFillSoft;
-
-  /// Karonun sağ altındaki soluk filigran: beyaz %12.
-  static const Color _watermark = SahneVivid.watermark;
-
   Widget? _secondName(BuildContext context) {
     final key = CategoryNames.tileKey(category);
     if (key == null) return null;
     final text = secondLabelFor(context, key, isKu: isKu);
-    return text == null ? null : SahneBilingualLabel(text, color: _onFillSoft);
+    return text == null ? null : SahneBilingualLabel(text);
   }
 
   @override
   Widget build(BuildContext context) {
     // Karoda KISA ad yazılır (bkz. [CategoryNames.tile]); ekran okuyucu tam
     // adı okur.
+    final t = SahneTokens.of(context);
     final name = CategoryNames.tile(category, isKu);
     final fullName = CategoryNames.localized(category, isKu);
     final ratio = (progress?.ratio ?? 0).clamp(0.0, 1.0);
     final started = ratio > 0;
     final percent = started ? context.percentRatio(ratio) : null;
     final night = Theme.of(context).brightness == Brightness.dark;
-    final tone = CategoryVisuals.tone(category);
-    final fill = tone.fill(night: night);
-    final mark = CategoryVisuals.mark(category);
+    final fill = CategoryVisuals.tone(category).fill(night: night);
     return Semantics(
       container: true,
       button: onTap != null,
@@ -170,8 +174,8 @@ class _HomeTopicTile extends StatelessWidget {
       excludeSemantics: true,
       onTap: onTap,
       child: SahneTappable(
-        shape: SahneShape.l,
-        color: fill,
+        shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
+        color: t.s1,
         onTap: onTap,
         child: ConstrainedBox(
           constraints: const BoxConstraints(
@@ -179,59 +183,35 @@ class _HomeTopicTile extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              if (mark != null)
-                PositionedDirectional(
-                  end: -14,
-                  bottom: -18,
-                  child: IgnorePointer(
-                    child: Transform.rotate(
-                      angle: -10 * math.pi / 180,
-                      child: SizedBox.square(
-                        dimension: HomeTopicGrid._watermarkBox,
-                        child: CustomPaint(
-                          painter: SahneCategoryGlyphPainter(
-                            mark: mark,
-                            tone: const SahneCategoryTone(
-                              ground: Colors.transparent,
-                              deep: Colors.transparent,
-                              detail: _watermark,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+              // Konu rengi kenar şeridi (4 px); kartın yuvarlak köşesine
+              // kırpılır.
+              PositionedDirectional(
+                start: 0,
+                top: 0,
+                bottom: 0,
+                width: HomeTopicGrid._strip,
+                child: ColoredBox(
+                  key: ValueKey('home-topic-strip-$category'),
+                  color: fill,
                 ),
+              ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: HomeTopicGrid._pad,
-                  vertical: HomeTopicGrid._padV,
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  HomeTopicGrid._pad + HomeTopicGrid._strip,
+                  HomeTopicGrid._padV,
+                  HomeTopicGrid._pad,
+                  HomeTopicGrid._padV,
                 ),
                 child: ExcludeSemantics(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Beyaz ikon: konunun silüeti, iç ayrıntısı karonun
-                      // kendi renginde (oyuk gibi okunur).
-                      SizedBox.square(
-                        dimension: HomeTopicGrid._mark,
-                        child: mark == null
-                            ? Icon(
-                                CategoryVisuals.icon(category),
-                                size: 24,
-                                color: _onFill,
-                              )
-                            : CustomPaint(
-                                painter: SahneCategoryGlyphPainter(
-                                  mark: mark,
-                                  tone: SahneCategoryTone(
-                                    ground: fill,
-                                    deep: fill,
-                                    detail: _onFill,
-                                  ),
-                                ),
-                              ),
+                      CategoryIconTile(
+                        key: ValueKey('home-topic-badge-$category'),
+                        category: category,
+                        icon: CategoryVisuals.icon(category),
+                        size: HomeTopicGrid._badge,
                       ),
                       const SizedBox(height: SahneSpace.x2),
                       Text(
@@ -239,10 +219,10 @@ class _HomeTopicTile extends StatelessWidget {
                         maxLines: 1,
                         softWrap: false,
                         overflow: TextOverflow.ellipsis,
-                        style: SahneType.bodyStrong.copyWith(color: _onFill),
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
                       ),
-                      // İki dilli etiket: konunun öbür dildeki adı, düz, tek
-                      // satır; sığmazsa hiç çizilmez (dar ekran, büyük yazı).
+                      // İki dilli etiket: ayar açıksa konunun öbür dildeki adı,
+                      // küçük soluk tek satır; sığmazsa hiç çizilmez.
                       ?_secondName(context),
                       if (started)
                         Padding(
@@ -258,8 +238,8 @@ class _HomeTopicTile extends StatelessWidget {
                               key: ValueKey('home-topic-progress-$category'),
                               value: ratio,
                               minHeight: 4,
-                              color: _onFill,
-                              backgroundColor: _watermark,
+                              color: fill,
+                              backgroundColor: t.s3,
                             ),
                           ),
                         ),

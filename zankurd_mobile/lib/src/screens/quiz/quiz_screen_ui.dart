@@ -47,7 +47,7 @@ extension _QuizScreenUI on _QuizScreenState {
               scrollKey: const ValueKey('quiz-portrait-scroll'),
               resetKey: index,
               padding: const EdgeInsets.only(
-                top: SahneSpace.x4,
+                top: quizStageTopGap,
                 bottom: SahneSpace.x6,
               ),
               child: Column(
@@ -70,17 +70,11 @@ extension _QuizScreenUI on _QuizScreenState {
                     context,
                     layoutSize: layoutSize,
                     bodyHeight: constraints.maxHeight,
-                    // TÜM modlarda (ders, yarışma, düello, oda, görselli)
-                    // kısa soru için şıklar alta (baş parmak bölgesi) oturur,
-                    // soru üstteki boş alanda ortalanır. Bildirim ve tost payı
-                    // 160 + üst/alt dolgu düşülür; düello/oda/karşılaşma
-                    // üstlüğü ve görsel de kayan gövdede yer tutar, onların
-                    // payı ayrıca düşülür: içerik sığıyorsa gereksiz kaydırma
-                    // doğmaz. Uzun soru/şık zaten kayar.
-                    anchorHeight: _portraitAnchorHeight(
-                      constraints.maxHeight,
-                      layoutSize,
-                    ),
+                    // K6 (2026-10-28): soru ÜSTTEN başlar (şıkları alta oturtan
+                    // `anchorHeight` kalktı): kısa soruda ekranın üstünde
+                    // dev boş alan kalıyor, soru ekranın dibine itiliyordu.
+                    // Joker/geri bildirim alt perdede sabittir; boşluk artık
+                    // şıkların ALTINDA kalır.
                     showExplanation: showExpl,
                     // Coach-mark anahtarı yalnız ilk soruda: panel
                     // AnimatedSwitcher içinde, geçişte eski ve yeni panel
@@ -103,38 +97,6 @@ extension _QuizScreenUI on _QuizScreenState {
         );
       },
     );
-  }
-
-  /// Dikey akışta soru+şık bloğunun en az boyu (şıkları alta oturtur).
-  ///
-  /// Kusur (kurul, 2026-10-20): yalnız yarışma sorusu şıkları alta
-  /// oturtuyordu; ders, seviye belirleme, sırayla düello ve ders yanlış
-  /// cevabı şıkları ekranın tepesine yığıp altı bomboş bırakıyordu — aynı
-  /// uygulamada iki ayrı soru ekranı gibi. Tek kural artık hepsinde.
-  double? _portraitAnchorHeight(double bodyHeight, Size layoutSize) {
-    var reserve = SahneSpace.x4 + SahneSpace.x6 + quizAnchorNoticeReserve;
-    // Karşılaşma bandı / düello ve oda başlığı gövdenin içinde yer tutar.
-    if (widget.versusBannerText != null) reserve += 56;
-    if (widget.is1v1 || _isCrowd) reserve += 120;
-    // Çok oyunculu açıklamada "Süre doldu" kartı ile "Sonraki soru: N sn"
-    // çipi birlikte çıkar; tek uyarılık pay ikincisini alt çubuğun
-    // arkasına itiyordu (2026-10-27, iki cihazlı düello). İkinci uyarı payı.
-    if (_isMultiplayer &&
-        _mpPhase == _MultiplayerPhase.reveal &&
-        selectedAnswer == 'TIMEOUT') {
-      reserve += 56;
-    }
-    if (question.hasImage) {
-      final compact = layoutSize.height < 700;
-      reserve +=
-          questionImagePortraitHeight(
-            layoutSize,
-            isCompact: compact || bodyHeight < 720,
-          ) +
-          SahneSpace.x3;
-    }
-    final height = bodyHeight - reserve;
-    return height > 0 ? height : null;
   }
 
   // ─── Compact landscape layout ──────────────────────────────────────────
@@ -242,6 +204,19 @@ extension _QuizScreenUI on _QuizScreenState {
       _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
   ];
 
+  /// Üst çubuğun TEK mod çipi (K6+): bütün modlar aynı sahne, yalnız çip
+  /// değişir.
+  String _modeChipLabel(BuildContext context) {
+    if (_isLearningExperience) return context.t(K.modeLesson);
+    if (widget.practice) return context.t(K.practiceSection);
+    if (_isCrowd) return context.t(K.roomWord);
+    if (widget.is1v1) return context.t(K.notifDuelTitle);
+    if (widget.dailyQuiz) return context.t(K.dailyContest);
+    if (widget.versusBannerText != null) return context.t(K.tournament);
+    if (_isMultiplayer) return context.t(K.roomWord);
+    return context.t(K.raceWord);
+  }
+
   /// Üst satırın orta yuvası: kategori ikonu + "Kategori · 1/5" künyesi.
   ///
   /// Künye artık gövdede değil üst satırdadır (2026-10-19). Tur adı ("Günün
@@ -254,7 +229,7 @@ extension _QuizScreenUI on _QuizScreenState {
   /// ("burada süre yok" der); süreli turda hedef sayaçtır
   /// ([_buildStageTrailing]).
   Widget _buildStageCenter(BuildContext context) => QuizStageCenter(
-    onBand: true,
+    modeLabel: _modeChipLabel(context),
     keyed: _usesTimer ? null : _timerTargetKey,
     category: question.category,
     index: index,
@@ -285,7 +260,6 @@ extension _QuizScreenUI on _QuizScreenState {
           if (_isMultiplayer)
             SahneIconButton(
               key: const ValueKey('quiz-reaction-menu-button'),
-              glass: true,
               icon: AppIcons.faceSmile,
               semanticLabel: context.t(K.chat),
               onPressed: () => _showLiveReactionMenu(context),
@@ -324,7 +298,6 @@ extension _QuizScreenUI on _QuizScreenState {
                 maxSeconds: widget.room.secondsPerQuestion,
                 isPaused: answered,
                 light: _stageLight,
-                onBand: true,
               ),
             ),
             const SizedBox(width: SahneSpace.x1),
@@ -332,7 +305,6 @@ extension _QuizScreenUI on _QuizScreenState {
           Builder(
             builder: (buttonContext) => SahneIconButton(
               key: const ValueKey('quiz-more-menu'),
-              glass: true,
               icon: AppIcons.ellipsis,
               semanticLabel: context.t(K.moreOptions),
               onPressed: () => _openQuestionMenu(buttonContext),
@@ -418,7 +390,10 @@ extension _QuizScreenUI on _QuizScreenState {
   Widget _buildStageProgress(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [if (!_isLearningExperience) _buildComboRow()],
+      children: [
+        _buildBandProgress(context),
+        if (!_isLearningExperience) _buildComboRow(),
+      ],
     );
   }
 
@@ -437,8 +412,6 @@ extension _QuizScreenUI on _QuizScreenState {
       value: total == 0 ? 0 : done / total,
       height: 4,
       tone: SahneProgressTone.action,
-      fillColor: SahneVivid.onFill,
-      trackColor: SahneVivid.glassTrack,
       semanticLabel:
           '${index + 1}/$total · $right ${context.t(K.correct)} · '
           '$wrong ${context.t(K.wrong)}',
@@ -634,8 +607,18 @@ extension _QuizScreenUI on _QuizScreenState {
                 ),
               if (showJokers)
                 _buildWildcardRow()
-              else if (showRatingBar)
-                _buildRatingBar(context)
+              else if (answered && !_suspense)
+                // K6+ (2026-10-28): cevaptan sonra alttan geri bildirim şeridi
+                // (doğru yeşil, yanlış kırmızı): başlık + ≤1 satır + eylem
+                // AYNI şeritte. Alıştırmada doğru cevaptan sonra eylem
+                // "Sonraki" değil zorluk puanıdır.
+                QuizFeedbackStrip(
+                  correct: !_answerWasWrong,
+                  detail: _feedbackDetail(context),
+                  action: showRatingBar
+                      ? _buildRatingBar(context)
+                      : _buildNextButton(context),
+                )
               else
                 _buildNextButton(context),
             ],
@@ -643,6 +626,29 @@ extension _QuizScreenUI on _QuizScreenState {
         ),
       ),
     );
+  }
+
+  /// Geri bildirim şeridinin tek satırlık açıklaması: öğrenmede sorunun
+  /// açıklaması; yoksa yanlışta doğru cevap; doğruda boş.
+  String? _feedbackDetail(BuildContext context) {
+    if (_answerWasWrong) {
+      // Yanlışta açıklama gövdedeki karttadır; şerit yalnız doğru cevabı
+      // söyler (tekrar yok).
+      // Yazılı/sıralama sorularında doğru cevabı gövdedeki yedek kutu
+      // ([_AnswerRevealFallback]) zaten basar; şerit tekrarlamaz.
+      if (needsAnswerRevealFallback(question.type) ||
+          question.type == QuestionType.fillInBlank) {
+        return null;
+      }
+      final correct = question.correctAnswer.trim();
+      if (correct.isNotEmpty) {
+        return '${context.t(K.correctAnswerLabel)}: $correct';
+      }
+      return null;
+    }
+    // Doğruda açıklama şeride GİRMEZ: öğrenmede "Açıklamayı gör" kapısı,
+    // yarışta hiçbir açıklama yok (bkz. `lesson_explanation_test`).
+    return null;
   }
 
   /// Tek birincil eylem: "Sonraki" / son soruda "Bitir".
@@ -656,7 +662,7 @@ extension _QuizScreenUI on _QuizScreenState {
         ? false
         : (answered && !completing && !_suspense);
     final waiting = _isMultiplayer || _suspense;
-    return SahneButton.primary(
+    final next = SahneButton.primary(
       key: const ValueKey('quiz-next-button'),
       label: _isMultiplayer && answered && _mpPhase != _MultiplayerPhase.reveal
           ? context.t(K.waitingOpponent)
@@ -677,6 +683,8 @@ extension _QuizScreenUI on _QuizScreenState {
       expand: true,
       onPressed: canPressNext ? () => _next() : null,
     );
+    // Cevaptan ÖNCE pasif "Sonraki": çerçeveli, "düğme ama henüz değil".
+    return !answered && !waiting ? QuizInactiveButtonFrame(child: next) : next;
   }
 
   /// Alıştırma turunda doğru cevaptan sonra zorluk puanı: üç eşit ikincil
@@ -751,7 +759,7 @@ extension _QuizScreenUI on _QuizScreenState {
           // gibi görünmesin: jetonun nereden kazanılacağını söyle (ekranda
           // yazılmaz; ekran okuyucuya gider ve kilitli jokere dokununca tost
           // olur).
-          showHint: _freeWildcardAvailable || _jokerStock > 0,
+          showHint: !_freeWildcardAvailable && _jokerStock > 0,
           hint: _freeWildcardAvailable
               ? context.t(K.freeWildcardToday)
               : _jokerStock > 0
@@ -789,6 +797,7 @@ extension _QuizScreenUI on _QuizScreenState {
       isAnswered: answered,
       isActive: isActive,
       cantAfford: !used && !canAfford && !answered,
+      free: _freeWildcardAvailable && !used,
       onTap: () => _onWildcardTap(type),
       onLockedTap: _explainLockedWildcard,
     );
@@ -1190,7 +1199,11 @@ extension _QuizScreenUI on _QuizScreenState {
     // görsel dar kademeye (%19, 64–132) iner. Aksi hâlde görselli dört şıklı
     // soruda D şıkkı alt perdenin arkasına düşüyordu (402×874, bkz.
     // `quiz_round_honesty_test` Kusur 3). Tablette görsel tam boyunda kalır.
-    final imageCompact = isCompact || (bodyHeight ?? size.height) < 720;
+    // K6+ (2026-10-28): karar SAHNE boyundan verilir (eskiden gövde boyundan).
+    // Cevapta alt perde jokerden geri bildirim şeridine dönüp uzayınca gövde
+    // 720'nin altına iniyor ve fotoğraf cevapla birlikte küçülüyordu.
+    // 720 gövde ≈ 900 sahne (üst çubuk + ilerleme + alt perde ≈ 180).
+    final imageCompact = isCompact || size.height < 900;
 
     Widget textAndAnswers({required bool headline}) => _QuestionTextAndAnswers(
       promptText: promptText,

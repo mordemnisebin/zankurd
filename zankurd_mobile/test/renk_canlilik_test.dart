@@ -23,9 +23,9 @@
 ///   ≥ 4.5:1 (11 konunun hepsi, iki temada).
 /// * Mod renkleri uygulanır: öğrenme Zimrût, yarış Boyax, sosyal Nîl; ton
 ///   zemin üstündeki mod metni ≥ 4.5:1.
-/// * Yarış merkezinde kahraman Boyax gradyanlı, oda düğmeleri Nîl tonlu.
-/// * B aşaması (2026-10-20): soru ekranının üst bandı SORUNUN KONUSUNUN dolu
-///   renginde; sıralamada ilk üç kaide Zêr/gümüş/bronz madalya tonunda, kendi
+/// * Yarış merkezinde kahraman Boyax gradyanlı, oda standart kart.
+/// * B aşaması (2026-10-20): [soru ekranı bandı 2026-10-28 K6+ ile KALDIRILDI,
+///   sonuç sahnesi K7 ile nötr]; sıralamada ilk üç kaide Zêr/gümüş/bronz madalya tonunda, kendi
 ///   satırın Zêr tonlu; sosyal ekranlar (arkadaşlar) Nîl, yarış ekranları
 ///   (turnuva, yarışma, çark, eşleşme) Boyax, öğrenme Zimrût bandı; gece konu
 ///   dolguları gündüzden sönük değil; kazanılmayan sonuç yıldızı konturlu
@@ -58,6 +58,7 @@ import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
+import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -136,46 +137,38 @@ void main() {
     });
 
     for (final dark in [false, true]) {
-      testWidgets('ana sayfa karoları DOLU konu renginde (dark=$dark)', (
-        tester,
-      ) async {
-        await tester.binding.setSurfaceSize(const Size(390, 2000));
-        addTearDown(() => tester.binding.setSurfaceSize(null));
-        final repo = freshMockRepository();
-        await tester.pumpWidget(
-          _wrap(
-            HomeScreen(
-              repository: repo,
-              onOpenLearning: () async {},
-              onOpenPlay: () {},
+      // 2026-10-28 kurul K1: "dolu karo" kararı (2026-10-20) geri alındı;
+      // karo nötr yüzey, renk rozet + kenar şeridinde. Ayrıntılı bekçi:
+      // `konu_karosu_notr_test.dart`; burada yalnız konu rengi eşlemesi.
+      testWidgets(
+        'ana sayfa karolarında konu rengi rozet+şeritte (dark=$dark)',
+        (tester) async {
+          await tester.binding.setSurfaceSize(const Size(390, 2000));
+          addTearDown(() => tester.binding.setSurfaceSize(null));
+          final repo = freshMockRepository();
+          await tester.pumpWidget(
+            _wrap(
+              HomeScreen(
+                repository: repo,
+                onOpenLearning: () async {},
+                onOpenPlay: () {},
+              ),
+              dark: dark,
             ),
-            dark: dark,
-          ),
-        );
-        await tester.pump(const Duration(seconds: 1));
-        for (final category in repo.categories) {
-          final tile = find.byKey(ValueKey('home-topic-$category'));
-          expect(tile, findsOneWidget, reason: category);
-          final surface = tester.widget<SahneTappable>(
-            find.descendant(of: tile, matching: find.byType(SahneTappable)),
           );
-          expect(
-            surface.color,
-            CategoryVisuals.tone(category).fill(night: dark),
-            reason: '$category karosu konu renginde dolu olmalı',
-          );
-          // Beyaz ad: renk beyaz, koyu konu metni değil.
-          final name = tester.widget<Text>(
-            find
-                .descendant(
-                  of: tile,
-                  matching: find.text(CategoryNames.tile(category, false)),
-                )
-                .first,
-          );
-          expect(name.style?.color, const Color(0xFFFFFFFF), reason: category);
-        }
-      });
+          await tester.pump(const Duration(seconds: 1));
+          for (final category in repo.categories) {
+            final strip = tester.widget<ColoredBox>(
+              find.byKey(ValueKey('home-topic-strip-$category')),
+            );
+            expect(
+              strip.color,
+              CategoryVisuals.tone(category).fill(night: dark),
+              reason: '$category şeridi konu renginde olmalı',
+            );
+          }
+        },
+      );
     }
   });
 
@@ -228,7 +221,7 @@ void main() {
 
   group('yarış merkezi', () {
     for (final dark in [false, true]) {
-      testWidgets('kahraman Boyax gradyanlı, oda düğmeleri Nîl tonlu '
+      testWidgets('kahraman Boyax gradyanlı, oda standart kart '
           '(dark=$dark)', (tester) async {
         await tester.binding.setSurfaceSize(const Size(390, 1000));
         addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -250,8 +243,10 @@ void main() {
             .first;
         expect(gradient.colors, [t.raceFill, t.raceDeep]);
 
-        // Oda kartı Nîl (sosyal) DOLU rol rengindedir (oda eylemleri alt
-        // sayfaya taşındı, 2026-10-24).
+        // 2026-10-28, kurul K3/K5: Oda artık DOLU Nîl blok değil, standart
+        // kart yüzeyi (`t.s1`); Nîl rengi yalnız ikon rozetinde kalır
+        // (ikincil kartlar ana eylemle yarışmasın). Hero Boyax gradyanı ve
+        // tek turuncu düğme korunur — canlılık kaybı değil, amaçlı renk.
         final room = find.byKey(const ValueKey('play-hub-room'));
         expect(
           tester
@@ -259,8 +254,8 @@ void main() {
                 find.descendant(of: room, matching: find.byType(SahneTappable)),
               )
               .color,
-          t.nilFill,
-          reason: 'Oda kartı Nîl dolgulu olmalı',
+          t.s1,
+          reason: 'Oda kartı standart kart yüzeyinde olmalı (K5)',
         );
       });
     }
@@ -279,7 +274,7 @@ void main() {
         );
 
     for (final dark in [false, true]) {
-      testWidgets('sahne mod renginde; çipler, Zêr kartı ve "Nerelerde '
+      testWidgets('sahne nötr (K7); çipler, Zêr kartı ve "Nerelerde '
           'zorlandın?" durur (dark=$dark)', (tester) async {
         await tester.binding.setSurfaceSize(const Size(390, 1800));
         addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -306,18 +301,10 @@ void main() {
         );
         await tester.pump(const Duration(seconds: 2));
 
-        // Zemin: düz grafit değil, Boyax'tan koyuya gradyan.
-        final scene = tester.widget<DecoratedBox>(
-          find.byKey(const ValueKey('sahne-stage-scene')),
-        );
-        final colors =
-            ((scene.decoration as BoxDecoration).gradient! as LinearGradient)
-                .colors;
-        expect(
-          colors.first,
-          dark ? const Color(0xFF6B2A45) : const Color(0xFFB8294A),
-        );
-        expect(colors.length, 4);
+        // K7 (2026-10-28) GEÇERSİZ KILDI: "sahne mod renginde (Boyax
+        // gradyanı)" kararı. Sonuç ekranı NÖTR sahnedir; başarı vurgusu
+        // altın/yeşil, kırmızı yalnız yanlış sayısında.
+        expect(find.byKey(const ValueKey('sahne-stage-scene')), findsNothing);
 
         // Renkli Doğru / Yanlış / Üst üste çipleri.
         final chips = tester.widgetList<DecoratedBox>(
@@ -397,9 +384,11 @@ void main() {
       }
     });
 
-    testWidgets('soru ekranının üst bandı sorunun konusunun renginde', (
-      tester,
-    ) async {
+    // K6+ (2026-10-28) GEÇERSİZ KILDI: B aşamasının "üst band sorunun
+    // konusunun renginde" kararı. Soru sahnesi her modda ve her konuda AYNI
+    // nötr sahnedir (turkuaz/yeşil/mor bant yok); konu yalnız küçük
+    // künyede. Bekçisi `soru_sonuc_ortak_sahne_test`.
+    testWidgets('soru ekranında konu renkli üst bant yok', (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
       final repository = freshMockRepository();
@@ -425,25 +414,10 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        final band = tester.widget<ColoredBox>(
+        expect(
           find.byKey(const ValueKey('sahne-stage-band')),
-        );
-        // Renk UYGULAMA temasından okunur (sahne her zaman gecedir).
-        final appNight =
-            Theme.of(tester.element(find.byType(QuizScreen))).brightness ==
-            Brightness.dark;
-        expect(
-          band.color,
-          CategoryVisuals.tone(category).fill(night: appNight),
-          reason: '$category bandı konu renginde',
-        );
-        // İlerleme çubuğu bandın içinde ve beyaz dolgulu.
-        expect(
-          find.descendant(
-            of: find.byKey(const ValueKey('sahne-stage-band')),
-            matching: find.byKey(const ValueKey('quiz-progress-bar')),
-          ),
-          findsOneWidget,
+          findsNothing,
+          reason: '$category: konu bandı geri gelmiş',
         );
       }
     });
@@ -465,20 +439,24 @@ void main() {
         () => ContestScreen(repository: MockZanKurdRepository()),
       ),
     ]) {
-      testWidgets('$name çubuğu rolünün dolu renginde (Nîl/Boyax)', (
+      // 2026-10-28 kurul K2: üst çubuk nötr; rol rengi yalnız 3 px çizgi.
+      testWidgets('$name çubuğu nötr, rol rengi yalnız ince çizgide', (
         tester,
       ) async {
         await tester.binding.setSurfaceSize(const Size(390, 900));
         addTearDown(() => tester.binding.setSurfaceSize(null));
         await tester.pumpWidget(testShell(child: build()));
         await tester.pump(const Duration(seconds: 1));
-        final band = tester.widget<ColoredBox>(
-          find.byKey(const ValueKey('sahne-pushed-band')),
+        final line = tester.widget<ColoredBox>(
+          find.descendant(
+            of: find.byKey(ZkAccentLine.valueKey),
+            matching: find.byType(ColoredBox),
+          ),
         );
         expect(
-          band.color,
+          line.color,
           SahneTokens.of(
-            tester.element(find.byKey(const ValueKey('sahne-pushed-band'))),
+            tester.element(find.byKey(ZkAccentLine.valueKey)),
           ).roleFill(role),
         );
       });
@@ -538,7 +516,7 @@ void main() {
   group('D aşaması', () {
     for (final dark in [false, true]) {
       testWidgets(
-        'mağaza üst bandı Zêr, bakiye çipi koyu (${dark ? "gece" : "gündüz"})',
+        'mağaza üst çubuğu nötr + Zêr çizgisi, bakiye çipi koyu (${dark ? "gece" : "gündüz"})',
         (tester) async {
           await tester.pumpWidget(
             _wrap(ShopScreen(repository: MockZanKurdRepository()), dark: dark),
@@ -546,7 +524,8 @@ void main() {
           await tester.pump(const Duration(seconds: 1));
           final t = SahneTokens.of(tester.element(find.byType(ShopScreen)));
           final bar = tester.widget<AppBar>(find.byType(AppBar));
-          expect(bar.backgroundColor, t.zerBand);
+          expect(bar.backgroundColor, t.bg);
+          expect(bar.bottom, isA<ZkAccentLine>());
           expect(_contrast(t.onZer, t.zerBand), greaterThanOrEqualTo(4.5));
           expect(
             _contrast(SahneVivid.onFill, t.zerChip),

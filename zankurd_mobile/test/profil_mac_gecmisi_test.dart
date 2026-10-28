@@ -228,43 +228,29 @@ void main() {
       expect(find.byKey(const ValueKey('profile-match-a')), findsOneWidget);
     });
 
-    testWidgets('boş: oynamaya çağırır ve eylemi çalışır', (tester) async {
-      var started = 0;
+    // 2026-10-28 kurul K9 (eski "boş Son maçlar oynamaya çağırır" kararı
+    // DEĞİŞTİ): boş Rekorlar ve boş Son maçlar iki ayrı boş kart değil, TEK
+    // kompakt boş durumdur ve onu Rekorlar kartı (oyna eylemiyle) taşır.
+    testWidgets('boş: ayrı boş kart çizilmez (tek boş durum Rekorlar)', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         testShell(
           child: Scaffold(
             body: ProfileMatchHistorySection(
               repository: freshMockRepository(),
-              onStartPlay: () => started++,
+              onStartPlay: () {},
             ),
           ),
         ),
       );
       await _settle(tester);
-      expect(find.text('Henüz maç yok. İlk düellonu başlat.'), findsOneWidget);
-      await tester.tap(
-        find.byKey(const ValueKey('profile-recent-matches-start')),
-      );
-      expect(started, 1);
-    });
-
-    testWidgets('boş + eylem verilmezse düğme çizilmez', (tester) async {
-      await tester.pumpWidget(
-        testShell(
-          child: Scaffold(
-            body: ProfileMatchHistorySection(repository: freshMockRepository()),
-          ),
-        ),
-      );
-      await _settle(tester);
+      expect(find.textContaining('Henüz maç yok'), findsNothing);
       expect(
         find.byKey(const ValueKey('profile-recent-matches-empty')),
-        findsOneWidget,
-      );
-      expect(
-        find.byKey(const ValueKey('profile-recent-matches-start')),
         findsNothing,
       );
+      expect(find.text('Son maçlar'), findsNothing);
     });
 
     testWidgets('sunucu hatası: "yüklenemedi" + tekrar dene, "maç yok" DEĞİL', (
@@ -299,7 +285,7 @@ void main() {
       );
       await _settle(tester);
       expect(repo.matchCalls, 0);
-      expect(find.text('Henüz maç yok. İlk düellonu başlat.'), findsOneWidget);
+      expect(find.textContaining('Henüz maç yok'), findsNothing);
     });
 
     testWidgets('Kurmancî başlık ve sonuç metinleri', (tester) async {
@@ -335,7 +321,8 @@ void main() {
         ),
       );
       await _settle(tester);
-      expect(find.text('Rekorlarım'), findsOneWidget);
+      // K9: boş durumda bölüm başlığı yok, tek kompakt kart var.
+      expect(find.text('Rekorlarım'), findsNothing);
       expect(find.text('—'), findsNothing);
       expect(
         find.byKey(const ValueKey('profile-record-day-streak')),

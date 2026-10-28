@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 import '../data/placement_store.dart';
@@ -10,6 +8,7 @@ import '../models/quiz_question.dart';
 import '../config/category_visuals.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_icons.dart';
+import '../widgets/quiz_stage_kit.dart';
 import '../widgets/quiz_top_bar.dart';
 import '../widgets/sahne/sahne.dart';
 import 'quiz/quiz_option_tile.dart';
@@ -145,16 +144,13 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
               CategoryVisuals.canonicalName(question.category),
             ),
       ridge: true,
-      // 2026-10-20 renk ve canlılık (B): seviye belirleme öğrenme akışıdır;
-      // üst bant Zimrût (soru konusu her adımda değişir, bant sabit kalır).
-      band: question == null ? null : SahneTokens.of(context).learnFill,
-      bandProgress: question == null
+      // K6+ (2026-10-28): yeşil üst bant kalktı; her modda aynı lacivert
+      // sahne, ilerleme çubuğu `progress` yuvasında.
+      progress: question == null
           ? null
           : SahneProgressBar(
-              height: 6,
+              height: 4,
               value: _index / _questions.length,
-              fillColor: SahneVivid.onFill,
-              trackColor: SahneVivid.glassTrack,
               semanticLabel: context.t(K.placementProgress, {
                 'index': '${_index + 1}',
                 'total': '${_questions.length}',
@@ -166,7 +162,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
               category: question.category,
               index: _index,
               total: _questions.length,
-              onBand: true,
+              modeLabel: context.t(K.modeLesson),
               title: context.t(K.placementTitle),
             ),
       score: useCompactSkip
@@ -212,36 +208,25 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     // her şey tepeye yığılıyor, altı bomboştu.
     return LayoutBuilder(
       builder: (context, constraints) {
-        final reserve = quizAnswerBottomReserve(context, constraints.maxHeight);
         return SahneStageScroll(
           // Yeni soruda başa dön, üst kenar ilerleme çubuğunun altında sönsün
           // (bkz. `SahneStageScroll`).
           scrollKey: const ValueKey('placement-scroll'),
           resetKey: _index,
-          padding: EdgeInsets.fromLTRB(
+          padding: const EdgeInsets.fromLTRB(
             SahneSpace.page,
-            SahneSpace.x4,
+            quizStageTopGap,
             SahneSpace.page,
-            reserve,
+            SahneSpace.x6,
           ),
           child: Center(
             child: ConstrainedBox(
               key: const ValueKey('placement-answers-anchored'),
-              constraints: BoxConstraints(
-                maxWidth: 800,
-                minHeight: math.max(
-                  0.0,
-                  constraints.maxHeight - SahneSpace.x4 - reserve,
-                ),
-              ),
+              constraints: const BoxConstraints(maxWidth: 800),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Üst etiket artık ortak üst satırda; boş yuva soruyu
-                  // şıklarla tepe arasında ortalar (ders ekranıyla aynı).
-                  const SizedBox.shrink(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
@@ -254,7 +239,9 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
                         ),
                         const SizedBox(height: SahneSpace.x3),
                       ],
-                      QuizQuestionPrompt(question.prompt),
+                      QuizPromptCard(
+                        child: QuizQuestionPrompt(question.prompt),
+                      ),
                       const SizedBox(height: SahneSpace.x4),
                     ],
                   ),
@@ -276,7 +263,6 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
                             selected: false,
                             correct: false,
                             disabled: _inputLocked,
-                            tone: CategoryVisuals.tone(question.category),
                             onTap: _inputLocked
                                 ? null
                                 : () => _answer(question, answer),

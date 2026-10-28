@@ -12,6 +12,7 @@ import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dar
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/play_hub_nav.dart';
 import 'support/widget_test_helpers.dart';
@@ -203,11 +204,10 @@ void main() {
           await tester.pumpAndSettle();
           final wheel = find.byKey(const ValueKey('play-hub-spin-wheel'));
           await tester.scrollUntilVisible(wheel, 200);
+          // K5 (2026-10-28): çark standart liste satırı; "Hazır!" rozeti
+          // satırın SahneBadge'idir (nokta göstergesi kalktı).
           expect(
-            find.descendant(
-              of: wheel,
-              matching: find.byKey(const ValueKey('mode-tile-badge-dot')),
-            ),
+            find.descendant(of: wheel, matching: find.byType(SahneBadge)),
             findsOneWidget,
           );
           expect(find.textContaining('…'), findsNothing);

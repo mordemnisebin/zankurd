@@ -37,7 +37,7 @@ void main() {
     );
   });
 
-  testWidgets('mağaza telefonda tek tip yatay satır kullanır (tur 6)', (
+  testWidgets('mağaza telefonda satır + 2 sütun karo kullanır (tur 6, K11)', (
     tester,
   ) async {
     // Tur 6: karışık ızgara (iki fiyat dili, eşit olmayan kartlar) kalktı;
@@ -64,7 +64,9 @@ void main() {
               .evaluate())
         tester.getTopLeft(find.byWidget(e.widget)).dx,
     };
-    expect(lefts.length, 1);
+    // 2026-10-28 K11: güçlendiriciler tek sütun satır, çerçeveler 2 sütun karo:
+    // en çok iki farklı sol kenar (GridView yine yok; Wrap).
+    expect(lefts.length, lessThanOrEqualTo(2));
   });
 
   testWidgets('mağaza gerçek coin bakiyesini gösterir', (tester) async {

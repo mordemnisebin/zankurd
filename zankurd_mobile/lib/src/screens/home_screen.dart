@@ -56,7 +56,6 @@ import '../data/mastery_store.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/player_identity.dart';
 import '../services/analytics_service.dart';
-import '../widgets/learning_goal_chooser.dart';
 import '../utils/number_format.dart';
 
 /// [MistakeStore.readyIds] içindeki kimlikleri gerçekten açılabilir
@@ -532,20 +531,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> _selectLearningGoal(LearningGoal goal) async {
-    final store = await LearningGoalStore.load();
-    final saved = await store.save(goal);
-    if (!mounted) return;
-    if (!saved) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
-      return;
-    }
-    setState(() => _learningGoal = goal);
-    await _refreshProgress();
-  }
-
   Future<void> _bootstrap() async {
     try {
       await repo.ensureProfile();
@@ -702,6 +687,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             children: [
               SahneModeTile(
                 key: const ValueKey('home-door-learn'),
+                calm: true,
                 icon: AppIcons.graduationCap,
                 role: SahneRole.learn,
                 title: context.t(K.learnKurmanci),
@@ -713,6 +699,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               SahneModeTile(
                 key: const ValueKey('home-door-play'),
+                calm: true,
                 icon: AppIcons.gamepad,
                 role: SahneRole.race,
                 title: context.t(K.homeDoorPlayTitle),
@@ -755,29 +742,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // Dar düzende günlük görevler Günün dersinin hemen altında durur
           // (eskiden sayfa dibindeydi: görev var mı diye kimse bakmıyordu);
           // ilerleme özeti ve Pro sayfa sonuna iner.
-          if (narrow) ...[
-            const SizedBox(height: SahneSpace.cardGap),
-            missionsCard,
-          ],
           if (!_firstSession && !narrow) ...[
             const SizedBox(height: SahneSpace.cardGap),
             progressCard,
           ],
-          if (!_firstSession &&
-              _learningGoalLoaded &&
-              _learningGoal == null) ...[
-            const SizedBox(height: SahneSpace.cardGap),
-            LearningGoalChooser(
-              key: const ValueKey('home-learning-goal-chooser'),
-              isKu: ku,
-              selected: null,
-              onSelected: _selectLearningGoal,
-            ),
-          ],
-          // Günün sözü kapıların ALTINDA: Günün dersi ile kapılar arasına
-          // konunca öğren kapısını 390×844'te alt çubuğun altına itiyordu
-          // (manzara_seridi_test).
-          DailyQuoteCard(isKu: ku),
+          // "Bugün neye odaklanmak istersin?" bloğu ana sayfadan kalktı
+          // (2026-10-28 kurul K4): seçim onboarding'de ve Ayarlar'da var;
+          // ana sayfada her açılışta ikinci bir karar sorusu idi.
           SahneSectionHeader(
             title: context.t(K.homeTopicsTitle),
             // İki dilli etiket: öbür dilde aynı anahtar (bkz.
@@ -790,6 +761,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             progress: _topicProgress,
             onOpen: _openCategory,
           ),
+          // Günlük görev paneli konuların ALTINDA (K4 sırası: görev kartı →
+          // Öğren/Yarış → Konular → panel → Günün sözü).
+          if (narrow) ...[
+            const SizedBox(height: SahneSpace.cardGap),
+            missionsCard,
+            const SizedBox(height: SahneSpace.cardGap),
+            progressCard,
+          ],
+          // Günün sözü EN ALTTA, sade kart (K4).
+          DailyQuoteCard(isKu: ku),
           // Slogan satırı (S1): dokununca "Doza me" sayfası.
           const DozaSloganLine(),
         ],
@@ -802,7 +783,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (!narrow) missionsCard,
-          if (narrow) progressCard,
 
           // ── Abonelik girişi ────────────────────────────────────────────
           //

@@ -297,7 +297,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // ============ HESAP / ACCOUNT ============
-              SahneSectionHeader(title: context.t(K.secAccount)),
+              SahneSectionHeader(title: context.t(K.secAccountPrivacy)),
               SahneSurfaceCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -329,6 +329,139 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
+
+              // ============ PREMIUM ABONELİK ============
+              // Diğer her blok gibi premium de kendi bölüm başlığını taşır.
+              // Başlıksızken kart, bir üstteki "Seslendirme" bölümünün
+              // devamı gibi görünüyor ve para kazandıran tek giriş noktası
+              // ayarların içinde kayboluyordu (2026-07-25 canlı denetimi).
+              //
+              // Abone olmayana + yapılandırma yoksa bölüm gizlenir: ürünsüz
+              // paywall ölü sokaktır (2026-09-05 canlı turu). Abone, durum
+              // satırını her zaman görür.
+              Consumer<PremiumService>(
+                builder: (context, premium, _) {
+                  final isPremium = premium.isPremium;
+                  // Satılabilir paket yoksa da gizli (2026-10-23).
+                  if (!kProEnabled || (!isPremium && !premium.canSell)) {
+                    return const SizedBox.shrink();
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: SahneSpace.cardGap),
+                      SahneListGroup(
+                        children: [
+                          SahneListRow.icon(
+                            icon: AppIcons.gem,
+                            role: SahneRole.gold,
+                            title: isPremium
+                                ? context.t(K.premiumBrand)
+                                : context.t(K.premiumCta),
+                            subtitle: isPremium
+                                ? context.t(K.premiumActive)
+                                : context.t(K.premiumPerks),
+                            trailing: SahneBadge(
+                              label: isPremium
+                                  ? context.t(K.premiumBadgeOn)
+                                  : context.t(K.premiumBadgeOff),
+                              tone: isPremium
+                                  ? SahneBadgeTone.gold
+                                  : SahneBadgeTone.soon,
+                            ),
+                            chevron: true,
+                            onTap: () => Navigator.of(context).push(
+                              AppRoute.to(
+                                PaywallScreen(repository: widget.repository),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
+
+              // ============ GİZLİLİK / PRIVACY ============
+              const SizedBox(height: SahneSpace.cardGap),
+              SahneListGroup(
+                dividerIndent: _rowTextInset,
+                children: [
+                  SahneListRow.plain(
+                    key: const ValueKey('settings-export-data'),
+                    title: context.t(K.exportData),
+                    // K17: iki cümlelik açıklama satırdan kalktı; ekran
+                    // okuyucu yine duyar.
+                    semanticLabel:
+                        '${context.t(K.exportData)}. ${context.t(K.exportDataSub)}',
+                    chevron: true,
+                    onTap: _exportData,
+                  ),
+                  Consumer<AnalyticsConsentProvider>(
+                    builder: (context, consent, _) => SahneListRow.plain(
+                      title: context.t(K.analyticsConsent),
+                      subtitle: context.t(K.analyticsConsentSub),
+                      trailing: Switch(
+                        key: const ValueKey('analytics-consent-switch'),
+                        value: consent.enabled,
+                        onChanged: _setAnalyticsConsent,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              // ============ GÜVENLİK / SAFETY ============
+              //
+              // Apple 1.2 dördüncü şart: UGC barındıran uygulamada
+              // iletişim bilgisi YAYIMLANMIŞ olmalı. Oda sohbeti
+              // 2026-07-31'de moderasyonuyla geri geldi; bu satır
+              // kullanıcının taciz bildirimini nereye yapacağını söyler.
+              // Web sayfasında durması yetmez — uygulamadan ulaşılmalı.
+              const SizedBox(height: SahneSpace.cardGap),
+              // İki eylem TEK bir yüzeyde durur (bkz.
+              // `beta_release_experience_test`: ortak `AppPanel` atası).
+              // `AppPanel` Şahnê'de yüzey kartıdır; satırlar liste grubunun
+              // diliyle, aralarında ikon hizasından başlayan ayırıcıyla.
+              AppPanel(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SahneListRow.plain(
+                      key: const ValueKey('settings-report-abuse'),
+                      title: context.t(K.reportAbuse),
+                      chevron: true,
+                      onTap: _openAbuseReport,
+                    ),
+                    const _RowDivider(),
+                    SahneListRow.plain(
+                      key: const ValueKey('settings-beta-feedback'),
+                      title: context.t(K.betaFeedback),
+                      chevron: true,
+                      onTap: _openBetaFeedback,
+                    ),
+                  ],
+                ),
+              ),
+
+              // ============ ENGELLENENLER ============
+              // 2026-08-02 denetimi: `unblockPlayer` depoda vardı ama TEK
+              // bir çağıranı bile yoktu — kullanıcı birini engelledikten
+              // sonra kararını geri alamıyordu. Engelleme, geri alınabilir
+              // olmadıkça bir moderasyon aracı değil tek yönlü bir kapıdır.
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: SahneSpace.x4,
+                  bottom: SahneSpace.x2,
+                ),
+                child: Text(
+                  context.t(K.secBlocked),
+                  style: SahneType.captionStrong.copyWith(color: t.tx2),
+                ),
+              ),
+              _BlockedUsersSection(repository: widget.repository),
 
               // ============ ÖĞRENME / LEARNING ============
               SahneSectionHeader(title: context.t(K.secLearning)),
@@ -364,63 +497,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       );
                     },
                   ),
-                ],
-              ),
-
-              // ============ GÜVENLİK / SAFETY ============
-              //
-              // Apple 1.2 dördüncü şart: UGC barındıran uygulamada
-              // iletişim bilgisi YAYIMLANMIŞ olmalı. Oda sohbeti
-              // 2026-07-31'de moderasyonuyla geri geldi; bu satır
-              // kullanıcının taciz bildirimini nereye yapacağını söyler.
-              // Web sayfasında durması yetmez — uygulamadan ulaşılmalı.
-              SahneSectionHeader(title: context.t(K.secSafety)),
-              // İki eylem TEK bir yüzeyde durur (bkz.
-              // `beta_release_experience_test`: ortak `AppPanel` atası).
-              // `AppPanel` Şahnê'de yüzey kartıdır; satırlar liste grubunun
-              // diliyle, aralarında ikon hizasından başlayan ayırıcıyla.
-              AppPanel(
-                padding: EdgeInsets.zero,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SahneListRow.plain(
-                      key: const ValueKey('settings-report-abuse'),
-                      title: context.t(K.reportAbuse),
-                      chevron: true,
-                      onTap: _openAbuseReport,
-                    ),
-                    const _RowDivider(),
-                    SahneListRow.plain(
-                      key: const ValueKey('settings-beta-feedback'),
-                      title: context.t(K.betaFeedback),
-                      chevron: true,
-                      onTap: _openBetaFeedback,
-                    ),
-                  ],
-                ),
-              ),
-
-              // ============ GİZLİLİK / PRIVACY ============
-              SahneSectionHeader(title: context.t(K.secPrivacy)),
-              SahneListGroup(
-                dividerIndent: _rowTextInset,
-                children: [
-                  SahneListRow.plain(
-                    key: const ValueKey('settings-export-data'),
-                    title: context.t(K.exportData),
-                    subtitle: context.t(K.exportDataSub),
-                    chevron: true,
-                    onTap: _exportData,
-                  ),
-                  Consumer<AnalyticsConsentProvider>(
-                    builder: (context, consent, _) => SahneListRow.plain(
-                      title: context.t(K.analyticsConsent),
-                      subtitle: context.t(K.analyticsConsentSub),
-                      trailing: Switch(
-                        key: const ValueKey('analytics-consent-switch'),
-                        value: consent.enabled,
-                        onChanged: _setAnalyticsConsent,
+                  Consumer<UntimedModeProvider>(
+                    builder: (context, untimed, _) => SahneListRow.plain(
+                      title: context.t(K.untimedSolo),
+                      trailing: _SwitchWithInfo(
+                        label: context.t(K.untimedSolo),
+                        info: context.t(K.untimedSoloSub),
+                        child: Switch(
+                          key: const ValueKey('untimed-solo-switch'),
+                          value: untimed.enabled,
+                          onChanged: (v) => untimed.setEnabled(v),
+                        ),
                       ),
                     ),
                   ),
@@ -428,7 +515,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
 
               // ============ GÖRÜNÜM / APPEARANCE ============
-              SahneSectionHeader(title: context.t(K.secAppearance)),
+              SahneSectionHeader(title: context.t(K.secAppSound)),
               SahneListGroup(
                 dividerIndent: _rowTextInset,
                 children: [
@@ -477,25 +564,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                     ),
-                  Consumer<UntimedModeProvider>(
-                    builder: (context, untimed, _) => SahneListRow.plain(
-                      title: context.t(K.untimedSolo),
-                      subtitle: context.t(K.untimedSoloSub),
-                      trailing: Switch(
-                        key: const ValueKey('untimed-solo-switch'),
-                        value: untimed.enabled,
-                        onChanged: (v) => untimed.setEnabled(v),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              // ============ SES & BİLDİRİM / SOUND & NOTIFICATIONS ============
-              SahneSectionHeader(title: context.t(K.secSoundNotif)),
-              SahneListGroup(
-                dividerIndent: _rowTextInset,
-                children: [
                   // Ses efektleri web'de HİÇ çalmıyor: `SoundProvider._play`
                   // ikinci satırında `if (kIsWeb) return;` diyor. Anahtar
                   // yine de koşulsuz gösteriliyordu, yani web kullanıcısı
@@ -525,13 +593,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                       ),
                     ),
+                ],
+              ),
+
+              // ============ SESLENDİRME (TTS) ============
+              const SizedBox(height: SahneSpace.cardGap),
+              const _TtsSettingsSection(),
+
+              // ============ SES & BİLDİRİM / SOUND & NOTIFICATIONS ============
+              SahneSectionHeader(title: context.t(K.secNotifications)),
+              SahneListGroup(
+                dividerIndent: _rowTextInset,
+                children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       // Ana anahtar: bildirim izni/onayı. Türler altında.
+                      // Satır adı üstteki grup başlığıyla ("Bildirimler")
+                      // aynı olamaz (2026-10-28): eylem olarak "Bildirimleri
+                      // aç" der.
                       SahneListRow.plain(
-                        title: context.t(K.notifMasterTitle),
-                        subtitle: context.t(K.notifMasterSub),
+                        title: context.t(K.notifPromptEnable),
                         trailing: Switch(
                           key: const ValueKey('settings-notif-master'),
                           value: _notificationsEnabled,
@@ -572,7 +654,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     SahneListRow.plain(
                       title: context.t(K.dailyContest),
-                      subtitle: context.t(K.notifContestSub),
                       trailing: Switch(
                         key: const ValueKey('settings-notif-contest'),
                         value: _contestOn,
@@ -585,7 +666,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     SahneListRow.plain(
                       title: context.t(K.notifStreakTitle),
-                      subtitle: context.t(K.notifStreakSub),
                       trailing: Switch(
                         key: const ValueKey('settings-notif-streak'),
                         value: _streakOn,
@@ -598,7 +678,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     SahneListRow.plain(
                       title: context.t(K.notifDuelTitle),
-                      subtitle: context.t(K.notifDuelSub),
                       trailing: Switch(
                         key: const ValueKey('settings-notif-duel'),
                         value: _duelOn,
@@ -612,7 +691,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     SahneListRow.plain(
                       title: context.t(K.notifSocialTitle),
-                      subtitle: context.t(K.notifSocialSub),
                       trailing: Switch(
                         key: const ValueKey('settings-notif-social'),
                         value: _socialOn,
@@ -628,73 +706,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               ),
 
-              // ============ SESLENDİRME (TTS) ============
-              SahneSectionHeader(title: context.t(K.secTts)),
-              const _TtsSettingsSection(),
-
-              // ============ ENGELLENENLER ============
-              // 2026-08-02 denetimi: `unblockPlayer` depoda vardı ama TEK
-              // bir çağıranı bile yoktu — kullanıcı birini engelledikten
-              // sonra kararını geri alamıyordu. Engelleme, geri alınabilir
-              // olmadıkça bir moderasyon aracı değil tek yönlü bir kapıdır.
-              SahneSectionHeader(title: context.t(K.secBlocked)),
-              _BlockedUsersSection(repository: widget.repository),
-
-              // ============ PREMIUM ABONELİK ============
-              // Diğer her blok gibi premium de kendi bölüm başlığını taşır.
-              // Başlıksızken kart, bir üstteki "Seslendirme" bölümünün
-              // devamı gibi görünüyor ve para kazandıran tek giriş noktası
-              // ayarların içinde kayboluyordu (2026-07-25 canlı denetimi).
-              //
-              // Abone olmayana + yapılandırma yoksa bölüm gizlenir: ürünsüz
-              // paywall ölü sokaktır (2026-09-05 canlı turu). Abone, durum
-              // satırını her zaman görür.
-              Consumer<PremiumService>(
-                builder: (context, premium, _) {
-                  final isPremium = premium.isPremium;
-                  // Satılabilir paket yoksa da gizli (2026-10-23).
-                  if (!kProEnabled || (!isPremium && !premium.canSell)) {
-                    return const SizedBox.shrink();
-                  }
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const SahneSectionHeader(title: 'Premium'),
-                      SahneListGroup(
-                        children: [
-                          SahneListRow.icon(
-                            icon: AppIcons.gem,
-                            role: SahneRole.gold,
-                            title: isPremium
-                                ? context.t(K.premiumBrand)
-                                : context.t(K.premiumCta),
-                            subtitle: isPremium
-                                ? context.t(K.premiumActive)
-                                : context.t(K.premiumPerks),
-                            trailing: SahneBadge(
-                              label: isPremium
-                                  ? context.t(K.premiumBadgeOn)
-                                  : context.t(K.premiumBadgeOff),
-                              tone: isPremium
-                                  ? SahneBadgeTone.gold
-                                  : SahneBadgeTone.soon,
-                            ),
-                            chevron: true,
-                            onTap: () => Navigator.of(context).push(
-                              AppRoute.to(
-                                PaywallScreen(repository: widget.repository),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                },
-              ),
-
               // ============ HAKKINDA / ABOUT ============
-              SahneSectionHeader(title: context.t(K.secAbout)),
+              SahneSectionHeader(title: context.t(K.secAboutHelp)),
               SahneListGroup(
                 children: [
                   SahneListRow.icon(
@@ -725,7 +738,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // Sık sorulan sorular (2026-10-27): rakiplerde yardım merkezi
               // zorunlu sayılıyor; en çok sorulan sekiz konu, son satır
               // destek adresi. Cevaplar koddaki gerçek davranışı anlatır.
-              SahneSectionHeader(title: context.t(K.faqTitle)),
+              // K17: SSS ayrı bölüm başlığı değil, "Hakkında ve yardım" grubunun
+              // küçük alt etiketidir.
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: SahneSpace.x4,
+                  bottom: SahneSpace.x2,
+                ),
+                child: Semantics(
+                  header: true,
+                  child: Text(
+                    context.t(K.faqTitle),
+                    style: SahneType.captionStrong.copyWith(color: t.tx2),
+                  ),
+                ),
+              ),
               SahneListGroup(
                 key: const ValueKey('settings-faq'),
                 dividerIndent: _rowTextInset,
@@ -800,11 +827,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: SahneSpace.x3),
-                    Text(
-                      context.t(K.aboutBody),
-                      style: SahneType.body.copyWith(color: t.tx2),
-                    ),
+                    // 2026-10-28 K17: uygulama tanıtım paragrafı (aboutBody)
+                    // kalktı; ayarlar sayfasında kimsenin aradığı metin değil.
                     const SizedBox(height: SahneSpace.x3),
                     // Yasal bağlantılar (mağaza şartı)
                     const LegalLinksRow(),
@@ -826,13 +850,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // için yanlış öncelik — en alta taşındı
               // (2026-07-22 canlı UX denetimi).
               SahneSectionHeader(title: context.t(K.secDanger)),
-              Padding(
-                padding: const EdgeInsets.only(bottom: SahneSpace.x3),
-                child: Text(
-                  context.t(K.dangerNote),
-                  style: SahneType.caption.copyWith(color: t.tx2),
-                ),
-              ),
               SahneListGroup(
                 children: [
                   SahneListRow.plain(
@@ -1652,5 +1669,44 @@ bool _hasProvider<T>(BuildContext context) {
     return true;
   } on ProviderNotFoundException {
     return false;
+  }
+}
+
+/// Anahtarın solunda küçük bilgi simgesi: uzun açıklama satıra paragraf
+/// olarak yazılmaz (K17), dokununca ipucu olarak açılır ve ekran okuyucuya
+/// anahtarın ipucu olarak söylenir. Simge ≥ 48 dokunma hedefidir.
+class _SwitchWithInfo extends StatelessWidget {
+  const _SwitchWithInfo({
+    required this.label,
+    required this.info,
+    required this.child,
+  });
+
+  /// Anahtarın adı (ekran okuyucu); ipucu `hint` olarak eklenir.
+  final String label;
+  final String info;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Tooltip(
+          message: info,
+          triggerMode: TooltipTriggerMode.tap,
+          excludeFromSemantics: true,
+          showDuration: const Duration(seconds: 6),
+          child: SizedBox.square(
+            dimension: 48,
+            child: Center(
+              child: Icon(AppIcons.circleInfo, size: 20, color: t.tx2),
+            ),
+          ),
+        ),
+        Semantics(label: label, hint: info, child: child),
+      ],
+    );
   }
 }

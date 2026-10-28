@@ -207,7 +207,9 @@ void main() {
             expect(finder, findsOneWidget);
             // 2026-10-22 tasarım kurulu: günün turu Boyax mod kartıdır
             // (dolu rol rengi; Agir değil, birincil düğme taşımaz).
-            expect(tester.widget(finder), isA<SahneModeTile>(), reason: key);
+            // K5 (2026-10-28 kurul): günün turu standart liste satırı
+            // (eski "Boyax dolu mod kartı" kararı DEĞİŞTİ).
+            expect(tester.widget(finder), isA<SahneListRow>(), reason: key);
             expect(
               find.descendant(of: finder, matching: find.byType(FilledButton)),
               findsNothing,
@@ -215,7 +217,7 @@ void main() {
             );
             _expectActionSemantics(tester, key);
           }
-          final daily = tester.widget<SahneModeTile>(
+          final daily = tester.widget<SahneListRow>(
             find.byKey(const ValueKey('play-hub-daily-contest')),
           );
           expect(daily.role, SahneRole.race);

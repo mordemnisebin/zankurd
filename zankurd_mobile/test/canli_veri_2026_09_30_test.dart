@@ -158,18 +158,25 @@ void main() {
       expect(find.textContaining('0 oda'), findsNothing);
     });
 
-    testWidgets('oyun sayısı "oda" değil "yarış" birimiyle yazılır', (
-      tester,
-    ) async {
+    // 2026-10-28, kurul K18: sıralama satırının ikinci satırı ("7 yarış · 2
+    // seri" / "7 pêşbirk · 2 zincîr") kalktı; satır yalnız sıra · avatar · ad
+    // · puan. Eski bekçi birimin "oda" değil "yarış / pêşbirk" yazılmasını
+    // koruyordu; birim artık bu yüzeyde hiç yazılmadığı için bekçi, "oda"
+    // sözcüğünün (ve sayım satırının) geri sızmamasını korur.
+    testWidgets('oyun sayısı satırı yok; "oda" birimi sızmaz', (tester) async {
       await _pumpBoard(
         tester,
         _BoardRepo([_entry(1, 'a', 'Awaz', 900, rooms: 7)]),
       );
-      expect(find.text('7 yarış · 2 seri'), findsOneWidget);
+      expect(find.text('Awaz'), findsOneWidget);
+      expect(find.text('900'), findsOneWidget);
+      expect(find.textContaining('yarış ·'), findsNothing);
       expect(find.textContaining(' oda'), findsNothing);
     });
 
-    testWidgets('Kurmancî birim "pêşbirk"', (tester) async {
+    testWidgets('Kurmancî satırda da sayım satırı yok, "oda" sızmaz', (
+      tester,
+    ) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
       await tester.pumpWidget(
@@ -183,7 +190,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text('7 pêşbirk · 2 zincîr'), findsOneWidget);
+      expect(find.textContaining('pêşbirk ·'), findsNothing);
+      expect(find.textContaining('zincîr'), findsNothing);
     });
   });
 

@@ -242,6 +242,7 @@ void main() {
       testShell(child: const SignInScreen(), authProvider: GateAuthProvider()),
     );
     await tester.pumpAndSettle();
+    await revealSignInForm(tester);
     debugDefaultTargetPlatformOverride = null;
 
     expect(find.text('Google ile giriş yap'), findsOneWidget);
@@ -262,6 +263,7 @@ void main() {
         testShell(child: const SignInScreen(), authProvider: authProvider),
       );
       await tester.pumpAndSettle();
+      await revealSignInForm(tester);
 
       final appleButton = find.text('Apple ile giriş yap');
       expect(appleButton, findsOneWidget);
@@ -309,6 +311,7 @@ void main() {
       testShell(child: const SignInScreen(), authProvider: authProvider),
     );
     await tester.pumpAndSettle();
+    await revealSignInForm(tester);
 
     await tester.tap(find.text('Apple ile giriş yap'));
     await tester.pumpAndSettle();
@@ -338,6 +341,7 @@ void main() {
         testShell(child: const SignInScreen(), authProvider: authProvider),
       );
       await tester.pumpAndSettle();
+      await revealSignInForm(tester);
 
       await tester.tap(find.text('Google ile giriş yap'));
       await tester.pumpAndSettle();
@@ -360,6 +364,7 @@ void main() {
       testShell(child: const SignInScreen(), authProvider: GateAuthProvider()),
     );
     await tester.pumpAndSettle();
+    await revealSignInForm(tester);
 
     final fields = find.byType(TextField);
     expect(fields, findsNWidgets(2));
@@ -408,6 +413,7 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
+        await revealSignInForm(tester);
 
         // Google butonu: iki temada da beyaz dolgu -> koyu metin.
         final googleLabel = tester.widget<Text>(
@@ -420,10 +426,7 @@ void main() {
         // bekçileri korur. Burada yalnız varlığı ve ikincil girişin ayrı
         // olduğu sabitlenir.
         expect(find.byKey(const ValueKey('sign-in-play-now')), findsOneWidget);
-        expect(
-          find.byKey(const ValueKey('sign-in-have-account')),
-          findsOneWidget,
-        );
+        expect(find.byKey(const ValueKey('sign-in-submit')), findsOneWidget);
       }
     },
   );
@@ -439,15 +442,16 @@ void main() {
       testShell(child: const SignInScreen(), authProvider: GateAuthProvider()),
     );
     await tester.pumpAndSettle();
+    await revealSignInForm(tester);
     bool isPrimary(String key) =>
         tester.widget<SahneButton>(find.byKey(ValueKey(key))).isPrimary;
     expect(isPrimary('sign-in-play-now'), isTrue);
-    expect(isPrimary('sign-in-have-account'), isFalse);
+    expect(isPrimary('sign-in-submit'), isFalse);
     final fields = find.byType(TextField);
     await tester.enterText(fields.at(0), 'a@b.co');
     await tester.enterText(fields.at(1), 'parola123');
     await tester.pump();
-    expect(isPrimary('sign-in-have-account'), isTrue);
+    expect(isPrimary('sign-in-submit'), isTrue);
     expect(isPrimary('sign-in-play-now'), isFalse);
     expect(find.text('Giriş yap'), findsWidgets);
   });
@@ -505,6 +509,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      await revealSignInForm(tester);
 
       // E-posta formu artık genişleyen bölümde; önce aç (tasarım: tek
       // birincil CTA = Google, form varsayılan kapalı).
@@ -695,14 +700,17 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Sonraki'), findsOneWidget);
+    expect(find.text('Devam'), findsOneWidget);
     expect(
-      tester.getBottomRight(find.text('Sonraki')).dy,
+      tester.getBottomRight(find.text('Devam')).dy,
       lessThanOrEqualTo(390),
     );
 
-    await tester.tap(find.text('Sonraki'));
-    await tester.pumpAndSettle();
+    // 2026-10-28 K10: karşılama 3 adım (dil, öğren, yarış).
+    for (var i = 0; i < 2; i++) {
+      await tester.tap(find.text('Devam'));
+      await tester.pumpAndSettle();
+    }
 
     expect(find.text('Başla'), findsOneWidget);
     expect(
@@ -722,14 +730,17 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Sonraki'), findsOneWidget);
+    expect(find.text('Devam'), findsOneWidget);
     expect(
-      tester.getBottomRight(find.text('Sonraki')).dy,
+      tester.getBottomRight(find.text('Devam')).dy,
       lessThanOrEqualTo(844),
     );
 
-    await tester.tap(find.text('Sonraki'));
-    await tester.pumpAndSettle();
+    // 2026-10-28 K10: karşılama 3 adım (dil, öğren, yarış).
+    for (var i = 0; i < 2; i++) {
+      await tester.tap(find.text('Devam'));
+      await tester.pumpAndSettle();
+    }
 
     expect(find.text('Başla'), findsOneWidget);
     expect(
@@ -793,7 +804,9 @@ void main() {
     // sağda). XXXL'de kahraman kart çekilir ve logo kartın içinde olduğu
     // için onunla gider (marka splash ve giriş ekranında); korunan kural:
     // iki üst kontrol çakışmadan, ekran dışına taşmadan sığar.
-    expect(logo, findsNothing);
+    // 2026-10-28 K10: kahraman kutusu kalktı; logo dil adımının kutusuz
+    // görselidir ve XXXL'de de ekrandadır.
+    expect(logo, findsOneWidget);
     expect(skip, findsOneWidget);
     expect(language, findsOneWidget);
     final skipRect = tester.getRect(skip);
@@ -805,6 +818,9 @@ void main() {
     expect(languageRect.right, lessThanOrEqualTo(surface.right));
     expect(languageRect.top, greaterThanOrEqualTo(skipRect.bottom - 1));
     expect(find.text('Kurmancî hîn bibe, pêş bikeve.'), findsNothing);
+    // 2. adım (öğren): başlık ve satırlar.
+    await tester.tap(find.text('Bidomîne'));
+    await tester.pumpAndSettle();
     for (final finder in [find.text('Hîn bibe'), find.text('Bidomîne')]) {
       expect(finder, findsOneWidget);
       final rect = tester.getRect(finder);
@@ -879,14 +895,17 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(AppLogo), findsOneWidget);
-    expect(find.text('Sonraki'), findsOneWidget);
+    expect(find.text('Devam'), findsOneWidget);
     expect(
-      tester.getBottomRight(find.text('Sonraki')).dy,
+      tester.getBottomRight(find.text('Devam')).dy,
       lessThanOrEqualTo(800),
     );
 
-    await tester.tap(find.text('Sonraki'));
-    await tester.pumpAndSettle();
+    // 2026-10-28 K10: karşılama 3 adım (dil, öğren, yarış).
+    for (var i = 0; i < 2; i++) {
+      await tester.tap(find.text('Devam'));
+      await tester.pumpAndSettle();
+    }
 
     expect(find.text('Başla'), findsOneWidget);
     expect(
@@ -1199,6 +1218,7 @@ void main() {
       testShell(child: const SignInScreen(), authProvider: GateAuthProvider()),
     );
     await tester.pumpAndSettle();
+    await revealSignInForm(tester);
 
     final guestButton = find.text('Hemen oyna');
     expect(guestButton, findsOneWidget);
@@ -1250,6 +1270,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    await revealSignInForm(tester);
 
     final pageScroll = find.byType(SingleChildScrollView);
     final pageScrollable = find.descendant(
@@ -1267,7 +1288,7 @@ void main() {
       'Navnîşana e-nameyê',
       'Şîfre',
       'Te şîfre ji bîr kir?',
-      'Hesabê min heye · Têkeve',
+      'Têkeve', // 2026-10-28 K10: formun gönderim düğmesi
       'Tomar bibe',
     ]) {
       final finder = find.text(label);
@@ -1300,6 +1321,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    await revealSignInForm(tester);
 
     for (final label in ['Niha bilîze', 'An jî bi e-nameyê']) {
       final finder = find.text(label);

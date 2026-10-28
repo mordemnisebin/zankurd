@@ -260,7 +260,9 @@ void main() {
 
     await _scrollToDeleteAction(tester);
     expect(find.text('Hesap işlemleri'), findsOneWidget);
-    expect(find.text('Bu alandaki işlemler geri alınamaz.'), findsOneWidget);
+    // 2026-10-28 K17: "geri alınamaz" paragrafı kalktı (silme satırının kendi
+    // açıklaması var); başlık ve satır yerinde.
+    expect(find.text('Bu alandaki işlemler geri alınamaz.'), findsNothing);
     expect(find.text('Hesabımı sil'), findsOneWidget);
   });
 

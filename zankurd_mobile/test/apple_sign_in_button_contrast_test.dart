@@ -85,6 +85,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      await revealSignInForm(tester); // K10: sosyal girişler "Hesabım var"da
 
       final context = tester.element(find.byType(SignInScreen));
       // Düğme giriş kartının (Perde) üstünde durur.

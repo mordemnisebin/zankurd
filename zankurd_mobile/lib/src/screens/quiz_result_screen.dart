@@ -1756,6 +1756,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     ];
 
     final scaffold = SahneResultScaffold(
+      neutral: true,
       mood: mood,
       // Sahne rengi modun rengi: öğrenme Zimrût, yarış Boyax.
       accent: isLearningExperience ? SahneRole.learn : SahneRole.race,
@@ -2153,7 +2154,7 @@ class _CategoryLearnings extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: SahneSpace.x3,
-                  vertical: SahneSpace.x3,
+                  vertical: SahneSpace.x2,
                 ),
                 child: Row(
                   children: [
@@ -2163,11 +2164,11 @@ class _CategoryLearnings extends StatelessWidget {
                         shape: SahneShape.m,
                       ),
                       child: SizedBox.square(
-                        dimension: 40,
+                        dimension: 32,
                         child: mark == null
                             ? Icon(
                                 CategoryVisuals.icon(tally.category),
-                                size: 22,
+                                size: 20,
                                 color: SahneVivid.onFill,
                               )
                             : CustomPaint(
@@ -2633,7 +2634,6 @@ class _RoundGains extends StatelessWidget {
                 icon: achievement.icon,
                 role: SahneRole.gold,
                 title: achievement.title(context.isKu),
-                subtitle: achievement.description(context.isKu),
               ),
             for (final entry in promotions.entries)
               SahneListRow.icon(
@@ -2654,19 +2654,17 @@ class _RoundGains extends StatelessWidget {
               SahneListRow.icon(
                 icon: AppIcons.listCheck,
                 role: SahneRole.gold,
-                title: context.t(K.gorevTamamlandi),
                 // XP burada verilmez, ana ekranda alınır; toplamda
                 // görünmeyen bir "+100 XP" yazmak yanlış olurdu.
-                subtitle:
-                    '${context.isKu ? mission.labelKu : mission.labelTr}'
-                    ' — ${context.t(K.missionClaimAction)}',
+                title:
+                    '${context.t(K.gorevTamamlandi)} · '
+                    '${context.isKu ? mission.labelKu : mission.labelTr}',
               ),
             if (dailyStreak > 0)
               SahneListRow.icon(
                 icon: AppIcons.fire,
                 role: SahneRole.gold,
                 title: context.t(K.dailyStreakDays, {'days': '$dailyStreak'}),
-                subtitle: context.t(K.keepStreakTomorrow),
               ),
           ],
         ),
@@ -2841,13 +2839,24 @@ class _LevelUpDialog extends StatelessWidget {
 /// 2026-09-29 Şahnê: bölüm başlığı (`SahneSectionHeader`) + ipucu + liste
 /// grubu; her satırın solunda durum karesi (✓ / ✗ / boş için ⧗). Eski sol
 /// renk çubuğu kalktı — durum renkle değil şekil ve sözle verilir.
-class _AllExplanationsCard extends StatelessWidget {
+class _AllExplanationsCard extends StatefulWidget {
   const _AllExplanationsCard({required this.records});
 
   final List<AnswerRecord> records;
 
   @override
+  State<_AllExplanationsCard> createState() => _AllExplanationsCardState();
+}
+
+class _AllExplanationsCardState extends State<_AllExplanationsCard> {
+  /// K7 (2026-10-28): tur açıklamaları varsayılan KAPALI; "Cevapları gör"
+  /// açar. İlk görünüm yıldız + puan + ödül + tek birincil eylemdir; uzun
+  /// açıklama listesi onu itiyordu.
+  bool _open = false;
+
+  @override
   Widget build(BuildContext context) {
+    final records = widget.records;
     final isKu = context.isKu;
     final entries = <({int index, AnswerRecord record, String explanation})>[];
     for (var i = 0; i < records.length; i++) {
@@ -2881,23 +2890,34 @@ class _AllExplanationsCard extends StatelessWidget {
       key: const ValueKey('result-all-explanations'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SahneSectionHeader(title: context.t(K.allExplanations)),
-        Text(
-          context.t(K.allExplanationsHint),
-          style: SahneType.caption.copyWith(color: t.tx2),
-        ),
         const SizedBox(height: SahneSpace.x3),
-        SahneListGroup(
-          dividerIndent: SahneSpace.x3 + 28 + SahneSpace.x3,
-          children: [
-            for (final entry in entries)
-              ResultExplanationEntry(
-                index: entry.index,
-                record: entry.record,
-                explanation: entry.explanation,
-              ),
-          ],
+        SahneButton.secondary(
+          key: const ValueKey('result-see-answers'),
+          label: context.t(_open ? K.hideAnswers : K.seeAnswers),
+          icon: _open ? AppIcons.chevronUp : AppIcons.chevronDown,
+          arrow: false,
+          expand: true,
+          onPressed: () => setState(() => _open = !_open),
         ),
+        if (_open) ...[
+          SahneSectionHeader(title: context.t(K.allExplanations)),
+          Text(
+            context.t(K.allExplanationsHint),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x3),
+          SahneListGroup(
+            dividerIndent: SahneSpace.x3 + 28 + SahneSpace.x3,
+            children: [
+              for (final entry in entries)
+                ResultExplanationEntry(
+                  index: entry.index,
+                  record: entry.record,
+                  explanation: entry.explanation,
+                ),
+            ],
+          ),
+        ],
       ],
     );
   }

@@ -15,6 +15,7 @@ import '../widgets/player_avatar.dart';
 import '../widgets/player_moderation_button.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/sahne/sahne.dart';
+import '../providers/bilingual_labels_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -1354,7 +1355,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
     final title = CategoryNames.localized(category, ku);
     final other = CategoryNames.localized(category, !ku);
-    final subtitle = other == title ? null : other;
+    // K14: öbür dildeki ad yalnız "iki dilli etiketler" açıksa.
+    final subtitle =
+        other == title || !BilingualLabelsProvider.isEnabledIn(context)
+        ? null
+        : other;
     // 2026-09-29 doğallık (K1): liste satırında çizim yok. 36'lık küçükte
     // üretilmiş çizim seçilemeyen bir renk lekesiydi; her kategori
     // çizimsiz karonun küçüğünü alır (kendi tonu + kendi ikonu).
@@ -1779,7 +1784,9 @@ class _RandomMatchCard extends StatelessWidget {
               // Kenarlık yok: dikdörtgen kenarlık pah kırpıcısında köşeleri
               // kesik bir çerçeve bırakıyordu.
               decoration: BoxDecoration(
-                color: t.raceTint,
+                // Nötr yüzey (2026-10-28 kurul K5): renk yalnız Boyax ikon
+                // rozetinde ve turuncu ok karosunda.
+                color: t.s1,
                 boxShadow: const <BoxShadow>[],
               ),
               padding: const EdgeInsets.all(SahneSpace.x4),

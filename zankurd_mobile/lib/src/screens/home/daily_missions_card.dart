@@ -90,8 +90,8 @@ class DailyMissionsCard extends StatelessWidget {
                 key: const ValueKey('home-today-streak'),
                 leading: const SahneGlyph(SahneGlyphKind.flame),
                 label: '$streak ${Tr.forKu(K.streakDayUnit, isKu)}',
-                tint: t.selFill,
-                foreground: t.selTx,
+                tint: t.warmFill,
+                foreground: t.warmTx,
                 semanticLabel: streakSemanticLabel,
                 onTap: onStreakTap,
               ),
@@ -113,14 +113,23 @@ class DailyMissionsCard extends StatelessWidget {
             ),
           ),
           if (visible.isNotEmpty) ...[
+            if (compact) const SizedBox(height: SahneSpace.x1),
             for (final m in visible)
-              _MissionTile(
-                mission: m,
-                isKu: isKu,
-                compact: compact,
-                onClaim: onClaimReward,
-                isGoal: identical(m, goalRow),
-              ),
+              if (compact)
+                _CompactMissionRow(
+                  mission: m,
+                  isKu: isKu,
+                  onClaim: onClaimReward,
+                  isGoal: identical(m, goalRow),
+                )
+              else
+                _MissionTile(
+                  mission: m,
+                  isKu: isKu,
+                  compact: compact,
+                  onClaim: onClaimReward,
+                  isGoal: identical(m, goalRow),
+                ),
             if (compact && completedCount == all.length) ...[
               const SizedBox(height: SahneSpace.x3),
               Row(
@@ -330,6 +339,102 @@ class _MissionTile extends StatelessWidget {
             ? (Tr.forKu(K.tamamlandi, isKu))
             : '${mission.progress}/${mission.target}',
         child: tile,
+      ),
+    );
+  }
+}
+
+/// Ana sayfa "Bugün" panelinin sade satırı (2026-10-28 kurul K4): ikon · kısa
+/// ad · sağda tek sayı. Satır başı ilerleme çubuğu ve "+N XP" rozeti yok
+/// (panelin üstündeki genel çubuk yeter); ödül yalnız ALINABİLİRKEN tek
+/// kompakt eylem olarak çıkar, bitmiş görev onay işareti gösterir.
+class _CompactMissionRow extends StatelessWidget {
+  const _CompactMissionRow({
+    required this.mission,
+    required this.isKu,
+    this.onClaim,
+    this.isGoal = false,
+  });
+
+  final DailyMission mission;
+  final bool isKu;
+  final bool isGoal;
+  final void Function(DailyMission mission)? onClaim;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final label = isKu ? mission.labelKu : mission.labelTr;
+    final done = mission.completed;
+    final canClaim = done && !mission.claimed && onClaim != null;
+    final count =
+        '${mission.progress.clamp(0, mission.target)}/${mission.target}';
+    final Widget trailing;
+    if (canClaim) {
+      trailing = KeyedSubtree(
+        key: ValueKey('claim-mission-${mission.missionKey}'),
+        child: SahneStatChip(
+          gold: true,
+          leading: const SahneGlyph(SahneGlyphKind.coin),
+          label: context.t(K.missionClaimAction),
+          onTap: () => onClaim!(mission),
+        ),
+      );
+    } else if (done) {
+      trailing = ExcludeSemantics(
+        child: Icon(AppIcons.circleCheck, size: 22, color: t.okTx),
+      );
+    } else {
+      trailing = ExcludeSemantics(
+        child: Text(count, style: SahneType.bodyStrong.copyWith(color: t.tx2)),
+      );
+    }
+    return Padding(
+      key: ValueKey('home-mission-row-${mission.type.name}'),
+      padding: const EdgeInsets.only(top: SahneSpace.x2),
+      child: Semantics(
+        container: true,
+        label: label,
+        value: done ? Tr.forKu(K.tamamlandi, isKu) : count,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 48),
+          child: Row(
+            children: [
+              ExcludeSemantics(
+                child: _IconTile(
+                  icon: done
+                      ? AppIcons.check
+                      : _MissionTile._missionIcon(mission.type),
+                  size: 36,
+                ),
+              ),
+              const SizedBox(width: SahneSpace.x3),
+              Expanded(
+                child: ExcludeSemantics(
+                  child: Text(
+                    label,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: SahneType.bodyStrong.copyWith(
+                      color: done ? t.tx2 : t.tx,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: SahneSpace.x2),
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width * 0.4,
+                ),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: trailing,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

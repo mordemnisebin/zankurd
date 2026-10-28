@@ -256,8 +256,13 @@ void main() {
               .evaluate()
               .map((e) => tester.getTopLeft(find.byWidget(e.widget)).dx)
               .toSet();
-          // Tur 6: her ürün tam genişlik satır; hep tek sütun.
-          expect(lefts.length, 1, reason: 'ürünler tek sütun olmalı');
+          // 2026-10-28 K11: güçlendiriciler tek sütun satır, çerçeve/rozet 2
+          // sütun karo (1.0×); büyük yazıda (≥ 1.5×) hepsi tek sütun.
+          if (scale >= 1.5) {
+            expect(lefts.length, 1, reason: 'büyük yazıda tek sütun');
+          } else {
+            expect(lefts.length, lessThanOrEqualTo(2));
+          }
           _expectNoMidWordBreaks(find.byType(ListView), 'mağaza listesi');
         });
       }

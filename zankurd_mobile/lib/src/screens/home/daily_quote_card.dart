@@ -5,7 +5,6 @@ import '../../config/app_config.dart';
 import '../../data/daily_quote_store.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
-import '../../providers/bilingual_labels_provider.dart';
 import '../../theme/app_icons.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../../services/app_haptics.dart';
@@ -17,9 +16,9 @@ import '../../services/app_haptics.dart';
 /// Kurmancî olsa da gösterilir (öğretici); yalnız "iki dilli etiket" ayarı
 /// kapalı VE arayüz Kurmancîyse gizlenir. Sağ üstte paylaş düğmesi.
 ///
-/// Renk: Zêr (altın) tonlu zemin, ince Zêr kenar; ödül/ışık rengi "bugünün
-/// armağanı" duygusunu verir, öğrenme (Zimrût) ve yarış (Boyax) kartlarıyla
-/// karışmaz. Çizim saat kaynağından ([SahneClock]) okur: gün değişince bir
+/// Renk: SADE standart yüzey kartı (2026-10-28 kurul K4: söz sayfanın en
+/// altında düz bir kart; renkli zemin Günün görevi ve konularla yarışıyordu).
+/// Kimliği Zêr tonlu küçük üst etiket taşır. Çizim saat kaynağından ([SahneClock]) okur: gün değişince bir
 /// sonraki çizimde yeni söz gelir.
 class DailyQuoteCard extends StatefulWidget {
   const DailyQuoteCard({
@@ -88,7 +87,9 @@ class _DailyQuoteCardState extends State<DailyQuoteCard> {
     if (quote == null) return const SizedBox.shrink();
     final t = SahneTokens.of(context);
     final isKu = widget.isKu;
-    final showTr = !isKu || BilingualLabelsProvider.isEnabledIn(context);
+    // Sözün Türkçe karşılığı öğrenme içeriğidir (K14 istisnası): iki dilli
+    // etiket ayarından bağımsız, her arayüz dilinde görünür (2026-10-28).
+    final showTr = quote.tr.trim().isNotEmpty;
     final label = Tr.forKu(K.gotinaRoje, isKu);
     return Padding(
       key: const ValueKey('home-daily-quote'),
@@ -97,8 +98,6 @@ class _DailyQuoteCardState extends State<DailyQuoteCard> {
         container: true,
         label: '$label. ${quote.ku}${showTr ? '. ${quote.tr}' : ''}',
         child: SahneSurfaceCard(
-          color: t.goldTint,
-          edgeColor: t.goldTx.withValues(alpha: 0.35),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

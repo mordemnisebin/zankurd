@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
@@ -17,6 +16,7 @@ import '../../utils/player_identity.dart';
 import '../../data/streak_store.dart';
 import '../../utils/error_reporter.dart';
 import '../../widgets/player_avatar.dart';
+import '../../widgets/quiz_stage_kit.dart';
 import '../../widgets/quiz_top_bar.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../quiz/quiz_option_tile.dart';
@@ -752,12 +752,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           CategoryVisuals.canonicalName(question.category),
         ),
         ridge: true,
-        // 2026-10-20 renk ve canlılık (B): üst bant sorunun konusunun renginde
-        // (ders ve yarışma ekranıyla aynı; renk uygulama temasından okunur).
-        band: CategoryVisuals.tone(
-          question.category,
-        ).fill(night: Theme.of(context).brightness == Brightness.dark),
-        bandProgress: SahneProgressBar(
+        // K6+ (2026-10-28): konu renkli üst bant kalktı; her modda aynı
+        // lacivert sahne. İlerleme çubuğu `progress` yuvasında.
+        progress: SahneProgressBar(
           key: const ValueKey('async-duel-progress-bar'),
           // `_results` toplam uzunlukta ve boş (`null`) başlar: yalnız
           // cevaplananlar dolu sayılır.
@@ -767,9 +764,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                   0.0,
                   1.0,
                 ),
-          height: 6,
-          fillColor: SahneVivid.onFill,
-          trackColor: SahneVivid.glassTrack,
+          height: 4,
           semanticLabel: progressLabel,
         ),
         // 2026-09-29 doğallık (K2): soru arkasındaki hayalet kategori
@@ -783,7 +778,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           index: _index,
           total: total,
           textKey: const ValueKey('async-duel-progress'),
-          onBand: true,
+          modeLabel: context.t(_isTournament ? K.tournament : K.notifDuelTitle),
         ),
         // Çıkış gönderilirken sayaç yerine bekleme göstergesi: kalan
         // sorular sunucuya TIMEOUT olarak gidiyor.
@@ -796,10 +791,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
               _exitInFlight
                   ? const SizedBox.square(
                       dimension: 24,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: SahneVivid.onFill,
-                      ),
+                      child: CircularProgressIndicator(strokeWidth: 2),
                     )
                   : AnimatedBuilder(
                       animation: _timerController.animation,
@@ -811,7 +803,6 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                           // Cevap gönderildikten sonra sayaç durur; gerilim rengi
                           // de söner.
                           hotSeconds: disabled ? -1 : 5,
-                          onBand: true,
                           semanticLabel:
                               '$seconds ${context.t(K.secondsShortUnit)}',
                         );
@@ -872,32 +863,24 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                   // alanda ortalanır — ders ve yarışma ekranıyla AYNI yerleşim.
                   return LayoutBuilder(
                     builder: (context, constraints) {
-                      final reserve = quizAnswerBottomReserve(
-                        context,
-                        constraints.maxHeight,
-                      );
                       return SahneStageScroll(
                         scrollKey: const ValueKey('async-duel-scroll'),
                         // Yeni soruda başa dön; üst kenar elmas şeridin altında sönsün.
                         resetKey: _index,
-                        padding: EdgeInsets.fromLTRB(
+                        padding: const EdgeInsets.fromLTRB(
                           SahneSpace.page,
-                          SahneSpace.x4,
+                          quizStageTopGap,
                           SahneSpace.page,
-                          reserve,
+                          SahneSpace.x6,
                         ),
+                        // K6: soru ÜSTTEN başlar (şıkları alta oturtan boşluk
+                        // kalktı).
                         child: ConstrainedBox(
                           key: const ValueKey('async-duel-answers-anchored'),
-                          constraints: BoxConstraints(
-                            minHeight: math.max(
-                              0.0,
-                              constraints.maxHeight - SahneSpace.x4 - reserve,
-                            ),
-                          ),
+                          constraints: const BoxConstraints(),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               // Sıra ve kategori ortak üst satırda; burada yalnız
                               // rakip bağlamı (boş yuva soruyu ortalar). Rakip adı
@@ -985,7 +968,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                                         ),
                                       ),
                               ),
-                              _QuestionText(text: question.promptText),
+                              QuizPromptCard(
+                                child: _QuestionText(text: question.promptText),
+                              ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 mainAxisSize: MainAxisSize.min,
@@ -1027,9 +1012,6 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                                         disabled: disabled,
                                         suspense: suspenseVisual,
                                         optionCount: answers.length,
-                                        tone: CategoryVisuals.tone(
-                                          question.category,
-                                        ),
                                         dimmed:
                                             _revealedAnswerText != null &&
                                             answer != _revealedAnswerText &&
@@ -1119,7 +1101,7 @@ class _QuestionText extends StatelessWidget {
           ),
           textDirection: Directionality.of(context),
           textScaler: MediaQuery.textScalerOf(context),
-          maxLines: 4,
+          maxLines: 3,
         )..layout(maxWidth: constraints.maxWidth);
         final style = painter.didExceedMaxLines
             ? SahneType.headline

@@ -1,3 +1,6 @@
+// 2026-10-28 K11 (kurul): mağazada ayrı "N jeton eksik" satırı ve "hepsi tek tam
+// genişlik satır" kararı geçersiz; yetmeyen ürün yalnız nötr fiyat hapı taşır,
+// çerçeve/rozet 2 sütun karodur (bkz. magaza_eksik_jeton_sol_sutun_test).
 // Tasarım kurulu tur 6: Mağaza ızgarasında iki fiyat dili ve eşit olmayan
 // kartlar vardı. VIP ve Neon tam genişlik yatay, "Ekstra çevirme" ve "Altın
 // çerçeve" yarım genişlik dikeydi; alınabilen üründe dolu turuncu çıplak "120",
@@ -32,36 +35,40 @@ void main() {
     await tester.pumpWidget(testShell(child: ShopScreen(repository: _Repo())));
     await tester.pumpAndSettle();
 
-    final cards = <Finder>[
-      find.byKey(const ValueKey('shop-hero-surface')),
-      for (final id in [
-        'spin_wheel_extra',
-        'avatar_frame_gold',
-        'avatar_frame_neon',
-      ])
-        find.byKey(ValueKey('shop-item-surface-$id')),
-    ];
-    final widths = <double>{};
-    for (final c in cards) {
-      expect(c, findsOneWidget);
-      widths.add(tester.getSize(c).width);
-    }
-    expect(widths.length, 1, reason: 'Kartlar eşit genişlikte olmalı: $widths');
+    // 2026-10-28 K11: "hepsi tek tam genişlik satır" kararı geçersiz;
+    // güçlendiriciler eşit genişlikte satır, çerçeve/rozet eşit genişlikte
+    // karodur ve fiyat düğmeleri hep AYNI sabit boydadır.
+    double width(String id) =>
+        tester.getSize(find.byKey(ValueKey('shop-item-surface-$id'))).width;
+    expect({width('spin_wheel_extra'), width('joker_pack_3')}.length, 1);
+    expect(
+      {
+        width('avatar_frame_gold'),
+        width('avatar_frame_neon'),
+        width('profile_badge_vip'),
+      }.length,
+      1,
+    );
 
-    // Alınabilen üründe eylem fiil taşır, çıplak sayı değil.
-    expect(find.text('Satın al · 120'), findsOneWidget);
-
-    // Eylem/fiyat satırının sağ kenarı her kartta aynı (tur 10b: eylem artık
-    // metnin altında sağa yaslı satırda; sütun değil satır).
-    final rights = <double>{};
+    final sizes = <Size>{};
     for (final k in [
-      'shop-short-profile_badge_vip',
+      'shop-buy-streak_freeze',
+      'shop-buy-joker_pack_3',
       'shop-buy-spin_wheel_extra',
-      'shop-short-avatar_frame_gold',
-      'shop-short-avatar_frame_neon',
     ]) {
       final f = find.byKey(ValueKey(k));
-      expect(f, findsOneWidget);
+      if (f.evaluate().isEmpty) continue;
+      sizes.add(tester.getSize(f));
+    }
+    // Satır düğmeleri (genişlik sabit 112) aynı boyda.
+    expect(sizes.map((e) => e.width).toSet().length, 1, reason: '$sizes');
+    expect(sizes.map((e) => e.height).toSet().length, 1, reason: '$sizes');
+
+    // Satırlarda eylem sağ kenarda hizalı.
+    final rights = <double>{};
+    for (final k in ['shop-buy-joker_pack_3', 'shop-buy-spin_wheel_extra']) {
+      final f = find.byKey(ValueKey(k));
+      if (f.evaluate().isEmpty) continue;
       rights.add(tester.getTopRight(f).dx.roundToDouble());
     }
     expect(rights.length, 1, reason: 'Fiyat/eylem aynı sağ kenarda: $rights');

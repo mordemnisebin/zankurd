@@ -3,7 +3,6 @@ import 'dart:math' as math;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../data/learner_lexicon.dart';
 import '../data/lesson_completion_store.dart';
@@ -41,7 +40,6 @@ import '../services/app_haptics.dart';
 import 'alphabet_screen.dart';
 import 'stories_screen.dart';
 import 'tekrar_screen.dart';
-import 'favorite_questions_screen.dart';
 
 /// Öğrenme yolunda "şu an aktif/önerilen" düğümün indeksi.
 ///
@@ -280,10 +278,7 @@ class _LearningScreenState extends State<LearningScreen> {
       appBar: zkAppBar(
         context,
         title: Text(context.t(K.learnKurmanci)),
-        backgroundColor: t.learnFill,
-        foregroundColor: SahneVivid.onFill,
-        glassBack: true,
-        systemOverlayStyle: SystemUiOverlayStyle.light,
+        accent: t.learnFill,
       ),
       body: SafeArea(
         top: false,
@@ -360,64 +355,44 @@ class _LearningScreenState extends State<LearningScreen> {
               // vadesi gelince görünüyordu, kaydedilen sorular yalnız
               // Profil'deydi.
               _page(SahneSectionHeader(title: context.t(K.practiceSection))),
+              // 2x2 kompakt ızgara (2026-10-28 kurul K8): beş satırlık liste
+              // ilk ekranı uzatıyordu. "Kaydedilen sorular" Profil'de duruyor
+              // (Profil → Öğrenme), burada ikinci kez yer tutmaz.
               _page(
-                SahneListGroup(
+                _PracticeGrid(
                   key: const ValueKey('learning-practice-hub'),
-                  children: [
-                    SahneListRow.icon(
+                  tiles: [
+                    _PracticeTileData(
                       key: const ValueKey('learning-practice-review'),
                       icon: AppIcons.arrowsRotate,
-                      role: SahneRole.learn,
                       title: context.t(K.tekrarTitle),
-                      chevron: true,
                       onTap: _openTekrar,
                     ),
-                    SahneListRow.icon(
+                    _PracticeTileData(
                       key: const ValueKey('learning-lexicon-entry'),
                       icon: AppIcons.magnifyingGlass,
-                      role: SahneRole.learn,
                       title: context.t(K.lexiconTitle),
-                      chevron: true,
                       onTap: _openLexicon,
                     ),
                     // Alfabe ve sesler (2026-10-27): harf-ses başvurusu;
                     // eskiden yalnız ilk dersin içindeydi.
-                    SahneListRow.icon(
+                    _PracticeTileData(
                       key: const ValueKey('learning-alphabet-entry'),
                       icon: AppIcons.volumeHigh,
-                      role: SahneRole.learn,
                       title: context.t(K.alphabetTitle),
-                      chevron: true,
                       onTap: () => Navigator.of(
                         context,
                       ).push(AppRoute.to(const AlphabetScreen())),
                     ),
-                    SahneListRow.icon(
+                    _PracticeTileData(
                       key: const ValueKey('learning-my-words-entry'),
                       icon: AppIcons.bookmark,
-                      role: SahneRole.learn,
                       title: context.t(K.wordsTitle),
-                      // Vadesi gelen sayısı burada DEĞİL: tekrar girişi tektir
-                      // ("Tekrar · bugün N" kartı), Kelimelerim yalnız liste.
+                      // Vadesi gelen sayısı burada DEĞİL: tekrar girişi tektir.
                       subtitle: _wordCount > 0
                           ? context.t(K.wordsCount, {'count': '$_wordCount'})
                           : null,
-                      chevron: true,
                       onTap: _openMyWords,
-                    ),
-                    SahneListRow.icon(
-                      key: const ValueKey('learning-saved-questions'),
-                      icon: AppIcons.star,
-                      role: SahneRole.learn,
-                      title: context.t(K.savedQuestions),
-                      chevron: true,
-                      onTap: () => Navigator.of(context).push(
-                        AppRoute.to(
-                          FavoriteQuestionsScreen(
-                            repository: widget.repository,
-                          ),
-                        ),
-                      ),
                     ),
                   ],
                 ),
@@ -432,7 +407,7 @@ class _LearningScreenState extends State<LearningScreen> {
                   width: double.infinity,
                   child: StoryCatalog(
                     isKu: ku,
-                    limit: 4,
+                    limit: 3,
                     onShowAll: () => Navigator.of(
                       context,
                     ).push(AppRoute.to(const StoriesScreen())),
@@ -449,24 +424,8 @@ class _LearningScreenState extends State<LearningScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: SahneSpace.cardGap),
-              _page(
-                SahneListGroup(
-                  children: [
-                    // Seviye testi: yalnızca ilk açılış kartında ve
-                    // Ayarlar'ın derinindeydi; kart kapatılınca öğrenme
-                    // alanından bulunamıyordu (erişim haritası, 2026-10-21).
-                    SahneListRow.icon(
-                      key: const ValueKey('learning-retake-placement'),
-                      icon: AppIcons.gaugeHigh,
-                      role: SahneRole.learn,
-                      title: context.t(K.retakePlacement),
-                      chevron: true,
-                      onTap: _openPlacement,
-                    ),
-                  ],
-                ),
-              ),
+              // "Seviyeni yeniden belirle" buradan kalktı (2026-10-28 kurul K8):
+              // Ayarlar'da var; ilk açılış daveti `_PlacementPromptCard` kalır.
             ],
           ),
         ),
@@ -1968,10 +1927,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
       backgroundColor: t.bg,
       appBar: zkAppBar(
         context,
-        backgroundColor: t.learnFill,
-        foregroundColor: SahneVivid.onFill,
-        glassBack: true,
-        systemOverlayStyle: SystemUiOverlayStyle.light,
+        accent: t.learnFill,
         // Ders başlığı arayüz diline uyar; Kurmancî adı yedek kalır.
         title: Text(
           ku
@@ -1980,7 +1936,6 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
         ),
         actions: [
           SahneIconButton(
-            glass: true,
             icon: _flashcardMode ? AppIcons.clone : AppIcons.layerGroup,
             semanticLabel: context.t(K.flashcardMode),
             onPressed: _toggleFlashcard,
@@ -2386,6 +2341,106 @@ class _UnitHeader extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _PracticeTileData {
+  const _PracticeTileData({
+    required this.key,
+    required this.icon,
+    required this.title,
+    required this.onTap,
+    this.subtitle,
+  });
+
+  final Key key;
+  final IconData icon;
+  final String title;
+  final String? subtitle;
+  final VoidCallback onTap;
+}
+
+/// Pratik araçları: iki sütunlu kompakt kartlar (rozet + ad). Büyük yazıda
+/// tek sütuna düşer.
+class _PracticeGrid extends StatelessWidget {
+  const _PracticeGrid({required this.tiles, super.key});
+
+  final List<_PracticeTileData> tiles;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final scale = MediaQuery.textScalerOf(context).scale(16) / 16;
+    final columns = scale > 1.3 ? 1 : 2;
+    Widget tile(_PracticeTileData d) => SahneSurfaceCard(
+      key: d.key,
+      onTap: d.onTap,
+      semanticLabel: [d.title, ?d.subtitle].join(', '),
+      padding: const EdgeInsets.all(SahneSpace.x3),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 48),
+        child: ExcludeSemantics(
+          child: Row(
+            children: [
+              DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: t.learnFill,
+                  shape: SahneShape.m,
+                ),
+                child: SizedBox.square(
+                  dimension: 40,
+                  child: Icon(d.icon, size: 22, color: SahneVivid.onFill),
+                ),
+              ),
+              const SizedBox(width: SahneSpace.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      d.title,
+                      style: SahneType.bodyStrong.copyWith(color: t.tx),
+                    ),
+                    if (d.subtitle != null)
+                      Text(
+                        d.subtitle!,
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    const gap = SahneSpace.x3;
+    final rows = <Widget>[];
+    for (var i = 0; i < tiles.length; i += columns) {
+      if (rows.isNotEmpty) rows.add(const SizedBox(height: gap));
+      rows.add(
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var j = i; j < i + columns; j++) ...[
+                if (j > i) const SizedBox(width: gap),
+                Expanded(
+                  child: j < tiles.length
+                      ? tile(tiles[j])
+                      : const SizedBox.shrink(),
+                ),
+              ],
+            ],
+          ),
+        ),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: rows,
     );
   }
 }

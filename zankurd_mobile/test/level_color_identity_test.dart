@@ -98,7 +98,7 @@ void main() {
         // temanın birincil metin rengiyle yazılır (koyu bant kalktı).
         expect(
           DefaultTextStyle.of(tester.element(inBar)).style.color,
-          SahneVivid.onFill,
+          t.tx,
           reason: combo,
         );
         final gradients = find.byWidgetPredicate((widget) {

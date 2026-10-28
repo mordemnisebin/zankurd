@@ -445,7 +445,7 @@ void main() {
     expect(find.text('Henüz kaydedilmiş soru yok.'), findsOneWidget);
   });
 
-  testWidgets('profil mobil düzende 6 menü öğesinin tamamını gösterir', (
+  testWidgets('profil mobil düzende menü öğelerinin tamamını gösterir', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(400, 900);
@@ -466,7 +466,9 @@ void main() {
     }
 
     expect(find.text('Kaydedilen sorular'), findsOneWidget);
-    expect(find.text('Yanlışlarım'), findsOneWidget);
+    // K9 (2026-10-28): "Yanlışlarım" profil menüsünden kalktı; Öğren'deki
+    // Tekrar'da.
+    expect(find.text('Yanlışlarım'), findsNothing);
     // 2026-09-29 Şahnê: bölüm başlığı tek biçemdir (`SahneSectionHeader`,
     // Manşet 22) — büyük harf etiketi değil.
     expect(find.text('Öğrenme'), findsOneWidget);

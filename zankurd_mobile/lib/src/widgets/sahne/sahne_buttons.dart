@@ -397,9 +397,14 @@ class SahneJokerButton extends StatelessWidget {
     this.semanticLabel,
     this.selected = false,
     this.unaffordable = false,
+    this.freeLabel,
   });
 
   final IconData icon;
+
+  /// Günlük ücretsiz hak varken fiyat yerine küçük rozet ("Ücretsiz").
+  /// Yalnız etkin ve seçili olmayan jokerde görünür (K6, 2026-10-28).
+  final String? freeLabel;
 
   /// Jokerin adı (ör. "Nîv bi Nîv"): Semantics ve uzun basış ipucu.
   final String label;
@@ -502,7 +507,37 @@ class SahneJokerButton extends StatelessWidget {
                                     color: t.goldTx,
                                   ),
                                 ],
-                                if (showPrice) ...[
+                                // Büyük yazıda ad etiketi gizlenir; "Ücretsiz" rozeti
+                                // de düşer (dört özdeş rozet jokerleri
+                                // ayırt ettirmezdi): fiyat çizilir.
+                                if (showPrice &&
+                                    freeLabel != null &&
+                                    enabled &&
+                                    showLabel) ...[
+                                  const SizedBox(width: SahneSpace.x1),
+                                  DecoratedBox(
+                                    key: const ValueKey('joker-free-badge'),
+                                    decoration: ShapeDecoration(
+                                      color: t.okFill,
+                                      shape: const StadiumBorder(),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 6,
+                                        vertical: 1,
+                                      ),
+                                      child: Text(
+                                        freeLabel!,
+                                        maxLines: 1,
+                                        style: SahneType.caption.copyWith(
+                                          color: t.tx,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ] else if (showPrice) ...[
                                   const SizedBox(width: SahneSpace.x1),
                                   // Kurul 2. tur (2026-10-20): sıfır bakiyede
                                   // pasif joker hâlâ "etkin" okunuyordu (üç

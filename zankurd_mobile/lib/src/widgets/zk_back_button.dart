@@ -23,18 +23,10 @@ import 'sahne/sahne.dart';
 /// artık bileşenin kendisi verir ([SahneIconButton]); ekran okuyucu tek bir
 /// 48'lik düğme görür.
 class ZkBackButton extends StatelessWidget {
-  const ZkBackButton({
-    super.key,
-    this.onPressed,
-    this.color,
-    this.glass = false,
-  });
+  const ZkBackButton({super.key, this.onPressed, this.color});
 
   final VoidCallback? onPressed;
   final Color? color;
-
-  /// Renkli başlık bandında (konu rengi) yarı saydam cam plaka.
-  final bool glass;
 
   /// Dokunma kutusunun kenarı.
   static const double tapTarget = sahneTapTarget;
@@ -43,7 +35,6 @@ class ZkBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SahneIconButton(
       icon: AppIcons.arrowLeft,
-      glass: glass,
       semanticLabel: context.t(K.back),
       onPressed: onPressed ?? () => Navigator.maybePop(context),
     );
@@ -67,7 +58,7 @@ PreferredSizeWidget zkAppBar(
   Widget? subtitle,
   String? titleSecondary,
   List<Widget>? actions,
-  Color? backgroundColor,
+  Color? accent,
   double? elevation,
   double? scrolledUnderElevation,
   bool automaticallyImplyLeading = true,
@@ -75,16 +66,12 @@ PreferredSizeWidget zkAppBar(
   IconThemeData? iconTheme,
   bool? centerTitle,
   SystemUiOverlayStyle? systemOverlayStyle,
-  Color? foregroundColor,
-  Color? subtitleColor,
 
-  /// İki dilli küçük satırın rengi (renkli bantta okunur renk); verilmezse
-  /// ikincil metin.
-  Color? secondaryColor,
-  bool glassBack = false,
+  /// Çubuğun altındaki 3 px'lik mod/konu çizgisi; `null` → çizgi yok.
+  PreferredSizeWidget? bottom,
 }) {
   final t = SahneTokens.of(context);
-  final titleColor = foregroundColor ?? t.tx;
+  final titleColor = t.tx;
   final showDefaultLeading = automaticallyImplyLeading && leading == null;
   final hasLeading = leading != null || showDefaultLeading;
   // Başlık metinse sözleri bölünmeden sarar ([SahneUnbrokenText]) ve çubuk
@@ -150,14 +137,11 @@ PreferredSizeWidget zkAppBar(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (secondaryFits)
-                      SahneBilingualLabel(secondary, color: secondaryColor),
+                    if (secondaryFits) SahneBilingualLabel(secondary),
                     shownTitle,
                     if (subtitle != null)
                       DefaultTextStyle.merge(
-                        style: SahneType.caption.copyWith(
-                          color: subtitleColor ?? t.tx2,
-                        ),
+                        style: SahneType.caption.copyWith(color: t.tx2),
                         softWrap: true,
                         child: subtitle,
                       ),
@@ -175,6 +159,7 @@ PreferredSizeWidget zkAppBar(
   return AppBar(
     key: key,
     toolbarHeight: toolbarHeight,
+    bottom: bottom ?? (accent == null ? null : ZkAccentLine(color: accent)),
     title: heading,
     titleSpacing: hasLeading ? SahneSpace.x3 : SahneSpace.page,
     titleTextStyle: SahneType.headline.copyWith(color: titleColor),
@@ -187,7 +172,7 @@ PreferredSizeWidget zkAppBar(
     actions: actions == null || actions.isEmpty
         ? actions
         : [...actions, SizedBox(width: trailingGap)],
-    backgroundColor: backgroundColor ?? t.bg,
+    backgroundColor: t.bg,
     surfaceTintColor: Colors.transparent,
     elevation: elevation ?? 0,
     scrolledUnderElevation: scrolledUnderElevation ?? 0,
@@ -205,11 +190,34 @@ PreferredSizeWidget zkAppBar(
     leading:
         leading ??
         (showDefaultLeading
-            ? Padding(
-                padding: const EdgeInsetsDirectional.only(start: _backInset),
-                child: Center(child: ZkBackButton(glass: glassBack)),
+            ? const Padding(
+                padding: EdgeInsetsDirectional.only(start: _backInset),
+                child: Center(child: ZkBackButton()),
               )
             : null),
+  );
+}
+
+/// Nötr üst çubuğun altındaki ince mod/konu çizgisi (K2): 3 px, tam genişlik.
+/// Çubuğun tek renkli öğesidir; dolu bant yerine geçer.
+class ZkAccentLine extends StatelessWidget implements PreferredSizeWidget {
+  const ZkAccentLine({super.key, required this.color});
+
+  final Color color;
+
+  static const double height = 3;
+
+  /// Bekçi ve ekran turu çizgiyi bununla bulur.
+  static const valueKey = ValueKey('zk-accent-line');
+
+  @override
+  Size get preferredSize => const Size.fromHeight(height);
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+    key: valueKey,
+    height: height,
+    child: ColoredBox(color: color),
   );
 }
 

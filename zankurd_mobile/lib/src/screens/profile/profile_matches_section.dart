@@ -174,42 +174,9 @@ class _ProfileMatchHistorySectionState
         ),
       );
     } else if (matches.isEmpty) {
-      body = SahneSurfaceCard(
-        key: const ValueKey('profile-recent-matches-empty'),
-        padding: const EdgeInsets.symmetric(
-          horizontal: SahneSpace.x4,
-          vertical: SahneSpace.x3,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 2),
-              child: ExcludeSemantics(
-                child: Icon(AppIcons.swords, size: 20, color: t.tx3),
-              ),
-            ),
-            const SizedBox(width: SahneSpace.x3),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.t(K.recentMatchesEmpty),
-                    style: SahneType.caption.copyWith(color: t.tx2),
-                  ),
-                  if (widget.onStartPlay != null)
-                    SahneButton.text(
-                      buttonKey: const ValueKey('profile-recent-matches-start'),
-                      label: context.t(K.startToday),
-                      onPressed: widget.onStartPlay,
-                    ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
+      // Boş "Son maçlar" ayrı bir kart çizmez (2026-10-28 kurul K9): boş
+      // Rekorlar kartı tek kompakt boş durumdur ve oyuna zaten götürür.
+      return const SizedBox.shrink(key: ValueKey('profile-recent-matches'));
     } else {
       body = SahneListGroup(
         children: [for (final match in matches) _MatchRow(match: match)],
@@ -402,11 +369,12 @@ class _ProfileRecordsSectionState extends State<ProfileRecordsSection> {
         if (row.value != '—') row,
     ];
     if (known.isEmpty) {
+      // Başlıksız tek kompakt boş durum (rekor + son maç birlikte, K9).
       return Column(
         key: const ValueKey('profile-records'),
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SahneSectionHeader(title: context.t(K.recordsTitle)),
+          const SizedBox(height: SahneSpace.cardGap),
           SahneSurfaceCard(
             key: const ValueKey('profile-records-empty'),
             padding: const EdgeInsets.symmetric(

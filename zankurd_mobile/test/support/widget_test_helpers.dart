@@ -1,5 +1,6 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
@@ -222,4 +223,16 @@ MockZanKurdRepository freshMockRepository() {
   XPStore.resetInstance();
   BootDiagnostics.instance.reset();
   return TestMockZanKurdRepository();
+}
+
+/// Giriş ekranının ilk görünümünde yalnız "Hemen oyna" (birincil) ve "Hesabım
+/// var · Giriş yap" (ikincil) durur; e-posta/parola formu ve Google/Apple
+/// düğmeleri "Hesabım var"a basılınca açılır (2026-10-28 kurul K10). Formu ya
+/// da sosyal girişleri sınayan testler önce bunu çağırır.
+Future<void> revealSignInForm(WidgetTester tester) async {
+  final button = find.byKey(const ValueKey('sign-in-have-account'));
+  if (button.evaluate().isEmpty) return;
+  await tester.ensureVisible(button);
+  await tester.tap(button);
+  await tester.pumpAndSettle();
 }

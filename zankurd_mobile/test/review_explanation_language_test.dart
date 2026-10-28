@@ -107,6 +107,16 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    // K7 (2026-10-28): tur açıklamaları varsayılan KAPALI; "Cevapları gör" açar.
+    final seeAnswers = find.byKey(
+      const ValueKey('result-see-answers'),
+      skipOffstage: false,
+    );
+    await tester.ensureVisible(seeAnswers);
+    await tester.pump();
+    await tester.tap(seeAnswers);
+    await tester.pumpAndSettle();
+
     expect(find.text('«av» bi Tirkî dibe «su».'), findsOneWidget);
     expect(find.textContaining('Şirove:'), findsNothing);
   });

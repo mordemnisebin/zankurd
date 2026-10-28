@@ -482,6 +482,99 @@ class SahneSurfaceCard extends StatelessWidget {
   }
 }
 
+/// STANDART İKİNCİL EYLEM KARTI (2026-10-28 kurul K3): nötr yüzey + renkli
+/// ikon rozeti + başlık + en çok 1 satır alt yazı + ok.
+///
+/// Ekranda turuncu dolu düğme TEK birincil eylemdir; öteki tıklanabilir
+/// kartlar (Günün çarkı, Oda, Sırayla düello, Arkadaşlar, Turnuva, mağaza
+/// satırı …) dolu sarı/mavi/bordo yüzey DEĞİL, bu karttır: renk yalnız
+/// rozettedir ([role] → [SahneTokens.roleFill]; `neutral` rozet nötr kalır).
+/// 48+ dokunma, büyük yazıda sarar. Liste içi satır için
+/// [SahneListRow.icon], tek başına kart için bu bileşen; ikisinin görünümü
+/// aynı aileden (44 rozet, M köşe, ok).
+class SahneActionCard extends StatelessWidget {
+  const SahneActionCard({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.onTap,
+    this.subtitle,
+    this.role = SahneRole.neutral,
+    this.trailing,
+  });
+
+  final IconData icon;
+  final String title;
+
+  /// En çok tek satır (sarar, kesilmez).
+  final String? subtitle;
+  final SahneRole role;
+
+  /// Verilmezse ok (chevron).
+  final Widget? trailing;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final gold = role == SahneRole.gold;
+    // Altın rolün dolu yüzeyi yok; rozet Zêr bandı + koyu ikon (ödül/çark).
+    final fill = gold ? t.zerBand : t.roleFill(role);
+    return SahneSurfaceCard(
+      onTap: onTap,
+      semanticLabel: [title, ?subtitle].join(', '),
+      padding: const EdgeInsets.symmetric(
+        horizontal: SahneSpace.x3,
+        vertical: SahneSpace.x3,
+      ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 48),
+        child: ExcludeSemantics(
+          child: Row(
+            children: [
+              DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: fill ?? t.s3,
+                  shape: SahneShape.m,
+                ),
+                child: SizedBox.square(
+                  dimension: 44,
+                  child: Icon(
+                    icon,
+                    size: 24,
+                    color: fill == null
+                        ? t.tx
+                        : (gold ? t.onZer : SahneVivid.onFill),
+                  ),
+                ),
+              ),
+              const SizedBox(width: SahneSpace.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      title,
+                      style: SahneType.bodyStrong.copyWith(color: t.tx),
+                    ),
+                    if (subtitle != null)
+                      Text(
+                        subtitle!,
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                      ),
+                  ],
+                ),
+              ),
+              trailing ?? Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Mücevher karo — kategori karosu (maketteki "4 · Mücevher karo",
 /// `.sh-cat`).
 ///

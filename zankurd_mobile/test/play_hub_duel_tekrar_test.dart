@@ -86,44 +86,48 @@ void main() {
     );
   });
 
-  testWidgets(
-    'ikincil modlar (çark) sade; büyük kartlar yalnız oyun seçimleri',
-    (tester) async {
-      await _pumpHub(tester, pendingDuel: false);
-      final big = tester.getSize(
-        find.byKey(const ValueKey('play-hub-async-duel')),
-      );
-      final daily = tester.getSize(
-        find.byKey(const ValueKey('play-hub-daily-contest')),
-      );
-      final wheel = tester.getSize(
-        find.byKey(const ValueKey('play-hub-spin-wheel')),
-      );
-      final room = tester.getSize(find.byKey(const ValueKey('play-hub-room')));
-      expect(big.height, greaterThanOrEqualTo(SahneModeTile.minHeight));
-      expect(room.height, greaterThanOrEqualTo(SahneModeTile.minHeight));
-      // 2026-10-24: büyük kartlar yalnız oyun seçimleri (canlı düello,
-      // sırayla düello, oda); günün turu ve çarkı sade tek satır.
+  // 2026-10-28 kurul K3/K5 (eski "çark dolgulu Zêr kart" beklentisi
+  // DEĞİŞTİ): Sırayla düello ve Oda eşit boyutlu iki SAKİN karttır; Günün
+  // turu ve Günün çarkı Arkadaşlar/Turnuva ile aynı standart liste satırı.
+  testWidgets('sırayla düello ve oda eşit; günün turu ve çark standart satır', (
+    tester,
+  ) async {
+    await _pumpHub(tester, pendingDuel: false);
+    final big = tester.getSize(
+      find.byKey(const ValueKey('play-hub-async-duel')),
+    );
+    final room = tester.getSize(find.byKey(const ValueKey('play-hub-room')));
+    expect(big.height, greaterThanOrEqualTo(SahneModeTile.minHeight));
+    expect(room.height, closeTo(big.height, 0.5), reason: 'eşit boy');
+    expect(room.width, closeTo(big.width, 0.5), reason: 'eşit en');
+    for (final key in ['play-hub-daily-contest', 'play-hub-spin-wheel']) {
+      final finder = find.byKey(ValueKey(key));
+      expect(tester.widget(finder), isA<SahneListRow>(), reason: key);
       expect(
-        daily.height,
-        lessThan(SahneModeTile.minHeight * 0.7),
-        reason: 'günün turu tek satırlık sade kart',
+        find.descendant(of: finder, matching: find.byType(FilledButton)),
+        findsNothing,
+        reason: key,
       );
-      expect(
-        wheel.height,
-        lessThan(SahneModeTile.minHeight * 0.7),
-        reason: 'çark tek satırlık sade kart',
-      );
-      // Renk kimliği korunur: çark hâlâ Zêr dolgulu.
-      final fill = tester
-          .widget<SahneTappable>(
-            find.descendant(
-              of: find.byKey(const ValueKey('play-hub-spin-wheel')),
-              matching: find.byType(SahneTappable),
-            ),
-          )
-          .color;
-      expect(fill, isNotNull);
-    },
-  );
+    }
+    // Sakin kart: dolu mod rengi yüzeyi yok (nötr yüzey + renkli rozet).
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('play-hub-room')),
+        matching: find.byKey(const ValueKey('mode-tile-accent')),
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('Yarış merkezinde tek turuncu birincil düğme var', (
+    tester,
+  ) async {
+    await _pumpHub(tester, pendingDuel: false);
+    // Ekranın birincil eylemi "Rakip seç"tir; başka dolgulu birincil düğme
+    // (SahneButton.primary) çizilmez.
+    final primaries = find.byWidgetPredicate(
+      (w) => w is SahneButton && w.isPrimary,
+    );
+    expect(primaries, findsOneWidget);
+  });
 }

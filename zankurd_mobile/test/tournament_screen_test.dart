@@ -92,10 +92,25 @@ void main() {
       // 2026-10-28 görsel kurul: lobinin alt yarısı boştu, oyuncu sunucu
       // puanlamasını ve 24 saat kuralını bilmiyordu.
       expect(find.byKey(const ValueKey('tournament-rules')), findsOneWidget);
+      // K16 (2026-10-28 kurul): kurallar katlanır "Nasıl oynanır?" içinde,
+      // varsayılan kapalı; ödül ilk bakışta AÇIKÇA yazılı.
+      expect(find.text('Nasıl oynanır?'), findsOneWidget);
+      expect(
+        find.text('Her turu 24 saat içinde oyna; oynamazsan maçı kaybedersin.'),
+        findsNothing,
+      );
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('tournament-rules-toggle')),
+      );
+      await tester.tap(find.byKey(const ValueKey('tournament-rules-toggle')));
+      await tester.pumpAndSettle();
       expect(
         find.text('Her turu 24 saat içinde oyna; oynamazsan maçı kaybedersin.'),
         findsOneWidget,
       );
+      expect(find.text('Ödül: 200 jeton'), findsOneWidget);
+      // Durum çipi ("Başlamadı") katıl düğmesiyle çelişmesin diye kalktı.
+      expect(find.text('Başlamadı'), findsNothing);
       expect(find.text('Turnuvaya katıl'), findsOneWidget);
       final startButton = tester.widget(
         find.byKey(const ValueKey('tournament-primary-cta')),

@@ -250,14 +250,21 @@ void main() {
       findsOneWidget,
     );
 
-    // Kullanıcı çıkışsız kalmamalı: durum oturum içinde tazelenebilmeli.
-    final retry = find.text(Tr.of(K.retry, AppLanguage.tr));
-    expect(retry, findsOne);
-    await tester.ensureVisible(retry);
-    await tester.tap(retry);
+    // 2026-10-28 K12 (eski karar geçersiz): "durum tazelenebilmeli" diye
+    // boş durumda "Tekrar dene" vardı; basınca aynı boş durum dönüyordu
+    // (çıkmaz tuşu). Artık "Yakında" durumunda eylem "Geri"dir ve ekrandan
+    // çıkar; "Tekrar dene" yalnız hata durumunda (ağ) kalır.
+    expect(find.text(Tr.of(K.retry, AppLanguage.tr)), findsNothing);
+    final back = find.descendant(
+      of: find.byKey(const ValueKey('paywall-empty-offerings')),
+      matching: find.text(Tr.of(K.back, AppLanguage.tr)),
+    );
+    expect(back, findsOne);
+    expect(find.byType(PaywallScreen), findsOne);
+    await tester.ensureVisible(back);
+    await tester.tap(back);
     await tester.pumpAndSettle();
-
-    expect(attempts, 2);
+    expect(attempts, 1);
   });
 
   test('fiyat yanında yenileme dönemi gösterilir', () {

@@ -210,6 +210,10 @@ void main() {
       300,
     );
     await tester.pumpAndSettle();
+    // K7 (2026-10-28): açıklamalar varsayılan KAPALI; "Cevapları gör" açar.
+    expect(find.text('«av» Türkçede «su» demektir.'), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('result-see-answers')));
+    await tester.pumpAndSettle();
 
     expect(find.text('Turun açıklamaları'), findsOneWidget);
     expect(find.text('«av» Türkçede «su» demektir.'), findsOneWidget);

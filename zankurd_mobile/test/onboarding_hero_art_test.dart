@@ -1,36 +1,27 @@
-/// Onboarding hero SANATININ bekçisi: iki slaytın soru kartı maketi,
-/// maketin bankadaki gerçek soruyla aynı kalması ve hero/başlık arası
-/// boşluk.
+/// Karşılama görselinin ve sadeliğinin bekçisi (2026-10-28 kurul K10).
 ///
-/// 2026-09-29 doğallık: 1. ve 2. grup eski görünüşü (üç eğik kategori
-/// çizimi, VS amblemi) sabitliyordu. Kahraman artık bankadaki gerçek bir
-/// sorunun statik maketi (GORSEL_KARARLAR K1); yarış slaytında VS amblemi
-/// (iki elmas avatar) yerine soru ilerlemesi durur — elmasın iki
-/// anlamından biri (K5). Korunan kurallar aynı: hero "burada ne var"
-/// sorusunu gerçek içerikle yanıtlar, dekoratiftir (ekran okuyucuya
-/// ayrıca duyurulmaz), yarış slaytı öğrenme slaytından ayrışır. Yeni
-/// bekçi: maketteki metin ve şıklar bankadaki soruyla birebir aynıdır.
+/// ## Geçersiz kılınan eski kararlar
 ///
-/// 2026-09-29 Şahnê: iki slayt da sahne kartıdır (`SahneStageCard`): sayfa
-/// 1 öğrenme (Zimrût), sayfa 2 yarış (Boyax sahne degradesi).
+/// * 2026-10-01/09-29 "kahraman yuvası": her slayt koyu, kilim şeritli bir
+///   sahne kartıydı (`SahneEntryHero`). K10: "siyah kutu kalkar"; görsel artık
+///   düz zeminde, rolün ton zeminli yuvarlak rozetidir.
+/// * 2026-09-29 "üst/alt eşit boşluk (`spaceEvenly`)" ve 2026-10-24 "dil
+///   seçici ilk sayfanın tepesinde": ilk görünümde sayfa yarısı boştu. Dil
+///   seçimi kendi (1.) adımıdır ve iki büyük karttır; adım sayısı 2 → 3.
+/// * 2026-10-24 "Sonraki": alt düğme artık "Devam" (son adımda "Başla").
 ///
-/// ## Kusur
+/// ## Korunan kural
 ///
-/// Her iki tanıtım sayfasının hero'su aynı jenerik kalıptaydı: forest
-/// gradyanı + kilim dokusu + BEYAZ DAİREDE TEK İKON (mezuniyet şapkası ya
-/// da şimşek) + köşede Zana. Sahip ekranı "renksiz" buldu: ikon ne
-/// kategoriyle ne de "burada ne var" sorusuyla ilgiliydi. 2026-09-27'deki
-/// üç kategori çizimi yelpazesi bu kez "yapay zekâ yapmış gibi" okundu:
-/// çizim kolajı neyin oynanacağını söylemiyordu. Uzun telefonlarda
-/// (390×844) hero ile başlık arasında da ~100pt boş alan kalıyordu.
+/// Görsel soru DEĞİLDİR: soru cümlesi, şık, harf karosu yok, dokunulmaz,
+/// ekran okuyucuya duyurulmaz (kullanıcılar sahte soru kartındaki şıklara
+/// dokunuyordu, 2026-10-24).
 ///
-/// ## Niçin sessiz kalırdı
+/// ## Yeni kural
 ///
-/// `onboarding_hierarchy_test.dart` yalnız hero YÜKSEKLİĞİNİ (< 300pt)
-/// ölçüyordu; hero'nun İÇİNDE ne olduğuna hiç bakmıyordu. Maket sabit veri
-/// taşıdığı için banka değişse de ekran aynı kalır; bankayla karşılaştıran
-/// bir test olmadan maket sessizce var olmayan bir soruyu gösterirdi. Hero
-/// ile başlık arasındaki boşluk da hiçbir yerde PİKSEL olarak ölçülmüyordu.
+/// Her adım = 1 görsel + 1 başlık + EN ÇOK 2 kısa satır + alt "Devam".
+/// Görsel + başlık + satırlar tek grup, dikeyde ortalanır: grup ile üst
+/// çubuk arası ve grup ile alt düğme arası boşluk birbirine yakındır (ortada
+/// delik yok).
 library;
 
 import 'package:flutter/material.dart';
@@ -39,216 +30,231 @@ import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
-import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
-/// Tek başına `OnboardingScreen`i (yalnız dil sağlayıcısıyla) çizer —
-/// `onboarding_hierarchy_test.dart` ile aynı hafif kurulum.
-Future<void> _pumpOnboarding(WidgetTester tester, {String lang = 'tr'}) async {
+Future<void> _pumpOnboarding(
+  WidgetTester tester, {
+  String lang = 'tr',
+  double textScale = 1,
+}) async {
   await tester.pumpWidget(
     ChangeNotifierProvider(
       create: (_) => LanguageProvider()..setLang(lang),
-      child: MaterialApp(home: OnboardingScreen(onComplete: () {})),
+      child: MaterialApp(
+        home: MediaQuery(
+          data: MediaQueryData(
+            size: tester.view.physicalSize / tester.view.devicePixelRatio,
+            textScaler: TextScaler.linear(textScale),
+          ),
+          child: OnboardingScreen(onComplete: () {}),
+        ),
+      ),
     ),
   );
   await tester.pumpAndSettle();
 }
 
-/// Kahraman yuvası ([SahneEntryHero]) bir sahne kartı sarar; rol ve kilim
-/// kartın kendi alanlarıdır.
-SahneStageCard _card(WidgetTester tester, Finder hero) =>
-    tester.widget<SahneStageCard>(
-      find.descendant(of: hero, matching: find.byType(SahneStageCard)),
-    );
-
-/// Kahramanın içindeki tek görsel logodur (K1: kategori çizimi kolajı
-/// kalktı). 2026-10-01'den beri logo kartın içinde durur (giriş, kayıt ve ad
-/// ekranındaki kartlar gibi); bu yüzden "hiç `Image` yok" yerine "her `Image`
-/// bir `AppLogo`nun içinde" denir.
-void _expectOnlyLogoImages(WidgetTester tester, Finder hero) {
-  final images = find.descendant(of: hero, matching: find.byType(Image));
-  final inLogo = find.descendant(
-    of: find.descendant(of: hero, matching: find.byType(AppLogo)),
-    matching: find.byType(Image),
-  );
-  expect(
-    images.evaluate().length,
-    inLogo.evaluate().length,
-    reason: 'kategori çizimi kolajı kalktı (K1); yalnız logo görseli kalır',
-  );
+Future<void> _next(WidgetTester tester, {String label = 'Devam'}) async {
+  await tester.tap(find.text(label));
+  await tester.pumpAndSettle();
 }
 
 void main() {
-  final hero = find.byKey(const ValueKey('onboarding-hero-panel'));
+  final art = find.byKey(const ValueKey('onboarding-scene-art'));
 
-  group('1) Kahraman dokunulmaz bir sahne çizimidir, soru değil', () {
-    testWidgets('sayfa 1: soru cümlesi, şık, harf karosu ve dokunma yok', (
+  void phone(WidgetTester tester, Size size) {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = size;
+    addTearDown(tester.view.reset);
+  }
+
+  group('1) Görsel dokunulmaz bir çizimdir, soru değil', () {
+    testWidgets('öğren adımı: soru, şık, harf karosu, dokunma yok', (
       tester,
     ) async {
-      await tester.binding.setSurfaceSize(const Size(390, 844));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-
+      phone(tester, const Size(390, 844));
       await _pumpOnboarding(tester);
+      await _next(tester);
 
-      // Eski maket: '"dar" Türkçede ne demektir?' ve dört şık. Kullanıcılar
-      // onu gerçek soru sanıp şıklara dokunuyordu.
+      expect(art, findsOneWidget);
       expect(
-        find.descendant(of: hero, matching: find.textContaining('?')),
+        find.descendant(of: art, matching: find.byIcon(AppIcons.graduationCap)),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(of: art, matching: find.textContaining('?')),
         findsNothing,
       );
       for (final letter in ['A', 'B', 'C', 'D']) {
         expect(
-          find.descendant(of: hero, matching: find.text(letter)),
+          find.descendant(of: art, matching: find.text(letter)),
           findsNothing,
         );
       }
       expect(
-        find.descendant(of: hero, matching: find.byType(InkWell)),
+        find.descendant(of: art, matching: find.byType(InkWell)),
         findsNothing,
       );
       expect(
-        find.descendant(of: hero, matching: find.byType(GestureDetector)),
+        find.descendant(of: art, matching: find.byType(GestureDetector)),
         findsNothing,
       );
       expect(
-        find.descendant(
-          of: hero,
-          matching: find.byKey(const ValueKey('onboarding-scene-art')),
-        ),
-        findsOneWidget,
-      );
-      expect(
-        find.descendant(
-          of: hero,
-          matching: find.byIcon(AppIcons.graduationCap),
-        ),
-        findsOneWidget,
-      );
-      _expectOnlyLogoImages(tester, hero);
-      expect(_card(tester, hero).kilim, isTrue);
-    });
-
-    testWidgets('sahne çizimi ekran okuyucuya duyurulmaz', (tester) async {
-      await tester.binding.setSurfaceSize(const Size(390, 844));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-      final semantics = tester.ensureSemantics();
-
-      await _pumpOnboarding(tester);
-
-      expect(
-        find.ancestor(
-          of: find.byKey(const ValueKey('onboarding-scene-art')),
-          matching: find.byType(ExcludeSemantics),
-        ),
+        find.ancestor(of: art, matching: find.byType(ExcludeSemantics)),
         findsWidgets,
+        reason: 'görsel ekran okuyucuya duyurulmaz',
       );
-
-      semantics.dispose();
     });
-  });
 
-  group('2) Sayfa 2: yarışma sahnesi (Boyax sahne kartı)', () {
-    testWidgets('öğrenme slaytı Zimrût, yarış slaytı Boyax + kılıç ve kupa', (
+    testWidgets('siyah kutu yok: kahraman kartı (SahneStageCard) çizilmez', (
       tester,
     ) async {
-      await tester.binding.setSurfaceSize(const Size(390, 844));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-
+      phone(tester, const Size(390, 844));
       await _pumpOnboarding(tester);
-      expect(_card(tester, hero).role, SahneRole.learn);
+      for (var i = 0; i < 3; i++) {
+        expect(
+          find.byType(SahneStageCard),
+          findsNothing,
+          reason: 'adım ${i + 1}',
+        );
+        expect(find.byType(SahneEntryHero), findsNothing);
+        if (i < 2) await _next(tester);
+      }
+    });
 
-      // "Sonraki" ilk dokunuşta etkindir: yaş kutusu kalktı.
-      await tester.tap(find.text('Sonraki'));
-      await tester.pumpAndSettle();
-
-      expect(_card(tester, hero).role, SahneRole.race);
+    testWidgets('yarış adımı: kılıçlar + kupa, maskot yok', (tester) async {
+      phone(tester, const Size(390, 844));
+      await _pumpOnboarding(tester);
+      await _next(tester);
+      await _next(tester);
       expect(
-        find.descendant(of: hero, matching: find.byIcon(AppIcons.swords)),
+        find.descendant(of: art, matching: find.byIcon(AppIcons.swords)),
         findsOneWidget,
       );
       expect(
-        find.descendant(of: hero, matching: find.byIcon(AppIcons.trophy)),
+        find.descendant(of: art, matching: find.byIcon(AppIcons.trophy)),
         findsOneWidget,
       );
-      expect(
-        find.descendant(of: hero, matching: find.byType(SahneDiamondRow)),
-        findsNothing,
-      );
-      expect(
-        find.descendant(of: hero, matching: find.byType(InkWell)),
-        findsNothing,
-      );
-      _expectOnlyLogoImages(tester, hero);
-      expect(find.byType(RojMascot), findsNothing, reason: 'maskot yok');
+      expect(find.byType(RojMascot), findsNothing);
+      expect(find.text('Başla'), findsOneWidget, reason: 'son adımda "Başla"');
     });
   });
 
-  group('3) Hero ile başlık arasındaki boşluk', () {
+  group('2) Her adım: 1 başlık + en çok 2 kısa satır', () {
+    for (final lang in ['tr', 'ku']) {
+      testWidgets('$lang: yazılar sınırı aşmaz, madde/nokta listesi yok', (
+        tester,
+      ) async {
+        phone(tester, const Size(390, 844));
+        await _pumpOnboarding(tester, lang: lang);
+        for (var i = 0; i < 3; i++) {
+          final scroller = find.byKey(
+            const ValueKey('onboarding-text-scrollbar'),
+          );
+          // Sayfadaki Text'ler: 1 başlık (+ dil adımında kart adları) + ≤ 2 satır.
+          final texts = find
+              .descendant(of: scroller, matching: find.byType(Text))
+              .evaluate()
+              .map((e) => (e.widget as Text).data ?? '')
+              .where((s) => s.isNotEmpty)
+              .toList();
+          final cardLabels = {'Kurmancî', 'Türkçe'};
+          final body = texts.where((s) => !cardLabels.contains(s)).toList();
+          expect(
+            body.length,
+            lessThanOrEqualTo(3),
+            reason: 'adım ${i + 1}: başlık + ≤ 2 satır, bulunan: $body',
+          );
+          if (i < 2) {
+            await _next(tester, label: lang == 'ku' ? 'Bidomîne' : 'Devam');
+          }
+        }
+      });
+    }
+
+    testWidgets('1. adım iki büyük dil kartıdır (≥ 96 yüksek, yan yana)', (
+      tester,
+    ) async {
+      phone(tester, const Size(390, 844));
+      await _pumpOnboarding(tester);
+      final ku = tester.getRect(
+        find.byKey(const ValueKey('onboarding-language-ku')),
+      );
+      final tr = tester.getRect(
+        find.byKey(const ValueKey('onboarding-language-tr')),
+      );
+      expect(ku.height, greaterThanOrEqualTo(96));
+      expect(tr.height, greaterThanOrEqualTo(96));
+      expect(ku.right, lessThan(tr.left), reason: 'Kurmancî ÖNCE, yan yana');
+      expect(ku.width, greaterThanOrEqualTo(120));
+    });
+  });
+
+  testWidgets('büyük yazıda dil kartları alt alta (kelime kırılmaz)', (
+    tester,
+  ) async {
+    phone(tester, const Size(320, 568));
+    await _pumpOnboarding(tester, textScale: 2);
+    final ku = tester.getRect(
+      find.byKey(const ValueKey('onboarding-language-ku')),
+    );
+    final tr = tester.getRect(
+      find.byKey(const ValueKey('onboarding-language-tr')),
+    );
+    expect(tr.top, greaterThanOrEqualTo(ku.bottom), reason: 'alt alta');
+    expect(ku.width, greaterThan(250));
+    expect(tester.takeException(), isNull);
+  });
+
+  group('3) Boşluk', () {
     testWidgets(
-      '390×844: hero altı ile başlık üstü arasında ≤ 64pt (eskiden ~100pt)',
+      '390×844: görsel+metin grubu dikeyde dengeli (üst/alt boşluk farkı ≤ 120)',
       (tester) async {
-        await tester.binding.setSurfaceSize(const Size(390, 844));
-        addTearDown(() => tester.binding.setSurfaceSize(null));
-
+        phone(tester, const Size(390, 844));
         await _pumpOnboarding(tester);
-
-        final heroBottom = tester.getBottomLeft(hero).dy;
-        final titleTop = tester.getTopLeft(find.text('Öğren')).dy;
-
+        await _next(tester);
+        final area = tester.getRect(
+          find.byKey(const ValueKey('onboarding-text-scrollbar')),
+        );
+        final top = tester.getTopLeft(art).dy;
+        final bottom = tester
+            .getBottomLeft(
+              find.text('Kısa sorularla kelime öğren, kültürü tanı.'),
+            )
+            .dy;
+        // Grup alanın ortasına oturur; sığdırıcı ek sözcüğe ihtiyaç yok.
+        final above = top - area.top;
+        final below = area.bottom - bottom - 24; // son satır (marka sözü) payı
+        expect((above - below).abs(), lessThanOrEqualTo(120));
         expect(
-          titleTop - heroBottom,
-          lessThanOrEqualTo(64),
-          reason:
-              'kahraman ile metin tek grup olarak ortalanır; aralarında '
-              'yalnız sabit boşluk kalır.',
+          above,
+          lessThanOrEqualTo(220),
+          reason: 'üstte büyük boş alan yok',
         );
       },
     );
   });
 
-  group('4) Küçük ekran ve büyük yazıda taşma yok', () {
-    testWidgets('375×667 (iPhone SE, normal yazı): sayfa 1 ve 2 taşmaz', (
-      tester,
-    ) async {
-      await tester.binding.setSurfaceSize(const Size(375, 667));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-      tester.takeException();
-
-      await _pumpOnboarding(tester);
-      expect(tester.takeException(), isNull);
-
-      await tester.tap(find.text('Sonraki'));
-      await tester.pumpAndSettle();
-      expect(tester.takeException(), isNull);
-    });
-
-    testWidgets('%200 yazı: sayfa 1 ve 2 taşmaz', (tester) async {
-      const size = Size(390, 844);
-      await tester.binding.setSurfaceSize(size);
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-      tester.takeException();
-
-      await tester.pumpWidget(
-        ChangeNotifierProvider(
-          create: (_) => LanguageProvider()..setLang('tr'),
-          child: MaterialApp(
-            home: MediaQuery(
-              data: const MediaQueryData(
-                size: size,
-                textScaler: TextScaler.linear(2),
-              ),
-              child: OnboardingScreen(onComplete: () {}),
-            ),
-          ),
-        ),
+  group('4) Taşma yok', () {
+    for (final (size, scale) in [
+      (const Size(375, 667), 1.0),
+      (const Size(320, 568), 1.0),
+      (const Size(320, 568), 2.0),
+      (const Size(390, 844), 2.0),
+    ]) {
+      testWidgets(
+        '${size.width.toInt()}x${size.height.toInt()} yazı $scale: 3 adım taşmaz',
+        (tester) async {
+          phone(tester, size);
+          await _pumpOnboarding(tester, textScale: scale);
+          expect(tester.takeException(), isNull);
+          await _next(tester);
+          expect(tester.takeException(), isNull);
+          await _next(tester);
+          expect(tester.takeException(), isNull);
+        },
       );
-      await tester.pumpAndSettle();
-      expect(tester.takeException(), isNull);
-
-      await tester.tap(find.text('Sonraki'));
-      await tester.pumpAndSettle();
-      expect(tester.takeException(), isNull);
-    });
+    }
   });
 }

@@ -276,24 +276,32 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Ayarlar: iki dilli etiketler anahtarı kapatır', (tester) async {
-    final provider = BilingualLabelsProvider();
-    await _size(tester, const Size(390, 3000));
-    await tester.pumpWidget(
-      MultiProvider(
-        providers: [ChangeNotifierProvider.value(value: provider)],
-        child: testShell(
-          child: SettingsScreen(repository: freshMockRepository()),
+  testWidgets(
+    'Ayarlar: iki dilli etiketler anahtarı açar (varsayılan kapalı)',
+    (tester) async {
+      final provider = BilingualLabelsProvider();
+      expect(provider.enabled, isFalse, reason: 'K14: varsayılan kapalı');
+      await _size(tester, const Size(390, 3000));
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [ChangeNotifierProvider.value(value: provider)],
+          child: testShell(
+            child: SettingsScreen(repository: freshMockRepository()),
+          ),
         ),
-      ),
-    );
-    await tester.pumpAndSettle();
-    final toggle = find.byKey(const ValueKey('bilingual-labels-switch'));
-    expect(toggle, findsOneWidget);
-    expect(find.text(Tr.of(K.bilingualLabels, AppLanguage.tr)), findsOneWidget);
-    await tester.ensureVisible(toggle);
-    await tester.tap(toggle);
-    await tester.pumpAndSettle();
-    expect(provider.enabled, isFalse);
-  });
+      );
+      await tester.pumpAndSettle();
+      final toggle = find.byKey(const ValueKey('bilingual-labels-switch'));
+      expect(toggle, findsOneWidget);
+      expect(
+        find.text(Tr.of(K.bilingualLabels, AppLanguage.tr)),
+        findsOneWidget,
+      );
+      await tester.ensureVisible(toggle);
+      await tester.tap(toggle);
+      await tester.pumpAndSettle();
+      // K14 (2026-10-28): varsayılan KAPALI; anahtar açar.
+      expect(provider.enabled, isTrue);
+    },
+  );
 }

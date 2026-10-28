@@ -270,6 +270,7 @@ class _PodiumColumn extends StatelessWidget {
       key: ValueKey('leaderboard-rank-row-${entry.rank}'),
       container: true,
       label: label,
+      hint: onReport == null ? null : Tr.forKu(K.reportTapHint, isKu),
       button: onReport != null,
       onTap: onReport,
       onLongPress: onReport,

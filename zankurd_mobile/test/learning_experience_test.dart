@@ -46,13 +46,17 @@ void main() {
     expect(body, contains('enableTimer: false'));
   });
 
-  test('profil yanlışları da öğrenme pratiği olarak başlatılır', () {
+  test('yanlış tekrarı öğrenme pratiği olarak başlatılır', () {
+    // 2026-10-28, kurul K9: profildeki "Yanlışlarım" satırı (ve
+    // `_startMistakePractice`) kalktı; yanlış tekrarı Öğren'deki Tekrar
+    // aşamasına (`tekrarQuestionRoute`) toplandı. Kural aynı: yanlış tekrarı
+    // yarışma deneyimine ve süre baskısına düşmemeli.
     final source = File(
-      'lib/src/screens/profile_screen.dart',
+      'lib/src/screens/tekrar_screen.dart',
     ).readAsStringSync();
-    final start = source.indexOf('Future<void> _startMistakePractice()');
-    expect(start, greaterThan(-1), reason: '_startMistakePractice bulunamadı');
-    final nextMethod = source.indexOf('\n  Future<void> ', start + 1);
+    final start = source.indexOf('Route<void> tekrarQuestionRoute(');
+    expect(start, greaterThan(-1), reason: 'tekrarQuestionRoute bulunamadı');
+    final nextMethod = source.indexOf('\nclass ', start + 1);
     final body = source.substring(
       start,
       nextMethod == -1 ? source.length : nextMethod,
@@ -62,7 +66,7 @@ void main() {
     expect(
       body,
       contains('experience: QuizExperience.learning'),
-      reason: 'Profil yanlışları yarışma deneyimine düşmemeli',
+      reason: 'Yanlış tekrarı yarışma deneyimine düşmemeli',
     );
     expect(
       body,

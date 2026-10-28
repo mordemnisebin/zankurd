@@ -26,7 +26,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  testWidgets('ad 16/600, kartta açıklama yok, fiyat 14/600, eksik 13/500', (
+  testWidgets('ad 16/600, kartta açıklama yok, fiyat 14/600, eksik satırı yok', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 1400));
@@ -34,7 +34,9 @@ void main() {
     await tester.pumpWidget(testShell(child: ShopScreen(repository: _Repo())));
     await tester.pumpAndSettle();
 
-    final card = find.byKey(const ValueKey('shop-hero-surface'));
+    final card = find.byKey(
+      const ValueKey('shop-item-surface-profile_badge_vip'),
+    );
     final name = tester.widget<Text>(
       find.descendant(of: card, matching: find.text('VIP rozeti')),
     );
@@ -56,11 +58,8 @@ void main() {
     expect(price.style?.fontSize, 14);
     expect(price.style?.fontWeight, FontWeight.w600);
 
-    final note = tester.widget<Text>(
-      find.descendant(of: card, matching: find.text('420 jeton eksik')),
-    );
-    expect(note.style?.fontSize, 13);
-    expect(note.style?.fontWeight, FontWeight.w500);
+    // 2026-10-28 K11: eksik söz satırı kalktı (bkz. magaza_eksik_jeton_sol_sutun_test).
+    expect(find.textContaining('jeton eksik'), findsNothing);
 
     // Kilit ↔ jeton glifi ↔ fiyat: 6 px.
     final shortCol = find.byKey(const ValueKey('shop-short-profile_badge_vip'));

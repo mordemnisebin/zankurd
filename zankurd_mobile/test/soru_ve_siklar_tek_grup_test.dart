@@ -19,7 +19,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
-import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -54,18 +53,20 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
   }
 
-  testWidgets('soru şıkların hemen üstünde, boşluk grubun üstünde', (
+  testWidgets('soru kartı şıkların hemen üstünde, soru ÜSTTEN başlar', (
     tester,
   ) async {
     await pump(tester, const Size(390, 844), 1.0);
-    final prompt = tester.getRect(find.byType(QuizQuestionPrompt));
+    final card = tester.getRect(find.byKey(const ValueKey('quiz-prompt-card')));
     final area = tester.getRect(
-      find.byKey(const ValueKey('quiz-answers-anchored')),
+      find.byKey(const ValueKey('quiz-answer-content')),
     );
-    final gap = _gapToNextBlock(tester, prompt, area);
-    expect(gap, inInclusiveRange(24, 40), reason: 'soru-şık arası $gap');
-    // Boşluk soru ÜSTÜNDE: soru, grup alanının üstüne yapışık değil.
-    expect(prompt.top - area.top, greaterThan(40));
+    final gap = _gapToNextBlock(tester, card, area);
+    // K6 (2026-10-28) GEÇERSİZ KILDI: eski 24-40 aralığı ve "boşluk grubun
+    // üstünde" (anchorHeight) kararı. Yeni sözleşme: soru kartı alanın
+    // tepesinde, kart ile ilk şık arası 16.
+    expect(gap, inInclusiveRange(12, 24), reason: 'soru-şık arası $gap');
+    expect(card.top - area.top, lessThan(8));
     expect(SahneType.question.fontSize, 26);
   });
 
@@ -81,7 +82,7 @@ void main() {
 /// olan boşluk: prompt altı ile alandaki ilk dokunulur çubuk üstü arası.
 double _gapToNextBlock(WidgetTester tester, Rect prompt, Rect area) {
   final bars = find.descendant(
-    of: find.byKey(const ValueKey('quiz-answers-anchored')),
+    of: find.byKey(const ValueKey('quiz-answer-content')),
     matching: find.byType(InkWell),
   );
   var top = double.infinity;

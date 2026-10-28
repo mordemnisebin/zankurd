@@ -15,7 +15,6 @@ import '../utils/word_csv.dart';
 import '../widgets/app_state.dart';
 import '../widgets/lexicon_lookup.dart';
 import '../widgets/lexicon_speak_button.dart';
-import '../widgets/pronunciation_sheet.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/todays_review_card.dart';
 import '../widgets/word_save_button.dart';
@@ -299,9 +298,17 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
     final entry = LearnerLexicon.byId(word.entryId)!;
     final due = word.isDue(DateTime.now());
     final box = context.t(K.wordsBox, {'box': '${word.box}'});
+    // 2026-10-28 kurul K13: satır = sözcük + anlam + ses + kaydet. Mikrofon
+    // (telaffuz denemesi) satırdan kalktı: kelime ayrıntısına (balon) ve
+    // çalışmaya taşındı; her satırda üç ikon sırası listeyi kalabalık
+    // yapıyordu. "Kutu n/5" yazısı 5 noktalık küçük ustalık göstergesi oldu
+    // (ekran okuyucu yine "Kutu n/5" der); "Hazır" rozeti yeşil "Tekrar
+    // zamanı" çipi oldu.
     return SahneSurfaceCard(
       key: ValueKey('my-word-${entry.id}'),
-      semanticLabel: '${entry.termKu}. ${entry.meaningTr}. $box.',
+      semanticLabel:
+          '${entry.termKu}. ${entry.meaningTr}. $box.'
+          '${due ? ' ${context.t(K.wordsDueBadge)}.' : ''}',
       onTap: () => showLexiconEntrySheet(context, entry),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -326,13 +333,11 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
                     runSpacing: SahneSpace.x1,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      Text(
-                        box,
-                        style: SahneType.captionStrong.copyWith(
-                          color: t.learnTx,
-                        ),
+                      _MasteryDots(
+                        key: ValueKey('my-word-mastery-${entry.id}'),
+                        box: word.box,
                       ),
-                      if (due) SahneBadge(label: context.t(K.wordsDueBadge)),
+                      if (due) _DueChip(label: context.t(K.wordsDueBadge)),
                     ],
                   ),
                 ],
@@ -340,9 +345,71 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
             ),
           ),
           LexiconSpeakButton(text: entry.termKu),
-          PronunciationButton(text: entry.termKu),
           WordSaveButton(entryId: entry.id, store: store),
         ],
+      ),
+    );
+  }
+}
+
+/// Leitner kutusunu 5 küçük noktayla gösterir: dolu nokta sayısı = kutu.
+/// Renge ek olarak doluluk (şekil) söyler; sayı ekran okuyucuda kartın
+/// etiketinde ("Kutu n/5") yazılıdır.
+class _MasteryDots extends StatelessWidget {
+  const _MasteryDots({super.key, required this.box});
+
+  final int box;
+
+  static const int total = 5;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (var i = 0; i < total; i++) ...[
+          if (i > 0) const SizedBox(width: 4),
+          DecoratedBox(
+            key: ValueKey('mastery-dot-$i-${i < box ? 'on' : 'off'}'),
+            decoration: ShapeDecoration(
+              shape: CircleBorder(
+                side: BorderSide(
+                  color: i < box ? t.learnTx : t.tx3,
+                  width: 1.5,
+                ),
+              ),
+              color: i < box ? t.learnTx : Colors.transparent,
+            ),
+            child: const SizedBox.square(dimension: 9),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// Küçük yeşil "Tekrar zamanı" çipi (vadesi gelmiş kelime).
+class _DueChip extends StatelessWidget {
+  const _DueChip({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return DecoratedBox(
+      key: const ValueKey('my-word-due-chip'),
+      decoration: ShapeDecoration(color: t.okTint, shape: SahneShape.s),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: SahneSpace.x2,
+          vertical: 2,
+        ),
+        child: Text(
+          label,
+          style: SahneType.captionStrong.copyWith(color: t.okTx),
+        ),
       ),
     );
   }

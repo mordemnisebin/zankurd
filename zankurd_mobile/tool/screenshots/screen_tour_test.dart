@@ -517,6 +517,14 @@ class _TourRepository extends TestMockZanKurdRepository {
 
 /// Belirli bir jeton bakiyesiyle açılan tur deposu: "jeton yetmiyor"
 /// karelerinin (mağaza, oda kurma, paywall değil) bakiyesi.
+/// Mağazada bakiyenin yetmediği ilk ürünün kilitli fiyat düğmesi. 2026-10-28
+/// (K11): hero yüzeyi ve ayrı "jeton eksik" satırı kalktı; yetmeyen ürün
+/// nötr/pasif fiyat gösterir ve dokunuş kartın pencere eylemine düşer.
+Finder _shortShopItem() => find.byWidgetPredicate((w) {
+  final key = w.key;
+  return key is ValueKey<String> && key.value.startsWith('shop-short-');
+}).first;
+
 class _BalanceTourRepository extends _TourRepository {
   _BalanceTourRepository(this.coins);
   final int coins;
@@ -1664,23 +1672,46 @@ void main() {
     await _shoot(t, '73b_onboarding_ku');
   }, tags: ['preview']);
 
-  // İkinci tanıtım sayfası (yarış) 2026-09-27'de sahne fonu kazandı; tur
-  // yalnız ilk sayfayı basıyordu, ikinci sayfa hiç görülmeden gidiyordu.
-  testWidgets('73c karşılama, yarış sayfası', (t) async {
+  // 2026-10-28 K10: karşılama üç adım (dil, öğren, yarış). Tur her adımı basar.
+  testWidgets('73c karşılama, öğren adımı', (t) async {
     await _pump(t, OnboardingScreen(onComplete: () {}));
-    await t.tap(find.text('Sonraki'));
-    // Sayfa geçişi bitince sayfa göstergesi kendi 240 ms'lik animasyonunu
-    // ANCAK bir sonraki karede başlatır; üçüncü kare olmadan görüntü eski
-    // göstergeyi basıyordu.
+    await t.tap(find.text('Devam'));
     for (var i = 0; i < 3; i++) {
       await t.pump(const Duration(milliseconds: 600));
     }
-    await _shoot(t, '73c_onboarding_compete');
+    await _shoot(t, '73c_onboarding_learn');
+  }, tags: ['preview']);
+
+  testWidgets('73d karşılama, yarış adımı', (t) async {
+    await _pump(t, OnboardingScreen(onComplete: () {}));
+    for (var s = 0; s < 2; s++) {
+      await t.tap(find.text('Devam'));
+      for (var i = 0; i < 3; i++) {
+        await t.pump(const Duration(milliseconds: 600));
+      }
+    }
+    await _shoot(t, '73d_onboarding_compete');
   }, tags: ['preview']);
 
   testWidgets('74 giriş', (t) async {
     await _pump(t, const SignInScreen());
     await _shoot(t, '74_sign_in');
+  }, tags: ['preview']);
+
+  // K10: ilk görünümde yalnız "Hemen oyna" + "Hesabım var"; form ve sosyal
+  // girişler "Hesabım var"dan sonra.
+  testWidgets('74b giriş, form açık', (t) async {
+    await _pump(t, const SignInScreen());
+    await t.tap(find.byKey(const ValueKey('sign-in-have-account')));
+    for (var i = 0; i < 3; i++) {
+      await t.pump(const Duration(milliseconds: 400));
+    }
+    await _shoot(t, '74b_sign_in_form');
+  }, tags: ['preview']);
+
+  testWidgets('74c giriş (Kurmancî)', (t) async {
+    await _pump(t, const SignInScreen(), ku: true);
+    await _shoot(t, '74c_sign_in_ku');
   }, tags: ['preview']);
 
   testWidgets('75 giriş (karanlık)', (t) async {
@@ -2636,7 +2667,7 @@ void main() {
 
   testWidgets('107 mağaza — yetmeyen ürünün penceresi', (t) async {
     await _pump(t, ShopScreen(repository: _BalanceTourRepository(200)));
-    await t.tap(find.byKey(const ValueKey('shop-hero-surface')));
+    await t.tap(_shortShopItem());
     await t.pump();
     await t.pump(const Duration(milliseconds: 600));
     await _shoot(t, '107_shop_short_dialog');
@@ -2651,7 +2682,7 @@ void main() {
         dark: true,
         ku: true,
       );
-      await t.tap(find.byKey(const ValueKey('shop-hero-surface')));
+      await t.tap(_shortShopItem());
       await t.pump();
       await t.pump(const Duration(milliseconds: 600));
       await _shoot(t, '108_shop_short_dialog_dark_ku');

@@ -13,6 +13,9 @@ import 'package:zankurd_mobile/src/data/word_list_store.dart';
 import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
 import 'package:zankurd_mobile/src/screens/my_words_screen.dart';
 import 'package:zankurd_mobile/src/screens/word_drill_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/widgets/lexicon_speak_button.dart';
+import 'package:zankurd_mobile/src/widgets/pronunciation_sheet.dart';
 import 'package:zankurd_mobile/src/widgets/word_save_button.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -274,8 +277,84 @@ void main() {
       expect(find.byKey(const ValueKey('todays-review-card')), findsOneWidget);
       expect(find.text('Bugünkü tekrar'), findsNothing);
       expect(find.byKey(const ValueKey('my-words-review-start')), findsNothing);
-      expect(find.text('Kutu 2/5'), findsOneWidget);
-      expect(find.text('Kutu 1/5'), findsNWidgets(2));
+      // 2026-10-28 K13 (eski karar geçersiz): "Kutu n/5" yazısı kalktı; kutu
+      // 5 küçük noktayla gösterilir (dolu nokta sayısı = kutu), sayı yalnız
+      // ekran okuyucu etiketinde yaşar.
+      expect(find.textContaining(RegExp(r'Kutu \d/5')), findsNothing);
+      int filled(String id) => find
+          .descendant(
+            of: find.byKey(ValueKey('my-word-mastery-$id')),
+            matching: find.byWidgetPredicate(
+              (w) =>
+                  w.key is ValueKey<String> &&
+                  (w.key! as ValueKey<String>).value.endsWith('-on'),
+            ),
+          )
+          .evaluate()
+          .length;
+      expect(filled('sevbas'), 2);
+      expect(filled('rojbas'), 1);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('my-word-mastery-rojbas')),
+          matching: find.byWidgetPredicate(
+            (w) =>
+                w.key is ValueKey<String> &&
+                (w.key! as ValueKey<String>).value.startsWith('mastery-dot-'),
+          ),
+        ),
+        findsNWidgets(5),
+      );
+    });
+
+    // 2026-10-28 K13: satırda yalnız ses + kaydet; mikrofon kelime ayrıntısında
+    // (balon) ve çalışmada. Vadesi gelen kelime küçük yeşil "Tekrar zamanı"
+    // çipi taşır ("Hazır" kalktı).
+    testWidgets('satırda mikrofon yok; vade çipi "Tekrar zamanı"', (
+      tester,
+    ) async {
+      final semantics = tester.ensureSemantics();
+      final store = await seededStore(['rojbas', 'evarbas']);
+      await pumpAt(
+        tester,
+        MyWordsScreen(repository: MockZanKurdRepository(), store: store),
+      );
+      final row = find.byKey(const ValueKey('my-word-rojbas'));
+      expect(
+        find.descendant(of: row, matching: find.byType(PronunciationButton)),
+        findsNothing,
+      );
+      expect(
+        find.descendant(of: row, matching: find.byIcon(AppIcons.microphone)),
+        findsNothing,
+      );
+      expect(
+        find.descendant(of: row, matching: find.byType(LexiconSpeakButton)),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(of: row, matching: find.byType(WordSaveButton)),
+        findsOneWidget,
+      );
+      expect(find.text('Hazır'), findsNothing);
+      expect(
+        find.descendant(of: row, matching: find.text('Tekrar zamanı')),
+        findsOneWidget,
+      );
+      // Kutu bilgisi kaybolmadı: kartın ekran okuyucu etiketinde.
+      expect(find.bySemanticsLabel(RegExp(r'Kutu 1/5')), findsWidgets);
+
+      // Mikrofon artık ayrıntı balonunda.
+      await tester.tap(row);
+      await tester.pumpAndSettle();
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('lexicon-entry-sheet')),
+          matching: find.byType(PronunciationButton),
+        ),
+        findsOneWidget,
+      );
+      semantics.dispose();
     });
 
     testWidgets('kelime çıkarılınca satır kaybolur ve sayı düşer', (

@@ -517,37 +517,50 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     // ikincil düğme. Kodun biçimi katılma sayfasındaki alan ve doğrulama
     // mesajında yazılı. Kilitliyken açıklama satırı DEĞİŞMEZ (2026-09-30: sunucu
     // durumunu üstteki şerit söyler).
+    // 2026-10-28 kurul K3/K5: Günün turu ve Günün çarkı dolu bordo/sarı
+    // kutu DEĞİL, Arkadaşlar/Turnuva ile aynı standart liste satırıdır;
+    // renk yalnız ikon rozetinde. Ekranın tek turuncusu "Rakip seç"tir.
     final dailyContest = _lockedTap(
       locked,
-      SahneModeTile(
+      SahneListRow.icon(
         key: const ValueKey('play-hub-daily-contest'),
         icon: AppIcons.calendarDays,
         role: SahneRole.race,
-        // Hızlı düello ve sırayla düelloyla aynı kırmızı alt alta karışıyordu.
-        deep: true,
-        // İkincil satır (2026-10-24): üç büyük kart artık yalnız oyun
-        // seçimleridir; günün turu çarkın yanında sade kart.
-        compact: true,
         title: context.t(K.dailyContest),
-        loading: _dailyLoading,
+        subtitle: context.t(K.tenQuestions),
+        trailing: _dailyLoading
+            ? const SizedBox.square(
+                dimension: 18,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : null,
+        chevron: !locked && !_dailyLoading,
+        enabled: !locked,
         onTap: locked || _dailyLoading ? null : _openDailyQuiz,
         semanticLabel:
             '${context.t(K.dailyContest)}. ${context.t(K.tenQuestions)}',
       ),
     );
 
-    // Çark: günlük jeton kazanma yeri. Eskiden yalnız mağazadan ve "jeton
-    // yetmedi" iletisinden bulunuyordu; Yarış sekmesinde tek dokunuşta durur.
-    final wheelTile = SahneModeTile(
+    // Çark: günlük jeton kazanma yeri; tek dokunuşta durur.
+    final wheelTile = SahneListRow.icon(
       key: const ValueKey('play-hub-spin-wheel'),
       icon: AppIcons.dice,
       role: SahneRole.gold,
-      // İkincil, günde bir kez: sade tek satırlık kart (rengi korunur).
-      compact: true,
       title: context.t(K.wheelTitle),
-      semanticLabel:
-          '${context.t(K.wheelTitle)}. ${context.t(K.wheelOncePerDay)}',
-      badge: _spinReady ? context.t(K.wheelReadyBadge) : null,
+      subtitle: context.t(K.wheelOncePerDay),
+      trailing: _spinReady
+          ? SahneBadge(
+              label: context.t(K.wheelReadyBadge),
+              tone: SahneBadgeTone.gold,
+            )
+          : null,
+      chevron: !_spinReady,
+      semanticLabel: [
+        context.t(K.wheelTitle),
+        context.t(K.wheelOncePerDay),
+        if (_spinReady) context.t(K.wheelReadyBadge),
+      ].join('. '),
       onTap: _openSpinWheel,
     );
 
@@ -615,6 +628,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 locked,
                 SahneModeTile(
                   key: const ValueKey('play-hub-async-duel'),
+                  calm: true,
                   icon: AppIcons.hourglass,
                   role: SahneRole.race,
                   title: context.t(K.asyncDuel),
@@ -634,6 +648,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               locked,
               SahneModeTile(
                 key: const ValueKey('play-hub-room'),
+                calm: true,
                 icon: AppIcons.peopleGroup,
                 // Oda çok oyunculu sosyal moddur: Nîl.
                 role: SahneRole.social,
@@ -649,16 +664,15 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             ),
           ],
         ),
-        // İkincil modlar (günün turu, günün çarkı): sade tek satırlık
-        // kartlar; renk kimliği korunur.
+        // İkincil girişler tek standart liste grubunda: günün turu, çark,
+        // arkadaşlar, turnuva (K5).
         const SizedBox(height: SahneSpace.x3),
-        SahneModeGrid(children: [dailyContest, wheelTile]),
-        const SizedBox(height: SahneSpace.x3),
-        SahneListGroup(children: [friendsRow]),
-        if (!widget.asyncDuelEnabled || kTournamentEnabled) ...[
-          const SizedBox(height: SahneSpace.x5),
-          SahneListGroup(
-            children: [
+        SahneListGroup(
+          children: [
+            dailyContest,
+            wheelTile,
+            friendsRow,
+            if (!widget.asyncDuelEnabled || kTournamentEnabled) ...[
               if (!widget.asyncDuelEnabled)
                 SahneListRow.icon(
                   key: const ValueKey('play-hub-async-duel-soon'),
@@ -701,8 +715,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 ),
               ],
             ],
-          ),
-        ],
+          ],
+        ),
         // 'Bu hafta' kartı düellolarım kutusunun ALTINDA durur: üstte olunca
         // yüksekliği kutuyu tembel listede ekran dışına itiyordu.
         if (widget.asyncDuelEnabled && !locked)
@@ -1079,99 +1093,42 @@ class _ThisWeekCardState extends State<ThisWeekCard> {
       if (hasData && entry.roomsPlayed > 0)
         (context.t(K.raceWord), '${entry.roomsPlayed}'),
     ];
-    final night = Theme.of(context).brightness == Brightness.dark;
     return SahneSurfaceCard(
       key: const ValueKey('play-hub-this-week'),
       child: hasData
-          // Zêr sıra bloğu + renkli ikonlu sayılar (2026-10-20): sıra altın,
-          // puan şimşek (Zêr tonu), yarış kupa (Boyax tonu).
-          ? IntrinsicHeight(
+          // Sakin tek sıra (2026-10-28 kurul K5): başlık + eşit üç sayı;
+          // altın blok ve renkli rozetler kalktı, sayılar okunur kalır.
+          ? Column(
               key: const ValueKey('play-hub-this-week-stats'),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: SahneGoldBlock(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  context.t(K.thisWeek),
+                  style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                ),
+                const SizedBox(height: SahneSpace.x2),
+                Wrap(
+                  spacing: SahneSpace.x6,
+                  runSpacing: SahneSpace.x2,
+                  children: [
+                    for (final cell in cells)
+                      Column(
                         mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            context.t(K.thisWeek),
-                            style: SahneType.captionStrong.copyWith(
-                              color: t.goldTx,
-                            ),
+                            cell.$2,
+                            style: SahneType.title.copyWith(color: t.tx),
                           ),
                           Text(
-                            cells.first.$2,
-                            style: SahneType.title.copyWith(color: t.goldTx),
-                          ),
-                          Text(
-                            cells.first.$1,
+                            cell.$1,
                             style: SahneType.caption.copyWith(color: t.tx2),
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                  const SizedBox(width: SahneSpace.x3),
-                  Expanded(
-                    flex: 6,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        for (var i = 1; i < cells.length; i++) ...[
-                          if (i > 1) const SizedBox(height: SahneSpace.x2),
-                          Row(
-                            children: [
-                              DecoratedBox(
-                                decoration: ShapeDecoration(
-                                  color: i == 1 ? t.goldTint : t.raceTint,
-                                  shape: SahneShape.m,
-                                ),
-                                child: SizedBox.square(
-                                  dimension: 32,
-                                  child: Icon(
-                                    i == 1 ? AppIcons.bolt : AppIcons.trophy,
-                                    size: 18,
-                                    color: i == 1
-                                        ? t.goldTx
-                                        : night
-                                        ? t.raceTx
-                                        : t.race,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: SahneSpace.x2),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      cells[i].$2,
-                                      style: SahneType.bodyStrong.copyWith(
-                                        color: t.tx,
-                                      ),
-                                    ),
-                                    Text(
-                                      cells[i].$1,
-                                      style: SahneType.caption.copyWith(
-                                        color: t.tx2,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              ],
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

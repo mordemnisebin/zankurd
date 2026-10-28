@@ -13,12 +13,14 @@ import '../utils/error_reporter.dart';
 /// 2026-10-20 kullanıcı geri bildirimi: sade arayüzde bile oyuncular bir
 /// şeyi bulmakta zorlanıyor. Kitle iki dilli; Kurmancîyi öğrenen Türkçe
 /// arayüzde, Kurmancî arayüzü seçen de bazen Türkçe sözle yön buluyor.
-/// Varsayılan AÇIK; Ayarlar'dan kapatılınca her yer tek dile döner.
+/// Varsayılan KAPALI (2026-10-28 kurul K14: sayfa başlıklarının üstündeki
+/// ikinci dil satırı gürültüydü; arayüz yalnız seçili dilde konuşur).
+/// Ayarlar'dan açılırsa küçük ikinci dil satırları geri gelir.
 ///
 /// Düğme, soru, şık, açıklama ve gövde metni HER ZAMAN tek dildedir; ikinci
 /// dil yalnız yön bulduran etiketlerdedir.
 class BilingualLabelsProvider extends ChangeNotifier {
-  BilingualLabelsProvider({bool initialEnabled = true})
+  BilingualLabelsProvider({bool initialEnabled = false})
     : _enabled = initialEnabled;
 
   static const storageKey = 'zankurd.bilingualLabels';
@@ -28,10 +30,10 @@ class BilingualLabelsProvider extends ChangeNotifier {
   bool get enabled => _enabled;
 
   static Future<BilingualLabelsProvider> load() async {
-    var value = true;
+    var value = false;
     try {
       final prefs = await SharedPreferences.getInstance();
-      value = prefs.getBool(storageKey) ?? true;
+      value = prefs.getBool(storageKey) ?? false;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'bilingual_labels_load');
     }
@@ -50,13 +52,13 @@ class BilingualLabelsProvider extends ChangeNotifier {
     }
   }
 
-  /// Ağaçta sağlayıcı yoksa varsayılan (AÇIK) döner ve dinler; sağlayıcısız
+  /// Ağaçta sağlayıcı yoksa varsayılan (KAPALI) döner ve dinler; sağlayıcısız
   /// bir testte ya da ekran turunda çökmez.
   static bool isEnabledIn(BuildContext context) {
     try {
       return Provider.of<BilingualLabelsProvider>(context).enabled;
     } on ProviderNotFoundException {
-      return true;
+      return false;
     } on Object {
       try {
         return Provider.of<BilingualLabelsProvider>(
@@ -64,7 +66,7 @@ class BilingualLabelsProvider extends ChangeNotifier {
           listen: false,
         ).enabled;
       } on ProviderNotFoundException {
-        return true;
+        return false;
       }
     }
   }

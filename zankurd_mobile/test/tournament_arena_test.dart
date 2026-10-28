@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/models/tournament.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 import 'package:zankurd_mobile/src/widgets/arena_kit.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -51,39 +52,35 @@ void main() {
 
   // ── Ödül ────────────────────────────────────────────────────────────────
 
+  // 2026-10-28, kurul K16: ödül artık ayrı bir `RewardToken` ("200" +
+  // "jeton · şampiyona" etiketi) değil, açıkça yazılmış tek satır:
+  // "Ödül: 200 jeton" (Kurmancî "Xelat: 200 zêr"). Neden: "200" tek başına
+  // ne olduğunu söylemiyordu. Beklenti aynı kalır — değer
+  // `TournamentConfig`ten gelir, ekrana sabit yazılmaz.
   testWidgets('kupanın şampiyonluk ödülü lobide görünür', (tester) async {
     await _pump(tester);
-    // Değer `TournamentConfig`ten gelir; ekrana sabit yazılmaz. Sunucu
-    // (`claim_tournament_reward`) sabit 200 ödüyor — 2026-08-14'e kadar
-    // burada 500 yazıyordu.
+    // Sunucu (`claim_tournament_reward`) sabit 200 ödüyor — 2026-08-14'e
+    // kadar burada 500 yazıyordu.
+    final reward = find.byKey(const ValueKey('tournament-reward'));
+    expect(reward, findsOneWidget, reason: 'şampiyonluk ödülü görünmüyor');
     expect(
-      find.text('${TournamentConfig.coinBonusChampion}'),
+      tester.widget<Semantics>(reward).properties.label,
+      'Ödül: ${TournamentConfig.coinBonusChampion} jeton',
+    );
+    expect(
+      find.text('Ödül: ${TournamentConfig.coinBonusChampion} jeton'),
       findsOneWidget,
-      reason: 'şampiyonluk ödülü görünmüyor',
     );
-    final reward = tester.widget<RewardToken>(
-      find.byWidgetPredicate(
-        (widget) =>
-            widget is RewardToken &&
-            widget.value == '${TournamentConfig.coinBonusChampion}',
-      ),
-    );
-    expect(reward.label, 'jeton · şampiyona');
   });
 
   testWidgets('Kurmancî kupada ödülün birimi zêr olarak okunur', (
     tester,
   ) async {
     await _pump(tester, ku: true);
-    final reward = tester.widget<RewardToken>(
-      find.byWidgetPredicate(
-        (widget) =>
-            widget is RewardToken &&
-            widget.value == '${TournamentConfig.coinBonusChampion}',
-      ),
+    expect(
+      find.text('Xelat: ${TournamentConfig.coinBonusChampion} zêr'),
+      findsOneWidget,
     );
-    expect(reward.label, 'zêr · ji şampiyon re');
-    expect(find.text('zêr · ji şampiyon re'), findsOneWidget);
   });
 
   testWidgets('maç başı sahte bir ödül vaat edilmiyor', (tester) async {
@@ -95,9 +92,15 @@ void main() {
     expect(find.text('maç başı'), findsNothing);
   });
 
-  testWidgets('ödül ortak jeton bileşeniyle çizilir', (tester) async {
+  testWidgets('ödül ortak jeton ikonuyla çizilir', (tester) async {
     await _pump(tester);
-    expect(find.byType(RewardToken), findsWidgets);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('tournament-reward')),
+        matching: find.byType(SahneGlyph),
+      ),
+      findsOneWidget,
+    );
   });
 
   // ── Biçim ───────────────────────────────────────────────────────────────
@@ -131,13 +134,20 @@ void main() {
       findsNothing,
       reason: 'katılmayan oyuncuya sahte ilerleme gösterildi',
     );
-    // Durum "başlamadı"; katıldı/tamamlandı denmemeli.
-    expect(find.text('Başlamadı'), findsOneWidget);
+    // Katıldı/tamamlandı denmemeli. 2026-10-28, K16: "Başlamadı" durum çipi
+    // kalktı — hemen altındaki "Turnuvaya katıl" düğmesiyle çelişiyordu.
+    expect(find.text('Başlamadı'), findsNothing);
   });
 
-  testWidgets('durum çipi ortak bileşenden gelir', (tester) async {
+  testWidgets('katılmamış oyuncuya durum çipi ile katıl düğmesi çelişmez', (
+    tester,
+  ) async {
     await _pump(tester);
-    expect(find.byType(ArenaStatusChip), findsWidgets);
+    expect(find.byType(ArenaStatusChip), findsNothing);
+    expect(
+      find.byKey(const ValueKey('tournament-primary-cta')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('ekran adı iki kez yazılmaz', (tester) async {

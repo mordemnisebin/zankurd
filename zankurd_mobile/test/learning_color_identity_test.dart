@@ -78,7 +78,7 @@ void main() {
           expect(title, findsOneWidget, reason: combo);
           expect(
             DefaultTextStyle.of(tester.element(title)).style.color,
-            SahneVivid.onFill,
+            t.tx,
             reason: combo,
           );
         },

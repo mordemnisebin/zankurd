@@ -135,6 +135,8 @@ void main() {
     expect(streakTaps, 1);
   });
 
+  // 2026-10-28, kurul K4: görev satırı "ikon · kısa ad · sağda sayı" oldu;
+  // sağdaki sayı boşluksuz "6/15" yazılır (eski "6 / 15" biçimi kalktı).
   testWidgets('günlük hedef görev satırıdır: doğru ilerleme, ödülsüz', (
     tester,
   ) async {
@@ -150,7 +152,7 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.descendant(of: goalRow, matching: find.text('6 / 15')),
+      find.descendant(of: goalRow, matching: find.text('6/15')),
       findsOneWidget,
     );
     // Ödül rozeti ya da alma düğmesi yok.

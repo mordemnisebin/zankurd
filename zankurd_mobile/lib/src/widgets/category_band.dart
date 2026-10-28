@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../config/category_visuals.dart';
 import 'sahne/sahne.dart';
 import 'zk_back_button.dart';
 
 /// Konu akışının TEK başlığı: kategori → alt kategori → seviye ekranları
-/// uygulamanın standart sayfa başlığını ([zkAppBar]) taşır; başlık BANDI
-/// konunun dolu rengindedir ([SahneCategoryTone.fill]) — beyaz ad, cam geri
-/// düğmesi, cam ikon karosu, altında beyaz ilerleme izi.
+/// uygulamanın standart NÖTR sayfa başlığını ([zkAppBar]) taşır. 2026-10-28
+/// kurul K2: dolu konu renkli bant kalktı; konu rengi yalnız ikon rozetinde
+/// ve çubuğun altındaki 3–4 px'lik ilerleme/süs izindedir. Aşağıdaki
+/// 2026-10-20 notu tarihçedir.
 ///
 /// 2026-10-20 renk ve canlılık (B aşaması): kurul 2. tur başlığı sade beyaz
 /// çubuğa indirmişti (kategori rengi yalnız ikon karosunda ve 3 pt'lik
@@ -63,13 +63,9 @@ class CategoryBandScaffold extends StatelessWidget {
         context,
         title: Text(title),
         subtitle: subtitle == null ? null : Text(subtitle!, maxLines: 12),
-        backgroundColor: fill,
-        foregroundColor: SahneVivid.onFill,
-        subtitleColor: SahneVivid.onFillSoft,
-        glassBack: true,
-        systemOverlayStyle: SystemUiOverlayStyle.light,
+        // K2: nötr çubuk; konu rengi ikon rozetinde ve altındaki izde.
         // Büyük yazıda ikon karosu düşer: dar ekranda ad ve alt satıra
-        // yer kalsın, kesilmesin (kategori rengi bandın kendisinde).
+        // yer kalsın, kesilmesin.
         actions: MediaQuery.textScalerOf(context).scale(16) >= 24
             ? null
             : [
@@ -82,7 +78,6 @@ class CategoryBandScaffold extends StatelessWidget {
                       child: CategoryIconTile(
                         category: category,
                         icon: CategoryVisuals.icon(category),
-                        onBand: true,
                       ),
                     ),
                   ),
@@ -96,7 +91,7 @@ class CategoryBandScaffold extends StatelessWidget {
           children: [
             ColoredBox(
               key: bandKey,
-              color: fill,
+              color: t.bg,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(
                   SahneSpace.page,
@@ -105,17 +100,22 @@ class CategoryBandScaffold extends StatelessWidget {
                   SahneSpace.x4,
                 ),
                 child: progress == null
-                    ? const SizedBox(
+                    ? SizedBox(
                         height: 3,
                         child: DecoratedBox(
                           key: accentKey,
                           decoration: ShapeDecoration(
-                            color: SahneVivid.glassTrack,
-                            shape: StadiumBorder(),
+                            color: fill,
+                            shape: const StadiumBorder(),
                           ),
                         ),
                       )
-                    : _BandProgress(key: accentKey, value: progress!),
+                    : _BandProgress(
+                        key: accentKey,
+                        value: progress!,
+                        color: fill,
+                        track: t.s3,
+                      ),
               ),
             ),
             Expanded(child: body),
@@ -136,27 +136,27 @@ class CategoryIconTile extends StatelessWidget {
   const CategoryIconTile({
     required this.category,
     required this.icon,
-    this.onBand = false,
+    this.size = 44,
     super.key,
   });
 
   final String category;
   final IconData icon;
-  final bool onBand;
+
+  /// Rozet kenarı: satırlarda 44, konu karosunda 40.
+  final double size;
 
   @override
   Widget build(BuildContext context) {
     final night = Theme.of(context).brightness == Brightness.dark;
     return DecoratedBox(
       decoration: ShapeDecoration(
-        color: onBand
-            ? SahneVivid.glass
-            : CategoryVisuals.tone(category).fill(night: night),
+        color: CategoryVisuals.tone(category).fill(night: night),
         shape: SahneShape.m,
       ),
       child: SizedBox.square(
-        dimension: 44,
-        child: Icon(icon, size: 24, color: SahneVivid.onFill),
+        dimension: size,
+        child: Icon(icon, size: size >= 44 ? 24 : 22, color: SahneVivid.onFill),
       ),
     );
   }
@@ -165,9 +165,16 @@ class CategoryIconTile extends StatelessWidget {
 /// Başlık altı ilerleme çubuğu: 4 pt, yuvarlak uç; boş kısım cam iz, dolu
 /// kısım beyaz. Değer 0'da dolu kısım hiç çizilmez.
 class _BandProgress extends StatelessWidget {
-  const _BandProgress({super.key, required this.value});
+  const _BandProgress({
+    super.key,
+    required this.value,
+    required this.color,
+    required this.track,
+  });
 
   final double value;
+  final Color color;
+  final Color track;
 
   @override
   Widget build(BuildContext context) {
@@ -175,10 +182,7 @@ class _BandProgress extends StatelessWidget {
     return SizedBox(
       height: 4,
       child: DecoratedBox(
-        decoration: const ShapeDecoration(
-          color: SahneVivid.glassTrack,
-          shape: StadiumBorder(),
-        ),
+        decoration: ShapeDecoration(color: track, shape: const StadiumBorder()),
         child: Align(
           alignment: AlignmentDirectional.centerStart,
           child: v <= 0
@@ -186,10 +190,10 @@ class _BandProgress extends StatelessWidget {
               : FractionallySizedBox(
                   widthFactor: v,
                   heightFactor: 1,
-                  child: const DecoratedBox(
+                  child: DecoratedBox(
                     decoration: ShapeDecoration(
-                      color: SahneVivid.onFill,
-                      shape: StadiumBorder(),
+                      color: color,
+                      shape: const StadiumBorder(),
                     ),
                   ),
                 ),

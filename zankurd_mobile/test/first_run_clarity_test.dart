@@ -100,7 +100,7 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('onboarding-language-tr')));
         await tester.pumpAndSettle();
 
-        expect(find.text('Sonraki'), findsOneWidget);
+        expect(find.text('Devam'), findsOneWidget);
         expect(find.text('Bidomîne'), findsNothing);
 
         await tester.tap(find.byKey(const ValueKey('onboarding-language-ku')));
@@ -361,18 +361,20 @@ void main() {
             .getTopLeft(find.byKey(const ValueKey('entry-dock')))
             .dy;
 
-        await tester.tap(find.text('Sonraki'));
+        await tester.tap(find.text('Devam'));
         await tester.pumpAndSettle();
 
         // Eskiden burada logo kaybolup düz "ZanKurd" yazısına düşüyordu;
         // aynı sabit yükseklikli kutuda çok daha küçük içerik durunca
         // üstte boşluk açılıyor, başlık zıplıyormuş gibi görünüyordu.
+        // 2026-10-28 K10: logo yalnız dil adımının görselidir; öğren/yarış
+        // adımlarında yerini rolün rozet çizimi alır (sayfa başına TEK görsel).
+        expect(find.byType(AppLogo), findsNothing);
         expect(
-          find.byType(AppLogo),
+          find.byKey(const ValueKey('onboarding-scene-art')),
           findsOneWidget,
-          reason: '2. sayfada da logo görünmeli, düz metne düşmemeli',
         );
-        final widthPage1 = tester.widget<AppLogo>(find.byType(AppLogo)).width;
+        final widthPage1 = widthPage0;
         final barTop1 = tester
             .getTopLeft(find.byKey(const ValueKey('onboarding-progress')))
             .dy;

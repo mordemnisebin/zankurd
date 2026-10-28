@@ -936,14 +936,19 @@ void main() {
       tester.getTopLeft(catalog).dy,
       greaterThan(tester.getBottomLeft(nextStep).dy),
     );
-    // Dört hikâyenin hepsi tam görünür (yarım kart yok).
-    for (final id in ['cayxane', 'xwe-nasandin', 'kirin', 'rê-pirsîn']) {
-      expect(
-        find.byKey(ValueKey('story-card-$id'), skipOffstage: false),
-        findsOneWidget,
-        reason: id,
-      );
-    }
+    // 2026-10-28, kurul K8: Öğren'de günlük hikâyeler ilk 3 + "Tümü"
+    // (eskiden 4). Üç kart tam görünür, dördüncüsü "Tüm hikâyeler" satırının
+    // arkasındadır; yarım kart yok.
+    final cards = find.byWidgetPredicate(
+      (w) => w.key.toString().startsWith("[<'story-card-"),
+      skipOffstage: false,
+    );
+    expect(cards, findsNWidgets(3));
+    expect(
+      find.byKey(const ValueKey('story-catalog-all'), skipOffstage: false),
+      findsOneWidget,
+      reason: 'kalan hikâyelere "Tümü" satırıyla ulaşılmalı',
+    );
   });
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {

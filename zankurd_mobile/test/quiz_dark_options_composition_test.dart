@@ -100,22 +100,13 @@ void main() {
         );
       }
     }
-    // Tur 8b: grup, üst çubuk ile alt bildirim payı arasında ORTALI (üst ve
-    // alt boşluk yaklaşık eşit); 48 pt kuralı yanlıştı, geri alındı.
+    // K6 (2026-10-28) GEÇERSİZ KILDI: tur 8b'nin "grup dikeyde ortalı" kararı
+    // (ve `anchorHeight`) kalktı; soru ÜSTTEN başlar, boşluk şıkların ALTINDA
+    // kalır (bkz. `soru_sonuc_ortak_sahne_test`).
     final scroll = find.byKey(const ValueKey('quiz-portrait-scroll'));
-    // Grubun üstü SORUNUN üstüdür (`quiz-answer-content` dış sütunu her zaman
-    // dolgunun hemen altında başlar; grup içinde ortalanır).
     final top = tester.getTopLeft(find.byType(QuizQuestionPrompt)).dy;
     final topGap = top - tester.getTopLeft(scroll).dy;
-    final bottomGap =
-        tester.getBottomLeft(scroll).dy -
-        quizAnchorNoticeReserve -
-        tester.getBottomLeft(tiles.last).dy;
-    expect(
-      (topGap - bottomGap).abs(),
-      lessThanOrEqualTo(48),
-      reason: 'üst=$topGap alt=$bottomGap eşit olmalı',
-    );
+    expect(topGap, lessThanOrEqualTo(48), reason: 'soru üstte: $topGap');
   });
 
   // 8. kurul (Opus, Gemini): 4 pt ilerleme çubuğu koyu zeminde görünmüyordu;
@@ -146,18 +137,16 @@ void main() {
     );
   });
 
-  testWidgets('ilerleme çubuğu 4 pt, beyaz dolgu (konu bandında), görünür iz', (
+  testWidgets('ilerleme çubuğu 4 pt, nötr sahnede (konu bandı yok)', (
     tester,
   ) async {
     await pump(tester);
     final finder = find.byKey(const ValueKey('quiz-progress-bar'));
     final bar = tester.widget<SahneProgressBar>(finder);
     expect(bar.height, 4);
-    // 2026-10-20 (B): çubuk konu renginde bandın içinde; turuncu kırmızı/turuncu
-    // konularda kaybolurdu, dolgu beyaz.
-    expect(bar.fillColor, SahneVivid.onFill);
-    expect(bar.trackColor, isNotNull);
-    expect(bar.trackColor!.a, greaterThan(0.1));
+    // K6+ (2026-10-28) GEÇERSİZ KILDI: konu bandı (beyaz dolgu, cam iz)
+    // kalktı; çubuk nötr sahnede varsayılan eylem tonunda.
+    expect(find.byKey(const ValueKey('sahne-stage-band')), findsNothing);
   });
 
   for (final (name, size, scale) in [

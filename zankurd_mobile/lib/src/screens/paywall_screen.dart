@@ -252,10 +252,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
             else if (_offeringsLoadFailed)
               _OfferingsLoadError(onRetry: () => _loadOfferings(manual: true))
             else if (_packages.isEmpty)
-              _EmptyOfferings(
-                isKu: ku,
-                onRetry: () => _loadOfferings(manual: true),
-              )
+              _EmptyOfferings(isKu: ku)
             else
               _PackageList(
                 packages: _packages,
@@ -488,12 +485,14 @@ class _PackageRow extends StatelessWidget {
 /// [error] durumunda ikon Şaş metninde (durum ikon ve sözle birlikte).
 class _NoticeCard extends StatelessWidget {
   const _NoticeCard({
+    super.key,
     required this.icon,
     required this.title,
     required this.body,
     required this.retryLabel,
     required this.onRetry,
     this.error = false,
+    this.arrow = true,
   });
 
   final IconData icon;
@@ -502,6 +501,9 @@ class _NoticeCard extends StatelessWidget {
   final String retryLabel;
   final VoidCallback onRetry;
   final bool error;
+
+  /// Eylem metin düğmesinde sağa ok ister mi ('Geri' için hayır).
+  final bool arrow;
 
   @override
   Widget build(BuildContext context) {
@@ -529,7 +531,7 @@ class _NoticeCard extends StatelessWidget {
           const SizedBox(height: SahneSpace.x1),
           Text(body, style: SahneType.caption.copyWith(color: t.tx2)),
           const SizedBox(height: SahneSpace.x1),
-          SahneButton.text(label: retryLabel, onPressed: onRetry),
+          SahneButton.text(label: retryLabel, arrow: arrow, onPressed: onRetry),
         ],
       ),
     );
@@ -538,25 +540,32 @@ class _NoticeCard extends StatelessWidget {
 
 /// Offering çekildi ama içinde paket yok.
 ///
-/// Bu bir hata DEĞİLDİR — fetch başarılı döner — ama kullanıcı açısından
-/// sonucu aynıdır: satın alacak bir şey yoktur. Aradaki tek fark, bu
-/// durumun dışarıdan (RevenueCat panelinde offering ↔ mağaza ürünü
-/// eşlemesi tamamlandığında) kendiliğinden düzelmesidir. Bu yüzden ekran
-/// dürüst kalır (sahte fiyat veya sahte paket uydurulmaz) fakat çıkışsız
-/// bırakılmaz: hata durumuyla aynı yeniden deneme yolu sunulur.
+/// Bu bir hata DEĞİLDİR — fetch başarılı döner — ve kullanıcının yapabileceği
+/// bir şey yoktur: durum dışarıdan (RevenueCat panelinde offering ↔ mağaza
+/// ürünü eşlemesi tamamlandığında) düzelir. Ekran dürüst kalır (sahte fiyat
+/// veya sahte paket uydurulmaz) ve "Yakında" der.
+///
+/// 2026-10-28 kurul K12: eskiden burada "Tekrar dene" vardı; basınca aynı
+/// boş durum geri geliyordu (çıkmaz tuşu). Artık eylem "Geri": ekrandan
+/// çıkış açık ve tek. Satın alma girişleri zaten bu durumda gizlidir
+/// (`PremiumService.canSell`: ana sayfa Pro satırı ve Ayarlar > Premium);
+/// ekrana yalnız eski bir bağlantıyla ya da paketler yüklendikten sonra
+/// boşalırsa gelinir. Hata durumunda ([_OfferingsLoadError]) yeniden deneme
+/// kalır: orada deneme işe yarayabilir.
 class _EmptyOfferings extends StatelessWidget {
-  const _EmptyOfferings({required this.isKu, required this.onRetry});
+  const _EmptyOfferings({required this.isKu});
   final bool isKu;
-  final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
     return _NoticeCard(
+      key: const ValueKey('paywall-empty-offerings'),
       icon: AppIcons.circleInfo,
       title: Tr.forKu(K.paywallPackagesInactive, isKu),
       body: Tr.forKu(K.paywallPackagesInactiveBody, isKu),
-      retryLabel: Tr.forKu(K.retry, isKu),
-      onRetry: onRetry,
+      retryLabel: Tr.forKu(K.back, isKu),
+      arrow: false,
+      onRetry: () => Navigator.of(context).maybePop(),
     );
   }
 }

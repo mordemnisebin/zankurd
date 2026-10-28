@@ -637,6 +637,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
       contextLabel: context.t(K.asyncDuel),
       hero: hero,
       balanced: true,
+      neutral: true,
       stats: scoreboard,
       // Sıfır XP ("+0 XP") gösterilmez: yanlış ya da süresi dolmuş sıfır
       // doğrulu düello ödülsüz biter.

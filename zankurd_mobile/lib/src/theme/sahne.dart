@@ -293,7 +293,9 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Mücevher karonun nötr kaşı.
   final Color rim;
 
-  /// TEK seçili stili (kurul incelemesi 2026-10-19): seçili çip, segment ve
+  /// TEK seçili stili. GÜNCEL HÂL (2026-10-28, K15) aşağıdaki [selFill]
+  /// belgesindedir; altındaki tarihçe turuncu dönemi anlatır.
+  /// (kurul incelemesi 2026-10-19): seçili çip, segment ve
   /// sekme her yerde Agir'den türer — açık turuncu ton dolgu + turuncu çizgi
   /// + koyu turuncu metin. Dolu turuncu yalnız ana eylem düğmesindedir;
   /// seçili çip de dolu olunca ikisi birbiriyle yarışıyordu (7 modelden 4'ü).
@@ -308,10 +310,20 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Kurul 4. tur 2026-10-20 (AI Studio, Grok): seçili hâl hâlâ yalnız ince
   /// çerçeveyle okunuyordu; dolgu koyulaştı (gündüz `#FFE1CC`, gece opak
   /// `#4A321F`). Metin hâlâ ≥ 4.5:1 (bekçi ölçer).
-  Color get selFill =>
+  Color get warmFill =>
       _isNight ? const Color(0xFF4A321F) : const Color(0xFFFFE1CC);
-  Color get selLine => act;
-  Color get selTx => _isNight ? const Color(0xFFFFB27F) : actTx;
+  Color get warmTx => _isNight ? const Color(0xFFFFB27F) : actTx;
+
+  /// 2026-10-28 kurul K15: seçili segment/sekme/çip artık turuncu ton değil,
+  /// KOYU MÜREKKEP dolgu + açık metindir (gündüz `tx` dolgu + beyaz metin;
+  /// gece açık mürekkep dolgu + koyu metin — ters çevrilmiş nötr, ≥ 12:1).
+  /// Turuncu yalnız birincil düğmededir; seçili çip onunla yarışmıyordu
+  /// ama ekranda üç dört turuncu öğe birikiyordu. Eski turuncu ton
+  /// [warmFill]/[warmTx] olarak kalır (seri çipi gibi seçim OLMAYAN sıcak
+  /// vurgular için).
+  Color get selFill => tx;
+  Color get selLine => selFill;
+  Color get selTx => _isNight ? bg : const Color(0xFFFFFFFF);
 
   /// Kilim imzası (2026-10-20 kimlik işi): kökboya kırmızısı ile turuncu
   /// arası; yalnız Yarış'ın kahraman kartının alt kenarındaki ince kilim

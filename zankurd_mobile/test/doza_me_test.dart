@@ -190,6 +190,9 @@ void main() {
     expect(find.byType(DozaMeScreen), findsOneWidget);
   });
 
+  // 2026-10-28 K10: ilk ekran artık dil adımıdır; başlık "Uygulama dili ·
+  // Zimanê sepanê", slogan onun hemen altında, kartların üstünde durur
+  // ("Öğren" başlığı 2. adıma indi).
   testWidgets('onboarding ilk ekranında slogan başlığın altında', (
     tester,
   ) async {
@@ -202,7 +205,9 @@ void main() {
     expect(find.text('Zimanê me nasnameya me ye.'), findsOneWidget);
     expect(
       tester.getTopLeft(slogan).dy,
-      greaterThan(tester.getTopLeft(find.text('Öğren')).dy),
+      greaterThan(
+        tester.getTopLeft(find.text('Uygulama dili · Zimanê sepanê')).dy,
+      ),
     );
   });
 

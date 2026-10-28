@@ -6,6 +6,7 @@ import '../l10n/strings.dart';
 import '../screens/learner_lexicon_screen.dart';
 import '../utils/app_route.dart';
 import 'lexicon_speak_button.dart';
+import 'pronunciation_sheet.dart';
 import 'word_save_button.dart';
 import 'sahne/sahne.dart';
 
@@ -300,6 +301,9 @@ Future<void> showLexiconEntrySheet(
                 ),
               ),
               LexiconSpeakButton(text: entry.termKu),
+              // K13: telaffuz denemesi (mikrofon) satırlardan kelime ayrıntısına
+              // taşındı.
+              PronunciationButton(text: entry.termKu),
               WordSaveButton(entryId: entry.id),
             ],
           ),

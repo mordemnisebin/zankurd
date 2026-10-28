@@ -1,25 +1,24 @@
-// 2026-10-20 TASARIM KURULU (tur 9b): mağaza "N jeton eksik" yeri.
+// 2026-10-28 kurul K11 — mağazada AYRI "N jeton eksik" satırı yok.
 //
-// ## Kusur
+// ## Geçersiz kılınan eski karar
 //
-// Kilitli ürünün "N jeton eksik" sözü sağ sütunda, fiyat hapının altına
-// sıkışıyordu; 136 px'lik sütun hem fiyatı hem sözü taşıyınca kart dar ve
-// kalabalık okunuyordu (3 denetçi).
+// 2026-10-20 tur 9b / kurul 4. tur: kilitli ürünün "N jeton eksik" sözü ürün
+// adının altında, sol sütunda kehribar renkte yazılırdı ve bekçi onun yerini
+// ve rengini sabitlerdi. K11: ekranın en kalabalık yeri buydu (her satırda
+// fiyat + eksik söz + kilit); yetmeyen fiyat artık yalnız nötr, pasif bir
+// fiyat hapıdır ("720") ve eksik miktar yalnız (a) ekran okuyucu etiketinde,
+// (b) hapa uzun basınca çıkan ipucunda, (c) satıra dokununca açılan
+// pencerede (jeton kazanma yoluyla) söylenir.
 //
 // ## Niçin sessiz kalırdı
 //
-// Eski bekçiler sözün VARLIĞINI ve rengini ölçüyordu, YERİNİ değil: söz
-// hangi sütunda olursa olsun geçiyorlardı. Sözleşme: söz sol metin
-// sütununda, açıklamanın ALTINDA (aynı sol kenar), sağ sütunda yalnız
-// kilitli fiyat; kart iç boşluğu 14.
-// 2026-10-20 az söz turu: kartlardan açıklama satırı kalktı; söz artık
-// ürün adının ALTINDA (aynı sol kenar) durur.
+// Eksik söz bir metin düğümü olarak geri eklense hiçbir işlev testi
+// kırılmazdı; kalabalık yalnız ekran görüntüsünde fark edilir.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
-import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -31,40 +30,48 @@ class _Repo extends MockZanKurdRepository {
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  testWidgets('eksik söz ürün adının altında, fiyat sütununda değil', (
-    tester,
-  ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 1400));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-    await tester.pumpWidget(testShell(child: ShopScreen(repository: _Repo())));
-    await tester.pumpAndSettle();
+  testWidgets(
+    'yetmeyen üründe "eksik" satırı yok; hap yalnız tutarı gösterir',
+    (tester) async {
+      final semantics = tester.ensureSemantics();
+      await tester.binding.setSurfaceSize(const Size(390, 1800));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        testShell(child: ShopScreen(repository: _Repo())),
+      );
+      await tester.pumpAndSettle();
 
-    final card = find.byKey(const ValueKey('shop-hero-surface'));
-    final note = find.byKey(
-      const ValueKey('shop-short-note-profile_badge_vip'),
-    );
-    final desc = find.descendant(of: card, matching: find.text('VIP rozeti'));
-    final price = find.byKey(const ValueKey('shop-short-profile_badge_vip'));
-    expect(note, findsOneWidget);
+      expect(find.textContaining('eksik'), findsNothing);
+      expect(
+        find.byKey(const ValueKey('shop-short-note-profile_badge_vip')),
+        findsNothing,
+      );
 
-    final n = tester.getRect(note), d = tester.getRect(desc);
-    final p = tester.getRect(price);
-    // Söz eylem satırının solunda (kartın iç sol kenarı), ürün adının
-    // altında; adla yan yana değil.
-    expect(n.left, lessThanOrEqualTo(d.left), reason: 'metinden sola yaslı');
-    expect(n.top, greaterThanOrEqualTo(d.bottom));
-    expect(n.right, lessThanOrEqualTo(p.left), reason: 'sağ sütunda değil');
+      final card = find.byKey(
+        const ValueKey('shop-item-surface-profile_badge_vip'),
+      );
+      final pill = find.byKey(const ValueKey('shop-short-profile_badge_vip'));
+      expect(pill, findsOneWidget);
+      expect(
+        find.descendant(of: pill, matching: find.text('720')),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(of: pill, matching: find.byType(FilledButton)),
+        findsNothing,
+        reason: 'hap düğme değil durumdur',
+      );
+      // Ad, fiyat hapı ve (varsa) tek ikon/glif dışında kartta başka metin yok.
+      final texts = find
+          .descendant(of: card, matching: find.byType(Text))
+          .evaluate()
+          .map((e) => (e.widget as Text).data)
+          .toSet();
+      expect(texts, {'VIP rozeti', '720'});
 
-    final t = SahneTokens.of(tester.element(note));
-    final style = tester.widget<Text>(note).style!;
-    expect(style.fontSize, 13);
-    expect(style.fontWeight, FontWeight.w500);
-    expect(style.color, t.shortfallTx);
-
-    // Kart iç boşluğu 14: önizleme karosu kartın sol kenarından 14 içeridedir.
-    final tile = tester.getRect(
-      find.descendant(of: card, matching: find.byType(DecoratedBox)).first,
-    );
-    expect(tile.left - tester.getRect(card).left, closeTo(14, 1.5));
-  });
+      // Bilgi kaybolmadı: ekran okuyucu eksik miktarı söyler.
+      expect(find.bySemanticsLabel(RegExp('420 jeton eksik')), findsWidgets);
+      semantics.dispose();
+    },
+  );
 }

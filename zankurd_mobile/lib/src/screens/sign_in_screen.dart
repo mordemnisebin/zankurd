@@ -39,6 +39,13 @@ class _SignInScreenState extends State<SignInScreen>
   /// misafir olabiliyordu (2026-10-28 görsel kurul: GPT-6 Sol + Gemini).
   bool _credentialsFilled = false;
 
+  /// "Hesabım var · Giriş yap"a basılınca true: e-posta/parola formu ve
+  /// Google/Apple düğmeleri ANCAK o zaman görünür. İlk görünümde ekranın tek
+  /// birincil eylemi "Hemen oyna"dır (turuncu) ve tek ikincil eylem "Hesabım
+  /// var"dır; eskiden Google + e-posta + parola + iki düğme ilk karede
+  /// yığılıyordu (2026-10-28 kurul K10: tek birincil, form sonra).
+  bool _formOpen = false;
+
   void _onCredentialsChanged() {
     final filled =
         _emailController.text.trim().isNotEmpty &&
@@ -331,11 +338,11 @@ class _SignInScreenState extends State<SignInScreen>
                   SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
                   form,
                   SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
-                  // Hesabı olan için ikincil yol: dolgulu birincil eylem
-                  // artık "Hemen oyna"dır (alt perde).
+                  // Form içindeki gönderim: alanlar doluyken ekranın birincil
+                  // eylemi olur ("Hemen oyna" ikincile iner), boşken ikincil.
                   _credentialsFilled
                       ? SahneButton.primary(
-                          key: const ValueKey('sign-in-have-account'),
+                          key: const ValueKey('sign-in-submit'),
                           label: context.t(K.signIn),
                           icon: AppIcons.rightToBracket,
                           arrow: false,
@@ -345,8 +352,8 @@ class _SignInScreenState extends State<SignInScreen>
                               : () => _signIn(authProvider),
                         )
                       : SahneButton.secondary(
-                          key: const ValueKey('sign-in-have-account'),
-                          label: context.t(K.signInHaveAccount),
+                          key: const ValueKey('sign-in-submit'),
+                          label: context.t(K.signIn),
                           icon: AppIcons.rightToBracket,
                           arrow: false,
                           expand: true,
@@ -356,6 +363,19 @@ class _SignInScreenState extends State<SignInScreen>
                         ),
                 ],
               ),
+            );
+
+            // İlk görünüm: yalnız "Hesabım var · Giriş yap" (ikincil). Basınca
+            // form ve sosyal girişler açılır.
+            final haveAccount = SahneButton.secondary(
+              key: const ValueKey('sign-in-have-account'),
+              label: context.t(K.signInHaveAccount),
+              icon: AppIcons.rightToBracket,
+              arrow: false,
+              expand: true,
+              onPressed: loading
+                  ? null
+                  : () => setState(() => _formOpen = true),
             );
 
             return SahneEntryScaffold(
@@ -384,7 +404,9 @@ class _SignInScreenState extends State<SignInScreen>
                 ),
               ),
               title: context.t(K.welcomeTitle),
-              content: panel,
+              // Tek kısa satır (K10); metin karşılamadaki Öğren gövdesiyle aynı.
+              body: context.t(K.onbLearnBody),
+              content: _formOpen ? panel : haveAccount,
               // 2026-10-24: karşılamadaki yaş kutusu kalktı; şartlar ve
               // gizlilik kabulü birincil düğmenin hemen ÜSTÜNDE düz metin
               // bağlantıdır. Altında değil: birincil düğmenin dört giriş
@@ -392,6 +414,9 @@ class _SignInScreenState extends State<SignInScreen>
               // (`entry_scaffold_test.dart`); üstteki satır onu kaydırmaz.
               aboveAction: const ConsentLine(),
               primaryFirstWhenFlowing: true,
+              // İlk görünüm kısa: kahraman grubu perdeyle üst çubuk arasında
+              // ortalanır; "Hesabım var" ile perde arasında boşluk kalmaz.
+              centerWhenAnchored: !_formOpen,
               primary: FadeTransition(
                 opacity: LoadAnimationSequence.buttonFadeAnimation(
                   _animationController,

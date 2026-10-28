@@ -53,6 +53,7 @@ import '../widgets/confetti_overlay.dart';
 import '../widgets/floating_reaction_overlay.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/player_avatar.dart';
+import '../widgets/quiz_stage_kit.dart';
 import '../widgets/quiz_top_bar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
 import '../widgets/lexicon_lookup.dart';
@@ -1991,9 +1992,6 @@ class _QuizScreenState extends State<QuizScreen>
     // sormadan bitiriyordu (öğrenme alıştırması ve konu turu, 1/10). Tur
     // başlamış sayılır: ilk soruda da sorulur. Sonuç ekranında sorulmaz (o
     // ayrı ekran).
-    // Konu bandının rengi UYGULAMA temasından okunur (sahne teması her zaman
-    // gecedir; band ana sayfadaki dolu konu karosuyla aynı rengi taşımalı).
-    final appNight = Theme.of(context).brightness == Brightness.dark;
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
@@ -2034,10 +2032,9 @@ class _QuizScreenState extends State<QuizScreen>
                   closeKey: const ValueKey('quiz-close'),
                   closeLabel: context.t(K.close),
                   light: _stageLight,
-                  band: CategoryVisuals.tone(
-                    question.category,
-                  ).fill(night: appNight),
-                  bandProgress: _buildBandProgress(context),
+                  // K6+ (2026-10-28): konu renkli üst bant kalktı; her modda
+                  // aynı lacivert sahne. Mod üstte tek küçük çip; ilerleme
+                  // çubuğu `progress` yuvasında.
                   ridge: true,
                   center: _buildStageCenter(context),
                   score: _buildStageTrailing(context),

@@ -1,3 +1,5 @@
+// 2026-10-28 kurul K18: ⋮ düğmesi ve ikinci meta satırı kalktı (aşağıdaki
+// 'K18' bekçileri); eski 'leaderboard-more' beklentileri bunun için değişti.
 // Tasarım kurulu tüm ekranlar 2026-10-20: bildir bayrağı satırdan ⋯ menüsüne.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-09-30 canlı: satır alt metninde oyun sayısının birimi "oda" değil
@@ -19,6 +21,7 @@ import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -175,8 +178,8 @@ void main() {
     // 12 oyuncunun hepsi TEK yüzeyde (ilk üç dahil).
     final rows = find.byKey(const ValueKey('leaderboard-rank-row-4'));
     expect(rows, findsOneWidget);
-    // Birim kaynağı defterde (K.raceWord); "oda" yalnız yer gibi okunuyordu.
-    expect(find.text('10 yarış · 5 seri'), findsWidgets);
+    // K18 (2026-10-28 kurul): ikinci "10 yarış · 5 seri" satırı KALKTI.
+    expect(find.text('10 yarış · 5 seri'), findsNothing);
     // Satırlar tek liste grubunun içindedir — ayrı kartlar değil.
     expect(
       find.ancestor(of: rows, matching: find.byType(SahneListGroup)),
@@ -216,22 +219,59 @@ void main() {
     );
   });
 
-  testWidgets('kendi satırında bildir düğmesi yok', (tester) async {
+  testWidgets('satırda ⋮ düğmesi ve ikinci meta satırı yok (K18)', (
+    tester,
+  ) async {
+    // 2026-10-28 kurul K18: satır = sıra · avatar · ad · puan. "⋮" düğmesi
+    // kalktı; bildir/engelle eylemi satıra dokunma ya da uzun basmaya taşındı.
     await _pump(tester, _Repo(count: 12, selfIndex: 5));
+    expect(find.byIcon(AppIcons.ellipsisVertical), findsNothing);
+    expect(find.textContaining('seri'), findsNothing);
+    expect(find.textContaining('yarış'), findsNothing);
+    final source = File(
+      'lib/src/screens/leaderboard_screen.dart',
+    ).readAsStringSync();
+    expect(source.contains('leaderboard-more-'), isFalse);
+    expect(source.contains('ellipsisVertical'), isFalse);
+  });
+
+  testWidgets('başkasının satırına dokunmak bildir sayfasını açar', (
+    tester,
+  ) async {
+    await _pump(tester, _Repo(count: 12, selfIndex: 5));
+    final row = find.byKey(const ValueKey('leaderboard-rank-row-7'));
+    await tester.ensureVisible(row);
+    await tester.pump();
+    await tester.tap(row);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('player-report-action')), findsOne);
+  });
+
+  testWidgets('uzun basmak da bildir sayfasını açar', (tester) async {
+    await _pump(tester, _Repo(count: 12, selfIndex: 5));
+    final row = find.byKey(const ValueKey('leaderboard-rank-row-7'));
+    await tester.ensureVisible(row);
+    await tester.pump();
+    await tester.longPress(row);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('player-report-action')), findsOne);
+  });
+
+  testWidgets('kendi satırında bildir yok ve belirgin çerçeve var', (
+    tester,
+  ) async {
+    await _pump(tester, _Repo(count: 12, selfIndex: 5));
+    expect(find.byKey(const ValueKey('leaderboard-me-outline')), findsOne);
+    final row = find.byKey(const ValueKey('leaderboard-rank-row-6'));
+    await tester.ensureVisible(row);
+    await tester.pump();
+    await tester.tap(row);
+    await tester.pumpAndSettle();
     expect(
-      find.byKey(const ValueKey('leaderboard-more-user')),
+      find.byKey(const ValueKey('player-report-action')),
       findsNothing,
       reason: 'kişi kendini bildiremez',
     );
-    // Başkalarınınki durur; bildir ⋯ menüsünde.
-    expect(find.byKey(const ValueKey('leaderboard-more-other-6')), findsOne);
-    await tester.ensureVisible(
-      find.byKey(const ValueKey('leaderboard-more-other-6')),
-    );
-    await tester.pump();
-    await tester.tap(find.byKey(const ValueKey('leaderboard-more-other-6')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('player-report-action')), findsOne);
   });
 
   testWidgets('kendi satırı vurgu için turuncuya boyanmaz', (tester) async {
@@ -366,13 +406,12 @@ void main() {
 
   // ── Erişilebilirlik ─────────────────────────────────────────────────────
 
-  testWidgets('bildir düğmesi 48dp dokunma hedefini korur', (tester) async {
+  testWidgets('sıra satırı 48dp dokunma hedefini korur', (tester) async {
     await _pump(tester, _Repo(count: 12));
-    final button = find.byKey(const ValueKey('leaderboard-more-other-4'));
-    expect(button, findsOneWidget);
-    final size = tester.getSize(button);
+    final size = tester.getSize(
+      find.byKey(const ValueKey('leaderboard-rank-row-4')),
+    );
     expect(size.height, greaterThanOrEqualTo(48));
-    expect(size.width, greaterThanOrEqualTo(48));
   });
 
   testWidgets('satır tek semantik düğümde okunur', (tester) async {

@@ -54,6 +54,7 @@ class SahneEntryScaffold extends StatelessWidget {
     required this.primary,
     this.secondary,
     this.primaryFirstWhenFlowing = false,
+    this.centerWhenAnchored = false,
     this.surfaceKey,
     this.dockKey = const ValueKey('entry-dock'),
   }) : assert(
@@ -95,6 +96,12 @@ class SahneEntryScaffold extends StatelessWidget {
   /// eylem "Hemen oyna"dır; formun altında kalırsa yatay telefonda ilk
   /// ekranın dışına düşüyordu.
   final bool primaryFirstWhenFlowing;
+
+  /// Perde sabitken kahraman üst çubuğun altında kalır, başlık + içerik kalan
+  /// alanda DİKEY ORTALANIR. İçerik kısa olduğunda (giriş ekranının ilk
+  /// görünümü: kahraman, başlık, "Hesabım var") altta büyük bir boşluk kalıp
+  /// düğmeyi perdeden koparıyordu (2026-10-28). Uzun içerik yine kayar.
+  final bool centerWhenAnchored;
 
   /// Sayfa zemininin anahtarı (testler zemini bulur).
   final Key? surfaceKey;
@@ -168,6 +175,11 @@ class SahneEntryScaffold extends StatelessWidget {
                     ],
                   ],
                 );
+                final heading = SahneEntryHeading(title: title!, body: body);
+                // Kısa ilk görünüm: kahraman üst çubuğun altında SABİT kalır
+                // (sözleşme: dört ekranda aynı yer), başlık + içerik kalan
+                // alanda dikey ortalanır (`centerWhenAnchored`).
+                final centered = anchored && centerWhenAnchored && !wide;
                 final Widget laidOut = wide
                     ? Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,6 +187,29 @@ class SahneEntryScaffold extends StatelessWidget {
                           Expanded(flex: 5, child: head),
                           const SizedBox(width: SahneSpace.x8),
                           Expanded(flex: 6, child: main),
+                        ],
+                      )
+                    : centered
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          ?hero,
+                          if (hero != null)
+                            const SizedBox(height: SahneSpace.x4),
+                          Expanded(
+                            child: Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  heading,
+                                  if (content != null)
+                                    const SizedBox(height: SahneSpace.x5),
+                                  main,
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       )
                     : Column(
@@ -186,16 +221,29 @@ class SahneEntryScaffold extends StatelessWidget {
                           main,
                         ],
                       );
-                return SingleChildScrollView(
-                  // Sabit perde varken alt pay büyür: kartın son satırı
-                  // perdenin altında kalıp kesik görünmesin (kurul 2026-10-20).
-                  padding: EdgeInsets.fromLTRB(
-                    SahneSpace.page,
-                    SahneSpace.x2,
-                    SahneSpace.page,
-                    anchored ? SahneSpace.x8 : SahneSpace.x6,
+                const padTop = SahneSpace.x2;
+                final padBottom = anchored ? SahneSpace.x8 : SahneSpace.x6;
+                return LayoutBuilder(
+                  builder: (context, view) => SingleChildScrollView(
+                    // Sabit perde varken alt pay büyür: kartın son satırı
+                    // perdenin altında kalıp kesik görünmesin (kurul
+                    // 2026-10-20).
+                    padding: EdgeInsets.fromLTRB(
+                      SahneSpace.page,
+                      padTop,
+                      SahneSpace.page,
+                      padBottom,
+                    ),
+                    child: centered
+                        ? ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minHeight: (view.maxHeight - padTop - padBottom)
+                                  .clamp(0.0, double.infinity),
+                            ),
+                            child: IntrinsicHeight(child: limited(laidOut)),
+                          )
+                        : limited(laidOut),
                   ),
-                  child: limited(laidOut),
                 );
               }
 

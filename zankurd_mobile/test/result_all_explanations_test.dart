@@ -75,6 +75,16 @@ void main() {
     );
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
+
+    // K7 (2026-10-28): tur açıklamaları varsayılan KAPALI; "Cevapları gör" açar.
+    final seeAnswers = find.byKey(
+      const ValueKey('result-see-answers'),
+      skipOffstage: false,
+    );
+    await tester.ensureVisible(seeAnswers);
+    await tester.pump();
+    await tester.tap(seeAnswers);
+    await tester.pumpAndSettle();
   }
 
   testWidgets('doğru ve yanlış, her sorunun açıklaması sonuçta var', (

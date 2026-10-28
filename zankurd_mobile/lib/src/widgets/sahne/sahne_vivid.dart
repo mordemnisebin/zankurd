@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../theme/app_icons.dart';
 import '../../theme/sahne.dart';
+import 'sahne_cards.dart';
 import 'sahne_foundation.dart';
 import 'sahne_list_row.dart';
 import 'sahne_painters.dart';
@@ -252,7 +253,14 @@ class SahneModeTile extends StatefulWidget {
     this.semanticLabel,
     this.deep = false,
     this.compact = false,
+    this.calm = false,
   });
+
+  /// SAKİN kart (2026-10-28 kurul K3/K4/K5): nötr yüzey + üstte rol renginde
+  /// ince şerit + renkli ikon rozeti + ad + en çok iki satır alt yazı. Dolu
+  /// renkli blok, silik büyük ikon filigranı YOK; mod rengi yalnız rozet ve
+  /// şeritte yaşar (canlılık ölmez, ama ekranda tek birincil turuncu kalır).
+  final bool calm;
 
   /// Sade, tek satırlık küçük kart: yalnız ikon + ad (+ rozet). Rol rengi
   /// AYNEN korunur (sadeleştirme rengi öldürmesin); büyüklük ve filigran
@@ -293,6 +301,7 @@ class _SahneModeTileState extends State<SahneModeTile> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.calm) return _buildCalm(context);
     final icon = widget.icon;
     final title = widget.title;
     final subtitle = widget.subtitle;
@@ -510,6 +519,120 @@ class _SahneModeTileState extends State<SahneModeTile> {
                         ],
                       ),
               ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+extension on _SahneModeTileState {
+  Widget _buildCalm(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final role = widget.role;
+    final gold = role == SahneRole.gold;
+    final fill = gold ? t.zerBand : (t.roleFill(role) ?? t.s3);
+    final ink = gold ? t.onZer : SahneVivid.onFill;
+    final enabled = widget.onTap != null;
+    final badge = widget.badge;
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: enabled,
+      label: [
+        widget.semanticLabel ?? [widget.title, ?widget.subtitle].join('. '),
+        ?badge,
+      ].join('. '),
+      excludeSemantics: true,
+      onTap: widget.onTap,
+      child: Opacity(
+        opacity: enabled ? 1 : 0.55,
+        child: SahneSurfaceCard(
+          onTap: widget.onTap,
+          padding: EdgeInsets.zero,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 112),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ColoredBox(
+                  key: const ValueKey('mode-tile-accent'),
+                  color: fill,
+                  child: const SizedBox(height: 4),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(SahneSpace.x3),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          DecoratedBox(
+                            decoration: ShapeDecoration(
+                              color: fill,
+                              shape: SahneShape.m,
+                            ),
+                            child: SizedBox.square(
+                              dimension: 44,
+                              child: Icon(widget.icon, size: 24, color: ink),
+                            ),
+                          ),
+                          const Spacer(),
+                          if (widget.loading)
+                            const SizedBox.square(
+                              dimension: 18,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          else if (badge != null)
+                            Flexible(
+                              child: DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: t.s3,
+                                  shape: const StadiumBorder(),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: SahneSpace.x2,
+                                    vertical: 2,
+                                  ),
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      badge,
+                                      maxLines: 1,
+                                      style: SahneType.captionStrong.copyWith(
+                                        color: t.tx,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: SahneSpace.x2),
+                      Text(
+                        widget.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
+                      ),
+                      if (widget.subtitle != null) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          widget.subtitle!,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: SahneType.caption.copyWith(color: t.tx2),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),

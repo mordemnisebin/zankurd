@@ -310,6 +310,10 @@ void main() {
         );
         await tester.pumpAndSettle();
 
+        // K6 (2026-10-28): soru artık açık kartta; %200 yazıda ilk şıklar
+        // alt perdenin altında kalabilir, oyuncu kaydırır.
+        await tester.ensureVisible(find.text('ekmek'));
+        await tester.pumpAndSettle();
         await tester.tap(find.text('ekmek'));
         await tester.pumpAndSettle(const Duration(seconds: 2));
 

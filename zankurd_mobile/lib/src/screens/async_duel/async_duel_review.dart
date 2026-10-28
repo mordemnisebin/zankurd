@@ -19,10 +19,11 @@ String asyncDuelSecondsLabel(BuildContext context, int ms) {
 /// Rakip satırı yalnız sunucu verdiyse çizilir: engelli çiftte ya da rakip o
 /// soruyu hiç oynamadıysa (hükmen) [AsyncDuelReviewQuestion.opponent] null
 /// gelir ve satır YOKTUR — "yanlış" ile "hiç oynamadı" ayrı şeylerdir.
-class AsyncDuelReviewSection extends StatelessWidget {
+class AsyncDuelReviewSection extends StatefulWidget {
   const AsyncDuelReviewSection({
     required this.review,
     required this.opponentLabel,
+    this.initiallyOpen = false,
     super.key,
   });
 
@@ -31,34 +32,57 @@ class AsyncDuelReviewSection extends StatelessWidget {
   /// Rakibin satırdaki adı (engelli çiftte genel "Rakip").
   final String opponentLabel;
 
+  /// K7 (2026-10-28): karşılaştırma varsayılan KAPALI; "Cevapları gör" açar.
+  final bool initiallyOpen;
+
+  @override
+  State<AsyncDuelReviewSection> createState() => _AsyncDuelReviewSectionState();
+}
+
+class _AsyncDuelReviewSectionState extends State<AsyncDuelReviewSection> {
+  late bool _open = widget.initiallyOpen;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    final review = widget.review;
+    final opponentLabel = widget.opponentLabel;
     if (review.questions.isEmpty) return const SizedBox.shrink();
     return Column(
       key: const ValueKey('async-duel-review'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SahneSectionHeader(title: context.t(K.asyncDuelReviewTitle)),
-        if (review.opponentBlocked) ...[
-          Text(
-            context.t(K.asyncDuelReviewBlockedNote),
-            key: const ValueKey('async-duel-review-blocked'),
-            style: SahneType.caption.copyWith(color: t.tx2),
-          ),
-          const SizedBox(height: SahneSpace.x3),
-        ],
-        SahneListGroup(
-          dividerIndent: SahneSpace.x4,
-          children: [
-            for (final question in review.questions)
-              AsyncDuelReviewRow(
-                key: ValueKey('async-duel-review-row-${question.index}'),
-                question: question,
-                opponentLabel: opponentLabel,
-              ),
-          ],
+        SahneButton.secondary(
+          key: const ValueKey('async-duel-review-toggle'),
+          label: context.t(_open ? K.hideAnswers : K.seeAnswers),
+          icon: _open ? AppIcons.chevronUp : AppIcons.chevronDown,
+          arrow: false,
+          expand: true,
+          onPressed: () => setState(() => _open = !_open),
         ),
+        if (_open) ...[
+          const SizedBox(height: SahneSpace.x3),
+          if (review.opponentBlocked) ...[
+            Text(
+              context.t(K.asyncDuelReviewBlockedNote),
+              key: const ValueKey('async-duel-review-blocked'),
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+            const SizedBox(height: SahneSpace.x3),
+          ],
+          SahneListGroup(
+            dividerIndent: SahneSpace.x4,
+            children: [
+              for (final question in review.questions)
+                AsyncDuelReviewRow(
+                  key: ValueKey('async-duel-review-row-${question.index}'),
+                  question: question,
+                  opponentLabel: opponentLabel,
+                ),
+            ],
+          ),
+        ],
       ],
     );
   }
@@ -96,7 +120,7 @@ class AsyncDuelReviewRow extends StatelessWidget {
           Text(
             '${question.index + 1}. ${question.prompt}',
             key: ValueKey('async-duel-review-prompt-${question.index}'),
-            maxLines: 2,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: SahneType.bodyStrong.copyWith(color: t.tx),
           ),
@@ -104,24 +128,55 @@ class AsyncDuelReviewRow extends StatelessWidget {
           Text(
             '${context.t(K.correctAnswerLabel)}: ${question.correctText}',
             key: ValueKey('async-duel-review-correct-${question.index}'),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: SahneType.captionStrong.copyWith(color: t.okTx),
           ),
           const SizedBox(height: SahneSpace.x2),
-          _AnswerLine(
-            key: ValueKey('async-duel-review-mine-${question.index}'),
-            who: context.t(K.you),
-            question: question,
-            answer: mine,
+          // K7: sen ve rakip TEK satırda yan yana (dar ekran / büyük yazıda
+          // alt alta).
+          LayoutBuilder(
+            builder: (context, box) {
+              final stacked =
+                  opponent == null ||
+                  box.maxWidth < 340 ||
+                  MediaQuery.textScalerOf(context).scale(14) > 16;
+              final myLine = _AnswerLine(
+                key: ValueKey('async-duel-review-mine-${question.index}'),
+                who: context.t(K.you),
+                question: question,
+                answer: mine,
+              );
+              final oppLine = opponent == null
+                  ? null
+                  : _AnswerLine(
+                      key: ValueKey('async-duel-review-opp-${question.index}'),
+                      who: opponentLabel,
+                      question: question,
+                      answer: opponent,
+                    );
+              if (stacked || oppLine == null) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    myLine,
+                    if (oppLine != null) ...[
+                      const SizedBox(height: SahneSpace.x1),
+                      oppLine,
+                    ],
+                  ],
+                );
+              }
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: myLine),
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(child: oppLine),
+                ],
+              );
+            },
           ),
-          if (opponent != null) ...[
-            const SizedBox(height: SahneSpace.x1),
-            _AnswerLine(
-              key: ValueKey('async-duel-review-opp-${question.index}'),
-              who: opponentLabel,
-              question: question,
-              answer: opponent,
-            ),
-          ],
         ],
       ),
     );

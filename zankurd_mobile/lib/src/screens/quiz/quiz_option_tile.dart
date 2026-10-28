@@ -499,7 +499,7 @@ class QuizQuestionPrompt extends StatelessWidget {
   final bool forceHeadline;
 
   /// Soru 24/30'da en çok bu kadar satır.
-  static const int maxTitleLines = 4;
+  static const int maxTitleLines = 3;
 
   /// Bu soruda Soru 24/30'a izin verilen en çok satır.
   ///

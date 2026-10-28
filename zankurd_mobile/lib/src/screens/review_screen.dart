@@ -244,7 +244,7 @@ class _SummaryStrip extends StatelessWidget {
   }
 }
 
-class _ReviewCard extends StatelessWidget {
+class _ReviewCard extends StatefulWidget {
   const _ReviewCard({
     required this.record,
     required this.index,
@@ -260,7 +260,23 @@ class _ReviewCard extends StatelessWidget {
   final ValueChanged<int>? onRate;
 
   @override
+  State<_ReviewCard> createState() => _ReviewCardState();
+}
+
+/// K7+ (2026-10-28, jüri): cevap kartı yalnız KENDİ şıkkını ve doğru şıkkı
+/// gösterir (öteki şıklar gizli; "Tüm şıkları gör" ile açılır); açıklama tek
+/// satır, dokununca açılır. Kusur: dört şık + üç satırlık açıklama her kartı
+/// 300 pt yapıyordu, yanlış cevabı bulmak için uzun kaydırma gerekiyordu.
+class _ReviewCardState extends State<_ReviewCard> {
+  bool _showAll = false;
+  bool _explanationOpen = false;
+
+  @override
   Widget build(BuildContext context) {
+    final record = widget.record;
+    final index = widget.index;
+    final rating = widget.rating;
+    final onRate = widget.onRate;
     final t = SahneTokens.of(context);
     final bool isCorrect = record.isCorrect;
     final bool isUnanswered = record.isUnanswered;
@@ -324,13 +340,30 @@ class _ReviewCard extends StatelessWidget {
           ),
           const SizedBox(height: SahneSpace.x3),
           for (final answer in record.answers)
-            _AnswerLine(
-              text: answer,
-              state: answer == record.correctAnswer
-                  ? _AnswerState.correct
-                  : answer == record.selectedAnswer
-                  ? _AnswerState.wrong
-                  : _AnswerState.idle,
+            if (_showAll ||
+                answer == record.correctAnswer ||
+                answer == record.selectedAnswer)
+              _AnswerLine(
+                text: answer,
+                state: answer == record.correctAnswer
+                    ? _AnswerState.correct
+                    : answer == record.selectedAnswer
+                    ? _AnswerState.wrong
+                    : _AnswerState.idle,
+              ),
+          if (!_showAll &&
+              record.answers.any(
+                (a) => a != record.correctAnswer && a != record.selectedAnswer,
+              ))
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: SahneButton.text(
+                key: ValueKey('review-show-all-${record.id}'),
+                label: context.t(K.showAllOptions),
+                arrow: false,
+                quiet: true,
+                onPressed: () => setState(() => _showAll = true),
+              ),
             ),
           if (showTypedAnswer)
             _AnswerLine(
@@ -346,18 +379,38 @@ class _ReviewCard extends StatelessWidget {
             const SizedBox(height: SahneSpace.x2),
             SizedBox(height: 1, child: ColoredBox(color: t.line)),
             const SizedBox(height: SahneSpace.x3),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(AppIcons.lightbulb, color: t.learnTx, size: 20),
-                const SizedBox(width: SahneSpace.x2),
-                Expanded(
-                  child: Text(
-                    explanationText,
-                    style: SahneType.body.copyWith(color: t.tx2),
-                  ),
+            // Tek satır; dokununca açılır (48 dokunma kutusu).
+            InkWell(
+              key: ValueKey('review-explanation-${record.id}'),
+              onTap: () => setState(() => _explanationOpen = !_explanationOpen),
+              child: ConstrainedBox(
+                // a11y-tap-target: 48 — açıklamayı açıp kapatan satır.
+                constraints: const BoxConstraints(minHeight: 48),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(AppIcons.lightbulb, color: t.learnTx, size: 20),
+                    const SizedBox(width: SahneSpace.x2),
+                    Expanded(
+                      child: Text(
+                        explanationText,
+                        maxLines: _explanationOpen ? null : 1,
+                        overflow: _explanationOpen
+                            ? TextOverflow.visible
+                            : TextOverflow.ellipsis,
+                        style: SahneType.body.copyWith(color: t.tx2),
+                      ),
+                    ),
+                    Icon(
+                      _explanationOpen
+                          ? AppIcons.chevronUp
+                          : AppIcons.chevronDown,
+                      color: t.tx2,
+                      size: 20,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ],
           if (rating != null && onRate != null) ...[
@@ -366,8 +419,8 @@ class _ReviewCard extends StatelessWidget {
             const SizedBox(height: SahneSpace.x2),
             _RatingRow(
               key: ValueKey('rate-row-${record.id}'),
-              rating: rating!,
-              onRate: onRate!,
+              rating: rating,
+              onRate: onRate,
             ),
           ],
         ],

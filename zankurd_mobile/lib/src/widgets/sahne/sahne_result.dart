@@ -186,9 +186,16 @@ class SahneResultScaffold extends StatelessWidget {
     this.onClose,
     this.overlay,
     this.balanced = false,
+    this.neutral = false,
     this.accent = SahneRole.race,
     this.mood = SahneResultMood.high,
   });
+
+  /// Nötr sahne (2026-10-28, jüri K7): mod renginde (Boyax/bordo) tam
+  /// ekran gradyan yerine soru sahnesinin nötr zemini. Başarı vurguları
+  /// altın/yeşil kalır; kırmızı yalnız yanlış sayısında. Kusur: yarış
+  /// sonucu ekranın tamamını bordoya boyuyor, "kırmızı = hata" okunuyordu.
+  final bool neutral;
 
   /// Sonucun tonu (bkz. [SahneResultMood]).
   final SahneResultMood mood;
@@ -346,8 +353,8 @@ class SahneResultScaffold extends StatelessWidget {
         closeLabel: closeLabel,
         // Sonuçta dar huzme yerine sonuç ışınları (kahramanın arkasında).
         beam: false,
-        scene: scene.colors,
-        sceneGlow: scene.glow,
+        scene: neutral ? null : scene.colors,
+        sceneGlow: neutral ? null : scene.glow,
         center: contextLabel == null ? null : Text(contextLabel!),
         dock: Center(
           child: ConstrainedBox(

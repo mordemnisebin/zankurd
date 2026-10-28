@@ -52,8 +52,8 @@ class _Entry {
 final _entries = <_Entry>[
   _Entry(
     'karşılama',
-    'Öğren',
-    'Sonraki',
+    'Uygulama dili · Zimanê sepanê',
+    'Devam',
     () => OnboardingScreen(onComplete: () {}),
   ),
   const _Entry('giriş', "ZanKurd'a hoş geldin", 'Hemen oyna', SignInScreen.new),
@@ -115,7 +115,7 @@ void main() {
   ) async {
     await _open(tester, _entries.first);
     final page0 = _primaryRect(tester);
-    await tester.tap(find.text('Sonraki'));
+    await tester.tap(find.text('Devam'));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('onboarding-back')), findsOneWidget);
     expect(_primaryRect(tester).top, closeTo(page0.top, 0.5));
@@ -129,19 +129,29 @@ void main() {
       final text = tester.widget<Text>(find.text(e.title));
       expect(text.style?.fontSize, SahneType.title.fontSize, reason: e.name);
       expect(text.style?.fontWeight, SahneType.title.fontWeight);
-      expect(
-        tester.getTopLeft(find.text(e.title)).dx,
-        SahneSpace.page,
-        reason: '${e.name}: başlık sayfa kenarına sola yaslı',
-      );
+      // 2026-10-28 K10: karşılama adımları (görsel + başlık + satırlar) ORTALI
+      // tek gruptur; sola yaslama sözleşmesi öteki üç ekran için sürer.
+      if (e.name != 'karşılama') {
+        expect(
+          tester.getTopLeft(find.text(e.title)).dx,
+          SahneSpace.page,
+          reason: '${e.name}: başlık sayfa kenarına sola yaslı',
+        );
+      }
       await tester.pumpWidget(const SizedBox.shrink());
     }
   });
 
-  testWidgets('kahraman yuvası dört ekranda kilim şeritli sahne kartıdır', (
+  // 2026-10-28 K10: karşılamanın koyu kahraman kartı kalktı (siyah kutu);
+  // kilim şeritli sahne kartı kararı yalnız giriş, kayıt ve ad ekranı için
+  // sürer.
+  testWidgets('kahraman yuvası giriş/kayıt/ad ekranında kilim şeritli kart', (
     tester,
   ) async {
-    for (final e in _entries) {
+    await _open(tester, _entries.first);
+    expect(find.byType(SahneStageCard), findsNothing);
+    await tester.pumpWidget(const SizedBox.shrink());
+    for (final e in _entries.skip(1)) {
       await _open(tester, e);
       final card = find.byType(SahneStageCard).first;
       expect(tester.widget<SahneStageCard>(card).kilim, isTrue, reason: e.name);
@@ -154,11 +164,7 @@ void main() {
       // Karşılamanın ilk sayfasında kahramanın üstünde büyük dil seçici durur
       // (2026-10-24: etiket + 56'lık segment); öteki ekranlarda kart hemen
       // üst çubuğun altındadır.
-      expect(
-        rect.top,
-        lessThan(e.name == 'karşılama' ? 250 : 110),
-        reason: e.name,
-      );
+      expect(rect.top, lessThan(110), reason: e.name);
       await tester.pumpWidget(const SizedBox.shrink());
     }
   });
@@ -190,7 +196,7 @@ void main() {
     (tester) async {
       // Karşılama 2. sayfa.
       await _open(tester, _entries.first);
-      await tester.tap(find.text('Sonraki'));
+      await tester.tap(find.text('Devam'));
       await tester.pumpAndSettle();
       var primary = _primaryRect(tester);
       var back = tester.getRect(find.byKey(const ValueKey('onboarding-back')));
@@ -205,7 +211,7 @@ void main() {
       // Karşılama geri tuşu bir önceki sayfaya döner.
       await tester.tap(find.byKey(const ValueKey('onboarding-back')));
       await tester.pumpAndSettle();
-      expect(find.text('Öğren'), findsOneWidget);
+      expect(find.text('Uygulama dili · Zimanê sepanê'), findsOneWidget);
 
       // Kayıt 2. adım: "Geri" dolgulu ikinci düğme değil, metin düğmesi.
       await tester.pumpWidget(const SizedBox.shrink());

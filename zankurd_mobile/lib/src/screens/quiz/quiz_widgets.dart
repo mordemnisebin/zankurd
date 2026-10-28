@@ -241,7 +241,7 @@ class _QuestionImageFallback extends StatelessWidget {
 /// Soru metni ile şık grubu arası (şıklar alta oturan düzende). 24-32 aralığı
 /// kurul kararıdır; 28 başparmak bölgesinde soruyu şıklara bağlar ama
 /// birbirine yapıştırmaz.
-const double quizPromptToAnswersGap = 28;
+const double quizPromptToAnswersGap = SahneSpace.x4;
 
 /// Şıklar arası dikey boşluk (tur 8: 8 → 12; koyu temada şıklar birbirine
 /// yapışık okunuyordu).
@@ -409,20 +409,24 @@ class _QuestionTextAndAnswers extends StatelessWidget {
             ],
           ],
         );
-        final Widget promptRow = translation == null
-            ? promptLine
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  promptLine,
-                  const SizedBox(height: SahneSpace.x2),
-                  PromptTranslationReveal(
-                    key: ValueKey('prompt-tr-reveal-${question.id}'),
-                    translation: translation,
-                  ),
-                ],
-              );
+        // K6 (2026-10-28): soru metni HER modda aynı açık kartta (koyu sahnede
+        // yüksek karşıtlık); sahne zemininde yüzen metin okunmuyordu.
+        final Widget promptRow = QuizPromptCard(
+          child: translation == null
+              ? promptLine
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    promptLine,
+                    const SizedBox(height: SahneSpace.x2),
+                    PromptTranslationReveal(
+                      key: ValueKey('prompt-tr-reveal-${question.id}'),
+                      translation: translation,
+                    ),
+                  ],
+                ),
+        );
         final rest = <Widget>[
           SizedBox(height: isCompact ? SahneSpace.x3 : SahneSpace.x4),
           Container(key: answerAreaKey, child: _answerArea(context)),
@@ -635,7 +639,6 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       opponentNamesWhoSelected: opps,
       isCompact: isCompact,
       optionCount: question.displayAnswers.length,
-      tone: CategoryVisuals.tone(question.category),
       // Açıklanmada renk yalnız anlam taşır: doğru Rast, seçilen yanlış
       // Şaş; geri kalan şıklar söner.
       dimmed:
@@ -1771,13 +1774,15 @@ class _CoinBalanceLine extends StatelessWidget {
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
+          // K6 (2026-10-28): "Bugün 1 joker bedava" artık yazı değil, jokerler
+          // üstünde "Ücretsiz" rozeti; burada yalnız stok ipucu yazılır.
           if (showHint && hint != null) ...[
             const SizedBox(width: SahneSpace.x2),
             Flexible(
               child: Text(
                 '· $hint',
                 key: const ValueKey('quiz-free-wildcard-hint'),
-                maxLines: 2,
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: SahneType.caption.copyWith(color: t.tx2),
               ),
