@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../data/local_progress_scope.dart';
 import '../data/tournament_progress_publisher.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -111,7 +114,35 @@ class _TournamentScreenState extends State<TournamentScreen> {
   /// tekrar basınca sunucu skoru tek sefer kabul ettiği için sessizce
   /// hiçbir şey olmuyordu (2026-08-14 denetimi). Bu küme yanlış
   /// çıkarımı düzeltir.
+  ///
+  /// Kalıcıdır (Codex denetimi 2026-10-29): bellekte tutulunca ekran
+  /// yeniden açıldığında 0 puanla bitirilmiş maç için "Başlat" geri
+  /// geliyordu. Anahtar kullanıcıya göre ayrılır.
   final Set<String> _submittedMatchIds = {};
+
+  static String get _submittedKey =>
+      LocalProgressScope.physical('zankurd.tournament.submittedMatches');
+
+  Future<void> _restoreSubmitted() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _submittedMatchIds.addAll(prefs.getStringList(_submittedKey) ?? const []);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'tournament_submitted_read');
+    }
+  }
+
+  Future<void> _markSubmitted(String matchId) async {
+    _submittedMatchIds.add(matchId);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final ids = _submittedMatchIds.toList();
+      final kept = ids.length > 40 ? ids.sublist(ids.length - 40) : ids;
+      await prefs.setStringList(_submittedKey, kept);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'tournament_submitted_write');
+    }
+  }
 
   /// Şema sunucudan mı geldi?
   ///
@@ -215,6 +246,25 @@ class _TournamentScreenState extends State<TournamentScreen> {
       }
       return;
     }
+    // Maçım bitti (ör. yarı finali erken kazandım) ama kupa sürüyor: sonraki
+    // tur diğer maç kapanınca kurulur. `_userMatch` boş olduğundan yukarıdaki
+    // dal çalışmıyordu ve ekran eski kalıyordu (Codex denetimi 2026-10-29).
+    final current = _bracket;
+    if (_serverBracket &&
+        current != null &&
+        current.status == 'active' &&
+        _userMatch == null) {
+      try {
+        final real = await widget.repository.loadRealTournamentBracket();
+        if (!mounted || real == null) return;
+        if (_bracketSignature(real) != _bracketSignature(current)) {
+          await _load();
+        }
+      } catch (_) {
+        // Sonraki tıkta denenir.
+      }
+      return;
+    }
     if (!_waitingForPlayers) return;
     try {
       final real = await widget.repository.loadRealTournamentBracket();
@@ -230,6 +280,15 @@ class _TournamentScreenState extends State<TournamentScreen> {
     }
   }
 
+  /// Şemanın ilerleyişini özetler: tur, durum ve biten maç sayısı.
+  static String _bracketSignature(TournamentBracket b) {
+    final completed = b.rounds
+        .expand((round) => round.matches)
+        .where((m) => m.status == 'completed')
+        .length;
+    return '${b.currentRound}|${b.status}|$completed';
+  }
+
   Future<void> _load() async {
     setState(() {
       _loading = true;
@@ -239,6 +298,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
       // Önce gerçek turnuva sorulur. `null` dönmesi "sunucu tarafı yok"
       // demektir; şemanın kimliğine bakarak tahmin etmek sahte depoyu
       // sunucu sanmaya yol açıyordu.
+      await _restoreSubmitted();
       final real = await widget.repository.loadRealTournamentBracket();
       final bracket = real ?? await widget.repository.loadTournamentBracket();
       final standings = await widget.repository.loadTournamentStandings();
@@ -641,7 +701,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             // gönderildi sayılır — `_awaitingOpponent` skorun sıfırdan
             // büyük olmasına bakınca bu durumu kaçırıyordu (2026-08-14
             // denetimi).
-            _submittedMatchIds.add(match.id);
+            await _markSubmitted(match.id);
           }
           await _load();
         } else {
@@ -678,7 +738,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
       if (!mounted) return;
       // Skoru sunucu son cevapta yazdı; yalnız şema yeniden okunur. Yarıda
       // çıkılan maçta da (kalanlar TIMEOUT) skor yazılmıştır.
-      if (tournamentMatchCompleted(result)) _submittedMatchIds.add(match.id);
+      if (tournamentMatchCompleted(result)) await _markSubmitted(match.id);
     } finally {
       if (mounted) setState(() => _matchLoading = false);
     }

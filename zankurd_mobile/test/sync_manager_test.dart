@@ -1314,6 +1314,41 @@ void main() {
     expect(prefs.getString('zankurd.syncQueue.v2.user-a'), contains('room-1'));
   });
 
+  // Codex denetimi 2026-10-29 (hata #4): "Yeniden dene" kaynak listeyi önce
+  // diskte boşaltıp sonra hedefi yazıyordu; arada kapanma tek kopyayı
+  // yok ediyordu. Artık hedef önce yazılır; arada kapanırsa kalan çift
+  // kopya yüklemede tekilleştirilir (ödül iki kez gitmez, kaybolmaz).
+  test(
+    'yeniden dene arasında kapanma: çift kopya yüklemede tekilleşir',
+    () async {
+      final item = {
+        'queueId': 'q-dup-1',
+        'type': 'sync_quiz_reward',
+        'score': 100,
+        'correctCount': 1,
+        'bestStreak': 1,
+        'totalQuestions': 1,
+        'roomId': 'room-dup',
+        'playerId': 'user-a',
+        'timestamp': 1,
+      };
+      SharedPreferences.setMockInitialValues({
+        'zankurd.syncQueue.v2.user-a': jsonEncode([
+          {...item, 'retries': 0},
+        ]),
+        'zankurd.syncQueue.failed.v1.user-a': jsonEncode([
+          {...item, 'retries': 5},
+        ]),
+      });
+      final manager = await SyncManager.initialize(
+        _AlwaysFailingRewardRepository(userId: 'user-a'),
+        connectivityMonitor: _OnlineConnectivityMonitor(),
+      );
+      expect(manager.pendingCount, 1);
+      expect(manager.failedCount, 0);
+    },
+  );
+
   Map<String, dynamic> queuedReward(String id, {int retries = 0}) => {
     'queueId': id,
     'type': 'sync_quiz_reward',

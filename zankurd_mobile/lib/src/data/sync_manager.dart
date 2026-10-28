@@ -502,6 +502,12 @@ class SyncManager {
             );
         }
       }
+      // `retryFailedItems` hedefi yazıp kaynağı boşaltmadan kapanmışsa aynı
+      // kayıt iki listede kalır; başarısız listedekini düşür.
+      String canon(Map<String, dynamic> item) =>
+          jsonEncode((Map<String, dynamic>.of(item)..remove('retries')));
+      final queued = _queue.map(canon).toSet();
+      _failedItems.removeWhere((item) => queued.contains(canon(item)));
     } catch (error, stack) {
       ErrorReporter.record(
         error,
@@ -1408,14 +1414,24 @@ class SyncManager {
   /// (ör. eksik migration) sonsuz döngüye girer.
   Future<void> retryFailedItems() async {
     if (_failedItems.isEmpty) return;
-    for (final item in _failedItems) {
+    // Önce HEDEF (asıl kuyruk) kalıcı yazılır, sonra kaynak (başarısız
+    // liste) boşaltılır. Eski sıra kaynağı önce boşaltıyordu: arada kapanma
+    // ya da yazım hatası tek kalıcı kopyayı yok ediyordu (Codex denetimi
+    // 2026-10-29). Arada kapanırsa iki kopya kalır; yüklemede tekilleştirilir.
+    final moved = List<Map<String, dynamic>>.of(_failedItems);
+    for (final item in moved) {
       item['retries'] = 0;
     }
-    _queue.addAll(_failedItems);
+    _queue.addAll(moved);
+    try {
+      await _saveQueue(propagateFailure: true);
+    } catch (_) {
+      _queue.removeWhere((item) => moved.any((m) => identical(m, item)));
+      return;
+    }
     _failedItems.clear();
     _notifyNotifiers();
     await _saveFailedQueue();
-    await _saveQueue();
     unawaited(sync());
   }
 
