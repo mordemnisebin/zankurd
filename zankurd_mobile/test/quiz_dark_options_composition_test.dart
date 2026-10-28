@@ -100,13 +100,18 @@ void main() {
         );
       }
     }
-    // K6 (2026-10-28) GEÇERSİZ KILDI: tur 8b'nin "grup dikeyde ortalı" kararı
-    // (ve `anchorHeight`) kalktı; soru ÜSTTEN başlar, boşluk şıkların ALTINDA
-    // kalır (bkz. `soru_sonuc_ortak_sahne_test`).
+    // 2026-10-28 tur 2 R3: K6'nın "soru ÜSTTEN başlar" kararı da dengeli
+    // yerleşimle değişti: grup üst çubuk ile alt perde arasındaki boşlukta
+    // üst-ortada durur (bkz. `soru_sonuc_ortak_sahne_test`); başlığa
+    // yapışık değil.
     final scroll = find.byKey(const ValueKey('quiz-portrait-scroll'));
     final top = tester.getTopLeft(find.byType(QuizQuestionPrompt)).dy;
     final topGap = top - tester.getTopLeft(scroll).dy;
-    expect(topGap, lessThanOrEqualTo(48), reason: 'soru üstte: $topGap');
+    expect(
+      topGap,
+      greaterThanOrEqualTo(16),
+      reason: 'başlığa yapışık: $topGap',
+    );
   });
 
   // 8. kurul (Opus, Gemini): 4 pt ilerleme çubuğu koyu zeminde görünmüyordu;

@@ -625,19 +625,18 @@ class SahneResultHero extends StatelessWidget {
             ),
           ),
         ),
-        // En çok iki küçük parıltı (yalnız kutlanan sonuçta, renkli sahnede).
-        if (scenic && shine) ...const [
+        // R5 (2026-10-28 tur 2): puanın arkasında kontrollü altın ışıma ve
+        // dört parıltı; yalnız kutlanan/iyi sonuçta. Bir kez belirir (döngü
+        // yok: testler yerleşir, pil yanmaz); hareket azaltmada baştan
+        // durağan.
+        if (scenic && shine && !calm)
           PositionedDirectional(
-            start: 32,
-            top: 64,
-            child: _Sparkle(size: 18, color: SahneVivid.sparkGold),
+            start: 0,
+            end: 0,
+            top: value != null ? (scenic ? 128 : 104) - 150 : 84 - 150,
+            height: 300,
+            child: const _ScoreCelebration(),
           ),
-          PositionedDirectional(
-            end: 32,
-            top: 44,
-            child: _Sparkle(size: 20, color: SahneVivid.sparkLight),
-          ),
-        ],
         Padding(
           padding: const EdgeInsets.only(
             top: SahneSpace.x2,
@@ -646,6 +645,104 @@ class SahneResultHero extends StatelessWidget {
           child: SizedBox(width: double.infinity, child: content),
         ),
       ],
+    );
+  }
+}
+
+/// Puanın arkasındaki altın ışıma + parıltılar (R5, 2026-10-28 tur 2).
+///
+/// Işıma radyal altın (merkez ≈ %34, kenar 0); parıltılar ışımanın içinde
+/// dört noktada, kademeli belirir. Hareket azaltma açıkken ([sahneMotionReduced])
+/// animasyon yoktur: son kare durağan çizilir.
+class _ScoreCelebration extends StatefulWidget {
+  const _ScoreCelebration();
+
+  @override
+  State<_ScoreCelebration> createState() => _ScoreCelebrationState();
+}
+
+class _ScoreCelebrationState extends State<_ScoreCelebration>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1100),
+  );
+  bool _started = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_started) return;
+    _started = true;
+    if (sahneMotionReduced(context)) {
+      _c.value = 1;
+    } else {
+      _c.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return ExcludeSemantics(
+      child: IgnorePointer(
+        child: AnimatedBuilder(
+          animation: _c,
+          builder: (context, _) {
+            final glow = Curves.easeOut.transform(_c.value);
+            double pop(double from) => Curves.easeOutBack.transform(
+              ((_c.value - from) / (1 - from)).clamp(0.0, 1.0),
+            );
+            return Stack(
+              key: const ValueKey('result-score-celebration'),
+              alignment: Alignment.center,
+              children: [
+                Transform.scale(
+                  scale: 0.85 + 0.15 * glow,
+                  child: Opacity(
+                    opacity: glow,
+                    child: SizedBox.square(
+                      dimension: 280,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: RadialGradient(
+                            colors: [
+                              t.gold.withValues(alpha: 0.34),
+                              t.gold.withValues(alpha: 0.12),
+                              t.gold.withValues(alpha: 0),
+                            ],
+                            stops: const [0, 0.55, 1],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                for (final spark in const [
+                  (-118.0, -34.0, 20.0, 0.30),
+                  (112.0, -58.0, 24.0, 0.15),
+                  (-96.0, 52.0, 14.0, 0.45),
+                  (104.0, 46.0, 18.0, 0.0),
+                ])
+                  Transform.translate(
+                    offset: Offset(spark.$1, spark.$2),
+                    child: Transform.scale(
+                      scale: pop(spark.$4),
+                      child: _Sparkle(size: spark.$3, color: t.gold),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }

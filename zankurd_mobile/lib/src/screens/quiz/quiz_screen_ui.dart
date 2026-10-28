@@ -46,6 +46,9 @@ extension _QuizScreenUI on _QuizScreenState {
             child: SahneStageScroll(
               scrollKey: const ValueKey('quiz-portrait-scroll'),
               resetKey: index,
+              // R3 (2026-10-28 tur 2): soru + şıklar grubu üst çubuk ile
+              // alt perde arasındaki boşlukta dengeli (üst-orta) durur.
+              balance: sahneQuestionBalance,
               padding: const EdgeInsets.only(
                 top: quizStageTopGap,
                 bottom: SahneSpace.x6,

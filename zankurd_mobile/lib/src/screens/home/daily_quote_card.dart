@@ -98,6 +98,12 @@ class _DailyQuoteCardState extends State<DailyQuoteCard> {
         container: true,
         label: '$label. ${quote.ku}${showTr ? '. ${quote.tr}' : ''}',
         child: SahneSurfaceCard(
+          // Tur 2 R8: söz sayfanın SON, küçük kartı (görev ve konulardan
+          // daha az ağırlık): dar iç boşluk, gövde yazı boyu.
+          padding: const EdgeInsets.symmetric(
+            horizontal: SahneSpace.x4,
+            vertical: SahneSpace.x2,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -121,18 +127,18 @@ class _DailyQuoteCardState extends State<DailyQuoteCard> {
               Text(
                 DailyQuoteCard.quoted(quote.ku),
                 key: const ValueKey('home-daily-quote-ku'),
-                style: SahneType.headline.copyWith(color: t.tx),
+                style: SahneType.bodyStrong.copyWith(color: t.tx),
               ),
               if (showTr) ...[
-                const SizedBox(height: SahneSpace.x2),
+                const SizedBox(height: SahneSpace.x1),
                 Text(
                   quote.tr,
                   key: const ValueKey('home-daily-quote-tr'),
-                  style: SahneType.body.copyWith(color: t.tx2),
+                  style: SahneType.caption.copyWith(color: t.tx2),
                 ),
               ],
               if (quote.source.isNotEmpty) ...[
-                const SizedBox(height: SahneSpace.x2),
+                const SizedBox(height: SahneSpace.x1),
                 Text(
                   quote.source,
                   key: const ValueKey('home-daily-quote-source'),

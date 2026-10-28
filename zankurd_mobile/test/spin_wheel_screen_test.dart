@@ -46,7 +46,36 @@ Widget _shell(Widget child) {
   );
 }
 
+// 2026-10-28 TUR 2 R6 — çark ekranı: çark küçük ve tepeye yapışıktı
+// (genişliğin ~%77'si 300'de sınırlı, altında ölü yarım ekran). Karar: çark
+// sayfa kenar boşlukları düşülmüş genişliği doldurur ve kullanılabilir
+// alanın (üst çubuk ile "Çevir" arası) dikey ortasındadır. Taşma/istisna
+// vermez, yani eski testler hiçbir şey söylemezdi; yalnız ölçü yakalar.
 void main() {
+  testWidgets('R6: çark 390 genişlikte ≥ %70 ve alanın ortasında', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      _shell(SpinWheelScreen(repository: _SpinRepository(canSpin: true))),
+    );
+    await tester.pump();
+    await tester.pump();
+    final dial = tester.getRect(find.byKey(const ValueKey('spin-wheel-dial')));
+    expect(dial.width, greaterThanOrEqualTo(390 * 0.70));
+    expect(dial.width, lessThanOrEqualTo(spinWheelMaxDiameter));
+    // Çevir altta sabit; çark üst çubuk (≈ 56–100) ile düğme arasında.
+    final spin = tester.getRect(find.text('Çevir'));
+    expect(spin.top, greaterThan(dial.bottom));
+    const top = 100.0;
+    final bottom = tester.getTopLeft(find.text('Çevir')).dy - 24;
+    final centre = (dial.center.dy - top) / (bottom - top);
+    expect(centre, inInclusiveRange(0.35, 0.65), reason: 'çark ortada değil');
+    expect(tester.takeException(), isNull);
+  });
+
   // Çevir butonu ve geri sayım, çark görselinin (320px) altında kalır;
   // varsayılan test viewport'unda ListView bu satırları hiç build etmez.
   Future<void> useTallPhoneViewport(WidgetTester tester) async {

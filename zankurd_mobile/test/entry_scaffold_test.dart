@@ -153,8 +153,19 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
     for (final e in _entries.skip(1)) {
       await _open(tester, e);
-      final card = find.byType(SahneStageCard).first;
-      expect(tester.widget<SahneStageCard>(card).kilim, isTrue, reason: e.name);
+      // 2026-10-28 tur 2 R4: giriş kahramanı kilim kartı değil dağ + güneş
+      // manzarasıdır ([SahneEntryScene]); kayıt ve ad ekranı kilim kartıdır.
+      final isScene = e.name == 'giriş';
+      final card = isScene
+          ? find.byType(SahneEntryScene)
+          : find.byType(SahneStageCard).first;
+      if (!isScene) {
+        expect(
+          tester.widget<SahneStageCard>(card).kilim,
+          isTrue,
+          reason: e.name,
+        );
+      }
       final rect = tester.getRect(card);
       expect(rect.left, SahneSpace.page, reason: e.name);
       expect(rect.right, _size.width - SahneSpace.page, reason: e.name);

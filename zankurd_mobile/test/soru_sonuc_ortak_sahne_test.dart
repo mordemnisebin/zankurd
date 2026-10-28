@@ -25,6 +25,17 @@
 //   → kalktı; soru ÜSTTEN başlar.
 // * 2026-10-20 sonuç sahnesi mod renginde gradyan (Boyax/Zimrût) → nötr
 //   sahne.
+//
+// ## 2026-10-28 TUR 2 (R3 soru sahnesi, R5 sonuç)
+//
+// * R3: "soru ÜSTTEN başlar" da değişti. Kısa soruda grup başlığa
+//   yapışıyor, altta ölü ~%50 kalıyordu (kurul: dört model). Yeni kural:
+//   soru + şıklar grubu üst çubuk ile alt perde arasındaki kullanılabilir
+//   yüksekliğin %30–55'inde (üst-orta) durur; uzun soruda boşluk sıfırlanır
+//   ve alan kayar. Şık ≥ 60; joker ≥ 48 × 48, adı ≥ 11 sp, fiyat/"Ücretsiz"
+//   ayrı hap.
+// * R5: "Konulara göre" ve "Yeni rozet" katlı (tek satır özet); kutlama
+//   ışıması hareket azaltmada durağan; başlık başarıya göre.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -112,20 +123,74 @@ void main() {
     });
   }
 
-  testWidgets('K6: soru bloğu ekranın üst %45\'inde başlar, açık kartta', (
+  for (final experience in [
+    QuizExperience.competition,
+    QuizExperience.learning,
+  ]) {
+    testWidgets('R3: ${experience.name} soru+şık grubu kullanılabilir alanın '
+        'üst-ortasında (%30–55), açık kartta', (tester) async {
+      await pumpQuiz(tester, experience: experience);
+      final card = find.byKey(const ValueKey('quiz-prompt-card'));
+      expect(card, findsOneWidget);
+      final scroll = tester.getRect(
+        find.byKey(const ValueKey('quiz-portrait-scroll')),
+      );
+      final tiles = find.byType(QuizOptionTile);
+      final groupTop = tester.getTopLeft(card).dy;
+      final groupBottom = tester.getBottomLeft(tiles.last).dy;
+      final centre =
+          ((groupTop + groupBottom) / 2 - scroll.top) / scroll.height;
+      expect(
+        centre,
+        inInclusiveRange(0.30, 0.55),
+        reason: 'grup dikey merkezi %${(centre * 100).round()}',
+      );
+      // Başlığa yapışık değil, altta ölü yarım ekran da yok.
+      expect(groupTop - scroll.top, greaterThanOrEqualTo(16));
+      expect(scroll.bottom - groupBottom, lessThan(scroll.height * 0.6));
+      // Açık yüzey: koyu sahnede açık kart (yüksek karşıtlık).
+      final box = tester.widget<Container>(card);
+      final fill = (box.decoration as ShapeDecoration).color!;
+      expect(fill.computeLuminance(), greaterThan(0.8));
+    });
+  }
+
+  testWidgets('R3: şık 60-64, jokerler ≥ 48×48; ad ≥ 11 sp, fiyat ayrı hap', (
     tester,
   ) async {
     await pumpQuiz(tester);
-    final card = find.byKey(const ValueKey('quiz-prompt-card'));
-    expect(card, findsOneWidget);
-    final top = tester.getTopLeft(card).dy;
-    expect(top, lessThan(844 * 0.45), reason: 'soru bloğu üstü $top');
-    // Üstte dev boş alan yok: kart üst çubuğun hemen altında.
-    expect(top, lessThan(200));
-    // Açık yüzey: koyu sahnede açık kart (yüksek karşıtlık).
-    final box = tester.widget<Container>(card);
-    final fill = (box.decoration as ShapeDecoration).color!;
-    expect(fill.computeLuminance(), greaterThan(0.8));
+    for (final e in find.byType(QuizOptionTile).evaluate()) {
+      final h = tester.getSize(find.byWidget(e.widget)).height;
+      expect(h, inInclusiveRange(60, 64));
+    }
+    final jokers = find.byType(SahneJokerButton);
+    expect(jokers, findsWidgets);
+    for (final e in jokers.evaluate()) {
+      final size = tester.getSize(find.byWidget(e.widget));
+      expect(size.width, greaterThanOrEqualTo(48));
+      expect(size.height, greaterThanOrEqualTo(48));
+    }
+    final names = find.byKey(const ValueKey('joker-name'));
+    expect(names, findsWidgets);
+    for (final e in names.evaluate()) {
+      final text = e.widget as Text;
+      expect(text.style!.fontSize, greaterThanOrEqualTo(11));
+      // Ad küçültülmez: FittedBox altında değil.
+      expect(
+        find.ancestor(
+          of: find.byWidget(text),
+          matching: find.byType(FittedBox),
+        ),
+        findsNothing,
+      );
+    }
+    // Fiyat/"Ücretsiz" adın metniyle aynı Text değil, ayrı hap.
+    final free = find.byKey(const ValueKey('joker-free-badge'));
+    if (free.evaluate().isNotEmpty) {
+      final nameRect = tester.getRect(names.first);
+      final badgeRect = tester.getRect(free.first);
+      expect(badgeRect.top, greaterThanOrEqualTo(nameRect.bottom - 1));
+    }
   });
 
   testWidgets('K6: şıklar ≥ 52 yüksek, aralık 8-12', (tester) async {
@@ -198,6 +263,20 @@ void main() {
       (w) => w is SahneButton && w.isPrimary,
     );
     expect(primaries, findsOneWidget);
+    // R5 (2026-10-28 tur 2): konu özeti ve rozetler katlı.
+    expect(
+      find.byKey(const ValueKey('result-category-learnings')),
+      findsNothing,
+      reason: '"Konulara göre" varsayılan kapalı olmalı',
+    );
+    // (Önbellek alanındaki satırlar ekran dışı sayılır: skipOffstage kapalı.)
+    expect(
+      find.byKey(
+        const ValueKey('result-category-section'),
+        skipOffstage: false,
+      ),
+      findsOneWidget,
+    );
     // Cevaplar varsayılan kapalı; "Cevapları gör" açar.
     expect(find.byType(ResultExplanationEntry), findsNothing);
     final toggle = find.byKey(const ValueKey('result-see-answers'));
@@ -209,6 +288,98 @@ void main() {
     await tester.tap(toggle);
     await tester.pump();
     expect(find.byType(ResultExplanationEntry), findsWidgets);
+  });
+
+  testWidgets('R5: katlı bölüm dokununca açılır; ilk görünümde tek birincil', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final repo = MockZanKurdRepository();
+    await tester.pumpWidget(
+      testShell(
+        child: QuizResultScreen(
+          repository: repo,
+          room: repo.createRoom(),
+          score: 240,
+          correctCount: 2,
+          wrongCount: 0,
+          totalQuestions: 2,
+          bestStreak: 2,
+          coinsAwarded: 30,
+          answerRecords: _records,
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1500));
+    // İki doğru → üç yıldız → başlık kutlama.
+    expect(find.text('Tebrikler!'), findsOneWidget);
+    // Kutlama ışıması çizilir.
+    expect(
+      find.byKey(const ValueKey('result-score-celebration')),
+      findsOneWidget,
+    );
+    // Skor ve birincil eylem ilk görünümde.
+    expect(find.byKey(const ValueKey('result-score-count')), findsOneWidget);
+    final play = find.byKey(const ValueKey('result-play-again-button'));
+    expect(tester.getBottomLeft(play).dy, lessThanOrEqualTo(844));
+    // Katlı başlık ≥ 48 yüksek, dokununca bölüm açılır.
+    final header = find.descendant(
+      of: find.byKey(const ValueKey('result-category-section')),
+      matching: find.byKey(const ValueKey('result-collapsible-header')),
+    );
+    await tester.scrollUntilVisible(
+      header,
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(tester.getSize(header.first).height, greaterThanOrEqualTo(48));
+    await tester.tap(header.first);
+    await tester.pump();
+    expect(
+      find.byKey(const ValueKey('result-category-learnings')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('R5: hareket azaltmada kutlama ışıması baştan durağan', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final repo = MockZanKurdRepository();
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(
+          size: Size(390, 844),
+          disableAnimations: true,
+        ),
+        child: testShell(
+          child: QuizResultScreen(
+            repository: repo,
+            room: repo.createRoom(),
+            score: 240,
+            correctCount: 2,
+            wrongCount: 0,
+            totalQuestions: 2,
+            bestStreak: 2,
+            coinsAwarded: 30,
+            answerRecords: _records,
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    final glow = find.byKey(const ValueKey('result-score-celebration'));
+    expect(glow, findsOneWidget);
+    // Tek karede son hâl: ışıma tam opak.
+    final opacity = tester.widget<Opacity>(
+      find.descendant(of: glow, matching: find.byType(Opacity)).first,
+    );
+    expect(opacity.opacity, 1.0);
   });
 
   testWidgets('K7+: cevaplar kartı yalnız kendi + doğru şıkkı gösterir', (

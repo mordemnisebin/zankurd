@@ -1579,10 +1579,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         : SahneResultMood.high;
     final lowMood = mood == SahneResultMood.low;
 
+    final starsEarned = accuracy >= 80
+        ? 3
+        : accuracy >= 50
+        ? 2
+        : 1;
     final headerTitle = isLearningExperience
         // Düşük puanda "Öğrenme tamamlandı" kutlaması yersiz; var olan
         // "Tekrar dene" dizesi cesaretlendirir.
-        ? (lowMood ? context.t(K.retry) : context.t(K.learningResultTitle))
+        ? (lowMood
+              ? context.t(K.retry)
+              : starsEarned == 3
+              ? context.t(K.congrats)
+              : context.t(K.learningResultTitle))
         : is1v1
         ? (isWinner
               ? context.t(K.youWon)
@@ -1593,6 +1602,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ? context.t(K.draw)
         : crowdWin
         ? context.t(K.youWon)
+        // R5 (2026-10-28 tur 2): solo turda başlık başarıya göre — üç
+        // yıldızda kutlama ("Tebrikler!"), aksi hâlde sakin "Yarış
+        // tamamlandı". Mevcut onaylı dizeler; yeni Kurmancî dize yok.
+        : (!room.isCrowd && !is1v1 && starsEarned == 3)
+        ? context.t(K.congrats)
         : context.t(K.raceFinished);
 
     // Kutlama (sonuç ışınları) yalnız kutlanacak bir sonuç varken çizilir:
@@ -1603,11 +1617,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // sıradan bir tur da güneş ışınlarıyla açılıyordu ve parıltı her
     // sonuçta olunca hiçbir şeyi kutlamıyordu. Işın yalnız üç yıldızda
     // (%80+) — yıldızların saydığı eşikle aynı.
-    final starsEarned = accuracy >= 80
-        ? 3
-        : accuracy >= 50
-        ? 2
-        : 1;
     final celebrate = room.isCrowd
         ? crowdWin
         : is1v1
@@ -1682,10 +1691,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               ? null
               : () => openReview(learningOutcome.reviewRecords),
         ),
-        if (breakdown.isNotEmpty) ...[
-          SahneSectionHeader(title: context.t(K.resultLearnedTitle)),
-          _CategoryLearnings(breakdown: breakdown),
-        ],
+        if (breakdown.isNotEmpty)
+          ResultCollapsibleSection(
+            key: const ValueKey('result-category-section'),
+            title: context.t(K.resultLearnedTitle),
+            // Tek satır özet: "Dil 1/1 · Tarih 0/1".
+            summary: [
+              for (final tally in breakdown)
+                '${CategoryNames.localized(tally.category, context.isKu)} '
+                    '${tally.correct}/${tally.answered}',
+            ].join(' · '),
+            child: _CategoryLearnings(breakdown: breakdown),
+          ),
       ],
     ];
 
@@ -1815,7 +1832,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             ? accuracyText
             : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
         celebrate: celebrate,
-        lightGlow: mood == SahneResultMood.high && starsEarned >= 2,
+        lightGlow: !lowMood && starsEarned >= 2,
         calm: lowMood,
         tone: duelOutcome == null
             ? SahneResultTone.reward
@@ -1888,6 +1905,102 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         if (!didPop && isOnlineRoom) completeResultAction();
       },
       child: scaffold,
+    );
+  }
+}
+
+/// Sonuç ekranının katlanır bölümü (2026-10-28 tur 2 R5): kapalıyken TEK
+/// satır (başlık + özet + ok, ≥ 48 yükseklik), dokununca açılır.
+///
+/// Kusur: "Konulara göre" ve "Yeni rozet" bölümleri varsayılan açıktı;
+/// ilk görünümde yıldız, puan, çipler ve ödülün altında uzun listeler
+/// ekranı itiyor, kutlama anı bir rapora dönüyordu. Sessizdi çünkü hiçbir
+/// şey taşmıyor, yalnız ilk ekranın içeriği ölçülünce görünüyor.
+class ResultCollapsibleSection extends StatefulWidget {
+  const ResultCollapsibleSection({
+    super.key,
+    required this.title,
+    required this.summary,
+    required this.child,
+  });
+
+  final String title;
+
+  /// Kapalıyken başlığın yanında tek satır özet (taşarsa üç nokta).
+  final String summary;
+  final Widget child;
+
+  @override
+  State<ResultCollapsibleSection> createState() =>
+      _ResultCollapsibleSectionState();
+}
+
+class _ResultCollapsibleSectionState extends State<ResultCollapsibleSection> {
+  bool _open = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final stacked = MediaQuery.textScalerOf(context).scale(14) > 18.2;
+    final title = Text(
+      widget.title,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: SahneType.bodyStrong.copyWith(color: t.tx),
+    );
+    final summary = widget.summary.isEmpty
+        ? null
+        : Text(
+            widget.summary,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: stacked ? TextAlign.start : TextAlign.end,
+            style: SahneType.caption.copyWith(color: t.tx2),
+          );
+    final header = SahneSurfaceCard(
+      key: const ValueKey('result-collapsible-header'),
+      padding: const EdgeInsets.symmetric(
+        horizontal: SahneSpace.x4,
+        vertical: SahneSpace.x3,
+      ),
+      semanticLabel: '${widget.title}, ${widget.summary}',
+      onTap: () => setState(() => _open = !_open),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: sahneTapTarget - 24),
+        child: Row(
+          children: [
+            Expanded(
+              // Büyük yazıda başlık ve özet alt alta; yan yana sığmazdı.
+              child: stacked
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [title, ?summary],
+                    )
+                  : Row(
+                      children: [
+                        Flexible(child: title),
+                        const SizedBox(width: SahneSpace.x3),
+                        if (summary != null) Expanded(child: summary),
+                      ],
+                    ),
+            ),
+            const SizedBox(width: SahneSpace.x2),
+            Icon(
+              _open ? AppIcons.chevronUp : AppIcons.chevronDown,
+              size: 18,
+              color: t.tx2,
+            ),
+          ],
+        ),
+      ),
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: SahneSpace.x3),
+        header,
+        if (_open) ...[const SizedBox(height: SahneSpace.x2), widget.child],
+      ],
     );
   }
 }
@@ -2620,55 +2733,75 @@ class _RoundGains extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        if (achievements.isNotEmpty)
-          SahneSectionHeader(title: context.t(K.newBadge))
-        else
-          const SizedBox(height: SahneSpace.sectionTop),
-        SahneListGroup(
-          children: [
-            for (final achievement in achievements)
-              SahneListRow.icon(
-                icon: achievement.icon,
-                role: SahneRole.gold,
-                title: achievement.title(context.isKu),
-              ),
-            for (final entry in promotions.entries)
-              SahneListRow.icon(
-                icon: entry.value.icon,
-                role: SahneRole.gold,
-                // Anahtar tabanlı kayda taşınmadı ve taşınmamalı: iki dal
-                // yalnız *metin* değil, iki farklı veri araması yapıyor —
-                // `CategoryNames.localized` farklı argümanla, unvan da
-                // farklı alandan (`titleKu` / `titleTr`) okunuyor. Bu bir
-                // çeviri değil, dile göre kaynak seçimidir; kayıt defteri
-                // bunu ifade edemez.
-                title: ku
-                    ? '${CategoryNames.localized(entry.key, true)} — ${entry.value.titleKu}!'
-                    : '${CategoryNames.localized(entry.key, false)} — ${entry.value.titleTr}!',
-                subtitle: context.t(K.newTitleEarned),
-              ),
-            for (final mission in missions)
-              SahneListRow.icon(
-                icon: AppIcons.listCheck,
-                role: SahneRole.gold,
-                // XP burada verilmez, ana ekranda alınır; toplamda
-                // görünmeyen bir "+100 XP" yazmak yanlış olurdu.
-                title:
-                    '${context.t(K.gorevTamamlandi)} · '
-                    '${context.isKu ? mission.labelKu : mission.labelTr}',
-              ),
-            if (dailyStreak > 0)
-              SahneListRow.icon(
-                icon: AppIcons.fire,
-                role: SahneRole.gold,
-                title: context.t(K.dailyStreakDays, {'days': '$dailyStreak'}),
-              ),
-          ],
-        ),
-      ],
+    // Her kazanımın tek satırlık adı (katlanmış özet ve ekran okuyucu için).
+    final promotionTitles = [
+      for (final entry in promotions.entries)
+        // Anahtar tabanlı kayda taşınmadı ve taşınmamalı: iki dal yalnız
+        // *metin* değil, iki farklı veri araması yapıyor —
+        // `CategoryNames.localized` farklı argümanla, unvan da farklı
+        // alandan (`titleKu` / `titleTr`) okunuyor. Bu bir çeviri değil,
+        // dile göre kaynak seçimidir; kayıt defteri bunu ifade edemez.
+        ku
+            ? '${CategoryNames.localized(entry.key, true)} — ${entry.value.titleKu}!'
+            : '${CategoryNames.localized(entry.key, false)} — ${entry.value.titleTr}!',
+    ];
+    final missionTitles = [
+      for (final mission in missions)
+        // XP burada verilmez, ana ekranda alınır; toplamda görünmeyen bir
+        // "+100 XP" yazmak yanlış olurdu.
+        '${context.t(K.gorevTamamlandi)} · '
+            '${ku ? mission.labelKu : mission.labelTr}',
+    ];
+    final streakTitle = dailyStreak > 0
+        ? context.t(K.dailyStreakDays, {'days': '$dailyStreak'})
+        : null;
+    final achievementTitles = [for (final a in achievements) a.title(ku)];
+    final all = [
+      ...achievementTitles,
+      ...promotionTitles,
+      ...missionTitles,
+      ?streakTitle,
+    ];
+    // R5 (2026-10-28 tur 2): kapalıyken TEK satır. Rozet varsa başlık
+    // "Yeni rozet" + adlar; yoksa ilk kazanım başlık, kalanı "+N".
+    final hasBadge = achievements.isNotEmpty;
+    final title = hasBadge ? context.t(K.newBadge) : all.first;
+    final summary = hasBadge
+        ? all.join(' · ')
+        : (all.length > 1 ? '+${all.length - 1}' : '');
+    return ResultCollapsibleSection(
+      key: const ValueKey('result-gains-section'),
+      title: title,
+      summary: summary,
+      child: SahneListGroup(
+        children: [
+          for (final achievement in achievements)
+            SahneListRow.icon(
+              icon: achievement.icon,
+              role: SahneRole.gold,
+              title: achievement.title(ku),
+            ),
+          for (final (i, entry) in promotions.entries.indexed)
+            SahneListRow.icon(
+              icon: entry.value.icon,
+              role: SahneRole.gold,
+              title: promotionTitles[i],
+              subtitle: context.t(K.newTitleEarned),
+            ),
+          for (final (i, _) in missions.indexed)
+            SahneListRow.icon(
+              icon: AppIcons.listCheck,
+              role: SahneRole.gold,
+              title: missionTitles[i],
+            ),
+          if (streakTitle != null)
+            SahneListRow.icon(
+              icon: AppIcons.fire,
+              role: SahneRole.gold,
+              title: streakTitle,
+            ),
+        ],
+      ),
     );
   }
 }

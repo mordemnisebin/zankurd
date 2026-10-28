@@ -254,8 +254,8 @@ void main() {
                 find.descendant(of: room, matching: find.byType(SahneTappable)),
               )
               .color,
-          t.s1,
-          reason: 'Oda kartı standart kart yüzeyinde olmalı (K5)',
+          t.roleTint(SahneRole.social),
+          reason: 'Oda kartı hafif Nîl tonlu yüzeyde olmalı (tur 2 R2)',
         );
       });
     }

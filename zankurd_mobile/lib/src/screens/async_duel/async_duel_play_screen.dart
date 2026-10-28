@@ -867,6 +867,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                         scrollKey: const ValueKey('async-duel-scroll'),
                         // Yeni soruda başa dön; üst kenar elmas şeridin altında sönsün.
                         resetKey: _index,
+                        balance: sahneQuestionBalance,
                         padding: const EdgeInsets.fromLTRB(
                           SahneSpace.page,
                           quizStageTopGap,

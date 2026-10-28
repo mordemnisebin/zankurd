@@ -5,6 +5,9 @@
 // Oyuncu hangisinin ne olduğunu, hangisinin ödül verdiğini ayırt edemiyordu.
 // Sessizdi: her sayaç kendi başına doğruydu; kusur toplamdaydı.
 //
+// 2026-10-28 tur 2 R8: kompakt panel en çok ÜÇ satır (hedef + 2 görev);
+// panel konu ızgarasının ÜSTÜNDE durur.
+//
 // Karar: tek panel. Üstte seri, altında TEK liste (günlük hedef de bir görev
 // satırı) ve TEK özet ("Bugün 2/4 tamam"). Hedef satırının ödülü yoktur;
 // görev XP'si yalnız "Ödülü al" ile verilir (callback dokunuşla çağrılır).
@@ -117,8 +120,9 @@ void main() {
       find.byKey(const ValueKey('daily-missions-overall-progress')),
       findsOneWidget,
     );
-    // 3 görev + 1 hedef = 4; 2 tamam (bitirilen 2 görev).
-    expect(find.text('Bugün 2/4 tamam'), findsOneWidget);
+    // Tur 2 R8: kompakt panel EN ÇOK 3 satır: hedef + ilk 2 görev; 1 tamam
+    // (bitirilen joker görevi 3. satırdır).
+    expect(find.text('Bugün 1/3 tamam'), findsOneWidget);
 
     // Seri çipi panelin içinde ve ilk satırdan ÖNCE.
     final streak = find.byKey(const ValueKey('home-today-streak'));
@@ -173,7 +177,7 @@ void main() {
       _wrap(_card(missions: _missions(), goalDone: 15, onClaim: (_) {})),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Bugün 3/4 tamam'), findsOneWidget);
+    expect(find.text('Bugün 2/3 tamam'), findsOneWidget);
     expect(
       find.byKey(const ValueKey('claim-mission-answerCorrect:15')),
       findsNothing,
@@ -235,7 +239,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Îro'), findsOneWidget);
-    expect(find.text('Îro 2/4 temam bû'), findsOneWidget);
+    expect(find.text('Îro 1/3 temam bû'), findsOneWidget);
     expect(find.text('5 roj'), findsOneWidget);
   });
 

@@ -169,7 +169,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         languagePicker: true,
         title: context.t(K.languagePickerLabel),
         // Marka sözü ilk ekranda durur (S1); kartların üstünde.
-        lines: [context.t(K.dozaSlogan)],
+        lines: [context.t(K.entryPromise), context.t(K.dozaSlogan)],
         sloganLast: true,
       ),
       // 2. adım: öğren. Başlık kep, iki kısa satır.
@@ -322,13 +322,21 @@ class _OnboardingPageState extends State<_OnboardingPage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Center(
+                      // Tur 2 R4: görsel ortada yüzmez; dağ + güneş
+                      // manzarasının gökyüzünde durur (boş orta alan dolar).
+                      SahneEntryScene(
+                        key: const ValueKey('onboarding-scene'),
+                        // Kısa ekranda (SE, 600 pt test yüzeyi) manzara alçalır:
+                        // dil kartları ve düğme kaydırmadan görünür kalsın.
+                        height: outer.maxHeight < 700
+                            ? 112
+                            : SahneEntryScene.regularHeight,
                         child: data.icons.isEmpty
                             ? brand
                             : _SceneArt(
                                 icons: data.icons,
                                 role: data.role,
-                                size: compact ? 72 : 104,
+                                size: compact ? 48 : 64,
                               ),
                       ),
                       SizedBox(height: compact ? SahneSpace.x4 : SahneSpace.x6),

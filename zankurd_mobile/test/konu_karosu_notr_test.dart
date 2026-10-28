@@ -1,14 +1,17 @@
-// 2026-10-28 kurul K1: konu karosu nötr yüzey + renkli rozet.
+// 2026-10-28 kurul turu 2 R1: konu karosu TONLU yüzey (K1'in nötr karosunun
+// yerine; dosya adı tarihçe için kaldı).
 //
-// Kusur: on bir doygun dolu karo yan yana ekranı bağırtıyordu ve büyük silik
-// filigran adın üstüne biniyordu. Karar: karo standart kart (açık temada
-// beyaz, koyu temada grafit `s1`); konu rengi YALNIZ 40 px'lik ikon
-// rozetinde ve 4 px'lik başlangıç şeridinde; ad normal metin rengi; ikinci
-// dil yalnız "iki dilli etiketler" açıksa küçük soluk satır. Konu→renk
-// eşlemesi [SahneCategoryTone]'dan gelir ve eşleşme listesindeki satırla
-// ([CategoryIconTile]) aynıdır. Bu bekçi karoyu ölçer; yoksa biri karoyu
-// yeniden doldurabilirdi ve hiçbir test fark etmezdi (eski "DOLU karo"
-// bekçisi tersini şart koşuyordu; güncellendi).
+// Kusur: tur 1'de karo nötr yüzey + renkli rozetti; dört model "aşırı
+// sterilize, bankacılık uygulaması" dedi (canlılık 4-7). Doygun dolu karo
+// da geri dönmemeli (on bir karo yan yana bağırıyordu). Karar: yüzey konu
+// renginin HAFİF karışımı ([SahneTopicTint.topicSurface]: gündüz %12, gece
+// %20), kenar konu renginin soluğu, 4 px başlangıç şeridi, 44 px rozet,
+// sağ üst köşede ≤ %8 konu ikonu filigranı. Ad normal metin renginde;
+// ikinci dil yalnız "iki dilli etiketler" açıksa küçük soluk satır.
+// Kontrast (metin ≥ 4,5:1 tonlu yüzeyde, on bir konu × iki tema) ayrı
+// bekçide: `konu_tonu_kontrast_test.dart`. Eski bekçi karonun `s1` olmasını
+// şart koşuyordu; tersine çevrildi (tonlu olmalı, nötr s1 ya da doygun dolgu
+// OLMAMALI).
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +52,7 @@ Widget _grid({required bool dark, required bool bilingual}) => MultiProvider(
 
 void main() {
   for (final dark in [false, true]) {
-    testWidgets('karo nötr yüzey; renk yalnız rozet ve şeritte '
+    testWidgets('karo tonlu yüzey, 44 rozet, 4 şerit, ≤%8 filigran '
         '(${dark ? "gece" : "gündüz"})', (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 900));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -61,8 +64,14 @@ void main() {
         final surface = tester.widget<SahneTappable>(
           find.descendant(of: tile, matching: find.byType(SahneTappable)),
         );
-        expect(surface.color, t.s1, reason: '$c: karo nötr yüzey olmalı');
         final fill = CategoryVisuals.tone(c).fill(night: dark);
+        expect(
+          surface.color,
+          t.topicSurface(fill, night: dark),
+          reason: '$c: karo konu renginin hafif tonu olmalı',
+        );
+        expect(surface.color, isNot(t.s1), reason: '$c: nötr s1 olmamalı');
+        expect(surface.color, isNot(fill), reason: '$c: doygun dolu olmamalı');
         final strip = tester.widget<ColoredBox>(
           find.byKey(ValueKey('home-topic-strip-$c')),
         );
@@ -74,7 +83,7 @@ void main() {
         final badge = tester.widget<CategoryIconTile>(
           find.byKey(ValueKey('home-topic-badge-$c')),
         );
-        expect(badge.size, 40);
+        expect(badge.size, 44);
         expect(badge.category, c);
         // Ad normal metin renginde.
         final name = tester.widget<Text>(
@@ -86,7 +95,13 @@ void main() {
               .first,
         );
         expect(name.style?.color, t.tx, reason: '$c adı');
-        // Silik büyük filigran yok.
+        // Köşe filigranı çok hafif (≤ %8) ve konunun kendi ikonu.
+        final mark = tester.widget<Icon>(
+          find.byKey(ValueKey('home-topic-mark-$c')),
+        );
+        expect(mark.color!.a, lessThanOrEqualTo(0.08), reason: '$c filigran');
+        expect(mark.icon, CategoryVisuals.icon(c));
+        // Eski silik büyük çizim (painter) yok.
         expect(
           find.descendant(
             of: tile,

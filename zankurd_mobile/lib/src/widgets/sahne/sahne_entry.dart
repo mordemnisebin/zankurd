@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../theme/sahne.dart';
 import 'sahne_cards.dart';
 import 'sahne_foundation.dart';
+import 'sahne_painters.dart';
 
 /// D · Giriş akışı iskeleti (karşılama, giriş, kayıt, ad sorma).
 ///
@@ -460,6 +461,51 @@ class SahneEntryHeading extends StatelessWidget {
           Text(body!, style: SahneType.body.copyWith(color: t.tx2)),
         ],
       ],
+    );
+  }
+}
+
+/// Giriş akışının MANZARA sahnesi (2026-10-28 kurul turu 2, R4).
+///
+/// Giriş ve açılış ekranlarının ortası boş kalıyordu (kurul: "logo üstte,
+/// metin altta, arası delik"). Ana sayfadaki görev kartının dağ + güneş
+/// manzarası ([SahneVistaPainter], gece yıldızlı) burada büyük bir kart olur;
+/// [child] (logo ya da adım çizimi) gökyüzünün üst yarısında ortalanır.
+/// Tek kaynak: ana sayfadaki şeritle aynı çizici, aynı palet, aynı dönem.
+/// Gövde metni manzaranın ÜSTÜNE binmez; kart kendi satırıdır.
+/// Büyük yazıda ya da kısa ekranda alçalır ([compactHeight]).
+class SahneEntryScene extends StatelessWidget {
+  const SahneEntryScene({super.key, this.child, this.height = regularHeight});
+
+  final Widget? child;
+  final double height;
+
+  static const double regularHeight = 176;
+  static const double compactHeight = 104;
+
+  @override
+  Widget build(BuildContext context) {
+    final bigText = MediaQuery.textScalerOf(context).scale(16) >= 24;
+    final h = bigText ? compactHeight : height;
+    return ClipPath(
+      clipper: const ShapeBorderClipper(shape: SahneShape.l),
+      child: SizedBox(
+        height: h,
+        width: double.infinity,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            ExcludeSemantics(
+              child: CustomPaint(
+                key: const ValueKey('entry-scene-vista'),
+                painter: SahneVistaPainter.of(SahneVistaPhase.now()),
+              ),
+            ),
+            if (child != null)
+              Align(alignment: const Alignment(0, -0.45), child: child),
+          ],
+        ),
+      ),
     );
   }
 }

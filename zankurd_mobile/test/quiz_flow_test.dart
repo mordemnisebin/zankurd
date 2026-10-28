@@ -1301,8 +1301,8 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  // Uzun telefonda kısa soru tam ortaya itilmez; göz ilerleme çubuğundan
-  // soruya doğal biçimde inerken alt eylem sabit kalır.
+  // Uzun telefonda kısa soru tam ortaya itilmez, başlığa da yapışmaz: üst-orta
+  // (2026-10-28 tur 2 R3); alt eylem sabit kalır.
   testWidgets('2 şıklı kısa soru uzun ekranda üstten dengeli başlar', (
     tester,
   ) async {
@@ -1340,10 +1340,13 @@ void main() {
     final gapAbove = content.top - scrollArea.top;
     final gapBelow = scrollArea.bottom - content.bottom;
 
+    // 2026-10-28 tur 2 R3: grup kullanılabilir yüksekliğin ÜST-ORTASINDA
+    // (üstte ≈ %36, altta ≈ %64 boşluk): ne başlığa yapışık ne ortada.
+    expect(gapAbove, greaterThanOrEqualTo(16), reason: 'başlığa yapışık');
     expect(
       gapAbove,
-      inInclusiveRange(16, 72),
-      reason: 'Kısa içerik ne üste yapışmalı ne ekran ortasına itilmelidir.',
+      lessThan(gapBelow),
+      reason: 'Kısa içerik üst-ortada durur; tam ortaya itilmez.',
     );
 
     // Burada eskiden `gapBelow > gapAbove` bekleniyordu; 2026-08-16'da

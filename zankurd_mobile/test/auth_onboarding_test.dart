@@ -133,10 +133,17 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    _expectLearnStageIdentity(
-      tester,
-      find.byKey(const ValueKey('sign-in-hero-banner')),
-    );
+    // 2026-10-28 tur 2 R4: giriş kahramanı artık sahne kartı değil, ana
+    // sayfadaki görev kartıyla aynı dağ + güneş manzarasıdır.
+    final hero = find.byKey(const ValueKey('sign-in-hero-banner'));
+    expect(hero, findsOneWidget);
+    final painters = tester
+        .widgetList<CustomPaint>(
+          find.descendant(of: hero, matching: find.byType(CustomPaint)),
+        )
+        .map((p) => p.painter)
+        .whereType<SahneVistaPainter>();
+    expect(painters, isNotEmpty, reason: 'giriş kahramanı manzara çizmeli');
   });
 
   // 2026-09-29 Şahnê: dil seçici seçim rayının sığan çeşididir; seçili çip

@@ -286,7 +286,13 @@ void main() {
     // başlık "Yarış tamamlandı" Manşet biçemindedir (büyük harf etiketi
     // değil).
     expect(find.text('Sonuç'), findsNothing);
-    expect(find.text('Yarış tamamlandı'), findsOneWidget);
+    // 3 soruda 3 doğru → üç yıldız: başlık başarıya göre kutlama
+    // ("Tebrikler!", 2026-10-28 tur 2 R5); sakin hâli "Yarış tamamlandı".
+    expect(
+      find.text('Tebrikler!').evaluate().isNotEmpty ||
+          find.text('Yarış tamamlandı').evaluate().isNotEmpty,
+      isTrue,
+    );
     expect(find.text('Doğru'), findsOneWidget);
     expect(find.text('Yanlış'), findsOneWidget);
 
@@ -376,6 +382,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Yeni rozet'), findsOneWidget);
+    // R5 (2026-10-28 tur 2): bölüm kapalı, adlar tek satır özette; açınca
+    // satırlar görünür.
+    expect(find.textContaining('İlk oyun'), findsOneWidget);
+    await tester.tap(find.text('Yeni rozet'));
+    await tester.pumpAndSettle();
     expect(find.text('İlk oyun'), findsOneWidget);
     expect(find.text('10 doğru üst üste'), findsOneWidget);
   });

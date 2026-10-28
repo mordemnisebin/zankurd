@@ -69,7 +69,10 @@ class DailyMissionsCard extends StatelessWidget {
             claimed: true,
           )
         : null;
-    final all = [?goalRow, ...missions];
+    // Tur 2 R8: kompakt "Bugün" en çok ÜÇ satır (hedef satırı + görevler);
+    // fazlası ana sayfayı uzatıyordu, tam liste Günün turu/Görevler'de.
+    final everything = [?goalRow, ...missions];
+    final all = compact ? everything.take(3).toList() : everything;
     final completedCount = all.where((m) => m.completed).length;
     final totalProgress = all.isEmpty ? 0.0 : completedCount / all.length;
     // Kompakt "Bugün" panelinde bütün satırlar görünür: tek liste, tek

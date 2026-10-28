@@ -11,8 +11,9 @@ import '../../utils/player_identity.dart';
 import '../../widgets/lexicon_lookup.dart';
 import '../../widgets/sahne/sahne.dart';
 
-/// Şık çubuğunun en az yüksekliği (tur 8: 52 → 56).
-const double quizOptionMinHeight = 56;
+/// Şık çubuğunun en az yüksekliği (tur 8: 52 → 56; 2026-10-28 tur 2 R3:
+/// 60 — baş parmak hedefi ve dengeli soru sahnesi).
+const double quizOptionMinHeight = 60;
 
 /// Şık çubuğu — Şahnê'nin "8 · Şık çubuğu" bileşeni (maketteki `.sh-ans`).
 ///

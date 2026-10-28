@@ -44,6 +44,15 @@ import 'home_rows.dart' show CategoryProgress;
 /// [SahneCategoryTone]'dan gelir; rozet eşleme sayfasındaki satırla
 /// ([CategoryIconTile]) birebir aynıdır. Bekçi: `test/konu_karosu_notr_test.dart`.
 ///
+/// ## 2026-10-28 kurul turu 2 (R1): tonlu yüzey
+///
+/// Tur 1'in nötr karosu canlılığı öldürdü (dört model "bankacılık uygulaması").
+/// Yüzey artık konu renginin hafif karışımıdır ([SahneTopicTint.topicSurface]:
+/// gündüz %12, gece %20), kenar konu renginin soluğu, rozet 44 px, şerit 4 px,
+/// sağ üst köşede %7 konu ikonu filigranı. Doygun duvar DEĞİL: ad ve ikinci
+/// satır normal metin renginde ve ≥ 4,5:1 (bekçi:
+/// `test/konu_tonu_kontrast_test.dart`).
+///
 /// Sütun sayısı 2'dir; en uzun ad bir sütuna tek satırda sığmıyorsa (dar
 /// ekran, büyük yazı) tek sütuna düşer — ad hiçbir zaman kelime ortasından
 /// bölünmez ya da "…" ile kesilmez (2026-09-30 simülatör bulgusu: büyük
@@ -70,7 +79,7 @@ class HomeTopicGrid extends StatelessWidget {
   static const double _pad = SahneSpace.x4;
   static const double _padV = SahneSpace.x3;
   static const double _gap = SahneSpace.x3;
-  static const double _badge = 40;
+  static const double _badge = 44;
   static const double _strip = 4;
   static const double _minHeight = 96;
 
@@ -167,6 +176,9 @@ class _HomeTopicTile extends StatelessWidget {
     final percent = started ? context.percentRatio(ratio) : null;
     final night = Theme.of(context).brightness == Brightness.dark;
     final fill = CategoryVisuals.tone(category).fill(night: night);
+    // Tur 2 R1: yüzey konu renginin hafif tonu; kenar konu renginin soluğu.
+    final surface = t.topicSurface(fill, night: night);
+    final edge = t.topicEdge(fill, night: night);
     return Semantics(
       container: true,
       button: onTap != null,
@@ -174,8 +186,8 @@ class _HomeTopicTile extends StatelessWidget {
       excludeSemantics: true,
       onTap: onTap,
       child: SahneTappable(
-        shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
-        color: t.s1,
+        shape: SahneShape.withSide(SahneShape.l, edge, width: 1),
+        color: surface,
         onTap: onTap,
         child: ConstrainedBox(
           constraints: const BoxConstraints(
@@ -183,6 +195,22 @@ class _HomeTopicTile extends StatelessWidget {
           ),
           child: Stack(
             children: [
+              // Köşede çok hafif (%7) konu ikonu filigranı: sağ üst köşe
+              // boştur (ad rozetin ALTINDA, sola dayalı), metinle çakışmaz.
+              PositionedDirectional(
+                end: -8,
+                top: -8,
+                child: IgnorePointer(
+                  child: ExcludeSemantics(
+                    child: Icon(
+                      CategoryVisuals.icon(category),
+                      key: ValueKey('home-topic-mark-$category'),
+                      size: 56,
+                      color: fill.withValues(alpha: 0.07),
+                    ),
+                  ),
+                ),
+              ),
               // Konu rengi kenar şeridi (4 px); kartın yuvarlak köşesine
               // kırpılır.
               PositionedDirectional(

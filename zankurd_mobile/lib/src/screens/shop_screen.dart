@@ -1362,7 +1362,7 @@ class _ShopScreenState extends State<ShopScreen> {
 
   // ── Fiyat düğmesi ──
   //
-  // Alınabilirse: turuncu birincil (jeton glifi + tutar; birim glifte, "j"
+  // Alınabilirse: Zêr (altın) dolgulu düğme, turuncu DEĞİL (tur 2 R7; jeton glifi + tutar; birim glifte, "j"
   // kısaltması yok). Alınamıyorsa: aynı boyda nötr, pasif fiyat hapı
   // (disabledFill / disabledFg, kilit + glif + tutar) — düğme DEĞİL durum.
   // Ekran okuyucuya söylenen ad tam cümledir ("X, N jeton karşılığında satın
@@ -1427,14 +1427,51 @@ class _ShopScreenState extends State<ShopScreen> {
         ),
       );
     }
-    return SahneButton.primary(
-      key: ValueKey('shop-buy-${item.id}'),
-      label: label,
-      leading: const SahneGlyph(SahneGlyphKind.coin, size: 20),
-      arrow: false,
-      expand: expand,
-      semanticLabel: semanticLabel,
+    // Tur 2 R7: alınabilir fiyat TURUNCU değil, jeton rengi Zêr (altın dolgu,
+    // koyu kahve yazı ≥ 9:1). Turuncu yalnız ana akışın birincil eylemidir;
+    // mağazada üç fiyat düğmesi turuncu olunca ekranda "tek birincil" kuralı
+    // bozuluyordu. Alınamayan fiyat hâlâ gri + kilit (ayrım korunur).
+    final button = FilledButton(
       onPressed: _loading ? null : () => _confirmPurchase(item),
+      style: FilledButton.styleFrom(
+        backgroundColor: t.zerBand,
+        foregroundColor: t.onZer,
+        disabledBackgroundColor: t.disabledFill,
+        disabledForegroundColor: t.disabledFg,
+        minimumSize: const Size(0, _priceHeight),
+        padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x3),
+        shape: SahneShape.m,
+        textStyle: SahneType.button,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SahneGlyph(SahneGlyphKind.coin, size: 20),
+          const SizedBox(width: _lockGap),
+          Flexible(
+            child: Text(
+              label,
+              style: SahneType.button.copyWith(
+                color: t.onZer,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    return Semantics(
+      container: true,
+      button: true,
+      label: semanticLabel,
+      excludeSemantics: true,
+      onTap: _loading ? null : () => _confirmPurchase(item),
+      child: SizedBox(
+        key: ValueKey('shop-buy-${item.id}'),
+        width: expand ? double.infinity : null,
+        child: button,
+      ),
     );
   }
 

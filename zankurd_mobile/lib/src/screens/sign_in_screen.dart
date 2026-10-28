@@ -383,29 +383,26 @@ class _SignInScreenState extends State<SignInScreen>
                 kuKey: ValueKey('sign-in-language-chip-KU'),
                 trKey: ValueKey('sign-in-language-chip-TR'),
               ),
+              // Tur 2 R4: ortadaki boşluk dağ + güneş manzarasıyla dolar
+              // (ana sayfadaki görev kartının çizimi); logo gökte durur.
               hero: _AnimatedTitle(
                 controller: _animationController,
-                child: SahneEntryHero(
+                child: SahneEntryScene(
                   key: const ValueKey('sign-in-hero-banner'),
-                  padding: const EdgeInsets.fromLTRB(
-                    SahneSpace.x4,
-                    SahneSpace.x3,
-                    SahneSpace.x4,
-                    SahneSpace.x3,
-                  ),
-                  child: Center(
-                    child: ScaleTransition(
-                      scale: LoadAnimationSequence.logoScaleAnimation(
-                        _animationController,
-                      ),
-                      child: const AppLogo(width: 64),
+                  // İlk görünüm kısa: manzara büyür ve boşluğu doldurur; form
+                  // açılınca alçalır (alan formun).
+                  height: _formOpen ? SahneEntryScene.regularHeight : 264,
+                  child: ScaleTransition(
+                    scale: LoadAnimationSequence.logoScaleAnimation(
+                      _animationController,
                     ),
+                    child: const AppLogo(width: 64),
                   ),
                 ),
               ),
               title: context.t(K.welcomeTitle),
-              // Tek kısa satır (K10); metin karşılamadaki Öğren gövdesiyle aynı.
-              body: context.t(K.onbLearnBody),
+              // Tek satır ürün vaadi (tur 2 R4).
+              body: context.t(K.entryPromise),
               content: _formOpen ? panel : haveAccount,
               // 2026-10-24: karşılamadaki yaş kutusu kalktı; şartlar ve
               // gizlilik kabulü birincil düğmenin hemen ÜSTÜNDE düz metin

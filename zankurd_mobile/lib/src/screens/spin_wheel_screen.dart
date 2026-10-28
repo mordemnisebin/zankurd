@@ -18,6 +18,9 @@ import '../widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../services/app_haptics.dart';
 
+/// Çarkın tablet üst sınırı (R6); telefonda genişlik belirler.
+const double spinWheelMaxDiameter = 440;
+
 class SpinWheelScreen extends StatefulWidget {
   const SpinWheelScreen({required this.repository, super.key});
 
@@ -316,44 +319,62 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
               ),
       );
     } else {
+      // 2026-10-28 tur 2 R6: çark kullanılabilir alanın DİKEY ortasındadır
+      // (üst çubuk ile alttaki "Çevir" arası); eskiden tepeye yapışıyor,
+      // altında ölü yarım ekran kalıyordu. Alan kısa/yazı büyükse içerik
+      // yine kayar (`hasScrollBody: false`).
       body = SliverPadding(
         padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
-        sliver: SliverToBoxAdapter(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildWheelStage(context, ku),
-              // ── Ödül ──
-              if (_wonAmount != null) ...[
-                const SizedBox(height: SahneSpace.cardGap),
-                _buildPrizeReveal(context, ku, _wonAmount!),
-              ],
-              if (_spinErrorMessage != null) ...[
-                const SizedBox(height: SahneSpace.cardGap),
-                // Alt perdedeki "Çevir!" ekranın birincil eylemi; buradaki
-                // yeniden deneme ikincildir (iki Agir düğme olmaz).
-                _spinErrorOffline
-                    ? AppOfflineState(
-                        title: context.t(K.wheelOfflineTitle),
-                        message: context.t(K.wheelOfflineBody),
-                        retryLabel: context.t(K.retryShort),
-                        primaryAction: false,
-                        onRetry: _retrySpinStatus ? _checkSpin : _spin,
-                      )
-                    : AppErrorState(
-                        title: context.t(K.loadFailedShort),
-                        message: _spinErrorMessage!,
-                        retryLabel: context.t(K.retryShort),
-                        primaryAction: false,
-                        onRetry: _retrySpinStatus ? _checkSpin : _spin,
-                      ),
-              ],
-              // ── Geri sayım ──
-              if (!_canSpin && !_spinning) ...[
-                const SizedBox(height: SahneSpace.cardGap),
-                _buildCountdownCard(context, ku),
-              ],
-            ],
+        sliver: SliverFillRemaining(
+          // İç kaydırma: alan yetmezse (büyük yazı, yatay) içerik kayar;
+          // yetince Center dikey ortalar. (`hasScrollBody: false` iç boyut
+          // sorar, hata kartlarındaki LayoutBuilder'ı düşürürdü.)
+          child: LayoutBuilder(
+            builder: (context, box) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: box.maxHeight),
+                child: Center(
+                  child: Column(
+                    key: const ValueKey('spin-balanced-body'),
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _buildWheelStage(context, ku),
+                      // ── Ödül ──
+                      if (_wonAmount != null) ...[
+                        const SizedBox(height: SahneSpace.cardGap),
+                        _buildPrizeReveal(context, ku, _wonAmount!),
+                      ],
+                      if (_spinErrorMessage != null) ...[
+                        const SizedBox(height: SahneSpace.cardGap),
+                        // Alt perdedeki "Çevir!" ekranın birincil eylemi; buradaki
+                        // yeniden deneme ikincildir (iki Agir düğme olmaz).
+                        _spinErrorOffline
+                            ? AppOfflineState(
+                                title: context.t(K.wheelOfflineTitle),
+                                message: context.t(K.wheelOfflineBody),
+                                retryLabel: context.t(K.retryShort),
+                                primaryAction: false,
+                                onRetry: _retrySpinStatus ? _checkSpin : _spin,
+                              )
+                            : AppErrorState(
+                                title: context.t(K.loadFailedShort),
+                                message: _spinErrorMessage!,
+                                retryLabel: context.t(K.retryShort),
+                                primaryAction: false,
+                                onRetry: _retrySpinStatus ? _checkSpin : _spin,
+                              ),
+                      ],
+                      // ── Geri sayım ──
+                      if (!_canSpin && !_spinning) ...[
+                        const SizedBox(height: SahneSpace.cardGap),
+                        _buildCountdownCard(context, ku),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       );
@@ -397,6 +418,13 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   Widget _buildWheelStage(BuildContext context, bool ku) {
     return SahneStageCard(
       role: SahneRole.gold,
+      // Çark kartın içini doldurur: yatay boşluk 8 (eskiden 16).
+      padding: const EdgeInsets.fromLTRB(
+        SahneSpace.x2,
+        SahneSpace.x4,
+        SahneSpace.x2,
+        SahneSpace.x3,
+      ),
       child: Builder(
         builder: (context) {
           // Sahne kartının içi gece belirteçleridir.
@@ -425,12 +453,28 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   //  Wheel section
   // ────────────────────────────────────────────
   Widget _buildWheelSection() {
-    return LayoutBuilder(
-      builder: (context, constraints) {
+    // `SliverFillRemaining` iç boyut sorar: LayoutBuilder kullanılamaz, çap
+    // ekran ölçüsünden türer.
+    return Builder(
+      builder: (context) {
         final t = SahneTokens.of(context);
-        final size = math.min(constraints.maxWidth, 300.0);
+        // R6 (2026-10-28 tur 2): çark sayfa kenar boşlukları ve kart payı
+        // düşülmüş genişliği doldurur (tablet üst sınırı 440; kısa/yatay
+        // ekranda yüksekliğe de bağlı); eskiden 300'de kalıyordu.
+        final screen = MediaQuery.sizeOf(context);
+        final size = math.max(
+          0.0,
+          math.min(
+            math.min(
+              screen.width - 2 * (SahneSpace.page + SahneSpace.x2),
+              spinWheelMaxDiameter,
+            ),
+            math.max(240.0, screen.height - 300),
+          ),
+        );
         return Center(
           child: SizedBox.square(
+            key: const ValueKey('spin-wheel-dial'),
             dimension: size,
             child: Stack(
               alignment: Alignment.center,
@@ -468,7 +512,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                     ),
                   ),
                   child: SizedBox.square(
-                    dimension: 60,
+                    dimension: math.max(60.0, size * 0.2),
                     child: Center(
                       child: Text(
                         'ZK',
@@ -484,7 +528,10 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                 Positioned(
                   top: 0,
                   child: CustomPaint(
-                    size: const Size(32, 40),
+                    size: Size(
+                      32 * math.max(1.0, size / 300),
+                      40 * math.max(1.0, size / 300),
+                    ),
                     painter: _PointerPainter(
                       fill: t.gold,
                       edge: t.goldDeep,

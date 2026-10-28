@@ -256,7 +256,8 @@ class SahneModeTile extends StatefulWidget {
     this.calm = false,
   });
 
-  /// SAKİN kart (2026-10-28 kurul K3/K4/K5): nötr yüzey + üstte rol renginde
+  /// SAKİN kart (2026-10-28 kurul K3/K4/K5; tur 2 R2: yüzey rolün HAFİF
+  /// tonudur — [SahneTokens.roleTint]): tonlu yüzey + üstte rol renginde
   /// ince şerit + renkli ikon rozeti + ad + en çok iki satır alt yazı. Dolu
   /// renkli blok, silik büyük ikon filigranı YOK; mod rengi yalnız rozet ve
   /// şeritte yaşar (canlılık ölmez, ama ekranda tek birincil turuncu kalır).
@@ -551,6 +552,12 @@ extension on _SahneModeTileState {
         child: SahneSurfaceCard(
           onTap: widget.onTap,
           padding: EdgeInsets.zero,
+          // Tur 2 R2: mod kartı yüzeyi rolün hafif tonu (Öğren yeşil, Yarış
+          // bordo, Oda mavi); kenar rolün soluğu. Nötr rolde yüzey nötr kalır.
+          color: role == SahneRole.neutral ? null : t.roleTint(role),
+          edgeColor: role == SahneRole.neutral
+              ? null
+              : Color.alphaBlend(fill.withValues(alpha: 0.35), t.s1),
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 112),
             child: Column(

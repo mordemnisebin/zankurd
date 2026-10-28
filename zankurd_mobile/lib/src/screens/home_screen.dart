@@ -749,6 +749,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // "Bugün neye odaklanmak istersin?" bloğu ana sayfadan kalktı
           // (2026-10-28 kurul K4): seçim onboarding'de ve Ayarlar'da var;
           // ana sayfada her açılışta ikinci bir karar sorusu idi.
+          // Tur 2 R8 sırası: görev → Öğren/Yarış → Bugün (kompakt, ≤3 satır)
+          // → Konular → seviye → Günün sözü (küçük). Dar düzende "Bugün"
+          // konuların ÜSTÜNDE; geniş düzende sağ sütunda durur.
+          if (narrow) ...[
+            const SizedBox(height: SahneSpace.cardGap),
+            missionsCard,
+          ],
           SahneSectionHeader(
             title: context.t(K.homeTopicsTitle),
             // İki dilli etiket: öbür dilde aynı anahtar (bkz.
@@ -761,11 +768,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             progress: _topicProgress,
             onOpen: _openCategory,
           ),
-          // Günlük görev paneli konuların ALTINDA (K4 sırası: görev kartı →
-          // Öğren/Yarış → Konular → panel → Günün sözü).
           if (narrow) ...[
-            const SizedBox(height: SahneSpace.cardGap),
-            missionsCard,
             const SizedBox(height: SahneSpace.cardGap),
             progressCard,
           ],

@@ -155,8 +155,8 @@ Future<void> _spinAndReturn(
   await tester.pump();
   expect(find.text('Günün çarkı'), findsOneWidget);
   expect(find.byType(SpinWheelScreen), findsOneWidget);
-  await tester.drag(find.byType(Scrollable), const Offset(0, -500));
-  await tester.pump();
+  // 2026-10-28 tur 2 R6: "Çevir" alt perdede sabittir (çark ekranı iç
+  // kaydırmalı ve dikey ortalı); aşağı kaydırmaya gerek yok.
   await tester.tap(find.text('Çevir'));
   await tester.pump();
   await tester.pump(const Duration(seconds: 5));
@@ -389,6 +389,7 @@ void main() {
     );
   });
 
+  // (2026-10-28 tur 2 R7: alınabilir fiyat artık Zêr/altın dolgu.)
   // Kurul 2. tur 2026-10-20: alınabilir fiyat = turuncu çerçeveli açık düğme
   // (hero dahil); pasif düğme gri dolgu + kilit. İkisi bir bakışta ayrılır;
   // eskiden alınabilir olan da gri dolguydu ve pasif görünüyordu.
@@ -414,7 +415,13 @@ void main() {
         find.descendant(of: affordable, matching: find.byType(FilledButton)),
       );
       expect(filled.onPressed, isNotNull);
-      expect(t.act.computeLuminance(), greaterThan(0.2));
+      // 2026-10-28 kurul turu 2 R7: fiyat düğmesi TURUNCU değil, jeton rengi
+      // Zêr (altın dolgu, koyu kahve yazı). Turuncu yalnız ana akışın tek
+      // birincil eylemidir; mağazada üç turuncu düğme bunu bozuyordu.
+      final bg = filled.style!.backgroundColor!.resolve(<WidgetState>{})!;
+      expect(bg, t.zerBand, reason: 'fiyat düğmesi Zêr (altın)');
+      expect(bg, isNot(t.act), reason: 'fiyat düğmesi turuncu olmamalı');
+      expect(filled.style!.foregroundColor!.resolve(<WidgetState>{}), t.onZer);
 
       final short = find.byKey(const ValueKey('shop-short-profile_badge_vip'));
       expect(short, findsOneWidget);
@@ -614,8 +621,7 @@ void main() {
     await tester.tap(find.text('Jeton kazan'));
     await tester.pumpAndSettle();
     await tester.pump();
-    await tester.drag(find.byType(Scrollable), const Offset(0, -500));
-    await tester.pump();
+    // R6 (2026-10-28 tur 2): "Çevir" alt perdede sabit; kaydırma gerekmez.
     await tester.tap(find.text('Çevir'));
     await tester.pump();
     await tester.pump(const Duration(seconds: 5));

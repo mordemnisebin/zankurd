@@ -1085,9 +1085,19 @@ class SahneStageScroll extends StatefulWidget {
     this.resetKey,
     this.padding = EdgeInsets.zero,
     this.fade = SahneSpace.x4,
+    this.balance,
   });
 
   final Widget child;
+
+  /// Dengeli yerleşim (2026-10-28 tur 2 R3): `null` → içerik üstten
+  /// başlar. 0–1 verilirse içerik kullanılabilir yüksekliğin içinde bu
+  /// oranda aşağı konur (0 = tepe, 0.5 = tam orta; soru ekranlarında
+  /// [sahneQuestionBalance]). Boşluk içeriğin hem üstünde hem altında
+  /// kalır: soru başlığa yapışmaz, altta ölü yarım ekran olmaz. İçerik
+  /// alandan uzunsa boşluk sıfırdır ve alan kayar (uzun soru yukarıdan
+  /// başlar).
+  final double? balance;
 
   /// İçteki `SingleChildScrollView`in anahtarı (testler ve ölçümler için).
   final Key? scrollKey;
@@ -1140,15 +1150,40 @@ class _SahneStageScrollState extends State<SahneStageScroll> {
           stops: [0, stop],
         ).createShader(bounds);
       },
-      child: SingleChildScrollView(
-        key: widget.scrollKey,
-        controller: _controller,
-        padding: widget.padding,
-        child: widget.child,
-      ),
+      child: widget.balance == null
+          ? SingleChildScrollView(
+              key: widget.scrollKey,
+              controller: _controller,
+              padding: widget.padding,
+              child: widget.child,
+            )
+          : LayoutBuilder(
+              builder: (context, constraints) {
+                final usable = math.max(
+                  0.0,
+                  constraints.maxHeight - widget.padding.vertical,
+                );
+                return SingleChildScrollView(
+                  key: widget.scrollKey,
+                  controller: _controller,
+                  padding: widget.padding,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: usable),
+                    child: Align(
+                      alignment: Alignment(0, widget.balance! * 2 - 1),
+                      child: widget.child,
+                    ),
+                  ),
+                );
+              },
+            ),
     );
   }
 }
+
+/// Soru + şıklar grubunun kullanılabilir yükseklikteki konumu (üst-orta):
+/// grup, boş alanın %36'sı üstte, %64'ü altta kalacak biçimde oturur.
+const double sahneQuestionBalance = 0.36;
 
 /// Alt perdenin üst kenarı: gövde perdenin altında DEVAM EDİYORSA 1 px
 /// ayırıcı çizgi ([SahneTokens.line]), içerik bittiyse hiçbir şey.

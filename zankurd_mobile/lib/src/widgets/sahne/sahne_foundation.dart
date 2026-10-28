@@ -62,6 +62,23 @@ extension SahneRoleTokens on SahneTokens {
   };
 }
 
+/// Konu rengi YÜZEY TONU (2026-10-28 kurul turu 2, R1): konu karosu nötr
+/// yüzey (tur 1) canlılığı öldürdü; dört model "bankacılık uygulaması" dedi.
+/// Karo yüzeyi artık konu renginin HAFİF karışımıdır: açık temada %12, koyu
+/// temada %20 ([SahneTokens.s1] üzerine). Karışım hafif olduğundan metin
+/// ([SahneTokens.tx], [SahneTokens.tx2]) ton yüzeyde ≥ 4,5:1 kalır; bekçi
+/// (`test/konu_tonu_kontrast_test.dart`) on bir konuyu iki temada ölçer.
+/// Tek kaynaktır: ana sayfa karosu ve öğrenme kökü aynı bileşenden gelir.
+extension SahneTopicTint on SahneTokens {
+  /// Konu karosunun ton yüzeyi.
+  Color topicSurface(Color toneFill, {required bool night}) =>
+      Color.alphaBlend(toneFill.withValues(alpha: night ? 0.20 : 0.12), s1);
+
+  /// Konu karosunun ince kenarı (konu renginin %32'si).
+  Color topicEdge(Color toneFill, {required bool night}) =>
+      Color.alphaBlend(toneFill.withValues(alpha: night ? 0.40 : 0.32), s1);
+}
+
 /// Eski bir aksan renginin Şahnê rolü.
 ///
 /// Ortak bileşenlerin eski API'leri renk parametresi alıyordu (`accent`,

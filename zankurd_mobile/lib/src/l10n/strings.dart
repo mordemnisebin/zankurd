@@ -286,6 +286,12 @@ class Tr {
       'ku': 'Bi xêr hatî ZanKurdê',
       'tr': 'ZanKurd\'a hoş geldin',
     },
+    // Giriş ve açılış ürün vaadi (2026-10-28 kurul turu 2, R4). KU: Gemini 3.8
+    // Flash + Gemini 4 Argon onayı (Grok kotası dolu).
+    K.entryPromise: {
+      'ku': 'Kurmancî hîn bibe, zanîna xwe bi pêşbirkê biceribîne.',
+      'tr': 'Kurmancî öğren, bilgini yarıştır.',
+    },
     K.signInGoogle: {'ku': 'Bi Google têkeve', 'tr': 'Google ile giriş yap'},
     K.signInApple: {'ku': 'Bi Apple têkeve', 'tr': 'Apple ile giriş yap'},
     K.orWithEmail: {'ku': 'An jî bi e-nameyê', 'tr': 'Veya e-posta ile'},
@@ -5161,6 +5167,7 @@ class K {
   static const noAccountPrefix = 'auth.noAccountPrefix';
   static const signUp = 'auth.signUp';
   static const welcomeTitle = 'auth.welcomeTitle';
+  static const entryPromise = 'auth.entryPromise';
   static const signInGoogle = 'auth.signInGoogle';
   static const signInApple = 'auth.signInApple';
   static const orWithEmail = 'auth.orWithEmail';

@@ -670,7 +670,7 @@ void main() {
             .widgetList<SahneTappable>(find.byType(SahneTappable))
             .single;
         expect(cap.color, SahneTokens.night.disabledFill);
-        expect((cap.shape as StadiumBorder).side, BorderSide.none);
+        expect((cap.shape as OutlinedBorder).side, BorderSide.none);
         // Kontrast >= 3:1 (gece pasif kapsül üstünde).
         final bg = SahneTokens.night.disabledFill;
         final fg = Color.alphaBlend(price, bg);

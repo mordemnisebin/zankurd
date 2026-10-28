@@ -253,7 +253,8 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    expect(find.text('Öğrenme tamamlandı'), findsOneWidget);
+    // 1/1 doğru → üç yıldız: başlık kutlama (R5, 2026-10-28 tur 2).
+    expect(find.text('Tebrikler!'), findsOneWidget);
     expect(find.text('Yarış tamamlandı'), findsNothing);
     // Öğrenme turunda puan üretilmediği için büyük sayı skor (0/100)
     // değil, doğru cevap sayısı olmalıdır (2026-09-10 simülatör turu:

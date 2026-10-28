@@ -10,8 +10,8 @@
 // ALTINDADIR (maket); bekçi aynı ferahlığı yeni dizilişte ölçer: iç sol
 // boşluk 16, üst boşluk 12, işaret 28'lik kutu, ad işaretle aynı sol hizada.
 //
-// 2026-10-28 kurul K1: karo nötr kart; rozet 40'lık ve başta 4 px'lik konu
-// şeridi var → iç sol boşluk 16 + 4 (şerit), rozet 40. Ferahlık ölçüsü aynı.
+// 2026-10-28 kurul K1: karo nötr kart; rozet 44'lık ve başta 4 px'lik konu
+// şeridi var → iç sol boşluk 16 + 4 (şerit), rozet 44. Ferahlık ölçüsü aynı.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +21,7 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 void main() {
   testWidgets(
-    'konu kartı: sol boşluk 16 (+4 şerit), aralık 12, rozet 40 ve hizalı',
+    'konu kartı: sol boşluk 16 (+4 şerit), aralık 12, rozet 44 ve hizalı',
     (tester) async {
       tester.view.physicalSize = const Size(390, 844);
       tester.view.devicePixelRatio = 1.0;
@@ -58,13 +58,13 @@ void main() {
         find.descendant(
           of: find.byKey(const ValueKey('home-topic-Ziman')),
           matching: find.byWidgetPredicate(
-            (w) => w is SizedBox && w.width == 40 && w.height == 40,
+            (w) => w is SizedBox && w.width == 44 && w.height == 44,
           ),
         ),
       );
       expect(mark.left - a.left, greaterThanOrEqualTo(20));
       expect(mark.top - a.top, greaterThanOrEqualTo(12));
-      expect(mark.width, 40);
+      expect(mark.width, 44);
       // Ad + öbür dildeki küçük satır bir blok olarak işaretin ALTINDA, aynı
       // sol hizada durur.
       final texts = find.descendant(

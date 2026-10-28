@@ -437,8 +437,9 @@ class SahneJokerButton extends StatelessWidget {
     final fg = selected ? t.goldTx : (enabled ? t.tx : dim(t.tx));
     final showPrice = !selected && (enabled || unaffordable);
     // Kurul incelemesi 2026-10-19: kapsül gecede zemine karışıyordu (4 model).
-    // Etkin ve pasif kapsül 1 px görünür kenar taşır; ikon tam karşıtlıkta.
-    final capsule = StadiumBorder(
+    // Etkin ve pasif düğme 1 px görünür kenar taşır; ikon tam karşıtlıkta.
+    final capsule = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(SahneShape.lValue),
       side: selected
           ? BorderSide(
               color: t.goldTx,
@@ -447,9 +448,70 @@ class SahneJokerButton extends StatelessWidget {
             )
           : (enabled ? BorderSide(color: t.tx3) : BorderSide.none),
     );
-    // Ad etiketi (ikonun altında, tek satır, sığmazsa küçülür); büyük
-    // yazıda (≥ %130) gizlenir, ad Semantics'te bütündür.
+    // Büyük yazıda (≥ %130) ad ve rozet düşer: düğme ikon + fiyata iner,
+    // ad Semantics'te bütündür.
     final showLabel = MediaQuery.textScalerOf(context).scale(14) < 18.2;
+    final labelColor = selected
+        ? t.goldTx
+        : (enabled ? t.tx : t.tx2.withValues(alpha: 0.75));
+    final showFree = showPrice && freeLabel != null && enabled && showLabel;
+    // Fiyat/"Ücretsiz" AYRI bir hap: ad ile karışmaz (2026-10-28 tur 2 R3;
+    // eskiden ikon + rozet + fiyat tek satırda sıkışıyor, kapsül sığdırmak
+    // için küçülüyordu ve "Ücretsiz" okunmaz boya iniyordu).
+    Widget? pricePill;
+    if (showFree) {
+      pricePill = DecoratedBox(
+        key: const ValueKey('joker-free-badge'),
+        decoration: ShapeDecoration(
+          color: t.okFill,
+          shape: const StadiumBorder(),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          child: Text(
+            freeLabel!,
+            maxLines: 1,
+            style: SahneType.caption.copyWith(
+              color: t.tx,
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+      );
+    } else if (showPrice) {
+      pricePill = DecoratedBox(
+        decoration: ShapeDecoration(color: t.s1, shape: const StadiumBorder()),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Kurul 2. tur (2026-10-20): sıfır bakiyede pasif joker hâlâ
+              // "etkin" okunuyordu. Jeton glifi yerine KİLİT: "alınamaz"ı
+              // söyler, soluk dolgu tek başına söylemiyordu.
+              if (unaffordable)
+                Icon(
+                  AppIcons.lock,
+                  key: const ValueKey('joker-locked-glyph'),
+                  size: 14,
+                  color: t.tx2,
+                )
+              else
+                const SahneGlyph(SahneGlyphKind.coin, size: 14, filled: true),
+              const SizedBox(width: SahneSpace.x1),
+              Text(
+                '$price',
+                style: SahneType.captionStrong.copyWith(
+                  color: enabled ? t.goldTx : t.tx2,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return Semantics(
       container: true,
       button: true,
@@ -466,8 +528,6 @@ class SahneJokerButton extends StatelessWidget {
           enabled: enabled,
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: sahneTapTarget),
-            // Dokunma kutusu en az 48.
-            // Etiket eklenince kapsül 48'in üstüne uzayabilir.
             child: Center(
               heightFactor: 1,
               child: SahneTappable(
@@ -479,114 +539,52 @@ class SahneJokerButton extends StatelessWidget {
                     : (unaffordable ? t.disabledFill : t.s2),
                 onTap: tappable ? onPressed : null,
                 child: ConstrainedBox(
-                  // a11y-tap-target: noninteractive — görsel kapsül tabanı;
-                  // dokunma hedefi dıştaki 48'lik kutudur.
+                  // a11y-tap-target: noninteractive — görsel taban; dokunma
+                  // hedefi dıştaki kutudur (≥ 48 × 48).
                   constraints: const BoxConstraints(
                     minHeight: visualHeight,
                     minWidth: 52,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: SahneSpace.x2,
+                      horizontal: SahneSpace.x1,
+                      vertical: SahneSpace.x2,
                     ),
-                    child: Center(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Column(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(icon, size: 20, color: fg),
-                                if (selected) ...[
-                                  const SizedBox(width: SahneSpace.x1),
-                                  Icon(
-                                    AppIcons.check,
-                                    size: 16,
-                                    color: t.goldTx,
-                                  ),
-                                ],
-                                // Büyük yazıda ad etiketi gizlenir; "Ücretsiz" rozeti
-                                // de düşer (dört özdeş rozet jokerleri
-                                // ayırt ettirmezdi): fiyat çizilir.
-                                if (showPrice &&
-                                    freeLabel != null &&
-                                    enabled &&
-                                    showLabel) ...[
-                                  const SizedBox(width: SahneSpace.x1),
-                                  DecoratedBox(
-                                    key: const ValueKey('joker-free-badge'),
-                                    decoration: ShapeDecoration(
-                                      color: t.okFill,
-                                      shape: const StadiumBorder(),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 6,
-                                        vertical: 1,
-                                      ),
-                                      child: Text(
-                                        freeLabel!,
-                                        maxLines: 1,
-                                        style: SahneType.caption.copyWith(
-                                          color: t.tx,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ] else if (showPrice) ...[
-                                  const SizedBox(width: SahneSpace.x1),
-                                  // Kurul 2. tur (2026-10-20): sıfır bakiyede
-                                  // pasif joker hâlâ "etkin" okunuyordu (üç
-                                  // model). Jeton glifi yerine KİLİT: fiyatın
-                                  // yanındaki kilit "alınamaz"ı söyler,
-                                  // soluk dolgu tek başına söylemiyordu.
-                                  if (unaffordable)
-                                    Icon(
-                                      AppIcons.lock,
-                                      key: const ValueKey('joker-locked-glyph'),
-                                      size: 14,
-                                      color: t.tx2,
-                                    )
-                                  else
-                                    const SahneGlyph(
-                                      SahneGlyphKind.coin,
-                                      size: 16,
-                                      filled: true,
-                                    ),
-                                  const SizedBox(width: SahneSpace.x1),
-                                  Text(
-                                    '$price',
-                                    style: SahneType.captionStrong.copyWith(
-                                      color: enabled ? t.goldTx : t.tx2,
-                                      fontFeatures: const [
-                                        FontFeature.tabularFigures(),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ],
-                            ),
-                            if (showLabel)
-                              Text(
-                                label,
-                                maxLines: 1,
-                                style: SahneType.caption.copyWith(
-                                  color: selected
-                                      ? t.goldTx
-                                      : (enabled
-                                            ? t.tx2
-                                            : t.tx2.withValues(alpha: 0.75)),
-                                  // ≥ 13: 11 px etiket kurulda okunmadı.
-                                  fontSize: 13,
-                                ),
-                              ),
+                            Icon(icon, size: 22, color: fg),
+                            if (selected) ...[
+                              const SizedBox(width: SahneSpace.x1),
+                              Icon(AppIcons.check, size: 16, color: t.goldTx),
+                            ],
                           ],
                         ),
-                      ),
+                        if (showLabel) ...[
+                          const SizedBox(height: 2),
+                          // Ad ≥ 11 sp okunur: sığmazsa en çok iki satıra
+                          // iner, küçülmez.
+                          Text(
+                            label,
+                            key: const ValueKey('joker-name'),
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: SahneType.caption.copyWith(
+                              color: labelColor,
+                              fontSize: 12,
+                              height: 1.15,
+                            ),
+                          ),
+                        ],
+                        if (pricePill != null) ...[
+                          const SizedBox(height: SahneSpace.x1),
+                          FittedBox(fit: BoxFit.scaleDown, child: pricePill),
+                        ],
+                      ],
                     ),
                   ),
                 ),
