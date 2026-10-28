@@ -16,5 +16,10 @@
 		<string>applinks:www.zankurd.com</string>
 		<string>applinks:zankurd.com</string>
 	</array>
+	<!-- Ana ekran widget'ı: uygulama ile ZanKurdWidget uzantısı aynı grubu paylaşır. -->
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.zankurd.app</string>
+	</array>
 </dict>
 </plist>
