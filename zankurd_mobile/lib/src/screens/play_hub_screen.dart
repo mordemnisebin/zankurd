@@ -481,7 +481,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     final messenger = ScaffoldMessenger.of(context);
     messenger.hideCurrentSnackBar();
     messenger.showSnackBar(
-      SnackBar(content: Text(context.t(K.serverUnreachableTitle))),
+      SnackBar(content: Text(context.t(K.internetRequired))),
     );
   }
 
@@ -548,7 +548,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       icon: AppIcons.ferrisWheel,
       role: SahneRole.gold,
       title: context.t(K.wheelTitle),
-      subtitle: context.t(K.wheelOncePerDay),
+      subtitle: context.t(K.wheelFreeDaily),
       trailing: _spinReady
           ? SahneBadge(
               label: context.t(K.wheelReadyBadge),
@@ -558,7 +558,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       chevron: !_spinReady,
       semanticLabel: [
         context.t(K.wheelTitle),
-        context.t(K.wheelOncePerDay),
+        context.t(K.wheelFreeDaily),
         if (_spinReady) context.t(K.wheelReadyBadge),
       ].join('. '),
       onTap: _openSpinWheel,
@@ -915,7 +915,7 @@ class _QuickDuelHeroState extends State<_QuickDuelHero> {
       button: true,
       enabled: enabled,
       excludeSemantics: true,
-      label: '${context.t(K.quickDuel)}. ${context.t(K.pickOpponent)}',
+      label: '${context.t(K.quickDuel)}. ${context.t(K.findOpponent)}',
       onTap: onTap,
       // Boyax DOLU kahraman (2026-10-20 renk ve canlılık): yarış kimliği tek
       // bakışta. Sadeleştirme beyaz bir karta indirmişti; Boyax ekranda
@@ -1000,7 +1000,7 @@ class _QuickDuelHeroState extends State<_QuickDuelHero> {
                   excludeFromSemantics: true,
                   onTap: onTap == null ? widget.onLockedTap : null,
                   child: SahneButton.primary(
-                    label: context.t(K.pickOpponent),
+                    label: context.t(K.findOpponent),
                     onPressed: onTap,
                     expand: true,
                   ),

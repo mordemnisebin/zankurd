@@ -27,8 +27,9 @@ enum SahneProgressTone {
   /// Ödül (Zêr): XP, seviye.
   gold,
 
-  /// Eylem rengi (`act`, turuncu): yol boyunca ilerleyen akışlar (tanıtım,
-  /// soru ilerlemesi); uygulamanın birincil eylem rengiyle aynı ton.
+  /// Akış ilerlemesi (tanıtım, soru): W9 (2026-10-28 tur 5) — turuncu YALNIZ
+  /// eylemdir, ilerleme eylem değildir. Koyu sahnede beyaz (`tx`), açık
+  /// yüzeyde Öğren yeşili (`learnBar`).
   action,
 }
 
@@ -81,7 +82,8 @@ class SahneProgressBar extends StatelessWidget {
         fillColor ??
         switch (tone) {
           SahneProgressTone.gold => t.gold,
-          SahneProgressTone.action => t.act,
+          SahneProgressTone.action =>
+            t.bg == SahneTokens.day.bg ? t.learnBar : t.tx,
           SahneProgressTone.learn => t.learnBar,
         };
     final reduceMotion = sahneMotionReduced(context);

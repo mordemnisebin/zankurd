@@ -8,6 +8,8 @@
 // 2026-09-29 doğallık (K5, K7): düello kartında VS amblemi yok (yerine
 // "10 soru · ~2 dakika"); "Oda kur" ve "Kodla katıl" liste grubu değil yan
 // yana iki ikincil düğme. Bekçiler yeni düzeni ve TEK Agir kuralını sorar.
+// 2026-10-28 tur 5 W6: canlı düello kahraman düğmesi "Rakip seç" değil "Rakip bul"
+// (eşleşme aranır, oyuncu liste görmez).
 import 'support/play_hub_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -86,8 +88,8 @@ void main() {
       find.descendant(of: hero, matching: find.byType(FilledButton)),
       findsOneWidget,
     );
-    final ctx = tester.element(find.text('Rakip seç'));
-    final label = tester.widget<Text>(find.text('Rakip seç'));
+    final ctx = tester.element(find.text('Rakip bul'));
+    final label = tester.widget<Text>(find.text('Rakip bul'));
     expect(
       DefaultTextStyle.of(ctx).style.merge(label.style).color,
       SahneTokens.night.onAct,
@@ -109,7 +111,7 @@ void main() {
     final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
     final heroData = tester.getSemantics(hero).getSemanticsData();
     expect(heroData.flagsCollection.isButton, isTrue);
-    expect(heroData.label, 'Canlı düello. Rakip seç');
+    expect(heroData.label, 'Canlı düello. Rakip bul');
     final action = find.byKey(const ValueKey('play-hub-quick-duel-cta'));
     expect(action, findsOneWidget);
     expect(tester.getSize(action).height, greaterThanOrEqualTo(48));

@@ -43,6 +43,7 @@ class WildcardButton extends StatelessWidget {
     required this.onTap,
     this.cantAfford = false,
     this.onLockedTap,
+    this.free = false,
     super.key,
   });
 
@@ -53,6 +54,9 @@ class WildcardButton extends StatelessWidget {
   final bool isAnswered;
   final bool isActive;
   final bool cantAfford;
+
+  /// W1: günlük bedava hak açık; fiyat yuvasında "Bedava" yazar.
+  final bool free;
   final VoidCallback onTap;
 
   /// Jetonu yetmeyen joker soluk + kilitli çizilir ama DOKUNULABİLİR kalır:
@@ -81,10 +85,11 @@ class WildcardButton extends StatelessWidget {
       WildcardType.doubleAnswer => context.t(K.wildcardDoubleHint),
       WildcardType.changeQuestion => context.t(K.wildcardChangeHint),
     };
-    // 2026-10-28 tur 3 T2: günlük ücretsiz hak TEK hak; jokerlerin üstüne
-    // dört "Ücretsiz" rozeti yapışmaz (jokerler normal fiyatını taşır), hak
-    // jokerlerin üstündeki tek altın çiple söylenir.
-    final price = '${type.coinCost} ${context.t(K.coinWord)}';
+    // W1 (2026-10-28 tur 5): hak açıkken fiyat yuvası "Bedava" yazar (aynı
+    // boy/stil, rozet değil); ayrı "Bugün 1 joker bedava" çipi kalktı.
+    final price = free
+        ? context.t(K.freeWord)
+        : '${type.coinCost} ${context.t(K.coinWord)}';
     final displayLabel = stateLabel == null
         ? '$typeLabel • $price'
         : '$typeLabel • $stateLabel';
@@ -110,6 +115,8 @@ class WildcardButton extends StatelessWidget {
         // görünsün).
         selected: isActive,
         unaffordable: cantAfford,
+        free: free,
+        freeLabel: context.t(K.freeWord),
         onPressed: canTap ? onTap : lockedTap,
       ),
     );

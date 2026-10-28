@@ -612,13 +612,9 @@ class _LearningScreenState extends State<LearningScreen> {
               dense: true,
               title: context.t(K.allLessonsMore, {'n': '$lockedHidden'}),
               onTap: () => setState(() => _showAllLocked = true),
-              trailing: Icon(
-                AppIcons.lock,
-                size: 20,
-                // D aşaması (3 model): kilit öğrenme alanının Zimrût'una
-                // doğru kayık, düşük doygunluk; açık satırdan geride.
-                color: Color.lerp(t.tx2, t.learnTx, 0.4),
-              ),
+              // W3 (2026-10-28 tur 5): kilit değil ok — satır kilitli dersleri
+              // AÇAN bir eylemdir; kilit "dokunulamaz" okunuyordu.
+              chevron: true,
             ),
           );
         }

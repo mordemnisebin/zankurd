@@ -2108,6 +2108,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return _mockExtraSpins > _mockUsedExtraSpins;
   }
 
+  @override
+  Future<int> unusedExtraSpins() async =>
+      (_mockExtraSpins - _mockUsedExtraSpins).clamp(0, 1 << 30);
+
   /// Sahte depoda sunucu XP'si tutulmaz; yalnız çağrının yapıldığı görülür.
   int awardedXpTotal = 0;
 

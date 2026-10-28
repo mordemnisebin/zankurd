@@ -63,8 +63,14 @@ class HomeTopicGrid extends StatelessWidget {
     required this.categories,
     required this.progress,
     required this.onOpen,
+    this.onMixed,
     super.key,
   });
+
+  /// W11 (2026-10-28 tur 5): 12. karo "Karışık" — konu seçmeden karışık
+  /// alıştırma başlatır; 11 konu çift sütunda tek bir karo yalnız kalıyordu.
+  /// `null` → karo çizilmez.
+  final VoidCallback? onMixed;
 
   final bool isKu;
   final List<String> categories;
@@ -134,6 +140,17 @@ class HomeTopicGrid extends StatelessWidget {
                   isKu: isKu,
                   progress: progress[category],
                   onTap: onOpen == null ? null : () => onOpen!(category),
+                ),
+              ),
+            if (onMixed != null)
+              SizedBox(
+                width: tileWidth,
+                child: _HomeTopicTile(
+                  key: const ValueKey('home-topic-mixed'),
+                  category: 'Tevlihev',
+                  isKu: isKu,
+                  progress: null,
+                  onTap: onMixed,
                 ),
               ),
           ],

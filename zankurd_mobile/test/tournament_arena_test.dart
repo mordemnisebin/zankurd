@@ -117,8 +117,11 @@ void main() {
     await _pump(tester);
     // Merdiven `generateBracket` ile aynı bölme mantığından türer; sabit
     // dizi yazılsaydı ikisi sessizce ayrışabilirdi.
-    for (final step in const ['4', '2', '1']) {
-      expect(find.text(step), findsWidgets, reason: '$step basamağı yok');
+    //
+    // 2026-10-28 tur 5 W4: çipler ADLI ("Yarı Final 4 › Final 2 › Şampiyon");
+    // çıplak sayılar neyin sayısı olduğunu söylemiyordu.
+    for (final step in const ['Yarı Final 4', 'Final 2', 'Şampiyon']) {
+      expect(find.text(step), findsOneWidget, reason: '$step basamağı yok');
     }
     expect(find.text('16'), findsNothing);
     expect(find.text('8'), findsNothing);

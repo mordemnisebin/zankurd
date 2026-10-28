@@ -147,19 +147,24 @@ class TodayTaskCard extends StatelessWidget {
                             meta,
                             style: SahneType.caption.copyWith(color: t.tx2),
                           ),
-                          const SizedBox(height: SahneSpace.x3),
-                          // İlerleme: ince 4 px çubuk + küçük "0/5". Eskiden 80 px'lik
-                          // ders elmasıydı (bkz. sınıf belgesi).
-                          SahneProgressBar(
-                            key: const ValueKey('home-daily-task-progress'),
-                            value: safeTotal == 0 ? 0 : safeDone / safeTotal,
-                            // Kalın (8 px) Zimrût çubuk, tonlu iz (2026-10-20).
-                            height: 8,
-                            trackColor: t.learnTrack,
-                            edgeColor: t.learnEdge,
-                            trailing: '$safeDone/$safeTotal',
-                            semanticLabel: title,
-                          ),
+                          // W11 (2026-10-28 tur 5): ilerleme çubuğu İLK doğru
+                          // cevaba kadar gizli; "0/5" boş çubuk ilerlemeyi değil
+                          // eksikliği gösteriyordu.
+                          if (safeDone > 0) ...[
+                            const SizedBox(height: SahneSpace.x3),
+                            // İlerleme: ince 4 px çubuk + küçük "0/5". Eskiden 80 px'lik
+                            // ders elmasıydı (bkz. sınıf belgesi).
+                            SahneProgressBar(
+                              key: const ValueKey('home-daily-task-progress'),
+                              value: safeTotal == 0 ? 0 : safeDone / safeTotal,
+                              // Kalın (8 px) Zimrût çubuk, tonlu iz (2026-10-20).
+                              height: 8,
+                              trackColor: t.learnTrack,
+                              edgeColor: t.learnEdge,
+                              trailing: '$safeDone/$safeTotal',
+                              semanticLabel: title,
+                            ),
+                          ],
                           const SizedBox(height: SahneSpace.x4),
                           _StartButton(
                             label: label,

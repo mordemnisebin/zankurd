@@ -360,12 +360,13 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   Color medalTint(int place) => switch (place) {
     0 => goldTint,
     1 => _isNight ? const Color(0xFF2C3038) : const Color(0xFFE7EBF3),
-    _ => _isNight ? const Color(0xFF3A2B20) : const Color(0xFFF9E8DB),
+    // W9 (2026-10-28 tur 5): bakır tonu; turuncuya (eylem rengi) kaymaz.
+    _ => _isNight ? const Color(0xFF332B25) : const Color(0xFFF1E6DC),
   };
   Color medalBar(int place) => switch (place) {
     0 => gold,
     1 => _isNight ? const Color(0xFFAAB3C6) : const Color(0xFF9AA5BC),
-    _ => const Color(0xFFCD7F32),
+    _ => const Color(0xFFA9713F),
   };
 
   /// Gündüz kartının çok hafif gölgesi (mürekkep %8, 6 pt, 2 aşağı).

@@ -115,6 +115,29 @@ class _ReviewScreenState extends State<ReviewScreen> {
         // tekrarlıyordu).
         title: Text(context.t(K.answersTitle)),
       ),
+      // W8 (2026-10-28 tur 5): "Tekrara başla" listenin başında kayıyordu;
+      // artık altta SABİT (Günün turu/çark gibi tek birincil eylem).
+      bottomNavigationBar: wrong > 0 && widget.practiceAvailable
+          ? SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  SahneSpace.page,
+                  SahneSpace.x2,
+                  SahneSpace.page,
+                  SahneSpace.x3,
+                ),
+                child: SahneButton.primary(
+                  key: const ValueKey('review-practice-cta'),
+                  onPressed: () => Navigator.of(context).pop(true),
+                  icon: AppIcons.arrowsRotate,
+                  arrow: false,
+                  label: context.t(K.tekraraBasla),
+                  expand: true,
+                ),
+              ),
+            )
+          : null,
       body: SafeArea(
         top: false,
         child: widget.records.isEmpty
@@ -150,17 +173,6 @@ class _ReviewScreenState extends State<ReviewScreen> {
                       ),
                     ],
                   ),
-                  if (wrong > 0 && widget.practiceAvailable) ...[
-                    const SizedBox(height: SahneSpace.x3),
-                    SahneButton.primary(
-                      key: const ValueKey('review-practice-cta'),
-                      onPressed: () => Navigator.of(context).pop(true),
-                      icon: AppIcons.arrowsRotate,
-                      arrow: false,
-                      label: context.t(K.tekraraBasla),
-                      expand: true,
-                    ),
-                  ],
                   const SizedBox(height: SahneSpace.x4),
                   if (_isFlashcardMode)
                     _FlashcardView(records: widget.records)

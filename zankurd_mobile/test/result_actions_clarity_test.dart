@@ -218,10 +218,9 @@ void main() {
       await tester.pumpAndSettle();
       await openResultDetails(tester);
 
-      const sideActionKeys = [
-        'result-review-mistakes-button',
-        'result-share-button',
-      ];
+      // W2 (2026-10-28 tur 5): Paylaş artık alt perdede SİMGE düğmesi (etiket
+      // yok, ekran okuyucuya gider); yalnız yazılı yan eylem burada ölçülür.
+      const sideActionKeys = ['result-review-mistakes-button'];
       for (final keyName in sideActionKeys) {
         final button = find.byKey(ValueKey(keyName), skipOffstage: false);
         expect(button, findsOneWidget, reason: keyName);
@@ -263,6 +262,10 @@ void main() {
           reason: '$keyName: dokunma hedefi tabanı 48pt olmalı',
         );
       }
+      final share = find.byKey(const ValueKey('result-share-button'));
+      expect(share, findsOneWidget);
+      expect(tester.getSize(share).width, greaterThanOrEqualTo(48));
+      expect(tester.getSize(share).height, greaterThanOrEqualTo(48));
       expect(tester.takeException(), isNull);
     },
   );

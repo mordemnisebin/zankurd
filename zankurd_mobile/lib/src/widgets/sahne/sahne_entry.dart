@@ -330,6 +330,9 @@ class _TopBar extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // W15 (2026-10-28 tur 5): dil seçici üstteki çevrimdışı şeride
+          // yapışıyordu (ios_04/and_04); standart 8 üst boşluk.
+          const SizedBox(height: SahneSpace.x2),
           ConstrainedBox(
             // a11y-tap-target: noninteractive — üst çubuğun yerleşim boyu;
             // içindeki düğmeler kendi 48'lik hedeflerini taşır.

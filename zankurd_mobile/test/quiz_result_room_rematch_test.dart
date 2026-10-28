@@ -92,7 +92,10 @@ void main() {
       find.descendant(of: rematch, matching: find.text('Tekrar oyna')),
       findsOneWidget,
     );
-    expect(find.byKey(const ValueKey('result-primary-home')), findsOneWidget);
+    // W2 (2026-10-28 tur 5): alt perde = tam genişlik "Tekrar oyna" + simge
+    // olarak Paylaş; "Ana sayfa" "Diğer seçenekler"e indi.
+    expect(find.byKey(const ValueKey('result-primary-home')), findsNothing);
+    expect(find.byKey(const ValueKey('result-share-button')), findsOneWidget);
     // Özel odada ikinci bir "Yeni oda" yok: Tekrar oyna aynı işi görür.
     expect(find.byKey(const ValueKey('result-new-room-button')), findsNothing);
 

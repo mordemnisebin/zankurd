@@ -224,9 +224,9 @@ void main() {
       );
     });
 
-    testWidgets('doğru cevapta kart YOK, eylem "Sonraki" kalır', (
-      tester,
-    ) async {
+    // W10 (2026-10-28 tur 5): doğruda da yanlışta da aynı eylem sözü:
+    // "Devam et" (eskiden doğruda "Sonraki" idi).
+    testWidgets('doğru cevapta kart YOK, eylem "Devam et"', (tester) async {
       await pumpQuiz(tester);
       await tester.pumpAndSettle();
 
@@ -235,7 +235,7 @@ void main() {
 
       expect(find.byKey(kart), findsNothing);
       expect(find.text('«av» Türkçede «su» demektir.'), findsNothing);
-      expect(find.text('Sonraki'), findsOneWidget);
+      expect(find.text('Devam et'), findsOneWidget);
     });
 
     testWidgets('açıklaması olmayan soruda yalnız doğru cevap yazılır', (
@@ -294,7 +294,7 @@ void main() {
 
       expect(find.byKey(kart), findsNothing);
       expect(find.text('«av» Türkçede «su» demektir.'), findsNothing);
-      expect(find.text('Sonraki'), findsOneWidget);
+      expect(find.text('Devam et'), findsOneWidget);
     });
 
     testWidgets('bot yarışında yanlış cevap açıklama göstermez', (

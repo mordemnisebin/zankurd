@@ -9,9 +9,13 @@ import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/wildcard.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_wildcard_bar.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
+/// 2026-10-28 tur 5 W1: hak açıkken fiyat yuvasında "Bedava" (rozet/çip yok);
+/// kısa etiketler (50/50, İpucu, Çift cevap, Değiştir) ≥ 12 sp.
+///
 /// Solo turda günlük bedava joker: ilk kullanım jeton düşmez, ikincisi düşer.
 ///
 /// ## Kusur
@@ -139,12 +143,12 @@ void main() {
     final repository = _CountingRepository(8);
     await pumpQuiz(tester, repository);
 
-    // T2 (2026-10-28 tur 3): ücretsiz hak TEK altın çip; jokerlerde
-    // "Ücretsiz" rozeti yok (jokerler normal fiyatını taşır).
-    expect(
-      find.byKey(const ValueKey('quiz-free-wildcard-chip')),
-      findsOneWidget,
-    );
+    // W1 (2026-10-28 tur 5): hak açıkken HER jokerin fiyat yuvasında
+    // "Bedava" yazar; ayrı "Bugün 1 joker bedava" çipi yoktur.
+    expect(find.byKey(const ValueKey('quiz-free-wildcard-chip')), findsNothing);
+    expect(find.text('Bugün 1 joker bedava'), findsNothing);
+    expect(find.byKey(const ValueKey('joker-free-label')), findsNWidgets(4));
+    expect(find.text('Bedava'), findsNWidgets(4));
     expect(find.byKey(const ValueKey('joker-free-badge')), findsNothing);
     expect(
       find.byKey(const ValueKey('quiz-collapsed-wildcard-pill')),
@@ -186,6 +190,9 @@ void main() {
     );
 
     expect(find.byKey(const ValueKey('quiz-free-wildcard-hint')), findsNothing);
+    // Hak bittiyse normal fiyatlar: "Bedava" yazmaz.
+    expect(find.text('Bedava'), findsNothing);
+    expect(find.text('${WildcardType.fiftyFifty.coinCost}'), findsOneWidget);
     await tap(tester, WildcardType.fiftyFifty);
     expect(repository.spends, [WildcardType.fiftyFifty.coinCost]);
   });
@@ -199,12 +206,12 @@ void main() {
       freeDay: FreeWildcardStore.dayKey(yesterday),
     );
 
-    // T2 (2026-10-28 tur 3): ücretsiz hak TEK altın çip; jokerlerde
-    // "Ücretsiz" rozeti yok (jokerler normal fiyatını taşır).
-    expect(
-      find.byKey(const ValueKey('quiz-free-wildcard-chip')),
-      findsOneWidget,
-    );
+    // W1 (2026-10-28 tur 5): hak açıkken HER jokerin fiyat yuvasında
+    // "Bedava" yazar; ayrı "Bugün 1 joker bedava" çipi yoktur.
+    expect(find.byKey(const ValueKey('quiz-free-wildcard-chip')), findsNothing);
+    expect(find.text('Bugün 1 joker bedava'), findsNothing);
+    expect(find.byKey(const ValueKey('joker-free-label')), findsNWidgets(4));
+    expect(find.text('Bedava'), findsNWidgets(4));
     expect(find.byKey(const ValueKey('joker-free-badge')), findsNothing);
     await tap(tester, WildcardType.fiftyFifty);
     expect(repository.spends, isEmpty);
@@ -231,5 +238,29 @@ void main() {
     expect(repository.spends, isEmpty, reason: 'paket parası zaten alındı');
     expect(find.text('8'), findsOneWidget, reason: 'bakiye 8 kalır');
     expect(await JokerStockStore.count(), 1);
+  });
+
+  testWidgets('W1: kısa joker etiketleri ≥ 12 sp, "Bedava" fiyatla aynı boy', (
+    tester,
+  ) async {
+    await pumpQuiz(tester, _CountingRepository(8));
+    final names = [
+      for (final e in find.byKey(const ValueKey('joker-name')).evaluate())
+        e.widget as Text,
+    ];
+    expect(names.map((n) => n.data), [
+      '50/50',
+      'İpucu',
+      'Çift cevap',
+      'Değiştir',
+    ]);
+    for (final n in names) {
+      expect(n.style!.fontSize, greaterThanOrEqualTo(12));
+    }
+    final free = tester.widget<Text>(
+      find.byKey(const ValueKey('joker-free-label')).first,
+    );
+    // Fiyat hapıyla aynı stil (captionStrong): boy aynı, rozet rengi yok.
+    expect(free.style!.fontSize, SahneType.captionStrong.fontSize);
   });
 }

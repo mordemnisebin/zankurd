@@ -22,7 +22,7 @@ void main() {
   });
 
   testWidgets(
-    'katalog bütün hikâyeleri gösterir; başlanmamışta söz ve ok yok',
+    'katalog bütün hikâyeleri gösterir; her satırda sağ ok, başlanmamışta söz yok',
     (tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -41,7 +41,12 @@ void main() {
         expect(find.byKey(ValueKey('story-card-${story.id}')), findsOneWidget);
       }
       expect(find.text('Başla'), findsNothing);
-      expect(find.byIcon(AppIcons.chevronRight), findsNothing);
+      // W3 (2026-10-28 tur 5): her hikâye satırı dokunulur olduğunu sağ okla
+      // söyler (satırın sağı boştu); başlanmamışta "Başla" sözü yine yok.
+      expect(
+        find.byIcon(AppIcons.chevronRight),
+        findsNWidgets(everydayStories.length),
+      );
       expect(find.byIcon(AppIcons.bookOpenReader), findsNothing);
     },
   );

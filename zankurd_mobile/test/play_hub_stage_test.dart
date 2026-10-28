@@ -232,11 +232,14 @@ void main() {
   // 2026-09-30 simülatör: kilitliyken "Rakip bul", "Oda" ve
   // "Günün soruları" dokunulunca hiçbir şey yapmıyordu (sessiz ölü düğme).
   // Bekçi: dördü de pasif kalır (tıklanabilir bildirilmez) ve dokunulunca
-  // kısa bir SnackBar "Sunucuya ulaşılamadı" der.
+  // kısa bir SnackBar der. 2026-10-28 tur 5 W16: söz "İnternet bağlantısı
+  // gerekli" (sunucu dili değil, oyuncunun yapacağı iş); Turnuva satırı da
+  // dahil (iOS gezintisinde dokunuşa yanıt vermiyordu).
   for (final key in [
     'play-hub-quick-duel-cta',
     'play-hub-room',
     'play-hub-daily-contest',
+    'play-hub-tournament',
   ]) {
     testWidgets('kilitliyken $key dokunulunca geri bildirim verir', (
       tester,
@@ -263,7 +266,7 @@ void main() {
       expect(
         find.descendant(
           of: find.byType(SnackBar),
-          matching: find.text('Sunucuya ulaşılamadı'),
+          matching: find.text('İnternet bağlantısı gerekli'),
         ),
         findsOneWidget,
       );

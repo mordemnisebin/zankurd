@@ -24,6 +24,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/contest.dart' show DailyEventEntry;
 import '../providers/reduced_motion_provider.dart';
+import '../providers/remote_availability.dart';
 import '../providers/sound_provider.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/sync_failed_notice.dart';
@@ -610,13 +611,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // İlk oturum hâlâ 5 soruluk, süresiz, açıklamalı ilk derstir:
           // yeni gelene ilk dakikada süreli tur vermek yerine önce nasıl
           // oynandığı öğretilir. İlk ders bitince kart günün turuna döner.
-          if (_firstSession)
+          //
+          // W16 (2026-10-28 tur 5): sunucuya ulaşılamıyorsa (çevrimdışı) Günün
+          // turu oynanamaz (sunucu sıralaması gerekir); görev kartı çevrimdışı
+          // oynanabilir günlük dersi (yerel sorular) gösterir.
+          if (_firstSession || RemoteAvailability.socialLockedWatch(context))
             TodayTaskCard(
               isKu: ku,
               loading: _roomActionLoading,
               done: _todayAnswered,
-              total: 5,
-              firstSession: true,
+              total: _firstSession ? 5 : _todayTarget,
+              firstSession: _firstSession,
               onStart: _startPractice,
             )
           else
@@ -731,6 +736,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             categories: repo.categories,
             progress: _topicProgress,
             onOpen: _openCategory,
+            onMixed: _startPractice,
           ),
           // Günün sözü EN ALTTA, sade kart (K4).
           DailyQuoteCard(isKu: ku),

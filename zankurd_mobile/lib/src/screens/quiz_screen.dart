@@ -88,6 +88,7 @@ class QuizScreen extends StatefulWidget {
     this.botRace = false,
     this.dailyQuiz = false,
     this.enableTimer = true,
+    this.levelGated = false,
     this.is1v1 = false,
     this.experience = QuizExperience.competition,
     this.contestId,
@@ -111,6 +112,12 @@ class QuizScreen extends StatefulWidget {
   final bool dailyQuiz;
 
   final bool enableTimer;
+
+  /// W13 (2026-10-28 tur 5): seviye yolunun turu. Geçme eşiğinin altında
+  /// kalırsa sonuç ekranı "Seviye geçilmedi" der (satır içi; eskiden
+  /// [LevelScreen] bir SnackBar açıyordu ve o, sonuç ekranının satırlarını
+  /// örtüyordu).
+  final bool levelGated;
   final bool is1v1;
   final QuizExperience experience;
 
@@ -438,6 +445,7 @@ class _QuizScreenState extends State<QuizScreen>
       _revealKeepingPhoto(
         target,
         photoKey: _photoKeyFor(index),
+        topKey: _promptCardKeyFor(index),
         duration: const Duration(milliseconds: 320),
         // Öğrenme akışında doğru şıkkın hemen altında açıklama kutusu
         // belirir ve asıl öğretici içerik odur; karo yukarı alınarak
@@ -481,6 +489,7 @@ class _QuizScreenState extends State<QuizScreen>
       _revealKeepingPhoto(
         target,
         photoKey: _photoKeyFor(index),
+        topKey: _promptCardKeyFor(index),
         duration: sahneMotionReduced(context)
             ? Duration.zero
             : const Duration(milliseconds: 320),
@@ -500,6 +509,12 @@ class _QuizScreenState extends State<QuizScreen>
   /// geçişte eski ve yeni paneli birlikte yaşattığı için tek anahtar
   /// paylaşılamaz (duplicate-GlobalKey); her soruya kendi anahtarı düşer.
   final Map<int, GlobalKey> _photoKeys = {};
+
+  /// W12 (2026-10-28 tur 5): soru KARTININ anahtarı. Cevap sonrası kaydırma
+  /// (doğru şık / açıklama) kartın üstünü ekran dışına itmez.
+  final Map<int, GlobalKey> _promptCardKeys = {};
+  GlobalKey _promptCardKeyFor(int questionIndex) =>
+      _promptCardKeys.putIfAbsent(questionIndex, GlobalKey.new);
   GlobalKey _photoKeyFor(int questionIndex) =>
       _photoKeys.putIfAbsent(questionIndex, GlobalKey.new);
 
@@ -3389,6 +3404,7 @@ class _QuizScreenState extends State<QuizScreen>
             practice: widget.practice,
             dailyQuiz: widget.dailyQuiz,
             isLearningExperience: _isLearningExperience,
+            levelGated: widget.levelGated,
             contestId: widget.contestId,
             roundId: _analyticsRoundId,
           ),
@@ -4061,6 +4077,7 @@ class _QuizScreenState extends State<QuizScreen>
             practice: widget.practice,
             dailyQuiz: widget.dailyQuiz,
             isLearningExperience: _isLearningExperience,
+            levelGated: widget.levelGated,
             contestId: widget.contestId,
             roundId: _analyticsRoundId,
             tournamentMatch: widget.versusBannerText != null,

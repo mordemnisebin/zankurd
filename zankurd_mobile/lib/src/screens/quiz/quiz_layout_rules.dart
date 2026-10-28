@@ -46,6 +46,10 @@ const double _compactLandscapeMaxHeight = 600.0;
 @visibleForTesting
 bool revealCorrectAnswerInTests = false;
 
+/// Soru kartının üstünü korurken hedefin görünür kalması gereken en az
+/// yükseklik (pt).
+const double _minTargetVisible = 96.0;
+
 /// Cevaptan sonraki kaydırmada soru fotoğrafından görünür kalması gereken
 /// en az yükseklik (pt).
 const double _questionPhotoMinVisible = 64.0;
@@ -61,6 +65,7 @@ const double _questionPhotoMinVisible = 64.0;
 void _revealKeepingPhoto(
   BuildContext target, {
   required GlobalKey photoKey,
+  GlobalKey? topKey,
   required double alignment,
   required Duration duration,
   Curve curve = Curves.easeOutCubic,
@@ -79,6 +84,31 @@ void _revealKeepingPhoto(
     final keep = min(photo.size.height, _questionPhotoMinVisible);
     final cap = photoTop + photo.size.height - keep;
     offset = min(offset, max(cap, position.pixels));
+  }
+  // W12: soru kartının ÜST kenarı görünür kalır. Açıklama kutusu uzun olunca
+  // hizalama kartı üst kenarın arkasına itiyor, ilk satır kesiliyordu
+  // (iOS gezinti, ios_15). Kart ekranda kalır; açıklamanın kalanı kayarak
+  // okunur.
+  final card = topKey?.currentContext?.findRenderObject();
+  if (card is RenderBox && card.attached && card.hasSize) {
+    final cardTop = viewport.getOffsetToReveal(card, 0).offset;
+    final capped = min(offset, cardTop - 8);
+    // Kart üstü ile hedef BİRLİKTE sığmıyorsa hedefin en az bu kadarı
+    // (başlık + birkaç satır) görünür kalmalı; yoksa kuralı bırak: çok
+    // uzun soru + uzun şıklarda açıklama perdenin arkasında kalmasın
+    // (`quiz_stage_scroll_test` S1).
+    final hidden = offset - capped;
+    final targetHeight = renderObject is RenderBox && renderObject.hasSize
+        ? renderObject.size.height
+        : 0.0;
+    if (hidden <= max(0.0, targetHeight - _minTargetVisible)) {
+      offset = capped;
+    } else {
+      // Birlikte sığmıyor: soru kartı YARIM kesik kalmasın (ilk satırı
+      // görünüp gerisi gizli kötü okunur). Ya tam görünür ya tamamen kayar.
+      final cardBottom = cardTop + card.size.height;
+      if (offset > cardTop - 8 && offset < cardBottom) offset = cardBottom;
+    }
   }
   offset = offset.clamp(position.minScrollExtent, position.maxScrollExtent);
   if (duration == Duration.zero) {

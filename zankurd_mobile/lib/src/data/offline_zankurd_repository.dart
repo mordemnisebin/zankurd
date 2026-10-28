@@ -466,6 +466,9 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<int> unusedExtraSpins() async => 0;
+
+  @override
   Future<int> awardSpinCoins() async {
     return 0;
   }

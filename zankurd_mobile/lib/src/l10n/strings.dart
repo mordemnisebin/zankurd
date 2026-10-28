@@ -427,6 +427,14 @@ class Tr {
     // İlk ikisi "rakip seçimi" sayfasını açar: Rastgele ya da Arkadaş.
     // Jüri bekliyor (2026-10-24): zindî = canlı (`Pûana zindî` ile aynı kök).
     K.pickOpponent: {'ku': 'Hevrik hilbijêre', 'tr': 'Rakip seç'},
+    // W6 (2026-10-28 tur 5): kahraman düğme "seç" değil "bul" der (eşleşme
+    // aranır, oyuncu rakip listesi görmez).
+    K.findOpponent: {'ku': 'Hevrikekî bibîne', 'tr': 'Rakip bul'},
+    // W16: sunucuya ulaşılamayan girişe dokununca söylenen kısa söz.
+    K.internetRequired: {
+      'ku': 'Girêdana înternetê pêwîst e',
+      'tr': 'İnternet bağlantısı gerekli',
+    },
     K.opponentRandom: {'ku': 'Rasthatî', 'tr': 'Rastgele'},
     K.opponentFriend: {'ku': 'Heval', 'tr': 'Arkadaş'},
     K.opponentFriendLiveSub: {
@@ -1117,9 +1125,9 @@ class Tr {
     // alaşımıdır, yanlış metal olur; `Zîv`/`Zêr` gibi yerli karşılık yok.
     K.bronzLig: {'ku': 'Lîga bronz', 'tr': 'Bronz lig'},
     K.metin: {'ku': 'Nîv bi nîv', 'tr': '50/50'},
-    K.sikIpucu: {'ku': 'Alîkariya bersivê', 'tr': 'Şık ipucu'},
+    K.sikIpucu: {'ku': 'Alîkariya bersivê', 'tr': 'İpucu'},
     K.ciftCevap: {'ku': 'Du bersiv', 'tr': 'Çift cevap'},
-    K.soruDegistir: {'ku': 'Pirsê biguhere', 'tr': 'Soru değiştir'},
+    K.soruDegistir: {'ku': 'Pirsê biguhere', 'tr': 'Değiştir'},
     K.yakinda: {'ku': 'Di demeke nêzîk de tê.', 'tr': 'Yakında'},
     K.soru: {'ku': 'pirs', 'tr': 'soru'},
     K.gotinaRoje: {'ku': 'Gotina rojê', 'tr': 'Günün sözü'},
@@ -1823,9 +1831,15 @@ class Tr {
     K.wheelTitle: {'ku': 'Çerxa rojê', 'tr': 'Günün çarkı'},
     // Mod kartı rozeti: çark bugün çevrilebilir (2026-10-22).
     K.wheelReadyBadge: {'ku': 'Amade ye!', 'tr': 'Hazır!'},
-    K.wheelOncePerDay: {
-      'ku': 'Her roj carekê bizivirîne.',
-      'tr': 'Her gün bir kez çevir.',
+    // W5 (2026-10-28 tur 5): "Her gün bir kez çevir" hakkın ne olduğunu
+    // söylemiyordu; ek çevirme satın alındıysa sayısı eklenir.
+    K.wheelFreeDaily: {
+      'ku': 'Her roj 1 zivirandineke belaş',
+      'tr': 'Her gün 1 ücretsiz çevirme',
+    },
+    K.wheelExtraSpins: {
+      'ku': '+ {n} zivirandinên zêde',
+      'tr': '+ {n} ek çevirme',
     },
     K.wheelWonAmount: {
       'ku': 'Te {amount} zêr qezenc kir!',
@@ -2204,10 +2218,17 @@ class Tr {
       'ku': 'Îro 1 alîkarî belaş e',
       'tr': 'Bugün 1 joker bedava',
     },
+    // W1 (2026-10-28 tur 5): günlük hak açıkken jokerin fiyat yuvasında yazar.
+    K.freeWord: {'ku': 'Belaş', 'tr': 'Bedava'},
     // K6/K7 (2026-10-28): soru ekranı mod çipi, ücretsiz joker rozeti, sonuçta
     // katlanan cevap listesi. KU jüri onaylı (Gemini 3.8 Flash, Grok 4.7, GPT-6 Sol).
     K.modeLesson: {'ku': 'Ders', 'tr': 'Ders'},
     K.seeAnswers: {'ku': 'Bersivan bibîne', 'tr': 'Cevapları gör'},
+    // W2 (2026-10-28 tur 5): görünür düğme; yanlış sayısı parantezde.
+    K.seeAnswersWrong: {
+      'ku': 'Bersivan bibîne ({n} şaşî)',
+      'tr': 'Cevapları gör ({n} yanlış)',
+    },
     K.hideAnswers: {'ku': 'Bersivan veşêre', 'tr': 'Cevapları gizle'},
     K.showAllOptions: {'ku': 'Hemû vebijarkan bibîne', 'tr': 'Tüm şıkları gör'},
     K.wildcardNoCoins: {
@@ -4836,12 +4857,17 @@ class K {
   static const diacriticHint = 'quiz.diacriticHint';
   static const wildcardNoCoins = 'quiz.wildcard.no.coins';
   static const freeWildcardToday = 'quiz.wildcard.free.today';
+  static const wheelFreeDaily = 'wheel.freeDaily';
+  static const wheelExtraSpins = 'wheel.extraSpins';
+  static const findOpponent = 'play.findOpponent';
+  static const internetRequired = 'common.internetRequired';
+  static const freeWord = 'quiz.wildcard.free.word';
   static const modeLesson = 'quiz.mode.lesson';
   static const seeAnswers = 'result.seeAnswers';
+  static const seeAnswersWrong = 'result.seeAnswersWrong';
   static const hideAnswers = 'result.hideAnswers';
   static const showAllOptions = 'review.showAllOptions';
   static const wheelTitle = 'wheel.title';
-  static const wheelOncePerDay = 'wheel.oncePerDay';
   static const wheelWonAmount = 'wheel.wonAmount';
   static const congrats = 'common.congrats';
   static const wheelWonPlus = 'wheel.wonPlus';

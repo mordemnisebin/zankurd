@@ -260,6 +260,10 @@ class _StoryCatalogCard extends StatelessWidget {
                     style: SahneType.captionStrong.copyWith(color: t.learnTx),
                   ),
                 ],
+                // W3 (2026-10-28 tur 5): her hikâye satırı dokunulur olduğunu
+                // sağ ok ile söyler (başlangıçta satırın sağı boştu).
+                const SizedBox(width: SahneSpace.x2),
+                Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
               ],
             ),
           ),

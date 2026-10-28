@@ -621,6 +621,9 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Günlük çark: bugün çevrilebilir mi?
   Future<bool> canSpinToday();
 
+  /// Satın alınmış, henüz kullanılmamış ek çevirme sayısı (W5, 2026-10-28).
+  Future<int> unusedExtraSpins();
+
   /// Günlük çark ödülünü coin olarak yazar, kazanılan miktarı döner.
   ///
   /// Gerçek backend bu miktarı sunucuda belirlemelidir; istemci yalnızca

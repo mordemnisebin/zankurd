@@ -310,6 +310,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     this.twoColumn = false,
     this.minBodyHeight,
     this.answerAreaKey,
+    this.promptCardKey,
     this.correctAnswerKey,
     this.explanationKey,
     this.explanationActionKey,
@@ -319,6 +320,10 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   });
 
   final String promptText;
+
+  /// W12: soru kartının anahtarı; cevap sonrası kaydırma kartın ÜSTÜNÜ
+  /// kaybetmez ([_revealKeepingPhoto] `topKey`).
+  final GlobalKey? promptCardKey;
 
   /// Sözlük dokunuşu: yalnız öğrenme modunda (günün dersi, ders kısa testi,
   /// alıştırma); yarış, oda ve düelloda KAPALI.
@@ -412,6 +417,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
         // K6 (2026-10-28): soru metni HER modda aynı açık kartta (koyu sahnede
         // yüksek karşıtlık); sahne zemininde yüzen metin okunmuyordu.
         final Widget promptRow = QuizPromptCard(
+          key: promptCardKey,
           child: translation == null
               ? promptLine
               : Column(
@@ -1739,13 +1745,9 @@ class _CoinBalanceLine extends StatelessWidget {
     required this.balance,
     this.hint,
     this.showHint = false,
-    this.freeToday = false,
   });
 
   final int balance;
-
-  /// Günlük ücretsiz hak açık: bakiyenin yanında TEK altın çip (T2).
-  final bool freeToday;
 
   /// Açıklayıcı cümle. 2026-10-19 sadeleşme: ekranda YAZILMAZ (iki satırlık
   /// "Yarışı bitir, jeton kazan, jokerleri aç" alt perdeyi büyütüyor, her
@@ -1778,35 +1780,6 @@ class _CoinBalanceLine extends StatelessWidget {
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
-          // K6 (2026-10-28): "Bugün 1 joker bedava" artık yazı değil, jokerler
-          // üstünde "Ücretsiz" rozeti; burada yalnız stok ipucu yazılır.
-          if (freeToday) ...[
-            const SizedBox(width: SahneSpace.x2),
-            Flexible(
-              child: DecoratedBox(
-                key: const ValueKey('quiz-free-wildcard-chip'),
-                decoration: ShapeDecoration(
-                  color: t.goldTint,
-                  shape: StadiumBorder(side: BorderSide(color: t.gold)),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: SahneSpace.x3,
-                    vertical: SahneSpace.x1,
-                  ),
-                  child: Text(
-                    context.t(K.freeWildcardToday),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: SahneType.captionStrong.copyWith(
-                      color: t.goldTx,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
           if (showHint && hint != null) ...[
             const SizedBox(width: SahneSpace.x2),
             Flexible(

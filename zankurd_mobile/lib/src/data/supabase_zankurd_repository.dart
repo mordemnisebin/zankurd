@@ -2816,7 +2816,19 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     return '${istanbul.year}-${istanbul.month}-${istanbul.day}';
   }
 
-  Future<bool> _hasUnusedExtraSpin() async {
+  @override
+  Future<int> unusedExtraSpins() async {
+    try {
+      return (await _unusedExtraSpinCount()).clamp(0, 1 << 30);
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'unusedExtraSpins failed');
+      return 0;
+    }
+  }
+
+  Future<bool> _hasUnusedExtraSpin() async => await _unusedExtraSpinCount() > 0;
+
+  Future<int> _unusedExtraSpinCount() async {
     final user = client.auth.currentUser ?? await signInAnonymously();
     final purchased = await client
         .from('shop_purchases')
@@ -2828,7 +2840,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .count(CountOption.exact)
         .eq('player_id', user.id)
         .inFilter('reason', ['extra_spin:server', 'daily_spin:extra_purchase']);
-    return purchased > used;
+    return purchased - used;
   }
 
   static String get _lastSpinKey =>

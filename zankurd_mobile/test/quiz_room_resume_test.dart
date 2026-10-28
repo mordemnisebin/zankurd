@@ -1444,7 +1444,14 @@ void main() {
     await _pumpFrames(tester, 5);
     expect(find.text('Yarıştan çıkılsın mı?'), findsOneWidget);
 
-    await tester.tap(find.text('Devam et'));
+    // W10 (2026-10-28 tur 5): arkadaki soru ekranının eylemi de artık
+    // "Devam et" der; iletişim kutusunun düğmesi seçilir.
+    await tester.tap(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text('Devam et'),
+      ),
+    );
     await _pumpFrames(tester, 10);
 
     expect(repository.leaveCalls, 0);

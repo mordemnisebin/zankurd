@@ -684,9 +684,9 @@ extension _QuizScreenUI on _QuizScreenState {
         ? context.t(K.finishAction)
         // Yanlıştan sonra açıklama kartı açıkken eylem "Devam": oyuncu
         // önce okur, sonra devam eder (bkz. [_WrongAnswerInsight]).
-        : _wrongAnswerInsightVisible
-        ? context.t(K.continueAction)
-        : context.t(K.next);
+        // W10 (2026-10-28 tur 5): doğruda "Sonraki", yanlışta "Devam et"
+        // idi — aynı eylem iki sözle. Artık ikisi de "Devam et".
+        : context.t(K.continueAction);
     // Beklerken kum saati; son soruda bayrak; yoksa ok (→).
     final nextIcon = waiting
         ? AppIcons.hourglassStart
@@ -790,7 +790,6 @@ extension _QuizScreenUI on _QuizScreenState {
           // gibi görünmesin: jetonun nereden kazanılacağını söyle (ekranda
           // yazılmaz; ekran okuyucuya gider ve kilitli jokere dokununca tost
           // olur).
-          freeToday: _freeWildcardAvailable,
           showHint: !_freeWildcardAvailable && _jokerStock > 0,
           hint: _freeWildcardAvailable
               ? context.t(K.freeWildcardToday)
@@ -829,6 +828,7 @@ extension _QuizScreenUI on _QuizScreenState {
       isAnswered: answered,
       isActive: isActive,
       cantAfford: !used && !canAfford && !answered,
+      free: _freeWildcardAvailable,
       onTap: () => _onWildcardTap(type),
       onLockedTap: _explainLockedWildcard,
     );
@@ -1260,6 +1260,7 @@ extension _QuizScreenUI on _QuizScreenState {
       minBodyHeight: anchorHeight,
       twoColumn: compactLandscape,
       answerAreaKey: answerAreaKey,
+      promptCardKey: _promptCardKeyFor(index),
       correctAnswerKey: correctAnswerKey,
       explanationKey: _explanationKey,
       explanationActionKey: _explanationActionKey,

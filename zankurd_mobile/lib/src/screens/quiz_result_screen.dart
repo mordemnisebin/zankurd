@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +9,7 @@ import '../config/category_visuals.dart';
 import '../config/coin_prices.dart';
 import '../data/achievement_store.dart';
 import '../data/badge_service.dart';
+import '../data/level_progress_store.dart';
 import '../data/mastery_store.dart';
 import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
@@ -96,6 +98,7 @@ class QuizResultScreen extends StatefulWidget {
     this.practice = false,
     this.dailyQuiz = false,
     this.isLearningExperience = false,
+    this.levelGated = false,
     this.contestId,
     this.roundId,
     this.tournamentMatch = false,
@@ -147,6 +150,9 @@ class QuizResultScreen extends StatefulWidget {
   final bool practice;
   final bool dailyQuiz;
   final bool isLearningExperience;
+
+  /// W13: seviye yolunun turu; eşik altında "Seviye geçilmedi" satırı çıkar.
+  final bool levelGated;
 
   /// Turnuva maçının sonucu (2026-10-27). Ana eylem "Tekrar oyna" değil
   /// "Turnuvaya dön"dür ve oyuncuyu ana sayfaya değil şemaya geri götürür:
@@ -210,6 +216,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   bool _ackAttempted = false;
   bool _newRoomLoading = false;
   bool _showNotifPrompt = false;
+
+  /// W2: "Cevapları gör" düğmesi "Ayrıntılar" bölümünü açar ve cevap
+  /// listesine kaydırır.
+  final ValueNotifier<int> _detailsOpenRequest = ValueNotifier<int>(0);
+  final GlobalKey _answersKey = GlobalKey();
   NotificationPromptPolicy? _notifPolicy;
 
   /// Özel oda sonucunda "Tekrar oyna": sunucu aynı ayarlarla yeni lobi kurar
@@ -393,6 +404,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       ),
     );
     if (goEarn == true && mounted) await _openSpinWheel();
+  }
+
+  @override
+  void dispose() {
+    _detailsOpenRequest.dispose();
+    super.dispose();
   }
 
   @override
@@ -1499,15 +1516,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           label: context.t(K.reviewMistakes),
           onTap: () => openReview(wrongRecords),
         ),
-      // "Tekrar oyna" dock'ta birincil, "Ana sayfa" ikincil olunca "Paylaş"
-      // buraya iner (dock'ta yalnız iki eylem durur).
-      if (canRematch)
-        _ResultAction(
-          key: const ValueKey('result-share-button'),
-          icon: AppIcons.shareNodes,
-          label: context.t(K.share),
-          onTap: shareResult,
-        ),
       // Özel odada "Tekrar oyna" aynı işi görür (aynı ayarla yeni lobi);
       // ikinci bir "Yeni oda" kafa karıştırır.
       if (isOnlineRoom && !canRematch)
@@ -1657,6 +1665,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         _HeroNotice(icon: AppIcons.cloud, text: context.t(K.rewardPending)),
       if (widget.rewardSettlementState == QuizRewardSettlementState.unresolved)
         _HeroNotice(icon: AppIcons.cloud, text: context.t(K.rewardUnresolved)),
+      // W13 (2026-10-28 tur 5): eşik altı seviye turu SnackBar değil, kahraman
+      // altında satır içi söylenir; SnackBar "Ayrıntılar"/"Diğer seçenekler"
+      // satırlarını örtüyordu (Android gezinti, and_17/18).
+      if (widget.levelGated &&
+          !LevelProgressStore.passes(correctCount, totalQuestions))
+        _HeroNotice(
+          key: const ValueKey('result-level-not-passed'),
+          icon: AppIcons.flag,
+          text: context.t(K.levelNotPassed, {
+            'p0': '${(LevelProgressStore.passRatio * 100).round()}',
+          }),
+        ),
     ];
 
     final hasRewards = SahneResultRewards.hasAny(
@@ -1688,11 +1708,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ResultCollapsibleSection(
           key: const ValueKey('result-details-section'),
           title: context.t(K.resultDetails),
-          summary: [
-            for (final tally in breakdown)
-              '${CategoryNames.localized(tally.category, context.isKu)} '
-                  '${tally.correct}/${tally.answered}',
-          ].join(' · '),
+          // W2: kapalı satırda kesilen özet yok; yalnız "Ayrıntılar" + sayı.
+          summary: breakdown.isEmpty ? '' : '${breakdown.length}',
+          openRequest: _detailsOpenRequest,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -1737,7 +1755,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               // U5 (2026-10-28 tur 4): "Cevapları gör" ayrı düğmeydi; "Ayrıntılar"
               // ile iki katlanır satır üst üste duruyordu. Tek satır: ayrıntılar
               // ve cevaplar aynı bölümün içinde.
-              _AllExplanationsCard(records: answerRecords),
+              KeyedSubtree(
+                key: _answersKey,
+                child: _AllExplanationsCard(records: answerRecords),
+              ),
             ],
           ),
         ),
@@ -1808,6 +1829,37 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         onRate: () => ReviewService.openStoreListing(),
       ),
     ];
+
+    // W2: cevap listesi "Diğer seçenekler"in içinde değil, alt perdenin hemen
+    // üstünde görünür bir metin düğmesidir.
+    Widget? seeAnswersButton;
+    if (_explanationEntries(answerRecords, context.isKu).isNotEmpty) {
+      seeAnswersButton = SahneButton.text(
+        key: const ValueKey('result-see-answers-button'),
+        label: wrongCount > 0
+            ? context.t(K.seeAnswersWrong, {'n': '$wrongCount'})
+            : context.t(K.seeAnswers),
+        arrow: false,
+        onPressed: () {
+          _detailsOpenRequest.value++;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            final target = _answersKey.currentContext;
+            if (!mounted || target == null) return;
+            Scrollable.ensureVisible(
+              target,
+              duration: sahneMotionReduced(context)
+                  ? Duration.zero
+                  : const Duration(milliseconds: 300),
+              alignment: 0.05,
+            );
+          });
+        },
+      );
+    }
+
+    // Büyük yazıda (≥ %150) alt perde zaten alt alta iner; ek bir satır
+    // içeriği yok ederdi. Düğme o zaman listenin sonunda durur.
+    final stackedDock = MediaQuery.textScalerOf(context).scale(16) >= 24;
 
     final scaffold = SahneResultScaffold(
       neutral: true,
@@ -1904,7 +1956,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   : null,
             )
           : null,
-      sections: sections,
+      sections: [
+        ...sections,
+        if (stackedDock && seeAnswersButton != null) ...[
+          const SizedBox(height: SahneSpace.x2),
+          Center(child: seeAnswersButton),
+        ],
+      ],
+      dockAbove: stackedDock ? null : seeAnswersButton,
       primary: SahneResultAction(
         key: ValueKey(primaryResultKey),
         label: primaryResultLabel,
@@ -1912,19 +1971,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         loading: canRematch && _newRoomLoading,
         onPressed: canRematch ? _rematch : completeResultAction,
       ),
-      secondary: canRematch
-          ? SahneResultAction(
-              key: const ValueKey('result-primary-home'),
-              label: context.t(K.home),
-              icon: AppIcons.house,
-              onPressed: completeResultAction,
-            )
-          : SahneResultAction(
-              key: const ValueKey('result-share-button'),
-              label: context.t(K.share),
-              icon: AppIcons.shareNodes,
-              onPressed: shareResult,
-            ),
+      // W2 (2026-10-28 tur 5): alt perde = tam genişlik birincil + simge
+      // düğmesi olarak Paylaş. Ana sayfa "Diğer seçenekler"de kalır.
+      secondary: SahneResultAction(
+        key: const ValueKey('result-share-button'),
+        label: context.t(K.share),
+        icon: AppIcons.shareNodes,
+        iconOnly: true,
+        onPressed: shareResult,
+      ),
       overlay: _showConfetti
           ? ConfettiOverlay(
               onFinished: () {
@@ -1959,7 +2014,11 @@ class ResultCollapsibleSection extends StatefulWidget {
     required this.title,
     required this.summary,
     required this.child,
+    this.openRequest,
   });
+
+  /// Dışarıdan açma isteği ("Cevapları gör"): değer her artışında bölüm açılır.
+  final ValueListenable<int>? openRequest;
 
   final String title;
 
@@ -1974,6 +2033,22 @@ class ResultCollapsibleSection extends StatefulWidget {
 
 class _ResultCollapsibleSectionState extends State<ResultCollapsibleSection> {
   bool _open = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.openRequest?.addListener(_onOpenRequest);
+  }
+
+  @override
+  void dispose() {
+    widget.openRequest?.removeListener(_onOpenRequest);
+    super.dispose();
+  }
+
+  void _onOpenRequest() {
+    if (!_open) setState(() => _open = true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -3014,6 +3089,35 @@ class _LevelUpDialog extends StatelessWidget {
   }
 }
 
+/// Cevap listesinde gösterilecek açıklamalı satırlar (boş/şablon olanlar yok).
+List<({int index, AnswerRecord record, String explanation})>
+_explanationEntries(List<AnswerRecord> records, bool isKu) {
+  final entries = <({int index, AnswerRecord record, String explanation})>[];
+  for (var i = 0; i < records.length; i++) {
+    // Önce sorunun **yazılmış** açıklaması, sonra kural motoru.
+    //
+    // Burası doğrudan motora gidiyordu ve bankada yazılı Kurmancî
+    // açıklamayı hiç görmüyordu; motor eşleşme bulamayınca ham Türkçe
+    // metni `Şirove: <cümle>` diye sarıyor ve sarmak çevirmek değil.
+    // Açıklamaların **asıl gösterildiği yer** burasıdır: tur boyunca
+    // hiçbir açıklama gösterilmez, hepsi burada toplanır (2026-07-27).
+    final authored = isKu ? records[i].explanationKu : records[i].explanationTr;
+    final text =
+        (authored != null &&
+            authored.trim().isNotEmpty &&
+            !isTemplateExplanation(authored))
+        ? authored
+        : resolveRawExplanation(
+            id: records[i].id,
+            explanation: records[i].explanation,
+            isKu: isKu,
+          );
+    if (text.trim().isEmpty) continue;
+    entries.add((index: i + 1, record: records[i], explanation: text));
+  }
+  return entries;
+}
+
 /// Turun bütün açıklamalarını tek bölümde toplar.
 ///
 /// Açıklama eskiden cevaptan hemen sonra sorunun altında açılıyordu.
@@ -3036,32 +3140,7 @@ class _AllExplanationsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isKu = context.isKu;
-    final entries = <({int index, AnswerRecord record, String explanation})>[];
-    for (var i = 0; i < records.length; i++) {
-      // Önce sorunun **yazılmış** açıklaması, sonra kural motoru.
-      //
-      // Burası doğrudan motora gidiyordu ve bankada yazılı Kurmancî
-      // açıklamayı hiç görmüyordu; motor eşleşme bulamayınca ham Türkçe
-      // metni `Şirove: <cümle>` diye sarıyor ve sarmak çevirmek değil.
-      // Açıklamaların **asıl gösterildiği yer** burasıdır: tur boyunca
-      // hiçbir açıklama gösterilmez, hepsi burada toplanır (2026-07-27).
-      final authored = isKu
-          ? records[i].explanationKu
-          : records[i].explanationTr;
-      final text =
-          (authored != null &&
-              authored.trim().isNotEmpty &&
-              !isTemplateExplanation(authored))
-          ? authored
-          : resolveRawExplanation(
-              id: records[i].id,
-              explanation: records[i].explanation,
-              isKu: isKu,
-            );
-      if (text.trim().isEmpty) continue;
-      entries.add((index: i + 1, record: records[i], explanation: text));
-    }
+    final entries = _explanationEntries(records, context.isKu);
     if (entries.isEmpty) return const SizedBox.shrink();
 
     final t = SahneTokens.of(context);

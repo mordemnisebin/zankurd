@@ -141,8 +141,13 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
       // Hedef üst şeritte → balon ekranın altına.
       tooltipBottom = 24;
     } else if (highlightRect.top >= bottomZone) {
-      // Hedef alt şeritte → balon ekranın üstüne.
-      tooltipTop = MediaQuery.paddingOf(context).top + 16;
+      // Hedef alt şeritte → balon hedefin hemen ÜSTÜNE (şıkların üstüne).
+      //
+      // W14 (2026-10-28 tur 5): eskiden ekranın üstüne sabitleniyordu ve
+      // soru kartını örtüyordu (iOS/Android gezinti ios_11/and_11: "hangi
+      // İspanyol kaşif…" okunamıyordu). Alt hedefte balon alta yakın durur;
+      // soru kartı (üstte) her zaman açıktadır.
+      tooltipBottom = screenSize.height - highlightRect.top + 12;
     } else {
       // Balon hedefin altına mı üstüne mi?
       //

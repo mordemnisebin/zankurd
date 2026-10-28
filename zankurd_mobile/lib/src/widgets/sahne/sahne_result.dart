@@ -44,9 +44,14 @@ class SahneResultAction {
     this.key,
     this.icon,
     this.loading = false,
+    this.iconOnly = false,
   });
 
   final String label;
+
+  /// Yalnız ikincil eylemde: etiket çizilmez, 56'lık simge düğmesi olur
+  /// (etiket ekran okuyucuya gider). W2 (2026-10-28 tur 5).
+  final bool iconOnly;
 
   /// Eylem sürerken düğmede döner gösterge; yeni dokunuş yutulur.
   final bool loading;
@@ -181,6 +186,7 @@ class SahneResultScaffold extends StatelessWidget {
     this.rewards,
     this.sections = const [],
     this.secondary,
+    this.dockAbove,
     this.contextLabel,
     this.closeLabel,
     this.onClose,
@@ -227,6 +233,10 @@ class SahneResultScaffold extends StatelessWidget {
 
   /// İkincil eylem (Paylaş, Kapat…); `null` → alt perdede yalnız birincil.
   final SahneResultAction? secondary;
+
+  /// Alt perdenin hemen üstünde, birincil eylemden önce duran görünür metin
+  /// düğmesi (ör. "Cevapları gör"); `null` → yok.
+  final Widget? dockAbove;
 
   /// Üst satırın ortasındaki bağlam ("Dil • 5 soru", "Sırayla düello").
   final String? contextLabel;
@@ -353,7 +363,7 @@ class SahneResultScaffold extends StatelessWidget {
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  height: SahneSpace.x6,
+                  height: SahneSpace.x4,
                   child: IgnorePointer(
                     child: DecoratedBox(
                       key: const ValueKey('sahne-result-bottom-fade'),
@@ -389,7 +399,17 @@ class SahneResultScaffold extends StatelessWidget {
         dock: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: kSahneResultMaxWidth),
-            child: SahneResultDock(primary: primary, secondary: secondary),
+            child: dockAbove == null
+                ? SahneResultDock(primary: primary, secondary: secondary)
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Center(child: dockAbove),
+                      const SizedBox(height: SahneSpace.x1),
+                      SahneResultDock(primary: primary, secondary: secondary),
+                    ],
+                  ),
           ),
         ),
         body: body,
@@ -1296,6 +1316,43 @@ class SahneResultDock extends StatelessWidget {
     );
     final other = secondary;
     if (other == null) return primaryButton;
+    if (other.iconOnly) {
+      // W2: tam genişlik birincil + sağda 56'lık simge düğmesi.
+      final t = SahneTokens.of(context);
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(child: primaryButton),
+          const SizedBox(width: SahneSpace.x3),
+          _DockAction(
+            key: other.key,
+            label: other.label,
+            onTap: other.onPressed,
+            child: SizedBox.square(
+              dimension: 52,
+              child: FilledButton(
+                onPressed: other.onPressed,
+                style: FilledButton.styleFrom(
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  foregroundColor: t.tx,
+                  padding: EdgeInsets.zero,
+                  minimumSize: const Size(52, 52),
+                  shape: SahneShape.m,
+                  side: BorderSide(
+                    color: t.secondaryEdge,
+                    width: 1.5,
+                    strokeAlign: BorderSide.strokeAlignInside,
+                  ),
+                ),
+                child: Icon(other.icon, size: 22),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
     final secondaryButton = _DockAction(
       key: other.key,
       label: other.label,

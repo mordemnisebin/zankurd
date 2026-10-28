@@ -121,6 +121,9 @@ class LexiconText extends StatelessWidget {
 
   static final _word = RegExp(r'[\p{L}̧̂]+', unicode: true);
 
+  /// Sözcüğe bitişik AÇILIŞ tırnağı (boşluk ve harf olmayan).
+  static final _leadPunct = RegExp(r'["“«„]+$');
+
   /// Sözcüğe bitişik kapanış noktalaması (boşluk ve harf olmayan).
   static final _tailPunct = RegExp(r'[.,;:!?…”»")\]]+');
 
@@ -156,7 +159,6 @@ class LexiconText extends StatelessWidget {
         // Aradaki ayraçlar: tırnak durumunu izle.
         final gap = line.substring(cursor, match.start);
         trackQuotes(gap);
-        if (gap.isNotEmpty) spans.add(TextSpan(text: gap));
         cursor = match.end;
         final word = match.group(0)!;
         final allowedHere = switch (policy.mode) {
@@ -173,9 +175,17 @@ class LexiconText extends StatelessWidget {
             ? LearnerLexicon.lookup(word)
             : null;
         if (entry == null) {
+          if (gap.isNotEmpty) spans.add(TextSpan(text: gap));
           spans.add(TextSpan(text: word));
           continue;
         }
+        // W17 (2026-10-28 tur 5): açılış tırnağı sözcükle AYNI yer tutucuya
+        // girer. Tırnak ayrı metin parçası kalırsa yer tutucunun önündeki
+        // kırılım fırsatı onu satır sonunda öksüz bırakıyordu (`dibêje: "` /
+        // `Bi xêr hatî!`, Android gezinti and_41).
+        final lead = _leadPunct.firstMatch(gap)?.group(0) ?? '';
+        final gapText = gap.substring(0, gap.length - lead.length);
+        if (gapText.isNotEmpty) spans.add(TextSpan(text: gapText));
         // Sözcüğe bitişik noktalama (". , ! ?" ve kapanan tırnak) aynı
         // parçaya alınır: yer tutucudan sonraki metin satır kırılımına
         // açıktı ve nokta tek başına alt satıra düşüyordu (2026-10-25
@@ -183,7 +193,7 @@ class LexiconText extends StatelessWidget {
         final tail = _tailPunct.matchAsPrefix(line, cursor)?.group(0) ?? '';
         trackQuotes(tail);
         cursor += tail.length;
-        spans.add(_tappable(context, t, word, entry, tail: tail));
+        spans.add(_tappable(context, t, word, entry, tail: tail, lead: lead));
       }
       final rest = line.substring(cursor);
       // Satır sonundaki tırnaklar da durumu etkiler.
@@ -203,6 +213,7 @@ class LexiconText extends StatelessWidget {
     String word,
     LearnerLexiconEntry entry, {
     String tail = '',
+    String lead = '',
   }) {
     return WidgetSpan(
       alignment: PlaceholderAlignment.middle,
@@ -223,8 +234,13 @@ class LexiconText extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 2),
               child: Text.rich(
                 TextSpan(
-                  text: word,
                   children: [
+                    if (lead.isNotEmpty)
+                      TextSpan(
+                        text: lead,
+                        style: const TextStyle(decoration: TextDecoration.none),
+                      ),
+                    TextSpan(text: word),
                     if (tail.isNotEmpty)
                       TextSpan(
                         text: tail,

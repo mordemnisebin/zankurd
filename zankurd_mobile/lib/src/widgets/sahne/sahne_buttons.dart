@@ -397,9 +397,16 @@ class SahneJokerButton extends StatelessWidget {
     this.semanticLabel,
     this.selected = false,
     this.unaffordable = false,
+    this.free = false,
+    this.freeLabel = '',
   });
 
   final IconData icon;
+
+  /// W1 (2026-10-28 tur 5): günlük bedava hak açık. Fiyat yuvası jeton + sayı
+  /// yerine [freeLabel] ("Bedava") yazar; aynı boy ve stil, renkli rozet YOK.
+  final bool free;
+  final String freeLabel;
 
   /// Jokerin adı (ör. "Nîv bi Nîv"): Semantics ve uzun basış ipucu.
   final String label;
@@ -450,7 +457,22 @@ class SahneJokerButton extends StatelessWidget {
     // Fiyat AYRI bir hap: ad ile karışmaz. Günlük ücretsiz hak jokere değil
     // jokerlerin üstündeki tek çipe aittir (2026-10-28 tur 3 T2).
     Widget? pricePill;
-    if (showPrice) {
+    if (showPrice && free) {
+      pricePill = DecoratedBox(
+        decoration: ShapeDecoration(color: t.s1, shape: const StadiumBorder()),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          child: Text(
+            freeLabel,
+            key: const ValueKey('joker-free-label'),
+            maxLines: 1,
+            style: SahneType.captionStrong.copyWith(
+              color: enabled ? t.goldTx : t.tx2,
+            ),
+          ),
+        ),
+      );
+    } else if (showPrice) {
       pricePill = DecoratedBox(
         decoration: ShapeDecoration(color: t.s1, shape: const StadiumBorder()),
         child: Padding(

@@ -16,12 +16,6 @@ import '../config/subcategory_config.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
 
-/// Sonuç ekranının alt eylem çubuğu Scaffold'un alt çubuğu olduğu için
-/// floating SnackBar zaten onun üstüne yerleşir; burada yalnız nefes payı.
-/// 124 verildiğinde (2026-10-21 simülatör) uyarı ödül kartının üstüne
-/// biniyordu.
-const double _kResultActionBarClearance = SahneSpace.x2;
-
 class LevelScreen extends StatefulWidget {
   const LevelScreen({
     required this.repository,
@@ -180,6 +174,7 @@ class _LevelScreenState extends State<LevelScreen> {
             // akışı zaten bu ayarda.
             experience: QuizExperience.learning,
             enableTimer: false,
+            levelGated: true,
           ),
         ),
       );
@@ -187,40 +182,19 @@ class _LevelScreenState extends State<LevelScreen> {
       // skor haritasıyla döner; yarıda bırakma null döner ve tik almamalı.
       // Geçmek için doğruların %60'ı gerekir; 0/10 bitiren de yıldız alıp
       // bir sonraki seviyeyi açıyordu.
-      var notPassed = false;
+      // W13 (2026-10-28 tur 5): "Seviye geçilmedi" artık burada SnackBar
+      // DEĞİL; sonuç ekranı kendi satırında söyler (`levelGated`). Quiz
+      // `pushReplacement(result:)` ile döndüğü için bu satıra gelindiğinde
+      // sonuç ekranı hâlâ üstteydi ve SnackBar onun satırlarını örtüyordu.
       if (result is Map) {
         final store = await LevelProgressStore.load();
-        final passed = await store.recordResult(
+        await store.recordResult(
           widget.category,
           widget.subCategory,
           level.number,
           correct: (result['correct'] as num?)?.toInt() ?? questions.length,
           total: questions.length,
         );
-        notPassed = !passed;
-      }
-      if (notPassed && mounted) {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(
-              // Sonuç ekranı hâlâ üstteyken açılır: düz SnackBar alt eylem
-              // çubuğuna oturup "Nerelerde zorlandın?" kartını örtüyordu.
-              // Yüzen + alt boşluk onu eylem çubuğunun ÜSTÜNDE tutar.
-              behavior: SnackBarBehavior.floating,
-              margin: const EdgeInsets.fromLTRB(
-                SahneSpace.page,
-                0,
-                SahneSpace.page,
-                _kResultActionBarClearance,
-              ),
-              content: Text(
-                context.t(K.levelNotPassed, {
-                  'p0': '${(LevelProgressStore.passRatio * 100).round()}',
-                }),
-              ),
-            ),
-          );
       }
       await _loadProgress();
     } catch (error, stack) {

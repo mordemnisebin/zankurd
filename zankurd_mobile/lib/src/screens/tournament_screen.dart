@@ -858,6 +858,8 @@ class _TournamentScreenState extends State<TournamentScreen> {
     // 2026-09-29 Şahnê: B iskeleti. Lobide çubuk "Turnuva" der; kupanın
     // adı ("ZanKurd Kupası") kahraman kartındadır — iki kez yazılmaz.
     // Şemada kahraman yok: çubuk kupanın adını ve türünü taşır.
+    final showJoinDock =
+        !_loading && !_hasError && !_waitingForPlayers && bracket == null;
     final Widget body;
     if (_loading) {
       body = SliverFillRemaining(
@@ -902,11 +904,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
         padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
         sliver: SliverToBoxAdapter(
           child: bracket == null
-              ? _LobbyView(
-                  ku: ku,
-                  onStart: _startTournament,
-                  starting: _startingNewTournament,
-                )
+              ? _LobbyView(ku: ku)
               : _buildBracket(context, ku),
         ),
       );
@@ -925,6 +923,17 @@ class _TournamentScreenState extends State<TournamentScreen> {
           : null,
       backLabel: context.t(K.back),
       slivers: [body],
+      // W4 (2026-10-28 tur 5): "Turnuvaya katıl" ekranın altına SABİT (Günün
+      // turu ve çarktaki gibi); eskiden kahraman kartının içinde, kaydırınca
+      // kayboluyordu.
+      bottom: showJoinDock
+          ? SahneButton.primary(
+              key: const ValueKey('tournament-primary-cta'),
+              label: context.t(K.joinTournament),
+              expand: true,
+              onPressed: _startingNewTournament ? null : _startTournament,
+            )
+          : null,
     );
   }
 
@@ -1089,15 +1098,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
 }
 
 class _LobbyView extends StatelessWidget {
-  const _LobbyView({
-    required this.ku,
-    required this.onStart,
-    this.starting = false,
-  });
+  const _LobbyView({required this.ku});
 
   final bool ku;
-  final VoidCallback onStart;
-  final bool starting;
 
   @override
   Widget build(BuildContext context) {
@@ -1139,12 +1142,6 @@ class _LobbyView extends StatelessWidget {
           }),
         ),
       ],
-      action: SahneButton.primary(
-        key: const ValueKey('tournament-primary-cta'),
-        label: context.t(K.joinTournament),
-        expand: true,
-        onPressed: starting ? null : onStart,
-      ),
     );
 
     final format = _CupFormatPanel(ku: ku);
@@ -1443,6 +1440,7 @@ class _CupLadder extends StatelessWidget {
     while (steps.last > 1) {
       steps.add(steps.last ~/ 2);
     }
+    final roundNames = tournamentRoundNames(ku, steps.length - 1);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1462,7 +1460,14 @@ class _CupLadder extends StatelessWidget {
                   ExcludeSemantics(
                     child: Icon(AppIcons.chevronRight, size: 16, color: t.tx3),
                   ),
-                _LadderStep(count: steps[i], isFinal: steps[i] == 1),
+                _LadderStep(
+                  count: steps[i],
+                  isFinal: steps[i] == 1,
+                  // W4: çipler adlı — "Yarı final 4 › Final 2 › Şampiyon".
+                  label: steps[i] == 1
+                      ? Tr.forKu(K.champion, ku).replaceAll('!', '')
+                      : '${roundNames[i]} ${steps[i]}',
+                ),
               ],
             ],
           ),
@@ -1473,8 +1478,13 @@ class _CupLadder extends StatelessWidget {
 }
 
 class _LadderStep extends StatelessWidget {
-  const _LadderStep({required this.count, required this.isFinal});
+  const _LadderStep({
+    required this.count,
+    required this.isFinal,
+    required this.label,
+  });
 
+  final String label;
   final int count;
   final bool isFinal;
 
@@ -1505,12 +1515,15 @@ class _LadderStep extends StatelessWidget {
                 const SahneGlyph(SahneGlyphKind.crown, size: 16),
                 const SizedBox(width: SahneSpace.x1),
               ],
-              Text(
-                '$count',
-                maxLines: 1,
-                style: SahneType.captionStrong.copyWith(
-                  color: fg,
-                  fontFeatures: const [FontFeature.tabularFigures()],
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: SahneType.captionStrong.copyWith(
+                    color: fg,
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ],

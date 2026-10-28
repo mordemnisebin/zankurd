@@ -101,6 +101,8 @@ class CategoryVisuals {
     // profil istatistiği, oda/düello konu seçici ve sıralamada ayırt
     // edilemezdi (ana sayfa karosu silüetle ayrışıyordu, bu yüzeyler değil).
     'Cîhan': AppIcons.compass,
+    // W11 (2026-10-28 tur 5): ana sayfanın 12. karosu "Karışık".
+    'Tevlihev': AppIcons.shuffle,
   };
 
   /// Konunun görsel dili: ana sayfa karosundaki K3 silüeti ve alt konu

@@ -6,6 +6,7 @@ import '../data/learner_lexicon.dart';
 import '../data/story_progress_store.dart';
 import '../data/streak_store.dart';
 import '../l10n/lang.dart';
+import '../utils/text_glue.dart';
 import '../l10n/strings.dart';
 import '../models/mini_guide.dart';
 import '../models/story.dart';
@@ -392,7 +393,7 @@ class _StoryScreenState extends State<StoryScreen> {
                     ),
                     const SizedBox(height: SahneSpace.x2),
                     Text(
-                      node.textTr,
+                      glueOpeningQuotes(node.textTr),
                       style: SahneType.body.copyWith(color: s.tx2),
                     ),
                   ],
@@ -499,7 +500,7 @@ class _NarrationBubble extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        node.textTr,
+                        glueOpeningQuotes(node.textTr),
                         style: SahneType.caption.copyWith(color: t.tx2),
                       ),
                     ],
@@ -543,12 +544,12 @@ class _PlayerBubble extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  choice.labelKu,
+                  glueOpeningQuotes(choice.labelKu),
                   textAlign: TextAlign.end,
                   style: SahneType.bodyStrong.copyWith(color: t.learnTx),
                 ),
                 Text(
-                  choice.labelTr,
+                  glueOpeningQuotes(choice.labelTr),
                   textAlign: TextAlign.end,
                   style: SahneType.caption.copyWith(color: t.tx2),
                 ),

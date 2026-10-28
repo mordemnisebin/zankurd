@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../providers/remote_availability.dart';
 import '../providers/sound_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../utils/app_route.dart';
@@ -39,6 +40,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   late final AnimationController _spinController;
   late Animation<double> _rotation;
   bool _canSpin = false;
+
+  /// W5: satın alınmış, kullanılmamış ek çevirme sayısı.
+  int _extraSpins = 0;
   bool _loading = true;
   bool _statusError = false;
   bool _statusOffline = false;
@@ -166,8 +170,15 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     }
     try {
       final can = await widget.repository.canSpinToday();
+      var extra = 0;
+      try {
+        extra = await widget.repository.unusedExtraSpins();
+      } catch (_) {
+        extra = 0;
+      }
       if (!mounted) return;
       setState(() {
+        _extraSpins = extra;
         _canSpin = can;
         _loading = false;
         _statusError = false;
@@ -360,7 +371,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                             onRetry: _retrySpinStatus ? _checkSpin : _spin,
                           ),
                   ],
-                  if (!_canSpin && !_spinning) ...[
+                  if (!_canSpin &&
+                      !_spinning &&
+                      !RemoteAvailability.socialLockedWatch(context)) ...[
                     const SizedBox(height: SahneSpace.cardGap),
                     _buildCountdownCard(context, ku),
                   ],
@@ -416,7 +429,11 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
         Semantics(
           header: true,
           child: Text(
-            context.t(K.wheelOncePerDay),
+            _extraSpins > 0
+                ? '${context.t(K.wheelFreeDaily)} '
+                      '${context.t(K.wheelExtraSpins, {'n': '$_extraSpins'})}'
+                : context.t(K.wheelFreeDaily),
+            key: const ValueKey('spin-daily-line'),
             textAlign: TextAlign.center,
             style: SahneType.headline.copyWith(color: t.tx),
           ),
@@ -578,12 +595,17 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   // ────────────────────────────────────────────
   Widget _buildSpinButton(BuildContext context, bool ku) {
     final enabled = _canSpin && !_spinning;
+    // W16 (2026-10-28 tur 5): sunucuya ulaşılamıyorken çark çevrilemez ama
+    // sebep "bugün hakkını kullandın" DEĞİL; "Yarın tekrar gel" yalan olurdu.
+    final offline = RemoteAvailability.socialLockedWatch(context);
     // Pasif hâl opaklık değil: Perde + üçüncül metin (bileşenin işi).
     return SahneButton.primary(
       label: _spinning
           ? (context.t(K.wheelSpinning))
           : enabled
           ? (context.t(K.wheelSpin))
+          : offline
+          ? context.t(K.internetRequired)
           : (context.t(K.wheelComeTomorrow)),
       icon: enabled || _spinning ? AppIcons.ferrisWheel : AppIcons.lock,
       arrow: false,
