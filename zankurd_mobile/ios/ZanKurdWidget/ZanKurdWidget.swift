@@ -20,11 +20,13 @@ struct ZanKurdEntry: TimelineEntry {
 struct ZanKurdProvider: TimelineProvider {
     func placeholder(in context: Context) -> ZanKurdEntry {
         ZanKurdEntry(date: Date(), hasData: true, streak: 7, dailyPrompt: "ZanKurd",
-                     labelStreak: "ZanKurd", labelUnit: "", labelDaily: "ZanKurd")
+                     labelStreak: "Zincîr", labelUnit: "roj", labelDaily: "Pirsa rojê")
     }
 
     func getSnapshot(in context: Context, completion: @escaping (ZanKurdEntry) -> Void) {
-        completion(load())
+        // Galeri önizlemesi veri yokken boş/siyah kalmasın: örnek göster.
+        let entry = load()
+        completion(context.isPreview && !entry.hasData ? placeholder(in: context) : entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<ZanKurdEntry>) -> Void) {
@@ -154,7 +156,7 @@ struct ZanKurdWidget: Widget {
             ZanKurdWidgetView(entry: entry)
         }
         .configurationDisplayName("ZanKurd")
-        .description("ZanKurd")
+        .description("Zincîr û pirsa rojê · Seri ve günün sorusu")
         .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
