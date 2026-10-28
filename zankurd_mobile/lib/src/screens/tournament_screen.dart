@@ -182,8 +182,21 @@ class _TournamentScreenState extends State<TournamentScreen> {
     super.dispose();
   }
 
+  /// Havadaki yenileme: yavaş bağlantıda iki istek üst üste binip geç dönen
+  /// eskisi ekrandaki doluluğu geri almasın (GPT-6 Sol incelemesi).
+  bool _pollInFlight = false;
+
   Future<void> _pollWhileWaiting() async {
-    if (_loading) return;
+    if (_loading || _pollInFlight) return;
+    _pollInFlight = true;
+    try {
+      await _pollOnce();
+    } finally {
+      _pollInFlight = false;
+    }
+  }
+
+  Future<void> _pollOnce() async {
     // Puanımı gönderdim, rakip oynuyor: maç kapanınca (ve sonraki tur
     // kurulunca) şema kendiliğinden yenilenir. Eskiden "rakibini
     // bekliyoruz" kartı rakip bitirdikten sonra da kalıyordu (4 simülatörlü

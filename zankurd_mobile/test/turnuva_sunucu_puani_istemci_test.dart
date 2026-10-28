@@ -62,6 +62,7 @@ class _ServerScoredRepo extends MockZanKurdRepository {
   final List<String> calls = [];
   int submits = 0;
   bool failNextPresent = false;
+  bool emptyNextPresent = false;
 
   @override
   String? get currentUserId => 'me';
@@ -94,6 +95,10 @@ class _ServerScoredRepo extends MockZanKurdRepository {
     if (failNextPresent) {
       failNextPresent = false;
       throw StateError('network');
+    }
+    if (emptyNextPresent) {
+      emptyNextPresent = false;
+      return const TournamentPresent(elapsedMs: 0);
     }
     return TournamentPresent(elapsedMs: 0, question: _q(index));
   }
@@ -336,6 +341,32 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
     expect(awaiting, findsNothing);
     expect(find.text('Maçı başlat'), findsOneWidget, reason: 'final maçı');
+  });
+
+  // GPT-6 Sol incelemesi (2026-10-28): sunum içeriksiz gelirse yer tutucu
+  // soru açılıp sayaç başlıyordu.
+  testWidgets('sunum içeriksiz gelirse soru açılmaz, yeniden dene çıkar', (
+    tester,
+  ) async {
+    final repo = _ServerScoredRepo(_bracket(serverScored: true))
+      ..emptyNextPresent = true;
+    await tester.pumpWidget(
+      testShell(
+        child: AsyncDuelPlayScreen(
+          repository: repo,
+          entry: const AsyncDuelEntry.tournament('m1', roundLabel: 'Final'),
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    final retry = find.byKey(const ValueKey('tournament-present-retry'));
+    expect(retry, findsOneWidget);
+    expect(find.text('Yek'), findsNothing);
+    await tester.tap(retry);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.text('Pirs 0'), findsOneWidget);
   });
 
   testWidgets('turnuva maçında çıkış diyaloğu "maç" der', (tester) async {

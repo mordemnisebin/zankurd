@@ -307,10 +307,17 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     }
     if (!mounted || _index != index || _exitInFlight) return;
     final question = presented.question;
+    // İçerik yoksa (beklenmedik sunucu yanıtı) yer tutucu soru açılmaz ve
+    // sayaç başlamaz: oyuncu cevaplanamaz bir soruda süre yakardı.
+    if (question == null || index >= _questions.length) {
+      setState(() {
+        _awaitingQuestion = false;
+        _presentFailed = true;
+      });
+      return;
+    }
     setState(() {
-      if (question != null && index < _questions.length) {
-        _questions[index] = question;
-      }
+      _questions[index] = question;
       _awaitingQuestion = false;
     });
     _presentOffsetMs = presented.elapsedMs;
