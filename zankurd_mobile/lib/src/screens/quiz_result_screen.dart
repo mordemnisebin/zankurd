@@ -695,6 +695,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     return 'solo';
   }
 
+  /// "Yarış tamamla" görevini ilerletir mi? Yalnız rakipli/yarış turları:
+  /// oda, düello, bot yarışı, günün turu. Tek başına çözülen tur (solo
+  /// "Pratik") ve öğrenme yarış değildir (2026-10-29, X5).
+  bool get _countsAsRace => switch (_quizModeLabel) {
+    'crowd' || '1v1' || 'daily' || 'bot_race' => true,
+    _ => false,
+  };
+
   /// Analitik `round_id`: boşlukları kırpılmış açık kimlik.
   String? get _effectiveRoundId {
     final explicit = widget.roundId?.trim();
@@ -1148,6 +1156,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             correctAnswers: correctCount,
             category: room.category,
             streakAlive: streak > 0,
+            countsAsRace: _countsAsRace,
           );
     // XP ve Seviye Hesaplaması
     //
@@ -1229,7 +1238,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
     if (mounted) {
       setState(() {
-        _dailyStreak = streak;
+        // "Günlük seri: N gün" kazanımı yalnız seriyi o gün İLK ilerleten
+        // turda anılır; aynı günün sonraki turlarında "Yeni rozet" altında
+        // tekrar gösterilmez (2026-10-29, X5).
+        _dailyStreak = isNewDay ? streak : 0;
         _newAchievements = newAchievements;
         _promotions = promotions;
         _earnedXP = earnedXP;
@@ -1909,6 +1921,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         subtitle: is1v1 && !isLearningExperience
             ? '${context.t(K.you)} $score – ${opponents.first.score} '
                   '${context.playerDisplayName(opponents.first.name, tag: opponents.first.tag)}'
+                  '${opponents.first.isBot ? ' · ${context.t(K.botChip)}' : ''}'
             : null,
         titleRole: duelOutcome == _DuelOutcome.win ? SahneRole.gold : null,
         // Öğrenme turunda puan üretilmez (`score` hep 0); büyük sayı "0"
@@ -2154,7 +2167,26 @@ class _DuelFaceOff extends StatelessWidget {
         const SizedBox(width: SahneSpace.x3),
         emblem,
         const SizedBox(width: SahneSpace.x3),
-        _avatarOf(opponent, radius: 24),
+        if (opponent.isBot)
+          // Bot rakibin gerçek olmadığı sonuçta da yazılır (2026-10-29, X4):
+          // rozet avatarın alt kenarına biner, satır yüksekliği değişmez.
+          Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.bottomCenter,
+            children: [
+              _avatarOf(opponent, radius: 24),
+              Positioned(
+                bottom: -10,
+                child: SahneBadge(
+                  key: const ValueKey('result-bot-chip'),
+                  label: context.t(K.botChip),
+                  tone: SahneBadgeTone.soon,
+                ),
+              ),
+            ],
+          )
+        else
+          _avatarOf(opponent, radius: 24),
       ],
     );
   }

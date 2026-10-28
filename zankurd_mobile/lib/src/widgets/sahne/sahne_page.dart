@@ -1234,6 +1234,14 @@ class SahneStageScroll extends StatefulWidget {
 class _SahneStageScrollState extends State<SahneStageScroll> {
   final ScrollController _controller = ScrollController();
 
+  /// Altta kaydırılacak içerik var mı? Doluyken alt kenar söner (aşağıda
+  /// devamı var der); içerik bitince ya da hiç taşmıyorsa sönme yoktur.
+  final ValueNotifier<bool> _moreBelow = ValueNotifier<bool>(false);
+
+  /// Alt sönme yüksekliği (2026-10-29, X8): uzun soruda son şık alt perdenin
+  /// kıyısında yarım kalıyordu ve kaydırılabildiği belli olmuyordu.
+  static const double bottomFade = SahneSpace.x6;
+
   @override
   void didUpdateWidget(SahneStageScroll oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -1248,56 +1256,108 @@ class _SahneStageScrollState extends State<SahneStageScroll> {
   @override
   void dispose() {
     _controller.dispose();
+    _moreBelow.dispose();
     super.dispose();
+  }
+
+  bool _track(ScrollMetrics metrics, int depth) {
+    if (depth == 0 && metrics.axis == Axis.vertical) {
+      // Alt boşluk (padding) "devamı" sayılmaz: yalnız boşluk kalmışsa
+      // sönme gürültüdür.
+      final more = metrics.extentAfter > widget.padding.bottom + 1;
+      if (_moreBelow.value != more) _moreBelow.value = more;
+    }
+    return false;
   }
 
   @override
   Widget build(BuildContext context) {
     final opaque = SahneTokens.of(context).bg;
-    return ShaderMask(
-      blendMode: BlendMode.dstIn,
-      shaderCallback: (bounds) {
-        final stop = bounds.height <= 0
-            ? 0.0
-            : (widget.fade / bounds.height).clamp(0.0, 1.0);
-        return LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          // Yalnız alfa kullanılır; opak uç bir belirteçtir (ham renk yok).
-          colors: [Colors.transparent, opaque],
-          stops: [0, stop],
-        ).createShader(bounds);
-      },
-      child: widget.balance == null
-          ? SingleChildScrollView(
-              key: widget.scrollKey,
-              controller: _controller,
-              padding: widget.padding,
-              child: widget.child,
-            )
-          : LayoutBuilder(
-              builder: (context, constraints) {
-                final usable = math.max(
-                  0.0,
-                  constraints.maxHeight - widget.padding.vertical,
-                );
-                return SingleChildScrollView(
-                  key: widget.scrollKey,
-                  controller: _controller,
-                  padding: widget.padding,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: usable),
-                    child: Align(
-                      alignment: Alignment(0, widget.balance! * 2 - 1),
-                      child: widget.child,
-                    ),
+    final scroll = widget.balance == null
+        ? SingleChildScrollView(
+            key: widget.scrollKey,
+            controller: _controller,
+            padding: widget.padding,
+            child: widget.child,
+          )
+        : LayoutBuilder(
+            builder: (context, constraints) {
+              final usable = math.max(
+                0.0,
+                constraints.maxHeight - widget.padding.vertical,
+              );
+              return SingleChildScrollView(
+                key: widget.scrollKey,
+                controller: _controller,
+                padding: widget.padding,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: usable),
+                  child: Align(
+                    alignment: Alignment(0, widget.balance! * 2 - 1),
+                    child: widget.child,
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
+          );
+    return NotificationListener<ScrollMetricsNotification>(
+      onNotification: (n) => _track(n.metrics, n.depth),
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (n) => _track(n.metrics, n.depth),
+        child: ValueListenableBuilder<bool>(
+          valueListenable: _moreBelow,
+          builder: (context, more, child) => Stack(
+            children: [
+              Positioned.fill(
+                child: ShaderMask(
+                  blendMode: BlendMode.dstIn,
+                  shaderCallback: (bounds) {
+                    final h = bounds.height;
+                    final top = h <= 0
+                        ? 0.0
+                        : (widget.fade / h).clamp(0.0, 1.0);
+                    final bottom = h <= 0
+                        ? 1.0
+                        : (1 - bottomFade / h).clamp(top, 1.0);
+                    // Yalnız alfa kullanılır; opak uç bir belirteçtir (ham
+                    // renk yok).
+                    return LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        opaque,
+                        opaque,
+                        more ? Colors.transparent : opaque,
+                      ],
+                      stops: [0, top, bottom, 1],
+                    ).createShader(bounds);
+                  },
+                  child: child,
+                ),
+              ),
+              // Sönmenin açık olduğunu bildiren sıfır boyutlu işaret
+              // (testler okur).
+              if (more)
+                const Positioned(
+                  bottom: 0,
+                  left: 0,
+                  width: 0,
+                  height: 0,
+                  child: SizedBox.shrink(key: sahneStageBottomFadeKey),
+                ),
+            ],
+          ),
+          child: scroll,
+        ),
+      ),
     );
   }
 }
+
+/// Kayan gövdenin alt sönmesi açıkken (altta devam eden içerik var) çizilen
+/// sıfır boyutlu işaretin anahtarı.
+const Key sahneStageBottomFadeKey = ValueKey('sahne-stage-bottom-fade');
 
 /// Soru + şıklar grubunun kullanılabilir yükseklikteki konumu (üst-orta):
 /// grup, boş alanın %36'sı üstte, %64'ü altta kalacak biçimde oturur.

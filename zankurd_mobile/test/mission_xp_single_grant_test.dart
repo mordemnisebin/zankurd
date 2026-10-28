@@ -1,4 +1,6 @@
 // Bekçi: görev XP'si tek yerden, ödül alınırken verilir (B1).
+// 2026-10-29 (X5): sonuç turu artık Günün turu (`dailyQuiz: true`): "yarış
+// tamamla" görevi tek başına çözülen solo turda ilerlemez.
 //
 // ## Kusur
 // Günlük görev tamamlanınca XP İKİ kez veriliyordu: sonuç ekranı
@@ -94,6 +96,9 @@ void main() {
           bestStreak: 1,
           answerRecords: const [_record],
           coinsAwarded: 10,
+          // 2026-10-29 (X5): "yarış tamamla" görevi yalnız yarış turunda
+          // ilerler; Günün turu yarış sayılır (tek başına solo tur sayılmaz).
+          dailyQuiz: true,
         ),
       ),
     );

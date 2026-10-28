@@ -297,6 +297,11 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     return '$hours:$minutes:$seconds';
   }
 
+  /// Ödül ve geri sayım kartlarının yaklaşık yükseklikleri (çarkı küçültmek
+  /// için; ölçü değil, ayırma payı).
+  static const double _prizeCardHeight = 84;
+  static const double _countdownCardHeight = 140;
+
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
@@ -335,9 +340,27 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       // sahnesidir (soru/sonuç gibi); çark beyaz sayfada yüzen koyu kart
       // değildi. Çark sahne yüksekliğinin ~%58'inde, dikey ortada; alan
       // kısa/yazı büyükse içerik kayar. "Çevir" sahnenin dibinde sabit.
+      //
+      // 2026-10-29 (X9): ödül + geri sayım kartı görününce içerik alt
+      // perdeye varıyor, "Saat/Dakika/Saniye" etiketleri düğmenin altında
+      // kalıyordu. (1) Kaydırma alanına alt boşluk eklendi; (2) bu iki kart
+      // görünürken çark kartların yüksekliği kadar küçülür ki ilk bakışta
+      // hepsi sığsın.
+      final showCountdown =
+          !_canSpin &&
+          !_spinning &&
+          !RemoteAvailability.socialLockedWatch(context);
+      final extrasHeight =
+          (_wonAmount != null ? _prizeCardHeight + SahneSpace.cardGap : 0.0) +
+          (showCountdown ? _countdownCardHeight + SahneSpace.cardGap : 0.0);
       stageBody = LayoutBuilder(
         builder: (context, box) => SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+          padding: const EdgeInsets.fromLTRB(
+            SahneSpace.page,
+            0,
+            SahneSpace.page,
+            SahneSpace.x4,
+          ),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: box.maxHeight),
             child: Center(
@@ -346,7 +369,11 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _buildWheelStage(context, ku, box.maxHeight),
+                  _buildWheelStage(
+                    context,
+                    ku,
+                    math.max(0.0, box.maxHeight - extrasHeight),
+                  ),
                   if (_wonAmount != null) ...[
                     const SizedBox(height: SahneSpace.cardGap),
                     _buildPrizeReveal(context, ku, _wonAmount!),
@@ -371,9 +398,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                             onRetry: _retrySpinStatus ? _checkSpin : _spin,
                           ),
                   ],
-                  if (!_canSpin &&
-                      !_spinning &&
-                      !RemoteAvailability.socialLockedWatch(context)) ...[
+                  if (showCountdown) ...[
                     const SizedBox(height: SahneSpace.cardGap),
                     _buildCountdownCard(context, ku),
                   ],

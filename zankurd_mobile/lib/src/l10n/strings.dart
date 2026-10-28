@@ -1214,8 +1214,10 @@ class Tr {
     },
     K.thisWeek: {'ku': 'Vê heftê', 'tr': 'Bu hafta'},
     K.buHaftaYarisLige: {
-      'ku': 'Vê heftê bilîze û bikeve lîgê.',
-      'tr': 'Bu hafta yarış, lige gir.',
+      // 2026-10-29 (X1): lig puanı yalnız canlı düello ve odadan gelir;
+      // "yarış" sözü Günün turunu da kapsıyordu.
+      'ku': 'Di pêşbirka zindî an odeyê de bilîze, bikeve lîgê.',
+      'tr': 'Canlı düello ya da odada oyna, lige gir.',
     },
     K.seninSiranPP: {
       'ku': 'Rêza te: {p0}. {p1}, {p2} pûan',
@@ -1324,6 +1326,11 @@ class Tr {
     // senkronize" yalan söylüyordu — bulut hiç yok. Bu, o dalın nötr
     // karşılığı (bkz. `profile_screen.dart` `_SyncStatusChip`).
     K.deviceOnlyProgress: {'ku': 'Tenê li vê amûrê', 'tr': 'Yalnız bu cihazda'},
+    // 2026-10-29 (X3): misafir hesapta "İlerleme kayıtlı" yanlış güven verir.
+    K.guestSavedOnDevice: {
+      'ku': 'Li ser vê amûrê tomarkirî ye',
+      'tr': 'Bu cihazda kayıtlı',
+    },
     // Gönderilmeyi bekleyen (henüz başarısız olmamış) kayıtlar. "kayd"
     // bankada başka hiçbir yerde geçmiyor; yerleşik sözcük "tomar"dır.
     K.pendingOnDeviceP: {
@@ -1794,6 +1801,10 @@ class Tr {
       'tr': 'Soru yenisiyle değiştirilir',
     },
     K.wildcardActive: {'ku': 'Çalak', 'tr': 'Etkin'},
+    K.wildcardUnavailableTwoOptions: {
+      'ku': 'Di vê pirsê de du vebijark hene; nayê bikaranîn',
+      'tr': 'Bu soruda iki şık var; kullanılamaz',
+    },
     K.wildcardUsed: {'ku': 'Hatiye bikaranîn.', 'tr': 'Kullanıldı'},
 
     // ── Etkinlik / çark / eşleşme ────────────────────────────────────
@@ -2158,13 +2169,18 @@ class Tr {
       'tr': 'Oyuncular bekleniyor',
     },
     K.tournamentWaitingBody: {
+      // 2026-10-29 (X2): sunucu kuralı `start_due_tournaments`: kupa
+      // açıldıktan `fill_hours` (24) sonra, en az `min_size` (2) oyuncu
+      // varsa eldekilerle başlar; yoksa açık kalıp beklemeyi sürdürür.
       'ku':
           'Kûpa bi lîstikvanên rastîn tê lîstin. Gava hejmar temam bibe '
-          'hevrik tên diyarkirin; herî dereng piştî 24 saetan bi yên '
-          'amade dest pê dike.',
+          'hevrik tên diyarkirin. 24 saet piştî vekirina kûpayê, heke '
+          'herî kêm 2 lîstikvan hebin bi wan dest pê dike; wekî din li '
+          'benda lîstikvanan dimîne.',
       'tr':
           'Turnuva gerçek oyuncularla oynanır. Kontenjan dolunca eşleşmeler '
-          'kurulur; en geç 24 saat içinde eldeki oyuncularla başlar.',
+          'kurulur. Kupa açıldıktan 24 saat sonra en az 2 oyuncu varsa '
+          'eldekilerle başlar; yoksa oyuncu beklenir.',
     },
     // KU fiilsiz: "tevlî bûn" çoğuldur, "1/4"te yanlış olurdu (jüri:
     // Codex GPT-6.1-Sol + Gemini 3.8 Flash, 2026-10-27).
@@ -2476,11 +2492,21 @@ class Tr {
     // 2026-09-30 canlı: sıralama yalnız biten çevrimiçi yarışları sayar;
     // bota karşı düello ve günün soruları cihazda oynanır. Oyuncu ikisini
     // oynayıp sıralamayı boş görünce nedenini bilmiyordu.
+    // 2026-10-29 (X1): sıralama yalnız biten çevrimiçi odaları sayar
+    // (`get_leaderboard`). Günün turu ve bot düellosu cihazda/kendi
+    // sıralamasında kalır; boş durum bunu açıkça söyler.
     K.startRaceHint: {
-      'ku': 'Pêşbirka xwe ya serhêl a yekem bilîze, navê te li vir xuya bibe.',
-      'tr': 'İlk çevrimiçi yarışını oyna, adın burada çıksın.',
+      'ku':
+          'Pûanên pêşbirka zindî û odeyê li vir têne hesibandin. Gera rojê di rêzbendiya xwe de ye.',
+      'tr':
+          'Canlı düello ve oda puanları burada sayılır. Günün turu kendi sıralamasında.',
     },
+    K.botChip: {'ku': 'Bot', 'tr': 'Bot'},
     K.startRaceAction: {'ku': 'Dest bi pêşbirkê bike', 'tr': 'Yarışa başla'},
+    K.dailyTourRankingAction: {
+      'ku': 'Rêzbendiya gera rojê',
+      'tr': 'Günün turu sıralaması',
+    },
     // 2026-10-01 (A8): sıralamanın altına sabitlenen kendi satırı, oyuncunun
     // seçili dönemde puanı yoksa sessiz kalıyordu; "sıralamada değilim"
     // ile "sıralama yüklenmedi" ayrılmıyordu.
@@ -4676,6 +4702,7 @@ class K {
   static const bulutlaSenkronize = 'screen.bulutlaSenkronize';
   static const pSenkronizeEdilemedi = 'screen.pSenkronizeEdilemedi';
   static const deviceOnlyProgress = 'screen.deviceOnlyProgress';
+  static const guestSavedOnDevice = 'screen.guestSavedOnDevice';
   static const pendingOnDeviceP = 'screen.pendingOnDeviceP';
   static const allQuestionsSubcategory = 'screen.allQuestionsSubcategory';
   static const seri = 'screen.seri';
@@ -4839,6 +4866,7 @@ class K {
   static const wildcardChangeHint = 'quiz.wildcard.change';
   static const wildcardActive = 'quiz.wildcard.active';
   static const wildcardUsed = 'quiz.wildcard.used';
+  static const wildcardUnavailableTwoOptions = 'quiz.wildcard.unavailableTwo';
 
   // ── Etkinlik / çark / eşleşme ──────────────────────────────────────
   static const noQuestionsFound = 'contest.noQuestions';
@@ -5092,7 +5120,9 @@ class K {
   static const boardLoadFailed = 'leaderboard.loadFailed';
   static const noScoresYet = 'leaderboard.noScores';
   static const startRaceHint = 'leaderboard.startRaceHint';
+  static const botChip = 'duel.botChip';
   static const startRaceAction = 'leaderboard.startRace';
+  static const dailyTourRankingAction = 'leaderboard.dailyTourRanking';
   static const notRankedYet = 'leaderboard.notRankedYet';
   static const leaderboardTitle = 'leaderboard.title';
 

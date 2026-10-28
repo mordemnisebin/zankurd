@@ -237,6 +237,9 @@ extension _QuizScreenUI on _QuizScreenState {
     category: question.category,
     index: index,
     total: widget.questions.length,
+    // Skor 1.000'e varınca sağ grup genişler; konu işareti düşer ki
+    // "Soru n/N · Konu" kısalmasın (2026-10-29, X7; bkz. `QuizStageCenter`).
+    score: score,
   );
 
   /// Üst satırın sağ yuvası: [sohbet] [skor] [kalan saniye] [⋯ menü].
@@ -764,8 +767,11 @@ extension _QuizScreenUI on _QuizScreenState {
     final noneAffordable =
         jokers.isNotEmpty &&
         jokers.every(
-          (type) => !_wildcard.isUsed(type) && !_canPayWildcard(type),
-        );
+          (type) =>
+              _wildcardUnavailable(type) ||
+              (!_wildcard.isUsed(type) && !_canPayWildcard(type)),
+        ) &&
+        jokers.any((type) => !_wildcardUnavailable(type));
     if (noneAffordable) {
       return KeyedSubtree(
         key: const ValueKey('quiz-wildcard-row'),
@@ -829,8 +835,24 @@ extension _QuizScreenUI on _QuizScreenState {
       isActive: isActive,
       cantAfford: !used && !canAfford && !answered,
       free: _freeWildcardAvailable,
+      unavailable: !used && _wildcardUnavailable(type),
       onTap: () => _onWildcardTap(type),
-      onLockedTap: _explainLockedWildcard,
+      onLockedTap: _wildcardUnavailable(type)
+          ? _explainUnavailableWildcard
+          : _explainLockedWildcard,
+    );
+  }
+
+  /// Bu soruda anlamsız joker mi? (2026-10-29, X6) İki şıklı soruda Şık
+  /// İpucu hep %50/%50 gösterir: oyuncu jetonu (ya da günlük bedava hakkı)
+  /// bilgisiz bir sonuca harcamasın.
+  bool _wildcardUnavailable(WildcardType type) =>
+      type == WildcardType.audience && !_supportsAudienceWildcard;
+
+  void _explainUnavailableWildcard() {
+    _showStageToast(
+      context.t(K.wildcardUnavailableTwoOptions),
+      key: const ValueKey('quiz-wildcard-unavailable-note'),
     );
   }
 
@@ -878,6 +900,11 @@ extension _QuizScreenUI on _QuizScreenState {
   }
 
   // ─── Joker mekanikleri ───────────────────────────────────────────────────
+
+  /// Şık İpucu en az üç şıkta anlamlıdır; iki şıkta oy dağılımı %50/%50
+  /// olur ve ücretsiz hak boşa gider (2026-10-29, X6).
+  bool get _supportsAudienceWildcard =>
+      _supportsOptionWildcards && question.answers.length >= 3;
 
   bool get _supportsOptionWildcards =>
       question.type != QuestionType.fillInBlank &&
@@ -1064,7 +1091,7 @@ extension _QuizScreenUI on _QuizScreenState {
   }
 
   void _useAudience() {
-    if (!_supportsOptionWildcards ||
+    if (!_supportsAudienceWildcard ||
         _wildcard.audienceUsed ||
         !_canPayWildcard(WildcardType.audience) ||
         answered) {

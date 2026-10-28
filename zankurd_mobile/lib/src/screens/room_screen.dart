@@ -12,6 +12,7 @@ import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/avatar_identity.dart';
+import '../widgets/zk_back_button.dart' show ZkAccentLine;
 import '../widgets/player_avatar.dart';
 import '../widgets/room_chat.dart';
 import '../utils/app_route.dart';
@@ -1254,7 +1255,6 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                       room.id != null && (room.players.length >= 2 || _chatOpen)
                       ? SahneIconButton(
                           key: const ValueKey('room-chat-toggle'),
-                          glass: true,
                           icon: AppIcons.comment,
                           semanticLabel: context.t(K.chat),
                           selected: _chatOpen,
@@ -1665,7 +1665,9 @@ class _RoomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    // 2026-10-20 renk ve canlılık (B): oda sosyal moddur; çubuk Nîl.
+    // 2026-10-29 (X10): çubuk NÖTR (TASARIM_DILI: renkli dolu üst çubuk
+    // yok); oda sosyal modunun rengi yalnız altındaki 3 px'lik çizgide.
+    // (2026-10-20'de dolu Nîl bant yapılmıştı; geri alındı.)
     final bar = ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 64),
       child: Padding(
@@ -1678,7 +1680,6 @@ class _RoomBar extends StatelessWidget {
         child: Row(
           children: [
             SahneIconButton(
-              glass: true,
               icon: AppIcons.arrowLeft,
               semanticLabel: leaveLabel,
               onPressed: onLeave,
@@ -1689,7 +1690,7 @@ class _RoomBar extends StatelessWidget {
                 header: true,
                 child: SahneUnbrokenText(
                   title,
-                  style: SahneType.headline.copyWith(color: SahneVivid.onFill),
+                  style: SahneType.headline.copyWith(color: t.tx),
                 ),
               ),
             ),
@@ -1698,12 +1699,19 @@ class _RoomBar extends StatelessWidget {
         ),
       ),
     );
-    return ColoredBox(
-      color: t.nilFill,
-      child: Padding(
-        padding: EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
-        child: bar,
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ColoredBox(
+          key: const ValueKey('room-bar-neutral'),
+          color: t.bg,
+          child: Padding(
+            padding: EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
+            child: bar,
+          ),
+        ),
+        ZkAccentLine(color: t.nilFill),
+      ],
     );
   }
 }

@@ -19,6 +19,7 @@ import '../widgets/app_state.dart';
 import '../widgets/leaderboard_podium.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
+import 'contest_screen.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -454,6 +455,12 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     await _refreshPendingRequests();
   }
 
+  void _openDailyTour() {
+    Navigator.of(
+      context,
+    ).push(AppRoute.to(ContestScreen(repository: widget.repository)));
+  }
+
   Future<void> _startQuickRace() async {
     final questions = await widget.repository.loadQuestions(limit: 10);
     if (!mounted) return;
@@ -684,6 +691,13 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
               actionLabel: context.t(K.startRaceAction),
               actionIcon: AppIcons.bolt,
               onAction: _startQuickRace,
+              // Günün turunun kendi sıralaması var; burada sayılmadığı
+              // için oraya götüren ikincil bağlantı (2026-10-29, X1).
+              footer: SahneButton.text(
+                key: const ValueKey('leaderboard-empty-daily-ranking'),
+                label: context.t(K.dailyTourRankingAction),
+                onPressed: _openDailyTour,
+              ),
             ),
           );
         }

@@ -10,6 +10,9 @@ class Player {
   /// değişirse diğerleri sessizce yanlış cevap vermeye başlardı.
   static const readyState = 'Hazır';
 
+  /// Cihazda üretilen bot rakibin `state` değeri (`BotRace.toPlayers`).
+  static const botState = 'Bot';
+
   const Player({
     this.id,
     required this.name,
@@ -52,6 +55,10 @@ class Player {
   /// oyuncu (`room_players.left_at` dolu). Satır silinmez: skoru kalır,
   /// ama sıralamaya girmez ve oda onu beklemez.
   final bool left;
+
+  /// Rakip cihazdaki bot mu (gerçek oyuncu değil)? Arayüz bunu "Bot"
+  /// rozetiyle açıkça söyler (2026-10-29, X4).
+  bool get isBot => state == botState;
 
   /// Herkese açık profille tamamlanmış kopya: boş/yer tutucu olmayan ad,
   /// fotoğraf, simge, renk, çerçeve, unvan ve oyuncu kodu profilden gelir.

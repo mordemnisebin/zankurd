@@ -44,6 +44,7 @@ class WildcardButton extends StatelessWidget {
     this.cantAfford = false,
     this.onLockedTap,
     this.free = false,
+    this.unavailable = false,
     super.key,
   });
 
@@ -57,6 +58,11 @@ class WildcardButton extends StatelessWidget {
 
   /// W1: günlük bedava hak açık; fiyat yuvasında "Bedava" yazar.
   final bool free;
+
+  /// Bu soruda anlamsız (ör. iki şıklı sorudaki Şık İpucu: %50/%50 gösterir
+  /// ve ücretsiz hakkı boşa harcar). Pasif çizilir; sebep ekran okuyucuya
+  /// ve [onLockedTap] tostuna gider (2026-10-29, X6).
+  final bool unavailable;
   final VoidCallback onTap;
 
   /// Jetonu yetmeyen joker soluk + kilitli çizilir ama DOKUNULABİLİR kalır:
@@ -65,8 +71,10 @@ class WildcardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final canTap = isEnabled;
-    final lockedTap = cantAfford && !canTap ? onLockedTap : null;
+    final canTap = isEnabled && !unavailable;
+    final lockedTap = (cantAfford || unavailable) && !canTap
+        ? onLockedTap
+        : null;
 
     final stateLabel = isActive
         ? context.t(K.wildcardActive)
@@ -74,6 +82,8 @@ class WildcardButton extends StatelessWidget {
         ? context.t(K.wildcardUsed)
         : isAnswered
         ? context.t(K.locked)
+        : unavailable
+        ? context.t(K.wildcardUnavailableTwoOptions)
         : cantAfford
         ? context.t(K.wildcardNoCoins)
         : null;
@@ -114,7 +124,7 @@ class WildcardButton extends StatelessWidget {
         // yetmeyen joker pasif ama fiyatını gösterir (neden alınamadığı
         // görünsün).
         selected: isActive,
-        unaffordable: cantAfford,
+        unaffordable: cantAfford || unavailable,
         free: free,
         freeLabel: context.t(K.freeWord),
         onPressed: canTap ? onTap : lockedTap,

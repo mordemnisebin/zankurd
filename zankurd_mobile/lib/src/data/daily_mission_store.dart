@@ -191,6 +191,7 @@ class DailyMissionStore {
     required int correctAnswers,
     required String category,
     required bool streakAlive,
+    bool countsAsRace = true,
   }) async {
     final completed = <DailyMission>[];
     // Görev listesinden ÖNCE ve ondan bağımsız: bugünün doğruları o gün
@@ -205,7 +206,12 @@ class DailyMissionStore {
             mission.target,
           );
         case MissionType.completeQuiz:
-          mission.progress = (mission.progress + 1).clamp(0, mission.target);
+          // "Yarış tamamla": yalnız yarış turları (düello, oda, bot yarışı,
+          // günün turu) sayılır. Tek başına çözülen "Pratik" turu yarış
+          // değildir ve görevi tamamlamamalı (2026-10-29, X5).
+          if (countsAsRace) {
+            mission.progress = (mission.progress + 1).clamp(0, mission.target);
+          }
         case MissionType.keepStreak:
           if (streakAlive) mission.progress = mission.target;
         case MissionType.playCategory:

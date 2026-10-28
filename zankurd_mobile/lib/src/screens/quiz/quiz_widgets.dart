@@ -1212,11 +1212,26 @@ class _DuelScoreHeader extends StatelessWidget {
               ? CrossAxisAlignment.end
               : CrossAxisAlignment.start,
           children: [
-            Text(
-              context.playerDisplayName(p.name, tag: p.tag),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: SahneType.captionStrong.copyWith(color: t.tx),
+            // Ad + (botsa) "Bot" rozeti: dar kartta (320 dp, büyük yazı)
+            // rozet taşmaz, alt satıra iner (2026-10-29, X4).
+            Wrap(
+              alignment: end ? WrapAlignment.end : WrapAlignment.start,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: SahneSpace.x1,
+              children: [
+                Text(
+                  context.playerDisplayName(p.name, tag: p.tag),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: SahneType.captionStrong.copyWith(color: t.tx),
+                ),
+                if (p.isBot)
+                  SahneBadge(
+                    key: const ValueKey('duel-bot-chip'),
+                    label: context.t(K.botChip),
+                    tone: SahneBadgeTone.soon,
+                  ),
+              ],
             ),
             Text(
               // 2026-09-30 canlı: "pts" İngilizce kısaltmaydı; terim sözlüğü

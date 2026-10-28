@@ -1,6 +1,8 @@
 // 2026-10-28 kurul K18: ⋮ düğmesi ve ikinci meta satırı kalktı (aşağıdaki
 // 'K18' bekçileri); eski 'leaderboard-more' beklentileri bunun için değişti.
 // Tasarım kurulu tüm ekranlar 2026-10-20: bildir bayrağı satırdan ⋯ menüsüne.
+// 2026-10-29 (X1): lig açıklaması "Canlı düello ya da odada oyna, lige gir." oldu
+// (puan yalnız canlı düello ve odadan gelir).
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-09-30 canlı: satır alt metninde oyun sayısının birimi "oda" değil
 // "yarış" (bkz. `canli_veri_2026_09_30_test.dart`).
@@ -125,7 +127,7 @@ void main() {
       await _pump(tester, _Repo(), size: _phone, textScale: 2.0);
 
       final subtitle = tester.widget<Text>(
-        find.text('Bu hafta yarış, lige gir.'),
+        find.text('Canlı düello ya da odada oyna, lige gir.'),
       );
       expect(subtitle.maxLines, 2);
       expect(subtitle.overflow, TextOverflow.ellipsis);
@@ -141,7 +143,7 @@ void main() {
       await _pump(tester, _Repo(), size: _phone);
 
       final subtitle = tester.widget<Text>(
-        find.text('Bu hafta yarış, lige gir.'),
+        find.text('Canlı düello ya da odada oyna, lige gir.'),
       );
       expect(subtitle.maxLines, 1);
       expect(tester.takeException(), isNull);

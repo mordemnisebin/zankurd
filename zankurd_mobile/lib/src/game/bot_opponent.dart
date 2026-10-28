@@ -67,7 +67,7 @@ class BotRace {
           (bot) => Player(
             name: bot.name,
             score: bot.score,
-            state: 'Bot',
+            state: Player.botState,
             streak: bot.streak,
           ),
         )

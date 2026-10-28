@@ -67,8 +67,11 @@ void main() {
     }
   });
 
+  // 2026-10-29 (X1): `K.startRaceHint` iki cümle oldu ("Canlı düello ve oda
+  // puanları burada sayılır. Günün turu kendi sıralamasında."): sıralamanın
+  // neyi saydığı ve Günün turunun nerede olduğu ayrı iki bilgidir.
   test('boş durum metinleri tek cümle', () {
-    for (final key in [K.contestNoneToday, K.startRaceHint]) {
+    for (final key in [K.contestNoneToday]) {
       for (final ku in [true, false]) {
         final s = Tr.forKu(key, ku);
         expect('.'.allMatches(s).length, 1, reason: s);

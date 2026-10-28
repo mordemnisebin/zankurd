@@ -958,9 +958,17 @@ class _SyncStatusChip extends StatelessWidget {
                 // diyordu. Yalan: bulut yok (2026-09-27 simülatör turu).
                 final deviceOnly =
                     isSynced && RemoteAvailability.socialLockedWatch(context);
+                // 2026-10-29 (X3): misafir (anonim) hesabın ilerlemesi
+                // sunucuya yazılsa da hesap cihazla birlikte kaybolur;
+                // "İlerleme kayıtlı" gerçek hesabın sözüdür. Misafire
+                // "Bu cihazda kayıtlı" denir, nötr tonla.
+                final guestSynced =
+                    isSynced &&
+                    !deviceOnly &&
+                    context.select<AuthProvider, bool>((a) => a.isGuest);
                 final (bg, fg) = hasFailed
                     ? (t.errTint, t.errTx)
-                    : deviceOnly
+                    : (deviceOnly || guestSynced)
                     ? (t.s2, t.tx2)
                     : isSynced
                     ? (t.okTint, t.okTx)
@@ -969,7 +977,7 @@ class _SyncStatusChip extends StatelessWidget {
                     ? AppIcons.arrowsRotate
                     : (hasFailed
                           ? AppIcons.triangleExclamation
-                          : (deviceOnly
+                          : ((deviceOnly || guestSynced)
                                 ? AppIcons.mobileScreen
                                 : (isSynced
                                       ? AppIcons.circleCheck
@@ -982,6 +990,8 @@ class _SyncStatusChip extends StatelessWidget {
                             })
                           : (deviceOnly
                                 ? Tr.forKu(K.deviceOnlyProgress, isKu)
+                                : guestSynced
+                                ? Tr.forKu(K.guestSavedOnDevice, isKu)
                                 : (isSynced
                                       ? (Tr.forKu(K.bulutlaSenkronize, isKu))
                                       : Tr.forKu(K.pendingOnDeviceP, isKu, {
