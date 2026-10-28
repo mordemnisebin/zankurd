@@ -730,14 +730,9 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
     if (review == null) return const [];
 
     final opponentId = review.opponentId;
+    // U12 (2026-10-28 tur 4): rövanş yoksa pasif düğme + uyarı çizilmez;
+    // ekranda ölü bir eylem ve gerekçe satırı kalıyordu. Yok ise hiçbir şey.
     final canRematch = review.canRematch && opponentId != null;
-    final String? whyNot = canRematch
-        ? null
-        : review.rematchLimitReached
-        ? context.t(K.asyncDuelRematchLimit)
-        : (review.opponentBlocked || opponentId == null)
-        ? context.t(K.asyncDuelRematchUnavailable)
-        : context.t(K.asyncDuelRematchFriendsOnly);
     final rawName = review.opponentBlocked
         ? null
         : (review.opponentName ?? widget.view.opponentName);
@@ -748,38 +743,17 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
             tag: widget.view.opponentProfile?.playerTag,
           );
     return [
-      Padding(
-        padding: const EdgeInsets.only(top: SahneSpace.x1),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SahneButton.secondary(
-              buttonKey: const ValueKey('async-duel-result-rematch'),
-              label: context.t(K.asyncDuelRematch),
-              icon: AppIcons.arrowsRotate,
-              expand: true,
-              onPressed: canRematch ? () => _startRematch(opponentId) : null,
-            ),
-            if (whyNot != null) ...[
-              const SizedBox(height: SahneSpace.x2),
-              // Renk yazının DURDUĞU yerin temasından: sonuç gövdesi her
-              // temada gece sahnesidir. Ekranın (gündüz) jetonu bordo
-              // zeminde lacivert, okunmaz yazı veriyordu (2026-10-28 görsel
-              // kurul: GPT-6 Sol + Gemini).
-              Builder(
-                builder: (context) => Text(
-                  whyNot,
-                  key: const ValueKey('async-duel-result-rematch-why'),
-                  textAlign: TextAlign.center,
-                  style: SahneType.caption.copyWith(
-                    color: SahneTokens.of(context).tx2,
-                  ),
-                ),
-              ),
-            ],
-          ],
+      if (canRematch)
+        Padding(
+          padding: const EdgeInsets.only(top: SahneSpace.x1),
+          child: SahneButton.secondary(
+            buttonKey: const ValueKey('async-duel-result-rematch'),
+            label: context.t(K.asyncDuelRematch),
+            icon: AppIcons.arrowsRotate,
+            expand: true,
+            onPressed: () => _startRematch(opponentId),
+          ),
         ),
-      ),
       AsyncDuelReviewSection(review: review, opponentLabel: opponentLabel),
     ];
   }

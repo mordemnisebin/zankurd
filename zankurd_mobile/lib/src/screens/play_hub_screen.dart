@@ -545,7 +545,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     // Çark: günlük jeton kazanma yeri; tek dokunuşta durur.
     final wheelTile = SahneListRow.icon(
       key: const ValueKey('play-hub-spin-wheel'),
-      icon: AppIcons.dice,
+      icon: AppIcons.ferrisWheel,
       role: SahneRole.gold,
       title: context.t(K.wheelTitle),
       subtitle: context.t(K.wheelOncePerDay),
@@ -1925,7 +1925,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                       final earn = SahneButton.text(
                         buttonKey: const ValueKey('custom-room-earn-coins'),
                         label: context.t(K.earnCoins),
-                        icon: AppIcons.dice,
+                        icon: AppIcons.ferrisWheel,
                         arrow: false,
                         onPressed: () => Navigator.of(
                           context,

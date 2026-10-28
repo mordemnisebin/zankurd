@@ -14,7 +14,6 @@ import '../data/learning_goal_store.dart';
 import '../data/streak_store.dart';
 import '../data/xp_award_publisher.dart';
 import '../data/xp_store.dart';
-import '../widgets/progress_summary.dart';
 import '../widgets/streak_calendar.dart';
 import '../widgets/streak_panel.dart';
 import '../widgets/streak_repair_card.dart';
@@ -134,9 +133,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   // "—" yükleme placeholder'ı yerine 0 ile başlıyor: kısa an için kırık
   // görünen bir tire yerine, gerçek bakiye gelince normal bir güncelleme.
   int _coinBalance = 0;
-  int _level = 1;
-  int _xpInLevel = 0;
-  int _xpNeeded = 0;
   int _streak = 0;
   List<DailyMission> _missions = [];
   int _reviewReadyCount = 0;
@@ -192,7 +188,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _refreshStreak();
     _loadMissions();
     _refreshFirstSession();
-    _refreshXpLevel();
     _refreshReviewCount();
     _refreshTourState();
     // "Kaldığın yer" ilk açılışta hiç çağrılmıyordu — yalnız
@@ -228,7 +223,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void _handleRefreshSignal() {
     if (!mounted) return;
     _refreshCoins();
-    _refreshXpLevel();
     _loadMissions();
     _refreshFirstSession();
     _refreshStreak();
@@ -310,20 +304,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return null;
   }
 
-  Future<void> _refreshXpLevel() async {
-    try {
-      final store = await XPStore.load();
-      if (!mounted) return;
-      setState(() {
-        _level = store.currentLevel;
-        _xpInLevel = store.xpInCurrentLevel;
-        _xpNeeded = store.xpNeededForNextLevel;
-      });
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'home_progress');
-    }
-  }
-
   Future<void> _refreshStreak() async {
     final store = await StreakStore.load();
     unawaited(store.markFirstSeen());
@@ -343,8 +323,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final streak = _streak;
     String? prompt;
     try {
-      final daily = await repo.loadDailyQuestions(limit: 1);
-      if (daily.isNotEmpty) prompt = daily.first.promptFor(isKu: ku);
+      // Görsele dayanan sorular widget'a girmez (U13): bugünün kümesinden ilk
+      // yalnız-metin soru seçilir; yoksa widget boş/marka durumunda kalır.
+      final daily = await repo.loadDailyQuestions(limit: 20);
+      prompt = HomeWidgetSync.pickDailyPrompt(daily, isKu: ku);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home_widget_prompt');
     }
@@ -467,14 +449,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     try {
       final xpStore = await XPStore.load();
       await xpStore.addXP(mission.xpReward);
-      await _refreshXpLevel();
       unawaited(
-        XpAwardPublisher.publish(
-          repository: repo,
-          delta: mission.xpReward,
-        ).then((_) async {
-          if (mounted) await _refreshXpLevel();
-        }),
+        XpAwardPublisher.publish(repository: repo, delta: mission.xpReward),
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home_claim_mission_xp');
@@ -609,16 +585,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       goalDone: _todayAnswered,
       goalTarget: _todayTarget,
     );
-    final progressCard = SahneSurfaceCard(
-      child: ProgressSummary(
-        key: const ValueKey('home-progress-summary'),
-        level: _level,
-        xpInLevel: _xpInLevel,
-        xpNeeded: _xpNeeded,
-        levelLabel: context.t(K.progressLevelLabel),
-      ),
-    );
-
+    // U11 (2026-10-28 tur 4): ana sayfadaki ayrı Seviye/XP kartı kalktı; seviye
+    // profilde (kimlik başlığı) durur. Ana sayfa "bugün ne yapayım"dır.
     final primary = _buildAnimatedCard(
       _heroFadeAnimation(0),
       Column(
@@ -742,10 +710,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // Dar düzende günlük görevler Günün dersinin hemen altında durur
           // (eskiden sayfa dibindeydi: görev var mı diye kimse bakmıyordu);
           // ilerleme özeti ve Pro sayfa sonuna iner.
-          if (!_firstSession && !narrow) ...[
-            const SizedBox(height: SahneSpace.cardGap),
-            progressCard,
-          ],
           // "Bugün neye odaklanmak istersin?" bloğu ana sayfadan kalktı
           // (2026-10-28 kurul K4): seçim onboarding'de ve Ayarlar'da var;
           // ana sayfada her açılışta ikinci bir karar sorusu idi.
@@ -768,10 +732,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             progress: _topicProgress,
             onOpen: _openCategory,
           ),
-          if (narrow) ...[
-            const SizedBox(height: SahneSpace.cardGap),
-            progressCard,
-          ],
           // Günün sözü EN ALTTA, sade kart (K4).
           DailyQuoteCard(isKu: ku),
           // Slogan satırı (S1): dokununca "Doza me" sayfası.

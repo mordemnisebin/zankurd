@@ -1,3 +1,4 @@
+// 2026-10-28 tur 4 (U4): yeni oyuncuda dört boş bölüm TEK "Başlangıç" kartında toplandı.
 // Kurul 5. tur 2026-10-20: seviye+XP+jeton kimlik başlığında; boş durumda "Adını belirle" ve birincil başla düğmesi.
 /// Profilin boş istatistik durumu: bağlamsal ikon + tek cümle + tek eylem.
 ///
@@ -50,27 +51,28 @@ void main() {
     }
     expect(cta, findsOneWidget);
 
-    final row = find.ancestor(of: cta, matching: find.byType(Row)).first;
+    // U4 (2026-10-28 tur 4): boş istatistik/rekor/başarı bölümleri TEK
+    // "Başlangıç" kartında: küçük rozet (kupa) + tek cümle + tek eylem. Eski
+    // 20'lik grafik ikonlu şerit ve ayrı boş kartlar kalktı.
+    final card = find.byKey(const ValueKey('profile-start-card'));
+    expect(card, findsOneWidget);
     expect(
-      find.descendant(of: row, matching: find.byType(RojMascot)),
+      find.descendant(of: card, matching: find.byType(RojMascot)),
       findsNothing,
       reason: 'boş durumda maskot/logo plakası yok',
     );
     final icon = find.descendant(
-      of: row,
-      matching: find.byIcon(AppIcons.chartColumn),
+      of: card,
+      matching: find.byIcon(AppIcons.trophy),
     );
     expect(icon, findsOneWidget);
-    final iconWidget = tester.widget<Icon>(icon);
-    // 2026-10-19 sadeleşme (ikinci tur): boş durum küçük tek satırlık şerit,
-    // ikon 32 yerine 20 ve eylem metin bağlantısı (kart 190 px'ti).
-    expect(iconWidget.size, 20);
-    expect(iconWidget.color, SahneTokens.of(tester.element(icon)).tx3);
     expect(
       find.ancestor(of: icon, matching: find.byType(ExcludeSemantics)),
       findsWidgets,
       reason: 'ikon semantik ağaca ayrı bir düğüm eklememeli',
     );
+    expect(find.byIcon(AppIcons.chartColumn), findsNothing);
+    expect(find.text('Henüz soru çözmedin.'), findsNothing);
   });
 
   testWidgets('ilk turdan önce seviye kartı ve başarı çubuğu yok', (
@@ -87,17 +89,16 @@ void main() {
         ),
       ),
     );
-    final rewards = find.byKey(const ValueKey('profile-rewards-card'));
-    for (var i = 0; i < 40 && rewards.evaluate().isEmpty; i++) {
+    final card = find.byKey(const ValueKey('profile-start-card'));
+    for (var i = 0; i < 40 && card.evaluate().isEmpty; i++) {
       await tester.pump(const Duration(milliseconds: 50));
     }
-    expect(rewards, findsOneWidget);
+    expect(card, findsOneWidget);
+    // U4: boş Başarılar kartı ("0/13", ipucu) ayrı çizilmez.
+    expect(find.byKey(const ValueKey('profile-rewards-card')), findsNothing);
     // Kurul 5. tur 2026-10-20: seviye + XP kimlik başlığına taşındı.
     expect(find.byKey(const ValueKey('profile-set-name-cta')), findsOneWidget);
-    expect(
-      find.descendant(of: rewards, matching: find.byType(SahneProgressBar)),
-      findsNothing,
-    );
-    expect(find.text('İlk başarın için bir yarış bitir.'), findsOneWidget);
+    expect(find.byType(SahneProgressBar), findsOneWidget);
+    expect(find.text('İlk başarın için bir yarış bitir.'), findsNothing);
   });
 }

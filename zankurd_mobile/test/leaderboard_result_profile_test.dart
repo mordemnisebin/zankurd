@@ -94,7 +94,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Sıralama'), findsOneWidget);
-    expect(find.byIcon(AppIcons.arrowsRotate), findsOneWidget);
+    // U10 (2026-10-28 tur 4): yenile düğmesi yok; aşağı çekerek yenilenir.
+    expect(find.byIcon(AppIcons.arrowsRotate), findsNothing);
+    expect(find.byType(RefreshIndicator), findsOneWidget);
   });
 
   testWidgets('leaderboard lists the top three as ranked rows', (tester) async {
@@ -551,12 +553,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Profil açıldığında henüz rozet yok: "İlk oyun" yalnız kilitli
-    // siluet olarak görünür (2026-10-22), kazanılmış çip olarak değil.
-    expect(
-      find.byKey(const ValueKey('profile-locked-rewards')),
-      findsOneWidget,
-    );
+    // Profil açıldığında henüz hiçbir şey oynanmadı: U4 (2026-10-28 tur 4) tek
+    // "Başlangıç" kartı; kilitli rozet siluetleri oyundan sonra görünür.
+    expect(find.byKey(const ValueKey('profile-start-card')), findsOneWidget);
+    expect(find.byKey(const ValueKey('profile-locked-rewards')), findsNothing);
 
     // Profil tabı dışındayken bir quiz tamamlanıp rozet açılmış gibi yap.
     final store = await AchievementStore.load();

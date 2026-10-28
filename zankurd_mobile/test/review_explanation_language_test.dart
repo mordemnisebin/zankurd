@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -6,6 +5,7 @@ import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 
+import 'support/result_details.dart';
 import 'support/widget_test_helpers.dart';
 
 /// Tur özeti, sorunun **yazılmış** açıklamasını göstermeli.
@@ -101,21 +101,9 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('result-all-explanations')),
-      300,
-    );
-    await tester.pumpAndSettle();
-
-    // K7 (2026-10-28): tur açıklamaları varsayılan KAPALI; "Cevapları gör" açar.
-    final seeAnswers = find.byKey(
-      const ValueKey('result-see-answers'),
-      skipOffstage: false,
-    );
-    await tester.ensureVisible(seeAnswers);
-    await tester.pump();
-    await tester.tap(seeAnswers);
-    await tester.pumpAndSettle();
+    // K7 (2026-10-28): tur açıklamaları varsayılan KAPALI. U5 (tur 4):
+    // "Ayrıntılar" satırının içinde.
+    await openResultDetails(tester);
 
     expect(find.text('«av» bi Tirkî dibe «su».'), findsOneWidget);
     expect(find.textContaining('Şirove:'), findsNothing);

@@ -334,6 +334,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // (avatar + ad + kod) → seviye kartı → bölümler (tek bölüm
     // başlığı + liste grupları). Eski yeşil degrade kahraman kart, süs
     // daireleri, kilim bordürü ve büyük harfli gri bölüm etiketleri kalktı.
+    // U4 (2026-10-28 tur 4): hiç oynamamış oyuncuda boş bölümler (0/7 hafta,
+    // "Henüz soru çözmedin", "İlk rekorunu kır", boş Başarılar ipucu) dört ayrı
+    // boş kart olarak üst üste diziliyordu; tek "Başlangıç" kartında toplanır.
+    final fresh = _stats == null && _answeredTotal == 0 && !_hasPlayed;
     final identity = _ProfileHeroCard(
       ku: ku,
       displayName: _displayName(ku),
@@ -364,195 +368,199 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: _SyncStatusChip(),
         ),
         const SizedBox(height: SahneSpace.x2),
-        const ProfileWeekStrip(),
-        // Seviye + XP çubuğu + jeton artık kimlik başlığındadır (kurul 5. tur).
-        // 2026-10-19 sadeleşme (ikinci tur): "Ayrıntılı istatistik" ayrı bir
-        // açılır kart değil, başlığın yanındaki bağlantıdır; ayrıntılar
-        // altta, bağlantıya basınca açılır (varsayılan kapalı).
-        SahneSectionHeader(
-          title: context.t(K.myStats),
-          actionLabel: context.t(K.detailedStats),
-          onAction: () =>
-              setState(() => _statsDetailsOpen = !_statsDetailsOpen),
-        ),
-        // Sunucu satırı yoksa yerel ilerleme de gizleniyordu: çevrimdışı
-        // 2 soru cevaplamış oyuncu kendi cevapladığı soru sayısını
-        // göremiyordu (2026-07-27). Kapı sunucu satırına değil,
-        // gösterilecek bir şey olup olmadığına bakar; karolar sunucu
-        // metriği yokken "—" gösterir.
-        if (_stats == null && _answeredTotal == 0)
-          // Boş durum: bağlamsal çizgi ikon + tek cümle + ekranın tek
-          // birincil eylemi. İkon semantik ağaca düğüm eklemez.
-          //
-          // 2026-09-29 doğallık (K3): burada 64'lük maskot/logo plakası
-          // duruyordu; boş durumların ortak dili gibi 32'lik üçüncül bir
-          // çizgi ikon (istatistik sütunu) oldu. Logo marka satırının işi.
-          // 2026-10-19 sadeleşme (ikinci tur): boş durum 190 px'lik büyük
-          // karttı ve içinde ikinci bir turuncu düğme vardı; artık tek
-          // satırlık küçük şerit: simge + cümle, altında metin eylemi.
-          SahneSurfaceCard(
-            padding: const EdgeInsets.symmetric(
-              horizontal: SahneSpace.x4,
-              vertical: SahneSpace.x3,
-            ),
-            child: Builder(
-              builder: (context) {
-                final t = SahneTokens.of(context);
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: ExcludeSemantics(
-                        child: Icon(
-                          AppIcons.chartColumn,
-                          size: 20,
-                          color: t.tx3,
+        if (fresh)
+          _ProfileStartCard(onStart: _startQuickRace)
+        else ...[
+          const ProfileWeekStrip(),
+          // Seviye + XP çubuğu + jeton artık kimlik başlığındadır (kurul 5. tur).
+          // 2026-10-19 sadeleşme (ikinci tur): "Ayrıntılı istatistik" ayrı bir
+          // açılır kart değil, başlığın yanındaki bağlantıdır; ayrıntılar
+          // altta, bağlantıya basınca açılır (varsayılan kapalı).
+          SahneSectionHeader(
+            title: context.t(K.myStats),
+            actionLabel: context.t(K.detailedStats),
+            onAction: () =>
+                setState(() => _statsDetailsOpen = !_statsDetailsOpen),
+          ),
+          // Sunucu satırı yoksa yerel ilerleme de gizleniyordu: çevrimdışı
+          // 2 soru cevaplamış oyuncu kendi cevapladığı soru sayısını
+          // göremiyordu (2026-07-27). Kapı sunucu satırına değil,
+          // gösterilecek bir şey olup olmadığına bakar; karolar sunucu
+          // metriği yokken "—" gösterir.
+          if (_stats == null && _answeredTotal == 0)
+            // Boş durum: bağlamsal çizgi ikon + tek cümle + ekranın tek
+            // birincil eylemi. İkon semantik ağaca düğüm eklemez.
+            //
+            // 2026-09-29 doğallık (K3): burada 64'lük maskot/logo plakası
+            // duruyordu; boş durumların ortak dili gibi 32'lik üçüncül bir
+            // çizgi ikon (istatistik sütunu) oldu. Logo marka satırının işi.
+            // 2026-10-19 sadeleşme (ikinci tur): boş durum 190 px'lik büyük
+            // karttı ve içinde ikinci bir turuncu düğme vardı; artık tek
+            // satırlık küçük şerit: simge + cümle, altında metin eylemi.
+            SahneSurfaceCard(
+              padding: const EdgeInsets.symmetric(
+                horizontal: SahneSpace.x4,
+                vertical: SahneSpace.x3,
+              ),
+              child: Builder(
+                builder: (context) {
+                  final t = SahneTokens.of(context);
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: ExcludeSemantics(
+                          child: Icon(
+                            AppIcons.chartColumn,
+                            size: 20,
+                            color: t.tx3,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: SahneSpace.x3),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            context.t(K.noOnlineHistory),
-                            style: SahneType.caption.copyWith(color: t.tx2),
-                          ),
-                          // Kurul 5. tur 2026-10-20 (Opus, Grok): boş durumun
-                          // eylemi metin bağlantısıydı, kart sönük kalıyordu;
-                          // artık net birincil düğme.
-                          const SizedBox(height: SahneSpace.x2),
-                          SahneButton.primary(
-                            buttonKey: const ValueKey(
-                              'profile-stats-start-cta',
+                      const SizedBox(width: SahneSpace.x3),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.t(K.noOnlineHistory),
+                              style: SahneType.caption.copyWith(color: t.tx2),
                             ),
-                            label: context.t(K.startToday),
-                            arrow: true,
-                            onPressed: _startQuickRace,
-                          ),
-                        ],
+                            // Kurul 5. tur 2026-10-20 (Opus, Grok): boş durumun
+                            // eylemi metin bağlantısıydı, kart sönük kalıyordu;
+                            // artık net birincil düğme.
+                            const SizedBox(height: SahneSpace.x2),
+                            SahneButton.primary(
+                              buttonKey: const ValueKey(
+                                'profile-stats-start-cta',
+                              ),
+                              label: context.t(K.startToday),
+                              arrow: true,
+                              onPressed: _startQuickRace,
+                            ),
+                          ],
+                        ),
                       ),
+                    ],
+                  );
+                },
+              ),
+            )
+          else
+            // İlk bakışta 4 metrik — kalanı "Detaylı İstatistik"te.
+            _StatGrid(
+              tiles: [
+                // 2026-09-30 simülatör: 390 XP ve 16 cevaplı soru varken bu iki
+                // karo "Hîn tune / Henüz yok" diyordu — yan yana çelişki.
+                // Sıra ve toplam puan SUNUCU yarış puanından gelir; yerel
+                // olarak bilinen bir toplam yoktur (XP ayrı bir kavram, seviye
+                // kartında). Veri yokken karo göstermek yerine gizlenir; yeni
+                // bir "ilk yarıştan sonra" cümlesi uydurulmaz. Sıralama sekmesi
+                // ve ilk yarış eylemi zaten durur.
+                if (_hasServerScore) ...[
+                  if ((_weeklyEntry?.rank ?? 0) > 0)
+                    _StatTile(
+                      label: context.t(K.thisWeek),
+                      value: '—',
+                      count: _weeklyEntry!.rank,
+                      countPrefix: '#',
+                      role: SahneRole.gold,
+                      icon: AppIcons.chartColumn,
                     ),
-                  ],
-                );
-              },
-            ),
-          )
-        else
-          // İlk bakışta 4 metrik — kalanı "Detaylı İstatistik"te.
-          _StatGrid(
-            tiles: [
-              // 2026-09-30 simülatör: 390 XP ve 16 cevaplı soru varken bu iki
-              // karo "Hîn tune / Henüz yok" diyordu — yan yana çelişki.
-              // Sıra ve toplam puan SUNUCU yarış puanından gelir; yerel
-              // olarak bilinen bir toplam yoktur (XP ayrı bir kavram, seviye
-              // kartında). Veri yokken karo göstermek yerine gizlenir; yeni
-              // bir "ilk yarıştan sonra" cümlesi uydurulmaz. Sıralama sekmesi
-              // ve ilk yarış eylemi zaten durur.
-              if (_hasServerScore) ...[
-                if ((_weeklyEntry?.rank ?? 0) > 0)
                   _StatTile(
-                    label: context.t(K.thisWeek),
+                    label: context.t(K.statTotalScore),
                     value: '—',
-                    count: _weeklyEntry!.rank,
-                    countPrefix: '#',
+                    count: _stats!.totalScore,
                     role: SahneRole.gold,
-                    icon: AppIcons.chartColumn,
+                    icon: AppIcons.star,
                   ),
-                _StatTile(
-                  label: context.t(K.statTotalScore),
-                  value: '—',
-                  count: _stats!.totalScore,
-                  role: SahneRole.gold,
-                  icon: AppIcons.star,
-                ),
-              ],
-              _StatTile(
-                label: context.t(K.statAnswered),
-                value: groupThousands(_answeredTotal),
-                count: _answeredTotal,
-                role: SahneRole.learn,
-                icon: AppIcons.gamepad,
-              ),
-              _StatTile(
-                label: context.t(K.statAccuracy),
-                value: _accuracyPercent == null
-                    ? '—'
-                    : context.percent(_accuracyPercent!.round()),
-                // Doğruluk bir durum değil bir ölçüdür: yeşil "iyi", kırmızı
-                // "kötü" demez (renk tek başına anlam taşımaz). Nötr karo.
-                role: SahneRole.social,
-                icon: AppIcons.bullseye,
-              ),
-            ],
-          ),
-        const SizedBox(height: SahneSpace.cardGap),
-
-        // Detaylı analiz (grafik, kategori ustalığı, güçlü/zayıf yön) —
-        // sadelik için varsayılan kapalı; başlıktaki bağlantı açar.
-        if (_statsDetailsOpen)
-          SahneSurfaceCard(
-            key: const ValueKey('profile-detailed-stats'),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _SubHeading(context.t(K.weeklyPerformance)),
-                const SizedBox(height: SahneSpace.x3),
-                FutureBuilder<MistakeStore>(
-                  future: _mistakeStoreFuture,
-                  builder: (context, snapshot) {
-                    final t = SahneTokens.of(context);
-                    if (snapshot.hasError) {
-                      return SizedBox(
-                        height: 160,
-                        child: Center(
-                          child: Text(
-                            context.t(K.performanceLoadFail),
-                            style: SahneType.caption.copyWith(color: t.tx2),
-                          ),
-                        ),
-                      );
-                    }
-                    if (!snapshot.hasData) {
-                      return SizedBox(
-                        height: 160,
-                        child: Center(
-                          child: CircularProgressIndicator(color: t.tx2),
-                        ),
-                      );
-                    }
-                    final history = snapshot.data!.getLast7DaysHistory();
-                    return WeeklyPerformanceChart(history: history, isKu: ku);
-                  },
-                ),
-                const SizedBox(height: SahneSpace.x6),
-                _PedagogicalAnalyticsSection(isKu: ku),
-                const SizedBox(height: SahneSpace.x6),
-                StrengthMapSection(
-                  isKu: ku,
-                  refreshSignal: widget.refreshSignal,
-                ),
-                if (_masteryStore != null) ...[
-                  const SizedBox(height: SahneSpace.x6),
-                  _MasterySection(store: _masteryStore!, isKu: ku),
                 ],
+                _StatTile(
+                  label: context.t(K.statAnswered),
+                  value: groupThousands(_answeredTotal),
+                  count: _answeredTotal,
+                  role: SahneRole.learn,
+                  icon: AppIcons.gamepad,
+                ),
+                _StatTile(
+                  label: context.t(K.statAccuracy),
+                  value: _accuracyPercent == null
+                      ? '—'
+                      : context.percent(_accuracyPercent!.round()),
+                  // Doğruluk bir durum değil bir ölçüdür: yeşil "iyi", kırmızı
+                  // "kötü" demez (renk tek başına anlam taşımaz). Nötr karo.
+                  role: SahneRole.social,
+                  icon: AppIcons.bullseye,
+                ),
               ],
             ),
+          const SizedBox(height: SahneSpace.cardGap),
+
+          // Detaylı analiz (grafik, kategori ustalığı, güçlü/zayıf yön) —
+          // sadelik için varsayılan kapalı; başlıktaki bağlantı açar.
+          if (_statsDetailsOpen)
+            SahneSurfaceCard(
+              key: const ValueKey('profile-detailed-stats'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _SubHeading(context.t(K.weeklyPerformance)),
+                  const SizedBox(height: SahneSpace.x3),
+                  FutureBuilder<MistakeStore>(
+                    future: _mistakeStoreFuture,
+                    builder: (context, snapshot) {
+                      final t = SahneTokens.of(context);
+                      if (snapshot.hasError) {
+                        return SizedBox(
+                          height: 160,
+                          child: Center(
+                            child: Text(
+                              context.t(K.performanceLoadFail),
+                              style: SahneType.caption.copyWith(color: t.tx2),
+                            ),
+                          ),
+                        );
+                      }
+                      if (!snapshot.hasData) {
+                        return SizedBox(
+                          height: 160,
+                          child: Center(
+                            child: CircularProgressIndicator(color: t.tx2),
+                          ),
+                        );
+                      }
+                      final history = snapshot.data!.getLast7DaysHistory();
+                      return WeeklyPerformanceChart(history: history, isKu: ku);
+                    },
+                  ),
+                  const SizedBox(height: SahneSpace.x6),
+                  _PedagogicalAnalyticsSection(isKu: ku),
+                  const SizedBox(height: SahneSpace.x6),
+                  StrengthMapSection(
+                    isKu: ku,
+                    refreshSignal: widget.refreshSignal,
+                  ),
+                  if (_masteryStore != null) ...[
+                    const SizedBox(height: SahneSpace.x6),
+                    _MasterySection(store: _masteryStore!, isKu: ku),
+                  ],
+                ],
+              ),
+            ),
+          // 2026-10-24: kişisel rekorlar ve son maçlar. Çevrimdışı/yerel
+          // misafirde sunucuya sorulmaz; yerel seri yine görünür.
+          ProfileRecordsSection(
+            repository: widget.repository,
+            refreshSignal: widget.refreshSignal,
+            remote: remoteMatches,
+            // Yeni oyuncunun boş rekor kartı oyuna götürür; üstteki boş
+            // istatistik kartı zaten "Bugün başla" taşıyorsa tekrarlanmaz.
+            onStartPlay: _stats == null && _answeredTotal == 0
+                ? null
+                : _startQuickRace,
           ),
-        // 2026-10-24: kişisel rekorlar ve son maçlar. Çevrimdışı/yerel
-        // misafirde sunucuya sorulmaz; yerel seri yine görünür.
-        ProfileRecordsSection(
-          repository: widget.repository,
-          refreshSignal: widget.refreshSignal,
-          remote: remoteMatches,
-          // Yeni oyuncunun boş rekor kartı oyuna götürür; üstteki boş
-          // istatistik kartı zaten "Bugün başla" taşıyorsa tekrarlanmaz.
-          onStartPlay: _stats == null && _answeredTotal == 0
-              ? null
-              : _startQuickRace,
-        ),
+        ],
       ],
     );
 
@@ -560,27 +568,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Widget rightColumn = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _UnifiedRewardsSection(
-          achievements: _achievements,
-          badgeUnlocked: _badgeUnlocked,
-          progress: _rewardProgress,
-          unlockedOn: _rewardUnlockedOn,
-          showProgress: _hasPlayed,
-          isKu: ku,
-        ),
-        // 2026-10-27 (rakip kıyası): başarımlar maç geçmişinin ALTINDA,
-        // sayfanın dibine yakındı; Duolingo profilinde istatistiğin hemen
-        // ardından gelir. Geçmiş artık rozetlerin altında.
-        ProfileMatchHistorySection(
-          repository: widget.repository,
-          refreshSignal: widget.refreshSignal,
-          remote: remoteMatches,
-          // Üstteki boş istatistik kartı zaten "Bugün başla" düğmesini
-          // taşır; aynı eylem iki kez çizilmez.
-          onStartPlay: _stats == null && _answeredTotal == 0
-              ? null
-              : _startQuickRace,
-        ),
+        if (!fresh) ...[
+          _UnifiedRewardsSection(
+            achievements: _achievements,
+            badgeUnlocked: _badgeUnlocked,
+            progress: _rewardProgress,
+            unlockedOn: _rewardUnlockedOn,
+            showProgress: _hasPlayed,
+            isKu: ku,
+          ),
+          // 2026-10-27 (rakip kıyası): başarımlar maç geçmişinin ALTINDA,
+          // sayfanın dibine yakındı; Duolingo profilinde istatistiğin hemen
+          // ardından gelir. Geçmiş artık rozetlerin altında.
+          ProfileMatchHistorySection(
+            repository: widget.repository,
+            refreshSignal: widget.refreshSignal,
+            remote: remoteMatches,
+            // Üstteki boş istatistik kartı zaten "Bugün başla" düğmesini
+            // taşır; aynı eylem iki kez çizilmez.
+            onStartPlay: _stats == null && _answeredTotal == 0
+                ? null
+                : _startQuickRace,
+          ),
+        ],
         // Navigasyon kısayolları — iki adlandırılmış liste grubu
         ..._buildMenuSections(ku),
         // 2026-10-28 tur 3 T5: "Davamız" kartı dolu doygun yeşildi (ekranın
@@ -1023,6 +1033,71 @@ class _SyncStatusChip extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+/// Hiç oynamamış oyuncunun TEK başlangıç kartı (U4, 2026-10-28 tur 4):
+/// küçük rozet + tek cümle + ekranın tek turuncu eylemi. Veri oluşunca bu kart
+/// kalkar, bölümler normal görünür.
+class _ProfileStartCard extends StatelessWidget {
+  const _ProfileStartCard({required this.onStart});
+
+  final VoidCallback onStart;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(top: SahneSpace.x2),
+      child: SahneSurfaceCard(
+        key: const ValueKey('profile-start-card'),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                ExcludeSemantics(
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: t.goldTint,
+                      shape: SahneShape.m,
+                    ),
+                    child: SizedBox.square(
+                      dimension: 44,
+                      child: Icon(AppIcons.trophy, size: 24, color: t.goldTx),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: SahneSpace.x3),
+                Expanded(
+                  child: Semantics(
+                    header: true,
+                    // Dar ekranda + büyük yazıda söz harf harf bölünmez.
+                    child: SahneUnbrokenText(
+                      context.t(K.baslangic),
+                      style: SahneType.headline.copyWith(color: t.tx),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: SahneSpace.x2),
+            Text(
+              context.t(K.profileStartBody),
+              style: SahneType.body.copyWith(color: t.tx2),
+            ),
+            const SizedBox(height: SahneSpace.x3),
+            SahneButton.primary(
+              buttonKey: const ValueKey('profile-stats-start-cta'),
+              label: context.t(K.profileStartCta),
+              arrow: true,
+              expand: true,
+              onPressed: onStart,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

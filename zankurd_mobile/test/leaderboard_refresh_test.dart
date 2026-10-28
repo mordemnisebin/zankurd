@@ -86,7 +86,12 @@ void main() {
     final page = tester.widget<SahneTabPage>(find.byType(SahneTabPage));
     expect(page.title, 'Sıralama');
     expect(find.byKey(const ValueKey('leaderboard-friends-button')), findsOne);
-    expect(find.byKey(const ValueKey('leaderboard-refresh-button')), findsOne);
+    // U10 (2026-10-28 tur 4): çubukta yenile düğmesi YOK; aşağı çekilir.
+    expect(
+      find.byKey(const ValueKey('leaderboard-refresh-button')),
+      findsNothing,
+    );
+    expect(find.byType(RefreshIndicator), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -106,9 +111,7 @@ void main() {
     await tester.pumpAndSettle();
     final initialCalls = repository.loadCalls;
     expect(initialCalls, greaterThanOrEqualTo(1));
-    expect(find.byKey(const ValueKey('leaderboard-refresh-button')), findsOne);
-    expect(find.byTooltip('Yenile'), findsOneWidget);
-    expect(find.bySemanticsLabel('Sıralamayı yenile'), findsOneWidget);
+    expect(find.byType(RefreshIndicator), findsOneWidget);
     // 2026-09-29 doğallık (K9): podyum yok; bütün sıralama tek liste.
     expect(find.byKey(const ValueKey('leaderboard-rank-list')), findsOne);
     expect(

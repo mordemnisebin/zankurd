@@ -3,6 +3,7 @@
 // doğru/yanlış paylı CategoryOutcomeBar; bekçi bunu bulur.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mastery_store.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
@@ -30,7 +31,11 @@ Future<void> _openAnalytics(
   SharedPreferences.setMockInitialValues({
     'zankurd.mastery.Ziman': 8,
     'zankurd.mastery.Dîrok': 3,
+    // U4 (2026-10-28 tur 4): hiç oynamamış profil tek "Başlangıç" kartı; istatistik
+    // bölümü oynamış oyuncuda görünür.
+    'zankurd.achievements.unlocked': ['first_game'],
   });
+  AchievementStore.resetInstance();
   await MistakeStore.load();
   await MasteryStore.load();
 

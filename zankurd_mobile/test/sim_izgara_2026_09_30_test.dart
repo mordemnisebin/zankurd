@@ -493,6 +493,8 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
+        await tester.tap(find.byKey(const ValueKey('story-menu')));
+        await tester.pumpAndSettle();
         await tester.tap(find.byKey(const ValueKey('story-open-guide')));
         await tester.pumpAndSettle();
         final sheetTop = tester.getTopLeft(find.byType(BottomSheet)).dy;

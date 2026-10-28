@@ -191,6 +191,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Mini rehberi aç; 5 kelimenin tamamında (şekir ve xizmetkar dahil) kaydet düğmesi görünür.
+      await tester.tap(find.byKey(const ValueKey('story-menu')));
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('story-open-guide')));
       await tester.pumpAndSettle();
       final saveCayInGuide = find.byKey(const ValueKey('word-save-cay'));

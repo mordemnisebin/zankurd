@@ -426,9 +426,9 @@ class SahneJokerButton extends StatelessWidget {
     // belirler. Etkin = hem dokunulabilir hem alınabilir.
     final tappable = onPressed != null;
     final enabled = tappable && !unaffordable;
-    // Jeton yetmiyorsa kapsül AYNI kalır; ikon ve etiket %50 opaklıkta, kenarsız, ortak pasif dolguda
+    // Jeton yetmiyorsa kapsül AYNI kalır; ikon ve etiket %40 opaklıkta (U8, 2026-10-28 tur 4), kenarsız, ortak pasif dolguda
     // çizilir (kilit simgesi jeton glifinin yerine geçer: kalabalık olmasın).
-    Color dim(Color c) => c.withValues(alpha: 0.5);
+    Color dim(Color c) => c.withValues(alpha: 0.4);
     final fg = selected ? t.goldTx : (enabled ? t.tx : dim(t.tx));
     final showPrice = !selected && (enabled || unaffordable);
     // Kurul incelemesi 2026-10-19: kapsül gecede zemine karışıyordu (4 model).
@@ -446,9 +446,7 @@ class SahneJokerButton extends StatelessWidget {
     // Büyük yazıda (≥ %130) ad ve rozet düşer: düğme ikon + fiyata iner,
     // ad Semantics'te bütündür.
     final showLabel = MediaQuery.textScalerOf(context).scale(14) < 18.2;
-    final labelColor = selected
-        ? t.goldTx
-        : (enabled ? t.tx : t.tx2.withValues(alpha: 0.75));
+    final labelColor = selected ? t.goldTx : (enabled ? t.tx : dim(t.tx));
     // Fiyat AYRI bir hap: ad ile karışmaz. Günlük ücretsiz hak jokere değil
     // jokerlerin üstündeki tek çipe aittir (2026-10-28 tur 3 T2).
     Widget? pricePill;

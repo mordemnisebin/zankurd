@@ -19,7 +19,7 @@ struct ZanKurdEntry: TimelineEntry {
 
 struct ZanKurdProvider: TimelineProvider {
     func placeholder(in context: Context) -> ZanKurdEntry {
-        ZanKurdEntry(date: Date(), hasData: true, streak: 7, dailyPrompt: "ZanKurd",
+        ZanKurdEntry(date: Date(), hasData: true, streak: 7, dailyPrompt: "Kîjan çem di Amedê re derbas dibe?",
                      labelStreak: "Zincîr", labelUnit: "roj", labelDaily: "Pirsa rojê")
     }
 

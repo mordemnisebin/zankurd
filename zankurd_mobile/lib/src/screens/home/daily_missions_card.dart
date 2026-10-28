@@ -253,10 +253,15 @@ class _MissionTile extends StatelessWidget {
     if (isGoal) {
       trailing = const SizedBox.shrink();
     } else if (!isDone) {
-      trailing = SahneBadge(
-        label: '+${mission.xpReward} XP',
-        tone: SahneBadgeTone.gold,
-      );
+      // U11 (2026-10-28 tur 4): ana sayfa "Bugün" panelinde hedef tamamlanana
+      // kadar XP rozeti YOK (üç görevde üç altın rozet panelin sesini
+      // yükseltiyordu); ödül yalnız alınabilir olunca, "Ödülü al" ile görünür.
+      trailing = compact
+          ? const SizedBox.shrink()
+          : SahneBadge(
+              label: '+${mission.xpReward} XP',
+              tone: SahneBadgeTone.gold,
+            );
     } else if (canClaim) {
       trailing = KeyedSubtree(
         key: ValueKey('claim-mission-${mission.missionKey}'),

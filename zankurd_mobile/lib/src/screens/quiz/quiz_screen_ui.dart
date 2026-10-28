@@ -620,7 +620,12 @@ extension _QuizScreenUI on _QuizScreenState {
                   detail: _feedbackDetail(context),
                   action: showRatingBar
                       ? _buildRatingBar(context)
-                      : _buildNextButton(context),
+                      : _buildNextButton(
+                          context,
+                          onStripFill: _answerWasWrong
+                              ? SahneTokens.of(context).errFill
+                              : SahneTokens.of(context).okFill,
+                        ),
                 )
               else
                 _buildNextButton(context),
@@ -662,32 +667,53 @@ extension _QuizScreenUI on _QuizScreenState {
   /// beklendiğini söyler. Gerilim tutuşu (sonuç bekleniyor) sırasında da
   /// kilitli: hızlı dokunuş skor uygulanmadan soruyu ilerletmesin. Pasif
   /// hâl Şahnê'nin pasifidir (Perde + üçüncül metin), soluk turuncu değil.
-  Widget _buildNextButton(BuildContext context) {
+  ///
+  /// [onStripFill] verilirse düğme yeşil/kırmızı geri bildirim şeridinin
+  /// ÜSTÜNDEDİR: turuncu-üstüne-yeşil/kırmızı iki doygun blok çarpışıyordu
+  /// (U6, 2026-10-28 tur 4). Duolingo deseni: beyaz dolgu + şeridin rengiyle
+  /// yazı (yeşil/kırmızı beyazda ≥ 4,5:1).
+  Widget _buildNextButton(BuildContext context, {Color? onStripFill}) {
     final bool canPressNext = _isMultiplayer
         ? false
         : (answered && !completing && !_suspense);
     final waiting = _isMultiplayer || _suspense;
-    final next = SahneButton.primary(
-      key: const ValueKey('quiz-next-button'),
-      label: _isMultiplayer && answered && _mpPhase != _MultiplayerPhase.reveal
-          ? context.t(K.waitingOpponent)
-          : isLastQuestion
-          ? context.t(K.finishAction)
-          // Yanlıştan sonra açıklama kartı açıkken eylem "Devam": oyuncu
-          // önce okur, sonra devam eder (bkz. [_WrongAnswerInsight]).
-          : _wrongAnswerInsightVisible
-          ? context.t(K.continueAction)
-          : context.t(K.next),
-      // Beklerken kum saati; son soruda bayrak; yoksa ok (→).
-      icon: waiting
-          ? AppIcons.hourglassStart
-          : isLastQuestion
-          ? AppIcons.flag
-          : null,
-      arrow: !waiting && !isLastQuestion,
-      expand: true,
-      onPressed: canPressNext ? () => _next() : null,
-    );
+    final nextLabel =
+        _isMultiplayer && answered && _mpPhase != _MultiplayerPhase.reveal
+        ? context.t(K.waitingOpponent)
+        : isLastQuestion
+        ? context.t(K.finishAction)
+        // Yanlıştan sonra açıklama kartı açıkken eylem "Devam": oyuncu
+        // önce okur, sonra devam eder (bkz. [_WrongAnswerInsight]).
+        : _wrongAnswerInsightVisible
+        ? context.t(K.continueAction)
+        : context.t(K.next);
+    // Beklerken kum saati; son soruda bayrak; yoksa ok (→).
+    final nextIcon = waiting
+        ? AppIcons.hourglassStart
+        : isLastQuestion
+        ? AppIcons.flag
+        : null;
+    final nextArrow = !waiting && !isLastQuestion;
+    final VoidCallback? nextPress = canPressNext ? () => _next() : null;
+    final next = onStripFill != null && canPressNext
+        ? SahneButton.tonal(
+            key: const ValueKey('quiz-next-button'),
+            label: nextLabel,
+            tint: Colors.white,
+            foreground: onStripFill,
+            icon: nextIcon,
+            arrow: nextArrow,
+            expand: true,
+            onPressed: nextPress,
+          )
+        : SahneButton.primary(
+            key: const ValueKey('quiz-next-button'),
+            label: nextLabel,
+            icon: nextIcon,
+            arrow: nextArrow,
+            expand: true,
+            onPressed: nextPress,
+          );
     // Cevaptan ÖNCE pasif "Sonraki": çerçeveli, "düğme ama henüz değil".
     return !answered && !waiting ? QuizInactiveButtonFrame(child: next) : next;
   }

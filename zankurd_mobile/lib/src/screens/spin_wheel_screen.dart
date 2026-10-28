@@ -585,7 +585,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
           : enabled
           ? (context.t(K.wheelSpin))
           : (context.t(K.wheelComeTomorrow)),
-      icon: enabled || _spinning ? AppIcons.dice : AppIcons.lock,
+      icon: enabled || _spinning ? AppIcons.ferrisWheel : AppIcons.lock,
       arrow: false,
       expand: true,
       onPressed: enabled ? _spin : null,

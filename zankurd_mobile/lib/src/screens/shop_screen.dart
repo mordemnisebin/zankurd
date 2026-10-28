@@ -1132,7 +1132,7 @@ class _ShopScreenState extends State<ShopScreen> {
     final row = SahneListRow.icon(
       key: const ValueKey('shop-spin-wheel-entry'),
       icon: AppIcons.ferrisWheel,
-      role: SahneRole.race,
+      role: SahneRole.gold,
       title: context.t(K.wheelTitle),
       subtitle: zero ? context.t(K.zeroBalanceHint) : null,
       chevron: true,
@@ -1337,9 +1337,21 @@ class _ShopScreenState extends State<ShopScreen> {
             ),
           ),
           const SizedBox(height: SahneSpace.x2),
-          isPurchased
-              ? _buildOwnedChip(expand: true)
-              : _buildBuyButton(item, ku, expand: true),
+          // U7 (2026-10-28 tur 4): ızgaradaki fiyat çipi güçlendirici listesiyle
+          // AYNI bileşen ve AYNI boy (112 × 52); eskiden kart genişliğine
+          // yayılıp farklı bir çip gibi okunuyordu.
+          Center(
+            child: ConstrainedBox(
+              // Büyük yazıda sabit 112 sığmaz ("300" rakamdan bölünürdü): çip
+              // kartın genişliğine açılır.
+              constraints: BoxConstraints(
+                maxWidth: _largeText(context) ? double.infinity : _priceWidth,
+              ),
+              child: isPurchased
+                  ? _buildOwnedChip(expand: true)
+                  : _buildBuyButton(item, ku, expand: true),
+            ),
+          ),
         ],
       ),
     );

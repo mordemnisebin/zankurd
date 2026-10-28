@@ -191,15 +191,11 @@ class _SignUpScreenState extends State<SignUpScreen>
                 offset: Offset(0, slide.value),
                 child: child,
               ),
-              child: const SahneEntryHero(
+              // U15 (2026-10-28 tur 4): giriş/karşılamayla aynı manzara.
+              child: const SahneEntryScene(
                 key: ValueKey('sign-up-hero-banner'),
-                padding: EdgeInsets.fromLTRB(
-                  SahneSpace.x4,
-                  SahneSpace.x6,
-                  SahneSpace.x4,
-                  SahneSpace.x5,
-                ),
-                child: Center(child: AppLogo(width: 64)),
+                height: SahneEntryScene.entryCompactHeight,
+                child: AppLogo(width: 64),
               ),
             ),
           ),

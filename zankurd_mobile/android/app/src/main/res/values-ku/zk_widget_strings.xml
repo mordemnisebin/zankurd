@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zk_widget_description">Zincîra rojên li pey hev û pirsa rojê li ser ekrana serekî nîşan dide.</string>
+    <string name="zk_widget_sample_streak">7</string>
+    <string name="zk_widget_sample_streak_label">Zincîr · roj</string>
+    <string name="zk_widget_sample_daily_label">PIRSA ROJÊ</string>
+    <string name="zk_widget_sample_prompt">Kîjan çem di Amedê re derbas dibe?</string>
+</resources>

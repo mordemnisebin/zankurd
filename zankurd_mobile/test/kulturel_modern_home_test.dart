@@ -97,10 +97,9 @@ void main() {
       refresh.value++;
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('home-first-steps')), findsNothing);
-      expect(
-        find.byKey(const ValueKey('home-progress-summary')),
-        findsOneWidget,
-      );
+      // U11 (2026-10-28 tur 4): seviye/XP kartı ana sayfadan kalktı (seviye
+      // profilde); ilk turdan sonra yalnız Bugün paneli açılır.
+      expect(find.byKey(const ValueKey('home-progress-summary')), findsNothing);
       expect(find.byType(DailyMissionsCard), findsOneWidget);
     },
   );

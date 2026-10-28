@@ -194,6 +194,70 @@ class _StoryScreenState extends State<StoryScreen> {
     });
   }
 
+  Future<void> _openMenu(BuildContext buttonContext) async {
+    final box = buttonContext.findRenderObject() as RenderBox?;
+    final overlay =
+        Overlay.of(buttonContext).context.findRenderObject() as RenderBox?;
+    if (box == null || overlay == null) return;
+    final topLeft = box.localToGlobal(Offset.zero, ancestor: overlay);
+    final position = RelativeRect.fromRect(
+      Rect.fromLTWH(
+        topLeft.dx,
+        topLeft.dy + box.size.height,
+        box.size.width,
+        0,
+      ),
+      Offset.zero & overlay.size,
+    );
+    final t = SahneTokens.of(buttonContext);
+    PopupMenuItem<String> item(
+      Key key,
+      String value,
+      IconData icon,
+      String label, {
+      bool enabled = true,
+    }) => PopupMenuItem<String>(
+      key: key,
+      value: value,
+      height: 48,
+      enabled: enabled,
+      child: Row(
+        children: [
+          Icon(icon, size: 20, color: t.tx),
+          const SizedBox(width: SahneSpace.x3),
+          Flexible(child: Text(label)),
+        ],
+      ),
+    );
+    final choice = await showMenu<String>(
+      context: buttonContext,
+      position: position,
+      items: [
+        if (widget.guide != null)
+          item(
+            const ValueKey('story-open-guide'),
+            'guide',
+            AppIcons.bookOpen,
+            buttonContext.t(K.guide),
+          ),
+        item(
+          const ValueKey('story-restart'),
+          'restart',
+          AppIcons.arrowsRotate,
+          buttonContext.t(K.restart),
+          enabled: !_busy,
+        ),
+      ],
+    );
+    if (!mounted) return;
+    switch (choice) {
+      case 'guide':
+        _openGuide();
+      case 'restart':
+        unawaited(_restart());
+    }
+  }
+
   void _openGuide() {
     final guide = widget.guide;
     if (guide == null) return;
@@ -224,19 +288,16 @@ class _StoryScreenState extends State<StoryScreen> {
       appBar: zkAppBar(
         context,
         title: Text(ku ? widget.story.titleKu : widget.story.titleTr),
+        // U10 (2026-10-28 tur 4): çubuğun sağında EN ÇOK BİR eylem. Rehber ve
+        // yeniden başlat tek "⋯" menüsünde.
         actions: [
-          if (widget.guide != null)
-            SahneIconButton(
-              key: const ValueKey('story-open-guide'),
-              icon: AppIcons.bookOpen,
-              semanticLabel: context.t(K.guide),
-              onPressed: _openGuide,
+          Builder(
+            builder: (buttonContext) => SahneIconButton(
+              key: const ValueKey('story-menu'),
+              icon: AppIcons.ellipsis,
+              semanticLabel: context.t(K.moreOptions),
+              onPressed: () => _openMenu(buttonContext),
             ),
-          SahneIconButton(
-            key: const ValueKey('story-restart'),
-            icon: AppIcons.arrowsRotate,
-            semanticLabel: context.t(K.restart),
-            onPressed: _busy ? null : _restart,
           ),
         ],
       ),

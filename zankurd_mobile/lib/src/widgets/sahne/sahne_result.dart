@@ -1112,21 +1112,24 @@ class SahneResultRewards extends StatelessWidget {
         runSpacing: SahneSpace.x2,
         alignment: WrapAlignment.start,
         children: [
-          // Dolu Zêr çipler (2026-10-20): ödül kartı altın tonlu, çipler
-          // dolu altın + koyu yazı (≥ 9:1).
+          // Tonlu Zêr çipler (U5, 2026-10-28 tur 4): dolu doygun altın çipler
+          // ödül kartında ekranın en ağır yeriydi; artık açık altın zemin +
+          // altın halka + altın yazı (mağaza fiyat çipiyle aynı dil).
           if (coins > 0)
             SahneStatChip(
-              tint: t.gold,
-              foreground: t.onGold,
-              leading: SahneGlyph(SahneGlyphKind.coin, color: t.onGold),
+              tint: t.goldTint,
+              outline: t.gold,
+              foreground: t.goldTx,
+              leading: SahneGlyph(SahneGlyphKind.coin, color: t.goldTx),
               label: coinLabel ?? '+$coins',
               semanticLabel: coinSemanticLabel,
             ),
           if (xp > 0)
             SahneStatChip(
-              tint: t.gold,
-              foreground: t.onGold,
-              leading: SahneGlyph(SahneGlyphKind.bolt, color: t.onGold),
+              tint: t.goldTint,
+              outline: t.gold,
+              foreground: t.goldTx,
+              leading: SahneGlyph(SahneGlyphKind.bolt, color: t.goldTx),
               label: xpLabel ?? '+$xp XP',
             ),
         ],

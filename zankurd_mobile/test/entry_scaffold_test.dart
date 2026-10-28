@@ -145,7 +145,10 @@ void main() {
   // 2026-10-28 K10: karşılamanın koyu kahraman kartı kalktı (siyah kutu);
   // kilim şeritli sahne kartı kararı yalnız giriş, kayıt ve ad ekranı için
   // sürer.
-  testWidgets('kahraman yuvası giriş/kayıt/ad ekranında kilim şeritli kart', (
+  // U15 (2026-10-28 tur 4): kayıt ve ad ekranındaki koyu kilim logo kutusu da
+  // kalktı; giriş akışının DÖRT ekranı aynı dağ + güneş manzarasını
+  // ([SahneEntryScene]) taşır, kilim kartı ([SahneStageCard]) hiçbirinde yok.
+  testWidgets('kahraman yuvası dört giriş ekranında aynı manzara sahnesi', (
     tester,
   ) async {
     await _open(tester, _entries.first);
@@ -153,19 +156,9 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
     for (final e in _entries.skip(1)) {
       await _open(tester, e);
-      // 2026-10-28 tur 2 R4: giriş kahramanı kilim kartı değil dağ + güneş
-      // manzarasıdır ([SahneEntryScene]); kayıt ve ad ekranı kilim kartıdır.
-      final isScene = e.name == 'giriş';
-      final card = isScene
-          ? find.byType(SahneEntryScene)
-          : find.byType(SahneStageCard).first;
-      if (!isScene) {
-        expect(
-          tester.widget<SahneStageCard>(card).kilim,
-          isTrue,
-          reason: e.name,
-        );
-      }
+      expect(find.byType(SahneStageCard), findsNothing, reason: e.name);
+      expect(find.byType(SahneEntryScene), findsOneWidget, reason: e.name);
+      final card = find.byType(SahneEntryScene);
       final rect = tester.getRect(card);
       expect(rect.left, SahneSpace.page, reason: e.name);
       expect(rect.right, _size.width - SahneSpace.page, reason: e.name);

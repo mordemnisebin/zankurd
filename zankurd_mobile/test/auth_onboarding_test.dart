@@ -53,22 +53,24 @@ class _GoogleAuthProvider extends AuthProvider {
 /// eski Forest gradyanıyla değil Şahnê sahne zeminiyle taşır: gece
 /// degradesi + Zimrût (öğrenme) köşe radyali ([SahneStagePainter]). Korunan
 /// kural aynı: üç giriş yüzeyi AYNI kimliği paylaşır.
-void _expectLearnStageIdentity(WidgetTester tester, Finder hero) {
+/// U15 (2026-10-28 tur 4): kayıt ve oyuncu adı ekranlarının kahramanı da giriş
+/// ve karşılamayla AYNI dağ + güneş manzarasıdır (eski koyu kilim logo kutusu
+/// kalktı); dört giriş ekranı tek görsel dilde.
+void _expectEntryScene(WidgetTester tester, Finder hero) {
   expect(hero, findsOneWidget);
+  expect(tester.widget(hero), isA<SahneEntryScene>());
   final painters = tester
       .widgetList<CustomPaint>(
-        find.descendant(
-          of: hero,
-          matching: find.byType(CustomPaint),
-          matchRoot: true,
-        ),
+        find.descendant(of: hero, matching: find.byType(CustomPaint)),
       )
       .map((p) => p.painter)
-      .whereType<SahneStagePainter>()
-      .toList();
-  expect(painters, isNotEmpty, reason: 'kahraman sahne zemini taşımalı');
-  expect(painters.first.race, isFalse);
-  expect(painters.first.glow, SahneTokens.night.roleGlow(SahneRole.learn));
+      .whereType<SahneVistaPainter>();
+  expect(painters, isNotEmpty, reason: 'giriş kahramanı manzara çizmeli');
+  expect(
+    find.descendant(of: hero, matching: find.byType(SahneStageCard)),
+    findsNothing,
+    reason: 'koyu kilim logo kutusu geri gelmiş',
+  );
 }
 
 void main() {
@@ -192,7 +194,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    _expectLearnStageIdentity(
+    _expectEntryScene(
       tester,
       find.byKey(const ValueKey('sign-up-hero-banner')),
     );
@@ -234,7 +236,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    _expectLearnStageIdentity(
+    _expectEntryScene(
       tester,
       find.byKey(const ValueKey('profile-name-gate-hero')),
     );

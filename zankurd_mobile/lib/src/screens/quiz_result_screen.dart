@@ -1734,6 +1734,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   embedded: true,
                 ),
               ],
+              // U5 (2026-10-28 tur 4): "Cevapları gör" ayrı düğmeydi; "Ayrıntılar"
+              // ile iki katlanır satır üst üste duruyordu. Tek satır: ayrıntılar
+              // ve cevaplar aynı bölümün içinde.
+              _AllExplanationsCard(records: answerRecords),
             ],
           ),
         ),
@@ -1793,7 +1797,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       // (uygulama sahibinin tekrarlanan geri bildirimi, 2026-07-26).
       // Birincil eylem alt perdede her an görünür: "Tekrar oyna" uzun bir
       // okuma listesinin arkasında kalmaz.
-      _AllExplanationsCard(records: answerRecords),
       const SizedBox(height: SahneSpace.sectionTop),
       _MoreOptions(
         onHome: goHome,
@@ -3026,24 +3029,13 @@ class _LevelUpDialog extends StatelessWidget {
 /// 2026-09-29 Şahnê: bölüm başlığı (`SahneSectionHeader`) + ipucu + liste
 /// grubu; her satırın solunda durum karesi (✓ / ✗ / boş için ⧗). Eski sol
 /// renk çubuğu kalktı — durum renkle değil şekil ve sözle verilir.
-class _AllExplanationsCard extends StatefulWidget {
+class _AllExplanationsCard extends StatelessWidget {
   const _AllExplanationsCard({required this.records});
 
   final List<AnswerRecord> records;
 
   @override
-  State<_AllExplanationsCard> createState() => _AllExplanationsCardState();
-}
-
-class _AllExplanationsCardState extends State<_AllExplanationsCard> {
-  /// K7 (2026-10-28): tur açıklamaları varsayılan KAPALI; "Cevapları gör"
-  /// açar. İlk görünüm yıldız + puan + ödül + tek birincil eylemdir; uzun
-  /// açıklama listesi onu itiyordu.
-  bool _open = false;
-
-  @override
   Widget build(BuildContext context) {
-    final records = widget.records;
     final isKu = context.isKu;
     final entries = <({int index, AnswerRecord record, String explanation})>[];
     for (var i = 0; i < records.length; i++) {
@@ -3077,34 +3069,28 @@ class _AllExplanationsCardState extends State<_AllExplanationsCard> {
       key: const ValueKey('result-all-explanations'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: SahneSpace.x3),
-        SahneButton.secondary(
-          key: const ValueKey('result-see-answers'),
-          label: context.t(_open ? K.hideAnswers : K.seeAnswers),
-          icon: _open ? AppIcons.chevronUp : AppIcons.chevronDown,
-          arrow: false,
-          expand: true,
-          onPressed: () => setState(() => _open = !_open),
+        const SizedBox(height: SahneSpace.cardGap),
+        Text(
+          context.t(K.allExplanations),
+          style: SahneType.bodyStrong.copyWith(color: t.tx),
         ),
-        if (_open) ...[
-          SahneSectionHeader(title: context.t(K.allExplanations)),
-          Text(
-            context.t(K.allExplanationsHint),
-            style: SahneType.caption.copyWith(color: t.tx2),
-          ),
-          const SizedBox(height: SahneSpace.x3),
-          SahneListGroup(
-            dividerIndent: SahneSpace.x3 + 28 + SahneSpace.x3,
-            children: [
-              for (final entry in entries)
-                ResultExplanationEntry(
-                  index: entry.index,
-                  record: entry.record,
-                  explanation: entry.explanation,
-                ),
-            ],
-          ),
-        ],
+        const SizedBox(height: SahneSpace.x1),
+        Text(
+          context.t(K.allExplanationsHint),
+          style: SahneType.caption.copyWith(color: t.tx2),
+        ),
+        const SizedBox(height: SahneSpace.x3),
+        SahneListGroup(
+          dividerIndent: SahneSpace.x3 + 28 + SahneSpace.x3,
+          children: [
+            for (final entry in entries)
+              ResultExplanationEntry(
+                index: entry.index,
+                record: entry.record,
+                explanation: entry.explanation,
+              ),
+          ],
+        ),
       ],
     );
   }

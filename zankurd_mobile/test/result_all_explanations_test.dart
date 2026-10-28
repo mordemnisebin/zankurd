@@ -5,6 +5,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 
+import 'support/result_details.dart';
 import 'support/widget_test_helpers.dart';
 
 /// Turun bütün açıklamaları sonuç ekranında, hepsi bir arada.
@@ -76,15 +77,9 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
 
-    // K7 (2026-10-28): tur açıklamaları varsayılan KAPALI; "Cevapları gör" açar.
-    final seeAnswers = find.byKey(
-      const ValueKey('result-see-answers'),
-      skipOffstage: false,
-    );
-    await tester.ensureVisible(seeAnswers);
-    await tester.pump();
-    await tester.tap(seeAnswers);
-    await tester.pumpAndSettle();
+    // K7 (2026-10-28): tur açıklamaları varsayılan KAPALI. U5 (tur 4):
+    // "Cevapları gör" ayrı düğme değil, "Ayrıntılar" satırının içinde.
+    await openResultDetails(tester);
   }
 
   testWidgets('doğru ve yanlış, her sorunun açıklaması sonuçta var', (

@@ -60,6 +60,8 @@ void main() {
       wrap(StoryScreen(story: cayxaneStory, guide: cayxaneGuide)),
     );
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('story-menu')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('story-open-guide')));
     await tester.pumpAndSettle();
     expect(find.text('Yeni kelimeler'), findsOneWidget);
@@ -119,6 +121,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Bir çay, lütfen.'));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('story-menu')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('story-restart')));
     await tester.pumpAndSettle();
     // Başlangıç seçimi tekrar görünür
@@ -140,6 +144,8 @@ void main() {
     final storyLabel = tester.widget<Text>(find.text('Hikâye'));
     expect(storyLabel.style?.color, SahneTokens.night.eyebrowTx);
 
+    await tester.tap(find.byKey(const ValueKey('story-menu')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('story-open-guide')));
     await tester.pumpAndSettle();
     final guideLabel = tester.widget<Text>(find.text('Kültürel not'));

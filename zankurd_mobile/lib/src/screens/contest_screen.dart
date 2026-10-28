@@ -191,7 +191,7 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
               ),
               child: Column(
                 children: [
-                  const SahneEntryScene(),
+                  SahneEntryScene(height: _heroSceneHeight(context)),
                   const SizedBox(height: SahneSpace.x4),
                   Expanded(
                     child: AppEmptyState(
@@ -284,20 +284,20 @@ class _ContestSkeleton extends StatelessWidget {
       label: context.t(K.preparingShort),
       liveRegion: true,
       excludeSemantics: true,
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SkeletonLine(height: _kHeroSkeletonHeight, borderRadius: 16),
-          // Dağ sahnesi (T3): yüklenen içerikte hero'nun hemen altında.
-          SizedBox(height: SahneSpace.cardGap),
-          SkeletonLine(height: SahneEntryScene.regularHeight, borderRadius: 16),
-          SizedBox(height: SahneSpace.sectionTop),
-          Align(
+          SkeletonLine(
+            height: _heroSceneHeight(context) + _kHeroTextHeight,
+            borderRadius: 16,
+          ),
+          const SizedBox(height: SahneSpace.sectionTop),
+          const Align(
             alignment: AlignmentDirectional.centerStart,
             child: SkeletonLine(width: 120, height: 20),
           ),
-          SizedBox(height: SahneSpace.x2),
-          Wrap(
+          const SizedBox(height: SahneSpace.x2),
+          const Wrap(
             spacing: SahneSpace.x2,
             runSpacing: SahneSpace.x2,
             children: [
@@ -306,9 +306,9 @@ class _ContestSkeleton extends StatelessWidget {
             ],
           ),
           // Önizleme satırı (geri sayım) ve alt boşluğu.
-          SizedBox(height: SahneSpace.x3),
-          SkeletonLine(width: 220, height: 20),
-          SizedBox(height: SahneSpace.x4),
+          const SizedBox(height: SahneSpace.x3),
+          const SkeletonLine(width: 220, height: 20),
+          const SizedBox(height: SahneSpace.x4),
         ],
       ),
     );
@@ -317,7 +317,14 @@ class _ContestSkeleton extends StatelessWidget {
 
 /// Kahraman kartın yüklenmiş hâldeki yüksekliği (iskelet bununla aynı yeri
 /// tutsun; `contest_skeleton_test` ölçüp kilitler).
-const double _kHeroSkeletonHeight = 128;
+const double _kHeroTextHeight = 128;
+
+/// Hero'ya gömülü dağ sahnesinin yüksekliği (U2, 2026-10-28 tur 4): ekranın
+/// %36'sı, 208–320 arası. Sabit 208 telefonda içerik ile sabit "Başla"
+/// arasında ~200 px ölü boşluk bırakıyordu; sahne boşluğu doldurur, kısa
+/// ekranda küçülür.
+double _heroSceneHeight(BuildContext context) =>
+    (MediaQuery.sizeOf(context).height * 0.36).clamp(208.0, 320.0);
 
 class _ContestContent extends StatelessWidget {
   const _ContestContent({
@@ -358,6 +365,7 @@ class _ContestContent extends StatelessWidget {
       title: context.t(K.dailyEventCardTitle),
       accent: SahneTokens.of(context).race,
       icon: AppIcons.champagneGlasses,
+      sceneHeight: _heroSceneHeight(context),
       tokens: [
         // Bitirilmiş günde rozet "Bugün" değil "Tamamlandı" der ve düğme
         // "Tekrar oyna"dır; tur yine oynanabilir (davranış değişmez).
@@ -419,13 +427,7 @@ class _ContestContent extends StatelessWidget {
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            hero,
-            const SizedBox(height: SahneSpace.cardGap),
-            const SahneEntryScene(key: ValueKey('contest-scene')),
-            quickInfo,
-            ?boardSection,
-          ],
+          children: [hero, quickInfo, ?boardSection],
         );
       },
     );

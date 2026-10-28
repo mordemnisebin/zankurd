@@ -237,8 +237,13 @@ class ArenaHero extends StatelessWidget {
     this.tokens = const [],
     this.action,
     this.motif = KilimMotif.triangleRhythm,
+    this.sceneHeight,
     super.key,
   });
+
+  /// Doluysa kartın ÜST kenarına dağ/güneş sahnesi gömülür (tek hero; ayrı
+  /// bir illüstrasyon bloğu yok — U2, 2026-10-28 tur 4).
+  final double? sceneHeight;
 
   final String title;
   final String? subtitle;
@@ -264,74 +269,90 @@ class ArenaHero extends StatelessWidget {
       child: SahneHeroSurface(
         role: role,
         kilim: false,
-        child: Padding(
-          padding: const EdgeInsets.all(SahneSpace.x4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (sceneHeight != null)
+              SahneEntryScene(
+                key: const ValueKey('contest-scene'),
+                height: sceneHeight!,
+                embedded: true,
+              ),
+            Padding(
+              padding: const EdgeInsets.all(SahneSpace.x4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  ExcludeSemantics(
-                    child: DecoratedBox(
-                      decoration: const ShapeDecoration(
-                        color: SahneVivid.glass,
-                        shape: SahneShape.m,
-                      ),
-                      child: SizedBox.square(
-                        dimension: 44,
-                        child: Icon(icon, size: 24, color: SahneVivid.onFill),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: SahneSpace.x3),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // Başlık kesilmez: uzun Kurmancî kupa adı iki
-                        // satırda "…" ile bitiyordu. Sarar; tek uzun söz
-                        // harf harf bölünmez.
-                        Semantics(
-                          header: true,
-                          child: SahneUnbrokenText(
-                            title,
-                            style: SahneType.headline.copyWith(
+                  Row(
+                    children: [
+                      ExcludeSemantics(
+                        child: DecoratedBox(
+                          decoration: const ShapeDecoration(
+                            color: SahneVivid.glass,
+                            shape: SahneShape.m,
+                          ),
+                          child: SizedBox.square(
+                            dimension: 44,
+                            child: Icon(
+                              icon,
+                              size: 24,
                               color: SahneVivid.onFill,
                             ),
                           ),
                         ),
-                        if (subtitle != null)
-                          Text(
-                            subtitle!,
-                            style: SahneType.caption.copyWith(
-                              color: SahneVivid.onFillSoft,
+                      ),
+                      const SizedBox(width: SahneSpace.x3),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // Başlık kesilmez: uzun Kurmancî kupa adı iki
+                            // satırda "…" ile bitiyordu. Sarar; tek uzun söz
+                            // harf harf bölünmez.
+                            Semantics(
+                              header: true,
+                              child: SahneUnbrokenText(
+                                title,
+                                style: SahneType.headline.copyWith(
+                                  color: SahneVivid.onFill,
+                                ),
+                              ),
                             ),
-                          ),
-                      ],
-                    ),
+                            if (subtitle != null)
+                              Text(
+                                subtitle!,
+                                style: SahneType.caption.copyWith(
+                                  color: SahneVivid.onFillSoft,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
+                  // Durum çipi başlığın yanında değil, ödül jetonlarıyla aynı
+                  // satırda ve ORTA hizada durur: başlığın yanında başlığı
+                  // daraltıp kesiyordu. Wrap sarar, satır taşmaz.
+                  if (status != null || tokens.isNotEmpty) ...[
+                    const SizedBox(height: SahneSpace.x3),
+                    Wrap(
+                      spacing: SahneSpace.x2,
+                      runSpacing: SahneSpace.x2,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [?status, ...tokens],
+                    ),
+                  ],
+                  if (action != null) ...[
+                    const SizedBox(height: SahneSpace.x4),
+                    SizedBox(width: double.infinity, child: action!),
+                  ],
                 ],
               ),
-              // Durum çipi başlığın yanında değil, ödül jetonlarıyla aynı
-              // satırda ve ORTA hizada durur: başlığın yanında başlığı
-              // daraltıp kesiyordu. Wrap sarar, satır taşmaz.
-              if (status != null || tokens.isNotEmpty) ...[
-                const SizedBox(height: SahneSpace.x3),
-                Wrap(
-                  spacing: SahneSpace.x2,
-                  runSpacing: SahneSpace.x2,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [?status, ...tokens],
-                ),
-              ],
-              if (action != null) ...[
-                const SizedBox(height: SahneSpace.x4),
-                SizedBox(width: double.infinity, child: action!),
-              ],
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

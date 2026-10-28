@@ -98,6 +98,8 @@ void main() {
     await tester.tap(find.text('Bir çay, lütfen.'));
     await tester.pumpAndSettle();
 
+    await tester.tap(find.byKey(const ValueKey('story-menu')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('story-restart')));
     await tester.pumpAndSettle();
     expect(find.text('Bir çay, lütfen.'), findsOneWidget);

@@ -134,10 +134,8 @@ void main() {
       await tester.binding.setSurfaceSize(Size(width, 844));
       await _pump(tester, isKu: false, isDark: false);
       final title = tester.getRect(find.text('Sıralama'));
-      for (final key in [
-        'leaderboard-friends-button',
-        'leaderboard-refresh-button',
-      ]) {
+      // U10 (2026-10-28 tur 4): yenile düğmesi kalktı (aşağı çekme).
+      for (final key in ['leaderboard-friends-button']) {
         final rect = tester.getRect(find.byKey(ValueKey(key)));
         expect(rect.bottom, lessThanOrEqualTo(title.top), reason: '$width');
         expect(rect.right, lessThanOrEqualTo(width), reason: '$width');

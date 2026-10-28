@@ -8,6 +8,7 @@ import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
+import 'support/result_details.dart';
 import 'support/widget_test_helpers.dart';
 
 /// Açıklamanın **nerede** gösterileceğinin bekçisi.
@@ -204,16 +205,10 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    // Kart listenin en sonunda; görünür olması için oraya kaydırılır.
-    await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('result-all-explanations')),
-      300,
-    );
-    await tester.pumpAndSettle();
     // K7 (2026-10-28): açıklamalar varsayılan KAPALI; "Cevapları gör" açar.
     expect(find.text('«av» Türkçede «su» demektir.'), findsNothing);
-    await tester.tap(find.byKey(const ValueKey('result-see-answers')));
-    await tester.pumpAndSettle();
+    // U5 (2026-10-28 tur 4): cevaplar "Ayrıntılar" satırının içinde.
+    await openResultDetails(tester);
 
     expect(find.text('Turun açıklamaları'), findsOneWidget);
     expect(find.text('«av» Türkçede «su» demektir.'), findsOneWidget);

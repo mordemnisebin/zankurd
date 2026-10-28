@@ -174,7 +174,8 @@ void main() {
     expect(names, findsWidgets);
     for (final e in names.evaluate()) {
       final text = e.widget as Text;
-      expect(text.style!.fontSize, greaterThanOrEqualTo(11));
+      // U8 (2026-10-28 tur 4): joker adı ≥ 12 sp.
+      expect(text.style!.fontSize, greaterThanOrEqualTo(12));
       // Ad küçültülmez: FittedBox altında değil.
       expect(
         find.ancestor(
@@ -235,6 +236,38 @@ void main() {
     );
   });
 
+  // U6 (2026-10-28 tur 4): geri bildirim şeridindeki eylem turuncu-üstüne-
+  // yeşil/kırmızı DEĞİL: beyaz dolgu + şeridin rengiyle yazı, ≥ 4,5:1.
+  // Sessizdi: renk çarpışması istisna vermez; yalnız renk ölçülür.
+  for (final pickFirst in [true, false]) {
+    testWidgets('U6: şerit eylemi beyaz dolgu, turuncu değil '
+        '(${pickFirst ? 'ilk' : 'son'} şık)', (tester) async {
+      await pumpQuiz(tester, experience: QuizExperience.learning);
+      final options = find.byType(QuizOptionTile);
+      await tester.tap(pickFirst ? options.first : options.last);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 900));
+      final strip = find.byWidgetPredicate(
+        (w) =>
+            w.key == const ValueKey('quiz-feedback-correct') ||
+            w.key == const ValueKey('quiz-feedback-wrong'),
+      );
+      expect(strip, findsOneWidget);
+      final button = tester.widget<FilledButton>(
+        find.descendant(of: strip, matching: find.byType(FilledButton)),
+      );
+      final fill = button.style!.backgroundColor!.resolve({})!;
+      final fg = button.style!.foregroundColor!.resolve({})!;
+      final t = SahneTokens.of(tester.element(strip));
+      expect(fill, Colors.white);
+      expect(fill, isNot(t.act), reason: 'turuncu dolgu şeritte geri geldi');
+      double lum(Color c) => c.computeLuminance();
+      final hi = lum(fill) > lum(fg) ? lum(fill) : lum(fg);
+      final lo = lum(fill) > lum(fg) ? lum(fg) : lum(fill);
+      expect((hi + 0.05) / (lo + 0.05), greaterThanOrEqualTo(4.5));
+    });
+  }
+
   testWidgets('K7: sonuç nötr sahne, tek turuncu birincil', (tester) async {
     tester.view.physicalSize = const Size(390, 844);
     tester.view.devicePixelRatio = 1.0;
@@ -284,9 +317,16 @@ void main() {
       findsNothing,
       reason: 'kapalıyken içerik kurulmaz',
     );
-    // Cevaplar varsayılan kapalı; "Cevapları gör" açar.
+    // U5 (2026-10-28 tur 4): "Cevapları gör" AYRI düğme değil; cevaplar
+    // "Ayrıntılar" katlı satırının içinde. Kapalıyken yok, satır açılınca var.
+    expect(find.byKey(const ValueKey('result-see-answers')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('result-collapsible-header')),
+      findsOneWidget,
+      reason: 'sonuçta TEK katlı satır (Ayrıntılar + Cevaplar)',
+    );
     expect(find.byType(ResultExplanationEntry), findsNothing);
-    final toggle = find.byKey(const ValueKey('result-see-answers'));
+    final toggle = find.byKey(const ValueKey('result-collapsible-header'));
     await tester.scrollUntilVisible(
       toggle,
       300,
@@ -295,6 +335,44 @@ void main() {
     await tester.tap(toggle);
     await tester.pump();
     expect(find.byType(ResultExplanationEntry), findsWidgets);
+  });
+
+  testWidgets('U5: ödül çipleri tonlu (açık altın zemin, altın halka/yazı)', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final repo = MockZanKurdRepository();
+    await tester.pumpWidget(
+      testShell(
+        child: QuizResultScreen(
+          repository: repo,
+          room: repo.createRoom(),
+          score: 240,
+          correctCount: 1,
+          wrongCount: 1,
+          totalQuestions: 2,
+          bestStreak: 1,
+          coinsAwarded: 30,
+          answerRecords: _records,
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1500));
+    final chips = find.descendant(
+      of: find.byType(SahneResultRewards),
+      matching: find.byType(SahneStatChip),
+    );
+    expect(chips, findsWidgets);
+    final t = SahneTokens.of(tester.element(chips.first));
+    for (final e in chips.evaluate()) {
+      final chip = e.widget as SahneStatChip;
+      expect(chip.tint, t.goldTint, reason: 'dolu doygun altın çip geri geldi');
+      expect(chip.outline, t.gold);
+      expect(chip.foreground, t.goldTx);
+    }
   });
 
   testWidgets('R5: katlı bölüm dokununca açılır; ilk görünümde tek birincil', (

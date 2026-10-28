@@ -482,6 +482,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   ///
   /// [pinned]: oyuncu ilk 10'da değilse listenin altına sabitlenen kendi
   /// sırası — kaydırmadan bağımsız, her zaman ekranda.
+  Future<void> _pullRefresh() async {
+    _loadData();
+    // Göstergenin dönüşü yenilemeyle aynı Future'ı bekler; hata ekranın
+    // kendi durumunda gösterilir, burada yutulur.
+    try {
+      await (_tabController.index == 3 ? _friendsFuture : _future);
+    } catch (_) {}
+  }
+
   Widget _page(
     BuildContext context,
     bool ku, {
@@ -490,7 +499,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   }) {
     final canPop = Navigator.of(context).canPop();
     final actions = _HeaderActions(
-      onRefresh: _loadData,
       onOpenFriends: _openFriends,
       pendingRequestCount: _pendingRequests,
     );
@@ -510,6 +518,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         backLabel: context.t(K.back),
         controller: widget.scrollController,
         actions: [actions],
+        onRefresh: _pullRefresh,
         children: top,
       );
     } else {
@@ -518,6 +527,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         title: context.t(K.leaderboardTitle),
         titleEyebrow: context.secondLabel(K.leaderboardTitle),
         stats: [actions],
+        onRefresh: _pullRefresh,
         children: top,
       );
     }
@@ -864,16 +874,14 @@ class _LeagueBanner extends StatelessWidget {
 
 // ─── Başlık eylemleri ───────────────────────────────────────────────────────
 
-/// Arkadaşlar ve yenile: marka satırının sağında (A) ya da çubuğun sağında
-/// (B) duran iki 44'lük pahlı ikon düğmesi (48 dokunma alanı).
+/// Arkadaşlar: marka satırının sağında (A) ya da çubuğun sağında (B) duran
+/// TEK 44'lük pahlı ikon düğmesi (48 dokunma alanı). Yenileme aşağı çekmeyle
+/// (U10, 2026-10-28 tur 4: çubuğun sağında en çok bir eylem).
 class _HeaderActions extends StatelessWidget {
   const _HeaderActions({
-    required this.onRefresh,
     required this.onOpenFriends,
     required this.pendingRequestCount,
   });
-
-  final VoidCallback onRefresh;
 
   /// Arkadaş ekranını açar. Bu düğme 2026-07-31'e kadar YOKTU.
   ///
@@ -903,13 +911,6 @@ class _HeaderActions extends StatelessWidget {
               : context.t(K.friendsScreen),
           onPressed: onOpenFriends,
           badgeCount: pendingRequestCount,
-        ),
-        _HeaderAction(
-          valueKey: const ValueKey('leaderboard-refresh-button'),
-          icon: AppIcons.arrowsRotate,
-          tooltip: context.t(K.refreshAction),
-          semanticLabel: context.t(K.refreshBoardA11y),
-          onPressed: onRefresh,
         ),
       ],
     );

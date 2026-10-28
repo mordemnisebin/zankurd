@@ -152,7 +152,12 @@ class SahneTabPage extends StatelessWidget {
     this.slivers = const [],
     this.brandName = 'ZanKurd',
     this.controller,
+    this.onRefresh,
   });
+
+  /// Verilirse içerik aşağı çekilerek yenilenir (üst çubukta yenile düğmesi
+  /// YOK: çubuğun sağında en çok bir eylem, U10 2026-10-28 tur 4).
+  final Future<void> Function()? onRefresh;
 
   final String title;
 
@@ -229,23 +234,42 @@ class SahneTabPage extends StatelessWidget {
         color: t.bg,
         child: SafeArea(
           bottom: false,
-          child: CustomScrollView(
-            controller: controller,
-            slivers: [
-              SliverToBoxAdapter(child: header),
-              if (children.isNotEmpty)
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: SahneSpace.page,
+          child: _refreshable(
+            t,
+            CustomScrollView(
+              controller: controller,
+              physics: onRefresh == null
+                  ? null
+                  : const AlwaysScrollableScrollPhysics(),
+              slivers: [
+                SliverToBoxAdapter(child: header),
+                if (children.isNotEmpty)
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: SahneSpace.page,
+                    ),
+                    sliver: SliverList.list(children: children),
                   ),
-                  sliver: SliverList.list(children: children),
+                ...slivers,
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: SahneSpace.x6),
                 ),
-              ...slivers,
-              const SliverToBoxAdapter(child: SizedBox(height: SahneSpace.x6)),
-            ],
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _refreshable(SahneTokens t, Widget scroll) {
+    final refresh = onRefresh;
+    if (refresh == null) return scroll;
+    return RefreshIndicator(
+      color: t.tx,
+      backgroundColor: t.s2,
+      onRefresh: refresh,
+      child: scroll,
     );
   }
 }
@@ -545,55 +569,59 @@ class SahnePushedPage extends StatelessWidget {
     final t = SahneTokens.of(context);
     final back = backLabel ?? sahneBackLabel(context);
     final accent = role == null ? null : t.roleFill(role!);
-    final bar = ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 64),
-      child: Padding(
-        // Geri plakasının görsel kenarı sayfa kenarına (16) oturur; 48'lik
-        // dokunma kutusu 2 px dışarı taşar.
-        padding: const EdgeInsetsDirectional.fromSTEB(
-          SahneSpace.page - SahneIconButton.inset,
-          SahneSpace.x2,
-          SahneSpace.page - SahneIconButton.inset,
-          SahneSpace.x2,
-        ),
-        child: Row(
-          children: [
-            SahneIconButton(
-              key: backKey,
-              icon: AppIcons.arrowLeft,
-              semanticLabel: back,
-              onPressed: onBack ?? () => Navigator.maybePop(context),
-            ),
-            const SizedBox(width: SahneSpace.x3 - SahneIconButton.inset),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Semantics(
-                    header: true,
-                    child: SahneUnbrokenText(
-                      title,
-                      style: SahneType.headline.copyWith(color: t.tx),
-                    ),
-                  ),
-                  if (subtitle != null)
-                    Text(
-                      subtitle!,
-                      style: SahneType.caption.copyWith(color: t.tx2),
-                    ),
-                ],
+    Widget barFor(BuildContext context) {
+      final t = SahneTokens.of(context);
+      return ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 64),
+        child: Padding(
+          // Geri plakasının görsel kenarı sayfa kenarına (16) oturur; 48'lik
+          // dokunma kutusu 2 px dışarı taşar.
+          padding: const EdgeInsetsDirectional.fromSTEB(
+            SahneSpace.page - SahneIconButton.inset,
+            SahneSpace.x2,
+            SahneSpace.page - SahneIconButton.inset,
+            SahneSpace.x2,
+          ),
+          child: Row(
+            children: [
+              SahneIconButton(
+                key: backKey,
+                icon: AppIcons.arrowLeft,
+                semanticLabel: back,
+                onPressed: onBack ?? () => Navigator.maybePop(context),
               ),
-            ),
-            for (final a in actions) ...[
-              const SizedBox(width: SahneSpace.x1),
-              a,
+              const SizedBox(width: SahneSpace.x3 - SahneIconButton.inset),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Semantics(
+                      header: true,
+                      child: SahneUnbrokenText(
+                        title,
+                        style: SahneType.headline.copyWith(color: t.tx),
+                      ),
+                    ),
+                    if (subtitle != null)
+                      Text(
+                        subtitle!,
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                      ),
+                  ],
+                ),
+              ),
+              for (final a in actions) ...[
+                const SizedBox(width: SahneSpace.x1),
+                a,
+              ],
             ],
-          ],
+          ),
         ),
-      ),
-    );
+      );
+    }
 
+    final bar = barFor(context);
     final scroll = CustomScrollView(
       controller: controller,
       physics: onRefresh == null ? null : const AlwaysScrollableScrollPhysics(),
@@ -612,14 +640,26 @@ class SahnePushedPage extends StatelessWidget {
     final stageContent = stageBody;
     if (stageContent != null) {
       return AnnotatedRegion<SystemUiOverlayStyle>(
-        value: _overlayFor(Theme.of(context).brightness),
+        value: _overlayFor(Brightness.dark),
         child: Scaffold(
           backgroundColor: SahneTokens.night.bg,
           body: SafeArea(
             bottom: false,
             child: Column(
               children: [
-                ColoredBox(color: t.bg, child: bar),
+                // U3 (2026-10-28 tur 4): oyun sahnesi (çark) açıkken üst çubuk
+                // da sahne gibi KOYU; nötr-çubuk kuralının tek istisnası
+                // (soru/sonuç tam ekran sahneleri gibi).
+                SahneStage(
+                  stage: AppTheme.stage,
+                  child: Builder(
+                    builder: (c) => ColoredBox(
+                      key: const ValueKey('sahne-pushed-stage-bar'),
+                      color: SahneTokens.of(c).bg,
+                      child: barFor(c),
+                    ),
+                  ),
+                ),
                 if (accent != null) ZkAccentLine(color: accent),
                 Expanded(
                   child: SahneStage(

@@ -23,7 +23,12 @@ class SahneStatChip extends StatelessWidget {
     this.gold = false,
     this.tint,
     this.foreground,
+    this.outline,
   });
+
+  /// Verilirse çip bu renkte 1.5 px halkalı çizilir (tonlu ödül çipi: açık
+  /// altın zemin + altın halka + altın yazı; U5, 2026-10-28 tur 4).
+  final Color? outline;
 
   /// Renkli çip (2026-10-20 renk ve canlılık işi): üst çubuktaki seri alevi
   /// ve jeton çipi nötr gri yüzeyde duruyordu; verilirse dolgu ve yazı bu
@@ -42,7 +47,9 @@ class SahneStatChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final visual = SahneTappable(
-      shape: SahneShape.chamferM,
+      shape: outline == null
+          ? SahneShape.chamferM
+          : SahneShape.withSide(SahneShape.chamferM, outline!, width: 1.5),
       color: tint ?? (gold ? t.goldTint : t.s2),
       onTap: onTap,
       child: ConstrainedBox(

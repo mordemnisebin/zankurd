@@ -475,20 +475,34 @@ class SahneEntryHeading extends StatelessWidget {
 /// Gövde metni manzaranın ÜSTÜNE binmez; kart kendi satırıdır.
 /// Büyük yazıda ya da kısa ekranda alçalır ([compactHeight]).
 class SahneEntryScene extends StatelessWidget {
-  const SahneEntryScene({super.key, this.child, this.height = regularHeight});
+  const SahneEntryScene({
+    super.key,
+    this.child,
+    this.height = regularHeight,
+    this.embedded = false,
+  });
 
   final Widget? child;
   final double height;
 
+  /// Bir hero kartın içine gömülü: kendi pahlı kırpması yok (kartın kırpması
+  /// geçerli), ayrı bir blok gibi görünmez (U2, 2026-10-28 tur 4).
+  final bool embedded;
+
   static const double regularHeight = 176;
   static const double compactHeight = 104;
+
+  /// Kayıt ve ad ekranı: form uzun olduğundan giriş manzarasının kısa hâli.
+  static const double entryCompactHeight = 136;
 
   @override
   Widget build(BuildContext context) {
     final bigText = MediaQuery.textScalerOf(context).scale(16) >= 24;
     final h = bigText ? compactHeight : height;
     return ClipPath(
-      clipper: const ShapeBorderClipper(shape: SahneShape.l),
+      clipper: embedded
+          ? const _NoClip()
+          : const ShapeBorderClipper(shape: SahneShape.l),
       child: SizedBox(
         height: h,
         width: double.infinity,
@@ -508,4 +522,15 @@ class SahneEntryScene extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Kırpmayan kırpıcı: [SahneEntryScene.embedded] için.
+class _NoClip extends CustomClipper<Path> {
+  const _NoClip();
+
+  @override
+  Path getClip(Size size) => Path()..addRect(Offset.zero & size);
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }

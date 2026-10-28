@@ -225,7 +225,9 @@ void main() {
     final fill = tester.widget<Material>(
       find.descendant(of: find.byKey(next), matching: find.byType(Material)),
     );
-    expect(fill.color, SahneTokens.night.act);
+    // U6 (2026-10-28 tur 4): şeritteki eylem turuncu değil, beyaz dolgu
+    // (turuncu-üstüne-yeşil/kırmızı çarpışıyordu).
+    expect(fill.color, Colors.white);
   });
 
   // Eski adı: "kilim tahtası turun kaydını taşır", sonra "elmas dizisi ...".

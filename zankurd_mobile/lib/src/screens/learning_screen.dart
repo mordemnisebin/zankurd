@@ -671,8 +671,7 @@ class _LearningScreenState extends State<LearningScreen> {
         lesson: lesson,
         title: _lessonTitle(lesson, ku),
         meta: _placementContextLabel(context, ku) ?? lesson.description(ku),
-        done: completedCount,
-        total: lessons.length,
+        position: index + 1,
         semanticLabel: semanticLabel,
         onTap: () => _openLesson(lesson),
       );
@@ -1039,8 +1038,7 @@ class _CurrentLessonCard extends StatelessWidget {
     required this.lesson,
     required this.title,
     required this.meta,
-    required this.done,
-    required this.total,
+    required this.position,
     required this.semanticLabel,
     required this.onTap,
   });
@@ -1048,8 +1046,11 @@ class _CurrentLessonCard extends StatelessWidget {
   final Lesson lesson;
   final String title;
   final String? meta;
-  final int done;
-  final int total;
+
+  /// Dersin yoldaki sırası (1'den). Kurs toplamı burada YOK (U1, 2026-10-28
+  /// tur 4): ünite çubuğu "0/5 ders", hero "0/21 ders" derken aynı ekranda iki
+  /// çelişen kesir görünüyordu; toplam yalnız "Tüm dersler (+N)" satırında.
+  final int position;
   final String semanticLabel;
   final VoidCallback onTap;
 
@@ -1133,7 +1134,7 @@ class _CurrentLessonCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // Kapsül ilerleme "tamamlanan / toplam ders".
+                        // Dersin yoldaki sırası ("Ders 3"); kesir yok (U1).
                         DecoratedBox(
                           key: const ValueKey('learning-progress-capsule'),
                           decoration: const ShapeDecoration(
@@ -1146,10 +1147,7 @@ class _CurrentLessonCard extends StatelessWidget {
                               vertical: SahneSpace.x1,
                             ),
                             child: Text(
-                              context.t(K.lessonCountProgress, {
-                                'done': '$done',
-                                'total': '$total',
-                              }),
+                              context.t(K.lessonPosition, {'n': '$position'}),
                               style: SahneType.captionStrong.copyWith(
                                 color: SahneVivid.onFill,
                                 fontFeatures: const [
@@ -1181,15 +1179,6 @@ class _CurrentLessonCard extends StatelessWidget {
                         ),
                       ),
                     ],
-                    const SizedBox(height: SahneSpace.x3),
-                    SahneProgressBar(
-                      value: total == 0 ? 0 : (done / total).clamp(0.0, 1.0),
-                      height: 4,
-                      semanticLabel: title,
-                      trackColor: SahneVivid.glassTrack,
-                      fillColor: SahneVivid.onFill,
-                      edgeColor: Colors.transparent,
-                    ),
                     const SizedBox(height: SahneSpace.x4),
                     SahneButton.primary(
                       label: context.t(K.start),

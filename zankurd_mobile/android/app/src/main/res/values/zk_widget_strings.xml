@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="zk_widget_description" translatable="false">ZanKurd</string>
+    <!-- Widget seçicisinde görünen açıklama ve ÖRNEK önizleme metinleri (U14,
+         2026-10-28 tur 4). Gerçek widget metinleri Dart'tan (HomeWidgetSync)
+         seçili dille yazılır; bunlar yalnız seçici önizlemesidir. Kurmancî
+         örnekler jüri incelemesi bekliyor (NEEDS_JURY). -->
+    <string name="zk_widget_description">Üst üste gün serini ve günün sorusunu ana ekranda göster.</string>
+    <string name="zk_widget_sample_streak">7</string>
+    <string name="zk_widget_sample_streak_label">Üst üste · gün</string>
+    <string name="zk_widget_sample_daily_label">GÜNÜN SORUSU</string>
+    <string name="zk_widget_sample_prompt">Hangi nehir Diyarbakır\'dan geçer?</string>
 </resources>

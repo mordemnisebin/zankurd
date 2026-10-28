@@ -28,6 +28,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
@@ -561,8 +562,14 @@ void main() {
       tester.view.devicePixelRatio = 1.0;
       tester.view.physicalSize = const Size(600, 4000);
       addTearDown(tester.view.reset);
+      // U4 (2026-10-28 tur 4): hiç oynamamış profil tek "Başlangıç" kartıdır;
+      // bölümler oynamış oyuncuda görünür (bir başarı açılmış).
       final repo = freshMockRepository()
         ..recentMatchesForTesting = [_match('a')];
+      SharedPreferences.setMockInitialValues({
+        'zankurd.achievements.unlocked': ['first_game'],
+      });
+      AchievementStore.resetInstance();
       await tester.pumpWidget(
         testShell(
           child: Scaffold(body: ProfileScreen(repository: repo)),

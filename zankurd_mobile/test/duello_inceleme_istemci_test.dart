@@ -27,6 +27,12 @@
 /// * Rövanş: yalnız `can_rematch` iken açık; basınca aynı rakibe arkadaş
 ///   meydan okuması (`createAsyncDuelChallenge(friendId)`) açılır.
 /// * 320 px ve %200 yazıda taşma yok.
+///
+/// ## 2026-10-28 tur 4 (U12)
+///
+/// Rövanş mümkün değilse (arkadaş değil, günlük limit, silinmiş/engelli rakip)
+/// pasif "Rövanş" düğmesi ve gerekçe satırı ÇİZİLMEZ: ekranda ölü bir eylem ve
+/// uyarı kalıyordu. Yok ise hiçbir şey; "Yeni düello" yine durur.
 library;
 
 import 'dart:convert';
@@ -643,7 +649,7 @@ void main() {
     });
 
     testWidgets('engelli çift: rakip adı yok, rakip satırı yok, not var, '
-        'rövanş kapalı', (tester) async {
+        'rövanş yok (U12)', (tester) async {
       final repo = _ReviewRepository(
         review: AsyncDuelReview.fromJson(
           _reviewJson(blocked: true, canRematch: false, friend: false),
@@ -664,15 +670,15 @@ void main() {
         find.byKey(const ValueKey('async-duel-review-mine-0')),
         findsOneWidget,
       );
-      final rematch = tester.widget<ButtonStyleButton>(
+      // U12 (2026-10-28 tur 4): rövanş yoksa ölü düğme + uyarı çizilmez.
+      expect(
         find.byKey(const ValueKey('async-duel-result-rematch')),
+        findsNothing,
       );
-      expect(rematch.onPressed, isNull);
       expect(
         find.byKey(const ValueKey('async-duel-result-rematch-why')),
-        findsOneWidget,
+        findsNothing,
       );
-      expect(find.text('Bu rakiple düello açılamaz.'), findsOneWidget);
     });
 
     testWidgets('arkadaş olmayan rakip: rövanş kapalı, nedeni yazar', (
@@ -684,15 +690,13 @@ void main() {
         ),
       );
       await open(tester, repo);
-      final rematch = tester.widget<ButtonStyleButton>(
-        find.byKey(const ValueKey('async-duel-result-rematch')),
-      );
-      expect(rematch.onPressed, isNull);
       expect(
-        find.text(
-          'Rövanş yalnız arkadaşlarla ve son 7 günde birlikte oynadığın rakiplerle açılır.',
-        ),
-        findsOneWidget,
+        find.byKey(const ValueKey('async-duel-result-rematch')),
+        findsNothing,
+      );
+      expect(
+        find.byKey(const ValueKey('async-duel-result-rematch-why')),
+        findsNothing,
       );
     });
 
@@ -704,16 +708,12 @@ void main() {
       final repo = _ReviewRepository(review: AsyncDuelReview.fromJson(json));
       await open(tester, repo);
       expect(
-        tester
-            .widget<ButtonStyleButton>(
-              find.byKey(const ValueKey('async-duel-result-rematch')),
-            )
-            .onPressed,
-        isNull,
+        find.byKey(const ValueKey('async-duel-result-rematch')),
+        findsNothing,
       );
       expect(
         find.text('Bugün en fazla 3 rövanş daveti gider; yarın tekrar dene.'),
-        findsOneWidget,
+        findsNothing,
       );
     });
 
@@ -726,7 +726,11 @@ void main() {
         ),
       );
       await open(tester, repo);
-      expect(find.text('Bu rakiple düello açılamaz.'), findsOneWidget);
+      expect(find.text('Bu rakiple düello açılamaz.'), findsNothing);
+      expect(
+        find.byKey(const ValueKey('async-duel-result-rematch')),
+        findsNothing,
+      );
     });
 
     testWidgets('rövanş açık: aynı rakibe arkadaş meydan okuması açar, '

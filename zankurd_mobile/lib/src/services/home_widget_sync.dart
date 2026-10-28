@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:home_widget/home_widget.dart';
 
 import '../l10n/strings.dart';
+import '../models/quiz_question.dart';
 import '../utils/error_reporter.dart';
 
 /// Ana ekran widget'ının (iOS WidgetKit + Android AppWidget) veri köprüsü.
@@ -72,6 +73,38 @@ class HomeWidgetSync {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home_widget_sync');
     }
+  }
+
+  /// Soru metni görsele dayanıyor mu ("Görselde …", "Görseldeki …", "Resimde …",
+  /// "Di wêneyê …")? Widget'ta görsel yok; görsele göndermeli bir soru anlamsız
+  /// ve cevaplanamaz görünür (U13, 2026-10-28 tur 4, Android emülatör turu).
+  static final RegExp _visualPrompt = RegExp(
+    r'(görsel|gorsel|resim|fotoğraf|fotograf|foto\b|wêne|wêneyê|image|photo|picture)',
+    caseSensitive: false,
+  );
+
+  /// Widget'ın "Günün sorusu" metni: bugünün kümesindeki İLK uygun yalnız-metin
+  /// soru. Görsel şablonlu (`visual` türü, görsel adresi olan ya da metni görsele
+  /// gönderme yapan) sorular atlanır; uygun soru yoksa `null` döner (widget
+  /// mevcut boş/marka durumunu gösterir).
+  static String? pickDailyPrompt(
+    Iterable<QuizQuestion> questions, {
+    required bool isKu,
+  }) {
+    for (final q in questions) {
+      if (q.type == QuestionType.visual || q.hasImage) continue;
+      final text = q.promptFor(isKu: isKu).trim();
+      if (text.isEmpty) continue;
+      // İki dilin metni de denetlenir: Türkçe arayüzde Kurmancî metin görsele
+      // gönderme yapıyorsa soru yine görsele dayanır.
+      if (_visualPrompt.hasMatch(text) ||
+          _visualPrompt.hasMatch(q.prompt) ||
+          _visualPrompt.hasMatch(q.promptTr ?? '')) {
+        continue;
+      }
+      return text;
+    }
+    return null;
   }
 
   static String _clip(String? text) {

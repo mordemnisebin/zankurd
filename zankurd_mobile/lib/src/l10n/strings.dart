@@ -2279,6 +2279,8 @@ class Tr {
       'ku': '{done}/{total} ders',
       'tr': '{done}/{total} ders',
     },
+    // U1 (2026-10-28 tur 4; NEEDS_JURY: "Dersa 3" ezafe kalıbı): hero'da ders sırası.
+    K.lessonPosition: {'ku': 'Dersa {n}', 'tr': '{n}. ders'},
     // T14 (KU jüri onaylı: Gemini 3.8 Flash + GPT-6 Sol): sonuç ekranı tek katlanan bölüm başlığı.
     K.resultDetails: {'ku': 'Hûrgilî', 'tr': 'Ayrıntılar'},
     // NEEDS_JURY: Kurmancî "astên din" (seviye = ast; "dersên din" kalıbı).
@@ -2563,6 +2565,15 @@ class Tr {
       'tr': 'Henüz soru çözmedin.',
     },
     K.startToday: {'ku': 'Îro dest pê bike', 'tr': 'Bugün başla'},
+    // U4 (2026-10-28 tur 4; NEEDS_JURY): yeni oyuncunun tek başlangıç kartı.
+    K.profileStartBody: {
+      'ku': 'Amar, rekor û destkeftiyên te li vir kom dibin.',
+      'tr': 'İstatistiklerin, rekorların ve başarıların burada toplanır.',
+    },
+    K.profileStartCta: {
+      'ku': 'Pêşbirka xwe ya yekem bilîze',
+      'tr': 'İlk yarışını oyna',
+    },
     K.savedQuestions: {'ku': 'Pirsên tomarkirî', 'tr': 'Kaydedilen sorular'},
     K.myMistakes: {'ku': 'Şaşiyên min', 'tr': 'Yanlışlarım'},
     K.suggestQuestion: {'ku': 'Pirs pêşniyar bike', 'tr': 'Soru öner'},
@@ -3728,23 +3739,8 @@ class Tr {
       'tr': 'Rakip engelli; yalnız senin cevapların gösteriliyor.',
     },
     K.asyncDuelRematch: {'ku': 'Pêşbirka vegerê', 'tr': 'Rövanş'},
-    K.asyncDuelRematchFriendsOnly: {
-      'ku':
-          'Pêşbirka vegerê tenê bi hevalan û hevrikên ku te di heft rojên '
-          'dawî de bi wan re lîstiye re tê vekirin.',
-      'tr':
-          'Rövanş yalnız arkadaşlarla ve son 7 günde birlikte oynadığın '
-          'rakiplerle açılır.',
-    },
-    K.asyncDuelRematchLimit: {
-      'ku':
-          'Îro herî zêde 3 vexwendinên pêşbirka vegerê dikarin bên şandin; sibe dîsa biceribîne.',
-      'tr': 'Bugün en fazla 3 rövanş daveti gider; yarın tekrar dene.',
-    },
-    K.asyncDuelRematchUnavailable: {
-      'ku': 'Bi vî hevrikî re pêşbirk nayê vekirin.',
-      'tr': 'Bu rakiple düello açılamaz.',
-    },
+    // U12 (2026-10-28 tur 4): rövanş yoksa düğme ve gerekçe çizilmez; üç gerekçe
+    // dizesi (arkadaş değil / günlük limit / kullanılamaz) kalktı.
 
     // ── Arkadaşa meydan okuma (bağlantı / arkadaş seç) ────────────────
     // "Meydan oku" için yerleşik bir Kurmancî karşılık yoktu; dosyada
@@ -4996,6 +4992,9 @@ class K {
   static const locked = 'common.locked';
   static const resultDetails = 'result.details';
   static const allLessonsMore = 'learning.allLessonsMore';
+  static const profileStartBody = 'profile.startBody';
+  static const profileStartCta = 'profile.startCta';
+  static const lessonPosition = 'learning.lessonPosition';
   static const lessonCountProgress = 'learning.lessonCountProgress';
   static const levelsMoreCount = 'learning.levelsMoreCount';
   static const titleWord = 'avatar.titleWord';
@@ -5606,9 +5605,6 @@ class K {
 
   /// Aynı rakibe arkadaş meydan okumasıyla rövanş düğmesi ve kapalı nedenleri.
   static const asyncDuelRematch = 'duel.async.rematch';
-  static const asyncDuelRematchFriendsOnly = 'duel.async.rematch.friendsOnly';
-  static const asyncDuelRematchLimit = 'duel.async.rematch.limit';
-  static const asyncDuelRematchUnavailable = 'duel.async.rematch.unavailable';
 
   /// Oyun sekmesi satırı, ana ekran düğmesi ve seçim sayfasının başlığı.
   static const challengeEntry = 'duel.challenge.entry';

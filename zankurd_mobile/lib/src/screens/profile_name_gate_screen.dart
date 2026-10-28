@@ -128,15 +128,12 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
         arrow: false,
         onPressed: _saving ? null : () => widget.onCompleted(),
       ),
-      hero: const SahneEntryHero(
+      // U15 (2026-10-28 tur 4): eski koyu kilim logo kutusu kalktı; dört giriş
+      // ekranı da aynı dağ + güneş manzarasını taşır (kısa boy: asıl iş soru).
+      hero: const SahneEntryScene(
         key: ValueKey('profile-name-gate-hero'),
-        padding: EdgeInsets.fromLTRB(
-          SahneSpace.x4,
-          SahneSpace.x6,
-          SahneSpace.x4,
-          SahneSpace.x5,
-        ),
-        child: Center(child: AppLogo(width: 64)),
+        height: SahneEntryScene.entryCompactHeight,
+        child: AppLogo(width: 64),
       ),
       title: context.t(K.nameGateQuestion),
       body: context.t(K.nameGateHelp),
