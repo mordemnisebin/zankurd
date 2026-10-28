@@ -377,9 +377,9 @@ class _StoryScreenState extends State<StoryScreen> {
                         Expanded(
                           child: Text(
                             context.t(K.storyWord),
-                            style: SahneType.eyebrow.copyWith(
-                              color: s.eyebrowTx,
-                            ),
+                            // Y5 (2026-10-29 tur 6): turuncu yalnız eylem;
+                            // hikâye Öğren moduna aittir (yeşil).
+                            style: SahneType.eyebrow.copyWith(color: s.learnTx),
                           ),
                         ),
                         LexiconSpeakButton(text: node.textKu),

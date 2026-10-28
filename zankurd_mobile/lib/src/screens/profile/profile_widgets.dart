@@ -194,6 +194,7 @@ class _ProfileHeroCard extends StatelessWidget {
                       label: Tr.forKu(K.playerNameHint, ku).replaceAll('…', ''),
                       icon: AppIcons.pen,
                       arrow: false,
+                      ink: true,
                       onPressed: onSetName,
                     ),
                   ),

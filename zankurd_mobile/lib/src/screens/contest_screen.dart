@@ -375,7 +375,8 @@ class _ContestContent extends StatelessWidget {
             doneToday ? K.streakDayStateCompleted : K.contestPlayableToday,
           ),
           onSolid: true,
-          role: SahneRole.race,
+          // Y5: nötr pil (kırmızı yalnız yanlış geri bildirimi).
+          role: SahneRole.neutral,
         ),
       ],
     );

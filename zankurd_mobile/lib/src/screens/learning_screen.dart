@@ -962,6 +962,7 @@ class _PlacementPromptCard extends StatelessWidget {
           final start = SahneButton.text(
             buttonKey: const ValueKey('learning-placement-start'),
             label: context.t(K.placementCardStart),
+            ink: true,
             onPressed: onStart,
           );
           final dismiss = IconButton(

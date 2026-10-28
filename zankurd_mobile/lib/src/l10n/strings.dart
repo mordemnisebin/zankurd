@@ -683,15 +683,21 @@ class Tr {
     },
     K.bracket: {'ku': 'Şemaya kûpayê', 'tr': 'Turnuva şeması'},
     K.standings: {'ku': 'Rêzbendî', 'tr': 'Sıralama'},
-    K.cupStartsWhenFull: {
-      'ku': 'Gava hejmar temam bibe dest pê dike',
-      'tr': 'Kontenjan dolunca başlar',
+    // Y7 (2026-10-29 tur 6): kahraman açıklaması TEK satır. Eski "dolmazsa 24
+    // saat içinde eldeki oyuncularla başlar" sunucu kuralını yanlış anlatıyordu
+    // (sunucu `start_due_tournaments`: 24 saat sonra EN AZ 2 oyuncu varsa
+    // başlar, yoksa beklenir); ayrıntı "Nasıl oynanır?" içinde (cupRuleStart).
+    K.cupStartsShort: {
+      'ku': 'Gava temam bibe an piştî 24 saetan dest pê dike',
+      'tr': 'Dolunca ya da 24 saat sonra başlar',
     },
-    // 2026-10-28 görsel kurul: "en geç 24 saat içinde, eldeki oyuncularla"
-    // fiilsiz kalıp yarım cümle okunuyordu.
-    K.cupStartsLatest: {
-      'ku': 'Ger temam nebe, di nav 24 saetan de bi yên amade dest pê dike',
-      'tr': 'Dolmazsa 24 saat içinde eldeki oyuncularla başlar',
+    K.cupRuleStart: {
+      'ku':
+          'Piştî 24 saetan, heke herî kêm 2 lîstikvan hebin dest pê dike; '
+          'wekî din li benda lîstikvanan dimîne.',
+      'tr':
+          'Kupa açıldıktan 24 saat sonra en az 2 oyuncu varsa başlar; '
+          'yoksa oyuncu beklenir.',
     },
     K.botDailyCup: {'ku': 'Kûpaya palawtinê', 'tr': 'Eleme turnuvası'},
     // Ayrılma/hükmen bitiş metinleri aynı kavramı `pêşbirk` der.
@@ -1438,7 +1444,13 @@ class Tr {
       'ku': 'Ez di pêşbirkê de bi ser ketim — tu jî dikarî?',
       'tr': 'Düelloyu kazandım — sen de yapabilir misin?',
     },
-    K.tekraraBasla: {'ku': 'Dest bi dubarekirinê bike', 'tr': 'Tekrara başla'},
+    // Y2 (2026-10-29 tur 6): cevaplar ekranındaki düğme YANLIŞ soruları yeniden
+    // çözdürür (aynı turu baştan oynatmaz); "Tekrara başla" ikisine de
+    // okunuyordu. Sonuçtaki "Tekrar oyna"dan ayrışır. KU jüri bekliyor.
+    K.reviewPracticeMistakes: {
+      'ku': 'Şaşiyan dubare bike',
+      'tr': 'Yanlışları çalış',
+    },
 
     // ── Soru tipi rozetleri ──────────────────────────────────────────
     K.qTypeMultipleChoice: {'ku': 'Bi vebijark', 'tr': 'Şıklı'},
@@ -1904,6 +1916,13 @@ class Tr {
     K.duel1v1Short: {'ku': 'Pêşbirka zindî', 'tr': 'Canlı düello'},
     K.duel1v1: {'ku': 'Pêşbirka zindî', 'tr': 'Canlı düello'},
     K.randomMatch: {'ku': 'Lihevanîna rasthatî', 'tr': 'Rastgele eşleşme'},
+    // Y4 (2026-10-29 tur 6): eşleşme ekranının tam genişlik birincil düğmesi.
+    // KU, onaylı iki parçadan kurulu ("Lihevanîna rasthatî" + "Hevrikekî
+    // bibîne"); jüri bekliyor.
+    K.randomFindOpponent: {
+      'ku': 'Hevrikekî rasthatî bibîne',
+      'tr': 'Rastgele rakip bul',
+    },
     K.matchByCategory: {
       'ku': 'Li gorî mijarê li hev bîne',
       'tr': 'Konuya göre eşleş',
@@ -2320,6 +2339,12 @@ class Tr {
     K.lessonPosition: {'ku': 'Dersa {n}', 'tr': '{n}. ders'},
     // T14 (KU jüri onaylı: Gemini 3.8 Flash + GPT-6 Sol): sonuç ekranı tek katlanan bölüm başlığı.
     K.resultDetails: {'ku': 'Hûrgilî', 'tr': 'Ayrıntılar'},
+    // Y1 (2026-10-29 tur 6): kapalı satırdaki sayının birimi açık yazılır
+    // ("Ayrıntılar · 3 konu"); çıplak "3" neyin sayısı olduğunu söylemiyordu.
+    K.resultDetailsTopics: {
+      'ku': 'Hûrgilî · {n} mijar',
+      'tr': 'Ayrıntılar · {n} konu',
+    },
     // NEEDS_JURY: Kurmancî "astên din" (seviye = ast; "dersên din" kalıbı).
     K.levelsMoreCount: {'ku': '+{n} astên din', 'tr': '+{n} seviye daha'},
     K.titleWord: {'ku': 'Nav û nîşan', 'tr': 'Unvan'},
@@ -3447,6 +3472,12 @@ class Tr {
     // 2026-10-24: karşılama ekranının tepesindeki dil seçicinin etiketi. İKİ
     // dilde birlikte yazılır, çünkü seçici tam da yanlış dilde açılan
     // kullanıcıya doğru dili buldurmak içindir; iki dilde de aynı metindir.
+    // Y8 (2026-10-29 tur 6): TASARIM_DILI "başlık tek dilde" kuralının
+    // BİLİNÇLİ İSTİSNASIDIR (jüri Haiku "tek dile indir" dedi; reddedildi):
+    // dil henüz seçilmediği için "seçili arayüz dili" yoktur ve yanlış dilde
+    // açılan kullanıcı kendi dilini yalnız iki dilli etiketten bulur. Kural
+    // yalnız bu etiket ve ayarlardaki dil satırı için gevşer; başka hiçbir
+    // başlık iki dilli yazılmaz.
     K.languagePickerLabel: {
       'ku': 'Uygulama dili · Zimanê sepanê',
       'tr': 'Uygulama dili · Zimanê sepanê',
@@ -3575,7 +3606,7 @@ class Tr {
     K.asyncDuelExpired: {'ku': 'Hevrik derneket', 'tr': 'Rakip çıkmadı'},
     K.asyncDuelUnfinished: {'ku': 'Nîvco ma', 'tr': 'Yarım kaldı'},
     // 2026-10-24 sırayla düello: 24 saat penceresi, kalan süre, hükmen sonuç.
-    // Kurmancî: `mane` (K.timerSecondsLeft), `saet`/`deqe` (K.cupStartsLatest,
+    // Kurmancî: `mane` (K.timerSecondsLeft), `saet`/`deqe` (K.cupStartsShort,
     // K.quickDuelDuration), `bi ser ketî` (K.youWon), `nelîst` (streak
     // metni). `bi hukmî` (hükmen) Kurmancî jürisi (3 model, çoğunluk)
     // metnidir; `xweber` hükmen anlamına gelmediği için bırakıldı.
@@ -4446,8 +4477,8 @@ class K {
   static const botTournament = 'tournament.bot';
   static const bracket = 'tournament.bracket';
   static const standings = 'tournament.standings';
-  static const cupStartsWhenFull = 'tournament.startsWhenFull';
-  static const cupStartsLatest = 'tournament.startsLatest';
+  static const cupStartsShort = 'tournament.startsShort';
+  static const cupRuleStart = 'tournament.ruleStart';
   static const botDailyCup = 'tournament.botDailyCup';
   static const formatSummary = 'tournament.formatSummary';
   static const joinTournament = 'tournament.join';
@@ -4741,7 +4772,7 @@ class K {
   static const senDeOynaPlay = 'screen.senDeOynaPlay';
   static const shareStoryLine = 'share.storyLine';
   static const shareStoryDuelWin = 'share.storyDuelWin';
-  static const tekraraBasla = 'screen.tekraraBasla';
+  static const reviewPracticeMistakes = 'screen.reviewPracticeMistakes';
 
   // ── Soru tipi rozetleri ────────────────────────────────────────────
   // Soru kartının üstünde görünür. Kurmancî karşılıkları bir zamanlar
@@ -4921,6 +4952,7 @@ class K {
   static const duel1v1Short = 'match.duel1v1Short';
   static const duel1v1 = 'match.duel1v1';
   static const randomMatch = 'match.random';
+  static const randomFindOpponent = 'match.randomFind';
   static const matchByCategory = 'match.byCategory';
   static const categoriesNotFound = 'match.categoriesNotFound';
   static const categoryPrefix = 'match.categoryPrefix';
@@ -5045,6 +5077,7 @@ class K {
   static const gold = 'avatar.gold';
   static const locked = 'common.locked';
   static const resultDetails = 'result.details';
+  static const resultDetailsTopics = 'result.detailsTopics';
   static const allLessonsMore = 'learning.allLessonsMore';
   static const profileStartBody = 'profile.startBody';
   static const profileStartCta = 'profile.startCta';

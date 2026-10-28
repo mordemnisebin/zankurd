@@ -495,9 +495,8 @@ void main() {
     await tester.scrollUntilVisible(review, 300);
     await tester.pumpAndSettle();
     expect(review, findsOneWidget);
+    // 2026-10-29 tur 6 Y1: "⋯" alt perdede, kaydırma gerekmez.
     final more = find.byKey(const ValueKey('result-more-options'));
-    await tester.scrollUntilVisible(more, 300);
-    await tester.pumpAndSettle();
     expect(more, findsOneWidget);
     expect(find.byKey(const ValueKey('result-home-button')), findsNothing);
 

@@ -28,7 +28,15 @@ class QuizStageCenter extends StatelessWidget {
     this.title,
     this.modeLabel,
     this.score = 0,
+    this.subtitle,
   });
+
+  /// Y3 (2026-10-29 tur 6): mod çipi bloğunun altında küçük alt satır
+  /// ("Sen oyna, rakip sonra"). Eskiden gövdede soru kartının üstünde
+  /// duruyordu ve soruyu ortaya itiyordu; yarış/ders sahnesinde soru kartı
+  /// üst çubuğun hemen altında. Yalnız çip görünürken (dar ekranda/büyük
+  /// yazıda düşer; o zaman bilgi zaten modun kendi ekranında okunur).
+  final String? subtitle;
 
   /// Üst çubuktaki canlı skor. [markScoreLimit] ve üstünde (1.095) sağ grup
   /// genişler ve orta yuvada konu işareti + "Soru 8/10 · …" birlikte sığmaz;
@@ -138,6 +146,32 @@ class QuizStageCenter extends StatelessWidget {
                   QuizModeChip(label: chip),
                   const SizedBox(height: SahneSpace.x1),
                   line,
+                  // Sıfır yükseklikte ASILI: üst çubuğun boyunu büyütmez, yani
+                  // soru kartı öteki modlarla aynı yerde kalır (Y3 bekçisi);
+                  // satır, gövdenin üst boşluğuna ([quizStageTopGap]) oturur.
+                  if (subtitle != null && subtitle!.isNotEmpty)
+                    SizedBox(
+                      height: 0,
+                      child: OverflowBox(
+                        alignment: Alignment.topCenter,
+                        // a11y-tap-target: noninteractive — asılı alt satır
+                        // (salt metin).
+                        minHeight: 0,
+                        maxHeight: 34,
+                        // 12 px aşağıda: üst çubuğun alt kenarındaki 4 px
+                        // ilerleme çubuğunun ALTINDA başlar, üstüne binmez.
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Text(
+                            subtitle!,
+                            key: const ValueKey('quiz-stage-subtitle'),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: SahneType.caption.copyWith(color: t.tx2),
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               )
             : line,
@@ -145,6 +179,11 @@ class QuizStageCenter extends StatelessWidget {
     );
   }
 }
+
+/// Alt perdesi olmayan soru ekranında (sırayla düello) ders/yarış alt
+/// perdesinin gövdeden düştüğü yükseklik (güvenli alan hariç). Y3
+/// (2026-10-29 tur 6): soru kartı her modda aynı üstte dursun.
+const double quizDocklessBottomReserve = 70;
 
 /// Dock'suz soru ekranlarında (seviye sınavı, eşzamansız düello) şıkların
 /// ekranın dibinden uzaklığı: ders/yarışmada şıklar alt perdenin

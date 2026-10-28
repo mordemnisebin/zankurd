@@ -1111,9 +1111,12 @@ class _LobbyView extends StatelessWidget {
     // yarım cümle olarak ("En geç 24 saat içinde, eldeki oyuncularla")
     // durup kesilmiş gibi okunuyordu. İkisi kahramanın alt satırında TEK
     // cümle; alt satır sarar, kesilmez.
-    final scheduleText =
-        '${context.t(K.cupStartsWhenFull)}; '
-        '${context.t(K.cupStartsLatest).toLowerCaseFirst()}';
+    //
+    // Y7 (2026-10-29 tur 6): hero açıklaması TEK satır ("Dolunca ya da 24 saat
+    // sonra başlar"); "dolmazsa eldeki oyuncularla" sunucu kuralına uymuyordu
+    // (24 saat sonra EN AZ 2 oyuncu gerekir) — doğru ayrıntı "Nasıl oynanır?"
+    // içinde. Rakip deseni: mağaza kartlarında tek satırlık alt metin.
+    final scheduleText = context.t(K.cupStartsShort);
 
     // Kupa kahramanı: durum, ödül ve ana eylem TEK yüzeyde (2026-08-04).
     //
@@ -1248,6 +1251,7 @@ class _CupRulesPanelState extends State<_CupRulesPanel> {
     final ku = widget.ku;
     final t = SahneTokens.of(context);
     final rules = <(IconData, String)>[
+      (AppIcons.hourglass, Tr.forKu(K.cupRuleStart, ku)),
       (AppIcons.peopleGroup, Tr.forKu(K.cupRuleSameQuestions, ku)),
       (AppIcons.bolt, Tr.forKu(K.cupRuleServerScore, ku)),
       (AppIcons.clock, Tr.forKu(K.cupRuleDeadline, ku)),
@@ -1464,9 +1468,11 @@ class _CupLadder extends StatelessWidget {
                   count: steps[i],
                   isFinal: steps[i] == 1,
                   // W4: çipler adlı — "Yarı final 4 › Final 2 › Şampiyon".
+                  // Y7: sayı birimli — "Yarı final · 4 oyuncu" (çıplak 4
+                  // aşama numarası gibi okunuyordu).
                   label: steps[i] == 1
                       ? Tr.forKu(K.champion, ku).replaceAll('!', '')
-                      : '${roundNames[i]} ${steps[i]}',
+                      : '${roundNames[i]} · ${steps[i]} ${Tr.forKu(K.cupPlayers, ku)}',
                 ),
               ],
             ],
@@ -1491,10 +1497,12 @@ class _LadderStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final fg = isFinal ? t.goldTx : t.raceTx;
+    // Y7: ara basamaklar nötr (kırmızı/turuncu yalnız anlamlı olduğunda),
+    // varış basamağı altın (ödül).
+    final fg = isFinal ? t.goldTx : t.tx;
     return DecoratedBox(
       decoration: ShapeDecoration(
-        color: isFinal ? t.goldTint : t.raceTint,
+        color: isFinal ? t.goldTint : t.s2,
         shape: isFinal
             ? SahneShape.withSide(SahneShape.s, t.gold, width: SahneRing.r1)
             : SahneShape.s,
@@ -1988,11 +1996,4 @@ class _UserMatchCard extends StatelessWidget {
       ),
     );
   }
-}
-
-extension on String {
-  /// Birleşik cümlede ikinci parça küçük harfle başlar (Türkçe/Kurmancî
-  /// ilk harfleri `I`/`İ` ile karışmaz: cümleler `E` ve `H` ile başlar).
-  String toLowerCaseFirst() =>
-      isEmpty ? this : '${this[0].toLowerCase()}${substring(1)}';
 }

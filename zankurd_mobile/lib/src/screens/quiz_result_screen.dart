@@ -1719,9 +1719,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // puan, sayımlar, ödül ve eylemlerdir.
         ResultCollapsibleSection(
           key: const ValueKey('result-details-section'),
-          title: context.t(K.resultDetails),
-          // W2: kapalı satırda kesilen özet yok; yalnız "Ayrıntılar" + sayı.
-          summary: breakdown.isEmpty ? '' : '${breakdown.length}',
+          // Y1 (2026-10-29 tur 6): çıplak "3" neyin sayısı belli değildi;
+          // birim başlığın içinde ("Ayrıntılar · 3 konu"), ayrı özet yok.
+          title: breakdown.isEmpty
+              ? context.t(K.resultDetails)
+              : context.t(K.resultDetailsTopics, {'n': '${breakdown.length}'}),
+          summary: '',
           openRequest: _detailsOpenRequest,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1823,35 +1826,22 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           missions: _completedMissions,
           dailyStreak: _dailyStreak,
         ),
-      // Turun bütün açıklamaları en sonda, bir arada.
-      //
-      // Eskiden her şıkkın altında tek tek açılıyordu; şık işaretlenir
-      // işaretlenmez paragraf beliriyor ve turun ritmi kesiliyordu
-      // (uygulama sahibinin tekrarlanan geri bildirimi, 2026-07-26).
-      // Birincil eylem alt perdede her an görünür: "Tekrar oyna" uzun bir
-      // okuma listesinin arkasında kalmaz.
-      const SizedBox(height: SahneSpace.sectionTop),
-      _MoreOptions(
-        onHome: goHome,
-        onLeaderboard: () {
-          Navigator.of(
-            context,
-          ).push(AppRoute.to(LeaderboardScreen(repository: repository)));
-        },
-        onRate: () => ReviewService.openStoreListing(),
-      ),
+      // Y1: seyrek çıkış yolları (ana sayfa, sıralama, değerlendir) kutusuz
+      // "Diğer seçenekler" satırı değil, alt perdedeki "⋯" düğmesinin
+      // sayfasındadır.
     ];
 
     // W2: cevap listesi "Diğer seçenekler"in içinde değil, alt perdenin hemen
     // üstünde görünür bir metin düğmesidir.
     Widget? seeAnswersButton;
     if (_explanationEntries(answerRecords, context.isKu).isNotEmpty) {
-      seeAnswersButton = SahneButton.text(
+      seeAnswersButton = _SeeAnswersButton(
         key: const ValueKey('result-see-answers-button'),
-        label: wrongCount > 0
+        wrongCount: wrongCount,
+        label: context.t(K.seeAnswers),
+        semanticLabel: wrongCount > 0
             ? context.t(K.seeAnswersWrong, {'n': '$wrongCount'})
             : context.t(K.seeAnswers),
-        arrow: false,
         onPressed: () {
           _detailsOpenRequest.value++;
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -1973,7 +1963,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ...sections,
         if (stackedDock && seeAnswersButton != null) ...[
           const SizedBox(height: SahneSpace.x2),
-          Center(child: seeAnswersButton),
+          seeAnswersButton,
         ],
       ],
       dockAbove: stackedDock ? null : seeAnswersButton,
@@ -1992,6 +1982,21 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         icon: AppIcons.shareNodes,
         iconOnly: true,
         onPressed: shareResult,
+      ),
+      // Y1: "⋯" — ana sayfa, sıralama, değerlendir.
+      more: SahneResultAction(
+        key: const ValueKey('result-more-options'),
+        label: context.t(K.moreOptions),
+        icon: AppIcons.ellipsis,
+        iconOnly: true,
+        onPressed: () => _openMoreOptions(
+          context,
+          onHome: goHome,
+          onLeaderboard: () => Navigator.of(
+            context,
+          ).push(AppRoute.to(LeaderboardScreen(repository: repository))),
+          onRate: () => ReviewService.openStoreListing(),
+        ),
       ),
       overlay: _showConfetti
           ? ConfettiOverlay(
@@ -2970,69 +2975,127 @@ class _RoundGains extends StatelessWidget {
   }
 }
 
-/// "Diğer seçenekler": seyrek çıkış yolları (ana sayfa, sıralama,
-/// değerlendir) kapalı bir açılır satırda; metin bağlantısı olarak durur,
-/// birincil eylemle yarışmaz.
-class _MoreOptions extends StatelessWidget {
-  const _MoreOptions({
-    required this.onHome,
-    required this.onLeaderboard,
-    required this.onRate,
+/// Y1 (2026-10-29 tur 6): "⋯" düğmesinin alt sayfası — seyrek çıkış
+/// yolları (ana sayfa, sıralama, değerlendir). Eskiden sayfanın sonunda
+/// kutusuz, havada duran "Diğer seçenekler ⌄" satırıydı; hangi öğenin ne
+/// açtığı belli olmuyordu (jüri: Opus, Fable, claude.ai Opus). Rakip deseni:
+/// Duolingo/Busuu sonuç ekranı — tek birincil düğme + simge, gerisi sayfada.
+Future<void> _openMoreOptions(
+  BuildContext context, {
+  required VoidCallback onHome,
+  required VoidCallback onLeaderboard,
+  required VoidCallback onRate,
+}) {
+  final t = SahneTokens.of(context);
+  Widget row(Key? key, IconData icon, String label, VoidCallback action) {
+    return Builder(
+      builder: (ctx) => SahneListRow.icon(
+        key: key,
+        icon: icon,
+        title: label,
+        onTap: () {
+          Navigator.of(ctx).pop();
+          action();
+        },
+      ),
+    );
+  }
+
+  return showModalBottomSheet<void>(
+    context: context,
+    useSafeArea: true,
+    isScrollControlled: true,
+    backgroundColor: t.s1,
+    shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
+    builder: (ctx) => SingleChildScrollView(
+      key: const ValueKey('result-more-sheet'),
+      padding: const EdgeInsets.fromLTRB(
+        SahneSpace.page,
+        SahneSpace.x4,
+        SahneSpace.page,
+        SahneSpace.x4,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          row(
+            const ValueKey('result-home-button'),
+            AppIcons.house,
+            context.t(K.home),
+            onHome,
+          ),
+          row(
+            null,
+            AppIcons.trophy,
+            context.t(K.leaderboardLink),
+            onLeaderboard,
+          ),
+          row(
+            const ValueKey('result-rate-button'),
+            AppIcons.star,
+            context.t(K.rate),
+            onRate,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+/// Y1: sonuçtaki "Cevapları gör" — tam genişlik ÇERÇEVELİ ikincil düğme;
+/// yanlış sayısı turuncu metin değil küçük rozettir. Turuncu yalnız altındaki
+/// "Tekrar oyna"dır (rakip deseni: Duolingo/Busuu ders sonu; ikincil =
+/// çerçeveli, birincil = dolu).
+class _SeeAnswersButton extends StatelessWidget {
+  const _SeeAnswersButton({
+    super.key,
+    required this.wrongCount,
+    required this.label,
+    required this.semanticLabel,
+    required this.onPressed,
   });
 
-  final VoidCallback onHome;
-  final VoidCallback onLeaderboard;
-  final VoidCallback onRate;
+  final int wrongCount;
+  final String label;
+  final String semanticLabel;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return Theme(
-      data: Theme.of(context).copyWith(
-        dividerColor: Colors.transparent,
-        splashColor: Colors.transparent,
-      ),
-      child: ExpansionTile(
-        key: const ValueKey('result-more-options'),
-        shape: SahneShape.m,
-        collapsedShape: SahneShape.m,
-        iconColor: t.tx2,
-        collapsedIconColor: t.tx2,
-        tilePadding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
-        childrenPadding: const EdgeInsets.only(bottom: SahneSpace.x1),
-        title: Text(
-          context.t(K.moreOptions),
-          textAlign: TextAlign.center,
-          style: SahneType.captionStrong.copyWith(color: t.tx2),
-        ),
-        children: [
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: SahneSpace.x3,
-            runSpacing: SahneSpace.x1,
-            children: [
-              SahneButton.text(
-                key: const ValueKey('result-home-button'),
-                label: context.t(K.home),
-                arrow: false,
-                onPressed: onHome,
-              ),
-              SahneButton.text(
-                label: context.t(K.leaderboardLink),
-                arrow: false,
-                onPressed: onLeaderboard,
-              ),
-              // Değerlendir: öne çıkan CTA değil, sakin bir bağlantı — her
-              // sonuç ekranında birincil aksiyonla yarışmasın.
-              SahneButton.text(
-                key: const ValueKey('result-rate-button'),
-                label: context.t(K.rate),
-                arrow: false,
-                onPressed: onRate,
-              ),
-            ],
-          ),
-        ],
+    return Semantics(
+      container: true,
+      button: true,
+      label: semanticLabel,
+      excludeSemantics: true,
+      onTap: onPressed,
+      child: SahneButton.secondary(
+        label: label,
+        icon: AppIcons.squareCheck,
+        expand: true,
+        onPressed: onPressed,
+        semanticLabel: semanticLabel,
+        trailing: wrongCount > 0
+            ? Container(
+                key: const ValueKey('result-see-answers-badge'),
+                // a11y-tap-target: noninteractive — yanlış sayısı rozeti;
+                // dokunma hedefi değil (düğmenin kendisi 52).
+                constraints: const BoxConstraints(minWidth: 24, minHeight: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 7),
+                alignment: Alignment.center,
+                decoration: ShapeDecoration(
+                  color: t.errTint,
+                  shape: StadiumBorder(
+                    side: BorderSide(color: t.errTx.withValues(alpha: 0.5)),
+                  ),
+                ),
+                child: Text(
+                  '$wrongCount',
+                  style: SahneType.captionStrong.copyWith(color: t.errTx),
+                ),
+              )
+            : null,
       ),
     );
   }

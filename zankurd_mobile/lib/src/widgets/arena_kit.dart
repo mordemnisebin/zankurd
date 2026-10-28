@@ -176,8 +176,13 @@ class ArenaStatusChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final (bg, fg) = switch (status) {
+      // Y5 (2026-10-29 tur 6): "Bugün oynanabilir" kırmızı kenarlı/tonlu pil
+      // uyarı gibi okunuyordu (kırmızı yalnız yanlış geri bildirimi);
+      // [SahneRole.neutral] durum pilini nötr beyaz yüzey yapar.
       ArenaStatus.live =>
-        role == SahneRole.race
+        role == SahneRole.neutral
+            ? (t.s1, t.tx)
+            : role == SahneRole.race
             ? (t.raceTint, t.raceTx)
             : (t.learnTint, t.learnTx),
       ArenaStatus.joined => (t.goldTint, t.goldTx),

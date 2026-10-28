@@ -184,57 +184,71 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    testWidgets('W2: görünür "Cevapları gör (N yanlış)" alt perdenin üstünde', (
-      tester,
-    ) async {
-      await pumpResult(tester, wrong: 2);
-      final see = find.byKey(const ValueKey('result-see-answers-button'));
-      expect(see, findsOneWidget);
-      expect(find.text('Cevapları gör (2 yanlış)'), findsOneWidget);
-      // "Diğer seçenekler"in İÇİNDE değil.
-      expect(
-        find.descendant(
-          of: find.byKey(const ValueKey('result-more-options')),
-          matching: see,
-        ),
-        findsNothing,
-      );
-      final seeRect = tester.getRect(see);
-      final primary = tester.getRect(
-        find.byKey(const ValueKey('result-play-again-button')).first,
-      );
-      expect(seeRect.bottom, lessThanOrEqualTo(primary.top + 1));
-      expect(seeRect.height, greaterThanOrEqualTo(44));
-      // Kapalı "Ayrıntılar" satırında kesik özet yok: yalnız ad + sayı.
-      final header = find.byKey(const ValueKey('result-collapsible-header'));
-      expect(header, findsOneWidget);
-      expect(
-        find.descendant(of: header, matching: find.textContaining('/')),
-        findsNothing,
-        reason: 'kategori 1/2 gibi kesik özet yazılmaz',
-      );
-      expect(
-        find.descendant(of: header, matching: find.text('Ayrıntılar')),
-        findsOneWidget,
-      );
-      // Alt perde: tam genişlik birincil + simge olarak Paylaş.
-      final share = find.byKey(const ValueKey('result-share-button'));
-      expect(tester.getSize(share).width, lessThanOrEqualTo(64));
-      expect(tester.getSize(share).height, greaterThanOrEqualTo(48));
-      expect(
-        find.descendant(of: share, matching: find.text('Paylaş')),
-        findsNothing,
-      );
-      expect(primary.width, greaterThan(250));
+    // 2026-10-29 tur 6 Y1: "Cevapları gör" artık tam genişlik çerçeveli
+    // ikincil düğme; yanlış sayısı parantez değil ROZET (turuncu metin yok).
+    // "Diğer seçenekler" satırı kalktı; yerine alt perdede "⋯" düğmesi.
+    testWidgets(
+      'W2/Y1: görünür "Cevapları gör" + yanlış rozeti alt perdenin üstünde',
+      (tester) async {
+        await pumpResult(tester, wrong: 2);
+        final see = find.byKey(const ValueKey('result-see-answers-button'));
+        expect(see, findsOneWidget);
+        expect(find.text('Cevapları gör'), findsOneWidget);
+        expect(
+          find.descendant(
+            of: find.byKey(const ValueKey('result-see-answers-badge')),
+            matching: find.text('2'),
+          ),
+          findsOneWidget,
+        );
+        expect(
+          find.bySemanticsLabel('Cevapları gör (2 yanlış)'),
+          findsOneWidget,
+        );
+        final seeRect = tester.getRect(see);
+        final primary = tester.getRect(
+          find.byKey(const ValueKey('result-play-again-button')).first,
+        );
+        expect(seeRect.bottom, lessThanOrEqualTo(primary.top + 1));
+        expect(seeRect.height, greaterThanOrEqualTo(44));
+        // Kapalı "Ayrıntılar" satırında kesik özet yok: yalnız ad + sayı.
+        final header = find.byKey(const ValueKey('result-collapsible-header'));
+        expect(header, findsOneWidget);
+        expect(
+          find.descendant(of: header, matching: find.textContaining('/')),
+          findsNothing,
+          reason: 'kategori 1/2 gibi kesik özet yazılmaz',
+        );
+        // Y1: birimli ad — çıplak "3" yok ("Ayrıntılar · 2 konu").
+        expect(
+          find.descendant(
+            of: header,
+            matching: find.text('Ayrıntılar · 2 konu'),
+          ),
+          findsOneWidget,
+        );
+        // Alt perde: tam genişlik birincil + simge olarak Paylaş.
+        final share = find.byKey(const ValueKey('result-share-button'));
+        expect(tester.getSize(share).width, lessThanOrEqualTo(64));
+        expect(tester.getSize(share).height, greaterThanOrEqualTo(48));
+        expect(
+          find.descendant(of: share, matching: find.text('Paylaş')),
+          findsNothing,
+        );
+        expect(
+          primary.width,
+          greaterThan(200),
+        ); // Y1: üç düğmeli satır (birincil + paylaş + ⋯)
 
-      // Dokununca bölüm açılır ve cevap listesi görünür.
-      await tester.tap(see);
-      await tester.pumpAndSettle();
-      expect(
-        find.byKey(const ValueKey('result-all-explanations')),
-        findsOneWidget,
-      );
-    });
+        // Dokununca bölüm açılır ve cevap listesi görünür.
+        await tester.tap(see);
+        await tester.pumpAndSettle();
+        expect(
+          find.byKey(const ValueKey('result-all-explanations')),
+          findsOneWidget,
+        );
+      },
+    );
 
     testWidgets('W2: hiç yanlış yoksa düğme sade "Cevapları gör"', (
       tester,

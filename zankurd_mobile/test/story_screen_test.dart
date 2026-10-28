@@ -133,6 +133,8 @@ void main() {
   // artık rol taşır: hikâye etiketi ve rehber bölüm etiketleri öğrenme
   // rolünün metin rengindedir (`learnTx`); anlatı sahne kartında olduğu için
   // hikâye etiketi her temada gecenin `eyebrowTx`idir (tur 9b: tek üst etiket rengi).
+  // 2026-10-29 tur 6 Y5: `eyebrowTx` turuncudur (eylem rengi); hikâye etiketi
+  // artık gecenin `learnTx`i (Öğren yeşili).
   testWidgets('hikâye ve rehber etiketleri öğrenme rolünün okunur metninde', (
     tester,
   ) async {
@@ -142,7 +144,8 @@ void main() {
     await tester.pumpAndSettle();
 
     final storyLabel = tester.widget<Text>(find.text('Hikâye'));
-    expect(storyLabel.style?.color, SahneTokens.night.eyebrowTx);
+    expect(storyLabel.style?.color, SahneTokens.night.learnTx);
+    expect(storyLabel.style?.color, isNot(SahneTokens.night.eyebrowTx));
 
     await tester.tap(find.byKey(const ValueKey('story-menu')));
     await tester.pumpAndSettle();

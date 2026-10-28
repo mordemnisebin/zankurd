@@ -12,7 +12,7 @@ import 'sahne/sahne.dart';
 ///
 /// Sözlük kartında ve kelime balonunda aynı düğmedir; durum
 /// [WordListStore]dan gelir, bu yüzden biri değişince ötekisi de güncellenir.
-/// Seçili durum Sahne'nin altın tonlu aç/kapa düğmesidir (yeni renk yok);
+/// Seçili durum Sahne'nin Öğren yeşili aç/kapa düğmesidir (Y6, 2026-10-29);
 /// ekran okuyucu "Listeme ekle" / "Listemden çıkar" der ve seçili durumu
 /// bildirir.
 class WordSaveButton extends StatefulWidget {
@@ -82,6 +82,8 @@ class _WordSaveButtonState extends State<WordSaveButton> {
       key: ValueKey('word-save-${widget.entryId}'),
       icon: AppIcons.bookmark,
       selected: saved,
+      // Y6: kaydedilince Öğren yeşili (altın = ödül); kayıtsız nötr çerçeve.
+      selectedLearn: true,
       semanticLabel: context.t(saved ? K.wordsRemove : K.wordsAdd),
       onPressed: store == null
           ? null

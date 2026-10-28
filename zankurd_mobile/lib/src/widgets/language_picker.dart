@@ -58,6 +58,9 @@ class LanguagePicker extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (showLabel) ...[
+          // TASARIM_DILI istisnası (Y8, 2026-10-29): bu etiket BİLİNÇLİ iki
+          // dillidir — dil seçilmeden önce "seçili arayüz dili" yoktur
+          // (bkz. K.languagePickerLabel).
           Text(
             context.t(K.languagePickerLabel),
             style: SahneType.captionStrong.copyWith(color: t.tx2),

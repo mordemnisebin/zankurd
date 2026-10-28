@@ -95,8 +95,9 @@ void main() {
       expect(tester.getRect(cta), before, reason: 'kaydırınca yerinde durur');
       expect(before.bottom, greaterThan(600), reason: 'ekranın dibinde');
 
-      expect(find.text('Yarı Final 4'), findsOneWidget);
-      expect(find.text('Final 2'), findsOneWidget);
+      // 2026-10-29 tur 6 Y7: sayı birimli.
+      expect(find.text('Yarı Final · 4 oyuncu'), findsOneWidget);
+      expect(find.text('Final · 2 oyuncu'), findsOneWidget);
       expect(find.text('Şampiyon'), findsOneWidget);
     });
   });

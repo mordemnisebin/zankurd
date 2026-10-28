@@ -210,89 +210,94 @@ class _HomeTopicTile extends StatelessWidget {
           constraints: const BoxConstraints(
             minHeight: HomeTopicGrid._minHeight,
           ),
-          child: Stack(
-            children: [
-              // Köşede çok hafif (%7) konu ikonu filigranı: sağ üst köşe
-              // boştur (ad rozetin ALTINDA, sola dayalı), metinle çakışmaz.
-              PositionedDirectional(
-                end: -8,
-                top: -8,
-                child: IgnorePointer(
-                  child: ExcludeSemantics(
-                    child: Icon(
-                      CategoryVisuals.icon(category),
-                      key: ValueKey('home-topic-mark-$category'),
-                      size: 56,
-                      color: fill.withValues(alpha: 0.07),
+          // Y8 (2026-10-29 tur 6): filigran kartın pahlı kenarında KIRPILIR
+          // (köşeden taşıyor gibi görünüyordu) ve ≤ %6 opaklıktadır.
+          child: ClipPath(
+            clipper: const ShapeBorderClipper(shape: SahneShape.l),
+            child: Stack(
+              children: [
+                // Köşede çok hafif (%6) konu ikonu filigranı: sağ üst köşe
+                // boştur (ad rozetin ALTINDA, sola dayalı), metinle çakışmaz.
+                PositionedDirectional(
+                  end: -8,
+                  top: -8,
+                  child: IgnorePointer(
+                    child: ExcludeSemantics(
+                      child: Icon(
+                        CategoryVisuals.icon(category),
+                        key: ValueKey('home-topic-mark-$category'),
+                        size: 56,
+                        color: fill.withValues(alpha: 0.06),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              // Konu rengi kenar şeridi (4 px); kartın yuvarlak köşesine
-              // kırpılır.
-              PositionedDirectional(
-                start: 0,
-                top: 0,
-                bottom: 0,
-                width: HomeTopicGrid._strip,
-                child: ColoredBox(
-                  key: ValueKey('home-topic-strip-$category'),
-                  color: fill,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(
-                  HomeTopicGrid._pad + HomeTopicGrid._strip,
-                  HomeTopicGrid._padV,
-                  HomeTopicGrid._pad,
-                  HomeTopicGrid._padV,
-                ),
-                child: ExcludeSemantics(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CategoryIconTile(
-                        key: ValueKey('home-topic-badge-$category'),
-                        category: category,
-                        icon: CategoryVisuals.icon(category),
-                        size: HomeTopicGrid._badge,
-                      ),
-                      const SizedBox(height: SahneSpace.x2),
-                      Text(
-                        name,
-                        maxLines: 1,
-                        softWrap: false,
-                        overflow: TextOverflow.ellipsis,
-                        style: SahneType.bodyStrong.copyWith(color: t.tx),
-                      ),
-                      // İki dilli etiket: ayar açıksa konunun öbür dildeki adı,
-                      // küçük soluk tek satır; sığmazsa hiç çizilmez.
-                      ?_secondName(context),
-                      if (started)
-                        Padding(
-                          padding: const EdgeInsets.only(top: SahneSpace.x2),
-                          // `LinearProgressIndicator` üstüne kurulu: ortak
-                          // `home_screen_navigation_refresh_test` ilerlemenin
-                          // karoda bu tiple çizildiğini arıyor.
-                          child: ClipPath(
-                            clipper: const ShapeBorderClipper(
-                              shape: StadiumBorder(),
-                            ),
-                            child: LinearProgressIndicator(
-                              key: ValueKey('home-topic-progress-$category'),
-                              value: ratio,
-                              minHeight: 4,
-                              color: fill,
-                              backgroundColor: t.s3,
-                            ),
-                          ),
-                        ),
-                    ],
+                // Konu rengi kenar şeridi (4 px); kartın yuvarlak köşesine
+                // kırpılır.
+                PositionedDirectional(
+                  start: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: HomeTopicGrid._strip,
+                  child: ColoredBox(
+                    key: ValueKey('home-topic-strip-$category'),
+                    color: fill,
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                    HomeTopicGrid._pad + HomeTopicGrid._strip,
+                    HomeTopicGrid._padV,
+                    HomeTopicGrid._pad,
+                    HomeTopicGrid._padV,
+                  ),
+                  child: ExcludeSemantics(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CategoryIconTile(
+                          key: ValueKey('home-topic-badge-$category'),
+                          category: category,
+                          icon: CategoryVisuals.icon(category),
+                          size: HomeTopicGrid._badge,
+                        ),
+                        const SizedBox(height: SahneSpace.x2),
+                        Text(
+                          name,
+                          maxLines: 1,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
+                          style: SahneType.bodyStrong.copyWith(color: t.tx),
+                        ),
+                        // İki dilli etiket: ayar açıksa konunun öbür dildeki adı,
+                        // küçük soluk tek satır; sığmazsa hiç çizilmez.
+                        ?_secondName(context),
+                        if (started)
+                          Padding(
+                            padding: const EdgeInsets.only(top: SahneSpace.x2),
+                            // `LinearProgressIndicator` üstüne kurulu: ortak
+                            // `home_screen_navigation_refresh_test` ilerlemenin
+                            // karoda bu tiple çizildiğini arıyor.
+                            child: ClipPath(
+                              clipper: const ShapeBorderClipper(
+                                shape: StadiumBorder(),
+                              ),
+                              child: LinearProgressIndicator(
+                                key: ValueKey('home-topic-progress-$category'),
+                                value: ratio,
+                                minHeight: 4,
+                                color: fill,
+                                backgroundColor: t.s3,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

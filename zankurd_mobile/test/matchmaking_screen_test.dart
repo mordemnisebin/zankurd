@@ -349,7 +349,7 @@ Future<void> _startImmediateMatch(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Rastgele eşleşme'));
+  await tester.tap(find.text('Rastgele rakip bul'));
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 1501));
   await tester.pump();
@@ -368,7 +368,7 @@ Future<void> _startSnapshotMatch(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Rastgele eşleşme'));
+  await tester.tap(find.text('Rastgele rakip bul'));
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 1501));
   await tester.pump();
@@ -425,7 +425,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.tap(find.text('Rastgele rakip bul'));
     await tester.pump();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 1501));
@@ -464,7 +464,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.tap(find.text('Rastgele rakip bul'));
     await tester.pump(const Duration(seconds: 20));
     await tester.tap(find.text('Evet'));
     await tester.pump();
@@ -506,7 +506,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.tap(find.text('Rastgele rakip bul'));
     await tester.pump(const Duration(seconds: 20));
     await tester.tap(find.text('Hayır'));
     await tester.pumpAndSettle();
@@ -543,7 +543,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Rastgele eşleşme'));
+      await tester.tap(find.text('Rastgele rakip bul'));
       await tester.pump();
       await tester.tap(find.text('Vazgeç'));
       await tester.pumpAndSettle();
@@ -567,32 +567,18 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Canlı düello'), findsOneWidget);
-    expect(find.text('Rastgele eşleşme'), findsOneWidget);
+    expect(find.text('Rastgele rakip bul'), findsOneWidget);
     expect(
       find.byKey(const ValueKey('matchmaking-selection-header')),
       findsOneWidget,
     );
-    // 2026-09-29 doğallık (K7): kartın tamamı Agir dolguydu; artık kart
-    // ikincil yüzeydir ve turuncu yalnız sağdaki ok karosundadır. Bekçi
-    // hâlâ "tek baskın eylem düz yüzeydir" der: degrade ve gölge yok,
-    // Agir tek bir öğede.
-    final duelCard = tester.widget<Container>(
-      find.byKey(const ValueKey('matchmaking-duel-card')),
-    );
-    final decoration = duelCard.decoration! as BoxDecoration;
-    expect(decoration.gradient, isNull);
-    final cardContext = tester.element(
-      find.byKey(const ValueKey('matchmaking-duel-card')),
-    );
-    expect(decoration.color, isNot(AppTheme.primaryCtaColor(cardContext)));
-    expect(decoration.boxShadow, isEmpty);
-    final go = tester.widget<DecoratedBox>(
-      find.byKey(const ValueKey('matchmaking-duel-card-go')),
-    );
-    expect(
-      (go.decoration as ShapeDecoration).color,
-      AppTheme.primaryCtaColor(cardContext),
-    );
+    // 2026-10-29 tur 6 Y4: rastgele eşleşme artık kart/ok karesi değil, altta
+    // sabit TAM GENİŞLİK turuncu birincil düğmedir (TRT "HEMEN OYNA" deseni);
+    // eski K7 kart bekçisi (nötr yüzey + turuncu ok karosu) kalktı.
+    final cta = find.byKey(const ValueKey('matchmaking-random-cta'));
+    expect(cta, findsOneWidget);
+    expect(find.byKey(const ValueKey('matchmaking-duel-card')), findsNothing);
+    expect(tester.getSize(cta).width, greaterThan(480 - 40));
     expect(tester.takeException(), isNull);
   });
 
@@ -610,7 +596,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.tap(find.text('Rastgele rakip bul'));
     await tester.pump();
 
     // Ekranı kaldır: dispose, kuyruğu sunucuda da temizlemeli ki oyuncu
@@ -634,7 +620,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('open-matchmaking')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.tap(find.text('Rastgele rakip bul'));
     await tester.pump();
     await tester.tap(find.text('Vazgeç'));
     await tester.pump();
@@ -683,7 +669,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.tap(find.text('Rastgele rakip bul'));
     await tester.pump();
     final firstJoin = repository.latestJoin;
     await tester.tap(find.text('Vazgeç'));
@@ -761,7 +747,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.tap(find.text('Rastgele rakip bul'));
     // 1500 ms'lik "zafer geçişi" gecikmesinin İÇİNDE, "eşleşti" durumu
     // görünür görünmez durdurulur — asıl UI burada.
     await tester.pump();
@@ -797,7 +783,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Rastgele eşleşme'));
+      await tester.tap(find.text('Rastgele rakip bul'));
       await tester.pump();
       await tester.pump();
 
@@ -894,7 +880,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.tap(find.text('Rastgele rakip bul'));
     await tester.pump(const Duration(seconds: 20));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 1501));
@@ -926,7 +912,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.tap(find.text('Rastgele rakip bul'));
     await tester.pump();
     await tester.tap(find.text('Vazgeç'));
     await tester.pump();
@@ -1044,7 +1030,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('open-matchmaking')));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.tap(find.text('Rastgele rakip bul'));
     await tester.pumpAndSettle();
 
     // İlk iptal: hata görünür, oyuncu hâlâ ekranda — hayalet kuyruğa karşı
@@ -1082,7 +1068,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Rastgele eşleşme'));
+      await tester.tap(find.text('Rastgele rakip bul'));
       await tester.pump();
 
       // Arama ekrani aktif

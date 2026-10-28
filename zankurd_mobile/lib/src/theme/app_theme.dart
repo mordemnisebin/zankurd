@@ -1074,11 +1074,19 @@ class AppTheme {
       // Anahtar: açıkken Zimrût (öğrenme ayarları çoğunlukta); Agir değil,
       // çünkü Agir yalnız birincil eylemin dolgusudur.
       switchTheme: SwitchThemeData(
+        // Y8 (2026-10-29 tur 6): kapalı anahtarın izi mavimsi-lavanta, topuzu
+        // lacivertti ("yarı açık" gibi okunuyordu). Kapalı = NÖTR gri iz +
+        // beyaz topuz; açık = Öğren yeşili iz (değişmedi). Gri ton kasıtlı
+        // renksiz: tema belirteçleri mavi alt tonlu olduğu için sabit gri.
         thumbColor: WidgetStateProperty.resolveWith(
-          (s) => s.contains(WidgetState.selected) ? Colors.white : t.tx3,
+          (s) => s.contains(WidgetState.selected)
+              ? Colors.white
+              : (isDark ? const Color(0xFFF2F3F5) : Colors.white),
         ),
         trackColor: WidgetStateProperty.resolveWith(
-          (s) => s.contains(WidgetState.selected) ? t.learnBar : t.s3,
+          (s) => s.contains(WidgetState.selected)
+              ? t.learnBar
+              : (isDark ? const Color(0xFF5A5B5E) : const Color(0xFF8E8E92)),
         ),
         trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
       ),

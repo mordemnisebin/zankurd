@@ -59,6 +59,11 @@ void main() {
     );
 
     testWidgets('lobi ekrani dogru sekilde yukleniyor', (tester) async {
+      // Y7 (2026-10-29): kural listesi 4 maddeye çıktı; açılan panel alt
+      // perdenin arkasında kalmasın diye uzun yüzey.
+      tester.view.physicalSize = const Size(800, 1400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
@@ -79,12 +84,10 @@ void main() {
       expect(find.textContaining('Cumartesi'), findsNothing);
       // Kurul 2. tur: başlama koşulu TEK cümle, kahramanın alt satırında
       // (ikinci yarım cümle format kartından kalktı).
-      expect(
-        find.text(
-          'Kontenjan dolunca başlar; dolmazsa 24 saat içinde eldeki oyuncularla başlar',
-        ),
-        findsOneWidget,
-      );
+      // 2026-10-29 tur 6 Y7: hero açıklaması TEK satır; "dolmazsa eldeki
+      // oyuncularla" sunucu kuralına (24 saat sonra en az 2 oyuncu) uymuyordu.
+      expect(find.text('Dolunca ya da 24 saat sonra başlar'), findsOneWidget);
+      expect(find.textContaining('eldeki oyuncularla başlar'), findsNothing);
       expect(
         find.text('En geç 24 saat içinde, eldeki oyuncularla'),
         findsNothing,

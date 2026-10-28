@@ -186,6 +186,7 @@ class SahneResultScaffold extends StatelessWidget {
     this.rewards,
     this.sections = const [],
     this.secondary,
+    this.more,
     this.dockAbove,
     this.contextLabel,
     this.closeLabel,
@@ -234,8 +235,15 @@ class SahneResultScaffold extends StatelessWidget {
   /// İkincil eylem (Paylaş, Kapat…); `null` → alt perdede yalnız birincil.
   final SahneResultAction? secondary;
 
-  /// Alt perdenin hemen üstünde, birincil eylemden önce duran görünür metin
-  /// düğmesi (ör. "Cevapları gör"); `null` → yok.
+  /// Y1 (2026-10-29 tur 6): alt perdede Paylaş'ın yanındaki "⋯" simge
+  /// düğmesi (seyrek çıkış yolları: ana sayfa, sıralama, değerlendir).
+  /// Kutusuz, havada duran "Diğer seçenekler" satırının yerini alır
+  /// (Duolingo/Busuu sonuç deseni: tek birincil + simgeler). Yalnız
+  /// [secondary] simge düğmesiyken çizilir.
+  final SahneResultAction? more;
+
+  /// Alt perdenin hemen üstünde, birincil eylemden önce duran görünür
+  /// ikincil düğme (ör. çerçeveli "Cevapları gör"); `null` → yok.
   final Widget? dockAbove;
 
   /// Üst satırın ortasındaki bağlam ("Dil • 5 soru", "Sırayla düello").
@@ -400,14 +408,22 @@ class SahneResultScaffold extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: kSahneResultMaxWidth),
             child: dockAbove == null
-                ? SahneResultDock(primary: primary, secondary: secondary)
+                ? SahneResultDock(
+                    primary: primary,
+                    secondary: secondary,
+                    more: more,
+                  )
                 : Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Center(child: dockAbove),
-                      const SizedBox(height: SahneSpace.x1),
-                      SahneResultDock(primary: primary, secondary: secondary),
+                      dockAbove!,
+                      const SizedBox(height: SahneSpace.x2),
+                      SahneResultDock(
+                        primary: primary,
+                        secondary: secondary,
+                        more: more,
+                      ),
                     ],
                   ),
           ),
@@ -1293,11 +1309,49 @@ class SahneRewardEntrance extends StatelessWidget {
 /// Alt perde — maketteki `.sh-dock--2`: solda ikincil eylem, sağda TEK
 /// birincil. İkincil yoksa birincil tek başına tam genişlik. Büyük yazıda
 /// alt alta iner, birincil üstte.
+Widget _dockIconButton(BuildContext context, SahneResultAction action) {
+  final t = SahneTokens.of(context);
+  return _DockAction(
+    key: action.key,
+    label: action.label,
+    onTap: action.onPressed,
+    child: SizedBox.square(
+      dimension: 52,
+      child: FilledButton(
+        onPressed: action.onPressed,
+        style: FilledButton.styleFrom(
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
+          foregroundColor: t.tx,
+          padding: EdgeInsets.zero,
+          minimumSize: const Size(52, 52),
+          shape: SahneShape.m,
+          side: BorderSide(
+            color: t.secondaryEdge,
+            width: 1.5,
+            strokeAlign: BorderSide.strokeAlignInside,
+          ),
+        ),
+        child: Icon(action.icon, size: 22),
+      ),
+    ),
+  );
+}
+
 class SahneResultDock extends StatelessWidget {
-  const SahneResultDock({super.key, required this.primary, this.secondary});
+  const SahneResultDock({
+    super.key,
+    required this.primary,
+    this.secondary,
+    this.more,
+  });
 
   final SahneResultAction primary;
   final SahneResultAction? secondary;
+
+  /// Y1: Paylaş'ın yanında ikinci simge düğmesi ("⋯").
+  final SahneResultAction? more;
 
   @override
   Widget build(BuildContext context) {
@@ -1317,39 +1371,18 @@ class SahneResultDock extends StatelessWidget {
     final other = secondary;
     if (other == null) return primaryButton;
     if (other.iconOnly) {
-      // W2: tam genişlik birincil + sağda 56'lık simge düğmesi.
-      final t = SahneTokens.of(context);
+      // W2: tam genişlik birincil + sağda 52'lik simge düğmesi; Y1: ikinci
+      // simge ("⋯") aynı biçimde.
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(child: primaryButton),
           const SizedBox(width: SahneSpace.x3),
-          _DockAction(
-            key: other.key,
-            label: other.label,
-            onTap: other.onPressed,
-            child: SizedBox.square(
-              dimension: 52,
-              child: FilledButton(
-                onPressed: other.onPressed,
-                style: FilledButton.styleFrom(
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  foregroundColor: t.tx,
-                  padding: EdgeInsets.zero,
-                  minimumSize: const Size(52, 52),
-                  shape: SahneShape.m,
-                  side: BorderSide(
-                    color: t.secondaryEdge,
-                    width: 1.5,
-                    strokeAlign: BorderSide.strokeAlignInside,
-                  ),
-                ),
-                child: Icon(other.icon, size: 22),
-              ),
-            ),
-          ),
+          _dockIconButton(context, other),
+          if (more != null) ...[
+            const SizedBox(width: SahneSpace.x2),
+            _dockIconButton(context, more!),
+          ],
         ],
       );
     }

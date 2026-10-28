@@ -779,6 +779,11 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           total: total,
           textKey: const ValueKey('async-duel-progress'),
           modeLabel: context.t(_isTournament ? K.tournament : K.notifDuelTitle),
+          // Y3: "Sen oyna, rakip sonra" üst çubukta küçük alt satır; rakip
+          // baştan bellidir ya da yoksa (meydan okuyan) yalnız bu satır.
+          subtitle: !_isTournament && _duel!.role != AsyncDuelRole.opponent
+              ? context.t(K.asyncDuelSub)
+              : null,
         ),
         // Çıkış gönderilirken sayaç yerine bekleme göstergesi: kalan
         // sorular sunucuya TIMEOUT olarak gidiyor.
@@ -868,11 +873,18 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                         // Yeni soruda başa dön; üst kenar elmas şeridin altında sönsün.
                         resetKey: _index,
                         balance: sahneQuestionBalance,
-                        padding: const EdgeInsets.fromLTRB(
+                        // Y3 (2026-10-29 tur 6): bu ekranda alt perde yok; ders ve
+                        // yarışta o yükseklik (≈ 70 + güvenli alan) gövdeden
+                        // düşer ve dengeli yerleşim ([sahneQuestionBalance])
+                        // ona göre konumlanır. Aynı yer burada boş ayrılır:
+                        // soru kartı her modda aynı üstte durur.
+                        padding: EdgeInsets.fromLTRB(
                           SahneSpace.page,
                           quizStageTopGap,
                           SahneSpace.page,
-                          SahneSpace.x6,
+                          SahneSpace.x6 +
+                              quizDocklessBottomReserve +
+                              MediaQuery.paddingOf(context).bottom,
                         ),
                         // K6: soru ÜSTTEN başlar (şıkları alta oturtan boşluk
                         // kalktı).
@@ -889,8 +901,14 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                               // "Rojda'ya karşı" Türkçe ek uyumu gerektirdiği için
                               // yeni cümle kurulmadı (NEEDS_JURY).
                               Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: SahneSpace.x4,
+                                // Y3: meydan okuyanda bu satır boştur ve boşluk da
+                                // yoktur (soru kartı diğer modlarla aynı yerde).
+                                padding: EdgeInsets.only(
+                                  bottom:
+                                      _isTournament ||
+                                          duel.role == AsyncDuelRole.opponent
+                                      ? SahneSpace.x4
+                                      : 0,
                                 ),
                                 // Turnuva maçında rakip baştan bellidir: rolden
                                 // bağımsız rakip satırı, üstünde tur adı.
@@ -962,12 +980,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                                         identity: duel.opponentProfile?.avatar,
                                         you: context.t(K.you),
                                       )
-                                    : Text(
-                                        context.t(K.asyncDuelSub),
-                                        style: SahneType.caption.copyWith(
-                                          color: t.tx2,
-                                        ),
-                                      ),
+                                    : const SizedBox.shrink(),
                               ),
                               QuizPromptCard(
                                 child: _QuestionText(text: question.promptText),

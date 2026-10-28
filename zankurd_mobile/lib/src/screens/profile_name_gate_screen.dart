@@ -125,6 +125,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
       skip: SahneButton.text(
         key: const ValueKey('name-gate-skip'),
         label: context.t(K.nameGateSkip),
+        ink: true,
         arrow: false,
         onPressed: _saving ? null : () => widget.onCompleted(),
       ),

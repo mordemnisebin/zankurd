@@ -315,6 +315,8 @@ void main() {
       await tester.drag(find.byType(ListView).first, const Offset(0, -500));
       await tester.pumpAndSettle();
     }
+    // 2026-10-29 tur 6 Y1: "Diğer seçenekler" satırı alt perdedeki "⋯"
+    // düğmesi oldu (listede kaydırmayla bulunmaz, hep görünür).
     expect(moreOptions, findsOneWidget);
     expect(find.byKey(const ValueKey('result-home-button')), findsNothing);
   });

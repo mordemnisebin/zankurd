@@ -17,7 +17,6 @@ import '../widgets/roj_mascot.dart';
 import '../widgets/sahne/sahne.dart';
 import '../providers/bilingual_labels_provider.dart';
 import '../providers/reduced_motion_provider.dart';
-import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/player_identity.dart';
@@ -1332,6 +1331,16 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       key: const ValueKey('matchmaking-selection-header'),
       title: context.t(K.duel1v1),
       backLabel: context.t(K.back),
+      // Y4: TEK birincil eylem altta tam genişlik (TRT "HEMEN OYNA" /
+      // Duolingo "DEVAM ET" deseni); konu satırları nötr kalır.
+      bottom: SahneButton.primary(
+        key: const ValueKey('matchmaking-random-cta'),
+        label: context.t(K.randomFindOpponent),
+        icon: AppIcons.shuffle,
+        arrow: false,
+        expand: true,
+        onPressed: () => _startMatchmaking('Rastgele'),
+      ),
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
@@ -1339,7 +1348,6 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _RandomMatchCard(onTap: () => _startMatchmaking('Rastgele')),
                 SahneSectionHeader(title: context.t(K.matchByCategory)),
                 categories,
               ],
@@ -1363,15 +1371,21 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     // 2026-09-29 doğallık (K1): liste satırında çizim yok. 36'lık küçükte
     // üretilmiş çizim seçilemeyen bir renk lekesiydi; her kategori
     // çizimsiz karonun küçüğünü alır (kendi tonu + kendi ikonu).
-    return SahneListRow.thumb(
-      image: null,
-      icon: CategoryVisuals.icon(category),
-      tone: CategoryVisuals.tone(category),
-      mark: CategoryVisuals.mark(category),
-      title: title,
-      subtitle: subtitle,
-      chevron: true,
-      onTap: onTap,
+    final tone = CategoryVisuals.tone(category);
+    // Y4 (2026-10-29 tur 6): satır nötr + sağda ›; konu kimliği sol kenarda
+    // 4 px renk şeridi (ana sayfa konu kartıyla aynı renk).
+    return SahneStripedRow(
+      color: tone.fill(night: Theme.of(context).brightness == Brightness.dark),
+      row: SahneListRow.thumb(
+        image: null,
+        icon: CategoryVisuals.icon(category),
+        tone: tone,
+        mark: CategoryVisuals.mark(category),
+        title: title,
+        subtitle: subtitle,
+        chevron: true,
+        onTap: onTap,
+      ),
     );
   }
 
@@ -1750,98 +1764,6 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           ),
         );
       },
-    );
-  }
-}
-
-/// Rastgele eşleşme — seçim ekranının TEK birincil eylemi.
-///
-/// 2026-09-29 doğallık (K7): kartın tamamı Agir (turuncu) dolguydu; ekranın
-/// üst yarısı tek bir turuncu blok olunca eylem değil afiş gibi okunuyordu.
-/// Kart artık ikincil yüzeydir (Perde `s1`, düz, gölgesiz, kenarlıksız, L
-/// pah); turuncu
-/// yalnız sağdaki ok karosunda kalır — ekranda tek turuncu öğe. Kartın
-/// tamamı yine dokunulur. Kart kendi dolgusunu taşıyan bir `Container`dır
-/// (bekçi: `matchmaking_screen_test`); pah şekli kırpıcıyla verilir.
-class _RandomMatchCard extends StatelessWidget {
-  const _RandomMatchCard({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return SahnePressSink(
-      enabled: true,
-      child: ClipPath(
-        clipper: const ShapeBorderClipper(shape: SahneShape.l),
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            onTap: onTap,
-            child: Container(
-              key: const ValueKey('matchmaking-duel-card'),
-              // Kenarlık yok: dikdörtgen kenarlık pah kırpıcısında köşeleri
-              // kesik bir çerçeve bırakıyordu.
-              decoration: BoxDecoration(
-                // Nötr yüzey (2026-10-28 kurul K5): renk yalnız Boyax ikon
-                // rozetinde ve turuncu ok karosunda.
-                color: t.s1,
-                boxShadow: const <BoxShadow>[],
-              ),
-              padding: const EdgeInsets.all(SahneSpace.x4),
-              child: Row(
-                children: [
-                  DecoratedBox(
-                    // İkon karosu nötr (Kulis): kartın tek renkli öğesi
-                    // sağdaki Agir ok karosudur.
-                    decoration: ShapeDecoration(
-                      color: t.raceFill,
-                      shape: SahneShape.m,
-                    ),
-                    child: const SizedBox.square(
-                      dimension: 44,
-                      child: Icon(
-                        AppIcons.shuffle,
-                        color: SahneVivid.onFill,
-                        size: 24,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: SahneSpace.x3),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          context.t(K.randomMatch),
-                          style: SahneType.button.copyWith(color: t.tx),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: SahneSpace.x3),
-                  DecoratedBox(
-                    key: const ValueKey('matchmaking-duel-card-go'),
-                    decoration: ShapeDecoration(
-                      color: AppTheme.primaryCtaColor(context),
-                      shape: SahneShape.m,
-                    ),
-                    child: SizedBox.square(
-                      dimension: 44,
-                      child: Icon(
-                        AppIcons.arrowRight,
-                        color: t.onAct,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

@@ -639,6 +639,45 @@ class SahneListRow extends StatelessWidget {
 /// başlayan 1 px ayırıcı (`line`) konur: [SahneListRow]'un
 /// `dividerIndent`i, başka bir çocukta [dividerIndent]. Dalga pahtan
 /// taşmaz.
+/// Konu kimliği için satırın sol kenarında 4 px'lik renk şeridi (Y4,
+/// 2026-10-29 tur 6): eşleşme konu listesi ana sayfa konu kartlarıyla aynı
+/// kimliği taşır (tasarım dili: "konu kartı: 4px şerit"). Satır nötr kalır;
+/// yalnız şerit konu renginde. Rakip deseni: Trivia Crack'te her kategori
+/// kendi rengiyle tanınır.
+class SahneStripedRow extends StatelessWidget {
+  const SahneStripedRow({super.key, required this.row, required this.color});
+
+  final SahneListRow row;
+  final Color color;
+
+  /// Şerit genişliği.
+  static const double width = 4;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        row,
+        Positioned.directional(
+          textDirection: Directionality.of(context),
+          start: 0,
+          top: 0,
+          bottom: 0,
+          width: width,
+          child: ExcludeSemantics(
+            child: IgnorePointer(
+              child: ColoredBox(
+                key: const ValueKey('sahne-row-stripe'),
+                color: color,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class SahneListGroup extends StatelessWidget {
   const SahneListGroup({
     super.key,
@@ -675,6 +714,8 @@ class SahneListGroup extends StatelessWidget {
                   padding: EdgeInsetsDirectional.only(
                     start: switch (children[i]) {
                       final SahneListRow row => row.dividerIndent,
+                      final SahneStripedRow striped =>
+                        striped.row.dividerIndent,
                       _ => dividerIndent,
                     },
                     end: dividerEndInset,

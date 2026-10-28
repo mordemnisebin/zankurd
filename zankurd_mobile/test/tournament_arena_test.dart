@@ -120,7 +120,13 @@ void main() {
     //
     // 2026-10-28 tur 5 W4: çipler ADLI ("Yarı Final 4 › Final 2 › Şampiyon");
     // çıplak sayılar neyin sayısı olduğunu söylemiyordu.
-    for (final step in const ['Yarı Final 4', 'Final 2', 'Şampiyon']) {
+    //
+    // 2026-10-29 tur 6 Y7: çıplak sayı birimli oldu — "Yarı Final · 4 oyuncu".
+    for (final step in const [
+      'Yarı Final · 4 oyuncu',
+      'Final · 2 oyuncu',
+      'Şampiyon',
+    ]) {
       expect(find.text(step), findsOneWidget, reason: '$step basamağı yok');
     }
     expect(find.text('16'), findsNothing);

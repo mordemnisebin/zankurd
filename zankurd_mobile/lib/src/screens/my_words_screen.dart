@@ -389,7 +389,10 @@ class _MasteryDots extends StatelessWidget {
   }
 }
 
-/// Küçük yeşil "Tekrar zamanı" çipi (vadesi gelmiş kelime).
+/// Küçük nötr "Tekrar zamanı" çipi (vadesi gelmiş kelime).
+///
+/// Y6 (2026-10-29 tur 6): çip yeşildi; yeşil "doğru cevap" demektir, burada
+/// ise "vakti geldi". Nötr yüzey + saat simgesi: durum anlamlarıyla çakışmaz.
 class _DueChip extends StatelessWidget {
   const _DueChip({required this.label});
 
@@ -400,15 +403,24 @@ class _DueChip extends StatelessWidget {
     final t = SahneTokens.of(context);
     return DecoratedBox(
       key: const ValueKey('my-word-due-chip'),
-      decoration: ShapeDecoration(color: t.okTint, shape: SahneShape.s),
+      decoration: ShapeDecoration(color: t.s2, shape: SahneShape.s),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: SahneSpace.x2,
           vertical: 2,
         ),
-        child: Text(
-          label,
-          style: SahneType.captionStrong.copyWith(color: t.okTx),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(AppIcons.clock, size: 12, color: t.tx2),
+            const SizedBox(width: 4),
+            Flexible(
+              child: Text(
+                label,
+                style: SahneType.captionStrong.copyWith(color: t.tx),
+              ),
+            ),
+          ],
         ),
       ),
     );

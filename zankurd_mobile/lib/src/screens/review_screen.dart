@@ -105,7 +105,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
     // 2026-09-29 Şahnê: B iskeleti. "Cevaplar" çubukta (2026-10-01'de tek
     // satırlık özet kalktı: karolar aynı sayıları söylüyor); eski camgöbeği kimlik bandı ve
     // kilim ayracı kalktı. İçerik: üç sayaç karosu → görünüm rayı → (varsa)
-    // TEK birincil "Tekrara başla" → cevap kartları ya da hafıza kartı.
+    // TEK birincil "Yanlışları çalış" (Y2) → cevap kartları ya da hafıza kartı.
     return Scaffold(
       backgroundColor: t.bg,
       appBar: zkAppBar(
@@ -115,7 +115,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
         // tekrarlıyordu).
         title: Text(context.t(K.answersTitle)),
       ),
-      // W8 (2026-10-28 tur 5): "Tekrara başla" listenin başında kayıyordu;
+      // W8 (2026-10-28 tur 5): "Yanlışları çalış" listenin başında kayıyordu;
       // artık altta SABİT (Günün turu/çark gibi tek birincil eylem).
       bottomNavigationBar: wrong > 0 && widget.practiceAvailable
           ? SafeArea(
@@ -132,7 +132,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                   onPressed: () => Navigator.of(context).pop(true),
                   icon: AppIcons.arrowsRotate,
                   arrow: false,
-                  label: context.t(K.tekraraBasla),
+                  label: context.t(K.reviewPracticeMistakes),
                   expand: true,
                 ),
               ),

@@ -53,6 +53,8 @@ class SahneButton extends StatelessWidget {
     this.semanticLabel,
     this.buttonKey,
   }) : quiet = false,
+       ink = false,
+       trailing = null,
        tint = null,
        edge = null,
        foreground = null,
@@ -69,7 +71,9 @@ class SahneButton extends StatelessWidget {
     this.loading = false,
     this.semanticLabel,
     this.buttonKey,
+    this.trailing,
   }) : quiet = false,
+       ink = false,
        tint = null,
        edge = null,
        foreground = null,
@@ -90,6 +94,8 @@ class SahneButton extends StatelessWidget {
     this.semanticLabel,
     this.buttonKey,
   }) : quiet = false,
+       ink = false,
+       trailing = null,
        _kind = _SahneButtonKind.tonal;
 
   const SahneButton.text({
@@ -98,10 +104,12 @@ class SahneButton extends StatelessWidget {
     required this.onPressed,
     this.arrow = true,
     this.quiet = false,
+    this.ink = false,
     this.icon,
     this.semanticLabel,
     this.buttonKey,
   }) : _kind = _SahneButtonKind.text,
+       trailing = null,
        tint = null,
        edge = null,
        foreground = null,
@@ -110,6 +118,10 @@ class SahneButton extends StatelessWidget {
        expand = false;
 
   final _SahneButtonKind _kind;
+
+  /// Yalnız ikincil düğme: etiketin sağında küçük serbest parça (ör. yanlış
+  /// sayısı rozeti — Y1, 2026-10-29).
+  final Widget? trailing;
 
   /// Dolgulu birincil düğme mi (testlerde hiyerarşiyi doğrulamak için).
   bool get isPrimary => _kind == _SahneButtonKind.primary;
@@ -145,6 +157,12 @@ class SahneButton extends StatelessWidget {
   /// satırdaki birincil metin eylemiyle ("Teste başla") yarışmasın diye
   /// "Şimdilik geç" gibi vazgeçme bağlantıları için.
   final bool quiet;
+
+  /// Yalnız metin düğmesi: mürekkep (birincil metin) rengi. Y5 (2026-10-29
+  /// tur 6): turuncu YALNIZ ekranın dolu birincil düğmesidir; "Teste başla",
+  /// "Şimdilik geç", "Oyundaki adını gir" gibi ikincil bağlantılar turuncu
+  /// metin olunca birincil eylemle yarışıyordu (jüri: Fable, Haiku, claude.ai).
+  final bool ink;
 
   /// Tam genişlik.
   final bool expand;
@@ -205,6 +223,10 @@ class SahneButton extends StatelessWidget {
                   textWidthBasis: TextWidthBasis.longestLine,
                 ),
               ),
+              if (trailing != null) ...[
+                SizedBox(width: gap),
+                onFirstLine(trailing!),
+              ],
               if (arrow) ...[
                 SizedBox(width: gap),
                 onFirstLine(
@@ -339,7 +361,11 @@ class SahneButton extends StatelessWidget {
           key: buttonKey,
           onPressed: press,
           style: TextButton.styleFrom(
-            foregroundColor: quiet ? t.tx2 : t.linkTx,
+            foregroundColor: quiet
+                ? t.tx2
+                : ink
+                ? t.tx
+                : t.linkTx,
             disabledForegroundColor: t.tx3,
             minimumSize: const Size(44, 44),
             textStyle: SahneType.captionStrong,

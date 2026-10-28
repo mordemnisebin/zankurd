@@ -810,6 +810,21 @@ class SahneCategoryTone {
     detail: Color(0xFF8F9199),
   );
 
+  /// "Karışık" (Tevlihev) karosunun tonu: konu değil, hepsinin karışımı.
+  ///
+  /// Y8 (2026-10-29 tur 6): karanlıkta sahne gecesine (fallback) düşüyor ve
+  /// zeminden ayrışmıyordu; öteki on karo renkli, bu devre dışı gibi duruyordu
+  /// (jüri: Opus). Nötr gümüş-arduvaz: gündüz koyu arduvaz, gece açık gümüş;
+  /// beyaz ikon/yazı ≥ 4,5:1 (4,78 ve 6,13). [byCategory]ye GİRMEZ: konu
+  /// tablosu yalnız on bir gerçek konudur.
+  static const mixed = SahneCategoryTone(
+    ground: SahneStageColors.top,
+    deep: SahneStageColors.bottom,
+    detail: Color(0xFF8F9199),
+    dayFill: Color(0xFF5B6270),
+    nightFill: Color(0xFF6A7383),
+  );
+
   /// Kanonik kategori kimliği → ton (bkz. `CategoryVisuals.canonicalName`).
   static const Map<String, SahneCategoryTone> byCategory = {
     'Ziman': ziman,
@@ -827,7 +842,8 @@ class SahneCategoryTone {
 
   /// Kanonik kategori kimliğinin tonu; bilinmeyen kategori [fallback].
   static SahneCategoryTone of(String canonicalCategory) =>
-      byCategory[canonicalCategory] ?? fallback;
+      byCategory[canonicalCategory] ??
+      (canonicalCategory == 'Tevlihev' ? mixed : fallback);
 
   @override
   bool operator ==(Object other) =>

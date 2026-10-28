@@ -55,7 +55,7 @@ void main() {
 
     await tester.pumpWidget(shell(MatchmakingScreen(repository: repository)));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.tap(find.text('Rastgele rakip bul'));
     // "Zafer geçişi" (1500 ms) tamamlanmadan, "eşleşti" durumunun
     // KENDİSİNİ yakala — asıl VS kartı burada.
     await tester.pump();

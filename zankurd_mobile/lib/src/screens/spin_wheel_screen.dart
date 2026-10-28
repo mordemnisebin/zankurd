@@ -463,6 +463,15 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
             style: SahneType.headline.copyWith(color: t.tx),
           ),
         ),
+        // Y8 (2026-10-29 tur 6): çarktaki sayıların ne olduğu yazmıyordu
+        // (jeton mu, XP mi): tek satır "Jeton kazan".
+        const SizedBox(height: SahneSpace.x1),
+        Text(
+          context.t(K.earnCoins),
+          key: const ValueKey('spin-prize-kind'),
+          textAlign: TextAlign.center,
+          style: SahneType.caption.copyWith(color: t.tx2),
+        ),
         const SizedBox(height: SahneSpace.x4),
         _buildWheelSection(areaHeight),
       ],

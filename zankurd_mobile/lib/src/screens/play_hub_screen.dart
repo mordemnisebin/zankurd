@@ -555,7 +555,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               tone: SahneBadgeTone.gold,
             )
           : null,
-      chevron: !_spinReady,
+      // Y5 (2026-10-29 tur 6): "Hazır!" altın (ödül) çip; satır sonundaki ›
+      // KALIR — diğer satırlarla aynı tıklanabilirlik ipucu.
+      chevron: true,
       semanticLabel: [
         context.t(K.wheelTitle),
         context.t(K.wheelFreeDaily),

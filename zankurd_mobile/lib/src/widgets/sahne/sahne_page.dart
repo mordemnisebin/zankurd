@@ -52,7 +52,14 @@ class SahneIconButton extends StatelessWidget {
     this.tooltip,
     this.quiet = false,
     this.glass = false,
+    this.selectedLearn = false,
   });
+
+  /// Seçili durumda altın (ödül) yerine Öğren yeşili: "kaydet" gibi öğrenme
+  /// eylemleri ödül/jeton rengini taşımaz (Y6, 2026-10-29 tur 6: altın =
+  /// ödül; dört satırda tekrarlanınca Kelimelerim'in en baskın rengi
+  /// "kaydet" oluyordu). Kayıtsız hâl nötr çerçevelidir.
+  final bool selectedLearn;
 
   /// Renkli sahnede (sonuç, quiz bandı) yarı saydam beyaz cam plaka: koyu
   /// kutu doygun zeminde sert duruyordu (kurul 2026-10-20). Kenarsız, ikon beyaz.
@@ -83,13 +90,15 @@ class SahneIconButton extends StatelessWidget {
     final t = SahneTokens.of(context);
     final enabled = onPressed != null;
     final on = selected ?? false;
+    final onFg = selectedLearn ? t.learnTx : t.goldTx;
+    final onBg = selectedLearn ? t.learnTint : t.goldTint;
     final plate = SahneTappable(
       shape: glass
           ? SahneShape.m
           : on
-          ? SahneShape.withSide(SahneShape.m, t.goldTx, width: SahneRing.r1)
+          ? SahneShape.withSide(SahneShape.m, onFg, width: SahneRing.r1)
           : SahneShape.withSide(SahneShape.m, t.edge, width: 1),
-      color: glass ? SahneVivid.glass : (on ? t.goldTint : t.s1),
+      color: glass ? SahneVivid.glass : (on ? onBg : t.s1),
       onTap: onPressed,
       child: SizedBox.square(
         dimension: visualSize,
@@ -99,7 +108,7 @@ class SahneIconButton extends StatelessWidget {
           color: glass
               ? SahneVivid.onFill
               : on
-              ? t.goldTx
+              ? onFg
               : (enabled ? (quiet ? t.tx2 : t.tx) : t.tx3),
         ),
       ),

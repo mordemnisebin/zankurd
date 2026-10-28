@@ -332,6 +332,9 @@ void main() {
     expect(find.textContaining('TIMEOUT'), findsNothing);
   });
 
+  // 2026-10-29 tur 6 Y2: düğme yanlış soruları yeniden çözdürür (aynı turu
+  // baştan oynatmaz); eski "Tekrara başla" sonuçtaki "Tekrar oyna" ile
+  // karışıyordu. Etiket işi söyler: "Yanlışları çalış".
   testWidgets('yanlış cevap varsa tekrar eylemi görünür', (tester) async {
     const records = [
       AnswerRecord(
@@ -352,8 +355,9 @@ void main() {
     final action = find.byKey(const ValueKey('review-practice-cta'));
     expect(action, findsOneWidget);
     expect(
-      find.descendant(of: action, matching: find.text('Tekrara başla')),
+      find.descendant(of: action, matching: find.text('Yanlışları çalış')),
       findsOneWidget,
     );
+    expect(find.text('Tekrara başla'), findsNothing);
   });
 }
