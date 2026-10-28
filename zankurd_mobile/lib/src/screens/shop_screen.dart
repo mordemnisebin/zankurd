@@ -738,6 +738,8 @@ class _ShopScreenState extends State<ShopScreen> {
   /// Seri dondurma satın alma: `spendStreakFreeze` (idempotent, bozulma
   /// anındaki teklifle aynı sunucu yolu) → [StreakStore.addFreeze].
   /// Üst sınır ([StreakStore.maxFreeze]) doluysa jeton hiç harcanmaz.
+  static String? _pendingFreezeKey;
+
   Future<void> _purchaseFreeze(ShopItem item) async {
     if (_freezeCount >= StreakStore.maxFreeze) {
       ScaffoldMessenger.of(
@@ -756,16 +758,27 @@ class _ShopScreenState extends State<ShopScreen> {
       _loading = true;
       _purchaseErrorMessage = null;
     });
+    // Anahtar belirsiz bir hatadan sonra AYNEN yeniden kullanılır: yanıtı
+    // kaybolan tahsilatın tekrarı yeni bir -50 satırı yazmasın (Codex
+    // denetimi 2026-10-29). Kesin sonuçta (başarı/ret) anahtar bırakılır.
+    final key =
+        _pendingFreezeKey ??
+        'shop_freeze_${DateTime.now().microsecondsSinceEpoch}';
+    _pendingFreezeKey = key;
     try {
       final charge = await widget.repository.spendStreakFreeze(
-        idempotencyKey: 'shop_freeze_${DateTime.now().microsecondsSinceEpoch}',
+        idempotencyKey: key,
       );
-      if (!mounted) return;
       if (!charge.succeeded) {
+        _pendingFreezeKey = null;
+        if (!mounted) return;
         AppHaptics.vibrate();
         setState(() => _purchaseErrorMessage = context.t(K.purchaseFailed));
         return;
       }
+      _pendingFreezeKey = null;
+      // Hak, ekrandan bağımsız teslim edilir: tahsilat beklenirken ekrandan
+      // çıkılırsa jeton gidip dondurma gelmemesin.
       final store = await StreakStore.load();
       final count = await store.addFreeze();
       if (!mounted) return;
@@ -829,12 +842,16 @@ class _ShopScreenState extends State<ShopScreen> {
       }
       final success = result.success;
 
+      // Etki (çerçeve/rozet) tahsilat sonrası EKRANDAN BAĞIMSIZ uygulanır:
+      // tahsilat beklenirken ekrandan çıkılırsa jeton gitmiş ama ürün
+      // verilmemiş kalıyordu (Codex denetimi 2026-10-29).
+      final effectApplied = success
+          ? await _applyPurchaseEffect(item.id)
+          : true;
       if (!mounted) return;
 
       if (success) {
         _purchaseErrorMessage = null;
-        final effectApplied = await _applyPurchaseEffect(item.id);
-        if (!mounted) return;
         if (!effectApplied) {
           final title = context.isKu ? item.titleKu : item.titleTr;
           setState(() {
