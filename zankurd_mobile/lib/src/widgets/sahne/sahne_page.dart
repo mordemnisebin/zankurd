@@ -651,79 +651,92 @@ class SahnePushedPage extends StatelessWidget {
       return AnnotatedRegion<SystemUiOverlayStyle>(
         value: _overlayFor(Brightness.dark),
         child: Scaffold(
-          backgroundColor: SahneTokens.night.bg,
-          body: SafeArea(
-            bottom: false,
-            child: Column(
-              children: [
-                // U3 (2026-10-28 tur 4): oyun sahnesi (çark) açıkken üst çubuk
-                // da sahne gibi KOYU; nötr-çubuk kuralının tek istisnası
-                // (soru/sonuç tam ekran sahneleri gibi).
-                SahneStage(
-                  stage: AppTheme.stage,
-                  child: Builder(
-                    builder: (c) => ColoredBox(
-                      key: const ValueKey('sahne-pushed-stage-bar'),
-                      color: SahneTokens.of(c).bg,
-                      child: barFor(c),
+          backgroundColor: SahneStageColors.nightGround,
+          body: Stack(
+            children: [
+              // G1 (2026-10-29): çark da oyun sahnesi — gece dağları zemini.
+              const Positioned.fill(child: SahneNightStage()),
+              SafeArea(
+                bottom: false,
+                child: Column(
+                  children: [
+                    // U3 (2026-10-28 tur 4): oyun sahnesi (çark) açıkken üst çubuk
+                    // da sahne gibi KOYU; nötr-çubuk kuralının tek istisnası
+                    // (soru/sonuç tam ekran sahneleri gibi).
+                    SahneStage(
+                      stage: AppTheme.stage,
+                      child: Builder(
+                        builder: (c) => ColoredBox(
+                          key: const ValueKey('sahne-pushed-stage-bar'),
+                          color: Colors.transparent,
+                          child: barFor(c),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                if (accent != null) ZkAccentLine(color: accent),
-                Expanded(
-                  child: SahneStage(
-                    stage: AppTheme.stage,
-                    child: Builder(
-                      builder: (context) {
-                        final st = SahneTokens.of(context);
-                        return ColoredBox(
-                          key: const ValueKey('sahne-pushed-stage'),
-                          color: st.bg,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: Stack(
-                                  children: [
-                                    Positioned.fill(
-                                      child: IgnorePointer(
-                                        child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            gradient: RadialGradient(
-                                              center: const Alignment(0, -0.1),
-                                              radius: 0.85,
-                                              colors: [
-                                                st.gold.withValues(alpha: 0.16),
-                                                st.gold.withValues(alpha: 0),
-                                              ],
+                    if (accent != null) ZkAccentLine(color: accent),
+                    Expanded(
+                      child: SahneStage(
+                        stage: AppTheme.stage,
+                        child: Builder(
+                          builder: (context) {
+                            final st = SahneTokens.of(context);
+                            return ColoredBox(
+                              key: const ValueKey('sahne-pushed-stage'),
+                              color: Colors.transparent,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Stack(
+                                      children: [
+                                        Positioned.fill(
+                                          child: IgnorePointer(
+                                            child: DecoratedBox(
+                                              decoration: BoxDecoration(
+                                                gradient: RadialGradient(
+                                                  center: const Alignment(
+                                                    0,
+                                                    -0.1,
+                                                  ),
+                                                  radius: 0.85,
+                                                  colors: [
+                                                    st.gold.withValues(
+                                                      alpha: 0.16,
+                                                    ),
+                                                    st.gold.withValues(
+                                                      alpha: 0,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
+                                        Positioned.fill(child: stageContent),
+                                      ],
                                     ),
-                                    Positioned.fill(child: stageContent),
-                                  ],
-                                ),
-                              ),
-                              if (bottom != null)
-                                SahneBottomDock(
-                                  color: st.bg,
-                                  padding: const EdgeInsets.fromLTRB(
-                                    SahneSpace.page,
-                                    SahneSpace.x2,
-                                    SahneSpace.page,
-                                    SahneSpace.x3,
                                   ),
-                                  child: bottom!,
-                                ),
-                            ],
-                          ),
-                        );
-                      },
+                                  if (bottom != null)
+                                    SahneBottomDock(
+                                      color: SahneStageColors.nightGround,
+                                      padding: const EdgeInsets.fromLTRB(
+                                        SahneSpace.page,
+                                        SahneSpace.x2,
+                                        SahneSpace.page,
+                                        SahneSpace.x3,
+                                      ),
+                                      child: bottom!,
+                                    ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );
@@ -960,7 +973,9 @@ class SahneStageScaffold extends StatelessWidget {
 
     final artwork = backdrop;
     final sceneColors = scene;
-    final floor = sceneColors == null ? t.bg : sceneColors.last;
+    final floor = sceneColors == null
+        ? SahneStageColors.nightGround
+        : sceneColors.last;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _overlayFor(Brightness.dark),
       child: Scaffold(
@@ -1015,9 +1030,15 @@ class SahneStageScaffold extends StatelessWidget {
                 ),
               )
             else
-              const Positioned.fill(
-                child: IgnorePointer(
-                  child: CustomPaint(painter: SahneUnderglowPainter()),
+              Positioned.fill(
+                // Scaffold gövdesinin MediaQuery'si alt perde boyunu taşır:
+                // dağlar perdenin üst kenarına oturur.
+                child: Builder(
+                  builder: (c) => SahneNightStage(
+                    groundInset: dockWidget == null
+                        ? 0
+                        : MediaQuery.paddingOf(c).bottom,
+                  ),
                 ),
               ),
             if (artwork != null)

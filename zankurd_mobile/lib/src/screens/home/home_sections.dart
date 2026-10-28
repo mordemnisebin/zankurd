@@ -85,7 +85,7 @@ class HomeTopicGrid extends StatelessWidget {
   static const double _pad = SahneSpace.x4;
   static const double _padV = SahneSpace.x3;
   static const double _gap = SahneSpace.x3;
-  static const double _badge = 44;
+  static const double _badge = 48;
   static const double _strip = 4;
   static const double _minHeight = 96;
 

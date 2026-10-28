@@ -1,3 +1,5 @@
+// 2026-10-29 canlılık katmanı G3: karışım açık %18 / koyu %26, rozet 48 px
+// (aşağıdaki başlıktaki %12/%20 ve 44 px eskidir); bekçi yeni ölçüyü sınar.
 // 2026-10-28 kurul turu 2 R1: konu karosu TONLU yüzey (K1'in nötr karosunun
 // yerine; dosya adı tarihçe için kaldı).
 //
@@ -83,7 +85,7 @@ void main() {
         final badge = tester.widget<CategoryIconTile>(
           find.byKey(ValueKey('home-topic-badge-$c')),
         );
-        expect(badge.size, 44);
+        expect(badge.size, 48); // G3 (2026-10-29): rozet 44 -> 48
         expect(badge.category, c);
         // Ad normal metin renginde.
         final name = tester.widget<Text>(

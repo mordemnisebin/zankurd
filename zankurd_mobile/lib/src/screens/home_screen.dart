@@ -660,7 +660,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             children: [
               SahneModeTile(
                 key: const ValueKey('home-door-learn'),
-                calm: true,
+                lobby: true,
                 icon: AppIcons.graduationCap,
                 role: SahneRole.learn,
                 title: context.t(K.learnKurmanci),
@@ -672,7 +672,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               SahneModeTile(
                 key: const ValueKey('home-door-play'),
-                calm: true,
+                lobby: true,
                 icon: AppIcons.gamepad,
                 role: SahneRole.race,
                 title: context.t(K.homeDoorPlayTitle),

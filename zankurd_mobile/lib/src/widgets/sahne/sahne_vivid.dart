@@ -254,6 +254,7 @@ class SahneModeTile extends StatefulWidget {
     this.deep = false,
     this.compact = false,
     this.calm = false,
+    this.lobby = false,
   });
 
   /// SAKİN kart (2026-10-28 kurul K3/K4/K5; tur 2 R2: yüzey rolün HAFİF
@@ -262,6 +263,16 @@ class SahneModeTile extends StatefulWidget {
   /// renkli blok, silik büyük ikon filigranı YOK; mod rengi yalnız rozet ve
   /// şeritte yaşar (canlılık ölmez, ama ekranda tek birincil turuncu kalır).
   final bool calm;
+
+  /// OYUN LOBİSİ kartı (2026-10-29 canlılık katmanı G2): rolün DOYGUN rengi
+  /// (Yarış bordo-pembe, Oda Nîl mavisi) iki tonlu degrade, büyük cam ikon
+  /// rozeti + köşede dev ikon filigranı, beyaz yazı. Kusur: Yarış sekmesinde
+  /// ikincil mod kartları pastel "sakin" yüzeydi; rakipte (TRT "Oyun modunu
+  /// seç") modlar kendi renginde doygun kartlardır ve ekran bir oyun
+  /// lobisi gibi okunur. Turuncu DEĞİL: ekranın tek turuncu birincil
+  /// düğmesi kahramandaki "Rakip bul" olarak kalır (kart dokunulur bir
+  /// yüzeydir, düğme değil).
+  final bool lobby;
 
   /// Sade, tek satırlık küçük kart: yalnız ikon + ad (+ rozet). Rol rengi
   /// AYNEN korunur (sadeleştirme rengi öldürmesin); büyüklük ve filigran
@@ -302,6 +313,7 @@ class _SahneModeTileState extends State<SahneModeTile> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.lobby) return _buildLobby(context);
     if (widget.calm) return _buildCalm(context);
     final icon = widget.icon;
     final title = widget.title;
@@ -529,6 +541,180 @@ class _SahneModeTileState extends State<SahneModeTile> {
 }
 
 extension on _SahneModeTileState {
+  Widget _buildLobby(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final role = widget.role;
+    final base = switch (role) {
+      SahneRole.social => t.nilFill,
+      SahneRole.learn => t.learnFill,
+      SahneRole.gold => t.zerBand,
+      _ => t.raceFill,
+    };
+    final gold = role == SahneRole.gold;
+    final ink = gold ? t.onZer : SahneVivid.onFill;
+    final soft = gold ? t.onZer : SahneVivid.onFillSoft;
+    final deepEnd = Color.lerp(base, SahneVivid.shade, 0.28)!;
+    final enabled = widget.onTap != null;
+    final badge = widget.badge;
+    final reduced = MediaQuery.disableAnimationsOf(context);
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: enabled,
+      label: [
+        widget.semanticLabel ?? [widget.title, ?widget.subtitle].join('. '),
+        ?badge,
+      ].join('. '),
+      excludeSemantics: true,
+      onTap: widget.onTap,
+      child: Listener(
+        onPointerDown: enabled ? (_) => _setPressed(true) : null,
+        onPointerUp: (_) => _setPressed(false),
+        onPointerCancel: (_) => _setPressed(false),
+        child: AnimatedScale(
+          scale: _pressed && !reduced ? 0.97 : 1,
+          duration: const Duration(milliseconds: 90),
+          curve: Curves.easeOut,
+          child: Opacity(
+            opacity: enabled ? 1 : 0.55,
+            child: Material(
+              type: MaterialType.transparency,
+              shape: SahneShape.l,
+              clipBehavior: Clip.antiAlias,
+              child: Ink(
+                key: const ValueKey('mode-tile-lobby'),
+                decoration: ShapeDecoration(
+                  shape: SahneShape.l,
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [base, deepEnd],
+                  ),
+                ),
+                child: InkWell(
+                  customBorder: SahneShape.l,
+                  onTap: widget.onTap,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 148),
+                    child: Stack(
+                      children: [
+                        PositionedDirectional(
+                          end: -14,
+                          bottom: -18,
+                          child: IgnorePointer(
+                            child: Transform.rotate(
+                              angle: -12 * math.pi / 180,
+                              child: Icon(
+                                widget.icon,
+                                size: 104,
+                                color: SahneVivid.watermarkNight,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(SahneSpace.x3),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                children: [
+                                  DecoratedBox(
+                                    decoration: const ShapeDecoration(
+                                      color: SahneVivid.glass,
+                                      shape: CircleBorder(
+                                        side: BorderSide(
+                                          color: SahneVivid.hairline,
+                                        ),
+                                      ),
+                                    ),
+                                    child: SizedBox.square(
+                                      dimension: 52,
+                                      child: Icon(
+                                        widget.icon,
+                                        size: 30,
+                                        color: ink,
+                                      ),
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  if (widget.loading)
+                                    SizedBox.square(
+                                      dimension: 18,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: ink,
+                                      ),
+                                    )
+                                  else if (badge != null)
+                                    Flexible(
+                                      child: DecoratedBox(
+                                        decoration: ShapeDecoration(
+                                          color: gold
+                                              ? t.zerChip
+                                              : SahneVivid.onFill,
+                                          shape: const StadiumBorder(),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: SahneSpace.x2,
+                                            vertical: 2,
+                                          ),
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: Text(
+                                              badge,
+                                              maxLines: 1,
+                                              style: SahneType.captionStrong
+                                                  .copyWith(
+                                                    color: gold
+                                                        ? t.goldTx
+                                                        : deepEnd,
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                              const SizedBox(height: SahneSpace.x3),
+                              Text(
+                                widget.title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: SahneType.bodyStrong.copyWith(
+                                  color: ink,
+                                  fontSize: 17,
+                                ),
+                              ),
+                              if (widget.subtitle != null) ...[
+                                const SizedBox(height: 2),
+                                Text(
+                                  widget.subtitle!,
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: SahneType.caption.copyWith(
+                                    color: soft,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildCalm(BuildContext context) {
     final t = SahneTokens.of(context);
     final role = widget.role;

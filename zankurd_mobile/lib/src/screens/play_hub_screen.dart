@@ -524,6 +524,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       locked,
       SahneListRow.icon(
         key: const ValueKey('play-hub-daily-contest'),
+        roundBadge: true,
         icon: AppIcons.calendarDays,
         role: SahneRole.race,
         title: context.t(K.dailyContest),
@@ -545,6 +546,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     // Çark: günlük jeton kazanma yeri; tek dokunuşta durur.
     final wheelTile = SahneListRow.icon(
       key: const ValueKey('play-hub-spin-wheel'),
+      roundBadge: true,
       icon: AppIcons.ferrisWheel,
       role: SahneRole.gold,
       title: context.t(K.wheelTitle),
@@ -572,6 +574,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       locked,
       SahneListRow.icon(
         key: const ValueKey('play-hub-friends'),
+        roundBadge: true,
         icon: AppIcons.userPlus,
         role: SahneRole.social,
         title: context.t(K.friendsScreen),
@@ -630,7 +633,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 locked,
                 SahneModeTile(
                   key: const ValueKey('play-hub-async-duel'),
-                  calm: true,
+                  lobby: true,
                   icon: AppIcons.hourglass,
                   role: SahneRole.race,
                   title: context.t(K.asyncDuel),
@@ -650,7 +653,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               locked,
               SahneModeTile(
                 key: const ValueKey('play-hub-room'),
-                calm: true,
+                lobby: true,
                 icon: AppIcons.peopleGroup,
                 // Oda çok oyunculu sosyal moddur: Nîl.
                 role: SahneRole.social,
@@ -695,6 +698,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                   locked,
                   SahneListRow.icon(
                     key: const ValueKey('play-hub-tournament'),
+                    roundBadge: true,
                     icon: AppIcons.trophy,
                     role: SahneRole.gold,
                     title: context.t(K.tournament),

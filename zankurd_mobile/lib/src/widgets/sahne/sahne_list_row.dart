@@ -180,6 +180,7 @@ class SahneListRow extends StatelessWidget {
     this.semanticLabel,
     this.destructive = false,
     this.footer,
+    this.roundBadge = false,
   }) : _kind = _RowKind.standard,
        dense = false,
        tone = SahneCategoryTone.fallback,
@@ -214,7 +215,8 @@ class SahneListRow extends StatelessWidget {
        avatar = null,
        destructive = false,
        leadingWidget = null,
-       leadingWidth = 44;
+       leadingWidth = 44,
+       roundBadge = false;
 
   /// Serbest öncüllü satır (ör. `PlayerAvatar`): [leadingWidth] ayırıcı
   /// hizası içindir (öncülün genişliği).
@@ -241,7 +243,8 @@ class SahneListRow extends StatelessWidget {
        role = SahneRole.neutral,
        rank = null,
        initial = null,
-       avatar = null;
+       avatar = null,
+       roundBadge = false;
 
   /// İkonsuz satır: öncül yok, metin satırın kenarından (16) başlar.
   /// Satırın tamamı dokunulur; sağda ok ya da değer, ikisi birden değil.
@@ -271,7 +274,8 @@ class SahneListRow extends StatelessWidget {
        initial = null,
        avatar = null,
        leadingWidget = null,
-       leadingWidth = 0;
+       leadingWidth = 0,
+       roundBadge = false;
 
   const SahneListRow.rank({
     super.key,
@@ -295,7 +299,8 @@ class SahneListRow extends StatelessWidget {
        enabled = true,
        destructive = false,
        leadingWidget = null,
-       leadingWidth = 36;
+       leadingWidth = 36,
+       roundBadge = false;
 
   const SahneListRow.me({
     super.key,
@@ -319,7 +324,13 @@ class SahneListRow extends StatelessWidget {
        enabled = true,
        destructive = false,
        leadingWidget = null,
-       leadingWidth = 36;
+       leadingWidth = 36,
+       roundBadge = false;
+
+  /// YUVARLAK RENKLİ ROZET (2026-10-29 canlılık katmanı G2): ikon rozeti
+  /// kare yerine daire; Zêr rolü de dolu altın + koyu ikon. Yarış sekmesi
+  /// liste satırlarında oyun lobisi canlılığı için (yalnız `.icon`).
+  final bool roundBadge;
 
   final _RowKind _kind;
   final IconData? icon;
@@ -418,11 +429,15 @@ class SahneListRow extends StatelessWidget {
         // 2026-10-20 renk ve canlılık (B): mod rolleri (öğrenme, yarış,
         // sosyal) ikon karosunda DOLU renk + beyaz ikon taşır; nötr ve Zêr
         // ton zemininde kalır.
-        final vividFill = destructive || !enabled ? null : t.roleFill(role);
+        final goldBadge =
+            roundBadge && !destructive && enabled && role == SahneRole.gold;
+        final vividFill = destructive || !enabled
+            ? null
+            : (goldBadge ? t.zerBand : t.roleFill(role));
         leading = DecoratedBox(
           decoration: ShapeDecoration(
             color: destructive ? t.errTint : (vividFill ?? t.roleTint(role)),
-            shape: SahneShape.m,
+            shape: roundBadge ? const CircleBorder() : SahneShape.m,
           ),
           child: SizedBox.square(
             dimension: 44,
@@ -433,6 +448,8 @@ class SahneListRow extends StatelessWidget {
                   ? t.tx3
                   : destructive
                   ? t.errTx
+                  : goldBadge
+                  ? t.onZer
                   : (vividFill != null ? SahneVivid.onFill : t.roleText(role)),
             ),
           ),

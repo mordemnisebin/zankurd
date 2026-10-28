@@ -134,7 +134,7 @@ class QuizOptionTile extends StatelessWidget {
     };
     final tn = tone;
     final Color base = state == _OptionState.dimmed
-        ? t.s1
+        ? t.optionDimFill
         : (tn != null && state == _OptionState.idle
               ? t.optionFillFor(tn)
               : t.optionFill);
@@ -150,7 +150,7 @@ class QuizOptionTile extends StatelessWidget {
     final Color letterBg = switch (state) {
       _OptionState.correct => t.okTx,
       _OptionState.wrong => t.errTx,
-      _OptionState.dimmed => t.s2,
+      _OptionState.dimmed => t.optionLetterFill,
       _ => t.optionLetterFill,
     };
     final Color letterFg = switch (state) {

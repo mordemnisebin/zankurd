@@ -155,11 +155,23 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Şık çubuğunun dinlenme dolgusu (tur 8, 5 denetçinin 5'i): gecede Kulis
   /// (`s2`) zemine (`bg`) 1,2:1 yakındı; bir ton açık Ray (`s3`) + [optionEdge]
   /// kenarı. Gündüz Kulis aynı kalır.
-  Color get optionFill => _isDay ? s2 : s3;
+  ///
+  /// G1 (2026-10-29): gece sahnesi artık lacivert-mor degrade; şık dolgusu
+  /// zeminden açık bir çivit ([SahneStageColors] gece dağları üstünde
+  /// yarı saydam beyaz gibi okunur, opak tutulur: kontrast ölçülebilsin).
+  Color get optionFill => _isDay ? s2 : const Color(0xFF3A3378);
+
+  /// Sönük (açıklanınca seçilmeyen) şık dolgusu: gecede gri Perde yerine
+  /// sahneden koyu çivit (G1, 2026-10-29); gündüz Perde.
+  Color get optionDimFill => _isDay ? s1 : const Color(0xFF1C1650);
+
+  /// Joker düğmesi dolgusu: gece sahnesinde gri Kulis yerine mor sahneyle
+  /// uyumlu çivit (G1, 2026-10-29); gündüz Kulis. Metin ≥ 7:1.
+  Color get stageChip => _isDay ? s2 : const Color(0xFF2C2566);
 
   /// Şık çubuğunun 1 px kenarı: gece zeminden ve dolgudan ayrılan ince çizgi
   /// (`#4C4F57`), gündüz `edge`.
-  Color get optionEdge => _isDay ? edge : const Color(0xFF4C4F57);
+  Color get optionEdge => _isDay ? edge : const Color(0xFF8A82CF);
 
   /// Zêr (ödül) bandı: mağaza üst bandı ve vip rozeti karosu (2026-10-20 D
   /// aşaması, 4 model: mağaza sönüktü, Zêr yalnız küçük jeton glifindeydi).
@@ -190,7 +202,7 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   );
 
   /// Şık harf karosu: gecede dolgu Ray olduğu için karo bir ton koyu (`s1`).
-  Color get optionLetterFill => _isDay ? s3 : s1;
+  Color get optionLetterFill => _isDay ? s3 : const Color(0xFF241D55);
 
   /// Agir — birincil eylem dolgusu.
   final Color act;
@@ -572,6 +584,31 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
 class SahneStageColors {
   const SahneStageColors._();
 
+  /// Oyun sahnesinin "gece dağları" zemini (2026-10-29 canlılık katmanı G1).
+  ///
+  /// Kusur: soru/sonuç/çark sahnesi düz neredeyse-siyah (#121214) idi;
+  /// rakipler (QuizPlanet, TRT, Trivia Crack) oyun sahnesini zengin bir gece
+  /// gökyüzüne boyuyor, bizimki "soluk ve düz" okunuyordu. Zemin artık
+  /// lacivert → çivit → mor dikey degrade + soluk yıldızlar + alçak dağ
+  /// siluetidir. İki temada da aynıdır (oyun sahnesi hep gecedir). Metin
+  /// kontrastı: Gece birincil metin (#F5F3EF) en açık durakta bile ≥ 10:1.
+  static const nightTop = Color(0xFF0E1433);
+  static const nightMid = Color(0xFF241A4F);
+  static const nightLow = Color(0xFF3A1F5C);
+
+  /// Dağ siluetleri: uzak (açık mor, yarı saydam), yakın ve zemin (koyu
+  /// çivit). Alt perde ([nightGround]) ile aynı renk: siluet perdeye akar.
+  static const nightRidgeFar = Color(0xFF5A3A8C);
+  static const nightRidgeNear = Color(0xFF1B1245);
+  static const nightGround = Color(0xFF1B1245);
+
+  /// Dağların ardındaki hafif sıcak ışıma (uç, saydam).
+  static const nightGlow = Color(0x2EF08A4A);
+  static const nightGlowEnd = Color(0x00F08A4A);
+
+  /// Soluk yıldız rengi.
+  static const nightStar = Color(0xFFFFF4E0);
+
   /// Sahne kartı degradesi (üst → alt).
   static const top = Color(0xFF24252A);
   static const bottom = Color(0xFF1A1B1F);
@@ -865,6 +902,9 @@ class SahneCategoryTone {
 /// yazılmaz (`sahne_design_guard_test`), buradan okunur.
 class SahneVivid {
   const SahneVivid._();
+
+  /// Doygun mod kartı degradesinin koyu ucuna karışan siyah.
+  static const shade = Color(0xFF000000);
 
   /// Dolu yüzey üstünde ad/ikon: beyaz; ikinci satır beyazın %92'si; filigran
   /// beyazın %12'si.
@@ -1325,12 +1365,12 @@ class SahneVistaPalette {
   static const _star = Color(0xFFF5F3EF);
 
   static const dawn = SahneVistaPalette(
-    skyTop: Color(0xFFFFC58A),
-    skyBottom: Color(0xFFFFE8CC),
+    skyTop: Color(0xFFFFA24D),
+    skyBottom: Color(0xFFFFD7A3),
     sun: Color(0xFFFF8A3D),
-    ridgeFar: Color(0xFF8FD3B5),
-    ridgeMid: Color(0xFF2E9F74),
-    ridgeNear: Color(0xFF0E8360),
+    ridgeFar: Color(0xFF63D2A2),
+    ridgeMid: Color(0xFF1B9E68),
+    ridgeNear: Color(0xFF067A57),
     star: _star,
     stars: false,
     sunX: 0.68,
@@ -1338,12 +1378,12 @@ class SahneVistaPalette {
     sunR: 0.15,
   );
   static const day = SahneVistaPalette(
-    skyTop: Color(0xFF5AA9EA),
-    skyBottom: Color(0xFFC3E4FA),
+    skyTop: Color(0xFF2E8CF0),
+    skyBottom: Color(0xFFA6DAFB),
     sun: Color(0xFFFFD23F),
-    ridgeFar: Color(0xFF8FD3B5),
-    ridgeMid: Color(0xFF2E9F74),
-    ridgeNear: Color(0xFF0E8360),
+    ridgeFar: Color(0xFF63D2A2),
+    ridgeMid: Color(0xFF1B9E68),
+    ridgeNear: Color(0xFF067A57),
     star: _star,
     stars: false,
     sunX: 0.70,
@@ -1351,7 +1391,7 @@ class SahneVistaPalette {
     sunR: 0.15,
   );
   static const dusk = SahneVistaPalette(
-    skyTop: Color(0xFF5C2E7E),
+    skyTop: Color(0xFF6B2BA0),
     skyBottom: Color(0xFFF5744F),
     sun: Color(0xFFE8391F),
     ridgeFar: Color(0xFF5B8F86),
@@ -1364,8 +1404,8 @@ class SahneVistaPalette {
     sunR: 0.25,
   );
   static const night = SahneVistaPalette(
-    skyTop: Color(0xFF151A3D),
-    skyBottom: Color(0xFF2B3B86),
+    skyTop: Color(0xFF1B2160),
+    skyBottom: Color(0xFF3B4FB8),
     sun: Color(0xFFFF8A3D),
     ridgeFar: Color(0xFF33438F),
     ridgeMid: Color(0xFF24336E),

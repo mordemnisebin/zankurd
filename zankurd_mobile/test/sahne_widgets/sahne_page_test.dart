@@ -192,7 +192,8 @@ void main() {
       expect(tester.takeException(), isNull);
 
       final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
-      expect(scaffold.backgroundColor, SahneTokens.night.bg);
+      // 2026-10-29 G1: oyun sahnesinin zemini gece dağları (zemin = dağ tabanı).
+      expect(scaffold.backgroundColor, SahneStageColors.nightGround);
 
       final timer = tester.getCenter(find.byKey(const Key('timer')));
       // Sayaç ile sağ grup arasında en az 12 px (2026-10-19): kalabalık

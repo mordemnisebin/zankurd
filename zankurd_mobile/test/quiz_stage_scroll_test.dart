@@ -262,7 +262,10 @@ void main() {
             });
             expect(
               brightest,
-              lessThan(90),
+              // 2026-10-29 G1: zemin artık yıldızlı degrade; en parlak yıldız
+              // pikseli ~175 (alfa <= %60). Kaydırılmış beyaz harf ~244: eşik
+              // 200 hâlâ "metin sönmemiş"i yakalar, yıldızı yanlış yakalamaz.
+              lessThan(200),
               reason: 'başlığın hemen altında parlak metin pikseli var',
             );
           },

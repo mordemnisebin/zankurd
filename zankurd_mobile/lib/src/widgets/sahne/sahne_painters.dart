@@ -881,3 +881,116 @@ class SahneUnderglowPainter extends CustomPainter {
   @override
   bool shouldRepaint(SahneUnderglowPainter oldDelegate) => false;
 }
+
+/// Oyun sahnesinin "gece dağları" zemini (2026-10-29 canlılık katmanı G1):
+/// lacivert → çivit → mor dikey degrade, soluk yıldız noktaları, iki katman
+/// dağ silueti ve dağların ardında çok hafif sıcak bir ışıma.
+///
+/// Statiktir (hareket yok → reduce-motion'a zaten uyar); `saveLayer` ve
+/// bulanıklık yok. [groundInset]: alttaki perdenin (dock) yüksekliği;
+/// siluetler perdenin üst kenarına oturur ve perde [SahneStageColors.nightGround]
+/// renginde olduğundan dağlar perdeye akar.
+class SahneNightStagePainter extends CustomPainter {
+  const SahneNightStagePainter({this.groundInset = 0});
+
+  final double groundInset;
+
+  /// Yıldız konumları (0–1 ızgarası, üst %62), yarıçap çarpanı ve opaklık;
+  /// sabit tohumlu, her çizimde aynı.
+  static final List<({double x, double y, double r, double a})> stars = () {
+    var seed = 20261029;
+    double next() {
+      seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+      return seed / 0x7fffffff;
+    }
+
+    return List.generate(46, (_) {
+      final x = next();
+      final y = next() * 0.62;
+      final r = 0.5 + next() * 0.9;
+      final a = 0.22 + next() * 0.38;
+      return (x: x, y: y, r: r, a: a);
+    });
+  }();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.isEmpty) return;
+    final rect = Offset.zero & size;
+    canvas.drawRect(
+      rect,
+      Paint()
+        ..shader = const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            SahneStageColors.nightTop,
+            SahneStageColors.nightMid,
+            SahneStageColors.nightLow,
+          ],
+          stops: [0, 0.5, 1],
+        ).createShader(rect),
+    );
+    final star = Paint();
+    for (final s in stars) {
+      star.color = SahneStageColors.nightStar.withValues(alpha: s.a);
+      canvas.drawCircle(Offset(s.x * size.width, s.y * size.height), s.r, star);
+    }
+    final base = size.height - groundInset;
+    final h = math.min(size.height * 0.2, 190.0);
+    if (base <= h) return;
+    // Dağların ardında hafif sıcak ışıma (tek turuncu ışık değil: ≤ %10).
+    paintEllipseGlow(
+      canvas,
+      rect,
+      center: Offset(size.width / 2, base),
+      radiusX: size.width * 0.8,
+      radiusY: h * 1.4,
+      colors: const [SahneStageColors.nightGlow, SahneStageColors.nightGlowEnd],
+      stops: const [0, 1],
+    );
+    final far = SahneRidgePainter.ridgePath(
+      Rect.fromLTWH(0, base - h, size.width, h),
+      floor: groundInset + 1,
+    );
+    canvas.drawPath(
+      far,
+      Paint()..color = SahneStageColors.nightRidgeFar.withValues(alpha: 0.5),
+    );
+    // Yakın katman: aynı sırt yatay aynalı, daha alçak.
+    final nearBox = Rect.fromLTWH(0, base - h * 0.55, size.width, h * 0.55);
+    canvas.save();
+    canvas.translate(size.width, 0);
+    canvas.scale(-1, 1);
+    canvas.drawPath(
+      SahneRidgePainter.ridgePath(nearBox, floor: groundInset + 1),
+      Paint()..color = SahneStageColors.nightRidgeNear,
+    );
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(SahneNightStagePainter old) =>
+      old.groundInset != groundInset;
+}
+
+/// [SahneNightStagePainter]'ı kutunun tamamına yayan, dokunmayı ve
+/// erişilebilirlik ağacını geçen sahne zemini.
+class SahneNightStage extends StatelessWidget {
+  const SahneNightStage({super.key, this.groundInset = 0});
+
+  final double groundInset;
+
+  @override
+  Widget build(BuildContext context) => IgnorePointer(
+    child: ExcludeSemantics(
+      child: RepaintBoundary(
+        child: CustomPaint(
+          key: const ValueKey('sahne-night-stage'),
+          painter: SahneNightStagePainter(groundInset: groundInset),
+          child: const SizedBox.expand(),
+        ),
+      ),
+    ),
+  );
+}

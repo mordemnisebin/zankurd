@@ -555,7 +555,7 @@ class SahneJokerButton extends StatelessWidget {
                 // yalnız soluk metin onu "etkin ama silik" gösteriyordu.
                 color: selected
                     ? t.goldTint
-                    : (unaffordable ? t.disabledFill : t.s2),
+                    : (unaffordable ? t.disabledFill : t.stageChip),
                 onTap: tappable ? onPressed : null,
                 child: ConstrainedBox(
                   // a11y-tap-target: noninteractive — görsel taban; dokunma

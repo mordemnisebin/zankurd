@@ -1,3 +1,5 @@
+// 2026-10-29 canlılık katmanı G1: gece şık dolgusu/kenarı gece-dağları
+// sahnesine göre çivit (#3A3378 / #8A82CF); kontrast eşikleri aynı kaldı.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,3 +1,5 @@
+// 2026-10-29 canlılık katmanı G3: konu rozeti 44 -> 48 px (başlıktaki 44
+// eskidir); diğer ölçüler aynı.
 // 9. kurul, kare 01/20/26 (Gemini + Grok): konu kartında ikon + metin sola
 // yapışık, sağda orantısız boşluk; kartlar arası sıkışıktı (8 pt).
 //
@@ -58,13 +60,13 @@ void main() {
         find.descendant(
           of: find.byKey(const ValueKey('home-topic-Ziman')),
           matching: find.byWidgetPredicate(
-            (w) => w is SizedBox && w.width == 44 && w.height == 44,
+            (w) => w is SizedBox && w.width == 48 && w.height == 48,
           ),
         ),
       );
       expect(mark.left - a.left, greaterThanOrEqualTo(20));
       expect(mark.top - a.top, greaterThanOrEqualTo(12));
-      expect(mark.width, 44);
+      expect(mark.width, 48); // G3 (2026-10-29): rozet 44 -> 48
       // Ad + öbür dildeki küçük satır bir blok olarak işaretin ALTINDA, aynı
       // sol hizada durur.
       final texts = find.descendant(

@@ -361,7 +361,9 @@ class SahneResultScaffold extends StatelessWidget {
         final Widget scrolling = scroll;
         // 2026-10-28 tur 3 T14: içerik alt perdenin ALTINDAN kayarken sert
         // kesilmesin; perdenin üstünde ince bir solma (yalnız kayan içerikte).
-        final floor = neutral ? SahneTokens.night.bg : scene.colors.last;
+        final floor = neutral
+            ? SahneStageColors.nightGround
+            : scene.colors.last;
         return ClipRect(
           child: Stack(
             children: [

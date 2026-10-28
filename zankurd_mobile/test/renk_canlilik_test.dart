@@ -244,19 +244,23 @@ void main() {
             .first;
         expect(gradient.colors, [t.raceFill, t.raceDeep]);
 
-        // 2026-10-28, kurul K3/K5: Oda artık DOLU Nîl blok değil, standart
-        // kart yüzeyi (`t.s1`); Nîl rengi yalnız ikon rozetinde kalır
-        // (ikincil kartlar ana eylemle yarışmasın). Hero Boyax gradyanı ve
-        // tek turuncu düğme korunur — canlılık kaybı değil, amaçlı renk.
+        // 2026-10-29 canlılık katmanı G2: Oda artık doygun LOBİ kartı (Nîl
+        // degradesi, beyaz yazı); eski pastel "sakin kart" kararı (2026-10-28
+        // K3/K5) geçersiz. Hero Boyax gradyanı ve tek turuncu düğme korunur;
+        // lobi kartı turuncu değildir (ayrıntı: canlilik_katmani_g_test).
         final room = find.byKey(const ValueKey('play-hub-room'));
+        final lobby = tester.widget<Ink>(
+          find.descendant(
+            of: room,
+            matching: find.byKey(const ValueKey('mode-tile-lobby')),
+          ),
+        );
         expect(
-          tester
-              .widget<SahneTappable>(
-                find.descendant(of: room, matching: find.byType(SahneTappable)),
-              )
-              .color,
-          t.roleTint(SahneRole.social),
-          reason: 'Oda kartı hafif Nîl tonlu yüzeyde olmalı (tur 2 R2)',
+          ((lobby.decoration! as ShapeDecoration).gradient! as LinearGradient)
+              .colors
+              .first,
+          t.nilFill,
+          reason: 'Oda kartı doygun Nîl degradesinde olmalı (G2)',
         );
       });
     }

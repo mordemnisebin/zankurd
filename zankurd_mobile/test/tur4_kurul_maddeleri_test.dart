@@ -165,7 +165,9 @@ void main() {
     await tester.pump();
     final bar = find.byKey(const ValueKey('sahne-pushed-stage-bar'));
     expect(bar, findsOneWidget);
-    expect(tester.widget<ColoredBox>(bar).color, SahneTokens.night.bg);
+    // 2026-10-29 G1: çubuk sahne zeminiyle (gece dağları) kaynaşır: saydam.
+    expect(tester.widget<ColoredBox>(bar).color, Colors.transparent);
+    expect(find.byKey(const ValueKey('sahne-night-stage')), findsOneWidget);
     final rect = tester.getRect(bar);
     expect(rect.top, lessThan(80));
     final title = tester.widget<Text>(find.text('Günün çarkı'));

@@ -1,3 +1,4 @@
+// 2026-10-29 canlılık katmanı: R2 mod kartı bekçisi lobi kartını sınar.
 // 2026-10-28 kurul turu 2 (R2, R4, R7, R8) bekçisi.
 //
 // Kusur: tur 1 sadeleştirmesi uygulamayı "bankacılık gibi" bıraktı (dört
@@ -148,15 +149,24 @@ void main() {
           ('home-door-learn', SahneRole.learn),
           ('home-door-play', SahneRole.race),
         ]) {
-          final surface = tester.widget<SahneTappable>(
-            find
-                .descendant(
-                  of: find.byKey(ValueKey(key)),
-                  matching: find.byType(SahneTappable),
-                )
-                .first,
+          // 2026-10-29 canlılık katmanı: ana sayfa kapıları da doygun lobi
+          // kartı (rolün degradesi); eski "rolün hafif tonu" kararı
+          // geçersiz. Hâlâ turuncu değil.
+          final lobby = tester.widget<Ink>(
+            find.descendant(
+              of: find.byKey(ValueKey(key)),
+              matching: find.byKey(const ValueKey('mode-tile-lobby')),
+            ),
           );
-          expect(surface.color, t.roleTint(role), reason: key);
+          final g =
+              (lobby.decoration! as ShapeDecoration).gradient!
+                  as LinearGradient;
+          expect(
+            g.colors.first,
+            role == SahneRole.learn ? t.learnFill : t.raceFill,
+            reason: key,
+          );
+          expect(g.colors.first, isNot(t.act), reason: key);
         }
         // Birincil turuncu hâlâ tek: kartlar turuncu değil.
         expect(

@@ -109,11 +109,12 @@ void main() {
         reason: key,
       );
     }
-    // Sakin kart: dolu mod rengi yüzeyi yok (nötr yüzey + renkli rozet).
+    // 2026-10-29 G2 (canlılık katmanı): sakin pastel kart değil, doygun
+    // LOBİ kartı (rolün degradesi + cam ikon rozeti); turuncu değil.
     expect(
       find.descendant(
         of: find.byKey(const ValueKey('play-hub-room')),
-        matching: find.byKey(const ValueKey('mode-tile-accent')),
+        matching: find.byKey(const ValueKey('mode-tile-lobby')),
       ),
       findsOneWidget,
     );

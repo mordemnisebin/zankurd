@@ -93,7 +93,9 @@ void main() {
     await tester.pump();
     final stage = find.byKey(const ValueKey('sahne-pushed-stage'));
     expect(stage, findsOneWidget);
-    expect(tester.widget<ColoredBox>(stage).color, SahneTokens.night.bg);
+    // 2026-10-29 G1: sahne düz Şev değil, gece dağları zemini (üstte).
+    expect(tester.widget<ColoredBox>(stage).color, Colors.transparent);
+    expect(find.byKey(const ValueKey('sahne-night-stage')), findsOneWidget);
     final rect = tester.getRect(stage);
     expect(rect.width, 390, reason: 'sahne kenardan kenara');
     expect(rect.bottom, 844, reason: 'sahne ekranın dibine kadar');

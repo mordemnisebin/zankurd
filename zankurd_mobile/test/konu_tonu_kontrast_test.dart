@@ -1,3 +1,6 @@
+// 2026-10-29 canlılık katmanı G3: karışım açık %12 -> %18, koyu %20 -> %26.
+// Aşağıdaki eşikler (>= 4,5:1) DEĞİŞMEDİ; formül tek kaynaktan
+// ([SahneTopicTint.topicSurface]) okunduğundan bekçi yeni tonu ölçer.
 // 2026-10-28 kurul turu 2 R1: konu karosunun TONLU yüzeyinde metin kontrastı.
 //
 // Kusur: karo yüzeyi konu rengine boyanınca (canlılık için) metin kontrastı
