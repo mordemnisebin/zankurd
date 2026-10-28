@@ -77,7 +77,9 @@ tool/surum_paketi.sh "$HEDEF" || hata "tool/surum_paketi.sh başarısız; yükle
 if [[ "$HEDEF" == ios ]]; then
   # Eski bir IPA yanlış dosyanın yüklenmesine yol açmasın.
   rm -rf build/ios/ipa
-  xcodebuild -exportArchive \
+  # Otomatik imza (2026-10-28): widget eklentisi App Group ister; profilleri
+  # Xcode'da oturum açık hesap üretir. Elle profil adı artık tutulmaz.
+  xcodebuild -exportArchive -allowProvisioningUpdates \
     -archivePath build/ios/archive/Runner.xcarchive \
     -exportPath build/ios/ipa \
     -exportOptionsPlist ios/ExportOptions.AppStore.plist

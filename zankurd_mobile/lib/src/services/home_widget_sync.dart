@@ -34,10 +34,7 @@ class HomeWidgetSync {
     final override = supportedOverride;
     if (override != null) return override();
     if (kIsWeb) return false;
-    // iOS widget eklentisi 2.1.1'de yok: App Group imzası (geliştirici
-    // hesabında yeni kimlik + profil) bu makineden açılamadı. Eklenti
-    // hazır olana dek iOS'ta App Group'suz yazmak boşa iş (2026-10-28).
-    return Platform.isAndroid;
+    return Platform.isIOS || Platform.isAndroid;
   }
 
   /// Widget verisini yazar ve widget'ı yeniden çizdirir. Asla fırlatmaz:

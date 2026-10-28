@@ -27,7 +27,11 @@ anahtar_adi=REVENUECAT_API_KEY_IOS
 iz="$(python3 -c "import json,sys;print(json.load(open('$ENV_FILE'))['$anahtar_adi'][:16])")"
 
 if [[ "$HEDEF" == ios ]]; then
-  flutter build ipa --release --no-codesign --dart-define-from-file="$ENV_FILE"
+  # İmzalı arşiv şart (2026-10-28): --no-codesign arşivinde yetki (entitlement)
+  # gömülmez; dışa aktarma da eklemez. Build 39-40 IPA'sında aps-environment,
+  # Apple ile giriş ve associated-domains YOKTU (codesign -d ile görüldü).
+  flutter build ipa --release --dart-define-from-file="$ENV_FILE" \
+    --export-options-plist=ios/ExportOptions.AppStore.plist
   ikili="build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app/Frameworks/App.framework/App"
   LC_ALL=C grep -a -q -- "$iz" "$ikili" || {
     echo "HATA: arşivdeki ikilide iOS RevenueCat anahtarı yok; yükleme." >&2
