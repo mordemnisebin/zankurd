@@ -17,6 +17,26 @@ import 'package:zankurd_mobile/src/widgets/word_save_button.dart';
 
 import 'support/widget_test_helpers.dart';
 
+class _FailOnceRandom implements math.Random {
+  final math.Random _delegate = math.Random(3);
+  bool fail = true;
+
+  @override
+  int nextInt(int max) {
+    if (fail) {
+      fail = false;
+      throw StateError('question generation failed');
+    }
+    return _delegate.nextInt(max);
+  }
+
+  @override
+  bool nextBool() => _delegate.nextBool();
+
+  @override
+  double nextDouble() => _delegate.nextDouble();
+}
+
 /// "Kelimelerim", kelime tekrarı ve çift yönlü sözlük ekranları (2026-10-24).
 ///
 /// ## Kusur
@@ -82,6 +102,31 @@ void main() {
     }
     return store;
   }
+
+  testWidgets(
+    'kelime tekrarında yükleme hatası tamamlandı sayılmaz; yeniden denenir',
+    (tester) async {
+      final store = await seededStore(['rojbas']);
+      final random = _FailOnceRandom();
+      await pumpAt(tester, WordDrillScreen(store: store, random: random));
+
+      expect(
+        find.byKey(const ValueKey('word-review-load-error')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('word-review-empty')), findsNothing);
+      expect(find.byKey(const ValueKey('word-review-done')), findsNothing);
+
+      await tester.tap(find.text('Tekrar dene'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(
+        find.byKey(const ValueKey('word-review-load-error')),
+        findsNothing,
+      );
+      expect(find.byKey(const ValueKey('word-review-prompt')), findsOneWidget);
+    },
+  );
 
   group('sözlük yön seçimi', () {
     testWidgets('Türkçe -> Kurmancî: kapı yazınca Derî ilk sırada', (

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -5,11 +7,36 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:zankurd_mobile/main.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/local_data_storage.dart';
+import 'package:zankurd_mobile/src/data/word_list_store.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
+import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
+import 'package:zankurd_mobile/src/screens/word_drill_screen.dart';
+import 'package:zankurd_mobile/src/widgets/app_state.dart';
+
+class _FailFirstQuestionRandom implements math.Random {
+  final math.Random _delegate = math.Random(3);
+  bool fail = true;
+
+  @override
+  int nextInt(int max) {
+    if (fail) {
+      fail = false;
+      throw StateError('test-only question generation failure');
+    }
+    return _delegate.nextInt(max);
+  }
+
+  @override
+  bool nextBool() => _delegate.nextBool();
+
+  @override
+  double nextDouble() => _delegate.nextDouble();
+}
 
 class _NativeVisualRepository extends MockZanKurdRepository {
   @override
@@ -119,4 +146,54 @@ void main() {
     expect(find.byType(SpinWheelScreen), findsOneWidget);
     await capture('native_spin_wheel');
   });
+
+  testWidgets(
+    'native öğrenme ve kelime tekrarı hata/yeniden deneme yüzeyleri',
+    (tester) async {
+      final repository = _NativeVisualRepository();
+      final auth = AuthProvider.test(authenticated: true);
+      await tester.pumpWidget(
+        ZanKurdApp(
+          repository: repository,
+          authProvider: auth,
+          home: LearningScreen(repository: repository),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.byType(LearningScreen), findsOneWidget);
+      await capture('native_learning');
+
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump();
+
+      WordListStore.resetInstance();
+      final store = await WordListStore.load(storage: InMemoryDataStorage());
+      await store.add(
+        'rojbas',
+        now: DateTime.now().subtract(const Duration(days: 1)),
+      );
+      await tester.pumpWidget(
+        ZanKurdApp(
+          repository: repository,
+          authProvider: auth,
+          home: WordDrillScreen(
+            store: store,
+            random: _FailFirstQuestionRandom(),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      final error = find.byKey(const ValueKey('word-review-load-error'));
+      expect(error, findsOneWidget);
+      await capture('native_word_review_error');
+
+      tester.widget<AppErrorState>(error).onRetry();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+      expect(find.byKey(const ValueKey('word-review-prompt')), findsOneWidget);
+      await capture('native_word_review_retry');
+    },
+  );
 }

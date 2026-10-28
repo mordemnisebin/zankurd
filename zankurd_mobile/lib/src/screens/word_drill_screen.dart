@@ -70,6 +70,7 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
   WordListStore? _store;
   List<WordReviewQuestion> _questions = const [];
   bool _loading = true;
+  bool _loadFailed = false;
   int _index = 0;
   int _correct = 0;
 
@@ -134,12 +135,27 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
         _firstPassCount = questions.length;
         _rng = rng;
         _loading = false;
+        _loadFailed = false;
       });
       _autoPlayIfListening();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'word_review_load');
-      if (mounted) setState(() => _loading = false);
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _loadFailed = true;
+        });
+      }
     }
+  }
+
+  void _retryLoad() {
+    if (_loading) return;
+    setState(() {
+      _loading = true;
+      _loadFailed = false;
+    });
+    unawaited(_load());
   }
 
   bool get _finished => _index >= _questions.length;
@@ -257,6 +273,14 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
         top: false,
         child: _loading
             ? const Center(child: CircularProgressIndicator())
+            : _loadFailed
+            ? AppErrorState(
+                key: const ValueKey('word-review-load-error'),
+                title: context.t(K.loadFailedShort),
+                message: context.t(K.genericErrorBody),
+                retryLabel: context.t(K.retryShort),
+                onRetry: _retryLoad,
+              )
             : _questions.isEmpty
             ? AppEmptyState(
                 key: const ValueKey('word-review-empty'),

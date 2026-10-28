@@ -46,6 +46,8 @@ if [[ "$HEDEF" == ios ]]; then
     echo "UYARI: $semboller yok; Crashlytics sembolleri yüklenmedi." >&2
   fi
 else
+  # --no-pub kullanma: Flutter release kayıtlarını yeniden üretmez ve
+  # integration_test/patrol gibi geliştirme eklentileri Java derlemesini bozabilir.
   flutter build appbundle --release --dart-define-from-file="$ENV_FILE"
   aab="build/app/outputs/bundle/release/app-release.aab"
   gecici="$(mktemp -d)"

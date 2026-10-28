@@ -28,6 +28,7 @@ import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/models/contest.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne_vivid.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
@@ -897,15 +898,38 @@ void main() {
     }
   }
 
+  // Ana ekranı gerçek uygulamadaki etkin sekme kapılarıyla göster.
+  // Callback verilmezse SahneModeTile kartları %55 opaklığa düşer ve
+  // tur görüntüsü, ürünün gerçek renk/kontrast durumunu yanlış temsil eder.
+  Widget homePreview(MockZanKurdRepository repo) => Scaffold(
+    body: HomeScreen(
+      repository: repo,
+      onOpenLearning: () async {},
+      onOpenPlay: () {},
+    ),
+  );
+
   testWidgets('01b ana ekran: Günün turu (oynanmadı)', (t) async {
     await homeAfterFirstSession(t, tourDone: false);
-    await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+    await _pump(t, homePreview(repository));
+    expect(
+      t
+          .widget<SahneModeTile>(find.byKey(const ValueKey('home-door-learn')))
+          .onTap,
+      isNotNull,
+    );
+    expect(
+      t
+          .widget<SahneModeTile>(find.byKey(const ValueKey('home-door-play')))
+          .onTap,
+      isNotNull,
+    );
     await _shoot(t, '01b_home_tour_open');
   }, tags: ['preview']);
 
   testWidgets('01c ana ekran: Günün turu (bitti)', (t) async {
     await homeAfterFirstSession(t, tourDone: true);
-    await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+    await _pump(t, homePreview(repository));
     await _shoot(t, '01c_home_tour_done');
   }, tags: ['preview']);
 
@@ -925,27 +949,19 @@ void main() {
 
   testWidgets('01e ana ekran: Bugün paneli', (t) async {
     await homeTodayPanel(t);
-    await _pump(t, Scaffold(body: HomeScreen(repository: repository)));
+    await _pump(t, homePreview(repository));
     await _shoot(t, '01e_home_today_panel');
   }, tags: ['preview']);
 
   testWidgets('01f ana ekran: Bugün paneli (Kurmancî)', (t) async {
     await homeTodayPanel(t);
-    await _pump(
-      t,
-      Scaffold(body: HomeScreen(repository: repository)),
-      ku: true,
-    );
+    await _pump(t, homePreview(repository), ku: true);
     await _shoot(t, '01f_home_today_panel_ku');
   }, tags: ['preview']);
 
   testWidgets('01d ana ekran: Günün turu (bitti, Kurmancî)', (t) async {
     await homeAfterFirstSession(t, tourDone: true);
-    await _pump(
-      t,
-      Scaffold(body: HomeScreen(repository: repository)),
-      ku: true,
-    );
+    await _pump(t, homePreview(repository), ku: true);
     await _shoot(t, '01d_home_tour_done_ku');
   }, tags: ['preview']);
 
@@ -2264,7 +2280,7 @@ void main() {
   testWidgets('247 ana ekran (düello sonucu hazır)', (t) async {
     final repo = _TourRepository();
     await t.runAsync(() => _seedRojdaDuel(repo));
-    await _pump(t, Scaffold(body: HomeScreen(repository: repo)));
+    await _pump(t, homePreview(repo));
     await _shoot(t, '247_home_duel_ready');
   }, tags: ['preview']);
 
@@ -2273,12 +2289,7 @@ void main() {
   ) async {
     final repo = _TourRepository();
     await t.runAsync(() => _seedRojdaDuel(repo));
-    await _pump(
-      t,
-      Scaffold(body: HomeScreen(repository: repo)),
-      dark: true,
-      ku: true,
-    );
+    await _pump(t, homePreview(repo), dark: true, ku: true);
     await _shoot(t, '248_home_duel_ready_dark_ku');
   }, tags: ['preview']);
 
@@ -2360,7 +2371,7 @@ void main() {
     await t.runAsync(
       () async => repo.addIncomingChallengeForTesting(creatorName: 'Rojda'),
     );
-    await _pump(t, Scaffold(body: HomeScreen(repository: repo)));
+    await _pump(t, homePreview(repo));
     await _shoot(t, '253_home_duel_your_turn');
   }, tags: ['preview']);
 

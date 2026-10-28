@@ -221,6 +221,9 @@ class _LearningScreenState extends State<LearningScreen> {
   void _loadLessons() {
     if (_lessonsLoading) return;
     _lessonsLoading = true;
+    // Önceki kategorinin pratik kartları yeni kategori yüklenirken
+    // erişilebilir kalmamalı.
+    _currentLessons = const [];
     _lessonsFuture = widget.repository
         .loadLessonsByCategory(_selectedCategory)
         .then(
@@ -234,7 +237,12 @@ class _LearningScreenState extends State<LearningScreen> {
             return lessons;
           },
           onError: (Object error, StackTrace stack) {
-            if (mounted) setState(() => _lessonsLoading = false);
+            if (mounted) {
+              setState(() {
+                _currentLessons = const [];
+                _lessonsLoading = false;
+              });
+            }
             ErrorReporter.record(error, stack, reason: 'learning_load_lessons');
             throw error;
           },
@@ -339,7 +347,7 @@ class _LearningScreenState extends State<LearningScreen> {
               _page(
                 _TopicActions(
                   isKu: ku,
-                  enabled: _currentLessons.isNotEmpty,
+                  enabled: !_lessonsLoading && _currentLessons.isNotEmpty,
                   onPractice: _openCategoryPractice,
                   onFlashcards: _openCategoryFlashcards,
                 ),
@@ -533,7 +541,7 @@ class _LearningScreenState extends State<LearningScreen> {
             title: context.t(K.loadFailedShort),
             message: context.t(K.lessonsLoadFail),
             retryLabel: context.t(K.retryShort),
-            onRetry: () => setState(() => _loadLessons()),
+            onRetry: () => setState(_loadLessons),
           );
         }
         final lessons = snap.data ?? [];
@@ -543,7 +551,7 @@ class _LearningScreenState extends State<LearningScreen> {
             title: context.t(K.noLesson),
             message: context.t(K.noLessonInCategory),
             actionLabel: context.t(K.retryShort),
-            onAction: _loadLessons,
+            onAction: () => setState(_loadLessons),
           );
         }
         final firstOpenIndex = _recommendedLessonIndex(lessons);
@@ -731,8 +739,10 @@ class _LearningScreenState extends State<LearningScreen> {
   }
 
   Future<void> _openCategoryPractice() async {
-    if (_currentLessons.isEmpty || !mounted) return;
+    if (_lessonsLoading || _currentLessons.isEmpty || !mounted) return;
+    final selectedCategory = _selectedCategory;
     final lessons = List<Lesson>.of(_currentLessons);
+    if (lessons.any((lesson) => lesson.category != selectedCategory)) return;
     final lesson = lessons.first;
     final quizCategory = quizCategoryForLesson(lesson.category);
     try {
@@ -742,7 +752,7 @@ class _LearningScreenState extends State<LearningScreen> {
         difficultyMax: 5,
         limit: 10,
       );
-      if (!mounted) return;
+      if (!mounted || _selectedCategory != selectedCategory) return;
       if (levelQuestions.isEmpty) {
         _showPracticeLoadFailure(context.t(K.noQuestionsFound));
         return;
@@ -762,7 +772,7 @@ class _LearningScreenState extends State<LearningScreen> {
             limit: 5,
           ),
       ];
-      if (!mounted) return;
+      if (!mounted || _selectedCategory != selectedCategory) return;
       final topicQuestions = <QuizQuestion>[
         for (var i = 0; i < 5; i++)
           for (final batch in perLesson)
@@ -775,7 +785,7 @@ class _LearningScreenState extends State<LearningScreen> {
       final room = widget.repository
           .createRoom(category: quizCategory)
           .copyWith(
-            name: _categoryLabel(_selectedCategory, context.isKu),
+            name: _categoryLabel(selectedCategory, context.isKu),
             questionCount: questions.length,
           );
       await Navigator.of(context).push(
@@ -824,9 +834,11 @@ class _LearningScreenState extends State<LearningScreen> {
   /// Kelime kartları eskiden her zaman konunun İLK dersini açıyordu:
   /// ikinci derse gelmiş biri kartlarda hep "Selamlaşma"yı görüyordu.
   Lesson? _recommendedLesson() {
-    if (_currentLessons.isEmpty) return null;
+    if (_lessonsLoading || _currentLessons.isEmpty) return null;
     final index = _recommendedLessonIndex(_currentLessons);
-    return _currentLessons[index < 0 ? _currentLessons.length - 1 : index];
+    final lesson =
+        _currentLessons[index < 0 ? _currentLessons.length - 1 : index];
+    return lesson.category == _selectedCategory ? lesson : null;
   }
 
   Future<void> _openLexicon() async {

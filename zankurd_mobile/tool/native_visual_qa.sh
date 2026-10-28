@@ -27,7 +27,7 @@ flutter test integration_test/native_visual_qa_test.dart -d "$DEVICE" 2>&1 |
     fi
   done
 
-for required in native_leaderboard native_spin_wheel; do
+for required in native_leaderboard native_spin_wheel native_learning native_word_review_error native_word_review_retry; do
   file="$OUT_DIR/$required.png"
   if [[ ! -s "$file" ]]; then
     echo "[Native Visual QA] Eksik kanıt: $file" >&2

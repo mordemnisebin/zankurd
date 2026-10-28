@@ -1,6 +1,7 @@
 // Kurul 3. tur 2026-10-20: kilitli dersler 3'ten sonra "+N ders daha" satırında toplanır.
 // 2026-09-29 doğallık (K5, K7): ders yolunda elmas düğüm ve ikon karosu yok.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/services/lesson_listening_speaker.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/app_state.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
@@ -101,6 +103,19 @@ class _UuidLessonRepository extends MockZanKurdRepository {
 class _NoLessonsRepository extends MockZanKurdRepository {
   @override
   Future<List<Lesson>> loadLessonsByCategory(String category) async => const [];
+}
+
+class _DelayedCategoryRepository extends MockZanKurdRepository {
+  final nextGrammarLoad = Completer<List<Lesson>>();
+  int grammarLoads = 0;
+
+  @override
+  Future<List<Lesson>> loadLessonsByCategory(String category) {
+    if (category == 'grammar' && ++grammarLoads == 1) {
+      return nextGrammarLoad.future;
+    }
+    return super.loadLessonsByCategory(category);
+  }
 }
 
 enum _PracticeFailure { none, empty, error }
@@ -230,6 +245,61 @@ class _PlacementRepository extends MockZanKurdRepository {
 }
 
 void main() {
+  testWidgets(
+    'kategori yüklenirken eski konu eylemleri kapanır; hata ve yeniden deneme',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({});
+      PlacementStore.resetInstance();
+      addTearDown(PlacementStore.resetInstance);
+      final repository = _DelayedCategoryRepository();
+
+      await tester.pumpWidget(wrap(LearningScreen(repository: repository)));
+      await tester.pumpAndSettle();
+
+      Finder action(String key) => find.descendant(
+        of: find.byKey(ValueKey(key)),
+        matching: find.byType(FilledButton),
+      );
+      for (final key in [
+        'learning-topic-practice',
+        'learning-topic-flashcards',
+      ]) {
+        expect(tester.widget<FilledButton>(action(key)).onPressed, isNotNull);
+      }
+
+      await tester.tap(find.byKey(const ValueKey('learning-tab-grammar')));
+      await tester.pump();
+      expect(repository.grammarLoads, 1);
+      for (final key in [
+        'learning-topic-practice',
+        'learning-topic-flashcards',
+      ]) {
+        expect(tester.widget<FilledButton>(action(key)).onPressed, isNull);
+      }
+
+      repository.nextGrammarLoad.completeError(StateError('offline'));
+      await tester.pumpAndSettle();
+      expect(find.byType(AppErrorState), findsOneWidget);
+      for (final key in [
+        'learning-topic-practice',
+        'learning-topic-flashcards',
+      ]) {
+        expect(tester.widget<FilledButton>(action(key)).onPressed, isNull);
+      }
+
+      await tester.tap(find.text('Tekrar dene').first);
+      await tester.pumpAndSettle();
+      expect(repository.grammarLoads, 2);
+      expect(find.byType(AppErrorState), findsNothing);
+      for (final key in [
+        'learning-topic-practice',
+        'learning-topic-flashcards',
+      ]) {
+        expect(tester.widget<FilledButton>(action(key)).onPressed, isNotNull);
+      }
+    },
+  );
+
   testWidgets(
     'kilitli dersler üçten sonra tek "+N ders daha" satırında toplanır',
     (tester) async {
