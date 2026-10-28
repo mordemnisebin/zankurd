@@ -429,8 +429,11 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// çağıran yerel önbellekle sürer.
   Future<int?> loadJokerStock();
 
-  /// Hesaptan bir joker hakkı düşer (`consume_joker_stock`).
-  Future<void> consumeJokerStock();
+  /// Hesaptan bir joker hakkı düşer (`consume_joker_stock`). Dönüş: sunucu
+  /// düşüşü KABUL ettiyse (ya da sunucu yoksa/ulaşılamıyorsa, yani ret
+  /// kanıtlanmadıysa) `true`; sunucu hak kalmadığı için REDDETTİYSE `false`
+  /// (`-1`; iki cihaz son hakkı birlikte kullandığında olur).
+  Future<bool> consumeJokerStock();
 
   // ─── Sunucu puanlı turnuva maçı (2026-10-27) ─────────────────────────
   //

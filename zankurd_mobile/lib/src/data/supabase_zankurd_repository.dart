@@ -4546,12 +4546,14 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<void> consumeJokerStock() async {
-    if (client.auth.currentUser == null) return;
+  Future<bool> consumeJokerStock() async {
+    if (client.auth.currentUser == null) return true;
     try {
-      await client.rpc<dynamic>('consume_joker_stock');
+      final response = await client.rpc<dynamic>('consume_joker_stock');
+      // `-1` = kalan hak yok, düşüş reddedildi.
+      return !(response is num && response < 0);
     } catch (error, stack) {
-      if (isMissingRpcError(error)) return;
+      if (isMissingRpcError(error)) return true;
       _recordError(error, stack, reason: 'consumeJokerStock failed');
       rethrow;
     }

@@ -72,7 +72,15 @@ class JokerStockStore {
     final ok = await consume();
     if (ok) {
       try {
-        await repository.consumeJokerStock();
+        final accepted = await repository.consumeJokerStock();
+        if (!accepted) {
+          // Sunucu reddetti (başka cihaz son hakkı kullandı): yerel önbellek
+          // hesabın gerçeğine eşitlenir, aynı hak ikinci kez harcanmaz
+          // (Codex denetimi 2026-10-29). Sonuç `false`: çağıran bu
+          // kullanımın karşılıksız olduğunu bilir.
+          await syncFromServer(repository);
+          return false;
+        }
       } catch (error, stack) {
         ErrorReporter.record(error, stack, reason: 'joker_stock_server_use');
       }

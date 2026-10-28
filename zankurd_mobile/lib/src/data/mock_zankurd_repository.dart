@@ -1214,7 +1214,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<int?> loadJokerStock() async => null;
 
   @override
-  Future<void> consumeJokerStock() async {}
+  Future<bool> consumeJokerStock() async => true;
 
   /// Sahte depoda turnuva bot benzetimidir, sunucu puanı yoktur: ekran eski
   /// yola düşer. Sunucu yolunu sınayan testler bu üçünü ezer.

@@ -286,12 +286,38 @@ class LocalProgressSnapshot {
           current.storyDone.toList()..sort(),
           snapshot.storyDone.toList()..sort(),
         )) {
+      // Seçim yolları (`path`) anlık görüntüde YOK; yeniden yazarken
+      // silinirlerse başka bir hikâyenin güncellenmesi bile yerel konuşma
+      // geçmişini kaybettirir (Codex denetimi 2026-10-29). Düğümü
+      // DEĞİŞMEYEN hikâyelerin yolu korunur; uzaktan düğümü gelen hikâyenin
+      // yolu bilinmez sayılır (yerel yol artık o düğüme götürmez).
+      final keptPaths = <String, List<int>>{};
+      final oldMeta = prefs.getString(_k(_storyMeta));
+      if (oldMeta != null) {
+        try {
+          final decoded = jsonDecode(oldMeta);
+          final rawPath = decoded is Map ? decoded['path'] : null;
+          if (rawPath is Map) {
+            rawPath.forEach((k, v) {
+              if (k is String &&
+                  v is List &&
+                  v.every((i) => i is int) &&
+                  snapshot.story[k] == current.story[k]) {
+                keptPaths[k] = v.cast<int>();
+              }
+            });
+          }
+        } catch (_) {
+          // Bozuk eski kayıt: yol bilinmez sayılır.
+        }
+      }
       ok =
           await prefs.setString(
             _k(_storyMeta),
             jsonEncode({
               'at': snapshot.storyUpdatedAt,
               'done': snapshot.storyDone.toList()..sort(),
+              if (keptPaths.isNotEmpty) 'path': keptPaths,
             }),
           ) &&
           ok;
