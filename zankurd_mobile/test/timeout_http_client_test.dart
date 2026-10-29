@@ -17,7 +17,32 @@ class _HangingClient extends http.BaseClient {
       Completer<http.StreamedResponse>().future;
 }
 
+/// Başlıkları hemen gelen ama gövdesi hiç tamamlanmayan yanıt.
+class _StalledBodyClient extends http.BaseClient {
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    final controller = StreamController<List<int>>()..add([1, 2, 3]);
+    return http.StreamedResponse(controller.stream, 200, request: request);
+  }
+}
+
 void main() {
+  // Codex denetimi 2026-10-29 (performans #5): sınır yalnız başlıklara
+  // uygulanıyordu; gövdesi takılan yanıt süresiz asılıyordu.
+  test(
+    'başlıktan sonra gövdesi takılan yanıt TimeoutException ile biter',
+    () async {
+      final client = TimeoutHttpClient(
+        _StalledBodyClient(),
+        (_) => const Duration(milliseconds: 50),
+      );
+      await expectLater(
+        client.get(Uri.parse('https://example.supabase.co/rest/v1/x')),
+        throwsA(isA<TimeoutException>()),
+      );
+    },
+  );
+
   test('asılı kalan istek TimeoutException ile biter', () async {
     final client = TimeoutHttpClient(
       _HangingClient(),

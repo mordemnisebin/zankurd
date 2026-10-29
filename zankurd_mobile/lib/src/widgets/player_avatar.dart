@@ -190,9 +190,16 @@ class PlayerAvatar extends StatelessWidget {
   Widget _buildCore(BuildContext context, Color bg, double size) {
     final url = photoUrl;
     if (url != null && url.trim().isNotEmpty) {
-      final provider =
+      final base =
           imageProviderFactory?.call(url) ??
           CachedNetworkImageProvider(url) as ImageProvider;
+      // Çözme boyutu çizilen boyuta bağlanır: büyük bir kaynak fotoğraf
+      // küçük avatar olarak çizilse de tam çözünürlükte belleğe açılırdı
+      // (Codex denetimi 2026-10-29).
+      final decodePx = (size * MediaQuery.devicePixelRatioOf(context))
+          .ceil()
+          .clamp(1, 512);
+      final provider = ResizeImage(base, width: decodePx);
       // İndirilirken boş kare yerine oyuncunun rengi görünür; hata olursa
       // simge/harf katmanına düşülür (fotoğraf "bozuk resim" çizmez).
       return ColoredBox(

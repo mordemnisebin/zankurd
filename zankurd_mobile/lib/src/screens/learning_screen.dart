@@ -2092,6 +2092,10 @@ class _SlideImage extends StatelessWidget {
           child: url.startsWith('asset://')
               ? Image.asset(
                   url.replaceFirst('asset://', ''),
+                  // Çözme genişliği sınırlı: kaynak ne kadar büyük olursa
+                  // olsun tam çözünürlükte belleğe açılmaz (Codex
+                  // denetimi 2026-10-29); uzak görselle aynı sınır.
+                  cacheWidth: 720,
                   fit: BoxFit.cover,
                   errorBuilder: (_, _, _) => const SizedBox(),
                 )

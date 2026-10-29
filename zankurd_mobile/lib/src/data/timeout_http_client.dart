@@ -30,9 +30,9 @@ class TimeoutHttpClient extends http.BaseClient {
   }
 
   @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) {
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
     final limit = timeoutFor(request.url);
-    return _inner
+    final response = await _inner
         .send(request)
         .timeout(
           limit,
@@ -41,6 +41,31 @@ class TimeoutHttpClient extends http.BaseClient {
             limit,
           ),
         );
+    // Sınır yalnız BAŞLIKLARIN gelişine uygulanıyordu: başlıkları gelip
+    // gövdesi yarıda takılan yanıt süresiz asılı kalıyordu (Codex denetimi
+    // 2026-10-29). Gövdede de her parça arasında aynı sınır boşta kalma
+    // süresi olarak işler; dolunca akış TimeoutException ile biter.
+    return http.StreamedResponse(
+      response.stream.timeout(
+        limit,
+        onTimeout: (sink) {
+          sink.addError(
+            TimeoutException(
+              'Response body stalled: ${request.method} ${request.url.path}',
+              limit,
+            ),
+          );
+          sink.close();
+        },
+      ),
+      response.statusCode,
+      contentLength: response.contentLength,
+      request: response.request,
+      headers: response.headers,
+      isRedirect: response.isRedirect,
+      persistentConnection: response.persistentConnection,
+      reasonPhrase: response.reasonPhrase,
+    );
   }
 
   @override

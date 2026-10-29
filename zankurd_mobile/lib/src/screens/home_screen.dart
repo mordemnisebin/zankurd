@@ -199,6 +199,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // kadar bölüm hep boş kalıyordu (2026-08-14 denetimi).
     _refreshProgress();
     widget.refreshSignal?.addListener(_handleRefreshSignal);
+    // Açılış sınırını (8 sn) aşıp geç biten ya da yeniden denenen soru
+    // yüklemesi ekrana bildirilir (Codex denetimi 2026-10-29).
+    QuestionBankLoader.instance.revision.addListener(_onQuestionBankChanged);
+  }
+
+  void _onQuestionBankChanged() {
+    if (!mounted) return;
+    _refreshProgress();
+    setState(() {});
   }
 
   @override
@@ -215,6 +224,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    QuestionBankLoader.instance.revision.removeListener(_onQuestionBankChanged);
     widget.refreshSignal?.removeListener(_handleRefreshSignal);
     _loadAnimationController.dispose();
     super.dispose();

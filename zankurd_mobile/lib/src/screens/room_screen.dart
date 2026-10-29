@@ -575,7 +575,34 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
     );
   }
 
+  /// Uçuştaki yoklamalar: yavaş ağda 3/6 sn'lik zamanlayıcı bir öncekinin
+  /// yanıtı gelmeden yenisini başlatıp istekleri üst üste bindiriyordu
+  /// (Codex denetimi 2026-10-29). Her tür için tek uçuş; yanıt gelince
+  /// sonraki tik yeni istek atar.
+  bool _playersPollInFlight = false;
+  bool _statusPollInFlight = false;
+
   Future<void> _pollPlayersOnce() async {
+    if (_playersPollInFlight) return;
+    _playersPollInFlight = true;
+    try {
+      await _pollPlayersBody();
+    } finally {
+      _playersPollInFlight = false;
+    }
+  }
+
+  Future<void> _pollRoomStatusOnce() async {
+    if (_statusPollInFlight) return;
+    _statusPollInFlight = true;
+    try {
+      await _pollRoomStatusBody();
+    } finally {
+      _statusPollInFlight = false;
+    }
+  }
+
+  Future<void> _pollPlayersBody() async {
     if (!mounted || quizOpened) return;
     // Uçuş başlarken realtime'in olay sayacı. Dönüşte değişmişse bir
     // event bu isteğin uçuşu sırasında düştü demektir: anlık görüntü
@@ -612,7 +639,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
     }
   }
 
-  Future<void> _pollRoomStatusOnce() async {
+  Future<void> _pollRoomStatusBody() async {
     if (!mounted || quizOpened) return;
     final seqAtDispatch = _realtimeEventSeq;
     try {
