@@ -18,6 +18,7 @@ import 'package:zankurd_mobile/src/models/avatar_identity.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
+import 'package:zankurd_mobile/src/widgets/shop_showcase.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -375,8 +376,19 @@ void main() {
             .descendant(of: card, matching: find.byType(DecoratedBox))
             .evaluate()
             .where((e) {
+              // 2026-10-29 vay 2B (B9): ürün önizlemesinin arkasındaki 88 px
+              // ışık diski (ShopPreviewStage) bilerek degradelidir — ürün
+              // rengi yalnız o küçük diskte; kartın yüzeyi yine sakin.
+              final inStage = find
+                  .ancestor(
+                    of: find.byWidget(e.widget),
+                    matching: find.byType(ShopPreviewStage),
+                  )
+                  .evaluate()
+                  .isNotEmpty;
               final d = (e.widget as DecoratedBox).decoration;
-              return d is BoxDecoration &&
+              return !inStage &&
+                  d is BoxDecoration &&
                   (d.gradient != null || (d.boxShadow?.isNotEmpty ?? false));
             }),
         isEmpty,
@@ -482,8 +494,10 @@ void main() {
       find.byKey(const ValueKey('shop-item-surface-profile_badge_vip')),
     );
     // Tur 6: Kurmancî olmayan Türkçe açıklama dar sütunda 3 satıra iner;
-    // kart yine kompakt (eskiden ~490 mp).
-    expect(hero.height, lessThanOrEqualTo(230));
+    // kart yine kompakt (eskiden ~490 mp). 2026-10-29 vay 2B (B9): önizleme
+    // 52 → 88 px ışık diski + gölge (Astra: "önizlemeler çok küçük"); tavan
+    // 230 → 250, ~490'dan hâlâ çok uzak.
+    expect(hero.height, lessThanOrEqualTo(250));
   });
 
   // 2026-10-28 K11 (eski Tur 6 "hepsi aynı tam genişlik satır" kararı geçersiz):

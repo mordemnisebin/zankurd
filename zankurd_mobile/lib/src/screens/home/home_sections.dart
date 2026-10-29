@@ -218,22 +218,9 @@ class _HomeTopicTile extends StatelessWidget {
             clipper: const ShapeBorderClipper(shape: SahneShape.l),
             child: Stack(
               children: [
-                // Köşede çok hafif (%6) konu ikonu filigranı: sağ üst köşe
-                // boştur (ad rozetin ALTINDA, sola dayalı), metinle çakışmaz.
-                PositionedDirectional(
-                  end: -8,
-                  top: -8,
-                  child: IgnorePointer(
-                    child: ExcludeSemantics(
-                      child: Icon(
-                        CategoryVisuals.icon(category),
-                        key: ValueKey('home-topic-mark-$category'),
-                        size: 56,
-                        color: fill.withValues(alpha: 0.06),
-                      ),
-                    ),
-                  ),
-                ),
+                // Vay 2A (2026-10-29): köşedeki silik konu ikonu filigranı
+                // KALKTI — Astra: "büyük dekoratif ikonlar kimlik katmaktan
+                // çok kalabalık yaratıyor"; konu kimliği rozet + şerittedir.
                 // Konu rengi kenar şeridi (4 px); kartın yuvarlak köşesine
                 // kırpılır.
                 PositionedDirectional(

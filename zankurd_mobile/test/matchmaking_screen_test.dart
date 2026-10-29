@@ -19,7 +19,8 @@ import 'package:zankurd_mobile/src/services/matchmaking_metrics.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/utils/app_route.dart';
 import 'package:zankurd_mobile/src/widgets/kilim_progress_bar.dart';
-import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
+import 'package:zankurd_mobile/src/widgets/zan_mascot.dart';
 
 /// Eşleştirme iptalinin gerçekten çağrıldığını izleyen sahte depo.
 class _TrackingRepository extends MockZanKurdRepository {
@@ -1052,10 +1053,12 @@ void main() {
   });
 
   testWidgets(
-    'arama ekrani RojMascot ve KilimProgressBar bilesenlerini gosterir',
+    'arama ekrani ZanMascot, VS rozeti ve KilimProgressBar gosterir',
     (tester) async {
       // 4.2 Gorsel Kimlik: Bekleme ekrani olu zaman olmaktan cikarilir;
       // RojMascot thinking modunda ve KilimProgressBar arama dokusuyla cizilir.
+      // 2026-10-29 vay 2A (VAY B3): eski RojMascot yerine onaylı maskot
+      // (ZanMascot, düşünen poz) + 44 px altın VS rozeti.
       final repository = _TrackingRepository();
       tester.view.physicalSize = const Size(480, 1600);
       tester.view.devicePixelRatio = 1.0;
@@ -1077,8 +1080,9 @@ void main() {
         findsOneWidget,
       );
 
-      // RojMascot (Zana maskotu) ve KilimProgressBar mevcut
-      expect(find.byType(RojMascot), findsOneWidget);
+      // ZanMascot ve KilimProgressBar mevcut
+      expect(find.byType(ZanMascot), findsOneWidget);
+      expect(find.byType(SahneVsBadge), findsOneWidget);
       expect(find.byType(KilimProgressBar), findsOneWidget);
 
       // Ekranı kaldır: temiz unmount

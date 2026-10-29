@@ -1101,6 +1101,37 @@ void main() {
     await _shoot(t, '18_matchmaking');
   }, tags: ['preview']);
 
+  // Vay 2A (2026-10-29): kategori ızgarasının sonu alt perdenin üstünde
+  // (Astra: "son kategori düğmenin arkasına giriyor") ve VS bekleme sahnesi
+  // (VAY B3: iki 72 px avatar + 44 px VS rozeti + maskot).
+  testWidgets('18b rakip arama — ızgaranın sonu', (t) async {
+    await _pump(t, MatchmakingScreen(repository: repository));
+    await t.drag(find.byType(CustomScrollView).first, const Offset(0, -3000));
+    await t.pumpAndSettle();
+    await _shoot(t, '18b_matchmaking_end');
+  }, tags: ['preview']);
+
+  for (final (name, dark, ku) in const [
+    ('18c_matchmaking_searching', false, false),
+    ('18d_matchmaking_searching_dark_ku', true, true),
+  ]) {
+    testWidgets('$name VS bekleme sahnesi', (t) async {
+      await _pump(
+        t,
+        MatchmakingScreen(repository: repository),
+        dark: dark,
+        ku: ku,
+      );
+      await t.tap(find.byKey(const ValueKey('matchmaking-random-cta')));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 600));
+      await _shoot(t, name);
+      // Arama zamanlayıcıları kapansın: ekran ağaçtan kalkar.
+      await t.pumpWidget(const SizedBox());
+      await t.pump(const Duration(seconds: 1));
+    }, tags: ['preview']);
+  }
+
   testWidgets('19 mağaza', (t) async {
     await _pump(t, ShopScreen(repository: _BalanceTourRepository(300)));
     await _shoot(t, '19_shop');

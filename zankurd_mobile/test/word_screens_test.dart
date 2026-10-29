@@ -78,7 +78,11 @@ void main() {
     LanguageProviderKind lang = LanguageProviderKind.tr,
   }) async {
     tester.view.devicePixelRatio = 3.0;
-    tester.view.physicalSize = Size(width, 800) * 3;
+    // 2026-10-29 vay 2B: üstteki tekrar kahramanı (maskot + ustalık çubuğu
+    // + tek turuncu düğme) ve iki pratik karosu listeyi aşağı itti; satır
+    // bekçileri tembel listenin ilk kelimelerini görebilsin diye yüzey 1400.
+    // Taşma bekçisi için belirleyici olan genişliktir (320).
+    tester.view.physicalSize = Size(width, 1400) * 3;
     addTearDown(tester.view.reset);
     // Önceki dilin durumu (State) yeni dil turuna sızmasın.
     await tester.pumpWidget(const SizedBox());

@@ -18,6 +18,7 @@ import '../widgets/app_state.dart';
 import '../widgets/branded_loader.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
+import '../widgets/shop_showcase.dart';
 import '../widgets/zk_back_button.dart';
 import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -421,6 +422,30 @@ class _ShopScreenState extends State<ShopScreen> {
         frameId: framed.frameId,
         showcaseTitle: framed.showcaseTitle,
         displayName: _profileName,
+      ),
+    );
+  }
+
+  /// Vitrin karosunda: oyuncunun avatarı ÇIPLAK (64 px), o çerçeveyle;
+  /// ürün rengi arkadaki ışık diskinde. Avatar yoksa ürün karosu.
+  Widget _stagePreview(ShopItem item, {required bool dim}) {
+    final avatar = _avatar;
+    if (avatar == null || !_isAvatarLookItem(item.id)) {
+      return _preview(item, size: 64, dim: dim);
+    }
+    final framed = applyShopPurchaseEffect(item.id, avatar);
+    return ExcludeSemantics(
+      child: Opacity(
+        opacity: dim ? 0.6 : 1,
+        child: PlayerAvatar(
+          radius: 32,
+          photoUrl: framed.photoUrl,
+          iconId: framed.iconId,
+          colorHex: framed.colorHex,
+          frameId: framed.frameId,
+          showcaseTitle: framed.showcaseTitle,
+          displayName: _profileName,
+        ),
       ),
     );
   }
@@ -1138,15 +1163,11 @@ class _ShopScreenState extends State<ShopScreen> {
       chevron: true,
       onTap: _openSpinWheel,
     );
-    return SahneListGroup(
-      children: [
-        zero
-            ? KeyedSubtree(
-                key: const ValueKey('shop-earn-coin-cta'),
-                child: row,
-              )
-            : row,
-      ],
+    // 2026-10-29 vay 2B (B9): satır vitrin kartının alt bandıdır.
+    return ShopShowcase(
+      footer: zero
+          ? KeyedSubtree(key: const ValueKey('shop-earn-coin-cta'), child: row)
+          : row,
     );
   }
 
@@ -1277,6 +1298,7 @@ class _ShopScreenState extends State<ShopScreen> {
         : _buildBuyButton(item, ku, expand: true);
     return SahneSurfaceCard(
       key: ValueKey('shop-item-surface-${item.id}'),
+      emboss: true,
       padding: const EdgeInsets.all(14),
       onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
       child: bigText
@@ -1285,7 +1307,7 @@ class _ShopScreenState extends State<ShopScreen> {
               children: [
                 Row(
                   children: [
-                    _preview(item, size: 44, dim: isPurchased),
+                    _preview(item, size: 56, dim: isPurchased),
                     const SizedBox(width: SahneSpace.x3),
                     Expanded(child: texts),
                   ],
@@ -1296,7 +1318,7 @@ class _ShopScreenState extends State<ShopScreen> {
             )
           : Row(
               children: [
-                _preview(item, size: 44, dim: isPurchased),
+                _preview(item, size: 56, dim: isPurchased),
                 const SizedBox(width: SahneSpace.x3),
                 Expanded(child: texts),
                 const SizedBox(width: SahneSpace.x3),
@@ -1314,17 +1336,21 @@ class _ShopScreenState extends State<ShopScreen> {
     final isPurchased = _purchasedItemIds.contains(item.id);
     return SahneSurfaceCard(
       key: ValueKey('shop-item-surface-${item.id}'),
+      emboss: true,
       padding: const EdgeInsets.all(12),
       onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // 2026-10-29 vay 2B (B9, Astra "önizlemeler satın alma isteği
+          // yaratamayacak kadar küçük"): 80'lik ürün karosu 88'lik ışık
+          // diskinin önünde, altında eliptik gölge — oyuncunun KENDİ
+          // avatarı o çerçeveyle büyük görünür.
           Center(
-            child: // 52: avatar çapı < 40 kalır, VIP işareti küçük (ikonlu) hâlde durur.
-            _preview(
-              item,
-              size: 52,
-              dim: isPurchased,
+            child: ShopPreviewStage(
+              key: ValueKey('shop-preview-${item.id}'),
+              glow: isPurchased ? t.s3 : _PreviewTile.fillFor(t, item.id),
+              child: _stagePreview(item, dim: isPurchased),
             ),
           ),
           const SizedBox(height: SahneSpace.x2),
@@ -1524,18 +1550,7 @@ class _PreviewTile extends StatelessWidget {
     // Ürün türüne göre DOLU karo (D aşaması, 4 model: mağaza sönüktü; hepsi
     // aynı soluk Zêr tonuydu): çark Boyax, VIP rozeti Zêr, altın çerçeve
     // Nîl, neon çerçeve Zimrût (konu renkleri gibi, ürün başına bir renk).
-    final (Color fill, Color on) = dim
-        ? (t.s2, t.tx3)
-        : switch (itemId) {
-            'spin_wheel_extra' => (t.raceFill, SahneVivid.onFill),
-            'profile_badge_vip' => (t.zerBand, t.onZer),
-            'avatar_frame_neon' => (t.learnFill, SahneVivid.onFill),
-            'avatar_frame_kilim' => (t.raceFill, SahneVivid.onFill),
-            'avatar_frame_newroz' => (t.zerBand, t.onZer),
-            'joker_pack_3' => (t.learnFill, SahneVivid.onFill),
-            'streak_freeze' => (t.nilFill, SahneVivid.onFill),
-            _ => (t.nilFill, SahneVivid.onFill),
-          };
+    final (Color fill, Color on) = dim ? (t.s2, t.tx3) : _pair(t, itemId);
     return ExcludeSemantics(
       child: DecoratedBox(
         decoration: ShapeDecoration(color: fill, shape: SahneShape.m),
@@ -1549,4 +1564,18 @@ class _PreviewTile extends StatelessWidget {
       ),
     );
   }
+
+  /// Ürünün kimlik rengi (vitrin ışık diski de bunu kullanır).
+  static Color fillFor(SahneTokens t, String itemId) => _pair(t, itemId).$1;
+
+  static (Color, Color) _pair(SahneTokens t, String itemId) => switch (itemId) {
+    'spin_wheel_extra' => (t.raceFill, SahneVivid.onFill),
+    'profile_badge_vip' => (t.zerBand, t.onZer),
+    'avatar_frame_neon' => (t.learnFill, SahneVivid.onFill),
+    'avatar_frame_kilim' => (t.raceFill, SahneVivid.onFill),
+    'avatar_frame_newroz' => (t.zerBand, t.onZer),
+    'joker_pack_3' => (t.learnFill, SahneVivid.onFill),
+    'streak_freeze' => (t.nilFill, SahneVivid.onFill),
+    _ => (t.nilFill, SahneVivid.onFill),
+  };
 }

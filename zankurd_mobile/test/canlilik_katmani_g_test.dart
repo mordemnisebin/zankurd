@@ -19,6 +19,10 @@
 //   turuncu birincil düğme vardır (kahramandaki "Rakip bul").
 // * G3: konu tonu açık %18 / koyu %26; ad ve ikinci satır ≥ 4,5:1
 //   (ayrıntılı ölçüm `konu_tonu_kontrast_test.dart`).
+//   2026-10-29 vay 2A: gece karışımı %26 → %14 (Astra: "koyu temada konu
+//   kartları çamurlu"); kural `vay_2a_test` ile aynı formülü ölçer.
+// * G2 (2026-10-29 vay 2A): lobi kartları İKİ temada da rolün DOYGUN
+//   GÜNDÜZ rengindedir; gece belirteçleri koyu zeminde "kirli" okunuyordu.
 // * G4: manzara şeridi paletleri doygunlaştı (gündüz gökyüzü belirgin mavi).
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -203,9 +207,10 @@ void main() {
         );
         await tester.pumpAndSettle();
         final t = dark ? SahneTokens.night : SahneTokens.day;
+        const vivid = SahneTokens.day;
         for (final (key, fill) in [
-          ('play-hub-async-duel', t.raceFill),
-          ('play-hub-room', t.nilFill),
+          ('play-hub-async-duel', vivid.raceFill),
+          ('play-hub-room', vivid.nilFill),
         ]) {
           final card = find.byKey(ValueKey(key));
           expect(card, findsOneWidget, reason: key);
@@ -260,14 +265,14 @@ void main() {
   });
 
   group('G3 konu tonu', () {
-    test('açık %18 / koyu %26 ve ad metni >= 4,5:1', () {
+    test('açık %18 / koyu %14 (vay 2A) ve ad metni >= 4,5:1', () {
       for (final night in [false, true]) {
         final t = night ? SahneTokens.night : SahneTokens.day;
         for (final e in SahneCategoryTone.byCategory.entries) {
           final fill = e.value.fill(night: night);
           expect(
             t.topicSurface(fill, night: night),
-            Color.alphaBlend(fill.withValues(alpha: night ? 0.26 : 0.18), t.s1),
+            Color.alphaBlend(fill.withValues(alpha: night ? 0.14 : 0.18), t.s1),
           );
           expect(
             _contrast(t.tx, t.topicSurface(fill, night: night)),

@@ -64,7 +64,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('story-open-guide')));
     await tester.pumpAndSettle();
-    expect(find.text('Yeni kelimeler'), findsOneWidget);
+    // 2026-10-29 vay 2B: sayfanın dibinde de hikâyenin kelime çantası
+    // ("Yeni kelimeler") durur; rehber balonu ikincisini açar.
+    expect(find.text('Yeni kelimeler'), findsNWidgets(2));
     expect(find.text('Anladım'), findsOneWidget);
   });
 

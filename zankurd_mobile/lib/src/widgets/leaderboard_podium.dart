@@ -126,15 +126,6 @@ class _PodiumColumn extends StatelessWidget {
     tag: entry.playerTag,
   );
 
-  Color _rankColor(SahneTokens t) {
-    if (isSelf) return t.goldTx;
-    return switch (place) {
-      0 => t.goldTx,
-      1 => t.silverTx,
-      _ => t.bronzeTx,
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
@@ -173,14 +164,9 @@ class _PodiumColumn extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  '${entry.rank}',
-                  maxLines: 1,
-                  style: SahneType.title.copyWith(
-                    color: _rankColor(t),
-                    fontFeatures: const [FontFeature.tabularFigures()],
-                  ),
-                ),
+                // 2026-10-29 vay 2B (B8): sıra rakamı madalya diskinde
+                // (altın / gümüş / bronz degrade, koyu rakam ≥ 4.5:1).
+                _MedalDisc(place: place, rank: entry.rank),
                 const SizedBox(height: SahneSpace.x1),
                 _PodiumName(name: _name),
                 const SizedBox(height: SahneSpace.x1),
@@ -332,6 +318,64 @@ class _PodiumName extends StatelessWidget {
           style: style,
         );
       },
+    );
+  }
+}
+
+/// Kaidenin tepesindeki madalya: 44 px degrade disk + koyu rakam.
+class _MedalDisc extends StatelessWidget {
+  const _MedalDisc({required this.place, required this.rank});
+
+  final int place;
+  final int rank;
+
+  static const _colors = [
+    (Color(0xFFFFE6A0), Color(0xFFD7A744), Color(0xFF4A3000)),
+    (Color(0xFFF1F4F7), Color(0xFFAEB8C2), Color(0xFF26313B)),
+    (Color(0xFFF6C9A4), Color(0xFFD08A57), Color(0xFF3D1C06)),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final (top, bottom, ink) = _colors[place.clamp(0, 2)];
+    final size = place == 0 ? 48.0 : 42.0;
+    return DecoratedBox(
+      key: ValueKey('podium-medal-${place + 1}'),
+      decoration: ShapeDecoration(
+        shape: CircleBorder(
+          side: BorderSide(color: Color.lerp(bottom, ink, 0.25)!, width: 1.5),
+        ),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [top, bottom],
+        ),
+        shadows: [
+          BoxShadow(
+            color: bottom.withValues(alpha: 0.45),
+            offset: const Offset(0, 3),
+            blurRadius: 6,
+          ),
+        ],
+      ),
+      child: SizedBox.square(
+        dimension: size,
+        child: Center(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              '$rank',
+              maxLines: 1,
+              textScaler: TextScaler.noScaling,
+              style: SahneType.headline.copyWith(
+                color: ink,
+                fontWeight: FontWeight.w800,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

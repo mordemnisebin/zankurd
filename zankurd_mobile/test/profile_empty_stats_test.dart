@@ -61,15 +61,17 @@ void main() {
       findsNothing,
       reason: 'boş durumda maskot/logo plakası yok',
     );
+    // 2026-10-29 vay 2B (B10): kupa rozeti yerine karşılama maskotu (boş
+    // durumların ortak dili); maskot dekoratif — semantik düğüm eklemez.
     final icon = find.descendant(
       of: card,
-      matching: find.byIcon(AppIcons.trophy),
+      matching: find.byKey(const ValueKey('profile-start-mascot')),
     );
     expect(icon, findsOneWidget);
     expect(
-      find.ancestor(of: icon, matching: find.byType(ExcludeSemantics)),
+      find.descendant(of: icon, matching: find.byType(ExcludeSemantics)),
       findsWidgets,
-      reason: 'ikon semantik ağaca ayrı bir düğüm eklememeli',
+      reason: 'maskot semantik ağaca ayrı bir düğüm eklememeli',
     );
     expect(find.byIcon(AppIcons.chartColumn), findsNothing);
     expect(find.text('Henüz soru çözmedin.'), findsNothing);

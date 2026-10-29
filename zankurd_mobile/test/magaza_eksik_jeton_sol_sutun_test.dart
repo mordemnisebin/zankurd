@@ -67,7 +67,9 @@ void main() {
           .evaluate()
           .map((e) => (e.widget as Text).data)
           .toSet();
-      expect(texts, {'VIP rozeti', '720'});
+      // 2026-10-29 vay 2B (B9): önizleme avatarı artık büyük (64 px) ve VIP
+      // ürününde avatarın kendi "VIP" işaretini taşır — ürünün GÖRÜNÜŞÜ.
+      expect(texts.difference({'VIP'}), {'VIP rozeti', '720'});
 
       // Bilgi kaybolmadı: ekran okuyucu eksik miktarı söyler.
       expect(find.bySemanticsLabel(RegExp('420 jeton eksik')), findsWidgets);

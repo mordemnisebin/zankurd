@@ -16,8 +16,18 @@ import '../utils/network_error.dart';
 import '../widgets/app_state.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/sahne/sahne.dart';
+import '../widgets/zan_mascot.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../services/app_haptics.dart';
+
+/// Çarkın dilim renkleri (vay 2A): marka paleti, siyah/gri dilim yok;
+/// rakam rengi [SahneVayColors.wheelInk] (bekçi: `vay_2a_test`).
+const List<Color> spinWheelSegmentColors = [
+  SahneVayColors.wheelGold,
+  SahneVayColors.wheelMint,
+  SahneVayColors.wheelRose,
+  SahneVayColors.wheelLilac,
+];
 
 /// Çarkın tablet üst sınırı (R6); telefonda genişlik belirler.
 const double spinWheelMaxDiameter = 440;
@@ -357,13 +367,18 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
         builder: (context, box) => SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(
             SahneSpace.page,
-            0,
+            SahneSpace.x4,
             SahneSpace.page,
             SahneSpace.x4,
           ),
+          // Vay 2A (2026-10-29, Astra: "çarktaki üst boşluk"): içerik üstten
+          // başlar (başlığın altında hemen çark); dikey ortalama başlığı
+          // ekranın ~%25'ine itiyor, üstte boş bir koyu alan bırakıyordu.
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: box.maxHeight),
-            child: Center(
+            child: Align(
+              // Üst-orta: boşluğun ~%25'i üstte, kalanı dağların üstünde.
+              alignment: const Alignment(0, -0.5),
               child: Column(
                 key: const ValueKey('spin-balanced-body'),
                 mainAxisSize: MainAxisSize.min,
@@ -506,7 +521,19 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
             dimension: size,
             child: Stack(
               alignment: Alignment.center,
+              clipBehavior: Clip.none,
               children: [
+                // Ödül patlaması: kazanınca çarkın ardında altın ışın diski
+                // (tek sefer, hareketsiz; konfeti ayrıca).
+                if (_wonAmount != null)
+                  OverflowBox(
+                    maxWidth: size * 1.3,
+                    maxHeight: size * 1.3,
+                    child: SahneRayDisc(
+                      key: const ValueKey('spin-prize-burst'),
+                      size: size * 1.3,
+                    ),
+                  ),
                 // Çark
                 AnimatedBuilder(
                   animation: _spinController,
@@ -524,29 +551,43 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                     );
                   },
                 ),
-                // Ortada ZK göbeği: yuvarlak, Halka 3 altın. 2026-09-29
-                // doğallık: göbek elmastı; elmas yalnız soru ilerlemesi ve
-                // ders sayacı anlamını taşır (K5). Çarkın göbeği çarkın
-                // kendisi gibi yuvarlaktır.
-                DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: t.s1,
-                    shape: CircleBorder(
-                      side: BorderSide(
-                        color: t.gold,
-                        width: SahneRing.r3,
-                        strokeAlign: BorderSide.strokeAlignInside,
+                // Vay 2A (2026-10-29, Astra: Trivia Crack "DÖNDÜR" göbeği):
+                // göbekte "ZK" yazısı yerine MASKOT, krem disk + altın halka;
+                // göbek de çevirir (alt perdedeki "Çevir" ile aynı eylem;
+                // ekran okuyucuda tek düğme kalsın diye anlamsal olarak
+                // dışlanır).
+                GestureDetector(
+                  key: const ValueKey('spin-hub'),
+                  excludeFromSemantics: true,
+                  behavior: HitTestBehavior.opaque,
+                  onTap: _canSpin && !_spinning ? _spin : null,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: SahneVayColors.wheelHub,
+                      shape: const CircleBorder(
+                        side: BorderSide(
+                          color: SahneVayColors.wheelRimEdge,
+                          width: 4,
+                        ),
                       ),
+                      shadows: [
+                        // Keskin koyu taban (bulanık gölge yok): göbek
+                        // basılabilir bir düğme gibi kalkar.
+                        BoxShadow(
+                          color: SahneVayColors.black.withValues(alpha: 0.35),
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
-                  ),
-                  child: SizedBox.square(
-                    dimension: math.max(60.0, size * 0.2),
-                    child: Center(
-                      child: Text(
-                        'ZK',
-                        style: SahneType.button.copyWith(
-                          color: t.gold,
-                          height: 1,
+                    child: SizedBox.square(
+                      dimension: math.max(76.0, size * 0.26),
+                      child: Center(
+                        child: ZanMascot(
+                          key: const ValueKey('spin-hub-mascot'),
+                          pose: _wonAmount != null
+                              ? ZanPose.celebrate
+                              : ZanPose.welcome,
+                          size: math.max(76.0, size * 0.26) * 0.74,
                         ),
                       ),
                     ),
@@ -560,10 +601,10 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                       32 * math.max(1.0, size / 300),
                       40 * math.max(1.0, size / 300),
                     ),
-                    painter: _PointerPainter(
-                      fill: t.gold,
-                      edge: t.goldDeep,
-                      rim: t.bg,
+                    painter: const _PointerPainter(
+                      fill: SahneVayColors.wheelGold,
+                      edge: SahneVayColors.wheelRimEdge,
+                      rim: SahneVayColors.wheelRim,
                     ),
                   ),
                 ),
@@ -598,7 +639,22 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
               padding: const EdgeInsets.all(SahneSpace.x4),
               child: Row(
                 children: [
-                  const SahneGlyph(SahneGlyphKind.coin, size: 40),
+                  // Ödül patlaması (vay 2A): jetonun ardında altın ışınlar.
+                  const SizedBox.square(
+                    dimension: 56,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      alignment: Alignment.center,
+                      children: [
+                        OverflowBox(
+                          maxWidth: 104,
+                          maxHeight: 104,
+                          child: SahneRayDisc(size: 104),
+                        ),
+                        SahneGlyph(SahneGlyphKind.coin, size: 44),
+                      ],
+                    ),
+                  ),
                   const SizedBox(width: SahneSpace.x3),
                   Expanded(
                     child: Column(
@@ -656,7 +712,8 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     final formatted = _formatDuration(_timeUntilNextSpin);
     final parts = formatted.split(':');
 
-    return SahneSurfaceCard(
+    // Vay 2A: sahnenin cam kartı (nötr gri Perde mor sahneden kopuyordu).
+    return SahneGlassCard(
       child: Column(
         children: [
           Row(
@@ -742,11 +799,12 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 // ═══════════════════════════════════════════════
 /// Çarkın ressamı.
 ///
-/// 2026-09-29 Şahnê: dilimler dört rol renginden dönüşümlü — Zêr, Zimrût,
-/// Boyax, Ray (`s3`). Agir yok: turuncu yalnız birincil eylemin rengidir.
-/// Rakam rengi dilime göre karşıtlıkla seçilir ([sahneOnFill]); rakamın
-/// altında gölge yok. Dış kasnak Kulis (`s2`), üstünde 16 altın ışık (yanan
-/// Zêr, sönen koyu altın) — bulanık hâle (`MaskFilter`) yok.
+/// Vay 2A (2026-10-29, Astra çark 5,5/10 — "siyah dilimler, hazır bileşen
+/// hissi"): dilimler MARKA paletinden dönüşümlü — altın, nane, gül, leylak
+/// ([SahneVayColors.wheelGold] …). Siyah/gri (Ray `s3`) dilim YOK. Rakamlar
+/// hepsinde koyu mürekkep ([SahneVayColors.wheelInk], ≥ 4,5:1; bekçi ölçer).
+/// Kasnak koyu mor gövde + altın ince çerçeve, üstünde 16 ışık (yanan altın,
+/// sönen krem). Turuncu yok: turuncu yalnız birincil eylemin rengidir.
 class _WheelPainter extends CustomPainter {
   _WheelPainter({
     required this.rewards,
@@ -758,49 +816,70 @@ class _WheelPainter extends CustomPainter {
   final double angle;
   final SahneTokens tokens;
 
+  /// Dilim renkleri (sırayla, dönüşümlü).
+  static const segmentColors = spinWheelSegmentColors;
+
   @override
   void paint(Canvas canvas, Size size) {
-    final t = tokens;
     final center = Offset(size.width / 2, size.height / 2);
     final outerRadius = size.width / 2;
     const rimWidth = 16.0;
     final innerRadius = outerRadius - rimWidth;
     final segment = 2 * math.pi / rewards.length;
-    final segmentColors = [t.gold, t.learn, t.race, t.s3];
 
-    // Dış kasnak.
-    canvas.drawCircle(center, outerRadius, Paint()..color = t.s2);
+    // Dış kasnak: koyu mor gövde + altın çerçeve.
+    canvas.drawCircle(
+      center,
+      outerRadius,
+      Paint()..color = SahneVayColors.wheelRim,
+    );
+    canvas.drawCircle(
+      center,
+      outerRadius - 1.5,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3
+        ..color = SahneVayColors.wheelRimEdge,
+    );
 
     for (var i = 0; i < rewards.length; i++) {
       final startAngle = i * segment;
       final fill = segmentColors[i % segmentColors.length];
-
+      final arcRect = Rect.fromCircle(center: center, radius: innerRadius);
+      canvas.drawArc(arcRect, startAngle, segment, true, Paint()..color = fill);
+      // Dilimin dış yarısında hafif ışık: düz renk levhası değil, kabartma.
       canvas.drawArc(
-        Rect.fromCircle(center: center, radius: innerRadius),
+        arcRect,
         startAngle,
         segment,
         true,
-        Paint()..color = fill,
+        Paint()
+          ..shader = RadialGradient(
+            colors: [
+              SahneVayColors.white.withValues(alpha: 0),
+              SahneVayColors.white.withValues(alpha: 0.18),
+            ],
+            stops: const [0.55, 1],
+          ).createShader(arcRect),
       );
 
-      // Dilimler arası ince ayırıcı (zemin tonu).
-      final sepPaint = Paint()
-        ..color = t.bg.withValues(alpha: 0.55)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
+      // Dilimler arası ince beyaz ayırıcı.
       canvas.drawLine(
         center,
         Offset(
           center.dx + math.cos(startAngle) * innerRadius,
           center.dy + math.sin(startAngle) * innerRadius,
         ),
-        sepPaint,
+        Paint()
+          ..color = SahneVayColors.white.withValues(alpha: 0.7)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2,
       );
 
       // Ödül rakamı. Çark `Transform.rotate` ile dönüyor; rakamlar dik
       // kalsın diye her çizimde karşı döndürme uygulanır (2026-07-22).
       final textAngle = startAngle + segment / 2;
-      final textRadius = innerRadius * 0.68;
+      final textRadius = innerRadius * 0.7;
       final textCenter = Offset(
         center.dx + math.cos(textAngle) * textRadius,
         center.dy + math.sin(textAngle) * textRadius,
@@ -812,7 +891,9 @@ class _WheelPainter extends CustomPainter {
           // belirteçten açıkça verilir (2026-07-26).
           style: SahneType.headline.copyWith(
             fontFamily: SahneType.display,
-            color: sahneOnFill(fill),
+            color: SahneVayColors.wheelInk,
+            fontSize: 24,
+            fontWeight: FontWeight.w800,
             height: 1,
             fontFeatures: const [FontFeature.tabularFigures()],
           ),
@@ -830,14 +911,14 @@ class _WheelPainter extends CustomPainter {
       canvas.restore();
     }
 
-    // İç kenar: dilimleri kasnaktan ayıran ince zemin çizgisi.
+    // İç kenar: dilimleri kasnaktan ayıran ince altın çizgi.
     canvas.drawCircle(
       center,
       innerRadius,
       Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2
-        ..color = t.bg,
+        ..color = SahneVayColors.wheelRimEdge,
     );
 
     // ── Kasnak ışıkları ──
@@ -852,8 +933,11 @@ class _WheelPainter extends CustomPainter {
       final isLit = math.sin(a * 2 - angle * 5) > 0.0;
       canvas.drawCircle(
         ledCenter,
-        3,
-        Paint()..color = isLit ? t.gold : t.goldDeep.withValues(alpha: 0.6),
+        3.2,
+        Paint()
+          ..color = isLit
+              ? SahneVayColors.wheelGold
+              : SahneVayColors.wheelHub.withValues(alpha: 0.55),
       );
     }
   }

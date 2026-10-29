@@ -59,9 +59,11 @@ void main() {
     // renktedir (Agir yalnız "Başla" düğmesinde kalır).
     expect(side.color, t.learnFill);
 
+    // 2026-10-29 vay 2B (B6): kilitli ders artık rotada 64'lük bir DÜĞÜM;
+    // kilit düğümün içinde 22 px, ikincil metin renginde (soluk değil), düğüm
+    // yüzeyi `s3` üstünde okunur. Ders adı soluklaştırılmaz (tx2).
     final lock = tester.widgetList<Icon>(find.byIcon(AppIcons.lock)).first;
-    expect(lock.size, 16);
-    // D aşaması: kilit öğrenme alanının Zimrût'una doğru kayık (soluk değil).
-    expect(lock.color, Color.lerp(t.tx2, t.learnTx, 0.4));
+    expect(lock.size, 22);
+    expect(lock.color, t.tx2);
   });
 }

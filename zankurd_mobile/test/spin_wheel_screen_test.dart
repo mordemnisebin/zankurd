@@ -123,9 +123,11 @@ void main() {
   // amblemidir: gece sahnesinde altın Halka 3'lü elmas, gölgesiz. Palet
   // dışı yeşil ve bulanık gölge geri gelmesin diye yeni biçim sabitlenir.
   // 2026-09-29 doğallık: göbek elmas değil yuvarlak (K5: elmas yalnız soru
-  // ilerlemesi ve ders sayacı). Korunan kural aynı: altın Halka 3, gölge
-  // ve degrade yok.
-  testWidgets('çark merkezindeki ZK göbeği altın halkalı ve yuvarlaktır', (
+  // ilerlemesi ve ders sayacı).
+  // 2026-10-29 vay 2A (Astra çark 5,5/10, Trivia Crack "DÖNDÜR" göbeği):
+  // göbekte "ZK" yazısı yerine MASKOT; krem disk + altın halka, keskin koyu
+  // taban (bulanık gölge ve degrade yok). Göbek de çevirir.
+  testWidgets('çark göbeği maskotlu, yuvarlak, altın halkalı ve çevirir', (
     tester,
   ) async {
     await useTallPhoneViewport(tester);
@@ -134,17 +136,23 @@ void main() {
     await tester.pump();
     await tester.pump();
 
+    expect(find.text('ZK'), findsNothing);
+    final mascot = find.byKey(const ValueKey('spin-hub-mascot'));
+    expect(mascot, findsOneWidget);
     final hub = tester.widget<DecoratedBox>(
-      find
-          .ancestor(of: find.text('ZK'), matching: find.byType(DecoratedBox))
-          .first,
+      find.ancestor(of: mascot, matching: find.byType(DecoratedBox)).first,
     );
     final decoration = hub.decoration as ShapeDecoration;
     final shape = decoration.shape as CircleBorder;
-    expect(shape.side.width, SahneRing.r3);
-    expect(shape.side.color, SahneTokens.night.gold);
-    expect(decoration.shadows, isNull);
+    expect(shape.side.color, SahneVayColors.wheelRimEdge);
     expect(decoration.gradient, isNull);
+    for (final s in decoration.shadows ?? const <BoxShadow>[]) {
+      expect(s.blurRadius, 0, reason: 'bulanık gölge yok');
+    }
+    final tap = tester.widget<GestureDetector>(
+      find.byKey(const ValueKey('spin-hub')),
+    );
+    expect(tap.onTap, isNotNull, reason: 'hak varken göbek çevirir');
   });
 
   testWidgets('çark hakkı varken Çevir butonu aktiftir', (tester) async {

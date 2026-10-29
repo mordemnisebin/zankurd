@@ -16,7 +16,7 @@ import '../widgets/app_state.dart';
 import '../widgets/lexicon_lookup.dart';
 import '../widgets/lexicon_speak_button.dart';
 import '../widgets/sahne/sahne.dart';
-import '../widgets/todays_review_card.dart';
+import '../widgets/words_review_hero.dart';
 import '../widgets/word_save_button.dart';
 import '../widgets/zk_back_button.dart';
 import 'word_drill_screen.dart';
@@ -119,7 +119,11 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
                   // Kelime listesi sınırsız büyür; kartlar tembel çizilir
                   // (yalnız görünenler). Üst bölüm sabit birkaç parçadır.
                   final header = [
-                    _reviewCard(context, t, store!),
+                    WordsReviewHero(
+                      repository: widget.repository,
+                      store: store!,
+                      onPractice: () => _startPractice(context, words),
+                    ),
                     _practiceSection(context, t, words),
                     const SizedBox(height: SahneSpace.x4),
                     Text(
@@ -188,18 +192,6 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
     }
   }
 
-  Widget _reviewCard(BuildContext context, SahneTokens t, WordListStore store) {
-    return SahneSurfaceCard(
-      key: const ValueKey('my-words-review-card'),
-      child: TodaysReviewCard(
-        repository: widget.repository,
-        isKu: context.isKu,
-        wordStore: store,
-        refreshSignal: store,
-      ),
-    );
-  }
-
   /// Serbest pratik: vadesini beklemeden tüm kelimeler ya da yalnız
   /// zorlandıkların (1. kutu). Kutular değişmez (bkz.
   /// [WordDrillScreen.practice]).
@@ -218,24 +210,69 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
       for (final w in words)
         if (w.box <= 1) w,
     ];
-    Widget row({
+    // 2026-10-29 vay 2B (Astra #4): iki eşit, nötr karo yan yana; ekranın
+    // birincili üstteki kahramandaki tek turuncu düğmedir.
+    Widget tile({
       required Key key,
       required String title,
       required List<SavedWord> pool,
+      required IconData icon,
     }) {
-      return SahneListRow.icon(
+      return SahneSurfaceCard(
         key: key,
-        icon: AppIcons.play,
-        role: SahneRole.learn,
-        title: title,
-        subtitle: '${pool.length}',
-        chevron: true,
+        emboss: true,
+        semanticLabel: '$title, ${pool.length}',
         onTap: () => _startPractice(context, pool),
+        padding: const EdgeInsets.all(SahneSpace.x3),
+        child: ExcludeSemantics(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: t.learnTint,
+                      shape: SahneShape.m,
+                    ),
+                    child: SizedBox.square(
+                      dimension: 40,
+                      child: Icon(icon, size: 20, color: t.learnTx),
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '${pool.length}',
+                    style: SahneType.headline.copyWith(color: t.tx),
+                  ),
+                ],
+              ),
+              const SizedBox(height: SahneSpace.x2),
+              Text(title, style: SahneType.bodyStrong.copyWith(color: t.tx)),
+            ],
+          ),
+        ),
       );
     }
 
+    final tiles = [
+      tile(
+        key: const ValueKey('my-words-practice-all'),
+        title: context.t(K.wordsPracticeAll),
+        pool: words,
+        icon: AppIcons.play,
+      ),
+      if (weak.isNotEmpty)
+        tile(
+          key: const ValueKey('my-words-practice-weak'),
+          title: context.t(K.wordsPracticeWeak),
+          pool: weak,
+          icon: AppIcons.bolt,
+        ),
+    ];
+    final stacked = MediaQuery.textScalerOf(context).scale(16) >= 24;
     return Padding(
-      padding: const EdgeInsets.only(top: SahneSpace.x4),
+      padding: const EdgeInsets.only(top: SahneSpace.sectionTop),
       child: Column(
         key: const ValueKey('my-words-practice'),
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -250,21 +287,19 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
             style: SahneType.caption.copyWith(color: t.tx2),
           ),
           const SizedBox(height: SahneSpace.x2),
-          SahneListGroup(
-            children: [
-              row(
-                key: const ValueKey('my-words-practice-all'),
-                title: context.t(K.wordsPracticeAll),
-                pool: words,
+          if (stacked || tiles.length == 1)
+            for (final w in tiles) ...[w, const SizedBox(height: SahneSpace.x2)]
+          else
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(child: tiles[0]),
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(child: tiles[1]),
+                ],
               ),
-              if (weak.isNotEmpty)
-                row(
-                  key: const ValueKey('my-words-practice-weak'),
-                  title: context.t(K.wordsPracticeWeak),
-                  pool: weak,
-                ),
-            ],
-          ),
+            ),
         ],
       ),
     );
@@ -336,6 +371,11 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
                       _MasteryDots(
                         key: ValueKey('my-word-mastery-${entry.id}'),
                         box: word.box,
+                      ),
+                      Text(
+                        context.t(WordStage.of(word.box).labelKey),
+                        key: ValueKey('my-word-stage-${entry.id}'),
+                        style: SahneType.captionStrong.copyWith(color: t.tx2),
                       ),
                       if (due) _DueChip(label: context.t(K.wordsDueBadge)),
                     ],

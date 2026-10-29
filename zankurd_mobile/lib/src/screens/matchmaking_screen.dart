@@ -13,7 +13,7 @@ import '../models/player.dart';
 import '../widgets/kilim_progress_bar.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/player_moderation_button.dart';
-import '../widgets/roj_mascot.dart';
+import '../widgets/zan_mascot.dart';
 import '../widgets/sahne/sahne.dart';
 import '../providers/bilingual_labels_provider.dart';
 import '../providers/reduced_motion_provider.dart';
@@ -1314,12 +1314,16 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               onAction: _loadCategoriesOnly,
             );
     } else {
-      // Kategori satırı: 36'lık çizimsiz küçük (kategori tonu + ikon); alt
-      // satırda öteki dildeki ad. Tam kategori çizimi (mücevher karo) burada yok:
-      // eşleşme bir kategori vitrini değil, hızlı bir seçim listesi.
-      categories = SahneListGroup(
+      // Vay 2A (2026-10-29, Astra eşleşme 6/10 — "ayarlar listesine
+      // benziyor"): kategori seçimi TRT "Kategorini seç" gibi iki sütunlu
+      // DOYGUN karolar (konunun rengi, 48 px cam ikon diski, kalın beyaz ad);
+      // dar ekranda / büyük yazıda tek sütun ([SahneModeGrid]). Konu rengi
+      // ana sayfa konu kartıyla aynı. Tek turuncu birincil yine alttaki
+      // "Rastgele rakip bul".
+      categories = SahneModeGrid(
+        key: const ValueKey('matchmaking-category-grid'),
         children: [
-          for (final category in _categories) _categoryRow(category, ku),
+          for (final category in _categories) _categoryTile(category, ku),
         ],
       );
     }
@@ -1350,6 +1354,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               children: [
                 SahneSectionHeader(title: context.t(K.matchByCategory)),
                 categories,
+                // Son karo alt perdedeki düğmenin ARKASINDA kalmasın (Astra:
+                // "son kategori düğmenin arkasına giriyor"): kaydırma sonunda
+                // düğme payı kadar boşluk.
+                const SizedBox(height: SahneSpace.x8),
               ],
             ),
           ),
@@ -1358,7 +1366,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     );
   }
 
-  Widget _categoryRow(String category, bool ku) {
+  Widget _categoryTile(String category, bool ku) {
     void onTap() => _startMatchmaking(category);
 
     final title = CategoryNames.localized(category, ku);
@@ -1368,24 +1376,14 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         other == title || !BilingualLabelsProvider.isEnabledIn(context)
         ? null
         : other;
-    // 2026-09-29 doğallık (K1): liste satırında çizim yok. 36'lık küçükte
-    // üretilmiş çizim seçilemeyen bir renk lekesiydi; her kategori
-    // çizimsiz karonun küçüğünü alır (kendi tonu + kendi ikonu).
     final tone = CategoryVisuals.tone(category);
-    // Y4 (2026-10-29 tur 6): satır nötr + sağda ›; konu kimliği sol kenarda
-    // 4 px renk şeridi (ana sayfa konu kartıyla aynı renk).
-    return SahneStripedRow(
-      color: tone.fill(night: Theme.of(context).brightness == Brightness.dark),
-      row: SahneListRow.thumb(
-        image: null,
-        icon: CategoryVisuals.icon(category),
-        tone: tone,
-        mark: CategoryVisuals.mark(category),
-        title: title,
-        subtitle: subtitle,
-        chevron: true,
-        onTap: onTap,
-      ),
+    return SahnePickTile(
+      key: ValueKey('matchmaking-category-$category'),
+      icon: CategoryVisuals.icon(category),
+      title: title,
+      subtitle: subtitle,
+      fill: tone.fill(night: Theme.of(context).brightness == Brightness.dark),
+      onTap: onTap,
     );
   }
 
@@ -1483,7 +1481,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           avatar: _RingedAvatar(
             ring: t.gold,
             child: PlayerAvatar(
-              radius: 32,
+              radius: 36,
               photoUrl: _myIdentity.photoUrl,
               iconId: _myIdentity.iconId,
               colorHex: _myIdentity.colorHex,
@@ -1512,23 +1510,28 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           opponentAvatar = _RingedAvatar(
             ring: t.tx3,
             child: SahneAvatar(
-              size: 64,
+              size: 72,
               icon: AppIcons.circleXmark,
               color: t.s3,
               foreground: t.tx2,
             ),
           );
         } else if (_found) {
-          opponentAvatar = _RingedAvatar(
-            ring: t.okTx,
-            child: PlayerAvatar(
-              radius: 32,
-              photoUrl: _opponentIdentity.photoUrl,
-              iconId: _opponentIdentity.iconId,
-              colorHex: _opponentIdentity.colorHex,
-              frameId: _opponentIdentity.frameId,
-              showcaseTitle: _opponentIdentity.showcaseTitle,
-              displayName: _opponentName,
+          // Vay B3: rakip bulununca avatar ölçeklenerek girer (hareketi
+          // azaltta sabit).
+          opponentAvatar = SahneScaleIn(
+            key: const ValueKey('matchmaking-opponent-found'),
+            child: _RingedAvatar(
+              ring: t.okTx,
+              child: PlayerAvatar(
+                radius: 36,
+                photoUrl: _opponentIdentity.photoUrl,
+                iconId: _opponentIdentity.iconId,
+                colorHex: _opponentIdentity.colorHex,
+                frameId: _opponentIdentity.frameId,
+                showcaseTitle: _opponentIdentity.showcaseTitle,
+                displayName: _opponentName,
+              ),
             ),
           );
         } else {
@@ -1538,7 +1541,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             child: const _RingedAvatar(
               ring: SahneStageColors.raceSoft,
               child: SahneAvatar(
-                size: 64,
+                size: 72,
                 icon: AppIcons.question,
                 color: SahneStageColors.race3,
                 foreground: SahneStageColors.raceSoft,
@@ -1610,28 +1613,27 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           ),
         );
 
-        // Eşleşme bulunduğunda VS altın renge döner ve yarışma programı
-        // hissiyle "punch" yapar; hareketi azaltta yalnız renk değişir.
+        // Vay B3 (2026-10-29): ortada 44 px altın VS rozeti (bulununca
+        // "punch"), üstünde maskot (aranırken
+        // düşünen, bulununca sevinen). Hareketi azaltta yalnız renk değişir.
         final vs = TweenAnimationBuilder<double>(
           key: ValueKey('vs-punch-$_found'),
-          tween: Tween(begin: _found && !reduce ? 1.8 : 1.0, end: 1.0),
+          tween: Tween(begin: _found && !reduce ? 1.6 : 1.0, end: 1.0),
           duration: reduce ? Duration.zero : const Duration(milliseconds: 450),
           curve: Curves.easeOutBack,
           builder: (context, scale, child) =>
               Transform.scale(scale: scale, child: child),
-          child: Text(
-            'VS',
-            style: SahneType.title.copyWith(
-              color: _found ? t.gold : SahneStageColors.raceSoft,
-            ),
-          ),
+          child: const SahneVsBadge(),
         );
 
         final emblem = Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: SahneSpace.x1),
-            const RojMascot(size: 36),
+            ZanMascot(
+              key: ValueKey('matchmaking-mascot-$_found'),
+              pose: _found ? ZanPose.celebrate : ZanPose.guide,
+              size: 64,
+            ),
             const SizedBox(height: SahneSpace.x2),
             vs,
           ],
@@ -1639,8 +1641,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
         // Büyük yazıda iki yan yan yana sığmaz (ad harf harf bölünür): yüz
         // yüze düzen dikey bir sıraya döner — oyuncu, amblem, rakip.
-        final stage = SahneStageCard(
-          role: SahneRole.race,
+        // Vay B3: yüz yüze sahne gece-dağ sahnesinin CAM kartıdır; bordo
+        // sahne kartı mor gecede çamurlu duruyordu.
+        final stage = SahneGlassCard(
           padding: const EdgeInsets.fromLTRB(
             SahneSpace.x3,
             SahneSpace.x6,
@@ -1683,82 +1686,89 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             SahneSpace.page,
             SahneSpace.x6,
           ),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 480),
-              child: Column(
-                key: const ValueKey('matchmaking-waiting-state'),
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  stage,
-                  const SizedBox(height: SahneSpace.x6),
-                  if (!_found) ...[
-                    Center(
-                      child: SizedBox(
-                        width: 180,
-                        child: AnimatedBuilder(
-                          animation: _pulseController,
-                          builder: (context, child) {
-                            final val = reduce
-                                ? 0.65
-                                : (0.35 + 0.45 * _pulseController.value);
-                            return KilimProgressBar(
-                              value: val,
-                              height: 8,
-                              color: t.race,
-                              trackColor: t.s3,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: SahneSpace.x4),
-                  ],
-                  Text(
-                    status,
-                    textAlign: TextAlign.center,
-                    style: SahneType.headline.copyWith(
-                      color: _found ? t.okTx : t.tx,
-                    ),
-                  ),
-                  if (_found) ...[
-                    const SizedBox(height: SahneSpace.x2),
-                    Text(
-                      context.t(K.startingSoon),
-                      textAlign: TextAlign.center,
-                      style: SahneType.bodyStrong.copyWith(color: t.goldTx),
-                    ),
-                  ],
-                  if (!_found) ...[
-                    const SizedBox(height: SahneSpace.x3),
-                    // Geçen bekleme süresi — yalnız gösterim; zamanlayıcı
-                    // mantığı değişmez. Bot diyaloğu açıkken çip gizlenir.
-                    if (!_botPromptOpen)
+          // Vay B3: yüz yüze sahne gece sahnesinin üst-ortasında (üstte
+          // dev boşluk ya da altta boş dağ alanı kalmasın).
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: max(0, constraints.maxHeight - 2 * SahneSpace.x6),
+            ),
+            child: Align(
+              alignment: const Alignment(0, -0.35),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 480),
+                child: Column(
+                  key: const ValueKey('matchmaking-waiting-state'),
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    stage,
+                    const SizedBox(height: SahneSpace.x6),
+                    if (!_found) ...[
                       Center(
-                        child: SahneStatChip(
-                          leading: Icon(
-                            AppIcons.stopwatch,
-                            size: 20,
-                            color: t.tx2,
+                        child: SizedBox(
+                          width: 180,
+                          child: AnimatedBuilder(
+                            animation: _pulseController,
+                            builder: (context, child) {
+                              final val = reduce
+                                  ? 0.65
+                                  : (0.35 + 0.45 * _pulseController.value);
+                              return KilimProgressBar(
+                                value: val,
+                                height: 8,
+                                color: t.race,
+                                trackColor: t.s3,
+                              );
+                            },
                           ),
-                          label: ku
-                              // Çip yalnız geçen süreyi taşır; durumu
-                              // üstteki başlık söyler. İkisi de durum
-                              // yazdığında biri ötekini yalanlıyordu.
-                              ? '$_secondsElapsed çirke'
-                              : '$_secondsElapsed saniye',
                         ),
                       ),
-                    const SizedBox(height: SahneSpace.x3),
+                      const SizedBox(height: SahneSpace.x4),
+                    ],
                     Text(
-                      context.t(K.searchingNote),
+                      status,
                       textAlign: TextAlign.center,
-                      style: SahneType.caption.copyWith(color: t.tx2),
+                      style: SahneType.headline.copyWith(
+                        color: _found ? t.okTx : t.tx,
+                      ),
                     ),
+                    if (_found) ...[
+                      const SizedBox(height: SahneSpace.x2),
+                      Text(
+                        context.t(K.startingSoon),
+                        textAlign: TextAlign.center,
+                        style: SahneType.bodyStrong.copyWith(color: t.goldTx),
+                      ),
+                    ],
+                    if (!_found) ...[
+                      const SizedBox(height: SahneSpace.x3),
+                      // Geçen bekleme süresi — yalnız gösterim; zamanlayıcı
+                      // mantığı değişmez. Bot diyaloğu açıkken çip gizlenir.
+                      if (!_botPromptOpen)
+                        Center(
+                          child: SahneStatChip(
+                            leading: Icon(
+                              AppIcons.stopwatch,
+                              size: 20,
+                              color: t.tx2,
+                            ),
+                            label: ku
+                                // Çip yalnız geçen süreyi taşır; durumu
+                                // üstteki başlık söyler. İkisi de durum
+                                // yazdığında biri ötekini yalanlıyordu.
+                                ? '$_secondsElapsed çirke'
+                                : '$_secondsElapsed saniye',
+                          ),
+                        ),
+                      const SizedBox(height: SahneSpace.x3),
+                      Text(
+                        context.t(K.searchingNote),
+                        textAlign: TextAlign.center,
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           ),
@@ -1795,7 +1805,7 @@ class _VersusSide extends StatelessWidget {
   }
 }
 
-/// 80'lik pahlı kare yuva: içte 64'lük avatar, dışta Halka 3.
+/// 88'lik pahlı kare yuva: içte 72'lik avatar (vay B3), dışta Halka 3.
 ///
 /// 2026-09-29 doğallık (K5): yuva ve arama halkaları elmastı; avatar pahlı
 /// kare olunca elmas halka kareyi çevreleyen ikinci bir şekil oluyordu.
@@ -1809,11 +1819,11 @@ class _RingedAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: 80,
+      dimension: 88,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           shape: SahneShape.withSide(
-            SahneShape.forSize(80),
+            SahneShape.forSize(88),
             ring,
             width: SahneRing.r3,
           ),
@@ -1842,7 +1852,7 @@ class _SearchPulse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: 80,
+      dimension: 88,
       child: Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.center,
@@ -1856,7 +1866,7 @@ class _SearchPulse extends StatelessWidget {
                   clipBehavior: Clip.none,
                   alignment: Alignment.center,
                   children: [
-                    for (final base in const [96.0, 112.0])
+                    for (final base in const [104.0, 120.0])
                       SizedBox.square(
                         dimension: base + 8 * v,
                         child: DecoratedBox(
@@ -1865,7 +1875,7 @@ class _SearchPulse extends StatelessWidget {
                               SahneShape.forSize(base + 8 * v),
                               SahneStageColors.raceSoft.withValues(
                                 alpha:
-                                    (base == 96 ? 0.32 : 0.16) * (1 - 0.5 * v),
+                                    (base == 104 ? 0.32 : 0.16) * (1 - 0.5 * v),
                               ),
                             ),
                           ),

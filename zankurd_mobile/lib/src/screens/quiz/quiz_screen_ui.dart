@@ -416,7 +416,8 @@ extension _QuizScreenUI on _QuizScreenState {
     return SahneProgressBar(
       key: const ValueKey('quiz-progress-bar'),
       value: total == 0 ? 0 : done / total,
-      height: 4,
+      // Vay 2A: 4 → 6 px (Astra: "sayaç ve ilerleme zayıf").
+      height: 6,
       tone: SahneProgressTone.action,
       semanticLabel:
           '${index + 1}/$total · $right ${context.t(K.correct)} · '
@@ -625,9 +626,10 @@ extension _QuizScreenUI on _QuizScreenState {
                       ? _buildRatingBar(context)
                       : _buildNextButton(
                           context,
-                          onStripFill: _answerWasWrong
-                              ? SahneTokens.of(context).errFill
-                              : SahneTokens.of(context).okFill,
+                          onStripFill: QuizFeedbackStrip.feedbackFill(
+                            SahneTokens.of(context),
+                            correct: !_answerWasWrong,
+                          ),
                         ),
                 )
               else
@@ -796,7 +798,9 @@ extension _QuizScreenUI on _QuizScreenState {
           // gibi görünmesin: jetonun nereden kazanılacağını söyle (ekranda
           // yazılmaz; ekran okuyucuya gider ve kilitli jokere dokununca tost
           // olur).
-          showHint: !_freeWildcardAvailable && _jokerStock > 0,
+          // Vay 2A: bedava hak açıkken TEK satır ipucu (jokerlerde "Bedava"
+          // tekrarı yok, bkz. [SahneJokerButton]).
+          showHint: _freeWildcardAvailable || _jokerStock > 0,
           hint: _freeWildcardAvailable
               ? context.t(K.freeWildcardToday)
               : _jokerStock > 0

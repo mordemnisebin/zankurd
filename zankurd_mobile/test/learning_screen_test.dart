@@ -14,6 +14,7 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/lesson.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
+import 'package:zankurd_mobile/src/widgets/learn_path.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/services/lesson_listening_speaker.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -316,12 +317,14 @@ void main() {
             (w.key as ValueKey<String>).value.startsWith('learning-path-node-'),
       );
       final more = find.byKey(const ValueKey('learning-locked-more'));
-      // T13 (2026-10-28 tur 3): etkin ders + 2 kilitli görünür; kalanı tek
-      // "Tüm dersler (+N)" satırında.
+      // T13 (2026-10-28 tur 3): etkin ders + 2 kilitli görünürdü.
+      // 2026-10-29 vay 2B (B6): etkin ünite KEŞİF ROTASIDIR — ünitenin beş
+      // dersi düğüm olarak görünür (5–7 düğüm kuralı); ünite dışındaki
+      // kilitliler tek "Tüm dersler (+N)" satırında.
       final total = _placementLessons.length;
-      expect(rows, findsNWidgets(3));
+      expect(rows, findsNWidgets(5));
       expect(more, findsOneWidget);
-      expect(find.text('Tüm dersler (+${total - 3})'), findsOneWidget);
+      expect(find.text('Tüm dersler (+${total - 5})'), findsOneWidget);
       await tester.tap(more);
       await tester.pumpAndSettle();
       expect(more, findsNothing);
@@ -560,23 +563,26 @@ void main() {
     );
     expect(meta.style?.color, SahneVivid.onFill);
 
-    // Beyaz yazılı iki rozette arka planın açılması kontrastı düşürüyordu.
+    // 2026-10-29 vay 2B: iki rozet kartın içinden rotadaki güncel düğümün
+    // YANINA taşındı (sayfa zemininde). Eski kural (cam zemin + beyaz yazı)
+    // yerine ölçü: rozet yazısı kendi zemininde ≥ 4.5:1.
     for (final key in const [
       'lesson-recommended-badge',
       'learning-progress-capsule',
     ]) {
       final badge = tester.widget<DecoratedBox>(find.byKey(ValueKey(key)));
-      expect(
-        (badge.decoration as ShapeDecoration).color,
-        SahneVivid.learnBadgeGlass,
-      );
+      final bg = (badge.decoration as ShapeDecoration).color!;
       final badgeText = tester.widget<Text>(
         find.descendant(
           of: find.byKey(ValueKey(key)),
           matching: find.byType(Text),
         ),
       );
-      expect(badgeText.style?.color, SahneVivid.onFill);
+      final fg = badgeText.style!.color!;
+      final l1 = bg.computeLuminance();
+      final l2 = fg.computeLuminance();
+      final ratio = ((l1 > l2 ? l1 : l2) + 0.05) / ((l1 > l2 ? l2 : l1) + 0.05);
+      expect(ratio, greaterThanOrEqualTo(4.5), reason: key);
     }
 
     final primary = find.descendant(
@@ -1349,8 +1355,10 @@ void main() {
       find.descendant(of: locked, matching: find.byIcon(AppIcons.lock)),
       findsOneWidget,
     );
+    // 2026-10-29 vay 2B (B6): etkin ünitenin kilitli dersi liste grubunda
+    // değil, keşif rotasının bir düğümü.
     expect(
-      find.ancestor(of: locked, matching: find.byType(SahneListGroup)),
+      find.ancestor(of: locked, matching: find.byType(LearnPath)),
       findsOneWidget,
     );
   });

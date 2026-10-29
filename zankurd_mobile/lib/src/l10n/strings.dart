@@ -4122,6 +4122,37 @@ class Tr {
       'ku': 'Îro hîn tu kesî neqedandiye. Bibe yekem!',
       'tr': 'Bugün henüz kimse bitirmedi. İlk sen ol!',
     },
+    // ── Vay katmanı 2B (2026-10-29) — KU jüri bekliyor ────────────────
+    K.storyYourReply: {'ku': 'Tu çi dibêjî?', 'tr': 'Ne diyeceksin?'},
+    K.wordsReviewStart: {
+      'ku': 'Dubarekirinê dest pê bike',
+      'tr': 'Tekrara başla',
+    },
+    K.wordsPracticeStart: {
+      'ku': 'Bi hemû peyvan bixebite',
+      'tr': 'Tüm kelimelerle çalış',
+    },
+    K.wordsStageNew: {'ku': 'Nû', 'tr': 'Yeni'},
+    K.wordsStageGrowing: {'ku': 'Xurt dibe', 'tr': 'Pekişiyor'},
+    K.wordsStageLearned: {'ku': 'Hîn bûye', 'tr': 'Öğrenildi'},
+    K.lbYourRank: {'ku': 'Rêza te: {n}', 'tr': '{n}. sıradasın'},
+    K.lbTopOfBoard: {'ku': 'Tu li serî yî!', 'tr': 'Zirvedesin!'},
+    K.lbGapToNext: {
+      'ku': 'Ji bo rêza jortir {n} xal',
+      'tr': 'Üst sıraya {n} puan',
+    },
+    K.lbClimbTitle: {'ku': 'Bilind bibe', 'tr': 'Yüksel'},
+    K.lbClimbBody: {
+      'ku': 'Her pêşbirk te ber bi jor ve dibe.',
+      'tr': 'Her oyun seni yukarı taşır.',
+    },
+    K.lbJoinTitle: {'ku': 'Bikeve rêzbendiyê', 'tr': 'Sıralamaya gir'},
+    K.profileStatStreak: {'ku': 'Zincîra rojane', 'tr': 'Günlük seri'},
+    K.profileStatCoins: {'ku': 'Zêr', 'tr': 'Jeton'},
+    K.profileXpToNext: {
+      'ku': '{n} XP heta asta din',
+      'tr': 'Sonraki seviyeye {n} XP',
+    },
     K.contestBoardUnavailable: {
       'ku': 'Rêzbendî niha nehat barkirin.',
       'tr': 'Sıralama şu an yüklenemedi.',
@@ -5789,4 +5820,19 @@ class K {
   static const contestTeaserOne = 'contest.teaser.one';
   static const contestTeaserBeFirst = 'contest.teaser.beFirst';
   static const contestBoardUnavailable = 'contest.board.unavailable';
+  static const storyYourReply = 'story.yourReply';
+  static const wordsReviewStart = 'words.reviewStart';
+  static const wordsPracticeStart = 'words.practiceStart';
+  static const wordsStageNew = 'words.stage.new';
+  static const wordsStageGrowing = 'words.stage.growing';
+  static const wordsStageLearned = 'words.stage.learned';
+  static const lbYourRank = 'leaderboard.yourRank';
+  static const lbTopOfBoard = 'leaderboard.topOfBoard';
+  static const lbGapToNext = 'leaderboard.gapToNext';
+  static const lbClimbTitle = 'leaderboard.climbTitle';
+  static const lbClimbBody = 'leaderboard.climbBody';
+  static const lbJoinTitle = 'leaderboard.joinTitle';
+  static const profileStatStreak = 'profile.stat.streak';
+  static const profileStatCoins = 'profile.stat.coins';
+  static const profileXpToNext = 'profile.xpToNext';
 }

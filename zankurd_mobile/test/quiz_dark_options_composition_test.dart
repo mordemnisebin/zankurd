@@ -144,13 +144,14 @@ void main() {
     );
   });
 
-  testWidgets('ilerleme çubuğu 4 pt, nötr sahnede (konu bandı yok)', (
+  testWidgets('ilerleme çubuğu 6 pt, nötr sahnede (konu bandı yok)', (
     tester,
   ) async {
     await pump(tester);
     final finder = find.byKey(const ValueKey('quiz-progress-bar'));
     final bar = tester.widget<SahneProgressBar>(finder);
-    expect(bar.height, 4);
+    // 2026-10-29 vay 2A: 4 → 6 px.
+    expect(bar.height, 6);
     // K6+ (2026-10-28) GEÇERSİZ KILDI: konu bandı (beyaz dolgu, cam iz)
     // kalktı; çubuk nötr sahnede varsayılan eylem tonunda.
     expect(find.byKey(const ValueKey('sahne-stage-band')), findsNothing);

@@ -231,7 +231,7 @@ class _VignettePainter extends CustomPainter {
 
 /// Yanlış cevapta tam ekran çok kısa Şaş flaşı.
 /// [trigger] her arttığında bir kez oynar. Şahnê'de flaş hafiftir (tepe
-/// %16): asıl söz şıkkın Şaş dolgusu, çapraz taraması ve ✗'idir.
+/// %16): asıl söz şıkkın Şaş dolgusu ve ✗'idir (tarama vay 2A'da kalktı).
 class WrongFlash extends StatefulWidget {
   const WrongFlash({required this.trigger, super.key});
 

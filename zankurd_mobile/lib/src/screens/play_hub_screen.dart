@@ -13,6 +13,7 @@ import '../models/leaderboard_period.dart';
 import '../models/room.dart';
 import '../providers/remote_availability.dart';
 import '../widgets/sahne/sahne.dart';
+import '../widgets/zan_mascot.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../services/analytics_service.dart';
@@ -926,8 +927,13 @@ class _QuickDuelHeroState extends State<_QuickDuelHero> {
       // Boyax DOLU kahraman (2026-10-20 renk ve canlılık): yarış kimliği tek
       // bakışta. Sadeleştirme beyaz bir karta indirmişti; Boyax ekranda
       // neredeyse görünmüyordu.
+      // Vay 2A (2026-10-29, Astra yarış lobisi + VAY B2): kahraman bir
+      // karşılaşma SAHNESİDİR — altta iki katmanlı dağ silueti, sağda maskot
+      // (köşedeki silik baklava kalktı: ikisi aynı köşede yarışırdı).
       child: SahneRaceHeroSurface(
         kilimKey: const ValueKey('play-hub-kilim-strip'),
+        ridge: true,
+        motif: false,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(
             SahneSpace.x4,
@@ -938,16 +944,39 @@ class _QuickDuelHeroState extends State<_QuickDuelHero> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                context.t(K.quickDuel),
-                style: SahneType.captionStrong.copyWith(
-                  color: SahneVivid.heroEyebrow,
-                ),
-              ),
-              const SizedBox(height: SahneSpace.x1),
-              Text(
-                title,
-                style: SahneType.headline.copyWith(color: SahneVivid.onFill),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          context.t(K.quickDuel),
+                          style: SahneType.captionStrong.copyWith(
+                            color: SahneVivid.heroEyebrow,
+                          ),
+                        ),
+                        const SizedBox(height: SahneSpace.x1),
+                        Text(
+                          title,
+                          style: SahneType.headline.copyWith(
+                            color: SahneVivid.onFill,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Büyük yazıda maskot düşer (yer metnindir).
+                  if (MediaQuery.textScalerOf(context).scale(16) < 22) ...[
+                    const SizedBox(width: SahneSpace.x2),
+                    const ZanMascot(
+                      key: ValueKey('play-hub-mascot'),
+                      pose: ZanPose.welcome,
+                      size: 72,
+                    ),
+                  ],
+                ],
               ),
               const SizedBox(height: SahneSpace.x2),
               LayoutBuilder(

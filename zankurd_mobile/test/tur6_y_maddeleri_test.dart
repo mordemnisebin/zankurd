@@ -281,8 +281,11 @@ void main() {
       child: MaterialApp(theme: AppTheme.light(), home: child),
     );
 
+    // 2026-10-29 vay 2A: konu SATIRLARI (nötr + › + 4 px şerit) yerine TRT
+    // "Kategorini seç" gibi doygun kategori karoları (Astra: "ayarlar
+    // listesine benziyor"); tek turuncu birincil kuralı aynı.
     testWidgets('"Rastgele rakip bul" tam genişlik tek birincil, altta sabit; '
-        'konu satırları nötr + ›, 4 px konu şeridi', (tester) async {
+        'konular doygun karolar', (tester) async {
       tester.view.physicalSize = const Size(390, 844);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.reset);
@@ -302,14 +305,8 @@ void main() {
       );
       expect(tester.getRect(cta).bottom, greaterThan(844 * 0.8));
 
-      final strips = find.byKey(const ValueKey('sahne-row-stripe'));
-      expect(strips, findsWidgets);
-      expect(tester.getSize(strips.first).width, 4);
-      final rows = tester.widgetList<SahneListRow>(find.byType(SahneListRow));
-      expect(rows, isNotEmpty);
-      for (final row in rows) {
-        expect(row.chevron, isTrue);
-      }
+      expect(find.byType(SahnePickTile), findsWidgets);
+      expect(find.byType(SahneListRow), findsNothing);
     });
   });
 
@@ -372,13 +369,21 @@ void main() {
         contains('label: context.t(K.nameGateSkip),\n        ink: true,'),
         reason: '"Şimdilik geç" turuncu metin olmamalı',
       );
+      // 2026-10-29 vay 2B (B7): bağlantı artık koyu kimlik kartında BEYAZ
+      // kalemli bağlantı (`_OnCardLink`); yine turuncu değil.
+      final profile = src('lib/src/screens/profile/profile_widgets.dart');
       expect(
-        src('lib/src/screens/profile/profile_widgets.dart'),
-        contains('arrow: false,\n                      ink: true,'),
+        profile,
+        contains("key: const ValueKey('profile-set-name-cta'),"),
+        reason: '"Oyundaki adını gir" bağlantısı duruyor',
+      );
+      expect(
+        profile,
+        contains('_OnCardLink(\n                          key'),
         reason: '"Oyundaki adını gir" turuncu metin olmamalı',
       );
       final story = src('lib/src/screens/story_screen.dart');
-      expect(story, contains('copyWith(color: s.learnTx)'));
+      expect(story, contains('color: s.learnTx'));
       expect(story, isNot(contains('color: s.eyebrowTx,')));
     });
 
@@ -488,13 +493,21 @@ void main() {
       // Sunucu kuralına uymayan eski söz hiçbir yerde yok.
       expect(find.textContaining('eldeki oyuncularla başlar'), findsNothing);
       // Yol çipleri birimli.
-      expect(find.textContaining('· 4 oyuncu'), findsOneWidget);
-      expect(find.textContaining('· 2 oyuncu'), findsOneWidget);
+      // 2026-10-29 vay 2A: yol bir eleme şeması; birimli cümle ekran
+      // okuyucuda (bkz. `vay_2a_test`).
+      expect(
+        find.bySemanticsLabel(RegExp(r'· 4 oyuncu › Final · 2 oyuncu')),
+        findsOneWidget,
+      );
       expect(find.text('Şampiyon'), findsOneWidget);
       // Sunucu kuralı (24 saat sonra EN AZ 2 oyuncu; yoksa bekler): açılınca.
       await tester.ensureVisible(
         find.byKey(const ValueKey('tournament-rules-toggle')),
       );
+      // 2026-10-29 vay 2A: eleme şeması lobiyi uzattı; kural düğmesi artık
+      // ilk ekranın altında. `ensureVisible` kaydırır ama çizmez: dokunmadan
+      // önce bir kare pompalanır (yoksa eski konuma dokunulur).
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('tournament-rules-toggle')));
       await tester.pumpAndSettle();
       expect(
@@ -525,7 +538,9 @@ void main() {
         final home = File(
           'lib/src/screens/home/home_sections.dart',
         ).readAsStringSync();
-        expect(home, contains('alpha: 0.06'));
+        // 2026-10-29 vay 2A: filigran tamamen kalktı (≤ %6 kuralı artık
+        // "hiç yok"); ad + rozet + şerit kartın pahlı kenarında kırpılır.
+        expect(home, isNot(contains('home-topic-mark-')));
         expect(home, contains('ClipPath'));
       },
     );

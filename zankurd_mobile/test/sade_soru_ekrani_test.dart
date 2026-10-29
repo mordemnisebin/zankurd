@@ -86,7 +86,8 @@ void main() {
     final bar = tester.widget<SahneProgressBar>(
       find.byKey(const ValueKey('quiz-progress-bar')),
     );
-    expect(bar.height, 4);
+    // 2026-10-29 vay 2A: 4 → 6 px.
+    expect(bar.height, 6);
   });
 
   testWidgets('⋯ menüsü Kaydet ve Bildir satırlarını taşır', (tester) async {

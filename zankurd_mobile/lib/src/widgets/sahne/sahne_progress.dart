@@ -426,6 +426,36 @@ class SahneStageTimer extends StatelessWidget {
         ),
       ],
     );
+    // Vay 2A (2026-10-29, Astra: "sayaç zayıf"): sahnedeki sayaç kapsül
+    // içinde durur (≥ 56 × 32, cam dolgu + ince kenar); gerilimde kenar
+    // sayının rengini alır. Bant üstündeki biçim (onBand) aynı kalır.
+    if (!onBand) {
+      return Semantics(
+        label: semanticLabel,
+        excludeSemantics: true,
+        child: DecoratedBox(
+          key: const ValueKey('stage-timer-capsule'),
+          decoration: ShapeDecoration(
+            color: t.stageChip,
+            shape: StadiumBorder(
+              side: BorderSide(
+                color: isHot ? color : t.optionEdge,
+                width: isHot ? 2 : 1,
+              ),
+            ),
+          ),
+          child: ConstrainedBox(
+            // a11y-tap-target: noninteractive — süre kapsülü bir göstergedir,
+            // dokunulmaz (semantikte etiket olarak okunur).
+            constraints: const BoxConstraints(minWidth: 56, minHeight: 32),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
+              child: Center(widthFactor: 1, heightFactor: 1, child: row),
+            ),
+          ),
+        ),
+      );
+    }
     return Semantics(
       label: semanticLabel,
       excludeSemantics: true,

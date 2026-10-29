@@ -186,7 +186,8 @@ void main() {
     // Tarama bitti: dolgu çubuğun tamamında.
     expect(right.gradient!.colors.first, t.okFill);
     expect(right.gradient!.stops![1], 1.0);
-    expect(wrong.gradient!.colors.first, t.errFill);
+    // 2026-10-29 vay 2A: yanlış dolgu sakin şarap tonu (tarama kalktı).
+    expect(wrong.gradient!.colors.first, SahneVayColors.optionWrongFill);
     expect(ringOf(tester, question.correctAnswer).color, t.okTx);
     expect(ringOf(tester, wrongAnswer).color, t.errTx);
     expect(find.byKey(const ValueKey('correct_icon')), findsOneWidget);
@@ -253,7 +254,8 @@ void main() {
       find.byKey(const ValueKey('quiz-progress-bar')),
     );
 
-    expect(bar().height, 4);
+    // 2026-10-29 vay 2A: 4 → 6 px (Astra: "ilerleme zayıf").
+    expect(bar().height, 6);
     expect(find.byType(SahneDiamondRow), findsNothing);
     expect(bar().value, 0, reason: 'tur başında hiçbir soru tamamlanmadı');
     expect(bar().semanticLabel, startsWith('1/3'));

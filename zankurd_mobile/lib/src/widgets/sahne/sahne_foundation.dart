@@ -75,12 +75,17 @@ extension SahneRoleTokens on SahneTokens {
 /// Tek kaynaktır: ana sayfa karosu ve öğrenme kökü aynı bileşenden gelir.
 extension SahneTopicTint on SahneTokens {
   /// Konu karosunun ton yüzeyi.
+  ///
+  /// Vay 2A (2026-10-29, Astra: "koyu temada konu kartları çamurlu"): gece
+  /// karışım %26 → %14. Doygun konu rengi grafit Perde ile çok karışınca
+  /// kahve-gri bir çamura dönüyordu (özellikle Tarih, Kültür); gecede konu
+  /// kimliğini artık daha belirgin kenar (%60), şerit ve rozet taşır.
   Color topicSurface(Color toneFill, {required bool night}) =>
-      Color.alphaBlend(toneFill.withValues(alpha: night ? 0.26 : 0.18), s1);
+      Color.alphaBlend(toneFill.withValues(alpha: night ? 0.14 : 0.18), s1);
 
-  /// Konu karosunun ince kenarı (konu renginin %32'si).
+  /// Konu karosunun ince kenarı (gündüz %40, gece %60).
   Color topicEdge(Color toneFill, {required bool night}) =>
-      Color.alphaBlend(toneFill.withValues(alpha: night ? 0.50 : 0.40), s1);
+      Color.alphaBlend(toneFill.withValues(alpha: night ? 0.60 : 0.40), s1);
 }
 
 /// Eski bir aksan renginin Şahnê rolü.
@@ -309,6 +314,7 @@ class SahneTappable extends StatelessWidget {
     if (style == null) return surface;
     return SahneEmbossShell(
       shape: shape,
+      tint: color,
       pressable: onTap != null || onLongPress != null,
       child: surface,
     );

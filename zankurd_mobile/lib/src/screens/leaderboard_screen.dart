@@ -16,6 +16,7 @@ import '../utils/app_route.dart';
 import '../utils/player_identity.dart';
 import '../widgets/player_moderation_button.dart';
 import '../widgets/app_state.dart';
+import '../widgets/leaderboard_arena.dart';
 import '../widgets/leaderboard_podium.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
@@ -203,6 +204,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
               banner,
               const SizedBox(height: SahneSpace.cardGap),
             ],
+            // 2026-10-29 vay 2B (B8): lig başlığı — dönem, sıran ve üst
+            // sıraya kalan puan (listedeki komşunun gerçek puanından).
+            _arenaHeader(entries, ku),
+            const SizedBox(height: SahneSpace.x4),
             if (podium) ...[
               LeaderboardPodium(
                 key: const ValueKey('leaderboard-podium'),
@@ -227,6 +232,12 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
               ],
             ] else
               listOf(entries),
+            // Listenin dibi boş kalmasın: tek turuncu "Yarışa başla" (oyuncu
+            // listedeyken; değilse sabit şerit aynı eylemi taşır).
+            if (_listsMe(entries)) ...[
+              const SizedBox(height: SahneSpace.sectionTop),
+              LeaderboardClimbCard(onStart: _startQuickRace),
+            ],
           ],
         );
         if (!wide) return column;
@@ -418,6 +429,46 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     _tabController.dispose();
     _refreshTimer?.cancel();
     super.dispose();
+  }
+
+  Widget _arenaHeader(List<LeaderboardEntry> entries, bool ku) {
+    final uid = widget.repository.currentUserId;
+    LeaderboardEntry? me;
+    LeaderboardEntry? above;
+    for (var i = 0; i < entries.length; i++) {
+      if (uid != null && entries[i].playerId == uid) {
+        me = entries[i];
+        if (i > 0) above = entries[i - 1];
+      }
+    }
+    final labels = ku ? ['Roj', 'Heft', 'Meh'] : ['Gün', 'Hafta', 'Ay'];
+    final period = labels[_tabController.index.clamp(0, 2)];
+    LeaderboardArenaHeader header(LeaderboardEntry? me, int? nextScore) {
+      final ranked = me != null && me.rank > 0 && me.totalScore > 0;
+      return LeaderboardArenaHeader(
+        periodLabel: period,
+        myRank: ranked ? me.rank : null,
+        myScore: ranked ? me.totalScore : null,
+        nextScore: ranked ? nextScore : null,
+      );
+    }
+
+    if (me != null) return header(me, above?.totalScore);
+    // İlk 10'da değilse sıra, sabit satırla AYNI sorgudan
+    // (`getMyLeaderboardRank`); üstteki komşu listede görünüyorsa fark yazılır.
+    return FutureBuilder<_MyRankLookup>(
+      future: _myRankFuture,
+      builder: (context, snap) {
+        final mine = snap.data?.entry;
+        int? next;
+        if (mine != null) {
+          for (final e in entries) {
+            if (e.rank == mine.rank - 1) next = e.totalScore;
+          }
+        }
+        return header(mine, next);
+      },
+    );
   }
 
   bool _listsMe(List<LeaderboardEntry> entries) {
@@ -1186,7 +1237,25 @@ class _RankRow extends StatelessWidget {
                       width: 2,
                     ),
                   ),
-                  child: _buildRow(context),
+                  // B8 (2026-10-29): 3 px altın yan işaret.
+                  child: Stack(
+                    children: [
+                      _buildRow(context),
+                      PositionedDirectional(
+                        start: 4,
+                        top: 10,
+                        bottom: 10,
+                        width: 3,
+                        child: DecoratedBox(
+                          key: const ValueKey('leaderboard-me-marker'),
+                          decoration: ShapeDecoration(
+                            color: SahneTokens.of(context).goldTx,
+                            shape: const StadiumBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               )
             : _buildRow(context),

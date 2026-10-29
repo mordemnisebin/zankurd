@@ -4,6 +4,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_icons.dart';
 import 'sahne/sahne.dart';
+import 'zan_mascot.dart';
 
 /// Bütün soru sahnelerinin ORTAK parçaları (2026-10-28, jüri K6 / K6+).
 ///
@@ -69,6 +70,9 @@ class QuizPromptCard extends StatelessWidget {
     final base = Theme.of(context);
     return Theme(
       data: base.copyWith(extensions: [day]),
+      // Vay 2A (2026-10-29): kart sahneden KALKAR — koyu yumuşak gölge
+      // (y=6, %30) ve altta 3 px koyu taban; düz beyaz levha gibiydi
+      // (Astra: "kartlar fazla düz", Quiz Planet derinliği).
       child: Container(
         key: const ValueKey('quiz-prompt-card'),
         padding: const EdgeInsets.all(SahneSpace.x4),
@@ -78,6 +82,17 @@ class QuizPromptCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(SahneShape.lValue),
             side: BorderSide(color: day.edge),
           ),
+          shadows: [
+            BoxShadow(
+              color: SahneVayColors.black.withValues(alpha: 0.30),
+              offset: const Offset(0, 6),
+              blurRadius: 14,
+            ),
+            BoxShadow(
+              color: SahneVayColors.black.withValues(alpha: 0.22),
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
         child: child,
       ),
@@ -90,6 +105,12 @@ class QuizPromptCard extends StatelessWidget {
 /// şeritte eylem ("Sonraki").
 ///
 /// Durum yalnız renkle verilmez: ikon (✓/✗) ve başlık sözü birliktedir.
+///
+/// Vay 2A (2026-10-29, Duolingo deseni + VAY B4): şeridin solunda mini
+/// maskot (doğruda sevinen, yanlışta teselli eden; 52 px, dekoratif). Yanlış
+/// şerit tuğla kırmızısı yerine sakin şarap tonu
+/// ([SahneVayColors.feedbackWrongFill]); büyük kırmızı panel ekranı
+/// ağırlaştırıyordu (Astra). Büyük yazıda maskot düşer (yer metnindir).
 class QuizFeedbackStrip extends StatelessWidget {
   const QuizFeedbackStrip({
     super.key,
@@ -106,10 +127,17 @@ class QuizFeedbackStrip extends StatelessWidget {
   /// Şeritteki eylem (genelde "Sonraki" düğmesi).
   final Widget action;
 
+  /// Mini maskotun genişliği.
+  static const double mascotSize = 52;
+
+  /// Şeridin dolgusu: doğru Rast, yanlış sakin şarap.
+  static Color feedbackFill(SahneTokens t, {required bool correct}) =>
+      correct ? t.okFill : SahneVayColors.feedbackWrongFill;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final fill = correct ? t.okFill : t.errFill;
+    final fill = feedbackFill(t, correct: correct);
     final title = context.t(correct ? K.correct : K.wrong);
     final reduce = sahneMotionReduced(context);
     // Büyük yazıda (≥ %130) açıklama satırı düşer: şerit tek başına ekranın
@@ -142,45 +170,70 @@ class QuizFeedbackStrip extends StatelessWidget {
                   Expanded(child: action),
                 ],
               )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
+            : Row(
+                // Maskot şeridin solunda, başlık + eylem sütununun yanında
+                // (Duolingo: karakter düğmenin yanında). Şerit eski boyunu
+                // korur: maskot ayrı bir satır açsaydı açıklama kartı
+                // kaydırma alanından itilirdi (`tur5_sonuc_quiz_test` W12).
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   ExcludeSemantics(
-                    child: Row(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 2),
+                      child: ZanMascot(
+                        key: const ValueKey('quiz-feedback-mascot'),
+                        pose: correct ? ZanPose.correct : ZanPose.wrong,
+                        size: mascotSize,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          correct ? AppIcons.check : AppIcons.xmark,
-                          size: 22,
-                          color: t.tx,
-                        ),
-                        const SizedBox(width: SahneSpace.x2),
-                        Expanded(
-                          child: Text(
-                            title,
-                            key: const ValueKey('quiz-feedback-title'),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: SahneType.bodyStrong.copyWith(color: t.tx),
+                        ExcludeSemantics(
+                          child: Row(
+                            children: [
+                              Icon(
+                                correct ? AppIcons.check : AppIcons.xmark,
+                                size: 22,
+                                color: t.tx,
+                              ),
+                              const SizedBox(width: SahneSpace.x2),
+                              Expanded(
+                                child: Text(
+                                  title,
+                                  key: const ValueKey('quiz-feedback-title'),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: SahneType.bodyStrong.copyWith(
+                                    color: t.tx,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
+                        if (detail != null && detail!.trim().isNotEmpty) ...[
+                          const SizedBox(height: SahneSpace.x1),
+                          ExcludeSemantics(
+                            child: Text(
+                              detail!.trim(),
+                              key: const ValueKey('quiz-feedback-detail'),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: SahneType.caption.copyWith(color: t.tx),
+                            ),
+                          ),
+                        ],
+                        const SizedBox(height: SahneSpace.x3),
+                        action,
                       ],
                     ),
                   ),
-                  if (detail != null && detail!.trim().isNotEmpty) ...[
-                    const SizedBox(height: SahneSpace.x1),
-                    ExcludeSemantics(
-                      child: Text(
-                        detail!.trim(),
-                        key: const ValueKey('quiz-feedback-detail'),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: SahneType.caption.copyWith(color: t.tx),
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: SahneSpace.x3),
-                  action,
                 ],
               ),
       ),

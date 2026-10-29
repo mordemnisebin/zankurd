@@ -61,6 +61,12 @@ void main() {
     expect(find.byKey(card), findsOneWidget);
     expect(find.text('Seviyeni bul'), findsOneWidget);
 
+    // 2026-10-29 vay 2B: davet, ünite sahnesi + rota düğümü + ders kartının
+    // altında; 800×600 test yüzeyinde ilk ekranın dibine düşer.
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('learning-placement-start')),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('learning-placement-start')));
     await tester.pumpAndSettle();
     expect(find.byType(LevelPlacementScreen), findsOneWidget);
@@ -70,6 +76,10 @@ void main() {
     await tester.pumpWidget(_app());
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('learning-placement-dismiss')),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('learning-placement-dismiss')));
     await tester.pumpAndSettle();
     expect(find.byKey(card), findsNothing);

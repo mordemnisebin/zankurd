@@ -26,8 +26,13 @@ const double quizOptionMinHeight = 60;
 ///   renginde. Sonuç açıklanmadan RENK YOK — renk cevabı ele verirdi.
 /// * Doğru: Rast dolgusu soldan sağa tarar (240 ms), Halka 2 Rast metni,
 ///   harf karosu Rast, sağda ✓.
-/// * Yanlış seçim: Şaş dolgusu + 135° çapraz tarama, Halka 2 Şaş metni,
-///   harf karosu Şaş, sağda ✗.
+/// * Yanlış seçim: sakin şarap dolgusu ([SahneVayColors.optionWrongFill]),
+///   Halka 2 Şaş metni, harf karosu Şaş, sağda ✗. Vay 2A (2026-10-29):
+///   135° kırmızı çapraz TARAMA KALKTI — Astra "açıkça kötü görünen" dedi;
+///   ekranı ağırlaştırıyor, uyarı levhası gibi okunuyordu. Durum ✗ + söz +
+///   halka ile zaten üç kanaldan verilir.
+/// * Boşta ve kontrol hâlinde şık KABARTMALIDIR (vay 2A, Quiz Planet/Kahoot
+///   derinliği): üstte ince ışık, altta 2 px koyu taban ([SahneEmbossPainter]).
 /// * Sönük (açıklanınca ötekiler, ya da 50/50 ile elenen): Perde (`s1`) +
 ///   üçüncül metin, 160 ms'de söner. Opaklık değil ton.
 ///
@@ -129,7 +134,7 @@ class QuizOptionTile extends StatelessWidget {
     // (anahtar duruma bağlı); hareketi azaltta hemen tamdır.
     final Color? fill = switch (state) {
       _OptionState.correct => t.okFill,
-      _OptionState.wrong => t.errFill,
+      _OptionState.wrong => SahneVayColors.optionWrongFill,
       _ => null,
     };
     final tn = tone;
@@ -243,49 +248,73 @@ class QuizOptionTile extends StatelessWidget {
           duration: reducedMotion ? Duration.zero : SahneMotion.answerReveal,
           curve: Curves.easeOutCubic,
           builder: (context, sweep, child) {
+            final raised =
+                state == _OptionState.idle || state == _OptionState.checking;
+            // Vay 2A: boştaki şığın altında 3 px keskin koyu taban (oyun
+            // tuşu derinliği); açıklanınca taban kalkar, şık "basılmış" olur.
             return DecoratedBox(
-              // Halka, dolgunun ÜSTÜNDE: içe çizilir, tarama altından geçer.
-              position: DecorationPosition.foreground,
+              key: const ValueKey('quiz-option-base'),
               decoration: ShapeDecoration(
-                shape: SahneShape.withSide(
-                  SahneShape.m,
-                  ring,
-                  width: ringWidth,
-                ),
+                shape: SahneShape.m,
+                shadows: raised
+                    ? [
+                        BoxShadow(
+                          color: SahneVayColors.black.withValues(alpha: 0.34),
+                          offset: const Offset(0, 3),
+                        ),
+                      ]
+                    : const [],
               ),
-              child: ClipPath(
-                clipper: const ShapeBorderClipper(shape: SahneShape.m),
-                child: AnimatedContainer(
-                  duration: reducedMotion || fill != null
-                      ? Duration.zero
-                      : SahneMotion.fade,
-                  curve: Curves.easeOut,
-                  width: double.infinity,
-                  constraints: BoxConstraints(
-                    minHeight: fixedHeight == null
-                        ? quizOptionMinHeight
-                        : (fixedHeight! < quizOptionMinHeight
-                              ? quizOptionMinHeight
-                              : fixedHeight!),
+              child: DecoratedBox(
+                // Halka, dolgunun ÜSTÜNDE: içe çizilir, tarama altından geçer.
+                position: DecorationPosition.foreground,
+                decoration: ShapeDecoration(
+                  shape: SahneShape.withSide(
+                    SahneShape.m,
+                    ring,
+                    width: ringWidth,
                   ),
-                  decoration: BoxDecoration(
-                    color: base,
-                    gradient: fill == null
-                        ? null
-                        : _sweepGradient(fill, base, sweep),
-                  ),
-                  child: CustomPaint(
-                    painter: state == _OptionState.wrong
-                        ? _HatchPainter(t.errTx.withValues(alpha: 0.18))
-                        : null,
-                    // Saydam Material dolgunun ÜSTÜNDE: dokunma dalgası
-                    // zeminin altında kalıp görünmez olmasın.
-                    child: Material(
-                      type: MaterialType.transparency,
-                      child: InkWell(
-                        onTap: disabled ? null : onTap,
-                        customBorder: SahneShape.m,
-                        child: child,
+                ),
+                child: ClipPath(
+                  clipper: const ShapeBorderClipper(shape: SahneShape.m),
+                  child: AnimatedContainer(
+                    duration: reducedMotion || fill != null
+                        ? Duration.zero
+                        : SahneMotion.fade,
+                    curve: Curves.easeOut,
+                    width: double.infinity,
+                    constraints: BoxConstraints(
+                      minHeight: fixedHeight == null
+                          ? quizOptionMinHeight
+                          : (fixedHeight! < quizOptionMinHeight
+                                ? quizOptionMinHeight
+                                : fixedHeight!),
+                    ),
+                    decoration: BoxDecoration(
+                      color: base,
+                      gradient: fill == null
+                          ? null
+                          : _sweepGradient(fill, base, sweep),
+                    ),
+                    child: CustomPaint(
+                      key: const ValueKey('quiz-option-face'),
+                      painter:
+                          state == _OptionState.idle ||
+                              state == _OptionState.checking
+                          ? const SahneEmbossPainter(
+                              shape: SahneShape.m,
+                              style: SahneEmbossStyle(night: true),
+                            )
+                          : null,
+                      // Saydam Material dolgunun ÜSTÜNDE: dokunma dalgası
+                      // zeminin altında kalıp görünmez olmasın.
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: InkWell(
+                          onTap: disabled ? null : onTap,
+                          customBorder: SahneShape.m,
+                          child: child,
+                        ),
                       ),
                     ),
                   ),
@@ -434,38 +463,6 @@ class _OpponentMark extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Yanlış seçimin çapraz taraması: 135°, 4 px şerit, 12 px adım
-/// (maketteki `repeating-linear-gradient(135deg, …)`). Tek dolu yol;
-/// bulanıklık ya da katman yok.
-class _HatchPainter extends CustomPainter {
-  const _HatchPainter(this.color);
-
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    const step = 12.0;
-    const band = 4.0;
-    final path = Path();
-    // 135°: şeritler sol üstten sağ alta iner; kaydırma yatayda yapılır.
-    for (var x = -size.height; x < size.width + step; x += step) {
-      path
-        ..moveTo(x, 0)
-        ..lineTo(x + band, 0)
-        ..lineTo(x + band + size.height, size.height)
-        ..lineTo(x + size.height, size.height)
-        ..close();
-    }
-    canvas.save();
-    canvas.clipRect(Offset.zero & size);
-    canvas.drawPath(path, Paint()..color = color);
-    canvas.restore();
-  }
-
-  @override
-  bool shouldRepaint(_HatchPainter oldDelegate) => oldDelegate.color != color;
 }
 
 /// Soru metni — Şahnê'de soru sahnenin kendisinde durur (maketteki

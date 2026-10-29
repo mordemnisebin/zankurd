@@ -695,7 +695,8 @@ class _WrongAnswerInsight extends StatelessWidget {
     if (!showAnswer && explanation.isEmpty) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.only(top: SahneSpace.x4),
-      child: SahneSurfaceCard(
+      // Vay 2A: sahnenin CAM kartı (gri Perde mor sahneden kopuyordu).
+      child: SahneGlassCard(
         key: const ValueKey('quiz-wrong-answer-insight'),
         padding: const EdgeInsets.all(SahneSpace.x3),
         child: Column(

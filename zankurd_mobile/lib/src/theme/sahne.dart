@@ -1458,4 +1458,40 @@ class SahneVayColors {
   /// Işın diski (altın, merkezde ≈ %18).
   static const Color rayCenter = Color(0x2EFFC94A);
   static const Color rayEdge = Color(0x00FFC94A);
+
+  // ── Vay 2A (2026-10-29) ──────────────────────────────────────────────
+
+  /// Kabartmalı kartın gece dış gölgesi (siyah %32): gündüzde gölge kartın
+  /// KENDİ renginden türer (gri plaka yerine renkli ışıma), gecede koyu
+  /// zeminde renkli gölge çamur gibi duruyordu.
+  static const Color cardShadowNight = Color(0x52000000);
+
+  /// Doygun kartın altındaki dağ siluetinin rengi (siyah %14): kart bir oyun
+  /// dünyasının parçası gibi okunur; beyaz yazı bu katmanın üstünde değil.
+  static const Color tileRidge = Color(0x24000000);
+
+  /// Günün çarkı dilimleri (Astra, 2026-10-29): siyah dilim YOK; marka
+  /// paleti — altın, nane, gül, leylak. Rakam rengi hepsinde [wheelInk]
+  /// (≥ 4,5:1, `vay_2a_test` ölçer).
+  static const Color wheelGold = Color(0xFFFFC857);
+  static const Color wheelMint = Color(0xFF37CBA0);
+  static const Color wheelRose = Color(0xFFF36A9D);
+  static const Color wheelLilac = Color(0xFFA69AF7);
+  static const Color wheelInk = Color(0xFF17152D);
+
+  /// Çark kasnağı: koyu mor gövde + altın ince çerçeve.
+  static const Color wheelRim = Color(0xFF2A1F5C);
+  static const Color wheelRimEdge = Color(0xFFE2B54A);
+
+  /// Çark göbeği: maskotun durduğu krem disk.
+  static const Color wheelHub = Color(0xFFFFF4DD);
+
+  /// Yanlış şık ve yanlış geri bildirim şeridi: tuğla kırmızısı (#6B1F1A)
+  /// gece-mor sahnede ağır duruyordu; şarap tonu daha sakin, metin
+  /// (#F5F3EF) üstünde ≥ 7:1.
+  static const Color optionWrongFill = Color(0xFF6E2438);
+  static const Color feedbackWrongFill = Color(0xFF4F1D33);
+
+  /// VS rozeti: altın disk (madalya altını) üstünde koyu yazı.
+  static const Color vsInk = Color(0xFF2A1A00);
 }

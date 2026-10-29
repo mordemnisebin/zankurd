@@ -1,3 +1,6 @@
+// 2026-10-29 vay 2A: köşedeki konu ikonu FİLİGRANI kalktı (Astra: "büyük
+// dekoratif ikonlar kalabalık yaratıyor"); bekçi artık filigranın OLMADIĞINI
+// sınar. Gece karışımı %26 → %14 (çamur görünümü), bkz. `vay_2a_test`.
 // 2026-10-29 canlılık katmanı G3: karışım açık %18 / koyu %26, rozet 48 px
 // (aşağıdaki başlıktaki %12/%20 ve 44 px eskidir); bekçi yeni ölçüyü sınar.
 // 2026-10-28 kurul turu 2 R1: konu karosu TONLU yüzey (K1'in nötr karosunun
@@ -54,7 +57,7 @@ Widget _grid({required bool dark, required bool bilingual}) => MultiProvider(
 
 void main() {
   for (final dark in [false, true]) {
-    testWidgets('karo tonlu yüzey, 44 rozet, 4 şerit, ≤%8 filigran '
+    testWidgets('karo tonlu yüzey, 48 rozet, 4 şerit, filigran yok '
         '(${dark ? "gece" : "gündüz"})', (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 900));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -97,12 +100,20 @@ void main() {
               .first,
         );
         expect(name.style?.color, t.tx, reason: '$c adı');
-        // Köşe filigranı çok hafif (≤ %8) ve konunun kendi ikonu.
-        final mark = tester.widget<Icon>(
+        // Vay 2A: köşe filigranı YOK; konu ikonu yalnız rozette.
+        expect(
           find.byKey(ValueKey('home-topic-mark-$c')),
+          findsNothing,
+          reason: '$c filigran geri geldi',
         );
-        expect(mark.color!.a, lessThanOrEqualTo(0.08), reason: '$c filigran');
-        expect(mark.icon, CategoryVisuals.icon(c));
+        expect(
+          find.descendant(
+            of: tile,
+            matching: find.byIcon(CategoryVisuals.icon(c)),
+          ),
+          findsOneWidget,
+          reason: '$c ikonu yalnız rozette',
+        );
         // Eski silik büyük çizim (painter) yok.
         expect(
           find.descendant(

@@ -122,13 +122,19 @@ void main() {
     // çıplak sayılar neyin sayısı olduğunu söylemiyordu.
     //
     // 2026-10-29 tur 6 Y7: çıplak sayı birimli oldu — "Yarı Final · 4 oyuncu".
-    for (final step in const [
-      'Yarı Final · 4 oyuncu',
-      'Final · 2 oyuncu',
-      'Şampiyon',
-    ]) {
-      expect(find.text(step), findsOneWidget, reason: '$step basamağı yok');
+    //
+    // 2026-10-29 vay 2A: çip dizisi yerine eleme ŞEMASI (Astra: "turnuva
+    // yolu birkaç etikete indirgenmiş"). Sütun başlıkları tur adlarıdır;
+    // sayılar yuvalarla görünür, birimli cümle ekran okuyucudadır.
+    for (final step in const ['Yarı Final', 'Final', 'Şampiyon']) {
+      expect(find.text(step), findsOneWidget, reason: '$step sütunu yok');
     }
+    expect(
+      find.bySemanticsLabel(
+        'Yarı Final · 4 oyuncu › Final · 2 oyuncu › Şampiyon',
+      ),
+      findsOneWidget,
+    );
     expect(find.text('16'), findsNothing);
     expect(find.text('8'), findsNothing);
   });

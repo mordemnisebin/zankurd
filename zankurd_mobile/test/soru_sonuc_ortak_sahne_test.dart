@@ -401,10 +401,13 @@ void main() {
     await tester.pump(const Duration(milliseconds: 1500));
     // İki doğru → üç yıldız → başlık kutlama.
     expect(find.text('Tebrikler!'), findsOneWidget);
-    // Kutlama ışıması çizilir.
+    // Kutlama ışıması çizilir. 2026-10-29 vay 2A: ışık TEK odakta —
+    // madalyanın ışın diski; puanın arkasındaki ikinci ışıma/parıltı yok
+    // (Astra: "madalya, maskot, ışınlar, yıldızlar aynı anda dikkat istiyor").
+    expect(find.byKey(const ValueKey('result-ray-disc')), findsOneWidget);
     expect(
       find.byKey(const ValueKey('result-score-celebration')),
-      findsOneWidget,
+      findsNothing,
     );
     // Skor ve birincil eylem ilk görünümde.
     expect(find.byKey(const ValueKey('result-score-count')), findsOneWidget);
@@ -458,13 +461,19 @@ void main() {
       ),
     );
     await tester.pump();
-    final glow = find.byKey(const ValueKey('result-score-celebration'));
-    expect(glow, findsOneWidget);
-    // Tek karede son hâl: ışıma tam opak.
-    final opacity = tester.widget<Opacity>(
-      find.descendant(of: glow, matching: find.byType(Opacity)).first,
+    // 2026-10-29 vay 2A: kutlama ışığı madalyanın ışın diskidir (hareketsiz);
+    // hareket azaltmada konfeti hiç çizilmez, madalya baştan tam boydadır.
+    expect(find.byKey(const ValueKey('result-ray-disc')), findsOneWidget);
+    expect(find.byKey(const ValueKey('sahne-confetti-burst')), findsNothing);
+    final scale = tester.widget<ScaleTransition>(
+      find
+          .ancestor(
+            of: find.byKey(const ValueKey('result-medal')),
+            matching: find.byType(ScaleTransition),
+          )
+          .first,
     );
-    expect(opacity.opacity, 1.0);
+    expect(scale.scale.value, 1.0);
   });
 
   testWidgets('K7+: cevaplar kartı yalnız kendi + doğru şıkkı gösterir', (

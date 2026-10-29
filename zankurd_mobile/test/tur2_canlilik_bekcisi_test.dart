@@ -161,9 +161,12 @@ void main() {
           final g =
               (lobby.decoration! as ShapeDecoration).gradient!
                   as LinearGradient;
+          // 2026-10-29 vay 2A: lobi kartı İKİ temada da rolün doygun GÜNDÜZ
+          // rengidir (gecede kararmış renkler "kirli" okunuyordu, Astra).
+          const vivid = SahneTokens.day;
           expect(
             g.colors.first,
-            role == SahneRole.learn ? t.learnFill : t.raceFill,
+            role == SahneRole.learn ? vivid.learnFill : vivid.raceFill,
             reason: key,
           );
           expect(g.colors.first, isNot(t.act), reason: key);

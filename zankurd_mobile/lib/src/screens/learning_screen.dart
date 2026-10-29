@@ -31,6 +31,7 @@ import '../widgets/lexicon_speak_button.dart';
 import '../widgets/lesson_recall_card.dart';
 import '../widgets/story_catalog.dart';
 import '../widgets/todays_review_card.dart';
+import '../widgets/learn_path.dart';
 import '../widgets/zk_back_button.dart';
 import 'learner_lexicon_screen.dart';
 import 'my_words_screen.dart';
@@ -81,9 +82,6 @@ int learningRecommendedIndex({
     (lesson) => !completedLessonIds.contains(lesson.id),
   );
 }
-
-/// Etkin dersten sonra görünen kilitli ders sayısı; kalanı "+N ders daha".
-const int _kVisibleLockedLessons = 2;
 
 /// Ders yolunda bir ünitedeki ders sayısı.
 const int _kLessonsPerUnit = 5;
@@ -521,19 +519,17 @@ class _LearningScreenState extends State<LearningScreen> {
           );
         }
         final firstOpenIndex = _recommendedLessonIndex(lessons);
-        final completedCount = lessons
-            .where((l) => _completedIds.contains(l.id))
-            .length;
-        // Yolun sonundaki "Kategori ustalık hedefi" durağı kalktı: ne
-        // olduğu, neye yaradığı ekranda yazmıyordu (2026-09-27).
+        // 2026-10-29 vay 2B (B6, Astra 7/10 "liste gibi"): etkin ünitenin
+        // dersleri artık bir KEŞİF ROTASI — ünite başı sahnesi (manzara +
+        // rehber maskot) ve kıvrımlı yol üstünde 64'lük düğümler; güncel ders
+        // 80'lik düğüm + 3 px halka, altında tek turuncu "Başla"lı kart.
+        // Önceki üniteler (bitenler) ve sonraki dersler eski liste dilinde
+        // kalır; kilitli sonraki dersler tek "Tüm dersler (+N)" satırında.
         //
-        // 2026-09-29 doğallık (K5, K7): dersler solda elmas düğümlü bir yol
-        // çizgisine dizilmiş ayrı kartlardı; her kartın başında bir ikon
-        // karosu vardı. Elmas yalnız soru ilerlemesi ve ders sayacında
-        // kalır, kilitli ders tek işaret (kilit) taşır. Artık etkin ders
-        // sahne kartı, öteki dersler onun önünde ve arkasında ikonsuz
-        // satırlardan oluşan liste grupları; satırın sağında ilerleme
-        // (✓ tamamlandı, kilit) durur, satırın tamamı dokunulur.
+        // Geçmiş: 2026-09-29 (K5, K7) elmas düğümlü yol ikonsuz satırlara
+        // döndü; 2026-10-25 beşerli üniteler; 2026-10-20 kilitli satırlar
+        // ikiyle sınırlandı. Rota, ünitenin en çok 5 dersini gösterdiği için
+        // aynı sınırı (5–7 düğüm) kendisi taşır.
         final blocks = <Widget>[];
         var run = <Widget>[];
         void closeRun() {
@@ -542,31 +538,27 @@ class _LearningScreenState extends State<LearningScreen> {
           run = <Widget>[];
         }
 
-        // Kurul 3. tur (2026-10-20): uzun sönük kilitli ders listesi
-        // ilerlemeyi zayıf gösteriyordu (55/56). Sıradaki en çok
-        // [_kVisibleLockedLessons] kilitli ders görünür; kalanı tek
-        // "+N ders daha" satırında toplanır, dokununca açılır.
-        var lockedShown = 0;
-        var lockedHidden = 0;
-        // 2026-10-25 (kurul: Codex + Gemini 4 Argon, ders yolu 9–10/10):
-        // 20 derslik düz liste "bitmeyen liste" gibi görünüyordu. Dersler
-        // beşerli ünitelere ayrılır; her ünitenin başında numara ve
-        // ilerleme durur (Busuu/Babbel ünite kalıbı).
-        var unitHeaderShown = -1;
-        var heroPromptAdded = false;
         final unitCount = (lessons.length / _kLessonsPerUnit).ceil();
-        for (var i = 0; i < lessons.length; i++) {
+        final pathUnit =
+            (firstOpenIndex < 0 ? lessons.length - 1 : firstOpenIndex) ~/
+            _kLessonsPerUnit;
+        final pathFrom = pathUnit * _kLessonsPerUnit;
+        final pathTo = math.min(pathFrom + _kLessonsPerUnit, lessons.length);
+        int doneIn(int from, int to) => [
+          for (var j = from; j < to; j++) lessons[j],
+        ].where((l) => _completedIds.contains(l.id)).length;
+
+        var unitHeaderShown = -1;
+        var lockedHidden = 0;
+        void listLesson(int i) {
           final isLocked = learningLessonLocked(
             index: i,
             completed: _completedIds.contains(lessons[i].id),
             recommendedIndex: firstOpenIndex,
           );
-          if (isLocked) {
-            if (!_showAllLocked && lockedShown >= _kVisibleLockedLessons) {
-              lockedHidden++;
-              continue;
-            }
-            lockedShown++;
+          if (isLocked && !_showAllLocked) {
+            lockedHidden++;
+            return;
           }
           final unit = i ~/ _kLessonsPerUnit;
           if (unitCount > 1 && unit != unitHeaderShown) {
@@ -574,36 +566,70 @@ class _LearningScreenState extends State<LearningScreen> {
             closeRun();
             final from = unit * _kLessonsPerUnit;
             final to = math.min(from + _kLessonsPerUnit, lessons.length);
-            final done = [
-              for (var j = from; j < to; j++) lessons[j],
-            ].where((l) => _completedIds.contains(l.id)).length;
             blocks.add(
               _UnitHeader(
                 key: ValueKey('learning-unit-${unit + 1}'),
                 number: unit + 1,
-                done: done,
+                done: doneIn(from, to),
                 total: to - from,
               ),
             );
           }
-          final stop = _pathStop(
-            ctx,
-            ku,
-            lessons: lessons,
-            index: i,
-            firstOpenIndex: firstOpenIndex,
-            completedCount: completedCount,
+          run.add(
+            _listStop(
+              ctx,
+              ku,
+              lessons: lessons,
+              index: i,
+              firstOpenIndex: firstOpenIndex,
+            ),
           );
-          if (stop.current) {
-            closeRun();
-            blocks.add(stop.widget);
-            if (afterHero != null && !heroPromptAdded) {
-              heroPromptAdded = true;
-              blocks.add(afterHero);
-            }
-          } else {
-            run.add(stop.widget);
-          }
+        }
+
+        // Önceki üniteler: liste.
+        for (var i = 0; i < pathFrom; i++) {
+          listLesson(i);
+        }
+        closeRun();
+        // Etkin ünite: sahne + rota.
+        blocks.add(
+          LearnUnitScene(
+            key: ValueKey('learning-unit-${pathUnit + 1}'),
+            eyebrow: context.t(K.learningUnit, {'n': '${pathUnit + 1}'}),
+            title: _categoryLabel(_selectedCategory, ku),
+            done: doneIn(pathFrom, pathTo),
+            total: pathTo - pathFrom,
+            countLabel: context.t(K.lessonCountProgress, {
+              'done': '${doneIn(pathFrom, pathTo)}',
+              'total': '${pathTo - pathFrom}',
+            }),
+          ),
+        );
+        blocks.add(
+          LearnPath(
+            key: const ValueKey('learning-route'),
+            stops: [
+              for (var i = pathFrom; i < pathTo; i++)
+                _routeStop(
+                  ctx,
+                  ku,
+                  lessons: lessons,
+                  index: i,
+                  firstOpenIndex: firstOpenIndex,
+                  // T13 (2026-10-28 tur 3): "Seviyeni bul" kahramanın ALTINDA.
+                  after: afterHero,
+                ),
+            ],
+          ),
+        );
+        // Güncel ders bu ünitede değilse (hepsi bitti) davet rotanın ardında.
+        final heroInPath =
+            firstOpenIndex >= pathFrom && firstOpenIndex < pathTo;
+        if (afterHero != null && !heroInPath) blocks.add(afterHero);
+        // Sonraki dersler: kilitliler gizli, "Tüm dersler (+N)".
+        unitHeaderShown = pathUnit;
+        for (var i = pathTo; i < lessons.length; i++) {
+          listLesson(i);
         }
         if (lockedHidden > 0) {
           run.add(
@@ -619,7 +645,6 @@ class _LearningScreenState extends State<LearningScreen> {
           );
         }
         closeRun();
-        if (afterHero != null && !heroPromptAdded) blocks.add(afterHero);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -633,17 +658,17 @@ class _LearningScreenState extends State<LearningScreen> {
     );
   }
 
-  /// Yolun bir durağı: etkin ders sahne kartı ([current]), ötekiler liste
-  /// satırı. Anahtarlar (`learning-path-node-…`, `learning-route-stop-…`)
-  /// ekranın test sözleşmesidir.
-  ({Widget widget, bool current}) _pathStop(
+  /// Rota durağı. Anahtarlar (`learning-path-node-…`, `learning-route-stop-…`,
+  /// güncelde `learning-next-step`) ekranın test sözleşmesidir.
+  LearnPathStop _routeStop(
     BuildContext context,
     bool ku, {
     required List<Lesson> lessons,
     required int index,
     required int firstOpenIndex,
-    required int completedCount,
+    Widget? after,
   }) {
+    final t = SahneTokens.of(context);
     final lesson = lessons[index];
     final completed = _completedIds.contains(lesson.id);
     final current =
@@ -661,33 +686,109 @@ class _LearningScreenState extends State<LearningScreen> {
       current: current,
       locked: locked,
     );
-    final Widget card;
+    void open() => _openLesson(lesson);
+    Widget keyed(Widget child) => KeyedSubtree(
+      key: ValueKey('learning-path-node-${lesson.id}'),
+      child: KeyedSubtree(
+        key: ValueKey('learning-route-stop-${lesson.id}'),
+        child: locked
+            ? KeyedSubtree(
+                key: ValueKey('lesson-locked-${lesson.id}'),
+                child: child,
+              )
+            : child,
+      ),
+    );
     if (current) {
-      card = _CurrentLessonCard(
-        lesson: lesson,
-        title: _lessonTitle(lesson, ku),
-        meta: _placementContextLabel(context, ku) ?? lesson.description(ku),
-        position: index + 1,
-        semanticLabel: semanticLabel,
-        onTap: () => _openLesson(lesson),
-      );
-    } else {
-      card = _LessonRow(
-        lesson: lesson,
+      return LearnPathStop(
+        state: LearnNodeState.current,
         step: index + 1,
-        title: _lessonTitle(lesson, ku),
-        completed: completed,
+        icon: iconForLesson(lesson),
         semanticLabel: semanticLabel,
-        onTap: locked ? null : () => _openLesson(lesson),
+        onTap: open,
+        after: after,
+        status: _CurrentStopBadges(position: index + 1),
+        attachment: _CurrentLessonCard(
+          lesson: lesson,
+          title: _lessonTitle(lesson, ku),
+          meta: _placementContextLabel(context, ku) ?? lesson.description(ku),
+          onTap: open,
+        ),
+        // Satır + kart tek düğme: ekran okuyucu "Sıradaki ders. Alfabe.
+        // Sonraki" duyar; kartın her yeri dokunulur.
+        wrap: (child) => keyed(
+          Semantics(
+            key: const ValueKey('learning-next-step'),
+            button: true,
+            enabled: true,
+            label: semanticLabel,
+            onTap: open,
+            excludeSemantics: true,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: open,
+              child: child,
+            ),
+          ),
+        ),
       );
     }
-    return (
-      current: current,
-      widget: KeyedSubtree(
-        key: ValueKey('learning-path-node-${lesson.id}'),
-        child: KeyedSubtree(
-          key: ValueKey('learning-route-stop-${lesson.id}'),
-          child: card,
+    return LearnPathStop(
+      state: completed
+          ? LearnNodeState.done
+          : locked
+          ? LearnNodeState.locked
+          : LearnNodeState.open,
+      step: index + 1,
+      icon: iconForLesson(lesson),
+      title: _lessonTitle(lesson, ku),
+      status: completed
+          ? Text(
+              context.t(K.dersTamamlandi),
+              style: SahneType.captionStrong.copyWith(color: t.okTx),
+            )
+          : null,
+      semanticLabel: semanticLabel,
+      onTap: locked ? null : open,
+      wrap: keyed,
+    );
+  }
+
+  /// Rota dışındaki ders (önceki üniteler, açılan sonraki dersler): liste
+  /// satırı.
+  Widget _listStop(
+    BuildContext context,
+    bool ku, {
+    required List<Lesson> lessons,
+    required int index,
+    required int firstOpenIndex,
+  }) {
+    final lesson = lessons[index];
+    final completed = _completedIds.contains(lesson.id);
+    final locked = learningLessonLocked(
+      index: index,
+      completed: completed,
+      recommendedIndex: firstOpenIndex,
+    );
+    final semanticLabel = _lessonStateSemanticLabel(
+      context,
+      lesson,
+      ku,
+      completed: completed,
+      current: false,
+      locked: locked,
+    );
+    return KeyedSubtree(
+      key: ValueKey('learning-path-node-${lesson.id}'),
+      child: KeyedSubtree(
+        key: ValueKey('learning-route-stop-${lesson.id}'),
+        child: _LessonRow(
+          lesson: lesson,
+          step: index + 1,
+          title: _lessonTitle(lesson, ku),
+          completed: completed,
+          semanticLabel: semanticLabel,
+          onTap: locked ? null : () => _openLesson(lesson),
         ),
       ),
     );
@@ -1023,170 +1124,120 @@ class _CategoryTab extends StatelessWidget {
       SahneRailChip(label: label, selected: isSelected, onTap: onTap);
 }
 
-/// Yolun etkin durağı — sahne kartı (maketteki `SahneStageCard.lesson`):
-/// "SANA ÖNERİLEN" rozeti, ders adı, bağlam satırı (yerleştirme seviyesi
-/// ya da dersin açıklaması), konu ilerlemesi elması (tamamlanan / toplam
-/// ders) ve tam genişlik TEK birincil düğme.
+/// Rotadaki güncel düğümün yanındaki iki rozet: "Sıradaki ders" ve dersin
+/// yoldaki sırası ("1. ders"; kesir yok — U1, 2026-10-28 tur 4: ünite
+/// sayacıyla çelişen ikinci kesir görünüyordu).
 ///
-/// Kartın her yeri dokunulabilir (düğme de aynı işi yapar): ekran okuyucu
-/// tek bir düğme duyar ("Sana önerilen. Selamlaşma. Sonraki").
+/// 2026-10-29 vay 2B: rozetler kartın içinden düğümün yanına taşındı; kart
+/// yalnız ad, bağlam ve tek birincil düğmeyi taşır.
+class _CurrentStopBadges extends StatelessWidget {
+  const _CurrentStopBadges({required this.position});
+
+  final int position;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    Widget chip(Key key, String text, {required bool strong}) => DecoratedBox(
+      key: key,
+      decoration: ShapeDecoration(
+        color: strong ? t.learnFill : t.learnTint,
+        shape: const StadiumBorder(),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: SahneSpace.x3,
+          vertical: SahneSpace.x1,
+        ),
+        child: Text(
+          text,
+          style: SahneType.captionStrong.copyWith(
+            color: strong ? SahneVivid.onFill : t.learnTx,
+            fontFeatures: const [FontFeature.tabularFigures()],
+          ),
+        ),
+      ),
+    );
+    return Wrap(
+      spacing: SahneSpace.x2,
+      runSpacing: SahneSpace.x1,
+      children: [
+        chip(
+          const ValueKey('lesson-recommended-badge'),
+          context.t(K.recommendedForYou),
+          strong: true,
+        ),
+        chip(
+          const ValueKey('learning-progress-capsule'),
+          context.t(K.lessonPosition, {'n': '$position'}),
+          strong: false,
+        ),
+      ],
+    );
+  }
+}
+
+/// Rotanın güncel düğümünün altındaki kart (konuşma balonu gibi): ders adı,
+/// bağlam satırı (yerleştirme seviyesi ya da dersin açıklaması) ve tam
+/// genişlik TEK birincil düğme.
+///
+/// Semantik ve kartın her yerine dokunma, düğümle birlikte dış sarmalayıcıda
+/// (`learning-next-step`): ekran okuyucu tek bir düğme duyar.
 class _CurrentLessonCard extends StatelessWidget {
   const _CurrentLessonCard({
     required this.lesson,
     required this.title,
     required this.meta,
-    required this.position,
-    required this.semanticLabel,
     required this.onTap,
   });
 
   final Lesson lesson;
   final String title;
   final String? meta;
-
-  /// Dersin yoldaki sırası (1'den). Kurs toplamı burada YOK (U1, 2026-10-28
-  /// tur 4): ünite çubuğu "0/5 ders", hero "0/21 ders" derken aynı ekranda iki
-  /// çelişen kesir görünüyordu; toplam yalnız "Tüm dersler (+N)" satırında.
-  final int position;
-  final String semanticLabel;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final metaText = meta?.trim();
     final t = SahneTokens.of(context);
-    // 2026-10-19 sadeleşme (ikinci tur): etkin ders gece degradeli sahne
-    // kartı ve 80 px'lik "0/21" elmasıydı; ekranın en ağır lekesi ve elmas
-    // yalnız soru ilerlemesinde kalmalıydı. Artık sakin yüzey kartı: rozet +
-    // kapsül ilerleme, ders adı, bağlam, ince çubuk ve TEK birincil "Başla"
-    // düğmesi aynı kartta.
-    return Semantics(
-      key: const ValueKey('learning-next-step'),
-      button: true,
-      enabled: true,
-      label: semanticLabel,
-      onTap: onTap,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        // Tasarım kurulu 2026-10-22 (ChatGPT, Gemini 3.1 Pro, Claude Opus):
-        // sıradaki ders kartı yalnız kenarıyla değil DOLU Zimrût yüzeyle
-        // öne çıkar (Duolingo'daki ilerleme hissi); yazı beyaz, sağ altta
-        // kep filigranı. Agir yalnız "Başla"da kalır; eski 2 px Agir çerçeve
-        // dolu yüzeyde gereksiz ağırlık olurdu.
-        child: DecoratedBox(
-          key: const ValueKey('learning-active-frame'),
-          position: DecorationPosition.foreground,
-          decoration: ShapeDecoration(
-            shape: SahneShape.withSide(SahneShape.l, t.learnFill, width: 2),
-          ),
-          child: SahneSurfaceCard(
-            color: t.learnFill,
-            edgeColor: t.learnFill,
-            child: Stack(
-              children: [
-                PositionedDirectional(
-                  end: -8,
-                  top: 34,
-                  child: IgnorePointer(
-                    child: Transform.rotate(
-                      angle: -10 * math.pi / 180,
-                      child: const Icon(
-                        AppIcons.graduationCap,
-                        size: 96,
-                        color: SahneVivid.watermark,
-                      ),
-                    ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Rozet + sayaç sığmazsa alt alta sarar (320 pt, ×2; "0/21 ders"
-                    // etiketi 2026-10-28 tur 3'te uzadı).
-                    Wrap(
-                      alignment: WrapAlignment.spaceBetween,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: SahneSpace.x2,
-                      runSpacing: SahneSpace.x2,
-                      children: [
-                        // Dolu Zimrût üstünde koyu cam çip, beyaz yazı.
-                        DecoratedBox(
-                          key: const ValueKey('lesson-recommended-badge'),
-                          decoration: const ShapeDecoration(
-                            color: SahneVivid.learnBadgeGlass,
-                            shape: StadiumBorder(),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: SahneSpace.x3,
-                              vertical: SahneSpace.x1,
-                            ),
-                            child: Text(
-                              context.t(K.recommendedForYou),
-                              style: SahneType.captionStrong.copyWith(
-                                color: SahneVivid.onFill,
-                              ),
-                            ),
-                          ),
-                        ),
-                        // Dersin yoldaki sırası ("Ders 3"); kesir yok (U1).
-                        DecoratedBox(
-                          key: const ValueKey('learning-progress-capsule'),
-                          decoration: const ShapeDecoration(
-                            color: SahneVivid.learnBadgeGlass,
-                            shape: StadiumBorder(),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: SahneSpace.x3,
-                              vertical: SahneSpace.x1,
-                            ),
-                            child: Text(
-                              context.t(K.lessonPosition, {'n': '$position'}),
-                              style: SahneType.captionStrong.copyWith(
-                                color: SahneVivid.onFill,
-                                fontFeatures: const [
-                                  FontFeature.tabularFigures(),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: SahneSpace.x2),
-                    Semantics(
-                      header: true,
-                      child: Text(
-                        title,
-                        style: SahneType.headline.copyWith(
-                          color: SahneVivid.onFill,
-                        ),
-                      ),
-                    ),
-                    if (metaText != null && metaText.isNotEmpty) ...[
-                      const SizedBox(height: SahneSpace.x1),
-                      Text(
-                        metaText,
-                        key: const ValueKey('learning-active-meta'),
-                        style: SahneType.caption.copyWith(
-                          color: SahneVivid.onFill,
-                        ),
-                      ),
-                    ],
-                    const SizedBox(height: SahneSpace.x4),
-                    SahneButton.primary(
-                      label: context.t(K.start),
-                      onPressed: onTap,
-                      expand: true,
-                    ),
-                  ],
-                ),
-              ],
+    // Tasarım kurulu 2026-10-22: sıradaki ders DOLU Zimrût yüzeyle öne
+    // çıkar; Agir yalnız "Başla"da. 2026-10-29 vay 2B: sağ alttaki silik kep
+    // filigranı kalktı (Astra: "marka kimliğine katkı sağlamıyor"); rozetler
+    // düğümün yanına taşındı.
+    return DecoratedBox(
+      key: const ValueKey('learning-active-frame'),
+      position: DecorationPosition.foreground,
+      decoration: ShapeDecoration(
+        shape: SahneShape.withSide(SahneShape.l, t.learnFill, width: 2),
+      ),
+      child: SahneSurfaceCard(
+        color: t.learnFill,
+        edgeColor: t.learnFill,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Semantics(
+              header: true,
+              child: Text(
+                title,
+                style: SahneType.headline.copyWith(color: SahneVivid.onFill),
+              ),
             ),
-          ),
+            if (metaText != null && metaText.isNotEmpty) ...[
+              const SizedBox(height: SahneSpace.x1),
+              Text(
+                metaText,
+                key: const ValueKey('learning-active-meta'),
+                style: SahneType.caption.copyWith(color: SahneVivid.onFill),
+              ),
+            ],
+            const SizedBox(height: SahneSpace.x4),
+            SahneButton.primary(
+              label: context.t(K.start),
+              onPressed: onTap,
+              expand: true,
+            ),
+          ],
         ),
       ),
     );

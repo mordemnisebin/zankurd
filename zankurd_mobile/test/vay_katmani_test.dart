@@ -195,8 +195,10 @@ void main() {
           expect(p.style.night, dark);
         }
         // Dış gölge kabuğu (y=8, blur=14, %14).
-        expect(SahneEmbossStyle.outerShadow.offset, const Offset(0, 8));
-        expect(SahneEmbossStyle.outerShadow.blurRadius, 14);
+        // 2026-10-29 vay 2A: y=8 blur=14 kartın altında gri ikinci plaka
+        // gibiydi (Astra); gölge 2 px'e indi (ayrıntı: `vay_2a_test`).
+        expect(SahneEmbossStyle.outerShadow.offset, const Offset(0, 2));
+        expect(SahneEmbossStyle.outerShadow.blurRadius, 8);
       });
     }
 
@@ -383,10 +385,11 @@ void main() {
       );
     });
 
-    test('ölçüler: madalya 104, ışın diski 184, maskot 120', () {
+    // 2026-10-29 vay 2A: maskot 120 → 84 ve madalyaya biner (tek odak).
+    test('ölçüler: madalya 104, ışın diski 184, maskot 84', () {
       expect(SahneMedalScene.medalSize, 104);
       expect(SahneMedalScene.discSize, 184);
-      expect(SahneMedalScene.mascotSize, 120);
+      expect(SahneMedalScene.mascotSize, 84);
       expect(SahneConfettiBurst.duration, const Duration(milliseconds: 650));
     });
   });

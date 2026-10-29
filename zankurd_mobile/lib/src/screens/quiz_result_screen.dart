@@ -1934,6 +1934,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             ? SahneMedalScene.medalSize - 70
             : 0,
         lightGlow: !lowMood && starsEarned >= 2,
+        // Vay 2A: madalya kümesi kendi ışın diskini taşır; puanın arkasında
+        // ikinci bir ışın/parıltı kaynağı olmaz (tek odak).
+        emblemOwnsGlow:
+            !(is1v1 && !isLearningExperience) && duelOutcome == null,
         calm: lowMood,
         tone: duelOutcome == null
             ? SahneResultTone.reward
@@ -2096,7 +2100,10 @@ class _ResultCollapsibleSectionState extends State<ResultCollapsibleSection> {
             textAlign: stacked ? TextAlign.start : TextAlign.end,
             style: SahneType.caption.copyWith(color: t.tx2),
           );
-    final header = SahneSurfaceCard(
+    // Vay 2A (2026-10-29): başlık sahnenin CAM yüzeyidir (beyaz %8 + ince
+    // açık kenar), nötr Perde değil. Kömür grisi "Ayrıntılar" bandı mor gece
+    // sahnesinden kopuk duruyordu (Astra, sonuç denetimi).
+    final header = SahneGlassCard(
       key: const ValueKey('result-collapsible-header'),
       padding: const EdgeInsets.symmetric(
         horizontal: SahneSpace.x4,

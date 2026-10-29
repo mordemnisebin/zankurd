@@ -242,7 +242,11 @@ void main() {
             .map((d) => d.gradient)
             .whereType<LinearGradient>()
             .first;
-        expect(gradient.colors, [t.raceFill, t.raceDeep]);
+        // 2026-10-29 vay 2A: kahraman ve lobi kartları İKİ temada da doygun
+        // GÜNDÜZ rengindedir (gece belirteçleri "kirli bordo" okunuyordu).
+        const vivid = SahneTokens.day;
+        expect(gradient.colors, [vivid.raceFill, vivid.raceDeep]);
+        expect(t.act, isNot(vivid.raceFill));
 
         // 2026-10-29 canlılık katmanı G2: Oda artık doygun LOBİ kartı (Nîl
         // degradesi, beyaz yazı); eski pastel "sakin kart" kararı (2026-10-28
@@ -259,7 +263,7 @@ void main() {
           ((lobby.decoration! as ShapeDecoration).gradient! as LinearGradient)
               .colors
               .first,
-          t.nilFill,
+          vivid.nilFill,
           reason: 'Oda kartı doygun Nîl degradesinde olmalı (G2)',
         );
       });

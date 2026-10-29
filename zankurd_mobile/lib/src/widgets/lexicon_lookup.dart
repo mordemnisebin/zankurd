@@ -108,12 +108,20 @@ class LexiconText extends StatelessWidget {
     this.policy = const LexiconTapPolicy(mode: LexiconTapMode.whole),
     this.skipLinePattern,
     this.textAlign,
+    this.subtle = false,
     super.key,
   });
 
   final String text;
   final TextStyle style;
   final LexiconTapPolicy policy;
+
+  /// Sakin iz (2026-10-29 vay 2B, hikâye): noktalı alt çizgi YAZIM DENETİMİ
+  /// gibi okunuyordu (GPT-6 Astra: "bitmemiş ürün hissi"). `true` iken
+  /// dokunulabilir sözcüğün altında metnin kendi renginden %22'lik düz,
+  /// ince bir çizgi durur (Duolingo hikâyelerinin sakin izi). Soru ve ders
+  /// ekranları varsayılan noktalı izi korur.
+  final bool subtle;
 
   /// Eşleşen satırlar düz metin kalır (ör. `• terim: anlam` çiftleri).
   final RegExp? skipLinePattern;
@@ -253,18 +261,27 @@ class LexiconText extends StatelessWidget {
                 // yazıda sözcük komşularının iki katı çıkıyordu (2026-10-22
                 // simülatör, bkz. lexicon_text_scale_test).
                 textScaler: TextScaler.noScaling,
-                style: style.copyWith(
-                  decoration: TextDecoration.underline,
-                  decorationStyle: TextDecorationStyle.dotted,
-                  // Çizgi metnin KENDİ renginden türer (~%45 alfa): renkli
-                  // soru sahnesinde (beyaz yazı) her sözcüğün altında yeşil
-                  // nokta gürültü yapıyordu; açık zeminli ders slaytında da
-                  // koyu yazının sakin bir izi kalır (2026-10-21 simülatör).
-                  decorationColor: (style.color ?? t.tx).withValues(
-                    alpha: 0.45,
-                  ),
-                  decorationThickness: 1.2,
-                ),
+                style: subtle
+                    ? style.copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationStyle: TextDecorationStyle.solid,
+                        decorationColor: (style.color ?? t.tx).withValues(
+                          alpha: 0.22,
+                        ),
+                        decorationThickness: 1.4,
+                      )
+                    : style.copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationStyle: TextDecorationStyle.dotted,
+                        // Çizgi metnin KENDİ renginden türer (~%45 alfa): renkli
+                        // soru sahnesinde (beyaz yazı) her sözcüğün altında yeşil
+                        // nokta gürültü yapıyordu; açık zeminli ders slaytında da
+                        // koyu yazının sakin bir izi kalır (2026-10-21 simülatör).
+                        decorationColor: (style.color ?? t.tx).withValues(
+                          alpha: 0.45,
+                        ),
+                        decorationThickness: 1.2,
+                      ),
               ),
             ),
           ),

@@ -84,7 +84,7 @@ Future<void> _pumpLoaded(
 }
 
 void main() {
-  testWidgets('profil avatar düzenleme rozeti Kulis tonlu pahlı karedir', (
+  testWidgets('profil avatar düzenleme rozeti koyu kartta beyaz yuva', (
     tester,
   ) async {
     await _seedMistakes();
@@ -98,15 +98,28 @@ void main() {
           )
           .first,
     );
+    // 2026-10-29 vay 2B (B7): kimlik kartı koyu gece-mavi degrade; kamera
+    // yuvası BEYAZ daire, simge kart renginde (eski Kulis pahlı kare koyu
+    // zeminde kayboluyordu). Ölçü: simge yuvada ≥ 4.5:1, yuva 32.
     final decoration = badge.decoration as ShapeDecoration;
-    final t = SahneTokens.of(tester.element(find.byIcon(AppIcons.camera)));
-    expect(decoration.color, t.s2);
-    expect(decoration.shape, isA<BeveledRectangleBorder>());
-    // Tur 9b: yuva 32 (simge 20, dokunma alanı 44x44); pahlı kare boyuna
-    // uygun pah taşır.
+    expect(decoration.color, Colors.white);
+    expect(decoration.shape, isA<CircleBorder>());
+    final icon = tester.widget<Icon>(find.byIcon(AppIcons.camera));
+    final l1 = Colors.white.computeLuminance();
+    final l2 = icon.color!.computeLuminance();
+    expect((l1 + 0.05) / (l2 + 0.05), greaterThanOrEqualTo(4.5));
     expect(
-      (decoration.shape as BeveledRectangleBorder).borderRadius,
-      SahneShape.forSize(32).borderRadius,
+      tester
+          .getSize(
+            find
+                .ancestor(
+                  of: find.byIcon(AppIcons.camera),
+                  matching: find.byType(DecoratedBox),
+                )
+                .first,
+          )
+          .width,
+      32,
     );
     expect(find.byKey(const ValueKey('profile-avatar-edit')), findsOneWidget);
   });

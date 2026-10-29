@@ -47,6 +47,17 @@ void main() {
                   matching: find.byType(RichText),
                 )
                 .evaluate()) {
+          // 2026-10-29 vay 2B: vitrin önizlemesi avatarı büyük çizer, VIP
+          // ürününde avatarın kendi "VIP" işareti (sabit 24 px'lik rozet,
+          // test yazı tipinde dar) görünür; o bir açıklama değil, işaret.
+          final inVip = find
+              .ancestor(
+                of: find.byWidget(e.widget),
+                matching: find.byKey(const ValueKey('avatar-vip-badge')),
+              )
+              .evaluate()
+              .isNotEmpty;
+          if (inVip) continue;
           final p = e.renderObject! as RenderParagraph;
           expect(
             p.didExceedMaxLines,

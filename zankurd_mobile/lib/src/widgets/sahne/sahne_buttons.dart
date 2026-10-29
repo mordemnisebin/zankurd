@@ -531,22 +531,14 @@ class SahneJokerButton extends StatelessWidget {
     final labelColor = selected ? t.goldTx : (enabled ? t.tx : dim(t.tx));
     // Fiyat AYRI bir hap: ad ile karışmaz. Günlük ücretsiz hak jokere değil
     // jokerlerin üstündeki tek çipe aittir (2026-10-28 tur 3 T2).
+    // Vay 2A (2026-10-29, Astra: "tekrarlanan sarı 'Bedava' etiketleri
+    // kalite hissini düşürüyor"): bedava hak açıkken jokerde fiyat yuvası
+    // HİÇ çizilmez; hakkı joker satırının üstündeki TEK satır söyler
+    // ("Bugün 1 joker bedava"). Ekran okuyucu jokerin etiketinde yine
+    // "Bedava" duyar ([semanticLabel]).
     Widget? pricePill;
     if (showPrice && free) {
-      pricePill = DecoratedBox(
-        decoration: ShapeDecoration(color: t.s1, shape: const StadiumBorder()),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-          child: Text(
-            freeLabel,
-            key: const ValueKey('joker-free-label'),
-            maxLines: 1,
-            style: SahneType.captionStrong.copyWith(
-              color: enabled ? t.goldTx : t.tx2,
-            ),
-          ),
-        ),
-      );
+      pricePill = null;
     } else if (showPrice) {
       pricePill = DecoratedBox(
         decoration: ShapeDecoration(color: t.s1, shape: const StadiumBorder()),

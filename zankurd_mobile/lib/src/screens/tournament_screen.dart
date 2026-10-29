@@ -1173,7 +1173,7 @@ class _LobbyView extends StatelessWidget {
                   child: Column(
                     key: const ValueKey('tournament-wide-column'),
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [format, ladder, rules],
+                    children: [ladder, format, rules],
                   ),
                 ),
               ),
@@ -1182,7 +1182,9 @@ class _LobbyView extends StatelessWidget {
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [hero, format, ladder, rules],
+          // Vay 2A: eleme şeması kahramanın hemen altında (turnuvanın "ne"si
+          // ilk ekranda görünsün); biçim karoları ondan sonra.
+          children: [hero, ladder, format, rules],
         );
       },
     );
@@ -1425,11 +1427,16 @@ class _CupFormatPanel extends StatelessWidget {
   }
 }
 
-/// Kupa yolu: 16 → 8 → 4 → 2 → 1.
+/// Kupa yolu: 4 → 2 → 1 eleme ŞEMASI.
 ///
-/// Turnuvayı yarışmadan ayıran şey: aşamalı ve uzun soluklu bir etkinlik.
-/// 2026-09-29 Şahnê: ara basamaklar yarış tonu (Boyax), varış basamağı
-/// ödül tonu (Zêr) + taç glifi — renk tek kanal değil.
+/// Vay 2A (2026-10-29, Astra turnuva 5,5/10 — "turnuva yolu birkaç etikete
+/// indirgenmiş; rakip, rekabet ve ilerleme hissi oluşmuyor"): yatay çip
+/// dizisi yerine Clash/TRT tarzı braket ([SahneBracket]): ilk sütunda
+/// oyuncu yuvaları (ilki "Sen", ötekiler henüz belli olmayan rakipler "?"),
+/// 2 px çizgilerle sonraki tura, en sağda altın taçlı şampiyon yuvası.
+/// Sütun adları turların adlarıdır; ekran okuyucu tek cümlede bütün yolu
+/// duyar ("Yarı Final · 4 oyuncu › Final · 2 oyuncu › Şampiyon"). Basamak
+/// sayıları `TournamentConfig.generateBracket` ile aynı bölmeden türer.
 class _CupLadder extends StatelessWidget {
   const _CupLadder({required this.ku});
 
@@ -1445,6 +1452,17 @@ class _CupLadder extends StatelessWidget {
       steps.add(steps.last ~/ 2);
     }
     final roundNames = tournamentRoundNames(ku, steps.length - 1);
+    final champion = Tr.forKu(K.champion, ku).replaceAll('!', '');
+    final labels = [
+      for (var i = 0; i < steps.length; i++)
+        steps[i] == 1 ? champion : roundNames[i],
+    ];
+    final spoken = [
+      for (var i = 0; i < steps.length; i++)
+        steps[i] == 1
+            ? champion
+            : '${roundNames[i]} · ${steps[i]} ${Tr.forKu(K.cupPlayers, ku)}',
+    ].join(' › ');
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1452,92 +1470,22 @@ class _CupLadder extends StatelessWidget {
       children: [
         SahneSectionHeader(title: Tr.forKu(K.cupLadder, ku)),
         SahneSurfaceCard(
-          // `Wrap`, yatay kaydırma DEĞİL: kaydırmada merdivenin son
-          // basamağı — şampiyonluk — sağda kesik duruyordu (2026-08-04).
-          child: Wrap(
-            spacing: SahneSpace.x1,
-            runSpacing: SahneSpace.x2,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              for (var i = 0; i < steps.length; i++) ...[
-                if (i > 0)
-                  ExcludeSemantics(
-                    child: Icon(AppIcons.chevronRight, size: 16, color: t.tx3),
-                  ),
-                _LadderStep(
-                  count: steps[i],
-                  isFinal: steps[i] == 1,
-                  // W4: çipler adlı — "Yarı final 4 › Final 2 › Şampiyon".
-                  // Y7: sayı birimli — "Yarı final · 4 oyuncu" (çıplak 4
-                  // aşama numarası gibi okunuyordu).
-                  label: steps[i] == 1
-                      ? Tr.forKu(K.champion, ku).replaceAll('!', '')
-                      : '${roundNames[i]} · ${steps[i]} ${Tr.forKu(K.cupPlayers, ku)}',
-                ),
-              ],
+          child: SahneBracket(
+            key: const ValueKey('tournament-bracket-preview'),
+            semanticLabel: spoken,
+            roundLabels: labels,
+            entrants: [
+              SahneBracketEntrant(
+                label: Tr.forKu(K.you, ku),
+                me: true,
+                avatar: Icon(AppIcons.user, size: 20, color: t.raceTx),
+              ),
+              for (var i = 1; i < TournamentConfig.totalPlayers; i++)
+                const SahneBracketEntrant(),
             ],
           ),
         ),
       ],
-    );
-  }
-}
-
-class _LadderStep extends StatelessWidget {
-  const _LadderStep({
-    required this.count,
-    required this.isFinal,
-    required this.label,
-  });
-
-  final String label;
-  final int count;
-  final bool isFinal;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    // Y7: ara basamaklar nötr (kırmızı/turuncu yalnız anlamlı olduğunda),
-    // varış basamağı altın (ödül).
-    final fg = isFinal ? t.goldTx : t.tx;
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: isFinal ? t.goldTint : t.s2,
-        shape: isFinal
-            ? SahneShape.withSide(SahneShape.s, t.gold, width: SahneRing.r1)
-            : SahneShape.s,
-      ),
-      child: ConstrainedBox(
-        // a11y-tap-target: noninteractive — turnuva merdiveni ilerleme
-        // rozeti; salt görsel, dokunma hedefi değil.
-        constraints: const BoxConstraints(minWidth: 40, minHeight: 32),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Şampiyonluk basamağı ayrıca taç taşır: son basamağın farkı
-              // yalnız tonla anlatılmaz.
-              if (isFinal) ...[
-                const SahneGlyph(SahneGlyphKind.crown, size: 16),
-                const SizedBox(width: SahneSpace.x1),
-              ],
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: SahneType.captionStrong.copyWith(
-                    color: fg,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

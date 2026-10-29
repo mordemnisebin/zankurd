@@ -55,7 +55,11 @@ class _ProfileHeroCard extends StatelessWidget {
     required this.xpNeeded,
     required this.coins,
     required this.onSetName,
+    this.streak = 0,
   });
+
+  /// Görünen günlük seri (`StreakStore.effectiveStreak`).
+  final int streak;
 
   /// Kurul 5. tur 2026-10-20 (Opus, Grok): profilin tepesinde kimlik yoktu
   /// (yalnız ZK-kodu). Artık ad (ya da "Adını belirle →"), seviye + XP çubuğu
@@ -85,213 +89,240 @@ class _ProfileHeroCard extends StatelessWidget {
   final int? rank;
   final VoidCallback onEditAvatar;
 
+  /// Kimlik kartının gece-mavi degradesi (VAY_KATMANI B7: #173C52 → #285C70);
+  /// iki temada aynı, üstündeki metin beyaz (≥ 4.5:1, bekçi ölçer).
+  static const Color cardTop = ProfileIdentityColors.cardTop;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    // Tur 9b (Grok + ChatGPT): avatar, ad ve seviye çubuğu çıplak bir satırdı;
-    // hizaları tutarsızdı (avatar satırın ortasında, ad üstte). Blok artık
-    // 16 iç boşluklu TEK karttır, avatar üstten hizalı.
-    return SahneSurfaceCard(
+    // 2026-10-29 vay 2B (B7, Astra 5,5/10 "hesap ayarları sayfası gibi"):
+    // kimlik artık Duolingo profilindeki gibi bir KİMLİK KARTI — gece-mavi
+    // degrade, 80'lik avatar + 6 px seviye halkası, ad, küçük oyuncu kodu
+    // ve altta üç sayı (seri · seviye · jeton) + "sonraki seviyeye N XP".
+    // Oyuncu kodu ikincil (küçük, soluk beyaz); ad başlıktır.
+    //
+    // Tur 9b sözleşmesi korunur: blok 16 iç boşluklu TEK kart, avatar üstten
+    // hizalı, kamera düğmesi ≥ 44.
+    const onCard2 = ProfileIdentityColors.onCard2;
+    final xpLeft = math.max(0, xpNeeded - xpInLevel);
+    return ProfileIdentitySurface(
       key: const ValueKey('profile-identity-card'),
-      padding: const EdgeInsets.all(SahneSpace.x4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Ekran okuyucuda etiketsiz bir düğme olarak görünüyordu
-          // (2026-07-25 denetimi).
-          Semantics(
-            button: true,
-            label: Tr.forKu(K.editAvatar, ku),
-            excludeSemantics: true,
-            onTap: onEditAvatar,
-            child: GestureDetector(
-              key: const ValueKey('profile-avatar-edit'),
-              behavior: HitTestBehavior.opaque,
-              onTap: onEditAvatar,
-              child: SizedBox.square(
-                dimension: 80,
-                child: Stack(
-                  children: [
-                    // Seviye halkası (tasarım oylaması 2026-10-22, 18/19
-                    // EVET): avatarın çevresinde Zêr yay, seviye içindeki
-                    // XP ilerlemesini gösterir.
-                    Positioned.fill(
-                      child: CustomPaint(
-                        key: const ValueKey('profile-level-ring'),
-                        painter: _LevelRingPainter(
-                          progress: xpNeeded <= 0
-                              ? 0
-                              : (xpInLevel / xpNeeded).clamp(0.0, 1.0),
-                          track: t.line,
-                          fill: t.gold,
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: PlayerAvatar(
-                        radius: 34,
-                        photoUrl: avatarIdentity.photoUrl,
-                        iconId: avatarIdentity.iconId,
-                        colorHex: avatarIdentity.colorHex,
-                        frameId: avatarIdentity.frameId,
-                        showcaseTitle: avatarIdentity.showcaseTitle,
-                        displayName: displayName,
-                        colorSeed: PlayerIdentity.resolveColorSeed(displayName),
-                      ),
-                    ),
-                    // Kamera düğmesi: dokunma alanı 44x44, görünen yuva 32 ve
-                    // simge 20 (eskiden 28/12: parmakla vurulamayacak kadar
-                    // küçüktü).
-                    PositionedDirectional(
-                      end: -SahneSpace.x2,
-                      bottom: -SahneSpace.x2,
-                      child: SizedBox.square(
-                        key: const ValueKey('profile-camera-button'),
-                        dimension: 44,
-                        child: Center(
-                          child: SizedBox.square(
-                            dimension: 32,
-                            child: DecoratedBox(
-                              decoration: ShapeDecoration(
-                                color: t.s2,
-                                shape: SahneShape.withSide(
-                                  SahneShape.forSize(32),
-                                  t.edge,
-                                  width: SahneRing.r2,
-                                ),
-                              ),
-                              child: Icon(
-                                AppIcons.camera,
-                                size: 20,
-                                color: t.tx,
+      child: Padding(
+        padding: const EdgeInsets.all(SahneSpace.x4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Ekran okuyucuda etiketsiz bir düğme olarak görünüyordu
+                // (2026-07-25 denetimi).
+                Semantics(
+                  button: true,
+                  label: Tr.forKu(K.editAvatar, ku),
+                  excludeSemantics: true,
+                  onTap: onEditAvatar,
+                  child: GestureDetector(
+                    key: const ValueKey('profile-avatar-edit'),
+                    behavior: HitTestBehavior.opaque,
+                    onTap: onEditAvatar,
+                    child: SizedBox.square(
+                      dimension: 80,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          // Seviye halkası: 6 px Zêr yay, seviye içindeki XP.
+                          Positioned.fill(
+                            child: CustomPaint(
+                              key: const ValueKey('profile-level-ring'),
+                              painter: _LevelRingPainter(
+                                progress: xpNeeded <= 0
+                                    ? 0
+                                    : (xpInLevel / xpNeeded).clamp(0.0, 1.0),
+                                track: Colors.white.withValues(alpha: 0.22),
+                                fill: t.gold,
+                                stroke: 6,
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: SahneSpace.x4),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 7. kurul (Opus + Grok): ad yokken başlık yerinde bir
-                // bağlantı ("Oyundaki adını gir ›") duruyordu. Artık başlık
-                // hep gerçek bir kimliktir: ad varsa ad, yoksa "Oyuncu ZK-4F7K"
-                // (kod dokununca kopyalanır); adı girme eylemi kalemli bağlantı
-                // olarak altında.
-                _identityTitle(context, t),
-                if (!hasOwnName)
-                  Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: SahneButton.text(
-                      buttonKey: const ValueKey('profile-set-name-cta'),
-                      label: Tr.forKu(K.playerNameHint, ku).replaceAll('…', ''),
-                      icon: AppIcons.pen,
-                      arrow: false,
-                      ink: true,
-                      onPressed: onSetName,
-                    ),
-                  ),
-                // Seviye satırı adın 6 altında (tek sabit ritim).
-                const SizedBox(height: 6),
-                Row(
-                  children: [
-                    // Küçülür, "S…" diye kesilmez (320 pt + %200 yazıda
-                    // seviye, kimlik kartının en önemli sayısıdır).
-                    Flexible(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: AlignmentDirectional.centerStart,
-                        child: Text(
-                          '${Tr.forKu(K.progressLevelLabel, ku)} $level',
-                          maxLines: 1,
-                          style: SahneType.captionStrong.copyWith(color: t.tx),
-                        ),
-                      ),
-                    ),
-                    if (coins != null) ...[
-                      const Spacer(),
-                      // Jeton ayrı küçük hap: çubuğun üstüne sıkışan çıplak
-                      // sayı değil.
-                      DecoratedBox(
-                        key: const ValueKey('profile-coin-pill'),
-                        decoration: ShapeDecoration(
-                          color: t.goldTint,
-                          shape: const StadiumBorder(),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: SahneSpace.x2,
-                            vertical: SahneSpace.x1,
+                          Center(
+                            child: PlayerAvatar(
+                              radius: 30,
+                              photoUrl: avatarIdentity.photoUrl,
+                              iconId: avatarIdentity.iconId,
+                              colorHex: avatarIdentity.colorHex,
+                              frameId: avatarIdentity.frameId,
+                              showcaseTitle: avatarIdentity.showcaseTitle,
+                              displayName: displayName,
+                              colorSeed: PlayerIdentity.resolveColorSeed(
+                                displayName,
+                              ),
+                            ),
                           ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const SahneGlyph(SahneGlyphKind.coin, size: 16),
-                              const SizedBox(width: SahneSpace.x1),
-                              Text(
-                                groupThousands(coins!),
-                                style: SahneType.captionStrong.copyWith(
-                                  color: t.tx,
-                                  fontFeatures: const [
-                                    FontFeature.tabularFigures(),
-                                  ],
+                          // Kamera: dokunma alanı 44, görünen yuva 32, simge 20.
+                          const PositionedDirectional(
+                            end: -SahneSpace.x2 - 2,
+                            bottom: -SahneSpace.x2 - 2,
+                            child: SizedBox.square(
+                              key: ValueKey('profile-camera-button'),
+                              dimension: 44,
+                              child: Center(
+                                child: SizedBox.square(
+                                  dimension: 32,
+                                  child: DecoratedBox(
+                                    decoration: ShapeDecoration(
+                                      color: Colors.white,
+                                      shape: CircleBorder(
+                                        side: BorderSide(
+                                          color: cardTop,
+                                          width: 2,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Icon(
+                                      AppIcons.camera,
+                                      size: 20,
+                                      color: cardTop,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: SahneSpace.x4),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Ad varsa ad; yoksa "Oyuncu ZK-4F7K" (kod dokununca
+                      // kopyalanır) ve altında kalemli "adını gir".
+                      _identityTitle(context, t),
+                      if (!hasOwnName)
+                        _OnCardLink(
+                          key: const ValueKey('profile-set-name-cta'),
+                          label: Tr.forKu(
+                            K.playerNameHint,
+                            ku,
+                          ).replaceAll('…', ''),
+                          onTap: onSetName,
+                        ),
+                      if (playerTag != null && hasOwnName)
+                        _PlayerTagChip(tag: playerTag!, ku: ku, onDark: true)
+                      else if (playerTag == null)
+                        Text(
+                          Tr.forKu(K.keepProgress, ku),
+                          style: SahneType.caption.copyWith(color: onCard2),
+                        ),
+                      if (showcaseTitle != null) ...[
+                        const SizedBox(height: SahneSpace.x1),
+                        Text(
+                          showcaseTitle!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: SahneType.captionStrong.copyWith(
+                            color: ProfileIdentityColors.gold,
                           ),
                         ),
-                      ),
+                      ],
+                      // Lig rozeti bayrakla kapalı (bkz. `kWeeklyLeagueEnabled`).
+                      if (kWeeklyLeagueEnabled) ...[
+                        const SizedBox(height: SahneSpace.x2),
+                        Builder(
+                          builder: (context) {
+                            final tier = LeagueTier.forRank(rank);
+                            return SahneBadge(
+                              label: tier.label(ku),
+                              tone: SahneBadgeTone.gold,
+                            );
+                          },
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
-                const SizedBox(height: SahneSpace.x2),
-                SahneProgressBar(
-                  value: xpNeeded > 0 ? xpInLevel / xpNeeded : 0,
-                  tone: SahneProgressTone.gold,
-                  height: 8,
-                  semanticLabel: '${Tr.forKu(K.progressLevelLabel, ku)} $level',
-                ),
-                if (playerTag != null && hasOwnName)
-                  _PlayerTagChip(tag: playerTag!, ku: ku)
-                else if (playerTag == null)
-                  Text(
-                    Tr.forKu(K.keepProgress, ku),
-                    style: SahneType.caption.copyWith(color: t.tx2),
-                  ),
-                if (showcaseTitle != null) ...[
-                  const SizedBox(height: SahneSpace.x1),
-                  Text(
-                    showcaseTitle!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: SahneType.captionStrong.copyWith(color: t.goldTx),
-                  ),
-                ],
-                // Lig rozeti bayrakla kapalı: az oyuncuyla herkes "Bronz
-                // Lig"de (bkz. `kWeeklyLeagueEnabled`).
-                if (kWeeklyLeagueEnabled) ...[
-                  const SizedBox(height: SahneSpace.x2),
-                  Builder(
-                    builder: (context) {
-                      final tier = LeagueTier.forRank(rank);
-                      return SahneBadge(
-                        label: tier.label(ku),
-                        tone: SahneBadgeTone.gold,
-                      );
-                    },
-                  ),
-                ],
               ],
             ),
-          ),
-        ],
+            const SizedBox(height: SahneSpace.x4),
+            // Üç sayı: seri · seviye · jeton (Duolingo profil istatistikleri).
+            Builder(
+              builder: (context) {
+                final cells = <Widget>[
+                  _IdentityStat(
+                    icon: const Icon(
+                      AppIcons.fire,
+                      size: 20,
+                      color: ProfileIdentityColors.streak,
+                    ),
+                    value: '$streak',
+                    label: Tr.forKu(K.profileStatStreak, ku),
+                  ),
+                  _IdentityStat(
+                    icon: const Icon(
+                      AppIcons.star,
+                      size: 20,
+                      color: ProfileIdentityColors.gold,
+                    ),
+                    value: '$level',
+                    label: Tr.forKu(K.progressLevelLabel, ku),
+                  ),
+                  if (coins != null)
+                    _IdentityStat(
+                      key: const ValueKey('profile-coin-pill'),
+                      icon: const SahneGlyph(SahneGlyphKind.coin, size: 20),
+                      value: groupThousands(coins!),
+                      label: Tr.forKu(K.profileStatCoins, ku),
+                    ),
+                ];
+                // Büyük yazıda üç hücre yan yana sığmaz ("Günl/ük"): alt alta.
+                final stacked =
+                    MediaQuery.textScalerOf(context).scale(16) >= 24;
+                if (stacked) {
+                  return Column(
+                    key: const ValueKey('profile-identity-stats'),
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (var i = 0; i < cells.length; i++) ...[
+                        if (i > 0) const SizedBox(height: SahneSpace.x2),
+                        cells[i],
+                      ],
+                    ],
+                  );
+                }
+                return Row(
+                  key: const ValueKey('profile-identity-stats'),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (var i = 0; i < cells.length; i++) ...[
+                      if (i > 0) const SizedBox(width: SahneSpace.x2),
+                      Expanded(child: cells[i]),
+                    ],
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: SahneSpace.x3),
+            SahneProgressBar(
+              value: xpNeeded > 0 ? xpInLevel / xpNeeded : 0,
+              tone: SahneProgressTone.gold,
+              height: 8,
+              trackColor: Colors.white.withValues(alpha: 0.22),
+              edgeColor: Colors.transparent,
+              semanticLabel: '${Tr.forKu(K.progressLevelLabel, ku)} $level',
+            ),
+            const SizedBox(height: SahneSpace.x1),
+            Text(
+              Tr.forKu(K.profileXpToNext, ku, {'n': groupThousands(xpLeft)}),
+              key: const ValueKey('profile-xp-to-next'),
+              style: SahneType.caption.copyWith(color: onCard2),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -308,7 +339,7 @@ class _ProfileHeroCard extends StatelessWidget {
       child: Text(
         text,
         maxLines: 1,
-        style: SahneType.headline.copyWith(color: t.tx),
+        style: SahneType.headline.copyWith(color: Colors.white),
       ),
     );
     if (hasOwnName || label == null) return title;
@@ -321,6 +352,115 @@ class _ProfileHeroCard extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: () => _copyPlayerTag(context, label, ku),
         child: title,
+      ),
+    );
+  }
+}
+
+/// Kimlik kartındaki tek sayı hücresi: ikon + kalın değer + küçük etiket,
+/// beyaz %12 cam zemin.
+class _IdentityStat extends StatelessWidget {
+  const _IdentityStat({
+    required this.icon,
+    required this.value,
+    required this.label,
+    super.key,
+  });
+
+  final Widget icon;
+  final String value;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: '$value $label',
+      excludeSemantics: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: Colors.white.withValues(alpha: 0.12),
+          shape: SahneShape.m,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: SahneSpace.x2,
+            vertical: SahneSpace.x2,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  icon,
+                  const SizedBox(width: SahneSpace.x1),
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        value,
+                        maxLines: 1,
+                        style: SahneType.headline.copyWith(
+                          color: Colors.white,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                label,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: SahneType.caption.copyWith(
+                  color: Colors.white.withValues(alpha: 0.82),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Koyu kart üstünde kalemli metin bağlantısı (≥ 48 dokunma).
+class _OnCardLink extends StatelessWidget {
+  const _OnCardLink({required this.label, required this.onTap, super.key});
+
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: label,
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: sahneTapTarget),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(AppIcons.pen, size: 16, color: Colors.white),
+              const SizedBox(width: SahneSpace.x2),
+              Flexible(
+                child: Text(
+                  label,
+                  style: SahneType.captionStrong.copyWith(
+                    color: Colors.white,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Colors.white.withValues(alpha: 0.5),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -346,10 +486,17 @@ Future<void> _copyPlayerTag(BuildContext context, String label, bool ku) async {
 /// ve kesin sonuç olarak bulur. Bu yüzden okunması değil **kopyalanması**
 /// asıl iş; dokunma hedefi bütün satırı kapsar (en az 48).
 class _PlayerTagChip extends StatelessWidget {
-  const _PlayerTagChip({required this.tag, required this.ku});
+  const _PlayerTagChip({
+    required this.tag,
+    required this.ku,
+    this.onDark = false,
+  });
 
   final String tag;
   final bool ku;
+
+  /// Kimlik kartının koyu degradesinde: soluk beyaz (vay 2B).
+  final bool onDark;
 
   @override
   Widget build(BuildContext context) {
@@ -380,14 +527,20 @@ class _PlayerTagChip extends StatelessWidget {
                     label,
                     maxLines: 1,
                     style: SahneType.captionStrong.copyWith(
-                      color: t.tx2,
+                      color: onDark
+                          ? Colors.white.withValues(alpha: 0.82)
+                          : t.tx2,
                       letterSpacing: 0.8,
                     ),
                   ),
                 ),
               ),
               const SizedBox(width: SahneSpace.x2),
-              Icon(AppIcons.copy, size: 16, color: t.tx2),
+              Icon(
+                AppIcons.copy,
+                size: 16,
+                color: onDark ? Colors.white.withValues(alpha: 0.82) : t.tx2,
+              ),
             ],
           ),
         ),
@@ -835,15 +988,16 @@ class _LevelRingPainter extends CustomPainter {
     required this.progress,
     required this.track,
     required this.fill,
+    this.stroke = 3.5,
   });
 
   final double progress;
   final Color track;
   final Color fill;
+  final double stroke;
 
   @override
   void paint(Canvas canvas, Size size) {
-    const stroke = 3.5;
     final rect = Offset.zero & size;
     final arcRect = rect.deflate(stroke / 2);
     final base = Paint()

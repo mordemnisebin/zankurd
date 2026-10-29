@@ -16,6 +16,7 @@ import '../widgets/lexicon_lookup.dart';
 import '../widgets/lexicon_speak_button.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/word_save_button.dart';
+import '../widgets/zan_mascot.dart';
 import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -363,38 +364,61 @@ class _StoryScreenState extends State<StoryScreen> {
         ],
         // Anlatı: sahne kartı (gece, öğrenme rolü). Kurmancî cümle Manşet,
         // çevirisi altında ikincil metinde.
+        //
+        // 2026-10-29 vay 2B (Astra 5/10 "sahne duygusu zayıf"): kartın
+        // tepesinde gece-dağ manzarası ve anlatıcı maskot — her adım bir
+        // sahnede geçer. Sözcük izleri noktalı değil sakin ([LexiconText.subtle]).
         SizedBox(
           width: double.infinity,
           child: SahneStageCard(
+            key: const ValueKey('story-scene-card'),
+            padding: EdgeInsets.zero,
             child: Builder(
               builder: (context) {
                 final s = SahneTokens.of(context);
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            context.t(K.storyWord),
-                            // Y5 (2026-10-29 tur 6): turuncu yalnız eylem;
-                            // hikâye Öğren moduna aittir (yeşil).
-                            style: SahneType.eyebrow.copyWith(color: s.learnTx),
+                    const _StorySceneHeader(),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        SahneSpace.x4,
+                        SahneSpace.x3,
+                        SahneSpace.x4,
+                        SahneSpace.x4,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  context.t(K.storyWord),
+                                  // Y5 (2026-10-29 tur 6): turuncu yalnız
+                                  // eylem; hikâye Öğren moduna aittir (yeşil).
+                                  style: SahneType.eyebrow.copyWith(
+                                    color: s.learnTx,
+                                  ),
+                                ),
+                              ),
+                              LexiconSpeakButton(text: node.textKu),
+                            ],
                           ),
-                        ),
-                        LexiconSpeakButton(text: node.textKu),
-                      ],
-                    ),
-                    const SizedBox(height: SahneSpace.x2),
-                    LexiconText(
-                      node.textKu,
-                      key: const ValueKey('story-text-ku'),
-                      style: SahneType.headline.copyWith(color: s.tx),
-                    ),
-                    const SizedBox(height: SahneSpace.x2),
-                    Text(
-                      glueOpeningQuotes(node.textTr),
-                      style: SahneType.body.copyWith(color: s.tx2),
+                          const SizedBox(height: SahneSpace.x1),
+                          LexiconText(
+                            node.textKu,
+                            key: const ValueKey('story-text-ku'),
+                            subtle: true,
+                            style: SahneType.headline.copyWith(color: s.tx),
+                          ),
+                          const SizedBox(height: SahneSpace.x2),
+                          Text(
+                            glueOpeningQuotes(node.textTr),
+                            style: SahneType.body.copyWith(color: s.tx2),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 );
@@ -447,13 +471,34 @@ class _StoryScreenState extends State<StoryScreen> {
           // altında. Gövde her zaman Kurmancî cümleyi üstte gösterir; şık da
           // aynı biçimi alır — Türkçe arayüzde öğrenci Kurmancî okuyup
           // Türkçe seçiyordu, alıştırmanın üretim kısmı yoktu (2026-07-27).
-          SahneListGroup(
+          Column(
+            key: const ValueKey('story-choices'),
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              for (final choice in node.choices)
+              // 2026-10-29 vay 2B: seçenekler ayrı, kabartmalı kartlar ve
+              // başlarında "senin cevabın" balonu; üstte tek satır soru.
+              Padding(
+                padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                child: Text(
+                  context.t(K.storyYourReply),
+                  style: SahneType.bodyStrong.copyWith(color: t.tx),
+                ),
+              ),
+              for (final choice in node.choices) ...[
                 _StoryChoiceRow(
                   choice: choice,
                   onTap: _busy ? null : () => _choose(choice),
                 ),
+                const SizedBox(height: SahneSpace.x2),
+              ],
+              // Hikâyenin kelime çantası: alttaki boş yarım ekran (Astra:
+              // "işlevsiz boş") hikâyenin yeni kelimelerine döner; çipe
+              // dokununca sözlük maddesi açılır.
+              if (widget.guide != null &&
+                  widget.guide!.newWords.isNotEmpty) ...[
+                const SizedBox(height: SahneSpace.x4),
+                _StoryWordBag(words: widget.guide!.newWords),
+              ],
             ],
           ),
       ],
@@ -496,6 +541,7 @@ class _NarrationBubble extends StatelessWidget {
                     children: [
                       LexiconText(
                         node.textKu,
+                        subtle: true,
                         style: SahneType.body.copyWith(color: t.tx),
                       ),
                       const SizedBox(height: 2),
@@ -562,8 +608,9 @@ class _PlayerBubble extends StatelessWidget {
   }
 }
 
-/// Hikâye seçeneği: liste grubunda bir satır — Kurmancî cümle (Gövde 700),
-/// çevirisi (Açıklama, ikincil) ve chevron. En az 64; metin sarar.
+/// Hikâye seçeneği: kabartmalı kart — başta oyuncunun konuşma balonu,
+/// Kurmancî cümle (Gövde 700), çevirisi (Açıklama, ikincil) ve chevron.
+/// En az 64; metin sarar.
 class _StoryChoiceRow extends StatelessWidget {
   const _StoryChoiceRow({required this.choice, required this.onTap});
 
@@ -573,39 +620,187 @@ class _StoryChoiceRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return InkWell(
+    return SahneSurfaceCard(
+      key: ValueKey('story-choice-${choice.nextNodeId}'),
+      emboss: true,
       onTap: onTap,
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        SahneSpace.x3,
+        SahneSpace.x3,
+        SahneSpace.x3,
+        SahneSpace.x3,
+      ),
+      // Dokunma hedefi kartın tamamı (12 iç boşluk + ≥ 48 içerik).
       child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: 64),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(
-            SahneSpace.x4,
-            SahneSpace.x3,
-            SahneSpace.x3,
-            SahneSpace.x3,
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
+        constraints: const BoxConstraints(minHeight: 48),
+        child: Row(
+          children: [
+            ExcludeSemantics(
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: t.learnTint,
+                  shape: const CircleBorder(),
+                ),
+                child: SizedBox.square(
+                  dimension: 40,
+                  child: Icon(AppIcons.comment, size: 20, color: t.learnTx),
+                ),
+              ),
+            ),
+            const SizedBox(width: SahneSpace.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    choice.labelKu,
+                    key: ValueKey('story-choice-ku-${choice.nextNodeId}'),
+                    style: SahneType.bodyStrong.copyWith(color: t.tx),
+                  ),
+                  Text(
+                    choice.labelTr,
+                    style: SahneType.caption.copyWith(color: t.tx2),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: SahneSpace.x2),
+            ExcludeSemantics(
+              child: Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Hikâyenin yeni kelimeleri: çip dizisi (Kurmancî kalın + çevirisi).
+/// Sözlükte kaydı olan çip dokunulur ve sözlük maddesini açar.
+class _StoryWordBag extends StatelessWidget {
+  const _StoryWordBag({required this.words});
+
+  final List<GuidePair> words;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Column(
+      key: const ValueKey('story-word-bag'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.t(K.yeniKelimeler),
+          style: SahneType.captionStrong.copyWith(color: t.tx2),
+        ),
+        const SizedBox(height: SahneSpace.x2),
+        Wrap(
+          spacing: SahneSpace.x2,
+          runSpacing: SahneSpace.x2,
+          children: [
+            for (final w in words)
+              _WordChip(pair: w, entry: LearnerLexicon.lookup(w.ku)),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _WordChip extends StatelessWidget {
+  const _WordChip({required this.pair, required this.entry});
+
+  final GuidePair pair;
+  final LearnerLexiconEntry? entry;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final e = entry;
+    return Semantics(
+      button: e != null,
+      label: '${pair.ku}. ${pair.tr}',
+      excludeSemantics: true,
+      child: Material(
+        color: t.s1,
+        shape: SahneShape.withSide(SahneShape.m, t.edge, width: 1),
+        child: InkWell(
+          customBorder: SahneShape.m,
+          onTap: e == null ? null : () => showLexiconEntrySheet(context, e),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: SahneSpace.x3,
+                vertical: SahneSpace.x2,
+              ),
+              child: Text.rich(
+                TextSpan(
                   children: [
-                    Text(
-                      choice.labelKu,
-                      key: ValueKey('story-choice-ku-${choice.nextNodeId}'),
-                      style: SahneType.bodyStrong.copyWith(color: t.tx),
+                    TextSpan(
+                      text: pair.ku,
+                      style: SahneType.bodyStrong.copyWith(color: t.learnTx),
                     ),
-                    Text(
-                      choice.labelTr,
+                    TextSpan(
+                      text: '  ${pair.tr}',
                       style: SahneType.caption.copyWith(color: t.tx2),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: SahneSpace.x2),
-              ExcludeSemantics(
-                child: Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Anlatı kartının tepesindeki sahne: gece-dağ manzarası, ortada anlatıcı
+/// maskot (karşılama pozu), alt kenarda kilim şeridi. Dekoratiftir.
+class _StorySceneHeader extends StatelessWidget {
+  const _StorySceneHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    return ExcludeSemantics(
+      child: ClipRRect(
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(SahneShape.lValue),
+        ),
+        child: SizedBox(
+          key: const ValueKey('story-scene-header'),
+          height: 112,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              CustomPaint(
+                painter: SahneVistaPainter.of(
+                  SahneVistaPhase.dusk,
+                  part: SahneVistaPart.back,
+                  sunLeft: true,
+                ),
+              ),
+              const PositionedDirectional(
+                end: 16,
+                bottom: 4,
+                child: ZanMascot(pose: ZanPose.welcome, size: 128),
+              ),
+              CustomPaint(
+                painter: SahneVistaPainter.of(
+                  SahneVistaPhase.dusk,
+                  part: SahneVistaPart.front,
+                ),
+              ),
+              const Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: SahneKilimBorder(
+                  color: SahneKilimBorderPainter.darkOn,
+                  height: 5,
+                ),
               ),
             ],
           ),

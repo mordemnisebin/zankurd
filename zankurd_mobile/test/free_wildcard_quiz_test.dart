@@ -9,12 +9,17 @@ import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/wildcard.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_wildcard_bar.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
-import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
 /// 2026-10-28 tur 5 W1: hak açıkken fiyat yuvasında "Bedava" (rozet/çip yok);
 /// kısa etiketler (50/50, İpucu, Çift cevap, Değiştir) ≥ 12 sp.
+///
+/// 2026-10-29 vay 2A: W1 TERSİNE döndü — dört jokerde tekrarlanan "Bedava"
+/// etiketleri joker çubuğunu kalabalıklaştırıyordu (Astra: "tekrarlanan
+/// sarı 'Bedava' rozetleri kalite hissini düşürüyor"). Hak artık joker
+/// satırının üstündeki TEK satırda yazar ("Bugün 1 joker bedava"); jokerde
+/// fiyat yuvası çizilmez, ekran okuyucu jokerin adında "Bedava" duyar.
 ///
 /// Solo turda günlük bedava joker: ilk kullanım jeton düşmez, ikincisi düşer.
 ///
@@ -143,13 +148,21 @@ void main() {
     final repository = _CountingRepository(8);
     await pumpQuiz(tester, repository);
 
-    // W1 (2026-10-28 tur 5): hak açıkken HER jokerin fiyat yuvasında
-    // "Bedava" yazar; ayrı "Bugün 1 joker bedava" çipi yoktur.
+    // Vay 2A: hak TEK satırda yazar; jokerlerde "Bedava" tekrarı yok.
     expect(find.byKey(const ValueKey('quiz-free-wildcard-chip')), findsNothing);
-    expect(find.text('Bugün 1 joker bedava'), findsNothing);
-    expect(find.byKey(const ValueKey('joker-free-label')), findsNWidgets(4));
-    expect(find.text('Bedava'), findsNWidgets(4));
+    expect(
+      find.byKey(const ValueKey('quiz-free-wildcard-hint')),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Bugün 1 joker bedava'), findsOneWidget);
+    expect(find.byKey(const ValueKey('joker-free-label')), findsNothing);
+    expect(find.text('Bedava'), findsNothing);
     expect(find.byKey(const ValueKey('joker-free-badge')), findsNothing);
+    expect(
+      find.bySemanticsLabel(RegExp('50/50 • Bedava')),
+      findsOneWidget,
+      reason: 'ekran okuyucu hakkı jokerde duyar',
+    );
     expect(
       find.byKey(const ValueKey('quiz-collapsed-wildcard-pill')),
       findsNothing,
@@ -206,13 +219,21 @@ void main() {
       freeDay: FreeWildcardStore.dayKey(yesterday),
     );
 
-    // W1 (2026-10-28 tur 5): hak açıkken HER jokerin fiyat yuvasında
-    // "Bedava" yazar; ayrı "Bugün 1 joker bedava" çipi yoktur.
+    // Vay 2A: hak TEK satırda yazar; jokerlerde "Bedava" tekrarı yok.
     expect(find.byKey(const ValueKey('quiz-free-wildcard-chip')), findsNothing);
-    expect(find.text('Bugün 1 joker bedava'), findsNothing);
-    expect(find.byKey(const ValueKey('joker-free-label')), findsNWidgets(4));
-    expect(find.text('Bedava'), findsNWidgets(4));
+    expect(
+      find.byKey(const ValueKey('quiz-free-wildcard-hint')),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Bugün 1 joker bedava'), findsOneWidget);
+    expect(find.byKey(const ValueKey('joker-free-label')), findsNothing);
+    expect(find.text('Bedava'), findsNothing);
     expect(find.byKey(const ValueKey('joker-free-badge')), findsNothing);
+    expect(
+      find.bySemanticsLabel(RegExp('50/50 • Bedava')),
+      findsOneWidget,
+      reason: 'ekran okuyucu hakkı jokerde duyar',
+    );
     await tap(tester, WildcardType.fiftyFifty);
     expect(repository.spends, isEmpty);
   });
@@ -240,7 +261,7 @@ void main() {
     expect(await JokerStockStore.count(), 1);
   });
 
-  testWidgets('W1: kısa joker etiketleri ≥ 12 sp, "Bedava" fiyatla aynı boy', (
+  testWidgets('W1: kısa joker etiketleri ≥ 12 sp, bedava hak tek satırda', (
     tester,
   ) async {
     await pumpQuiz(tester, _CountingRepository(8));
@@ -257,10 +278,11 @@ void main() {
     for (final n in names) {
       expect(n.style!.fontSize, greaterThanOrEqualTo(12));
     }
-    final free = tester.widget<Text>(
-      find.byKey(const ValueKey('joker-free-label')).first,
+    // Vay 2A: bedava hakta jokerde fiyat hapı yok; tek satır ipucu ≥ 12 sp.
+    expect(find.byKey(const ValueKey('joker-free-label')), findsNothing);
+    final hint = tester.widget<Text>(
+      find.byKey(const ValueKey('quiz-free-wildcard-hint')),
     );
-    // Fiyat hapıyla aynı stil (captionStrong): boy aynı, rozet rengi yok.
-    expect(free.style!.fontSize, SahneType.captionStrong.fontSize);
+    expect(hint.style!.fontSize, greaterThanOrEqualTo(12));
   });
 }

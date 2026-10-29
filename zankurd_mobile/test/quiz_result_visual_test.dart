@@ -511,25 +511,29 @@ void main() {
   // 2026-09-29 Şahnê: maskot yok. Kutlama artık puanın arkasındaki sonuç
   // ışınlarıdır ([SahneResultBackdropPainter.rays]); yüksek doğrulukta
   // ışınlar yanar.
-  testWidgets('skor başlığı yüksek doğrulukta kutlama ışınlarını yakar', (
-    tester,
-  ) async {
-    await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
-    await tester.pump(const Duration(seconds: 1));
-    await tester.pumpAndSettle();
+  testWidgets(
+    'yüksek doğrulukta kutlama ışınları madalya kümesinde (tek odak)',
+    (tester) async {
+      await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
-    expect(
-      find.byKey(const ValueKey('result-score-header')),
-      findsOneWidget,
-      reason: 'M33 eklerken mevcut skor başlığı bozulmamalı',
-    );
-    final backdrops = tester
-        .widgetList<CustomPaint>(find.byType(CustomPaint))
-        .map((p) => p.painter)
-        .whereType<SahneResultBackdropPainter>();
-    expect(backdrops, hasLength(1));
-    expect(backdrops.single.rays, isTrue);
-  });
+      expect(
+        find.byKey(const ValueKey('result-score-header')),
+        findsOneWidget,
+        reason: 'M33 eklerken mevcut skor başlığı bozulmamalı',
+      );
+      final backdrops = tester
+          .widgetList<CustomPaint>(find.byType(CustomPaint))
+          .map((p) => p.painter)
+          .whereType<SahneResultBackdropPainter>();
+      expect(backdrops, hasLength(1));
+      // 2026-10-29 vay 2A: solo sonucunda kutlama ışınları madalyanın ışın
+      // diskindedir (tek odak); puanın arkasındaki ikinci ışın kaynağı kapalı.
+      expect(backdrops.single.rays, isFalse);
+      expect(find.byKey(const ValueKey('result-ray-disc')), findsOneWidget);
+    },
+  );
 
   testWidgets('skor vitrini kazanılan XPyi seviye yoluna bağlar', (
     tester,

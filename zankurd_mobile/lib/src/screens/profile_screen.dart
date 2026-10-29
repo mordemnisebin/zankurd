@@ -10,6 +10,9 @@ import 'package:provider/provider.dart';
 import '../config/feature_flags.dart';
 import '../data/achievement_store.dart';
 import '../data/mastery_store.dart';
+import '../widgets/profile_identity_card.dart';
+import '../widgets/zan_mascot.dart';
+import '../data/streak_store.dart';
 import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
 import '../data/sync_manager.dart';
@@ -145,6 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   /// onu artırmaz ve oyuncu quiz bitirdiği hâlde "0" görüyordu
   /// (2026-07-22 canlı UX denetimi, P0-4).
   int _answeredTotal = 0;
+  int _streak = 0;
 
   @override
   void initState() {
@@ -242,10 +246,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       } catch (_) {
         coins = null; // bakiye yoksa jeton satırı çizilmez
       }
+      // Kimlik kartındaki seri (vay 2B). Okunamazsa 0 — kart yine çizilir.
+      var streak = 0;
+      try {
+        streak = (await StreakStore.load()).effectiveStreak();
+      } catch (_) {}
       if (mounted && generation == _loadGeneration) {
         setState(() {
           _currentName = name;
           _coins = coins;
+          _streak = streak;
           _stats = stats;
           _weeklyEntry = weekly;
           _playerTag = tag;
@@ -355,6 +365,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       xpInLevel: _xpInLevel,
       xpNeeded: _xpNeeded,
       coins: _coins,
+      streak: _streak,
       onSetName: _openSettings,
     );
 
@@ -1067,17 +1078,11 @@ class _ProfileStartCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                ExcludeSemantics(
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: t.goldTint,
-                      shape: SahneShape.m,
-                    ),
-                    child: SizedBox.square(
-                      dimension: 44,
-                      child: Icon(AppIcons.trophy, size: 24, color: t.goldTx),
-                    ),
-                  ),
+                // Vay 2B (B10): boş durumun karşılama maskotu.
+                const ZanMascot(
+                  key: ValueKey('profile-start-mascot'),
+                  pose: ZanPose.welcome,
+                  size: 88,
                 ),
                 const SizedBox(width: SahneSpace.x3),
                 Expanded(

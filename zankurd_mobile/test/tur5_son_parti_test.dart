@@ -96,9 +96,17 @@ void main() {
       expect(before.bottom, greaterThan(600), reason: 'ekranın dibinde');
 
       // 2026-10-29 tur 6 Y7: sayı birimli.
-      expect(find.text('Yarı Final · 4 oyuncu'), findsOneWidget);
-      expect(find.text('Final · 2 oyuncu'), findsOneWidget);
+      // 2026-10-29 vay 2A: eleme şeması; birimli yol ekran okuyucuda, ekranda
+      // tur adları sütun başlığıdır.
+      expect(find.text('Yarı Final'), findsOneWidget);
+      expect(find.text('Final'), findsOneWidget);
       expect(find.text('Şampiyon'), findsOneWidget);
+      expect(
+        find.bySemanticsLabel(
+          'Yarı Final · 4 oyuncu › Final · 2 oyuncu › Şampiyon',
+        ),
+        findsOneWidget,
+      );
     });
   });
 

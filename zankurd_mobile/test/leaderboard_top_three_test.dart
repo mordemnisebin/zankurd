@@ -361,9 +361,25 @@ void main() {
       final t = SahneTokens.of(
         tester.element(find.byKey(const ValueKey('leaderboard-podium'))),
       );
-      expect(_rankDigitColor(tester, 1), t.goldTx);
-      expect(_rankDigitColor(tester, 2), t.silverTx);
-      expect(_rankDigitColor(tester, 3), t.bronzeTx);
+      // 2026-10-29 vay 2B (B8): podyumdaki sıra rakamı madalya diskinde
+      // (altın / gümüş / bronz degrade) KOYU mürekkeple durur; madalya rengini
+      // disk taşır, rakam disk üstünde ≥ 4.5:1 okunur. Liste satırları eski
+      // kuralda (ikincil metin).
+      for (var place = 1; place <= 3; place++) {
+        final medal = find.byKey(ValueKey('podium-medal-$place'));
+        expect(medal, findsOneWidget, reason: 'madalya $place');
+        final deco =
+            tester.widget<DecoratedBox>(medal).decoration as ShapeDecoration;
+        final g = deco.gradient! as LinearGradient;
+        final ink = _rankDigitColor(tester, place)!;
+        for (final c in g.colors) {
+          final l1 = c.computeLuminance();
+          final l2 = ink.computeLuminance();
+          final ratio =
+              ((l1 > l2 ? l1 : l2) + 0.05) / ((l1 > l2 ? l2 : l1) + 0.05);
+          expect(ratio, greaterThanOrEqualTo(4.5), reason: 'madalya $place');
+        }
+      }
       expect(_rankDigitColor(tester, 4), t.tx2);
       expect(_rankDigitColor(tester, 5), t.tx2);
     });

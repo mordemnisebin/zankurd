@@ -506,7 +506,14 @@ class SahneResultHero extends StatelessWidget {
     this.tone = SahneResultTone.reward,
     this.notices = const [],
     this.emblemExtra = 0,
+    this.emblemOwnsGlow = false,
   });
+
+  /// Amblem kendi ışığını taşıyor (madalya + ışın diski): puanın arkasındaki
+  /// ışınlar ve parıltılar çizilmez. Vay 2A (2026-10-29, Astra sonuç 7/10):
+  /// madalya, maskot, ışınlar, yıldızlar ve parıltılar aynı anda dikkat
+  /// istiyordu; ekranın TEK odağı madalya kümesidir.
+  final bool emblemOwnsGlow;
 
   /// Amblem eski 70 px'lik yıldız satırından ne kadar yüksekse o kadar:
   /// ışınlar ve altın ışıma puanın ortasından çıkar, amblem büyüyünce
@@ -570,7 +577,7 @@ class SahneResultHero extends StatelessWidget {
     // Renkli sahnede (bkz. [SahneResultScene]) puan büyür: sonuç anı bir
     // sahnedir, tablo değil.
     final scenic = SahneResultScene.maybeOf(context) != null;
-    final shine = celebrate || (scenic && lightGlow);
+    final shine = (celebrate || (scenic && lightGlow)) && !emblemOwnsGlow;
     final content = Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -654,19 +661,10 @@ class SahneResultHero extends StatelessWidget {
           const SizedBox(height: SahneSpace.x1),
           extra,
         ],
-        // Kilim göz şeridi yalnız ZAFERDE puanın altında durur; rengi rolü
-        // izler: solo ödül altını, düello yarış lalı. Her sonucun altında
-        // aynı süs bir kimlik değil şablon izi olurdu (2026-09-29 K4).
-        if (celebrate) ...[
-          const SizedBox(height: SahneSpace.x2),
-          SizedBox(
-            width: 160,
-            child: SahneKilimStrip(
-              color: (tone == SahneResultTone.race ? t.raceTx : t.gold)
-                  .withValues(alpha: 0.7),
-            ),
-          ),
-        ],
+        // Vay 2A (2026-10-29): puanın altındaki kilim göz şeridi KALKTI.
+        // Zafer ekranında küçük pembe noktalar sırası olarak okunuyor, görsel
+        // gürültü yapıyordu (Astra, sonuç denetimi). Zaferi başlık, puan ve
+        // amblem söyler.
         for (final notice in notices) ...[
           const SizedBox(height: SahneSpace.x2),
           notice,

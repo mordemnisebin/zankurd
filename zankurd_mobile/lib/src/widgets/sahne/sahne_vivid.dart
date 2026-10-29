@@ -35,10 +35,18 @@ class SahneHeroSurface extends StatelessWidget {
     this.role = SahneRole.race,
     this.kilimKey,
     this.kilim = true,
+    this.ridge = false,
+    this.motif = true,
   });
+
+  /// Sağ üst köşedeki silik baklava motifi (maskot duran kahramanda kapalı).
+  final bool motif;
 
   final Widget child;
   final SahneRole role;
+
+  /// Altta iki katmanlı alçak dağ silueti (vay 2A, yarış kahramanı).
+  final bool ridge;
 
   /// Alt kilim şeridi çizilsin mi.
   final bool kilim;
@@ -48,7 +56,10 @@ class SahneHeroSurface extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
+    // Vay 2A (2026-10-29): kahraman İKİ temada da doygun gündüz rengindedir.
+    // Gece belirteçleri (#8E2A45 → #43202F) koyu zeminde "kirli bordo"
+    // okunuyordu (Astra, yarış lobisi 6/10); kahraman bir sahne nesnesidir.
+    const vivid = SahneTokens.day;
     return ClipPath(
       clipper: const ShapeBorderClipper(shape: SahneShape.l),
       child: DecoratedBox(
@@ -57,24 +68,33 @@ class SahneHeroSurface extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              t.roleFill(role) ?? t.raceFill,
-              t.roleDeep(role) ?? t.raceDeep,
+              vivid.roleFill(role) ?? vivid.raceFill,
+              vivid.roleDeep(role) ?? vivid.raceDeep,
             ],
           ),
         ),
         child: Stack(
           children: [
+            if (ridge)
+              const Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: 56,
+                child: SahneTileRidge(layers: 2),
+              ),
             // Silik baklava motifi: beyaz %9, sağ üst köşeden taşar.
-            const PositionedDirectional(
-              end: -30,
-              top: -26,
-              child: ExcludeSemantics(
-                child: SizedBox.square(
-                  dimension: 150,
-                  child: CustomPaint(painter: _HeroMotifPainter()),
+            if (motif)
+              const PositionedDirectional(
+                end: -30,
+                top: -26,
+                child: ExcludeSemantics(
+                  child: SizedBox.square(
+                    dimension: 150,
+                    child: CustomPaint(painter: _HeroMotifPainter()),
+                  ),
                 ),
               ),
-            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -97,8 +117,13 @@ class SahneHeroSurface extends StatelessWidget {
 
 /// Yarış (Boyax) kahramanı: [SahneHeroSurface]'in yarış rolü.
 class SahneRaceHeroSurface extends SahneHeroSurface {
-  const SahneRaceHeroSurface({super.key, required super.child, super.kilimKey})
-    : super(role: SahneRole.race);
+  const SahneRaceHeroSurface({
+    super.key,
+    required super.child,
+    super.kilimKey,
+    super.ridge,
+    super.motif,
+  }) : super(role: SahneRole.race);
 }
 
 /// Boyax kahramanın köşesindeki silik iç içe baklava motifi.
@@ -543,14 +568,22 @@ class _SahneModeTileState extends State<SahneModeTile> {
 }
 
 extension on _SahneModeTileState {
+  /// Vay 2A (2026-10-29, Astra yarış lobisi denetimi): koyu temada kartlar
+  /// gece karartmasıyla soluk bordo/lacivert duruyordu ("kirli renkler");
+  /// alttaki kalın renkli gölge ikinci bir plaka gibiydi; köşedeki 104 px
+  /// silik ikon filigranı kalabalık yapıyordu. Artık: rolün DOYGUN gündüz
+  /// rengi İKİ temada da (oyun lobisi kartı bir sahne nesnesidir, temaya göre
+  /// kararmaz), 68 px kabartmalı ikon diski (VAY B2), altta alçak dağ silueti
+  /// (oyun dünyası hissi), filigran yok, gölge y=4 ve yumuşak.
   Widget _buildLobby(BuildContext context) {
+    const vivid = SahneTokens.day;
     final t = SahneTokens.of(context);
     final role = widget.role;
     final base = switch (role) {
-      SahneRole.social => t.nilFill,
-      SahneRole.learn => t.learnFill,
+      SahneRole.social => vivid.nilFill,
+      SahneRole.learn => vivid.learnFill,
       SahneRole.gold => t.zerBand,
-      _ => t.raceFill,
+      _ => vivid.raceFill,
     };
     final gold = role == SahneRole.gold;
     final ink = gold ? t.onZer : SahneVivid.onFill;
@@ -581,9 +614,11 @@ extension on _SahneModeTileState {
             opacity: enabled ? 1 : 0.55,
             child: SahneEmbossShell(
               // Basma ölçeği ([AnimatedScale]) zaten var; çökme eklenmez.
-              // Gölge kartın kendi renginden (gri plaka değil, renkli ışıma).
+              // Dış gölge YOK: renkli alt gölge kartın altında ikinci bir
+              // plaka gibi okunuyordu (Astra); derinliği iç ışık, alt iç
+              // koyulaşma ve dağ silueti verir.
               shape: SahneShape.l,
-              shadowColor: deepEnd.withValues(alpha: 0.38),
+              shadowColor: SahneVivid.shade.withValues(alpha: 0),
               child: Material(
                 type: MaterialType.transparency,
                 shape: SahneShape.l,
@@ -610,19 +645,12 @@ extension on _SahneModeTileState {
                         constraints: const BoxConstraints(minHeight: 148),
                         child: Stack(
                           children: [
-                            PositionedDirectional(
-                              end: -14,
-                              bottom: -18,
-                              child: IgnorePointer(
-                                child: Transform.rotate(
-                                  angle: -12 * math.pi / 180,
-                                  child: Icon(
-                                    widget.icon,
-                                    size: 104,
-                                    color: SahneVivid.watermarkNight,
-                                  ),
-                                ),
-                              ),
+                            const Positioned(
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                              height: 34,
+                              child: SahneTileRidge(),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(SahneSpace.x3),
@@ -631,24 +659,12 @@ extension on _SahneModeTileState {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      DecoratedBox(
-                                        decoration: const ShapeDecoration(
-                                          color: SahneVivid.glass,
-                                          shape: CircleBorder(
-                                            side: BorderSide(
-                                              color: SahneVivid.hairline,
-                                            ),
-                                          ),
-                                        ),
-                                        child: SizedBox.square(
-                                          dimension: 52,
-                                          child: Icon(
-                                            widget.icon,
-                                            size: 30,
-                                            color: ink,
-                                          ),
-                                        ),
+                                      SahneIconDisc(
+                                        icon: widget.icon,
+                                        color: ink,
                                       ),
                                       const Spacer(),
                                       if (widget.loading)
