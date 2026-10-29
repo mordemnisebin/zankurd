@@ -3759,6 +3759,10 @@ class _QuizScreenState extends State<QuizScreen>
     if (!_usesServerHiddenAnswers &&
         _wildcard.doubleAnswerActivated &&
         _firstAttemptAnswer.isEmpty &&
+        // Süre dolumu bir "yanlış deneme" değildir: sayaç sıfırda yeniden
+        // başlatılamaz, soru cevaplanmış sayılmadan açık kalıyordu (Codex
+        // denetimi 2026-10-29). Doğrudan kesinleşir.
+        answer != 'TIMEOUT' &&
         !question.acceptsAnswer(answer)) {
       AppHaptics.heavy();
       setState(() => _firstAttemptAnswer = answer);

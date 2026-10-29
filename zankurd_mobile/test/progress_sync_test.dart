@@ -212,6 +212,40 @@ void main() {
     });
   });
 
+  // Codex denetimi 2026-10-29 (hata #12): sunucudan gelen başka bir hikâyenin
+  // ilerlemesi ortak meta kaydını yalnız `at`/`done` ile yeniden yazıyor,
+  // değişmeyen hikâyelerin seçim yollarını (`path`) siliyordu.
+  group('hikâye yolu', () {
+    test(
+      'başka hikâyenin güncellenmesi değişmeyen hikâyenin yolunu silmez',
+      () async {
+        SharedPreferences.setMockInitialValues({
+          'zankurd.scope.user-a.zankurd.story.s1': 'n4',
+          'zankurd.scope.user-a.zankurd.storyMeta.v1':
+              '{"at":{"s1":5},"done":[],"path":{"s1":[0,1],"s2":[1]}}',
+          'zankurd.scope.user-a.zankurd.story.s2': 'm1',
+        });
+        final prefs = await SharedPreferences.getInstance();
+        final current = LocalProgressSnapshot.read(prefs);
+        final next = ProgressSnapshot(
+          story: {...current.story, 's2': 'm9'},
+          storyUpdatedAt: {...current.storyUpdatedAt, 's2': 99},
+        );
+        expect(await LocalProgressSnapshot.write(prefs, next), isTrue);
+        final meta = prefs.getString(
+          'zankurd.scope.user-a.zankurd.storyMeta.v1',
+        )!;
+        expect(meta, contains('"s1":[0,1]'));
+        expect(
+          meta,
+          isNot(contains('"s2"]')),
+          reason: 'uzaktan gelen düğümün yolu bilinmez',
+        );
+        expect(meta.contains('"s2":[1]'), isFalse);
+      },
+    );
+  });
+
   group('ProgressSyncService', () {
     Future<ProgressSyncService> bind(
       _FakeRemote remote, {

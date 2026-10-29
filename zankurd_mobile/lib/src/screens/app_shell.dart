@@ -991,6 +991,7 @@ class _AppShellState extends State<AppShell>
         repository: _repository,
         refreshSignal: _leaderboardRefresh,
         isVisible: () => _tab == 2,
+        onOpenPlay: () => _selectTab(1),
       ),
       3 => ProfileScreen(
         repository: _repository,

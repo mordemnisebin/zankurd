@@ -30,9 +30,10 @@ class _FakeTts implements LessonListeningSpeaker {
   final ValueNotifier<bool> speakingListenable = ValueNotifier(false);
 
   @override
-  Future<void> speak(String text, {bool slow = false}) async {
+  Future<bool> speak(String text, {bool slow = false}) async {
     spoken.add(text);
     slows.add(slow);
+    return true;
   }
 
   @override
@@ -157,7 +158,7 @@ void main() {
       fallback: tts,
     );
 
-    await speaker.speak('Rojbaş');
+    expect(await speaker.speak('Rojbaş'), isTrue);
     expect(tts.spoken, ['Rojbaş']);
   });
 
@@ -169,7 +170,8 @@ void main() {
       fallback: tts,
     );
 
-    await speaker.speak('Rojbaş');
+    // Ses BAŞLAMADI: çağıran (dinleme kartı) bunu "dinlendi" saymasın.
+    expect(await speaker.speak('Rojbaş'), isFalse);
     expect(tts.spoken, isEmpty);
   });
 }

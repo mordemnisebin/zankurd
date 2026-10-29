@@ -14,8 +14,29 @@ List<QuizQuestion> selectDailyQuestionsForGoal({
   required List<QuizQuestion> candidates,
   required LearningGoal? goal,
   required int limit,
+  int? maxDifficulty,
 }) {
   if (limit <= 0 || candidates.isEmpty) return const [];
+
+  // İlk oturum (sıfırdan başlayan kullanıcı): zorluk üst sınırı. Seçim bütün
+  // zorluklardan yapıldığından ilk soruda ileri bilgiyle karşılaşılabiliyordu
+  // (Codex denetimi 2026-10-29). Sınırı aşanlar yalnız yeterli kolay soru
+  // yoksa, KOLAYDAN ZORA sıralı olarak turu doldurur.
+  if (maxDifficulty != null) {
+    final easy = candidates
+        .where((question) => question.difficulty <= maxDifficulty)
+        .toList(growable: false);
+    final hard =
+        candidates
+            .where((question) => question.difficulty > maxDifficulty)
+            .toList()
+          ..sort((a, b) => a.difficulty.compareTo(b.difficulty));
+    return selectDailyQuestionsForGoal(
+      candidates: [...easy, ...hard],
+      goal: goal,
+      limit: limit,
+    );
+  }
 
   // Öğrenme yolunun kaynağı doğrulanmış içerikten oluşsun. İlk sürümlerde
   // metadata taşımayan eski bankalar bulunduğu için onaylı havuz günlük

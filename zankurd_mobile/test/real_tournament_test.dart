@@ -299,6 +299,118 @@ void main() {
     );
   });
 
+  // Codex denetimi 2026-10-29 (hata #6): yarı finalini erken kazanan oyuncunun
+  // `_userMatch`i boşalıyordu ve periyodik yenileme sorgu yapmıyordu; diğer
+  // yarı final bitip final kurulsa da ekran eski kalıyordu.
+  testWidgets('yarı finalini kazanan oyuncuya final kendiliğinden gelir', (
+    tester,
+  ) async {
+    const won = TournamentMatch(
+      id: 'm1',
+      playerOneId: 'me',
+      playerOneName: 'Ben',
+      playerTwoId: 'p2',
+      playerTwoName: 'Rojda',
+      playerOneScore: 640,
+      playerTwoScore: 300,
+      status: 'completed',
+      winnerId: 'me',
+    );
+    const otherPending = TournamentMatch(
+      id: 'm2',
+      playerOneId: 'p3',
+      playerOneName: 'Bergen',
+      playerTwoId: 'p4',
+      playerTwoName: 'Berfîn',
+      playerOneScore: 0,
+      playerTwoScore: 0,
+      status: 'pending',
+      winnerId: '',
+    );
+    final repository = _RealTournamentRepository(
+      _bracketWith(const [won, otherPending]).copyWith(entryCount: 4, size: 4),
+    );
+    await tester.binding.setSurfaceSize(const Size(400, 2400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      testShell(child: TournamentScreen(repository: repository)),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.text('Zeynep'), findsNothing);
+
+    repository.bracket = _bracketWith(
+      const [
+        won,
+        TournamentMatch(
+          id: 'm2',
+          playerOneId: 'p3',
+          playerOneName: 'Bergen',
+          playerTwoId: 'p4',
+          playerTwoName: 'Berfîn',
+          playerOneScore: 500,
+          playerTwoScore: 100,
+          status: 'completed',
+          winnerId: 'p3',
+        ),
+      ],
+      secondRound: const [
+        TournamentMatch(
+          id: 'm3',
+          playerOneId: 'me',
+          playerOneName: 'Ben',
+          playerTwoId: 'p3',
+          playerTwoName: 'Zeynep',
+          playerOneScore: 0,
+          playerTwoScore: 0,
+          status: 'pending',
+          winnerId: '',
+        ),
+      ],
+      currentRound: 1,
+    ).copyWith(entryCount: 4, size: 4);
+    await tester.pump(const Duration(seconds: 16));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.textContaining('Zeynep'), findsWidgets);
+  });
+
+  // Codex denetimi 2026-10-29 (hata #11): 0 puanla bitirilen maçın "gönderildi"
+  // bilgisi yalnız bellekteydi; ekran yeniden açılınca "Başlat" geri geliyordu.
+  testWidgets('0 puanla gönderilmiş maç yeniden açılınca tekrar oynanmaz', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.navTour.seen': true,
+      'zankurd.tournament.submittedMatches': ['m1'],
+    });
+    final repository = _RealTournamentRepository(
+      _bracketWith(const [
+        TournamentMatch(
+          id: 'm1',
+          playerOneId: 'me',
+          playerOneName: 'Ben',
+          playerTwoId: 'p2',
+          playerTwoName: 'Rojda',
+          playerOneScore: 0,
+          playerTwoScore: 0,
+          status: 'pending',
+          winnerId: '',
+        ),
+      ]),
+    );
+    await tester.pumpWidget(
+      testShell(child: TournamentScreen(repository: repository)),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(
+      find.byKey(const ValueKey('tournament-awaiting-opponent')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('tournament-primary-cta')), findsNothing);
+  });
+
   testWidgets('sunucu yoksa ekran bot benzetimine düşer', (tester) async {
     // Karşı taraf: migration uygulanmamış ya da cihaz çevrimdışıyken
     // turnuva ekranı boş kalmamalı. Sahte depo `null` döndürür.

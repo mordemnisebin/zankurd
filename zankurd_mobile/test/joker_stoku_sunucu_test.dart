@@ -25,8 +25,13 @@ class _Repo extends MockZanKurdRepository {
   @override
   Future<int?> loadJokerStock() async => server;
 
+  bool rejectConsume = false;
+
   @override
-  Future<void> consumeJokerStock() async => serverUses++;
+  Future<bool> consumeJokerStock() async {
+    serverUses++;
+    return !rejectConsume;
+  }
 }
 
 void main() {
@@ -53,4 +58,19 @@ void main() {
     expect(await JokerStockStore.consumeWith(repo), isFalse);
     expect(repo.serverUses, 1, reason: 'hak yoksa sunucuya gidilmez');
   });
+
+  // Codex denetimi 2026-10-29 (hata #11): iki cihaz son hakkı birlikte
+  // yüklediğinde ikinci tüketim sunucuda -1 ile reddediliyor; repository
+  // cevabı atıyor, yerel önbellek de hak varmış gibi kalıyordu.
+  test(
+    'sunucu reddederse sonuç false olur, yerel stok hesapla eşitlenir',
+    () async {
+      final repo = _Repo()
+        ..server = 0
+        ..rejectConsume = true;
+      await JokerStockStore.add(1);
+      expect(await JokerStockStore.consumeWith(repo), isFalse);
+      expect(await JokerStockStore.count(), 0);
+    },
+  );
 }

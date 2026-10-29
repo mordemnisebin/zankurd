@@ -38,6 +38,7 @@ void main() {
   Future<void> pumpQuiz(
     WidgetTester tester, {
     List<QuizQuestion> questions = const [q1, q2],
+    bool enableTimer = false,
   }) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -58,11 +59,17 @@ void main() {
           repository: repository,
           room: repository.createRoom(),
           questions: questions,
-          enableTimer: false,
+          enableTimer: enableTimer,
         ),
       ),
     );
-    await tester.pumpAndSettle();
+    if (enableTimer) {
+      // Sayaç akarken pumpAndSettle süreyi sonuna kadar götürürdü.
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 600));
+    } else {
+      await tester.pumpAndSettle();
+    }
   }
 
   /// İlerleme düğmesinin eylemi; düğme hiç yoksa (cevaptan önce jokerler)
@@ -125,6 +132,26 @@ void main() {
       expect(find.text(q2.prompt), findsOneWidget);
     },
   );
+
+  // Codex denetimi 2026-10-29 (hata #8): Çift Cevap açıkken ilk cevap
+  // TIMEOUT olursa "yanlış ilk deneme" dalına giriliyor, sıfırdaki sayaç
+  // yeniden başlatılamıyor ve soru cevaplanmış sayılmadan açık kalıyordu.
+  testWidgets('çift cevap açıkken süre dolarsa soru kesinleşir, takılmaz', (
+    tester,
+  ) async {
+    await pumpQuiz(tester, enableTimer: true);
+    await tester.tap(
+      find.byWidgetPredicate(
+        (w) => w is WildcardButton && w.type == WildcardType.doubleAnswer,
+      ),
+    );
+    await tester.pump();
+    for (var i = 0; i < 60; i++) {
+      await tester.pump(const Duration(seconds: 1));
+    }
+    await tester.pumpAndSettle();
+    expect(nextButtonCallback(tester), isNotNull);
+  });
 
   testWidgets('10 ardışık soruda her reveal sonrası Piştre ilerler', (
     tester,

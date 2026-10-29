@@ -36,6 +36,30 @@ void main() {
     expect(find.text('T'), findsNothing);
   });
 
+  // Codex denetimi 2026-10-29 (performans #7): avatar sağlayıcısında çözme
+  // boyutu sınırı yoktu; büyük kaynak fotoğraf küçük çizilse de tam
+  // çözünürlükte belleğe açılıyordu.
+  testWidgets('avatar fotoğrafı çizilen boyuta göre küçültülerek çözülür', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      shell(
+        PlayerAvatar(
+          radius: 30,
+          photoUrl: 'https://example.com/a.jpg',
+          displayName: 'Test',
+          imageProviderFactory: (_) => MemoryImage(_tinyPng),
+        ),
+      ),
+    );
+    await tester.pump();
+    final image = tester.widget<Image>(find.byType(Image));
+    expect(image.image, isA<ResizeImage>());
+    final resize = image.image as ResizeImage;
+    expect(resize.width, isNotNull);
+    expect(resize.width!, lessThanOrEqualTo(512));
+  });
+
   testWidgets('photoUrl yok, iconId varsa Icon gösterilir', (tester) async {
     await tester.pumpWidget(
       shell(

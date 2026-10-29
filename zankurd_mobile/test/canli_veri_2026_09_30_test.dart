@@ -38,6 +38,7 @@ import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/suggest_question_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/arena_kit.dart';
@@ -83,12 +84,18 @@ class _BoardRepo extends MockZanKurdRepository {
   ) async => periodRank;
 }
 
-Future<void> _pumpBoard(WidgetTester tester, MockZanKurdRepository repo) async {
+Future<void> _pumpBoard(
+  WidgetTester tester,
+  MockZanKurdRepository repo, {
+  VoidCallback? onOpenPlay,
+}) async {
   await tester.binding.setSurfaceSize(const Size(390, 844));
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(
     testShell(
-      child: Scaffold(body: LeaderboardScreen(repository: repo)),
+      child: Scaffold(
+        body: LeaderboardScreen(repository: repo, onOpenPlay: onOpenPlay),
+      ),
     ),
   );
   await tester.pumpAndSettle();
@@ -156,6 +163,23 @@ void main() {
       expect(find.text('Henüz puan yok'), findsOneWidget);
       expect(find.text('Yarışa başla'), findsOneWidget);
       expect(find.textContaining('0 oda'), findsNothing);
+    });
+
+    // Codex denetimi 2026-10-29 (ürün #5): boş sıralamanın düğmesi puan
+    // getirmeyen yerel quiz açıyordu; sıralama yalnız çevrimiçi odaları sayar.
+    testWidgets('boş sıralamada "Yarışa başla" Oyna sekmesine yönlendirir', (
+      tester,
+    ) async {
+      var opened = 0;
+      await _pumpBoard(
+        tester,
+        _BoardRepo([_entry(1, 'user', 'Ben', 0, rooms: 1)]),
+        onOpenPlay: () => opened++,
+      );
+      await tester.tap(find.text('Yarışa başla'));
+      await tester.pump();
+      expect(opened, 1);
+      expect(find.byType(QuizScreen), findsNothing);
     });
 
     // 2026-10-28, kurul K18: sıralama satırının ikinci satırı ("7 yarış · 2

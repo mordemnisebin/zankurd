@@ -583,6 +583,7 @@ class _RecordImage extends StatelessWidget {
           child: url.startsWith('asset://')
               ? Image.asset(
                   url.replaceFirst('asset://', ''),
+                  cacheWidth: 720, // uzak görselle aynı çözme sınırı
                   fit: BoxFit.cover,
                   errorBuilder: (_, _, _) => const SizedBox(),
                 )

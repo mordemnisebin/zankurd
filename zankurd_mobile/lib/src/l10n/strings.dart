@@ -4125,16 +4125,16 @@ class Tr {
     // ── Vay katmanı 2B (2026-10-29) — KU jüri bekliyor ────────────────
     K.storyYourReply: {'ku': 'Tu çi dibêjî?', 'tr': 'Ne diyeceksin?'},
     K.wordsReviewStart: {
-      'ku': 'Dubarekirinê dest pê bike',
+      'ku': 'Dest bi dubarekirinê bike',
       'tr': 'Tekrara başla',
     },
     K.wordsPracticeStart: {
-      'ku': 'Bi hemû peyvan bixebite',
+      'ku': 'Li ser hemû peyvan bixebite',
       'tr': 'Tüm kelimelerle çalış',
     },
     K.wordsStageNew: {'ku': 'Nû', 'tr': 'Yeni'},
     K.wordsStageGrowing: {'ku': 'Xurt dibe', 'tr': 'Pekişiyor'},
-    K.wordsStageLearned: {'ku': 'Hîn bûye', 'tr': 'Öğrenildi'},
+    K.wordsStageLearned: {'ku': 'Hînbûyî', 'tr': 'Öğrenildi'},
     K.lbYourRank: {'ku': 'Rêza te: {n}', 'tr': '{n}. sıradasın'},
     K.lbTopOfBoard: {'ku': 'Tu li serî yî!', 'tr': 'Zirvedesin!'},
     K.lbGapToNext: {

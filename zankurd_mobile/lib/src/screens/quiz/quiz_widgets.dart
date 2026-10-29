@@ -116,6 +116,8 @@ class _QuestionImage extends StatelessWidget {
           )
         : Image.asset(
             assetPath,
+            // Uzak görselle aynı çözme sınırı (Codex denetimi 2026-10-29).
+            cacheWidth: _questionImageMemCacheWidth,
             fit: BoxFit.contain,
             frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
               if (wasSynchronouslyLoaded || frame != null) _notifyReady();

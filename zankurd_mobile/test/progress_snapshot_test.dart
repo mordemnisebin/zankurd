@@ -352,6 +352,31 @@ void main() {
       }
     });
 
+    // Codex denetimi 2026-10-29 (hata #5): ilk doğru tekrar vadeyi İLERİ
+    // taşır; "erken vade kazanır" kuralı eski sunucu kaydını seçip bu
+    // ilerlemeyi siliyordu.
+    test('aynı yanlışta ilk başarılı tekrar eski erken vadeye yenilmez', () {
+      final reviewed = SnapshotMistakes(
+        ids: {'q'},
+        meta: {
+          'q': {...meta(9000, reps: 1), 'missCount': 1, 'correctSessions': 1},
+        },
+      );
+      final stale = SnapshotMistakes(
+        ids: {'q'},
+        meta: {
+          'q': {...meta(1000), 'missCount': 1, 'correctSessions': 0},
+        },
+      );
+      for (final m in [
+        SnapshotMistakes.merge(reviewed, stale),
+        SnapshotMistakes.merge(stale, reviewed),
+      ]) {
+        expect(m.meta['q']!['correctSessions'], 1);
+        expect(m.meta['q']!['nextReview'], 9000);
+      }
+    });
+
     test('ustalaşmadan sonraki yeni yanlış kaybolmaz (simetrik)', () {
       final graduated = SnapshotMistakes(
         meta: {

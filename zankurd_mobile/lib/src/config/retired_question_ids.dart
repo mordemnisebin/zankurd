@@ -808,6 +808,13 @@ const Set<String> retiredQuestionIds = <String>{
   // yeni Kurmancî metin ister. Emekli.
   // ---------------------------------------------------------------------
   'visual_2026_08_07_0016', // def görseli okunaksız, soru görsele bağlı
+  // ---------------------------------------------------------------------
+  // 2026-10-29 (Codex denetimi): aynı olgu — Mitanni'nin başkenti Waşûkanî —
+  // iki aktif kayıtla soruluyordu (aynı Türkçe soru metni, aynı doğru cevap,
+  // aynı kaynak); ilki ikincisinin cevabını öğretiyordu. Kalan: hat_0084.
+  // Sunucu karşılığı: supabase/2026-10-29_codex_denetim_duzeltmeleri.sql.
+  // ---------------------------------------------------------------------
+  'hat_0094', // Mitanni başkenti (hat_0084)
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

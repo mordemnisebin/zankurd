@@ -356,6 +356,7 @@ class _LetterTilesState extends State<_LetterTiles> {
       unawaited(
         speaker.speak(word).catchError((Object error, StackTrace stack) {
           ErrorReporter.record(error, stack, reason: 'alphabet letter speak');
+          return false;
         }),
       );
     }

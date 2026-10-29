@@ -13,6 +13,7 @@ import '../../services/guest_save_prompt.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/player_identity.dart';
+import '../../data/daily_mission_store.dart';
 import '../../data/streak_store.dart';
 import '../../utils/error_reporter.dart';
 import '../../widgets/player_avatar.dart';
@@ -517,8 +518,36 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     _beginQuestion();
   }
 
+  /// Bu yarış günlük görevlere bir kez işlendi mi.
+  bool _missionReported = false;
+
+  /// Sırayla düello ve sunucu puanlı kupa maçı BİTTİĞİNDE günlük görevleri
+  /// ilerletir. Eskiden yalnız normal quiz sonuç akışı çağırıyordu: yarış
+  /// tamamlayan kullanıcı "yarış tamamla" ve "doğru cevap" görevlerini
+  /// ilerletemiyordu (Codex denetimi 2026-10-29). XP burada verilmez: ödül
+  /// ana ekranda "Ödülü al" ile tek kez yazılır.
+  Future<void> _reportMissionProgress() async {
+    if (_missionReported) return;
+    _missionReported = true;
+    try {
+      final store = await DailyMissionStore.load();
+      await store.reportQuizCompleted(
+        correctAnswers: _results
+            .where((r) => r == SahneDiamondState.correct)
+            .length,
+        category: _questions.isEmpty
+            ? (widget.category ?? '')
+            : _questions.first.category,
+        streakAlive: true,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'async_duel_mission_report');
+    }
+  }
+
   void _goToResult(AsyncDuelResult? result) {
     unawaited(StreakStore.recordActivity());
+    unawaited(_reportMissionProgress());
     if (_isTournament) {
       _popToTournament();
       return;
@@ -546,15 +575,18 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   Future<void> _confirmExit() async {
     if (_exitInFlight) return;
     // Diyalog açıkken soru sayacı DURUR (2026-10-21): "Yarıştan çık?" sorusunu
-    // düşünen oyuncunun süresi akıp soruyu yakıyordu (19 → 7). Duvar saati
-    // (`_stopwatch`) da durur ki sunucuya giden `responseMs` ile ekrandaki
-    // sayaç ayrışmasın; cevap süresini sunucu yeniden hesaplamaz, istemci
-    // bildirir.
+    // düşünen oyuncunun süresi akıp soruyu yakıyordu (19 → 7). 2026-10-29:
+    // sunucu saati durmadığı için yalnız görsel sayaç durur (aşağıya bkz.).
     final pauseForDialog =
         _phase == _Phase.idle && _timerController.isAnimating;
+    // Yalnız GÖRSEL sayaç durur; duvar saati (`_stopwatch`) işlemeye devam
+    // eder. Süreyi sunucu sunum anından ölçer ve diyalog sırasında akar:
+    // kronometre durdurulunca dönüşte ekranda süre varmış gibi görünüp
+    // 25 sn'yi aşmış doğru cevap yanlış sayılıyordu (Codex denetimi
+    // 2026-10-29). Dönüşte `_reconcileTimerAfterResume` sayacı eşitler,
+    // süre dolmuşsa zaman aşımını işler.
     if (pauseForDialog) {
       _timerController.pause();
-      _stopwatch.stop();
     }
     final quit = await showDialog<bool>(
       context: context,
@@ -587,8 +619,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           mounted &&
           _phase == _Phase.idle &&
           !_exitInFlight) {
-        _stopwatch.start();
-        _timerController.resume();
+        _reconcileTimerAfterResume();
       }
       return;
     }

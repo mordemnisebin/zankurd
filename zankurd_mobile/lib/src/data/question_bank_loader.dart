@@ -57,19 +57,52 @@ class QuestionBankLoader {
     }
   }
 
+  /// Başarıyla yüklenmiş paketler (yol → sorular). Yeniden denemede yalnız
+  /// başarısız paketler tekrar okunur; başarılılar korunur.
+  final Map<String, List<QuizQuestion>> _bankCache = {};
+
+  /// Havadaki yükleme: açılıştaki 8 sn'lik sınır beklemeyi bırakınca alttaki
+  /// iş sürer; ikinci `load()` onu paylaşır, aynı paketleri iki kez okumaz.
+  Future<void>? _inFlight;
+
+  /// Soru listesi değiştikçe artar. Geç tamamlanan (açılış sınırını aşan) ya
+  /// da yeniden denenen yükleme sonrası içerik gösteren ekranlar buna
+  /// kulak verip kendini yenileyebilir (Codex denetimi 2026-10-29).
+  final ValueNotifier<int> revision = ValueNotifier<int>(0);
+
   /// JSON asset'leri okur ve parse eder. Uygulama başlangıcında bir kez
   /// çağrılmalıdır (ör. `main()` içinde ya da `AppShell.initState()`).
-  Future<void> load() async {
-    if (_loaded) return;
+  ///
+  /// Bir paket okunamadıysa (`failedAssets` dolu) sonraki çağrı yalnız o
+  /// paketleri yeniden dener; eskiden `_loaded` bayrağı kısmi hatada bile
+  /// kalıcı açıldığından "Tekrar dene" hiçbir şey yapmıyordu.
+  Future<void> load() {
+    if (_loaded && _failedAssets.isEmpty) return Future<void>.value();
+    return _inFlight ??= _loadMissing().whenComplete(() => _inFlight = null);
+  }
 
+  Future<void> _loadMissing() async {
     // Hangi bankaların yükleneceği ve hangi sırayla — hepsi
     // `questionBankAssets` içinde, tek yerde. Cümle kurma, topluluk
     // katkısı ve editoryal sorular ayrı asset'lerde tutulur ki kaynakları
     // ve inceleme akışları üretilmiş bankadan bağımsız yürüsün.
-    final banks = await Future.wait(questionBankAssets.map(_loadJson));
+    final missing = [
+      for (final asset in questionBankAssets)
+        if (!_bankCache.containsKey(asset)) asset,
+    ];
+    _failedAssets.clear();
+    final loaded = await Future.wait(missing.map(_loadJson));
+    for (var i = 0; i < missing.length; i++) {
+      final bank = loaded[i];
+      if (bank != null) _bankCache[missing[i]] = bank;
+    }
 
-    _questions = [...curatedQuestionBank, for (final bank in banks) ...bank];
+    _questions = [
+      ...curatedQuestionBank,
+      for (final asset in questionBankAssets) ...?_bankCache[asset],
+    ];
     _loaded = true;
+    revision.value++;
   }
 
   /// Test ortamı için soruları manuel olarak yükleme imkanı tanır.
@@ -78,10 +111,15 @@ class QuestionBankLoader {
     _loaded = true;
   }
 
-  /// Tek bir JSON asset dosyasını yükler ve `List<QuizQuestion>` döndürür.
-  Future<List<QuizQuestion>> _loadJson(String assetPath) async {
+  /// Tek bir JSON asset dosyasını yükler ve `List<QuizQuestion>` döndürür;
+  /// okunamazsa `null` (çağıran önbelleğe yazmaz, bir sonraki deneme yeniden
+  /// okur).
+  Future<List<QuizQuestion>?> _loadJson(String assetPath) async {
     try {
-      final raw = await rootBundle.loadString(assetPath);
+      // `cache: false`: ham metin (≈1,4 MB) çözüldükten sonra bellekte
+      // tutulmaz ve yeniden denemede bozuk bir okuma önbellekten
+      // dönmez.
+      final raw = await rootBundle.loadString(assetPath, cache: false);
       // JSON çözme ARKA İSOLATE'te.
       //
       // Dört asset toplam ~1,4 MB ve en büyüğü tek başına 1,1 MB
@@ -107,9 +145,9 @@ class QuestionBankLoader {
         reason: 'question_bank_load',
       );
       debugPrint('[QuestionBank] Could not load $assetPath');
-      // Asset bulunamazsa veya parse hatası olursa boş liste döndür
+      // Asset bulunamazsa veya parse hatası olursa bu paket atlanır
       // (uygulama curated + diğer banka ile devam eder).
-      return const [];
+      return null;
     }
   }
 

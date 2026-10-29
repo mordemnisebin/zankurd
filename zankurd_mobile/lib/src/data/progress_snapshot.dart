@@ -671,6 +671,15 @@ class SnapshotMistakes {
           meta[key] = missA > missB ? ma : mb;
         } else if (gradA != gradB) {
           meta[key] = gradA ? ma : mb;
+        } else if (_int(ma['correctSessions']) != _int(mb['correctSessions'])) {
+          // Aynı yanlış döngüsünde başarılı tekrar ilerlemesi eski, daha
+          // erken vadeli kayıtla silinmez (Codex denetimi 2026-10-29): ilk
+          // doğru tekrar vadeyi ileri taşır ama sunucudaki eski kaydın
+          // vadesi daha erkendir; "erken vade kazanır" kuralı ilerlemeyi
+          // geri alıp soruyu tekrar kuyruğuna çağırıyordu.
+          meta[key] = _int(ma['correctSessions']) > _int(mb['correctSessions'])
+              ? ma
+              : mb;
         } else if (da != db) {
           meta[key] = da < db ? ma : mb;
         } else {

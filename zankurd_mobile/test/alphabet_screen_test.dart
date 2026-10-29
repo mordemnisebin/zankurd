@@ -29,9 +29,10 @@ class _FakeSpeaker implements LessonListeningSpeaker {
   ValueListenable<bool> get speakingListenable => ValueNotifier(false);
 
   @override
-  Future<void> speak(String text, {bool slow = false}) async {
+  Future<bool> speak(String text, {bool slow = false}) async {
     spoken.add(text);
     slows.add(slow);
+    return true;
   }
 
   @override

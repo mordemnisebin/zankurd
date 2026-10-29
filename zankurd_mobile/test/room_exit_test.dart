@@ -29,6 +29,8 @@ class _RoomExitRepository extends MockZanKurdRepository {
   int questionLoadCalls = 0;
   bool failSubscriptionCancel = false;
   Completer<void>? pendingLeave;
+  Completer<void>? questionGate;
+  Completer<void>? statusGate;
 
   @override
   String? get currentUserId => 'guest-user';
@@ -108,6 +110,8 @@ class _RoomExitRepository extends MockZanKurdRepository {
   @override
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async {
     questionLoadCalls++;
+    final gate = questionGate;
+    if (gate != null) await gate.future;
     if (failQuestionLoad) throw StateError('question fetch failed');
     return super.loadRoomQuestions(room);
   }
@@ -115,6 +119,8 @@ class _RoomExitRepository extends MockZanKurdRepository {
   @override
   Future<RoomStatus> loadRoomStatus(GameRoom room) async {
     statusPollCount++;
+    final gate = statusGate;
+    if (gate != null) await gate.future;
     return room.status;
   }
 
@@ -410,6 +416,55 @@ void main() {
     // launcher'a geri atmaktır.
     expect(find.byKey(const ValueKey('open-room')), findsNothing);
     expect(find.text('Ev sahibi ayrıldığı için oda kapandı.'), findsNothing);
+  });
+
+  // Codex denetimi 2026-10-29 (hata #9): çıkış sürerken soru yüklemesi
+  // dönerse quiz açılıyor, çıkışın `pop()`u lobiyi değil quiz'i kapatıyordu.
+  testWidgets('çıkış sürerken dönen soru yüklemesi quiz açmaz', (tester) async {
+    final repository = _RoomExitRepository();
+    addTearDown(repository.close);
+    SharedPreferences.setMockInitialValues({});
+    final gate = Completer<void>();
+    final pending = Completer<void>();
+    repository.questionGate = gate;
+    await _openRoom(tester, repository, repository.onlineLobby());
+
+    repository.emitStatus(RoomStatus.active);
+    await tester.pump();
+    repository.pendingLeave = pending;
+    await tester.binding.handlePopRoute();
+    await tester.pump();
+    expect(repository.leaveCalls, 1);
+
+    gate.complete();
+    await _pumpRouteTransition(tester);
+    expect(find.byType(QuizScreen), findsNothing);
+
+    pending.complete();
+    await _pumpRouteTransition(tester);
+    expect(find.byType(RoomScreen), findsNothing);
+    expect(find.byKey(const ValueKey('open-room')), findsOneWidget);
+  });
+
+  // Codex denetimi 2026-10-29 (performans #6): yavaş ağda yoklama zamanlayıcısı
+  // önceki yanıt gelmeden yeni istek başlatıp istekleri üst üste bindiriyordu.
+  testWidgets('yavaş ağda durum yoklaması üst üste binmez', (tester) async {
+    final repository = _RoomExitRepository();
+    addTearDown(repository.close);
+    final gate = Completer<void>();
+    repository.statusGate = gate;
+    await _openRoom(tester, repository, repository.onlineLobby());
+
+    for (var i = 0; i < 4; i++) {
+      await tester.pump(const Duration(seconds: 3));
+    }
+    expect(repository.statusPollCount, 1);
+
+    gate.complete();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 3));
+    expect(repository.statusPollCount, greaterThan(1));
+    await tester.pumpWidget(const SizedBox());
   });
 
   testWidgets('question load failure resumes lobby status monitoring', (

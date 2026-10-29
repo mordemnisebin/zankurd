@@ -2,6 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../utils/error_reporter.dart';
 import 'durable_write.dart';
+import 'local_progress_scope.dart';
 import 'sync_manager.dart';
 import 'xp_store.dart';
 import 'zankurd_repository.dart';
@@ -21,10 +22,15 @@ class XpAwardPublisher {
   }) async {
     final room = roomId?.trim() ?? '';
     if (room.isEmpty) return;
+    // Sahip, istek BAŞLARKEN yakalanır: yanıt gecikip hesap değişirse A'nın
+    // toplamı B'nin (o an etkin) XP anahtarına yazılmasın.
+    final owner = LocalProgressScope.activeUserId;
     try {
       final total = await repository.awardRoomXp(room);
       if (!repository.xpAwardIsServerTotal) return;
+      if (LocalProgressScope.activeUserId != owner) return;
       final store = await XPStore.load();
+      if (LocalProgressScope.activeUserId != owner) return;
       await store.applyServerTotal(total);
     } on RetryableWriteException catch (error, stack) {
       await _queue(roomId: room, error: error.cause, stack: stack);

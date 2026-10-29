@@ -6,6 +6,8 @@
 // 2026-09-29 doğallık (G3): fiyat etiketi "120j" değil "120" (birimi jeton
 // glifi söyler, K10); ürün adları cümle düzeninde ("Neon çerçeve"). Bu
 // beklentiler yalnız eski yazımı sabitliyordu; davranış aynı.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
@@ -115,6 +117,16 @@ class _OfflineSpendShopRepository extends _ShopRepository {
   ) async => throw const RetryableWriteException('network down');
 }
 
+class _SlowChargeRepository extends _FailingEffectShopRepository {
+  final gate = Completer<void>();
+
+  @override
+  Future<bool> spendCoins(int amount, String reason) async {
+    await gate.future;
+    return super.spendCoins(amount, reason);
+  }
+}
+
 class _SpinWheelShopRepository extends _ShopRepository {
   _SpinWheelShopRepository() : super(coins: 0);
 
@@ -179,7 +191,43 @@ void main() {
   // Neon/altın çerçeve satın alma `loadAvatarIdentity`/`updateAvatarIdentity`
   // üzerinden `SharedPreferences`e dokunur; mock'lanmazsa platform kanalı
   // hiç yanıt vermediği için widget testi sonsuza kadar asılı kalır.
-  setUp(() => SharedPreferences.setMockInitialValues({}));
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+    StreakStore.resetInstance();
+  });
+
+  // Codex denetimi 2026-10-29 (hata #2): tahsilat beklenirken ekrandan
+  // çıkılırsa `!mounted` erken dönüşü ürün etkisini atlıyor, jeton gidip
+  // çerçeve gelmiyordu. Etki artık ekrandan bağımsız uygulanır.
+  testWidgets('tahsilat beklenirken ekrandan çıkılsa da çerçeve uygulanır', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _SlowChargeRepository()..failEffect = false;
+    final visible = ValueNotifier<bool>(true);
+    await tester.pumpWidget(
+      _shell(
+        ValueListenableBuilder<bool>(
+          valueListenable: visible,
+          builder: (_, show, _) =>
+              show ? ShopScreen(repository: repository) : const Scaffold(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Neon çerçeve'));
+    await tester.tap(find.text('Neon çerçeve'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Satın al'));
+    await tester.pump();
+    visible.value = false;
+    await tester.pump();
+    repository.gate.complete();
+    await tester.pumpAndSettle();
+    expect(repository.spendReasons, ['purchase_avatar_frame_neon']);
+    expect(repository.identity.frameId, 'neon');
+  });
 
   test('mağaza kozmetik etkileri profil kimliğine uygulanır', () {
     const identity = AvatarIdentity(iconId: 'roj', colorHex: '#E94560');
@@ -1043,6 +1091,89 @@ void main() {
 
     expect((await StreakStore.load()).freezeCount, 1);
   });
+
+  // Codex denetimi 2026-10-29 (hata #2): tahsilat beklenirken ekrandan
+  // çıkılırsa `!mounted` dondurma hakkını atlıyor, jeton gidiyordu; yanıtı
+  // kaybolan denemenin tekrarı da yeni anahtar üretip ikinci kez çekiyordu.
+  testWidgets('dondurma: ekrandan çıkılsa da hak teslim edilir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 2400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _SlowFreezeRepository();
+    final visible = ValueNotifier<bool>(true);
+    await tester.pumpWidget(
+      _shell(
+        ValueListenableBuilder<bool>(
+          valueListenable: visible,
+          builder: (_, show, _) =>
+              show ? ShopScreen(repository: repository) : const Scaffold(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Seri dondurma'));
+    await tester.tap(find.text('Seri dondurma'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Satın al'));
+    await tester.pump();
+    visible.value = false;
+    await tester.pump();
+    repository.gate.complete();
+    await tester.pumpAndSettle();
+    expect((await StreakStore.load()).freezeCount, 1);
+  });
+
+  testWidgets('dondurma: belirsiz hatadan sonra aynı idempotency anahtarı', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 2400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _SlowFreezeRepository()..failFirst = true;
+    repository.gate.complete();
+    final visible = ValueNotifier<bool>(true);
+    await tester.pumpWidget(
+      _shell(
+        ValueListenableBuilder<bool>(
+          valueListenable: visible,
+          builder: (_, show, _) =>
+              show ? ShopScreen(repository: repository) : const Scaffold(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    for (var i = 0; i < 2; i++) {
+      await tester.ensureVisible(find.text('Seri dondurma'));
+      await tester.tap(find.text('Seri dondurma'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Satın al'));
+      await tester.pumpAndSettle();
+      // Ekrandan çıkıp yeniden girilir (belirsiz hata ekranı kapanır).
+      visible.value = false;
+      await tester.pump();
+      visible.value = true;
+      await tester.pumpAndSettle();
+    }
+    expect(repository.keys.length, greaterThanOrEqualTo(2));
+    expect(repository.keys.toSet(), hasLength(1));
+  });
+}
+
+class _SlowFreezeRepository extends _ShopRepository {
+  _SlowFreezeRepository() : super(coins: 1000);
+  final gate = Completer<void>();
+  final keys = <String>[];
+  bool failFirst = false;
+
+  @override
+  Future<StreakFreezeChargeResult> spendStreakFreeze({
+    required String idempotencyKey,
+  }) async {
+    keys.add(idempotencyKey);
+    await gate.future;
+    if (failFirst && keys.length == 1) throw StateError('yanıt kayboldu');
+    return super.spendStreakFreeze(idempotencyKey: idempotencyKey);
+  }
 }
 
 /// Bakiye yeterli görünürken sunucunun harcamayı reddettiği senaryo

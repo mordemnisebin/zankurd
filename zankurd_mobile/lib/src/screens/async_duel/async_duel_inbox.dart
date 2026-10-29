@@ -346,21 +346,47 @@ class _AsyncDuelTurnSectionState extends State<AsyncDuelTurnSection> {
     if (mounted) _reload();
   }
 
+  Future<void> _openSeeAll() async {
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(AsyncDuelListScreen(repository: widget.repository)));
+    if (mounted) _reload();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_items.isEmpty) {
       return const SizedBox.shrink(key: ValueKey('play-hub-async-duel-turn'));
     }
+    // Üst bölüm yalnız [maxRows] satır gösterir; alttaki "Düellolarım" kutusu
+    // dikkat isteyenleri dışladığı için üçüncü bekleyen düello hiçbir yerde
+    // görünmüyordu (Codex denetimi 2026-10-29). Fazlası varsa "Tümü" bağlantısı.
+    final hidden = _items.length - widget.maxRows;
     return Padding(
       key: const ValueKey('play-hub-async-duel-turn'),
       padding: const EdgeInsets.symmetric(vertical: SahneSpace.cardGap),
-      child: SahneListGroup(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          for (final summary in _items.take(widget.maxRows))
-            _AsyncDuelSummaryRow(
-              key: ValueKey('async-duel-row-${summary.duelId}'),
-              summary: summary,
-              onTap: () => _open(summary),
+          SahneListGroup(
+            children: [
+              for (final summary in _items.take(widget.maxRows))
+                _AsyncDuelSummaryRow(
+                  key: ValueKey('async-duel-row-${summary.duelId}'),
+                  summary: summary,
+                  onTap: () => _open(summary),
+                ),
+            ],
+          ),
+          if (hidden > 0)
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: SahneButton.text(
+                key: const ValueKey('async-duel-turn-see-all'),
+                label: '${context.t(K.asyncDuelSeeAll)} (${_items.length})',
+                arrow: false,
+                onPressed: _openSeeAll,
+              ),
             ),
         ],
       ),

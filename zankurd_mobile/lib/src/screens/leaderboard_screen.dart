@@ -32,10 +32,17 @@ class LeaderboardScreen extends StatefulWidget {
     this.scrollController,
     this.refreshSignal,
     this.isVisible,
+    this.onOpenPlay,
     super.key,
   });
 
   final ZanKurdRepository repository;
+
+  /// Boş sıralamanın "Yarışa başla" düğmesi: Oyna sekmesine geçer. Sıralama
+  /// yalnız biten çevrimiçi odaları saydığı için yerel bir quiz açmak
+  /// kullanıcıyı puan getirmeyen bir oyuna götürüyordu (Codex denetimi
+  /// 2026-10-29). Verilmezse (tam rota olarak açılmış) eski yerel yarış.
+  final VoidCallback? onOpenPlay;
   final ScrollController? scrollController;
   final ValueNotifier<int>? refreshSignal;
 
@@ -741,7 +748,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
               message: context.t(K.startRaceHint),
               actionLabel: context.t(K.startRaceAction),
               actionIcon: AppIcons.bolt,
-              onAction: _startQuickRace,
+              onAction: widget.onOpenPlay ?? _startQuickRace,
               // Günün turunun kendi sıralaması var; burada sayılmadığı
               // için oraya götüren ikincil bağlantı (2026-10-29, X1).
               footer: SahneButton.text(

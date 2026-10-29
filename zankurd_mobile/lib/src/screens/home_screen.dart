@@ -199,6 +199,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // kadar bölüm hep boş kalıyordu (2026-08-14 denetimi).
     _refreshProgress();
     widget.refreshSignal?.addListener(_handleRefreshSignal);
+    // Açılış sınırını (8 sn) aşıp geç biten ya da yeniden denenen soru
+    // yüklemesi ekrana bildirilir (Codex denetimi 2026-10-29).
+    QuestionBankLoader.instance.revision.addListener(_onQuestionBankChanged);
+  }
+
+  void _onQuestionBankChanged() {
+    if (!mounted) return;
+    _refreshProgress();
+    setState(() {});
   }
 
   @override
@@ -215,6 +224,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    QuestionBankLoader.instance.revision.removeListener(_onQuestionBankChanged);
     widget.refreshSignal?.removeListener(_handleRefreshSignal);
     _loadAnimationController.dispose();
     super.dispose();
@@ -1136,7 +1146,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       // Hedef seçilmişse, öncelikli kategorilerden seçim yapabilmek için
       // günlük depodan daha geniş bir aday havuzu isteriz. Quiz yine 5/10
       // soruda kalır; havuz küçükse saf seçici kalan sorularla doldurur.
-      final candidateLimit = goal == null ? questionLimit : questionLimit * 3;
+      // İlk oturumda zorluk üst sınırı için de geniş havuz gerekir.
+      final candidateLimit = goal == null && !firstSession
+          ? questionLimit
+          : questionLimit * 3;
       // Bugün zaten cevap verilmişse ("Devam et"/"Tekrar oyna") günün sabit
       // seti değil, görülmemiş sorular gelir.
       final candidates = await repo.loadDailyQuestions(
@@ -1147,6 +1160,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         candidates: candidates,
         goal: goal,
         limit: questionLimit,
+        // Sıfırdan başlayana ilk turda ileri düzey soru gelmez (zorluk 1–2).
+        maxDifficulty: firstSession ? 2 : null,
       );
       if (!mounted) return;
       if (questions.isEmpty) {
