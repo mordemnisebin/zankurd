@@ -12,6 +12,9 @@ import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
+import 'support/okunur_boyut.dart';
+import 'support/realistic_device.dart';
+
 /// Canlı düello sonucunun İLK görünümü kaydırmadan eksiksizdir.
 ///
 /// ## Kusur
@@ -55,6 +58,11 @@ QuizResultScreen _duel() {
 }
 
 void main() {
+  // Gerçek yazı tipi (kapışma U13, 2026-10-29): çip sözleri artık
+  // küçültülmüyor, sığmazsa alt satıra iniyor. Ölçü fontunda her harf kare
+  // olduğundan "En uzun seri" iki satıra kırılıp kartı gerçek cihazda
+  // olmayan 7 px aşağı itiyordu; geometri gerçek metrikle ölçülür.
+  setUpAll(loadAppFonts);
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   for (final (size, scale) in [
@@ -100,6 +108,12 @@ void main() {
       for (final label in ['Doğru', 'Yanlış', 'Boş', 'En uzun seri']) {
         final chip = find.text(label);
         expect(chip, findsOneWidget, reason: '$label çipi yok');
+        // U13: söz küçültülerek sığdırılmaz (≥ 14 pt × yazı ölçeği).
+        expect(
+          renderedFontSize(tester, chip),
+          greaterThanOrEqualTo(kOkunurAltSinir * scale - 0.01),
+          reason: '$label okunur boyutun altında çiziliyor',
+        );
         expect(
           tester.getRect(chip).bottom,
           lessThanOrEqualTo(preDockTop),

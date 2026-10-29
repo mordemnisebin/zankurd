@@ -2840,7 +2840,8 @@ class Tr {
     K.orSeparator: {'ku': 'an jî', 'tr': 'veya'},
     K.linkGoogle: {'ku': 'Bi Google girêde', 'tr': 'Google ile bağla'},
     K.authErrNetwork: {
-      'ku': 'Girêdan çênebû. Înternetê an DNS\'ê kontrol bike.',
+      'ku':
+          'Girêdan çênebû. Girêdana înternetê kontrol bike û dîsa biceribîne.',
       'tr':
           'Bağlantı kurulamadı. İnternet bağlantını kontrol edip tekrar dene.',
     },
@@ -3216,6 +3217,10 @@ class Tr {
           'Hemû ders û lîstik ji bo her kesî belaş dimînin; Premium ZanKurdê li ser piyan radigire.',
       'tr':
           'Tüm dersler ve oyunlar herkese ücretsiz kalır; Premium ZanKurd\'u ayakta tutar.',
+    },
+    K.paywallPerkSupport: {
+      'ku': 'Piştgiriya ji bo ZanKurdê',
+      'tr': "ZanKurd'a destek",
     },
     K.paywallPerkSupportBody: {
       'ku': 'Tu piştgiriya pêşketina sepana kurdî û naveroka nû dikî.',

@@ -481,55 +481,17 @@ class _SahneModeTileState extends State<SahneModeTile> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Row(
-                                  children: [
-                                    Icon(icon, size: 26, color: ink),
-                                    const SizedBox(width: SahneSpace.x2),
-                                    const Spacer(),
-                                    if (loading)
-                                      SizedBox.square(
-                                        dimension: 18,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          color: ink,
-                                        ),
-                                      )
-                                    else if (badge != null)
-                                      Flexible(
-                                        flex: 6,
-                                        child: DecoratedBox(
-                                          decoration: ShapeDecoration(
-                                            color: gold
-                                                ? t.zerChip
-                                                : SahneVivid.onFill,
-                                            shape: const StadiumBorder(),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: SahneSpace.x2,
-                                              vertical: 2,
-                                            ),
-                                            // Sığmazsa kesilmez, küçülür:
-                                            // "Sonuç hazır" yarım kartta
-                                            // "Sonuç ha…" okunuyordu
-                                            // (2026-10-28 görsel kurul).
-                                            child: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: Text(
-                                                badge,
-                                                maxLines: 1,
-                                                style: SahneType.captionStrong
-                                                    .copyWith(
-                                                      color: gold
-                                                          ? t.goldTx
-                                                          : fill,
-                                                    ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                  ],
+                                _DiscBadgeRow(
+                                  disc: Icon(icon, size: 26, color: ink),
+                                  loading: loading,
+                                  loadingColor: ink,
+                                  badge: badge,
+                                  badgeFill: gold
+                                      ? t.zerChip
+                                      : SahneVivid.onFill,
+                                  badgeStyle: SahneType.captionStrong.copyWith(
+                                    color: gold ? t.goldTx : fill,
+                                  ),
                                 ),
                                 const SizedBox(height: SahneSpace.x3),
                                 Text(
@@ -658,59 +620,25 @@ extension on _SahneModeTileState {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      // Son kurul tur 3: ikincil lobi
-                                      // kartında disk kabartmasız (tek
-                                      // katman hafifler; renk aynen).
-                                      SahneIconDisc(
-                                        icon: widget.icon,
-                                        color: ink,
-                                        flat: true,
-                                      ),
-                                      const Spacer(),
-                                      if (widget.loading)
-                                        SizedBox.square(
-                                          dimension: 18,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            color: ink,
-                                          ),
-                                        )
-                                      else if (badge != null)
-                                        Flexible(
-                                          child: DecoratedBox(
-                                            decoration: ShapeDecoration(
-                                              color: gold
-                                                  ? t.zerChip
-                                                  : SahneVivid.onFill,
-                                              shape: const StadiumBorder(),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: SahneSpace.x2,
-                                                    vertical: 2,
-                                                  ),
-                                              child: FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: Text(
-                                                  badge,
-                                                  maxLines: 1,
-                                                  style: SahneType.captionStrong
-                                                      .copyWith(
-                                                        color: gold
-                                                            ? t.goldTx
-                                                            : deepEnd,
-                                                      ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                  _DiscBadgeRow(
+                                    // Son kurul tur 3: ikincil lobi kartında
+                                    // disk kabartmasız (tek katman hafifler;
+                                    // renk aynen).
+                                    disc: SahneIconDisc(
+                                      icon: widget.icon,
+                                      color: ink,
+                                      flat: true,
+                                    ),
+                                    loading: widget.loading,
+                                    loadingColor: ink,
+                                    badge: badge,
+                                    badgeFill: gold
+                                        ? t.zerChip
+                                        : SahneVivid.onFill,
+                                    badgeStyle: SahneType.captionStrong
+                                        .copyWith(
+                                          color: gold ? t.goldTx : deepEnd,
                                         ),
-                                    ],
                                   ),
                                   const SizedBox(height: SahneSpace.x3),
                                   Text(
@@ -797,50 +725,23 @@ extension on _SahneModeTileState {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Row(
-                        children: [
-                          DecoratedBox(
-                            decoration: ShapeDecoration(
-                              color: fill,
-                              shape: SahneShape.m,
-                            ),
-                            child: SizedBox.square(
-                              dimension: 44,
-                              child: Icon(widget.icon, size: 24, color: ink),
-                            ),
+                      _DiscBadgeRow(
+                        disc: DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: fill,
+                            shape: SahneShape.m,
                           ),
-                          const Spacer(),
-                          if (widget.loading)
-                            const SizedBox.square(
-                              dimension: 18,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          else if (badge != null)
-                            Flexible(
-                              child: DecoratedBox(
-                                decoration: ShapeDecoration(
-                                  color: t.s3,
-                                  shape: const StadiumBorder(),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: SahneSpace.x2,
-                                    vertical: 2,
-                                  ),
-                                  child: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text(
-                                      badge,
-                                      maxLines: 1,
-                                      style: SahneType.captionStrong.copyWith(
-                                        color: t.tx,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
+                          child: SizedBox.square(
+                            dimension: 44,
+                            child: Icon(widget.icon, size: 24, color: ink),
+                          ),
+                        ),
+                        loading: widget.loading,
+                        badge: badge,
+                        badgeFill: t.s3,
+                        badgeStyle: SahneType.captionStrong.copyWith(
+                          color: t.tx,
+                        ),
                       ),
                       const SizedBox(height: SahneSpace.x2),
                       Text(
@@ -921,6 +822,84 @@ class SahneModeGrid extends StatelessWidget {
           children: rows,
         );
       },
+    );
+  }
+}
+
+/// Mod kartının üst satırı: disk + durum rozeti.
+///
+/// Kapışma U13 (2026-10-29): rozet FittedBox ile küçültülüyordu (ana
+/// sayfadaki yarım kartta "Sonuç hazır" ≈5 pt, kare 247). Rozet artık
+/// KÜÇÜLMEZ: diskin yanına tek satırda sığıyorsa orada, sığmıyorsa diskin
+/// ALTINA iner (en çok iki satır).
+class _DiscBadgeRow extends StatelessWidget {
+  const _DiscBadgeRow({
+    required this.disc,
+    required this.loading,
+    required this.badge,
+    required this.badgeFill,
+    required this.badgeStyle,
+    this.loadingColor,
+  });
+
+  final Widget disc;
+  final bool loading;
+  final Color? loadingColor;
+  final String? badge;
+  final Color badgeFill;
+  final TextStyle badgeStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    if (loading) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          disc,
+          const Spacer(),
+          SizedBox.square(
+            dimension: 18,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: loadingColor,
+            ),
+          ),
+        ],
+      );
+    }
+    final text = badge;
+    if (text == null) {
+      return Align(alignment: AlignmentDirectional.centerStart, child: disc);
+    }
+    final box = DecoratedBox(
+      key: const ValueKey('mode-tile-badge'),
+      decoration: ShapeDecoration(
+        color: badgeFill,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: SahneSpace.x2,
+          vertical: 2,
+        ),
+        child: Text(
+          text,
+          maxLines: 2,
+          textAlign: TextAlign.center,
+          style: badgeStyle,
+        ),
+      ),
+    );
+    // Wrap: rozet diskin yanına doğal genişliğiyle sığarsa sağda, sığmazsa
+    // alt satıra iner. LayoutBuilder kullanılamaz: mod ızgarası kartları
+    // IntrinsicHeight ile eşitler.
+    return Wrap(
+      alignment: WrapAlignment.spaceBetween,
+      spacing: SahneSpace.x2,
+      runSpacing: SahneSpace.x2,
+      children: [disc, box],
     );
   }
 }

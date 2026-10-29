@@ -910,7 +910,6 @@ class _CrowdScoreHeader extends StatelessWidget {
     Widget chip(CrowdStanding standing) {
       final isMe = playersShareIdentity(standing.player, player);
       final tabular = SahneType.captionStrong.copyWith(
-        fontSize: 12,
         color: isMe ? t.goldTx : t.tx2,
         fontFeatures: const [FontFeature.tabularFigures()],
       );
@@ -938,7 +937,10 @@ class _CrowdScoreHeader extends StatelessWidget {
                     label:
                         '${standing.rank}. ${context.playerDisplayName(standing.player.name, tag: standing.player.tag)}, ${standing.player.score}',
                     excludeSemantics: true,
-                    child: QuizFitLine(
+                    // Ad okunur alt sınırda (14) ve KÜÇÜLMEZ (kapışma U13/
+                    // U15; önce 12'den 11'e küçülüyordu). Sütun sayısı
+                    // sekiz harflik adı 14 pt'de sığdıracak biçimde seçilir.
+                    child: Text(
                       quizCrowdShortName(
                         context.playerDisplayName(
                           standing.player.name,
@@ -946,6 +948,9 @@ class _CrowdScoreHeader extends StatelessWidget {
                         ),
                       ),
                       key: ValueKey('quiz-crowd-name-${standing.rank}'),
+                      maxLines: 1,
+                      softWrap: false,
+                      overflow: TextOverflow.ellipsis,
                       style: tabular.copyWith(color: isMe ? t.goldTx : t.tx),
                     ),
                   ),

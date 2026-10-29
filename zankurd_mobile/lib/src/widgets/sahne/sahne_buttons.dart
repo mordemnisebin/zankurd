@@ -629,8 +629,9 @@ class SahneJokerButton extends StatelessWidget {
                         ),
                         if (showLabel) ...[
                           const SizedBox(height: 2),
-                          // Ad ≥ 11 sp okunur: sığmazsa en çok iki satıra
-                          // iner, küçülmez.
+                          // Ad okunur alt sınırda (caption 14, kapışma U13;
+                          // önce 12'ydi): sığmazsa en çok iki satıra iner,
+                          // küçülmez.
                           Text(
                             label,
                             key: const ValueKey('joker-name'),
@@ -639,7 +640,6 @@ class SahneJokerButton extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: SahneType.caption.copyWith(
                               color: labelColor,
-                              fontSize: 12,
                               height: 1.15,
                             ),
                           ),

@@ -466,10 +466,10 @@ String quizCrowdShortName(String displayName) {
 
 /// Oda skor şeridinin sütun sayısı (2026-10-29, Astra 2. inceleme; Tur 1
 /// I3): ölçerek seçilir. Çip = iç boşluk 8 + kısa ad + 4 +
-/// puan. Ad için sekiz harflik bir ad ("Dördüncü", 11 pt çizilen taban),
+/// puan. Ad için sekiz harflik bir ad ("Dördüncü", 14 pt),
 /// puan için en kötü 5 haneli ("99.999", [quizCrowdScorePt]) ölçülür; puan
 /// oyun içinde büyüyünce sütun sayısı DEĞİŞMEZ. Dört çip [innerWidth]'e
-/// sığıyorsa 4, sığmıyorsa 2.
+/// sığıyorsa 4, ikişerli sığıyorsa 2, yoksa 1.
 int quizCrowdColumns(TextScaler scaler, double innerWidth) {
   double widthOf(String text, double size) {
     final p = TextPainter(
@@ -489,11 +489,15 @@ int quizCrowdColumns(TextScaler scaler, double innerWidth) {
     return w;
   }
 
-  final ratio = scaler.scale(12) / 12;
-  final name = widthOf('Dördüncü', (11 / ratio).clamp(1.0, 12.0));
+  // Ad okunur alt sınırda (caption 14, kapışma U13/U15); küçültülmez.
+  final name = widthOf('Dördüncü', 14);
   final score = widthOf('99.999', quizCrowdScorePt);
   final need = 8 + name + 4 + score;
-  return (innerWidth - 3 * 4) / 4 >= need ? 4 : 2;
+  if ((innerWidth - 3 * 4) / 4 >= need) return 4;
+  // En dar telefonda büyük yazıda ikişerli de sığmazsa tek sütun: ad
+  // küçültülmez (kapışma U13). Bütçe ([_QuizHeaderHeights.crowd]) aynı
+  // sayıyı kullanır; 320 genişlik kaydırmasız hedefin dışındadır.
+  return (innerWidth - 4) / 2 >= need ? 2 : 1;
 }
 
 /// Ölçüm önbelleği anahtarı: parçalar YAPISAL eşitlikle karşılaştırılır.
