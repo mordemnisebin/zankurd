@@ -639,9 +639,20 @@ class Tr {
     },
     K.lessonFinishHint: {
       'ku':
-          '\'Biqedîne\' dersê diqedîne û dersa din vedike. Azmûna kurt vebijarkî ye û bandorê li qedandinê nake.',
+          '«Dersê biqedîne» dersê diqedîne û dersa din vedike. Rahênanên jêrîn û azmûna kurt vebijarkî ne û bandorê li qedandinê nakin.',
       'tr':
-          'Tamamla dersi bitirir ve sonraki dersi açar. Kısa test isteğe bağlıdır, tamamlamayı etkilemez.',
+          '«Dersi tamamla» dersi bitirir ve sonraki dersi açar. Aşağıdaki alıştırmalar ve kısa test isteğe bağlıdır, tamamlamayı etkilemez.',
+    },
+    K.finishLesson: {'ku': 'Dersê biqedîne', 'tr': 'Dersi tamamla'},
+    K.lessonOptionalPractice: {
+      'ku': 'Rahênana vebijarkî',
+      'tr': 'İsteğe bağlı alıştırma',
+    },
+    K.lessonCardCounter: {'ku': 'Qert {n}/{total}', 'tr': 'Kart {n}/{total}'},
+    K.slowShort: {'ku': 'Hêdî', 'tr': 'Yavaş'},
+    K.lessonLetterTapHint: {
+      'ku': 'Li tîpekê bitikîne: peyva mînak bibîne û guhdarî bike.',
+      'tr': 'Bir harfe dokun: örnek sözcüğü gör ve dinle.',
     },
     K.lessonRecallReveal: {'ku': 'Bersivê nîşan bide', 'tr': 'Yanıtı göster'},
     K.lessonRecallNext: {'ku': 'Bidomîne', 'tr': 'Sonraki'},
@@ -1117,14 +1128,13 @@ class Tr {
     K.online: {'ku': 'Serhêl', 'tr': 'Çevrimiçi'},
     K.offline: {'ku': 'Ne li serhêl', 'tr': 'Çevrimdışı'},
     K.friendPlayedToday: {
-      'ku': 'Di 24 saetên dawî de lîst',
-      'tr': 'Son 24 saatte oynadı',
+      'ku': 'Di 24 saetên dawî de çalak bû',
+      'tr': 'Son 24 saatte etkindi',
     },
     K.friendPlayedDaysAgo: {
-      'ku': 'Berî {n} rojan lîst',
-      'tr': '{n} gün önce oynadı',
+      'ku': 'Berî {n} rojan çalak bû',
+      'tr': '{n} gün önce etkindi',
     },
-    K.friendNeverPlayed: {'ku': 'Hîn nelîstiye', 'tr': 'Henüz oynamadı'},
     K.inviteToRoom: {'ku': 'Vexwîne odeyê', 'tr': 'Odaya çağır'},
     K.rejectAction: {'ku': 'Red bike', 'tr': 'Reddet'},
     K.acceptAction: {'ku': 'Qebûl', 'tr': 'Kabul'},
@@ -1703,9 +1713,9 @@ class Tr {
     K.faqCoinsQ: {'ku': 'Zêr ji bo çi ye?', 'tr': 'Jeton ne işe yarar?'},
     K.faqCoinsA: {
       'ku':
-          'Ji bo bikaranîna alîkariyê di dema pirsê de (her roj yek belaş e), kirîna çarçoveyê, rozeta VIP û mafê zêde yê gerandina çerxê li Dukanê û parastina zincîra te bikêr tê. Zêr ji bersivên rast, peywiran û çerxa rojê tê bidestxistin. Gera dubarekirina şaşiyan zêr nade; ji gerên ku bi tenê tên lîstin rojê herî zêde 45 zêr tên qezenckirin.',
+          'Bi zêran:\n• di dema pirsê de alîkariyê bi kar tînî (her roj yek belaş e),\n• ji Dukanê çarçove, rozeta VIP û mafê zêde yê gerandina çerxê dikirî,\n• zincîra xwe diparêzî.\n\nZêr ji bersivên rast, peywiran û çerxa rojê tê bidestxistin.\n\nGera dubarekirina şaşiyan zêr nade; ji gerên ku bi tenê tên lîstin rojê herî zêde 45 zêr tên qezenckirin.',
       'tr':
-          'Soru sırasında joker kullanmaya (her gün biri bedava), Mağaza\'da çerçeve, VIP rozeti ve ek çark hakkı almaya ve serini korumaya yarar. Jeton doğru cevaplardan, görevlerden ve günün çarkından gelir. Yanlış tekrarı turu jeton vermez; tek başına oynanan turlardan günde en çok 45 jeton kazanılır.',
+          'Jetonla:\n• soru sırasında joker kullanırsın (her gün biri bedava),\n• Mağaza\'dan çerçeve, VIP rozeti ve ek çark hakkı alırsın,\n• serini korursun.\n\nJeton doğru cevaplardan, görevlerden ve günün çarkından gelir.\n\nYanlış tekrarı turu jeton vermez; tek başına oynanan turlardan günde en çok 45 jeton kazanılır.',
     },
     K.faqReportQ: {
       'ku': 'Min di pirsekê de çewtiyek dît, çi bikim?',
@@ -2321,12 +2331,22 @@ class Tr {
       'ku': 'Cihê te yê di kûpaya rastîn de tê parastin; meşq bê xelat e.',
       'tr': 'Gerçek turnuvadaki yerin korunur; antrenman ödülsüzdür.',
     },
-    K.cupStandingActive: {'ku': 'Li bendê ye', 'tr': 'Bekliyor'},
+    K.cupStandingActive: {
+      'ku': 'Di kûpayê de berdewam e',
+      'tr': 'Turnuvada devam ediyor',
+    },
     K.cupStandingFinalist: {'ku': 'Fînalîst', 'tr': 'Finalist'},
     K.cupStandingsNote: {
-      'ku': 'Rêzbendî: pêşî rewşa di kûpayê de, paşê pûan.',
-      'tr': 'Sıralama: önce turnuvadaki durum, sonra puan.',
+      'ku':
+          'Rêzbendî pêşî li gorî rewşa di kûpayê de ye, paşê li gorî pûana giştî ya li rastê (berhevoka pûanên pêşbirkên ku lîstine).',
+      'tr':
+          'Sıralama önce turnuvadaki duruma, sonra sağdaki toplam puana (oynanan maçlardaki puanların toplamı) göredir.',
     },
+    K.bracketWinnerOf: {
+      'ku': 'Serkeftiyê pêşbirka {n}',
+      'tr': '{n}. maçın kazananı',
+    },
+    K.matchNotPlayedShort: {'ku': 'Nehatiye lîstin', 'tr': 'Oynanmadı'},
     K.cupRoundBadge: {'ku': 'Ger {n}/{total}', 'tr': 'Tur {n}/{total}'},
     K.cupMatchVs: {
       'ku': 'Li hemberî {opponent}: {my} – {their}',
@@ -3127,8 +3147,10 @@ class Tr {
     K.placementSkip: {'ku': 'Paşê bike', 'tr': 'Şimdilik geç'},
     // Tur 1 (I11): "Şimdilik geç" ekranı sessizce kapatıyordu.
     K.placementSkippedNote: {
-      'ku': 'Tu dikarî paşê azmûna astê ji qerta li rûpela sereke bikî.',
-      'tr': 'Seviye testini sonra ana sayfadaki karttan yapabilirsin.',
+      'ku':
+          'Tu dikarî kengî bixwazî azmûna astê ji qerta «Asta xwe bibîne» ya li rûpela «Kurmancî hîn bibe» an ji Mîhengan bikî.',
+      'tr':
+          'Seviye testini istediğin zaman «Kurmancî öğren» sayfasındaki «Seviyeni bul» kartından ya da Ayarlar\'dan yapabilirsin.',
     },
     K.placementCardTitle: {'ku': 'Asta xwe bibîne', 'tr': 'Seviyeni bul'},
     K.placementCardStart: {'ku': 'Dest bi azmûnê bike', 'tr': 'Teste başla'},
@@ -4657,6 +4679,11 @@ class K {
   static const lessonRecallHint = 'learn.lessonRecall.hint';
   static const lessonRecallRevealedHint = 'learn.recall.revealedHint';
   static const lessonFinishHint = 'learn.lesson.finishHint';
+  static const finishLesson = 'learn.lesson.finishLesson';
+  static const lessonOptionalPractice = 'learn.lesson.optionalPractice';
+  static const lessonCardCounter = 'learn.lesson.cardCounter';
+  static const slowShort = 'audio.slowShort';
+  static const lessonLetterTapHint = 'learn.lesson.letterTapHint';
   static const lessonRecallReveal = 'learn.lessonRecall.reveal';
   static const lessonRecallNext = 'learn.lessonRecall.next';
   static const lessonListeningTitle = 'learn.lessonListening.title';
@@ -4854,7 +4881,6 @@ class K {
   static const offline = 'friends.offline';
   static const friendPlayedToday = 'friends.playedToday';
   static const friendPlayedDaysAgo = 'friends.playedDaysAgo';
-  static const friendNeverPlayed = 'friends.neverPlayed';
   static const inviteToRoom = 'friends.inviteToRoom';
   static const rejectAction = 'friends.reject';
   static const acceptAction = 'friends.accept';
@@ -5292,6 +5318,8 @@ class K {
   static const tournamentPracticeNote = 'tournament.practiceNote';
   static const cupStandingActive = 'tournament.standing.active';
   static const cupStandingFinalist = 'tournament.standing.finalist';
+  static const bracketWinnerOf = 'cup.bracket.winnerOf';
+  static const matchNotPlayedShort = 'cup.bracket.notPlayed';
   static const cupStandingsNote = 'tournament.standingsNote';
   static const cupRoundBadge = 'tournament.roundBadge';
   static const cupMatchVs = 'tournament.matchVs';

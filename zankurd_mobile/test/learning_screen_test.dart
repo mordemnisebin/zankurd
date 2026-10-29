@@ -1514,6 +1514,12 @@ void main() {
       findsNothing,
     );
 
+    // Kurul 1 (C27): bitiş notu ve "İsteğe bağlı alıştırma" başlığı artık
+    // kartların üstünde; kart kaydırılarak görünür alana alınır.
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('lesson-listening-play')),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('lesson-listening-play')));
     await tester.pump();
     expect(speaker.spoken, ['Rojbaş']);

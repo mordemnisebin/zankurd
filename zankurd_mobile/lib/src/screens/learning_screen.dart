@@ -29,6 +29,7 @@ import '../widgets/lesson_listening_card.dart';
 import '../widgets/lesson_vocab_tiles.dart';
 import '../widgets/lexicon_speak_button.dart';
 import '../widgets/lesson_recall_card.dart';
+import '../widgets/lesson_scroll_edge_fade.dart';
 import '../widgets/story_catalog.dart';
 import '../widgets/todays_review_card.dart';
 import '../widgets/learn_path.dart';
@@ -1892,82 +1893,95 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                   ),
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(SahneSpace.page),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        if (_miniQuizEmpty)
-                          // "Soru yok" bir HATA değildir: tekrar denemek
-                          // sonucu değiştirmez. Eskiden "Quiz yüklenemedi" +
-                          // yalnız "Tekrar dene" vardı, yani çıkışsız bir
-                          // sokaktı. Şimdi durum açıkça söylenir ve kapatılır;
-                          // ders akışı (Geri / Tamamla) altta duruyor.
-                          AppEmptyState(
-                            key: const ValueKey('mini-quiz-empty'),
-                            icon: AppIcons.bookOpen,
-                            title: context.t(K.noQuestionsForCategory),
-                            message: context.t(K.miniQuizNone),
-                            actionLabel: context.t(K.close),
-                            primaryAction: false,
-                            onAction: () =>
-                                setState(() => _miniQuizEmpty = false),
-                          ),
-                        if (_miniQuizErrorMessage != null)
-                          AppErrorState(
-                            title: context.t(K.loadFailedShort),
-                            message: _miniQuizErrorMessage!,
-                            retryLabel: context.t(K.retryShort),
-                            onRetry: _startMiniQuiz,
-                          ),
-                        if (slide.imageUrl case final imgUrl?)
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: SahneSpace.x4,
+                  child: LessonScrollEdgeFade(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(SahneSpace.page),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          if (_miniQuizEmpty)
+                            // "Soru yok" bir HATA değildir: tekrar denemek
+                            // sonucu değiştirmez. Eskiden "Quiz yüklenemedi" +
+                            // yalnız "Tekrar dene" vardı, yani çıkışsız bir
+                            // sokaktı. Şimdi durum açıkça söylenir ve kapatılır;
+                            // ders akışı (Geri / Tamamla) altta duruyor.
+                            AppEmptyState(
+                              key: const ValueKey('mini-quiz-empty'),
+                              icon: AppIcons.bookOpen,
+                              title: context.t(K.noQuestionsForCategory),
+                              message: context.t(K.miniQuizNone),
+                              actionLabel: context.t(K.close),
+                              primaryAction: false,
+                              onAction: () =>
+                                  setState(() => _miniQuizEmpty = false),
                             ),
-                            child: _SlideImage(url: imgUrl),
-                          ),
-                        if (_flashcardMode)
-                          _buildFlashcard(slide, context, ku)
-                        else
-                          SahneSurfaceCard(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _buildKuContentRow(slide, context),
-                                // Türkçe açıklama yalnız Türkçe arayüzde ve artık
-                                // kartın sonunda değil, açıklama cümlesinin hemen
-                                // altında (kapışma U20; bkz. LessonContentBlocks).
-                                // Dokunarak çevrilen kart arkası kullanıcının
-                                // isteğidir ve dilden bağımsız kalır.
-                                if (slide.exampleKu case final exampleKu?) ...[
-                                  const SizedBox(height: SahneSpace.x3),
-                                  _buildExample(exampleKu, context),
+                          if (_miniQuizErrorMessage != null)
+                            AppErrorState(
+                              title: context.t(K.loadFailedShort),
+                              message: _miniQuizErrorMessage!,
+                              retryLabel: context.t(K.retryShort),
+                              onRetry: _startMiniQuiz,
+                            ),
+                          if (slide.imageUrl case final imgUrl?)
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: SahneSpace.x4,
+                              ),
+                              child: _SlideImage(url: imgUrl),
+                            ),
+                          if (_flashcardMode)
+                            _buildFlashcard(slide, context, ku)
+                          else
+                            SahneSurfaceCard(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildKuContentRow(slide, context),
+                                  // Türkçe açıklama yalnız Türkçe arayüzde ve artık
+                                  // kartın sonunda değil, açıklama cümlesinin hemen
+                                  // altında (kapışma U20; bkz. LessonContentBlocks).
+                                  // Dokunarak çevrilen kart arkası kullanıcının
+                                  // isteğidir ve dilden bağımsız kalır.
+                                  if (slide.exampleKu
+                                      case final exampleKu?) ...[
+                                    const SizedBox(height: SahneSpace.x3),
+                                    _buildExample(exampleKu, context),
+                                  ],
                                 ],
-                              ],
+                              ),
                             ),
-                          ),
-                        if (!_flashcardMode &&
-                            isLast &&
-                            recallEntries.length >= 2 &&
-                            _listeningSpeaker != null) ...[
-                          const SizedBox(height: SahneSpace.cardGap),
-                          LessonListeningCard(
-                            entries: recallEntries,
-                            speaker: _listeningSpeaker!,
-                          ),
+                          // Kurul 1 (C27, 2026-10-29): 6/6 dolu iken dersin
+                          // ayrıca tamamlanması gerektiği ve alıştırmaların
+                          // zorunlu olmadığı not, alıştırmalardan ÖNCE ve gövde
+                          // boyunda; alıştırmalar "İsteğe bağlı" başlığı altında.
+                          if (isLast) ...[
+                            const SizedBox(height: SahneSpace.cardGap),
+                            const LessonFinishHint(),
+                          ],
+                          if (!_flashcardMode &&
+                              isLast &&
+                              recallEntries.isNotEmpty) ...[
+                            const SizedBox(height: SahneSpace.cardGap),
+                            const LessonOptionalPracticeHeader(),
+                          ],
+                          if (!_flashcardMode &&
+                              isLast &&
+                              recallEntries.length >= 2 &&
+                              _listeningSpeaker != null) ...[
+                            const SizedBox(height: SahneSpace.cardGap),
+                            LessonListeningCard(
+                              entries: recallEntries,
+                              speaker: _listeningSpeaker!,
+                            ),
+                          ],
+                          if (!_flashcardMode &&
+                              isLast &&
+                              recallEntries.isNotEmpty) ...[
+                            const SizedBox(height: SahneSpace.cardGap),
+                            LessonRecallCard(entries: recallEntries),
+                          ],
                         ],
-                        if (!_flashcardMode &&
-                            isLast &&
-                            recallEntries.isNotEmpty) ...[
-                          const SizedBox(height: SahneSpace.cardGap),
-                          LessonRecallCard(entries: recallEntries),
-                        ],
-                        if (isLast) ...[
-                          const SizedBox(height: SahneSpace.cardGap),
-                          const LessonFinishHint(),
-                        ],
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -2028,7 +2042,7 @@ class LessonSlideNavigation extends StatelessWidget {
       expand: true,
     );
     final next = SahneButton.primary(
-      label: isLast ? context.t(K.finish) : context.t(K.nextStep),
+      label: isLast ? context.t(K.finishLesson) : context.t(K.nextStep),
       onPressed: onNext,
       expand: true,
     );
@@ -2383,6 +2397,25 @@ class _PracticeGrid extends StatelessWidget {
   }
 }
 
+/// Son slayttaki alıştırma kartlarının başlığı (kurul 1, C27): dinleme ve
+/// hızlı hatırlama dersi tamamlamak için gerekmez; başlık bunu söyler.
+class LessonOptionalPracticeHeader extends StatelessWidget {
+  const LessonOptionalPracticeHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Semantics(
+      header: true,
+      child: Text(
+        context.t(K.lessonOptionalPractice),
+        key: const ValueKey('lesson-optional-practice'),
+        style: SahneType.bodyStrong.copyWith(color: t.tx2),
+      ),
+    );
+  }
+}
+
 /// Son slaytın akış notu (kapışma U14, 2026-10-29).
 ///
 /// Son slaytta "Tamamla" ile "Kısa test" yan yana duruyordu; hangisinin dersi
@@ -2405,7 +2438,7 @@ class LessonFinishHint extends StatelessWidget {
         Expanded(
           child: Text(
             context.t(K.lessonFinishHint),
-            style: SahneType.caption.copyWith(color: t.tx2),
+            style: SahneType.body.copyWith(color: t.tx2),
           ),
         ),
       ],

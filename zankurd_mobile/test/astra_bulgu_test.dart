@@ -321,7 +321,7 @@ void main() {
       find.byKey(const ValueKey('tournament-standings-note')),
       findsOneWidget,
     );
-    expect(find.text('Bekliyor'), findsNWidgets(2));
+    expect(find.text('Turnuvada devam ediyor'), findsNWidgets(2));
     expect(find.text('Elendi'), findsWidgets);
     expect(
       tester

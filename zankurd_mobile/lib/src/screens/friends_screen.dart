@@ -1424,10 +1424,13 @@ class _FriendRow extends StatelessWidget {
       context.playerDisplayName(friend.friendName, tag: friend.friendTag),
       SahneType.bodyStrong,
     );
-    final sub = width(
-      friendActivityLabel(context, friend),
-      friend.isOnline ? SahneType.captionStrong : SahneType.caption,
-    );
+    final label = friendActivityLabel(context, friend);
+    final sub = label == null
+        ? 0.0
+        : width(
+            label,
+            friend.isOnline ? SahneType.captionStrong : SahneType.caption,
+          );
     return title > textRoom || sub > textRoom ? true : null;
   }
 

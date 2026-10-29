@@ -539,12 +539,12 @@ void main() {
             find.byType(LessonSlideNavigation),
             'ders gezinmesi',
           );
-          final next = tester.getTopLeft(find.text('Biqedîne'));
+          final next = tester.getTopLeft(find.text('Dersê biqedîne'));
           final back = tester.getTopLeft(find.text('Paş'));
           if (scale > 2) {
             expect(back.dy, greaterThan(next.dy), reason: 'alt alta');
             expect(
-              tester.getSize(find.text('Biqedîne')).width,
+              tester.getSize(find.text('Dersê biqedîne')).width,
               lessThan(size.width),
             );
           }
