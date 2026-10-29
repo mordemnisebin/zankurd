@@ -2314,7 +2314,7 @@ class Tr {
     },
     K.longestStreak: {'ku': 'Zincîra herî dirêj', 'tr': 'En uzun seri'},
     K.matchNoAnswers: {
-      'ku': 'Te tu bersiv neda; pûana herdu aliyan 0 ye.',
+      'ku': 'Te tu bersiv neda; pûana her du aliyan jî 0 e.',
       'tr': 'Hiç cevap vermedin; iki tarafın puanı da 0.',
     },
     K.participationReward: {'ku': 'Xelata beşdariyê', 'tr': 'Katılım ödülü'},
@@ -2335,7 +2335,8 @@ class Tr {
       'tr': 'Dolmasına {n} oyuncu kaldı.',
     },
     K.cupFillRemainingMin: {
-      'ku': 'Heta dawiya 24 saetan {left} maye; herî kêm 2 lîstikvan hewce ne.',
+      'ku':
+          'Heta dawiya 24 saetan {left} maye; herî kêm 2 lîstikvan pêwîst in.',
       'tr': '24 saatlik sürenin dolmasına {left} var; en az 2 oyuncu gerekir.',
     },
     K.championRewardGranted: {
