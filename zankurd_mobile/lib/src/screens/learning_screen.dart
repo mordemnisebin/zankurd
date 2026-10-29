@@ -1608,7 +1608,12 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     // örnek satırlardaki sözcükler dokunulabilir.
     // `• terim: anlam` satırları sesli kelime kartı, harf satırı karo
     // olur (bkz. LessonContentBlocks); öteki satırlar dokunulabilir kalır.
-    return LessonContentBlocks(text: slide.contentKu);
+    // Türkçe karşılık yalnız Türkçe arayüzde ve her açıklama cümlesinin
+    // HEMEN altında (kapışma U20); Kurmancî arayüzde verilmez.
+    return LessonContentBlocks(
+      text: slide.contentKu,
+      translation: context.isKu ? null : slide.contentTr,
+    );
   }
 
   /// Örnek cümle: Kulis (`s2`) tonlu M pahlı kutu, ikincil metin.
@@ -1930,22 +1935,11 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 _buildKuContentRow(slide, context),
-                                // Türkçe açıklama yalnız Türkçe arayüzde: Kurmancî
-                                // arayüzde Kurmancî metnin altında Türkçe düz
-                                // yazı çıkıyordu. Alan bir "öğrenci ipucu" diye
-                                // işaretli değil (sunucuda `content_tr` serbest
-                                // metin); dokunarak çevrilen kart arkası ise
-                                // kullanıcının isteğidir ve dilden bağımsız kalır.
-                                if (slide.contentTr case final contentTr?
-                                    when !ku && contentTr.isNotEmpty) ...[
-                                  const SizedBox(height: SahneSpace.x2),
-                                  Text(
-                                    contentTr,
-                                    style: SahneType.caption.copyWith(
-                                      color: t.tx2,
-                                    ),
-                                  ),
-                                ],
+                                // Türkçe açıklama yalnız Türkçe arayüzde ve artık
+                                // kartın sonunda değil, açıklama cümlesinin hemen
+                                // altında (kapışma U20; bkz. LessonContentBlocks).
+                                // Dokunarak çevrilen kart arkası kullanıcının
+                                // isteğidir ve dilden bağımsız kalır.
                                 if (slide.exampleKu case final exampleKu?) ...[
                                   const SizedBox(height: SahneSpace.x3),
                                   _buildExample(exampleKu, context),

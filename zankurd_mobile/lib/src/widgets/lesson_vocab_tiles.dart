@@ -26,9 +26,20 @@ import 'lexicon_speak_button.dart';
 ///   dönüşür.
 /// * Öteki satırlar (başlık, açıklama) dokunulabilir [LexiconText] kalır.
 class LessonContentBlocks extends StatelessWidget {
-  const LessonContentBlocks({required this.text, super.key});
+  const LessonContentBlocks({required this.text, this.translation, super.key});
 
   final String text;
+
+  /// Türkçe arayüzde Kurmancî açıklamanın karşılığı (`content_tr`).
+  ///
+  /// Kapışma U20 (2026-10-29): karşılık kelime kartlarının ve harf
+  /// karolarının ALTINDA, kartın en sonunda duruyordu; yeni başlayan hangi
+  /// Kurmancî cümlenin ne dediğini eşleyemiyordu. Artık her açıklama
+  /// cümlesinin HEMEN altında: karşılık boş satırla ayrılmış paragraflardan
+  /// oluşuyor ve sayısı Kurmancî metin bloklarıyla eşitse her biri kendi
+  /// bloğunun altına; değilse tamamı ilk açıklama bloğunun altına. Kurmancî
+  /// arayüzde verilmez (çağıran `null` geçer).
+  final String? translation;
 
   static final _pair = RegExp(r'^•\s*(.+?):\s+(.+)$');
 
@@ -65,12 +76,15 @@ class LessonContentBlocks extends StatelessWidget {
     final blocks = <Widget>[];
     final textBuffer = <String>[];
     final pairs = <(String, String)>[];
+    final textBlocks = <Widget>{};
 
     void flushText() {
       final joined = textBuffer.join('\n').trim();
       textBuffer.clear();
       if (joined.isEmpty) return;
-      blocks.add(LexiconText(joined, style: style));
+      final block = LexiconText(joined, style: style);
+      textBlocks.add(block);
+      blocks.add(block);
     }
 
     void flushPairs() {
@@ -110,6 +124,39 @@ class LessonContentBlocks extends StatelessWidget {
     flushText();
     flushPairs();
 
+    final tr = translation?.trim();
+    if (tr != null && tr.isNotEmpty) {
+      final paragraphs = tr
+          .split(RegExp(r'\n\s*\n'))
+          .map((p) => p.trim())
+          .where((p) => p.isNotEmpty)
+          .toList();
+      Widget translated(String p) => Padding(
+        key: const ValueKey('lesson-content-tr'),
+        padding: const EdgeInsets.only(top: SahneSpace.x1),
+        child: Text(p, style: SahneType.caption.copyWith(color: t.tx2)),
+      );
+      final textAt = [
+        for (var i = 0; i < blocks.length; i++)
+          if (textBlocks.contains(blocks[i])) i,
+      ];
+      if (textAt.isEmpty) {
+        blocks.insert(0, translated(paragraphs.join('\n\n')));
+      } else if (paragraphs.length == textAt.length) {
+        for (var k = textAt.length - 1; k >= 0; k--) {
+          blocks[textAt[k]] = _withTranslation(
+            blocks[textAt[k]],
+            translated(paragraphs[k]),
+          );
+        }
+      } else {
+        blocks[textAt.first] = _withTranslation(
+          blocks[textAt.first],
+          translated(paragraphs.join('\n\n')),
+        );
+      }
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -121,6 +168,13 @@ class LessonContentBlocks extends StatelessWidget {
     );
   }
 }
+
+/// Açıklama bloğu + hemen altında Türkçe karşılığı (aradaki boşluk dar:
+/// ikisi bir çift olarak okunur).
+Widget _withTranslation(Widget block, Widget translation) => Column(
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [block, translation],
+);
 
 class _VocabTile extends StatefulWidget {
   const _VocabTile({required this.term, required this.meaning});
