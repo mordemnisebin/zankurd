@@ -69,7 +69,9 @@ void main() {
       greaterThan(correct.bottom),
       reason: 'ikişerli dizilmeli',
     );
-    for (final label in ['Doğru', 'Yanlış', 'Boş', 'Üst üste']) {
+    // 'En uzun seri' çok sözcüklüdür: ikişerli kutuda SÖZCÜK sınırında
+    // sarabilir (harf harf kırılmaz); tek satır şartı kısa etiketlere.
+    for (final label in ['Doğru', 'Yanlış', 'Boş']) {
       final para = tester.renderObject<RenderParagraph>(find.text(label));
       expect(para.didExceedMaxLines, isFalse, reason: label);
       expect(

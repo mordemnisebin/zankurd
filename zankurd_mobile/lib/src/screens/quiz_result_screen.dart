@@ -413,6 +413,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   @override
   void dispose() {
+    _levelUpTimer?.cancel();
     _detailsOpenRequest.dispose();
     super.dispose();
   }
@@ -1266,7 +1267,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
         if (leveledUp) {
-          _showLevelUpDialog(context, xpStore.currentLevel);
+          // Seviye kutusu sonuç başlığını ve skoru ÖRTÜYORDU (Astra turu,
+          // 2026-10-29): önce sonuç okunur, kutu ~1,8 sn sonra gelir.
+          _levelUpTimer = Timer(const Duration(milliseconds: 1800), () {
+            if (!mounted) return;
+            _showLevelUpDialog(context, xpStore.currentLevel);
+          });
         } else {
           // Misafire üç oyunda bir "hesabını kaydet" önerisi. Seviye atlama
           // kutusunun üstüne binmesin diye o turda gösterilmez (oyun yine
@@ -1281,6 +1287,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       });
     }
   }
+
+  Timer? _levelUpTimer;
 
   void _showLevelUpDialog(BuildContext context, int newLevel) {
     showGeneralDialog(
@@ -1660,6 +1668,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final accuracyText =
         '${context.percent(accuracy)} ${context.t(K.accuracyLower)}';
     final notices = <Widget>[
+      // Kimse cevap vermediyse "Berabere!" sebepsiz kalıyordu.
+      if (is1v1 && isDraw && score == 0 && correctCount == 0 && wrongCount == 0)
+        _HeroNotice(
+          key: const ValueKey('result-no-answers-notice'),
+          icon: AppIcons.hourglass,
+          text: context.t(K.matchNoAnswers),
+        ),
       // Günlük tavana varıldıysa SEBEBİ söyle.
       //
       // Jeton rozeti yalnız miktar sıfırdan büyükken çiziliyor, dolayısıyla
@@ -2015,7 +2030,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       rewards: hasRewards
           ? SahneResultRewards(
               compact: duelCompact,
-              label: context.t(K.kazanildi),
+              // Hiç doğru yokken gelen jeton tamamlama bonusudur (sunucu:
+              // 10+ soruda 20, aksi 8); "Kazanıldı" demek yanıltırdı.
+              label:
+                  correctCount == 0 && coinsAwarded > 0 && !isLearningExperience
+                  ? context.t(K.participationReward)
+                  : context.t(K.kazanildi),
               coins: coinsAwarded,
               coinLabel: '+$coinsAwarded',
               coinSemanticLabel: '+$coinsAwarded ${context.t(K.coinWord)}',
@@ -2419,7 +2439,8 @@ class ResultStatTiles extends StatelessWidget {
         SahneResultStat(
           leading: const SahneGlyph(SahneGlyphKind.flame),
           value: streak,
-          label: context.t(K.streakLabel),
+          // "2 Üst üste" neyin sayısı olduğunu söylemiyordu.
+          label: context.t(K.longestStreak),
           tint: SahneVivid.chipGoldTint,
           accent: SahneVivid.chipGoldTx,
         ),

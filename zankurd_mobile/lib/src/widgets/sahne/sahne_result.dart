@@ -967,7 +967,65 @@ class SahneResultStats extends StatelessWidget {
         // ("Doğr/u", "Üst/üste"; 2026-10-27, iki cihazlı düello).
         final minTile = MediaQuery.textScalerOf(context).scale(112);
         var perRow = items.length;
-        final forceOne = oneRow;
+        // `oneRow` bir TERCİHTİR (kısa ekranda ilk görünüm eksiksiz kalsın):
+        // çipler SİMGESİZ ve doğal genişliğinde (yazı küçültülmeden) tek
+        // satıra sığıyorsa öyle çizilir; sığmıyorsa normal ızgaraya (ikişerli)
+        // inilir. Eskiden zorla tek satır + FittedBox okunmaz küçüklükte yazı
+        // üretiyordu (Astra incelemesi 06f1fd5a). Ölçüm gerçek biçem ve yazı
+        // ölçeğiyle.
+        if (oneRow && compact) {
+          final scaler = MediaQuery.textScalerOf(context);
+          double width(String text, TextStyle style) {
+            final painter = TextPainter(
+              text: TextSpan(
+                text: text,
+                style: style.copyWith(fontFamily: style.fontFamily),
+              ),
+              textDirection: TextDirection.ltr,
+              textScaler: scaler,
+              maxLines: 1,
+            )..layout();
+            final w = painter.width;
+            painter.dispose();
+            return w;
+          }
+
+          final all = stats.where((s) => s.visible).toList();
+          // 16 yatay iç boşluk + sayı + 4 + söz.
+          double chipWidth(SahneResultStat stat) =>
+              16 +
+              width('${stat.value}', SahneType.captionStrong) +
+              4 +
+              width(stat.label, SahneType.captionStrong);
+          // Önce hepsi; sığmazsa SONDAKİ (en az önemli: seri) düşer — en dar
+          // ekran + en geniş yazıda bile ilk görünüm eksiksiz kalsın. İki
+          // satıra inmek ödül kartını alt perdenin altına itiyordu.
+          for (var n = all.length; n >= 3 && n >= all.length - 1; n--) {
+            final visible = all.take(n).toList();
+            final widths = [for (final stat in visible) chipWidth(stat)];
+            final gaps = SahneSpace.x2 * (visible.length - 1);
+            if (widths.fold<double>(0, (a, b) => a + b) + gaps >
+                constraints.maxWidth) {
+              continue;
+            }
+            return Row(
+              children: [
+                for (var i = 0; i < visible.length; i++) ...[
+                  if (i > 0) const SizedBox(width: SahneSpace.x2),
+                  Expanded(
+                    flex: widths[i].round(),
+                    child: _StatTile(
+                      stat: visible[i],
+                      compact: true,
+                      bare: true,
+                    ),
+                  ),
+                ],
+              ],
+            );
+          }
+        }
+        const forceOne = false;
         // Büyük yazıda bile en az ikişerli; yalnız gerçekten dar kutuda
         // (< 240) tek sütuna inilir.
         final minCols = math.min(
@@ -1036,10 +1094,17 @@ class SahneResultStats extends StatelessWidget {
 }
 
 class _StatTile extends StatelessWidget {
-  const _StatTile({required this.stat, this.compact = false});
+  const _StatTile({
+    required this.stat,
+    this.compact = false,
+    this.bare = false,
+  });
 
   final SahneResultStat stat;
   final bool compact;
+
+  /// Simgesiz sıkışık çip (tek satırlık kısa ekran düzeni).
+  final bool bare;
 
   @override
   Widget build(BuildContext context) {
@@ -1056,14 +1121,16 @@ class _StatTile extends StatelessWidget {
             constraints: BoxConstraints(minHeight: compact ? 40 : 58),
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: SahneSpace.x3,
+                horizontal: bare ? SahneSpace.x2 : SahneSpace.x3,
                 vertical: compact ? SahneSpace.x1 : SahneSpace.x2,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox.square(dimension: 20, child: stat.leading),
-                  const SizedBox(width: SahneSpace.x2),
+                  if (!bare) ...[
+                    SizedBox.square(dimension: 20, child: stat.leading),
+                    const SizedBox(width: SahneSpace.x2),
+                  ],
                   if (compact)
                     // Sıkışık: sayı ve söz TEK satırda ("3 Doğru").
                     Flexible(
@@ -1076,12 +1143,16 @@ class _StatTile extends StatelessWidget {
                           children: [
                             Text(
                               '${stat.value}',
-                              style: SahneType.headline.copyWith(
-                                color: SahneVivid.onFill,
-                                fontFeatures: const [
-                                  FontFeature.tabularFigures(),
-                                ],
-                              ),
+                              style:
+                                  (bare
+                                          ? SahneType.captionStrong
+                                          : SahneType.headline)
+                                      .copyWith(
+                                        color: SahneVivid.onFill,
+                                        fontFeatures: const [
+                                          FontFeature.tabularFigures(),
+                                        ],
+                                      ),
                             ),
                             const SizedBox(width: SahneSpace.x1),
                             Text(

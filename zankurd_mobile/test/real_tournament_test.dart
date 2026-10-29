@@ -654,7 +654,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(find.textContaining('Yarı Final'), findsWidgets);
-    expect(find.text('1/2'), findsOneWidget);
+    expect(find.text('Tur 1/2'), findsOneWidget);
     expect(find.text('2/2'), findsNothing);
     expect(find.byKey(const ValueKey('tournament-join-new-cta')), findsNothing);
     expect(

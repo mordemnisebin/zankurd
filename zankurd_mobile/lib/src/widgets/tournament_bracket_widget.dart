@@ -164,7 +164,11 @@ class _RoundSection extends StatelessWidget {
               match: match,
               userId: userId,
               ku: ku,
-              onTap: () => onTapMatch(match),
+              // Henüz kurulmamış (iki oyuncusu da boş) kart dokunulamaz: buton
+              // gibi okunup hiçbir şey yapmıyordu.
+              onTap: match.playerOneId.isEmpty && match.playerTwoId.isEmpty
+                  ? null
+                  : () => onTapMatch(match),
             ),
           ),
       ],
@@ -183,7 +187,7 @@ class _BracketMatchCard extends StatelessWidget {
   final TournamentMatch match;
   final String userId;
   final bool ku;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +202,7 @@ class _BracketMatchCard extends StatelessWidget {
     final p2Won = isCompleted && match.winnerId == match.playerTwoId;
 
     return Semantics(
-      button: true,
+      button: onTap != null,
       label: Tr.forKu(K.matchSemantics, ku, {
         'one': match.playerOneName,
         'two': match.playerTwoName,

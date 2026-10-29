@@ -86,7 +86,10 @@ void main() {
       // (ikinci yarım cümle format kartından kalktı).
       // 2026-10-29 tur 6 Y7: hero açıklaması TEK satır; "dolmazsa eldeki
       // oyuncularla" sunucu kuralına (24 saat sonra en az 2 oyuncu) uymuyordu.
-      expect(find.text('Dolunca ya da 24 saat sonra başlar'), findsOneWidget);
+      expect(
+        find.text('Dolunca ya da 24 saat sonra en az 2 oyuncuyla başlar'),
+        findsOneWidget,
+      );
       expect(find.textContaining('eldeki oyuncularla başlar'), findsNothing);
       expect(
         find.text('En geç 24 saat içinde, eldeki oyuncularla'),

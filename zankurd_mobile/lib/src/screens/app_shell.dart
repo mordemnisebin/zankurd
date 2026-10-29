@@ -1200,10 +1200,28 @@ class _AppShellState extends State<AppShell>
   /// pay kalacak biçimde küçülür (en çok beşte birine kadar; gerçek yazı tipinde buna inilmez). Yazı ölçeği büyükse
   /// ölçüm de büyük hâliyle yapılır.
   Widget _withFittedNavLabels(BuildContext context, Widget bar) {
+    // Bütçe çubuğun GERÇEK genişliğinden ve gerçek sekme sayısından gelir
+    // (eskiden ekran genişliği / 4): yatay güvenli alan (yatay telefon, çentik)
+    // düşülür.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final pad = MediaQuery.paddingOf(context);
+        final barWidth = constraints.maxWidth.isFinite
+            ? constraints.maxWidth
+            : MediaQuery.sizeOf(context).width;
+        final usable = (barWidth - pad.left - pad.right).clamp(
+          0.0,
+          double.infinity,
+        );
+        return _fitLabels(context, bar, usable / _navLabelKeys.length);
+      },
+    );
+  }
+
+  Widget _fitLabels(BuildContext context, Widget bar, double slot) {
     final theme = Theme.of(context);
     final base = theme.navigationBarTheme.labelTextStyle?.resolve({});
     if (base == null) return bar;
-    final slot = MediaQuery.sizeOf(context).width / 4;
     final available = slot - 16;
     final scaler = MediaQuery.textScalerOf(context);
     final clamped = scaler.clamp(maxScaleFactor: 1.3);

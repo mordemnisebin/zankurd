@@ -305,6 +305,17 @@ class _ContestSkeleton extends StatelessWidget {
               SkeletonLine(width: 112, height: 44),
             ],
           ),
+          // "Sıralamaya ilk sonuç girer" açıklaması (dar telefonda üç satır) —
+          // yüklenince sayfa zıplamasın.
+          const SizedBox(height: SahneSpace.x3),
+          const SkeletonLine(height: 20),
+          const SizedBox(height: SahneSpace.x1),
+          const SkeletonLine(height: 20),
+          const SizedBox(height: SahneSpace.x1),
+          const Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: SkeletonLine(width: 220, height: 20),
+          ),
           // Önizleme satırı (geri sayım) ve alt boşluğu.
           const SizedBox(height: SahneSpace.x3),
           const SkeletonLine(width: 220, height: 20),
@@ -387,6 +398,19 @@ class _ContestContent extends StatelessWidget {
       children: [
         SahneSectionHeader(title: context.t(K.contestQuickInfo)),
         _ContestQuickStrip(contest: contest, ku: ku),
+        // Tekrar oynanabilir mi / hangi sonuç sayılır: sunucu yalnız günün
+        // İLK kaydını tutar (`submit_daily_event_result`: on conflict do
+        // nothing).
+        Padding(
+          padding: const EdgeInsets.only(top: SahneSpace.x3),
+          child: Text(
+            Tr.forKu(K.contestFirstCounts, ku),
+            key: const ValueKey('contest-first-counts'),
+            style: SahneType.caption.copyWith(
+              color: SahneTokens.of(context).tx2,
+            ),
+          ),
+        ),
       ],
     );
 

@@ -712,10 +712,6 @@ class Tr {
     // saat içinde eldeki oyuncularla başlar" sunucu kuralını yanlış anlatıyordu
     // (sunucu `start_due_tournaments`: 24 saat sonra EN AZ 2 oyuncu varsa
     // başlar, yoksa beklenir); ayrıntı "Nasıl oynanır?" içinde (cupRuleStart).
-    K.cupStartsShort: {
-      'ku': 'Gava temam bibe an piştî 24 saetan dest pê dike',
-      'tr': 'Dolunca ya da 24 saat sonra başlar',
-    },
     K.cupRuleStart: {
       'ku':
           'Piştî 24 saetan, heke herî kêm 2 lîstikvan hebin dest pê dike; '
@@ -2257,7 +2253,8 @@ class Tr {
     // dolunca yalnız skor göndermiş olan geçer (hükmen). Rakip hâlâ
     // oynayabilir; süre dolduktan sonra sonuç bir sonraki yenilemede gelir.
     K.tournamentWaitingOpponentDeadline: {
-      'ku': 'Heke hevrikê te heta {time} nelîze, tu bêyî lîstikê bi ser dikevî.',
+      'ku':
+          'Heke hevrikê te heta {time} nelîze, tu bêyî lîstikê bi ser dikevî.',
       'tr': 'Rakibin {time} tarihine kadar oynamazsa maçı hükmen kazanırsın.',
     },
     K.tournamentWaitingOpponentExpired: {
@@ -2266,11 +2263,76 @@ class Tr {
     },
     // Katılınca açılan yeni kupa: önceki kupa doluyken katılan oyuncu boş
     // bir "1/4" ekranına düşüyor ve nedenini göremiyordu.
-    K.tournamentNewOpened: {
+    // 2026-10-29 Astra bulguları (GPT-6 Astra): KU TASLAK, jüri bekler.
+    K.cupStartsShortMin: {
       'ku':
-          'Kûpayeke nû hat vekirin. Ji bo destpêkirinê hê {n} lîstikvan hewce ne.',
-      'tr':
-          'Yeni bir turnuva açıldı. Başlaması için {n} oyuncu daha gerekiyor.',
+          'Gava temam bibe an piştî 24 saetan bi herî kêm 2 lîstikvanan dest pê dike',
+      'tr': 'Dolunca ya da 24 saat sonra en az 2 oyuncuyla başlar',
+    },
+    K.cupLadderPreviewNote: {
+      'ku':
+          'Pêşdîtin: gava tevlî bibî, cihê te û hevrikên te li vir diyar dibin.',
+      'tr': 'Önizleme: katılınca yerin ve rakiplerin burada belli olur.',
+    },
+    K.cupFillRemaining: {
+      'ku': 'Heta destpêkirinê {left} maye',
+      'tr': 'Başlamasına {left} var',
+    },
+    K.cupFillElapsed: {
+      'ku': '24 saet derbas bûn; gava herî kêm 2 lîstikvan hebin dest pê dike.',
+      'tr': '24 saat doldu; en az 2 oyuncu olunca başlar.',
+    },
+    K.cupDurationHM: {'ku': '{h} saet {m} deqe', 'tr': '{h} sa {m} dk'},
+    K.cupDurationM: {'ku': '{m} deqe', 'tr': '{m} dk'},
+    K.tournamentPracticeNote: {
+      'ku': 'Cihê te yê di kûpaya rastîn de dimîne; meşq bê xelat e.',
+      'tr': 'Gerçek turnuvadaki yerin korunur; antrenman ödülsüzdür.',
+    },
+    K.cupStandingActive: {'ku': 'Li bendê ye', 'tr': 'Bekliyor'},
+    K.cupStandingFinalist: {'ku': 'Fînalîst', 'tr': 'Finalist'},
+    K.cupStandingsNote: {
+      'ku': 'Rêzbendî: pêşî rewşa kûpayê, paşê pûan.',
+      'tr': 'Sıralama: önce turnuvadaki durum, sonra puan.',
+    },
+    K.cupRoundBadge: {'ku': 'Ger {n}/{total}', 'tr': 'Tur {n}/{total}'},
+    K.cupMatchVs: {
+      'ku': 'Li hemberî {opponent}: {my} – {their}',
+      'tr': '{opponent} karşısında {my} – {their}',
+    },
+    K.cupWonRound: {
+      'ku': 'Te gera {round} bi ser xist',
+      'tr': '{round} turunu kazandın',
+    },
+    K.cupWonNext: {
+      'ku': 'Gava hevrikê gera din diyar bibe, pêşbirka te li vir vedibe.',
+      'tr': 'Sonraki turun rakibi belli olunca maçın burada açılır.',
+    },
+    K.tournamentWaitingOpponentScore: {
+      'ku':
+          'Pûana te hate tomarkirin: {score}; em li benda bersiva hevrikê te ne.',
+      'tr': 'Puanın kaydedildi: {score}; rakibinin oynamasını bekliyoruz.',
+    },
+    K.longestStreak: {'ku': 'Zincîra herî dirêj', 'tr': 'En uzun seri'},
+    K.matchNoAnswers: {
+      'ku': 'Tu bersiv nehat dayîn; kes pûan negirt.',
+      'tr': 'Hiç cevap verilmedi; kimse puan almadı.',
+    },
+    K.participationReward: {'ku': 'Xelata beşdariyê', 'tr': 'Katılım ödülü'},
+    K.asyncDuelAnswerSummary: {
+      'ku': '{name}: {c} rast · {w} şaş · {b} vala',
+      'tr': '{name}: {c} doğru · {w} yanlış · {b} boş',
+    },
+    K.asyncDuelTimes: {
+      'ku': 'Dem: Tu {my} · {name} {opp}',
+      'tr': 'Süre: Sen {my} · {name} {opp}',
+    },
+    K.contestFirstCounts: {
+      'ku': 'Encama yekem dikeve rêzbendiyê; dikarî dîsa bilîzî.',
+      'tr': 'Sıralamaya ilk sonucun girer; tekrar oynayabilirsin.',
+    },
+    K.tournamentNeedMore: {
+      'ku': 'Ji bo destpêkirinê hê {n} lîstikvan hewce ne.',
+      'tr': 'Başlaması için {n} oyuncu daha gerekiyor.',
     },
     K.championRewardGranted: {
       'ku': 'Pîroz be! Xelata şampiyoniyê: {coins} zêr',
@@ -4605,7 +4667,6 @@ class K {
   static const botTournament = 'tournament.bot';
   static const bracket = 'tournament.bracket';
   static const standings = 'tournament.standings';
-  static const cupStartsShort = 'tournament.startsShort';
   static const cupRuleStart = 'tournament.ruleStart';
   static const botDailyCup = 'tournament.botDailyCup';
   static const formatSummary = 'tournament.formatSummary';
@@ -5180,7 +5241,29 @@ class K {
       'tournament.waitingOpponentDeadline';
   static const tournamentWaitingOpponentExpired =
       'tournament.waitingOpponentExpired';
-  static const tournamentNewOpened = 'tournament.newOpened';
+  static const tournamentNeedMore = 'tournament.needMore';
+  static const cupStartsShortMin = 'tournament.startsShortMin';
+  static const cupLadderPreviewNote = 'tournament.ladderPreviewNote';
+  static const cupFillRemaining = 'tournament.fillRemaining';
+  static const cupFillElapsed = 'tournament.fillElapsed';
+  static const cupDurationHM = 'tournament.durationHM';
+  static const cupDurationM = 'tournament.durationM';
+  static const tournamentPracticeNote = 'tournament.practiceNote';
+  static const cupStandingActive = 'tournament.standing.active';
+  static const cupStandingFinalist = 'tournament.standing.finalist';
+  static const cupStandingsNote = 'tournament.standingsNote';
+  static const cupRoundBadge = 'tournament.roundBadge';
+  static const cupMatchVs = 'tournament.matchVs';
+  static const cupWonRound = 'tournament.wonRound';
+  static const cupWonNext = 'tournament.wonNext';
+  static const tournamentWaitingOpponentScore =
+      'tournament.waitingOpponentScore';
+  static const longestStreak = 'result.longestStreak';
+  static const matchNoAnswers = 'result.matchNoAnswers';
+  static const participationReward = 'result.participationReward';
+  static const asyncDuelAnswerSummary = 'duel.async.answerSummary';
+  static const asyncDuelTimes = 'duel.async.times';
+  static const contestFirstCounts = 'contest.firstCounts';
   static const championRewardGranted = 'tournament.championReward';
   static const tournamentMatchSubmitFailed = 'tournament.matchSubmitFailed';
   static const buyAction = 'shop.buy';

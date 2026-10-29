@@ -489,9 +489,14 @@ void main() {
         testShell(child: TournamentScreen(repository: freshMockRepository())),
       );
       await tester.pumpAndSettle();
-      final line = find.text('Dolunca ya da 24 saat sonra başlar');
+      final line = find.text(
+        'Dolunca ya da 24 saat sonra en az 2 oyuncuyla başlar',
+      );
       expect(line, findsOneWidget);
-      expect(tester.getSize(line).height, lessThan(24));
+      // 2026-10-29 Astra: başlama koşulu (en az 2 oyuncu) hero'da da yazılır,
+      // bekleme ekranıyla tutarlı olsun diye; dar telefonda İKİ satıra sarar
+      // (kesilmez). Tek satır şartı bilerek bu uzunluğa gevşetildi.
+      expect(tester.getSize(line).height, lessThan(48));
       // Sunucu kuralına uymayan eski söz hiçbir yerde yok.
       expect(find.textContaining('eldeki oyuncularla başlar'), findsNothing);
       // Yol çipleri birimli.
