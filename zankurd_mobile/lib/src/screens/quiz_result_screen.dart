@@ -204,9 +204,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   int get coinsAwarded => widget.coinsAwarded;
 
   /// Günlük tavan ödülü sıfırladı ya da istenenden aza indirdi mi?
+  ///
+  /// Kurul (Sol, 2026-10-29) "oda galibi +19, 0 puanlı +20 jeton": kusur değil
+  /// günlük oda tavanıydı (`claim_quiz_reward`, v_daily_cap 300; o gün çok
+  /// oynayan galibin payı tavana kırpıldı, `cap_reached` true). Ama not
+  /// çıkmıyordu: kıyas solo formülüyleydi ve oda payı onu aşıyordu. Çevrimiçi
+  /// odada sunucunun `cap_reached`i kırpmanın kendisidir (base_paid < base).
   bool get _dailyCapCutReward =>
       widget.dailyCapReached &&
       (coinsAwarded <= 0 ||
+          (widget.room.id?.trim() ?? '').isNotEmpty ||
           coinsAwarded <
               CoinCalculator.soloAward(
                 correctCount: widget.correctCount,

@@ -4096,7 +4096,12 @@ class Tr {
       'ku': 'Dema dora {name} were, ew ê agahdarî bistîne.',
       'tr': '{name} sırası gelince bildirim alacak.',
     },
-    K.asyncDuelStartNew: {'ku': 'Pêşbirka nû', 'tr': 'Yeni düello'},
+    // Kurul C20 (Astra + Sol): "Yeni düello" rozeti yeni özellik duyurusu
+    // gibi okunuyordu; eylem olduğu söylenir.
+    K.asyncDuelStartNew: {
+      'ku': 'Pêşbirkekê dest pê bike',
+      'tr': 'Düello başlat',
+    },
     K.challengeYourTurn: {'ku': 'Dora te ye', 'tr': 'Sıra sende'},
     K.challengeIncomingBy: {
       'ku': '{name} tu vexwendî pêşbirkê',

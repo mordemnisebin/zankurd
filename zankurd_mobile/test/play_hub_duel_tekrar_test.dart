@@ -65,7 +65,7 @@ void main() {
       reason: 'aynı bilgi üstteki sıra bölümünde zaten var',
     );
     expect(
-      find.descendant(of: tile, matching: find.text('Yeni düello')),
+      find.descendant(of: tile, matching: find.text('Düello başlat')),
       findsOneWidget,
     );
     // Eyleme çevrilebilir bilgi üstte kalır.
@@ -77,7 +77,7 @@ void main() {
     final tile = find.byKey(const ValueKey('play-hub-async-duel'));
     expect(tile, findsOneWidget);
     expect(
-      find.descendant(of: tile, matching: find.text('Yeni düello')),
+      find.descendant(of: tile, matching: find.text('Düello başlat')),
       findsNothing,
     );
     expect(
