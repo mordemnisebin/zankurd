@@ -2346,7 +2346,10 @@ class Tr {
       'ku': 'Serkeftiyê pêşbirka {n}',
       'tr': '{n}. maçın kazananı',
     },
-    K.matchNotPlayedShort: {'ku': 'Nehatiye lîstin', 'tr': 'Oynanmadı'},
+    K.matchAwaitingResultShort: {
+      'ku': 'Li benda encamê',
+      'tr': 'Sonuç bekleniyor',
+    },
     K.cupRoundBadge: {'ku': 'Ger {n}/{total}', 'tr': 'Tur {n}/{total}'},
     K.cupMatchVs: {
       'ku': 'Li hemberî {opponent}: {my} – {their}',
@@ -5319,7 +5322,7 @@ class K {
   static const cupStandingActive = 'tournament.standing.active';
   static const cupStandingFinalist = 'tournament.standing.finalist';
   static const bracketWinnerOf = 'cup.bracket.winnerOf';
-  static const matchNotPlayedShort = 'cup.bracket.notPlayed';
+  static const matchAwaitingResultShort = 'cup.bracket.awaitingResult';
   static const cupStandingsNote = 'tournament.standingsNote';
   static const cupRoundBadge = 'tournament.roundBadge';
   static const cupMatchVs = 'tournament.matchVs';

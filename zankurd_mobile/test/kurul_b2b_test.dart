@@ -259,6 +259,32 @@ void main() {
       ],
       createdAt: DateTime(2026, 10, 29),
     );
+    final started = TournamentBracket(
+      tournamentId: 't',
+      userId: 'me',
+      size: 4,
+      entryCount: 4,
+      rounds: const [
+        TournamentRound(
+          roundNumber: 1,
+          status: 'active',
+          matches: [
+            TournamentMatch(
+              id: 'm1',
+              playerOneId: 'me',
+              playerOneName: 'ME',
+              playerTwoId: 'qali',
+              playerTwoName: 'QALI',
+              playerOneScore: 134,
+              playerTwoScore: 0,
+              status: 'active',
+              winnerId: '',
+            ),
+          ],
+        ),
+      ],
+      createdAt: DateTime(2026, 10, 29),
+    );
 
     for (final width in [320.0, 402.0]) {
       testWidgets('bilinen finalist yazılır, öteki "2. maçın kazananı" '
@@ -283,13 +309,33 @@ void main() {
         expect(tester.takeException(), isNull);
         expect(find.text('2. maçın kazananı'), findsOneWidget);
         expect(find.text('QABERO'), findsNWidgets(2));
-        expect(find.text('Oynanmadı'), findsWidgets);
+        expect(find.text('Sonuç bekleniyor'), findsWidgets);
         expect(find.text('VS'), findsNothing);
         await tester.tap(find.text('2. maçın kazananı'));
         await tester.pumpAndSettle();
         expect(tapped, isNull, reason: 'Yer tutucu Final dokunulamaz.');
       });
     }
+
+    testWidgets('tamamlanmamış maç her durumda "Sonuç bekleniyor" (0 puanlı '
+        'gönderim hiç oynanmamıştan ayrılamaz)', (tester) async {
+      await tester.pumpWidget(
+        testShell(
+          child: Scaffold(
+            body: SingleChildScrollView(
+              child: TournamentBracketWidget(
+                bracket: started,
+                userId: 'me',
+                ku: false,
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Sonuç bekleniyor'), findsOneWidget);
+      expect(find.text('Oynanmadı'), findsNothing);
+    });
 
     test('sıralama notu sağdaki sayının ne olduğunu söyler', () {
       expect(

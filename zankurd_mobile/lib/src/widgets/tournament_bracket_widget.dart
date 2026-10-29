@@ -310,7 +310,10 @@ class _BracketMatchCard extends StatelessWidget {
                                   : hasPlayers
                                   // Kurul 1 (C32): yalnız "VS" maçın oynanıp
                                   // oynanmadığını söylemiyordu.
-                                  ? Tr.forKu(K.matchNotPlayedShort, ku)
+                                  // Astra incelemesi: istemci 0 puanlı bir
+                                  // gönderimi "hiç oynanmadı"dan ayıramaz;
+                                  // her iki durumda da doğru olan söz.
+                                  ? Tr.forKu(K.matchAwaitingResultShort, ku)
                                   : '—',
                               maxLines: 1,
                               softWrap: false,
