@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
@@ -519,4 +521,95 @@ double quizDockHeight(
     jokers = base.scale(20) + 8 + chip + 2;
   }
   return strip > jokers ? strip : jokers;
+}
+
+/// Sahnenin ÜSTÜNDE, yerleşimi itmeden beliren kısa bildirim (kurul C31).
+///
+/// 2026-10-29 kurul (Astra/Terra/Sol 3/3): yarım kalan soruya dönüşte
+/// "süre işlemeye devam ediyor" bilgisi ekranın en altında küçük bir
+/// SnackBar'daydı; oyuncu soruya bakarken görmüyor, dönüşte 4 sn kaldığını
+/// sayaçtan ancak fark ediyordu. Bildirim artık soru alanının üstünde, sayaç
+/// ikonuyla ve kehribar tonla belirir; kaplama katmanında çizildiği için
+/// soru ve şıklar yerinden oynamaz (kayma kuralı). [duration] sonunda ya da
+/// [QuizStageNotice.dismiss] ile kalkar.
+class QuizStageNotice {
+  QuizStageNotice._(this._entry);
+
+  final OverlayEntry _entry;
+  Timer? _timer;
+  bool _removed = false;
+
+  static const key = ValueKey('quiz-stage-top-notice');
+
+  static QuizStageNotice? show(
+    BuildContext context,
+    String message, {
+    Duration duration = const Duration(seconds: 5),
+  }) {
+    final overlay = Overlay.maybeOf(context);
+    if (overlay == null) return null;
+    final top = MediaQuery.paddingOf(context).top + 72;
+    final entry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: top,
+        left: SahneSpace.page,
+        right: SahneSpace.page,
+        child: IgnorePointer(
+          child: Semantics(
+            liveRegion: true,
+            child: Material(
+              type: MaterialType.transparency,
+              child: Builder(
+                builder: (context) {
+                  final t = SahneTokens.of(context);
+                  return DecoratedBox(
+                    key: key,
+                    decoration: ShapeDecoration(
+                      color: t.goldTint,
+                      shape: SahneShape.withSide(
+                        SahneShape.m,
+                        t.goldTx,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: SahneSpace.x4,
+                        vertical: SahneSpace.x3,
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(AppIcons.clock, size: 22, color: t.goldTx),
+                          const SizedBox(width: SahneSpace.x3),
+                          Expanded(
+                            child: Text(
+                              message,
+                              style: SahneType.bodyStrong.copyWith(
+                                color: t.goldTx,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    final notice = QuizStageNotice._(entry);
+    overlay.insert(entry);
+    notice._timer = Timer(duration, notice.dismiss);
+    return notice;
+  }
+
+  void dismiss() {
+    _timer?.cancel();
+    if (_removed) return;
+    _removed = true;
+    _entry.remove();
+  }
 }
