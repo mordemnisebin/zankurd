@@ -160,7 +160,7 @@ extension _QuizScreenUI on _QuizScreenState {
     if (widget.is1v1) {
       above += _QuizHeaderHeights.duel(base, tug: !shortScreen) + headerGap;
     } else if (_isCrowd) {
-      above += _QuizHeaderHeights.crowd(base) + headerGap;
+      above += _QuizHeaderHeights.crowd(base, contentWidth) + headerGap;
     }
     var inPrompt = 0.0;
     if (_translationRevealAllowed && _isKu) {
@@ -685,8 +685,27 @@ extension _QuizScreenUI on _QuizScreenState {
               MediaQuery.textScalerOf(context),
               practice: widget.practice,
               jokerCapable: jokerCapable,
-              width: MediaQuery.sizeOf(context).width,
+              screenWidth: MediaQuery.sizeOf(context).width,
               shortScreen: MediaQuery.sizeOf(context).height < 700,
+              compactRow: _isMultiplayer,
+              actionLabels: [
+                context.t(K.continueAction),
+                context.t(K.finishAction),
+                if (_isMultiplayer) ...[
+                  context.t(K.waitingOpponent),
+                  context.t(K.crowdWaitingOthers),
+                  context.t(K.sureDoldu),
+                  context.t(K.sonrakiSoruPS, {'p0': '88'}),
+                ],
+              ],
+              ratingLabels: [
+                context.t(K.difficultyHard),
+                context.t(K.difficultyMedium),
+                context.t(K.difficultyEasy),
+              ],
+              jokerLabels: [
+                for (final type in WildcardType.values) type.label(_isKu),
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

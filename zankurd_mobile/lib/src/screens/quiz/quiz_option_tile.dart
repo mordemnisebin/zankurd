@@ -341,7 +341,10 @@ class QuizOptionTile extends StatelessWidget {
             children: [
               tile0,
               PositionedDirectional(
-                top: -9,
+                // Çıkıntı, şıklar arası boşluk + önceki şıkkın alt iç
+                // boşluğu kadardır (en çok 9): rozet önceki şıkkın YAZISINA
+                // girmez; boşluk daraldıkça rozet kendi şıkkına doğru iner.
+                top: -(fit.optionGap + fit.optionVPad).clamp(0.0, 9.0),
                 start: 56,
                 end: SahneSpace.x3,
                 child: IgnorePointer(

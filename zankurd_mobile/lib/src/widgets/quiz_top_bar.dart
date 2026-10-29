@@ -123,17 +123,10 @@ class QuizStageCenter extends StatelessWidget {
           const SizedBox(width: SahneSpace.x2),
         ],
         Flexible(
-          child: Text(
+          child: _FitKicker(
             '$progress · $name',
-            key: textKey,
-            // Üç nokta yok: uzun künye iki satıra iner, çok uzunsa punto bir
-            // basamak (≥ 12) küçülür; üçüncü satır payı son çaredir.
-            maxLines: 3,
-            overflow: TextOverflow.clip,
-            style: SahneType.eyebrow.copyWith(
-              color: onBand ? SahneVivid.onFill : t.tx,
-              fontSize: _kickerSize('$progress · $name'),
-            ),
+            textKey: textKey,
+            color: onBand ? SahneVivid.onFill : t.tx,
           ),
         ),
       ],
@@ -183,10 +176,61 @@ class QuizStageCenter extends StatelessWidget {
   }
 }
 
-/// Künyenin puntosu: yer sahnenin üst çubuğunun ORTA yuvasıdır (iki yan
-/// grup düştükten sonra kalan genişlik); uzun künye kısalmaz, küçülür.
-double _kickerSize(String label) =>
-    label.length <= 24 ? 14 : (label.length <= 32 ? 13 : 12);
+/// Üst çubuk künyesi (2026-10-29, Astra 2. inceleme): yer, orta yuvanın GERÇEK
+/// genişliğidir; punto karakter sayısına göre DEĞİL, metin o genişlikte
+/// gerçek yazı ölçeğiyle ölçülerek seçilir: en büyük punto (14 → 11) ki künye
+/// en çok iki satıra sığsın; 11'de de sığmazsa gereken satır sayısı kadar
+/// satıra iner. `maxLines` ölçülen satır sayısıdır: metin ASLA kesilmez
+/// (`didExceedMaxLines` hep false).
+class _FitKicker extends StatelessWidget {
+  const _FitKicker(this.text, {required this.textKey, required this.color});
+
+  final String text;
+  final Key textKey;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final scaler = MediaQuery.textScalerOf(context);
+    final dts = DefaultTextStyle.of(context).style;
+    return LayoutBuilder(
+      builder: (context, c) {
+        final width = c.maxWidth.isFinite ? c.maxWidth : 10000.0;
+        int linesAt(double size) {
+          final p = TextPainter(
+            text: TextSpan(
+              text: text,
+              style: dts
+                  .merge(SahneType.eyebrow)
+                  .copyWith(
+                    fontFamily: SahneType.eyebrow.fontFamily,
+                    fontSize: size,
+                  ),
+            ),
+            textDirection: TextDirection.ltr,
+            textScaler: scaler,
+          )..layout(maxWidth: width);
+          final n = p.computeLineMetrics().length;
+          p.dispose();
+          return n;
+        }
+
+        var size = 14.0;
+        var lines = linesAt(size);
+        while (lines > 2 && size > 11) {
+          size -= 1;
+          lines = linesAt(size);
+        }
+        return Text(
+          text,
+          key: textKey,
+          maxLines: lines,
+          style: SahneType.eyebrow.copyWith(color: color, fontSize: size),
+        );
+      },
+    );
+  }
+}
 
 /// Alt perdesi olmayan soru ekranında (sırayla düello) ders/yarış alt
 /// perdesinin gövdeden düştüğü yükseklik (güvenli alan hariç). Y3

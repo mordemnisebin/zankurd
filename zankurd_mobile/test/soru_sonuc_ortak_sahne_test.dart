@@ -45,6 +45,7 @@ import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
+import 'package:zankurd_mobile/src/widgets/quiz_stage_kit.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -176,14 +177,23 @@ void main() {
       final text = e.widget as Text;
       // U8 (2026-10-28 tur 4): joker adı ≥ 12 sp.
       expect(text.style!.fontSize, greaterThanOrEqualTo(12));
-      // Ad küçültülmez: FittedBox altında değil.
-      expect(
-        find.ancestor(
-          of: find.byWidget(text),
-          matching: find.byType(FittedBox),
-        ),
-        findsNothing,
+      // Ad küçültülmez: kendi FittedBox'ı yok. Tek istisna alt perdenin
+      // kutusu (`QuizStableDockHeight`): hesap doğruysa ölçek 1'dir; sapma
+      // `soru_sigma_ek_test`te "içerik ≤ ayrılan yükseklik" ile yakalanır.
+      final fitted = find.ancestor(
+        of: find.byWidget(text),
+        matching: find.byType(FittedBox),
       );
+      expect(fitted.evaluate().length, lessThanOrEqualTo(1));
+      if (fitted.evaluate().isNotEmpty) {
+        expect(
+          find.descendant(
+            of: find.byType(QuizStableDockHeight),
+            matching: find.byWidget(fitted.evaluate().single.widget),
+          ),
+          findsOneWidget,
+        );
+      }
     }
     // Fiyat/"Ücretsiz" adın metniyle aynı Text değil, ayrı hap.
     final free = find.byKey(const ValueKey('joker-free-badge'));

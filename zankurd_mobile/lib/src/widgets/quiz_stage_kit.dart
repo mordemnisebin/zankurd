@@ -407,44 +407,108 @@ class QuizStableDockHeight extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // OverflowBox: içerik ayrılan boyu aşarsa (ölçü yazı tipi
-    // gerçek metrikleri taşımayan testler) hata fırlatmaz ve alt perde
-    // UZAMAZ; aşma bekçide ölçülür (`soru_sigma_ek_test`, "alt perde").
-    return SizedBox(
-      height: height,
-      child: OverflowBox(
-        alignment: Alignment.center,
-        // a11y-tap-target: noninteractive — yerleşim kutusu, dokunma hedefi
-        // değil (içindeki düğmeler kendi 48'lik kutusunu taşır).
-        minHeight: 0,
-        maxHeight: double.infinity,
-        child: child,
+    // Sabit kutu; OverflowBox YOK (aşan kısım dokunma almazdı). Hesap
+    // doğruysa içerik zaten sığar (ölçek 1). Yazı tipi metriği hesaptan
+    // sapar da içerik kutuyu aşarsa FittedBox onu kutunun İÇİNE küçültür:
+    // dokunma hedefi ve görünüm kutuda kalır, alt perde uzamaz. Sapma
+    // bekçide ölçülür (`soru_sigma_ek_test`: içerik ≤ ayrılan yükseklik).
+    return LayoutBuilder(
+      builder: (context, c) => SizedBox(
+        height: height,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: SizedBox(width: c.maxWidth, child: child),
+        ),
       ),
     );
   }
 }
 
-/// Alt perdenin ayrılan yüksekliği.
+/// Alt perdenin ayrılan yüksekliği: GERÇEK genişlik, yazı ölçeği ve etiket
+/// metinleriyle HESAPLANIR (durum ölçülmez).
 ///
-/// * şerit: 12 + 12 iç boşluk + 52'lik düğme (alıştırmada başlık + düğme);
-/// * joker bloğu: bakiye satırı + 8 + çipler (96, büyük yazıda +50·(ölçek−1));
-///
+/// * şerit: 12 + 12 iç boşluk + düğme; düğme = en az 52, etiket kaç satıra
+///   sarıyorsa o kadar (satır · 24 · ölçek + 24). Etiketler en geniş eylem
+///   yuvasında ölçülür; alıştırmada başlık + üç zorluk düğmesi;
+/// * joker bloğu: bakiye satırı + 8 + çip; çip = 66 (+ büyük yazıda) ve
+///   etiket görünürse etiketin satırları (≤ 2).
 double quizDockHeight(
   TextScaler base, {
   required bool practice,
   required bool jokerCapable,
-  required double width,
+  required double screenWidth,
   required bool shortScreen,
+  required bool compactRow,
+  required List<String> actionLabels,
+  required List<String> ratingLabels,
+  required List<String> jokerLabels,
 }) {
   final s = base.scale(16) / 16;
-  // Düğme: en az 52; tek satır etiket 24·ölçek + 24 dikey boşluk.
-  final button = base.scale(24) + 24 > 52 ? base.scale(24) + 24 : 52.0;
-  final strip = practice ? 24 + base.scale(26) + 12 + button : 24 + button;
-  // Etiketli çipler dar genişlikte iki satıra sarar (≈ 124); etiketsiz
-  // (kısa ekran / büyük yazı) çipler ≈ 100.
-  final labels = !shortScreen && s < 1.3;
-  final jokers = jokerCapable
-      ? (labels ? 124 : 100) + 40 * (s - 1).clamp(0.0, 0.3)
-      : 0.0;
+  final dockWidth = (screenWidth - 2 * SahneSpace.page).clamp(0.0, 800.0);
+  final inner = dockWidth - 24;
+
+  int lines(String text, TextStyle style, double width) {
+    if (width <= 4) return 1;
+    final p = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: style.copyWith(fontFamily: style.fontFamily),
+      ),
+      textDirection: TextDirection.ltr,
+      textScaler: base,
+    )..layout(maxWidth: width);
+    final n = p.computeLineMetrics().length;
+    p.dispose();
+    return n < 1 ? 1 : n;
+  }
+
+  double buttonHeight(List<String> texts, double actionWidth) {
+    // Düğme iç genişliği: 12'şer yan boşluk + ok/ikon yuvası (≈ 28).
+    final textWidth = actionWidth - 24 - 28;
+    var maxLines = 1;
+    for (final t in texts) {
+      final n = lines(t, SahneType.button, textWidth);
+      if (n > maxLines) maxLines = n;
+    }
+    final h = maxLines * base.scale(24) + 24;
+    return h > 52 ? h : 52;
+  }
+
+  final largeText = base.scale(14) > 17.0;
+  final double strip;
+  if (practice) {
+    // Başlık satırı + 12 + üç eşit düğme (8'er aralık).
+    final rating = buttonHeight(ratingLabels, (inner - 16) / 3);
+    strip = 24 + base.scale(26) + 12 + rating;
+  } else if (compactRow || largeText) {
+    // [✓/✗ ikonu 24 + 8] + tam genişlik eylem.
+    strip = 24 + buttonHeight(actionLabels, inner - 32);
+  } else {
+    // Maskot 44 + 8 + başlık (≤ 1/3) + 12; eylem kalanın 2/3'ü.
+    strip = 24 + buttonHeight(actionLabels, (inner - 64) * 2 / 3);
+  }
+
+  var jokers = 0.0;
+  if (jokerCapable) {
+    final showLabel = !shortScreen && base.scale(14) < 18.2;
+    final chipWidth = (dockWidth - 3 * 8) / 4;
+    var labelLines = 1;
+    if (showLabel) {
+      for (final l in jokerLabels) {
+        final n = lines(
+          l,
+          SahneType.caption.copyWith(fontSize: 12, height: 1.15),
+          chipWidth - 8,
+        );
+        if (n > labelLines) labelLines = n;
+      }
+      if (labelLines > 2) labelLines = 2;
+    }
+    final chip =
+        66 +
+        60 * (s - 1).clamp(0.0, 0.35) +
+        (showLabel ? 2 + labelLines * base.scale(13.8) : 0);
+    jokers = base.scale(20) + 8 + chip + 2;
+  }
   return strip > jokers ? strip : jokers;
 }

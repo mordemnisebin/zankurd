@@ -123,8 +123,8 @@ class QuizFit {
       promptPad: level >= 6 ? 4 : (level >= 5 ? 8 : (level >= 3 ? 10 : 12)),
       sectionGap: level >= 6 ? 4 : (level >= 5 ? 6 : (level >= 3 ? 8 : 12)),
       optionGap: level >= 6 ? 2 : (level >= 5 ? 4 : (level >= 3 ? 6 : 8)),
-      // Son kademe 46: iOS'un 44 pt dokunma tabanının üstünde.
-      optionMinHeight: level >= 6 ? 46 : (level >= 2 ? 48 : 52),
+      // Dokunma tabanı HER kademede 48 (Android 48 dp).
+      optionMinHeight: level >= 2 ? 48 : 52,
       optionVPad: level >= 6 ? 0 : (level >= 3 ? 2 : 4),
       promptLineHeight: const [null, null, 1.2, 1.15, 1.1, 1.1, 1.04][level],
       optionLineHeight: const [null, null, 1.35, 1.28, 1.22, 1.18, 1.1][level],
@@ -146,11 +146,30 @@ class QuizFit {
     double extraInPrompt = 0,
   }) {
     // Her yapılandırmada 36–72 TextPainter koşardı; girdilerle önbelleğe alınır.
-    final key =
-        '$level|${prompt.hashCode}|${Object.hashAll(answers)}|$width|'
-        '${base.scale(16)}|${base.scale(22)}|$listenButton|$titleLineBudget|'
-        '$extraInPrompt|${DefaultTextStyle.of(context).style.hashCode}|'
-        '$optionVPad';
+    // Anahtar: metinler İÇERİKLE (hash değil), bütün kademe alanları ve
+    // ölçekleyicinin birkaç punto için gerçek çıktısı (doğrusal olmayan
+    // ölçekleyiciler dahil).
+    final key = [
+      level,
+      questionScale,
+      optionScale,
+      promptPad,
+      sectionGap,
+      optionGap,
+      optionMinHeight,
+      optionVPad,
+      promptLineHeight,
+      optionLineHeight,
+      outerPad,
+      width,
+      listenButton,
+      titleLineBudget,
+      extraInPrompt,
+      for (final pt in const [11.0, 14.0, 16.0, 22.0, 26.0]) base.scale(pt),
+      DefaultTextStyle.of(context).style,
+      prompt,
+      ...answers,
+    ].join('\u0001');
     final hit = _cache.remove(key);
     if (hit != null) {
       _cache[key] = hit;
@@ -372,17 +391,47 @@ class QuizFitLine extends StatelessWidget {
           return w;
         }
 
+        // Genişlik sıfır/negatif/çok dar ise hiçbir ölçü yapılmaz: okunur
+        // tabanda (11 pt) sarılı metin; punto HER adımda pozitiftir.
+        final tooNarrow = !c.maxWidth.isFinite ? false : c.maxWidth < 8;
+        // `scaler.scale(size) >= _minPt` sağlayan EN KÜÇÜK punto (ölçekleyici
+        // doğrusal olmasa da): aralık araması, sonra doğrulama.
+        double floorSize() {
+          var lo = 1.0;
+          var hi = fs;
+          if (scaler.scale(hi) < _minPt) return hi;
+          for (var i = 0; i < 24; i++) {
+            final mid = (lo + hi) / 2;
+            if (scaler.scale(mid) >= _minPt) {
+              hi = mid;
+            } else {
+              lo = mid;
+            }
+          }
+          return hi;
+        }
+
         var size = fs;
         var lines = 1;
-        if (c.maxWidth.isFinite && widthAt(fs) > c.maxWidth) {
+        if (tooNarrow) {
+          size = floorSize();
+          lines = maxLines;
+        } else if (c.maxWidth.isFinite && widthAt(fs) > c.maxWidth) {
+          final floor = floorSize();
           // Orantı yetmez (harf genişliği punto ile tam doğrusal değil):
-          // sığana kadar birkaç kez yeniden ölç.
-          size = fs * ((c.maxWidth - 3) / widthAt(fs));
+          // sığana kadar birkaç kez yeniden ölç; taban altına inme.
+          size = (fs * ((c.maxWidth - 3) / widthAt(fs))).clamp(floor, fs);
           for (var i = 0; i < 6 && widthAt(size) > c.maxWidth - 1.5; i++) {
-            size *= (c.maxWidth - 3) / widthAt(size);
+            final next = (size * ((c.maxWidth - 3) / widthAt(size))).clamp(
+              floor,
+              fs,
+            );
+            if (next >= size) break;
+            size = next;
           }
-          if (scaler.scale(size) < _minPt) {
-            size = _minPt / (scaler.scale(fs) / fs);
+          if (widthAt(size) > c.maxWidth - 0.5) {
+            // Tabanda da tek satıra sığmadı: tabanda sar.
+            size = floor;
             lines = maxLines;
           }
         }
@@ -399,4 +448,36 @@ class QuizFitLine extends StatelessWidget {
       },
     );
   }
+}
+
+/// Oda skor şeridinin sütun sayısı (2026-10-29, Astra 2. inceleme): ölçerek
+/// seçilir. Çip = iç boşluk 8 + avatar 20 + 4 + puan; puan
+/// okunur tabanda (11 pt çizilen) en kötü 5 haneli ("99.999") ölçülür, yani
+/// puan oyun içinde büyüyünce sütun sayısı DEĞİŞMEZ. Dört çip [innerWidth]'e
+/// sığıyorsa 4, sığmıyorsa 2.
+int quizCrowdColumns(TextScaler scaler, double innerWidth) {
+  double widthOf(String text, double size) {
+    final p = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: SahneType.captionStrong.copyWith(
+          fontFamily: SahneType.text,
+          fontSize: size,
+          fontFeatures: const [FontFeature.tabularFigures()],
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+      textScaler: scaler,
+    )..layout();
+    final w = p.width;
+    p.dispose();
+    return w;
+  }
+
+  // Çizilen 11 pt'e denk punto (ölçek 1'in altına inmez); en kötü 5 haneli
+  // puan ("99.999").
+  final ratio = scaler.scale(12) / 12;
+  final score = widthOf('99.999', (11 / ratio).clamp(1.0, 12.0));
+  final need = 8 + 20 + 4 + score;
+  return (innerWidth - 3 * 4) / 4 >= need ? 4 : 2;
 }

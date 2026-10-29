@@ -919,43 +919,40 @@ class _CrowdScoreHeader extends StatelessWidget {
           shape: SahneShape.s,
         ),
         child: ConstrainedBox(
+          // a11y-tap-target: noninteractive — salt görüntü çipi.
           constraints: const BoxConstraints(minHeight: _QuizHeaderHeights.chip),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x1 + 2),
+            padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x1),
             child: Row(
               children: [
-                Text('${standing.rank}', maxLines: 1, style: tabular),
-                const SizedBox(width: SahneSpace.x1),
-                Expanded(
-                  // Çipte ad YOK, avatar var: dört çip ~75 pt'lik yuvaya
-                  // sığsın, ad kırpılmasın ya da okunmaz küçülmesin. Ad
-                  // ekran okuyucu etiketindedir.
-                  child: Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Semantics(
-                      label:
-                          '${standing.rank}. ${context.playerDisplayName(standing.player.name, tag: standing.player.tag)}, ${standing.player.score}',
-                      excludeSemantics: true,
-                      child: PlayerAvatar(
-                        radius: 10,
-                        photoUrl: standing.player.avatarUrl,
-                        iconId: standing.player.avatarIcon,
-                        colorHex: standing.player.avatarColor,
-                        frameId: standing.player.avatarFrame,
-                        showcaseTitle: standing.player.showcaseTitle,
-                        displayName: standing.player.name,
-                        colorOverride:
-                            colorOverrides[standing.player.id ??
-                                standing.player.name],
-                      ),
-                    ),
+                // Çipte ad ve sıra rakamı YOK: sıra soldan sağa sıradır, ad
+                // avatar + ekran okuyucu etiketindedir (5 haneli puan da
+                // 80 pt'lik yuvaya sığsın).
+                Semantics(
+                  label:
+                      '${standing.rank}. ${context.playerDisplayName(standing.player.name, tag: standing.player.tag)}, ${standing.player.score}',
+                  excludeSemantics: true,
+                  child: PlayerAvatar(
+                    radius: 10,
+                    photoUrl: standing.player.avatarUrl,
+                    iconId: standing.player.avatarIcon,
+                    colorHex: standing.player.avatarColor,
+                    frameId: standing.player.avatarFrame,
+                    showcaseTitle: standing.player.showcaseTitle,
+                    displayName: standing.player.name,
+                    colorOverride:
+                        colorOverrides[standing.player.id ??
+                            standing.player.name],
                   ),
                 ),
                 const SizedBox(width: SahneSpace.x1),
-                Text(
-                  groupThousands(standing.player.score),
-                  maxLines: 1,
-                  style: tabular.copyWith(color: t.goldTx),
+                Expanded(
+                  // Puan okunur tabana (11 pt) kadar küçülür.
+                  child: QuizFitLine(
+                    groupThousands(standing.player.score),
+                    alignment: AlignmentDirectional.centerEnd,
+                    style: tabular.copyWith(color: t.goldTx),
+                  ),
                 ),
               ],
             ),
@@ -964,10 +961,7 @@ class _CrowdScoreHeader extends StatelessWidget {
       );
     }
 
-    // Yazı ölçeği > 1,3: çipler 2×2 dizilir (dört yan yana sığmaz).
-    final cols = _QuizHeaderHeights.crowdColumns(
-      MediaQuery.textScalerOf(context),
-    );
+    // Dört çip sığmıyorsa (ölçülür) 2×2 dizilir.
     final strip = Semantics(
       label: context.t(K.crowdTopThree),
       container: true,
@@ -975,6 +969,10 @@ class _CrowdScoreHeader extends StatelessWidget {
         key: topKey,
         child: LayoutBuilder(
           builder: (context, c) {
+            final cols = quizCrowdColumns(
+              MediaQuery.textScalerOf(context),
+              c.maxWidth,
+            );
             final w = (c.maxWidth - SahneSpace.x1 * (cols - 1)) / cols;
             return Wrap(
               spacing: SahneSpace.x1,
@@ -1809,16 +1807,14 @@ class _QuizHeaderHeights {
       16 + 2 * s.scale(20) + (tug ? 8 + 12 : 0);
 
   /// Oda şeridi: 16 iç boşluk + üst satır + 4 + dört kompakt çip.
-  static double crowd(TextScaler s) {
-    final rows = (4 / crowdColumns(s)).ceil();
+  static double crowd(TextScaler s, double contentWidth) {
+    // Kart iç boşluğu 4+4, çerçeve 2 (bkz. `_CrowdScoreHeader`).
+    final rows = (4 / quizCrowdColumns(s, contentWidth - 10)).ceil();
     final chipH = max(chip, s.scale(17));
     return 2 * SahneSpace.x1 +
         max(28.0, s.scale(20)) +
         rows * (SahneSpace.x1 + chipH);
   }
-
-  /// Oda çiplerinin sütun sayısı: ölçek ≤ 1,3 → 4, aksi hâlde 2.
-  static int crowdColumns(TextScaler s) => s.scale(16) / 16 <= 1.3 ? 4 : 2;
 
   /// Kompakt oyuncu çipinin en az yüksekliği.
   static const double chip = 20;
