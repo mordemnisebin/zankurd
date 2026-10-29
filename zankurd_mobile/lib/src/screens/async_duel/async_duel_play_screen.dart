@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 
 import '../../config/category_visuals.dart';
 import '../../data/zankurd_repository.dart';
@@ -160,7 +161,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _resumedNotice?.dismiss();
+    _resumedTimer?.cancel();
     _timerController.dispose();
     super.dispose();
   }
@@ -276,8 +277,18 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       ..reset()
       ..start();
     _timerController.start();
-    unawaited(_presentCurrentQuestion());
+    // Sunucu sunumu dönene kadar kalan süre bilinmez (yarım kalan soruya
+    // dönüşte sunucu saati işlemiştir): sayaç "–" gösterir, tahmin yazmaz.
+    setState(() => _timeSynced = false);
+    unawaited(
+      _presentCurrentQuestion().whenComplete(() {
+        if (mounted && !_timeSynced) setState(() => _timeSynced = true);
+      }),
+    );
   }
+
+  /// Kalan süre sunucuyla eşitlendi mi (bkz. [_beginQuestion]).
+  bool _timeSynced = true;
 
   /// Turnuva: soru İÇERİĞİ sunumla gelir; soru ve sayaç ancak sunucu
   /// sunumu kaydettikten sonra görünür (sunucu süreyi o andan ölçer).
@@ -380,17 +391,30 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     );
   }
 
-  QuizStageNotice? _resumedNotice;
+  Timer? _resumedTimer;
 
-  /// Kurul C31: yarım kalan soruya dönüşte süre bilgisi sahnenin üstünde,
-  /// yerleşimi itmeden ([QuizStageNotice]).
+  /// Yarım kalan soruya dönüldüğü bilgisi gösteriliyor mu.
+  bool _resumedVisible = false;
+
+  /// Kurul C31 + tur 3 (2026-10-30): yarım kalan soruya dönüşte süre bilgisi.
+  ///
+  /// Önce en altta küçük bir SnackBar'dı (görülmüyordu); sonra sahnenin
+  /// üstünde bir kaplamaydı ve soru kartının ilk satırını ~4 sn örtüyordu.
+  /// Şimdi üst çubuktaki mod çipi 5 sn kehribar "Süre işliyor" olur — sayacın
+  /// hemen yanında, hiçbir şeyi örtmez ve çipin yüksekliği aynı olduğundan
+  /// yerleşimi itmez. Tam cümle ekran okuyucuya duyurulur.
   void _showResumedNotice() {
     if (!mounted) return;
-    _resumedNotice?.dismiss();
-    _resumedNotice = QuizStageNotice.show(
-      context,
+    _resumedTimer?.cancel();
+    setState(() => _resumedVisible = true);
+    SemanticsService.sendAnnouncement(
+      View.of(context),
       context.t(K.asyncDuelResumedQuestionNote),
+      Directionality.of(context),
     );
+    _resumedTimer = Timer(const Duration(seconds: 5), () {
+      if (mounted) setState(() => _resumedVisible = false);
+    });
   }
 
   void _handleAnswerTap(String answer) {
@@ -825,7 +849,10 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           textKey: const ValueKey('async-duel-progress'),
           // Kurul C14 (Astra + Sol): rozet yalnız "Düello" diyordu; canlı
           // düellodan ayrılmıyordu. Mod adı tam yazar.
-          modeLabel: context.t(_isTournament ? K.tournament : K.asyncDuelChip),
+          modeLabel: _resumedVisible
+              ? context.t(K.asyncDuelResumedChip)
+              : context.t(_isTournament ? K.tournament : K.asyncDuelChip),
+          modeHighlight: _resumedVisible,
           // Y3: "Sen oyna, rakip sonra" üst çubukta küçük alt satır; rakip
           // baştan bellidir ya da yoksa (meydan okuyan) yalnız bu satır.
           subtitle: !_isTournament && _duel!.role != AsyncDuelRole.opponent
@@ -852,6 +879,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                         final seconds = (fraction * _questionSeconds).ceil();
                         return SahneStageTimer(
                           secondsLeft: seconds,
+                          pending: !_timeSynced,
                           // Cevap gönderildikten sonra sayaç durur; gerilim rengi
                           // de söner.
                           hotSeconds: disabled ? -1 : 5,

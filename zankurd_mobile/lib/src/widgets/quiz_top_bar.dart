@@ -27,8 +27,12 @@ class QuizStageCenter extends StatelessWidget {
     this.onBand = false,
     this.title,
     this.modeLabel,
+    this.modeHighlight = false,
     this.subtitle,
   });
+
+  /// Mod çipini kehribar vurgulu çizer ([QuizModeChip.highlight]).
+  final bool modeHighlight;
 
   /// Y3 (2026-10-29 tur 6): mod çipi bloğunun altında küçük alt satır
   /// ("Sen oyna, rakip sonra"). Eskiden gövdede soru kartının üstünde
@@ -136,7 +140,7 @@ class QuizStageCenter extends StatelessWidget {
             ? Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  QuizModeChip(label: chip),
+                  QuizModeChip(label: chip, highlight: modeHighlight),
                   const SizedBox(height: SahneSpace.x1),
                   line,
                   // Sıfır yükseklikte ASILI: üst çubuğun boyunu büyütmez, yani

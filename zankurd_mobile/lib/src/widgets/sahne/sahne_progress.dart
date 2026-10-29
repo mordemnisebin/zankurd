@@ -378,7 +378,14 @@ class SahneStageTimer extends StatelessWidget {
     required this.semanticLabel,
     this.hotSeconds = 5,
     this.onBand = false,
+    this.pending = false,
   });
+
+  /// Kalan süre henüz bilinmiyor (yarım kalan soruya dönüşte sunucu saati
+  /// gelmeden): sayı yerine "–" çizilir, kapsülün genişliği aynı kalır. Tur 3
+  /// (2026-10-30): dönüşte sayaç önce yerel tam süreyi ("19") gösterip birkaç
+  /// saniye sonra sunucunun kalanına ("8") atlıyordu.
+  final bool pending;
 
   /// Renkli konu bandının üstünde (soru ekranı): normalde beyaz; gerilim
   /// saniyelerinde beyaz hap + koyu kehribar/kırmızı sayı (bandın renginden
@@ -393,7 +400,7 @@ class SahneStageTimer extends StatelessWidget {
   /// Bu saniyeye ve altına inince Boyax.
   final int hotSeconds;
 
-  bool get isHot => secondsLeft <= hotSeconds;
+  bool get isHot => !pending && secondsLeft <= hotSeconds;
 
   /// Kurul 5. tur 2026-10-20 (Opus, Grok): sayı küçük ve gri kalıyordu, soru
   /// ekranında süre en önemli bilgilerden biri. Normalde birincil metin,
@@ -438,7 +445,7 @@ class SahneStageTimer extends StatelessWidget {
               ),
             ),
             Text(
-              '$secondsLeft',
+              pending ? '–' : '$secondsLeft',
               key: const ValueKey('stage-timer-seconds'),
               style: numberStyle,
             ),

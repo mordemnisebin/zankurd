@@ -3865,6 +3865,7 @@ class Tr {
     },
     // Yarım bırakılıp dönülen soru: sunucu saati işlemeye devam etti.
     // Kurmancî: jüri kararı (Flash + Opus 5; yazım Grok + Opus).
+    K.asyncDuelResumedChip: {'ku': 'Dem didome', 'tr': 'Süre işliyor'},
     K.asyncDuelResumedQuestionNote: {
       'ku': 'Di pirsa nîvco mayî de dem didome.',
       'tr': 'Yarım kalan soruda süre işlemeye devam ediyor.',
@@ -5959,6 +5960,7 @@ class K {
 
   /// Yarım bırakılıp dönülen sorunun kısa notu (sunucu saati işledi).
   static const asyncDuelResumedQuestionNote = 'duel.async.resumedNote';
+  static const asyncDuelResumedChip = 'duel.async.resumedChip';
 
   /// Ben kendi 7 sorumu bitirmedim durumu (`myCorrect == null`).
   static const asyncDuelUnfinished = 'duel.async.unfinished';

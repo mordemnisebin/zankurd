@@ -176,4 +176,101 @@ void main() {
       expect(out.map((e) => e.id).toList(), [...tens, ...zeros]);
     });
   });
+
+  /// ## C31 — dönüş bildirimi soruyu örtüyordu, sayaç 19'dan 8'e atlıyordu
+  ///
+  /// Üstteki kaplama bildirim soru kartının ilk satırını ~4 sn örtüyordu.
+  /// Şimdi üst çubuktaki mod çipi kısa süre kehribar "Süre işliyor" olur:
+  /// hiçbir şeyi örtmez ve çip değişince künye ile gövde yerinden oynamaz.
+  /// Sunucu saati gelmeden sayaç yerel tam süreyi gösterip sonra atlıyordu;
+  /// şimdi "–" (aynı genişlik).
+  group('C31', () {
+    for (final ku in [false, true]) {
+      for (final width in [375.0, 402.0]) {
+        testWidgets('mod çipi vurgusu yerleşimi oynatmaz ${ku ? 'KU' : 'TR'} '
+            '$width', (tester) async {
+          tester.view.physicalSize = Size(width, 844);
+          tester.view.devicePixelRatio = 1;
+          addTearDown(tester.view.reset);
+          Future<(Rect, double)> pumpWith(String label, bool hi) async {
+            await tester.pumpWidget(
+              testShell(
+                languageProvider: ku ? kurmanciLang() : null,
+                child: SahneStageScaffold(
+                  onClose: () {},
+                  body: const SizedBox(key: ValueKey('tur3-body'), height: 10),
+                  center: QuizStageCenter(
+                    category: 'Edebiyat',
+                    index: 3,
+                    total: 7,
+                    modeLabel: label,
+                    modeHighlight: hi,
+                  ),
+                  score: const SahneStageTimer(
+                    secondsLeft: 8,
+                    semanticLabel: '8',
+                  ),
+                ),
+              ),
+            );
+            await tester.pump();
+            return (
+              tester.getRect(find.byKey(const ValueKey('quiz-stage-kicker'))),
+              tester.getTopLeft(find.byKey(const ValueKey('tur3-body'))).dy,
+            );
+          }
+
+          final normal = await pumpWith(ku ? 'Bi dorê' : 'Sırayla', false);
+          final hi = await pumpWith(ku ? 'Dem didome' : 'Süre işliyor', true);
+          expect(hi.$1.top, moreOrLessEquals(normal.$1.top, epsilon: 0.5));
+          expect(
+            hi.$1.height,
+            moreOrLessEquals(normal.$1.height, epsilon: 0.5),
+          );
+          expect(hi.$2, moreOrLessEquals(normal.$2, epsilon: 0.5));
+          final chip = tester.renderObject<RenderParagraph>(
+            find.descendant(
+              of: find.byKey(const ValueKey('quiz-mode-chip')),
+              matching: find.byType(RichText),
+            ),
+          );
+          expect(chip.didExceedMaxLines, isFalse, reason: 'çip kesilmez');
+        });
+      }
+    }
+
+    testWidgets('sayaç beklemede "–" ve aynı genişlikte', (tester) async {
+      await tester.pumpWidget(
+        testShell(
+          child: const Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SahneStageTimer(
+                  key: ValueKey('a'),
+                  secondsLeft: 19,
+                  semanticLabel: '19',
+                  pending: true,
+                ),
+                SahneStageTimer(
+                  key: ValueKey('b'),
+                  secondsLeft: 8,
+                  semanticLabel: '8',
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      expect(find.text('19'), findsNothing);
+      expect(find.text('–'), findsOneWidget);
+      expect(
+        tester.getSize(find.byKey(const ValueKey('a'))).width,
+        moreOrLessEquals(
+          tester.getSize(find.byKey(const ValueKey('b'))).width,
+          epsilon: 0.5,
+        ),
+      );
+    });
+  });
 }

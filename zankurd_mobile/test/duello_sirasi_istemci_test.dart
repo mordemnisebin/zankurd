@@ -530,20 +530,19 @@ void main() {
     ) async {
       final (repo, id) = await openResumed(tester);
       expect(repo.presentedAsyncDuelQuestions, ['$id#0']);
-      expect(
-        find.text('Yarım kalan soruda süre işlemeye devam ediyor.'),
-        findsNothing,
-      );
+      expect(find.text('Süre işliyor'), findsNothing);
     });
 
-    testWidgets('yarım bırakılan soruda sunucu saati işler: not görünür', (
+    // Tur 3 (2026-10-30): not artık soru kartını örten bir kaplama değil,
+    // üst çubuktaki mod çipinin 5 sn kehribar "Süre işliyor" hâli (tam cümle
+    // ekran okuyucuya duyurulur).
+    testWidgets('yarım bırakılan soruda sunucu saati işler: çip vurgusu', (
       tester,
     ) async {
       await openResumed(tester, elapsedMs: 12000);
-      expect(
-        find.text('Yarım kalan soruda süre işlemeye devam ediyor.'),
-        findsOneWidget,
-      );
+      expect(find.text('Süre işliyor'), findsOneWidget);
+      await tester.pump(const Duration(seconds: 6));
+      expect(find.text('Süre işliyor'), findsNothing);
     });
 
     testWidgets('dönüşte süresi geçmiş soru hemen süre doldu sayılır', (

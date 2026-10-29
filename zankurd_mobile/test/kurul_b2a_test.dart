@@ -10,7 +10,6 @@ import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/quiz/word_ordering_widget.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
-import 'package:zankurd_mobile/src/widgets/quiz_stage_kit.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -166,33 +165,9 @@ void main() {
     expect(submitted, 'Ez diçim malê');
   });
 
-  // C31 (3/3): yarım kalan soruya dönüş bilgisi en altta küçük SnackBar'daydı.
-  testWidgets('C31: sahne bildirimi üstte, yerleşimi itmez, süresi dolunca '
-      'kalkar', (tester) async {
-    await _setView(tester, 402, 874);
-    late BuildContext ctx;
-    await tester.pumpWidget(
-      testShell(
-        child: Builder(
-          builder: (context) {
-            ctx = context;
-            return const Scaffold(body: Center(child: Text('Soru')));
-          },
-        ),
-      ),
-    );
-    final before = tester.getTopLeft(find.text('Soru'));
-    QuizStageNotice.show(ctx, 'Süre işliyor');
-    await tester.pump();
-    expect(find.byKey(QuizStageNotice.key), findsOneWidget);
-    expect(
-      tester.getTopLeft(find.byKey(QuizStageNotice.key)).dy,
-      lessThan(200),
-    );
-    expect(tester.getTopLeft(find.text('Soru')), before);
-    await tester.pump(const Duration(seconds: 6));
-    expect(find.byKey(QuizStageNotice.key), findsNothing);
-  });
+  // C31 (3/3): yarım kalan soruya dönüş bilgisi en altta küçük SnackBar'daydı;
+  // tur 3'te üstteki kaplama da soru kartını örttü. Ayrıntılı bekçi:
+  // tur3_bulgu_test 'C31' grubu (mod çipi vurgusu, kayma yok).
 
   // Metin sözleşmeleri (TR): kurul maddelerinin sözleri.
   test('C4/C5/C9/C10/C11/C13/C16/C20/C25 metinleri', () {
