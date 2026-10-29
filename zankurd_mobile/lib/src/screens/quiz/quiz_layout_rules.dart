@@ -77,6 +77,16 @@ void _revealKeepingPhoto(
   if (scrollable == null || viewport == null) return;
   final position = scrollable.position;
 
+  // 2026-10-29 son kurul tur 2 (B): hedef zaten TAMAMEN görünüyorsa gövde
+  // kaydırılmaz. Hizalama (ör. 0.12) görünür bir hedefi de istenen orana
+  // çekiyor, cevap anında soru kartını ve şıkları gereksizce yukarı
+  // kaydırıyordu; soru ve şıklar cevaptan sonra yerinde kalır.
+  final shownFrom = viewport.getOffsetToReveal(renderObject, 1.0).offset;
+  final shownTo = viewport.getOffsetToReveal(renderObject, 0.0).offset;
+  if (position.pixels >= shownFrom - 0.5 && position.pixels <= shownTo + 0.5) {
+    return;
+  }
+
   var offset = viewport.getOffsetToReveal(renderObject, alignment).offset;
   final photo = photoKey.currentContext?.findRenderObject();
   if (photo is RenderBox && photo.attached && photo.hasSize) {

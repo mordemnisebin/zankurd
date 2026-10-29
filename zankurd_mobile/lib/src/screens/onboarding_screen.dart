@@ -313,7 +313,13 @@ class _OnboardingPageState extends State<_OnboardingPage> {
               constraints: BoxConstraints(
                 minHeight: outer.maxHeight - SahneSpace.x4 * 2,
               ),
-              child: Center(
+              // 2026-10-29 son kurul tur 2 (F, Astra + Sol): grup tam ortada
+              // dururken ilerleme çubuğunun altında büyük bir boşluk kalıyor,
+              // dil seçimi ekranın altına itiliyordu. Grup üst-orta durur
+              // (boşluğun %30'u üstte): görsel, başlık ve seçenekler tek
+              // dengeli öbek, "Devam" ile arada nefes payı.
+              child: Align(
+                alignment: const Alignment(0, _kOnboardingBalance * 2 - 1),
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(
                     maxWidth: SahneEntryScaffold.columnWidth,
@@ -441,3 +447,8 @@ class _SceneArt extends StatelessWidget {
     );
   }
 }
+
+/// Karşılama adımında görsel + metin grubunun dikey konumu: boş alanın
+/// bu oranı grubun ÜSTÜNDE kalır (0.5 = tam orta). Bkz. 2026-10-29 son kurul
+/// tur 2 (F).
+const double _kOnboardingBalance = 0.3;

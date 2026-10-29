@@ -903,10 +903,13 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                         scrollKey: const ValueKey('async-duel-scroll'),
                         // Yeni soruda başa dön; üst kenar elmas şeridin altında sönsün.
                         resetKey: _index,
-                        balance: sahneQuestionBalance,
+                        balance: quizQuestionBalance,
+                        // 2026-10-29 son kurul tur 2 (B): cevaptan sonra
+                        // soru ve şıklar yerinde kalır (ders/yarışla aynı).
+                        holdBalance: _selectedAnswer != null,
                         // Y3 (2026-10-29 tur 6): bu ekranda alt perde yok; ders ve
                         // yarışta o yükseklik (≈ 70 + güvenli alan) gövdeden
-                        // düşer ve dengeli yerleşim ([sahneQuestionBalance])
+                        // düşer ve dengeli yerleşim ([quizQuestionBalance])
                         // ona göre konumlanır. Aynı yer burada boş ayrılır:
                         // soru kartı her modda aynı üstte durur.
                         padding: EdgeInsets.fromLTRB(

@@ -1717,6 +1717,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         _completedMissions.isNotEmpty ||
         _dailyStreak > 0;
 
+    // 2026-10-29 son kurul tur 2 (D): puanın kaynağı yalnız veri TUTARLIYSA
+    // yazılır (bkz. [resultScoreBreakdown]); öğrenme turunda puan yok.
+    final scoreBreakdown = isLearningExperience
+        ? null
+        : resultScoreBreakdown(
+            score: score,
+            correctCount: correctCount,
+            online: (widget.room.id?.trim() ?? '').isNotEmpty,
+          );
+
     // 2026-10-01 (A6): kahraman, sayımlar ve ödül ortak sonuç şablonundan
     // ([SahneResultScaffold]) gelir; burada yalnız bu ekrana özgü bölümler
     // sıralanır. Sıra artık şablonun sırası: kahraman → sayımlar → ödül.
@@ -1743,6 +1753,25 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (scoreBreakdown != null) ...[
+                // Renk sahnenin İÇİNDEN okunur (Builder): ekranın kendi
+                // bağlamı gündüz temasında gündüz mürekkebini verir, gece
+                // sahnesinde 2:1 kalıyordu (bkz. aşağıdaki başlık).
+                Builder(
+                  builder: (context) => Text(
+                    context.t(K.resultScoreBreakdown, {
+                      'n': '$correctCount',
+                      'bonus': '${scoreBreakdown.bonus}',
+                      'score': '$score',
+                    }),
+                    key: const ValueKey('result-score-breakdown'),
+                    style: SahneType.caption.copyWith(
+                      color: SahneTokens.of(context).tx2,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: SahneSpace.cardGap),
+              ],
               LearningOutcomeCard(
                 outcome: learningOutcome,
                 // Kategori listesi gösteriliyorsa sayımlar orada: kart
@@ -1759,10 +1788,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text(
-                        context.t(K.resultLearnedTitle),
-                        style: SahneType.bodyStrong.copyWith(
-                          color: SahneTokens.of(context).tx,
+                      // 2026-10-29 son kurul tur 2 (G): gündüz temasında bu
+                      // başlık ekranın bağlamından GÜNDÜZ mürekkebini (#0E1433)
+                      // alıyor, gece sahnesinde neredeyse görünmüyordu. Renk
+                      // sahnenin içinden (Builder) okunur.
+                      Builder(
+                        builder: (context) => Text(
+                          context.t(K.resultLearnedTitle),
+                          key: const ValueKey('result-learned-title'),
+                          style: SahneType.bodyStrong.copyWith(
+                            color: SahneTokens.of(context).tx,
+                          ),
                         ),
                       ),
                       const SizedBox(height: SahneSpace.x2),
@@ -3370,4 +3406,25 @@ class ResultExplanationEntry extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Tur puanının dökümü: doğru başına 100 taban + kalan bonus.
+///
+/// 2026-10-29 son kurul tur 2 (D, Astra + Terra): sonuç ekranı puanı tek
+/// sayı olarak gösteriyor, nasıl oluştuğunu hiç söylemiyordu. Taban ve
+/// bonus gerçek formülden gelir: yerelde `SpeedScore.calculate` (100 + en
+/// çok 100 hız), çevrimiçi odada ([online]) sunucu `submit_answer` (100 + en
+/// çok 100 hız + en çok 50 seri). Sayılar bu aralığa uymuyorsa (eski sürüm,
+/// sunucu düzeltmesi) döküm UYDURULMAZ: `null`.
+@visibleForTesting
+({int base, int bonus})? resultScoreBreakdown({
+  required int score,
+  required int correctCount,
+  bool online = false,
+}) {
+  if (correctCount <= 0 || score <= 0) return null;
+  final base = correctCount * 100;
+  final maxPerCorrect = online ? 250 : 200;
+  if (score < base || score > correctCount * maxPerCorrect) return null;
+  return (base: base, bonus: score - base);
 }

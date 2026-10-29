@@ -254,7 +254,9 @@ Widget _result1v1VictoryScreen() {
     code: 'ZK-WINNER01',
     category: 'Ziman',
     players: [
-      Player(id: 'user', name: 'Ez', score: 320, state: Player.readyState),
+      // 2026-10-29 son kurul tur 2 (D): 4 doğru en az 400 puandır (sunucu
+      // `submit_answer`: doğru başına 100 + hız + seri); 320 imkânsızdı.
+      Player(id: 'user', name: 'Ez', score: 560, state: Player.readyState),
       Player(id: 'opp', name: 'Rojda', score: 180, state: Player.readyState),
     ],
     status: RoomStatus.finished,
@@ -264,7 +266,7 @@ Widget _result1v1VictoryScreen() {
   return QuizResultScreen(
     repository: repository,
     room: room,
-    score: 320,
+    score: 560,
     correctCount: 4,
     wrongCount: 1,
     totalQuestions: 5,
@@ -1639,6 +1641,36 @@ void main() {
   testWidgets('68 tur sonucu', (t) async {
     await _pump(t, _resultScreen());
     await _shoot(t, '68_result');
+  }, tags: ['preview']);
+
+  // 2026-10-29 son kurul tur 2 (D): "Ayrıntılar" açıkken puan dökümü
+  // ("2 doğru × 100 + 40 hız ve seri bonusu = 240 puan"). Bölüm turda hep
+  // kapalı basılıyordu; içindeki satır hiç görülmüyordu.
+  testWidgets('68b tur sonucu — ayrıntılar açık', (t) async {
+    await _pump(t, _resultScreen());
+    final section = find.byKey(const ValueKey('result-details-section'));
+    // Dar ekran + büyük yazıda bölüm tembel listenin dışında kalır.
+    await t.scrollUntilVisible(
+      section,
+      200,
+      scrollable: find
+          .descendant(
+            of: find.byType(ListView).first,
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    await t.pump(const Duration(milliseconds: 300));
+    await t.tap(section);
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    // Üst kenarın sönme payında kalmasın: satır ekranın üst çeyreğinde.
+    await Scrollable.ensureVisible(
+      t.element(find.byKey(const ValueKey('result-score-breakdown'))),
+      alignment: 0.25,
+    );
+    await t.pump(const Duration(milliseconds: 600));
+    await _shoot(t, '68b_result_details_open');
   }, tags: ['preview']);
 
   testWidgets('69 tur sonucu (karanlık)', (t) async {
@@ -3661,7 +3693,10 @@ Widget _resultVariant({
   return QuizResultScreen(
     repository: repository,
     room: room,
-    score: isLearningExperience ? 0 : 240,
+    // 2026-10-29 son kurul tur 2 (D): puan sabit 240'tı; %67 ve %33
+    // doğrulukta aynı sayı basılıyordu. Gerçek formül doğru başına 100 +
+    // hız bonusu (`SpeedScore`); fikstür doğru başına 120 verir.
+    score: isLearningExperience ? 0 : correct * 120,
     correctCount: correct,
     wrongCount: wrong,
     totalQuestions: total,

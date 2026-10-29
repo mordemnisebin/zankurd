@@ -19,9 +19,9 @@
 /// ## Yeni kural
 ///
 /// Her adım = 1 görsel + 1 başlık + EN ÇOK 2 kısa satır + alt "Devam".
-/// Görsel + başlık + satırlar tek grup, dikeyde ortalanır: grup ile üst
-/// çubuk arası ve grup ile alt düğme arası boşluk birbirine yakındır (ortada
-/// delik yok).
+/// Görsel + başlık + satırlar tek grup; ortada delik yok. 2026-10-29 son
+/// kurul tur 2 (F): grup tam ortada değil üst-ortadadır (boşluğun ≈ %30'u
+/// üstte); tam ortalama dil seçimini ekranın altına itiyordu.
 library;
 
 import 'package:flutter/material.dart';
@@ -208,32 +208,31 @@ void main() {
   });
 
   group('3) Boşluk', () {
-    testWidgets(
-      '390×844: görsel+metin grubu dikeyde dengeli (üst/alt boşluk farkı ≤ 120)',
-      (tester) async {
-        phone(tester, const Size(390, 844));
-        await _pumpOnboarding(tester);
-        await _next(tester);
-        final area = tester.getRect(
-          find.byKey(const ValueKey('onboarding-text-scrollbar')),
-        );
-        final top = tester.getTopLeft(art).dy;
-        final bottom = tester
-            .getBottomLeft(
-              find.text('Kısa sorularla kelime öğren, kültürü tanı.'),
-            )
-            .dy;
-        // Grup alanın ortasına oturur; sığdırıcı ek sözcüğe ihtiyaç yok.
-        final above = top - area.top;
-        final below = area.bottom - bottom - 24; // son satır (marka sözü) payı
-        expect((above - below).abs(), lessThanOrEqualTo(120));
-        expect(
-          above,
-          lessThanOrEqualTo(220),
-          reason: 'üstte büyük boş alan yok',
-        );
-      },
-    );
+    testWidgets('390×844: görsel+metin grubu üst-ortada (üst pay %20–45)', (
+      tester,
+    ) async {
+      phone(tester, const Size(390, 844));
+      await _pumpOnboarding(tester);
+      await _next(tester);
+      final area = tester.getRect(
+        find.byKey(const ValueKey('onboarding-text-scrollbar')),
+      );
+      final top = tester.getTopLeft(art).dy;
+      final bottom = tester
+          .getBottomLeft(
+            find.text('Kısa sorularla kelime öğren, kültürü tanı.'),
+          )
+          .dy;
+      final above = top - area.top;
+      final below = area.bottom - bottom - 24; // son satır (marka sözü) payı
+      // 2026-10-29 son kurul tur 2 (F, Astra + Sol): tam ortalama ilerleme
+      // çubuğunun altında büyük boşluk bırakıp dil seçimini aşağı itiyordu.
+      // Grup artık üst-orta durur (boşluğun ≈ %30'u üstte); eski "üst/alt
+      // fark ≤ 120" kuralı yerine oran ölçülür (bkz. `son_kurul_test`).
+      final share = above / (above + below);
+      expect(share, inInclusiveRange(0.2, 0.45), reason: 'üst pay $share');
+      expect(above, lessThanOrEqualTo(220), reason: 'üstte büyük boş alan yok');
+    });
   });
 
   group('4) Taşma yok', () {

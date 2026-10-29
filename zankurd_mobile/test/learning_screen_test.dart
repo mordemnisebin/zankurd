@@ -454,7 +454,9 @@ void main() {
       expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
       // Rozet Etiket biçemindedir: yerele duyarlı büyük harf.
       // 2026-09-29 doğallık: rozet artık cümle düzeninde (K8, `SahneBadge` captionStrong); bu bekçi eskiden büyük harfi bekliyordu.
-      expect(find.text('Sıradaki ders'), findsOneWidget);
+      // 2026-10-29 son kurul tur 2 (E): "Sıradaki ders" rozeti kalktı; güncel
+      // ders düğüm + dolu kartla bir kez söylenir.
+      expect(find.text('Sıradaki ders'), findsNothing);
     },
   );
 
@@ -550,9 +552,11 @@ void main() {
       findsNothing,
       reason: 'elmas yalnız soru ilerlemesi; ders sayacı kapsül',
     );
+    // 2026-10-29 son kurul tur 2 (E): "1. ders" kapsülü kalktı (güncel ders
+    // düğüm + kartla bir kez söylenir); bekçisi `son_kurul_test` tur 2.
     expect(
       find.byKey(const ValueKey('learning-progress-capsule')),
-      findsOneWidget,
+      findsNothing,
     );
     final title = tester.widget<Text>(
       find.descendant(of: nextStep, matching: find.text('Alfabe')),
@@ -564,27 +568,8 @@ void main() {
     );
     expect(meta.style?.color, SahneVivid.onFill);
 
-    // 2026-10-29 vay 2B: iki rozet kartın içinden rotadaki güncel düğümün
-    // YANINA taşındı (sayfa zemininde). Eski kural (cam zemin + beyaz yazı)
-    // yerine ölçü: rozet yazısı kendi zemininde ≥ 4.5:1.
-    for (final key in const [
-      'lesson-recommended-badge',
-      'learning-progress-capsule',
-    ]) {
-      final badge = tester.widget<DecoratedBox>(find.byKey(ValueKey(key)));
-      final bg = (badge.decoration as ShapeDecoration).color!;
-      final badgeText = tester.widget<Text>(
-        find.descendant(
-          of: find.byKey(ValueKey(key)),
-          matching: find.byType(Text),
-        ),
-      );
-      final fg = badgeText.style!.color!;
-      final l1 = bg.computeLuminance();
-      final l2 = fg.computeLuminance();
-      final ratio = ((l1 > l2 ? l1 : l2) + 0.05) / ((l1 > l2 ? l2 : l1) + 0.05);
-      expect(ratio, greaterThanOrEqualTo(4.5), reason: key);
-    }
+    // 2026-10-29 vay 2B'deki iki rozetin kontrast ölçümü, rozetlerle birlikte
+    // kalktı (son kurul tur 2, E).
 
     final primary = find.descendant(
       of: nextStep,
@@ -766,14 +751,12 @@ void main() {
         findsOneWidget,
       );
       expect(find.text('Mevcut seviyen: Orta'), findsOneWidget);
-      expect(
-        find.byKey(const ValueKey('lesson-recommended-badge')),
-        findsOneWidget,
-      );
+      // 2026-10-29 son kurul tur 2 (E): "Sıradaki ders" rozeti kalktı;
+      // önerilen düğüm `learning-next-step` sarmalayıcısıyla tanınır.
       expect(
         find.descendant(
           of: find.byKey(const ValueKey('learning-path-node-placement-1')),
-          matching: find.byKey(const ValueKey('lesson-recommended-badge')),
+          matching: find.byKey(const ValueKey('learning-next-step')),
         ),
         findsOneWidget,
       );
@@ -807,7 +790,8 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Mevcut seviyen: Orta'), findsNothing);
-    expect(find.text('Sıradaki ders'), findsOneWidget);
+    // 2026-10-29 son kurul tur 2 (E): rozet yerine güncel düğüm.
+    expect(find.text('Sıradaki ders'), findsNothing);
   });
 
   // Niyet: bir ekranda sistem yazı tipine düşen metin olmamalı (bkz.
@@ -896,7 +880,8 @@ void main() {
     expect(
       find.descendant(
         of: firstNode,
-        matching: find.byKey(const ValueKey('lesson-recommended-badge')),
+        // 2026-10-29 son kurul tur 2 (E): rozet yerine güncel düğüm.
+        matching: find.byKey(const ValueKey('learning-next-step')),
       ),
       findsOneWidget,
     );
@@ -1040,7 +1025,8 @@ void main() {
     expect(
       find.descendant(
         of: firstNode,
-        matching: find.byKey(const ValueKey('lesson-recommended-badge')),
+        // 2026-10-29 son kurul tur 2 (E): rozet yerine güncel düğüm.
+        matching: find.byKey(const ValueKey('learning-next-step')),
       ),
       findsNothing,
       reason:
@@ -1062,10 +1048,8 @@ void main() {
     );
     await tester.pumpAndSettle();
     // Destpêk/kayıt yok → ilk düğüm önerilir; rozet yine tek olur.
-    expect(
-      find.byKey(const ValueKey('lesson-recommended-badge')),
-      findsOneWidget,
-    );
+    // 2026-10-29 son kurul tur 2 (E): rozet yerine güncel düğüm.
+    expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
   });
 
   testWidgets('Flaş kart doğrudan kart kipinde açılır', (tester) async {

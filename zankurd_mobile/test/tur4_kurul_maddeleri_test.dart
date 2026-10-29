@@ -103,13 +103,13 @@ void main() {
       lessThanOrEqualTo(1),
       reason: 'ünite çubuğu ile hero çelişen iki kesir gösteriyor: $fractions',
     );
-    // Hero dersin SIRASINI söyler, kurs toplamını değil.
-    final chip = find.descendant(
-      of: find.byKey(const ValueKey('learning-progress-capsule')),
-      matching: find.byType(Text),
+    // 2026-10-29 son kurul tur 2 (E): hero'nun "1. ders" sıra kapsülü
+    // kalktı (düğüm, ünite kartı ve ders kartıyla aynı başlangıcı dördüncü
+    // kez söylüyordu). Kesir kuralı yukarıda korunur.
+    expect(
+      find.byKey(const ValueKey('learning-progress-capsule')),
+      findsNothing,
     );
-    expect(chip, findsOneWidget);
-    expect(tester.widget<Text>(chip).data, matches(RegExp(r'^\d+\. ders$')));
   });
 
   for (final size in const [Size(390, 844), Size(360, 740)]) {

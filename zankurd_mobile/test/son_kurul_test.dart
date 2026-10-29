@@ -25,6 +25,37 @@
 /// 8. **Çark:** dinlenirken işaretçi iki dilimin SINIRINI gösteriyordu
 ///    (dönme açısı 0; −90° bir dilim sınırı). Ödül eşlemesi bir yardımcıya
 ///    çıkarıldı ve burada her dilim için sınanır.
+///
+/// ## Tur 2 (2026-10-29 son kurul tur 2: Astra, 6.1 Sol, 6.1 Terra)
+///
+/// A. **Bot sözü çelişkisi:** seçim ekranı "botla oynamayı seçebilirsin",
+///    arama notu "botla eşleşirsin" diyordu. Gerçek akış: ~20 sn sonra diyalog,
+///    bot yalnız seçilirse. Not artık seçim ekranıyla aynı sözü söyler ve
+///    başlıktaki "Rakip aranıyor"u tekrarlamaz. Sessizdi: iki metnin ayrı
+///    varlık testi vardı, birbirini yalanlayıp yalanlamadığına bakan yoktu.
+/// B. **Cevapta sıçrayan soru:** dengeli yerleşim (`sahneQuestionBalance`, artık `quizQuestionBalance`)
+///    cevaptan sonra yeniden hesaplanıyordu; alt perde geri bildirim şeridine
+///    dönüp uzayınca ve açıklama eklenince soru kartı ve şıklar yukarı
+///    kayıyordu. Testler yalnız cevap ÖNCESİ ya da SONRASI konumu ölçüyordu,
+///    ikisinin farkını ölçen yoktu.
+/// C. **Sönük şık yazısı:** seçilmeyen şıklar üçüncül griydi; ölçü 4,5'i
+///    geçse de koyu sahnede sönük okunuyordu. Yazı ikincil mürekkebe çıktı,
+///    sönüklüğü yüzey taşır; iki temada ≥ 4,5:1 ölçülür.
+/// D. **Puan dökümü:** fikstür %67 ve %33'te aynı 240'ı basıyordu (1 doğru en
+///    çok 200/250 eder); 1v1 fikstüründe 4 doğruya 320 (en az 400) vardı.
+///    Sonuç ekranı puanın nasıl oluştuğunu söylemiyordu; döküm yalnız sayılar
+///    gerçek formüle uyuyorsa yazılır.
+/// E. **Ders yolu:** kilitli dersler nasıl açılacağını söylemiyordu; güncel
+///    ders "Sıradaki ders" + "1. ders" rozetleri, düğüm ve kartla dört kez
+///    söyleniyordu.
+/// F. **Karşılama boşluğu:** grup tam ortada, ilerleme çubuğunun altında
+///    büyük boşluk dil seçimini aşağı itiyordu.
+/// G. **Koyu temada küçük etiketler:** ölçüldü (İlerlemen kayıtlı 8,1:1, ünite
+///    etiketi 8,2:1); hiçbiri 4,5'in altında değil, çiftler burada sabitlenir.
+///    Ölçerken gerçek bir kusur çıktı: GÜNDÜZ temasında sonuç "Ayrıntılar"ındaki
+///    "Konulara göre" başlığı ekranın bağlamından gündüz mürekkebini alıyor,
+///    gece sahnesinde 1,04:1 kalıyordu. Sessizdi: testlerin varsayılan teması
+///    sahneyle aynı belirteçleri verdiği için renk hep doğru görünüyordu.
 library;
 
 import 'dart:math' as math;
@@ -41,12 +72,17 @@ import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/models/tournament.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
+import 'package:zankurd_mobile/src/providers/theme_provider.dart';
+import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
+import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 import 'support/realistic_device.dart';
 import 'support/widget_test_helpers.dart';
@@ -114,6 +150,7 @@ void main() {
     WidgetTester tester, {
     required int wrong,
     required int bestStreak,
+    ThemeMode? themeMode,
   }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(390, 844);
@@ -122,6 +159,9 @@ void main() {
     final records = _records(wrong: wrong);
     await tester.pumpWidget(
       testShell(
+        themeProvider: themeMode == null
+            ? null
+            : ThemeProvider(initialMode: themeMode),
         child: QuizResultScreen(
           repository: repository,
           room: repository.createRoom(),
@@ -339,6 +379,324 @@ void main() {
           final local = (SpinWheelScreen.pointerAngle - target) % (2 * math.pi);
           expect(((local % segment) - segment / 2).abs(), lessThan(1e-6));
         }
+      }
+    });
+  });
+
+  group('2026-10-29 son kurul tur 2', () {
+    double contrast(Color a, Color b) {
+      final l1 = a.computeLuminance();
+      final l2 = b.computeLuminance();
+      return (math.max(l1, l2) + 0.05) / (math.min(l1, l2) + 0.05);
+    }
+
+    setUp(() {
+      SharedPreferences.setMockInitialValues({
+        'zankurd.quiz_tutorial.seen': true,
+        'zankurd.navTour.seen': true,
+      });
+      XPStore.resetInstance();
+    });
+
+    testWidgets('A: arama notu bot SEÇİMİNİ söyler, başlığı tekrarlamaz', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(390, 844);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        _matchShell(MatchmakingScreen(repository: _NoOpponentRepository())),
+      );
+      await tester.pumpAndSettle();
+      final disclosure = Tr.of(K.botDisclosure, AppLanguage.tr);
+      await tester.tap(find.byKey(const ValueKey('matchmaking-random-cta')));
+      await tester.pump(const Duration(seconds: 2));
+      final note = Tr.of(K.searchingNote, AppLanguage.tr);
+      expect(find.text(note), findsOneWidget);
+      expect(note, startsWith(disclosure), reason: 'iki ekran aynı söz');
+      expect(note, isNot(contains('eşleşirsin')));
+      expect(
+        find.textContaining('Rakip aranıyor'),
+        findsOneWidget,
+        reason: 'durum başlıkta bir kez',
+      );
+      for (final lang in AppLanguage.values) {
+        expect(
+          Tr.of(K.searchingNote, lang),
+          startsWith(Tr.of(K.botDisclosure, lang)),
+          reason: lang.name,
+        );
+      }
+      // Gerçek akış: süre dolunca bot bir SEÇENEK olarak sunulur.
+      await tester.pump(const Duration(seconds: 20));
+      expect(find.text(Tr.of(K.searchTimedOut, AppLanguage.tr)), findsOne);
+      final cancel = find.byKey(const ValueKey('mm-offer-cancel'));
+      await tester.tap(
+        cancel.evaluate().isNotEmpty
+            ? cancel
+            : find.text(Tr.of(K.no, AppLanguage.tr)),
+      );
+      await tester.pumpAndSettle();
+    });
+
+    Future<List<String>> pumpLesson(
+      WidgetTester tester, {
+      QuizExperience experience = QuizExperience.learning,
+    }) async {
+      tester.view.physicalSize = const Size(390, 844);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+      final repository = MockZanKurdRepository();
+      final questions = repository.questions.take(5).toList();
+      await tester.pumpWidget(
+        testShell(
+          child: QuizScreen(
+            repository: repository,
+            room: repository.createRoom(),
+            questions: questions,
+            experience: experience,
+            enableTimer: false,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final q = questions.first;
+      return [
+        q.correctAnswer,
+        q.answers.firstWhere((a) => a != q.correctAnswer),
+      ];
+    }
+
+    Future<void> settleAnswer(WidgetTester tester) async {
+      await tester.pump();
+      for (var i = 0; i < 12; i++) {
+        await tester.pump(const Duration(milliseconds: 300));
+      }
+      await tester.pumpAndSettle();
+    }
+
+    for (final (name, experience, pickWrong) in [
+      ('ders · doğru', QuizExperience.learning, false),
+      ('ders · yanlış (açıklama kartı)', QuizExperience.learning, true),
+      ('yarış · doğru', QuizExperience.competition, false),
+    ]) {
+      testWidgets('B: soru kartı ve şıklar cevaptan sonra yerinde ($name)', (
+        tester,
+      ) async {
+        final picks = await pumpLesson(tester, experience: experience);
+        final scroll = find.byKey(const ValueKey('quiz-portrait-scroll'));
+        final content = find.byKey(const ValueKey('quiz-answer-content'));
+        final optionA = find.text(picks.last).first;
+        final contentTop = tester.getTopLeft(content).dy;
+        final optionTop = tester.getTopLeft(optionA).dy;
+        final firstOption = find.text(picks.first).first;
+        final firstTop = tester.getTopLeft(firstOption).dy;
+
+        await tester.tap(find.text(pickWrong ? picks.last : picks.first));
+        await settleAnswer(tester);
+
+        expect(scroll, findsOneWidget);
+        expect(tester.getTopLeft(content).dy, closeTo(contentTop, 0.5));
+        expect(tester.getTopLeft(optionA).dy, closeTo(optionTop, 0.5));
+        expect(tester.getTopLeft(firstOption).dy, closeTo(firstTop, 0.5));
+        if (pickWrong) {
+          // Açıklama okunur kalır: şıkların ALTINDA, kayan alanda.
+          final card = find.byKey(const ValueKey('quiz-wrong-answer-insight'));
+          expect(card, findsOneWidget);
+          expect(
+            tester.getTopLeft(card).dy,
+            greaterThan(tester.getBottomLeft(firstOption).dy),
+          );
+        }
+        expect(tester.takeException(), isNull);
+      });
+    }
+
+    testWidgets('C: cevaptan sonra seçilmeyen şıkların yazısı ≥ 4,5:1, '
+        'sönüklük yüzeyde', (tester) async {
+      final picks = await pumpLesson(tester);
+      final repository = MockZanKurdRepository();
+      final q = repository.questions.first;
+      await tester.tap(find.text(picks.first));
+      await settleAnswer(tester);
+      final others = q.answers
+          .where((a) => a != q.correctAnswer)
+          .toList(growable: false);
+      expect(others, isNotEmpty);
+      for (final other in others) {
+        final text = tester.widget<Text>(find.text(other).first);
+        final t = SahneTokens.of(tester.element(find.text(other).first));
+        final color = text.style!.color!;
+        expect(color, isNot(t.tx3), reason: 'üçüncül gri sönük okunuyordu');
+        expect(
+          contrast(color, t.optionDimFill),
+          greaterThanOrEqualTo(4.5),
+          reason: other,
+        );
+      }
+      // Token düzeyinde iki tema.
+      for (final t in const [SahneTokens.night, SahneTokens.day]) {
+        expect(contrast(t.tx2, t.optionDimFill), greaterThanOrEqualTo(4.5));
+        expect(contrast(t.tx2, t.optionLetterFill), greaterThanOrEqualTo(4.5));
+      }
+    });
+
+    test(
+      'D: puan dökümü gerçek formüle uyuyorsa yazılır, uymuyorsa uydurulmaz',
+      () {
+        expect(resultScoreBreakdown(score: 240, correctCount: 2), (
+          base: 200,
+          bonus: 40,
+        ));
+        expect(resultScoreBreakdown(score: 560, correctCount: 4), (
+          base: 400,
+          bonus: 160,
+        ));
+        // Yerelde 1 doğru en çok 200 eder (100 + 100 hız); çevrimiçi odada
+        // sunucu seri bonusu da ekler (en çok 250).
+        expect(resultScoreBreakdown(score: 240, correctCount: 1), isNull);
+        expect(
+          resultScoreBreakdown(score: 240, correctCount: 1, online: true),
+          (base: 100, bonus: 140),
+        );
+        expect(
+          resultScoreBreakdown(score: 251, correctCount: 1, online: true),
+          isNull,
+        );
+        // 4 doğru en az 400 eder (eski 1v1 fikstürü: 320).
+        expect(resultScoreBreakdown(score: 320, correctCount: 4), isNull);
+        expect(resultScoreBreakdown(score: 0, correctCount: 0), isNull);
+      },
+    );
+
+    testWidgets('D: "Ayrıntılar" puanın kaynağını tek satırda söyler', (
+      tester,
+    ) async {
+      // Gündüz teması: sonuç sahnesi her temada gecedir (bkz. G).
+      await pumpResult(
+        tester,
+        wrong: 1,
+        bestStreak: 2,
+        themeMode: ThemeMode.light,
+      );
+      await tester.tap(find.byKey(const ValueKey('result-see-answers-button')));
+      await tester.pumpAndSettle();
+      final line = find.byKey(const ValueKey('result-score-breakdown'));
+      expect(line, findsOneWidget);
+      expect(
+        tester.widget<Text>(line).data,
+        '2 doğru × 100 + 40 hız ve seri bonusu = 240 puan',
+      );
+      // G (aynı bölüm): gündüz temasında bölümdeki düz yazılar ekranın
+      // bağlamından GÜNDÜZ mürekkebini alıyordu ("Konulara göre" #0E1433
+      // gece sahnesinde). Renk sahnenin kendi belirteçleriyle ≥ 4,5:1.
+      for (final key in const [
+        'result-score-breakdown',
+        'result-learned-title',
+      ]) {
+        final finder = find.byKey(ValueKey(key));
+        expect(finder, findsOneWidget, reason: key);
+        final t = SahneTokens.of(tester.element(finder));
+        final color = tester.widget<Text>(finder).style!.color!;
+        expect(contrast(color, t.bg), greaterThanOrEqualTo(4.5), reason: key);
+        expect(contrast(color, t.s1), greaterThanOrEqualTo(4.5), reason: key);
+      }
+    });
+
+    testWidgets('D: sayılar formüle uymazsa döküm yok', (tester) async {
+      // pumpResult puanı 240 verir; 1 doğruyla bu imkânsız.
+      await pumpResult(tester, wrong: 2, bestStreak: 1);
+      await tester.tap(find.byKey(const ValueKey('result-see-answers-button')));
+      await tester.pumpAndSettle();
+      expect(
+        find.byKey(
+          const ValueKey('result-score-breakdown'),
+          skipOffstage: false,
+        ),
+        findsNothing,
+      );
+    });
+
+    testWidgets('E: güncel ders bir kez söylenir; ilk kilitli ders açılma '
+        'koşulunu yazar', (tester) async {
+      tester.view.physicalSize = const Size(390, 1600);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        testShell(child: LearningScreen(repository: MockZanKurdRepository())),
+      );
+      await tester.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('lesson-recommended-badge')),
+        findsNothing,
+      );
+      expect(
+        find.byKey(const ValueKey('learning-progress-capsule')),
+        findsNothing,
+      );
+      expect(find.text('Sıradaki ders'), findsNothing);
+      final hint = find.byKey(const ValueKey('learning-unlock-hint'));
+      expect(hint, findsOneWidget, reason: 'yalnız ilk kilitli düğümde');
+      expect(
+        tester.widget<Text>(hint).data,
+        Tr.of(K.lessonUnlockHint, AppLanguage.tr),
+      );
+      expect(
+        tester.getTopLeft(hint).dy,
+        greaterThan(
+          tester
+              .getBottomLeft(find.byKey(const ValueKey('learning-next-step')))
+              .dy,
+        ),
+      );
+      final t = SahneTokens.of(tester.element(hint));
+      expect(
+        contrast(tester.widget<Text>(hint).style!.color!, t.bg),
+        greaterThanOrEqualTo(4.5),
+      );
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets(
+      'F: karşılamada grup üst-orta durur (üst boşluk < alt boşluk)',
+      (tester) async {
+        tester.view.physicalSize = const Size(390, 844);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(tester.view.reset);
+        await tester.pumpWidget(
+          ChangeNotifierProvider(
+            create: (_) => LanguageProvider()..setLang('tr'),
+            child: MaterialApp(home: OnboardingScreen(onComplete: () {})),
+          ),
+        );
+        await tester.pumpAndSettle();
+        final area = tester.getRect(
+          find.byKey(const ValueKey('onboarding-text-scrollbar')),
+        );
+        final scene = tester.getRect(
+          find.byKey(const ValueKey('onboarding-scene')),
+        );
+        final tr = tester.getRect(
+          find.byKey(const ValueKey('onboarding-language-tr')),
+        );
+        final above = scene.top - area.top;
+        final below = area.bottom - tr.bottom;
+        expect(above, lessThan(below), reason: 'üstte büyük boşluk yok');
+        expect(above, lessThanOrEqualTo(100));
+      },
+    );
+
+    test('G: koyu temada küçük etiket çiftleri ≥ 4,5:1', () {
+      const t = SahneTokens.night;
+      for (final (name, fg, bg) in [
+        ('İlerlemen kayıtlı (okTx/okTint)', t.okTx, t.okTint),
+        ('ünite etiketi (learnTx/learnTint)', t.learnTx, t.learnTint),
+        ('ikincil yazı (tx2/bg)', t.tx2, t.bg),
+        ('üçüncül yazı (tx3/bg)', t.tx3, t.bg),
+        ('üçüncül yazı (tx3/s1)', t.tx3, t.s1),
+        ('altın etiket (goldTx/goldTint)', t.goldTx, t.goldTint),
+      ]) {
+        expect(contrast(fg, bg), greaterThanOrEqualTo(4.5), reason: name);
       }
     });
   });

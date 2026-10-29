@@ -151,7 +151,12 @@ class QuizOptionTile extends StatelessWidget {
       _ => Colors.transparent,
     };
     final double ringWidth = state == _OptionState.idle ? 1 : SahneRing.r2;
-    final Color textColor = state == _OptionState.dimmed ? t.tx3 : t.tx;
+    // 2026-10-29 son kurul tur 2 (C, Terra + Sol): cevaptan sonra seçilmeyen
+    // şıkların yazısı koyu sahnede sönük okunuyordu (üçüncül gri). Sönüklüğü
+    // YÜZEY taşır ([SahneTokens.optionDimFill], kenar yok, taban gölgesi
+    // yok); yazı ikincil mürekkebe çıkar: iki temada da ≥ 4,5:1 ve hâlâ
+    // boştaki şıkkın tam beyazından ayrı (bekçi: `son_kurul_test` tur 2).
+    final Color textColor = state == _OptionState.dimmed ? t.tx2 : t.tx;
     final Color letterBg = switch (state) {
       _OptionState.correct => t.okTx,
       _OptionState.wrong => t.errTx,
@@ -161,7 +166,9 @@ class QuizOptionTile extends StatelessWidget {
     final Color letterFg = switch (state) {
       _OptionState.correct => t.onOk,
       _OptionState.wrong => t.errTint,
-      _OptionState.dimmed => t.tx3,
+      // Tur 2 (C): harf de ikincil mürekkep; gündüz Ray üstünde üçüncül
+      // 4,2:1 kalıyordu.
+      _OptionState.dimmed => t.tx2,
       _ => t.tx,
     };
 

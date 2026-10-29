@@ -48,7 +48,11 @@ extension _QuizScreenUI on _QuizScreenState {
               resetKey: index,
               // R3 (2026-10-28 tur 2): soru + şıklar grubu üst çubuk ile
               // alt perde arasındaki boşlukta dengeli (üst-orta) durur.
-              balance: sahneQuestionBalance,
+              balance: quizQuestionBalance,
+              // 2026-10-29 son kurul tur 2 (B): cevaptan sonra soru kartı ve
+              // şıklar yerinde kalır; geri bildirim alt şeritte, açıklama
+              // şıkların altında belirir (bkz. `SahneStageScroll.holdBalance`).
+              holdBalance: answered,
               padding: const EdgeInsets.only(
                 top: quizStageTopGap,
                 bottom: SahneSpace.x6,

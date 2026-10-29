@@ -1234,9 +1234,19 @@ class SahneStageScroll extends StatefulWidget {
     this.padding = EdgeInsets.zero,
     this.fade = SahneSpace.x4,
     this.balance,
+    this.holdBalance = false,
   });
 
   final Widget child;
+
+  /// 2026-10-29 son kurul tur 2 (B): `true` iken [balance] boşluğu
+  /// YENİDEN HESAPLANMAZ; içerik, bayrak açıldığı andaki üst boşlukta kalır.
+  /// Soru ekranı cevaptan sonra bunu açar: alt perde geri bildirim şeridine
+  /// dönüp uzayınca ve şıkların altına açıklama eklenince dengeli yerleşim
+  /// grubu yeniden ortalıyor, soru kartı ve şıklar cevap anında yukarı
+  /// sıçrıyordu (Astra, Sol, Terra). Duolingo'daki gibi soru ve şıklar yerinde
+  /// kalır; eklenen içerik aşağı doğru uzar, sığmazsa alan kayar.
+  final bool holdBalance;
 
   /// Dengeli yerleşim (2026-10-28 tur 2 R3): `null` → içerik üstten
   /// başlar. 0–1 verilirse içerik kullanılabilir yüksekliğin içinde bu
@@ -1264,6 +1274,24 @@ class SahneStageScroll extends StatefulWidget {
 class _SahneStageScrollState extends State<SahneStageScroll> {
   final ScrollController _controller = ScrollController();
 
+  /// Dengeli yerleşimin hizalayıcısı: [SahneStageScroll.holdBalance] açılınca
+  /// çocuğun o anki üst boşluğu buradan okunur.
+  final GlobalKey _balanceAlignKey = GlobalKey();
+
+  /// [SahneStageScroll.holdBalance] açıkken korunan üst boşluk.
+  double? _heldGap;
+
+  /// Hizalayıcının çocuğu şu an kaç pt aşağıda (son çerçevenin yerleşimi).
+  double? _currentGap() {
+    final box = _balanceAlignKey.currentContext?.findRenderObject();
+    if (box is! RenderShiftedBox || !box.hasSize) return null;
+    final child = box.child;
+    if (child == null) return null;
+    final data = child.parentData;
+    if (data is! BoxParentData) return null;
+    return (_heldGap ?? 0) + data.offset.dy;
+  }
+
   /// Altta kaydırılacak içerik var mı? Doluyken alt kenar söner (aşağıda
   /// devamı var der); içerik bitince ya da hiç taşmıyorsa sönme yoktur.
   final ValueNotifier<bool> _moreBelow = ValueNotifier<bool>(false);
@@ -1275,6 +1303,13 @@ class _SahneStageScrollState extends State<SahneStageScroll> {
   @override
   void didUpdateWidget(SahneStageScroll oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (widget.holdBalance && !oldWidget.holdBalance) {
+      // Yerleşim henüz yenilenmedi: render ağacı hâlâ cevaptan ÖNCEKİ
+      // çerçeveyi taşır, boşluk oradan okunur.
+      _heldGap = _currentGap();
+    } else if (!widget.holdBalance) {
+      _heldGap = null;
+    }
     if (widget.resetKey != oldWidget.resetKey) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted || !_controller.hasClients) return;
@@ -1316,15 +1351,24 @@ class _SahneStageScrollState extends State<SahneStageScroll> {
                 0.0,
                 constraints.maxHeight - widget.padding.vertical,
               );
+              final held = widget.holdBalance ? _heldGap : null;
+              // Ağaç iki hâlde de AYNI biçimdedir (Padding → Align): yalnız
+              // değerler değişir, soru paneli yeniden kurulmaz.
               return SingleChildScrollView(
                 key: widget.scrollKey,
                 controller: _controller,
                 padding: widget.padding,
                 child: ConstrainedBox(
                   constraints: BoxConstraints(minHeight: usable),
-                  child: Align(
-                    alignment: Alignment(0, widget.balance! * 2 - 1),
-                    child: widget.child,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: held ?? 0),
+                    child: Align(
+                      key: _balanceAlignKey,
+                      alignment: held != null
+                          ? Alignment.topCenter
+                          : Alignment(0, widget.balance! * 2 - 1),
+                      child: widget.child,
+                    ),
                   ),
                 ),
               );

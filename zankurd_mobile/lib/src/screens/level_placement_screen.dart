@@ -213,7 +213,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
           // (bkz. `SahneStageScroll`).
           scrollKey: const ValueKey('placement-scroll'),
           resetKey: _index,
-          balance: sahneQuestionBalance,
+          balance: quizQuestionBalance,
           padding: const EdgeInsets.fromLTRB(
             SahneSpace.page,
             quizStageTopGap,

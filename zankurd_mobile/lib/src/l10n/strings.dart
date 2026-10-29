@@ -584,6 +584,13 @@ class Tr {
       'tr': 'Bu konuda henüz ders yok',
     },
     K.recommendedForYou: {'ku': 'Dersa dorê', 'tr': 'Sıradaki ders'},
+    // 2026-10-29 son kurul tur 2 (E): ilk kilitli dersin altında açılma
+    // koşulu. Kilit kuralı `learningLessonLocked`: önerilenin ardındaki
+    // tamamlanmamış ders kilitlidir. NEEDS_JURY (KU).
+    K.lessonUnlockHint: {
+      'ku': 'Gava tu dersa berê biqedînî, vedibe',
+      'tr': 'Önceki dersi bitirince açılır',
+    },
     K.noQuestionsForCategory: {
       'ku': 'Ji bo vê mijarê pirs nehatin dîtin',
       'tr': 'Bu konu için soru bulunamadı',
@@ -1955,11 +1962,16 @@ class Tr {
     K.startingSoon: {'ku': 'Dest pê dike…', 'tr': 'Başlamak üzere…'},
     // Eşleşme durumunun ilk (henüz sunucudan söz gelmemiş) hâli.
     K.searchingShort: {'ku': 'Lê tê gerîn…', 'tr': 'Aranıyor…'},
+    // 2026-10-29 son kurul tur 2 (A, Astra + Sol + Terra): not "botla
+    // eşleşirsin" diyordu; gerçek akışta ~20 sn sonra bir diyalog açılır ve
+    // bot YALNIZ oyuncu seçerse gelir (`_showBotPrompt`). Seçim ekranındaki
+    // [K.botDisclosure] ile aynı söz; "Rakip aranıyor" başlıkta kalır,
+    // notta tekrarlanmaz. Kurmancî cümleler mevcut iki metinden alındı.
     K.searchingNote: {
       'ku':
-          'Li hevrikekî tê gerîn. Heke lîstikvanekî zindî neyê dîtin, tu yê bi botekê re bêyî lihevanîn. Tu dikarî kengî bixwazî betal bikî.',
+          'Heke hevrikekî zindî neyê dîtin, tu dikarî bi botê re bilîzî. Tu dikarî kengî bixwazî betal bikî.',
       'tr':
-          'Rakip aranıyor. Canlı rakip bulunamazsa botla eşleşirsin. İstediğin zaman iptal edebilirsin.',
+          'Canlı rakip bulunamazsa botla oynamayı seçebilirsin. İstediğin zaman vazgeçebilirsin.',
     },
     K.cancelAction: {'ku': 'Betal bike', 'tr': 'Vazgeç'},
     // 2026-10-29 son kurul: bot olasılığı aramadan ÖNCE söylenir. Bot yalnız
@@ -2367,8 +2379,9 @@ class Tr {
       'ku': '{done}/{total} ders',
       'tr': '{done}/{total} ders',
     },
-    // U1 (2026-10-28 tur 4; NEEDS_JURY: "Dersa 3" ezafe kalıbı): hero'da ders sırası.
-    K.lessonPosition: {'ku': 'Dersa {n}', 'tr': '{n}. ders'},
+    // 2026-10-29 son kurul tur 2 (E): `K.lessonPosition` ("Dersa {n}" /
+    // "{n}. ders") hero rozetiyle birlikte kalktı; kullanılmayan anahtar
+    // silinir (METIN_DENETIMI).
     // T14 (KU jüri onaylı: Gemini 3.8 Flash + GPT-6 Sol): sonuç ekranı tek katlanan bölüm başlığı.
     K.resultDetails: {'ku': 'Hûrgilî', 'tr': 'Ayrıntılar'},
     // Y1 (2026-10-29 tur 6): kapalı satırdaki sayının birimi açık yazılır
@@ -2376,6 +2389,15 @@ class Tr {
     K.resultDetailsTopics: {
       'ku': 'Hûrgilî · {n} mijar',
       'tr': 'Ayrıntılar · {n} konu',
+    },
+    // 2026-10-29 son kurul tur 2 (D, Astra + Terra): puanın nereden geldiği
+    // "Ayrıntılar"ın ilk satırında. Taban 100 / doğru (`SpeedScore`, sunucu
+    // `submit_answer`); kalan hız (+ çevrimiçide seri) bonusudur.
+    // NEEDS_JURY (KU): "pûanên lez û zincîrê".
+    K.resultScoreBreakdown: {
+      'ku':
+          '{n} bersivên rast × 100 + {bonus} pûanên lez û zincîrê = {score} pûan',
+      'tr': '{n} doğru × 100 + {bonus} hız ve seri bonusu = {score} puan',
     },
     // NEEDS_JURY: Kurmancî "astên din" (seviye = ast; "dersên din" kalıbı).
     K.levelsMoreCount: {'ku': '+{n} astên din', 'tr': '+{n} seviye daha'},
@@ -4180,7 +4202,7 @@ class Tr {
     K.lbYourRank: {'ku': 'Rêza te: {n}', 'tr': '{n}. sıradasın'},
     K.lbTopOfBoard: {'ku': 'Tu li serî yî!', 'tr': 'Zirvedesin!'},
     K.lbGapToNext: {
-      'ku': 'Ji bo rêza jortir {n} xal',
+      'ku': 'Ji bo rêza jorîn {n} pûan',
       'tr': 'Üst sıraya {n} puan',
     },
     K.lbClimbTitle: {'ku': 'Bilind bibe', 'tr': 'Yüksel'},
@@ -5156,10 +5178,11 @@ class K {
   static const locked = 'common.locked';
   static const resultDetails = 'result.details';
   static const resultDetailsTopics = 'result.detailsTopics';
+  static const resultScoreBreakdown = 'result.scoreBreakdown';
   static const allLessonsMore = 'learning.allLessonsMore';
   static const profileStartBody = 'profile.startBody';
   static const profileStartCta = 'profile.startCta';
-  static const lessonPosition = 'learning.lessonPosition';
+  static const lessonUnlockHint = 'learning.lessonUnlockHint';
   static const lessonCountProgress = 'learning.lessonCountProgress';
   static const levelsMoreCount = 'learning.levelsMoreCount';
   static const titleWord = 'avatar.titleWord';

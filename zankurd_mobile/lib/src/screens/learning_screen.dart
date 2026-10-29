@@ -707,7 +707,10 @@ class _LearningScreenState extends State<LearningScreen> {
         semanticLabel: semanticLabel,
         onTap: open,
         after: after,
-        status: _CurrentStopBadges(position: index + 1),
+        // 2026-10-29 son kurul tur 2 (E, Sol + Terra + Astra): düğümün
+        // yanındaki "Sıradaki ders" ve "1. ders" rozetleri kalktı. Ünite
+        // kartı, düğüm ve dolu ders kartı aynı başlangıcı dört kez
+        // söylüyordu; güncel ders artık düğüm + kartla BİR kez söylenir.
         attachment: _CurrentLessonCard(
           lesson: lesson,
           title: _lessonTitle(lesson, ku),
@@ -746,6 +749,16 @@ class _LearningScreenState extends State<LearningScreen> {
           ? Text(
               context.t(K.dersTamamlandi),
               style: SahneType.captionStrong.copyWith(color: t.okTx),
+            )
+          // 2026-10-29 son kurul tur 2 (E, Terra ×2 + Sol + Astra): kilitli
+          // dersler nasıl açılacağını söylemiyordu. İpucu yalnız İLK kilitli
+          // düğümde (güncelin hemen ardı); her kilitliye yazmak rotayı
+          // aynı cümleyle doldururdu.
+          : locked && index == firstOpenIndex + 1
+          ? Text(
+              context.t(K.lessonUnlockHint),
+              key: const ValueKey('learning-unlock-hint'),
+              style: SahneType.caption.copyWith(color: t.tx2),
             )
           : null,
       semanticLabel: semanticLabel,
@@ -1122,59 +1135,6 @@ class _CategoryTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       SahneRailChip(label: label, selected: isSelected, onTap: onTap);
-}
-
-/// Rotadaki güncel düğümün yanındaki iki rozet: "Sıradaki ders" ve dersin
-/// yoldaki sırası ("1. ders"; kesir yok — U1, 2026-10-28 tur 4: ünite
-/// sayacıyla çelişen ikinci kesir görünüyordu).
-///
-/// 2026-10-29 vay 2B: rozetler kartın içinden düğümün yanına taşındı; kart
-/// yalnız ad, bağlam ve tek birincil düğmeyi taşır.
-class _CurrentStopBadges extends StatelessWidget {
-  const _CurrentStopBadges({required this.position});
-
-  final int position;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    Widget chip(Key key, String text, {required bool strong}) => DecoratedBox(
-      key: key,
-      decoration: ShapeDecoration(
-        color: strong ? t.learnFill : t.learnTint,
-        shape: const StadiumBorder(),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: SahneSpace.x3,
-          vertical: SahneSpace.x1,
-        ),
-        child: Text(
-          text,
-          style: SahneType.captionStrong.copyWith(
-            color: strong ? SahneVivid.onFill : t.learnTx,
-            fontFeatures: const [FontFeature.tabularFigures()],
-          ),
-        ),
-      ),
-    );
-    return Wrap(
-      spacing: SahneSpace.x2,
-      runSpacing: SahneSpace.x1,
-      children: [
-        chip(
-          const ValueKey('lesson-recommended-badge'),
-          context.t(K.recommendedForYou),
-          strong: true,
-        ),
-        chip(
-          const ValueKey('learning-progress-capsule'),
-          context.t(K.lessonPosition, {'n': '$position'}),
-          strong: false,
-        ),
-      ],
-    );
-  }
 }
 
 /// Rotanın güncel düğümünün altındaki kart (konuşma balonu gibi): ders adı,

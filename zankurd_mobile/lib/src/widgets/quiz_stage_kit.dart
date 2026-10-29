@@ -22,6 +22,21 @@ import 'zan_mascot.dart';
 /// başlar (ekranın ≈ %25–40'ında soru görünür; üstte büyük boş alan yok).
 const double quizStageTopGap = SahneSpace.x4;
 
+/// Soru ekranlarında (ders, yarış, günün turu, oda, sırayla düello, seviye
+/// belirleme) soru + şıklar grubunun dengeli yerleşim oranı (bkz.
+/// `SahneStageScroll.balance`): boş alanın bu kadarı grubun üstünde kalır.
+///
+/// 2026-10-29 son kurul tur 2 (B, Astra + Sol + Terra): grup cevaptan sonra
+/// artık yerinde kalır (`holdBalance`). Ama genel oran (`sahneQuestionBalance`
+/// 0.36) üstte ~76 pt boşluk bırakınca 390×844'te yanlış cevabın açıklama
+/// kartı perdenin arkasına düşüyor, gövde onu göstermek için kayıyordu: soru
+/// yine yerinden oynuyordu. Duolingo'daki gibi grup daha yukarıda başlar
+/// (Sol: "ilerleme çizgisiyle soru kartı arasındaki geniş boşluk"); kart
+/// şıkların altında kayma olmadan görünür. Grup yine başlığa yapışmaz
+/// (R3: dikey merkezi kullanılabilir alanın %30–55'inde) ve Y3 gereği her
+/// soru ekranında AYNI orandır.
+const double quizQuestionBalance = 0.12;
+
 /// Üst çubuktaki tek küçük mod çipi ("Yarış", "Ders", "Düello"...).
 class QuizModeChip extends StatelessWidget {
   const QuizModeChip({super.key, required this.label});
