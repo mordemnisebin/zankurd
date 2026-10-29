@@ -91,6 +91,10 @@ begin
   -- Aynı lobiye ikinci giriş ve çıkış (joined_at farklı olsun diye bekle).
   perform pg_sleep(0.01);
   perform public.join_room_by_code(v_code);
+  -- Tek işlemde now() sabit: ikinci katılımın zamanını gerçek saatle ayır
+  -- (canlıda her RPC ayrı işlem, joined_at zaten farklı olur).
+  update public.room_players set joined_at = clock_timestamp()
+   where room_id = v_room and player_id = g;
   perform public.leave_room(v_room);
   select coalesce(sum(amount), 0)::integer into b1
   from public.coin_transactions where player_id = g;
