@@ -311,6 +311,10 @@ void main() {
           240,
           scrollable: find.byType(Scrollable).first,
         );
+        // `scrollUntilVisible` görünür olur olmaz durur; düğme alt perdenin
+        // altında kalabilir. Biraz daha kaydırıp perdenin üstüne alınır.
+        await tester.drag(find.byType(Scrollable).first, const Offset(0, -160));
+        await tester.pumpAndSettle();
         await tester.tap(action);
         await tester.pumpAndSettle();
 

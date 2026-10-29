@@ -1191,7 +1191,63 @@ class _AppShellState extends State<AppShell>
     K.navProfile,
   ];
 
+  /// Sekme etiketlerini sekme genişliğine SIĞACAK kadar küçültür.
+  ///
+  /// 2026-10-29 iPhone 17 Pro turu: Kurmancî "Rûpela sereke" ~100 pt'lik
+  /// sekmeyi tam dolduruyor, sol ekran kenarına 7 px kalıyordu. Etiket
+  /// `NavigationDestination`da düz metindir (ölçeklenmez); bu yüzden dört
+  /// etiketin en uzunu ölçülür ve gerekirse yazı puntosu, her yandan 8 pt
+  /// pay kalacak biçimde küçülür (en çok beşte birine kadar; gerçek yazı tipinde buna inilmez). Yazı ölçeği büyükse
+  /// ölçüm de büyük hâliyle yapılır.
+  Widget _withFittedNavLabels(BuildContext context, Widget bar) {
+    final theme = Theme.of(context);
+    final base = theme.navigationBarTheme.labelTextStyle?.resolve({});
+    if (base == null) return bar;
+    final slot = MediaQuery.sizeOf(context).width / 4;
+    final available = slot - 16;
+    final scaler = MediaQuery.textScalerOf(context);
+    final clamped = scaler.clamp(maxScaleFactor: 1.3);
+    var widest = 0.0;
+    for (final key in _navLabelKeys) {
+      final painter = TextPainter(
+        text: TextSpan(
+          text: context.t(key),
+          style: base.copyWith(
+            fontFamily: base.fontFamily,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+        textScaler: clamped,
+        maxLines: 1,
+      )..layout();
+      if (painter.width > widest) widest = painter.width;
+      painter.dispose();
+    }
+    if (widest <= available || widest <= 0) return bar;
+    // %6 güvenlik payı: ölçüm ile NavigationBar'ın kendi yerleşimi arasında
+    // küçük fark kalır; etiket ikinci satıra KIRILMAMALI.
+    final factor = (available / widest * 0.94).clamp(0.2, 1.0);
+    final baseSize = base.fontSize ?? 12;
+    return Theme(
+      data: theme.copyWith(
+        navigationBarTheme: theme.navigationBarTheme.copyWith(
+          labelTextStyle: WidgetStateProperty.resolveWith(
+            (states) => theme.navigationBarTheme.labelTextStyle
+                ?.resolve(states)
+                ?.copyWith(fontSize: baseSize * factor),
+          ),
+        ),
+      ),
+      child: bar,
+    );
+  }
+
   Widget _buildNavigationBar(BuildContext context, {double? height}) {
+    return _withFittedNavLabels(context, _navigationBar(context, height));
+  }
+
+  Widget _navigationBar(BuildContext context, double? height) {
     return NavigationBar(
       height: height,
       selectedIndex: _tab,

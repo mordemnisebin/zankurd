@@ -510,7 +510,12 @@ class SahneResultHero extends StatelessWidget {
     this.notices = const [],
     this.emblemExtra = 0,
     this.emblemOwnsGlow = false,
+    this.valueSize,
   });
+
+  /// Büyük puanın punto değeri (renkli sahnede varsayılan 88). Kısa ekranda
+  /// 1v1 sonucu puan + ödül ilk görünümde kalsın diye küçültülür.
+  final double? valueSize;
 
   /// Amblem kendi ışığını taşıyor (madalya + ışın diski): puanın arkasındaki
   /// ışınlar ve parıltılar çizilmez. Vay 2A (2026-10-29, Astra sonuç 7/10):
@@ -619,7 +624,7 @@ class SahneResultHero extends StatelessWidget {
               suffix: suffix,
               style: SahneType.screen.copyWith(
                 color: calm ? t.tx : t.gold,
-                fontSize: scenic ? 88 : null,
+                fontSize: valueSize ?? (scenic ? 88 : null),
               ),
             ),
           ),
@@ -925,9 +930,21 @@ class SahneResultStat {
 /// içinde ikişerli satıra iner (sayı ve söz harf harf bölünmez). Görünür
 /// sayım yoksa hiçbir şey çizilmez.
 class SahneResultStats extends StatelessWidget {
-  const SahneResultStats({super.key, required this.stats});
+  const SahneResultStats({
+    super.key,
+    required this.stats,
+    this.compact = false,
+    this.oneRow = false,
+  });
 
   final List<SahneResultStat> stats;
+
+  /// Bütün sayımlar tek satırda (en kısa ekran); çipler sıkışık biçimdedir.
+  final bool oneRow;
+
+  /// Sıkışık çip: kısa ekranda (iPhone SE/8) sonuç ilk görünümde kalsın diye
+  /// çip yüksekliği 58 → 40.
+  final bool compact;
 
   /// Çizilecek bir sayım var mı? Çağıran, boş şerit için yer ayırmasın diye
   /// önceden sorar.
@@ -938,7 +955,7 @@ class SahneResultStats extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = <Widget>[
       for (final stat in stats)
-        if (stat.visible) _StatTile(stat: stat),
+        if (stat.visible) _StatTile(stat: stat, compact: compact),
     ];
     if (items.isEmpty) return const SizedBox.shrink();
     final t = SahneTokens.of(context);
@@ -950,13 +967,16 @@ class SahneResultStats extends StatelessWidget {
         // ("Doğr/u", "Üst/üste"; 2026-10-27, iki cihazlı düello).
         final minTile = MediaQuery.textScalerOf(context).scale(112);
         var perRow = items.length;
+        final forceOne = oneRow;
         // Büyük yazıda bile en az ikişerli; yalnız gerçekten dar kutuda
         // (< 240) tek sütuna inilir.
         final minCols = math.min(
           items.length,
           constraints.maxWidth >= 240 ? 2 : 1,
         );
-        while (perRow > minCols && constraints.maxWidth / perRow < minTile) {
+        while (!forceOne &&
+            perRow > minCols &&
+            constraints.maxWidth / perRow < minTile) {
           perRow = perRow > 2 ? 2 : 1;
         }
         // Satırdaki sütunlar eşit yükseklikte (`IntrinsicHeight`):
@@ -1016,9 +1036,10 @@ class SahneResultStats extends StatelessWidget {
 }
 
 class _StatTile extends StatelessWidget {
-  const _StatTile({required this.stat});
+  const _StatTile({required this.stat, this.compact = false});
 
   final SahneResultStat stat;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
@@ -1032,39 +1053,73 @@ class _StatTile extends StatelessWidget {
           decoration: ShapeDecoration(color: stat.tint, shape: SahneShape.m),
           child: ConstrainedBox(
             // a11y-tap-target: noninteractive — sayım çipi; salt görsel.
-            constraints: const BoxConstraints(minHeight: 58),
+            constraints: BoxConstraints(minHeight: compact ? 40 : 58),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
+              padding: EdgeInsets.symmetric(
                 horizontal: SahneSpace.x3,
-                vertical: SahneSpace.x2,
+                vertical: compact ? SahneSpace.x1 : SahneSpace.x2,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox.square(dimension: 20, child: stat.leading),
                   const SizedBox(width: SahneSpace.x2),
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '${stat.value}',
-                          style: SahneType.headline.copyWith(
-                            color: SahneVivid.onFill,
-                            height: 1.1,
-                            fontFeatures: const [FontFeature.tabularFigures()],
-                          ),
+                  if (compact)
+                    // Sıkışık: sayı ve söz TEK satırda ("3 Doğru").
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(
+                              '${stat.value}',
+                              style: SahneType.headline.copyWith(
+                                color: SahneVivid.onFill,
+                                fontFeatures: const [
+                                  FontFeature.tabularFigures(),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: SahneSpace.x1),
+                            Text(
+                              stat.label,
+                              maxLines: 1,
+                              style: SahneType.captionStrong.copyWith(
+                                color: stat.accent ?? t.tx2,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          stat.label,
-                          style: SahneType.captionStrong.copyWith(
-                            color: stat.accent ?? t.tx2,
+                      ),
+                    )
+                  else
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '${stat.value}',
+                            style: SahneType.headline.copyWith(
+                              color: SahneVivid.onFill,
+                              height: 1.1,
+                              fontFeatures: const [
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                          Text(
+                            stat.label,
+                            style: SahneType.captionStrong.copyWith(
+                              color: stat.accent ?? t.tx2,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -1128,7 +1183,11 @@ class SahneResultRewards extends StatelessWidget {
     this.xpLabel,
     this.progress,
     this.label,
+    this.compact = false,
   });
+
+  /// Sıkışık: söz ve çipler TEK satırda (kısa ekranda kart ~64 px).
+  final bool compact;
 
   /// Ödül satırının sözü ("Kazanıldı"): çipler tek başına durunca kartta
   /// ne olduğu belli olmuyordu (kalabalık sonuçta karta yalnız "+40"
@@ -1191,6 +1250,14 @@ class SahneResultRewards extends StatelessWidget {
       text,
       style: SahneType.bodyStrong.copyWith(color: SahneVivid.rewardLabel),
     );
+    if (compact) {
+      return Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        spacing: SahneSpace.x3,
+        runSpacing: SahneSpace.x1,
+        children: [labelText, chips],
+      );
+    }
     // Söz HER ZAMAN tam genişlikte üst satırda, çipler altında. Yan yana
     // düzende Kurmancî "Hat qezenckirin" çiplerin artığı olan dar sütuna
     // sığmayıp iki satıra kırılıyordu (tur 6, 70_result_ku); genişlik/ölçek

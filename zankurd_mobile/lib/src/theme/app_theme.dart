@@ -984,6 +984,9 @@ class AppTheme {
         elevation: 0,
         height: 64,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+        // 2026-10-29: Kurmancî "Rûpela sereke" sekme genişliğini tam
+        // dolduruyor ve ekran kenarına yapışıyordu; etikete yatay nefes payı.
+        labelPadding: const EdgeInsets.symmetric(horizontal: 8),
         iconTheme: WidgetStateProperty.resolveWith(
           (s) => IconThemeData(
             color: s.contains(WidgetState.selected) ? t.tx : t.tx3,
