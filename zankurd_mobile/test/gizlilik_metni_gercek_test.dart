@@ -20,7 +20,7 @@ void main() {
 
   test('ayar yolları gerçek bölüm ve satır adlarından oluşur', () {
     for (final lang in AppLanguage.values) {
-      final t = (String k) => Tr.of(k, lang);
+      String t(String k) => Tr.of(k, lang);
       final body = t(K.privacyBody);
       expect(
         body,
