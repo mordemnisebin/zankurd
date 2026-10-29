@@ -2472,10 +2472,7 @@ class ResultStatTiles extends StatelessWidget {
         SahneResultStat(
           leading: Icon(AppIcons.hourglass, size: 20, color: t.tx2),
           value: unanswered,
-          // Kurul C8 (Astra + Sol): "Boş" sorunun neden boş kaldığını
-          // söylemiyordu; yarışta boş = süre doldu (süresiz derste sayaç
-          // 0'dır ve çip görünmez).
-          label: context.t(K.sureDoldu),
+          label: context.t(K.blank),
           tint: SahneVivid.chipBlankTint,
           accent: SahneVivid.chipBlankTx,
         ),
@@ -3358,8 +3355,11 @@ class ResultExplanationEntry extends StatelessWidget {
     // Durum şekille ve sözle: oyuncu hangi soruda takıldığını listeyi
     // okumadan bulabilsin.
     final Widget status = record.isUnanswered
+        // Kurul C8 (Astra + Sol): "Boş" sorunun neden boş kaldığını
+        // söylemiyordu; yarışta boş soru süresi dolan sorudur ve inceleme
+        // listesinde öyle okunur (sonuç çipi dar ekranda kısa "Boş" kalır).
         ? Semantics(
-            label: context.t(K.blank),
+            label: context.t(K.sureDoldu),
             excludeSemantics: true,
             child: DecoratedBox(
               decoration: ShapeDecoration(color: t.s2, shape: SahneShape.s),

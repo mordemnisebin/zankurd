@@ -1514,7 +1514,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
       '$_selectedQuestionCount ${context.t(K.soru)} · '
       // Kurul C13 (Astra + Sol): "20 sn" neyin süresi olduğunu söylemiyordu.
       '${context.t(K.perQuestionSeconds, {'n': '$_selectedDuration'})} · '
-      '${_selectedEntryFee == 0 ? context.t(K.freeEntry) : '$_selectedEntryFee ${context.t(K.coinWord)}'}';
+      '${_selectedEntryFee == 0 ? context.t(K.freeEntrySummary) : '$_selectedEntryFee ${context.t(K.coinWord)}'}';
 
   @override
   void initState() {

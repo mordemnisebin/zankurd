@@ -1188,11 +1188,12 @@ extension _QuizScreenUI on _QuizScreenState {
   /// İlk taslak bu ayrımı yapmıyor ve `answers.length >= 4` diyordu; boşluk
   /// doldurma sorusunun şık listesi BOŞ olduğu için çift cevap orada da
   /// kapanmıştı. Kusuru iki mevcut test yakaladı.
-  // Kurul C29 (Astra + Sol, 2026-10-29): yazılı cevap ve cümle sıralamada
-  // "Çift cevap" ne yapacağı anlaşılmadan duruyordu (ikinci bir cevap alanı
-  // yok). Yalnız dört şıklı sorularda sunulur.
+  // Kurul C29 (Astra + Sol, 2026-10-29): yazılı cevapta "Çift cevap" ne
+  // yapacağı anlaşılmadan duruyordu. Joker orada GERÇEKTEN ikinci deneme
+  // verir (bekçi: fill_in_blank_quiz_flow_test); kaldırmak yerine etkinken
+  // bakiye yuvası "Çift cevap etkin: iki hakkın var" der (C16).
   bool get _supportsDoubleAnswer =>
-      _supportsOptionWildcards && question.answers.length >= 4;
+      !_supportsOptionWildcards || question.answers.length >= 4;
 
   /// Joker için ödeme yolu var mı: bedava günlük hak YA DA yeterli jeton.
   ///

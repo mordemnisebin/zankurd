@@ -3599,7 +3599,10 @@ class Tr {
     K.entryFeeLabel: {'ku': 'Xerca beşdarbûnê', 'tr': 'Katılım ücreti'},
     // Kurul C13 (Astra + Sol): "Ücretsiz (0)"daki sıfır neyin sıfırı belli
     // değildi; giriş ücreti olduğu yazar.
-    K.freeEntry: {'ku': 'Ketina bêpere', 'tr': 'Ücretsiz giriş'},
+    K.freeEntry: {'ku': 'Bêpere', 'tr': 'Ücretsiz'},
+    K.freeEntrySummary: {'ku': 'ketina bêpere', 'tr': 'giriş ücretsiz'},
+    // Kurul C14: sırayla düello rozeti canlı düellodan ayrılsın (kısa).
+    K.asyncDuelChip: {'ku': 'Bi dorê', 'tr': 'Sırayla'},
     K.perQuestionSeconds: {
       'ku': 'ji bo her pirsê {n} çirke',
       'tr': 'soru başına {n} sn',
@@ -5021,6 +5024,8 @@ class K {
   static const crowdWaitingCount = 'quiz.crowd.waitingCount';
   static const crowdAllTied = 'quiz.crowd.allTied';
   static const perQuestionSeconds = 'room.perQuestionSeconds';
+  static const freeEntrySummary = 'room.freeEntrySummary';
+  static const asyncDuelChip = 'duel.async.chip';
   static const doubleAnswerActiveHint = 'quiz.doubleAnswerActiveHint';
   static const wordOrderingHowTo = 'quiz.wordOrderingHowTo';
   static const questionImageZoomHint = 'quiz.questionImageZoomHint';

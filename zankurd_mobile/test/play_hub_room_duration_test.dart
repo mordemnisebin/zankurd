@@ -485,7 +485,10 @@ void main() {
     expect(find.byKey(const ValueKey('custom-room-count-5')), findsNothing);
     expect(find.byKey(const ValueKey('custom-room-duration-30')), findsNothing);
     expect(find.byKey(const ValueKey('custom-room-fee-25')), findsNothing);
-    expect(find.text('10 soru · 20 sn · Ücretsiz (0)'), findsOneWidget);
+    expect(
+      find.text('10 soru · soru başına 20 sn · giriş ücretsiz'),
+      findsOneWidget,
+    );
 
     final row = find.byKey(const ValueKey('custom-room-settings-row'));
     await tester.ensureVisible(row);
@@ -502,7 +505,10 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(row);
     await tester.pumpAndSettle();
-    expect(find.text('5 soru · 20 sn · Ücretsiz (0)'), findsOneWidget);
+    expect(
+      find.text('5 soru · soru başına 20 sn · giriş ücretsiz'),
+      findsOneWidget,
+    );
     expect(find.byKey(const ValueKey('custom-room-count-5')), findsNothing);
   });
 }

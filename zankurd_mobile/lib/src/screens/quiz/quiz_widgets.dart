@@ -156,78 +156,133 @@ class _QuestionImage extends StatelessWidget {
     // Kurul C18 (Astra + Sol, 2026-10-29): görselin sorunun kendisi olduğu
     // sorularda küçük karedeki ayrıntı seçilemiyordu; dokununca tam ekran,
     // yakınlaştırılabilir görünüm açılır (Duolingo/Quizlet deseni).
-    return Semantics(
-      image: true,
-      button: true,
+    return _ZoomableQuestionImage(
+      url: url,
       label: label,
-      hint: context.t(K.questionImageZoomHint),
-      // Alttaki `Image` widget'ları kendi (boş) semantiklerini üretiyor;
-      // dışlanmazsa ekran okuyucu etiketi iki kez ya da eksik okur.
-      excludeSemantics: true,
-      onTap: () => _openQuestionImageZoom(context, url, label),
       // Şahnê: görsel L pahlı karede (kesik köşe), yuvarlak köşe yok.
-      child: GestureDetector(
-        key: const ValueKey('quiz-question-image-zoom'),
-        behavior: HitTestBehavior.opaque,
-        onTap: () => _openQuestionImageZoom(context, url, label),
-        child: ClipPath(
-          clipper: const ShapeBorderClipper(shape: SahneShape.l),
-          child: (isLandscapeTablet || forcedHeight != null)
-              ? SizedBox(
-                  width: double.infinity,
-                  height: forcedHeight ?? maxHeight,
-                  child: image,
-                )
-              : SizedBox(
-                  width: double.infinity,
-                  height: portraitHeight,
-                  child: image,
-                ),
-        ),
+      child: ClipPath(
+        clipper: const ShapeBorderClipper(shape: SahneShape.l),
+        child: (isLandscapeTablet || forcedHeight != null)
+            ? SizedBox(
+                width: double.infinity,
+                height: forcedHeight ?? maxHeight,
+                child: image,
+              )
+            : SizedBox(
+                width: double.infinity,
+                height: portraitHeight,
+                child: image,
+              ),
       ),
     );
   }
 }
 
-/// Soru görselinin tam ekran, yakınlaştırılabilir görünümü (kurul C18).
-void _openQuestionImageZoom(BuildContext context, String url, String label) {
-  final provider = _questionImageProvider(url);
-  showDialog<void>(
-    context: context,
-    barrierColor: Colors.black.withValues(alpha: 0.92),
-    builder: (dialogContext) => Dialog.fullscreen(
-      backgroundColor: Colors.transparent,
-      child: SafeArea(
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Semantics(
-                image: true,
-                label: label,
-                child: InteractiveViewer(
-                  key: const ValueKey('quiz-question-image-zoom-view'),
-                  maxScale: 4,
-                  child: Center(
-                    child: Image(image: provider, fit: BoxFit.contain),
+/// Dokununca tam ekran açılan soru görseli. Açık görünüm görselin ait olduğu
+/// SORUYA bağlıdır (Astra incelemesi): süre dolup soru değişince, görsel
+/// değişince ya da ekran kapanınca kendiliğinden kapanır; eski görsel yeni
+/// soruyu ve işleyen sayacı örtmez.
+class _ZoomableQuestionImage extends StatefulWidget {
+  const _ZoomableQuestionImage({
+    required this.url,
+    required this.label,
+    required this.child,
+  });
+
+  final String url;
+  final String label;
+  final Widget child;
+
+  @override
+  State<_ZoomableQuestionImage> createState() => _ZoomableQuestionImageState();
+}
+
+class _ZoomableQuestionImageState extends State<_ZoomableQuestionImage> {
+  Route<void>? _route;
+
+  void _open() {
+    if (_route?.isActive ?? false) return;
+    final provider = _questionImageProvider(widget.url);
+    final label = widget.label;
+    final route = DialogRoute<void>(
+      context: context,
+      barrierColor: Colors.black.withValues(alpha: 0.92),
+      builder: (dialogContext) => Dialog.fullscreen(
+        backgroundColor: Colors.transparent,
+        child: SafeArea(
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Semantics(
+                  image: true,
+                  label: label,
+                  child: InteractiveViewer(
+                    key: const ValueKey('quiz-question-image-zoom-view'),
+                    maxScale: 4,
+                    child: Center(
+                      child: Image(image: provider, fit: BoxFit.contain),
+                    ),
                   ),
                 ),
               ),
-            ),
-            PositionedDirectional(
-              top: SahneSpace.x2,
-              end: SahneSpace.x2,
-              child: SahneIconButton(
-                key: const ValueKey('quiz-question-image-zoom-close'),
-                icon: AppIcons.xmark,
-                semanticLabel: dialogContext.t(K.close),
-                onPressed: () => Navigator.of(dialogContext).pop(),
+              PositionedDirectional(
+                top: SahneSpace.x2,
+                end: SahneSpace.x2,
+                child: SahneIconButton(
+                  key: const ValueKey('quiz-question-image-zoom-close'),
+                  icon: AppIcons.xmark,
+                  semanticLabel: dialogContext.t(K.close),
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+    _route = route;
+    Navigator.of(context).push(route);
+  }
+
+  void _close() {
+    final route = _route;
+    _route = null;
+    if (route != null && route.isActive) {
+      route.navigator?.removeRoute(route);
+    }
+  }
+
+  @override
+  void didUpdateWidget(_ZoomableQuestionImage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.url != widget.url) _close();
+  }
+
+  @override
+  void dispose() {
+    _close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      image: true,
+      button: true,
+      label: widget.label,
+      hint: context.t(K.questionImageZoomHint),
+      // Alttaki `Image` widget'ları kendi (boş) semantiklerini üretiyor;
+      // dışlanmazsa ekran okuyucu etiketi iki kez ya da eksik okur.
+      excludeSemantics: true,
+      onTap: _open,
+      child: GestureDetector(
+        key: const ValueKey('quiz-question-image-zoom'),
+        behavior: HitTestBehavior.opaque,
+        onTap: _open,
+        child: widget.child,
+      ),
+    );
+  }
 }
 
 /// Görsel indirilirken gösterilen hafif yükleme yüzeyi (Kulis tonu).
