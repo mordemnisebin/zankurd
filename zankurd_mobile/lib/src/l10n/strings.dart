@@ -1461,7 +1461,7 @@ class Tr {
     },
     K.wordOrderingHowTo: {
       'ku':
-          'Li peyvan bixe da ku hevokê çêbikî; ji bo rakirinê li peyva di hevokê de bixe.',
+          'Li peyvan bixe da ku hevokê çêbikî; ji bo vegerandinê li peyva di hevokê de bixe.',
       'tr':
           'Kelimelere dokunarak cümleyi kur; geri almak için cümledeki kelimeye dokun.',
     },
@@ -4132,7 +4132,7 @@ class Tr {
     // Kurul C20 (Astra + Sol): "Yeni düello" rozeti yeni özellik duyurusu
     // gibi okunuyordu; eylem olduğu söylenir.
     K.asyncDuelStartNew: {
-      'ku': 'Pêşbirkekê dest pê bike',
+      'ku': 'Dest bi pêşbirkekê bike',
       'tr': 'Düello başlat',
     },
     K.challengeYourTurn: {'ku': 'Dora te ye', 'tr': 'Sıra sende'},
