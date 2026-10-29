@@ -556,11 +556,7 @@ void main() {
         testShell(
           child: SahneStageScaffold(
             body: const SizedBox.shrink(),
-            center: QuizStageCenter(
-              category: 'Ziman',
-              index: 7,
-              total: 10,
-            ),
+            center: QuizStageCenter(category: 'Ziman', index: 7, total: 10),
             score: const FittedBox(
               fit: BoxFit.scaleDown,
               child: Row(

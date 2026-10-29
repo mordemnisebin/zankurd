@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
@@ -526,4 +525,3 @@ double quizDockHeight(
   }
   return strip > jokers ? strip : jokers;
 }
-
