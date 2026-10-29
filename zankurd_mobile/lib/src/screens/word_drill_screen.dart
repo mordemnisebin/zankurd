@@ -236,6 +236,7 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
     unawaited(
       speaker.speak(text).catchError((Object error, StackTrace stack) {
         ErrorReporter.record(error, stack, reason: 'word_review_speak');
+        return false;
       }),
     );
   }

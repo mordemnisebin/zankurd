@@ -26,8 +26,10 @@ class _Speaker implements LessonListeningSpeaker {
   final ValueNotifier<bool> speakingListenable = ValueNotifier(false);
 
   @override
-  Future<void> speak(String text, {bool slow = false}) async =>
-      spoken.add(text);
+  Future<bool> speak(String text, {bool slow = false}) async {
+    spoken.add(text);
+    return true;
+  }
 
   @override
   Future<void> stop() async {}

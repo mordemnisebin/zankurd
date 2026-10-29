@@ -59,8 +59,17 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
   }
 
   Future<void> _play({bool slow = false}) async {
-    await widget.speaker.speak(_entry.termKu, slow: slow);
-    if (!mounted || _hasPlayed) return;
+    final played = await widget.speaker.speak(_entry.termKu, slow: slow);
+    if (!mounted) return;
+    if (!played) {
+      // Ses başlamadı: "dinlendi" sayılmaz, şıklar açılmaz; kullanıcıya
+      // söylenir ve düğme yeniden denenebilir kalır.
+      ScaffoldMessenger.maybeOf(context)
+        ?..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(context.t(K.ttsUnavailable))));
+      return;
+    }
+    if (_hasPlayed) return;
     setState(() => _hasPlayed = true);
   }
 

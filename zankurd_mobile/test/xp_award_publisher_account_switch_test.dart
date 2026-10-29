@@ -32,23 +32,29 @@ void main() {
     XPStore.resetInstance();
   });
 
-  test('yanıt gelmeden hesap değişirse B deposu A toplamıyla ezilmez', () async {
-    LocalProgressScope.bind('user-a');
-    final repo = _SlowRepo();
-    final pending = XpAwardPublisher.publish(
-      repository: repo,
-      delta: 0,
-      roomId: 'room-1',
-    );
-    LocalProgressScope.bind('user-b');
-    XPStore.resetInstance();
-    final storeB = await XPStore.loadForTest(7);
-    repo.gate.complete(9999);
-    await pending;
-    expect(storeB.totalXP, 7);
-    final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getInt('zankurd.scope.user-b.zankurd.xp.total'), isNot(9999));
-  });
+  test(
+    'yanıt gelmeden hesap değişirse B deposu A toplamıyla ezilmez',
+    () async {
+      LocalProgressScope.bind('user-a');
+      final repo = _SlowRepo();
+      final pending = XpAwardPublisher.publish(
+        repository: repo,
+        delta: 0,
+        roomId: 'room-1',
+      );
+      LocalProgressScope.bind('user-b');
+      XPStore.resetInstance();
+      final storeB = await XPStore.loadForTest(7);
+      repo.gate.complete(9999);
+      await pending;
+      expect(storeB.totalXP, 7);
+      final prefs = await SharedPreferences.getInstance();
+      expect(
+        prefs.getInt('zankurd.scope.user-b.zankurd.xp.total'),
+        isNot(9999),
+      );
+    },
+  );
 
   test('hesap değişmediyse sunucu toplamı yazılır', () async {
     LocalProgressScope.bind('user-a');

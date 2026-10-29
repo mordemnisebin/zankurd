@@ -26,7 +26,12 @@ abstract interface class LessonListeningSpeaker {
 
   /// [slow]: öğrenen için yavaş çalma ("kaplumbağa"). Kayıt
   /// [kSlowPlaybackRate] hızla, TTS [kSlowSpeechFactor] kat yavaş okunur.
-  Future<void> speak(String text, {bool slow = false});
+  ///
+  /// Dönüş: ses GERÇEKTEN başlatıldıysa `true`. Kayıt çalmadı ve TTS de yoksa
+  /// `false`: eskiden hatasız dönüyordu ve dinleme kartı bunu "dinlendi"
+  /// sayıp kullanıcıyı duymadığı sesin anlamını seçmeye yönlendiriyordu
+  /// (Codex denetimi 2026-10-29).
+  Future<bool> speak(String text, {bool slow = false});
   Future<void> stop();
 }
 
@@ -56,8 +61,11 @@ class TtsLessonListeningSpeaker implements LessonListeningSpeaker {
   ValueListenable<bool> get speakingListenable => _tts.speakingNotifier;
 
   @override
-  Future<void> speak(String text, {bool slow = false}) =>
-      _tts.speak(text, rateFactor: slow ? kSlowSpeechFactor : 1.0);
+  Future<bool> speak(String text, {bool slow = false}) async {
+    if (!available) return false;
+    await _tts.speak(text, rateFactor: slow ? kSlowSpeechFactor : 1.0);
+    return true;
+  }
 
   @override
   Future<void> stop() => _tts.stop();
@@ -98,7 +106,7 @@ class RecordedFirstLessonListeningSpeaker implements LessonListeningSpeaker {
   ValueListenable<bool> get speakingListenable => _speaking;
 
   @override
-  Future<void> speak(String text, {bool slow = false}) async {
+  Future<bool> speak(String text, {bool slow = false}) async {
     final clip = catalog.clipForText(text);
     if (clip != null) {
       try {
@@ -107,7 +115,7 @@ class RecordedFirstLessonListeningSpeaker implements LessonListeningSpeaker {
           clip.toVerifiedClip(),
           rate: slow ? kSlowPlaybackRate : 1.0,
         );
-        return;
+        return true;
       } catch (error, stack) {
         ErrorReporter.record(
           error,
@@ -118,8 +126,9 @@ class RecordedFirstLessonListeningSpeaker implements LessonListeningSpeaker {
     }
     if (fallback.availableFor(text)) {
       await player.stop();
-      await fallback.speak(text, slow: slow);
+      return fallback.speak(text, slow: slow);
     }
+    return false;
   }
 
   @override

@@ -13,6 +13,7 @@ import '../../services/guest_save_prompt.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/player_identity.dart';
+import '../../data/daily_mission_store.dart';
 import '../../data/streak_store.dart';
 import '../../utils/error_reporter.dart';
 import '../../widgets/player_avatar.dart';
@@ -517,8 +518,36 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     _beginQuestion();
   }
 
+  /// Bu yarış günlük görevlere bir kez işlendi mi.
+  bool _missionReported = false;
+
+  /// Sırayla düello ve sunucu puanlı kupa maçı BİTTİĞİNDE günlük görevleri
+  /// ilerletir. Eskiden yalnız normal quiz sonuç akışı çağırıyordu: yarış
+  /// tamamlayan kullanıcı "yarış tamamla" ve "doğru cevap" görevlerini
+  /// ilerletemiyordu (Codex denetimi 2026-10-29). XP burada verilmez: ödül
+  /// ana ekranda "Ödülü al" ile tek kez yazılır.
+  Future<void> _reportMissionProgress() async {
+    if (_missionReported) return;
+    _missionReported = true;
+    try {
+      final store = await DailyMissionStore.load();
+      await store.reportQuizCompleted(
+        correctAnswers: _results
+            .where((r) => r == SahneDiamondState.correct)
+            .length,
+        category: _questions.isEmpty
+            ? (widget.category ?? '')
+            : _questions.first.category,
+        streakAlive: true,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'async_duel_mission_report');
+    }
+  }
+
   void _goToResult(AsyncDuelResult? result) {
     unawaited(StreakStore.recordActivity());
+    unawaited(_reportMissionProgress());
     if (_isTournament) {
       _popToTournament();
       return;

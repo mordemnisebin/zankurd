@@ -32,10 +32,14 @@ class _FakeSpeaker implements LessonListeningSpeaker {
   int stopCalls = 0;
 
   @override
-  Future<void> speak(String text, {bool slow = false}) async {
+  Future<bool> speak(String text, {bool slow = false}) async {
     spoken.add(text);
     slows.add(slow);
+    return playResult;
   }
+
+  /// `false`: kayıt çalmadı ve TTS yok (ses başlamadı).
+  bool playResult = true;
 
   @override
   Future<void> stop() async {
@@ -87,6 +91,26 @@ void main() {
     );
 
     expect(find.byKey(const ValueKey('lesson-listening-card')), findsNothing);
+  });
+
+  // Codex denetimi 2026-10-29 (ürün #12): kayıt çalmayıp TTS de yoksa
+  // `speak` hatasız dönüyor, kart bunu "dinlendi" sayıp duyulmayan sesin
+  // anlamını seçtiriyordu.
+  testWidgets('ses başlamadıysa şıklar açılmaz, kullanıcıya söylenir', (
+    tester,
+  ) async {
+    final speaker = _FakeSpeaker()..playResult = false;
+    await tester.pumpWidget(
+      _wrap(LessonListeningCard(entries: _entries, speaker: speaker)),
+    );
+
+    await tester.tap(find.byKey(const ValueKey('lesson-listening-play')));
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.text('Günaydın / İyi günler'), findsNothing);
+    expect(find.text('İyi akşamlar'), findsNothing);
+    expect(find.text('Seslendirme bu cihazda kullanılamıyor.'), findsOneWidget);
   });
 
   testWidgets('önce sesi dinletir, Kurmancî terimi cevaptan önce gizler', (

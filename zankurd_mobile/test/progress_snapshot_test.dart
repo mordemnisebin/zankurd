@@ -359,11 +359,7 @@ void main() {
       final reviewed = SnapshotMistakes(
         ids: {'q'},
         meta: {
-          'q': {
-            ...meta(9000, reps: 1),
-            'missCount': 1,
-            'correctSessions': 1,
-          },
+          'q': {...meta(9000, reps: 1), 'missCount': 1, 'correctSessions': 1},
         },
       );
       final stale = SnapshotMistakes(
