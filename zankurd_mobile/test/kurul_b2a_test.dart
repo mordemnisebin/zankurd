@@ -251,5 +251,42 @@ void main() {
       find.byKey(const ValueKey('quiz-question-image-zoom-view')),
       findsNothing,
     );
+    expect(tester.takeException(), isNull);
+  });
+
+  // Astra 2. inceleme: aynı görseli kullanan sonraki soruda eski tam ekran
+  // görünüm açık kalmamalı; kapanış derleme sırasında hata vermemeli.
+  testWidgets('C18: aynı görselli sonraki soruda açık görünüm kapanır', (
+    tester,
+  ) async {
+    await _setView(tester, 402, 874);
+    final qid = ValueNotifier<String>('q1');
+    await tester.pumpWidget(
+      testShell(
+        child: Scaffold(
+          body: ValueListenableBuilder<String>(
+            valueListenable: qid,
+            builder: (context, id, _) => QuizQuestionImage(
+              url: 'asset://assets/zankurd.webp',
+              questionId: id,
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('quiz-question-image-zoom')));
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('quiz-question-image-zoom-view')),
+      findsOneWidget,
+    );
+    qid.value = 'q2';
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('quiz-question-image-zoom-view')),
+      findsNothing,
+    );
+    expect(tester.takeException(), isNull);
   });
 }

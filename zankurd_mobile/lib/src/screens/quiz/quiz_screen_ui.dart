@@ -1555,6 +1555,7 @@ extension _QuizScreenUI on _QuizScreenState {
             width: 164,
             child: _QuestionImage(
               url: question.imageUrl!,
+              questionId: question.id,
               alt: question.imageAltFor(isKu: context.isKu),
               isCompact: isCompact,
               layoutSize: size,
@@ -1575,6 +1576,7 @@ extension _QuizScreenUI on _QuizScreenState {
           _QuestionImage(
             key: _photoKeyFor(index),
             url: question.imageUrl!,
+            questionId: question.id,
             alt: question.imageAltFor(isKu: context.isKu),
             isCompact: imageCompact,
             layoutSize: size,

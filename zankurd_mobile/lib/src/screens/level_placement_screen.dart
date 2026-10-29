@@ -274,6 +274,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
                           QuizQuestionImage(
                             key: const ValueKey('placement-question-image'),
                             url: question.imageUrl!,
+                            questionId: question.id,
                             alt: question.imageAltFor(isKu: context.isKu),
                           ),
                           const SizedBox(height: SahneSpace.x3),

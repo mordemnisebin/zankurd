@@ -18,13 +18,20 @@ part of '../quiz_screen.dart';
 /// çizer: aynı yükseklik formülü, aynı pah, aynı alt metin ve aynı hata
 /// yüzeyi. İkinci bir görsel kartı yazılmaz.
 class QuizQuestionImage extends StatelessWidget {
-  const QuizQuestionImage({super.key, required this.url, this.alt});
+  const QuizQuestionImage({
+    super.key,
+    required this.url,
+    this.alt,
+    this.questionId,
+  });
 
   final String url;
+  final String? questionId;
   final String? alt;
 
   @override
-  Widget build(BuildContext context) => _QuestionImage(url: url, alt: alt);
+  Widget build(BuildContext context) =>
+      _QuestionImage(url: url, alt: alt, questionId: questionId);
 }
 
 /// Soru görselinin kod çözme genişliği tavanı (bkz. `_QuestionImage`).
@@ -48,6 +55,7 @@ class _QuestionImage extends StatelessWidget {
   const _QuestionImage({
     super.key,
     required this.url,
+    this.questionId,
     this.alt,
     this.isCompact = false,
     this.layoutSize,
@@ -55,6 +63,10 @@ class _QuestionImage extends StatelessWidget {
   });
 
   final String url;
+
+  /// Görselin ait olduğu soru: tam ekran görünüm soru değişince kapanır
+  /// (aynı görseli kullanan iki soru arka arkaya gelse bile).
+  final String? questionId;
 
   /// Görselin ekran okuyucuya okunan betimlemesi.
   ///
@@ -158,6 +170,7 @@ class _QuestionImage extends StatelessWidget {
     // yakınlaştırılabilir görünüm açılır (Duolingo/Quizlet deseni).
     return _ZoomableQuestionImage(
       url: url,
+      questionId: questionId,
       label: label,
       // Şahnê: görsel L pahlı karede (kesik köşe), yuvarlak köşe yok.
       child: ClipPath(
@@ -187,9 +200,11 @@ class _ZoomableQuestionImage extends StatefulWidget {
     required this.url,
     required this.label,
     required this.child,
+    this.questionId,
   });
 
   final String url;
+  final String? questionId;
   final String label;
   final Widget child;
 
@@ -244,18 +259,26 @@ class _ZoomableQuestionImageState extends State<_ZoomableQuestionImage> {
     Navigator.of(context).push(route);
   }
 
+  /// Açık görünümü kapatır. Yaşam döngüsü çağrıları (didUpdateWidget,
+  /// dispose) yerleşim/derleme sırasında gelir; rota kaldırmak Navigator'da
+  /// setState tetiklediği için kaldırma sonraki kareye ertelenir ve orada
+  /// rotanın hâlâ etkin olduğu yeniden denetlenir (Astra incelemesi).
   void _close() {
     final route = _route;
     _route = null;
-    if (route != null && route.isActive) {
-      route.navigator?.removeRoute(route);
-    }
+    if (route == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (route.isActive) route.navigator?.removeRoute(route);
+    });
   }
 
   @override
   void didUpdateWidget(_ZoomableQuestionImage oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.url != widget.url) _close();
+    if (oldWidget.url != widget.url ||
+        oldWidget.questionId != widget.questionId) {
+      _close();
+    }
   }
 
   @override
