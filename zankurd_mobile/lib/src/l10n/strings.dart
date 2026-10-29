@@ -2257,7 +2257,8 @@ class Tr {
     // dolunca yalnız skor göndermiş olan geçer (hükmen). Rakip hâlâ
     // oynayabilir; süre dolduktan sonra sonuç bir sonraki yenilemede gelir.
     K.tournamentWaitingOpponentDeadline: {
-      'ku': 'Heke hevrikê te heta {time} nelîze, tu bêyî lîstikê bi ser dikevî.',
+      'ku':
+          'Heke hevrikê te heta {time} nelîze, tu bêyî lîstikê bi ser dikevî.',
       'tr': 'Rakibin {time} tarihine kadar oynamazsa maçı hükmen kazanırsın.',
     },
     K.tournamentWaitingOpponentExpired: {
