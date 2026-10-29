@@ -130,106 +130,103 @@ class SpeechToken {
   }
 }
 
-/// Tek bir telaffuz oynatıcısının oturum yaşam döngüsü.
+/// Telaffuz çalışlarının oturum yaşam döngüsü.
 ///
-/// * play/stop/dispose bu oynatıcı için SIRALIDIR;
-/// * her çalış yeni bir NESİLdir (kendi belirteci); doğal bitiş yalnız o
-///   neslin belirtecini bırakır. Bitiş sayılmadan önce o neslin `playing`
-///   olayı görülmüş olmalıdır: önceki çalışın geç gelen `completed` olayı
-///   (akış sırası korunur, yeni `playing`den ÖNCE gelir) yeni oturumu
-///   kapatamaz;
-/// * dispose bekleyen başlangıcı iptal eder ve belirteci bırakır.
+/// Astra 48bf4b86 incelemesi: tek oynatıcı örneği paylaşıldığında önceki
+/// çalışın geç gelen olayları yeni çalışın belirtecine ulaşabiliyordu ve
+/// bekleyen başlangıcın iptali ile çalan sesin bırakılması aynı adımdı.
+/// Yarış YAPISAL olarak kapatılır:
+///
+/// * HER çalış kendi [AudioPlayer] örneğini ve dinleyicisini alır; bitince ya
+///   da durdurulunca o örnek kapatılır. Eski çalışın olayları ayrı örnekten
+///   geldiği için yeni belirtece hiçbir yoldan ulaşamaz.
+/// * İPTAL (bayrak) ile BIRAKMA (belirteç) ayrıdır: başlamış çalışın
+///   belirteci, fiziksel stop + dispose TAMAMLANINCA bırakılır. Asenkron
+///   hazırlıktan (setSource) sonra, `resume`dan hemen önce iptal yeniden
+///   denetlenir; iptalse `resume` hiç çağrılmaz.
 class SpeechPlaybackGuard {
-  SpeechPlaybackGuard(this.player) {
-    _sub = player.onPlayerStateChanged.listen(_onState);
-  }
+  SpeechPlaybackGuard(this._createPlayer, {this.onState});
 
-  final AudioPlayer player;
-  late final StreamSubscription<PlayerState> _sub;
-  Future<void> _chain = Future<void>.value();
-  bool _sawPlaying = false;
-  SpeechToken? _token;
+  final AudioPlayer Function() _createPlayer;
+
+  /// Geçerli çalışın oynatıcı durumları (arayüzün "çalıyor" göstergesi).
+  final void Function(PlayerState state)? onState;
+
+  _SpeechRun? _current;
   bool _disposed = false;
 
   AudioSessionCoordinator get _c => AudioSessionCoordinator.instance;
 
-  Future<void> _serial(Future<void> Function() action) {
-    final result = _chain.then((_) => action());
-    _chain = result.then<void>((_) {}, onError: (_) {});
-    return result;
-  }
-
-  void _onState(PlayerState state) {
-    if (state == PlayerState.playing) {
-      _sawPlaying = true;
-      return;
+  /// Önceki çalışı iptal eder ve kapatır; yeni bir örnekle [prepare]
+  /// (kaynak, hız …) sonra `resume` yürütür. İptal edilmiş bir çalışın
+  /// hataları yutulur.
+  Future<void> play(Future<void> Function(AudioPlayer player) prepare) async {
+    if (_disposed) return;
+    final token = _c.acquireSpeech();
+    final run = _SpeechRun(_createPlayer(), token);
+    final previous = _current;
+    _current = run;
+    run.sub = run.player.onPlayerStateChanged.listen((state) {
+      if (identical(_current, run)) onState?.call(state);
+      if (state == PlayerState.completed) unawaited(run.finish());
+    });
+    if (previous != null) {
+      previous.cancelled = true;
+      await previous.finish();
     }
-    if (state == PlayerState.completed && _sawPlaying) {
-      final token = _token;
-      _token = null;
-      _sawPlaying = false;
-      if (token != null) unawaited(token.release());
-    }
-  }
-
-  Future<void> _releaseCurrent() async {
-    final token = _token;
-    _token = null;
-    _sawPlaying = false;
-    if (token != null) await token.release();
-  }
-
-  /// Durdurma dönemi: [stop]/[dispose] çağrıldığı AN artar. Bir [play]
-  /// çağrıldığı andaki dönemi yakalar; dönem değiştiyse (arada stop/dispose
-  /// geldiyse) başlangıç iptal olur — kuyrukta beklese bile.
-  int _epoch = 0;
-
-  /// Önceki çalışı bırakır, yeni nesil için oturumu sahiplenir ve [start]'ı
-  /// `playback` bağlamında yürütür.
-  Future<void> play(Future<void> Function() start) {
-    final epoch = _epoch;
-    return _serial(() async {
-      if (_disposed || epoch != _epoch) return;
-      await player.stop();
-      await _releaseCurrent();
-      if (_disposed || epoch != _epoch) return;
-      final token = _c.acquireSpeech();
-      _token = token;
-      try {
-        await _c.startSpeech(token, player, () async {
-          if (epoch != _epoch) return;
-          await start();
-        });
-      } catch (_) {
-        if (identical(_token, token)) _token = null;
-        await token.release();
+    try {
+      await _c.startSpeech(token, run.player, () async {
+        if (run.cancelled) return;
+        await prepare(run.player);
+        // Hazırlık asenkron: bu arada stop/dispose/yeni play gelmiş olabilir.
+        if (run.cancelled) return;
+        await run.player.resume();
+      });
+    } catch (_) {
+      if (!run.cancelled) {
+        await run.finish();
         rethrow;
       }
-    });
+    }
+    if (run.cancelled) await run.finish();
   }
 
-  /// Durdurur. Belirteç ÇAĞRI ANINDA bırakılır: başlangıç koordinatör
-  /// kuyruğunda bekliyorsa iptal olur ve oturum açılmaz.
-  Future<void> stop() {
-    _epoch++;
-    final release = _releaseCurrent();
-    return _serial(() async {
-      await release;
-      await player.stop();
-    });
+  /// Geçerli çalışı iptal eder; belirteç fiziksel durdurma bitince bırakılır.
+  Future<void> stop() async {
+    final run = _current;
+    _current = null;
+    if (run == null) return;
+    run.cancelled = true;
+    onState?.call(PlayerState.stopped);
+    await run.finish();
   }
 
-  /// Bekleyen başlangıcı iptal eder (belirteç hemen bırakılır), sonra
-  /// oynatıcıyı kapatır.
-  Future<void> dispose() {
-    if (_disposed) return Future<void>.value();
+  Future<void> dispose() async {
+    if (_disposed) return;
     _disposed = true;
-    _epoch++;
-    final release = _releaseCurrent();
-    return _serial(() async {
-      await release;
-      await _sub.cancel();
-      await player.dispose();
-    });
+    await stop();
   }
+}
+
+/// Bir telaffuz çalışı: kendi oynatıcı örneği, dinleyicisi ve belirteci.
+class _SpeechRun {
+  _SpeechRun(this.player, this.token);
+
+  final AudioPlayer player;
+  final SpeechToken token;
+  StreamSubscription<PlayerState>? sub;
+  bool cancelled = false;
+  Future<void>? _finishing;
+
+  /// Örneği durdurup kapatır, SONRA belirteci bırakır. TAM BİR KEZ.
+  Future<void> finish() => _finishing ??= () async {
+    await sub?.cancel();
+    try {
+      await player.stop();
+    } catch (_) {}
+    try {
+      await player.dispose();
+    } catch (_) {}
+    await token.release();
+  }();
 }

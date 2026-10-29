@@ -21,16 +21,14 @@ abstract class PronunciationPlayback {
 }
 
 class _AudioplayersPlayback implements PronunciationPlayback {
-  final AudioPlayer _player = AudioPlayer();
-
-  /// Oturum sahipliği, nesil ve sıra (Astra fd886658 incelemesi).
-  late final SpeechPlaybackGuard _guard = SpeechPlaybackGuard(_player);
+  /// Her çalış kendi oynatıcı örneğini alır (Astra 48bf4b86 incelemesi).
+  final SpeechPlaybackGuard _guard = SpeechPlaybackGuard(AudioPlayer.new);
 
   @override
   Future<void> play(String path) =>
       // Kullanıcının kendi kaydı: sessiz anahtarda da duyulur (playback);
       // bu ses sürerken efektler atlanır (kapışma U16).
-      _guard.play(() => _player.play(DeviceFileSource(path)));
+      _guard.play((player) => player.setSource(DeviceFileSource(path)));
 
   @override
   Future<void> stop() => _guard.stop();

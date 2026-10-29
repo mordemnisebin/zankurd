@@ -70,7 +70,9 @@ void main() {
     test('telaffuz oynatıcısı çalmadan önce kendi bağlamını kurar '
         '(efekt bağlamı sızmaz)', () async {
       final fake = _FakePlayer();
-      final player = AudioplayersVerifiedQuestionAudioPlayer(player: fake);
+      final player = AudioplayersVerifiedQuestionAudioPlayer(
+        playerFactory: () => fake,
+      );
       await player.play(
         VerifiedQuestionAudioClip(
           questionId: 'q1',
@@ -150,65 +152,71 @@ void main() {
     });
   });
 
-  // Astra fd886658 incelemesi: oturum bir boolean'la izleniyordu —
-  // başlangıç beklerken gelen stop/dispose kapanışı kaçırıyor, eşzamanlı
-  // iki play sayacı iki artırıp bir azaltıyor (kalıcı speechActive), önceki
-  // çalışın geç gelen completed olayı yeni oturumu kapatıyordu.
-  group('telaffuz koruyucusu (belirteç + nesil)', () {
-    test(
-      'başlangıç beklerken stop → belirteç bırakılır, oturum kapanır',
-      () async {
-        final c = AudioSessionCoordinator.instance;
-        final blocker = _FakePlayer(delay: true);
-        // Koordinatör kilidini meşgul et: telaffuz başlangıcı kuyrukta bekler.
-        final busy = c.playEffect(blocker, AssetSource(SoundAssets.coin));
-        final fake = _FakePlayer();
-        final guard = SpeechPlaybackGuard(fake);
-        final play = guard.play(() async => fake.calls.add('start'));
-        final stop = guard.stop();
-        await Future.wait([busy, play, stop]);
-        expect(c.speechActive, isFalse);
-        expect(fake.calls, isNot(contains('start')));
-        await guard.dispose();
-      },
-    );
-
-    test('çift play → sayaç 1; stop sonrası 0', () async {
+  // Astra fd886658 + 48bf4b86 incelemeleri: tek örnek paylaşılınca eski
+  // çalışın geç olayları yeni belirtece ulaşıyordu; bekleyen başlangıcın
+  // iptali ile çalan sesin bırakılması aynı adımdı. Artık her çalış kendi
+  // örneğini alır; iptal (bayrak) ile bırakma (stop + dispose bitince) ayrı.
+  group('telaffuz koruyucusu (çalış başına örnek)', () {
+    test('setSource beklerken stop → resume hiç çağrılmaz; belirteç stop '
+        'tamamlanınca bırakılır', () async {
       final c = AudioSessionCoordinator.instance;
-      final fake = _FakePlayer();
-      final guard = SpeechPlaybackGuard(fake);
-      await Future.wait([guard.play(() async {}), guard.play(() async {})]);
+      final gate = Completer<void>();
+      final fake = _FakePlayer(sourceGate: gate.future);
+      final guard = SpeechPlaybackGuard(() => fake);
+      final play = guard.play((p) => p.setSource(AssetSource('x.mp3')));
+      await pumpEvents();
+      expect(fake.calls, contains('source'), reason: 'hazırlık başlamalı');
       expect(c.speechActive, isTrue);
-      await guard.stop();
-      expect(c.speechActive, isFalse, reason: 'sayaç kalıcı tutulmamalı');
-      await guard.dispose();
+      final stop = guard.stop();
+      await pumpEvents();
+      gate.complete();
+      await Future.wait([play, stop]);
+      expect(fake.calls, isNot(contains('resume')));
+      expect(fake.calls, containsAllInOrder(['stop', 'dispose']));
+      expect(c.speechActive, isFalse);
+      expect(globalCalls, ['global:${AVAudioSessionCategory.ambient}']);
+    });
+
+    test('eski örneğin geç completed olayı yeni belirteci etkilemez', () async {
+      final c = AudioSessionCoordinator.instance;
+      final first = _FakePlayer();
+      final second = _FakePlayer();
+      final made = [first, second];
+      final guard = SpeechPlaybackGuard(() => made.removeAt(0));
+      await guard.play((p) async {});
+      first.emit(PlayerState.playing);
+      await guard.play((p) async {});
+      expect(first.calls, containsAllInOrder(['stop', 'dispose']));
+      first.emit(PlayerState.completed);
+      await pumpEvents();
+      expect(c.speechActive, isTrue, reason: 'eski bitiş yeni oturumu kapattı');
+      expect(second.calls, isNot(contains('dispose')));
+      second.emit(PlayerState.completed);
+      await pumpEvents();
+      expect(c.speechActive, isFalse);
+      expect(second.calls, contains('dispose'));
     });
 
     test(
-      'önceki çalışın geç gelen completed olayı yeni oturumu kapatmaz',
+      'hızlı art arda 3 play → yalnız sonuncusu çalar, sonunda sayaç 0',
       () async {
         final c = AudioSessionCoordinator.instance;
-        final fake = _FakePlayer();
-        final guard = SpeechPlaybackGuard(fake);
-        await guard.play(() async {});
-        fake.emit(PlayerState.playing);
-        await pumpEvents();
-        // İkinci çalış başlar; birincinin completed'ı akışta yeni playing'den
-        // ÖNCE gelir.
-        await guard.play(() async {});
-        fake.emit(PlayerState.completed);
-        await pumpEvents();
-        expect(
-          c.speechActive,
-          isTrue,
-          reason: 'eski bitiş yeni oturumu kapattı',
-        );
-        // Yeni çalışın kendi bitişi kapatır.
-        fake.emit(PlayerState.playing);
-        fake.emit(PlayerState.completed);
-        await pumpEvents();
+        final fakes = [_FakePlayer(), _FakePlayer(), _FakePlayer()];
+        var i = 0;
+        final guard = SpeechPlaybackGuard(() => fakes[i++]);
+        await Future.wait([
+          guard.play((p) async {}),
+          guard.play((p) async {}),
+          guard.play((p) async {}),
+        ]);
+        expect(fakes[0].calls, isNot(contains('resume')));
+        expect(fakes[1].calls, isNot(contains('resume')));
+        expect(fakes[2].calls, contains('resume'));
+        expect(fakes[0].calls, contains('dispose'));
+        expect(fakes[1].calls, contains('dispose'));
+        expect(c.speechActive, isTrue);
+        await guard.stop();
         expect(c.speechActive, isFalse);
-        await guard.dispose();
       },
     );
 
@@ -217,43 +225,46 @@ void main() {
       final blocker = _FakePlayer(delay: true);
       final busy = c.playEffect(blocker, AssetSource(SoundAssets.coin));
       final fake = _FakePlayer();
-      final guard = SpeechPlaybackGuard(fake);
-      final play = guard.play(() async => fake.calls.add('start'));
+      final guard = SpeechPlaybackGuard(() => fake);
+      final play = guard.play((p) async => fake.calls.add('prepare'));
       final disposed = guard.dispose();
       await Future.wait([busy, play, disposed]);
       expect(c.speechActive, isFalse);
-      expect(fake.calls, isNot(contains('start')));
-      expect(
-        fake.calls,
-        isNot(contains('ctx:${AVAudioSessionCategory.playback}')),
-      );
+      expect(fake.calls, isNot(contains('prepare')));
+      expect(fake.calls, isNot(contains('resume')));
     });
 
-    test(
-      'soru sesi oynatıcısı koruyucuyu kullanır: stop ve doğal bitiş kapatır',
-      () async {
-        final c = AudioSessionCoordinator.instance;
-        final fake = _FakePlayer();
-        final player = AudioplayersVerifiedQuestionAudioPlayer(player: fake);
-        final clip = VerifiedQuestionAudioClip(
-          questionId: 'q1',
-          source: 'assets/audio/x.mp3',
-          location: VerifiedAudioLocation.asset,
-          provenance: 'test',
-          license: 'test',
-        );
-        await player.play(clip);
-        expect(c.speechActive, isTrue);
-        await player.stop();
-        expect(c.speechActive, isFalse);
-        await player.play(clip);
-        fake.emit(PlayerState.playing);
-        fake.emit(PlayerState.completed);
-        await pumpEvents();
-        expect(c.speechActive, isFalse);
-        player.dispose();
-      },
-    );
+    test('soru sesi oynatıcısı: stop ve doğal bitiş oturumu kapatır', () async {
+      final c = AudioSessionCoordinator.instance;
+      final fakes = <_FakePlayer>[];
+      final player = AudioplayersVerifiedQuestionAudioPlayer(
+        playerFactory: () {
+          final f = _FakePlayer();
+          fakes.add(f);
+          return f;
+        },
+      );
+      final clip = VerifiedQuestionAudioClip(
+        questionId: 'q1',
+        source: 'assets/audio/x.mp3',
+        location: VerifiedAudioLocation.asset,
+        provenance: 'test',
+        license: 'test',
+      );
+      await player.play(clip);
+      expect(c.speechActive, isTrue);
+      await player.stop();
+      expect(c.speechActive, isFalse);
+      await player.play(clip);
+      expect(fakes, hasLength(2), reason: 'her çalış yeni örnek');
+      fakes.last.emit(PlayerState.playing);
+      await pumpEvents();
+      expect(player.isPlaying, isTrue);
+      fakes.last.emit(PlayerState.completed);
+      await pumpEvents();
+      expect(c.speechActive, isFalse);
+      player.dispose();
+    });
   });
 
   group('U17 ses dosyaları', () {
@@ -292,7 +303,14 @@ Future<void> pumpEvents() async {
 }
 
 class _FakePlayer implements AudioPlayer {
-  _FakePlayer({List<String>? log, this.tag, this.delay = false}) : _log = log;
+  _FakePlayer({
+    List<String>? log,
+    this.tag,
+    this.delay = false,
+    this.sourceGate,
+  }) : _log = log;
+
+  final Future<void>? sourceGate;
 
   final calls = <String>[];
   final List<String>? _log;
@@ -330,7 +348,10 @@ class _FakePlayer implements AudioPlayer {
   Future<void> stop() async => calls.add('stop');
 
   @override
-  Future<void> setSource(Source source) async => calls.add('source');
+  Future<void> setSource(Source source) async {
+    calls.add('source');
+    if (sourceGate != null) await sourceGate;
+  }
 
   @override
   Future<void> setPlaybackRate(double playbackRate) async => calls.add('rate');
@@ -342,7 +363,7 @@ class _FakePlayer implements AudioPlayer {
   Stream<PlayerState> get onPlayerStateChanged => _states.stream;
 
   @override
-  Future<void> dispose() async {}
+  Future<void> dispose() async => calls.add('dispose');
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
