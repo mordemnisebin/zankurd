@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 /// Ders slaydının kaydırılan içeriği, altta sabit gezinme düğmeleri var.
 ///
@@ -28,7 +29,18 @@ class LessonScrollEdgeFadeState extends State<LessonScrollEdgeFade> {
 
   bool _onMetrics(ScrollMetrics m) {
     final more = m.extentAfter > 0.5;
-    if (more != _moreBelow) setState(() => _moreBelow = more);
+    if (more == _moreBelow) return false;
+    // Kaydırma bildirimi yerleşim sırasında da gelebilir (konum düzeltmesi,
+    // sekme içeriği ilk kez ölçülürken); o anda setState "Build scheduled
+    // during frame" atar. Kare bitince uygulanır.
+    if (SchedulerBinding.instance.schedulerPhase ==
+        SchedulerPhase.persistentCallbacks) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        if (mounted && more != _moreBelow) setState(() => _moreBelow = more);
+      });
+    } else {
+      setState(() => _moreBelow = more);
+    }
     return false;
   }
 
