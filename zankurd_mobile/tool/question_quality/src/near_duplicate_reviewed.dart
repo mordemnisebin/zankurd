@@ -180,7 +180,7 @@ const Map<String, String> reviewedNearDuplicates = {
       "ds_cografya_0109 ~ ds_cografya_0119: farklı bilgi: doğru cevaplar farklı",
   '45702bfaa6979ea02f0a87363210542d':
       "ds_cografya_0109 ~ ds_cografya_0125: farklı bilgi: doğru cevaplar farklı",
-  'eecba40a04a7ad5d5a6d6156b49c65ed':
+  '3f473a98c21ee646d0a9b305fe42f1a8':
       "ds_cografya_0205 ~ ds_cografya_0223: farklı bilgi: doğru cevaplar farklı",
   '62d9547a9922a693b31637703dd2f075':
       "ds_dirok_0055 ~ ds_dirok_0072: farklı bilgi: doğru cevaplar farklı",
@@ -226,7 +226,7 @@ const Map<String, String> reviewedNearDuplicates = {
       "ds_cografya_0152 ~ ds_cografya_0154: farklı bilgi: doğru cevaplar farklı",
   '4c879ef2ce55e34f89ca85c854822608':
       "ds_cografya_0192 ~ ds_cografya_0179: farklı bilgi: doğru cevaplar farklı",
-  '911a1435e537a7b70fabdc242d63fe5d':
+  'b48dd4418227d3d87bc29550cb48e474':
       "ds_cografya_0205 ~ ds_cografya_0218: farklı bilgi: doğru cevaplar farklı",
   'e6d4bb48ce304990114bae5eed672a27':
       "ds_dirok_0131 ~ ds_dirok_0145: farklı bilgi: doğru cevaplar farklı",

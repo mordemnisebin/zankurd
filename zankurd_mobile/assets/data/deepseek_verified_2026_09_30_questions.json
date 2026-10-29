@@ -996,7 +996,7 @@
       "Koçberiya hundirîn"
     ],
     "correctAnswer": "Koçberiya hundirîn",
-    "explanation": "İç göç, bir ülke içinde, örneğin köyden şehre göç etmek anlamına gelir. Dış göç başka bir ülkeye gitmektir; geçici ve döngüsel göç ise geçicidir.",
+    "explanation": "İç göç, bir ülkenin sınırları içinde yapılan göçtür; köyden şehre ve şehirler arası göç bunun örnekleridir. Dış göç başka bir ülkeye yapılır; geçici ve döngüsel göç ise belirli bir süre ya da mevsim için yapılır ve kalıcı yerleşme amacı taşımaz.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -1008,7 +1008,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "İnsanların köylerden şehirlere göç etmesi için hangi terim kullanılır?",
+    "promptTr": "Bir ülke içinde köylerden şehirlere yapılan göç hangi türdür?",
     "answersTr": [
       "Dış göç",
       "Geçici göç",
@@ -1017,7 +1017,7 @@
     ],
     "correctAnswerTr": "İç göç",
     "explanationKu": "Koçberiya hundirîn tê wateya koçkirina di nav welatekî de, wek ji gund bo bajar. Koçberiya derveyî derbasî welatekî din dibe, ya demkî û çerxî jî demkî ne.",
-    "explanationTr": "İç göç, bir ülke içinde, örneğin köyden şehre göç etmek anlamına gelir. Dış göç başka bir ülkeye gitmektir; geçici ve döngüsel göç ise geçicidir."
+    "explanationTr": "İç göç, bir ülkenin sınırları içinde yapılan göçtür; köyden şehre ve şehirler arası göç bunun örnekleridir. Dış göç başka bir ülkeye yapılır; geçici ve döngüsel göç ise belirli bir süre ya da mevsim için yapılır ve kalıcı yerleşme amacı taşımaz."
   },
   {
     "id": "ds_cografya_0223",
@@ -6516,12 +6516,12 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Derin öğrenmede, çıktı hatasına göre model parametrelerini düzeltmek için hangi yöntem kullanılır?",
+    "promptTr": "Bir yapay sinir ağında kayıp fonksiyonunun parametrelere göre gradyanlarını zincir kuralıyla hesaplayan yöntem hangisidir?",
     "answersTr": [
       "İleri yayılım",
-      "Düzeltme yayılımı",
+      "Gradyan inişi",
       "Geri yayılım",
-      "Hata yayılımı"
+      "Gradyan kırpma"
     ],
     "correctAnswerTr": "Geri yayılım",
     "explanationKu": "Veguhestina paşverû (backpropagation) rêbazek e ku tê de xeletiya di navbera pêşbîniya modelê û encama rast de tê hesabkirin û ev xeletî ji qata dawî ber bi qata pêşîn ve tê belavkirin. Di vê pêvajoyê de, parametreyên modelê têne sererast kirin da ku xeletî kêm bibe.",
@@ -12330,7 +12330,7 @@
     "category": "Teknolojî",
     "difficulty": 5,
     "prompt": "Di pêvajoyera pîplînê de (Pipelining), rêbaza \"Operand Forwarding\" kîjan pirsgirêkê çareser dike?",
-    "promptTr": "İşlemci boru hattında (Pipelining) \"Operand Forwarding\" (Bypass) tekniği hangi donanımsal tehlikeyi (hazard) çözer?",
+    "promptTr": "İşlemci boru hattında operand yönlendirme (forwarding) hangi veri bağımlılığından kaynaklanan beklemeleri azaltır?",
     "answers": [
       "Xetereya binesaziyê ya ji ber nebûna yekîneya hesabkirina matematîkî",
       "Zêdebûna germahiya navenda pêvajoyê di dema lîstina lîstikên giran de",
@@ -12338,13 +12338,13 @@
       "Sekinîna ji ber xetereya daneyan (Data Hazard) bi şandina rasterast a encamê"
     ],
     "answersTr": [
-      "İşlemcide yeterli aritmetik mantık birimi bulunmamasından kaynaklanan yapısal donanım tehlikesini",
-      "Ağır grafiksel işlem yükü altında çekirdek sıcaklığının aniden yükselmesi tehlikesini",
-      "İkinci seviye L2 önbellek gereksinimini mikroişlemci mimarisinden tamamen kaldırma sorununu",
-      "Hesaplanan sonucu yazma aşamasını beklemeden doğrudan bir sonraki komuta aktararak Data Hazard sorununu"
+      "Okumadan sonra yazma (WAR) bağımlılığı",
+      "Yazmadan sonra yazma (WAW) bağımlılığı",
+      "Dallanmadan doğan kontrol bağımlılığı",
+      "Yazmadan sonra okuma (RAW) bağımlılığı"
     ],
     "correctAnswer": "Sekinîna ji ber xetereya daneyan (Data Hazard) bi şandina rasterast a encamê",
-    "correctAnswerTr": "Hesaplanan sonucu yazma aşamasını beklemeden doğrudan bir sonraki komuta aktararak Data Hazard sorununu",
+    "correctAnswerTr": "Yazmadan sonra okuma (RAW) bağımlılığı",
     "explanation": "Operand Forwarding, ALU çıktısını register'a yazılmasını beklemeden bir sonraki komutun girişine besleyerek RAW (Read-After-Write) gecikmesini önler.",
     "explanationKu": "Forwarding nahêle ku fermanek li benda qonaxa Write-Back bimîne; encam ji derketina ALU rasterast diçe fermana duyem.",
     "explanationTr": "Operand Forwarding, ALU çıktısını register'a yazılmasını beklemeden bir sonraki komutun girişine besleyerek RAW (Read-After-Write) gecikmesini önler.",
@@ -15760,7 +15760,7 @@
       "Xeta merîdyenê"
     ],
     "correctAnswer": "Tora koordînatan",
-    "explanation": "Koordinat ağı (graticule), haritada enlem ve boylamları gösteren çizgilerdir. İzolin çizgisi ise yüksekliği gösterir.",
+    "explanation": "Koordinat ağı (graticule), haritada enlem (paralel) ve boylam (meridyen) çizgilerinin oluşturduğu ağdır. İzolin ise eş değerli noktaları birleştiren çizgidir; eş yükselti eğrisi bunun yükseklik için kullanılan türüdür.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -15781,7 +15781,7 @@
     ],
     "correctAnswerTr": "Koordinat ağı",
     "explanationKu": "Tora koordînat (graticule) ji xetên ku hêlîpan û hêlîdirêjan li ser nexşeyê nîşan didin pêk tê. Xetên îzolîn bilindahiyê nîşan didin.",
-    "explanationTr": "Koordinat ağı (graticule), haritada enlem ve boylamları gösteren çizgilerdir. İzolin çizgisi ise yüksekliği gösterir."
+    "explanationTr": "Koordinat ağı (graticule), haritada enlem (paralel) ve boylam (meridyen) çizgilerinin oluşturduğu ağdır. İzolin ise eş değerli noktaları birleştiren çizgidir; eş yükselti eğrisi bunun yükseklik için kullanılan türüdür."
   },
   {
     "id": "ds_cografya_0225",

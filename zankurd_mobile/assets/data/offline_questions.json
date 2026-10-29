@@ -1946,8 +1946,8 @@
     "answersTr": [
       "Demirci Kawa/Kave",
       "Şerefxanê Bidlîsî",
-      "Irak Cumhurbaşkanı",
-      "Beylik (mîrlik)"
+      "Zalim kral Dehak",
+      "Ferhad (Şîrîn'in sevdalısı)"
     ],
     "correctAnswerTr": "Demirci Kawa/Kave"
   },
@@ -2320,9 +2320,9 @@
     "explanationTr": "Ezidiler, Kürtçe konuşan/kimliklenen topluluklar arasında özgün inanç yapıları ve yakın dönem travmalarıyla öne çıkar.",
     "promptTr": "Êzidîler Kürt kültürel coğrafyasında özellikle hangi başlıkla anılır?",
     "answersTr": [
-      "acı, kayıp ve toplumsal hafızanın aktarımı",
-      "İranî ve birçok başka halk (Newroz gibi)",
-      "toplumsal örgütlenme, güvenlik, üretim ve siyasal ilişki ağı",
+      "Osmanlı dönemi beylik yönetimi ve vergi düzeni",
+      "Hawar dergisi çevresinde gelişen yazı dili",
+      "medrese eğitimi ve klasik divan şiiri",
       "özgün dinî-kültürel topluluk ve tarihsel travmalar"
     ],
     "correctAnswerTr": "özgün dinî-kültürel topluluk ve tarihsel travmalar"
@@ -5926,11 +5926,11 @@
       "kincê dirêj ê li ser kincên din"
     ],
     "correctAnswer": "kincê dirêj ê li ser kincên din",
-    "explanation": "\"hewran\": diğer giysilerin üstüne giyilen uzun üstlük (aba).",
+    "explanation": "Hewran, öteki giysilerin üstüne giyilen uzun dış giysidir; günlük giysi katı değil, en üstteki örtü katıdır.",
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"hewran\": kincê dirêj ê ku li ser kincên din tê lixistin.",
-    "explanationTr": "\"hewran\": diğer giysilerin üstüne giyilen uzun üstlük (aba).",
+    "explanationTr": "Hewran, öteki giysilerin üstüne giyilen uzun dış giysidir; günlük giysi katı değil, en üstteki örtü katıdır.",
     "promptTr": "\"Hewran\" nedir?",
     "answersTr": [
       "\"Nû\" (yeni) + \"roj\" (gün)",
@@ -6001,11 +6001,11 @@
       "tûrê hûnandî yê ku xwarin tê de tê hilgirtin"
     ],
     "correctAnswer": "tûrê hûnandî yê ku xwarin tê de tê hilgirtin",
-    "explanation": "\"tûrik\": yiyecek taşımak için dokunan torba.",
+    "explanation": "Tûrik dokuma bir torbadır; yolda ya da tarlada ekmek ve azık taşımak için kullanılır.",
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"tûrik\": tûrikê ku ji bo hilgirtina xwarinê tê hûnandin.",
-    "explanationTr": "\"tûrik\": yiyecek taşımak için dokunan torba.",
+    "explanationTr": "Tûrik dokuma bir torbadır; yolda ya da tarlada ekmek ve azık taşımak için kullanılır.",
     "promptTr": "\"tûrik\" nedir?",
     "answersTr": [
       "geleneksel çobanlık ve doğa bilgisi",
@@ -6026,14 +6026,14 @@
       "vegotina bûyerên balkêş ên jiyayî"
     ],
     "correctAnswer": "nanê ku li dîwarê firna axî tê pehtin",
-    "explanation": "\"nanê tenûrê\": tandırda pişirilen geleneksel ekmek.",
+    "explanation": "Nanê tenûrê, tandırın (tenûr) iç duvarına yapıştırılarak pişirilen ince ekmektir; adı da pişirildiği ocaktan gelir.",
     "type": "visual",
     "difficulty": 2,
     "imageUrl": "asset://assets/question_images/nane_tenure.webp",
     "imageAltKu": "Odeyeke tenûrê ya nîvtarî; kesek bi amûreke dirêj agir tev dide, li pêş hevîrên pehn ên amade hene.",
     "imageAltTr": "Loş bir tandır odası; biri uzun bir aletle ateşi karıştırıyor, önde hazır yassı hamurlar duruyor.",
     "explanationKu": "\"nanê tenûrê\": nanê kevneşopî yê ku di tenûrê de tê patin.",
-    "explanationTr": "\"nanê tenûrê\": tandırda pişirilen geleneksel ekmek.",
+    "explanationTr": "Nanê tenûrê, tandırın (tenûr) iç duvarına yapıştırılarak pişirilen ince ekmektir; adı da pişirildiği ocaktan gelir.",
     "promptTr": "\"nanê tenûrê\" nedir?",
     "answersTr": [
       "tandırda pişirilen geleneksel ekmek",
@@ -6054,11 +6054,11 @@
       "vegotina ku ji nifşî bo nifşî hatiye veguhastin"
     ],
     "correctAnswer": "jiyana ku bi demsalan di navbera zozan û warî de digere",
-    "explanation": "\"koçerî\": göçer yaşam tarzı ve dans ritmi.",
+    "explanation": "Koçerî, yaz yaylası (zozan) ile kışlık (germiyan) arasında mevsimlik göçe dayanan yaşam biçimidir; aynı adla anılan bir govend ritmi de vardır.",
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"koçerî\": şêwaza jiyana koçeran a ku bi demsalan di navbera zozan û germiyanan de digere.",
-    "explanationTr": "\"koçerî\": göçer yaşam tarzı ve dans ritmi.",
+    "explanationTr": "Koçerî, yaz yaylası (zozan) ile kışlık (germiyan) arasında mevsimlik göçe dayanan yaşam biçimidir; aynı adla anılan bir govend ritmi de vardır.",
     "promptTr": "\"koçerî\" nedir?",
     "answersTr": [
       "dinî ilahiler/sözlü kutsal metinler",
@@ -6104,11 +6104,11 @@
       "cejna berdana beran û ajaldariyê"
     ],
     "correctAnswer": "peywendiya alîkariya di navbera malên nêzîk de",
-    "explanation": "\"cîranî\": komşuluk ve toplumsal yardımlaşma.",
+    "explanation": "Cîranî, \"cîran\" (komşu) sözcüğünden gelir; komşuluk ilişkisini ve komşular arası yardımlaşmayı anlatır.",
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"cîranî\": cîrantî û hevkariya civakî.",
-    "explanationTr": "\"cîranî\": komşuluk ve toplumsal yardımlaşma.",
+    "explanationTr": "Cîranî, \"cîran\" (komşu) sözcüğünden gelir; komşuluk ilişkisini ve komşular arası yardımlaşmayı anlatır.",
     "promptTr": "\"cîranî\" terimini doğru anlatan ifade hangisidir?",
     "answersTr": [
       "komşuluk ve toplumsal yardımlaşma",
@@ -6288,11 +6288,11 @@
       "konê eşîrên kurdên koçer"
     ],
     "correctAnswer": "kevneşopiya bexşîş dayîna muzîkjenan",
-    "explanation": "\"şabaş\": müzisyenlere bahşiş atma geleneği.",
+    "explanation": "Şabaş, düğün ve şenliklerde para ya da armağan verme geleneğidir; birçok yörede çalgıcılara ve dengbêjlere verilen bahşişi anlatır.",
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"şabaş\": kevneşopiya avêtina baxşîşê ji muzîkjenan re.",
-    "explanationTr": "\"şabaş\": müzisyenlere bahşiş atma geleneği.",
+    "explanationTr": "Şabaş, düğün ve şenliklerde para ya da armağan verme geleneğidir; birçok yörede çalgıcılara ve dengbêjlere verilen bahşişi anlatır.",
     "promptTr": "\"şabaş\" nedir?",
     "answersTr": [
       "dinî ilahiler/sözlü kutsal metinler",
@@ -6313,11 +6313,11 @@
       "rola çandî ya jinên ku pez didoşin"
     ],
     "correctAnswer": "pîrozbahiya serê salê di salnameya gelêrî ya kurdî de",
-    "explanation": "\"sersal\": Kürt halk takviminde yılbaşı kutlaması.",
+    "explanation": "Sersal, \"ser\" (baş) ve \"sal\" (yıl) sözcüklerinden oluşur; halk takviminde yeni yılın başlangıcını kutlamayı anlatır.",
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"sersal\": pîrozkirina serê salê di salnameya gelêrî ya kurdî de.",
-    "explanationTr": "\"sersal\": Kürt halk takviminde yılbaşı kutlaması.",
+    "explanationTr": "Sersal, \"ser\" (baş) ve \"sal\" (yıl) sözcüklerinden oluşur; halk takviminde yeni yılın başlangıcını kutlamayı anlatır.",
     "promptTr": "\"sersal\" nedir?",
     "answersTr": [
       "kaval türü geleneksel üflemeli çalgı",
@@ -6388,11 +6388,11 @@
       "reqsa gelêrî ya kevneşopî ya sê lingan"
     ],
     "correctAnswer": "mîrateya devkî ya ku ji nifşî bo nifşî tê veguhastin",
-    "explanation": "\"masal anlatımı\": kuşaktan kuşağa aktarılan anlatı.",
+    "explanation": "Masallar sözlü gelenekte kuşaktan kuşağa anlatılarak aktarılır; zamanla yazıya geçirilerek de korunur.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"vegotina çîrokan\": vegotina ku ji nifşekî diçe nifşekî din.",
-    "explanationTr": "\"masal anlatımı\": kuşaktan kuşağa aktarılan anlatı.",
+    "explanationTr": "Masallar sözlü gelenekte kuşaktan kuşağa anlatılarak aktarılır; zamanla yazıya geçirilerek de korunur.",
     "promptTr": "\"masal anlatımı\" nedir?",
     "answersTr": [
       "kuşaktan kuşağa aktarılan anlatı",
@@ -6413,11 +6413,11 @@
       "civînên axaftinê yên şevên zivistanê"
     ],
     "correctAnswer": "civînên axaftinê yên şevên zivistanê",
-    "explanation": "\"şevbêrk\": kış gecelerinde yapılan sohbet toplantıları.",
+    "explanation": "Şevbêrk, uzun kış gecelerinde komşuların bir evde toplanıp masal, kilam ve sohbetle vakit geçirdiği toplantıdır.",
     "type": "multipleChoice",
     "difficulty": 2,
     "explanationKu": "\"şevbêrk\": civînên şevê yên zivistanê.",
-    "explanationTr": "\"şevbêrk\": kış gecelerinde yapılan sohbet toplantıları.",
+    "explanationTr": "Şevbêrk, uzun kış gecelerinde komşuların bir evde toplanıp masal, kilam ve sohbetle vakit geçirdiği toplantıdır.",
     "promptTr": "\"şevbêrk\" nedir?",
     "answersTr": [
       "tarih boyunca dağlık coğrafyadaki yaşamla ilgilidir",
@@ -6663,11 +6663,11 @@
       "rolên kevneşopî yên civakî-olî"
     ],
     "correctAnswer": "vegotina bûyerên balkêş ên rastî",
-    "explanation": "\"serpêhatî\": yaşanmış ilginç olayların anlatımı.",
+    "explanation": "Serpêhatî, birinin başından geçmiş, yaşanmış olayları anlatan anlatıdır; hayal ürünü masaldan bu yönüyle ayrılır.",
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"serpêhatî\": vegotina bûyerên balkêş ên jiyayî.",
-    "explanationTr": "\"serpêhatî\": yaşanmış ilginç olayların anlatımı.",
+    "explanationTr": "Serpêhatî, birinin başından geçmiş, yaşanmış olayları anlatan anlatıdır; hayal ürünü masaldan bu yönüyle ayrılır.",
     "promptTr": "\"serpêhatî\" nedir?",
     "answersTr": [
       "düğünlerde geline takılan altınlar",
@@ -6716,11 +6716,11 @@
       "yelek an cilê kevneşopî yê kurdî"
     ],
     "correctAnswer": "yelek an cilê kevneşopî yê kurdî",
-    "explanation": "\"qutik\": geleneksel Kürt yeleği veya giysisi.",
+    "explanation": "Qutik, geleneksel giyimde yelek ya da üst giysi için kullanılan addır; öteki seçenekler giysi değil, başka kültür öğeleridir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "explanationKu": "\"qutik\": êlek an cilê kurdî yê kevneşopî.",
-    "explanationTr": "\"qutik\": geleneksel Kürt yeleği veya giysisi.",
+    "explanationTr": "Qutik, geleneksel giyimde yelek ya da üst giysi için kullanılan addır; öteki seçenekler giysi değil, başka kültür öğeleridir.",
     "promptTr": "\"qutik\" nedir?",
     "answersTr": [
       "düğünlerde geline takılan altınlar",
@@ -6741,11 +6741,11 @@
       "Kembera zîv a jinan"
     ],
     "correctAnswer": "Konê ji mûyê bizina reş",
-    "explanation": "\"reşmal\": siyah keçi kılından yapılan çadır.",
+    "explanation": "Reşmal \"kara ev\" demektir: göçerlerin keçi kılından dokunan çadırıdır; kıl yağmurda şişerek su geçirmez.",
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"reşmal\": çadira ku ji mûyê reş ê bizinan tê çêkirin.",
-    "explanationTr": "\"reşmal\": siyah keçi kılından yapılan çadır.",
+    "explanationTr": "Reşmal \"kara ev\" demektir: göçerlerin keçi kılından dokunan çadırıdır; kıl yağmurda şişerek su geçirmez.",
     "promptTr": "\"reşmal\" nedir?",
     "answersTr": [
       "Kara keçi kılından yapılan çadır",
@@ -6914,11 +6914,11 @@
       "Mîrê Kor"
     ],
     "correctAnswer": "operasyona leşkerî û kuştinên girseyî yên li herêma Dêrsimê",
-    "explanation": "\"Dersim 1937\": 1937-38 Dersim harekâtı, çatışmalar ve kitlesel öldürmeler.",
+    "explanation": "Dersim 1937–38, devletin bölgede yürüttüğü askerî harekâtı ve bu sırada yaşanan toplu öldürme ve sürgünleri anlatır.",
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"Dêrsim 1937\": operasyona leşkerî ya 1937-38an û kuştinên girseyî.",
-    "explanationTr": "\"Dersim 1937\": 1937-38 Dersim harekâtı, çatışmalar ve kitlesel öldürmeler.",
+    "explanationTr": "Dersim 1937–38, devletin bölgede yürüttüğü askerî harekâtı ve bu sırada yaşanan toplu öldürme ve sürgünleri anlatır.",
     "promptTr": "\"Dersim 1937\" nedir?",
     "answersTr": [
       "Dêrsim bölgesinde yaşanan askerî harekât ve kriz",
@@ -6939,19 +6939,19 @@
       "yekem dewleta kurdî ya kurtjiyan a ku di 1946an de hat damezrandin"
     ],
     "correctAnswer": "serokê sereke yê Serhildana Şêx Seîd a 1925an",
-    "explanation": "\"Şeyh Said\": 1925 Şeyh Said İsyanı'nın başlıca lideri.",
+    "explanation": "Şeyh Said, 1925 ayaklanmasının lideriydi; ayaklanmanın dinî ve Kürt ulusal boyutları tarihçilerce farklı değerlendirilir. Ayaklanma bastırıldı ve Şeyh Said aynı yıl Diyarbakır'da idam edildi.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Şêx Seîd\": rêberê serhildana 1925an a ji bo mafên kurdan.",
-    "explanationTr": "\"Şeyh Said\": 1925 Şeyh Said İsyanı'nın başlıca lideri.",
+    "explanationTr": "Şeyh Said, 1925 ayaklanmasının lideriydi; ayaklanmanın dinî ve Kürt ulusal boyutları tarihçilerce farklı değerlendirilir. Ayaklanma bastırıldı ve Şeyh Said aynı yıl Diyarbakır'da idam edildi.",
     "promptTr": "\"Şeyh Said\" kimdi?",
     "answersTr": [
-      "Kahire",
-      "Dicle kıyısındaki binlerce yıllık tarihî kent",
-      "1925'te Kürt hakları için ayaklanan lider",
-      "1946'da kurulan kısa ömürlü ilk Kürt devleti"
+      "1937 Dersim direnişinin önderi",
+      "Ağrı ayaklanmasının (1927–1930) askerî komutanı",
+      "1925 ayaklanmasına önderlik eden din âlimi",
+      "1946'da kurulan Mahabad Cumhuriyeti'nin cumhurbaşkanı"
     ],
-    "correctAnswerTr": "1925'te Kürt hakları için ayaklanan lider"
+    "correctAnswerTr": "1925 ayaklanmasına önderlik eden din âlimi"
   },
   {
     "id": "offline_7151",
@@ -6964,11 +6964,11 @@
       "mîrektiya kurd a girîng a bi navenda Cizîrê"
     ],
     "correctAnswer": "mîrektiya kurd a bihêz a bi navenda Silêmaniyê",
-    "explanation": "\"Baban Emirliği\": Süleymaniye merkezli güçlü Kürt prensliği.",
+    "explanation": "Baban Beyliği, merkezi Silêmanî (Süleymaniye) olan güçlü bir Kürt beyliğiydi; kent 1784'te Babanlar tarafından kuruldu.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Mîrgeha Babanê\": mîrnişîna kurd a bihêz a bi navenda Silêmaniyê.",
-    "explanationTr": "\"Baban Emirliği\": Süleymaniye merkezli güçlü Kürt prensliği.",
+    "explanationTr": "Baban Beyliği, merkezi Silêmanî (Süleymaniye) olan güçlü bir Kürt beyliğiydi; kent 1784'te Babanlar tarafından kuruldu.",
     "promptTr": "\"Baban Emirliği\" nedir?",
     "answersTr": [
       "Selahaddin Eyyubi tarafından kurulan büyük devlet",
@@ -6996,7 +6996,7 @@
     "explanationTr": "Celadet Bedirxan Kürt bir aydın ve yayıncıydı; Hawar dergisiyle Latin harfli Kürt alfabesini yaydı ve Kürtçe dilbilgisi üzerine çalıştı.",
     "promptTr": "\"Celadet Bedirxan\" kimdi?",
     "answersTr": [
-      "Güney Kürdistan'da uzun yıllar süren ulusal hareket",
+      "1925 ayaklanmasına önderlik eden din âlimi",
       "Hoybûn cemiyeti adına askerî liderlik yapan subay",
       "Kürt alfabesini geliştiren yayıncı ve aydın",
       "1898'de ilk Kürtçe gazete Kurdistan'ı çıkaran kişi"
@@ -7022,11 +7022,11 @@
     "promptTr": "\"Mîrê Kor\" kimdi?",
     "answersTr": [
       "Kürt alfabesini geliştiren yayıncı ve aydın",
-      "döneminden kalan belge veya nesne",
-      "Wan Gölü'nün güneyinde hüküm süren Kürt beyliği",
-      "Soran beyliğinin kör lakaplı güçlü lideri"
+      "Botan Beyliği'nin son büyük beyi",
+      "Şerefname'yi yazan Bitlis beyi",
+      "19. yüzyılda Soran Beyliği'ni yöneten güçlü emir"
     ],
-    "correctAnswerTr": "Soran beyliğinin kör lakaplı güçlü lideri"
+    "correctAnswerTr": "19. yüzyılda Soran Beyliği'ni yöneten güçlü emir"
   },
   {
     "id": "offline_7223",
@@ -7039,11 +7039,11 @@
       "avahiya ku bi rêveberiya navendî ve hat girêdan / hat rakirin"
     ],
     "correctAnswer": "peymana ku sînorê Osmanî û Sefewî diyar kir",
-    "explanation": "\"Kasr-ı Şirin Antlaşması\": Osmanlı ve Safevi sınırını belirleyen antlaşma.",
+    "explanation": "Kasr-ı Şirin Antlaşması (1639) Osmanlı–Safevi sınırını düzenledi ve Kürtlerin yaşadığı bölgelerin iki devlet arasındaki paylaşımını büyük ölçüde pekiştirdi.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Peymana Qesrişîrînê\": peymana ku sînorê Osmanî û Sefewiyan diyar kir.",
-    "explanationTr": "\"Kasr-ı Şirin Antlaşması\": Osmanlı ve Safevi sınırını belirleyen antlaşma.",
+    "explanationTr": "Kasr-ı Şirin Antlaşması (1639) Osmanlı–Safevi sınırını düzenledi ve Kürtlerin yaşadığı bölgelerin iki devlet arasındaki paylaşımını büyük ölçüde pekiştirdi.",
     "promptTr": "\"Kasr-ı Şirin Antlaşması\" nedir?",
     "answersTr": [
       "Osmanlı ile Safevi sınırını belirleyen antlaşma",
@@ -7112,15 +7112,15 @@
       "serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand"
     ],
     "correctAnswer": "serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand",
-    "explanation": "\"Şeyh Mahmud Berzenci\": Irak'ta kendini Kürdistan kralı ilan eden lider.",
+    "explanation": "Şeyh Mahmud Berzenci, 1920'lerde Süleymaniye'de kendini Kürdistan kralı (hükümdarı) ilan etti ve İngiliz yönetimine karşı direndi.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Şêx Mehmûdê Berzencî\": rêberê ku li Iraqê xwe wek padîşahê Kurdistanê ragihand.",
-    "explanationTr": "\"Şeyh Mahmud Berzenci\": Irak'ta kendini Kürdistan kralı ilan eden lider.",
+    "explanationTr": "Şeyh Mahmud Berzenci, 1920'lerde Süleymaniye'de kendini Kürdistan kralı (hükümdarı) ilan etti ve İngiliz yönetimine karşı direndi.",
     "promptTr": "\"Şeyh Mahmud Berzenci\" kimdi?",
     "answersTr": [
       "Mehabad Cumhuriyeti'nin lideri",
-      "Irak rejiminin Kürtlere karşı uyguladığı soykırım",
+      "1937 Dersim direnişinin önderi",
       "1898'de ilk Kürtçe gazete Kurdistan'ı çıkaran kişi",
       "Irak'ta kendini Kürdistan kralı ilan eden lider"
     ],
@@ -7190,19 +7190,19 @@
       "peymana ku sînorê Osmanî û Sefewî diyar kir"
     ],
     "correctAnswer": "yekem lêkolînerê ku edet û kevneşopiyên kurdî berhev kirin",
-    "explanation": "\"Mela Mahmude Bayazidi\": Kürt örf adetlerini derleyen ilk araştırmacı.",
+    "explanation": "Mela Mehmûdê Bazîdî, 19. yüzyılda Kürt örf ve âdetlerini Kürtçe olarak derleyen öncü eseri hazırladı; çalışma Rus diplomat Aleksandr Jaba'nın teşvikiyle yazıldı.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Mela Mehmûdê Bazîdî\": lêkolînerê yekem ê ku adet û kevneşopiyên kurdan berhev kir.",
-    "explanationTr": "\"Mela Mahmude Bayazidi\": Kürt örf adetlerini derleyen ilk araştırmacı.",
+    "explanationTr": "Mela Mehmûdê Bazîdî, 19. yüzyılda Kürt örf ve âdetlerini Kürtçe olarak derleyen öncü eseri hazırladı; çalışma Rus diplomat Aleksandr Jaba'nın teşvikiyle yazıldı.",
     "promptTr": "\"Mela Mahmude Bayazidi\" kimdi?",
     "answersTr": [
-      "merkezî yönetime bağlanan / kaldırılan yapı",
-      "döneminden kalan belge veya nesne",
-      "Kürt örf ve adetlerini derleyen ilk araştırmacı",
-      "Osmanlı ile Safevi sınırını belirleyen antlaşma"
+      "Şerefname'yi yazan Bitlis beyi",
+      "Hawar dergisini çıkaran dilbilimci",
+      "Kürt örf ve âdetlerini Kürtçe derleyen öncü yazar",
+      "Ağrı ayaklanmasının (1927–1930) askerî komutanı"
     ],
-    "correctAnswerTr": "Kürt örf ve adetlerini derleyen ilk araştırmacı"
+    "correctAnswerTr": "Kürt örf ve âdetlerini Kürtçe derleyen öncü yazar"
   },
   {
     "id": "offline_7334",
@@ -7338,11 +7338,11 @@
       "veguhastina cih a civakan"
     ],
     "correctAnswer": "ji delîlan wate derxistin",
-    "explanation": "\"şîroveya dîrokî\": kanıtlardan anlam çıkarma.",
+    "explanation": "Tarihî yorum, kaynaklardaki kanıtları karşılaştırıp onlardan anlam ve sonuç çıkarmaktır; yalnızca olayları sıralamak yorum değildir.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"şîroveya dîrokî\": derxistina wateyê ji delîlan.",
-    "explanationTr": "\"şîroveya dîrokî\": kanıtlardan anlam çıkarma.",
+    "explanationTr": "Tarihî yorum, kaynaklardaki kanıtları karşılaştırıp onlardan anlam ve sonuç çıkarmaktır; yalnızca olayları sıralamak yorum değildir.",
     "promptTr": "\"tarihî yorum\" nedir?",
     "answersTr": [
       "kanıtlardan anlam çıkarma",
@@ -7392,7 +7392,7 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"dîroka devkî\": rêbaza têgihiştina rabirdûyê bi şahidî û vegotinan.",
-    "explanationTr": "\"sözlü tarih\": tanıklık ve anlatılarla geçmişi anlama yöntemi.",
+    "explanationTr": "Dîroka devkî (sözlü tarih), geçmişi olayları yaşamış ya da duymuş kişilerin sözlü tanıklıkları üzerinden araştırır; bu tanıklıklar yazılı belgeler ve öteki kaynaklarla birlikte değerlendirilir.",
     "promptTr": "\"dîroka devkî\" teriminin doğru karşılığı hangisidir?",
     "answersTr": [
       "toplumların birbirini etkilemesi",
@@ -7463,17 +7463,17 @@
       "rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin"
     ],
     "correctAnswer": "ji serokên leşkerî û siyasî yên tevgera neteweyî ya kurdî",
-    "explanation": "\"Mustafa Barzani\": Kürt ulusal hareketinin askerî ve siyasî liderlerinden biri.",
+    "explanation": "Mustafa Barzani (1903–1979), Güney Kürdistan'daki Kürt hareketinin uzun yıllar askerî ve siyasi önderliğini yaptı; Mahabad Cumhuriyeti'nin ordusunda da komutandı.",
     "type": "multipleChoice",
     "difficulty": 2,
     "explanationKu": "\"Mistefa Barzanî\": rêberê leşkerî û siyasî yê navdar ê tevgera kurdî.",
-    "explanationTr": "\"Mustafa Barzani\": Kürt ulusal hareketinin askerî ve siyasî liderlerinden biri.",
+    "explanationTr": "Mustafa Barzani (1903–1979), Güney Kürdistan'daki Kürt hareketinin uzun yıllar askerî ve siyasi önderliğini yaptı; Mahabad Cumhuriyeti'nin ordusunda da komutandı.",
     "promptTr": "\"Mustafa Barzani\" kimdi?",
     "answersTr": [
-      "Batman Çayı",
+      "1946'da kurulan Mahabad Cumhuriyeti'nin cumhurbaşkanı",
       "Kürt hareketinin efsanevi askerî ve siyasi lideri",
-      "Osmanlı döneminde özerk kalmış Kürt hükümdarlığı",
-      "Silêmanî'de basılan erken dönem Kürtçe gazete"
+      "Hawar dergisini çıkaran dilbilimci",
+      "1925 ayaklanmasına önderlik eden din âlimi"
     ],
     "correctAnswerTr": "Kürt hareketinin efsanevi askerî ve siyasi lideri"
   },
@@ -7488,11 +7488,11 @@
       "rêbaza têgihiştina rabirdûyê bi şahidî û vegotinan"
     ],
     "correctAnswer": "veguhastina cih a civakan",
-    "explanation": "\"göç\": toplulukların yer değiştirmesi.",
+    "explanation": "Göç, insan topluluklarının yaşadığı yeri savaş, geçim ya da baskı gibi nedenlerle değiştirmesidir; geçici ya da kalıcı olabilir.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"koçberî\": guhertina cihê jiyanê ya komên mirovan.",
-    "explanationTr": "\"göç\": toplulukların yer değiştirmesi.",
+    "explanationTr": "Göç, insan topluluklarının yaşadığı yeri savaş, geçim ya da baskı gibi nedenlerle değiştirmesidir; geçici ya da kalıcı olabilir.",
     "promptTr": "\"göç\" nedir?",
     "answersTr": [
       "toplumların birbirini etkilemesi",
@@ -7587,11 +7587,11 @@
       "peymana 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand"
     ],
     "correctAnswer": "belge an tiştê ku rasterast ji wê serdemê maye",
-    "explanation": "\"birincil kaynak\": Döneminden kalan belge veya nesne (birincil kaynak).",
+    "explanation": "Birincil kaynak, araştırılan konuya doğrudan tanıklık eden ya da özgün veri sunan kaynaktır; dönemin belgeleri, nesneleri ve tanık anlatıları buna örnektir.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"çavkaniya seretayî\": belge an tiştê ku ji wê serdemê maye.",
-    "explanationTr": "\"birincil kaynak\": Döneminden kalan belge veya nesne (birincil kaynak).",
+    "explanationTr": "Birincil kaynak, araştırılan konuya doğrudan tanıklık eden ya da özgün veri sunan kaynaktır; dönemin belgeleri, nesneleri ve tanık anlatıları buna örnektir.",
     "promptTr": "\"birincil kaynak\" nedir?",
     "answersTr": [
       "Mehabad Kürt Cumhuriyeti'nin cumhurbaşkanı",
@@ -7619,9 +7619,9 @@
     "explanationTr": "Leyla Kasım Kürt bir kadın aktivistti; Irak rejimi tarafından idam edildi ve Kürt kadın mücadelesinin simgesi olarak anılır.",
     "promptTr": "\"Leyla Qasim\" kimdi?",
     "answersTr": [
-      "Güney Kürdistan'da uzun yıllar süren ulusal hareket",
-      "Hoybûn cemiyeti adına askerî liderlik yapan subay",
-      "1898'de ilk Kürtçe gazete Kurdistan'ı çıkaran kişi",
+      "Türkiye'de milletvekilliği yapan Kürt kadın siyasetçi",
+      "Paris'te öldürülen Kürt kadın siyasetçi",
+      "Kürtçe roman ve öyküler yazan kadın yazar",
       "Irak rejimi tarafından idam edilen Kürt kadın aktivist"
     ],
     "correctAnswerTr": "Irak rejimi tarafından idam edilen Kürt kadın aktivist"
@@ -7637,14 +7637,14 @@
       "çalakvana kurd a ku di 1974an de ji aliyê rejîma Iraqê ve hat îdamkirin"
     ],
     "correctAnswer": "kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist",
-    "explanation": "\"Mikdat Mithat Bedirxan\": 1898'de ilk Kürtçe gazete Kurdistan'ı çıkaran kişi.",
+    "explanation": "Mikdat Mithat Bedirxan, ilk Kürtçe gazete olan Kurdistan'ı 22 Nisan 1898'de Kahire'de yayımlamaya başladı; bu tarih Kürt basın günü olarak anılır.",
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"Mîqdat Mîdhad Bedirxan\": rojnamevanê kurd ê yekem ê ku rojnameya Kurdistan derxist.",
-    "explanationTr": "\"Mikdat Mithat Bedirxan\": 1898'de ilk Kürtçe gazete Kurdistan'ı çıkaran kişi.",
+    "explanationTr": "Mikdat Mithat Bedirxan, ilk Kürtçe gazete olan Kurdistan'ı 22 Nisan 1898'de Kahire'de yayımlamaya başladı; bu tarih Kürt basın günü olarak anılır.",
     "promptTr": "\"Mikdat Mithat Bedirxan\" kimdi?",
     "answersTr": [
-      "1961'den beri Güney Kürdistan'da süren ulusal hareket",
+      "1925 ayaklanmasına önderlik eden din âlimi",
       "1898'de ilk Kürtçe gazete Kurdistan'ı çıkaran kişi",
       "1927'de Hoybûn adına askerî liderlik yapan subay",
       "1974'te Irak rejimi tarafından idam edilen Kürt kadın aktivist"
@@ -7762,11 +7762,11 @@
       "mîrektiya kurd a bihêz a bi navenda Silêmaniyê"
     ],
     "correctAnswer": "mîrektiya kurd a girîng a bi navenda Cizîrê",
-    "explanation": "\"Bohtan Emirliği\": Cizre merkezli önemli Kürt beyliği.",
+    "explanation": "Botan Beyliği'nin merkezi Cizre'ydi (Cizîra Botan); son büyük beyi Bedirxan Bey 1847'de Osmanlı'ya yenildi.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Mîrgeha Botan\": mîrnişîna kurd a girîng a bi navenda Cizîrê.",
-    "explanationTr": "\"Bohtan Emirliği\": Cizre merkezli önemli Kürt beyliği.",
+    "explanationTr": "Botan Beyliği'nin merkezi Cizre'ydi (Cizîra Botan); son büyük beyi Bedirxan Bey 1847'de Osmanlı'ya yenildi.",
     "promptTr": "\"Botan Emirliği\" nedir?",
     "answersTr": [
       "Selahaddin Eyyubi tarafından kurulan büyük devlet",
@@ -7812,14 +7812,14 @@
       "efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir"
     ],
     "correctAnswer": "efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir",
-    "explanation": "\"Îhsan Nûrî Paşa\": Hoybun cemiyeti adına askeri liderlik yapan subay.",
+    "explanation": "Îhsan Nûrî Paşa, Hoybûn cemiyetinin desteklediği Ağrı (Ararat) ayaklanmasının (1927–1930) askerî komutanıydı.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Îhsan Nûrî Paşa\": efserê ku ji bo Xoybûnê rêberiya leşkerî kir.",
-    "explanationTr": "\"Îhsan Nûrî Paşa\": Hoybun cemiyeti adına askeri liderlik yapan subay.",
+    "explanationTr": "Îhsan Nûrî Paşa, Hoybûn cemiyetinin desteklediği Ağrı (Ararat) ayaklanmasının (1927–1930) askerî komutanıydı.",
     "promptTr": "\"Îhsan Nûrî Paşa\" kimdi?",
     "answersTr": [
-      "Güney Kürdistan'da uzun yıllar süren ulusal hareket",
+      "1946'da kurulan Mahabad Cumhuriyeti'nin cumhurbaşkanı",
       "1898'de ilk Kürtçe gazete Kurdistan'ı çıkaran kişi",
       "Irak rejimi tarafından idam edilen Kürt kadın aktivist",
       "Hoybûn cemiyeti adına askerî liderlik yapan subay"
@@ -7837,11 +7837,11 @@
       "rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin"
     ],
     "correctAnswer": "yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin",
-    "explanation": "\"Kovara Hawar\": Latin alfabesiyle basılan ilk Kürtçe dergi.",
+    "explanation": "Hawar dergisi 1932'de Şam'da Celadet Alî Bedirxan tarafından çıkarıldı; Latin harfli Kurmancî alfabesini yaydı.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Kovara Hawarê\": kovara kurdî ya yekem a ku bi tîpên latînî hat çapkirin.",
-    "explanationTr": "\"Kovara Hawar\": Latin alfabesiyle basılan ilk Kürtçe dergi.",
+    "explanationTr": "Hawar dergisi 1932'de Şam'da Celadet Alî Bedirxan tarafından çıkarıldı; Latin harfli Kurmancî alfabesini yaydı.",
     "promptTr": "\"Hawar Dergisi\" nedir?",
     "answersTr": [
       "Latin alfabesiyle basılan ilk Kürtçe dergi",
@@ -7937,11 +7937,11 @@
       "efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir"
     ],
     "correctAnswer": "jenosîda ku rejîma Iraqê li dijî kurdan pêk anî",
-    "explanation": "\"Kampanyaya Enfalê\": Irak rejimi tarafından Kürtlere yönelik soykırım.",
+    "explanation": "Enfal, Irak'taki Baas rejiminin 1988'de Kürtlere karşı yürüttüğü kampanyadır; köyler yıkıldı, on binlerce insan öldürüldü. Birçok ülke ve kurum bunu soykırım olarak tanır.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Operasyona Enfalê\": jenosîda ku rejîma Iraqê li dijî kurdan pêk anî.",
-    "explanationTr": "\"Kampanyaya Enfalê\": Irak rejimi tarafından Kürtlere yönelik soykırım.",
+    "explanationTr": "Enfal, Irak'taki Baas rejiminin 1988'de Kürtlere karşı yürüttüğü kampanyadır; köyler yıkıldı, on binlerce insan öldürüldü. Birçok ülke ve kurum bunu soykırım olarak tanır.",
     "promptTr": "\"Enfal Kampanyası\" nedir?",
     "answersTr": [
       "Kahire ve Şam",
@@ -7969,10 +7969,10 @@
     "explanationTr": "Niştecîh yerleşik demektir ve göçebe yaşamın karşıtıdır; bu yüzden bu deyim bir yerde kalıcı olarak yaşama düzenini anlatır.",
     "promptTr": "\"yerleşik yaşam\" deyiminin doğru karşılığı hangisidir?",
     "answersTr": [
-      "Celadet Alî Bedirxan",
+      "göçer yaşam düzeni",
       "kalıcı yerleşim düzeni",
-      "Süleymaniye'de basılan erken dönem Kürtçe gazete",
-      "Latin alfabesiyle basılan ilk Kürtçe dergi"
+      "yayla ile kışlak arasında yarı göçer düzen",
+      "çadırlarda geçici kamp düzeni"
     ],
     "correctAnswerTr": "kalıcı yerleşim düzeni"
   },
@@ -7987,11 +7987,11 @@
       "yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan"
     ],
     "correctAnswer": "bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê",
-    "explanation": "\"Heskîf\": Dicle nehri üzerinde yer alan binlerce yıllık tarihi kent.",
+    "explanation": "Heskîf (Hasankeyf), Dicle kıyısında kayalara oyulmuş mağara yerleşimleriyle bilinen çok eski bir kenttir; Ilısu Barajı'nın suları eski kentin büyük bölümünü 2020'de kapladı.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Heskîf\": bajarê dîrokî yê hezaran salî yê li ser çemê Dîcleyê.",
-    "explanationTr": "\"Heskîf\": Dicle nehri üzerinde yer alan binlerce yıllık tarihi kent.",
+    "explanationTr": "Heskîf (Hasankeyf), Dicle kıyısında kayalara oyulmuş mağara yerleşimleriyle bilinen çok eski bir kenttir; Ilısu Barajı'nın suları eski kentin büyük bölümünü 2020'de kapladı.",
     "promptTr": "\"Heskîf (Hasankeyf)\" nedir?",
     "answersTr": [
       "Dicle nehri üzerindeki binlerce yıllık tarihî kent",
@@ -8037,11 +8037,11 @@
       "çemê mezin ê ku jiyanê dide Mezopotamyayê"
     ],
     "correctAnswer": "gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin",
-    "explanation": "\"Derbendihan gölü\": Diyala nehri üzerinde kurulmuş baraj gölü.",
+    "explanation": "Derbendîxan Gölü, Diyala (Sîrwan) Nehri üzerine kurulan barajın oluşturduğu yapay göldür; doğal göl değildir.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Gola Derbendîxanê\": bendava ku li ser çemê Diyalayê hatiye avakirin.",
-    "explanationTr": "\"Derbendihan gölü\": Diyala nehri üzerinde kurulmuş baraj gölü.",
+    "explanationTr": "Derbendîxan Gölü, Diyala (Sîrwan) Nehri üzerine kurulan barajın oluşturduğu yapay göldür; doğal göl değildir.",
     "promptTr": "\"Derbendîxan Gölü\" nedir?",
     "answersTr": [
       "Diyala nehri üzerinde kurulmuş baraj gölü",
@@ -8140,11 +8140,11 @@
       "çemê ku ji herêma Sêrtê derbas dibe û dirije Dîcleyê"
     ],
     "correctAnswer": "deşta keviran a ku ji lavên Karacadaxê pêk hatiye",
-    "explanation": "\"Siverek ovası\": Karacadağ lavlarının oluşturduğu taşlık plato.",
+    "explanation": "Siverek Ovası (Deşta Sêwregê), Karacadağ'dan akan bazalt lavlarının örttüğü taşlık bir düzlüktür; bu yüzden toprağı taşlıdır.",
     "type": "multipleChoice",
     "difficulty": 2,
     "explanationKu": "\"Deşta Sêwregê\": deşta kevirî ya ku ji lavên Karacadaxê pêk hatiye.",
-    "explanationTr": "\"Siverek ovası\": Karacadağ lavlarının oluşturduğu taşlık plato.",
+    "explanationTr": "Siverek Ovası (Deşta Sêwregê), Karacadağ'dan akan bazalt lavlarının örttüğü taşlık bir düzlüktür; bu yüzden toprağı taşlıdır.",
     "promptTr": "\"Deşta Sêwregê\" nedir?",
     "answersTr": [
       "Karacadağ lavlarından oluşan taşlık ova",
@@ -8215,14 +8215,14 @@
       "çiyayê stratejîk ê ku li navenda deşta Mûsilê bilind dibe"
     ],
     "correctAnswer": "çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin",
-    "explanation": "\"Zagros sıradağları\": Kürdistan coğrafyasını baştan başa bölen dağlar.",
+    "explanation": "Zagros sıradağları kuzeybatı–güneydoğu doğrultusunda uzanır ve Kürdistan coğrafyasının omurgasını oluşturur.",
     "type": "visual",
     "difficulty": 5,
     "imageUrl": "asset://assets/question_images/ciyayen_zagros.webp",
     "imageAltKu": "Ji jor ve: gir û zinarên li ser hev, parçeyên berfê yên belav, di navîn de şopeke tarî ya avê.",
     "imageAltTr": "Yukarıdan bakış: üst üste kıvrılan kayalık yükseltiler, dağınık kar parçaları, ortada koyu bir su izi.",
     "explanationKu": "\"Rêzeçiyayên Zagrosê\": çiyayên ku erdnîgariya Kurdistanê ji serî heta binî dabeş dikin.",
-    "explanationTr": "\"Zagros sıradağları\": Kürdistan coğrafyasını baştan başa bölen dağlar.",
+    "explanationTr": "Zagros sıradağları kuzeybatı–güneydoğu doğrultusunda uzanır ve Kürdistan coğrafyasının omurgasını oluşturur.",
     "promptTr": "\"Zagros sıradağları\" nedir?",
     "answersTr": [
       "Kürdistan coğrafyasını baştan başa bölen dağlar",
@@ -8422,11 +8422,11 @@
       "deşteke bibereket a çandiniyê ya başûrê Kurdistanê"
     ],
     "correctAnswer": "deşteke bibereket a çandiniyê ya başûrê Kurdistanê",
-    "explanation": "\"Hewlêr ovası\": Güney Kürdistan'ın verimli tarım ovalarından biri.",
+    "explanation": "Hewlêr (Erbil) Ovası, Büyük ve Küçük Zap arasında uzanan verimli bir düzlüktür; tahıl tarımıyla bilinir.",
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"Deşta Hewlêrê\": deşta çandiniyê ya herî berdar a başûrê Kurdistanê.",
-    "explanationTr": "\"Hewlêr ovası\": Güney Kürdistan'ın verimli tarım ovalarından biri.",
+    "explanationTr": "Hewlêr (Erbil) Ovası, Büyük ve Küçük Zap arasında uzanan verimli bir düzlüktür; tahıl tarımıyla bilinir.",
     "promptTr": "\"Hewlêr Ovası\" nedir?",
     "answersTr": [
       "Karacadağ lavlarından oluşan taşlık ova",
@@ -8525,11 +8525,11 @@
       "avhewaya ku li herêmên kurdî yên nêzî Behra Spî tê dîtin"
     ],
     "correctAnswer": "volkana bazaltî ya berfireh a li deşta Amedê",
-    "explanation": "\"Karacadağ\": Diyarbakır ovasında yer alan yayvan bazaltik volkan.",
+    "explanation": "Karacadağ (Qerejdax), Diyarbakır ile Urfa arasında yayılan geniş ve alçak bir kalkan volkanıdır; çevresindeki bazalt taşlar Amed surlarında da kullanılmıştır.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Qerejdax\": volkana bazaltî ya berfireh a li deşta Amedê ye.",
-    "explanationTr": "\"Karacadağ\": Diyarbakır ovasında yer alan yayvan bazaltik volkan.",
+    "explanationTr": "Karacadağ (Qerejdax), Diyarbakır ile Urfa arasında yayılan geniş ve alçak bir kalkan volkanıdır; çevresindeki bazalt taşlar Amed surlarında da kullanılmıştır.",
     "promptTr": "\"Karacadağ\" nedir?",
     "answersTr": [
       "Amed ovasındaki geniş bazaltik volkan",
@@ -8575,11 +8575,11 @@
       "rêzeçiyayên herî asê yên erdnîgariya Dêrsimê"
     ],
     "correctAnswer": "çemê ku ji bin sûrên Amedê derbas dibe",
-    "explanation": "\"Dicle nehri\": Diyarbakır surlarının altından geçen nehir.",
+    "explanation": "Dicle, Diyarbakır'ın tarihî surlarının aşağısındaki vadiden akar; Hevsel Bahçeleri surlarla nehir arasındaki alandadır.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Çemê Dîcleyê\": çemê ku ji binê sûrên Amedê derbas dibe.",
-    "explanationTr": "\"Dicle nehri\": Diyarbakır surlarının altından geçen nehir.",
+    "explanationTr": "Dicle, Diyarbakır'ın tarihî surlarının aşağısındaki vadiden akar; Hevsel Bahçeleri surlarla nehir arasındaki alandadır.",
     "promptTr": "\"Dicle Nehri\" nedir?",
     "answersTr": [
       "Elazığ sınırları içindeki tektonik göl",
@@ -8600,14 +8600,14 @@
       "çiyayê stratejîk ê ku li navenda deşta Mûsilê bilind dibe"
     ],
     "correctAnswer": "gola bendavê ya çêkirî ya li nêzî Silêmaniyê",
-    "explanation": "\"Dokan gölü\": Süleymaniye yakınlarında yer alan yapay baraj gölü.",
+    "explanation": "Dokan Gölü, Küçük Zap üzerine kurulan barajın oluşturduğu yapay göldür ve Süleymaniye iline bağlıdır.",
     "type": "visual",
     "difficulty": 3,
     "imageUrl": "asset://assets/question_images/gola_dokane.webp",
     "imageAltKu": "Di bin ezmanekî hinekî ewrî de goleke mezin û şîn; li dora wê girên kesk û rêyeke peyayan a bi parmaxk.",
     "imageAltTr": "Az bulutlu gökyüzü altında büyük mavi bir göl; çevresinde yeşil tepeler ve korkuluklu yürüyüş yolu var.",
     "explanationKu": "\"Gola Dokanê\": bendava çêkirî ya li nêzîkî Silêmaniyê.",
-    "explanationTr": "\"Dokan gölü\": Süleymaniye yakınlarında yer alan yapay baraj gölü.",
+    "explanationTr": "Dokan Gölü, Küçük Zap üzerine kurulan barajın oluşturduğu yapay göldür ve Süleymaniye iline bağlıdır.",
     "promptTr": "Dokan Gölü nerededir?",
     "answersTr": [
       "Kürdistan coğrafyasını baştan başa bölen dağlar",
@@ -8628,11 +8628,11 @@
       "Kendava Besrayê (bi ser Şet-ul Erebê ve)"
     ],
     "correctAnswer": "zivistanên sar ên deverên bejahî û çiyayî",
-    "explanation": "\"Kürdistan iklimi\": karasal ve dağlık alanlarda soğuk kışlar.",
+    "explanation": "Kürdistan'ın büyük bölümünde karasal iklim hâkimdir: yükseklik ve denizden uzaklık nedeniyle kışlar soğuk ve karlı, yazlar sıcak ve kurak geçer.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Avhewaya Kurdistanê\": li deverên parzemînî û çiyayî zivistanên sar.",
-    "explanationTr": "\"Kürdistan iklimi\": karasal ve dağlık alanlarda soğuk kışlar.",
+    "explanationTr": "Kürdistan'ın büyük bölümünde karasal iklim hâkimdir: yükseklik ve denizden uzaklık nedeniyle kışlar soğuk ve karlı, yazlar sıcak ve kurak geçer.",
     "promptTr": "\"Kürdistan iklimi\" nedir?",
     "answersTr": [
       "dünyanın en büyük sodalı gölüne sahip havza",
@@ -8703,11 +8703,11 @@
       "çemê ku ji bin sûrên Amedê derbas dibe"
     ],
     "correctAnswer": "gola tektonîk a di sînorên Elezîzê de",
-    "explanation": "\"Hazar gölü\": Elazığ sınırlarında yer alan tektonik göl.",
+    "explanation": "Hazar Gölü, Elazığ'da Doğu Anadolu Fay Hattı üzerinde oluşmuş tektonik bir göldür; Dicle bu göl yöresinden doğar.",
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"Gola Hazarê\": gola tektonîk a li herêma Elezîzê.",
-    "explanationTr": "\"Hazar gölü\": Elazığ sınırlarında yer alan tektonik göl.",
+    "explanationTr": "Hazar Gölü, Elazığ'da Doğu Anadolu Fay Hattı üzerinde oluşmuş tektonik bir göldür; Dicle bu göl yöresinden doğar.",
     "promptTr": "\"Hazar Gölü nedir?\"",
     "answersTr": [
       "Elazığ sınırları içindeki tektonik göl",
@@ -8995,14 +8995,14 @@
       "çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin"
     ],
     "correctAnswer": "gola bendavê ya çêkirî ya li nêzî Silêmaniyê",
-    "explanation": "\"Dokan gölü\": Süleymaniye yakınlarında yer alan yapay baraj gölü.",
+    "explanation": "Dokan Gölü, Küçük Zap üzerindeki Dokan Barajı ile oluşmuş yapay göldür; Süleymaniye yakınındadır.",
     "type": "visual",
     "difficulty": 5,
     "imageUrl": "asset://assets/question_images/gola_dokane.webp",
     "imageAltKu": "Goleke berfireh di nav girên kesk de; li peravê çend avahiyên biçûk û rêyeke peyayan a bi stûnên şîn-spî.",
     "imageAltTr": "Yeşil tepelerle çevrelenmiş geniş bir göl; kıyıda mavi-beyaz direkli bir yaya yolu ve küçük yapılar var.",
     "explanationKu": "\"Gola Dokanê\": bendava çêkirî ya li nêzîkî Silêmaniyê.",
-    "explanationTr": "\"Dokan gölü\": Süleymaniye yakınlarında yer alan yapay baraj gölü.",
+    "explanationTr": "Dokan Gölü, Küçük Zap üzerindeki Dokan Barajı ile oluşmuş yapay göldür; Süleymaniye yakınındadır.",
     "promptTr": "\"Dokan Gölü\" nedir?",
     "answersTr": [
       "Cizîr ve Silopî ovalarını kapsayan verimli düzlük",
@@ -9172,11 +9172,11 @@
       "hewza gola şor a li rojhilatê Kurdistanê"
     ],
     "correctAnswer": "şaxê Dîcleyê yê ku sînorê Tirkiye û Iraqê xêz dike",
-    "explanation": "\"Habur çayı\": Türkiye ve Irak sınırını çizen Dicle kolu.",
+    "explanation": "Habur Çayı, Zaho yakınından geçip Dicle'ye karışan bir koldur; bir kesiminde Türkiye–Irak sınırını oluşturur.",
     "type": "multipleChoice",
     "difficulty": 1,
     "explanationKu": "\"Çemê Xabûrê\": şaxê Dîcleyê yê ku sînorê Tirkiye û Iraqê diyar dike.",
-    "explanationTr": "\"Habur çayı\": Türkiye ve Irak sınırını çizen Dicle kolu.",
+    "explanationTr": "Habur Çayı, Zaho yakınından geçip Dicle'ye karışan bir koldur; bir kesiminde Türkiye–Irak sınırını oluşturur.",
     "promptTr": "\"Habur Çayı\" nedir?",
     "answersTr": [
       "Türkiye ile Irak sınırını çizen Dicle kolu",
@@ -9197,11 +9197,11 @@
       "kovara zanistî ya ku li Bexdayê bi erebî derdiket"
     ],
     "correctAnswer": "kovara wêjeyî ya bi wêne ya ku li Şamê bi alfabeya latînî derket",
-    "explanation": "\"Ronahî dergisi\": Şam'da Latin alfabesiyle çıkarılan edebi dergi.",
+    "explanation": "Ronahî dergisi 1942–1945 arasında Şam'da Celadet Alî Bedirxan tarafından çıkarıldı; Hawar'ın kardeş yayınıydı ve resimliydi.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Kovara Ronahî\": kovara wêjeyî ya ku li Şamê bi tîpên latînî derket.",
-    "explanationTr": "\"Ronahî dergisi\": Şam'da Latin alfabesiyle çıkarılan edebi dergi.",
+    "explanationTr": "Ronahî dergisi 1942–1945 arasında Şam'da Celadet Alî Bedirxan tarafından çıkarıldı; Hawar'ın kardeş yayınıydı ve resimliydi.",
     "promptTr": "\"Ronahî\" dergisi neydi?",
     "answersTr": [
       "Kahire'de çıkan ilk Kürtçe gazete",
@@ -9247,16 +9247,16 @@
       "nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca"
     ],
     "correctAnswer": "helbestvanê civakî yê pêşeng ê helbesta kurdî ya nûjen",
-    "explanation": "\"Cegerxwîn\": modern Kürt şiirinin öncü toplumcu şairi.",
+    "explanation": "Cegerxwîn (1903–1984), klasik biçimlerden de yararlanarak şiirinde halkın yaşamını, toplumsal hakları ve özgürlüğü işledi; modern toplumcu Kürt şiirinin öncülerinden sayılır.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Cegerxwîn\": helbestvanê civakî yê pêşeng ê helbesta kurdî ya modern.",
-    "explanationTr": "\"Cegerxwîn\": modern Kürt şiirinin öncü toplumcu şairi.",
+    "explanationTr": "Cegerxwîn (1903–1984), klasik biçimlerden de yararlanarak şiirinde halkın yaşamını, toplumsal hakları ve özgürlüğü işledi; modern toplumcu Kürt şiirinin öncülerinden sayılır.",
     "promptTr": "\"Cegerxwîn\" kimdi?",
     "answersTr": [
       "modern Kürt şiirinin öncü toplumcu şairi",
       "Mewlûda Şerîf'i Kürtçe yazan klasik şair",
-      "Latin temelli Kürt alfabesinin yayılması",
+      "Mem û Zîn mesnevisini yazan klasik şair",
       "ilk Kürt romanı Şivanê Kurmanca'nın yazarı"
     ],
     "correctAnswerTr": "modern Kürt şiirinin öncü toplumcu şairi"
@@ -9382,12 +9382,12 @@
     "explanationTr": "Feqiyê Teyran klasik bir Kürt şairidir ve Teyran adıyla tanınır; geleneğe göre kuşların dilinden anladığı anlatılır.",
     "promptTr": "\"Feqiyê Teyran\" kimdi?",
     "answersTr": [
-      "kuşların dilini bilen ünlü Kürt şair",
-      "Mem û Zîn'in temelini oluşturan halk destanı",
+      "söylenceye göre kuşların dilini bilen klasik Kürt şairi",
+      "Mem û Zîn mesnevisini yazan klasik şair",
       "Mevlid-i Şerif'i Kürtçe yazan klasik şair",
-      "dengbêjlerin hikâye, destan ve anlatıları"
+      "Divanıyla tanınan Cizreli klasik şair"
     ],
-    "correctAnswerTr": "kuşların dilini bilen ünlü Kürt şair"
+    "correctAnswerTr": "söylenceye göre kuşların dilini bilen klasik Kürt şairi"
   },
   {
     "id": "offline_9405",
@@ -9457,12 +9457,12 @@
     "explanationTr": "Ehmedê Xasî şair ve din âlimidir ve Zazaca ilk mevlidi yazmıştır; eseri bu özelliğiyle bilinir.",
     "promptTr": "\"Ehmedê Xasî\" kimdi?",
     "answersTr": [
-      "Mehmed Uzun",
-      "dengbêjlerin hikâye, destan ve anlatıları",
+      "Siya Evînê romanının yazarı olan romancı",
+      "Mem û Zîn mesnevisini yazan klasik şair",
       "Kürt edebiyatının en eski klasik rubai şairi",
-      "Zazaca ilk mevlidi yazan şair ve din alimi"
+      "Zazaca ilk mevlidi yazan şair ve din âlimi"
     ],
-    "correctAnswerTr": "Zazaca ilk mevlidi yazan şair ve din alimi"
+    "correctAnswerTr": "Zazaca ilk mevlidi yazan şair ve din âlimi"
   },
   {
     "id": "offline_9410",
@@ -9475,11 +9475,11 @@
       "pêşketina cureyên wek roman û rojnameyê di serdema nûjen de"
     ],
     "correctAnswer": "destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn",
-    "explanation": "\"destana Memê Alan\": Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı.",
+    "explanation": "Memê Alan sözlü bir halk destanıdır; Ehmedê Xanî 1692'de yazdığı Mem û Zîn mesnevisinde bu anlatıdan yararlandı.",
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"Destana Memê Alan\": destana gelêrî ya ku Ehmedê Xanî ji bo Mem û Zînê jê îlham girtiye.",
-    "explanationTr": "\"destana Memê Alan\": Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı.",
+    "explanationTr": "Memê Alan sözlü bir halk destanıdır; Ehmedê Xanî 1692'de yazdığı Mem û Zîn mesnevisinde bu anlatıdan yararlandı.",
     "promptTr": "\"Destana Memê Alan\" nedir?",
     "answersTr": [
       "Ehmedê Xanî'nin Mem û Zîn için ilham aldığı halk destanı",
@@ -9500,11 +9500,11 @@
       "rojnameya ku li Bexdayê ji aliyê dewletê ve dihat weşandin"
     ],
     "correctAnswer": "rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin",
-    "explanation": "\"Riya Taza gazetesi\": Erivan'da uzun yıllar basılan Kürtçe gazete.",
+    "explanation": "Riya Taza, 1930'da Erivan'da yayımlanmaya başlayan Kürtçe gazetedir; yayını bir süre kesildikten sonra 1955'te yeniden başladı.",
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"Rojnameya Riya Taza\": rojnameya kurdî ya ku bi salan li Rewanê hat çapkirin.",
-    "explanationTr": "\"Riya Taza gazetesi\": Erivan'da uzun yıllar basılan Kürtçe gazete.",
+    "explanationTr": "Riya Taza, 1930'da Erivan'da yayımlanmaya başlayan Kürtçe gazetedir; yayını bir süre kesildikten sonra 1955'te yeniden başladı.",
     "promptTr": "\"Riya Taza\" nedir?",
     "answersTr": [
       "İstanbul'da Osmanlıca çıkan Kürtçe gazete",
@@ -9525,11 +9525,11 @@
       "ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir"
     ],
     "correctAnswer": "ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir",
-    "explanation": "\"Xanî Mektebi\": Ehmedê Xanî'nin başlattığı edebi ve düşünsel ekol.",
+    "explanation": "Xanî Mektebi, Ehmedê Xanî'nin Kürtçeyi bilim ve edebiyat dili yapma çabasından doğan ekoldür; Mem û Zîn'deki dil ve kimlik vurgusu bu düşüncenin temelidir.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Mekteba Xanî\": ekola wêjeyî û ramanî ya ku Ehmedê Xanî ava kiriye.",
-    "explanationTr": "\"Xanî Mektebi\": Ehmedê Xanî'nin başlattığı edebi ve düşünsel ekol.",
+    "explanationTr": "Xanî Mektebi, Ehmedê Xanî'nin Kürtçeyi bilim ve edebiyat dili yapma çabasından doğan ekoldür; Mem û Zîn'deki dil ve kimlik vurgusu bu düşüncenin temelidir.",
     "promptTr": "\"Xanî Mektebi\" nedir?",
     "answersTr": [
       "Şam'da Hawar dergisiyle ortaya çıkan hareket",
@@ -9650,11 +9650,11 @@
       "zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî"
     ],
     "correctAnswer": "yekem dîroknas û helbestvana kurd a jin a ku dîwan nivîsî",
-    "explanation": "\"Masture Erdelan\": tarihte divan yazmış ilk Kürt kadın tarihçi ve şair.",
+    "explanation": "Mestûre Erdelan (1805–1848), Erdelan Beyliği'nin tarihini yazdı ve şiirlerini divanda topladı; ilk Kürt kadın tarihçi olarak anılır.",
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"Mestûre Erdelan\": dîroknas û helbestvana kurd a yekem a ku dîwan nivîsandiye.",
-    "explanationTr": "\"Masture Erdelan\": tarihte divan yazmış ilk Kürt kadın tarihçi ve şair.",
+    "explanationTr": "Mestûre Erdelan (1805–1848), Erdelan Beyliği'nin tarihini yazdı ve şiirlerini divanda topladı; ilk Kürt kadın tarihçi olarak anılır.",
     "promptTr": "\"Masture Erdelan\" kimdi?",
     "answersTr": [
       "mistik aşkı ve felsefeyi içeren ünlü şiir divanı",
@@ -9704,7 +9704,7 @@
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"Nûbihara Biçûkan\": ferhenga kurdî ya yekem a ku Ehmedê Xanî nivîsî.",
-    "explanationTr": "\"Nûbihara Biçûkan\": Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük.",
+    "explanationTr": "Nûbihara Biçûkan, Ehmedê Xanî'nin çocukların Arapça öğrenmesi için yazdığı manzum Arapça–Kürtçe sözlüktür; sözcükler ezberlenecek beyitler hâlinde verilir.",
     "promptTr": "\"Nûbihara Biçûkan\" nedir?",
     "answersTr": [
       "Ehmedê Xanî'nin klasik aşk mesnevisi",
@@ -9775,11 +9775,11 @@
       "dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne"
     ],
     "correctAnswer": "yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen",
-    "explanation": "\"Osman Sabri\": modern Kürt hikayeciliğinin kurucu isimlerinden.",
+    "explanation": "Osman Sebrî (1905–1993), Hawar çevresinde yetişen yazar ve şairdir; modern Kürt öykücülüğünün kurucu adlarından sayılır.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Osman Sebrî\": yek ji navên damezrîner ên çîroknivîsiya kurdî ya modern.",
-    "explanationTr": "\"Osman Sabri\": modern Kürt hikayeciliğinin kurucu isimlerinden.",
+    "explanationTr": "Osman Sebrî (1905–1993), Hawar çevresinde yetişen yazar ve şairdir; modern Kürt öykücülüğünün kurucu adlarından sayılır.",
     "promptTr": "\"Osman Sabri\" kimdi?",
     "answersTr": [
       "modern Kürt hikâyeciliğinin kurucu isimlerinden biri",
@@ -9850,11 +9850,11 @@
       "tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir"
     ],
     "correctAnswer": "tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir",
-    "explanation": "\"Hawar Ekolü\": Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım.",
+    "explanation": "Hawar Ekolü, 1930–40'larda Bedirxan kardeşler çevresinde gelişti; Latin harfli Kurmancı yazı dilini ve Kürt aydınlanmasını yaydı.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Ekola Hawarê\": tevgera wêjeyî ya ku ronakbîriya kurdî û alfabeya latînî belav kir.",
-    "explanationTr": "\"Hawar Ekolü\": Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım.",
+    "explanationTr": "Hawar Ekolü, 1930–40'larda Bedirxan kardeşler çevresinde gelişti; Latin harfli Kurmancı yazı dilini ve Kürt aydınlanmasını yaydı.",
     "promptTr": "\"Hawar Ekolü\" nedir?",
     "answersTr": [
       "Baban'da gelişen klasik şiir okulu",
@@ -9925,11 +9925,11 @@
       "zimannasê ku rêzimana kurmancî nivîsî"
     ],
     "correctAnswer": "yek ji helbestvanên sereke yên dibistana klasîk a Babanê",
-    "explanation": "\"Nalî\": Soranice klasik şiirin Baban okulunun başlıca adlarından divan şairi.",
+    "explanation": "Nalî, 19. yüzyılda Baban beyliği döneminde Soranice yazan divan şairidir; Soranî klasik şiirin kurucu adlarından sayılır.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Nalî\": helbestvanê dîwanê yê herî mezin ê ekola klasîk a soranî.",
-    "explanationTr": "\"Nalî\": Soranice klasik şiirin Baban okulunun başlıca adlarından divan şairi.",
+    "explanationTr": "Nalî, 19. yüzyılda Baban beyliği döneminde Soranice yazan divan şairidir; Soranî klasik şiirin kurucu adlarından sayılır.",
     "promptTr": "Nalî kimdi?",
     "answersTr": [
       "dil ve alfabe çalışmalarını yaygınlaştırdığı için",
@@ -10033,9 +10033,9 @@
     "promptTr": "Melayê Bateyî kimdi?",
     "answersTr": [
       "Şivanê Kurmanca adlı ilk Kürtçe romanın yazarı",
-      "Zazaca ilk mevlidi yazan şair ve din alimi",
+      "Zazaca ilk mevlidi yazan şair ve din âlimi",
       "Mevlid-i Şerif'i Kürtçe yazan klasik şair",
-      "Latin temelli Kürt alfabesinin yayılması"
+      "Mem û Zîn mesnevisini yazan klasik şair"
     ],
     "correctAnswerTr": "Mevlid-i Şerif'i Kürtçe yazan klasik şair"
   },
@@ -10133,7 +10133,7 @@
     "promptTr": "Elî Herîrî kimdi?",
     "answersTr": [
       "Sorani klasik şiir okulunun en büyük divan şairi",
-      "Ehmedê Xanî'nin başlattığı edebî ve düşünsel ekol",
+      "Mem û Zîn mesnevisini yazan klasik şair",
       "Kürt edebiyatının en eski klasik şairlerinden biri",
       "Şerefname ve Mem û Zîn'i Soraniceye çeviren yazar"
     ],
@@ -10150,11 +10150,11 @@
       "ferhenga helbestî ya kurdî-erebî ya ji bo zarokan"
     ],
     "correctAnswer": "dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne",
-    "explanation": "\"Dîwana Melayê Cizîrî\": mistik aşk ve felsefe içeren meşhur şiir divanı.",
+    "explanation": "Melayê Cizîrî'nin divanı tasavvufi aşkı ve felsefi düşünceyi işler; klasik Kurmancî şiirin en çok okunan eserlerindendir.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Dîwana Melayê Cizîrî\": dîwana helbestê ya navdar a bi evîna mîstîk û felsefeyê.",
-    "explanationTr": "\"Dîwana Melayê Cizîrî\": mistik aşk ve felsefe içeren meşhur şiir divanı.",
+    "explanationTr": "Melayê Cizîrî'nin divanı tasavvufi aşkı ve felsefi düşünceyi işler; klasik Kurmancî şiirin en çok okunan eserlerindendir.",
     "promptTr": "Dîwana Melayê Cizîrî nedir?",
     "answersTr": [
       "mistik aşk ve felsefe içeren ünlü şiir divanı",
@@ -10250,11 +10250,11 @@
       "hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide"
     ],
     "correctAnswer": "şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê",
-    "explanation": "\"serhad ezgileri\": Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı.",
+    "explanation": "Serhad ezgileri Kars, Ağrı ve Van yöresinden gelir; uzun soluklu, lirik dengbêj söyleyişleriyle bilinir.",
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"awazên Serhedê\": şêwaza muzîka lîrîk a taybetî ya devera Qers, Agirî û Wanê.",
-    "explanationTr": "\"serhad ezgileri\": Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı.",
+    "explanationTr": "Serhad ezgileri Kars, Ağrı ve Van yöresinden gelir; uzun soluklu, lirik dengbêj söyleyişleriyle bilinir.",
     "promptTr": "\"serhad ezgileri\" nedir?",
     "answersTr": [
       "Şirnex ve Cizîr yöresinin ritmik ve makamsal müziği",
@@ -10275,11 +10275,11 @@
       "veguhastina muzîkal a bi têkiliya hoste-şagirt"
     ],
     "correctAnswer": "veguhastina muzîkal a bi têkiliya hoste-şagirt",
-    "explanation": "\"dengbêjlik okulu\": usta-çırak ilişkisiyle yürüyen müzikal aktarım.",
+    "explanation": "Dengbêjlik usta-çırak ilişkisiyle öğrenilir: genç dengbêj ustasını dinleyerek kilamları ezberler ve onun söyleyişini sürdürür.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"dibistana dengbêjiyê\": veguhastina muzîkî ya bi têkiliya hoste-şagirt.",
-    "explanationTr": "\"dengbêjlik okulu\": usta-çırak ilişkisiyle yürüyen müzikal aktarım.",
+    "explanationTr": "Dengbêjlik usta-çırak ilişkisiyle öğrenilir: genç dengbêj ustasını dinleyerek kilamları ezberler ve onun söyleyişini sürdürür.",
     "promptTr": "\"dengbêjlik okulu\" nedir?",
     "answersTr": [
       "kış gecesi sohbetlerinde söylenen sözlü müzik",
@@ -10381,11 +10381,11 @@
       "amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn"
     ],
     "correctAnswer": "pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike",
-    "explanation": "\"makam\": Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem.",
+    "explanation": "Makam, ezginin hangi seslerden kurulacağını ve nasıl ilerleyeceğini belirleyen dizi ve kurallar sistemidir; ritmi değil ezgiyi düzenler.",
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"meqam\": pergala ku avahiya awazê diyar dike.",
-    "explanationTr": "\"makam\": Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem.",
+    "explanationTr": "Makam, ezginin hangi seslerden kurulacağını ve nasıl ilerleyeceğini belirleyen dizi ve kurallar sistemidir; ritmi değil ezgiyi düzenler.",
     "promptTr": "\"makam\" nedir?",
     "answersTr": [
       "govendde çalınan hızlı ve ritmik halk şarkıları",
@@ -10406,11 +10406,11 @@
       "hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide"
     ],
     "correctAnswer": "sazê têlî yê ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin",
-    "explanation": "\"tembûr\": Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli saz.",
+    "explanation": "Tembûr uzun saplı telli bir sazdır; Yarsan (Ehl-i Hak) inancında kutsal sayılır ve cem törenlerinde çalınır.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"tembûr\": amûra têlî ya ku di muzîka gelêrî ya kurdî de herî pîroz tê hesibandin.",
-    "explanationTr": "\"tembûr\": Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli saz.",
+    "explanationTr": "Tembûr uzun saplı telli bir sazdır; Yarsan (Ehl-i Hak) inancında kutsal sayılır ve cem törenlerinde çalınır.",
     "promptTr": "\"tembûr\" nedir?",
     "answersTr": [
       "Qers, Agirî ve Wan yöresine özgü lirik müzik tarzı",
@@ -10463,9 +10463,9 @@
     "explanationTr": "Aram Tigran Ermeni asıllı usta bir müzisyendir ve Kürtçe şarkılarıyla tanınır.",
     "promptTr": "Aram Tigran kimdi?",
     "answersTr": [
-      "Kürt müziğini dünyaya tanıtan en ünlü ses sanatçısı",
-      "çobanların da çaldığı geleneksel nefesli çalgı",
-      "daha çok aşk ve yiğitlik üzerine söylenen müzik türü",
+      "Dengbêjlerin şahı diye anılan büyük dengbêj",
+      "Kürt müziğine rock ve caz esintisi getiren sanatçı",
+      "Sesini plağa kaydeden ilk Kürt kadın şarkıcılardan biri",
       "Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen"
     ],
     "correctAnswerTr": "Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen"
@@ -10506,11 +10506,11 @@
       "muzîka rîtmîk û meqamî ya herêma Şirnex û Cizîrê"
     ],
     "correctAnswer": "muzîka rîtmîk û meqamî ya herêma Şirnex û Cizîrê",
-    "explanation": "\"botan ezgileri\": Şırnak ve Cizre yöresinin ritmik ve makamsal müziği.",
+    "explanation": "Botan ezgileri Şırnak ve Cizre yöresine aittir; ritmik ve makamsal yapısıyla öteki yöre tarzlarından ayrılır.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"awazên Botanê\": muzîka rîtmîk û meqamî ya devera Şirnex û Cizîrê.",
-    "explanationTr": "\"botan ezgileri\": Şırnak ve Cizre yöresinin ritmik ve makamsal müziği.",
+    "explanationTr": "Botan ezgileri Şırnak ve Cizre yöresine aittir; ritmik ve makamsal yapısıyla öteki yöre tarzlarından ayrılır.",
     "promptTr": "\"botan ezgileri\" nedir?",
     "answersTr": [
       "Kürt müziğinin ilk kayıtlarını yapan dengbêj",
@@ -10531,11 +10531,11 @@
       "cureya muzîkê ya ku ji salên 70î ve li ser evînê tê gotin"
     ],
     "correctAnswer": "koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir",
-    "explanation": "\"Koma Amed\": 90'larda Kürt müziğinde devrim yapan alternatif müzik grubu.",
+    "explanation": "Koma Amed, Kürt müziğine modern çalgılar ve yeni düzenlemeler getiren alternatif bir müzik grubudur.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Koma Amed\": koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de şoreş çêkir.",
-    "explanationTr": "\"Koma Amed\": 90'larda Kürt müziğinde devrim yapan alternatif müzik grubu.",
+    "explanationTr": "Koma Amed, Kürt müziğine modern çalgılar ve yeni düzenlemeler getiren alternatif bir müzik grubudur.",
     "promptTr": "Koma Amed nedir?",
     "answersTr": [
       "60'lardan beri Kürtçe şarkılar söyleyen usta Ermeni müzisyen",
@@ -10564,9 +10564,9 @@
     "promptTr": "Aynur Doğan kimdir?",
     "answersTr": [
       "modern dönemde Kürt halk müziğini icra eden sanatçı",
-      "Kürt müziğine rock ve caz esintisi getiren sanatçı",
-      "Kürt müziğini dünyaya tanıtan en ünlü ses sanatçısı",
-      "çobanların da çaldığı geleneksel nefesli çalgı"
+      "Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen",
+      "Dengbêjlerin şahı diye anılan büyük dengbêj",
+      "Sesini plağa kaydeden ilk Kürt kadın şarkıcılardan biri"
     ],
     "correctAnswerTr": "modern dönemde Kürt halk müziğini icra eden sanatçı"
   },
@@ -10606,11 +10606,11 @@
       "yekem hunermenda kurd a jin a ku plak dagirt"
     ],
     "correctAnswer": "nîşanên gerdûnî yên ku ji bo nivîsandina muzîkê tên bikaranîn",
-    "explanation": "\"nota\": müziği kağıda dökmek için kullanılan evrensel işaretler.",
+    "explanation": "Nota, seslerin yüksekliğini ve süresini yazıyla gösteren işaret sistemidir; böylece bir ezgi kâğıttan okunup çalınabilir.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"nota\": nîşanên gerdûnî yên ku pê muzîk tê nivîsandin.",
-    "explanationTr": "\"nota\": müziği kağıda dökmek için kullanılan evrensel işaretler.",
+    "explanationTr": "Nota, seslerin yüksekliğini ve süresini yazıyla gösteren işaret sistemidir; böylece bir ezgi kâğıttan okunup çalınabilir.",
     "promptTr": "\"nota\" nedir?",
     "answersTr": [
       "govendde çalınan hızlı ve ritmik halk şarkıları",
@@ -10631,19 +10631,19 @@
       "stranbêjî an lêxistina bi tenê ya hunermendekî"
     ],
     "correctAnswer": "dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin",
-    "explanation": "\"Hasan Cizrawî\": erken dönem Kürt müziği kayıtlarını yapan dengbêj.",
+    "explanation": "Hesen Cizrawî, Bağdat Radyosu'nun Kürtçe yayınlarında yıllarca kilam söyleyen Cizreli bir dengbêjdir.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Hesen Cizrawî\": dengbêjê ku tomarên muzîka kurdî yên serdema destpêkê çêkirin.",
-    "explanationTr": "\"Hasan Cizrawî\": erken dönem Kürt müziği kayıtlarını yapan dengbêj.",
+    "explanationTr": "Hesen Cizrawî, Bağdat Radyosu'nun Kürtçe yayınlarında yıllarca kilam söyleyen Cizreli bir dengbêjdir.",
     "promptTr": "\"Hasan Cizrawî\" kimdi?",
     "answersTr": [
-      "Kürt halkının ulusal duygularını dile getiren dengbêj",
+      "Kürtçe rock ve caz çalışmalarıyla tanınan sanatçı",
       "Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj",
-      "Kürt müziğinin ilk kayıtlarını yapan dengbêj",
-      "bir sanatçının tek başına söylemesi ya da çalması"
+      "Bağdat Radyosu'nda yıllarca kilam söyleyen Cizreli dengbêj",
+      "Dengbêjlerin şahı diye anılan büyük dengbêj"
     ],
-    "correctAnswerTr": "Kürt müziğinin ilk kayıtlarını yapan dengbêj"
+    "correctAnswerTr": "Bağdat Radyosu'nda yıllarca kilam söyleyen Cizreli dengbêj"
   },
   {
     "id": "offline_10606",
@@ -10713,9 +10713,9 @@
     "explanationTr": "Mihemed Taha Akreyî, Behdînan yöresinin klasikleşmiş halk şarkılarıyla tanınan popüler bir sanatçısıdır.",
     "promptTr": "\"Mihemed Taha Akreyî\" kimdir?",
     "answersTr": [
-      "kilamların söylendiği serbest ritimli ses üslubu",
+      "Kürt müziğine rock ve caz esintisi getiren sanatçı",
       "Behdînan yöresinin popüler klasik halk sanatçısı",
-      "Qers, Agirî ve Wan yöresine özgü lirik müzik tarzı",
+      "Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen",
       "plak dolduran ilk Kürt kadın sanatçı"
     ],
     "correctAnswerTr": "Behdînan yöresinin popüler klasik halk sanatçısı"
@@ -10731,11 +10731,11 @@
       "kilama kevneşopî ya navdar a ku efsaneyekê vedibêje"
     ],
     "correctAnswer": "edeta ku ji muzîkjenan re pere tên avêtin",
-    "explanation": "\"şabaş geleneği\": müzisyenlere para atarak taltif etme adeti.",
+    "explanation": "Şabaş, düğünlerde para ya da armağan verme geleneğidir; birçok yörede çalgıcılara verilen bahşişi de kapsar.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"kevneşopiya şabaşê\": edeta avêtina pereyan ji muzîkjenan re.",
-    "explanationTr": "\"şabaş geleneği\": müzisyenlere para atarak taltif etme adeti.",
+    "explanationTr": "Şabaş, düğünlerde para ya da armağan verme geleneğidir; birçok yörede çalgıcılara verilen bahşişi de kapsar.",
     "promptTr": "\"şabaş geleneği\" nedir?",
     "answersTr": [
       "müzisyenlere para atma âdeti",
@@ -10831,17 +10831,17 @@
       "amûra pifê ya bi dengê bilind a ku li derve tê lêxistin"
     ],
     "correctAnswer": "dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman",
-    "explanation": "\"Mihemed Şêxo\": Kürt halkının ulusal duygularını seslendiren ozan.",
+    "explanation": "Mihemed Şêxo (1948–1989), Rojava kökenli bir sanatçıdır; tembûrla söylediği ulusal ve toplumsal şarkılarla tanınır.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Mihemed Şêxo\": ozanê ku hestên neteweyî yên gelê kurd dianî ziman.",
-    "explanationTr": "\"Mihemed Şêxo\": Kürt halkının ulusal duygularını seslendiren ozan.",
+    "explanationTr": "Mihemed Şêxo (1948–1989), Rojava kökenli bir sanatçıdır; tembûrla söylediği ulusal ve toplumsal şarkılarla tanınır.",
     "promptTr": "\"Mihemed Şêxo\" kimdi?",
     "answersTr": [
       "Kürt müziğinin ilk kayıtlarını yapan dengbêj",
-      "Kürt müziğini çok kültürlü bir ortamda sunan grup",
+      "Kürt müziğine rock ve caz esintisi getiren sanatçı",
       "Kürt halkının ulusal duygularını dile getiren ozan",
-      "açık havada çalınan yüksek sesli üflemeli çalgı"
+      "Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen"
     ],
     "correctAnswerTr": "Kürt halkının ulusal duygularını dile getiren ozan"
   },
@@ -10938,10 +10938,10 @@
     "explanationTr": "Ciwan Haco, Kürt müziğine rock, caz ve pop öğeleri katarak modern bir tarz oluşturmuş sanatçıdır.",
     "promptTr": "\"Ciwan Haco\" kimdir?",
     "answersTr": [
-      "Şirnex ve Cizîr yöresinin ritmik ve makamlı müziği",
+      "Dengbêjlerin şahı diye anılan büyük dengbêj",
       "Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj",
       "Kürt müziğine rock ve caz esintisi getiren sanatçı",
-      "daha çok aşk ve yiğitlik üzerine söylenen müzik türü"
+      "Sesini plağa kaydeden ilk Kürt kadın şarkıcılardan biri"
     ],
     "correctAnswerTr": "Kürt müziğine rock ve caz esintisi getiren sanatçı"
   },
@@ -10981,11 +10981,11 @@
       "hunermendê ku bayê rock û caz anî muzîka kurdî"
     ],
     "correctAnswer": "şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê",
-    "explanation": "\"behedînî ezgileri\": Duhok ve Zaho yöresine has müzikal tarz.",
+    "explanation": "Behdînî ezgileri Duhok ve Zaho çevresine (Behdînan) özgüdür; yöre ağzı ve kendine has ritimleriyle tanınır.",
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"awazên behdînî\": şêwaza muzîkê ya taybetî ya devera Dihok û Zaxoyê.",
-    "explanationTr": "\"behedînî ezgileri\": Duhok ve Zaho yöresine has müzikal tarz.",
+    "explanationTr": "Behdînî ezgileri Duhok ve Zaho çevresine (Behdînan) özgüdür; yöre ağzı ve kendine has ritimleriyle tanınır.",
     "promptTr": "\"Behdînî ezgileri\" nedir?",
     "answersTr": [
       "Kürt müziğini dünyaya tanıtan en ünlü ses sanatçısı",
@@ -11056,15 +11056,15 @@
       "hunermendê ku muzîka kurdî gihande sehneyên navneteweyî"
     ],
     "correctAnswer": "hunermendê ku muzîka kurdî gihande sehneyên navneteweyî",
-    "explanation": "\"Şivan Perwer\": Kürt müziğini uluslararası sahnelere taşıyan, sürgünde de üretmeyi sürdüren sanatçı.",
+    "explanation": "Şivan Perwer, 1970'lerden beri Avrupa başta olmak üzere dünya sahnelerinde Kürtçe şarkılar söyledi; uzun yıllar sürgünde üretmeyi sürdürdü.",
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"Şivan Perwer\": hunermendê dengî yê herî navdar ê ku muzîka kurdî bi cîhanê da naskirin.",
-    "explanationTr": "\"Şivan Perwer\": Kürt müziğini uluslararası sahnelere taşıyan, sürgünde de üretmeyi sürdüren sanatçı.",
+    "explanationTr": "Şivan Perwer, 1970'lerden beri Avrupa başta olmak üzere dünya sahnelerinde Kürtçe şarkılar söyledi; uzun yıllar sürgünde üretmeyi sürdürdü.",
     "promptTr": "\"Şivan Perwer\" kimdir?",
     "answersTr": [
       "plak dolduran ilk Kürt kadın sanatçı",
-      "Şakiro'nun söylediği uzun destansı kilamlar",
+      "Dengbêjlerin şahı diye anılan büyük dengbêj",
       "Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen",
       "Kürt müziğini uluslararası sahnelere taşıyan sanatçı"
     ],
@@ -11106,11 +11106,11 @@
       "şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin"
     ],
     "correctAnswer": "lêdanên birêkûpêk ên ku bingeha muzîkê ne",
-    "explanation": "\"ritim\": müziğin temelini oluşturan düzenli vuruşlar.",
+    "explanation": "Ritim, müzikte seslerin ve susların süre ve vurgu bakımından düzenlenmesidir; ezgiden farklı olarak seslerin yüksekliğini değil zamanlamasını belirler.",
     "type": "multipleChoice",
     "difficulty": 2,
     "explanationKu": "\"rîtm\": lêdanên birêkûpêk ên ku bingeha muzîkê pêk tînin.",
-    "explanationTr": "\"ritim\": müziğin temelini oluşturan düzenli vuruşlar.",
+    "explanationTr": "Ritim, müzikte seslerin ve susların süre ve vurgu bakımından düzenlenmesidir; ezgiden farklı olarak seslerin yüksekliğini değil zamanlamasını belirler.",
     "promptTr": "\"ritim\" nedir?",
     "answersTr": [
       "seslerin dizilişinden oluşan ezgi",
@@ -11256,11 +11256,11 @@
       "hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan"
     ],
     "correctAnswer": "defa bi zil a ku di muzîka gelêrî de pir tê lêxistin",
-    "explanation": "\"erbane\": halk müziğinde yaygın olarak çalınan zilli tef.",
+    "explanation": "Erbane, kasnağına zil ya da halka takılan büyük bir teftir; dinî meclislerde ve halk müziğinde ritim için çalınır.",
     "type": "multipleChoice",
     "difficulty": 1,
     "explanationKu": "\"erbane\": defa bi zengil a ku di muzîka gelêrî de belav tê lêxistin.",
-    "explanationTr": "\"erbane\": halk müziğinde yaygın olarak çalınan zilli tef.",
+    "explanationTr": "Erbane, kasnağına zil ya da halka takılan büyük bir teftir; dinî meclislerde ve halk müziğinde ritim için çalınır.",
     "promptTr": "\"erbane\" nedir?",
     "answersTr": [
       "usta-çırak ilişkisiyle yapılan müzikal aktarım",
@@ -11389,9 +11389,9 @@
     "promptTr": "\"dengbêj\" kimdir, ne yapar?",
     "answersTr": [
       "ezgili sözlü anlatım yapan sanatçı",
-      "Dihok ve Zaxo yöresine has müzikal tarz",
-      "zurna ile birlikte çalınan ritim sazı",
-      "çalgısız ve doğaçlama ezgiyle söyleme"
+      "Kilamları yazıya geçiren halk bilimci",
+      "Geleneksel çalgıları yapan ve onaran usta",
+      "Düğünlerde zurna ve davul çalan çalgıcı"
     ],
     "correctAnswerTr": "ezgili sözlü anlatım yapan sanatçı"
   },
@@ -12884,7 +12884,7 @@
     "explanation": "\"ademi merkeziyetçilik\": hêza ji navendekê bo yekîneyên herêmî belavkirin.",
     "type": "multipleChoice",
     "difficulty": 3,
-    "explanationTr": "\"ademi merkeziyetçilik\": yetkinin merkezden yerel birimlere dağıtılması.",
+    "explanationTr": "Ademi merkeziyetçilikte karar yetkisinin bir bölümü merkezî yönetimden il, bölge ve belediyeler gibi yerel birimlere aktarılır.",
     "explanationKu": "\"nenavendîbûn\": belavkirina hêzê ji navendê ber bi yekîneyên herêmî ve.",
     "promptTr": "\"ademi merkeziyetçilik\" için en doğru açıklama hangisidir?",
     "answersTr": [
@@ -13059,7 +13059,7 @@
     "explanation": "\"azınlık hakları\": parastina komên ku ji piraniyê cuda ne.",
     "type": "multipleChoice",
     "difficulty": 5,
-    "explanationTr": "\"azınlık hakları\": çoğunluktan farklı grupların korunması.",
+    "explanationTr": "Azınlık hakları, sayıca az olan grupların dilini, dinini ve kültürünü çoğunluk karşısında korumayı amaçlar.",
     "explanationKu": "\"azınlık hakları\": parastina komên ku ji piraniyê cuda ne.",
     "promptTr": "\"azınlık hakları\" için en doğru açıklama hangisidir?",
     "answersTr": [
@@ -13109,7 +13109,7 @@
     "explanation": "\"barış hakkı\": mafê gerdûnî yê civakê yê jiyana bêyî şer.",
     "type": "multipleChoice",
     "difficulty": 5,
-    "explanationTr": "\"barış hakkı\": toplumun savaşsız yaşama dair evrensel hakkı.",
+    "explanationTr": "Barış hakkı, bireylerin ve toplumların savaş ve şiddet tehdidi olmadan yaşama hakkıdır; insan haklarının \"dayanışma hakları\" kuşağında sayılır.",
     "explanationKu": "\"barış hakkı\": mafê gerdûnî yê civakê yê jiyana bêyî şer.",
     "promptTr": "Siyaset açısından \"barış hakkı\" için doğru ifade hangisidir?",
     "answersTr": [
@@ -13209,7 +13209,7 @@
     "explanation": "\"insan hakları\": mafên gerdûnî yên ku her kes ji dayikbûnê xwedî wan e.",
     "type": "multipleChoice",
     "difficulty": 1,
-    "explanationTr": "\"insan hakları\": herkesin doğuştan sahip olduğu evrensel haklar.",
+    "explanationTr": "İnsan hakları, kimsenin bağışlamasına bağlı olmadan her insanın doğuştan sahip olduğu evrensel haklardır; 1948 İnsan Hakları Evrensel Beyannamesi bunları sayar.",
     "explanationKu": "\"insan hakları\": mafên gerdûnî yên ku her kes ji dayikbûnê xwedî wan e.",
     "promptTr": "\"insan hakları\" siyaset konusunda neyi anlatır?",
     "answersTr": [
@@ -13409,7 +13409,7 @@
     "explanation": "\"müzakere\": rêbaza çareserkirina pirsgirêkan bi rêya diyalogê.",
     "type": "multipleChoice",
     "difficulty": 5,
-    "explanationTr": "\"müzakere\": sorunları diyalog yoluyla çözme yöntemi.",
+    "explanationTr": "Müzakere, tarafların sorunları güç kullanmadan karşılıklı görüşme ve uzlaşmayla çözmeye çalışmasıdır.",
     "explanationKu": "\"müzakere\": rêbaza çareserkirina pirsgirêkan bi rêya diyalogê.",
     "promptTr": "\"müzakere\" hakkında doğru açıklama hangisidir?",
     "answersTr": [
@@ -13434,7 +13434,7 @@
     "explanation": "\"çoğulculuk\": qebûlkirina wekhev a nasname û baweriyên cuda.",
     "type": "multipleChoice",
     "difficulty": 5,
-    "explanationTr": "\"çoğulculuk\": farklı kimlik ve inançların eşit kabulü.",
+    "explanationTr": "Çoğulculuk, toplumdaki farklı kimlik, inanç ve görüşlerin bir arada ve eşit biçimde var olabilmesini savunur.",
     "explanationKu": "\"çoğulculuk\": qebûlkirina wekhev a nasname û baweriyên cuda.",
     "promptTr": "\"çoğulculuk\" hakkında en doğru bilgi hangisidir?",
     "answersTr": [
@@ -13485,7 +13485,7 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"ergatîf\" tê vê wateyê: avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide.",
-    "explanationTr": "\"ergatîf\" şu anlama gelir: geçişli fiillerin öznesini geçmiş zamanda bükümlü gösteren dilbilgisi yapısı.",
+    "explanationTr": "Ergatif yapıda geçişli fiilin öznesi geçmiş zamanda bükümlü olur: \"Min nan xwar\" (Ben ekmek yedim) cümlesinde özne \"ez\" değil \"min\"dir.",
     "promptTr": "Geçişli fiillerin öznesini geçmiş zamanda bükümlü gösteren dilbilgisi yapısı nedir?",
     "answersTr": [
       "paşgirên tewandinê",
@@ -13510,7 +13510,7 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"tewandin\" tê vê wateyê: guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de.",
-    "explanationTr": "\"tewandin\" şu anlama gelir: ad ya da zamirlerin cümledeki rolüne göre ek değiştirmesi.",
+    "explanationTr": "Tewandin, ad ve zamirlerin cümledeki görevine göre biçim değiştirmesidir: \"ez\" bükümle \"min\", \"jin\" ise \"jinê\" olur.",
     "promptTr": "Ad ya da zamirlerin cümledeki rolüne göre ek değiştirmesi nedir?",
     "answersTr": [
       "tewandin",
@@ -13538,7 +13538,7 @@
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"ezafe\" tê vê wateyê: têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
-    "explanationTr": "\"ezafe\" şu anlama gelir: adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi.",
+    "explanationTr": "Ezafe, adı kendisinden sonra gelen sözcüğe bağlar: dişil adlarda \"-a\" (mala min = benim evim), eril adlarda \"-ê\" (bavê min = benim babam).",
     "promptTr": "Adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi nedir?",
     "answersTr": [
       "tewandin",
@@ -13563,7 +13563,7 @@
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"cînavkên tewandî\" tê vê wateyê: cînavkên wekî \"min, te, wî, wê, me, we, wan\" ku di bin tewandinê de ne.",
-    "explanationTr": "\"cînavkên tewandî\" şu anlama gelir: büküm (tewandin) almış \"min, te, wî, wê, me, we, wan\" gibi zamirler.",
+    "explanationTr": "Bükümlü zamirler (min, te, wî, wê, me, we, wan) şimdiki zamanlı geçişli cümlede nesne, geçmiş zamanlı geçişli cümlede özne olur: \"Ez wî dibînim\" (Onu görüyorum), \"Min ew dît\" (Onu gördüm).",
     "promptTr": "\"min, te, wî, wê, me, we, wan\" gibi zamirlere ne denir?",
     "answersTr": [
       "ergatîf",
@@ -13616,7 +13616,7 @@
     "type": "multipleChoice",
     "difficulty": 2,
     "explanationKu": "\"lêkera gerguhêz\" tê vê wateyê: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
-    "explanationTr": "\"lêkera gerguhêz\" şu anlama gelir: anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller.",
+    "explanationTr": "Geçişli fiiller nesne alabilir: \"xwarin\" (yemek) ile neyin yendiği söylenebilir (\"Ez nan dixwim\"); \"hatin\" (gelmek) ise geçişsizdir ve nesne almaz.",
     "promptTr": "Anlamını tamamlamak için nesneye ihtiyaç duyan fiillere ne denir?",
     "answersTr": [
       "ergatîf",
@@ -13641,7 +13641,7 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"rênivîsa Hawarê\" tê vê wateyê: pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin.",
-    "explanationTr": "\"rênivîsa Hawarê\" şu anlama gelir: Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi.",
+    "explanationTr": "Hawar yazımı, Celadet Alî Bedirxan'ın 1932'de Hawar dergisiyle yaydığı 31 harfli Latin Kurmancî alfabesidir; bugün yaygın biçimde kullanılan yazımdır.",
     "promptTr": "Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi nedir?",
     "answersTr": [
       "lêkera gerguhêz",
@@ -13666,7 +13666,7 @@
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"cînavkên kesane\" tê vê wateyê: cînavkên wekî \"ez, tu, ew, em, hûn, ew\" ên ku bo kesan tên bikaranîn.",
-    "explanationTr": "\"cînavkên kesane\" şu anlama gelir: kişiler için kullanılan \"ez, tu, ew, em, hûn, ew\" gibi göstericiler.",
+    "explanationTr": "Kişi zamirleri (ez, tu, ew, em, hûn, ew) bükümsüz yalın hâldir; şimdiki zamanda özne olarak kullanılır: \"Ez diçim\" (Gidiyorum).",
     "promptTr": "\"ez, tu, ew, em, hûn, ew\" gibi zamirlere ne denir?",
     "answersTr": [
       "lêkera gerguhêz",
@@ -13694,7 +13694,7 @@
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"dema borî ya dûr\" tê vê wateyê: avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide.",
-    "explanationTr": "\"dema borî ya dûr\" şu anlama gelir: çok uzak bir geçmişte olan eylemi gösteren fiil yapısı.",
+    "explanationTr": "Uzak geçmiş (dema borî ya dûr), geçmişteki bir eylemden önce tamamlanmış eylemi anlatır: \"Ez hatibûm\" (Gelmiştim), \"Min xwaribû\" (Yemiştim).",
     "promptTr": "Bir eylemin başka bir geçmiş eylemden önce bittiğini gösteren fiil yapısı nedir?",
     "answersTr": [
       "lêkera gerguhêz",
@@ -13719,7 +13719,7 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"paşgirên tewandinê\" tê vê wateyê: hêmanên wekî \"-î, -ê, -an\" ku di tewandina navdêran de cih digirin.",
-    "explanationTr": "\"paşgirên tewandinê\" şu anlama gelir: adların bükümünde yer alan \"-î, -ê, -an\" gibi ekler.",
+    "explanationTr": "Büküm ekleri adın cümledeki görevine göre eklenir: eril tekilde \"-î\" (mêrî), dişil tekilde \"-ê\" (jinê), çoğulda \"-an\" (zarokan).",
     "promptTr": "Adların bükümünde yer alan -î, -ê, -an gibi ekler nedir?",
     "answersTr": [
       "dema borî ya dûr",
@@ -13747,13 +13747,13 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Melayê Cizîrî\" tê vê wateyê: helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin.",
-    "explanationTr": "\"Melayê Cizîrî\" şu anlama gelir: felsefî ve tasavvufî divanıyla tanınan büyük klasik şair.",
+    "explanationTr": "Melayê Cizîrî (16.–17. yy), divanında tasavvufi aşkı ve felsefi düşünceyi işleyen klasik Kurmancî şairidir; Cizre'de yaşamıştır.",
     "promptTr": "Felsefî ve tasavvufî divanıyla tanınan büyük klasik şair kimdi?",
     "answersTr": [
       "Ehmedê Xanî",
-      "Hawar dergisi",
+      "Feqiyê Teyran",
       "Melayê Cizîrî",
-      "Helbesta Azad"
+      "Cegerxwîn"
     ],
     "correctAnswerTr": "Melayê Cizîrî"
   },
@@ -13772,10 +13772,10 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Feqiyê Teyran\" tê vê wateyê: helbestvanê klasîk ê ku bi berhema \"Şêx Sen\"an' û axaftina bi çûkan re navdar e.",
-    "explanationTr": "\"Feqiyê Teyran\" şu anlama gelir: \"Şêx Sen'an\" eseri ve kuşlarla konuşmasıyla tanınan klasik şair.",
-    "promptTr": "\"Şêx Sen'an\" eseri ve kuşlarla konuşmasıyla tanınan klasik şair kimdi?",
+    "explanationTr": "Feqiyê Teyran, \"teyr\" (kuş) sözcüğünden gelen adını kuşlarla konuştuğu söylencesinden alır; Şêx Sen'an manzum hikâyesiyle tanınır.",
+    "promptTr": "\"Şêx Sen'an\" eseriyle ve kuşlarla konuştuğuna ilişkin söylenceyle tanınan klasik şair kimdi?",
     "answersTr": [
-      "şevbêrkên wêjeyî",
+      "Melayê Cizîrî",
       "Arabê Şamo",
       "Cegerxwîn",
       "Feqiyê Teyran"
@@ -13801,11 +13801,11 @@
     "promptTr": "Ehmedê Xanî kimdi?",
     "answersTr": [
       "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair",
-      "Kürtlük düşüncesinin temelini atan ölümsüz \"Mem û Zîn\" destanının yazarı",
-      "1932'de Şam'da Bedirhanlar eliyle çıkan edebî ve kültürel dergi",
+      "Mem û Zîn mesnevisini kaleme alan klasik Kürt şairi",
+      "Felsefi ve tasavvufi divanıyla tanınan Cizreli klasik şair",
       "ilk Kürtçe roman kabul edilen \"Şivanê Kurd\" romanının yazarı"
     ],
-    "correctAnswerTr": "Kürtlük düşüncesinin temelini atan ölümsüz \"Mem û Zîn\" destanının yazarı"
+    "correctAnswerTr": "Mem û Zîn mesnevisini kaleme alan klasik Kürt şairi"
   },
   {
     "id": "offline_curated_20326",
@@ -13822,7 +13822,7 @@
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"Melayê Bateyî\" tê vê wateyê: helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye.",
-    "explanationTr": "\"Melayê Bateyî\" şu anlama gelir: ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair.",
+    "explanationTr": "Melayê Bateyî, Kurmancî yazdığı Mewlûda Kurdî ile tanınır; bu mevlit bugün de dinî toplantılarda okunur. Yaşadığı dönem konusunda farklı görüşler vardır.",
     "promptTr": "İlk Kürt Mevlidini Kurmancî lehçesinde yazan şair kimdi?",
     "answersTr": [
       "Ehmedê Xanî",
@@ -13872,7 +13872,7 @@
     "type": "multipleChoice",
     "difficulty": 1,
     "explanationKu": "\"Cegerxwîn\" tê vê wateyê: helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû.",
-    "explanationTr": "\"Cegerxwîn\" şu anlama gelir: modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair.",
+    "explanationTr": "Cegerxwîn, klasik biçimleri kullanmakla birlikte şiirin konusunu tasavvuftan halkın yoksulluğuna, haklarına ve özgürlüğüne çevirdi.",
     "promptTr": "Cegerxwîn Kürt şiirinde neyle tanınır?",
     "answersTr": [
       "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair",
@@ -13922,13 +13922,13 @@
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"Mehmed Uzun\" tê vê wateyê: romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir.",
-    "explanationTr": "\"Mehmed Uzun\" şu anlama gelir: derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı.",
-    "promptTr": "Derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı kimdi?",
+    "explanationTr": "Mehmed Uzun (1953–2007), Siya Evînê ve Bîra Qederê gibi romanlarıyla Kurmancî romanı edebî dil ve derinlik açısından yeni bir düzeye taşıdı.",
+    "promptTr": "Siya Evînê ve Bîra Qederê romanlarının yazarı kimdir?",
     "answersTr": [
       "Mehmed Uzun",
       "Ehmedê Xanî",
-      "Helbesta Azad",
-      "Hawar dergisi"
+      "Arabê Şamo",
+      "Cegerxwîn"
     ],
     "correctAnswerTr": "Mehmed Uzun"
   },
@@ -13947,15 +13947,15 @@
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"şevbêrkên wêjeyî\" tê vê wateyê: civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin.",
-    "explanationTr": "\"şevbêrkên wêjeyî\" şu anlama gelir: klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları.",
+    "explanationTr": "Edebî şevbêrkler, kış gecelerinde toplanılıp klasik ve modern şiirlerin, hikâyelerin okunduğu sohbet toplantılarıdır; sözlü edebiyatın aktarıldığı yerlerdir.",
     "promptTr": "Klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları neydi?",
     "answersTr": [
-      "Melayê Cizîrî",
-      "Hawar dergisi",
-      "Ehmedê Xanî",
-      "şevbêrkên wêjeyî"
+      "düğün öncesi kına geceleri",
+      "imece (zîbar) toplantıları",
+      "dinî zikir meclisleri",
+      "edebî şevbêrkler"
     ],
-    "correctAnswerTr": "şevbêrkên wêjeyî"
+    "correctAnswerTr": "edebî şevbêrkler"
   },
   {
     "id": "offline_curated_20476",
@@ -13972,8 +13972,8 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Helbesta Azad\" tê vê wateyê: rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide.",
-    "explanationTr": "\"Helbesta Azad\" şu anlama gelir: ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi.",
-    "promptTr": "Ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi nedir?",
+    "explanationTr": "Serbest şiir (Helbesta Azad) ölçü ve kafiye zorunluluğunu kaldırır; kafiye kullanılabilir ama şart değildir, anlam ve etki sözcük seçimiyle kurulur.",
+    "promptTr": "Belirli bir ölçü ve kafiye düzenine bağlı kalmadan yazılan şiir biçimi nedir?",
     "answersTr": [
       "Hawar dergisi",
       "Helbesta Azad",
@@ -13997,15 +13997,15 @@
     "type": "multipleChoice",
     "difficulty": 2,
     "explanationKu": "\"Împaratoriya Medî\" tê vê wateyê: hêza mezin a kevnar a li Zagrosê ku di hin vegotinên kurdî de bi kalan ve girêdayî ye.",
-    "explanationTr": "\"Împaratoriya Medî\" şu anlama gelir: bazı Kürt tarih anlatılarında atalara bağlanan, Zagros dağlarındaki antik güç.",
+    "explanationTr": "Medler, MÖ 7.–6. yüzyılda Zagros merkezli bir imparatorluk kurdu; bazı Kürt tarih anlatıları Kürtlerin kökenini Medlere bağlar.",
     "promptTr": "Bazı Kürt tarih anlatılarında atalara bağlanan, Zagros'taki antik güç neydi?",
     "answersTr": [
-      "Mîrê Kor",
-      "Şerefname",
-      "Împaratoriya Medî",
-      "Mîrgeha Erdelanê"
+      "Hitit İmparatorluğu",
+      "Urartu Krallığı",
+      "Med İmparatorluğu",
+      "Erdelan Beyliği"
     ],
-    "correctAnswerTr": "Împaratoriya Medî"
+    "correctAnswerTr": "Med İmparatorluğu"
   },
   {
     "id": "offline_curated_20504",
@@ -14047,15 +14047,15 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Dewleta Merwaniyan\" tê vê wateyê: xanedaniya kurdî ya serdema navîn ku navenda wê Amed û derdorên wê bûn.",
-    "explanationTr": "\"Dewleta Merwaniyan\" şu anlama gelir: merkezi Amed ve çevresi olan ortaçağ Kürt hanedanı.",
-    "promptTr": "Merkezi Amed ve çevresi olan ortaçağ Kürt hanedanı hangisidir?",
+    "explanationTr": "Mervanîler, 10. yüzyılın sonundan 1085'e kadar Amed ve Farqîn (Silvan) çevresinde hüküm süren ortaçağ Kürt hanedanıdır.",
+    "promptTr": "Merkezi Farqîn (Silvan) olan, Amed ve çevresinde de hüküm süren ortaçağ Kürt hanedanı hangisidir?",
     "answersTr": [
-      "Dewleta Merwaniyan",
-      "Şerefname",
-      "Mîrgeha Erdelanê",
-      "Mîrgeha Botan"
+      "Mervaniler Devleti",
+      "Hasanveyhîler Devleti",
+      "Erdelan Beyliği",
+      "Botan Beyliği"
     ],
-    "correctAnswerTr": "Dewleta Merwaniyan"
+    "correctAnswerTr": "Mervaniler Devleti"
   },
   {
     "id": "offline_curated_20551",
@@ -14125,12 +14125,12 @@
     "explanationTr": "\"Kovara Jîn\" şu anlama gelir: 20. yüzyıl başında ulusal haklar üzerine yazan tarihî Kürt yayını.",
     "promptTr": "20. yüzyıl başında ulusal haklar üzerine yazan tarihî Kürt yayını hangisidir?",
     "answersTr": [
-      "Kovara Jîn",
-      "Rojnameya Kurdistan",
-      "Lozan Antlaşması",
+      "Jîn dergisi",
+      "Azadiya Welat gazetesi",
+      "Ronahî dergisi",
       "Şerefname"
     ],
-    "correctAnswerTr": "Kovara Jîn"
+    "correctAnswerTr": "Jîn dergisi"
   },
   {
     "id": "offline_curated_20625",
@@ -14147,7 +14147,7 @@
     "type": "multipleChoice",
     "difficulty": 1,
     "explanationKu": "\"Selaheddînê Eyûbî\" tê vê wateyê: serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir.",
-    "explanationTr": "\"Selaheddînê Eyûbî\" şu anlama gelir: Kudüs'ü Haçlılardan geri alan ve Eyyubi hanedanını kuran büyük Kürt önder.",
+    "explanationTr": "Kürt kökenli Selahaddin Eyyubi, 1171'de Eyyubi yönetiminin temelini attı; 1187'de Hıttin zaferinin ardından Kudüs'ü Haçlılardan aldı.",
     "promptTr": "\"Selaheddînê Eyûbî\" kimdi?",
     "answersTr": [
       "Kudüs'ü Haçlılardan kurtaran ve Eyyubi hanedanını kuran büyük Kürt önder",
@@ -14218,10 +14218,10 @@
       "rojnameya kurdî ya yekem a ku di 1898an de li Qahîreyê derket"
     ],
     "correctAnswer": "rojnameya kurdî ya yekem a ku di 1898an de li Qahîreyê derket",
-    "explanation": "\"Rojnameya Kurdistan\": 1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürtçe gazete.",
+    "explanation": "Kurdistan gazetesi 22 Nisan 1898'de Kahire'de Mikdat Mithat Bedirxan tarafından yayımlandı; ilk Kürtçe gazete olduğu için bu tarih Kürt basın günü sayılır.",
     "type": "multipleChoice",
     "difficulty": 3,
-    "explanationTr": "\"Rojnameya Kurdistan\": 1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürtçe gazete.",
+    "explanationTr": "Kurdistan gazetesi 22 Nisan 1898'de Kahire'de Mikdat Mithat Bedirxan tarafından yayımlandı; ilk Kürtçe gazete olduğu için bu tarih Kürt basın günü sayılır.",
     "explanationKu": "\"Rojnameya Kurdistan\": rojnameya kurdî ya yekem ku di 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve derket.",
     "promptTr": "Kürt basın tarihinde \"Rojnameya Kurdistan\" nedir?",
     "answersTr": [
@@ -14247,15 +14247,15 @@
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"Mîrgeha Erdelanê\" tê vê wateyê: mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû.",
-    "explanationTr": "\"Mîrgeha Erdelanê\" şu anlama gelir: merkezi Sine olan, doğudaki kadim bir Kürt beyliği.",
+    "explanationTr": "Erdelan Beyliği'nin merkezi Sine (Senendec) idi; Doğu Kürdistan'da yüzyıllarca süren bir beylikti ve Mestûre Erdelan bu beyliğin tarihini yazdı.",
     "promptTr": "Merkezi Sine olan, doğudaki kadim Kürt beyliği hangisidir?",
     "answersTr": [
-      "Selaheddînê Eyûbî",
-      "Împaratoriya Medî",
-      "Mîrgeha Erdelanê",
-      "Dewleta Merwaniyan"
+      "Baban Beyliği",
+      "Med İmparatorluğu",
+      "Erdelan Beyliği",
+      "Mervaniler Devleti"
     ],
-    "correctAnswerTr": "Mîrgeha Erdelanê"
+    "correctAnswerTr": "Erdelan Beyliği"
   },
   {
     "id": "offline_curated_20726",
@@ -14297,7 +14297,7 @@
     "type": "visual",
     "difficulty": 1,
     "explanationKu": "\"çiyayên Zagrosê\" tê vê wateyê: rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin.",
-    "explanationTr": "\"çiyayên Zagrosê\" şu anlama gelir: Kürtlerin ülkesinin doğal sınırını oluşturan büyük ve sarp sıradağlar.",
+    "explanationTr": "Zagros Dağları kuzeybatı–güneydoğu doğrultusunda uzanan sarp bir sıradağdır; Kürt coğrafyasının doğal sınırlarından ve omurgasından biridir.",
     "imageUrl": "asset://assets/question_images/ciyayen_zagros.webp",
     "imageAltKu": "Wêneyê satelîtê: rêzikên zinarî yên asê û mezin li ser hev, cih bi cih berf, di navîn de goleke biçûk û tarî.",
     "imageAltTr": "Uydu görüntüsü: üst üste dizilmiş sarp ve devasa kayalık sıralar, yer yer kar, ortasında küçük koyu bir göl.",
@@ -14381,15 +14381,15 @@
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"Çiyayê Cûdî\" tê vê wateyê: çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye.",
-    "explanationTr": "\"Çiyayê Cûdî\" şu anlama gelir: inanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ.",
+    "explanationTr": "Cudi Dağı Şırnak'tadır; İslami gelenekte ve bazı eski kaynaklarda Nuh'un gemisinin oturduğu yer olarak anılır.",
     "promptTr": "İnanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ hangisidir?",
     "answersTr": [
       "Qerejdax",
-      "Heskîf",
-      "Çemê Firatê",
-      "Çiyayê Cûdî"
+      "Süphan Dağı",
+      "Nemrut Dağı",
+      "Cudi Dağı"
     ],
-    "correctAnswerTr": "Çiyayê Cûdî"
+    "correctAnswerTr": "Cudi Dağı"
   },
   {
     "id": "offline_curated_20851",
@@ -14406,15 +14406,15 @@
     "type": "multipleChoice",
     "difficulty": 1,
     "explanationKu": "\"Girê Mirazan\" tê vê wateyê: şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye.",
-    "explanationTr": "\"Girê Mirazan\" şu anlama gelir: Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri.",
-    "promptTr": "Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri hangisidir?",
+    "explanationTr": "Göbeklitepe (Girê Mirazan), Urfa yakınında yaklaşık 11.600 yıl öncesine uzanan anıtsal yapılarıyla bilinen Neolitik bir alandır; yapılar törensel işlevlerle ilişkilendirilir ve bilinen en eski tapınak yapılarından sayılır.",
+    "promptTr": "Urfa yakınında, yaklaşık 11.600 yıllık anıtsal yapılarıyla bilinen Neolitik alan hangisidir?",
     "answersTr": [
-      "Çiyayê Sîpanê",
-      "Newala Dîcleyê",
-      "Girê Mirazan",
-      "Çemê Firatê"
+      "Çayönü",
+      "Çatalhöyük",
+      "Göbeklitepe (Girê Mirazan)",
+      "Hattuşa"
     ],
-    "correctAnswerTr": "Girê Mirazan"
+    "correctAnswerTr": "Göbeklitepe (Girê Mirazan)"
   },
   {
     "id": "offline_curated_20879",
@@ -14459,18 +14459,18 @@
     "type": "visual",
     "difficulty": 3,
     "explanationKu": "\"Çiyayê Sîpanê\" tê vê wateyê: çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê.",
-    "explanationTr": "\"Çiyayê Sîpanê\" şu anlama gelir: Van Gölü'nün kuzeyindeki yüksek ve karlı volkanik dağ.",
+    "explanationTr": "Süphan Dağı (Çiyayê Sîpanê), Van Gölü'nün kuzey kıyısında yükselen sönmüş bir volkandır; Türkiye'nin en yüksek dağlarındandır.",
     "imageUrl": "asset://assets/question_images/gola_wane.webp",
     "imageAltKu": "Goleke fireh û aram a şîn-kesk heta asoyê dirêj dibe; li pêş giyayê zer û kevirên biçûk hene.",
     "imageAltTr": "Sakin, mavi-yeşil geniş bir göl ufka kadar uzanıyor; önde sarı otlar ve küçük taşlar görünüyor.",
     "promptTr": "Van Gölü'nün kuzeyindeki yüksek ve karlı volkanik dağ hangisidir?",
     "answersTr": [
-      "Çiyayê Sîpanê",
-      "çiyayên Zagrosê",
-      "Geliyê Zapê",
-      "Newala Dîcleyê"
+      "Süphan Dağı",
+      "Zagros Dağları",
+      "Nemrut Dağı",
+      "Erciyes Dağı"
     ],
-    "correctAnswerTr": "Çiyayê Sîpanê"
+    "correctAnswerTr": "Süphan Dağı"
   },
   {
     "id": "offline_curated_20926",
@@ -14487,18 +14487,18 @@
     "type": "visual",
     "difficulty": 4,
     "explanationKu": "\"Geliyê Zapê\" tê vê wateyê: geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve.",
-    "explanationTr": "\"Geliyê Zapê\" şu anlama gelir: coşkun Zap suyunun güneye doğru aktığı derin ve dar vadi.",
+    "explanationTr": "Zap Vadisi (Geliyê Zapê), Hakkari dağlarından güneye akan Büyük Zap'ın açtığı derin ve dar vadidir; Zap sonunda Dicle'ye karışır.",
     "imageUrl": "asset://assets/question_images/ava_zape.webp",
     "imageAltKu": "Geliyekî teng û kûr ê bi zinarên kesk; di binî re aveke zelal diherike, ronahiya rojê li ser darekê ye.",
     "imageAltTr": "Dar ve derin, yeşil kayalıklarla çevrili bir vadi; dipte berrak bir su akıyor, güneş ışığı bir ağaca vuruyor.",
     "promptTr": "Suyu coşkun biçimde güneye, Dicle'ye doğru akan derin ve dar vadi hangisidir?",
     "answersTr": [
-      "Girê Mirazan",
-      "Geliyê Zapê",
-      "Newala Dîcleyê",
-      "Gola Wanê"
+      "Aras Vadisi",
+      "Zap Vadisi",
+      "Dicle Vadisi",
+      "Murat Vadisi"
     ],
-    "correctAnswerTr": "Geliyê Zapê"
+    "correctAnswerTr": "Zap Vadisi"
   },
   {
     "id": "offline_curated_20929",
@@ -14543,16 +14543,16 @@
     "type": "visual",
     "difficulty": 5,
     "explanationKu": "\"Heskîf\" tê vê wateyê: bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye.",
-    "explanationTr": "\"Heskîf\" şu anlama gelir: Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî kent.",
+    "explanationTr": "Heskîf (Hasankeyf), Dicle kıyısında kayalara oyulmuş binlerce mağara konutuyla bilinir; eski kentin büyük bölümü Ilısu Barajı suları altında kaldı.",
     "imageUrl": "asset://assets/question_images/heskif.webp",
     "imageAltKu": "Ji dûr ve goleke mezin a bendavê; li perava din xirbeyên kevirî yên nêzî avê, li paş çiya di mijê de ne.",
     "imageAltTr": "Uzaktan büyük bir baraj gölü; karşı kıyıda suya yakın taş yapı kalıntıları, arkada puslu dağlar var.",
     "promptTr": "Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî kent hangisidir?",
     "answersTr": [
-      "Çemê Firatê",
-      "Qerejdax",
+      "Mardin",
+      "Ahlat",
       "Heskîf",
-      "Newala Dîcleyê"
+      "Bitlis"
     ],
     "correctAnswerTr": "Heskîf"
   },
@@ -14599,13 +14599,13 @@
     "type": "multipleChoice",
     "difficulty": 1,
     "explanationKu": "\"Qerejdax\" tê vê wateyê: çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya Rihayê vediqetîne.",
-    "explanationTr": "\"Qerejdax\" şu anlama gelir: Amed ovasını Riha ovasından ayıran bazaltik volkanik dağ.",
+    "explanationTr": "Karacadağ (Qerejdax), Diyarbakır ile Urfa ovaları arasında uzanan geniş bir kalkan volkanıdır; bazalt lavları iki ovayı birbirinden ayırır.",
     "promptTr": "Amed ovasını Riha ovasından ayıran bazaltik volkanik dağ hangisidir?",
     "answersTr": [
-      "çiyayên Zagrosê",
+      "Zagros Dağları",
       "Qerejdax",
-      "Girê Mirazan",
-      "Geliyê Zapê"
+      "Süphan Dağı",
+      "Nemrut Dağı"
     ],
     "correctAnswerTr": "Qerejdax"
   },
@@ -14624,7 +14624,7 @@
     "type": "multipleChoice",
     "difficulty": 2,
     "explanationKu": "\"Sazîbûna Dengbêjiyê\" tê vê wateyê: kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin.",
-    "explanationTr": "\"Sazîbûna Dengbêjiyê\" şu anlama gelir: dengbêjlerin stran ve kilamlarıyla yürüyen, dili ve tarihi koruyan kale.",
+    "explanationTr": "Dengbêjlik, yazının yaygın olmadığı dönemlerde tarihi, savaşları ve aşkları kilamlarla kuşaktan kuşağa aktararak dili ve hafızayı korudu.",
     "promptTr": "Dengbêjlerin stran ve kilamlarıyla yürütülen, dili ve tarihi koruyan kale hangisidir?",
     "answersTr": [
       "şevbêrk",
@@ -14705,7 +14705,7 @@
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"Govenda Kurdî\" tê vê wateyê: dansa komî û gelêrî ya ku bi hevgirtina destan û ruhê hevkariyê tê gerandin.",
-    "explanationTr": "\"Govenda Kurdî\" şu anlama gelir: el ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı.",
+    "explanationTr": "Govend, katılanların el ele ya da omuz omuza tutuşup halka veya sıra hâlinde oynadığı toplu halk dansıdır.",
     "promptTr": "El ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı hangisidir?",
     "answersTr": [
       "Dengbêjlik Kurumu",
@@ -14730,7 +14730,7 @@
     "type": "multipleChoice",
     "difficulty": 1,
     "explanationKu": "\"çanda koçeriyê\" tê vê wateyê: şêwaza jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye.",
-    "explanationTr": "\"çanda koçeriyê\" şu anlama gelir: yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi.",
+    "explanationTr": "Göçerlikte sürüler yazın serin yaylalara (zozan), kışın ılık alçak yerlere (germiyan) götürülür; yaşam bu mevsimlik döngüye göre kurulur.",
     "promptTr": "Yayla ve germiyan arasındaki kadim yaşam biçimi hangisidir?",
     "answersTr": [
       "şevbêrk",
@@ -14808,7 +14808,7 @@
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"Destana Memê Alan\" tê vê wateyê: destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne.",
-    "explanationTr": "\"Destana Memê Alan\" şu anlama gelir: Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı.",
+    "explanationTr": "Ehmedê Xanî 1692'de yazdığı Mem û Zîn'de sözlü Memê Alan destanından yararlandı ve onu ulusal bir aşk mesnevisine dönüştürdü.",
     "promptTr": "Mem û Zîn'in temelini oluşturan ulusal destan hangisidir?",
     "answersTr": [
       "Newroz",
@@ -14833,7 +14833,7 @@
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"hewran\" tê vê wateyê: kincê hewrî yê dirêj ê ku li ser kincên din tê wergirtin.",
-    "explanationTr": "\"hewran\" şu anlama gelir: diğer giysilerin üstüne giyilen uzun üstlük/aba.",
+    "explanationTr": "Hewran, öteki giysilerin üstüne giyilen uzun dış giysidir; en üst kat olarak giyilir.",
     "promptTr": "\"hewran\" terimi hangi açıklamayla daha iyi anlaşılır?",
     "answersTr": [
       "yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi",
@@ -14858,7 +14858,7 @@
     "type": "multipleChoice",
     "difficulty": 1,
     "explanationKu": "\"şevbêrk\" tê vê wateyê: civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin.",
-    "explanationTr": "\"şevbêrk\" şu anlama gelir: halk masalları ve bilmecelerin anlatıldığı kış gecesi toplantıları.",
+    "explanationTr": "Şevbêrk, uzun kış gecelerinde bir evde toplanılıp masal, bilmece ve kilamlarla vakit geçirilen toplantıdır.",
     "promptTr": "Halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları hangisidir?",
     "answersTr": [
       "şevbêrk",
@@ -14883,7 +14883,7 @@
     "type": "multipleChoice",
     "difficulty": 2,
     "explanationKu": "\"tembûr\" tê vê wateyê: amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan.",
-    "explanationTr": "\"tembûr\" şu anlama gelir: özellikle dinî meclislerde çalınan, Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli çalgı.",
+    "explanationTr": "Tembûr uzun saplı telli bir sazdır; Yarsan (Ehl-i Hak) inancında kutsal sayılır ve cem törenlerinde çalınır.",
     "promptTr": "Hangi terim şu açıklamayla bilinir: \"özellikle dinî meclislerde çalınan, Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli çalgı\"?",
     "answersTr": [
       "tembûr",
@@ -14908,7 +14908,7 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"erbane\" tê vê wateyê: amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e.",
-    "explanationTr": "\"erbane\" şu anlama gelir: Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı.",
+    "explanationTr": "Erbane, kasnağına zil ya da halka takılan büyük bir teftir; tekke ve dinî meclislerde zikre ve halk müziğinde ritme eşlik eder.",
     "promptTr": "Dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı hangisidir?",
     "answersTr": [
       "bilûr",
@@ -14933,7 +14933,7 @@
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"bilûr\" tê vê wateyê: amûra bayê ya şivanan ku bi dengê xwe yê xemgîn û lîrîk tê naskirin.",
-    "explanationTr": "\"bilûr\" şu anlama gelir: hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı.",
+    "explanationTr": "Bilûr, çobanların taşıdığı ağızdan üflemeli kaval türü çalgıdır; yumuşak ve hüzünlü sesiyle tanınır.",
     "promptTr": "Hüzünlü sesiyle bilinen çoban üflemeli çalgısı hangisidir?",
     "answersTr": [
       "lîrîka klaman",
@@ -14958,7 +14958,7 @@
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"lîrîka klaman\" tê vê wateyê: avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin.",
-    "explanationTr": "\"lîrîka klaman\" şu anlama gelir: aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı.",
+    "explanationTr": "Dengbêj kilamları aşk ve savaş hikâyelerini şiirsel bir dille, tekrarlarla ve uzun ezgili söyleyişle anlatır.",
     "promptTr": "Aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı hangisidir?",
     "answersTr": [
       "ninni",
@@ -14983,7 +14983,7 @@
     "type": "multipleChoice",
     "difficulty": 1,
     "explanationKu": "\"Şakiro\" tê vê wateyê: dengbêjê mezin ê ku wekî \"Şahê Dengbêjan\" tê naskirin û xwedî dengekî bêhempa bû.",
-    "explanationTr": "\"Şakiro\" şu anlama gelir: \"Dengbêjlerin Şahı\" diye bilinen, eşsiz sese sahip büyük dengbêj.",
+    "explanationTr": "Şakiro (1936–1996), güçlü sesi ve geniş kilam dağarcığıyla dengbêjler arasında \"dengbêjlerin şahı\" diye anılır.",
     "promptTr": "\"Dengbêjlerin Şahı\" diye bilinen, eşsiz sesli büyük dengbêj kimdi?",
     "answersTr": [
       "Şakiro",
@@ -15008,7 +15008,7 @@
     "type": "multipleChoice",
     "difficulty": 2,
     "explanationKu": "\"Hesen Cizrawî\" tê vê wateyê: yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine.",
-    "explanationTr": "\"Hasan Cizrawî\" şu anlama gelir: Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri.",
+    "explanationTr": "Hesen Cizrawî, Bağdat Radyosu'nun Kürtçe yayınlarında söylediği Botan kilamlarıyla tanınan Cizreli bir dengbêjdir.",
     "promptTr": "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri kimdi?",
     "answersTr": [
       "Meryem Xan",
@@ -15033,7 +15033,7 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"Meryem Xan\" tê vê wateyê: stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye.",
-    "explanationTr": "\"Meryem Xan\" şu anlama gelir: sesini plağa kaydeden ilk Kürt kadın şarkıcı.",
+    "explanationTr": "Meryem Xan (1904–1949), 1920'lerde ve 1930'larda plak dolduran ilk Kürt kadın şarkıcılardandır.",
     "promptTr": "Sesini plağa kaydeden ilk Kürt kadın şarkıcı kimdi?",
     "answersTr": [
       "Şakiro",
@@ -15083,7 +15083,7 @@
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"lawik\" tê vê wateyê: şêwaza kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye.",
-    "explanationTr": "\"lawik\" şu anlama gelir: çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı.",
+    "explanationTr": "Lawik, dengbêjlik geleneğinde çoğunlukla aşkı, hasreti ve ayrılığı işleyen lirik kilam türüdür.",
     "promptTr": "Çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı hangisidir?",
     "answersTr": [
       "bilûr",
@@ -15108,7 +15108,7 @@
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"heyran\" tê vê wateyê: klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin.",
-    "explanationTr": "\"heyran\" şu anlama gelir: özellikle kadınların söylediği Serhat yöresi aşk kilamları.",
+    "explanationTr": "Heyranok (heyran), Serhed yöresinde çoğunlukla kadınların söylediği, sevdiğine seslenen aşk kilamlarıdır.",
     "promptTr": "Kürt müziğinde \"heyran\" adlı kilamların özelliği nedir?",
     "answersTr": [
       "özellikle dinî meclislerde çalınan, Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli çalgı",
@@ -15233,15 +15233,15 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"nenavendîbûn\" tê vê wateyê: parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve.",
-    "explanationTr": "\"ademi-merkeziyet\" şu anlama gelir: iktidarın merkezden bölgelere ve özerk yönetimlere dağıtılması.",
+    "explanationTr": "Ademi merkeziyette yetki merkezî yönetimde toplanmaz; bölgelere ve yerel yönetimlere dağıtılır.",
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: \"iktidarın merkezden bölgelere ve özerk yönetimlere dağıtılması\"?",
     "answersTr": [
-      "ademi-merkeziyet",
-      "xweseriya demokratîk",
+      "yerinden yönetim",
+      "merkezî yönetim",
       "radikal demokrasi",
-      "hevpeymaniya demokratîk"
+      "demokratik ittifak"
     ],
-    "correctAnswerTr": "ademi-merkeziyet"
+    "correctAnswerTr": "yerinden yönetim"
   },
   {
     "id": "offline_curated_21626",
@@ -15283,15 +15283,15 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "\"pirrengî\" tê vê wateyê: prensîba parastin û pejirandina hemû nasnameyên cuda yên di civakê de.",
-    "explanationTr": "\"pirrengî\" şu anlama gelir: toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi.",
+    "explanationTr": "Pirrengî (çoğulculuk), toplumdaki farklı kimliklerin bir arada var olmasını ve eşit biçimde tanınmasını savunan ilkedir.",
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: \"toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi\"?",
     "answersTr": [
-      "pirrengî",
-      "demokrasiya rasterast",
-      "parastina rewa",
-      "peymana civakî"
+      "çoğulculuk",
+      "doğrudan demokrasi",
+      "meşru müdafaa",
+      "toplumsal sözleşme"
     ],
-    "correctAnswerTr": "pirrengî"
+    "correctAnswerTr": "çoğulculuk"
   },
   {
     "id": "offline_curated_21676",
@@ -15308,15 +15308,15 @@
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"demokrasiya rasterast\" tê vê wateyê: şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide.",
-    "explanationTr": "\"demokrasiya rasterast\" şu anlama gelir: halkın temsilciler olmadan karar verdiği yönetim biçimi.",
+    "explanationTr": "Doğrudan demokraside halk kararları temsilci seçmeden kendisi alır; meclislerde ya da halk oylamalarında doğrudan oy kullanır.",
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: \"halkın temsilciler olmadan karar verdiği yönetim biçimi\"?",
     "answersTr": [
-      "xweseriya demokratîk",
-      "komûn û meclîs",
-      "pirrengî",
-      "demokrasiya rasterast"
+      "demokratik özerklik",
+      "temsilî demokrasi",
+      "çoğulculuk",
+      "doğrudan demokrasi"
     ],
-    "correctAnswerTr": "demokrasiya rasterast"
+    "correctAnswerTr": "doğrudan demokrasi"
   },
   {
     "id": "offline_curated_21701",
@@ -19089,10 +19089,10 @@
     "correctAnswer": "Şaş",
     "explanation": "Na — ev ravekirina \"muxalefeta civakî\" ye; \"muxalefeta demokratîk\" rexnekirina desthilatê ye di nav sînorên hiqûqî de bêyî çekan.",
     "explanationKu": "Na — ev ravekirina \"muxalefeta civakî\" ye; \"muxalefeta demokratîk\" rexnekirina desthilatê ye di nav sînorên hiqûqî de bêyî çekan.",
-    "explanationTr": "Hayır — bu tanım \"muxalefeta civakî\" kavramına ait; \"muxalefeta demokratîk\", iktidarı silaha başvurmadan, hukuk içinde eleştirmedir.",
+    "explanationTr": "Yanlış. Demokratik muhalefeti yalnız partiler değil; sivil toplum kuruluşları, sendikalar ve toplumsal hareketler de barışçıl ve hukuki yollarla yürütebilir.",
     "type": "trueFalse",
     "difficulty": 4,
-    "promptTr": "\"muxalefeta demokratîk\", partilerin değil toplumsal kesimlerin gösterdiği hoşnutsuzluktur. Bu doğru mu yanlış mı?",
+    "promptTr": "\"muxalefeta demokratîk\" yalnızca siyasi partiler tarafından yürütülebilir. Bu doğru mu yanlış mı?",
     "answersTr": [
       "Doğru",
       "Yanlış"
@@ -19299,7 +19299,7 @@
     "correctAnswer": "Rast",
     "explanation": "Erê. Ji heman qadê têgeheke din: \"dadgehkirina dadperwer\" tê vê wateyê: mafê her kesî yê darizandina eşkere, bêalî û di demeke maqûl de.",
     "explanationKu": "Erê. Ji heman qadê têgeheke din: \"dadgehkirina dadperwer\" tê vê wateyê: mafê her kesî yê darizandina eşkere, bêalî û di demeke maqûl de.",
-    "explanationTr": "Evet. Aynı alandan bir başka kavram: \"dadgehkirina dadperwer\" şu anlama gelir: herkesin açık, tarafsız ve makul sürede yargılanma hakkı.",
+    "explanationTr": "Doğru. Cinsiyet kotası (kotaya zayendî), kurumlarda ve seçilmiş organlarda kadınların belirli bir orandan az temsil edilmemesi için asgari bir pay belirlenmesidir.",
     "type": "trueFalse",
     "difficulty": 3,
     "promptTr": "Bu açıklama \"kotaya zayendî\" için doğru mu yanlış mı: kurumlarda kadın temsili için asgari bir oran belirlenmesi?",
@@ -25254,9 +25254,9 @@
     "explanationKu": "Bi vê rêbazê av li ber koka nebatê tê rijandin; av li ser axê belav nabe û kêmtir winda dibe.",
     "promptTr": "Damlama sulama neden salma sulamadan daha az su harcar?",
     "answersTr": [
-      "Çünkü su borularda soğur ve azalır",
+      "Çünkü su toprağın derin katmanlarına doğrudan iletilir",
       "Çünkü su doğrudan köklere ulaşır",
-      "Çünkü damlalar salma sudan daha ağırdır",
+      "Çünkü borulardaki su toplanıp yeniden kullanılır",
       "Çünkü küçük tarlalar daha az su ister"
     ],
     "correctAnswerTr": "Çünkü su doğrudan köklere ulaşır"

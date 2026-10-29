@@ -248,6 +248,13 @@ void main() {
           'ds_ziman_1034': {'promptTr'},
           'ds_ziman_1036': {'promptTr'},
           'ds_ziman_1038': {'promptTr'},
+          // 2026-10-29 Opus 5.5 + GPT-6 Astra kapışması (U7): izolin tanımı,
+          // belirsiz kökler (iç göç, geri yayılım, forwarding) ve aynı türden
+          // şıklar. Doğru şıkkın konumu ve iki dildeki hizası korunur.
+          'ds_cografya_0199': {'explanation', 'explanationTr'},
+          'ds_cografya_0205': {'explanation', 'explanationTr', 'promptTr'},
+          'ds_teknoloji_0136': {'promptTr', 'answersTr'},
+          'ds_teknoloji_0328': {'promptTr', 'answersTr', 'correctAnswerTr'},
         };
         for (final c in copies) {
           final o = original[c['id']];

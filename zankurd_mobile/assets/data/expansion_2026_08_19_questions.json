@@ -46,9 +46,9 @@
     ],
     "answersTr": [
       "Hazar tektonik kökenlidir, Nemrut ise volkanik kaldera gölüdür",
-      "Hazar buzul gölüdür, Nemrut ise karstik bir çöküntü gölüdür",
-      "Hazar akarsu set gölüdür, Nemrut derin bir tektonik göldür",
-      "Hazar yapay bir barajdır, Nemrut doğal bir alüvyal göldür"
+      "Hazar volkanik set gölüdür, Nemrut ise tektonik çöküntü gölüdür",
+      "Hazar karstik çözünme gölüdür, Nemrut ise volkanik set gölüdür",
+      "Hazar heyelan set gölüdür, Nemrut ise buzul aşındırma gölüdür"
     ],
     "correctAnswer": "Hêzar gola tektonîk e, Nemrûd gola kalderayê ya volkanîk e",
     "correctAnswerTr": "Hazar tektonik kökenlidir, Nemrut ise volkanik kaldera gölüdür",
@@ -78,9 +78,9 @@
       "Herka Nemrûdê pêşiya newala Mûşê girtiye û hewzeya wê girtî maye"
     ],
     "answersTr": [
-      "Bölgedeki yağış miktarının çevre havzalardan çok daha yüksek olması",
-      "Dicle Nehri'nin tüm akışını doğrudan bu havzaya yönlendirmiş olması",
-      "Zagros fayının deniz suyunu doğrudan göl tabanına sızdırması",
+      "Bitlis Çayı alüvyonlarının göl çıkışını zamanla tamamen tıkaması",
+      "Süphan lavlarının havzanın dışa akışını keserek kapalı bir göl oluşturması",
+      "Murat Nehri'nin yatak değiştirip göle sodalı kaynak suları taşıması",
       "Nemrut lavlarının Muş vadisi çıkışını kapatması ve kapalı havza oluşması"
     ],
     "correctAnswer": "Herka Nemrûdê pêşiya newala Mûşê girtiye û hewzeya wê girtî maye",
@@ -177,9 +177,9 @@
       "Deryaya Qezwînê (Xezer)"
     ],
     "answersTr": [
-      "Urmiye Gölü tuzlu havzası",
-      "Akdeniz açık deniz havzası",
-      "Basra Körfezi okyanus kolu",
+      "Urmiye Gölü kapalı havzası",
+      "Aral Gölü kapalı havzası",
+      "Basra Körfezi deniz havzası",
       "Hazar Denizi kapalı havzası"
     ],
     "correctAnswer": "Deryaya Qezwînê (Xezer)",
@@ -210,10 +210,10 @@
       "Ji ber ku li ser xeta herikîna lavên germ ên nû bû"
     ],
     "answersTr": [
-      "Çeltik tarımı için gerekli en alçak bataklık taban olması",
+      "Alüvyal taban tarımı için taşkın ovasının tam ortasında bulunmak",
       "Kolay savunma sağlayan doğal topoğrafya ve su kaynağına hakimiyet",
-      "Bölgedeki tüm kervan ve ticaret yollarından tamamen yalıtılmak",
-      "Aktif lav akıntısı vadisinin tam merkezinde yer alması"
+      "Nehir taşımacılığına uygun geniş ve derin bir doğal limandan yararlanmak",
+      "Kış rüzgârlarından korunmak için vadinin en alçak noktasında olmak"
     ],
     "correctAnswer": "Ji bo parastina hêsan a leşkerî û nêzîkbûna çavkaniya avê",
     "correctAnswerTr": "Kolay savunma sağlayan doğal topoğrafya ve su kaynağına hakimiyet",
@@ -276,10 +276,10 @@
       "Ji bo hêsankirina sefera deryageran li okyanûsan"
     ],
     "answersTr": [
-      "Hava taşımacılığındaki en kısa rota çizgilerini göstermek",
+      "Denizcilerin sabit pusula rotalarını düz çizgiyle gösterebilmek",
       "Afrika ve Güney karalarının gerçek yüzölçümü oranlarını korumak",
-      "Avrupa ülkelerini Asya kıtasına oranla daha büyük çizmek",
-      "Okyanus denizcilerinin pusula yön hesaplarını basitleştirmek"
+      "Kutup bölgelerindeki şekil bozulmasını tamamen ortadan kaldırmak",
+      "Büyük daire uçuş rotalarını harita üzerinde düz çizgi yapmak"
     ],
     "correctAnswer": "Ji bo nîşandana rûberên rasteqîn ên parzemînên Afrîka û Başûr",
     "correctAnswerTr": "Afrika ve Güney karalarının gerçek yüzölçümü oranlarını korumak",
@@ -309,13 +309,13 @@
       "Arîtmetîk li gorî tevahiya rûberê ye, fîzyolojîk li gorî qada çandiniyê ye"
     ],
     "answersTr": [
-      "Aritmetik sadece kadın nüfusu, fizyolojik ise sanayi çalışanlarını kapsar",
-      "Aritmetik çöl bölgelerinde, fizyolojik ise kutup dairelerinde hesaplanır",
-      "Aritmetik gece ikametini, fizyolojik ise gündüz işgücü hareketini gösterir",
-      "Aritmetik toplam yüzölçüme, fizyolojik ise yalnızca tarım alanlarına bölünür"
+      "Aritmetik yalnızca kent nüfusunu, fizyolojik ise kırsal nüfusu hesaba katar",
+      "Aritmetik tarım alanına, fizyolojik ise toplam yüzölçümüne bölünerek bulunur",
+      "Aritmetik yerleşik alanlara, fizyolojik ise orman ve meralara bölünür",
+      "Aritmetik toplam yüzölçümüne, fizyolojik ise yalnızca tarım alanlarına bölünür"
     ],
     "correctAnswer": "Arîtmetîk li gorî tevahiya rûberê ye, fîzyolojîk li gorî qada çandiniyê ye",
-    "correctAnswerTr": "Aritmetik toplam yüzölçüme, fizyolojik ise yalnızca tarım alanlarına bölünür",
+    "correctAnswerTr": "Aritmetik toplam yüzölçümüne, fizyolojik ise yalnızca tarım alanlarına bölünür",
     "explanation": "Aritmetik yoğunluk toplam nüfusun toplam alana bölünmesidir; fizyolojik yoğunluk ise nüfusun yalnızca ekilebilir tarım arazilerine oranıdır.",
     "explanationTr": "Aritmetik yoğunluk toplam nüfusun toplam alana bölünmesidir; fizyolojik yoğunluk ise nüfusun yalnızca ekilebilir tarım arazilerine oranıdır.",
     "explanationKu": "Dendika arîtmetîk nifûsê li gorî hemû erdê dipîve, lê ya fîzyolojîk hejmara mirovan li gorî zeviyên çandiniyê dihesibîne.",
@@ -441,10 +441,10 @@
       "Kêmbûna radyasyona tavê di werzê havînê de"
     ],
     "answersTr": [
-      "Havzada akış gösteren büyük nehir sistemlerinin bulunmaması",
-      "Toprak yüzeyinin ısı tutmayan kireçli kumlarla kaplı olması",
+      "Bölgenin büyük bölümünün deniz seviyesinin altındaki çukurlarda kalması",
+      "Kıyı dağlarının alçak geçitlerle parçalanıp denizel etkiye açık olması",
       "Kıyıya paralel yüksek sıradağların denizel hava kütlelerini engellemesi",
-      "Yaz aylarında güneşlenme süresi ve radyasyonunun yetersiz kalması"
+      "Dağ yamaçlarında yükselen havanın iç kesimlere sürekli nem taşıması"
     ],
     "correctAnswer": "Rêzeçiyayên bilind rê li ber hilma deryayê digirin",
     "correctAnswerTr": "Kıyıya paralel yüksek sıradağların denizel hava kütlelerini engellemesi",
@@ -540,10 +540,10 @@
       "Ji bo parastina gund ji bayên germ ên havînê"
     ],
     "answersTr": [
-      "Yamaçlarda hava ulaşımı için iniş pistleri oluşturmak",
+      "Yamaç boyunca suyun daha hızlı akmasını sağlayarak drenajı artırmak",
       "Toprak erozyonunu önlemek ve suyun yüzey akışını yavaşlatmak",
-      "Yeraltı maden yataklarına daha kolay ulaşım sağlamak",
-      "Köy yerleşimini yazın esen sıcak çöl rüzgarlarından korumak"
+      "Toprağın güneşlenme süresini uzatarak ürünlerin erken olgunlaşmasını sağlamak",
+      "Hava dolaşımını güçlendirerek bitkilerde don zararını azaltmak"
     ],
     "correctAnswer": "Ji bo rawestandina erozyona axê û ragirtina ava baranê",
     "correctAnswerTr": "Toprak erozyonunu önlemek ve suyun yüzey akışını yavaşlatmak",
@@ -573,10 +573,10 @@
       "Rewşa hewayê bi piyanoyê tê pîvan, avhewa bi termometreyê"
     ],
     "answersTr": [
-      "Hava durumu sadece denizlerde, iklim ise yalnızca dağlarda geçerlidir",
-      "Hava durumu sabittir hiç değişmez, iklim ise günlük değişkenlik gösterir",
+      "Hava durumu uzun yılların ortalamasıdır, iklim ise günlük değişimi anlatır",
+      "Hava durumu yalnız sıcaklığı, iklim ise yalnız yağış miktarını inceler",
       "Hava durumu anlık ve kısa sürelidir, iklim ise uzun yılların ortalamasıdır",
-      "Hava durumu basınçla ölçülür, iklim ise sadece sıcaklık ölçümüdür"
+      "Hava durumu geniş kıtaları, iklim ise yalnız küçük yöreleri kapsar"
     ],
     "correctAnswer": "Rewşa hewayê ya demkurt e, avhewa navîniya demdirêj e",
     "correctAnswerTr": "Hava durumu anlık ve kısa sürelidir, iklim ise uzun yılların ortalamasıdır",
@@ -598,7 +598,7 @@
     "category": "Cografya",
     "difficulty": 5,
     "prompt": "Li herêma Zagrosê şikeft û dolînên kûr encama kîjan pêvajoya jeomorfolojîk in?",
-    "promptTr": "Zagros ve Toros kuşaklarındaki yaygın mağara ve düden oluşumları hangi jeomorfolojik sürecin ürünüdür?",
+    "promptTr": "Zagros bölgesindeki mağaralar ve derin dolinler hangi jeomorfolojik sürecin ürünüdür?",
     "answers": [
       "Helîna kîmyewî ya kevirên kilsî (karstîk)",
       "Herikîna lavên bazaltî yên sarbûyî",
@@ -607,9 +607,9 @@
     ],
     "answersTr": [
       "Kalker ve jips gibi kayaçların kimyasal çözünmesi (karstlaşma)",
-      "Bazaltik lav akıntılarının aniden soğuyup çatlaması",
-      "Ova tabanındaki denizel buzul kütlelerinin erimesi",
-      "Şiddetli rüzgar erozyonu ile çöl kumlarının birikmesi"
+      "Bazaltik lav tünellerinin soğuyup çökmesi (volkanik çökme)",
+      "Buzulların kayaları oyarak aşındırması (buzul aşındırması)",
+      "Rüzgârın taşıdığı kum tanelerinin kayaları aşındırması (korazyon)"
     ],
     "correctAnswer": "Helîna kîmyewî ya kevirên kilsî (karstîk)",
     "correctAnswerTr": "Kalker ve jips gibi kayaçların kimyasal çözünmesi (karstlaşma)",
@@ -639,10 +639,10 @@
       "Zêdebûna hejmara masîgirên kevneşopî yên li ser golê"
     ],
     "answersTr": [
-      "Bölge genelinde güneşlenme süresinin ve radyasyonunun azalması",
-      "Gölden Akdeniz'e doğru devasa bir tahliye kanalının açılması",
+      "Sanayi tesislerinin soğutma suyu için gölden aşırı miktarda su çekmesi",
+      "Gölün çevresindeki maden ocaklarından kaynaklanan yoğun kimyasal kirlilik",
       "Besleyici akarsular üzerine yapılan barajlar ve aşırı tarımsal sulama",
-      "Göl üzerinde avlanan ticari balıkçı teknelerinin sayısındaki artış"
+      "Göl kıyısındaki kentlerin içme suyu talebinin hızla artması"
     ],
     "correctAnswer": "Avakirina bendavên zêde li ser çemên wê û çandiniya bêserûber",
     "correctAnswerTr": "Besleyici akarsular üzerine yapılan barajlar ve aşırı tarımsal sulama",
@@ -672,10 +672,10 @@
       "Tenê di meha tebaxê ya germ de"
     ],
     "answersTr": [
-      "En soğuk geçen kış ortasında",
+      "Kış ortasında, en soğuk aylarda",
       "İlkbahar ve erken yaz aylarında",
-      "Kurak geçen sonbahar sonunda",
-      "Yalnızca sıcak ağustos ayında"
+      "Sonbaharın ilk yağışlı aylarında",
+      "Yaz sonunda, ağustos ve eylülde"
     ],
     "correctAnswer": "Di biharê û destpêka havînê de",
     "correctAnswerTr": "İlkbahar ve erken yaz aylarında",
@@ -739,9 +739,9 @@
     ],
     "answersTr": [
       "Sıcaklığı hızla artırır ve bağıl nemi düşürerek kurutur",
-      "Sıcaklığı hızla düşürür ve yoğun yamaç yağışı başlatır",
-      "Hava kütlesini dondurarak kar fırtınasına yol açar",
-      "Sıcaklık ve nem değerlerinde hiçbir değişim yaratmaz"
+      "Sıcaklığı düşürür ve bağıl nemi artırarak sis oluşturur",
+      "Sıcaklığı artırır ve bağıl nemi yükselterek yağış bırakır",
+      "Sıcaklığı sabit tutar, yalnızca rüzgâr hızını artırır"
     ],
     "correctAnswer": "Germahiyê zêde dike û hewayê hişk dike",
     "correctAnswerTr": "Sıcaklığı hızla artırır ve bağıl nemi düşürerek kurutur",
@@ -771,10 +771,10 @@
       "Nebûna ti herikîna avê di werzê bihar û havînê de"
     ],
     "answersTr": [
-      "Düz kumluk ovalarda akarsuyun yavaşça yatak değiştirmesi",
+      "Buzul dillerinin vadi tabanını U biçiminde genişleterek oyması",
       "Tektonik yükselmeyle birlikte akarsuyun kireçtaşını derine aşındırması",
-      "Vadi ağzında buzullardan oluşan doğal setlerin bulunması",
-      "İlkbahar aylarında su akışının tamamen durma noktasına gelmesi"
+      "Akarsuyun geniş ve düz ovada menderesler çizerek yatağını yana doğru açması",
+      "Volkanik lav akıntılarının vadiyi doldurup soğurken çatlaması"
     ],
     "correctAnswer": "Bilindbûna tektonîk û xurtiya kolandina avê ya li ser kevirên kilsî",
     "correctAnswerTr": "Tektonik yükselmeyle birlikte akarsuyun kireçtaşını derine aşındırması",
@@ -870,9 +870,9 @@
       "Germbûna lezgîn a rûyê erdê û bilindbûna konveksîyonî ya hewayê"
     ],
     "answersTr": [
-      "Dağlara düşen karların ova tabanında alçak basınç yaratması",
-      "Kuzey denizlerinden gelen serin hava akımlarının zemini soğutması",
-      "Ova çevresindeki sık orman örtüsünün rüzgarı engellemesi",
+      "Soğuk hava kütlesinin ova tabanına çökerek yüksek basınç oluşturması",
+      "Dağlardan inen nemli rüzgârların ova üzerinde yoğunlaşıp girdap yapması",
+      "Gece biriken serin havanın öğle saatlerinde yere doğru alçalması",
       "Zeminin aşırı ısınıp üzerindeki hava kütlesini hızla yukarı yükseltmesi"
     ],
     "correctAnswer": "Germbûna lezgîn a rûyê erdê û bilindbûna konveksîyonî ya hewayê",
@@ -895,7 +895,7 @@
     "category": "Cografya",
     "difficulty": 4,
     "prompt": "Sîstema çandiniya bejî (bêavî) li herêmê herî zêde bi kîjan berheman ve tê nasîn?",
-    "promptTr": "Bölgede kuru tarım (nadaslı tarım) yapılan alanlarda en yaygın olarak yetiştirilen temel ürün grubu hangisidir?",
+    "promptTr": "Bölgede kuru tarım yapılan alanlarda en yaygın olarak yetiştirilen temel ürün grubu hangisidir?",
     "answers": [
       "Pembû, birinc û mûz",
       "Genim, ceh û nîsk",
@@ -903,10 +903,10 @@
       "Qamîşê şekir û tûtina avî"
     ],
     "answersTr": [
-      "Pamuk, çeltik (pirinç) ve muz",
+      "Pamuk, mısır ve şeker pancarı",
       "Buğday, arpa ve kırmızı mercimek",
-      "Çay, fındık ve yaş antepfıstığı",
-      "Şeker kamışı ve sulak tütün"
+      "Pirinç, soya fasulyesi ve yer fıstığı",
+      "Patates, ayçiçeği ve tütün"
     ],
     "correctAnswer": "Genim, ceh û nîsk",
     "correctAnswerTr": "Buğday, arpa ve kırmızı mercimek",
@@ -936,9 +936,9 @@
       "Hewaya hênik, çavkaniyên avê û giyayên hêşîn ên çêrgehan"
     ],
     "answersTr": [
-      "Tüm bölgenin tamamen kayasız ve düz ovalardan oluşması",
-      "Pamuk tarımına uygun aşırı sıcak iklim koşulları sunması",
-      "Doğal su kaynaklarından tamamen uzak ve yalıtılmış olması",
+      "Kışın ılık geçmesi, ova tarımına uygunluk ve pazara yakınlık",
+      "Kurak yazlar, seyrek bitki örtüsü ve hayvan hastalıklarının azlığı",
+      "Ilık kış koşulları, geniş kışlık otlaklar ve uzun otlatma dönemi",
       "Serin hava koşulları, bol su kaynakları ve zengin yaz meraları"
     ],
     "correctAnswer": "Hewaya hênik, çavkaniyên avê û giyayên hêşîn ên çêrgehan",
@@ -969,10 +969,10 @@
       "Têkiliya Kendava Farsê bi Okyanûsa Pasîfîk re saz dikin"
     ],
     "answersTr": [
-      "Yalnızca Avrupa ülkeleri arasındaki nehir ticaretini sağlamak",
-      "Yüksek yaylalarda pamuk yetiştiriciliği için koridor açmak",
+      "İç Anadolu kentlerini Ege limanlarına ve Batı Anadolu pazarlarına bağlamak",
+      "Van Gölü havzasını Kafkasya'daki Hazar kıyılarına bağlamak",
       "Karadeniz limanlarını iç bölgelere ve Tarihi İpek Yolu'na bağlamak",
-      "Basra Körfezi'ni doğrudan Pasifik Okyanusu'na bağlamak"
+      "Güneydoğu ovalarını Toros geçitleri üzerinden Akdeniz limanlarına bağlamak"
     ],
     "correctAnswer": "Bendera Deryaya Reş bi herêmên hundir û Rêya Hevrîşimê ve girêdidin",
     "correctAnswerTr": "Karadeniz limanlarını iç bölgelere ve Tarihi İpek Yolu'na bağlamak",
@@ -1002,9 +1002,9 @@
       "Urmiye xwedî ava şor a klorûrî ye, Wan xwedî ava sodavî ya karbonatî ye"
     ],
     "answersTr": [
-      "Urmiye tatlı içme suyudur, Van Gölü ise kükürtlü zehirli bir göldür",
-      "Urmiye tabanı tamamen petrollüdür, Van ise saf buzul suyudur",
-      "Her iki göl de tamamen tatlı suya sahiptir ve mineral içermez",
+      "Urmiye sodalı karbonatlı yapıdadır, Van ise hiper-tuzlu klorürlü yapıdadır",
+      "Her iki göl de sodalı karbonatlıdır; yalnızca derinlikleri farklıdır",
+      "Urmiye sülfatlı acı sudur, Van ise düşük tuzlu tatlı göl suyudur",
       "Urmiye hiper-tuzlu klorürlü yapıdadır, Van ise sodalı karbonatlı yapıdadır"
     ],
     "correctAnswer": "Urmiye xwedî ava şor a klorûrî ye, Wan xwedî ava sodavî ya karbonatî ye",
@@ -1068,13 +1068,13 @@
       "Daketina blokên erdê di navbera xetên şikestekan de (graben)"
     ],
     "answersTr": [
-      "Kireçtaşı kayalıklarının deniz altında eriyerek aşınması",
-      "Şiddetli çöl fırtınalarının getirdiği kumulların yığılması",
-      "Buzul çağında devasa ağaç kalıntılarının vadileri doldurması",
-      "Fay hatları boyunca blokların çökmesiyle oluşan graben çukurlukları"
+      "Volkanik lavların vadileri doldurmasıyla oluşan lav platoları",
+      "Akarsuların taşıdığı alüvyonların birikmesiyle oluşan geniş delta ovaları",
+      "Buzulların vadileri oymasıyla oluşan sirk ve buzul çanakları",
+      "Fay hatları arasındaki blokların aşağı doğru kayarak alçalması"
     ],
     "correctAnswer": "Daketina blokên erdê di navbera xetên şikestekan de (graben)",
-    "correctAnswerTr": "Fay hatları boyunca blokların çökmesiyle oluşan graben çukurlukları",
+    "correctAnswerTr": "Fay hatları arasındaki blokların aşağı doğru kayarak alçalması",
     "explanation": "Doğu Anadolu Fay Zonu ve sıkışma tektoniği sonucu faylar arasında çöken graben alanları alüvyonla dolarak tektonik ovaları oluşturmuştur.",
     "explanationTr": "Doğu Anadolu Fay Zonu ve sıkışma tektoniği sonucu faylar arasında çöken graben alanları alüvyonla dolarak tektonik ovaları oluşturmuştur.",
     "explanationKu": "Di navbera şikestekên erdhejê de perçeyên erdê ketine xwarê û bi axa çeman ve bûne deştên berhemdar.",
@@ -1102,9 +1102,9 @@
     ],
     "answersTr": [
       "Verimli alüvyonları baraj gölünde tutarak alt deltada kıyı erozyonuna yol açmak",
-      "Nehir sularının akış yönünü tamamen Akdeniz havzasına çevirmek",
-      "Tüm Mezopotamya ovasının iklimini aniden kutupsal soğuğa dönüştürmek",
-      "Kaynak dağlarındaki yıllık kar ve yağmur yağışını tamamen kesmek"
+      "Nehir yataklarını genişletip aşağı havzada yeni taşkın ovaları oluşturmak",
+      "Delta kıyılarına her yıl daha fazla alüvyon taşıyarak kıyıyı denize doğru ilerletmek",
+      "Akarsuların tuzluluğunu azaltarak deltadaki bataklıkları tatlı göle çevirmek"
     ],
     "correctAnswer": "Axa bi bereket (aluvyon) li pişt bendavan digirin û xwarê xizan dikin",
     "correctAnswerTr": "Verimli alüvyonları baraj gölünde tutarak alt deltada kıyı erozyonuna yol açmak",
@@ -1168,9 +1168,9 @@
     ],
     "answersTr": [
       "Sel baskınlarından korunma, kaynak sularına yakınlık ve tarım arazisini işgal etmeme",
-      "Dağ zirvelerinde yaz sıcaklıklarının ovalardan çok daha yüksek olması",
-      "Büyük ticaret gemilerinin dağ yamaçlarına doğrudan yanaşabilmesi",
-      "Bölgedeki tüm orman ve odun kaynaklarından tamamen uzak durma isteği"
+      "Ova tabanındaki verimli toprakları doğrudan evlerin bahçesi olarak kullanabilme isteği",
+      "Dağ eteklerinde kışın kar örtüsünün ova tabanından daha ince olması",
+      "Yabani hayvanlardan korunmak için yüksek ve kayalık yerlerin seçilmesi"
     ],
     "correctAnswer": "Parastina ji lehiyê, nêzîkbûna çavkaniyên avê û parastina zeviyên çandiniyê",
     "correctAnswerTr": "Sel baskınlarından korunma, kaynak sularına yakınlık ve tarım arazisini işgal etmeme",
@@ -1200,10 +1200,10 @@
       "Tenê rûberên okyanûsên kûr"
     ],
     "answersTr": [
-      "Yalnızca Ekvator çizgisi çevresi",
-      "Yalnızca Kuzey Kutup noktası çevresi",
+      "Ekvator çevresi (tropikal kuşak)",
+      "Kutup çevresi (yüksek enlemler)",
       "Orta enlemler (ılıman kuşak ülkeleri)",
-      "Yalnızca derin okyanus çukurlukları"
+      "Tüm enlemler (hata her yerde eşittir)"
     ],
     "correctAnswer": "Hêlîlarên navîn (orta enlemler)",
     "correctAnswerTr": "Orta enlemler (ılıman kuşak ülkeleri)",
@@ -1234,9 +1234,9 @@
     ],
     "answersTr": [
       "Demir, magnezyum ve volkanik mineraller açısından son derece zengin olması",
-      "Yalnızca beyaz sofra tuzu ve kireç birikintisinden oluşması",
-      "Hiçbir besin minerali barındırmayan çorak kumul yapıda olması",
-      "Tamamen su geçirmeyen asidik bataklık killerinden ibaret olması"
+      "Kalsiyum karbonat bakımından kireçli topraklardan daha zengin olması",
+      "Organik maddece çok fakir, ince kumlu ve su tutmayan bir yapıda olması",
+      "Tuz birikimi nedeniyle tarıma elverişsiz, çoraklaşmış ve sert bir yapıda olması"
     ],
     "correctAnswer": "Ji hesin, magnezyûm û mîneralên volkanîk gelekî dewlemend e",
     "correctAnswerTr": "Demir, magnezyum ve volkanik mineraller açısından son derece zengin olması",
@@ -1266,9 +1266,9 @@
       "Zexta Plakaya Erebistanê ya li ser Plakaya Ewrasyayê"
     ],
     "answersTr": [
-      "Okyanus akıntılarının batıdan doğuya doğru kıtaları sürüklemesi",
-      "Arap Çölü üzerindeki alçak basınç merkezinin dağları çekmesi",
-      "Basra Körfezi'ndeki denizaltı volkanlarının çizgisel patlaması",
+      "Afrika Levhası'nın Anadolu Levhası'nı batıya doğru itip gererek yarıp açması",
+      "Avrasya Levhası'nın Arap Levhası'nın altına güneybatıya doğru dalması",
+      "Doğu Anadolu Fayı boyunca blokların yanal kayarak üst üste yığılması",
       "Arap Levhası'nın Avrasya Levhası'na kuzeydoğu yönünde çarpıp sıkıştırması"
     ],
     "correctAnswer": "Zexta Plakaya Erebistanê ya li ser Plakaya Ewrasyayê",
@@ -1291,7 +1291,7 @@
     "category": "Cografya",
     "difficulty": 4,
     "prompt": "Li ser çiyayên herêmê bi zêdebûna bilindahiyê re qadên daristanan çawa diguherin?",
-    "promptTr": "Bölge dağlarında yükselti arttıkça bitki örtüsü kuşaklarının sıralanışı aşağıdakilerden hangisidir?",
+    "promptTr": "İğne yapraklı orman kuşağının da bulunduğu bir dağ yamacında, yükselti arttıkça bitki örtüsü kuşaklarının sıralanışı hangisidir?",
     "answers": [
       "Darên pelweşîn (berû) -> darên derzîkî -> çêrgehên alpîn",
       "Çolên qûmî -> daristanên tropîkal -> mêweyên germ",
@@ -1300,9 +1300,9 @@
     ],
     "answersTr": [
       "Geniş yapraklı meşe ormanları -> iğne yapraklılar -> alpin çayırlar",
-      "Kumlu çöller -> tropikal yağmur ormanları -> narenciye bahçeleri",
-      "Muz ağaçları -> fıstık çamları -> ova domates tarlaları",
-      "Meşe ormanları -> sulak pamuk tarlaları -> incir bahçeleri"
+      "İğne yapraklılar -> geniş yapraklı meşe ormanları -> alpin çayırlar",
+      "Alpin çayırlar -> iğne yapraklılar -> geniş yapraklı meşe ormanları",
+      "Geniş yapraklı meşe ormanları -> alpin çayırlar -> iğne yapraklılar"
     ],
     "correctAnswer": "Darên pelweşîn (berû) -> darên derzîkî -> çêrgehên alpîn",
     "correctAnswerTr": "Geniş yapraklı meşe ormanları -> iğne yapraklılar -> alpin çayırlar",
@@ -1332,10 +1332,10 @@
       "Dîtina kaniyên nû yên avê li ser lûtkeyên berfîn"
     ],
     "answersTr": [
-      "Kışın dağ doruklarında aşırı sıcak hava dalgasının başlaması",
-      "Sürülerin tamamını Avrupa pazarlarına ihraç etmek",
+      "Ovada kışın başlayan hasat işlerine iş gücü sağlamak ve pazarlara yakınlık",
+      "Yaylalarda sonbaharda başlayan kuraklık ve kaynak sularının tuzlanması",
       "Şiddetli don olayları, yoğun kar yağışı ve yayla otlaklarının kapanması",
-      "Karlı dağ zirvelerinde yeni sıcak su pınarları aramak"
+      "Kış aylarında ticaret merkezlerine yaklaşarak hayvansal ürünlerin satışını artırmak"
     ],
     "correctAnswer": "Zêdebûna sermayê, barîna berfa giran û nemana çêrgehan",
     "correctAnswerTr": "Şiddetli don olayları, yoğun kar yağışı ve yayla otlaklarının kapanması",
@@ -1365,10 +1365,10 @@
       "Ji bo xwendina zarokan di dibistanên zivistanê de"
     ],
     "answersTr": [
-      "Yalnızca milli bayram kutlamaları için kent değiştirme geleneği",
-      "Devletlerarası deniz ticaretini organize etme zorunluluğu",
+      "Aşiretlerin vergi toplama dönemlerinde kent yönetimlerinden uzak durma isteği",
+      "Kışın yaylada tahıl ekip yazın ovada hasat yapma zorunluluğu",
       "Sürülerin mevsimlik otlak ve sıcaklık ihtiyacına göre yer değiştirmesi",
-      "Çocukların kış okullarında eğitim görmesini sağlama amacı"
+      "Kutsal mekânları yılda iki kez ziyaret eden hac geleneğine bağlılık"
     ],
     "correctAnswer": "Guhertina cihê ajalan a li gorî demsal û çêrgehan",
     "correctAnswerTr": "Sürülerin mevsimlik otlak ve sıcaklık ihtiyacına göre yer değiştirmesi",
@@ -1398,9 +1398,9 @@
       "Jina ku diçe dotina pez û çêkirina berhemên şîr"
     ],
     "answersTr": [
-      "Göç kervanının gece nöbetini ve güvenliğini tutan erkek",
-      "Yalnızca düğün kıyafetlerini dokuyan geleneksel terzi",
-      "Meclislerde yalnızca savaş kilamları okuyan dengbêj",
+      "Düğünlerde gelini baba evinden alıp getiren gelin alayının öncüsü",
+      "Taziyelerde ağıt yakarak yası yöneten yaşlı kadın ağıtçı",
+      "Kış gecesi sohbetlerinde masal ve destan anlatan usta kadın anlatıcı",
       "Yaylada koyun sağmaya giden ve süt ürünlerini işleyen kadın"
     ],
     "correctAnswer": "Jina ku diçe dotina pez û çêkirina berhemên şîr",
@@ -1431,10 +1431,10 @@
       "Ji çermê sewalan ê giran ku qet avê bernade hundir"
     ],
     "answersTr": [
-      "Çin ipeğinden dokunur; yalnızca düğün gecelerinde giyilir",
+      "Pamuk ipliğinden dokunur; teri emer ancak kışın soğuk tutar",
       "Tiftik keçisi yününden (maraz) dokunur; yazın serin kışın sıcak tutar",
-      "Pamuk liflerinden dokunur; yalnızca sıcak güney iklimine uygundur",
-      "Ağır hayvan derisinden dikilir; hiçbir şekilde hava geçirmez"
+      "Koyun yününden keçe olarak dövülür; ağırdır, yalnız kış aylarında giyilir",
+      "Kenevir lifinden dokunur; sert ve dayanıklıdır, yağmur geçirmez"
     ],
     "correctAnswer": "Ji mûyê bizina tiftîkê (maraz) ku havînê hênik û zivistanê germ digire",
     "correctAnswerTr": "Tiftik keçisi yününden (maraz) dokunur; yazın serin kışın sıcak tutar",
@@ -1464,13 +1464,13 @@
       "Kirasê jêrîn ê mil-dirêj (lewendî) û fîstanê rengîn ê qedîfe li ser"
     ],
     "answersTr": [
-      "Tamamen desensiz, süssüz ve tek parça siyah kumaştan ibarettir",
-      "Yalnızca at derisinden dikilmiş dar bir binici pantolonudur",
-      "Dikişsiz tek parça beyaz bir örtüden ibaret sade bir giysidir",
-      "Uzun kollu lewendi detaylı iç kiras ve üzerine giyilen renkli kadife fistan"
+      "Kısa kollu, dize kadar inen tek parça yün elbise ve belde bağlanan yün kuşak",
+      "Düz kesimli siyah çarşaf ve altına giyilen desensiz pamuklu şalvar",
+      "İşlemeli kısa cepken ve altına giyilen bol ve uzun yün şalvar",
+      "Uzun ve sarkık kollu iç kiras ile üzerine giyilen renkli kadife fistan"
     ],
     "correctAnswer": "Kirasê jêrîn ê mil-dirêj (lewendî) û fîstanê rengîn ê qedîfe li ser",
-    "correctAnswerTr": "Uzun kollu lewendi detaylı iç kiras ve üzerine giyilen renkli kadife fistan",
+    "correctAnswerTr": "Uzun ve sarkık kollu iç kiras ile üzerine giyilen renkli kadife fistan",
     "explanation": "Kiras-Fîstan, bileklerinden lewendî (ervanî) sarkan dökümlü iç gömlek ve üzerine giyilen parlak, işlemeli zengin fistan katmanıdır.",
     "explanationTr": "Kiras-Fîstan, bileklerinden lewendî (ervanî) sarkan dökümlü iç gömlek ve üzerine giyilen parlak, işlemeli zengin fistan katmanıdır.",
     "explanationKu": "Kirasê jinan ê xwedî lewendî û fîstanê rengîn ê li ser bejnê ji taybetmendiyên herî navdar ên kincên jinan e.",
@@ -1497,10 +1497,10 @@
       "Nexşeya sînorên mîrektiyên kevn ên herêmê"
     ],
     "answersTr": [
-      "Eski çağlardaki madeni askeri silah ve zırhları",
-      "Yalnızca sürüdeki hayvanların toplam sayısını",
+      "Göçer aşiretlerin savaş zaferleri ve kahramanlıkları",
+      "Ölüm, yas ve ahiret yolculuğuna dair inançlar",
       "Doğanın uyanışı, bahar bereketi ve ailevi bağlılık",
-      "Mîrlikler arasındaki idari sınır hatlarını"
+      "Kervan yolları, ticaret ve uzak diyar özlemi"
     ],
     "correctAnswer": "Bereketa sirûştê, kulîlkên biharê û hezkirina malbatê",
     "correctAnswerTr": "Doğanın uyanışı, bahar bereketi ve ailevi bağlılık",
@@ -1563,10 +1563,10 @@
       "Li giravên başûrê Deryaya Egeyê"
     ],
     "answersTr": [
-      "Kars ve Ardahan yüksek yaylalarında",
+      "Kars, Ardahan ve Erzurum yaylalarında",
       "Urfa, Diyarbakır ve Karacadağ yöresinde",
-      "Hazar Denizi sahil şeridinde",
-      "Ege Denizi güney kıyı adalarında"
+      "Van, Hakkari ve Başkale'nin dağ köylerinde",
+      "Dersim, Erzincan ve Elazığ çevresinde"
     ],
     "correctAnswer": "Li herêma Riha û Amedê",
     "correctAnswerTr": "Urfa, Diyarbakır ve Karacadağ yöresinde",
@@ -1596,9 +1596,9 @@
       "Parvekirina xemgîniya komî û bîranîna qenciyên mirî"
     ],
     "answersTr": [
-      "Yalnızca taziyeye gelmeyen akrabaları toplumsal olarak cezalandırmak",
-      "Miras kalan maddi mülkleri varisler arasında taksim etmek",
-      "Cemaat içinde en iyi ağıt yakan kişiye ödül dağıtmak",
+      "Merhumun mirasının kime kalacağını topluluk önünde ilan etmek",
+      "Ölümün nedenini sorgulayıp sorumluyu topluluk önünde belirlemek",
+      "Taziyeye gelen konukları ağırlamanın sırasını ve oturma düzenini belirlemek",
       "Kolektif yası dışa vurmak, acıyı paylaşmak ve merhumun erdemlerini anmak"
     ],
     "correctAnswer": "Parvekirina xemgîniya komî û bîranîna qenciyên mirî",
@@ -1629,13 +1629,13 @@
       "Çawîş (cerdevan)"
     ],
     "answersTr": [
-      "Bêrîvan (süt sağımcıları)",
-      "Pêşmerge (öncü muhafızlar)",
-      "Berbûk (gelin alayı refakatçileri)",
-      "Çavuş (tören korumaları)"
+      "Bêrîvan",
+      "Birazava",
+      "Berbûk",
+      "Dengbêj"
     ],
     "correctAnswer": "Berbûk (şandeya bûkê)",
-    "correctAnswerTr": "Berbûk (gelin alayı refakatçileri)",
+    "correctAnswerTr": "Berbûk",
     "explanation": "Berbûk, damat tarafından gelini getirmek için seçilen saygın akraba kadın ve erkeklerden oluşan gelin alayı kafilesidir.",
     "explanationTr": "Berbûk, damat tarafından gelini getirmek için seçilen saygın akraba kadın ve erkeklerden oluşan gelin alayı kafilesidir.",
     "explanationKu": "Berbûk ew kes in ku ji bo anîna bûkê ji aliyê zava ve tên şandin da ku bi rêz û hurmet bûkê bînin.",
@@ -1662,9 +1662,9 @@
       "Giranî bi gavên giran û seknekê ye, Şêxanî bileztir û livdar e"
     ],
     "answersTr": [
-      "Giranî oturarak icra edilir; Şêxanî ise at üstünde oynanan bir oyundur",
-      "Giranî yalnızca kadınlara aittir; Şêxanî sadece çocuk halk oyunudur",
-      "Giranî asla davulsuz oynanmaz; Şêxanî hiçbir enstrüman kullanılmadan söylenir",
+      "Şêxanî ağır adımlı ve vakur sekanslıdır; Giranî daha hızlı ve omuz hareketlidir",
+      "İkisi de aynı ritimdedir; Giranî düğünlerde, Şêxanî ise bayramlarda oynanır",
+      "Giranî tek kişilik sololarla, Şêxanî ise yalnızca iki kişilik çiftlerle oynanır",
       "Giranî ağır adımlı ve vakur sekanslıdır; Şêxanî daha hızlı ve omuz hareketlidir"
     ],
     "correctAnswer": "Giranî bi gavên giran û seknekê ye, Şêxanî bileztir û livdar e",
@@ -1695,10 +1695,10 @@
       "Şeva Yeldayê ya Zivistanê"
     ],
     "answersTr": [
-      "Sonbahar Kurban Bayramı",
+      "Cejna Êzîd (Aralık orucu bayramı)",
       "Çarşema Sor (Kırmızı Çarşamba)",
-      "Büyük Ramazan Bayramı",
-      "Kış Gündönümü Yelda Gecesi"
+      "Cejna Cemayê (sonbahar Laleş toplanması)",
+      "Newroz (21 Mart bahar bayramı)"
     ],
     "correctAnswer": "Çarşema Sor (Çarşema Serê Nîsanê)",
     "correctAnswerTr": "Çarşema Sor (Kırmızı Çarşamba)",
@@ -1761,13 +1761,13 @@
       "Kelehên leşkerî yên serdema şerên kevn ên navçeyê"
     ],
     "answersTr": [
-      "Kutsal su kaynakları, ulu ağaçlar, kayalıklar ve ocak erenlerinin mekanları",
-      "Yalnızca şehir merkezlerinde kurulan zengin tüccar konakları",
-      "Bayram günlerinde kurulan geçici ticari pazar yerleri",
-      "Eski savaş dönemlerinden kalan askeri savunma kaleleri"
+      "Kutsal su kaynakları, ulu ağaçlar, kayalıklar ve ocak erenlerinin mekânları",
+      "Köy meydanlarında kurulan, bayramlarda kullanılan ortak toplantı ve şenlik alanları",
+      "Eski kervan yollarındaki hanlar ve yolcuların konakladığı kervansaraylar",
+      "Aşiret liderlerinin mezarlarının bulunduğu, aileye ait özel bahçeler"
     ],
     "correctAnswer": "Kaniyên avê, darên kevnar, teht û gorên pîroz ên sirûştê",
-    "correctAnswerTr": "Kutsal su kaynakları, ulu ağaçlar, kayalıklar ve ocak erenlerinin mekanları",
+    "correctAnswerTr": "Kutsal su kaynakları, ulu ağaçlar, kayalıklar ve ocak erenlerinin mekânları",
     "explanation": "Dersim Aleviliğinde doğadaki pınarlar (Munzur), dağlar, ulu ağaçlar ve ulu zatların mekanları kutsal birer ziyaretgah kabul edilir.",
     "explanationTr": "Dersim Aleviliğinde doğadaki pınarlar (Munzur), dağlar, ulu ağaçlar ve ulu zatların mekanları kutsal birer ziyaretgah kabul edilir.",
     "explanationKu": "Ziyaretgeh cihên pîroz ên xwezayê mîna kaniyên zelal, darên kal û quntarên pîroz in ku mirov daxwazên xwe li wir dikin.",
@@ -1794,13 +1794,13 @@
       "Veguhastina destan, çîrok û bîra dîrokî ya ji nifşekî bo nifşê din"
     ],
     "answersTr": [
-      "Yalnızca yabancı ticaret dillerinin gençlere öğretilmesi",
-      "Uzun kış gecelerinde köy halkının konuşmasının yasaklanması",
-      "Bölgedeki tüm kilamların dijital olarak arşivlenmesi",
-      "Destan, masal ve tarihi hafızanın nesilden nesile sözlü olarak aktarılması"
+      "Köyün ortak tarla ve mera işlerinin bir sonraki yıl için ailelere paylaştırılması",
+      "Gençlerin evlilik için aile büyüklerince tanıştırılması ve nişanlanması",
+      "Aşiretler arası anlaşmazlıkların hakem heyeti önünde karara bağlanması",
+      "Destan, masal ve tarihî hafızanın nesilden nesile sözlü olarak aktarılması"
     ],
     "correctAnswer": "Veguhastina destan, çîrok û bîra dîrokî ya ji nifşekî bo nifşê din",
-    "correctAnswerTr": "Destan, masal ve tarihi hafızanın nesilden nesile sözlü olarak aktarılması",
+    "correctAnswerTr": "Destan, masal ve tarihî hafızanın nesilden nesile sözlü olarak aktarılması",
     "explanation": "Şevbihêrk, kış gecelerinde köy odalarında toplanıp masal, destan ve dengbêj kilamlarının dinlendiği sözlü edebiyat okuludur.",
     "explanationTr": "Şevbihêrk, kış gecelerinde köy odalarında toplanıp masal, destan ve dengbêj kilamlarının dinlendiği sözlü edebiyat okuludur.",
     "explanationKu": "Di şevbihêrkan de extiyar û dengbêjan çîrokên kevn digotin û ciwan fêrî ziman û çanda xwe dibûn.",
@@ -1828,9 +1828,9 @@
     ],
     "answersTr": [
       "Ev ev gezerek toplanan yiyeceklerin yoksul ailelerle paylaşılarak dayanışılması",
-      "Yalnızca çarşıda satılmak üzere tatlı şerbetler üretilmesi",
-      "Ocak ayı boyunca köylülerin evden çıkmasının yasaklanması",
-      "Yıl sonunda devlet adına köylerden tarımsal vergi toplanması"
+      "Köy gençlerinin yılbaşında dağa çıkıp av yapması ve avı kendi aileleriyle bölüşmesi",
+      "Yılın son gecesinde ocakların söndürülüp yeni yılda yeniden yakılması",
+      "Yeni yılın ilk günü köy büyüklerinin evlerine topluca hediye götürülmesi"
     ],
     "correctAnswer": "Komkirina xwarin û xelatan ji bo alîkariya malbatên hejar",
     "correctAnswerTr": "Ev ev gezerek toplanan yiyeceklerin yoksul ailelerle paylaşılarak dayanışılması",
@@ -1894,9 +1894,9 @@
     ],
     "answersTr": [
       "Hava temasını keserek serin ortamda fermente olmasını ve aromasını kazanmasını sağlamak",
-      "Yeraltı volkanik ısısının peyniri hızla pişirmesini temin etmek",
-      "Üretilen peyniri hırsızlardan korumak amacıyla mahzende gizlemek",
-      "Peynirin rengini tamamen siyaha dönüştürmek amacıyla bekletmek"
+      "Peynirin hava almasını artırıp yüzeyinde küf gelişmesini sağlamak",
+      "Peynirin içindeki otları kurutarak yaz boyunca bozulmadan sert ve kuru kalmasını sağlamak",
+      "Toprak nemini peynire geçirerek peynirin su oranını yükseltmek"
     ],
     "correctAnswer": "Ji bo havênbûna hênik, hevgirtina bêhnê û negirtina hewayê",
     "correctAnswerTr": "Hava temasını keserek serin ortamda fermente olmasını ve aromasını kazanmasını sağlamak",
@@ -1926,9 +1926,9 @@
       "Di navbera malbatên cuda de pêwendiyeke xurt a xizmantiya rûhî ava dike"
     ],
     "answersTr": [
-      "Yalnızca tarım arazisi alım satımında geçerli resmi ticari ortaklıktır",
-      "Köy muhtarını seçmek amacıyla uygulanan idari bir prosedürdür",
-      "Yılda bir kez çocuk oyunlarıyla kutlanan sembolik bir festivaldir",
+      "Köyler arasında toprak sınırlarını belirleyen ve mülkiyeti güvenceye alan yazılı sözleşme",
+      "Aşiret liderinin ardılını belirlemek için yapılan, yalnızca erkeklere açık tören",
+      "Komşu köylerin hasadı ortak depolayıp kıtlık yıllarında birlikte kullanması",
       "Farklı aile ve topluluklar arasında akrabalık düzeyinde sarsılmaz manevi bağ kurmak"
     ],
     "correctAnswer": "Di navbera malbatên cuda de pêwendiyeke xurt a xizmantiya rûhî ava dike",
@@ -1960,9 +1960,9 @@
     ],
     "answersTr": [
       "Ekin biçme, ev yapımı, kışlık hazırlık ve harman kaldırma gibi ağır işlerde",
-      "Yalnızca tatil günlerinde at yarışı turnuvaları düzenlemek için",
-      "Şehir merkezlerindeki resmi siyasi toplantıların organizasyonunda",
-      "Sınır ötesi ülkelerle yapılan uluslararası ticaret anlaşmalarında"
+      "Bayram ve düğün hazırlıkları dışında uygulanmayan törensel işlerde",
+      "Köy okulunun ve caminin bakımı gibi yalnızca resmî görevlilerin yaptığı kamu işlerinde",
+      "Hayvan alım satımında ve pazarlarda yapılan ticari ortaklık işlerinde"
     ],
     "correctAnswer": "Dirûna zeviyan, çêkirina xaniyan û berhevkirina berheman",
     "correctAnswerTr": "Ekin biçme, ev yapımı, kışlık hazırlık ve harman kaldırma gibi ağır işlerde",
@@ -1992,13 +1992,13 @@
       "Hemû cureyên xwendin û nivîsandina bi kurdî qedexe dikir"
     ],
     "answersTr": [
-      "Yalnızca gençlere yönelik denizcilik ve askeri taktik eğitimi verilmesi",
-      "Yalnızca Batı dillerinde ipek ticareti sertifikasyonu sağlanması",
-      "Dini ve felsefi ilimlerle birlikte Kürtçe edebiyat ve dilin bir arada okutulması",
-      "Kitabi eğitimi tamamen reddedip sadece bedensel zanaat öğretmesi"
+      "Yalnızca Arapça dinî ilimlerin okutulması, Kürtçenin ise derslerden tamamen dışlanması",
+      "Farsça divan edebiyatı ve hat sanatının saray kâtiplerine öğretilmesi",
+      "Dinî ve felsefi ilimlerle birlikte Kürtçe edebiyat ve dilin bir arada okutulması",
+      "Kürtçe yerine yalnızca fıkıh ve hadis öğretimine ağırlık verilerek okutulması"
     ],
     "correctAnswer": "Zanistên olî û felsefî li gel ziman û edebiyata kurdî bi hev re dihatin xwendin",
-    "correctAnswerTr": "Dini ve felsefi ilimlerle birlikte Kürtçe edebiyat ve dilin bir arada okutulması",
+    "correctAnswerTr": "Dinî ve felsefi ilimlerle birlikte Kürtçe edebiyat ve dilin bir arada okutulması",
     "explanation": "Kırmızı Medrese (Medreseya Sor), fıkıh ve astronominin yanında Melayê Cizîrî gibi alimlerin Kürtçe divan edebiyatını talebelere okuttuğu ilim yuvasıdır.",
     "explanationTr": "Kırmızı Medrese (Medreseya Sor), fıkıh ve astronominin yanında Melayê Cizîrî gibi alimlerin Kürtçe divan edebiyatını talebelere okuttuğu ilim yuvasıdır.",
     "explanationKu": "Li Medreseya Sor hem zanistên dînî û astronomî hem jî helbest û zimanê kurdî bi awayekî bilind dihatin hînkirin.",
@@ -2059,9 +2059,9 @@
     ],
     "answersTr": [
       "Çim hokeyi veya geleneksel golfe",
-      "Salon masa voleyboluna",
-      "Olimpik su topu sporuna",
-      "Kapalı alan masa tenisine"
+      "Beyzbol veya İngiliz kriketi oyununa",
+      "Bocce veya bilardo oyununa",
+      "Lakros veya kale topu oyununa"
     ],
     "correctAnswer": "Hokeya ser axê an golfê",
     "correctAnswerTr": "Çim hokeyi veya geleneksel golfe",
@@ -2124,10 +2124,10 @@
       "Diyarkirina sînorên nû yên parêzgehan bi kevirên spî"
     ],
     "answersTr": [
-      "Yalnızca yerel toprak sahipleri adına yıllık vergileri tahsil etmek",
+      "Hasadın sonunu kutlamak ve kışlık erzakı aileler arasında bölüşmek",
       "Doğanın uyanışını kutlamak ve komşuluk/akrabalık bağlarını tazelemek",
-      "Açık havada halay çekmeyi ve oyun oynamayı tamamen yasaklamak",
-      "İl ve ilçe sınırlarını dağ taşlarına beyaz kireçle yeniden çizmek"
+      "Yaylaya göç öncesi sürüleri saymak ve otlakları aileler arasında paylaşmak",
+      "Kış boyunca ölenleri anmak ve mezarlıkları topluca temizleyip onarmak"
     ],
     "correctAnswer": "Pêşwazîkirina zindîbûna sirûştê û xurtkirina têkiliyên hevaltiyê",
     "correctAnswerTr": "Doğanın uyanışını kutlamak ve komşuluk/akrabalık bağlarını tazelemek",
@@ -2157,10 +2157,10 @@
       "Tenê heft cureyên çandiniyê yên herêmê"
     ],
     "answersTr": [
-      "Kış mevsiminde kar yağışının durduğu yedi güneşli günü",
-      "Tarih öncesi dönemde bölgede savaşmış yedi pagan kralı",
+      "Yılın yedi kutsal bayramını ve her birinde topluca yapılan ziyaret ibadetini",
+      "İnancın kurucusu sayılan yedi peygamberin yeryüzündeki yolculuğunu",
       "Evrenin yaratılışını ve yönetimini sağlayan yedi kutsal nur/melek sırrını",
-      "Mezopotamya ovasında ekimi yapılan yedi temel tahıl türünü"
+      "Ruhun ölümden sonra geçtiği yedi katlı ahiret basamaklarını"
     ],
     "correctAnswer": "Heft sirên pîroz ên rêveberiya gerdûnê û afirandinê",
     "correctAnswerTr": "Evrenin yaratılışını ve yönetimini sağlayan yedi kutsal nur/melek sırrını",
@@ -2191,9 +2191,9 @@
     ],
     "answersTr": [
       "Yağmurda liflerin şişip su geçirmemesi, sıcakta ise gözeneklerin hava alması",
-      "Kış aylarında çadırın içini sürekli buzdolabı gibi dondurucu tutması",
-      "Fırtınalı havalarda çadırın ağırlıktan dolayı hemen yere yıkılması",
-      "Yalnızca güneş ışığını doğrudan çadırın içine yansıtması"
+      "Islak liflerin gevşeyip gözenekleri açarak çadırın daha hızlı kuruması",
+      "Sık dokunun her mevsimde aynı hava geçirgenliğini koruması",
+      "Kumaşın çok hafif olması sayesinde tek kişinin bir saatte taşıyıp kurabilmesi"
     ],
     "correctAnswer": "Di baranê de mû diwerime û avê bernade, di germê de jî hewayê derbas dike",
     "correctAnswerTr": "Yağmurda liflerin şişip su geçirmemesi, sıcakta ise gözeneklerin hava alması",
@@ -2223,10 +2223,10 @@
       "Li gorî bejna herî dirêj di nav ciwanan de"
     ],
     "answersTr": [
-      "Odaya en hızlı atla ilk ulaşan kişinin hız derecesine göre",
-      "Kişinin üzerindeki kıyafetin parlak renk tonuna göre",
+      "Odaya giriş sırasına göre; ilk gelen başköşeye, son gelen kapı yanına",
+      "Kişinin taşıdığı silahın ve atının değerine göre belirlenen bir sıraya göre",
       "Yaş büyüklüğü, bilgelik, konukluk derecesi ve toplumsal saygınlığa göre",
-      "Meclisteki en genç ve en uzun boylu birey olma şartına göre"
+      "Ev sahibinin kura çekerek her akşam yeniden belirlediği bir sıraya göre"
     ],
     "correctAnswer": "Li gorî temen, zanîn, mêvanperwerî û rûmeta kesayetiyê",
     "correctAnswerTr": "Yaş büyüklüğü, bilgelik, konukluk derecesi ve toplumsal saygınlığa göre",
@@ -2256,10 +2256,10 @@
       "Ji ber ku ji hesinê sivik hatiye çêkirin li dijî guleyan e"
     ],
     "answersTr": [
-      "Yalnızca resmi mahkeme salonlarında protokol kıyafeti olarak giyilir",
+      "Hafif ve ince olduğu için yazın sıcağında güneşten gölgelik sağlar",
       "Hem şiddetli yağmur ve soğuğu geçirmez hem de arazide yatak görevi görür",
-      "Yalnızca derin akarsularda yüzmeyi kolaylaştıran bir can yeleğidir",
-      "Hafif kurşun geçirmez çelik liflerden örülmüş bir zırhtır"
+      "Parlak renkleri sayesinde sisli havalarda çobanın uzaktan görülmesini sağlar",
+      "Rengi sayesinde yırtıcı hayvanları korkutup sürüden uzak tutar"
     ],
     "correctAnswer": "Hem ji baran û sermayê diparêze hem jî wekî doşek û nivîn tê bikaranîn",
     "correctAnswerTr": "Hem şiddetli yağmur ve soğuğu geçirmez hem de arazide yatak görevi görür",
@@ -2289,10 +2289,10 @@
       "Pêşbirkek ji bo çêkirina nanê herî mezin ê herêmê"
     ],
     "answersTr": [
-      "Tuz ticareti yapan kervanlardan alınan zorunlu pazar vergisi",
-      "Akşam yemeklerinde tuz kullanımını tamamen yasaklayan eski yasa",
+      "Misafire sunulan yemeğin tuzunun ve bolluğunun ev sahibinin cömertliğini göstermesi",
+      "Ekmek ve tuzun israf edilmemesi gerektiğini anlatan tutumluluk öğüdü",
       "Birlikte sofra paylaşılan kişiye karşı sadakat ve asla hıyanet etmeme ahlakı",
-      "Köy meydanında en büyük ekmeği pişirene verilen sembolik ödül"
+      "Kervanlarla getirilen tuzun köy halkı arasında eşit paylaştırılması"
     ],
     "correctAnswer": "Mirovê ku bi yekî re xwarin xwariye divê ti carî îxanetê lê neke",
     "correctAnswerTr": "Birlikte sofra paylaşılan kişiye karşı sadakat ve asla hıyanet etmeme ahlakı",
@@ -2322,13 +2322,13 @@
       "Mem û Zîn tenê lîstikeke şanoyê ya nûjen e ku di sedsala bîstan de hatiye nivîsandin"
     ],
     "answersTr": [
-      "Xanî halk anlatısını felsefi, tasavvufi ve ulusal birlik temalı edebi bir mesneviye dönüştürmüştür",
-      "Xanî destandaki tüm aşk öğelerini çıkarıp sadece kabileler arası sınır savaşlarını anlatmıştır",
-      "Memê Alan Latin harfleriyle yazılmışken Mem û Zîn sadece sözlü olarak nakledilmiştir",
-      "Mem û Zîn yirminci yüzyılda sahnelenmek üzere yazılmış modern bir tiyatro metnidir"
+      "Xanî halk anlatısını felsefi, tasavvufi ve ulusal birlik temalı edebî bir mesneviye dönüştürmüştür",
+      "Xanî halk anlatısını hiçbir yerini değiştirmeden yalnızca Arap harfleriyle yazıya geçirip derlemiştir",
+      "Xanî destandaki trajik sonu değiştirip Mem ile Zîn'in kavuştuğu mutlu bir son yazmıştır",
+      "Xanî mesneviyi Farsça yazmış, Kurmancî çevirisini ise öğrencileri sonradan hazırlamıştır"
     ],
     "correctAnswer": "Xanî çîroka gelêrî veguherandiye mesnewiyeke felsefî, tesewufî û nasnameyî",
-    "correctAnswerTr": "Xanî halk anlatısını felsefi, tasavvufi ve ulusal birlik temalı edebi bir mesneviye dönüştürmüştür",
+    "correctAnswerTr": "Xanî halk anlatısını felsefi, tasavvufi ve ulusal birlik temalı edebî bir mesneviye dönüştürmüştür",
     "explanation": "Ehmedê Xanî sözlü \"Memê Alan\" destanını alıp aruz vezniyle, tasavvufi derinlikle ve Kürtlerin birlik olma felsefesiyle şaheser bir mesneviye dönüştürmüştür.",
     "explanationTr": "Ehmedê Xanî sözlü \"Memê Alan\" destanını alıp aruz vezniyle, tasavvufi derinlikle ve Kürtlerin birlik olma felsefesiyle şaheser bir mesneviye dönüştürmüştür.",
     "explanationKu": "Ehmedê Xanî çîroka Memê Alan bi zanyarî û felsefeya bilind nivîsand û kire berhemeke mezin a edebiyata klasîk.",
@@ -2355,10 +2355,10 @@
       "Şerê di navbera împaratoriyên rojava û rojhilat de"
     ],
     "answersTr": [
-      "Tarım arazilerinin ve buğday hasadının piyasa fiyatı",
-      "Cizre'deki ipek tüccarlarının vergi muafiyeti kuralları",
+      "Cizre beylerinin adaleti ve halkın vergi yükünün hafifletilmesi",
+      "Kürtçenin edebiyat dili olarak Farsça ve Arapçadan geri kalmadığı",
       "İlahi aşkın mahiyeti, varlığın sırrı ve hakikat nurunun tecellisi",
-      "Doğu ve batı imparatorlukları arasındaki sınır çatışmaları"
+      "Bahar mevsiminin güzellikleri ve göçer yayla hayatının sadeliği"
     ],
     "correctAnswer": "Evîna heqîqî (îlahî), gerdûn û sirên nûra heqîqetê",
     "correctAnswerTr": "İlahi aşkın mahiyeti, varlığın sırrı ve hakikat nurunun tecellisi",
@@ -2388,10 +2388,10 @@
       "Her du weşanan jî tenê alfabeya erebî ya kevn a osmanî bi kar dianî"
     ],
     "answersTr": [
-      "Hawar yalnızca Fransızca yayımlandı; Rêya Teze ise tamamen Ermenice olarak basıldı",
+      "İkisi de Arap harfleriyle yayımlandı, ancak Rêya Teze ünlüleri gösteren ek işaretler kullandı",
       "İkisi de Latin alfabesiyle yayımlandı, ancak Rêya Teze farklı bir Sovyet versiyonu kullandı",
-      "Hawar yalnızca resimli bir bültendi; Rêya Teze ise hiçbir zaman matbaada basılmadı",
-      "Her iki yayın da yalnızca klasik Arap harfli Osmanlı imlasını ve dizgisini kullanmıştır"
+      "Hawar Latin, Rêya Teze ise ilk sayısından itibaren yalnızca Kiril alfabesiyle basıldı",
+      "Hawar Arap harfleriyle, Rêya Teze ise Ermeni alfabesine uyarlanmış harflerle basıldı"
     ],
     "correctAnswer": "Her du jî bi alfabeya latînî derketin, lê Rêya Teze guhertoyeke cuda ya Sovyetî bi kar anî",
     "correctAnswerTr": "İkisi de Latin alfabesiyle yayımlandı, ancak Rêya Teze farklı bir Sovyet versiyonu kullandı",
@@ -2454,13 +2454,13 @@
       "Tenê behsa xwezaya Ewropayê kir û ji jiyana welat bi temamî dûr ket"
     ],
     "answersTr": [
-      "Şiiri ağır aruz ve saray kalıplarından çıkarıp halkın yalın diline ve toplumsal mücadeleye taşıdı",
-      "Tüm şiir türlerini reddedip yalnızca nesir masallar yazmaya yöneldi",
-      "Şiiri yalnızca eski Latince gramerle kilise korolarında icra ettirdi",
-      "Yalnızca Avrupa doğasını övüp yerel toplumsal gerçeklikten tamamen koptu"
+      "Klasik biçimlerden de yararlanarak halkın yaşamını ve toplumsal mücadeleyi şiirinin merkezine taşıdı",
+      "Şiiri halkın yalın dilinden uzaklaştırıp Farsça ve Arapça ağırlıklı yeni bir divan diline yöneltti",
+      "Aruzu tamamen bırakıp yalnızca serbest nazımla bireysel aşk ve doğa şiirleri yazdı",
+      "Klasik divan geleneğini olduğu gibi sürdürüp tasavvufi temaları yeniden canlandırdı"
     ],
     "correctAnswer": "Zimanê helbestê ji qalibên giran ên erûzê ber bi zimanê gel û têkoşîna civakî ve bir",
-    "correctAnswerTr": "Şiiri ağır aruz ve saray kalıplarından çıkarıp halkın yalın diline ve toplumsal mücadeleye taşıdı",
+    "correctAnswerTr": "Klasik biçimlerden de yararlanarak halkın yaşamını ve toplumsal mücadeleyi şiirinin merkezine taşıdı",
     "explanation": "Cegerxwîn divan şiirinin soyut mazmunları yerine halkın konuştuğu arı Kurmancî ile yoksulluk, özgürlük ve aydınlanma temalarını şiirinin merkezine koymuştur.",
     "explanationTr": "Cegerxwîn divan şiirinin soyut mazmunları yerine halkın konuştuğu arı Kurmancî ile yoksulluk, özgürlük ve aydınlanma temalarını şiirinin merkezine koymuştur.",
     "explanationKu": "Cegerxwîn helbest ji qesran derxist, kire zimanê xelkê xebatkar û bi peyvên zelal êş û hêviyên civakê anî ziman.",
