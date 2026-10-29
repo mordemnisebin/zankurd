@@ -1969,6 +1969,10 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                           const SizedBox(height: SahneSpace.cardGap),
                           LessonRecallCard(entries: recallEntries),
                         ],
+                        if (isLast) ...[
+                          const SizedBox(height: SahneSpace.cardGap),
+                          const LessonFinishHint(),
+                        ],
                       ],
                     ),
                   ),
@@ -2381,6 +2385,36 @@ class _PracticeGrid extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: rows,
+    );
+  }
+}
+
+/// Son slaytın akış notu (kapışma U14, 2026-10-29).
+///
+/// Son slaytta "Tamamla" ile "Kısa test" yan yana duruyordu; hangisinin dersi
+/// bitirdiği ve testin tamamlamaya etkisi yazmıyordu (kare 96). Davranış:
+/// Tamamla dersi yerel + sunucu kuyruğuna yazar ve sonrakinin kilidini açar;
+/// kısa test ödülsüz alıştırmadır, tamamlamayı değiştirmez. Not kaydırılan
+/// içerikte durur: alt perdeye konunca %200 yazıda perde içeriği eziyordu.
+class LessonFinishHint extends StatelessWidget {
+  const LessonFinishHint({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Row(
+      key: const ValueKey('lesson-finish-hint'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(AppIcons.circleCheck, size: 20, color: t.tx2),
+        const SizedBox(width: SahneSpace.x2),
+        Expanded(
+          child: Text(
+            context.t(K.lessonFinishHint),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+        ),
+      ],
     );
   }
 }

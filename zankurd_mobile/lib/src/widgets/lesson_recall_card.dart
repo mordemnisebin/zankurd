@@ -66,8 +66,13 @@ class _LessonRecallCardState extends State<LessonRecallCard> {
             ],
           ),
           const SizedBox(height: SahneSpace.x2),
+          // Kapışma U14 (2026-10-29): yanıt açılınca yönerge hâlâ "düşün,
+          // sonra göster" diyordu; artık sıradaki adımı söyler.
           Text(
-            context.t(K.lessonRecallHint),
+            context.t(
+              _revealed ? K.lessonRecallRevealedHint : K.lessonRecallHint,
+            ),
+            key: const ValueKey('lesson-recall-hint'),
             style: SahneType.body.copyWith(color: t.tx2),
           ),
           const SizedBox(height: SahneSpace.x4),

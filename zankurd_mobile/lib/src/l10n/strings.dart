@@ -622,6 +622,16 @@ class Tr {
       'ku': 'Wateya vê peyv an îfadeyê bifikire, paşê bersivê nîşan bide.',
       'tr': 'Bu kelime veya ifadenin anlamını düşün, sonra yanıtı göster.',
     },
+    K.lessonRecallRevealedHint: {
+      'ku': 'Te zanî? Derbasî ya din bibe.',
+      'tr': 'Bildin mi? Sonrakine geç.',
+    },
+    K.lessonFinishHint: {
+      'ku':
+          'Biqedîne dersê diqedîne û dersa din vedike. Azmûna kurt bijarte ye û bandorê li qedandinê nake.',
+      'tr':
+          'Tamamla dersi bitirir ve sonraki dersi açar. Kısa test isteğe bağlıdır, tamamlamayı etkilemez.',
+    },
     K.lessonRecallReveal: {'ku': 'Bersivê nîşan bide', 'tr': 'Yanıtı göster'},
     K.lessonRecallNext: {'ku': 'Bidomîne', 'tr': 'Sonraki'},
     K.lessonListeningTitle: {'ku': 'Guhdarî', 'tr': 'Dinleme'},
@@ -4627,6 +4637,8 @@ class K {
   static const miniQuiz = 'learn.miniQuiz';
   static const lessonRecallTitle = 'learn.lessonRecall.title';
   static const lessonRecallHint = 'learn.lessonRecall.hint';
+  static const lessonRecallRevealedHint = 'learn.recall.revealedHint';
+  static const lessonFinishHint = 'learn.lesson.finishHint';
   static const lessonRecallReveal = 'learn.lessonRecall.reveal';
   static const lessonRecallNext = 'learn.lessonRecall.next';
   static const lessonListeningTitle = 'learn.lessonListening.title';
