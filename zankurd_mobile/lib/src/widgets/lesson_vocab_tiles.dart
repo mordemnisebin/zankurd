@@ -62,6 +62,43 @@ class LessonContentBlocks extends StatelessWidget {
     'xemrî': Color(0xFF6B1F2E),
   };
 
+  /// Kurmancî metindeki AÇIKLAMA bloklarının sayısı (kelime çifti ve harf
+  /// satırı dışındaki, boş satırla ayrılmamış ardışık metin parçaları —
+  /// [build]'in `flushText` ile ürettiği bloklar).
+  ///
+  /// Veri sözleşmesi (kapışma U20, 2026-10-29): `content_tr` boş satırla
+  /// ayrılmış paragraflardan oluşur ve paragraf sayısı bu sayıya EŞİTTİR;
+  /// paragraflar sırayla eşleşir. Eşit değilse güvenlik ağı olarak tamamı ilk
+  /// bloğun altına düşer (bkz. `test/ders_karsilik_sozlesmesi_test.dart`).
+  static int explanationBlockCount(String text) {
+    var count = 0;
+    var open = false;
+    for (final line in text.split('\n')) {
+      if (_pair.hasMatch(line.trim()) || _isLetterRow(line)) {
+        open = false;
+        continue;
+      }
+      if (line.trim().isEmpty) {
+        // Boş satır metin bloğunu bölmez (flushText birleştirir); yalnız
+        // çift/harf satırı böler.
+        continue;
+      }
+      if (!open) {
+        count++;
+        open = true;
+      }
+    }
+    return count;
+  }
+
+  /// `content_tr`nin paragrafları (boş satırla ayrılmış, boşlar atılır).
+  static List<String> translationParagraphs(String text) => text
+      .trim()
+      .split(RegExp(r'\n\s*\n'))
+      .map((p) => p.trim())
+      .where((p) => p.isNotEmpty)
+      .toList();
+
   static final _singleCapital = RegExp(r'^\p{Lu}$', unicode: true);
 
   static bool _isLetterRow(String line) {
@@ -126,11 +163,7 @@ class LessonContentBlocks extends StatelessWidget {
 
     final tr = translation?.trim();
     if (tr != null && tr.isNotEmpty) {
-      final paragraphs = tr
-          .split(RegExp(r'\n\s*\n'))
-          .map((p) => p.trim())
-          .where((p) => p.isNotEmpty)
-          .toList();
+      final paragraphs = translationParagraphs(tr);
       Widget translated(String p) => Padding(
         key: const ValueKey('lesson-content-tr'),
         padding: const EdgeInsets.only(top: SahneSpace.x1),

@@ -170,18 +170,23 @@ class SpeechPlaybackGuard {
       if (identical(_current, run)) onState?.call(state);
       if (state == PlayerState.completed) unawaited(run.finish());
     });
-    if (previous != null) {
-      previous.cancelled = true;
-      await previous.finish();
+    if (previous != null) await previous.finish();
+    if (run.cancelled) {
+      // Önceki kapanırken bu çalış da durduruldu: hiç başlamaz.
+      run.markStarted();
+      await run.finish();
+      return;
     }
+    final starting = _c.startSpeech(token, run.player, () async {
+      if (run.cancelled) return;
+      await prepare(run.player);
+      // Hazırlık asenkron: bu arada stop/dispose/yeni play gelmiş olabilir.
+      if (run.cancelled) return;
+      await run.player.resume();
+    });
+    run.markStarted(starting);
     try {
-      await _c.startSpeech(token, run.player, () async {
-        if (run.cancelled) return;
-        await prepare(run.player);
-        // Hazırlık asenkron: bu arada stop/dispose/yeni play gelmiş olabilir.
-        if (run.cancelled) return;
-        await run.player.resume();
-      });
+      await starting;
     } catch (_) {
       if (!run.cancelled) {
         await run.finish();
@@ -209,6 +214,12 @@ class SpeechPlaybackGuard {
 }
 
 /// Bir telaffuz çalışı: kendi oynatıcı örneği, dinleyicisi ve belirteci.
+///
+/// Astra 6b1a66c6 incelemesi: kapanış, başlamış hazırlığı/başlatmayı
+/// beklemiyordu — askıdaki `resume` ile paralel stop + dispose + belirteç
+/// bırakma olabiliyor, askıdaki işlem SONRA devam edip ses çıkarabiliyordu.
+/// Kapanış artık tek sıralı zincirdir: iptal HEMEN işaretlenir → başlamış
+/// hazırlık/başlatma beklenir (hatası yutulur) → stop + dispose → belirteç.
 class _SpeechRun {
   _SpeechRun(this.player, this.token);
 
@@ -216,17 +227,36 @@ class _SpeechRun {
   final SpeechToken token;
   StreamSubscription<PlayerState>? sub;
   bool cancelled = false;
+  final Completer<void> _started = Completer<void>();
   Future<void>? _finishing;
 
-  /// Örneği durdurup kapatır, SONRA belirteci bırakır. TAM BİR KEZ.
-  Future<void> finish() => _finishing ??= () async {
-    await sub?.cancel();
-    try {
-      await player.stop();
-    } catch (_) {}
-    try {
-      await player.dispose();
-    } catch (_) {}
-    await token.release();
-  }();
+  /// Başlatma (varsa) kuruldu; kapanış onu bekler. Başlatma hiç
+  /// yapılmayacaksa argümansız çağrılır.
+  void markStarted([Future<void>? starting]) {
+    if (_started.isCompleted) return;
+    if (starting == null) {
+      _started.complete();
+    } else {
+      _started.complete(starting.catchError((Object _) {}));
+    }
+  }
+
+  /// İptali işaretler; başlatma sürüyorsa onun bitmesini bekler, SONRA
+  /// örneği durdurup kapatır ve belirteci bırakır. TAM BİR KEZ.
+  Future<void> finish() {
+    cancelled = true;
+    return _finishing ??= () async {
+      try {
+        await _started.future;
+      } catch (_) {}
+      await sub?.cancel();
+      try {
+        await player.stop();
+      } catch (_) {}
+      try {
+        await player.dispose();
+      } catch (_) {}
+      await token.release();
+    }();
+  }
 }

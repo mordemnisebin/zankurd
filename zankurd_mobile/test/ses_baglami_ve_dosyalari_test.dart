@@ -177,6 +177,35 @@ void main() {
       expect(globalCalls, ['global:${AVAudioSessionCategory.ambient}']);
     });
 
+    // Astra 6b1a66c6: kapanış askıdaki resume'u beklemiyordu; resume
+    // stop + dispose'dan SONRA tamamlanıp ses çıkarabiliyordu.
+    test('resume askıdayken stop → resume bitince stop+dispose, belirteç '
+        'ondan sonra bırakılır; sonra ses yok', () async {
+      final c = AudioSessionCoordinator.instance;
+      final gate = Completer<void>();
+      final fake = _FakePlayer(resumeGate: gate.future);
+      final guard = SpeechPlaybackGuard(() => fake);
+      final play = guard.play((p) async {});
+      await pumpEvents();
+      expect(fake.calls, contains('resume'), reason: 'resume askıda olmalı');
+      final stop = guard.stop();
+      await pumpEvents();
+      expect(fake.calls, isNot(contains('stop')), reason: 'resume beklenmeli');
+      expect(fake.calls, isNot(contains('dispose')));
+      expect(c.speechActive, isTrue, reason: 'belirteç erken bırakıldı');
+      gate.complete();
+      await Future.wait([play, stop]);
+      final resumeDone = fake.calls.indexOf('resume:done');
+      expect(resumeDone, isNonNegative);
+      expect(fake.calls.indexOf('stop'), greaterThan(resumeDone));
+      expect(
+        fake.calls.indexOf('dispose'),
+        greaterThan(fake.calls.indexOf('stop')),
+      );
+      expect(c.speechActive, isFalse);
+      expect(fake.calls.last, 'dispose', reason: 'kapanıştan sonra ses yok');
+    });
+
     test('eski örneğin geç completed olayı yeni belirteci etkilemez', () async {
       final c = AudioSessionCoordinator.instance;
       final first = _FakePlayer();
@@ -303,7 +332,15 @@ Future<void> pumpEvents() async {
 }
 
 class _FakePlayer implements AudioPlayer {
-  _FakePlayer({this.log, this.tag, this.delay = false, this.sourceGate});
+  _FakePlayer({
+    this.log,
+    this.tag,
+    this.delay = false,
+    this.sourceGate,
+    this.resumeGate,
+  });
+
+  final Future<void>? resumeGate;
 
   final Future<void>? sourceGate;
 
@@ -352,7 +389,13 @@ class _FakePlayer implements AudioPlayer {
   Future<void> setPlaybackRate(double playbackRate) async => calls.add('rate');
 
   @override
-  Future<void> resume() async => calls.add('resume');
+  Future<void> resume() async {
+    calls.add('resume');
+    if (resumeGate != null) {
+      await resumeGate;
+      calls.add('resume:done');
+    }
+  }
 
   @override
   Stream<PlayerState> get onPlayerStateChanged => _states.stream;
