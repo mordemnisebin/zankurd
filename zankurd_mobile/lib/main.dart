@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -236,12 +237,17 @@ Future<void> main() async {
             options: DefaultFirebaseOptions.currentPlatform,
           );
         },
+        // Kurulur kurulmaz İKİ ölçüm de kapatılır; rıza varsa aşağıda
+        // açılır. 2.1.1+41 ve öncesinde rıza varsayılan açıktı ve SDK'lar
+        // `true`yu KALICI saklıyordu; yükseltilen iOS kurulumunda plist
+        // varsayılanı ezilir (Android'de MainActivity bunu daha önce yapar).
         disableCrashlytics: () async {
           if (!kIsWeb) {
             await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
               false,
             );
           }
+          await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(false);
         },
       );
       // Bildirime dokununca doğru ekrana yönlendirme yalnız Firebase gerçekten
@@ -341,17 +347,21 @@ Future<void> main() async {
       }
 
       startInBackground(premiumService.warmUp(), 'premium warmUp');
+      // İki rıza ayrı (2026-10-29): kullanım analizi ve hata raporları
+      // seçim yokken kapalı; açık olan yalnız kendi hizmetini başlatır.
       if (analyticsConsentProvider.enabled) {
         startInBackground(
           AnalyticsService.instance.initialize(enabled: true),
           'analytics init',
         );
-        if (firebaseReady && !kIsWeb) {
-          startInBackground(
-            ErrorReporter.setCollectionEnabled(true),
-            'crashlytics enable',
-          );
-        }
+      }
+      if (analyticsConsentProvider.crashReportsEnabled &&
+          firebaseReady &&
+          !kIsWeb) {
+        startInBackground(
+          ErrorReporter.setCollectionEnabled(true),
+          'crashlytics enable',
+        );
       }
       startInBackground(
         // Servis kurulunca seri uyarısı bir sonraki akşama kurulur (tek atış).

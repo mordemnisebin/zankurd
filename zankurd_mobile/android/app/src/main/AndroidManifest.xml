@@ -136,6 +136,21 @@
         <meta-data
             android:name="google_analytics_adid_collection_enabled"
             android:value="false" />
+        <!-- Hata raporları da VARSAYILAN KAPALI (2026-10-29, Opus+Astra
+             kararı): Crashlytics yerel SDK'sı aksi hâlde kendiliğinden açılır.
+             Ayarlar > Hata raporları açılınca
+             `setCrashlyticsCollectionEnabled(true)`. -->
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
+        <!-- Rıza, FirebaseInitProvider'dan (initOrder 100) ÖNCE uygulanır:
+             yükseltilen kurulumda Crashlytics'in kalıcı `true`su bu sağlayıcıda
+             `false` yazılır (bkz. ConsentInitProvider.kt). -->
+        <provider
+            android:name=".ConsentInitProvider"
+            android:authorities="${applicationId}.consentinit"
+            android:exported="false"
+            android:initOrder="200" />
 
         <!-- FCM varsayılanları (arka planda gelen push).
              Uygulama arka plandayken `notification` yüklü FCM iletisini

@@ -11,7 +11,8 @@ import 'package:zankurd_mobile/src/l10n/strings.dart';
 /// oysa tamamlanan dersler `user_lesson_progress` tablosuna, kayıtlı
 /// hesabın seri/rozet/yanlış geçmişi `save_my_progress` ile sunucuya
 /// yazılıyor. Analiz ayarı için gösterilen "Ayarlar > Gizlilik ve veri"
-/// yolu da yoktu; ayar "Hesap ve gizlilik" bölümünde, varsayılanı açık.
+/// yolu da yoktu; ayar "Hesap ve gizlilik" bölümünde. 2026-10-29'dan beri
+/// analiz ve hata raporları ayrı anahtar, ikisi de varsayılan kapalı.
 /// Sessiz kaldı çünkü hiçbir test metni koda bağlamıyordu: metin elle
 /// yazılmış bir iddiaydı.
 void main() {
@@ -33,6 +34,15 @@ void main() {
       expect(
         body,
         contains(
+          '${t(K.settings)} > ${t(K.secAccountPrivacy)} > '
+          '${t(K.crashReportsConsent)}',
+        ),
+        reason:
+            '$lang: hata raporu ayarının yolu ekrandaki adlarla aynı olmalı',
+      );
+      expect(
+        body,
+        contains(
           '${t(K.settings)} > ${t(K.secDanger)} > ${t(K.deleteAccount)}',
         ),
         reason: '$lang: hesap silme yolu ekrandaki adlarla aynı olmalı',
@@ -46,10 +56,14 @@ void main() {
     expect(body, contains('tamamlanan dersler'));
     expect(body, contains('yedeği de sunucuya'));
     expect(body, isNot(contains('öğrenme ilerlemesi yalnız bu cihazda')));
-    // Analiz varsayılanı açık (AnalyticsConsent.defaultEnabled); metin
-    // "yalnız açarsan" diyemez.
-    expect(body, contains('başlangıçta açıktır'));
-    expect(ku(K.privacyBody), contains('di destpêkê de vekirî ye'));
+    // 2026-10-29 (Opus+Astra): analiz ve hata raporları ayrı anahtar,
+    // ikisi de varsayılan kapalı (AnalyticsConsentProvider.defaultEnabled).
+    // Metin "başlangıçta açıktır" ya da kanıtsız "anonim" diyemez.
+    expect(body, contains('başlangıçta kapalıdır'));
+    expect(body, isNot(contains('başlangıçta açıktır')));
+    expect(body, isNot(contains('anonim çökme')));
+    expect(ku(K.privacyBody), contains('di destpêkê de girtî ne'));
+    expect(ku(K.privacyBody), isNot(contains('di destpêkê de vekirî ye')));
 
     // Metnin dayandığı kod gerçekleri yerinde mi? Biri değişirse metin de
     // gözden geçirilmeli.
@@ -60,7 +74,7 @@ void main() {
     final consent = File(
       'lib/src/providers/analytics_consent_provider.dart',
     ).readAsStringSync();
-    expect(consent, contains('defaultEnabled = true'));
+    expect(consent, contains('defaultEnabled = false'));
     final sync = File('lib/src/data/progress_sync.dart').readAsStringSync();
     expect(sync, contains('misafir olmayan'));
   });

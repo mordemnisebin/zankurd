@@ -81,8 +81,20 @@ class Tr {
     K.secSafety: {'ku': 'Ewlekarî', 'tr': 'Güvenlik'},
     K.analyticsConsent: {'ku': 'Analîza bikaranînê', 'tr': 'Kullanım analizi'},
     K.analyticsConsentSub: {
-      'ku': 'Ji bo em sepanê baştir bikin, daneyên bênav ên bikaranînê bişîne',
-      'tr': 'Uygulamayı geliştirmemiz için anonim kullanım verisi gönder',
+      'ku':
+          'Ji bo em sepanê baştir bikin, daneyên bikaranînê bişîne; dibe ku bi hesabê te ve werin girêdan',
+      'tr':
+          'Uygulamayı geliştirmemiz için kullanım verisi gönder; hesabınla ilişkilendirilebilir',
+    },
+    K.crashReportsConsent: {
+      'ku': 'Ragihandinên çewtiyan',
+      'tr': 'Hata raporları',
+    },
+    K.crashReportsConsentSub: {
+      'ku':
+          'Gava sepan têk biçe, tomara çewtiya teknîkî bişîne da ku em wê sererast bikin',
+      'tr':
+          'Uygulama çökerse teknik hata kaydını gönder; düzeltmemize yardım eder',
     },
     K.reportAbuse: {
       'ku': 'Bikaranîna xerab ragihîne',
@@ -206,7 +218,7 @@ class Tr {
     K.emailRequired: {'ku': 'E-name pêwîst e', 'tr': 'E-posta gerekli'},
     K.passwordRequired: {'ku': 'Şîfre pêwîst e', 'tr': 'Parola gerekli'},
     K.passwordMin6: {
-      'ku': 'Şîfre divê herî kêm 6 tîp be',
+      'ku': 'Şîfre divê herî kêm 6 karakter be',
       'tr': 'Parola en az 6 karakter olmalı',
     },
     K.signingIn: {'ku': 'Tê têketin…', 'tr': 'Giriş yapılıyor…'},
@@ -350,7 +362,7 @@ class Tr {
       'ku': 'Agahiyên xwe kontrol bike',
       'tr': 'Bilgilerini gözden geçir',
     },
-    K.passwordHintMin6: {'ku': 'Herî kêm 6 tîp', 'tr': 'En az 6 karakter'},
+    K.passwordHintMin6: {'ku': 'Herî kêm 6 karakter', 'tr': 'En az 6 karakter'},
     K.confirmPassword: {'ku': 'Şîfreyê piştrast bike', 'tr': 'Parolayı onayla'},
     K.confirmPasswordRequired: {
       'ku': 'Piştrastkirina şîfreyê pêwîst e',
@@ -2607,11 +2619,11 @@ class Tr {
       'tr': 'Oda sohbetinde bağlantı paylaşılamaz.',
     },
     K.chatTooLong: {
-      'ku': 'Peyam pir dirêj e (herî zêde 240 tîp).',
+      'ku': 'Peyam pir dirêj e (herî zêde 240 karakter).',
       'tr': 'Mesaj çok uzun (en fazla 240 karakter).',
     },
     K.chatSpam: {
-      'ku': 'Heman tîp pir zêde hatiye dubarekirin.',
+      'ku': 'Heman karakter pir zêde hatiye dubarekirin.',
       'tr': 'Aynı karakter çok fazla tekrarlanmış.',
     },
     K.chatSendFailed: {
@@ -2849,7 +2861,7 @@ class Tr {
     },
     K.password: {'ku': 'Şîfre', 'tr': 'Parola'},
     K.passwordTooShort: {
-      'ku': 'Şîfre divê herî kêm 6 tîp be',
+      'ku': 'Şîfre divê herî kêm 6 karakter be',
       'tr': 'Parola en az 6 karakter olmalı',
     },
     K.orSeparator: {'ku': 'an jî', 'tr': 'veya'},
@@ -2890,7 +2902,7 @@ class Tr {
       'tr': 'Bu e-posta zaten kullanılıyor.',
     },
     K.authErrWeakPassword: {
-      'ku': 'Şîfre pir qels e (herî kêm 6 tîp).',
+      'ku': 'Şîfre pir qels e (herî kêm 6 karakter).',
       'tr': 'Parola çok zayıf (en az 6 karakter).',
     },
     K.authErrInvalidEmail: {
@@ -3335,11 +3347,11 @@ class Tr {
     },
     K.nameGateHint: {'ku': 'Mînak: Zelal', 'tr': 'Örn: Zelal'},
     K.nameMinLength: {
-      'ku': 'Nav divê herî kêm 2 tîp be',
+      'ku': 'Nav divê herî kêm 2 karakter be',
       'tr': 'Ad en az 2 karakter olmalı',
     },
     K.nameMaxLength: {
-      'ku': 'Nav divê herî zêde 24 tîp be',
+      'ku': 'Nav divê herî zêde 24 karakter be',
       'tr': 'Ad en fazla 24 karakter olmalı',
     },
     // 2026-08-02: adlar hiçbir içerik filtresinden geçmiyordu; bu dört
@@ -3353,7 +3365,7 @@ class Tr {
       'tr': 'Bu ad korumalı, kullanılamaz',
     },
     K.nameInvalidChars: {
-      'ku': 'Ev nav tîpên nederbasdar dihewîne',
+      'ku': 'Ev nav karakterên nederbasdar dihewîne',
       'tr': 'Bu ad geçersiz karakterler içeriyor',
     },
     K.nameNoLinks: {
@@ -3442,9 +3454,9 @@ class Tr {
     },
     K.privacyBody: {
       'ku':
-          'ZanKurd van daneyan li ser pêşkêşkarê, bi hesabê te ve girêdayî tomar dike: navê lîstikvan û wêneyê profîlê, navnîşana e-nameyê (heke tu xwe tomar bikî), XP, hejmara zêran û kirîn, pûan û statîstîkên lîstikê, pûana rêzbendiyê, dersên qedandî, pirsên tomarkirî, peyamên odeyê, pêşniyarên pirsan û bikarhênerên ku te asteng kirine. Salnameya zincîrê, rozet, ast, serdestiya mijaran, pirsên şaş ên li benda dubarekirinê û pêşketina çîrokan li ser vê amûrê tên parastin; heke te hesabê xwe tomar kiribe, kopiyeke wan jî li ser pêşkêşkarê tê hilanîn û li ser amûreke din vedigere. Di hesabê mêvan de ev tenê li ser vê amûrê ne. Lîsteya peyvan û mîheng tenê li ser vê amûrê tên parastin. Dema tu derkevî, pêşketina li ser amûrê tê paqijkirin. Analîza bikaranînê û tomarên têkçûnê yên anonîm dema Mîheng > Hesab û nepenî > Analîza bikaranînê vekirî be tên şandin; ev mîheng di destpêkê de vekirî ye û tu dikarî kengî bixwazî wê bigirî.\n\nDaneyên te nayên firotin û bi armanca bazargeriyê bi aliyên sêyemîn re nayên parvekirin. Navê te di rêzbendiyê, lêgerîna hevalan û daxwazên hevaltiyê de, her wiha di odeyên serhêl de xuya dibe.\n\nJi bo jêbirina hesabê xwe û hemû daneyên xwe yên serhêl bi awayekî mayînde: Mîheng > Karên hesabê > Hesabê min jê bibe.',
+          'ZanKurd van daneyan li ser pêşkêşkarê, bi hesabê te ve girêdayî tomar dike: navê lîstikvan û wêneyê profîlê, navnîşana e-nameyê (heke tu xwe tomar bikî), XP, hejmara zêran û kirîn, pûan û statîstîkên lîstikê, pûana rêzbendiyê, dersên qedandî, pirsên tomarkirî, peyamên odeyê, pêşniyarên pirsan û bikarhênerên ku te asteng kirine. Salnameya zincîrê, rozet, ast, serdestiya mijaran, pirsên şaş ên li benda dubarekirinê û pêşketina çîrokan li ser vê amûrê tên parastin; heke te hesabê xwe tomar kiribe, kopiyeke wan jî li ser pêşkêşkarê tê hilanîn û li ser amûreke din vedigere. Di hesabê mêvan de ev tenê li ser vê amûrê ne. Lîsteya peyvan û mîheng tenê li ser vê amûrê tên parastin. Dema tu derkevî, pêşketina li ser amûrê tê paqijkirin. Bûyerên bikaranînê yên ku dikarin bi hesabê te ve werin girêdan tenê dema Mîheng > Hesab û nepenî > Analîza bikaranînê vekirî be, tomarên têkçûnê jî tenê dema Mîheng > Hesab û nepenî > Ragihandinên çewtiyan vekirî be tên şandin. Her du mîheng di destpêkê de girtî ne; tu dikarî kengî bixwazî wan veki an bigirî.\n\nDaneyên te nayên firotin û bi armanca bazargeriyê bi aliyên sêyemîn re nayên parvekirin. Navê te di rêzbendiyê, lêgerîna hevalan û daxwazên hevaltiyê de, her wiha di odeyên serhêl de xuya dibe.\n\nJi bo jêbirina hesabê xwe û hemû daneyên xwe yên serhêl bi awayekî mayînde: Mîheng > Karên hesabê > Hesabê min jê bibe.',
       'tr':
-          'ZanKurd şu verileri sunucuda, hesabına bağlı olarak saklar: oyuncu adı ve profil fotoğrafı, e-posta adresi (kayıt olursan), XP, jeton sayısı ve satın almalar, oyun puanları ve istatistikleri, sıralama puanı, tamamlanan dersler, kaydedilen sorular, oda mesajları, soru önerileri ve engellediğin kullanıcılar. Seri takvimi, rozetler, seviye, konu ustalığı, tekrar bekleyen yanlış sorular ve hikâye ilerlemesi bu cihazda tutulur; hesabını kaydettiysen bunların bir yedeği de sunucuya alınır ve başka cihazda geri gelir. Misafir hesapta bunlar yalnız bu cihazdadır. Kelime listesi ve ayarlar yalnız bu cihazda tutulur. Çıkış yaptığında cihazdaki ilerleme temizlenir. Kullanım analizi ve anonim çökme kayıtları, Ayarlar > Hesap ve gizlilik > Kullanım analizi açıkken gönderilir; bu ayar başlangıçta açıktır ve istediğin zaman kapatabilirsin.\n\nVerilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı paylaşılmaz. Adın sıralamada, arkadaş araması ve isteklerinde, ayrıca çevrimiçi odalarda görünür.\n\nHesabını ve tüm çevrimiçi verilerini kalıcı olarak silmek için: Ayarlar > Hesap işlemleri > Hesabımı sil.',
+          'ZanKurd şu verileri sunucuda, hesabına bağlı olarak saklar: oyuncu adı ve profil fotoğrafı, e-posta adresi (kayıt olursan), XP, jeton sayısı ve satın almalar, oyun puanları ve istatistikleri, sıralama puanı, tamamlanan dersler, kaydedilen sorular, oda mesajları, soru önerileri ve engellediğin kullanıcılar. Seri takvimi, rozetler, seviye, konu ustalığı, tekrar bekleyen yanlış sorular ve hikâye ilerlemesi bu cihazda tutulur; hesabını kaydettiysen bunların bir yedeği de sunucuya alınır ve başka cihazda geri gelir. Misafir hesapta bunlar yalnız bu cihazdadır. Kelime listesi ve ayarlar yalnız bu cihazda tutulur. Çıkış yaptığında cihazdaki ilerleme temizlenir. Hesabınla ilişkilendirilebilen kullanım olayları yalnız Ayarlar > Hesap ve gizlilik > Kullanım analizi açıkken, çökme kayıtları yalnız Ayarlar > Hesap ve gizlilik > Hata raporları açıkken gönderilir. İki ayar da başlangıçta kapalıdır; istediğin zaman açıp kapatabilirsin.\n\nVerilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı paylaşılmaz. Adın sıralamada, arkadaş araması ve isteklerinde, ayrıca çevrimiçi odalarda görünür.\n\nHesabını ve tüm çevrimiçi verilerini kalıcı olarak silmek için: Ayarlar > Hesap işlemleri > Hesabımı sil.',
     },
     K.aboutBody: {
       'ku':
@@ -4477,6 +4489,8 @@ class K {
   static const secSafety = 'settings.section.safety';
   static const analyticsConsent = 'settings.analyticsConsent';
   static const analyticsConsentSub = 'settings.analyticsConsent.sub';
+  static const crashReportsConsent = 'settings.crashReportsConsent';
+  static const crashReportsConsentSub = 'settings.crashReportsConsent.sub';
   static const reportAbuse = 'settings.reportAbuse';
   static const betaFeedback = 'settings.betaFeedback';
   static const betaMailSubject = 'settings.betaMail.subject';
