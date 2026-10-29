@@ -544,7 +544,10 @@ void main() {
     /// "Soru 8/10 · Dil" sığmıyor ve konu adı "…" oluyordu.
     ///
     /// ## Kural
-    /// Skor 1.000 ve üstünde konu işareti düşer; sayaç ve konu adı tam okunur.
+    /// İlk kural "skor 1.000'de konu işareti düşer" idi; tur 3'te (2026-10-30)
+    /// işaretin soru ORTASINDA düşmesi orta yuvayı genişletip soruyu kaydırdı.
+    /// Artık sağ grubun skor yuvası baştan en geniş hâliyle ayrılır; işaret
+    /// skordan bağımsız yerinde kalır ve künye yine kesilmez.
     Future<void> pumpCenter(WidgetTester tester, int score) async {
       tester.view.physicalSize = const Size(390, 844);
       tester.view.devicePixelRatio = 1;
@@ -557,7 +560,6 @@ void main() {
               category: 'Ziman',
               index: 7,
               total: 10,
-              score: score,
             ),
             score: const FittedBox(
               fit: BoxFit.scaleDown,
@@ -581,13 +583,13 @@ void main() {
       await tester.pump();
     }
 
-    testWidgets('skor 1095: işaret düşer, "Soru 8/10 · Dil" kısalmaz', (
+    testWidgets('skor 1095: işaret yerinde, "Soru 8/10 · Dil" kısalmaz', (
       tester,
     ) async {
       await pumpCenter(tester, 1095);
       expect(
         find.byKey(const ValueKey('quiz-question-icon-badge')),
-        findsNothing,
+        findsOneWidget,
       );
       final finder = find.byKey(const ValueKey('quiz-stage-kicker'));
       final paragraph = tester.renderObject<RenderParagraph>(finder);

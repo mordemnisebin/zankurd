@@ -27,7 +27,6 @@ class QuizStageCenter extends StatelessWidget {
     this.onBand = false,
     this.title,
     this.modeLabel,
-    this.score = 0,
     this.subtitle,
   });
 
@@ -38,14 +37,12 @@ class QuizStageCenter extends StatelessWidget {
   /// yazıda düşer; o zaman bilgi zaten modun kendi ekranında okunur).
   final String? subtitle;
 
-  /// Üst çubuktaki canlı skor. [markScoreLimit] ve üstünde (1.095) sağ grup
-  /// genişler ve orta yuvada konu işareti + "Soru 8/10 · …" birlikte sığmaz;
-  /// kesilen şey KONU ADI oluyordu (2026-10-29 çevrimiçi gezinti, X7). O
-  /// durumda 28'lik konu işareti düşer, sayaç ve konu adı okunur kalır.
-  final int score;
-
-  /// Konu işaretinin düştüğü skor.
-  static const int markScoreLimit = 1000;
+  // Tur 3 (2026-10-30): konu işareti eskiden skor 1.000'e varınca düşüyordu
+  // (X7: sağ grup genişleyince künye kısalıyordu). Ama işaret SORU ORTASINDA
+  // düşünce orta yuva genişliyor, künye iki satırdan bire iniyor ve soru
+  // yukarı kayıyordu. Artık sağ grubun skor yuvası ve sayaç kapsülü baştan en
+  // geniş hâliyle ayrılır; orta yuva soru boyunca sabittir ve işaret yalnız
+  // ekran genişliğine/yazı ölçeğine göre ([compact]) düşer.
 
   final String category;
 
@@ -102,7 +99,7 @@ class QuizStageCenter extends StatelessWidget {
     final line = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (!compact && score < markScoreLimit) ...[
+        if (!compact) ...[
           if (onBand)
             Icon(
               CategoryVisuals.icon(category),

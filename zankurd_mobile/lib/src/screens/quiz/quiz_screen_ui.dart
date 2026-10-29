@@ -320,9 +320,6 @@ extension _QuizScreenUI on _QuizScreenState {
     category: question.category,
     index: index,
     total: widget.questions.length,
-    // Skor 1.000'e varınca sağ grup genişler; konu işareti düşer ki
-    // "Soru n/N · Konu" kısalmasın (2026-10-29, X7; bkz. `QuizStageCenter`).
-    score: score,
   );
 
   /// Üst satırın sağ yuvası: [sohbet] [skor] [kalan saniye] [⋯ menü].

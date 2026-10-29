@@ -409,20 +409,40 @@ class SahneStageTimer extends StatelessWidget {
     final color = onBand
         ? (isHot ? (red ? day.errTx : day.shortfallTx) : SahneVivid.onFill)
         : (red ? t.errTx : (isHot ? t.shortfallTx : t.tx));
+    final numberStyle = SahneType.headline.copyWith(
+      color: color,
+      fontSize: 20,
+      fontWeight: FontWeight.w800,
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
     final row = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(AppIcons.clock, size: 20, color: color),
         const SizedBox(width: SahneSpace.x1),
-        Text(
-          '$secondsLeft',
-          key: const ValueKey('stage-timer-seconds'),
-          style: SahneType.headline.copyWith(
-            color: color,
-            fontSize: 20,
-            fontWeight: FontWeight.w800,
-            fontFeatures: const [FontFeature.tabularFigures()],
-          ),
+        // Tur 3 (2026-10-30, canlı düello kayması): sayı "12"den "9"a inince
+        // kapsül daralıyor, üst çubuğun orta yuvası genişliyor ve künye iki
+        // satırdan bire inip soruyu ~7 pt yukarı kaydırıyordu. Sayının yeri
+        // en az iki hane ("88") genişliğinde sabittir; tablo rakamlı olduğu
+        // için iki hanelik her değer aynı genişliktedir.
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            ExcludeSemantics(
+              child: Visibility(
+                visible: false,
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                child: Text('88', style: numberStyle),
+              ),
+            ),
+            Text(
+              '$secondsLeft',
+              key: const ValueKey('stage-timer-seconds'),
+              style: numberStyle,
+            ),
+          ],
         ),
       ],
     );
@@ -459,21 +479,21 @@ class SahneStageTimer extends StatelessWidget {
     return Semantics(
       label: semanticLabel,
       excludeSemantics: true,
-      child: onBand && isHot
-          ? DecoratedBox(
-              decoration: const ShapeDecoration(
-                color: SahneVivid.onFill,
-                shape: StadiumBorder(),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: SahneSpace.x2,
-                  vertical: SahneSpace.x1,
-                ),
-                child: row,
-              ),
-            )
-          : row,
+      // Bant üstünde gerilim hapı sonradan eklenince de boyut değişmesin:
+      // dolgu her zaman vardır, hap yalnız gerilimde boyanır.
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: isHot ? SahneVivid.onFill : Colors.transparent,
+          shape: const StadiumBorder(),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: SahneSpace.x2,
+            vertical: SahneSpace.x1,
+          ),
+          child: row,
+        ),
+      ),
     );
   }
 }
