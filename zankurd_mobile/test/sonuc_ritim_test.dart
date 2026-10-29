@@ -11,7 +11,10 @@
 //
 // Aralıklar tek tek `SizedBox` sabitleridir; hiçbiri derleme ya da taşma
 // hatası vermez, mevcut testler yalnız SIRAyı ölçer. Bu dosya mesafeyi
-// ölçer: amblem→başlık 12, alt satır→sayım kartı 20, sayım→ödül 20.
+// ölçer: amblem→başlık 12, alt satır→sayım kartı 16, sayım→ödül 16.
+//
+// 2026-10-29 son kurul tur 3: ritim 20 → 16 (üç model: kutlama ağır,
+// "Ayrıntılar" aşağı itiliyordu). Eşitlik korunur; yalnız aralık sıkılaştı.
 //
 // Alt çubuğun son satırı örtmemesi ayrı bekçidedir:
 // `sahne_result_template_test.dart` (`alt boşluk`).
@@ -25,7 +28,7 @@ import 'support/widget_test_helpers.dart';
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  testWidgets('amblem→başlık 12, alt satır→sayım 20, sayım→ödül 20', (
+  testWidgets('amblem→başlık 12, alt satır→sayım 16, sayım→ödül 16', (
     tester,
   ) async {
     tester.view.devicePixelRatio = 1.0;
@@ -66,7 +69,7 @@ void main() {
 
     expect(title.top - emblem.bottom, closeTo(12, 6)); // metin iç boşluğu
     // Kahraman bloğunun alt dolgusu (16) dahil, ölçü metnin alt kenarından.
-    expect(stats.top - caption.bottom, closeTo(20, 5));
-    expect(rewards.top - stats.bottom, closeTo(20, 0.5));
+    expect(stats.top - caption.bottom, closeTo(16, 5));
+    expect(rewards.top - stats.bottom, closeTo(16, 0.5));
   });
 }

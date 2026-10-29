@@ -72,7 +72,10 @@ const double kSahneResultMaxWidth = 560;
 /// tek boşluk: yıldız/puan/alt satır grubu ile kartlar aynı ritimde durur.
 /// Kahraman bloğunun kendi alt dolgusu 16 olduğundan kahraman→sayımlar
 /// arasına bu değerden 16 az eklenir.
-const double kSahneResultRhythmGap = 20;
+///
+/// 2026-10-29 son kurul tur 3 (üç model): 20 → 16. Kutlama bloğu ağır,
+/// "Ayrıntılar" ilk ekranın dibine itiliyordu; ritim eşit kalır, yalnız sıkı.
+const double kSahneResultRhythmGap = 16;
 
 /// Büyük puan ile hemen altındaki satır ("puan · %67 doğruluk") arası.
 /// Tur 9b (Gemini + Grok): 64 punto rakamın alt boşluğu ile 14 punto alt satır
@@ -1210,7 +1213,9 @@ class SahneResultRewards extends StatelessWidget {
     return SahneSurfaceCard(
       // Zêr "Kazanıldı" kartı (2026-10-20): altın tonlu zemin ve kenar.
       color: t.gold.withValues(alpha: 0.24),
-      edgeColor: t.gold.withValues(alpha: 0.55),
+      // Son kurul tur 3: kenar %55 → %40 (altın çerçeveler kutlamayı
+      // ağırlaştırıyordu; zemin tonu ve çip halkaları aynen).
+      edgeColor: t.gold.withValues(alpha: 0.40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

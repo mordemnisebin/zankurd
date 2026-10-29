@@ -1173,6 +1173,14 @@ class _CurrentLessonCard extends StatelessWidget {
       child: SahneSurfaceCard(
         color: t.learnFill,
         edgeColor: t.learnFill,
+        // Son kurul tur 3: üst dolgu 16 → 12, Başla öncesi 16 → 12 (ilk
+        // ekranda rotanın devamı görünsün; düğüm + kart tek birim).
+        padding: const EdgeInsets.fromLTRB(
+          SahneSpace.x4,
+          SahneSpace.x3,
+          SahneSpace.x4,
+          SahneSpace.x4,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -1191,7 +1199,7 @@ class _CurrentLessonCard extends StatelessWidget {
                 style: SahneType.caption.copyWith(color: SahneVivid.onFill),
               ),
             ],
-            const SizedBox(height: SahneSpace.x4),
+            const SizedBox(height: SahneSpace.x3),
             SahneButton.primary(
               label: context.t(K.start),
               onPressed: onTap,

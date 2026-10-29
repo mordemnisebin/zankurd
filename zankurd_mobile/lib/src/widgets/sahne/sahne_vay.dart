@@ -596,7 +596,12 @@ class SahneMedalScene extends StatelessWidget {
   /// ayrı odak değil, tek bir kutlama kümesidir (Astra: "madalya, maskot ve
   /// yıldızlar yarışıyor").
   static const double medalSize = 104;
-  static const double discSize = 184;
+
+  /// Işın diski. 2026-10-29 son kurul tur 3 (üç model, üç tur): kutlama
+  /// ayrıntıları aşağı itecek kadar ağırdı; disk 184 → 164 (ışın opaklığı
+  /// da %18 → %14, [SahneVayColors.rayCenter]). Madalya, maskot ve puan
+  /// boyu aynen kalır.
+  static const double discSize = 164;
   static const double mascotSize = 84;
 
   /// Maskotun madalyanın üstüne bindiği pay.
@@ -867,11 +872,23 @@ class SahneIconDisc extends StatelessWidget {
     required this.icon,
     required this.color,
     this.size = 68,
+    this.flat = false,
   });
 
   final IconData icon;
   final Color color;
   final double size;
+
+  /// Kabartmasız disk: dış gölge yok, cam degrade ve kenar daha ince
+  /// ([flatTop]/[flatBottom]/[flatRim]). İkincil lobi kartları içindir —
+  /// 2026-10-29 son kurul tur 3 (Astra + Sol, üç turdur): degrade + kabarık
+  /// ikon halkası + gölge + dağ kenarı bir arada küçük kartta ağır duruyordu.
+  /// Kartın rengi ve degradesi DEĞİŞMEZ; yalnız bu tek katman hafifler.
+  final bool flat;
+
+  static const double flatTop = 0.20;
+  static const double flatBottom = 0.06;
+  static const double flatRim = 0.18;
 
   @override
   Widget build(BuildContext context) {
@@ -883,22 +900,26 @@ class SahneIconDisc extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              SahneVayColors.white.withValues(alpha: 0.30),
-              SahneVayColors.white.withValues(alpha: 0.08),
+              SahneVayColors.white.withValues(alpha: flat ? flatTop : 0.30),
+              SahneVayColors.white.withValues(alpha: flat ? flatBottom : 0.08),
             ],
           ),
           shape: CircleBorder(
             side: BorderSide(
-              color: SahneVayColors.white.withValues(alpha: 0.30),
+              color: SahneVayColors.white.withValues(
+                alpha: flat ? flatRim : 0.30,
+              ),
             ),
           ),
-          shadows: [
-            BoxShadow(
-              color: SahneVayColors.black.withValues(alpha: 0.16),
-              offset: const Offset(0, 3),
-              blurRadius: 6,
-            ),
-          ],
+          shadows: flat
+              ? const []
+              : [
+                  BoxShadow(
+                    color: SahneVayColors.black.withValues(alpha: 0.16),
+                    offset: const Offset(0, 3),
+                    blurRadius: 6,
+                  ),
+                ],
         ),
         child: SizedBox.square(
           dimension: size,
@@ -1385,6 +1406,9 @@ class _BracketLinePainter extends CustomPainter {
 /// Oyun sahnesinin CAM kartı: beyaz %8 yüzey + beyaz %12 kenar
 /// ([SahneVivid.sheet], [SahneVivid.sheetEdge]). Gece-dağ sahnesinin üstünde
 /// nötr gri Perde yerine sahnenin rengini geçiren yüzey (sonuç "Ayrıntılar").
+///
+/// [solid] uzun metinli kart içindir: aynı ton opak ([SahneVivid.sheetSolid]),
+/// dağ silueti yazının arkasından geçmez.
 class SahneGlassCard extends StatelessWidget {
   const SahneGlassCard({
     super.key,
@@ -1392,12 +1416,14 @@ class SahneGlassCard extends StatelessWidget {
     this.padding = const EdgeInsets.all(SahneSpace.x4),
     this.onTap,
     this.semanticLabel,
+    this.solid = false,
   });
 
   final Widget child;
   final EdgeInsetsGeometry padding;
   final VoidCallback? onTap;
   final String? semanticLabel;
+  final bool solid;
 
   @override
   Widget build(BuildContext context) {
@@ -1408,7 +1434,7 @@ class SahneGlassCard extends StatelessWidget {
     );
     final card = Material(
       key: const ValueKey('sahne-glass-card'),
-      color: SahneVivid.sheet,
+      color: solid ? SahneVivid.sheetSolid : SahneVivid.sheet,
       shape: shape,
       clipBehavior: Clip.antiAlias,
       child: InkWell(

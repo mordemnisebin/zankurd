@@ -698,8 +698,11 @@ class _WrongAnswerInsight extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: SahneSpace.x4),
       // Vay 2A: sahnenin CAM kartı (gri Perde mor sahneden kopuyordu).
+      // Son kurul tur 3 (2026-10-29, üç model): saydam camdan gece dağı
+      // açıklama yazısının arkasından görünüyordu; kart aynı tonda OPAK.
       child: SahneGlassCard(
         key: const ValueKey('quiz-wrong-answer-insight'),
+        solid: true,
         padding: const EdgeInsets.all(SahneSpace.x3),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

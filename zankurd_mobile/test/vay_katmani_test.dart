@@ -386,9 +386,10 @@ void main() {
     });
 
     // 2026-10-29 vay 2A: maskot 120 → 84 ve madalyaya biner (tek odak).
-    test('ölçüler: madalya 104, ışın diski 184, maskot 84', () {
+    test('ölçüler: madalya 104, ışın diski 164, maskot 84', () {
       expect(SahneMedalScene.medalSize, 104);
-      expect(SahneMedalScene.discSize, 184);
+      // 2026-10-29 son kurul tur 3: 184 → 164 (kutlama hafifledi).
+      expect(SahneMedalScene.discSize, 164);
       expect(SahneMedalScene.mascotSize, 84);
       expect(SahneConfettiBurst.duration, const Duration(milliseconds: 650));
     });

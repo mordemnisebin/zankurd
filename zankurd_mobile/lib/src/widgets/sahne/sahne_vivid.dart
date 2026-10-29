@@ -662,9 +662,13 @@ extension on _SahneModeTileState {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      // Son kurul tur 3: ikincil lobi
+                                      // kartında disk kabartmasız (tek
+                                      // katman hafifler; renk aynen).
                                       SahneIconDisc(
                                         icon: widget.icon,
                                         color: ink,
+                                        flat: true,
                                       ),
                                       const Spacer(),
                                       if (widget.loading)

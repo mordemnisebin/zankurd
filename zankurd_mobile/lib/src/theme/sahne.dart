@@ -995,6 +995,13 @@ class SahneVivid {
   /// Renkli sahnede konu listesi kartı.
   static const sheet = Color(0x14FFFFFF);
   static const sheetEdge = Color(0x1FFFFFFF);
+
+  /// [sheet]'in OPAK eşi: gece sahnesinin orta durağı
+  /// ([SahneStageColors.nightMid]) üstünde beyaz %8 — cam kartla aynı ton,
+  /// ama arkasındaki dağ silueti geçmez. Uzun metin taşıyan kartlar içindir
+  /// (yanlış cevap açıklaması; 2026-10-29 son kurul tur 3, üç model: dağ
+  /// açıklama yazısının arkasından görünüyordu).
+  static const sheetSolid = Color(0xFF352C5D);
 }
 
 /// Aralık ölçeği. Bütün boşluklar 4'ün katıdır; sayfa kenarı 16.
@@ -1456,7 +1463,8 @@ class SahneVayColors {
   static const Color medalStar = Color(0xFF8A5A00);
 
   /// Işın diski (altın, merkezde ≈ %18).
-  static const Color rayCenter = Color(0x2EFFC94A);
+  // Son kurul tur 3 (2026-10-29): %18 → %14; bkz. SahneMedalScene.discSize.
+  static const Color rayCenter = Color(0x24FFC94A);
   static const Color rayEdge = Color(0x00FFC94A);
 
   // ── Vay 2A (2026-10-29) ──────────────────────────────────────────────

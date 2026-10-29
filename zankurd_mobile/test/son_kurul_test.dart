@@ -56,6 +56,25 @@
 ///    "Konulara göre" başlığı ekranın bağlamından gündüz mürekkebini alıyor,
 ///    gece sahnesinde 1,04:1 kalıyordu. Sessizdi: testlerin varsayılan teması
 ///    sahneyle aynı belirteçleri verdiği için renk hep doğru görünüyordu.
+///
+/// ## Tur 3 (2026-10-29 son kurul tur 3: üçü de ONAY; ≥ 2 modelin zevk notu)
+///
+/// Hepsi ölçülü: renk ve degrade hiçbir yerde sönmez (canlılık bekçileri
+/// aynen geçer); yalnız bir katman hafifler ya da sıkılaşır.
+///
+/// 1. **Açıklama kartı:** yanlış cevap açıklaması saydam cam karttaydı; gece
+///    dağı uzun yazının arkasından görünüyordu. Kart aynı tonda opak
+///    (`SahneVivid.sheetSolid`). Sessizdi: testler kartın VARLIĞINI ve
+///    konumunu ölçüyordu, zeminin saydamlığını değil.
+/// 2. **Öğrenme ilk ekranı:** ünite sahnesi + güncel düğüm + Başla kartı
+///    390×844'te ekranı dolduruyor, rotanın devamı görünmüyordu. Manzara
+///    92 → 68, güncel satırın nefesi 20 → 4, kart dolgusu sıkı. Sessizdi:
+///    rota testleri uzun (1600) ekranda koşuyordu.
+/// 3. **Sonuç kutlaması:** ışın diski 184 → 164 ve %18 → %14, ritim 20 → 16,
+///    ödül kartı altın kenarı %55 → %40. Madalya, maskot ve puan boyu aynı.
+/// 4. **Lobi kartları:** ikincil lobi kartında (Sırayla düello, Oda) ikon
+///    diski kabartmasız (gölge yok, cam ince); kartın doygun degradesi ve
+///    dağ kenarı aynen. Kahraman kartlar dokunulmadı.
 library;
 
 import 'dart:math' as math;
@@ -82,7 +101,9 @@ import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/theme/sahne.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/widgets/learn_path.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/realistic_device.dart';
 import 'support/widget_test_helpers.dart';
@@ -698,6 +719,167 @@ void main() {
       ]) {
         expect(contrast(fg, bg), greaterThanOrEqualTo(4.5), reason: name);
       }
+    });
+  });
+
+  group('2026-10-29 son kurul tur 3', () {
+    double contrast(Color a, Color b) {
+      final l1 = a.computeLuminance();
+      final l2 = b.computeLuminance();
+      return (math.max(l1, l2) + 0.05) / (math.min(l1, l2) + 0.05);
+    }
+
+    setUp(() {
+      SharedPreferences.setMockInitialValues({
+        'zankurd.quiz_tutorial.seen': true,
+        'zankurd.navTour.seen': true,
+      });
+      XPStore.resetInstance();
+    });
+
+    testWidgets('1: yanlış cevap açıklaması OPAK yüzeyde, yazı ≥ 4,5:1', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(390, 844);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+      final repository = MockZanKurdRepository();
+      final questions = repository.questions.take(5).toList();
+      await tester.pumpWidget(
+        testShell(
+          child: QuizScreen(
+            repository: repository,
+            room: repository.createRoom(),
+            questions: questions,
+            experience: QuizExperience.learning,
+            enableTimer: false,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final q = questions.first;
+      await tester.tap(
+        find.text(q.answers.firstWhere((a) => a != q.correctAnswer)).first,
+      );
+      await tester.pump();
+      for (var i = 0; i < 12; i++) {
+        await tester.pump(const Duration(milliseconds: 300));
+      }
+      await tester.pumpAndSettle();
+      final card = find.byKey(const ValueKey('quiz-wrong-answer-insight'));
+      expect(card, findsOneWidget);
+      final surface = tester.widget<Material>(
+        find.descendant(
+          of: card,
+          matching: find.byKey(const ValueKey('sahne-glass-card')),
+        ),
+      );
+      expect(surface.color, SahneVivid.sheetSolid);
+      expect(surface.color!.a, 1.0, reason: 'dağ yazının arkasından geçmez');
+      final t = SahneTokens.of(tester.element(card));
+      expect(contrast(t.tx, SahneVivid.sheetSolid), greaterThanOrEqualTo(4.5));
+      expect(
+        contrast(t.learnTx, SahneVivid.sheetSolid),
+        greaterThanOrEqualTo(4.5),
+      );
+      // Ton sahneyle aynı aile kalır (gri Perde'ye dönmez): mor baskın.
+      expect(SahneVivid.sheetSolid.b, greaterThan(SahneVivid.sheetSolid.g));
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('2: 390×844 öğrenme ilk ekranında rotanın sonraki iki '
+        'düğümü görünür', (tester) async {
+      tester.view.physicalSize = const Size(390, 844);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        testShell(child: LearningScreen(repository: MockZanKurdRepository())),
+      );
+      await tester.pumpAndSettle();
+      expect(LearnUnitScene.vistaHeight, lessThanOrEqualTo(68));
+      final current = find.byKey(const ValueKey('learn-node-current'));
+      expect(current, findsOneWidget);
+      final later = find.byKey(const ValueKey('learn-node-locked'));
+      expect(later, findsWidgets);
+      final below =
+          [
+              for (final e in later.evaluate())
+                tester.getRect(find.byWidget(e.widget)),
+            ].where((r) => r.top > tester.getRect(current).bottom).toList()
+            ..sort((a, b) => a.top.compareTo(b.top));
+      expect(below.length, greaterThanOrEqualTo(2));
+      expect(
+        below[1].bottom,
+        lessThanOrEqualTo(844),
+        reason: 'ikinci sonraki düğüm ilk ekranda',
+      );
+      // Tek turuncu Başla korunur.
+      expect(find.byKey(const ValueKey('learning-active-frame')), findsOne);
+      expect(tester.takeException(), isNull);
+    });
+
+    test('3: kutlama hafif; madalya, maskot ve ritim eşitliği korunur', () {
+      expect(SahneMedalScene.discSize, lessThan(184));
+      expect(
+        SahneMedalScene.discSize,
+        greaterThan(SahneMedalScene.medalSize * 1.4),
+        reason: 'ışınlar madalyanın etrafında görünmeye devam eder',
+      );
+      expect(SahneVayColors.rayCenter.a, lessThanOrEqualTo(0.15));
+      expect(SahneVayColors.rayCenter.a, greaterThan(0.08));
+      expect(SahneMedalScene.medalSize, 104);
+      expect(SahneMedalScene.mascotSize, 84);
+      expect(kSahneResultRhythmGap, 16);
+    });
+
+    for (final dark in [false, true]) {
+      testWidgets('4: ikincil lobi kartında disk kabartmasız, renk aynen '
+          '(${dark ? 'gece' : 'gündüz'})', (tester) async {
+        tester.view.physicalSize = const Size(200, 300);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(tester.view.reset);
+        await tester.pumpWidget(
+          testShell(
+            themeProvider: ThemeProvider(
+              initialMode: dark ? ThemeMode.dark : ThemeMode.light,
+            ),
+            child: Scaffold(
+              body: SahneModeTile(
+                lobby: true,
+                icon: AppIcons.hourglass,
+                title: 'Sırayla düello',
+                subtitle: 'Sen oyna, rakip sonra',
+                onTap: () {},
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        final disc = tester.widget<SahneIconDisc>(find.byType(SahneIconDisc));
+        expect(disc.flat, isTrue);
+        final box = tester.widget<DecoratedBox>(
+          find.byKey(const ValueKey('sahne-icon-disc')),
+        );
+        final deco = box.decoration as ShapeDecoration;
+        expect(deco.shadows, isEmpty, reason: 'tek katman hafifler: gölge');
+        final ink = tester.widget<Ink>(
+          find.byKey(const ValueKey('mode-tile-lobby')),
+        );
+        final g =
+            (ink.decoration! as ShapeDecoration).gradient! as LinearGradient;
+        // Lobi kartı iki temada da gündüzün doygun rengini taşır.
+        expect(
+          g.colors.first,
+          SahneTokens.day.raceFill,
+          reason: 'doygun renk sönmez',
+        );
+        expect(find.byKey(const ValueKey('sahne-tile-ridge')), findsOneWidget);
+      });
+    }
+
+    test('4: varsayılan (kahraman) disk kabarık kalır', () {
+      const disc = SahneIconDisc(icon: Icons.star, color: Colors.white);
+      expect(disc.flat, isFalse);
     });
   });
 }

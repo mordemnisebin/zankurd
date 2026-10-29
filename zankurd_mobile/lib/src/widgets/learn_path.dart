@@ -103,6 +103,10 @@ class LearnPathMetrics {
   /// Yolun kalınlığı.
   static const double stroke = 10;
 
+  /// Güncel düğümün satırında düğümün üstü + altındaki toplam nefes
+  /// (son kurul tur 3; sıradan satırda 20).
+  static const double currentBreath = 4;
+
   /// Büyük yazıda (≥ ×1,5) düğümler küçülür ve yol düzleşir: dar telefonda
   /// ders adı harf harf bölünmesin (320 pt + ×2: "Selamlaş / ma").
   static const double compactNode = 52;
@@ -266,7 +270,13 @@ class _LearnPathRowState extends State<_LearnPathRow> {
     // Satır yüksekliği: düğüm + nefes ya da iki satırlık ad + durum.
     // Satır en az düğüm + 20 yüksekliğinde; ad/rozetler uzarsa (büyük yazı)
     // satır onlarla uzar, düğüm dikeyde ortada kalır.
-    final minHeight = nodeSlot + 20;
+    //
+    // 2026-10-29 son kurul tur 3 (Astra + Sol + Terra): güncel düğümün
+    // satırında yanında ad yoktur (ad kartta); 20'lik nefes düğümü kartından
+    // ayırıp ilk ekranı dolduruyordu. Güncel satırda nefes 4: düğüm, ucu ve
+    // kartı tek bir birim gibi okunur.
+    final minHeight =
+        nodeSlot + (current ? LearnPathMetrics.currentBreath : 20);
     final done = t.learnFill;
     final todo = t.s3;
     final labelStart = widget.x + nodeSlot / 2 + SahneSpace.x3;
@@ -554,7 +564,12 @@ class LearnUnitScene extends StatelessWidget {
   /// "0/5 ders".
   final String countLabel;
 
-  static const double vistaHeight = 92;
+  /// Manzara bandı. 2026-10-29 son kurul tur 3 (üç model): ünite kartı +
+  /// güncel düğüm + Başla kartı 390×844'te ilk ekranı tamamen dolduruyor,
+  /// rotanın devamı görünmüyordu. Bant 92 → 68, rehber maskot 116 → 92;
+  /// manzara ve maskot yerinde kalır, yalnız alçalır.
+  static const double vistaHeight = 68;
+  static const double mascotSize = 92;
 
   @override
   Widget build(BuildContext context) {
@@ -592,7 +607,7 @@ class LearnUnitScene extends StatelessWidget {
                       child: ZanMascot(
                         key: ValueKey('learn-unit-mascot'),
                         pose: ZanPose.guide,
-                        size: 116,
+                        size: mascotSize,
                       ),
                     ),
                     CustomPaint(
