@@ -264,6 +264,11 @@ void main() {
   testWidgets('W1: kısa joker etiketleri ≥ 12 sp, bedava hak tek satırda', (
     tester,
   ) async {
+    // 2026-10-29 (soru sığma): joker adları kısa ekranda (< 700 pt) düşer;
+    // etiket denetimi normal telefon boyunda yapılır.
+    tester.view.physicalSize = const Size(402, 874);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
     await pumpQuiz(tester, _CountingRepository(8));
     final names = [
       for (final e in find.byKey(const ValueKey('joker-name')).evaluate())

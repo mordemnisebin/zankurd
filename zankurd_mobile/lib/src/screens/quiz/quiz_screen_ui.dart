@@ -78,14 +78,14 @@ extension _QuizScreenUI on _QuizScreenState {
                       _buildDuelHeader(compact: layoutSize.height < 700),
                       SizedBox(
                         height: layoutSize.height < 700
-                            ? SahneSpace.x2
+                            ? SahneSpace.x1
                             : SahneSpace.x4,
                       ),
                     ] else if (_isCrowd) ...[
                       _buildCrowdHeader(),
                       SizedBox(
                         height: layoutSize.height < 700
-                            ? SahneSpace.x2
+                            ? SahneSpace.x1
                             : SahneSpace.x4,
                       ),
                     ],
@@ -156,7 +156,7 @@ extension _QuizScreenUI on _QuizScreenState {
       p.dispose();
     }
     final shortScreen = layoutSize.height < 700;
-    final headerGap = shortScreen ? SahneSpace.x2 : SahneSpace.x4;
+    final headerGap = shortScreen ? SahneSpace.x1 : SahneSpace.x4;
     if (widget.is1v1) {
       above += _QuizHeaderHeights.duel(base, tug: !shortScreen) + headerGap;
     } else if (_isCrowd) {
@@ -277,9 +277,18 @@ extension _QuizScreenUI on _QuizScreenState {
   /// sonraki soruya geri sayım. Hepsi gövdenin akışındadır; kaydırma
   /// emniyet supabı olarak kalır.
   List<Widget> _buildRoundNotices() => [
-    if (selectedAnswer == 'TIMEOUT' && !_suspense)
+    // Şıklı sorularda ayrı bildirim YOK: alt perdedeki şerit "Süre doldu" der,
+    // doğru şık ✓ ile yeşil, cümle ekran okuyucuya şeritten gider. Gövdeye
+    // eklenen kutu şıkların altını uzatıp soruyu yerinden oynatıyordu.
+    if (selectedAnswer == 'TIMEOUT' && !_suspense && !_choiceTypeVisible)
       QuizTimeoutNotice(isKu: _isKu, correctAnswer: question.correctAnswer),
   ];
+
+  /// Şıklı soru (şıklar ekranda ✓ ile işaretlenir).
+  bool get _choiceTypeVisible =>
+      question.type == QuestionType.multipleChoice ||
+      question.type == QuestionType.trueFalse ||
+      question.type == QuestionType.visual;
 
   /// Üst çubuğun TEK mod çipi (K6+): bütün modlar aynı sahne, yalnız çip
   /// değişir.
@@ -647,7 +656,6 @@ extension _QuizScreenUI on _QuizScreenState {
   /// TAMAMIDIR: balon "cevaptan sonra buraya dokun" der; cevaptan önce
   /// orada jokerler durur, cevaptan sonra "Sonraki" aynı yere gelir.
   Widget _buildDock(BuildContext context) {
-    final t = SahneTokens.of(context);
     final bool showRatingBar =
         widget.practice &&
         answered &&
@@ -673,37 +681,17 @@ extension _QuizScreenUI on _QuizScreenState {
         child: KeyedSubtree(
           key: _nextButtonKey,
           child: QuizStableDockHeight(
-            stackedAction: widget.practice,
-            compactRow: _isMultiplayer,
-            minHeight: jokerCapable
-                ? 96 +
-                      50 *
-                          ((MediaQuery.textScalerOf(context).scale(16) / 16) -
-                                  1)
-                              .clamp(0.0, 0.3)
-                : 0,
+            height: quizDockHeight(
+              MediaQuery.textScalerOf(context),
+              practice: widget.practice,
+              jokerCapable: jokerCapable,
+              width: MediaQuery.sizeOf(context).width,
+              shortScreen: MediaQuery.sizeOf(context).height < 700,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Çift Cevap ilk denemesi yanlışsa: açıklama olmadan ikinci cevap
-                // beklenir; oyuncuya net ipucu verilir.
-                if (!answered && _firstAttemptAnswer.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                    child: Semantics(
-                      liveRegion: true,
-                      label: context.t(K.doubleAnswerHint),
-                      excludeSemantics: true,
-                      child: Text(
-                        context.t(K.doubleAnswerHint),
-                        textAlign: TextAlign.center,
-                        style: SahneType.captionStrong.copyWith(
-                          color: t.goldTx,
-                        ),
-                      ),
-                    ),
-                  ),
                 if (showJokers)
                   _buildWildcardRow()
                 else if (answered && !_suspense)
@@ -717,6 +705,11 @@ extension _QuizScreenUI on _QuizScreenState {
                     inlineAction: !showRatingBar,
                     compactRow: _isMultiplayer,
                     timedOut: selectedAnswer == 'TIMEOUT',
+                    semanticDetail: selectedAnswer == 'TIMEOUT'
+                        ? Tr.forKu(K.sureDolduDogruCevap, _isKu, {
+                            'p0': question.correctAnswer,
+                          })
+                        : null,
                     action: showRatingBar
                         ? _buildRatingBar(context)
                         : _buildNextButton(
@@ -789,6 +782,10 @@ extension _QuizScreenUI on _QuizScreenState {
     final nextLabel =
         _isMultiplayer && answered && _mpPhase == _MultiplayerPhase.reveal
         ? context.t(K.sonrakiSoruPS, {'p0': '$_revealCountdown'})
+        : _isMultiplayer && answered && selectedAnswer == 'TIMEOUT'
+        // Süre dolunca bekleme etiketi "Süre doldu" der (şerit yalnız ✗ +
+        // düğme taşır; başlık yazısına yer yok).
+        ? context.t(K.sureDoldu)
         : _isMultiplayer && answered
         ? context.t(_isCrowd ? K.crowdWaitingOthers : K.waitingOpponent)
         : !answered
@@ -881,7 +878,8 @@ extension _QuizScreenUI on _QuizScreenState {
               _wildcardUnavailable(type) ||
               (!_wildcard.isUsed(type) && !_canPayWildcard(type)),
         ) &&
-        jokers.any((type) => !_wildcardUnavailable(type));
+        jokers.any((type) => !_wildcardUnavailable(type)) &&
+        _firstAttemptAnswer.isEmpty;
     if (noneAffordable) {
       return KeyedSubtree(
         key: const ValueKey('quiz-wildcard-row'),
@@ -908,6 +906,11 @@ extension _QuizScreenUI on _QuizScreenState {
           // olur).
           // Vay 2A: bedava hak açıkken TEK satır ipucu (jokerlerde "Bedava"
           // tekrarı yok, bkz. [SahneJokerButton]).
+          // Çift cevap ipucu bakiye satırının AYNI yuvasındadır (alt perde
+          // uzamaz): ilk deneme yanlışsa "ikinci cevabını seç" der.
+          doubleAnswerHint: _firstAttemptAnswer.isNotEmpty
+              ? context.t(K.doubleAnswerHint)
+              : null,
           showHint: _freeWildcardAvailable || _jokerStock > 0,
           hint: _freeWildcardAvailable
               ? context.t(K.freeWildcardToday)

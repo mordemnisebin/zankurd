@@ -227,17 +227,6 @@ class QuizOptionTile extends StatelessWidget {
               ),
             ],
           ),
-          if (audiencePercent != null) ...[
-            const SizedBox(height: SahneSpace.x2),
-            Padding(
-              padding: const EdgeInsetsDirectional.only(start: 48),
-              child: SahneProgressBar(
-                value: audiencePercent!.clamp(0.0, 1.0),
-                tone: SahneProgressTone.gold,
-                trailing: context.percentRatio(audiencePercent!),
-              ),
-            ),
-          ],
         ],
       ),
     );
@@ -338,23 +327,44 @@ class QuizOptionTile extends StatelessWidget {
     // Rakibin seçtiği şıkkın adı çubuğun ÜST kenarına asılı rozettir: eskiden
     // çubuğun içine ek satır açıyor, cevaptan sonra altındaki bütün şıklar
     // aşağı kayıyordu (yer baştan ayrılmaz).
-    final names = opponentNamesWhoSelected;
-    final tile = names == null || names.isEmpty
+    final names = opponentNamesWhoSelected ?? const <String>[];
+    final percent = audiencePercent;
+    // Seyirci yüzdesi ve rakip adları çubuğun ÜST kenarına asılı rozetlerdir:
+    // çubuğun içine satır eklemek cevaptan/joker sonrası bütün şıkları
+    // kaydırıyordu (2026-10-29). Rozet alanı iki kenarla sınırlı (sol 56, sağ
+    // 12): uzun ad ya da birkaç rozet taşmaz, Flexible daralır; yarısı
+    // (≈ 9 pt) üstteki boşluğa çıkar, kendi çubuğunun yazısını örtmez.
+    final tile = names.isEmpty && percent == null
         ? tile0
         : Stack(
             clipBehavior: Clip.none,
             children: [
               tile0,
               PositionedDirectional(
-                top: -10,
+                top: -9,
+                start: 56,
                 end: SahneSpace.x3,
-                child: Wrap(
-                  alignment: WrapAlignment.end,
-                  spacing: SahneSpace.x1,
-                  children: [
-                    for (final name in names)
-                      _OpponentMark(name: name, tokens: t),
-                  ],
+                child: IgnorePointer(
+                  child: Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (percent != null)
+                          _PercentMark(
+                            text: context.percentRatio(percent),
+                            tokens: t,
+                          ),
+                        for (final name in names) ...[
+                          if (percent != null || name != names.first)
+                            const SizedBox(width: SahneSpace.x1),
+                          Flexible(
+                            child: _OpponentMark(name: name, tokens: t),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -439,6 +449,32 @@ class _LetterTile extends StatelessWidget {
 }
 
 /// Rakibin seçtiği şıkta adı: Perde üstünde küçük S pahlı etiket + göz.
+/// Seyirci jokerinin yüzdesi: çubuğun üst kenarına asılı küçük Zêr rozet.
+class _PercentMark extends StatelessWidget {
+  const _PercentMark({required this.text, required this.tokens});
+
+  final String text;
+  final SahneTokens tokens;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: ShapeDecoration(color: tokens.goldTint, shape: SahneShape.s),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: SahneSpace.x2,
+          vertical: 2,
+        ),
+        child: Text(
+          text,
+          maxLines: 1,
+          style: SahneType.captionStrong.copyWith(color: tokens.goldTx),
+        ),
+      ),
+    );
+  }
+}
+
 class _OpponentMark extends StatelessWidget {
   const _OpponentMark({required this.name, required this.tokens});
 

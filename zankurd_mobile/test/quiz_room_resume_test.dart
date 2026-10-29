@@ -528,7 +528,8 @@ void main() {
     );
     await _pumpFrames(tester);
 
-    expect(find.byKey(const ValueKey('quiz-timeout-notice')), findsOneWidget);
+    // Şıklı soruda timeout bildirimi alt perdedeki şerittir (soru sığma).
+    expect(find.byKey(const ValueKey('quiz-feedback-wrong')), findsOneWidget);
     final correct = tester
         .widgetList<QuizOptionTile>(find.byType(QuizOptionTile))
         .singleWhere((tile) => tile.answer == 'A2');

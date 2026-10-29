@@ -903,96 +903,125 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                     builder: (context, constraints) {
                       final fitPlan = _planFit(context, constraints, answers);
                       final fit = fitPlan.fit;
-                      return SahneStageScroll(
-                        scrollKey: const ValueKey('async-duel-scroll'),
-                        // Yeni soruda başa dön; üst kenar elmas şeridin altında sönsün.
-                        resetKey: _index,
-                        balance: _isTournament ? 0 : quizQuestionBalance,
-                        // 2026-10-29 son kurul tur 2 (B): cevaptan sonra
-                        // soru ve şıklar yerinde kalır (ders/yarışla aynı).
-                        holdBalance: _selectedAnswer != null,
-                        // Y3 (2026-10-29 tur 6): bu ekranda alt perde yok; ders ve
-                        // yarışta o yükseklik (≈ 70 + güvenli alan) gövdeden
-                        // düşer ve dengeli yerleşim ([quizQuestionBalance])
-                        // ona göre konumlanır. Aynı yer burada boş ayrılır:
-                        // soru kartı her modda aynı üstte durur.
-                        padding: EdgeInsets.fromLTRB(
-                          SahneSpace.page,
-                          fit.outerPad,
-                          SahneSpace.page,
-                          fitPlan.bottomPad,
-                        ),
-                        // K6: soru ÜSTTEN başlar (şıkları alta oturtan boşluk
-                        // kalktı).
-                        child: QuizFitScope(
-                          fit: fit,
-                          child: ConstrainedBox(
-                            key: const ValueKey('async-duel-answers-anchored'),
-                            constraints: const BoxConstraints(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                // Sıra ve kategori ortak üst satırda; burada yalnız
-                                // rakip bağlamı (boş yuva soruyu ortalar). Rakip adı
-                                // biliniyorsa avatarıyla birlikte ("Sen · Rojda"):
-                                // "Rojda'ya karşı" Türkçe ek uyumu gerektirdiği için
-                                // yeni cümle kurulmadı (NEEDS_JURY).
-                                Padding(
-                                  // Y3: meydan okuyanda bu satır boştur ve boşluk da
-                                  // yoktur (soru kartı diğer modlarla aynı yerde).
-                                  padding: EdgeInsets.only(
-                                    bottom:
-                                        _isTournament ||
-                                            duel.role == AsyncDuelRole.opponent
-                                        ? SahneSpace.x4
-                                        : 0,
-                                  ),
-                                  // Turnuva maçında rakip baştan bellidir: rolden
-                                  // bağımsız rakip satırı, üstünde tur adı.
-                                  child: _isTournament
-                                      ? Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            if (widget.entry?.roundLabel !=
-                                                null)
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                  bottom: SahneSpace.x1,
-                                                ),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Icon(
-                                                      AppIcons.trophy,
-                                                      size: 16,
-                                                      color: t.goldTx,
-                                                    ),
-                                                    const SizedBox(
-                                                      width: SahneSpace.x1,
-                                                    ),
-                                                    Flexible(
-                                                      child: Text(
-                                                        widget
-                                                            .entry!
-                                                            .roundLabel!,
-                                                        key: const ValueKey(
-                                                          'tournament-match-round',
+                      return Stack(
+                        children: [
+                          SahneStageScroll(
+                            scrollKey: const ValueKey('async-duel-scroll'),
+                            // Yeni soruda başa dön; üst kenar elmas şeridin altında sönsün.
+                            resetKey: _index,
+                            balance: _isTournament ? 0 : quizQuestionBalance,
+                            // 2026-10-29 son kurul tur 2 (B): cevaptan sonra
+                            // soru ve şıklar yerinde kalır (ders/yarışla aynı).
+                            holdBalance: _selectedAnswer != null,
+                            // Y3 (2026-10-29 tur 6): bu ekranda alt perde yok; ders ve
+                            // yarışta o yükseklik (≈ 70 + güvenli alan) gövdeden
+                            // düşer ve dengeli yerleşim ([quizQuestionBalance])
+                            // ona göre konumlanır. Aynı yer burada boş ayrılır:
+                            // soru kartı her modda aynı üstte durur.
+                            padding: EdgeInsets.fromLTRB(
+                              SahneSpace.page,
+                              fit.outerPad,
+                              SahneSpace.page,
+                              fitPlan.bottomPad,
+                            ),
+                            // K6: soru ÜSTTEN başlar (şıkları alta oturtan boşluk
+                            // kalktı).
+                            child: QuizFitScope(
+                              fit: fit,
+                              child: ConstrainedBox(
+                                key: const ValueKey(
+                                  'async-duel-answers-anchored',
+                                ),
+                                constraints: const BoxConstraints(),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    // Sıra ve kategori ortak üst satırda; burada yalnız
+                                    // rakip bağlamı (boş yuva soruyu ortalar). Rakip adı
+                                    // biliniyorsa avatarıyla birlikte ("Sen · Rojda"):
+                                    // "Rojda'ya karşı" Türkçe ek uyumu gerektirdiği için
+                                    // yeni cümle kurulmadı (NEEDS_JURY).
+                                    Padding(
+                                      // Y3: meydan okuyanda bu satır boştur ve boşluk da
+                                      // yoktur (soru kartı diğer modlarla aynı yerde).
+                                      padding: EdgeInsets.only(
+                                        bottom:
+                                            _isTournament ||
+                                                duel.role ==
+                                                    AsyncDuelRole.opponent
+                                            ? SahneSpace.x4
+                                            : 0,
+                                      ),
+                                      // Turnuva maçında rakip baştan bellidir: rolden
+                                      // bağımsız rakip satırı, üstünde tur adı.
+                                      child: _isTournament
+                                          ? Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                if (widget.entry?.roundLabel !=
+                                                    null)
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                          bottom: SahneSpace.x1,
                                                         ),
-                                                        style: SahneType
-                                                            .captionStrong
-                                                            .copyWith(
-                                                              color: t.goldTx,
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        Icon(
+                                                          AppIcons.trophy,
+                                                          size: 16,
+                                                          color: t.goldTx,
+                                                        ),
+                                                        const SizedBox(
+                                                          width: SahneSpace.x1,
+                                                        ),
+                                                        Flexible(
+                                                          child: Text(
+                                                            widget
+                                                                .entry!
+                                                                .roundLabel!,
+                                                            key: const ValueKey(
+                                                              'tournament-match-round',
                                                             ),
-                                                      ),
+                                                            style: SahneType
+                                                                .captionStrong
+                                                                .copyWith(
+                                                                  color:
+                                                                      t.goldTx,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ],
+                                                  ),
+                                                _RivalLine(
+                                                  name:
+                                                      duel.opponentName == null
+                                                      ? context.t(
+                                                          K.asyncDuelOpponent,
+                                                        )
+                                                      : context.playerDisplayName(
+                                                          duel.opponentName,
+                                                          tag: duel
+                                                              .opponentProfile
+                                                              ?.playerTag,
+                                                        ),
+                                                  rawName: duel.opponentName,
+                                                  identity: duel
+                                                      .opponentProfile
+                                                      ?.avatar,
+                                                  you: context.t(K.you),
                                                 ),
-                                              ),
-                                            _RivalLine(
+                                              ],
+                                            )
+                                          : duel.role == AsyncDuelRole.opponent
+                                          ? _RivalLine(
                                               name: duel.opponentName == null
                                                   ? context.t(
                                                       K.asyncDuelOpponent,
@@ -1007,118 +1036,124 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                                               identity:
                                                   duel.opponentProfile?.avatar,
                                               you: context.t(K.you),
-                                            ),
-                                          ],
-                                        )
-                                      : duel.role == AsyncDuelRole.opponent
-                                      ? _RivalLine(
-                                          name: duel.opponentName == null
-                                              ? context.t(K.asyncDuelOpponent)
-                                              : context.playerDisplayName(
-                                                  duel.opponentName,
-                                                  tag: duel
-                                                      .opponentProfile
-                                                      ?.playerTag,
-                                                ),
-                                          rawName: duel.opponentName,
-                                          identity:
-                                              duel.opponentProfile?.avatar,
-                                          you: context.t(K.you),
-                                        )
-                                      : const SizedBox.shrink(),
-                                ),
-                                QuizPromptCard(
-                                  padding: fit.promptPad,
-                                  child: MediaQuery(
-                                    data: MediaQuery.of(context).copyWith(
-                                      textScaler: QuizFitScope.scaled(
-                                        MediaQuery.textScalerOf(context),
-                                        fit.questionScale,
+                                            )
+                                          : const SizedBox.shrink(),
+                                    ),
+                                    QuizPromptCard(
+                                      padding: fit.promptPad,
+                                      child: MediaQuery(
+                                        data: MediaQuery.of(context).copyWith(
+                                          textScaler: QuizFitScope.scaled(
+                                            MediaQuery.textScalerOf(context),
+                                            fit.questionScale,
+                                          ),
+                                        ),
+                                        child: Semantics(
+                                          header: true,
+                                          child: QuizQuestionPrompt(
+                                            question.promptText,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    child: Semantics(
-                                      header: true,
-                                      child: QuizQuestionPrompt(
-                                        question.promptText,
+                                    MediaQuery(
+                                      data: MediaQuery.of(context).copyWith(
+                                        textScaler: QuizFitScope.scaled(
+                                          MediaQuery.textScalerOf(context),
+                                          fit.optionScale,
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                                MediaQuery(
-                                  data: MediaQuery.of(context).copyWith(
-                                    textScaler: QuizFitScope.scaled(
-                                      MediaQuery.textScalerOf(context),
-                                      fit.optionScale,
-                                    ),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SizedBox(height: fit.sectionGap),
-                                      if (_phase == _Phase.error) ...[
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              AppIcons.triangleExclamation,
-                                              size: 20,
-                                              color: t.errTx,
-                                            ),
-                                            const SizedBox(
-                                              width: SahneSpace.x2,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                context.t(
-                                                  K.asyncDuelAnswerFailed,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SizedBox(height: fit.sectionGap),
+                                          for (final (i, answer)
+                                              in answers.indexed)
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                bottom: fit.optionGap,
+                                              ),
+                                              child: QuizOptionTile(
+                                                key: ValueKey(
+                                                  'async-duel-option-$i',
                                                 ),
-                                                style: SahneType.bodyStrong
-                                                    .copyWith(color: t.errTx),
+                                                index: i,
+                                                answer: answer,
+                                                selected:
+                                                    _selectedAnswer == answer,
+                                                correct:
+                                                    _revealedAnswerText !=
+                                                        null &&
+                                                    answer ==
+                                                        _revealedAnswerText,
+                                                disabled: disabled,
+                                                isCompact:
+                                                    MediaQuery.sizeOf(
+                                                      context,
+                                                    ).height <
+                                                    700,
+                                                suspense: suspenseVisual,
+                                                optionCount: answers.length,
+                                                dimmed:
+                                                    _revealedAnswerText !=
+                                                        null &&
+                                                    answer !=
+                                                        _revealedAnswerText &&
+                                                    _selectedAnswer != answer,
+                                                onTap: () =>
+                                                    _handleAnswerTap(answer),
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: SahneSpace.x3),
-                                      ],
-                                      for (final (i, answer) in answers.indexed)
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            bottom: fit.optionGap,
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          // "Cevap gönderilemedi" uyarısı gövdenin ALTINA
+                          // asılı yüzer bir satırdır: eskiden soru ile şıklar
+                          // arasına giriyor, şıkları ~40 pt aşağı itiyordu
+                          // (soru sığma bekçisi, 2026-10-29).
+                          if (_phase == _Phase.error)
+                            PositionedDirectional(
+                              start: SahneSpace.page,
+                              end: SahneSpace.page,
+                              bottom: SahneSpace.x2,
+                              child: DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: SahneTokens.of(context).s2,
+                                  shape: SahneShape.m,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(SahneSpace.x2),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        AppIcons.triangleExclamation,
+                                        size: 20,
+                                        color: SahneTokens.of(context).errTx,
+                                      ),
+                                      const SizedBox(width: SahneSpace.x2),
+                                      Expanded(
+                                        child: Text(
+                                          context.t(K.asyncDuelAnswerFailed),
+                                          style: SahneType.bodyStrong.copyWith(
+                                            color: SahneTokens.of(
+                                              context,
+                                            ).errTx,
                                           ),
-                                          child: QuizOptionTile(
-                                            key: ValueKey(
-                                              'async-duel-option-$i',
-                                            ),
-                                            index: i,
-                                            answer: answer,
-                                            selected: _selectedAnswer == answer,
-                                            correct:
-                                                _revealedAnswerText != null &&
-                                                answer == _revealedAnswerText,
-                                            disabled: disabled,
-                                            isCompact:
-                                                MediaQuery.sizeOf(
-                                                  context,
-                                                ).height <
-                                                700,
-                                            suspense: suspenseVisual,
-                                            optionCount: answers.length,
-                                            dimmed:
-                                                _revealedAnswerText != null &&
-                                                answer != _revealedAnswerText &&
-                                                _selectedAnswer != answer,
-                                            onTap: () =>
-                                                _handleAnswerTap(answer),
-                                          ),
                                         ),
+                                      ),
                                     ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
+                        ],
                       );
                     },
                   );

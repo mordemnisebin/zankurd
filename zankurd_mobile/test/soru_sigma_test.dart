@@ -54,9 +54,10 @@ import 'support/widget_test_helpers.dart';
 ///    perdenin arkasında kalmaz;
 ///  * 375×667 @2.0 yalnız son çare: taşma yok, kırpılma yok.
 ///
-/// Bilinen sınır (belgelenmiş): 375×667'de duello/oda varyantında skor kartı
-/// + 4 şık ile bankanın tek 269 karakterlik sorusu (ya da 1,3× yazı) ≤
-/// [_ucSinir] pt kayar (skor kartı + 1,3× yazı + 4 şık; taban
+/// Bilinen sınır (belgelenmiş): 375×667 @1,3'te duello/oda varyantında skor
+/// kartı + 1,3× yazı + 4 şık, bankanın 269 karakterlik tek sorusunda ölçülen
+/// 5–11 (TR) / 23–29 (KU) pt kayar; taban punto 17/15'in altına inilmez. Sınır
+/// [_ucSinir] (skor kartı + 1,3× yazı + 4 şık; taban
 /// punto 17/15'in altına inilmez).
 
 class _Sample {
@@ -145,7 +146,7 @@ GameRoom _roomFor(_V v) {
   ];
   switch (v) {
     case _V.duello1v1:
-      return GameRoom(
+      return const GameRoom(
         id: 'r1',
         name: '1v1',
         code: 'ZK-1',
@@ -155,14 +156,14 @@ GameRoom _roomFor(_V v) {
         players: p,
       );
     case _V.oda:
-      return GameRoom(
+      return const GameRoom(
         id: 'r2',
         name: 'Oda',
         code: 'ZK-2',
         category: 'Ziman',
         status: RoomStatus.active,
         questionCount: 1,
-        players: const [
+        players: [
           ...p,
           Player(name: 'Üçüncü', score: 0, state: 'Hazır'),
           Player(name: 'Dördüncü', score: 0, state: 'Hazır'),
@@ -172,7 +173,7 @@ GameRoom _roomFor(_V v) {
         hostId: 'h',
       );
     default:
-      return GameRoom(
+      return const GameRoom(
         id: null,
         name: 'Solo',
         code: 'ZK-0',
@@ -214,7 +215,7 @@ const _kombinler = <(_Size, double)>[
 ];
 
 /// 375×667 @1,3 duello/oda uç sorusunda izin verilen en çok kayma (pt).
-const double _ucSinir = 45;
+const double _ucSinir = 35;
 
 bool _dar(_Size s) => s.size.width < 375;
 
@@ -496,7 +497,8 @@ void main() {
             final ucSinirli =
                 s == _s375 &&
                 (v == _V.duello1v1 || v == _V.oda) &&
-                (scale == 1.3 || smp.label == 'uc-soru-269');
+                scale == 1.3 &&
+                (smp.label == 'uc-soru-269' || smp.label == 'uc-siklar');
 
             if (scale <= 1.3) {
               _ayniYerde(r0, r50, '$name ilk→50ms');
@@ -504,6 +506,10 @@ void main() {
               _ayniYerde(r0, r1000, '$name ilk→1sn');
             }
             final scrollBefore = _position(tester)!.maxScrollExtent;
+            if (Platform.environment['SIGMA_VERBOSE'] != null) {
+              // ignore: avoid_print
+              print('SIGMA|$name|kaydirma=${scrollBefore.toStringAsFixed(1)}');
+            }
             expect(
               _kirpilanlar(tester),
               isEmpty,

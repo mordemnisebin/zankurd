@@ -34,6 +34,7 @@ class QuizFit {
     this.promptLineHeight,
     this.optionLineHeight,
     this.outerPad = 16,
+    this.fits = true,
   });
 
   /// 0 = tam boy. Üst sınır [maxLevel].
@@ -68,9 +69,28 @@ class QuizFit {
   /// Soru bloğunun kayan alanın üstüne ve altına bıraktığı boşluk (her biri).
   final double outerPad;
 
+  /// `false`: hiçbir kademe alana sığmadı (alan kayar). Sessiz değil, açık
+  /// sonuç: bekçi ve taramalar bunu sayar.
+  final bool fits;
+
+  QuizFit withFits(bool value) => QuizFit(
+    level: level,
+    questionScale: questionScale,
+    optionScale: optionScale,
+    promptPad: promptPad,
+    sectionGap: sectionGap,
+    optionGap: optionGap,
+    optionMinHeight: optionMinHeight,
+    optionVPad: optionVPad,
+    promptLineHeight: promptLineHeight,
+    optionLineHeight: optionLineHeight,
+    outerPad: outerPad,
+    fits: value,
+  );
+
   static const QuizFit nominal = QuizFit();
 
-  static const int maxLevel = 5;
+  static const int maxLevel = 6;
 
   /// Kısa ekranda (yükseklik < 700) tam boy kademesinin şık dikey boşluğu.
   static const double shortOptionVPad = 4;
@@ -85,27 +105,30 @@ class QuizFit {
   bool get isNominal => level == 0;
 
   /// [level] kademesinin değerleri. [base] kullanıcının yazı ölçeği.
-  static QuizFit forLevel(int level, double base, {bool short = false}) {
+  static QuizFit forLevel(int level, TextScaler base, {bool short = false}) {
     if (level <= 0) {
       return short ? const QuizFit(optionVPad: shortOptionVPad) : nominal;
     }
     final t = level / maxLevel;
     double lerp(double a, double b) => a + (b - a) * t;
-    // Taban: SahneType.headline (22) çizilen ≥ 17 kalsın.
-    final qMin = (minQuestionPt / (22 * base)).clamp(0.5, 1.0);
-    final oMin = (minOptionPt / (16 * base)).clamp(0.5, 1.0);
+    // Taban: SahneType.headline (22) ve gövde (16) çizilen ≥ 17 / 15 kalsın.
+    // Doğrusal olmayan ölçekleyicide (Android 14) punto başına ölçek farklıdır:
+    // gerçek ölçek `base.scale(punto)` ile alınır.
+    final qMin = (minQuestionPt / base.scale(22)).clamp(0.5, 1.0);
+    final oMin = (minOptionPt / base.scale(16)).clamp(0.5, 1.0);
     return QuizFit(
       level: level,
       questionScale: lerp(1, qMin),
       optionScale: lerp(1, oMin),
-      promptPad: level >= 5 ? 8 : (level >= 3 ? 10 : 12),
-      sectionGap: level >= 5 ? 6 : (level >= 3 ? 8 : 12),
-      optionGap: level >= 5 ? 4 : (level >= 3 ? 6 : 8),
-      optionMinHeight: level >= 2 ? 48 : 52,
-      optionVPad: level >= 3 ? 2 : 4,
-      promptLineHeight: const [null, null, 1.2, 1.15, 1.1, 1.1][level],
-      optionLineHeight: const [null, null, 1.35, 1.28, 1.22, 1.18][level],
-      outerPad: level >= 5 ? 4 : (level >= 4 ? 8 : 16),
+      promptPad: level >= 6 ? 4 : (level >= 5 ? 8 : (level >= 3 ? 10 : 12)),
+      sectionGap: level >= 6 ? 4 : (level >= 5 ? 6 : (level >= 3 ? 8 : 12)),
+      optionGap: level >= 6 ? 2 : (level >= 5 ? 4 : (level >= 3 ? 6 : 8)),
+      // Son kademe 46: iOS'un 44 pt dokunma tabanının üstünde.
+      optionMinHeight: level >= 6 ? 46 : (level >= 2 ? 48 : 52),
+      optionVPad: level >= 6 ? 0 : (level >= 3 ? 2 : 4),
+      promptLineHeight: const [null, null, 1.2, 1.15, 1.1, 1.1, 1.04][level],
+      optionLineHeight: const [null, null, 1.35, 1.28, 1.22, 1.18, 1.1][level],
+      outerPad: level >= 6 ? 0 : (level >= 5 ? 4 : (level >= 4 ? 8 : 16)),
     );
   }
 
@@ -113,6 +136,44 @@ class QuizFit {
   /// Çizimle AYNI biçimler ve AYNI genişlikler kullanılır; bekçi
   /// (`soru_sigma_test`) sapmayı yakalar.
   double estimate({
+    required BuildContext context,
+    required String prompt,
+    required List<String> answers,
+    required double width,
+    required TextScaler base,
+    required bool listenButton,
+    required int titleLineBudget,
+    double extraInPrompt = 0,
+  }) {
+    // Her yapılandırmada 36–72 TextPainter koşardı; girdilerle önbelleğe alınır.
+    final key =
+        '$level|${prompt.hashCode}|${Object.hashAll(answers)}|$width|'
+        '${base.scale(16)}|${base.scale(22)}|$listenButton|$titleLineBudget|'
+        '$extraInPrompt|${DefaultTextStyle.of(context).style.hashCode}|'
+        '$optionVPad';
+    final hit = _cache.remove(key);
+    if (hit != null) {
+      _cache[key] = hit;
+      return hit;
+    }
+    final v = _estimate(
+      context: context,
+      prompt: prompt,
+      answers: answers,
+      width: width,
+      base: base,
+      listenButton: listenButton,
+      titleLineBudget: titleLineBudget,
+      extraInPrompt: extraInPrompt,
+    );
+    _cache[key] = v;
+    if (_cache.length > 600) _cache.remove(_cache.keys.first);
+    return v;
+  }
+
+  static final Map<String, double> _cache = {};
+
+  double _estimate({
     required BuildContext context,
     required String prompt,
     required List<String> answers,
@@ -207,7 +268,7 @@ class QuizFit {
     final scale = base.scale(16) / 16;
     if (scale > maxAccessibleScale || !available.isFinite) return nominal;
     for (var k = 0; k <= maxLevel; k++) {
-      final fit = forLevel(k, scale, short: short);
+      final fit = forLevel(k, base, short: short);
       final h = fit.estimate(
         context: context,
         prompt: prompt,
@@ -220,7 +281,7 @@ class QuizFit {
       );
       if (h <= available) return fit;
     }
-    return forLevel(maxLevel, scale);
+    return forLevel(maxLevel, base, short: short).withFits(false);
   }
 
   @override
@@ -265,4 +326,77 @@ class QuizFitScope extends InheritedWidget {
 
   @override
   bool updateShouldNotify(QuizFitScope old) => old.fit != fit;
+}
+
+/// Tek satırlık ad/etiket: sığmazsa küçülür AMA okunur tabanın (11 pt)
+/// altına inmez; taban da yetmezse en çok [maxLines] satıra sarar ve son çare
+/// üç nokta. Eskiden `FittedBox` sınırsız küçültüyordu (okunmaz ölçü).
+class QuizFitLine extends StatelessWidget {
+  const QuizFitLine(
+    this.text, {
+    super.key,
+    required this.style,
+    this.maxLines = 1,
+    this.alignment = AlignmentDirectional.centerStart,
+  });
+
+  final String text;
+  final TextStyle style;
+  final int maxLines;
+  final AlignmentGeometry alignment;
+
+  /// Çizilen en küçük punto.
+  static const double _minPt = 11;
+
+  @override
+  Widget build(BuildContext context) {
+    final scaler = MediaQuery.textScalerOf(context);
+    return LayoutBuilder(
+      builder: (context, c) {
+        final fs = style.fontSize ?? 14;
+        final base = DefaultTextStyle.of(context).style.merge(style);
+        double widthAt(double size) {
+          final painter = TextPainter(
+            text: TextSpan(
+              text: text,
+              style: base.copyWith(
+                fontFamily: style.fontFamily,
+                fontSize: size,
+              ),
+            ),
+            textDirection: TextDirection.ltr,
+            textScaler: scaler,
+          )..layout();
+          final w = painter.width;
+          painter.dispose();
+          return w;
+        }
+
+        var size = fs;
+        var lines = 1;
+        if (c.maxWidth.isFinite && widthAt(fs) > c.maxWidth) {
+          // Orantı yetmez (harf genişliği punto ile tam doğrusal değil):
+          // sığana kadar birkaç kez yeniden ölç.
+          size = fs * ((c.maxWidth - 3) / widthAt(fs));
+          for (var i = 0; i < 6 && widthAt(size) > c.maxWidth - 1.5; i++) {
+            size *= (c.maxWidth - 3) / widthAt(size);
+          }
+          if (scaler.scale(size) < _minPt) {
+            size = _minPt / (scaler.scale(fs) / fs);
+            lines = maxLines;
+          }
+        }
+        return Align(
+          alignment: alignment,
+          child: Text(
+            text,
+            maxLines: lines,
+            softWrap: lines > 1,
+            overflow: TextOverflow.ellipsis,
+            style: style.copyWith(fontSize: size),
+          ),
+        );
+      },
+    );
+  }
 }

@@ -126,10 +126,13 @@ class QuizStageCenter extends StatelessWidget {
           child: Text(
             '$progress · $name',
             key: textKey,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+            // Üç nokta yok: uzun künye iki satıra iner, çok uzunsa punto bir
+            // basamak (≥ 12) küçülür; üçüncü satır payı son çaredir.
+            maxLines: 3,
+            overflow: TextOverflow.clip,
             style: SahneType.eyebrow.copyWith(
               color: onBand ? SahneVivid.onFill : t.tx,
+              fontSize: _kickerSize('$progress · $name'),
             ),
           ),
         ),
@@ -179,6 +182,11 @@ class QuizStageCenter extends StatelessWidget {
     );
   }
 }
+
+/// Künyenin puntosu: yer sahnenin üst çubuğunun ORTA yuvasıdır (iki yan
+/// grup düştükten sonra kalan genişlik); uzun künye kısalmaz, küçülür.
+double _kickerSize(String label) =>
+    label.length <= 24 ? 14 : (label.length <= 32 ? 13 : 12);
 
 /// Alt perdesi olmayan soru ekranında (sırayla düello) ders/yarış alt
 /// perdesinin gövdeden düştüğü yükseklik (güvenli alan hariç). Y3

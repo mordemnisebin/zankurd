@@ -143,6 +143,7 @@ class QuizFeedbackStrip extends StatelessWidget {
     this.inlineAction = true,
     this.compactRow = false,
     this.timedOut = false,
+    this.semanticDetail,
   });
 
   /// Şerit her cevapta aynı boyda kalsın diye açıklama satırı yazılmaz
@@ -163,6 +164,9 @@ class QuizFeedbackStrip extends StatelessWidget {
 
   /// Süre dolduysa başlık "Yanlış" değil "Süre doldu" der.
   final bool timedOut;
+
+  /// Yalnız ekran okuyucuya giden ek cümle (görünür satır eklemez).
+  final String? semanticDetail;
 
   final bool correct;
 
@@ -195,7 +199,7 @@ class QuizFeedbackStrip extends StatelessWidget {
     final strip = Semantics(
       container: true,
       liveRegion: true,
-      label: detail == null ? title : '$title. $detail',
+      label: semanticDetail ?? (detail == null ? title : '$title. $detail'),
       child: Container(
         key: animate
             ? ValueKey(
@@ -249,15 +253,21 @@ class QuizFeedbackStrip extends StatelessWidget {
                           ),
                           const SizedBox(width: SahneSpace.x1),
                           Flexible(
-                            child: Text(
-                              title,
-                              key: animate
-                                  ? const ValueKey('quiz-feedback-title')
-                                  : null,
-                              maxLines: 2,
-                              style: SahneType.bodyStrong.copyWith(
-                                color: t.tx,
-                                fontSize: 18,
+                            // Tek satır, sığmazsa küçülür: iki satıra
+                            // sarsa şerit uzar, alt perde oynar.
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: AlignmentDirectional.centerStart,
+                              child: Text(
+                                title,
+                                key: animate
+                                    ? const ValueKey('quiz-feedback-title')
+                                    : null,
+                                maxLines: 1,
+                                style: SahneType.bodyStrong.copyWith(
+                                  color: t.tx,
+                                  fontSize: 18,
+                                ),
                               ),
                             ),
                           ),
@@ -302,15 +312,19 @@ class QuizFeedbackStrip extends StatelessWidget {
                               ),
                               const SizedBox(width: SahneSpace.x2),
                               Expanded(
-                                child: Text(
-                                  title,
-                                  key: animate
-                                      ? const ValueKey('quiz-feedback-title')
-                                      : null,
-                                  maxLines: 2,
-                                  style: SahneType.bodyStrong.copyWith(
-                                    color: t.tx,
-                                    fontSize: 18,
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  alignment: AlignmentDirectional.centerStart,
+                                  child: Text(
+                                    title,
+                                    key: animate
+                                        ? const ValueKey('quiz-feedback-title')
+                                        : null,
+                                    maxLines: 1,
+                                    style: SahneType.bodyStrong.copyWith(
+                                      color: t.tx,
+                                      fontSize: 18,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -342,13 +356,9 @@ class QuizFeedbackStrip extends StatelessWidget {
       tween: Tween(begin: 0, end: 1),
       duration: const Duration(milliseconds: 220),
       curve: Curves.easeOutCubic,
-      builder: (context, v, child) => Opacity(
-        opacity: v,
-        child: Transform.translate(
-          offset: Offset(0, (1 - v) * 24),
-          child: child,
-        ),
-      ),
+      // Yalnız solma: eskiden 24 pt aşağıdan kayarak geliyordu; "cevaptan
+      // sonra hiçbir öğe yer değiştirmesin" (2026-10-29).
+      builder: (context, v, child) => Opacity(opacity: v, child: child),
       child: strip,
     );
   }
@@ -377,56 +387,64 @@ class QuizInactiveButtonFrame extends StatelessWidget {
   }
 }
 
-/// Alt perdenin boyunu SABİT tutar: joker dizisi, pasif "Sonraki" ve geri
-/// bildirim şeridi aynı alanı paylaşır; en yüksek olanın boyu kadar yer
-/// ayrılır. Eskiden cevaptan sonra perde 60–100 pt uzuyor, kayan gövde bu
-/// kadar daralıp soru ve şıklar yerinden oynuyordu ya da kaydırma
-/// çıkıyordu (2026-10-29, "soru gelince her şey sabit olmalı").
+/// Alt perdenin boyunu SABİT tutar: joker dizisi, pasif "Sonraki", geri
+/// bildirim şeridi, "Çift cevap" ipucu satırı ve joker bakiyesi (dört çip /
+/// tek sönük satır) aynı [height] içinde durur. Yükseklik DURUM değil
+/// YAPILANDIRMADAN (yazı ölçeği, mod) hesaplanır ([quizDockHeight]); bir durum
+/// ayrılan yüksekliği aşarsa taşma hatası verir ve bekçi
+/// (`soru_sigma_test`, "alt perde") yakalar. Eskiden en uzun durumun boyu
+/// "görünmez ikizle" ölçülüyordu; gerçek çocuk ikizden büyük olunca perde
+/// uzuyor, gövde daralıyor, soru yerinden oynuyordu (2026-10-29).
 class QuizStableDockHeight extends StatelessWidget {
   const QuizStableDockHeight({
     super.key,
     required this.child,
-    this.stackedAction = false,
-    this.compactRow = false,
-    this.minHeight = 0,
+    required this.height,
   });
 
   final Widget child;
-
-  /// Alıştırma turu: doğru cevaptan sonra üç düğmeli zorluk puanı gelir
-  /// (başlığın altında); ikiz de o boyda olsun.
-  final bool stackedAction;
-  final bool compactRow;
-
-  /// En az bu kadar yer ayrılır: joker dizisi iki hâlde gelir (bakiye
-  /// yüklenince dört çip, yüklenmeden tek sönük satır) ve bakiye geç
-  /// yüklenince alt perde 80 → 96 pt uzayıp soruyu yerinden oynatıyordu.
-  final double minHeight;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
-    // Görünmez ikiz: şeridin en uzun hâli (düğme boyunda boş yer tutucu).
-    final twin = ExcludeSemantics(
-      child: IgnorePointer(
-        child: Opacity(
-          opacity: 0,
-          child: QuizFeedbackStrip(
-            correct: true,
-            animate: false,
-            inlineAction: !stackedAction,
-            compactRow: compactRow,
-            action: const SizedBox(height: 52),
-          ),
-        ),
-      ),
-    );
-    return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: minHeight),
-      child: Stack(
-        fit: StackFit.passthrough,
+    // OverflowBox: içerik ayrılan boyu aşarsa (ölçü yazı tipi
+    // gerçek metrikleri taşımayan testler) hata fırlatmaz ve alt perde
+    // UZAMAZ; aşma bekçide ölçülür (`soru_sigma_ek_test`, "alt perde").
+    return SizedBox(
+      height: height,
+      child: OverflowBox(
         alignment: Alignment.center,
-        children: [twin, child],
+        // a11y-tap-target: noninteractive — yerleşim kutusu, dokunma hedefi
+        // değil (içindeki düğmeler kendi 48'lik kutusunu taşır).
+        minHeight: 0,
+        maxHeight: double.infinity,
+        child: child,
       ),
     );
   }
+}
+
+/// Alt perdenin ayrılan yüksekliği.
+///
+/// * şerit: 12 + 12 iç boşluk + 52'lik düğme (alıştırmada başlık + düğme);
+/// * joker bloğu: bakiye satırı + 8 + çipler (96, büyük yazıda +50·(ölçek−1));
+///
+double quizDockHeight(
+  TextScaler base, {
+  required bool practice,
+  required bool jokerCapable,
+  required double width,
+  required bool shortScreen,
+}) {
+  final s = base.scale(16) / 16;
+  // Düğme: en az 52; tek satır etiket 24·ölçek + 24 dikey boşluk.
+  final button = base.scale(24) + 24 > 52 ? base.scale(24) + 24 : 52.0;
+  final strip = practice ? 24 + base.scale(26) + 12 + button : 24 + button;
+  // Etiketli çipler dar genişlikte iki satıra sarar (≈ 124); etiketsiz
+  // (kısa ekran / büyük yazı) çipler ≈ 100.
+  final labels = !shortScreen && s < 1.3;
+  final jokers = jokerCapable
+      ? (labels ? 124 : 100) + 40 * (s - 1).clamp(0.0, 0.3)
+      : 0.0;
+  return strip > jokers ? strip : jokers;
 }

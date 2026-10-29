@@ -531,21 +531,22 @@ void main() {
         tester.widget<Text>(find.byKey(const ValueKey('quiz-crowd-rank'))).data,
         '#2/4',
       );
-      // 2026-10-29 (soru sığma): şerit iki satırlık sabit boydur; ilk üç
-      // kapalı başlar, şeride dokununca açılır.
-      expect(find.byKey(const ValueKey('quiz-crowd-top3')), findsNothing);
-      await tester.tap(find.byKey(const ValueKey('quiz-crowd-top3-toggle')));
-      await tester.pump();
+      // 2026-10-29 (soru sığma): şerit iki satırlık sabit boydur; dört
+      // oyuncunun hepsi her zaman görünür (avatar + puan çipleri).
       final top = find.byKey(const ValueKey('quiz-crowd-top3'));
+      expect(top, findsOneWidget);
+      // Ayşe 500, Ez ve Berat 300, Ceren 100 (Gitti ayrıldı → yok).
+      for (final puan in ['500', '300', '100']) {
+        expect(
+          find.descendant(of: top, matching: find.text(puan)),
+          findsWidgets,
+          reason: '$puan puanlı çip',
+        );
+      }
       expect(
-        find.descendant(of: top, matching: find.text('Ayşe')),
-        findsOneWidget,
-      );
-      expect(
-        find.descendant(of: top, matching: find.text('Gitti')),
+        find.descendant(of: top, matching: find.text('900')),
         findsNothing,
       );
-      expect(find.text('300 puan'), findsOneWidget);
       // Düello kartı ve dört satırlık canlı tablo kalabalıkta yoktur.
       expect(find.text('VS'), findsNothing);
     });
