@@ -105,6 +105,28 @@ const _reviewedSlideDifferences = [
     localLiteral:
         'Nerelisin? sorusu ve cevabı. "ji" ile dişil şehir adlarının sonuna -ê eklenir: Wan → Wanê, Mêrdîn → Mêrdînê, Stenbol → Stenbolê.',
   ),
+  // Kapışma U20 veri sözleşmesi (ders_karsilik_sozlesmesi_test): Türkçe
+  // paragraf sayısı Kurmancî açıklama bloğu sayısına eşit olsun diye yalnız
+  // cümle aralarına boş satır eklendi; metin aynı. Sunucu tarafı
+  // supabase/2026-10-29_ders_karsilik_paragraf.sql ile eşitlenir.
+  (
+    lessonId: 'alphabet_1',
+    order: 1,
+    field: 'tr',
+    sqlLiteral:
+        'Kurmancî (Hawar) alfabesi 31 harftir: 8 ünlü ve 23 ünsüz harf. Hawar alfabesi Latin harflerini kullanır.',
+    localLiteral:
+        'Kurmancî (Hawar) alfabesi 31 harftir:\n\n8 ünlü ve 23 ünsüz harf. Hawar alfabesi Latin harflerini kullanır.',
+  ),
+  (
+    lessonId: 'verbs_1',
+    order: 1,
+    field: 'tr',
+    sqlLiteral:
+        'Kurmancîde fiil cümlenin sonunda yer alır. Şimdiki/geniş zaman çoğu fiilde di- önekiyle yapılır. Özne + nesne + fiil sırası vardır. Hatin (gelmek) di- almaz: ew tên onlar geliyorlar. Olumsuzluk na- ile yapılır: ez naçim ben gitmiyorum.',
+    localLiteral:
+        'Kurmancîde fiil cümlenin sonunda yer alır. Şimdiki/geniş zaman çoğu fiilde di- önekiyle yapılır. Özne + nesne + fiil sırası vardır.\n\nHatin (gelmek) di- almaz: ew tên onlar geliyorlar.\n\nOlumsuzluk na- ile yapılır: ez naçim ben gitmiyorum.',
+  ),
 ];
 
 bool _allowsReviewedDifference(

@@ -27,7 +27,7 @@ void main() {
     // taşıyordu; birim `ode`, kupa `kûpa`.
     expect(
       Tr.of(K.untimedSoloSub, AppLanguage.ku),
-      'Dema tu bi tenê dilîzî dem nayê jimartin. Di odeyê, rû bi rû û kûpayê de dem heye.',
+      'Dema tu bi tenê dilîzî dem nayê jimartin. Di odeyê, pêşbirkê û kûpayê de dem heye.',
     );
     // Avatar simgesi "Kupa" deyince û düşer; `contains('kûpa')` onu
     // görmez — puan ile aynı sınıf.

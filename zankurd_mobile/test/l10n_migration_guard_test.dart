@@ -237,7 +237,7 @@ void main() {
       );
       expect(
         Tr.of(K.inviteShareText, AppLanguage.ku, {'tag': 'ZK-TEST'}),
-        'Ez li ZanKurdê bi Kurmancî hîn dibim! Koda min a vexwendinê: ZK-TEST. Tu jî were:',
+        'Ez bi ZanKurdê Kurmancî hîn dibim û pêşbirkê dikim! Koda min a vexwendinê: ZK-TEST. Tu jî were:',
       );
       expect(
         Tr.of(K.inviteShareText, AppLanguage.tr, {'tag': 'ZK-TEST'}),
