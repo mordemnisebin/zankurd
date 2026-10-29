@@ -1279,7 +1279,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             child: Text(
               Tr.forKu(K.cupStandingsNote, ku),
               key: const ValueKey('tournament-standings-note'),
-              style: SahneType.caption.copyWith(color: t.tx2),
+              style: SahneType.body.copyWith(color: t.tx2),
             ),
           ),
           SahneListGroup(

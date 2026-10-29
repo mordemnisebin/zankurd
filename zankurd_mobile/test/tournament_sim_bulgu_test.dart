@@ -138,8 +138,10 @@ void main() {
       expect(tester.takeException(), isNull, reason: 'taşma/hata var');
 
       // Dört oyuncu, iki yarı final maçı, boş Final kartı.
+      // QABERO yarı finali kazandığı için Final kartında da yazılır (kurul 1,
+      // C32); hepsi görünür olmalı.
       for (final name in ['Ben', 'QALI', 'QABERO', 'QACANO']) {
-        final rect = tester.getRect(find.text(name));
+        final rect = tester.getRect(find.text(name).first);
         expect(rect.left, greaterThanOrEqualTo(0), reason: name);
         expect(rect.right, lessThanOrEqualTo(width), reason: name);
         expect(rect.bottom, lessThan(3000), reason: name);

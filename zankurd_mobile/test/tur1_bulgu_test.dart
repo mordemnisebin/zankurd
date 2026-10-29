@@ -204,7 +204,7 @@ void main() {
   });
 
   testWidgets('I5 etiket: "Çevrimdışı" yerine son oynama', (tester) async {
-    late String never, days;
+    late String? never, days;
     await tester.pumpWidget(
       testShell(
         child: Builder(
@@ -237,8 +237,10 @@ void main() {
         ),
       ),
     );
-    expect(never, 'Henüz oynamadı');
-    expect(days, '2 gün önce oynadı');
+    // Kurul 1 (C22): etkinlik zamanı bilinmiyorsa satır bir şey İDDİA
+    // ETMEZ (misafir hesap çok oynadığı hâlde "Henüz oynamadı" görünüyordu).
+    expect(never, isNull);
+    expect(days, '2 gün önce etkindi');
   });
 
   testWidgets('I6 dolu 4/4 oda: davet yok, 4. oyuncu ilk görünümde perdenin '
@@ -403,7 +405,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('ana-sayfa'), findsOneWidget);
     expect(
-      find.text('Seviye testini sonra ana sayfadaki karttan yapabilirsin.'),
+      find.text(
+        'Seviye testini istediğin zaman «Kurmancî öğren» sayfasındaki «Seviyeni bul» kartından ya da Ayarlar\'dan yapabilirsin.',
+      ),
       findsOneWidget,
     );
   });

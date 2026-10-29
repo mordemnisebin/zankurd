@@ -172,6 +172,7 @@ class SahneListRow extends StatelessWidget {
     required IconData this.icon,
     required this.title,
     this.subtitle,
+    this.subtitleProminent = false,
     this.role = SahneRole.neutral,
     this.trailing,
     this.chevron = false,
@@ -199,6 +200,7 @@ class SahneListRow extends StatelessWidget {
     required this.title,
     this.icon = AppIcons.clapperboard,
     this.subtitle,
+    this.subtitleProminent = false,
     this.trailing,
     this.chevron = false,
     this.onTap,
@@ -226,6 +228,7 @@ class SahneListRow extends StatelessWidget {
     required this.title,
     this.leadingWidth = 44,
     this.subtitle,
+    this.subtitleProminent = false,
     this.trailing,
     this.chevron = false,
     this.onTap,
@@ -253,6 +256,7 @@ class SahneListRow extends StatelessWidget {
     this.dense = false,
     required this.title,
     this.subtitle,
+    this.subtitleProminent = false,
     this.trailing,
     this.chevron = false,
     this.onTap,
@@ -285,6 +289,7 @@ class SahneListRow extends StatelessWidget {
     this.icon,
     this.avatar,
     this.subtitle,
+    this.subtitleProminent = false,
     this.trailing,
     this.onTap,
     this.semanticLabel,
@@ -307,6 +312,7 @@ class SahneListRow extends StatelessWidget {
     required int this.rank,
     required this.title,
     this.subtitle,
+    this.subtitleProminent = false,
     this.icon = AppIcons.user,
     this.avatar,
     this.trailing,
@@ -339,6 +345,12 @@ class SahneListRow extends StatelessWidget {
   final String? initial;
   final String title;
   final String? subtitle;
+
+  /// Alt metin bilgi taşıyorsa (ör. veri paylaşımı rıza açıklaması) gövde
+  /// boyunda çizilir. Kurul 1 (C34, 2026-10-29): Ayarlar'daki kullanım
+  /// analizi / hata raporu açıklamaları 14 pt soluk kalıyordu; kullanıcının
+  /// neye izin verdiğini okuduğu yer bu satır.
+  final bool subtitleProminent;
   final SahneRole role;
   final Widget? trailing;
   final bool chevron;
@@ -534,9 +546,8 @@ class SahneListRow extends StatelessWidget {
         if (subtitle != null)
           Text(
             subtitle!,
-            style: SahneType.caption.copyWith(
-              color: enabled ? t.tx2 : t.disabledFg,
-            ),
+            style: (subtitleProminent ? SahneType.body : SahneType.caption)
+                .copyWith(color: enabled ? t.tx2 : t.disabledFg),
           ),
         if (footer != null) ...[const SizedBox(height: SahneSpace.x1), footer!],
       ],

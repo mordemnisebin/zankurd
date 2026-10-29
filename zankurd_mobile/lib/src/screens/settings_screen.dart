@@ -412,6 +412,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     builder: (context, consent, _) => SahneListRow.plain(
                       title: context.t(K.analyticsConsent),
                       subtitle: context.t(K.analyticsConsentSub),
+                      subtitleProminent: true,
                       trailing: Switch(
                         key: const ValueKey('analytics-consent-switch'),
                         value: consent.enabled,
@@ -423,6 +424,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     builder: (context, consent, _) => SahneListRow.plain(
                       title: context.t(K.crashReportsConsent),
                       subtitle: context.t(K.crashReportsConsentSub),
+                      subtitleProminent: true,
                       trailing: Switch(
                         key: const ValueKey('crash-reports-consent-switch'),
                         value: consent.crashReportsEnabled,

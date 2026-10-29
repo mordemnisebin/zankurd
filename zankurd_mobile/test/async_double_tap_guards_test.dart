@@ -97,15 +97,19 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    for (var i = 0; i < 40 && find.text('Biqedîne').evaluate().isEmpty; i++) {
+    for (
+      var i = 0;
+      i < 40 && find.text('Dersê biqedîne').evaluate().isEmpty;
+      i++
+    ) {
       await tester.tap(find.text('Pêş'));
       await tester.pumpAndSettle();
     }
-    expect(find.text('Biqedîne'), findsOneWidget);
+    expect(find.text('Dersê biqedîne'), findsOneWidget);
 
-    await tester.tap(find.text('Biqedîne'));
+    await tester.tap(find.text('Dersê biqedîne'));
     await tester.pump();
-    await tester.tap(find.text('Biqedîne'), warnIfMissed: false);
+    await tester.tap(find.text('Dersê biqedîne'), warnIfMissed: false);
     await tester.pump();
 
     expect(repository.completeCalls, 1);
