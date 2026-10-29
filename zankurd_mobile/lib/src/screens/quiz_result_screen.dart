@@ -1270,7 +1270,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           // Seviye kutusu sonuç başlığını ve skoru ÖRTÜYORDU (Astra turu,
           // 2026-10-29): önce sonuç okunur, kutu ~1,8 sn sonra gelir.
           _levelUpTimer = Timer(const Duration(milliseconds: 1800), () {
-            if (!mounted) return;
+            // Bu arada başka bir rota/diyalog açıldıysa kutu onun üstüne
+            // binmesin: yalnız bu sonuç ekranı hâlâ en üstteyse gösterilir.
+            if (!mounted || ModalRoute.of(context)?.isCurrent != true) return;
             _showLevelUpDialog(context, xpStore.currentLevel);
           });
         } else {
@@ -1998,11 +2000,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // sayısıdır: "3/5".
         value: isLearningExperience ? correctCount : score,
         suffix: isLearningExperience ? '/$totalQuestions' : '',
+        // Kısa ekranda düello sonucunda "puan • %doğruluk" alt yazısı yoktur:
+        // doğru/yanlış sayıları zaten çiplerde; satır ödül kartını alt
+        // perdenin altına itiyordu.
         caption: isLearningExperience
             ? accuracyText
+            : (duelCompact && shortScreen)
+            ? null
             : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
         celebrate: celebrate,
-        valueSize: duelCompact ? (shortScreen ? 56 : 72) : null,
+        valueSize: duelCompact ? (shortScreen ? 36 : 72) : null,
         emblemExtra: is1v1 && !isLearningExperience
             ? _DuelMascotTop.heightFor(duelMascotWidth)
             : duelOutcome == null

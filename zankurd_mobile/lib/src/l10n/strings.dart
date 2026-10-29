@@ -2266,7 +2266,7 @@ class Tr {
     // 2026-10-29 Astra bulguları (GPT-6 Astra): KU TASLAK, jüri bekler.
     K.cupStartsShortMin: {
       'ku':
-          'Gava temam bibe an piştî 24 saetan bi herî kêm 2 lîstikvanan dest pê dike',
+          'Gava tijî bibe an piştî 24 saetan bi herî kêm 2 lîstikvanan dest pê dike',
       'tr': 'Dolunca ya da 24 saat sonra en az 2 oyuncuyla başlar',
     },
     K.cupLadderPreviewNote: {
@@ -2285,13 +2285,13 @@ class Tr {
     K.cupDurationHM: {'ku': '{h} saet {m} deqe', 'tr': '{h} sa {m} dk'},
     K.cupDurationM: {'ku': '{m} deqe', 'tr': '{m} dk'},
     K.tournamentPracticeNote: {
-      'ku': 'Cihê te yê di kûpaya rastîn de dimîne; meşq bê xelat e.',
+      'ku': 'Cihê te yê di kûpaya rastîn de tê parastin; meşq bê xelat e.',
       'tr': 'Gerçek turnuvadaki yerin korunur; antrenman ödülsüzdür.',
     },
     K.cupStandingActive: {'ku': 'Li bendê ye', 'tr': 'Bekliyor'},
     K.cupStandingFinalist: {'ku': 'Fînalîst', 'tr': 'Finalist'},
     K.cupStandingsNote: {
-      'ku': 'Rêzbendî: pêşî rewşa kûpayê, paşê pûan.',
+      'ku': 'Rêzbendî: pêşî rewşa di kûpayê de, paşê pûan.',
       'tr': 'Sıralama: önce turnuvadaki durum, sonra puan.',
     },
     K.cupRoundBadge: {'ku': 'Ger {n}/{total}', 'tr': 'Tur {n}/{total}'},
@@ -2300,7 +2300,7 @@ class Tr {
       'tr': '{opponent} karşısında {my} – {their}',
     },
     K.cupWonRound: {
-      'ku': 'Te gera {round} bi ser xist',
+      'ku': 'Te gera {round} qezenc kir',
       'tr': '{round} turunu kazandın',
     },
     K.cupWonNext: {
@@ -2309,13 +2309,13 @@ class Tr {
     },
     K.tournamentWaitingOpponentScore: {
       'ku':
-          'Pûana te hate tomarkirin: {score}; em li benda bersiva hevrikê te ne.',
+          'Pûana te hate tomarkirin: {score}; em li benda lîstina hevrikê te ne.',
       'tr': 'Puanın kaydedildi: {score}; rakibinin oynamasını bekliyoruz.',
     },
     K.longestStreak: {'ku': 'Zincîra herî dirêj', 'tr': 'En uzun seri'},
     K.matchNoAnswers: {
-      'ku': 'Tu bersiv nehat dayîn; kes pûan negirt.',
-      'tr': 'Hiç cevap verilmedi; kimse puan almadı.',
+      'ku': 'Te tu bersiv neda; pûana herdu aliyan 0 ye.',
+      'tr': 'Hiç cevap vermedin; iki tarafın puanı da 0.',
     },
     K.participationReward: {'ku': 'Xelata beşdariyê', 'tr': 'Katılım ödülü'},
     K.asyncDuelAnswerSummary: {
@@ -2327,12 +2327,16 @@ class Tr {
       'tr': 'Süre: Sen {my} · {name} {opp}',
     },
     K.contestFirstCounts: {
-      'ku': 'Encama yekem dikeve rêzbendiyê; dikarî dîsa bilîzî.',
+      'ku': 'Encama te ya yekem dikeve rêzbendiyê; dikarî dîsa bilîzî.',
       'tr': 'Sıralamaya ilk sonucun girer; tekrar oynayabilirsin.',
     },
     K.tournamentNeedMore: {
-      'ku': 'Ji bo destpêkirinê hê {n} lîstikvan hewce ne.',
-      'tr': 'Başlaması için {n} oyuncu daha gerekiyor.',
+      'ku': 'Ji bo tijîbûnê {n} lîstikvan mane.',
+      'tr': 'Dolmasına {n} oyuncu kaldı.',
+    },
+    K.cupFillRemainingMin: {
+      'ku': 'Heta dawiya 24 saetan {left} maye; herî kêm 2 lîstikvan hewce ne.',
+      'tr': '24 saatlik sürenin dolmasına {left} var; en az 2 oyuncu gerekir.',
     },
     K.championRewardGranted: {
       'ku': 'Pîroz be! Xelata şampiyoniyê: {coins} zêr',
@@ -5242,6 +5246,7 @@ class K {
   static const tournamentWaitingOpponentExpired =
       'tournament.waitingOpponentExpired';
   static const tournamentNeedMore = 'tournament.needMore';
+  static const cupFillRemainingMin = 'tournament.fillRemainingMin';
   static const cupStartsShortMin = 'tournament.startsShortMin';
   static const cupLadderPreviewNote = 'tournament.ladderPreviewNote';
   static const cupFillRemaining = 'tournament.fillRemaining';

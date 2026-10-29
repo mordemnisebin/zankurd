@@ -948,9 +948,12 @@ class _TournamentScreenState extends State<TournamentScreen> {
           .difference(DateTime.now());
       remaining = left.isNegative || left == Duration.zero
           ? context.t(K.cupFillElapsed)
-          : context.t(K.cupFillRemaining, {
-              'left': _durationLabel(context, left),
-            });
+          // Sunucu 24 saat sonunda EN AZ 2 oyuncu ister: tek kişiyken
+          // "başlamasına X var" kesin başlangıç sözü olurdu.
+          : context.t(
+              fill.count >= 2 ? K.cupFillRemaining : K.cupFillRemainingMin,
+              {'left': _durationLabel(context, left)},
+            );
     }
     // Katılma anında kupa yeniyse (tek kayıt: biz) bunu söyle.
     final fresh = _joinedJustNow && fill.count <= 1

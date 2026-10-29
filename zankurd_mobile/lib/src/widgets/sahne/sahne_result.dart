@@ -990,24 +990,19 @@ class SahneResultStats extends StatelessWidget {
             return w;
           }
 
-          final all = stats.where((s) => s.visible).toList();
+          final visible = stats.where((s) => s.visible).toList();
           // 16 yatay iç boşluk + sayı + 4 + söz.
-          double chipWidth(SahneResultStat stat) =>
+          final widths = [
+            for (final stat in visible)
               16 +
-              width('${stat.value}', SahneType.captionStrong) +
-              4 +
-              width(stat.label, SahneType.captionStrong);
-          // Önce hepsi; sığmazsa SONDAKİ (en az önemli: seri) düşer — en dar
-          // ekran + en geniş yazıda bile ilk görünüm eksiksiz kalsın. İki
-          // satıra inmek ödül kartını alt perdenin altına itiyordu.
-          for (var n = all.length; n >= 3 && n >= all.length - 1; n--) {
-            final visible = all.take(n).toList();
-            final widths = [for (final stat in visible) chipWidth(stat)];
-            final gaps = SahneSpace.x2 * (visible.length - 1);
-            if (widths.fold<double>(0, (a, b) => a + b) + gaps >
-                constraints.maxWidth) {
-              continue;
-            }
+                  width('${stat.value}', SahneType.captionStrong) +
+                  4 +
+                  width(stat.label, SahneType.captionStrong),
+          ];
+          final gaps = SahneSpace.x2 * (visible.length - 1);
+          // Hiçbir sayım düşmez: tek satıra sığmıyorsa ızgaraya inilir.
+          if (widths.fold<double>(0, (a, b) => a + b) + gaps <=
+              constraints.maxWidth) {
             return Row(
               children: [
                 for (var i = 0; i < visible.length; i++) ...[
@@ -1073,7 +1068,8 @@ class SahneResultStats extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             for (var i = 0; i < rows.length; i++) ...[
-              if (i > 0) const SizedBox(height: SahneSpace.x2),
+              if (i > 0)
+                SizedBox(height: compact ? SahneSpace.x1 : SahneSpace.x2),
               rows[i],
             ],
           ],
@@ -1118,7 +1114,7 @@ class _StatTile extends StatelessWidget {
           decoration: ShapeDecoration(color: stat.tint, shape: SahneShape.m),
           child: ConstrainedBox(
             // a11y-tap-target: noninteractive — sayım çipi; salt görsel.
-            constraints: BoxConstraints(minHeight: compact ? 40 : 58),
+            constraints: BoxConstraints(minHeight: compact ? 34 : 58),
             child: Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: bare ? SahneSpace.x2 : SahneSpace.x3,

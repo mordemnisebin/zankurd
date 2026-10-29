@@ -256,7 +256,7 @@ void main() {
 
     expect(find.byKey(const ValueKey('tournament-waiting')), findsOneWidget);
     expect(find.textContaining('Yeni bir turnuva açıldı'), findsNothing);
-    expect(find.textContaining('3 oyuncu daha'), findsOneWidget);
+    expect(find.textContaining('Dolmasına 3 oyuncu kaldı'), findsOneWidget);
     expect(find.textContaining('1/4 oyuncu katıldı'), findsOneWidget);
   });
 }

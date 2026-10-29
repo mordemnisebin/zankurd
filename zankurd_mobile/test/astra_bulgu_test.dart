@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/xp_store.dart';
+import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/models/tournament.dart';
@@ -490,4 +492,98 @@ void main() {
       }
     });
   }
+
+  testWidgets('B: tek oyunculu bekleme "başlamasına X var" demez; en az 2 '
+      'oyuncu şartını söyler', (tester) async {
+    await _setView(tester, 402, 874);
+    TournamentBracket waiting(int n) => TournamentBracket(
+      tournamentId: 't',
+      userId: 'me',
+      size: 4,
+      entryCount: n,
+      rounds: const [],
+      createdAt: DateTime.now().subtract(const Duration(hours: 4)),
+    );
+    await tester.pumpWidget(
+      testShell(
+        child: TournamentScreen(repository: _Repo(current: waiting(1))),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.textContaining('Başlamasına'), findsNothing);
+    expect(find.textContaining('sürenin dolmasına 19 sa'), findsOneWidget);
+    expect(find.textContaining('en az 2 oyuncu gerekir'), findsOneWidget);
+  });
+
+  QuizResultScreen result({required int score, required int correct}) {
+    final repository = MockZanKurdRepository();
+    return QuizResultScreen(
+      repository: repository,
+      room: repository.createRoom(),
+      score: score,
+      correctCount: correct,
+      wrongCount: 0,
+      totalQuestions: 10,
+      bestStreak: 0,
+      coinsAwarded: 20,
+      answerRecords: const [],
+      opponents: [
+        Player(id: 'opp', name: 'QaAlı', score: score, state: 'Online'),
+      ],
+    );
+  }
+
+  testWidgets('D: hiç cevap yoksa sebep yalnız kullanıcı hakkında yazılır', (
+    tester,
+  ) async {
+    await _setView(tester, 402, 874);
+    await tester.pumpWidget(testShell(child: result(score: 0, correct: 0)));
+    await tester.pump(const Duration(seconds: 2));
+    expect(
+      find.byKey(const ValueKey('result-no-answers-notice')),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Hiç cevap vermedin'), findsOneWidget);
+    expect(find.textContaining('kimse'), findsNothing);
+    expect(find.text('Katılım ödülü'), findsOneWidget);
+  });
+
+  testWidgets('D: seviye kutusu gecikir; başka rota açılmışsa üstüne binmez', (
+    tester,
+  ) async {
+    await _setView(tester, 402, 874);
+    await XPStore.loadForTest(XPStore.xpRequiredForLevel(2) - 1);
+    addTearDown(XPStore.resetInstance);
+    await tester.pumpWidget(testShell(child: result(score: 300, correct: 3)));
+    await tester.pump(const Duration(milliseconds: 600));
+    expect(
+      find.text('Seviye atladın!'),
+      findsNothing,
+      reason: 'sonuç okunmadan kutu açılmamalı',
+    );
+    await tester.pump(const Duration(milliseconds: 1500));
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.text('Seviye atladın!'), findsOneWidget);
+  });
+
+  testWidgets('D: seviye kutusu beklerken başka rota açıldıysa gösterilmez', (
+    tester,
+  ) async {
+    await _setView(tester, 402, 874);
+    await XPStore.loadForTest(XPStore.xpRequiredForLevel(2) - 1);
+    addTearDown(XPStore.resetInstance);
+    await tester.pumpWidget(testShell(child: result(score: 300, correct: 3)));
+    await tester.pump(const Duration(milliseconds: 600));
+    final navigator = tester.state<NavigatorState>(
+      find.byType(Navigator).first,
+    );
+    navigator.push(
+      MaterialPageRoute<void>(builder: (_) => const Scaffold(body: Text('X'))),
+    );
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.text('Seviye atladın!'), findsNothing);
+  });
 }
