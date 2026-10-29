@@ -1443,6 +1443,12 @@ class Tr {
       'tr': '{n} oyuncu bekleniyor…',
     },
     K.rakipBekleniyor: {'ku': 'Hevrik tê payîn…', 'tr': 'Rakip bekleniyor…'},
+    // Kurul C25: seviye penceresi yerine ödül kartında satır içi kutlama.
+    K.levelUpInline: {'ku': 'Asta nû: {n}', 'tr': 'Yeni seviye: {n}'},
+    K.questionImageZoomHint: {
+      'ku': 'Ji bo mezinkirinê li wêneyê bixe',
+      'tr': 'Büyütmek için görsele dokun',
+    },
     K.wordOrderingHowTo: {
       'ku':
           'Li peyvan bixe da ku hevokê çêbikî; ji bo rakirinê li peyva di hevokê de bixe.',
@@ -3330,7 +3336,6 @@ class Tr {
           'tahsil edilir. İstediğin zaman mağaza hesap ayarlarından iptal '
           'edebilirsin.',
     },
-    K.levelUpTitle: {'ku': 'Asta te bilind bû!', 'tr': 'Seviye atladın!'},
 
     // ── Profil kartı ──────────────────────────────────────────────
     // Düzenleyici başlığı zaten `K.myAvatar` ("Rûyê Min"). Düğme
@@ -5013,6 +5018,8 @@ class K {
   static const perQuestionSeconds = 'room.perQuestionSeconds';
   static const doubleAnswerActiveHint = 'quiz.doubleAnswerActiveHint';
   static const wordOrderingHowTo = 'quiz.wordOrderingHowTo';
+  static const questionImageZoomHint = 'quiz.questionImageZoomHint';
+  static const levelUpInline = 'result.levelUpInline';
   static const rakipBekleniyor = 'screen.rakipBekleniyor';
   static const cumleyiOlusturmakIcinKelimeleri =
       'screen.cumleyiOlusturmakIcinKelimeleri';
@@ -5693,7 +5700,6 @@ class K {
   static const paywallPackagesInactiveBody = 'paywall.packages.inactive.body';
   static const paywallRenewalTerms = 'paywall.renewalTerms';
   static const paywallRestoreFailed = 'paywall.restore.failed';
-  static const levelUpTitle = 'result.levelUp.title';
 
   // ── Profil kartı ──────────────────────────────────────────────
   static const editAvatar = 'profile.editAvatar';

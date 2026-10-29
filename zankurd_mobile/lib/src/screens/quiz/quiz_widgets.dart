@@ -153,29 +153,81 @@ class _QuestionImage extends StatelessWidget {
         ? alt!.trim()
         : context.t(K.questionImage);
 
+    // Kurul C18 (Astra + Sol, 2026-10-29): görselin sorunun kendisi olduğu
+    // sorularda küçük karedeki ayrıntı seçilemiyordu; dokununca tam ekran,
+    // yakınlaştırılabilir görünüm açılır (Duolingo/Quizlet deseni).
     return Semantics(
       image: true,
+      button: true,
       label: label,
+      hint: context.t(K.questionImageZoomHint),
       // Alttaki `Image` widget'ları kendi (boş) semantiklerini üretiyor;
       // dışlanmazsa ekran okuyucu etiketi iki kez ya da eksik okur.
       excludeSemantics: true,
+      onTap: () => _openQuestionImageZoom(context, url, label),
       // Şahnê: görsel L pahlı karede (kesik köşe), yuvarlak köşe yok.
-      child: ClipPath(
-        clipper: const ShapeBorderClipper(shape: SahneShape.l),
-        child: (isLandscapeTablet || forcedHeight != null)
-            ? SizedBox(
-                width: double.infinity,
-                height: forcedHeight ?? maxHeight,
-                child: image,
-              )
-            : SizedBox(
-                width: double.infinity,
-                height: portraitHeight,
-                child: image,
-              ),
+      child: GestureDetector(
+        key: const ValueKey('quiz-question-image-zoom'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _openQuestionImageZoom(context, url, label),
+        child: ClipPath(
+          clipper: const ShapeBorderClipper(shape: SahneShape.l),
+          child: (isLandscapeTablet || forcedHeight != null)
+              ? SizedBox(
+                  width: double.infinity,
+                  height: forcedHeight ?? maxHeight,
+                  child: image,
+                )
+              : SizedBox(
+                  width: double.infinity,
+                  height: portraitHeight,
+                  child: image,
+                ),
+        ),
       ),
     );
   }
+}
+
+/// Soru görselinin tam ekran, yakınlaştırılabilir görünümü (kurul C18).
+void _openQuestionImageZoom(BuildContext context, String url, String label) {
+  final provider = _questionImageProvider(url);
+  showDialog<void>(
+    context: context,
+    barrierColor: Colors.black.withValues(alpha: 0.92),
+    builder: (dialogContext) => Dialog.fullscreen(
+      backgroundColor: Colors.transparent,
+      child: SafeArea(
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Semantics(
+                image: true,
+                label: label,
+                child: InteractiveViewer(
+                  key: const ValueKey('quiz-question-image-zoom-view'),
+                  maxScale: 4,
+                  child: Center(
+                    child: Image(image: provider, fit: BoxFit.contain),
+                  ),
+                ),
+              ),
+            ),
+            PositionedDirectional(
+              top: SahneSpace.x2,
+              end: SahneSpace.x2,
+              child: SahneIconButton(
+                key: const ValueKey('quiz-question-image-zoom-close'),
+                icon: AppIcons.xmark,
+                semanticLabel: dialogContext.t(K.close),
+                onPressed: () => Navigator.of(dialogContext).pop(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 /// Görsel indirilirken gösterilen hafif yükleme yüzeyi (Kulis tonu).
