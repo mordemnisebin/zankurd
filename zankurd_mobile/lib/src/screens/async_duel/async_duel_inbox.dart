@@ -494,20 +494,30 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
       subtitle = myCorrect != null
           ? '${context.t(K.you)} $myCorrect/${view.total}'
           : null;
+    } else if (summary.canResume) {
+      // Kurul C30 (3/3): "Yarım kaldı" satırında hangi oyunun yarım kaldığı
+      // (oyun türü) yazmıyordu; başlık rakip, alt satır "Sırayla düello ·
+      // Yarım kaldı". Tur 3 (2026-10-30): davet edilen ama henüz oynamamış
+      // rakipte (invited, knownOpponent yok) önceki dal önce yakalıyordu ve
+      // önek yine çıkmıyordu; yarım kalan tur artık her durumda bu daldadır.
+      final name =
+          knownOpponent ??
+          (invited == null
+              ? null
+              : context.playerDisplayName(
+                  invited,
+                  tag: summary.invitedProfile?.playerTag,
+                ));
+      title = name ?? statusLabel;
+      subtitle = name != null
+          ? '${context.t(K.asyncDuel)} · $statusLabel'
+          : context.t(K.asyncDuel);
     } else if (invited != null && knownOpponent == null) {
       title = context.playerDisplayName(
         invited,
         tag: summary.invitedProfile?.playerTag,
       );
       subtitle = statusLabel;
-    } else if (summary.canResume) {
-      // Kurul C30 (3/3): "Yarım kaldı" satırında hangi oyunun yarım kaldığı
-      // (oyun türü) yazmıyordu; başlık rakip, alt satır "Sırayla düello ·
-      // Yarım kaldı".
-      title = knownOpponent ?? statusLabel;
-      subtitle = knownOpponent != null
-          ? '${context.t(K.asyncDuel)} · $statusLabel'
-          : context.t(K.asyncDuel);
     } else {
       title = knownOpponent ?? statusLabel;
       subtitle = knownOpponent != null

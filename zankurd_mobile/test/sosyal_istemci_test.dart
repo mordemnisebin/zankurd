@@ -388,6 +388,27 @@ void main() {
       expect(find.byType(AsyncDuelPlayScreen), findsOneWidget);
     });
 
+    // Tur 3 (2026-10-30): arkadaşa meydan okuyup turu yarım bırakınca rakip
+    // henüz oynamadığı için (davet edilen, `knownOpponent` yok) önceki dal
+    // önce yakalıyordu; satır yalnız "Yarım kaldı" diyor, oyun türü
+    // yazmıyordu (57_yarim_kaldi_A).
+    testWidgets('davetli yarım düello satırı "Sırayla düello · Yarım kaldı"', (
+      tester,
+    ) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      final repository = _InvitedResumeRepository();
+      await tester.pumpWidget(
+        testShell(
+          child: Scaffold(body: AsyncDuelInboxSection(repository: repository)),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('QaBero'), findsOneWidget);
+      expect(find.text('Sırayla düello · Yarım kaldı'), findsOneWidget);
+      expect(find.text('Devam et'), findsOneWidget);
+    });
+
     testWidgets('kimsenin katılmadığı düello geri çekilir', (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -495,6 +516,21 @@ void main() {
 
 /// Arkadaş ekranı için sahte depo: arama sonucu, arkadaşlar, gelen ve
 /// gönderilen istekler verilir. `sent: null` → sunucuda yönetim RPC'leri yok.
+class _InvitedResumeRepository extends MockZanKurdRepository {
+  @override
+  Future<List<AsyncDuelSummary>> loadMyAsyncDuels() async => [
+    AsyncDuelSummary(
+      duelId: 'davetli-yarim',
+      status: AsyncDuelStatus.open,
+      role: AsyncDuelRole.creator,
+      invitedName: 'QaBero',
+      createdAt: DateTime.now().toUtc(),
+      expiresAt: DateTime.now().toUtc().add(const Duration(hours: 23)),
+      seen: false,
+    ),
+  ];
+}
+
 class _SocialRepository extends MockZanKurdRepository {
   _SocialRepository({
     this.results = const [],

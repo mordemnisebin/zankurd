@@ -34,10 +34,17 @@ class LessonScrollEdgeFadeState extends State<LessonScrollEdgeFade> {
 
   @override
   Widget build(BuildContext context) {
+    // Yalnız doğrudan altındaki DİKEY kaydırma sayılır (tur 3, 2026-10-30:
+    // ana sayfa ve profil sekmelerinde de kullanılır; oradaki yatay
+    // şeritler ve iç içe listeler solmayı açıp kapatmasın).
+    bool relevant(int depth, ScrollMetrics m) =>
+        depth == 0 && m.axis == Axis.vertical;
     return NotificationListener<ScrollMetricsNotification>(
-      onNotification: (n) => _onMetrics(n.metrics),
+      onNotification: (n) =>
+          relevant(n.depth, n.metrics) ? _onMetrics(n.metrics) : false,
       child: NotificationListener<ScrollNotification>(
-        onNotification: (n) => _onMetrics(n.metrics),
+        onNotification: (n) =>
+            relevant(n.depth, n.metrics) ? _onMetrics(n.metrics) : false,
         // ShaderMask'a durumla değişen anahtar VERİLMEZ: anahtar değişince
         // altındaki kaydırma yeniden kurulur ve konum başa döner.
         child: ShaderMask(
