@@ -558,6 +558,8 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
               myRawName: _myName,
               opponentProfile: opponentProfile,
               opponentRawName: rawOpponentName,
+              myBlank: _blankCount(mine: true),
+              opponentBlank: _blankCount(mine: false),
             ),
           );
         }
@@ -694,7 +696,12 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
                             : K.asyncDuelXpBreakdown,
                         {'n': '${view.myCorrect}'},
                       ),
-                      style: SahneType.caption.copyWith(color: t.tx2),
+                      // Kapışma U12: tema ikincil rengi (gündüz koyu gri)
+                      // sahnedeki altın kartta okunmuyordu (kare 101). Beyaz:
+                      // her sahne durağında ≥ 4.5:1 (krem 3.7'de kalıyordu).
+                      style: SahneType.caption.copyWith(
+                        color: SahneVivid.onFill,
+                      ),
                     )
                   : null,
             )
@@ -740,6 +747,22 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
 
   /// Rövanş düğmesi + soru soru karşılaştırma. Yalnız bitmiş düelloda;
   /// yüklenirken başlık + gösterge, hatada "Yeniden dene", RPC yoksa hiçbiri.
+  /// Karşılaştırma verisinden boş (cevapsız/süresi dolan) soru sayısı;
+  /// veri yoksa ya da rakip engelliyse `null`.
+  int? _blankCount({required bool mine}) {
+    final review = _review;
+    if (review == null) return null;
+    if (!mine &&
+        (review.opponentBlocked ||
+            !review.questions.any((q) => q.opponent != null))) {
+      return null;
+    }
+    return review.questions
+        .map((q) => mine ? q.mine : q.opponent)
+        .where((a) => a == null || a.timedOut)
+        .length;
+  }
+
   List<Widget> _reviewSections(BuildContext context, AsyncDuelResultView view) {
     if (view.kind != AsyncDuelResultKind.completed) return const [];
     final t = SahneTokens.of(context);
@@ -901,7 +924,17 @@ class _DuelScoreboard extends StatelessWidget {
     this.myIdentity,
     this.opponentProfile,
     this.opponentRawName,
+    this.myBlank,
+    this.opponentBlank,
   });
+
+  /// Boş bırakılan (cevapsız ya da süresi dolan) soru sayısı; karşılaştırma
+  /// verisi yüklenmediyse `null` ve satırda yazılmaz.
+  ///
+  /// Kapışma U12 (2026-10-29): "Sen 5 – 3 Rojda" Rojda'nın 4 soruyu BOŞ
+  /// bıraktığını söylemiyordu; 3 doğru, 4 yanlış gibi okunuyordu.
+  final int? myBlank;
+  final int? opponentBlank;
 
   final String myName;
   final String? myRawName;
@@ -925,42 +958,51 @@ class _DuelScoreboard extends StatelessWidget {
       bool winner,
       AvatarIdentity? identity,
       String? avatarName,
-    ) => Expanded(
-      child: Semantics(
-        container: true,
-        label: '$name, $correct/$total ${context.t(K.correct)}',
-        excludeSemantics: true,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            PlayerAvatar.fromIdentity(
-              radius: 28,
-              identity: identity,
-              displayName: avatarName ?? name,
-            ),
-            const SizedBox(height: SahneSpace.x2),
-            Text(
-              name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: SahneType.captionStrong.copyWith(color: t.tx2),
-            ),
-            const SizedBox(height: SahneSpace.x1),
-            Text(
-              '$correct/$total',
-              style: SahneType.headline.copyWith(
-                color: winner ? t.goldTx : t.tx,
-                fontFeatures: const [FontFeature.tabularFigures()],
+      int? blank,
+    ) {
+      final caption = (blank ?? 0) > 0
+          ? context.t(K.correctBlankCaption, {'b': '$blank'})
+          : context.t(K.correct);
+      return Expanded(
+        child: Semantics(
+          container: true,
+          label: '$name, $correct/$total $caption',
+          excludeSemantics: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              PlayerAvatar.fromIdentity(
+                radius: 28,
+                identity: identity,
+                displayName: avatarName ?? name,
               ),
-            ),
-            Text(
-              context.t(K.correct),
-              style: SahneType.caption.copyWith(color: t.tx2),
-            ),
-          ],
+              const SizedBox(height: SahneSpace.x2),
+              Text(
+                name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: SahneType.captionStrong.copyWith(color: t.tx2),
+              ),
+              const SizedBox(height: SahneSpace.x1),
+              Text(
+                '$correct/$total',
+                style: SahneType.headline.copyWith(
+                  color: winner ? t.goldTx : t.tx,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+              Text(
+                caption,
+                key: ValueKey('async-duel-side-caption-$name'),
+                textAlign: TextAlign.center,
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
+
     return SahneSurfaceCard(
       key: const ValueKey('async-duel-result-scoreboard'),
       padding: const EdgeInsets.symmetric(
@@ -976,6 +1018,7 @@ class _DuelScoreboard extends StatelessWidget {
               outcome == AsyncDuelOutcome.win,
               myIdentity,
               myRawName,
+              myBlank,
             ),
             VerticalDivider(width: SahneSpace.x4 * 2 + 1, color: t.line),
             side(
@@ -984,6 +1027,7 @@ class _DuelScoreboard extends StatelessWidget {
               outcome == AsyncDuelOutcome.loss,
               opponentProfile?.avatar,
               opponentRawName,
+              opponentBlank,
             ),
           ],
         ),

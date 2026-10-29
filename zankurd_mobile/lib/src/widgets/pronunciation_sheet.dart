@@ -11,6 +11,7 @@ import '../services/pronunciation_recorder.dart';
 import '../theme/app_icons.dart';
 import '../utils/error_reporter.dart';
 import 'sahne/sahne.dart';
+import '../services/audio_session_coordinator.dart';
 
 /// Kendi kaydını çalmak için ince bir arayüz; testler sahte verir.
 abstract class PronunciationPlayback {
@@ -20,19 +21,20 @@ abstract class PronunciationPlayback {
 }
 
 class _AudioplayersPlayback implements PronunciationPlayback {
-  final AudioPlayer _player = AudioPlayer();
+  /// Her çalış kendi oynatıcı örneğini alır (Astra 48bf4b86 incelemesi).
+  final SpeechPlaybackGuard _guard = SpeechPlaybackGuard(AudioPlayer.new);
 
   @override
-  Future<void> play(String path) async {
-    await _player.stop();
-    await _player.play(DeviceFileSource(path));
-  }
+  Future<void> play(String path) =>
+      // Kullanıcının kendi kaydı: sessiz anahtarda da duyulur (playback);
+      // bu ses sürerken efektler atlanır (kapışma U16).
+      _guard.play((player) => player.setSource(DeviceFileSource(path)));
 
   @override
-  Future<void> stop() => _player.stop();
+  Future<void> stop() => _guard.stop();
 
   @override
-  Future<void> dispose() => _player.dispose();
+  Future<void> dispose() => _guard.dispose();
 }
 
 /// Telaffuz atölyesi (2026-10-26, ücretsiz): referans sesi dinle, kendi

@@ -9,6 +9,7 @@ import 'package:zankurd_mobile/src/screens/quiz/quiz_fit.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 
+import 'support/okunur_boyut.dart';
 import 'support/realistic_device.dart';
 import 'support/widget_test_helpers.dart';
 
@@ -287,6 +288,19 @@ void main() {
           find.byKey(const ValueKey('quiz-crowd-header')),
         );
         expect(tester.getRect(strip).right, lessThanOrEqualTo(header.right));
+        // Kapışma U13/U15: ad ve puan okunur alt sınırın altına küçülmez
+        // (kart yazı ölçeği 1.15'te tavanlanır).
+        final effective = kOkunurAltSinir * (scale > 1.15 ? 1.15 : scale);
+        for (var rank = 1; rank <= 4; rank++) {
+          expect(
+            renderedFontSize(
+              tester,
+              find.byKey(ValueKey('quiz-crowd-name-$rank')),
+            ),
+            greaterThanOrEqualTo(effective - 0.01),
+            reason: '$rank. oyuncunun adı küçültülmüş',
+          );
+        }
       },
     );
   }

@@ -164,7 +164,7 @@ void main() {
       expect(
         find.descendant(
           of: dialog,
-          matching: find.text('Arkadaşının verdiği kodu gir'),
+          matching: find.text('Arkadaşının paylaştığı davet kodunu gir'),
         ),
         findsOneWidget,
       );

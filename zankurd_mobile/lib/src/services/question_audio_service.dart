@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import '../models/quiz_question.dart';
 import '../utils/error_reporter.dart';
 import 'tts_service.dart';
+import 'audio_session_coordinator.dart';
 
 enum VerifiedAudioLocation { asset, network }
 
@@ -130,25 +131,24 @@ class AudioplayersVerifiedQuestionAudioPlayer
   /// paketlenince oynatıcı ekran açılır açılmaz kuruluyordu: kimse dinlemese
   /// de platform kanalı açılıyor, test koşucusunda da (eklenti yok)
   /// `MissingPluginException` atıyordu (ekran turu, öğrenen sözlüğü).
-  AudioplayersVerifiedQuestionAudioPlayer({AudioPlayer? player})
-    : _injected = player;
+  ///
+  /// Her çalış YENİ bir oynatıcı örneği alır (bkz. [SpeechPlaybackGuard]);
+  /// [playerFactory] testlerde sahte örnek verir.
+  AudioplayersVerifiedQuestionAudioPlayer({
+    AudioPlayer Function()? playerFactory,
+  }) : _playerFactory = playerFactory ?? AudioPlayer.new;
 
-  final AudioPlayer? _injected;
-  AudioPlayer? _created;
+  final AudioPlayer Function() _playerFactory;
   final ValueNotifier<bool> _playing = ValueNotifier(false);
-  StreamSubscription<PlayerState>? _stateSubscription;
   bool _disposed = false;
 
-  AudioPlayer get _player {
-    final existing = _created;
-    if (existing != null) return existing;
-    final player = _injected ?? AudioPlayer();
-    _stateSubscription = player.onPlayerStateChanged.listen((state) {
+  late final SpeechPlaybackGuard _guard = SpeechPlaybackGuard(
+    _playerFactory,
+    onState: (state) {
       if (_disposed) return;
       _playing.value = state == PlayerState.playing;
-    });
-    return _created = player;
-  }
+    },
+  );
 
   @override
   bool get isPlaying => _playing.value;
@@ -157,7 +157,7 @@ class AudioplayersVerifiedQuestionAudioPlayer
   ValueListenable<bool> get playingListenable => _playing;
 
   @override
-  Future<void> play(VerifiedQuestionAudioClip clip, {double rate = 1.0}) async {
+  Future<void> play(VerifiedQuestionAudioClip clip, {double rate = 1.0}) {
     final source = switch (clip.location) {
       VerifiedAudioLocation.asset => AssetSource(
         clip.source.startsWith('assets/')
@@ -166,29 +166,27 @@ class AudioplayersVerifiedQuestionAudioPlayer
       ),
       VerifiedAudioLocation.network => UrlSource(clip.source),
     };
-    // Oynatıcı paylaşılır: hız her çalışta yeniden kurulur, yoksa bir
-    // yavaş dinlemeden sonra normal ses de yavaş kalırdı.
-    final player = _player;
-    await player.stop();
-    await player.setSource(source);
-    await player.setPlaybackRate(rate);
-    await player.resume();
+    // Telaffuz bilerek dinlenir: sessiz anahtarda da duyulur (playback).
+    // iOS oturumu genel olduğundan geçiş tek koordinatörden yapılır; bu ses
+    // sürerken efektler atlanır, bitince oturum ambient'e döner (kapışma U16
+    // + Astra F1, fd886658, 48bf4b86 incelemeleri).
+    return _guard.play((player) async {
+      await player.setSource(source);
+      await player.setPlaybackRate(rate);
+    });
   }
 
   @override
   Future<void> stop() async {
-    final player = _created;
-    if (player != null) await player.stop();
     _playing.value = false;
+    await _guard.stop();
   }
 
   @override
   void dispose() {
     if (_disposed) return;
     _disposed = true;
-    unawaited(_stateSubscription?.cancel());
-    final player = _created;
-    if (player != null) unawaited(player.dispose());
+    unawaited(_guard.dispose());
     _playing.dispose();
   }
 }

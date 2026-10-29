@@ -1106,7 +1106,7 @@ void main() {
     await tester.tap(practice);
     await tester.pumpAndSettle();
 
-    expect(find.text('Quiz yüklenemedi'), findsOneWidget);
+    expect(find.text('Soru turu yüklenemedi.'), findsOneWidget);
     expect(find.text('Tekrar dene'), findsOneWidget);
     expect(repository.loadCalls, 1);
 
@@ -1238,7 +1238,7 @@ void main() {
       find.text('Bu ders için henüz kısa test yok. Dersi tamamlayabilirsin.'),
       findsOneWidget,
     );
-    expect(find.text('Quiz yüklenemedi'), findsNothing);
+    expect(find.text('Soru turu yüklenemedi.'), findsNothing);
     expect(find.text('Tekrar dene'), findsNothing);
 
     await tester.tap(find.text('Kapat'));

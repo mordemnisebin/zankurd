@@ -49,6 +49,7 @@ import 'package:zankurd_mobile/src/models/friend.dart';
 import 'package:zankurd_mobile/src/models/async_duel.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -486,6 +487,65 @@ void main() {
         await tester.pumpAndSettle();
       }
     }
+
+    // Kapışma U12 (2026-10-29): skor kartı "3/7 Doğru" rakibin boş
+    // bıraktığı soruları söylemiyordu; 3 doğru 4 yanlış gibi okunuyordu.
+    testWidgets('U12: skor kartı boş sayısını yazar (karşılaştırmadan)', (
+      tester,
+    ) async {
+      final review = AsyncDuelReview.fromJson(_reviewJson());
+      final repo = _ReviewRepository(review: review);
+      tester.view.devicePixelRatio = 1.0;
+      tester.view.physicalSize = const Size(390, 2600);
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        testShell(
+          child: AsyncDuelResultScreen(
+            repository: repo,
+            view: AsyncDuelResultView.fromSummary(_completedSummary()),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      int blanks(bool mine) => review.questions
+          .map((q) => mine ? q.mine : q.opponent)
+          .where((a) => a == null || a.timedOut)
+          .length;
+      for (final mine in [true, false]) {
+        final b = blanks(mine);
+        if (b == 0) continue;
+        expect(find.text('Doğru · $b boş'), findsWidgets);
+      }
+      expect(
+        blanks(true) + blanks(false),
+        greaterThan(0),
+        reason: 'örnek veri en az bir boş içermeli (bekçi boşa dönmesin)',
+      );
+    });
+
+    test('U12: XP dökümü altın ödül kartında okunur (≥ 4.5:1)', () {
+      // Kart: altın %24 gece yarış sahnesinin her durağı üzerinde.
+      double ratio(Color a, Color b) {
+        final la = a.computeLuminance();
+        final lb = b.computeLuminance();
+        final hi = la > lb ? la : lb;
+        final lo = la > lb ? lb : la;
+        return (hi + 0.05) / (lo + 0.05);
+      }
+
+      const gold = Color(0xFFF5C24C);
+      for (final stop in [
+        ...SahneVivid.raceSceneNight,
+        ...SahneVivid.raceSceneDay,
+      ]) {
+        final card = Color.alphaBlend(gold.withValues(alpha: 0.24), stop);
+        expect(
+          ratio(SahneVivid.onFill, card),
+          greaterThanOrEqualTo(4.5),
+          reason: 'sahne durağı $stop',
+        );
+      }
+    });
 
     testWidgets('K7: karşılaştırma varsayılan kapalı', (tester) async {
       final repo = _ReviewRepository(

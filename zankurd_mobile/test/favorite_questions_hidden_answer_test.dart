@@ -155,6 +155,53 @@ void main() {
         );
       },
     );
+
+    // Kapışma U10 (2026-10-29): Kaydedilenler soru metnini oyun ekranıyla
+    // AYNI dil seçimiyle gösterir. Türkçe arayüzde kanonik Kurmancî metin
+    // çiziliyordu; oyun ekranı aynı soruyu Türkçe gösterdiği için oyuncu
+    // kaydettiği soruyu tanımıyordu.
+    const bilingual = QuizQuestion(
+      id: 'curated_bilingual_0001',
+      category: 'Ziman',
+      prompt: 'Paytexta Kurdistana Iraqê kîjan bajar e?',
+      promptTr: 'Irak Kürdistanı\'nın başkenti hangi şehirdir?',
+      answers: ['Hewlêr', 'Duhok', 'Silêmanî', 'Kerkûk'],
+      correctAnswer: 'Hewlêr',
+      explanation: '',
+    );
+
+    testWidgets('Türkçe arayüzde soru metni Türkçe (oyunla aynı)', (
+      tester,
+    ) async {
+      await tester.pumpWidget(pumpWith([bilingual]));
+      await tester.pumpAndSettle();
+      expect(
+        find.text('Irak Kürdistanı\'nın başkenti hangi şehirdir?'),
+        findsOneWidget,
+      );
+      expect(find.text(bilingual.prompt), findsNothing);
+    });
+
+    testWidgets('Kurmancî arayüzde kanonik metin', (tester) async {
+      await tester.pumpWidget(
+        testShell(
+          languageProvider: kurmanciLang(),
+          child: FavoriteQuestionsScreen(
+            repository: _FavoritesRepository([bilingual]),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text(bilingual.prompt), findsOneWidget);
+    });
+
+    testWidgets('çevirisi olmayan soru Türkçe arayüzde Kurmancî kalır', (
+      tester,
+    ) async {
+      await tester.pumpWidget(pumpWith([playableQuestion]));
+      await tester.pumpAndSettle();
+      expect(find.text('Yerel soru?'), findsOneWidget);
+    });
   });
 }
 

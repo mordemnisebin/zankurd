@@ -260,7 +260,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('todays-review-card')));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    expect(find.text('Quiz yüklenemedi'), findsOneWidget);
+    expect(find.text('Soru turu yüklenemedi.'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('todays-review-card')));
     await tester.pumpAndSettle();
     expect(starts, 2);

@@ -43,6 +43,7 @@ import 'package:zankurd_mobile/src/screens/suggest_question_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/arena_kit.dart';
 
+import 'support/realistic_device.dart';
 import 'support/widget_test_helpers.dart';
 
 LeaderboardEntry _entry(
@@ -335,6 +336,10 @@ void main() {
     testWidgets('davet kodu düğmesi "ZK-" ile yazılır ve satıra kırılmaz', (
       tester,
     ) async {
+      // Gerçek yazı tipi (2026-10-29): etiket "Koda vexwendinê binivîse"
+      // oldu (kapışma U9: paylaşma ve girme aynı ad); "tek satır" sorusu
+      // ölçü fontunun kare harfleriyle anlamsız.
+      await tester.runAsync(loadAppFonts);
       await tester.binding.setSurfaceSize(const Size(390, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
       await tester.pumpWidget(
@@ -347,8 +352,8 @@ void main() {
       // Kurul 2026-10-20: düğme "Parve bike · ZK-7RHC" (ne yaptığını söyler).
       expect(find.textContaining('· ZK-7RHC'), findsOneWidget);
       expect(find.text('7RHC'), findsNothing);
-      // "Koda xelatê têxe" tek satır: tam genişlikte düğme.
-      final label = tester.getSize(find.text('Koda xelatê têxe'));
+      // "Koda vexwendinê binivîse" tek satır: tam genişlikte düğme.
+      final label = tester.getSize(find.text('Koda vexwendinê binivîse'));
       expect(label.height, lessThanOrEqualTo(26));
     });
 

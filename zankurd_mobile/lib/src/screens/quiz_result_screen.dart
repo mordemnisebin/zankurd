@@ -1811,6 +1811,23 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     ),
                   ),
                 ),
+                // Kapışma U19 (2026-10-29): çevrimiçi turda XP sunucuda
+                // yarış puanının kendisidir (award_room_xp, 0..2000); sonuç
+                // "+539 XP" deyip kaynağını söylemiyordu, sırayla düellonun
+                // "20 XP/doğru"suyla çelişiyor gibi okunuyordu.
+                if (_earnedXP > 0 &&
+                    (widget.room.id?.trim() ?? '').isNotEmpty) ...[
+                  const SizedBox(height: SahneSpace.x1),
+                  Builder(
+                    builder: (context) => Text(
+                      context.t(K.resultXpIsScore),
+                      key: const ValueKey('result-xp-source'),
+                      style: SahneType.caption.copyWith(
+                        color: SahneTokens.of(context).tx2,
+                      ),
+                    ),
+                  ),
+                ],
                 const SizedBox(height: SahneSpace.cardGap),
               ],
               LearningOutcomeCard(

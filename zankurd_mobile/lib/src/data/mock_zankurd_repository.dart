@@ -2995,7 +2995,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentKu:
             'Alfabeya Kurmancî (Hawar) 31 tîp e:\n\nA B C Ç D E Ê F G H I Î J K L M N O P Q R S Ş T U Û V W X Y Z\n\nHeşt tîp dengdêr in, bîst û sê tîp dengdar in.\n\n• Elîfbê: Alfabe\n• Tîp: Harf\n• Dengdêr: Ünlü harf\n• Dengdar: Ünsüz harf',
         contentTr:
-            'Kurmancî (Hawar) alfabesi 31 harftir: 8 ünlü ve 23 ünsüz harf. Hawar alfabesi Latin harflerini kullanır.',
+            'Kurmancî (Hawar) alfabesi 31 harftir:\n\n8 ünlü ve 23 ünsüz harf. Hawar alfabesi Latin harflerini kullanır.',
         exampleKu: 'A, B, C, Ç, D...',
       ),
       LessonSlide(
@@ -3468,7 +3468,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentKu:
             'Lêker çi ye?\n\nDi kurmancî de lêker di dawiya hevokê de ye. Dema niha bi pêşgira di- çêdibe:\n\n• ez nan dixwim: ben ekmek yiyorum\n• tu çay vedixwî: sen çay içiyorsun\n• ew diçe: o gidiyor\n• em dikin: biz yapıyoruz\n• hûn dibînin: siz görüyorsunuz\n\nHatin cuda ye, di- naxe:\n\n• ew tên: onlar geliyorlar\n\nForma neyînî bi na- ye:\n\n• ez naçim: ben gitmiyorum',
         contentTr:
-            'Kurmancîde fiil cümlenin sonunda yer alır. Şimdiki/geniş zaman çoğu fiilde di- önekiyle yapılır. Özne + nesne + fiil sırası vardır. Hatin (gelmek) di- almaz: ew tên onlar geliyorlar. Olumsuzluk na- ile yapılır: ez naçim ben gitmiyorum.',
+            'Kurmancîde fiil cümlenin sonunda yer alır. Şimdiki/geniş zaman çoğu fiilde di- önekiyle yapılır. Özne + nesne + fiil sırası vardır.\n\nHatin (gelmek) di- almaz: ew tên onlar geliyorlar.\n\nOlumsuzluk na- ile yapılır: ez naçim ben gitmiyorum.',
       ),
       LessonSlide(
         id: 'verbs_1_s2',

@@ -519,8 +519,8 @@ void main() {
       await tester.pumpAndSettle();
       expect(
         find.text(
-          'Kupa açıldıktan 24 saat sonra en az 2 oyuncu varsa başlar; '
-          'yoksa oyuncu beklenir.',
+          'Kontenjan dolunca başlar; dolmazsa 24 saat sonunda en az 2 '
+          'oyuncuyla başlar.',
         ),
         findsOneWidget,
       );

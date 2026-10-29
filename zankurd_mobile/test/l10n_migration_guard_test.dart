@@ -267,7 +267,7 @@ void main() {
           'total': '10',
           'percent': '%80',
         }),
-        'ZanKurd\'te 120 puan aldım! Doğru: 8/10 (%80). Sen de oyna, Play Store\'da "ZanKurd".',
+        'ZanKurd\'da 120 puan aldım! Doğru: 8/10 (%80). Sen de oyna, Play Store\'da "ZanKurd".',
       );
       expect(
         Tr.of(K.progressLevelsCompleted, AppLanguage.ku, {

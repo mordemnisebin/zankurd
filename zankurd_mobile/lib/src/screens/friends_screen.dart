@@ -1331,12 +1331,11 @@ class _FriendRow extends StatelessWidget {
       subtitle: friendActivityLabel(context, friend),
       subtitleColor: online ? t.okTx : t.tx2,
       subtitleStrong: online,
-      // Uzun etiket (KU "Vexwîne pêşbirkê") ad sütununu daraltıp adı ve
-      // "Ne li serhêl"i sarıyordu: eylemler adın altına iner (tur 10a).
-      stackTrailing:
-          onChallenge != null && context.t(K.challengeFriendAction).length > 12
-          ? true
-          : null,
+      // Eylemler adın altına iner, eğer ad ya da oynama bilgisi eylemlerin
+      // yanında TEK satıra sığmıyorsa. Önce yalnız etiket uzunluğuna
+      // bakılıyordu (tur 10a); kapışma U11 (2026-10-29): "50 gün önce
+      // oynadı" "Meydan oku"nun yanında üç satıra kırılıyordu (kare 13).
+      stackTrailing: _needsStack(context),
       // 2026-10-14: ürünün günlük aktif oyuncusu 3-25; iki arkadaşın aynı
       // anda çevrimiçi olması neredeyse hiç yok. Canlı oda daveti oyuncuyu
       // boş bir lobide bekletiyordu. Birincil eylem sırayla meydan okumadır
@@ -1385,6 +1384,51 @@ class _FriendRow extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// Ad ve oynama bilgisi, eylemlerin (meydan oku + ⋯) yanında tek satıra
+  /// sığıyor mu? Sığmıyorsa eylemler alt satıra iner; bilgi sıkışmaz.
+  /// Genişlikler gerçek biçem ve yazı ölçeğiyle ölçülür.
+  bool? _needsStack(BuildContext context) {
+    final scaler = MediaQuery.textScalerOf(context);
+    double width(String text, TextStyle style) {
+      final p = TextPainter(
+        text: TextSpan(
+          text: text,
+          style: style.copyWith(fontFamily: style.fontFamily),
+        ),
+        textDirection: Directionality.of(context),
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      final w = p.width;
+      p.dispose();
+      return w;
+    }
+
+    final hasMenu =
+        onChallenge != null || onRemove != null || onModerate != null;
+    final actionLabel = onChallenge != null
+        ? context.t(K.challengeFriendAction)
+        : context.t(K.inviteToRoom);
+    // Hap: kenarlık 2 + iç boşluk 24 + simge 20 + 8 + söz (en çok 176);
+    // "⋯" 4 + 44. Oda düğmesi için aynı tahmin üstten yeterli.
+    final pill = (2 + 24 + 20 + 8 + width(actionLabel, SahneType.captionStrong))
+        .clamp(0.0, 176.0);
+    final trailing = pill + (hasMenu ? 4 + 48 : 0);
+    final screen = MediaQuery.sizeOf(context).width;
+    // Liste kenar boşluğu 16+16, satır iç boşluğu 12+16, avatar 40 + 12,
+    // eylem aralığı 8.
+    final textRoom = screen - 32 - 28 - 52 - 8 - trailing;
+    final title = width(
+      context.playerDisplayName(friend.friendName, tag: friend.friendTag),
+      SahneType.bodyStrong,
+    );
+    final sub = width(
+      friendActivityLabel(context, friend),
+      friend.isOnline ? SahneType.captionStrong : SahneType.caption,
+    );
+    return title > textRoom || sub > textRoom ? true : null;
   }
 
   void _openMenu(BuildContext context) {

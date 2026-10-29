@@ -156,7 +156,7 @@ void main() {
       _LobbyRepository(userId: 'host-user', players: [_me, _guest]),
     );
     expect(
-      find.text('Ev sahibi'),
+      find.text('Oda sahibi'),
       findsOneWidget,
       reason:
           'Kartta ayrıca bir "Ev sahibi" çipi çiziliyordu; aynı bilgi iki '
@@ -165,7 +165,7 @@ void main() {
     expect(
       find.descendant(
         of: find.byKey(const ValueKey('room-player-tile-1')),
-        matching: find.text('Ev sahibi'),
+        matching: find.text('Oda sahibi'),
       ),
       findsOneWidget,
     );
@@ -257,7 +257,7 @@ void main() {
       findsNothing,
       reason: 'Konuk başlatamaz; pasif "Yarışı başlat" düğmesi ölü eylemdi.',
     );
-    expect(find.textContaining('Ev sahibi bekleniyor'), findsOneWidget);
+    expect(find.textContaining('Oda sahibi bekleniyor'), findsOneWidget);
   });
 
   testWidgets('ev sahibinin tek birincil eylemi başlat düğmesidir', (
@@ -301,7 +301,7 @@ void main() {
     expect(
       find.descendant(
         of: find.byKey(const ValueKey('room-player-tile-1')),
-        matching: find.text('Ev sahibi'),
+        matching: find.text('Oda sahibi'),
       ),
       findsOneWidget,
     );

@@ -505,7 +505,7 @@ double quizDockHeight(
       for (final l in jokerLabels) {
         final n = lines(
           l,
-          SahneType.caption.copyWith(fontSize: 12, height: 1.15),
+          SahneType.caption.copyWith(height: 1.15),
           chipWidth - 8,
         );
         if (n > labelLines) labelLines = n;

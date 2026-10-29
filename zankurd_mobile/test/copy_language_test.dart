@@ -467,24 +467,26 @@ void main() {
 
   test('gizlilik özeti saklanan verileri ve uygulama içi silmeyi açıklar', () {
     final turkish = Tr.of(K.privacyBody, AppLanguage.tr);
-    expect(turkish, contains('oyun ve eşleştirme'));
+    // 2026-10-29 (kapışma U1): metin gerçek davranışa göre yeniden yazıldı;
+    // yollar bölüm adlarından (Hesap işlemleri) — bkz. gizlilik_metni_gercek.
+    expect(turkish, contains('oyun puanları ve istatistikleri'));
     expect(turkish, contains('oda mesajları'));
     expect(turkish, contains('soru önerileri'));
-    expect(turkish, contains('Ayarlar > Hesap > Hesabımı sil'));
+    expect(turkish, contains('Ayarlar > Hesap işlemleri > Hesabımı sil'));
     expect(turkish, contains('sıralamada'));
     expect(turkish, contains('arkadaş araması ve isteklerinde'));
     expect(turkish, contains('çevrimiçi odalarda'));
     expect(turkish, isNot(contains('@')));
 
     final kurmanci = Tr.of(K.privacyBody, AppLanguage.ku);
-    expect(kurmanci, contains('lîstik û hevberkirinê'));
+    expect(kurmanci, contains('statîstîkên lîstikê'));
     expect(kurmanci, contains('peyamên odeyê'));
     expect(kurmanci, contains('pêşniyarên pirsan'));
     // 2026-07-30: metin kullanıcıyı "Sazkarî" menüsüne yolluyordu; oysa
     // ayarlar ekranının Kurmancî adı `Mîheng` (K.settings). Hesabını silmek
     // isteyen oyuncu var olmayan bir menü arıyordu — yasal metnin tarif
     // ettiği yol uygulamada bulunmuyordu.
-    expect(kurmanci, contains('Mîheng > Hesab > Hesabê min jê bibe'));
+    expect(kurmanci, contains('Mîheng > Karên hesabê > Hesabê min jê bibe'));
     expect(kurmanci, contains(Tr.of(K.settings, AppLanguage.ku)));
     expect(kurmanci, contains('rêzbendiyê'));
     expect(kurmanci, contains('lêgerîna hevalan'));
@@ -856,7 +858,10 @@ void main() {
     // Etiket `Koda Vexwendinê` der (`K.enterReferralCode`). Misafir
     // yasağı "davetê" deyince oyuncu aynı kodu iki adla görür. Türkçe
     // `davet` kökü `contains('vexwend')` taramasını kör eder.
-    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda xelatê têxe');
+    expect(
+      Tr.of(K.enterReferralCode, AppLanguage.ku),
+      'Koda vexwendinê binivîse',
+    );
     expect(
       Tr.of(K.referralGuestBlocked, AppLanguage.ku),
       contains('Koda vexwendinê'),

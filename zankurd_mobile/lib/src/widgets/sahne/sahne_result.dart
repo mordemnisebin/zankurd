@@ -991,10 +991,11 @@ class SahneResultStats extends StatelessWidget {
           }
 
           final visible = stats.where((s) => s.visible).toList();
-          // 16 yatay iç boşluk + sayı + 4 + söz.
+          // 16 yatay iç boşluk + sayı + 4 + söz (+2 yuvarlama payı: flex
+          // tam sayıya yuvarlanır; pay olmadan söz alt satıra kayıyordu).
           final widths = [
             for (final stat in visible)
-              16 +
+              18 +
                   width('${stat.value}', SahneType.captionStrong) +
                   4 +
                   width(stat.label, SahneType.captionStrong),
@@ -1128,38 +1129,39 @@ class _StatTile extends StatelessWidget {
                     const SizedBox(width: SahneSpace.x2),
                   ],
                   if (compact)
-                    // Sıkışık: sayı ve söz TEK satırda ("3 Doğru").
+                    // Sıkışık: sayı ve söz aynı akışta ("3 Doğru"); sığmazsa
+                    // söz bir alt satıra geçer. Eskiden FittedBox ile
+                    // KÜÇÜLÜYORDU: 2×2 ızgarada "En uzun seri" ≈8 pt
+                    // çiziliyordu (kapışma U13 / O4-2). Yazı küçültülmez.
                     Flexible(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: [
-                            Text(
-                              '${stat.value}',
-                              style:
-                                  (bare
-                                          ? SahneType.captionStrong
-                                          : SahneType.headline)
-                                      .copyWith(
-                                        color: SahneVivid.onFill,
-                                        fontFeatures: const [
-                                          FontFeature.tabularFigures(),
-                                        ],
-                                      ),
+                      child: Wrap(
+                        key: ValueKey('result-stat-compact-${stat.label}'),
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.end,
+                        spacing: SahneSpace.x1,
+                        children: [
+                          Text(
+                            '${stat.value}',
+                            style:
+                                (bare
+                                        ? SahneType.captionStrong
+                                        : SahneType.headline)
+                                    .copyWith(
+                                      color: SahneVivid.onFill,
+                                      height: 1.1,
+                                      fontFeatures: const [
+                                        FontFeature.tabularFigures(),
+                                      ],
+                                    ),
+                          ),
+                          Text(
+                            stat.label,
+                            textAlign: TextAlign.center,
+                            style: SahneType.captionStrong.copyWith(
+                              color: stat.accent ?? t.tx2,
                             ),
-                            const SizedBox(width: SahneSpace.x1),
-                            Text(
-                              stat.label,
-                              maxLines: 1,
-                              style: SahneType.captionStrong.copyWith(
-                                color: stat.accent ?? t.tx2,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     )
                   else

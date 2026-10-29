@@ -1608,7 +1608,12 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     // örnek satırlardaki sözcükler dokunulabilir.
     // `• terim: anlam` satırları sesli kelime kartı, harf satırı karo
     // olur (bkz. LessonContentBlocks); öteki satırlar dokunulabilir kalır.
-    return LessonContentBlocks(text: slide.contentKu);
+    // Türkçe karşılık yalnız Türkçe arayüzde ve her açıklama cümlesinin
+    // HEMEN altında (kapışma U20); Kurmancî arayüzde verilmez.
+    return LessonContentBlocks(
+      text: slide.contentKu,
+      translation: context.isKu ? null : slide.contentTr,
+    );
   }
 
   /// Örnek cümle: Kulis (`s2`) tonlu M pahlı kutu, ikincil metin.
@@ -1930,22 +1935,11 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 _buildKuContentRow(slide, context),
-                                // Türkçe açıklama yalnız Türkçe arayüzde: Kurmancî
-                                // arayüzde Kurmancî metnin altında Türkçe düz
-                                // yazı çıkıyordu. Alan bir "öğrenci ipucu" diye
-                                // işaretli değil (sunucuda `content_tr` serbest
-                                // metin); dokunarak çevrilen kart arkası ise
-                                // kullanıcının isteğidir ve dilden bağımsız kalır.
-                                if (slide.contentTr case final contentTr?
-                                    when !ku && contentTr.isNotEmpty) ...[
-                                  const SizedBox(height: SahneSpace.x2),
-                                  Text(
-                                    contentTr,
-                                    style: SahneType.caption.copyWith(
-                                      color: t.tx2,
-                                    ),
-                                  ),
-                                ],
+                                // Türkçe açıklama yalnız Türkçe arayüzde ve artık
+                                // kartın sonunda değil, açıklama cümlesinin hemen
+                                // altında (kapışma U20; bkz. LessonContentBlocks).
+                                // Dokunarak çevrilen kart arkası kullanıcının
+                                // isteğidir ve dilden bağımsız kalır.
                                 if (slide.exampleKu case final exampleKu?) ...[
                                   const SizedBox(height: SahneSpace.x3),
                                   _buildExample(exampleKu, context),
@@ -1968,6 +1962,10 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                             recallEntries.isNotEmpty) ...[
                           const SizedBox(height: SahneSpace.cardGap),
                           LessonRecallCard(entries: recallEntries),
+                        ],
+                        if (isLast) ...[
+                          const SizedBox(height: SahneSpace.cardGap),
+                          const LessonFinishHint(),
                         ],
                       ],
                     ),
@@ -2381,6 +2379,36 @@ class _PracticeGrid extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: rows,
+    );
+  }
+}
+
+/// Son slaytın akış notu (kapışma U14, 2026-10-29).
+///
+/// Son slaytta "Tamamla" ile "Kısa test" yan yana duruyordu; hangisinin dersi
+/// bitirdiği ve testin tamamlamaya etkisi yazmıyordu (kare 96). Davranış:
+/// Tamamla dersi yerel + sunucu kuyruğuna yazar ve sonrakinin kilidini açar;
+/// kısa test ödülsüz alıştırmadır, tamamlamayı değiştirmez. Not kaydırılan
+/// içerikte durur: alt perdeye konunca %200 yazıda perde içeriği eziyordu.
+class LessonFinishHint extends StatelessWidget {
+  const LessonFinishHint({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Row(
+      key: const ValueKey('lesson-finish-hint'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(AppIcons.circleCheck, size: 20, color: t.tx2),
+        const SizedBox(width: SahneSpace.x2),
+        Expanded(
+          child: Text(
+            context.t(K.lessonFinishHint),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+        ),
+      ],
     );
   }
 }
