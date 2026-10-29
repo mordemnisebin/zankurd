@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme/sahne.dart';
@@ -149,7 +150,7 @@ class QuizFit {
     // Anahtar: metinler İÇERİKLE (hash değil), bütün kademe alanları ve
     // ölçekleyicinin birkaç punto için gerçek çıktısı (doğrusal olmayan
     // ölçekleyiciler dahil).
-    final key = [
+    final key = _FitKey([
       level,
       questionScale,
       optionScale,
@@ -169,7 +170,7 @@ class QuizFit {
       DefaultTextStyle.of(context).style,
       prompt,
       ...answers,
-    ].join('\u0001');
+    ]);
     final hit = _cache.remove(key);
     if (hit != null) {
       _cache[key] = hit;
@@ -190,7 +191,7 @@ class QuizFit {
     return v;
   }
 
-  static final Map<String, double> _cache = {};
+  static final Map<_FitKey, double> _cache = {};
 
   double _estimate({
     required BuildContext context,
@@ -480,4 +481,23 @@ int quizCrowdColumns(TextScaler scaler, double innerWidth) {
   final score = widthOf('99.999', (11 / ratio).clamp(1.0, 12.0));
   final need = 8 + 20 + 4 + score;
   return (innerWidth - 3 * 4) / 4 >= need ? 4 : 2;
+}
+
+/// Ölçüm önbelleği anahtarı: parçalar YAPISAL eşitlikle karşılaştırılır.
+///
+/// Önce `join` ile metne çevriliyordu; sürüm derlemesinde `TextStyle.toString()`
+/// alanlarını yazmaz, yazı tipi ya da satır yüksekliği değişse de anahtar aynı
+/// kalıp eski ölçümü döndürebilirdi (Astra incelemesi, 2026-10-29).
+@immutable
+class _FitKey {
+  _FitKey(List<Object?> parts) : parts = List.unmodifiable(parts);
+
+  final List<Object?> parts;
+
+  @override
+  bool operator ==(Object other) =>
+      other is _FitKey && listEquals(other.parts, parts);
+
+  @override
+  int get hashCode => Object.hashAll(parts);
 }
