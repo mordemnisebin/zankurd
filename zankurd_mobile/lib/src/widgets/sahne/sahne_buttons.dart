@@ -6,6 +6,7 @@ import '../../theme/app_icons.dart';
 import '../../theme/sahne.dart';
 import 'sahne_foundation.dart';
 import 'sahne_glyphs.dart';
+import 'sahne_vay.dart';
 
 enum _SahneButtonKind { primary, secondary, text, tonal }
 
@@ -267,7 +268,53 @@ class SahneButton extends StatelessWidget {
           key: buttonKey,
           onPressed: press,
           style: ButtonStyle(
-            minimumSize: const WidgetStatePropertyAll(Size(52, 52)),
+            minimumSize: const WidgetStatePropertyAll(
+              Size(52, SahneVolume.buttonHeight),
+            ),
+            // Vay katmanı A1 (2026-10-29): yarıçap 18, yüz gradyanı
+            // (üstte açık → altta Agir) ve üstte 1 px beyaz %40 ışık.
+            // `backgroundColor` temadan gelir (Agir); gradyan onun üstünü
+            // örter, pasifte çizilmez (pasif dolgu temadan).
+            shape: const WidgetStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(SahneVolume.buttonRadius),
+                ),
+              ),
+            ),
+            backgroundBuilder: (context, states, child) {
+              if (states.contains(WidgetState.disabled)) return child!;
+              return DecoratedBox(
+                decoration: ShapeDecoration(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(SahneVolume.buttonRadius),
+                    ),
+                  ),
+                  gradient: SahneVolume.face(
+                    t.act,
+                    pressed: states.contains(WidgetState.pressed),
+                  ),
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  fit: StackFit.passthrough,
+                  children: [
+                    const Positioned(
+                      top: 0,
+                      left: SahneVolume.buttonRadius,
+                      right: SahneVolume.buttonRadius,
+                      height: 1,
+                      child: ColoredBox(
+                        key: ValueKey('primary-top-light'),
+                        color: SahneVayColors.buttonTopLight,
+                      ),
+                    ),
+                    child!,
+                  ],
+                ),
+              );
+            },
             // Pasif birincil: soluk Kulis dolgusu (`s2`, temadan) + üçüncül
             // etiket, KENARSIZ (`backgroundColor` burada yazılmaz: Agir
             // dolgu bekçisi temadan gelen dolguyu sayar). Eskiden Perde (`s1`, gündüz beyaz) + `edge` çerçeve
@@ -281,22 +328,7 @@ class SahneButton extends StatelessWidget {
           ),
           child: content,
         );
-        if (enabled) {
-          button = DecoratedBox(
-            decoration: ShapeDecoration(
-              shape: SahneShape.m,
-              shadows: [
-                BoxShadow(
-                  color: t.actShadow,
-                  offset: const Offset(0, 8),
-                  blurRadius: t.actShadowBlur,
-                  spreadRadius: -8,
-                ),
-              ],
-            ),
-            child: button,
-          );
-        }
+      // Taban ve parlama gölgesi [SahnePressSink] içinde (aşağıda).
       case _SahneButtonKind.secondary:
         button = FilledButton(
           key: buttonKey,
@@ -380,7 +412,24 @@ class SahneButton extends StatelessWidget {
     }
 
     if (expand) button = SizedBox(width: double.infinity, child: button);
-    button = SahnePressSink(enabled: enabled, child: button);
+    button = isPrimary && enabled
+        ? SahnePressSink(
+            enabled: true,
+            volume: true,
+            volumeShape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(SahneVolume.buttonRadius),
+              ),
+            ),
+            glow: BoxShadow(
+              color: t.actShadow,
+              offset: const Offset(0, 8),
+              blurRadius: t.actShadowBlur,
+              spreadRadius: -8,
+            ),
+            child: button,
+          )
+        : SahnePressSink(enabled: enabled, child: button);
     if (semanticLabel != null) {
       button = Semantics(
         label: semanticLabel,

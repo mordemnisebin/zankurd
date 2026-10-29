@@ -35,7 +35,6 @@ import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
-import 'package:zankurd_mobile/src/widgets/sahne/sahne_painters.dart';
 
 import 'support/widget_test_helpers.dart';
 

@@ -79,10 +79,11 @@ class DailyTourCard extends StatelessWidget {
             color: t.raceTint,
             edgeColor: t.raceTx.withValues(alpha: 0.28),
             padding: EdgeInsets.zero,
+            emboss: true,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SahneVistaStrip(),
+                const SahneVistaStrip(mascot: true),
                 Padding(
                   padding: const EdgeInsets.all(SahneSpace.x4),
                   child: Column(

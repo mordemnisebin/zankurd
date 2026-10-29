@@ -1424,3 +1424,38 @@ class SahneVistaPalette {
     SahneVistaPhase.night => night,
   };
 }
+
+/// "Vay" katmanının sabit renkleri (VAY_KATMANI A1–A3, B5; 2026-10-29).
+///
+/// Tema belirteci değil, tema DIŞI ham renktir (ışık beyazı, gölge siyahı,
+/// madalya altını): hepsi burada durur ki bileşen kütüphanesi
+/// (`widgets/sahne/`) ham renk taşımasın (`sahne_design_guard_test`).
+class SahneVayColors {
+  const SahneVayColors._();
+
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color black = Color(0xFF000000);
+
+  /// Birincil düğmenin 4 px koyu tabanı (#B94D13).
+  static const Color buttonBase = Color(0xFFB94D13);
+
+  /// Düğme üst kenarındaki 1 px ışık (beyaz %40).
+  static const Color buttonTopLight = Color(0x66FFFFFF);
+
+  /// Kabartma kartın dış gölgesi (siyah %14).
+  static const Color cardShadow = Color(0x24000000);
+
+  /// Kilim kenar şeridi: açık yüzeyde #245C69 %7, koyu sahnede beyaz %9.
+  static const Color kilimOnLight = Color(0x12245C69);
+  static const Color kilimOnDark = Color(0x17FFFFFF);
+
+  /// Madalya: #FFE6A0 → #D7A744, kenar, kazanılmış yıldız.
+  static const Color medalTop = Color(0xFFFFE6A0);
+  static const Color medalBottom = Color(0xFFD7A744);
+  static const Color medalRim = Color(0xFFB98A2E);
+  static const Color medalStar = Color(0xFF8A5A00);
+
+  /// Işın diski (altın, merkezde ≈ %18).
+  static const Color rayCenter = Color(0x2EFFC94A);
+  static const Color rayEdge = Color(0x00FFC94A);
+}

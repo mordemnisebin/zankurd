@@ -23,4 +23,5 @@ export 'sahne_section_header.dart';
 export 'sahne_sheet.dart';
 export 'sahne_shortfall.dart';
 export 'sahne_topic_marks.dart';
+export 'sahne_vay.dart';
 export 'sahne_vivid.dart';

@@ -27,6 +27,8 @@ void main() {
       tester.getCenter(find.byType(GeometricGradientButton)),
     );
     await tester.pump();
+    // 2026-10-29 vay A1: çökme 80 ms'de animasyonla olur.
+    await tester.pump(const Duration(milliseconds: 100));
     final transform = tester.widget<Transform>(
       find.descendant(
         of: find.byType(SahnePressSink),
@@ -38,7 +40,7 @@ void main() {
       transform.transform.getTranslation().y,
     );
     await gesture.up();
-    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 150));
     return offset;
   }
 

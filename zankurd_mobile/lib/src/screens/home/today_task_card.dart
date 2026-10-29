@@ -110,6 +110,7 @@ class TodayTaskCard extends StatelessWidget {
             edgeColor: t.learnEdge,
             // Manzara kenardan kenara; içerik kendi 16'lık boşluğunu taşır.
             padding: EdgeInsets.zero,
+            emboss: true,
             child: Builder(
               builder: (context) {
                 final safeTotal = total < 0 ? 0 : total;
@@ -117,7 +118,7 @@ class TodayTaskCard extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SahneVistaStrip(),
+                    const SahneVistaStrip(mascot: true),
                     Padding(
                       padding: const EdgeInsets.all(SahneSpace.x4),
                       child: Column(

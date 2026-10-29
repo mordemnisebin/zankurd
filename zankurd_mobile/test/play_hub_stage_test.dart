@@ -260,6 +260,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(SnackBar), findsNothing);
+      // 2026-10-29 vay A1: birincil düğme 56 ve kartlar kabartmalı; Turnuva
+      // satırı ilk ekranın altına düşebilir, önce görünür kılınır.
+      await tester.ensureVisible(find.byKey(ValueKey(key)));
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(ValueKey(key)), warnIfMissed: false);
       await tester.pump();
       expect(find.byType(SnackBar), findsOneWidget, reason: key);

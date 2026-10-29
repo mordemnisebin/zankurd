@@ -8,7 +8,10 @@
 ///   320 px'te taşmaz. Eski düğmeler sabit yükseklikle çizildiği için 2.0
 ///   ölçekte etiket kırpılıyordu; burada yükseklik en az değerdir.
 /// * Birincil düğme tek bulanık gölgeyi taşır; pasifte gölge yoktur.
-/// * Basınca 2 px çökme; "hareketi azalt" açıkken çökme yok.
+///   2026-10-29 vay katmanı A1: gölgenin YANINDA 4 px koyu taban vardır
+///   ([SahneVolume.baseColor]); boy 56 (eski 52). Ayrıntı:
+///   `vay_katmani_test.dart`.
+/// * Basınca 2 px çökme (80 ms'de); "hareketi azalt" açıkken çökme yok.
 /// * Joker adı ekranda yazmaz ama ekran okuyucu "ad, fiyat"ı duyar.
 library;
 
@@ -106,7 +109,7 @@ void main() {
         for (final e in f.evaluate()) {
           expect(
             tester.getSize(find.byWidget(e.widget)).height,
-            greaterThanOrEqualTo(52),
+            greaterThanOrEqualTo(52) /* birincil 56 */,
           );
         }
       }
@@ -152,10 +155,13 @@ void main() {
     }
 
     final active = shadowsOf('A');
-    expect(active, hasLength(1));
-    expect(active.single.color, SahneTokens.night.actShadow);
-    expect(active.single.offset, const Offset(0, 8));
-    expect(active.single.spreadRadius, -8);
+    // Vay A1: koyu taban + eylem gölgesi.
+    expect(active, hasLength(2));
+    expect(active.first.color, SahneVolume.baseColor);
+    final glow = active.last;
+    expect(glow.color, SahneTokens.night.actShadow);
+    expect(glow.offset, const Offset(0, 8));
+    expect(glow.spreadRadius, -8);
     expect(shadowsOf('B'), isEmpty);
   });
 
@@ -173,10 +179,12 @@ void main() {
         tester.getCenter(find.text('Bas')),
       );
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
       final during = tester.getTopLeft(find.text('Bas'));
       expect(during.dy - before.dy, reduce ? 0 : 2);
       await gesture.up();
       await tester.pump();
+      await tester.pump(const Duration(milliseconds: 150));
       expect(tester.getTopLeft(find.text('Bas')), before);
     });
   }

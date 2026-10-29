@@ -29,6 +29,7 @@ import 'package:zankurd_mobile/src/models/contest.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne_vivid.dart';
+import 'package:zankurd_mobile/src/widgets/zan_mascot.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
@@ -815,6 +816,10 @@ void main() {
     } else {
       print('UYARI: MaterialIcons bulunamadı — o ikonlar kare çizilecek');
     }
+
+    // Maskot SVG'leri (vay katmanı A4): varlık okuma gerçek G/Ç'dir; tur
+    // başında bir kez yüklenir, sonraki `pump`lar maskotu eşzamanlı çizer.
+    await ZanMascot.preloadForTest();
 
     final lucideFont = File('assets/fonts/Lucide.ttf');
     if (lucideFont.existsSync()) {

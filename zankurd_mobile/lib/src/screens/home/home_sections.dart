@@ -206,6 +206,8 @@ class _HomeTopicTile extends StatelessWidget {
         shape: SahneShape.withSide(SahneShape.l, edge, width: 1),
         color: surface,
         onTap: onTap,
+        // Vay katmanı A2: konu kartı kabartmalı (ışık + alt gölge + dış gölge).
+        emboss: SahneEmbossStyle(night: night),
         child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: HomeTopicGrid._minHeight,

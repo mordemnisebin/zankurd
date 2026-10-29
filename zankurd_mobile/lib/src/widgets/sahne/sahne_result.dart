@@ -505,7 +505,13 @@ class SahneResultHero extends StatelessWidget {
     this.calm = false,
     this.tone = SahneResultTone.reward,
     this.notices = const [],
+    this.emblemExtra = 0,
   });
+
+  /// Amblem eski 70 px'lik yıldız satırından ne kadar yüksekse o kadar:
+  /// ışınlar ve altın ışıma puanın ortasından çıkar, amblem büyüyünce
+  /// aşağı kayar (vay B5: madalya kompozisyonu 104 px).
+  final double emblemExtra;
 
   /// Renkli sahnede ([SahneResultScene]) hafif ışınlar ve parıltılar, tam
   /// kutlama ([celebrate]) olmayan iyi sonuçta da açılır (solo turda iki
@@ -679,7 +685,8 @@ class SahneResultHero extends StatelessWidget {
                   rays: shine,
                   // Işınlar puan sayısının (ya da puansızsa başlığın)
                   // ortasından çıkar.
-                  raysCenterY: value != null ? (scenic ? 128 : 104) : 84,
+                  raysCenterY:
+                      (value != null ? (scenic ? 128 : 104) : 84) + emblemExtra,
                   tinted: scenic,
                   bg: t.bg,
                   // Gece Perde açıldığı için (tur 6b) sırtın dolgusu aynı
@@ -701,7 +708,9 @@ class SahneResultHero extends StatelessWidget {
           PositionedDirectional(
             start: 0,
             end: 0,
-            top: value != null ? (scenic ? 128 : 104) - 150 : 84 - 150,
+            top:
+                (value != null ? (scenic ? 128 : 104) - 150 : 84 - 150) +
+                emblemExtra,
             height: 300,
             child: _ScoreCelebration(aboveText: value == null),
           ),

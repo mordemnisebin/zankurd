@@ -19,6 +19,11 @@
 ///   dilli etiketler açıkken de, iki dilde ve iki temada.
 /// * Şerit ana sayfada TEK kezdir ve kilim yoktur (kilim imzası yalnız yarış
 ///   merkezindedir).
+///
+/// 2026-10-29 vay katmanı B1: kahraman şeridi maskotlu 120'ye çıktı (üst sınır
+/// [SahneVistaStrip.maxHeight] = 128) ve alt kenarında TEK 6 px kilim
+/// şeridi vardır (ekran başına ≤ 2 kilim bölgesi); ilk konu satırı ve öğren
+/// kapısı yine ilk ekranda kalır.
 library;
 
 import 'package:flutter/material.dart';
@@ -55,7 +60,10 @@ void main() {
 
         final strip = find.byKey(const ValueKey('sahne-vista-strip'));
         expect(strip, findsOneWidget);
-        expect(tester.getSize(strip).height, lessThanOrEqualTo(100));
+        expect(
+          tester.getSize(strip).height,
+          lessThanOrEqualTo(SahneVistaStrip.maxHeight),
+        );
         // Şerit Günün dersi kartının içindedir.
         expect(
           find.descendant(
@@ -65,6 +73,10 @@ void main() {
           findsOneWidget,
         );
         expect(find.byType(SahneKilimStrip), findsNothing);
+        expect(
+          find.byKey(const ValueKey('sahne-kilim-border')),
+          findsOneWidget,
+        );
 
         final firstTile = find.byKey(
           ValueKey('home-topic-${repo.categories.first}'),

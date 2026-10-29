@@ -10,6 +10,7 @@ import 'sahne_list_row.dart';
 import 'sahne_painters.dart';
 import 'sahne_progress.dart';
 import 'sahne_topic_marks.dart';
+import 'sahne_vay.dart';
 
 enum _StageKind { plain, lesson, duel, mini }
 
@@ -435,12 +436,18 @@ class SahneSurfaceCard extends StatelessWidget {
     this.semanticLabel,
     this.color,
     this.edgeColor,
+    this.emboss = false,
   });
 
   final Widget child;
   final EdgeInsetsGeometry padding;
   final VoidCallback? onTap;
   final String? semanticLabel;
+
+  /// Kabartma reçetesi (vay katmanı A2): üstte ışık, alt iç gölge, dış gölge,
+  /// basınca 2 px çökme. Görev kartı, mod ve konu kartları açar; standart
+  /// liste kartı düz kalır.
+  final bool emboss;
 
   /// Mod tonlu kart (2026-10-20 renk ve canlılık işi): Günün dersi Zimrût
   /// tonu, düello satırı Boyax tonu. Verilmezse beyaz/Perde yüzey ve nötr
@@ -456,6 +463,7 @@ class SahneSurfaceCard extends StatelessWidget {
       shape: SahneShape.withSide(SahneShape.l, edgeColor ?? t.edge, width: 1),
       color: color ?? t.s1,
       onTap: onTap,
+      emboss: emboss ? SahneEmbossStyle.of(context) : null,
       child: SahneOnSurface(
         child: Padding(padding: padding, child: child),
       ),
@@ -463,7 +471,7 @@ class SahneSurfaceCard extends StatelessWidget {
     // Kart ayrımı (kurul 2026-10-20, 3 model): beyaz kart açık gri zeminde
     // düz duruyordu. Gündüz çok hafif, kısa bir gölge (yayılmayan, 6 pt);
     // gece kenar zaten ayırır.
-    final raised = color == null && t.bg.computeLuminance() > 0.5
+    final raised = !emboss && color == null && t.bg.computeLuminance() > 0.5
         ? DecoratedBox(
             decoration: ShapeDecoration(
               shape: SahneShape.l,

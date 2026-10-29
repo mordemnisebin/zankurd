@@ -7,6 +7,7 @@ import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../providers/reduced_motion_provider.dart';
 import '../../theme/sahne.dart';
+import 'sahne_vay.dart';
 
 /// Şahnê rolü: bir öğenin hangi renk ailesini taşıdığı.
 ///
@@ -171,12 +172,33 @@ bool sahneMotionReduced(BuildContext context) =>
 /// verir) ve öğe 2 px aşağı iner. Hareketi azalt açıkken çökme yoktur.
 /// `Listener` kullanır: jest yarışmasına girmez, çocuğun dokunuşunu
 /// çalmaz.
+///
+/// 2026-10-29 vay katmanı A1: [volume] açıkken (birincil düğme) çocuğun
+/// altında 4 px KOYU TABAN çizilir ([SahneVolume.baseColor]); basınca yüz
+/// 80 ms'de 2 px iner ve taban 2 px'e incelir, bırakınca 120 ms'de döner.
+/// Hareketi azaltta taban sabit 4 px kalır, yüz hiç oynamaz.
 class SahnePressSink extends StatefulWidget {
-  const SahnePressSink({super.key, required this.enabled, required this.child});
+  const SahnePressSink({
+    super.key,
+    required this.enabled,
+    required this.child,
+    this.volume = false,
+    this.volumeShape,
+    this.glow,
+  });
 
   /// Pasif öğe çökmez.
   final bool enabled;
   final Widget child;
+
+  /// Koyu taban (yalnız etkin birincil düğme).
+  final bool volume;
+
+  /// Tabanın şekli (düğmenin köşe yarıçapıyla aynı olmalı).
+  final ShapeBorder? volumeShape;
+
+  /// Tabanın altındaki yumuşak parlama gölgesi (varsa).
+  final BoxShadow? glow;
 
   @override
   State<SahnePressSink> createState() => _SahnePressSinkState();
@@ -191,15 +213,47 @@ class _SahnePressSinkState extends State<SahnePressSink> {
 
   @override
   Widget build(BuildContext context) {
-    final sink = widget.enabled && _down && !sahneMotionReduced(context);
+    final reduced = sahneMotionReduced(context);
+    final sink = widget.enabled && _down && !reduced;
+    final Widget body;
+    if (widget.volume && widget.enabled) {
+      body = TweenAnimationBuilder<double>(
+        tween: Tween(end: sink ? SahneVolume.press : 0),
+        duration: reduced
+            ? Duration.zero
+            : (sink ? SahneVolume.pressDown : SahneVolume.pressUp),
+        curve: Curves.easeOut,
+        builder: (context, dy, child) => Transform.translate(
+          offset: Offset(0, dy),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              shape: widget.volumeShape ?? SahneShape.m,
+              shadows: [
+                // Koyu taban: dinlenmede 4 px, basınca 4 − 2 = 2 px görünür
+                // (yüz 2 px inerken taban alt kenarda sabit kalır).
+                BoxShadow(
+                  color: SahneVolume.baseColor,
+                  offset: Offset(0, SahneVolume.base - dy),
+                ),
+                ?widget.glow,
+              ],
+            ),
+            child: child,
+          ),
+        ),
+        child: widget.child,
+      );
+    } else {
+      body = Transform.translate(
+        offset: Offset(0, sink ? 2 : 0),
+        child: widget.child,
+      );
+    }
     return Listener(
       onPointerDown: (_) => _set(true),
       onPointerUp: (_) => _set(false),
       onPointerCancel: (_) => _set(false),
-      child: Transform.translate(
-        offset: Offset(0, sink ? 2 : 0),
-        child: widget.child,
-      ),
+      child: body,
     );
   }
 }
@@ -216,28 +270,47 @@ class SahneTappable extends StatelessWidget {
     required this.child,
     this.onTap,
     this.onLongPress,
+    this.emboss,
   });
 
   final ShapeBorder shape;
   final Color color;
+
+  /// Kabartma reçetesi (VAY A2): üstte ışık, üst kenarda parlama, altta iç
+  /// koyulaşma, dış gölge; dokunulabilirse basınca 90 ms'de 2 px çöker.
+  /// `null` → düz yüzey (eski görünüş).
+  final SahneEmbossStyle? emboss;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    final style = emboss;
+    final content = style == null
+        ? child
+        : CustomPaint(
+            painter: SahneEmbossPainter(shape: shape, style: style),
+            child: child,
+          );
+    final surface = Material(
       color: color,
       shape: shape,
       clipBehavior: Clip.antiAlias,
       child: onTap == null && onLongPress == null
-          ? child
+          ? content
           : InkWell(
               customBorder: shape,
               onTap: onTap,
               onLongPress: onLongPress,
-              child: child,
+              child: content,
             ),
+    );
+    if (style == null) return surface;
+    return SahneEmbossShell(
+      shape: shape,
+      pressable: onTap != null || onLongPress != null,
+      child: surface,
     );
   }
 }

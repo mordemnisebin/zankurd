@@ -11,6 +11,7 @@ import '../theme/app_icons.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'sahne/sahne.dart';
+import 'zan_mascot.dart';
 
 export '../data/tekrar_plani.dart' show reviewRoomCategory;
 
@@ -303,7 +304,12 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
           constraints: const BoxConstraints(minHeight: 48),
           child: Row(
             children: [
-              _tile(t, AppIcons.circleCheck),
+              // Vay katmanı B10 (2026-10-29): boş durum karşılama maskotudur.
+              const ZanMascot(
+                key: ValueKey('todays-review-empty-mascot'),
+                pose: ZanPose.welcome,
+                size: 72,
+              ),
               const SizedBox(width: SahneSpace.x3),
               Expanded(
                 child: Column(

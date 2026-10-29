@@ -4,6 +4,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../theme/sahne.dart';
+import '../zan_mascot.dart';
+import 'sahne_vay.dart';
 
 /// Şahnê'nin bütün CustomPainter'ları: elmas göstergeler, kilim şeridi,
 /// çizimsiz kategori karosu, sahne degradeleri ve ışık huzmesi.
@@ -515,12 +517,27 @@ class SahneRidgePainter extends CustomPainter {
 /// `saveLayer` yok. Metin ve düğme manzaranın üstüne binmez: şerit kartın
 /// ayrı bir satırıdır.
 class SahneVistaPainter extends CustomPainter {
-  const SahneVistaPainter(this.palette);
+  const SahneVistaPainter(
+    this.palette, {
+    this.part = SahneVistaPart.all,
+    this.sunLeft = false,
+  });
 
-  SahneVistaPainter.of(SahneVistaPhase phase)
-    : this(SahneVistaPalette.of(phase));
+  SahneVistaPainter.of(
+    SahneVistaPhase phase, {
+    SahneVistaPart part = SahneVistaPart.all,
+    bool sunLeft = false,
+  }) : this(SahneVistaPalette.of(phase), part: part, sunLeft: sunLeft);
 
   final SahneVistaPalette palette;
+
+  /// Hangi katmanlar çizilir: maskot ORTA ve YAKIN sırt arasına girer
+  /// (vay katmanı B1: "ön tepenin arkasından"), bu yüzden şerit iki parça
+  /// çizilir — arka (gök, güneş, uzak ve orta sırt) ve ön (yakın sırt).
+  final SahneVistaPart part;
+
+  /// Güneş sola kayar (sağda maskot dururken ikisi üst üste binmesin).
+  final bool sunLeft;
 
   /// Uzak sırt (maketteki açık katman), 0–1 ızgarasında.
   static const List<Offset> farLine = [
@@ -569,6 +586,12 @@ class SahneVistaPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (size.isEmpty) return;
     final rect = Offset.zero & size;
+    final h = size.height;
+    final w = size.width;
+    if (part == SahneVistaPart.front) {
+      _paintFront(canvas, size);
+      return;
+    }
     canvas.drawRect(
       rect,
       Paint()
@@ -578,8 +601,6 @@ class SahneVistaPainter extends CustomPainter {
           colors: [palette.skyTop, palette.skyBottom],
         ).createShader(rect),
     );
-    final h = size.height;
-    final w = size.width;
     // Orta sırt (logo sırtı) şeridin %25'inden başlar; zirvesi oradadır.
     final midBox = Rect.fromLTWH(0, h * 0.25, w, h * 0.75);
     final peak = Offset(
@@ -593,7 +614,7 @@ class SahneVistaPainter extends CustomPainter {
       }
     } else {
       // Güneş zirvenin sağ arkasında, sırtın ardından doğar.
-      final c = Offset(w * palette.sunX, h * palette.sunY);
+      final c = Offset(w * (sunLeft ? 0.2 : palette.sunX), h * palette.sunY);
       final r = h * palette.sunR;
       final sun = palette.sun;
       canvas.drawCircle(
@@ -634,7 +655,18 @@ class SahneVistaPainter extends CustomPainter {
       SahneRidgePainter.ridgePath(midBox),
       Paint()..color = palette.ridgeMid,
     );
-    // Yakın taban: alçak, dalgasız koyu şerit.
+    if (part == SahneVistaPart.back) {
+      _paintPeakLight(canvas, peak);
+      return;
+    }
+    _paintFront(canvas, size);
+    _paintPeakLight(canvas, peak);
+  }
+
+  /// Yakın taban: alçak, dalgasız koyu şerit.
+  void _paintFront(Canvas canvas, Size size) {
+    final h = size.height;
+    final w = size.width;
     canvas.drawPath(
       _line(const [
         Offset(0.00, 0.30),
@@ -646,6 +678,9 @@ class SahneVistaPainter extends CustomPainter {
       ], Rect.fromLTWH(0, h * 0.80, w, h * 0.20)),
       Paint()..color = palette.ridgeNear,
     );
+  }
+
+  void _paintPeakLight(Canvas canvas, Offset peak) {
     if (palette.stars) {
       final sun = palette.sun;
       // Zirvede TEK turuncu ışık: küçük hale + nokta.
@@ -655,19 +690,39 @@ class SahneVistaPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(SahneVistaPainter old) => old.palette != palette;
+  bool shouldRepaint(SahneVistaPainter old) =>
+      old.palette != palette || old.part != part || old.sunLeft != sunLeft;
 }
+
+/// [SahneVistaPainter]'in çizdiği katmanlar.
+enum SahneVistaPart { all, back, front }
 
 /// Manzara şeridi: kartın tepesinde tam genişlik, en çok [maxHeight].
 /// Dekoratiftir, ekran okuyucuya görünmez.
 class SahneVistaStrip extends StatefulWidget {
-  const SahneVistaStrip({super.key, this.height = defaultHeight});
+  const SahneVistaStrip({
+    super.key,
+    this.height = defaultHeight,
+    this.mascot = false,
+  });
+
+  /// Vay katmanı B1 (2026-10-29): sağda karşılama maskotu ORTA ve YAKIN sırt
+  /// arasında ("ön tepenin arkasından"), güneş sola kayar, alt kenarda 6 px
+  /// kilim şeridi. Maskotlu şerit [heroHeight] yüksekliğindedir.
+  final bool mascot;
+
+  /// Maskotlu kahraman şeridinin yüksekliği.
+  static const double heroHeight = 120;
 
   /// Kurulun tek itirazı manzaranın kartı büyütüp konuları aşağı itmesiydi:
   /// şerit ALÇAKTIR (≤ [maxHeight]); 390×844'te konu ızgarasının ilk satırı
   /// ilk ekranda kalır (bekçi: `manzara_seridi_test.dart`).
   static const double defaultHeight = 88;
-  static const double maxHeight = 100;
+
+  ///
+  /// 2026-10-29 vay katmanı B1: maskotlu kahraman şeridi 120'ye çıktı
+  /// (üst sınır 128); öğren kapısı yine ilk ekranda kalır.
+  static const double maxHeight = 128;
 
   final double height;
 
@@ -698,12 +753,47 @@ class _SahneVistaStripState extends State<SahneVistaStrip> {
 
   @override
   Widget build(BuildContext context) {
+    final height = widget.mascot
+        ? SahneVistaStrip.heroHeight
+        : widget.height.clamp(0, SahneVistaStrip.maxHeight).toDouble();
     return ExcludeSemantics(
       child: SizedBox(
         key: const ValueKey('sahne-vista-strip'),
-        height: widget.height.clamp(0, SahneVistaStrip.maxHeight),
+        height: height,
         width: double.infinity,
-        child: CustomPaint(painter: SahneVistaPainter.of(_phase)),
+        child: widget.mascot
+            ? Stack(
+                fit: StackFit.expand,
+                children: [
+                  CustomPaint(
+                    painter: SahneVistaPainter.of(
+                      _phase,
+                      part: SahneVistaPart.back,
+                      sunLeft: true,
+                    ),
+                  ),
+                  const PositionedDirectional(
+                    end: 12,
+                    bottom: 10,
+                    child: ZanMascot(pose: ZanPose.welcome, size: 124),
+                  ),
+                  CustomPaint(
+                    painter: SahneVistaPainter.of(
+                      _phase,
+                      part: SahneVistaPart.front,
+                    ),
+                  ),
+                  const Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: SahneKilimBorder(
+                      color: SahneKilimBorderPainter.darkOn,
+                    ),
+                  ),
+                ],
+              )
+            : CustomPaint(painter: SahneVistaPainter.of(_phase)),
       ),
     );
   }

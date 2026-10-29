@@ -36,6 +36,7 @@ import '../widgets/daily_event_board.dart';
 import '../widgets/learning_outcome_card.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
+import '../widgets/zan_mascot.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/percent_format.dart';
@@ -1881,20 +1882,23 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       hero: SahneResultHero(
         key: const ValueKey('result-score-header'),
         emblem: is1v1 && !isLearningExperience
-            ? _DuelFaceOff(
-                me: room.players.isNotEmpty ? room.players.first : null,
-                opponent: opponents.first,
-                emblem: isWinner
-                    ? const SahneResultEmblem.win()
-                    : SahneResultEmblem.state(
-                        icon: isDraw ? AppIcons.scaleBalanced : AppIcons.flag,
-                      ),
+            ? _DuelMascotTop(
+                pose: isWinner ? ZanPose.celebrate : ZanPose.support,
+                celebrate: isWinner,
+                child: _DuelFaceOff(
+                  me: room.players.isNotEmpty ? room.players.first : null,
+                  opponent: opponents.first,
+                  emblem: isWinner
+                      ? const SahneResultEmblem.win()
+                      : SahneResultEmblem.state(
+                          icon: isDraw ? AppIcons.scaleBalanced : AppIcons.flag,
+                        ),
+                ),
               )
             : switch (duelOutcome) {
-                null => SizedBox(
-                  height: 70,
-                  child: _ScoreStars(earned: starsEarned, calm: lowMood),
-                ),
+                // Vay B5: madalya + ışın diski + maskot (≥ 2 yıldızda kutlama,
+                // konfeti; düşükte destek). Yıldızlar madalyanın yüzünde.
+                null => SahneMedalScene(stars: starsEarned),
                 _DuelOutcome.win => const SahneResultEmblem.win(),
                 _DuelOutcome.draw => const SahneResultEmblem.state(
                   icon: AppIcons.scaleBalanced,
@@ -1924,6 +1928,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             ? accuracyText
             : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
         celebrate: celebrate,
+        emblemExtra: is1v1 && !isLearningExperience
+            ? _DuelMascotTop.height
+            : duelOutcome == null
+            ? SahneMedalScene.medalSize - 70
+            : 0,
         lightGlow: !lowMood && starsEarned >= 2,
         calm: lowMood,
         tone: duelOutcome == null
@@ -2137,6 +2146,45 @@ class _ResultCollapsibleSectionState extends State<ResultCollapsibleSection> {
 
 enum _DuelOutcome { win, draw, loss, podium }
 
+/// 1v1 kahramanının üstündeki maskot (vay B5): kazanınca kutlama (+ tek
+/// konfeti), kaybedince/beraberlikte destek. Dekoratif; sonucu başlık söyler.
+class _DuelMascotTop extends StatelessWidget {
+  const _DuelMascotTop({
+    required this.pose,
+    required this.celebrate,
+    required this.child,
+  });
+
+  final ZanPose pose;
+  final bool celebrate;
+  final Widget child;
+
+  static const double mascotWidth = 104;
+
+  /// Maskot + boşluk (eski amblem satırına eklenen yükseklik).
+  static double get height =>
+      mascotWidth / ZanPose.celebrate.aspect + SahneSpace.x2;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.topCenter,
+      children: [
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ZanMascot(pose: pose, size: mascotWidth),
+            const SizedBox(height: SahneSpace.x2),
+            child,
+          ],
+        ),
+        if (celebrate) const Positioned.fill(child: SahneConfettiBurst()),
+      ],
+    );
+  }
+}
+
 /// 1v1 kahramanının amblem yuvası: iki oyuncu yüz yüze, ortada sonucun
 /// amblemi (taç / terazi / bayrak).
 ///
@@ -2197,58 +2245,9 @@ class _DuelFaceOff extends StatelessWidget {
   }
 }
 
-/// Kahramanın üç puan yıldızı: 20 · 28 · 20, alta hizalı, 8 aralık.
-///
-/// 2026-10-19 sadeleşme (ikinci tur): 32 · 44 · 32 idi; puan ekranın tek
-/// büyük öğesi olsun diye yıldızlar küçüldü (dekoratif, sayı zaten söylüyor).
-///
-/// ## Kusur (tarih)
-///
-/// Kazanılan ve kazanılmayan yıldız bir zamanlar aynı KONTUR glifiyle
-/// çiziliyordu; ikisini yalnız renk ayırıyordu ve 5/5 doğru bir tur üç boş
-/// yıldızla kutlanıyordu (2026-08-12 simülatör turu). Şahnê'de kazanılan
-/// yıldız DOLU Zêr glif, kazanılmayan Ray (`s3`) tonunda — ayrımı renk
-/// değil doluluk taşır (bkz. `quiz_result_star_fill_test.dart`).
-class _ScoreStars extends StatelessWidget {
-  const _ScoreStars({required this.earned, this.calm = false});
-
-  final int earned;
-
-  /// Düşük sonuç: kazanılan yıldız altın değil sönük nötr.
-  final bool calm;
-
-  @override
-  Widget build(BuildContext context) {
-    // 2026-10-20 renk ve canlılık: renkli sahnede yıldızlar büyür
-    // (50 · 70 · 50, kazanılan altın); kazanılmayan yıldız beyaz %16 DOLU
-    // (doluluk yine ayrımı taşır).
-    final scenic = SahneResultScene.maybeOf(context) != null;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        for (var i = 0; i < 3; i++) ...[
-          if (i > 0) const SizedBox(width: SahneSpace.x2),
-          SahneGlyph(
-            SahneGlyphKind.star,
-            size: scenic ? (i == 1 ? 70 : 50) : (i == 1 ? 28 : 20),
-            filled: i < earned,
-            color: scenic && i >= earned
-                ? SahneVivid.starEmpty
-                : calm
-                ? SahneTokens.of(context).tx2.withValues(alpha: 0.55)
-                : null,
-            // Kazanılmayan yıldızın koyu konturu bordo zeminde sert
-            // duruyordu (kurul 2026-10-20): kontur yok, yalnız cam dolgu.
-            edgeColor: scenic && (i >= earned || calm)
-                ? Colors.transparent
-                : null,
-          ),
-        ],
-      ],
-    );
-  }
-}
+// Kahramanın üç puan yıldızı artık madalyanın yüzündedir ([SahneMedal],
+// vay katmanı B5, 2026-10-29). Doluluk kuralı aynı kalır: kazanılan yıldız
+// DOLU, kazanılmayan boş (`quiz_result_star_fill_test.dart`).
 
 /// Kahramanın altındaki bilgi satırı (günlük tavan, bekleyen ödül).
 class _HeroNotice extends StatelessWidget {

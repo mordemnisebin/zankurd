@@ -8,6 +8,7 @@ import 'sahne_cards.dart';
 import 'sahne_foundation.dart';
 import 'sahne_list_row.dart';
 import 'sahne_painters.dart';
+import 'sahne_vay.dart';
 
 /// Renkli kahraman yüzeyleri (2026-10-20 renk ve canlılık işi).
 ///
@@ -380,6 +381,7 @@ class _SahneModeTileState extends State<SahneModeTile> {
                   : SahneShape.l,
               color: fill,
               onTap: onTap,
+              emboss: SahneEmbossStyle(night: night, saturated: true),
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   minHeight: compact
@@ -577,133 +579,146 @@ extension on _SahneModeTileState {
           curve: Curves.easeOut,
           child: Opacity(
             opacity: enabled ? 1 : 0.55,
-            child: Material(
-              type: MaterialType.transparency,
+            child: SahneEmbossShell(
+              // Basma ölçeği ([AnimatedScale]) zaten var; çökme eklenmez.
+              // Gölge kartın kendi renginden (gri plaka değil, renkli ışıma).
               shape: SahneShape.l,
-              clipBehavior: Clip.antiAlias,
-              child: Ink(
-                key: const ValueKey('mode-tile-lobby'),
-                decoration: ShapeDecoration(
-                  shape: SahneShape.l,
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [base, deepEnd],
+              shadowColor: deepEnd.withValues(alpha: 0.38),
+              child: Material(
+                type: MaterialType.transparency,
+                shape: SahneShape.l,
+                clipBehavior: Clip.antiAlias,
+                child: Ink(
+                  key: const ValueKey('mode-tile-lobby'),
+                  decoration: ShapeDecoration(
+                    shape: SahneShape.l,
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [base, deepEnd],
+                    ),
                   ),
-                ),
-                child: InkWell(
-                  customBorder: SahneShape.l,
-                  onTap: widget.onTap,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(minHeight: 148),
-                    child: Stack(
-                      children: [
-                        PositionedDirectional(
-                          end: -14,
-                          bottom: -18,
-                          child: IgnorePointer(
-                            child: Transform.rotate(
-                              angle: -12 * math.pi / 180,
-                              child: Icon(
-                                widget.icon,
-                                size: 104,
-                                color: SahneVivid.watermarkNight,
+                  child: InkWell(
+                    customBorder: SahneShape.l,
+                    onTap: widget.onTap,
+                    child: CustomPaint(
+                      painter: SahneEmbossPainter(
+                        shape: SahneShape.l,
+                        style: SahneEmbossStyle.of(context, saturated: true),
+                      ),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(minHeight: 148),
+                        child: Stack(
+                          children: [
+                            PositionedDirectional(
+                              end: -14,
+                              bottom: -18,
+                              child: IgnorePointer(
+                                child: Transform.rotate(
+                                  angle: -12 * math.pi / 180,
+                                  child: Icon(
+                                    widget.icon,
+                                    size: 104,
+                                    color: SahneVivid.watermarkNight,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(SahneSpace.x3),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Row(
+                            Padding(
+                              padding: const EdgeInsets.all(SahneSpace.x3),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  DecoratedBox(
-                                    decoration: const ShapeDecoration(
-                                      color: SahneVivid.glass,
-                                      shape: CircleBorder(
-                                        side: BorderSide(
-                                          color: SahneVivid.hairline,
-                                        ),
-                                      ),
-                                    ),
-                                    child: SizedBox.square(
-                                      dimension: 52,
-                                      child: Icon(
-                                        widget.icon,
-                                        size: 30,
-                                        color: ink,
-                                      ),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  if (widget.loading)
-                                    SizedBox.square(
-                                      dimension: 18,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        color: ink,
-                                      ),
-                                    )
-                                  else if (badge != null)
-                                    Flexible(
-                                      child: DecoratedBox(
-                                        decoration: ShapeDecoration(
-                                          color: gold
-                                              ? t.zerChip
-                                              : SahneVivid.onFill,
-                                          shape: const StadiumBorder(),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: SahneSpace.x2,
-                                            vertical: 2,
-                                          ),
-                                          child: FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: Text(
-                                              badge,
-                                              maxLines: 1,
-                                              style: SahneType.captionStrong
-                                                  .copyWith(
-                                                    color: gold
-                                                        ? t.goldTx
-                                                        : deepEnd,
-                                                  ),
+                                  Row(
+                                    children: [
+                                      DecoratedBox(
+                                        decoration: const ShapeDecoration(
+                                          color: SahneVivid.glass,
+                                          shape: CircleBorder(
+                                            side: BorderSide(
+                                              color: SahneVivid.hairline,
                                             ),
                                           ),
                                         ),
+                                        child: SizedBox.square(
+                                          dimension: 52,
+                                          child: Icon(
+                                            widget.icon,
+                                            size: 30,
+                                            color: ink,
+                                          ),
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      if (widget.loading)
+                                        SizedBox.square(
+                                          dimension: 18,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            color: ink,
+                                          ),
+                                        )
+                                      else if (badge != null)
+                                        Flexible(
+                                          child: DecoratedBox(
+                                            decoration: ShapeDecoration(
+                                              color: gold
+                                                  ? t.zerChip
+                                                  : SahneVivid.onFill,
+                                              shape: const StadiumBorder(),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: SahneSpace.x2,
+                                                    vertical: 2,
+                                                  ),
+                                              child: FittedBox(
+                                                fit: BoxFit.scaleDown,
+                                                child: Text(
+                                                  badge,
+                                                  maxLines: 1,
+                                                  style: SahneType.captionStrong
+                                                      .copyWith(
+                                                        color: gold
+                                                            ? t.goldTx
+                                                            : deepEnd,
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: SahneSpace.x3),
+                                  Text(
+                                    widget.title,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: SahneType.bodyStrong.copyWith(
+                                      color: ink,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  if (widget.subtitle != null) ...[
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      widget.subtitle!,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: SahneType.caption.copyWith(
+                                        color: soft,
                                       ),
                                     ),
+                                  ],
                                 ],
                               ),
-                              const SizedBox(height: SahneSpace.x3),
-                              Text(
-                                widget.title,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: SahneType.bodyStrong.copyWith(
-                                  color: ink,
-                                  fontSize: 17,
-                                ),
-                              ),
-                              if (widget.subtitle != null) ...[
-                                const SizedBox(height: 2),
-                                Text(
-                                  widget.subtitle!,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: SahneType.caption.copyWith(
-                                    color: soft,
-                                  ),
-                                ),
-                              ],
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -738,6 +753,7 @@ extension on _SahneModeTileState {
         child: SahneSurfaceCard(
           onTap: widget.onTap,
           padding: EdgeInsets.zero,
+          emboss: true,
           // Tur 2 R2: mod kartı yüzeyi rolün hafif tonu (Öğren yeşil, Yarış
           // bordo, Oda mavi); kenar rolün soluğu. Nötr rolde yüzey nötr kalır.
           color: role == SahneRole.neutral ? null : t.roleTint(role),

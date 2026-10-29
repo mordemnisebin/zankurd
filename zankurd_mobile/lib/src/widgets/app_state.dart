@@ -3,10 +3,19 @@ import 'package:flutter/material.dart';
 import '../theme/app_icons.dart';
 import 'roj_mascot.dart';
 import 'sahne/sahne.dart';
+import 'zan_mascot.dart';
 
-/// Boş durum: 32'lik bağlamsal çizgi ikon + başlık + açıklama + isteğe
-/// bağlı TEK eylem.
+/// Boş durum: karşılama maskotu + başlık + açıklama + isteğe bağlı TEK eylem.
 ///
+/// 2026-10-29 vay katmanı B10: uygulamanın BÜTÜN boş durumları aynı maskotu
+/// ([ZanPose.welcome], 104 genişlik) gösterir: boş liste "hata" ya da "ölü
+/// ekran" değil, selam veren bir karşılamadır (rakipte boş durum da bir
+/// karakterdir). Maskot dekoratiftir; anlamı başlık ve metin taşır. [icon]
+/// geriye uyum için kalır (hata ve çevrimdışı durumları ikonla ayrışır),
+/// boş durumda ÇİZİLMEZ.
+///
+/// (Tarih) 2026-09-29 doğallık (K3): önce logo plakası + durum karosu vardı;
+/// o gün bağlamsal çizgi ikona sadeleşti:
 /// 2026-09-29 doğallık (K3): eskiden logo işareti plakası + köşesinde durum
 /// karosu vardı. Her boş listede aynı logonun belirmesi şablon izi
 /// bırakıyordu ve plakadaki logo kenarı kırıntılıydı. Artık yalnız
@@ -52,6 +61,7 @@ class AppEmptyState extends StatelessWidget {
       actionIcon: actionIcon,
       primaryAction: primaryAction,
       footer: footer,
+      mascot: true,
     );
   }
 }
@@ -146,6 +156,7 @@ class _AppStateScaffold extends StatelessWidget {
     this.onAction,
     this.actionIcon,
     this.footer,
+    this.mascot = false,
   });
 
   final IconData icon;
@@ -156,6 +167,12 @@ class _AppStateScaffold extends StatelessWidget {
   final IconData? actionIcon;
   final bool primaryAction;
   final Widget? footer;
+
+  /// Boş durum: ikon yerine karşılama maskotu.
+  final bool mascot;
+
+  /// Maskotun genişliği (VAY B10: 96–112).
+  static const double mascotSize = 104;
 
   /// Durum ikonunun kenarı.
   static const double iconSize = 32;
@@ -215,9 +232,16 @@ class _AppStateScaffold extends StatelessWidget {
         // Bağlamsal çizgi ikon (dekoratif; başlık okunur). Hata da aynı
         // üçüncül renktedir: durum ikonun şekli ve başlıkla söylenir, kırmızı
         // bir alarm plakasıyla değil.
-        ExcludeSemantics(
-          child: Icon(icon, size: iconSize, color: t.tx3),
-        ),
+        if (mascot)
+          const ZanMascot(
+            key: ValueKey('empty-state-mascot'),
+            pose: ZanPose.welcome,
+            size: mascotSize,
+          )
+        else
+          ExcludeSemantics(
+            child: Icon(icon, size: iconSize, color: t.tx3),
+          ),
         const SizedBox(height: SahneSpace.x4),
         Semantics(
           header: true,

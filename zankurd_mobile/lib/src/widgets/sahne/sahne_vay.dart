@@ -1,0 +1,748 @@
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+
+import '../../theme/sahne.dart';
+import '../zan_mascot.dart';
+import 'sahne_foundation.dart';
+import 'sahne_glyphs.dart';
+
+/// "Vay" katmanı ortak parçaları (VAY_KATMANI A1–A3 + A5, 2026-10-29).
+///
+/// ## Kusur
+///
+/// Tasarım kurulu 6 turda düz yüzeyleri temizledi; geriye "temiz ama
+/// cansız" bir arayüz kaldı: düğme düz turuncu bir dikdörtgen, kartlar
+/// yassı. Rakipte (Duolingo düğmesi, TRT mod kartları) yüzeyin bir HACMİ var:
+/// düğmenin koyu bir tabanı, kartın üstte ışığı, altta gölgesi.
+///
+/// ## Karar
+///
+/// Hacim üç küçük reçeteyle verilir ve her yerde AYNI reçete kullanılır:
+/// birincil düğmenin tabanı ([SahneVolume]), kartların kabartması
+/// ([SahneEmbossStyle] + [SahneEmbossPainter]) ve hero alt kenarındaki
+/// kilim şeridi ([SahneKilimBorderPainter]). Hareket yardımcıları
+/// ([SahneEnter], [SahneScaleIn], [SahneConfettiBurst]) "hareketi azalt"
+/// açıkken ([sahneMotionReduced]) hiçbir şeyi oynatmaz.
+/// "Hareketi azalt" açık mı ([sahneMotionReduced]).
+bool _reduceMotion(BuildContext context) => sahneMotionReduced(context);
+
+class SahneVolume {
+  const SahneVolume._();
+
+  /// Birincil düğmenin asgari yüksekliği (eski 52 → 56).
+  static const double buttonHeight = 56;
+
+  /// Düğme köşe yarıçapı.
+  static const double buttonRadius = 18;
+
+  /// Dinlenme hâlinde koyu taban kalınlığı; basınca 2 px'e iner.
+  static const double base = 4;
+
+  /// Basınca düğme yüzünün çöküşü.
+  static const double press = 2;
+
+  /// Koyu taban rengi (#B94D13).
+  static const Color baseColor = SahneVayColors.buttonBase;
+
+  /// Taban basınca 80 ms'de iner, bırakınca 120 ms'de döner.
+  static const Duration pressDown = Duration(milliseconds: 80);
+  static const Duration pressUp = Duration(milliseconds: 120);
+
+  /// Düğme yüzünün gradyanı: üstte açık, altta jetonun kendisi.
+  static LinearGradient face(Color act, {bool pressed = false}) {
+    final top = Color.lerp(act, SahneVayColors.white, 0.22)!;
+    final bottom = act;
+    return LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: pressed
+          ? [
+              Color.lerp(top, SahneVayColors.black, 0.08)!,
+              Color.lerp(bottom, SahneVayColors.black, 0.08)!,
+            ]
+          : [top, bottom],
+    );
+  }
+}
+
+/// Kabartma kartın ışık/gölge ayarı (A2).
+///
+/// [saturated] doygun yüzeylerde (oyun lobisi kartları) ışık %16'dır; açık
+/// temadaki tonlu kartta %60, koyu temada %12 (üstteki beyaz parıltı).
+class SahneEmbossStyle {
+  const SahneEmbossStyle({required this.night, this.saturated = false});
+
+  final bool night;
+  final bool saturated;
+
+  /// Üst %35'teki beyaz→saydam ışığın başlangıç opaklığı.
+  double get lightAlpha => saturated ? 0.16 : (night ? 0.12 : 0.60);
+
+  /// Üst kenardaki 1 px parlama.
+  double get rimAlpha => saturated ? 0.34 : (night ? 0.16 : 0.70);
+
+  /// Alt iç kenarın 3 px koyulaşması (siyah katman).
+  double get shadeAlpha => saturated ? 0.14 : (night ? 0.22 : 0.10);
+
+  /// Dış gölge: y=8 blur=14, %14.
+  static const BoxShadow outerShadow = BoxShadow(
+    color: SahneVayColors.cardShadow,
+    offset: Offset(0, 8),
+    blurRadius: 14,
+  );
+
+  static SahneEmbossStyle of(BuildContext context, {bool saturated = false}) =>
+      SahneEmbossStyle(
+        night: Theme.of(context).brightness == Brightness.dark,
+        saturated: saturated,
+      );
+}
+
+/// Kartın kabartma katmanı: yüzün ÜSTÜNE, içeriğin ALTINA çizilir
+/// (`CustomPaint.painter`). Kartın şekline kırpılır.
+class SahneEmbossPainter extends CustomPainter {
+  const SahneEmbossPainter({required this.shape, required this.style});
+
+  final ShapeBorder shape;
+  final SahneEmbossStyle style;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.isEmpty) return;
+    final rect = Offset.zero & size;
+    canvas.save();
+    canvas.clipPath(shape.getOuterPath(rect));
+    final topH = size.height * 0.35;
+    final light = Rect.fromLTWH(0, 0, size.width, topH);
+    canvas.drawRect(
+      light,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            SahneVayColors.white.withValues(alpha: style.lightAlpha),
+            SahneVayColors.white.withValues(alpha: 0),
+          ],
+        ).createShader(light),
+    );
+    canvas.drawRect(
+      Rect.fromLTWH(0, 0, size.width, 1),
+      Paint()..color = SahneVayColors.white.withValues(alpha: style.rimAlpha),
+    );
+    canvas.drawRect(
+      Rect.fromLTWH(0, size.height - 3, size.width, 3),
+      Paint()..color = SahneVayColors.black.withValues(alpha: style.shadeAlpha),
+    );
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(SahneEmbossPainter old) =>
+      old.shape != shape ||
+      old.style.night != style.night ||
+      old.style.saturated != style.saturated;
+}
+
+/// Kabartılmış kartın dış kabuğu: dış gölge + basınca 90 ms'de 2 px çökme.
+///
+/// İçine kartın kendisi (yüzü kendi çizen `SahneTappable`, `Ink` …) konur;
+/// kabartma ışığı için kartın İÇERİĞİ [SahneEmbossPainter] ile sarılır
+/// (`SahneTappable.emboss` ikisini birlikte yapar).
+class SahneEmbossShell extends StatefulWidget {
+  const SahneEmbossShell({
+    required this.shape,
+    required this.child,
+    this.pressable = false,
+    this.shadowColor,
+    super.key,
+  });
+
+  final ShapeBorder shape;
+  final bool pressable;
+  final Widget child;
+
+  /// Dış gölgenin rengi (varsayılan siyah %14). Doygun kartta kartın kendi
+  /// rengi: gri bir "plaka" yerine renkli bir ışıma.
+  final Color? shadowColor;
+
+  @override
+  State<SahneEmbossShell> createState() => _SahneEmbossShellState();
+}
+
+class _SahneEmbossShellState extends State<SahneEmbossShell> {
+  bool _down = false;
+
+  void _set(bool v) {
+    if (_down != v && mounted) setState(() => _down = v);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final sink = widget.pressable && _down && !_reduceMotion(context);
+    Widget body = DecoratedBox(
+      decoration: ShapeDecoration(
+        shape: widget.shape,
+        shadows: [
+          if (widget.shadowColor == null)
+            SahneEmbossStyle.outerShadow
+          else
+            BoxShadow(
+              color: widget.shadowColor!,
+              offset: SahneEmbossStyle.outerShadow.offset,
+              blurRadius: SahneEmbossStyle.outerShadow.blurRadius,
+            ),
+        ],
+      ),
+      child: widget.child,
+    );
+    if (!widget.pressable) return body;
+    return Listener(
+      onPointerDown: (_) => _set(true),
+      onPointerUp: (_) => _set(false),
+      onPointerCancel: (_) => _set(false),
+      child: _SinkBy2(sink: sink, child: body),
+    );
+  }
+}
+
+/// 2 px'lik mutlak çökme (AnimatedSlide oransaldır; kart boyundan bağımsız
+/// 2 px için [TweenAnimationBuilder]).
+class _SinkBy2 extends StatelessWidget {
+  const _SinkBy2({required this.sink, required this.child});
+
+  final bool sink;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(end: sink ? SahneVolume.press : 0),
+      duration: const Duration(milliseconds: 90),
+      curve: Curves.easeOut,
+      builder: (context, dy, child) =>
+          Transform.translate(offset: Offset(0, dy), child: child),
+      child: child,
+    );
+  }
+}
+
+/// Kilim kenar boyacısı (A3): 24 birim GENİŞLİKTE tekrar eden birim — baklava,
+/// basamaklı üçgen, kısa çizgi — şeridin yüksekliğine ölçeklenir.
+///
+/// Açık yüzeyde #245C69 %7, koyu sahnede beyaz %9 ([SahneKilimBorderPainter.lightOn],
+/// [SahneKilimBorderPainter.darkOn]). Yalnız hero alt 4–6 px şeridi, bölüm
+/// ayıracı ya da rozet çevresi için; ekran başına ≤ 2 bölge; metnin altına
+/// girmez. Dekoratiftir.
+class SahneKilimBorderPainter extends CustomPainter {
+  const SahneKilimBorderPainter(this.color);
+
+  /// Açık yüzey rengi (#245C69 %7).
+  static const Color lightOn = SahneVayColors.kilimOnLight;
+
+  /// Koyu sahne rengi (beyaz %9).
+  static const Color darkOn = SahneVayColors.kilimOnDark;
+
+  /// Tekrar biriminin genişliği.
+  static const double unit = 24;
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.isEmpty) return;
+    final h = size.height;
+    final count = (size.width / unit).ceil();
+    final paint = Paint()..color = color;
+    canvas.save();
+    canvas.clipRect(Offset.zero & size);
+    for (var i = 0; i < count; i++) {
+      final x = i * unit;
+      // 1) baklava (0–10)
+      canvas.drawPath(
+        Path()
+          ..moveTo(x + 5, 0)
+          ..lineTo(x + 10, h / 2)
+          ..lineTo(x + 5, h)
+          ..lineTo(x, h / 2)
+          ..close(),
+        paint,
+      );
+      // 2) basamaklı üçgen (10–20)
+      final s = h / 3;
+      canvas.drawPath(
+        Path()
+          ..moveTo(x + 11, h)
+          ..lineTo(x + 11, h - s)
+          ..lineTo(x + 14, h - s)
+          ..lineTo(x + 14, h - 2 * s)
+          ..lineTo(x + 17, h - 2 * s)
+          ..lineTo(x + 17, 0)
+          ..lineTo(x + 19, 0)
+          ..lineTo(x + 19, h)
+          ..close(),
+        paint,
+      );
+      // 3) kısa çizgi (20–24)
+      canvas.drawRect(
+        Rect.fromLTWH(x + 21, h / 2 - h * 0.12, 3, h * 0.24),
+        paint,
+      );
+    }
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(SahneKilimBorderPainter old) => old.color != color;
+}
+
+/// Kilim kenar şeridi (4–6 px). Dekoratif.
+class SahneKilimBorder extends StatelessWidget {
+  const SahneKilimBorder({required this.color, this.height = 6, super.key});
+
+  final Color color;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return ExcludeSemantics(
+      child: SizedBox(
+        key: const ValueKey('sahne-kilim-border'),
+        height: height,
+        width: double.infinity,
+        child: CustomPaint(painter: SahneKilimBorderPainter(color)),
+      ),
+    );
+  }
+}
+
+/// Giriş hareketi (A5): opaklık 0→1 + 6 px yükselme, 240 ms, tek sefer.
+/// "Hareketi azalt" açıkken çocuk doğrudan, sabit çizilir.
+class SahneEnter extends StatefulWidget {
+  const SahneEnter({
+    required this.child,
+    this.delay = Duration.zero,
+    super.key,
+  });
+
+  final Widget child;
+  final Duration delay;
+
+  @override
+  State<SahneEnter> createState() => _SahneEnterState();
+}
+
+class _SahneEnterState extends State<SahneEnter>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 240),
+  );
+  bool _started = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_started) return;
+    _started = true;
+    if (_reduceMotion(context)) {
+      _c.value = 1;
+    } else if (widget.delay == Duration.zero) {
+      _c.forward();
+    } else {
+      Future<void>.delayed(widget.delay, () {
+        if (mounted) _c.forward();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _c,
+      child: widget.child,
+      builder: (context, child) {
+        final v = Curves.easeOut.transform(_c.value);
+        return Opacity(
+          opacity: v,
+          child: Transform.translate(
+            offset: Offset(0, 6 * (1 - v)),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// Ölçek girişi (A5): 0,94 → 1, 280 ms, tek sefer (madalya, avatar).
+class SahneScaleIn extends StatefulWidget {
+  const SahneScaleIn({required this.child, super.key});
+
+  final Widget child;
+
+  @override
+  State<SahneScaleIn> createState() => _SahneScaleInState();
+}
+
+class _SahneScaleInState extends State<SahneScaleIn>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 280),
+  );
+  bool _started = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_started) return;
+    _started = true;
+    if (_reduceMotion(context)) {
+      _c.value = 1;
+    } else {
+      _c.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+      scale: Tween<double>(
+        begin: 0.94,
+        end: 1,
+      ).animate(CurvedAnimation(parent: _c, curve: Curves.easeOutBack)),
+      child: widget.child,
+    );
+  }
+}
+
+/// Konfeti (A5): 12–16 parça, 650 ms, TEK sefer. Hareketi azaltta hiç
+/// çizilmez ([SizedBox.shrink]). Yalnız kutlanacak anda (≥ 2 yıldız) açılır.
+class SahneConfettiBurst extends StatefulWidget {
+  const SahneConfettiBurst({this.count = 14, this.colors, super.key});
+
+  /// 12–16 arası kelepçelenir.
+  final int count;
+
+  /// Verilmezse Zêr + role renkleri.
+  final List<Color>? colors;
+
+  /// Süre (A5).
+  static const Duration duration = Duration(milliseconds: 650);
+
+  @override
+  State<SahneConfettiBurst> createState() => _SahneConfettiBurstState();
+}
+
+class _SahneConfettiBurstState extends State<SahneConfettiBurst>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c;
+  bool _started = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Hareketi azaltta hiç kullanılmasa da burada kurulur: `dispose`da tembel
+    // kurulum, kapanmış bir öğeden ata sorgular ve çöker.
+    _c = AnimationController(
+      vsync: this,
+      duration: SahneConfettiBurst.duration,
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_started) return;
+    _started = true;
+    if (!_reduceMotion(context)) _c.forward();
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_reduceMotion(context)) return const SizedBox.shrink();
+    final t = SahneTokens.of(context);
+    final colors =
+        widget.colors ?? [t.gold, t.act, t.learn, t.race, SahneVayColors.white];
+    return ExcludeSemantics(
+      child: IgnorePointer(
+        child: AnimatedBuilder(
+          animation: _c,
+          builder: (context, _) => CustomPaint(
+            key: const ValueKey('sahne-confetti-burst'),
+            size: Size.infinite,
+            painter: _ConfettiBurstPainter(
+              progress: _c.value,
+              count: widget.count.clamp(12, 16),
+              colors: colors,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ConfettiBurstPainter extends CustomPainter {
+  const _ConfettiBurstPainter({
+    required this.progress,
+    required this.count,
+    required this.colors,
+  });
+
+  final double progress;
+  final int count;
+  final List<Color> colors;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (progress <= 0 || progress >= 1) return;
+    final origin = Offset(size.width / 2, size.height * 0.28);
+    final ease = Curves.easeOutCubic.transform(progress);
+    final fade = 1 - Curves.easeIn.transform(progress);
+    for (var i = 0; i < count; i++) {
+      // Sabit tohumlu dağılım: her çizimde aynı parçalar.
+      final a = (i / count) * 2 * math.pi + (i.isEven ? 0.2 : -0.2);
+      final speed = 70 + (i * 37 % 60);
+      final dx = math.cos(a) * speed * ease;
+      final dy = math.sin(a) * speed * ease * 0.8 + 38 * progress * progress;
+      final c = colors[i % colors.length].withValues(alpha: fade);
+      canvas.save();
+      canvas.translate(origin.dx + dx, origin.dy + dy);
+      canvas.rotate(a + progress * 5);
+      canvas.drawRect(
+        Rect.fromCenter(center: Offset.zero, width: 7, height: 4),
+        Paint()..color = c,
+      );
+      canvas.restore();
+    }
+  }
+
+  @override
+  bool shouldRepaint(_ConfettiBurstPainter old) => old.progress != progress;
+}
+
+/// Sonuç ödül kompozisyonu (VAY B5): 104 px madalya (#FFE6A0 → #D7A744),
+/// arkasında 184 px ışın diski (%18) ve yanında maskot (≥ 2 yıldızda
+/// kutlama, düşükte destek).
+///
+/// Madalyanın yüzünde kazanılan yıldızlar durur (doluluk ayrımı taşır).
+/// Madalya 280 ms'de ölçeklenerek girer ([SahneScaleIn]); konfeti YALNIZ
+/// [stars] ≥ 2 iken ve hareketi azalt kapalıyken ([SahneConfettiBurst]).
+/// Işın diski de yalnız ≥ 2 yıldızda: düşük turda kutlama ışığı sonucu
+/// yanlış okutur. Dekoratiftir; sonucu başlık ve puan söyler.
+class SahneMedalScene extends StatelessWidget {
+  const SahneMedalScene({required this.stars, super.key});
+
+  /// Kazanılan yıldız (0–3).
+  final int stars;
+
+  /// Madalya, ışın diski ve maskot boyları.
+  static const double medalSize = 104;
+  static const double discSize = 184;
+  static const double mascotSize = 120;
+
+  /// Konfeti ve kutlama maskotu eşiği.
+  static const int celebrateAt = 2;
+
+  bool get celebrate => stars >= celebrateAt;
+
+  @override
+  Widget build(BuildContext context) {
+    final pose = celebrate ? ZanPose.celebrate : ZanPose.support;
+    return Stack(
+      key: const ValueKey('result-medal-scene'),
+      clipBehavior: Clip.none,
+      alignment: Alignment.center,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ZanMascot(pose: pose, size: mascotSize),
+            const SizedBox(width: SahneSpace.x2),
+            SizedBox.square(
+              dimension: medalSize,
+              child: Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.center,
+                children: [
+                  if (celebrate)
+                    const OverflowBox(
+                      maxWidth: discSize,
+                      maxHeight: discSize,
+                      child: ExcludeSemantics(
+                        child: SizedBox.square(
+                          dimension: discSize,
+                          child: CustomPaint(
+                            key: ValueKey('result-ray-disc'),
+                            painter: _RayDiscPainter(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  SahneScaleIn(child: SahneMedal(stars: stars)),
+                ],
+              ),
+            ),
+          ],
+        ),
+        if (celebrate) const Positioned.fill(child: SahneConfettiBurst()),
+      ],
+    );
+  }
+}
+
+/// Madalya: altın gradyan disk + iç halka + kazanılan yıldızlar.
+class SahneMedal extends StatelessWidget {
+  const SahneMedal({required this.stars, super.key});
+
+  final int stars;
+
+  static const Color goldTop = SahneVayColors.medalTop;
+  static const Color goldBottom = SahneVayColors.medalBottom;
+  static const Color rim = SahneVayColors.medalRim;
+  static const Color starOn = SahneVayColors.medalStar;
+
+  @override
+  Widget build(BuildContext context) {
+    return ExcludeSemantics(
+      child: SizedBox.square(
+        key: const ValueKey('result-medal'),
+        dimension: SahneMedalScene.medalSize,
+        child: CustomPaint(
+          painter: const _MedalPainter(),
+          child: Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                for (var i = 0; i < 3; i++) ...[
+                  if (i > 0) const SizedBox(width: 2),
+                  SahneGlyph(
+                    SahneGlyphKind.star,
+                    size: i == 1 ? 28 : 21,
+                    filled: i < stars,
+                    color: i < stars
+                        ? starOn
+                        : SahneVayColors.white.withValues(alpha: 0.5),
+                    edgeColor: Colors.transparent,
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MedalPainter extends CustomPainter {
+  const _MedalPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final c = size.center(Offset.zero);
+    final r = size.width / 2;
+    final rect = Rect.fromCircle(center: c, radius: r);
+    canvas.drawCircle(
+      c,
+      r,
+      Paint()
+        ..shader = const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [SahneMedal.goldTop, SahneMedal.goldBottom],
+        ).createShader(rect),
+    );
+    canvas.drawCircle(
+      c,
+      r - 1.5,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3
+        ..color = SahneMedal.rim,
+    );
+    canvas.drawCircle(
+      c,
+      r - 11,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.5
+        ..color = SahneVayColors.white.withValues(alpha: 0.55),
+    );
+    // Üst-sol parlama yayı.
+    canvas.drawArc(
+      Rect.fromCircle(center: c, radius: r - 6),
+      math.pi * 1.05,
+      math.pi * 0.5,
+      false,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeCap = StrokeCap.round
+        ..strokeWidth = 3
+        ..color = SahneVayColors.white.withValues(alpha: 0.6),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_MedalPainter old) => false;
+}
+
+/// Madalyanın arkasındaki 184 px ışın diski: %18 altın ışınlar, merkezden
+/// kenara sönen.
+class _RayDiscPainter extends CustomPainter {
+  const _RayDiscPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final c = size.center(Offset.zero);
+    final r = size.width / 2;
+    final rect = Rect.fromCircle(center: c, radius: r);
+    final fade = const RadialGradient(
+      colors: [SahneVayColors.rayCenter, SahneVayColors.rayEdge],
+      stops: [0.35, 1],
+    ).createShader(rect);
+    canvas.save();
+    canvas.clipPath(Path()..addOval(rect));
+    const rays = 14;
+    final paint = Paint()..shader = fade;
+    for (var i = 0; i < rays; i++) {
+      final a = i * 2 * math.pi / rays;
+      const half = math.pi / rays * 0.5;
+      canvas.drawPath(
+        Path()
+          ..moveTo(c.dx, c.dy)
+          ..lineTo(c.dx + r * math.cos(a - half), c.dy + r * math.sin(a - half))
+          ..lineTo(c.dx + r * math.cos(a + half), c.dy + r * math.sin(a + half))
+          ..close(),
+        paint,
+      );
+    }
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(_RayDiscPainter old) => false;
+}
