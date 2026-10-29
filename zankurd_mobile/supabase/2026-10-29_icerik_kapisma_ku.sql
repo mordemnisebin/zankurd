@@ -504,7 +504,11 @@ insert into _kapisma_ku (id, yerel, sutun, eski, yeni) values
   ('a84c9ee8-9acb-5142-97df-de34a3bc38c6', 'offline_2749', 'explanation_ku', NULL, '"Nivîsîn" bi tirkî "yazmak" e; ji vê "nivîskar" (yazar) tê.'),
   ('9c0260aa-97f0-50d0-90bf-af17e1de7d7b', 'offline_5094', 'explanation_ku', NULL, '"Şev" bi tirkî "gece" ye; "Şev baş!" yanî "iyi geceler".'),
   ('277778ce-29ea-51ff-96bc-debfb84f2b7d', 'offline_5221', 'explanation_ku', NULL, '"Kal" bi tirkî "dede" ye; jina wî "pîr" e.'),
-  ('d44d06b9-ee3b-5591-9f8f-d11ebd4720e9', 'offline_5685', 'explanation_ku', NULL, '"Ay" (li ezmên) bi kurmancî "heyv" e; "ay" a salnameyê jî "meh" e.');
+  ('d44d06b9-ee3b-5591-9f8f-d11ebd4720e9', 'offline_5685', 'explanation_ku', NULL, '"Ay" (li ezmên) bi kurmancî "heyv" e; "ay" a salnameyê jî "meh" e.'),
+  ('6715b57b-f5f9-5359-9c9e-aa948ea4f765', 'ds_cand_1182', 'option_c', 'Tenê ji çarşefeke yek-parçe ya bê dirûn ava dibe', 'Êlekeke kurt a neqişandî û şalwarekî hirî yê fireh û dirêj li binê wê'),
+  ('adefc83e-9509-55ba-84db-b186df2748b8', 'ds_cand_1196', 'option_b', 'Rêbazeke leşkerî ye ji bo hilbijartina serokê gund', 'Merasîmeke tenê ji bo mêran ku tê de cihgirê serokeşîrî tê diyarkirin'),
+  ('4ddd8267-674e-562f-be9a-b11e699fb4de', 'offline_9456', 'explanation_ku', '"Mekteba Xanî": ekola wêjeyî û ramanî ya ku Ehmedê Xanî ava kiriye.', 'Mekteba Xanî ekolek e ku ji hewla Ehmedê Xanî ya kirina kurdî bi zimanê zanist û edebiyatê çêbû; giraniya ku di Mem û Zînê de li ser ziman û nasnameyê tê danîn bingeha vê ramanê ye.'),
+  ('c48de691-6c34-537d-8c95-93c5df996523', 'offline_11125', 'explanation_ku', '"Şivan Perwer": hunermendê dengî yê herî navdar ê ku muzîka kurdî bi cîhanê da naskirin.', 'Şivan Perwer ji salên 1970yî ve bi taybetî li Ewropayê li ser sehneyên cîhanê stranên kurdî gotin; bi salan di sirgûnê de berhem dan.');
 
 -- Kökler: eşi olan satırın kökü ne eski ne yeni metinse (elle değişmiş) göç durur.
 do $$

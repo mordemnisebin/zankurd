@@ -9557,7 +9557,7 @@
     "explanation": "Xanî Mektebi, Ehmedê Xanî'nin Kürtçeyi bilim ve edebiyat dili yapma çabasından doğan ekoldür; Mem û Zîn'deki dil ve kimlik vurgusu bu düşüncenin temelidir.",
     "type": "multipleChoice",
     "difficulty": 3,
-    "explanationKu": "\"Mekteba Xanî\": ekola wêjeyî û ramanî ya ku Ehmedê Xanî ava kiriye.",
+    "explanationKu": "Mekteba Xanî ekolek e ku ji hewla Ehmedê Xanî ya kirina kurdî bi zimanê zanist û edebiyatê çêbû; giraniya ku di Mem û Zînê de li ser ziman û nasnameyê tê danîn bingeha vê ramanê ye.",
     "explanationTr": "Xanî Mektebi, Ehmedê Xanî'nin Kürtçeyi bilim ve edebiyat dili yapma çabasından doğan ekoldür; Mem û Zîn'deki dil ve kimlik vurgusu bu düşüncenin temelidir.",
     "promptTr": "\"Xanî Mektebi\" nedir?",
     "answersTr": [
@@ -11088,7 +11088,7 @@
     "explanation": "Şivan Perwer, 1970'lerden beri Avrupa başta olmak üzere dünya sahnelerinde Kürtçe şarkılar söyledi; uzun yıllar sürgünde üretmeyi sürdürdü.",
     "type": "multipleChoice",
     "difficulty": 4,
-    "explanationKu": "\"Şivan Perwer\": hunermendê dengî yê herî navdar ê ku muzîka kurdî bi cîhanê da naskirin.",
+    "explanationKu": "Şivan Perwer ji salên 1970yî ve bi taybetî li Ewropayê li ser sehneyên cîhanê stranên kurdî gotin; bi salan di sirgûnê de berhem dan.",
     "explanationTr": "Şivan Perwer, 1970'lerden beri Avrupa başta olmak üzere dünya sahnelerinde Kürtçe şarkılar söyledi; uzun yıllar sürgünde üretmeyi sürdürdü.",
     "promptTr": "\"Şivan Perwer\" kimdir?",
     "answersTr": [
