@@ -651,7 +651,7 @@ class Tr {
     K.lessonCardCounter: {'ku': 'Qert {n}/{total}', 'tr': 'Kart {n}/{total}'},
     K.slowShort: {'ku': 'Hêdî', 'tr': 'Yavaş'},
     K.lessonLetterTapHint: {
-      'ku': 'Li tîpekê bitikîne: peyva mînak bibîne û guhdarî bike.',
+      'ku': 'Li tîpekê bitikîne: peyva mînak bibîne û lê guhdarî bike.',
       'tr': 'Bir harfe dokun: örnek sözcüğü gör ve dinle.',
     },
     K.lessonRecallReveal: {'ku': 'Bersivê nîşan bide', 'tr': 'Yanıtı göster'},
@@ -1713,7 +1713,7 @@ class Tr {
     K.faqCoinsQ: {'ku': 'Zêr ji bo çi ye?', 'tr': 'Jeton ne işe yarar?'},
     K.faqCoinsA: {
       'ku':
-          'Bi zêran:\n• di dema pirsê de alîkariyê bi kar tînî (her roj yek belaş e),\n• ji Dukanê çarçove, rozeta VIP û mafê zêde yê gerandina çerxê dikirî,\n• zincîra xwe diparêzî.\n\nZêr ji bersivên rast, peywiran û çerxa rojê tê bidestxistin.\n\nGera dubarekirina şaşiyan zêr nade; ji gerên ku bi tenê tên lîstin rojê herî zêde 45 zêr tên qezenckirin.',
+          'Bi zêran:\n• di dema pirsê de alîkariyê bi kar tînî (her roj yek belaş e),\n• ji Dukanê çarçove, rozeta VIP û mafê zêde yê gerandina çerxê dikirî,\n• zincîra xwe diparêzî.\n\nZêr ji bersivên rast, peywiran û çerxa rojê tên bidestxistin.\n\nGera dubarekirina şaşiyan zêr nade; ji gerên ku bi tenê tên lîstin rojê herî zêde 45 zêr tên qezenckirin.',
       'tr':
           'Jetonla:\n• soru sırasında joker kullanırsın (her gün biri bedava),\n• Mağaza\'dan çerçeve, VIP rozeti ve ek çark hakkı alırsın,\n• serini korursun.\n\nJeton doğru cevaplardan, görevlerden ve günün çarkından gelir.\n\nYanlış tekrarı turu jeton vermez; tek başına oynanan turlardan günde en çok 45 jeton kazanılır.',
     },
@@ -2338,7 +2338,7 @@ class Tr {
     K.cupStandingFinalist: {'ku': 'Fînalîst', 'tr': 'Finalist'},
     K.cupStandingsNote: {
       'ku':
-          'Rêzbendî pêşî li gorî rewşa di kûpayê de ye, paşê li gorî pûana giştî ya li rastê (berhevoka pûanên pêşbirkên ku lîstine).',
+          'Rêzbendî pêşî li gorî rewşa di kûpayê de ye, paşê li gorî pûana giştî ya li rastê (berhevoka pûanên pêşbirkên ku hatine lîstin).',
       'tr':
           'Sıralama önce turnuvadaki duruma, sonra sağdaki toplam puana (oynanan maçlardaki puanların toplamı) göredir.',
     },
