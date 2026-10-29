@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../services/app_audio_contexts.dart';
 import '../utils/error_reporter.dart';
 
 class SoundProvider extends ChangeNotifier {
@@ -35,12 +36,15 @@ class SoundProvider extends ChangeNotifier {
     await prefs.setBool(_enabledKey, _enabled);
   }
 
-  Future<void> playCorrect() => _play('sounds/correct.mp3');
-  Future<void> playWrong() => _play('sounds/wrong.mp3');
-  Future<void> playWin() => _play('sounds/win.mp3');
-  Future<void> playCoin() => _play('sounds/coin.mp3');
-  Future<void> playWildcard() => _play('sounds/wildcard.mp3');
-  Future<void> playTick() => _play('sounds/coin.mp3');
+  // Kapışma U17 (2026-10-29): `win` `correct`'in, `wildcard` `coin`'in
+  // bayt bayt kopyasıydı; geri sayım tıkı 2 saniyelik jeton sesini çalıyordu.
+  // Yeni üç ses `tool/sounds/sentez.py` ile üretildi (assets/sounds/KAYNAK.md).
+  Future<void> playCorrect() => _play(SoundAssets.correct);
+  Future<void> playWrong() => _play(SoundAssets.wrong);
+  Future<void> playWin() => _play(SoundAssets.win);
+  Future<void> playCoin() => _play(SoundAssets.coin);
+  Future<void> playWildcard() => _play(SoundAssets.wildcard);
+  Future<void> playTick() => _play(SoundAssets.tick);
 
   Future<void> _play(String asset) async {
     if (!_enabled) return;
@@ -50,8 +54,14 @@ class SoundProvider extends ChangeNotifier {
       if (_player == null && playerFactory != null) {
         _player = playerFactory();
       }
-      if (_player != null) {
-        await _player!.play(AssetSource(asset));
+      final player = _player;
+      if (player != null) {
+        // Bağlam HER çalışta kurulur: iOS'ta ses oturumu geneldir ve
+        // telaffuz oynatıcısı onu `playback`e çeker; efekt yeniden
+        // `ambient`e dönmezse sessiz anahtarı yok sayar, dış müziği keser
+        // (kapışma U16, bkz. [AppAudioContexts]).
+        await player.setAudioContext(AppAudioContexts.effects);
+        await player.play(AssetSource(asset));
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'sound_provider');
@@ -64,4 +74,16 @@ class SoundProvider extends ChangeNotifier {
     _player?.dispose();
     super.dispose();
   }
+}
+
+/// Efekt ses dosyaları (`assets/` önekisiz, `AssetSource` biçiminde).
+abstract final class SoundAssets {
+  static const correct = 'sounds/correct.mp3';
+  static const wrong = 'sounds/wrong.mp3';
+  static const win = 'sounds/win.mp3';
+  static const coin = 'sounds/coin.mp3';
+  static const wildcard = 'sounds/wildcard.mp3';
+  static const tick = 'sounds/tick.mp3';
+
+  static const all = [correct, wrong, win, coin, wildcard, tick];
 }

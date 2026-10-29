@@ -8,6 +8,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/quiz_question.dart';
 import '../config/category_visuals.dart';
+import '../services/app_haptics.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_icons.dart';
 import '../widgets/quiz_stage_kit.dart';
@@ -73,6 +74,11 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
   void _answer(QuizQuestion question, String choice) {
     if (_inputLocked || _result != null) return;
     _inputLocked = true;
+    // Kapışma U18 (2026-10-29): cevap anında hiçbir geri bildirim yoktu;
+    // oyuncu dokunuşun alındığını yalnız sorunun değişmesinden anlıyordu.
+    // Doğru/yanlış SESİ bilerek verilmez — sınav cevabı ele vermez (sınıf
+    // belgesi); nötr seçim titreşimi dokunuşu onaylar.
+    AppHaptics.selection();
     _answers.add(
       PlacementItem(
         difficulty: question.difficulty,

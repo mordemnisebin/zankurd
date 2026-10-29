@@ -11,6 +11,7 @@ import '../services/pronunciation_recorder.dart';
 import '../theme/app_icons.dart';
 import '../utils/error_reporter.dart';
 import 'sahne/sahne.dart';
+import '../services/app_audio_contexts.dart';
 
 /// Kendi kaydını çalmak için ince bir arayüz; testler sahte verir.
 abstract class PronunciationPlayback {
@@ -25,6 +26,8 @@ class _AudioplayersPlayback implements PronunciationPlayback {
   @override
   Future<void> play(String path) async {
     await _player.stop();
+    // Kullanıcının kendi kaydı: sessiz anahtarda da duyulur (kapışma U16).
+    await _player.setAudioContext(AppAudioContexts.speech);
     await _player.play(DeviceFileSource(path));
   }
 

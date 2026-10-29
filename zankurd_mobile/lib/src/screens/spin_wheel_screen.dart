@@ -318,11 +318,12 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       await _prizeAnimController.forward();
     }
 
-    // Ödül kartı tamamen açıldıktan sonra sesi çal
+    // Ödül kartı tamamen açıldıktan sonra TEK ses: tek oynatıcıda art arda
+    // iki `play` ilkini kesiyordu, kulağa bozuk bir yarım ses geliyordu
+    // (kapışma U17).
     if (!mounted) return;
     try {
       context.read<SoundProvider>().playWin();
-      context.read<SoundProvider>().playCoin();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'spin result sound failed');
     }

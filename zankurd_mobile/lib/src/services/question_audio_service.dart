@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import '../models/quiz_question.dart';
 import '../utils/error_reporter.dart';
 import 'tts_service.dart';
+import 'app_audio_contexts.dart';
 
 enum VerifiedAudioLocation { asset, network }
 
@@ -170,6 +171,10 @@ class AudioplayersVerifiedQuestionAudioPlayer
     // yavaş dinlemeden sonra normal ses de yavaş kalırdı.
     final player = _player;
     await player.stop();
+    // Telaffuz bilerek dinlenir: sessiz anahtarda da duyulur. iOS oturumu
+    // genel olduğundan efekt oynatıcısının `ambient` bağlamı buraya sızmasın
+    // diye her çalışta kurulur (kapışma U16).
+    await player.setAudioContext(AppAudioContexts.speech);
     await player.setSource(source);
     await player.setPlaybackRate(rate);
     await player.resume();

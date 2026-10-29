@@ -10,6 +10,7 @@ import '../../l10n/strings.dart';
 import '../../models/async_duel.dart';
 import '../../models/avatar_identity.dart';
 import '../../models/quiz_question.dart';
+import '../../services/answer_feedback.dart';
 import '../../services/guest_save_prompt.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
@@ -472,6 +473,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   }
 
   Future<void> _handleAnswerResponse(AsyncDuelAnswer response) async {
+    // Ana soru ekranıyla aynı ses + titreşim (kapışma U18). Süre dolumunda
+    // da yanlış geri bildirimi verilir: QuizScreen de öyle yapar.
+    playAnswerFeedback(context, correct: response.correct);
     setState(() {
       _phase = _Phase.revealed;
       if (_index < _results.length) {
