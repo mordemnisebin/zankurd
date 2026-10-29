@@ -124,7 +124,10 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
                 ),
               ),
               Text(
-                '${_index % playable.length + 1}/${playable.length}',
+                context.t(K.lessonCardCounter, {
+                  'n': '${_index % playable.length + 1}',
+                  'total': '${playable.length}',
+                }),
                 style: SahneType.captionStrong.copyWith(
                   color: t.tx3,
                   fontFeatures: const [FontFeature.tabularFigures()],
@@ -159,11 +162,16 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
                 const SizedBox(width: SahneSpace.x2),
                 // Yavaş dinleme (rakiplerde "kaplumbağa"): öğrenen sesi
                 // ayırt edemezse 0,7 hızla yeniden dinler.
-                SahneIconButton(
-                  key: const ValueKey('lesson-listening-slow'),
-                  icon: AppIcons.turtle,
-                  semanticLabel: context.t(K.slowListen),
-                  onPressed: () => _play(slow: true),
+                // Kurul 1 (C27): yalnız kaplumbağa simgesi ilk kullanımda
+                // anlaşılmıyordu; yanında kısa "Yavaş" yazar.
+                Flexible(
+                  child: SahneButton.secondary(
+                    key: const ValueKey('lesson-listening-slow'),
+                    icon: AppIcons.turtle,
+                    label: context.t(K.slowShort),
+                    semanticLabel: context.t(K.slowListen),
+                    onPressed: () => _play(slow: true),
+                  ),
                 ),
               ],
             ),

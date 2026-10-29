@@ -1470,14 +1470,15 @@ class _FriendRankRow extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Text(
-                    friendActivityLabel(context, friend),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: SahneType.caption.copyWith(
-                      color: online ? t.learnTx : t.tx2,
+                  if (friendActivityLabel(context, friend) case final label?)
+                    Text(
+                      label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: SahneType.caption.copyWith(
+                        color: online ? t.learnTx : t.tx2,
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),

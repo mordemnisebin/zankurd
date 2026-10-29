@@ -212,7 +212,7 @@ void main() {
     );
 
     expect(find.byKey(const ValueKey('lesson-listening-play')), findsOneWidget);
-    expect(find.text('1/2'), findsOneWidget);
+    expect(find.text('Kart 1/2'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('lesson-listening-play')));
     await tester.pump();
     expect(speaker.spoken, ['Êvarbaş']);

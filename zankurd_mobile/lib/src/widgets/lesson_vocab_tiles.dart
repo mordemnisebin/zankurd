@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../data/learner_lexicon.dart';
 import '../utils/error_reporter.dart';
 
+import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../theme/sahne.dart';
 import 'lexicon_lookup.dart';
 import '../services/lesson_listening_speaker.dart';
@@ -457,6 +459,18 @@ class _LetterTilesState extends State<_LetterTiles> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // Kurul 1 (C28, 2026-10-29): karolar düğme gibi çiziliyor ama ne
+        // yaptıkları yazmıyordu (ses mi, seçim mi?). Dokunulabilir harf
+        // varsa bir satır yönerge.
+        if (widget.letters.any(kAlphabetExampleWords.containsKey)) ...[
+          Text(
+            context.t(K.lessonLetterTapHint),
+            key: const ValueKey('lesson-letter-hint'),
+            textAlign: TextAlign.center,
+            style: SahneType.body.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x2),
+        ],
         // Ortalı: sola yaslı karolar dar ekranda sağda boş şerit bırakıyordu
         // (simülatör, 2026-10-22).
         Wrap(

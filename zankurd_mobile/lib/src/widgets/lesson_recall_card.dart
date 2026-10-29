@@ -57,7 +57,10 @@ class _LessonRecallCardState extends State<LessonRecallCard> {
                 ),
               ),
               Text(
-                '${_index + 1}/${widget.entries.length}',
+                context.t(K.lessonCardCounter, {
+                  'n': '${_index + 1}',
+                  'total': '${widget.entries.length}',
+                }),
                 style: SahneType.captionStrong.copyWith(
                   color: t.tx3,
                   fontFeatures: const [FontFeature.tabularFigures()],

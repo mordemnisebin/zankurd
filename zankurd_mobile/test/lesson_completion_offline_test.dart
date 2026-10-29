@@ -189,7 +189,7 @@ void main() {
     await tester.tap(find.text('aç'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text(Tr.forKu(K.finish, false)));
+    await tester.tap(find.text(Tr.forKu(K.finishLesson, false)));
     await tester.pumpAndSettle();
 
     // Hata değil "kaydedilecek" bildirimi; ekran kapandı; yerelde duruyor.

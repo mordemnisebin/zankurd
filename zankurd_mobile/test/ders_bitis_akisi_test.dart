@@ -42,8 +42,8 @@ void main() {
       expect(tester.takeException(), isNull);
       expect(
         find.text(
-          'Tamamla dersi bitirir ve sonraki dersi açar. Kısa test isteğe '
-          'bağlıdır, tamamlamayı etkilemez.',
+          '«Dersi tamamla» dersi bitirir ve sonraki dersi açar. Aşağıdaki '
+          'alıştırmalar ve kısa test isteğe bağlıdır, tamamlamayı etkilemez.',
         ),
         findsOneWidget,
       );

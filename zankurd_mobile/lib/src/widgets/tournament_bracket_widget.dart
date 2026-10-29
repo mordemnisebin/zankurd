@@ -60,9 +60,26 @@ class TournamentBracketWidget extends StatelessWidget {
     // Yoksa oyuncu şemada final olduğunu hiç görmüyordu (2026-10-29 turu).
     final rounds = [...bracket.rounds];
     final totalRounds = bracket.totalRounds;
+    // Kurul 1 (C32, 2026-10-29): bir finalist belli iken Final'in iki tarafı
+    // da "Belirsiz" yazıyordu. Önceki turun TAMAMLANMIŞ maçının kazananı
+    // yerine yazılır; belli olmayan taraf "n. maçın kazananı" der.
     while (rounds.length < totalRounds) {
-      final previous = rounds.last.matches.length;
-      final count = previous <= 1 ? 1 : (previous + 1) ~/ 2;
+      final prev = rounds.last.matches;
+      final count = prev.length <= 1 ? 1 : (prev.length + 1) ~/ 2;
+      ({String id, String name}) side(int index) {
+        if (index >= prev.length) return (id: '', name: 'TBD');
+        final m = prev[index];
+        if (m.status == 'completed' && m.winnerId.isNotEmpty) {
+          if (m.winnerId == m.playerOneId) {
+            return (id: m.playerOneId, name: m.playerOneName);
+          }
+          if (m.winnerId == m.playerTwoId) {
+            return (id: m.playerTwoId, name: m.playerTwoName);
+          }
+        }
+        return (id: '', name: 'TBD:${index + 1}');
+      }
+
       rounds.add(
         TournamentRound(
           roundNumber: rounds.length + 1,
@@ -71,10 +88,10 @@ class TournamentBracketWidget extends StatelessWidget {
             for (var m = 0; m < count; m++)
               TournamentMatch(
                 id: 'placeholder-${rounds.length}-$m',
-                playerOneId: '',
-                playerOneName: 'TBD',
-                playerTwoId: '',
-                playerTwoName: 'TBD',
+                playerOneId: side(2 * m).id,
+                playerOneName: side(2 * m).name,
+                playerTwoId: side(2 * m + 1).id,
+                playerTwoName: side(2 * m + 1).name,
                 playerOneScore: 0,
                 playerTwoScore: 0,
                 status: 'pending',
@@ -166,7 +183,11 @@ class _RoundSection extends StatelessWidget {
               ku: ku,
               // Henüz kurulmamış (iki oyuncusu da boş) kart dokunulamaz: buton
               // gibi okunup hiçbir şey yapmıyordu.
-              onTap: match.playerOneId.isEmpty && match.playerTwoId.isEmpty
+              // Kurul 1 (C32): bir tarafı tahmin edilmiş yer tutucu da
+              // gerçek maç değildir; dokunulamaz.
+              onTap:
+                  match.id.startsWith('placeholder-') ||
+                      (match.playerOneId.isEmpty && match.playerTwoId.isEmpty)
                   ? null
                   : () => onTapMatch(match),
             ),
@@ -287,7 +308,12 @@ class _BracketMatchCard extends StatelessWidget {
                               isCompleted
                                   ? '${match.playerOneScore} – ${match.playerTwoScore}'
                                   : hasPlayers
-                                  ? 'VS'
+                                  // Kurul 1 (C32): yalnız "VS" maçın oynanıp
+                                  // oynanmadığını söylemiyordu.
+                                  // Astra incelemesi: istemci 0 puanlı bir
+                                  // gönderimi "hiç oynanmadı"dan ayıramaz;
+                                  // her iki durumda da doğru olan söz.
+                                  ? Tr.forKu(K.matchAwaitingResultShort, ku)
                                   : '—',
                               maxLines: 1,
                               softWrap: false,
@@ -351,15 +377,20 @@ class _PlayerSlot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final placeholder = Tr.forKu(K.unknownPlayer, ku);
-    final displayName = name == 'TBD' || name.isEmpty
-        ? placeholder
-        : PlayerIdentity.resolveNameWithTag(
-            profile?.displayName ?? name,
-            isKu: ku,
-            tag: profile?.playerTag,
-          );
+    final winnerOf = name.startsWith('TBD:')
+        ? Tr.forKu(K.bracketWinnerOf, ku).replaceAll('{n}', name.substring(4))
+        : null;
+    final displayName =
+        winnerOf ??
+        (name == 'TBD' || name.isEmpty
+            ? placeholder
+            : PlayerIdentity.resolveNameWithTag(
+                profile?.displayName ?? name,
+                isKu: ku,
+                tag: profile?.playerTag,
+              ));
     final isDimmed = isCompleted && !isWinner;
-    final hasPlayer = name.isNotEmpty && name != 'TBD';
+    final hasPlayer = name.isNotEmpty && !name.startsWith('TBD');
 
     // 2026-09-29 Şahnê: kazanan satırı Zêr tonu + Halka 1 altın, adı Zêr
     // metni + kupa; kaybeden üçüncül metin, üstü çizili + ✗ (yalnız renkle
