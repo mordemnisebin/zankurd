@@ -704,6 +704,13 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             timer.cancel();
             return;
           }
+          // Tur 3 (2026-10-30): rakip bulununca bu sayaç durmuyordu; bir
+          // sonraki tikte durum metnini yeniden "Rakip aranıyor…" yapıyor,
+          // altında "Başlamak üzere…" ile çelişik iki durum görünüyordu.
+          if (_found) {
+            timer.cancel();
+            return;
+          }
 
           // 30 saniye, canlı oyuncu havuzu henüz yokken yeni kullanıcıyı
           // boş bir radar ekranında bekletiyordu (2026-07-25 canlı

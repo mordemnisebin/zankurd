@@ -110,6 +110,19 @@ class _CancellationRaceRepository extends _SnapshotMatchRepository {
   }
 }
 
+/// Bekledikten sonra eşleşmeyi kuyruk akışından veren depo (tur 3 VS).
+class _LateStreamMatchRepository extends _SnapshotMatchRepository {
+  final queue = StreamController<Map<String, dynamic>?>();
+
+  @override
+  Future<Map<String, dynamic>> joinMatchmaking(String categoryName) async {
+    return const {'status': 'waiting'};
+  }
+
+  @override
+  Stream<Map<String, dynamic>?> subscribeMatchmakingQueue() => queue.stream;
+}
+
 class _RetryableMatchCategoriesRepository extends MockZanKurdRepository {
   bool fail = true;
   bool returnEmpty = false;
@@ -860,6 +873,42 @@ void main() {
     expect(find.byType(QuizScreen), findsNothing);
     expect(find.text('Eşleşme olmadı, tekrar dene.'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  // Tur 3 (2026-10-30): rakip bulununca saniye sayacı durmuyordu; sonraki
+  // tikte durum metni yeniden "Rakip aranıyor…" oluyor, altında "Başlamak
+  // üzere…" ile çelişik iki durum görünüyordu (02_vs_A).
+  testWidgets('rakip bulunduktan sonra durum metni "aranıyor"a dönmez', (
+    tester,
+  ) async {
+    final repository = _LateStreamMatchRepository();
+    addTearDown(repository.queue.close);
+    addTearDown(tester.view.reset);
+    tester.view.physicalSize = const Size(480, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    await tester.pumpWidget(
+      _shell(
+        MatchmakingScreen(loadRetryDelays: const [], repository: repository),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.pump(const Duration(seconds: 3));
+    expect(find.text('Rakip aranıyor...'), findsOneWidget);
+    repository.queue.add(const {
+      'status': 'matched',
+      'room_id': _SnapshotMatchRepository.roomId,
+    });
+    await tester.pump();
+    await tester.pump();
+    for (var i = 0; i < 3; i++) {
+      await tester.pump(const Duration(milliseconds: 400));
+      if (find.byType(QuizScreen).evaluate().isNotEmpty) break;
+      expect(find.text('Rakip aranıyor...'), findsNothing);
+      expect(find.text('Başlamak üzere…'), findsOneWidget);
+    }
+    await tester.pump(const Duration(milliseconds: 1600));
+    await tester.pump();
   });
 
   testWidgets('timeout ile yarışan eşleşme bot yerine gerçek odaya gider', (
