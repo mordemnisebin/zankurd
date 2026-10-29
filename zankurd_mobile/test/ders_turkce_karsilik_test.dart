@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/lesson.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/widgets/lesson_vocab_tiles.dart';

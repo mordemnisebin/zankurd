@@ -303,17 +303,12 @@ Future<void> pumpEvents() async {
 }
 
 class _FakePlayer implements AudioPlayer {
-  _FakePlayer({
-    List<String>? log,
-    this.tag,
-    this.delay = false,
-    this.sourceGate,
-  }) : _log = log;
+  _FakePlayer({this.log, this.tag, this.delay = false, this.sourceGate});
 
   final Future<void>? sourceGate;
 
   final calls = <String>[];
-  final List<String>? _log;
+  final List<String>? log;
   final String? tag;
   final bool delay;
   final _states = StreamController<PlayerState>.broadcast();
@@ -322,7 +317,7 @@ class _FakePlayer implements AudioPlayer {
 
   void _rec(String e) {
     calls.add(e);
-    if (tag != null) _log?.add('$tag:${e.startsWith('play:') ? 'play' : e}');
+    if (tag != null) log?.add('$tag:${e.startsWith('play:') ? 'play' : e}');
   }
 
   @override
