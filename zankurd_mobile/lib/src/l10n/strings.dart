@@ -2335,6 +2335,8 @@ class Tr {
       'ku': '{name}: {c} rast · {w} şaş · {b} vala',
       'tr': '{name}: {c} doğru · {w} yanlış · {b} boş',
     },
+    // Kapışma U12 (2026-10-29): sırayla düello skor kartında boş sayısı.
+    K.correctBlankCaption: {'ku': 'Rast · {b} vala', 'tr': 'Doğru · {b} boş'},
     K.asyncDuelTimes: {
       'ku': 'Dem: Tu {my} · {name} {opp}',
       'tr': 'Süre: Sen {my} · {name} {opp}',
@@ -5271,6 +5273,7 @@ class K {
   static const matchNoAnswers = 'result.matchNoAnswers';
   static const participationReward = 'result.participationReward';
   static const asyncDuelAnswerSummary = 'duel.async.answerSummary';
+  static const correctBlankCaption = 'result.correctBlankCaption';
   static const asyncDuelTimes = 'duel.async.times';
   static const contestFirstCounts = 'contest.firstCounts';
   static const championRewardGranted = 'tournament.championReward';
