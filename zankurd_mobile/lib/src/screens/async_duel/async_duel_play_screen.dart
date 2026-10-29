@@ -815,7 +815,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           index: _index,
           total: total,
           textKey: const ValueKey('async-duel-progress'),
-          modeLabel: context.t(_isTournament ? K.tournament : K.notifDuelTitle),
+          // Kurul C14 (Astra + Sol): rozet yalnız "Düello" diyordu; canlı
+          // düellodan ayrılmıyordu. Mod adı tam yazar.
+          modeLabel: context.t(_isTournament ? K.tournament : K.asyncDuel),
           // Y3: "Sen oyna, rakip sonra" üst çubukta küçük alt satır; rakip
           // baştan bellidir ya da yoksa (meydan okuyan) yalnız bu satır.
           subtitle: !_isTournament && _duel!.role != AsyncDuelRole.opponent

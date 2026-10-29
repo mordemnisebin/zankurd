@@ -1443,6 +1443,12 @@ class Tr {
       'tr': '{n} oyuncu bekleniyor…',
     },
     K.rakipBekleniyor: {'ku': 'Hevrik tê payîn…', 'tr': 'Rakip bekleniyor…'},
+    K.wordOrderingHowTo: {
+      'ku':
+          'Li peyvan bixe da ku hevokê çêbikî; ji bo rakirinê li peyva di hevokê de bixe.',
+      'tr':
+          'Kelimelere dokunarak cümleyi kur; geri almak için cümledeki kelimeye dokun.',
+    },
     K.cumleyiOlusturmakIcinKelimeleri: {
       'ku': 'Peyvan hilbijêre ku hevokê çêbikî',
       'tr': 'Cümleyi oluşturmak için kelimeleri seç',
@@ -1850,6 +1856,10 @@ class Tr {
     },
     K.pronunciationRecording: {'ku': 'Tê tomarkirin…', 'tr': 'Kaydediliyor…'},
     K.listenQuestion: {'ku': 'Guh bide pirsê', 'tr': 'Soruyu dinle'},
+    K.doubleAnswerActiveHint: {
+      'ku': 'Bersiva ducar çalak e: du mafên te hene',
+      'tr': 'Çift cevap etkin: iki hakkın var',
+    },
     K.doubleAnswerHint: {
       'ku': 'Bersiveke din bide',
       'tr': 'Bir cevap daha ver',
@@ -2188,7 +2198,8 @@ class Tr {
     K.crowdHostStartHint: {
       // Kurul C11 (Astra + Sol): "Hazır olunca" oyuncu başına hazır durumu
       // varmış gibi okunuyordu; ürün yalnız oda sahibinin başlatmasını bilir.
-      'ku': 'Gava her kes hat, dest pê bike. Piştî destpêkê kes nikare tevlî bibe.',
+      'ku':
+          'Gava her kes hat, dest pê bike. Piştî destpêkê kes nikare tevlî bibe.',
       'tr': 'Herkes gelince başlat. Yarış başlayınca kimse katılamaz.',
     },
     K.hostTransferredToYou: {
@@ -2427,8 +2438,10 @@ class Tr {
     },
     // Günlük bedava joker ipucu (2026-10-24): jeton satırının yanında.
     K.freeWildcardToday: {
-      'ku': 'Îro 1 alîkarî belaş e',
-      'tr': 'Bugün 1 joker bedava',
+      // Kurul C16 (Astra + Sol): hangi jokerin bedava olduğu belli değildi;
+      // ilk kullanılan joker bedavadır.
+      'ku': 'Îro alîkariya te ya yekem belaş e',
+      'tr': 'Bugün ilk jokerin bedava',
     },
     // W1 (2026-10-28 tur 5): günlük hak açıkken jokerin fiyat yuvasında yazar.
     K.freeWord: {'ku': 'Belaş', 'tr': 'Bedava'},
@@ -4998,6 +5011,8 @@ class K {
   static const crowdWaitingCount = 'quiz.crowd.waitingCount';
   static const crowdAllTied = 'quiz.crowd.allTied';
   static const perQuestionSeconds = 'room.perQuestionSeconds';
+  static const doubleAnswerActiveHint = 'quiz.doubleAnswerActiveHint';
+  static const wordOrderingHowTo = 'quiz.wordOrderingHowTo';
   static const rakipBekleniyor = 'screen.rakipBekleniyor';
   static const cumleyiOlusturmakIcinKelimeleri =
       'screen.cumleyiOlusturmakIcinKelimeleri';

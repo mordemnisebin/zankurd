@@ -4758,13 +4758,13 @@ List<TournamentStandings> tournamentStandingsFromBracket(
 /// Oda oyuncu satırlarının kararlı sırası: `joined_at` (ISO metin, yoksa en
 /// sona), eşitlikte `player_id`. Lobi her cihazda aynı sırada çizilir.
 int compareRoomPlayerRows(Map<String, dynamic> a, Map<String, dynamic> b) {
-  final aj = a['joined_at']?.toString();
-  final bj = b['joined_at']?.toString();
-  if (aj != bj) {
-    if (aj == null) return 1;
-    if (bj == null) return -1;
-    final byJoin = DateTime.parse(aj).compareTo(DateTime.parse(bj));
+  final aj = DateTime.tryParse(a['joined_at']?.toString() ?? '');
+  final bj = DateTime.tryParse(b['joined_at']?.toString() ?? '');
+  if (aj != null && bj != null) {
+    final byJoin = aj.compareTo(bj);
     if (byJoin != 0) return byJoin;
+  } else if (aj != null || bj != null) {
+    return aj == null ? 1 : -1;
   }
   return (a['player_id']?.toString() ?? '').compareTo(
     b['player_id']?.toString() ?? '',

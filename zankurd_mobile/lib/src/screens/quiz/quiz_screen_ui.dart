@@ -1035,8 +1035,12 @@ extension _QuizScreenUI on _QuizScreenState {
           // tekrarı yok, bkz. [SahneJokerButton]).
           // Çift cevap ipucu bakiye satırının AYNI yuvasındadır (alt perde
           // uzamaz): ilk deneme yanlışsa "ikinci cevabını seç" der.
+          // Kurul C16 (Astra + Sol): etkin çift cevap jokeri yalnız sarı
+          // çerçeveyle anlatılıyordu; etkinken bakiye yuvası iki hakkı yazar.
           doubleAnswerHint: _firstAttemptAnswer.isNotEmpty
               ? context.t(K.doubleAnswerHint)
+              : _wildcard.doubleAnswerActivated
+              ? context.t(K.doubleAnswerActiveHint)
               : null,
           showHint: _freeWildcardAvailable || _jokerStock > 0,
           hint: _freeWildcardAvailable
@@ -1184,8 +1188,11 @@ extension _QuizScreenUI on _QuizScreenState {
   /// İlk taslak bu ayrımı yapmıyor ve `answers.length >= 4` diyordu; boşluk
   /// doldurma sorusunun şık listesi BOŞ olduğu için çift cevap orada da
   /// kapanmıştı. Kusuru iki mevcut test yakaladı.
+  // Kurul C29 (Astra + Sol, 2026-10-29): yazılı cevap ve cümle sıralamada
+  // "Çift cevap" ne yapacağı anlaşılmadan duruyordu (ikinci bir cevap alanı
+  // yok). Yalnız dört şıklı sorularda sunulur.
   bool get _supportsDoubleAnswer =>
-      !_supportsOptionWildcards || question.answers.length >= 4;
+      _supportsOptionWildcards && question.answers.length >= 4;
 
   /// Joker için ödeme yolu var mı: bedava günlük hak YA DA yeterli jeton.
   ///
