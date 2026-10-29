@@ -401,12 +401,24 @@ class _QuestionTextAndAnswers extends StatelessWidget {
             canListen && onListen != null && listeningListenable != null;
 
         final translation = _revealableTranslation(context);
+        final fit0 = QuizFitScope.of(context);
         final promptLine = Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Dinleme düğmesi (48) soru metninin yanında durur; boy
-            // kararı metne kalan genişlikte ölçülür.
-            Expanded(child: _promptWidget(context)),
+            // kararı metne kalan genişlikte ölçülür. Soru sığdırma
+            // kademesi yalnız bu metnin ölçeğini küçültür.
+            Expanded(
+              child: MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                  textScaler: QuizFitScope.scaled(
+                    MediaQuery.textScalerOf(context),
+                    fit0.questionScale,
+                  ),
+                ),
+                child: Builder(builder: _promptWidget),
+              ),
+            ),
             if (showListen) ...[
               const SizedBox(width: SahneSpace.x2),
               _ListenButton(
@@ -418,8 +430,11 @@ class _QuestionTextAndAnswers extends StatelessWidget {
         );
         // K6 (2026-10-28): soru metni HER modda aynı açık kartta (koyu sahnede
         // yüksek karşıtlık); sahne zemininde yüzen metin okunmuyordu.
+        final fit = QuizFitScope.of(context);
+        final baseScaler = MediaQuery.textScalerOf(context);
         final Widget promptRow = QuizPromptCard(
           key: promptCardKey,
+          padding: fit.promptPad,
           child: translation == null
               ? promptLine
               : Column(
@@ -436,8 +451,20 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                 ),
         );
         final rest = <Widget>[
-          SizedBox(height: isCompact ? SahneSpace.x3 : SahneSpace.x4),
-          Container(key: answerAreaKey, child: _answerArea(context)),
+          SizedBox(
+            height: fit.isNominal
+                ? (isCompact ? SahneSpace.x3 : SahneSpace.x4)
+                : fit.sectionGap,
+          ),
+          Container(
+            key: answerAreaKey,
+            child: MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaler: QuizFitScope.scaled(baseScaler, fit.optionScale),
+              ),
+              child: Builder(builder: _answerArea),
+            ),
+          ),
           _AnswerRevealFallback(
             question: question,
             isKu: context.isKu,
@@ -476,7 +503,11 @@ class _QuestionTextAndAnswers extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 promptRow,
-                const SizedBox(height: quizPromptToAnswersGap),
+                SizedBox(
+                  height: fit.isNominal
+                      ? quizPromptToAnswersGap
+                      : fit.sectionGap,
+                ),
                 // `rest[0]` bitişik düzenin 16'lık aralığıdır; burada yerini
                 // yukarıdaki sabit aralık alır.
                 ...rest.skip(1),
@@ -565,7 +596,8 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     }
 
     final answers = question.displayAnswers;
-    const gap = quizOptionGap;
+    final fit = QuizFitScope.of(context);
+    final gap = fit.isNominal ? quizOptionGap : fit.optionGap;
 
     Widget item(int index, String answer) {
       final hidden = hiddenAnswers.contains(answer);
@@ -578,7 +610,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
         key: answered && answer == question.correctAnswer
             ? correctAnswerKey
             : null,
-        padding: const EdgeInsets.only(bottom: gap),
+        padding: EdgeInsets.only(bottom: gap),
         // 50/50 ile elenen şık: sönük (Perde + üçüncül metin) ve
         // dokunulmaz. Opaklık değil ton — Şahnê'nin pasif hâli.
         child: IgnorePointer(
@@ -828,7 +860,7 @@ class _LearningExplanationAction extends StatelessWidget {
 /// yan yana koymak olmaz. Burada herkesin puanı değil, oyuncunun bilmek
 /// istediği iki şey vardır: nerede olduğu ve önünde kimlerin olduğu.
 /// Sıra, eşit puanda aynı numarayı paylaşır (bkz. `crowdStandings`).
-class _CrowdScoreHeader extends StatelessWidget {
+class _CrowdScoreHeader extends StatefulWidget {
   const _CrowdScoreHeader({
     required this.player,
     required this.rank,
@@ -856,9 +888,28 @@ class _CrowdScoreHeader extends StatelessWidget {
   static const topKey = ValueKey('quiz-crowd-top3');
 
   @override
+  State<_CrowdScoreHeader> createState() => _CrowdScoreHeaderState();
+}
+
+/// Kalabalık oda şeridi (2026-10-29 simülatör turu): eskiden sıra + ilk üç
+/// + "x/N cevapladı" ≈ 220 pt tutuyor, uzun soruda D şıkkı alt perdenin
+/// arkasına düşüyordu; "x/N cevapladı" satırı bir saniye SONRA gelince de
+/// soru ve şıklar ~120 pt aşağı zıplıyordu. Şimdi şerit İKİ SATIR ve boyu
+/// SABİT: üst satırda ad + sıra, alt satırda puan + "x/N cevapladı"
+/// (sayı gelmeden aynı genişlikte görünmez yer tutucu durur). İlk üç, şeride
+/// dokununca açılır (kapalı başlar; açıldığında içerik kullanıcının isteğiyle
+/// uzar).
+class _CrowdScoreHeaderState extends State<_CrowdScoreHeader> {
+  bool _open = false;
+
+  @override
   Widget build(BuildContext context) {
+    final player = widget.player;
+    final rank = widget.rank;
+    final total = widget.total;
+    final top = widget.top;
+    final progress = widget.progress;
     final t = SahneTokens.of(context);
-    final stacked = MediaQuery.textScalerOf(context).scale(16) >= 24;
     final colorOverrides = resolveAvatarColors([
       for (final p in {player, ...top.map((s) => s.player)})
         (id: p.id ?? p.name, displayName: p.name, colorHex: p.avatarColor),
@@ -866,78 +917,14 @@ class _CrowdScoreHeader extends StatelessWidget {
     final rankText = rank == null ? '—' : '#$rank/$total';
     final scoreText =
         '${groupThousands(player.score)} ${context.t(K.scoreWord).toLowerCase()}';
-
-    final me = Row(
-      children: [
-        PlayerAvatar(
-          radius: 16,
-          photoUrl: player.avatarUrl,
-          iconId: player.avatarIcon,
-          colorHex: player.avatarColor,
-          frameId: player.avatarFrame,
-          showcaseTitle: player.showcaseTitle,
-          displayName: player.name,
-          colorOverride: colorOverrides[player.id ?? player.name],
-        ),
-        const SizedBox(width: SahneSpace.x2),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.playerDisplayName(player.name, tag: player.tag),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: SahneType.captionStrong.copyWith(color: t.tx),
-              ),
-              Text(
-                scoreText,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: SahneType.captionStrong.copyWith(
-                  color: t.goldTx,
-                  fontFeatures: const [FontFeature.tabularFigures()],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+    final progressStyle = SahneType.captionStrong.copyWith(
+      color: t.tx2,
+      fontFeatures: const [FontFeature.tabularFigures()],
     );
-
-    final rankLabel = Text(
-      context.t(K.crowdRankLabel),
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      style: SahneType.eyebrow.copyWith(color: t.tx2),
+    String answeredText(int answered, int active) => context.t(
+      K.crowdAnsweredCount,
+      {'answered': '$answered', 'active': '$active'},
     );
-    final rankValue = Text(
-      rankText,
-      key: rankKey,
-      maxLines: 1,
-      style: SahneType.headline.copyWith(
-        color: t.raceTx,
-        fontFeatures: const [FontFeature.tabularFigures()],
-      ),
-    );
-    // Büyük yazıda etiket ve sıra TEK satıra iner: iki satırlık sütun
-    // başlığı 320 px / 2×'te soruyu aşağı itiyordu.
-    final rankBlock = stacked
-        ? Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              Flexible(child: rankLabel),
-              const SizedBox(width: SahneSpace.x2),
-              rankValue,
-            ],
-          )
-        : Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [rankLabel, rankValue],
-          );
 
     Widget cell(CrowdStanding standing) {
       final isMe = playersShareIdentity(standing.player, player);
@@ -963,76 +950,148 @@ class _CrowdScoreHeader extends StatelessWidget {
               const SizedBox(width: SahneSpace.x2),
               // Büyük yazıda ad ve puan aynı satırda (puan sağda): üç
               // iki-satırlık kutu başlığı ekranın yarısını yiyordu.
-              if (stacked) ...[
-                Expanded(
-                  child: Text(
-                    context.playerDisplayName(
-                      standing.player.name,
-                      tag: standing.player.tag,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: SahneType.caption.copyWith(color: t.tx),
-                  ),
-                ),
-                const SizedBox(width: SahneSpace.x2),
-                Text(
-                  groupThousands(standing.player.score),
-                  maxLines: 1,
-                  style: SahneType.captionStrong.copyWith(
-                    color: t.goldTx,
-                    fontFeatures: const [FontFeature.tabularFigures()],
-                  ),
-                ),
-              ] else
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
                         context.playerDisplayName(
                           standing.player.name,
                           tag: standing.player.tag,
                         ),
                         maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                         style: SahneType.caption.copyWith(color: t.tx),
                       ),
-                      Text(
-                        groupThousands(standing.player.score),
-                        maxLines: 1,
-                        style: SahneType.captionStrong.copyWith(
-                          color: t.goldTx,
-                          fontFeatures: const [FontFeature.tabularFigures()],
-                        ),
+                    ),
+                    Text(
+                      groupThousands(standing.player.score),
+                      maxLines: 1,
+                      style: SahneType.captionStrong.copyWith(
+                        color: t.goldTx,
+                        fontFeatures: const [FontFeature.tabularFigures()],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+              ),
             ],
           ),
         ),
       );
     }
 
-    final strip = stacked
-        ? Column(
+    final strip = Row(
+      children: [
+        for (var i = 0; i < top.length; i++) ...[
+          if (i > 0) const SizedBox(width: SahneSpace.x1),
+          Expanded(child: cell(top[i])),
+        ],
+      ],
+    );
+
+    Widget fit(
+      Widget child, {
+      AlignmentGeometry align = Alignment.centerLeft,
+    }) => FittedBox(fit: BoxFit.scaleDown, alignment: align, child: child);
+
+    final header = Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        PlayerAvatar(
+          radius: 16,
+          photoUrl: player.avatarUrl,
+          iconId: player.avatarIcon,
+          colorHex: player.avatarColor,
+          frameId: player.avatarFrame,
+          showcaseTitle: player.showcaseTitle,
+          displayName: player.name,
+          colorOverride: colorOverrides[player.id ?? player.name],
+        ),
+        const SizedBox(width: SahneSpace.x2),
+        Expanded(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              for (var i = 0; i < top.length; i++) ...[
-                if (i > 0) const SizedBox(height: SahneSpace.x1),
-                cell(top[i]),
-              ],
+              Row(
+                children: [
+                  Expanded(
+                    child: fit(
+                      Text(
+                        context.playerDisplayName(player.name, tag: player.tag),
+                        maxLines: 1,
+                        style: SahneType.captionStrong.copyWith(color: t.tx),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: SahneSpace.x2),
+                  Text(
+                    context.t(K.crowdRankLabel),
+                    maxLines: 1,
+                    style: SahneType.eyebrow.copyWith(color: t.tx2),
+                  ),
+                  const SizedBox(width: SahneSpace.x1),
+                  Text(
+                    rankText,
+                    key: _CrowdScoreHeader.rankKey,
+                    maxLines: 1,
+                    style: SahneType.captionStrong.copyWith(
+                      color: t.raceTx,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                  Icon(
+                    _open ? AppIcons.chevronUp : AppIcons.chevronDown,
+                    size: 16,
+                    color: t.tx2,
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: fit(
+                      Text(
+                        scoreText,
+                        maxLines: 1,
+                        style: SahneType.captionStrong.copyWith(
+                          color: t.goldTx,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: SahneSpace.x2),
+                  // Sayı gelmeden de yer AYNI: görünmez yer tutucu en geniş
+                  // hâliyle (hepsi cevapladı) satırı baştan ayırır.
+                  if (progress != null)
+                    Text(
+                      answeredText(progress.answered, progress.active),
+                      key: _CrowdScoreHeader.progressKey,
+                      maxLines: 1,
+                      style: progressStyle,
+                    )
+                  else
+                    ExcludeSemantics(
+                      child: Opacity(
+                        opacity: 0,
+                        child: Text(
+                          answeredText(total, total),
+                          maxLines: 1,
+                          style: progressStyle,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ],
-          )
-        : Row(
-            children: [
-              for (var i = 0; i < top.length; i++) ...[
-                if (i > 0) const SizedBox(width: SahneSpace.x1),
-                Expanded(child: cell(top[i])),
-              ],
-            ],
-          );
+          ),
+        ),
+      ],
+    );
 
     return Semantics(
       container: true,
@@ -1041,56 +1100,27 @@ class _CrowdScoreHeader extends StatelessWidget {
           '${player.score} ${context.t(K.scoreWord).toLowerCase()}',
       child: SahneSurfaceCard(
         key: const ValueKey('quiz-crowd-header'),
-        padding: const EdgeInsets.all(SahneSpace.x3),
+        padding: const EdgeInsets.all(SahneSpace.x2),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            if (stacked) ...[
-              me,
+            // Şeridin TAMAMI dokunma hedefi (≥ 48): ilk üçü açar / kapatır.
+            Semantics(
+              button: true,
+              expanded: _open,
+              hint: context.t(K.crowdTopThree),
+              child: InkWell(
+                key: const ValueKey('quiz-crowd-top3-toggle'),
+                onTap: top.isEmpty
+                    ? null
+                    : () => setState(() => _open = !_open),
+                child: header,
+              ),
+            ),
+            if (_open && top.isNotEmpty) ...[
               const SizedBox(height: SahneSpace.x2),
-              Align(
-                alignment: AlignmentDirectional.centerEnd,
-                child: rankBlock,
-              ),
-            ] else
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(child: me),
-                  const SizedBox(width: SahneSpace.x3),
-                  rankBlock,
-                ],
-              ),
-            if (progress != null) ...[
-              const SizedBox(height: SahneSpace.x2),
-              Text(
-                context.t(K.crowdAnsweredCount, {
-                  'answered': '${progress!.answered}',
-                  'active': '${progress!.active}',
-                }),
-                key: progressKey,
-                style: SahneType.captionStrong.copyWith(
-                  color: t.tx2,
-                  fontFeatures: const [FontFeature.tabularFigures()],
-                ),
-              ),
-            ],
-            if (top.isNotEmpty && stacked) ...[
-              const SizedBox(height: SahneSpace.x2),
-              _CollapsibleTop(
-                title: context.t(K.crowdTopThree),
-                child: KeyedSubtree(key: topKey, child: strip),
-              ),
-            ] else if (top.isNotEmpty) ...[
-              const SizedBox(height: SahneSpace.x3),
-              Padding(
-                padding: const EdgeInsets.only(bottom: SahneSpace.x1),
-                child: Text(
-                  context.t(K.crowdTopThree),
-                  style: SahneType.eyebrow.copyWith(color: t.tx2),
-                ),
-              ),
-              KeyedSubtree(key: topKey, child: strip),
+              KeyedSubtree(key: _CrowdScoreHeader.topKey, child: strip),
             ],
           ],
         ),
@@ -1162,11 +1192,15 @@ class _DuelScoreHeader extends StatelessWidget {
     required this.player,
     required this.opponent,
     required this.progress,
+    this.showTug = true,
   });
 
   final Player player;
   final Player opponent;
   final String progress;
+
+  /// Halat çekme çubuğu; kısa ekranda (< 700 pt) düşer, puanlar yine yazılıdır.
+  final bool showTug;
 
   @override
   Widget build(BuildContext context) {
@@ -1211,55 +1245,6 @@ class _DuelScoreHeader extends StatelessWidget {
       colorOverride: opponentColor,
     );
 
-    Widget side(Player p, Widget avatar, {required bool end}) {
-      final info = Expanded(
-        child: Column(
-          crossAxisAlignment: end
-              ? CrossAxisAlignment.end
-              : CrossAxisAlignment.start,
-          children: [
-            // Ad + (botsa) "Bot" rozeti: dar kartta (320 dp, büyük yazı)
-            // rozet taşmaz, alt satıra iner (2026-10-29, X4).
-            Wrap(
-              alignment: end ? WrapAlignment.end : WrapAlignment.start,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              spacing: SahneSpace.x1,
-              children: [
-                Text(
-                  context.playerDisplayName(p.name, tag: p.tag),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: SahneType.captionStrong.copyWith(color: t.tx),
-                ),
-                if (p.isBot)
-                  SahneBadge(
-                    key: const ValueKey('duel-bot-chip'),
-                    label: context.t(K.botChip),
-                    tone: SahneBadgeTone.soon,
-                  ),
-              ],
-            ),
-            Text(
-              // 2026-09-30 canlı: "pts" İngilizce kısaltmaydı; terim sözlüğü
-              // puan/pûan der, kelime `K.scoreWord`tan gelir.
-              '${groupThousands(p.score)} ${context.t(K.scoreWord).toLowerCase()}',
-              style: SahneType.captionStrong.copyWith(
-                color: t.goldTx,
-                fontFeatures: const [FontFeature.tabularFigures()],
-              ),
-            ),
-          ],
-        ),
-      );
-      return Expanded(
-        child: Row(
-          children: end
-              ? [info, const SizedBox(width: SahneSpace.x2), avatar]
-              : [avatar, const SizedBox(width: SahneSpace.x2), info],
-        ),
-      );
-    }
-
     Widget streakOf(Player p, {required bool end}) {
       if (p.streak <= 0) return const SizedBox.shrink();
       const glyph = SahneGlyph(SahneGlyphKind.flame, size: 16);
@@ -1275,8 +1260,85 @@ class _DuelScoreHeader extends StatelessWidget {
       );
     }
 
+    Widget side(Player p, Widget avatar, {required bool end}) {
+      final info = Expanded(
+        child: Column(
+          crossAxisAlignment: end
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start,
+          children: [
+            // Ad + (botsa) "Bot" rozeti: dar kartta (320 dp, büyük yazı)
+            // rozet taşmaz, alt satıra iner (2026-10-29, X4).
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: end
+                  ? AlignmentDirectional.centerEnd
+                  : AlignmentDirectional.centerStart,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    context.playerDisplayName(p.name, tag: p.tag),
+                    maxLines: 1,
+                    style: SahneType.captionStrong.copyWith(color: t.tx),
+                  ),
+                  if (p.isBot) ...[
+                    const SizedBox(width: SahneSpace.x1),
+                    SahneBadge(
+                      key: const ValueKey('duel-bot-chip'),
+                      label: context.t(K.botChip),
+                      tone: SahneBadgeTone.soon,
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            // Seri (🔥xN) puanın yanındadır: eskiden kartın altında AYRI bir
+            // satırdı ve rakip puan alıp seri başlayınca kart ~28 pt uzayıp
+            // soruyu aşağı itiyordu (2026-10-29, "soru gelince her şey sabit").
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: end
+                  ? AlignmentDirectional.centerEnd
+                  : AlignmentDirectional.centerStart,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (end && p.streak > 0) ...[
+                    streakOf(p, end: true),
+                    const SizedBox(width: SahneSpace.x2),
+                  ],
+                  Text(
+                    // 2026-09-30 canlı: "pts" İngilizce kısaltmaydı; terim
+                    // sözlüğü puan/pûan der, kelime `K.scoreWord`tan gelir.
+                    '${groupThousands(p.score)} ${context.t(K.scoreWord).toLowerCase()}',
+                    maxLines: 1,
+                    style: SahneType.captionStrong.copyWith(
+                      color: t.goldTx,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                  if (!end && p.streak > 0) ...[
+                    const SizedBox(width: SahneSpace.x2),
+                    streakOf(p, end: false),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+      return Expanded(
+        child: Row(
+          children: end
+              ? [info, const SizedBox(width: SahneSpace.x2), avatar]
+              : [avatar, const SizedBox(width: SahneSpace.x2), info],
+        ),
+      );
+    }
+
     return SahneSurfaceCard(
-      padding: const EdgeInsets.all(SahneSpace.x3),
+      padding: const EdgeInsets.all(SahneSpace.x2),
       child: Column(
         children: [
           Row(
@@ -1305,16 +1367,11 @@ class _DuelScoreHeader extends StatelessWidget {
           ),
           // Halat çekme: puan FARKI okunmadan görülsün. Rakip puan
           // aldığında sınır KAYAR — rakibin varlığı hareketle hissedilir.
-          const SizedBox(height: SahneSpace.x3),
-          _DuelTugBar(playerScore: player.score, opponentScore: opponent.score),
-          if (player.streak > 0 || opponent.streak > 0) ...[
+          if (showTug) ...[
             const SizedBox(height: SahneSpace.x2),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                streakOf(player, end: false),
-                streakOf(opponent, end: true),
-              ],
+            _DuelTugBar(
+              playerScore: player.score,
+              opponentScore: opponent.score,
             ),
           ],
         ],
@@ -1445,112 +1502,6 @@ class _AnswerRevealFallback extends StatelessWidget {
               ),
             )
           : const SizedBox(width: double.infinity, height: 0),
-    );
-  }
-}
-
-/// Çok oyunculuda cevap kaydedildi, öteki oyuncu bekleniyor.
-class _MultiplayerWaitingOverlay extends StatelessWidget {
-  const _MultiplayerWaitingOverlay({
-    required this.isKu,
-    this.crowd = false,
-    this.progress,
-  });
-
-  final bool isKu;
-
-  /// Kalabalık odada bekleyen tek bir rakip değil, "diğerleri"dir.
-  final bool crowd;
-
-  /// Kalabalıkta biliniyorsa "x/N cevapladı"; yoksa genel bekleme metni.
-  final RoomAnswerProgress? progress;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return Padding(
-      padding: const EdgeInsets.only(top: SahneSpace.x3),
-      child: SahneSurfaceCard(
-        child: Row(
-          children: [
-            SizedBox.square(
-              dimension: 20,
-              child: CircularProgressIndicator(strokeWidth: 2.5, color: t.tx2),
-            ),
-            const SizedBox(width: SahneSpace.x3),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    Tr.forKu(K.cevabinKaydedildi, isKu),
-                    style: SahneType.bodyStrong.copyWith(color: t.tx),
-                  ),
-                  Text(
-                    progress != null
-                        ? Tr.forKu(K.crowdAnsweredCount, isKu, {
-                            'answered': '${progress!.answered}',
-                            'active': '${progress!.active}',
-                          })
-                        : Tr.forKu(
-                            crowd
-                                ? K.crowdWaitingOthers
-                                : K.digerOyuncuBekleniyor,
-                            isKu,
-                          ),
-                    style: SahneType.caption.copyWith(color: t.tx2),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: SahneSpace.x2),
-            Icon(AppIcons.hourglassStart, color: t.tx2, size: 20),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// ─── Reveal Countdown ──────────────────────────────────────────────────────
-
-/// "Sonraki soru N sn" — Kulis tonlu M pahlı çip, ortada.
-class _RevealCountdown extends StatelessWidget {
-  const _RevealCountdown({required this.seconds, required this.isKu});
-
-  final int seconds;
-  final bool isKu;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return Padding(
-      padding: const EdgeInsets.only(top: SahneSpace.x3),
-      child: Center(
-        child: DecoratedBox(
-          decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: SahneSpace.x3,
-              vertical: SahneSpace.x2,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(AppIcons.forward, color: t.tx2, size: 16),
-                const SizedBox(width: SahneSpace.x2),
-                Flexible(
-                  child: Text(
-                    Tr.forKu(K.sonrakiSoruPS, isKu, {'p0': '$seconds'}),
-                    style: SahneType.captionStrong.copyWith(color: t.tx2),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
@@ -1804,12 +1755,15 @@ class _CoinBalanceLine extends StatelessWidget {
           if (showHint && hint != null) ...[
             const SizedBox(width: SahneSpace.x2),
             Flexible(
-              child: Text(
-                '· $hint',
-                key: const ValueKey('quiz-free-wildcard-hint'),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: SahneType.caption.copyWith(color: t.tx2),
+              // Üç nokta yerine sığacak kadar küçülür (soru sığma bekçisi).
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  '· $hint',
+                  key: const ValueKey('quiz-free-wildcard-hint'),
+                  maxLines: 1,
+                  style: SahneType.caption.copyWith(color: t.tx2),
+                ),
               ),
             ),
           ],
@@ -1872,11 +1826,14 @@ class _CollapsedWildcardLine extends StatelessWidget {
                     ),
                     const SizedBox(width: SahneSpace.x2),
                     Flexible(
-                      child: Text(
-                        label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: SahneType.captionStrong.copyWith(color: t.tx),
+                      // Üç nokta yok: sığmazsa metin küçülür.
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          label,
+                          maxLines: 1,
+                          style: SahneType.captionStrong.copyWith(color: t.tx),
+                        ),
                       ),
                     ),
                   ],
@@ -1888,4 +1845,21 @@ class _CollapsedWildcardLine extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Soru bloğunun ÜSTÜNDEKİ bantların (skor kartları, çeviri şeridi) tahmini
+/// boyları. Sığdırma bütçesi bunları düşer ([QuizFit]); bekçi
+/// (`soru_sigma_test`) sapmayı yakalar.
+class _QuizHeaderHeights {
+  const _QuizHeaderHeights._();
+
+  /// Düello kartı: 16 iç boşluk + iki 20'lik satır (ad / puan) + 8 + halat 12.
+  static double duel(TextScaler s, {bool tug = true}) =>
+      16 + 2 * s.scale(20) + (tug ? 8 + 12 : 0);
+
+  /// Oda şeridi: 16 iç boşluk + iki satır (ad / puan).
+  static double crowd(TextScaler s) => 16 + max(32, 2 * s.scale(20));
+
+  /// Kapalı çeviri şeridi.
+  static double translation(TextScaler s) => max(32, s.scale(20) + 8);
 }

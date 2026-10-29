@@ -9,6 +9,7 @@ import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/widgets/coach_mark.dart';
+import 'package:zankurd_mobile/src/widgets/quiz_stage_kit.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/realistic_device.dart';
@@ -172,7 +173,9 @@ void main() {
             expect(row, findsOneWidget);
             final rowRect = tester.getRect(row);
             final viewport = tester.getRect(find.byKey(scrollKey));
-            final dock = tester.getRect(find.byKey(nextKey));
+            // Alt perdenin görünür yüzü geri bildirim şeridinin kendisidir
+            // (düğme şeridin içinde, üstünden 12 pt aşağıda durur).
+            final dock = tester.getRect(find.byType(QuizFeedbackStrip).last);
             final progress = tester.getRect(find.byKey(progressKey));
 
             expect(

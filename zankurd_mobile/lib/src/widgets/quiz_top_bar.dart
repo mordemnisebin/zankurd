@@ -126,7 +126,7 @@ class QuizStageCenter extends StatelessWidget {
           child: Text(
             '$progress · $name',
             key: textKey,
-            maxLines: largeText ? 2 : 1,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: SahneType.eyebrow.copyWith(
               color: onBand ? SahneVivid.onFill : t.tx,

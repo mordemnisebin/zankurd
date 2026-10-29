@@ -75,9 +75,16 @@ class QuizModeChip extends StatelessWidget {
 /// (koyu metin). Okunurluk için TEK karar: soru metni her modda aynı
 /// kartta, ≥ 4,5:1 (beyaz zemin üstünde `#0E1433`, ≈ 16:1).
 class QuizPromptCard extends StatelessWidget {
-  const QuizPromptCard({super.key, required this.child});
+  const QuizPromptCard({
+    super.key,
+    required this.child,
+    this.padding = SahneSpace.x4,
+  });
 
   final Widget child;
+
+  /// İç boşluk; soru sığdırma kademesinde (`QuizFit.promptPad`) daralır.
+  final double padding;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +97,7 @@ class QuizPromptCard extends StatelessWidget {
       // (Astra: "kartlar fazla düz", Quiz Planet derinliği).
       child: Container(
         key: const ValueKey('quiz-prompt-card'),
-        padding: const EdgeInsets.all(SahneSpace.x4),
+        padding: EdgeInsets.all(padding),
         decoration: ShapeDecoration(
           color: day.s1,
           shape: RoundedRectangleBorder(
@@ -132,7 +139,30 @@ class QuizFeedbackStrip extends StatelessWidget {
     required this.correct,
     required this.action,
     this.detail,
+    this.animate = true,
+    this.inlineAction = true,
+    this.compactRow = false,
+    this.timedOut = false,
   });
+
+  /// Şerit her cevapta aynı boyda kalsın diye açıklama satırı yazılmaz
+  /// (bkz. `_feedbackDetail`).
+  static const bool fixedHeight = true;
+
+  /// `false`: giriş animasyonu yok (alt perdenin boyunu ölçen görünmez ikiz).
+  final bool animate;
+
+  /// `true`: eylem düğmesi başlığın YANINDA (tek satır, ≈76 pt); `false`
+  /// (üç düğmeli zorluk puanı): düğmeler başlığın altında tam genişlikte.
+  final bool inlineAction;
+
+  /// `true`: maskot ve başlık yazısı düşer, yalnız ✓/✗ + tam genişlikte eylem
+  /// (çok oyunculuda "Rakip bekleniyor…" etiketi dar yuvada iki satıra sarıp
+  /// alt perdeyi uzatıyordu).
+  final bool compactRow;
+
+  /// Süre dolduysa başlık "Yanlış" değil "Süre doldu" der.
+  final bool timedOut;
 
   final bool correct;
 
@@ -153,20 +183,25 @@ class QuizFeedbackStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final fill = feedbackFill(t, correct: correct);
-    final title = context.t(correct ? K.correct : K.wrong);
+    final title = context.t(
+      correct ? K.correct : (timedOut ? K.sureDoldu : K.wrong),
+    );
     final reduce = sahneMotionReduced(context);
     // Büyük yazıda (≥ %130) açıklama satırı düşer: şerit tek başına ekranın
     // üçte biriydi ve sorunun açıklama kartını kaydırma alanından itiyordu
     // (`quiz_stage_scroll_test`). Söz ekran okuyucuda bütündür.
-    final largeText = MediaQuery.textScalerOf(context).scale(14) > 18.2;
+    final largeText =
+        compactRow || MediaQuery.textScalerOf(context).scale(14) > 17.0;
     final strip = Semantics(
       container: true,
       liveRegion: true,
       label: detail == null ? title : '$title. $detail',
       child: Container(
-        key: ValueKey(
-          correct ? 'quiz-feedback-correct' : 'quiz-feedback-wrong',
-        ),
+        key: animate
+            ? ValueKey(
+                correct ? 'quiz-feedback-correct' : 'quiz-feedback-wrong',
+              )
+            : null,
         padding: const EdgeInsets.all(SahneSpace.x3),
         decoration: ShapeDecoration(color: fill, shape: SahneShape.l),
         child: largeText
@@ -185,18 +220,67 @@ class QuizFeedbackStrip extends StatelessWidget {
                   Expanded(child: action),
                 ],
               )
+            : inlineAction
+            ? Row(
+                // Tek satır (2026-10-29, soru sığma): maskot + başlık solda,
+                // eylem sağda. Eskiden başlık ve düğme üst üste iki satırdı
+                // (≈110 pt); alt perde kısaldıkça soru ve şıklar ekranda
+                // daha çok yer bulur.
+                children: [
+                  ExcludeSemantics(
+                    child: ZanMascot(
+                      key: animate
+                          ? const ValueKey('quiz-feedback-mascot')
+                          : null,
+                      pose: correct ? ZanPose.correct : ZanPose.wrong,
+                      size: 44,
+                    ),
+                  ),
+                  const SizedBox(width: SahneSpace.x2),
+                  Flexible(
+                    child: ExcludeSemantics(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            correct ? AppIcons.check : AppIcons.xmark,
+                            size: 22,
+                            color: t.tx,
+                          ),
+                          const SizedBox(width: SahneSpace.x1),
+                          Flexible(
+                            child: Text(
+                              title,
+                              key: animate
+                                  ? const ValueKey('quiz-feedback-title')
+                                  : null,
+                              maxLines: 2,
+                              style: SahneType.bodyStrong.copyWith(
+                                color: t.tx,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(flex: 2, child: action),
+                ],
+              )
             : Row(
                 // Maskot şeridin solunda, başlık + eylem sütununun yanında
-                // (Duolingo: karakter düğmenin yanında). Şerit eski boyunu
-                // korur: maskot ayrı bir satır açsaydı açıklama kartı
-                // kaydırma alanından itilirdi (`tur5_sonuc_quiz_test` W12).
+                // (Duolingo: karakter düğmenin yanında).
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   ExcludeSemantics(
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 2),
                       child: ZanMascot(
-                        key: const ValueKey('quiz-feedback-mascot'),
+                        key: animate
+                            ? const ValueKey('quiz-feedback-mascot')
+                            : null,
                         pose: correct ? ZanPose.correct : ZanPose.wrong,
                         size: mascotSize,
                       ),
@@ -220,9 +304,10 @@ class QuizFeedbackStrip extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   title,
-                                  key: const ValueKey('quiz-feedback-title'),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                                  key: animate
+                                      ? const ValueKey('quiz-feedback-title')
+                                      : null,
+                                  maxLines: 2,
                                   style: SahneType.bodyStrong.copyWith(
                                     color: t.tx,
                                     fontSize: 18,
@@ -238,8 +323,7 @@ class QuizFeedbackStrip extends StatelessWidget {
                             child: Text(
                               detail!.trim(),
                               key: const ValueKey('quiz-feedback-detail'),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
                               style: SahneType.caption.copyWith(color: t.tx),
                             ),
                           ),
@@ -253,7 +337,7 @@ class QuizFeedbackStrip extends StatelessWidget {
               ),
       ),
     );
-    if (reduce) return strip;
+    if (reduce || !animate) return strip;
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 1),
       duration: const Duration(milliseconds: 220),
@@ -289,6 +373,60 @@ class QuizInactiveButtonFrame extends StatelessWidget {
         ),
       ),
       child: child,
+    );
+  }
+}
+
+/// Alt perdenin boyunu SABİT tutar: joker dizisi, pasif "Sonraki" ve geri
+/// bildirim şeridi aynı alanı paylaşır; en yüksek olanın boyu kadar yer
+/// ayrılır. Eskiden cevaptan sonra perde 60–100 pt uzuyor, kayan gövde bu
+/// kadar daralıp soru ve şıklar yerinden oynuyordu ya da kaydırma
+/// çıkıyordu (2026-10-29, "soru gelince her şey sabit olmalı").
+class QuizStableDockHeight extends StatelessWidget {
+  const QuizStableDockHeight({
+    super.key,
+    required this.child,
+    this.stackedAction = false,
+    this.compactRow = false,
+    this.minHeight = 0,
+  });
+
+  final Widget child;
+
+  /// Alıştırma turu: doğru cevaptan sonra üç düğmeli zorluk puanı gelir
+  /// (başlığın altında); ikiz de o boyda olsun.
+  final bool stackedAction;
+  final bool compactRow;
+
+  /// En az bu kadar yer ayrılır: joker dizisi iki hâlde gelir (bakiye
+  /// yüklenince dört çip, yüklenmeden tek sönük satır) ve bakiye geç
+  /// yüklenince alt perde 80 → 96 pt uzayıp soruyu yerinden oynatıyordu.
+  final double minHeight;
+
+  @override
+  Widget build(BuildContext context) {
+    // Görünmez ikiz: şeridin en uzun hâli (düğme boyunda boş yer tutucu).
+    final twin = ExcludeSemantics(
+      child: IgnorePointer(
+        child: Opacity(
+          opacity: 0,
+          child: QuizFeedbackStrip(
+            correct: true,
+            animate: false,
+            inlineAction: !stackedAction,
+            compactRow: compactRow,
+            action: const SizedBox(height: 52),
+          ),
+        ),
+      ),
+    );
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: minHeight),
+      child: Stack(
+        fit: StackFit.passthrough,
+        alignment: Alignment.center,
+        children: [twin, child],
+      ),
     );
   }
 }

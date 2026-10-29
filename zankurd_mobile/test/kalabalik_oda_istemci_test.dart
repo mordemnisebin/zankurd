@@ -531,6 +531,11 @@ void main() {
         tester.widget<Text>(find.byKey(const ValueKey('quiz-crowd-rank'))).data,
         '#2/4',
       );
+      // 2026-10-29 (soru sığma): şerit iki satırlık sabit boydur; ilk üç
+      // kapalı başlar, şeride dokununca açılır.
+      expect(find.byKey(const ValueKey('quiz-crowd-top3')), findsNothing);
+      await tester.tap(find.byKey(const ValueKey('quiz-crowd-top3-toggle')));
+      await tester.pump();
       final top = find.byKey(const ValueKey('quiz-crowd-top3'));
       expect(
         find.descendant(of: top, matching: find.text('Ayşe')),
@@ -675,9 +680,10 @@ void main() {
             .data,
         '3/4 cevapladı',
       );
-      // Bekleme kartı da aynı sayıyı söyler; genel metin kalkar.
-      expect(find.text('3/4 cevapladı'), findsNWidgets(2));
-      expect(find.text('Diğer oyuncular bekleniyor…'), findsNothing);
+      // Bekleme kartı kalktı (gövdeyi uzatıp soruyu kaydırıyordu): sayı
+      // yalnız başlıkta, bekleme sözü alt perdedeki düğmenin etiketidir.
+      expect(find.text('3/4 cevapladı'), findsOneWidget);
+      expect(find.text('Diğer oyuncular bekleniyor…'), findsOneWidget);
     });
 
     testWidgets('sayı yoklamayla güncellenir (6 sn)', (tester) async {

@@ -102,7 +102,7 @@ void _revealKeepingPhoto(
   final card = topKey?.currentContext?.findRenderObject();
   if (card is RenderBox && card.attached && card.hasSize) {
     final cardTop = viewport.getOffsetToReveal(card, 0).offset;
-    final capped = min(offset, cardTop - 8);
+    final capped = min(offset, cardTop - 4);
     // Kart üstü ile hedef BİRLİKTE sığmıyorsa hedefin en az bu kadarı
     // (başlık + birkaç satır) görünür kalmalı; yoksa kuralı bırak: çok
     // uzun soru + uzun şıklarda açıklama perdenin arkasında kalmasın
@@ -117,7 +117,7 @@ void _revealKeepingPhoto(
       // Birlikte sığmıyor: soru kartı YARIM kesik kalmasın (ilk satırı
       // görünüp gerisi gizli kötü okunur). Ya tam görünür ya tamamen kayar.
       final cardBottom = cardTop + card.size.height;
-      if (offset > cardTop - 8 && offset < cardBottom) offset = cardBottom;
+      if (offset > cardTop - 4 && offset < cardBottom) offset = cardBottom;
     }
   }
   offset = offset.clamp(position.minScrollExtent, position.maxScrollExtent);
