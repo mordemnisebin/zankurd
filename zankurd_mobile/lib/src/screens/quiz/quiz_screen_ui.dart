@@ -543,8 +543,12 @@ extension _QuizScreenUI on _QuizScreenState {
   /// etikettir. Yer ayırmak (sabit boy) da denendi; tek oyunculu soruyu her
   /// turda ~32 pt daraltıp şıkları 60'tan 52'ye indiriyordu. Düello/odada
   /// seri zaten skor kartında yazar, rozet yoktur.
+  ///
+  /// Tur 3 (2026-10-30): görselli soruda resim gövdenin en üstünden başlar ve
+  /// asılı rozetin üstüne biniyordu (iki öğe üst üste). Görselli soruda rozet
+  /// çizilmez; seri sayısı sonuçta ve sonraki sorularda okunur.
   Widget _buildComboRow() {
-    final showBadge = !widget.is1v1 && !_isCrowd;
+    final showBadge = !widget.is1v1 && !_isCrowd && !question.hasImage;
     return SizedBox(
       key: _comboKey,
       width: double.infinity,

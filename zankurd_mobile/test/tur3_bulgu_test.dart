@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/widgets/quiz_top_bar.dart';
@@ -272,5 +275,65 @@ void main() {
         ),
       );
     });
+  });
+
+  /// ## Görselli soruda resim seri rozetinin üstüne biniyordu
+  ///
+  /// Asılı "×n Üst üste" rozeti gövdenin üst payına boyanır; görselli soruda
+  /// resim gövdenin en üstünden başladığı için ikisi üst üste geliyordu.
+  /// Görselli soruda rozet çizilmez; görselsiz soruda yine görünür.
+  testWidgets('görselli soruda seri rozeti yok, görselsizde var', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(402, 874);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    SharedPreferences.setMockInitialValues({
+      'zankurd.quiz_tutorial.seen': true,
+      'zankurd.navTour.seen': true,
+    });
+    QuizQuestion q(int n, {String? image}) => QuizQuestion(
+      id: 'tur3-$n',
+      category: 'Ziman',
+      prompt: 'Pirsa hejmar $n?',
+      answers: const ['rast', 'şaş-a', 'şaş-b', 'şaş-c'],
+      correctAnswer: 'rast',
+      explanation: '',
+      imageUrl: image,
+    );
+    final repository = freshMockRepository();
+    await tester.pumpWidget(
+      testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [
+            q(1),
+            q(2),
+            q(3),
+            q(4, image: 'asset://assets/zankurd.webp'),
+            q(5),
+          ],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    Future<void> answer(String text) async {
+      await tester.tap(find.text(text));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('quiz-next-button')));
+      await tester.pumpAndSettle();
+    }
+
+    for (var i = 0; i < 3; i++) {
+      await answer('rast');
+    }
+    // 4. soru görselli: seri ×3 ama rozet çizilmez.
+    expect(find.textContaining('×3'), findsNothing);
+    await answer('rast');
+    // 5. soru görselsiz: seri ×4 rozeti görünür.
+    expect(find.textContaining('×4'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }
