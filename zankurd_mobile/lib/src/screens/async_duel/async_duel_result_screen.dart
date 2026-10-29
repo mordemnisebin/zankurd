@@ -51,7 +51,14 @@ class AsyncDuelResultView {
     this.invitedName,
     this.canCancel = false,
     this.isForfeit = false,
+    this.myMs,
+    this.opponentMs,
   });
+
+  /// Toplam sürelerim/rakibin (yalnız turun hemen ardındaki sonuçta, sunucu
+  /// `my_ms`/`opponent_ms`); eşit doğruda hızın kazandığı yerde gösterilir.
+  final int? myMs;
+  final int? opponentMs;
 
   final String duelId;
   final AsyncDuelResultKind kind;
@@ -129,6 +136,8 @@ class AsyncDuelResultView {
       outcome: result.outcome,
       opponentName: start.opponentName,
       opponentProfile: start.opponentProfile,
+      myMs: result.myMs,
+      opponentMs: result.opponentMs,
     );
   }
 
@@ -585,6 +594,25 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
                 key: const ValueKey('async-duel-result-tiebreak'),
                 textAlign: TextAlign.center,
                 style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+            // Hız belirleyiciyse iki süre de yazılır (veri varsa).
+            if (outcome != AsyncDuelOutcome.draw &&
+                view.myCorrect != null &&
+                view.myCorrect == view.opponentCorrect &&
+                view.myMs != null &&
+                view.opponentMs != null)
+              Padding(
+                padding: const EdgeInsets.only(top: SahneSpace.x1),
+                child: Text(
+                  context.t(K.asyncDuelTimes, {
+                    'my': asyncDuelSecondsLabel(context, view.myMs!),
+                    'name': opponentName,
+                    'opp': asyncDuelSecondsLabel(context, view.opponentMs!),
+                  }),
+                  key: const ValueKey('async-duel-result-times'),
+                  textAlign: TextAlign.center,
+                  style: SahneType.caption.copyWith(color: t.tx2),
+                ),
               ),
           ],
           // Kilim şeridi ve ışınlar yalnız zaferde (2026-09-29 K4).

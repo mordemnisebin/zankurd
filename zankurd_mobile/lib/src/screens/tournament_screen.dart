@@ -586,6 +586,28 @@ class _TournamentScreenState extends State<TournamentScreen> {
     return myScore > 0;
   }
 
+  static int _roundIndexOf(TournamentBracket bracket, TournamentMatch match) {
+    for (var i = 0; i < bracket.rounds.length; i++) {
+      if (bracket.rounds[i].matches.any((m) => m.id == match.id)) return i;
+    }
+    return 0;
+  }
+
+  /// Kullanıcının en son BİTMİŞ maçı (sonuç kartları için).
+  TournamentMatch? get _lastDoneMatch {
+    final bracket = _bracket;
+    if (bracket == null) return null;
+    for (var i = bracket.rounds.length - 1; i >= 0; i--) {
+      for (final m in bracket.rounds[i].matches) {
+        if (m.status == 'completed' &&
+            (m.playerOneId == _userId || m.playerTwoId == _userId)) {
+          return m;
+        }
+      }
+    }
+    return null;
+  }
+
   TournamentMatch? get _userMatch {
     final bracket = _bracket;
     if (bracket == null || bracket.status != 'active') return null;
@@ -917,12 +939,38 @@ class _TournamentScreenState extends State<TournamentScreen> {
               openedAt.add(const Duration(hours: cupFillHours)),
             ),
           });
+    // Kalan süre: yalnız açılış anı biliniyorsa. 24 saat dolduysa "başlar"
+    // denmez; sunucu en az 2 oyuncu olunca başlatır.
+    String? remaining;
+    if (openedAt != null) {
+      final left = openedAt
+          .add(const Duration(hours: cupFillHours))
+          .difference(DateTime.now());
+      remaining = left.isNegative || left == Duration.zero
+          ? context.t(K.cupFillElapsed)
+          // Sunucu 24 saat sonunda EN AZ 2 oyuncu ister: tek kişiyken
+          // "başlamasına X var" kesin başlangıç sözü olurdu.
+          : context.t(
+              fill.count >= 2 ? K.cupFillRemaining : K.cupFillRemainingMin,
+              {'left': _durationLabel(context, left)},
+            );
+    }
     // Katılma anında kupa yeniyse (tek kayıt: biz) bunu söyle.
     final fresh = _joinedJustNow && fill.count <= 1
-        ? context.t(K.tournamentNewOpened, {'n': '${fill.size - fill.count}'})
+        ? context.t(K.tournamentNeedMore, {'n': '${fill.size - fill.count}'})
         : null;
-    final head = [?fresh, line, ?due].join('\n');
+    final head = [?fresh, line, ?due, ?remaining].join('\n');
     return '$head\n\n$body';
+  }
+
+  /// "5 sa 20 dk" / "42 dk"; en az 1 dk.
+  static String _durationLabel(BuildContext context, Duration d) {
+    final minutes = d.inMinutes < 1 ? 1 : d.inMinutes;
+    final h = minutes ~/ 60;
+    final m = minutes % 60;
+    return h > 0
+        ? context.t(K.cupDurationHM, {'h': '$h', 'm': '$m'})
+        : context.t(K.cupDurationM, {'m': '$m'});
   }
 
   /// `get_tournament_bracket` doluluk alanlarıyla birlikte `createdAt` =
@@ -995,11 +1043,28 @@ class _TournamentScreenState extends State<TournamentScreen> {
           onAction: _startingNewTournament
               ? null
               : () => unawaited(_startPracticeCup()),
-          footer: SahneButton.text(
-            key: const ValueKey('tournament-waiting-refresh'),
-            label: context.t(K.retry),
-            arrow: false,
-            onPressed: _load,
+          footer: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Antrenman yereldir (botlarla, ödülsüz); sunucudaki kayıt ona
+              // dokunmaz: `_startPracticeCup` yalnız bellekteki şemayı kurar,
+              // gerçek kupadan ayrılma çağrısı yoktur.
+              Text(
+                context.t(K.tournamentPracticeNote),
+                key: const ValueKey('tournament-practice-note'),
+                textAlign: TextAlign.center,
+                style: SahneType.caption.copyWith(
+                  color: SahneTokens.of(context).tx2,
+                ),
+              ),
+              SahneButton.text(
+                key: const ValueKey('tournament-waiting-refresh'),
+                // "Tekrar dene" hata gibi okunuyordu; bu yalnız yenilemedir.
+                label: context.t(K.refreshAction),
+                arrow: false,
+                onPressed: _load,
+              ),
+            ],
           ),
         ),
       );
@@ -1058,6 +1123,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             ku: ku,
             roundNames: roundNames,
             userId: _userId,
+            lastMatch: _lastDoneMatch,
           ),
         if (bracket.status == 'won') ...[
           const SizedBox(height: SahneSpace.cardGap),
@@ -1106,6 +1172,21 @@ class _TournamentScreenState extends State<TournamentScreen> {
                 : _startNewTournamentAfterFinish,
           ),
         ],
+        // Maçı kazandım, kupa sürüyor: sonucu ve sıradaki adımı üstte söyle.
+        // (Eskiden yalnız şema ve ilerleme şeridi vardı; kazandığını oyuncu
+        // şemadan çıkarmak zorundaydı — Astra turu, 2026-10-29.) Rakip belli
+        // olunca maç bu ekranda açılır: ekran yoklamayla kendiliğinden
+        // yenilenir (`_pollOnce`).
+        if (bracket.status == 'active' &&
+            _userMatch == null &&
+            _lastDoneMatch != null &&
+            _lastDoneMatch!.winnerId == _userId)
+          _MatchWonCard(
+            match: _lastDoneMatch!,
+            userId: _userId,
+            roundName: roundNames[_roundIndexOf(bracket, _lastDoneMatch!)],
+            ku: ku,
+          ),
         // Skorumuzu bildirdik ama maç kapanmadı: rakip henüz oynamamış.
         // Gerçek oyunculu turnuvada bu normal bir durumdur ve söylenmezse
         // oyuncu bir şeyin bozulduğunu sanır (2026-07-26).
@@ -1122,7 +1203,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        context.t(K.tournamentWaitingOpponent),
+                        context.t(K.tournamentWaitingOpponentScore, {
+                          'score':
+                              '${_userMatch!.playerOneId == _userId ? _userMatch!.playerOneScore : _userMatch!.playerTwoScore}',
+                        }),
                         style: SahneType.body.copyWith(color: t.tx2),
                       ),
                       // Sunucu süre dolunca skor göndereni hükmen geçirir
@@ -1190,6 +1274,14 @@ class _TournamentScreenState extends State<TournamentScreen> {
         ),
         if (_standings.isNotEmpty) ...[
           SahneSectionHeader(title: context.t(K.standings)),
+          Padding(
+            padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+            child: Text(
+              Tr.forKu(K.cupStandingsNote, ku),
+              key: const ValueKey('tournament-standings-note'),
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+          ),
           SahneListGroup(
             children: [
               for (final s in _standings)
@@ -1211,6 +1303,15 @@ class _TournamentScreenState extends State<TournamentScreen> {
                       ? null
                       : SahneType.upperFor(s.playerName.trim()[0], isKu: ku),
                   icon: AppIcons.user,
+                  // Sıra önce kupadaki duruma, sonra puana göredir; durum
+                  // yazılmayınca 0 puanlı bekleyen, 122 puanlı elenenin
+                  // üstünde sebepsiz görünüyordu (Astra turu).
+                  subtitle: switch (s.status) {
+                    'champion' => Tr.forKu(K.champion, ku).replaceAll('!', ''),
+                    'finalist' => Tr.forKu(K.cupStandingFinalist, ku),
+                    'eliminated' => Tr.forKu(K.eliminated, ku),
+                    _ => Tr.forKu(K.cupStandingActive, ku),
+                  },
                   trailing: SahneRowValue(groupThousands(s.totalScore)),
                 ),
             ],
@@ -1240,7 +1341,7 @@ class _LobbyView extends StatelessWidget {
     // sonra başlar"); "dolmazsa eldeki oyuncularla" sunucu kuralına uymuyordu
     // (24 saat sonra EN AZ 2 oyuncu gerekir) — doğru ayrıntı "Nasıl oynanır?"
     // içinde. Rakip deseni: mağaza kartlarında tek satırlık alt metin.
-    final scheduleText = context.t(K.cupStartsShort);
+    final scheduleText = context.t(K.cupStartsShortMin);
 
     // Kupa kahramanı: durum, ödül ve ana eylem TEK yüzeyde (2026-08-04).
     //
@@ -1282,7 +1383,10 @@ class _LobbyView extends StatelessWidget {
 
     final format = _CupFormatPanel(ku: ku);
     final ladder = _CupLadder(ku: ku);
-    final rules = _CupRulesPanel(ku: ku);
+    final rules = _CupRulesPanel(
+      key: const ValueKey('tournament-rules-panel'),
+      ku: ku,
+    );
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -1376,7 +1480,7 @@ class _CupRewardLine extends StatelessWidget {
 /// Kurallar sunucuyla birebir: aynı sorular, 100 + en çok 50 hız puanı,
 /// 24 saatte oynanmayan maç hükmen.
 class _CupRulesPanel extends StatefulWidget {
-  const _CupRulesPanel({required this.ku});
+  const _CupRulesPanel({super.key, required this.ku});
 
   final bool ku;
 
@@ -1613,15 +1717,20 @@ class _CupLadder extends StatelessWidget {
             key: const ValueKey('tournament-bracket-preview'),
             semanticLabel: spoken,
             roundLabels: labels,
+            // Katılmadan kimse şemaya konmaz: 2026-10-29 Astra turu, "Sen"
+            // yazan önizleme oyuncuya yeri çoktan ayrılmış gibi okunuyordu.
             entrants: [
-              SahneBracketEntrant(
-                label: Tr.forKu(K.you, ku),
-                me: true,
-                avatar: Icon(AppIcons.user, size: 20, color: t.raceTx),
-              ),
-              for (var i = 1; i < TournamentConfig.totalPlayers; i++)
+              for (var i = 0; i < TournamentConfig.totalPlayers; i++)
                 const SahneBracketEntrant(),
             ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: SahneSpace.x2),
+          child: Text(
+            Tr.forKu(K.cupLadderPreviewNote, ku),
+            key: const ValueKey('tournament-ladder-preview-note'),
+            style: SahneType.caption.copyWith(color: t.tx2),
           ),
         ),
       ],
@@ -1791,12 +1900,16 @@ class _StatusCard extends StatelessWidget {
     required this.ku,
     required this.roundNames,
     required this.userId,
+    this.lastMatch,
   });
 
   final TournamentBracket bracket;
   final bool ku;
   final List<String> roundNames;
   final String userId;
+
+  /// Kullanıcının son bitmiş maçı: elenme kartı skor ve rakibi yazar.
+  final TournamentMatch? lastMatch;
 
   @override
   Widget build(BuildContext context) {
@@ -1843,6 +1956,12 @@ class _StatusCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: SahneType.caption.copyWith(color: t.tx2),
                   ),
+                if (bracket.status == 'eliminated' && lastMatch != null)
+                  Text(
+                    _matchVsLine(lastMatch!, userId, ku),
+                    key: const ValueKey('tournament-eliminated-vs'),
+                    style: SahneType.caption.copyWith(color: t.tx2),
+                  ),
                 if (bracket.totalScore > 0)
                   Text(
                     '${Tr.forKu(K.statTotalScore, ku)}: ${bracket.totalScore}',
@@ -1854,12 +1973,77 @@ class _StatusCard extends StatelessWidget {
           ),
           const SizedBox(width: SahneSpace.x2),
           SahneBadge(
-            label:
-                '${(shownRound + 1).clamp(1, bracket.totalRounds)}'
-                '/${bracket.totalRounds}',
+            // "1/2" tek başına belirsizdi: ne olduğu yazılır.
+            label: Tr.forKu(K.cupRoundBadge, ku, {
+              'n': '${(shownRound + 1).clamp(1, bracket.totalRounds)}',
+              'total': '${bracket.totalRounds}',
+            }),
             tone: SahneBadgeTone.gold,
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// "Rakip karşısında benim – onun" satırı.
+String _matchVsLine(TournamentMatch m, String userId, bool ku) {
+  final mine = m.playerOneId == userId;
+  return Tr.forKu(K.cupMatchVs, ku, {
+    'opponent': mine ? m.playerTwoName : m.playerOneName,
+    'my': '${mine ? m.playerOneScore : m.playerTwoScore}',
+    'their': '${mine ? m.playerTwoScore : m.playerOneScore}',
+  });
+}
+
+/// Kazanılan maçın sonuç kartı: ne oldu ve sıradaki adım ne.
+class _MatchWonCard extends StatelessWidget {
+  const _MatchWonCard({
+    required this.match,
+    required this.userId,
+    required this.roundName,
+    required this.ku,
+  });
+
+  final TournamentMatch match;
+  final String userId;
+  final String roundName;
+  final bool ku;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: SahneSpace.cardGap),
+      child: SahneSurfaceCard(
+        key: const ValueKey('tournament-match-won'),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(AppIcons.trophy, size: 20, color: t.goldTx),
+            const SizedBox(width: SahneSpace.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    Tr.forKu(K.cupWonRound, ku, {'round': roundName}),
+                    style: SahneType.headline.copyWith(color: t.tx),
+                  ),
+                  Text(
+                    _matchVsLine(match, userId, ku),
+                    style: SahneType.body.copyWith(color: t.tx2),
+                  ),
+                  const SizedBox(height: SahneSpace.x1),
+                  Text(
+                    Tr.forKu(K.cupWonNext, ku),
+                    style: SahneType.caption.copyWith(color: t.tx2),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -57,9 +57,13 @@ QuizResultScreen _duel() {
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  for (final size in [const Size(402, 874), const Size(375, 667)]) {
+  for (final (size, scale) in [
+    (const Size(402, 874), 1.0),
+    (const Size(375, 667), 1.0),
+    (const Size(375, 667), 1.3),
+  ]) {
     testWidgets('düello sonucu ilk görünümde eksiksiz (${size.width}x'
-        '${size.height})', (tester) async {
+        '${size.height}, x$scale)', (tester) async {
       tester.view.devicePixelRatio = 1;
       tester.view.physicalSize = size;
       addTearDown(tester.view.reset);
@@ -73,11 +77,40 @@ void main() {
               create: (_) => PremiumService.fallback(),
             ),
           ],
-          child: MaterialApp(theme: AppTheme.light(), home: _duel()),
+          child: MaterialApp(
+            theme: AppTheme.light(),
+            builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: TextScaler.linear(scale)),
+              child: child!,
+            ),
+            home: _duel(),
+          ),
         ),
       );
       await tester.pump(const Duration(seconds: 2));
       expect(tester.takeException(), isNull);
+      // 375x667'de %130 yazıda alt perde tek başına ekranın ~%34'ü: ilk
+      // görünüme sonuç + skor + sayımlar sığar, ödül kartı bir kaydırma
+      // ötededir (kaçınılmaz; bkz. rapor). Orada bekçi kaydırınca sayımların
+      // ve ödül kartının perdenin üstünde eksiksiz görünmesine bakar.
+      final preDockTop = tester.getRect(find.byType(SahneResultDock)).top;
+      // Dört sayım çipi de ekranda ve perdenin üstünde (hiçbiri düşmez).
+      for (final label in ['Doğru', 'Yanlış', 'Boş', 'En uzun seri']) {
+        final chip = find.text(label);
+        expect(chip, findsOneWidget, reason: '$label çipi yok');
+        expect(
+          tester.getRect(chip).bottom,
+          lessThanOrEqualTo(preDockTop),
+          reason: '$label perdenin altında',
+        );
+      }
+      final scrolled = scale > 1.0 && size.height < 760;
+      if (scrolled) {
+        await tester.ensureVisible(find.byType(SahneResultRewards));
+        await tester.pump(const Duration(milliseconds: 600));
+      }
 
       // Alt perde = "Cevapları gör" düğmesi + eylem satırı.
       final seeAnswers = find.byKey(
@@ -94,15 +127,20 @@ void main() {
         reason: 'ödül kartı alt perdenin altında kalıyor: $rewards / $dockTop',
       );
       // Sonuç başlığı, büyük skor ve ödül çipi ekranda.
-      for (final key in const [
-        ValueKey('result-score-count'),
-        ValueKey('result-duel-faceoff'),
-      ]) {
+      for (final key
+          in scrolled
+              ? const <ValueKey<String>>[]
+              : const [
+                  ValueKey('result-score-count'),
+                  ValueKey('result-duel-faceoff'),
+                ]) {
         final r = tester.getRect(find.byKey(key));
         expect(r.top, greaterThanOrEqualTo(0), reason: '$key');
         expect(r.bottom, lessThanOrEqualTo(dockTop), reason: '$key');
       }
-      expect(find.text(Tr.forKu(K.youLost, false)), findsOneWidget);
+      if (!scrolled) {
+        expect(find.text(Tr.forKu(K.youLost, false)), findsOneWidget);
+      }
       expect(find.text('+20'), findsOneWidget, reason: 'jeton çipi');
       expect(
         tester.getRect(find.text('+20')).bottom,

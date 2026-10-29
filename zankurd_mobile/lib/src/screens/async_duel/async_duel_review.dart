@@ -53,6 +53,20 @@ class _AsyncDuelReviewSectionState extends State<AsyncDuelReviewSection> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SahneSectionHeader(title: context.t(K.asyncDuelReviewTitle)),
+        // Doğru/yanlış/boş dökümü: skor yalnız doğruyu söylüyordu.
+        _AnswerSummaryLine(
+          key: const ValueKey('async-duel-review-summary-me'),
+          name: context.t(K.you),
+          answers: [for (final q in review.questions) q.mine],
+        ),
+        if (!review.opponentBlocked &&
+            review.questions.any((q) => q.opponent != null))
+          _AnswerSummaryLine(
+            key: const ValueKey('async-duel-review-summary-opp'),
+            name: opponentLabel,
+            answers: [for (final q in review.questions) q.opponent],
+          ),
+        const SizedBox(height: SahneSpace.x2),
         SahneButton.secondary(
           key: const ValueKey('async-duel-review-toggle'),
           label: context.t(_open ? K.hideAnswers : K.seeAnswers),
@@ -84,6 +98,46 @@ class _AsyncDuelReviewSectionState extends State<AsyncDuelReviewSection> {
           ),
         ],
       ],
+    );
+  }
+}
+
+/// "Sen: 5 doğru · 1 yanlış · 1 boş" — cevapsız (null) ve süresi dolan boştur.
+class _AnswerSummaryLine extends StatelessWidget {
+  const _AnswerSummaryLine({
+    required this.name,
+    required this.answers,
+    super.key,
+  });
+
+  final String name;
+  final List<AsyncDuelReviewAnswer?> answers;
+
+  @override
+  Widget build(BuildContext context) {
+    var correct = 0;
+    var wrong = 0;
+    var blank = 0;
+    for (final a in answers) {
+      if (a == null || a.timedOut) {
+        blank++;
+      } else if (a.correct) {
+        correct++;
+      } else {
+        wrong++;
+      }
+    }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: SahneSpace.x1),
+      child: Text(
+        context.t(K.asyncDuelAnswerSummary, {
+          'name': name,
+          'c': '$correct',
+          'w': '$wrong',
+          'b': '$blank',
+        }),
+        style: SahneType.caption.copyWith(color: SahneTokens.of(context).tx2),
+      ),
     );
   }
 }
