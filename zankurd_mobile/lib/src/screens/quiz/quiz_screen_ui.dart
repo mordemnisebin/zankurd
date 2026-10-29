@@ -36,6 +36,12 @@ extension _QuizScreenUI on _QuizScreenState {
           max(0.0, constraints.maxWidth - SahneSpace.page * 2),
           800.0,
         );
+        final fit = _chooseQuizFit(
+          context,
+          contentWidth: contentWidth,
+          bodyHeight: constraints.maxHeight,
+          layoutSize: layoutSize,
+        );
         // Kayan alan 800'lük içerik adasıdır (geniş ekranda ortalanır);
         // şıklar ve alt perdedeki eylem aynı sütunda durur.
         return Align(
@@ -48,61 +54,133 @@ extension _QuizScreenUI on _QuizScreenState {
               resetKey: index,
               // R3 (2026-10-28 tur 2): soru + şıklar grubu üst çubuk ile
               // alt perde arasındaki boşlukta dengeli (üst-orta) durur.
-              balance: quizQuestionBalance,
+              balance:
+                  (widget.is1v1 || _isCrowd || widget.versusBannerText != null)
+                  ? 0
+                  : quizQuestionBalance,
               // 2026-10-29 son kurul tur 2 (B): cevaptan sonra soru kartı ve
               // şıklar yerinde kalır; geri bildirim alt şeritte, açıklama
               // şıkların altında belirir (bkz. `SahneStageScroll.holdBalance`).
               holdBalance: answered,
-              padding: const EdgeInsets.only(
-                top: quizStageTopGap,
-                bottom: SahneSpace.x6,
-              ),
-              child: Column(
-                key: const ValueKey('quiz-answer-content'),
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (widget.versusBannerText != null) ...[
-                    _VersusBanner(text: widget.versusBannerText!),
-                    const SizedBox(height: SahneSpace.x3),
+              padding: EdgeInsets.only(top: fit.outerPad, bottom: fit.outerPad),
+              child: QuizFitScope(
+                fit: fit,
+                child: Column(
+                  key: const ValueKey('quiz-answer-content'),
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (widget.versusBannerText != null) ...[
+                      _VersusBanner(text: widget.versusBannerText!),
+                      const SizedBox(height: SahneSpace.x3),
+                    ],
+                    if (widget.is1v1) ...[
+                      _buildDuelHeader(compact: layoutSize.height < 700),
+                      SizedBox(
+                        height: layoutSize.height < 700
+                            ? SahneSpace.x1
+                            : SahneSpace.x4,
+                      ),
+                    ] else if (_isCrowd) ...[
+                      _buildCrowdHeader(),
+                      SizedBox(
+                        height: layoutSize.height < 700
+                            ? SahneSpace.x1
+                            : SahneSpace.x4,
+                      ),
+                    ],
+                    _buildQuestionSwitcher(
+                      context,
+                      layoutSize: layoutSize,
+                      bodyHeight: constraints.maxHeight,
+                      // K6 (2026-10-28): soru ÜSTTEN başlar (şıkları alta oturtan
+                      // `anchorHeight` kalktı): kısa soruda ekranın üstünde
+                      // dev boş alan kalıyor, soru ekranın dibine itiliyordu.
+                      // Joker/geri bildirim alt perdede sabittir; boşluk artık
+                      // şıkların ALTINDA kalır.
+                      showExplanation: showExpl,
+                      // Coach-mark anahtarı yalnız ilk soruda: panel
+                      // AnimatedSwitcher içinde, geçişte eski ve yeni panel
+                      // birlikte yaşar (duplicate-GlobalKey).
+                      answerAreaKey: index == 0 ? _answerAreaKey : null,
+                      correctAnswerKey: _correctAnswerKey,
+                      questionVisualReady: !_questionVisualReady
+                          ? _handleQuestionVisualReady
+                          : null,
+                    ),
+                    ..._buildRoundNotices(),
+                    // 1v1'de "Canlı puan" kartı kaldırıldı (2026-10-27, iki
+                    // cihazlı E2E): üstteki VS kartı iki puanı zaten taşıyor;
+                    // alttaki kart onu tekrarlıyor ve oyuncu listesi eşleşme
+                    // anında tek kişiyle kalıyordu ("1 Bergen 0").
                   ],
-                  if (widget.is1v1) ...[
-                    _buildDuelHeader(),
-                    const SizedBox(height: SahneSpace.x4),
-                  ] else if (_isCrowd) ...[
-                    _buildCrowdHeader(),
-                    const SizedBox(height: SahneSpace.x4),
-                  ],
-                  _buildQuestionSwitcher(
-                    context,
-                    layoutSize: layoutSize,
-                    bodyHeight: constraints.maxHeight,
-                    // K6 (2026-10-28): soru ÜSTTEN başlar (şıkları alta oturtan
-                    // `anchorHeight` kalktı): kısa soruda ekranın üstünde
-                    // dev boş alan kalıyor, soru ekranın dibine itiliyordu.
-                    // Joker/geri bildirim alt perdede sabittir; boşluk artık
-                    // şıkların ALTINDA kalır.
-                    showExplanation: showExpl,
-                    // Coach-mark anahtarı yalnız ilk soruda: panel
-                    // AnimatedSwitcher içinde, geçişte eski ve yeni panel
-                    // birlikte yaşar (duplicate-GlobalKey).
-                    answerAreaKey: index == 0 ? _answerAreaKey : null,
-                    correctAnswerKey: _correctAnswerKey,
-                    questionVisualReady: !_questionVisualReady
-                        ? _handleQuestionVisualReady
-                        : null,
-                  ),
-                  ..._buildRoundNotices(),
-                  // 1v1'de "Canlı puan" kartı kaldırıldı (2026-10-27, iki
-                  // cihazlı E2E): üstteki VS kartı iki puanı zaten taşıyor;
-                  // alttaki kart onu tekrarlıyor ve oyuncu listesi eşleşme
-                  // anında tek kişiyle kalıyordu ("1 Bergen 0").
-                ],
+                ),
               ),
             ),
           ),
         );
       },
+    );
+  }
+
+  /// Soru + şıkların bu ekranda hangi [QuizFit] kademesiyle çizileceği.
+  /// Çizimden ÖNCE, aynı karede seçilir: metin gerçek genişlikte ölçülür.
+  /// Bütçe = gövde yüksekliği − üst/alt pay − soru bloğunun ÜSTÜNDEKİ
+  /// bantlar (turnuva bandı, düello / oda skor kartı). Bantlar kendi
+  /// boylarında kalır (küçülmez); yalnız soru ve şıklar kademelenir.
+  QuizFit _chooseQuizFit(
+    BuildContext context, {
+    required double contentWidth,
+    required double bodyHeight,
+    required Size layoutSize,
+  }) {
+    final type = question.type;
+    if (type != QuestionType.multipleChoice &&
+        type != QuestionType.trueFalse &&
+        type != QuestionType.visual) {
+      return QuizFit.nominal;
+    }
+    final base = MediaQuery.textScalerOf(context);
+    var above = 0.0;
+    if (widget.versusBannerText != null) {
+      final p = TextPainter(
+        text: TextSpan(
+          text: widget.versusBannerText,
+          style: SahneType.captionStrong.copyWith(fontFamily: SahneType.text),
+        ),
+        textDirection: TextDirection.ltr,
+        textScaler: base,
+        maxLines: 2,
+      )..layout(maxWidth: contentWidth - 24);
+      above += max(p.height, base.scale(20)) + SahneSpace.x3;
+      p.dispose();
+    }
+    final shortScreen = layoutSize.height < 700;
+    final headerGap = shortScreen ? SahneSpace.x1 : SahneSpace.x4;
+    if (widget.is1v1) {
+      above += _QuizHeaderHeights.duel(base, tug: !shortScreen) + headerGap;
+    } else if (_isCrowd) {
+      above += _QuizHeaderHeights.crowd(base, contentWidth) + headerGap;
+    }
+    var inPrompt = 0.0;
+    if (_translationRevealAllowed && _isKu) {
+      inPrompt += SahneSpace.x2 + _QuizHeaderHeights.translation(base);
+    }
+    if (question.hasImage) above += 144 + SahneSpace.x3;
+    final listen = _canListenCurrentQuestion && _questionAudioService != null;
+    final answers = question.displayAnswers;
+    return QuizFit.choose(
+      context: context,
+      prompt: question.promptText,
+      answers: answers,
+      width: contentWidth,
+      available: bodyHeight - above,
+      listenButton: listen,
+      titleLineBudget: (widget.is1v1 || _isCrowd)
+          ? QuizQuestionPrompt.maxTitleLines - 1
+          : QuizQuestionPrompt.maxTitleLines,
+      short: layoutSize.height < 700,
+      extraInPrompt: inPrompt,
     );
   }
 
@@ -199,17 +277,18 @@ extension _QuizScreenUI on _QuizScreenState {
   /// sonraki soruya geri sayım. Hepsi gövdenin akışındadır; kaydırma
   /// emniyet supabı olarak kalır.
   List<Widget> _buildRoundNotices() => [
-    if (selectedAnswer == 'TIMEOUT' && !_suspense)
+    // Şıklı sorularda ayrı bildirim YOK: alt perdedeki şerit "Süre doldu" der,
+    // doğru şık ✓ ile yeşil, cümle ekran okuyucuya şeritten gider. Gövdeye
+    // eklenen kutu şıkların altını uzatıp soruyu yerinden oynatıyordu.
+    if (selectedAnswer == 'TIMEOUT' && !_suspense && !_choiceTypeVisible)
       QuizTimeoutNotice(isKu: _isKu, correctAnswer: question.correctAnswer),
-    if (_isMultiplayer && answered && _mpPhase == _MultiplayerPhase.waiting)
-      _MultiplayerWaitingOverlay(
-        isKu: _isKu,
-        crowd: _isCrowd,
-        progress: _currentCrowdProgress,
-      ),
-    if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
-      _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
   ];
+
+  /// Şıklı soru (şıklar ekranda ✓ ile işaretlenir).
+  bool get _choiceTypeVisible =>
+      question.type == QuestionType.multipleChoice ||
+      question.type == QuestionType.trueFalse ||
+      question.type == QuestionType.visual;
 
   /// Üst çubuğun TEK mod çipi (K6+): bütün modlar aynı sahne, yalnız çip
   /// değişir.
@@ -450,9 +529,9 @@ extension _QuizScreenUI on _QuizScreenState {
   }
 
   /// Düello kartı: iki oyuncu, skorlar, halat çekme çubuğu.
-  Widget _buildDuelHeader() {
+  Widget _buildDuelHeader({bool compact = false}) {
     final myName = widget.room.id != null ? _myName : Tr.forKu(K.you, _isKu);
-    final player = livePlayers.firstWhere(
+    var player = livePlayers.firstWhere(
       _isMe,
       orElse: () => Player(
         id: _myId,
@@ -462,6 +541,11 @@ extension _QuizScreenUI on _QuizScreenState {
         streak: streak,
       ),
     );
+    // Yanlış cevaptan sonra seri rozeti hemen söner (sunucu skoru gelene
+    // kadar eski seri "x2" kalıyordu; GPT-6 Astra simülatör bulgusu #7).
+    if (answered && _answerWasWrong && player.streak > 0) {
+      player = player.copyWith(streak: 0);
+    }
     final opponent = livePlayers.firstWhere(
       (player) => !_isMe(player),
       orElse: () =>
@@ -471,6 +555,7 @@ extension _QuizScreenUI on _QuizScreenState {
       player: player,
       opponent: opponent,
       progress: '${index + 1}/${widget.questions.length}',
+      showTug: !compact,
     );
   }
 
@@ -495,7 +580,7 @@ extension _QuizScreenUI on _QuizScreenState {
       player: player,
       rank: mine?.rank,
       total: standings.length,
-      top: standings.take(3).toList(growable: false),
+      top: standings.take(4).toList(growable: false),
       progress: _currentCrowdProgress,
     );
   }
@@ -571,7 +656,6 @@ extension _QuizScreenUI on _QuizScreenState {
   /// TAMAMIDIR: balon "cevaptan sonra buraya dokun" der; cevaptan önce
   /// orada jokerler durur, cevaptan sonra "Sonraki" aynı yere gelir.
   Widget _buildDock(BuildContext context) {
-    final t = SahneTokens.of(context);
     final bool showRatingBar =
         widget.practice &&
         answered &&
@@ -582,11 +666,11 @@ extension _QuizScreenUI on _QuizScreenState {
     // Turnuva maçında (versus bandı) joker yok: iki oyuncu AYNI dört soruyu
     // oynar; "Soru değiştir" bunu bozar, jetonla 50/50 da maçı parayla
     // kazandırır (4 simülatörlü tur, 2026-10-27).
-    final showJokers =
+    final jokerCapable =
         !_isLearningExperience &&
         !_usesServerHiddenAnswers &&
-        widget.versusBannerText == null &&
-        !answered;
+        widget.versusBannerText == null;
+    final showJokers = jokerCapable && !answered;
 
     // Geniş ekranda eylemler de 800'lük içerik adasında kalır: tam genişlikte
     // bir "Sonraki" şıklardan kopuk ayrı bir şerit gibi okunurdu.
@@ -596,49 +680,69 @@ extension _QuizScreenUI on _QuizScreenState {
         constraints: const BoxConstraints(maxWidth: 800),
         child: KeyedSubtree(
           key: _nextButtonKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Çift Cevap ilk denemesi yanlışsa: açıklama olmadan ikinci cevap
-              // beklenir; oyuncuya net ipucu verilir.
-              if (!answered && _firstAttemptAnswer.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                  child: Semantics(
-                    liveRegion: true,
-                    label: context.t(K.doubleAnswerHint),
-                    excludeSemantics: true,
-                    child: Text(
-                      context.t(K.doubleAnswerHint),
-                      textAlign: TextAlign.center,
-                      style: SahneType.captionStrong.copyWith(color: t.goldTx),
-                    ),
-                  ),
-                ),
-              if (showJokers)
-                _buildWildcardRow()
-              else if (answered && !_suspense)
-                // K6+ (2026-10-28): cevaptan sonra alttan geri bildirim şeridi
-                // (doğru yeşil, yanlış kırmızı): başlık + ≤1 satır + eylem
-                // AYNI şeritte. Alıştırmada doğru cevaptan sonra eylem
-                // "Sonraki" değil zorluk puanıdır.
-                QuizFeedbackStrip(
-                  correct: !_answerWasWrong,
-                  detail: _feedbackDetail(context),
-                  action: showRatingBar
-                      ? _buildRatingBar(context)
-                      : _buildNextButton(
-                          context,
-                          onStripFill: QuizFeedbackStrip.feedbackFill(
-                            SahneTokens.of(context),
-                            correct: !_answerWasWrong,
+          child: QuizStableDockHeight(
+            height: quizDockHeight(
+              MediaQuery.textScalerOf(context),
+              practice: widget.practice,
+              jokerCapable: jokerCapable,
+              screenWidth: MediaQuery.sizeOf(context).width,
+              shortScreen: MediaQuery.sizeOf(context).height < 700,
+              compactRow: _isMultiplayer,
+              actionLabels: [
+                context.t(K.continueAction),
+                context.t(K.finishAction),
+                if (_isMultiplayer) ...[
+                  context.t(K.waitingOpponent),
+                  context.t(K.crowdWaitingOthers),
+                  context.t(K.sureDoldu),
+                  context.t(K.sonrakiSoruPS, {'p0': '88'}),
+                ],
+              ],
+              ratingLabels: [
+                context.t(K.difficultyHard),
+                context.t(K.difficultyMedium),
+                context.t(K.difficultyEasy),
+              ],
+              jokerLabels: [
+                for (final type in WildcardType.values) type.label(_isKu),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (showJokers)
+                  _buildWildcardRow()
+                else if (answered && !_suspense)
+                  // K6+ (2026-10-28): cevaptan sonra alttan geri bildirim şeridi
+                  // (doğru yeşil, yanlış kırmızı): başlık + ≤1 satır + eylem
+                  // AYNI şeritte. Alıştırmada doğru cevaptan sonra eylem
+                  // "Sonraki" değil zorluk puanıdır.
+                  QuizFeedbackStrip(
+                    correct: !_answerWasWrong,
+                    detail: _feedbackDetail(context),
+                    inlineAction: !showRatingBar,
+                    compactRow: _isMultiplayer,
+                    timedOut: selectedAnswer == 'TIMEOUT',
+                    semanticDetail: selectedAnswer == 'TIMEOUT'
+                        ? Tr.forKu(K.sureDolduDogruCevap, _isKu, {
+                            'p0': question.correctAnswer,
+                          })
+                        : null,
+                    action: showRatingBar
+                        ? _buildRatingBar(context)
+                        : _buildNextButton(
+                            context,
+                            onStripFill: QuizFeedbackStrip.feedbackFill(
+                              SahneTokens.of(context),
+                              correct: !_answerWasWrong,
+                            ),
                           ),
-                        ),
-                )
-              else
-                _buildNextButton(context),
-            ],
+                  )
+                else
+                  _buildNextButton(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -648,6 +752,10 @@ extension _QuizScreenUI on _QuizScreenState {
   /// Geri bildirim şeridinin tek satırlık açıklaması: öğrenmede sorunun
   /// açıklaması; yoksa yanlışta doğru cevap; doğruda boş.
   String? _feedbackDetail(BuildContext context) {
+    // 2026-10-29 (soru sığma): şerit artık HER durumda aynı boydadır; doğru
+    // cevap şıkta zaten ✓ ile yeşil ve ekran okuyucu "Doğru" der. Ek satır,
+    // cevaptan sonra alt perdeyi uzatıp soruyu daraltıyordu.
+    if (QuizFeedbackStrip.fixedHeight) return null;
     if (_answerWasWrong) {
       // 2026-10-28 tur 3 T4: "Doğru cevap: X" YALNIZ BİR yerde durur. Gövdede
       // içgörü kartı açıksa (cevap + açıklama orada) şerit yalnız "Yanlış" +
@@ -686,9 +794,21 @@ extension _QuizScreenUI on _QuizScreenState {
         ? false
         : (answered && !completing && !_suspense);
     final waiting = _isMultiplayer || _suspense;
+    // 2026-10-29 (soru sığma): "Cevabın kaydedildi / diğer oyuncu bekleniyor"
+    // ve "Sonraki soru n" kartları gövdede şıkların ALTINA ekleniyordu;
+    // cevaptan sonra ~100 pt uzayıp soruyu kaydırtıyordu. Aynı bilgi artık
+    // alt perdedeki düğmenin etiketidir (düğme zaten kilitli bekleme düğmesi).
     final nextLabel =
-        _isMultiplayer && answered && _mpPhase != _MultiplayerPhase.reveal
-        ? context.t(K.waitingOpponent)
+        _isMultiplayer && answered && _mpPhase == _MultiplayerPhase.reveal
+        ? context.t(K.sonrakiSoruPS, {'p0': '$_revealCountdown'})
+        : _isMultiplayer && answered && selectedAnswer == 'TIMEOUT'
+        // Süre dolunca bekleme etiketi "Süre doldu" der (şerit yalnız ✗ +
+        // düğme taşır; başlık yazısına yer yok).
+        ? context.t(K.sureDoldu)
+        : _isMultiplayer && answered
+        ? context.t(_isCrowd ? K.crowdWaitingOthers : K.waitingOpponent)
+        : !answered
+        ? context.t(K.pickAnAnswer)
         : isLastQuestion
         ? context.t(K.finishAction)
         // Yanlıştan sonra açıklama kartı açıkken eylem "Devam": oyuncu
@@ -777,7 +897,8 @@ extension _QuizScreenUI on _QuizScreenState {
               _wildcardUnavailable(type) ||
               (!_wildcard.isUsed(type) && !_canPayWildcard(type)),
         ) &&
-        jokers.any((type) => !_wildcardUnavailable(type));
+        jokers.any((type) => !_wildcardUnavailable(type)) &&
+        _firstAttemptAnswer.isEmpty;
     if (noneAffordable) {
       return KeyedSubtree(
         key: const ValueKey('quiz-wildcard-row'),
@@ -804,6 +925,11 @@ extension _QuizScreenUI on _QuizScreenState {
           // olur).
           // Vay 2A: bedava hak açıkken TEK satır ipucu (jokerlerde "Bedava"
           // tekrarı yok, bkz. [SahneJokerButton]).
+          // Çift cevap ipucu bakiye satırının AYNI yuvasındadır (alt perde
+          // uzamaz): ilk deneme yanlışsa "ikinci cevabını seç" der.
+          doubleAnswerHint: _firstAttemptAnswer.isNotEmpty
+              ? context.t(K.doubleAnswerHint)
+              : null,
           showHint: _freeWildcardAvailable || _jokerStock > 0,
           hint: _freeWildcardAvailable
               ? context.t(K.freeWildcardToday)

@@ -191,13 +191,19 @@ void main() {
       await tester.pump(const Duration(seconds: 15));
       await tester.pump();
 
-      final notice = find.byKey(const ValueKey('quiz-timeout-notice'));
-      expect(notice, findsOneWidget);
-      // Dalga 5: timeout bandı artık süre + doğru cevabı birlikte bildirir.
+      // 2026-10-29 (soru sığma): şıklı soruda timeout bildirimi gövdeye kutu
+      // eklemez (şıkların altını uzatıp soruyu oynatıyordu); alt perdedeki
+      // şerit "Süre doldu" der ve süre + doğru cevap cümlesini ekran
+      // okuyucuya bildirir, doğru şık ✓ ile işaretlidir.
+      expect(find.byKey(const ValueKey('quiz-timeout-notice')), findsNothing);
       final expected =
           'Süre doldu. Doğru cevap: ${repo.questions.first.correctAnswer}';
-      expect(find.text(expected), findsOneWidget);
-      final semantics = tester.widget<Semantics>(notice);
+      final strip = find.byKey(const ValueKey('quiz-feedback-wrong'));
+      expect(strip, findsOneWidget);
+      expect(find.text('Süre doldu'), findsOneWidget);
+      final semantics = tester.widget<Semantics>(
+        find.ancestor(of: strip, matching: find.byType(Semantics)).first,
+      );
       expect(semantics.properties.liveRegion, isTrue);
       expect(semantics.properties.label, expected);
     });

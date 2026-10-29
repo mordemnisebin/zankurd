@@ -94,9 +94,10 @@ void main() {
         textScaler: paragraph.textScaler,
         maxLines: 1,
       )..layout();
-      // Kategori adı uzun: künye kısaltılır (kategori yer) ama sayaç
-      // eksiksiz çizilir.
-      expect(paragraph.didExceedMaxLines, isTrue);
+      // 2026-10-29 (soru sığma, Astra 2. inceleme): künye ARTIK kısaltılmaz;
+      // uzun kategori adı gerçek genişlikte ölçülüp punto/satır seçilir, metin
+      // tam çizilir (sayaç da, kategori de).
+      expect(paragraph.didExceedMaxLines, isFalse);
       expect(
         paragraph.size.width,
         greaterThanOrEqualTo(painter.width),

@@ -834,6 +834,16 @@ class Tr {
     K.questionEmpty: {'ku': 'Pirs vala nabe', 'tr': 'Soru boş olamaz'},
     K.answersLabel: {'ku': 'Bersiv', 'tr': 'Cevaplar'},
     K.answerLabel: {'ku': 'Bersiv', 'tr': 'Cevap'},
+    K.crowdWaitingOthers: {
+      'ku': 'Li benda lîstikvanên din…',
+      'tr': 'Diğer oyuncular bekleniyor…',
+    },
+    K.pickAnAnswer: {
+      // 2026-10-29 (soru sığma, GPT-6 Astra #6): cevaptan önce pasif düğme ne
+      // beklendiğini söyler. KU taslak: Gemini/Grok jürisi onaylamadı.
+      'ku': 'Bersivekê hilbijêre',
+      'tr': 'Bir cevap seç',
+    },
     K.pickCorrectAnswer: {
       'ku': 'Bersiva rast hilbijêre',
       'tr': 'Doğru cevabı seç',
@@ -1380,10 +1390,6 @@ class Tr {
     K.cevabinKaydedildi: {
       'ku': 'Bersiva te hat tomarkirin',
       'tr': 'Cevabın kaydedildi',
-    },
-    K.digerOyuncuBekleniyor: {
-      'ku': 'Li benda lîstikvanê din…',
-      'tr': 'Diğer oyuncu bekleniyor…',
     },
     K.sonrakiSoruPS: {
       // 2026-09-25 düzeltmesi: `{p0}s` kısaltması Türkçe saniye
@@ -2149,10 +2155,6 @@ class Tr {
     K.crowdAnsweredCount: {
       'ku': '{answered}/{active} bersiv da',
       'tr': '{answered}/{active} cevapladı',
-    },
-    K.crowdWaitingOthers: {
-      'ku': 'Li benda lîstikvanên din…',
-      'tr': 'Diğer oyuncular bekleniyor…',
     },
     K.crowdDroppedBody: {
       'ku':
@@ -4548,6 +4550,8 @@ class K {
   static const quickDuelHeadline = 'play.quickDuel.headline';
   static const quickDuelDuration = 'play.quickDuel.duration';
   static const pickOpponent = 'play.pickOpponent';
+  static const crowdWaitingOthers = 'quiz.crowd.waitingOthers';
+  static const pickAnAnswer = 'quiz.pickAnAnswer';
   static const opponentRandom = 'play.opponent.random';
   static const opponentFriend = 'play.opponent.friend';
   static const opponentFriendLiveSub = 'play.opponent.friend.liveSub';
@@ -4934,7 +4938,6 @@ class K {
   static const sureDolduDogruCevap = 'screen.sureDolduDogruCevap';
   static const sureDoldu = 'screen.sureDoldu';
   static const cevabinKaydedildi = 'screen.cevabinKaydedildi';
-  static const digerOyuncuBekleniyor = 'screen.digerOyuncuBekleniyor';
   static const sonrakiSoruPS = 'screen.sonrakiSoruPS';
   static const rakipBekleniyor = 'screen.rakipBekleniyor';
   static const cumleyiOlusturmakIcinKelimeleri =
@@ -5218,7 +5221,6 @@ class K {
   static const crowdRankLabel = 'quiz.crowd.rankLabel';
   static const crowdTopThree = 'quiz.crowd.topThree';
   static const crowdAnsweredCount = 'quiz.crowd.answeredCount';
-  static const crowdWaitingOthers = 'quiz.crowd.waitingOthers';
   static const crowdDroppedBody = 'quiz.crowd.droppedBody';
   static const crowdStandingsTitle = 'result.crowd.standingsTitle';
   static const crowdLeftBadge = 'result.crowd.leftBadge';

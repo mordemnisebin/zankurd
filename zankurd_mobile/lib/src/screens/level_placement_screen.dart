@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../data/placement_store.dart';
@@ -11,6 +13,7 @@ import '../theme/app_icons.dart';
 import '../widgets/quiz_stage_kit.dart';
 import '../widgets/quiz_top_bar.dart';
 import '../widgets/sahne/sahne.dart';
+import 'quiz/quiz_fit.dart';
 import 'quiz/quiz_option_tile.dart';
 import 'quiz_screen.dart' show QuizQuestionImage;
 
@@ -208,70 +211,103 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     // her şey tepeye yığılıyor, altı bomboştu.
     return LayoutBuilder(
       builder: (context, constraints) {
+        // Soru sığdırma (2026-10-29): metin gerçek genişlikte ölçülür, kademe
+        // çizimden önce seçilir (bkz. [QuizFit]).
+        final fit = QuizFit.choose(
+          context: context,
+          prompt: question.prompt,
+          answers: question.displayAnswers,
+          width: math.min(constraints.maxWidth - 2 * SahneSpace.page, 800),
+          available: constraints.maxHeight - (question.hasImage ? 144 + 12 : 0),
+          listenButton: false,
+          titleLineBudget: QuizQuestionPrompt.maxTitleLines,
+          short: MediaQuery.sizeOf(context).height < 700,
+        );
+        final baseScaler = MediaQuery.textScalerOf(context);
         return SahneStageScroll(
           // Yeni soruda başa dön, üst kenar ilerleme çubuğunun altında sönsün
           // (bkz. `SahneStageScroll`).
           scrollKey: const ValueKey('placement-scroll'),
           resetKey: _index,
           balance: quizQuestionBalance,
-          padding: const EdgeInsets.fromLTRB(
+          padding: EdgeInsets.fromLTRB(
             SahneSpace.page,
-            quizStageTopGap,
+            fit.outerPad,
             SahneSpace.page,
-            SahneSpace.x6,
+            fit.outerPad,
           ),
-          child: Center(
-            child: ConstrainedBox(
-              key: const ValueKey('placement-answers-anchored'),
-              constraints: const BoxConstraints(maxWidth: 800),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (question.hasImage) ...[
-                        QuizQuestionImage(
-                          key: const ValueKey('placement-question-image'),
-                          url: question.imageUrl!,
-                          alt: question.imageAltFor(isKu: context.isKu),
-                        ),
-                        const SizedBox(height: SahneSpace.x3),
-                      ],
-                      QuizPromptCard(
-                        child: QuizQuestionPrompt(question.prompt),
-                      ),
-                      const SizedBox(height: SahneSpace.x4),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      for (final (index, answer)
-                          in question.displayAnswers.indexed)
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                          // Quiz'in şık çubuğu: harf karosu renksiz, cevaptan
-                          // önce renk yok (bkz.
-                          // `answer_option_color_semantics_test`). Sınav
-                          // doğru/yanlış göstermez: çubuk yalnız dokunulur.
-                          child: QuizOptionTile(
-                            index: index,
-                            answer: answer,
-                            selected: false,
-                            correct: false,
-                            disabled: _inputLocked,
-                            onTap: _inputLocked
-                                ? null
-                                : () => _answer(question, answer),
+          child: QuizFitScope(
+            fit: fit,
+            child: Center(
+              child: ConstrainedBox(
+                key: const ValueKey('placement-answers-anchored'),
+                constraints: const BoxConstraints(maxWidth: 800),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (question.hasImage) ...[
+                          QuizQuestionImage(
+                            key: const ValueKey('placement-question-image'),
+                            url: question.imageUrl!,
+                            alt: question.imageAltFor(isKu: context.isKu),
+                          ),
+                          const SizedBox(height: SahneSpace.x3),
+                        ],
+                        QuizPromptCard(
+                          padding: fit.promptPad,
+                          child: MediaQuery(
+                            data: MediaQuery.of(context).copyWith(
+                              textScaler: QuizFitScope.scaled(
+                                baseScaler,
+                                fit.questionScale,
+                              ),
+                            ),
+                            child: QuizQuestionPrompt(question.prompt),
                           ),
                         ),
-                    ],
-                  ),
-                ],
+                        SizedBox(height: fit.sectionGap),
+                      ],
+                    ),
+                    MediaQuery(
+                      data: MediaQuery.of(context).copyWith(
+                        textScaler: QuizFitScope.scaled(
+                          baseScaler,
+                          fit.optionScale,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          for (final (index, answer)
+                              in question.displayAnswers.indexed)
+                            Padding(
+                              padding: EdgeInsets.only(bottom: fit.optionGap),
+                              // Quiz'in şık çubuğu: harf karosu renksiz, cevaptan
+                              // önce renk yok (bkz.
+                              // `answer_option_color_semantics_test`). Sınav
+                              // doğru/yanlış göstermez: çubuk yalnız dokunulur.
+                              child: QuizOptionTile(
+                                index: index,
+                                answer: answer,
+                                selected: false,
+                                correct: false,
+                                disabled: _inputLocked,
+                                onTap: _inputLocked
+                                    ? null
+                                    : () => _answer(question, answer),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -384,7 +420,12 @@ class _SkipTextButton extends StatelessWidget {
         // Yeşil bandın üstünde Agir metni okunmaz: beyaz metinli cam hap.
         child: SizedBox(
           height: sahneTapTarget,
+          // `widthFactor: 1`: düğme kendi genişliğinde kalır. Eskiden Center
+          // üst çubuğun verdiği yarım genişliği (≈ 211 pt) tamamen alıyor,
+          // künye ("Soru 1/12 · Seviyeni belirle") 99 pt'e sıkışıp
+          // kırpılıyordu (soru sığma bekçisi).
           child: Center(
+            widthFactor: 1,
             child: SahneTappable(
               shape: SahneShape.m,
               color: SahneVivid.glass,

@@ -527,7 +527,11 @@ class SahneJokerButton extends StatelessWidget {
     );
     // Büyük yazıda (≥ %130) ad ve rozet düşer: düğme ikon + fiyata iner,
     // ad Semantics'te bütündür.
-    final showLabel = MediaQuery.textScalerOf(context).scale(14) < 18.2;
+    // Kısa ekranda (< 700 pt, iPhone SE) da düşer: alt perde 28 pt kısalır,
+    // soru ve şıklar o kadar yer kazanır (soru sığma, 2026-10-29).
+    final showLabel =
+        MediaQuery.textScalerOf(context).scale(14) < 18.2 &&
+        MediaQuery.sizeOf(context).height >= 700;
     final labelColor = selected ? t.goldTx : (enabled ? t.tx : dim(t.tx));
     // Fiyat AYRI bir hap: ad ile karışmaz. Günlük ücretsiz hak jokere değil
     // jokerlerin üstündeki tek çipe aittir (2026-10-28 tur 3 T2).

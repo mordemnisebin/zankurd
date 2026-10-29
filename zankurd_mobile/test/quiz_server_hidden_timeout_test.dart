@@ -154,7 +154,19 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 1));
 
-    expect(find.text('Süre doldu. Doğru cevap: Kitêb'), findsOneWidget);
+    // 2026-10-29 (soru sığma): bildirim kutusu kalktı; cümle alt perdedeki
+    // şeridin ekran okuyucu etiketidir, doğru şık ✓ ile işaretlenir.
+    final strip = find.byKey(const ValueKey('quiz-feedback-wrong'));
+    expect(strip, findsOneWidget);
+    expect(
+      tester
+          .widget<Semantics>(
+            find.ancestor(of: strip, matching: find.byType(Semantics)).first,
+          )
+          .properties
+          .label,
+      'Süre doldu. Doğru cevap: Kitêb',
+    );
     final revealedTiles = tester
         .widgetList<QuizOptionTile>(find.byType(QuizOptionTile))
         .toList();

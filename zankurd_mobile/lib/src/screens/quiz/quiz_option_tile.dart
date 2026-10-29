@@ -10,6 +10,7 @@ import '../../utils/percent_format.dart';
 import '../../utils/player_identity.dart';
 import '../../widgets/lexicon_lookup.dart';
 import '../../widgets/sahne/sahne.dart';
+import 'quiz_fit.dart';
 
 /// Şık çubuğunun en az yüksekliği (tur 8: 52 → 56; 2026-10-28 tur 2 R3:
 /// 60 — baş parmak hedefi ve dengeli soru sahnesi).
@@ -172,7 +173,11 @@ class QuizOptionTile extends StatelessWidget {
       _ => t.tx,
     };
 
-    final vPad = isCompact ? SahneSpace.x1 : SahneSpace.x2;
+    final fit = QuizFitScope.of(context);
+    final vPad = fit.isNominal
+        ? (isCompact ? QuizFit.shortOptionVPad : fit.optionVPad)
+        : fit.optionVPad;
+    final minHeight = fit.isNominal ? quizOptionMinHeight : fit.optionMinHeight;
     final content = Padding(
       padding: EdgeInsets.fromLTRB(SahneSpace.x2, vPad, SahneSpace.x3, vPad),
       child: Column(
@@ -187,6 +192,20 @@ class QuizOptionTile extends StatelessWidget {
                 letter: letter,
                 background: letterBg,
                 color: letterFg,
+                // Doğru/yanlış işareti harf karosunun YERİNE geçer (eskiden
+                // sağda 44 pt'lik ayrı bir yuvaydı): şık metni cevaptan sonra
+                // daralıp ek satıra kırılmaz, çubuklar yerinden oynamaz.
+                reducedMotion: reducedMotion,
+                markIcon: switch (state) {
+                  _OptionState.correct => AppIcons.check,
+                  _OptionState.wrong => AppIcons.xmark,
+                  _ => null,
+                },
+                markKey: switch (state) {
+                  _OptionState.correct => const ValueKey('correct_icon'),
+                  _OptionState.wrong => const ValueKey('wrong_icon'),
+                  _ => null,
+                },
               ),
               const SizedBox(width: SahneSpace.x3),
               Expanded(
@@ -198,49 +217,21 @@ class QuizOptionTile extends StatelessWidget {
                     alignment: AlignmentDirectional.centerStart,
                     child: Text(
                       answer,
-                      style: SahneType.bodyStrong.copyWith(color: textColor),
+                      style: SahneType.bodyStrong.copyWith(
+                        color: textColor,
+                        height: fit.optionLineHeight,
+                      ),
                     ),
                   ),
                 ),
               ),
-              _StatusMark(
-                state: state,
-                reducedMotion: reducedMotion,
-                tokens: t,
-              ),
             ],
           ),
-          if (audiencePercent != null) ...[
-            const SizedBox(height: SahneSpace.x2),
-            Padding(
-              padding: const EdgeInsetsDirectional.only(start: 48),
-              child: SahneProgressBar(
-                value: audiencePercent!.clamp(0.0, 1.0),
-                tone: SahneProgressTone.gold,
-                trailing: context.percentRatio(audiencePercent!),
-              ),
-            ),
-          ],
-          if (opponentNamesWhoSelected != null &&
-              opponentNamesWhoSelected!.isNotEmpty) ...[
-            const SizedBox(height: SahneSpace.x2),
-            // Rakip rozetleri `Wrap`: 2-3 uzun isim ya da %200 yazıda alt
-            // satıra iner, yatay taşmaz (bkz. large_text_overflow_test).
-            Wrap(
-              alignment: WrapAlignment.end,
-              spacing: SahneSpace.x1,
-              runSpacing: SahneSpace.x1,
-              children: [
-                for (final name in opponentNamesWhoSelected!)
-                  _OpponentMark(name: name, tokens: t),
-              ],
-            ),
-          ],
         ],
       ),
     );
 
-    final tile = Semantics(
+    final tile0 = Semantics(
       button: true,
       enabled: !disabled,
       selected: selected,
@@ -292,9 +283,9 @@ class QuizOptionTile extends StatelessWidget {
                     width: double.infinity,
                     constraints: BoxConstraints(
                       minHeight: fixedHeight == null
-                          ? quizOptionMinHeight
-                          : (fixedHeight! < quizOptionMinHeight
-                                ? quizOptionMinHeight
+                          ? minHeight
+                          : (fixedHeight! < minHeight
+                                ? minHeight
                                 : fixedHeight!),
                     ),
                     decoration: BoxDecoration(
@@ -333,6 +324,54 @@ class QuizOptionTile extends StatelessWidget {
         ),
       ),
     );
+    // Rakibin seçtiği şıkkın adı çubuğun ÜST kenarına asılı rozettir: eskiden
+    // çubuğun içine ek satır açıyor, cevaptan sonra altındaki bütün şıklar
+    // aşağı kayıyordu (yer baştan ayrılmaz).
+    final names = opponentNamesWhoSelected ?? const <String>[];
+    final percent = audiencePercent;
+    // Seyirci yüzdesi ve rakip adları çubuğun ÜST kenarına asılı rozetlerdir:
+    // çubuğun içine satır eklemek cevaptan/joker sonrası bütün şıkları
+    // kaydırıyordu (2026-10-29). Rozet alanı iki kenarla sınırlı (sol 56, sağ
+    // 12): uzun ad ya da birkaç rozet taşmaz, Flexible daralır; yarısı
+    // (≈ 9 pt) üstteki boşluğa çıkar, kendi çubuğunun yazısını örtmez.
+    final tile = names.isEmpty && percent == null
+        ? tile0
+        : Stack(
+            clipBehavior: Clip.none,
+            children: [
+              tile0,
+              PositionedDirectional(
+                // Çıkıntı, şıklar arası boşluk + önceki şıkkın alt iç
+                // boşluğu kadardır (en çok 9): rozet önceki şıkkın YAZISINA
+                // girmez; boşluk daraldıkça rozet kendi şıkkına doğru iner.
+                top: -(fit.optionGap + fit.optionVPad).clamp(0.0, 9.0),
+                start: 56,
+                end: SahneSpace.x3,
+                child: IgnorePointer(
+                  child: Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (percent != null)
+                          _PercentMark(
+                            text: context.percentRatio(percent),
+                            tokens: t,
+                          ),
+                        for (final name in names) ...[
+                          if (percent != null || name != names.first)
+                            const SizedBox(width: SahneSpace.x1),
+                          Flexible(
+                            child: _OpponentMark(name: name, tokens: t),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
     // Doğru cevapta kısa ödül sekmesi (tasarım oylaması 2026-10-22, 19/19
     // EVET): YALNIZ oyuncunun seçtiği şık doğruysa bir kez %4 büyüyüp
     // döner; hareketi azaltta yok. Anahtar duruma bağlı: aynı soruda
@@ -372,11 +411,17 @@ class _LetterTile extends StatelessWidget {
     required this.letter,
     required this.background,
     required this.color,
+    this.markIcon,
+    this.markKey,
+    this.reducedMotion = false,
   });
 
   final String letter;
   final Color background;
   final Color color;
+  final IconData? markIcon;
+  final Key? markKey;
+  final bool reducedMotion;
 
   @override
   Widget build(BuildContext context) {
@@ -386,56 +431,53 @@ class _LetterTile extends StatelessWidget {
       height: 36,
       alignment: Alignment.center,
       decoration: ShapeDecoration(color: background, shape: SahneShape.m),
-      child: MediaQuery.withNoTextScaling(
-        // Harf karonun içine sığmalı: %200 yazıda 36'lık karodan taşardı.
-        // Harf tek başına anlam taşımaz; ekran okuyucu "A: …" der.
-        child: Text(letter, style: SahneType.button.copyWith(color: color)),
+      // İşaret belirirken yumuşak geçer; hareketi azalt açıkken anında.
+      child: AnimatedSwitcher(
+        duration: reducedMotion ? Duration.zero : SahneMotion.answerReveal,
+        child: markIcon != null
+            ? Icon(markIcon, key: markKey, size: 22, color: color)
+            : MediaQuery.withNoTextScaling(
+                key: const ValueKey('letter'),
+                // Harf karonun içine sığmalı: %200 yazıda 36'lık karodan
+                // taşardı. Harf tek başına anlam taşımaz; ekran okuyucu
+                // "A: …" der.
+                child: Text(
+                  letter,
+                  style: SahneType.button.copyWith(color: color),
+                ),
+              ),
       ),
-    );
-  }
-}
-
-/// Sağdaki durum işareti: doğruda ✓, yanlışta ✗; yoksa yer tutmaz.
-class _StatusMark extends StatelessWidget {
-  const _StatusMark({
-    required this.state,
-    required this.reducedMotion,
-    required this.tokens,
-  });
-
-  final _OptionState state;
-  final bool reducedMotion;
-  final SahneTokens tokens;
-
-  @override
-  Widget build(BuildContext context) {
-    final Widget mark = switch (state) {
-      _OptionState.correct => Padding(
-        key: const ValueKey('correct_icon'),
-        padding: const EdgeInsetsDirectional.only(start: SahneSpace.x2),
-        child: SizedBox.square(
-          dimension: 36,
-          child: Icon(AppIcons.check, size: 24, color: tokens.tx),
-        ),
-      ),
-      _OptionState.wrong => Padding(
-        key: const ValueKey('wrong_icon'),
-        padding: const EdgeInsetsDirectional.only(start: SahneSpace.x2),
-        child: SizedBox.square(
-          dimension: 36,
-          child: Icon(AppIcons.xmark, size: 24, color: tokens.errTx),
-        ),
-      ),
-      _ => const SizedBox.shrink(key: ValueKey('empty_icon')),
-    };
-    return AnimatedSwitcher(
-      duration: reducedMotion ? Duration.zero : SahneMotion.answerReveal,
-      child: mark,
     );
   }
 }
 
 /// Rakibin seçtiği şıkta adı: Perde üstünde küçük S pahlı etiket + göz.
+/// Seyirci jokerinin yüzdesi: çubuğun üst kenarına asılı küçük Zêr rozet.
+class _PercentMark extends StatelessWidget {
+  const _PercentMark({required this.text, required this.tokens});
+
+  final String text;
+  final SahneTokens tokens;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: ShapeDecoration(color: tokens.goldTint, shape: SahneShape.s),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: SahneSpace.x2,
+          vertical: 2,
+        ),
+        child: Text(
+          text,
+          maxLines: 1,
+          style: SahneType.captionStrong.copyWith(color: tokens.goldTx),
+        ),
+      ),
+    );
+  }
+}
+
 class _OpponentMark extends StatelessWidget {
   const _OpponentMark({required this.name, required this.tokens});
 
@@ -521,6 +563,7 @@ class QuizQuestionPrompt extends StatelessWidget {
     double maxWidth, {
     bool forceHeadline = false,
     int titleLineBudget = maxTitleLines,
+    double? lineHeight,
   }) {
     final t = SahneTokens.of(context);
     final headline = SahneType.headline.copyWith(color: t.tx);
@@ -532,7 +575,10 @@ class QuizQuestionPrompt extends StatelessWidget {
     final painter = TextPainter(
       text: TextSpan(
         text: text,
-        style: title.copyWith(fontFamily: SahneType.display),
+        style: title.copyWith(
+          fontFamily: SahneType.display,
+          height: lineHeight,
+        ),
       ),
       textDirection: TextDirection.ltr,
       textScaler: MediaQuery.textScalerOf(context),
@@ -546,13 +592,15 @@ class QuizQuestionPrompt extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
+        final fit = QuizFitScope.of(context);
         final style = styleFor(
           context,
           text,
           constraints.maxWidth,
           forceHeadline: forceHeadline,
           titleLineBudget: titleLineBudget,
-        );
+          lineHeight: fit.promptLineHeight,
+        ).copyWith(height: fit.promptLineHeight);
         return lexicon.enabled
             ? LexiconText(text, style: style, policy: lexicon)
             : Text(text, style: style);

@@ -531,16 +531,22 @@ void main() {
         tester.widget<Text>(find.byKey(const ValueKey('quiz-crowd-rank'))).data,
         '#2/4',
       );
+      // 2026-10-29 (soru sığma): şerit iki satırlık sabit boydur; dört
+      // oyuncunun hepsi her zaman görünür (avatar + puan çipleri).
       final top = find.byKey(const ValueKey('quiz-crowd-top3'));
+      expect(top, findsOneWidget);
+      // Ayşe 500, Ez ve Berat 300, Ceren 100 (Gitti ayrıldı → yok).
+      for (final puan in ['500', '300', '100']) {
+        expect(
+          find.descendant(of: top, matching: find.text(puan)),
+          findsWidgets,
+          reason: '$puan puanlı çip',
+        );
+      }
       expect(
-        find.descendant(of: top, matching: find.text('Ayşe')),
-        findsOneWidget,
-      );
-      expect(
-        find.descendant(of: top, matching: find.text('Gitti')),
+        find.descendant(of: top, matching: find.text('900')),
         findsNothing,
       );
-      expect(find.text('300 puan'), findsOneWidget);
       // Düello kartı ve dört satırlık canlı tablo kalabalıkta yoktur.
       expect(find.text('VS'), findsNothing);
     });
@@ -675,9 +681,10 @@ void main() {
             .data,
         '3/4 cevapladı',
       );
-      // Bekleme kartı da aynı sayıyı söyler; genel metin kalkar.
-      expect(find.text('3/4 cevapladı'), findsNWidgets(2));
-      expect(find.text('Diğer oyuncular bekleniyor…'), findsNothing);
+      // Bekleme kartı kalktı (gövdeyi uzatıp soruyu kaydırıyordu): sayı
+      // yalnız başlıkta, bekleme sözü alt perdedeki düğmenin etiketidir.
+      expect(find.text('3/4 cevapladı'), findsOneWidget);
+      expect(find.text('Diğer oyuncular bekleniyor…'), findsOneWidget);
     });
 
     testWidgets('sayı yoklamayla güncellenir (6 sn)', (tester) async {
