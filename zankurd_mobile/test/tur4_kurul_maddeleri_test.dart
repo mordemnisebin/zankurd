@@ -343,7 +343,10 @@ void main() {
     final joker = File(
       'lib/src/widgets/sahne/sahne_buttons.dart',
     ).readAsStringSync();
-    expect(joker, contains('fontSize: 12,'));
+    // 2026-10-29 kapışma U13: joker adı caption (14) — 12'nin üstünde;
+    // sabit 12 yazılmaz.
+    expect(joker, isNot(contains('fontSize: 12,')));
+    expect(joker, contains("key: const ValueKey('joker-name')"));
     expect(joker, contains('c.withValues(alpha: 0.4)'));
   });
 }

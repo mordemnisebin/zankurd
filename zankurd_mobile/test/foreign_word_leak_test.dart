@@ -49,7 +49,8 @@ void main() {
     },
     'tr': {
       'premium',
-      'quiz',
+      // 'quiz' YOK (2026-10-29, kapışma Z1): Türkçe metinde son iki
+      // "Quiz" de ("Quiz yüklenemedi", "Quiz sırasında") Türkçeleşti.
       'xp',
       'zankurd',
       'avatar', // Türkçe ürün adı; Kurmancî karşılığı `rû` (`K.myAvatar`)
@@ -245,8 +246,11 @@ void main() {
     // Ürün terimi zaten `Koda Vexwendinê` (`K.enterReferralCode`).
     // Misafir yasağı "davetê" deyince aynı kod iki adla duruyordu.
     // Türkçe `davet` kökü `contains('vexwend')` taramasını kör eder.
-    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda xelatê têxe');
-    expect(Tr.of(K.enterReferralCode, AppLanguage.tr), 'Ödül kodu gir');
+    expect(
+      Tr.of(K.enterReferralCode, AppLanguage.ku),
+      'Koda vexwendinê binivîse',
+    );
+    expect(Tr.of(K.enterReferralCode, AppLanguage.tr), 'Davet kodu gir');
     expect(
       Tr.of(K.referralGuestBlocked, AppLanguage.ku),
       contains('Koda vexwendinê'),

@@ -1393,7 +1393,10 @@ class _FriendRow extends StatelessWidget {
     final scaler = MediaQuery.textScalerOf(context);
     double width(String text, TextStyle style) {
       final p = TextPainter(
-        text: TextSpan(text: text, style: style),
+        text: TextSpan(
+          text: text,
+          style: style.copyWith(fontFamily: style.fontFamily),
+        ),
         textDirection: Directionality.of(context),
         textScaler: scaler,
         maxLines: 1,
