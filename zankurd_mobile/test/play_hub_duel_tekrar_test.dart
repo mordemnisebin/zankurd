@@ -68,8 +68,8 @@ void main() {
       find.descendant(of: tile, matching: find.text('Düello başlat')),
       findsOneWidget,
     );
-    // Eyleme çevrilebilir bilgi üstte kalır.
-    expect(find.text('Sıra sende'), findsWidgets);
+    // Eyleme çevrilebilir bilgi üstte kalır (kurul C30: rozet "Devam et").
+    expect(find.text('Devam et'), findsWidgets);
   });
 
   testWidgets('sırası bende düello yoksa kartta rozet yok', (tester) async {

@@ -3925,6 +3925,11 @@ class Tr {
           'XP qezenc kir.',
       'tr': '24 saat içinde rakip çıkmadı. Doğru cevapların için XP kazandın.',
     },
+    // Kurul C30: yarım kalan düellonun süre çubuğu neyi saydığını söyler.
+    K.asyncDuelClosesOnExpiry: {
+      'ku': 'Dema biqede, pêşbirk tê girtin',
+      'tr': 'Süre dolunca düello kapanır',
+    },
     K.asyncDuelUnfinishedBody: {
       'ku':
           'Te hemû pirs nebersivandin; dema wê biqede, ev pêşbirk dê were girtin.',
@@ -5026,6 +5031,7 @@ class K {
   static const perQuestionSeconds = 'room.perQuestionSeconds';
   static const freeEntrySummary = 'room.freeEntrySummary';
   static const asyncDuelChip = 'duel.async.chip';
+  static const asyncDuelClosesOnExpiry = 'duel.async.closesOnExpiry';
   static const doubleAnswerActiveHint = 'quiz.doubleAnswerActiveHint';
   static const wordOrderingHowTo = 'quiz.wordOrderingHowTo';
   static const questionImageZoomHint = 'quiz.questionImageZoomHint';

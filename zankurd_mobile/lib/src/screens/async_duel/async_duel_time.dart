@@ -37,11 +37,18 @@ class AsyncDuelTimeLeft extends StatelessWidget {
   const AsyncDuelTimeLeft({
     required this.left,
     this.showBar = false,
+    this.closesOnExpiry = false,
     this.textKey,
     super.key,
   });
 
   final Duration? left;
+
+  /// Kurul C30 (2026-10-29, 3/3): yarım kalan düelloda çubuğun neyi
+  /// saydığı ve süre dolunca ne olduğu yazmıyordu. `true` iken çubuğun
+  /// altında "Süre dolunca düello kapanır" yazar (sunucu süpürmesi düelloyu
+  /// kapatır, bkz. [K.asyncDuelUnfinishedBody]).
+  final bool closesOnExpiry;
 
   /// İnce (4 px) kalan-süre çubuğunu da çiz.
   final bool showBar;
@@ -78,6 +85,14 @@ class AsyncDuelTimeLeft extends StatelessWidget {
           // Ekran okuyucu yüzdeyi değil, satırın etiketindeki süreyi okur.
           semanticLabel: label,
         ),
+        if (closesOnExpiry) ...[
+          const SizedBox(height: SahneSpace.x1),
+          Text(
+            context.t(K.asyncDuelClosesOnExpiry),
+            key: const ValueKey('async-duel-closes-note'),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+        ],
       ],
     );
   }

@@ -500,6 +500,14 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
         tag: summary.invitedProfile?.playerTag,
       );
       subtitle = statusLabel;
+    } else if (summary.canResume) {
+      // Kurul C30 (3/3): "Yarım kaldı" satırında hangi oyunun yarım kaldığı
+      // (oyun türü) yazmıyordu; başlık rakip, alt satır "Sırayla düello ·
+      // Yarım kaldı".
+      title = knownOpponent ?? statusLabel;
+      subtitle = knownOpponent != null
+          ? '${context.t(K.asyncDuel)} · $statusLabel'
+          : context.t(K.asyncDuel);
     } else {
       title = knownOpponent ?? statusLabel;
       subtitle = knownOpponent != null
@@ -518,10 +526,12 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
         (view.kind == AsyncDuelResultKind.completed && !summary.seen);
     // "Sıra sende" (yarım kalan turum) rozeti: eskiden "Devam et" diyordu;
     // oyuncuya asıl söylenmesi gereken, hamlenin ondan beklendiği ve süresi.
+    // Kurul C30 (3/3): yarım kalan turda açık bir "Devam et" eylemi yoktu
+    // (rozet "Sıra sende" diyordu; "Rakip bul" düğmesi daha baskındı).
     final readyLabel = incoming
         ? context.t(K.challengePlay)
         : resumable
-        ? context.t(K.challengeYourTurn)
+        ? context.t(K.continueAction)
         : context.t(K.asyncDuelReady);
     // Kalan süre: sırası bende olan satırda metin + ince çubuk, rakip
     // beklenen satırda yalnız metin. Süre bilinmiyorsa (eski sunucu) yok.
@@ -547,6 +557,7 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
         key: const ValueKey('async-duel-time-left'),
         left: left,
         showBar: true,
+        closesOnExpiry: resumable,
       );
     } else if (summary.isWaitingOpponent && left != null) {
       final timeLeftText = AsyncDuelTimeLeft(
