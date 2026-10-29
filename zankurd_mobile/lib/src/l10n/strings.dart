@@ -2257,7 +2257,7 @@ class Tr {
     // dolunca yalnız skor göndermiş olan geçer (hükmen). Rakip hâlâ
     // oynayabilir; süre dolduktan sonra sonuç bir sonraki yenilemede gelir.
     K.tournamentWaitingOpponentDeadline: {
-      'ku': 'Heke hevrikê te heta {time} nebilîze, tu bêyî lîstik serdikevî.',
+      'ku': 'Heke hevrikê te heta {time} nelîze, tu bêyî lîstikê bi ser dikevî.',
       'tr': 'Rakibin {time} tarihine kadar oynamazsa maçı hükmen kazanırsın.',
     },
     K.tournamentWaitingOpponentExpired: {
@@ -3881,11 +3881,11 @@ class Tr {
     // nedenini bilmiyordu. Formül sunucuda sabit (claim_async_duel_xp:
     // doğru başına 20, galibiyet bonusu 30).
     K.asyncDuelXpBreakdown: {
-      'ku': '{n} bersivên rast × 20 XP',
+      'ku': '{n} rast × 20 XP',
       'tr': '{n} doğru × 20 XP',
     },
     K.asyncDuelXpBreakdownWin: {
-      'ku': '{n} bersivên rast × 20 + 30 XP ji bo serkeftinê',
+      'ku': '{n} rast × 20 + 30 XP bonusa serkeftinê',
       'tr': '{n} doğru × 20 + 30 XP galibiyet bonusu',
     },
     // Doğrular eşitken kazananı toplam süre belirler; "Kazandın · 3–3"
