@@ -744,8 +744,11 @@ extension _QuizScreenUI on _QuizScreenState {
                   context.t(K.waitingOpponent),
                   context.t(K.crowdWaitingOthers),
                   context.t(K.sureDoldu),
-                  for (final verdict in [K.correct, K.wrong, K.sureDoldu])
+                  for (final verdict in [K.correct, K.wrong, K.sureDoldu]) ...[
                     _revealLabel(context, verdict, 88, last: false),
+                    _revealLabel(context, verdict, 88, last: true),
+                  ],
+                  context.t(K.crowdWaitingCount, {'n': '88'}),
                 ],
               ],
               ratingLabels: [
@@ -877,7 +880,7 @@ extension _QuizScreenUI on _QuizScreenState {
         // düğme taşır; başlık yazısına yer yok).
         ? context.t(K.sureDoldu)
         : _isMultiplayer && answered
-        ? context.t(_isCrowd ? K.crowdWaitingOthers : K.waitingOpponent)
+        ? _waitingLabel(context)
         : !answered
         ? context.t(K.pickAnAnswer)
         : isLastQuestion
@@ -888,12 +891,15 @@ extension _QuizScreenUI on _QuizScreenState {
         // idi — aynı eylem iki sözle. Artık ikisi de "Devam et".
         : context.t(K.continueAction);
     // Beklerken kum saati; son soruda bayrak; yoksa ok (→).
+    // Kurul C6 (2026-10-29, Astra + Sol): bayrak cevaptan ÖNCE de "Bir cevap
+    // seç"in yanındaydı ve soru bildirme düğmesi gibi okunuyordu. Bayrak
+    // yalnız eylem gerçekten "Bitir" iken (cevaptan sonra) görünür.
     final nextIcon = waiting
         ? AppIcons.hourglassStart
-        : isLastQuestion
+        : isLastQuestion && answered
         ? AppIcons.flag
         : null;
-    final nextArrow = !waiting && !isLastQuestion;
+    final nextArrow = !waiting && !isLastQuestion && answered;
     final VoidCallback? nextPress = canPressNext ? () => _next() : null;
     final next = onStripFill != null && canPressNext
         ? SahneButton.tonal(
@@ -926,11 +932,27 @@ extension _QuizScreenUI on _QuizScreenState {
     required bool last,
   }) {
     final verdict = context.t(verdictKey);
-    if (last) return verdict;
+    // Kurul C5 (Astra + Sol): son soruda yalnız "Doğru" + kum saati ne
+    // beklendiğini söylemiyordu; artık sonuçlara geçildiğini söyler.
+    if (last) return context.t(K.revealVerdictResults, {'verdict': verdict});
+    // Kurul C4 (Astra + Sol): "Doğru · 3 sn" üstteki soru sayacıyla
+    // karışıyordu; geri sayımın SONRAKİ soruya olduğu yazar.
     return context.t(K.revealVerdictCountdown, {
       'verdict': verdict,
       'n': '$seconds',
     });
+  }
+
+  /// Çok oyunculu bekleme etiketi. Kurul C10 (Astra + Sol): kalabalık odada
+  /// "Diğer oyuncular bekleniyor" kaç kişinin beklendiğini söylemiyordu;
+  /// sunucu sayıyı verdiyse kalan kişi sayısı yazar.
+  String _waitingLabel(BuildContext context) {
+    if (!_isCrowd) return context.t(K.waitingOpponent);
+    final progress = _currentCrowdProgress;
+    final left = progress == null ? 0 : progress.active - progress.answered;
+    return left > 0
+        ? context.t(K.crowdWaitingCount, {'n': '$left'})
+        : context.t(K.crowdWaitingOthers);
   }
 
   /// Alıştırma turunda doğru cevaptan sonra zorluk puanı: üç eşit ikincil

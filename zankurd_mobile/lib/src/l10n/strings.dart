@@ -1427,8 +1427,18 @@ class Tr {
     },
     // Tur 1 (I1): çok oyunculu açılışta hüküm + geri sayım ("Doğru · 3sn").
     K.revealVerdictCountdown: {
-      'ku': '{verdict} · {n} çirke',
-      'tr': '{verdict} · {n} sn',
+      'ku': '{verdict} · ya din {n} çirke',
+      'tr': '{verdict} · sonraki {n} sn',
+    },
+    // Kurul C5: son soruda açılış etiketi sonuçlara geçildiğini söyler.
+    K.revealVerdictResults: {
+      'ku': '{verdict} · encam tên',
+      'tr': '{verdict} · sonuçlar geliyor',
+    },
+    // Kurul C10: kalabalık odada beklenen kişi sayısı.
+    K.crowdWaitingCount: {
+      'ku': 'Li benda {n} lîstikvanan…',
+      'tr': '{n} oyuncu bekleniyor…',
     },
     K.rakipBekleniyor: {'ku': 'Hevrik tê payîn…', 'tr': 'Rakip bekleniyor…'},
     K.cumleyiOlusturmakIcinKelimeleri: {
@@ -4972,6 +4982,8 @@ class K {
   static const sureDoldu = 'screen.sureDoldu';
   static const cevabinKaydedildi = 'screen.cevabinKaydedildi';
   static const revealVerdictCountdown = 'quiz.revealVerdictCountdown';
+  static const revealVerdictResults = 'quiz.revealVerdictResults';
+  static const crowdWaitingCount = 'quiz.crowd.waitingCount';
   static const rakipBekleniyor = 'screen.rakipBekleniyor';
   static const cumleyiOlusturmakIcinKelimeleri =
       'screen.cumleyiOlusturmakIcinKelimeleri';
