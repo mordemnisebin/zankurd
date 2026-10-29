@@ -216,11 +216,11 @@ class _QuizScreenState extends State<QuizScreen>
   /// değil" sayılıyor, şık ve alt şerit kırmızı ✕ ile "yanlış" diyordu;
   /// açılışta doğru çıkınca yeşile dönüyordu. Bekleme hükümsüzdür: şık nötr
   /// "seçildi", şerit yerine kum saatli bekleme düğmesi; hüküm yalnız
-  /// açılışta ([_MultiplayerPhase.reveal] + güvenli açılış) gelir.
+  /// doğru cevap güvenle bilindiğinde ([_hasSafeCurrentReveal]) gelir.
+  /// Sunucu doğru şıkkı gönderimle birlikte açarsa hüküm hemen görünür —
+  /// aynı anda çalan doğru/yanlış sesiyle tutarlı kalmak için (Astra).
   bool get _verdictPending =>
-      _usesServerHiddenAnswers &&
-      answered &&
-      (_mpPhase != _MultiplayerPhase.reveal || !_hasSafeCurrentReveal);
+      _usesServerHiddenAnswers && answered && !_hasSafeCurrentReveal;
 
   /// Hüküm (doğru/yanlış rengi, ✓/✕, şerit) gizli mi: gerilim tutuşu ya da
   /// sunucu-gizli bekleme.
