@@ -879,6 +879,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                         final seconds = (fraction * _questionSeconds).ceil();
                         return SahneStageTimer(
                           secondsLeft: seconds,
+                          maxSeconds: _questionSeconds,
                           pending: !_timeSynced,
                           // Cevap gönderildikten sonra sayaç durur; gerilim rengi
                           // de söner.

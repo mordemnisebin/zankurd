@@ -90,6 +90,28 @@ void main() {
     );
   }
 
+  testWidgets('üç haneli turda kapsül 120→100→99→9→0 aynı genişlikte', (
+    tester,
+  ) async {
+    double? width;
+    for (final s in [120, 100, 99, 10, 9, 0]) {
+      await tester.pumpWidget(
+        testShell(
+          child: Center(
+            child: SahneStageTimer(
+              secondsLeft: s,
+              maxSeconds: 120,
+              semanticLabel: '$s',
+            ),
+          ),
+        ),
+      );
+      final w = tester.getSize(find.byType(SahneStageTimer)).width;
+      width ??= w;
+      expect(w, moreOrLessEquals(width, epsilon: 0.5), reason: '$s sn');
+    }
+  });
+
   testWidgets('sayaç kapsülü 0–99 arasında hep aynı genişlikte', (
     tester,
   ) async {

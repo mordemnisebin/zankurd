@@ -379,7 +379,13 @@ class SahneStageTimer extends StatelessWidget {
     this.hotSeconds = 5,
     this.onBand = false,
     this.pending = false,
+    this.maxSeconds = 99,
   });
+
+  /// Turun en uzun süresi: sayının yeri bu kadar hane genişliğinde sabit
+  /// ayrılır (en az iki hane). 100+ saniyelik turda "100"den "99"a inişte
+  /// de kapsül daralmaz (Astra, tur 3 incelemesi).
+  final int maxSeconds;
 
   /// Kalan süre henüz bilinmiyor (yarım kalan soruya dönüşte sunucu saati
   /// gelmeden): sayı yerine "–" çizilir, kapsülün genişliği aynı kalır. Tur 3
@@ -441,7 +447,10 @@ class SahneStageTimer extends StatelessWidget {
                 maintainSize: true,
                 maintainAnimation: true,
                 maintainState: true,
-                child: Text('88', style: numberStyle),
+                child: Text(
+                  '8' * ('$maxSeconds'.length < 2 ? 2 : '$maxSeconds'.length),
+                  style: numberStyle,
+                ),
               ),
             ),
             Text(

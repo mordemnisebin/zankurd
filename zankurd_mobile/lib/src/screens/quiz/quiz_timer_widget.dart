@@ -49,6 +49,7 @@ class QuizTimerWidget extends StatelessWidget {
         final seconds = (progress * maxSeconds).ceil();
         return SahneStageTimer(
           secondsLeft: seconds,
+          maxSeconds: maxSeconds,
           // Cevaptan sonra gerilim eşiği kapanır (bkz. sınıf belgesi).
           hotSeconds: isPaused ? -1 : 5,
           onBand: onBand,
