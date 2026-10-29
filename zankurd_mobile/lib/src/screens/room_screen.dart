@@ -1785,6 +1785,11 @@ class _RoomHero extends StatelessWidget {
   /// sunucuda değil, lobi değil) düğme çizilmez.
   final VoidCallback? onInviteFriends;
 
+  /// Kalabalık oda (3+ kişilik) dolu mu? İki kişilik odada davet düğmesi
+  /// her durumda kalır (lobi "yalnız sen" ile "rakip geldi" arasında gidip
+  /// gelir; yer tutucu oyuncular kapasiteyi doldurmuş gibi görünebilir).
+  bool get _full => room.isCrowd && room.players.length >= room.maxPlayers;
+
   @override
   Widget build(BuildContext context) {
     // 2026-10-19 sadeleşme (ikinci tur): kahraman Boyax degradeli büyük
@@ -1944,22 +1949,28 @@ class _RoomHero extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: SahneSpace.x1),
-              Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  _RoomInviteButton(
-                    label: context.t(K.roomInviteAction),
-                    onShare: onShare,
-                    primary: inviteFirst,
-                  ),
-                  if (onInviteFriends != null)
-                    _RoomInviteFriendsButton(
-                      label: context.t(K.roomInviteFriendsAction),
-                      onPressed: onInviteFriends!,
+              // Tur 1 (I6, 2026-10-29): oda DOLUYKEN davet eylemleri işe
+              // yaramaz; ama kartı ~110 pt uzatıp 4. oyuncuyu ilk görünümde
+              // "Yarışı başlat" perdesinin arkasına itiyordu. Dolu odada
+              // yalnız kod kalır, oyuncu listesi ilk görünüme sığar.
+              if (!_full) ...[
+                const SizedBox(height: SahneSpace.x1),
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    _RoomInviteButton(
+                      label: context.t(K.roomInviteAction),
+                      onShare: onShare,
+                      primary: inviteFirst,
                     ),
-                ],
-              ),
+                    if (onInviteFriends != null)
+                      _RoomInviteFriendsButton(
+                        label: context.t(K.roomInviteFriendsAction),
+                        onPressed: onInviteFriends!,
+                      ),
+                  ],
+                ),
+              ],
             ],
           );
         },

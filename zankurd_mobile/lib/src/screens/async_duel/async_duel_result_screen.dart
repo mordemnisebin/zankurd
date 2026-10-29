@@ -628,6 +628,13 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
           value: view.myCorrect,
           suffix: '/${view.total}',
           valueKey: const ValueKey('async-duel-result-score'),
+          // Tur 1 (I8, 2026-10-29): "3/7"nin neyi saydığı yazmıyordu.
+          caption: view.myCorrect == null
+              ? null
+              : context.t(K.asyncDuelCorrectCaption, {
+                  'total': '${view.total}',
+                  'correct': '${view.myCorrect}',
+                }),
           body: view.challengeCode == null
               ? context.t(K.asyncDuelWaitingBody)
               : view.invitedName != null

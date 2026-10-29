@@ -51,6 +51,22 @@ class Friend {
     return DateTime.now().toUtc().difference(last).inMinutes < 5;
   }
 
+  /// Son oynadığından bu yana geçen tam gün sayısı; hiç oynamadıysa null.
+  ///
+  /// Tur 1 (I5, 2026-10-29): iki oyuncu uygulamada açıkken birbirini
+  /// "Çevrimdışı" görüyordu. Sunucuda varlık (heartbeat) yok:
+  /// `last_active_at` = `profiles.updated_at`, yalnız XP ödülünde güncellenir
+  /// (bkz. `supabase/2026-08-14_list_friends_score_and_activity.sql`). Bu
+  /// yüzden ikili "çevrimiçi/çevrimdışı" çoğu zaman YANLIŞ bir iddiaydı;
+  /// satır artık verinin gerçekte söylediğini yazar: "Bugün oynadı",
+  /// "3 gün önce oynadı". Yalnız son 5 dakikada ödül alan "Çevrimiçi"dir.
+  int? daysSinceActive([DateTime? nowUtc]) {
+    final last = lastActiveAt;
+    if (last == null) return null;
+    final diff = (nowUtc ?? DateTime.now().toUtc()).difference(last.toUtc());
+    return diff.isNegative ? 0 : diff.inHours ~/ 24;
+  }
+
   Friend copyWith({
     String? id,
     String? userId,

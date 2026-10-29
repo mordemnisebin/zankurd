@@ -451,10 +451,24 @@ class QuizFitLine extends StatelessWidget {
   }
 }
 
-/// Oda skor şeridinin sütun sayısı (2026-10-29, Astra 2. inceleme): ölçerek
-/// seçilir. Çip = iç boşluk 8 + avatar 20 + 4 + puan; puan
-/// okunur tabanda (11 pt çizilen) en kötü 5 haneli ("99.999") ölçülür, yani
-/// puan oyun içinde büyüyünce sütun sayısı DEĞİŞMEZ. Dört çip [innerWidth]'e
+/// Oda skor çipindeki puanın punto boyu (Tur 1, I3: 12 pt okunmuyordu).
+const double quizCrowdScorePt = 14;
+
+/// Oda skor kartının yazı ölçeği tavanı (bilgi bandı; bkz. `_CrowdScoreHeader`).
+const double quizCrowdMaxScale = 1.15;
+
+/// Çipteki kısa ad: görünen adın ilk sözcüğü ("Azad Hevrik" → "Azad").
+String quizCrowdShortName(String displayName) {
+  final trimmed = displayName.trim();
+  if (trimmed.isEmpty) return trimmed;
+  return trimmed.split(RegExp(r'\s+')).first;
+}
+
+/// Oda skor şeridinin sütun sayısı (2026-10-29, Astra 2. inceleme; Tur 1
+/// I3): ölçerek seçilir. Çip = iç boşluk 8 + kısa ad + 4 +
+/// puan. Ad için sekiz harflik bir ad ("Dördüncü", 11 pt çizilen taban),
+/// puan için en kötü 5 haneli ("99.999", [quizCrowdScorePt]) ölçülür; puan
+/// oyun içinde büyüyünce sütun sayısı DEĞİŞMEZ. Dört çip [innerWidth]'e
 /// sığıyorsa 4, sığmıyorsa 2.
 int quizCrowdColumns(TextScaler scaler, double innerWidth) {
   double widthOf(String text, double size) {
@@ -475,11 +489,10 @@ int quizCrowdColumns(TextScaler scaler, double innerWidth) {
     return w;
   }
 
-  // Çizilen 11 pt'e denk punto (ölçek 1'in altına inmez); en kötü 5 haneli
-  // puan ("99.999").
   final ratio = scaler.scale(12) / 12;
-  final score = widthOf('99.999', (11 / ratio).clamp(1.0, 12.0));
-  final need = 8 + 20 + 4 + score;
+  final name = widthOf('Dördüncü', (11 / ratio).clamp(1.0, 12.0));
+  final score = widthOf('99.999', quizCrowdScorePt);
+  final need = 8 + name + 4 + score;
   return (innerWidth - 3 * 4) / 4 >= need ? 4 : 2;
 }
 

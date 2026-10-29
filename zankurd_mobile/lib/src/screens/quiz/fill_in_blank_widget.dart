@@ -238,7 +238,14 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
         // Süre dolunca doğru cevabı zaten `QuizTimeoutNotice` yazıyor
         // ("Dem qediya. Bersiv: X"); buradaki kutu da aynı cevabı yazınca
         // iki bant üst üste aynı sözü söylüyordu (2026-09-30 canlı).
-        if (widget.showResult && widget.selectedAnswer != 'TIMEOUT') ...[
+        //
+        // Tur 1 (I10, 2026-10-29): doğru ve kanonik yazımla verilen cevapta
+        // kutu yalnız "Rast" diyordu; alan zaten yeşil kenar + ✓, alt şerit
+        // de "Rast" — aynı hüküm üç yerde. Kutu yalnız YENİ bilgi taşıdığında
+        // çizilir: yanlışta doğru cevap, doğruda kanonik yazım.
+        if (widget.showResult &&
+            widget.selectedAnswer != 'TIMEOUT' &&
+            !(isCorrect && usesCanonicalWriting)) ...[
           const SizedBox(height: SahneSpace.x3),
           Semantics(
             liveRegion: true,

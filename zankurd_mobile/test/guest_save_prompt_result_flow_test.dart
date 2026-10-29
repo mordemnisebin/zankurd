@@ -10,6 +10,11 @@
 ///
 /// Bu dosya taze bir misafirin üç oyunu sonuç ekranından bitirmesini kurar:
 /// sayfa tam 3. oyunda, bir kez çıkmalıdır.
+///
+/// Tur 1 (I4, 2026-10-29): sayfa sonuç ekranı açılır açılmaz çıkıp skoru
+/// örtüyordu (simülatör, TR + KU). Artık sonuç ekranı AÇIKKEN çıkmaz; oyuncu
+/// sonuçtan ayrılınca döndüğü ekranın üstünde açılır. Testler iki şeyi de
+/// sorar: sonuç açıkken sayfa yok, ayrılınca var.
 library;
 
 import 'package:flutter/material.dart';
@@ -37,18 +42,32 @@ const _solo = GameRoom(
   questionCount: 1,
 );
 
+/// Bir oyunu bitirir: ana sayfadan sonuç ekranı açılır, [checkOnResult]
+/// sonuç ekranı açıkken çağrılır, sonra oyuncu sonuçtan ayrılır.
 Future<void> _finishGame(
   WidgetTester tester, {
   bool practice = false,
   bool dailyQuiz = false,
+  void Function()? checkOnResult,
 }) async {
   await tester.pumpWidget(const SizedBox.shrink());
   final auth = AuthProvider.offline();
   await auth.signInAsGuest();
+  final navKey = GlobalKey<NavigatorState>();
   await tester.pumpWidget(
     testShell(
       authProvider: auth,
-      child: QuizResultScreen(
+      child: Navigator(
+        key: navKey,
+        onGenerateRoute: (_) => MaterialPageRoute<void>(
+          builder: (_) => const Scaffold(body: Text('ana-sayfa')),
+        ),
+      ),
+    ),
+  );
+  navKey.currentState!.push(
+    MaterialPageRoute<void>(
+      builder: (_) => QuizResultScreen(
         repository: MockZanKurdRepository(),
         room: _solo,
         score: 60,
@@ -66,7 +85,20 @@ Future<void> _finishGame(
   for (var i = 0; i < 30; i++) {
     await tester.pump(const Duration(milliseconds: 100));
   }
+  // Sonuç ekranı açıkken öneri sayfası ASLA yok (skoru örtmez).
+  expect(
+    find.text(_title),
+    findsNothing,
+    reason: 'sayfa sonuç ekranını örtüyor',
+  );
+  checkOnResult?.call();
+  navKey.currentState!.pop();
+  for (var i = 0; i < 10; i++) {
+    await tester.pump(const Duration(milliseconds: 100));
+  }
 }
+
+const _title = 'İlerlemeni kaybetme — hesabını kaydet';
 
 void main() {
   setUp(() async {
@@ -80,22 +112,23 @@ void main() {
     XPStore.resetInstance();
   });
 
-  const title = 'İlerlemeni kaybetme — hesabını kaydet';
+  const title = _title;
 
-  testWidgets('taze misafir: sayfa tam 3. oyunun sonuç ekranında çıkar', (
-    tester,
-  ) async {
-    await _finishGame(tester, practice: true);
-    expect(find.text(title), findsNothing, reason: '1. oyun');
-    await _finishGame(tester, dailyQuiz: true);
-    expect(find.text(title), findsNothing, reason: '2. oyun');
-    await _finishGame(tester);
-    expect(find.text(title), findsOneWidget, reason: '3. oyun');
-    await tester.tap(find.text('Şimdi değil'));
-    await tester.pumpAndSettle();
-    await _finishGame(tester);
-    expect(find.text(title), findsNothing, reason: '4. oyun: bekleme');
-  });
+  testWidgets(
+    'taze misafir: sayfa tam 3. oyundan sonra, sonuçtan ayrılınca çıkar',
+    (tester) async {
+      await _finishGame(tester, practice: true);
+      expect(find.text(title), findsNothing, reason: '1. oyun');
+      await _finishGame(tester, dailyQuiz: true);
+      expect(find.text(title), findsNothing, reason: '2. oyun');
+      await _finishGame(tester);
+      expect(find.text(title), findsOneWidget, reason: '3. oyun');
+      await tester.tap(find.text('Şimdi değil'));
+      await tester.pumpAndSettle();
+      await _finishGame(tester);
+      expect(find.text(title), findsNothing, reason: '4. oyun: bekleme');
+    },
+  );
 
   testWidgets('seviye atlatan oyun da sayılır: sayfa yine 3. oyunda çıkar', (
     tester,

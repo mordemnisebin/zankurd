@@ -20,6 +20,7 @@ import '../models/add_friend_outcome.dart';
 import '../models/friend.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../widgets/friend_activity_label.dart';
 import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/player_moderation_button.dart';
@@ -1291,7 +1292,7 @@ class _FriendRow extends StatelessWidget {
     return _PersonRow(
       key: ValueKey('friend-row-${friend.friendName}'),
       // Çevrimiçi durumu yalnız renkle verilmez: avatarın köşesindeki küçük
-      // nokta dolu (çevrimiçi) ya da boş (çevrimdışı) ve alt satırda söz.
+      // nokta dolu (çevrimiçi) ya da boş ve alt satırda söz (son oynama).
       // 2026-09-29 doğallık: nokta elmastı; elmas yalnız soru ilerlemesi ve
       // ders sayacı anlamını taşır (K5). Durum noktası yuvarlaktır.
       avatar: SizedBox.square(
@@ -1327,7 +1328,7 @@ class _FriendRow extends StatelessWidget {
         friend.friendName,
         tag: friend.friendTag,
       ),
-      subtitle: online ? context.t(K.online) : context.t(K.offline),
+      subtitle: friendActivityLabel(context, friend),
       subtitleColor: online ? t.okTx : t.tx2,
       subtitleStrong: online,
       // Uzun etiket (KU "Vexwîne pêşbirkê") ad sütununu daraltıp adı ve

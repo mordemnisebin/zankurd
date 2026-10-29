@@ -149,10 +149,13 @@ void main() {
       await tester.tap(submit);
       await tester.pumpAndSettle();
 
+      // Tur 1 (I10, 2026-10-29): doğru ve kanonik cevapta ayrı "Rast" kutusu
+      // artık çizilmez (alan kenarı + ✓ ve alt şerit hükmü zaten söyler);
+      // hükmü alanın kendi kenarı taşır.
       expect(
-        find.byKey(const ValueKey('fill-in-blank-result')),
+        find.byKey(const ValueKey('fill-in-blank-verdict-correct')),
         findsOneWidget,
-        reason: 'Cevap gönderildi ama sonuç satırı çıkmadı.',
+        reason: 'Cevap gönderildi ama alan hükmü taşımıyor.',
       );
 
       final next = find.byKey(const ValueKey('quiz-next-button'));

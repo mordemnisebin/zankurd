@@ -143,6 +143,7 @@ class QuizFeedbackStrip extends StatelessWidget {
     this.inlineAction = true,
     this.compactRow = false,
     this.timedOut = false,
+    this.ratingPrompt,
     this.semanticDetail,
   });
 
@@ -164,6 +165,9 @@ class QuizFeedbackStrip extends StatelessWidget {
 
   /// Süre dolduysa başlık "Yanlış" değil "Süre doldu" der.
   final bool timedOut;
+
+  /// Zorluk puanı soruluyorsa başlığa eklenen soru ("Bu soru nasıldı?").
+  final String? ratingPrompt;
 
   /// Yalnız ekran okuyucuya giden ek cümle (görünür satır eklemez).
   final String? semanticDetail;
@@ -187,9 +191,13 @@ class QuizFeedbackStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final fill = feedbackFill(t, correct: correct);
-    final title = context.t(
+    final verdict = context.t(
       correct ? K.correct : (timedOut ? K.sureDoldu : K.wrong),
     );
+    // Tur 1 (I10, 2026-10-29): alıştırmada doğrudan sonra "Zor / Orta /
+    // Kolay" açıklamasızdı; başlık soruyu da sorar. Tek satır, sığmazsa
+    // küçülür (şeridin boyu değişmez).
+    final title = ratingPrompt == null ? verdict : '$verdict · $ratingPrompt';
     final reduce = sahneMotionReduced(context);
     // Büyük yazıda (≥ %130) açıklama satırı düşer: şerit tek başına ekranın
     // üçte biriydi ve sorunun açıklama kartını kaydırma alanından itiyordu

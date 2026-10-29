@@ -82,19 +82,20 @@ void main() {
               find.byKey(const ValueKey('quiz-stage-kicker')),
               findsOneWidget,
             );
+            // Tur 1 (I11): yazılı etiket %130'a kadar kalır (yalnız ikon ne
+            // yaptığını söylemiyordu); daha büyük yazıda ikon.
+            final full = textScale <= 1.3;
             expect(
               find.byKey(const ValueKey('placement-skip')),
-              textScale == 1.0 ? findsOneWidget : findsNothing,
+              full ? findsOneWidget : findsNothing,
             );
             expect(
               find.byKey(const ValueKey('placement-skip-compact')),
-              textScale > 1.0 ? findsOneWidget : findsNothing,
+              full ? findsNothing : findsOneWidget,
             );
 
             final action = find.byKey(
-              ValueKey(
-                textScale == 1.0 ? 'placement-skip' : 'placement-skip-compact',
-              ),
+              ValueKey(full ? 'placement-skip' : 'placement-skip-compact'),
             );
             final semantics = tester.getSemantics(action).getSemanticsData();
             expect(semantics.hasAction(ui.SemanticsAction.tap), isTrue);
@@ -108,8 +109,8 @@ void main() {
   testWidgets(
     'placement actions and title stay within real bounds without clipping',
     (tester) async {
-      // 402: iPhone 17 Pro. Tam etiket 430 altında kompakt simgeye geçer; başlık
-      // ("Siyaset · Pi…") kırpılmasın diye (2026-10-21 simülatör düğme turu).
+      // 402: iPhone 17 Pro. Tur 1 (I11, 2026-10-29): tam etiket 375+ ve ≤ %130
+      // yazıda; künye artık uyarlanır (iki satır / küçülen punto), kırpılmaz.
       for (final size in [
         const Size(440, 844),
         const Size(402, 874),
@@ -131,7 +132,7 @@ void main() {
 
               final title = find.byKey(const ValueKey('quiz-stage-kicker'));
               final skipLabel = isKu ? 'Paşê bike' : 'Şimdilik geç';
-              final isFullLabel = size.width == 440 && textScale == 1.0;
+              final isFullLabel = size.width >= 375 && textScale <= 1.3;
               final action = find.byKey(
                 ValueKey(
                   isFullLabel ? 'placement-skip' : 'placement-skip-compact',

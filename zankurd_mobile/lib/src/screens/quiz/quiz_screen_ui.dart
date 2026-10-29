@@ -338,8 +338,31 @@ extension _QuizScreenUI on _QuizScreenState {
   ///
   /// Grup, dar ekranda ve büyük yazıda taşmaz: sığdırılarak küçülür.
   Widget _buildStageTrailing(BuildContext context) {
-    final showScore =
-        !(_isLearningExperience || widget.is1v1 || _isCrowd) && score > 0;
+    // Tur 1 (E1 kökü, 2026-10-29): puan çipi ilk doğrudan SONRA ekleniyordu;
+    // sağ grup genişleyince ortadaki künye ("Soru 1/10 · Ziman") daralıp iki
+    // satıra sarıyor, üst çubuk ~12 pt uzuyor ve soru + şıklar aşağı
+    // kayıyordu. Yuva baştan en geniş hâliyle ("88.888") ayrılır; puan
+    // gelince yalnız görünür olur, hiçbir şeyin yeri değişmez.
+    final scoreSlot = !(_isLearningExperience || widget.is1v1 || _isCrowd);
+    final showScore = scoreSlot && score > 0;
+    // Yer tutucu yıldız çizmez (yalnız aynı genişlikte boşluk): puan 0 iken
+    // ekranda "★ 0" ya da görünmez bir yıldız durmaz.
+    Widget scoreChip(String text, {bool glyph = true}) => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        glyph
+            ? const SahneGlyph(SahneGlyphKind.star, size: 16)
+            : const SizedBox.square(dimension: 16),
+        const SizedBox(width: SahneSpace.x1),
+        Text(
+          text,
+          style: SahneType.captionStrong.copyWith(
+            color: SahneVivid.onFill,
+            fontFeatures: const [FontFeature.tabularFigures()],
+          ),
+        ),
+      ],
+    );
     return FittedBox(
       fit: BoxFit.scaleDown,
       alignment: AlignmentDirectional.centerEnd,
@@ -353,25 +376,29 @@ extension _QuizScreenUI on _QuizScreenState {
               semanticLabel: context.t(K.chat),
               onPressed: () => _showLiveReactionMenu(context),
             ),
-          if (showScore) ...[
-            Semantics(
-              label: '${groupThousands(score)} ${context.t(K.scoreWord)}',
-              excludeSemantics: true,
-              child: Row(
-                key: const ValueKey('quiz-score-chip'),
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SahneGlyph(SahneGlyphKind.star, size: 16),
-                  const SizedBox(width: SahneSpace.x1),
-                  Text(
-                    groupThousands(score),
-                    style: SahneType.captionStrong.copyWith(
-                      color: SahneVivid.onFill,
-                      fontFeatures: const [FontFeature.tabularFigures()],
+          if (scoreSlot) ...[
+            Stack(
+              alignment: AlignmentDirectional.centerEnd,
+              children: [
+                ExcludeSemantics(
+                  child: Visibility(
+                    visible: false,
+                    maintainSize: true,
+                    maintainAnimation: true,
+                    maintainState: true,
+                    child: scoreChip(groupThousands(88888), glyph: false),
+                  ),
+                ),
+                if (showScore)
+                  Semantics(
+                    label: '${groupThousands(score)} ${context.t(K.scoreWord)}',
+                    excludeSemantics: true,
+                    child: KeyedSubtree(
+                      key: const ValueKey('quiz-score-chip'),
+                      child: scoreChip(groupThousands(score)),
                     ),
                   ),
-                ],
-              ),
+              ],
             ),
             const SizedBox(width: SahneSpace.x3),
           ],
@@ -508,22 +535,44 @@ extension _QuizScreenUI on _QuizScreenState {
     );
   }
 
-  /// Seri rozeti + puan uçuşu satırı. Rozet yokken yükseklik kaplamaz.
+  /// Seri rozeti + puan uçuşu satırı.
+  ///
+  /// 2026-10-29 simülatör turu 1 (E1, engelleyici): satır rozet yokken 0,
+  /// ×3'ten sonra rozet boyundaydı; günlük turda 3. doğrudan sonra soru ve
+  /// şıklar ~20 pt aşağı, seri bozulunca yukarı kayıyordu. "+N" uçuşu da
+  /// 900 ms boyunca Manşet satırı kadar yer kaplayıp aynı itişi yapıyordu.
+  /// Şimdi satır YERLEŞİME HİÇ GİRMEZ (0 boy): rozet ilerleme çubuğunun
+  /// hemen altında, gövdenin üst payının üstünde boyanan dokunulmaz bir
+  /// etikettir. Yer ayırmak (sabit boy) da denendi; tek oyunculu soruyu her
+  /// turda ~32 pt daraltıp şıkları 60'tan 52'ye indiriyordu. Düello/odada
+  /// seri zaten skor kartında yazar, rozet yoktur.
   Widget _buildComboRow() {
-    return Padding(
+    final showBadge = !widget.is1v1 && !_isCrowd;
+    return SizedBox(
       key: _comboKey,
-      padding: EdgeInsets.only(
-        top: comboTierFor(streak) != null ? SahneSpace.x2 : 0,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Flexible(
-            child: ComboBadge(streak: streak, isKu: _isKu),
+      width: double.infinity,
+      height: 0,
+      child: OverflowBox(
+        // a11y-tap-target: noninteractive — süs etiketi, dokunulmaz.
+        alignment: Alignment.topCenter,
+        minHeight: 0,
+        maxHeight: double.infinity,
+        child: IgnorePointer(
+          child: Padding(
+            padding: const EdgeInsets.only(top: SahneSpace.x1),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (showBadge)
+                  Flexible(
+                    child: ComboBadge(streak: streak, isKu: _isKu),
+                  ),
+                const SizedBox(width: SahneSpace.x2),
+                ScoreFlyup(trigger: _flyupTrigger, points: _lastPointsEarned),
+              ],
+            ),
           ),
-          const SizedBox(width: SahneSpace.x2),
-          ScoreFlyup(trigger: _flyupTrigger, points: _lastPointsEarned),
-        ],
+        ),
       ),
     );
   }
@@ -695,7 +744,8 @@ extension _QuizScreenUI on _QuizScreenState {
                   context.t(K.waitingOpponent),
                   context.t(K.crowdWaitingOthers),
                   context.t(K.sureDoldu),
-                  context.t(K.sonrakiSoruPS, {'p0': '88'}),
+                  for (final verdict in [K.correct, K.wrong, K.sureDoldu])
+                    _revealLabel(context, verdict, 88, last: false),
                 ],
               ],
               ratingLabels: [
@@ -724,6 +774,9 @@ extension _QuizScreenUI on _QuizScreenState {
                     inlineAction: !showRatingBar,
                     compactRow: _isMultiplayer,
                     timedOut: selectedAnswer == 'TIMEOUT',
+                    ratingPrompt: showRatingBar
+                        ? context.t(K.rateQuestionPrompt)
+                        : null,
                     semanticDetail: selectedAnswer == 'TIMEOUT'
                         ? Tr.forKu(K.sureDolduDogruCevap, _isKu, {
                             'p0': question.correctAnswer,
@@ -739,6 +792,8 @@ extension _QuizScreenUI on _QuizScreenState {
                             ),
                           ),
                   )
+                else if (!answered && hasOwnSubmit(question.type))
+                  const SizedBox.shrink()
                 else
                   _buildNextButton(context),
               ],
@@ -793,14 +848,30 @@ extension _QuizScreenUI on _QuizScreenState {
     final bool canPressNext = _isMultiplayer
         ? false
         : (answered && !completing && !_suspense);
-    final waiting = _isMultiplayer || _suspense;
+    // Tur 1 (I7): cevaptan ÖNCE çok oyunculuda da "Bir cevap seç" bir
+    // bekleme değil yönergedir; kum saati yalnız cevaptan sonra (rakip /
+    // sonuç beklenirken). Eskiden kum saatli gri düğme "bekle" gibi okunuyordu.
+    final waiting = (_isMultiplayer && answered) || _suspense;
     // 2026-10-29 (soru sığma): "Cevabın kaydedildi / diğer oyuncu bekleniyor"
     // ve "Sonraki soru n" kartları gövdede şıkların ALTINA ekleniyordu;
     // cevaptan sonra ~100 pt uzayıp soruyu kaydırtıyordu. Aynı bilgi artık
     // alt perdedeki düğmenin etiketidir (düğme zaten kilitli bekleme düğmesi).
+    // Tur 1 (I1, I2, 2026-10-29): çok oyunculu şerit dar olduğundan başlık
+    // yazısı düşüyordu; açılışta yalnız ✓/✗ + "Sonraki soru: 3sn" kalıyor,
+    // oyuncu sonucu ikondan çıkarmak zorundaydı. Etiket artık hükümle başlar
+    // ("Doğru · 3sn"); "Sonraki soru" sözü düştü ki etiket alt perdeyi
+    // uzatmasın (bütçe: [quizDockHeight]). Son soruda sonraki soru yok:
+    // yalnız hüküm yazar.
     final nextLabel =
         _isMultiplayer && answered && _mpPhase == _MultiplayerPhase.reveal
-        ? context.t(K.sonrakiSoruPS, {'p0': '$_revealCountdown'})
+        ? _revealLabel(
+            context,
+            selectedAnswer == 'TIMEOUT'
+                ? K.sureDoldu
+                : (_answerWasWrong ? K.wrong : K.correct),
+            _revealCountdown,
+            last: isLastQuestion,
+          )
         : _isMultiplayer && answered && selectedAnswer == 'TIMEOUT'
         // Süre dolunca bekleme etiketi "Süre doldu" der (şerit yalnız ✗ +
         // düğme taşır; başlık yazısına yer yok).
@@ -845,6 +916,21 @@ extension _QuizScreenUI on _QuizScreenState {
           );
     // Cevaptan ÖNCE pasif "Sonraki": çerçeveli, "düğme ama henüz değil".
     return !answered && !waiting ? QuizInactiveButtonFrame(child: next) : next;
+  }
+
+  /// Çok oyunculu açılış etiketi: "Doğru · 3sn"; son soruda yalnız hüküm.
+  String _revealLabel(
+    BuildContext context,
+    String verdictKey,
+    int seconds, {
+    required bool last,
+  }) {
+    final verdict = context.t(verdictKey);
+    if (last) return verdict;
+    return context.t(K.revealVerdictCountdown, {
+      'verdict': verdict,
+      'n': '$seconds',
+    });
   }
 
   /// Alıştırma turunda doğru cevaptan sonra zorluk puanı: üç eşit ikincil

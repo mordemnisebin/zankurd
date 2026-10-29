@@ -116,7 +116,18 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
       // (learning_screen `markSkipped`). Eskiden onaysız tek dokunuş
       // kartı sonsuza dek kaldırıyordu.
       widget.onFinished?.call(null);
-      if (mounted) Navigator.of(context).maybePop();
+      // Tur 1 (I11, 2026-10-29): geç deyince ekran sessizce kapanıyordu;
+      // oyuncu testin nereye gittiğini bilmiyordu. Kapanırken kısa not.
+      final messenger = ScaffoldMessenger.maybeOf(context);
+      final note = context.t(K.placementSkippedNote);
+      if (mounted) await Navigator.of(context).maybePop();
+      messenger?.showSnackBar(
+        SnackBar(
+          key: const ValueKey('placement-skipped-note'),
+          content: Text(note),
+          duration: const Duration(seconds: 4),
+        ),
+      );
     } finally {
       if (mounted) setState(() => _inputLocked = false);
     }
@@ -131,8 +142,11 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     }
     final skipLabel = context.t(K.placementSkip);
     final textScale = MediaQuery.textScalerOf(context).scale(16) / 16;
+    // Tur 1 (I11): yalnız ikon (⏭) ne yaptığını söylemiyordu; yazılı
+    // "Şimdilik geç" artık 375+ genişlikte ve ≤ %130 yazıda. Künye uyarlanır
+    // (iki satır / küçülen punto), kırpılmaz.
     final useCompactSkip =
-        MediaQuery.sizeOf(context).width < 430 || textScale > 1.05;
+        MediaQuery.sizeOf(context).width < 375 || textScale > 1.3;
     final question = _questions.isNotEmpty
         ? _questions[_index].localized(isKu: ku, learning: true)
         : null;

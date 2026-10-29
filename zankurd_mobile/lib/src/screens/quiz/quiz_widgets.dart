@@ -890,11 +890,12 @@ class _CrowdScoreHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final colorOverrides = resolveAvatarColors([
-      for (final p in {player, ...top.map((s) => s.player)})
-        (id: p.id ?? p.name, displayName: p.name, colorHex: p.avatarColor),
-    ]);
     final rankText = rank == null ? '—' : '#$rank/$total';
+    // Kartın içi %115 tavanlı ölçekle çizilir; bu `context` tavanın ÜSTÜNDE
+    // olduğundan boylar aynı tavanla buradan hesaplanır.
+    final cardScaler = MediaQuery.textScalerOf(
+      context,
+    ).clamp(maxScaleFactor: quizCrowdMaxScale);
     final progressStyle = SahneType.captionStrong.copyWith(
       color: t.tx2,
       fontFeatures: const [FontFeature.tabularFigures()],
@@ -918,40 +919,46 @@ class _CrowdScoreHeader extends StatelessWidget {
           color: isMe ? t.goldTint : t.s2,
           shape: SahneShape.s,
         ),
-        child: ConstrainedBox(
-          // a11y-tap-target: noninteractive — salt görüntü çipi.
-          constraints: const BoxConstraints(minHeight: _QuizHeaderHeights.chip),
+        child: SizedBox(
+          // a11y-tap-target: noninteractive — salt görüntü çipi. Boy SABİT ve
+          // sığdırma bütçesiyle aynı formül (sapma soruyu kaydırırdı).
+          height: _QuizHeaderHeights.chipHeight(cardScaler),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x1),
             child: Row(
               children: [
-                // Çipte ad ve sıra rakamı YOK: sıra soldan sağa sıradır, ad
-                // avatar + ekran okuyucu etiketindedir (5 haneli puan da
-                // 80 pt'lik yuvaya sığsın).
-                Semantics(
-                  label:
-                      '${standing.rank}. ${context.playerDisplayName(standing.player.name, tag: standing.player.tag)}, ${standing.player.score}',
-                  excludeSemantics: true,
-                  child: PlayerAvatar(
-                    radius: 10,
-                    photoUrl: standing.player.avatarUrl,
-                    iconId: standing.player.avatarIcon,
-                    colorHex: standing.player.avatarColor,
-                    frameId: standing.player.avatarFrame,
-                    showcaseTitle: standing.player.showcaseTitle,
-                    displayName: standing.player.name,
-                    colorOverride:
-                        colorOverrides[standing.player.id ??
-                            standing.player.name],
+                // Tur 1 (I3, 2026-10-29): çipte ad yoktu, yalnız baş harf +
+                // 12 pt puan; test adları aynı harfle başlayınca kimin hangi
+                // puanı aldığı anlaşılmıyordu (Opus + Astra). Artık kısa ad
+                // (ilk sözcük) + büyük puan; avatar düştü (baş harf ad kadar
+                // bilgi taşımıyor, yeri ada kalır). Sütun sayısı ikisinin en
+                // kötü genişliğiyle ölçülür ([quizCrowdColumns]).
+                Expanded(
+                  child: Semantics(
+                    label:
+                        '${standing.rank}. ${context.playerDisplayName(standing.player.name, tag: standing.player.tag)}, ${standing.player.score}',
+                    excludeSemantics: true,
+                    child: QuizFitLine(
+                      quizCrowdShortName(
+                        context.playerDisplayName(
+                          standing.player.name,
+                          tag: standing.player.tag,
+                        ),
+                      ),
+                      key: ValueKey('quiz-crowd-name-${standing.rank}'),
+                      style: tabular.copyWith(color: isMe ? t.goldTx : t.tx),
+                    ),
                   ),
                 ),
                 const SizedBox(width: SahneSpace.x1),
-                Expanded(
-                  // Puan okunur tabana (11 pt) kadar küçülür.
-                  child: QuizFitLine(
+                ExcludeSemantics(
+                  child: Text(
                     groupThousands(standing.player.score),
-                    alignment: AlignmentDirectional.centerEnd,
-                    style: tabular.copyWith(color: t.goldTx),
+                    maxLines: 1,
+                    style: tabular.copyWith(
+                      color: t.goldTx,
+                      fontSize: quizCrowdScorePt,
+                    ),
                   ),
                 ),
               ],
@@ -987,49 +994,41 @@ class _CrowdScoreHeader extends StatelessWidget {
       ),
     );
 
+    // Üst satır: solda sıran, sağda "x/N cevapladı". Kendi adın ve puanın
+    // aşağıdaki çiplerde (Zêr tonlu) zaten var; tekrar etmez.
     final header = Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        PlayerAvatar(
-          radius: 14,
-          photoUrl: player.avatarUrl,
-          iconId: player.avatarIcon,
-          colorHex: player.avatarColor,
-          frameId: player.avatarFrame,
-          showcaseTitle: player.showcaseTitle,
-          displayName: player.name,
-          colorOverride: colorOverrides[player.id ?? player.name],
+        Text(
+          context.t(K.crowdRankLabel),
+          maxLines: 1,
+          style: SahneType.eyebrow.copyWith(color: t.tx2),
         ),
-        const SizedBox(width: SahneSpace.x2),
-        Expanded(
-          flex: 5,
-          child: QuizFitLine(
-            context.playerDisplayName(player.name, tag: player.tag),
-            maxLines: 2,
-            style: SahneType.captionStrong.copyWith(color: t.tx),
+        const SizedBox(width: SahneSpace.x1),
+        Text(
+          rankText,
+          key: rankKey,
+          maxLines: 1,
+          style: SahneType.captionStrong.copyWith(
+            color: t.raceTx,
+            fontFeatures: const [FontFeature.tabularFigures()],
           ),
         ),
         const SizedBox(width: SahneSpace.x2),
-        Flexible(
-          flex: 6,
-          // Sağ grup (cevap sayısı + sıra) sığmazsa birlikte küçülür.
+        Expanded(
+          // Sayı gelmeden de yer AYNI: görünmez yer tutucu en geniş hâliyle
+          // (hepsi cevapladı) satırı baştan ayırır.
           child: FittedBox(
             fit: BoxFit.scaleDown,
             alignment: AlignmentDirectional.centerEnd,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Sayı gelmeden de yer AYNI: görünmez yer tutucu en geniş hâliyle
-                // (hepsi cevapladı) satırı baştan ayırır.
-                if (progress != null)
-                  Text(
+            child: progress != null
+                ? Text(
                     answeredText(progress!.answered, progress!.active),
                     key: progressKey,
                     maxLines: 1,
                     style: progressStyle,
                   )
-                else
-                  ExcludeSemantics(
+                : ExcludeSemantics(
                     child: Opacity(
                       opacity: 0,
                       child: Text(
@@ -1039,52 +1038,40 @@ class _CrowdScoreHeader extends StatelessWidget {
                       ),
                     ),
                   ),
-                const SizedBox(width: SahneSpace.x2),
-                Text(
-                  context.t(K.crowdRankLabel),
-                  maxLines: 1,
-                  style: SahneType.eyebrow.copyWith(color: t.tx2),
-                ),
-                const SizedBox(width: SahneSpace.x1),
-                Text(
-                  rankText,
-                  key: rankKey,
-                  maxLines: 1,
-                  style: SahneType.captionStrong.copyWith(
-                    color: t.raceTx,
-                    fontFeatures: const [FontFeature.tabularFigures()],
-                  ),
-                ),
-              ],
-            ),
           ),
         ),
       ],
     );
 
-    return Semantics(
-      container: true,
-      label:
-          '${context.t(K.crowdRankLabel)}: $rankText, '
-          '${player.score} ${context.t(K.scoreWord).toLowerCase()}',
-      child: SahneSurfaceCard(
-        key: const ValueKey('quiz-crowd-header'),
-        padding: const EdgeInsets.all(SahneSpace.x1),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ConstrainedBox(
-              // a11y-tap-target: noninteractive — salt görüntü satırı (dokunma
-              // yok; oda şeridi artık tıklanmaz).
-              constraints: const BoxConstraints(minHeight: 28),
-              child: header,
-            ),
-            if (top.isNotEmpty) ...[
-              const SizedBox(height: SahneSpace.x1),
-              strip,
+    return MediaQuery.withClampedTextScaling(
+      // Skor şeridi bilgi bandıdır; büyük yazıda %115'te durur ki soru ve
+      // şıklar (asıl içerik) büyük yazının alanını alsın. Bütçe aynı sınırı
+      // kullanır ([_QuizHeaderHeights.crowd]).
+      maxScaleFactor: quizCrowdMaxScale,
+      child: Semantics(
+        container: true,
+        label:
+            '${context.t(K.crowdRankLabel)}: $rankText, '
+            '${player.score} ${context.t(K.scoreWord).toLowerCase()}',
+        child: SahneSurfaceCard(
+          key: const ValueKey('quiz-crowd-header'),
+          padding: const EdgeInsets.all(SahneSpace.x1),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                // a11y-tap-target: noninteractive — salt görüntü satırı (dokunma
+                // yok; oda şeridi artık tıklanmaz). Boy SABİT, bütçeyle aynı.
+                height: _QuizHeaderHeights.headerRowHeight(cardScaler),
+                child: header,
+              ),
+              if (top.isNotEmpty) ...[
+                const SizedBox(height: SahneSpace.x1),
+                strip,
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -1339,6 +1326,19 @@ bool needsAnswerRevealFallback(QuestionType type) => switch (type) {
   QuestionType.visual ||
   QuestionType.fillInBlank => false,
   QuestionType.wordOrdering => true,
+};
+
+/// Soru türü cevabı KENDİ düğmesiyle mi gönderir ("Kontrol et")?
+///
+/// Tur 1 (I12, 2026-10-29): cümle sıralamada gövdede "Kontrol bike" dururken
+/// alt perdede pasif "Bir cevap seç" de görünüyordu: aynı anda iki eylem,
+/// biri yanlış yönerge. Kendi gönderme düğmesi olan türlerde alt perde
+/// cevaptan önce boş kalır (boyu sabit; bkz. `quizDockHeight`).
+bool hasOwnSubmit(QuestionType type) => switch (type) {
+  QuestionType.multipleChoice ||
+  QuestionType.trueFalse ||
+  QuestionType.visual => false,
+  QuestionType.fillInBlank || QuestionType.wordOrdering => true,
 };
 
 /// Doğru cevabı, cevap alanı onu göstermiyorsa gösteren YEDEK not.
@@ -1809,15 +1809,25 @@ class _QuizHeaderHeights {
   /// Oda şeridi: 16 iç boşluk + üst satır + 4 + dört kompakt çip.
   static double crowd(TextScaler s, double contentWidth) {
     // Kart iç boşluğu 4+4, çerçeve 2 (bkz. `_CrowdScoreHeader`).
-    final rows = (4 / quizCrowdColumns(s, contentWidth - 10)).ceil();
-    final chipH = max(chip, s.scale(17));
+    final c = s.clamp(maxScaleFactor: quizCrowdMaxScale);
+    final rows = (4 / quizCrowdColumns(c, contentWidth - 10)).ceil();
     return 2 * SahneSpace.x1 +
-        max(28.0, s.scale(20)) +
-        rows * (SahneSpace.x1 + chipH);
+        headerRowHeight(c) +
+        rows * (SahneSpace.x1 + chipHeight(c));
   }
 
   /// Kompakt oyuncu çipinin en az yüksekliği.
-  static const double chip = 20;
+  static const double chip = 22;
+
+  /// Çipin SABİT boyu: en az [chip], büyük yazıda puan satırı kadar.
+  static double chipHeight(TextScaler s) =>
+      max(chip, s.scale(quizCrowdScorePt) * 1.3 + 4);
+
+  /// Sıra + "x/N cevapladı" satırının en az yüksekliği.
+  static const double headerRow = 20;
+
+  /// Satırın SABİT boyu (bütçe ve çizim aynı formülü kullanır).
+  static double headerRowHeight(TextScaler s) => max(headerRow, s.scale(18));
 
   /// Kapalı çeviri şeridi.
   static double translation(TextScaler s) => max(32, s.scale(20) + 8);

@@ -14,6 +14,7 @@ import '../models/league_tier.dart';
 import '../providers/remote_availability.dart';
 import '../utils/app_route.dart';
 import '../utils/player_identity.dart';
+import '../widgets/friend_activity_label.dart';
 import '../widgets/player_moderation_button.dart';
 import '../widgets/app_state.dart';
 import '../widgets/leaderboard_arena.dart';
@@ -1470,9 +1471,7 @@ class _FriendRankRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    online
-                        ? (Tr.forKu(K.online, isKu))
-                        : (Tr.forKu(K.offline, isKu)),
+                    friendActivityLabel(context, friend),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: SahneType.caption.copyWith(

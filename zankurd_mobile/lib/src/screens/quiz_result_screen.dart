@@ -411,10 +411,34 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     if (goEarn == true && mounted) await _openSpinWheel();
   }
 
+  /// Sonuçtan ayrılınca gösterilecek misafir kayıt önerisi (I4).
+  Future<GuestSavePromptService?>? _pendingGuestSave;
+  NavigatorState? _navigator;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _navigator = Navigator.maybeOf(context);
+  }
+
   @override
   void dispose() {
     _levelUpTimer?.cancel();
     _detailsOpenRequest.dispose();
+    final pending = _pendingGuestSave;
+    final navigator = _navigator;
+    if (pending != null && navigator != null) {
+      // Rota kapandıktan sonraki karede, gezginin kendi bağlamından.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!navigator.mounted) return;
+        unawaited(
+          pending.then((service) {
+            if (!navigator.mounted) return null;
+            return GuestSavePrompt.presentIfDue(navigator.context, service);
+          }),
+        );
+      });
+    }
     super.dispose();
   }
 
@@ -1279,12 +1303,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           // Misafire üç oyunda bir "hesabını kaydet" önerisi. Seviye atlama
           // kutusunun üstüne binmesin diye o turda gösterilmez (oyun yine
           // sayılır; öneri bir sonraki oyunda gelir). Oyunu asla engellemez.
-          unawaited(
-            guestSaveCount.then((service) {
-              if (!mounted) return null;
-              return GuestSavePrompt.presentIfDue(context, service);
-            }),
-          );
+          //
+          // Tur 1 (I4, 2026-10-29): sayfa sonuç ekranı açılır açılmaz çıkıp
+          // skoru ve istatistikleri örtüyordu (simülatör, TR + KU). Artık
+          // sonuç önce okunur: sayfa oyuncu sonuç ekranından AYRILINCA,
+          // döndüğü ekranın üstünde açılır (bkz. [dispose]).
+          _pendingGuestSave = guestSaveCount;
         }
       });
     }

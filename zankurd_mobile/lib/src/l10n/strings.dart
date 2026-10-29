@@ -1095,6 +1095,15 @@ class Tr {
     },
     K.online: {'ku': 'Serhêl', 'tr': 'Çevrimiçi'},
     K.offline: {'ku': 'Ne li serhêl', 'tr': 'Çevrimdışı'},
+    K.friendPlayedToday: {
+      'ku': 'Di 24 saetên dawî de lîst',
+      'tr': 'Son 24 saatte oynadı',
+    },
+    K.friendPlayedDaysAgo: {
+      'ku': 'Berî {n} rojan lîst',
+      'tr': '{n} gün önce oynadı',
+    },
+    K.friendNeverPlayed: {'ku': 'Hîn nelîstiye', 'tr': 'Henüz oynamadı'},
     K.inviteToRoom: {'ku': 'Vexwîne odeyê', 'tr': 'Odaya çağır'},
     K.rejectAction: {'ku': 'Red bike', 'tr': 'Reddet'},
     K.acceptAction: {'ku': 'Qebûl', 'tr': 'Kabul'},
@@ -1391,12 +1400,10 @@ class Tr {
       'ku': 'Bersiva te hat tomarkirin',
       'tr': 'Cevabın kaydedildi',
     },
-    K.sonrakiSoruPS: {
-      // 2026-09-25 düzeltmesi: `{p0}s` kısaltması Türkçe saniye
-      // kısaltmasıydı; Kurmancî metinde Türkçe harf kalıyordu.
-      // `K.secondsShortUnit` zaten "çirke" diyor, o kullanılmalı.
-      'ku': 'Pirsa din: {p0} çirke',
-      'tr': 'Sonraki soru: {p0}sn',
+    // Tur 1 (I1): çok oyunculu açılışta hüküm + geri sayım ("Doğru · 3sn").
+    K.revealVerdictCountdown: {
+      'ku': '{verdict} · {n} çirke',
+      'tr': '{verdict} · {n}sn',
     },
     K.rakipBekleniyor: {'ku': 'Hevrik tê payîn…', 'tr': 'Rakip bekleniyor…'},
     K.cumleyiOlusturmakIcinKelimeleri: {
@@ -3085,6 +3092,11 @@ class Tr {
     // ── Seviye tespiti ────────────────────────────────────────────
     K.placementTitle: {'ku': 'Asta xwe diyar bike', 'tr': 'Seviyeni belirle'},
     K.placementSkip: {'ku': 'Paşê bike', 'tr': 'Şimdilik geç'},
+    // Tur 1 (I11): "Şimdilik geç" ekranı sessizce kapatıyordu.
+    K.placementSkippedNote: {
+      'ku': 'Tu dikarî azmûna astê paşê ji qerta li rûpela sereke bikî.',
+      'tr': 'Seviye testini sonra ana sayfadaki karttan yapabilirsin.',
+    },
     K.placementCardTitle: {'ku': 'Asta xwe bibîne', 'tr': 'Seviyeni bul'},
     K.placementCardStart: {'ku': 'Dest bi azmûnê bike', 'tr': 'Teste başla'},
     K.placementNoQuestions: {
@@ -3847,6 +3859,11 @@ class Tr {
       'tr': 'Önce bir tur oyna, sonra kodu kullan.',
     },
     K.asyncDuelTurnDone: {'ku': 'Dora te qediya.', 'tr': 'Senin turun bitti.'},
+    // Tur 1 (I8): bekleme kahramanındaki "3/7" etiketsizdi.
+    K.asyncDuelCorrectCaption: {
+      'ku': 'Ji {total} pirsan {correct} rast',
+      'tr': '{total} soruda {correct} doğru',
+    },
     K.asyncDuelWaitingBody: {
       'ku': 'Dema hevrikê te bilîze, encam li vir xuya dibe.',
       'tr': 'Rakibin oynayınca sonuç burada görünecek.',
@@ -4822,6 +4839,9 @@ class K {
   static const noFriendsHint = 'friends.none.hint';
   static const online = 'friends.online';
   static const offline = 'friends.offline';
+  static const friendPlayedToday = 'friends.playedToday';
+  static const friendPlayedDaysAgo = 'friends.playedDaysAgo';
+  static const friendNeverPlayed = 'friends.neverPlayed';
   static const inviteToRoom = 'friends.inviteToRoom';
   static const rejectAction = 'friends.reject';
   static const acceptAction = 'friends.accept';
@@ -4938,7 +4958,7 @@ class K {
   static const sureDolduDogruCevap = 'screen.sureDolduDogruCevap';
   static const sureDoldu = 'screen.sureDoldu';
   static const cevabinKaydedildi = 'screen.cevabinKaydedildi';
-  static const sonrakiSoruPS = 'screen.sonrakiSoruPS';
+  static const revealVerdictCountdown = 'quiz.revealVerdictCountdown';
   static const rakipBekleniyor = 'screen.rakipBekleniyor';
   static const cumleyiOlusturmakIcinKelimeleri =
       'screen.cumleyiOlusturmakIcinKelimeleri';
@@ -5572,6 +5592,7 @@ class K {
   // ── Seviye tespiti ────────────────────────────────────────────
   static const placementTitle = 'placement.title';
   static const placementSkip = 'placement.skip';
+  static const placementSkippedNote = 'placement.skippedNote';
   static const placementCardTitle = 'placement.card.title';
   static const placementCardStart = 'placement.card.start';
   static const placementNoQuestions = 'placement.noQuestions';
@@ -5854,6 +5875,7 @@ class K {
 
   /// Son soru cevaplandığında, rakip henüz bitirmemişse sonuç başlığı.
   static const asyncDuelTurnDone = 'duel.async.turnDone';
+  static const asyncDuelCorrectCaption = 'duel.async.correctCaption';
 
   /// "Rakip bekleniyor" durumunun açıklama gövdesi.
   static const asyncDuelWaitingBody = 'duel.async.waiting.body';

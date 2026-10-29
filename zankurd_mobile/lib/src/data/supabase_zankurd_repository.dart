@@ -3903,91 +3903,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     // eklemeden bu veriden türetilir (2026-08-14 denetimi).
     final bracket = await loadRealTournamentBracket();
     if (bracket == null) return _offline.loadTournamentStandings(limit: limit);
-    final standings = _standingsFromBracket(bracket);
+    final standings = tournamentStandingsFromBracket(bracket);
     if (standings.isEmpty) {
       return _offline.loadTournamentStandings(limit: limit);
     }
     return standings.take(limit).toList();
-  }
-
-  /// Bracket'teki maçlardan sıralama türetir — `champion`/`finalist` yalnız
-  /// bracket TEK maçlık bir tura ulaştıysa (yani final oynandıysa) verilir;
-  /// erken turda kaybeden `eliminated`, henüz elenmemiş/final oynanmamış
-  /// herkes `active` kalır.
-  List<TournamentStandings> _standingsFromBracket(TournamentBracket bracket) {
-    final names = <String, String>{};
-    final profiles = <String, PublicProfile>{};
-    final scores = <String, int>{};
-    final status = <String, String>{};
-
-    int? finalRound;
-    for (final round in bracket.rounds) {
-      if (round.matches.length == 1) finalRound = round.roundNumber;
-    }
-
-    void touch(String id, String name) {
-      if (id.isEmpty) return;
-      names[id] = name;
-      scores.putIfAbsent(id, () => 0);
-      status.putIfAbsent(id, () => 'active');
-    }
-
-    for (final round in bracket.rounds) {
-      for (final match in round.matches) {
-        touch(match.playerOneId, match.playerOneName);
-        touch(match.playerTwoId, match.playerTwoName);
-        final p1 = match.playerOneProfile;
-        final p2 = match.playerTwoProfile;
-        if (p1 != null) profiles[match.playerOneId] = p1;
-        if (p2 != null) profiles[match.playerTwoId] = p2;
-        if (match.playerOneId.isNotEmpty) {
-          scores[match.playerOneId] =
-              (scores[match.playerOneId] ?? 0) + match.playerOneScore;
-        }
-        if (match.playerTwoId.isNotEmpty) {
-          scores[match.playerTwoId] =
-              (scores[match.playerTwoId] ?? 0) + match.playerTwoScore;
-        }
-        if (match.status != 'completed' || match.winnerId.isEmpty) continue;
-        final loserId = match.playerOneId == match.winnerId
-            ? match.playerTwoId
-            : match.playerOneId;
-        final isFinal = finalRound != null && round.roundNumber == finalRound;
-        if (isFinal) {
-          status[match.winnerId] = 'champion';
-          if (loserId.isNotEmpty) status[loserId] = 'finalist';
-        } else if (loserId.isNotEmpty) {
-          status[loserId] = 'eliminated';
-        }
-      }
-    }
-
-    const statusWeight = {
-      'champion': 0,
-      'finalist': 1,
-      'active': 2,
-      'eliminated': 3,
-    };
-    final ids = names.keys.toList()
-      ..sort((a, b) {
-        final byStatus = (statusWeight[status[a]] ?? 2).compareTo(
-          statusWeight[status[b]] ?? 2,
-        );
-        if (byStatus != 0) return byStatus;
-        return (scores[b] ?? 0).compareTo(scores[a] ?? 0);
-      });
-
-    return List.generate(
-      ids.length,
-      (i) => TournamentStandings(
-        rank: i + 1,
-        playerId: ids[i],
-        playerName: names[ids[i]] ?? '—',
-        totalScore: scores[ids[i]] ?? 0,
-        status: status[ids[i]] ?? 'active',
-        profile: profiles[ids[i]],
-      ),
-    );
   }
 
   @override
@@ -4721,4 +4641,111 @@ Map<String, dynamic> decodeRoomBroadcast(Map<String, dynamic> raw) {
   final kind = out['kind'];
   if (kind != null) out['type'] = kind;
   return out;
+}
+
+/// Bracket'teki maçlardan sıralama türetir. Final oynandıysa kazanan
+/// `champion`, kaybeden `finalist`; erken turda kaybeden `eliminated`.
+///
+/// Tur 1 (I9, 2026-10-29): yarı finali KAZANAN da `finalist`tir (finale
+/// çıktı). Sunucu final turunu ancak iki yarı final bitince kurar; o ana
+/// kadar bracket'te tek maçlık tur yoktu ve yarı final galibi "Bekliyor"
+/// (`active`) görünüyordu (simülatör, 4 kişilik kupa). Final turunun numarası
+/// artık ilk turdaki oyuncu sayısından da çıkarılır.
+List<TournamentStandings> tournamentStandingsFromBracket(
+  TournamentBracket bracket,
+) {
+  final names = <String, String>{};
+  final profiles = <String, PublicProfile>{};
+  final scores = <String, int>{};
+  final status = <String, String>{};
+
+  int? finalRound;
+  for (final round in bracket.rounds) {
+    if (round.matches.length == 1) finalRound = round.roundNumber;
+  }
+  if (finalRound == null && bracket.rounds.isNotEmpty) {
+    // Final henüz kurulmadı: ilk turdaki maç sayısından tur sayısı (2^k).
+    final first = bracket.rounds.reduce(
+      (a, b) => a.roundNumber <= b.roundNumber ? a : b,
+    );
+    var matches = first.matches.length;
+    var number = first.roundNumber;
+    while (matches > 1) {
+      matches = (matches + 1) ~/ 2;
+      number += 1;
+    }
+    finalRound = number;
+  }
+
+  void touch(String id, String name) {
+    if (id.isEmpty) return;
+    names[id] = name;
+    scores.putIfAbsent(id, () => 0);
+    status.putIfAbsent(id, () => 'active');
+  }
+
+  // Turlar artan sırayla: final sonucu yarı final galibinin `finalist`ini ezer.
+  final ordered = [...bracket.rounds]
+    ..sort((a, b) => a.roundNumber.compareTo(b.roundNumber));
+  for (final round in ordered) {
+    for (final match in round.matches) {
+      touch(match.playerOneId, match.playerOneName);
+      touch(match.playerTwoId, match.playerTwoName);
+      final p1 = match.playerOneProfile;
+      final p2 = match.playerTwoProfile;
+      if (p1 != null) profiles[match.playerOneId] = p1;
+      if (p2 != null) profiles[match.playerTwoId] = p2;
+      if (match.playerOneId.isNotEmpty) {
+        scores[match.playerOneId] =
+            (scores[match.playerOneId] ?? 0) + match.playerOneScore;
+      }
+      if (match.playerTwoId.isNotEmpty) {
+        scores[match.playerTwoId] =
+            (scores[match.playerTwoId] ?? 0) + match.playerTwoScore;
+      }
+      if (match.status != 'completed' || match.winnerId.isEmpty) continue;
+      final loserId = match.playerOneId == match.winnerId
+          ? match.playerTwoId
+          : match.playerOneId;
+      final isFinal = finalRound != null && round.roundNumber == finalRound;
+      if (isFinal) {
+        status[match.winnerId] = 'champion';
+        if (loserId.isNotEmpty) status[loserId] = 'finalist';
+      } else {
+        if (loserId.isNotEmpty) status[loserId] = 'eliminated';
+        // Finalden önceki turun galibi finale çıktı (final bitince yukarıda
+        // `champion`/`finalist` olarak yeniden yazılır; turlar sırayla gezilir).
+        if (finalRound != null && round.roundNumber == finalRound - 1) {
+          status[match.winnerId] = 'finalist';
+        }
+      }
+    }
+  }
+
+  const statusWeight = {
+    'champion': 0,
+    'finalist': 1,
+    'active': 2,
+    'eliminated': 3,
+  };
+  final ids = names.keys.toList()
+    ..sort((a, b) {
+      final byStatus = (statusWeight[status[a]] ?? 2).compareTo(
+        statusWeight[status[b]] ?? 2,
+      );
+      if (byStatus != 0) return byStatus;
+      return (scores[b] ?? 0).compareTo(scores[a] ?? 0);
+    });
+
+  return List.generate(
+    ids.length,
+    (i) => TournamentStandings(
+      rank: i + 1,
+      playerId: ids[i],
+      playerName: names[ids[i]] ?? '—',
+      totalScore: scores[ids[i]] ?? 0,
+      status: status[ids[i]] ?? 'active',
+      profile: profiles[ids[i]],
+    ),
+  );
 }
