@@ -1043,7 +1043,7 @@ void main() {
     testWidgets('Kurmancî sonuç başlığı ve ayrılan etiketi', (tester) async {
       await mountResult(tester, players: players, ku: true);
 
-      expect(find.text('Rêzkirina pêşbirkê'), findsOneWidget);
+      expect(find.text('Rêzbendiya pêşbirkê'), findsOneWidget);
       expect(
         find.descendant(
           of: find.byKey(const ValueKey('crowd-left-gone')),
