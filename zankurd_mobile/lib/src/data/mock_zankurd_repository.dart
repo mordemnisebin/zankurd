@@ -1665,7 +1665,21 @@ class MockZanKurdRepository implements ZanKurdRepository {
         (q) => !QuestionSetPolicy.isProductionTask(q) && !q.hasImage,
       );
       if (replaceAt < 2) {
-        if (result.length < limit) result.add(pick);
+        if (result.length < limit) {
+          result.add(pick);
+        } else {
+          // Isınmadan sonraki her soru üretim ya da görselli olabilir; o zaman
+          // seçilen soru SESSİZCE düşüyordu ve Destpêk turu ~12'de 1 cümle
+          // kurmasız geliyordu (beginner_track_test ara sıra kırılıyordu).
+          // Zorunlu türlerden olmayan en sondaki soru yer açar.
+          final fallback = result.lastIndexWhere(
+            (q) =>
+                q.type != QuestionType.wordOrdering &&
+                q.type != QuestionType.fillInBlank,
+          );
+          if (fallback < 2) return;
+          result[fallback] = pick;
+        }
         used.add(pick.id);
         return;
       }
