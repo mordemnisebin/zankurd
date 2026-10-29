@@ -113,6 +113,10 @@ void main() {
     await tester.pumpAndSettle();
     final friendLoads = repository.friendLoads;
 
+    // Ölçü fontunda (kare harfler) satır eylemleri alt satıra iner
+    // (kapışma U11 ölçümü); düğme 800×600 test yüzeyinin altına düşebilir.
+    await tester.ensureVisible(find.byKey(const ValueKey('friend-more-Rojda')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('friend-more-Rojda')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('friend-moderate-Rojda')));
