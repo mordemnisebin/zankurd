@@ -2506,6 +2506,11 @@ class Tr {
     // "Ayrıntılar"ın ilk satırında. Taban 100 / doğru (`SpeedScore`, sunucu
     // `submit_answer`); kalan hız (+ çevrimiçide seri) bonusudur.
     // NEEDS_JURY (KU): "pûanên lez û zincîrê".
+    K.resultXpIsScore: {
+      'ku':
+          'Di lîstika serhêl de XP bi qasî pûana pêşbirkê ye (herî zêde 2000).',
+      'tr': 'Çevrimiçi oyunda XP, yarış puanın kadardır (en çok 2000).',
+    },
     K.resultScoreBreakdown: {
       'ku':
           '{n} bersivên rast × 100 + {bonus} pûanên lez û zincîrê = {score} pûan',
@@ -5321,6 +5326,7 @@ class K {
   static const locked = 'common.locked';
   static const resultDetails = 'result.details';
   static const resultDetailsTopics = 'result.detailsTopics';
+  static const resultXpIsScore = 'result.xpIsScore';
   static const resultScoreBreakdown = 'result.scoreBreakdown';
   static const allLessonsMore = 'learning.allLessonsMore';
   static const profileStartBody = 'profile.startBody';
