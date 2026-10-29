@@ -202,7 +202,9 @@ void main() {
       // kaynaksız) emekliye ayrıldı.
       // 3376 -> 3375 (-1): 2026-10-26 `visual_2026_08_07_0016` (def görseli
       // okunaksız, soru görsele bağlı) emekli.
-      3375,
+      // 3375 -> 3374 (-1): 2026-10-29 `hat_0094` (Mitanni başkenti, hat_0084
+      // ile aynı olgu) emekli.
+      3374,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -274,7 +276,8 @@ void main() {
       'retired=Edebiyat': 25, // 2026-10-19 içerik denetimi +2
       // 43 -> 45: 2026-10-17 yakın tekrar (`ds_dirok_0029`, `offline_2668`).
       // 45 -> 46: 2026-10-25 birebir kopya `kolay_dirok_08`.
-      'retired=Dîrok': 46,
+      // 46 -> 47: 2026-10-29 `hat_0094` (hat_0084 ile aynı olgu).
+      'retired=Dîrok': 47,
       // 2026-10-17 yakın tekrar: `ds_cografya_0133`, `ds_dirok_0091`, `ds_muzik_0144`.
       // 2026-10-19: +sf_cin_0007/0008; 2026-10-25 birebir kopya +sf_nat_0005.
       'retired=Cîhan': 6,

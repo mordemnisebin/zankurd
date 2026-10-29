@@ -142,8 +142,18 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('home-daily-task-start')));
     await tester.pumpAndSettle();
 
-    expect(repository.dailyQuestionLimit, 5);
+    // 2026-10-29: ilk tur zorluk 1-2 ile sınırlandığından aday havuzu geniş
+    // istenir (bkz. daily_question_selector `maxDifficulty`); QUIZIN soru
+    // sayısı yine beş.
+    expect(repository.dailyQuestionLimit, greaterThanOrEqualTo(5));
     expect(find.byType(QuizScreen), findsOneWidget);
+    final quiz = tester.widget<QuizScreen>(find.byType(QuizScreen));
+    expect(quiz.questions, hasLength(5));
+    expect(
+      quiz.questions.every((question) => question.difficulty <= 2),
+      isTrue,
+      reason: 'sıfırdan başlayan ilk turda ileri düzey soru gelmemeli',
+    );
   });
 
   // 2026-09-02: cihaz turunun otomatik karşılığı. Fiziksel telefon
