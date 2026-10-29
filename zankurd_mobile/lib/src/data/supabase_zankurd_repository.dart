@@ -1849,7 +1849,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .from('room_players')
         .stream(primaryKey: ['room_id', 'player_id'])
         .eq('room_id', roomId)
-        .asyncMap((rows) async {
+        .asyncMap((rawRows) async {
+          // Kurul C12 (Sol + Opus turu, 2026-10-29): gerçek zamanlı akış
+          // satırları belirli bir sırayla vermez; aynı lobi cihazdan cihaza
+          // farklı sırada çiziliyordu. İlk yükleme gibi katılma zamanına
+          // (eşitlikte oyuncu kimliğine) göre sıralanır.
+          final rows = [...rawRows]..sort(compareRoomPlayerRows);
           final List<Player> players = [];
           final List<String> missingProfileIds = [];
 
@@ -4747,5 +4752,21 @@ List<TournamentStandings> tournamentStandingsFromBracket(
       status: status[ids[i]] ?? 'active',
       profile: profiles[ids[i]],
     ),
+  );
+}
+
+/// Oda oyuncu satırlarının kararlı sırası: `joined_at` (ISO metin, yoksa en
+/// sona), eşitlikte `player_id`. Lobi her cihazda aynı sırada çizilir.
+int compareRoomPlayerRows(Map<String, dynamic> a, Map<String, dynamic> b) {
+  final aj = a['joined_at']?.toString();
+  final bj = b['joined_at']?.toString();
+  if (aj != bj) {
+    if (aj == null) return 1;
+    if (bj == null) return -1;
+    final byJoin = DateTime.parse(aj).compareTo(DateTime.parse(bj));
+    if (byJoin != 0) return byJoin;
+  }
+  return (a['player_id']?.toString() ?? '').compareTo(
+    b['player_id']?.toString() ?? '',
   );
 }

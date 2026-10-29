@@ -1436,6 +1436,8 @@ class Tr {
       'tr': '{verdict} · sonuçlar geliyor',
     },
     // Kurul C10: kalabalık odada beklenen kişi sayısı.
+    // Kurul C9: kalabalık odada herkes aynı puandayken sıra yerine.
+    K.crowdAllTied: {'ku': 'Wekhev', 'tr': 'Eşit'},
     K.crowdWaitingCount: {
       'ku': 'Li benda {n} lîstikvanan…',
       'tr': '{n} oyuncu bekleniyor…',
@@ -2184,8 +2186,10 @@ class Tr {
       'tr': 'Oda sahibi başlatınca yarış başlar.',
     },
     K.crowdHostStartHint: {
-      'ku': 'Gava amade bî dest pê bike. Piştî destpêkê kes nikare tevlî bibe.',
-      'tr': 'Hazır olunca başlat. Yarış başlayınca kimse katılamaz.',
+      // Kurul C11 (Astra + Sol): "Hazır olunca" oyuncu başına hazır durumu
+      // varmış gibi okunuyordu; ürün yalnız oda sahibinin başlatmasını bilir.
+      'ku': 'Gava her kes hat, dest pê bike. Piştî destpêkê kes nikare tevlî bibe.',
+      'tr': 'Herkes gelince başlat. Yarış başlayınca kimse katılamaz.',
     },
     K.hostTransferredToYou: {
       'ku': 'Mêvandar derket; niha tu mêvandar î.',
@@ -2436,6 +2440,8 @@ class Tr {
     // 2026-10-29 son kurul: "Cevapları gör" rozetindeki sayının ne olduğu
     // görünür yazılır ("2" değil "2 yanlış").
     K.wrongCountBadge: {'ku': '{n} şaşî', 'tr': '{n} yanlış'},
+    // Kurul C7: inceleme rozetinde boş (süresi dolan) soru sayısı.
+    K.blankCountBadge: {'ku': '{n} vala', 'tr': '{n} boş'},
     K.seeAnswersWrong: {
       'ku': 'Bersivan bibîne ({n} şaşî)',
       'tr': 'Cevapları gör ({n} yanlış)',
@@ -3573,7 +3579,13 @@ class Tr {
     K.selectCategory: {'ku': 'Mijarê hilbijêre', 'tr': 'Konu seç'},
     K.questionCountLabel: {'ku': 'Hejmara pirsan', 'tr': 'Soru sayısı'},
     K.entryFeeLabel: {'ku': 'Xerca beşdarbûnê', 'tr': 'Katılım ücreti'},
-    K.freeEntry: {'ku': 'Bêpere (0)', 'tr': 'Ücretsiz (0)'},
+    // Kurul C13 (Astra + Sol): "Ücretsiz (0)"daki sıfır neyin sıfırı belli
+    // değildi; giriş ücreti olduğu yazar.
+    K.freeEntry: {'ku': 'Ketina bêpere', 'tr': 'Ücretsiz giriş'},
+    K.perQuestionSeconds: {
+      'ku': 'ji bo her pirsê {n} çirke',
+      'tr': 'soru başına {n} sn',
+    },
     K.insufficientCoins: {
       'ku': 'Zêrên te têr nakin.',
       'tr': 'Jetonun yetmiyor.',
@@ -4984,6 +4996,8 @@ class K {
   static const revealVerdictCountdown = 'quiz.revealVerdictCountdown';
   static const revealVerdictResults = 'quiz.revealVerdictResults';
   static const crowdWaitingCount = 'quiz.crowd.waitingCount';
+  static const crowdAllTied = 'quiz.crowd.allTied';
+  static const perQuestionSeconds = 'room.perQuestionSeconds';
   static const rakipBekleniyor = 'screen.rakipBekleniyor';
   static const cumleyiOlusturmakIcinKelimeleri =
       'screen.cumleyiOlusturmakIcinKelimeleri';
@@ -5167,6 +5181,7 @@ class K {
   static const seeAnswers = 'result.seeAnswers';
   static const seeAnswersWrong = 'result.seeAnswersWrong';
   static const wrongCountBadge = 'result.wrongCountBadge';
+  static const blankCountBadge = 'result.blankCountBadge';
   static const hideAnswers = 'result.hideAnswers';
   static const showAllOptions = 'review.showAllOptions';
   static const wheelTitle = 'wheel.title';

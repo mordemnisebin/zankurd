@@ -1512,7 +1512,8 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
   /// "10 soru · 20 sn · ücretsiz": kapalı Ayarlar satırının özeti.
   String _settingsSummary(BuildContext context) =>
       '$_selectedQuestionCount ${context.t(K.soru)} · '
-      '$_selectedDuration ${context.t(K.secondsShortUnit)} · '
+      // Kurul C13 (Astra + Sol): "20 sn" neyin süresi olduğunu söylemiyordu.
+      '${context.t(K.perQuestionSeconds, {'n': '$_selectedDuration'})} · '
       '${_selectedEntryFee == 0 ? context.t(K.freeEntry) : '$_selectedEntryFee ${context.t(K.coinWord)}'}';
 
   @override

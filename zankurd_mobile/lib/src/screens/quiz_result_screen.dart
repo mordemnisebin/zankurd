@@ -183,6 +183,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   int get score => widget.score;
   int get correctCount => widget.correctCount;
   int get wrongCount => widget.wrongCount;
+
+  /// "Cevapları gör" rozeti: yanlış ve boş (süresi dolan) sayısı; ikisi de
+  /// yoksa boş metin (rozet çizilmez).
+  String _reviewBadgeLabel(BuildContext context) {
+    final blank = (widget.totalQuestions - widget.correctCount - wrongCount)
+        .clamp(0, widget.totalQuestions);
+    return [
+      if (wrongCount > 0) context.t(K.wrongCountBadge, {'n': '$wrongCount'}),
+      if (blank > 0) context.t(K.blankCountBadge, {'n': '$blank'}),
+    ].join(' · ');
+  }
+
   int get totalQuestions => widget.totalQuestions;
 
   /// "Üst üste" = bu turdaki en uzun doğru zinciri. Doğru sayısını aşamaz;
@@ -1381,7 +1393,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final isMixedCategoryRound = learningOutcome.categoryBreakdown.length > 1;
     final raceWord = context.t(K.raceWord);
     final String? roundLabel;
-    if (isMixedCategoryRound) {
+    if (room.isCrowd) {
+      // Kurul C24 (Opus turu): aynı kalabalık odanın sonucu oda sahibinde
+      // "Grup yarışı", katılanlarda "Karışık" yazıyordu (oda adı yalnız
+      // sahipte dolu). Kalabalık odada başlık herkeste aynıdır.
+      roundLabel = context.t(K.crowdRoomTitle);
+    } else if (isMixedCategoryRound) {
       final title = quizRoundTitle(
         roomId: null,
         roomCode: '',
@@ -1946,7 +1963,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       seeAnswersButton = _SeeAnswersButton(
         key: const ValueKey('result-see-answers-button'),
         wrongCount: wrongCount,
-        badgeLabel: context.t(K.wrongCountBadge, {'n': '$wrongCount'}),
+        // Kurul C7 (Astra + Sol): rozet yalnız yanlışları sayıyordu; boş
+        // (süresi dolan) sorular da incelemede olduğu hâlde görünmüyordu.
+        badgeLabel: _reviewBadgeLabel(context),
         label: context.t(K.seeAnswers),
         semanticLabel: wrongCount > 0
             ? context.t(K.seeAnswersWrong, {'n': '$wrongCount'})
@@ -2480,7 +2499,10 @@ class ResultStatTiles extends StatelessWidget {
         SahneResultStat(
           leading: Icon(AppIcons.hourglass, size: 20, color: t.tx2),
           value: unanswered,
-          label: context.t(K.blank),
+          // Kurul C8 (Astra + Sol): "Boş" sorunun neden boş kaldığını
+          // söylemiyordu; yarışta boş = süre doldu (süresiz derste sayaç
+          // 0'dır ve çip görünmez).
+          label: context.t(K.sureDoldu),
           tint: SahneVivid.chipBlankTint,
           accent: SahneVivid.chipBlankTx,
         ),
@@ -3232,7 +3254,7 @@ class _SeeAnswersButton extends StatelessWidget {
         expand: true,
         onPressed: onPressed,
         semanticLabel: semanticLabel,
-        trailing: wrongCount > 0
+        trailing: badgeLabel.isNotEmpty
             ? Container(
                 key: const ValueKey('result-see-answers-badge'),
                 // a11y-tap-target: noninteractive — yanlış sayısı rozeti;

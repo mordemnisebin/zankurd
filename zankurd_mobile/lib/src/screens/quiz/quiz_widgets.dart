@@ -890,7 +890,16 @@ class _CrowdScoreHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final rankText = rank == null ? '—' : '#$rank/$total';
+    // Kurul C9 (Astra + Sol): herkes aynı puandayken (ör. ilk soruda 0)
+    // "#1/4" tek başına liderlik gibi okunuyordu; eşitlikte "Eşit" yazar.
+    final allTied =
+        top.length > 1 &&
+        top.every((s) => s.player.score == top.first.player.score);
+    final rankText = rank == null
+        ? '—'
+        : allTied
+        ? context.t(K.crowdAllTied)
+        : '#$rank/$total';
     // Kartın içi %115 tavanlı ölçekle çizilir; bu `context` tavanın ÜSTÜNDE
     // olduğundan boylar aynı tavanla buradan hesaplanır.
     final cardScaler = MediaQuery.textScalerOf(
