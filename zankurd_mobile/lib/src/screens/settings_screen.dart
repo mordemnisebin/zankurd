@@ -242,6 +242,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ..showSnackBar(SnackBar(content: Text(copiedText)));
   }
 
+  Future<void> _setCrashReportsConsent(bool enabled) async {
+    final saved = await context
+        .read<AnalyticsConsentProvider>()
+        .setCrashReportsEnabled(enabled);
+    if (!mounted || saved) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
+  }
+
   Future<void> _setAnalyticsConsent(bool enabled) async {
     final saved = await context.read<AnalyticsConsentProvider>().setEnabled(
       enabled,
@@ -406,6 +416,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         key: const ValueKey('analytics-consent-switch'),
                         value: consent.enabled,
                         onChanged: _setAnalyticsConsent,
+                      ),
+                    ),
+                  ),
+                  Consumer<AnalyticsConsentProvider>(
+                    builder: (context, consent, _) => SahneListRow.plain(
+                      title: context.t(K.crashReportsConsent),
+                      subtitle: context.t(K.crashReportsConsentSub),
+                      trailing: Switch(
+                        key: const ValueKey('crash-reports-consent-switch'),
+                        value: consent.crashReportsEnabled,
+                        onChanged: _setCrashReportsConsent,
                       ),
                     ),
                   ),

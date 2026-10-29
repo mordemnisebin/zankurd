@@ -673,33 +673,51 @@ void main() {
     }
   });
 
-  test('harf uzunluğu Kurmancîde tîp olarak kalır', () {
-    // Şifre ipucu `Herî kêm 6 tîp` der. Oda kodu "10 karakter"
-    // deyince oyuncu aynı birimi iki adla görür. Türkçe `karakter`
-    // kökü `contains('tîp')` taramasını kör eder — turnûva ile aynı sınıf.
-    expect(Tr.of(K.passwordHintMin6, AppLanguage.ku), 'Herî kêm 6 tîp');
+  test('uzunluk sınırları Kurmancîde karakter, harf sayısı tîp', () {
+    // 2026-10-29 (Opus 5.5 + GPT-6 Astra kararı, jüri 2/3): şifre, ad ve
+    // sohbet sınırları rakam ve simgeyi de sayar; `tîp` (harf) kuralı yanlış
+    // anlatır ('12345a' 6 tîp mi?). Bu sınırlarda birim `karakter`. Yalnız
+    // gerçekten harf sayan metin (`minTwoChars`, TR "harf") `tîp` kalır.
+    // Eskiden (c7e92bc8) `karakter` Türkçe sızıntı sayılıp her yerde
+    // yasaktı; yasak artık yalnız bu uzunluk anahtarlarına istisna tanır.
+    const lengthKeys = {
+      K.passwordMin6,
+      K.passwordTooShort,
+      K.passwordHintMin6,
+      K.authErrWeakPassword,
+      K.nameMinLength,
+      K.nameMaxLength,
+      K.nameInvalidChars,
+      K.chatTooLong,
+      K.chatSpam,
+    };
+    expect(Tr.of(K.passwordHintMin6, AppLanguage.ku), 'Herî kêm 6 karakter');
+    expect(Tr.of(K.minTwoChars, AppLanguage.ku), 'Herî kêm 2 tîp binivîse');
     expect(
       Tr.of(K.roomCodeInvalid, AppLanguage.ku),
       'Kodê kontrol bike. Mînak: 482 913',
     );
 
     final karakter = RegExp(r'karakter', caseSensitive: false);
+    final tip = RegExp(r'\btîp');
+    for (final key in lengthKeys) {
+      final ku = Tr.of(key, AppLanguage.ku);
+      expect(karakter.hasMatch(ku), isTrue, reason: '$key: birim karakter');
+      expect(tip.hasMatch(ku), isFalse, reason: '$key: tîp harf demektir');
+    }
     for (final key in Tr.keys) {
+      if (lengthKeys.contains(key)) continue;
       expect(
         karakter.hasMatch(Tr.of(key, AppLanguage.ku)),
         isFalse,
-        reason: '$key: Kurmancî metinde Türkçe "karakter"; karşılığı "tîp"',
+        reason:
+            '$key: Kurmancî metinde Türkçe "karakter" yalnız uzunluk '
+            'sınırlarında kabul',
       );
     }
 
-    // Auth hataları defterde değil; zayıf şifre "6 karakter" deyince
-    // ipucu `tîp` ile çelişir. Yorum satırları eski yalanı belgelemek
-    // için kökü anabilir.
-    // Auth hata iletileri artık metin anahtarı (K.authErr*), `lang.dart`taki
-    // elle eşleme kalktı; zayıf şifre iletisi defterde `tîp` demeli.
     final weak = Tr.of(K.authErrWeakPassword, AppLanguage.ku);
-    expect(weak, contains('herî kêm 6 tîp'));
-    expect(weak, isNot(contains('karakter')));
+    expect(weak, contains('herî kêm 6 karakter'));
   });
 
   test('bulut senkronu Kurmancîde ewr olarak kalır', () {
