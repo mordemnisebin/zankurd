@@ -3094,7 +3094,7 @@ class Tr {
     K.placementSkip: {'ku': 'Paşê bike', 'tr': 'Şimdilik geç'},
     // Tur 1 (I11): "Şimdilik geç" ekranı sessizce kapatıyordu.
     K.placementSkippedNote: {
-      'ku': 'Tu dikarî azmûna astê paşê ji qerta li rûpela sereke bikî.',
+      'ku': 'Tu dikarî paşê azmûna astê ji qerta li rûpela sereke bikî.',
       'tr': 'Seviye testini sonra ana sayfadaki karttan yapabilirsin.',
     },
     K.placementCardTitle: {'ku': 'Asta xwe bibîne', 'tr': 'Seviyeni bul'},
