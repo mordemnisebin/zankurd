@@ -126,4 +126,44 @@ void main() {
       ]);
     },
   );
+
+  // Codex denetimi 2026-10-29 (içerik #3): ilk pratikte zorluk sınırı yoktu;
+  // sıfırdan başlayan ilk soruda ileri bilgiyle karşılaşabiliyordu.
+  QuizQuestion hard(String id, int difficulty) => QuizQuestion(
+    id: id,
+    category: 'Ziman',
+    prompt: 'Pirs $id?',
+    answers: const ['A', 'B'],
+    correctAnswer: 'A',
+    explanation: 'Şîrove $id.',
+    difficulty: difficulty,
+  );
+
+  test(
+    'ilk oturum zorluk sınırı: kolaylar önce, zorlar kolaydan zora doldurur',
+    () {
+      final selected = selectDailyQuestionsForGoal(
+        candidates: [
+          hard('d5', 5),
+          hard('e1', 1),
+          hard('d3', 3),
+          hard('e2', 2),
+        ],
+        goal: null,
+        limit: 3,
+        maxDifficulty: 2,
+      );
+      expect(selected.map((q) => q.id), ['e1', 'e2', 'd3']);
+    },
+  );
+
+  test('ilk oturum yeterli kolay soruda hiç zor soru almaz', () {
+    final selected = selectDailyQuestionsForGoal(
+      candidates: [hard('d5', 5), hard('e1', 1), hard('e2', 2), hard('e1b', 1)],
+      goal: null,
+      limit: 3,
+      maxDifficulty: 2,
+    );
+    expect(selected.every((q) => q.difficulty <= 2), isTrue);
+  });
 }

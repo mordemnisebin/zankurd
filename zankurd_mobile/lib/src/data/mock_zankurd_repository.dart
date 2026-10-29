@@ -529,7 +529,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
     final ordered = difficultyMax <= 2
         ? QuestionSetPolicy.byReadingLoad(pool.isEmpty ? playable : pool)
         : (pool.isEmpty ? playable : pool);
-    final selected = await _selectFresh(ordered, limit);
+    final fresh = await _selectFresh(ordered, limit);
+    // `_selectFresh` -> `preferUnseen` görülmemişleri KARIŞTIRIR; yukarıdaki
+    // okuma yükü sıralaması seçimden sonra kaybolup ilk sorunun hafif
+    // okunması güvencesiz kalıyordu (Codex denetimi 2026-10-29). Seçilen
+    // tur, giriş basamaklarında yeniden okuma yüküne göre sıralanır.
+    final selected = difficultyMax <= 2
+        ? QuestionSetPolicy.byReadingLoad(fresh)
+        : fresh;
     // `byReadingLoad` üretim sorularını (boşluk doldurma, cümle kurma) bilerek
     // sona iter; tanıma sorusu havuzu turu doldurduğu için yeni başlayan hiç
     // yazmalı/sıralamalı soru GÖRMÜYORDU (2026-10-06, başlangıç yolu geri
@@ -1510,7 +1517,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
     int salt,
   ) {
     final seed = dailySeedFor(currentUserId) ^ salt;
-    final pool = [...playable]..shuffle(Random(seed));
+    // Aynı olguyu iki kayıtla soran sorular (Türkçe soru metni + doğru cevap
+    // aynı) günlük turda birlikte çıkmaz: ilki ikincisinin cevabını
+    // öğretirdi (Codex denetimi 2026-10-29).
+    final pool = _dedupeSameFact([...playable]..shuffle(Random(seed)));
     final daily = _withVisualBlend(
       pool.take(limit).toList(),
       playable,
@@ -1520,6 +1530,26 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Günlük ders rastgele havuzdan çekilir; üretim soruları bankanın ~%3'ü
     // olduğundan yeni başlayan günlük derste hiç cümle kurma görmeyebilirdi.
     return _withBeginnerProduction(daily, playable, limit, Random(seed));
+  }
+
+  /// Türkçe soru metni ve doğru cevabı aynı olan kayıtlardan yalnız ilkini
+  /// tutar (sıra korunur). Türkçe metin yoksa soru olduğu gibi geçer.
+  static List<QuizQuestion> _dedupeSameFact(List<QuizQuestion> pool) {
+    final seen = <String>{};
+    return [
+      for (final question in pool)
+        if (_sameFactKey(question) case final key?)
+          if (seen.add(key)) question else ...const <QuizQuestion>[]
+        else
+          question,
+    ];
+  }
+
+  static String? _sameFactKey(QuizQuestion question) {
+    final prompt = question.promptTr?.trim().toLowerCase();
+    final answer = (question.correctAnswerTr ?? '').trim().toLowerCase();
+    if (prompt == null || prompt.isEmpty || answer.isEmpty) return null;
+    return '$prompt|$answer';
   }
 
   /// Dersin kısa testi: etiketli tanıma sorularının arasına, dersin etiketli

@@ -505,7 +505,7 @@ class SyncManager {
       // `retryFailedItems` hedefi yazıp kaynağı boşaltmadan kapanmışsa aynı
       // kayıt iki listede kalır; başarısız listedekini düşür.
       String canon(Map<String, dynamic> item) =>
-          jsonEncode((Map<String, dynamic>.of(item)..remove('retries')));
+          jsonEncode(Map<String, dynamic>.of(item)..remove('retries'));
       final queued = _queue.map(canon).toSet();
       _failedItems.removeWhere((item) => queued.contains(canon(item)));
     } catch (error, stack) {
