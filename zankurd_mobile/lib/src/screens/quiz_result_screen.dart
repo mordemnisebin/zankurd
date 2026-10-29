@@ -1914,6 +1914,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // içeriği yok ederdi. Düğme o zaman listenin sonunda durur.
     final stackedDock = MediaQuery.textScalerOf(context).scale(16) >= 24;
 
+    // 2026-10-29 gerçek cihaz turu (402x874): düello sonucunda "Kazanıldı"
+    // kartı alt perdenin altında yarım kalıyor, XP/jeton çipleri kaydırınca
+    // görünüyordu. Düellonun ilk görünümü sonuç + skor + ödüldür; maskot,
+    // puan ve karolar küçülür (kısa ekranda maskot hiç çizilmez).
+    final duelCompact = is1v1 && !isLearningExperience;
+    final shortScreen = MediaQuery.sizeOf(context).height < 760;
+    final duelMascotWidth = shortScreen ? 0.0 : 72.0;
+
     final scaffold = SahneResultScaffold(
       neutral: true,
       mood: mood,
@@ -1933,6 +1941,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         key: const ValueKey('result-score-header'),
         emblem: is1v1 && !isLearningExperience
             ? _DuelMascotTop(
+                mascotWidth: duelMascotWidth,
                 pose: isWinner ? ZanPose.celebrate : ZanPose.support,
                 celebrate: isWinner,
                 child: _DuelFaceOff(
@@ -1978,8 +1987,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             ? accuracyText
             : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
         celebrate: celebrate,
+        valueSize: duelCompact ? (shortScreen ? 56 : 72) : null,
         emblemExtra: is1v1 && !isLearningExperience
-            ? _DuelMascotTop.height
+            ? _DuelMascotTop.heightFor(duelMascotWidth)
             : duelOutcome == null
             ? SahneMedalScene.medalSize - 70
             : 0,
@@ -1995,6 +2005,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         notices: notices,
       ),
       stats: ResultStatTiles(
+        compact: duelCompact,
+        oneRow: duelCompact && shortScreen,
         correct: correctCount,
         wrong: wrongCount,
         unanswered: unanswered,
@@ -2002,12 +2014,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       ),
       rewards: hasRewards
           ? SahneResultRewards(
+              compact: duelCompact,
               label: context.t(K.kazanildi),
               coins: coinsAwarded,
               coinLabel: '+$coinsAwarded',
               coinSemanticLabel: '+$coinsAwarded ${context.t(K.coinWord)}',
               xp: _earnedXP,
-              progress: _levelJourneyReady
+              // Kısa ekranda düello sonucunda seviye çubuğu çizilmez: ilk
+              // görünüm sonuç + skor + XP/jeton'dur (çubuk ödül kartını alt
+              // perdenin altına itiyordu).
+              progress: _levelJourneyReady && !(duelCompact && shortScreen)
                   ? KeyedSubtree(
                       key: const ValueKey('result-level-journey-progress'),
                       child: SahneResultLevelProgress(
@@ -2207,6 +2223,7 @@ enum _DuelOutcome { win, draw, loss, podium }
 /// konfeti), kaybedince/beraberlikte destek. Dekoratif; sonucu başlık söyler.
 class _DuelMascotTop extends StatelessWidget {
   const _DuelMascotTop({
+    required this.mascotWidth,
     required this.pose,
     required this.celebrate,
     required this.child,
@@ -2216,11 +2233,12 @@ class _DuelMascotTop extends StatelessWidget {
   final bool celebrate;
   final Widget child;
 
-  static const double mascotWidth = 104;
+  /// Maskot genişliği; 0 → maskot çizilmez (kısa ekran).
+  final double mascotWidth;
 
   /// Maskot + boşluk (eski amblem satırına eklenen yükseklik).
-  static double get height =>
-      mascotWidth / ZanPose.celebrate.aspect + SahneSpace.x2;
+  static double heightFor(double width) =>
+      width <= 0 ? 0 : width / ZanPose.celebrate.aspect + SahneSpace.x2;
 
   @override
   Widget build(BuildContext context) {
@@ -2231,8 +2249,10 @@ class _DuelMascotTop extends StatelessWidget {
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ZanMascot(pose: pose, size: mascotWidth),
-            const SizedBox(height: SahneSpace.x2),
+            if (mascotWidth > 0) ...[
+              ZanMascot(pose: pose, size: mascotWidth),
+              const SizedBox(height: SahneSpace.x2),
+            ],
             child,
           ],
         ),
@@ -2344,6 +2364,8 @@ class _HeroNotice extends StatelessWidget {
 @visibleForTesting
 class ResultStatTiles extends StatelessWidget {
   const ResultStatTiles({
+    this.compact = false,
+    this.oneRow = false,
     required this.correct,
     required this.wrong,
     required this.unanswered,
@@ -2355,11 +2377,15 @@ class ResultStatTiles extends StatelessWidget {
   final int wrong;
   final int unanswered;
   final int streak;
+  final bool compact;
+  final bool oneRow;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     return SahneResultStats(
+      compact: compact,
+      oneRow: oneRow,
       stats: [
         // Renkli çipler (2026-10-20): doğru yeşil, yanlış kırmızı, boş nötr,
         // seri altın; ton dolgu renkli sahnenin üstünde %18.

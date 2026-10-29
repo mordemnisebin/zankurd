@@ -2252,6 +2252,26 @@ class Tr {
       'ku': 'Pûana te hate tomarkirin; em li benda bersiva hevrikê te ne.',
       'tr': 'Puanın kaydedildi; rakibinin oynamasını bekliyoruz.',
     },
+    // 2026-10-29 gerçek cihaz turu: bekleme kartı "ne kadar" ve "ne olur"u
+    // söylemiyordu. Sunucu (`resolve_expired_tournament_matches`): süre
+    // dolunca yalnız skor göndermiş olan geçer (hükmen). Rakip hâlâ
+    // oynayabilir; süre dolduktan sonra sonuç bir sonraki yenilemede gelir.
+    K.tournamentWaitingOpponentDeadline: {
+      'ku': 'Heke hevrikê te heta {time} nebilîze, tu bêyî lîstik serdikevî.',
+      'tr': 'Rakibin {time} tarihine kadar oynamazsa maçı hükmen kazanırsın.',
+    },
+    K.tournamentWaitingOpponentExpired: {
+      'ku': 'Dem qediya; encam di demeke nêzîk de tê nûkirin.',
+      'tr': 'Süre doldu; sonuç birazdan güncellenecek.',
+    },
+    // Katılınca açılan yeni kupa: önceki kupa doluyken katılan oyuncu boş
+    // bir "1/4" ekranına düşüyor ve nedenini göremiyordu.
+    K.tournamentNewOpened: {
+      'ku':
+          'Kûpayeke nû hat vekirin. Ji bo destpêkirinê hê {n} lîstikvan hewce ne.',
+      'tr':
+          'Yeni bir turnuva açıldı. Başlaması için {n} oyuncu daha gerekiyor.',
+    },
     K.championRewardGranted: {
       'ku': 'Pîroz be! Xelata şampiyoniyê: {coins} zêr',
       'tr': 'Tebrikler! Şampiyonluk ödülün: {coins} jeton',
@@ -3857,6 +3877,17 @@ class Tr {
     K.asyncDuelKeepPlaying: {'ku': 'Bidomîne', 'tr': 'Devam et'},
     K.asyncDuelNew: {'ku': 'Pêşbirkeke nû', 'tr': 'Yeni düello'},
     K.asyncDuelXp: {'ku': '+{xp} XP', 'tr': '+{xp} XP'},
+    // 2026-10-29 gerçek cihaz turu: kaybeden +20, kazanan +50 XP görüyor ve
+    // nedenini bilmiyordu. Formül sunucuda sabit (claim_async_duel_xp:
+    // doğru başına 20, galibiyet bonusu 30).
+    K.asyncDuelXpBreakdown: {
+      'ku': '{n} bersivên rast × 20 XP',
+      'tr': '{n} doğru × 20 XP',
+    },
+    K.asyncDuelXpBreakdownWin: {
+      'ku': '{n} bersivên rast × 20 + 30 XP ji bo serkeftinê',
+      'tr': '{n} doğru × 20 + 30 XP galibiyet bonusu',
+    },
     // Doğrular eşitken kazananı toplam süre belirler; "Kazandın · 3–3"
     // açıklamasız kalınca oyuncu nedenini anlamıyordu.
     K.asyncDuelTieBreak: {
@@ -5145,6 +5176,11 @@ class K {
   static const tournamentQuitTitle = 'tournament.quitTitle';
   static const tournamentNextAfterFinish = 'tournament.nextAfterFinish';
   static const tournamentWaitingOpponent = 'tournament.waitingOpponent';
+  static const tournamentWaitingOpponentDeadline =
+      'tournament.waitingOpponentDeadline';
+  static const tournamentWaitingOpponentExpired =
+      'tournament.waitingOpponentExpired';
+  static const tournamentNewOpened = 'tournament.newOpened';
   static const championRewardGranted = 'tournament.championReward';
   static const tournamentMatchSubmitFailed = 'tournament.matchSubmitFailed';
   static const buyAction = 'shop.buy';
@@ -5785,6 +5821,8 @@ class K {
 
   /// Sonuç ekranındaki kazanılan XP rozeti; `{xp}` yer tutuculudur.
   static const asyncDuelXp = 'duel.async.xp';
+  static const asyncDuelXpBreakdown = 'duel.async.xpBreakdown';
+  static const asyncDuelXpBreakdownWin = 'duel.async.xpBreakdownWin';
 
   /// Eşit doğruda süreyle belirlenen sonucun açıklaması.
   static const asyncDuelTieBreak = 'duel.async.tieBreak';

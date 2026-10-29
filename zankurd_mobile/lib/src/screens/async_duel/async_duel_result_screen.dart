@@ -646,6 +646,22 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
               label: context.t(K.kazanildi),
               xp: xp,
               xpLabel: context.t(K.asyncDuelXp, {'xp': '$xp'}),
+              // XP'nin kaynağı yalnız formül verinin kendisinden çıkıyorsa
+              // yazılır (tamamlandı: doğru×20 + galibiyet 30; süre doldu:
+              // doğru×20).
+              progress: (view.myCorrect ?? 0) > 0
+                  ? Text(
+                      key: const ValueKey('async-duel-xp-breakdown'),
+                      context.t(
+                        view.kind == AsyncDuelResultKind.completed &&
+                                view.outcome == AsyncDuelOutcome.win
+                            ? K.asyncDuelXpBreakdownWin
+                            : K.asyncDuelXpBreakdown,
+                        {'n': '${view.myCorrect}'},
+                      ),
+                      style: SahneType.caption.copyWith(color: t.tx2),
+                    )
+                  : null,
             )
           : null,
       sections: [

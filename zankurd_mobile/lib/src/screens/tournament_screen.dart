@@ -163,6 +163,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
   /// göndermezse null ve satır çizilmez (2026-10-27).
   ({int count, int size})? _waitingFill;
 
+  /// Oyuncu "Katıl"a bastı ve bekleme ekranına düştü: yeni açılan kupayı
+  /// açıkça söyler (önceki kupa doluyken boş "1/4" ekranı açıklamasızdı).
+  bool _joinedJustNow = false;
+
   /// Kupanın açıldığı an (sunucu `opened_at`); 24 saatlik süre buradan
   /// sayılır. Yalnız doluluk alanlarını döndüren (yeni) RPC'de güvenilir.
   DateTime? _waitingOpenedAt;
@@ -423,6 +427,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             _waitingForPlayers = !seeded;
             _waitingFill = _fillOf(joined);
             _waitingOpenedAt = _openedAtOf(joined);
+            _joinedJustNow = !seeded;
           });
           return;
         }
@@ -912,7 +917,11 @@ class _TournamentScreenState extends State<TournamentScreen> {
               openedAt.add(const Duration(hours: cupFillHours)),
             ),
           });
-    final head = [line, ?due].join('\n');
+    // Katılma anında kupa yeniyse (tek kayıt: biz) bunu söyle.
+    final fresh = _joinedJustNow && fill.count <= 1
+        ? context.t(K.tournamentNewOpened, {'n': '${fill.size - fill.count}'})
+        : null;
+    final head = [?fresh, line, ?due].join('\n');
     return '$head\n\n$body';
   }
 
@@ -1109,9 +1118,29 @@ class _TournamentScreenState extends State<TournamentScreen> {
                 Icon(AppIcons.hourglass, size: 20, color: t.goldTx),
                 const SizedBox(width: SahneSpace.x3),
                 Expanded(
-                  child: Text(
-                    context.t(K.tournamentWaitingOpponent),
-                    style: SahneType.body.copyWith(color: t.tx2),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        context.t(K.tournamentWaitingOpponent),
+                        style: SahneType.body.copyWith(color: t.tx2),
+                      ),
+                      // Sunucu süre dolunca skor göndereni hükmen geçirir
+                      // (`resolve_expired_tournament_matches`); kural yalnız
+                      // gerçek şemada ve son tarih biliniyorsa yazılır.
+                      if (_userMatch?.deadline case final deadline?) ...[
+                        const SizedBox(height: SahneSpace.x1),
+                        Text(
+                          key: const ValueKey('tournament-awaiting-deadline'),
+                          deadline.isBefore(DateTime.now())
+                              ? context.t(K.tournamentWaitingOpponentExpired)
+                              : context.t(K.tournamentWaitingOpponentDeadline, {
+                                  'time': formatMatchDeadline(deadline),
+                                }),
+                          style: SahneType.caption.copyWith(color: t.tx2),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
               ],

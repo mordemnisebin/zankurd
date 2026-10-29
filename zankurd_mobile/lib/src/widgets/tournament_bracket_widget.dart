@@ -26,10 +26,17 @@ List<String> tournamentRoundNames(bool ku, int totalRounds) {
   });
 }
 
-/// Visual single-elimination tournament bracket with connecting lines,
-/// player avatars, scores, and winner highlighting.
+/// Dikey, sıkışık turnuva şeması: tur başlığı + o turun maç kartları, turlar
+/// üst üste.
 ///
-/// Supports 8 or 16 player brackets shown across 3-4 rounds.
+/// 2026-10-29 gerçek cihaz turu (iPhone 17 Pro, 402×874): eski düzen turları
+/// YATAY dizip sabit yükseklikli (264 px) bir kutuya koyuyordu. İkinci yarı
+/// final maçı kutunun altında yarım kalıyor, Final sütunu sağ kenardaki
+/// solma gradyanının arkasında kayboluyordu; oyuncu şemayı göremiyordu.
+/// Dört kişilik şema dar telefonda yatay sığmaz; dikey düzen yükseklikten
+/// değil sayfanın kaydırmasından yararlanır, hiçbir turu gizlemez ve yazı
+/// ölçeği büyüyünce kendiliğinden uzar (iç kaydırma ya da sabit yükseklik
+/// YOK). Bağlantı çizgileri kalktı: tur sırası başlıklardan okunur.
 class TournamentBracketWidget extends StatelessWidget {
   const TournamentBracketWidget({
     required this.bracket,
@@ -44,110 +51,72 @@ class TournamentBracketWidget extends StatelessWidget {
   final bool ku;
   final void Function(TournamentMatch match, int roundIndex)? onTapMatch;
 
-  List<String> get _roundNames => tournamentRoundNames(ku, bracket.totalRounds);
-
   @override
   Widget build(BuildContext context) {
     if (bracket.rounds.isEmpty) return const SizedBox.shrink();
 
-    final totalRounds = bracket.rounds.length;
-
-    // 2026-07-22 canlı UX denetimi: bracket yatay scroll düzeltmesi
-    // IntrinsicHeight kaldırıldı (double-pass layout önlendi),
-    // dinamik kart genişliği + sağ kenar fade overlay eklendi.
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // Dinamik kart genişliği: mevcut alanı turlara böl, clamp(120, 160)
-        // M-10: connectorWidth 28→20 — dar ekranlarda toplam genişliği azaltır;
-        // yatay scroll korunur, kart alanı biraz genişler.
-        const connectorWidth = 20.0;
-        final totalConnectorWidth = (totalRounds - 1) * connectorWidth;
-        final availableForCards = constraints.maxWidth - totalConnectorWidth;
-        final cardWidth = (availableForCards / totalRounds).clamp(120.0, 160.0);
-
-        // Minimum yükseklik: ilk turdaki en fazla maç sayısına göre hesapla
-        final maxMatches = bracket.rounds.first.matches.length;
-        const cardHeight =
-            100.0; // tahmini kart yüksekliği (header + 2 oyuncu + padding)
-        final minBracketHeight = maxMatches * cardHeight + 64.0;
-
-        return Stack(
-          children: [
-            // Yatay kaydırılabilir bracket
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(vertical: SahneSpace.x3),
-              child: SizedBox(
-                height: minBracketHeight,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (int i = 0; i < totalRounds; i++) ...[
-                      if (i > 0)
-                        _ConnectorColumn(
-                          roundIndex: i,
-                          roundCount: totalRounds,
-                          prevMatchCount: bracket.rounds[i - 1].matches.length,
-                          currMatchCount: bracket.rounds[i].matches.length,
-                          bracketHeight: minBracketHeight,
-                        ),
-                      _RoundColumn(
-                        round: bracket.rounds[i],
-                        roundName: _roundNames[i],
-                        userId: userId,
-                        ku: ku,
-                        isActive: i == bracket.currentRound,
-                        isCompleted: i < bracket.currentRound,
-                        matchCount: bracket.rounds[i].matches.length,
-                        cardWidth: cardWidth,
-                        bracketHeight: minBracketHeight,
-                        onTapMatch: (match) => onTapMatch?.call(match, i),
-                      ),
-                    ],
-                  ],
-                ),
+    // Sunucu bir sonraki turun maçlarını ancak kazananlar belli olunca kurar;
+    // henüz kurulmamış turlar (ör. yarı finalde Final) BOŞ kartla gösterilir.
+    // Yoksa oyuncu şemada final olduğunu hiç görmüyordu (2026-10-29 turu).
+    final rounds = [...bracket.rounds];
+    final totalRounds = bracket.totalRounds;
+    while (rounds.length < totalRounds) {
+      final previous = rounds.last.matches.length;
+      final count = previous <= 1 ? 1 : (previous + 1) ~/ 2;
+      rounds.add(
+        TournamentRound(
+          roundNumber: rounds.length + 1,
+          status: 'pending',
+          matches: [
+            for (var m = 0; m < count; m++)
+              TournamentMatch(
+                id: 'placeholder-${rounds.length}-$m',
+                playerOneId: '',
+                playerOneName: 'TBD',
+                playerTwoId: '',
+                playerTwoName: 'TBD',
+                playerOneScore: 0,
+                playerTwoScore: 0,
+                status: 'pending',
+                winnerId: '',
               ),
-            ),
-            // 2026-07-22 canlı UX denetimi: yatay scroll ipucu — sağ kenar gradyanı
-            Positioned(
-              top: 0,
-              right: 0,
-              bottom: 0,
-              width: 32,
-              child: IgnorePointer(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [
-                        SahneTokens.of(context).bg.withValues(alpha: 0),
-                        SahneTokens.of(context).bg,
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ],
-        );
-      },
+        ),
+      );
+    }
+    final names = tournamentRoundNames(ku, totalRounds);
+
+    return Column(
+      key: const ValueKey('tournament-bracket-vertical'),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (int i = 0; i < totalRounds; i++) ...[
+          if (i > 0) const SizedBox(height: SahneSpace.x3),
+          _RoundSection(
+            round: rounds[i],
+            roundName: names[i],
+            userId: userId,
+            ku: ku,
+            isActive: i == bracket.currentRound,
+            isCompleted: i < bracket.currentRound,
+            onTapMatch: (match) => onTapMatch?.call(match, i),
+          ),
+        ],
+      ],
     );
   }
 }
 
-/// Vertical column for one round showing all match cards.
-class _RoundColumn extends StatelessWidget {
-  const _RoundColumn({
+/// Bir tur: başlık rozeti + alt alta maç kartları.
+class _RoundSection extends StatelessWidget {
+  const _RoundSection({
     required this.round,
     required this.roundName,
     required this.userId,
     required this.ku,
     required this.isActive,
     required this.isCompleted,
-    required this.matchCount,
-    required this.cardWidth,
-    required this.bracketHeight,
     required this.onTapMatch,
   });
 
@@ -157,182 +126,63 @@ class _RoundColumn extends StatelessWidget {
   final bool ku;
   final bool isActive;
   final bool isCompleted;
-  final int matchCount;
-  final double cardWidth;
-  final double bracketHeight;
   final void Function(TournamentMatch match) onTapMatch;
 
   @override
   Widget build(BuildContext context) {
-    final spacingFactor = matchCount <= 2 ? 3.0 : (matchCount <= 4 ? 1.5 : 0.7);
-
-    return SizedBox(
-      height: bracketHeight,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          // Round header — 2026-09-29 Şahnê: S pahlı rozet; süren tur Zêr
-          // tonu, biten tur Kulis, gelecek tur yalnız üçüncül metin.
-          Builder(
-            builder: (context) {
-              final t = SahneTokens.of(context);
-              final (bg, fg) = isActive
-                  ? (t.goldTint, t.goldTx)
-                  : isCompleted
-                  ? (t.s2, t.tx2)
-                  : (Colors.transparent, t.tx3);
-              return DecoratedBox(
-                decoration: ShapeDecoration(color: bg, shape: SahneShape.s),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: SahneSpace.x2,
-                    vertical: SahneSpace.x1,
-                  ),
-                  child: Text(
-                    roundName,
-                    style: SahneType.captionStrong.copyWith(color: fg),
-                  ),
-                ),
-              );
-            },
-          ),
-          // Match cards below header — scrollable to handle varying content
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(vertical: spacingFactor * 4),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (final match in round.matches)
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: spacingFactor * 4,
-                      ),
-                      child: _BracketMatchCard(
-                        match: match,
-                        userId: userId,
-                        ku: ku,
-                        cardWidth: cardWidth,
-                        onTap: () => onTapMatch(match),
-                      ),
-                    ),
-                ],
+    final t = SahneTokens.of(context);
+    // Süren tur Zêr tonu, biten tur Kulis, gelecek tur yalnız üçüncül metin.
+    final (bg, fg) = isActive
+        ? (t.goldTint, t.goldTx)
+        : isCompleted
+        ? (t.s2, t.tx2)
+        : (t.s2, t.tx3);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(color: bg, shape: SahneShape.s),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: SahneSpace.x2,
+                vertical: SahneSpace.x1,
+              ),
+              child: Text(
+                roundName,
+                style: SahneType.captionStrong.copyWith(color: fg),
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Connector lines between rounds showing the bracket links.
-class _ConnectorColumn extends StatelessWidget {
-  const _ConnectorColumn({
-    required this.roundIndex,
-    required this.roundCount,
-    required this.prevMatchCount,
-    required this.currMatchCount,
-    required this.bracketHeight,
-  });
-
-  final int roundIndex;
-  final int roundCount;
-  final int prevMatchCount;
-  final int currMatchCount;
-  final double bracketHeight;
-
-  @override
-  Widget build(BuildContext context) {
-    // 2026-07-22 canlı UX denetimi: bracketHeight doğrudan kullanılıyor
-    // (IntrinsicHeight + double.infinity kaldırıldı)
-    return SizedBox(
-      width: 28,
-      height: bracketHeight,
-      child: CustomPaint(
-        size: Size(28, bracketHeight),
-        painter: _ConnectorPainter(
-          roundIndex: roundIndex,
-          roundCount: roundCount,
-          prevMatchCount: prevMatchCount,
-          currMatchCount: currMatchCount,
-          color: SahneTokens.of(context).line,
         ),
-      ),
+        for (final match in round.matches)
+          Padding(
+            padding: const EdgeInsets.only(top: SahneSpace.x2),
+            child: _BracketMatchCard(
+              match: match,
+              userId: userId,
+              ku: ku,
+              onTap: () => onTapMatch(match),
+            ),
+          ),
+      ],
     );
   }
 }
 
-class _ConnectorPainter extends CustomPainter {
-  const _ConnectorPainter({
-    required this.roundIndex,
-    required this.roundCount,
-    required this.prevMatchCount,
-    required this.currMatchCount,
-    required this.color,
-  });
-
-  final int roundIndex;
-  final int roundCount;
-  final int prevMatchCount;
-  final int currMatchCount;
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 1.5
-      ..style = PaintingStyle.stroke;
-
-    // Maç sayıları şemadan gelir; eskiden 16 oyunculu şema varsayılıyordu
-    // (16 >> roundIndex) ve 4 kişilik gerçek turnuvada bağlantılar yanlış
-    // çiziliyordu.
-    final matchCountPrev = prevMatchCount;
-    final matchCountCurr = currMatchCount;
-
-    if (matchCountPrev <= 0 || matchCountCurr <= 0) return;
-
-    // Draw horizontal connecting lines
-    final rowHeight = size.height / matchCountPrev;
-
-    for (int i = 0; i < matchCountCurr; i++) {
-      final topY = (i * 2) * rowHeight + rowHeight / 2;
-      final bottomY = (i * 2 + 1) * rowHeight + rowHeight / 2;
-      final midY = (topY + bottomY) / 2;
-      final midX = size.width / 2;
-
-      // Vertical line connecting top and bottom match outputs
-      canvas.drawLine(Offset(midX, topY), Offset(midX, bottomY), paint);
-
-      // Horizontal lines from edges to vertical
-      canvas.drawLine(Offset(0, topY), Offset(midX, topY), paint);
-      canvas.drawLine(Offset(0, bottomY), Offset(midX, bottomY), paint);
-
-      // Horizontal line from vertical to next round
-      canvas.drawLine(Offset(midX, midY), Offset(size.width, midY), paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-/// Single match card in the bracket with player avatars, names, scores,
-/// and winner gold highlight.
 class _BracketMatchCard extends StatelessWidget {
   const _BracketMatchCard({
     required this.match,
     required this.userId,
     required this.ku,
-    required this.cardWidth,
     required this.onTap,
   });
 
   final TournamentMatch match;
   final String userId;
   final bool ku;
-  final double cardWidth;
   final VoidCallback onTap;
 
   @override
@@ -369,7 +219,6 @@ class _BracketMatchCard extends StatelessWidget {
               ? Duration.zero
               : const Duration(milliseconds: 350),
           curve: Curves.easeInOut,
-          width: cardWidth,
           padding: const EdgeInsets.all(SahneSpace.x1),
           // 2026-09-29 Şahnê: maç kartı yüzeydir (Perde, M pah); kullanıcının
           // maçı Halka 2 Zêr ("Sen" altındır), biten maç gündüz kenarı.
