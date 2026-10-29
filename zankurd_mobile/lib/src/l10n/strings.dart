@@ -595,7 +595,10 @@ class Tr {
       'ku': 'Ji bo vê mijarê pirs nehatin dîtin',
       'tr': 'Bu konu için soru bulunamadı',
     },
-    K.quizLoadFail: {'ku': 'Quiz nehate barkirin', 'tr': 'Quiz yüklenemedi'},
+    K.quizLoadFail: {
+      'ku': 'Quiz nehate barkirin',
+      'tr': 'Soru turu yüklenemedi.',
+    },
     K.miniQuizNone: {
       'ku': 'Ji bo vê dersê hîn azmûneke kurt tune ye. Dikarî dersê biqedînî.',
       'tr': 'Bu ders için henüz kısa test yok. Dersi tamamlayabilirsin.',
@@ -714,11 +717,9 @@ class Tr {
     // başlar, yoksa beklenir); ayrıntı "Nasıl oynanır?" içinde (cupRuleStart).
     K.cupRuleStart: {
       'ku':
-          'Piştî 24 saetan, heke herî kêm 2 lîstikvan hebin dest pê dike; '
-          'wekî din li benda lîstikvanan dimîne.',
+          'Gava tijî bibe dest pê dike; heke tijî nebe, piştî 24 saetan bi herî kêm 2 lîstikvanan dest pê dike.',
       'tr':
-          'Kupa açıldıktan 24 saat sonra en az 2 oyuncu varsa başlar; '
-          'yoksa oyuncu beklenir.',
+          'Kontenjan dolunca başlar; dolmazsa 24 saat sonunda en az 2 oyuncuyla başlar.',
     },
     K.botDailyCup: {'ku': 'Kûpaya palawtinê', 'tr': 'Eleme turnuvası'},
     // Ayrılma/hükmen bitiş metinleri aynı kavramı `pêşbirk` der.
@@ -816,7 +817,7 @@ class Tr {
     K.suggestTitle: {'ku': 'Pirs pêşniyar bike', 'tr': 'Soru öner'},
     K.suggestIntro: {
       'ku': 'Ji bo dewlemendkirina pirsan, pirsa xwe ya nû ji me re bişîne.',
-      'tr': 'Soru havuzunu zenginleştirmek için yeni sorunu bizimle paylaş.',
+      'tr': 'Yeni bir soru önererek soru havuzuna katkıda bulun.',
     },
     K.suggestLicenseNote: {
       'ku':
@@ -871,8 +872,7 @@ class Tr {
           'Pêşniyara te hat wergirtin. Piştî nirxandinê, tu dikarî rewşa '
           'wê di rûpela Pêşniyarên min de bibînî.',
       'tr':
-          'Önerin alındı. İnceledikten sonra durumunu Önerilerim '
-          'sayfasında görebilirsin.',
+          'Önerin alındı. İnceleme sonucunu Önerilerim sayfasında görebilirsin.',
     },
     K.mySuggestions: {'ku': 'Pêşniyarên min', 'tr': 'Önerilerim'},
     K.mySuggestionsEmpty: {
@@ -1112,8 +1112,10 @@ class Tr {
       'tr': 'Arkadaşlarını davet et',
     },
     K.inviteSubtitle: {
-      'ku': 'Koda xwe parve bike, her du alî jî 100 zêr bistînin.',
-      'tr': 'Kodunu paylaş, iki taraf da 100 jeton kazansın.',
+      'ku':
+          'Koda xwe ya vexwendinê parve bike; gava hevalê te hesabê xwe tomar bike û kodê binivîse, her du jî 100 zêr qezenc dikin.',
+      'tr':
+          'Davet kodunu paylaş; arkadaşın hesabını kaydedip kodu girince ikiniz de 100 jeton kazanırsınız.',
     },
     K.inviteShareText: {
       'ku':
@@ -1121,12 +1123,15 @@ class Tr {
       'tr':
           'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: {tag}. Sen de katıl:',
     },
-    K.enterReferralCode: {'ku': 'Koda xelatê têxe', 'tr': 'Ödül kodu gir'},
+    K.enterReferralCode: {
+      'ku': 'Koda vexwendinê binivîse',
+      'tr': 'Davet kodu gir',
+    },
     // 2026-09-30 simülatör: kod GİRME diyaloğu paylaşma cümlesini
     // ([K.inviteSubtitle]) tekrar ediyordu; girişle ilgisizdi.
     K.enterReferralCodeHint: {
-      'ku': 'Koda ku hevalê te daye binivîse',
-      'tr': 'Arkadaşının verdiği kodu gir',
+      'ku': 'Koda vexwendinê ya ku hevalê te parve kiriye binivîse',
+      'tr': 'Arkadaşının paylaştığı davet kodunu gir',
     },
     K.referralCodeHint: {'ku': 'Mînak: ZK-XXXX', 'tr': 'Örnek: ZK-XXXX'},
     K.referralApplyAction: {'ku': 'Bi kar bîne', 'tr': 'Kullan'},
@@ -1156,8 +1161,7 @@ class Tr {
           '{correct}/{total} ({percent}). Tu jî bilîze, li Play '
           'Store\'ê "ZanKurd".',
       'tr':
-          'ZanKurd\'te {score} puan aldım! Doğru: {correct}/{total} '
-          '({percent}). Sen de oyna, Play Store\'da "ZanKurd".',
+          'ZanKurd\'da {score} puan aldım! Doğru: {correct}/{total} ({percent}). Sen de oyna, Play Store\'da "ZanKurd".',
     },
 
     // ── Çevrimiçi tur durum satırı ───────────────────────────────────
@@ -1329,8 +1333,8 @@ class Tr {
       'tr': 'Doğru: {correct}/{answered} · %{accuracy}',
     },
     K.masteryEvidencePending: {
-      'ku': '{correct} bersivên rast · delîl hêj tune',
-      'tr': '{correct} doğru cevap · kanıt henüz yok',
+      'ku': '{correct} rast · serdestî hêj nehatiye piştrastkirin',
+      'tr': '{correct} doğru · ustalık henüz doğrulanmadı',
     },
     K.baslangic: {'ku': 'Destpêk', 'tr': 'Başlangıç'},
     K.performansAnalizi: {
@@ -1355,7 +1359,7 @@ class Tr {
     },
     K.pAktifYanlisSoru: {
       'ku': '{p0} pirsên şaş ên çalak',
-      'tr': '{p0} aktif yanlış soru',
+      'tr': 'Tekrar bekleyen {p0} yanlış soru',
     },
     K.senkronizeEdiliyor: {'ku': 'Tê tomarkirin…', 'tr': 'Kaydediliyor…'},
     // Durum çipi "Bulut" diyordu — Türkçe. Karşılığı `ewr`; parantez
@@ -1403,7 +1407,7 @@ class Tr {
     // Tur 1 (I1): çok oyunculu açılışta hüküm + geri sayım ("Doğru · 3sn").
     K.revealVerdictCountdown: {
       'ku': '{verdict} · {n} çirke',
-      'tr': '{verdict} · {n}sn',
+      'tr': '{verdict} · {n} sn',
     },
     K.rakipBekleniyor: {'ku': 'Hevrik tê payîn…', 'tr': 'Rakip bekleniyor…'},
     K.cumleyiOlusturmakIcinKelimeleri: {
@@ -1661,9 +1665,9 @@ class Tr {
     },
     K.faqSyncA: {
       'ku':
-          'Heke hesabê xwe bi e-nameyê, Apple an Google tomar bikî, pêşketina te li ser pêşkêşkarê tê parastin; li cîhazekî din bi heman hesabî têkevî, pêşketina te vedigere. Pêşketina hesabê mêvan tenê li ser vî cîhazî ye.',
+          'Heke hesabê xwe bi e-nameyê, Apple an Google tomar bikî, pûan, zêr, dersên qedandî, pirsên tomarkirî, zincîr, rozet û şaşiyên te yên li benda dubarekirinê li ser pêşkêşkarê bi hesabê te ve tên parastin; li cîhazekî din bi heman hesabî têkevî, ew vedigerin. Pêşketina hesabê mêvan tenê bi danişîna vê cîhazê ve girêdayî ye; heke sepanê jê bibî an derkevî, nayê vegerandin.',
       'tr':
-          'Hesabını kaydedersen (e-posta, Apple ya da Google) ilerlemen sunucuda saklanır; başka cihazda aynı hesapla girince geri gelir. Misafir hesabın ilerlemesi yalnız bu cihazdadır.',
+          'Hesabını kaydedersen (e-posta, Apple ya da Google) puanların, jetonların, tamamlanan derslerin, kaydettiğin sorular, serin, rozetlerin ve tekrar bekleyen yanlışların sunucuda hesabına bağlı saklanır; başka cihazda aynı hesapla girince geri gelir. Misafir hesabın ilerlemesi yalnız bu cihazdaki oturuma bağlıdır; uygulamayı silersen ya da çıkış yaparsan geri getirilemez.',
     },
     K.faqStreakQ: {
       'ku': 'Heke zincîra min biqete çi dibe?',
@@ -1678,9 +1682,9 @@ class Tr {
     K.faqCoinsQ: {'ku': 'Zêr ji bo çi ye?', 'tr': 'Jeton ne işe yarar?'},
     K.faqCoinsA: {
       'ku':
-          'Ji bo bikaranîna alîkariyê di dema pirsê de (her roj yek belaş e), kirîna çarçoveyê, rozeta VIP û mafê zêde yê gerandina çerxê li Dukanê û parastina zincîra te bikêr tê. Zêr ji bersivên rast, peywiran û çerxa rojê tê bidestxistin.',
+          'Ji bo bikaranîna alîkariyê di dema pirsê de (her roj yek belaş e), kirîna çarçoveyê, rozeta VIP û mafê zêde yê gerandina çerxê li Dukanê û parastina zincîra te bikêr tê. Zêr ji bersivên rast, peywiran û çerxa rojê tê bidestxistin. Gera dubarekirina şaşiyan zêr nade; ji gerên ku bi tenê tên lîstin rojê herî zêde 45 zêr tên qezenckirin.',
       'tr':
-          'Soru sırasında joker kullanmaya (her gün biri bedava), Mağaza\'da çerçeve, VIP rozeti ve ek çark hakkı almaya ve serini korumaya yarar. Jeton doğru cevaplardan, görevlerden ve günün çarkından gelir.',
+          'Soru sırasında joker kullanmaya (her gün biri bedava), Mağaza\'da çerçeve, VIP rozeti ve ek çark hakkı almaya ve serini korumaya yarar. Jeton doğru cevaplardan, görevlerden ve günün çarkından gelir. Yanlış tekrarı turu jeton vermez; tek başına oynanan turlardan günde en çok 45 jeton kazanılır.',
     },
     K.faqReportQ: {
       'ku': 'Min di pirsekê de çewtiyek dît, çi bikim?',
@@ -2003,11 +2007,11 @@ class Tr {
     },
     K.roomClosedByHost: {
       'ku': 'Ji ber ku mêvandar derket, ode hat girtin.',
-      'tr': 'Ev sahibi ayrıldığı için oda kapandı.',
+      'tr': 'Oda sahibi ayrıldığı için oda kapandı.',
     },
     K.chat: {'ku': 'Suhbet', 'tr': 'Sohbet'},
     K.privateRoom: {'ku': 'Odeya taybet', 'tr': 'Özel oda'},
-    K.host: {'ku': 'Mêvandar', 'tr': 'Ev sahibi'},
+    K.host: {'ku': 'Mêvandar', 'tr': 'Oda sahibi'},
     // Oda daveti (2026-09-27). Bağlantı web sürümünde odaya doğrudan
     // katılır (`JoinDeepLink`); kod, uygulamadan elle girmek isteyen için.
     // 2026-10-28 görsel kurul: "Arkadaşlarını davet et" ile
@@ -2104,7 +2108,7 @@ class Tr {
     K.waitingHost: {
       'ku':
           'Li benda mêvandar e… Pêşbirk dê ji aliyê damezrîner ve bê destpêkirin.',
-      'tr': 'Ev sahibi bekleniyor… Yarışı odayı kuran kişi başlatacak.',
+      'tr': 'Oda sahibi bekleniyor… Yarışı oda sahibi başlatacak.',
     },
     K.gameStartFailed: {
       'ku': 'Lîstik nehat destpêkirin. Dîsa biceribîne.',
@@ -2449,7 +2453,7 @@ class Tr {
     // ── Avatar / liderlik / kaydedilenler ────────────────────────────
     K.photoTooLarge: {
       'ku': 'Wêne ji 2MB mezintir e.',
-      'tr': 'Fotoğraf 2MB sınırını aşıyor.',
+      'tr': 'Fotoğraf 2 MB sınırını aşıyor.',
     },
     K.uploadFailed: {'ku': 'Barkirin bi ser neket.', 'tr': 'Yüklenemedi.'},
     K.saveFailed: {
@@ -2750,7 +2754,7 @@ class Tr {
       'ku':
           'Di dema pêşbirkê de bişkoka nîşankirinê bitikîne û pirsan li vir zêde bike.',
       'tr':
-          'Quiz sırasında yer imi simgesine basarak soruları buraya ekleyebilirsin.',
+          'Soru ekranındaki yer imi simgesine dokunarak soruları buraya kaydedebilirsin.',
     },
 
     // ── Profil ekranı ────────────────────────────────────────────────
@@ -2811,7 +2815,7 @@ class Tr {
     K.suggestQuestion: {'ku': 'Pirs pêşniyar bike', 'tr': 'Soru öner'},
     K.suggestQuestionSub: {
       'ku': 'Pirsa xwe pêşniyar bike, bila piştî pejirandinê were zêdekirin',
-      'tr': 'Kendi sorunu öner, onaylandıktan sonra eklensin',
+      'tr': 'Bir soru öner; onaylanırsa oyuna eklensin.',
     },
     K.saveAccount: {'ku': 'Hesabê xwe tomar bike', 'tr': 'Hesabını kaydet'},
     K.saveAccountSub: {
@@ -2837,7 +2841,8 @@ class Tr {
     K.linkGoogle: {'ku': 'Bi Google girêde', 'tr': 'Google ile bağla'},
     K.authErrNetwork: {
       'ku': 'Girêdan çênebû. Înternetê an DNS\'ê kontrol bike.',
-      'tr': 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.',
+      'tr':
+          'Bağlantı kurulamadı. İnternet bağlantını kontrol edip tekrar dene.',
     },
     K.authErrUnexpected: {
       'ku': 'Şaşiyeke nediyar çêbû.',
@@ -2895,15 +2900,15 @@ class Tr {
     },
     K.authErrGeneric: {
       'ku': 'Çewtiyek rû da. Ji kerema xwe dîsa biceribîne.',
-      'tr': 'Bir hata oluştu. Lütfen tekrar deneyin.',
+      'tr': 'Bir hata oluştu. Tekrar dene.',
     },
     K.premiumErrPurchaseNotConfigured: {
-      'ku': 'Kirîn di vê guhertoyê de nehatiye sazkirin.',
-      'tr': 'Satın alma bu sürümde yapılandırılmadı.',
+      'ku': 'Di vê guhertoyê de kirîn nayê bikaranîn.',
+      'tr': 'Bu sürümde satın alma kullanılamıyor.',
     },
     K.premiumErrRestoreNotConfigured: {
-      'ku': 'Vegerandin di vê guhertoyê de nehatiye sazkirin.',
-      'tr': 'Geri yükleme bu sürümde yapılandırılmadı.',
+      'ku': 'Di vê guhertoyê de vegerandin nayê bikaranîn.',
+      'tr': 'Bu sürümde geri yükleme kullanılamıyor.',
     },
     K.premiumInfoPending: {
       'ku':
@@ -3208,13 +3213,9 @@ class Tr {
     // ragirtin (radigire), "her kesî" ayrı yazılır.
     K.paywallFreeForAll: {
       'ku':
-          'Hemû ders û lîstik ji bo her kesî belaş dimînin; Pro ZanKurdê li ser piyan radigire.',
+          'Hemû ders û lîstik ji bo her kesî belaş dimînin; Premium ZanKurdê li ser piyan radigire.',
       'tr':
-          "Tüm dersler ve oyunlar herkese ücretsiz kalır; Pro ZanKurd'u ayakta tutar.",
-    },
-    K.paywallPerkSupport: {
-      'ku': 'Piştgiriya ji bo ZanKurdê',
-      'tr': "ZanKurd'a destek",
+          'Tüm dersler ve oyunlar herkese ücretsiz kalır; Premium ZanKurd\'u ayakta tutar.',
     },
     K.paywallPerkSupportBody: {
       'ku': 'Tu piştgiriya pêşketina sepana kurdî û naveroka nû dikî.',
@@ -3421,35 +3422,9 @@ class Tr {
     },
     K.privacyBody: {
       'ku':
-          'ZanKurd ev daneyên serhêl tomar dike: navê lîstikvan, '
-          'navnîşana e-nameyê (heke tomar bibî), pûan, statîstîk û '
-          'daneyên lîstik û hevberkirinê, hejmara zêran, pirsên '
-          'tomarkirî, peyamên odeyê û pêşniyarên pirsan. Asta herêmî, '
-          'zincîr, şaşî û pêşketina hînbûnê li ser vê amûrê tên '
-          'parastin; dema tu derkevî ew ji amûrê tên paqij kirin. '
-          'Pûana rêzbendiyê li ser hesabê tê nivîsîn. Di xetayan de '
-          'tomarên teknîkî yên anonîm û analîza bikaranînê tenê heke '
-          'tu wê ji Mîheng > Nepenî û daneyên ve vekî tê çalak '
-          'kirin.\n\nDaneyên te nayên firotin û ji bo reklamê bi kesên '
-          'sêyemîn re nayên parvekirin. Navê te di rêzbendiyê, '
-          'lêgerîna hevalan, daxwazên hevaltiyê û odeyên serhêl de '
-          'xuya dibe.\n\nJi bo jêbirina hesabê û hemû daneyên serhêl: '
-          'Mîheng > Hesab > Hesabê min jê bibe.',
+          'ZanKurd van daneyan li ser pêşkêşkarê, bi hesabê te ve girêdayî tomar dike: navê lîstikvan û wêneyê profîlê, navnîşana e-nameyê (heke tomar bibî), XP, hejmara zêran û kirîn, pûan û statîstîkên lîstikê, pûana rêzbendiyê, dersên qedandî, pirsên tomarkirî, peyamên odeyê, pêşniyarên pirsan û bikarhênerên ku te asteng kirine. Salnameya zincîrê, rozet, ast, serdestiya mijaran, pirsên şaş ên li benda dubarekirinê û pêşketina çîrokan li ser vê amûrê tên parastin; heke te hesabê xwe tomar kiribe, kopiyeke wan jî li ser pêşkêşkarê tê hilanîn û li amûreke din vedigere. Di hesabê mêvan de ev tenê li ser vê amûrê ne. Lîsteya peyvan û mîheng tenê li ser vê amûrê ne. Dema tu derkevî, pêşketina li ser amûrê tê paqijkirin. Analîza bikaranînê û tomarên teknîkî yên anonîm ên xetayan dema Mîheng > Hesab û nepenî > Analîza bikaranînê vekirî be tên şandin; ev mîheng di destpêkê de vekirî ye û tu dikarî her dem wê bigirî.\n\nDaneyên te nayên firotin û ji bo reklamê bi kesên sêyemîn re nayên parvekirin. Navê te di rêzbendiyê, lêgerîna hevalan, daxwazên hevaltiyê û odeyên serhêl de xuya dibe.\n\nJi bo jêbirina hesabê û hemû daneyên serhêl: Mîheng > Karên hesabê > Hesabê min jê bibe.',
       'tr':
-          'ZanKurd şu çevrimiçi verileri saklar: oyuncu adı, e-posta '
-          'adresi (kayıt olursan), oyun ve eşleştirme puanları, '
-          'istatistikleri ve verileri, jeton sayısı, kaydedilen '
-          'sorular, oda mesajları ve soru önerileri. Yerel seviye '
-          'çubuğu, seri, yanlışlar ve öğrenme ilerlemesi yalnız bu '
-          'cihazda tutulur; çıkış yaptığında cihazdan temizlenir. '
-          'Sıralama puanın hesabına yazılır. Hatalarda anonim teknik '
-          'çökme kayıtları ve kullanım analizi yalnız Ayarlar > '
-          'Gizlilik ve veri seçeneğini açarsan etkinleşir.\n\nVerilerin '
-          'satılmaz ve üçüncü taraflarla pazarlama amaçlı '
-          'paylaşılmaz. Adın sıralamada, arkadaş araması ve '
-          'isteklerinde, ayrıca çevrimiçi odalarda görünür.\n\nHesabını '
-          've tüm çevrimiçi verilerini kalıcı olarak silmek için: '
-          'Ayarlar > Hesap > Hesabımı sil.',
+          'ZanKurd şu verileri sunucuda, hesabına bağlı olarak saklar: oyuncu adı ve profil fotoğrafı, e-posta adresi (kayıt olursan), XP, jeton sayısı ve satın almalar, oyun puanları ve istatistikleri, sıralama puanı, tamamlanan dersler, kaydedilen sorular, oda mesajları, soru önerileri ve engellediğin kullanıcılar. Seri takvimi, rozetler, seviye, konu ustalığı, tekrar bekleyen yanlış sorular ve hikâye ilerlemesi bu cihazda tutulur; hesabını kaydettiysen bunların bir yedeği de sunucuya alınır ve başka cihazda geri gelir. Misafir hesapta bunlar yalnız bu cihazdadır. Kelime listesi ve ayarlar yalnız bu cihazda tutulur. Çıkış yaptığında cihazdaki ilerleme temizlenir. Kullanım analizi ve anonim çökme kayıtları, Ayarlar > Hesap ve gizlilik > Kullanım analizi açıkken gönderilir; bu ayar başlangıçta açıktır ve istediğin zaman kapatabilirsin.\n\nVerilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı paylaşılmaz. Adın sıralamada, arkadaş araması ve isteklerinde, ayrıca çevrimiçi odalarda görünür.\n\nHesabını ve tüm çevrimiçi verilerini kalıcı olarak silmek için: Ayarlar > Hesap işlemleri > Hesabımı sil.',
     },
     K.aboutBody: {
       'ku':
@@ -3654,8 +3629,7 @@ class Tr {
           'Bi berdewamkirinê, tu [Mercên bikaranînê] û [Polîtîkaya nepeniyê] '
           'qebûl dikî.',
       'tr':
-          'Devam ederek [Kullanım Şartları] ve [Gizlilik Politikası]\'nı '
-          'kabul edersin.',
+          'Devam ederek [Kullanım Koşulları] ve [Gizlilik Politikası]\'nı kabul edersin.',
     },
     // Arkadaşlar ekranındaki davet kartı (2026-10-24: kullanıcı kendi kodunu
     // bulamıyordu).
@@ -3943,7 +3917,7 @@ class Tr {
     },
     K.recordBestContest: {
       'ku': 'Di pêşbirka rojane de herî zêde rast',
-      'tr': 'Günlük yarışta en çok doğru',
+      'tr': 'Günün turunda en çok doğru',
     },
     K.recordDuelWins: {'ku': 'Serkeftinên pêşbirkê', 'tr': 'Düello galibiyeti'},
     K.recordWinRate: {'ku': 'Rêjeya serkeftinê', 'tr': 'Kazanma oranı'},
@@ -3994,8 +3968,10 @@ class Tr {
       'tr': 'Soru karşılaştırması yüklenemedi.',
     },
     K.asyncDuelReviewBlockedNote: {
-      'ku': 'Hevrik astengkirî ye; tenê bersivên te tên nîşandan.',
-      'tr': 'Rakip engelli; yalnız senin cevapların gösteriliyor.',
+      'ku':
+          'Ji ber ku te ev lîstikvan asteng kiriye, tenê bersivên te tên nîşandan.',
+      'tr':
+          'Bu oyuncuyu engellediğin için yalnız senin cevapların gösteriliyor.',
     },
     K.asyncDuelRematch: {'ku': 'Pêşbirka vegerê', 'tr': 'Rövanş'},
     // U12 (2026-10-28 tur 4): rövanş yoksa düğme ve gerekçe çizilmez; üç gerekçe
@@ -4248,9 +4224,9 @@ class Tr {
     K.dozaG3Date: {'ku': '16ê Adarê', 'tr': '16 Mart'},
     K.dozaG4Text: {
       'ku':
-          'Cejna Zimanê Kurdî: Salvegera kovara Hawarê ya Celadet Bedirxan (1932). Bi zimanê xwe bipeyive!',
+          'Cejna Zimanê Kurdî: Salvegera hejmara yekem a kovara Hawarê ya Celadet Bedirxan (15ê Gulana 1932an). Bi zimanê xwe bipeyive!',
       'tr':
-          'Kürt Dili Bayramı: Celadet Bedirxan\'ın Hawar dergisinin (1932) yıldönümü. Bi zimanê xwe bipeyive!',
+          'Kürt Dili Bayramı: Celadet Bedirxan\'ın Hawar dergisinin ilk sayısının (15 Mayıs 1932) yıl dönümü. \'Bi zimanê xwe bipeyive!\' — \'Kendi dilinde konuş!\'',
     },
     K.dozaG4Date: {'ku': '15ê Gulanê', 'tr': '15 Mayıs'},
     K.dozaG5Text: {
@@ -4324,8 +4300,8 @@ class Tr {
     },
     K.lbClimbTitle: {'ku': 'Bilind bibe', 'tr': 'Yüksel'},
     K.lbClimbBody: {
-      'ku': 'Her pêşbirk te ber bi jor ve dibe.',
-      'tr': 'Her oyun seni yukarı taşır.',
+      'ku': 'Bilîze, pûan qezenc bike, di rêzbendiyê de bilind bibe.',
+      'tr': 'Oyna, puan kazan, sıralamada yüksel.',
     },
     K.lbJoinTitle: {'ku': 'Bikeve rêzbendiyê', 'tr': 'Sıralamaya gir'},
     K.profileStatStreak: {'ku': 'Zincîra rojane', 'tr': 'Günlük seri'},

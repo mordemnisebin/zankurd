@@ -178,7 +178,7 @@ void main() {
       final text = tester.widget<Text>(line).textSpan!.toPlainText();
       expect(
         text,
-        "Devam ederek Kullanım Şartları ve Gizlilik Politikası'nı kabul edersin.",
+        "Devam ederek Kullanım Koşulları ve Gizlilik Politikası'nı kabul edersin.",
       );
       final spans = <TextSpan>[];
       tester.widget<Text>(line).textSpan!.visitChildren((span) {
@@ -186,7 +186,7 @@ void main() {
         return true;
       });
       expect(spans.map((s) => s.text), [
-        'Kullanım Şartları',
+        'Kullanım Koşulları',
         'Gizlilik Politikası',
       ]);
       // Düğme değil: yalnız düz metin içinde iki bağlantı.

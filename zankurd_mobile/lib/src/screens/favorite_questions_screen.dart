@@ -309,8 +309,12 @@ class _FavoriteQuestionTile extends StatelessWidget {
                     style: SahneType.caption.copyWith(color: t.tx2),
                   ),
                 const SizedBox(height: SahneSpace.x1),
+                // Oyun ekranıyla aynı dil seçimi (`localized` → `promptFor`):
+                // Türkçe arayüzde kanonik Kurmancî metin gösteriliyordu
+                // (kapışma U10, tur kareleri 16 ↔ 71).
                 Text(
-                  question.promptText,
+                  question.promptFor(isKu: context.isKu),
+                  key: ValueKey('favorite-prompt-${question.id}'),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: SahneType.bodyStrong.copyWith(color: t.tx),

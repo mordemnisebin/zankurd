@@ -396,7 +396,7 @@ void main() {
 
     expect(find.byType(RoomScreen), findsNothing);
     expect(find.byKey(const ValueKey('open-room')), findsOneWidget);
-    expect(find.text('Ev sahibi ayrıldığı için oda kapandı.'), findsOneWidget);
+    expect(find.text('Oda sahibi ayrıldığı için oda kapandı.'), findsOneWidget);
     expect(repository.leaveCalls, 0);
   });
 
@@ -415,7 +415,7 @@ void main() {
     // çevirebilir. RoomScreen'in yapmaması gereken şey lobi mesajıyla
     // launcher'a geri atmaktır.
     expect(find.byKey(const ValueKey('open-room')), findsNothing);
-    expect(find.text('Ev sahibi ayrıldığı için oda kapandı.'), findsNothing);
+    expect(find.text('Oda sahibi ayrıldığı için oda kapandı.'), findsNothing);
   });
 
   // Codex denetimi 2026-10-29 (hata #9): çıkış sürerken soru yüklemesi
