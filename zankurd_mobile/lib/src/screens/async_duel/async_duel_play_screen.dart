@@ -160,6 +160,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _resumedNotice?.dismiss();
     _timerController.dispose();
     super.dispose();
   }
@@ -327,11 +328,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     _presentOffsetMs = presented.elapsedMs;
     _stopwatch.start();
     _timerController.start();
-    if (presented.elapsedMs > 1500) {
-      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-        SnackBar(content: Text(context.t(K.asyncDuelResumedQuestionNote))),
-      );
-    }
+    if (presented.elapsedMs > 1500) _showResumedNotice();
     if (presented.elapsedMs >= _questionDurationMs) {
       _handleTimeout();
       return;
@@ -373,15 +370,26 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     // Normal ilk sunum: sunucu ile yerel saat ağ gecikmesi kadar ayrışır.
     if (serverElapsed <= localMs + 1500) return;
     _presentOffsetMs = serverElapsed - localMs;
-    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-      SnackBar(content: Text(context.t(K.asyncDuelResumedQuestionNote))),
-    );
+    _showResumedNotice();
     if (serverElapsed >= _questionDurationMs) {
       _handleTimeout();
       return;
     }
     _timerController.sync(
       (_questionDurationMs - serverElapsed) / _questionDurationMs,
+    );
+  }
+
+  QuizStageNotice? _resumedNotice;
+
+  /// Kurul C31: yarım kalan soruya dönüşte süre bilgisi sahnenin üstünde,
+  /// yerleşimi itmeden ([QuizStageNotice]).
+  void _showResumedNotice() {
+    if (!mounted) return;
+    _resumedNotice?.dismiss();
+    _resumedNotice = QuizStageNotice.show(
+      context,
+      context.t(K.asyncDuelResumedQuestionNote),
     );
   }
 
@@ -815,7 +823,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           index: _index,
           total: total,
           textKey: const ValueKey('async-duel-progress'),
-          modeLabel: context.t(_isTournament ? K.tournament : K.notifDuelTitle),
+          // Kurul C14 (Astra + Sol): rozet yalnız "Düello" diyordu; canlı
+          // düellodan ayrılmıyordu. Mod adı tam yazar.
+          modeLabel: context.t(_isTournament ? K.tournament : K.asyncDuelChip),
           // Y3: "Sen oyna, rakip sonra" üst çubukta küçük alt satır; rakip
           // baştan bellidir ya da yoksa (meydan okuyan) yalnız bu satır.
           subtitle: !_isTournament && _duel!.role != AsyncDuelRole.opponent

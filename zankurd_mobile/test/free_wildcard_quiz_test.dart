@@ -154,7 +154,7 @@ void main() {
       find.byKey(const ValueKey('quiz-free-wildcard-hint')),
       findsOneWidget,
     );
-    expect(find.textContaining('Bugün 1 joker bedava'), findsOneWidget);
+    expect(find.textContaining('Bugün ilk jokerin bedava'), findsOneWidget);
     expect(find.byKey(const ValueKey('joker-free-label')), findsNothing);
     expect(find.text('Bedava'), findsNothing);
     expect(find.byKey(const ValueKey('joker-free-badge')), findsNothing);
@@ -225,7 +225,7 @@ void main() {
       find.byKey(const ValueKey('quiz-free-wildcard-hint')),
       findsOneWidget,
     );
-    expect(find.textContaining('Bugün 1 joker bedava'), findsOneWidget);
+    expect(find.textContaining('Bugün ilk jokerin bedava'), findsOneWidget);
     expect(find.byKey(const ValueKey('joker-free-label')), findsNothing);
     expect(find.text('Bedava'), findsNothing);
     expect(find.byKey(const ValueKey('joker-free-badge')), findsNothing);

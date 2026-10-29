@@ -134,8 +134,10 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
     });
   }
 
+  bool get _canCheck => _selectedWords.isNotEmpty && _availableWords.isEmpty;
+
   void _submit() {
-    if (_selectedWords.isEmpty || widget.disabled) return;
+    if (!_canCheck || widget.disabled) return;
     widget.onAnswerSubmitted(_selectedWords.map((t) => t.word).join(' '));
   }
 
@@ -266,7 +268,16 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
         ),
 
         if (!answered) ...[
-          const SizedBox(height: SahneSpace.x4),
+          // Kurul C15 (Astra + Sol, 2026-10-29): sözcüğün nasıl taşınıp geri
+          // alındığı yazmıyordu. Yönerge cevaba kadar HEP aynı yerde durur
+          // (ilk seçimde belirip içeriği kaydırmaz).
+          const SizedBox(height: SahneSpace.x2),
+          Text(
+            Tr.forKu(K.wordOrderingHowTo, isKu),
+            key: const ValueKey('word-ordering-howto'),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x3),
 
           // ============ KELİME HAVUZU (AVAILABLE WORDS) ============
           ConstrainedBox(
@@ -291,10 +302,13 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
           const SizedBox(height: SahneSpace.x4),
 
           // ============ KONTROL ET / GÖNDER BUTONU ============
+          // Kurul C15: eksik cümlede "Kontrol et" tam etkin görünüyordu;
+          // bütün sözcükler yerleşince açılır (havuzdaki her sözcük cevabın
+          // parçasıdır, çeldirici yok).
           SahnePressSink(
-            enabled: _selectedWords.isNotEmpty,
+            enabled: _canCheck,
             child: FilledButton(
-              onPressed: _selectedWords.isNotEmpty ? _submit : null,
+              onPressed: _canCheck ? _submit : null,
               style: FilledButton.styleFrom(
                 minimumSize: const Size.fromHeight(52),
               ),

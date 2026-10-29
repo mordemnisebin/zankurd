@@ -549,7 +549,10 @@ void main() {
     expect(find.text('Katılım ödülü'), findsOneWidget);
   });
 
-  testWidgets('D: seviye kutusu gecikir; başka rota açılmışsa üstüne binmez', (
+  // Kurul C25 (2026-10-29, Opus + Astra): seviye penceresi gecikmeyle bile
+  // skoru örtüyordu. Pencere kalktı; kutlama ödül kartının seviye satırında
+  // sonuçla aynı anda görünür ve hiçbir şeyi örtmez.
+  testWidgets('C25: seviye atlama satır içi; pencere yok, skor örtülmez', (
     tester,
   ) async {
     await _setView(tester, 402, 874);
@@ -557,33 +560,10 @@ void main() {
     addTearDown(XPStore.resetInstance);
     await tester.pumpWidget(testShell(child: result(score: 300, correct: 3)));
     await tester.pump(const Duration(milliseconds: 600));
-    expect(
-      find.text('Seviye atladın!'),
-      findsNothing,
-      reason: 'sonuç okunmadan kutu açılmamalı',
-    );
-    await tester.pump(const Duration(milliseconds: 1500));
-    await tester.pump(const Duration(milliseconds: 400));
-    expect(find.text('Seviye atladın!'), findsOneWidget);
-  });
-
-  testWidgets('D: seviye kutusu beklerken başka rota açıldıysa gösterilmez', (
-    tester,
-  ) async {
-    await _setView(tester, 402, 874);
-    await XPStore.loadForTest(XPStore.xpRequiredForLevel(2) - 1);
-    addTearDown(XPStore.resetInstance);
-    await tester.pumpWidget(testShell(child: result(score: 300, correct: 3)));
-    await tester.pump(const Duration(milliseconds: 600));
-    final navigator = tester.state<NavigatorState>(
-      find.byType(Navigator).first,
-    );
-    navigator.push(
-      MaterialPageRoute<void>(builder: (_) => const Scaffold(body: Text('X'))),
-    );
-    await tester.pump(const Duration(milliseconds: 400));
-    await tester.pump(const Duration(seconds: 2));
-    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pump(const Duration(seconds: 3));
+    expect(find.text('Yeni seviye: 2'), findsOneWidget);
+    expect(find.byType(Dialog), findsNothing);
     expect(find.text('Seviye atladın!'), findsNothing);
+    expect(find.byType(ModalBarrier), findsOneWidget, reason: 'yalnız sayfa');
   });
 }

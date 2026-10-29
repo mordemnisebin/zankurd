@@ -62,7 +62,9 @@ void main() {
     // temadan `onAct`, koyu); Zêr dolgu üstünde `t.onGold`. Kural aynı:
     // dolu yüzeyde metin sabit beyaz değil, dolguya göre okunur renk.
     final expectedHelpers = <String, String>{
-      'lib/src/screens/quiz_result_screen.dart': 'color: t.onGold',
+      // Kurul C25 (2026-10-29): sonuç ekranındaki altın dolgulu seviye
+      // penceresi kalktı (kutlama ödül kartında satır içi); dosyada Zêr
+      // dolgu üstü metin artık yok.
       'lib/src/screens/quiz/quiz_screen_ui.dart': 'SahneButton.primary(',
       'lib/src/screens/paywall_screen.dart': 'SahneButton.primary(',
       // Boş/hata panelinin eylem düğmesi bu listede yoktu ve sabit beyaz

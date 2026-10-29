@@ -684,7 +684,8 @@ void main() {
       // Bekleme kartı kalktı (gövdeyi uzatıp soruyu kaydırıyordu): sayı
       // yalnız başlıkta, bekleme sözü alt perdedeki düğmenin etiketidir.
       expect(find.text('3/4 cevapladı'), findsOneWidget);
-      expect(find.text('Diğer oyuncular bekleniyor…'), findsOneWidget);
+      // Kurul C10 (2026-10-29): bekleme etiketi kalan kişi sayısını söyler.
+      expect(find.text('1 oyuncu bekleniyor…'), findsOneWidget);
     });
 
     testWidgets('sayı yoklamayla güncellenir (6 sn)', (tester) async {

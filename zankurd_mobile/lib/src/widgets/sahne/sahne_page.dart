@@ -751,7 +751,11 @@ class SahnePushedPage extends StatelessWidget {
             children: [
               bar,
               if (accent != null) ZkAccentLine(color: accent),
-              Expanded(child: _wrapRefresh(t, scroll)),
+              Expanded(
+                child: bottom == null
+                    ? _wrapRefresh(t, scroll)
+                    : _DockEdge(color: t.line, child: _wrapRefresh(t, scroll)),
+              ),
             ],
           ),
         ),
@@ -1437,20 +1441,28 @@ const Key sahneStageBottomFadeKey = ValueKey('sahne-stage-bottom-fade');
 /// grup, boş alanın %36'sı üstte, %64'ü altta kalacak biçimde oturur.
 const double sahneQuestionBalance = 0.36;
 
-/// Alt perdenin üst kenarı: gövde perdenin altında DEVAM EDİYORSA 1 px
-/// ayırıcı çizgi ([SahneTokens.line]), içerik bittiyse hiçbir şey.
+/// Alt perdenin üst kenarı: gövde perdenin altında DEVAM EDİYORSA içerik
+/// son [fadeHeight] pt'de sönerek (alfa maskesi) perdeye girer ve 1 px
+/// ayırıcı çizgi ([SahneTokens.line]) çizilir; içerik bittiyse ikisi de yok.
 ///
-/// 2026-09-29 doğallık (K10): eskiden burada hep açık, zemine kararan 24 px
-/// degrade vardı. İçerik bitmiş olsa bile gövdenin son 24 px'ini örtüyor,
-/// sonuç ekranında öğrenme kartının yazısını ortasından eritiyordu (bir
-/// çizim hatası gibi okunuyordu). Çizgi yazıyı örtmez; yalnız gövdenin en
-/// dıştaki dikey kaydırıcısı sonuna varmamışken görünür ve "aşağıda devamı
-/// var" der. Perde yine `Scaffold`un alt yuvasında (SnackBar üstünde açılır).
+/// 2026-09-29 doğallık (K10): eskiden burada HEP açık, zemine kararan 24 px
+/// degrade vardı; içerik bitmiş olsa bile son satırı ortasından eritiyordu.
+/// 2026-10-29 kurul (C1, Astra/Terra/Sol 3/3): yalnız çizgi kalınca sonuç
+/// ekranında "Rakiplerle karşılaştır / Yarış sıralaması" başlığı, günlük tur
+/// girişinde son bilgi satırı ve düello konu kartları perdenin kıyısında
+/// keskin biçimde YARIM kesiliyor, bozuk yerleşim gibi okunuyordu. Sönme
+/// yalnız devamı varken açılır (K10'un eritme sorunu sona varınca yoktur) ve
+/// maskedir: arkadaki sahne (dağlar, gece zemini) görünmeye devam eder, düz
+/// renk perdesi sürülmez. Perde yine `Scaffold`un alt yuvasında (SnackBar
+/// üstünde açılır).
 class _DockEdge extends StatefulWidget {
   const _DockEdge({required this.color, required this.child});
 
   final Color color;
   final Widget child;
+
+  /// Devamı varken içeriğin söndüğü bant yüksekliği.
+  static const double fadeHeight = SahneSpace.x8;
 
   @override
   State<_DockEdge> createState() => _DockEdgeState();
@@ -1461,8 +1473,8 @@ class _DockEdgeState extends State<_DockEdge> {
 
   bool _track(ScrollMetrics metrics, int depth) {
     // Yalnız gövdenin en dıştaki dikey kaydırıcısı: yatay şeritler ve iç
-    // içe listeler çizgiyi oynatmaz. Listenin alt boşluğu (çoğunda 16–24)
-    // "devamı" sayılmaz: perdenin altında yalnız boşluk kalmışsa çizgi
+    // içe listeler kenarı oynatmaz. Listenin alt boşluğu (çoğunda 16–24)
+    // "devamı" sayılmaz: perdenin altında yalnız boşluk kalmışsa sönme
     // gürültüdür (tur karesi 69, tam boy).
     if (depth == 0 && metrics.axis == Axis.vertical) {
       _more.value = metrics.extentAfter > SahneSpace.x6;
@@ -1478,35 +1490,54 @@ class _DockEdgeState extends State<_DockEdge> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: NotificationListener<ScrollMetricsNotification>(
-            onNotification: (n) => _track(n.metrics, n.depth),
-            child: NotificationListener<ScrollNotification>(
-              onNotification: (n) => _track(n.metrics, n.depth),
-              child: widget.child,
+    final opaque = SahneTokens.of(context).bg;
+    return ValueListenableBuilder<bool>(
+      valueListenable: _more,
+      builder: (context, more, child) => Stack(
+        children: [
+          Positioned.fill(
+            child: ShaderMask(
+              key: const ValueKey('sahne-stage-dock-fade'),
+              blendMode: BlendMode.dstIn,
+              shaderCallback: (bounds) {
+                final h = bounds.height;
+                final start = h <= 0
+                    ? 1.0
+                    : (1 - _DockEdge.fadeHeight / h).clamp(0.0, 1.0);
+                // Yalnız alfa kullanılır; opak uç bir belirteçtir (ham renk
+                // yok). Devamı yokken maske tamamen opaktır: hiçbir şey sönmez.
+                return LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [opaque, opaque, more ? Colors.transparent : opaque],
+                  stops: [0, start, 1],
+                ).createShader(bounds);
+              },
+              child: child,
             ),
           ),
-        ),
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: 1,
-          child: IgnorePointer(
-            child: ValueListenableBuilder<bool>(
-              valueListenable: _more,
-              builder: (context, more, _) => more
-                  ? ColoredBox(
-                      key: const ValueKey('sahne-stage-dock-edge'),
-                      color: widget.color,
-                    )
-                  : const SizedBox.shrink(),
+          if (more)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: 1,
+              child: IgnorePointer(
+                child: ColoredBox(
+                  key: const ValueKey('sahne-stage-dock-edge'),
+                  color: widget.color,
+                ),
+              ),
             ),
-          ),
+        ],
+      ),
+      child: NotificationListener<ScrollMetricsNotification>(
+        onNotification: (n) => _track(n.metrics, n.depth),
+        child: NotificationListener<ScrollNotification>(
+          onNotification: (n) => _track(n.metrics, n.depth),
+          child: widget.child,
         ),
-      ],
+      ),
     );
   }
 }

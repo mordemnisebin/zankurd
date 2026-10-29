@@ -65,11 +65,11 @@ void main() {
       reason: 'aynı bilgi üstteki sıra bölümünde zaten var',
     );
     expect(
-      find.descendant(of: tile, matching: find.text('Yeni düello')),
+      find.descendant(of: tile, matching: find.text('Düello başlat')),
       findsOneWidget,
     );
-    // Eyleme çevrilebilir bilgi üstte kalır.
-    expect(find.text('Sıra sende'), findsWidgets);
+    // Eyleme çevrilebilir bilgi üstte kalır (kurul C30: rozet "Devam et").
+    expect(find.text('Devam et'), findsWidgets);
   });
 
   testWidgets('sırası bende düello yoksa kartta rozet yok', (tester) async {
@@ -77,7 +77,7 @@ void main() {
     final tile = find.byKey(const ValueKey('play-hub-async-duel'));
     expect(tile, findsOneWidget);
     expect(
-      find.descendant(of: tile, matching: find.text('Yeni düello')),
+      find.descendant(of: tile, matching: find.text('Düello başlat')),
       findsNothing,
     );
     expect(

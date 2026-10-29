@@ -18,13 +18,20 @@ part of '../quiz_screen.dart';
 /// çizer: aynı yükseklik formülü, aynı pah, aynı alt metin ve aynı hata
 /// yüzeyi. İkinci bir görsel kartı yazılmaz.
 class QuizQuestionImage extends StatelessWidget {
-  const QuizQuestionImage({super.key, required this.url, this.alt});
+  const QuizQuestionImage({
+    super.key,
+    required this.url,
+    this.alt,
+    this.questionId,
+  });
 
   final String url;
+  final String? questionId;
   final String? alt;
 
   @override
-  Widget build(BuildContext context) => _QuestionImage(url: url, alt: alt);
+  Widget build(BuildContext context) =>
+      _QuestionImage(url: url, alt: alt, questionId: questionId);
 }
 
 /// Soru görselinin kod çözme genişliği tavanı (bkz. `_QuestionImage`).
@@ -48,6 +55,7 @@ class _QuestionImage extends StatelessWidget {
   const _QuestionImage({
     super.key,
     required this.url,
+    this.questionId,
     this.alt,
     this.isCompact = false,
     this.layoutSize,
@@ -55,6 +63,10 @@ class _QuestionImage extends StatelessWidget {
   });
 
   final String url;
+
+  /// Görselin ait olduğu soru: tam ekran görünüm soru değişince kapanır
+  /// (aynı görseli kullanan iki soru arka arkaya gelse bile).
+  final String? questionId;
 
   /// Görselin ekran okuyucuya okunan betimlemesi.
   ///
@@ -153,12 +165,13 @@ class _QuestionImage extends StatelessWidget {
         ? alt!.trim()
         : context.t(K.questionImage);
 
-    return Semantics(
-      image: true,
+    // Kurul C18 (Astra + Sol, 2026-10-29): görselin sorunun kendisi olduğu
+    // sorularda küçük karedeki ayrıntı seçilemiyordu; dokununca tam ekran,
+    // yakınlaştırılabilir görünüm açılır (Duolingo/Quizlet deseni).
+    return _ZoomableQuestionImage(
+      url: url,
+      questionId: questionId,
       label: label,
-      // Alttaki `Image` widget'ları kendi (boş) semantiklerini üretiyor;
-      // dışlanmazsa ekran okuyucu etiketi iki kez ya da eksik okur.
-      excludeSemantics: true,
       // Şahnê: görsel L pahlı karede (kesik köşe), yuvarlak köşe yok.
       child: ClipPath(
         clipper: const ShapeBorderClipper(shape: SahneShape.l),
@@ -173,6 +186,123 @@ class _QuestionImage extends StatelessWidget {
                 height: portraitHeight,
                 child: image,
               ),
+      ),
+    );
+  }
+}
+
+/// Dokununca tam ekran açılan soru görseli. Açık görünüm görselin ait olduğu
+/// SORUYA bağlıdır (Astra incelemesi): süre dolup soru değişince, görsel
+/// değişince ya da ekran kapanınca kendiliğinden kapanır; eski görsel yeni
+/// soruyu ve işleyen sayacı örtmez.
+class _ZoomableQuestionImage extends StatefulWidget {
+  const _ZoomableQuestionImage({
+    required this.url,
+    required this.label,
+    required this.child,
+    this.questionId,
+  });
+
+  final String url;
+  final String? questionId;
+  final String label;
+  final Widget child;
+
+  @override
+  State<_ZoomableQuestionImage> createState() => _ZoomableQuestionImageState();
+}
+
+class _ZoomableQuestionImageState extends State<_ZoomableQuestionImage> {
+  Route<void>? _route;
+
+  void _open() {
+    if (_route?.isActive ?? false) return;
+    final provider = _questionImageProvider(widget.url);
+    final label = widget.label;
+    final route = DialogRoute<void>(
+      context: context,
+      barrierColor: Colors.black.withValues(alpha: 0.92),
+      builder: (dialogContext) => Dialog.fullscreen(
+        backgroundColor: Colors.transparent,
+        child: SafeArea(
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Semantics(
+                  image: true,
+                  label: label,
+                  child: InteractiveViewer(
+                    key: const ValueKey('quiz-question-image-zoom-view'),
+                    maxScale: 4,
+                    child: Center(
+                      child: Image(image: provider, fit: BoxFit.contain),
+                    ),
+                  ),
+                ),
+              ),
+              PositionedDirectional(
+                top: SahneSpace.x2,
+                end: SahneSpace.x2,
+                child: SahneIconButton(
+                  key: const ValueKey('quiz-question-image-zoom-close'),
+                  icon: AppIcons.xmark,
+                  semanticLabel: dialogContext.t(K.close),
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    _route = route;
+    Navigator.of(context).push(route);
+  }
+
+  /// Açık görünümü kapatır. Yaşam döngüsü çağrıları (didUpdateWidget,
+  /// dispose) yerleşim/derleme sırasında gelir; rota kaldırmak Navigator'da
+  /// setState tetiklediği için kaldırma sonraki kareye ertelenir ve orada
+  /// rotanın hâlâ etkin olduğu yeniden denetlenir (Astra incelemesi).
+  void _close() {
+    final route = _route;
+    _route = null;
+    if (route == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (route.isActive) route.navigator?.removeRoute(route);
+    });
+  }
+
+  @override
+  void didUpdateWidget(_ZoomableQuestionImage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.url != widget.url ||
+        oldWidget.questionId != widget.questionId) {
+      _close();
+    }
+  }
+
+  @override
+  void dispose() {
+    _close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      image: true,
+      button: true,
+      label: widget.label,
+      hint: context.t(K.questionImageZoomHint),
+      // Alttaki `Image` widget'ları kendi (boş) semantiklerini üretiyor;
+      // dışlanmazsa ekran okuyucu etiketi iki kez ya da eksik okur.
+      excludeSemantics: true,
+      onTap: _open,
+      child: GestureDetector(
+        key: const ValueKey('quiz-question-image-zoom'),
+        behavior: HitTestBehavior.opaque,
+        onTap: _open,
+        child: widget.child,
       ),
     );
   }
@@ -890,7 +1020,16 @@ class _CrowdScoreHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final rankText = rank == null ? '—' : '#$rank/$total';
+    // Kurul C9 (Astra + Sol): herkes aynı puandayken (ör. ilk soruda 0)
+    // "#1/4" tek başına liderlik gibi okunuyordu; eşitlikte "Eşit" yazar.
+    final allTied =
+        top.length > 1 &&
+        top.every((s) => s.player.score == top.first.player.score);
+    final rankText = rank == null
+        ? '—'
+        : allTied
+        ? context.t(K.crowdAllTied)
+        : '#$rank/$total';
     // Kartın içi %115 tavanlı ölçekle çizilir; bu `context` tavanın ÜSTÜNDE
     // olduğundan boylar aynı tavanla buradan hesaplanır.
     final cardScaler = MediaQuery.textScalerOf(

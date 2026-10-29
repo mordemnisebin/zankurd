@@ -1437,10 +1437,34 @@ class Tr {
     },
     // Tur 1 (I1): çok oyunculu açılışta hüküm + geri sayım ("Doğru · 3sn").
     K.revealVerdictCountdown: {
-      'ku': '{verdict} · {n} çirke',
-      'tr': '{verdict} · {n} sn',
+      'ku': '{verdict} · ya din {n} çirke',
+      'tr': '{verdict} · sonraki {n} sn',
+    },
+    // Kurul C5: son soruda açılış etiketi sonuçlara geçildiğini söyler.
+    K.revealVerdictResults: {
+      'ku': '{verdict} · encam tên',
+      'tr': '{verdict} · sonuçlar geliyor',
+    },
+    // Kurul C10: kalabalık odada beklenen kişi sayısı.
+    // Kurul C9: kalabalık odada herkes aynı puandayken sıra yerine.
+    K.crowdAllTied: {'ku': 'Wekhev', 'tr': 'Eşit'},
+    K.crowdWaitingCount: {
+      'ku': 'Li benda {n} lîstikvanan…',
+      'tr': '{n} oyuncu bekleniyor…',
     },
     K.rakipBekleniyor: {'ku': 'Hevrik tê payîn…', 'tr': 'Rakip bekleniyor…'},
+    // Kurul C25: seviye penceresi yerine ödül kartında satır içi kutlama.
+    K.levelUpInline: {'ku': 'Asta nû: {n}', 'tr': 'Yeni seviye: {n}'},
+    K.questionImageZoomHint: {
+      'ku': 'Ji bo mezinkirinê li wêneyê bixe',
+      'tr': 'Büyütmek için görsele dokun',
+    },
+    K.wordOrderingHowTo: {
+      'ku':
+          'Li peyvan bixe da ku hevokê çêbikî; ji bo rakirinê li peyva di hevokê de bixe.',
+      'tr':
+          'Kelimelere dokunarak cümleyi kur; geri almak için cümledeki kelimeye dokun.',
+    },
     K.cumleyiOlusturmakIcinKelimeleri: {
       'ku': 'Peyvan hilbijêre ku hevokê çêbikî',
       'tr': 'Cümleyi oluşturmak için kelimeleri seç',
@@ -1848,6 +1872,10 @@ class Tr {
     },
     K.pronunciationRecording: {'ku': 'Tê tomarkirin…', 'tr': 'Kaydediliyor…'},
     K.listenQuestion: {'ku': 'Guh bide pirsê', 'tr': 'Soruyu dinle'},
+    K.doubleAnswerActiveHint: {
+      'ku': 'Bersiva ducar çalak e: du mafên te hene',
+      'tr': 'Çift cevap etkin: iki hakkın var',
+    },
     K.doubleAnswerHint: {
       'ku': 'Bersiveke din bide',
       'tr': 'Bir cevap daha ver',
@@ -2184,8 +2212,11 @@ class Tr {
       'tr': 'Oda sahibi başlatınca yarış başlar.',
     },
     K.crowdHostStartHint: {
-      'ku': 'Gava amade bî dest pê bike. Piştî destpêkê kes nikare tevlî bibe.',
-      'tr': 'Hazır olunca başlat. Yarış başlayınca kimse katılamaz.',
+      // Kurul C11 (Astra + Sol): "Hazır olunca" oyuncu başına hazır durumu
+      // varmış gibi okunuyordu; ürün yalnız oda sahibinin başlatmasını bilir.
+      'ku':
+          'Gava her kes hat, dest pê bike. Piştî destpêkê kes nikare tevlî bibe.',
+      'tr': 'Herkes gelince başlat. Yarış başlayınca kimse katılamaz.',
     },
     K.hostTransferredToYou: {
       'ku': 'Mêvandar derket; niha tu mêvandar î.',
@@ -2436,8 +2467,10 @@ class Tr {
     },
     // Günlük bedava joker ipucu (2026-10-24): jeton satırının yanında.
     K.freeWildcardToday: {
-      'ku': 'Îro 1 alîkarî belaş e',
-      'tr': 'Bugün 1 joker bedava',
+      // Kurul C16 (Astra + Sol): hangi jokerin bedava olduğu belli değildi;
+      // ilk kullanılan joker bedavadır.
+      'ku': 'Îro alîkariya te ya yekem belaş e',
+      'tr': 'Bugün ilk jokerin bedava',
     },
     // W1 (2026-10-28 tur 5): günlük hak açıkken jokerin fiyat yuvasında yazar.
     K.freeWord: {'ku': 'Belaş', 'tr': 'Bedava'},
@@ -2449,6 +2482,8 @@ class Tr {
     // 2026-10-29 son kurul: "Cevapları gör" rozetindeki sayının ne olduğu
     // görünür yazılır ("2" değil "2 yanlış").
     K.wrongCountBadge: {'ku': '{n} şaşî', 'tr': '{n} yanlış'},
+    // Kurul C7: inceleme rozetinde boş (süresi dolan) soru sayısı.
+    K.blankCountBadge: {'ku': '{n} vala', 'tr': '{n} boş'},
     K.seeAnswersWrong: {
       'ku': 'Bersivan bibîne ({n} şaşî)',
       'tr': 'Cevapları gör ({n} yanlış)',
@@ -3326,7 +3361,6 @@ class Tr {
           'tahsil edilir. İstediğin zaman mağaza hesap ayarlarından iptal '
           'edebilirsin.',
     },
-    K.levelUpTitle: {'ku': 'Asta te bilind bû!', 'tr': 'Seviye atladın!'},
 
     // ── Profil kartı ──────────────────────────────────────────────
     // Düzenleyici başlığı zaten `K.myAvatar` ("Rûyê Min"). Düğme
@@ -3588,7 +3622,16 @@ class Tr {
     K.selectCategory: {'ku': 'Mijarê hilbijêre', 'tr': 'Konu seç'},
     K.questionCountLabel: {'ku': 'Hejmara pirsan', 'tr': 'Soru sayısı'},
     K.entryFeeLabel: {'ku': 'Xerca beşdarbûnê', 'tr': 'Katılım ücreti'},
-    K.freeEntry: {'ku': 'Bêpere (0)', 'tr': 'Ücretsiz (0)'},
+    // Kurul C13 (Astra + Sol): "Ücretsiz (0)"daki sıfır neyin sıfırı belli
+    // değildi; giriş ücreti olduğu yazar.
+    K.freeEntry: {'ku': 'Bêpere', 'tr': 'Ücretsiz'},
+    K.freeEntrySummary: {'ku': 'ketina bêpere', 'tr': 'giriş ücretsiz'},
+    // Kurul C14: sırayla düello rozeti canlı düellodan ayrılsın (kısa).
+    K.asyncDuelChip: {'ku': 'Bi dorê', 'tr': 'Sırayla'},
+    K.perQuestionSeconds: {
+      'ku': 'ji bo her pirsê {n} çirke',
+      'tr': 'soru başına {n} sn',
+    },
     K.insufficientCoins: {
       'ku': 'Zêrên te têr nakin.',
       'tr': 'Jetonun yetmiyor.',
@@ -3907,6 +3950,11 @@ class Tr {
           'XP qezenc kir.',
       'tr': '24 saat içinde rakip çıkmadı. Doğru cevapların için XP kazandın.',
     },
+    // Kurul C30: yarım kalan düellonun süre çubuğu neyi saydığını söyler.
+    K.asyncDuelClosesOnExpiry: {
+      'ku': 'Dema biqede, pêşbirk tê girtin',
+      'tr': 'Süre dolunca düello kapanır',
+    },
     K.asyncDuelUnfinishedBody: {
       'ku':
           'Te hemû pirs nebersivandin; dema wê biqede, ev pêşbirk dê were girtin.',
@@ -4081,7 +4129,12 @@ class Tr {
       'ku': 'Dema dora {name} were, ew ê agahdarî bistîne.',
       'tr': '{name} sırası gelince bildirim alacak.',
     },
-    K.asyncDuelStartNew: {'ku': 'Pêşbirka nû', 'tr': 'Yeni düello'},
+    // Kurul C20 (Astra + Sol): "Yeni düello" rozeti yeni özellik duyurusu
+    // gibi okunuyordu; eylem olduğu söylenir.
+    K.asyncDuelStartNew: {
+      'ku': 'Pêşbirkekê dest pê bike',
+      'tr': 'Düello başlat',
+    },
     K.challengeYourTurn: {'ku': 'Dora te ye', 'tr': 'Sıra sende'},
     K.challengeIncomingBy: {
       'ku': '{name} tu vexwendî pêşbirkê',
@@ -5001,6 +5054,17 @@ class K {
   static const sureDoldu = 'screen.sureDoldu';
   static const cevabinKaydedildi = 'screen.cevabinKaydedildi';
   static const revealVerdictCountdown = 'quiz.revealVerdictCountdown';
+  static const revealVerdictResults = 'quiz.revealVerdictResults';
+  static const crowdWaitingCount = 'quiz.crowd.waitingCount';
+  static const crowdAllTied = 'quiz.crowd.allTied';
+  static const perQuestionSeconds = 'room.perQuestionSeconds';
+  static const freeEntrySummary = 'room.freeEntrySummary';
+  static const asyncDuelChip = 'duel.async.chip';
+  static const asyncDuelClosesOnExpiry = 'duel.async.closesOnExpiry';
+  static const doubleAnswerActiveHint = 'quiz.doubleAnswerActiveHint';
+  static const wordOrderingHowTo = 'quiz.wordOrderingHowTo';
+  static const questionImageZoomHint = 'quiz.questionImageZoomHint';
+  static const levelUpInline = 'result.levelUpInline';
   static const rakipBekleniyor = 'screen.rakipBekleniyor';
   static const cumleyiOlusturmakIcinKelimeleri =
       'screen.cumleyiOlusturmakIcinKelimeleri';
@@ -5184,6 +5248,7 @@ class K {
   static const seeAnswers = 'result.seeAnswers';
   static const seeAnswersWrong = 'result.seeAnswersWrong';
   static const wrongCountBadge = 'result.wrongCountBadge';
+  static const blankCountBadge = 'result.blankCountBadge';
   static const hideAnswers = 'result.hideAnswers';
   static const showAllOptions = 'review.showAllOptions';
   static const wheelTitle = 'wheel.title';
@@ -5682,7 +5747,6 @@ class K {
   static const paywallPackagesInactiveBody = 'paywall.packages.inactive.body';
   static const paywallRenewalTerms = 'paywall.renewalTerms';
   static const paywallRestoreFailed = 'paywall.restore.failed';
-  static const levelUpTitle = 'result.levelUp.title';
 
   // ── Profil kartı ──────────────────────────────────────────────
   static const editAvatar = 'profile.editAvatar';

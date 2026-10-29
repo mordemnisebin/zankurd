@@ -37,7 +37,6 @@ import '../widgets/learning_outcome_card.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zan_mascot.dart';
-import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/percent_format.dart';
 import '../utils/player_identity.dart';
@@ -183,6 +182,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   int get score => widget.score;
   int get correctCount => widget.correctCount;
   int get wrongCount => widget.wrongCount;
+
+  /// "Cevapları gör" rozeti: yanlış ve boş (süresi dolan) sayısı; ikisi de
+  /// yoksa boş metin (rozet çizilmez).
+  String _reviewBadgeLabel(BuildContext context) {
+    final blank = (widget.totalQuestions - widget.correctCount - wrongCount)
+        .clamp(0, widget.totalQuestions);
+    return [
+      if (wrongCount > 0) context.t(K.wrongCountBadge, {'n': '$wrongCount'}),
+      if (blank > 0) context.t(K.blankCountBadge, {'n': '$blank'}),
+    ].join(' · ');
+  }
+
   int get totalQuestions => widget.totalQuestions;
 
   /// "Üst üste" = bu turdaki en uzun doğru zinciri. Doğru sayısını aşamaz;
@@ -193,9 +204,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   int get coinsAwarded => widget.coinsAwarded;
 
   /// Günlük tavan ödülü sıfırladı ya da istenenden aza indirdi mi?
+  ///
+  /// Kurul (Sol, 2026-10-29) "oda galibi +19, 0 puanlı +20 jeton": kusur değil
+  /// günlük oda tavanıydı (`claim_quiz_reward`, v_daily_cap 300; o gün çok
+  /// oynayan galibin payı tavana kırpıldı, `cap_reached` true). Ama not
+  /// çıkmıyordu: kıyas solo formülüyleydi ve oda payı onu aşıyordu. Çevrimiçi
+  /// odada sunucunun `cap_reached`i kırpmanın kendisidir (base_paid < base).
   bool get _dailyCapCutReward =>
       widget.dailyCapReached &&
       (coinsAwarded <= 0 ||
+          (widget.room.id?.trim() ?? '').isNotEmpty ||
           coinsAwarded <
               CoinCalculator.soloAward(
                 correctCount: widget.correctCount,
@@ -423,7 +441,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   @override
   void dispose() {
-    _levelUpTimer?.cancel();
     _detailsOpenRequest.dispose();
     final pending = _pendingGuestSave;
     final navigator = _navigator;
@@ -1291,14 +1308,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
         if (leveledUp) {
-          // Seviye kutusu sonuç başlığını ve skoru ÖRTÜYORDU (Astra turu,
-          // 2026-10-29): önce sonuç okunur, kutu ~1,8 sn sonra gelir.
-          _levelUpTimer = Timer(const Duration(milliseconds: 1800), () {
-            // Bu arada başka bir rota/diyalog açıldıysa kutu onun üstüne
-            // binmesin: yalnız bu sonuç ekranı hâlâ en üstteyse gösterilir.
-            if (!mounted || ModalRoute.of(context)?.isCurrent != true) return;
-            _showLevelUpDialog(context, xpStore.currentLevel);
-          });
+          // Kurul C25 (2026-10-29, Opus + Astra KABUL): seviye penceresi
+          // 1,8 sn gecikmeyle bile skoru örtüyordu. Pencere kalktı; kutlama
+          // ödül kartının seviye satırında "Yeni seviye: n" olarak, sonuçla
+          // AYNI anda ve hiçbir şeyi örtmeden görünür (konfeti sürer).
+          setState(() => _leveledUpTo = xpStore.currentLevel);
         } else {
           // Misafire üç oyunda bir "hesabını kaydet" önerisi. Seviye atlama
           // kutusunun üstüne binmesin diye o turda gösterilmez (oyun yine
@@ -1314,37 +1328,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     }
   }
 
-  Timer? _levelUpTimer;
-
-  void _showLevelUpDialog(BuildContext context, int newLevel) {
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: context.t(K.levelUpTitle),
-      transitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (context, anim1, anim2) {
-        return const SizedBox.shrink();
-      },
-      transitionBuilder: (context, anim1, anim2, child) {
-        final dialog = _LevelUpDialog(
-          level: newLevel,
-          onContinue: () => Navigator.of(
-            context,
-          ).pop({'score': score, 'correct': correctCount}),
-        );
-        // Hareketi azalt açıkken pencere yaylanmadan, yalnız belirerek
-        // gelir.
-        if (sahneMotionReduced(context)) {
-          return FadeTransition(opacity: anim1, child: dialog);
-        }
-        final curve = CurveTween(curve: Curves.easeOutBack).animate(anim1);
-        return ScaleTransition(
-          scale: curve,
-          child: FadeTransition(opacity: anim1, child: dialog),
-        );
-      },
-    );
-  }
+  /// Bu turda çıkılan seviye (yoksa null): seviye satırı kutlamayı yazar.
+  int? _leveledUpTo;
 
   @override
   Widget build(BuildContext context) {
@@ -1381,7 +1366,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final isMixedCategoryRound = learningOutcome.categoryBreakdown.length > 1;
     final raceWord = context.t(K.raceWord);
     final String? roundLabel;
-    if (isMixedCategoryRound) {
+    if (room.isCrowd) {
+      // Kurul C24 (Opus turu): aynı kalabalık odanın sonucu oda sahibinde
+      // "Grup yarışı", katılanlarda "Karışık" yazıyordu (oda adı yalnız
+      // sahipte dolu). Kalabalık odada başlık herkeste aynıdır.
+      roundLabel = context.t(K.crowdRoomTitle);
+    } else if (isMixedCategoryRound) {
       final title = quizRoundTitle(
         roomId: null,
         roomCode: '',
@@ -1946,7 +1936,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       seeAnswersButton = _SeeAnswersButton(
         key: const ValueKey('result-see-answers-button'),
         wrongCount: wrongCount,
-        badgeLabel: context.t(K.wrongCountBadge, {'n': '$wrongCount'}),
+        // Kurul C7 (Astra + Sol): rozet yalnız yanlışları sayıyordu; boş
+        // (süresi dolan) sorular da incelemede olduğu hâlde görünmüyordu.
+        badgeLabel: _reviewBadgeLabel(context),
         label: context.t(K.seeAnswers),
         semanticLabel: wrongCount > 0
             ? context.t(K.seeAnswersWrong, {'n': '$wrongCount'})
@@ -2095,9 +2087,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   ? KeyedSubtree(
                       key: const ValueKey('result-level-journey-progress'),
                       child: SahneResultLevelProgress(
-                        levelLabel: context.t(K.seviyeP, {
-                          'p0': '$_currentLevel',
-                        }),
+                        levelLabel: _leveledUpTo != null
+                            ? context.t(K.levelUpInline, {'n': '$_leveledUpTo'})
+                            : context.t(K.seviyeP, {'p0': '$_currentLevel'}),
                         xpInLevel: _xpInCurrentLevel,
                         xpNeeded: _xpNeededForNextLevel,
                         progress: _levelProgress,
@@ -3232,7 +3224,7 @@ class _SeeAnswersButton extends StatelessWidget {
         expand: true,
         onPressed: onPressed,
         semanticLabel: semanticLabel,
-        trailing: wrongCount > 0
+        trailing: badgeLabel.isNotEmpty
             ? Container(
                 key: const ValueKey('result-see-answers-badge'),
                 // a11y-tap-target: noninteractive — yanlış sayısı rozeti;
@@ -3253,89 +3245,6 @@ class _SeeAnswersButton extends StatelessWidget {
                 ),
               )
             : null,
-      ),
-    );
-  }
-}
-
-/// Seviye atlama penceresi — sahne dilinde: Perde yüzey, L pah, Zêr taç,
-/// "Seviye atladın!", "Seviye N" Zêr plakası ve tek birincil "Devam Et".
-/// Gündüz temasında da gece çizilir.
-///
-/// 2026-09-29 doğallık (K10, K4): başlığın altında aynı şeyi ikinci kez
-/// söyleyen bir satır vardı ("Seviye atladın!" → "Yeni bir seviyeye
-/// ulaştın!"); söz tekrarı kalktı, yeni seviye plakada okunur. Üst kenardaki
-/// kilim şeridi de kalktı: taç ve altın plaka anı zaten taşıyor.
-class _LevelUpDialog extends StatelessWidget {
-  const _LevelUpDialog({required this.level, required this.onContinue});
-
-  final int level;
-  final VoidCallback onContinue;
-
-  @override
-  Widget build(BuildContext context) {
-    return SahneStage(
-      stage: AppTheme.stage,
-      child: Builder(
-        builder: (context) {
-          final t = SahneTokens.of(context);
-          return Dialog(
-            backgroundColor: t.s1,
-            elevation: 0,
-            shape: SahneShape.l,
-            clipBehavior: Clip.antiAlias,
-            insetPadding: const EdgeInsets.symmetric(horizontal: SahneSpace.x6),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                SahneSpace.x6,
-                SahneSpace.x8,
-                SahneSpace.x6,
-                SahneSpace.x6,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SahneGlyph(SahneGlyphKind.crown, size: 56),
-                  const SizedBox(height: SahneSpace.x4),
-                  Semantics(
-                    header: true,
-                    child: Text(
-                      context.t(K.levelUpTitle),
-                      textAlign: TextAlign.center,
-                      style: SahneType.headline.copyWith(color: t.goldTx),
-                    ),
-                  ),
-                  const SizedBox(height: SahneSpace.x5),
-                  DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: t.gold,
-                      shape: SahneShape.m,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: SahneSpace.x5,
-                        vertical: SahneSpace.x2,
-                      ),
-                      child: Text(
-                        context.t(K.seviyeP, {'p0': '$level'}),
-                        textAlign: TextAlign.center,
-                        // Zêr dolgunun üstündeki metin Zêr'in kendi
-                        // "üstü" belirtecidir (koyu mürekkep).
-                        style: SahneType.headline.copyWith(color: t.onGold),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: SahneSpace.x6),
-                  SahneButton.primary(
-                    label: context.t(K.devamEt2),
-                    expand: true,
-                    onPressed: onContinue,
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
       ),
     );
   }
@@ -3446,8 +3355,11 @@ class ResultExplanationEntry extends StatelessWidget {
     // Durum şekille ve sözle: oyuncu hangi soruda takıldığını listeyi
     // okumadan bulabilsin.
     final Widget status = record.isUnanswered
+        // Kurul C8 (Astra + Sol): "Boş" sorunun neden boş kaldığını
+        // söylemiyordu; yarışta boş soru süresi dolan sorudur ve inceleme
+        // listesinde öyle okunur (sonuç çipi dar ekranda kısa "Boş" kalır).
         ? Semantics(
-            label: context.t(K.blank),
+            label: context.t(K.sureDoldu),
             excludeSemantics: true,
             child: DecoratedBox(
               decoration: ShapeDecoration(color: t.s2, shape: SahneShape.s),

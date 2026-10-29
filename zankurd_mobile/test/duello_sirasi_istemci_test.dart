@@ -286,8 +286,14 @@ void main() {
         await tester.pumpWidget(_listScreen(repo));
         await tester.pumpAndSettle();
 
-        // İki "Sıra sende" rozeti, ikisi de ince çubuklu.
-        expect(find.text('Sıra sende'), findsNWidgets(2));
+        // İki yarım tur rozeti, ikisi de ince çubuklu. Kurul C30
+        // (2026-10-29, 3/3): rozet açık eylemdir ("Devam et") ve çubuğun
+        // altında süre dolunca ne olduğu yazar.
+        expect(find.text('Devam et'), findsNWidgets(2));
+        expect(
+          find.byKey(const ValueKey('async-duel-closes-note')),
+          findsNWidgets(2),
+        );
         expect(
           find.byKey(const ValueKey('async-duel-time-bar')),
           findsNWidgets(2),
@@ -374,7 +380,7 @@ void main() {
       final turn = find.byKey(const ValueKey('play-hub-async-duel-turn'));
       expect(turn, findsOneWidget);
       expect(
-        find.descendant(of: turn, matching: find.text('Sıra sende')),
+        find.descendant(of: turn, matching: find.text('Devam et')),
         findsOneWidget,
       );
       expect(
