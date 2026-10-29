@@ -178,8 +178,8 @@ class QuizStageCenter extends StatelessWidget {
 
 /// Üst çubuk künyesi (2026-10-29, Astra 2. inceleme): yer, orta yuvanın GERÇEK
 /// genişliğidir; punto karakter sayısına göre DEĞİL, metin o genişlikte
-/// gerçek yazı ölçeğiyle ölçülerek seçilir: en büyük punto (14 → 11) ki künye
-/// en çok iki satıra sığsın; 11'de de sığmazsa gereken satır sayısı kadar
+/// gerçek yazı ölçeğiyle ölçülerek seçilir: en büyük punto (14 → 12) ki künye
+/// en çok iki satıra sığsın; 12'de de sığmazsa gereken satır sayısı kadar
 /// satıra iner. `maxLines` ölçülen satır sayısıdır: metin ASLA kesilmez
 /// (`didExceedMaxLines` hep false).
 class _FitKicker extends StatelessWidget {
@@ -217,7 +217,7 @@ class _FitKicker extends StatelessWidget {
 
         var size = 14.0;
         var lines = linesAt(size);
-        while (lines > 2 && size > 11) {
+        while (lines > 2 && size > 12) {
           size -= 1;
           lines = linesAt(size);
         }
