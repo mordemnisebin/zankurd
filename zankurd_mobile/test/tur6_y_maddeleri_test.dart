@@ -123,7 +123,9 @@ void main() {
       expect(
         find.descendant(
           of: find.byKey(const ValueKey('result-see-answers-badge')),
-          matching: find.text('1'),
+          matching: find.text(
+            '1 yanlış',
+          ), // 2026-10-29 son kurul: rozet birimli
         ),
         findsOneWidget,
       );

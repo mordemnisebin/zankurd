@@ -163,8 +163,11 @@ class _WordsReviewHeroState extends State<WordsReviewHero> {
     final t = SahneTokens.of(context);
     final plan = _plan;
     final ready = plan != null && plan.dueTotal > 0;
+    // 2026-10-29 son kurul: "Tekrar · bugün 5" ile altındaki "3 kelime · 2
+    // soru" iki ayrı sayı gibi okunuyordu; üst satır yalnız kapsamı söyler
+    // ("Bugünkü tekrar"), dökümü başlık verir.
     final eyebrow = ready
-        ? context.t(K.tekrarTodayLine, {'count': '${plan.dueTotal}'})
+        ? context.t(K.tekrarTodayTitle)
         : context.t(K.tekrarNone);
     final headline = ready
         ? _breakdown(context, plan)

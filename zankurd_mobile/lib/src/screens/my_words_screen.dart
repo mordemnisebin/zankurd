@@ -127,7 +127,11 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
                     _practiceSection(context, t, words),
                     const SizedBox(height: SahneSpace.x4),
                     Text(
-                      context.t(K.wordsCount, {'count': '${words.length}'}),
+                      // 2026-10-29 son kurul: yalın "4 kelime" tekrar
+                      // sayılarıyla karışıyordu; liste KAYITLI kelimelerdir.
+                      context.t(K.wordsSavedCount, {
+                        'count': '${words.length}',
+                      }),
                       key: const ValueKey('my-words-count'),
                       style: SahneType.captionStrong.copyWith(color: t.tx2),
                     ),

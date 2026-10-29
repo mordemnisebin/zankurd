@@ -3640,7 +3640,7 @@ Widget _resultVariant({
   int? duelOpponentScore,
   int coins = 30,
   int wrong = 1,
-  int streak = 2,
+  int? streak,
 }) {
   final repository = _TourRepository();
   final room = repository.createRoom();
@@ -3648,6 +3648,16 @@ Widget _resultVariant({
   final total = records.length;
   final correct = records.where((r) => r.isCorrect).length;
   assert(correct + wrong == total, 'kahraman sayıları kayıtlarla uyuşmalı');
+  // 2026-10-29 son kurul: "Üst üste" eskiden sabit 2'ydi; 1 doğrulu turda
+  // "1 Doğru · 2 Üst üste" gibi imkânsız bir kare basıyordu. Varsayılan,
+  // kayıtlardaki en uzun doğru zinciridir (oyunun `quiz_screen` hesabı).
+  var run = 0;
+  var longest = 0;
+  for (final r in records) {
+    run = r.isCorrect ? run + 1 : 0;
+    if (run > longest) longest = run;
+  }
+  streak ??= longest;
   return QuizResultScreen(
     repository: repository,
     room: room,

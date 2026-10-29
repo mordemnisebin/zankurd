@@ -397,7 +397,9 @@ void main() {
   testWidgets('mağaza ürün rengini büyük yüzeylere taşımadan sakin kalır', (
     tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
+    await tester.binding.setSurfaceSize(const Size(390, 1000));
+    // 2026-10-29 son kurul: güçlendiricilere işlev satırı eklendi; VIP
+    // kartı 844'te tembel listenin dışında kalıyordu.
     addTearDown(() => tester.binding.setSurfaceSize(null));
     final repository = _ShopRepository(coins: 500);
 
@@ -463,7 +465,9 @@ void main() {
   testWidgets(
     'alınabilir fiyat turuncu çerçeveli, yetmeyen gri dolgulu ve kilitli',
     (tester) async {
-      await tester.binding.setSurfaceSize(const Size(390, 844));
+      await tester.binding.setSurfaceSize(const Size(390, 1000));
+      // 2026-10-29 son kurul: güçlendiricilere işlev satırı eklendi; VIP
+      // kartı 844'te tembel listenin dışında kalıyordu.
       addTearDown(() => tester.binding.setSurfaceSize(null));
       final repository = _ShopRepository(coins: 500);
 
@@ -532,7 +536,9 @@ void main() {
   );
 
   testWidgets('VIP kartı yatay ve kompakt (eskiden ~490 mp)', (tester) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
+    await tester.binding.setSurfaceSize(const Size(390, 1000));
+    // 2026-10-29 son kurul: güçlendiricilere işlev satırı eklendi; VIP
+    // kartı 844'te tembel listenin dışında kalıyordu.
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(
       _shell(ShopScreen(repository: _ShopRepository(coins: 1000))),

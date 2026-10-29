@@ -31,6 +31,12 @@
 /// artık ilk ekranın altında, kaydırınca görünür. Bulucular bu yüzden
 /// ekran dışını da arar (`skipOffstage: false`) ve düğmeye kaydırır; korunan
 /// kurallar (tek inceleme yolu, okunur etiket, ≥ 48 yükseklik) aynıdır.
+///
+/// 2026-10-29 son kurul: alt perdedeki "Cevapları gör (n yanlış)" varken
+/// gövdedeki "Yanlışları incele" İKİNCİ bir inceleme yoluydu (GPT-6 Astra +
+/// GPT-6.1 Sol/Terra uyuştu). Açıklamalı kayıt olan her turda yan düğme
+/// artık YOK; tek inceleme eylemi alt perdededir. Okunurluk ve çakışma
+/// ölçümleri o düğmeye taşındı. Yeni bekçi: `son_kurul_test.dart`.
 library;
 
 import 'package:flutter/material.dart';
@@ -177,7 +183,8 @@ void main() {
     },
   );
 
-  testWidgets('baskın kategori VE başka yerde yanlış varsa iki düğme de kalır', (
+  testWidgets('baskın kategori VE başka yerde yanlış varsa: kart konuyu, '
+      'alt perde hepsini açar; gövdede ikinci inceleme düğmesi yok', (
     tester,
   ) async {
     final repository = MockZanKurdRepository();
@@ -193,10 +200,14 @@ void main() {
         const ValueKey('result-review-mistakes-button'),
         skipOffstage: false,
       ),
-      findsOneWidget,
+      findsNothing,
       reason:
-          'reviewCategory doluyken kart yalnız O KONUYU açar; yan düğme hâlâ '
-          'HEPSİNİ açan tek yoldur — burada iki düğme farklıdır, ikisi kalmalı.',
+          '2026-10-29 son kurul: HEPSİNİ gösteren yol alt perdedeki '
+          '"Cevapları gör"dür; gövdede ikinci bir inceleme düğmesi olmaz.',
+    );
+    expect(
+      find.byKey(const ValueKey('result-see-answers-button')),
+      findsOneWidget,
     );
     expect(
       find.byKey(
@@ -220,7 +231,8 @@ void main() {
 
       // W2 (2026-10-28 tur 5): Paylaş artık alt perdede SİMGE düğmesi (etiket
       // yok, ekran okuyucuya gider); yalnız yazılı yan eylem burada ölçülür.
-      const sideActionKeys = ['result-review-mistakes-button'];
+      // 2026-10-29 son kurul: tek yazılı inceleme eylemi "Cevapları gör".
+      const sideActionKeys = ['result-see-answers-button'];
       for (final keyName in sideActionKeys) {
         final button = find.byKey(ValueKey(keyName), skipOffstage: false);
         expect(button, findsOneWidget, reason: keyName);
@@ -241,9 +253,9 @@ void main() {
           of: button,
           matching: find.byType(Text),
         );
-        final label = tester.widget<Text>(labelFinder);
+        final label = tester.widget<Text>(labelFinder.first);
         final effective = DefaultTextStyle.of(
-          tester.element(labelFinder),
+          tester.element(labelFinder.first),
         ).style.merge(label.style);
         expect(
           effective.fontSize,
@@ -291,11 +303,20 @@ void main() {
         // olabilir; `buildScreen`deki `_expectReadablePrimaryNextAction` ile
         // AYNI desen — önce kaydır, SONRA var say. Haplar aynı bloktaki
         // bitişik öğeler olduğu için TEK kaydırma ikisini de görünür kılar.
-        final review = find.byKey(
-          const ValueKey('result-review-mistakes-button'),
+        // 2026-10-29 son kurul: yan düğme yok; %200 yazıda "Cevapları gör"
+        // listenin sonundadır ve alt perdedeki Paylaş ile çakışmamalı.
+        // Bu fikstürün kayıtlarında Kurmancî açıklama yok: KU'da "Cevapları
+        // gör" çıkmaz ve yan düğme TEK inceleme yolu olarak kalır.
+        final reviewKey = ValueKey(
+          language == 'ku'
+              ? 'result-review-mistakes-button'
+              : 'result-see-answers-button',
         );
+        final review = find.byKey(reviewKey);
         final share = find.byKey(const ValueKey('result-share-button'));
-        await tester.scrollUntilVisible(review, 600);
+        final reviewAnywhere = find.byKey(reviewKey, skipOffstage: false);
+        expect(reviewAnywhere, findsOneWidget, reason: language);
+        await tester.ensureVisible(reviewAnywhere);
         await tester.pumpAndSettle();
 
         expect(review, findsOneWidget, reason: language);

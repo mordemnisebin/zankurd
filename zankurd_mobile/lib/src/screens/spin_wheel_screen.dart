@@ -39,6 +39,34 @@ class SpinWheelScreen extends StatefulWidget {
 
   static const rewards = [10, 25, 50, 15, 75, 20, 100, 30];
 
+  /// İşaretçi üstte (−90°). Ressam `i`. dilimi `i * dilim` açısından başlatır.
+  static const double pointerAngle = -math.pi / 2;
+
+  /// Dinlenme açısı: yarım dilim kaydırılır ki işaretçi bir dilimin ORTASINA
+  /// baksın. 0'da −90° iki dilimin sınırına düşüyordu ve işaretçi çizgiyi
+  /// gösteriyordu (2026-10-29 son kurul).
+  static double get restAngle => -math.pi / rewards.length;
+
+  /// Çark [angle] kadar dönmüşken işaretçinin altındaki dilimin sırası.
+  static int segmentUnderPointer(double angle) {
+    final segment = 2 * math.pi / rewards.length;
+    final local = (pointerAngle - angle) % (2 * math.pi);
+    return (local / segment).floor() % rewards.length;
+  }
+
+  /// Kazanan dilimin ortası işaretçiye gelecek bitiş açısı ([from]'dan en az
+  /// beş tam tur ileride).
+  static double spinTarget(int winnerIndex, {double from = 0}) {
+    final segment = 2 * math.pi / rewards.length;
+    final centered = pointerAngle - (winnerIndex * segment + segment / 2);
+    const turns = 2 * math.pi;
+    var target = centered % turns + 5 * turns;
+    while (target - from < 5 * turns) {
+      target += turns;
+    }
+    return target;
+  }
+
   @override
   State<SpinWheelScreen> createState() => _SpinWheelScreenState();
 }
@@ -88,7 +116,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
           ? const Duration(milliseconds: 400)
           : const Duration(milliseconds: 3800),
     );
-    _rotation = const AlwaysStoppedAnimation(0);
+    _rotation = AlwaysStoppedAnimation(SpinWheelScreen.restAngle);
     _spinController.addListener(() {
       if (_spinController.isAnimating) {
         final angle = _rotation.value;
@@ -256,13 +284,13 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     // sunucuda yazıldı; çark yeniden açılınca bakiye güncel görünür.
     if (!mounted) return;
     final winnerIndex = rewards.contains(won) ? rewards.indexOf(won) : 0;
-    final segment = 2 * math.pi / rewards.length;
-    // işaretçi üstte (−90°); kazanan dilimin ortası işaretçiye gelsin.
-    final target =
-        2 * math.pi * 5 - (winnerIndex * segment + segment / 2) - math.pi / 2;
+    // İşaretçi üstte (−90°); kazanan dilimin ortası işaretçiye gelsin. Ek
+    // çevirmede çark son yerinden döner (eskiden 0'a sıçrıyordu).
+    final from = _rotation.value % (2 * math.pi);
+    final target = SpinWheelScreen.spinTarget(winnerIndex, from: from);
 
     _rotation = Tween<double>(
-      begin: 0,
+      begin: from,
       end: target,
     ).chain(CurveTween(curve: Curves.easeOutQuart)).animate(_spinController);
     _spinController.reset();

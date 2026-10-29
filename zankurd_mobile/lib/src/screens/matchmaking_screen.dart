@@ -196,6 +196,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   // olur; ekranda donuk "X sn" çipi kalmasın).
   bool _botPromptOpen = false;
 
+  /// Bulunan rakip bot mu? VS sahnesinde "Bot" diye yazılır (2026-10-29 son
+  /// kurul); soru ve sonuç ekranı botu zaten `Player.isBot` ile etiketler.
+  bool _opponentIsBot = false;
+
   bool _searchingStarted = false;
   List<String> _categories = const [];
   bool _loadingCategories = false;
@@ -1129,6 +1133,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       _found = true;
       _opponentName = matchedName;
       _opponentLevelKnown = opponentLevel != null;
+      // Sunucu odası yoksa rakip bottur (yalnız `_showBotPrompt` → bot).
+      _opponentIsBot = matchedRoom == null;
       if (opponentLevel != null) _opponentLevel = opponentLevel;
       _opponentIdentity = opponentIdentity;
       _opponentId = opponentId;
@@ -1337,13 +1343,30 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       backLabel: context.t(K.back),
       // Y4: TEK birincil eylem altta tam genişlik (TRT "HEMEN OYNA" /
       // Duolingo "DEVAM ET" deseni); konu satırları nötr kalır.
-      bottom: SahneButton.primary(
-        key: const ValueKey('matchmaking-random-cta'),
-        label: context.t(K.randomFindOpponent),
-        icon: AppIcons.shuffle,
-        arrow: false,
-        expand: true,
-        onPressed: () => _startMatchmaking('Rastgele'),
+      // 2026-10-29 son kurul: bot olasılığı aramadan ÖNCE, düğmenin hemen
+      // üstünde söylenir (eskiden yalnız arama başlayınca küçük notta).
+      bottom: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            context.t(K.botDisclosure),
+            key: const ValueKey('matchmaking-bot-disclosure'),
+            textAlign: TextAlign.center,
+            style: SahneType.caption.copyWith(
+              color: SahneTokens.of(context).tx2,
+            ),
+          ),
+          const SizedBox(height: SahneSpace.x2),
+          SahneButton.primary(
+            key: const ValueKey('matchmaking-random-cta'),
+            label: context.t(K.randomFindOpponent),
+            icon: AppIcons.shuffle,
+            arrow: false,
+            expand: true,
+            onPressed: () => _startMatchmaking('Rastgele'),
+          ),
+        ],
       ),
       slivers: [
         SliverPadding(
@@ -1606,9 +1629,12 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           level: _LevelTag(
             label: !_found
                 ? '?'
-                : _opponentLevelKnown
-                ? context.t(K.levelPrefix, {'level': '$_opponentLevel'})
-                : context.t(K.levelUnknown),
+                : [
+                    if (_opponentIsBot) context.t(K.botChip),
+                    _opponentLevelKnown
+                        ? context.t(K.levelPrefix, {'level': '$_opponentLevel'})
+                        : context.t(K.levelUnknown),
+                  ].join(' · '),
             found: _found,
           ),
         );

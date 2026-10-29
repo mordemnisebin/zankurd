@@ -184,7 +184,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   int get correctCount => widget.correctCount;
   int get wrongCount => widget.wrongCount;
   int get totalQuestions => widget.totalQuestions;
-  int get bestStreak => widget.bestStreak;
+
+  /// "Üst üste" = bu turdaki en uzun doğru zinciri. Doğru sayısını aşamaz;
+  /// aşan bir değer (ör. sunucunun oda dışı `streak`i) ekranda "1 Doğru ·
+  /// 2 Üst üste" gibi imkânsız bir çift yazar (2026-10-29 son kurul).
+  int get bestStreak => widget.bestStreak.clamp(0, widget.correctCount);
   List<AnswerRecord> get answerRecords => widget.answerRecords;
   int get coinsAwarded => widget.coinsAwarded;
 
@@ -1519,8 +1523,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // (maketteki `.sh-dock--2`). Geri kalan yan eylemler öğrenme özetinin
     // ALTINDA, ikincil düğme olarak kalır — öğrenme içgörüsü onlardan önce
     // okunur.
+    // 2026-10-29 son kurul: alt perdedeki "Cevapları gör (n yanlış)" varken
+    // gövdedeki "Yanlışları incele" ikinci bir inceleme yoluydu (iki model
+    // uyuştu). Tek inceleme eylemi alt perdededir; yan düğme yalnız o
+    // düğme yokken (açıklamalı kayıt yokken) kalır.
+    final hasSeeAnswers = _explanationEntries(
+      answerRecords,
+      context.isKu,
+    ).isNotEmpty;
     final secondaryResultActions = <_ResultAction>[
       if (wrongRecords.isNotEmpty &&
+          !hasSeeAnswers &&
           !learningContinue &&
           !learningOutcomeAlreadyOffersAllMistakes)
         _ResultAction(
@@ -1835,10 +1848,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // W2: cevap listesi "Diğer seçenekler"in içinde değil, alt perdenin hemen
     // üstünde görünür bir metin düğmesidir.
     Widget? seeAnswersButton;
-    if (_explanationEntries(answerRecords, context.isKu).isNotEmpty) {
+    if (hasSeeAnswers) {
       seeAnswersButton = _SeeAnswersButton(
         key: const ValueKey('result-see-answers-button'),
         wrongCount: wrongCount,
+        badgeLabel: context.t(K.wrongCountBadge, {'n': '$wrongCount'}),
         label: context.t(K.seeAnswers),
         semanticLabel: wrongCount > 0
             ? context.t(K.seeAnswersWrong, {'n': '$wrongCount'})
@@ -3057,12 +3071,17 @@ class _SeeAnswersButton extends StatelessWidget {
   const _SeeAnswersButton({
     super.key,
     required this.wrongCount,
+    required this.badgeLabel,
     required this.label,
     required this.semanticLabel,
     required this.onPressed,
   });
 
   final int wrongCount;
+
+  /// Rozet metni: yalın sayı değil "2 yanlış" (2026-10-29 son kurul — "2"
+  /// neyin sayısı olduğu belli değildi).
+  final String badgeLabel;
   final String label;
   final String semanticLabel;
   final VoidCallback onPressed;
@@ -3097,7 +3116,8 @@ class _SeeAnswersButton extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  '$wrongCount',
+                  badgeLabel,
+                  maxLines: 1,
                   style: SahneType.captionStrong.copyWith(color: t.errTx),
                 ),
               )

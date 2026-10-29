@@ -72,6 +72,10 @@ List<QuizQuestion> deterministicMatchQuestions(
   return rotated.take(limit).toList();
 }
 
+/// Sunucu `start_due_tournaments`: kupa açıldıktan bu kadar saat sonra en az
+/// 2 oyuncuyla başlar (`tournaments.fill_hours` varsayılanı).
+const int cupFillHours = 24;
+
 /// Maçın hükmen kapanacağı anı `GG.AA SS:dd` biçiminde yerel saate çevirir.
 String formatMatchDeadline(DateTime deadline) {
   final local = deadline.toLocal();
@@ -158,6 +162,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
   /// Bekleme ekranındaki doluluk ("1/4 oyuncu katıldı"); sunucu sayıyı
   /// göndermezse null ve satır çizilmez (2026-10-27).
   ({int count, int size})? _waitingFill;
+
+  /// Kupanın açıldığı an (sunucu `opened_at`); 24 saatlik süre buradan
+  /// sayılır. Yalnız doluluk alanlarını döndüren (yeni) RPC'de güvenilir.
+  DateTime? _waitingOpenedAt;
 
   /// Şampiyonluk ödülünün GERÇEK durumu.
   ///
@@ -274,7 +282,13 @@ class _TournamentScreenState extends State<TournamentScreen> {
         return;
       }
       final fill = _fillOf(real);
-      if (fill != _waitingFill) setState(() => _waitingFill = fill);
+      final openedAt = _openedAtOf(real);
+      if (fill != _waitingFill || openedAt != _waitingOpenedAt) {
+        setState(() {
+          _waitingFill = fill;
+          _waitingOpenedAt = openedAt;
+        });
+      }
     } catch (_) {
       // Bekleme ekranı doğru durumu gösteriyor; sonraki tıkta denenir.
     }
@@ -332,6 +346,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
         _serverBracket = seeded && real != null;
         _waitingForPlayers = real != null && !_isSeeded(real);
         _waitingFill = _fillOf(real);
+        _waitingOpenedAt = _openedAtOf(real);
         _standings = standings;
         _loading = false;
       });
@@ -407,6 +422,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             // sözünü bozardı.
             _waitingForPlayers = !seeded;
             _waitingFill = _fillOf(joined);
+            _waitingOpenedAt = _openedAtOf(joined);
           });
           return;
         }
@@ -886,7 +902,26 @@ class _TournamentScreenState extends State<TournamentScreen> {
       'count': '${fill.count}',
       'size': '${fill.size}',
     });
-    return '$line\n\n$body';
+    // 2026-10-29 son kurul: doluluğun yanında 24 saatlik sürenin bittiği
+    // an da yazılır (kural gövdede; burada yalnız saat).
+    final openedAt = _waitingOpenedAt;
+    final due = openedAt == null
+        ? null
+        : context.t(K.cupFillDeadline, {
+            'time': formatMatchDeadline(
+              openedAt.add(const Duration(hours: cupFillHours)),
+            ),
+          });
+    final head = [line, ?due].join('\n');
+    return '$head\n\n$body';
+  }
+
+  /// `get_tournament_bracket` doluluk alanlarıyla birlikte `createdAt` =
+  /// `opened_at` döndürür (2026-10-27_turnuva_doluluk.sql). Eski RPC'de
+  /// `createdAt` yoktu ve model "şimdi"ye düşerdi; o zaman saat yazılmaz.
+  static DateTime? _openedAtOf(TournamentBracket? bracket) {
+    if (bracket == null || bracket.entryCount == null) return null;
+    return bracket.createdAt;
   }
 
   static ({int count, int size})? _fillOf(TournamentBracket? bracket) {
@@ -1204,6 +1239,15 @@ class _LobbyView extends StatelessWidget {
             'n': '${TournamentConfig.coinBonusChampion}',
           }),
         ),
+        // 2026-10-29 son kurul: "Dolunca" neyin dolacağını söylemiyordu.
+        // Lobide (katılmadan) sunucu doluluk vermez — `get_tournament_bracket`
+        // yalnız kayıtlı oyuncuya döner; burada kapasite yazılır, katılınca
+        // bekleme ekranı "n/4" ve süre sonunu gösterir.
+        _CupRewardLine(
+          key: const ValueKey('tournament-capacity'),
+          text: '${TournamentConfig.totalPlayers} ${context.t(K.cupPlayers)}',
+          icon: AppIcons.peopleGroup,
+        ),
       ],
     );
 
@@ -1254,15 +1298,18 @@ class _LobbyView extends StatelessWidget {
 /// "Ödül: 200 jeton" çipi. [RewardToken] tek satıra kesiyordu (320 pt + %200
 /// yazıda "Ödül: 200 jet…"); ödül metni OKUNAKLI olmalı, bu yüzden sarar.
 class _CupRewardLine extends StatelessWidget {
-  const _CupRewardLine({required this.text});
+  const _CupRewardLine({super.key, required this.text, this.icon});
 
   final String text;
+
+  /// `null` → jeton glifi (ödül çipi); doluysa bilgi çipi (ör. kapasite).
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     return Semantics(
-      key: const ValueKey('tournament-reward'),
+      key: icon == null ? const ValueKey('tournament-reward') : null,
       label: text,
       child: ExcludeSemantics(
         child: DecoratedBox(
@@ -1275,7 +1322,10 @@ class _CupRewardLine extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SahneGlyph(SahneGlyphKind.coin, size: 20),
+                if (icon == null)
+                  const SahneGlyph(SahneGlyphKind.coin, size: 20)
+                else
+                  Icon(icon, size: 20, color: t.tx2),
                 const SizedBox(width: SahneSpace.x2),
                 Flexible(
                   child: Text(

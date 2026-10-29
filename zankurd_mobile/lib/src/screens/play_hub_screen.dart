@@ -298,7 +298,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     }
   }
 
-  /// "Oda" (3+ kişi): oda kur ya da kodla katıl.
+  /// "Oda" (2–50 kişi): oda kur ya da kodla katıl.
   Future<void> _openRoomSheet() async {
     final choice = await showSahneSheet<_RoomChoice>(
       context: context,
@@ -503,6 +503,12 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     // düğmeler anında açılsın; `socialLockedIn` (dinlemeyen) yalnız bir
     // sonraki tesadüfi çizimde açardı.
     final locked = RemoteAvailability.socialLockedWatch(context);
+    // 2026-10-29 son kurul: oda 2 kişiyle başlar; aralık gerçek
+    // kapasitelerden ("3+ kişi" yanlıştı, bkz. `son_kurul_test`).
+    final roomSub = context.t(K.roomTileSub, {
+      'min': '${GameRoom.allowedMaxPlayers.first}',
+      'max': '${GameRoom.allowedMaxPlayers.last}',
+    });
 
     // 2026-09-29 Şahnê A iskeleti: marka satırı → "Yarış" → alt başlık →
     // tek birincil eylem (hızlı düello sahne kartı) → iki adlandırılmış
@@ -659,13 +665,12 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 // Oda çok oyunculu sosyal moddur: Nîl.
                 role: SahneRole.social,
                 title: context.t(K.roomWord),
-                subtitle: context.t(K.roomTileSub),
+                subtitle: roomSub,
                 loading: _roomActionLoading,
                 onTap: locked || _roomActionLoading
                     ? null
                     : () => unawaited(_openRoomSheet()),
-                semanticLabel:
-                    '${context.t(K.roomWord)}. ${context.t(K.roomTileSub)}',
+                semanticLabel: '${context.t(K.roomWord)}. $roomSub',
               ),
             ),
           ],

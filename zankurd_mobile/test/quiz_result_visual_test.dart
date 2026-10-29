@@ -356,8 +356,10 @@ void main() {
     final primary = tester.getRect(
       find.byKey(const ValueKey('result-play-again-button')),
     );
+    // 2026-10-29 son kurul: ikincil inceleme eylemi alt perdedeki
+    // "Cevapları gör"dür (gövdedeki "Yanlışları incele" kalktı).
     final secondaryFinder = find.byKey(
-      const ValueKey('result-review-mistakes-button'),
+      const ValueKey('result-see-answers-button'),
       skipOffstage: false,
     );
     await tester.ensureVisible(secondaryFinder);
@@ -463,9 +465,11 @@ void main() {
 
     await openResultDetails(tester);
     final outcome = find.byKey(const ValueKey('learning-outcome-card'));
-    final review = find.byKey(const ValueKey('result-review-mistakes-button'));
+    // 2026-10-29 son kurul: ikincil inceleme eylemi alt perdedeki "Cevapları
+    // gör"dür; öğrenme özeti kaydırınca onun ÜSTÜNDE okunur.
+    final review = find.byKey(const ValueKey('result-see-answers-button'));
     final share = find.byKey(const ValueKey('result-share-button'));
-    await tester.scrollUntilVisible(review, 300);
+    await tester.ensureVisible(outcome);
     await tester.pumpAndSettle();
     expect(outcome, findsOneWidget);
     expect(review, findsOneWidget);
@@ -491,10 +495,16 @@ void main() {
     // gövdede, kaydırınca görünür (eskiden aynı satırdaydılar).
     final primary = find.byKey(const ValueKey('result-play-again-button'));
     expect(primary, findsOneWidget);
-    final review = find.byKey(const ValueKey('result-review-mistakes-button'));
-    await tester.scrollUntilVisible(review, 300);
-    await tester.pumpAndSettle();
+    // 2026-10-29 son kurul: tek inceleme eylemi alt perdede, kaydırmasız.
+    final review = find.byKey(const ValueKey('result-see-answers-button'));
     expect(review, findsOneWidget);
+    expect(
+      find.byKey(
+        const ValueKey('result-review-mistakes-button'),
+        skipOffstage: false,
+      ),
+      findsNothing,
+    );
     // 2026-10-29 tur 6 Y1: "⋯" alt perdede, kaydırma gerekmez.
     final more = find.byKey(const ValueKey('result-more-options'));
     expect(more, findsOneWidget);

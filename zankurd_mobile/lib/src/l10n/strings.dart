@@ -445,7 +445,13 @@ class Tr {
       'ku': 'Bi girêdanê an jî ji navnîşa hevalan vexwîne',
       'tr': 'Bağlantıyla ya da listeden meydan oku',
     },
-    K.roomTileSub: {'ku': 'Bi kodê 3+ kes', 'tr': 'Kodla 3+ kişi'},
+    // 2026-10-29 son kurul: oda 2 kişiyle başlar (`start_room_game`, oda
+    // ekranındaki `canStart`), kapasite 2–50 (`GameRoom.allowedMaxPlayers`).
+    // Eski "3+ kişi" yanlıştı.
+    K.roomTileSub: {
+      'ku': 'Bi kodê {min}–{max} kes',
+      'tr': 'Kodla {min}–{max} kişi',
+    },
     K.roomOpenFailed: {
       'ku': 'Ode nehat vekirin. Girêdana xwe kontrol bike.',
       'tr': 'Oda açılamadı. Bağlantını kontrol et.',
@@ -514,9 +520,21 @@ class Tr {
     K.wordsReviewUndo: {'ku': 'Tîpa dawî jê bibe', 'tr': 'Son harfi sil'},
     // Serbest pratik (2026-10-25, herkese açık). Kurul: Gemini Flash + Grok.
     K.wordsPracticeTitle: {'ku': 'Pratîka azad', 'tr': 'Serbest pratik'},
+    // 2026-10-29 son kurul: "Kutular" iç terimdi; kullanıcı tekrar
+    // zamanlarını görür (`K.wordsDueBadge` "Dema dubarekirinê").
     K.wordsPracticeHint: {
-      'ku': 'Qutî naguherin; çiqas bixwazî bixebite.',
-      'tr': 'Kutular değişmez; istediğin kadar çalış.',
+      'ku': 'Demên dubarekirinê naguherîne; çiqas bixwazî bixebite.',
+      'tr': 'Tekrar zamanlarını değiştirmez; istediğin kadar çalış.',
+    },
+    // 2026-10-29 son kurul: Kelimelerim kahramanının üst satırı ve liste
+    // başlığı kapsamı söyler ("Tekrar · bugün 5" ile "4 kelime" karışıyordu).
+    K.tekrarTodayTitle: {
+      'ku': 'Dubarekirina îro',
+      'tr': 'Bugün tekrar edilecek',
+    },
+    K.wordsSavedCount: {
+      'ku': '{count} peyvên tomarkirî',
+      'tr': 'Kayıtlı {count} kelime',
     },
     K.wordsPracticeAll: {'ku': 'Hemû peyvên min', 'tr': 'Tüm kelimelerim'},
     K.wordsPracticeWeak: {'ku': 'Peyvên min ên zehmet', 'tr': 'Zorlandıklarım'},
@@ -1944,6 +1962,12 @@ class Tr {
           'Rakip aranıyor. Canlı rakip bulunamazsa botla eşleşirsin. İstediğin zaman iptal edebilirsin.',
     },
     K.cancelAction: {'ku': 'Betal bike', 'tr': 'Vazgeç'},
+    // 2026-10-29 son kurul: bot olasılığı aramadan ÖNCE söylenir. Bot yalnız
+    // oyuncu seçerse gelir (`MatchmakingScreen._showBotPrompt`).
+    K.botDisclosure: {
+      'ku': 'Heke hevrikekî zindî neyê dîtin, tu dikarî bi botê re bilîzî.',
+      'tr': 'Canlı rakip bulunamazsa botla oynamayı seçebilirsin.',
+    },
 
     // ── Oda / mağaza ─────────────────────────────────────────────────
     K.roomCodeCopied: {
@@ -2203,6 +2227,11 @@ class Tr {
     },
     // KU fiilsiz: "tevlî bûn" çoğuldur, "1/4"te yanlış olurdu (jüri:
     // Codex GPT-6.1-Sol + Gemini 3.8 Flash, 2026-10-27).
+    // 2026-10-29 son kurul: bekleme ekranında 24 saatlik sürenin bittiği an.
+    K.cupFillDeadline: {
+      'ku': 'Dawiya 24 saetan: {time}',
+      'tr': '24 saatin sonu: {time}',
+    },
     K.tournamentWaitingFill: {
       'ku': 'Lîstikvanên beşdar: {count}/{size}',
       'tr': '{count}/{size} oyuncu katıldı',
@@ -2260,6 +2289,9 @@ class Tr {
     K.modeLesson: {'ku': 'Ders', 'tr': 'Ders'},
     K.seeAnswers: {'ku': 'Bersivan bibîne', 'tr': 'Cevapları gör'},
     // W2 (2026-10-28 tur 5): görünür düğme; yanlış sayısı parantezde.
+    // 2026-10-29 son kurul: "Cevapları gör" rozetindeki sayının ne olduğu
+    // görünür yazılır ("2" değil "2 yanlış").
+    K.wrongCountBadge: {'ku': '{n} şaşî', 'tr': '{n} yanlış'},
     K.seeAnswersWrong: {
       'ku': 'Bersivan bibîne ({n} şaşî)',
       'tr': 'Cevapları gör ({n} yanlış)',
@@ -2374,6 +2406,16 @@ class Tr {
     K.shopFreezeFull: {
       'ku': 'Tu dikarî herî zêde 2 cemidandinan hilgirî',
       'tr': 'En çok 2 dondurma tutabilirsin',
+    },
+    // 2026-10-29 son kurul: güçlendiricilerin tek satırlık işlevi (Seri
+    // dondurmanın "Elinde" satırı vardı, ötekiler yalnız addı).
+    K.shopJokerShort: {
+      'ku': 'Nîv bi nîv, alîkariya bersivê an du bersiv',
+      'tr': '50/50, ipucu ya da çift cevap',
+    },
+    K.shopExtraSpinShort: {
+      'ku': 'Li çerxa rojê zivirîneke din',
+      'tr': 'Günün çarkında bir tur daha',
     },
     K.jokerStockHint: {
       'ku': 'Di stokê de {n} alîkarî hene',
@@ -4420,6 +4462,8 @@ class K {
   static const wordsReviewUndo = 'words.review.undo';
   static const wordsPracticeTitle = 'words.practice.title';
   static const wordsPracticeHint = 'words.practice.hint';
+  static const tekrarTodayTitle = 'tekrar.todayTitle';
+  static const wordsSavedCount = 'words.savedCount';
   static const wordsPracticeAll = 'words.practice.all';
   static const wordsPracticeWeak = 'words.practice.weak';
   static const paywallFreeForAll = 'paywall.freeForAll';
@@ -4955,6 +4999,7 @@ class K {
   static const modeLesson = 'quiz.mode.lesson';
   static const seeAnswers = 'result.seeAnswers';
   static const seeAnswersWrong = 'result.seeAnswersWrong';
+  static const wrongCountBadge = 'result.wrongCountBadge';
   static const hideAnswers = 'result.hideAnswers';
   static const showAllOptions = 'review.showAllOptions';
   static const wheelTitle = 'wheel.title';
@@ -4992,6 +5037,7 @@ class K {
   static const startingSoon = 'match.startingSoon';
   static const searchingShort = 'match.searchingShort';
   static const searchingNote = 'match.searchingNote';
+  static const botDisclosure = 'match.botDisclosure';
   static const cancelAction = 'common.cancelAction';
 
   // ── Oda / mağaza ───────────────────────────────────────────────────
@@ -5072,6 +5118,7 @@ class K {
   static const tournamentWaitingTitle = 'tournament.waitingTitle';
   static const tournamentWaitingBody = 'tournament.waitingBody';
   static const tournamentWaitingFill = 'tournament.waitingFill';
+  static const cupFillDeadline = 'tournament.fillDeadline';
   static const backToTournament = 'tournament.backTo';
   static const tournamentQuitTitle = 'tournament.quitTitle';
   static const tournamentNextAfterFinish = 'tournament.nextAfterFinish';
@@ -5127,6 +5174,8 @@ class K {
   static const shopFreezeTitle = 'shop2.shopFreezeTitle';
   static const shopFreezeDesc = 'shop2.shopFreezeDesc';
   static const shopFreezeOwned = 'shop2.shopFreezeOwned';
+  static const shopJokerShort = 'shop2.jokerShort';
+  static const shopExtraSpinShort = 'shop2.extraSpinShort';
   static const shopFreezeFull = 'shop2.shopFreezeFull';
   static const jokerStockHint = 'shop2.jokerStockHint';
   static const frameNeon = 'avatar.frame.neon';

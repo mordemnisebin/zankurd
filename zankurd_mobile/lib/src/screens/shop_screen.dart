@@ -1283,6 +1283,10 @@ class _ShopScreenState extends State<ShopScreen> {
     'joker_pack_3' when _jokerStock > 0 => context.t(K.jokerStockHint, {
       'n': '$_jokerStock',
     }),
+    // 2026-10-29 son kurul: Seri dondurmanın alt satırı vardı, ötekiler
+    // yalnız addı; güçlendiricinin ne işe yaradığı tek satırla yazılır.
+    'joker_pack_3' => context.t(K.shopJokerShort),
+    'spin_wheel_extra' => context.t(K.shopExtraSpinShort),
     _ => null,
   };
 

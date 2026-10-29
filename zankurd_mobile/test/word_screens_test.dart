@@ -274,10 +274,13 @@ void main() {
         MyWordsScreen(repository: MockZanKurdRepository(), store: store),
       );
 
-      expect(find.text('3 kelime'), findsOneWidget);
+      // 2026-10-29 son kurul: liste başlığı kapsamı söyler ("Kayıtlı").
+      expect(find.text('Kayıtlı 3 kelime'), findsOneWidget);
       // Tek giriş: eski kelime-yalnız kartı ("Bugünkü tekrar" + Başla)
       // gitti; yerinde birleşik "Tekrar · bugün N" kartı durur.
-      expect(find.text('Tekrar · bugün 2'), findsOneWidget);
+      // 2026-10-29 son kurul: üst satır kapsamı söyler, döküm başlıktadır.
+      expect(find.text('Bugün tekrar edilecek'), findsOneWidget);
+      expect(find.text('2 kelime'), findsOneWidget);
       expect(find.byKey(const ValueKey('todays-review-card')), findsOneWidget);
       expect(find.text('Bugünkü tekrar'), findsNothing);
       expect(find.byKey(const ValueKey('my-words-review-start')), findsNothing);
@@ -374,7 +377,7 @@ void main() {
       expect(find.byKey(const ValueKey('my-word-rojbas')), findsNothing);
       expect(
         tester.widget<Text>(find.byKey(const ValueKey('my-words-count'))).data,
-        '1 kelime',
+        'Kayıtlı 1 kelime',
       );
     });
 
