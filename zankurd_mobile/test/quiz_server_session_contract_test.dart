@@ -13,6 +13,7 @@ import 'package:zankurd_mobile/src/screens/quiz/quiz_timer_widget.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
+import 'package:zankurd_mobile/src/widgets/quiz_stage_kit.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -318,6 +319,81 @@ void main() {
       'zankurd.quiz_tutorial.seen': true,
     });
   });
+
+  // 2026-10-29 son simülatör turu (ENGELLEYİCİ): sunucu doğru cevabı gizli
+  // tutarken oyuncu cevaplayıp rakibi beklediğinde `correctAnswer` boş
+  // olduğu için seçilen şık "yanlış" sayılıyor; şık ve alt şerit kırmızı ✕
+  // ile "Rakip bekleniyor…" diyordu, açılışta doğru çıkınca yeşile
+  // dönüyordu. Mevcut testler yalnız `correct == false`a bakıyordu (doğru),
+  // yanlış hükmün ÇİZİLİP çizilmediğine bakmıyordu. Bekleme hükümsüzdür:
+  // şık nötr "seçildi" (gerilim görünümü), şerit yok; hüküm açılışta.
+  for (final isCorrect in [true, false]) {
+    testWidgets(
+      'bekleme hükümsüz: ${isCorrect ? 'doğru' : 'yanlış'} cevap açılışa '
+      'kadar renksiz, açılışta gerçek hüküm',
+      (tester) async {
+        final started = _snapshot(remainingMs: 20000);
+        // Gerçek sunucu sözleşmesi: gönderim kabul edilir, hüküm bekler;
+        // yeniden okuma seçimi bekleyen cevap olarak döndürür.
+        final repository = _ServerSessionRepository(snapshot: started)
+          ..submitResult = {'accepted': true, 'pending': true};
+        addTearDown(repository.close);
+        await _mount(tester, repository, resumeSnapshot: started);
+        repository.snapshot = _snapshot(
+          remainingMs: 19000,
+          pendingAnswer: ResumedPendingAnswer(
+            questionId: 'server-q-1',
+            questionIndex: 0,
+            selectedOptionKey: isCorrect ? 'A' : 'B',
+            responseMs: 1200,
+          ),
+        );
+
+        final pick = isCorrect ? 'A1' : 'B1';
+        await tester.tap(find.text(pick).first);
+        await _pumpFrames(tester, 6);
+
+        var tiles = tester
+            .widgetList<QuizOptionTile>(find.byType(QuizOptionTile))
+            .toList();
+        expect(tiles.singleWhere((t) => t.answer == pick).selected, isTrue);
+        expect(tiles.every((t) => t.suspense), isTrue);
+        expect(tiles.any((t) => t.correct), isFalse);
+        expect(find.byType(QuizFeedbackStrip), findsNothing);
+        expect(find.textContaining('Yanlış'), findsNothing);
+        expect(find.textContaining('Rakip bekleniyor'), findsWidgets);
+
+        repository.snapshot = _snapshot(
+          remainingMs: 18000,
+          answers: [
+            ResumedAnswer(
+              questionId: 'server-q-1',
+              questionIndex: 0,
+              selectedOptionKey: isCorrect ? 'A' : 'B',
+              correctOptionKey: 'A',
+              isCorrect: isCorrect,
+              pointsAwarded: isCorrect ? 110 : 0,
+              responseMs: 1200,
+            ),
+          ],
+        );
+        repository.emitOpponentAnswered();
+        await _pumpFrames(tester, 6);
+
+        tiles = tester
+            .widgetList<QuizOptionTile>(find.byType(QuizOptionTile))
+            .toList();
+        expect(tiles.singleWhere((t) => t.answer == 'A1').correct, isTrue);
+        expect(tiles.any((t) => t.suspense), isFalse);
+        expect(
+          tester
+              .widget<QuizFeedbackStrip>(find.byType(QuizFeedbackStrip))
+              .correct,
+          isCorrect,
+        );
+      },
+    );
+  }
 
   testWidgets('fresh server oda iki client-ready olmadan süreyi başlatmaz', (
     tester,

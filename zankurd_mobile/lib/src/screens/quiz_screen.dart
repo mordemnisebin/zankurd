@@ -202,11 +202,29 @@ class _QuizScreenState extends State<QuizScreen>
   /// Cevap yanlış mı (süre dolması dahil)? Karar kaydedilmiş değerlendirmeden;
   /// kayıt henüz yoksa sorunun kendi eşleşme kuralından.
   bool get _answerWasWrong {
-    if (!answered) return false;
+    if (!answered || _verdictPending) return false;
     return _currentAnswerAdjudication == false ||
         (_currentAnswerAdjudication == null &&
             !question.acceptsAnswer(selectedAnswer));
   }
+
+  /// Sunucu doğru cevabı gizli tutarken (çok oyunculu) oyuncu cevapladı ama
+  /// hüküm henüz AÇIKLANMADI mı?
+  ///
+  /// 2026-10-29 son simülatör turu (ENGELLEYİCİ): bu aralıkta
+  /// `question.correctAnswer` boş olduğundan seçilen şık "doğru şıkka eşit
+  /// değil" sayılıyor, şık ve alt şerit kırmızı ✕ ile "yanlış" diyordu;
+  /// açılışta doğru çıkınca yeşile dönüyordu. Bekleme hükümsüzdür: şık nötr
+  /// "seçildi", şerit yerine kum saatli bekleme düğmesi; hüküm yalnız
+  /// açılışta ([_MultiplayerPhase.reveal] + güvenli açılış) gelir.
+  bool get _verdictPending =>
+      _usesServerHiddenAnswers &&
+      answered &&
+      (_mpPhase != _MultiplayerPhase.reveal || !_hasSafeCurrentReveal);
+
+  /// Hüküm (doğru/yanlış rengi, ✓/✕, şerit) gizli mi: gerilim tutuşu ya da
+  /// sunucu-gizli bekleme.
+  bool get _verdictHidden => _suspense || _verdictPending;
 
   /// Yanlıştan sonra doğru cevap + açıklama kartı görünür mü?
   ///
@@ -215,7 +233,7 @@ class _QuizScreenState extends State<QuizScreen>
   bool get _wrongAnswerInsightVisible =>
       _instantExplanationAllowed &&
       _showExplanation &&
-      !_suspense &&
+      !_verdictHidden &&
       _answerWasWrong;
 
   /// Süresiz modun geçerli olabileceği tek yer: ödül üretmeyen tek kişilik

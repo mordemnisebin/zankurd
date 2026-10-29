@@ -280,7 +280,7 @@ extension _QuizScreenUI on _QuizScreenState {
     // Şıklı sorularda ayrı bildirim YOK: alt perdedeki şerit "Süre doldu" der,
     // doğru şık ✓ ile yeşil, cümle ekran okuyucuya şeritten gider. Gövdeye
     // eklenen kutu şıkların altını uzatıp soruyu yerinden oynatıyordu.
-    if (selectedAnswer == 'TIMEOUT' && !_suspense && !_choiceTypeVisible)
+    if (selectedAnswer == 'TIMEOUT' && !_verdictHidden && !_choiceTypeVisible)
       QuizTimeoutNotice(isKu: _isKu, correctAnswer: question.correctAnswer),
   ];
 
@@ -763,7 +763,7 @@ extension _QuizScreenUI on _QuizScreenState {
               children: [
                 if (showJokers)
                   _buildWildcardRow()
-                else if (answered && !_suspense)
+                else if (answered && !_verdictHidden)
                   // K6+ (2026-10-28): cevaptan sonra alttan geri bildirim şeridi
                   // (doğru yeşil, yanlış kırmızı): başlık + ≤1 satır + eylem
                   // AYNI şeritte. Alıştırmada doğru cevaptan sonra eylem
@@ -1501,7 +1501,7 @@ extension _QuizScreenUI on _QuizScreenState {
       audiencePoll: _audiencePoll,
       showExplanation: showExplanation ?? _showExplanation,
       wrongAnswerInsight: _wrongAnswerInsightVisible,
-      suspense: _suspense,
+      suspense: _verdictHidden,
       opponentSelectedAnswers: _opponentSelectedAnswers,
       isCompact: isCompact,
       minBodyHeight: anchorHeight,
