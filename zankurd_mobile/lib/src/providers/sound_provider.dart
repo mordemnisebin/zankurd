@@ -2,7 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../services/app_audio_contexts.dart';
+import '../services/audio_session_coordinator.dart';
 import '../utils/error_reporter.dart';
 
 class SoundProvider extends ChangeNotifier {
@@ -56,12 +56,13 @@ class SoundProvider extends ChangeNotifier {
       }
       final player = _player;
       if (player != null) {
-        // Bağlam HER çalışta kurulur: iOS'ta ses oturumu geneldir ve
-        // telaffuz oynatıcısı onu `playback`e çeker; efekt yeniden
-        // `ambient`e dönmezse sessiz anahtarı yok sayar, dış müziği keser
-        // (kapışma U16, bkz. [AppAudioContexts]).
-        await player.setAudioContext(AppAudioContexts.effects);
-        await player.play(AssetSource(asset));
+        // iOS'ta ses oturumu geneldir: bağlam geçişi ve çalma tek
+        // koordinatörden geçer; telaffuz sürerken efekt atlanır (kapışma
+        // U16 + Astra F1 incelemesi, bkz. [AudioSessionCoordinator]).
+        await AudioSessionCoordinator.instance.playEffect(
+          player,
+          AssetSource(asset),
+        );
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'sound_provider');

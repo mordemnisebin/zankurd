@@ -11,7 +11,7 @@ import '../services/pronunciation_recorder.dart';
 import '../theme/app_icons.dart';
 import '../utils/error_reporter.dart';
 import 'sahne/sahne.dart';
-import '../services/app_audio_contexts.dart';
+import '../services/audio_session_coordinator.dart';
 
 /// Kendi kaydını çalmak için ince bir arayüz; testler sahte verir.
 abstract class PronunciationPlayback {
@@ -21,21 +21,47 @@ abstract class PronunciationPlayback {
 }
 
 class _AudioplayersPlayback implements PronunciationPlayback {
+  _AudioplayersPlayback() {
+    // Doğal bitiş oturumu ambient'e döndürür (bkz. AudioSessionCoordinator).
+    _complete = _player.onPlayerComplete.listen((_) => unawaited(_end()));
+  }
+
   final AudioPlayer _player = AudioPlayer();
+  late final StreamSubscription<void> _complete;
+  bool _speaking = false;
+
+  Future<void> _end() async {
+    if (!_speaking) return;
+    _speaking = false;
+    await AudioSessionCoordinator.instance.endSpeech();
+  }
 
   @override
   Future<void> play(String path) async {
     await _player.stop();
-    // Kullanıcının kendi kaydı: sessiz anahtarda da duyulur (kapışma U16).
-    await _player.setAudioContext(AppAudioContexts.speech);
-    await _player.play(DeviceFileSource(path));
+    await _end();
+    // Kullanıcının kendi kaydı: sessiz anahtarda da duyulur (playback).
+    // Geçiş tek koordinatörden; bu ses sürerken efektler atlanır (kapışma
+    // U16 + Astra F1 incelemesi).
+    await AudioSessionCoordinator.instance.beginSpeech(
+      _player,
+      () => _player.play(DeviceFileSource(path)),
+    );
+    _speaking = true;
   }
 
   @override
-  Future<void> stop() => _player.stop();
+  Future<void> stop() async {
+    await _player.stop();
+    await _end();
+  }
 
   @override
-  Future<void> dispose() => _player.dispose();
+  Future<void> dispose() async {
+    await _complete.cancel();
+    await _end();
+    await _player.dispose();
+  }
 }
 
 /// Telaffuz atölyesi (2026-10-26, ücretsiz): referans sesi dinle, kendi

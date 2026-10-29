@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import '../models/quiz_question.dart';
 import '../utils/error_reporter.dart';
 import 'tts_service.dart';
-import 'app_audio_contexts.dart';
+import 'audio_session_coordinator.dart';
 
 enum VerifiedAudioLocation { asset, network }
 
@@ -145,6 +145,10 @@ class AudioplayersVerifiedQuestionAudioPlayer
     if (existing != null) return existing;
     final player = _injected ?? AudioPlayer();
     _stateSubscription = player.onPlayerStateChanged.listen((state) {
+      // Doğal bitiş telaffuz oturumunu kapatır. `stopped` burada ele
+      // alınmaz: yeni çalıştan önceki stop'un geç gelen olayı yeni oturumu
+      // erken kapatırdı; açık durdurma [stop]/[play] içinde kapanır.
+      if (state == PlayerState.completed) unawaited(_endSpeech());
       if (_disposed) return;
       _playing.value = state == PlayerState.playing;
     });
@@ -171,13 +175,26 @@ class AudioplayersVerifiedQuestionAudioPlayer
     // yavaş dinlemeden sonra normal ses de yavaş kalırdı.
     final player = _player;
     await player.stop();
-    // Telaffuz bilerek dinlenir: sessiz anahtarda da duyulur. iOS oturumu
-    // genel olduğundan efekt oynatıcısının `ambient` bağlamı buraya sızmasın
-    // diye her çalışta kurulur (kapışma U16).
-    await player.setAudioContext(AppAudioContexts.speech);
-    await player.setSource(source);
-    await player.setPlaybackRate(rate);
-    await player.resume();
+    await _endSpeech();
+    // Telaffuz bilerek dinlenir: sessiz anahtarda da duyulur (playback).
+    // iOS oturumu genel olduğundan geçiş tek koordinatörden yapılır; bu
+    // ses sürerken efektler atlanır, bitince oturum ambient'e döner
+    // (kapışma U16 + Astra F1 incelemesi).
+    await AudioSessionCoordinator.instance.beginSpeech(player, () async {
+      await player.setSource(source);
+      await player.setPlaybackRate(rate);
+      await player.resume();
+    });
+    _speaking = true;
+  }
+
+  /// Bu oynatıcının açtığı telaffuz oturumu sürüyor mu? Kapanış TAM BİR KEZ.
+  bool _speaking = false;
+
+  Future<void> _endSpeech() async {
+    if (!_speaking) return;
+    _speaking = false;
+    await AudioSessionCoordinator.instance.endSpeech();
   }
 
   @override
@@ -185,12 +202,14 @@ class AudioplayersVerifiedQuestionAudioPlayer
     final player = _created;
     if (player != null) await player.stop();
     _playing.value = false;
+    await _endSpeech();
   }
 
   @override
   void dispose() {
     if (_disposed) return;
     _disposed = true;
+    unawaited(_endSpeech());
     unawaited(_stateSubscription?.cancel());
     final player = _created;
     if (player != null) unawaited(player.dispose());
