@@ -140,15 +140,16 @@ class AudioplayersVerifiedQuestionAudioPlayer
   StreamSubscription<PlayerState>? _stateSubscription;
   bool _disposed = false;
 
+  SpeechPlaybackGuard? _guard;
+
   AudioPlayer get _player {
     final existing = _created;
     if (existing != null) return existing;
     final player = _injected ?? AudioPlayer();
+    // Oturum (playback ↔ ambient) koruyucuda; bu dinleyici yalnız arayüzün
+    // "çalıyor" durumunu taşır.
+    _guard = SpeechPlaybackGuard(player);
     _stateSubscription = player.onPlayerStateChanged.listen((state) {
-      // Doğal bitiş telaffuz oturumunu kapatır. `stopped` burada ele
-      // alınmaz: yeni çalıştan önceki stop'un geç gelen olayı yeni oturumu
-      // erken kapatırdı; açık durdurma [stop]/[play] içinde kapanır.
-      if (state == PlayerState.completed) unawaited(_endSpeech());
       if (_disposed) return;
       _playing.value = state == PlayerState.playing;
     });
@@ -174,45 +175,34 @@ class AudioplayersVerifiedQuestionAudioPlayer
     // Oynatıcı paylaşılır: hız her çalışta yeniden kurulur, yoksa bir
     // yavaş dinlemeden sonra normal ses de yavaş kalırdı.
     final player = _player;
-    await player.stop();
-    await _endSpeech();
     // Telaffuz bilerek dinlenir: sessiz anahtarda da duyulur (playback).
-    // iOS oturumu genel olduğundan geçiş tek koordinatörden yapılır; bu
-    // ses sürerken efektler atlanır, bitince oturum ambient'e döner
-    // (kapışma U16 + Astra F1 incelemesi).
-    await AudioSessionCoordinator.instance.beginSpeech(player, () async {
+    // iOS oturumu genel olduğundan geçiş tek koordinatörden yapılır; bu ses
+    // sürerken efektler atlanır, bitince oturum ambient'e döner (kapışma U16
+    // + Astra F1 ve fd886658 incelemeleri). Sahiplik, nesil ve sıra
+    // [SpeechPlaybackGuard]'da.
+    await _guard!.play(() async {
       await player.setSource(source);
       await player.setPlaybackRate(rate);
       await player.resume();
     });
-    _speaking = true;
-  }
-
-  /// Bu oynatıcının açtığı telaffuz oturumu sürüyor mu? Kapanış TAM BİR KEZ.
-  bool _speaking = false;
-
-  Future<void> _endSpeech() async {
-    if (!_speaking) return;
-    _speaking = false;
-    await AudioSessionCoordinator.instance.endSpeech();
   }
 
   @override
   Future<void> stop() async {
-    final player = _created;
-    if (player != null) await player.stop();
     _playing.value = false;
-    await _endSpeech();
+    final guard = _guard;
+    if (guard != null) await guard.stop();
   }
 
   @override
   void dispose() {
     if (_disposed) return;
     _disposed = true;
-    unawaited(_endSpeech());
     unawaited(_stateSubscription?.cancel());
-    final player = _created;
-    if (player != null) unawaited(player.dispose());
+    // Koruyucu bekleyen başlangıcı iptal eder, belirteci bırakır ve
+    // oynatıcıyı kapatır.
+    final guard = _guard;
+    if (guard != null) unawaited(guard.dispose());
     _playing.dispose();
   }
 }

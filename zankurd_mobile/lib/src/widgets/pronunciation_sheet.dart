@@ -21,47 +21,22 @@ abstract class PronunciationPlayback {
 }
 
 class _AudioplayersPlayback implements PronunciationPlayback {
-  _AudioplayersPlayback() {
-    // Doğal bitiş oturumu ambient'e döndürür (bkz. AudioSessionCoordinator).
-    _complete = _player.onPlayerComplete.listen((_) => unawaited(_end()));
-  }
-
   final AudioPlayer _player = AudioPlayer();
-  late final StreamSubscription<void> _complete;
-  bool _speaking = false;
 
-  Future<void> _end() async {
-    if (!_speaking) return;
-    _speaking = false;
-    await AudioSessionCoordinator.instance.endSpeech();
-  }
+  /// Oturum sahipliği, nesil ve sıra (Astra fd886658 incelemesi).
+  late final SpeechPlaybackGuard _guard = SpeechPlaybackGuard(_player);
 
   @override
-  Future<void> play(String path) async {
-    await _player.stop();
-    await _end();
-    // Kullanıcının kendi kaydı: sessiz anahtarda da duyulur (playback).
-    // Geçiş tek koordinatörden; bu ses sürerken efektler atlanır (kapışma
-    // U16 + Astra F1 incelemesi).
-    await AudioSessionCoordinator.instance.beginSpeech(
-      _player,
-      () => _player.play(DeviceFileSource(path)),
-    );
-    _speaking = true;
-  }
+  Future<void> play(String path) =>
+      // Kullanıcının kendi kaydı: sessiz anahtarda da duyulur (playback);
+      // bu ses sürerken efektler atlanır (kapışma U16).
+      _guard.play(() => _player.play(DeviceFileSource(path)));
 
   @override
-  Future<void> stop() async {
-    await _player.stop();
-    await _end();
-  }
+  Future<void> stop() => _guard.stop();
 
   @override
-  Future<void> dispose() async {
-    await _complete.cancel();
-    await _end();
-    await _player.dispose();
-  }
+  Future<void> dispose() => _guard.dispose();
 }
 
 /// Telaffuz atölyesi (2026-10-26, ücretsiz): referans sesi dinle, kendi
