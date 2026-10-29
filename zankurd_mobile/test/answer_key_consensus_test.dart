@@ -211,6 +211,11 @@ void main() {
     // `qedexeya firînê`) taşındı.
     // 2026-10-14: «welêt→welat» yazım düzeltmesi `ds_dirok_0320` hükmünü de
     // aynı biçimde eskitti; hüküm yeni yazıma taşındı.
+    // 2026-10-29: Opus–Astra kapışması 6 üretilmiş sorunun doğru şıkkını
+    // yeniden yazdı (ds_cografya_0279/0284, ds_cand_1182/1187,
+    // ds_edebiyat_0248, ds_teknoloji_0328): doğru şıkkın KONUMU ve kimliği
+    // aynı, ifadesi değişti (ör. kökteki "graben"i tekrar etmeme, ele veren
+    // parantez açıklamalarını kaldırma). Hükümler yeni yazıma taşındı.
     final contradicting = <String>[];
     for (final question in generated) {
       final given = verdicts[question['id']] as String?;

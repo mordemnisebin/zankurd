@@ -46,6 +46,8 @@ const _promptFixSqls = [
   'supabase/2026-10-14_banka_ku_duzeltme.sql',
   // 2026-10-23 soru kalitesi taraması.
   'supabase/2026-10-23_icerik_taramasi.sql',
+  // 2026-10-29 Opus–Astra kapışması: jüri onaylı Kurmancî kök düzeltmeleri.
+  'supabase/2026-10-29_icerik_kapisma_ku.sql',
 ];
 final _fixRe = RegExp(
   r"^update questions set\n  prompt = '((?:[^']|'')*)'(?:,[\s\S]*?)?\nwhere id = '([0-9a-f-]{36})';",

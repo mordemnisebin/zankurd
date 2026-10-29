@@ -3,10 +3,9 @@
 -- Yerel paket sorularında değişen explanationTr metinlerinin sunucu eşleri.
 -- Satırlar yerel kimliğin uuid5'iyle eşlenir (bkz. test/local_parity_server_sync_test.dart).
 -- Her güncelleme ESKİ değerle korumalıdır: sunucuda metin zaten değişmişse ya da eş
--- yoksa 0 satır günceller (idempotent, zararsız). Kurmancî alanlar (şık, KU açıklama,
--- KU kök) BURADA YOK: jüri (Argon + Gemini 3.8 Flash + GPT-6.1 Terra, ≥2 oy) sonrası
--- ayrı göçle gelir. Sunucuda Türkçe kök/şık sütunu olmadığı için TR kök ve şık
--- değişiklikleri yalnız yereldedir.
+-- yoksa 0 satır günceller (idempotent, zararsız). Kurmancî alanlar ayrı göçte:
+-- 2026-10-29_icerik_kapisma_ku.sql. Sunucuda Türkçe kök/şık sütunu olmadığı için TR kök
+-- ve şık değişiklikleri yalnız yereldedir.
 --
 -- Çalıştırma (önce kuru): supabase db query --linked -f supabase/2026-10-29_icerik_kapisma_duzeltme.sql
 
@@ -137,15 +136,15 @@ insert into _kapisma_tr (id, yerel, eski, yeni) values
   ('97a7c8aa-a36e-5e01-9225-ea3c1c6ea478', 'cinema_0005', 'Vitaphone sistemiyle konuşma ve şarkı görüntüyle eşzamanlı verildi; bu, sessiz dönemin birkaç yıl içinde kapanmasına yol açtı. Renkli süreç ve uzun metraj animasyon yenilikleri 1930''ların sonunu bekledi.', 'Vitaphone sistemiyle şarkılar ve bazı konuşmalar görüntüyle eşzamanlı verildi. Ses ile görüntünün eşzamanlı verilmesi, sessiz filmden sesli filme geçişi hızlandırdı.'),
   ('da5dbcb8-c9de-5ce7-8a88-af9a272a9675', 'ders_2026_10_01_0055', '"Dilşad" sevinç ve neşedir.', '"Dilşad" sevinçli, neşeli demektir; "dil" (gönül) ve "şad" (sevinçli) sözcüklerinden oluşur. "Xemgîn" ise üzgün demektir.'),
   ('c1f8e390-1284-5240-9e23-1f3e3e35c12e', 'ds_cografya_0205', 'İç göç, bir ülke içinde, örneğin köyden şehre göç etmek anlamına gelir. Dış göç başka bir ülkeye gitmektir; geçici ve döngüsel göç ise geçicidir.', 'İç göç, bir ülkenin sınırları içinde yapılan göçtür; köyden şehre ve şehirler arası göç bunun örnekleridir. Dış göç başka bir ülkeye yapılır; geçici ve döngüsel göç ise belirli bir süre ya da mevsim için yapılır ve kalıcı yerleşme amacı taşımaz.'),
-  ('c01560a2-2d59-554b-91c0-28ff7cc365ed', 'offline_tf_siy_0018', 'Hayır — bu tanım "muxalefeta civakî" kavramına ait; "muxalefeta demokratîk", iktidarı silaha başvurmadan, hukuk içinde eleştirmedir.', 'Yanlış. Demokratik muhalefeti yalnız partiler değil; sivil toplum kuruluşları, sendikalar ve toplumsal hareketler de barışçıl ve hukuki yollarla yürütebilir.');
+  ('c01560a2-2d59-554b-91c0-28ff7cc365ed', 'offline_tf_siy_0018', 'Hayır — bu tanım "muxalefeta civakî" kavramına ait; "muxalefeta demokratîk", iktidarı silaha başvurmadan, hukuk içinde eleştirmedir.', 'Yanlış. Demokratik muhalefeti yalnız partiler değil; sivil toplum kuruluşları, sendikalar ve toplumsal hareketler de barışçıl ve hukuki yollarla yürütebilir.'),
+  ('23f9a5f4-9182-5e0c-b470-8f0390cb2489', 'ds_cografya_0284', 'Karacadağ''ın bazaltik lavlarından ayrışan topraklar demir, fosfor ve potasyum yönünden zengin olup taş temizliği sonrası çok verimlidir.', 'Karacadağ bazaltından gelişen topraklar, ana materyalden gelen demir ve magnezyum içeren mineralleri barındırır; tarımsal verimlilik ayrıca toprak gelişimi ve koşullara bağlıdır.');
 
 update questions q set explanation_tr = k.yeni
   from _kapisma_tr k
  where q.id = k.id
    and q.explanation_tr is not distinct from k.eski;
 
--- Doğrulama: eşi olan her satır ya yeni metne geçmiş ya da önceden farklı bir metindeydi
--- (elle düzeltilmiş). Eski metin hâlâ duruyorsa göç eksik çalışmıştır.
+-- Doğrulama: eski metin hâlâ duruyorsa göç eksik çalışmıştır.
 do $$
 declare
   v_kalan int;

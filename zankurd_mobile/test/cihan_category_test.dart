@@ -251,10 +251,26 @@ void main() {
           // 2026-10-29 Opus 5.5 + GPT-6 Astra kapışması (U7): izolin tanımı,
           // belirsiz kökler (iç göç, geri yayılım, forwarding) ve aynı türden
           // şıklar. Doğru şıkkın konumu ve iki dildeki hizası korunur.
-          'ds_cografya_0199': {'explanation', 'explanationTr'},
-          'ds_cografya_0205': {'explanation', 'explanationTr', 'promptTr'},
-          'ds_teknoloji_0136': {'promptTr', 'answersTr'},
-          'ds_teknoloji_0328': {'promptTr', 'answersTr', 'correctAnswerTr'},
+          // Kurmancî karşılıklar (prompt, answers, explanationKu) Argon +
+          // Gemini 3.8 Flash + GPT-6.1 Terra jürisinden ≥2 oyla geçti.
+          'ds_cografya_0199': {'explanation', 'explanationTr', 'explanationKu'},
+          'ds_cografya_0205': {
+            'explanation',
+            'explanationTr',
+            'explanationKu',
+            'promptTr',
+            'prompt',
+          },
+          'ds_teknoloji_0136': {'promptTr', 'answersTr', 'prompt', 'answers'},
+          'ds_teknoloji_0328': {
+            'promptTr',
+            'answersTr',
+            'correctAnswerTr',
+            'prompt',
+            'answers',
+            'correctAnswer',
+          },
+          'ds_teknoloji_0339': {'explanationKu'},
         };
         for (final c in copies) {
           final o = original[c['id']];

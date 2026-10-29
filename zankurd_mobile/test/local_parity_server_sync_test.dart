@@ -86,6 +86,8 @@ const _promptFixSqls = [
   'supabase/2026-10-14_banka_ku_duzeltme.sql',
   'supabase/2026-10-20_tije_tiji.sql',
   'supabase/2026-10-23_icerik_taramasi.sql',
+  // 2026-10-29 Opus–Astra kapışması: jüri onaylı Kurmancî kök düzeltmeleri.
+  'supabase/2026-10-29_icerik_kapisma_ku.sql',
 ];
 
 // update questions set\n  prompt = '…'[, …] where id = 'uuid';

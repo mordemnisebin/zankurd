@@ -988,7 +988,7 @@
   {
     "id": "ds_cografya_0205",
     "category": "Cîhan",
-    "prompt": "Kîjan têgih ji bo koçkirina mirovan ji gundan bo bajaran tê bikaranîn?",
+    "prompt": "Koçkirina ji gundan bo bajaran di nav welatekî de kîjan cureya koçberiyê ye?",
     "answers": [
       "Koçberiya derveyî",
       "Koçberiya demkî",
@@ -1016,7 +1016,7 @@
       "İç göç"
     ],
     "correctAnswerTr": "İç göç",
-    "explanationKu": "Koçberiya hundirîn tê wateya koçkirina di nav welatekî de, wek ji gund bo bajar. Koçberiya derveyî derbasî welatekî din dibe, ya demkî û çerxî jî demkî ne.",
+    "explanationKu": "Koçberiya hundirîn koçkirina di nav sînorên welatekî de ye; koçkirina ji gund bo bajar û ji bajarekî bo bajarekî din mînakên wê ne. Koçberiya derveyî bo welatekî din e; koçberiya demkî û çerxî jî ji bo demeke an demsaleke diyar e û armanca bicihbûna mayînde nîne.",
     "explanationTr": "İç göç, bir ülkenin sınırları içinde yapılan göçtür; köyden şehre ve şehirler arası göç bunun örnekleridir. Dış göç başka bir ülkeye yapılır; geçici ve döngüsel göç ise belirli bir süre ya da mevsim için yapılır ve kalıcı yerleşme amacı taşımaz."
   },
   {
@@ -6496,12 +6496,12 @@
   {
     "id": "ds_teknoloji_0136",
     "category": "Teknolojî",
-    "prompt": "Di fêrbûna kûr de, kîjan rêbaz ji bo sererastkirina parametreyên modelê li gorî xeletiya hilberînê tê bikaranîn?",
+    "prompt": "Di tora demarî ya çêkirî de kîjan rêbaz gradyanên fonksiyona windabûnê li gorî parametreyan bi qaîdeya zincîrê hesab dike?",
     "answers": [
       "Veguhestina pêşverû",
-      "Veguhestina rastkirinê",
+      "Daketina gradyanê (gradient descent)",
       "Veguhestina paşverû",
-      "Veguhestina çewtkirinê"
+      "Birrîna gradyanê (gradient clipping)"
     ],
     "correctAnswer": "Veguhestina paşverû",
     "explanation": "Geri yayılım (backpropagation), modelin tahmini ile doğru sonuç arasındaki hatanın hesaplandığı ve bu hatanın son katmandan ilk katmana doğru yayıldığı bir yöntemdir. Bu süreçte, hatayı azaltmak için model parametreleri düzeltilir.",
@@ -12329,13 +12329,13 @@
     "id": "ds_teknoloji_0328",
     "category": "Teknolojî",
     "difficulty": 5,
-    "prompt": "Di pêvajoyera pîplînê de (Pipelining), rêbaza \"Operand Forwarding\" kîjan pirsgirêkê çareser dike?",
+    "prompt": "Di pîplîna pêvajoyerê de, şandina rasterast a operandê (forwarding) bendemayînên ji kîjan girêdayîbûna daneyan kêm dike?",
     "promptTr": "İşlemci boru hattında operand yönlendirme (forwarding) hangi veri bağımlılığından kaynaklanan beklemeleri azaltır?",
     "answers": [
-      "Xetereya binesaziyê ya ji ber nebûna yekîneya hesabkirina matematîkî",
-      "Zêdebûna germahiya navenda pêvajoyê di dema lîstina lîstikên giran de",
-      "Rakirina pêdiviya bîrgeha lezgîn a asta duyem (L2 Cache) ji ser çîpê",
-      "Sekinîna ji ber xetereya daneyan (Data Hazard) bi şandina rasterast a encamê"
+      "Girêdayîbûna nivîsandinê piştî xwendinê (WAR)",
+      "Girêdayîbûna nivîsandinê piştî nivîsandinê (WAW)",
+      "Girêdayîbûna kontrolê ya ji şaxbûnê",
+      "Girêdayîbûna xwendinê piştî nivîsandinê (RAW)"
     ],
     "answersTr": [
       "Okumadan sonra yazma (WAR) bağımlılığı",
@@ -12343,7 +12343,7 @@
       "Dallanmadan doğan kontrol bağımlılığı",
       "Yazmadan sonra okuma (RAW) bağımlılığı"
     ],
-    "correctAnswer": "Sekinîna ji ber xetereya daneyan (Data Hazard) bi şandina rasterast a encamê",
+    "correctAnswer": "Girêdayîbûna xwendinê piştî nivîsandinê (RAW)",
     "correctAnswerTr": "Yazmadan sonra okuma (RAW) bağımlılığı",
     "explanation": "Operand Forwarding, ALU çıktısını register'a yazılmasını beklemeden bir sonraki komutun girişine besleyerek RAW (Read-After-Write) gecikmesini önler.",
     "explanationKu": "Forwarding nahêle ku fermanek li benda qonaxa Write-Back bimîne; encam ji derketina ALU rasterast diçe fermana duyem.",
@@ -12602,7 +12602,7 @@
     "correctAnswer": "Tenê stûnên pêwîst ji dîskê dixwîne û li ser stûnan şidandineke pir bilind peyda dike",
     "correctAnswerTr": "Yalnızca sorguda adı geçen sütunları diskten okuması ve aynı tür veride çok yüksek sıkıştırma sağlaması",
     "explanation": "Sütun odaklı depolama (Parquet vb.) sadece sorgulanan sütunları diskten okur ve homojen veri yapısı sayesinde yüksek sıkıştırma sunar.",
-    "explanationKu": "Di stûnî de tenê qadên têkildar tên xwendin û ji ber ku dane ji heman tîpê ne, bi algorîtmayên wekî Parquet pir baş tên şidandin.",
+    "explanationKu": "Di depokirina stûnî de tenê qadên têkildar tên xwendin û ji ber ku dane ji heman cureyê ne, di formatên pelan ên wekî Parquet de pir baş tên şidandin.",
     "explanationTr": "Sütun odaklı depolama (Parquet vb.) sadece sorgulanan sütunları diskten okur ve homojen veri yapısı sayesinde yüksek sıkıştırma sunar.",
     "metadata": {
       "reviewStatus": "approved",
@@ -15780,7 +15780,7 @@
       "Meridyen çizgisi"
     ],
     "correctAnswerTr": "Koordinat ağı",
-    "explanationKu": "Tora koordînat (graticule) ji xetên ku hêlîpan û hêlîdirêjan li ser nexşeyê nîşan didin pêk tê. Xetên îzolîn bilindahiyê nîşan didin.",
+    "explanationKu": "Tora koordînatan (graticule) li ser nexşeyê tora xetên hêlîpan (paralel) û hêlîdirêjan (merîdyen) e. Îzolîn jî ew xet e ku xalên xwedî heman nirxî bi hev ve girê dide; xeta bilindahiyê ya wekhev cureyê wê yê ji bo bilindahiyê ye.",
     "explanationTr": "Koordinat ağı (graticule), haritada enlem (paralel) ve boylam (meridyen) çizgilerinin oluşturduğu ağdır. İzolin ise eş değerli noktaları birleştiren çizgidir; eş yükselti eğrisi bunun yükseklik için kullanılan türüdür."
   },
   {
