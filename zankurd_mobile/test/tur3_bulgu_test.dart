@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/models/player.dart';
+import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/widgets/quiz_top_bar.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
@@ -137,4 +139,41 @@ void main() {
       );
     }
   }
+
+  /// ## C12 — lobi oyuncu sırası cihazdan cihaza farklı
+  ///
+  /// Klasik (kalabalık olmayan) odanın lobisi de puana göre sıralanıyordu;
+  /// herkes 0 puandayken Dart'ın kararsız `sort`u eşitleri her cihazda farklı
+  /// diziyordu. Lobide sıra depodan gelen katılma sırasıdır; oyunda puan
+  /// sırası KARARLIDIR (eşitlikte gelen sıra korunur).
+  group('C12 oyuncu sırası', () {
+    Player p(String id, int score) =>
+        Player(id: id, name: id, score: score, state: '');
+
+    test('lobide gelen sıra aynen korunur', () {
+      final input = [p('ali', 0), p('bero', 0), p('dlan', 0), p('cano', 0)];
+      expect(orderRoomPlayersForDisplay(input, lobby: true).map((e) => e.id), [
+        'ali',
+        'bero',
+        'dlan',
+        'cano',
+      ]);
+    });
+
+    test('oyunda puana göre, eşitlikte gelen sıra (kararlı)', () {
+      final input = [
+        for (var i = 0; i < 40; i++) p('o$i', i % 3 == 0 ? 10 : 0),
+      ];
+      final out = orderRoomPlayersForDisplay(input, lobby: false);
+      final tens = [
+        for (final e in input)
+          if (e.score == 10) e.id,
+      ];
+      final zeros = [
+        for (final e in input)
+          if (e.score == 0) e.id,
+      ];
+      expect(out.map((e) => e.id).toList(), [...tens, ...zeros]);
+    });
+  });
 }
