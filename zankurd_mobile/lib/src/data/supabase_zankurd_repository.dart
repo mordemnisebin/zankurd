@@ -4666,6 +4666,18 @@ List<TournamentStandings> tournamentStandingsFromBracket(
   final profiles = <String, PublicProfile>{};
   final scores = <String, int>{};
   final status = <String, String>{};
+  final submitted = <String, bool?>{};
+  final forfeit = <String, bool>{};
+  void recordSubmission(String id, bool? value) {
+    if (id.isEmpty) return;
+    if (!submitted.containsKey(id)) {
+      submitted[id] = value;
+    } else if (submitted[id] == true || value == true) {
+      submitted[id] = true;
+    } else if (submitted[id] == null || value == null) {
+      submitted[id] = null;
+    }
+  }
 
   int? finalRound;
   for (final round in bracket.rounds) {
@@ -4697,8 +4709,12 @@ List<TournamentStandings> tournamentStandingsFromBracket(
     ..sort((a, b) => a.roundNumber.compareTo(b.roundNumber));
   for (final round in ordered) {
     for (final match in round.matches) {
+      recordSubmission(match.playerOneId, match.hasPlayerOneSubmitted);
+      recordSubmission(match.playerTwoId, match.hasPlayerTwoSubmitted);
       touch(match.playerOneId, match.playerOneName);
       touch(match.playerTwoId, match.playerTwoName);
+      forfeit[match.playerOneId] = false;
+      forfeit[match.playerTwoId] = false;
       final p1 = match.playerOneProfile;
       final p2 = match.playerTwoProfile;
       if (p1 != null) profiles[match.playerOneId] = p1;
@@ -4712,6 +4728,7 @@ List<TournamentStandings> tournamentStandingsFromBracket(
             (scores[match.playerTwoId] ?? 0) + match.playerTwoScore;
       }
       if (match.status != 'completed' || match.winnerId.isEmpty) continue;
+      forfeit[match.winnerId] = match.isForfeit;
       final loserId = match.playerOneId == match.winnerId
           ? match.playerTwoId
           : match.playerOneId;
@@ -4752,6 +4769,8 @@ List<TournamentStandings> tournamentStandingsFromBracket(
       playerId: ids[i],
       playerName: names[ids[i]] ?? '—',
       totalScore: scores[ids[i]] ?? 0,
+      hasSubmitted: submitted[ids[i]],
+      wonByForfeit: forfeit[ids[i]] ?? false,
       status: status[ids[i]] ?? 'active',
       profile: profiles[ids[i]],
     ),

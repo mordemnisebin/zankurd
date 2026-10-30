@@ -11,6 +11,48 @@ class TournamentMatch {
   final String playerTwoName;
   final int playerOneScore;
   final int playerTwoScore;
+
+  /// null bayrak: eski sunucu/yerel kayıt gönderim bilgisi taşımıyor.
+  /// Zaman null ama bayrak false ise tarafın göndermediği kesindir.
+  final DateTime? playerOneSubmittedAt;
+  final DateTime? playerTwoSubmittedAt;
+  final bool? playerOneSubmitted;
+  final bool? playerTwoSubmitted;
+
+  bool? get hasPlayerOneSubmitted => playerOneSubmittedAt != null
+      ? true
+      : playerOneSubmitted ?? (playerOneScore > 0 ? true : null);
+  bool? get hasPlayerTwoSubmitted => playerTwoSubmittedAt != null
+      ? true
+      : playerTwoSubmitted ?? (playerTwoScore > 0 ? true : null);
+
+  bool get bothSubmitted =>
+      hasPlayerOneSubmitted == true && hasPlayerTwoSubmitted == true;
+
+  bool get isForfeit =>
+      status == 'completed' &&
+      winnerId.isNotEmpty &&
+      ((winnerId == playerOneId &&
+              (playerTwoId.isEmpty || hasPlayerTwoSubmitted == false)) ||
+          (winnerId == playerTwoId &&
+              (playerOneId.isEmpty || hasPlayerOneSubmitted == false)));
+
+  bool get closedWithoutSubmission =>
+      status == 'completed' &&
+      winnerId.isEmpty &&
+      hasPlayerOneSubmitted == false &&
+      hasPlayerTwoSubmitted == false;
+
+  static bool? _submitted(Map<String, dynamic> json, String key) {
+    if (!json.containsKey(key)) {
+      final flag = json[key.replaceFirst('_at', '')];
+      return flag is bool ? flag : null;
+    }
+    final value = json[key];
+    if (value == null) return false;
+    return value is String && DateTime.tryParse(value) != null ? true : null;
+  }
+
   final String status; // 'pending', 'active', 'completed'
   final String winnerId;
   final String questionCategory;
@@ -42,6 +84,10 @@ class TournamentMatch {
     this.questionCategory = '',
     this.questionsAnswered = 0,
     this.deadline,
+    this.playerOneSubmittedAt,
+    this.playerTwoSubmittedAt,
+    this.playerOneSubmitted,
+    this.playerTwoSubmitted,
     this.playerOneProfile,
     this.playerTwoProfile,
   });
@@ -59,6 +105,10 @@ class TournamentMatch {
     String? questionCategory,
     int? questionsAnswered,
     DateTime? deadline,
+    DateTime? playerOneSubmittedAt,
+    DateTime? playerTwoSubmittedAt,
+    bool? playerOneSubmitted,
+    bool? playerTwoSubmitted,
     PublicProfile? playerOneProfile,
     PublicProfile? playerTwoProfile,
   }) => TournamentMatch(
@@ -74,6 +124,10 @@ class TournamentMatch {
     questionCategory: questionCategory ?? this.questionCategory,
     questionsAnswered: questionsAnswered ?? this.questionsAnswered,
     deadline: deadline ?? this.deadline,
+    playerOneSubmittedAt: playerOneSubmittedAt ?? this.playerOneSubmittedAt,
+    playerTwoSubmittedAt: playerTwoSubmittedAt ?? this.playerTwoSubmittedAt,
+    playerOneSubmitted: playerOneSubmitted ?? this.playerOneSubmitted,
+    playerTwoSubmitted: playerTwoSubmitted ?? this.playerTwoSubmitted,
     playerOneProfile: playerOneProfile ?? this.playerOneProfile,
     playerTwoProfile: playerTwoProfile ?? this.playerTwoProfile,
   );
@@ -87,6 +141,14 @@ class TournamentMatch {
         playerTwoName: json['playerTwoName'] as String? ?? 'TBD',
         playerOneScore: json['playerOneScore'] as int? ?? 0,
         playerTwoScore: json['playerTwoScore'] as int? ?? 0,
+        playerOneSubmittedAt: DateTime.tryParse(
+          json['p1_submitted_at']?.toString() ?? '',
+        ),
+        playerTwoSubmittedAt: DateTime.tryParse(
+          json['p2_submitted_at']?.toString() ?? '',
+        ),
+        playerOneSubmitted: _submitted(json, 'p1_submitted_at'),
+        playerTwoSubmitted: _submitted(json, 'p2_submitted_at'),
         status: json['status'] as String? ?? 'pending',
         winnerId: json['winnerId'] as String? ?? '',
         questionCategory: json['questionCategory'] as String? ?? '',
@@ -104,6 +166,14 @@ class TournamentMatch {
     'playerTwoName': playerTwoName,
     'playerOneScore': playerOneScore,
     'playerTwoScore': playerTwoScore,
+    if (playerOneSubmittedAt != null || playerOneSubmitted == false)
+      'p1_submitted_at': playerOneSubmittedAt?.toIso8601String(),
+    if (playerTwoSubmittedAt != null || playerTwoSubmitted == false)
+      'p2_submitted_at': playerTwoSubmittedAt?.toIso8601String(),
+    if (playerOneSubmitted == true && playerOneSubmittedAt == null)
+      'p1_submitted': true,
+    if (playerTwoSubmitted == true && playerTwoSubmittedAt == null)
+      'p2_submitted': true,
     'status': status,
     'winnerId': winnerId,
     'questionCategory': questionCategory,
@@ -306,6 +376,8 @@ class TournamentStandings {
   final String playerId;
   final String playerName;
   final int totalScore;
+  final bool? hasSubmitted;
+  final bool wonByForfeit;
   final String status; // 'champion', 'finalist', 'eliminated'
 
   /// Herkese açık kimlik (fotoğraf/simge/kod); gerçek turnuvada dolar.
@@ -316,6 +388,8 @@ class TournamentStandings {
     required this.playerId,
     required this.playerName,
     this.totalScore = 0,
+    this.hasSubmitted,
+    this.wonByForfeit = false,
     required this.status,
     this.profile,
   });
@@ -325,6 +399,8 @@ class TournamentStandings {
     String? playerId,
     String? playerName,
     int? totalScore,
+    bool? hasSubmitted,
+    bool? wonByForfeit,
     String? status,
     PublicProfile? profile,
   }) => TournamentStandings(
@@ -332,6 +408,8 @@ class TournamentStandings {
     playerId: playerId ?? this.playerId,
     playerName: playerName ?? this.playerName,
     totalScore: totalScore ?? this.totalScore,
+    hasSubmitted: hasSubmitted ?? this.hasSubmitted,
+    wonByForfeit: wonByForfeit ?? this.wonByForfeit,
     status: status ?? this.status,
     profile: profile ?? this.profile,
   );
@@ -342,6 +420,8 @@ class TournamentStandings {
         playerId: json['playerId'] as String? ?? '',
         playerName: json['playerName'] as String? ?? '',
         totalScore: json['totalScore'] as int? ?? 0,
+        hasSubmitted: json['hasSubmitted'] as bool?,
+        wonByForfeit: json['wonByForfeit'] as bool? ?? false,
         status: json['status'] as String? ?? '',
       );
 
@@ -350,6 +430,8 @@ class TournamentStandings {
     'playerId': playerId,
     'playerName': playerName,
     'totalScore': totalScore,
+    if (hasSubmitted != null) 'hasSubmitted': hasSubmitted,
+    if (wonByForfeit) 'wonByForfeit': true,
     'status': status,
   };
 }

@@ -2390,6 +2390,18 @@ class Tr {
       'ku': 'Serkeftiyê pêşbirka {n}',
       'tr': '{n}. maçın kazananı',
     },
+    // T2: KU taslak; mevcut Kurmancî metinler değiştirilmedi.
+    K.cupSubmissionsReceived: {
+      'ku': 'Her du encam jî hatin şandin',
+      'tr': 'İki sonuç da gönderildi',
+    },
+    K.cupSubmissionPlayed: {'ku': 'Lîst · {score}', 'tr': 'Oynadı · {score}'},
+    K.cupSubmissionNotPlayed: {'ku': 'Hê nelîstiye', 'tr': 'Henüz oynamadı'},
+    K.cupAdvancedByForfeit: {'ku': 'Bi hukmî derbas bû', 'tr': 'Hükmen geçti'},
+    K.cupExpiredUnplayed: {
+      'ku': 'Dem qediya · kesî nelîstiye',
+      'tr': 'Süre doldu · oynayan yok',
+    },
     K.matchAwaitingResultShort: {
       'ku': 'Li benda encamê',
       'tr': 'Sonuç bekleniyor',
@@ -5426,6 +5438,11 @@ class K {
   static const cupDurationHM = 'tournament.durationHM';
   static const cupDurationM = 'tournament.durationM';
   static const tournamentPracticeNote = 'tournament.practiceNote';
+  static const cupSubmissionsReceived = 'tournament.submissionsReceived';
+  static const cupSubmissionPlayed = 'tournament.submissionPlayed';
+  static const cupSubmissionNotPlayed = 'tournament.submissionNotPlayed';
+  static const cupAdvancedByForfeit = 'tournament.advancedByForfeit';
+  static const cupExpiredUnplayed = 'tournament.expiredUnplayed';
   static const cupStandingActive = 'tournament.standing.active';
   static const cupStandingFinalist = 'tournament.standing.finalist';
   static const bracketWinnerOf = 'cup.bracket.winnerOf';

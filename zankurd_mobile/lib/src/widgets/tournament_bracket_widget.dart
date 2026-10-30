@@ -10,6 +10,14 @@ import '../theme/app_icons.dart';
 import 'player_avatar.dart';
 import 'sahne/sahne.dart';
 
+/// Eski RPC sıfır puanda bilgi vermez; bilinmeyene "oynamadı" denmez.
+String? tournamentSubmissionLabel(bool? submitted, int score, bool ku) =>
+    switch (submitted) {
+      true => Tr.forKu(K.cupSubmissionPlayed, ku, {'score': '$score'}),
+      false => Tr.forKu(K.cupSubmissionNotPlayed, ku),
+      null => null,
+    };
+
 /// Tur adları SONDAN sayılır: son tur her zaman Final'dir. Tur sayısı
 /// şemadan türetilir; 16 oyunculuk varsayım (Son 16 ile başlama) 4 kişilik
 /// gerçek turnuvada ilk turu "Son 16" diye yazıyordu.
@@ -230,16 +238,38 @@ class _BracketMatchCard extends StatelessWidget {
     final isUserMatch =
         match.playerOneId == userId || match.playerTwoId == userId;
 
+    final resultLabel = match.isForfeit
+        ? Tr.forKu(K.cupAdvancedByForfeit, ku)
+        : match.closedWithoutSubmission
+        ? Tr.forKu(K.cupExpiredUnplayed, ku)
+        : isCompleted || match.bothSubmitted
+        ? '${match.playerOneScore} – ${match.playerTwoScore}'
+        : hasPlayers && match.deadline?.isBefore(DateTime.now()) == true
+        ? Tr.forKu(K.tournamentWaitingOpponentExpired, ku)
+        : hasPlayers
+        ? Tr.forKu(K.matchAwaitingResultShort, ku)
+        : '—';
+    final oneLabel = tournamentSubmissionLabel(
+      match.hasPlayerOneSubmitted,
+      match.playerOneScore,
+      ku,
+    );
+    final twoLabel = tournamentSubmissionLabel(
+      match.hasPlayerTwoSubmitted,
+      match.playerTwoScore,
+      ku,
+    );
     final t = SahneTokens.of(context);
     final p1Won = isCompleted && match.winnerId == match.playerOneId;
     final p2Won = isCompleted && match.winnerId == match.playerTwoId;
 
+    final semanticsLabel = Tr.forKu(K.matchSemantics, ku, {
+      'one': [match.playerOneName, if (oneLabel != null) oneLabel].join(', '),
+      'two': [match.playerTwoName, if (twoLabel != null) twoLabel].join(', '),
+    });
     return Semantics(
       button: onTap != null,
-      label: Tr.forKu(K.matchSemantics, ku, {
-        'one': match.playerOneName,
-        'two': match.playerTwoName,
-      }),
+      label: '$semanticsLabel, $resultLabel',
       // 2026-07-23 canlı UX denetimi: _PlayerSlot içindeki oyuncu adı
       // Text'leri ayrıca kendi semantics düğümünü ekleyip çift okumaya
       // yol açıyordu (M28 devamı).
@@ -275,7 +305,7 @@ class _BracketMatchCard extends StatelessWidget {
                 name: match.playerOneName,
                 playerId: match.playerOneId,
                 profile: match.playerOneProfile,
-                score: match.playerOneScore,
+                submissionLabel: oneLabel,
                 isWinner: p1Won,
                 isUser: match.playerOneId == userId,
                 isCompleted: isCompleted,
@@ -317,16 +347,7 @@ class _BracketMatchCard extends StatelessWidget {
                           child: FittedBox(
                             fit: BoxFit.scaleDown,
                             child: Text(
-                              isCompleted
-                                  ? '${match.playerOneScore} – ${match.playerTwoScore}'
-                                  : hasPlayers
-                                  // Kurul 1 (C32): yalnız "VS" maçın oynanıp
-                                  // oynanmadığını söylemiyordu.
-                                  // Astra incelemesi: istemci 0 puanlı bir
-                                  // gönderimi "hiç oynanmadı"dan ayıramaz;
-                                  // her iki durumda da doğru olan söz.
-                                  ? Tr.forKu(K.matchAwaitingResultShort, ku)
-                                  : '—',
+                              resultLabel,
                               maxLines: 1,
                               softWrap: false,
                               style: SahneType.captionStrong.copyWith(
@@ -347,7 +368,7 @@ class _BracketMatchCard extends StatelessWidget {
                 name: match.playerTwoName,
                 playerId: match.playerTwoId,
                 profile: match.playerTwoProfile,
-                score: match.playerTwoScore,
+                submissionLabel: twoLabel,
                 isWinner: p2Won,
                 isUser: match.playerTwoId == userId,
                 isCompleted: isCompleted,
@@ -366,7 +387,7 @@ class _PlayerSlot extends StatelessWidget {
   const _PlayerSlot({
     required this.name,
     required this.playerId,
-    required this.score,
+    this.submissionLabel,
     required this.isWinner,
     this.profile,
     required this.isUser,
@@ -380,7 +401,7 @@ class _PlayerSlot extends StatelessWidget {
   /// Gerçek turnuvada oyuncunun herkese açık kimliği; yoksa (bot/yerel)
   /// kimlikten türetilen simge ve renk çizilir.
   final PublicProfile? profile;
-  final int score;
+  final String? submissionLabel;
   final bool isWinner;
   final bool isUser;
   final bool isCompleted;
@@ -445,23 +466,36 @@ class _PlayerSlot extends StatelessWidget {
             const SizedBox(width: SahneSpace.x2),
             // Player name
             Expanded(
-              child: Text(
-                displayName,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: (isUser ? SahneType.captionStrong : SahneType.caption)
-                    .copyWith(
-                      // Ham altın, kartın altın tonlu zemininde karanlık
-                      // temada kayboluyordu: kazananın adı hiç görünmüyordu
-                      // (2026-08-04). Şahnê: Zêr metni (`goldTx`).
-                      color: isWinner
-                          ? t.goldTx
-                          : isDimmed
-                          ? t.tx3
-                          : t.tx,
-                      decoration: isDimmed ? TextDecoration.lineThrough : null,
-                      decorationColor: t.tx3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    displayName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: (isUser ? SahneType.captionStrong : SahneType.caption)
+                        .copyWith(
+                          // Ham altın, kartın altın tonlu zemininde karanlık
+                          // temada kayboluyordu: kazananın adı hiç görünmüyordu
+                          // (2026-08-04). Şahnê: Zêr metni (`goldTx`).
+                          color: isWinner
+                              ? t.goldTx
+                              : isDimmed
+                              ? t.tx3
+                              : t.tx,
+                          decoration: isDimmed
+                              ? TextDecoration.lineThrough
+                              : null,
+                          decorationColor: t.tx3,
+                        ),
+                  ),
+                  if (playerId.isNotEmpty && submissionLabel != null)
+                    Text(
+                      submissionLabel!,
+                      style: SahneType.caption.copyWith(color: t.tx2),
                     ),
+                ],
               ),
             ),
             // Maç bittiyse kazanan kupayı, kaybeden çarpıyı alır: kazanan/
