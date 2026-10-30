@@ -251,9 +251,9 @@ void main() {
       tester.widget<SahneStageTimer>(find.byType(SahneStageTimer)).pending,
       isTrue,
     );
-    expect(find.text('–'), findsOneWidget);
+    expect(find.byKey(const ValueKey('stage-timer-paused')), findsOneWidget);
     await tester.pump(const Duration(milliseconds: 600));
-    expect(find.text('–'), findsOneWidget);
+    expect(find.byKey(const ValueKey('stage-timer-paused')), findsOneWidget);
     await tester.pump(const Duration(milliseconds: 700));
     expect(repo.calls, contains('present:1'));
     expect(

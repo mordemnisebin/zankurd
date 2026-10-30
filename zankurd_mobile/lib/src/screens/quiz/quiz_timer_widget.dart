@@ -31,6 +31,7 @@ class QuizTimerWidget extends StatelessWidget {
     this.onBand = false,
     this.stopped = false,
     this.pendingLabel,
+    this.opponentTime = false,
     super.key,
   });
 
@@ -46,12 +47,15 @@ class QuizTimerWidget extends StatelessWidget {
 
   /// Kurul 3 D2 (3/3): cevap açılışında soru süresi bitmiştir; üstteki
   /// sayaç "11" gibi akmaya devam ediyor görünüp alttaki "sonraki 4 sn" ile
-  /// çelişiyordu. Açılışta sayı yerine "–" (kapsül genişliği aynı); tek geri
+  /// çelişiyordu. Açılışta sayı yerine duraklatma simgesi; tek geri
   /// sayım alt şeritteki.
   final bool stopped;
 
   /// Sunucu hazır yanıtı beklenirken sahte tam süreyi seslendirme.
   final String? pendingLabel;
+
+  /// Kendi yanıtı gönderilmiş; akan süre diğer oyunculara ait.
+  final bool opponentTime;
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +68,19 @@ class QuizTimerWidget extends StatelessWidget {
           secondsLeft: seconds,
           maxSeconds: maxSeconds,
           // Cevaptan sonra gerilim eşiği kapanır (bkz. sınıf belgesi).
-          hotSeconds: isPaused ? -1 : 5,
+          hotSeconds: isPaused || opponentTime ? -1 : 5,
+          secondary: opponentTime,
           onBand: onBand,
           pending: stopped,
-          semanticLabel:
-              pendingLabel ??
-              context.t(K.timerSecondsLeft, {'n': groupThousands(seconds)}),
+          semanticLabel: stopped
+              ? context.t(K.timerPaused)
+              : pendingLabel ??
+                    context.t(
+                      opponentTime
+                          ? K.timerOpponentSecondsLeft
+                          : K.timerSecondsLeft,
+                      {'n': groupThousands(seconds)},
+                    ),
         );
       },
     );

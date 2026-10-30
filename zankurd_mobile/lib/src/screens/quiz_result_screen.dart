@@ -2079,12 +2079,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             : duelOutcome == null
             ? SahneMedalScene.medalSize - 70
             : 0,
-        lightGlow: !lowMood && starsEarned >= 2,
+        lightGlow:
+            !lowMood && (duelOutcome == null ? starsEarned >= 2 : celebrate),
         // Vay 2A: madalya kümesi kendi ışın diskini taşır; puanın arkasında
         // ikinci bir ışın/parıltı kaynağı olmaz (tek odak).
         emblemOwnsGlow:
             !(is1v1 && !isLearningExperience) && duelOutcome == null,
-        calm: lowMood,
+        calm: lowMood || (duelOutcome != null && !celebrate),
         tone: duelOutcome == null
             ? SahneResultTone.reward
             : SahneResultTone.race,

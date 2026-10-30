@@ -146,6 +146,10 @@ MAPPING = {
     "peopleGroup": "users",
     "peopleRoof": "users-round",  # "aile"; `users`tan yuvarlak kafalarla ayrışır
     "personCircleCheck": "user-check",
+    "ellipsis": "ellipsis",
+    "snowflake": "snowflake",
+    "turtle": "turtle",
+    "pause": "pause",
     "play": "play",
     # Çıplak "?" yok. `circle-question-mark` zaten circleQuestion'da;
     # ikisi ayırt edilsin diye burada rozetli olan seçildi.

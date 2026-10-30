@@ -267,7 +267,9 @@ void main() {
       }
     }
 
-    testWidgets('sayaç beklemede "–" ve aynı genişlikte', (tester) async {
+    testWidgets('sayaç beklemede duraklatma simgesi ve aynı genişlikte', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         testShell(
           child: const Center(
@@ -291,7 +293,7 @@ void main() {
         ),
       );
       expect(find.text('19'), findsNothing);
-      expect(find.text('–'), findsOneWidget);
+      expect(find.byKey(const ValueKey('stage-timer-paused')), findsOneWidget);
       expect(
         tester.getSize(find.byKey(const ValueKey('a'))).width,
         moreOrLessEquals(

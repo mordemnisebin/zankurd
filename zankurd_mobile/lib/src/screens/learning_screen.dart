@@ -155,6 +155,8 @@ class _LearningScreenState extends State<LearningScreen> {
   bool _lessonsLoading = false;
   int _wordCount = 0;
   final _reviewRefresh = ValueNotifier<int>(0);
+  final _currentCardKey = GlobalKey();
+  (String, String)? _revealedLesson;
 
   @override
   void initState() {
@@ -524,6 +526,24 @@ class _LearningScreenState extends State<LearningScreen> {
           );
         }
         final firstOpenIndex = _recommendedLessonIndex(lessons);
+        if (firstOpenIndex >= 0) {
+          final target = (_selectedCategory, lessons[firstOpenIndex].id);
+          if (_revealedLesson != target) {
+            _revealedLesson = target;
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (!mounted || _revealedLesson != target) return;
+              final cardContext = _currentCardKey.currentContext;
+              if (cardContext == null) return;
+              // E12: yalnız yeni seçili ders için kaydır; sonraki rebuild'ler
+              // kullanıcının elle gezdiği ders yolunu geri çekmesin.
+              Scrollable.ensureVisible(
+                cardContext,
+                alignment: 1,
+                alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd,
+              );
+            });
+          }
+        }
         // 2026-10-29 vay 2B (B6, Astra 7/10 "liste gibi"): etkin ünitenin
         // dersleri artık bir KEŞİF ROTASI — ünite başı sahnesi (manzara +
         // rehber maskot) ve kıvrımlı yol üstünde 64'lük düğümler; güncel ders
@@ -717,6 +737,7 @@ class _LearningScreenState extends State<LearningScreen> {
         // kartı, düğüm ve dolu ders kartı aynı başlangıcı dört kez
         // söylüyordu; güncel ders artık düğüm + kartla BİR kez söylenir.
         attachment: _CurrentLessonCard(
+          key: _currentCardKey,
           lesson: lesson,
           title: _lessonTitle(lesson, ku),
           meta: _placementContextLabel(context, ku) ?? lesson.description(ku),
@@ -1150,6 +1171,7 @@ class _CategoryTab extends StatelessWidget {
 /// (`learning-next-step`): ekran okuyucu tek bir düğme duyar.
 class _CurrentLessonCard extends StatelessWidget {
   const _CurrentLessonCard({
+    super.key,
     required this.lesson,
     required this.title,
     required this.meta,

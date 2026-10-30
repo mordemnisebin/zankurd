@@ -148,7 +148,11 @@ void main() {
           );
           await tester.pumpAndSettle();
           expect(find.text('Oynadı · 0'), findsNWidgets(c.played));
-          expect(find.text('Henüz oynamadı'), findsNWidgets(c.unplayed));
+          expect(
+            find.text(c.expired ? 'Oynamadı · hükmen' : 'Henüz oynamadı'),
+            findsNWidgets(c.unplayed),
+          );
+          if (c.expired) expect(find.text('Henüz oynamadı'), findsNothing);
           expect(find.text('Sonuç bekleniyor'), findsNWidgets(c.waiting));
           if (c.expired) expect(find.text('Hükmen geçti'), findsOneWidget);
           expect(tester.takeException(), isNull);

@@ -1078,23 +1078,30 @@ class _CrowdScoreHeader extends StatelessWidget {
                 Expanded(
                   child: Semantics(
                     label:
-                        '${groupThousands(standing.rank)}. ${context.playerDisplayName(standing.player.name, tag: standing.player.tag)}, ${groupThousands(standing.player.score)}',
+                        '${groupThousands(standing.rank)}. ${context.playerDisplayName(standing.player.name, tag: standing.player.tag)}${isMe ? ' (${context.t(K.you)})' : ''}, ${groupThousands(standing.player.score)}',
                     excludeSemantics: true,
                     // Ad okunur alt sınırda (14) ve KÜÇÜLMEZ (kapışma U13/
                     // U15; önce 12'den 11'e küçülüyordu). Sütun sayısı
                     // sekiz harflik adı 14 pt'de sığdıracak biçimde seçilir.
-                    child: Text(
-                      quizCrowdShortName(
-                        context.playerDisplayName(
-                          standing.player.name,
-                          tag: standing.player.tag,
+                    child: SelfMarkedName(
+                      mark: isMe ? '(${context.t(K.you)})' : null,
+                      markKey: const ValueKey('quiz-crowd-self-mark'),
+                      markStyle: tabular.copyWith(color: t.goldTx),
+                      // Çip tek satırlı kalır: isim esner, Sen kesilmez.
+                      minNameWidth: 0,
+                      name: Text(
+                        quizCrowdShortName(
+                          context.playerDisplayName(
+                            standing.player.name,
+                            tag: standing.player.tag,
+                          ),
                         ),
+                        key: ValueKey('quiz-crowd-name-${standing.rank}'),
+                        maxLines: 1,
+                        softWrap: false,
+                        overflow: TextOverflow.ellipsis,
+                        style: tabular.copyWith(color: isMe ? t.goldTx : t.tx),
                       ),
-                      key: ValueKey('quiz-crowd-name-${standing.rank}'),
-                      maxLines: 1,
-                      softWrap: false,
-                      overflow: TextOverflow.ellipsis,
-                      style: tabular.copyWith(color: isMe ? t.goldTx : t.tx),
                     ),
                   ),
                 ),
@@ -1662,12 +1669,8 @@ class _OpponentWaitingOverlay extends StatelessWidget {
   }
 }
 
-/// Kaybedenin payı hiç sıfırlanmaz.
-///
-/// Ham oran kullanılsaydı 0-0'da çubuk tanımsız, ezici galibiyette ise
-/// TEK renk olurdu; tek renkli çubuk "rakip yok" diye okunur ve tam da
-/// göstermek istediği şeyi siler. Uçlarda ince bir şerit bırakmak
-/// "eziliyorsun" ile "yalnızsın" arasındaki farkı korur.
+/// Pozitif ama çok küçük puan payı için görünür alt sınır.
+/// Sıfır puanlı tarafa dilim verilmez; 0–0 nötr başlangıçtır.
 const double duelTugFloor = 0.08;
 
 /// Halat çekme çubuğunda oyuncunun payı (0..1).
@@ -1677,6 +1680,8 @@ const double duelTugFloor = 0.08;
 double duelTugShare(int playerScore, int opponentScore) {
   final total = playerScore + opponentScore;
   if (total <= 0) return 0.5;
+  if (playerScore <= 0) return 0;
+  if (opponentScore <= 0) return 1;
   return (playerScore / total).clamp(duelTugFloor, 1 - duelTugFloor);
 }
 
@@ -1713,27 +1718,29 @@ class _DuelTugBar extends StatelessWidget {
           ClipPath(
             clipper: const ShapeBorderClipper(shape: SahneShape.s),
             child: TweenAnimationBuilder<double>(
-              tween: Tween(begin: 0.5, end: share),
+              tween: Tween(begin: share, end: share),
               duration: reduceMotion ? Duration.zero : SahneMotion.scoreFlight,
               curve: Curves.easeOutCubic,
               builder: (context, value, _) => Row(
                 children: [
-                  Expanded(
-                    flex: (value * 1000).round(),
-                    child: ColoredBox(
-                      key: const ValueKey('duel-tug-left'),
-                      color: leftColor,
-                      child: const SizedBox(height: 8),
+                  if (playerScore > 0 || neutral)
+                    Expanded(
+                      flex: (value * 1000).round(),
+                      child: ColoredBox(
+                        key: const ValueKey('duel-tug-left'),
+                        color: leftColor,
+                        child: const SizedBox(height: 8),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: ((1 - value) * 1000).round(),
-                    child: ColoredBox(
-                      key: const ValueKey('duel-tug-right'),
-                      color: rightColor,
-                      child: const SizedBox(height: 8),
+                  if (opponentScore > 0 || neutral)
+                    Expanded(
+                      flex: ((1 - value) * 1000).round(),
+                      child: ColoredBox(
+                        key: const ValueKey('duel-tug-right'),
+                        color: rightColor,
+                        child: const SizedBox(height: 8),
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),

@@ -1587,6 +1587,13 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _submitting = false;
 
+  bool get _canSubmit =>
+      _validEmail(_emailController.text) &&
+      _passwordController.text.length >= 6;
+
+  bool _validEmail(String value) =>
+      RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value.trim());
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -1651,10 +1658,11 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
               ],
               SahneField(
                 controller: _emailController,
+                onChanged: (_) => setState(() {}),
                 keyboardType: TextInputType.emailAddress,
                 label: context.t(K.email),
                 validator: (v) {
-                  if (v == null || v.isEmpty || !v.contains('@')) {
+                  if (v == null || !_validEmail(v)) {
                     return context.t(K.emailInvalid);
                   }
                   return null;
@@ -1663,6 +1671,7 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
               const SizedBox(height: 12),
               SahneField(
                 controller: _passwordController,
+                onChanged: (_) => setState(() {}),
                 obscureText: true,
                 label: context.t(K.password),
                 validator: (v) {
@@ -1683,7 +1692,8 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
             child: Text(context.t(K.cancel)),
           ),
           confirm: FilledButton(
-            onPressed: _submitting
+            key: const ValueKey('guest-upgrade-save'),
+            onPressed: _submitting || !_canSubmit
                 ? null
                 : () async {
                     if (!(_formKey.currentState?.validate() ?? false)) {

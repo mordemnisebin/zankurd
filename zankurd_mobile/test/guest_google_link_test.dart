@@ -114,6 +114,66 @@ Future<void> _openGuestUpgradeDialog(
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
+  for (final ku in [false, true]) {
+    testWidgets('E1/E2 hesap seçenekleri ve geçerli form bekçisi ($ku)', (
+      tester,
+    ) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      addTearDown(() => debugDefaultTargetPlatformOverride = null);
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          ProfileScreen(repository: MockZanKurdRepository()),
+          _GuestAuthProviderWithGoogleLink(),
+          isKu: ku,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openGuestUpgradeDialog(tester, isKu: ku);
+      debugDefaultTargetPlatformOverride = null;
+      final body = find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text(Tr.forKu(K.saveAccountBody, ku)),
+      );
+      expect(body, findsOneWidget);
+      expect(
+        tester.widget<Text>(body).style!.fontSize,
+        greaterThanOrEqualTo(14),
+      );
+      for (final key in [K.saveAccountBody, K.saveAccountSub]) {
+        expect(Tr.forKu(key, ku), contains('Apple'));
+        expect(Tr.forKu(key, ku), contains('Google'));
+        expect(Tr.forKu(key, ku), contains(ku ? 'e-name' : 'e-posta'));
+      }
+      final save = find.byKey(const ValueKey('guest-upgrade-save'));
+      bool enabled() => tester.widget<FilledButton>(save).onPressed != null;
+      expect(enabled(), isFalse);
+      expect(find.byKey(const ValueKey('guest-upgrade-apple')), findsOneWidget);
+      expect(find.byKey(const ValueKey('auth-google')), findsOneWidget);
+      final fields = find.byType(TextField);
+      await tester.enterText(fields.first, 'name@example.com');
+      await tester.pump();
+      expect(enabled(), isFalse);
+      await tester.enterText(fields.last, '12345');
+      await tester.pump();
+      expect(enabled(), isFalse);
+      await tester.enterText(fields.last, '123456');
+      await tester.pump();
+      expect(enabled(), isTrue);
+      for (final invalid in ['', '@', 'a@', 'a@b', 'a b@example.com']) {
+        await tester.enterText(fields.first, invalid);
+        await tester.pump();
+        expect(enabled(), isFalse, reason: invalid);
+      }
+      await tester.enterText(fields.first, 'name@example.com');
+      await tester.pump();
+      expect(enabled(), isTrue);
+      await tester.enterText(fields.last, '');
+      await tester.pump();
+      expect(enabled(), isFalse);
+      expect(tester.takeException(), isNull);
+    });
+  }
+
   group('GuestGoogleLink — buton görünürlüğü', () {
     testWidgets(
       'misafir yükseltme dialog\'unda "Google ile devam et" görünür',

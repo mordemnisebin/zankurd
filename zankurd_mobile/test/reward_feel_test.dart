@@ -23,12 +23,11 @@ void main() {
       expect(duelTugShare(30, 10), closeTo(0.75, 0.001));
     });
 
-    test('ezici sonuçta bile kaybedene şerit kalır', () {
-      // Asıl korunan kural. Ham oran 1.0 olurdu ve çubuk TEK renge
-      // dönerdi; tek renkli çubuk "rakip yok" diye okunur, yani rakibi
-      // göstermek için eklenen öğe rakibi siler.
-      expect(duelTugShare(120, 0), 1 - duelTugFloor);
-      expect(duelTugShare(0, 120), duelTugFloor);
+    test('sıfır puana dilim yok; pozitif puana görünür taban kalır', () {
+      expect(duelTugShare(120, 0), 1);
+      expect(duelTugShare(0, 120), 0);
+      expect(duelTugShare(120, 1), 1 - duelTugFloor);
+      expect(duelTugShare(1, 120), duelTugFloor);
     });
   });
 

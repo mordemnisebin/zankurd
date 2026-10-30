@@ -410,6 +410,10 @@ extension _QuizScreenUI on _QuizScreenState {
                 // çipiyle (örn. 30 sn) çelişiyordu.
                 maxSeconds: widget.room.secondsPerQuestion,
                 isPaused: answered,
+                opponentTime:
+                    _isMultiplayer &&
+                    answered &&
+                    _mpPhase == _MultiplayerPhase.waiting,
                 stopped:
                     _mpPhase == _MultiplayerPhase.reveal ||
                     (_usesServerHiddenAnswers && _serverReadyWaiting),

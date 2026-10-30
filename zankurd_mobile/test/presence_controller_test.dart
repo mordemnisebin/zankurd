@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/services/presence_controller.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -39,6 +40,37 @@ class _Gateway implements PresenceGateway {
 }
 
 void main() {
+  for (final ku in [false, true]) {
+    testWidgets('E9 çevrimiçi ve son görülme açıklaması ($ku)', (tester) async {
+      freshMockRepository();
+      final auth = AuthProvider.test();
+      auth.presence.bind(_Gateway(), userId: 'guest');
+      auth.presence.didChangeAppLifecycleState(AppLifecycleState.resumed);
+      await tester.pumpWidget(
+        testShell(
+          authProvider: auth,
+          languageProvider: ku ? kurmanciLang() : turkishLang(),
+          child: SettingsScreen(repository: MockZanKurdRepository()),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final text = Tr.forKu(K.presenceVisibilitySub, ku);
+      expect(text, contains(ku ? 'serhêl' : 'çevrimiçi'));
+      expect(text, contains(ku ? 'dawî' : 'son görülme'));
+      expect(text, contains(ku ? 'girtî' : 'kapalı'));
+      final subtitle = find.text(text);
+      await tester.ensureVisible(subtitle);
+      await tester.pumpAndSettle();
+      expect(subtitle, findsOneWidget);
+      expect(
+        tester.widget<Text>(subtitle).style!.fontSize,
+        greaterThanOrEqualTo(14),
+      );
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox.shrink());
+    });
+  }
+
   testWidgets('T1 gecikmiş okuma arka planda touch başlatmaz; hızlı '
       'yanıt veren testler yaşam döngüsü yarışını gizliyordu', (tester) async {
     final pending = Completer<bool>();

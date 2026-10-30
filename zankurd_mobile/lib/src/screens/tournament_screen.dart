@@ -1153,7 +1153,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
           const SizedBox(height: SahneSpace.x4),
           SahneButton.primary(
             key: const ValueKey('tournament-join-new-cta'),
-            label: context.t(K.joinTournament),
+            label: context.t(K.joinNewTournament),
             expand: true,
             onPressed: _startingNewTournament
                 ? null
@@ -1949,16 +1949,22 @@ class _StatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final statusLabel = switch (bracket.status) {
-      'won' => context.t(K.champion),
-      'eliminated' => context.t(K.eliminated),
-      _ => context.t(K.ongoing),
-    };
     // Elenen oyuncunun turu kendi son maçından okunur; bkz.
     // [TournamentBracket.lastRoundIndexOf].
     final shownRound = bracket.status == 'eliminated'
         ? bracket.lastRoundIndexOf(userId) ?? bracket.currentRound
         : bracket.currentRound;
+    final runnerUp =
+        bracket.status == 'eliminated' &&
+        shownRound == bracket.totalRounds - 1 &&
+        lastMatch?.status == 'completed' &&
+        lastMatch?.winnerId.isNotEmpty == true &&
+        lastMatch?.winnerId != userId;
+    final statusLabel = switch (bracket.status) {
+      'won' => context.t(K.champion),
+      'eliminated' => context.t(runnerUp ? K.tournamentRunnerUp : K.eliminated),
+      _ => context.t(K.ongoing),
+    };
     return SahneSurfaceCard(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1982,6 +1988,7 @@ class _StatusCard extends StatelessWidget {
                 // Elenen oyuncuya HANGİ turda elendiği ve kaç puan aldığı
                 // söylenir; ikisi de şemada gerçekten duruyor.
                 if (bracket.status == 'eliminated' &&
+                    !runnerUp &&
                     shownRound < roundNames.length)
                   Text(
                     Tr.forKu(K.cupEliminatedRound, ku, {
@@ -1993,7 +2000,7 @@ class _StatusCard extends StatelessWidget {
                   ),
                 if (bracket.status == 'eliminated' && lastMatch != null)
                   Text(
-                    _matchVsLine(lastMatch!, userId, ku),
+                    _matchVsLine(lastMatch!, userId, ku, owned: runnerUp),
                     key: const ValueKey('tournament-eliminated-vs'),
                     style: SahneType.caption.copyWith(color: t.tx2),
                   ),
@@ -2024,7 +2031,12 @@ class _StatusCard extends StatelessWidget {
 }
 
 /// "Rakip karşısında benim – onun" satırı.
-String _matchVsLine(TournamentMatch m, String userId, bool ku) {
+String _matchVsLine(
+  TournamentMatch m,
+  String userId,
+  bool ku, {
+  bool owned = false,
+}) {
   if (m.isForfeit) {
     final winner = m.winnerId == m.playerOneId
         ? m.playerOneName
@@ -2033,7 +2045,7 @@ String _matchVsLine(TournamentMatch m, String userId, bool ku) {
   }
   if (m.closedWithoutSubmission) return Tr.forKu(K.cupExpiredUnplayed, ku);
   final mine = m.playerOneId == userId;
-  return Tr.forKu(K.cupMatchVs, ku, {
+  return Tr.forKu(owned ? K.cupOwnedMatchVs : K.cupMatchVs, ku, {
     'opponent': mine ? m.playerTwoName : m.playerOneName,
     'my': groupThousands(mine ? m.playerOneScore : m.playerTwoScore),
     'their': groupThousands(mine ? m.playerTwoScore : m.playerOneScore),

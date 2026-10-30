@@ -230,9 +230,7 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('boş form gönderilemez — doğrulama hataları gösterilir', (
-      tester,
-    ) async {
+    testWidgets('E2 boş form gönderilemez — Kaydet pasiftir', (tester) async {
       final guestAuth = _GuestAuthProvider();
       await tester.pumpWidget(
         _wrapWithProviders(
@@ -247,21 +245,11 @@ void main() {
       await tester.tap(find.text('Hesabını kaydet'));
       await tester.pumpAndSettle();
 
-      // Kaydet butonuna dokun (form boş)
-      await tester.tap(find.text('Kaydet'));
+      final save = find.byKey(const ValueKey('guest-upgrade-save'));
+      expect(tester.widget<FilledButton>(save).onPressed, isNull);
+      await tester.tap(save);
       await tester.pumpAndSettle();
-
-      // Doğrulama hataları görünmeli
-      expect(
-        find.text('Geçerli bir e-posta gir'),
-        findsOneWidget,
-        reason: 'Boş e-posta alanı için hata mesajı gösterilmeli',
-      );
-      expect(
-        find.text('Parola en az 6 karakter olmalı'),
-        findsOneWidget,
-        reason: 'Kısa şifre için hata mesajı gösterilmeli',
-      );
+      expect(find.byType(AlertDialog), findsOneWidget);
       // upgradeGuestAccount çağrılmamış olmalı
       expect(guestAuth.upgradeCalled, isFalse);
     });

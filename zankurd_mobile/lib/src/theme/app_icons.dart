@@ -333,6 +333,9 @@ class AppIcons {
     fontFamily: 'Lucide',
   );
 
+  /// Lucide `pause`.
+  static const IconData pause = IconData(0xe12e, fontFamily: 'Lucide');
+
   /// Lucide `play`.
   static const IconData play = IconData(0xe13c, fontFamily: 'Lucide');
 

@@ -651,7 +651,7 @@ void main() {
       expect(find.byKey(const ValueKey('async-duel-play')), findsOneWidget);
     });
 
-    testWidgets('bekleyen bağlantım: başlık "Meydan okuma bağlantısı", '
+    testWidgets('E5 bekleyen bağlantım: başlık "Açık davet", '
         'dokununca Paylaş', (tester) async {
       await _useSurface(tester);
       final shared = _captureShares();
@@ -674,11 +674,11 @@ void main() {
       // 2026-10-22: mod kartları düellolarım kutusunu tembel listede
       // aşağı itti; satır görünene dek kaydırılır.
       await tester.scrollUntilVisible(
-        find.text('Meydan okuma bağlantısı'),
+        find.text('Açık davet'),
         200,
         scrollable: find.byType(Scrollable).first,
       );
-      expect(find.text('Meydan okuma bağlantısı'), findsOneWidget);
+      expect(find.text('Açık davet'), findsOneWidget);
 
       final row = find.byKey(ValueKey('async-duel-row-${start.duelId}'));
       await tester.ensureVisible(row);

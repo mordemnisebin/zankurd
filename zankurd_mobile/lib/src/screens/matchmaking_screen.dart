@@ -1301,6 +1301,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     );
   }
 
+  final _categoryGridKey = GlobalKey();
+  final _categoryTileKeys = <String, GlobalKey>{};
+
   Widget _buildSelectionMenu(bool ku) {
     final t = SahneTokens.of(context);
     final Widget categories;
@@ -1338,7 +1341,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       categories = SahneModeGrid(
         key: const ValueKey('matchmaking-category-grid'),
         children: [
-          for (final category in _categories) _categoryTile(category, ku),
+          for (final category in _categories)
+            KeyedSubtree(
+              key: _categoryTileKeys.putIfAbsent(category, GlobalKey.new),
+              child: _categoryTile(category, ku),
+            ),
         ],
       );
     }
@@ -1384,13 +1391,18 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SahneSectionHeader(title: context.t(K.matchByCategory)),
+                // Kısa telefonda büyük yazı: üst çubuk sayfayı zaten
+                // tanıtır. Yinelenen ara başlık ilk tam konu satırını itmesin.
+                if (MediaQuery.sizeOf(context).height >= 700 ||
+                    MediaQuery.textScalerOf(context).scale(16) / 16 <= 1)
+                  SahneSectionHeader(title: context.t(K.matchByCategory)),
                 // Kurul 3 D24 (Astra + Sol): karta dokunmanın eşleşme
                 // başlattığı ve alttaki düğmenin konu seçmediği belli
                 // değildi. Çok büyük yazıda (≥1,5×) satır düşer: dar ekranda
                 // konu karolarını ilk görünümden itiyordu; düğmenin kendisi
                 // kapsamı ("Tüm konulardan") yine söyler.
-                if (MediaQuery.textScalerOf(context).scale(16) / 16 < 1.5)
+                if (MediaQuery.textScalerOf(context).scale(16) / 16 < 1.5 &&
+                    MediaQuery.sizeOf(context).height >= 700)
                   Padding(
                     padding: const EdgeInsets.only(bottom: SahneSpace.x2),
                     child: Text(
@@ -1401,15 +1413,32 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                       ),
                     ),
                   ),
-                categories,
-                // Son karo alt perdedeki düğmenin ARKASINDA kalmasın (Astra:
-                // "son kategori düğmenin arkasına giriyor"): kaydırma sonunda
-                // düğme payı kadar boşluk.
-                const SizedBox(height: SahneSpace.x8),
               ],
             ),
           ),
         ),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+          sliver: SliverLayoutBuilder(
+            builder: (context, constraints) => SliverToBoxAdapter(
+              child: ClipRect(
+                key: const ValueKey('matchmaking-whole-rows'),
+                clipper: _WholeTopicRowsClipper(
+                  gridKey: _categoryGridKey,
+                  tileKeys: [
+                    for (final category in _categories)
+                      ?_categoryTileKeys[category],
+                  ],
+                  visibleEnd:
+                      constraints.scrollOffset +
+                      constraints.remainingPaintExtent,
+                ),
+                child: KeyedSubtree(key: _categoryGridKey, child: categories),
+              ),
+            ),
+          ),
+        ),
+        const SliverToBoxAdapter(child: SizedBox(height: SahneSpace.x8)),
       ],
     );
   }
@@ -1985,4 +2014,39 @@ class _LevelTag extends StatelessWidget {
       ),
     );
   }
+}
+
+/// E13: alt perdenin üstünde yalnız tamamı görünen satırları çiz.
+/// Ölçüler gerçek karolardan gelir; iki dil, büyük yazı ve tek sütun aynı
+/// kuralla çalışır. Kaydırma boyu değişmez, son satıra erişim korunur.
+class _WholeTopicRowsClipper extends CustomClipper<Rect> {
+  _WholeTopicRowsClipper({
+    required this.gridKey,
+    required this.tileKeys,
+    required this.visibleEnd,
+  });
+
+  final GlobalKey gridKey;
+  final List<GlobalKey> tileKeys;
+  final double visibleEnd;
+
+  @override
+  Rect getClip(Size size) {
+    final grid = gridKey.currentContext?.findRenderObject();
+    if (grid is! RenderBox || tileKeys.isEmpty) return Offset.zero & size;
+    // Ortak alt panelin 32 px solma bandına tam satır da girmesin.
+    final limit = visibleEnd - SahneSpace.x8;
+    var bottom = 0.0;
+    for (final key in tileKeys) {
+      final tile = key.currentContext?.findRenderObject();
+      if (tile is! RenderBox || !tile.hasSize) continue;
+      final tileBottom =
+          tile.localToGlobal(Offset.zero, ancestor: grid).dy + tile.size.height;
+      if (tileBottom <= limit + 0.5 && tileBottom > bottom) bottom = tileBottom;
+    }
+    return Rect.fromLTWH(0, 0, size.width, bottom.clamp(0, size.height));
+  }
+
+  @override
+  bool shouldReclip(_WholeTopicRowsClipper oldClipper) => true;
 }
