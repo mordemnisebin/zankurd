@@ -61,3 +61,53 @@ signInEmail | E-posta ile giriş | Bi e-nameyê têkeve
 signUpApple | Apple ile kaydol | Bi Apple tomar bibe
 signUpGoogle | Google ile kaydol | Bi Google tomar bibe
 continueGuest | Misafir olarak devam et | Wek mêvan bidomîne
+
+2026-10-30 — tam erişimle devam oturumu
+
+Bu bölüm yukarıdaki sandbox oturumunun tarihsel durumunu günceller.
+- Önceki çalışma dff7c878 commit'iyle kaydedildi. Geçici *_smoke.sql dosyası bulunmadı. Bu not, değişen eski testlerin gerekçelerini koruduğu için bırakıldı.
+- Yeni çalışma çıktıları yalnız worktree içindeki build/astra-ci/ altında tutuldu; CI için TMPDIR de bu klasöre yönlendirildi. Çıktılar izlenmeyen derleme/doğrulama kanıtlarıdır.
+- Tam CI komutu: TMPDIR="$PWD/build/astra-ci/tmp" ./tool/ci_yerel.sh --tam
+- Tam CI günlüğü: build/astra-ci/ci-01.log
+- Ekran turu: 214 test geçti.
+- Bağımsız Codex kod incelemesi: 5fa942a9..dff7c878 aralığında önemli doğrulanabilir regresyon bulunmadı. Bu inceleme farklı firma veya KU çift model onayı değildir.
+
+Gerçek tarayıcı kontrolü
+- AuthProvider.test tabanlı geçici önizleme build/astra-ci/auth_preview.dart ile Flutter web derlemesi başarılı. Üretim başlangıcı ve gerçek oturum servisi başlatılmadı.
+- Playwright ile yalnız 127.0.0.1 sunucusuna izin verildi, dış ağ istekleri engellendi. Geçici HTTP sunucusu kontrol sonunda kapatıldı.
+- 375x667 TR açık tema: ilk giriş düğmeleri görünür; e-posta formu açıldı; Kaydol ile kayıt ekranına, Giriş yap ile geri dönüldü.
+- 320x667 KU koyu tema, 2x yazı: sosyal/e-posta düğmelerine kaydırılarak erişildi ve e-posta formu açıldı.
+- 375x667 TR koyu tema: misafir hesabını kaydetme yüzeyi görüntülendi.
+- Görsel kanıtlar: build/astra-ci/signin-tr.png, signup-tr.png, signin-ku.png, signin-ku-dark-large.png, signin-ku-dark-email.png, save-tr-dark.png.
+- Tarayıcı konsolunda yalnız engellenen fonts.gstatic.com fontu ve accounts.google.com betiği için ağ hataları görüldü. Bunlar önizlemenin ağ sınırından kaynaklanır; üretim OAuth doğrulaması değildir.
+- Web derlemesi flutter_tts paketinin WebAssembly uyumu ve CupertinoIcons font kaydı konusunda uyarı verdi; JavaScript web derlemesi başarılı. Bunlar bu değişiklikte düzeltilmedi.
+
+Kalan sınırlar
+- Apple yerel iOS görünümü widget testleriyle sınanır; bu oturumda iOS simülatör/cihaz doğrulaması yapılmadı.
+- Gerçek Apple/Google oturumu ve misafir ilerleme aktarımı canlı hesapla sınanmadı.
+- Yeni KU metinlerde Gemini/Grok onayı ve farklı firmadan kod incelemesi hâlâ yok. Kimlik/config dosyası erişimi gerektiren harici CLI'ler bu oturumda başlatılmadı.
+- Sunucu göçü dosyası yok; bu T4 değişikliği göç gerektirmiyor. Canlı veritabanı işlemi ve push yapılmadı.
+
+Tam CI'ın yakaladığı kök nedenler ve düzeltmeler
+- copy_language_test.dart: aynı TR "Apple ile devam et" için yeni continueApple ile mevcut linkApple farklı KU karşılık taşıyordu. Yalnız yeni continueApple mevcut "Bi Apple re bidomîne" ile eşitlendi; test değişmedi. Yukarıdaki KU taslak tablosundaki eski continueApple karşılığını bu satır günceller.
+- l10n_kullanilmayan_anahtar_test.dart: T4 sonrasında orSeparator, signInHaveAccount, signInApple kullanılmıyordu. Lib/test/tool içinde başka referans olmadığı doğrulandı; yalnız bildirim ve çeviri kayıtları kaldırıldı. Bekçiye istisna eklenmedi.
+- tur2_canlilik_bekcisi_test.dart: eski >=176 px manzara beklentisi T4'ün bilinçli 72 px düzeniyle çelişiyordu. Manzara ve vaat korunarak bekçi 375x667 iOS, gerçek fontlar ve üst güvenli alanla güncellendi; misafir/Apple/Google/e-posta yolları kaydırma yapılmadan hitTestable olmalı. Kesin 72 px ölçü de denetlenir.
+- painter_font_test.dart: statik tarayıcı açıkça font ailesi taşıyan SahneType.button stilini tanımıyordu. Yalnız doğrudan bu stil ifadesi tanındı; gerçek fontFamily null/boş/yalnız boşluk olamaz. copyWith ve başka stil isimleri bu yoldan muaf tutulmaz; ailesiz TextStyle denetimi korunur. Ürün koduna gereksiz font kopyalama eklenmedi.
+
+Düzeltme doğrulaması
+- İlk tam koşu: 7015 başarılı, 3 atlanan, 4 başarısız test; cihazsız akış adımına ulaşmadı.
+- Düzeltme sonrası dart analyze: No issues found! (build/astra-ci/fix-analyze-02.log).
+- Dört bekçi dosyası + auth_visibility_t4_test.dart: 91/91 geçti (build/astra-ci/fix-tests-02.log). İlk hedefli koşuda yeni iOS test ayarı invariant kontrolünden önce sıfırlanmıyordu; gövde sonunda da sıfırlanarak düzeltildi, addTearDown güvencesi korundu.
+- Kod ve bekçi düzeltmeleri: b478c59d. Bağımsız son diff incelemesi de uygun buldu.
+- İkinci tam CI günlüğü: build/astra-ci/ci-02.log.
+
+Sonuç — ikinci tam CI
+- Çıkış kodu: 0.
+- dart format ve dart analyze: başarılı, No issues found!
+- Soru kalitesi, şık kalite ve dokunma hedefi kapıları: başarılı.
+- Ekran turu: 214/214 geçti.
+- Tam Flutter test paketi: 7019 başarılı, 3 atlanan, 0 başarısız.
+- Cihazsız uygulama akışları: 4/4 geçti.
+- Tam CI son satırı: CI yerel: bütün adımlar geçti.
+- Bu T4 çalışması için sunucu göçü dosyası oluşturulmadı veya uygulanmadı; push yapılmadı.
+- Kanıtlar build/astra-ci/ içinde gerekçeli olarak tutuldu; docs notu tarihsel bulguları ve eski testlerin güncellenme nedenlerini korur.
