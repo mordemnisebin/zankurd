@@ -259,6 +259,7 @@ Future<void> _pumpQuiz(
       child: _olcekli(
         scale,
         QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: v == _V.duello1v1 || v == _V.oda
               ? _roomFor(v)
@@ -414,7 +415,10 @@ Future<void> _cevapla(
   // Ekran soruyu yerelleştirip şıkları kendi sırasıyla gösterir; yanlış
   // şıkkın SIRASI aynı kuraldan bulunur (metin bulucu öğrenme modunda
   // sözlük dokunuşlu metni bulamaz).
-  final shown = q.localized(isKu: ku, learning: learning);
+  final roundId =
+      tester.widget<QuizScreen>(find.byType(QuizScreen)).room.id ??
+      'test-round';
+  final shown = q.forRound(roundId).localized(isKu: ku, learning: learning);
   final wrong = shown.displayAnswers.indexWhere(
     (a) => a != shown.correctAnswer,
   );

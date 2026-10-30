@@ -114,6 +114,7 @@ void main() {
     await tester.pumpWidget(
       wrap(
         QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: [question],
@@ -125,7 +126,7 @@ void main() {
 
     // Sahne her zaman gece: gündüz temasında da gece belirteçleri.
     const t = SahneTokens.night;
-    for (final answer in question.displayAnswers) {
+    for (final answer in question.forRound('test-round').displayAnswers) {
       final decoration = barOf(tester, answer).decoration! as BoxDecoration;
       // Tur 8: dinlenme dolgusu bir ton açık (optionFill) + 1 px kenar.
       // K6+ (2026-10-28) GEÇERSİZ KILDI: "D aşaması" konu tonlu şık dolgusu
@@ -158,12 +159,14 @@ void main() {
     });
     final repository = MockZanKurdRepository();
     final question = repository.questions.first;
-    final wrongAnswer = question.displayAnswers.firstWhere(
-      (answer) => answer != question.correctAnswer,
-    );
+    final wrongAnswer = question
+        .forRound('test-round')
+        .displayAnswers
+        .firstWhere((answer) => answer != question.correctAnswer);
     await tester.pumpWidget(
       wrap(
         QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: [question],
@@ -205,6 +208,7 @@ void main() {
     await tester.pumpWidget(
       wrap(
         QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: [question],
@@ -241,6 +245,7 @@ void main() {
     await tester.pumpWidget(
       wrap(
         QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: questions,
@@ -288,6 +293,7 @@ void main() {
     await tester.pumpWidget(
       wrap(
         QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: [question],
@@ -298,7 +304,10 @@ void main() {
     await tester.pumpAndSettle();
 
     final deco =
-        barOf(tester, question.displayAnswers.first).decoration!
+        barOf(
+              tester,
+              question.forRound('test-round').displayAnswers.first,
+            ).decoration!
             as BoxDecoration;
     expect(deco.boxShadow, isNull, reason: 'Şahnê: tek gölge birincil düğmede');
   });
@@ -309,6 +318,7 @@ void main() {
     await tester.pumpWidget(
       wrap(
         QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: [question],
@@ -352,6 +362,7 @@ void main() {
     await tester.pumpWidget(
       wrap(
         QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: [question],

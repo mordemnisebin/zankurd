@@ -77,6 +77,7 @@ void main() {
         child: MediaQuery(
           data: MediaQueryData(textScaler: TextScaler.linear(textScale)),
           child: QuizScreen(
+            roundId: 'test-round',
             repository: repository,
             room: repository.createRoom(),
             questions: questions,
@@ -125,7 +126,7 @@ void main() {
             '$lang turda soru metni yansıtılmamış. `localized(isKu:)` '
             'zinciri kopmuş olabilir.',
       );
-      for (final answer in first.displayAnswers) {
+      for (final answer in first.forRound('test-round').displayAnswers) {
         expect(
           find.text(answer),
           findsWidgets,

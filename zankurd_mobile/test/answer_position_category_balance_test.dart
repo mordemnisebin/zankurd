@@ -76,6 +76,43 @@ void main() {
     );
   });
 
+  test(
+    'metin şıklarının maç dağılımı sessizdi; eski bekçi yalnız bankayı ölçüyordu',
+    () {
+      final byCategory = <String, List<int>>{};
+      final questions = MockZanKurdRepository().playableQuestions.where(
+        (q) =>
+            q.type == QuestionType.multipleChoice &&
+            q.answers.length == 4 &&
+            q.answers.contains(q.correctAnswer) &&
+            // Sayısal şıklar sözleşme gereği yönlü sıralanır; bir sayının
+            // sıralı dört konumu da ziyaret etmesini beklemek yanlıştır.
+            // Eski tüm-banka kategori bekçisi yukarıda aynen korunur.
+            !q.answers.every(
+              (a) => num.tryParse(a.trim().replaceAll('.', '')) != null,
+            ),
+      );
+      for (var match = 0; match < 100; match++) {
+        for (final source in questions) {
+          final q = source.forRound('category-match-$match');
+          final counts = byCategory.putIfAbsent(q.category, () => [0, 0, 0, 0]);
+          counts[q.displayAnswers.indexOf(q.correctAnswer)]++;
+        }
+      }
+      expect(byCategory.length, greaterThan(8));
+      for (final entry in byCategory.entries) {
+        final total = entry.value.reduce((a, b) => a + b);
+        for (final count in entry.value) {
+          expect(
+            100 * count / total,
+            inInclusiveRange(22, 28),
+            reason: '${entry.key}: ${entry.value}',
+          );
+        }
+      }
+    },
+  );
+
   test('doğru/yanlış şıkları hep Rast, Şaş (Doğru, Yanlış) sırasında', () {
     final bad = <String>[];
     for (final q in QuestionBankLoader.instance.allQuestions) {

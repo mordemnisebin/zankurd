@@ -244,7 +244,10 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       final resumeAt = start.answeredCount;
       setState(() {
         _duel = start;
-        _questions = List.of(start.questions);
+        _questions = [
+          for (final question in start.questions)
+            question.forRound(start.duelId),
+        ];
         _results = List<SahneDiamondState?>.filled(
           start.questions.length,
           null,
@@ -333,7 +336,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       return;
     }
     setState(() {
-      _questions[index] = question;
+      _questions[index] = question.forRound(duel.duelId);
       _awaitingQuestion = false;
     });
     _presentOffsetMs = presented.elapsedMs;
