@@ -59,7 +59,18 @@ const _namespace = '5a1e2b7c-3d4f-4e60-9a8b-2c1d0f9e8a77';
 /// Ekleme göçündeki kategorisi sonradan yerelde değiştirilen sorular:
 /// yerel id -> ekleme dosyasındaki ESKİ kategori. Düzeltme göçü
 /// `supabase/2026-10-02_e2e_content_fixes.sql`dir.
-const _recategorisedLocally = <String, String>{'offline_0757': 'Cografya'};
+const _recategorisedLocally = <String, String>{
+  'offline_0757': 'Cografya',
+  // Kurul 3 D6 (2026-10-30): "Jin, Jiyan, Azadî" olay sorusu "Bilim"
+  // (Paradigma) turunda yersizdi; yerelde ve sunucuda Siyaset'e alındı.
+  'curated_paradigma_0009': 'Paradigma',
+};
+
+/// Yerelde kategorisi değişen satırın sunucu düzeltme göçü.
+const _recategorisationFix = <String, String>{
+  'offline_0757': 'supabase/2026-10-02_e2e_content_fixes.sql',
+  'curated_paradigma_0009': 'supabase/2026-10-30_slogan_kategori_duzeltme.sql',
+};
 
 /// Ekleme göçüyle sunucuya girdikten SONRA emekliye ayrılan sorular: yerel
 /// id -> sunucuyu onaydan çıkaran göç. Ekleme göçü tarihî bir kayıttır;
@@ -354,10 +365,8 @@ void main() {
   });
 
   test('yerelde kategorisi değişen ekleme satırlarının düzeltme göçü var', () {
-    final fix = File(
-      'supabase/2026-10-02_e2e_content_fixes.sql',
-    ).readAsStringSync();
     for (final localId in _recategorisedLocally.keys) {
+      final fix = File(_recategorisationFix[localId]!).readAsStringSync();
       final id = _uuid5('zankurd-local:$localId');
       expect(fix, contains(id), reason: '$localId için göç yok');
       expect(
@@ -367,6 +376,9 @@ void main() {
       );
     }
     // Koordinat sorusu: göçteki yeni şık yereldekiyle aynı.
+    final fix = File(
+      'supabase/2026-10-02_e2e_content_fixes.sql',
+    ).readAsStringSync();
     expect(fix, contains('Dem û lez'));
     expect(
       byId['ds_cografya_0177']!.answers,

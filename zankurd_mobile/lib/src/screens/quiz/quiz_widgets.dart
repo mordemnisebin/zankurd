@@ -1318,6 +1318,7 @@ class _DuelScoreHeader extends StatelessWidget {
                   : MainAxisAlignment.start,
               children: [
                 Flexible(
+                  flex: 3,
                   // Okunur tabana (11 pt) kadar küçülür, sonra iki satıra
                   // sarar (üç nokta yalnız son çare).
                   // Kurul 3 D5 (3/3): kendi tarafın "Sen" ile işaretli
@@ -1335,11 +1336,15 @@ class _DuelScoreHeader extends StatelessWidget {
                     context.playerDisplayName(p.name, tag: p.tag) !=
                         context.t(K.you)) ...[
                   const SizedBox(width: SahneSpace.x1),
-                  Text(
-                    '(${context.t(K.you)})',
-                    key: const ValueKey('duel-self-mark'),
-                    maxLines: 1,
-                    style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                  Flexible(
+                    child: Text(
+                      '(${context.t(K.you)})',
+                      key: const ValueKey('duel-self-mark'),
+                      maxLines: 1,
+                      softWrap: false,
+                      overflow: TextOverflow.clip,
+                      style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                    ),
                   ),
                 ],
               ],
