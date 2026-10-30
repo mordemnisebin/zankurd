@@ -1,0 +1,8 @@
+**ONAY (1 küçük düzeltme notuyla)**
+
+Genel mimari, `revealed` faz sinyaliyle tümü yanlış/timeout olduğunda sessiz kalan realtime'ın kurtarılması, `_reconcileQueued` ile uçuş sırasındaki reconcile çağrılarının kaçırılmaması, 3 in-flight + 4 sn timeout + mononton sıra (`_crowdProgressApplied`) koruması ve ortak deadline sayaç akışı doğru.
+
+**Kontrol edilmesi gereken tek somut nokta:**
+- [`quiz_screen.dart`](file:///private/tmp/zk-t10-review/zankurd_mobile/lib/src/screens/quiz_screen.dart#L2655-L2663) ve [`quiz_screen.dart`](file:///private/tmp/zk-t10-review/zankurd_mobile/lib/src/screens/quiz_screen.dart#L3818-L3821): `_cancelMultiplayerTimers()` içinde `_crowdProgressTimer?.cancel()` çağrılıyor ancak `_crowdProgressTimer = null` yapılmıyor. `_ensureRoomPolling()` içinde ise `_pollTimer = Timer.periodic(...)` doğrudan atanırken `_crowdProgressTimer ??= Timer.periodic(...)` kullanılmış. Zamanlayıcılar iptal edildikten sonra `_ensureRoomPolling()` tekrar çağrılırsa (ör. yaşam döngüsü/yeniden bağlanma akışında), `_crowdProgressTimer` `null` olmadığı (`isActive == false` kaldığı) için `??=` nedeniyle yeniden başlamaz.
+  - **Çözüm:** `_ensureRoomPolling()` içinde `_crowdProgressTimer?.cancel(); _crowdProgressTimer = Timer.periodic(...);` kullanın ve `_cancelMultiplayerTimers()` içinde `_crowdProgressTimer = null;` atayın.
+- *(İsteğe bağlı SQL notu)*: `$verify$` bloğuna `position($key$'revealed'$key$ in pg_get_functiondef(...)) = 0` kontrolü ve üstteki geri alma yorumuna `v_phase_new -> v_phase_old` notu da eklenebilir.

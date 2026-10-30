@@ -20,6 +20,10 @@ import '../widgets/zan_mascot.dart';
 import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
+/// İçerik çiftinde Türkçe yardım yalnız TR arayüzünde gösterilir.
+String _storyPairText(BuildContext context, String ku, String tr) =>
+    [ku, if (!context.isKu) tr].join(' — ');
+
 /// Dallanan hikâye oynatıcısı. İlerleme yerelde kaydedilir; hikâye yeniden
 /// başlatılabilir. Opsiyonel bir [guide] verilirse başta/istenince mini
 /// rehber gösterilebilir.
@@ -412,11 +416,13 @@ class _StoryScreenState extends State<StoryScreen> {
                             subtle: true,
                             style: SahneType.headline.copyWith(color: s.tx),
                           ),
-                          const SizedBox(height: SahneSpace.x2),
-                          Text(
-                            glueOpeningQuotes(node.textTr),
-                            style: SahneType.body.copyWith(color: s.tx2),
-                          ),
+                          if (!context.isKu) ...[
+                            const SizedBox(height: SahneSpace.x2),
+                            Text(
+                              glueOpeningQuotes(node.textTr),
+                              style: SahneType.body.copyWith(color: s.tx2),
+                            ),
+                          ],
                         ],
                       ),
                     ),
@@ -444,7 +450,7 @@ class _StoryScreenState extends State<StoryScreen> {
                       children: [
                         Expanded(
                           child: Text(
-                            '• ${w.ku} — ${w.tr}',
+                            '• ${_storyPairText(context, w.ku, w.tr)}',
                             style: SahneType.body.copyWith(color: t.tx),
                           ),
                         ),
@@ -545,10 +551,11 @@ class _NarrationBubble extends StatelessWidget {
                         style: SahneType.body.copyWith(color: t.tx),
                       ),
                       const SizedBox(height: 2),
-                      Text(
-                        glueOpeningQuotes(node.textTr),
-                        style: SahneType.caption.copyWith(color: t.tx2),
-                      ),
+                      if (!context.isKu)
+                        Text(
+                          glueOpeningQuotes(node.textTr),
+                          style: SahneType.caption.copyWith(color: t.tx2),
+                        ),
                     ],
                   ),
                 ),
@@ -594,11 +601,12 @@ class _PlayerBubble extends StatelessWidget {
                   textAlign: TextAlign.end,
                   style: SahneType.bodyStrong.copyWith(color: t.learnTx),
                 ),
-                Text(
-                  glueOpeningQuotes(choice.labelTr),
-                  textAlign: TextAlign.end,
-                  style: SahneType.caption.copyWith(color: t.tx2),
-                ),
+                if (!context.isKu)
+                  Text(
+                    glueOpeningQuotes(choice.labelTr),
+                    textAlign: TextAlign.end,
+                    style: SahneType.caption.copyWith(color: t.tx2),
+                  ),
               ],
             ),
           ),
@@ -658,10 +666,11 @@ class _StoryChoiceRow extends StatelessWidget {
                     key: ValueKey('story-choice-ku-${choice.nextNodeId}'),
                     style: SahneType.bodyStrong.copyWith(color: t.tx),
                   ),
-                  Text(
-                    choice.labelTr,
-                    style: SahneType.caption.copyWith(color: t.tx2),
-                  ),
+                  if (!context.isKu)
+                    Text(
+                      choice.labelTr,
+                      style: SahneType.caption.copyWith(color: t.tx2),
+                    ),
                 ],
               ),
             ),
@@ -720,7 +729,7 @@ class _WordChip extends StatelessWidget {
     final e = entry;
     return Semantics(
       button: e != null,
-      label: '${pair.ku}. ${pair.tr}',
+      label: context.isKu ? pair.ku : '${pair.ku}. ${pair.tr}',
       excludeSemantics: true,
       child: Material(
         color: t.s1,
@@ -742,10 +751,11 @@ class _WordChip extends StatelessWidget {
                       text: pair.ku,
                       style: SahneType.bodyStrong.copyWith(color: t.learnTx),
                     ),
-                    TextSpan(
-                      text: '  ${pair.tr}',
-                      style: SahneType.caption.copyWith(color: t.tx2),
-                    ),
+                    if (!context.isKu)
+                      TextSpan(
+                        text: '  ${pair.tr}',
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                      ),
                   ],
                 ),
               ),
@@ -845,7 +855,12 @@ class _MiniGuideView extends StatelessWidget {
             for (final w in guide.newWords)
               Row(
                 children: [
-                  Expanded(child: Text('• ${w.ku} — ${w.tr}', style: item)),
+                  Expanded(
+                    child: Text(
+                      '• ${_storyPairText(context, w.ku, w.tr)}',
+                      style: item,
+                    ),
+                  ),
                   LexiconSpeakButton(text: w.ku),
                   if (LearnerLexicon.lookup(w.ku) case final entry?)
                     WordSaveButton(entryId: entry.id),
@@ -859,7 +874,12 @@ class _MiniGuideView extends StatelessWidget {
             for (final e in guide.examples)
               Row(
                 children: [
-                  Expanded(child: Text('• ${e.ku} — ${e.tr}', style: item)),
+                  Expanded(
+                    child: Text(
+                      '• ${_storyPairText(context, e.ku, e.tr)}',
+                      style: item,
+                    ),
+                  ),
                   LexiconSpeakButton(text: e.ku),
                 ],
               ),

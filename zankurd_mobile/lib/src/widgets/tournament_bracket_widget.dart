@@ -275,8 +275,16 @@ class _BracketMatchCard extends StatelessWidget {
     final p2Won = isCompleted && match.winnerId == match.playerTwoId;
 
     final semanticsLabel = Tr.forKu(K.matchSemantics, ku, {
-      'one': [match.playerOneName, ?oneLabel].join(', '),
-      'two': [match.playerTwoName, ?twoLabel].join(', '),
+      'one': [
+        match.playerOneName,
+        if (match.playerOneId == userId) Tr.forKu(K.you, ku),
+        ?oneLabel,
+      ].join(', '),
+      'two': [
+        match.playerTwoName,
+        if (match.playerTwoId == userId) Tr.forKu(K.you, ku),
+        ?twoLabel,
+      ].join(', '),
     });
     return Semantics(
       button: onTap != null,
@@ -481,25 +489,38 @@ class _PlayerSlot extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    displayName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: (isUser ? SahneType.captionStrong : SahneType.caption)
-                        .copyWith(
-                          // Ham altın, kartın altın tonlu zemininde karanlık
-                          // temada kayboluyordu: kazananın adı hiç görünmüyordu
-                          // (2026-08-04). Şahnê: Zêr metni (`goldTx`).
-                          color: isWinner
-                              ? t.goldTx
-                              : isDimmed
-                              ? t.tx3
-                              : t.tx,
-                          decoration: isDimmed
-                              ? TextDecoration.lineThrough
-                              : null,
-                          decorationColor: t.tx3,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          displayName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: (isUser ? SahneType.captionStrong : SahneType.caption)
+                              .copyWith(
+                                // Ham altın, kartın altın tonlu zemininde karanlık
+                                // temada kayboluyordu: kazananın adı hiç görünmüyordu
+                                // (2026-08-04). Şahnê: Zêr metni (`goldTx`).
+                                color: isWinner
+                                    ? t.goldTx
+                                    : isDimmed
+                                    ? t.tx3
+                                    : t.tx,
+                                decoration: isDimmed
+                                    ? TextDecoration.lineThrough
+                                    : null,
+                                decorationColor: t.tx3,
+                              ),
                         ),
+                      ),
+                      if (isUser)
+                        Text(
+                          ' (${Tr.forKu(K.you, ku)})',
+                          style: SahneType.captionStrong.copyWith(
+                            color: t.goldTx,
+                          ),
+                        ),
+                    ],
                   ),
                   if (playerId.isNotEmpty && submissionLabel != null)
                     Text(

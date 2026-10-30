@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../data/xp_store.dart';
+import '../../services/guest_save_prompt.dart';
 import '../../data/zankurd_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
@@ -280,11 +281,15 @@ class AsyncDuelResultScreen extends StatefulWidget {
   const AsyncDuelResultScreen({
     required this.repository,
     required this.view,
+    this.pendingGuestSave,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final AsyncDuelResultView view;
+
+  /// Yalnız yeni tamamlanan oyunda sayılır; geçmiş sonucu açmak sayılmaz.
+  final Future<GuestSavePromptService?>? pendingGuestSave;
 
   @override
   State<AsyncDuelResultScreen> createState() => _AsyncDuelResultScreenState();
@@ -339,8 +344,30 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
     }
   }
 
+  NavigatorState? _navigator;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _navigator = Navigator.maybeOf(context);
+  }
+
   @override
   void dispose() {
+    final pending = widget.pendingGuestSave;
+    final navigator = _navigator;
+    // Beklemeden kesin sonuca geçmek sonuçtan ayrılmak değildir.
+    if (!_replacedByResult && pending != null && navigator != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!navigator.mounted) return;
+        unawaited(
+          pending.then((service) {
+            if (!navigator.mounted) return null;
+            return GuestSavePrompt.presentIfDue(navigator.context, service);
+          }),
+        );
+      });
+    }
     _waitingPoll?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
@@ -374,7 +401,11 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
         unawaited(
           Navigator.of(context).pushReplacement(
             AppRoute.to(
-              AsyncDuelResultScreen(repository: widget.repository, view: view),
+              AsyncDuelResultScreen(
+                repository: widget.repository,
+                view: view,
+                pendingGuestSave: widget.pendingGuestSave,
+              ),
             ),
           ),
         );

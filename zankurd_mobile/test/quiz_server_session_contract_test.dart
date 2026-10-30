@@ -131,6 +131,7 @@ class _ServerSessionRepository extends MockZanKurdRepository {
   _AdvanceHandler? advanceHandler;
   int markCalls = 0;
   int resumeCalls = 0;
+  int? resumeResponseBudget;
   int advanceCalls = 0;
   int submitCalls = 0;
   int finishCalls = 0;
@@ -165,6 +166,10 @@ class _ServerSessionRepository extends MockZanKurdRepository {
   @override
   Future<RoomResumeSnapshot?> loadMyResumableRoom() async {
     resumeCalls++;
+    // Döngü regresyonunda testin microtask kuyruğunda sonsuza takılmasını
+    // önle; ilgili bekçi bu bütçenin aşılmadığını ayrıca doğrular.
+    final budget = resumeResponseBudget;
+    if (budget != null && resumeCalls > budget) return null;
     return snapshot;
   }
 
@@ -620,6 +625,7 @@ void main() {
     final next = _snapshot(index: 1, remainingMs: 15000);
     final pending = Completer<RoomResumeSnapshot?>();
     final repository = _ServerSessionRepository(snapshot: answered)
+      ..resumeResponseBudget = 20
       ..advanceHandler = (_) => pending.future;
     addTearDown(repository.close);
 
@@ -630,6 +636,11 @@ void main() {
     repository.emitOpponentAnswered();
     await tester.pump(const Duration(seconds: 6));
     expect(repository.advanceCalls, 1);
+    expect(
+      repository.resumeCalls,
+      lessThanOrEqualTo(20),
+      reason: 'pending snapshot kendi kendini yeniden kuyruğa almamalı',
+    );
 
     repository.snapshot = next;
     pending.complete(next);

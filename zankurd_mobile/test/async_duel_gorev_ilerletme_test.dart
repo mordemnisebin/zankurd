@@ -5,6 +5,9 @@ import 'package:zankurd_mobile/src/data/daily_mission_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/async_duel.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
+import 'package:zankurd_mobile/src/providers/auth_provider.dart';
+import 'package:zankurd_mobile/src/services/guest_save_prompt.dart';
 
 import 'support/play_hub_nav.dart';
 import 'support/widget_test_helpers.dart';
@@ -64,11 +67,19 @@ void main() {
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
-    final repository = _CountingDuelRepository();
     freshMockRepository();
+    final auth = AuthProvider.offline();
+    await auth.signInAsGuest();
+    final prompt = await GuestSavePromptService.load(
+      auth.guestSaveUserId ?? 'local',
+    );
+    await prompt.countGame();
+    await prompt.countGame();
+    final repository = _CountingDuelRepository();
 
     await tester.pumpWidget(
       testShell(
+        authProvider: auth,
         child: PlayHubScreen(repository: repository, asyncDuelEnabled: true),
       ),
     );
@@ -90,5 +101,17 @@ void main() {
 
     final store = await DailyMissionStore.load();
     expect(store.correctAnswersToday, 7);
+    expect(
+      find.byType(GuestSaveSheet),
+      findsNothing,
+      reason: 'T10: sonuç örtülmemeli',
+    );
+    Navigator.of(tester.element(find.byType(AsyncDuelResultScreen))).pop();
+    await tester.pumpAndSettle();
+    expect(
+      find.byType(GuestSaveSheet),
+      findsOneWidget,
+      reason: 'T10: sonuçtan ayrılınca önerilmeli',
+    );
   });
 }

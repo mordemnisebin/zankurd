@@ -1,0 +1,58 @@
+İnceleme tamamlandı. Kritik bir engelleyici veya güvenlik açığı bulunmamaktadır (**ONAY**); ancak canlıya çıkış ve test aşamasında dikkate alınması gereken birkaç **davranışsal kenar durum (edge-case)** ve **varsayım** aşağıda detaylandırılmıştır.
+
+---
+
+### 1. T10: Oda Sayaç Adaleti, `progress1s` / `heavy6s` ve Reconcile Kuyruğu (`quiz_screen.dart`)
+
+* **Sayaç Adaleti & Ses/Haptic İzolasyonu:**
+  * `_usesServerHiddenAnswers` aktifken cevap verildiğinde `_timerController.stop()` çağrısının atlanması ve `_startOpponentWaitTimer()` içinde `_estimatedAuthoritativeRemainingMs` ile ortak deadline'a senkronize edilip `reverse()` ile akmaya devam etmesi doğru kurgulanmış.
+  * Cevap veren oyuncuda son 5, 3, 1. saniyelerdeki ses ve titreşimlerin `!answered` koşuluyla susturulması (`L723`) ve herkes cevaplayıp erken reveal'a geçildiğinde `_enterServerRevealPhase` başında `_timerController.stop()` (`L2246`) ile sayacın durdurulması yerinde.
+  * `advanceJitter` (0,3–1,5 sn) kaldırılarak tüm istemcilerin ortak reveal deadline'ında geçiş yapması faz farkını ortadan kaldırıyor; sunucu tarafındaki CAS (`expected-index`) zaten yarış durumunu (race condition) koruyor.
+* **Potansiyel Yük / Davranış Gözlemi (`_onCrowdPlayersChanged` - `L2605-2612`):**
+  * Eskiden `_crowdRevealProbeTimer` yalnız `if (answered && _mpPhase == _MultiplayerPhase.waiting)` iken kuruluyordu. Yeni kodda bu koşul kaldırılmış; her `room_players` akışı (stream) tetiklendiğinde koşulsuz olarak `100..700ms` içinde ağır olan `_reconcileOnlineRoom()` çağrılıyor.
+  * **Risk / Varsayım:** Eğer soru esnasında verilen cevaplar yalnız `player_answers` tablosuna yazılıyor ve `room_players` tablosunu tetiklemiyorsa (yani `room_players` sadece oyuncu odadan düştüğünde/çıktığında veya tur sonunda güncelleniyorsa) bu değişiklik son kalan oyuncunun ayrılmasıyla reveal'a geçişi yakalamak için doğrudur. Ancak her cevapta `room_players` satırı da güncelleniyorsa, 50 kişilik odada her cevapta tüm istemciler ağır reconcile RPC'sini çağırır ve `heavy6s` hedefini deler.
+* **In-Flight Reconcile Kuyruklama (`_reconcileQueued` - `L2666-2675`, `L2774-2779`):**
+  * İstek uçuşta iken (`_reconcileInFlight`) gelen yeni çağrıların `_reconcileQueued = true` ile işaretlenip `finally` bloğunda yeniden tetiklenmesi olay kaybını önlüyor.
+  * **Küçük İyileştirme Notu:**
+    1. `if (_reconcileInFlight)` kontrolü, `if (!_isMultiplayer || widget.room.id == null || _terminalHandling || completing)` kontrolünden **sonra** gelirse, oyun biterken (`completing`/`_terminalHandling`) gereksiz yere kuyruk bayrağı kaldırılmaz.
+    2. Başka bir yerde `_reconcileGeneration++` yapılarak uçuş sırasında iptal (invalidation) yapılıyorsa, eski çağrının `finally` bloğu `generation == _reconcileGeneration` koşuluna girmeyeceği için `_reconcileQueued` sıfırlanmadan kalabilir; `_reconcileGeneration` artırılan yerlerde `_reconcileQueued = false` sıfırlaması da yapılmalıdır.
+
+---
+
+### 2. SQL Yaması (`get_room_answer_progress(uuid)`)
+
+* **Güvenlik ve Korumalı Gövde Yaması:**
+  * `SECURITY DEFINER` (`prosecdef`), `auth.uid()`, `public.is_room_participant(p_room_id)` ve `rp.left_at is null` varlık kontrolleri ile `search_path = public, pg_temp` ve `anon`/`public` REVOKE kuralları tam.
+  * `v_old` sonunda `;` bulunduğu (`'and pa.question_id = v_question_id;'`), `v_new` içinde ise ilk satırda `;` bulunmadığı için yama uygulandıktan sonra `v_old` artık gövdede eşleşmez; böylece ikinci kez çalıştırıldığında (`elsif position(v_old in v_definition) > 0`) hataya düşmeden **idempotent** olarak geçer.
+* **Dikkat Edilecek Nokta:**
+  * Canlıdaki `pg_get_functiondef` çıktısında `and pa.question_id = v_question_id;` ifadesinin büyük/küçük harf (`AND` vs `and`) ve boşluk yapısı birebir `v_old` ile aynı olmalıdır; aksi halde `unexpected answer count definition` istisnası fırlatıp güvenli şekilde rollback edecektir (beklenen korumalı davranış).
+
+---
+
+### 3. Diğer UI Diff'leri
+
+* **`async_duel_play_screen.dart` & `async_duel_result_screen.dart` (Misafir Kayıt İstemi Lifecycle):**
+  * Prompt'un sonuç ekranına girerken değil, sonuç ekranından çıkarken (`dispose` içinde `!_replacedByResult` iken) gösterilmesi ve bekleme ekranından kesin sonuca `pushReplacement` ile geçildiğinde `pendingGuestSave`'in yeni ekrana devredilmesi doğru çalışır.
+  * **Varsayım:** `GuestSavePrompt.countGame(context)` çağrısı hemen `navigator.pushReplacement` öncesinde başlatılıyor (`async_duel_play_screen.dart:623`). `countGame` metodunun `BuildContext` erişimini ilk `await` öncesinde senkron olarak tamamladığı varsayılmıştır (aksi halde `AsyncDuelPlayScreen` dispose olacağı için `await` sonrası `context` erişimi unmounted hatası verir).
+* **`sign_up_screen.dart`:**
+  * Zorunlu alanlar dolmadan "İleri" butonunun pasif tutulması ve controller listener'larının bağlanması doğru. *(Mevcut `_emailController` vb. controller'ların `dispose()` içinde temizlendiği varsayılmıştır).*
+* **`story_screen.dart`:**
+  * Kürtçe arayüzde (`context.isKu` / `isKu`) Türkçe çeviri metinlerinin ve `Semantics` içindeki Türkçe karşılıkların gizlenmesi tutarlı.
+  * *Kozmetik:* `_NarrationBubble` (`L549`) içinde `const SizedBox(height: 2)` satırı `if (!context.isKu)` dışına bırakılmış (üstteki `L415` bloğunda ise `if` içine alınmış).
+* **`tournament_screen.dart` & `tournament_bracket_widget.dart`:**
+  * Teslim etmeyen (`s.hasSubmitted == false`) oyuncuların durum etiketinin alt başlığa taşınıp `trailing`'in kaldırılması, tamamlanmış turnuvada tüm turların `_RoundState.done` olması ve eşleşme kartında/erişilebilirlik etiketinde kullanıcının yanına `(Sen/Tu)` eklenmesi sorunsuzdur.
+
+---
+
+### Varsayımlar ve Önerilen Testler
+
+1. **Varsayımlar:**
+   * `quiz_screen.dart` içinde `_timerController` 0'a ulaştığında tetiklenen timeout dinleyicisinde `if (answered) return;` koruması mevcuttur (cevap vermiş oyuncuda sayaç 0'a indiğinde ikinci kez timeout gönderilmez).
+   * `room_players` realtime yayını her oyuncu cevabında değil, yalnız oyuncu katılım/ayrılma veya tur sonu güncellemelerinde tetiklenmektedir.
+   * `tournamentSubmissionLabel(false, ...)` çağrısı `hasSubmitted == false` için hiçbir zaman `null` dönmemektedir (`L1324`'teki `!` operatörü).
+2. **Test İhtiyacı:**
+   * **Quiz Oda Testi:** Sunucu gizli cevaplı (server-hidden) odada erken cevap verildiğinde görsel sayacın durmadığı, 5-3-1 sn seslerinin çalmadığı ve tüm oyuncular cevapladığında sayacın anında durup reveal fazına geçtiği doğrulanmalı.
+   * **Async Duel Testi:** Bekleyen (`waiting`) sonuç ekranından gerçek sonuca otomatik geçişte (`_replacedByResult = true`) misafir kayıt penceresinin erken açılmadığı, yalnızca sonuç ekranından çıkarken açıldığı doğrulanmalı.
+   * **SQL Duman Testi:** Yorumda belirtildiği üzere canlı uygulama öncesi `begin/rollback` bloğunda `TIMEOUT` kaydının `answered_count` değerini artırmadığı ve script'in üst üste iki kez hatasız çalıştığı doğrulanmalı.
+
+**Karar:** **ONAY** (Yukarıdaki `room_players` tetiklenme sıklığı varsayımı doğrulanmak kaydıyla).

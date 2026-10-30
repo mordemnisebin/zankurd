@@ -3,7 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/data/story_progress_store.dart';
 import 'package:zankurd_mobile/src/models/story.dart';
+import 'package:zankurd_mobile/src/models/mini_guide.dart';
 import 'package:zankurd_mobile/src/screens/story_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
@@ -23,6 +25,9 @@ void main() {
   });
 
   Future<void> pumpStory(WidgetTester tester, String lang) async {
+    await tester.pumpWidget(const SizedBox.shrink());
+    SharedPreferences.setMockInitialValues({});
+    StoryProgressStore.resetInstance();
     await tester.pumpWidget(
       ChangeNotifierProvider<LanguageProvider>(
         // Anahtarsız ikinci pump aynı sağlayıcıyı yeniden kullanır ve
@@ -31,7 +36,7 @@ void main() {
         create: (_) => LanguageProvider()..setLang(lang),
         child: MaterialApp(
           theme: AppTheme.light(),
-          home: StoryScreen(story: cayxaneStory),
+          home: StoryScreen(story: cayxaneStory, guide: cayxaneGuide),
         ),
       ),
     );
@@ -50,9 +55,33 @@ void main() {
       );
       expect(
         find.text('Bir çay, lütfen.'),
-        findsOneWidget,
-        reason: '$lang arayüzde şıkkın çevirisi yok',
+        lang == 'tr' ? findsOneWidget : findsNothing,
+        reason: '$lang arayüzünde çeviri görünürlüğü yanlış',
       );
+      expect(
+        find.textContaining('Çay evine giriyorsun.'),
+        lang == 'tr' ? findsOneWidget : findsNothing,
+      );
+      await tester.tap(find.text('Çayekê, ji kerema xwe.'));
+      await tester.pumpAndSettle();
+      await tester.drag(find.byType(ListView), const Offset(0, 1000));
+      await tester.pumpAndSettle();
+      expect(
+        find.text('Bir çay, lütfen.'),
+        lang == 'tr' ? findsOneWidget : findsNothing,
+      );
+      await tester.tap(find.byKey(const ValueKey('story-menu')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('story-open-guide')));
+      await tester.pumpAndSettle();
+      for (final pair in [...cayxaneGuide.newWords, ...cayxaneGuide.examples]) {
+        expect(
+          find.text('• ${pair.ku} — ${pair.tr}'),
+          lang == 'tr' ? findsOneWidget : findsNothing,
+        );
+        if (lang == 'ku') expect(find.text('• ${pair.ku}'), findsOneWidget);
+      }
+      expect(tester.takeException(), isNull);
     }
   });
 }

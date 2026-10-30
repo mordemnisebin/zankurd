@@ -105,9 +105,28 @@ class _SignUpScreenState extends State<SignUpScreen>
   static const _stepCount = 3;
   late AnimationController _animationController;
 
+  bool get _hasRequiredStepFields => switch (_currentStep) {
+    0 =>
+      _emailController.text.trim().isNotEmpty &&
+          _passwordController.text.isNotEmpty &&
+          _confirmPasswordController.text.isNotEmpty,
+    1 => _usernameController.text.trim().isNotEmpty,
+    _ => true,
+  };
+
+  void _refreshFormActions() => setState(() {});
+
   @override
   void initState() {
     super.initState();
+    for (final controller in [
+      _emailController,
+      _passwordController,
+      _confirmPasswordController,
+      _usernameController,
+    ]) {
+      controller.addListener(_refreshFormActions);
+    }
     _animationController = AnimationController(
       // Kademeli giriş animasyonu içeriği süre*0.5–0.95 aralığında
       // gösteriyor; 2000ms'de bu ~1.0–1.9sn boş ekran demekti
@@ -294,13 +313,14 @@ class _SignUpScreenState extends State<SignUpScreen>
           ),
           aboveAction: _currentStep == 2 ? const ConsentLine() : null,
           primary: SahneButton.primary(
+            key: const ValueKey('signup-next'),
             label: _currentStep == 2
                 ? context.t(K.createAccount)
                 : context.t(K.nextStep),
             icon: _currentStep == 2 ? AppIcons.circleCheck : null,
             arrow: _currentStep != 2,
             expand: true,
-            onPressed: loading
+            onPressed: loading || !_hasRequiredStepFields
                 ? null
                 : (_currentStep == 2 ? () => _signUp(authProvider) : _nextStep),
           ),
@@ -353,7 +373,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   String _getStepSubtitle(BuildContext context) {
     switch (_currentStep) {
       case 0:
-        return context.t(K.stepCredentials);
+        return context.t(K.saveAccountSub);
       case 1:
         return context.t(K.stepUsername);
       case 2:
