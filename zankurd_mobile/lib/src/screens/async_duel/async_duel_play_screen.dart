@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
 import '../../config/category_visuals.dart';
+import '../../game/reveal_timing.dart';
 import '../../data/zankurd_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
@@ -69,7 +70,6 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   static const _questionSeconds = 20;
   static const _questionDurationMs = _questionSeconds * 1000;
-  static const _revealPause = Duration(milliseconds: 1200);
 
   bool _loading = true;
   Object? _startError;
@@ -77,6 +77,8 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
 
   late final QuizTimerController _timerController;
   final Stopwatch _stopwatch = Stopwatch();
+  Timer? _revealTimer;
+  Completer<void>? _revealDone;
 
   /// Yarım bırakılıp dönülen soruda sunucunun SUNUM anından bu yana işleyen
   /// süre ([ZanKurdRepository.presentAsyncDuelQuestion]); yerel kronometreye
@@ -162,6 +164,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _resumedTimer?.cancel();
+    _revealTimer?.cancel();
+    final revealDone = _revealDone;
+    if (revealDone != null && !revealDone.isCompleted) revealDone.complete();
     _timerController.dispose();
     super.dispose();
   }
@@ -522,7 +527,17 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         response.correctOption,
       );
     });
-    await Future<void>.delayed(_revealPause);
+    // Ekran kapanırsa Future.delayed'in gizli Timer'ı yaşamaya devam eder.
+    // Süreyi sahiplen; dispose hem Timer'ı iptal eder hem bekleyeni çözer.
+    final revealDone = Completer<void>();
+    _revealDone = revealDone;
+    _revealTimer = Timer(
+      RevealTiming.individual(correct: response.correct),
+      revealDone.complete,
+    );
+    await revealDone.future;
+    _revealDone = null;
+    _revealTimer = null;
     // Çıkış onaylandıysa ekran ilerlemez: bir sonraki soru açılıp sayacı
     // başlasaydı oyuncu, çıkış döngüsü o soruyu TIMEOUT ile gönderirken
     // ona cevap verebilir ve aynı soru iki kez gönderilirdi.

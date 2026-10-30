@@ -95,7 +95,9 @@ Future<void> _useSurface(WidgetTester tester) async {
 Future<void> _answerCurrentQuestion(WidgetTester tester) async {
   await tester.tap(find.byKey(const ValueKey('async-duel-option-0')));
   await tester.pump();
-  await tester.pump(const Duration(milliseconds: 1300));
+  // İlk seçenek yanlış olabilir: T5 yanlış cevap okuma arası 3 saniye.
+  // Sonuç/paylaşım doğrulamalarına ancak soru gerçekten ilerleyince geç.
+  await tester.pump(const Duration(milliseconds: 3100));
   await tester.pump();
 }
 

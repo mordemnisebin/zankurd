@@ -28,6 +28,7 @@ class QuizTimerWidget extends StatelessWidget {
     this.light,
     this.onBand = false,
     this.stopped = false,
+    this.pendingLabel,
     super.key,
   });
 
@@ -47,6 +48,9 @@ class QuizTimerWidget extends StatelessWidget {
   /// sayım alt şeritteki.
   final bool stopped;
 
+  /// Sunucu hazır yanıtı beklenirken sahte tam süreyi seslendirme.
+  final String? pendingLabel;
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -61,7 +65,8 @@ class QuizTimerWidget extends StatelessWidget {
           hotSeconds: isPaused ? -1 : 5,
           onBand: onBand,
           pending: stopped,
-          semanticLabel: context.t(K.timerSecondsLeft, {'n': '$seconds'}),
+          semanticLabel:
+              pendingLabel ?? context.t(K.timerSecondsLeft, {'n': '$seconds'}),
         );
       },
     );

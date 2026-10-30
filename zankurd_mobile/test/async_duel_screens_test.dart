@@ -107,7 +107,7 @@ Future<void> _openAsyncDuelFromHub(WidgetTester tester) async {
 }
 
 /// Ekrandaki ilk soruyu [optionIndex] şıkkına dokunarak cevaplar ve
-/// açıklama duraklamasını (1200 ms) geçip bir sonraki soruya ilerler.
+/// açıklama duraklamasını (doğru 1200, yanlış 3000 ms) geçip bir sonraki soruya ilerler.
 ///
 /// Üç adımlı pompa dizisi bu depodaki yerleşik desendir (bkz.
 /// `test/gamification_custom_room_test.dart`): ilk `pump()` sunucu
@@ -120,7 +120,7 @@ Future<void> _answerCurrentQuestion(
 }) async {
   await tester.tap(find.byKey(ValueKey('async-duel-option-$optionIndex')));
   await tester.pump();
-  await tester.pump(const Duration(milliseconds: 1300));
+  await tester.pump(const Duration(milliseconds: 3100));
   await tester.pump();
 }
 
@@ -315,6 +315,30 @@ void main() {
   });
 
   testWidgets(
+    'T5: açıklama sırasında ekran kapanınca bekleme zamanlayıcısı kalmaz',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      final repository = freshMockRepository();
+      await tester.pumpWidget(
+        testShell(
+          child: PlayHubScreen(repository: repository, asyncDuelEnabled: true),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openAsyncDuelFromHub(tester);
+      // TIMEOUT kesin yanlış yanıttır; bankanın karıştırılmış ilk şıkkına bağlı değil.
+      await tester.pump(const Duration(seconds: 21));
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(_progressText(tester).data, '1/7');
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump();
+      // Flutter test binding'i dispose sonrası kalan Timer'ı ayrıca reddeder.
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
     'süre dolumu: hiçbir şıkka dokunulmazsa TIMEOUT gönderilir ve ilerleme '
     '2/7\'ye geçer',
     (tester) async {
@@ -331,11 +355,18 @@ void main() {
       await _openAsyncDuelFromHub(tester);
       expect(_progressText(tester).data, '1/7');
 
-      // 20 sn'lik geri sayım + 1200 ms açıklama duraklaması: tek pompa
+      // 20 sn'lik geri sayım + 3000 ms açıklama duraklaması: tek pompa
       // yerine ikisi ayrı ayrı ilerletilir (bkz. `_answerCurrentQuestion`
       // üstündeki not).
       await tester.pump(const Duration(seconds: 21));
-      await tester.pump(const Duration(milliseconds: 1300));
+      await tester.pump(const Duration(milliseconds: 2999));
+      expect(
+        _progressText(tester).data,
+        '1/7',
+        reason:
+            'T5: yanlış cevap 1,2 sn sonra kayboluyordu; yalnız sonuç sınanıyordu.',
+      );
+      await tester.pump(const Duration(milliseconds: 1));
       await tester.pump();
 
       expect(_progressText(tester).data, '2/7');

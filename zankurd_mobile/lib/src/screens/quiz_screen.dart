@@ -24,6 +24,7 @@ import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';
 import '../game/bot_opponent.dart';
 import '../game/speed_score.dart';
+import '../game/reveal_timing.dart';
 import '../models/answer_record.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
@@ -381,6 +382,7 @@ class _QuizScreenState extends State<QuizScreen>
   _MultiplayerPhase _mpPhase = _MultiplayerPhase.answering;
   Timer? _revealTimer;
   int _revealCountdown = 0;
+  ServerRevealClock? _serverRevealClock;
   Timer? _revealTickTimer;
   Timer? _opponentWaitTimer;
   Timer? _advanceRetryTimer;
@@ -418,8 +420,8 @@ class _QuizScreenState extends State<QuizScreen>
   bool _advanceInFlight = false;
   bool _advanceSequenceActive = false;
   bool _serverAnswerPending = false;
-  int? _authoritativeRemainingMs;
-  DateTime? _authoritativeRemainingCapturedAt;
+  ServerRevealClock? _serverQuestionClock;
+  DateTime? _latestSnapshotServerNow;
 
   // Soru sesi tek kapıdan seçilir: doğrulanmış insan kaydı varsa o,
   // yoksa Kurmancî TTS, ikisi de yoksa dinleme eylemi gizlenir.
@@ -1034,24 +1036,20 @@ class _QuizScreenState extends State<QuizScreen>
       snapshot.questionStartedAt != null && snapshot.deadline != null;
 
   void _captureAuthoritativeTiming(RoomResumeSnapshot snapshot) {
+    _latestSnapshotServerNow = snapshot.serverNow;
+    _serverRevealClock = snapshot.revealClock;
     if (!_hasAuthoritativeTiming(snapshot)) {
-      _authoritativeRemainingMs = null;
-      _authoritativeRemainingCapturedAt = null;
+      _serverQuestionClock = null;
       return;
     }
-    _authoritativeRemainingMs = max(0, snapshot.remainingMs);
-    _authoritativeRemainingCapturedAt = DateTime.now();
-  }
-
-  int? get _estimatedAuthoritativeRemainingMs {
-    final remaining = _authoritativeRemainingMs;
-    final capturedAt = _authoritativeRemainingCapturedAt;
-    if (remaining == null || capturedAt == null) return null;
-    return max(
-      0,
-      remaining - DateTime.now().difference(capturedAt).inMilliseconds,
+    _serverQuestionClock = ServerRevealClock.fromServerClock(
+      clock: snapshot.serverClock,
+      endsAt: snapshot.deadline!,
     );
   }
+
+  int? get _estimatedAuthoritativeRemainingMs =>
+      _serverQuestionClock?.remaining.inMilliseconds;
 
   bool get _hasSafeCurrentReveal =>
       !_serverAnswerPending &&
@@ -2234,20 +2232,29 @@ class _QuizScreenState extends State<QuizScreen>
 
   /// Multiplayer reveal phase: doğru cevap ve açıklama gösterilir.
   /// [_revealCountdown] saniye sonra otomatik olarak sonraki soruya geçilir.
-  void _startRevealPhase() {
-    if (_mpPhase == _MultiplayerPhase.reveal ||
+  void _startRevealPhase({bool refreshClock = false}) {
+    if ((_mpPhase == _MultiplayerPhase.reveal && !refreshClock) ||
         (_usesServerHiddenAnswers && !_hasSafeCurrentReveal)) {
+      return;
+    }
+    final serverClock = _serverRevealClock;
+    // Eski sunucu beş saniyeyi zorunlu tutar. Yeni sunucuda aynı bitiş
+    // zamanı kullanılır; geç gelen snapshot yeni bir tam süre başlatmaz.
+    final revealDuration = serverClock?.remaining ?? RevealTiming.legacy;
+    // Erken RTT tahmini/aynı indeks yanıtı sıfır süreli RPC döngüsü
+    // üretmemeli; mevcut sınırlı advance retry akışı işi devralır.
+    if (refreshClock &&
+        revealDuration == Duration.zero &&
+        _revealCountdown == 0) {
       return;
     }
     _autoNextTimer?.cancel();
     _revealTimer?.cancel();
     _revealTickTimer?.cancel();
     _opponentWaitTimer?.cancel();
-
-    const revealDuration = 5;
     setState(() {
       _mpPhase = _MultiplayerPhase.reveal;
-      _revealCountdown = revealDuration;
+      _revealCountdown = serverClock?.secondsLeft ?? revealDuration.inSeconds;
       // Açıklamayı açıklama controller aracılığıyla da tetikle
       // (tek oyunculu ile aynı animasyon ritmi).
       _showExplanation = true;
@@ -2260,10 +2267,12 @@ class _QuizScreenState extends State<QuizScreen>
         return;
       }
       setState(() {
-        _revealCountdown = (revealDuration - timer.tick).clamp(
-          0,
-          revealDuration,
-        );
+        _revealCountdown =
+            serverClock?.secondsLeft ??
+            (revealDuration.inSeconds - timer.tick).clamp(
+              0,
+              revealDuration.inSeconds,
+            );
       });
     });
 
@@ -2279,21 +2288,19 @@ class _QuizScreenState extends State<QuizScreen>
     final advanceJitter = _isCrowd && !_isHost
         ? Duration(milliseconds: 300 + Random().nextInt(1200))
         : Duration.zero;
-    _revealTimer = Timer(
-      const Duration(seconds: revealDuration) + advanceJitter,
-      () {
-        _revealTickTimer?.cancel();
-        if (mounted) {
-          if (_usesServerHiddenAnswers) {
-            unawaited(_advanceAuthoritativeIndex());
-          } else if (_isHost) {
-            unawaited(_next());
-          } else {
-            _requestAuthoritativeAdvance();
-          }
+    _revealTimer = Timer(revealDuration + advanceJitter, () {
+      _revealTickTimer?.cancel();
+      if (mounted) {
+        setState(() => _revealCountdown = 0);
+        if (_usesServerHiddenAnswers) {
+          unawaited(_advanceAuthoritativeIndex());
+        } else if (_isHost) {
+          unawaited(_next());
+        } else {
+          _requestAuthoritativeAdvance();
         }
-      },
-    );
+      }
+    });
   }
 
   Future<void> _sendLiveReaction(String text) async {
@@ -2744,6 +2751,14 @@ class _QuizScreenState extends State<QuizScreen>
 
   void _applyReconciledSnapshot(RoomResumeSnapshot snapshot) {
     if (!mounted || _questions.isEmpty) return;
+    // Ready ve reconcile istekleri paralel dönebilir. Eski aynı-soru
+    // yanıtı yeni deadline/reveal durumunu geri alamaz.
+    final latestServerNow = _latestSnapshotServerNow;
+    if (snapshot.currentQuestionIndex == index &&
+        latestServerNow != null &&
+        snapshot.serverNow.isBefore(latestServerNow)) {
+      return;
+    }
     final oldIndex = index;
     final hasTiming = _hasAuthoritativeTiming(snapshot);
     setState(() {
@@ -2779,7 +2794,12 @@ class _QuizScreenState extends State<QuizScreen>
         if (_mpPhase != _MultiplayerPhase.reveal) {
           _startOpponentWaitTimer();
         }
-        _checkMultiplayerSync();
+        if (_mpPhase == _MultiplayerPhase.reveal &&
+            _serverRevealClock != null) {
+          _startRevealPhase(refreshClock: true);
+        } else {
+          _checkMultiplayerSync();
+        }
       }
       return;
     }
@@ -3977,6 +3997,7 @@ class _QuizScreenState extends State<QuizScreen>
       });
       _revealCorrectAnswer();
       _checkMultiplayerSync();
+      if (_usesServerHiddenAnswers) unawaited(_reconcileOnlineRoom());
       // Altın kademe anı: ×10 seriye özel kutlama sesi (yeni asset yok).
       if (isCorrect && streak == 10 && mounted) {
         context.read<SoundProvider>().playWin();

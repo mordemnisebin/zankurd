@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'durable_write.dart';
+import '../game/reveal_timing.dart';
+import '../game/server_clock.dart';
 import '../models/async_duel.dart';
 import '../models/match_history.dart';
 import '../models/my_suggestion.dart';
@@ -1089,10 +1091,28 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<RoomResumeSnapshot?> loadMyResumableRoom() async {
+    final requestWatch = Stopwatch()..start();
     final response = await client.rpc('get_my_resumable_room');
+    requestWatch.stop();
     if (response == null) return null;
 
     final json = _requiredJsonObject(response, 'get_my_resumable_room');
+    final serverNow = _requiredDateTime(json, 'server_now');
+    final serverClock = ServerClock(
+      serverNow: serverNow,
+      roundTrip: requestWatch.elapsed,
+    );
+    final revealEndsAt = _optionalDateTimeFromKeys(json, const [
+      'current_question_reveal_ends_at',
+    ]);
+    // Saati profil/oda yüklemesinden ÖNCE yakala. RTT/2 yalnız aktarım
+    // tahminidir; erken ilerletme isteğini sunucunun CAS kapısı reddeder.
+    final revealClock = revealEndsAt == null
+        ? null
+        : ServerRevealClock.fromServerClock(
+            clock: serverClock,
+            endsAt: revealEndsAt,
+          );
     final roomId = _requiredString(json, const ['room_id']);
     final room = await loadRoomSnapshot(roomId);
     if (room.id != roomId) {
@@ -1144,7 +1164,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       wrongCount: _requiredInt(json, const ['wrong_count']),
       answers: answers,
       pendingAnswer: _requiredPendingAnswer(json),
-      serverNow: _requiredDateTime(json, 'server_now'),
+      serverNow: serverNow,
+      serverClock: serverClock,
+      revealClock: revealClock,
       questionStartedAt: _optionalDateTimeFromKeys(json, const [
         'current_question_started_at',
         'question_started_at',

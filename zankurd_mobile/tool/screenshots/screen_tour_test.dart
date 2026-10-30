@@ -2581,11 +2581,11 @@ void main() {
     await _pump(t, AsyncDuelPlayScreen(repository: repo));
     await t.tap(find.byKey(const ValueKey('async-duel-option-0')));
     await t.pump();
-    // Açıklama duraklaması 1200 ms; kare onun İÇİNDE çekilir, yoksa ekran
+    // Açıklama doğruysa 1200, yanlışsa 3000 ms; kare İÇİNDE çekilir, yoksa ekran
     // ikinci soruya geçmiş olur ve renkler görünmez.
     await t.pump(const Duration(milliseconds: 300));
     await _shoot(t, '100_async_duel_revealed');
-    // Açıklama duraklamasının zamanlayıcısı kapanmadan test bitmesin.
+    // Doğruda sonraki soru; yanlışta ekran dispose olunca timer iptal edilir.
     await t.pump(const Duration(seconds: 2));
   }, tags: ['preview']);
 
