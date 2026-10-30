@@ -40,6 +40,10 @@ void main() {
     ]);
     // PostgREST 2.9.1 parametresiz RPC gövdesini JSON null gönderir.
     // Kimlik/istemci zamanı yine gönderilmez; tercih tek açık parametredir.
-    expect(bodies, [null, {'p_visible': false}, null]);
+    expect(bodies, [
+      null,
+      {'p_visible': false},
+      null,
+    ]);
   });
 }
