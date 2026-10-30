@@ -165,6 +165,8 @@ class _FriendsScreenState extends State<FriendsScreen>
       await _refreshSocialState();
     } catch (_) {
       // Eski veri ekranda kalır; bir sonraki turda yeniden denenir.
+      // Saat ilerlerken eski yeşil nokta sonsuza kadar asılı kalmasın.
+      if (mounted) setState(() {});
     } finally {
       _reloading = false;
     }
@@ -1299,7 +1301,7 @@ class _FriendRow extends StatelessWidget {
     return _PersonRow(
       key: ValueKey('friend-row-${friend.friendName}'),
       // Çevrimiçi durumu yalnız renkle verilmez: avatarın köşesindeki küçük
-      // nokta dolu (çevrimiçi) ya da boş ve alt satırda söz (son oynama).
+      // yeşil nokta ve alt satırdaki söz aynı varlık bilgisini anlatır.
       // 2026-09-29 doğallık: nokta elmastı; elmas yalnız soru ilerlemesi ve
       // ders sayacı anlamını taşır (K5). Durum noktası yuvarlaktır.
       avatar: SizedBox.square(
@@ -1312,10 +1314,7 @@ class _FriendRow extends StatelessWidget {
               fallbackColorHex: friend.friendAvatarColor,
               displayName: friend.friendName,
             ),
-            // Kurul 3 D26 (Astra + Sol): boş (içi dolmamış) halka hiçbir
-            // şey anlatmıyordu — sunucuda gerçek çevrimiçi durumu yok, satır
-            // son etkinliği zaten yazar. Nokta yalnız son 5 dakikada etkin
-            // olan arkadaşta (dolu, yeşil) çizilir.
+            // Yalnız izin verilen, üç dakikadan yeni kalp atışı yeşildir.
             if (online)
               PositionedDirectional(
                 end: 0,

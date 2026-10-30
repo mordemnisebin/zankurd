@@ -1385,10 +1385,9 @@ class _RankRow extends StatelessWidget {
 
 /// Arkadaş sıralaması satırı (liste grubunun içinde): seviye karesi,
 /// avatar + çevrimiçi işareti, ad + durum sözü, puan. Durum yalnız renkle
-/// verilmez: "Çevrimiçi" / "Çevrimdışı" yazar.
+/// verilmez: "Çevrimiçi" / son etkinlik yazar; veri yoksa işaret de yoktur.
 ///
-/// 2026-09-29 doğallık (K5): çevrimiçi işareti küçük elmastı; elmas yalnız
-/// soru ilerlemesi ve ders sayacında kalır, işaret küçük pahlı kare.
+/// Durum noktası yuvarlak ve yeşildir; bilinmeyen varlık işaret üretmez.
 class _FriendRankRow extends StatelessWidget {
   const _FriendRankRow({required this.friend, required this.isKu});
 
@@ -1435,23 +1434,25 @@ class _FriendRankRow extends StatelessWidget {
                     fallbackColorHex: friend.friendAvatarColor,
                     displayName: friend.friendName,
                   ),
-                  PositionedDirectional(
-                    bottom: 0,
-                    end: 0,
-                    child: SizedBox.square(
-                      dimension: 12,
-                      child: DecoratedBox(
-                        decoration: ShapeDecoration(
-                          color: online ? t.learnTx : t.tx3,
-                          shape: SahneShape.withSide(
-                            SahneShape.forSize(12),
-                            t.s1,
-                            width: SahneRing.r2,
+                  if (online)
+                    PositionedDirectional(
+                      bottom: 0,
+                      end: 0,
+                      child: SizedBox.square(
+                        dimension: 12,
+                        child: DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: t.okTx,
+                            shape: CircleBorder(
+                              side: BorderSide(
+                                color: t.s1,
+                                width: SahneRing.r2,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),

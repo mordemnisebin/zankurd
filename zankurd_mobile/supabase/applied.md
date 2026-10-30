@@ -15,6 +15,7 @@
 
 | Dosya | Canlıda? | Tarih / Not |
 |---|---|---|
+| 2026-10-30_presence.sql | ⏳ YAZILDI, UYGULANMADI | T1: varsayılan kapalı, hesap bazlı varlık; 60 sn sunucu sınırı, eski list_friends gövdesini koruyan sarmalayıcı. Canlı bağlantı/uygulama yapılmadı. |
 | 2026-07-03_reward_hardening.sql | ✅ | 2026-07-03 (claim_* RPC'ler, xp, guard trigger'lar) |
 | 2026-07-03_matchmaking_fix.sql | ✅ | 2026-07-03 (join_matchmaking + realtime queue) |
 | 2026-07-13_curated_question_wave_1.sql | ✅ | 2026-07-15, Management API ile (category_id düzeltmesiyle) |

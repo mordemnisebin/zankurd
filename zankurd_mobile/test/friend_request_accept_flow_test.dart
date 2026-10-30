@@ -49,7 +49,7 @@ class _AcceptFlowRepository extends MockZanKurdRepository {
         totalScore: 120,
         level: 2,
         gamesPlayed: 3,
-        lastActiveAt: DateTime.now().toUtc(),
+        lastSeenAt: DateTime.now().toUtc(),
       ),
     ];
   }

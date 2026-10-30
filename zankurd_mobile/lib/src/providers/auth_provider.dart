@@ -1,4 +1,5 @@
 import '../services/email_verification.dart';
+import '../services/presence_controller.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -46,6 +47,7 @@ class AccountLocalCleanupException implements Exception {
 /// ile kalıcı hesaba yükseltilebilir.
 class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
   bool _disposed = false;
+  final presence = PresenceController();
 
   static String get authRedirectUri =>
       kIsWeb ? 'https://www.zankurd.com/' : 'com.zankurd.app://login-callback/';
@@ -168,6 +170,7 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
   /// Mevcut oturumu okur ve auth olaylarını dinlemeye başlar.
   void _wireAuth(SupabaseClient client) {
     _currentUser = client.auth.currentUser;
+    presence.bind(SupabasePresenceGateway(client), userId: _currentUser?.id);
     _observeLifecycle();
     unawaited(_syncPremiumIdentity(_currentUser));
     _authSub?.cancel();
@@ -175,6 +178,7 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
       final next = state.session?.user;
       final changed = next?.id != _currentUser?.id;
       _currentUser = next;
+      presence.updateSession(next?.id);
       // Onay bağlantısı oturumu kalıcı kullanıcıya çevirdiyse "onay
       // bekleniyor" durumu asılı kalmamalı.
       if (next != null && !next.isAnonymous) _needsEmailConfirmation = false;
@@ -410,6 +414,7 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
   @override
   void dispose() {
     _disposed = true;
+    presence.dispose();
     _authSub?.cancel();
     if (_observingLifecycle) {
       try {
