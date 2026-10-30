@@ -65,6 +65,28 @@ List<Player> dedupeRoomPlayers(List<Player> players) {
   return result;
 }
 
+/// Oda ekranında çizilecek oyuncu sırası.
+///
+/// Lobide sıra, depodan gelen sıradır (katılma zamanı; bkz.
+/// `compareRoomPlayerRows`): puana göre SIRALANMAZ. Tur 3 (2026-10-30): 4
+/// kişilik klasik odanın lobisi A ve D'de "Ali, Cano, Dlan, Bero", B ve C'de
+/// "Ali, Bero, Dlan, Cano" görünüyordu. Kalabalık olmayan odada lobide de
+/// puana göre sıralanıyordu; herkes 0 puandayken Dart'ın kararsız `sort`u
+/// eşitleri cihazdan cihaza farklı diziyordu. Oyunda puana göre sıralama
+/// KARARLIDIR: eşit puanda gelen sıra korunur.
+List<Player> orderRoomPlayersForDisplay(
+  List<Player> players, {
+  required bool lobby,
+}) {
+  if (lobby) return [...players];
+  final indexed = [for (var i = 0; i < players.length; i++) (i, players[i])];
+  indexed.sort((a, b) {
+    final byScore = b.$2.score.compareTo(a.$2.score);
+    return byScore != 0 ? byScore : a.$1.compareTo(b.$1);
+  });
+  return [for (final e in indexed) e.$2];
+}
+
 /// Odadan çıkış RPC'sinin beklenebileceği en uzun süre.
 ///
 /// `quiz_screen.dart`teki `_onlineResultRequestTimeout` ile aynı bütçe:
@@ -1048,12 +1070,10 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     final crowd = room.isCrowd;
-    // Kalabalık lobide herkes 0 puandadır: sıralamak katılış sırasını
-    // karıştırır (Dart'ın sort'u kararlı değil) ve satırlar yerinden oynar.
-    final sorted = [...room.players];
-    if (!crowd || room.status != RoomStatus.lobby) {
-      sorted.sort((a, b) => b.score.compareTo(a.score));
-    }
+    final sorted = orderRoomPlayersForDisplay(
+      room.players,
+      lobby: room.status == RoomStatus.lobby,
+    );
     // Lobide ev sahibi listenin başındadır (ev sahibi el değiştirince de):
     // iki simülatör turunda sahip ikinci sırada kalıyordu. Yalnız lobi;
     // oyun başlayınca sıra puan sırasıdır.

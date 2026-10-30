@@ -48,6 +48,7 @@ import 'quiz_screen.dart';
 import 'room_result_recovery_screen.dart';
 import 'room_screen.dart';
 import 'sign_in_screen.dart';
+import '../widgets/lesson_scroll_edge_fade.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 typedef AppShellErrorRecorder =
@@ -630,9 +631,18 @@ class _AppShellState extends State<AppShell>
     // 2026-07-22 canlı UX denetimi: tablet iki sütun düzeni
     final isDesktop = width >= AppShell.desktopNavBreakpoint;
 
+    // Tur 3 (2026-10-30): telefonda sekme içeriği alt sekme çubuğunun
+    // arkasında YARIM satırlarla kesiliyordu (profil, ana sayfa). Altta daha
+    // içerik varken son 28 pt soluklaşır (C1 ile aynı bileşen); en sona
+    // kaydırınca solma kalkar. Her sekme kendi durumunu tutar.
     final body = IndexedStack(
       index: _tab,
-      children: List.generate(4, (index) => _buildTab(context, index)),
+      children: List.generate(
+        4,
+        (index) => isDesktop
+            ? _buildTab(context, index)
+            : LessonScrollEdgeFade(child: _buildTab(context, index)),
+      ),
     );
 
     // Sekme içeriği durum çubuğunun ALTINA girmez.

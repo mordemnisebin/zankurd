@@ -2992,15 +2992,19 @@ class _CrowdStandings extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SahneSectionHeader(title: context.t(K.crowdStandingsTitle)),
+        ...blocks,
+        // Tur 3 (2026-10-30): özet cümlesi başlığın hemen altındaydı; ilk
+        // görünümde ikinci satırı alt perdenin solmasına denk geliyor, yarım
+        // okunuyordu (48_oda_sonuc_D). Başlığın altında önce sıralamanın
+        // kendisi (oyuncu satırları) görünür; özet listenin ardından gelir.
         if (summary != null) ...[
+          const SizedBox(height: SahneSpace.x3),
           Text(
             summary,
             key: const ValueKey('crowd-standings-summary'),
             style: SahneType.body.copyWith(color: t.tx2),
           ),
-          const SizedBox(height: SahneSpace.x3),
         ],
-        ...blocks,
       ],
     );
   }

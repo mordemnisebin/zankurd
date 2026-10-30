@@ -378,7 +378,20 @@ class SahneStageTimer extends StatelessWidget {
     required this.semanticLabel,
     this.hotSeconds = 5,
     this.onBand = false,
+    this.pending = false,
+    this.maxSeconds = 99,
   });
+
+  /// Turun en uzun süresi: sayının yeri bu kadar hane genişliğinde sabit
+  /// ayrılır (en az iki hane). 100+ saniyelik turda "100"den "99"a inişte
+  /// de kapsül daralmaz (Astra, tur 3 incelemesi).
+  final int maxSeconds;
+
+  /// Kalan süre henüz bilinmiyor (yarım kalan soruya dönüşte sunucu saati
+  /// gelmeden): sayı yerine "–" çizilir, kapsülün genişliği aynı kalır. Tur 3
+  /// (2026-10-30): dönüşte sayaç önce yerel tam süreyi ("19") gösterip birkaç
+  /// saniye sonra sunucunun kalanına ("8") atlıyordu.
+  final bool pending;
 
   /// Renkli konu bandının üstünde (soru ekranı): normalde beyaz; gerilim
   /// saniyelerinde beyaz hap + koyu kehribar/kırmızı sayı (bandın renginden
@@ -393,7 +406,7 @@ class SahneStageTimer extends StatelessWidget {
   /// Bu saniyeye ve altına inince Boyax.
   final int hotSeconds;
 
-  bool get isHot => secondsLeft <= hotSeconds;
+  bool get isHot => !pending && secondsLeft <= hotSeconds;
 
   /// Kurul 5. tur 2026-10-20 (Opus, Grok): sayı küçük ve gri kalıyordu, soru
   /// ekranında süre en önemli bilgilerden biri. Normalde birincil metin,
@@ -409,20 +422,43 @@ class SahneStageTimer extends StatelessWidget {
     final color = onBand
         ? (isHot ? (red ? day.errTx : day.shortfallTx) : SahneVivid.onFill)
         : (red ? t.errTx : (isHot ? t.shortfallTx : t.tx));
+    final numberStyle = SahneType.headline.copyWith(
+      color: color,
+      fontSize: 20,
+      fontWeight: FontWeight.w800,
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
     final row = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(AppIcons.clock, size: 20, color: color),
         const SizedBox(width: SahneSpace.x1),
-        Text(
-          '$secondsLeft',
-          key: const ValueKey('stage-timer-seconds'),
-          style: SahneType.headline.copyWith(
-            color: color,
-            fontSize: 20,
-            fontWeight: FontWeight.w800,
-            fontFeatures: const [FontFeature.tabularFigures()],
-          ),
+        // Tur 3 (2026-10-30, canlı düello kayması): sayı "12"den "9"a inince
+        // kapsül daralıyor, üst çubuğun orta yuvası genişliyor ve künye iki
+        // satırdan bire inip soruyu ~7 pt yukarı kaydırıyordu. Sayının yeri
+        // en az iki hane ("88") genişliğinde sabittir; tablo rakamlı olduğu
+        // için iki hanelik her değer aynı genişliktedir.
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            ExcludeSemantics(
+              child: Visibility(
+                visible: false,
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                child: Text(
+                  '8' * ('$maxSeconds'.length < 2 ? 2 : '$maxSeconds'.length),
+                  style: numberStyle,
+                ),
+              ),
+            ),
+            Text(
+              pending ? '–' : '$secondsLeft',
+              key: const ValueKey('stage-timer-seconds'),
+              style: numberStyle,
+            ),
+          ],
         ),
       ],
     );
@@ -459,21 +495,21 @@ class SahneStageTimer extends StatelessWidget {
     return Semantics(
       label: semanticLabel,
       excludeSemantics: true,
-      child: onBand && isHot
-          ? DecoratedBox(
-              decoration: const ShapeDecoration(
-                color: SahneVivid.onFill,
-                shape: StadiumBorder(),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: SahneSpace.x2,
-                  vertical: SahneSpace.x1,
-                ),
-                child: row,
-              ),
-            )
-          : row,
+      // Bant üstünde gerilim hapı sonradan eklenince de boyut değişmesin:
+      // dolgu her zaman vardır, hap yalnız gerilimde boyanır.
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: isHot ? SahneVivid.onFill : Colors.transparent,
+          shape: const StadiumBorder(),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: SahneSpace.x2,
+            vertical: SahneSpace.x1,
+          ),
+          child: row,
+        ),
+      ),
     );
   }
 }

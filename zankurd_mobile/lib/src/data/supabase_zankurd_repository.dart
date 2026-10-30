@@ -2979,7 +2979,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           'avatar_url, avatar_frame, showcase_title)',
         )
         .eq('room_id', roomId)
-        .order('joined_at');
+        // Eşit katılma zamanında oyuncu kimliği: gerçek zamanlı akışla
+        // (`compareRoomPlayerRows`) aynı kararlı sıra.
+        .order('joined_at')
+        .order('player_id');
 
     // `profiles` RLS yalnız kendi satırını okutur: gömülü profil öteki
     // oyuncular için null gelir ve lobide herkes "Oyuncu" görünüyordu.

@@ -2158,7 +2158,7 @@
       "mêvanperwerî û daxwaza avakirina têkiliyê",
       "bihar, nûbûn û azadî/berxwedan",
       "veguhastina êş, windahî û bîra civakî",
-      "Îranî û gelek gelên din (wek Newrozê)"
+      "pîrozkirina dawet û şahiyan"
     ],
     "correctAnswer": "veguhastina êş, windahî û bîra civakî",
     "explanation": "Ağıtlar, bireysel yasın yanında toplumsal olayların ve kolektif acının hafızasını taşır.",
@@ -2171,7 +2171,7 @@
       "misafirperverlik ve ilişki kurma isteği",
       "bahar, yenilenme ve özgürlük/direniş",
       "acı, kayıp ve toplumsal hafızanın aktarımı",
-      "İranî ve birçok başka halk (Newroz gibi)"
+      "düğün ve şenlikleri kutlamak"
     ],
     "correctAnswerTr": "acı, kayıp ve toplumsal hafızanın aktarımı"
   },
@@ -3898,7 +3898,7 @@
     "category": "Çand",
     "prompt": "Di çanda gelêrî ya Kurdî de girîngiya ku ji çiyayan re tê dayîn herî zêde bi çi tê ravekirin?",
     "answers": [
-      "Îranî û gelek gelên din (wek Newrozê)",
+      "bi navkirina çiyayan di pirtûkên pîroz de",
       "govend tê girtin û li ser agir tê bazdan",
       "berxwedana li dijî zilmê û ji nû ve jidayikbûn",
       "bi jiyana di erdnîgariya çiyayî de di dirêjahiya dîrokê de"
@@ -3911,7 +3911,7 @@
     "explanationTr": "Kürtler yüzyıllardır dağlık bir coğrafyada yaşar; dağlar hem geçim ve yaşam alanı hem de korunak olduğu için halk kültüründe özel bir yere sahiptir.",
     "promptTr": "Kürt halk kültüründe dağlara verilen önem en çok neyle açıklanır?",
     "answersTr": [
-      "İranî ve birçok başka halkla (Newroz gibi)",
+      "dağların kutsal kitaplarda anılmasıyla",
       "govend tutulup ateşin üzerinden atlanmasıyla",
       "zulme karşı direniş ve yeniden doğuşla",
       "tarih boyunca dağlık bir coğrafyada yaşamakla"
