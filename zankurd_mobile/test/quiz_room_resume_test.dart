@@ -170,6 +170,7 @@ class _SessionRepository extends MockZanKurdRepository {
       StreamController<Map<String, dynamic>>.broadcast();
   RoomResumeSnapshot? snapshot;
   RoomResumeSnapshot? readySnapshot;
+  Completer<RoomResumeSnapshot?>? readyGate;
   RoomResultSnapshot? exactResult = _resultSnapshot();
   final List<Object?> resultResponses = [];
   Completer<RoomResultSnapshot?>? resultGate;
@@ -226,7 +227,7 @@ class _SessionRepository extends MockZanKurdRepository {
 
   @override
   Future<RoomResumeSnapshot?> markRoomClientReady(GameRoom room) async =>
-      readySnapshot;
+      readyGate == null ? readySnapshot : await readyGate!.future;
 
   @override
   Future<RoomResumeSnapshot?> loadMyResumableRoom() async {
@@ -692,6 +693,46 @@ void main() {
       await tester.pumpWidget(const SizedBox.shrink());
     },
   );
+
+  testWidgets('T5: hazır yanıtı beklenirken varsayılan tam süre gösterilmez', (
+    tester,
+  ) async {
+    final capturedAt = tester.binding.clock.now();
+    final snapshot = _snapshot(
+      questionIndex: 0,
+      remainingMs: 20000,
+      serverClock: ServerClock(
+        serverNow: DateTime.utc(2026, 8, 2, 12),
+        elapsed: () => tester.binding.clock.now().difference(capturedAt),
+      ),
+    );
+    final repository = _SessionRepository(snapshot)
+      ..readyGate = Completer<RoomResumeSnapshot?>();
+    addTearDown(repository.close);
+    await tester.pumpWidget(
+      testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: _room,
+          questions: _questions,
+          is1v1: true,
+          resumeSnapshot: snapshot,
+        ),
+      ),
+    );
+    await tester.pump();
+    QuizTimerWidget timer() => tester.widget<QuizTimerWidget>(
+      find.byKey(const ValueKey('quiz-circular-timer')),
+    );
+    expect(timer().stopped, isTrue);
+    await tester.pump(const Duration(seconds: 2));
+    repository.readyGate!.complete(snapshot);
+    await tester.pump();
+    await tester.pump();
+    expect(timer().stopped, isFalse);
+    expect(timer().animation.value * 30, closeTo(18, 0.5));
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
 
   testWidgets(
     'T5: geç dönen eski bekleme snapshotı çalışan sunucu saatini silmez',
