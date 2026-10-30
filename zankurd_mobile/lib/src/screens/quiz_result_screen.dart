@@ -1712,8 +1712,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ? isWinner
         : starsEarned == 3;
 
-    final accuracyText =
-        '${context.percent(accuracy)} ${context.t(K.accuracyLower)}';
+    final accuracyText = context.t(K.resultAccuracyOfTotal, {
+      'n': groupThousands(totalQuestions),
+      'percent': context.percent(accuracy),
+    });
     final notices = <Widget>[
       // Kimse cevap vermediyse "Berabere!" sebepsiz kalıyordu.
       if (is1v1 && isDraw && score == 0 && correctCount == 0 && wrongCount == 0)
@@ -1816,7 +1818,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           key: const ValueKey('result-details-section'),
           // Y1 (2026-10-29 tur 6): çıplak "3" neyin sayısı belli değildi;
           // birim başlığın içinde ("Ayrıntılar · 3 konu"), ayrı özet yok.
-          title: breakdown.isEmpty
+          // Kalabalık odada kırılım kişiseldir; başlık ortak kalır.
+          title: room.isCrowd || breakdown.isEmpty
               ? context.t(K.resultDetails)
               : context.t(K.resultDetailsTopics, {
                   'n': groupThousands(breakdown.length),
@@ -2900,7 +2903,7 @@ class _RaceStandings extends StatelessWidget {
           SahneListRow.me(
             rank: i + 1,
             title: context.playerDisplayName(player.name, tag: player.tag),
-            avatar: userIdentity == null ? null : _avatarOf(player),
+            avatar: userIdentity == null ? null : _avatarOf(userIdentity!),
             subtitle: streakLine,
             trailing: SahneRowValue(groupThousands(player.score)),
           ),

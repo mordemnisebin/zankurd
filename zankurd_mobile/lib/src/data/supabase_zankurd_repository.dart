@@ -660,6 +660,46 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<List<({int correct, int wrong})>?> loadOnlineAnswerHistory({
+    required List<DateTime> dayBoundaries,
+  }) async {
+    if (client.auth.currentUser == null) return null;
+    if (dayBoundaries.length != 8) {
+      throw ArgumentError.value(dayBoundaries, 'dayBoundaries');
+    }
+    try {
+      final result = await client.rpc(
+        'get_my_online_answer_history',
+        params: {
+          'p_day_boundaries': [
+            for (final day in dayBoundaries) day.toUtc().toIso8601String(),
+          ],
+        },
+      );
+      if (result == null) return null;
+      if (result is! List || result.length != 7) {
+        throw const FormatException('Online answer history must have 7 days.');
+      }
+      return result.map((day) {
+        if (day is! Map) {
+          throw const FormatException('Online answer day must be an object.');
+        }
+        final correct = day['correct'];
+        final wrong = day['wrong'];
+        if (correct is! int || wrong is! int || correct < 0 || wrong < 0) {
+          throw const FormatException(
+            'Online answer counts must be non-negative integers.',
+          );
+        }
+        return (correct: correct, wrong: wrong);
+      }).toList();
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadOnlineAnswerHistory failed');
+      rethrow;
+    }
+  }
+
+  @override
   Future<LeaderboardEntry?> getPlayerStats() async {
     try {
       final user = client.auth.currentUser;

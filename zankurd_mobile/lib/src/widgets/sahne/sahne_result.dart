@@ -741,7 +741,10 @@ class SahneResultHero extends StatelessWidget {
                             : 84 - 150) +
                         emblemExtra,
                     height: 300,
-                    child: _ScoreCelebration(aboveText: value == null),
+                    child: _ScoreCelebration(
+                      aboveText: value == null,
+                      captionBelow: caption != null,
+                    ),
                   ),
                 ],
               ),
@@ -765,12 +768,16 @@ class SahneResultHero extends StatelessWidget {
 /// dört noktada, kademeli belirir. Hareket azaltma açıkken ([sahneMotionReduced])
 /// animasyon yoktur: son kare durağan çizilir.
 class _ScoreCelebration extends StatefulWidget {
-  const _ScoreCelebration({this.aboveText = false});
+  const _ScoreCelebration({this.aboveText = false, this.captionBelow = false});
 
   /// Puansız kahramanda (düello "Kazandın!" + skor satırı) parıltılar
   /// merkezin ÜSTÜNDE kalır: 2026-10-28 tur 3 T7, alttakiler skor satırının
   /// üstüne biniyordu.
   final bool aboveText;
+
+  // Uzun TR/KU açıklamaların yanlarına taşan alt parıltıları çizme.
+  // Üstteki kutlama ve arka ışıma yerlerini korur.
+  final bool captionBelow;
 
   @override
   State<_ScoreCelebration> createState() => _ScoreCelebrationState();
@@ -854,13 +861,14 @@ class _ScoreCelebrationState extends State<_ScoreCelebration>
                             (-96.0, 52.0, 14.0, 0.45),
                             (104.0, 46.0, 18.0, 0.0),
                           ])
-                  Transform.translate(
-                    offset: Offset(spark.$1, spark.$2),
-                    child: Transform.scale(
-                      scale: pop(spark.$4),
-                      child: _Sparkle(size: spark.$3, color: t.gold),
+                  if (!widget.captionBelow || spark.$2 < 0)
+                    Transform.translate(
+                      offset: Offset(spark.$1, spark.$2),
+                      child: Transform.scale(
+                        scale: pop(spark.$4),
+                        child: _Sparkle(size: spark.$3, color: t.gold),
+                      ),
                     ),
-                  ),
               ],
             );
           },

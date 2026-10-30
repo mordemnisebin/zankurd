@@ -15,7 +15,7 @@ import 'support/widget_test_helpers.dart';
 void main() {
   setUpAll(loadAppFonts);
   testWidgets(
-    'S9 cevap açılışında saniye kalır, genel onay tiki yok; boyut sabit',
+    'S9 T16 erken açılışta sayaç durur, genel onay tiki yok; boyut sabit',
     (tester) async {
       Future<void> pump(bool stopped) => tester.pumpWidget(
         testShell(
@@ -33,9 +33,9 @@ void main() {
       final before = tester.getSize(find.byType(QuizTimerWidget));
       await pump(true);
       expect(find.byKey(const ValueKey('stage-timer-revealed')), findsNothing);
-      expect(find.byKey(const ValueKey('stage-timer-paused')), findsNothing);
-      expect(find.byKey(const ValueKey('stage-timer-seconds')), findsOneWidget);
-      expect(find.text('8'), findsOneWidget);
+      expect(find.byKey(const ValueKey('stage-timer-paused')), findsOneWidget);
+      expect(find.byKey(const ValueKey('stage-timer-seconds')), findsNothing);
+      expect(find.text('8'), findsNothing);
       expect(tester.getSize(find.byType(QuizTimerWidget)), before);
     },
   );

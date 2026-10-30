@@ -204,7 +204,8 @@ void main() {
         isFalse,
       );
       expect(find.byKey(const ValueKey('stage-timer-revealed')), findsNothing);
-      expect(find.byKey(const ValueKey('stage-timer-seconds')), findsOneWidget);
+      expect(find.byKey(const ValueKey('stage-timer-seconds')), findsNothing);
+      expect(find.byKey(const ValueKey('stage-timer-paused')), findsOneWidget);
       expect(
         tester.getRect(find.byKey(const ValueKey('stage-timer-capsule'))),
         initial,
@@ -265,11 +266,12 @@ void main() {
           find.byKey(const ValueKey('stage-timer-revealed')),
           findsNothing,
         );
+        expect(find.byKey(const ValueKey('stage-timer-seconds')), findsNothing);
         expect(
-          find.byKey(const ValueKey('stage-timer-seconds')),
+          find.byKey(const ValueKey('stage-timer-paused')),
           findsOneWidget,
         );
-        expect(find.text('4'), findsOneWidget);
+        expect(find.text('4'), findsNothing);
         expect(
           tester
               .widget<SahneStageTimer>(find.byType(SahneStageTimer))

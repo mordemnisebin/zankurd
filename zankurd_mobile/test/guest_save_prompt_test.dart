@@ -21,6 +21,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/services/guest_save_prompt.dart';
+import 'package:zankurd_mobile/src/widgets/guest_account_email_form.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -108,7 +109,16 @@ void main() {
     expect(find.text('İlerlemeni kaybetme — hesabını kaydet'), findsOneWidget);
     expect(find.text('Google ile devam et'), findsOneWidget);
     expect(find.text('Apple ile devam et'), findsNothing, reason: 'Android');
-    expect(find.text('E-posta ile kaydet'), findsOneWidget);
+    expect(find.byType(GuestAccountEmailForm), findsOneWidget);
+    expect(
+      tester
+          .widget<FilledButton>(
+            find.byKey(const ValueKey('guest-upgrade-save')),
+          )
+          .onPressed,
+      isNull,
+    );
+    await tester.ensureVisible(find.text('Şimdi değil'));
     await tester.tap(find.text('Şimdi değil'));
     await tester.pumpAndSettle();
     await shown;
