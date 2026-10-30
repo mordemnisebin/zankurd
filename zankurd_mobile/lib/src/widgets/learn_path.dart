@@ -200,7 +200,20 @@ class _Caret extends StatelessWidget {
     return ExcludeSemantics(
       child: SizedBox(
         height: 10,
-        child: CustomPaint(painter: _CaretPainter(x, color)),
+        child: Stack(
+          children: [
+            Positioned(
+              left: x - 12,
+              width: 24,
+              top: 0,
+              bottom: 0,
+              child: CustomPaint(
+                key: const ValueKey('learn-current-connector'),
+                painter: _CaretPainter(12, color),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -331,9 +344,14 @@ class _LearnPathRowState extends State<_LearnPathRow> {
               painter: _RowPathPainter(
                 x: widget.x,
                 prevX: widget.prevX,
-                nextX: widget.nextX,
+                // The selected node points straight into its own card.
+                nextX: current && stop.attachment != null
+                    ? widget.x
+                    : widget.nextX,
                 inColor: widget.inDone ? done : todo,
-                outColor: widget.outDone ? done : todo,
+                outColor: widget.outDone || (current && stop.attachment != null)
+                    ? done
+                    : todo,
               ),
             ),
           ),

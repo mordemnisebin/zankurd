@@ -138,6 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int _answeredTotal = 0;
   bool _answerStatsAvailable = true;
   bool _answerStatsFailed = false;
+  bool _answerStatsLoading = false;
   int _streak = 0;
 
   @override
@@ -299,6 +300,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  /// Yalnız yanıt bölümünü yeniler; rekorlar ve kaydırma konumu korunur.
+  Future<void> _retryAnswerStats() async {
+    if (_answerStatsLoading) return;
+    setState(() => _answerStatsLoading = true);
+    try {
+      final online = await widget.repository.loadOnlineAnswerStats();
+      final local = await MistakeStore.load();
+      if (!mounted) return;
+      final correct = local.totalCorrect + (online?.correct ?? 0);
+      final wrong = local.totalWrong + (online?.wrong ?? 0);
+      final total = correct + wrong;
+      setState(() {
+        _answerStatsFailed = false;
+        _answerStatsAvailable = online != null && total > 0;
+        _answeredTotal = total;
+        _accuracyPercent = total > 0 ? correct / total * 100 : null;
+      });
+    } catch (_) {
+      if (mounted) setState(() => _answerStatsFailed = true);
+    } finally {
+      if (mounted) setState(() => _answerStatsLoading = false);
+    }
+  }
+
   Future<void> _openSettings() async {
     await Navigator.of(
       context,
@@ -440,15 +465,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ? 'profile-answer-stats-unavailable'
                     : 'profile-answer-stats-empty',
               ),
-              child: Text(
-                context.t(
-                  _answerStatsFailed
-                      ? K.answerStatsUnavailable
-                      : K.profileStartBody,
-                ),
-                style: SahneType.body.copyWith(
-                  color: SahneTokens.of(context).tx2,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.t(K.t15AnswerStatsTitle),
+                    style: SahneType.bodyStrong.copyWith(
+                      color: SahneTokens.of(context).tx,
+                    ),
+                  ),
+                  const SizedBox(height: SahneSpace.x2),
+                  Semantics(
+                    liveRegion: true,
+                    child: Text(
+                      context.t(
+                        _answerStatsLoading
+                            ? K.t15AnswerStatsLoading
+                            : _answerStatsFailed
+                            ? K.answerStatsUnavailable
+                            : K.t15AnswerStatsEmpty,
+                      ),
+                      key: _answerStatsLoading
+                          ? const ValueKey('profile-answer-stats-loading')
+                          : null,
+                      style: SahneType.body.copyWith(
+                        color: SahneTokens.of(context).tx2,
+                      ),
+                    ),
+                  ),
+                  if (_answerStatsFailed)
+                    SahneButton.text(
+                      key: const ValueKey('profile-answer-stats-retry'),
+                      label: context.t(K.t15Retry),
+                      arrow: false,
+                      onPressed: _answerStatsLoading ? null : _retryAnswerStats,
+                    ),
+                ],
               ),
             )
           else if (_stats == null && _answeredTotal == 0)

@@ -258,17 +258,30 @@ class _BracketMatchCard extends StatelessWidget {
         : hasPlayers
         ? Tr.forKu(K.matchAwaitingResultShort, ku)
         : '—';
-    final oneLabel = tournamentSubmissionLabel(
+    String? playerLabel(String id, bool? submitted, int score) {
+      final submission = tournamentSubmissionLabel(
+        submitted,
+        score,
+        ku,
+        completed: isCompleted,
+      );
+      if (!match.isForfeit || match.winnerId != id) return submission;
+      // Bay geçen oyuncu oynamadığı için elenmiş gibi etiketlenmez.
+      return [
+        Tr.forKu(K.cupAdvancedByForfeit, ku),
+        if (submitted == true) ?submission,
+      ].join(' · ');
+    }
+
+    final oneLabel = playerLabel(
+      match.playerOneId,
       match.hasPlayerOneSubmitted,
       match.playerOneScore,
-      ku,
-      completed: isCompleted,
     );
-    final twoLabel = tournamentSubmissionLabel(
+    final twoLabel = playerLabel(
+      match.playerTwoId,
       match.hasPlayerTwoSubmitted,
       match.playerTwoScore,
-      ku,
-      completed: isCompleted,
     );
     final t = SahneTokens.of(context);
     final p1Won = isCompleted && match.winnerId == match.playerOneId;
@@ -321,6 +334,9 @@ class _BracketMatchCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               _PlayerSlot(
+                key: ValueKey(
+                  'tournament-player-${match.id}-one-${match.playerOneId}',
+                ),
                 name: match.playerOneName,
                 playerId: match.playerOneId,
                 profile: match.playerOneProfile,
@@ -330,60 +346,64 @@ class _BracketMatchCard extends StatelessWidget {
                 isCompleted: isCompleted,
                 ku: ku,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: SahneSpace.x1),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // `Spacer` YOK: iki yanında birer Spacer varken esnek
-                    // çip satırın yalnız üçte birini alıyor ve skor
-                    // okunamayacak kadar küçülüyordu. `center` hizası
-                    // zaten ortalar.
-                    // Esnek olmalı: "340 – 280" %200 yazıda 120 piksellik
-                    // karta sığmıyor ve satırı 16 piksel taşırıyordu.
-                    // Skor kısaltılamaz (kısaltılmış skor yanlış bilgi),
-                    // o yüzden çip esner ve metin gerekince küçülür.
-                    Flexible(
-                      child: DecoratedBox(
-                        decoration: ShapeDecoration(
-                          color: isCompleted ? t.goldTint : t.s2,
-                          shape: SahneShape.s,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: SahneSpace.x2,
+              if (!match.isForfeit)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: SahneSpace.x1),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // `Spacer` YOK: iki yanında birer Spacer varken esnek
+                      // çip satırın yalnız üçte birini alıyor ve skor
+                      // okunamayacak kadar küçülüyordu. `center` hizası
+                      // zaten ortalar.
+                      // Esnek olmalı: "340 – 280" %200 yazıda 120 piksellik
+                      // karta sığmıyor ve satırı 16 piksel taşırıyordu.
+                      // Skor kısaltılamaz (kısaltılmış skor yanlış bilgi),
+                      // o yüzden çip esner ve metin gerekince küçülür.
+                      Flexible(
+                        child: DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: isCompleted ? t.goldTint : t.s2,
+                            shape: SahneShape.s,
                           ),
-                          // Maç bittiyse SKORLAR burada durur.
-                          //
-                          // Skor eskiden hiçbir yerde görünmüyordu: oyuncu
-                          // satırındaki dal yalnız maç tamamlanmamışken
-                          // çalışıyordu ve skor ancak tamamlandıktan sonra
-                          // oluşuyor. Skoru oyuncu satırına koymayı denedik;
-                          // dar kartta adı yiyordu ("R…", "Şi…") ve ad
-                          // oyuncunun kimliğidir. Ortadaki çip zaten iki
-                          // satırın arasında ve tam da sonucun yeri
-                          // (2026-08-04).
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              resultLabel,
-                              maxLines: 1,
-                              softWrap: false,
-                              style: SahneType.captionStrong.copyWith(
-                                color: isCompleted ? t.goldTx : t.tx2,
-                                fontFeatures: const [
-                                  FontFeature.tabularFigures(),
-                                ],
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: SahneSpace.x2,
+                            ),
+                            // Maç bittiyse SKORLAR burada durur.
+                            //
+                            // Skor eskiden hiçbir yerde görünmüyordu: oyuncu
+                            // satırındaki dal yalnız maç tamamlanmamışken
+                            // çalışıyordu ve skor ancak tamamlandıktan sonra
+                            // oluşuyor. Skoru oyuncu satırına koymayı denedik;
+                            // dar kartta adı yiyordu ("R…", "Şi…") ve ad
+                            // oyuncunun kimliğidir. Ortadaki çip zaten iki
+                            // satırın arasında ve tam da sonucun yeri
+                            // (2026-08-04).
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                resultLabel,
+                                maxLines: 1,
+                                softWrap: false,
+                                style: SahneType.captionStrong.copyWith(
+                                  color: isCompleted ? t.goldTx : t.tx2,
+                                  fontFeatures: const [
+                                    FontFeature.tabularFigures(),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
               _PlayerSlot(
+                key: ValueKey(
+                  'tournament-player-${match.id}-two-${match.playerTwoId}',
+                ),
                 name: match.playerTwoName,
                 playerId: match.playerTwoId,
                 profile: match.playerTwoProfile,
@@ -404,6 +424,7 @@ class _BracketMatchCard extends StatelessWidget {
 /// Individual player row inside a bracket match card.
 class _PlayerSlot extends StatelessWidget {
   const _PlayerSlot({
+    super.key,
     required this.name,
     required this.playerId,
     this.submissionLabel,

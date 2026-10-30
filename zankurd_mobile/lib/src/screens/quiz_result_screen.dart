@@ -50,7 +50,6 @@ import '../widgets/notification_prompt_card.dart';
 import '../services/guest_save_prompt.dart';
 import '../services/review_service.dart';
 import '../utils/result_sharer.dart';
-import '../widgets/confetti_overlay.dart';
 import 'leaderboard_screen.dart';
 import 'quiz_screen.dart';
 import 'review_screen.dart';
@@ -237,7 +236,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   bool _levelJourneyReady = false;
   List<DailyMission> _completedMissions = const [];
   _StreakOutcome? _pendingStreak;
-  bool _showConfetti = false;
   bool _ackAttempted = false;
   bool _newRoomLoading = false;
   bool _showNotifPrompt = false;
@@ -1303,7 +1301,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         _xpNeededForNextLevel = xpStore.xpNeededForNextLevel;
         _levelProgress = xpStore.levelProgress;
         _levelJourneyReady = true;
-        _showConfetti = promotions.isNotEmpty;
         // 2026-09-29 Şahnê: tamamlanan görevler yüzen bildirim olarak
         // değil, turun kazanımları arasında satır olarak görünür. Sonuç
         // ekranında birincil eylem alt perdededir; yüzen bildirim tam onun
@@ -2015,7 +2012,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // puan ve karolar küçülür (kısa ekranda maskot hiç çizilmez).
     final duelCompact = is1v1 && !isLearningExperience;
     final shortScreen = MediaQuery.sizeOf(context).height < 760;
-    final duelMascotWidth = shortScreen ? 0.0 : 72.0;
+    final duelMascotWidth = shortScreen ? 0.0 : 36.0;
 
     final scaffold = SahneResultScaffold(
       neutral: true,
@@ -2032,11 +2029,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         if (is1v1) context.t(K.duel1v1Short),
         ?roundLabel,
         context.t(K.questionCount, {'count': groupThousands(totalQuestions)}),
-      ].join(' • '),
-      compactSpacing: room.isCrowd,
+      ].where((part) => part.trim().isNotEmpty).join(' · '),
+      compactSpacing: duelCompact || room.isCrowd,
       hero: SahneResultHero(
         key: const ValueKey('result-score-header'),
-        compactSpacing: room.isCrowd,
+        compactSpacing: duelCompact || room.isCrowd,
         emblem: is1v1 && !isLearningExperience
             ? _DuelMascotTop(
                 mascotWidth: duelMascotWidth,
@@ -2068,18 +2065,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 ),
               },
         title: headerTitle,
-        // 1v1: skor karşılaştırması ("Sen 5 – 3 Rojda") büyük puanın altında.
-        subtitle: is1v1 && !isLearningExperience
-            ? '${context.t(K.you)} ${groupThousands(score)} – ${groupThousands(opponents.first.score)} '
-                  '${context.playerDisplayName(opponents.first.name, tag: opponents.first.tag)}'
-                  '${opponents.first.isBot ? ' · ${context.t(K.botChip)}' : ''}'
+        scoreComparison: duelCompact
+            ? _DuelScoreComparison(score: score, opponent: opponents.first)
             : null,
         titleRole: duelOutcome == _DuelOutcome.win ? SahneRole.gold : null,
         // Öğrenme turunda puan üretilmez (`score` hep 0); büyük sayı "0"
         // yazınca 3 doğru yapan kullanıcıya başarısız gibi görünüyordu
         // (2026-09-10 simülatör turu). Öğrenmede sayı, doğru cevap
         // sayısıdır: "3/5".
-        value: isLearningExperience ? correctCount : score,
+        value: duelCompact
+            ? null
+            : isLearningExperience
+            ? correctCount
+            : score,
         valueLabel: isLearningExperience
             ? null
             : context.t(K.scoreWord).toLowerCase(),
@@ -2090,11 +2088,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // doğru/yanlış sayıları zaten çiplerde; satır ödül kartını alt
         // perdenin altına itiyordu.
         caption: crowdSummary != null
-            ? '$crowdSummary • $accuracyText'
-            : isLearningExperience
-            ? accuracyText
-            : (duelCompact && shortScreen)
-            ? null
+            ? '$crowdSummary\n$accuracyText'
             : accuracyText,
         celebrate: celebrate,
         valueSize: duelCompact
@@ -2120,8 +2114,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         notices: notices,
       ),
       stats: ResultStatTiles(
+        fourStats: duelCompact || room.isCrowd,
         compact: duelCompact || room.isCrowd,
-        oneRow: duelCompact && shortScreen,
+        oneRow: false,
         correct: correctCount,
         wrong: wrongCount,
         unanswered: unanswered,
@@ -2141,22 +2136,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               coinSemanticLabel:
                   '+${groupThousands(coinsAwarded)} ${context.t(K.coinWord)}',
               xp: _earnedXP,
-              // Kurul 3 D7 (3/3): çevrimiçi turda XP yarış puanının kendisidir;
-              // "+443 puan" ve "+443 XP" yan yana nedeni söylenmeden
-              // duruyordu. Çip kaynağını söyler. D8: kaybedende 0 XP açık.
-              xpLabel: (widget.room.id?.trim() ?? '').isNotEmpty
-                  ? context.t(K.xpEqualsScoreChip, {
-                      'n': groupThousands(_earnedXP),
-                    })
-                  : null,
-              showZeroXp:
-                  (widget.room.id?.trim() ?? '').isNotEmpty &&
-                  _earnedXP == 0 &&
-                  !isLearningExperience,
-              // Kısa ekranda düello sonucunda seviye çubuğu çizilmez: ilk
-              // görünüm sonuç + skor + XP/jeton'dur (çubuk ödül kartını alt
-              // perdenin altına itiyordu).
-              progress: _levelJourneyReady && !(duelCompact && shortScreen)
+              // XP çipi yalnız kazanımı söyler; puan ilişkisi ayrıntılarda.
+              progress: _levelJourneyReady
                   ? KeyedSubtree(
                       key: const ValueKey('result-level-journey-progress'),
                       child: SahneResultLevelProgress(
@@ -2226,15 +2207,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           onRate: () => ReviewService.openStoreListing(),
         ),
       ),
-      overlay: _showConfetti
-          ? ConfettiOverlay(
-              onFinished: () {
-                setState(() {
-                  _showConfetti = false;
-                });
-              },
-            )
-          : null,
     );
 
     return PopScope<void>(
@@ -2405,7 +2377,63 @@ class _DuelMascotTop extends StatelessWidget {
             child,
           ],
         ),
-        if (celebrate) const Positioned.fill(child: SahneConfettiBurst()),
+        if (celebrate)
+          const Positioned.fill(child: ClipRect(child: SahneConfettiBurst())),
+      ],
+    );
+  }
+}
+
+/// Aynı ölçekte iki skor; her sayı kendi oyuncu adı ve birimiyle okunur.
+class _DuelScoreComparison extends StatelessWidget {
+  const _DuelScoreComparison({required this.score, required this.opponent});
+
+  final int score;
+  final Player opponent;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final scoreStyle = SahneType.screen.copyWith(fontSize: 32, color: t.tx);
+    Widget player(String name, int points, String id) => Expanded(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            name,
+            textAlign: TextAlign.center,
+            style: SahneType.bodyStrong.copyWith(color: t.tx),
+          ),
+          Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: SahneSpace.x1,
+            children: [
+              Text(
+                groupThousands(points),
+                key: ValueKey('result-duel-score-$id'),
+                style: scoreStyle,
+              ),
+              Text(
+                context.t(K.scoreWord).toLowerCase(),
+                style: SahneType.body.copyWith(color: t.tx2),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+    return Row(
+      key: const ValueKey('result-duel-score-comparison'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        player(context.t(K.you), score, 'me'),
+        const SizedBox(width: SahneSpace.x3),
+        player(
+          context.playerDisplayName(opponent.name, tag: opponent.tag),
+          opponent.score,
+          'opponent',
+        ),
       ],
     );
   }
@@ -2509,12 +2537,13 @@ class _HeroNotice extends StatelessWidget {
 /// Tur sayımları — doğru ✓ / yanlış ✗ / (boş ⧗) / seri alev. Karoların
 /// kendisi ortak şablondadır ([SahneResultStats]); burada yalnız bu turun
 /// kuralı verilir: doğru/yanlış çifti turun omurgası olduğu için sıfırken de
-/// durur, boş ve seri karoları sıfırken çizilmez (anlamsız sıfır yok).
+/// durur. Çok oyunculuda dört alan sıfırlar dahil ortak 2×2 düzendedir.
 @visibleForTesting
 class ResultStatTiles extends StatelessWidget {
   const ResultStatTiles({
     this.compact = false,
     this.oneRow = false,
+    this.fourStats = false,
     required this.correct,
     required this.wrong,
     required this.unanswered,
@@ -2528,6 +2557,7 @@ class ResultStatTiles extends StatelessWidget {
   final int streak;
   final bool compact;
   final bool oneRow;
+  final bool fourStats;
 
   @override
   Widget build(BuildContext context) {
@@ -2535,6 +2565,7 @@ class ResultStatTiles extends StatelessWidget {
     return SahneResultStats(
       compact: compact,
       oneRow: oneRow,
+      twoColumns: fourStats,
       stats: [
         // Renkli çipler (2026-10-20): doğru yeşil, yanlış kırmızı, boş nötr,
         // seri altın; ton dolgu renkli sahnenin üstünde %18.
@@ -2561,6 +2592,7 @@ class ResultStatTiles extends StatelessWidget {
         SahneResultStat(
           leading: Icon(AppIcons.hourglass, size: 20, color: t.tx2),
           value: unanswered,
+          showWhenZero: fourStats,
           label: context.t(K.blank),
           tint: SahneVivid.chipBlankTint,
           accent: SahneVivid.chipBlankTx,
@@ -2568,6 +2600,7 @@ class ResultStatTiles extends StatelessWidget {
         SahneResultStat(
           leading: const SahneGlyph(SahneGlyphKind.flame),
           value: streak,
+          showWhenZero: fourStats,
           // "2 Üst üste" neyin sayısı olduğunu söylemiyordu.
           label: context.t(K.longestStreak),
           tint: SahneVivid.chipGoldTint,
@@ -2895,9 +2928,9 @@ class _RaceStandings extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SahneSectionHeader(title: context.t(K.compareRivals)),
-        Text(summary, style: SahneType.body.copyWith(color: t.tx2)),
-        const SizedBox(height: SahneSpace.x3),
         ...blocks,
+        const SizedBox(height: SahneSpace.x3),
+        Text(summary, style: SahneType.body.copyWith(color: t.tx2)),
       ],
     );
   }

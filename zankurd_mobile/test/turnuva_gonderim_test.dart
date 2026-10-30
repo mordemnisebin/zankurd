@@ -147,14 +147,18 @@ void main() {
             ),
           );
           await tester.pumpAndSettle();
-          expect(find.text('Oynadı · 0'), findsNWidgets(c.played));
+          expect(find.textContaining('Oynadı · 0'), findsNWidgets(c.played));
           expect(
-            find.text(c.expired ? 'Oynamadı · hükmen' : 'Henüz oynamadı'),
+            find.text(
+              c.expired ? 'Oynamadı · hükmen elendi' : 'Henüz oynamadı',
+            ),
             findsNWidgets(c.unplayed),
           );
           if (c.expired) expect(find.text('Henüz oynamadı'), findsNothing);
           expect(find.text('Sonuç bekleniyor'), findsNWidgets(c.waiting));
-          if (c.expired) expect(find.text('Hükmen geçti'), findsOneWidget);
+          if (c.expired) {
+            expect(find.textContaining('Hükmen geçti'), findsOneWidget);
+          }
           expect(tester.takeException(), isNull);
         },
       );
@@ -249,7 +253,29 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        expect(find.text(c.text), findsOneWidget);
+        expect(find.textContaining(c.text), findsOneWidget);
+        if (c.match.isForfeit) {
+          final slot = c.match.winnerId == c.match.playerOneId ? 'one' : 'two';
+          final winner = find.byKey(
+            ValueKey(
+              'tournament-player-${c.match.id}-$slot-${c.match.winnerId}',
+            ),
+          );
+          expect(
+            find.descendant(
+              of: winner,
+              matching: find.textContaining('Hükmen geçti'),
+            ),
+            findsOneWidget,
+          );
+          expect(
+            find.descendant(
+              of: winner,
+              matching: find.textContaining('hükmen elendi'),
+            ),
+            findsNothing,
+          );
+        }
         expect(find.text('Sonuç bekleniyor'), findsNothing);
         expect(tester.takeException(), isNull);
       },

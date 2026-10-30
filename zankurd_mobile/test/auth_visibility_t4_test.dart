@@ -106,7 +106,7 @@ void main() {
         final auth = _Auth();
         await open(tester, const SignInScreen(), auth);
         final labels = [
-          'Misafir olarak devam et',
+          'Misafir olarak oyna',
           if (platform == TargetPlatform.iOS) 'Apple ile devam et',
           'Google ile devam et',
           'E-posta ile giriş',
@@ -121,7 +121,7 @@ void main() {
               .where((b) => b.isPrimary)
               .single
               .label,
-          'Misafir olarak devam et',
+          'Misafir olarak oyna',
         );
         final guest = tester.getRect(
           find.byKey(const ValueKey('sign-in-play-now')),
@@ -182,11 +182,11 @@ void main() {
           expect(auth.calls.last, guest ? 'link-${entry.$2}' : entry.$2);
         }
         expect(find.text('Veya e-posta ile'), findsOneWidget);
-        expect(find.text('Misafir olarak devam et'), findsOneWidget);
+        expect(find.text('Misafir olarak oyna'), findsOneWidget);
         expect(
           tester.getTopLeft(find.textContaining('Zaten hesabın var mı?')).dy,
           greaterThan(
-            tester.getBottomLeft(find.text('Misafir olarak devam et')).dy,
+            tester.getBottomLeft(find.text('Misafir olarak oyna')).dy,
           ),
           reason:
               'T4 misafir ve hesap girişi aynı satıra karışıyordu; eski bekçi yalnız varlığı sayıyordu',
@@ -196,8 +196,8 @@ void main() {
           tester.getSize(find.byKey(const ValueKey('auth-apple'))),
           tester.getSize(find.byKey(const ValueKey('auth-google'))),
         );
-        await tester.ensureVisible(find.text('Misafir olarak devam et'));
-        await tester.tap(find.text('Misafir olarak devam et'));
+        await tester.ensureVisible(find.text('Misafir olarak oyna'));
+        await tester.tap(find.text('Misafir olarak oyna'));
         await tester.pumpAndSettle();
         expect(auth.calls.where((c) => c == 'guest').length, guest ? 0 : 1);
         expect(tester.takeException(), isNull);

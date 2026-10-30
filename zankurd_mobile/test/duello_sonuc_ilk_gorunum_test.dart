@@ -140,12 +140,13 @@ void main() {
         lessThanOrEqualTo(dockTop),
         reason: 'ödül kartı alt perdenin altında kalıyor: $rewards / $dockTop',
       );
-      // Sonuç başlığı, büyük skor ve ödül çipi ekranda.
+      // S2: iki oyuncunun skoru tek karşılaştırmada, amblem ve ödül görünür.
       for (final key
           in scrolled
               ? const <ValueKey<String>>[]
               : const [
-                  ValueKey('result-score-count'),
+                  ValueKey('result-duel-score-me'),
+                  ValueKey('result-duel-score-opponent'),
                   ValueKey('result-duel-faceoff'),
                 ]) {
         final r = tester.getRect(find.byKey(key));

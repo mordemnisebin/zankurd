@@ -366,7 +366,10 @@ void main() {
         expect(tiles.any((t) => t.correct), isFalse);
         expect(find.byType(QuizFeedbackStrip), findsNothing);
         expect(find.textContaining('Yanlış'), findsNothing);
-        expect(find.textContaining('Rakip bekleniyor'), findsWidgets);
+        expect(
+          find.textContaining('Rakibin cevabı bekleniyor'),
+          findsOneWidget,
+        );
 
         repository.snapshot = _snapshot(
           remainingMs: 18000,
@@ -551,7 +554,10 @@ void main() {
 
     await _mount(tester, repository, resumeSnapshot: revealed);
 
-    expect(find.textContaining(RegExp(r'· sonraki \d+ sn')), findsOneWidget);
+    expect(
+      find.textContaining(RegExp(r'Sonraki soru: \d+ sn')),
+      findsOneWidget,
+    );
     expect(repository.advanceCalls, 0);
   });
 
@@ -579,7 +585,10 @@ void main() {
         .widgetList<QuizOptionTile>(find.byType(QuizOptionTile))
         .toList();
     expect(options.singleWhere((tile) => tile.answer == 'A1').correct, isTrue);
-    expect(find.textContaining(RegExp(r'· sonraki \d+ sn')), findsOneWidget);
+    expect(
+      find.textContaining(RegExp(r'Sonraki soru: \d+ sn')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('host olmayan üye expected index ile CAS advance çağırır', (
@@ -600,7 +609,10 @@ void main() {
     await _mount(tester, repository, resumeSnapshot: answered);
     repository.emitOpponentAnswered();
     await _pumpFrames(tester);
-    expect(find.textContaining(RegExp(r'· sonraki \d+ sn')), findsOneWidget);
+    expect(
+      find.textContaining(RegExp(r'Sonraki soru: \d+ sn')),
+      findsOneWidget,
+    );
     await tester.pump(const Duration(seconds: 6));
     await _pumpFrames(tester);
 
@@ -766,7 +778,10 @@ void main() {
     await _mount(tester, repository, resumeSnapshot: answered);
     repository.emitOpponentAnswered();
     await _pumpFrames(tester);
-    expect(find.textContaining(RegExp(r'· sonraki \d+ sn')), findsOneWidget);
+    expect(
+      find.textContaining(RegExp(r'Sonraki soru: \d+ sn')),
+      findsOneWidget,
+    );
     await tester.pump(const Duration(seconds: 6));
     await _pumpFrames(tester, 8);
 

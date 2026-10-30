@@ -600,7 +600,14 @@ void main() {
         ),
         isEmpty,
       );
-      expect(find.text('Diğer oyuncular bekleniyor…'), findsOneWidget);
+      expect(
+        find.textContaining(
+          RegExp(
+            r'^Cevabın kaydedildi: [A-D] · B1\nDiğer oyuncular bekleniyor…$',
+          ),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('kontrol: 1v1 odasında aynı cevap hâlâ yayınlanır', (
@@ -700,7 +707,12 @@ void main() {
       // yalnız başlıkta, bekleme sözü alt perdedeki düğmenin etiketidir.
       expect(find.text('3/4 cevapladı'), findsOneWidget);
       // Kurul C10 (2026-10-29): bekleme etiketi kalan kişi sayısını söyler.
-      expect(find.text('1 oyuncu bekleniyor…'), findsOneWidget);
+      expect(
+        find.textContaining(
+          RegExp(r'^Cevabın kaydedildi: [A-D] · B1\n1 oyuncu bekleniyor…$'),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('sayı yoklamayla güncellenir (6 sn)', (tester) async {
@@ -738,7 +750,14 @@ void main() {
       await pumpFrames(tester);
 
       expect(find.byKey(const ValueKey('quiz-crowd-progress')), findsNothing);
-      expect(find.text('Diğer oyuncular bekleniyor…'), findsOneWidget);
+      expect(
+        find.textContaining(
+          RegExp(
+            r'^Cevabın kaydedildi: [A-D] · B1\nDiğer oyuncular bekleniyor…$',
+          ),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('sunucuda RPC yoksa bugünkü bekleme metni gösterilir', (
@@ -751,7 +770,14 @@ void main() {
       await pumpFrames(tester);
 
       expect(find.byKey(const ValueKey('quiz-crowd-progress')), findsNothing);
-      expect(find.text('Diğer oyuncular bekleniyor…'), findsOneWidget);
+      expect(
+        find.textContaining(
+          RegExp(
+            r'^Cevabın kaydedildi: [A-D] · B1\nDiğer oyuncular bekleniyor…$',
+          ),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('hazır süresi dolup düşen oyuncu bilgilendirilir', (

@@ -227,7 +227,9 @@ void main() {
             ),
           );
           // Henüz pumpAndSettle yok: ilk çizilen şıklar zaten doğru sırada.
-          final expected = _q.forRound(seed).localized(isKu: ku);
+          // T15: çevrimiçi içerik sunucunun KU/orijinal diliyle kalır;
+          // iki arayüz dilinde de kanonik seçenek anahtarları aynı olmalı.
+          final expected = _q.forRound(seed).localized(isKu: online || ku);
           expect(_shown(tester), expected.displayAnswers);
           final keys = _shown(tester).map(expected.optionKeyForAnswer).toList();
           first ??= keys;

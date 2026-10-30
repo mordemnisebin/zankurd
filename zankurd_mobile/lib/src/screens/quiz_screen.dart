@@ -639,7 +639,10 @@ class _QuizScreenState extends State<QuizScreen>
                 ? LearningProductiveRecall.transform(question)
                 : question)
             .forRound(_answerOrderRoundId)
-            .localized(isKu: _isKu, learning: _isLearningExperience),
+            .localized(
+              isKu: _isMultiplayer || _isKu,
+              learning: _isLearningExperience,
+            ),
     ];
     _myId = widget.repository.currentUserId;
     _onlineResultOwnerId = widget.repository.currentUserId?.trim() ?? '';
@@ -2630,7 +2633,20 @@ class _QuizScreenState extends State<QuizScreen>
       }
       _crowdProgressApplied = request;
       setState(() {
-        _crowdProgress = progress;
+        final previous = _crowdProgress?.questionIndex == index
+            ? _crowdProgress
+            : null;
+        // Aynı sorudaki benzersiz cevaplar geri alınmaz. Açılış sırasındaki
+        // geçici 0 yanıtı görünür sayacı sıfırlamamalı; yeni soru ayrı indekstir.
+        _crowdProgress = RoomAnswerProgress(
+          questionIndex: progress.questionIndex,
+          answered: max(
+            progress.answered,
+            previous?.answered ?? 0,
+          ).clamp(0, progress.active),
+          active: progress.active,
+          revealed: progress.revealed,
+        );
         // Yalnız kabul yanıtından SONRA başlayan sorgu kendi cevabımızı
         // kapsar. Önceden uçuşta olan sorgu iyimser sayıyı geri alamaz.
         final acceptedAfter = _crowdLocalAcceptedAfterRequest;

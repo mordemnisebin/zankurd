@@ -410,6 +410,7 @@ extension _QuizScreenUI on _QuizScreenState {
                 // çipiyle (örn. 30 sn) çelişiyordu.
                 maxSeconds: widget.room.secondsPerQuestion,
                 isPaused: answered,
+                expired: answered && selectedAnswer == 'TIMEOUT',
                 opponentTime:
                     _isMultiplayer &&
                     answered &&
@@ -752,17 +753,32 @@ extension _QuizScreenUI on _QuizScreenState {
               actionLabels: [
                 context.t(K.continueAction),
                 context.t(K.finishAction),
-                if (_isMultiplayer) ...[
-                  context.t(K.waitingOpponent),
-                  context.t(K.crowdWaitingOthers),
-                  context.t(K.sureDoldu),
-                  for (final verdict in [K.correct, K.wrong, K.sureDoldu]) ...[
-                    _revealLabel(context, verdict, 88, last: false),
-                    _revealLabel(context, verdict, 88, last: true),
-                  ],
-                  context.t(K.crowdWaitingCount, {'n': '88'}),
-                ],
               ],
+              statusLabels: _isMultiplayer
+                  ? [
+                      for (final answer in question.displayAnswers)
+                        for (final wait in [
+                          if (_isCrowd) ...[
+                            context.t(K.crowdWaitingOthers),
+                            context.t(K.crowdWaitingCount, {'n': '88'}),
+                          ] else
+                            context.t(K.quizWaitingOpponentAnswer),
+                        ])
+                          _recordedAnswerLabel(
+                            context,
+                            answer: answer,
+                            waitLabel: wait,
+                          ),
+                      context.t(K.quizUnansweredExpired),
+                    ]
+                  : const [],
+              revealLabels: _isMultiplayer
+                  ? [
+                      for (final verdict in [K.correct, K.wrong, K.sureDoldu])
+                        for (final last in [false, true])
+                          _revealLabel(context, verdict, 88, last: last),
+                    ]
+                  : const [],
               ratingLabels: [
                 context.t(K.difficultyHard),
                 context.t(K.difficultyMedium),
@@ -778,7 +794,9 @@ extension _QuizScreenUI on _QuizScreenState {
               children: [
                 if (showJokers)
                   _buildWildcardRow()
-                else if (answered && !_verdictHidden)
+                else if (answered &&
+                    !_verdictHidden &&
+                    (!_isMultiplayer || _mpPhase == _MultiplayerPhase.reveal))
                   // K6+ (2026-10-28): cevaptan sonra alttan geri bildirim şeridi
                   // (doğru yeşil, yanlış kırmızı): başlık + ≤1 satır + eylem
                   // AYNI şeritte. Alıştırmada doğru cevaptan sonra eylem
@@ -915,9 +933,9 @@ extension _QuizScreenUI on _QuizScreenState {
         : _isMultiplayer && answered && selectedAnswer == 'TIMEOUT'
         // Süre dolunca bekleme etiketi "Süre doldu" der (şerit yalnız ✗ +
         // düğme taşır; başlık yazısına yer yok).
-        ? context.t(K.sureDoldu)
+        ? context.t(K.quizUnansweredExpired)
         : _isMultiplayer && answered
-        ? _waitingLabel(context)
+        ? _recordedAnswerLabel(context)
         : !answered
         ? context.t(K.pickAnAnswer)
         : isLastQuestion
@@ -945,22 +963,26 @@ extension _QuizScreenUI on _QuizScreenState {
     // (alt perde sabit, [quizDockHeight]).
     final revealPhase =
         _isMultiplayer && answered && _mpPhase == _MultiplayerPhase.reveal;
-    if (revealPhase && onStripFill != null) {
+    if (_isMultiplayer && answered) {
       return Semantics(
         key: const ValueKey('quiz-next-button'),
         liveRegion: true,
         label: nextLabel,
         excludeSemantics: true,
         child: ConstrainedBox(
-          key: const ValueKey('quiz-reveal-status-band'),
+          key: revealPhase
+              ? const ValueKey('quiz-reveal-status-band')
+              : const ValueKey('quiz-waiting-status-band'),
           // a11y-tap-target: noninteractive — durum bandı, dokunulmaz.
           constraints: const BoxConstraints(
             minHeight: SahneVolume.buttonHeight,
           ),
           child: DecoratedBox(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
+            decoration: BoxDecoration(
+              color: onStripFill != null
+                  ? Colors.white
+                  : SahneTokens.of(context).s1,
+              borderRadius: const BorderRadius.all(
                 Radius.circular(SahneVolume.buttonRadius),
               ),
             ),
@@ -976,7 +998,9 @@ extension _QuizScreenUI on _QuizScreenState {
                     child: Text(
                       nextLabel,
                       textAlign: TextAlign.center,
-                      style: SahneType.button.copyWith(color: onStripFill),
+                      style: SahneType.captionStrong.copyWith(
+                        color: onStripFill ?? SahneTokens.of(context).tx,
+                      ),
                     ),
                   ),
                 ],
@@ -1015,16 +1039,34 @@ extension _QuizScreenUI on _QuizScreenState {
     int seconds, {
     required bool last,
   }) {
-    final verdict = context.t(verdictKey);
+    final verdict = verdictKey == K.sureDoldu
+        ? context.t(K.quizUnansweredExpired)
+        : context.t(verdictKey);
     // Kurul C5 (Astra + Sol): son soruda yalnız "Doğru" + kum saati ne
     // beklendiğini söylemiyordu; artık sonuçlara geçildiğini söyler.
     if (last) return context.t(K.revealVerdictResults, {'verdict': verdict});
     // Kurul C4 (Astra + Sol): "Doğru · 3 sn" üstteki soru sayacıyla
     // karışıyordu; geri sayımın SONRAKİ soruya olduğu yazar.
-    return context.t(K.revealVerdictCountdown, {
-      'verdict': verdict,
-      'n': groupThousands(seconds),
-    });
+    return '$verdict\n${context.t(K.quizNextQuestionCountdown, {'n': groupThousands(seconds)})}';
+  }
+
+  String _recordedAnswerLabel(
+    BuildContext context, {
+    String? answer,
+    String? waitLabel,
+  }) {
+    final value = answer ?? selectedAnswer;
+    final optionIndex = question.displayAnswers.indexOf(value);
+    final optionLetter = optionIndex < 0
+        ? ''
+        : String.fromCharCode(65 + optionIndex);
+    final letter = optionLetter.isEmpty ? '' : '$optionLetter · ';
+    final wait =
+        waitLabel ??
+        (_isCrowd
+            ? _waitingLabel(context)
+            : context.t(K.quizWaitingOpponentAnswer));
+    return '${context.t(K.cevabinKaydedildi)}: $letter$value\n$wait';
   }
 
   /// Çok oyunculu bekleme etiketi. Kurul C10 (Astra + Sol): kalabalık odada
@@ -1598,6 +1640,7 @@ extension _QuizScreenUI on _QuizScreenState {
     final imageCompact = isCompact || size.height < 900;
 
     Widget textAndAnswers({required bool headline}) => _QuestionTextAndAnswers(
+      showAnswerLabels: _isMultiplayer,
       promptText: promptText,
       lexiconEnabled: _lexiconTapAllowed,
       translationEnabled: _translationRevealAllowed,

@@ -107,13 +107,15 @@ class _SignUpScreenState extends State<SignUpScreen>
   late AnimationController _animationController;
 
   bool get _hasRequiredStepFields => switch (_currentStep) {
-    0 =>
-      _emailController.text.trim().isNotEmpty &&
-          _passwordController.text.isNotEmpty &&
-          _confirmPasswordController.text.isNotEmpty,
+    // E-posta geçerliyken ilerleme denenebilir; eksik parola alanlarını
+    // _validateCurrentStep yerinde açıklar, kayıt adımı atlanmaz.
+    0 => _isValidEmail(_emailController.text),
     1 => _usernameController.text.trim().isNotEmpty,
     _ => true,
   };
+
+  static bool _isValidEmail(String value) =>
+      RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value.trim());
 
   void _refreshFormActions() => setState(() {});
 
@@ -240,7 +242,6 @@ class _SignUpScreenState extends State<SignUpScreen>
     if (ReducedMotionProvider.isReducedIn(context)) {
       _animationController.value = 1;
     }
-    final t = SahneTokens.of(context);
     final slide = LoadAnimationSequence.titleSlideAnimation(
       _animationController,
     );
@@ -292,10 +293,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                 child: child,
               ),
               // U15 (2026-10-28 tur 4): giriş/karşılamayla aynı manzara.
-              child: const SahneEntryScene(
-                key: ValueKey('sign-up-hero-banner'),
-                height: SahneEntryScene.compactHeight,
-                child: AppLogo(width: 64),
+              child: SahneEntryScene(
+                key: const ValueKey('sign-up-hero-banner'),
+                height: _currentStep == 0 ? 40 : SahneEntryScene.compactHeight,
+                child: AppLogo(width: _currentStep == 0 ? 32 : 64),
               ),
             ),
           ),
@@ -367,7 +368,9 @@ class _SignUpScreenState extends State<SignUpScreen>
                       children: [
                         Text(
                           context.t(K.haveAccountPrefix),
-                          style: SahneType.body.copyWith(color: t.tx2),
+                          style: SahneType.body.copyWith(
+                            color: SahneTokens.of(context).tx2,
+                          ),
                         ),
                         SahneButton.text(
                           label: context.t(K.signIn),
@@ -387,7 +390,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   String _getStepSubtitle(BuildContext context) {
     switch (_currentStep) {
       case 0:
-        return context.t(K.saveAccountSub);
+        return context.t(K.t15SignUpSteps);
       case 1:
         return context.t(K.stepUsername);
       case 2:
@@ -417,12 +420,25 @@ class _SignUpScreenState extends State<SignUpScreen>
                   if (value == null || value.isEmpty) {
                     return context.t(K.emailRequired);
                   }
-                  if (!value.contains('@')) {
+                  if (!_isValidEmail(value)) {
                     return context.t(K.emailInvalid2);
                   }
                   return null;
                 },
               ),
+              if (_emailController.text.trim().isEmpty) ...[
+                const SizedBox(height: SahneSpace.x1),
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    context.t(K.t15EmailPrompt),
+                    key: const ValueKey('signup-email-prompt'),
+                    style: SahneType.caption.copyWith(
+                      color: SahneTokens.of(context).tx2,
+                    ),
+                  ),
+                ),
+              ],
               const SizedBox(height: 20),
               FadeTransition(
                 opacity: LoadAnimationSequence.formField2FadeAnimation(

@@ -27,7 +27,7 @@ void main() {
   ) async {
     await open(tester, const SignInScreen());
     for (final label in [
-      'Misafir olarak devam et',
+      'Misafir olarak oyna',
       'Apple ile devam et',
       'Google ile devam et',
     ]) {
@@ -37,7 +37,7 @@ void main() {
         .widgetList<SahneButton>(find.byType(SahneButton))
         .where((button) => button.isPrimary);
     expect(primary, hasLength(1));
-    expect(primary.single.label, 'Misafir olarak devam et');
+    expect(primary.single.label, 'Misafir olarak oyna');
     debugDefaultTargetPlatformOverride = null;
   });
 

@@ -322,17 +322,22 @@ void main() {
             matching: find.byType(DecoratedBox),
           ),
         );
-        expect(
-          chips.where((d) {
-            final dec = d.decoration;
-            return dec is ShapeDecoration &&
-                dec.color != null &&
-                dec.color!.a > 0 &&
-                dec.color!.a < 0.5;
-          }).length,
-          greaterThanOrEqualTo(3),
-          reason: 'çipler ton dolgulu olmalı',
-        );
+        // S1: dekor sayımlardan geçmesin diye zemin opak; renkler korunur.
+        final chipColors = chips
+            .map((box) => box.decoration)
+            .whereType<ShapeDecoration>()
+            .map((decoration) => decoration.color)
+            .whereType<Color>()
+            .toSet();
+        expect(chipColors.length, greaterThanOrEqualTo(3));
+        for (final color in chipColors) {
+          expect(color.a, 1);
+          expect(
+            HSVColor.fromColor(color).saturation,
+            greaterThan(0.1),
+            reason: 'sayım çipleri nötrleşmemeli',
+          );
+        }
 
         // T14 F22: altın tonu korunur; dağ dokusu XP yazısına
         // karışmasın diye zemin artık opaktır.

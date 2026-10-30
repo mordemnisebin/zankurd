@@ -51,7 +51,7 @@ ImageProvider _questionImageProvider(String url) {
   );
 }
 
-class _QuestionImage extends StatelessWidget {
+class _QuestionImage extends StatefulWidget {
   const _QuestionImage({
     super.key,
     required this.url,
@@ -83,6 +83,34 @@ class _QuestionImage extends StatelessWidget {
   final Size? layoutSize;
   final VoidCallback? onReady;
 
+  @override
+  State<_QuestionImage> createState() => _QuestionImageState();
+}
+
+class _QuestionImageState extends State<_QuestionImage> {
+  bool _failed = false;
+  String get url => widget.url;
+  String? get questionId => widget.questionId;
+  String? get alt => widget.alt;
+  bool get isCompact => widget.isCompact;
+  Size? get layoutSize => widget.layoutSize;
+  VoidCallback? get onReady => widget.onReady;
+
+  @override
+  void didUpdateWidget(_QuestionImage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.url != url || oldWidget.questionId != questionId) {
+      _failed = false;
+    }
+  }
+
+  void _notifyFailure() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _failed) return;
+      setState(() => _failed = true);
+    });
+  }
+
   void _notifyReady() {
     final callback = onReady;
     if (callback == null) return;
@@ -91,6 +119,7 @@ class _QuestionImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (_failed) return const _QuestionImageFallback();
     final assetPath = url.startsWith('asset://')
         ? url.replaceFirst('asset://', '')
         : null;
@@ -123,6 +152,7 @@ class _QuestionImage extends StatelessWidget {
             // hiç başlamaz (2026-07-25 canlı denetimi).
             errorWidget: (context, url, error) {
               _notifyReady();
+              _notifyFailure();
               return const _QuestionImageFallback();
             },
           )
@@ -137,6 +167,7 @@ class _QuestionImage extends StatelessWidget {
             },
             errorBuilder: (context, error, stackTrace) {
               _notifyReady();
+              _notifyFailure();
               return const _QuestionImageFallback();
             },
           );
@@ -334,27 +365,15 @@ class _QuestionImageFallback extends StatelessWidget {
   const _QuestionImageFallback();
 
   @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return ColoredBox(
-      color: t.s2,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(AppIcons.image, color: t.tx2, size: 32),
-            const SizedBox(height: SahneSpace.x2),
-            Text(
-              context.t(K.imageLoadFailed),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: SahneType.caption.copyWith(color: t.tx2),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Text(
+    context.t(K.imageLoadFailed),
+    key: const ValueKey('quiz-image-load-failed'),
+    maxLines: 2,
+    style: SahneType.caption.copyWith(
+      color: SahneTokens.of(context).tx2,
+      fontSize: 14,
+    ),
+  );
 }
 
 /// Soru metni + cevap alanı (şıklar, boşluk doldurma, kelime sıralama) +
@@ -429,6 +448,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     required this.hiddenAnswers,
     required this.firstAttemptAnswer,
     required this.showExplanation,
+    required this.showAnswerLabels,
     this.wrongAnswerInsight = false,
     required this.suspense,
     required this.onAnswer,
@@ -471,6 +491,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final String firstAttemptAnswer;
   final Map<String, double>? audiencePoll;
   final bool showExplanation;
+  final bool showAnswerLabels;
 
   /// Yanlış cevaptan sonra doğru cevap + açıklama kartı (bkz.
   /// [instantExplanationAllowedFor]). Doluyken "Açıklamayı gör" kapısının
@@ -801,6 +822,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       index: index,
       answer: answer,
       selected: selectedAnswer == answer,
+      showAnswerLabels: showAnswerLabels,
       correct: revealed && answer == question.correctAnswer,
       disabled: answered || answer == firstAttemptAnswer || eliminated,
       firstAttemptWrong: !answered && answer == firstAttemptAnswer,
@@ -1390,13 +1412,6 @@ class _DuelScoreHeader extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
                 child: Column(
                   children: [
-                    Text(
-                      progress,
-                      style: SahneType.captionStrong.copyWith(
-                        color: t.tx2,
-                        fontFeatures: const [FontFeature.tabularFigures()],
-                      ),
-                    ),
                     Text(
                       'VS',
                       style: SahneType.eyebrow.copyWith(color: t.raceTx),

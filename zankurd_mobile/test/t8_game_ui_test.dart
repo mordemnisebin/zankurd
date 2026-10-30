@@ -7,7 +7,6 @@ import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_timer_widget.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
-import 'package:zankurd_mobile/src/widgets/rolling_count.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/realistic_device.dart';
@@ -128,19 +127,20 @@ void main() {
       final hero = tester.widget<SahneResultHero>(
         find.byKey(const ValueKey('result-score-header')),
       );
-      final score = tester.widget<RollingCount>(
-        find.byKey(const ValueKey('result-score-count')),
+      final score = tester.widget<Text>(
+        find.byKey(const ValueKey('result-duel-score-me')),
+      );
+      final opponentScore = tester.widget<Text>(
+        find.byKey(const ValueKey('result-duel-score-opponent')),
       );
       final scene = tester.widget<SahneResultScene>(
         find.byType(SahneResultScene).first,
       );
+      expect(score.style, opponentScore.style);
       expect(hero.celebrate, win);
       expect(hero.lightGlow, win);
       expect(hero.calm, !win);
-      expect(
-        score.style.color,
-        win ? SahneTokens.night.gold : SahneTokens.night.tx,
-      );
+      expect(score.style!.color, SahneTokens.night.tx);
       expect(
         scene.mood,
         SahneResultMood.high,
@@ -201,12 +201,10 @@ void main() {
       await tester.pump(const Duration(milliseconds: 150));
       expect(
         tester.widget<SahneStageTimer>(find.byType(SahneStageTimer)).revealed,
-        isTrue,
+        isFalse,
       );
-      expect(
-        find.byKey(const ValueKey('stage-timer-revealed')),
-        findsOneWidget,
-      );
+      expect(find.byKey(const ValueKey('stage-timer-revealed')), findsNothing);
+      expect(find.byKey(const ValueKey('stage-timer-seconds')), findsOneWidget);
       expect(
         tester.getRect(find.byKey(const ValueKey('stage-timer-capsule'))),
         initial,
@@ -265,9 +263,13 @@ void main() {
         await pump(stopped: true);
         expect(
           find.byKey(const ValueKey('stage-timer-revealed')),
+          findsNothing,
+        );
+        expect(
+          find.byKey(const ValueKey('stage-timer-seconds')),
           findsOneWidget,
         );
-        expect(find.byKey(const ValueKey('stage-timer-seconds')), findsNothing);
+        expect(find.text('4'), findsOneWidget);
         expect(
           tester
               .widget<SahneStageTimer>(find.byType(SahneStageTimer))
