@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
+
 import '../l10n/explanation_ku.dart';
 import '../l10n/explanation_overrides.dart';
 import '../l10n/strings.dart';
@@ -79,6 +83,7 @@ class QuizQuestion {
     this.imageAltTr,
     this.difficulty = 2,
     this.metadata,
+    this.answerOrder,
   });
 
   final String id;
@@ -86,6 +91,11 @@ class QuizQuestion {
   final String prompt;
   final List<String> answers;
   final String correctAnswer;
+
+  /// Tura bağlı, değişmez sunum indeksleri. Kaynak/JSON sırasını değiştirmez.
+  /// Oyun ekranları [forRound] ile yerelleştirmeden ÖNCE bağlar; cevap
+  /// açılması ve dil yansıtması bu indeksleri aynen taşır.
+  final List<int>? answerOrder;
 
   /// Serbest metinli sorularda kanonik cevabın yanında kabul edilen açık
   /// yazım veya anlatım alternatifleri. Kanonik cevap daima ayrıca kabul
@@ -290,6 +300,7 @@ class QuizQuestion {
     List<String>? acceptedAnswersTr,
     AnswerLanguage? answerLanguage,
     QuestionType? type,
+    List<int>? answerOrder,
   }) {
     return QuizQuestion(
       id: id,
@@ -310,6 +321,7 @@ class QuizQuestion {
       hintTr: hintTr,
       audioUrl: audioUrl,
       type: type ?? this.type,
+      answerOrder: answerOrder ?? this.answerOrder,
       imageUrl: imageUrl,
       imageAltKu: imageAltKu,
       imageAltTr: imageAltTr,
@@ -378,7 +390,59 @@ class QuizQuestion {
             translatedAccepted.every((answer) => answer.trim().isNotEmpty));
   }
 
+  /// Aynı soru + ortak maç kimliği, tüm istemcilerde aynı permütasyondur.
+  /// SHA-256 ve byte tabanlı Fisher–Yates; hashCode/Random uygulamasına,
+  /// dile, oyuncuya ve doğru cevabın açıklanmasına bağlı değildir.
+  QuizQuestion forRound(String roundId) {
+    if (roundId.trim().isEmpty) {
+      throw ArgumentError.value(roundId, 'roundId', 'Tur kimliği boş olamaz');
+    }
+    final indices = List<int>.generate(answers.length, (i) => i);
+    if (type == QuestionType.multipleChoice && answers.length > 1) {
+      final numeric = _numericValues(answers);
+      if (numeric != null) {
+        if (answers.length < 3) {
+          return copyWith(answerOrder: List.unmodifiable(indices));
+        }
+        indices.sort((a, b) => numeric[a].compareTo(numeric[b]));
+        if (_stableAnswerOffset(answers.length).isEven) {
+          return copyWith(answerOrder: List.unmodifiable(indices.reversed));
+        }
+      } else {
+        // Her adımın ayrı digest'i vardır. Modulo yanlılığını reddetme
+        // örneklemesi kaldırır; dört şıkkın 24 sırası da mümkündür.
+        for (var i = indices.length - 1; i > 0; i--) {
+          var attempt = 0;
+          int value;
+          final bound = i + 1;
+          final limit = 0x100000000 - (0x100000000 % bound);
+          do {
+            final bytes = sha256
+                .convert(
+                  utf8.encode(
+                    jsonEncode(['answer-order-v1', id, roundId, i, attempt++]),
+                  ),
+                )
+                .bytes;
+            value = bytes.take(4).fold<int>(0, (v, b) => v * 256 + b);
+          } while (value >= limit);
+          final j = value % bound;
+          final saved = indices[i];
+          indices[i] = indices[j];
+          indices[j] = saved;
+        }
+      }
+    }
+    return copyWith(answerOrder: List.unmodifiable(indices));
+  }
+
   List<String> get displayAnswers {
+    final order = answerOrder;
+    if (order != null) {
+      return List.unmodifiable([for (final i in order) answers[i]]);
+    }
+    // Tura bağlanmamış banka/önizleme tüketicileri için eski gösterim.
+    // Oyun ekranları daima forRound ile bağlanmış bir model kullanır.
     if (type == QuestionType.trueFalse || answers.length < 3) {
       return List.unmodifiable(answers);
     }
@@ -485,6 +549,12 @@ class QuizQuestion {
       prompt: prompt,
       answers: answers,
       correctAnswer: correctAnswer,
+      answerOrder: answerOrder,
+      promptTr: promptTr,
+      answersTr: answersTr,
+      correctAnswerTr: correctAnswerTr,
+      imageAltKu: imageAltKu,
+      imageAltTr: imageAltTr,
       acceptedAnswers: acceptedAnswers,
       acceptedAnswersTr: acceptedAnswersTr,
       answerLanguage: answerLanguage,

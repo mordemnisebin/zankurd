@@ -1496,10 +1496,9 @@ extension _QuizScreenUI on _QuizScreenState {
       // `prompt` alanını, yani Kurmancî metni döndürür — Türkçe oynayan
       // oyuncu 30 coin ödeyip Kurmancî bir soru ve Kurmancî şıklar
       // alıyordu (2026-07-31 denetimi).
-      _questions[index] = replacement.localized(
-        isKu: _isKu,
-        learning: _isLearningExperience,
-      );
+      _questions[index] = replacement
+          .forRound(_answerOrderRoundId)
+          .localized(isKu: _isKu, learning: _isLearningExperience);
       hiddenAnswers = const {};
       _audiencePoll = null;
       favorite = false;

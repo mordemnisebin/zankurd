@@ -115,6 +115,7 @@ Future<void> _pumpQuiz(
             context,
           ).copyWith(textScaler: TextScaler.linear(scale)),
           child: QuizScreen(
+            roundId: 'test-round',
             repository: repository,
             room: solo ? repository.createRoom() : _oda(crowd),
             questions: [q, q],
@@ -164,7 +165,10 @@ void _ayni(List<Rect> a, List<Rect> b, String neden) {
 }
 
 Future<void> _yanlisCevapla(WidgetTester tester) async {
-  final shown = _uzun.localized(isKu: false, learning: false);
+  final roundId =
+      tester.widget<QuizScreen>(find.byType(QuizScreen)).room.id ??
+      'test-round';
+  final shown = _uzun.forRound(roundId).localized(isKu: false, learning: false);
   final i = shown.displayAnswers.indexWhere((a) => a != shown.correctAnswer);
   await tester.tap(
     find.byKey(const ValueKey('quiz-option-base')).at(i),
@@ -208,7 +212,12 @@ void main() {
         await tester.tap(find.byType(WildcardButton).at(2));
         await tester.pump(const Duration(milliseconds: 300));
         expect(_dock(tester), closeTo(h0, 0.5), reason: 'joker sonrası');
-        final shown = _uzun.localized(isKu: ku, learning: false);
+        final roundId =
+            tester.widget<QuizScreen>(find.byType(QuizScreen)).room.id ??
+            'test-round';
+        final shown = _uzun
+            .forRound(roundId)
+            .localized(isKu: ku, learning: false);
         final yanlis = shown.displayAnswers.indexWhere(
           (a) => a != shown.correctAnswer,
         );

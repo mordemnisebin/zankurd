@@ -95,6 +95,7 @@ class QuizScreen extends StatefulWidget {
     this.contestId,
     this.versusBannerText,
     this.resumeSnapshot,
+    this.roundId,
     @visibleForTesting this.suspenseHold,
     super.key,
   });
@@ -131,6 +132,11 @@ class QuizScreen extends StatefulWidget {
 
   /// Süreç yeniden açıldığında sunucudan gelen yetkili aktif-oda durumu.
   final RoomResumeSnapshot? resumeSnapshot;
+
+  /// Yerel turnuva maçının veya yeniden açılan solo turun kimliği.
+  /// Çevrimiçi odada ortak room.id önceliklidir. Yoksa State başında
+  /// üretilen solo kimliği yaşam döngüsü resume boyunca korunur.
+  final String? roundId;
 
   /// Cevaptan sonraki "gerilim tutuşu" süresi. `null` → üretimde 520 ms,
   /// test ortamında sıfır. Yalnız testler üretim değerini zorlamak için verir
@@ -628,6 +634,7 @@ class _QuizScreenState extends State<QuizScreen>
         (_isLearningExperience
                 ? LearningProductiveRecall.transform(question)
                 : question)
+            .forRound(_answerOrderRoundId)
             .localized(isKu: _isKu, learning: _isLearningExperience),
     ];
     _myId = widget.repository.currentUserId;
@@ -3013,6 +3020,12 @@ class _QuizScreenState extends State<QuizScreen>
   /// gönderimde ve `_settleCoins`in tekrar çağrılarında AYNI kimlik gider;
   /// sunucu (`claim_solo_reward`) ikinci talepte ödemez.
   final String _soloRoundId = newClientRoundId();
+
+  // İlk model bağlanırken hesaplanır; rebuild/resume yeni tohum üretmez.
+  late final String _answerOrderRoundId =
+      (widget.room.id?.trim().isNotEmpty ?? false)
+      ? widget.room.id!.trim()
+      : widget.roundId ?? _soloRoundId;
 
   /// Analitik `round_id` değeri: çevrimiçi odalarda (`room.id != null`)
   /// deterministik oda kimliği kullanılır ki `RoomResultRecoveryScreen` ya da

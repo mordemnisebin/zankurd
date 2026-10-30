@@ -180,6 +180,7 @@ void main() {
           child: MaterialApp(
             theme: AppTheme.dark(),
             home: QuizScreen(
+              roundId: 'test-round',
               repository: repo,
               room: room,
               questions: [repo.questions.first],
@@ -233,6 +234,7 @@ void main() {
           child: MaterialApp(
             theme: AppTheme.dark(),
             home: QuizScreen(
+              roundId: 'test-round',
               repository: repo,
               room: room,
               questions: [question],
@@ -275,6 +277,7 @@ void main() {
           child: MaterialApp(
             theme: AppTheme.dark(),
             home: QuizScreen(
+              roundId: 'test-round',
               repository: repo,
               room: room,
               questions: [question],
@@ -285,9 +288,10 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      final wrongAnswer = question.displayAnswers.firstWhere(
-        (a) => a != question.correctAnswer,
-      );
+      final wrongAnswer = question
+          .forRound('test-round')
+          .displayAnswers
+          .firstWhere((a) => a != question.correctAnswer);
       await tester.tap(
         find
             .ancestor(
@@ -340,6 +344,7 @@ void main() {
           child: MaterialApp(
             theme: AppTheme.dark(),
             home: QuizScreen(
+              roundId: 'test-round',
               repository: repo,
               room: room,
               questions: [question],

@@ -458,6 +458,14 @@ void main() {
       );
       await _pumpFrames(tester);
 
+      // T3: soğuk resume da oda kimliğini kullanmalı; eski test yalnız
+      // soru/puanı kontrol ediyor, görünen şık sırasını kaçırıyordu.
+      expect(
+        tester
+            .widgetList<QuizOptionTile>(find.byType(QuizOptionTile))
+            .map((tile) => tile.answer),
+        _questions[1].forRound(_room.id!).displayAnswers,
+      );
       expect(find.text('Pirs 2'), findsOneWidget);
       expect(find.text('Pirs 1'), findsNothing);
       expect(find.text('420 puan'), findsOneWidget);
@@ -496,6 +504,10 @@ void main() {
     final options = tester
         .widgetList<QuizOptionTile>(find.byType(QuizOptionTile))
         .toList();
+    expect(
+      options.map((tile) => tile.answer),
+      _questions[1].forRound(_room.id!).displayAnswers,
+    );
     expect(options.singleWhere((tile) => tile.answer == 'B2').selected, isTrue);
     expect(options.singleWhere((tile) => tile.answer == 'B2').disabled, isTrue);
     expect(options.singleWhere((tile) => tile.answer == 'A2').correct, isTrue);

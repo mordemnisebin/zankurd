@@ -199,6 +199,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: [question],
@@ -217,10 +218,17 @@ void main() {
       find.byKey(const ValueKey('quiz-landscape-content')),
       findsOneWidget,
     );
-    expect(find.text(shown.displayAnswers.first), findsWidgets);
+    expect(
+      find.text(shown.forRound('test-round').displayAnswers.first),
+      findsWidgets,
+    );
 
-    await tester.ensureVisible(find.text(shown.displayAnswers.first).first);
-    await tester.tap(find.text(shown.displayAnswers.first).first);
+    await tester.ensureVisible(
+      find.text(shown.forRound('test-round').displayAnswers.first).first,
+    );
+    await tester.tap(
+      find.text(shown.forRound('test-round').displayAnswers.first).first,
+    );
     await tester.pumpAndSettle();
 
     // Yarışma modunda tur içi açıklama gösterilmez (çözümler oyun sonunda).
@@ -237,6 +245,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: [question],
@@ -296,6 +305,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: roomRepository,
           room: room,
           questions: questions,
@@ -305,7 +315,9 @@ void main() {
     );
     await tester.pump(const Duration(milliseconds: 100));
 
-    await tester.tap(find.text(questions.first.displayAnswers.first).first);
+    await tester.tap(
+      find.text(questions.first.forRound(room.id!).displayAnswers.first).first,
+    );
     await tester.pump(const Duration(milliseconds: 500));
 
     expect(
@@ -346,6 +358,7 @@ void main() {
       await tester.pumpWidget(
         testShell(
           child: QuizScreen(
+            roundId: 'test-round',
             repository: duelRepository,
             room: room,
             questions: [question],
@@ -363,7 +376,9 @@ void main() {
       });
       await tester.pump(const Duration(milliseconds: 100));
 
-      await tester.tap(find.text(question.displayAnswers.first).first);
+      await tester.tap(
+        find.text(question.forRound(room.id!).displayAnswers.first).first,
+      );
       await tester.pump(const Duration(milliseconds: 500));
       duelRepository.controller.add({
         'sender': 'Berfin',
@@ -423,6 +438,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: duelRepository,
           room: room,
           questions: [question],
@@ -439,7 +455,9 @@ void main() {
     });
     await tester.pump(const Duration(milliseconds: 100));
 
-    await tester.tap(find.text(question.displayAnswers.first).first);
+    await tester.tap(
+      find.text(question.forRound(room.id!).displayAnswers.first).first,
+    );
     await tester.pump(const Duration(milliseconds: 500));
     duelRepository.controller.add({
       'sender': 'Berfin',
@@ -505,6 +523,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: duelRepository,
           room: room,
           questions: [question],
@@ -520,7 +539,9 @@ void main() {
       'ready': true,
     });
     await tester.pump(const Duration(milliseconds: 100));
-    await tester.tap(find.text(question.displayAnswers.first).first);
+    await tester.tap(
+      find.text(question.forRound(room.id!).displayAnswers.first).first,
+    );
     await tester.pump(const Duration(milliseconds: 500));
     duelRepository.controller.add({
       'sender': 'Berfin',
@@ -582,6 +603,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: duelRepository,
           room: room,
           questions: const [question],
@@ -661,6 +683,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: teamRepository,
           room: room,
           questions: const [question],
@@ -778,6 +801,7 @@ void main() {
       await tester.pumpWidget(
         testShell(
           child: QuizScreen(
+            roundId: 'test-round',
             repository: teamRepository,
             room: room,
             questions: const [question],
@@ -896,6 +920,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: teamRepository,
           room: room,
           questions: const [question],
@@ -990,6 +1015,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: teamRepository,
           room: room,
           questions: const [question],
@@ -1082,6 +1108,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: teamRepository,
           room: room,
           questions: const [question],
@@ -1177,6 +1204,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: teamRepository,
           room: room,
           questions: const [question],
@@ -1259,6 +1287,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: const [question],
@@ -1330,6 +1359,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: const [question],
@@ -1390,6 +1420,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: [question],
@@ -1452,6 +1483,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: [question],
@@ -1499,6 +1531,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom(),
           questions: const [question],

@@ -65,6 +65,7 @@ void main() {
       await tester.pumpWidget(
         testShell(
           child: QuizScreen(
+            roundId: 'test-round',
             repository: repository,
             room: room,
             questions: questions,
@@ -75,7 +76,9 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
 
       // Ben (host) 0. soruyu cevaplıyorum.
-      await tester.tap(find.text(questions[0].displayAnswers.first).first);
+      await tester.tap(
+        find.text(questions[0].forRound(room.id!).displayAnswers.first).first,
+      );
       await tester.pump(const Duration(milliseconds: 500));
 
       // Rakip de aynı soruyu cevapladı (reveal fazını tetikler; 5sn'lik

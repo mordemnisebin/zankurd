@@ -64,19 +64,29 @@ void main() {
       expect(question.typeLabelLocalized(true), 'Rast/Şaş');
     });
 
-    test('displayAnswers moves stored first answer for multiple choice', () {
-      const question = QuizQuestion(
-        id: 'q_shuffle',
-        category: 'Ziman',
-        prompt: 'Test question?',
-        answers: ['Correct', 'Wrong 1', 'Wrong 2', 'Wrong 3'],
-        correctAnswer: 'Correct',
-        explanation: 'This is correct',
-      );
+    test(
+      'sabit konum ezberleniyordu; model bekçisi maç kimliğini taşımıyordu',
+      () {
+        const question = QuizQuestion(
+          id: 'q_shuffle',
+          category: 'Ziman',
+          prompt: 'Test question?',
+          answers: ['Correct', 'Wrong 1', 'Wrong 2', 'Wrong 3'],
+          correctAnswer: 'Correct',
+          explanation: 'This is correct',
+        );
 
-      expect(question.displayAnswers.toSet(), question.answers.toSet());
-      expect(question.displayAnswers.first, isNot(question.answers.first));
-    });
+        final shown = question.forRound('model-match');
+        expect(shown.displayAnswers.toSet(), question.answers.toSet());
+        expect(shown.displayAnswers, [
+          'Wrong 3',
+          'Correct',
+          'Wrong 1',
+          'Wrong 2',
+        ]);
+        expect(shown.displayAnswers.first, isNot(question.answers.first));
+      },
+    );
 
     test(
       'optionKeyForAnswer keeps backend option keys tied to stored answers',

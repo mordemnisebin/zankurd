@@ -699,6 +699,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             repository: widget.repository,
             room: widget.repository.createRoom(),
             questions: questions,
+            roundId: match?.id,
             // Bot yarışı yalnız antrenman kupasında: gerçek kupada sonuç
             // ekranı "Hêlîn önde bitirdi" diye uydurma rakiplerle kıyas
             // gösteriyordu (4 simülatörlü tur, 2026-10-27). Gerçek rakibin
