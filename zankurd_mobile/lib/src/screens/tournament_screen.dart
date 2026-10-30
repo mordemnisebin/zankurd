@@ -108,20 +108,8 @@ class _TournamentScreenState extends State<TournamentScreen> {
   /// `join_tournament` çağırmasını engeller.
   bool _startingNewTournament = false;
 
-  /// Bu oturumda skorumuzu gönderdiğimiz maç kimlikleri.
-  ///
-  /// `get_tournament_bracket` "ben gönderdim mi" bilgisini AYRI bir alan
-  /// olarak taşımıyor; istemci bunu skorun sıfırdan büyük olmasından
-  /// çıkarıyordu (`_awaitingOpponent`). Turu 0 puanla bitiren (bütün
-  /// sorulara yanlış cevap veren ya da süresi dolan) oyuncu için bu
-  /// çıkarım YANLIŞ sonuç veriyordu: "Maçı başlat" düğmesi geri geliyor,
-  /// tekrar basınca sunucu skoru tek sefer kabul ettiği için sessizce
-  /// hiçbir şey olmuyordu (2026-08-14 denetimi). Bu küme yanlış
-  /// çıkarımı düzeltir.
-  ///
-  /// Kalıcıdır (Codex denetimi 2026-10-29): bellekte tutulunca ekran
-  /// yeniden açıldığında 0 puanla bitirilmiş maç için "Başlat" geri
-  /// geliyordu. Anahtar kullanıcıya göre ayrılır.
+  /// Eski RPC için kullanıcıya göre ayrılmış kalıcı gönderim yedeği.
+  /// Yeni RPC'nin açık gönderim bilgisi bu yerel tahminden önceliklidir.
   final Set<String> _submittedMatchIds = {};
 
   static String get _submittedKey =>
@@ -571,19 +559,14 @@ class _TournamentScreenState extends State<TournamentScreen> {
     }
   }
 
-  /// Kendi skorumuzu bildirdik ama maç hâlâ açık mı?
-  ///
-  /// Şemada "kim gönderdi" alanı yok; skorun sıfırdan büyük olması
-  /// gönderdiğimizin işaretidir. Sunucu skoru tek sefer kabul ettiği için
-  /// bu çıkarım güvenli: bir kez yazıldıysa bizim skorumuzdur.
+  /// Gönderim sıfır puanda da sunucudan okunur (başka cihazda da çalışır).
   bool get _awaitingOpponent {
     final match = _userMatch;
     if (match == null || match.status == 'completed') return false;
-    if (_submittedMatchIds.contains(match.id)) return true;
-    final myScore = match.playerOneId == _userId
-        ? match.playerOneScore
-        : match.playerTwoScore;
-    return myScore > 0;
+    final submitted = match.playerOneId == _userId
+        ? match.hasPlayerOneSubmitted
+        : match.hasPlayerTwoSubmitted;
+    return submitted ?? _submittedMatchIds.contains(match.id);
   }
 
   static int _roundIndexOf(TournamentBracket bracket, TournamentMatch match) {
@@ -1204,27 +1187,31 @@ class _TournamentScreenState extends State<TournamentScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        context.t(K.tournamentWaitingOpponentScore, {
-                          'score':
-                              '${_userMatch!.playerOneId == _userId ? _userMatch!.playerOneScore : _userMatch!.playerTwoScore}',
-                        }),
+                        _userMatch!.bothSubmitted
+                            ? context.t(K.cupSubmissionsReceived)
+                            : context.t(K.tournamentWaitingOpponentScore, {
+                                'score':
+                                    '${_userMatch!.playerOneId == _userId ? _userMatch!.playerOneScore : _userMatch!.playerTwoScore}',
+                              }),
                         style: SahneType.body.copyWith(color: t.tx2),
                       ),
                       // Sunucu süre dolunca skor göndereni hükmen geçirir
                       // (`resolve_expired_tournament_matches`); kural yalnız
                       // gerçek şemada ve son tarih biliniyorsa yazılır.
-                      if (_userMatch?.deadline case final deadline?) ...[
-                        const SizedBox(height: SahneSpace.x1),
-                        Text(
-                          key: const ValueKey('tournament-awaiting-deadline'),
-                          deadline.isBefore(DateTime.now())
-                              ? context.t(K.tournamentWaitingOpponentExpired)
-                              : context.t(K.tournamentWaitingOpponentDeadline, {
-                                  'time': formatMatchDeadline(deadline),
-                                }),
-                          style: SahneType.caption.copyWith(color: t.tx2),
-                        ),
-                      ],
+                      if (!_userMatch!.bothSubmitted)
+                        if (_userMatch?.deadline case final deadline?) ...[
+                          const SizedBox(height: SahneSpace.x1),
+                          Text(
+                            key: const ValueKey('tournament-awaiting-deadline'),
+                            deadline.isBefore(DateTime.now())
+                                ? context.t(K.tournamentWaitingOpponentExpired)
+                                : context.t(
+                                    K.tournamentWaitingOpponentDeadline,
+                                    {'time': formatMatchDeadline(deadline)},
+                                  ),
+                            style: SahneType.caption.copyWith(color: t.tx2),
+                          ),
+                        ],
                     ],
                   ),
                 ),
@@ -1308,13 +1295,26 @@ class _TournamentScreenState extends State<TournamentScreen> {
                   // Sıra önce kupadaki duruma, sonra puana göredir; durum
                   // yazılmayınca 0 puanlı bekleyen, 122 puanlı elenenin
                   // üstünde sebepsiz görünüyordu (Astra turu).
-                  subtitle: switch (s.status) {
-                    'champion' => Tr.forKu(K.champion, ku).replaceAll('!', ''),
-                    'finalist' => Tr.forKu(K.cupStandingFinalist, ku),
-                    'eliminated' => Tr.forKu(K.eliminated, ku),
-                    _ => Tr.forKu(K.cupStandingActive, ku),
-                  },
-                  trailing: SahneRowValue(groupThousands(s.totalScore)),
+                  subtitle: [
+                    switch (s.status) {
+                      'champion' => Tr.forKu(
+                        K.champion,
+                        ku,
+                      ).replaceAll('!', ''),
+                      'finalist' => Tr.forKu(K.cupStandingFinalist, ku),
+                      'eliminated' => Tr.forKu(K.eliminated, ku),
+                      _ => Tr.forKu(K.cupStandingActive, ku),
+                    },
+                    if (s.wonByForfeit) Tr.forKu(K.cupAdvancedByForfeit, ku),
+                  ].join(' · '),
+                  trailing: SahneRowValue(
+                    tournamentSubmissionLabel(
+                          s.hasSubmitted,
+                          s.totalScore,
+                          ku,
+                        ) ??
+                        groupThousands(s.totalScore),
+                  ),
                 ),
             ],
           ),
@@ -2015,6 +2015,13 @@ class _StatusCard extends StatelessWidget {
 
 /// "Rakip karşısında benim – onun" satırı.
 String _matchVsLine(TournamentMatch m, String userId, bool ku) {
+  if (m.isForfeit) {
+    final winner = m.winnerId == m.playerOneId
+        ? m.playerOneName
+        : m.playerTwoName;
+    return '$winner · ${Tr.forKu(K.cupAdvancedByForfeit, ku)}';
+  }
+  if (m.closedWithoutSubmission) return Tr.forKu(K.cupExpiredUnplayed, ku);
   final mine = m.playerOneId == userId;
   return Tr.forKu(K.cupMatchVs, ku, {
     'opponent': mine ? m.playerTwoName : m.playerOneName,
