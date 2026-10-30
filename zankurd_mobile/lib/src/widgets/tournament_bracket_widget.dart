@@ -264,8 +264,8 @@ class _BracketMatchCard extends StatelessWidget {
     final p2Won = isCompleted && match.winnerId == match.playerTwoId;
 
     final semanticsLabel = Tr.forKu(K.matchSemantics, ku, {
-      'one': [match.playerOneName, if (oneLabel != null) oneLabel].join(', '),
-      'two': [match.playerTwoName, if (twoLabel != null) twoLabel].join(', '),
+      'one': [match.playerOneName, ?oneLabel].join(', '),
+      'two': [match.playerTwoName, ?twoLabel].join(', '),
     });
     return Semantics(
       button: onTap != null,

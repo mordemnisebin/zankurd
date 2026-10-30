@@ -159,16 +159,18 @@ void main() {
   test(
     'T2 eski RPC sıfır skoru oynanmadı sanılıyordu; eksik ve null aynıydı',
     () {
-      final legacy = TournamentMatch.fromJson({
+      final legacy = TournamentMatch.fromJson(const {
         'playerOneScore': 0,
         'playerTwoScore': 45,
       });
       expect(legacy.hasPlayerOneSubmitted, isNull);
       expect(legacy.hasPlayerTwoSubmitted, isTrue);
       expect(legacy.toJson().containsKey('p1_submitted_at'), isFalse);
-      final malformed = TournamentMatch.fromJson({'p1_submitted_at': 'bozuk'});
+      final malformed = TournamentMatch.fromJson(const {
+        'p1_submitted_at': 'bozuk',
+      });
       expect(malformed.hasPlayerOneSubmitted, isNull);
-      final flag = TournamentMatch.fromJson({
+      final flag = TournamentMatch.fromJson(const {
         'p1_submitted': true,
         'p2_submitted': false,
       });
