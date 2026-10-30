@@ -25,7 +25,7 @@ update questions
    and option_d = 'Îranî û gelek gelên din (wek Newrozê)';
 
 update questions
-   set option_a = 'bi navkirina çiyayan di pirtûkên pîroz de'
+   set option_a = 'bi behskirina çiyayan di pirtûkên pîroz de'
  where id = '739a56c7-9218-5787-9764-428fe955e1c3'
    and option_a = 'Îranî û gelek gelên din (wek Newrozê)';
 
