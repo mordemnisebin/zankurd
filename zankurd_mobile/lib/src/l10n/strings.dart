@@ -2024,7 +2024,7 @@ class Tr {
     // bibîne"); jüri bekliyor.
     // Kurul 3 D24: düğmenin kapsamı (bütün konular) yazar.
     K.randomFindOpponent: {
-      'ku': 'Ji hemû mijaran hevrikekî bibîne',
+      'ku': 'Hevrik ji hemû mijaran',
       'tr': 'Tüm konulardan rakip bul',
     },
     K.matchByCategoryHint: {

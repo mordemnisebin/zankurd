@@ -1385,17 +1385,20 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 SahneSectionHeader(title: context.t(K.matchByCategory)),
                 // Kurul 3 D24 (Astra + Sol): karta dokunmanın eşleşme
                 // başlattığı ve alttaki düğmenin konu seçmediği belli
-                // değildi.
-                Padding(
-                  padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                  child: Text(
-                    context.t(K.matchByCategoryHint),
-                    key: const ValueKey('matchmaking-category-hint'),
-                    style: SahneType.caption.copyWith(
-                      color: SahneTokens.of(context).tx2,
+                // değildi. Çok büyük yazıda (≥1,5×) satır düşer: dar ekranda
+                // konu karolarını ilk görünümden itiyordu; düğmenin kendisi
+                // kapsamı ("Tüm konulardan") yine söyler.
+                if (MediaQuery.textScalerOf(context).scale(16) / 16 < 1.5)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                    child: Text(
+                      context.t(K.matchByCategoryHint),
+                      key: const ValueKey('matchmaking-category-hint'),
+                      style: SahneType.caption.copyWith(
+                        color: SahneTokens.of(context).tx2,
+                      ),
                     ),
                   ),
-                ),
                 categories,
                 // Son karo alt perdedeki düğmenin ARKASINDA kalmasın (Astra:
                 // "son kategori düğmenin arkasına giriyor"): kaydırma sonunda
