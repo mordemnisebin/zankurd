@@ -382,6 +382,8 @@ class SahneResultScaffold extends StatelessWidget {
       night: night,
       mood: mood,
       child: SahneStageScaffold(
+        // Sonuç bilgileri ve sıralama alt eylem alanında soldurulmaz.
+        fadeDock: false,
         onClose: onClose,
         closeLabel: closeLabel,
         // Sonuçta dar huzme yerine sonuç ışınları (kahramanın arkasında).

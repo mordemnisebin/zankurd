@@ -56,7 +56,7 @@ void main() {
   ) async {
     await _profile(tester, _GuestAuth());
     await _dialog(tester);
-    final hint = find.text(Tr.forKu(K.passwordHintMin6, false));
+    final hint = find.text(Tr.forKu(K.guestAccountRequirements, false));
     expect(hint, findsOneWidget);
     expect(tester.widget<Text>(hint).style!.fontSize, greaterThanOrEqualTo(14));
     await tester.enterText(find.byType(TextField).last, '123');

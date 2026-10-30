@@ -292,11 +292,13 @@ class _BracketMatchCard extends StatelessWidget {
         match.playerOneName,
         if (match.playerOneId == userId) Tr.forKu(K.you, ku),
         ?oneLabel,
+        if (p1Won) Tr.forKu(K.bracketRoundWon, ku),
       ].join(', '),
       'two': [
         match.playerTwoName,
         if (match.playerTwoId == userId) Tr.forKu(K.you, ku),
         ?twoLabel,
+        if (p2Won) Tr.forKu(K.bracketRoundWon, ku),
       ].join(', '),
     });
     return Semantics(
@@ -535,6 +537,11 @@ class _PlayerSlot extends StatelessWidget {
                         ),
                     ],
                   ),
+                  if (isWinner)
+                    Text(
+                      Tr.forKu(K.bracketRoundWon, ku),
+                      style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                    ),
                   if (playerId.isNotEmpty && submissionLabel != null)
                     Text(
                       submissionLabel!,

@@ -82,7 +82,7 @@ class _GuestAccountEmailFormState extends State<GuestAccountEmailForm> {
         ),
         const SizedBox(height: SahneSpace.x2),
         Text(
-          context.t(K.passwordHintMin6),
+          context.t(K.guestAccountRequirements),
           style: SahneType.caption.copyWith(color: SahneTokens.of(context).tx2),
         ),
       ],

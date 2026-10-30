@@ -684,6 +684,7 @@ void main() {
       K.passwordMin6,
       K.passwordTooShort,
       K.passwordHintMin6,
+      K.guestAccountRequirements,
       K.authErrWeakPassword,
       K.nameMinLength,
       K.nameMaxLength,

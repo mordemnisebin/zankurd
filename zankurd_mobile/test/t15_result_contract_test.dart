@@ -134,6 +134,51 @@ void main() {
       'Lucide',
     )..addFont(rootBundle.load('assets/fonts/Lucide.ttf'))).load();
   });
+  testWidgets(
+    'T17 sıralama sınırdaki satırı yarım göstermez; kaydırınca bütünü görünür',
+    (tester) async {
+      await _pumpResult(tester, crowd: true, win: false, ku: true);
+      final last = find.text('Bero');
+      final row = find
+          .ancestor(of: last, matching: find.byType(SahneListRow))
+          .first;
+      final scroll = find.byType(Scrollable).first;
+      final state = tester.state<ScrollableState>(scroll);
+      final viewport = tester.getRect(scroll);
+      state.position.jumpTo(
+        state.position.pixels +
+            tester.getRect(row).bottom -
+            viewport.bottom -
+            8,
+      );
+      await tester.pumpAndSettle();
+      expect(
+        last.hitTestable(),
+        findsNothing,
+        reason: 'alt sınırdaki yarım satır gösterilmemeli',
+      );
+      state.position.jumpTo(state.position.pixels + 32);
+      await tester.pumpAndSettle();
+      expect(last.hitTestable(), findsOneWidget);
+      expect(tester.getRect(row).bottom, lessThanOrEqualTo(viewport.bottom));
+    },
+  );
+
+  testWidgets('T17 sıralama alt eylem alanında solmaz, son satıra kayılır', (
+    tester,
+  ) async {
+    await _pumpResult(tester, crowd: true, win: false, ku: true);
+    expect(find.byKey(const ValueKey('sahne-stage-dock-fade')), findsNothing);
+    final last = find.text('Bero');
+    final scroll = find.byType(Scrollable).first;
+    await tester.scrollUntilVisible(last, 200, scrollable: scroll);
+    await tester.pumpAndSettle();
+    expect(last.hitTestable(), findsOneWidget);
+    final viewport = tester.getRect(scroll);
+    expect(tester.getRect(last).bottom, lessThanOrEqualTo(viewport.bottom));
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('T16 S1: geniş KU doğruluk etiketi parıltıyla örtüşmez', (
     tester,
   ) async {

@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 import 'package:zankurd_mobile/src/widgets/tournament_bracket_widget.dart';
 
 import 'support/widget_test_helpers.dart';
+import 'support/okunur_boyut.dart';
 
 /// Turnuva şemasının oyuncuya verdiği sözleşmeler.
 ///
@@ -203,6 +204,40 @@ void main() {
       expect(find.text(' (${ku ? 'Tu' : 'Sen'})'), findsWidgets);
     }
   });
+
+  for (final ku in [false, true]) {
+    testWidgets(
+      'T17 kupa anlamı kazanan satırında görünür ve seslendirilir ku=$ku',
+      (tester) async {
+        final semantics = tester.ensureSemantics();
+        await _pump(tester, _bracket(currentRound: 1, rounds: 2), ku: ku);
+        final label = ku ? 'Ger qezenc kir' : 'Turu kazandı';
+        final winner = find.byKey(
+          const ValueKey('tournament-player-r0m0-one-user'),
+        );
+        final loser = find.byKey(
+          const ValueKey('tournament-player-r0m0-two-rival0'),
+        );
+        expect(
+          find.descendant(of: winner, matching: find.text(label)),
+          findsOneWidget,
+        );
+        expect(
+          find.descendant(of: loser, matching: find.text(label)),
+          findsNothing,
+        );
+        expect(find.bySemanticsLabel(RegExp('Rojhat.*$label')), findsWidgets);
+        expect(
+          renderedFontSize(
+            tester,
+            find.descendant(of: winner, matching: find.text(label)),
+          ),
+          greaterThanOrEqualTo(kOkunurAltSinir),
+        );
+        semantics.dispose();
+      },
+    );
+  }
 
   // ── Tekrar yok ──────────────────────────────────────────────────────────
 
