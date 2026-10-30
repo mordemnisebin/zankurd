@@ -72,6 +72,7 @@ enum _GuestUpgradeAction {
   emailFailure,
   googleRequested,
   appleRequested,
+  existingAccountRequested,
 }
 
 bool get _supportsGoogleAccountLinking => true;
@@ -390,6 +391,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
           alignment: AlignmentDirectional.centerStart,
           child: _SyncStatusChip(),
         ),
+        if (context.watch<AuthProvider>().isGuest) ...[
+          const SizedBox(height: SahneSpace.x2),
+          Text(
+            context.t(K.t12AccountRecovery),
+            key: const ValueKey('profile-guest-recovery'),
+            style: SahneType.caption.copyWith(
+              color: SahneTokens.of(context).tx2,
+            ),
+          ),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TextButton(
+              key: const ValueKey('profile-guest-protect'),
+              onPressed: _showGuestUpgradeDialog,
+              child: Text(context.t(K.t12AccountProtect)),
+            ),
+          ),
+        ],
         const SizedBox(height: SahneSpace.x2),
         if (fresh)
           _ProfileStartCard(onStart: _startQuickRace)
@@ -884,6 +903,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         await _linkGoogleAccount();
       case _GuestUpgradeAction.appleRequested:
         await _linkAppleAccount();
+      case _GuestUpgradeAction.existingAccountRequested:
+        // Mevcut hesaba geçiş misafir oturumunu kapatır. Önce var olan
+        // kayıp uyarısı/onayı gösterilir; iptal mevcut ilerlemeyi korur.
+        // Onay sonrası AppShell giriş ekranını kendisi açar.
+        await _confirmSignOut(context);
       case null:
         break;
     }

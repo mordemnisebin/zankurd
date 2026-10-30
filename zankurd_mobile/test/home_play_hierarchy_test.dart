@@ -294,12 +294,11 @@ void main() {
       expect(
         find.descendant(
           of: find.byKey(const ValueKey('home-door-learn')),
-          matching: find.text('2'),
+          matching: find.text('Tamamlanan ders: 2'),
         ),
         findsOneWidget,
       );
-      // 2026-10-22: kapı dolu mod kartı; sayı sağ üstte rozet olarak durur
-      // (tik ikonu artık yok).
+      // T12: sayı, açıklamasız rozet yerine tamamlanan ders alt metninde.
     },
   );
 }

@@ -682,10 +682,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 icon: AppIcons.graduationCap,
                 role: SahneRole.learn,
                 title: context.t(K.learnKurmanci),
-                subtitle: context.t(K.homeDoorLearnSub),
-                badge: _completedLessonsCount > 0
-                    ? groupThousands(_completedLessonsCount)
-                    : null,
+                subtitle: _completedLessonsCount > 0
+                    ? context.t(K.t12CompletedLessons, {
+                        'n': groupThousands(_completedLessonsCount),
+                      })
+                    : context.t(K.homeDoorLearnSub),
                 onTap: widget.onOpenLearning == null ? null : _openLearning,
               ),
               SahneModeTile(

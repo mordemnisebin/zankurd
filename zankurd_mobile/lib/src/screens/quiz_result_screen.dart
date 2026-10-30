@@ -1612,6 +1612,20 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         room.isCrowd &&
         crowdActive.length > 1 &&
         crowdActive.every((s) => (s.player.rank ?? s.rank) == 1);
+    final crowdSharing = crowdRank == null
+        ? 0
+        : crowdActive
+              .where((s) => (s.player.rank ?? s.rank) == crowdRank)
+              .length;
+    final crowdSummary = crowdRank == null
+        ? null
+        : crowdSharing > 1
+        ? context.t(K.crowdSharedRank, {
+            'rank': groupThousands(crowdRank),
+            'count': groupThousands(crowdSharing),
+            'total': groupThousands(crowdActive.length),
+          })
+        : '${context.t(K.crowdRankLabel)} #${groupThousands(crowdRank)}/${groupThousands(crowdActive.length)}';
     final crowdWin = crowdRank == 1 && !crowdAllTied && score > 0;
     final is1v1 = !room.isCrowd && opponents.length == 1;
     bool isWinner = false;
@@ -2013,11 +2027,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       // Orta yuva bağlamdır: "Yarış tamamlandı" zaten içerikte başlık,
       // ekran adı ("Sonuç") tekrarlanmaz.
       contextLabel: [
+        if (is1v1) context.t(K.duel1v1Short),
         ?roundLabel,
         context.t(K.questionCount, {'count': groupThousands(totalQuestions)}),
       ].join(' • '),
+      compactSpacing: room.isCrowd,
       hero: SahneResultHero(
         key: const ValueKey('result-score-header'),
+        compactSpacing: room.isCrowd,
         emblem: is1v1 && !isLearningExperience
             ? _DuelMascotTop(
                 mascotWidth: duelMascotWidth,
@@ -2067,13 +2084,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // Kısa ekranda düello sonucunda "puan • %doğruluk" alt yazısı yoktur:
         // doğru/yanlış sayıları zaten çiplerde; satır ödül kartını alt
         // perdenin altına itiyordu.
-        caption: isLearningExperience
+        caption: crowdSummary != null
+            ? '$crowdSummary • ${context.t(K.scoreWord).toLowerCase()} • $accuracyText'
+            : isLearningExperience
             ? accuracyText
             : (duelCompact && shortScreen)
             ? null
             : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
         celebrate: celebrate,
-        valueSize: duelCompact ? (shortScreen ? 36 : 72) : null,
+        valueSize: duelCompact
+            ? (shortScreen ? 36 : 72)
+            : room.isCrowd
+            ? 48
+            : null,
         emblemExtra: is1v1 && !isLearningExperience
             ? _DuelMascotTop.heightFor(duelMascotWidth)
             : duelOutcome == null
@@ -2092,7 +2115,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         notices: notices,
       ),
       stats: ResultStatTiles(
-        compact: duelCompact,
+        compact: duelCompact || room.isCrowd,
         oneRow: duelCompact && shortScreen,
         correct: correctCount,
         wrong: wrongCount,
@@ -2101,7 +2124,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       ),
       rewards: hasRewards
           ? SahneResultRewards(
-              compact: duelCompact,
+              compact: duelCompact || room.isCrowd,
               // Hiç doğru yokken gelen jeton tamamlama bonusudur (sunucu:
               // 10+ soruda 20, aksi 8); "Kazanıldı" demek yanıltırdı.
               label:

@@ -156,7 +156,7 @@ void main() {
   }
 
   testWidgets(
-    'E10/E11: gerçek oyun yanıt sonrası rakip sayacı ve açılışta pause',
+    'E10/E11: gerçek oyun yanıt sonrası rakip sayacı ve açılışta cevap işareti',
     (tester) async {
       freshMockRepository();
       SharedPreferences.setMockInitialValues({
@@ -200,10 +200,13 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 150));
       expect(
-        tester.widget<SahneStageTimer>(find.byType(SahneStageTimer)).pending,
+        tester.widget<SahneStageTimer>(find.byType(SahneStageTimer)).revealed,
         isTrue,
       );
-      expect(find.byKey(const ValueKey('stage-timer-paused')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('stage-timer-revealed')),
+        findsOneWidget,
+      );
       expect(
         tester.getRect(find.byKey(const ValueKey('stage-timer-capsule'))),
         initial,
@@ -215,7 +218,7 @@ void main() {
 
   for (final ku in [false, true]) {
     testWidgets(
-      'E10/E11: sayaç sahipliği ve pause sabit geometri (${ku ? 'KU' : 'TR'})',
+      'E10/E11: sayaç sahipliği ve cevap işareti sabit geometri (${ku ? 'KU' : 'TR'})',
       (tester) async {
         Future<void> pump({bool opponent = false, bool stopped = false}) async {
           await tester.pumpWidget(
@@ -261,7 +264,7 @@ void main() {
         );
         await pump(stopped: true);
         expect(
-          find.byKey(const ValueKey('stage-timer-paused')),
+          find.byKey(const ValueKey('stage-timer-revealed')),
           findsOneWidget,
         );
         expect(find.byKey(const ValueKey('stage-timer-seconds')), findsNothing);
@@ -269,7 +272,7 @@ void main() {
           tester
               .widget<SahneStageTimer>(find.byType(SahneStageTimer))
               .semanticLabel,
-          ku ? 'Dem rawestiya' : 'Süre durdu',
+          ku ? 'Bersiv eşkere ne' : 'Cevaplar açık',
         );
         expect(
           tester.getRect(find.byKey(const ValueKey('stage-timer-capsule'))),

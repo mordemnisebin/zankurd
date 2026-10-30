@@ -441,12 +441,12 @@ class _PlayerSlot extends StatelessWidget {
                 isKu: ku,
                 tag: profile?.playerTag,
               ));
-    final isDimmed = isCompleted && !isWinner;
     final hasPlayer = name.isNotEmpty && !name.startsWith('TBD');
 
     // 2026-09-29 Şahnê: kazanan satırı Zêr tonu + Halka 1 altın, adı Zêr
-    // metni + kupa; kaybeden üçüncül metin, üstü çizili + ✗ (yalnız renkle
-    // değil). Kullanıcının adı kalın. Avatar elmas.
+    // metni + kupa; kaybedende ✗ var. İsim üstü çizilmez ve soldurulmaz:
+    // sonuç ikonu durumu anlatırken oyuncu kimliği okunaklı kalır.
+    // Kullanıcının adı kalın. Avatar elmas.
     final t = SahneTokens.of(context);
     return DecoratedBox(
       decoration: ShapeDecoration(
@@ -501,15 +501,7 @@ class _PlayerSlot extends StatelessWidget {
                                 // Ham altın, kartın altın tonlu zemininde karanlık
                                 // temada kayboluyordu: kazananın adı hiç görünmüyordu
                                 // (2026-08-04). Şahnê: Zêr metni (`goldTx`).
-                                color: isWinner
-                                    ? t.goldTx
-                                    : isDimmed
-                                    ? t.tx3
-                                    : t.tx,
-                                decoration: isDimmed
-                                    ? TextDecoration.lineThrough
-                                    : null,
-                                decorationColor: t.tx3,
+                                color: isWinner ? t.goldTx : t.tx,
                               ),
                         ),
                       ),
