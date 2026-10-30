@@ -61,7 +61,7 @@ void main() {
     expect(sql.trim(), endsWith('commit;'));
     expect(
       File('supabase/applied.md').readAsStringSync(),
-      contains('2026-10-30_t11_profile_answer_stats.sql | ⏳'),
+      contains('2026-10-30_t11_profile_answer_stats.sql | ✅'),
     );
   });
 }
