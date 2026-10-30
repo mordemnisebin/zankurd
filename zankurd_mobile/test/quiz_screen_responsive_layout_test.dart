@@ -79,6 +79,7 @@ void main() {
               context,
             ).copyWith(textScaler: TextScaler.linear(textScale)),
             child: QuizScreen(
+              roundId: 'test-round',
               repository: repository,
               room: repository.createRoom(),
               questions: const [question, question2],

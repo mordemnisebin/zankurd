@@ -237,13 +237,7 @@ class QuizOptionTile extends StatelessWidget {
       ),
     );
 
-    final tile0 = Semantics(
-      button: true,
-      enabled: !disabled,
-      selected: selected,
-      label: '$letter: $answer$stateHint',
-      onTap: disabled ? null : onTap,
-      excludeSemantics: true,
+    final tile0 = ExcludeSemantics(
       child: SahnePressSink(
         enabled: !disabled,
         child: TweenAnimationBuilder<double>(
@@ -340,7 +334,7 @@ class QuizOptionTile extends StatelessWidget {
     // kaydırıyordu (2026-10-29). Rozet alanı iki kenarla sınırlı (sol 56, sağ
     // 12): uzun ad ya da birkaç rozet taşmaz, Flexible daralır; yarısı
     // (≈ 9 pt) üstteki boşluğa çıkar, kendi çubuğunun yazısını örtmez.
-    final tile = names.isEmpty && percent == null
+    Widget tile = names.isEmpty && percent == null
         ? tile0
         : Stack(
             clipBehavior: Clip.none,
@@ -382,18 +376,31 @@ class QuizOptionTile extends StatelessWidget {
     // EVET): YALNIZ oyuncunun seçtiği şık doğruysa bir kez %4 büyüyüp
     // döner; hareketi azaltta yok. Anahtar duruma bağlı: aynı soruda
     // yeniden çizim tekrar oynatmaz.
-    if (!(selected && state == _OptionState.correct) || reducedMotion) {
-      return tile;
+    if (selected && state == _OptionState.correct && !reducedMotion) {
+      tile = TweenAnimationBuilder<double>(
+        key: const ValueKey('quiz-option-correct-bounce'),
+        tween: Tween(begin: 0, end: 1),
+        duration: const Duration(milliseconds: 360),
+        builder: (context, v, child) => Transform.scale(
+          // 0 → 1 → 0 yarım sinüs: 1.00 → 1.04 → 1.00.
+          scale: 1 + 0.04 * math.sin(v * math.pi),
+          child: child,
+        ),
+        child: tile,
+      );
     }
-    return TweenAnimationBuilder<double>(
-      key: const ValueKey('quiz-option-correct-bounce'),
-      tween: Tween(begin: 0, end: 1),
-      duration: const Duration(milliseconds: 360),
-      builder: (context, v, child) => Transform.scale(
-        // 0 → 1 → 0 yarım sinüs: 1.00 → 1.04 → 1.00.
-        scale: 1 + 0.04 * math.sin(v * math.pi),
-        child: child,
-      ),
+    // Etiket ve seçili durum kutlama/rozet katmanlarının DIŞINDA kalır.
+    // Böylece doğru seçimde kök düğüm boş bir Transform düğümüne dönüşmez.
+    // Yalnız şıkkın görsel içeriği yukarıda dışlandı; seyirci yüzdesi ve
+    // rakip adları ayrı alt düğümler olarak okunmaya devam eder.
+    return Semantics(
+      container: true,
+      explicitChildNodes: true,
+      button: true,
+      enabled: !disabled,
+      selected: selected,
+      label: '$letter: $answer$stateHint',
+      onTap: disabled ? null : onTap,
       child: tile,
     );
   }

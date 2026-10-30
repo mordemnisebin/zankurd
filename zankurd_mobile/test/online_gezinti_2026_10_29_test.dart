@@ -286,6 +286,7 @@ void main() {
           child: MaterialApp(
             home: Scaffold(
               body: QuizScreen(
+                roundId: 'test-round',
                 repository: repository,
                 room: repository.createRoom(),
                 questions: [repository.playableQuestions.first],
@@ -493,6 +494,7 @@ void main() {
       await tester.pumpWidget(
         testShell(
           child: QuizScreen(
+            roundId: 'test-round',
             repository: repository,
             room: repository.createRoom(),
             questions: [q, q],

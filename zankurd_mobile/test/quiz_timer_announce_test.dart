@@ -58,6 +58,7 @@ void main() {
         child: MaterialApp(
           theme: AppTheme.dark(),
           home: QuizScreen(
+            roundId: 'test-round',
             repository: repository,
             room: room,
             questions: repository.questions.take(1).toList(),

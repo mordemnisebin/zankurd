@@ -236,6 +236,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(
+          roundId: 'test-round',
           repository: repository,
           room: repository.createRoom().copyWith(questionCount: 1),
           questions: repository.questions.take(1).toList(),

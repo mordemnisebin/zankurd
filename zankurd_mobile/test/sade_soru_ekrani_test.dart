@@ -50,6 +50,7 @@ void main() {
         data: MediaQueryData(size: size, textScaler: TextScaler.linear(scale)),
         child: testShell(
           child: QuizScreen(
+            roundId: 'test-round',
             repository: repo,
             room: repo.createRoom(),
             questions: repo.questions.take(2).toList(),
