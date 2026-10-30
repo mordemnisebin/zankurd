@@ -923,9 +923,9 @@ extension _QuizScreenUI on _QuizScreenState {
             minHeight: SahneVolume.buttonHeight,
           ),
           child: DecoratedBox(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: const BorderRadius.all(
+              borderRadius: BorderRadius.all(
                 Radius.circular(SahneVolume.buttonRadius),
               ),
             ),

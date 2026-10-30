@@ -24,6 +24,7 @@ import '../widgets/player_moderation_button.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
+import '../widgets/self_marked_name.dart';
 import 'room/room_invite_friends_sheet.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
@@ -2324,25 +2325,14 @@ class _RoomPlayerRow extends StatelessWidget {
       overflow: TextOverflow.ellipsis,
       style: SahneType.bodyStrong.copyWith(color: t.tx),
     );
-    final nameText = showSelfMark
-        ? Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(flex: 3, child: plainName),
-              const SizedBox(width: SahneSpace.x1),
-              Flexible(
-                child: Text(
-                  '(${context.t(K.you)})',
-                  key: const ValueKey('room-player-self-mark'),
-                  maxLines: 1,
-                  overflow: TextOverflow.clip,
-                  softWrap: false,
-                  style: SahneType.bodyStrong.copyWith(color: t.goldTx),
-                ),
-              ),
-            ],
-          )
-        : plainName;
+    // Astra 2. inceleme: işaret 3:1 esnek düzende kırpılıyordu; ortak
+    // [SelfMarkedName] işareti tam genişlikte tutar, gerekirse alta indirir.
+    final nameText = SelfMarkedName(
+      name: plainName,
+      mark: showSelfMark ? '(${context.t(K.you)})' : null,
+      markKey: const ValueKey('room-player-self-mark'),
+      markStyle: SahneType.bodyStrong.copyWith(color: t.goldTx),
+    );
 
     // Ev sahibi rozeti adın SAĞINDA aynı satırdadır: altına inince bu satır
     // ötekilerden uzun oluyordu. `Wrap`: ad + rozet sığmazsa (dar ekran,

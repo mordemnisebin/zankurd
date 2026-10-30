@@ -11,6 +11,8 @@ import 'package:zankurd_mobile/src/screens/profile/profile_matches_section.dart'
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_wildcard_bar.dart';
 import 'package:zankurd_mobile/src/screens/quiz/word_ordering_widget.dart';
+import 'package:zankurd_mobile/src/widgets/self_marked_name.dart';
+import 'package:flutter/rendering.dart';
 import 'package:zankurd_mobile/src/widgets/rolling_count.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -207,4 +209,51 @@ void main() {
     expect(tr(K.lessonSlideCounter, {'n': '5', 'total': '5'}), 'Slayt 5/5');
     expect(tr(K.xpEqualsScoreChip, {'n': '443'}), '+443 XP (puan kadar)');
   });
+
+  // Astra 2. inceleme (D5): "(Sen)" işareti 3:1 esnek düzende dar ekranda /
+  // büyük yazıda kırpılıyordu. İşaret ASLA kesilmez: tam genişlik, gerekirse
+  // adın altında.
+  for (final width in [60.0, 120.0, 200.0, 320.0]) {
+    for (final scale in [1.0, 1.3, 2.0]) {
+      for (final name in ['Al', 'Welatêkurdistanêmezin Berxwedan']) {
+        for (final mark in ['(Sen)', '(Tu)']) {
+          testWidgets('D5 işaret kesilmez: $width pt ×$scale "$name" $mark', (
+            tester,
+          ) async {
+            await tester.pumpWidget(
+              MediaQuery(
+                data: MediaQueryData(textScaler: TextScaler.linear(scale)),
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Center(
+                    child: SizedBox(
+                      width: width,
+                      child: SelfMarkedName(
+                        name: Text(name, maxLines: 2),
+                        mark: mark,
+                        markKey: const ValueKey('mark'),
+                        markStyle: const TextStyle(fontSize: 14),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+            expect(tester.takeException(), isNull);
+            final p = tester.renderObject<RenderParagraph>(
+              find.byKey(const ValueKey('mark')),
+            );
+            expect(p.didExceedMaxLines, isFalse);
+            expect(
+              p.size.width,
+              greaterThanOrEqualTo(
+                p.getMaxIntrinsicWidth(double.infinity) - 0.5,
+              ),
+              reason: 'işaret kendi genişliğinden dar çizildi (kırpıldı)',
+            );
+          });
+        }
+      }
+    }
+  }
 }

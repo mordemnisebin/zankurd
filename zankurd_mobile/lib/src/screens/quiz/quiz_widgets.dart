@@ -1312,42 +1312,18 @@ class _DuelScoreHeader extends StatelessWidget {
           children: [
             // Ad + (botsa) "Bot" rozeti: dar kartta (320 dp, büyük yazı)
             // rozet taşmaz, alt satıra iner (2026-10-29, X4).
-            Row(
-              mainAxisAlignment: end
-                  ? MainAxisAlignment.end
-                  : MainAxisAlignment.start,
-              children: [
-                Flexible(
-                  flex: 3,
-                  // Okunur tabana (11 pt) kadar küçülür, sonra iki satıra
-                  // sarar (üç nokta yalnız son çare).
-                  // Kurul 3 D5 (3/3): kendi tarafın "Sen" ile işaretli
-                  // değildi; iki avatar da aynı baş harfi taşıyabiliyordu.
-                  child: QuizFitLine(
-                    context.playerDisplayName(p.name, tag: p.tag),
-                    maxLines: 2,
-                    alignment: end
-                        ? AlignmentDirectional.centerEnd
-                        : AlignmentDirectional.centerStart,
-                    style: SahneType.captionStrong.copyWith(color: t.tx),
-                  ),
-                ),
-                if (!end &&
-                    context.playerDisplayName(p.name, tag: p.tag) !=
-                        context.t(K.you)) ...[
-                  const SizedBox(width: SahneSpace.x1),
-                  Flexible(
-                    child: Text(
-                      '(${context.t(K.you)})',
-                      key: const ValueKey('duel-self-mark'),
-                      maxLines: 1,
-                      softWrap: false,
-                      overflow: TextOverflow.clip,
-                      style: SahneType.captionStrong.copyWith(color: t.goldTx),
-                    ),
-                  ),
-                ],
-              ],
+            Align(
+              alignment: end
+                  ? AlignmentDirectional.centerEnd
+                  : AlignmentDirectional.centerStart,
+              child: QuizFitLine(
+                context.playerDisplayName(p.name, tag: p.tag),
+                maxLines: 2,
+                alignment: end
+                    ? AlignmentDirectional.centerEnd
+                    : AlignmentDirectional.centerStart,
+                style: SahneType.captionStrong.copyWith(color: t.tx),
+              ),
             ),
             // Seri (🔥xN) puanın yanındadır: eskiden kartın altında AYRI bir
             // satırdı ve rakip puan alıp seri başlayınca kart ~28 pt uzayıp
@@ -1360,6 +1336,23 @@ class _DuelScoreHeader extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // Kurul 3 D5 (3/3) + Astra 2. inceleme: kendi tarafın "Sen"
+                  // ile işaretlenir. İşaret ad satırında 3:1 esnek düzende
+                  // kırpılıyor, tam genişlik verilince de adı ikinci satıra
+                  // itip soru sığma bütçesini bozuyordu (375×667 ×1,3). Puan
+                  // satırında durur: satır tek parça olarak küçülür, işaret
+                  // asla kesilmez ve kartın boyu değişmez.
+                  if (!end &&
+                      context.playerDisplayName(p.name, tag: p.tag) !=
+                          context.t(K.you)) ...[
+                    Text(
+                      context.t(K.you),
+                      key: const ValueKey('duel-self-mark'),
+                      maxLines: 1,
+                      style: SahneType.captionStrong.copyWith(color: t.tx),
+                    ),
+                    const SizedBox(width: SahneSpace.x2),
+                  ],
                   // "Bot" rozeti puan satırında (ad satırı dar kalır; ad, rozetle
                   // yarışıp üç noktaya düşmesin).
                   if (p.isBot && end) ...[
