@@ -218,9 +218,9 @@ class Tr {
     K.emailRequired: {'ku': 'E-name pêwîst e', 'tr': 'E-posta gerekli'},
     K.t12TournamentYourTotal: {
       "tr": "Senin toplam puanın: {score}",
-      "ku": "Xalên te yên giştî: {score}",
+      "ku": "Pûanên te yên giştî: {score}",
     },
-    K.t12TournamentPoints: {"tr": "{score} puan", "ku": "{score} xal"},
+    K.t12TournamentPoints: {"tr": "{score} puan", "ku": "{score} pûan"},
     K.t12AccountExisting: {
       "tr": "Hesabın var mı? Giriş yap",
       "ku": "Hesabê te heye? Têkeve",

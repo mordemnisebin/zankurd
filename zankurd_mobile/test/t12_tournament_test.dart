@@ -102,7 +102,7 @@ void main() {
       final text = tester.widget<Text>(total);
       expect(
         text.data,
-        ku ? 'Xalên te yên giştî: 510' : 'Senin toplam puanın: 510',
+        ku ? 'Pûanên te yên giştî: 510' : 'Senin toplam puanın: 510',
       );
       expect(text.style!.fontSize, greaterThanOrEqualTo(14));
     }
@@ -127,7 +127,7 @@ void main() {
     for (final ku in [false, true]) {
       await tester.pumpWidget(const SizedBox.shrink());
       await _pump(tester, ku: ku);
-      final points = find.text(ku ? '644 xal' : '644 puan');
+      final points = find.text(ku ? '644 pûan' : '644 puan');
       expect(points, findsOneWidget);
       expect(find.text('Oynadı · 644'), findsNothing);
       expect(tester.takeException(), isNull);
