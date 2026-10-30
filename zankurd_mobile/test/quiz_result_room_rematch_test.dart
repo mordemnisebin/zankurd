@@ -108,14 +108,19 @@ void main() {
     expect(find.byType(QuizResultScreen), findsNothing);
   });
 
-  testWidgets('özel olmayan oda: Tekrar oyna yok, Ana sayfa birincil', (
+  // Kurul 3 D9: rastgele 1v1 odada birincil eylem "Rakip bul" (Ana sayfa
+  // "⋯" menüsünde).
+  testWidgets('özel olmayan oda: Tekrar oyna yok, Rakip bul birincil', (
     tester,
   ) async {
     final repo = _repo();
     await _pump(tester, repo, isCustom: false);
 
     expect(rematch, findsNothing);
-    expect(find.byKey(const ValueKey('result-primary-home')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('result-primary-find-opponent')),
+      findsOneWidget,
+    );
     expect(repo.calls, isEmpty);
   });
 

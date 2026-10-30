@@ -410,6 +410,7 @@ extension _QuizScreenUI on _QuizScreenState {
                 // çipiyle (örn. 30 sn) çelişiyordu.
                 maxSeconds: widget.room.secondsPerQuestion,
                 isPaused: answered,
+                stopped: _mpPhase == _MultiplayerPhase.reveal,
                 light: _stageLight,
               ),
             ),
@@ -902,6 +903,54 @@ extension _QuizScreenUI on _QuizScreenState {
         : null;
     final nextArrow = !waiting && !isLastQuestion && answered;
     final VoidCallback? nextPress = canPressNext ? () => _next() : null;
+    // Kurul 3 D3 (Sol + Terra): açılışta etiket renkli şeridin içinde gri,
+    // devre dışı bir DÜĞME gibiydi; üstelik hem ✓ hem kum saati vardı. Açılış
+    // bir eylem değil durumdur: şeridin üstünde beyaz bir durum bandı, şeridin
+    // rengiyle yazı; ✓/✕ şeridin kendi ikonu (tek ikon), kum saati yok. Yükseklik düğmeyle aynı
+    // (alt perde sabit, [quizDockHeight]).
+    final revealPhase =
+        _isMultiplayer && answered && _mpPhase == _MultiplayerPhase.reveal;
+    if (revealPhase && onStripFill != null) {
+      return Semantics(
+        key: const ValueKey('quiz-next-button'),
+        liveRegion: true,
+        label: nextLabel,
+        excludeSemantics: true,
+        child: ConstrainedBox(
+          key: const ValueKey('quiz-reveal-status-band'),
+          // a11y-tap-target: noninteractive — durum bandı, dokunulmaz.
+          constraints: const BoxConstraints(
+            minHeight: SahneVolume.buttonHeight,
+          ),
+          child: DecoratedBox(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(SahneVolume.buttonRadius),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: SahneSpace.x3,
+                vertical: SahneSpace.x2,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Text(
+                      nextLabel,
+                      textAlign: TextAlign.center,
+                      style: SahneType.button.copyWith(color: onStripFill),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
     final next = onStripFill != null && canPressNext
         ? SahneButton.tonal(
             key: const ValueKey('quiz-next-button'),
@@ -1080,6 +1129,7 @@ extension _QuizScreenUI on _QuizScreenState {
       isUsed: used,
       isAnswered: answered,
       isActive: isActive,
+      secondTry: hasOwnSubmit(question.type),
       cantAfford: !used && !canAfford && !answered,
       free: _freeWildcardAvailable,
       unavailable: !used && _wildcardUnavailable(type),

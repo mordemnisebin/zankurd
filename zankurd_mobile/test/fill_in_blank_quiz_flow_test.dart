@@ -59,7 +59,8 @@ class _RejectingSubmitRepository extends MockZanKurdRepository {
 /// 2026-09-29 Şahnê: joker düğmesi adını ekranda yazmaz (ikon + jeton +
 /// fiyat); ad ekran okuyucu sözünde ve uzun basış ipucundadır. Joker bu
 /// yüzden metinle değil ipucuyla bulunur; davranış aynı.
-final _doubleAnswerJoker = find.byTooltip('Çift cevap');
+// Kurul 3 D19: yazılı soruda joker "İkinci deneme" adını taşır.
+final _doubleAnswerJoker = find.byTooltip('İkinci deneme');
 
 void main() {
   testWidgets('yazılı soruda yalnız işe yarayan jokerler gösterilir', (

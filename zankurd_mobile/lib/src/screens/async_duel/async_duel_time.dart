@@ -70,21 +70,23 @@ class AsyncDuelTimeLeft extends StatelessWidget {
         fontFeatures: const [FontFeature.tabularFigures()],
       ),
     );
-    if (!showBar) return text;
+    if (!showBar && !closesOnExpiry) return text;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         text,
-        const SizedBox(height: SahneSpace.x1),
-        SahneProgressBar(
-          key: const ValueKey('async-duel-time-bar'),
-          value: asyncDuelTimeFraction(remaining),
-          height: 4,
-          fillColor: urgent ? t.errFill : t.raceFill,
-          // Ekran okuyucu yüzdeyi değil, satırın etiketindeki süreyi okur.
-          semanticLabel: label,
-        ),
+        if (showBar) ...[
+          const SizedBox(height: SahneSpace.x1),
+          SahneProgressBar(
+            key: const ValueKey('async-duel-time-bar'),
+            value: asyncDuelTimeFraction(remaining),
+            height: 4,
+            fillColor: urgent ? t.errFill : t.raceFill,
+            // Ekran okuyucu yüzdeyi değil, satırın etiketindeki süreyi okur.
+            semanticLabel: label,
+          ),
+        ],
         if (closesOnExpiry) ...[
           const SizedBox(height: SahneSpace.x1),
           Text(

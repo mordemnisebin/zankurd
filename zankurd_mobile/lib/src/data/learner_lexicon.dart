@@ -173,7 +173,7 @@ class LearnerLexicon {
     ),
     'alphabet_1': LearnerLexiconSource(
       id: 'alphabet_1',
-      titleKu: 'Alfabe',
+      titleKu: 'Elîfbê',
       titleTr: 'Alfabe',
       categoryKu: 'Jiyana rojane',
       categoryTr: 'Gündelik hayat',

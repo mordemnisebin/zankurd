@@ -188,6 +188,17 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
           ),
           const SizedBox(height: SahneSpace.x2),
         ],
+        // Kurul 3 D21 (Astra + Sol): sözcük havuzu ile kurulan cümle alanı
+        // tek kutu gibi okunuyordu. İki alan etiketlidir: "Kurduğun cümle"
+        // (cevaptan önce) ve "Sözcükler".
+        if (!answered) ...[
+          Text(
+            Tr.forKu(K.kurdugunCumle, isKu),
+            key: const ValueKey('word-ordering-sentence-label'),
+            style: SahneType.captionStrong.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x1),
+        ],
         // ============ SEÇİLEN KELİMELERİN CÜMLE ALANI ============
         // 88: tek satır çip (50) + dolgu (32) = 82; eskiden 80'di ve ilk
         // kelime seçilince alan 2 dp uzayıp düğmeyi kaydırıyordu.
@@ -278,6 +289,12 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
             style: SahneType.caption.copyWith(color: t.tx2),
           ),
           const SizedBox(height: SahneSpace.x3),
+          Text(
+            Tr.forKu(K.wordPoolLabel, isKu),
+            key: const ValueKey('word-ordering-pool-label'),
+            style: SahneType.captionStrong.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x1),
 
           // ============ KELİME HAVUZU (AVAILABLE WORDS) ============
           ConstrainedBox(

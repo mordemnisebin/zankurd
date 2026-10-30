@@ -197,7 +197,9 @@ void main() {
     final source = File(
       'lib/src/screens/tournament_screen.dart',
     ).readAsStringSync();
-    expect(source, contains("bracketStatus == 'active' && i == currentRound"));
+    // Kurul 3 D16: etkin aşama oyuncunun kendi aşamasıdır; yine yalnız
+    // turnuva sürerken (bracketStatus == 'active').
+    expect(source, contains("bracketStatus == 'active' && i == _userStage"));
     expect(tester.takeException(), isNull);
   });
 

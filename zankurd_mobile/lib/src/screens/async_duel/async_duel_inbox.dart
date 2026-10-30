@@ -566,7 +566,10 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
       footer = AsyncDuelTimeLeft(
         key: const ValueKey('async-duel-time-left'),
         left: left,
-        showBar: true,
+        // Kurul 3 D13 (3/3): yarım kalan turda "24 sa kaldı"nın altındaki
+        // dolu çubuğun neyi ölçtüğü okunmuyordu; süre metni ve "Süre dolunca
+        // düello kapanır" bilgiyi zaten taşır, çubuk yalnız yeni turda kalır.
+        showBar: !resumable,
         closesOnExpiry: resumable,
       );
     } else if (summary.isWaitingOpponent && left != null) {
@@ -609,7 +612,19 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
       if (footer != null && forfeitReason == null) ?timeLabel,
       if (showReadyChip) readyLabel,
     ].join('. ');
-    final trailing = showReadyChip
+    // Kurul 3 D13: yarım kalan turda "Devam et" küçük bir rozetti, yanındaki
+    // "Rakip bul" düğmesi daha baskındı. Yarım turda gerçek (tonlu) bir
+    // düğmedir; satır dokunuşuyla aynı eylem.
+    final t = SahneTokens.of(context);
+    final trailing = resumable && !incoming
+        ? SahneButton.tonal(
+            key: const ValueKey('async-duel-ready-badge'),
+            label: readyLabel,
+            tint: t.raceTint,
+            foreground: t.raceTx,
+            onPressed: onTap,
+          )
+        : showReadyChip
         ? SahneBadge(
             key: const ValueKey('async-duel-ready-badge'),
             label: readyLabel,

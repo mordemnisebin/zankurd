@@ -294,10 +294,9 @@ void main() {
           find.byKey(const ValueKey('async-duel-closes-note')),
           findsNWidgets(2),
         );
-        expect(
-          find.byKey(const ValueKey('async-duel-time-bar')),
-          findsNWidgets(2),
-        );
+        // Kurul 3 D13 (3/3): yarım turda dolu çubuğun neyi ölçtüğü
+        // okunmuyordu; süre metni + kapanış notu kalır, çubuk düşer.
+        expect(find.byKey(const ValueKey('async-duel-time-bar')), findsNothing);
         expect(find.text('18 sa kaldı'), findsOneWidget);
         expect(find.text('3 sa kaldı'), findsOneWidget);
         // Beklenen satır: durum metni + kalan süre, çubuk yok.

@@ -24,6 +24,7 @@ import '../widgets/player_moderation_button.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
+import '../widgets/self_marked_name.dart';
 import 'room/room_invite_friends_sheet.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
@@ -2313,11 +2314,24 @@ class _RoomPlayerRow extends StatelessWidget {
     final t = SahneTokens.of(context);
     final isReady = player.state == Player.readyState;
     final stacked = MediaQuery.textScalerOf(context).scale(16) >= 24;
-    final nameText = Text(
-      _displayName(context),
+    // Kurul 3 D5 (3/3): lobide kendi satırın işaretli değildi. Yerel
+    // oyuncunun gerçek adı varsa yanına "(Sen)" eklenir; ad zaten "Sen"
+    // yer tutucusuysa tekrar eklenmez.
+    final ownName = _displayName(context);
+    final showSelfMark = isSelf && ownName != context.t(K.you);
+    final plainName = Text(
+      ownName,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: SahneType.bodyStrong.copyWith(color: t.tx),
+    );
+    // Astra 2. inceleme: işaret 3:1 esnek düzende kırpılıyordu; ortak
+    // [SelfMarkedName] işareti tam genişlikte tutar, gerekirse alta indirir.
+    final nameText = SelfMarkedName(
+      name: plainName,
+      mark: showSelfMark ? '(${context.t(K.you)})' : null,
+      markKey: const ValueKey('room-player-self-mark'),
+      markStyle: SahneType.bodyStrong.copyWith(color: t.goldTx),
     );
 
     // Ev sahibi rozeti adın SAĞINDA aynı satırdadır: altına inince bu satır

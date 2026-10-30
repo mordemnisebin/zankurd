@@ -298,7 +298,7 @@ void main() {
 
       final cta = find.byKey(const ValueKey('matchmaking-random-cta'));
       expect(cta, findsOneWidget);
-      expect(find.text('Rastgele rakip bul'), findsOneWidget);
+      expect(find.text('Tüm konulardan rakip bul'), findsOneWidget);
       expect(tester.getSize(cta).width, greaterThanOrEqualTo(390 - 32 - 1));
       expect(tester.getSize(cta).height, greaterThanOrEqualTo(48));
       expect(

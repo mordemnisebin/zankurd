@@ -262,7 +262,7 @@ void main() {
         find.byKey(const ValueKey('custom-room-capacity-8')),
       );
       expect(eight.selected, isTrue);
-      expect(find.text('Oyuncu sayısı'), findsOneWidget);
+      expect(find.text('En çok oyuncu'), findsOneWidget);
       // Etiket yalnız rakam; birim anlamsal adda.
       expect(
         find.descendant(
@@ -481,7 +481,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Konu seç'), findsOneWidget);
-    expect(find.text('Oyuncu sayısı'), findsOneWidget);
+    expect(find.text('En çok oyuncu'), findsOneWidget);
     expect(find.byKey(const ValueKey('custom-room-count-5')), findsNothing);
     expect(find.byKey(const ValueKey('custom-room-duration-30')), findsNothing);
     expect(find.byKey(const ValueKey('custom-room-fee-25')), findsNothing);

@@ -45,8 +45,15 @@ class WildcardButton extends StatelessWidget {
     this.onLockedTap,
     this.free = false,
     this.unavailable = false,
+    this.secondTry = false,
     super.key,
   });
+
+  /// Kurul 3 D19 (3/3): yazılı cevap ve cümle sıralama sorularında "Çift
+  /// cevap" adı ne yaptığını söylemiyordu (iki şık seçilmez; yanlışsa bir
+  /// deneme daha verilir). Bu türlerde joker "İkinci deneme" adını taşır;
+  /// mantık aynı.
+  final bool secondTry;
 
   final WildcardType type;
   final bool isKu;
@@ -88,7 +95,9 @@ class WildcardButton extends StatelessWidget {
         ? context.t(K.wildcardNoCoins)
         : null;
 
-    final typeLabel = type.label(isKu);
+    final typeLabel = secondTry && type == WildcardType.doubleAnswer
+        ? context.t(K.wildcardSecondTry)
+        : type.label(isKu);
     final typeHint = switch (type) {
       WildcardType.fiftyFifty => context.t(K.wildcardFiftyHint),
       WildcardType.audience => context.t(K.wildcardAudienceHint),

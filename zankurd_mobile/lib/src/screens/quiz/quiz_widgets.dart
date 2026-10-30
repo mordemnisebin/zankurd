@@ -811,8 +811,12 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       optionCount: question.displayAnswers.length,
       // Açıklanmada renk yalnız anlam taşır: doğru Rast, seçilen yanlış
       // Şaş; geri kalan şıklar söner.
+      // Kurul 3 D1 (3/3): hüküm beklenirken (sunucu-gizli cevap ya da
+      // gerilim tutuşu) seçilmeyen şıklar da söner; cevabın kilitlendiği
+      // görünür. Hüküm rengi yine yalnız açılışta gelir.
       dimmed:
           eliminated ||
+          (answered && suspense && selectedAnswer != answer) ||
           (revealed &&
               answer != question.correctAnswer &&
               selectedAnswer != answer),
@@ -1308,24 +1312,18 @@ class _DuelScoreHeader extends StatelessWidget {
           children: [
             // Ad + (botsa) "Bot" rozeti: dar kartta (320 dp, büyük yazı)
             // rozet taşmaz, alt satıra iner (2026-10-29, X4).
-            Row(
-              mainAxisAlignment: end
-                  ? MainAxisAlignment.end
-                  : MainAxisAlignment.start,
-              children: [
-                Flexible(
-                  // Okunur tabana (11 pt) kadar küçülür, sonra iki satıra
-                  // sarar (üç nokta yalnız son çare).
-                  child: QuizFitLine(
-                    context.playerDisplayName(p.name, tag: p.tag),
-                    maxLines: 2,
-                    alignment: end
-                        ? AlignmentDirectional.centerEnd
-                        : AlignmentDirectional.centerStart,
-                    style: SahneType.captionStrong.copyWith(color: t.tx),
-                  ),
-                ),
-              ],
+            Align(
+              alignment: end
+                  ? AlignmentDirectional.centerEnd
+                  : AlignmentDirectional.centerStart,
+              child: QuizFitLine(
+                context.playerDisplayName(p.name, tag: p.tag),
+                maxLines: 2,
+                alignment: end
+                    ? AlignmentDirectional.centerEnd
+                    : AlignmentDirectional.centerStart,
+                style: SahneType.captionStrong.copyWith(color: t.tx),
+              ),
             ),
             // Seri (🔥xN) puanın yanındadır: eskiden kartın altında AYRI bir
             // satırdı ve rakip puan alıp seri başlayınca kart ~28 pt uzayıp
@@ -1338,6 +1336,23 @@ class _DuelScoreHeader extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // Kurul 3 D5 (3/3) + Astra 2. inceleme: kendi tarafın "Sen"
+                  // ile işaretlenir. İşaret ad satırında 3:1 esnek düzende
+                  // kırpılıyor, tam genişlik verilince de adı ikinci satıra
+                  // itip soru sığma bütçesini bozuyordu (375×667 ×1,3). Puan
+                  // satırında durur: satır tek parça olarak küçülür, işaret
+                  // asla kesilmez ve kartın boyu değişmez.
+                  if (!end &&
+                      context.playerDisplayName(p.name, tag: p.tag) !=
+                          context.t(K.you)) ...[
+                    Text(
+                      context.t(K.you),
+                      key: const ValueKey('duel-self-mark'),
+                      maxLines: 1,
+                      style: SahneType.captionStrong.copyWith(color: t.tx),
+                    ),
+                    const SizedBox(width: SahneSpace.x2),
+                  ],
                   // "Bot" rozeti puan satırında (ad satırı dar kalır; ad, rozetle
                   // yarışıp üç noktaya düşmesin).
                   if (p.isBot && end) ...[
@@ -1357,8 +1372,11 @@ class _DuelScoreHeader extends StatelessWidget {
                     // sözlüğü puan/pûan der, kelime `K.scoreWord`tan gelir.
                     '${groupThousands(p.score)} ${context.t(K.scoreWord).toLowerCase()}',
                     maxLines: 1,
+                    // Kurul 3 D4: puanın rengi halattaki tarafının rengidir
+                    // (sen Zêr, rakip Boyax); hangi rengin kime ait olduğu
+                    // okunur.
                     style: SahneType.captionStrong.copyWith(
-                      color: t.goldTx,
+                      color: end ? t.raceTx : t.goldTx,
                       fontFeatures: const [FontFeature.tabularFigures()],
                     ),
                   ),
@@ -1717,6 +1735,13 @@ class _DuelTugBar extends StatelessWidget {
     final t = SahneTokens.of(context);
     final share = duelTugShare(playerScore, opponentScore);
     final reduceMotion = sahneMotionReduced(context);
+    // Kurul 3 D4 (3/3): 0–0'da çubuk yarı Zêr yarı Boyax tam doluydu; daha
+    // kimse puan almadan bir "durum" gösteriyordu. Puan yokken iki yarı da
+    // nötr iz rengidir; ilk puanla renkler gelir.
+    final neutral = playerScore <= 0 && opponentScore <= 0;
+    final track = t.tx3.withValues(alpha: 0.4);
+    final leftColor = neutral ? track : t.gold;
+    final rightColor = neutral ? track : t.race;
 
     return SizedBox(
       key: const ValueKey('duel-tug-bar'),
@@ -1735,14 +1760,16 @@ class _DuelTugBar extends StatelessWidget {
                   Expanded(
                     flex: (value * 1000).round(),
                     child: ColoredBox(
-                      color: t.gold,
+                      key: const ValueKey('duel-tug-left'),
+                      color: leftColor,
                       child: const SizedBox(height: 8),
                     ),
                   ),
                   Expanded(
                     flex: ((1 - value) * 1000).round(),
                     child: ColoredBox(
-                      color: t.race,
+                      key: const ValueKey('duel-tug-right'),
+                      color: rightColor,
                       child: const SizedBox(height: 8),
                     ),
                   ),
@@ -1812,20 +1839,41 @@ class _CoinBalanceLine extends StatelessWidget {
     final t = SahneTokens.of(context);
     final dbl = doubleAnswerHint;
     if (dbl != null) {
+      // Kurul 3 D20 (Astra + Sol): çift cevap ipucu bakiye satırının YERİNE
+      // geçiyordu; jokerlerin fiyatları görünürken bakiye kayboluyordu. Aynı
+      // yuvada solda bakiye, sağda ipucu (alt perde uzamaz).
       return Semantics(
         liveRegion: true,
+        // Canlı bölge yalnız ipucunu okur (ikinci deneme bildirimi).
         label: dbl,
         excludeSemantics: true,
-        child: Center(
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              dbl,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              style: SahneType.captionStrong.copyWith(color: t.goldTx),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SahneGlyph(SahneGlyphKind.coin, size: 16),
+            const SizedBox(width: SahneSpace.x1),
+            Text(
+              groupThousands(balance),
+              style: SahneType.captionStrong.copyWith(
+                color: t.goldTx,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
             ),
-          ),
+            const SizedBox(width: SahneSpace.x2),
+            Text('·', style: SahneType.captionStrong.copyWith(color: t.tx2)),
+            const SizedBox(width: SahneSpace.x1),
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  dbl,
+                  key: const ValueKey('quiz-double-answer-hint'),
+                  maxLines: 1,
+                  style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                ),
+              ),
+            ),
+          ],
         ),
       );
     }

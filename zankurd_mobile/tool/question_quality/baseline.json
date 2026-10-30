@@ -21,12 +21,12 @@
     "assets/data/fill_in_blank_2026_08_questions.json": "0bb341e6966474e91754695fcea433e51c78783ab29087b555a829c6171d6b5c",
     "assets/data/hat_2026_10_07_questions.json": "1cae99c2fa5472561befcaa185c6a5148dcde6a1a56b91b7f28e3b86818c2ff9",
     "assets/data/kolay_2026_10_19_questions.json": "5f78a323605d475f1f3d143ddb4843a8770977138270568cc3b439e57dfe17ba",
-    "assets/data/offline_questions.json": "a2281c16e0b36e5f13b24ff14f5f05b07efd7c37bbee68debfef6d853f47ed2a",
+    "assets/data/offline_questions.json": "b8c9a77d048d92651192350241ef71605237d97e0e6622a9625a9ba68c304537",
     "assets/data/restore_2026_08_07_questions.json": "46f668226886cb604a818a1a63a046219b6ea193c061f5d78946b9f5ef901d0b",
     "assets/data/sentence_building_questions.json": "5e770157578541426a3d75b433ef985ada70be8209453a193de594e2c7ba247a",
     "assets/data/source_first_2026_08_questions.json": "8954e5b13703de77e997c06f0bc72148e791cc073509e045136449ad0a35cc48",
     "assets/data/visual_2026_08_07_questions.json": "defbbd00df69f68865b16d232a6530cbc9e374f7ef191f02a3253d8d2689c5c9",
-    "lib/src/data/curated_question_bank.dart": "1eb15d5b7ec24d1360a467b60573ff229209af43441bf421c390f236f5517903"
+    "lib/src/data/curated_question_bank.dart": "9f64cc5de2b00dc219937a07da3e134e1028f7c136747869bd33960fe4034b0f"
   },
   "blockerCount": 0,
   "criticalCount": 0,

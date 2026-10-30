@@ -325,7 +325,7 @@ void main() {
       final total = _placementLessons.length;
       expect(rows, findsNWidgets(5));
       expect(more, findsOneWidget);
-      expect(find.text('Tüm dersler (+${total - 5})'), findsOneWidget);
+      expect(find.text('Tüm dersler · ${total - 5} ders daha'), findsOneWidget);
       await tester.tap(more);
       await tester.pumpAndSettle();
       expect(more, findsNothing);

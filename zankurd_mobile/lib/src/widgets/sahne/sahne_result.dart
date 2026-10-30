@@ -1253,7 +1253,13 @@ class SahneResultRewards extends StatelessWidget {
     this.progress,
     this.label,
     this.compact = false,
+    this.showZeroXp = false,
   });
+
+  /// Kurul 3 D8 (3/3): kaybeden oyuncuda yalnız jeton çipi + seviye çubuğu
+  /// görünüyor, bu maçın XP verip vermediği okunmuyordu. Çevrimiçi turda XP
+  /// 0 ise "0 XP" çipi açıkça çizilir.
+  final bool showZeroXp;
 
   /// Sıkışık: söz ve çipler TEK satırda (kısa ekranda kart ~64 px).
   final bool compact;
@@ -1300,7 +1306,7 @@ class SahneResultRewards extends StatelessWidget {
               label: coinLabel ?? '+$coins',
               semanticLabel: coinSemanticLabel,
             ),
-          if (xp > 0)
+          if (xp > 0 || showZeroXp)
             SahneStatChip(
               tint: t.goldTint,
               outline: t.gold,

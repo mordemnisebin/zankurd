@@ -363,7 +363,7 @@ Future<void> _startImmediateMatch(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Rastgele rakip bul'));
+  await tester.tap(find.text('Tüm konulardan rakip bul'));
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 1501));
   await tester.pump();
@@ -382,7 +382,7 @@ Future<void> _startSnapshotMatch(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Rastgele rakip bul'));
+  await tester.tap(find.text('Tüm konulardan rakip bul'));
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 1501));
   await tester.pump();
@@ -439,7 +439,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.tap(find.text('Tüm konulardan rakip bul'));
     await tester.pump();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 1501));
@@ -478,7 +478,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.tap(find.text('Tüm konulardan rakip bul'));
     await tester.pump(const Duration(seconds: 20));
     await tester.tap(find.text('Evet'));
     await tester.pump();
@@ -520,7 +520,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.tap(find.text('Tüm konulardan rakip bul'));
     await tester.pump(const Duration(seconds: 20));
     await tester.tap(find.text('Hayır'));
     await tester.pumpAndSettle();
@@ -557,7 +557,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Rastgele rakip bul'));
+      await tester.tap(find.text('Tüm konulardan rakip bul'));
       await tester.pump();
       await tester.tap(find.text('Vazgeç'));
       await tester.pumpAndSettle();
@@ -581,7 +581,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Canlı düello'), findsOneWidget);
-    expect(find.text('Rastgele rakip bul'), findsOneWidget);
+    expect(find.text('Tüm konulardan rakip bul'), findsOneWidget);
     expect(
       find.byKey(const ValueKey('matchmaking-selection-header')),
       findsOneWidget,
@@ -610,7 +610,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.tap(find.text('Tüm konulardan rakip bul'));
     await tester.pump();
 
     // Ekranı kaldır: dispose, kuyruğu sunucuda da temizlemeli ki oyuncu
@@ -634,7 +634,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('open-matchmaking')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.tap(find.text('Tüm konulardan rakip bul'));
     await tester.pump();
     await tester.tap(find.text('Vazgeç'));
     await tester.pump();
@@ -683,7 +683,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.tap(find.text('Tüm konulardan rakip bul'));
     await tester.pump();
     final firstJoin = repository.latestJoin;
     await tester.tap(find.text('Vazgeç'));
@@ -761,7 +761,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.tap(find.text('Tüm konulardan rakip bul'));
     // 1500 ms'lik "zafer geçişi" gecikmesinin İÇİNDE, "eşleşti" durumu
     // görünür görünmez durdurulur — asıl UI burada.
     await tester.pump();
@@ -797,7 +797,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Rastgele rakip bul'));
+      await tester.tap(find.text('Tüm konulardan rakip bul'));
       await tester.pump();
       await tester.pump();
 
@@ -892,7 +892,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.tap(find.text('Tüm konulardan rakip bul'));
     await tester.pump(const Duration(seconds: 3));
     expect(find.text('Rakip aranıyor...'), findsOneWidget);
     repository.queue.add(const {
@@ -930,7 +930,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.tap(find.text('Tüm konulardan rakip bul'));
     await tester.pump(const Duration(seconds: 20));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 1501));
@@ -962,7 +962,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.tap(find.text('Tüm konulardan rakip bul'));
     await tester.pump();
     await tester.tap(find.text('Vazgeç'));
     await tester.pump();
@@ -1080,7 +1080,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('open-matchmaking')));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.tap(find.text('Tüm konulardan rakip bul'));
     await tester.pumpAndSettle();
 
     // İlk iptal: hata görünür, oyuncu hâlâ ekranda — hayalet kuyruğa karşı
@@ -1120,7 +1120,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Rastgele rakip bul'));
+      await tester.tap(find.text('Tüm konulardan rakip bul'));
       await tester.pump();
 
       // Arama ekrani aktif

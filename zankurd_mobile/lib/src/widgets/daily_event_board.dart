@@ -164,17 +164,26 @@ extension on _DailyEventBoardCardState {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: SahneSpace.x3),
+        // Kurul 3 D12 (3/3): bitiş süresi bölümün EN ALTINDAYDI; ilk
+        // görünümde alt perdenin solma kenarına düşüp neredeyse okunmuyordu.
+        // Tek zamana bağlı, karar etkileyen bilgi olduğu için en üstte ve
+        // tam kontrastta.
+        _Countdown(now: _now(), isKu: isKu, ends: true, prominent: true),
         FutureBuilder<DailyEventBoard?>(
           future: _board,
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
-              return const SkeletonLine(height: 48, borderRadius: 16);
+              return const Padding(
+                padding: EdgeInsets.only(top: SahneSpace.x3),
+                child: SkeletonLine(height: 48, borderRadius: 16),
+              );
             }
             final board = snapshot.data;
             if (board == null) return const SizedBox.shrink();
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const SizedBox(height: SahneSpace.x3),
                 _InfoLine(
                   key: const ValueKey('daily-event-participants'),
                   icon: AppIcons.user,
@@ -197,12 +206,10 @@ extension on _DailyEventBoardCardState {
                     }),
                   ),
                 ],
-                const SizedBox(height: SahneSpace.x3),
               ],
             );
           },
         ),
-        _Countdown(now: _now(), isKu: isKu, ends: true),
       ],
     );
   }
@@ -285,7 +292,15 @@ class _Unavailable extends StatelessWidget {
 }
 
 class _Countdown extends StatelessWidget {
-  const _Countdown({required this.now, required this.isKu, this.ends = false});
+  const _Countdown({
+    required this.now,
+    required this.isKu,
+    this.ends = false,
+    this.prominent = false,
+  });
+
+  /// Birincil mürekkep (giriş önizlemesinde en üst satır, kurul 3 D12).
+  final bool prominent;
 
   /// Tur henüz oynanmadıysa "Bu tur X sonra biter" (oynanabilirlikle
   /// çelişmez); bittiyse "Yeni tur X sonra".
@@ -296,23 +311,35 @@ class _Countdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final left = contestResetCountdown(now);
+    // Kurul 3 D12: bir saatten az kalınca "0 sa 5 dk" yerine "5 dk".
+    final underHour = left.hours <= 0;
     return _InfoLine(
       key: const ValueKey('daily-event-countdown'),
       icon: AppIcons.clock,
-      text: Tr.forKu(ends ? K.contestEndsIn : K.contestNextIn, isKu, {
-        'h': '${left.hours}',
-        'm': '${left.minutes}',
-      }),
+      prominent: prominent,
+      text: Tr.forKu(
+        ends
+            ? (underHour ? K.contestEndsInMin : K.contestEndsIn)
+            : (underHour ? K.contestNextInMin : K.contestNextIn),
+        isKu,
+        {'h': '${left.hours}', 'm': '${left.minutes}'},
+      ),
     );
   }
 }
 
 /// İkon + sarılan tek metin (dar ekranda ve %200 yazıda taşmaz).
 class _InfoLine extends StatelessWidget {
-  const _InfoLine({super.key, required this.icon, required this.text});
+  const _InfoLine({
+    super.key,
+    required this.icon,
+    required this.text,
+    this.prominent = false,
+  });
 
   final IconData icon;
   final String text;
+  final bool prominent;
 
   @override
   Widget build(BuildContext context) {
@@ -320,10 +347,15 @@ class _InfoLine extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 18, color: t.tx2),
+        Icon(icon, size: 18, color: prominent ? t.tx : t.tx2),
         const SizedBox(width: SahneSpace.x2),
         Expanded(
-          child: Text(text, style: SahneType.caption.copyWith(color: t.tx2)),
+          child: Text(
+            text,
+            style: prominent
+                ? SahneType.captionStrong.copyWith(color: t.tx)
+                : SahneType.caption.copyWith(color: t.tx2),
+          ),
         ),
       ],
     );

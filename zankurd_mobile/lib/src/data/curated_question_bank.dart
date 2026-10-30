@@ -895,7 +895,9 @@ const curatedQuestionBank = <QuizQuestion>[
   ),
   QuizQuestion(
     id: 'curated_paradigma_0009',
-    category: 'Paradigma',
+    // Kurul 3 D6: slogan/olay sorusu "Bilim" (Paradigma) turunda yersizdi;
+    // sunucu eşiyle birlikte Siyaset'e taşındı (2026-10-30_slogan_kategori).
+    category: 'Siyaset',
     prompt: 'Kîjan bûyer bi sloganê "Jin, Jiyan, Azadî" re pir girêdayî ye?',
     answers: [
       'Berxwedana jinên Kobanî (2014)',
