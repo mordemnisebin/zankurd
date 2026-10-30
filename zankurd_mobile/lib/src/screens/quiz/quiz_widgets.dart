@@ -1323,9 +1323,7 @@ class _DuelScoreHeader extends StatelessWidget {
                   // Kurul 3 D5 (3/3): kendi tarafın "Sen" ile işaretli
                   // değildi; iki avatar da aynı baş harfi taşıyabiliyordu.
                   child: QuizFitLine(
-                    end
-                        ? context.playerDisplayName(p.name, tag: p.tag)
-                        : '${context.playerDisplayName(p.name, tag: p.tag)} (${context.t(K.you)})',
+                    context.playerDisplayName(p.name, tag: p.tag),
                     maxLines: 2,
                     alignment: end
                         ? AlignmentDirectional.centerEnd
@@ -1333,6 +1331,17 @@ class _DuelScoreHeader extends StatelessWidget {
                     style: SahneType.captionStrong.copyWith(color: t.tx),
                   ),
                 ),
+                if (!end &&
+                    context.playerDisplayName(p.name, tag: p.tag) !=
+                        context.t(K.you)) ...[
+                  const SizedBox(width: SahneSpace.x1),
+                  Text(
+                    '(${context.t(K.you)})',
+                    key: const ValueKey('duel-self-mark'),
+                    maxLines: 1,
+                    style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                  ),
+                ],
               ],
             ),
             // Seri (🔥xN) puanın yanındadır: eskiden kartın altında AYRI bir
@@ -1837,7 +1846,8 @@ class _CoinBalanceLine extends StatelessWidget {
       // yuvada solda bakiye, sağda ipucu (alt perde uzamaz).
       return Semantics(
         liveRegion: true,
-        label: '$balance ${context.t(K.coinWord)}. $dbl',
+        // Canlı bölge yalnız ipucunu okur (ikinci deneme bildirimi).
+        label: dbl,
         excludeSemantics: true,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1852,11 +1862,13 @@ class _CoinBalanceLine extends StatelessWidget {
               ),
             ),
             const SizedBox(width: SahneSpace.x2),
+            Text('·', style: SahneType.captionStrong.copyWith(color: t.tx2)),
+            const SizedBox(width: SahneSpace.x1),
             Flexible(
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  '· $dbl',
+                  dbl,
                   key: const ValueKey('quiz-double-answer-hint'),
                   maxLines: 1,
                   style: SahneType.captionStrong.copyWith(color: t.goldTx),

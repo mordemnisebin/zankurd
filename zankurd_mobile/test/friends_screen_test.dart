@@ -156,6 +156,11 @@ void main() {
     ) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
+      // Kurul 3 D27: arkadaşı olan oyuncuda davet kartı listenin ALTINDA.
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('friends-enter-code-button')),
+      );
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('friends-enter-code-button')));
       await tester.pumpAndSettle();
 

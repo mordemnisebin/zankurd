@@ -174,7 +174,7 @@ Future<void> _startSearch(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Rastgele rakip bul'));
+  await tester.tap(find.text('Tüm konulardan rakip bul'));
   await tester.pump();
 }
 

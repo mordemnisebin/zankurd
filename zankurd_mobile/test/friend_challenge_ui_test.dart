@@ -416,7 +416,9 @@ void main() {
       await _playAllSeven(tester);
 
       expect(
-        find.text('Rojda sırası gelince bildirim alacak.'),
+        find.text(
+          'Sıra Rojda adlı oyuncuda. Oynayınca sonucu Yarış sekmesinde görürsün.',
+        ),
         findsOneWidget,
       );
       expect(

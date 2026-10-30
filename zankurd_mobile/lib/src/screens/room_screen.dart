@@ -2317,16 +2317,32 @@ class _RoomPlayerRow extends StatelessWidget {
     // oyuncunun gerçek adı varsa yanına "(Sen)" eklenir; ad zaten "Sen"
     // yer tutucusuysa tekrar eklenmez.
     final ownName = _displayName(context);
-    final selfMark = isSelf && ownName != context.t(K.you)
-        ? ' (${context.t(K.you)})'
-        : '';
-    final nameText = Text(
-      '$ownName$selfMark',
-      key: isSelf ? const ValueKey('room-player-self-name') : null,
+    final showSelfMark = isSelf && ownName != context.t(K.you);
+    final plainName = Text(
+      ownName,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: SahneType.bodyStrong.copyWith(color: t.tx),
     );
+    final nameText = showSelfMark
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(flex: 3, child: plainName),
+              const SizedBox(width: SahneSpace.x1),
+              Flexible(
+                child: Text(
+                  '(${context.t(K.you)})',
+                  key: const ValueKey('room-player-self-mark'),
+                  maxLines: 1,
+                  overflow: TextOverflow.clip,
+                  softWrap: false,
+                  style: SahneType.bodyStrong.copyWith(color: t.goldTx),
+                ),
+              ),
+            ],
+          )
+        : plainName;
 
     // Ev sahibi rozeti adın SAĞINDA aynı satırdadır: altına inince bu satır
     // ötekilerden uzun oluyordu. `Wrap`: ad + rozet sığmazsa (dar ekran,

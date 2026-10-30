@@ -106,7 +106,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Rastgele rakip bul'));
+      await tester.tap(find.text('Tüm konulardan rakip bul'));
       await tester.pump(const Duration(seconds: 20));
 
       // Üç düğme de soldan sağa sırayla var: cancel, bot, asyncDuel.
@@ -143,7 +143,7 @@ void main() {
         _shell(MatchmakingScreen(repository: repository)),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Rastgele rakip bul'));
+      await tester.tap(find.text('Tüm konulardan rakip bul'));
       await tester.pump(const Duration(seconds: 20));
 
       // Beklenti bilerek bayrağa bağlıdır: `kAsyncDuelEnabled` `applied.md`
@@ -176,7 +176,7 @@ void main() {
       _shell(MatchmakingScreen(repository: repository, asyncDuelEnabled: true)),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rastgele rakip bul'));
+    await tester.tap(find.text('Tüm konulardan rakip bul'));
     await tester.pump(const Duration(seconds: 20));
     await tester.tap(find.byKey(const ValueKey('mm-offer-async-duel')));
     await tester.pump();

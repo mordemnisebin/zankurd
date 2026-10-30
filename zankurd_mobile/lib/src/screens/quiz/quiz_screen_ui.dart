@@ -925,7 +925,9 @@ extension _QuizScreenUI on _QuizScreenState {
           child: DecoratedBox(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(SahneVolume.buttonRadius),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(SahneVolume.buttonRadius),
+              ),
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(

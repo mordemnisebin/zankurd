@@ -143,7 +143,7 @@ Future<void> _searchUntilRejoinPending(
   await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('open-matchmaking')));
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Rastgele rakip bul'));
+  await tester.tap(find.text('Tüm konulardan rakip bul'));
   await tester.pump();
   expect(repository.joinCalls, 1);
   expect(repository.inQueue, isTrue);

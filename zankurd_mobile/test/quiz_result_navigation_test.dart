@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
+import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
@@ -66,7 +67,7 @@ Future<void> _pumpResultOnFinishedRoomStack(
   await tester.pump(const Duration(seconds: 1));
   final primaryActionKey = roomId == null
       ? 'result-play-again-button'
-      : 'result-primary-home';
+      : 'result-primary-find-opponent';
   await tester.scrollUntilVisible(
     find.byKey(ValueKey(primaryActionKey)),
     500,
@@ -76,7 +77,7 @@ Future<void> _pumpResultOnFinishedRoomStack(
 
 void main() {
   testWidgets(
-    'çevrimiçi sonuç ana eylemi eve döner ve bitmiş oda rotasını temizler',
+    'çevrimiçi sonuç ana eylemi yeni rakip arar ve bitmiş oda rotasını temizler',
     (tester) async {
       await _pumpResultOnFinishedRoomStack(
         tester,
@@ -84,36 +85,44 @@ void main() {
         roomId: 'online-room-id',
       );
 
-      final action = find.byKey(const ValueKey('result-primary-home'));
+      // Kurul 3 D9 (2026-10-30): rastgele canlı düellonun sonucunda birincil
+      // eylem "Ana sayfa" değil "Rakip bul"dur; bitmiş oda rotası yine
+      // temizlenir, eşleşme ilk rotanın üstüne açılır. Ana sayfa "⋯"de.
+      final action = find.byKey(const ValueKey('result-primary-find-opponent'));
       expect(
-        find.descendant(of: action, matching: find.text('Ana sayfa')),
+        find.descendant(of: action, matching: find.text('Rakip bul')),
         findsOneWidget,
       );
 
       await tester.tap(action);
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
 
-      expect(find.text(_rootMarker), findsOneWidget);
       expect(find.text(_staleRoomMarker), findsNothing);
       expect(find.byType(QuizResultScreen), findsNothing);
+      expect(find.byType(MatchmakingScreen), findsOneWidget);
+      // Eşleşme ekranının zamanlayıcıları kapansın.
+      await tester.pumpWidget(const SizedBox());
+      await tester.pump(const Duration(seconds: 1));
     },
   );
 
-  testWidgets('çevrimiçi ana eylem Kurmancîde Sereke olarak görünür', (
-    tester,
-  ) async {
-    await _pumpResultOnFinishedRoomStack(
-      tester,
-      language: 'ku',
-      roomId: 'online-room-id',
-    );
+  testWidgets(
+    'çevrimiçi ana eylem Kurmancîde Hevrikekî bibîne olarak görünür',
+    (tester) async {
+      await _pumpResultOnFinishedRoomStack(
+        tester,
+        language: 'ku',
+        roomId: 'online-room-id',
+      );
 
-    final action = find.byKey(const ValueKey('result-primary-home'));
-    expect(
-      find.descendant(of: action, matching: find.text('Rûpela sereke')),
-      findsOneWidget,
-    );
-  });
+      final action = find.byKey(const ValueKey('result-primary-find-opponent'));
+      expect(
+        find.descendant(of: action, matching: find.text('Hevrikekî bibîne')),
+        findsOneWidget,
+      );
+    },
+  );
 
   // 2026-09-29 Şahnê: sonuç C iskeletine (oyun sahnesi) taşındı; AppBar'ın
   // geri düğmesinin yerini sahnenin üst satırındaki kapat (✕) aldı. Korunan

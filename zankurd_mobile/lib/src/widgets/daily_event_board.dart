@@ -169,18 +169,21 @@ extension on _DailyEventBoardCardState {
         // Tek zamana bağlı, karar etkileyen bilgi olduğu için en üstte ve
         // tam kontrastta.
         _Countdown(now: _now(), isKu: isKu, ends: true, prominent: true),
-        const SizedBox(height: SahneSpace.x3),
         FutureBuilder<DailyEventBoard?>(
           future: _board,
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
-              return const SkeletonLine(height: 48, borderRadius: 16);
+              return const Padding(
+                padding: EdgeInsets.only(top: SahneSpace.x3),
+                child: SkeletonLine(height: 48, borderRadius: 16),
+              );
             }
             final board = snapshot.data;
             if (board == null) return const SizedBox.shrink();
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const SizedBox(height: SahneSpace.x3),
                 _InfoLine(
                   key: const ValueKey('daily-event-participants'),
                   icon: AppIcons.user,
