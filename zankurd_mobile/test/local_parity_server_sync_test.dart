@@ -393,7 +393,7 @@ void main() {
   });
 
   test(
-    'T7 berxwedan kategori farkı korumalı ve uygulanmamış göçle izlenir',
+    'T7 berxwedan kategori farkı korumalı ve canlıya uygulanmış göçle izlenir',
     () {
       const localId = 'curated_movement_0006';
       final path = _recategorisationFix[localId]!;
@@ -412,7 +412,7 @@ void main() {
       expect(sql, contains('correct_option = v_word.correct_option'));
       expect(
         File('supabase/applied.md').readAsStringSync(),
-        contains('| ${path.split('/').last} | ⏳ |'),
+        contains('| ${path.split('/').last} | ✅ |'),
       );
     },
   );
