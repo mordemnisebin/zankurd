@@ -107,7 +107,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
-    expect(find.text('Hemen oyna'), findsOneWidget);
+    expect(find.text('Misafir olarak devam et'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -256,7 +256,7 @@ void main() {
 
     expect(find.text('Google ile devam et'), findsOneWidget);
     expect(find.text('Apple ile devam et'), findsOneWidget);
-    expect(find.text('Hemen oyna'), findsOneWidget);
+    expect(find.text('Misafir olarak devam et'), findsOneWidget);
     expect(find.text('Veya e-posta ile'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
@@ -403,45 +403,42 @@ void main() {
     expect(find.byType(AppLogo), findsOneWidget);
   });
 
-  testWidgets(
-    'auth alternative buttons stay readable on their own backgrounds',
-    (tester) async {
-      await tester.binding.setSurfaceSize(const Size(844, 390));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
+  testWidgets('auth alternative buttons stay readable on their own backgrounds', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(844, 390));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
 
-      for (final mode in [ThemeMode.light, ThemeMode.dark]) {
-        // KeyedSubtree: provider create'leri her temada yeniden çalışsın.
-        await tester.pumpWidget(
-          KeyedSubtree(
-            key: ValueKey(mode),
-            child: testShell(
-              child: const SignInScreen(),
-              authProvider: GateAuthProvider(),
-              themeProvider: ThemeProvider(initialMode: mode),
-            ),
+    for (final mode in [ThemeMode.light, ThemeMode.dark]) {
+      // KeyedSubtree: provider create'leri her temada yeniden çalışsın.
+      await tester.pumpWidget(
+        KeyedSubtree(
+          key: ValueKey(mode),
+          child: testShell(
+            child: const SignInScreen(),
+            authProvider: GateAuthProvider(),
+            themeProvider: ThemeProvider(initialMode: mode),
           ),
-        );
-        await tester.pumpAndSettle();
-        await revealSignInForm(tester);
+        ),
+      );
+      await tester.pumpAndSettle();
+      await revealSignInForm(tester);
 
-        // Google butonu: iki temada da beyaz dolgu -> koyu metin.
-        final googleLabel = tester.widget<Text>(
-          find.text('Google ile devam et'),
-        );
-        expect(googleLabel.style?.color?.computeLuminance(), lessThan(0.3));
+      // Google butonu: iki temada da beyaz dolgu -> koyu metin.
+      final googleLabel = tester.widget<Text>(find.text('Google ile devam et'));
+      expect(googleLabel.style?.color?.computeLuminance(), lessThan(0.3));
 
-        // "Hemen oyna" artık dolgulu birincil düğmedir (yazı rengi tema
-        // belirtecinden gelir, burada elle ölçülmez); okunurluğu Şahnê düğme
-        // bekçileri korur. Burada yalnız varlığı ve ikincil girişin ayrı
-        // olduğu sabitlenir.
-        expect(find.byKey(const ValueKey('sign-in-play-now')), findsOneWidget);
-        expect(find.byKey(const ValueKey('sign-in-submit')), findsOneWidget);
-      }
-    },
-  );
+      // "Misafir olarak devam et" artık dolgulu birincil düğmedir (yazı rengi tema
+      // belirtecinden gelir, burada elle ölçülmez); okunurluğu Şahnê düğme
+      // bekçileri korur. Burada yalnız varlığı ve ikincil girişin ayrı
+      // olduğu sabitlenir.
+      expect(find.byKey(const ValueKey('sign-in-play-now')), findsOneWidget);
+      expect(find.byKey(const ValueKey('sign-in-submit')), findsOneWidget);
+    }
+  });
 
   // 2026-10-28 görsel kurul: form doldurulunca "Giriş yap" birincil olur,
-  // "Hemen oyna" ikincile iner; boşken misafir yolu birincil kalır.
+  // "Misafir olarak devam et" ikincile iner; boşken misafir yolu birincil kalır.
   testWidgets(
     'T4 form açıkken misafir ikincil; eski bekçi yalnız dolu formu ölçüyordu',
     (tester) async {
@@ -487,9 +484,9 @@ void main() {
     // isLoading true iken onPressed null'a düşer; IgnorePointer bu durumda
     // butonu tamamen hit-test dışı bırakmalı (yalnızca InkWell'in örtük
     // null-onTap davranışına güvenmemeli). Bulunamaması bunun kanıtıdır.
-    // "Hemen oyna" Şahnê düğmesidir: yükleme sürerken dokunuş alır ama
+    // "Misafir olarak devam et" Şahnê düğmesidir: yükleme sürerken dokunuş alır ama
     // onPressed null olduğundan hiçbir şey yapmaz.
-    await tester.tap(find.text('Hemen oyna'), warnIfMissed: false);
+    await tester.tap(find.text('Misafir olarak devam et'), warnIfMissed: false);
     await tester.pump();
     expect(authProvider.isAuthenticated, isFalse);
 
@@ -497,7 +494,7 @@ void main() {
     await tester.pump();
 
     // Yükleme bitince buton tekrar normal çalışmalı (regresyon önlemi).
-    await tester.tap(find.text('Hemen oyna').hitTestable());
+    await tester.tap(find.text('Misafir olarak devam et').hitTestable());
     await tester.pumpAndSettle();
 
     expect(authProvider.isAuthenticated, isTrue);
@@ -560,7 +557,7 @@ void main() {
           (hi > lo ? hi + 0.05 : lo + 0.05) / (hi > lo ? lo + 0.05 : hi + 0.05);
       expect(contrast, greaterThanOrEqualTo(4.5));
 
-      expect(find.text('Hemen oyna'), findsOneWidget);
+      expect(find.text('Misafir olarak devam et'), findsOneWidget);
       expect(tester.takeException(), isNull);
     }
   });
@@ -650,7 +647,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final guestButton = find.text('Hemen oyna');
+    final guestButton = find.text('Misafir olarak devam et');
     expect(guestButton, findsOneWidget);
     expect(tester.getBottomRight(guestButton).dy, lessThan(844));
   });
@@ -986,9 +983,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Hemen oyna'));
+    await tester.ensureVisible(find.text('Misafir olarak devam et'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Hemen oyna'));
+    await tester.tap(find.text('Misafir olarak devam et'));
     await tester.pumpAndSettle();
 
     expect(find.byType(HomeScreen), findsOneWidget);
@@ -1233,7 +1230,7 @@ void main() {
     await tester.pumpAndSettle();
     await revealSignInForm(tester);
 
-    final guestButton = find.text('Hemen oyna');
+    final guestButton = find.text('Misafir olarak devam et');
     expect(guestButton, findsOneWidget);
     final beforeDragY = tester.getTopLeft(guestButton).dy;
 
@@ -1259,7 +1256,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final guestButton = find.text('Hemen oyna');
+    final guestButton = find.text('Misafir olarak devam et');
     expect(guestButton, findsOneWidget);
     expect(tester.getBottomRight(guestButton).dy, lessThan(390));
   });
@@ -1336,7 +1333,7 @@ void main() {
     await tester.pumpAndSettle();
     await revealSignInForm(tester);
 
-    for (final label in ['Niha bilîze', 'An jî bi e-nameyê']) {
+    for (final label in ['Wek mêvan bidomîne', 'An jî bi e-nameyê']) {
       final finder = find.text(label);
       expect(finder, findsOneWidget, reason: label);
       final paragraph = tester.renderObject<RenderParagraph>(finder);
@@ -1362,6 +1359,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Bi xêr hatî ZanKurdê'), findsOneWidget);
-    expect(find.text('Niha bilîze'), findsOneWidget);
+    expect(find.text('Wek mêvan bidomîne'), findsOneWidget);
   });
 }

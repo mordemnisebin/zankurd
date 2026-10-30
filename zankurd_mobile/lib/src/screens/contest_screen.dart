@@ -340,12 +340,10 @@ class _ContestSkeleton extends StatelessWidget {
 /// tutsun; `contest_skeleton_test` ölçüp kilitler).
 const double _kHeroTextHeight = 128;
 
-/// Hero'ya gömülü dağ sahnesinin yüksekliği (U2, 2026-10-28 tur 4): ekranın
-/// %36'sı, 208–320 arası. Sabit 208 telefonda içerik ile sabit "Başla"
-/// arasında ~200 px ölü boşluk bırakıyordu; sahne boşluğu doldurur, kısa
-/// ekranda küçülür.
+/// Alt perdede süre, katılım ve dünün birincisi de bulunduğundan sahne
+/// kısa bilgi çiplerine yer bırakır. İskelet aynı ölçüyü kullanır.
 double _heroSceneHeight(BuildContext context) =>
-    (MediaQuery.sizeOf(context).height * 0.36).clamp(208.0, 320.0);
+    (MediaQuery.sizeOf(context).height * 0.22).clamp(160.0, 240.0);
 
 class _ContestContent extends StatelessWidget {
   const _ContestContent({

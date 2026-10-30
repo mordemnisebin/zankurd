@@ -1,4 +1,4 @@
-/// Giriş ekranının tek birincil eylemi "Hemen oyna" (misafir) olmalı.
+/// Giriş ekranının tek birincil eylemi "Misafir olarak devam et" (misafir) olmalı.
 ///
 /// ## Kusur
 ///
@@ -43,7 +43,7 @@ void main() {
       await tester.pumpAndSettle();
 
       for (final label in [
-        'Hemen oyna',
+        'Misafir olarak devam et',
         'Apple ile devam et',
         'Google ile devam et',
         'E-posta ile giriş',
@@ -52,13 +52,13 @@ void main() {
       }
       expect(find.byType(TextField), findsNothing);
 
-      // Ekranda TEK turuncu birincil düğme: "Hemen oyna".
+      // Ekranda TEK turuncu birincil düğme: "Misafir olarak devam et".
       final primaries = tester
           .widgetList<SahneButton>(find.byType(SahneButton))
           .where((b) => b.isPrimary)
           .toList();
       expect(primaries, hasLength(1));
-      expect(primaries.single.label, 'Hemen oyna');
+      expect(primaries.single.label, 'Misafir olarak devam et');
 
       // T4: form açılınca da misafir erişilebilir, artık ikincildir.
       await tester.tap(find.text('E-posta ile giriş'));
@@ -78,7 +78,7 @@ void main() {
             .where((b) => b.isPrimary),
         hasLength(1),
       );
-      await tester.tap(find.text('Hemen oyna'));
+      await tester.tap(find.text('Misafir olarak devam et'));
       await tester.pumpAndSettle();
       expect(auth.isAuthenticated, isTrue);
       debugDefaultTargetPlatformOverride = null;

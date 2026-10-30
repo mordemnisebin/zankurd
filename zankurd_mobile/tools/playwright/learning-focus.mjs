@@ -31,7 +31,7 @@ try {
  await shot('onboarding');
  await click('Bidomîne');
  await click('Dest pê bike');
- await click('Niha bilîze');
+ await click('Wek mêvan bidomîne');
  await page.getByText('Navê te di lîstikê de çi be?',{exact:true}).waitFor();
  const nameInput=page.getByRole('textbox');
  assert.equal(await nameInput.count(),1,'Name gate should expose one textbox');

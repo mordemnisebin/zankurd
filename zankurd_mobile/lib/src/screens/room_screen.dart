@@ -1303,252 +1303,275 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                       : null,
                 ),
                 Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.only(
-                      top: SahneSpace.x2,
-                      bottom: SahneSpace.x6,
-                    ),
-                    children: [
-                      width(
-                        SizedBox(
-                          key: const ValueKey('room-content-width'),
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              // 2026-10-19 sadeleşme (ikinci tur): hızlı tepkiler ve
-                              // sohbet TEK kompakt düğmenin ("Sohbet") arkasında;
-                              // lobi varsayılanda yalnız kod, oyuncular ve başlat
-                              // düğmesidir. Tepkiler yalnız karşıda biri varken
-                              // anlamlıdır.
-                              //
-                              // Sohbet 2026-07-31'de moderasyonuyla (Apple
-                              // 1.2: gönderimde süzgeç, uzun basınca
-                              // bildir/engelle; sunucu karşılığı
-                              // supabase/2026-07-31_chat_moderation.sql)
-                              // katlanabilir bir panel olarak geri geldi;
-                              // kalabalık kaygısı kapalı başlayarak
-                              // karşılanıyor.
-                              // Sohbet düğmesi artık başlıkta ([_RoomBar.trailing]);
-                              // burada yalnız açıkken panel durur.
-                              // 2026-10-27 (4 cihazlı E2E): panel eskiden oyuncu
-                              // listesinin ALTINDAydı; 8 kişilik odada ekran
-                              // dışında açılıyor, düğmeye basan "hiçbir şey
-                              // olmadı" sanıp kapatıyordu. Artık çubuğun hemen
-                              // altında, göründüğü yerde açılır.
-                              if (room.id != null && _chatOpen) ...[
-                                if (_chatOpen && room.players.length >= 2) ...[
-                                  const SizedBox(height: SahneSpace.x2),
-                                  _buildQuickReactionChips(context),
+                  child: SahneBottomFade(
+                    color: t.bg,
+                    height: SahneSpace.x4,
+                    child: ListView(
+                      padding: const EdgeInsets.only(
+                        top: SahneSpace.x2,
+                        bottom: SahneSpace.x6,
+                      ),
+                      children: [
+                        width(
+                          SizedBox(
+                            key: const ValueKey('room-content-width'),
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                // 2026-10-19 sadeleşme (ikinci tur): hızlı tepkiler ve
+                                // sohbet TEK kompakt düğmenin ("Sohbet") arkasında;
+                                // lobi varsayılanda yalnız kod, oyuncular ve başlat
+                                // düğmesidir. Tepkiler yalnız karşıda biri varken
+                                // anlamlıdır.
+                                //
+                                // Sohbet 2026-07-31'de moderasyonuyla (Apple
+                                // 1.2: gönderimde süzgeç, uzun basınca
+                                // bildir/engelle; sunucu karşılığı
+                                // supabase/2026-07-31_chat_moderation.sql)
+                                // katlanabilir bir panel olarak geri geldi;
+                                // kalabalık kaygısı kapalı başlayarak
+                                // karşılanıyor.
+                                // Sohbet düğmesi artık başlıkta ([_RoomBar.trailing]);
+                                // burada yalnız açıkken panel durur.
+                                // 2026-10-27 (4 cihazlı E2E): panel eskiden oyuncu
+                                // listesinin ALTINDAydı; 8 kişilik odada ekran
+                                // dışında açılıyor, düğmeye basan "hiçbir şey
+                                // olmadı" sanıp kapatıyordu. Artık çubuğun hemen
+                                // altında, göründüğü yerde açılır.
+                                if (room.id != null && _chatOpen) ...[
+                                  if (_chatOpen &&
+                                      room.players.length >= 2) ...[
+                                    const SizedBox(height: SahneSpace.x2),
+                                    _buildQuickReactionChips(context),
+                                  ],
+                                  if (_chatOpen && room.id != null) ...[
+                                    const SizedBox(height: SahneSpace.x2),
+                                    padded(
+                                      RoomChat(
+                                        key: const ValueKey('room-chat'),
+                                        repository: widget.repository,
+                                        roomId: room.id!,
+                                        visible: true,
+                                        onToggle: () => setState(
+                                          () => _chatOpen = !_chatOpen,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                  const SizedBox(height: SahneSpace.cardGap),
                                 ],
-                                if (_chatOpen && room.id != null) ...[
-                                  const SizedBox(height: SahneSpace.x2),
+                                padded(
+                                  _RoomHero(
+                                    room: room,
+                                    onCopy: () => _copyRoomCode(context, ku),
+                                    onShare: _shareRoomInvite,
+                                    // Kurul 2. tur 2026-10-20: davet düğmesi her
+                                    // lobi durumunda aynı sakin biçimde; yalnızken
+                                    // turuncu dolu düğmeye dönüşüp kartı
+                                    // öteki durumlardan farklı yapıyordu.
+                                    inviteFirst: false,
+                                    onInviteFriends: _canInviteFriends
+                                        ? _inviteFriends
+                                        : null,
+                                  ),
+                                ),
+                                padded(
+                                  SahneSectionHeader(
+                                    title: context.t(K.playersWord),
+                                  ),
+                                ),
+                                if (_playersRefreshing)
                                   padded(
-                                    RoomChat(
-                                      key: const ValueKey('room-chat'),
-                                      repository: widget.repository,
-                                      roomId: room.id!,
-                                      visible: true,
-                                      onToggle: () => setState(
-                                        () => _chatOpen = !_chatOpen,
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: SahneSpace.x2,
+                                      ),
+                                      child: Row(
+                                        key: const ValueKey(
+                                          'room-connection-state',
+                                        ),
+                                        children: [
+                                          SizedBox.square(
+                                            dimension: 12,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 1.5,
+                                              color: t.raceTx,
+                                            ),
+                                          ),
+                                          const SizedBox(width: SahneSpace.x2),
+                                          Expanded(
+                                            child: Text(
+                                              context.t(K.playerListUpdating),
+                                              style: SahneType.caption.copyWith(
+                                                color: t.tx2,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                ],
-                                const SizedBox(height: SahneSpace.cardGap),
-                              ],
-                              padded(
-                                _RoomHero(
-                                  room: room,
-                                  onCopy: () => _copyRoomCode(context, ku),
-                                  onShare: _shareRoomInvite,
-                                  // Kurul 2. tur 2026-10-20: davet düğmesi her
-                                  // lobi durumunda aynı sakin biçimde; yalnızken
-                                  // turuncu dolu düğmeye dönüşüp kartı
-                                  // öteki durumlardan farklı yapıyordu.
-                                  inviteFirst: false,
-                                  onInviteFriends: _canInviteFriends
-                                      ? _inviteFriends
-                                      : null,
-                                ),
-                              ),
-                              padded(
-                                SahneSectionHeader(
-                                  title: context.t(K.playersWord),
-                                ),
-                              ),
-                              if (_playersRefreshing)
                                 padded(
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      bottom: SahneSpace.x2,
-                                    ),
-                                    child: Row(
-                                      key: const ValueKey(
-                                        'room-connection-state',
-                                      ),
-                                      children: [
-                                        SizedBox.square(
-                                          dimension: 12,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 1.5,
-                                            color: t.raceTx,
-                                          ),
-                                        ),
-                                        const SizedBox(width: SahneSpace.x2),
-                                        Expanded(
+                                  visiblePlayers.isEmpty
+                                      ? SahneSurfaceCard(
                                           child: Text(
-                                            context.t(K.playerListUpdating),
-                                            style: SahneType.caption.copyWith(
+                                            context.t(K.noPlayersYet),
+                                            style: SahneType.body.copyWith(
                                               color: t.tx2,
                                             ),
                                           ),
+                                        )
+                                      : SahneListGroup(
+                                          dividerIndent: _RoomPlayerRow.indent,
+                                          children: [
+                                            for (
+                                              var i = 0;
+                                              i < visiblePlayers.length;
+                                              i++
+                                            )
+                                              _RoomPlayerRow(
+                                                key: ValueKey(
+                                                  'room-player-tile-${i + 1}',
+                                                ),
+                                                rank: i + 1,
+                                                player: visiblePlayers[i],
+                                                isKu: ku,
+                                                // Oyun başlamadan puan ve seri
+                                                // yok: "0 / 0 üst üste" anlamsız
+                                                // sütundu.
+                                                showScore:
+                                                    room.status !=
+                                                    RoomStatus.lobby,
+                                                showReadyState: !crowd,
+                                                quietModeration: crowd,
+                                                // "Hazırım" anahtarı yalnız
+                                                // 1v1/2 kişilik odada ve YEREL
+                                                // oyuncunun kendi satırında.
+                                                onReadyChanged:
+                                                    !crowd && i == selfRowIndex
+                                                    ? _toggleReady
+                                                    : null,
+                                                readyValue: ready,
+                                                repository: widget.repository,
+                                                isSelf:
+                                                    visiblePlayers[i].id ==
+                                                        null ||
+                                                    visiblePlayers[i].id ==
+                                                        widget
+                                                            .repository
+                                                            .currentUserId,
+                                                isHost:
+                                                    room.hostId != null &&
+                                                    visiblePlayers[i].id ==
+                                                        room.hostId,
+                                                onBlocked: () {
+                                                  final id =
+                                                      visiblePlayers[i].id;
+                                                  if (id == null) return;
+                                                  setState(
+                                                    () => _blockedPlayerIds.add(
+                                                      id,
+                                                    ),
+                                                  );
+                                                },
+                                                onKick: _kickHandlerFor(
+                                                  visiblePlayers[i],
+                                                ),
+                                              ),
+                                            if (crowd)
+                                              ..._emptySeatRows(
+                                                room.maxPlayers -
+                                                    visiblePlayers.length,
+                                                firstRank:
+                                                    visiblePlayers.length + 1,
+                                              )
+                                            else if (visiblePlayers.length < 2)
+                                              _WaitingPlayerTile(
+                                                isKu: ku,
+                                                onInvite: _canInviteFriends
+                                                    ? _inviteFriends
+                                                    : null,
+                                              ),
+                                          ],
                                         ),
-                                      ],
+                                ),
+                                // Dört kişi geldikten sonra öncelik oyuncu
+                                // listesindedir. Açık odalarda davet erişimi
+                                // kalır; dördüncü satırı alt şeride itmez.
+                                if (crowd &&
+                                    room.players.length >= 4 &&
+                                    room.players.length < room.maxPlayers)
+                                  padded(
+                                    _RoomInvites(
+                                      onShare: _shareRoomInvite,
+                                      onInviteFriends: _canInviteFriends
+                                          ? _inviteFriends
+                                          : null,
                                     ),
                                   ),
-                                ),
-                              padded(
-                                visiblePlayers.isEmpty
-                                    ? SahneSurfaceCard(
-                                        child: Text(
-                                          context.t(K.noPlayersYet),
-                                          style: SahneType.body.copyWith(
-                                            color: t.tx2,
-                                          ),
-                                        ),
-                                      )
-                                    : SahneListGroup(
-                                        dividerIndent: _RoomPlayerRow.indent,
+                                // Yerel oyuncunun satırı listede yoksa (depo kimliği
+                                // eşleşmiyor) anahtar kaybolmasın: eski kartın yerine
+                                // tek satırlık yedek.
+                                if (!crowd && selfRowIndex < 0) ...[
+                                  const SizedBox(height: SahneSpace.cardGap),
+                                  padded(
+                                    SahneSurfaceCard(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: SahneSpace.x4,
+                                        vertical: SahneSpace.x1,
+                                      ),
+                                      child: Row(
                                         children: [
-                                          for (
-                                            var i = 0;
-                                            i < visiblePlayers.length;
-                                            i++
-                                          )
-                                            _RoomPlayerRow(
-                                              key: ValueKey(
-                                                'room-player-tile-${i + 1}',
-                                              ),
-                                              rank: i + 1,
-                                              player: visiblePlayers[i],
-                                              isKu: ku,
-                                              // Oyun başlamadan puan ve seri
-                                              // yok: "0 / 0 üst üste" anlamsız
-                                              // sütundu.
-                                              showScore:
-                                                  room.status !=
-                                                  RoomStatus.lobby,
-                                              showReadyState: !crowd,
-                                              quietModeration: crowd,
-                                              // "Hazırım" anahtarı yalnız
-                                              // 1v1/2 kişilik odada ve YEREL
-                                              // oyuncunun kendi satırında.
-                                              onReadyChanged:
-                                                  !crowd && i == selfRowIndex
-                                                  ? _toggleReady
-                                                  : null,
-                                              readyValue: ready,
-                                              repository: widget.repository,
-                                              isSelf:
-                                                  visiblePlayers[i].id ==
-                                                      null ||
-                                                  visiblePlayers[i].id ==
-                                                      widget
-                                                          .repository
-                                                          .currentUserId,
-                                              isHost:
-                                                  room.hostId != null &&
-                                                  visiblePlayers[i].id ==
-                                                      room.hostId,
-                                              onBlocked: () {
-                                                final id = visiblePlayers[i].id;
-                                                if (id == null) return;
-                                                setState(
-                                                  () =>
-                                                      _blockedPlayerIds.add(id),
-                                                );
-                                              },
-                                              onKick: _kickHandlerFor(
-                                                visiblePlayers[i],
-                                              ),
+                                          Expanded(
+                                            child: Text(
+                                              context.t(K.imReady),
+                                              style: SahneType.bodyStrong
+                                                  .copyWith(color: t.tx),
                                             ),
-                                          if (crowd)
-                                            ..._emptySeatRows(
-                                              room.maxPlayers -
-                                                  visiblePlayers.length,
-                                              firstRank:
-                                                  visiblePlayers.length + 1,
-                                            )
-                                          else if (visiblePlayers.length < 2)
-                                            _WaitingPlayerTile(
-                                              isKu: ku,
-                                              onInvite: _canInviteFriends
-                                                  ? _inviteFriends
-                                                  : null,
+                                          ),
+                                          Switch(
+                                            key: const ValueKey(
+                                              'room-ready-switch',
                                             ),
+                                            value: ready,
+                                            onChanged: _toggleReady,
+                                          ),
                                         ],
                                       ),
-                              ),
-                              // Yerel oyuncunun satırı listede yoksa (depo kimliği
-                              // eşleşmiyor) anahtar kaybolmasın: eski kartın yerine
-                              // tek satırlık yedek.
-                              if (!crowd && selfRowIndex < 0) ...[
-                                const SizedBox(height: SahneSpace.cardGap),
-                                padded(
-                                  SahneSurfaceCard(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: SahneSpace.x4,
-                                      vertical: SahneSpace.x1,
                                     ),
-                                    child: Row(
+                                  ),
+                                ],
+                                // Bilgi şeritleri (hazır değil, 2 oyuncu gerekli…): "Hazırım"
+                                // anahtarı artık oyuncunun kendi satırında, ayrı kart yok.
+                                if (notices.isNotEmpty) ...[
+                                  const SizedBox(height: SahneSpace.cardGap),
+                                  padded(
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
                                       children: [
-                                        Expanded(
-                                          child: Text(
-                                            context.t(K.imReady),
-                                            style: SahneType.bodyStrong
-                                                .copyWith(color: t.tx),
-                                          ),
-                                        ),
-                                        Switch(
-                                          key: const ValueKey(
-                                            'room-ready-switch',
-                                          ),
-                                          value: ready,
-                                          onChanged: _toggleReady,
-                                        ),
+                                        for (
+                                          var i = 0;
+                                          i < notices.length;
+                                          i++
+                                        ) ...[
+                                          if (i > 0)
+                                            const SizedBox(
+                                              height: SahneSpace.x2,
+                                            ),
+                                          notices[i],
+                                        ],
                                       ],
                                     ),
                                   ),
-                                ),
+                                ],
                               ],
-                              // Bilgi şeritleri (hazır değil, 2 oyuncu gerekli…): "Hazırım"
-                              // anahtarı artık oyuncunun kendi satırında, ayrı kart yok.
-                              if (notices.isNotEmpty) ...[
-                                const SizedBox(height: SahneSpace.cardGap),
-                                padded(
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      for (
-                                        var i = 0;
-                                        i < notices.length;
-                                        i++
-                                      ) ...[
-                                        if (i > 0)
-                                          const SizedBox(height: SahneSpace.x2),
-                                        notices[i],
-                                      ],
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -1968,22 +1991,12 @@ class _RoomHero extends StatelessWidget {
               // yaramaz; ama kartı ~110 pt uzatıp 4. oyuncuyu ilk görünümde
               // "Yarışı başlat" perdesinin arkasına itiyordu. Dolu odada
               // yalnız kod kalır, oyuncu listesi ilk görünüme sığar.
-              if (!_full) ...[
+              if (!_full && !(room.isCrowd && room.players.length >= 4)) ...[
                 const SizedBox(height: SahneSpace.x1),
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    _RoomInviteButton(
-                      label: context.t(K.roomInviteAction),
-                      onShare: onShare,
-                      primary: inviteFirst,
-                    ),
-                    if (onInviteFriends != null)
-                      _RoomInviteFriendsButton(
-                        label: context.t(K.roomInviteFriendsAction),
-                        onPressed: onInviteFriends!,
-                      ),
-                  ],
+                _RoomInvites(
+                  onShare: onShare,
+                  onInviteFriends: onInviteFriends,
+                  primary: inviteFirst,
                 ),
               ],
             ],
@@ -1992,6 +2005,35 @@ class _RoomHero extends StatelessWidget {
       ),
     );
   }
+}
+
+class _RoomInvites extends StatelessWidget {
+  const _RoomInvites({
+    required this.onShare,
+    this.onInviteFriends,
+    this.primary = false,
+  });
+
+  final Future<void> Function(Rect?) onShare;
+  final VoidCallback? onInviteFriends;
+  final bool primary;
+
+  @override
+  Widget build(BuildContext context) => Wrap(
+    crossAxisAlignment: WrapCrossAlignment.center,
+    children: [
+      _RoomInviteButton(
+        label: context.t(K.roomInviteAction),
+        onShare: onShare,
+        primary: primary,
+      ),
+      if (onInviteFriends != null)
+        _RoomInviteFriendsButton(
+          label: context.t(K.roomInviteFriendsAction),
+          onPressed: onInviteFriends!,
+        ),
+    ],
+  );
 }
 
 /// Oyuncu sayısı: kart başlığının sağında "kişi simgesi + sayı". Yalnız

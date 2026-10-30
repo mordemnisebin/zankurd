@@ -90,6 +90,7 @@ const _room = GameRoom(
 );
 
 RoomResumeSnapshot _snapshot({
+  GameRoom room = _room,
   int questionIndex = 1,
   int score = 420,
   int streak = 3,
@@ -108,7 +109,7 @@ RoomResumeSnapshot _snapshot({
   final testClock = TestWidgetsFlutterBinding.instance.clock;
   final capturedAt = testClock.now();
   return RoomResumeSnapshot(
-    room: _room,
+    room: room,
     currentQuestionIndex: questionIndex,
     ownScore: score,
     streak: streak,
@@ -199,6 +200,7 @@ class _SessionRepository extends MockZanKurdRepository {
   );
   Completer<RoomEndState>? endStateGate;
   List<Player> serverPlayers = _room.players;
+  Completer<void>? playersGate;
   Completer<void>? pendingLeave;
   bool failLeave = false;
   Object? leaveErrorAfterGate;
@@ -249,7 +251,9 @@ class _SessionRepository extends MockZanKurdRepository {
   @override
   Future<List<Player>> loadRoomPlayers(GameRoom room) async {
     playerCalls++;
-    return serverPlayers;
+    final captured = serverPlayers;
+    await playersGate?.future;
+    return captured;
   }
 
   @override
@@ -476,6 +480,166 @@ void main() {
       'zankurd.quiz_tutorial.seen': true,
     });
   });
+
+  testWidgets(
+    'T13 reveal snapshot applies opponent score before player refresh',
+    (tester) async {
+      final repository = _SessionRepository(
+        _snapshot(
+          room: _room.copyWith(
+            players: [
+              _room.players.first,
+              _room.players.last.copyWith(score: 560),
+            ],
+          ),
+          answers: const [_firstAnswer, _secondAnswer],
+        ),
+      );
+      addTearDown(repository.close);
+      await _openQuiz(tester, repository);
+      expect(
+        find.byKey(const ValueKey('quiz-reveal-status-band')),
+        findsOneWidget,
+      );
+      expect(
+        tester
+            .widget<Text>(find.byKey(const ValueKey('duel-opponent-score')))
+            .data,
+        '560',
+      );
+    },
+  );
+
+  testWidgets('T13 ready snapshot updates rival score without polling', (
+    tester,
+  ) async {
+    final gate = Completer<RoomResumeSnapshot?>();
+    final repository = _SessionRepository(
+      _snapshot(questionIndex: 0, hasTiming: false),
+    )..readyGate = gate;
+    addTearDown(repository.close);
+    await _openQuiz(tester, repository);
+    gate.complete(
+      _snapshot(
+        questionIndex: 0,
+        room: _room.copyWith(
+          players: [
+            _room.players.first,
+            _room.players.last.copyWith(score: 560),
+          ],
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump();
+    expect(
+      tester
+          .widget<Text>(find.byKey(const ValueKey('duel-opponent-score')))
+          .data,
+      '560',
+    );
+  });
+
+  testWidgets('T13 delayed old reconciliation cannot roll rival score back', (
+    tester,
+  ) async {
+    final newerRoom = _room.copyWith(
+      players: [_room.players.first, _room.players.last.copyWith(score: 560)],
+    );
+    final repository = _SessionRepository(
+      _snapshot(
+        questionIndex: 0,
+        room: newerRoom,
+        serverNow: DateTime.utc(2026, 8, 2, 12, 0, 2),
+      ),
+    );
+    addTearDown(repository.close);
+    await _openQuiz(tester, repository);
+    repository.snapshot = _snapshot(questionIndex: 0);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await _pumpFrames(tester);
+    expect(
+      tester
+          .widget<Text>(find.byKey(const ValueKey('duel-opponent-score')))
+          .data,
+      '560',
+    );
+  });
+
+  for (final emptySnapshot in [false, true]) {
+    testWidgets(
+      'T13 in-flight ${emptySnapshot ? 'empty' : 'null'} snapshot players cannot undo newer ready score',
+      (tester) async {
+        final ready = Completer<RoomResumeSnapshot?>();
+        final players = Completer<void>();
+        final repository = _SessionRepository(
+          _snapshot(questionIndex: 0, hasTiming: false),
+        )..readyGate = ready;
+        addTearDown(repository.close);
+        await _openQuiz(tester, repository);
+        repository.snapshot = emptySnapshot
+            ? _snapshot(questionIndex: 0, room: _room.copyWith(players: []))
+            : null;
+        repository.playersGate = players;
+        final callsBefore = repository.playerCalls;
+        tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+        tester.binding.handleAppLifecycleStateChanged(
+          AppLifecycleState.resumed,
+        );
+        await tester.pump();
+        expect(repository.playerCalls, greaterThan(callsBefore));
+        ready.complete(
+          _snapshot(
+            questionIndex: 0,
+            room: _room.copyWith(
+              players: [
+                _room.players.first,
+                _room.players.last.copyWith(score: 560),
+              ],
+            ),
+          ),
+        );
+        await tester.pump();
+        await tester.pump();
+        expect(
+          tester
+              .widget<Text>(find.byKey(const ValueKey('duel-opponent-score')))
+              .data,
+          '560',
+        );
+        players.complete();
+        await _pumpFrames(tester);
+        expect(
+          tester
+              .widget<Text>(find.byKey(const ValueKey('duel-opponent-score')))
+              .data,
+          '560',
+        );
+
+        // Daha sonra başlayan bağımsız bir okuma düşük gerçek puanı da uygular.
+        // Güncellik koruması max(score) veya kalıcı bir kilit değildir.
+        repository.snapshot = null;
+        repository.readyGate = null;
+        repository.playersGate = null;
+        repository.serverPlayers = [
+          _room.players.first,
+          _room.players.last.copyWith(score: 120),
+        ];
+        tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+        tester.binding.handleAppLifecycleStateChanged(
+          AppLifecycleState.resumed,
+        );
+        await _pumpFrames(tester);
+        expect(
+          tester
+              .widget<Text>(find.byKey(const ValueKey('duel-opponent-score')))
+              .data,
+          '120',
+        );
+      },
+    );
+  }
 
   testWidgets(
     'T5: herkes cevaplamadan açılış riski; yalnız tamamlanmış snapshot sınanıyordu',

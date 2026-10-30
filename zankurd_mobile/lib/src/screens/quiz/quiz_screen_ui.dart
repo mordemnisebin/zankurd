@@ -860,6 +860,31 @@ extension _QuizScreenUI on _QuizScreenState {
   /// (U6, 2026-10-28 tur 4). Duolingo deseni: beyaz dolgu + şeridin rengiyle
   /// yazı (yeşil/kırmızı beyazda ≥ 4,5:1).
   Widget _buildNextButton(BuildContext context, {Color? onStripFill}) {
+    // T14: şık doğrudan gönderilir; cevap seç yönergesi pasif bir gönder
+    // düğmesi değildir. Aynı yükseklik alt perdeyi ve soru konumunu korur.
+    if (!answered && !_suspense) {
+      return ConstrainedBox(
+        key: const ValueKey('quiz-next-button'),
+        // a11y-tap-target: noninteractive — düz cevap seçme yönergesi.
+        constraints: const BoxConstraints(minHeight: SahneVolume.buttonHeight),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: SahneSpace.x3,
+            vertical: SahneSpace.x2,
+          ),
+          child: Center(
+            heightFactor: 1,
+            child: Text(
+              context.t(K.pickAnAnswer),
+              textAlign: TextAlign.center,
+              style: SahneType.bodyStrong.copyWith(
+                color: SahneTokens.of(context).tx,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
     final bool canPressNext = _isMultiplayer
         ? false
         : (answered && !completing && !_suspense);
@@ -980,8 +1005,7 @@ extension _QuizScreenUI on _QuizScreenState {
             expand: true,
             onPressed: nextPress,
           );
-    // Cevaptan ÖNCE pasif "Sonraki": çerçeveli, "düğme ama henüz değil".
-    return !answered && !waiting ? QuizInactiveButtonFrame(child: next) : next;
+    return next;
   }
 
   /// Çok oyunculu açılış etiketi: "Doğru · 3sn"; son soruda yalnız hüküm.

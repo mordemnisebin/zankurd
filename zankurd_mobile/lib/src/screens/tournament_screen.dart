@@ -2014,15 +2014,18 @@ class _StatusCard extends StatelessWidget {
                   ),
                 if (bracket.status == 'eliminated' && lastMatch != null)
                   Text(
-                    _matchVsLine(lastMatch!, userId, ku, owned: runnerUp),
+                    [
+                      if (shownRound >= 0 && shownRound < roundNames.length)
+                        roundNames[shownRound],
+                      _matchVsLine(lastMatch!, userId, ku, owned: runnerUp),
+                    ].join(' · '),
                     key: const ValueKey('tournament-eliminated-vs'),
                     style: SahneType.caption.copyWith(color: t.tx2),
                   ),
                 if (bracket.totalScore > 0)
                   Text(
-                    Tr.forKu(K.t12TournamentYourTotal, ku, {
-                      'score': groupThousands(bracket.totalScore),
-                    }),
+                    '${context.t(K.tournament)} · '
+                    '${Tr.forKu(K.t12TournamentYourTotal, ku, {'score': groupThousands(bracket.totalScore)})}',
                     key: const ValueKey('tournament-your-total'),
                     style: SahneType.captionStrong.copyWith(color: t.tx),
                   ),

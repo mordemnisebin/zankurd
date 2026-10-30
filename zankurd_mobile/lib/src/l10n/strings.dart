@@ -346,7 +346,6 @@ class Tr {
     },
     K.signInGoogle: {'ku': 'Bi Google têkeve', 'tr': 'Google ile giriş yap'},
     K.orWithEmail: {'ku': 'An jî bi e-nameyê', 'tr': 'Veya e-posta ile'},
-    K.signInPlayNow: {'ku': 'Niha bilîze', 'tr': 'Hemen oyna'},
     K.guestSaveTitle: {
       'ku': 'Pêşketina xwe winda neke — hesabê xwe tomar bike',
       'tr': 'İlerlemeni kaybetme — hesabını kaydet',
@@ -5739,7 +5738,6 @@ class K {
   static const premiumErrUnavailable = 'premium.err.unavailable';
   static const premiumErrOtherAccount = 'premium.err.otherAccount';
   static const premiumErrGeneric = 'premium.err.generic';
-  static const signInPlayNow = 'auth.signInPlayNow';
   static const guestSaveTitle = 'guestSave.title';
   static const guestSaveBody = 'guestSave.body';
   static const guestSaveEmail = 'guestSave.email';

@@ -219,7 +219,7 @@ void main() {
         expect(tester.getSize(hero).height, 72);
         expect(find.text('Kurmancî öğren, bilgini yarıştır.'), findsOneWidget);
         for (final label in [
-          'Hemen oyna',
+          'Misafir olarak devam et',
           'Apple ile devam et',
           'Google ile devam et',
           'E-posta ile giriş',

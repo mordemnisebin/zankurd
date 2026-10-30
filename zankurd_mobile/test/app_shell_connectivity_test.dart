@@ -105,7 +105,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Sunucuya ulaşılamadı'), findsOneWidget);
-      final guestAction = find.text('Hemen oyna');
+      final guestAction = find.text('Misafir olarak devam et');
       expect(guestAction, findsOneWidget);
       expect(
         tester.getBottomRight(guestAction).dy,

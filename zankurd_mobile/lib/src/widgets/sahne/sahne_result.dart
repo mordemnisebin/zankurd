@@ -371,38 +371,9 @@ class SahneResultScaffold extends StatelessWidget {
         // durumu yalnız kırmızı ✗ karesiyle söylenir. Gövde perdenin
         // ÜSTÜNDE biter, yani liste dibi perde boyu kadar boşluk bırakır.
         final Widget scrolling = scroll;
-        // 2026-10-28 tur 3 T14: içerik alt perdenin ALTINDAN kayarken sert
-        // kesilmesin; perdenin üstünde ince bir solma (yalnız kayan içerikte).
-        final floor = neutral
-            ? SahneStageColors.nightGround
-            : scene.colors.last;
-        return ClipRect(
-          child: Stack(
-            children: [
-              scrolling,
-              if (!centered)
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  height: SahneSpace.x4,
-                  child: IgnorePointer(
-                    child: DecoratedBox(
-                      key: const ValueKey('sahne-result-bottom-fade'),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [floor.withValues(alpha: 0), floor],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ?overlay,
-            ],
-          ),
-        );
+        // Gövde alt perdenin üstünde biter; son 16px'i soldurmak
+        // sıralama/karşılaştırma yazılarını örtüyordu (T14 kurul 8).
+        return ClipRect(child: Stack(children: [scrolling, ?overlay]));
       },
     );
 
@@ -507,6 +478,7 @@ class SahneResultHero extends StatelessWidget {
     this.value,
     this.suffix = '',
     this.valueKey,
+    this.valueLabel,
     this.subtitle,
     this.subtitleSize,
     this.caption,
@@ -569,6 +541,9 @@ class SahneResultHero extends StatelessWidget {
   final String suffix;
   final Key? valueKey;
 
+  /// Puan birimi sayıyla aynı grupta; alt özetin bağımsız parçası değildir.
+  final String? valueLabel;
+
   /// Puanın altında Başlık 22 satırı ("Sen 5 – 3 Rojda").
   final String? subtitle;
 
@@ -629,17 +604,37 @@ class SahneResultHero extends StatelessWidget {
         if (value != null)
           // Puan sayarak çıkar: tırmanışı izlemek kazanmanın kendisidir (bkz.
           // `RollingCount`). Hareket azaltma açıkken sayım yapılmaz.
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: RollingCount(
-              key: valueKey ?? const ValueKey('result-score-count'),
-              value: value!,
-              suffix: suffix,
-              style: SahneType.screen.copyWith(
-                color: calm ? t.tx : t.gold,
-                fontSize: valueSize ?? (scenic ? 88 : null),
+          Row(
+            key: const ValueKey('result-value-with-unit'),
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: RollingCount(
+                    key: valueKey ?? const ValueKey('result-score-count'),
+                    value: value!,
+                    suffix: suffix,
+                    style: SahneType.screen.copyWith(
+                      color: calm ? t.tx : t.gold,
+                      fontSize: valueSize ?? (scenic ? 88 : null),
+                    ),
+                  ),
+                ),
               ),
-            ),
+              if (valueLabel != null) ...[
+                const SizedBox(width: SahneSpace.x2),
+                Text(
+                  valueLabel!,
+                  key: const ValueKey('result-score-unit'),
+                  style: SahneType.bodyStrong.copyWith(
+                    color: calm ? t.tx : t.gold,
+                  ),
+                ),
+              ],
+            ],
           ),
         if (subtitle != null) ...[
           SizedBox(
@@ -724,14 +719,25 @@ class SahneResultHero extends StatelessWidget {
         // yok: testler yerleşir, pil yanmaz); hareket azaltmada baştan
         // durağan.
         if (scenic && shine && !calm)
-          PositionedDirectional(
-            start: 0,
-            end: 0,
-            top:
-                (value != null ? (scenic ? 128 : 104) - 150 : 84 - 150) +
-                emblemExtra,
-            height: 300,
-            child: _ScoreCelebration(aboveText: value == null),
+          Positioned.fill(
+            child: ClipRect(
+              key: const ValueKey('result-celebration-clip'),
+              child: Stack(
+                children: [
+                  PositionedDirectional(
+                    start: 0,
+                    end: 0,
+                    top:
+                        (value != null
+                            ? (scenic ? 128 : 104) - 150
+                            : 84 - 150) +
+                        emblemExtra,
+                    height: 300,
+                    child: _ScoreCelebration(aboveText: value == null),
+                  ),
+                ],
+              ),
+            ),
           ),
         Padding(
           padding: EdgeInsets.only(
@@ -1367,7 +1373,9 @@ class SahneResultRewards extends StatelessWidget {
     final t = SahneTokens.of(context);
     return SahneSurfaceCard(
       // Zêr "Kazanıldı" kartı (2026-10-20): altın tonlu zemin ve kenar.
-      color: t.gold.withValues(alpha: 0.24),
+      // Aynı altın tonu opak zemine oturur; dağ/dekor XP yazısının
+      // arkasından geçip kontrastı değiştiremez (T14 kurul 8).
+      color: Color.alphaBlend(t.gold.withValues(alpha: 0.24), t.bg),
       // Son kurul tur 3: kenar %55 → %40 (altın çerçeveler kutlamayı
       // ağırlaştırıyordu; zemin tonu ve çip halkaları aynen).
       edgeColor: t.gold.withValues(alpha: 0.40),

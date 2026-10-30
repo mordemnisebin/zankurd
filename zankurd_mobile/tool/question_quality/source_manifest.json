@@ -2,39 +2,9 @@
  "version": 1,
  "sources": [
   {
-   "id": "t7_visual_preview",
-   "description": "T7 offline visual regression fixture",
-   "path": "tool/t7_web_preview.dart",
-   "role": "test_fixture",
-   "parser": "none",
-   "canonicalGroup": "none",
-   "reportIncluded": false,
-   "gateIncluded": false,
-   "productionLike": false,
-   "precedence": 1000,
-   "expectedRecordCount": null,
-   "notes": "Only the isolated web preview entrypoint; never imported by the application.",
-   "columns": {}
-  },
-  {
    "id": "t8_visual_preview",
    "description": "T8 offline visual regression fixture",
    "path": "tool/t8_web_preview.dart",
-   "role": "test_fixture",
-   "parser": "none",
-   "canonicalGroup": "none",
-   "reportIncluded": false,
-   "gateIncluded": false,
-   "productionLike": false,
-   "precedence": 1000,
-   "expectedRecordCount": null,
-   "notes": "Only the isolated web preview entrypoint; never imported by the application.",
-   "columns": {}
-  },
-  {
-   "id": "t10_visual_preview",
-   "description": "T10 offline visual regression fixture",
-   "path": "tool/t10_web_preview.dart",
    "role": "test_fixture",
    "parser": "none",
    "canonicalGroup": "none",
@@ -2941,6 +2911,21 @@
     "reviewedAt": "metadata.reviewedAt",
     "locale": "ku-kmr"
    }
+  },
+  {
+   "id": "question_image_reference_validator",
+   "description": "Question image path and URL validation utility",
+   "path": "tool/question_images/validate_image_reference.dart",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 1000,
+   "expectedRecordCount": null,
+   "notes": "Validates and discovers image references; contains no question records.",
+   "columns": {}
   }
  ]
 }

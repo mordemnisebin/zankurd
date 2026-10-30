@@ -106,7 +106,7 @@ void main() {
         final auth = _Auth();
         await open(tester, const SignInScreen(), auth);
         final labels = [
-          'Hemen oyna',
+          'Misafir olarak devam et',
           if (platform == TargetPlatform.iOS) 'Apple ile devam et',
           'Google ile devam et',
           'E-posta ile giriş',
@@ -121,7 +121,7 @@ void main() {
               .where((b) => b.isPrimary)
               .single
               .label,
-          'Hemen oyna',
+          'Misafir olarak devam et',
         );
         final guest = tester.getRect(
           find.byKey(const ValueKey('sign-in-play-now')),

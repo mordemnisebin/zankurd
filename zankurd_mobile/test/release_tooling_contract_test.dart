@@ -82,7 +82,7 @@ void main() {
     ).readAsStringSync();
     expect(source, isNot(contains('ageGate')));
     expect(source, contains("click('Kurmancî')"));
-    expect(source, contains("Niha bilîze"));
+    expect(source, contains("Wek mêvan bidomîne"));
     expect(source, contains("click('Bidomîne')"));
     expect(source, contains("Hînbûn temam bû"));
     expect(source, contains('ZANKURD_AUDIT_DIR'));

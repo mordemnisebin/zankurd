@@ -334,14 +334,15 @@ void main() {
           reason: 'çipler ton dolgulu olmalı',
         );
 
-        // Zêr "Kazanıldı" kartı: altın tonlu zemin.
+        // T14 F22: altın tonu korunur; dağ dokusu XP yazısına
+        // karışmasın diye zemin artık opaktır.
         final reward = find.ancestor(
           of: find.text('Kazanıldı'),
           matching: find.byType(SahneTappable),
         );
         expect(reward, findsOneWidget);
         final rewardColor = tester.widget<SahneTappable>(reward).color;
-        expect(rewardColor.a, lessThan(0.5));
+        expect(rewardColor.a, 1);
         expect(rewardColor.r, greaterThan(rewardColor.b));
 
         // Maket "Nerelerde zorlandın" bölümünü çıkarmıştı; ürün kararıyla
