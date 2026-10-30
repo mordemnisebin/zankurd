@@ -315,6 +315,30 @@ void main() {
   });
 
   testWidgets(
+    'T5: açıklama sırasında ekran kapanınca bekleme zamanlayıcısı kalmaz',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      final repository = freshMockRepository();
+      await tester.pumpWidget(
+        testShell(
+          child: PlayHubScreen(repository: repository, asyncDuelEnabled: true),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openAsyncDuelFromHub(tester);
+      // TIMEOUT kesin yanlış yanıttır; bankanın karıştırılmış ilk şıkkına bağlı değil.
+      await tester.pump(const Duration(seconds: 21));
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(_progressText(tester).data, '1/7');
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump();
+      // Flutter test binding'i dispose sonrası kalan Timer'ı ayrıca reddeder.
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
     'süre dolumu: hiçbir şıkka dokunulmazsa TIMEOUT gönderilir ve ilerleme '
     '2/7\'ye geçer',
     (tester) async {
