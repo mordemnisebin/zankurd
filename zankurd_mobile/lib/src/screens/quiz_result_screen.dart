@@ -23,6 +23,7 @@ import '../l10n/lang.dart';
 import '../utils/coin_calculator.dart';
 import '../l10n/strings.dart';
 import '../services/crowd_standings.dart';
+import '../widgets/whole_scroll_row.dart';
 import '../widgets/player_moderation_button.dart';
 import '../services/premium_service.dart';
 import '../services/quiz_reward_settlement_service.dart';
@@ -3012,7 +3013,11 @@ class _CrowdStandings extends StatelessWidget {
       if (blocks.isNotEmpty) {
         blocks.add(const SizedBox(height: SahneSpace.x2));
       }
-      blocks.add(SahneListGroup(children: pending));
+      blocks.add(
+        SahneListGroup(
+          children: [for (final row in pending) WholeScrollRow(child: row)],
+        ),
+      );
       pending = <Widget>[];
     }
 
@@ -3028,13 +3033,15 @@ class _CrowdStandings extends StatelessWidget {
           blocks.add(const SizedBox(height: SahneSpace.x2));
         }
         blocks.add(
-          SahneListRow.me(
-            key: ValueKey('crowd-standing-me-$rank'),
-            rank: rank,
-            title: context.t(K.you),
-            avatar: _avatarOf(player),
-            subtitle: streakLine,
-            trailing: scoreOf(standing),
+          WholeScrollRow(
+            child: SahneListRow.me(
+              key: ValueKey('crowd-standing-me-$rank'),
+              rank: rank,
+              title: context.t(K.you),
+              avatar: _avatarOf(player),
+              subtitle: streakLine,
+              trailing: scoreOf(standing),
+            ),
           ),
         );
       } else {

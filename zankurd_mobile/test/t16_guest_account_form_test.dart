@@ -79,7 +79,14 @@ void main() {
           isFalse,
           reason: 'boş form kırmızı hata üretmeden pasif kalmalı',
         );
-        expect(find.text(Tr.forKu(K.passwordHintMin6, ku)), findsOneWidget);
+        expect(
+          find.text(
+            ku
+                ? 'E-name û şîfreyeke herî kêm 6 karakterî binivîse'
+                : 'E-posta ve en az 6 karakterlik parola gir',
+          ),
+          findsOneWidget,
+        );
         expect(find.text(Tr.forKu(K.emailInvalid, ku)), findsNothing);
         final fields = find.byType(SahneField);
         expect(fields, findsNWidgets(2));

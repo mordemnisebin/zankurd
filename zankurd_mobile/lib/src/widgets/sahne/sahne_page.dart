@@ -867,9 +867,13 @@ class SahneStageScaffold extends StatelessWidget {
     this.sceneGlow,
     this.band,
     this.bandProgress,
+    this.fadeDock = true,
   });
 
   final Widget body;
+
+  /// Sıralama gibi tam kontrast isteyen içerikte alt alfa maskesini kapatır.
+  final bool fadeDock;
 
   /// Konu bandı (2026-10-20 renk ve canlılık, B): verilirse üst satır (kapat |
   /// bağlam | skor) ve [bandProgress] bu DOLU renkte bir bandın içinde, durum
@@ -1177,7 +1181,9 @@ class SahneStageScaffold extends StatelessWidget {
                               Positioned.fill(
                                 child: dockWidget == null
                                     ? body
-                                    : _DockEdge(color: t.line, child: body),
+                                    : fadeDock
+                                    ? _DockEdge(color: t.line, child: body)
+                                    : body,
                               ),
                             ],
                           ),

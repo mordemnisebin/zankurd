@@ -434,6 +434,11 @@ class Tr {
       'ku': 'Agahiyên xwe kontrol bike',
       'tr': 'Bilgilerini gözden geçir',
     },
+    K.guestAccountRequirements: {
+      'ku': 'E-name û şîfreyeke herî kêm 6 karakterî binivîse',
+      'tr': 'E-posta ve en az 6 karakterlik parola gir',
+    },
+    K.bracketRoundWon: {'ku': 'Ger qezenc kir', 'tr': 'Turu kazandı'},
     K.passwordHintMin6: {'ku': 'Herî kêm 6 karakter', 'tr': 'En az 6 karakter'},
     K.confirmPassword: {'ku': 'Şîfreyê piştrast bike', 'tr': 'Parolayı onayla'},
     K.confirmPasswordRequired: {
@@ -4803,6 +4808,8 @@ class K {
   static const haveAccountPrefix = 'auth.haveAccountPrefix';
   static const stepUsername = 'auth.step.username';
   static const stepReview = 'auth.step.review';
+  static const guestAccountRequirements = 'auth.guestAccountRequirements';
+  static const bracketRoundWon = 'cup.bracket.roundWon';
   static const passwordHintMin6 = 'auth.password.hintMin6';
   static const confirmPassword = 'auth.confirmPassword';
   static const confirmPasswordRequired = 'auth.confirmPassword.required';

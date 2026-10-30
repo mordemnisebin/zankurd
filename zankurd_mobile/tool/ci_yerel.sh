@@ -54,7 +54,9 @@ if [[ "${1:-}" == "--tam" ]]; then
   adim "flutter test"
   flutter test --no-pub -r failures-only
   adim "cihazsız uygulama akışları"
-  flutter test --no-pub -d flutter-tester integration_test/app_flows_test.dart
+  # integration_test yolu Flutter'ın cihaz seçimini tetikler. Aynı
+  # TestWidgetsFlutterBinding akışlarını normal test koşucusunda aç.
+  flutter test --no-pub tool/ci_app_flows_test.dart
 fi
 
 printf '\nCI yerel: bütün adımlar geçti.\n'
