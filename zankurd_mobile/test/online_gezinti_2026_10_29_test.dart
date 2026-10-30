@@ -554,10 +554,10 @@ void main() {
       addTearDown(tester.view.reset);
       await tester.pumpWidget(
         testShell(
-          child: SahneStageScaffold(
-            body: const SizedBox.shrink(),
+          child: const SahneStageScaffold(
+            body: SizedBox.shrink(),
             center: QuizStageCenter(category: 'Ziman', index: 7, total: 10),
-            score: const FittedBox(
+            score: FittedBox(
               fit: BoxFit.scaleDown,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
