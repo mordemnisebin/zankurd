@@ -76,7 +76,7 @@ class _QuizForfeitDialog extends StatelessWidget {
       title: Text(context.t(K.matchForfeitedTitle)),
       content: Text(
         coinsAwarded > 0
-            ? '$body\n\n${context.t(K.wheelWonPlus, {'amount': '$coinsAwarded'})}'
+            ? '$body\n\n${context.t(K.wheelWonPlus, {'amount': groupThousands(coinsAwarded)})}'
             : body,
       ),
       actions: [

@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
@@ -132,9 +134,9 @@ class _AnswerSummaryLine extends StatelessWidget {
       child: Text(
         context.t(K.asyncDuelAnswerSummary, {
           'name': name,
-          'c': '$correct',
-          'w': '$wrong',
-          'b': '$blank',
+          'c': groupThousands(correct),
+          'w': groupThousands(wrong),
+          'b': groupThousands(blank),
         }),
         style: SahneType.caption.copyWith(color: SahneTokens.of(context).tx2),
       ),
@@ -172,7 +174,7 @@ class AsyncDuelReviewRow extends StatelessWidget {
           // Soru kısa gösterilir: 2 satır, sonra "…". Tam metin zaten
           // oynarken görüldü; burada amaç cevapları yan yana okumaktır.
           Text(
-            '${question.index + 1}. ${question.prompt}',
+            '${groupThousands(question.index + 1)}. ${question.prompt}',
             key: ValueKey('async-duel-review-prompt-${question.index}'),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

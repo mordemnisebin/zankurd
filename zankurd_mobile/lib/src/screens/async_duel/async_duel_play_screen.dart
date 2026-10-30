@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -819,7 +821,8 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     final suspenseVisual =
         _phase == _Phase.submitting || _phase == _Phase.error;
     final disabled = _phase != _Phase.idle || _exitInFlight;
-    final progressLabel = '${_index + 1}/$total';
+    final progressLabel =
+        '${groupThousands(_index + 1)}/${groupThousands(total)}';
 
     return PopScope(
       key: const ValueKey('async-duel-play'),
@@ -898,12 +901,12 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                         return SahneStageTimer(
                           secondsLeft: seconds,
                           maxSeconds: _questionSeconds,
-                          pending: !_timeSynced,
+                          pending: !_timeSynced || _phase == _Phase.revealed,
                           // Cevap gönderildikten sonra sayaç durur; gerilim rengi
                           // de söner.
                           hotSeconds: disabled ? -1 : 5,
                           semanticLabel:
-                              '$seconds ${context.t(K.secondsShortUnit)}',
+                              '${groupThousands(seconds)} ${context.t(K.secondsShortUnit)}',
                         );
                       },
                     ),

@@ -188,8 +188,8 @@ class _TabStatChipsState extends State<TabStatChips> {
 Widget streakStatChip(BuildContext context, int days, {VoidCallback? onTap}) {
   return SahneStatChip(
     leading: const SahneGlyph(SahneGlyphKind.flame),
-    label: '$days ${context.t(K.streakDayUnit)}',
-    semanticLabel: context.t(K.dailyStreakDays, {'days': '$days'}),
+    label: '${groupThousands(days)} ${context.t(K.streakDayUnit)}',
+    semanticLabel: context.t(K.dailyStreakDays, {'days': groupThousands(days)}),
     onTap: onTap,
   );
 }

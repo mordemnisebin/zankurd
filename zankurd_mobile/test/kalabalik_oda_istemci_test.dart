@@ -39,8 +39,10 @@ Player _p(
   int? rank,
   String state = Player.readyState,
   String? tag,
+  DateTime? joinedAt,
 }) => Player(
   id: id,
+  joinedAt: joinedAt,
   name: name,
   score: score,
   streak: streak,
@@ -355,9 +357,19 @@ void main() {
       final repository = _LobbyRepo(
         me: 'host-user',
         players: [
-          _p('host-user', 'Mêvandar'),
-          _p('g1', 'Zeynep'),
-          _p('g2', 'Ahmet'),
+          _p(
+            'g2',
+            'Ahmet',
+            score: 20,
+            joinedAt: DateTime.utc(2026, 10, 30, 12, 0, 2),
+          ),
+          _p('host-user', 'Mêvandar', joinedAt: DateTime.utc(2026, 10, 30, 12)),
+          _p(
+            'g1',
+            'Zeynep',
+            score: 999,
+            joinedAt: DateTime.utc(2026, 10, 30, 12, 0, 1),
+          ),
         ],
       );
       await mountLobby(tester, repository);

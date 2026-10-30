@@ -11,6 +11,7 @@ import '../l10n/strings.dart';
 import '../widgets/share_story_card.dart';
 import 'error_reporter.dart';
 import 'percent_format.dart';
+import 'number_format.dart';
 
 /// Quiz sonucunu markalı bir kart görseli olarak paylaşır.
 ///
@@ -100,9 +101,9 @@ class ResultSharer {
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
     final text = Tr.forKu(K.resultShareText, isKu, {
-      'score': '$score',
-      'correct': '$correctCount',
-      'total': '$totalQuestions',
+      'score': groupThousands(score),
+      'correct': groupThousands(correctCount),
+      'total': groupThousands(totalQuestions),
       'percent': PercentFormat.value(accuracy, isKu: isKu),
     });
 
@@ -121,7 +122,8 @@ class ResultSharer {
           ShareStoryCard(
             isKu: isKu,
             format: format,
-            scoreText: '$correctCount/$totalQuestions',
+            scoreText:
+                '${groupThousands(correctCount)}/${groupThousands(totalQuestions)}',
             category: category,
             stars: stars,
             duelWin: duelWin,

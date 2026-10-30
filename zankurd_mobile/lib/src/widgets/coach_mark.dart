@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/strings.dart';
@@ -323,7 +325,7 @@ class _CoachMarkBubble extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${index + 1}/$total',
+                  '${groupThousands(index + 1)}/${groupThousands(total)}',
                   style: SahneType.captionStrong.copyWith(
                     color: t.tx3,
                     fontFeatures: const [FontFeature.tabularFigures()],

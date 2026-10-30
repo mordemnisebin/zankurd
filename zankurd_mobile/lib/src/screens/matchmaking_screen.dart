@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 import 'dart:math';
 
@@ -1545,7 +1547,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             style: SahneType.bodyStrong.copyWith(color: t.tx),
           ),
           level: _LevelTag(
-            label: context.t(K.levelPrefix, {'level': '$_myLevel'}),
+            label: context.t(K.levelPrefix, {
+              'level': groupThousands(_myLevel),
+            }),
           ),
         );
 
@@ -1655,7 +1659,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 : [
                     if (_opponentIsBot) context.t(K.botChip),
                     _opponentLevelKnown
-                        ? context.t(K.levelPrefix, {'level': '$_opponentLevel'})
+                        ? context.t(K.levelPrefix, {
+                            'level': groupThousands(_opponentLevel),
+                          })
                         : context.t(K.levelUnknown),
                   ].join(' · '),
             found: _found,
@@ -1805,8 +1811,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                 // Çip yalnız geçen süreyi taşır; durumu
                                 // üstteki başlık söyler. İkisi de durum
                                 // yazdığında biri ötekini yalanlıyordu.
-                                ? '$_secondsElapsed çirke'
-                                : '$_secondsElapsed saniye',
+                                ? '${groupThousands(_secondsElapsed)} çirke'
+                                : '${groupThousands(_secondsElapsed)} saniye',
                           ),
                         ),
                       const SizedBox(height: SahneSpace.x3),

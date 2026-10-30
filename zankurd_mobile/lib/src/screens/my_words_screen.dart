@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -130,7 +132,7 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
                       // 2026-10-29 son kurul: yalın "4 kelime" tekrar
                       // sayılarıyla karışıyordu; liste KAYITLI kelimelerdir.
                       context.t(K.wordsSavedCount, {
-                        'count': '${words.length}',
+                        'count': groupThousands(words.length),
                       }),
                       key: const ValueKey('my-words-count'),
                       style: SahneType.captionStrong.copyWith(color: t.tx2),
@@ -225,7 +227,7 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
       return SahneSurfaceCard(
         key: key,
         emboss: true,
-        semanticLabel: '$title, ${pool.length}',
+        semanticLabel: '$title, ${groupThousands(pool.length)}',
         onTap: () => _startPractice(context, pool),
         padding: const EdgeInsets.all(SahneSpace.x3),
         child: ExcludeSemantics(
@@ -246,7 +248,7 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
                   ),
                   const Spacer(),
                   Text(
-                    '${pool.length}',
+                    groupThousands(pool.length),
                     style: SahneType.headline.copyWith(color: t.tx),
                   ),
                 ],
@@ -336,7 +338,7 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
   ) {
     final entry = LearnerLexicon.byId(word.entryId)!;
     final due = word.isDue(DateTime.now());
-    final box = context.t(K.wordsBox, {'box': '${word.box}'});
+    final box = context.t(K.wordsBox, {'box': groupThousands(word.box)});
     // 2026-10-28 kurul K13: satır = sözcük + anlam + ses + kaydet. Mikrofon
     // (telaffuz denemesi) satırdan kalktı: kelime ayrıntısına (balon) ve
     // çalışmaya taşındı; her satırda üç ikon sırası listeyi kalabalık

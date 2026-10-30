@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -142,7 +144,8 @@ class _DailyEventBoardCardState extends State<DailyEventBoardCard> {
                     icon: AppIcons.trophy,
                     text: Tr.forKu(K.contestYesterdayWinner, isKu, {
                       'name': winner.name,
-                      'score': '${winner.correct}/${winner.total}',
+                      'score':
+                          '${groupThousands(winner.correct)}/${groupThousands(winner.total)}',
                     }),
                   ),
                 ],
@@ -191,7 +194,7 @@ extension on _DailyEventBoardCardState {
                     <= 0 => Tr.forKu(K.contestTeaserBeFirst, isKu),
                     1 => Tr.forKu(K.contestTeaserOne, isKu),
                     final n => Tr.forKu(K.contestTeaserParticipants, isKu, {
-                      'count': '$n',
+                      'count': groupThousands(n),
                     }),
                   },
                 ),
@@ -202,7 +205,8 @@ extension on _DailyEventBoardCardState {
                     icon: AppIcons.trophy,
                     text: Tr.forKu(K.contestYesterdayWinner, isKu, {
                       'name': winner.name,
-                      'score': '${winner.correct}/${winner.total}',
+                      'score':
+                          '${groupThousands(winner.correct)}/${groupThousands(winner.total)}',
                     }),
                   ),
                 ],
@@ -222,8 +226,9 @@ class _Rows extends StatelessWidget {
   final bool isKu;
 
   SahneListRow _row(DailyEventEntry e, bool isKu) {
-    final score = '${e.correct}/${e.total}';
-    final label = '${e.rank}. ${e.name}, $score, ${e.timeLabel}';
+    final scoreText = '${groupThousands(e.correct)}/${groupThousands(e.total)}';
+    final label =
+        '${groupThousands(e.rank)}. ${e.name}, $scoreText, ${e.timeLabel}';
     if (e.isMe) {
       return SahneListRow.me(
         key: ValueKey('daily-event-row-${e.rank}'),
@@ -239,7 +244,7 @@ class _Rows extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            SahneRowValue(score),
+            SahneRowValue(scoreText),
             const SizedBox(height: SahneSpace.x1),
             SahneBadge(label: Tr.forKu(K.you, isKu), tone: SahneBadgeTone.gold),
           ],
@@ -253,7 +258,7 @@ class _Rows extends StatelessWidget {
       title: e.name,
       icon: AppIcons.user,
       subtitle: e.timeLabel,
-      trailing: SahneRowValue(score),
+      trailing: SahneRowValue(scoreText),
       semanticLabel: label,
     );
   }

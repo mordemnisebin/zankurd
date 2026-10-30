@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -242,7 +244,9 @@ class _RoomInviteFriendsSheetState extends State<RoomInviteFriendsSheet> {
         const SizedBox(height: SahneSpace.x4),
         SahneButton.primary(
           key: const ValueKey('room-invite-send'),
-          label: context.t(K.roomInviteSend, {'n': '${_selected.length}'}),
+          label: context.t(K.roomInviteSend, {
+            'n': groupThousands(_selected.length),
+          }),
           icon: AppIcons.userPlus,
           arrow: false,
           expand: true,

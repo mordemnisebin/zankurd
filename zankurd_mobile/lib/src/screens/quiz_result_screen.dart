@@ -190,8 +190,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final blank = (widget.totalQuestions - widget.correctCount - wrongCount)
         .clamp(0, widget.totalQuestions);
     return [
-      if (wrongCount > 0) context.t(K.wrongCountBadge, {'n': '$wrongCount'}),
-      if (blank > 0) context.t(K.blankCountBadge, {'n': '$blank'}),
+      if (wrongCount > 0)
+        context.t(K.wrongCountBadge, {'n': groupThousands(wrongCount)}),
+      if (blank > 0) context.t(K.blankCountBadge, {'n': groupThousands(blank)}),
     ].join(' · ');
   }
 
@@ -324,7 +325,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           title: Text(context.t(K.newRoomAction)),
           content: Text(
             context.t(K.newRoomFeeConfirm, {
-              'amount': '${widget.room.entryFee}',
+              'amount': groupThousands(widget.room.entryFee),
             }),
           ),
           actions: [
@@ -399,7 +400,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              context.t(K.yourBalance, {'coins': '$balance'}),
+              context.t(K.yourBalance, {'coins': groupThousands(balance)}),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: SahneSpace.x2),
@@ -994,7 +995,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       builder: (ctx) => AlertDialog(
         title: Text(context.t(K.streakBreaking)),
         content: Text(
-          context.t(K.streakFreezeAsk, {'cost': '$_streakFreezeCost'}),
+          context.t(K.streakFreezeAsk, {
+            'cost': groupThousands(_streakFreezeCost),
+          }),
         ),
         actions: [
           DialogActionPair(
@@ -1005,7 +1008,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             confirm: FilledButton(
               onPressed: () => Navigator.of(ctx).pop(true),
               child: Text(
-                context.t(K.streakFreezeAction, {'cost': '$_streakFreezeCost'}),
+                context.t(K.streakFreezeAction, {
+                  'cost': groupThousands(_streakFreezeCost),
+                }),
               ),
             ),
           ),
@@ -1753,7 +1758,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           key: const ValueKey('result-level-not-passed'),
           icon: AppIcons.flag,
           text: context.t(K.levelNotPassed, {
-            'p0': '${(LevelProgressStore.passRatio * 100).round()}',
+            'p0': groupThousands((LevelProgressStore.passRatio * 100).round()),
           }),
         ),
     ];
@@ -1800,7 +1805,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           // birim başlığın içinde ("Ayrıntılar · 3 konu"), ayrı özet yok.
           title: breakdown.isEmpty
               ? context.t(K.resultDetails)
-              : context.t(K.resultDetailsTopics, {'n': '${breakdown.length}'}),
+              : context.t(K.resultDetailsTopics, {
+                  'n': groupThousands(breakdown.length),
+                }),
           summary: '',
           openRequest: _detailsOpenRequest,
           child: Column(
@@ -1813,9 +1820,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 Builder(
                   builder: (context) => Text(
                     context.t(K.resultScoreBreakdown, {
-                      'n': '$correctCount',
-                      'bonus': '${scoreBreakdown.bonus}',
-                      'score': '$score',
+                      'n': groupThousands(correctCount),
+                      'bonus': groupThousands(scoreBreakdown.bonus),
+                      'score': groupThousands(score),
                     }),
                     key: const ValueKey('result-score-breakdown'),
                     style: SahneType.caption.copyWith(
@@ -1963,7 +1970,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         badgeLabel: _reviewBadgeLabel(context),
         label: context.t(K.seeAnswers),
         semanticLabel: wrongCount > 0
-            ? context.t(K.seeAnswersWrong, {'n': '$wrongCount'})
+            ? context.t(K.seeAnswersWrong, {'n': groupThousands(wrongCount)})
             : context.t(K.seeAnswers),
         onPressed: () {
           _detailsOpenRequest.value++;
@@ -2007,7 +2014,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       // ekran adı ("Sonuç") tekrarlanmaz.
       contextLabel: [
         ?roundLabel,
-        context.t(K.questionCount, {'count': '$totalQuestions'}),
+        context.t(K.questionCount, {'count': groupThousands(totalQuestions)}),
       ].join(' • '),
       hero: SahneResultHero(
         key: const ValueKey('result-score-header'),
@@ -2044,7 +2051,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         title: headerTitle,
         // 1v1: skor karşılaştırması ("Sen 5 – 3 Rojda") büyük puanın altında.
         subtitle: is1v1 && !isLearningExperience
-            ? '${context.t(K.you)} $score – ${opponents.first.score} '
+            ? '${context.t(K.you)} ${groupThousands(score)} – ${groupThousands(opponents.first.score)} '
                   '${context.playerDisplayName(opponents.first.name, tag: opponents.first.tag)}'
                   '${opponents.first.isBot ? ' · ${context.t(K.botChip)}' : ''}'
             : null,
@@ -2054,7 +2061,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // (2026-09-10 simülatör turu). Öğrenmede sayı, doğru cevap
         // sayısıdır: "3/5".
         value: isLearningExperience ? correctCount : score,
-        suffix: isLearningExperience ? '/$totalQuestions' : '',
+        suffix: isLearningExperience
+            ? '/${groupThousands(totalQuestions)}'
+            : '',
         // Kısa ekranda düello sonucunda "puan • %doğruluk" alt yazısı yoktur:
         // doğru/yanlış sayıları zaten çiplerde; satır ödül kartını alt
         // perdenin altına itiyordu.
@@ -2099,14 +2108,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   ? context.t(K.participationReward)
                   : context.t(K.kazanildi),
               coins: coinsAwarded,
-              coinLabel: '+$coinsAwarded',
-              coinSemanticLabel: '+$coinsAwarded ${context.t(K.coinWord)}',
+              coinLabel: '+${groupThousands(coinsAwarded)}',
+              coinSemanticLabel:
+                  '+${groupThousands(coinsAwarded)} ${context.t(K.coinWord)}',
               xp: _earnedXP,
               // Kurul 3 D7 (3/3): çevrimiçi turda XP yarış puanının kendisidir;
               // "+443 puan" ve "+443 XP" yan yana nedeni söylenmeden
               // duruyordu. Çip kaynağını söyler. D8: kaybedende 0 XP açık.
               xpLabel: (widget.room.id?.trim() ?? '').isNotEmpty
-                  ? context.t(K.xpEqualsScoreChip, {'n': '$_earnedXP'})
+                  ? context.t(K.xpEqualsScoreChip, {
+                      'n': groupThousands(_earnedXP),
+                    })
                   : null,
               showZeroXp:
                   (widget.room.id?.trim() ?? '').isNotEmpty &&
@@ -2120,8 +2132,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       key: const ValueKey('result-level-journey-progress'),
                       child: SahneResultLevelProgress(
                         levelLabel: _leveledUpTo != null
-                            ? context.t(K.levelUpInline, {'n': '$_leveledUpTo'})
-                            : context.t(K.seviyeP, {'p0': '$_currentLevel'}),
+                            ? context.t(K.levelUpInline, {
+                                'n': groupThousands(_leveledUpTo!),
+                              })
+                            : context.t(K.seviyeP, {
+                                'p0': groupThousands(_currentLevel),
+                              }),
                         xpInLevel: _xpInCurrentLevel,
                         xpNeeded: _xpNeededForNextLevel,
                         progress: _levelProgress,
@@ -2579,7 +2595,8 @@ class _CategoryLearnings extends StatelessWidget {
     final night = SahneResultScene.maybeOf(context)?.night ?? true;
     final ok = tally.answered > 0 && tally.correct * 2 >= tally.answered;
     final statusLabel = context.t(ok ? K.correct : K.wrong);
-    final fraction = '${tally.correct}/${tally.answered}';
+    final fraction =
+        '${groupThousands(tally.correct)}/${groupThousands(tally.answered)}';
     final tone = CategoryVisuals.tone(tally.category);
     final fill = tone.fill(night: night);
     final mark = CategoryVisuals.mark(tally.category);
@@ -2789,10 +2806,10 @@ class _RaceStandings extends StatelessWidget {
         standings.indexWhere((player) => player.state == 'Player') + 1;
     final leader = standings.first;
     final summary = leader.state == 'Player'
-        ? context.t(K.finishedAtRank, {'rank': '$userRank'})
+        ? context.t(K.finishedAtRank, {'rank': groupThousands(userRank)})
         : context.t(K.leaderFinishedFirst, {
             'leader': context.playerDisplayName(leader.name, tag: leader.tag),
-            'rank': '$userRank',
+            'rank': groupThousands(userRank),
           });
 
     // Ardışık rakipler tek grupta; "Sen" satırı iki grubun arasında.
@@ -2810,7 +2827,7 @@ class _RaceStandings extends StatelessWidget {
     for (var i = 0; i < standings.length; i++) {
       final player = standings[i];
       final streakLine = player.streak > 0
-          ? '${context.t(K.streakLabel)} ${player.streak}'
+          ? '${context.t(K.streakLabel)} ${groupThousands(player.streak)}'
           : null;
       if (player.state == 'Player') {
         flush();
@@ -2895,13 +2912,13 @@ class _CrowdStandings extends StatelessWidget {
         ? null
         : sharing > 1
         ? context.t(K.crowdSharedRank, {
-            'rank': '$ownRank',
-            'count': '$sharing',
-            'total': '${standings.length}',
+            'rank': groupThousands(ownRank!),
+            'count': groupThousands(sharing),
+            'total': groupThousands(standings.length),
           })
         : context.t(K.crowdFinishedAtRank, {
-            'rank': '$ownRank',
-            'total': '${standings.length}',
+            'rank': groupThousands(ownRank!),
+            'total': groupThousands(standings.length),
           });
 
     Widget scoreOf(CrowdStanding standing) {
@@ -2938,7 +2955,7 @@ class _CrowdStandings extends StatelessWidget {
       final player = standing.player;
       final rank = player.rank ?? standing.rank;
       final streakLine = player.streak > 0
-          ? '${context.t(K.streakLabel)} ${player.streak}'
+          ? '${context.t(K.streakLabel)} ${groupThousands(player.streak)}'
           : null;
       if (player.id == ownId) {
         flush();
@@ -3096,7 +3113,7 @@ class _RoundGains extends StatelessWidget {
             '${ku ? mission.labelKu : mission.labelTr}',
     ];
     final streakTitle = dailyStreak > 0
-        ? context.t(K.dailyStreakDays, {'days': '$dailyStreak'})
+        ? context.t(K.dailyStreakDays, {'days': groupThousands(dailyStreak)})
         : null;
     final achievementTitles = [for (final a in achievements) a.title(ku)];
     final all = [
@@ -3111,7 +3128,7 @@ class _RoundGains extends StatelessWidget {
     final title = hasBadge ? context.t(K.newBadge) : all.first;
     final summary = hasBadge
         ? all.join(' · ')
-        : (all.length > 1 ? '+${all.length - 1}' : '');
+        : (all.length > 1 ? '+${groupThousands(all.length - 1)}' : '');
     final list = SahneListGroup(
       children: [
         for (final achievement in achievements)
@@ -3444,7 +3461,7 @@ class ResultExplanationEntry extends StatelessWidget {
                 // toplandığı yer). Soru metni artık tam görünür; uzun soru
                 // listeyi uzatır, kaydırma zaten var.
                 Text(
-                  '$index. ${record.prompt}',
+                  '${groupThousands(index)}. ${record.prompt}',
                   style: SahneType.bodyStrong.copyWith(color: t.tx),
                 ),
                 const SizedBox(height: SahneSpace.x1),

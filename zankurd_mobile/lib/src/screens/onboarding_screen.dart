@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
@@ -104,7 +106,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     key: const ValueKey('onboarding-progress'),
                     tone: SahneProgressTone.action,
                     value: (_page + 1) / pages.length,
-                    trailing: '${_page + 1}/${pages.length}',
+                    trailing:
+                        '${groupThousands(_page + 1)}/${groupThousands(pages.length)}',
                   ),
                 )
               : null,

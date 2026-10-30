@@ -156,7 +156,7 @@ class _LevelScreenState extends State<LevelScreen> {
             // (2026-08-16 simülatör taraması).
             name:
                 '${CategoryNames.localized(level.category, context.isKu)} '
-                '${level.number}. ${context.t(K.progressLevelLabel)}',
+                '${groupThousands(level.number)}. ${context.t(K.progressLevelLabel)}',
             questionCount: questions.length,
           );
       final result = await Navigator.of(context).push(
@@ -300,12 +300,15 @@ class _LevelProgressCard extends StatelessWidget {
           // burada yalnız sayaç.
           Semantics(
             label: Tr.forKu(K.progressLevelsCompleted, isKu, {
-              'completed': '$completed',
-              'total': '$total',
+              'completed': groupThousands(completed),
+              'total': groupThousands(total),
             }),
             excludeSemantics: true,
             child: Text(
-              Tr.forKu(K.pPSeviye, isKu, {'p0': '$completed', 'p1': '$total'}),
+              Tr.forKu(K.pPSeviye, isKu, {
+                'p0': groupThousands(completed),
+                'p1': groupThousands(total),
+              }),
               style: SahneType.captionStrong.copyWith(color: t.tx2),
             ),
           ),
@@ -701,7 +704,7 @@ class _LevelRowContent extends StatelessWidget {
     final night = Theme.of(context).brightness == Brightness.dark;
     final topic = CategoryVisuals.tone(level.category).fill(night: night);
     final number = Text(
-      '${level.number}',
+      groupThousands(level.number),
       style: SahneType.headline.copyWith(
         color: badge == _LevelBadge.next ? SahneVivid.onFill : t.tx,
         fontFeatures: const [FontFeature.tabularFigures()],
@@ -756,7 +759,7 @@ class _LevelRowContent extends StatelessWidget {
               child: Text(
                 locked
                     ? context.t(K.oncePSeviyeyiTamamla, {
-                        'p0': '${level.number - 1}.',
+                        'p0': '${groupThousands(level.number - 1)}.',
                       })
                     : '${groupThousands(level.questionCount)} ${context.t(K.soru)}',
                 key: locked
@@ -819,7 +822,9 @@ class _DifficultyBars extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final isKu = context.isKu;
-    final label = Tr.forKu(K.zorlukUzerindenPYildiz, isKu, {'p0': '$filled'});
+    final label = Tr.forKu(K.zorlukUzerindenPYildiz, isKu, {
+      'p0': groupThousands(filled),
+    });
     return Tooltip(
       message: Tr.forKu(K.zorluk, isKu),
       child: Semantics(

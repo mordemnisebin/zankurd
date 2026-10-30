@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
@@ -267,16 +269,16 @@ class LearningOutcomeCard extends StatelessWidget {
                   : K.outcomeReview,
               {
                 'name': reviewName,
-                'answered': '${outcome.reviewAnswered}',
-                'wrong': '${outcome.reviewWrong}',
+                'answered': groupThousands(outcome.reviewAnswered),
+                'wrong': groupThousands(outcome.reviewWrong),
               },
             );
       final strong = strongestName == null
           ? null
           : context.t(K.outcomeStrong, {
               'name': strongestName,
-              'answered': '${outcome.strongestAnswered}',
-              'correct': '${outcome.strongestCorrect}',
+              'answered': groupThousands(outcome.strongestAnswered),
+              'correct': groupThousands(outcome.strongestCorrect),
             });
       final canReview = outcome.reviewRecords.isNotEmpty && onReview != null;
       final link = !canReview
@@ -370,9 +372,9 @@ class LearningOutcomeCard extends StatelessWidget {
             const SizedBox(height: SahneSpace.x3),
             Text(
               context.t(K.outcomeCounts, {
-                'answered': '${outcome.answered}',
-                'correct': '${outcome.correct}',
-                'wrong': '${outcome.answered - outcome.correct}',
+                'answered': groupThousands(outcome.answered),
+                'correct': groupThousands(outcome.correct),
+                'wrong': groupThousands(outcome.answered - outcome.correct),
               }),
               style: SahneType.bodyStrong.copyWith(color: t.tx),
             ),
@@ -381,7 +383,7 @@ class LearningOutcomeCard extends StatelessWidget {
             const SizedBox(height: SahneSpace.x1),
             Text(
               context.t(K.outcomeUnanswered, {
-                'count': '${outcome.unanswered}',
+                'count': groupThousands(outcome.unanswered),
               }),
               style: SahneType.body.copyWith(color: t.tx2),
             ),
@@ -393,8 +395,8 @@ class LearningOutcomeCard extends StatelessWidget {
               color: t.okTx,
               text: context.t(K.outcomeStrong, {
                 'name': strongestName,
-                'answered': '${outcome.strongestAnswered}',
-                'correct': '${outcome.strongestCorrect}',
+                'answered': groupThousands(outcome.strongestAnswered),
+                'correct': groupThousands(outcome.strongestCorrect),
               }),
             ),
           if (strongestName != null && reviewName != null)
@@ -405,8 +407,8 @@ class LearningOutcomeCard extends StatelessWidget {
               color: t.goldTx,
               text: context.t(K.outcomeReview, {
                 'name': reviewName,
-                'answered': '${outcome.reviewAnswered}',
-                'wrong': '${outcome.reviewWrong}',
+                'answered': groupThousands(outcome.reviewAnswered),
+                'wrong': groupThousands(outcome.reviewWrong),
               }),
             ),
           if (leftoverCategories.isNotEmpty) ...[
@@ -418,8 +420,8 @@ class LearningOutcomeCard extends StatelessWidget {
                 child: Text(
                   context.t(K.outcomeCategoryTally, {
                     'name': CategoryNames.localized(tally.category, isKu),
-                    'answered': '${tally.answered}',
-                    'correct': '${tally.correct}',
+                    'answered': groupThousands(tally.answered),
+                    'correct': groupThousands(tally.correct),
                   }),
                   style: SahneType.body.copyWith(color: t.tx2),
                 ),

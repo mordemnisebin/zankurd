@@ -34,6 +34,7 @@ import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 
 import 'support/widget_test_helpers.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 QuizQuestion _q(int i) => QuizQuestion.fromServerRow({
   'id': 'q$i',
@@ -218,6 +219,48 @@ void main() {
       'zankurd.navTour.seen': true,
       'zankurd.quiz_tutorial.seen': true,
     });
+  });
+
+  testWidgets('T7 turnuva açılışında sayaç çizgi, yeni soruda tekrar sayı', (
+    tester,
+  ) async {
+    final repo = _ServerScoredRepo(_bracket(serverScored: true));
+    await _openTournament(tester, repo);
+    expect(
+      find.byKey(const ValueKey('tournament-match-self-mark')),
+      findsOneWidget,
+    );
+    expect(
+      tester
+          .widget<Text>(
+            find.byKey(const ValueKey('tournament-match-self-mark')),
+          )
+          .data,
+      'Sen',
+    );
+    await tester.tap(find.text('Maçı başlat'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(
+      tester.widget<SahneStageTimer>(find.byType(SahneStageTimer)).pending,
+      isFalse,
+    );
+    await tester.tap(find.text('Yek'));
+    await tester.pump();
+    expect(
+      tester.widget<SahneStageTimer>(find.byType(SahneStageTimer)).pending,
+      isTrue,
+    );
+    expect(find.text('–'), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 600));
+    expect(find.text('–'), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 700));
+    expect(repo.calls, contains('present:1'));
+    expect(
+      tester.widget<SahneStageTimer>(find.byType(SahneStageTimer)).pending,
+      isFalse,
+    );
+    await tester.pumpWidget(const SizedBox());
   });
 
   testWidgets('sunucu puanlı kupa: maç turnuva RPC\'leriyle oynanır, '

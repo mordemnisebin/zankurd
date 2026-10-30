@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../data/sync_manager.dart';
@@ -41,7 +43,9 @@ class SyncFailedNotice extends StatelessWidget {
                     const SizedBox(width: SahneSpace.x2),
                     Expanded(
                       child: Text(
-                        context.t(K.pSenkronizeEdilemedi, {'p0': '$failed'}),
+                        context.t(K.pSenkronizeEdilemedi, {
+                          'p0': groupThousands(failed),
+                        }),
                         style: SahneType.captionStrong.copyWith(color: t.errTx),
                       ),
                     ),

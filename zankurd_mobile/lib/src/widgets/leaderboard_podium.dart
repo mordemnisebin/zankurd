@@ -130,7 +130,7 @@ class _PodiumColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final label = Tr.forKu(isSelf ? K.seninSiranPP : K.pPPPuan, isKu, {
-      'p0': '${entry.rank}',
+      'p0': groupThousands(entry.rank),
       'p1': _name,
       'p2': groupThousands(entry.totalScore),
     });
@@ -364,7 +364,7 @@ class _MedalDisc extends StatelessWidget {
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              '$rank',
+              groupThousands(rank),
               maxLines: 1,
               textScaler: TextScaler.noScaling,
               style: SahneType.headline.copyWith(

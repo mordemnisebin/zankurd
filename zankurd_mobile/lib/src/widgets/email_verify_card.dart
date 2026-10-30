@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -311,7 +313,7 @@ class _CodeSheetState extends State<_CodeSheet> {
               buttonKey: const ValueKey('email-verify-resend'),
               label: _secondsLeft > 0
                   ? context.t(K.emailVerifyResendIn, {
-                      'seconds': '$_secondsLeft',
+                      'seconds': groupThousands(_secondsLeft),
                     })
                   : context.t(K.emailVerifyResend),
               arrow: false,

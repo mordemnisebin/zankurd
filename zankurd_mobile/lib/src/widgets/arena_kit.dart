@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../theme/app_icons.dart';
@@ -442,7 +444,7 @@ class MissionProgressCard extends StatelessWidget {
               tone: role == SahneRole.learn
                   ? SahneProgressTone.learn
                   : SahneProgressTone.gold,
-              trailing: '$current/$target',
+              trailing: '${groupThousands(current)}/${groupThousands(target)}',
               semanticLabel: title,
             ),
             if (done && onClaim != null) ...[
@@ -503,7 +505,7 @@ class RankMedal extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final number = Text(
-      '$rank',
+      groupThousands(rank),
       maxLines: 1,
       style: SahneType.bodyStrong.copyWith(
         color: rank <= 3 ? t.onGold : t.tx2,

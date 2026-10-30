@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -319,8 +321,8 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
           const SizedBox(height: SahneSpace.x2),
           Text(
             context.t(K.wordsReviewScore, {
-              'correct': '$_correct',
-              'total': '$_firstPassCount',
+              'correct': groupThousands(_correct),
+              'total': groupThousands(_firstPassCount),
             }),
             key: const ValueKey('word-review-score'),
             textAlign: TextAlign.center,
@@ -369,7 +371,7 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
         children: [
           SahneProgressBar(
             value: _index / total,
-            trailing: '${_index + 1}/$total',
+            trailing: '${groupThousands(_index + 1)}/${groupThousands(total)}',
             semanticLabel: context.t(K.tekrarTitle),
           ),
           const SizedBox(height: SahneSpace.x5),

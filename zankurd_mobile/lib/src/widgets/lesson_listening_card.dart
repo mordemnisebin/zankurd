@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -125,8 +127,8 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
               ),
               Text(
                 context.t(K.lessonCardCounter, {
-                  'n': '${_index % playable.length + 1}',
-                  'total': '${playable.length}',
+                  'n': groupThousands(_index % playable.length + 1),
+                  'total': groupThousands(playable.length),
                 }),
                 style: SahneType.captionStrong.copyWith(
                   color: t.tx3,

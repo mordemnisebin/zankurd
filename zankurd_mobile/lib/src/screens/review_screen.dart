@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -336,7 +338,9 @@ class _ReviewCardState extends State<_ReviewCard> {
             children: [
               status,
               Text(
-                context.t(K.questionIndex, {'index': '${index + 1}'}),
+                context.t(K.questionIndex, {
+                  'index': groupThousands(index + 1),
+                }),
                 style: SahneType.captionStrong.copyWith(color: t.tx3),
               ),
             ],
@@ -699,7 +703,7 @@ class _FlashcardViewState extends State<_FlashcardView> {
             runSpacing: SahneSpace.x1,
             children: [
               Text(
-                '${_currentIndex + 1} / ${widget.records.length}',
+                '${groupThousands(_currentIndex + 1)} / ${groupThousands(widget.records.length)}',
                 style: SahneType.bodyStrong.copyWith(
                   color: t.tx,
                   fontFeatures: const [FontFeature.tabularFigures()],

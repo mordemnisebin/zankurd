@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -565,7 +567,7 @@ class SahneJokerButton extends StatelessWidget {
                 const SahneGlyph(SahneGlyphKind.coin, size: 14, filled: true),
               const SizedBox(width: SahneSpace.x1),
               Text(
-                '$price',
+                groupThousands(price),
                 style: SahneType.captionStrong.copyWith(
                   color: enabled ? t.goldTx : t.tx2,
                   fontFeatures: const [FontFeature.tabularFigures()],
@@ -581,7 +583,7 @@ class SahneJokerButton extends StatelessWidget {
       button: true,
       enabled: tappable,
       selected: selected ? true : null,
-      label: semanticLabel ?? '$label, $price',
+      label: semanticLabel ?? '$label, ${groupThousands(price)}',
       onTap: tappable ? onPressed : null,
       excludeSemantics: true,
       child: Tooltip(

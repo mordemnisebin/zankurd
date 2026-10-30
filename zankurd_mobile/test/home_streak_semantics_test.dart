@@ -11,6 +11,6 @@ void main() {
       source,
       contains('streakSemanticLabel: context.t(K.dailyStreakDays, {'),
     );
-    expect(source, contains("'days': '\$_streak'"));
+    expect(source, contains("'days': groupThousands(_streak)"));
   });
 }

@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -160,7 +162,7 @@ class ComboBadge extends StatelessWidget {
                     const SizedBox(width: SahneSpace.x2),
                     Flexible(
                       child: Text(
-                        '×$streak ${Tr.forKu(K.seri, isKu)}',
+                        '×${groupThousands(streak)} ${Tr.forKu(K.seri, isKu)}',
                         style: SahneType.captionStrong.copyWith(
                           color: t.goldTx,
                         ),
@@ -336,7 +338,7 @@ class _ScoreFlyupState extends State<ScoreFlyup>
             child: Transform.translate(
               offset: Offset(0, -40 * t),
               child: Text(
-                '+${widget.points}',
+                '+${groupThousands(widget.points)}',
                 style: SahneType.headline.copyWith(
                   color: SahneTokens.of(context).goldTx,
                   fontFeatures: const [FontFeature.tabularFigures()],

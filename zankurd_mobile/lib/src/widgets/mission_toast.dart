@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
@@ -37,7 +39,7 @@ class MissionToast {
                     style: SahneType.captionStrong.copyWith(color: t.tx),
                   ),
                   Text(
-                    '$label — +${mission.xpReward} XP',
+                    '$label — +${groupThousands(mission.xpReward)} XP',
                     style: SahneType.caption.copyWith(color: t.tx2),
                   ),
                 ],

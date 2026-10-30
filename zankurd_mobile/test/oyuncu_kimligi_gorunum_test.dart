@@ -318,6 +318,11 @@ void main() {
     testWidgets('1v1: rakip yayın gönderince fotoğrafı ve gerçek adı kaybolmaz', (
       tester,
     ) async {
+      // T7: dar yatay sütunda avatar bilinçli saklanır. Bu kimlik testi,
+      // avatarın gösterildiği telefon düzeninde yayın öncesi/sonrasını ölçer.
+      tester.view.physicalSize = const Size(430, 932);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
       final repository = _DuelRepository();
       await tester.pumpWidget(
         MultiProvider(
@@ -344,6 +349,14 @@ void main() {
         ),
       );
       await tester.pump();
+
+      expect(
+        find.byWidgetPredicate(
+          (w) => w is PlayerAvatar && w.photoUrl == _photo,
+        ),
+        findsWidgets,
+        reason: 'kimlik testi başlamadan fotoğraf görünür olmalı',
+      );
 
       // Rakip, yer tutucu adıyla ("Oyuncu") hazır yayını + cevap yayını yollar.
       repository.emit({

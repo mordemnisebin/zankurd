@@ -533,8 +533,8 @@ extension _QuizScreenUI on _QuizScreenState {
       height: 6,
       tone: SahneProgressTone.action,
       semanticLabel:
-          '${index + 1}/$total · $right ${context.t(K.correct)} · '
-          '$wrong ${context.t(K.wrong)}',
+          '${groupThousands(index + 1)}/${groupThousands(total)} · ${groupThousands(right)} ${context.t(K.correct)} · '
+          '${groupThousands(wrong)} ${context.t(K.wrong)}',
     );
   }
 
@@ -610,7 +610,8 @@ extension _QuizScreenUI on _QuizScreenState {
     return _DuelScoreHeader(
       player: player,
       opponent: opponent,
-      progress: '${index + 1}/${widget.questions.length}',
+      progress:
+          '${groupThousands(index + 1)}/${groupThousands(widget.questions.length)}',
       showTug: !compact,
     );
   }
@@ -832,9 +833,9 @@ extension _QuizScreenUI on _QuizScreenState {
           question.type == QuestionType.fillInBlank) {
         return null;
       }
-      final correct = question.correctAnswer.trim();
-      if (correct.isNotEmpty) {
-        return '${context.t(K.correctAnswerLabel)}: $correct';
+      final correctAnswer = question.correctAnswer.trim();
+      if (correctAnswer.isNotEmpty) {
+        return '${context.t(K.correctAnswerLabel)}: $correctAnswer';
       }
       return null;
     }
@@ -994,7 +995,7 @@ extension _QuizScreenUI on _QuizScreenState {
     // karışıyordu; geri sayımın SONRAKİ soruya olduğu yazar.
     return context.t(K.revealVerdictCountdown, {
       'verdict': verdict,
-      'n': '$seconds',
+      'n': groupThousands(seconds),
     });
   }
 
@@ -1006,7 +1007,7 @@ extension _QuizScreenUI on _QuizScreenState {
     final progress = _currentCrowdProgress;
     final left = progress == null ? 0 : progress.active - progress.answered;
     return left > 0
-        ? context.t(K.crowdWaitingCount, {'n': '$left'})
+        ? context.t(K.crowdWaitingCount, {'n': groupThousands(left)})
         : context.t(K.crowdWaitingOthers);
   }
 
@@ -1101,7 +1102,7 @@ extension _QuizScreenUI on _QuizScreenState {
           hint: _freeWildcardAvailable
               ? context.t(K.freeWildcardToday)
               : _jokerStock > 0
-              ? context.t(K.jokerStockHint, {'n': '$_jokerStock'})
+              ? context.t(K.jokerStockHint, {'n': groupThousands(_jokerStock)})
               : (_coinBalance == 0 && index == 0
                     ? context.t(K.finishQuizHint)
                     : null),

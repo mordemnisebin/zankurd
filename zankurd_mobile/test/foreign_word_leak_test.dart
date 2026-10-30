@@ -326,10 +326,11 @@ void main() {
   });
 
   test('Google/Apple bağlama Türkçe ile kalıbı taşımaz', () {
-    // Giriş `Bi Google têkeve` der. Bağlama "Bi Google ve" deyince
-    // Türkçe "ile" `ve` olarak sızar. `ji nû ve` doğru postposition;
-    // marka + ve kalıbı şart.
-    expect(Tr.of(K.linkGoogle, AppLanguage.ku), 'Bi Google girêde');
+    // T7: Apple/Google aynı devam fiilini ve bi … re kalıbını kullanır.
+    // Marka + ve kalıbı Türkçe "ile" sızıntısıdır; ji nû ve ise doğaldır.
+    expect(Tr.of(K.linkGoogle, AppLanguage.ku), 'Bi Google re bidomîne');
+    expect(Tr.of(K.continueGoogle, AppLanguage.ku), 'Bi Google re bidomîne');
+    expect(Tr.of(K.continueApple, AppLanguage.ku), 'Bi Apple re bidomîne');
     expect(
       Tr.of(K.connectingGoogle, AppLanguage.ku),
       'Bi Google re tê girêdan…',

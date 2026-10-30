@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -239,8 +241,10 @@ class _SignUpScreenState extends State<SignUpScreen>
             child: SahneProgressBar(
               key: const ValueKey('signup-progress'),
               value: (_currentStep + 1) / _stepCount,
-              trailing: '${_currentStep + 1}/$_stepCount',
-              semanticLabel: '${_currentStep + 1}/$_stepCount',
+              trailing:
+                  '${groupThousands(_currentStep + 1)}/${groupThousands(_stepCount)}',
+              semanticLabel:
+                  '${groupThousands(_currentStep + 1)}/${groupThousands(_stepCount)}',
             ),
           ),
           hero: FadeTransition(

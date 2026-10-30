@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
@@ -106,11 +108,11 @@ class WildcardButton extends StatelessWidget {
     };
     // W1 (2026-10-28 tur 5): hak açıkken fiyat yuvası "Bedava" yazar (aynı
     // boy/stil, rozet değil); ayrı "Bugün 1 joker bedava" çipi kalktı.
-    final price = free
+    final priceLabel = free
         ? context.t(K.freeWord)
-        : '${type.coinCost} ${context.t(K.coinWord)}';
+        : '${groupThousands(type.coinCost)} ${context.t(K.coinWord)}';
     final displayLabel = stateLabel == null
-        ? '$typeLabel • $price'
+        ? '$typeLabel • $priceLabel'
         : '$typeLabel • $stateLabel';
     final hintMessage = stateLabel == null
         ? typeHint

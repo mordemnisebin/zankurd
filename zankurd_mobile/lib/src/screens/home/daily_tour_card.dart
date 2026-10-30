@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../l10n/strings.dart';
@@ -59,14 +61,16 @@ class DailyTourCard extends StatelessWidget {
       doneToday ? K.homeTourDoneTitle : K.dailyEvent,
       isKu,
     );
-    final count = Tr.forKu(K.questionCount, isKu, {'count': '$questionCount'});
-    final seconds = Tr.forKu(K.contestSeconds, isKu);
+    final countLabel = Tr.forKu(K.questionCount, isKu, {
+      'count': groupThousands(questionCount),
+    });
+    final secondsLabel = Tr.forKu(K.contestSeconds, isKu);
     final meta = doneToday
         ? Tr.forKu(K.contestNextIn, isKu, {
             'h': '${left.hours}',
             'm': '${left.minutes}',
           })
-        : '$count · $kDailyEventSecondsPerQuestion $seconds';
+        : '$countLabel · ${groupThousands(kDailyEventSecondsPerQuestion)} $secondsLabel';
 
     return KeyedSubtree(
       key: const ValueKey('home-daily-task'),
@@ -107,9 +111,9 @@ class DailyTourCard extends StatelessWidget {
                       if (doneToday && myEntry != null) ...[
                         Text(
                           Tr.forKu(K.homeTourMyRank, isKu, {
-                            'rank': '${myEntry!.rank}',
-                            'correct': '${myEntry!.correct}',
-                            'total': '${myEntry!.total}',
+                            'rank': groupThousands(myEntry!.rank),
+                            'correct': groupThousands(myEntry!.correct),
+                            'total': groupThousands(myEntry!.total),
                           }),
                           key: const ValueKey('home-daily-task-rank'),
                           style: SahneType.bodyStrong.copyWith(color: t.tx),

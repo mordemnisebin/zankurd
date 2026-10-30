@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../data/learner_lexicon.dart';
@@ -58,8 +60,8 @@ class _LessonRecallCardState extends State<LessonRecallCard> {
               ),
               Text(
                 context.t(K.lessonCardCounter, {
-                  'n': '${_index + 1}',
-                  'total': '${widget.entries.length}',
+                  'n': groupThousands(_index + 1),
+                  'total': groupThousands(widget.entries.length),
                 }),
                 style: SahneType.captionStrong.copyWith(
                   color: t.tx3,

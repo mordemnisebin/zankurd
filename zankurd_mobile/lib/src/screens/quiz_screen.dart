@@ -723,7 +723,11 @@ class _QuizScreenState extends State<QuizScreen>
               AppHaptics.light();
               context.read<SoundProvider>().playTick();
               if (remaining == 5) {
-                _announce(context.t(K.timerSecondsLeft, {'n': '$remaining'}));
+                _announce(
+                  context.t(K.timerSecondsLeft, {
+                    'n': groupThousands(remaining),
+                  }),
+                );
               }
             }
           }

@@ -169,23 +169,23 @@ void main() {
   ///
   /// Klasik (kalabalık olmayan) odanın lobisi de puana göre sıralanıyordu;
   /// herkes 0 puandayken Dart'ın kararsız `sort`u eşitleri her cihazda farklı
-  /// diziyordu. Lobide sıra depodan gelen katılma sırasıdır; oyunda puan
-  /// sırası KARARLIDIR (eşitlikte gelen sıra korunur).
+  /// diziyordu. T7: lobide sıra sunucunun katılma anahtarıdır; oyunda
+  /// eşit puanlar da aynı anahtarla çözülür. Tarih yoksa kimlik belirler.
   group('C12 oyuncu sırası', () {
     Player p(String id, int score) =>
         Player(id: id, name: id, score: score, state: '');
 
-    test('lobide gelen sıra aynen korunur', () {
+    test('lobide zaman yoksa oyuncu kimliği belirleyicidir', () {
       final input = [p('ali', 0), p('bero', 0), p('dlan', 0), p('cano', 0)];
       expect(orderRoomPlayersForDisplay(input, lobby: true).map((e) => e.id), [
         'ali',
         'bero',
-        'dlan',
         'cano',
+        'dlan',
       ]);
     });
 
-    test('oyunda puana göre, eşitlikte gelen sıra (kararlı)', () {
+    test('oyunda puana göre, eşitlikte sunucu katılma anahtarı', () {
       final input = [
         for (var i = 0; i < 40; i++) p('o$i', i % 3 == 0 ? 10 : 0),
       ];
@@ -198,7 +198,10 @@ void main() {
         for (final e in input)
           if (e.score == 0) e.id,
       ];
-      expect(out.map((e) => e.id).toList(), [...tens, ...zeros]);
+      expect(out.map((e) => e.id).toList(), [
+        ...(tens..sort()),
+        ...(zeros..sort()),
+      ]);
     });
   });
 

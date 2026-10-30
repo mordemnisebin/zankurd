@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -484,11 +486,13 @@ class _ContestQuickStrip extends StatelessWidget {
     final items = <(IconData, String)>[
       (
         AppIcons.question,
-        Tr.forKu(K.questionCount, ku, {'count': '${contest.questionCount}'}),
+        Tr.forKu(K.questionCount, ku, {
+          'count': groupThousands(contest.questionCount),
+        }),
       ),
       (
         AppIcons.clock,
-        '$kDailyEventSecondsPerQuestion ${Tr.forKu(K.contestSeconds, ku)}',
+        '${groupThousands(kDailyEventSecondsPerQuestion)} ${Tr.forKu(K.contestSeconds, ku)}',
       ),
     ];
 

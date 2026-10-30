@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -257,7 +259,7 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
     if (hasIncoming) {
       title = incomingCount == 1
           ? context.t(K.challengeYourTurn)
-          : '${context.t(K.challengeYourTurn)} · $incomingCount';
+          : '${context.t(K.challengeYourTurn)} · ${groupThousands(incomingCount)}';
       final inviter = _incoming.first.opponentName;
       if (incomingCount == 1 && _incoming.first.incomingChallenge) {
         subtitle = inviter == null
@@ -277,14 +279,15 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
                 tag: _incoming.first.opponentProfile?.playerTag,
               );
       } else if (readyCount > 0) {
-        subtitle = '${context.t(K.asyncDuelReady)} · $readyCount';
+        subtitle =
+            '${context.t(K.asyncDuelReady)} · ${groupThousands(readyCount)}';
       } else {
         subtitle = context.t(K.asyncDuelInbox);
       }
     } else if (pending) {
       title = readyCount == 1
           ? context.t(K.asyncDuelReady)
-          : '${context.t(K.asyncDuelReady)} · $readyCount';
+          : '${context.t(K.asyncDuelReady)} · ${groupThousands(readyCount)}';
       final opponent = _ready.first.opponentName;
       subtitle = readyCount == 1 && opponent != null
           ? context.playerDisplayName(
@@ -299,7 +302,7 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
           ? null
           : _waiting.length == 1
           ? context.t(K.asyncDuelWaiting)
-          : '${context.t(K.asyncDuelWaiting)} · ${_waiting.length}';
+          : '${context.t(K.asyncDuelWaiting)} · ${groupThousands(_waiting.length)}';
     }
 
     // Kalan süre: sırası bende olan düelloların en yakın bitişi (metin +

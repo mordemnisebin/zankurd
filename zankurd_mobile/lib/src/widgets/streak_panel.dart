@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
@@ -152,7 +154,7 @@ class StreakPanel extends StatelessWidget {
               children: [
                 RewardToken(
                   kind: RewardKind.streak,
-                  value: '$current',
+                  value: groupThousands(current),
                   label: dayUnitLabel,
                 ),
                 const SizedBox(width: SahneSpace.x2),
@@ -196,7 +198,8 @@ class StreakPanel extends StatelessWidget {
               SahneProgressBar(
                 value: (current / nextMilestone!).clamp(0.0, 1.0),
                 tone: SahneProgressTone.gold,
-                trailing: '$current/${nextMilestone!}',
+                trailing:
+                    '${groupThousands(current)}/${groupThousands(nextMilestone!)}',
                 semanticLabel: dayUnitLabel.isEmpty ? null : dayUnitLabel,
               ),
             ],
@@ -207,7 +210,7 @@ class StreakPanel extends StatelessWidget {
               SahneButton.secondary(
                 label: freezeCost == null
                     ? freezeActionLabel!
-                    : '${freezeActionLabel!} · $freezeCost',
+                    : '${freezeActionLabel!} · ${groupThousands(freezeCost!)}',
                 icon: AppIcons.shield,
                 expand: true,
                 onPressed: onFreeze,

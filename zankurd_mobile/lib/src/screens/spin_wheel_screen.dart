@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -500,7 +502,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
           child: Text(
             _extraSpins > 0
                 ? '${context.t(K.wheelFreeDaily)} '
-                      '${context.t(K.wheelExtraSpins, {'n': '$_extraSpins'})}'
+                      '${context.t(K.wheelExtraSpins, {'n': groupThousands(_extraSpins)})}'
                 : context.t(K.wheelFreeDaily),
             key: const ValueKey('spin-daily-line'),
             textAlign: TextAlign.center,
@@ -652,7 +654,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     final t = SahneTokens.of(context);
     return Semantics(
       liveRegion: true,
-      label: context.t(K.wheelWonAmount, {'amount': '$amount'}),
+      label: context.t(K.wheelWonAmount, {'amount': groupThousands(amount)}),
       child: ScaleTransition(
         scale: _prizeScale,
         child: FadeTransition(
@@ -694,7 +696,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                           style: SahneType.headline.copyWith(color: t.tx),
                         ),
                         Text(
-                          context.t(K.wheelWonPlus, {'amount': '$amount'}),
+                          context.t(K.wheelWonPlus, {
+                            'amount': groupThousands(amount),
+                          }),
                           style: SahneType.bodyStrong.copyWith(color: t.goldTx),
                         ),
                       ],
@@ -915,7 +919,7 @@ class _WheelPainter extends CustomPainter {
       );
       final textPainter = TextPainter(
         text: TextSpan(
-          text: '${rewards[i]}',
+          text: groupThousands(rewards[i]),
           // `CustomPainter` içindeki metin temayı görmez: aile ve boyut
           // belirteçten açıkça verilir (2026-07-26).
           style: SahneType.headline.copyWith(

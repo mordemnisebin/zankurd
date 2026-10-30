@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -175,8 +177,8 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
               height: 4,
               value: _index / _questions.length,
               semanticLabel: context.t(K.placementProgress, {
-                'index': '${_index + 1}',
-                'total': '${_questions.length}',
+                'index': groupThousands(_index + 1),
+                'total': groupThousands(_questions.length),
               }),
             ),
       center: question == null
@@ -390,8 +392,8 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
         titleKey: const ValueKey('placement-result-level'),
         titleRole: role,
         caption: context.t(K.placementScore, {
-          'correct': '${result.correctCount}',
-          'total': '${result.totalCount}',
+          'correct': groupThousands(result.correctCount),
+          'total': groupThousands(result.totalCount),
         }),
         body: _resultHint(ku, level),
       ),

@@ -259,7 +259,7 @@ class _ProfileHeroCard extends StatelessWidget {
                       size: 20,
                       color: ProfileIdentityColors.streak,
                     ),
-                    value: '$streak',
+                    value: groupThousands(streak),
                     label: Tr.forKu(K.profileStatStreak, ku),
                   ),
                   _IdentityStat(
@@ -268,7 +268,7 @@ class _ProfileHeroCard extends StatelessWidget {
                       size: 20,
                       color: ProfileIdentityColors.gold,
                     ),
-                    value: '$level',
+                    value: groupThousands(level),
                     label: Tr.forKu(K.progressLevelLabel, ku),
                   ),
                   if (coins != null)
@@ -313,7 +313,8 @@ class _ProfileHeroCard extends StatelessWidget {
               height: 8,
               trackColor: Colors.white.withValues(alpha: 0.22),
               edgeColor: Colors.transparent,
-              semanticLabel: '${Tr.forKu(K.progressLevelLabel, ku)} $level',
+              semanticLabel:
+                  '${Tr.forKu(K.progressLevelLabel, ku)} ${groupThousands(level)}',
             ),
             const SizedBox(height: SahneSpace.x1),
             Text(
@@ -868,7 +869,8 @@ class _UnifiedRewardsSection extends StatelessWidget {
                 SahneProgressBar(
                   value: totalAll == 0 ? 0 : totalUnlocked / totalAll,
                   tone: SahneProgressTone.gold,
-                  trailing: '$totalUnlocked/$totalAll',
+                  trailing:
+                      '${groupThousands(totalUnlocked)}/${groupThousands(totalAll)}',
                   semanticLabel: Tr.forKu(K.basarilar, isKu),
                 ),
                 const SizedBox(height: SahneSpace.x3),
@@ -1190,8 +1192,8 @@ class _MasteryRow extends StatelessWidget {
           else
             Text(
               accuracy == null
-                  ? '$count/$threshold · ${Tr.forKu(K.masteryEvidencePending, isKu, {'correct': '$count'})}'
-                  : '$count/$threshold · ${Tr.forKu(K.masteryEvidenceLabel, isKu, {'correct': '$count', 'answered': '$answered', 'accuracy': '$accuracy'})}',
+                  ? '${groupThousands(count)}/${groupThousands(threshold)} · ${Tr.forKu(K.masteryEvidencePending, isKu, {'correct': groupThousands(count)})}'
+                  : '${groupThousands(count)}/${groupThousands(threshold)} · ${Tr.forKu(K.masteryEvidenceLabel, isKu, {'correct': groupThousands(count), 'answered': groupThousands(answered), 'accuracy': groupThousands(accuracy)})}',
               style: SahneType.caption.copyWith(color: t.tx2),
             ),
         ],
@@ -1339,7 +1341,7 @@ class _PedagogicalAnalyticsSectionState
                       SizedBox(
                         width: 40,
                         child: Text(
-                          '${bar.correct}',
+                          groupThousands(bar.correct),
                           textAlign: TextAlign.right,
                           style: SahneType.captionStrong.copyWith(
                             color: t.okTx,
@@ -1389,7 +1391,9 @@ class _PedagogicalAnalyticsSectionState
                   const SizedBox(width: SahneSpace.x2),
                   Expanded(
                     child: Text(
-                      Tr.forKu(K.pDogruCevap, isKu, {'p0': '$maxCorrect'}),
+                      Tr.forKu(K.pDogruCevap, isKu, {
+                        'p0': groupThousands(maxCorrect),
+                      }),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: SahneType.caption.copyWith(color: t.tx),
@@ -1417,7 +1421,7 @@ class _PedagogicalAnalyticsSectionState
                   Expanded(
                     child: Text(
                       Tr.forKu(K.pAktifYanlisSoru, isKu, {
-                        'p0': '$maxMistakes',
+                        'p0': groupThousands(maxMistakes),
                       }),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

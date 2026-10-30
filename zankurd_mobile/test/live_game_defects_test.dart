@@ -151,25 +151,32 @@ void main() {
       await tester.tap(find.text('mirov').first);
       await tester.pump(const Duration(milliseconds: 600));
 
-      // Canlı liste: "Tu" ve "Zana" birer kez. Kusurlu sürümde rakip
-      // tarafına benim satırım yazılıyordu ("Tu" fazla, "Zana" eksik). Üst
-      // puan kartı 2026-10-27'de kalktı (aynı iki satırı ikinci kez
-      // gösteriyordu); sayılar bu yüzden ikiden bire indi.
-      expect(find.text('Tu'), findsOneWidget);
+      // T7: oyuncu adı ve ayrı "Tu" işareti farklı satırlardadır.
+      // Rakip adı kendi kimliğini korumalı; kendi işareti tek olmalıdır.
+      expect(find.byKey(const ValueKey('duel-self-mark')), findsOneWidget);
       expect(find.text('Zana'), findsOneWidget);
       expect(find.text('ZanKurd Oyuncusu'), findsNothing);
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('puan kartında İngilizce "pts" yok, sözlükteki "pûan" var', (
+    testWidgets('Kurmancî puan satırı ek sözcüksüz okunur sayıdır', (
       tester,
     ) async {
       await _pumpDuel(tester, repository: _GuestRepository(), room: botRoom);
       expect(find.textContaining('pts'), findsNothing);
-      expect(find.textContaining('pûan'), findsNWidgets(2));
+      expect(
+        tester.widget<Text>(find.byKey(const ValueKey('duel-self-score'))).data,
+        '0',
+      );
+      expect(
+        tester
+            .widget<Text>(find.byKey(const ValueKey('duel-opponent-score')))
+            .data,
+        '0',
+      );
     });
 
-    testWidgets('Türkçede de "puan"', (tester) async {
+    testWidgets('Türkçede de ek sözcüksüz puan', (tester) async {
       await _pumpDuel(
         tester,
         repository: _GuestRepository(),
@@ -177,7 +184,16 @@ void main() {
         ku: false,
       );
       expect(find.textContaining('pts'), findsNothing);
-      expect(find.text('0 puan'), findsNWidgets(2));
+      expect(
+        tester.widget<Text>(find.byKey(const ValueKey('duel-self-score'))).data,
+        '0',
+      );
+      expect(
+        tester
+            .widget<Text>(find.byKey(const ValueKey('duel-opponent-score')))
+            .data,
+        '0',
+      );
     });
   });
 
@@ -214,7 +230,12 @@ void main() {
         expect(find.text('Berfin'), findsOneWidget);
         expect(find.text('Lîstikvan'), findsOneWidget);
         expect(find.text('ZanKurd Oyuncusu'), findsNothing);
-        expect(find.text('230 pûan'), findsOneWidget);
+        expect(
+          tester
+              .widget<Text>(find.byKey(const ValueKey('duel-opponent-score')))
+              .data,
+          '230',
+        );
       },
     );
   });

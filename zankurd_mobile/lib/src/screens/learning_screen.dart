@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -396,7 +398,9 @@ class _LearningScreenState extends State<LearningScreen> {
                       title: context.t(K.wordsTitle),
                       // Vadesi gelen sayısı burada DEĞİL: tekrar girişi tektir.
                       subtitle: _wordCount > 0
-                          ? context.t(K.wordsCount, {'count': '$_wordCount'})
+                          ? context.t(K.wordsCount, {
+                              'count': groupThousands(_wordCount),
+                            })
                           : null,
                       onTap: _openMyWords,
                     ),
@@ -1894,8 +1898,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                     // sanılıyordu (ayrıca "Dersi tamamla" bekleniyor). Neyi
                     // saydığı yazar: slayt kartı.
                     trailing: context.t(K.lessonSlideCounter, {
-                      'n': '${_currentSlideIndex + 1}',
-                      'total': '${slides.length}',
+                      'n': groupThousands(_currentSlideIndex + 1),
+                      'total': groupThousands(slides.length),
                     }),
                     semanticLabel: ku
                         ? widget.lesson.titleKu
@@ -2210,7 +2214,7 @@ class _LessonStepMark extends StatelessWidget {
         child: completed
             ? Icon(AppIcons.check, size: 16, color: ink)
             : Text(
-                '$step',
+                groupThousands(step),
                 style: SahneType.captionStrong.copyWith(color: ink),
               ),
       ),
@@ -2236,8 +2240,8 @@ class _UnitHeader extends StatelessWidget {
     final t = SahneTokens.of(context);
     final complete = done >= total;
     final countLabel = context.t(K.lessonCountProgress, {
-      'done': '$done',
-      'total': '$total',
+      'done': groupThousands(done),
+      'total': groupThousands(total),
     });
     // Büyük yazıda (≥ %150) "Beşa 1" + "0/5 ders" + çubuk tek satıra sığmaz
     // (320 pt, ×2: 30 pt taştı, 2026-10-28 tur 3): ad ve sayaç üstte, çubuk
@@ -2256,7 +2260,7 @@ class _UnitHeader extends StatelessWidget {
                 ],
                 Expanded(
                   child: Text(
-                    context.t(K.learningUnit, {'n': '$number'}),
+                    context.t(K.learningUnit, {'n': groupThousands(number)}),
                     style: SahneType.eyebrow.copyWith(color: t.learnTx),
                   ),
                 ),
@@ -2270,7 +2274,9 @@ class _UnitHeader extends StatelessWidget {
             SahneProgressBar(
               value: total == 0 ? 0 : done / total,
               height: 4,
-              semanticLabel: context.t(K.learningUnit, {'n': '$number'}),
+              semanticLabel: context.t(K.learningUnit, {
+                'n': groupThousands(number),
+              }),
             ),
           ],
         ),
@@ -2285,7 +2291,7 @@ class _UnitHeader extends StatelessWidget {
             const SizedBox(width: SahneSpace.x2),
           ],
           Text(
-            context.t(K.learningUnit, {'n': '$number'}),
+            context.t(K.learningUnit, {'n': groupThousands(number)}),
             style: SahneType.eyebrow.copyWith(color: t.learnTx),
           ),
           const SizedBox(width: SahneSpace.x3),
@@ -2294,7 +2300,9 @@ class _UnitHeader extends StatelessWidget {
               value: total == 0 ? 0 : done / total,
               height: 4,
               trailing: countLabel,
-              semanticLabel: context.t(K.learningUnit, {'n': '$number'}),
+              semanticLabel: context.t(K.learningUnit, {
+                'n': groupThousands(number),
+              }),
             ),
           ),
         ],

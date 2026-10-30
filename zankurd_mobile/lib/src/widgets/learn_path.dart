@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -463,7 +465,7 @@ class _LearnNode extends StatelessWidget {
       LearnNodeState.done => Icon(AppIcons.check, size: 28, color: glyph),
       LearnNodeState.current => Icon(icon, size: 34, color: glyph),
       LearnNodeState.open => Text(
-        '$step',
+        groupThousands(step),
         style: SahneType.headline.copyWith(color: glyph),
       ),
       LearnNodeState.locked => Icon(AppIcons.lock, size: 22, color: glyph),
@@ -699,7 +701,7 @@ class _SegmentedProgress extends StatelessWidget {
     final n = math.max(total, 1);
     return Semantics(
       label: semanticLabel,
-      value: '$done/$total',
+      value: '${groupThousands(done)}/${groupThousands(total)}',
       excludeSemantics: true,
       child: Row(
         key: const ValueKey('learn-unit-progress'),

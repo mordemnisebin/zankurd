@@ -106,7 +106,7 @@ void main() {
     final shown = GuestSavePrompt.afterGame(ctx, now: () => now);
     await tester.pumpAndSettle();
     expect(find.text('İlerlemeni kaybetme — hesabını kaydet'), findsOneWidget);
-    expect(find.text('Google ile bağla'), findsOneWidget);
+    expect(find.text('Google ile devam et'), findsOneWidget);
     expect(find.text('Apple ile devam et'), findsNothing, reason: 'Android');
     expect(find.text('E-posta ile kaydet'), findsOneWidget);
     await tester.tap(find.text('Şimdi değil'));
@@ -128,7 +128,7 @@ void main() {
         await tester.pumpAndSettle();
       }
       expect(find.text('Apple ile devam et'), findsOneWidget);
-      expect(find.text('Google ile bağla'), findsOneWidget);
+      expect(find.text('Google ile devam et'), findsOneWidget);
       debugDefaultTargetPlatformOverride = null;
     },
   );

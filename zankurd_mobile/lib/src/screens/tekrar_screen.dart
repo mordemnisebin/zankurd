@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../data/mistake_store.dart';
@@ -199,7 +201,7 @@ class _TekrarScreenState extends State<TekrarScreen> {
       onDone: hasQuestions ? _toQuestions : null,
       doneLabel: hasQuestions
           ? context.t(K.tekrarToQuestions, {
-              'count': '${plan.questions.length}',
+              'count': groupThousands(plan.questions.length),
             })
           : null,
     );

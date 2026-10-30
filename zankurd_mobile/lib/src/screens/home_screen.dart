@@ -393,7 +393,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     unawaited(_refreshCoins());
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(context.t(K.streakRepairDone, {'days': '$days'}))),
+      SnackBar(
+        content: Text(
+          context.t(K.streakRepairDone, {'days': groupThousands(days)}),
+        ),
+      ),
     );
   }
 
@@ -477,7 +481,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            context.t(K.missionXpClaimed, {'xp': '${mission.xpReward}'}),
+            context.t(K.missionXpClaimed, {
+              'xp': groupThousands(mission.xpReward),
+            }),
           ),
           duration: const Duration(seconds: 2),
           behavior: SnackBarBehavior.floating,
@@ -591,7 +597,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       // "Bugün" paneli: seri çipi panelin en üstünde (üst çubuktan taşındı,
       // aynı sayı iki yerde durmasın) ve günlük hedef listenin bir satırı.
       streak: _streak,
-      streakSemanticLabel: context.t(K.dailyStreakDays, {'days': '$_streak'}),
+      streakSemanticLabel: context.t(K.dailyStreakDays, {
+        'days': groupThousands(_streak),
+      }),
       onStreakTap: () => _showStreakFreezeBottomSheet(context),
       goalDone: _todayAnswered,
       goalTarget: _todayTarget,
@@ -714,7 +722,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               subtitle: _reviewReadyCount == 1
                   ? context.t(K.homeReviewTimeSubOne)
                   : context.t(K.homeReviewTimeSub, {
-                      'count': '$_reviewReadyCount',
+                      'count': groupThousands(_reviewReadyCount),
                     }),
               onTap: _openLearning,
             ),
