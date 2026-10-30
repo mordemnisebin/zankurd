@@ -266,7 +266,11 @@ class _BracketMatchCard extends StatelessWidget {
         completed: isCompleted,
       );
       if (!match.isForfeit || match.winnerId != id) return submission;
-      return [Tr.forKu(K.cupAdvancedByForfeit, ku), ?submission].join(' · ');
+      // Bay geçen oyuncu oynamadığı için elenmiş gibi etiketlenmez.
+      return [
+        Tr.forKu(K.cupAdvancedByForfeit, ku),
+        if (submitted == true) ?submission,
+      ].join(' · ');
     }
 
     final oneLabel = playerLabel(
@@ -331,7 +335,7 @@ class _BracketMatchCard extends StatelessWidget {
             children: [
               _PlayerSlot(
                 key: ValueKey(
-                  'tournament-player-${match.id}-${match.playerOneId}',
+                  'tournament-player-${match.id}-one-${match.playerOneId}',
                 ),
                 name: match.playerOneName,
                 playerId: match.playerOneId,
@@ -398,7 +402,7 @@ class _BracketMatchCard extends StatelessWidget {
                 ),
               _PlayerSlot(
                 key: ValueKey(
-                  'tournament-player-${match.id}-${match.playerTwoId}',
+                  'tournament-player-${match.id}-two-${match.playerTwoId}',
                 ),
                 name: match.playerTwoName,
                 playerId: match.playerTwoId,

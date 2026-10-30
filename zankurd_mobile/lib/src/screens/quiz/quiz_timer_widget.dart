@@ -30,6 +30,7 @@ class QuizTimerWidget extends StatelessWidget {
     this.light,
     this.onBand = false,
     this.stopped = false,
+    this.expired = false,
     this.pendingLabel,
     this.opponentTime = false,
     super.key,
@@ -51,6 +52,10 @@ class QuizTimerWidget extends StatelessWidget {
   /// sayım alt şeritteki.
   final bool stopped;
 
+  /// Yetkili cevapsız/süre doldu durumu; resume animasyonu henüz tam
+  /// süredeyken de sıfır saniye gösterilmesini sağlar.
+  final bool expired;
+
   /// Sunucu hazır yanıtı beklenirken sahte tam süreyi seslendirme.
   final String? pendingLabel;
 
@@ -63,7 +68,9 @@ class QuizTimerWidget extends StatelessWidget {
       animation: animation,
       builder: (context, _) {
         final progress = animation.value.clamp(0.0, 1.0);
-        final seconds = (progress * maxSeconds).ceil();
+        // Resume görüntüsü animasyon denetleyicisinden önce gelebilir.
+        // Yetkili TIMEOUT başlangıçtaki 1.0 değerini süre diye göstermez.
+        final seconds = expired ? 0 : (progress * maxSeconds).ceil();
         return SahneStageTimer(
           secondsLeft: seconds,
           maxSeconds: maxSeconds,

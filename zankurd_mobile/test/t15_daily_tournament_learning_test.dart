@@ -199,10 +199,10 @@ void main() {
     ) async {
       await _open(tester, TournamentScreen(repository: _Repo()), ku: ku);
       final winner = find.byKey(
-        const ValueKey('tournament-player-semi-one-rival'),
+        const ValueKey('tournament-player-semi-one-two-rival'),
       );
       final loser = find.byKey(
-        const ValueKey('tournament-player-semi-one-absent'),
+        const ValueKey('tournament-player-semi-one-one-absent'),
       );
       expect(
         find.descendant(

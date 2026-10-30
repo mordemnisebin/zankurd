@@ -110,7 +110,7 @@ class _ProfileHeroCard extends StatelessWidget {
       'earned': groupThousands(xpInLevel),
       'needed': groupThousands(xpNeeded),
     });
-    final xpRemaining = Tr.forKu(K.profileXpToNext, ku, {
+    final xpRemainingText = Tr.forKu(K.profileXpToNext, ku, {
       'n': groupThousands(xpLeft),
     });
     return ProfileIdentitySurface(
@@ -322,7 +322,7 @@ class _ProfileHeroCard extends StatelessWidget {
               trackColor: Colors.white.withValues(alpha: 0.22),
               edgeColor: Colors.transparent,
               semanticLabel:
-                  '${Tr.forKu(K.progressLevelLabel, ku)} ${groupThousands(level)}. $xpScale. $xpRemaining',
+                  '${Tr.forKu(K.progressLevelLabel, ku)} ${groupThousands(level)}. $xpScale. $xpRemainingText',
             ),
             const SizedBox(height: SahneSpace.x1),
             Text(
@@ -331,7 +331,7 @@ class _ProfileHeroCard extends StatelessWidget {
               style: SahneType.captionStrong.copyWith(color: Colors.white),
             ),
             Text(
-              xpRemaining,
+              xpRemainingText,
               key: const ValueKey('profile-xp-to-next'),
               style: SahneType.caption.copyWith(color: onCard2),
             ),

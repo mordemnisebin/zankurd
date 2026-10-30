@@ -268,7 +268,20 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.textContaining('1.202 – 888'), findsOneWidget);
+      expect(
+        tester
+            .widget<Text>(find.byKey(const ValueKey('result-duel-score-me')))
+            .data,
+        '1.202',
+      );
+      expect(
+        tester
+            .widget<Text>(
+              find.byKey(const ValueKey('result-duel-score-opponent')),
+            )
+            .data,
+        '888',
+      );
       expect(find.textContaining('1202'), findsNothing);
       expect(tester.takeException(), isNull);
     });

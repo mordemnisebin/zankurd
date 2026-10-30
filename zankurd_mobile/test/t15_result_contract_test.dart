@@ -208,12 +208,13 @@ void main() {
             ),
           )) {
             final shape = decoration.decoration;
-            if (shape is ShapeDecoration)
+            if (shape is ShapeDecoration) {
               expect(
                 shape.color!.a,
                 1,
                 reason: 'S1 yıldızlar sayım zemininden geçemez',
               );
+            }
           }
           if (!crowd) {
             expect(
@@ -254,8 +255,9 @@ void main() {
             final header = tester.widget<SahneResultScaffold>(
               find.byType(SahneResultScaffold),
             );
-            if (!ku)
+            if (!ku) {
               expect(header.contextLabel, 'Canlı düello · Dil · 10 soru');
+            }
           }
           expect(hero.caption, contains(ku ? 'rastbûn' : 'doğruluk'));
           expect(find.textContaining('= XP'), findsNothing);
@@ -348,8 +350,9 @@ void main() {
         tester.getRect(clip).bottom,
         lessThanOrEqualTo(tester.getRect(find.byType(ResultStatTiles)).top),
       );
-      if (frame == 10 || frame == 25)
+      if (frame == 10 || frame == 25) {
         await _capture(tester, 'S1_animasyon_${frame * 50}ms');
+      }
       expect(tester.takeException(), isNull);
     }
     await tester.pumpWidget(const SizedBox());
@@ -370,8 +373,9 @@ void main() {
         find.byType(SahneResultStats),
       );
       expect(stats.stats.where((s) => s.visible), hasLength(4));
-      for (final s in stats.stats)
+      for (final s in stats.stats) {
         expect(tester.widget<Text>(find.text(s.label)).maxLines, isNull);
+      }
       await tester.drag(find.byType(ListView).first, const Offset(0, -3000));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);

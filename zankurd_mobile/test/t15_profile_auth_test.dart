@@ -200,7 +200,7 @@ void main() {
     expect(
       find
           .text(
-            '1. E-posta ve parola → 2. Kullanıcı adı → 3. Kontrol et ve hesabı oluştur',
+            '1. E-posta ve parola · 2. Kullanıcı adı · 3. Kontrol et ve hesabı oluştur',
           )
           .hitTestable(),
       findsOneWidget,

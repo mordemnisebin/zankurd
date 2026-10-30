@@ -455,6 +455,8 @@ double quizDockHeight(
   required List<String> actionLabels,
   required List<String> ratingLabels,
   required List<String> jokerLabels,
+  List<String> statusLabels = const [],
+  List<String> revealLabels = const [],
 }) {
   final s = base.scale(16) / 16;
   final dockWidth = (screenWidth - 2 * SahneSpace.page).clamp(0.0, 800.0);
@@ -523,5 +525,28 @@ double quizDockHeight(
         (showLabel ? 2 + labelLines * base.scale(13.8) : 0);
     jokers = base.scale(20) + 8 + chip + 2;
   }
-  return strip > jokers ? strip : jokers;
+  // Salt durum bandında düğme ikonu yoktur; çizimle aynı 14/20 yazı,
+  // 12 yatay / 8 dikey boşluk kullanılır. Bütün olası durumlar soru
+  // başlamadan ölçülür; cevap seçilince dock yüksekliği değişmez.
+  double statusHeight(List<String> texts, double width) {
+    var height = 52.0;
+    for (final text in texts) {
+      final h =
+          lines(text, SahneType.captionStrong, width - 24) * base.scale(20) +
+          16;
+      if (h > height) height = h;
+    }
+    return height;
+  }
+
+  var height = strip > jokers ? strip : jokers;
+  if (statusLabels.isNotEmpty) {
+    final status = statusHeight(statusLabels, dockWidth);
+    if (status > height) height = status;
+  }
+  if (revealLabels.isNotEmpty) {
+    final reveal = 24 + statusHeight(revealLabels, inner - 32);
+    if (reveal > height) height = reveal;
+  }
+  return height;
 }

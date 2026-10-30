@@ -99,8 +99,9 @@ class _QuestionImageState extends State<_QuestionImage> {
   @override
   void didUpdateWidget(_QuestionImage oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.url != url || oldWidget.questionId != questionId)
+    if (oldWidget.url != url || oldWidget.questionId != questionId) {
       _failed = false;
+    }
   }
 
   void _notifyFailure() {
@@ -447,6 +448,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     required this.hiddenAnswers,
     required this.firstAttemptAnswer,
     required this.showExplanation,
+    required this.showAnswerLabels,
     this.wrongAnswerInsight = false,
     required this.suspense,
     required this.onAnswer,
@@ -489,6 +491,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final String firstAttemptAnswer;
   final Map<String, double>? audiencePoll;
   final bool showExplanation;
+  final bool showAnswerLabels;
 
   /// Yanlış cevaptan sonra doğru cevap + açıklama kartı (bkz.
   /// [instantExplanationAllowedFor]). Doluyken "Açıklamayı gör" kapısının
@@ -819,6 +822,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       index: index,
       answer: answer,
       selected: selectedAnswer == answer,
+      showAnswerLabels: showAnswerLabels,
       correct: revealed && answer == question.correctAnswer,
       disabled: answered || answer == firstAttemptAnswer || eliminated,
       firstAttemptWrong: !answered && answer == firstAttemptAnswer,

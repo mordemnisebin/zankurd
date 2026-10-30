@@ -97,7 +97,15 @@ void main() {
             expect(find.text('99.999'), findsOneWidget);
             expect(find.text('12.345'), findsOneWidget);
             expect(find.text('×5'), findsNWidgets(2));
-            final question = find.text(ku ? 'Yek + yek?' : 'Bir + bir?');
+            // T15 sözleşmesi: çevrimiçi soru içeriği KU kalır; yalnız
+            // arayüz yerelleşir. Sığma/kayma bekçisi gerçek soru ile ölçülür.
+            final question = find.text('Yek + yek?');
+            expect(question, findsOneWidget);
+            expect(find.text('Bir + bir?'), findsNothing);
+            expect(
+              find.textContaining(ku ? 'Pirs 1/2 · Ziman' : 'Soru 1/2 · Dil'),
+              findsOneWidget,
+            );
             final top = tester.getTopLeft(question);
             await tester.pump(const Duration(seconds: 1));
             expect(tester.getTopLeft(question), top);

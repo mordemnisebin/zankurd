@@ -32,6 +32,19 @@ class Tr {
   /// Bir dil için karşılık yoksa Kurmancî'ye düşülür: eksik çeviri, boş
   /// ekrandan iyidir ve eksikliği görünür kılar.
   static const Map<String, Map<String, String>> _table = {
+    K.quizAnswerOwner: {'tr': 'Senin cevabın', 'ku': 'Bersiva te'},
+    K.quizUnansweredExpired: {
+      'tr': 'Cevap vermedin · Süre doldu',
+      'ku': 'Te bersiv neda · Dem qediya',
+    },
+    K.quizNextQuestionCountdown: {
+      'tr': 'Sonraki soru: {n} sn',
+      'ku': 'Pirsa din: {n} çirke',
+    },
+    K.quizWaitingOpponentAnswer: {
+      'tr': 'Rakibin cevabı bekleniyor',
+      'ku': 'Em li benda bersiva hevrikê te ne',
+    },
     K.t15GuestStorage: {
       'tr':
           'İlerlemen bu cihazda saklanır. Başka cihazda devam etmek için hesabını kaydet.',
@@ -40,9 +53,9 @@ class Tr {
     },
     K.t15SignUpSteps: {
       'tr':
-          '1. E-posta ve parola → 2. Kullanıcı adı → 3. Kontrol et ve hesabı oluştur',
+          '1. E-posta ve parola · 2. Kullanıcı adı · 3. Kontrol et ve hesabı oluştur',
       'ku':
-          '1. E-name û şîfre → 2. Navê bikarhêner → 3. Kontrol bike û hesabê xwe çêke',
+          '1. E-name û şîfre · 2. Navê bikarhêner · 3. Kontrol bike û hesabê xwe çêke',
     },
     K.t15EmailPrompt: {
       'tr': 'Devam etmek için e-posta adresini gir',
@@ -56,7 +69,7 @@ class Tr {
       'tr':
           'Henüz yanıt kaydı yok. Soru çözdükçe istatistiklerin burada görünür.',
       'ku':
-          'Hîn qeyda bersivan tune ye. Her ku tu pirsan çareser dikî, statîstîkên te li vir xuya dibin.',
+          'Hîn tomara bersivan tune ye. Her ku tu pirsan çareser dikî, statîstîkên te li vir xuya dibin.',
     },
     K.t15AnswerStatsLoading: {
       'tr': 'Yanıt istatistikleri yükleniyor…',
@@ -4680,6 +4693,10 @@ class Tr {
 /// Metin anahtarları. Sabit olmaları, yazım hatasının derleme zamanında
 /// yakalanmasını sağlar.
 class K {
+  static const quizAnswerOwner = 'quiz.answerOwner';
+  static const quizUnansweredExpired = 'quiz.unansweredExpired';
+  static const quizNextQuestionCountdown = 'quiz.nextQuestionCountdown';
+  static const quizWaitingOpponentAnswer = 'quiz.waitingOpponentAnswer';
   static const t15GuestStorage = 't15.t15GuestStorage';
   static const t15SignUpSteps = 't15.t15SignUpSteps';
   static const t15EmailPrompt = 't15.t15EmailPrompt';

@@ -29,6 +29,9 @@ import 'support/widget_test_helpers.dart';
 /// testler yalnız "şık var, dokunulur" diyordu. Burada belirteç kontrastı,
 /// ölçülen yükseklik/aralık ve alt boşluk sayıyla sabitlenir.
 void main() {
+  // Sığdırma gerçek font ölçümlerine dayanır. Ahem geniş kare glifleri
+  // normal telefon boyunda gereksiz dar kademe seçtirir.
+  setUpAll(loadAppFonts);
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   double lum(Color c) => c.computeLuminance();

@@ -23,9 +23,12 @@ void main() {
         ),
       ),
     );
-    expect(find.text('Oynamadı · hükmen'), findsOneWidget);
+    expect(find.text('Oynamadı · hükmen elendi'), findsOneWidget);
     expect(
-      tester.widget<Text>(find.text('Oynamadı · hükmen')).style!.fontSize,
+      tester
+          .widget<Text>(find.text('Oynamadı · hükmen elendi'))
+          .style!
+          .fontSize,
       greaterThanOrEqualTo(14),
     );
     expect(find.text('Henüz oynamadı'), findsNothing);
@@ -44,7 +47,7 @@ void main() {
       ),
     );
     expect(find.text('Henüz oynamadı'), findsOneWidget);
-    expect(find.text('Oynamadı · hükmen'), findsNothing);
+    expect(find.text('Oynamadı · hükmen elendi'), findsNothing);
   });
 
   for (final link in [false, true]) {

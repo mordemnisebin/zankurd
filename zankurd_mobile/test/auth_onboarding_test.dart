@@ -403,39 +403,42 @@ void main() {
     expect(find.byType(AppLogo), findsOneWidget);
   });
 
-  testWidgets('auth alternative buttons stay readable on their own backgrounds', (
-    tester,
-  ) async {
-    await tester.binding.setSurfaceSize(const Size(844, 390));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
+  testWidgets(
+    'auth alternative buttons stay readable on their own backgrounds',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(844, 390));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
 
-    for (final mode in [ThemeMode.light, ThemeMode.dark]) {
-      // KeyedSubtree: provider create'leri her temada yeniden çalışsın.
-      await tester.pumpWidget(
-        KeyedSubtree(
-          key: ValueKey(mode),
-          child: testShell(
-            child: const SignInScreen(),
-            authProvider: GateAuthProvider(),
-            themeProvider: ThemeProvider(initialMode: mode),
+      for (final mode in [ThemeMode.light, ThemeMode.dark]) {
+        // KeyedSubtree: provider create'leri her temada yeniden çalışsın.
+        await tester.pumpWidget(
+          KeyedSubtree(
+            key: ValueKey(mode),
+            child: testShell(
+              child: const SignInScreen(),
+              authProvider: GateAuthProvider(),
+              themeProvider: ThemeProvider(initialMode: mode),
+            ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
-      await revealSignInForm(tester);
+        );
+        await tester.pumpAndSettle();
+        await revealSignInForm(tester);
 
-      // Google butonu: iki temada da beyaz dolgu -> koyu metin.
-      final googleLabel = tester.widget<Text>(find.text('Google ile devam et'));
-      expect(googleLabel.style?.color?.computeLuminance(), lessThan(0.3));
+        // Google butonu: iki temada da beyaz dolgu -> koyu metin.
+        final googleLabel = tester.widget<Text>(
+          find.text('Google ile devam et'),
+        );
+        expect(googleLabel.style?.color?.computeLuminance(), lessThan(0.3));
 
-      // "Misafir olarak oyna" artık dolgulu birincil düğmedir (yazı rengi tema
-      // belirtecinden gelir, burada elle ölçülmez); okunurluğu Şahnê düğme
-      // bekçileri korur. Burada yalnız varlığı ve ikincil girişin ayrı
-      // olduğu sabitlenir.
-      expect(find.byKey(const ValueKey('sign-in-play-now')), findsOneWidget);
-      expect(find.byKey(const ValueKey('sign-in-submit')), findsOneWidget);
-    }
-  });
+        // "Misafir olarak oyna" artık dolgulu birincil düğmedir (yazı rengi tema
+        // belirtecinden gelir, burada elle ölçülmez); okunurluğu Şahnê düğme
+        // bekçileri korur. Burada yalnız varlığı ve ikincil girişin ayrı
+        // olduğu sabitlenir.
+        expect(find.byKey(const ValueKey('sign-in-play-now')), findsOneWidget);
+        expect(find.byKey(const ValueKey('sign-in-submit')), findsOneWidget);
+      }
+    },
+  );
 
   // 2026-10-28 görsel kurul: form doldurulunca "Giriş yap" birincil olur,
   // "Misafir olarak oyna" ikincile iner; boşken misafir yolu birincil kalır.
