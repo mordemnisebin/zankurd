@@ -44,7 +44,7 @@ void main() {
     expect(sql, contains('to authenticated;'));
     expect(
       File('supabase/applied.md').readAsStringSync(),
-      contains('2026-10-30_t16_weekly_answer_history.sql | ⏳'),
+      contains('2026-10-30_t16_weekly_answer_history.sql | ✅'),
     );
   });
 }
