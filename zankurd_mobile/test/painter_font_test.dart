@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 /// Temanın yazı tipini atlayan iki kod biçiminin bekçisi.
 ///
@@ -66,6 +67,13 @@ void main() {
 
   test('TextPainter kullanan her dosya yazı tipi ailesini yazıyor', () {
     final offenders = <String>[];
+    // T4 ortak sosyal düğmeleri aileyi açıkça tanımlayan SahneType.button
+    // ile ölçer. Yalnız doğrudan bu stil kabul edilir; copyWith veya başka
+    // bir stil adı, aile denetimini atlayamaz. Gerçek değer de doğrulanır.
+    final directButtonStyle = RegExp(r'\bstyle:\s*SahneType\.button\s*(?:,|$)');
+    final buttonFontFamily = SahneType.button.fontFamily;
+    expect(buttonFontFamily, isNotNull);
+    expect(buttonFontFamily?.trim(), isNotEmpty);
 
     for (final entity in Directory('lib').listSync(recursive: true)) {
       if (entity is! File || !entity.path.endsWith('.dart')) continue;
@@ -92,7 +100,8 @@ void main() {
           }
         }
         final block = source.substring(index, end);
-        if (!block.contains('fontFamily')) {
+        if (!block.contains('fontFamily') &&
+            !directButtonStyle.hasMatch(block)) {
           final line = '\n'.allMatches(source.substring(0, index)).length + 1;
           offenders.add('${entity.path}:$line');
         }

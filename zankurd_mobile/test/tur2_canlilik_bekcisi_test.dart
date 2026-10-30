@@ -14,6 +14,7 @@
 //       ayrı (gri + kilit);
 // * R8  ana sayfa sırası görev → Öğren/Yarış → Bugün (≤3 satır) → Konular →
 //       Günün sözü (küçük).
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,7 @@ import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart'
     show GateAuthProvider, freshMockRepository, testShell;
+import 'support/realistic_device.dart' show loadAppFonts;
 
 Widget _wrap(Widget child, {bool dark = false, String lang = 'tr'}) =>
     MultiProvider(
@@ -56,6 +58,7 @@ Widget _wrap(Widget child, {bool dark = false, String lang = 'tr'}) =>
     );
 
 void main() {
+  setUpAll(loadAppFonts);
   setUp(() {
     freshMockRepository();
     SharedPreferences.setMockInitialValues({
@@ -181,28 +184,53 @@ void main() {
   });
 
   group('R4 giriş ve açılış sahnesi', () {
-    testWidgets('giriş ekranı manzara + tek satır vaat taşır', (tester) async {
-      await tester.binding.setSurfaceSize(const Size(390, 844));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-      await tester.pumpWidget(
-        testShell(
-          child: const SignInScreen(),
-          authProvider: GateAuthProvider(),
-        ),
-      );
-      await tester.pumpAndSettle();
-      final hero = find.byKey(const ValueKey('sign-in-hero-banner'));
-      expect(hero, findsOneWidget);
-      expect(
-        find.descendant(
-          of: hero,
-          matching: find.byKey(const ValueKey('entry-scene-vista')),
-        ),
-        findsOneWidget,
-      );
-      expect(tester.getSize(hero).height, greaterThanOrEqualTo(176));
-      expect(find.text('Kurmancî öğren, bilgini yarıştır.'), findsOneWidget);
-    });
+    testWidgets(
+      'T4 kompakt manzara ve vaat, giriş yollarını ilk karede bırakır',
+      (tester) async {
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        addTearDown(() => debugDefaultTargetPlatformOverride = null);
+        tester.view.devicePixelRatio = 1;
+        tester.view.physicalSize = const Size(375, 667);
+        addTearDown(tester.view.reset);
+        await tester.pumpWidget(
+          testShell(
+            child: const MediaQuery(
+              data: MediaQueryData(
+                size: Size(375, 667),
+                padding: EdgeInsets.only(top: 20),
+              ),
+              child: SignInScreen(),
+            ),
+            authProvider: GateAuthProvider(),
+          ),
+        );
+        await tester.pumpAndSettle();
+        final hero = find.byKey(const ValueKey('sign-in-hero-banner'));
+        expect(hero, findsOneWidget);
+        expect(
+          find.descendant(
+            of: hero,
+            matching: find.byKey(const ValueKey('entry-scene-vista')),
+          ),
+          findsOneWidget,
+        );
+        // T4: 176 px manzara sosyal yolları aşağı itiyordu. Manzara korunur;
+        // 72 px kompakt düzen, dört yolu kaydırmadan erişilebilir tutar.
+        expect(tester.getSize(hero).height, 72);
+        expect(find.text('Kurmancî öğren, bilgini yarıştır.'), findsOneWidget);
+        for (final label in [
+          'Hemen oyna',
+          'Apple ile devam et',
+          'Google ile devam et',
+          'E-posta ile giriş',
+        ]) {
+          expect(find.text(label).hitTestable(), findsOneWidget, reason: label);
+        }
+        // Flutter invariant kontrolü addTearDown'dan önce çalışır.
+        debugDefaultTargetPlatformOverride = null;
+        expect(tester.takeException(), isNull);
+      },
+    );
 
     testWidgets('açılış her adımda manzara taşır; dil adımında vaat var', (
       tester,
