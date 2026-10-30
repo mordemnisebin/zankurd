@@ -12,14 +12,26 @@ import '../../widgets/sahne/sahne.dart';
 /// "35 dk kaldı" (en az 1). Süre kalmadıysa null.
 ///
 /// Dil: [context.t] (KU/TR); sayı yer tutucusu `{n}`.
-String? asyncDuelTimeLeftLabel(BuildContext context, Duration? left) {
+String? asyncDuelTimeLeftLabel(
+  BuildContext context,
+  Duration? left, {
+  bool openInvite = false,
+}) {
   if (left == null || left <= Duration.zero) return null;
   if (left.inMinutes >= 60) {
     final hours = (left.inMinutes / 60).round();
-    return context.t(K.asyncDuelTimeLeftHours, {'n': groupThousands(hours)});
+    return context.t(
+      openInvite ? K.asyncDuelOpenInviteClosesHours : K.asyncDuelTimeLeftHours,
+      {'n': groupThousands(hours)},
+    );
   }
   final minutes = (left.inSeconds / 60).ceil().clamp(1, 59);
-  return context.t(K.asyncDuelTimeLeftMinutes, {'n': groupThousands(minutes)});
+  return context.t(
+    openInvite
+        ? K.asyncDuelOpenInviteClosesMinutes
+        : K.asyncDuelTimeLeftMinutes,
+    {'n': groupThousands(minutes)},
+  );
 }
 
 /// Kalan süre oranı (0–1): [left] / [asyncDuelWindow]. Eski 48 saatlik
@@ -40,11 +52,14 @@ class AsyncDuelTimeLeft extends StatelessWidget {
     required this.left,
     this.showBar = false,
     this.closesOnExpiry = false,
+    this.openInvite = false,
     this.textKey,
     super.key,
   });
 
   final Duration? left;
+
+  final bool openInvite;
 
   /// Kurul C30 (2026-10-29, 3/3): yarım kalan düelloda çubuğun neyi
   /// saydığı ve süre dolunca ne olduğu yazmıyordu. `true` iken çubuğun
@@ -60,7 +75,11 @@ class AsyncDuelTimeLeft extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final remaining = left;
-    final label = asyncDuelTimeLeftLabel(context, remaining);
+    final label = asyncDuelTimeLeftLabel(
+      context,
+      remaining,
+      openInvite: openInvite,
+    );
     if (remaining == null || label == null) return const SizedBox.shrink();
     final t = SahneTokens.of(context);
     final urgent = remaining <= asyncDuelUrgentWithin;

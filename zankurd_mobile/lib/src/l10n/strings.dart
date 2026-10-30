@@ -2943,15 +2943,41 @@ class Tr {
       'ku': 'Pirsa xwe pêşniyar bike, bila piştî pejirandinê were zêdekirin',
       'tr': 'Bir soru öner; onaylanırsa oyuna eklensin.',
     },
+    K.cupSubmissionForfeitNotPlayed: {
+      'tr': 'Oynamadı · hükmen',
+      'ku': 'Nelîst · têkçûna bi biryarê',
+    },
+    K.joinNewTournament: {
+      'tr': 'Yeni turnuvaya katıl',
+      'ku': 'Tevlî kûpayeke nû bibe',
+    },
+    K.tournamentRunnerUp: {'tr': 'İkinci oldun', 'ku': 'Tu bûyî duyemîn'},
+    K.cupOwnedMatchVs: {
+      'tr': 'Sen {my} – {their} {opponent}',
+      'ku': 'Tu {my} – {their} {opponent}',
+    },
+    K.asyncDuelOpenInvite: {'tr': 'Açık davet', 'ku': 'Vexwendina vekirî'},
+    K.asyncDuelOpenInviteClosesHours: {
+      'tr': '{n} sa içinde katılan olmazsa kapanır',
+      'ku': 'Heke di {n} saet de kes tevlî nebe tê girtin',
+    },
+    K.asyncDuelOpenInviteClosesMinutes: {
+      'tr': '{n} dk içinde katılan olmazsa kapanır',
+      'ku': 'Heke di {n} deqe de kes tevlî nebe tê girtin',
+    },
+    K.timerOpponentSecondsLeft: {
+      'tr': 'Rakibin süresi: {n} saniye kaldı',
+      'ku': 'Dema hevrikî: {n} çirke ma',
+    },
+    K.timerPaused: {'tr': 'Süre durdu', 'ku': 'Dem rawestiya'},
     K.saveAccount: {'ku': 'Hesabê xwe tomar bike', 'tr': 'Hesabını kaydet'},
     K.saveAccountSub: {
-      'ku': 'E-name û şîfreyekê binivîse, hesabê te yê mêvan bibe mayînde',
-      'tr': 'E-posta ve parola belirle, misafir hesabın kalıcı olsun',
+      'tr': 'Hesabını kalıcı yap: Apple, Google ya da e-posta ile.',
+      'ku': 'Hesabê xwe mayînde bike: bi Apple, Google an e-nameyê.',
     },
     K.saveAccountBody: {
-      'ku':
-          'E-name û şîfreyekê binivîse da ku hesabê xwe yê mêvan bikî hesabê mayînde.',
-      'tr': 'Misafir hesabını kalıcı yapmak için e-posta ve parola belirle.',
+      'tr': 'Hesabını kalıcı yap: Apple, Google ya da e-posta ile.',
+      'ku': 'Hesabê xwe mayînde bike: bi Apple, Google an e-nameyê.',
     },
     K.email: {'ku': 'E-name', 'tr': 'E-posta'},
     K.emailInvalid: {
@@ -3563,9 +3589,9 @@ class Tr {
     },
     K.presenceVisibilitySub: {
       'tr':
-          'Son görülme zamanın arkadaşlarına gösterilir. Varsayılan kapalıdır.',
+          'Açıkken arkadaşların çevrimiçi olduğunu ve son görülme zamanını görür. Varsayılan kapalı.',
       'ku':
-          'Dema dîtina te ya dawî ji hevalên te re tê nîşandan. Di destpêkê de girtî ye.',
+          'Dema vekirî be, hevalên te dibînin ku tu serhêl î û kengî cara dawî hatiyî dîtin. Bi standardî girtî ye.',
     },
     K.privacyBody: {
       'ku':
@@ -4204,10 +4230,6 @@ class Tr {
       'tr': '{name} seni düelloya çağırdı',
     },
     K.challengePlay: {'ku': 'Bilîze', 'tr': 'Oyna'},
-    K.challengeLinkRow: {
-      'ku': 'Girêdana pêşbirkê',
-      'tr': 'Meydan okuma bağlantısı',
-    },
     K.challengeErrNotFound: {
       'ku': 'Ev pêşbirk nehat dîtin an jî êdî derbasdar nîne.',
       'tr': 'Bu meydan okuma bulunamadı ya da artık geçerli değil.',
@@ -5636,6 +5658,18 @@ class K {
   static const myMistakes = 'profile.myMistakes';
   static const suggestQuestion = 'profile.suggestQuestion';
   static const suggestQuestionSub = 'profile.suggestQuestion.sub';
+  static const cupSubmissionForfeitNotPlayed =
+      't8.cupSubmissionForfeitNotPlayed';
+  static const joinNewTournament = 't8.joinNewTournament';
+  static const tournamentRunnerUp = 't8.tournamentRunnerUp';
+  static const cupOwnedMatchVs = 't8.cupOwnedMatchVs';
+  static const asyncDuelOpenInvite = 't8.asyncDuelOpenInvite';
+  static const asyncDuelOpenInviteClosesHours =
+      't8.asyncDuelOpenInviteClosesHours';
+  static const asyncDuelOpenInviteClosesMinutes =
+      't8.asyncDuelOpenInviteClosesMinutes';
+  static const timerOpponentSecondsLeft = 't8.timerOpponentSecondsLeft';
+  static const timerPaused = 't8.timerPaused';
   static const saveAccount = 'profile.saveAccount';
   static const saveAccountSub = 'profile.saveAccount.sub';
   static const saveAccountBody = 'profile.saveAccount.body';
@@ -6177,8 +6211,6 @@ class K {
   /// Gelen meydan okuma satırının eylem rozeti.
   static const challengePlay = 'duel.challenge.play';
 
-  /// Henüz kimsenin almadığı, yeniden paylaşılabilir bağlantı satırı.
-  static const challengeLinkRow = 'duel.challenge.linkRow';
   static const challengeErrNotFound = 'duel.challenge.err.notFound';
   static const challengeErrOwn = 'duel.challenge.err.own';
   static const challengeErrTaken = 'duel.challenge.err.taken';

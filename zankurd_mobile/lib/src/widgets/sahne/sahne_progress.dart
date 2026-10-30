@@ -2,6 +2,8 @@ import 'package:zankurd_mobile/src/utils/number_format.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../l10n/lang.dart';
+import '../../l10n/strings.dart';
 import '../../theme/app_icons.dart';
 import '../../theme/sahne.dart';
 import '../../utils/percent_format.dart';
@@ -386,6 +388,7 @@ class SahneStageTimer extends StatelessWidget {
     this.hotSeconds = 5,
     this.onBand = false,
     this.pending = false,
+    this.secondary = false,
     this.maxSeconds = 99,
   });
 
@@ -395,10 +398,13 @@ class SahneStageTimer extends StatelessWidget {
   final int maxSeconds;
 
   /// Kalan süre henüz bilinmiyor (yarım kalan soruya dönüşte sunucu saati
-  /// gelmeden): sayı yerine "–" çizilir, kapsülün genişliği aynı kalır. Tur 3
+  /// gelmeden): sayı yerine duraklatma simgesi çizilir; genişlik aynı kalır. Tur 3
   /// (2026-10-30): dönüşte sayaç önce yerel tam süreyi ("19") gösterip birkaç
   /// saniye sonra sunucunun kalanına ("8") atlıyordu.
   final bool pending;
+
+  /// Beklenen rakibin süresi: birincil dikkat yerine ikincil metin tonu.
+  final bool secondary;
 
   /// Renkli konu bandının üstünde (soru ekranı): normalde beyaz; gerilim
   /// saniyelerinde beyaz hap + koyu kehribar/kırmızı sayı (bandın renginden
@@ -413,7 +419,7 @@ class SahneStageTimer extends StatelessWidget {
   /// Bu saniyeye ve altına inince Boyax.
   final int hotSeconds;
 
-  bool get isHot => !pending && secondsLeft <= hotSeconds;
+  bool get isHot => !pending && !secondary && secondsLeft <= hotSeconds;
 
   /// Kurul 5. tur 2026-10-20 (Opus, Grok): sayı küçük ve gri kalıyordu, soru
   /// ekranında süre en önemli bilgilerden biri. Normalde birincil metin,
@@ -428,7 +434,9 @@ class SahneStageTimer extends StatelessWidget {
     const day = SahneTokens.day;
     final color = onBand
         ? (isHot ? (red ? day.errTx : day.shortfallTx) : SahneVivid.onFill)
-        : (red ? t.errTx : (isHot ? t.shortfallTx : t.tx));
+        : (secondary
+              ? t.tx2
+              : (red ? t.errTx : (isHot ? t.shortfallTx : t.tx)));
     final numberStyle = SahneType.headline.copyWith(
       color: color,
       fontSize: 20,
@@ -463,11 +471,19 @@ class SahneStageTimer extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
-              pending ? '–' : groupThousands(secondsLeft),
-              key: const ValueKey('stage-timer-seconds'),
-              style: numberStyle,
-            ),
+            if (pending)
+              Icon(
+                AppIcons.pause,
+                key: const ValueKey('stage-timer-paused'),
+                size: 20,
+                color: color,
+              )
+            else
+              Text(
+                groupThousands(secondsLeft),
+                key: const ValueKey('stage-timer-seconds'),
+                style: numberStyle,
+              ),
           ],
         ),
       ],
@@ -477,7 +493,7 @@ class SahneStageTimer extends StatelessWidget {
     // sayının rengini alır. Bant üstündeki biçim (onBand) aynı kalır.
     if (!onBand) {
       return Semantics(
-        label: semanticLabel,
+        label: pending ? context.t(K.timerPaused) : semanticLabel,
         excludeSemantics: true,
         child: DecoratedBox(
           key: const ValueKey('stage-timer-capsule'),
@@ -503,7 +519,7 @@ class SahneStageTimer extends StatelessWidget {
       );
     }
     return Semantics(
-      label: semanticLabel,
+      label: pending ? context.t(K.timerPaused) : semanticLabel,
       excludeSemantics: true,
       // Bant üstünde gerilim hapı sonradan eklenince de boyut değişmesin:
       // dolgu her zaman vardır, hap yalnız gerilimde boyanır.

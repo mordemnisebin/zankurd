@@ -445,85 +445,81 @@ void main() {
     },
   );
 
-  testWidgets(
-    'inbox: bekleyen creator satırı "Rakip bekleniyor" der; tamamlanmış '
-    'opponent satırı okunmamış rozet gösterir ve dokununca kalkar',
-    (tester) async {
-      await tester.binding.setSurfaceSize(const Size(390, 844));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-      final repository = freshMockRepository();
+  testWidgets('inbox: bekleyen creator satırı "Açık davet" der; tamamlanmış '
+      'opponent satırı okunmamış rozet gösterir ve dokununca kalkar', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = freshMockRepository();
 
-      // Bir CREATOR düellosu — kendi 7 sorusunu bitirir, rakip henüz
-      // katılmadı: satır "Rakip bekleniyor" der.
-      final creatorStart = await repository.startAsyncDuel();
-      for (var i = 0; i < creatorStart.questions.length; i++) {
-        await repository.answerAsyncDuel(
-          duelId: creatorStart.duelId,
-          questionIndex: i,
-          choice: 'A',
-          responseMs: 1000,
-        );
-      }
-
-      // Bir OPPONENT düellosu — rakip (test) önceden "bitirilmiş"; ben
-      // bitirince karşılaştırma hemen kesinleşir. Doğrudan depo üzerinden
-      // kuruluyor ki bu test Play Hub'ın kendi oynanış akışını değil,
-      // SADECE kutunun okunmamış rozetini ve tıklamayla temizlenmesini
-      // sınasın (oynanış zaten yukarıdaki creator/opponent testlerinde).
-      repository.addPendingAsyncDuelForTesting(
-        opponentCorrect: 0,
-        opponentMs: 1,
+    // Bir CREATOR düellosu — kendi 7 sorusunu bitirir, rakip henüz
+    // katılmadı: satır "Açık davet" der.
+    final creatorStart = await repository.startAsyncDuel();
+    for (var i = 0; i < creatorStart.questions.length; i++) {
+      await repository.answerAsyncDuel(
+        duelId: creatorStart.duelId,
+        questionIndex: i,
+        choice: 'A',
+        responseMs: 1000,
       );
-      final opponentStart = await repository.startAsyncDuel();
-      for (var i = 0; i < opponentStart.questions.length; i++) {
-        await repository.answerAsyncDuel(
-          duelId: opponentStart.duelId,
-          questionIndex: i,
-          choice: 'A',
-          responseMs: 1000,
-        );
-      }
+    }
 
-      await tester.pumpWidget(
-        testShell(
-          child: PlayHubScreen(repository: repository, asyncDuelEnabled: true),
-        ),
+    // Bir OPPONENT düellosu — rakip (test) önceden "bitirilmiş"; ben
+    // bitirince karşılaştırma hemen kesinleşir. Doğrudan depo üzerinden
+    // kuruluyor ki bu test Play Hub'ın kendi oynanış akışını değil,
+    // SADECE kutunun okunmamış rozetini ve tıklamayla temizlenmesini
+    // sınasın (oynanış zaten yukarıdaki creator/opponent testlerinde).
+    repository.addPendingAsyncDuelForTesting(opponentCorrect: 0, opponentMs: 1);
+    final opponentStart = await repository.startAsyncDuel();
+    for (var i = 0; i < opponentStart.questions.length; i++) {
+      await repository.answerAsyncDuel(
+        duelId: opponentStart.duelId,
+        questionIndex: i,
+        choice: 'A',
+        responseMs: 1000,
       );
-      await tester.pumpAndSettle();
+    }
 
-      // Sonucu hazır düello artık sayfanın üstünde; bekleyen creator satırı
-      // "Düellolarım" kutusunda (tembel listede aşağıda).
-      await tester.scrollUntilVisible(
-        find.text('Rakip bekleniyor'),
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      expect(find.text('Rakip bekleniyor'), findsOneWidget);
-      await tester.scrollUntilVisible(
-        find.byKey(const ValueKey('async-duel-ready-badge')),
-        -200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      final badge = find.byKey(const ValueKey('async-duel-ready-badge'));
-      expect(badge, findsOneWidget);
+    await tester.pumpWidget(
+      testShell(
+        child: PlayHubScreen(repository: repository, asyncDuelEnabled: true),
+      ),
+    );
+    await tester.pumpAndSettle();
 
-      await tester.ensureVisible(badge);
-      await tester.pump();
-      await tester.tap(badge);
-      await tester.pumpAndSettle();
+    // Sonucu hazır düello artık sayfanın üstünde; bekleyen creator satırı
+    // "Düellolarım" kutusunda (tembel listede aşağıda).
+    await tester.scrollUntilVisible(
+      find.text('Açık davet'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.text('Açık davet'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('async-duel-ready-badge')),
+      -200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    final badge = find.byKey(const ValueKey('async-duel-ready-badge'));
+    expect(badge, findsOneWidget);
 
-      expect(find.byKey(const ValueKey('async-duel-result')), findsOneWidget);
+    await tester.ensureVisible(badge);
+    await tester.pump();
+    await tester.tap(badge);
+    await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Kapat'));
-      await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('async-duel-result')), findsOneWidget);
 
-      expect(
-        find.byKey(const ValueKey('async-duel-ready-badge')),
-        findsNothing,
-        reason: 'sonuç ekranı görülünce rozet kalkmalı',
-      );
-    },
-  );
+    await tester.tap(find.text('Kapat'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const ValueKey('async-duel-ready-badge')),
+      findsNothing,
+      reason: 'sonuç ekranı görülünce rozet kalkmalı',
+    );
+  });
 
   testWidgets('kart varsayılanda kAsyncDuelEnabled bayrağını izler', (
     tester,
@@ -664,16 +660,16 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Rakip bekleniyor'), findsOneWidget);
+    expect(find.text('Açık davet'), findsOneWidget);
 
     await finishCreatorDuel();
     refresh.value++;
     await tester.pump();
     expect(find.byType(CircularProgressIndicator), findsNothing);
-    expect(find.text('Rakip bekleniyor'), findsWidgets);
+    expect(find.text('Açık davet'), findsWidgets);
 
     await tester.pumpAndSettle();
-    expect(find.text('Rakip bekleniyor'), findsNWidgets(2));
+    expect(find.text('Açık davet'), findsNWidgets(2));
   });
 
   testWidgets('eşit doğruda süreyle kazanılan sonuç nedenini söyler', (

@@ -480,7 +480,12 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
     final myCorrect = view.myCorrect;
     final invited = summary.invitedName;
     final incoming = summary.incomingChallenge;
-    final linkChallenge = summary.isWaitingLinkChallenge;
+    final openInvite =
+        summary.role == AsyncDuelRole.creator &&
+        summary.status == AsyncDuelStatus.open &&
+        knownOpponent == null &&
+        invited == null &&
+        myCorrect != null;
     final String title;
     final String? subtitle;
     if (incoming) {
@@ -490,13 +495,14 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
       subtitle = knownOpponent == null
           ? null
           : context.t(K.challengeIncomingBy, {'name': knownOpponent});
-    } else if (linkChallenge) {
+    } else if (openInvite) {
       // Kimsenin almadığı bağlantı: satıra dokunmak sonuç ekranını
       // (Paylaş'lı) açar.
-      title = context.t(K.challengeLinkRow);
-      subtitle = myCorrect != null
-          ? '${context.t(K.you)} ${groupThousands(myCorrect)}/${groupThousands(view.total)}'
-          : null;
+      title = context.t(K.asyncDuelOpenInvite);
+      subtitle = context.t(K.asyncDuelCorrectCaption, {
+        'correct': groupThousands(myCorrect),
+        'total': groupThousands(view.total),
+      });
     } else if (summary.canResume) {
       // Kurul C30 (3/3): "Yarım kaldı" satırında hangi oyunun yarım kaldığı
       // (oyun türü) yazmıyordu; başlık rakip, alt satır "Sırayla düello ·
@@ -549,7 +555,11 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
     // Kalan süre: sırası bende olan satırda metin + ince çubuk, rakip
     // beklenen satırda yalnız metin. Süre bilinmiyorsa (eski sunucu) yok.
     final left = summary.timeLeft(DateTime.now());
-    final timeLabel = asyncDuelTimeLeftLabel(context, left);
+    final timeLabel = asyncDuelTimeLeftLabel(
+      context,
+      left,
+      openInvite: openInvite,
+    );
     final forfeitReason =
         summary.isForfeit && view.kind == AsyncDuelResultKind.completed
         ? (view.outcome == AsyncDuelOutcome.win
@@ -579,6 +589,7 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
       final timeLeftText = AsyncDuelTimeLeft(
         key: const ValueKey('async-duel-time-left'),
         left: left,
+        openInvite: openInvite,
       );
       // Rakibin sırası: süre metninin altında "Dürt". Düğme kendi alt
       // ağacında yaşar; satır dokunuşu (sonuç ekranı) ondan ayrıdır.

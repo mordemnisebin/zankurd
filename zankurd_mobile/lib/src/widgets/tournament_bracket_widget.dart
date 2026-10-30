@@ -13,14 +13,19 @@ import 'player_avatar.dart';
 import 'sahne/sahne.dart';
 
 /// Eski RPC sıfır puanda bilgi vermez; bilinmeyene "oynamadı" denmez.
-String? tournamentSubmissionLabel(bool? submitted, int score, bool ku) =>
-    switch (submitted) {
-      true => Tr.forKu(K.cupSubmissionPlayed, ku, {
-        'score': groupThousands(score),
-      }),
-      false => Tr.forKu(K.cupSubmissionNotPlayed, ku),
-      null => null,
-    };
+String? tournamentSubmissionLabel(
+  bool? submitted,
+  int score,
+  bool ku, {
+  bool completed = false,
+}) => switch (submitted) {
+  true => Tr.forKu(K.cupSubmissionPlayed, ku, {'score': groupThousands(score)}),
+  false => Tr.forKu(
+    completed ? K.cupSubmissionForfeitNotPlayed : K.cupSubmissionNotPlayed,
+    ku,
+  ),
+  null => null,
+};
 
 /// Tur adları SONDAN sayılır: son tur her zaman Final'dir. Tur sayısı
 /// şemadan türetilir; 16 oyunculuk varsayım (Son 16 ile başlama) 4 kişilik
@@ -257,11 +262,13 @@ class _BracketMatchCard extends StatelessWidget {
       match.hasPlayerOneSubmitted,
       match.playerOneScore,
       ku,
+      completed: isCompleted,
     );
     final twoLabel = tournamentSubmissionLabel(
       match.hasPlayerTwoSubmitted,
       match.playerTwoScore,
       ku,
+      completed: isCompleted,
     );
     final t = SahneTokens.of(context);
     final p1Won = isCompleted && match.winnerId == match.playerOneId;

@@ -238,7 +238,7 @@ void main() {
       tester.widget<SahneStageTimer>(find.byType(SahneStageTimer)).pending,
       isTrue,
     );
-    expect(find.text('–'), findsOneWidget);
+    expect(find.byKey(const ValueKey('stage-timer-paused')), findsOneWidget);
     // Doğru cevap açılışı yalnız 1,2 sn. Kare komutu hemen verilir;
     // 500 ms sonra hâlâ aynı evrede olduğumuz ayrıca doğrulanır.
     // ignore: avoid_print
@@ -248,7 +248,7 @@ void main() {
       tester.widget<SahneStageTimer>(find.byType(SahneStageTimer)).pending,
       isTrue,
     );
-    expect(find.text('–'), findsOneWidget);
+    expect(find.byKey(const ValueKey('stage-timer-paused')), findsOneWidget);
 
     await show(
       Scaffold(
