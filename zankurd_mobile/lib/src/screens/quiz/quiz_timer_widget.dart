@@ -74,7 +74,7 @@ class QuizTimerWidget extends StatelessWidget {
           pending: stopped && pendingLabel != null,
           // Süresi biten soru tamamlanma tikiyle başarı gibi okunmasın.
           // Sıfır aynı sabit sayı yuvasında kalır; üst satır oynamaz.
-          revealed: stopped && pendingLabel == null && seconds > 0,
+          revealed: false,
           semanticLabel: stopped
               ? pendingLabel ??
                     context.t(

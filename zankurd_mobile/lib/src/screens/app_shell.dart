@@ -639,7 +639,7 @@ class _AppShellState extends State<AppShell>
       index: _tab,
       children: List.generate(
         4,
-        (index) => isDesktop
+        (index) => isDesktop || index == 3
             ? _buildTab(context, index)
             : LessonScrollEdgeFade(child: _buildTab(context, index)),
       ),

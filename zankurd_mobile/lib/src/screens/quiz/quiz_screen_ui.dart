@@ -754,6 +754,7 @@ extension _QuizScreenUI on _QuizScreenState {
                 context.t(K.finishAction),
                 if (_isMultiplayer) ...[
                   context.t(K.waitingOpponent),
+                  _recordedAnswerLabel(context, answer: _longestAnswer),
                   context.t(K.crowdWaitingOthers),
                   context.t(K.sureDoldu),
                   for (final verdict in [K.correct, K.wrong, K.sureDoldu]) ...[
@@ -915,9 +916,11 @@ extension _QuizScreenUI on _QuizScreenState {
         : _isMultiplayer && answered && selectedAnswer == 'TIMEOUT'
         // Süre dolunca bekleme etiketi "Süre doldu" der (şerit yalnız ✗ +
         // düğme taşır; başlık yazısına yer yok).
-        ? context.t(K.sureDoldu)
+        ? (context.isKu
+              ? 'Te bersiv neda · Dem qediya'
+              : 'Cevap vermedin · Süre doldu')
         : _isMultiplayer && answered
-        ? _waitingLabel(context)
+        ? _recordedAnswerLabel(context)
         : !answered
         ? context.t(K.pickAnAnswer)
         : isLastQuestion
@@ -1015,16 +1018,36 @@ extension _QuizScreenUI on _QuizScreenState {
     int seconds, {
     required bool last,
   }) {
-    final verdict = context.t(verdictKey);
+    final verdict = verdictKey == K.sureDoldu
+        ? (context.isKu
+              ? 'Te bersiv neda · Dem qediya'
+              : 'Cevap vermedin · Süre doldu')
+        : context.t(verdictKey);
     // Kurul C5 (Astra + Sol): son soruda yalnız "Doğru" + kum saati ne
     // beklendiğini söylemiyordu; artık sonuçlara geçildiğini söyler.
     if (last) return context.t(K.revealVerdictResults, {'verdict': verdict});
     // Kurul C4 (Astra + Sol): "Doğru · 3 sn" üstteki soru sayacıyla
     // karışıyordu; geri sayımın SONRAKİ soruya olduğu yazar.
-    return context.t(K.revealVerdictCountdown, {
-      'verdict': verdict,
-      'n': groupThousands(seconds),
-    });
+    return '$verdict\n${context.isKu ? 'Pirsa din' : 'Sonraki soru'}: ${groupThousands(seconds)} ${context.isKu ? 'çirke' : 'sn'}';
+  }
+
+  String get _longestAnswer => question.displayAnswers.fold<String>(
+    '',
+    (longest, answer) => answer.length > longest.length ? answer : longest,
+  );
+
+  String _recordedAnswerLabel(BuildContext context, {String? answer}) {
+    final value = answer ?? selectedAnswer;
+    final optionIndex = question.displayAnswers.indexOf(value);
+    final letter = optionIndex < 0
+        ? ''
+        : '${String.fromCharCode(65 + optionIndex)} · ';
+    final wait = _isCrowd
+        ? _waitingLabel(context)
+        : (context.isKu
+              ? 'Li benda bersiva hevrikê ye'
+              : 'Rakibin cevabı bekleniyor');
+    return '${context.t(K.cevabinKaydedildi)}: $letter$value\n$wait';
   }
 
   /// Çok oyunculu bekleme etiketi. Kurul C10 (Astra + Sol): kalabalık odada

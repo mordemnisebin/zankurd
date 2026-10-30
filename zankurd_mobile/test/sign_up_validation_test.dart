@@ -57,7 +57,9 @@ void main() {
       await pumpSignUpScreen(tester);
 
       expect(
-        find.text('Hesabını kalıcı yap: Apple, Google ya da e-posta ile.'),
+        find.text(
+          '1. E-posta ve parola → 2. Kullanıcı adı → 3. Kontrol et ve hesabı oluştur',
+        ),
         findsOneWidget,
       );
       expect(find.text('E-postanı ve parolanı gir'), findsNothing);
@@ -70,7 +72,7 @@ void main() {
       expect(hasSnackBar(tester), isFalse);
     });
 
-    testWidgets('T10 tüm alanlar dolunca İleri açılır, temizlenince kapanır', (
+    testWidgets('S25 geçerli epostada İleri açılır, boş epostada kapanır', (
       tester,
     ) async {
       await pumpSignUpScreen(tester);
@@ -78,7 +80,7 @@ void main() {
       await tester.enterText(textFieldByLabel('E-posta adresi'), 'a@b.com');
       await tester.enterText(textFieldByLabel('Parola'), '123456');
       await tester.pump();
-      expect(tester.widget<SahneButton>(next).onPressed, isNull);
+      expect(tester.widget<SahneButton>(next).onPressed, isNotNull);
       await tester.enterText(textFieldByLabel('Parolayı onayla'), '123456');
       await tester.pump();
       expect(tester.widget<SahneButton>(next).onPressed, isNotNull);

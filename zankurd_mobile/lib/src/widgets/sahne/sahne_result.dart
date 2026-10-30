@@ -479,6 +479,7 @@ class SahneResultHero extends StatelessWidget {
     this.suffix = '',
     this.valueKey,
     this.valueLabel,
+    this.scoreComparison,
     this.subtitle,
     this.subtitleSize,
     this.caption,
@@ -544,6 +545,9 @@ class SahneResultHero extends StatelessWidget {
   /// Puan birimi sayıyla aynı grupta; alt özetin bağımsız parçası değildir.
   final String? valueLabel;
 
+  /// İki oyuncunun adını ve puanını tek birincil alanda eşleştirir.
+  final Widget? scoreComparison;
+
   /// Puanın altında Başlık 22 satırı ("Sen 5 – 3 Rojda").
   final String? subtitle;
 
@@ -601,6 +605,10 @@ class SahneResultHero extends StatelessWidget {
             ),
           ),
         ),
+        if (scoreComparison != null) ...[
+          const SizedBox(height: SahneSpace.x2),
+          scoreComparison!,
+        ],
         if (value != null)
           // Puan sayarak çıkar: tırmanışı izlemek kazanmanın kendisidir (bkz.
           // `RollingCount`). Hareket azaltma açıkken sayım yapılmaz.
@@ -954,9 +962,13 @@ class SahneResultStats extends StatelessWidget {
     required this.stats,
     this.compact = false,
     this.oneRow = false,
+    this.twoColumns = false,
   });
 
   final List<SahneResultStat> stats;
+
+  /// Sonuçlarda dört metriğin ekranlar arasında aynı 2×2 konumu.
+  final bool twoColumns;
 
   /// Bütün sayımlar tek satırda (en kısa ekran); çipler sıkışık biçimdedir.
   final bool oneRow;
@@ -985,14 +997,14 @@ class SahneResultStats extends StatelessWidget {
         // ikon + sayı + etiket sığmıyor, sözcük ortadan kırılıyordu
         // ("Doğr/u", "Üst/üste"; 2026-10-27, iki cihazlı düello).
         final minTile = MediaQuery.textScalerOf(context).scale(112);
-        var perRow = items.length;
+        var perRow = twoColumns ? math.min(2, items.length) : items.length;
         // `oneRow` bir TERCİHTİR (kısa ekranda ilk görünüm eksiksiz kalsın):
         // çipler SİMGESİZ ve doğal genişliğinde (yazı küçültülmeden) tek
         // satıra sığıyorsa öyle çizilir; sığmıyorsa normal ızgaraya (ikişerli)
         // inilir. Eskiden zorla tek satır + FittedBox okunmaz küçüklükte yazı
         // üretiyordu (Astra incelemesi 06f1fd5a). Ölçüm gerçek biçem ve yazı
         // ölçeğiyle.
-        if (oneRow && compact) {
+        if (oneRow && compact && !twoColumns) {
           final scaler = MediaQuery.textScalerOf(context);
           double width(String text, TextStyle style) {
             final painter = TextPainter(
@@ -1131,7 +1143,10 @@ class _StatTile extends StatelessWidget {
         label: '${groupThousands(stat.value)} ${stat.label}',
         excludeSemantics: true,
         child: DecoratedBox(
-          decoration: ShapeDecoration(color: stat.tint, shape: SahneShape.m),
+          decoration: ShapeDecoration(
+            color: Color.alphaBlend(stat.tint!, t.bg),
+            shape: SahneShape.m,
+          ),
           child: ConstrainedBox(
             // a11y-tap-target: noninteractive — sayım çipi; salt görsel.
             constraints: BoxConstraints(minHeight: compact ? 34 : 58),
@@ -1275,9 +1290,8 @@ class SahneResultRewards extends StatelessWidget {
     this.showZeroXp = false,
   });
 
-  /// Kurul 3 D8 (3/3): kaybeden oyuncuda yalnız jeton çipi + seviye çubuğu
-  /// görünüyor, bu maçın XP verip vermediği okunmuyordu. Çevrimiçi turda XP
-  /// 0 ise "0 XP" çipi açıkça çizilir.
+  /// Eski çağıranlarla kaynak uyumu. Sıfır XP ödül çipi olarak çizilmez;
+  /// mevcut seviye ilerlemesi bağımsız olarak görünmeye devam eder.
   final bool showZeroXp;
 
   /// Sıkışık: söz ve çipler TEK satırda (kısa ekranda kart ~64 px).
@@ -1325,7 +1339,7 @@ class SahneResultRewards extends StatelessWidget {
               label: coinLabel ?? '+${groupThousands(coins)}',
               semanticLabel: coinSemanticLabel,
             ),
-          if (xp > 0 || showZeroXp)
+          if (xp > 0)
             SahneStatChip(
               tint: t.goldTint,
               outline: t.gold,

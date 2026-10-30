@@ -218,12 +218,10 @@ class _FitKicker extends StatelessWidget {
           return n;
         }
 
-        var size = 14.0;
-        var lines = linesAt(size);
-        while (lines > 2 && size > 11) {
-          size -= 1;
-          lines = linesAt(size);
-        }
+        // Bilgi metni 14 pt altına inmez; dar yuvada gerçek satır sayısı
+        // ayrılır. Küçültme yerine erişilebilir satır kırılması kullanılır.
+        const size = 14.0;
+        final lines = linesAt(size);
         return Text(
           text,
           key: textKey,

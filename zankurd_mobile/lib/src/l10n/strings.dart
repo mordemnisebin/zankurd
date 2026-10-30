@@ -32,6 +32,41 @@ class Tr {
   /// Bir dil için karşılık yoksa Kurmancî'ye düşülür: eksik çeviri, boş
   /// ekrandan iyidir ve eksikliği görünür kılar.
   static const Map<String, Map<String, String>> _table = {
+    K.t15GuestStorage: {
+      'tr':
+          'İlerlemen bu cihazda saklanır. Başka cihazda devam etmek için hesabını kaydet.',
+      'ku':
+          'Pêşketina te li ser vê amûrê tê parastin. Ji bo ku tu li ser amûreke din bidomînî, hesabê xwe tomar bike.',
+    },
+    K.t15SignUpSteps: {
+      'tr':
+          '1. E-posta ve parola → 2. Kullanıcı adı → 3. Kontrol et ve hesabı oluştur',
+      'ku':
+          '1. E-name û şîfre → 2. Navê bikarhêner → 3. Kontrol bike û hesabê xwe çêke',
+    },
+    K.t15EmailPrompt: {
+      'tr': 'Devam etmek için e-posta adresini gir',
+      'ku': 'Ji bo domandinê navnîşana e-nameya xwe binivîse',
+    },
+    K.t15AnswerStatsTitle: {
+      'tr': 'Yanıt istatistikleri',
+      'ku': 'Statîstîkên bersivan',
+    },
+    K.t15AnswerStatsEmpty: {
+      'tr':
+          'Henüz yanıt kaydı yok. Soru çözdükçe istatistiklerin burada görünür.',
+      'ku':
+          'Hîn qeyda bersivan tune ye. Her ku tu pirsan çareser dikî, statîstîkên te li vir xuya dibin.',
+    },
+    K.t15AnswerStatsLoading: {
+      'tr': 'Yanıt istatistikleri yükleniyor…',
+      'ku': 'Statîstîkên bersivan tên barkirin…',
+    },
+    K.t15Retry: {'tr': 'Yeniden dene', 'ku': 'Dîsa biceribîne'},
+    K.t15LevelXp: {
+      'tr': 'Bu seviyede: {earned} / {needed} XP',
+      'ku': 'Di vê astê de: {earned} / {needed} XP',
+    },
     // ── Ortak eylemler ───────────────────────────────────────────────
     K.back: {'ku': 'Vegere', 'tr': 'Geri'},
     K.next: {'ku': 'Bidomîne', 'tr': 'Sonraki'},
@@ -340,10 +375,7 @@ class Tr {
     K.signInEmail: {'ku': 'Bi e-nameyê têkeve', 'tr': 'E-posta ile giriş'},
     K.signUpApple: {'ku': 'Bi Apple tomar bibe', 'tr': 'Apple ile kaydol'},
     K.signUpGoogle: {'ku': 'Bi Google tomar bibe', 'tr': 'Google ile kaydol'},
-    K.continueGuest: {
-      'ku': 'Wek mêvan bidomîne',
-      'tr': 'Misafir olarak devam et',
-    },
+    K.continueGuest: {'ku': 'Wek mêvan bilîze', 'tr': 'Misafir olarak oyna'},
     K.signInGoogle: {'ku': 'Bi Google têkeve', 'tr': 'Google ile giriş yap'},
     K.orWithEmail: {'ku': 'An jî bi e-nameyê', 'tr': 'Veya e-posta ile'},
     K.guestSaveTitle: {
@@ -2971,7 +3003,7 @@ class Tr {
       'tr': 'Bir soru öner; onaylanırsa oyuna eklensin.',
     },
     K.cupSubmissionForfeitNotPlayed: {
-      'tr': 'Oynamadı · hükmen',
+      'tr': 'Oynamadı · hükmen elendi',
       'ku': 'Nelîst · têkçûna bi biryarê',
     },
     K.joinNewTournament: {
@@ -4648,6 +4680,14 @@ class Tr {
 /// Metin anahtarları. Sabit olmaları, yazım hatasının derleme zamanında
 /// yakalanmasını sağlar.
 class K {
+  static const t15GuestStorage = 't15.t15GuestStorage';
+  static const t15SignUpSteps = 't15.t15SignUpSteps';
+  static const t15EmailPrompt = 't15.t15EmailPrompt';
+  static const t15AnswerStatsTitle = 't15.t15AnswerStatsTitle';
+  static const t15AnswerStatsEmpty = 't15.t15AnswerStatsEmpty';
+  static const t15AnswerStatsLoading = 't15.t15AnswerStatsLoading';
+  static const t15Retry = 't15.t15Retry';
+  static const t15LevelXp = 't15.t15LevelXp';
   static const t12TournamentYourTotal = 't12.t12TournamentYourTotal';
   static const t12TournamentPoints = 't12.t12TournamentPoints';
   static const t12AccountExisting = 't12.t12AccountExisting';

@@ -107,7 +107,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
-    expect(find.text('Misafir olarak devam et'), findsOneWidget);
+    expect(find.text('Misafir olarak oyna'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -256,7 +256,7 @@ void main() {
 
     expect(find.text('Google ile devam et'), findsOneWidget);
     expect(find.text('Apple ile devam et'), findsOneWidget);
-    expect(find.text('Misafir olarak devam et'), findsOneWidget);
+    expect(find.text('Misafir olarak oyna'), findsOneWidget);
     expect(find.text('Veya e-posta ile'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
@@ -428,7 +428,7 @@ void main() {
       final googleLabel = tester.widget<Text>(find.text('Google ile devam et'));
       expect(googleLabel.style?.color?.computeLuminance(), lessThan(0.3));
 
-      // "Misafir olarak devam et" artık dolgulu birincil düğmedir (yazı rengi tema
+      // "Misafir olarak oyna" artık dolgulu birincil düğmedir (yazı rengi tema
       // belirtecinden gelir, burada elle ölçülmez); okunurluğu Şahnê düğme
       // bekçileri korur. Burada yalnız varlığı ve ikincil girişin ayrı
       // olduğu sabitlenir.
@@ -438,7 +438,7 @@ void main() {
   });
 
   // 2026-10-28 görsel kurul: form doldurulunca "Giriş yap" birincil olur,
-  // "Misafir olarak devam et" ikincile iner; boşken misafir yolu birincil kalır.
+  // "Misafir olarak oyna" ikincile iner; boşken misafir yolu birincil kalır.
   testWidgets(
     'T4 form açıkken misafir ikincil; eski bekçi yalnız dolu formu ölçüyordu',
     (tester) async {
@@ -484,9 +484,9 @@ void main() {
     // isLoading true iken onPressed null'a düşer; IgnorePointer bu durumda
     // butonu tamamen hit-test dışı bırakmalı (yalnızca InkWell'in örtük
     // null-onTap davranışına güvenmemeli). Bulunamaması bunun kanıtıdır.
-    // "Misafir olarak devam et" Şahnê düğmesidir: yükleme sürerken dokunuş alır ama
+    // "Misafir olarak oyna" Şahnê düğmesidir: yükleme sürerken dokunuş alır ama
     // onPressed null olduğundan hiçbir şey yapmaz.
-    await tester.tap(find.text('Misafir olarak devam et'), warnIfMissed: false);
+    await tester.tap(find.text('Misafir olarak oyna'), warnIfMissed: false);
     await tester.pump();
     expect(authProvider.isAuthenticated, isFalse);
 
@@ -494,7 +494,7 @@ void main() {
     await tester.pump();
 
     // Yükleme bitince buton tekrar normal çalışmalı (regresyon önlemi).
-    await tester.tap(find.text('Misafir olarak devam et').hitTestable());
+    await tester.tap(find.text('Misafir olarak oyna').hitTestable());
     await tester.pumpAndSettle();
 
     expect(authProvider.isAuthenticated, isTrue);
@@ -557,7 +557,7 @@ void main() {
           (hi > lo ? hi + 0.05 : lo + 0.05) / (hi > lo ? lo + 0.05 : hi + 0.05);
       expect(contrast, greaterThanOrEqualTo(4.5));
 
-      expect(find.text('Misafir olarak devam et'), findsOneWidget);
+      expect(find.text('Misafir olarak oyna'), findsOneWidget);
       expect(tester.takeException(), isNull);
     }
   });
@@ -647,7 +647,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final guestButton = find.text('Misafir olarak devam et');
+    final guestButton = find.text('Misafir olarak oyna');
     expect(guestButton, findsOneWidget);
     expect(tester.getBottomRight(guestButton).dy, lessThan(844));
   });
@@ -983,9 +983,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Misafir olarak devam et'));
+    await tester.ensureVisible(find.text('Misafir olarak oyna'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Misafir olarak devam et'));
+    await tester.tap(find.text('Misafir olarak oyna'));
     await tester.pumpAndSettle();
 
     expect(find.byType(HomeScreen), findsOneWidget);
@@ -1230,7 +1230,7 @@ void main() {
     await tester.pumpAndSettle();
     await revealSignInForm(tester);
 
-    final guestButton = find.text('Misafir olarak devam et');
+    final guestButton = find.text('Misafir olarak oyna');
     expect(guestButton, findsOneWidget);
     final beforeDragY = tester.getTopLeft(guestButton).dy;
 
@@ -1256,7 +1256,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final guestButton = find.text('Misafir olarak devam et');
+    final guestButton = find.text('Misafir olarak oyna');
     expect(guestButton, findsOneWidget);
     expect(tester.getBottomRight(guestButton).dy, lessThan(390));
   });
@@ -1333,7 +1333,7 @@ void main() {
     await tester.pumpAndSettle();
     await revealSignInForm(tester);
 
-    for (final label in ['Wek mêvan bidomîne', 'An jî bi e-nameyê']) {
+    for (final label in ['Wek mêvan bilîze', 'An jî bi e-nameyê']) {
       final finder = find.text(label);
       expect(finder, findsOneWidget, reason: label);
       final paragraph = tester.renderObject<RenderParagraph>(finder);
@@ -1359,6 +1359,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Bi xêr hatî ZanKurdê'), findsOneWidget);
-    expect(find.text('Wek mêvan bidomîne'), findsOneWidget);
+    expect(find.text('Wek mêvan bilîze'), findsOneWidget);
   });
 }

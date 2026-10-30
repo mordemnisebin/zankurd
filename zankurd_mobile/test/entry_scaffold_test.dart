@@ -59,7 +59,7 @@ final _entries = <_Entry>[
   const _Entry(
     'giriş',
     "ZanKurd'a hoş geldin",
-    'Misafir olarak devam et',
+    'Misafir olarak oyna',
     SignInScreen.new,
   ),
   const _Entry('kayıt', 'Hesabını oluştur', 'İleri', SignUpScreen.new),

@@ -355,7 +355,13 @@ class _SignInScreenState extends State<SignInScreen>
                     )
                   : null,
               anchorActions: _formOpen,
-              aboveAction: _formOpen ? const ConsentLine() : null,
+              aboveAction: _formOpen
+                  ? const ConsentLine()
+                  : Text(
+                      context.t(K.t15GuestStorage),
+                      key: const ValueKey('sign-in-guest-storage'),
+                      style: SahneType.caption.copyWith(color: t.tx2),
+                    ),
               primaryFirstWhenFlowing: true,
               primary: FadeTransition(
                 opacity: LoadAnimationSequence.buttonFadeAnimation(

@@ -383,6 +383,57 @@ class QuizOptionTile extends StatelessWidget {
         child: tile,
       );
     }
+    // T15: kişisel seçim ve doğru cevap, simge/renkten bağımsız okunur.
+    // Etiket mevcut şık aralığında durur; cevap sonrası şık boyunu değiştirmez.
+    if (selected || correct) {
+      tile = Stack(
+        clipBehavior: Clip.none,
+        children: [
+          tile,
+          PositionedDirectional(
+            top: -8,
+            end: SahneSpace.x3,
+            child: IgnorePointer(
+              child: DecoratedBox(
+                decoration: BoxDecoration(color: t.s1),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (correct)
+                        Text(
+                          context.t(K.correctAnswerLabel),
+                          style: SahneType.captionStrong.copyWith(
+                            color: t.tx,
+                            fontSize: 14,
+                          ),
+                        ),
+                      if (correct && selected)
+                        Text(
+                          ' · ',
+                          style: SahneType.captionStrong.copyWith(
+                            color: t.tx,
+                            fontSize: 14,
+                          ),
+                        ),
+                      if (selected)
+                        Text(
+                          context.isKu ? 'Bersiva te' : 'Senin cevabın',
+                          style: SahneType.captionStrong.copyWith(
+                            color: t.tx,
+                            fontSize: 14,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
     // Etiket ve seçili durum kutlama/rozet katmanlarının DIŞINDA kalır.
     // Böylece doğru seçimde kök düğüm boş bir Transform düğümüne dönüşmez.
     // Yalnız şıkkın görsel içeriği yukarıda dışlandı; seyirci yüzdesi ve

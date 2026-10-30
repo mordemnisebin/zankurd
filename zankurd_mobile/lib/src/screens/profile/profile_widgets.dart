@@ -106,6 +106,13 @@ class _ProfileHeroCard extends StatelessWidget {
     // hizalı, kamera düğmesi ≥ 44.
     const onCard2 = ProfileIdentityColors.onCard2;
     final xpLeft = math.max(0, xpNeeded - xpInLevel);
+    final xpScale = Tr.forKu(K.t15LevelXp, ku, {
+      'earned': groupThousands(xpInLevel),
+      'needed': groupThousands(xpNeeded),
+    });
+    final xpRemaining = Tr.forKu(K.profileXpToNext, ku, {
+      'n': groupThousands(xpLeft),
+    });
     return ProfileIdentitySurface(
       key: const ValueKey('profile-identity-card'),
       child: Padding(
@@ -308,17 +315,23 @@ class _ProfileHeroCard extends StatelessWidget {
             ),
             const SizedBox(height: SahneSpace.x3),
             SahneProgressBar(
+              key: const ValueKey('profile-level-xp-progress'),
               value: xpNeeded > 0 ? xpInLevel / xpNeeded : 0,
               tone: SahneProgressTone.gold,
               height: 8,
               trackColor: Colors.white.withValues(alpha: 0.22),
               edgeColor: Colors.transparent,
               semanticLabel:
-                  '${Tr.forKu(K.progressLevelLabel, ku)} ${groupThousands(level)}',
+                  '${Tr.forKu(K.progressLevelLabel, ku)} ${groupThousands(level)}. $xpScale. $xpRemaining',
             ),
             const SizedBox(height: SahneSpace.x1),
             Text(
-              Tr.forKu(K.profileXpToNext, ku, {'n': groupThousands(xpLeft)}),
+              xpScale,
+              key: const ValueKey('profile-xp-scale'),
+              style: SahneType.captionStrong.copyWith(color: Colors.white),
+            ),
+            Text(
+              xpRemaining,
               key: const ValueKey('profile-xp-to-next'),
               style: SahneType.caption.copyWith(color: onCard2),
             ),
