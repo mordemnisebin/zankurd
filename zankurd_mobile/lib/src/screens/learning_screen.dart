@@ -1775,14 +1775,18 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
             ErrorReporter.record(error, stack, reason: 'log_lesson_completed');
             return false;
           });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.t(success ? K.dersTamamlandi : K.lessonSavedOffline),
+      // Kurul 3 D10 (3/3): "Ders qediya" bildirimi geri dönülen yoldaki
+      // sonraki dersin "Dest pê bike" düğmesini örtüyordu; tamamlandı bilgisi
+      // zaten yoldaki düğümde yazar. Bildirim yalnız ÇEVRİMDIŞI kayıtta
+      // (tamamlama henüz sunucuda değilken) kalır — o bilgi başka yerde yok.
+      if (!success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(context.t(K.lessonSavedOffline)),
+            duration: const Duration(seconds: 2),
           ),
-          duration: const Duration(seconds: 2),
-        ),
-      );
+        );
+      }
       Navigator.pop(context);
     } else if (mounted) {
       // Ne sunucuya ne yerele yazılabildi: "tamamlandı" demeden, ekranı

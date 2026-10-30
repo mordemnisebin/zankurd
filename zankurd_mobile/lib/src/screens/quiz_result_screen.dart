@@ -38,6 +38,7 @@ import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zan_mascot.dart';
 import '../utils/app_route.dart';
+import 'matchmaking_screen.dart';
 import '../utils/percent_format.dart';
 import '../utils/player_identity.dart';
 import '../data/daily_mission_store.dart';
@@ -1391,15 +1392,28 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // Yalnız ÖZEL oda tekrar oynanabilir (sunucu kuralı); hızlı düello ve
     // rastgele eşleşmede düğme çıkmaz.
     final canRematch = isOnlineRoom && room.isCustom;
+    // Kurul 3 D9 (Astra + Sol): rastgele canlı düellonun sonucunda birincil
+    // eylem "Ana sayfa"ydı; oyunu sürdürmenin yolu yoktu. Rastgele eşleşmede
+    // (özel oda, kalabalık oda ve turnuva değil) birincil eylem yeni bir
+    // rakip aramaktır; ana sayfa "⋯" menüsünde kalır.
+    final findNewOpponent =
+        isOnlineRoom &&
+        !canRematch &&
+        !room.isCrowd &&
+        !widget.tournamentMatch;
     final nextActionLabel = context.t(
       widget.tournamentMatch
           ? K.backToTournament
+          : findNewOpponent
+          ? K.findOpponent
           : isOnlineRoom && !canRematch
           ? K.home
           : K.playAgain,
     );
     final nextActionIcon = widget.tournamentMatch
         ? AppIcons.trophy
+        : findNewOpponent
+        ? AppIcons.magnifyingGlass
         : isOnlineRoom && !canRematch
         ? AppIcons.house
         : AppIcons.arrowRotateLeft;
@@ -1516,6 +1530,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ? 'result-primary-learning-continue'
         : canRematch
         ? 'result-room-rematch-button'
+        : findNewOpponent
+        ? 'result-primary-find-opponent'
         : isOnlineRoom
         ? 'result-primary-home'
         : 'result-play-again-button';
@@ -2080,6 +2096,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               coinLabel: '+$coinsAwarded',
               coinSemanticLabel: '+$coinsAwarded ${context.t(K.coinWord)}',
               xp: _earnedXP,
+              // Kurul 3 D7 (3/3): çevrimiçi turda XP yarış puanının kendisidir;
+              // "+443 puan" ve "+443 XP" yan yana nedeni söylenmeden
+              // duruyordu. Çip kaynağını söyler. D8: kaybedende 0 XP açık.
+              xpLabel: (widget.room.id?.trim() ?? '').isNotEmpty
+                  ? context.t(K.xpEqualsScoreChip, {'n': '$_earnedXP'})
+                  : null,
+              showZeroXp:
+                  (widget.room.id?.trim() ?? '').isNotEmpty &&
+                  _earnedXP == 0 &&
+                  !isLearningExperience,
               // Kısa ekranda düello sonucunda seviye çubuğu çizilmez: ilk
               // görünüm sonuç + skor + XP/jeton'dur (çubuk ödül kartını alt
               // perdenin altına itiyordu).
@@ -2111,7 +2137,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         label: primaryResultLabel,
         icon: learningContinue ? null : nextActionIcon,
         loading: canRematch && _newRoomLoading,
-        onPressed: canRematch ? _rematch : completeResultAction,
+        onPressed: canRematch
+            ? _rematch
+            : findNewOpponent
+            ? () {
+                final navigator = Navigator.of(context);
+                navigator.popUntil((route) => route.isFirst);
+                unawaited(
+                  navigator.push(
+                    AppRoute.to(MatchmakingScreen(repository: repository)),
+                  ),
+                );
+              }
+            : completeResultAction,
       ),
       // W2 (2026-10-28 tur 5): alt perde = tam genişlik birincil + simge
       // düğmesi olarak Paylaş. Ana sayfa "Diğer seçenekler"de kalır.

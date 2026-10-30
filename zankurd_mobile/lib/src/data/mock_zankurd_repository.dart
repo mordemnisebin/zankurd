@@ -2577,7 +2577,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'alphabet_1',
         slug: 'alphabet_1',
-        titleKu: 'Alfabe',
+        titleKu: 'Elîfbê',
         titleTr: 'Alfabe',
         descriptionKu: 'Tîpên Kurmancî û dengên wan',
         descriptionTr: 'Kurmancî harfleri ve sesleri',

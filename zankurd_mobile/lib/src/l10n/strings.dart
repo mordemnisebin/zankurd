@@ -2574,6 +2574,10 @@ class Tr {
     // "Ayrıntılar"ın ilk satırında. Taban 100 / doğru (`SpeedScore`, sunucu
     // `submit_answer`); kalan hız (+ çevrimiçide seri) bonusudur.
     // NEEDS_JURY (KU): "pûanên lez û zincîrê".
+    K.xpEqualsScoreChip: {
+      'ku': '+{n} XP (bi qasî pûanê)',
+      'tr': '+{n} XP (puan kadar)',
+    },
     K.resultXpIsScore: {
       'ku':
           'Di lîstika serhêl de XP bi qasî pûana pêşbirkê ye (herî zêde 2000).',
@@ -4372,6 +4376,14 @@ class Tr {
       'ku': 'Ev ger piştî {h} saet û {m} deqeyan diqede',
       'tr': 'Bu tur {h} sa {m} dk sonra biter',
     },
+    K.contestEndsInMin: {
+      'ku': 'Ev ger piştî {m} deqeyan diqede',
+      'tr': 'Bu tur {m} dk sonra biter',
+    },
+    K.contestNextInMin: {
+      'ku': 'Gera nû piştî {m} deqeyan',
+      'tr': 'Yeni tur {m} dk sonra',
+    },
     K.contestNextIn: {
       'ku': 'Gera nû piştî {h} saet û {m} deqeyan',
       'tr': 'Yeni tur {h} sa {m} dk sonra',
@@ -4822,6 +4834,8 @@ class K {
   // göstermiyordu ve tema adı yerine sabit bir başlık yazıyordu.
   static const contestToday = 'contest.today';
   static const contestPlayableToday = 'contest.playableToday';
+  static const contestEndsInMin = 'contest.endsInMin';
+  static const contestNextInMin = 'contest.nextInMin';
   static const contestEndsIn = 'contest.endsIn';
   static const contestQuickInfo = 'contest.quickInfo';
   static const contestSeconds = 'contest.seconds';
@@ -5436,6 +5450,7 @@ class K {
   static const locked = 'common.locked';
   static const resultDetails = 'result.details';
   static const resultDetailsTopics = 'result.detailsTopics';
+  static const xpEqualsScoreChip = 'result.xpEqualsScoreChip';
   static const resultXpIsScore = 'result.xpIsScore';
   static const resultScoreBreakdown = 'result.scoreBreakdown';
   static const allLessonsMore = 'learning.allLessonsMore';
