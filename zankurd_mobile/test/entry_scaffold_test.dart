@@ -92,23 +92,30 @@ void main() {
   // ayrışırdı.
   setUpAll(loadAppFonts);
 
-  testWidgets('birincil düğme dört ekranda ekranın AYNI yerinde durur', (
-    tester,
-  ) async {
-    final rects = <String, Rect>{};
-    for (final e in _entries) {
-      await _open(tester, e);
-      expect(find.text(e.primary), findsOneWidget, reason: e.name);
-      rects[e.name] = _primaryRect(tester);
-      await tester.pumpWidget(const SizedBox.shrink());
-    }
-    final first = rects.values.first;
-    for (final entry in rects.entries) {
-      expect(entry.value.top, closeTo(first.top, 0.5), reason: entry.key);
-      expect(entry.value.left, closeTo(first.left, 0.5), reason: entry.key);
-      expect(entry.value.width, closeTo(first.width, 0.5), reason: entry.key);
-    }
-  });
+  testWidgets(
+    'T4 sosyal yollar için giriş/kayıt yerleşimi değişti; ortak hizalar korunur',
+    (tester) async {
+      final rects = <String, Rect>{};
+      for (final e in _entries) {
+        await _open(tester, e);
+        expect(find.text(e.primary), findsOneWidget, reason: e.name);
+        rects[e.name] = tester.getRect(
+          find.widgetWithText(SahneButton, e.primary),
+        );
+        await tester.pumpWidget(const SizedBox.shrink());
+      }
+      final first = rects.values.first;
+      for (final entry in rects.entries) {
+        // T4 girişte misafir sosyal düğmelerin üstünde; kayıtta yeni misafir
+        // satırı var. Karşılama ve ad ekranının sabit yüksekliği değişmedi.
+        if (entry.key == 'karşılama' || entry.key == 'ad sorma') {
+          expect(entry.value.top, closeTo(first.top, 0.5), reason: entry.key);
+        }
+        expect(entry.value.left, closeTo(first.left, 0.5), reason: entry.key);
+        expect(entry.value.width, closeTo(first.width, 0.5), reason: entry.key);
+      }
+    },
+  );
 
   testWidgets('karşılamanın 2. sayfasında "Geri" varken de düğme zıplamaz', (
     tester,

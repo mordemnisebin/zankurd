@@ -303,6 +303,16 @@ class Tr {
       'ku': 'Kurmancî hîn bibe, zanîna xwe bi pêşbirkê biceribîne.',
       'tr': 'Kurmancî öğren, bilgini yarıştır.',
     },
+    // T4 KU taslakları: bağımsız dil incelemesi bekliyor; mevcut dizeler korunur.
+    K.continueApple: {'ku': 'Bi Apple bidomîne', 'tr': 'Apple ile devam et'},
+    K.continueGoogle: {'ku': 'Bi Google bidomîne', 'tr': 'Google ile devam et'},
+    K.signInEmail: {'ku': 'Bi e-nameyê têkeve', 'tr': 'E-posta ile giriş'},
+    K.signUpApple: {'ku': 'Bi Apple tomar bibe', 'tr': 'Apple ile kaydol'},
+    K.signUpGoogle: {'ku': 'Bi Google tomar bibe', 'tr': 'Google ile kaydol'},
+    K.continueGuest: {
+      'ku': 'Wek mêvan bidomîne',
+      'tr': 'Misafir olarak devam et',
+    },
     K.signInGoogle: {'ku': 'Bi Google têkeve', 'tr': 'Google ile giriş yap'},
     K.signInApple: {'ku': 'Bi Apple têkeve', 'tr': 'Apple ile giriş yap'},
     K.orWithEmail: {'ku': 'An jî bi e-nameyê', 'tr': 'Veya e-posta ile'},
@@ -5675,6 +5685,12 @@ class K {
   static const signUp = 'auth.signUp';
   static const welcomeTitle = 'auth.welcomeTitle';
   static const entryPromise = 'auth.entryPromise';
+  static const continueApple = 'auth.continueApple';
+  static const continueGoogle = 'auth.continueGoogle';
+  static const signInEmail = 'auth.signInEmail';
+  static const signUpApple = 'auth.signUpApple';
+  static const signUpGoogle = 'auth.signUpGoogle';
+  static const continueGuest = 'auth.continueGuest';
   static const signInGoogle = 'auth.signInGoogle';
   static const signInApple = 'auth.signInApple';
   static const orWithEmail = 'auth.orWithEmail';

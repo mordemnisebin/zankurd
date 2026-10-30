@@ -56,6 +56,7 @@ class SahneEntryScaffold extends StatelessWidget {
     this.secondary,
     this.primaryFirstWhenFlowing = false,
     this.centerWhenAnchored = false,
+    this.anchorActions = true,
     this.surfaceKey,
     this.dockKey = const ValueKey('entry-dock'),
   }) : assert(
@@ -104,6 +105,9 @@ class SahneEntryScaffold extends StatelessWidget {
   /// düğmeyi perdeden koparıyordu (2026-10-28). Uzun içerik yine kayar.
   final bool centerWhenAnchored;
 
+  /// T4 giriş seçenekleri birlikte kayar; diğer ekranların sabit perdesi korunur.
+  final bool anchorActions;
+
   /// Sayfa zemininin anahtarı (testler zemini bulur).
   final Key? surfaceKey;
 
@@ -137,7 +141,11 @@ class SahneEntryScaffold extends StatelessWidget {
               final short = c.maxHeight < 560;
               final anchored =
                   paged != null ||
-                  (!keyboardOpen && !wide && !short && !bigText);
+                  (anchorActions &&
+                      !keyboardOpen &&
+                      !wide &&
+                      !short &&
+                      !bigText);
               final width = wide ? 960.0 : columnWidth;
               Widget limited(Widget child) => Center(
                 heightFactor: 1,

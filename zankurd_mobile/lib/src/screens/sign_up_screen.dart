@@ -9,6 +9,7 @@ import '../providers/reduced_motion_provider.dart';
 import '../services/analytics_service.dart';
 import '../services/display_name_policy.dart';
 import '../widgets/app_logo.dart';
+import '../widgets/auth_social_buttons.dart';
 import '../widgets/consent_line.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/sahne/sahne.dart';
@@ -39,6 +40,66 @@ class _SignUpScreenState extends State<SignUpScreen>
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   int _currentStep = 0;
+  AuthProvider? _pendingSocialAuth;
+
+  void _onSocialSession() {
+    final auth = _pendingSocialAuth;
+    if (!mounted || auth == null || !auth.isAuthenticated || auth.isGuest) {
+      return;
+    }
+    auth.removeListener(_onSocialSession);
+    _pendingSocialAuth = null;
+    Navigator.of(context).maybePop();
+  }
+
+  Future<void> _socialSignUp(AuthProvider auth, {required bool apple}) async {
+    _pendingSocialAuth?.removeListener(_onSocialSession);
+    _pendingSocialAuth = null;
+    LoadingOverlay.show(
+      context,
+      message: context.t(apple ? K.connectingApple : K.connectingGoogle),
+    );
+    final success = await (auth.isGuest
+        ? (apple ? auth.linkAppleAccount() : auth.linkGoogleAccount())
+        : (apple ? auth.signInWithApple() : auth.signInWithGoogle()));
+    if (!mounted) return;
+    LoadingOverlay.hide(context);
+    if (!success) {
+      if (auth.errorMessage != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(context.translateAuthError(auth.errorMessage!)),
+          ),
+        );
+      }
+      return;
+    }
+    // OAuth başlatılması hesap açıldığı anlamına gelmez; gerçek oturumu bekle.
+    _pendingSocialAuth?.removeListener(_onSocialSession);
+    _pendingSocialAuth = auth;
+    auth.addListener(_onSocialSession);
+    _onSocialSession();
+  }
+
+  Future<void> _continueAsGuest(AuthProvider auth) async {
+    if (auth.isGuest) {
+      await Navigator.of(context).maybePop();
+      return;
+    }
+    LoadingOverlay.show(context, message: context.t(K.signingInGuest));
+    final success = await auth.signInAsGuest();
+    if (!mounted) return;
+    LoadingOverlay.hide(context);
+    if (success) {
+      AnalyticsService.instance.logSignIn('guest');
+      await Navigator.of(context).maybePop();
+    } else if (auth.errorMessage != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.translateAuthError(auth.errorMessage!))),
+      );
+    }
+  }
+
   static const _stepCount = 3;
   late AnimationController _animationController;
 
@@ -57,6 +118,7 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   @override
   void dispose() {
+    _pendingSocialAuth?.removeListener(_onSocialSession);
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
@@ -194,7 +256,7 @@ class _SignUpScreenState extends State<SignUpScreen>
               // U15 (2026-10-28 tur 4): giriş/karşılamayla aynı manzara.
               child: const SahneEntryScene(
                 key: ValueKey('sign-up-hero-banner'),
-                height: SahneEntryScene.entryCompactHeight,
+                height: SahneEntryScene.compactHeight,
                 child: AppLogo(width: 64),
               ),
             ),
@@ -206,7 +268,24 @@ class _SignUpScreenState extends State<SignUpScreen>
               opacity: LoadAnimationSequence.formField1FadeAnimation(
                 _animationController,
               ),
-              child: _buildStepContent(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (_currentStep == 0) ...[
+                    AuthSocialButtons(
+                      signUp: true,
+                      onApple: loading
+                          ? null
+                          : () => _socialSignUp(authProvider, apple: true),
+                      onGoogle: loading
+                          ? null
+                          : () => _socialSignUp(authProvider, apple: false),
+                    ),
+                    const AuthEmailDivider(),
+                  ],
+                  _buildStepContent(context),
+                ],
+              ),
             ),
           ),
           aboveAction: _currentStep == 2 ? const ConsentLine() : null,
@@ -232,18 +311,33 @@ class _SignUpScreenState extends State<SignUpScreen>
                   arrow: false,
                   onPressed: loading ? null : _previousStep,
                 )
-              : Wrap(
-                  alignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: SahneSpace.x1,
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      context.t(K.haveAccountPrefix),
-                      style: SahneType.body.copyWith(color: t.tx2),
-                    ),
                     SahneButton.text(
-                      label: context.t(K.signIn),
-                      onPressed: () => Navigator.of(context).pop(),
+                      key: const ValueKey('sign-up-guest'),
+                      label: context.t(K.continueGuest),
+                      arrow: false,
+                      onPressed: loading
+                          ? null
+                          : () => _continueAsGuest(authProvider),
+                    ),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: SahneSpace.x1,
+                      children: [
+                        Text(
+                          context.t(K.haveAccountPrefix),
+                          style: SahneType.body.copyWith(color: t.tx2),
+                        ),
+                        SahneButton.text(
+                          label: context.t(K.signIn),
+                          onPressed: loading
+                              ? null
+                              : () => Navigator.of(context).maybePop(),
+                        ),
+                      ],
                     ),
                   ],
                 ),

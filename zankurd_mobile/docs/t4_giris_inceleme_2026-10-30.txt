@@ -1,0 +1,63 @@
+T4 — Giriş, kayıt ve misafir hesabı kaydetme inceleme notu
+
+Davranış
+- Girişte Hemen oyna birincil; iOS Apple, Google ve e-posta seçenekleri ilk görünümde açık. E-posta formu açıldığında misafir eylemi ikincil olarak korunur.
+- Kayıtta sosyal düğmeler e-posta formunun üstünde; misafir ve mevcut hesap eylemleri ayrı satırlarda.
+- Misafir hesabını kaydetme yüzeyleri aynı sosyal düğmeleri kullanır. Mevcut linkIdentity çağrıları korunur. OAuth başlatılması kayıt tamamlandı sayılmaz; gerçek oturum beklenir.
+- Apple yalnız iOS; sosyal düğmeler aynı yükseklikte, büyük yazıda etiketler sarılır.
+
+Ürün dosyaları (zankurd_mobile/ altında)
+- lib/src/screens/sign_in_screen.dart
+- lib/src/screens/sign_up_screen.dart
+- lib/src/screens/profile_screen.dart
+- lib/src/screens/profile/profile_widgets.dart
+- lib/src/services/guest_save_prompt.dart
+- lib/src/widgets/auth_social_buttons.dart (yeni ortak düğmeler ve ayırıcı)
+- lib/src/widgets/sahne/sahne_entry.dart (eylemleri akışa yerleştirme seçeneği; varsayılan korunur)
+- lib/src/l10n/strings.dart (yalnız yeni TR/KU anahtarları)
+- assets/brand/google_g.svg (yeni)
+- pubspec.yaml (yalnız varlık kaydı; sürüm aynı)
+
+Bekçiler ve değişen eski beklentilerin gerekçeleri
+- test/auth_visibility_t4_test.dart: yeni platform, görünürlük/dokunma, eşit yükseklik, misafir, OAuth sonuçları, 320/375 genişlik, 1.3/2 yazı, TR/KU ve açık/koyu tema bekçileri. Kayıt altındaki iki eylemin aynı satıra karışması önce başarısız testle gösterilip düzeltildi.
+- test/sign_in_guest_primary_test.dart: K10'un sosyal girişleri gizleme beklentisi kullanıcı T4 isteğiyle kaldırıldı; misafir ilk görünümde birincil, açık formda ikincil.
+- test/auth_onboarding_test.dart: yeni görünür sosyal etiketler ve açık formun birincil eylemi.
+- test/auth_boot_fallback_test.dart: görünür e-posta açma etiketi.
+- test/apple_sign_in_button_contrast_test.dart: etiket güncellendi; kontrast eşikleri korunur.
+- test/google_sign_in_branding_test.dart: ortak bileşen ve renkli SVG denetimi; sahte G yasağı korunur.
+- test/guest_google_link_test.dart: iOS'ta Google da görünür; Apple ile eşit yükseklik ve form üstünde sıralama; bağlama bekçileri korunur.
+- test/guest_save_prompt_test.dart: iOS'ta iki sosyal seçenek.
+- test/entry_scaffold_test.dart: ilk giriş/kayıt ekranının yeni dikey düzeni; yatay hizalama ve diğer ekran ilişkileri korunur.
+- test/support/widget_test_helpers.dart: mevcut form açma yardımcısının yorumu güncellendi.
+
+Doğrulama
+- Flutter analyze: No issues found (33.6 sn).
+- dart format --set-exit-if-changed lib test: 1201 dosya, 0 değişiklik.
+- git diff --check: temiz; izlenen dosya silinmedi.
+- Standart flutter test başlatıcısı localhost soketi açamadı: Operation not permitted.
+- Aynı gerçek test dosyaları geçici standalone test_core başlatıcısıyla derlenip flutter_tester üzerinde VM servisi kapalı çalıştırıldı: 629 kontrol geçti. Bu sonuç standart flutter test komutunun başarıyla tamamlandığı anlamına gelmez.
+- Kapsam: auth_visibility_t4, auth_onboarding, sign_in_guest_primary, sign_up_validation, sign_in_reduced_motion, sign_up_reduced_motion, apple_sign_in_button_contrast, google_sign_in_branding, guest_google_link, guest_save_prompt, entry_scaffold, soru_sigma, soru_sigma_ek, soru_sigma_ek2, tur3_bulgu, native_auth_flow.
+- Test günlüğü: /private/tmp/zk-t4-final-tests.log
+- Analiz/format: /private/tmp/zk-t4-final-clean-analyze.log ve /private/tmp/zk-t4-final-clean-format.log
+- Canlı bağlantısı olmayan AuthProvider.test önizlemesinin web build'i başarılı: /private/tmp/zk-t4-final-web-build.log
+- 375x667 TR/KU açık/koyu Flutter motor görüntüleri: /private/tmp/zk-t4-previews/. Misafir ve sosyal seçenekler ilk görünümde görünür. Bunlar gerçek tarayıcı veya simülatör kanıtı değildir.
+
+Sunucu
+- Göç gerekmiyor. Supabase'e bağlanılmadı; applied.md, auth_provider ve soru ekranı değiştirilmedi.
+
+Açık doğrulama eksikleri / riskler
+- Standart flutter test, tam CI ve Playwright/simülatör doğrulaması ortam izinleri nedeniyle tamamlanmadı.
+- Gerçek Apple/Google oturumu ve misafir ilerleme aktarımı canlı hesapla sınanmadı; mevcut çağrı yolları ve davranış bekçileriyle denetlendi.
+- Mevcut özel Apple düğmesi/marka glifi ve uygulama yazı tipi kullanılır; Google klasik dört renkli SVG kullanır. Güncel resmî marka varlıkları/fontlarıyla birebir uyum onaylanmış değildir; Claude/görsel incelemede değerlendirilmelidir.
+- KU metinler taslaktır. Gemini/Grok bağımsız inceleme çağrıları ortam izinleri nedeniyle çalışmadı; iki model onayı yok. Mevcut KU metinleri değiştirilmedi.
+- Claude Opus incelemesi bekleniyor.
+- Commit engellendi: ana depodaki /Users/kocer/Projects/zankurd/.git/worktrees/zk-astra-giris/index.lock için Operation not permitted. Değişiklikler commit edilmemiştir; push yapılmadı. İstenen Türkçe gövde ve ortak yazar satırı /private/tmp/zk-t4-commit.txt dosyasında hazırdır.
+
+Yeni metinler (KU taslak)
+Anahtar | TR | KU
+continueApple | Apple ile devam et | Bi Apple bidomîne
+continueGoogle | Google ile devam et | Bi Google bidomîne
+signInEmail | E-posta ile giriş | Bi e-nameyê têkeve
+signUpApple | Apple ile kaydol | Bi Apple tomar bibe
+signUpGoogle | Google ile kaydol | Bi Google tomar bibe
+continueGuest | Misafir olarak devam et | Wek mêvan bidomîne
