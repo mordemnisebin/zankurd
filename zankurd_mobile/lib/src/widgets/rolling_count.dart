@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/reduced_motion_provider.dart';
+import '../utils/number_format.dart';
 
 /// Sayıyı hedefe DOĞRU sayarak çıkar.
 ///
@@ -71,7 +72,7 @@ class RollingCount extends StatelessWidget {
     );
     if (reduced) {
       return Text(
-        '$prefix$value$suffix',
+        '$prefix${groupThousands(value)}$suffix',
         style: style,
         maxLines: maxLines,
         overflow: TextOverflow.ellipsis,
@@ -86,7 +87,9 @@ class RollingCount extends StatelessWidget {
       duration: durationFor(value),
       curve: Curves.easeOutCubic,
       builder: (context, current, _) => Text(
-        '$prefix${current.round()}$suffix',
+        // Kurul 3 D22 (Sol, nesnel): oyunda puan "1.001" (binlik ayırıcı),
+        // sonuçta "1432" yazıyordu. Sayım da aynı biçimle yazar.
+        '$prefix${groupThousands(current.round())}$suffix',
         style: style,
         maxLines: maxLines,
         overflow: TextOverflow.ellipsis,

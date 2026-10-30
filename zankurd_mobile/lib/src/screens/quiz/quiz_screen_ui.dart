@@ -1127,6 +1127,7 @@ extension _QuizScreenUI on _QuizScreenState {
       isUsed: used,
       isAnswered: answered,
       isActive: isActive,
+      secondTry: hasOwnSubmit(question.type),
       cantAfford: !used && !canAfford && !answered,
       free: _freeWildcardAvailable,
       unavailable: !used && _wildcardUnavailable(type),

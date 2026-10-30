@@ -1397,10 +1397,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // (özel oda, kalabalık oda ve turnuva değil) birincil eylem yeni bir
     // rakip aramaktır; ana sayfa "⋯" menüsünde kalır.
     final findNewOpponent =
-        isOnlineRoom &&
-        !canRematch &&
-        !room.isCrowd &&
-        !widget.tournamentMatch;
+        isOnlineRoom && !canRematch && !room.isCrowd && !widget.tournamentMatch;
     final nextActionLabel = context.t(
       widget.tournamentMatch
           ? K.backToTournament
@@ -1741,6 +1738,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       // W13 (2026-10-28 tur 5): eşik altı seviye turu SnackBar değil, kahraman
       // altında satır içi söylenir; SnackBar "Ayrıntılar"/"Diğer seçenekler"
       // satırlarını örtüyordu (Android gezinti, and_17/18).
+      // Kurul 3 D23 (3/3): günün turu sonucunda "Tekrar oyna" yeniden
+      // oynamanın sıralamaya etkisini söylemiyordu (sunucu: ilk sonuç girer,
+      // `submit_daily_event_result` on conflict do nothing).
+      if (widget.contestId != null)
+        _HeroNotice(
+          key: const ValueKey('result-contest-first-counts'),
+          icon: AppIcons.trophy,
+          text: context.t(K.contestFirstCounts),
+        ),
       if (widget.levelGated &&
           !LevelProgressStore.passes(correctCount, totalQuestions))
         _HeroNotice(

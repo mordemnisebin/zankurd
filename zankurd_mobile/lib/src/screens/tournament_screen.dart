@@ -1818,7 +1818,9 @@ class _RoundProgressStrip extends StatelessWidget {
     final mine = rounds[currentRound].matches.where(
       (m) => m.playerOneId == userId || m.playerTwoId == userId,
     );
-    final won = mine.any((m) => m.status == 'completed' && m.winnerId == userId);
+    final won = mine.any(
+      (m) => m.status == 'completed' && m.winnerId == userId,
+    );
     return won && currentRound + 1 < roundNames.length
         ? currentRound + 1
         : currentRound;

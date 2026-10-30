@@ -1890,7 +1890,13 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                   ),
                   child: SahneProgressBar(
                     value: (_currentSlideIndex + 1) / slides.length,
-                    trailing: '${_currentSlideIndex + 1}/${slides.length}',
+                    // Kurul 3 D29 (Astra + Sol): çıplak "5/5" dersin bittiği
+                    // sanılıyordu (ayrıca "Dersi tamamla" bekleniyor). Neyi
+                    // saydığı yazar: slayt kartı.
+                    trailing: context.t(K.lessonSlideCounter, {
+                      'n': '${_currentSlideIndex + 1}',
+                      'total': '${slides.length}',
+                    }),
                     semanticLabel: ku
                         ? widget.lesson.titleKu
                         : (widget.lesson.titleTr ?? widget.lesson.titleKu),

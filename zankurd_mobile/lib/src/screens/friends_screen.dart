@@ -502,7 +502,10 @@ class _FriendsScreenState extends State<FriendsScreen>
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _buildSearchSection(ku),
-                if (kReferralRewardsEnabled) ...[
+                // Kurul 3 D27 (Astra + Sol): arkadaşı olan oyuncuda büyük
+                // davet kartı listenin ÜSTÜNDE baskındı, "Meydan oku" altta
+                // küçük kalıyordu. Arkadaş varsa kart listenin altına iner.
+                if (kReferralRewardsEnabled && _friendIds.isEmpty) ...[
                   const SizedBox(height: SahneSpace.x4),
                   _buildInviteSection(ku),
                 ],
@@ -510,6 +513,10 @@ class _FriendsScreenState extends State<FriendsScreen>
                 _buildSentSection(),
                 SahneSectionHeader(title: context.t(K.friendsScreen)),
                 _buildFriendsSection(ku),
+                if (kReferralRewardsEnabled && _friendIds.isNotEmpty) ...[
+                  const SizedBox(height: SahneSpace.x4),
+                  _buildInviteSection(ku),
+                ],
               ],
             ),
           ),
@@ -1305,22 +1312,25 @@ class _FriendRow extends StatelessWidget {
               fallbackColorHex: friend.friendAvatarColor,
               displayName: friend.friendName,
             ),
-            PositionedDirectional(
-              end: 0,
-              bottom: 0,
-              child: DecoratedBox(
-                decoration: ShapeDecoration(
-                  color: online ? t.okTx : t.s1,
-                  shape: CircleBorder(
-                    side: BorderSide(
-                      color: online ? t.s1 : t.tx3,
-                      width: SahneRing.r2,
+            // Kurul 3 D26 (Astra + Sol): boş (içi dolmamış) halka hiçbir
+            // şey anlatmıyordu — sunucuda gerçek çevrimiçi durumu yok, satır
+            // son etkinliği zaten yazar. Nokta yalnız son 5 dakikada etkin
+            // olan arkadaşta (dolu, yeşil) çizilir.
+            if (online)
+              PositionedDirectional(
+                end: 0,
+                bottom: 0,
+                child: DecoratedBox(
+                  key: const ValueKey('friend-online-dot'),
+                  decoration: ShapeDecoration(
+                    color: t.okTx,
+                    shape: CircleBorder(
+                      side: BorderSide(color: t.s1, width: SahneRing.r2),
                     ),
                   ),
+                  child: const SizedBox.square(dimension: 12),
                 ),
-                child: const SizedBox.square(dimension: 12),
               ),
-            ),
           ],
         ),
       ),

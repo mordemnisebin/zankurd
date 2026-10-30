@@ -1383,6 +1383,19 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SahneSectionHeader(title: context.t(K.matchByCategory)),
+                // Kurul 3 D24 (Astra + Sol): karta dokunmanın eşleşme
+                // başlattığı ve alttaki düğmenin konu seçmediği belli
+                // değildi.
+                Padding(
+                  padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                  child: Text(
+                    context.t(K.matchByCategoryHint),
+                    key: const ValueKey('matchmaking-category-hint'),
+                    style: SahneType.caption.copyWith(
+                      color: SahneTokens.of(context).tx2,
+                    ),
+                  ),
+                ),
                 categories,
                 // Son karo alt perdedeki düğmenin ARKASINDA kalmasın (Astra:
                 // "son kategori düğmenin arkasına giriyor"): kaydırma sonunda

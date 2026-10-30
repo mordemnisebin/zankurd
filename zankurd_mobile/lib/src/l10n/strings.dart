@@ -649,6 +649,10 @@ class Tr {
       'tr': 'İsteğe bağlı alıştırma',
     },
     K.lessonCardCounter: {'ku': 'Qert {n}/{total}', 'tr': 'Kart {n}/{total}'},
+    K.lessonSlideCounter: {
+      'ku': 'Slayt {n}/{total}',
+      'tr': 'Slayt {n}/{total}',
+    },
     K.slowShort: {'ku': 'Hêdî', 'tr': 'Yavaş'},
     K.lessonLetterTapHint: {
       'ku': 'Li tîpekê bitikîne: peyva mînak bibîne û lê guhdarî bike.',
@@ -1470,6 +1474,7 @@ class Tr {
       'tr': 'Cümleyi oluşturmak için kelimeleri seç',
     },
     K.kurdugunCumle: {'ku': 'Hevoka te', 'tr': 'Kurduğun cümle'},
+    K.wordPoolLabel: {'ku': 'Peyv', 'tr': 'Kelimeler'},
     K.cumledenCikar: {'ku': 'Ji hevokê derxe', 'tr': 'Cümleden çıkar'},
     K.cumleyeEkle: {'ku': 'Li hevokê zêde bike', 'tr': 'Cümleye ekle'},
     K.kontrolEt: {'ku': 'Kontrol bike', 'tr': 'Kontrol et'},
@@ -1901,6 +1906,7 @@ class Tr {
       'ku': 'Dabeşbûna bersivan a texmînî nîşan dide',
       'tr': 'Tahmini şık dağılımını gösterir',
     },
+    K.wildcardSecondTry: {'ku': 'Ceribandina duyem', 'tr': 'İkinci deneme'},
     K.wildcardDoubleHint: {
       'ku': 'Heke bersiva yekem şaş be, derfeteke din heye.',
       'tr': 'İlk deneme yanlışsa bir hak daha',
@@ -2016,9 +2022,15 @@ class Tr {
     // Y4 (2026-10-29 tur 6): eşleşme ekranının tam genişlik birincil düğmesi.
     // KU, onaylı iki parçadan kurulu ("Lihevanîna rasthatî" + "Hevrikekî
     // bibîne"); jüri bekliyor.
+    // Kurul 3 D24: düğmenin kapsamı (bütün konular) yazar.
     K.randomFindOpponent: {
-      'ku': 'Hevrikekî rasthatî bibîne',
-      'tr': 'Rastgele rakip bul',
+      'ku': 'Ji hemû mijaran hevrikekî bibîne',
+      'tr': 'Tüm konulardan rakip bul',
+    },
+    K.matchByCategoryHint: {
+      'ku':
+          'Ji bo pêşbirkê li mijarekê bitikîne, an jî ji hemû mijaran hevrikekî bibîne.',
+      'tr': 'Bir konuya dokun ya da tüm konulardan rakip bul.',
     },
     K.matchByCategory: {
       'ku': 'Li gorî mijarê li hev bîne',
@@ -2200,7 +2212,8 @@ class Tr {
       'tr': 'Odaya katılamadın. Tekrar dene.',
     },
     // ── Kalabalık oda (2–50 kişi, 2026-10-16) ───────────────────────
-    K.roomCapacityLabel: {'ku': 'Hejmara lîstikvanan', 'tr': 'Oyuncu sayısı'},
+    // Kurul 3 D25 (Astra + Sol): kapasite mi kesin sayı mı belirsizdi.
+    K.roomCapacityLabel: {'ku': 'Herî zêde lîstikvan', 'tr': 'En çok oyuncu'},
     K.roomCapacityOption: {'ku': '{n} kes', 'tr': '{n} kişi'},
     K.roomCapacityHint: {
       'ku': 'Mêvandar bi herî kêm 2 lîstikvanan dikare dest pê bike.',
@@ -2554,7 +2567,11 @@ class Tr {
     // Kurul 3. tur 2026-10-20: kilitli dersleri tek satırda toplayan
     // düğme. Kurmancî metin jüri incelemesi bekliyor (NEEDS_JURY).
     // 2026-10-28 tur 3 T13 (KU jüri onaylı: Gemini 3.8 Flash + GPT-6 Sol): tüm dersler satırı ve ders sayacı.
-    K.allLessonsMore: {'ku': 'Hemû ders (+{n})', 'tr': 'Tüm dersler (+{n})'},
+    // Kurul 3 D28 (Astra + Sol): "(+15)" neyi saydığını söylemiyordu.
+    K.allLessonsMore: {
+      'ku': 'Hemû ders · {n} dersên din',
+      'tr': 'Tüm dersler · {n} ders daha',
+    },
     K.lessonCountProgress: {
       'ku': '{done}/{total} ders',
       'tr': '{done}/{total} ders',
@@ -4137,7 +4154,8 @@ class Tr {
     // görüneceği yazar.
     K.challengeFriendWaitBody: {
       'ku': 'Dor li {name} ye. Gava bilîze, tu encamê li beşa Pêşbirkê dibînî.',
-      'tr': 'Sıra {name} adlı oyuncuda. Oynayınca sonucu Yarış sekmesinde görürsün.',
+      'tr':
+          'Sıra {name} adlı oyuncuda. Oynayınca sonucu Yarış sekmesinde görürsün.',
     },
     // Kurul C20 (Astra + Sol): "Yeni düello" rozeti yeni özellik duyurusu
     // gibi okunuyordu; eylem olduğu söylenir.
@@ -4755,6 +4773,7 @@ class K {
   static const lessonFinishHint = 'learn.lesson.finishHint';
   static const finishLesson = 'learn.lesson.finishLesson';
   static const lessonOptionalPractice = 'learn.lesson.optionalPractice';
+  static const lessonSlideCounter = 'learn.lesson.slideCounter';
   static const lessonCardCounter = 'learn.lesson.cardCounter';
   static const slowShort = 'audio.slowShort';
   static const lessonLetterTapHint = 'learn.lesson.letterTapHint';
@@ -5088,6 +5107,7 @@ class K {
   static const rakipBekleniyor = 'screen.rakipBekleniyor';
   static const cumleyiOlusturmakIcinKelimeleri =
       'screen.cumleyiOlusturmakIcinKelimeleri';
+  static const wordPoolLabel = 'wordOrdering.poolLabel';
   static const kurdugunCumle = 'screen.kurdugunCumle';
   static const cumledenCikar = 'screen.cumledenCikar';
   static const cumleyeEkle = 'screen.cumleyeEkle';
@@ -5236,6 +5256,7 @@ class K {
   static const finishQuizHint = 'quiz.finishQuizHint';
   static const wildcardFiftyHint = 'quiz.wildcard.fifty';
   static const wildcardAudienceHint = 'quiz.wildcard.audience';
+  static const wildcardSecondTry = 'wildcard.secondTry';
   static const wildcardDoubleHint = 'quiz.wildcard.double';
   static const wildcardChangeHint = 'quiz.wildcard.change';
   static const wildcardActive = 'quiz.wildcard.active';
@@ -5298,6 +5319,7 @@ class K {
   static const duel1v1 = 'match.duel1v1';
   static const randomMatch = 'match.random';
   static const randomFindOpponent = 'match.randomFind';
+  static const matchByCategoryHint = 'matchmaking.byCategoryHint';
   static const matchByCategory = 'match.byCategory';
   static const categoriesNotFound = 'match.categoriesNotFound';
   static const categoryPrefix = 'match.categoryPrefix';

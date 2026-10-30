@@ -1832,20 +1832,38 @@ class _CoinBalanceLine extends StatelessWidget {
     final t = SahneTokens.of(context);
     final dbl = doubleAnswerHint;
     if (dbl != null) {
+      // Kurul 3 D20 (Astra + Sol): çift cevap ipucu bakiye satırının YERİNE
+      // geçiyordu; jokerlerin fiyatları görünürken bakiye kayboluyordu. Aynı
+      // yuvada solda bakiye, sağda ipucu (alt perde uzamaz).
       return Semantics(
         liveRegion: true,
-        label: dbl,
+        label: '$balance ${context.t(K.coinWord)}. $dbl',
         excludeSemantics: true,
-        child: Center(
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              dbl,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              style: SahneType.captionStrong.copyWith(color: t.goldTx),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SahneGlyph(SahneGlyphKind.coin, size: 16),
+            const SizedBox(width: SahneSpace.x1),
+            Text(
+              groupThousands(balance),
+              style: SahneType.captionStrong.copyWith(
+                color: t.goldTx,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
             ),
-          ),
+            const SizedBox(width: SahneSpace.x2),
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  '· $dbl',
+                  key: const ValueKey('quiz-double-answer-hint'),
+                  maxLines: 1,
+                  style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                ),
+              ),
+            ),
+          ],
         ),
       );
     }
