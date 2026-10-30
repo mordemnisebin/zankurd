@@ -1,5 +1,5 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
-// 2026-07-23 canlı UX denetimi M18: misafir hesabını Google ile bağlama.
+// 2026-07-23 canlı UX denetimi M18: misafir hesabını Google ile devam etma.
 // signInWithGoogle() anonim oturumu değiştiriyordu (ilerleme kaybı riski);
 // linkGoogleAccount() Supabase'in linkIdentity PKCE akışını kullanarak
 // mevcut anonim kimliği genişletir. Gerçek OAuth akışı (tarayıcı açılışı,
@@ -115,21 +115,22 @@ void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   group('GuestGoogleLink — buton görünürlüğü', () {
-    testWidgets('misafir yükseltme dialog\'unda "Google ile bağla" görünür', (
-      tester,
-    ) async {
-      final guestAuth = _GuestAuthProviderWithGoogleLink();
-      await tester.pumpWidget(
-        _wrapWithProviders(
-          ProfileScreen(repository: MockZanKurdRepository()),
-          guestAuth,
-        ),
-      );
-      await tester.pumpAndSettle();
-      await _openGuestUpgradeDialog(tester);
+    testWidgets(
+      'misafir yükseltme dialog\'unda "Google ile devam et" görünür',
+      (tester) async {
+        final guestAuth = _GuestAuthProviderWithGoogleLink();
+        await tester.pumpWidget(
+          _wrapWithProviders(
+            ProfileScreen(repository: MockZanKurdRepository()),
+            guestAuth,
+          ),
+        );
+        await tester.pumpAndSettle();
+        await _openGuestUpgradeDialog(tester);
 
-      expect(find.text('Google ile bağla'), findsOneWidget);
-    });
+        expect(find.text('Google ile devam et'), findsOneWidget);
+      },
+    );
 
     // Kusur: iOS'ta misafirin tek kalıcı yolu e-postaydı. `linkAppleAccount`
     // yazılmıştı ama hiçbir çağrı yeri yoktu; Google bağlama bu platformda
@@ -151,7 +152,7 @@ void main() {
         await _openGuestUpgradeDialog(tester);
         debugDefaultTargetPlatformOverride = null;
 
-        expect(find.text('Google ile bağla'), findsOneWidget);
+        expect(find.text('Google ile devam et'), findsOneWidget);
         expect(find.text('Apple ile devam et'), findsOneWidget);
         expect(find.text('E-posta'), findsWidgets);
         final apple = find.byKey(const ValueKey('guest-upgrade-apple'));
@@ -186,6 +187,7 @@ void main() {
       debugDefaultTargetPlatformOverride = null;
 
       expect(find.text('Bi Apple re bidomîne'), findsOneWidget);
+      expect(find.text('Bi Google re bidomîne'), findsOneWidget);
     });
 
     testWidgets('Android yükseltmesinde Apple görünmez, Google görünür', (
@@ -203,7 +205,7 @@ void main() {
       debugDefaultTargetPlatformOverride = null;
 
       expect(find.text('Apple ile devam et'), findsNothing);
-      expect(find.text('Google ile bağla'), findsOneWidget);
+      expect(find.text('Google ile devam et'), findsOneWidget);
     });
 
     testWidgets('kalıcı kullanıcıda misafir yükseltme dialog\'u hiç açılamaz', (
@@ -218,16 +220,16 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // "Hesabını kaydet" satırı hiç yok, dolayısıyla "Google ile bağla"
+      // "Hesabını kaydet" satırı hiç yok, dolayısıyla "Google ile devam et"
       // seçeneği de kalıcı kullanıcıya asla gösterilmez.
       expect(find.text('Hesabını kaydet'), findsNothing);
-      expect(find.text('Google ile bağla'), findsNothing);
+      expect(find.text('Google ile devam et'), findsNothing);
     });
   });
 
   group('GuestGoogleLink — başarı akışı', () {
     testWidgets(
-      '"Google ile bağla" dokunulunca linkGoogleAccount() çağrılır ve dialog kapanır',
+      '"Google ile devam et" dokunulunca linkGoogleAccount() çağrılır ve dialog kapanır',
       (tester) async {
         final guestAuth = _GuestAuthProviderWithGoogleLink();
         await tester.pumpWidget(
@@ -239,7 +241,7 @@ void main() {
         await tester.pumpAndSettle();
         await _openGuestUpgradeDialog(tester);
 
-        await tester.tap(find.text('Google ile bağla'));
+        await tester.tap(find.text('Google ile devam et'));
         await tester.pumpAndSettle();
 
         expect(guestAuth.googleLinkCalled, isTrue);
@@ -269,7 +271,7 @@ void main() {
       await tester.pumpAndSettle();
       await _openGuestUpgradeDialog(tester);
 
-      await tester.tap(find.text('Google ile bağla'));
+      await tester.tap(find.text('Google ile devam et'));
       await tester.pumpAndSettle();
 
       expect(guestAuth.googleLinkCalled, isTrue);
@@ -302,7 +304,7 @@ void main() {
       await tester.pumpAndSettle();
       await _openGuestUpgradeDialog(tester, isKu: true);
 
-      await tester.tap(find.text('Bi Google girêde'));
+      await tester.tap(find.text('Bi Google re bidomîne'));
       await tester.pumpAndSettle();
 
       expect(guestAuth.googleLinkCalled, isTrue);

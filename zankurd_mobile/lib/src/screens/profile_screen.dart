@@ -984,7 +984,7 @@ class _SyncStatusChip extends StatelessWidget {
                     ? (Tr.forKu(K.senkronizeEdiliyor, isKu))
                     : (hasFailed
                           ? Tr.forKu(K.pSenkronizeEdilemedi, isKu, {
-                              'p0': '$failed',
+                              'p0': groupThousands(failed),
                             })
                           : (deviceOnly
                                 ? Tr.forKu(K.deviceOnlyProgress, isKu)
@@ -993,7 +993,7 @@ class _SyncStatusChip extends StatelessWidget {
                                 : (isSynced
                                       ? (Tr.forKu(K.bulutlaSenkronize, isKu))
                                       : Tr.forKu(K.pendingOnDeviceP, isKu, {
-                                          'p0': '$pending',
+                                          'p0': groupThousands(pending),
                                         }))));
 
                 final chip = DecoratedBox(

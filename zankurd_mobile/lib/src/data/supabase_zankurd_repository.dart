@@ -1872,11 +1872,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .stream(primaryKey: ['room_id', 'player_id'])
         .eq('room_id', roomId)
         .asyncMap((rawRows) async {
-          // Kurul C12 (Sol + Opus turu, 2026-10-29): gerçek zamanlı akış
-          // satırları belirli bir sırayla vermez; aynı lobi cihazdan cihaza
-          // farklı sırada çiziliyordu. İlk yükleme gibi katılma zamanına
-          // (eşitlikte oyuncu kimliğine) göre sıralanır.
-          final rows = [...rawRows]..sort(compareRoomPlayerRows);
+          // Her INSERT/UPDATE snapshotı yeniden sıralanır. Eksik katılma
+          // zamanı cihazdaki olay sırasıyla tahmin edilmez; satır okunur.
+          final rows = await resolveRoomPlayerRows(
+            rawRows,
+            fetchRow: (playerId) => client
+                .from('room_players')
+                .select()
+                .eq('room_id', roomId)
+                .eq('player_id', playerId)
+                .maybeSingle(),
+          );
           final List<Player> players = [];
           final List<String> missingProfileIds = [];
 
@@ -1907,6 +1913,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             players.add(
               Player(
                 id: playerId,
+                joinedAt: DateTime.parse(row['joined_at'] as String),
                 name: name,
                 score: row['score'] as int? ?? 0,
                 streak: row['streak'] as int? ?? 0,
@@ -2996,7 +3003,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final rows = await client
         .from('room_players')
         .select(
-          'player_id, score, streak, is_ready, left_at, '
+          'player_id, joined_at, score, streak, is_ready, left_at, '
           'profiles(display_name, player_tag, avatar_icon, avatar_color, '
           'avatar_url, avatar_frame, showcase_title)',
         )
@@ -3038,6 +3045,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final ready = row['is_ready'] as bool? ?? false;
       return Player(
         id: playerId,
+        joinedAt: DateTime.parse(row['joined_at'] as String),
         name: name,
         score: row['score'] as int? ?? 0,
         streak: row['streak'] as int? ?? 0,
@@ -4799,18 +4807,36 @@ List<TournamentStandings> tournamentStandingsFromBracket(
   );
 }
 
-/// Oda oyuncu satırlarının kararlı sırası: `joined_at` (ISO metin, yoksa en
-/// sona), eşitlikte `player_id`. Lobi her cihazda aynı sırada çizilir.
-int compareRoomPlayerRows(Map<String, dynamic> a, Map<String, dynamic> b) {
-  final aj = DateTime.tryParse(a['joined_at']?.toString() ?? '');
-  final bj = DateTime.tryParse(b['joined_at']?.toString() ?? '');
-  if (aj != null && bj != null) {
-    final byJoin = aj.compareTo(bj);
-    if (byJoin != 0) return byJoin;
-  } else if (aj != null || bj != null) {
-    return aj == null ? 1 : -1;
+/// Canlı snapshot eksik katılma anahtarı taşıyorsa yetkili satırı tamamlar.
+/// Silinmiş satır gösterilmez; okuma hatası veya bozuk zaman sessizce
+/// cihazın geliş sırasına düşmez, akışın mevcut hata yoluna taşınır.
+Future<List<Map<String, dynamic>>> resolveRoomPlayerRows(
+  List<Map<String, dynamic>> rawRows, {
+  required Future<Map<String, dynamic>?> Function(String playerId) fetchRow,
+}) async {
+  final rows = <Map<String, dynamic>>[];
+  for (final raw in rawRows) {
+    var row = raw;
+    if (DateTime.tryParse(row['joined_at']?.toString() ?? '') == null) {
+      final authoritative = await fetchRow(row['player_id'] as String);
+      if (authoritative == null) continue;
+      if (authoritative['player_id'] != row['player_id'] ||
+          DateTime.tryParse(authoritative['joined_at']?.toString() ?? '') ==
+              null) {
+        throw StateError('Room player has no authoritative join key');
+      }
+      row = authoritative;
+    }
+    rows.add(Map<String, dynamic>.from(row));
   }
-  return (a['player_id']?.toString() ?? '').compareTo(
-    b['player_id']?.toString() ?? '',
-  );
+  return rows..sort(compareRoomPlayerRows);
 }
+
+/// İlk yükleme ve her canlı snapshot için aynı sunucu sıralama anahtarı.
+int compareRoomPlayerRows(Map<String, dynamic> a, Map<String, dynamic> b) =>
+    compareRoomPlayerOrder(
+      DateTime.tryParse(a['joined_at']?.toString() ?? ''),
+      a['player_id']?.toString(),
+      DateTime.tryParse(b['joined_at']?.toString() ?? ''),
+      b['player_id']?.toString(),
+    );

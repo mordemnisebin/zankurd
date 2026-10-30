@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../data/story_progress_store.dart';
@@ -141,7 +143,7 @@ class _StoryCatalogState extends State<StoryCatalog> {
                 SahneListRow.plain(
                   key: const ValueKey('story-catalog-all'),
                   title: Tr.forKu(K.storyCatalogAll, widget.isKu, {
-                    'count': '${everydayStories.length}',
+                    'count': groupThousands(everydayStories.length),
                   }),
                   chevron: true,
                   onTap: () async {

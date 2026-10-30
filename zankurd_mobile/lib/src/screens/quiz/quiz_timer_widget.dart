@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
@@ -66,7 +68,8 @@ class QuizTimerWidget extends StatelessWidget {
           onBand: onBand,
           pending: stopped,
           semanticLabel:
-              pendingLabel ?? context.t(K.timerSecondsLeft, {'n': '$seconds'}),
+              pendingLabel ??
+              context.t(K.timerSecondsLeft, {'n': groupThousands(seconds)}),
         );
       },
     );

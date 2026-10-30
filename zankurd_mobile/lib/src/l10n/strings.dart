@@ -305,7 +305,10 @@ class Tr {
     },
     // T4 KU taslakları: bağımsız dil incelemesi bekliyor; mevcut dizeler korunur.
     K.continueApple: {'ku': 'Bi Apple re bidomîne', 'tr': 'Apple ile devam et'},
-    K.continueGoogle: {'ku': 'Bi Google bidomîne', 'tr': 'Google ile devam et'},
+    K.continueGoogle: {
+      'ku': 'Bi Google re bidomîne',
+      'tr': 'Google ile devam et',
+    },
     K.signInEmail: {'ku': 'Bi e-nameyê têkeve', 'tr': 'E-posta ile giriş'},
     K.signUpApple: {'ku': 'Bi Apple tomar bibe', 'tr': 'Apple ile kaydol'},
     K.signUpGoogle: {'ku': 'Bi Google tomar bibe', 'tr': 'Google ile kaydol'},
@@ -2960,7 +2963,7 @@ class Tr {
       'ku': 'Şîfre divê herî kêm 6 karakter be',
       'tr': 'Parola en az 6 karakter olmalı',
     },
-    K.linkGoogle: {'ku': 'Bi Google girêde', 'tr': 'Google ile bağla'},
+    K.linkGoogle: {'ku': 'Bi Google re bidomîne', 'tr': 'Google ile devam et'},
     K.authErrNetwork: {
       'ku':
           'Girêdan çênebû. Girêdana înternetê kontrol bike û dîsa biceribîne.',

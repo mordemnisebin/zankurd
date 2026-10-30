@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -996,7 +998,7 @@ class SahneResultStats extends StatelessWidget {
           final widths = [
             for (final stat in visible)
               18 +
-                  width('${stat.value}', SahneType.captionStrong) +
+                  width(groupThousands(stat.value), SahneType.captionStrong) +
                   4 +
                   width(stat.label, SahneType.captionStrong),
           ];
@@ -1109,7 +1111,7 @@ class _StatTile extends StatelessWidget {
     if (stat.tint != null) {
       return Semantics(
         container: true,
-        label: '${stat.value} ${stat.label}',
+        label: '${groupThousands(stat.value)} ${stat.label}',
         excludeSemantics: true,
         child: DecoratedBox(
           decoration: ShapeDecoration(color: stat.tint, shape: SahneShape.m),
@@ -1141,7 +1143,7 @@ class _StatTile extends StatelessWidget {
                         spacing: SahneSpace.x1,
                         children: [
                           Text(
-                            '${stat.value}',
+                            groupThousands(stat.value),
                             style:
                                 (bare
                                         ? SahneType.captionStrong
@@ -1171,7 +1173,7 @@ class _StatTile extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            '${stat.value}',
+                            groupThousands(stat.value),
                             style: SahneType.headline.copyWith(
                               color: SahneVivid.onFill,
                               height: 1.1,
@@ -1198,7 +1200,7 @@ class _StatTile extends StatelessWidget {
     }
     return Semantics(
       container: true,
-      label: '${stat.value} ${stat.label}',
+      label: '${groupThousands(stat.value)} ${stat.label}',
       excludeSemantics: true,
       child: ConstrainedBox(
         // a11y-tap-target: noninteractive — sayım; salt görsel, dokunma
@@ -1216,7 +1218,7 @@ class _StatTile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    '${stat.value}',
+                    groupThousands(stat.value),
                     style: SahneType.bodyStrong.copyWith(
                       color: t.tx,
                       fontFeatures: const [FontFeature.tabularFigures()],
@@ -1303,7 +1305,7 @@ class SahneResultRewards extends StatelessWidget {
               outline: t.gold,
               foreground: t.goldTx,
               leading: SahneGlyph(SahneGlyphKind.coin, color: t.goldTx),
-              label: coinLabel ?? '+$coins',
+              label: coinLabel ?? '+${groupThousands(coins)}',
               semanticLabel: coinSemanticLabel,
             ),
           if (xp > 0 || showZeroXp)
@@ -1312,7 +1314,7 @@ class SahneResultRewards extends StatelessWidget {
               outline: t.gold,
               foreground: t.goldTx,
               leading: SahneGlyph(SahneGlyphKind.bolt, color: t.goldTx),
-              label: xpLabel ?? '+$xp XP',
+              label: xpLabel ?? '+${groupThousands(xp)} XP',
             ),
         ],
       ),
@@ -1400,7 +1402,7 @@ class SahneResultLevelProgress extends StatelessWidget {
           children: [
             Text(levelLabel, style: SahneType.bodyStrong.copyWith(color: t.tx)),
             Text(
-              '$xpInLevel / $xpNeeded XP',
+              '${groupThousands(xpInLevel)} / ${groupThousands(xpNeeded)} XP',
               style: SahneType.caption.copyWith(
                 color: t.tx2,
                 fontFeatures: const [FontFeature.tabularFigures()],

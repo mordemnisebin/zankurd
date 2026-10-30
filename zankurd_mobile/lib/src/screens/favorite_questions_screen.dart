@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../config/category_visuals.dart';
@@ -88,7 +90,9 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
             final count = snapshot.data?.length ?? 0;
             return Text(
               count > 0
-                  ? context.t(K.questionsReplay, {'count': '$count'})
+                  ? context.t(K.questionsReplay, {
+                      'count': groupThousands(count),
+                    })
                   : context.t(K.yourFavorites),
             );
           },

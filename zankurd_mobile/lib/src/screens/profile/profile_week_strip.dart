@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../data/streak_store.dart';
@@ -87,7 +89,7 @@ class _ProfileWeekStripState extends State<ProfileWeekStrip> {
                     ),
                   ),
                   Text(
-                    '$activeCount/7',
+                    '${groupThousands(activeCount)}/7',
                     key: const ValueKey('profile-week-count'),
                     style: SahneType.captionStrong.copyWith(
                       color: t.tx2,

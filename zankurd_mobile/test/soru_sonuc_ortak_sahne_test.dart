@@ -342,6 +342,11 @@ void main() {
       300,
       scrollable: find.byType(Scrollable).first,
     );
+    // Önbellekte kurulan başlık kısmen alt perdenin arkasında olabilir.
+    // Gerçek kullanıcının dokunabildiği konuma kaydır ve merkezini doğrula.
+    await Scrollable.ensureVisible(tester.element(toggle), alignment: 0.5);
+    await tester.pumpAndSettle();
+    expect(toggle.hitTestable(), findsOneWidget);
     await tester.tap(toggle);
     await tester.pump();
     expect(find.byType(ResultExplanationEntry), findsWidgets);

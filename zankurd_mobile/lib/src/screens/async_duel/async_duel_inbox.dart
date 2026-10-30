@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -383,7 +385,8 @@ class _AsyncDuelTurnSectionState extends State<AsyncDuelTurnSection> {
               alignment: AlignmentDirectional.centerEnd,
               child: SahneButton.text(
                 key: const ValueKey('async-duel-turn-see-all'),
-                label: '${context.t(K.asyncDuelSeeAll)} (${_items.length})',
+                label:
+                    '${context.t(K.asyncDuelSeeAll)} (${groupThousands(_items.length)})',
                 arrow: false,
                 onPressed: _openSeeAll,
               ),
@@ -431,7 +434,7 @@ class _UnreadCountBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SahneBadge(label: '$count', tone: SahneBadgeTone.race);
+    return SahneBadge(label: groupThousands(count), tone: SahneBadgeTone.race);
   }
 }
 
@@ -492,7 +495,7 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
       // (Paylaş'lı) açar.
       title = context.t(K.challengeLinkRow);
       subtitle = myCorrect != null
-          ? '${context.t(K.you)} $myCorrect/${view.total}'
+          ? '${context.t(K.you)} ${groupThousands(myCorrect)}/${groupThousands(view.total)}'
           : null;
     } else if (summary.canResume) {
       // Kurul C30 (3/3): "Yarım kaldı" satırında hangi oyunun yarım kaldığı
@@ -523,7 +526,7 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
       subtitle = knownOpponent != null
           ? statusLabel
           : (myCorrect != null
-                ? '${context.t(K.you)} $myCorrect/${view.total}'
+                ? '${context.t(K.you)} ${groupThousands(myCorrect)}/${groupThousands(view.total)}'
                 : null);
     }
     // Rozet yalnız TAMAMLANMIŞ ve henüz görülmemiş satırda anlamlıdır —

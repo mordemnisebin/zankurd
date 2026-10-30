@@ -209,7 +209,7 @@ const curatedQuestionBank = <QuizQuestion>[
   ),
   QuizQuestion(
     id: 'curated_movement_0006',
-    category: 'Paradigma',
+    category: 'Ziman',
     prompt:
         'Di vê hevokê de peyva "berxwedan" çi dide zanîn? "Berxwedana wan dom kir."',
     answers: [

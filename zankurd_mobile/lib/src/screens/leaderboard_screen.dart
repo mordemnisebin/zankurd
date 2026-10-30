@@ -929,7 +929,9 @@ class _LeagueBanner extends StatelessWidget {
                   ),
                   Text(
                     myRank != null
-                        ? (Tr.forKu(K.buHaftakiSiranP, isKu, {'p0': '$myRank'}))
+                        ? (Tr.forKu(K.buHaftakiSiranP, isKu, {
+                            'p0': groupThousands(myRank!),
+                          }))
                         : (Tr.forKu(K.buHaftaYarisLige, isKu)),
                     maxLines: accessibilityText ? 2 : 1,
                     overflow: TextOverflow.ellipsis,
@@ -979,7 +981,7 @@ class _HeaderActions extends StatelessWidget {
           tooltip: context.t(K.friendsScreen),
           semanticLabel: pendingRequestCount > 0
               ? context.t(K.friendRequestsPendingA11y, {
-                  'count': '$pendingRequestCount',
+                  'count': groupThousands(pendingRequestCount),
                 })
               : context.t(K.friendsScreen),
           onPressed: onOpenFriends,
@@ -1033,7 +1035,7 @@ class _HeaderAction extends StatelessWidget {
           child: IgnorePointer(
             child: SahneBadge(
               key: const ValueKey('leaderboard-friends-badge'),
-              label: badgeCount > 9 ? '9+' : '$badgeCount',
+              label: badgeCount > 9 ? '9+' : groupThousands(badgeCount),
               tone: SahneBadgeTone.race,
             ),
           ),
@@ -1180,12 +1182,12 @@ class _RankRow extends StatelessWidget {
     // düğümde birleştirilir (2026-07-25 denetimi).
     final label = highlight
         ? (Tr.forKu(K.seninSiranPP, isKu, {
-            'p0': '${entry.rank}',
+            'p0': groupThousands(entry.rank),
             'p1': _name,
             'p2': groupThousands(entry.totalScore),
           }))
         : (Tr.forKu(K.pPPPuan, isKu, {
-            'p0': '${entry.rank}',
+            'p0': groupThousands(entry.rank),
             'p1': _name,
             'p2': groupThousands(entry.totalScore),
           }));
@@ -1298,7 +1300,7 @@ class _RankRow extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    '${entry.rank}',
+                    groupThousands(entry.rank),
                     maxLines: 1,
                     style: SahneType.bodyStrong.copyWith(
                       color: _rankColor(t),
@@ -1417,7 +1419,7 @@ class _FriendRankRow extends StatelessWidget {
                 dimension: 36,
                 child: Center(
                   child: Text(
-                    '${friend.level}',
+                    groupThousands(friend.level),
                     style: SahneType.captionStrong.copyWith(color: t.tx2),
                   ),
                 ),

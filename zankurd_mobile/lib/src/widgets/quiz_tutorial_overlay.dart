@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -148,7 +150,7 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
                   icon: AppIcons.stopwatch,
                   title: context.t(K.quizTutorialTimerTitle),
                   description: context.t(K.quizTutorialTimerBody, {
-                    'seconds': '${widget.timerSeconds}',
+                    'seconds': groupThousands(widget.timerSeconds),
                   }),
                 )
               else

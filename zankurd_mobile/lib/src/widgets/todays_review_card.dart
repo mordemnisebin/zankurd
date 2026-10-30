@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../data/mistake_store.dart';
@@ -198,14 +200,14 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
     final plan = _plan!;
     if (plan.dueWords > 0 && plan.dueQuestions > 0) {
       return Tr.forKu(K.tekrarBreakdown, ku, {
-        'words': '${plan.dueWords}',
-        'questions': '${plan.dueQuestions}',
+        'words': groupThousands(plan.dueWords),
+        'questions': groupThousands(plan.dueQuestions),
       });
     }
     return plan.dueWords > 0
-        ? Tr.forKu(K.wordsCount, ku, {'count': '${plan.dueWords}'})
+        ? Tr.forKu(K.wordsCount, ku, {'count': groupThousands(plan.dueWords)})
         : Tr.forKu(K.tekrarQuestionsOnly, ku, {
-            'count': '${plan.dueQuestions}',
+            'count': groupThousands(plan.dueQuestions),
           });
   }
 
@@ -226,7 +228,9 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
 
   Widget _buildReady(BuildContext context, bool ku) {
     final t = SahneTokens.of(context);
-    final line = Tr.forKu(K.tekrarTodayLine, ku, {'count': '$_readyCount'});
+    final line = Tr.forKu(K.tekrarTodayLine, ku, {
+      'count': groupThousands(_readyCount),
+    });
     final breakdown = _breakdown(ku);
     final semanticLabel = [
       line,

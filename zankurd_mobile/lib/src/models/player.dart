@@ -15,6 +15,7 @@ class Player {
 
   const Player({
     this.id,
+    this.joinedAt,
     required this.name,
     required this.score,
     required this.state,
@@ -30,6 +31,9 @@ class Player {
   });
 
   final String? id;
+
+  /// Oda sırası için sunucunun room_players.joined_at değeri.
+  final DateTime? joinedAt;
   final String name;
   final int score;
   final String state;
@@ -69,6 +73,7 @@ class Player {
     final a = profile.avatar;
     return Player(
       id: id,
+      joinedAt: joinedAt,
       name: profileName.isEmpty ? name : profileName,
       score: score,
       state: state,
@@ -88,6 +93,7 @@ class Player {
   /// kopyası (canlı skor akışı eski, kimliği eksik kaydı ezmesin diye).
   Player mergeIdentity(Player other) => Player(
     id: id ?? other.id,
+    joinedAt: joinedAt ?? other.joinedAt,
     name: name,
     score: score,
     state: state,
@@ -113,6 +119,7 @@ class Player {
   }) {
     return Player(
       id: id ?? this.id,
+      joinedAt: joinedAt,
       name: name ?? this.name,
       score: score ?? this.score,
       state: state ?? this.state,
@@ -162,4 +169,20 @@ bool playersShareIdentity(Player first, Player second) {
 String playerIdentityKey({required String? id, required String legacyName}) {
   final usableId = _usablePlayerId(id);
   return usableId == null ? 'name:$legacyName' : 'id:$usableId';
+}
+
+/// Sunucunun oda katılma anahtarı: zaman, eşitlikte kalıcı oyuncu kimliği.
+int compareRoomPlayerOrder(
+  DateTime? firstJoinedAt,
+  String? firstId,
+  DateTime? secondJoinedAt,
+  String? secondId,
+) {
+  if (firstJoinedAt != null && secondJoinedAt != null) {
+    final byJoin = firstJoinedAt.compareTo(secondJoinedAt);
+    if (byJoin != 0) return byJoin;
+  } else if (firstJoinedAt != null || secondJoinedAt != null) {
+    return firstJoinedAt == null ? 1 : -1;
+  }
+  return (firstId ?? '').compareTo(secondId ?? '');
 }

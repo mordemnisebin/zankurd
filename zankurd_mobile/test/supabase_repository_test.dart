@@ -179,6 +179,7 @@ class _RoomSnapshotHttpClient extends http.BaseClient {
       body = const [
         {
           'player_id': 'host-id',
+          'joined_at': '2026-10-30T12:00:00Z',
           'score': 90,
           'streak': 3,
           'is_ready': true,
@@ -193,6 +194,7 @@ class _RoomSnapshotHttpClient extends http.BaseClient {
         },
         {
           'player_id': 'guest-id',
+          'joined_at': '2026-10-30T12:00:01Z',
           'score': 40,
           'streak': 1,
           'is_ready': true,
@@ -244,6 +246,7 @@ class _RoomSessionHttpClient extends http.BaseClient {
     this.roomPlayersResponse = const [
       {
         'player_id': 'host-id',
+        'joined_at': '2026-10-30T12:00:00Z',
         'score': 250,
         'streak': 2,
         'is_ready': true,
@@ -251,6 +254,7 @@ class _RoomSessionHttpClient extends http.BaseClient {
       },
       {
         'player_id': 'guest-id',
+        'joined_at': '2026-10-30T12:00:01Z',
         'score': 100,
         'streak': 1,
         'is_ready': true,
@@ -1025,6 +1029,7 @@ void main() {
       roomPlayersResponse: const [
         {
           'player_id': 'host-id',
+          'joined_at': '2026-10-30T12:00:00Z',
           'score': 0,
           'streak': 0,
           'is_ready': true,

@@ -2,6 +2,21 @@
  "version": 1,
  "sources": [
   {
+   "id": "t7_visual_preview",
+   "description": "T7 offline visual regression fixture",
+   "path": "tool/t7_web_preview.dart",
+   "role": "test_fixture",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 1000,
+   "expectedRecordCount": null,
+   "notes": "Only the isolated web preview entrypoint; never imported by the application.",
+   "columns": {}
+  },
+  {
    "id": "offline_runtime_bank",
    "description": "Primary bundled runtime bank",
    "path": "assets/data/offline_questions.json",

@@ -164,7 +164,8 @@ void main() {
     );
     expect(
       find.descendant(
-        of: find.byKey(const ValueKey('room-player-tile-1')),
+        of: find.byKey(const ValueKey('room-player-tile-2')),
+        // joinedAt yoksa guest-user önce gelir; ev sahibi başa taşınmaz.
         matching: find.text('Oda sahibi'),
       ),
       findsOneWidget,

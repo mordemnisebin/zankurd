@@ -230,7 +230,7 @@ void main() {
     expect(ui, isNot(contains('awardProfileXPDelta(')));
     expect(result, isNot(contains('queueXP(')));
     expect(ui, isNot(contains('queueXP(')));
-    expect(toast, contains(r'+${mission.xpReward} XP'));
+    expect(toast, contains(r'+${groupThousands(mission.xpReward)} XP'));
     expect(toast, isNot(contains('mission.coinReward')));
   });
 

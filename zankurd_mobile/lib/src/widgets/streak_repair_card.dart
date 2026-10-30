@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../data/streak_store.dart';
@@ -93,7 +95,7 @@ class _StreakRepairCardState extends State<StreakRepairCard> {
     // Premium ücretsizliği abonelik sunucuda doğrulanınca (2.2); şimdilik
     // onarım herkes için StreakStore.repairCost jeton.
     final label = context.t(K.streakRepairAction, {
-      'cost': '${StreakStore.repairCost}',
+      'cost': groupThousands(StreakStore.repairCost),
     });
     return SahneSurfaceCard(
       child: Column(
@@ -121,7 +123,7 @@ class _StreakRepairCardState extends State<StreakRepairCard> {
           const SizedBox(height: SahneSpace.x2),
           Text(
             context.t(K.streakRepairBody, {
-              'days': '${widget.offer.lostStreak}',
+              'days': groupThousands(widget.offer.lostStreak),
             }),
             style: SahneType.body.copyWith(color: t.tx2),
           ),

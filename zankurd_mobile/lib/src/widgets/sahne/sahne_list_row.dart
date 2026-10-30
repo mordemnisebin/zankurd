@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../theme/app_icons.dart';
@@ -498,7 +500,7 @@ class SahneListRow extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  '$rank',
+                  groupThousands(rank!),
                   maxLines: 1,
                   textAlign: TextAlign.center,
                   style: SahneType.bodyStrong.copyWith(

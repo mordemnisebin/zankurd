@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../l10n/strings.dart';
@@ -78,12 +80,12 @@ class TodayTaskCard extends StatelessWidget {
     final title = Tr.forKu(titleKey, isKu);
     final meta = goalInProgress
         ? Tr.forKu(K.dailyGoalRemainingCorrect, isKu, {
-            'n': '$remaining',
-            'm': '${_minutesFor(remaining)}',
+            'n': groupThousands(remaining),
+            'm': groupThousands(_minutesFor(remaining)),
           })
         : Tr.forKu(firstSession ? K.firstSessionSub : K.pSoruYaklasikP, isKu, {
-            'p0': '$total',
-            'p1': '${_minutesFor(total)}',
+            'p0': groupThousands(total),
+            'p1': groupThousands(_minutesFor(total)),
           });
     final eyebrow = Tr.forKu(
       firstSession ? K.firstSessionBadge : K.bugununGorevi,
@@ -162,7 +164,8 @@ class TodayTaskCard extends StatelessWidget {
                               height: 8,
                               trackColor: t.learnTrack,
                               edgeColor: t.learnEdge,
-                              trailing: '$safeDone/$safeTotal',
+                              trailing:
+                                  '${groupThousands(safeDone)}/${groupThousands(safeTotal)}',
                               semanticLabel: title,
                             ),
                           ],

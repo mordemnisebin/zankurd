@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -166,8 +168,8 @@ class _RoomInviteCardState extends State<RoomInviteCard> {
     final title = context.t(K.roomInviteCardTitle, {'name': name});
     final meta = context.t(K.roomInviteCardMeta, {
       'category': invite.categoryName,
-      'count': '${invite.playerCount}',
-      'max': '${invite.maxPlayers}',
+      'count': groupThousands(invite.playerCount),
+      'max': groupThousands(invite.maxPlayers),
     });
     return Padding(
       key: const ValueKey('room-invite-card'),
@@ -184,7 +186,7 @@ class _RoomInviteCardState extends State<RoomInviteCard> {
                 children: [
                   Text(
                     extra > 0
-                        ? '${context.t(K.roomInviteSection)} · ${_invites.length}'
+                        ? '${context.t(K.roomInviteSection)} · ${groupThousands(_invites.length)}'
                         : context.t(K.roomInviteSection),
                     style: SahneType.captionStrong.copyWith(color: t.eyebrowTx),
                   ),

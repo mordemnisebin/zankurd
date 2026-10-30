@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../config/avatar_presets.dart';
@@ -13,7 +15,9 @@ import 'sahne/sahne.dart';
 /// Eski RPC sıfır puanda bilgi vermez; bilinmeyene "oynamadı" denmez.
 String? tournamentSubmissionLabel(bool? submitted, int score, bool ku) =>
     switch (submitted) {
-      true => Tr.forKu(K.cupSubmissionPlayed, ku, {'score': '$score'}),
+      true => Tr.forKu(K.cupSubmissionPlayed, ku, {
+        'score': groupThousands(score),
+      }),
       false => Tr.forKu(K.cupSubmissionNotPlayed, ku),
       null => null,
     };
@@ -30,7 +34,7 @@ List<String> tournamentRoundNames(bool ku, int totalRounds) {
     if (distanceFromFinal < namesFromFinal.length) {
       return namesFromFinal[distanceFromFinal];
     }
-    return Tr.forKu(K.tournamentRoundGeneric, ku, {'n': '${i + 1}'});
+    return Tr.forKu(K.tournamentRoundGeneric, ku, {'n': groupThousands(i + 1)});
   });
 }
 
@@ -243,7 +247,7 @@ class _BracketMatchCard extends StatelessWidget {
         : match.closedWithoutSubmission
         ? Tr.forKu(K.cupExpiredUnplayed, ku)
         : isCompleted || match.bothSubmitted
-        ? '${match.playerOneScore} – ${match.playerTwoScore}'
+        ? '${groupThousands(match.playerOneScore)} – ${groupThousands(match.playerTwoScore)}'
         : hasPlayers && match.deadline?.isBefore(DateTime.now()) == true
         ? Tr.forKu(K.tournamentWaitingOpponentExpired, ku)
         : hasPlayers

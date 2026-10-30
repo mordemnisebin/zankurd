@@ -22,6 +22,7 @@ class _Http extends http.BaseClient {
       body = [
         {
           'player_id': 'me',
+          'joined_at': '2026-10-30T12:00:00Z',
           'score': 0,
           'streak': 0,
           'is_ready': true,
@@ -30,6 +31,7 @@ class _Http extends http.BaseClient {
         },
         {
           'player_id': 'other',
+          'joined_at': '2026-10-30T12:00:01Z',
           'score': 0,
           'streak': 0,
           'is_ready': false,
@@ -79,6 +81,8 @@ void main() {
 
       expect(players.map((p) => p.name), ['Ez', 'Rojda']);
       expect(players.last.avatarIcon, 'star');
+      expect(players.first.joinedAt, DateTime.utc(2026, 10, 30, 12));
+      expect(players.last.joinedAt, DateTime.utc(2026, 10, 30, 12, 0, 1));
       expect(httpClient.paths, contains('/rest/v1/rpc/get_public_profiles'));
     },
   );

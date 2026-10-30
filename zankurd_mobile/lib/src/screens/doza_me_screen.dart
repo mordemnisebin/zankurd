@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -114,7 +116,7 @@ class _ItemCard extends StatelessWidget {
     final second = context.secondLabel(item.headKey);
     return SahneSurfaceCard(
       key: ValueKey('doza-item-$index'),
-      semanticLabel: '$index. $head. $body',
+      semanticLabel: '${groupThousands(index)}. $head. $body',
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -132,7 +134,7 @@ class _ItemCard extends StatelessWidget {
                   Icon(item.icon, size: 22, color: t.learnTx),
                   const SizedBox(height: SahneSpace.x1),
                   Text(
-                    '$index',
+                    groupThousands(index),
                     style: SahneType.captionStrong.copyWith(
                       color: t.learnTx,
                       fontFeatures: const [FontFeature.tabularFigures()],

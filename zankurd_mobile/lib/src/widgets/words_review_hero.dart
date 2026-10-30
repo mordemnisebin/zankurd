@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -149,13 +151,15 @@ class _WordsReviewHeroState extends State<WordsReviewHero> {
   String _breakdown(BuildContext context, TekrarPlan plan) {
     if (plan.dueWords > 0 && plan.dueQuestions > 0) {
       return context.t(K.tekrarBreakdown, {
-        'words': '${plan.dueWords}',
-        'questions': '${plan.dueQuestions}',
+        'words': groupThousands(plan.dueWords),
+        'questions': groupThousands(plan.dueQuestions),
       });
     }
     return plan.dueWords > 0
-        ? context.t(K.wordsCount, {'count': '${plan.dueWords}'})
-        : context.t(K.tekrarQuestionsOnly, {'count': '${plan.dueQuestions}'});
+        ? context.t(K.wordsCount, {'count': groupThousands(plan.dueWords)})
+        : context.t(K.tekrarQuestionsOnly, {
+            'count': groupThousands(plan.dueQuestions),
+          });
   }
 
   @override
@@ -257,7 +261,8 @@ class WordMasteryBar extends StatelessWidget {
     }
     final total = math.max(words.length, 1);
     final label = [
-      for (final s in WordStage.values) '${counts[s]} ${context.t(s.labelKey)}',
+      for (final s in WordStage.values)
+        '${groupThousands(counts[s]!)} ${context.t(s.labelKey)}',
     ].join(', ');
     return Semantics(
       key: const ValueKey('my-words-mastery-bar'),
@@ -303,7 +308,7 @@ class WordMasteryBar extends StatelessWidget {
                     const SizedBox(width: 6),
                     Flexible(
                       child: Text(
-                        '${counts[s]} ${context.t(s.labelKey)}',
+                        '${groupThousands(counts[s]!)} ${context.t(s.labelKey)}',
                         style: SahneType.captionStrong.copyWith(color: t.tx),
                       ),
                     ),

@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../theme/app_icons.dart';
@@ -343,7 +345,8 @@ class SahneLessonDiamond extends StatelessWidget {
     final t = SahneTokens.of(context);
     final fraction = total <= 0 ? 0.0 : done / total;
     return Semantics(
-      label: semanticLabel ?? '$done/$total',
+      label:
+          semanticLabel ?? '${groupThousands(done)}/${groupThousands(total)}',
       excludeSemantics: true,
       child: SizedBox.square(
         dimension: size,
@@ -355,7 +358,11 @@ class SahneLessonDiamond extends StatelessWidget {
             fraction: fraction,
             fromTop: true,
           ),
-          child: _DiamondLabel(text: '$done/$total', color: t.tx, size: size),
+          child: _DiamondLabel(
+            text: '${groupThousands(done)}/${groupThousands(total)}',
+            color: t.tx,
+            size: size,
+          ),
         ),
       ),
     );
@@ -448,13 +455,16 @@ class SahneStageTimer extends StatelessWidget {
                 maintainAnimation: true,
                 maintainState: true,
                 child: Text(
-                  '8' * ('$maxSeconds'.length < 2 ? 2 : '$maxSeconds'.length),
+                  '8' *
+                      (groupThousands(maxSeconds).length < 2
+                          ? 2
+                          : groupThousands(maxSeconds).length),
                   style: numberStyle,
                 ),
               ),
             ),
             Text(
-              pending ? '–' : '$secondsLeft',
+              pending ? '–' : groupThousands(secondsLeft),
               key: const ValueKey('stage-timer-seconds'),
               style: numberStyle,
             ),
@@ -626,7 +636,7 @@ class _SahneTimerDiamondState extends State<SahneTimerDiamond>
               halo: SahneTimerDiamond.haloColor(hot: hot, light: widget.light),
             ),
             child: _DiamondLabel(
-              text: '${widget.secondsLeft}',
+              text: groupThousands(widget.secondsLeft),
               color: hot ? t.raceTx : t.tx,
               size: 60,
             ),

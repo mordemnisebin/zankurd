@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -15,10 +17,10 @@ import '../../widgets/sahne/sahne.dart';
 String asyncDuelNudgeCooldownLabel(BuildContext context, Duration left) {
   if (left.inMinutes >= 60) {
     final hours = (left.inMinutes / 60).ceil();
-    return context.t(K.nudgeCooldownHours, {'n': '$hours'});
+    return context.t(K.nudgeCooldownHours, {'n': groupThousands(hours)});
   }
   final minutes = (left.inSeconds / 60).ceil().clamp(1, 59);
-  return context.t(K.nudgeCooldownMinutes, {'n': '$minutes'});
+  return context.t(K.nudgeCooldownMinutes, {'n': groupThousands(minutes)});
 }
 
 /// "Rakip bekleniyor" satırındaki "Dürt" düğmesi.

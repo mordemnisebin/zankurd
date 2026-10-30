@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
@@ -14,10 +16,10 @@ String? asyncDuelTimeLeftLabel(BuildContext context, Duration? left) {
   if (left == null || left <= Duration.zero) return null;
   if (left.inMinutes >= 60) {
     final hours = (left.inMinutes / 60).round();
-    return context.t(K.asyncDuelTimeLeftHours, {'n': '$hours'});
+    return context.t(K.asyncDuelTimeLeftHours, {'n': groupThousands(hours)});
   }
   final minutes = (left.inSeconds / 60).ceil().clamp(1, 59);
-  return context.t(K.asyncDuelTimeLeftMinutes, {'n': '$minutes'});
+  return context.t(K.asyncDuelTimeLeftMinutes, {'n': groupThousands(minutes)});
 }
 
 /// Kalan süre oranı (0–1): [left] / [asyncDuelWindow]. Eski 48 saatlik

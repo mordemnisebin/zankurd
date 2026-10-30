@@ -67,6 +67,14 @@ void main() {
       200,
       scrollable: find.byType(Scrollable).first,
     );
+    // Görünüm sınırına gelmesi alt eylem perdesinin üstünde olduğu anlamına
+    // gelmez. Başlığı kaydırılabilir alanın üst yarısına alıp gerçekten dokun.
+    await Scrollable.ensureVisible(
+      tester.element(header.first),
+      alignment: 0.25,
+    );
+    await tester.pump();
+    expect(header.hitTestable(), findsOneWidget);
     await tester.tap(header.first);
     await tester.pump(const Duration(milliseconds: 600));
   }

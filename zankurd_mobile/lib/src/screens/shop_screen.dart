@@ -669,7 +669,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           // "Zêrên xwe bi aqilmendî bixercîne" derken sayaç
                           // "0 coin" diyordu (2026-08-01, canlı Kurmancî
                           // mağaza ekranı).
-                          '${item.cost} ${ctx.t(K.coinWord).toLowerCase()}',
+                          '${groupThousands(item.cost)} ${ctx.t(K.coinWord).toLowerCase()}',
                           style: SahneType.bodyStrong.copyWith(
                             color: t.tx,
                             fontFeatures: const [FontFeature.tabularFigures()],
@@ -1279,9 +1279,11 @@ class _ShopScreenState extends State<ShopScreen> {
   static const double _priceHeight = 52;
 
   String? _stockLabel(ShopItem item) => switch (item.id) {
-    _freezeItemId => context.t(K.shopFreezeOwned, {'n': '$_freezeCount'}),
+    _freezeItemId => context.t(K.shopFreezeOwned, {
+      'n': groupThousands(_freezeCount),
+    }),
     'joker_pack_3' when _jokerStock > 0 => context.t(K.jokerStockHint, {
-      'n': '$_jokerStock',
+      'n': groupThousands(_jokerStock),
     }),
     // 2026-10-29 son kurul: Seri dondurmanın alt satırı vardı, ötekiler
     // yalnız addı; güçlendiricinin ne işe yaradığı tek satırla yazılır.
@@ -1422,15 +1424,15 @@ class _ShopScreenState extends State<ShopScreen> {
   // Ekran okuyucuya söylenen ad tam cümledir ("X, N jeton karşılığında satın
   // al"; yetmiyorsa eksik söz de eklenir): `test/button_semantics_test.dart`.
   Widget _buildBuyButton(ShopItem item, bool ku, {bool expand = true}) {
-    final label = '${item.cost}';
+    final label = groupThousands(item.cost);
     final semanticLabel = context.t(K.buyItemForCoins, {
       'item': ku ? item.titleKu : item.titleTr,
-      'coins': '${item.cost}',
+      'coins': groupThousands(item.cost),
     });
     final missing = coinShortfall(cost: item.cost, balance: _coinBalance);
     final t = SahneTokens.of(context);
     if (missing > 0) {
-      final note = context.t(K.coinsShort, {'coins': '$missing'});
+      final note = context.t(K.coinsShort, {'coins': groupThousands(missing)});
       return Semantics(
         container: true,
         label: '$semanticLabel. $note',

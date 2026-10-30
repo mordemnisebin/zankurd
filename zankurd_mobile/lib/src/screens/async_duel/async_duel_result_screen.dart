@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -269,7 +271,7 @@ String asyncDuelStatusLabel(BuildContext context, AsyncDuelResultView view) {
         AsyncDuelOutcome.loss => context.t(K.youLost),
         AsyncDuelOutcome.draw => context.t(K.draw),
       };
-      return '$headline · ${view.myCorrect}–${view.opponentCorrect}';
+      return '$headline · ${groupThousands(view.myCorrect ?? 0)}–${groupThousands(view.opponentCorrect ?? 0)}';
   }
 }
 
@@ -584,7 +586,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
           },
           titleRole: win ? SahneRole.gold : null,
           subtitle:
-              '${context.t(K.you)} ${view.myCorrect} – ${view.opponentCorrect} '
+              '${context.t(K.you)} ${groupThousands(view.myCorrect ?? 0)} – ${groupThousands(view.opponentCorrect ?? 0)} '
               '$opponentName',
           subtitleSize: win ? 32 : null,
           extras: [
@@ -628,14 +630,14 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
           // Sonuç bilinmiyorsa ([myCorrect] null) skor GÖSTERİLMEZ: "0/7"
           // oyuncuya yanlış bir sonuç söylerdi.
           value: view.myCorrect,
-          suffix: '/${view.total}',
+          suffix: '/${groupThousands(view.total)}',
           valueKey: const ValueKey('async-duel-result-score'),
           // Tur 1 (I8, 2026-10-29): "3/7"nin neyi saydığı yazmıyordu.
           caption: view.myCorrect == null
               ? null
               : context.t(K.asyncDuelCorrectCaption, {
-                  'total': '${view.total}',
-                  'correct': '${view.myCorrect}',
+                  'total': groupThousands(view.total),
+                  'correct': groupThousands(view.myCorrect ?? 0),
                 }),
           body: view.challengeCode == null
               ? context.t(K.asyncDuelWaitingBody)
@@ -682,7 +684,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
           ? SahneResultRewards(
               label: context.t(K.kazanildi),
               xp: xp,
-              xpLabel: context.t(K.asyncDuelXp, {'xp': '$xp'}),
+              xpLabel: context.t(K.asyncDuelXp, {'xp': groupThousands(xp)}),
               // XP'nin kaynağı yalnız formül verinin kendisinden çıkıyorsa
               // yazılır (tamamlandı: doğru×20 + galibiyet 30; süre doldu:
               // doğru×20).
@@ -694,7 +696,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
                                 view.outcome == AsyncDuelOutcome.win
                             ? K.asyncDuelXpBreakdownWin
                             : K.asyncDuelXpBreakdown,
-                        {'n': '${view.myCorrect}'},
+                        {'n': groupThousands(view.myCorrect ?? 0)},
                       ),
                       // Kapışma U12: tema ikincil rengi (gündüz koyu gri)
                       // sahnedeki altın kartta okunmuyordu (kare 101). Beyaz:
@@ -880,7 +882,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
     final correct = view.myCorrect;
     if (code == null || correct == null) return;
     final text = context.t(K.challengeShareText, {
-      'n': '$correct',
+      'n': groupThousands(correct),
       'link': JoinDeepLink.shareUrl(code),
     });
     final size = MediaQuery.sizeOf(context);
@@ -961,12 +963,13 @@ class _DuelScoreboard extends StatelessWidget {
       int? blank,
     ) {
       final caption = (blank ?? 0) > 0
-          ? context.t(K.correctBlankCaption, {'b': '$blank'})
+          ? context.t(K.correctBlankCaption, {'b': groupThousands(blank ?? 0)})
           : context.t(K.correct);
       return Expanded(
         child: Semantics(
           container: true,
-          label: '$name, $correct/$total $caption',
+          label:
+              '$name, ${groupThousands(correct)}/${groupThousands(total)} $caption',
           excludeSemantics: true,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -985,7 +988,7 @@ class _DuelScoreboard extends StatelessWidget {
               ),
               const SizedBox(height: SahneSpace.x1),
               Text(
-                '$correct/$total',
+                '${groupThousands(correct)}/${groupThousands(total)}',
                 style: SahneType.headline.copyWith(
                   color: winner ? t.goldTx : t.tx,
                   fontFeatures: const [FontFeature.tabularFigures()],

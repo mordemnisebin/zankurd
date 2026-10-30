@@ -222,7 +222,9 @@ void main() {
     ).readAsStringSync();
     expect(
       source,
-      contains('playerOneScore} – \${match.playerTwoScore'),
+      contains(
+        r'${groupThousands(match.playerOneScore)} – ${groupThousands(match.playerTwoScore)}',
+      ),
       reason: 'skor oyuncu satırına dönerse ad yeniden kırpılır',
     );
   });

@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'home/room_invite_card.dart';
 import 'dart:async';
 
@@ -506,8 +508,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     // 2026-10-29 son kurul: oda 2 kişiyle başlar; aralık gerçek
     // kapasitelerden ("3+ kişi" yanlıştı, bkz. `son_kurul_test`).
     final roomSub = context.t(K.roomTileSub, {
-      'min': '${GameRoom.allowedMaxPlayers.first}',
-      'max': '${GameRoom.allowedMaxPlayers.last}',
+      'min': groupThousands(GameRoom.allowedMaxPlayers.first),
+      'max': groupThousands(GameRoom.allowedMaxPlayers.last),
     });
 
     // 2026-09-29 Şahnê A iskeleti: marka satırı → "Yarış" → alt başlık →
@@ -586,14 +588,17 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         role: SahneRole.social,
         title: context.t(K.friendsScreen),
         trailing: _pendingRequests > 0 && !locked
-            ? SahneBadge(label: '$_pendingRequests', tone: SahneBadgeTone.learn)
+            ? SahneBadge(
+                label: groupThousands(_pendingRequests),
+                tone: SahneBadgeTone.learn,
+              )
             : null,
         chevron: !locked && _pendingRequests == 0,
         enabled: !locked,
         onTap: locked ? null : _openFriends,
         semanticLabel: _pendingRequests > 0
             ? context.t(K.friendRequestsPendingA11y, {
-                'count': '$_pendingRequests',
+                'count': groupThousands(_pendingRequests),
               })
             : context.t(K.friendsScreen),
       ),
@@ -1127,11 +1132,11 @@ class _ThisWeekCardState extends State<ThisWeekCard> {
     final entry = _entry;
     final hasData = entry != null && entry.rank > 0;
     final cells = <(String, String)>[
-      if (hasData) (context.t(K.statRank), '#${entry.rank}'),
+      if (hasData) (context.t(K.statRank), '#${groupThousands(entry.rank)}'),
       if (hasData && entry.totalScore > 0)
-        (context.t(K.scoreWord), '${entry.totalScore}'),
+        (context.t(K.scoreWord), groupThousands(entry.totalScore)),
       if (hasData && entry.roomsPlayed > 0)
-        (context.t(K.raceWord), '${entry.roomsPlayed}'),
+        (context.t(K.raceWord), groupThousands(entry.roomsPlayed)),
     ];
     return SahneSurfaceCard(
       key: const ValueKey('play-hub-this-week'),
@@ -1511,10 +1516,10 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
 
   /// "10 soru · 20 sn · ücretsiz": kapalı Ayarlar satırının özeti.
   String _settingsSummary(BuildContext context) =>
-      '$_selectedQuestionCount ${context.t(K.soru)} · '
+      '${groupThousands(_selectedQuestionCount)} ${context.t(K.soru)} · '
       // Kurul C13 (Astra + Sol): "20 sn" neyin süresi olduğunu söylemiyordu.
-      '${context.t(K.perQuestionSeconds, {'n': '$_selectedDuration'})} · '
-      '${_selectedEntryFee == 0 ? context.t(K.freeEntrySummary) : '$_selectedEntryFee ${context.t(K.coinWord)}'}';
+      '${context.t(K.perQuestionSeconds, {'n': groupThousands(_selectedDuration)})} · '
+      '${_selectedEntryFee == 0 ? context.t(K.freeEntrySummary) : '${groupThousands(_selectedEntryFee)} ${context.t(K.coinWord)}'}';
 
   @override
   void initState() {
@@ -1742,10 +1747,10 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                         key: ValueKey(
                                           'custom-room-capacity-$capacity',
                                         ),
-                                        label: '$capacity',
+                                        label: groupThousands(capacity),
                                         semanticLabel: context.t(
                                           K.roomCapacityOption,
-                                          {'n': '$capacity'},
+                                          {'n': groupThousands(capacity)},
                                         ),
                                         selected:
                                             _selectedMaxPlayers == capacity,
@@ -1805,7 +1810,8 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                         key: ValueKey(
                                           'custom-room-count-$count',
                                         ),
-                                        label: '$count ${context.t(K.soru)}',
+                                        label:
+                                            '${groupThousands(count)} ${context.t(K.soru)}',
                                         selected:
                                             _selectedQuestionCount == count,
                                         onTap: () => setState(
@@ -1835,7 +1841,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                           'custom-room-duration-$seconds',
                                         ),
                                         label:
-                                            '$seconds ${context.t(K.secondsShortUnit)}',
+                                            '${groupThousands(seconds)} ${context.t(K.secondsShortUnit)}',
                                         selected: _selectedDuration == seconds,
                                         onTap: () => setState(
                                           () => _selectedDuration = seconds,
@@ -1867,8 +1873,9 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                     Flexible(
                                       child: Text(
                                         context.t(K.yourBalance, {
-                                          'coins': widget.coinBalance
-                                              .toString(),
+                                          'coins': groupThousands(
+                                            widget.coinBalance,
+                                          ),
                                         }),
                                         textAlign: TextAlign.end,
                                         style: SahneType.caption.copyWith(
@@ -1898,13 +1905,13 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                             : null,
                                         label: fee == 0
                                             ? context.t(K.freeEntry)
-                                            : '$fee ${context.t(K.coinWord)}',
+                                            : '${groupThousands(fee)} ${context.t(K.coinWord)}',
                                         selected: _selectedEntryFee == fee,
                                         locked: fee > widget.coinBalance,
                                         looked: _blockedFee == fee,
                                         semanticLabel: fee > widget.coinBalance
-                                            ? '${'$fee ${context.t(K.coinWord)}'}, '
-                                                  '${context.t(K.coinsShort, {'coins': '${coinShortfall(cost: fee, balance: widget.coinBalance)}'})}'
+                                            ? '${'${groupThousands(fee)} ${context.t(K.coinWord)}'}, '
+                                                  '${context.t(K.coinsShort, {'coins': groupThousands(coinShortfall(cost: fee, balance: widget.coinBalance))})}'
                                             : null,
                                         onTap: () {
                                           setState(() {

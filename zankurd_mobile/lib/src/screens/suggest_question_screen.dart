@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
@@ -256,7 +258,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                     const SizedBox(height: SahneSpace.x4),
                     _FieldLabel(
                       context.t(K.difficultyWithValue, {
-                        'level': '$_difficulty',
+                        'level': groupThousands(_difficulty),
                       }),
                     ),
                     Row(
@@ -268,14 +270,14 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                         Expanded(
                           child: Semantics(
                             label: context.t(K.difficultyLabel),
-                            value: '$_difficulty / 5',
+                            value: '${groupThousands(_difficulty)} / 5',
                             slider: true,
                             child: Slider(
                               value: _difficulty.toDouble(),
                               min: 1,
                               max: 5,
                               divisions: 4,
-                              label: '$_difficulty',
+                              label: groupThousands(_difficulty),
                               onChanged: (value) {
                                 setState(() => _difficulty = value.round());
                               },

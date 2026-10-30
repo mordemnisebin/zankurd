@@ -52,7 +52,7 @@ class LeaderboardArenaHeader extends StatelessWidget {
         ? context.t(K.lbJoinTitle)
         : top
         ? context.t(K.lbTopOfBoard)
-        : context.t(K.lbYourRank, {'n': '$rank'});
+        : context.t(K.lbYourRank, {'n': groupThousands(rank)});
     final gap =
         (rank != null && rank > 1 && nextScore != null && myScore != null)
         ? (nextScore! - myScore! + 1).clamp(1, 1 << 30)

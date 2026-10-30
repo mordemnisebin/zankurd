@@ -1033,7 +1033,7 @@ class _CrowdScoreHeader extends StatelessWidget {
         ? '—'
         : allTied
         ? context.t(K.crowdAllTied)
-        : '#$rank/$total';
+        : '#${groupThousands(rank!)}/${groupThousands(total)}';
     // Kartın içi %115 tavanlı ölçekle çizilir; bu `context` tavanın ÜSTÜNDE
     // olduğundan boylar aynı tavanla buradan hesaplanır.
     final cardScaler = MediaQuery.textScalerOf(
@@ -1045,7 +1045,7 @@ class _CrowdScoreHeader extends StatelessWidget {
     );
     String answeredText(int answered, int active) => context.t(
       K.crowdAnsweredCount,
-      {'answered': '$answered', 'active': '$active'},
+      {'answered': groupThousands(answered), 'active': groupThousands(active)},
     );
 
     // Dört oyuncunun hepsi her zaman görünür: tek satırlık kompakt çipler
@@ -1078,7 +1078,7 @@ class _CrowdScoreHeader extends StatelessWidget {
                 Expanded(
                   child: Semantics(
                     label:
-                        '${standing.rank}. ${context.playerDisplayName(standing.player.name, tag: standing.player.tag)}, ${standing.player.score}',
+                        '${groupThousands(standing.rank)}. ${context.playerDisplayName(standing.player.name, tag: standing.player.tag)}, ${groupThousands(standing.player.score)}',
                     excludeSemantics: true,
                     // Ad okunur alt sınırda (14) ve KÜÇÜLMEZ (kapışma U13/
                     // U15; önce 12'den 11'e küçülüyordu). Sütun sayısı
@@ -1200,7 +1200,7 @@ class _CrowdScoreHeader extends StatelessWidget {
         container: true,
         label:
             '${context.t(K.crowdRankLabel)}: $rankText, '
-            '${player.score} ${context.t(K.scoreWord).toLowerCase()}',
+            '${groupThousands(player.score)} ${context.t(K.scoreWord).toLowerCase()}',
         child: SahneSurfaceCard(
           key: const ValueKey('quiz-crowd-header'),
           padding: const EdgeInsets.all(SahneSpace.x1),
@@ -1288,109 +1288,61 @@ class _DuelScoreHeader extends StatelessWidget {
       colorOverride: opponentColor,
     );
 
-    Widget streakOf(Player p, {required bool end}) {
-      if (p.streak <= 0) return const SizedBox.shrink();
-      const glyph = SahneGlyph(SahneGlyphKind.flame, size: 16);
-      final label = Text(
-        'x${p.streak}',
-        style: SahneType.captionStrong.copyWith(color: t.goldTx),
-      );
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: end
-            ? [label, const SizedBox(width: SahneSpace.x1), glyph]
-            : [glyph, const SizedBox(width: SahneSpace.x1), label],
-      );
-    }
-
     Widget side(Player p, Widget avatar, {required bool end}) {
+      final alignment = end
+          ? AlignmentDirectional.centerEnd
+          : AlignmentDirectional.centerStart;
+      final scaler = MediaQuery.textScalerOf(context);
       final info = Expanded(
         child: Column(
           crossAxisAlignment: end
               ? CrossAxisAlignment.end
               : CrossAxisAlignment.start,
           children: [
-            // Ad + (botsa) "Bot" rozeti: dar kartta (320 dp, büyük yazı)
-            // rozet taşmaz, alt satıra iner (2026-10-29, X4).
-            Align(
-              alignment: end
-                  ? AlignmentDirectional.centerEnd
-                  : AlignmentDirectional.centerStart,
-              child: QuizFitLine(
-                context.playerDisplayName(p.name, tag: p.tag),
-                maxLines: 2,
-                alignment: end
-                    ? AlignmentDirectional.centerEnd
-                    : AlignmentDirectional.centerStart,
-                style: SahneType.captionStrong.copyWith(color: t.tx),
+            QuizFitLine(
+              context.playerDisplayName(p.name, tag: p.tag),
+              maxLines: 2,
+              alignment: alignment,
+              style: SahneType.captionStrong.copyWith(color: t.tx),
+            ),
+            // Puan tek başına: FittedBox taban puntoyu sessizce küçültemez.
+            Text(
+              groupThousands(p.score),
+              key: ValueKey(end ? 'duel-opponent-score' : 'duel-self-score'),
+              maxLines: 1,
+              style: SahneType.captionStrong.copyWith(
+                fontSize: 14,
+                color: end ? t.raceTx : t.goldTx,
+                fontFeatures: const [FontFeature.tabularFigures()],
               ),
             ),
-            // Seri (🔥xN) puanın yanındadır: eskiden kartın altında AYRI bir
-            // satırdı ve rakip puan alıp seri başlayınca kart ~28 pt uzayıp
-            // soruyu aşağı itiyordu (2026-10-29, "soru gelince her şey sabit").
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: end
-                  ? AlignmentDirectional.centerEnd
-                  : AlignmentDirectional.centerStart,
+            // Seri sıfırken de aynı alan ayrılır; 0→5 geçişi soruyu kaydırmaz.
+            SizedBox(
+              height: scaler.scale(20),
               child: Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: end
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.start,
                 children: [
-                  // Kurul 3 D5 (3/3) + Astra 2. inceleme: kendi tarafın "Sen"
-                  // ile işaretlenir. İşaret ad satırında 3:1 esnek düzende
-                  // kırpılıyor, tam genişlik verilince de adı ikinci satıra
-                  // itip soru sığma bütçesini bozuyordu (375×667 ×1,3). Puan
-                  // satırında durur: satır tek parça olarak küçülür, işaret
-                  // asla kesilmez ve kartın boyu değişmez.
-                  if (!end &&
-                      context.playerDisplayName(p.name, tag: p.tag) !=
-                          context.t(K.you)) ...[
+                  if (!end)
                     Text(
                       context.t(K.you),
                       key: const ValueKey('duel-self-mark'),
-                      maxLines: 1,
                       style: SahneType.captionStrong.copyWith(color: t.tx),
                     ),
-                    const SizedBox(width: SahneSpace.x2),
-                  ],
-                  // "Bot" rozeti puan satırında (ad satırı dar kalır; ad, rozetle
-                  // yarışıp üç noktaya düşmesin).
-                  if (p.isBot && end) ...[
-                    SahneBadge(
+                  if (p.isBot)
+                    Text(
+                      context.t(K.botChip),
                       key: const ValueKey('duel-bot-chip'),
-                      label: context.t(K.botChip),
-                      tone: SahneBadgeTone.soon,
+                      style: SahneType.captionStrong.copyWith(color: t.tx2),
                     ),
-                    const SizedBox(width: SahneSpace.x2),
-                  ],
-                  if (end && p.streak > 0) ...[
-                    streakOf(p, end: true),
-                    const SizedBox(width: SahneSpace.x2),
-                  ],
-                  Text(
-                    // 2026-09-30 canlı: "pts" İngilizce kısaltmaydı; terim
-                    // sözlüğü puan/pûan der, kelime `K.scoreWord`tan gelir.
-                    '${groupThousands(p.score)} ${context.t(K.scoreWord).toLowerCase()}',
-                    maxLines: 1,
-                    // Kurul 3 D4: puanın rengi halattaki tarafının rengidir
-                    // (sen Zêr, rakip Boyax); hangi rengin kime ait olduğu
-                    // okunur.
-                    style: SahneType.captionStrong.copyWith(
-                      color: end ? t.raceTx : t.goldTx,
-                      fontFeatures: const [FontFeature.tabularFigures()],
+                  if (p.streak > 0) ...[
+                    const SizedBox(width: 4),
+                    const SahneGlyph(SahneGlyphKind.flame, size: 14),
+                    Text(
+                      '×${groupThousands(p.streak)}',
+                      style: SahneType.captionStrong.copyWith(color: t.goldTx),
                     ),
-                  ),
-                  if (p.isBot && !end) ...[
-                    const SizedBox(width: SahneSpace.x2),
-                    SahneBadge(
-                      key: const ValueKey('duel-bot-chip'),
-                      label: context.t(K.botChip),
-                      tone: SahneBadgeTone.soon,
-                    ),
-                  ],
-                  if (!end && p.streak > 0) ...[
-                    const SizedBox(width: SahneSpace.x2),
-                    streakOf(p, end: false),
                   ],
                 ],
               ),
@@ -1398,21 +1350,30 @@ class _DuelScoreHeader extends StatelessWidget {
           ],
         ),
       );
-      // Çok büyük yazıda (> 1,5×) avatar düşer: ad yuvası 40 pt'e iniyordu.
-      final big = MediaQuery.textScalerOf(context).scale(16) / 16 > 1.5;
       return Expanded(
-        child: big
-            ? Row(children: [info])
-            : Row(
-                children: end
-                    ? [info, const SizedBox(width: SahneSpace.x2), avatar]
-                    : [avatar, const SizedBox(width: SahneSpace.x2), info],
-              ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            // Yatay ekranda pencere geniş olsa da soru sütunu dar olabilir.
+            // Avatar yalnız oyuncu tarafının gerçek alanı yeterliyse görünür;
+            // puan/seri yazısını küçülterek yer açılmaz.
+            final compact = constraints.maxWidth < 140 || scaler.scale(14) > 14;
+            return compact
+                ? Row(children: [info])
+                : Row(
+                    children: end
+                        ? [info, const SizedBox(width: SahneSpace.x2), avatar]
+                        : [avatar, const SizedBox(width: SahneSpace.x2), info],
+                  );
+          },
+        ),
       );
     }
 
     return SahneSurfaceCard(
-      padding: const EdgeInsets.all(SahneSpace.x2),
+      padding: const EdgeInsets.symmetric(
+        horizontal: SahneSpace.x2,
+        vertical: 6,
+      ),
       child: Column(
         children: [
           Row(
@@ -1879,7 +1840,7 @@ class _CoinBalanceLine extends StatelessWidget {
     }
     return Semantics(
       label:
-          '$balance ${context.t(K.coinWord)}${hint == null ? '' : '. $hint'}',
+          '${groupThousands(balance)} ${context.t(K.coinWord)}${hint == null ? '' : '. $hint'}',
       excludeSemantics: true,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -1929,7 +1890,7 @@ class _CollapsedWildcardLine extends StatelessWidget {
     final label = context.t(K.wildcardNoCoins);
     return Semantics(
       button: true,
-      label: '$balance ${context.t(K.coinWord)}. $label',
+      label: '${groupThousands(balance)} ${context.t(K.coinWord)}. $label',
       excludeSemantics: true,
       onTap: onTap,
       child: GestureDetector(
@@ -1994,9 +1955,9 @@ class _CollapsedWildcardLine extends StatelessWidget {
 class _QuizHeaderHeights {
   const _QuizHeaderHeights._();
 
-  /// Düello kartı: 16 iç boşluk + iki 20'lik satır (ad / puan) + 8 + halat 12.
+  /// Düello kartı: 12 iç boşluk + üç 20'lik satır (ad / puan / kimlik-seri) + 8 + halat 12.
   static double duel(TextScaler s, {bool tug = true}) =>
-      16 + 2 * s.scale(20) + (tug ? 8 + 12 : 0);
+      12 + 3 * s.scale(20) + (tug ? 8 + 12 : 0);
 
   /// Oda şeridi: 16 iç boşluk + üst satır + 4 + dört kompakt çip.
   static double crowd(TextScaler s, double contentWidth) {

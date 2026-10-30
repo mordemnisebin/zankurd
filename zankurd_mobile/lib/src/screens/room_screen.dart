@@ -68,24 +68,23 @@ List<Player> dedupeRoomPlayers(List<Player> players) {
 
 /// Oda ekranında çizilecek oyuncu sırası.
 ///
-/// Lobide sıra, depodan gelen sıradır (katılma zamanı; bkz.
-/// `compareRoomPlayerRows`): puana göre SIRALANMAZ. Tur 3 (2026-10-30): 4
-/// kişilik klasik odanın lobisi A ve D'de "Ali, Cano, Dlan, Bero", B ve C'de
-/// "Ali, Bero, Dlan, Cano" görünüyordu. Kalabalık olmayan odada lobide de
-/// puana göre sıralanıyordu; herkes 0 puandayken Dart'ın kararsız `sort`u
-/// eşitleri cihazdan cihaza farklı diziyordu. Oyunda puana göre sıralama
-/// KARARLIDIR: eşit puanda gelen sıra korunur.
+/// Lobi sunucunun katılma zamanı ve oyuncu kimliğiyle yeniden sıralanır;
+/// akışın geliş sırası, puan ve hazır durumu koltuk sırasını değiştirmez.
+/// Sunucu zamanı olmayan eski kayıtlarda da oyuncu kimliği belirleyicidir.
+/// Oyunda puan önceliklidir; eşitlikte aynı katılma anahtarı kullanılır.
 List<Player> orderRoomPlayersForDisplay(
   List<Player> players, {
   required bool lobby,
 }) {
-  if (lobby) return [...players];
-  final indexed = [for (var i = 0; i < players.length; i++) (i, players[i])];
-  indexed.sort((a, b) {
-    final byScore = b.$2.score.compareTo(a.$2.score);
-    return byScore != 0 ? byScore : a.$1.compareTo(b.$1);
+  final ordered = [...players];
+  ordered.sort((a, b) {
+    if (!lobby) {
+      final byScore = b.score.compareTo(a.score);
+      if (byScore != 0) return byScore;
+    }
+    return compareRoomPlayerOrder(a.joinedAt, a.id, b.joinedAt, b.id);
   });
-  return [for (final e in indexed) e.$2];
+  return ordered;
 }
 
 /// Odadan çıkış RPC'sinin beklenebileceği en uzun süre.
@@ -1007,7 +1006,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
       SnackBar(
         content: Text(
           count > 0
-              ? context.t(K.roomInviteSent, {'n': '$count'})
+              ? context.t(K.roomInviteSent, {'n': groupThousands(count)})
               : context.t(K.roomInviteNoneSent),
         ),
       ),
@@ -1057,12 +1056,12 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
       for (var k = 0; k < shown; k++)
         _EmptySeatRow(
           key: ValueKey('room-empty-seat-${k + 1}'),
-          label: '${firstRank + k}',
+          label: groupThousands(firstRank + k),
         ),
       if (more > 0)
         _EmptySeatRow(
           key: const ValueKey('room-empty-seat-more'),
-          label: '+$more',
+          label: '+${groupThousands(more)}',
         ),
     ];
   }
@@ -1075,14 +1074,6 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
       room.players,
       lobby: room.status == RoomStatus.lobby,
     );
-    // Lobide ev sahibi listenin başındadır (ev sahibi el değiştirince de):
-    // iki simülatör turunda sahip ikinci sırada kalıyordu. Yalnız lobi;
-    // oyun başlayınca sıra puan sırasıdır.
-    final lobbyHostId = room.hostId;
-    if (room.status == RoomStatus.lobby && lobbyHostId != null) {
-      final at = sorted.indexWhere((p) => p.id == lobbyHostId);
-      if (at > 0) sorted.insert(0, sorted.removeAt(at));
-    }
     // `room.players` (yukarıdaki `sorted`) kasten süzülmez: oda üyeliği,
     // `canStart`/`allPlayersReady` gibi oyun mantığı hâlâ GERÇEK listeye
     // bakmalı. Yalnız EKRANDA çizilen satırlar süzülür.
@@ -1834,14 +1825,17 @@ class _RoomHero extends StatelessWidget {
             ),
             (
               AppIcons.stopwatch,
-              '${room.secondsPerQuestion} ${context.t(K.secondsShortUnit)}',
+              '${groupThousands(room.secondsPerQuestion)} ${context.t(K.secondsShortUnit)}',
             ),
             (
               AppIcons.circleQuestion,
-              '${room.questionCount} ${context.t(K.soru)}',
+              '${groupThousands(room.questionCount)} ${context.t(K.soru)}',
             ),
             if (room.entryFee > 0)
-              (AppIcons.coins, '${room.entryFee} ${context.t(K.coinWord)}'),
+              (
+                AppIcons.coins,
+                '${groupThousands(room.entryFee)} ${context.t(K.coinWord)}',
+              ),
           ];
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -2015,7 +2009,9 @@ class _PlayerCount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final text = max == null ? '$count' : '$count/$max';
+    final text = max == null
+        ? groupThousands(count)
+        : '${groupThousands(count)}/${groupThousands(max!)}';
     return Semantics(
       key: anchorKey,
       label: '${context.t(K.playersWord)}: $text',
@@ -2385,7 +2381,7 @@ class _RoomPlayerRow extends StatelessWidget {
           ),
         ),
         Text(
-          '${player.streak} ${context.t(K.streakLabel).toLowerCase()}',
+          '${groupThousands(player.streak)} ${context.t(K.streakLabel).toLowerCase()}',
           style: SahneType.caption.copyWith(color: t.tx2),
         ),
       ],
@@ -2443,7 +2439,7 @@ class _RoomPlayerRow extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      '$rank',
+                      groupThousands(rank),
                       maxLines: 1,
                       style: SahneType.bodyStrong.copyWith(
                         color: isHost ? t.goldTx : t.tx2,

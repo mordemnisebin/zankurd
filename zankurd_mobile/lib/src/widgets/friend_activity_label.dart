@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/widgets.dart';
 
 import '../l10n/lang.dart';
@@ -11,5 +13,5 @@ String? friendActivityLabel(BuildContext context, Friend friend) {
   final days = friend.daysSinceActive();
   if (days == null) return null;
   if (days == 0) return context.t(K.friendPlayedToday);
-  return context.t(K.friendPlayedDaysAgo, {'n': '$days'});
+  return context.t(K.friendPlayedDaysAgo, {'n': groupThousands(days)});
 }

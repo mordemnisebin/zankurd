@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -45,9 +47,9 @@ String profileMatchSubtitle(BuildContext context, RecentMatch match) {
   if (mine == theirs &&
       match.result != RecentMatchResult.draw &&
       match.kind == RecentMatchKind.async) {
-    return '$label · $mine–$theirs ${context.t(match.result == RecentMatchResult.win ? K.matchDecidedFaster : K.matchDecidedSlower)}';
+    return '$label · ${groupThousands(mine)}–${groupThousands(theirs)} ${context.t(match.result == RecentMatchResult.win ? K.matchDecidedFaster : K.matchDecidedSlower)}';
   }
-  return '$label · $mine–$theirs';
+  return '$label · ${groupThousands(mine)}–${groupThousands(theirs)}';
 }
 
 IconData _kindIcon(RecentMatchKind kind) => switch (kind) {
@@ -326,7 +328,8 @@ class _ProfileRecordsSectionState extends State<ProfileRecordsSection> {
   }
 
   /// 0 ve null "henüz yok" demektir: "—".
-  String _count(int? value) => value == null || value <= 0 ? '—' : '$value';
+  String _count(int? value) =>
+      value == null || value <= 0 ? '—' : groupThousands(value);
 
   @override
   Widget build(BuildContext context) {
@@ -356,7 +359,7 @@ class _ProfileRecordsSectionState extends State<ProfileRecordsSection> {
         // Düello oynanmışsa 0 galibiyet gerçek bir sayıdır; hiç oynanmadıysa "—".
         value: server == null || server.duelTotal == 0
             ? '—'
-            : '${server.duelWins}',
+            : groupThousands(server.duelWins),
         icon: AppIcons.trophy,
         key: 'duel-wins',
       ),

@@ -961,7 +961,11 @@ void main() {
     // Türkçe "ile" `ve` olarak sızar. `ji nû ve` doğru Kurmancî
     // postposition'dır; kök taraması onu vurur. Marka + ve şart.
     expect(Tr.of(K.signInGoogle, AppLanguage.ku), 'Bi Google têkeve');
-    expect(Tr.of(K.linkGoogle, AppLanguage.ku), 'Bi Google girêde');
+    expect(Tr.of(K.linkGoogle, AppLanguage.ku), 'Bi Google re bidomîne');
+    expect(
+      Tr.of(K.linkGoogle, AppLanguage.ku),
+      Tr.of(K.continueGoogle, AppLanguage.ku),
+    );
     expect(
       Tr.of(K.connectingGoogle, AppLanguage.ku),
       'Bi Google re tê girêdan…',

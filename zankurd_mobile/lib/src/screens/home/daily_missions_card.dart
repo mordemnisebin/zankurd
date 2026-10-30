@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
@@ -92,7 +94,8 @@ class DailyMissionsCard extends StatelessWidget {
               child: SahneStatChip(
                 key: const ValueKey('home-today-streak'),
                 leading: const SahneGlyph(SahneGlyphKind.flame),
-                label: '$streak ${Tr.forKu(K.streakDayUnit, isKu)}',
+                label:
+                    '${groupThousands(streak)} ${Tr.forKu(K.streakDayUnit, isKu)}',
                 tint: t.warmFill,
                 foreground: t.warmTx,
                 semanticLabel: streakSemanticLabel,
@@ -106,10 +109,10 @@ class DailyMissionsCard extends StatelessWidget {
             value: totalProgress,
             trailing: compact
                 ? Tr.forKu(K.todaySummary, isKu, {
-                    'done': '$completedCount',
-                    'total': '${all.length}',
+                    'done': groupThousands(completedCount),
+                    'total': groupThousands(all.length),
                   })
-                : '$completedCount/${all.length} ${Tr.forKu(K.tamamlandi, isKu)}',
+                : '${groupThousands(completedCount)}/${groupThousands(all.length)} ${Tr.forKu(K.tamamlandi, isKu)}',
             semanticLabel: Tr.forKu(
               compact ? K.contestToday : K.gunlukGorevler,
               isKu,
@@ -259,7 +262,7 @@ class _MissionTile extends StatelessWidget {
       trailing = compact
           ? const SizedBox.shrink()
           : SahneBadge(
-              label: '+${mission.xpReward} XP',
+              label: '+${groupThousands(mission.xpReward)} XP',
               tone: SahneBadgeTone.gold,
             );
     } else if (canClaim) {
@@ -329,7 +332,7 @@ class _MissionTile extends StatelessWidget {
             value: ratio,
             trailing: compact && mission.target <= 1
                 ? null
-                : '${mission.progress.clamp(0, mission.target)} / ${mission.target}',
+                : '${groupThousands(mission.progress.clamp(0, mission.target))} / ${groupThousands(mission.target)}',
           ),
         ),
       ],
@@ -345,7 +348,7 @@ class _MissionTile extends StatelessWidget {
         label: label,
         value: isDone
             ? (Tr.forKu(K.tamamlandi, isKu))
-            : '${mission.progress}/${mission.target}',
+            : '${groupThousands(mission.progress)}/${groupThousands(mission.target)}',
         child: tile,
       ),
     );
@@ -376,7 +379,7 @@ class _CompactMissionRow extends StatelessWidget {
     final done = mission.completed;
     final canClaim = done && !mission.claimed && onClaim != null;
     final count =
-        '${mission.progress.clamp(0, mission.target)}/${mission.target}';
+        '${groupThousands(mission.progress.clamp(0, mission.target))}/${groupThousands(mission.target)}';
     final Widget trailing;
     if (canClaim) {
       trailing = KeyedSubtree(

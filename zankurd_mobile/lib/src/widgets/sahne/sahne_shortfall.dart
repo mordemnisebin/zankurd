@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../l10n/lang.dart';
@@ -67,8 +69,11 @@ class SahneShortfallNote extends StatelessWidget {
     final t = SahneTokens.of(context);
     final color = warn ? t.shortfallTx : (alert ? t.errTx : t.tx2);
     final label = fee == null
-        ? context.t(K.coinsShort, {'coins': '$missing'})
-        : context.t(K.coinsShortForFee, {'fee': '$fee', 'coins': '$missing'});
+        ? context.t(K.coinsShort, {'coins': groupThousands(missing)})
+        : context.t(K.coinsShortForFee, {
+            'fee': groupThousands(fee!),
+            'coins': groupThousands(missing),
+          });
     return Semantics(
       container: true,
       label: label,
@@ -145,10 +150,10 @@ class SahnePriceChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final note = context.t(K.coinsShort, {'coins': '$missing'});
+    final note = context.t(K.coinsShort, {'coins': groupThousands(missing)});
     return Semantics(
       container: true,
-      label: semanticLabel ?? '$price, $note',
+      label: semanticLabel ?? '${groupThousands(price)}, $note',
       excludeSemantics: true,
       child: DecoratedBox(
         decoration: ShapeDecoration(color: t.s1, shape: SahneShape.m),
@@ -175,7 +180,7 @@ class SahnePriceChip extends StatelessWidget {
                     ),
                     const SizedBox(width: SahneSpace.x2),
                     Text(
-                      '$price',
+                      groupThousands(price),
                       style: SahneType.button.copyWith(
                         color: t.tx2,
                         fontFeatures: const [FontFeature.tabularFigures()],

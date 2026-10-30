@@ -548,7 +548,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            context.t(K.championRewardGranted, {'coins': '$amount'}),
+            context.t(K.championRewardGranted, {
+              'coins': groupThousands(amount),
+            }),
           ),
         ),
       );
@@ -910,8 +912,8 @@ class _TournamentScreenState extends State<TournamentScreen> {
     final fill = _waitingFill;
     if (fill == null) return body;
     final line = context.t(K.tournamentWaitingFill, {
-      'count': '${fill.count}',
-      'size': '${fill.size}',
+      'count': groupThousands(fill.count),
+      'size': groupThousands(fill.size),
     });
     // 2026-10-29 son kurul: doluluğun yanında 24 saatlik sürenin bittiği
     // an da yazılır (kural gövdede; burada yalnız saat).
@@ -941,7 +943,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
     }
     // Katılma anında kupa yeniyse (tek kayıt: biz) bunu söyle.
     final fresh = _joinedJustNow && fill.count <= 1
-        ? context.t(K.tournamentNeedMore, {'n': '${fill.size - fill.count}'})
+        ? context.t(K.tournamentNeedMore, {
+            'n': groupThousands(fill.size - fill.count),
+          })
         : null;
     final head = [?fresh, line, ?due, ?remaining].join('\n');
     return '$head\n\n$body';
@@ -1190,8 +1194,11 @@ class _TournamentScreenState extends State<TournamentScreen> {
                         _userMatch!.bothSubmitted
                             ? context.t(K.cupSubmissionsReceived)
                             : context.t(K.tournamentWaitingOpponentScore, {
-                                'score':
-                                    '${_userMatch!.playerOneId == _userId ? _userMatch!.playerOneScore : _userMatch!.playerTwoScore}',
+                                'score': groupThousands(
+                                  _userMatch!.playerOneId == _userId
+                                      ? _userMatch!.playerOneScore
+                                      : _userMatch!.playerTwoScore,
+                                ),
                               }),
                         style: SahneType.body.copyWith(color: t.tx2),
                       ),
@@ -1368,7 +1375,7 @@ class _LobbyView extends StatelessWidget {
         // sunucu maç başına hiçbir coin ödemiyor (2026-08-14 denetimi).
         _CupRewardLine(
           text: context.t(K.cupRewardLine, {
-            'n': '${TournamentConfig.coinBonusChampion}',
+            'n': groupThousands(TournamentConfig.coinBonusChampion),
           }),
         ),
         // 2026-10-29 son kurul: "Dolunca" neyin dolacağını söylemiyordu.
@@ -1377,7 +1384,8 @@ class _LobbyView extends StatelessWidget {
         // bekleme ekranı "n/4" ve süre sonunu gösterir.
         _CupRewardLine(
           key: const ValueKey('tournament-capacity'),
-          text: '${TournamentConfig.totalPlayers} ${context.t(K.cupPlayers)}',
+          text:
+              '${groupThousands(TournamentConfig.totalPlayers)} ${context.t(K.cupPlayers)}',
           icon: AppIcons.peopleGroup,
         ),
       ],
@@ -1603,12 +1611,12 @@ class _CupFormatPanel extends StatelessWidget {
     final items = <(IconData, String, String)>[
       (
         AppIcons.peopleGroup,
-        '${TournamentConfig.totalPlayers}',
+        groupThousands(TournamentConfig.totalPlayers),
         Tr.forKu(K.cupPlayers, ku),
       ),
       (
         AppIcons.trophy,
-        '${TournamentConfig.roundCount}',
+        groupThousands(TournamentConfig.roundCount),
         Tr.forKu(K.cupRounds, ku),
       ),
     ];
@@ -1706,7 +1714,7 @@ class _CupLadder extends StatelessWidget {
       for (var i = 0; i < steps.length; i++)
         steps[i] == 1
             ? champion
-            : '${roundNames[i]} · ${steps[i]} ${Tr.forKu(K.cupPlayers, ku)}',
+            : '${roundNames[i]} · ${groupThousands(steps[i])} ${Tr.forKu(K.cupPlayers, ku)}',
     ].join(' › ');
 
     return Column(
@@ -1991,7 +1999,7 @@ class _StatusCard extends StatelessWidget {
                   ),
                 if (bracket.totalScore > 0)
                   Text(
-                    '${Tr.forKu(K.statTotalScore, ku)}: ${bracket.totalScore}',
+                    '${Tr.forKu(K.statTotalScore, ku)}: ${groupThousands(bracket.totalScore)}',
                     maxLines: 1,
                     style: SahneType.captionStrong.copyWith(color: t.tx),
                   ),
@@ -2002,8 +2010,10 @@ class _StatusCard extends StatelessWidget {
           SahneBadge(
             // "1/2" tek başına belirsizdi: ne olduğu yazılır.
             label: Tr.forKu(K.cupRoundBadge, ku, {
-              'n': '${(shownRound + 1).clamp(1, bracket.totalRounds)}',
-              'total': '${bracket.totalRounds}',
+              'n': groupThousands(
+                (shownRound + 1).clamp(1, bracket.totalRounds),
+              ),
+              'total': groupThousands(bracket.totalRounds),
             }),
             tone: SahneBadgeTone.gold,
           ),
@@ -2025,8 +2035,8 @@ String _matchVsLine(TournamentMatch m, String userId, bool ku) {
   final mine = m.playerOneId == userId;
   return Tr.forKu(K.cupMatchVs, ku, {
     'opponent': mine ? m.playerTwoName : m.playerOneName,
-    'my': '${mine ? m.playerOneScore : m.playerTwoScore}',
-    'their': '${mine ? m.playerTwoScore : m.playerOneScore}',
+    'my': groupThousands(mine ? m.playerOneScore : m.playerTwoScore),
+    'their': groupThousands(mine ? m.playerTwoScore : m.playerOneScore),
   });
 }
 
@@ -2151,7 +2161,7 @@ class _ChampionBanner extends StatelessWidget {
       key: const ValueKey('tournament-champion'),
       title: context.t(K.championCongrats),
       // Final skoru GERÇEK şemadan gelir.
-      subtitle: '${context.t(K.statTotalScore)}: $finalScore',
+      subtitle: '${context.t(K.statTotalScore)}: ${groupThousands(finalScore)}',
       accent: SahneTokens.of(context).gold,
       icon: AppIcons.trophy,
       tokens: [
@@ -2162,7 +2172,7 @@ class _ChampionBanner extends StatelessWidget {
         if (rewardState == _CupRewardState.granted && rewardAmount > 0)
           RewardToken(
             kind: RewardKind.coin,
-            value: '$rewardAmount',
+            value: groupThousands(rewardAmount),
             onSolid: true,
           ),
       ],
@@ -2228,6 +2238,12 @@ class _UserMatchCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: SahneType.bodyStrong.copyWith(color: t.tx),
                   ),
+                  if (me)
+                    Text(
+                      context.t(K.you),
+                      key: const ValueKey('tournament-match-self-mark'),
+                      style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                    ),
                 ],
               ),
             );

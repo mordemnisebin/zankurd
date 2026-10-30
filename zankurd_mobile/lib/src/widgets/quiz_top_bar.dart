@@ -1,3 +1,5 @@
+import 'package:zankurd_mobile/src/utils/number_format.dart';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
@@ -77,9 +79,9 @@ class QuizStageCenter extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final name = title ?? CategoryNames.localized(category, context.isKu);
-    final progress = context.t(K.placementProgress, {
-      'index': '${index + 1}',
-      'total': '$total',
+    final progressLabel = context.t(K.placementProgress, {
+      'index': groupThousands(index + 1),
+      'total': groupThousands(total),
     });
     // SIRA: sayaç BAŞTA, kategori sonda. Tek satırda kısaltma sondan yer;
     // "Teknoloji · Sor…" biçiminde kesilen şey sayaç oluyordu (kaçıncı soruda
@@ -125,7 +127,7 @@ class QuizStageCenter extends StatelessWidget {
         ],
         Flexible(
           child: _FitKicker(
-            '$progress · $name',
+            '$progressLabel · $name',
             textKey: textKey,
             color: onBand ? SahneVivid.onFill : t.tx,
           ),

@@ -64,12 +64,16 @@ const _recategorisedLocally = <String, String>{
   // Kurul 3 D6 (2026-10-30): "Jin, Jiyan, Azadî" olay sorusu "Bilim"
   // (Paradigma) turunda yersizdi; yerelde ve sunucuda Siyaset'e alındı.
   'curated_paradigma_0009': 'Paradigma',
+  // T7: cümlede berxwedan sözcüğünün anlamı Ziman'a taşındı.
+  // Sunucu düzeltmesi henüz uygulanmamış yeni göç taslağındadır.
+  'curated_movement_0006': 'Paradigma',
 };
 
 /// Yerelde kategorisi değişen satırın sunucu düzeltme göçü.
 const _recategorisationFix = <String, String>{
   'offline_0757': 'supabase/2026-10-02_e2e_content_fixes.sql',
   'curated_paradigma_0009': 'supabase/2026-10-30_slogan_kategori_duzeltme.sql',
+  'curated_movement_0006': 'supabase/2026-10-30_anlam_kategori_celdirici.sql',
 };
 
 /// Ekleme göçüyle sunucuya girdikten SONRA emekliye ayrılan sorular: yerel
@@ -387,4 +391,29 @@ void main() {
     );
     expect(fix, contains(_uuid5('zankurd-local:ds_cografya_0177')));
   });
+
+  test(
+    'T7 berxwedan kategori farkı korumalı ve uygulanmamış göçle izlenir',
+    () {
+      const localId = 'curated_movement_0006';
+      final path = _recategorisationFix[localId]!;
+      final sql = _code(File(path).readAsStringSync());
+      expect(byId[localId]!.category, 'Ziman');
+      expect(sql, contains(_uuid5('zankurd-local:$localId')));
+      expect(sql, contains(byId[localId]!.prompt));
+      expect(
+        sql,
+        contains(
+          "into strict v_language from public.categories where slug = 'ziman'",
+        ),
+      );
+      expect(sql, contains('set category_id = v_language'));
+      expect(sql, contains('where id = v_word.id and category_id = v_science'));
+      expect(sql, contains('correct_option = v_word.correct_option'));
+      expect(
+        File('supabase/applied.md').readAsStringSync(),
+        contains('| ${path.split('/').last} | ⏳ |'),
+      );
+    },
+  );
 }
