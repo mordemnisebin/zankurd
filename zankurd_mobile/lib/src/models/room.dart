@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'player.dart';
 import '../game/reveal_timing.dart';
+import '../game/server_clock.dart';
 
 enum RoomStatus { lobby, active, finished }
 
@@ -68,11 +69,13 @@ class RoomResumeSnapshot {
     required List<ResumedAnswer> answers,
     this.pendingAnswer,
     this.revealClock,
+    ServerClock? serverClock,
     required this.serverNow,
     required this.questionStartedAt,
     required this.deadline,
     required this.remainingMs,
-  }) : answers = List.unmodifiable(answers);
+  }) : answers = List.unmodifiable(answers),
+       serverClock = serverClock ?? ServerClock(serverNow: serverNow);
 
   final GameRoom room;
   final int currentQuestionIndex;
@@ -86,6 +89,7 @@ class RoomResumeSnapshot {
 
   /// Null: göç uygulanmamış sunucu; eski beş saniyelik sözleşme.
   final ServerRevealClock? revealClock;
+  final ServerClock serverClock;
   final DateTime serverNow;
   final DateTime? questionStartedAt;
   final DateTime? deadline;

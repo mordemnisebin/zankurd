@@ -1,3 +1,5 @@
+import 'server_clock.dart';
+
 /// Cevap açıldıktan sonraki okuma arası; soru cevaplama süresinden ayrıdır.
 abstract final class RevealTiming {
   static const live = Duration(seconds: 3);
@@ -17,22 +19,17 @@ class ServerRevealClock {
     required DateTime serverNow,
     required this.endsAt,
     Duration Function()? elapsed,
-  }) : _initialRemaining = endsAt.difference(serverNow),
-       _elapsed = elapsed ?? _monotonicElapsed();
+  }) : clock = ServerClock(serverNow: serverNow, elapsed: elapsed);
+
+  ServerRevealClock.fromServerClock({
+    required this.clock,
+    required this.endsAt,
+  });
 
   final DateTime endsAt;
-  final Duration _initialRemaining;
-  final Duration Function() _elapsed;
+  final ServerClock clock;
 
-  static Duration Function() _monotonicElapsed() {
-    final watch = Stopwatch()..start();
-    return () => watch.elapsed;
-  }
-
-  Duration get remaining {
-    final value = _initialRemaining - _elapsed();
-    return value.isNegative ? Duration.zero : value;
-  }
+  Duration get remaining => clock.remainingUntil(endsAt);
 
   int get secondsLeft => (remaining.inMicroseconds / 1000000).ceil();
 }

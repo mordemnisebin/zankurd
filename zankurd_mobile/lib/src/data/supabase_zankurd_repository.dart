@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'durable_write.dart';
 import '../game/reveal_timing.dart';
+import '../game/server_clock.dart';
 import '../models/async_duel.dart';
 import '../models/match_history.dart';
 import '../models/my_suggestion.dart';
@@ -1097,6 +1098,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
     final json = _requiredJsonObject(response, 'get_my_resumable_room');
     final serverNow = _requiredDateTime(json, 'server_now');
+    final serverClock = ServerClock(
+      serverNow: serverNow,
+      roundTrip: requestWatch.elapsed,
+    );
     final revealEndsAt = _optionalDateTimeFromKeys(json, const [
       'current_question_reveal_ends_at',
     ]);
@@ -1104,8 +1109,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     // tahminidir; erken ilerletme isteğini sunucunun CAS kapısı reddeder.
     final revealClock = revealEndsAt == null
         ? null
-        : ServerRevealClock(
-            serverNow: serverNow.add(requestWatch.elapsed ~/ 2),
+        : ServerRevealClock.fromServerClock(
+            clock: serverClock,
             endsAt: revealEndsAt,
           );
     final roomId = _requiredString(json, const ['room_id']);
@@ -1160,6 +1165,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       answers: answers,
       pendingAnswer: _requiredPendingAnswer(json),
       serverNow: serverNow,
+      serverClock: serverClock,
       revealClock: revealClock,
       questionStartedAt: _optionalDateTimeFromKeys(json, const [
         'current_question_started_at',

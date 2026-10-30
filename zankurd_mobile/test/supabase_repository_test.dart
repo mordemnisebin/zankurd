@@ -224,6 +224,7 @@ class _RoomSnapshotHttpClient extends http.BaseClient {
 class _RoomSessionHttpClient extends http.BaseClient {
   _RoomSessionHttpClient({
     this.resumeResponse,
+    this.beforeRequest,
     this.resultResponse,
     this.leaveResponse = const {
       'status': 'finished',
@@ -259,6 +260,7 @@ class _RoomSessionHttpClient extends http.BaseClient {
   });
 
   final Object? resumeResponse;
+  final Future<void> Function(String path)? beforeRequest;
   final Object? resultResponse;
   final Object? leaveResponse;
   final String? rpcErrorCode;
@@ -285,6 +287,7 @@ class _RoomSessionHttpClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    await beforeRequest?.call(request.url.path);
     requestedPaths.add(request.url.path);
     if (request is http.Request && request.body.isNotEmpty) {
       final decoded = jsonDecode(request.body);
@@ -1392,6 +1395,52 @@ void main() {
       },
     );
   }
+
+  test(
+    'T5: oda yüklemesi sunucu saat örneğinden sonraki iki saniyeyi sayar',
+    () async {
+      final httpClient = _RoomSessionHttpClient(
+        beforeRequest: (path) async {
+          if (path == '/rest/v1/rooms') {
+            await Future<void>.delayed(const Duration(seconds: 2));
+          }
+        },
+        resumeResponse: {
+          'room_id': '00000000-0000-0000-0000-000000000099',
+          'current_question_index': 0,
+          'own_score': 0,
+          'own_streak': 0,
+          'own_best_streak': 0,
+          'correct_count': 0,
+          'wrong_count': 0,
+          'server_now': '2026-08-02T12:00:15.000Z',
+          'current_question_reveal_ends_at': '2026-08-02T12:00:20.000Z',
+          'current_question_started_at': '2026-08-02T12:00:10.000Z',
+          'current_question_deadline': '2026-08-02T12:00:30.000Z',
+          'current_question_remaining_ms': 15000,
+          'pending_answer': null,
+          'answers': <Object>[],
+        },
+      );
+      final client = SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: httpClient,
+      );
+      addTearDown(client.dispose);
+      final resume = (await SupabaseZanKurdRepository(
+        client,
+      ).loadMyResumableRoom())!;
+      final remaining = resume.serverClock.remainingUntil(resume.deadline!);
+      expect(remaining.inMilliseconds, inInclusiveRange(11000, 13000));
+      expect(
+        resume.revealClock!.remaining.inMilliseconds,
+        inInclusiveRange(1000, 3000),
+      );
+      // Legacy remaining_ms halen taşınır; ekran son tarih/saat çiftini kullanır.
+      expect(resume.remainingMs, 15000);
+    },
+  );
 
   test('resume RPC null dönerse snapshot sorgulanmaz', () async {
     final httpClient = _RoomSessionHttpClient();

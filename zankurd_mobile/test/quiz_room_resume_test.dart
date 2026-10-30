@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/game/reveal_timing.dart';
+import 'package:zankurd_mobile/src/game/server_clock.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
@@ -96,11 +97,14 @@ RoomResumeSnapshot _snapshot({
   int correct = 1,
   int wrong = 0,
   int remainingMs = 12000,
+  DateTime? serverNow,
+  bool hasTiming = true,
   ServerRevealClock? revealClock,
+  ServerClock? serverClock,
   ResumedPendingAnswer? pendingAnswer,
   List<ResumedAnswer> answers = const [],
 }) {
-  final now = DateTime.utc(2026, 8, 2, 12);
+  final now = serverNow ?? DateTime.utc(2026, 8, 2, 12);
   return RoomResumeSnapshot(
     room: _room,
     currentQuestionIndex: questionIndex,
@@ -112,9 +116,12 @@ RoomResumeSnapshot _snapshot({
     answers: answers,
     serverNow: now,
     revealClock: revealClock,
+    serverClock: serverClock,
     pendingAnswer: pendingAnswer,
-    questionStartedAt: now.subtract(const Duration(seconds: 18)),
-    deadline: now.add(Duration(milliseconds: remainingMs)),
+    questionStartedAt: hasTiming
+        ? now.subtract(const Duration(seconds: 18))
+        : null,
+    deadline: hasTiming ? now.add(Duration(milliseconds: remainingMs)) : null,
     remainingMs: remainingMs,
   );
 }
@@ -162,6 +169,7 @@ class _SessionRepository extends MockZanKurdRepository {
   final StreamController<Map<String, dynamic>> broadcasts =
       StreamController<Map<String, dynamic>>.broadcast();
   RoomResumeSnapshot? snapshot;
+  RoomResumeSnapshot? readySnapshot;
   RoomResultSnapshot? exactResult = _resultSnapshot();
   final List<Object?> resultResponses = [];
   Completer<RoomResultSnapshot?>? resultGate;
@@ -215,6 +223,10 @@ class _SessionRepository extends MockZanKurdRepository {
     String roomId,
     Map<String, dynamic> payload,
   ) async {}
+
+  @override
+  Future<RoomResumeSnapshot?> markRoomClientReady(GameRoom room) async =>
+      readySnapshot;
 
   @override
   Future<RoomResumeSnapshot?> loadMyResumableRoom() async {
@@ -640,6 +652,92 @@ void main() {
       );
       expect(timer.animation.value, closeTo(0.4, 0.04));
       expect(timer.animation.isAnimating, isTrue);
+    },
+  );
+
+  testWidgets(
+    'T5: iki saniye bekleyen snapshot soru sayacını yeniden başlatmaz',
+    (tester) async {
+      final capturedAt = tester.binding.clock.now();
+      final repository = _SessionRepository(
+        _snapshot(
+          questionIndex: 0,
+          remainingMs: 20000,
+          serverClock: ServerClock(
+            serverNow: DateTime.utc(2026, 8, 2, 12),
+            elapsed: () => tester.binding.clock.now().difference(capturedAt),
+          ),
+        ),
+      );
+      addTearDown(repository.close);
+      // RPC örneği ile ekranın kurulması arasındaki oda/profil gecikmesi.
+      await tester.pump(const Duration(seconds: 2));
+      await tester.pumpWidget(
+        testShell(
+          child: QuizScreen(
+            repository: repository,
+            room: _room,
+            questions: _questions,
+            is1v1: true,
+            resumeSnapshot: repository.snapshot,
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+      final timer = tester.widget<QuizTimerWidget>(
+        find.byKey(const ValueKey('quiz-circular-timer')),
+      );
+      expect(timer.animation.value * 30, closeTo(18, 0.5));
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
+
+  testWidgets(
+    'T5: geç dönen eski bekleme snapshotı çalışan sunucu saatini silmez',
+    (tester) async {
+      final origin = DateTime.utc(2026, 8, 2, 12);
+      final repository =
+          _SessionRepository(
+              _snapshot(questionIndex: 0, serverNow: origin, hasTiming: false),
+            )
+            ..readySnapshot = _snapshot(
+              questionIndex: 0,
+              serverNow: origin.add(const Duration(seconds: 2)),
+              serverClock: ServerClock(
+                serverNow: origin.add(const Duration(seconds: 2)),
+                elapsed: () => Duration.zero,
+              ),
+              remainingMs: 18000,
+            )
+            ..endStateGate = Completer<RoomEndState>();
+      addTearDown(repository.close);
+      await tester.pumpWidget(
+        testShell(
+          child: QuizScreen(
+            repository: repository,
+            room: _room,
+            questions: _questions,
+            is1v1: true,
+            resumeSnapshot: repository.snapshot,
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+      QuizTimerWidget timer() => tester.widget<QuizTimerWidget>(
+        find.byKey(const ValueKey('quiz-circular-timer')),
+      );
+      expect(timer().animation.isAnimating, isTrue);
+      expect(timer().animation.value * 30, closeTo(18, 0.5));
+      // Reconcile eski waiting yanıtını daha önce almıştı; oyuncu/endState
+      // sorgusu geciktiği için yeni ready yanıtından SONRA ekrana ulaşır.
+      repository.endStateGate!.complete(repository.endState);
+      await tester.pump();
+      await tester.pump();
+      expect(timer().animation.isAnimating, isTrue);
+      expect(timer().animation.value * 30, closeTo(18, 0.5));
+      await tester.pumpWidget(const SizedBox.shrink());
     },
   );
 

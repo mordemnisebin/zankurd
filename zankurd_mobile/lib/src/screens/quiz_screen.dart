@@ -414,8 +414,8 @@ class _QuizScreenState extends State<QuizScreen>
   bool _advanceInFlight = false;
   bool _advanceSequenceActive = false;
   bool _serverAnswerPending = false;
-  int? _authoritativeRemainingMs;
-  DateTime? _authoritativeRemainingCapturedAt;
+  ServerRevealClock? _serverQuestionClock;
+  DateTime? _latestSnapshotServerNow;
 
   // Soru sesi tek kapıdan seçilir: doğrulanmış insan kaydı varsa o,
   // yoksa Kurmancî TTS, ikisi de yoksa dinleme eylemi gizlenir.
@@ -1029,25 +1029,20 @@ class _QuizScreenState extends State<QuizScreen>
       snapshot.questionStartedAt != null && snapshot.deadline != null;
 
   void _captureAuthoritativeTiming(RoomResumeSnapshot snapshot) {
+    _latestSnapshotServerNow = snapshot.serverNow;
     _serverRevealClock = snapshot.revealClock;
     if (!_hasAuthoritativeTiming(snapshot)) {
-      _authoritativeRemainingMs = null;
-      _authoritativeRemainingCapturedAt = null;
+      _serverQuestionClock = null;
       return;
     }
-    _authoritativeRemainingMs = max(0, snapshot.remainingMs);
-    _authoritativeRemainingCapturedAt = DateTime.now();
-  }
-
-  int? get _estimatedAuthoritativeRemainingMs {
-    final remaining = _authoritativeRemainingMs;
-    final capturedAt = _authoritativeRemainingCapturedAt;
-    if (remaining == null || capturedAt == null) return null;
-    return max(
-      0,
-      remaining - DateTime.now().difference(capturedAt).inMilliseconds,
+    _serverQuestionClock = ServerRevealClock.fromServerClock(
+      clock: snapshot.serverClock,
+      endsAt: snapshot.deadline!,
     );
   }
+
+  int? get _estimatedAuthoritativeRemainingMs =>
+      _serverQuestionClock?.remaining.inMilliseconds;
 
   bool get _hasSafeCurrentReveal =>
       !_serverAnswerPending &&
@@ -2749,6 +2744,14 @@ class _QuizScreenState extends State<QuizScreen>
 
   void _applyReconciledSnapshot(RoomResumeSnapshot snapshot) {
     if (!mounted || _questions.isEmpty) return;
+    // Ready ve reconcile istekleri paralel dönebilir. Eski aynı-soru
+    // yanıtı yeni deadline/reveal durumunu geri alamaz.
+    final latestServerNow = _latestSnapshotServerNow;
+    if (snapshot.currentQuestionIndex == index &&
+        latestServerNow != null &&
+        snapshot.serverNow.isBefore(latestServerNow)) {
+      return;
+    }
     final oldIndex = index;
     final hasTiming = _hasAuthoritativeTiming(snapshot);
     setState(() {
