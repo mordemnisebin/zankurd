@@ -42,6 +42,6 @@ void main() {
     expect(sql, contains('begin;'));
     expect(sql.trim(), endsWith('commit;'));
     final applied = File('supabase/applied.md').readAsStringSync();
-    expect(applied, contains('2026-10-30_t10_room_answer_count.sql | ⏳'));
+    expect(applied, contains('2026-10-30_t10_room_answer_count.sql | ✅'));
   });
 }

@@ -285,4 +285,4 @@
 | 2026-10-30_gecis_ritmi.sql | ✅ | 2026-10-30 sabah, ana ajan uyguladı (GPT-6 Astra yazdı ve karar verdi). Açılış süresi: 1v1 ve 2 kişilik oda 3 sn, kalabalık özel oda 4 sn (room_reveal_delay); advance_room_question / get_my_resumable_room ortak saatle. Dry-run hatasız; canlıda room_reveal_delay(false,2)=3 sn doğrulandı. |
 | 2026-10-30_anlam_kategori_celdirici.sql | ✅ | 2026-10-30 sabah, ana ajan uyguladı (GPT-6 Astra yazdı). Tur 5: berxwedan sorusu Paradigma → Ziman; konfederalîzm sorusunda tartışmalı Bookchin çeldiricisi → Hobbes (KU Flash+Argon). Eski değer korumalı; dry-run hatasız; uygulamada doğrulama bloğu geçti. |
 
-| 2026-10-30_t10_room_answer_count.sql | ⏳ | T10: yalnız A/B/C/D cevaplarını say; TIMEOUT hariç. Canlıya bağlanılmadı/uygulanmadı. Canlı tanımdan korumalı yama; canlı diff ve transaction duman testi uygulama öncesi gerekli. |
+| 2026-10-30_t10_room_answer_count.sql | ✅ | 2026-10-30 öğle, ana ajan uyguladı (GPT-6 Astra yazdı). get_room_answer_progress yalnız A/B/C/D cevaplarını sayar (TIMEOUT kayıtları sahte 4/4 üretmesin); search_path sabit, anon yetkisiz. Dry-run hatasız; uygulandı. |
