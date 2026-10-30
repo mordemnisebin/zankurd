@@ -40,6 +40,13 @@ String profileMatchSubtitle(BuildContext context, RecentMatch match) {
   final mine = match.myScore;
   final theirs = match.opponentScore;
   if (mine == null || theirs == null) return label;
+  // Kurul 3 D15 (3/3): eşit skorda "Kazandın · 1–1" gerekçesizdi. Eşit
+  // skorda sırayla düelloda sonucu hız belirler (sunucu kuralı); söylenir.
+  if (mine == theirs &&
+      match.result != RecentMatchResult.draw &&
+      match.kind == RecentMatchKind.async) {
+    return '$label · $mine–$theirs ${context.t(match.result == RecentMatchResult.win ? K.matchDecidedFaster : K.matchDecidedSlower)}';
+  }
   return '$label · $mine–$theirs';
 }
 

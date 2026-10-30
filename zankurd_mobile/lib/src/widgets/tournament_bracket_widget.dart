@@ -66,18 +66,28 @@ class TournamentBracketWidget extends StatelessWidget {
     while (rounds.length < totalRounds) {
       final prev = rounds.last.matches;
       final count = prev.length <= 1 ? 1 : (prev.length + 1) ~/ 2;
-      ({String id, String name}) side(int index) {
-        if (index >= prev.length) return (id: '', name: 'TBD');
+      // Kurul 3 D17 (Sol, nesnel): finalist yarı finalde kendi avatarıyla,
+      // Final kartında varsayılan avatarla görünüyordu; profil de taşınır.
+      ({String id, String name, PublicProfile? profile}) side(int index) {
+        if (index >= prev.length) return (id: '', name: 'TBD', profile: null);
         final m = prev[index];
         if (m.status == 'completed' && m.winnerId.isNotEmpty) {
           if (m.winnerId == m.playerOneId) {
-            return (id: m.playerOneId, name: m.playerOneName);
+            return (
+              id: m.playerOneId,
+              name: m.playerOneName,
+              profile: m.playerOneProfile,
+            );
           }
           if (m.winnerId == m.playerTwoId) {
-            return (id: m.playerTwoId, name: m.playerTwoName);
+            return (
+              id: m.playerTwoId,
+              name: m.playerTwoName,
+              profile: m.playerTwoProfile,
+            );
           }
         }
-        return (id: '', name: 'TBD:${index + 1}');
+        return (id: '', name: 'TBD:${index + 1}', profile: null);
       }
 
       rounds.add(
@@ -92,6 +102,8 @@ class TournamentBracketWidget extends StatelessWidget {
                 playerOneName: side(2 * m).name,
                 playerTwoId: side(2 * m + 1).id,
                 playerTwoName: side(2 * m + 1).name,
+                playerOneProfile: side(2 * m).profile,
+                playerTwoProfile: side(2 * m + 1).profile,
                 playerOneScore: 0,
                 playerTwoScore: 0,
                 status: 'pending',

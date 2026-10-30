@@ -1271,6 +1271,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
           rounds: bracket.rounds,
           currentRound: bracket.currentRound,
           bracketStatus: bracket.status,
+          userId: _userId,
         ),
         if (_standings.isNotEmpty) ...[
           SahneSectionHeader(title: context.t(K.standings)),
@@ -1797,12 +1798,31 @@ class _RoundProgressStrip extends StatelessWidget {
     required this.rounds,
     required this.currentRound,
     required this.bracketStatus,
+    this.userId = '',
   });
 
   final List<String> roundNames;
   final List<TournamentRound> rounds;
   final int currentRound;
   final String bracketStatus;
+  final String userId;
+
+  /// Kurul 3 D16 (3/3): yarı finalini KAZANMIŞ oyuncuda diğer yarı final
+  /// sürerken şerit hâlâ "Yarı Final"i etkin (oynat simgesiyle) gösteriyordu;
+  /// oyuncunun sıradaki aşaması Final'dir. Oyuncunun kendi tamamlanmış ve
+  /// kazanılmış maçı varsa o tur onun için bitmiştir; etkin aşama bir
+  /// sonrakidir (henüz kurulmadıysa bekleme simgesiyle).
+  int get _userStage {
+    if (userId.isEmpty || bracketStatus != 'active') return currentRound;
+    if (currentRound >= rounds.length) return currentRound;
+    final mine = rounds[currentRound].matches.where(
+      (m) => m.playerOneId == userId || m.playerTwoId == userId,
+    );
+    final won = mine.any((m) => m.status == 'completed' && m.winnerId == userId);
+    return won && currentRound + 1 < roundNames.length
+        ? currentRound + 1
+        : currentRound;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1824,10 +1844,12 @@ class _RoundProgressStrip extends StatelessWidget {
             // Durum GERÇEK tur verisinden gelir; sıra numarasından tahmin
             // edilmez. Turnuva bittiyse hiçbir tur "şu an oynanıyor" diye
             // işaretlenmez.
-            state: i < rounds.length && rounds[i].status == 'completed'
+            state:
+                (i < rounds.length && rounds[i].status == 'completed') ||
+                    (bracketStatus == 'active' && i < _userStage)
                 ? _RoundState.done
-                : (bracketStatus == 'active' && i == currentRound)
-                ? _RoundState.active
+                : (bracketStatus == 'active' && i == _userStage)
+                ? (i > currentRound ? _RoundState.waiting : _RoundState.active)
                 : _RoundState.upcoming,
           ),
         ],
@@ -1836,7 +1858,7 @@ class _RoundProgressStrip extends StatelessWidget {
   }
 }
 
-enum _RoundState { done, active, upcoming }
+enum _RoundState { done, active, waiting, upcoming }
 
 class _RoundPill extends StatelessWidget {
   const _RoundPill({required this.label, required this.state});
@@ -1852,12 +1874,14 @@ class _RoundPill extends StatelessWidget {
     final (bg, fg, icon) = switch (state) {
       _RoundState.done => (t.okTint, t.okTx, AppIcons.check),
       _RoundState.active => (t.raceTint, t.raceTx, AppIcons.play),
+      // Oyuncunun sıradaki aşaması, rakibi henüz belli değil.
+      _RoundState.waiting => (t.raceTint, t.raceTx, AppIcons.hourglass),
       _RoundState.upcoming => (t.s2, t.tx2, AppIcons.clock),
     };
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: bg,
-        shape: state == _RoundState.active
+        shape: state == _RoundState.active || state == _RoundState.waiting
             ? SahneShape.withSide(SahneShape.s, fg, width: SahneRing.r1)
             : SahneShape.s,
       ),

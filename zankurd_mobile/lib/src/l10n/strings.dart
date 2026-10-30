@@ -3998,6 +3998,8 @@ class Tr {
     },
     K.recentMatchesTitle: {'ku': 'Pêşbirkên dawî', 'tr': 'Son maçlar'},
     K.matchResultWin: {'ku': 'Bi ser ketî', 'tr': 'Kazandın'},
+    K.matchDecidedFaster: {'ku': '(zûtir)', 'tr': '(daha hızlı)'},
+    K.matchDecidedSlower: {'ku': '(hêdîtir)', 'tr': '(daha yavaş)'},
     K.matchResultLoss: {'ku': 'Te winda kir', 'tr': 'Kaybettin'},
     K.matchResultDraw: {'ku': 'Beramberî', 'tr': 'Berabere'},
     K.recordsTitle: {'ku': 'Rekorên min', 'tr': 'Rekorlarım'},
@@ -4130,9 +4132,12 @@ class Tr {
           'Girêdanê ji hevalê xwe re bişîne. Dema ew bilîze, encam li vir xuya dibe.',
       'tr': 'Bağlantıyı arkadaşına gönder. O oynayınca sonuç burada görünecek.',
     },
+    // Kurul 3 D14 (Astra + Sol): "sırası gelince bildirim alacak" oyuncuya
+    // kendi yapacağını söylemiyordu; sıranın kimde olduğu ve sonucun nerede
+    // görüneceği yazar.
     K.challengeFriendWaitBody: {
-      'ku': 'Dema dora {name} were, ew ê agahdarî bistîne.',
-      'tr': '{name} sırası gelince bildirim alacak.',
+      'ku': 'Dor li {name} ye. Gava bilîze, tu encamê li beşa Pêşbirkê dibînî.',
+      'tr': 'Sıra {name} adlı oyuncuda. Oynayınca sonucu Yarış sekmesinde görürsün.',
     },
     // Kurul C20 (Astra + Sol): "Yeni düello" rozeti yeni özellik duyurusu
     // gibi okunuyordu; eylem olduğu söylenir.
@@ -6027,6 +6032,8 @@ class K {
   static const nudgeSent = 'duel.async.nudge.sent';
   static const nudgeFailed = 'duel.async.nudge.failed';
   static const recentMatchesTitle = 'profile.recentMatches.title';
+  static const matchDecidedFaster = 'profile.matchDecidedFaster';
+  static const matchDecidedSlower = 'profile.matchDecidedSlower';
   static const matchResultWin = 'profile.match.win';
   static const matchResultLoss = 'profile.match.loss';
   static const matchResultDraw = 'profile.match.draw';
