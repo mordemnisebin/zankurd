@@ -3556,13 +3556,13 @@ class Tr {
     K.presenceVisibilityUnavailable: {
       'tr': 'Tercihin sunucudan doğrulanamadı. Bağlantı kurulunca yenilenir.',
       'ku':
-          'Vebijêrka te ji pêşkêşkarê nehat piştrastkirin. Dema girêdan çêbibe dê nû bibe.',
+          'Vebijêrka te ji pêşkêşkar nehat piştrastkirin. Dema girêdan çêbibe dê were nûkirin.',
     },
     K.presenceVisibilitySub: {
       'tr':
           'Son görülme zamanın arkadaşlarına gösterilir. Varsayılan kapalıdır.',
       'ku':
-          'Dema ku tu cara dawî hatî dîtin ji hevalên te re tê nîşandan. Di destpêkê de girtî ye.',
+          'Dema dîtina te ya dawî ji hevalên te re tê nîşandan. Di destpêkê de girtî ye.',
     },
     K.privacyBody: {
       'ku':

@@ -15,7 +15,7 @@
 
 | Dosya | Canlıda? | Tarih / Not |
 |---|---|---|
-| 2026-10-30_presence.sql | ⏳ YAZILDI, UYGULANMADI | T1: varsayılan kapalı, hesap bazlı varlık; 60 sn sunucu sınırı, eski list_friends gövdesini koruyan sarmalayıcı. Canlı bağlantı/uygulama yapılmadı. |
+| 2026-10-30_presence.sql | ✅ | 2026-10-30 sabah, ana ajan uyguladı (GPT-6 Astra yazdı, Opus güvenlik incelemesi). user_presence (RLS; okuma: kendi + rıza veren arkadaş; yazma yalnız SECURITY DEFINER RPC), touch_presence (60 sn sınır), get/set_presence_visibility, list_friends last_seen_at (eski gövde sarmalandı). Anon yetkisiz. Dry-run hatasız; sonra canlıda tablo var, RLS açık, anon execute=false. |
 | 2026-07-03_reward_hardening.sql | ✅ | 2026-07-03 (claim_* RPC'ler, xp, guard trigger'lar) |
 | 2026-07-03_matchmaking_fix.sql | ✅ | 2026-07-03 (join_matchmaking + realtime queue) |
 | 2026-07-13_curated_question_wave_1.sql | ✅ | 2026-07-15, Management API ile (category_id düzeltmesiyle) |
