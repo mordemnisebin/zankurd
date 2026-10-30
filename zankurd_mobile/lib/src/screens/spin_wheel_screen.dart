@@ -11,6 +11,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/remote_availability.dart';
 import '../providers/sound_provider.dart';
+import '../providers/wheel_status_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -79,14 +80,14 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 
   late final AnimationController _spinController;
   late Animation<double> _rotation;
-  bool _canSpin = false;
-
-  /// W5: satın alınmış, kullanılmamış ek çevirme sayısı.
-  int _extraSpins = 0;
-  bool _loading = true;
-  bool _statusError = false;
-  bool _statusOffline = false;
-  bool _statusRequestInFlight = false;
+  late final WheelStatusProvider _wheelStatus;
+  late final bool _ownsWheelStatus;
+  bool get _canSpin => _wheelStatus.ready;
+  int get _extraSpins => _wheelStatus.extraSpins;
+  bool get _loading => _wheelStatus.loading && !_spinning && _wonAmount == null;
+  bool get _statusError =>
+      _wheelStatus.error != null && !_spinning && _wonAmount == null;
+  bool get _statusOffline => _wheelStatus.offline;
   bool _spinning = false;
   int? _wonAmount;
   String? _spinErrorMessage;
@@ -144,7 +145,14 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       curve: const Interval(0, 0.7, curve: Curves.easeOut),
     );
 
-    _checkSpin();
+    final shared = context.read<WheelStatusProvider?>();
+    _ownsWheelStatus = shared == null;
+    _wheelStatus = shared ?? WheelStatusProvider(widget.repository);
+    _wheelStatus.addListener(_onWheelStatusChanged);
+    // Ortak sağlayıcıdaki diğer ekranlar build sırasında bildirilmesin.
+    scheduleMicrotask(() {
+      if (mounted) unawaited(_checkSpin());
+    });
     _startCountdown();
   }
 
@@ -197,49 +205,20 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     }
   }
 
+  void _onWheelStatusChanged() {
+    if (mounted) setState(() {});
+  }
+
   Future<void> _checkSpin() async {
-    if (_statusRequestInFlight) return;
-    _statusRequestInFlight = true;
-    if (mounted) {
-      setState(() {
-        _loading = true;
-        _statusError = false;
-        _statusOffline = false;
-        _spinErrorMessage = null;
-      });
-    }
-    try {
-      final can = await widget.repository.canSpinToday();
-      var extra = 0;
-      try {
-        extra = await widget.repository.unusedExtraSpins();
-      } catch (_) {
-        extra = 0;
-      }
-      if (!mounted) return;
-      setState(() {
-        _extraSpins = extra;
-        _canSpin = can;
-        _loading = false;
-        _statusError = false;
-      });
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'canSpinToday failed');
-      if (mounted) {
-        setState(() {
-          _loading = false;
-          _statusError = true;
-          _statusOffline = isLikelyOfflineError(error);
-        });
-      }
-    } finally {
-      _statusRequestInFlight = false;
-    }
+    if (mounted) setState(() => _spinErrorMessage = null);
+    await _wheelStatus.refresh();
   }
 
   @override
   void dispose() {
     appRouteObserver.unsubscribe(this);
+    _wheelStatus.removeListener(_onWheelStatusChanged);
+    if (_ownsWheelStatus) _wheelStatus.dispose();
     _spinController.dispose();
     _prizeAnimController.dispose();
     _countdownTimer?.cancel();
@@ -259,7 +238,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     const rewards = SpinWheelScreen.rewards;
     int won;
     try {
-      won = await widget.repository.awardSpinCoins();
+      won = await _wheelStatus.spin();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'awardSpinCoins failed');
       if (!mounted) return;
@@ -275,7 +254,6 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       if (!mounted) return;
       setState(() {
         _spinning = false;
-        _canSpin = false;
         _spinErrorMessage = context.t(K.wheelAlreadySpun);
         _retrySpinStatus = true;
       });
@@ -306,7 +284,6 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 
     setState(() {
       _spinning = false;
-      _canSpin = false;
       _wonAmount = won;
       _showConfetti = true;
     });

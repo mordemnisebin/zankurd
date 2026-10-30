@@ -52,6 +52,26 @@ Widget _shell(Widget child) {
 // alanın (üst çubuk ile "Çevir" arası) dikey ortasındadır. Taşma/istisna
 // vermez, yani eski testler hiçbir şey söylemezdi; yalnız ölçü yakalar.
 void main() {
+  testWidgets('Ö3: çark açıkken uygulamaya dönüş hakkı yeniden okur', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final repository = _SpinRepository(canSpin: true);
+    await tester.pumpWidget(_shell(SpinWheelScreen(repository: repository)));
+    await tester.pumpAndSettle();
+    expect(find.text('Çevir'), findsOneWidget);
+
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    repository.canSpin = false;
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Yarın tekrar gel.'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('R6: çark 390 genişlikte ≥ %70 ve alanın ortasında', (
     tester,
   ) async {

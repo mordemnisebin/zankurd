@@ -50,6 +50,32 @@ void main() {
       findsNothing,
     );
   });
+  testWidgets('T16 Ö1: erken açılış üst sayacı durdurur, geometri korunur', (
+    tester,
+  ) async {
+    for (final seconds in [3, 4]) {
+      Future<void> show(bool stopped) => tester.pumpWidget(
+        testShell(
+          child: Center(
+            child: QuizTimerWidget(
+              animation: AlwaysStoppedAnimation(seconds / 30),
+              maxSeconds: 30,
+              isPaused: stopped,
+              stopped: stopped,
+            ),
+          ),
+        ),
+      );
+      await show(false);
+      final before = tester.getRect(find.byType(SahneStageTimer));
+      expect(find.text('$seconds'), findsOneWidget);
+      await show(true);
+      expect(find.byKey(const ValueKey('stage-timer-seconds')), findsNothing);
+      expect(find.byKey(const ValueKey('stage-timer-paused')), findsOneWidget);
+      expect(tester.getRect(find.byType(SahneStageTimer)), before);
+      expect(tester.takeException(), isNull);
+    }
+  });
   testWidgets('S9: cevapsız resume ilk karede eski tam süreyi göstermez', (
     tester,
   ) async {
@@ -438,7 +464,7 @@ void main() {
                 room: t8GameRoom(),
                 questions: const [t8GameQuestion, t8GameQuestion],
                 is1v1: true,
-                enableTimer: false,
+                enableTimer: true,
               ),
             ),
           ),
@@ -500,6 +526,11 @@ void main() {
         expect(find.text(ku ? 'Bersiva rast' : 'Doğru cevap'), findsOneWidget);
         expect(
           find.textContaining(ku ? 'Pirsa din' : 'Sonraki soru'),
+          findsOneWidget,
+        );
+        expect(find.byKey(const ValueKey('stage-timer-seconds')), findsNothing);
+        expect(
+          find.byKey(const ValueKey('stage-timer-paused')),
           findsOneWidget,
         );
         await capture(tester, boundary, 'S8_sonra_${ku ? 'KU' : 'TR'}_dogru');

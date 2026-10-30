@@ -36,6 +36,7 @@ import 'src/utils/boot_step.dart';
 import 'src/utils/firebase_bootstrap.dart';
 import 'src/utils/supabase_boot.dart';
 import 'src/providers/sound_provider.dart';
+import 'src/providers/wheel_status_provider.dart';
 import 'src/providers/theme_provider.dart';
 import 'src/screens/app_shell.dart';
 import 'src/screens/splash_screen.dart';
@@ -629,6 +630,12 @@ class ZanKurdApp extends StatelessWidget {
         ChangeNotifierProvider<RepositoryHolder>.value(value: repositoryHolder),
         ProxyProvider<RepositoryHolder, ZanKurdRepository>(
           update: (_, holder, _) => holder.repository,
+        ),
+        ChangeNotifierProxyProvider<ZanKurdRepository, WheelStatusProvider>(
+          create: (context) =>
+              WheelStatusProvider(context.read<ZanKurdRepository>()),
+          update: (_, repository, status) =>
+              status!..updateRepository(repository),
         ),
         // Dışarıdan verilen instance'lar `.value` ile paylaşılır. `create:`
         // ile verilirse Provider bunların sahipliğini üstlenir ve ağaç

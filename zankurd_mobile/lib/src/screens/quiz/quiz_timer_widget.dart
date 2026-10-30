@@ -48,7 +48,7 @@ class QuizTimerWidget extends StatelessWidget {
 
   /// Kurul 3 D2 (3/3): cevap açılışında soru süresi bitmiştir; üstteki
   /// sayaç "11" gibi akmaya devam ediyor görünüp alttaki "sonraki 4 sn" ile
-  /// çelişiyordu. Açılışta sayı yerine tamamlanma işareti; tek geri
+  /// çelişiyordu. Erken açılışta sayı yerine duraklatma işareti; tek geri
   /// sayım alt şeritteki.
   final bool stopped;
 
@@ -78,7 +78,7 @@ class QuizTimerWidget extends StatelessWidget {
           hotSeconds: isPaused || opponentTime ? -1 : 5,
           secondary: opponentTime,
           onBand: onBand,
-          pending: stopped && pendingLabel != null,
+          pending: stopped && (pendingLabel != null || seconds > 0),
           // Süresi biten soru tamamlanma tikiyle başarı gibi okunmasın.
           // Sıfır aynı sabit sayı yuvasında kalır; üst satır oynamaz.
           revealed: false,

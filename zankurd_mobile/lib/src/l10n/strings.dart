@@ -400,10 +400,6 @@ class Tr {
           'XP, zêr û rozetên te bi te re bimînin, heke tu amûra xwe biguherînî jî.',
       'tr': 'XP, jeton ve rozetlerin cihaz değiştirsen bile seninle kalsın.',
     },
-    K.guestSaveEmail: {
-      'ku': 'Bi e-nameyê tomar bike',
-      'tr': 'E-posta ile kaydet',
-    },
     K.guestSaveNotNow: {'ku': 'Ne niha', 'tr': 'Şimdi değil'},
 
     // ── Kayıt ekranı ─────────────────────────────────────────────────
@@ -768,7 +764,10 @@ class Tr {
       'tr': 'Öğrenme tamamlandı',
     },
     K.resultTitle: {'ku': 'Encam', 'tr': 'Sonuç'},
-    K.accuracyLower: {'ku': 'rastbûn', 'tr': 'doğruluk'},
+    K.resultAccuracyOfTotal: {
+      'ku': 'Di {n} pirsan de {percent} rastbûn',
+      'tr': '{n} soruda {percent} doğruluk',
+    },
     K.correct: {'ku': 'Rast', 'tr': 'Doğru'},
     K.wrong: {'ku': 'Şaş', 'tr': 'Yanlış'},
     K.blank: {'ku': 'Vala', 'tr': 'Boş'},
@@ -4944,7 +4943,7 @@ class K {
   static const raceFinished = 'result.raceFinished';
   static const learningResultTitle = 'result.learningTitle';
   static const resultTitle = 'result.title';
-  static const accuracyLower = 'result.accuracyLower';
+  static const resultAccuracyOfTotal = 'result.accuracyOfTotal';
   static const correct = 'result.correct';
   static const wrong = 'result.wrong';
   static const blank = 'result.blank';
@@ -5797,7 +5796,6 @@ class K {
   static const premiumErrGeneric = 'premium.err.generic';
   static const guestSaveTitle = 'guestSave.title';
   static const guestSaveBody = 'guestSave.body';
-  static const guestSaveEmail = 'guestSave.email';
   static const guestSaveNotNow = 'guestSave.notNow';
   static const accountSaved = 'profile.accountSaved';
   static const connectingGoogle = 'common.connectingGoogle';

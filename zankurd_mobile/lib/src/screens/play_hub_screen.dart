@@ -5,6 +5,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../config/feature_flags.dart';
 import '../data/zankurd_repository.dart';
@@ -14,6 +15,7 @@ import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/room.dart';
 import '../providers/remote_availability.dart';
+import '../providers/wheel_status_provider.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zan_mascot.dart';
 import '../utils/app_route.dart';
@@ -97,8 +99,14 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   @override
   void initState() {
     super.initState();
+    final shared = context.read<WheelStatusProvider?>();
+    _ownsWheelStatus = shared == null;
+    _wheelStatus = shared ?? WheelStatusProvider(widget.repository);
+    _wheelStatus.addListener(_onWheelStatusChanged);
     unawaited(_refreshPendingRequests());
-    unawaited(_refreshModeBadges());
+    scheduleMicrotask(() {
+      if (mounted) unawaited(_refreshModeBadges());
+    });
     _asyncDuelInboxSignal.addListener(_refreshModeBadges);
     if (widget.asyncDuelEnabled) {
       unawaited(
@@ -123,6 +131,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
   @override
   void dispose() {
+    _wheelStatus.removeListener(_onWheelStatusChanged);
+    if (_ownsWheelStatus) _wheelStatus.dispose();
     _asyncDuelInboxSignal.removeListener(_refreshModeBadges);
     _joinCodeController.dispose();
     _asyncDuelInboxRefresh.dispose();
@@ -222,7 +232,12 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
   Future<void> _openSpinWheel() async {
     await Navigator.of(context).push(
-      AppRoute<void>(page: SpinWheelScreen(repository: widget.repository)),
+      AppRoute<void>(
+        page: ChangeNotifierProvider<WheelStatusProvider>.value(
+          value: _wheelStatus,
+          child: SpinWheelScreen(repository: widget.repository),
+        ),
+      ),
     );
     if (mounted) unawaited(_refreshModeBadges());
   }
@@ -232,16 +247,18 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   /// sırası bende olan düello varsa nötr "Yeni düello" (aynı düello üstte
   /// "Sıra sende" satırı olarak zaten durur). Rozet bir iyileştirmedir:
   /// okunamazsa kart rozetsiz çizilir.
-  bool _spinReady = false;
+  late final WheelStatusProvider _wheelStatus;
+  late final bool _ownsWheelStatus;
+  bool get _spinReady => _wheelStatus.ready;
+
+  void _onWheelStatusChanged() {
+    if (mounted) setState(() {});
+  }
+
   int _duelsMyTurn = 0;
 
   Future<void> _refreshModeBadges() async {
-    try {
-      final ready = await widget.repository.canSpinToday();
-      if (mounted && ready != _spinReady) setState(() => _spinReady = ready);
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'play_hub_spin_badge');
-    }
+    await _wheelStatus.refresh();
     if (!widget.asyncDuelEnabled) return;
     try {
       final duels = await widget.repository.loadMyAsyncDuels();

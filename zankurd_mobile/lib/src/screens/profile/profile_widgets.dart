@@ -1595,23 +1595,12 @@ class _GuestUpgradeDialog extends StatefulWidget {
 }
 
 class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _emailForm = GuestAccountEmailController();
   bool _submitting = false;
-  bool _obscurePassword = true;
-
-  bool get _canSubmit =>
-      _validEmail(_emailController.text) &&
-      _passwordController.text.length >= 6;
-
-  bool _validEmail(String value) =>
-      RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value.trim());
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    _emailForm.dispose();
     super.dispose();
   }
 
@@ -1635,95 +1624,52 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
       // düğmeler ancak somut bir genişlik altında ölçülebilir.
       content: SizedBox(
         width: contentWidth,
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                context.t(K.saveAccountBody),
-                style: SahneType.caption.copyWith(
-                  color: SahneTokens.of(context).tx2,
-                ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              context.t(K.saveAccountBody),
+              style: SahneType.caption.copyWith(
+                color: SahneTokens.of(context).tx2,
               ),
-              const SizedBox(height: SahneSpace.x4),
-              if (widget.supportsGoogleLinking ||
-                  widget.supportsAppleLinking) ...[
-                AuthSocialButtons(
-                  linking: true,
-                  contentWidth: contentWidth,
-                  showGoogle: widget.supportsGoogleLinking,
-                  showApple: widget.supportsAppleLinking,
-                  appleKey: const ValueKey('guest-upgrade-apple'),
-                  onApple: _submitting
-                      ? null
-                      : () => Navigator.pop(
-                          context,
-                          _GuestUpgradeAction.appleRequested,
-                        ),
-                  onGoogle: _submitting
-                      ? null
-                      : () => Navigator.pop(
-                          context,
-                          _GuestUpgradeAction.googleRequested,
-                        ),
-                ),
-                AuthEmailDivider(contentWidth: contentWidth),
-              ],
-              SahneField(
-                controller: _emailController,
-                onChanged: (_) => setState(() {}),
-                keyboardType: TextInputType.emailAddress,
-                label: context.t(K.email),
-                validator: (v) {
-                  if (v == null || !_validEmail(v)) {
-                    return context.t(K.emailInvalid);
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 12),
-              SahneField(
-                controller: _passwordController,
-                onChanged: (_) => setState(() {}),
-                obscureText: _obscurePassword,
-                suffixIcon: _obscurePassword ? AppIcons.eyeSlash : AppIcons.eye,
-                suffixSemanticLabel: context.t(
-                  _obscurePassword ? K.showPassword : K.hidePassword,
-                ),
-                onSuffixIconPressed: () =>
-                    setState(() => _obscurePassword = !_obscurePassword),
-                label: context.t(K.password),
-                validator: (v) {
-                  if (v == null || v.length < 6) {
-                    return context.t(K.passwordTooShort);
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: SahneSpace.x2),
-              Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: Text(
-                  context.t(K.passwordHintMin6),
-                  style: SahneType.caption.copyWith(
-                    color: SahneTokens.of(context).tx2,
-                  ),
-                ),
-              ),
-              const SizedBox(height: SahneSpace.x2),
-              TextButton(
-                key: const ValueKey('guest-upgrade-existing-account'),
-                onPressed: _submitting
+            ),
+            const SizedBox(height: SahneSpace.x4),
+            if (widget.supportsGoogleLinking ||
+                widget.supportsAppleLinking) ...[
+              AuthSocialButtons(
+                linking: true,
+                contentWidth: contentWidth,
+                showGoogle: widget.supportsGoogleLinking,
+                showApple: widget.supportsAppleLinking,
+                appleKey: const ValueKey('guest-upgrade-apple'),
+                onApple: _submitting
                     ? null
                     : () => Navigator.pop(
                         context,
-                        _GuestUpgradeAction.existingAccountRequested,
+                        _GuestUpgradeAction.appleRequested,
                       ),
-                child: Text(context.t(K.t12AccountExisting)),
+                onGoogle: _submitting
+                    ? null
+                    : () => Navigator.pop(
+                        context,
+                        _GuestUpgradeAction.googleRequested,
+                      ),
               ),
+              AuthEmailDivider(contentWidth: contentWidth),
             ],
-          ),
+            GuestAccountEmailForm(controller: _emailForm, busy: _submitting),
+            const SizedBox(height: SahneSpace.x2),
+            TextButton(
+              key: const ValueKey('guest-upgrade-existing-account'),
+              onPressed: _submitting
+                  ? null
+                  : () => Navigator.pop(
+                      context,
+                      _GuestUpgradeAction.existingAccountRequested,
+                    ),
+              child: Text(context.t(K.t12AccountExisting)),
+            ),
+          ],
         ),
       ),
       actions: [
@@ -1732,44 +1678,30 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
             onPressed: _submitting ? null : () => Navigator.pop(context, null),
             child: Text(context.t(K.cancel)),
           ),
-          confirm: FilledButton(
-            key: const ValueKey('guest-upgrade-save'),
-            onPressed: _submitting || !_canSubmit
-                ? null
-                : () async {
-                    if (!(_formKey.currentState?.validate() ?? false)) {
-                      return;
-                    }
-                    setState(() => _submitting = true);
-                    try {
-                      final auth = context.read<AuthProvider>();
-                      final navigator = Navigator.of(context);
-                      final success = await auth.upgradeGuestAccount(
-                        email: _emailController.text.trim(),
-                        password: _passwordController.text,
-                      );
-                      if (!mounted) return;
-                      navigator.pop(
-                        !success
-                            ? _GuestUpgradeAction.emailFailure
-                            : auth.needsEmailConfirmation
-                            ? _GuestUpgradeAction.emailPendingConfirmation
-                            : _GuestUpgradeAction.emailSuccess,
-                      );
-                    } finally {
-                      if (mounted) setState(() => _submitting = false);
-                    }
-                  },
-            child: _submitting
-                ? SizedBox(
-                    width: 18,
-                    height: 18,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: SahneTokens.of(context).tx3,
-                    ),
-                  )
-                : Text(context.t(K.save)),
+          confirm: GuestAccountSaveButton(
+            controller: _emailForm,
+            busy: _submitting,
+            onPressed: () async {
+              setState(() => _submitting = true);
+              try {
+                final auth = context.read<AuthProvider>();
+                final navigator = Navigator.of(context);
+                final success = await auth.upgradeGuestAccount(
+                  email: _emailForm.email.text.trim(),
+                  password: _emailForm.password.text,
+                );
+                if (!mounted) return;
+                navigator.pop(
+                  !success
+                      ? _GuestUpgradeAction.emailFailure
+                      : auth.needsEmailConfirmation
+                      ? _GuestUpgradeAction.emailPendingConfirmation
+                      : _GuestUpgradeAction.emailSuccess,
+                );
+              } finally {
+                if (mounted) setState(() => _submitting = false);
+              }
+            },
           ),
         ),
       ],

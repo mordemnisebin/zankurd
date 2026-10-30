@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/services/quiz_reward_settlement_service.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
+import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 
 import 'support/realistic_device.dart';
 import 'support/widget_test_helpers.dart';
@@ -40,6 +41,7 @@ Future<void> _pumpResult(
   bool ku = false,
   double scale = 1,
   double width = 402,
+  bool mixed = false,
 }) async {
   tester.view.physicalSize = Size(width, 874);
   tester.view.devicePixelRatio = 1;
@@ -104,7 +106,7 @@ Future<void> _pumpResult(
                 for (var i = 0; i < 10; i++)
                   AnswerRecord(
                     id: 't15-$i',
-                    category: 'Ziman',
+                    category: mixed && i >= 3 ? 'Dîrok' : 'Ziman',
                     prompt: 'Pirs $i',
                     answers: const ['A', 'B'],
                     correctAnswer: 'A',
@@ -131,6 +133,66 @@ void main() {
     await (FontLoader(
       'Lucide',
     )..addFont(rootBundle.load('assets/fonts/Lucide.ttf'))).load();
+  });
+  testWidgets('T16 S1: geniş KU doğruluk etiketi parıltıyla örtüşmez', (
+    tester,
+  ) async {
+    await _pumpResult(tester, crowd: true, win: true, ku: true);
+    final caption = tester.getRect(find.textContaining('Di 10 pirsan de'));
+    final sparkles = find.byWidgetPredicate(
+      (w) => w.runtimeType.toString() == '_Sparkle',
+    );
+    expect(sparkles, findsWidgets);
+    for (final sparkle in sparkles.evaluate()) {
+      expect(
+        tester.getRect(find.byWidget(sparkle.widget)).overlaps(caption),
+        isFalse,
+      );
+    }
+  });
+  testWidgets('T16: Sen avatarı gerçek oyuncu adını korur', (tester) async {
+    await _pumpResult(tester, crowd: false, win: true);
+    final scroll = find.byType(Scrollable).first;
+    await tester.scrollUntilVisible(
+      find.byType(PlayerAvatar).last,
+      400,
+      scrollable: scroll,
+    );
+    final avatars = tester.widgetList<PlayerAvatar>(find.byType(PlayerAvatar));
+    expect(avatars.where((a) => a.displayName == 'Sen'), isEmpty);
+    expect(avatars.where((a) => a.displayName == 'Azad'), isNotEmpty);
+  });
+  testWidgets(
+    'T16: oda ayrıntı başlığı cevaplanan konu sayısına bağlı değildir',
+    (tester) async {
+      await _pumpResult(tester, crowd: true, win: true, mixed: true);
+      final section = find.byKey(const ValueKey('result-details-section'));
+      await tester.scrollUntilVisible(
+        section,
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(
+        tester.widget<ResultCollapsibleSection>(section).title,
+        'Ayrıntılar',
+      );
+      await _pumpResult(tester, crowd: true, win: false, mixed: true);
+      await tester.scrollUntilVisible(
+        section,
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(
+        tester.widget<ResultCollapsibleSection>(section).title,
+        'Ayrıntılar',
+      );
+    },
+  );
+  testWidgets('T16: sonuç doğruluğu toplam soru paydasını açıklar', (
+    tester,
+  ) async {
+    await _pumpResult(tester, crowd: false, win: true);
+    expect(find.text('10 soruda %30 doğruluk'), findsOneWidget);
   });
   for (final crowd in [false, true]) {
     for (final win in [false, true]) {

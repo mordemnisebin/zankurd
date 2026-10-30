@@ -6,6 +6,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/auth_social_buttons.dart';
+import '../widgets/guest_account_email_form.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/sahne/sahne.dart';
 
@@ -177,16 +178,12 @@ class GuestSaveSheet extends StatefulWidget {
 }
 
 class _GuestSaveSheetState extends State<GuestSaveSheet> {
-  final _email = TextEditingController();
-  final _password = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  bool _emailOpen = false;
+  final _emailForm = GuestAccountEmailController();
   bool _busy = false;
 
   @override
   void dispose() {
-    _email.dispose();
-    _password.dispose();
+    _emailForm.dispose();
     super.dispose();
   }
 
@@ -214,14 +211,14 @@ class _GuestSaveSheetState extends State<GuestSaveSheet> {
   }
 
   Future<void> _saveWithEmail() async {
-    if (!(_formKey.currentState?.validate() ?? false)) return;
+    if (!_emailForm.validate() || _busy) return;
     final auth = context.read<AuthProvider>();
     final navigator = Navigator.of(context);
     final messenger = ScaffoldMessenger.maybeOf(context);
     setState(() => _busy = true);
     final ok = await auth.upgradeGuestAccount(
-      email: _email.text.trim(),
-      password: _password.text,
+      email: _emailForm.email.text.trim(),
+      password: _emailForm.password.text,
     );
     if (!mounted) return;
     setState(() => _busy = false);
@@ -276,49 +273,13 @@ class _GuestSaveSheetState extends State<GuestSaveSheet> {
                       : () => _link((a) => a.linkAppleAccount()),
                 ),
                 const AuthEmailDivider(),
-                if (!_emailOpen)
-                  SahneButton.secondary(
-                    label: context.t(K.guestSaveEmail),
-                    expand: true,
-                    arrow: false,
-                    onPressed: _busy
-                        ? null
-                        : () => setState(() => _emailOpen = true),
-                  )
-                else
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SahneField(
-                          controller: _email,
-                          keyboardType: TextInputType.emailAddress,
-                          label: context.t(K.email),
-                          validator: (v) => v == null || !v.contains('@')
-                              ? context.t(K.emailInvalid)
-                              : null,
-                        ),
-                        const SizedBox(height: SahneSpace.x2),
-                        SahneField(
-                          controller: _password,
-                          obscureText: true,
-                          label: context.t(K.password),
-                          validator: (v) => v == null || v.length < 6
-                              ? context.t(K.passwordTooShort)
-                              : null,
-                        ),
-                        const SizedBox(height: SahneSpace.x2),
-                        SahneButton.primary(
-                          label: context.t(K.save),
-                          expand: true,
-                          arrow: false,
-                          loading: _busy,
-                          onPressed: _busy ? null : _saveWithEmail,
-                        ),
-                      ],
-                    ),
-                  ),
+                GuestAccountEmailForm(controller: _emailForm, busy: _busy),
+                const SizedBox(height: SahneSpace.x2),
+                GuestAccountSaveButton(
+                  controller: _emailForm,
+                  busy: _busy,
+                  onPressed: _saveWithEmail,
+                ),
                 const SizedBox(height: SahneSpace.x1),
                 SahneButton.text(
                   label: context.t(K.guestSaveNotNow),

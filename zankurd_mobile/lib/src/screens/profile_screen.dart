@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import '../widgets/doza_widgets.dart';
 import 'package:flutter/material.dart';
 import '../widgets/auth_social_buttons.dart';
+import '../widgets/guest_account_email_form.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
@@ -102,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   /// "Ayrıntılı istatistik" bağlantısıyla açılan ayrıntı paneli.
   bool _statsDetailsOpen = false;
 
-  late final Future<MistakeStore> _mistakeStoreFuture = MistakeStore.load();
+  Map<String, Map<String, int>>? _weeklyHistory;
   bool _loading = true;
 
   /// İlk yükleme bitti mi; sonraki yüklemeler iskelet göstermez.
@@ -234,6 +235,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         answerStatsFailed = true;
         // Diğer profil bölümleri erişilebilir kalır; eksik toplam gösterilmez.
       }
+      final weeklyHistory = await _loadWeeklyHistory(mistakeStore);
       final correct = mistakeStore.totalCorrect + (onlineAnswers?.correct ?? 0);
       final wrong = mistakeStore.totalWrong + (onlineAnswers?.wrong ?? 0);
       final answered = correct + wrong;
@@ -278,6 +280,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _xpInLevel = xpStore.xpInCurrentLevel;
           _xpNeeded = xpStore.xpNeededForNextLevel;
           _answerStatsFailed = answerStatsFailed;
+          _weeklyHistory = weeklyHistory;
           _answerStatsAvailable =
               onlineAnswers != null && !missingAnswerHistory;
           _accuracyPercent = onlineAnswers != null && answered > 0
@@ -300,6 +303,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  Future<Map<String, Map<String, int>>?> _loadWeeklyHistory(
+    MistakeStore local,
+  ) async {
+    try {
+      final history = local.getLast7DaysHistory();
+      final days = history.keys.map(DateTime.parse).toList();
+      final last = days.last;
+      final online = await widget.repository.loadOnlineAnswerHistory(
+        dayBoundaries: [...days, DateTime(last.year, last.month, last.day + 1)],
+      );
+      // Çevrimiçi kısım bilinmiyorsa yereli tam performans gibi göstermeyiz.
+      if (online == null) return null;
+      return {
+        for (var i = 0; i < days.length; i++)
+          history.keys.elementAt(i): {
+            'correct':
+                history.values.elementAt(i)['correct']! + online[i].correct,
+            'wrong': history.values.elementAt(i)['wrong']! + online[i].wrong,
+          },
+      };
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'profile weekly history failed',
+      );
+      return null;
+    }
+  }
+
   /// Yalnız yanıt bölümünü yeniler; rekorlar ve kaydırma konumu korunur.
   Future<void> _retryAnswerStats() async {
     if (_answerStatsLoading) return;
@@ -307,12 +340,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       final online = await widget.repository.loadOnlineAnswerStats();
       final local = await MistakeStore.load();
+      final weeklyHistory = await _loadWeeklyHistory(local);
       if (!mounted) return;
       final correct = local.totalCorrect + (online?.correct ?? 0);
       final wrong = local.totalWrong + (online?.wrong ?? 0);
       final total = correct + wrong;
       setState(() {
         _answerStatsFailed = false;
+        _weeklyHistory = weeklyHistory;
         _answerStatsAvailable = online != null && total > 0;
         _answeredTotal = total;
         _accuracyPercent = total > 0 ? correct / total * 100 : null;
@@ -623,33 +658,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   _SubHeading(context.t(K.weeklyPerformance)),
                   const SizedBox(height: SahneSpace.x3),
-                  FutureBuilder<MistakeStore>(
-                    future: _mistakeStoreFuture,
-                    builder: (context, snapshot) {
-                      final t = SahneTokens.of(context);
-                      if (snapshot.hasError) {
-                        return SizedBox(
-                          height: 160,
-                          child: Center(
-                            child: Text(
-                              context.t(K.performanceLoadFail),
-                              style: SahneType.caption.copyWith(color: t.tx2),
-                            ),
+                  if (_weeklyHistory == null)
+                    SizedBox(
+                      height: 160,
+                      child: Center(
+                        child: Text(
+                          context.t(K.performanceLoadFail),
+                          style: SahneType.caption.copyWith(
+                            color: SahneTokens.of(context).tx2,
                           ),
-                        );
-                      }
-                      if (!snapshot.hasData) {
-                        return SizedBox(
-                          height: 160,
-                          child: Center(
-                            child: CircularProgressIndicator(color: t.tx2),
-                          ),
-                        );
-                      }
-                      final history = snapshot.data!.getLast7DaysHistory();
-                      return WeeklyPerformanceChart(history: history, isKu: ku);
-                    },
-                  ),
+                        ),
+                      ),
+                    )
+                  else
+                    WeeklyPerformanceChart(history: _weeklyHistory!, isKu: ku),
                   const SizedBox(height: SahneSpace.x6),
                   _PedagogicalAnalyticsSection(isKu: ku),
                   const SizedBox(height: SahneSpace.x6),

@@ -276,6 +276,13 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Ağ, RPC veya geçersiz yanıt hataları fırlatılır; boş geçmiş sayılmaz.
   Future<({int correct, int wrong})?> loadOnlineAnswerStats();
 
+  /// Aynı çevrimiçi cevapların yedi günlük dağılımı. Sekiz yerel takvim
+  /// sınırı UTC'ye çevrilerek gönderilir; yaz/kış saati günleri korunur.
+  /// Eksik oturum/geçmiş null, ağ/RPC/veri hatası istisnadır.
+  Future<List<({int correct, int wrong})>?> loadOnlineAnswerHistory({
+    required List<DateTime> dayBoundaries,
+  });
+
   /// Sıralama ekranının altına sabitlenen "benim sıram" satırının SEÇİLİ
   /// DÖNEME (Gün/Hafta/Ay) ait karşılığı.
   ///
