@@ -359,11 +359,23 @@ void main() {
   });
 
   group('C34 rıza açıklamaları gövde boyunda', () {
-    test('iki rıza satırı belirgin alt metin kullanır', () {
+    test('üç rıza satırının her biri belirgin alt metin kullanır', () {
       final src = File(
         'lib/src/screens/settings_screen.dart',
       ).readAsStringSync();
-      expect('subtitleProminent: true'.allMatches(src).length, 2);
+      // Varlık paylaşımı üçüncü açık rıza oldu; önceki iki açıklamanın
+      // belirginliğini korurken yeni açıklamayı da aynı ölçütle denetle.
+      expect('subtitleProminent: true'.allMatches(src).length, 3);
+      for (final key in [
+        'presenceVisibility',
+        'analyticsConsent',
+        'crashReportsConsent',
+      ]) {
+        final row = src
+            .split('title: context.t(K.$key),')[1]
+            .split('trailing: Switch(')[0];
+        expect(row, contains('subtitleProminent: true'), reason: key);
+      }
     });
 
     testWidgets('belirgin alt metin 16 pt', (tester) async {

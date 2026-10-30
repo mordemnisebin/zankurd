@@ -30,7 +30,7 @@ class _TestFriendsRepository extends MockZanKurdRepository {
         totalScore: 2450,
         level: 12,
         gamesPlayed: 48,
-        lastActiveAt: DateTime.now().toUtc(),
+        lastSeenAt: DateTime.now().toUtc(),
       ),
       Friend(
         id: 'friend2',
@@ -42,7 +42,7 @@ class _TestFriendsRepository extends MockZanKurdRepository {
         totalScore: 1820,
         level: 9,
         gamesPlayed: 31,
-        lastActiveAt: DateTime.now().toUtc().subtract(
+        lastSeenAt: DateTime.now().toUtc().subtract(
           const Duration(minutes: 10),
         ),
       ),

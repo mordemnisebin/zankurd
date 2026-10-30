@@ -28,7 +28,7 @@ class _Repo extends MockZanKurdRepository {
       friendId: 'friend-diyar',
       friendName: 'Diyar',
       createdAt: DateTime(2026, 8, 1),
-      lastActiveAt: DateTime.now().subtract(const Duration(days: 50)),
+      lastSeenAt: DateTime.now().subtract(const Duration(days: 50)),
     ),
     Friend(
       id: 'f2',

@@ -252,6 +252,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
   }
 
+  Future<void> _setPresenceVisibility(bool enabled) async {
+    final saved = await context.read<AuthProvider>().presence.setEnabled(
+      enabled,
+    );
+    if (!mounted || saved) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
+  }
+
   Future<void> _setAnalyticsConsent(bool enabled) async {
     final saved = await context.read<AnalyticsConsentProvider>().setEnabled(
       enabled,
@@ -398,6 +408,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SahneListGroup(
                 dividerIndent: _rowTextInset,
                 children: [
+                  Consumer<AuthProvider>(
+                    builder: (context, auth, _) => ListenableBuilder(
+                      listenable: auth.presence,
+                      builder: (context, _) => SahneListRow.plain(
+                        title: context.t(K.presenceVisibility),
+                        subtitle: auth.presence.ready
+                            ? context.t(K.presenceVisibilitySub)
+                            : context.t(K.presenceVisibilityUnavailable),
+                        subtitleProminent: true,
+                        trailing: Switch(
+                          key: const ValueKey('presence-visibility-switch'),
+                          value: auth.presence.enabled,
+                          onChanged: auth.presence.canChange
+                              ? _setPresenceVisibility
+                              : null,
+                        ),
+                      ),
+                    ),
+                  ),
                   SahneListRow.plain(
                     key: const ValueKey('settings-export-data'),
                     title: context.t(K.exportData),

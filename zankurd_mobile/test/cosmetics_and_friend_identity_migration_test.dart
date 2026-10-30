@@ -96,7 +96,27 @@ void main() {
       isNotEmpty,
       reason: '$function hiçbir tarihli göçte tanımlanmıyor',
     );
-    return executableSql(dated.last.readAsStringSync());
+    final latest = executableSql(dated.last.readAsStringSync());
+    if (function == 'list_friends' &&
+        latest.contains('from public.list_friends_before_presence() f')) {
+      // T1 gövdeyi yeniden yazmaz: canlı fonksiyonu korur. Eski kimlik
+      // beklentileri aşağıda aynen sürer; ek olarak delegasyon korunur.
+      expect(latest, contains('select f.*,'));
+      expect(
+        latest,
+        contains(
+          'alter function public.list_friends() rename to '
+          'list_friends_before_presence',
+        ),
+      );
+      expect(latest, contains("v_definition := pg_get_functiondef("));
+      expect(
+        latest,
+        contains('original list_friends definition was not preserved'),
+      );
+      return '$latest\n${executableSql(dated[dated.length - 2].readAsStringSync())}';
+    }
+    return latest;
   }
 
   group('neon çerçevesi', () {

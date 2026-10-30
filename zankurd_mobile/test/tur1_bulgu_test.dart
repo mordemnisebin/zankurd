@@ -196,7 +196,7 @@ void main() {
       friendId: 'x',
       friendName: 'Rojda',
       createdAt: DateTime.utc(2026),
-      lastActiveAt: at,
+      lastSeenAt: at,
     );
     expect(f(null).daysSinceActive(now), isNull);
     expect(f(now.subtract(const Duration(hours: 3))).daysSinceActive(now), 0);
@@ -227,7 +227,7 @@ void main() {
                 friendId: 'x',
                 friendName: 'R',
                 createdAt: DateTime.utc(2026),
-                lastActiveAt: DateTime.now().toUtc().subtract(
+                lastSeenAt: DateTime.now().toUtc().subtract(
                   const Duration(days: 2, hours: 1),
                 ),
               ),

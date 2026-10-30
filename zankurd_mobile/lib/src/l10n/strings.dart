@@ -3548,11 +3548,27 @@ class Tr {
           'puan ve jeton kazandırır; üst üste doğrular ek puan '
           'getirir.',
     },
+    // T1 KU taslakları: Gemini/Grok denetimi ortam izni nedeniyle bekliyor.
+    K.presenceVisibility: {
+      'tr': 'Çevrimiçi durumumu göster',
+      'ku': 'Rewşa min a serhêl nîşan bide',
+    },
+    K.presenceVisibilityUnavailable: {
+      'tr': 'Tercihin sunucudan doğrulanamadı. Bağlantı kurulunca yenilenir.',
+      'ku':
+          'Vebijêrka te ji pêşkêşkarê nehat piştrastkirin. Dema girêdan çêbibe dê nû bibe.',
+    },
+    K.presenceVisibilitySub: {
+      'tr':
+          'Son görülme zamanın arkadaşlarına gösterilir. Varsayılan kapalıdır.',
+      'ku':
+          'Dema ku tu cara dawî hatî dîtin ji hevalên te re tê nîşandan. Di destpêkê de girtî ye.',
+    },
     K.privacyBody: {
       'ku':
-          'ZanKurd van daneyan li ser pêşkêşkarê, bi hesabê te ve girêdayî tomar dike: navê lîstikvan û wêneyê profîlê, navnîşana e-nameyê (heke tu xwe tomar bikî), XP, hejmara zêran û kirîn, pûan û statîstîkên lîstikê, pûana rêzbendiyê, dersên qedandî, pirsên tomarkirî, peyamên odeyê, pêşniyarên pirsan û bikarhênerên ku te asteng kirine. Salnameya zincîrê, rozet, ast, serdestiya mijaran, pirsên şaş ên li benda dubarekirinê û pêşketina çîrokan li ser vê amûrê tên parastin; heke te hesabê xwe tomar kiribe, kopiyeke wan jî li ser pêşkêşkarê tê hilanîn û li ser amûreke din vedigere. Di hesabê mêvan de ev tenê li ser vê amûrê ne. Lîsteya peyvan û mîheng tenê li ser vê amûrê tên parastin. Dema tu derkevî, pêşketina li ser amûrê tê paqijkirin. Bûyerên bikaranînê yên ku dikarin bi hesabê te ve werin girêdan tenê dema Mîheng > Hesab û nepenî > Analîza bikaranînê vekirî be, tomarên têkçûnê jî tenê dema Mîheng > Hesab û nepenî > Ragihandinên çewtiyan vekirî be tên şandin. Her du mîheng di destpêkê de girtî ne; tu dikarî kengî bixwazî wan vekî an bigirî.\n\nDaneyên te nayên firotin û bi armanca bazargeriyê bi aliyên sêyemîn re nayên parvekirin. Navê te di rêzbendiyê, lêgerîna hevalan û daxwazên hevaltiyê de, her wiha di odeyên serhêl de xuya dibe.\n\nJi bo jêbirina hesabê xwe û hemû daneyên xwe yên serhêl bi awayekî mayînde: Mîheng > Karên hesabê > Hesabê min jê bibe.',
+          'ZanKurd van daneyan li ser pêşkêşkarê, bi hesabê te ve girêdayî tomar dike: navê lîstikvan û wêneyê profîlê, navnîşana e-nameyê (heke tu xwe tomar bikî), XP, hejmara zêran û kirîn, pûan û statîstîkên lîstikê, pûana rêzbendiyê, dersên qedandî, pirsên tomarkirî, peyamên odeyê, pêşniyarên pirsan û bikarhênerên ku te asteng kirine. Salnameya zincîrê, rozet, ast, serdestiya mijaran, pirsên şaş ên li benda dubarekirinê û pêşketina çîrokan li ser vê amûrê tên parastin; heke te hesabê xwe tomar kiribe, kopiyeke wan jî li ser pêşkêşkarê tê hilanîn û li ser amûreke din vedigere. Di hesabê mêvan de ev tenê li ser vê amûrê ne. Lîsteya peyvan û mîheng tenê li ser vê amûrê tên parastin. Dema tu derkevî, pêşketina li ser amûrê tê paqijkirin. Bûyerên bikaranînê yên ku dikarin bi hesabê te ve werin girêdan tenê dema Mîheng > Hesab û nepenî > Analîza bikaranînê vekirî be, tomarên têkçûnê jî tenê dema Mîheng > Hesab û nepenî > Ragihandinên çewtiyan vekirî be tên şandin. Her du mîheng di destpêkê de girtî ne; tu dikarî kengî bixwazî wan vekî an bigirî.\n\nDaneyên te nayên firotin û bi armanca bazargeriyê bi aliyên sêyemîn re nayên parvekirin. Navê te di rêzbendiyê, lêgerîna hevalan û daxwazên hevaltiyê de, her wiha di odeyên serhêl de xuya dibe. Heke tu mîhenga nîşandana rewşa xwe ya serhêl vekî, dema ku tu cara dawî hatî dîtin li ser pêşkêşkarê tê tomarkirin û ji hevalên te re tê nîşandan. Ev vebijêrk bi hesabê te ve girêdayî ye û di destpêkê de girtî ye; gava tu wê bigirî, ev dem ji hevalên te re nayê nîşandan.\n\nJi bo jêbirina hesabê xwe û hemû daneyên xwe yên serhêl bi awayekî mayînde: Mîheng > Karên hesabê > Hesabê min jê bibe.',
       'tr':
-          'ZanKurd şu verileri sunucuda, hesabına bağlı olarak saklar: oyuncu adı ve profil fotoğrafı, e-posta adresi (kayıt olursan), XP, jeton sayısı ve satın almalar, oyun puanları ve istatistikleri, sıralama puanı, tamamlanan dersler, kaydedilen sorular, oda mesajları, soru önerileri ve engellediğin kullanıcılar. Seri takvimi, rozetler, seviye, konu ustalığı, tekrar bekleyen yanlış sorular ve hikâye ilerlemesi bu cihazda tutulur; hesabını kaydettiysen bunların bir yedeği de sunucuya alınır ve başka cihazda geri gelir. Misafir hesapta bunlar yalnız bu cihazdadır. Kelime listesi ve ayarlar yalnız bu cihazda tutulur. Çıkış yaptığında cihazdaki ilerleme temizlenir. Hesabınla ilişkilendirilebilen kullanım olayları yalnız Ayarlar > Hesap ve gizlilik > Kullanım analizi açıkken, çökme kayıtları yalnız Ayarlar > Hesap ve gizlilik > Hata raporları açıkken gönderilir. İki ayar da başlangıçta kapalıdır; istediğin zaman açıp kapatabilirsin.\n\nVerilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı paylaşılmaz. Adın sıralamada, arkadaş araması ve isteklerinde, ayrıca çevrimiçi odalarda görünür.\n\nHesabını ve tüm çevrimiçi verilerini kalıcı olarak silmek için: Ayarlar > Hesap işlemleri > Hesabımı sil.',
+          'ZanKurd şu verileri sunucuda, hesabına bağlı olarak saklar: oyuncu adı ve profil fotoğrafı, e-posta adresi (kayıt olursan), XP, jeton sayısı ve satın almalar, oyun puanları ve istatistikleri, sıralama puanı, tamamlanan dersler, kaydedilen sorular, oda mesajları, soru önerileri ve engellediğin kullanıcılar. Seri takvimi, rozetler, seviye, konu ustalığı, tekrar bekleyen yanlış sorular ve hikâye ilerlemesi bu cihazda tutulur; hesabını kaydettiysen bunların bir yedeği de sunucuya alınır ve başka cihazda geri gelir. Misafir hesapta bunlar yalnız bu cihazdadır. Kelime listesi ve ayarlar yalnız bu cihazda tutulur. Çıkış yaptığında cihazdaki ilerleme temizlenir. Hesabınla ilişkilendirilebilen kullanım olayları yalnız Ayarlar > Hesap ve gizlilik > Kullanım analizi açıkken, çökme kayıtları yalnız Ayarlar > Hesap ve gizlilik > Hata raporları açıkken gönderilir. İki ayar da başlangıçta kapalıdır; istediğin zaman açıp kapatabilirsin.\n\nVerilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı paylaşılmaz. Adın sıralamada, arkadaş araması ve isteklerinde, ayrıca çevrimiçi odalarda görünür. Çevrimiçi durumumu göster ayarını açarsan son görülme zamanın sunucuda saklanır ve arkadaşlarına gösterilir. Bu tercih hesabına bağlıdır, başlangıçta kapalıdır; kapattığında bu zaman arkadaşlarına gösterilmez.\n\nHesabını ve tüm çevrimiçi verilerini kalıcı olarak silmek için: Ayarlar > Hesap işlemleri > Hesabımı sil.',
     },
     K.aboutBody: {
       'ku':
@@ -5858,6 +5874,9 @@ class K {
   static const notifPermDeniedInline = 'settings.notif.deniedInline';
   static const notifPermDeniedBody = 'settings.notif.deniedBody';
   static const howToPlayBody = 'settings.howToPlay.body';
+  static const presenceVisibility = 'settings.presence.visibility';
+  static const presenceVisibilitySub = 'settings.presence.visibility.sub';
+  static const presenceVisibilityUnavailable = 'settings.presence.unavailable';
   static const privacyBody = 'settings.privacy.body';
   static const aboutBody = 'settings.about.body';
   static const ttsKurdishLimited = 'settings.tts.kurdishLimited';

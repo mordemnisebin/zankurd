@@ -18,8 +18,11 @@ class Friend {
   final int level;
   final int gamesPlayed;
 
-  /// Son aktiflik zamanı; null ise hiç çevrimiçi olmamış sayılır.
+  /// Eski RPC alanı; varlık göstergesi için kullanılmaz.
   final DateTime? lastActiveAt;
+
+  /// İzin veren arkadaşın sunucuda ölçülen son varlık zamanı.
+  final DateTime? lastSeenAt;
 
   /// Herkese açık kimlik (kod + fotoğraf/simge); `list_friends` avatar
   /// döndürmediği için depo `get_public_profiles` ile tamamlar. null ise
@@ -37,6 +40,7 @@ class Friend {
     this.level = 1,
     this.gamesPlayed = 0,
     this.lastActiveAt,
+    this.lastSeenAt,
     this.profile,
   });
 
@@ -44,27 +48,20 @@ class Friend {
   String? get friendTag => profile?.playerTag;
   AvatarIdentity? get friendAvatar => profile?.avatar;
 
-  /// Son 5 dakika içinde aktifse çevrimiçi sayılır.
+  /// Tam üç dakikada çevrimiçi penceresi kapanır; gelecek tarih iddia üretmez.
   bool get isOnline {
-    final last = lastActiveAt;
+    final last = lastSeenAt;
     if (last == null) return false;
-    return DateTime.now().toUtc().difference(last).inMinutes < 5;
+    final age = DateTime.now().toUtc().difference(last.toUtc());
+    return !age.isNegative && age < const Duration(minutes: 3);
   }
 
-  /// Son oynadığından bu yana geçen tam gün sayısı; hiç oynamadıysa null.
-  ///
-  /// Tur 1 (I5, 2026-10-29): iki oyuncu uygulamada açıkken birbirini
-  /// "Çevrimdışı" görüyordu. Sunucuda varlık (heartbeat) yok:
-  /// `last_active_at` = `profiles.updated_at`, yalnız XP ödülünde güncellenir
-  /// (bkz. `supabase/2026-08-14_list_friends_score_and_activity.sql`). Bu
-  /// yüzden ikili "çevrimiçi/çevrimdışı" çoğu zaman YANLIŞ bir iddiaydı;
-  /// satır artık verinin gerçekte söylediğini yazar: "Bugün oynadı",
-  /// "3 gün önce oynadı". Yalnız son 5 dakikada ödül alan "Çevrimiçi"dir.
+  /// Yalnız gerçek varlık verisinden geçen tam gün sayısı.
   int? daysSinceActive([DateTime? nowUtc]) {
-    final last = lastActiveAt;
+    final last = lastSeenAt;
     if (last == null) return null;
     final diff = (nowUtc ?? DateTime.now().toUtc()).difference(last.toUtc());
-    return diff.isNegative ? 0 : diff.inHours ~/ 24;
+    return diff.isNegative ? null : diff.inHours ~/ 24;
   }
 
   Friend copyWith({
@@ -78,6 +75,7 @@ class Friend {
     int? level,
     int? gamesPlayed,
     DateTime? lastActiveAt,
+    DateTime? lastSeenAt,
     PublicProfile? profile,
   }) => Friend(
     id: id ?? this.id,
@@ -90,6 +88,7 @@ class Friend {
     level: level ?? this.level,
     gamesPlayed: gamesPlayed ?? this.gamesPlayed,
     lastActiveAt: lastActiveAt ?? this.lastActiveAt,
+    lastSeenAt: lastSeenAt ?? this.lastSeenAt,
     profile: profile ?? this.profile,
   );
 
@@ -103,6 +102,8 @@ class Friend {
     if (totalScore != 0) 'total_score': totalScore,
     if (level != 1) 'level': level,
     if (gamesPlayed != 0) 'games_played': gamesPlayed,
+    if (lastSeenAt != null)
+      'last_seen_at': lastSeenAt!.toUtc().toIso8601String(),
     if (lastActiveAt != null)
       'last_active_at': lastActiveAt!.toUtc().toIso8601String(),
   };
@@ -126,6 +127,7 @@ class Friend {
     level: (json['level'] as num?)?.toInt() ?? 1,
     gamesPlayed: (json['games_played'] as num?)?.toInt() ?? 0,
     lastActiveAt: DateTime.tryParse(json['last_active_at'] as String? ?? ''),
+    lastSeenAt: DateTime.tryParse(json['last_seen_at'] as String? ?? ''),
   );
 
   @override
