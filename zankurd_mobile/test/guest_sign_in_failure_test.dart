@@ -11,7 +11,7 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 /// Misafir girişi başarısız olduğunda kullanıcı bunu görmeli.
 ///
 /// 2026-07-27: uygulama ulaşılamayan bir sunucuya bağlıyken simülatörde
-/// "Niha bilîze"ye basıldı ve **hiçbir şey olmadı** — ne bekleme
+/// "Wek mêvan bidomîne"ye basıldı ve **hiçbir şey olmadı** — ne bekleme
 /// göstergesi, ne hata. Ekranın donduğu izlenimi doğuyordu. Kod okununca
 /// akış doğru görünüyordu (yükleme katmanı + hata bildirimi), yani gözle
 /// bakarak karar verilemezdi: SnackBar birkaç saniyede kaybolur ve ekran
@@ -66,7 +66,7 @@ void main() {
     );
     await tester.pump();
 
-    await tester.tap(find.text('Hemen oyna'));
+    await tester.tap(find.text('Misafir olarak devam et'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
 

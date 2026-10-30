@@ -368,7 +368,7 @@ class _SignInScreenState extends State<SignInScreen>
                   child: _formOpen
                       ? SahneButton.secondary(
                           key: const ValueKey('sign-in-play-now'),
-                          label: context.t(K.signInPlayNow),
+                          label: context.t(K.continueGuest),
                           icon: AppIcons.play,
                           arrow: false,
                           expand: true,
@@ -378,7 +378,7 @@ class _SignInScreenState extends State<SignInScreen>
                         )
                       : SahneButton.primary(
                           key: const ValueKey('sign-in-play-now'),
-                          label: context.t(K.signInPlayNow),
+                          label: context.t(K.continueGuest),
                           icon: AppIcons.play,
                           arrow: false,
                           expand: true,

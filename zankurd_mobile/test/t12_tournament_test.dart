@@ -102,9 +102,19 @@ void main() {
       final text = tester.widget<Text>(total);
       expect(
         text.data,
-        ku ? 'Pûanên te yên giştî: 510' : 'Senin toplam puanın: 510',
+        ku
+            ? 'Kûpa · Pûanên te yên giştî: 510'
+            : 'Turnuva · Senin toplam puanın: 510',
       );
       expect(text.style!.fontSize, greaterThanOrEqualTo(14));
+      // T14 F09: aynı 510 iki kişide; final ve turnuva kapsamı ayrı yazılır.
+      final match = tester.widget<Text>(
+        find.byKey(const ValueKey('tournament-eliminated-vs')),
+      );
+      expect(match.data, startsWith(ku ? 'Fînal · ' : 'Final · '));
+      expect(match.data, contains('245'));
+      expect(match.data, contains('510'));
+      expect(match.style!.fontSize, greaterThanOrEqualTo(14));
     }
   });
 

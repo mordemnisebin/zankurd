@@ -327,7 +327,7 @@ void main() {
       tester
           .widget<Text>(find.byKey(const ValueKey('tournament-eliminated-vs')))
           .data,
-      'QALI karşısında 100 – 640',
+      'Yarı Final · QALI karşısında 100 – 640',
     );
     expect(find.text('Tur 1/2'), findsOneWidget);
     expect(find.text('1/2'), findsNothing);

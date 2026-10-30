@@ -101,9 +101,12 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('İkinci oldun'), findsOneWidget);
-    expect(find.text('Sen 245 – 510 QaAlı'), findsOneWidget);
+    expect(find.text('Final · Sen 245 – 510 QaAlı'), findsOneWidget);
     expect(
-      tester.widget<Text>(find.text('Sen 245 – 510 QaAlı')).style!.fontSize,
+      tester
+          .widget<Text>(find.text('Final · Sen 245 – 510 QaAlı'))
+          .style!
+          .fontSize,
       greaterThanOrEqualTo(14),
     );
     expect(find.text('Elendi'), findsNothing);

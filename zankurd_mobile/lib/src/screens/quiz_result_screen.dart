@@ -248,7 +248,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   final GlobalKey _answersKey = GlobalKey();
   NotificationPromptPolicy? _notifPolicy;
 
-  /// Özel oda sonucunda "Tekrar oyna": sunucu aynı ayarlarla yeni lobi kurar
+  /// Özel oda sonucunda "Rövanş": sunucu aynı ayarlarla yeni lobi kurar
   /// (ya da arkadaşının zaten kurduğuna katılır); sonuç rotası lobiyle
   /// DEĞİŞTİRİLİR, geri tuşu bitmiş odaya dönmez. Süren istek çift basışı
   /// yutar: iki istek iki lobi (iki ücret) demek olurdu.
@@ -1410,6 +1410,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           ? K.findOpponent
           : isOnlineRoom && !canRematch
           ? K.home
+          : canRematch
+          ? K.asyncDuelRematch
           : K.playAgain,
     );
     final nextActionIcon = widget.tournamentMatch
@@ -2078,6 +2080,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // (2026-09-10 simülatör turu). Öğrenmede sayı, doğru cevap
         // sayısıdır: "3/5".
         value: isLearningExperience ? correctCount : score,
+        valueLabel: isLearningExperience
+            ? null
+            : context.t(K.scoreWord).toLowerCase(),
         suffix: isLearningExperience
             ? '/${groupThousands(totalQuestions)}'
             : '',
@@ -2085,12 +2090,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // doğru/yanlış sayıları zaten çiplerde; satır ödül kartını alt
         // perdenin altına itiyordu.
         caption: crowdSummary != null
-            ? '$crowdSummary • ${context.t(K.scoreWord).toLowerCase()} • $accuracyText'
+            ? '$crowdSummary • $accuracyText'
             : isLearningExperience
             ? accuracyText
             : (duelCompact && shortScreen)
             ? null
-            : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
+            : accuracyText,
         celebrate: celebrate,
         valueSize: duelCompact
             ? (shortScreen ? 36 : 72)

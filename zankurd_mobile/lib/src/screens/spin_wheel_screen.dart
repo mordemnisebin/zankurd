@@ -624,21 +624,24 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                     ),
                   ),
                 ),
-                // İşaretçi (üstte) — dilimin ortasını gösteren altın elmas uç.
-                Positioned(
-                  top: 0,
-                  child: CustomPaint(
-                    size: Size(
-                      32 * math.max(1.0, size / 300),
-                      40 * math.max(1.0, size / 300),
-                    ),
-                    painter: const _PointerPainter(
-                      fill: SahneVayColors.wheelGold,
-                      edge: SahneVayColors.wheelRimEdge,
-                      rim: SahneVayColors.wheelRim,
+                // Kilitli ekran yeniden açıldığında ödül bilinmez. Varsayılan
+                // 100 dilimini bugünkü kazanım gibi işaretlemeyelim.
+                if (_canSpin || _spinning || _wonAmount != null)
+                  Positioned(
+                    key: const ValueKey('spin-wheel-pointer'),
+                    top: 0,
+                    child: CustomPaint(
+                      size: Size(
+                        32 * math.max(1.0, size / 300),
+                        40 * math.max(1.0, size / 300),
+                      ),
+                      painter: const _PointerPainter(
+                        fill: SahneVayColors.wheelGold,
+                        edge: SahneVayColors.wheelRimEdge,
+                        rim: SahneVayColors.wheelRim,
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
           ),

@@ -72,9 +72,14 @@ class QuizTimerWidget extends StatelessWidget {
           secondary: opponentTime,
           onBand: onBand,
           pending: stopped && pendingLabel != null,
-          revealed: stopped && pendingLabel == null,
+          // Süresi biten soru tamamlanma tikiyle başarı gibi okunmasın.
+          // Sıfır aynı sabit sayı yuvasında kalır; üst satır oynamaz.
+          revealed: stopped && pendingLabel == null && seconds > 0,
           semanticLabel: stopped
-              ? pendingLabel ?? context.t(K.t12QuestionRevealed)
+              ? pendingLabel ??
+                    context.t(
+                      seconds == 0 ? K.sureDoldu : K.t12QuestionRevealed,
+                    )
               : pendingLabel ??
                     context.t(
                       opponentTime

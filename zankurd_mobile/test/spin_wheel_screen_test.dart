@@ -179,6 +179,9 @@ void main() {
 
     expect(find.text('Yarın tekrar gel.'), findsOneWidget);
     expect(find.textContaining('Yeni çevirme hakkı'), findsOneWidget);
+    // T14 F11: eski ödül bilinmiyorken başlangıçtaki 100 ödül gibi sunulmaz.
+    expect(find.byKey(const ValueKey('spin-wheel-pointer')), findsNothing);
+    expect(repository.awardCalls, 0);
     final button = tester.widget<FilledButton>(find.byType(FilledButton));
     expect(button.onPressed, isNull);
     expect(tester.takeException(), isNull);
@@ -193,6 +196,7 @@ void main() {
     await tester.pump();
     await tester.pump();
 
+    expect(find.byKey(const ValueKey('spin-wheel-pointer')), findsOneWidget);
     await tester.tap(find.text('Çevir'));
     await tester.pump();
     // Animasyon sürerken ikinci hızlı dokunuş çift ödül vermemeli.
@@ -204,6 +208,7 @@ void main() {
 
     expect(repository.awardCalls, 1);
     expect(find.textContaining('+50 jeton kazandın'), findsOneWidget);
+    expect(find.byKey(const ValueKey('spin-wheel-pointer')), findsOneWidget);
     expect(find.text('Yarın tekrar gel.'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

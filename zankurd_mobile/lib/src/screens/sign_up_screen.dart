@@ -27,6 +27,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen>
     with TickerProviderStateMixin {
   final _emailController = TextEditingController();
+  final _scrollController = ScrollController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _usernameController = TextEditingController();
@@ -140,6 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   @override
   void dispose() {
     _pendingSocialAuth?.removeListener(_onSocialSession);
+    _scrollController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
@@ -253,6 +255,19 @@ class _SignUpScreenState extends State<SignUpScreen>
       builder: (context, authProvider, _) {
         final loading = authProvider.isLoading;
         return SahneEntryScaffold(
+          scrollController: _scrollController,
+          showScrollFade: false,
+          leading: _currentStep == 0
+              ? SahneButton.text(
+                  key: const ValueKey('signup-exit-button'),
+                  label: context.t(K.back),
+                  icon: AppIcons.arrowLeft,
+                  arrow: false,
+                  onPressed: loading
+                      ? null
+                      : () => Navigator.of(context).maybePop(),
+                )
+              : null,
           progress: FadeTransition(
             opacity: LoadAnimationSequence.titleFadeAnimation(
               _animationController,
@@ -287,6 +302,7 @@ class _SignUpScreenState extends State<SignUpScreen>
           title: context.t(K.createYourAccount),
           body: _getStepSubtitle(context),
           content: SahneSurfaceCard(
+            key: const ValueKey('signup-form-card'),
             child: FadeTransition(
               opacity: LoadAnimationSequence.formField1FadeAnimation(
                 _animationController,
@@ -324,10 +340,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                 ? null
                 : (_currentStep == 2 ? () => _signUp(authProvider) : _nextStep),
           ),
-          // İlk adımda "geri" yok, çünkü geri gidilecek adım yok; çıkış
-          // "Giriş yap" bağlantısıdır (2026-07-22 canlı UX denetimi:
-          // sihirbazın hiçbir adımında geri yoktu). Sonraki adımlarda
-          // "Geri" bir önceki adıma döner.
+          // İlk adımın üstteki geri eylemi önceki sayfaya döner.
+          // Sonraki adımların alttaki geri eylemi yalnız adımı değiştirir.
           secondary: _currentStep > 0
               ? SahneButton.text(
                   key: const ValueKey('signup-back-button'),

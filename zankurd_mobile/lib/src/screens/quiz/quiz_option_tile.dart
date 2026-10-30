@@ -35,7 +35,7 @@ const double quizOptionMinHeight = 60;
 /// * Boşta ve kontrol hâlinde şık KABARTMALIDIR (vay 2A, Quiz Planet/Kahoot
 ///   derinliği): üstte ince ışık, altta 2 px koyu taban ([SahneEmbossPainter]).
 /// * Sönük (açıklanınca ötekiler, ya da 50/50 ile elenen): Perde (`s1`) +
-///   üçüncül metin, 160 ms'de söner. Opaklık değil ton.
+///   tam kontrastlı metin. Etkileşim kilidi metni soldurmaz.
 ///
 /// Durum hiçbir zaman yalnız renkle verilmez: ✓/✗ ikonu ve ekran okuyucu
 /// sözü ("A: yaşam, Doğru") her zaman birliktedir.
@@ -97,7 +97,7 @@ class QuizOptionTile extends StatelessWidget {
   final int optionCount;
 
   /// Açıklanmada seçilmeyen ve doğru olmayan şıklar ya da elenen şık:
-  /// sönük (Perde + üçüncül metin).
+  /// Perde yüzeyi; metin ve harf okunaklı kalır.
   final bool dimmed;
 
   /// Soru sahnesinin konu tonu: boştaki şıkta dolgu ve kenar ona doğru ölçülü
@@ -152,12 +152,9 @@ class QuizOptionTile extends StatelessWidget {
       _ => Colors.transparent,
     };
     final double ringWidth = state == _OptionState.idle ? 1 : SahneRing.r2;
-    // 2026-10-29 son kurul tur 2 (C, Terra + Sol): cevaptan sonra seçilmeyen
-    // şıkların yazısı koyu sahnede sönük okunuyordu (üçüncül gri). Sönüklüğü
-    // YÜZEY taşır ([SahneTokens.optionDimFill], kenar yok, taban gölgesi
-    // yok); yazı ikincil mürekkebe çıkar: iki temada da ≥ 4,5:1 ve hâlâ
-    // boştaki şıkkın tam beyazından ayrı (bekçi: `son_kurul_test` tur 2).
-    final Color textColor = state == _OptionState.dimmed ? t.tx2 : t.tx;
+    // T14: kilitli şık hâlâ okunacak içeriktir. Kilidi yüzey, halka ve
+    // dokunma durumu taşır; yanıt metni ve harfi etkin kontrastını korur.
+    final Color textColor = t.tx;
     final Color letterBg = switch (state) {
       _OptionState.correct => t.okTx,
       _OptionState.wrong => t.errTx,
@@ -167,9 +164,6 @@ class QuizOptionTile extends StatelessWidget {
     final Color letterFg = switch (state) {
       _OptionState.correct => t.onOk,
       _OptionState.wrong => t.errTint,
-      // Tur 2 (C): harf de ikincil mürekkep; gündüz Ray üstünde üçüncül
-      // 4,2:1 kalıyordu.
-      _OptionState.dimmed => t.tx2,
       _ => t.tx,
     };
 

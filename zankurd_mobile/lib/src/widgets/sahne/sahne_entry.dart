@@ -57,6 +57,8 @@ class SahneEntryScaffold extends StatelessWidget {
     this.primaryFirstWhenFlowing = false,
     this.centerWhenAnchored = false,
     this.anchorActions = true,
+    this.scrollController,
+    this.showScrollFade = true,
     this.surfaceKey,
     this.dockKey = const ValueKey('entry-dock'),
   }) : assert(
@@ -107,6 +109,12 @@ class SahneEntryScaffold extends StatelessWidget {
 
   /// T4 giriş seçenekleri birlikte kayar; diğer ekranların sabit perdesi korunur.
   final bool anchorActions;
+
+  /// Uzun formlarda kaydırılabilirliği sürekli görünür kılan denetleyici.
+  final ScrollController? scrollController;
+
+  /// Form alanlarını soldurmadan göstermek isteyen ekranlar kapatabilir.
+  final bool showScrollFade;
 
   /// Sayfa zemininin anahtarı (testler zemini bulur).
   final Key? surfaceKey;
@@ -233,26 +241,36 @@ class SahneEntryScaffold extends StatelessWidget {
                 const padTop = SahneSpace.x2;
                 final padBottom = anchored ? SahneSpace.x8 : SahneSpace.x6;
                 return LayoutBuilder(
-                  builder: (context, view) => SingleChildScrollView(
-                    // Sabit perde varken alt pay büyür: kartın son satırı
-                    // perdenin altında kalıp kesik görünmesin (kurul
-                    // 2026-10-20).
-                    padding: EdgeInsets.fromLTRB(
-                      SahneSpace.page,
-                      padTop,
-                      SahneSpace.page,
-                      padBottom,
-                    ),
-                    child: centered
-                        ? ConstrainedBox(
-                            constraints: BoxConstraints(
-                              minHeight: (view.maxHeight - padTop - padBottom)
-                                  .clamp(0.0, double.infinity),
-                            ),
-                            child: IntrinsicHeight(child: limited(laidOut)),
-                          )
-                        : limited(laidOut),
-                  ),
+                  builder: (context, view) {
+                    final scrollView = SingleChildScrollView(
+                      controller: scrollController,
+                      // Sabit perde varken alt pay büyür: kartın son satırı
+                      // perdenin altında kalıp kesik görünmesin (kurul
+                      // 2026-10-20).
+                      padding: EdgeInsets.fromLTRB(
+                        SahneSpace.page,
+                        padTop,
+                        SahneSpace.page,
+                        padBottom,
+                      ),
+                      child: centered
+                          ? ConstrainedBox(
+                              constraints: BoxConstraints(
+                                minHeight: (view.maxHeight - padTop - padBottom)
+                                    .clamp(0.0, double.infinity),
+                              ),
+                              child: IntrinsicHeight(child: limited(laidOut)),
+                            )
+                          : limited(laidOut),
+                    );
+                    return scrollController == null
+                        ? scrollView
+                        : Scrollbar(
+                            controller: scrollController,
+                            thumbVisibility: true,
+                            child: scrollView,
+                          );
+                  },
                 );
               }
 
@@ -267,10 +285,11 @@ class SahneEntryScaffold extends StatelessWidget {
                         : Stack(
                             children: [
                               Positioned.fill(child: scrollBody()),
-                              if (anchored)
+                              if (anchored && showScrollFade)
                                 // Perdenin hemen üstünde zemin rengine
                                 // sönen şerit: kart kesik değil, kayıyor.
                                 Positioned(
+                                  key: const ValueKey('entry-scroll-fade'),
                                   left: 0,
                                   right: 0,
                                   bottom: 0,

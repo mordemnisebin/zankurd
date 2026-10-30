@@ -56,7 +56,12 @@ final _entries = <_Entry>[
     'Devam',
     () => OnboardingScreen(onComplete: () {}),
   ),
-  const _Entry('giriş', "ZanKurd'a hoş geldin", 'Hemen oyna', SignInScreen.new),
+  const _Entry(
+    'giriş',
+    "ZanKurd'a hoş geldin",
+    'Misafir olarak devam et',
+    SignInScreen.new,
+  ),
   const _Entry('kayıt', 'Hesabını oluştur', 'İleri', SignUpScreen.new),
   _Entry(
     'ad sorma',

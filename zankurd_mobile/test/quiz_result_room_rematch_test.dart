@@ -48,6 +48,7 @@ Future<void> _pump(
   WidgetTester tester,
   _RematchRepo repo, {
   required bool isCustom,
+  bool ku = false,
 }) async {
   final room = repo.createRoom().copyWith(
     id: 'finished-room-1',
@@ -56,6 +57,7 @@ Future<void> _pump(
   );
   await tester.pumpWidget(
     testShell(
+      languageProvider: ku ? kurmanciLang() : turkishLang(),
       child: QuizResultScreen(
         repository: repo,
         room: room,
@@ -81,32 +83,44 @@ _RematchRepo _repo() {
 void main() {
   final rematch = find.byKey(const ValueKey('result-room-rematch-button'));
 
-  testWidgets('özel oda: Tekrar oyna doğru oda kimliğiyle yeni lobiyi açar', (
-    tester,
-  ) async {
-    final repo = _repo();
-    await _pump(tester, repo, isCustom: true);
+  for (final ku in [false, true]) {
+    testWidgets(
+      'özel oda: Rövanş doğru oda kimliğiyle yeni lobiyi açar ku=$ku',
+      (tester) async {
+        final repo = _repo();
+        await _pump(tester, repo, isCustom: true, ku: ku);
 
-    expect(rematch, findsOneWidget);
-    expect(
-      find.descendant(of: rematch, matching: find.text('Tekrar oyna')),
-      findsOneWidget,
+        expect(rematch, findsOneWidget);
+        expect(
+          find.descendant(
+            of: rematch,
+            matching: find.text(ku ? 'Pêşbirka vegerê' : 'Rövanş'),
+          ),
+          findsOneWidget,
+        );
+        // W2 (2026-10-28 tur 5): alt perde = tam genişlik "Tekrar oyna" + simge
+        // olarak Paylaş; "Ana sayfa" "Diğer seçenekler"e indi.
+        expect(find.byKey(const ValueKey('result-primary-home')), findsNothing);
+        expect(
+          find.byKey(const ValueKey('result-share-button')),
+          findsOneWidget,
+        );
+        // Özel odada ikinci bir "Yeni oda" yok: Tekrar oyna aynı işi görür.
+        expect(
+          find.byKey(const ValueKey('result-new-room-button')),
+          findsNothing,
+        );
+
+        await tester.tap(rematch);
+        await tester.pump();
+        await tester.pump(const Duration(seconds: 1));
+
+        expect(repo.calls, ['finished-room-1']);
+        expect(find.byType(RoomScreen), findsOneWidget);
+        expect(find.byType(QuizResultScreen), findsNothing);
+      },
     );
-    // W2 (2026-10-28 tur 5): alt perde = tam genişlik "Tekrar oyna" + simge
-    // olarak Paylaş; "Ana sayfa" "Diğer seçenekler"e indi.
-    expect(find.byKey(const ValueKey('result-primary-home')), findsNothing);
-    expect(find.byKey(const ValueKey('result-share-button')), findsOneWidget);
-    // Özel odada ikinci bir "Yeni oda" yok: Tekrar oyna aynı işi görür.
-    expect(find.byKey(const ValueKey('result-new-room-button')), findsNothing);
-
-    await tester.tap(rematch);
-    await tester.pump();
-    await tester.pump(const Duration(seconds: 1));
-
-    expect(repo.calls, ['finished-room-1']);
-    expect(find.byType(RoomScreen), findsOneWidget);
-    expect(find.byType(QuizResultScreen), findsNothing);
-  });
+  }
 
   // Kurul 3 D9: rastgele 1v1 odada birincil eylem "Rakip bul" (Ana sayfa
   // "⋯" menüsünde).
