@@ -15,15 +15,17 @@ void main() {
       'https://example.supabase.co',
       'test-public-key',
       httpClient: MockClient((request) async {
+        expect(request.method, 'POST');
         paths.add(request.url.path);
         bodies.add(jsonDecode(request.body));
         return request.url.path.endsWith('get_presence_visibility')
             ? http.Response(
                 'true',
                 200,
+                request: request,
                 headers: {'content-type': 'application/json'},
               )
-            : http.Response('', 204);
+            : http.Response('', 204, request: request);
       }),
     );
     addTearDown(client.dispose);
@@ -36,10 +38,8 @@ void main() {
       '/rest/v1/rpc/set_presence_visibility',
       '/rest/v1/rpc/touch_presence',
     ]);
-    expect(bodies, [
-      <String, Object?>{},
-      {'p_visible': false},
-      <String, Object?>{},
-    ]);
+    // PostgREST 2.9.1 parametresiz RPC gövdesini JSON null gönderir.
+    // Kimlik/istemci zamanı yine gönderilmez; tercih tek açık parametredir.
+    expect(bodies, [null, {'p_visible': false}, null]);
   });
 }
