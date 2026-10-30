@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -1356,7 +1358,13 @@ void main() {
     test(
       'T5: resume açılış saatini yutardı; eski JSON testi sessizdi ($withRevealClock)',
       () async {
+        final time = FakeAsync();
         final httpClient = _RoomSessionHttpClient(
+          beforeRequest: (path) async {
+            if (path == '/rest/v1/rpc/get_my_resumable_room') {
+              time.elapse(const Duration(milliseconds: 200));
+            }
+          },
           resumeResponse: {
             'room_id': '00000000-0000-0000-0000-000000000099',
             'current_question_index': 0,
@@ -1375,27 +1383,32 @@ void main() {
             'answers': <Object>[],
           },
         );
+        final client = SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        );
+        addTearDown(client.dispose);
         final repository = SupabaseZanKurdRepository(
-          SupabaseClient(
-            'https://example.supabase.co',
-            'sb_publishable_test_key',
-            httpClient: httpClient,
-          ),
+          client,
+          stopwatchFactory: time.getClock(DateTime.utc(2026)).stopwatch,
         );
         final resume = await repository.loadMyResumableRoom();
         expect(resume, isNotNull);
+        // Yalnız RPC RTT/2 (100 ms) eklenir; yükleme CPU süresi eklenmez.
+        expect(
+          resume!.serverClock.remainingUntil(resume.deadline!),
+          const Duration(milliseconds: 14900),
+        );
         if (withRevealClock) {
-          expect(resume!.revealClock, isNotNull);
+          expect(resume.revealClock, isNotNull);
           expect(
             resume.revealClock!.endsAt,
             DateTime.utc(2026, 8, 2, 12, 0, 17),
           );
-          expect(
-            resume.revealClock!.remaining.inMilliseconds,
-            inInclusiveRange(0, 2000),
-          );
+          expect(resume.revealClock!.remaining.inMilliseconds, 1900);
         } else {
-          expect(resume!.revealClock, isNull);
+          expect(resume.revealClock, isNull);
         }
       },
     );
@@ -1404,10 +1417,14 @@ void main() {
   test(
     'T5: oda yüklemesi sunucu saat örneğinden sonraki iki saniyeyi sayar',
     () async {
+      final time = FakeAsync();
+      final roomRequested = Completer<void>();
+      final roomResponse = Completer<void>();
       final httpClient = _RoomSessionHttpClient(
         beforeRequest: (path) async {
           if (path == '/rest/v1/rooms') {
-            await Future<void>.delayed(const Duration(seconds: 2));
+            roomRequested.complete();
+            await roomResponse.future;
           }
         },
         resumeResponse: {
@@ -1433,17 +1450,35 @@ void main() {
         httpClient: httpClient,
       );
       addTearDown(client.dispose);
-      final resume = (await SupabaseZanKurdRepository(
-        client,
-      ).loadMyResumableRoom())!;
+      var completed = false;
+      final pending =
+          SupabaseZanKurdRepository(
+            client,
+            stopwatchFactory: time.getClock(DateTime.utc(2026)).stopwatch,
+          ).loadMyResumableRoom().then((value) {
+            completed = true;
+            return value;
+          });
+      // JSON çözümü ayrı isolate kullanır. RPC'nin bitmesini olayla bekle;
+      // oda yanıtını ve geçen monoton süreyi test açıkça kontrol eder.
+      await roomRequested.future;
+      expect(completed, isFalse);
+      time.elapse(const Duration(milliseconds: 1999));
+      expect(completed, isFalse);
+      time.elapse(const Duration(milliseconds: 1));
+      roomResponse.complete();
+      final resume = (await pending)!;
       final remaining = resume.serverClock.remainingUntil(resume.deadline!);
-      expect(remaining.inMilliseconds, inInclusiveRange(11000, 13000));
-      expect(
-        resume.revealClock!.remaining.inMilliseconds,
-        inInclusiveRange(1000, 3000),
-      );
+      expect(remaining.inMilliseconds, 13000);
+      expect(resume.revealClock!.remaining.inMilliseconds, 3000);
       // Legacy remaining_ms halen taşınır; ekran son tarih/saat çiftini kullanır.
       expect(resume.remainingMs, 15000);
+      time.elapse(const Duration(seconds: 3));
+      expect(resume.revealClock!.remaining, Duration.zero);
+      expect(
+        resume.serverClock.remainingUntil(resume.deadline!),
+        const Duration(seconds: 10),
+      );
     },
   );
 

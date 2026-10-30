@@ -105,6 +105,8 @@ RoomResumeSnapshot _snapshot({
   List<ResumedAnswer> answers = const [],
 }) {
   final now = serverNow ?? DateTime.utc(2026, 8, 2, 12);
+  final testClock = TestWidgetsFlutterBinding.instance.clock;
+  final capturedAt = testClock.now();
   return RoomResumeSnapshot(
     room: _room,
     currentQuestionIndex: questionIndex,
@@ -116,7 +118,16 @@ RoomResumeSnapshot _snapshot({
     answers: answers,
     serverNow: now,
     revealClock: revealClock,
-    serverClock: serverClock,
+    // Widget Timer'ları ve snapshot aynı sahte zaman çizgisinde ilerlemeli.
+    // Varsayılan ServerClock gerçek Stopwatch kullanır; yoğun CI'da ekran
+    // kurulurken soru süresini tüketip erken advance isteği üretebilir.
+    serverClock:
+        serverClock ??
+        ServerClock(
+          serverNow: now,
+          localReceivedAt: capturedAt,
+          elapsed: () => testClock.now().difference(capturedAt),
+        ),
     pendingAnswer: pendingAnswer,
     questionStartedAt: hasTiming
         ? now.subtract(const Duration(seconds: 18))
@@ -495,6 +506,12 @@ void main() {
       );
       await tester.pump();
       await tester.pump(const Duration(seconds: 3));
+      expect(
+        repository.snapshot!.serverClock.now.difference(
+          repository.snapshot!.serverNow,
+        ),
+        const Duration(seconds: 3),
+      );
       expect(repository.advanceCalls, 0);
       expect(
         find.byKey(const ValueKey('quiz-reveal-status-band')),
@@ -506,6 +523,15 @@ void main() {
             .any((tile) => tile.correct),
         isFalse,
       );
+      // Rakip hâlâ cevaplamadı: 12 sn'lik soru son tarihine kadar açılış yok.
+      await tester.pump(const Duration(milliseconds: 8999));
+      expect(repository.advanceCalls, 0);
+      expect(
+        find.byKey(const ValueKey('quiz-reveal-status-band')),
+        findsNothing,
+      );
+      await tester.pump(const Duration(milliseconds: 1));
+      expect(repository.advanceIndices, [1]);
       await tester.pumpWidget(const SizedBox.shrink());
     },
   );

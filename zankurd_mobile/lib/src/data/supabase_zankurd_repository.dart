@@ -212,7 +212,14 @@ ResumedPendingAnswer? _requiredPendingAnswer(Map<String, dynamic> json) {
 const String suggestedQuestionLicenseVersion = '2026-08-11';
 
 class SupabaseZanKurdRepository implements ZanKurdRepository {
-  SupabaseZanKurdRepository(this.client);
+  SupabaseZanKurdRepository(
+    this.client, {
+    this.stopwatchFactory = Stopwatch.new,
+  });
+
+  /// RPC RTT'si ve yanıt sonrası geçen süre aynı monoton zaman kaynağından
+  /// ölçülür. Her çağrı yeni, başlamamış bir kronometre döndürmelidir.
+  final Stopwatch Function() stopwatchFactory;
 
   static const _defaultAvatarColor = '#2E9E93';
 
@@ -1091,16 +1098,18 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<RoomResumeSnapshot?> loadMyResumableRoom() async {
-    final requestWatch = Stopwatch()..start();
+    final requestWatch = stopwatchFactory()..start();
     final response = await client.rpc('get_my_resumable_room');
     requestWatch.stop();
     if (response == null) return null;
 
     final json = _requiredJsonObject(response, 'get_my_resumable_room');
     final serverNow = _requiredDateTime(json, 'server_now');
+    final responseWatch = stopwatchFactory()..start();
     final serverClock = ServerClock(
       serverNow: serverNow,
       roundTrip: requestWatch.elapsed,
+      elapsed: () => responseWatch.elapsed,
     );
     final revealEndsAt = _optionalDateTimeFromKeys(json, const [
       'current_question_reveal_ends_at',
