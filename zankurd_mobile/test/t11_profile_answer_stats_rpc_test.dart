@@ -9,9 +9,10 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   for (final guest in [true, false]) {
     test('T11 RPC own stats: guest=$guest, valid/empty/missing/broken', () async {
-      Object body = {'correct': 8, 'wrong': 7};
+      Object? body = {'correct': 8, 'wrong': 7};
       var status = 200;
       var reads = 0;
+      var transportFails = false;
       final client = SupabaseClient(
         'http://127.0.0.1:55441',
         'local-fixture',
@@ -55,6 +56,7 @@ void main() {
             reason: 'No caller-selected player id',
           );
           reads++;
+          if (transportFails) throw http.ClientException('offline');
           return http.Response(
             jsonEncode(body),
             status,
@@ -71,6 +73,8 @@ void main() {
       expect(await repo.loadOnlineAnswerStats(), (correct: 8, wrong: 7));
       body = {'correct': 0, 'wrong': 0};
       expect(await repo.loadOnlineAnswerStats(), (correct: 0, wrong: 0));
+      body = null;
+      expect(await repo.loadOnlineAnswerStats(), isNull);
       for (final invalid in [
         <String, Object>{},
         {'correct': 8},
@@ -79,11 +83,19 @@ void main() {
         {'correct': '8', 'wrong': 0},
       ]) {
         body = invalid;
-        expect(await repo.loadOnlineAnswerStats(), isNull);
+        await expectLater(repo.loadOnlineAnswerStats(), throwsFormatException);
       }
       body = {'code': 'PGRST202', 'message': 'RPC unavailable'};
       status = 404;
-      expect(await repo.loadOnlineAnswerStats(), isNull);
+      await expectLater(
+        repo.loadOnlineAnswerStats(),
+        throwsA(isA<PostgrestException>()),
+      );
+      transportFails = true;
+      await expectLater(
+        repo.loadOnlineAnswerStats(),
+        throwsA(isA<http.ClientException>()),
+      );
     });
   }
 }

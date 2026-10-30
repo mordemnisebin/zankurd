@@ -8,11 +8,20 @@ import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 
 import 'support/widget_test_helpers.dart';
 
+class _GuestAuth extends FakeAuthProvider {
+  @override
+  bool get isGuest => true;
+}
+
 class _OnlineStatsRepo extends MockZanKurdRepository {
-  _OnlineStatsRepo(this.totals);
+  _OnlineStatsRepo(this.totals, {this.fail = false});
+  final bool fail;
   final ({int correct, int wrong})? totals;
   @override
-  Future<({int correct, int wrong})?> loadOnlineAnswerStats() async => totals;
+  Future<({int correct, int wrong})?> loadOnlineAnswerStats() async {
+    if (fail) throw StateError('network unavailable');
+    return totals;
+  }
 
   @override
   Future<LeaderboardEntry?> getPlayerStats() async => const LeaderboardEntry(
@@ -30,13 +39,15 @@ void main() {
 
   Future<void> open(
     WidgetTester tester,
-    ({int correct, int wrong})? totals,
-  ) async {
+    ({int correct, int wrong})? totals, {
+    bool fail = false,
+  }) async {
     SharedPreferences.setMockInitialValues({});
     await tester.pumpWidget(
       testShell(
+        authProvider: _GuestAuth(),
         child: Scaffold(
-          body: ProfileScreen(repository: _OnlineStatsRepo(totals)),
+          body: ProfileScreen(repository: _OnlineStatsRepo(totals, fail: fail)),
         ),
       ),
     );
@@ -68,16 +79,32 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('T11 unavailable online history is not zero or a partial total', (
+  testWidgets('T13 missing online history is neutral, never zero or partial', (
     tester,
   ) async {
     await open(tester, null);
+    expect(find.text('Cevap istatistikleri şu anda alınamıyor.'), findsNothing);
     expect(
-      find.text('Cevap istatistikleri şu anda alınamıyor.'),
+      find.byKey(const ValueKey('profile-answer-stats-empty')),
       findsOneWidget,
     );
     expect(find.text('Cevaplanan soru'), findsNothing);
     expect(find.text('Doğruluk'), findsNothing);
+  });
+
+  testWidgets('T13 network failure stays an error, not empty history', (
+    tester,
+  ) async {
+    await open(tester, null, fail: true);
+    expect(
+      find.text('Cevap istatistikleri şu anda alınamıyor.'),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('profile-answer-stats-empty')),
+      findsNothing,
+    );
+    expect(find.text('Cevaplanan soru'), findsNothing);
   });
 
   testWidgets('T11 match history without answer records never claims zero', (
@@ -85,7 +112,7 @@ void main() {
   ) async {
     await open(tester, (correct: 0, wrong: 0));
     expect(
-      find.byKey(const ValueKey('profile-answer-stats-unavailable')),
+      find.byKey(const ValueKey('profile-answer-stats-empty')),
       findsOneWidget,
     );
     expect(find.text('Cevaplanan soru'), findsNothing);
@@ -100,6 +127,7 @@ void main() {
     await store.markMistake('solo-wrong');
     await tester.pumpWidget(
       testShell(
+        authProvider: _GuestAuth(),
         child: Scaffold(
           body: ProfileScreen(
             repository: _OnlineStatsRepo((correct: 8, wrong: 7)),

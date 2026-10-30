@@ -398,6 +398,7 @@ class _QuizScreenState extends State<QuizScreen>
   bool _onlineLeaveFailed = false;
   bool _reconcileInFlight = false;
   int _reconcileGeneration = 0;
+  int _roomStateRevision = 0;
   bool _terminalHandling = false;
   _OnlineResultPhase _onlineResultPhase = _OnlineResultPhase.idle;
   bool _onlineResultInFlight = false;
@@ -932,6 +933,7 @@ class _QuizScreenState extends State<QuizScreen>
               .subscribeRoomPlayers(widget.room)
               .listen((players) {
                 if (!mounted) return;
+                _roomStateRevision++;
                 setState(() {
                   for (final p in players) {
                     final idx = livePlayers.indexWhere(
@@ -1084,6 +1086,7 @@ class _QuizScreenState extends State<QuizScreen>
         .clamp(0, _questions.length - 1)
         .toInt();
     if (!initial && targetIndex < index) return;
+    _roomStateRevision++;
 
     final advanced = targetIndex > index;
     if (advanced) {
@@ -1120,6 +1123,18 @@ class _QuizScreenState extends State<QuizScreen>
 
     index = targetIndex;
     _captureAuthoritativeTiming(snapshot);
+    // Açılış görüntüsü rakip puanlarını da taşır. Bunları sonraki oyuncu
+    // yoklamasına bırakmak doğru cevapla puanın farklı anda görünmesine yol açar.
+    if (snapshot.room.players.isNotEmpty) {
+      livePlayers = snapshot.room.players.map((player) {
+        final previous = livePlayers
+            .where((current) => playersShareIdentity(current, player))
+            .firstOrNull;
+        return previous == null
+            ? player
+            : player.copyWith(state: previous.state).mergeIdentity(previous);
+      }).toList();
+    }
     score = snapshot.ownScore;
     streak = snapshot.streak;
     bestStreak = snapshot.bestStreak;
@@ -2742,6 +2757,7 @@ class _QuizScreenState extends State<QuizScreen>
     }
     _reconcileInFlight = true;
     final generation = ++_reconcileGeneration;
+    final roomStateRevision = _roomStateRevision;
     RoomResumeSnapshot? snapshot;
     List<Player>? players;
     RoomEndState? endState;
@@ -2758,16 +2774,19 @@ class _QuizScreenState extends State<QuizScreen>
               reason: 'quiz room resume reconciliation failed',
             );
           }
-        }(),
-        () async {
-          try {
-            players = await widget.repository.loadRoomPlayers(widget.room);
-          } catch (error, stack) {
-            ErrorReporter.record(
-              error,
-              stack,
-              reason: 'quiz room players reconciliation failed',
-            );
+          // Tam görüntü oyuncuları zaten içerir. Aynı anda ikinci bir
+          // zaman damgasız liste okuyup iki farklı sürümü karıştırma.
+          if (_matchingResumeSnapshot(snapshot)?.room.players.isNotEmpty !=
+              true) {
+            try {
+              players = await widget.repository.loadRoomPlayers(widget.room);
+            } catch (error, stack) {
+              ErrorReporter.record(
+                error,
+                stack,
+                reason: 'quiz room players reconciliation failed',
+              );
+            }
           }
         }(),
         () async {
@@ -2798,13 +2817,16 @@ class _QuizScreenState extends State<QuizScreen>
       }
 
       final matchingSnapshot = _matchingResumeSnapshot(snapshot);
-      if (matchingSnapshot != null &&
-          matchingSnapshot.currentQuestionIndex >= index) {
-        _applyReconciledSnapshot(matchingSnapshot);
-      }
-
+      final staleSnapshot =
+          matchingSnapshot != null && _isOlderRoomSnapshot(matchingSnapshot);
       final loadedPlayers = players;
-      if (loadedPlayers != null && loadedPlayers.isNotEmpty && mounted) {
+      // Bu istek beklerken ready/realtime daha yeni bir görüntü uyguladıysa,
+      // zaman damgası olmayan fallback listesi onu geri alamaz.
+      if (!staleSnapshot &&
+          roomStateRevision == _roomStateRevision &&
+          loadedPlayers != null &&
+          loadedPlayers.isNotEmpty &&
+          mounted) {
         setState(() {
           livePlayers = List<Player>.of(loadedPlayers)
             ..sort((a, b) => b.score.compareTo(a.score));
@@ -2812,10 +2834,16 @@ class _QuizScreenState extends State<QuizScreen>
             _applyOwnAuthoritativePlayerState();
           }
         });
-        if (_isCrowd && livePlayers.any((p) => _isMe(p) && p.left)) {
-          unawaited(_handleDroppedFromCrowd());
-          return;
-        }
+      }
+
+      // Kabul edilen görüntü cevap açılışını ve oyuncu puanlarını birlikte uygular.
+      if (matchingSnapshot != null &&
+          matchingSnapshot.currentQuestionIndex >= index) {
+        _applyReconciledSnapshot(matchingSnapshot);
+      }
+      if (_isCrowd && livePlayers.any((p) => _isMe(p) && p.left)) {
+        unawaited(_handleDroppedFromCrowd());
+        return;
       }
 
       final state = endState;
@@ -2839,16 +2867,19 @@ class _QuizScreenState extends State<QuizScreen>
     }
   }
 
+  bool _isOlderRoomSnapshot(RoomResumeSnapshot snapshot) {
+    final latestServerNow = _latestSnapshotServerNow;
+    return snapshot.currentQuestionIndex < index ||
+        (snapshot.currentQuestionIndex == index &&
+            latestServerNow != null &&
+            snapshot.serverNow.isBefore(latestServerNow));
+  }
+
   void _applyReconciledSnapshot(RoomResumeSnapshot snapshot) {
     if (!mounted || _questions.isEmpty) return;
     // Ready ve reconcile istekleri paralel dönebilir. Eski aynı-soru
     // yanıtı yeni deadline/reveal durumunu geri alamaz.
-    final latestServerNow = _latestSnapshotServerNow;
-    if (snapshot.currentQuestionIndex == index &&
-        latestServerNow != null &&
-        snapshot.serverNow.isBefore(latestServerNow)) {
-      return;
-    }
+    if (_isOlderRoomSnapshot(snapshot)) return;
     final oldIndex = index;
     final hasTiming = _hasAuthoritativeTiming(snapshot);
     setState(() {

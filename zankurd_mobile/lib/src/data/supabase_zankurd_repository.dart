@@ -641,16 +641,21 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // Misafir de authenticated rolündeki kendi auth.uid() kaydını okur.
       // Eksik RPC/ağ/bozuk cevap hiçbir zaman sahte sıfıra dönüşmez.
       final result = await client.rpc('get_my_online_answer_stats');
-      if (result is! Map) return null;
+      if (result == null) return null;
+      if (result is! Map) {
+        throw const FormatException('Online answer stats must be an object.');
+      }
       final correct = result['correct'];
       final wrong = result['wrong'];
       if (correct is! int || wrong is! int || correct < 0 || wrong < 0) {
-        return null;
+        throw const FormatException(
+          'Online answer totals must be non-negative integers.',
+        );
       }
       return (correct: correct, wrong: wrong);
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadOnlineAnswerStats failed');
-      return null;
+      rethrow;
     }
   }
 

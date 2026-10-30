@@ -137,6 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   /// (2026-07-22 canlı UX denetimi, P0-4).
   int _answeredTotal = 0;
   bool _answerStatsAvailable = true;
+  bool _answerStatsFailed = false;
   int _streak = 0;
 
   @override
@@ -225,9 +226,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // profil gridinde gösterilmiyor, quiz üst barında görünüyor.
       final mistakeStore = await MistakeStore.load();
       ({int correct, int wrong})? onlineAnswers;
+      var answerStatsFailed = false;
       try {
         onlineAnswers = await widget.repository.loadOnlineAnswerStats();
       } catch (_) {
+        answerStatsFailed = true;
         // Diğer profil bölümleri erişilebilir kalır; eksik toplam gösterilmez.
       }
       final correct = mistakeStore.totalCorrect + (onlineAnswers?.correct ?? 0);
@@ -273,6 +276,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _level = xpStore.currentLevel;
           _xpInLevel = xpStore.xpInCurrentLevel;
           _xpNeeded = xpStore.xpNeededForNextLevel;
+          _answerStatsFailed = answerStatsFailed;
           _answerStatsAvailable =
               onlineAnswers != null && !missingAnswerHistory;
           _accuracyPercent = onlineAnswers != null && answered > 0
@@ -431,9 +435,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           // metriği yokken "—" gösterir.
           if (!_answerStatsAvailable)
             SahneSurfaceCard(
-              key: const ValueKey('profile-answer-stats-unavailable'),
+              key: ValueKey(
+                _answerStatsFailed
+                    ? 'profile-answer-stats-unavailable'
+                    : 'profile-answer-stats-empty',
+              ),
               child: Text(
-                context.t(K.answerStatsUnavailable),
+                context.t(
+                  _answerStatsFailed
+                      ? K.answerStatsUnavailable
+                      : K.profileStartBody,
+                ),
                 style: SahneType.body.copyWith(
                   color: SahneTokens.of(context).tx2,
                 ),
