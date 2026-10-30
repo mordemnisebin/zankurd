@@ -1,0 +1,10 @@
+Canlı maçlarda ortak açılış saatini kullan
+
+İstemci cevabı geç alınca yeniden beş saniye sayıyordu; sunucunun ortak
+bitiş zamanını monoton saatle izleyerek gereksiz beklemeyi kaldır.
+Düello ve iki kişilik oda için üç, kalabalık için dört saniyelik süreyi
+dar ve idempotent göçle tanımla; eski sunucuda beş saniyeyi koru.
+Sırayla düello ve turnuvada yanlış cevabın okunmasına üç saniye ayır.
+Erken geçiş, sahte saat, son soru ve eski sunucu uyumu bekçilerini ekle.
+
+Co-Authored-By: GPT-6 Astra <noreply@openai.com>

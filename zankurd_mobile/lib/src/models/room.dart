@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'player.dart';
+import '../game/reveal_timing.dart';
 
 enum RoomStatus { lobby, active, finished }
 
@@ -66,6 +67,7 @@ class RoomResumeSnapshot {
     required this.wrongCount,
     required List<ResumedAnswer> answers,
     this.pendingAnswer,
+    this.revealClock,
     required this.serverNow,
     required this.questionStartedAt,
     required this.deadline,
@@ -81,6 +83,9 @@ class RoomResumeSnapshot {
   final int wrongCount;
   final List<ResumedAnswer> answers;
   final ResumedPendingAnswer? pendingAnswer;
+
+  /// Null: göç uygulanmamış sunucu; eski beş saniyelik sözleşme.
+  final ServerRevealClock? revealClock;
   final DateTime serverNow;
   final DateTime? questionStartedAt;
   final DateTime? deadline;

@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
+import 'package:zankurd_mobile/src/game/reveal_timing.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
@@ -95,6 +96,8 @@ RoomResumeSnapshot _snapshot({
   int correct = 1,
   int wrong = 0,
   int remainingMs = 12000,
+  ServerRevealClock? revealClock,
+  ResumedPendingAnswer? pendingAnswer,
   List<ResumedAnswer> answers = const [],
 }) {
   final now = DateTime.utc(2026, 8, 2, 12);
@@ -108,6 +111,8 @@ RoomResumeSnapshot _snapshot({
     wrongCount: wrong,
     answers: answers,
     serverNow: now,
+    revealClock: revealClock,
+    pendingAnswer: pendingAnswer,
     questionStartedAt: now.subtract(const Duration(seconds: 18)),
     deadline: now.add(Duration(milliseconds: remainingMs)),
     remainingMs: remainingMs,
@@ -185,6 +190,8 @@ class _SessionRepository extends MockZanKurdRepository {
   int awardCalls = 0;
   int submitCalls = 0;
   int advanceCalls = 0;
+  final advanceIndices = <int>[];
+  bool finishOnAdvance = false;
   int resultCalls = 0;
   int resultQuestionCalls = 0;
   int ackCalls = 0;
@@ -277,6 +284,15 @@ class _SessionRepository extends MockZanKurdRepository {
     required int expectedQuestionIndex,
   }) async {
     advanceCalls++;
+    advanceIndices.add(expectedQuestionIndex);
+    if (finishOnAdvance) {
+      snapshot = null;
+      endState = const RoomEndState(
+        status: RoomStatus.finished,
+        endedReason: 'completed',
+        forfeitedBy: null,
+      );
+    }
     return null;
   }
 
@@ -436,6 +452,161 @@ void main() {
       'zankurd.quiz_tutorial.seen': true,
     });
   });
+
+  testWidgets(
+    'T5: herkes cevaplamadan açılış riski; yalnız tamamlanmış snapshot sınanıyordu',
+    (tester) async {
+      final repository = _SessionRepository(
+        _snapshot(
+          questionIndex: 1,
+          answers: const [_firstAnswer],
+          pendingAnswer: const ResumedPendingAnswer(
+            questionId: 'resume-q-2',
+            questionIndex: 1,
+            selectedOptionKey: 'B',
+            responseMs: 1000,
+          ),
+        ),
+      );
+      addTearDown(repository.close);
+      await tester.pumpWidget(
+        testShell(
+          child: QuizScreen(
+            repository: repository,
+            room: _room,
+            questions: _questions,
+            is1v1: true,
+            resumeSnapshot: repository.snapshot,
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 3));
+      expect(repository.advanceCalls, 0);
+      expect(
+        find.byKey(const ValueKey('quiz-reveal-status-band')),
+        findsNothing,
+      );
+      expect(
+        tester
+            .widgetList<QuizOptionTile>(find.byType(QuizOptionTile))
+            .any((tile) => tile.correct),
+        isFalse,
+      );
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
+
+  for (final crowd in [false, true]) {
+    testWidgets(
+      'T5: ${crowd ? "oda" : "düello"} geç gelen açılışı yeniden sayardı; tek cihaz testi gizledi',
+      (tester) async {
+        final started = tester.binding.clock.now();
+        final serverNow = DateTime.utc(2026, 10, 30);
+        final duration = crowd ? RevealTiming.crowd : RevealTiming.live;
+        final clock = ServerRevealClock(
+          serverNow: serverNow.add(const Duration(seconds: 1)),
+          endsAt: serverNow.add(duration),
+          elapsed: () => tester.binding.clock.now().difference(started),
+        );
+        final repository = _SessionRepository(
+          _snapshot(
+            questionIndex: 1,
+            answers: const [_firstAnswer, _secondAnswer],
+            revealClock: clock,
+          ),
+        );
+        addTearDown(repository.close);
+        await tester.pumpWidget(
+          testShell(
+            child: QuizScreen(
+              repository: repository,
+              room: _room.copyWith(
+                hostId: 'me',
+                isCustom: crowd,
+                maxPlayers: crowd ? 50 : 2,
+              ),
+              questions: _questions,
+              is1v1: !crowd,
+              resumeSnapshot: repository.snapshot,
+            ),
+          ),
+        );
+        await tester.pump();
+        await tester.pump();
+        expect(repository.advanceCalls, 0);
+        expect(
+          find.byKey(const ValueKey('quiz-reveal-status-band')),
+          findsOneWidget,
+        );
+        await tester.pump(
+          duration -
+              const Duration(seconds: 1) -
+              const Duration(milliseconds: 1),
+        );
+        expect(repository.advanceCalls, 0);
+        await tester.pump(const Duration(milliseconds: 1));
+        await tester.pump();
+        expect(repository.advanceIndices, [1]);
+        // RPC henüz yeni indeksi doğrulamadı: ekranda kendi kendine ilerleme yok.
+        expect(find.text('Pirs 2'), findsOneWidget);
+        await tester.pumpWidget(const SizedBox.shrink());
+      },
+    );
+  }
+
+  testWidgets(
+    'T5: son cevap açılışı atlanırdı; ara soru testleri bitişi kapsamıyordu',
+    (tester) async {
+      final started = tester.binding.clock.now();
+      final serverNow = DateTime.utc(2026, 10, 30);
+      final repository = _SessionRepository(
+        _snapshot(
+          questionIndex: 2,
+          answers: const [
+            _firstAnswer,
+            _secondAnswer,
+            ResumedAnswer(
+              questionId: 'resume-q-3',
+              questionIndex: 2,
+              selectedOptionKey: 'B',
+              correctOptionKey: 'A',
+              isCorrect: false,
+              pointsAwarded: 0,
+              responseMs: 1000,
+            ),
+          ],
+          revealClock: ServerRevealClock(
+            serverNow: serverNow,
+            endsAt: serverNow.add(RevealTiming.live),
+            elapsed: () => tester.binding.clock.now().difference(started),
+          ),
+        ),
+      )..finishOnAdvance = true;
+      addTearDown(repository.close);
+      await tester.pumpWidget(
+        testShell(
+          child: QuizScreen(
+            repository: repository,
+            room: _room,
+            questions: _questions,
+            is1v1: true,
+            resumeSnapshot: repository.snapshot,
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 2999));
+      expect(repository.advanceCalls, 0);
+      expect(find.byType(QuizResultScreen), findsNothing);
+      await tester.pump(const Duration(milliseconds: 1));
+      await _pumpFrames(tester, 8);
+      expect(repository.advanceIndices, [2]);
+      expect(find.byType(QuizResultScreen), findsOneWidget);
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
 
   testWidgets(
     'aktif oda index skor seri ve ilk kalan süreyle doğrudan devam eder',

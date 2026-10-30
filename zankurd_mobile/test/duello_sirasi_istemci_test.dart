@@ -550,8 +550,8 @@ void main() {
       final (repo, id) = await openResumed(tester, elapsedMs: 26000);
       // Sonraki soru temiz başlasın (zincirleme süre aşımı olmasın).
       repo.presentElapsedMsForTesting = null;
-      // Açıklama duraklaması (1,2 sn) bitsin, ekran sökülsün.
-      await tester.pump(const Duration(milliseconds: 1500));
+      // T5: TIMEOUT doğru şıkkı 3 sn gösterir; bekçi sonucu aynı kalır.
+      await tester.pump(const Duration(milliseconds: 3100));
       final resumed = await repo.resumeAsyncDuel(id);
       expect(
         resumed.answeredCount,

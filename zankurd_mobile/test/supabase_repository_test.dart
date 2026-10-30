@@ -1344,6 +1344,55 @@ void main() {
     },
   );
 
+  for (final withRevealClock in [false, true]) {
+    test(
+      'T5: resume açılış saatini yutardı; eski JSON testi sessizdi ($withRevealClock)',
+      () async {
+        final httpClient = _RoomSessionHttpClient(
+          resumeResponse: {
+            'room_id': '00000000-0000-0000-0000-000000000099',
+            'current_question_index': 0,
+            'own_score': 0,
+            'own_streak': 0,
+            'own_best_streak': 0,
+            'correct_count': 0,
+            'wrong_count': 0,
+            'server_now': '2026-08-02T12:00:15.000Z',
+            if (withRevealClock)
+              'current_question_reveal_ends_at': '2026-08-02T12:00:17.000Z',
+            'current_question_started_at': '2026-08-02T12:00:10.000Z',
+            'current_question_deadline': '2026-08-02T12:00:30.000Z',
+            'current_question_remaining_ms': 15000,
+            'pending_answer': null,
+            'answers': <Object>[],
+          },
+        );
+        final repository = SupabaseZanKurdRepository(
+          SupabaseClient(
+            'https://example.supabase.co',
+            'sb_publishable_test_key',
+            httpClient: httpClient,
+          ),
+        );
+        final resume = await repository.loadMyResumableRoom();
+        expect(resume, isNotNull);
+        if (withRevealClock) {
+          expect(resume!.revealClock, isNotNull);
+          expect(
+            resume.revealClock!.endsAt,
+            DateTime.utc(2026, 8, 2, 12, 0, 17),
+          );
+          expect(
+            resume.revealClock!.remaining.inMilliseconds,
+            inInclusiveRange(0, 2000),
+          );
+        } else {
+          expect(resume!.revealClock, isNull);
+        }
+      },
+    );
+  }
+
   test('resume RPC null dönerse snapshot sorgulanmaz', () async {
     final httpClient = _RoomSessionHttpClient();
     final repository = SupabaseZanKurdRepository(

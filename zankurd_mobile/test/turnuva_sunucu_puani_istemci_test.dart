@@ -286,6 +286,26 @@ void main() {
     expect(repo.calls.where((c) => c == 'present:0'), hasLength(2));
   });
 
+  testWidgets(
+    'T5: turnuvada yanlış şık 1,2 sn sonra kaybolurdu; doğru yanıt akışı gizledi',
+    (tester) async {
+      final repo = _ServerScoredRepo(_bracket(serverScored: true));
+      await _openTournament(tester, repo);
+      await tester.tap(find.text('Maçı başlat'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      await tester.tap(find.text('Du'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 2999));
+      expect(find.text('Pirs 0'), findsOneWidget);
+      expect(repo.calls, isNot(contains('present:1')));
+      await tester.pump(const Duration(milliseconds: 1));
+      await tester.pump();
+      expect(repo.calls, contains('present:1'));
+      await tester.pumpWidget(const SizedBox.shrink());
+    },
+  );
+
   testWidgets('rakip bekleniyor kartı rakip bitirince kendiliğinden kalkar', (
     tester,
   ) async {

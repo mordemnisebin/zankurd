@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
 import '../../config/category_visuals.dart';
+import '../../game/reveal_timing.dart';
 import '../../data/zankurd_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
@@ -69,7 +70,6 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   static const _questionSeconds = 20;
   static const _questionDurationMs = _questionSeconds * 1000;
-  static const _revealPause = Duration(milliseconds: 1200);
 
   bool _loading = true;
   Object? _startError;
@@ -519,7 +519,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         response.correctOption,
       );
     });
-    await Future<void>.delayed(_revealPause);
+    await Future<void>.delayed(
+      RevealTiming.individual(correct: response.correct),
+    );
     // Çıkış onaylandıysa ekran ilerlemez: bir sonraki soru açılıp sayacı
     // başlasaydı oyuncu, çıkış döngüsü o soruyu TIMEOUT ile gönderirken
     // ona cevap verebilir ve aynı soru iki kez gönderilirdi.
