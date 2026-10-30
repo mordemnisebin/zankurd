@@ -45,12 +45,16 @@ class PresenceController extends ChangeNotifier with WidgetsBindingObserver {
   bool _enabled = false;
   bool _ready = false;
   bool _saving = false;
+  // Timeout RPC'yi iptal etmez; hesap değişse de eski yazma bitmeden
+  // yenisi başlayamaz. Aksi hâlde geciken açma son kapatmayı ezebilir.
+  bool _writePending = false;
   int _generation = 0;
   int? _pollGeneration;
 
   bool get enabled => _enabled;
   bool get ready => _ready;
-  bool get canChange => _ready && !_saving && _userId != null;
+  bool get canChange =>
+      !_disposed && _ready && !_saving && !_writePending && _userId != null;
   static const _timeout = Duration(seconds: 10);
 
   void bind(PresenceGateway gateway, {required String? userId}) {
@@ -107,6 +111,7 @@ class PresenceController extends ChangeNotifier with WidgetsBindingObserver {
     if (!_current(generation) ||
         !_foreground ||
         _saving ||
+        _writePending ||
         gateway == null ||
         _pollGeneration == generation) {
       return;
@@ -136,27 +141,53 @@ class PresenceController extends ChangeNotifier with WidgetsBindingObserver {
     _timer?.cancel();
     _notify();
     var saved = false;
+    var timedOut = false;
+    _writePending = true;
+    Future<void> write() async {
+      try {
+        await gateway.setVisibility(enabled);
+      } finally {
+        _writePending = false;
+        if (timedOut && !_disposed) {
+          // Geç yanıtın hedefini UI'ya uygulama; mevcut hesabı yeniden oku.
+          _ready = false;
+          _restart();
+          _notify();
+        }
+      }
+    }
+
     try {
-      await gateway.setVisibility(enabled).timeout(_timeout);
+      await write().timeout(_timeout);
       if (!_current(generation)) return false;
       _enabled = enabled;
       saved = true;
       return true;
+    } on TimeoutException {
+      timedOut = true;
+      return false;
     } catch (_) {
       return false;
     } finally {
       if (_current(generation)) {
         _saving = false;
+        if (_writePending) _ready = false;
         _notify();
         // Yazma başarısızsa hemen kalp atışı yollama. Sonraki tur tercihi
         // yeniden okur; kapanma ağda gerçekleşmiş olabilir.
-        if (saved) {
+        if (_writePending) {
+          // Geç tamamlanma write() içinde yoklamayı yeniden başlatır.
+        } else if (saved) {
           _restart();
         } else if (_foreground) {
           _timer = Timer.periodic(const Duration(minutes: 2), (_) {
             unawaited(_pulse());
           });
         }
+      } else if (!_disposed && !_writePending) {
+        // Yazma sırasında hesap değiştiyse yeni hesabın okuması beklemişti.
+        _restart();
+        _notify();
       }
     }
   }

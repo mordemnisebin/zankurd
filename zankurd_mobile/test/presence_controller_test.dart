@@ -44,23 +44,26 @@ void main() {
     final pending = Completer<bool>();
     final gateway = _Gateway()..pendingRead = pending;
     final controller = PresenceController();
-    addTearDown(controller.dispose);
-    controller.bind(gateway, userId: 'guest');
-    controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
-    await tester.pump();
-    controller.didChangeAppLifecycleState(AppLifecycleState.paused);
-    pending.complete(true);
-    await tester.pump();
-    expect(gateway.touches, 0);
-    gateway.pendingRead = null;
-    gateway.visible = true;
-    gateway.failTouch = true;
-    controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
-    await tester.pump();
-    expect(tester.takeException(), isNull);
-    gateway.failTouch = false;
-    await tester.pump(const Duration(minutes: 2));
-    expect(gateway.touches, 1);
+    try {
+      controller.bind(gateway, userId: 'guest');
+      controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
+      await tester.pump();
+      controller.didChangeAppLifecycleState(AppLifecycleState.paused);
+      pending.complete(true);
+      await tester.pump();
+      expect(gateway.touches, 0);
+      gateway.pendingRead = null;
+      gateway.visible = true;
+      gateway.failTouch = true;
+      controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
+      await tester.pump();
+      expect(tester.takeException(), isNull);
+      gateway.failTouch = false;
+      await tester.pump(const Duration(minutes: 2));
+      expect(gateway.touches, 1);
+    } finally {
+      controller.dispose();
+    }
   });
 
   testWidgets('T1 ayar sunucu onayını bekler ve dar ekrana sığar; eski '
@@ -70,7 +73,6 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     final auth = AuthProvider.test();
-    addTearDown(auth.dispose);
     final gateway = _Gateway();
     auth.presence.bind(gateway, userId: 'guest');
     auth.presence.didChangeAppLifecycleState(AppLifecycleState.resumed);
@@ -107,22 +109,25 @@ void main() {
       'testler izinsiz paylaşımı ölçmüyordu', (tester) async {
     final gateway = _Gateway();
     final controller = PresenceController();
-    addTearDown(controller.dispose);
-    controller.bind(gateway, userId: null);
-    controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
-    await tester.pump(const Duration(minutes: 4));
-    expect(controller.enabled, isFalse);
-    expect(gateway.touches, 0);
-    controller.updateSession('guest');
-    await tester.pump();
-    expect(gateway.touches, 0);
-    expect(await controller.setEnabled(true), isTrue);
-    await tester.pump();
-    expect(gateway.touches, 1);
-    await tester.pump(const Duration(seconds: 119));
-    expect(gateway.touches, 1);
-    await tester.pump(const Duration(seconds: 1));
-    expect(gateway.touches, 2);
+    try {
+      controller.bind(gateway, userId: null);
+      controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
+      await tester.pump(const Duration(minutes: 4));
+      expect(controller.enabled, isFalse);
+      expect(gateway.touches, 0);
+      controller.updateSession('guest');
+      await tester.pump();
+      expect(gateway.touches, 0);
+      expect(await controller.setEnabled(true), isTrue);
+      await tester.pump();
+      expect(gateway.touches, 1);
+      await tester.pump(const Duration(seconds: 119));
+      expect(gateway.touches, 1);
+      await tester.pump(const Duration(seconds: 1));
+      expect(gateway.touches, 2);
+    } finally {
+      controller.dispose();
+    }
   });
 
   testWidgets('T1 arka planda durur, dönüşte yenilenir, çıkışta susar; '
@@ -159,57 +164,69 @@ void main() {
       'olmaz; önce ayar sunucuya yazılmıyordu', (tester) async {
     final gateway = _Gateway()..visible = true;
     final controller = PresenceController();
-    addTearDown(controller.dispose);
-    controller.bind(gateway, userId: 'user');
-    controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
-    await tester.pump();
-    gateway.pendingWrite = Completer<void>();
-    final save = controller.setEnabled(false);
-    await tester.pump(const Duration(minutes: 2));
-    expect(gateway.touches, 1);
-    gateway.pendingWrite!.complete();
-    // The request timed out: never claim that the server saved it.
-    expect(await save, isFalse);
-    gateway.pendingWrite = null;
-    expect(await controller.setEnabled(false), isTrue);
-    await tester.pump(const Duration(minutes: 4));
-    expect(controller.enabled, isFalse);
-    expect(gateway.touches, 1);
-    gateway.fail = true;
-    expect(await controller.setEnabled(true), isFalse);
-    expect(controller.enabled, isFalse);
-    await tester.pump(const Duration(minutes: 2));
-    expect(tester.takeException(), isNull);
+    try {
+      controller.bind(gateway, userId: 'user');
+      controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
+      await tester.pump();
+      gateway.pendingWrite = Completer<void>();
+      final save = controller.setEnabled(false);
+      await tester.pump(const Duration(minutes: 2));
+      expect(gateway.touches, 1);
+      gateway.pendingWrite!.complete();
+      // The request timed out: never claim that the server saved it.
+      expect(await save, isFalse);
+      gateway.pendingWrite = null;
+      // Geç yazma tamamlandıktan sonra sunucu tercihi yeniden okunur.
+      await tester.pump();
+      expect(controller.canChange, isTrue);
+      expect(await controller.setEnabled(false), isTrue);
+      await tester.pump(const Duration(minutes: 4));
+      expect(controller.enabled, isFalse);
+      expect(gateway.touches, 1);
+      gateway.fail = true;
+      expect(await controller.setEnabled(true), isFalse);
+      expect(controller.enabled, isFalse);
+      await tester.pump(const Duration(minutes: 2));
+      expect(tester.takeException(), isNull);
+    } finally {
+      controller.dispose();
+    }
   });
 
   testWidgets('T1 geç eski hesap yanıtı yeni hesaba sızmaz; tek hesap '
       'örnekleri yarış durumunu gizliyordu', (tester) async {
     final gateway = _Gateway()..pendingRead = Completer<bool>();
     final controller = PresenceController();
-    addTearDown(controller.dispose);
-    controller.bind(gateway, userId: 'old');
-    controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
-    await tester.pump();
-    final old = gateway.pendingRead!;
-    gateway.pendingRead = null;
-    controller.updateSession('new');
-    old.complete(true);
-    await tester.pump();
-    expect(controller.enabled, isFalse);
-    expect(gateway.touches, 0);
+    try {
+      controller.bind(gateway, userId: 'old');
+      controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
+      await tester.pump();
+      final old = gateway.pendingRead!;
+      gateway.pendingRead = null;
+      controller.updateSession('new');
+      old.complete(true);
+      await tester.pump();
+      expect(controller.enabled, isFalse);
+      expect(gateway.touches, 0);
+    } finally {
+      controller.dispose();
+    }
   });
 
   testWidgets('T1 başka cihazda kapatılan tercih sonraki turda okunur; '
       'yerel önbellek tek başına mahremiyeti korumaz', (tester) async {
     final gateway = _Gateway()..visible = true;
     final controller = PresenceController();
-    addTearDown(controller.dispose);
-    controller.bind(gateway, userId: 'guest');
-    controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
-    await tester.pump();
-    gateway.visible = false;
-    await tester.pump(const Duration(minutes: 2));
-    expect(controller.enabled, isFalse);
-    expect(gateway.touches, 1);
+    try {
+      controller.bind(gateway, userId: 'guest');
+      controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
+      await tester.pump();
+      gateway.visible = false;
+      await tester.pump(const Duration(minutes: 2));
+      expect(controller.enabled, isFalse);
+      expect(gateway.touches, 1);
+    } finally {
+      controller.dispose();
+    }
   });
 }
