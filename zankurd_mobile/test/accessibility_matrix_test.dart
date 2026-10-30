@@ -94,12 +94,14 @@ late final Lesson _lesson;
 final Map<String, _Build> _screens = {
   'ders slaytı': (r) => LessonDetailScreen(lesson: _lesson, repository: r),
   'soru (cevaplandı)': (r) => QuizScreen(
+    roundId: 'test-round',
     repository: r,
     room: r.createRoom().copyWith(questionCount: 1),
     questions: r.questions.take(1).toList(),
     enableTimer: false,
   ),
   'ders sorusu (cevaplandı)': (r) => QuizScreen(
+    roundId: 'test-round',
     repository: r,
     room: r.createRoom().copyWith(questionCount: 1),
     questions: r.questions.take(1).toList(),
@@ -111,12 +113,14 @@ final Map<String, _Build> _screens = {
   'alt kategoriler': (r) => SubcategoryScreen(repository: r, category: 'Ziman'),
   'seviyeler': (r) => LevelScreen(repository: r, category: 'Ziman'),
   'soru': (r) => QuizScreen(
+    roundId: 'test-round',
     repository: r,
     room: r.createRoom().copyWith(questionCount: 1),
     questions: r.questions.take(1).toList(),
     enableTimer: false,
   ),
   'ders sorusu': (r) => QuizScreen(
+    roundId: 'test-round',
     repository: r,
     room: r.createRoom().copyWith(questionCount: 1),
     questions: r.questions.take(1).toList(),
