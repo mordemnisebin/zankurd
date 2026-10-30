@@ -75,15 +75,27 @@ void main() {
   // ekrana sığar; büyük yazıda ikisi sığmaz ve fotoğraf payı korunur, doğru
   // şık bir kaydırma ötede kalır (kullanıcı kaydırabilir; fotoğrafı geri
   // getirmek ise bağlamı yeniden aramaktır).
-  for (final (name, size, textScale, answerMustShow) in [
-    ('440×956 Pro Max', const Size(440, 956), 1.0, true),
-    ('402×874', kPhoneSize, 1.0, true),
-    ('440×956 Pro Max, yazı 1.5×', const Size(440, 956), 1.5, true),
-    ('402×874, yazı 1.5×', kPhoneSize, 1.5, false),
-    ('402×874, yazı 2×', kPhoneSize, 2.0, false),
+  for (final (name, size, textScale, answerMustShow, question) in [
+    ('440×956 Pro Max', const Size(440, 956), 1.0, true, _question),
+    ('402×874', kPhoneSize, 1.0, true, _question),
+    ('440×956 Pro Max, yazı 1.5×', const Size(440, 956), 1.5, true, _question),
+    ('402×874, yazı 1.5×', kPhoneSize, 1.5, false, _question),
+    ('402×874, yazı 2×, uzun soru', kPhoneSize, 2.0, false, _question),
+    (
+      '402×874, yazı 2×, kısa soru',
+      kPhoneSize,
+      2.0,
+      false,
+      _question.copyWith(prompt: 'Newroz ateşi neyi simgeler?'),
+    ),
   ]) {
+    // Uzun soruda %200 yazı ile fotoğraf ve ilk şık birlikte sığmıyor.
+    // Kullanıcının elle kaydırması fotoğrafı zaten gizler; mevcut sözleşme
+    // bu durumda kullanıcıyı geri çekmemektir. Kısa soru aynı ölçekte
+    // fotoğrafın cevap sonrası 64 pt kalmasını ayrıca sınar.
+    final manuallyHidden = textScale == 2 && identical(question, _question);
     testWidgets(
-      '$name: cevaptan sonra fotoğrafın en az 64pt\'si görünür kalır',
+      '$name: ${manuallyHidden ? 'elle gizlenen fotoğrafa geri kaydırmaz' : 'cevaptan sonra fotoğrafın en az 64pt\'si görünür kalır'}',
       (tester) async {
         await tester.binding.setSurfaceSize(size);
         addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -104,7 +116,7 @@ void main() {
               child: QuizScreen(
                 repository: repository,
                 room: repository.createRoom(),
-                questions: const [_question],
+                questions: [question],
                 enableTimer: false,
                 experience: QuizExperience.learning,
               ),
@@ -114,22 +126,42 @@ void main() {
         await tester.pumpAndSettle();
 
         final photoHeight = tester.getSize(_photo).height;
+        // Büyük yazıda ilk şık perdenin altında kalabilir. Boşa dokunup
+        // cevap öncesi fotoğrafı ölçmek testi yanlışlıkla yeşile çeviriyordu.
+        final option = find.byType(QuizOptionTile).first;
+        await Scrollable.ensureVisible(
+          tester.element(option),
+          alignment: 1,
+          alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd,
+        );
+        await tester.pumpAndSettle();
         final before = _visiblePhotoHeight(tester);
-
-        await tester.tap(find.byType(QuizOptionTile).first);
+        final floor = photoHeight < 64 ? photoHeight : 64.0;
+        expect(
+          before,
+          manuallyHidden ? isZero : greaterThanOrEqualTo(floor),
+          reason: 'Testin cevap öncesi fotoğraf görünürlüğü kurulmalı.',
+        );
+        await tester.tap(option);
         // Açıklama denetleyicisi (800 ms) + kaydırma (320 ms).
         await tester.pump(const Duration(milliseconds: 900));
         await tester.pumpAndSettle();
 
         expect(
+          tester
+              .widgetList<QuizOptionTile>(find.byType(QuizOptionTile))
+              .where((tile) => tile.selected),
+          hasLength(1),
+          reason: 'Fotoğraf ölçülmeden önce cevap gerçekten seçilmiş olmalı.',
+        );
+        expect(
           tester.getSize(_photo).height,
           photoHeight,
           reason: 'Fotoğrafın kendi yüksekliği cevapla değişmemeli.',
         );
-        final floor = photoHeight < 64 ? photoHeight : 64.0;
         expect(
           _visiblePhotoHeight(tester),
-          greaterThanOrEqualTo(floor),
+          manuallyHidden ? isZero : greaterThanOrEqualTo(floor),
           reason:
               'Cevaptan sonra fotoğraf ince bir şeride düştü (önce: $before, '
               'sonra: ${_visiblePhotoHeight(tester)}).',
