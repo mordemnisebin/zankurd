@@ -13,6 +13,7 @@ import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
+import 'package:zankurd_mobile/src/widgets/zan_mascot.dart';
 
 /// 1v1 sonuç başlığı her üç sonuçta da okunur ve sonuçlar birbirinden
 /// ayrışır.
@@ -80,6 +81,19 @@ void main() {
       ],
     );
   }
+
+  testWidgets('T10: kaybeden canlı düello maskotu üzgün destek pozu kullanır', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(390, 844);
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(wrap(duel(mine: 0, theirs: 375)));
+    await tester.pump(const Duration(seconds: 1));
+    final mascots = tester.widgetList<ZanMascot>(find.byType(ZanMascot));
+    expect(mascots, isNotEmpty);
+    expect(mascots.every((m) => m.pose == ZanPose.support), isTrue);
+  });
 
   const outcomes = <String, (int, int, String)>{
     'kazandı': (300, 100, K.youWon),

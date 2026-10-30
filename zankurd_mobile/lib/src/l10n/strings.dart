@@ -358,10 +358,6 @@ class Tr {
       'ku': 'Hesabê te jixwe heye? ',
       'tr': 'Zaten hesabın var mı? ',
     },
-    K.stepCredentials: {
-      'ku': 'E-name û şîfreya xwe binivîse',
-      'tr': 'E-postanı ve parolanı gir',
-    },
     K.stepUsername: {
       'ku': 'Navê bikarhênerê xwe hilbijêre',
       'tr': 'Kullanıcı adını seç',
@@ -4713,7 +4709,6 @@ class K {
   static const createAccount = 'auth.createAccount';
   static const nextStep = 'common.nextStep';
   static const haveAccountPrefix = 'auth.haveAccountPrefix';
-  static const stepCredentials = 'auth.step.credentials';
   static const stepUsername = 'auth.step.username';
   static const stepReview = 'auth.step.review';
   static const passwordHintMin6 = 'auth.password.hintMin6';

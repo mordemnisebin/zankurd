@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/tournament.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 import 'package:zankurd_mobile/src/widgets/tournament_bracket_widget.dart';
 
@@ -76,7 +77,9 @@ TournamentBracket _bracket({
 }
 
 class _Repo extends MockZanKurdRepository {
-  _Repo(this.bracket);
+  _Repo(this.bracket, {this.standings = const []});
+
+  final List<TournamentStandings> standings;
 
   final TournamentBracket? bracket;
 
@@ -89,7 +92,7 @@ class _Repo extends MockZanKurdRepository {
   @override
   Future<List<TournamentStandings>> loadTournamentStandings({
     int limit = 16,
-  }) async => const [];
+  }) async => standings;
 }
 
 Future<void> _pump(
@@ -99,6 +102,7 @@ Future<void> _pump(
   double textScale = 1.0,
   ThemeMode mode = ThemeMode.light,
   bool ku = false,
+  List<TournamentStandings> standings = const [],
 }) async {
   tester.view.devicePixelRatio = 1.0;
   tester.view.physicalSize = size;
@@ -109,7 +113,11 @@ Future<void> _pump(
       languageProvider: ku ? kurmanciLang() : turkishLang(),
       child: MediaQuery(
         data: MediaQueryData(textScaler: TextScaler.linear(textScale)),
-        child: Scaffold(body: TournamentScreen(repository: _Repo(bracket))),
+        child: Scaffold(
+          body: TournamentScreen(
+            repository: _Repo(bracket, standings: standings),
+          ),
+        ),
       ),
     ),
   );
@@ -119,6 +127,82 @@ Future<void> _pump(
 
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
+
+  testWidgets('T10: hükmen elenen sıralamada da oynanmadı hükmen der', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      _bracket(rounds: 2),
+      standings: const [
+        TournamentStandings(
+          rank: 3,
+          playerId: 'missing',
+          playerName: 'Gelmedi',
+          status: 'eliminated',
+          hasSubmitted: false,
+        ),
+      ],
+    );
+    await tester.scrollUntilVisible(
+      find.textContaining('Oynamadı · hükmen'),
+      500,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.textContaining('Oynamadı · hükmen'), findsOneWidget);
+    expect(find.text('Henüz oynamadı'), findsNothing);
+  });
+
+  testWidgets('T10: bitmiş kupada eski tur durumları saat göstermez', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      _bracket(currentRound: 0, rounds: 2, status: 'completed'),
+    );
+    expect(find.byIcon(AppIcons.clock), findsNothing);
+    expect(find.byIcon(AppIcons.hourglass), findsNothing);
+    expect(find.byIcon(AppIcons.check), findsWidgets);
+  });
+
+  testWidgets(
+    'T10: elenen finalistte tamamlanan maçlar eski tur durumunu ezer',
+    (tester) async {
+      const match = TournamentMatch(
+        id: 'final',
+        playerOneId: 'user',
+        playerOneName: 'Rojhat',
+        playerTwoId: 'rival',
+        playerTwoName: 'Rakip',
+        playerOneScore: 0,
+        playerTwoScore: 0,
+        status: 'completed',
+        winnerId: 'rival',
+      );
+      final bracket = TournamentBracket(
+        tournamentId: 'cup',
+        userId: 'user',
+        rounds: const [
+          TournamentRound(roundNumber: 1, matches: [match]),
+        ],
+        currentRound: 0,
+        status: 'eliminated',
+        totalScore: 0,
+        createdAt: DateTime.utc(2026),
+      );
+      await _pump(tester, bracket);
+      expect(find.byIcon(AppIcons.clock), findsNothing);
+      expect(find.byIcon(AppIcons.check), findsWidgets);
+    },
+  );
+
+  testWidgets('T10: şemada kendi satırı iki dilde işaretli', (tester) async {
+    for (final ku in [false, true]) {
+      await tester.pumpWidget(const SizedBox.shrink());
+      await _pump(tester, _bracket(rounds: 2), ku: ku);
+      expect(find.text(' (${ku ? 'Tu' : 'Sen'})'), findsWidgets);
+    }
+  });
 
   // ── Tekrar yok ──────────────────────────────────────────────────────────
 

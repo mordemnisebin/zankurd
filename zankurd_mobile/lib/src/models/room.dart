@@ -177,8 +177,11 @@ class RoomAnswerProgress {
     required this.questionIndex,
     required this.answered,
     required this.active,
+    this.revealed = false,
   });
 
+  /// Sadece faz bilgisi; doğru cevap veya oyuncu seçimi taşımaz.
+  final bool revealed;
   final int questionIndex;
   final int answered;
   final int active;
@@ -196,6 +199,7 @@ class RoomAnswerProgress {
       questionIndex: index.toInt(),
       answered: answered.toInt().clamp(0, active.toInt()),
       active: active.toInt(),
+      revealed: json['revealed'] == true,
     );
   }
 }

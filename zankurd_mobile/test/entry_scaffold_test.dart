@@ -234,6 +234,8 @@ void main() {
       );
       await tester.enterText(find.byType(EditableText).at(1), 'sifre123');
       await tester.enterText(find.byType(EditableText).at(2), 'sifre123');
+      // Alan dinleyicisinin boşken pasif olan İleri'yi etkinleştiren karesi.
+      await tester.pump();
       await tester.tap(find.text('İleri'));
       await tester.pumpAndSettle();
       final signupBack = find.byKey(const ValueKey('signup-back-button'));

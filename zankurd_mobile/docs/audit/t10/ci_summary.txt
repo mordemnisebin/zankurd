@@ -1,0 +1,20 @@
+Komut: cd zankurd_mobile && ./tool/ci_yerel.sh --tam
+Exit code: 0
+Tam günlük: /tmp/t10-ci-final.log
+SHA-256: 251cf922dca56c62b75c5bc415c7f87124a15851a617ca1ef85db04874cd1167
+
+== dart format
+== dart analyze
+No issues found!
+== soru kalitesi kapısı
+Question quality gate passed: no regression from baseline.
+== şık kalite taraması
+== dokunma hedefi taraması
+== ekran turu
++214: All tests passed!
+== flutter test
++7216 ~3: 3 skipped tests.
++7216 ~3: All other tests passed!
+== cihazsız uygulama akışları
+00:04 +4: All tests passed!
+CI yerel: bütün adımlar geçti.

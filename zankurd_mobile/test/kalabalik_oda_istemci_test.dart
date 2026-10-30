@@ -628,6 +628,9 @@ void main() {
       tester,
     ) async {
       final crowd = await mount(tester);
+      // İlk realtime bildiriminin en çok 700 ms'lik uzlaştırmasını bitir;
+      // aşağıda ölçülen yalnız altı saniyelik periyodik yedek yoklamadır.
+      await tester.pump(const Duration(milliseconds: 800));
       final base = crowd.resumeCalls;
       await tester.pump(const Duration(milliseconds: 4500));
       expect(
@@ -1125,11 +1128,13 @@ class _LobbyRepo extends MockZanKurdRepository {
 
 /// Sunucu-gizli cevaplı kalabalık oyun için sahte depo.
 class _QuizRepo extends MockZanKurdRepository {
-  _QuizRepo({required this.players, required GameRoom room})
-    : snapshot = _snapshotFor(room);
+  _QuizRepo({required this.players, required this.room});
 
   List<Player> players;
-  final RoomResumeSnapshot snapshot;
+  final GameRoom room;
+  // Realtime ve yeniden sorgu aynı sunucu durumunu temsil eder.
+  RoomResumeSnapshot get snapshot =>
+      _snapshotFor(room.copyWith(players: players));
   Object? markError;
   int resumeCalls = 0;
   int markCalls = 0;
@@ -1148,7 +1153,7 @@ class _QuizRepo extends MockZanKurdRepository {
     return RoomResumeSnapshot(
       room: room,
       currentQuestionIndex: 0,
-      ownScore: 0,
+      ownScore: room.players.where((p) => p.id == 'me').firstOrNull?.score ?? 0,
       streak: 0,
       bestStreak: 0,
       correctCount: 0,
@@ -1185,7 +1190,10 @@ class _QuizRepo extends MockZanKurdRepository {
   @override
   Stream<List<Player>> subscribeRoomPlayers(GameRoom room) async* {
     yield List<Player>.of(players);
-    yield* playersController.stream;
+    yield* playersController.stream.map((latest) {
+      players = List<Player>.of(latest);
+      return players;
+    });
   }
 
   @override

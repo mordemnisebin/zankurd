@@ -720,7 +720,7 @@ class _QuizScreenState extends State<QuizScreen>
               (_timerController.value * widget.room.secondsPerQuestion).ceil();
           if (remaining != lastTickSecond) {
             lastTickSecond = remaining;
-            if (remaining > 0 && [5, 3, 1].contains(remaining)) {
+            if (!answered && remaining > 0 && [5, 3, 1].contains(remaining)) {
               AppHaptics.light();
               context.read<SoundProvider>().playTick();
               if (remaining == 5) {
@@ -904,7 +904,9 @@ class _QuizScreenState extends State<QuizScreen>
                     _syncToQuestionIndex(targetIndex);
                   }
                 }
-                if (_usesServerHiddenAnswers && payload['answered'] == true) {
+                if (_usesServerHiddenAnswers &&
+                    (payload['answered'] == true ||
+                        payload['finished'] == true)) {
                   unawaited(_reconcileOnlineRoom());
                   return;
                 }
@@ -1705,6 +1707,7 @@ class _QuizScreenState extends State<QuizScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _reconcileGeneration++;
+    _reconcileQueued = false;
     _playersSub?.cancel();
     _realtimeSub?.cancel();
     _autoNextTimer?.cancel();
@@ -1716,6 +1719,8 @@ class _QuizScreenState extends State<QuizScreen>
     _serverReadyRetryTimer?.cancel();
     _roomSub?.cancel();
     _pollTimer?.cancel();
+    _crowdProgressTimer?.cancel();
+    _crowdProgressTimer = null;
     _crowdRevealProbeTimer?.cancel();
     _readyPingTimer?.cancel();
     _readyTimeoutTimer?.cancel();
@@ -2228,7 +2233,10 @@ class _QuizScreenState extends State<QuizScreen>
 
     if (answered && allOthersAnswered && _mpPhase != _MultiplayerPhase.reveal) {
       if (_usesServerHiddenAnswers && !_hasSafeCurrentReveal) {
-        unawaited(_reconcileOnlineRoom());
+        // Snapshot uygulamak yeni bir sunucu olayı değildir. Aynı pending
+        // yanıt kendini tekrar kuyruğa alırsa microtask döngüsü oluşur.
+        // Dış answered/index olayları doğrudan reconcile çağırmayı sürdürür.
+        if (!_reconcileInFlight) unawaited(_reconcileOnlineRoom());
         return;
       }
       _startRevealPhase();
@@ -2242,6 +2250,7 @@ class _QuizScreenState extends State<QuizScreen>
         (_usesServerHiddenAnswers && !_hasSafeCurrentReveal)) {
       return;
     }
+    _timerController.stop();
     final serverClock = _serverRevealClock;
     // Eski sunucu beş saniyeyi zorunlu tutar. Yeni sunucuda aynı bitiş
     // zamanı kullanılır; geç gelen snapshot yeni bir tam süre başlatmaz.
@@ -2284,16 +2293,10 @@ class _QuizScreenState extends State<QuizScreen>
     // Server-hidden odada her iki üye de aynı expected-index CAS'ini
     // güvenle deneyebilir. Eski broadcast tabanlı odalarda mevcut host
     // koordinasyonu korunur.
-    // Kalabalıkta herkes geri sayımı aynı saniyede bitirir ve aynı anda
-    // `advance_room_question` + `get_my_resumable_room` çağırırdı (50 kişide
-    // 100 eşzamanlı RPC). Ev sahibi hemen ilerletir; ötekiler 0,3–1,5 sn
-    // sonra dener — sunucu zaten tek bir ilerletmeyi kabul eder, gecikme
-    // yalnız gereksiz çağrıları `rooms` akışının getirdiği yeni indekse
-    // bırakır.
-    final advanceJitter = _isCrowd && !_isHost
-        ? Duration(milliseconds: 300 + Random().nextInt(1200))
-        : Duration.zero;
-    _revealTimer = Timer(revealDuration + advanceJitter, () {
+    // Ortak reveal deadline'ı tüm istemcilerde aynı geçişi tetikler.
+    // İstemciye özel 0,3–1,5 sn gecikme faz farkı yaratıyordu; sunucunun
+    // expected-index CAS kapısı yinelenen ilerletmeleri zaten reddeder.
+    _revealTimer = Timer(revealDuration, () {
       _revealTickTimer?.cancel();
       if (mounted) {
         setState(() => _revealCountdown = 0);
@@ -2377,6 +2380,19 @@ class _QuizScreenState extends State<QuizScreen>
   /// ilerleme isteğini host karşılar; host yoksa yerel fallback oyunu kilitlemez.
   void _startOpponentWaitTimer() {
     if (!_isMultiplayer) return;
+    if (_usesServerHiddenAnswers && _mpPhase != _MultiplayerPhase.reveal) {
+      // Cevap süresi kaydı değişmez; ekranda herkes ortak deadline'ı izler.
+      final remainingMs = _estimatedAuthoritativeRemainingMs;
+      if (remainingMs != null && _usesTimer) {
+        _timerController.stop();
+        _timerController.value =
+            (remainingMs / (widget.room.secondsPerQuestion * 1000)).clamp(
+              0.0,
+              1.0,
+            );
+        if (remainingMs > 0) _timerController.reverse();
+      }
+    }
     _opponentWaitTimer?.cancel();
     if (_usesServerHiddenAnswers) {
       if (_advanceSequenceActive) return;
@@ -2534,7 +2550,11 @@ class _QuizScreenState extends State<QuizScreen>
   /// yalnız sayı verir; `null` ise (RPC yok) başlık eski bekleme metninde
   /// kalır.
   RoomAnswerProgress? _crowdProgress;
-  bool _crowdProgressInFlight = false;
+  int _crowdProgressInFlight = 0;
+  int _crowdProgressRequest = 0;
+  int _crowdProgressApplied = 0;
+  Timer? _crowdProgressTimer;
+  bool _reconcileQueued = false;
 
   /// Yalnız GÜNCEL soruya ait sayı gösterilir: cevap yolda gecikip başka
   /// soruya geçilmişse eski sayı yanlış sorunun "kaç kişi cevapladı"sı olur.
@@ -2546,21 +2566,35 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Future<void> _refreshCrowdProgress() async {
-    if (!_isCrowd || _crowdProgressInFlight || !mounted) return;
-    _crowdProgressInFlight = true;
+    if (!_isCrowd || _crowdProgressInFlight >= 3 || !mounted) return;
+    // İki saniyelik ağ gecikmesi yeni sayı sorgusunu bloke etmesin.
+    // En fazla üç hafif sorgu; geç dönen eski yanıt sayıyı geri alamaz.
+    _crowdProgressInFlight++;
+    final request = ++_crowdProgressRequest;
     try {
-      final progress = await widget.repository.loadRoomAnswerProgress(
-        widget.room,
-      );
-      if (!mounted || progress == null) return;
+      final progress = await widget.repository
+          .loadRoomAnswerProgress(widget.room)
+          .timeout(const Duration(seconds: 4));
+      if (!mounted || progress == null || request < _crowdProgressApplied) {
+        return;
+      }
       // Soru, istek uçarken değiştiyse sayı geçersizdir (render'da da
       // kontrol edilir; burada yalnız gereksiz yeniden çizimi önler).
-      if (progress.questionIndex != index) return;
+      if (progress.questionIndex != index) {
+        if (progress.questionIndex > index) unawaited(_reconcileOnlineRoom());
+        return;
+      }
+      _crowdProgressApplied = request;
       setState(() => _crowdProgress = progress);
+      // Tüm cevaplar yanlış/TIMEOUT ise skor satırı değişmez: realtime
+      // sessiz kalsa da açılışı hafif ve yetkili faz bilgisiyle yakala.
+      if (progress.revealed && !_hasSafeCurrentReveal) {
+        unawaited(_reconcileOnlineRoom());
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'crowd answer progress');
     } finally {
-      _crowdProgressInFlight = false;
+      _crowdProgressInFlight--;
     }
   }
 
@@ -2572,9 +2606,9 @@ class _QuizScreenState extends State<QuizScreen>
 
   /// `room_players` satırları değişti (kalabalık oda).
   ///
-  /// İki anlam taşır: (1) skorlar yalnız bir soru AÇIKLANINCA yazılır — bu
-  /// yüzden cevabını vermiş ve beklemekte olan oyuncu için değişiklik
-  /// "açıklandı" işaretidir; cevap yayını olmadığından başka işaret yok.
+  /// İki anlam taşır: (1) skorlar yalnız bir soru AÇIKLANINCA yazılır —
+  /// cevap vermemiş istemci de bu işaretle yetkili snapshotı yeniler.
+  /// Skor değişmezse hafif ilerleme RPC'sinin revealed alanı yedektir.
   /// (2) `left_at` dolduysa oyuncu düşmüştür (ayrıldı ya da zamanında hazır
   /// olmadı).
   ///
@@ -2588,17 +2622,14 @@ class _QuizScreenState extends State<QuizScreen>
       unawaited(_handleDroppedFromCrowd());
       return;
     }
-    if (answered &&
-        _mpPhase == _MultiplayerPhase.waiting &&
-        _crowdRevealProbeTimer == null) {
-      _crowdRevealProbeTimer = Timer(
-        Duration(milliseconds: 100 + Random().nextInt(600)),
-        () {
-          _crowdRevealProbeTimer = null;
-          if (mounted) unawaited(_reconcileOnlineRoom());
-        },
-      );
-    }
+    unawaited(_refreshCrowdProgress());
+    _crowdRevealProbeTimer ??= Timer(
+      Duration(milliseconds: 100 + Random().nextInt(600)),
+      () {
+        _crowdRevealProbeTimer = null;
+        if (mounted) unawaited(_reconcileOnlineRoom());
+      },
+    );
   }
 
   /// Bu oyuncu kalabalık odadan düşürüldü (hazır süresi doldu ya da başka
@@ -2628,6 +2659,15 @@ class _QuizScreenState extends State<QuizScreen>
 
   void _ensureRoomPolling() {
     if (!_isMultiplayer || _pollTimer?.isActive == true) return;
+    if (_isCrowd) {
+      unawaited(_refreshCrowdProgress());
+      // Hafif sayı RPC'si; ağır resume/oyuncu yükü 6 sn'de kalır.
+      _crowdProgressTimer ??= Timer.periodic(const Duration(seconds: 1), (_) {
+        if (!_terminalHandling && !completing) {
+          unawaited(_refreshCrowdProgress());
+        }
+      });
+    }
     // Kalabalık odada her istemci her turda üç sorgu atar; 50 kişide 4 sn
     // yoklama saniyede ~35 sorgu demek. Asıl uyarı `room_players` akışıdır.
     _pollTimer = Timer.periodic(
@@ -2645,9 +2685,12 @@ class _QuizScreenState extends State<QuizScreen>
     }
     if (!_isMultiplayer ||
         widget.room.id == null ||
-        _reconcileInFlight ||
         _terminalHandling ||
         completing) {
+      return;
+    }
+    if (_reconcileInFlight) {
+      _reconcileQueued = true;
       return;
     }
     final expectedOwnerId = _onlineResultOwnerId;
@@ -2750,6 +2793,10 @@ class _QuizScreenState extends State<QuizScreen>
     } finally {
       if (generation == _reconcileGeneration) {
         _reconcileInFlight = false;
+        if (_reconcileQueued) {
+          _reconcileQueued = false;
+          if (mounted) unawaited(_reconcileOnlineRoom());
+        }
       }
     }
   }
@@ -3776,6 +3823,8 @@ class _QuizScreenState extends State<QuizScreen>
     _advanceRetryTimer?.cancel();
     _serverReadyRetryTimer?.cancel();
     _pollTimer?.cancel();
+    _crowdProgressTimer?.cancel();
+    _crowdProgressTimer = null;
     _crowdRevealProbeTimer?.cancel();
     _crowdRevealProbeTimer = null;
   }
@@ -3806,7 +3855,8 @@ class _QuizScreenState extends State<QuizScreen>
     if (answered) return;
     AppHaptics.selection();
 
-    _timerController.stop();
+    // Sunucu odasında cevap veren de ortak kalan süreyi görür.
+    if (!_usesServerHiddenAnswers) _timerController.stop();
 
     // Çift Cevap aktifse ve ilk deneme yanlışsa: göster ama kilitleme.
     // NOT: açıklama burada tetiklenmez — aksi halde reveal görüntüsü

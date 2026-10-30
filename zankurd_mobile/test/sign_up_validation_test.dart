@@ -7,6 +7,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
+import 'package:zankurd_mobile/src/widgets/auth_social_buttons.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -29,6 +31,7 @@ bool hasSnackBar(WidgetTester tester) {
 
 /// Buton ekran dışındaysa önce görünür yapar, sonra basar.
 Future<void> tapButton(WidgetTester tester, String text) async {
+  await tester.pump();
   final finder = find.text(text);
   await tester.ensureVisible(finder);
   await tester.tap(finder, warnIfMissed: false);
@@ -48,21 +51,46 @@ void main() {
   }
 
   group('Adım 0 — e-posta/parola doğrulama', () {
-    testWidgets('boş alanlar → inline "gerekli" hata mesajları gösterilir', (
+    testWidgets('T10 boş alanlarda İleri pasif, sosyal kayıt yolları açık', (
       tester,
     ) async {
       await pumpSignUpScreen(tester);
 
-      // "İleri" butonuna bas — tüm alanlar boş
+      expect(
+        find.text('Hesabını kalıcı yap: Apple, Google ya da e-posta ile.'),
+        findsOneWidget,
+      );
+      expect(find.text('E-postanı ve parolanı gir'), findsNothing);
+      final next = find.byKey(const ValueKey('signup-next'));
+      expect(tester.widget<SahneButton>(next).onPressed, isNull);
+      final google = find.byKey(const ValueKey('auth-google'));
+      expect(tester.widget<GoogleAuthButton>(google).onPressed, isNotNull);
       await tapButton(tester, 'İleri');
-
-      // Inline hata mesajları alanın altında görünmeli
-      expect(find.text('E-posta gerekli'), findsOneWidget);
-      expect(find.text('Parola gerekli'), findsOneWidget);
-      expect(find.text('Parola onayı gerekli'), findsOneWidget);
-
-      // SnackBar gösterilmemeli
+      expect(find.text('E-posta gerekli'), findsNothing);
       expect(hasSnackBar(tester), isFalse);
+    });
+
+    testWidgets('T10 tüm alanlar dolunca İleri açılır, temizlenince kapanır', (
+      tester,
+    ) async {
+      await pumpSignUpScreen(tester);
+      final next = find.byKey(const ValueKey('signup-next'));
+      await tester.enterText(textFieldByLabel('E-posta adresi'), 'a@b.com');
+      await tester.enterText(textFieldByLabel('Parola'), '123456');
+      await tester.pump();
+      expect(tester.widget<SahneButton>(next).onPressed, isNull);
+      await tester.enterText(textFieldByLabel('Parolayı onayla'), '123456');
+      await tester.pump();
+      expect(tester.widget<SahneButton>(next).onPressed, isNotNull);
+      await tester.enterText(textFieldByLabel('E-posta adresi'), '   ');
+      await tester.pump();
+      expect(tester.widget<SahneButton>(next).onPressed, isNull);
+      await tester.enterText(textFieldByLabel('E-posta adresi'), 'a@b.com');
+      await tester.pump();
+      expect(tester.widget<SahneButton>(next).onPressed, isNotNull);
+      await tapButton(tester, 'İleri');
+      expect(find.text('Kullanıcı adını seç'), findsOneWidget);
+      expect(tester.widget<SahneButton>(next).onPressed, isNull);
     });
 
     testWidgets('geçersiz e-posta → inline hata mesajı gösterilir', (
@@ -132,18 +160,17 @@ void main() {
       await tapButton(tester, 'İleri');
     }
 
-    testWidgets('boş kullanıcı adı → inline "gerekli" hatası gösterilir', (
-      tester,
-    ) async {
+    testWidgets('boş kullanıcı adı → İleri pasif', (tester) async {
       await goToStep1(tester);
 
-      // Adım 1'de kullanıcı adı boş — "İleri"ye bas
+      expect(
+        tester
+            .widget<SahneButton>(find.byKey(const ValueKey('signup-next')))
+            .onPressed,
+        isNull,
+      );
       await tapButton(tester, 'İleri');
-
-      // 2026-08-14: alan artık `DisplayNamePolicy.review` çağırıyor (bkz.
-      // aşağıdaki grup) — boş/kısa ad ikisi de aynı politika mesajını
-      // paylaşır, isim kapısı ve ayarlarla aynı metin.
-      expect(find.text('Ad en az 2 karakter olmalı'), findsOneWidget);
+      expect(find.text('Ad en az 2 karakter olmalı'), findsNothing);
       expect(hasSnackBar(tester), isFalse);
     });
 

@@ -617,17 +617,13 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     final navigator = Navigator.of(context);
     navigator.pushReplacement(
       AppRoute.to(
-        AsyncDuelResultScreen(repository: widget.repository, view: view),
+        AsyncDuelResultScreen(
+          repository: widget.repository,
+          view: view,
+          pendingGuestSave: GuestSavePrompt.countGame(context),
+        ),
       ),
     );
-    // Misafire üç oyunda bir "hesabını kaydet" önerisi (düello de sayılır).
-    // Bu ekran kapandığı için sayfa gezginin kendi bağlamından, sonuç
-    // ekranının ilk karesinden sonra açılır. Oyunu asla engellemez.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (navigator.mounted) {
-        unawaited(GuestSavePrompt.afterGame(navigator.context));
-      }
-    });
   }
 
   Future<void> _confirmExit() async {

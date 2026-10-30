@@ -1313,15 +1313,26 @@ class _TournamentScreenState extends State<TournamentScreen> {
                       _ => Tr.forKu(K.cupStandingActive, ku),
                     },
                     if (s.wonByForfeit) Tr.forKu(K.cupAdvancedByForfeit, ku),
+                    if (s.hasSubmitted == false)
+                      tournamentSubmissionLabel(
+                        false,
+                        s.totalScore,
+                        ku,
+                        completed:
+                            s.status == 'eliminated' ||
+                            bracket.status == 'completed',
+                      )!,
                   ].join(' · '),
-                  trailing: SahneRowValue(
-                    tournamentSubmissionLabel(
-                          s.hasSubmitted,
-                          s.totalScore,
-                          ku,
-                        ) ??
-                        groupThousands(s.totalScore),
-                  ),
+                  trailing: s.hasSubmitted == false
+                      ? null
+                      : SahneRowValue(
+                          tournamentSubmissionLabel(
+                                s.hasSubmitted,
+                                s.totalScore,
+                                ku,
+                              ) ??
+                              groupThousands(s.totalScore),
+                        ),
                 ),
             ],
           ),
@@ -1856,7 +1867,13 @@ class _RoundProgressStrip extends StatelessWidget {
             // edilmez. Turnuva bittiyse hiçbir tur "şu an oynanıyor" diye
             // işaretlenmez.
             state:
-                (i < rounds.length && rounds[i].status == 'completed') ||
+                bracketStatus == 'completed' ||
+                    (i < rounds.length &&
+                        (rounds[i].status == 'completed' ||
+                            (rounds[i].matches.isNotEmpty &&
+                                rounds[i].matches.every(
+                                  (m) => m.status == 'completed',
+                                )))) ||
                     (bracketStatus == 'active' && i < _userStage)
                 ? _RoundState.done
                 : (bracketStatus == 'active' && i == _userStage)

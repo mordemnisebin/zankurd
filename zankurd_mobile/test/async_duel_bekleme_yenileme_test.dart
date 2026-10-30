@@ -24,6 +24,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/async_duel.dart';
+import 'package:zankurd_mobile/src/services/guest_save_prompt.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -63,6 +64,46 @@ AsyncDuelSummary _expired() => AsyncDuelSummary(
 void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({'zankurd.onboarding.seen': true});
+  });
+
+  testWidgets('T10: bekleme kesin sonuca dönüşürken kayıt önerisi örtmez', (
+    tester,
+  ) async {
+    final prompt = await GuestSavePromptService.load('local');
+    for (var i = 0; i < 3; i++) {
+      await prompt.countGame();
+    }
+    final repo = _ListRepository()..duels = [_summary(done: false)];
+    final navKey = GlobalKey<NavigatorState>();
+    await tester.pumpWidget(
+      testShell(
+        child: Navigator(
+          key: navKey,
+          onGenerateRoute: (_) => MaterialPageRoute<void>(
+            builder: (_) => const Scaffold(body: Text('home')),
+          ),
+        ),
+      ),
+    );
+    navKey.currentState!.push(
+      MaterialPageRoute<void>(
+        builder: (_) => AsyncDuelResultScreen(
+          repository: repo,
+          view: AsyncDuelResultView.fromSummary(_summary(done: false)),
+          pendingGuestSave: Future.value(prompt),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(GuestSaveSheet), findsNothing);
+    repo.duels = [_summary(done: true)];
+    await tester.pump(const Duration(seconds: 11));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Kazandın'), findsWidgets);
+    expect(find.byType(GuestSaveSheet), findsNothing);
+    navKey.currentState!.pop();
+    await tester.pumpAndSettle();
+    expect(find.byType(GuestSaveSheet), findsOneWidget);
   });
 
   testWidgets('rakip bitirince bekleme ekranı sonuca geçer', (tester) async {
