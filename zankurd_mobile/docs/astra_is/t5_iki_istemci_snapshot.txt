@@ -1,0 +1,63 @@
+- generic [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - heading "A · cihaz saati +5 sn" [level=2] [ref=f3e3]
+    - iframe [ref=f3e4]:
+      - generic [ref=f4e4]:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - button "Kapat" [ref=f4e5]
+                  - heading "Düello Soru 1/3 · Dil" [level=2] [ref=f4e6]
+                  - button "Sohbet" [ref=f4e7]
+                  - generic [ref=f4e8]: 15 saniye kaldı
+                  - button "Diğer seçenekler" [ref=f4e9]
+                  - generic [ref=f4e10]: 1/3 · 0 Doğru · 0 Yanlış %0
+                  - group:
+                    - generic [ref=f4e11]: A
+                    - generic [ref=f4e12]: A
+                    - generic [ref=f4e13]: Sen
+                    - generic [ref=f4e14]: 0 puan
+                    - generic [ref=f4e15]: 1/3
+                    - generic [ref=f4e16]: VS
+                    - generic [ref=f4e17]: B
+                    - generic [ref=f4e18]: 0 puan
+                    - generic [ref=f4e19]: B
+                    - generic [ref=f4e20]: 2 + 2 = ?
+                    - 'button "A: 4" [ref=f4e21]'
+                    - 'button "B: 3" [ref=f4e22]'
+                    - 'button "C: 2" [ref=f4e23]'
+                    - 'button "D: 1" [ref=f4e24]'
+                  - button "Bir cevap seç" [disabled] [ref=f4e25]
+  - generic [ref=f3e5]:
+    - heading "B · cihaz saati −5 sn · olay/veri 2 sn gecikmeli" [level=2] [ref=f3e6]
+    - iframe [active] [ref=f3e7]:
+      - generic [active] [ref=f5e4]:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - button "Kapat" [ref=f5e5]
+                  - heading "Düello Soru 1/3 · Dil" [level=2] [ref=f5e6]
+                  - button "Sohbet" [ref=f5e7]
+                  - generic [ref=f5e8]: 15 saniye kaldı
+                  - button "Diğer seçenekler" [ref=f5e9]
+                  - generic [ref=f5e10]: 1/3 · 0 Doğru · 0 Yanlış %0
+                  - group:
+                    - generic [ref=f5e11]: A
+                    - generic [ref=f5e12]: A
+                    - generic [ref=f5e13]: Sen
+                    - generic [ref=f5e14]: 0 puan
+                    - generic [ref=f5e15]: 1/3
+                    - generic [ref=f5e16]: VS
+                    - generic [ref=f5e17]: B
+                    - generic [ref=f5e18]: 0 puan
+                    - generic [ref=f5e19]: B
+                    - generic [ref=f5e20]: 2 + 2 = ?
+                    - 'button "A: 4" [ref=f5e21]'
+                    - 'button "B: 3" [ref=f5e22]'
+                    - 'button "C: 2" [ref=f5e23]'
+                    - 'button "D: 1" [ref=f5e24]'
+                  - button "Bir cevap seç" [disabled] [ref=f5e25]

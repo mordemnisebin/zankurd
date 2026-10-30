@@ -1,107 +1,68 @@
-# T5 — Doğrulama ve teslim durumu
+# T5 — Yerel doğrulama ve teslim
 
-30 Ekim 2026. **Tamamlandı / birleştirmeye hazır değildir.** Kod ve uygulanmamış
-göç hazır; widget davranışları, canlı SQL ve bağımsız Opus onayı açık.
+30 Ekim 2026. Önceki sandbox engelleri bu oturumda aşıldı. Canlı veritabanına bağlanılmadı, göç uygulanmadı, push yapılmadı. Anahtar/kimlik dosyaları incelenmedi. Çalışma dosyaları bu worktree içinde tutuldu.
 
-## Çalışan kontroller
+## Commitler
 
-- `flutter --suppress-analytics --no-version-check analyze --no-pub`:
-  **No issues found! (ran in 320.8s)**. Aynı Flutter 3.44.7 SDK'sının geçici,
-  yazılabilir kopyası kullanıldı; bağımlılıklar mevcut önbellekten çözüldü.
-- `dart --suppress-analytics format --set-exit-if-changed lib test`:
-  **Formatted 1202 files (0 changed)**, çıkış 0.
-- `git diff --check`: temiz; `git diff --diff-filter=D --stat`: boş.
-- Gerçek Dart VM'sinde üretim `ServerRevealClock` sınıfı ile altı bağımsız
-  duman kontrolü geçti: geç cihaz, deadline öncesi, iki saatin aynı anda
-  sıfırlanması, arka plan gecikmesi, mod süreleri, yanlış cevabın 3 sn okunması.
-  Bu kontroller Flutter testlerinin yerine sayılmaz.
-- SQL metin sözleşmesi için altı kontrol geçti: işlem sınırı, canlı gövde
-  çıpaları, dar süre değişikliği, ortak zaman alanı, ACL/RLS, son do-bloğu
-  ve geri alma açıklaması. SQL PostgreSQL üzerinde çalıştırılmadı.
-- İlk kırmızı test denemesinde henüz var olmayan reveal_timing.dart ithalatı
-  derlenmedi. Widget testlerinde RED/GREEN davranış kanıtı alınamadı.
+- `ae73e27d` — önceki oturumun geçiş ritmi, uygulanmamış göç ve bekçileri.
+- `536adb22` — soru/reveal için RPC anında sunucu saati, saat farkı, monoton süre; eski snapshot yarışı.
+- `278ce66d` — üç meydan okuma sonucunu yeni yanlış cevap beklemesine uyarlama.
+- `c1f6f4cb` — hazır yanıtı gelmeden yanıltıcı tam süre göstermeme; erişilebilir bekleme etiketi.
+- `dd24b84b` — ekran kapanınca açıklama Timer'ını iptal etme, bekleyen Future'ı çözme.
 
-## Çalıştırıldı fakat ortam tarafından engellendi
+## Kök neden ve çözüm
 
-`flutter test --no-pub` ile aşağıdaki 12 dosya denendi. Hepsi test gövdesinden
-ÖNCE aynı hata ile yüklenemedi: `Failed to create server socket (OS Error:
-Operation not permitted, errno = 1), address = 127.0.0.1, port = 0`.
+Soru sayacı sunucunun `remaining_ms` değerini oda/profil sorguları tamamlandıktan sonra yeniden başlatıyordu. Aradaki gecikme kayboluyor; sonraki geçen süre `DateTime.now` farkıyla hesaplanıyordu. Sunucu zaman damgaları zaten mevcut olduğundan soru saati için yeni RPC gerekmedi.
 
-- test/t5_reveal_timing_test.dart
-- test/t5_gecis_sql_test.dart
-- test/quiz_room_resume_test.dart
-- test/async_duel_screens_test.dart
-- test/supabase_repository_test.dart
-- test/soru_sigma_test.dart
-- test/soru_sigma_ek_test.dart
-- test/soru_sigma_ek2_test.dart
-- test/tur3_bulgu_test.dart
-- test/turnuva_sunucu_puani_istemci_test.dart
-- test/duello_sirasi_istemci_test.dart
-- test/room_question_advance_test.dart
+`ServerClock`, RPC yanıtı gelir gelmez `server_now + RTT/2 - local_received_at` farkını ölçer. Sonraki zaman yalnız monoton `Stopwatch` ile ilerler. Oda/profil yükleme, ekran kurulumu ve gecikmiş olaydan sonra kalan süre ortak sunucu deadline'ından hesaplanır. Soru ve reveal aynı saat örneğini kullanır; cihaz duvar saati sonraki geri sayımı değiştirmez.
 
-Aynı kısıt doğrudan Python yerel socket bind denemesinde de doğrulandı.
-**Sigma/tur3 yeşil denemez.** Gerçek Flutter web/Playwright veya simülatör
-kare kontrolü yapılmadı. Yerleşim/dock/metin dosyaları değiştirilmedi.
+Hazır işaretleme ve reconciliation paralel dönebildiğinden, aynı sorunun eski `server_now` örneği yeni deadline'ı silebiliyordu. Eski örnek artık uygulanmaz. Hazır yanıtı beklenirken de varsayılan 30 gibi sahte bir süre yerine mevcut bekleme göstergesi kullanılır; yeni TR/KU dizesi eklenmedi.
 
-`bash tool/ci_yerel.sh --tam` başlatıldı; format adımı geçti, analiz adımında
-tekrarlı uzun çalışma durduruldu (ayrı flutter analyze temiz tamamlandı).
-Tam CI'nin kalan kapıları tamamlanmadı; zaten ekran turu/testler aynı yerel
-socket iznini gerektiriyor. Push yapılmadı.
+Tam CI ekran turu ayrı bir yaşam döngüsü kusurunu yakaladı: yanlış cevap açıklamasındaki `Future.delayed` ekran kapanınca iptal olmuyordu. Süre artık ekranın sahip olduğu Timer ile tutulur; dispose hem Timer'ı iptal eder hem bekleyen Future'ı çözer. Testin beklemesi uzatılarak hata gizlenmedi.
 
-Dart MCP roots çağrısı: `MCP tool call requires approval, but approval policy
-is never`. Yerel CLI'ye geçildi. İlk SDK/pub/telemetri yazma engelleri yalnız
-geçici SDK/cache ve analytics kapatma ile aşıldı; global ayarlar değiştirilmedi.
+## Kanıt
 
-## İnceleme, commit ve belge yolu
+- İki saniye bekletilmiş snapshot: düzeltme öncesi beklenen 18 yerine **20** saniye; düzeltme sonrası geçti.
+- Eski waiting yanıtı: düzeltme öncesi çalışan sayaç durdu (`isAnimating == false`); düzeltme sonrası geçti.
+- Hazır yanıtı gecikmesi: yanlış tam süre yerine bekleme göstergesi; yanıt gelince geçen iki saniye düşülür.
+- Erken ekran kapanışı: düzeltme öncesi Flutter binding `A Timer is still pending...` ile kırıldı; düzeltme sonrası geçti.
+- `t5_server_clock_test.dart`: ±5 saniye cihaz saati, 2 saniye geç olay, farklı RTT, ortak deadline ve kaçan tick bekçileri.
+- Hedef doğrulamaları: 119 saat/repository/oda testi; 71 oda/meydan okuma testi; 37 oda testi; son yaşam döngüsü düzeltmesiyle 66 düello/turnuva testi geçti. Bunlar aşağıdaki tam CI'ın yerine sayılmadı.
+- Son komut: `cd zankurd_mobile && ./tool/ci_yerel.sh --tam` (`TMPDIR` worktree içinde).
+- Tam CI: **214 ekran turu + 7.000 ana test (3 atlandı) + 4 cihazsız uygulama akışı geçti; çıkış kodu 0.**
+- Son satır: **CI yerel: bütün adımlar geçti.**
+- Son çıktı özeti: [t5_ci_sonuc.txt](t5_ci_sonuc.txt).
 
-- Claude Opus 5.5 (`agy --model claude-opus-5-5-high`) salt metin incelemesi
-  boş geçici klasörde denendi. CLI, günlük dizinine yazamadı ve localhost
-  portu açamadı: `listen tcp 127.0.0.1:0: bind: operation not permitted`.
-  **Opus cevabı/onayı yok.** Kod dış modele ulaşmış veya incelenmiş sayılmaz.
-- `git add` başarısız: `/Users/kocer/Projects/zankurd/.git/worktrees/
-  zk-astra-gecis/index.lock: Operation not permitted`. Commit oluşturulamadı;
-  bütün değişiklikler worktree'de duruyor. Hazır mesaj: `t5_commit_mesaji.txt`.
-- İstenen `/Users/kocer/Projects/zankurd_kapisma/astra_is/t5_karar.md` yoluna
-  kopyalama `Operation not permitted` ile reddedildi. Asıl teslim belgesi
-  bu klasördeki `t5_karar.md`; yetkili oturumda istenen yola kopyalanmalı.
+İlk tam taramada üç eski meydan okuma helper'ı kırıldı. O tur sürerken kod değiştiği için bir test dosyası eski derleme önbelleğiyle yüklenemedi; bu tur son doğrulama sayılmadı. Sonraki tam tur ekran kapanışı Timer kusurunu buldu. Bunun ardından 6.999 test geçti; tek kırık, benim verdiğim `TMPDIR` yolundaki `..` bileşenini dağıtım güvenlik bekçisinin reddetmesiydi. Test/üretim kodu değiştirilmedi: `TMPDIR=/Users/kocer/Projects/zk-astra-gecis/.local-tmp` mutlak yolu ile aynı bekçi geçti. Yukarıdaki son tam CI bu ayarla, sabit kaynak durumunda baştan çalıştırıldı.
 
-## Değişen dosyalar
+## Değiştirilen eski testler ve gerekçeleri
 
-Üretim:
-- lib/src/game/reveal_timing.dart — mod süreleri ve monoton sunucu saati.
-- lib/src/models/room.dart — opsiyonel revealClock (eski sunucu uyumu).
-- lib/src/data/supabase_zankurd_repository.dart — ortak bitiş zamanı, RTT/2
-  tahmini; saat oda/profil yüklemesinden önce yakalanır.
-- lib/src/screens/quiz_screen.dart — mevcut sayaç ve advance CAS akışına
-  saat bağlandı; sıfır süreli tekrarlama döngüsü önlendi.
-- lib/src/screens/async_duel/async_duel_play_screen.dart — yanlış/TIMEOUT
-  3 sn, doğru 1,2 sn; aynı ekranı kullanan sunucu puanlı turnuvaya da uygulanır.
-- supabase/2026-10-30_gecis_ritmi.sql — idempotent, çıpalı dar yama; uygulanmadı.
-- supabase/applied.md — ⏳ YAZILDI, UYGULANMADI kaydı.
+| Dosya | Değişiklik / gerekçe |
+|---|---|
+| `test/async_duel_screens_test.dart` | Ortak ilerleme helper'ı 1300 → 3100 ms: ilk seçenek yanlış olabilir. TIMEOUT testi 2999 ms'de hâlâ aynı soruda, +1 ms'de sonraki soruda olmayı ayrıca doğrular. Yeni erken dispose bekçisi eklendi. |
+| `test/duello_sirasi_istemci_test.dart` | Süresi dolmuş resume senaryosu 1500 → 3100 ms bekler; TIMEOUT açıklamasının yeni 3 sn sözleşmesi. Cevap sayısı doğrulaması korunur. |
+| `test/friend_challenge_ui_test.dart` | Ortak helper 1300 → 3100 ms: bağlantı paylaşımı, arkadaş sonucu ve bağlantı kabulü testleri gerçekten yedi soruyu tamamlar. Sonuç ve paylaşım beklentileri değişmedi. |
+| `test/quiz_room_resume_test.dart` | Mevcut doğrulamalar korunarak ortak reveal, son soru, gecikmiş snapshot, ters yanıt sırası ve hazır bekleme bekçileri eklendi; kontrollü saat/yanıt destekleri genişletildi. |
+| `test/supabase_repository_test.dart` | Eski/yeni reveal alanı ve RPC'den sonraki iki saniyelik oda yükleme gecikmesini sınayan testler eklendi. |
+| `test/turnuva_sunucu_puani_istemci_test.dart` | Yanlış cevabın 2999 ms'de kaybolmadığı, 3000 ms'de ilerlediği bekçi eklendi. |
+| `tool/screenshots/screen_tour_test.dart` | Yalnız eski 1200 ms yorumları güncellendi. Ekran100'ün 2 saniyelik kapanış beklemesi aynen kaldı; Timer sızıntısı üretim kodunda giderildi. |
 
-Bekçiler: t5_reveal_timing_test, t5_gecis_sql_test yeni; quiz_room_resume_test,
-supabase_repository_test, async_duel_screens_test, duello_sirasi_istemci_test,
-turnuva_sunucu_puani_istemci_test genişletildi. Eski doğrulamalar kaldırılmadı;
-TIMEOUT/yanlış cevap bekleyen helper süreleri yeni 3 sn'ye uyarlandı.
+Hiçbir sonuç/paylaşım/puan doğrulaması gevşetilmedi. Yeni bağımsız dosyalar: `t5_server_clock_test.dart`, `t5_reveal_timing_test.dart`, `t5_gecis_sql_test.dart`.
 
-## Açık riskler / sonraki yetkili oturum
+## Görsel kontrol ve sınırı
 
-1. Yukarıdaki 12 dosyayı, ardından `tool/ci_yerel.sh --tam` çalıştır; gerçek
-   ekranda geri sayım, dock sabitliği ve final geçişini gör.
-2. Opus bağımsız incelemesini tamamla; testler çalışmadığı için yeni widget
-   bekçilerinin çalışma zamanı doğruluğu da henüz kanıtlanmış değil.
-3. Göç uygulamasından önce gerçek `pg_get_functiondef` diff'i ve
-   begin/rollback testleri: iki eşzamanlı ilerletme, herkes/eksik cevap,
-   TIMEOUT, ayrılan üye, son soru, tekrar uygulama, anon yetkisizliği.
-   Bilinmeyen çıpa göçü güvenle durdurur; bu durumda eski gövdeyi kopyalama.
-4. Ağ asimetrisinde RTT/2 yalnız tahmindir. Cihazların fiziksel çizim anı
-   birebir garanti değil; son tarih ve ilerletme yetkisi sunucuda ortaktır.
-5. Göç uygulanana kadar canlı odalar 5 sn yedek davranışını sürdürür.
-6. Test/inceleme sonrası istenen Türkçe mesajla commit; push yok.
+Gerçek `QuizScreen`, yerel sahte repository ile Flutter web debug derlemesinde Playwright üzerinden iki ayrı 390×844 istemcide açıldı. A için +5 sn, B için −5 sn cihaz saati örneği; B için 2 sn veri gecikmesi enjekte edildi. Sistem saati değiştirilmedi. Hazırdan sonra 25/25, 24/24 ve kayıtlı karede **15/15** görüldü. Taşma görülmedi; son tarayıcı oturumunda konsol hatası yoktu.
 
-## TR / KU tablosu
+- [İki istemci ekranı](t5_iki_istemci.png)
+- [Aynı anın erişilebilirlik ağacı](t5_iki_istemci_snapshot.txt)
 
-| Anahtar | TR | KU | Durum |
-|---|---|---|---|
-| Yeni dize yok | Mevcut geri sayım korundu | Mevcut KU korundu | strings.dart değişmedi; yeni çeviri/jüri gerekmiyor |
+Bu kanıt canlı sunucu veya fiziksel iki cihaz deneyi değildir. Native simülatör turu bu oturumda yapılmadı. Geçici web harness'i ve çalışma dosyaları kaldırıldı; ekran kanıtları bu klasörde tutuldu.
+
+## Uygulanmayan göç ve açık riskler
+
+- `supabase/2026-10-30_gecis_ritmi.sql` **YAZILDI, UYGULANMADI**; `supabase/applied.md` kaydı ⏳ olarak kaldı. Göç eski tam fonksiyonu kopyalamaz; uygulama anındaki canlı `pg_get_functiondef` üzerinde tekil çıpaları değiştirir, tanım saparsa transaction'ı durdurur. Bu oturumda SQL motorunda veya canlıda çalıştırılmadı.
+- Soru deadline/saat düzeltmesi mevcut API alanlarını kullanır. Ortak reveal bitiş alanı gelmeyen eski sunucuda 5 sn yedek davranışı sürer; canlı reveal eşitlemesi göçün ayrıca doğrulanıp uygulanmasına bağlıdır.
+- RTT/2 simetrik aktarım tahminidir. Aşırı asimetrik ağ veya uzun sunucu işlem süresinde ±1 sn genel garantisi yoktur. Geç ulaşan soru içeriğinin fiziksel görüntülenme anı da eşitlenmiş olmaz; gelen istemci kalan süreyi doğru hesaplar.
+- Uygulama öncesi canlı fonksiyon diff'i, begin/rollback SQL duman testleri ve gerçek iki cihaz ölçümü hâlâ gereklidir. Bu işlemler burada yetki dışıdır.
+- Aynı sağlayıcıdan bağımsız ikinci göz saat, snapshot yarışı, bekleme göstergesi ve Timer yaşam döngüsü farklarını inceledi; son kontrolde engelleyici bulgu kalmadı. Farklı sağlayıcıdan Claude/Gemini onayı alınmadı; böyle bir onay varmış gibi sunulmadı.
+- Web derlemesinde `flutter_tts` bağımlılığının WASM deneme uyarıları görüldü; kullanılan JavaScript debug derlemesi başarılıydı. Release/store hazır oluşu iddia edilmedi.

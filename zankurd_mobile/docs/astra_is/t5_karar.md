@@ -1,9 +1,10 @@
 # T5 — Cevap açılışı ve geçiş kararı
 
 30 Ekim 2026; bu worktree'nin kod incelemesi. Canlı veritabanına bağlanılmadı.
-Kararı uygulayan: Astra görevi; son inceleme: Claude Opus 5.5 (bekliyor).
+Kararı uygulayan: Astra görevi. Bağımsız aynı sağlayıcı incelemesi tamamlandı;
+farklı sağlayıcı Claude/Gemini onayı alınmadı. Güncel kanıt: [t5_dogrulama.md](t5_dogrulama.md).
 
-## Bugünkü gerçek durum
+## Değişiklik öncesindeki durum
 
 | Mod | Cevap sonrası | Erken açılış / geçiş | Son soru |
 |---|---|---|---|
@@ -93,13 +94,14 @@ kanıtını ayrıca almalı. Bu görevde canlıya bağlantı veya göç uygulama
 2. Geri uyumlu snapshot saati; mevcut dock/metin/yerleşimi değiştirmeden timer.
 3. İdempotent dar SQL göçü + ACL/RLS/doğrulama ve bekçiler.
 4. Gerçek ekran akışında süre/son soru, mevcut sigma/tur3 ve ilgili testler.
-5. Analyze/format, mümkünse tam CI; Opus incelemesine risklerle teslim.
+5. Analyze/format, tam CI ve iki istemcili yerel web kontrolü; açık risklerle teslim.
 
 Yeni TR/KU kullanıcı metni yok; strings.dart değişmez.
 
 ## Teslim notu
 
-Kod uygulanmıştır; sunucu göçü uygulanmamıştır. Analiz ve format temizdir;
-Flutter testleri yerel socket izni nedeniyle yüklenememiştir. Tam CI, görsel
-kontrol, Opus onayı ve commit açık kalmıştır. Ayrıntı: [t5_dogrulama.md](t5_dogrulama.md).
-İstenen dış scratch yolu yazmaya kapalı olduğundan belge bu worktree'dedir.
+Kod commitlendi; sunucu göçü uygulanmadı. Tam CI geçti: 214 ekran turu,
+7.000 ana test (3 atlandı), 4 cihazsız akış. Yerel Flutter web üzerinde iki
+istemci sayaçları görsel olarak doğrulandı. Native simülatör/canlı iki cihaz
+kontrolü, canlı SQL doğrulaması ve farklı sağlayıcı incelemesi açık kaldı.
+Ayrıntı: [t5_dogrulama.md](t5_dogrulama.md). Belgeler bu worktree'dedir.

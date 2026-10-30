@@ -1,0 +1,24 @@
+T5 tam yerel CI — 30 Ekim 2026
+Test edilen kod commit'i: dd24b84bb0ebc1b703a39f69dfd570e70f684d71
+Çalışma dizini: /Users/kocer/Projects/zk-astra-gecis/zankurd_mobile
+Komut: ./tool/ci_yerel.sh --tam
+Ortam: TMPDIR=/Users/kocer/Projects/zk-astra-gecis/.local-tmp FLUTTER_SUPPRESS_ANALYTICS=true DART_SUPPRESS_ANALYTICS=true
+Çıkış kodu: 0
+Ham çıktı SHA-256: f41cd0f787008b1106edae09d56cbb675f30e9b3552b676a39ce12dd5a4eea5e
+
+== dart format
+== dart analyze
+No issues found!
+== soru kalitesi kapısı
+Question quality gate passed: no regression from baseline.
+== şık kalite taraması
+0 bulgu
+== dokunma hedefi taraması
+== ekran turu
++214: All tests passed!
+== flutter test
++7000 ~3: 3 skipped tests.
++7000 ~3: All other tests passed!
+== cihazsız uygulama akışları
+00:06 +4: All tests passed!
+CI yerel: bütün adımlar geçti.
