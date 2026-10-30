@@ -1326,12 +1326,9 @@ class _TournamentScreenState extends State<TournamentScreen> {
                   trailing: s.hasSubmitted == false
                       ? null
                       : SahneRowValue(
-                          tournamentSubmissionLabel(
-                                s.hasSubmitted,
-                                s.totalScore,
-                                ku,
-                              ) ??
-                              groupThousands(s.totalScore),
+                          Tr.forKu(K.t12TournamentPoints, ku, {
+                            'score': groupThousands(s.totalScore),
+                          }),
                         ),
                 ),
             ],
@@ -2023,8 +2020,10 @@ class _StatusCard extends StatelessWidget {
                   ),
                 if (bracket.totalScore > 0)
                   Text(
-                    '${Tr.forKu(K.statTotalScore, ku)}: ${groupThousands(bracket.totalScore)}',
-                    maxLines: 1,
+                    Tr.forKu(K.t12TournamentYourTotal, ku, {
+                      'score': groupThousands(bracket.totalScore),
+                    }),
+                    key: const ValueKey('tournament-your-total'),
                     style: SahneType.captionStrong.copyWith(color: t.tx),
                   ),
               ],

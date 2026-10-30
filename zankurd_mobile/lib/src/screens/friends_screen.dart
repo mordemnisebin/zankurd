@@ -801,8 +801,8 @@ class _FriendsScreenState extends State<FriendsScreen>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SahneSectionHeader(title: context.t(K.findFriend)),
-        // Tema girdisi (Kulis, M pah) + ikincil "Ara". Büyük yazıda düğme
-        // girdinin altına iner; girdi daralıp ipucunu kaybetmez.
+        // Tema girdisi (Kulis, M pah) + ikincil "Ara". Telefonlarda düğme
+        // alta iner; uzun TR/KU ipucu büyük yazıda iki satıra sarılır.
         KeyedSubtree(
           key: const ValueKey('friends-search-panel'),
           child: LayoutBuilder(
@@ -810,6 +810,7 @@ class _FriendsScreenState extends State<FriendsScreen>
               final field = SahneField.search(
                 controller: _searchController,
                 hintText: context.t(K.searchByNameOrTag),
+                hintMaxLines: 2,
                 onSubmitted: (_) => _search(),
               );
               final button = SahneButton.secondary(
@@ -819,7 +820,7 @@ class _FriendsScreenState extends State<FriendsScreen>
               );
               final stack =
                   MediaQuery.textScalerOf(context).scale(16) >= 24 ||
-                  constraints.maxWidth < 280;
+                  constraints.maxWidth < 400;
               if (stack) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

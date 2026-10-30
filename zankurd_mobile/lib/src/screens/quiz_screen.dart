@@ -568,7 +568,7 @@ class _QuizScreenState extends State<QuizScreen>
   bool get _isMultiplayer => widget.room.id != null;
 
   /// Kalabalık oda (özel oda, kapasite > 2). 1v1 düello yolundan şu farklarla
-  /// ayrılır: cevap başına yayın YOK (N oyuncuda N² mesaj olurdu), rakibin
+  /// ayrılır: cevap yayını yalnız sayı yenileme işaretidir; rakibin
   /// seçtiği şık gösterilmez, başlık sıra + ilk üç şeridi taşır, sonuç
   /// sunucunun sıralı yükünden gelir ve yoklama seyrektir.
   bool get _isCrowd => _isMultiplayer && widget.room.isCrowd;
@@ -803,9 +803,18 @@ class _QuizScreenState extends State<QuizScreen>
                 }
                 return;
               }
-              // Kalabalık odada cevap/hazır yayını yoktur; tepki dışında
-              // gelen her şey (eski istemci, yabancı yayın) yok sayılır.
-              if (_isCrowd) return;
+              if (_isCrowd) {
+                // Yayın sayıya/faza yetki vermez; kabul edilmiş cevaptan
+                // sonra yalnız sunucu sayısını hemen yeniden isteriz.
+                if (payload['type'] == 'crowd_answered' &&
+                    !isSelf &&
+                    senderId != null &&
+                    livePlayers.any((player) => player.id == senderId) &&
+                    payload['question_index'] == index) {
+                  unawaited(_refreshCrowdProgress());
+                }
+                return;
+              }
               if (!_usesServerHiddenAnswers &&
                   senderName != null &&
                   !isSelf &&
@@ -1633,8 +1642,16 @@ class _QuizScreenState extends State<QuizScreen>
     _saveLocalProgress(() async {
       final store = await MistakeStore.load();
       return correct
-          ? store.markResolved(id, sessionId: _mistakeSessionId)
-          : store.markMistake(id, category: category);
+          ? store.markResolved(
+              id,
+              sessionId: _mistakeSessionId,
+              countAnswer: !_usesServerHiddenAnswers,
+            )
+          : store.markMistake(
+              id,
+              category: category,
+              countAnswer: !_usesServerHiddenAnswers,
+            );
     }, reason: 'quiz mistake progress save failed');
   }
 
@@ -2190,8 +2207,9 @@ class _QuizScreenState extends State<QuizScreen>
             : Tr.forKu(K.waitingAnswerState, _isKu),
       );
     }
-    // Kalabalık odada cevap yayını yok: N oyuncu N² mesaj üretir. Skor ve
-    // sıra `room_players` akışından, "kimler cevapladı" sunucudan okunur.
+    // Kalabalık odada tam skor/hazır durumu yayınlanmaz. Skor ve sıra
+    // `room_players` akışından, cevap sayısı sunucudan okunur; kabul
+    // sonrasındaki küçük bildirim yalnız sayı sorgusunu erkene çeker.
     if (_isCrowd) return;
     widget.repository
         .sendRoomBroadcast(widget.room.id!, {
@@ -2550,6 +2568,9 @@ class _QuizScreenState extends State<QuizScreen>
   /// yalnız sayı verir; `null` ise (RPC yok) başlık eski bekleme metninde
   /// kalır.
   RoomAnswerProgress? _crowdProgress;
+  int _crowdLocalAnswerIndex = -1;
+  int _crowdLocalAnswerFloor = 0;
+  int? _crowdLocalAcceptedAfterRequest;
   int _crowdProgressInFlight = 0;
   int _crowdProgressRequest = 0;
   int _crowdProgressApplied = 0;
@@ -2560,9 +2581,17 @@ class _QuizScreenState extends State<QuizScreen>
   /// soruya geçilmişse eski sayı yanlış sorunun "kaç kişi cevapladı"sı olur.
   RoomAnswerProgress? get _currentCrowdProgress {
     final progress = _crowdProgress;
-    return progress != null && progress.questionIndex == index
-        ? progress
-        : null;
+    if (progress == null || progress.questionIndex != index) return null;
+    if (_crowdLocalAnswerIndex != index) return progress;
+    return RoomAnswerProgress(
+      questionIndex: index,
+      answered: max(
+        progress.answered,
+        _crowdLocalAnswerFloor,
+      ).clamp(0, progress.active),
+      active: progress.active,
+      revealed: progress.revealed,
+    );
   }
 
   Future<void> _refreshCrowdProgress() async {
@@ -2585,7 +2614,16 @@ class _QuizScreenState extends State<QuizScreen>
         return;
       }
       _crowdProgressApplied = request;
-      setState(() => _crowdProgress = progress);
+      setState(() {
+        _crowdProgress = progress;
+        // Yalnız kabul yanıtından SONRA başlayan sorgu kendi cevabımızı
+        // kapsar. Önceden uçuşta olan sorgu iyimser sayıyı geri alamaz.
+        final acceptedAfter = _crowdLocalAcceptedAfterRequest;
+        if (acceptedAfter != null && request > acceptedAfter) {
+          _crowdLocalAnswerIndex = -1;
+          _crowdLocalAcceptedAfterRequest = null;
+        }
+      });
       // Tüm cevaplar yanlış/TIMEOUT ise skor satırı değişmez: realtime
       // sessiz kalsa da açılışı hafif ve yetkili faz bilgisiyle yakala.
       if (progress.revealed && !_hasSafeCurrentReveal) {
@@ -3897,6 +3935,11 @@ class _QuizScreenState extends State<QuizScreen>
     final isTimeout = answer == 'TIMEOUT';
     final questionIndex = index;
     setState(() {
+      if (_isCrowd && !isTimeout) {
+        _crowdLocalAnswerFloor = (_currentCrowdProgress?.answered ?? 0) + 1;
+        _crowdLocalAnswerIndex = questionIndex;
+        _crowdLocalAcceptedAfterRequest = null;
+      }
       selectedAnswer = answer;
       _suspense =
           (!isTimeout || _usesServerHiddenAnswers) && !_skipsSuspenseHold;
@@ -3972,7 +4015,25 @@ class _QuizScreenState extends State<QuizScreen>
         // açıklama `room_players` akışı, seyrek yoklama ve sunucu süresi
         // (`_startOpponentWaitTimer`) ile yakalanır.
         if (_isCrowd) {
+          _crowdLocalAcceptedAfterRequest = _crowdProgressRequest;
           unawaited(_refreshCrowdProgress());
+          if (!isTimeout) {
+            unawaited(
+              widget.repository
+                  .sendRoomBroadcast(widget.room.id!, {
+                    'type': 'crowd_answered',
+                    'sender_id': _myId,
+                    'question_index': questionIndex,
+                  })
+                  .catchError((Object error, StackTrace stack) {
+                    ErrorReporter.record(
+                      error,
+                      stack,
+                      reason: 'crowd answer notification',
+                    );
+                  }),
+            );
+          }
         } else {
           unawaited(_reconcileOnlineRoom());
         }
@@ -4063,6 +4124,8 @@ class _QuizScreenState extends State<QuizScreen>
         if (!mounted || index != questionIndex) return;
         setState(() {
           selectedAnswer = '';
+          _crowdLocalAnswerIndex = -1;
+          _crowdLocalAcceptedAfterRequest = null;
           _serverAnswerPending = false;
           _suspense = false;
         });

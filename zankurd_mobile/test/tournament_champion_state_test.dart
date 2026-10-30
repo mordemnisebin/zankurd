@@ -195,7 +195,7 @@ void main() {
 
   testWidgets('elenen oyuncu gerçek skorunu görür', (tester) async {
     await _pump(tester, _LocalRepo('eliminated'));
-    expect(find.textContaining('Toplam puan: 340'), findsWidgets);
+    expect(find.textContaining('Senin toplam puanın: 340'), findsWidgets);
   });
 
   testWidgets('sahte teselli ödülü üretilmez', (tester) async {

@@ -1586,6 +1586,7 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _submitting = false;
+  bool _obscurePassword = true;
 
   bool get _canSubmit =>
       _validEmail(_emailController.text) &&
@@ -1672,7 +1673,13 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
               SahneField(
                 controller: _passwordController,
                 onChanged: (_) => setState(() {}),
-                obscureText: true,
+                obscureText: _obscurePassword,
+                suffixIcon: _obscurePassword ? AppIcons.eyeSlash : AppIcons.eye,
+                suffixSemanticLabel: context.t(
+                  _obscurePassword ? K.showPassword : K.hidePassword,
+                ),
+                onSuffixIconPressed: () =>
+                    setState(() => _obscurePassword = !_obscurePassword),
                 label: context.t(K.password),
                 validator: (v) {
                   if (v == null || v.length < 6) {
@@ -1680,6 +1687,27 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
                   }
                   return null;
                 },
+              ),
+              const SizedBox(height: SahneSpace.x2),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  context.t(K.passwordHintMin6),
+                  style: SahneType.caption.copyWith(
+                    color: SahneTokens.of(context).tx2,
+                  ),
+                ),
+              ),
+              const SizedBox(height: SahneSpace.x2),
+              TextButton(
+                key: const ValueKey('guest-upgrade-existing-account'),
+                onPressed: _submitting
+                    ? null
+                    : () => Navigator.pop(
+                        context,
+                        _GuestUpgradeAction.existingAccountRequested,
+                      ),
+                child: Text(context.t(K.t12AccountExisting)),
               ),
             ],
           ),

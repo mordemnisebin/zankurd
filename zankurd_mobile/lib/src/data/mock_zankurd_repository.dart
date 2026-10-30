@@ -365,6 +365,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<({int correct, int wrong})?> loadOnlineAnswerStats() async =>
+      (correct: 0, wrong: 0);
+
+  @override
   Future<LeaderboardEntry?> getPlayerStats() async {
     // "Benim istatistiğim" olarak tablonun **birincisi** döndürülüyordu:
     // çevrimdışı açan yeni bir oyuncu, sıralamanın altına sabitlenen kendi

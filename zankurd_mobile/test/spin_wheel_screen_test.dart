@@ -224,7 +224,9 @@ void main() {
       await tester.pump();
       await tester.pump();
 
-      expect(find.text('Bugün zaten çevirdin.'), findsOneWidget);
+      // Sunucu uyarısı hata kartında; tüketilen hak bilgisi sayaçta kalıcı.
+      expect(find.text('Bugün zaten çevirdin.'), findsNWidgets(2));
+      expect(find.byKey(const ValueKey('spin-used-today')), findsOneWidget);
       expect(find.text('Yarın tekrar gel.'), findsOneWidget);
       expect(tester.takeException(), isNull);
     },

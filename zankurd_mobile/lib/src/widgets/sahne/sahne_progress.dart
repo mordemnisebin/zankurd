@@ -388,6 +388,7 @@ class SahneStageTimer extends StatelessWidget {
     this.hotSeconds = 5,
     this.onBand = false,
     this.pending = false,
+    this.revealed = false,
     this.secondary = false,
     this.maxSeconds = 99,
   });
@@ -402,6 +403,9 @@ class SahneStageTimer extends StatelessWidget {
   /// (2026-10-30): dönüşte sayaç önce yerel tam süreyi ("19") gösterip birkaç
   /// saniye sonra sunucunun kalanına ("8") atlıyordu.
   final bool pending;
+
+  /// Cevaplar açıldı; soru süresiyle sonraki sorunun geri sayımı karışmaz.
+  final bool revealed;
 
   /// Beklenen rakibin süresi: birincil dikkat yerine ikincil metin tonu.
   final bool secondary;
@@ -419,7 +423,8 @@ class SahneStageTimer extends StatelessWidget {
   /// Bu saniyeye ve altına inince Boyax.
   final int hotSeconds;
 
-  bool get isHot => !pending && !secondary && secondsLeft <= hotSeconds;
+  bool get isHot =>
+      !pending && !revealed && !secondary && secondsLeft <= hotSeconds;
 
   /// Kurul 5. tur 2026-10-20 (Opus, Grok): sayı küçük ve gri kalıyordu, soru
   /// ekranında süre en önemli bilgilerden biri. Normalde birincil metin,
@@ -471,7 +476,14 @@ class SahneStageTimer extends StatelessWidget {
                 ),
               ),
             ),
-            if (pending)
+            if (revealed)
+              Icon(
+                AppIcons.check,
+                key: const ValueKey('stage-timer-revealed'),
+                size: 20,
+                color: color,
+              )
+            else if (pending)
               Icon(
                 AppIcons.pause,
                 key: const ValueKey('stage-timer-paused'),
@@ -493,7 +505,11 @@ class SahneStageTimer extends StatelessWidget {
     // sayının rengini alır. Bant üstündeki biçim (onBand) aynı kalır.
     if (!onBand) {
       return Semantics(
-        label: pending ? context.t(K.timerPaused) : semanticLabel,
+        label: revealed
+            ? context.t(K.t12QuestionRevealed)
+            : pending
+            ? context.t(K.timerPaused)
+            : semanticLabel,
         excludeSemantics: true,
         child: DecoratedBox(
           key: const ValueKey('stage-timer-capsule'),
@@ -519,7 +535,11 @@ class SahneStageTimer extends StatelessWidget {
       );
     }
     return Semantics(
-      label: pending ? context.t(K.timerPaused) : semanticLabel,
+      label: revealed
+          ? context.t(K.t12QuestionRevealed)
+          : pending
+          ? context.t(K.timerPaused)
+          : semanticLabel,
       excludeSemantics: true,
       // Bant üstünde gerilim hapı sonradan eklenince de boyut değişmesin:
       // dolgu her zaman vardır, hap yalnız gerilimde boyanır.

@@ -635,6 +635,26 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<({int correct, int wrong})?> loadOnlineAnswerStats() async {
+    if (client.auth.currentUser == null) return null;
+    try {
+      // Misafir de authenticated rolündeki kendi auth.uid() kaydını okur.
+      // Eksik RPC/ağ/bozuk cevap hiçbir zaman sahte sıfıra dönüşmez.
+      final result = await client.rpc('get_my_online_answer_stats');
+      if (result is! Map) return null;
+      final correct = result['correct'];
+      final wrong = result['wrong'];
+      if (correct is! int || wrong is! int || correct < 0 || wrong < 0) {
+        return null;
+      }
+      return (correct: correct, wrong: wrong);
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadOnlineAnswerStats failed');
+      return null;
+    }
+  }
+
+  @override
   Future<LeaderboardEntry?> getPlayerStats() async {
     try {
       final user = client.auth.currentUser;

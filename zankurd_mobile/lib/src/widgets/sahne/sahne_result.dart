@@ -198,6 +198,7 @@ class SahneResultScaffold extends StatelessWidget {
     this.onClose,
     this.overlay,
     this.balanced = false,
+    this.compactSpacing = false,
     this.neutral = false,
     this.accent = SahneRole.race,
     this.mood = SahneResultMood.high,
@@ -221,6 +222,10 @@ class SahneResultScaffold extends StatelessWidget {
   /// kartlarından sonra ekranın ~%35'i boş kalıyordu (Opus + ChatGPT). Uzun
   /// içerikte sayfa yine kayar.
   final bool balanced;
+
+  /// Uzun grup sonuçlarında sayım ile ödül arasını 12pt tutar.
+  /// Yazı boyutu ve bütün bilgiler korunur.
+  final bool compactSpacing;
 
   /// Kahraman ([SahneResultHero]).
   final Widget hero;
@@ -298,6 +303,8 @@ class SahneResultScaffold extends StatelessWidget {
                   ? SahneSpace.x3
                   : stats == null
                   ? kSahneResultRhythmGap - SahneSpace.x4
+                  : compactSpacing
+                  ? SahneSpace.x3
                   : kSahneResultRhythmGap,
             ),
             rewards!,
@@ -513,11 +520,15 @@ class SahneResultHero extends StatelessWidget {
     this.emblemExtra = 0,
     this.emblemOwnsGlow = false,
     this.valueSize,
+    this.compactSpacing = false,
   });
 
   /// Büyük puanın punto değeri (renkli sahnede varsayılan 88). Kısa ekranda
   /// 1v1 sonucu puan + ödül ilk görünümde kalsın diye küçültülür.
   final double? valueSize;
+
+  /// Grup sonucunda uzun KU sayım etiketlerine yer açar; fontlar değişmez.
+  final bool compactSpacing;
 
   /// Amblem kendi ışığını taşıyor (madalya + ışın diski): puanın arkasındaki
   /// ışınlar ve parıltılar çizilmez. Vay 2A (2026-10-29, Astra sonuç 7/10):
@@ -593,7 +604,7 @@ class SahneResultHero extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         emblem,
-        const SizedBox(height: SahneSpace.x3),
+        SizedBox(height: compactSpacing ? SahneSpace.x2 : SahneSpace.x3),
         if (eyebrow != null) ...[
           Text(
             eyebrow!,
@@ -723,9 +734,9 @@ class SahneResultHero extends StatelessWidget {
             child: _ScoreCelebration(aboveText: value == null),
           ),
         Padding(
-          padding: const EdgeInsets.only(
-            top: SahneSpace.x2,
-            bottom: SahneSpace.x4,
+          padding: EdgeInsets.only(
+            top: compactSpacing ? 0 : SahneSpace.x2,
+            bottom: compactSpacing ? SahneSpace.x1 : SahneSpace.x4,
           ),
           child: SizedBox(width: double.infinity, child: content),
         ),

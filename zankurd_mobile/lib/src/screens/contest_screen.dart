@@ -223,11 +223,7 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
                       key: const ValueKey('contest-board'),
                       repository: widget.repository,
                     )
-                  : DailyEventBoardCard(
-                      key: const ValueKey('contest-teaser'),
-                      repository: widget.repository,
-                      teaser: true,
-                    ),
+                  : null,
             ),
           );
         }
@@ -237,16 +233,32 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
           backLabel: context.t(K.back),
           slivers: [content],
           bottom: loaded && !snapshot.hasError && contest != null
-              ? SahneButton.primary(
-                  buttonKey: const ValueKey('contest-start'),
-                  label: _starting
-                      ? context.t(K.preparing)
-                      : context.t(_doneToday ? K.playAgain : K.startEvent),
-                  icon: AppIcons.play,
-                  arrow: false,
-                  expand: true,
-                  loading: _starting,
-                  onPressed: _starting ? null : () => _startQuiz(contest),
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Önizleme bir paragrafın ortasından solmasın: süre ve
+                    // katılım bilgisi, Başla ile aynı güvenli alt alandadır.
+                    if (!_doneToday) ...[
+                      DailyEventBoardCard(
+                        key: const ValueKey('contest-teaser'),
+                        repository: widget.repository,
+                        teaser: true,
+                      ),
+                      const SizedBox(height: SahneSpace.x3),
+                    ],
+                    SahneButton.primary(
+                      buttonKey: const ValueKey('contest-start'),
+                      label: _starting
+                          ? context.t(K.preparing)
+                          : context.t(_doneToday ? K.playAgain : K.startEvent),
+                      icon: AppIcons.play,
+                      arrow: false,
+                      expand: true,
+                      loading: _starting,
+                      onPressed: _starting ? null : () => _startQuiz(contest),
+                    ),
+                  ],
                 )
               : null,
         );
@@ -318,10 +330,6 @@ class _ContestSkeleton extends StatelessWidget {
             alignment: AlignmentDirectional.centerStart,
             child: SkeletonLine(width: 220, height: 20),
           ),
-          // Önizleme satırı (geri sayım) ve alt boşluğu.
-          const SizedBox(height: SahneSpace.x3),
-          const SkeletonLine(width: 220, height: 20),
-          const SizedBox(height: SahneSpace.x4),
         ],
       ),
     );

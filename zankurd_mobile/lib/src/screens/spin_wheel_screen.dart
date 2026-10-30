@@ -341,7 +341,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   /// Ödül ve geri sayım kartlarının yaklaşık yükseklikleri (çarkı küçültmek
   /// için; ölçü değil, ayırma payı).
   static const double _prizeCardHeight = 84;
-  static const double _countdownCardHeight = 140;
+  static const double _countdownCardHeight = 200;
 
   @override
   Widget build(BuildContext context) {
@@ -749,6 +749,20 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     return SahneGlassCard(
       child: Column(
         children: [
+          Text(
+            context.t(K.wheelAlreadySpun),
+            key: const ValueKey('spin-used-today'),
+            textAlign: TextAlign.center,
+            style: SahneType.bodyStrong.copyWith(color: t.tx),
+          ),
+          const SizedBox(height: SahneSpace.x1),
+          Text(
+            context.t(K.t12WheelResetTime),
+            key: const ValueKey('spin-reset-time'),
+            textAlign: TextAlign.center,
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x3),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

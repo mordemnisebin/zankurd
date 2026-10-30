@@ -216,6 +216,34 @@ class Tr {
     K.ttsRate: {'ku': 'Leza xwendinê', 'tr': 'Konuşma hızı'},
     // ── Giriş / kayıt ────────────────────────────────────────────────
     K.emailRequired: {'ku': 'E-name pêwîst e', 'tr': 'E-posta gerekli'},
+    K.t12TournamentYourTotal: {
+      "tr": "Senin toplam puanın: {score}",
+      "ku": "Xalên te yên giştî: {score}",
+    },
+    K.t12TournamentPoints: {"tr": "{score} puan", "ku": "{score} xal"},
+    K.t12AccountExisting: {
+      "tr": "Hesabın var mı? Giriş yap",
+      "ku": "Hesabê te heye? Têkeve",
+    },
+    K.t12AccountRecovery: {
+      "tr":
+          "Misafir hesabındasın. Çıkış yaparsan veya cihazını kaybedersen ilerlemene yeniden erişemezsin. İlerlemeni korumak için hesabını kaydet.",
+      "ku":
+          "Tu di hesabê mêvan de yî. Heke tu derkevî an amûra xwe winda bikî, tu nikarî dîsa bigihîjî pêşketina xwe. Ji bo parastina pêşketina xwe hesabê xwe tomar bike.",
+    },
+    K.t12AccountProtect: {
+      "tr": "İlerlememi koru",
+      "ku": "Pêşketina min biparêze",
+    },
+    K.t12CompletedLessons: {
+      "tr": "Tamamlanan ders: {n}",
+      "ku": "Dersên qediyayî: {n}",
+    },
+    K.t12WheelResetTime: {
+      "tr": "Ücretsiz hak her gün İstanbul saatiyle 00.00'da yenilenir.",
+      "ku": "Mafê belaş her roj bi saeta Stenbolê di saet 00.00'an de nû dibe.",
+    },
+    K.t12QuestionRevealed: {"tr": "Cevaplar açık", "ku": "Bersiv eşkere ne"},
     K.passwordRequired: {'ku': 'Şîfre pêwîst e', 'tr': 'Parola gerekli'},
     K.passwordMin6: {
       'ku': 'Şîfre divê herî kêm 6 karakter be',
@@ -2239,7 +2267,7 @@ class Tr {
       'ku': 'Mêvandar derket; niha tu mêvandar î.',
       'tr': 'Oda sahibi ayrıldı; artık oda sahibi sensin.',
     },
-    K.crowdRankLabel: {'ku': 'Rêza te', 'tr': 'Sıran'},
+    K.crowdRankLabel: {'ku': 'Rêza te', 'tr': 'Sıralaman'},
     K.crowdTopThree: {'ku': 'Sêyên yekem', 'tr': 'İlk 3'},
     K.crowdAnsweredCount: {
       'ku': '{answered}/{active} bersiv da',
@@ -2900,6 +2928,10 @@ class Tr {
     // küçülüyor, uzun metin puntoyu okunmaz yapıyordu (2026-08-16).
     K.statPending: {'ku': 'Hîn tune', 'tr': 'Henüz yok'},
     K.myStats: {'ku': 'Statîstîkên min', 'tr': 'İstatistiklerim'},
+    K.answerStatsUnavailable: {
+      'ku': 'Statîstîkên bersivan niha nayên standin.',
+      'tr': 'Cevap istatistikleri şu anda alınamıyor.',
+    },
     K.detailedStats: {
       'ku': 'Statîstîkên berfireh',
       'tr': 'Ayrıntılı istatistik',
@@ -3438,10 +3470,7 @@ class Tr {
       'ku': 'Koda te ya lîstikvan: {tag}. Ji bo kopîkirinê bitikîne.',
       'tr': 'Oyuncu kodun: {tag}. Kopyalamak için dokun.',
     },
-    K.searchByNameOrTag: {
-      'ku': 'Nav an koda lîstikvan…',
-      'tr': 'Oyuncu adı ya da kodu…',
-    },
+    K.searchByNameOrTag: {'ku': 'Nav an kod', 'tr': 'Ad veya kod'},
     K.signOutGuestWarn: {
       'ku':
           'Tu wek mêvan têketî yî. Heke derkevî, XP, zêr, rozet û '
@@ -4620,6 +4649,14 @@ class Tr {
 /// Metin anahtarları. Sabit olmaları, yazım hatasının derleme zamanında
 /// yakalanmasını sağlar.
 class K {
+  static const t12TournamentYourTotal = 't12.t12TournamentYourTotal';
+  static const t12TournamentPoints = 't12.t12TournamentPoints';
+  static const t12AccountExisting = 't12.t12AccountExisting';
+  static const t12AccountRecovery = 't12.t12AccountRecovery';
+  static const t12AccountProtect = 't12.t12AccountProtect';
+  static const t12CompletedLessons = 't12.t12CompletedLessons';
+  static const t12WheelResetTime = 't12.t12WheelResetTime';
+  static const t12QuestionRevealed = 't12.t12QuestionRevealed';
   const K._();
 
   static const back = 'common.back';
@@ -5647,6 +5684,7 @@ class K {
   static const detailedStats = 'profile.detailedStats';
   static const weeklyPerformance = 'profile.weeklyPerformance';
   static const performanceLoadFail = 'profile.performanceLoadFail';
+  static const answerStatsUnavailable = 'profile.answerStatsUnavailable';
   static const noOnlineHistory = 'profile.noOnlineHistory';
   static const startToday = 'profile.startToday';
   static const savedQuestions = 'profile.savedQuestions';

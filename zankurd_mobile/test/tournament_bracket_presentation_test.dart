@@ -246,16 +246,9 @@ void main() {
 
   testWidgets('kazanan yalnız renkle anlatılmaz', (tester) async {
     await _pump(tester, _bracket(currentRound: 1, rounds: 2));
-    // Kupa ikonu ikinci kanal; kaybedende üstü çizili ad üçüncü kanal.
-    final slots = tester.widgetList<Text>(find.byType(Text));
-    final struck = slots.where(
-      (t) => t.style?.decoration == TextDecoration.lineThrough,
-    );
-    expect(
-      struck,
-      isNotEmpty,
-      reason: 'kaybeden yalnız soluk renkle işaretlenmiş',
-    );
+    // Sonuç ikonları rengi tamamlar; oyuncu adını çizerek okunurluk azaltılmaz.
+    expect(find.byIcon(AppIcons.trophy), findsWidgets);
+    expect(find.byIcon(AppIcons.circleXmark), findsWidgets);
   });
 
   // ── Tur yapısı ──────────────────────────────────────────────────────────
