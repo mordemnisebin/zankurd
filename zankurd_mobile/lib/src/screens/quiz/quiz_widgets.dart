@@ -811,8 +811,12 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       optionCount: question.displayAnswers.length,
       // Açıklanmada renk yalnız anlam taşır: doğru Rast, seçilen yanlış
       // Şaş; geri kalan şıklar söner.
+      // Kurul 3 D1 (3/3): hüküm beklenirken (sunucu-gizli cevap ya da
+      // gerilim tutuşu) seçilmeyen şıklar da söner; cevabın kilitlendiği
+      // görünür. Hüküm rengi yine yalnız açılışta gelir.
       dimmed:
           eliminated ||
+          (answered && suspense && selectedAnswer != answer) ||
           (revealed &&
               answer != question.correctAnswer &&
               selectedAnswer != answer),
@@ -1316,8 +1320,12 @@ class _DuelScoreHeader extends StatelessWidget {
                 Flexible(
                   // Okunur tabana (11 pt) kadar küçülür, sonra iki satıra
                   // sarar (üç nokta yalnız son çare).
+                  // Kurul 3 D5 (3/3): kendi tarafın "Sen" ile işaretli
+                  // değildi; iki avatar da aynı baş harfi taşıyabiliyordu.
                   child: QuizFitLine(
-                    context.playerDisplayName(p.name, tag: p.tag),
+                    end
+                        ? context.playerDisplayName(p.name, tag: p.tag)
+                        : '${context.playerDisplayName(p.name, tag: p.tag)} (${context.t(K.you)})',
                     maxLines: 2,
                     alignment: end
                         ? AlignmentDirectional.centerEnd
@@ -1357,8 +1365,11 @@ class _DuelScoreHeader extends StatelessWidget {
                     // sözlüğü puan/pûan der, kelime `K.scoreWord`tan gelir.
                     '${groupThousands(p.score)} ${context.t(K.scoreWord).toLowerCase()}',
                     maxLines: 1,
+                    // Kurul 3 D4: puanın rengi halattaki tarafının rengidir
+                    // (sen Zêr, rakip Boyax); hangi rengin kime ait olduğu
+                    // okunur.
                     style: SahneType.captionStrong.copyWith(
-                      color: t.goldTx,
+                      color: end ? t.raceTx : t.goldTx,
                       fontFeatures: const [FontFeature.tabularFigures()],
                     ),
                   ),
@@ -1717,6 +1728,13 @@ class _DuelTugBar extends StatelessWidget {
     final t = SahneTokens.of(context);
     final share = duelTugShare(playerScore, opponentScore);
     final reduceMotion = sahneMotionReduced(context);
+    // Kurul 3 D4 (3/3): 0–0'da çubuk yarı Zêr yarı Boyax tam doluydu; daha
+    // kimse puan almadan bir "durum" gösteriyordu. Puan yokken iki yarı da
+    // nötr iz rengidir; ilk puanla renkler gelir.
+    final neutral = playerScore <= 0 && opponentScore <= 0;
+    final track = t.tx3.withValues(alpha: 0.4);
+    final leftColor = neutral ? track : t.gold;
+    final rightColor = neutral ? track : t.race;
 
     return SizedBox(
       key: const ValueKey('duel-tug-bar'),
@@ -1735,14 +1753,16 @@ class _DuelTugBar extends StatelessWidget {
                   Expanded(
                     flex: (value * 1000).round(),
                     child: ColoredBox(
-                      color: t.gold,
+                      key: const ValueKey('duel-tug-left'),
+                      color: leftColor,
                       child: const SizedBox(height: 8),
                     ),
                   ),
                   Expanded(
                     flex: ((1 - value) * 1000).round(),
                     child: ColoredBox(
-                      color: t.race,
+                      key: const ValueKey('duel-tug-right'),
+                      color: rightColor,
                       child: const SizedBox(height: 8),
                     ),
                   ),

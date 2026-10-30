@@ -196,14 +196,20 @@ class QuizOptionTile extends StatelessWidget {
                 // sağda 44 pt'lik ayrı bir yuvaydı): şık metni cevaptan sonra
                 // daralıp ek satıra kırılmaz, çubuklar yerinden oynamaz.
                 reducedMotion: reducedMotion,
+                // Kurul 3 D1: hüküm beklenirken seçili şıkta kilit — cevap
+                // gönderildi, değiştirilemez; doğru/yanlış rengi taşımaz.
                 markIcon: switch (state) {
                   _OptionState.correct => AppIcons.check,
                   _OptionState.wrong => AppIcons.xmark,
+                  _OptionState.checking when suspense => AppIcons.lock,
                   _ => null,
                 },
                 markKey: switch (state) {
                   _OptionState.correct => const ValueKey('correct_icon'),
                   _OptionState.wrong => const ValueKey('wrong_icon'),
+                  _OptionState.checking when suspense => const ValueKey(
+                    'locked_icon',
+                  ),
                   _ => null,
                 },
               ),

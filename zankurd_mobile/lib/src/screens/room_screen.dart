@@ -2313,8 +2313,16 @@ class _RoomPlayerRow extends StatelessWidget {
     final t = SahneTokens.of(context);
     final isReady = player.state == Player.readyState;
     final stacked = MediaQuery.textScalerOf(context).scale(16) >= 24;
+    // Kurul 3 D5 (3/3): lobide kendi satırın işaretli değildi. Yerel
+    // oyuncunun gerçek adı varsa yanına "(Sen)" eklenir; ad zaten "Sen"
+    // yer tutucusuysa tekrar eklenmez.
+    final ownName = _displayName(context);
+    final selfMark = isSelf && ownName != context.t(K.you)
+        ? ' (${context.t(K.you)})'
+        : '';
     final nameText = Text(
-      _displayName(context),
+      '$ownName$selfMark',
+      key: isSelf ? const ValueKey('room-player-self-name') : null,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: SahneType.bodyStrong.copyWith(color: t.tx),
