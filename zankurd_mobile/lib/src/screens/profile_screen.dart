@@ -135,6 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   /// onu artırmaz ve oyuncu quiz bitirdiği hâlde "0" görüyordu
   /// (2026-07-22 canlı UX denetimi, P0-4).
   int _answeredTotal = 0;
+  bool _answerStatsAvailable = true;
   int _streak = 0;
 
   @override
@@ -222,6 +223,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // Doğruluk oranı istatistik kartı için (UI-only). Coin bakiyesi artık
       // profil gridinde gösterilmiyor, quiz üst barında görünüyor.
       final mistakeStore = await MistakeStore.load();
+      ({int correct, int wrong})? onlineAnswers;
+      try {
+        onlineAnswers = await widget.repository.loadOnlineAnswerStats();
+      } catch (_) {
+        // Diğer profil bölümleri erişilebilir kalır; eksik toplam gösterilmez.
+      }
+      final correct = mistakeStore.totalCorrect + (onlineAnswers?.correct ?? 0);
+      final wrong = mistakeStore.totalWrong + (onlineAnswers?.wrong ?? 0);
+      final answered = correct + wrong;
+      // Eski/silinmiş cevap kayıtlarından sıfır sonucunu çıkaramayız:
+      // maç veya ilerleme kanıtı varsa boş toplam da bilinmeyendir.
+      final missingAnswerHistory =
+          answered == 0 &&
+          ((stats?.roomsPlayed ?? 0) > 0 ||
+              xpStore.currentLevel > 1 ||
+              xpStore.xpInCurrentLevel > 0);
       final badgeService = await BadgeService.load();
       final rewardView = await RewardProgressSnapshot.load(
         achievements: achievementStore,
@@ -255,8 +272,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _level = xpStore.currentLevel;
           _xpInLevel = xpStore.xpInCurrentLevel;
           _xpNeeded = xpStore.xpNeededForNextLevel;
-          _accuracyPercent = mistakeStore.accuracyPercent;
-          _answeredTotal = mistakeStore.totalCorrect + mistakeStore.totalWrong;
+          _answerStatsAvailable =
+              onlineAnswers != null && !missingAnswerHistory;
+          _accuracyPercent = onlineAnswers != null && answered > 0
+              ? correct / answered * 100
+              : null;
+          _answeredTotal = answered;
           _loading = false;
           _loadedOnce = true;
           _loadFailed = false;
@@ -334,7 +355,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // U4 (2026-10-28 tur 4): hiç oynamamış oyuncuda boş bölümler (0/7 hafta,
     // "Henüz soru çözmedin", "İlk rekorunu kır", boş Başarılar ipucu) dört ayrı
     // boş kart olarak üst üste diziliyordu; tek "Başlangıç" kartında toplanır.
-    final fresh = _stats == null && _answeredTotal == 0 && !_hasPlayed;
+    final fresh =
+        _answerStatsAvailable &&
+        _stats == null &&
+        _answeredTotal == 0 &&
+        !_hasPlayed;
     final identity = _ProfileHeroCard(
       ku: ku,
       displayName: _displayName(ku),
@@ -385,7 +410,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           // göremiyordu (2026-07-27). Kapı sunucu satırına değil,
           // gösterilecek bir şey olup olmadığına bakar; karolar sunucu
           // metriği yokken "—" gösterir.
-          if (_stats == null && _answeredTotal == 0)
+          if (!_answerStatsAvailable)
+            SahneSurfaceCard(
+              key: const ValueKey('profile-answer-stats-unavailable'),
+              child: Text(
+                context.t(K.answerStatsUnavailable),
+                style: SahneType.body.copyWith(
+                  color: SahneTokens.of(context).tx2,
+                ),
+              ),
+            )
+          else if (_stats == null && _answeredTotal == 0)
             // Boş durum: bağlamsal çizgi ikon + tek cümle + ekranın tek
             // birincil eylemi. İkon semantik ağaca düğüm eklemez.
             //

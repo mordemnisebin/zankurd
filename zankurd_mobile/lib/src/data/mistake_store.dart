@@ -190,8 +190,12 @@ class MistakeStore {
   int get readyCount => _ids.where((id) => isReadyForReview(id)).length;
   Set<String> get readyIds => _ids.where((id) => isReadyForReview(id)).toSet();
 
-  Future<bool> markMistake(String id, {String? category}) async {
-    await _recordAnswer(false);
+  Future<bool> markMistake(
+    String id, {
+    String? category,
+    bool countAnswer = true,
+  }) async {
+    if (countAnswer) await _recordAnswer(false);
     _ids.add(id);
 
     // Get existing easeFactor if present to keep continuity, or start fresh at 2.5
@@ -221,8 +225,17 @@ class MistakeStore {
   }
 
   /// Normal quizler veya varsayılan çözümler için (Orta zorluk - q = 4).
-  Future<bool> markResolved(String id, {String? sessionId}) async {
-    return markResolvedSM2(id, 4, sessionId: sessionId);
+  Future<bool> markResolved(
+    String id, {
+    String? sessionId,
+    bool countAnswer = true,
+  }) async {
+    return markResolvedSM2(
+      id,
+      4,
+      sessionId: sessionId,
+      countAnswer: countAnswer,
+    );
   }
 
   /// SM-2 formülüne göre dereceli çözüm.

@@ -2900,6 +2900,10 @@ class Tr {
     // küçülüyor, uzun metin puntoyu okunmaz yapıyordu (2026-08-16).
     K.statPending: {'ku': 'Hîn tune', 'tr': 'Henüz yok'},
     K.myStats: {'ku': 'Statîstîkên min', 'tr': 'İstatistiklerim'},
+    K.answerStatsUnavailable: {
+      'ku': 'Statîstîkên bersivan niha nayên standin.',
+      'tr': 'Cevap istatistikleri şu anda alınamıyor.',
+    },
     K.detailedStats: {
       'ku': 'Statîstîkên berfireh',
       'tr': 'Ayrıntılı istatistik',
@@ -3438,10 +3442,7 @@ class Tr {
       'ku': 'Koda te ya lîstikvan: {tag}. Ji bo kopîkirinê bitikîne.',
       'tr': 'Oyuncu kodun: {tag}. Kopyalamak için dokun.',
     },
-    K.searchByNameOrTag: {
-      'ku': 'Nav an koda lîstikvan…',
-      'tr': 'Oyuncu adı ya da kodu…',
-    },
+    K.searchByNameOrTag: {'ku': 'Nav an kod', 'tr': 'Ad veya kod'},
     K.signOutGuestWarn: {
       'ku':
           'Tu wek mêvan têketî yî. Heke derkevî, XP, zêr, rozet û '
@@ -5647,6 +5648,7 @@ class K {
   static const detailedStats = 'profile.detailedStats';
   static const weeklyPerformance = 'profile.weeklyPerformance';
   static const performanceLoadFail = 'profile.performanceLoadFail';
+  static const answerStatsUnavailable = 'profile.answerStatsUnavailable';
   static const noOnlineHistory = 'profile.noOnlineHistory';
   static const startToday = 'profile.startToday';
   static const savedQuestions = 'profile.savedQuestions';

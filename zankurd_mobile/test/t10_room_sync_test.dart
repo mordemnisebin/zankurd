@@ -146,6 +146,7 @@ class _RoomServer {
     }
     for (final client in clients) {
       await client.players.close();
+      await client.broadcasts.close();
     }
   }
 }
@@ -160,6 +161,9 @@ class _RoomClient extends MockZanKurdRepository {
   final Duration wallSkew;
   final Duration delay;
   final players = StreamController<List<Player>>.broadcast();
+  final broadcasts = StreamController<Map<String, dynamic>>.broadcast();
+  Completer<void>? nextSubmitGate;
+  bool rejectNextSubmit = false;
   Completer<void>? nextResumeGate;
   Completer<void>? nextProgressGate;
   int resumeCalls = 0;
@@ -176,12 +180,16 @@ class _RoomClient extends MockZanKurdRepository {
   Stream<List<Player>> subscribeRoomPlayers(GameRoom room) => players.stream;
   @override
   Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId) =>
-      const Stream.empty();
+      broadcasts.stream;
   @override
   Future<void> sendRoomBroadcast(
     String roomId,
     Map<String, dynamic> payload,
-  ) async {}
+  ) async {
+    for (final client in server.clients) {
+      if (client != this) client.broadcasts.add(payload);
+    }
+  }
 
   @override
   Future<RoomResumeSnapshot?> loadMyResumableRoom() async {
@@ -235,6 +243,13 @@ class _RoomClient extends MockZanKurdRepository {
     required String selectedOptionOptionKey,
     required int responseMs,
   }) async {
+    final gate = nextSubmitGate;
+    nextSubmitGate = null;
+    if (gate != null) await gate.future;
+    if (rejectNextSubmit) {
+      rejectNextSubmit = false;
+      throw StateError('Rejected test answer');
+    }
     server.answers.putIfAbsent(server.index, () => {})[id] =
         selectedOptionOptionKey;
     return {'accepted': true, 'pending': true};
@@ -308,6 +323,97 @@ Future<_RoomServer> _openFour(WidgetTester tester) async {
 
 void main() {
   setUp(freshMockRepository);
+
+  testWidgets('T11: yerel cevap sunucu yanıtını beklemeden sayılır', (
+    tester,
+  ) async {
+    final server = await _openFour(tester);
+    await _tick(tester, const Duration(milliseconds: 3100));
+    final client = server.clients.last;
+    final gate = Completer<void>();
+    client.nextSubmitGate = gate;
+    await tester.tap(_inside('D', find.byType(QuizOptionTile)).first);
+    await tester.pump();
+    expect(server.answers[0], isNull);
+    expect(_inside('D', find.text('1/4 cevapladı')), findsOneWidget);
+    gate.complete();
+    await _tick(tester, const Duration(milliseconds: 2200));
+    expect(_inside('D', find.text('1/4 cevapladı')), findsOneWidget);
+    expect(_inside('D', find.text('2/4 cevapladı')), findsNothing);
+    await tester.pumpWidget(const SizedBox.shrink());
+    await _tick(tester, const Duration(seconds: 3));
+  });
+
+  testWidgets('T11: kabul edilen cevap yayını periyodik yoklamayı beklemez', (
+    tester,
+  ) async {
+    final server = await _openFour(tester);
+    await _tick(tester, const Duration(milliseconds: 3100));
+    final observer = server.clients.first;
+    final before = observer.progressCalls;
+    await tester.tap(_inside('D', find.byType(QuizOptionTile)).first);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 50));
+    expect(observer.progressCalls, greaterThan(before));
+    expect(_inside('A', find.text('1/4 cevapladı')), findsOneWidget);
+    await tester.pumpWidget(const SizedBox.shrink());
+    await _tick(tester, const Duration(seconds: 3));
+  });
+
+  testWidgets('T11: reddedilen yerel cevap sayısı geri alınır', (tester) async {
+    final server = await _openFour(tester);
+    await _tick(tester, const Duration(milliseconds: 3100));
+    final client = server.clients.first;
+    final gate = Completer<void>();
+    client.nextSubmitGate = gate;
+    client.rejectNextSubmit = true;
+    await tester.tap(_inside('A', find.byType(QuizOptionTile)).first);
+    await tester.pump();
+    expect(_inside('A', find.text('1/4 cevapladı')), findsOneWidget);
+    gate.complete();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 50));
+    expect(_inside('A', find.text('0/4 cevapladı')), findsOneWidget);
+    expect(server.answers[0], isNull);
+    await tester.pumpWidget(const SizedBox.shrink());
+    await _tick(tester, const Duration(seconds: 3));
+  });
+
+  testWidgets('T11: yayın sayı veya soru evresini değiştiremez', (
+    tester,
+  ) async {
+    final server = await _openFour(tester);
+    await _tick(tester, const Duration(milliseconds: 3100));
+    final client = server.clients.first;
+    final before = client.progressCalls;
+    client.broadcasts.add({
+      'type': 'crowd_answered',
+      'sender_id': 'D',
+      'question_index': 0,
+      'answered': 4,
+      'revealed': true,
+    });
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 50));
+    expect(client.progressCalls, greaterThan(before));
+    expect(_inside('A', find.text('0/4 cevapladı')), findsOneWidget);
+    expect(_inside('A', find.text('Soru 1')), findsOneWidget);
+    final after = client.progressCalls;
+    client.broadcasts.add({
+      'type': 'crowd_answered',
+      'sender_id': 'outsider',
+      'question_index': 0,
+    });
+    client.broadcasts.add({
+      'type': 'crowd_answered',
+      'sender_id': 'D',
+      'question_index': 1,
+    });
+    await tester.pump();
+    expect(client.progressCalls, after);
+    await tester.pumpWidget(const SizedBox.shrink());
+    await _tick(tester, const Duration(seconds: 3));
+  });
 
   testWidgets(
     'T10: dört oda, ±5 sn saat ve 0–2 sn gecikmede ortak sayaç/sayı',

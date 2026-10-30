@@ -271,6 +271,10 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   Future<void> deleteMyAccount();
   Future<LeaderboardEntry?> getPlayerStats();
 
+  /// Kendi çevrimiçi oda, düello ve turnuva cevapları; TIMEOUT sayılmaz.
+  /// Okunamayan veri null'dır, doğrulanmış boş geçmiş sıfırdır.
+  Future<({int correct, int wrong})?> loadOnlineAnswerStats();
+
   /// Sıralama ekranının altına sabitlenen "benim sıram" satırının SEÇİLİ
   /// DÖNEME (Gün/Hafta/Ay) ait karşılığı.
   ///

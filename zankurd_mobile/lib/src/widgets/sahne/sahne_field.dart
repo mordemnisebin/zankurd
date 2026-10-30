@@ -31,6 +31,7 @@ class SahneField extends FormField<String> {
     this.controller,
     this.focusNode,
     this.hintText,
+    this.hintMaxLines,
     this.semanticLabel,
     this.keyboardType,
     this.textInputAction,
@@ -65,6 +66,7 @@ class SahneField extends FormField<String> {
     Key? key,
     TextEditingController? controller,
     String? hintText,
+    int? hintMaxLines,
     String? semanticLabel,
     ValueChanged<String>? onChanged,
     ValueChanged<String>? onSubmitted,
@@ -73,6 +75,7 @@ class SahneField extends FormField<String> {
          key: key,
          controller: controller,
          hintText: hintText,
+         hintMaxLines: hintMaxLines,
          semanticLabel: semanticLabel ?? hintText,
          textInputAction: TextInputAction.search,
          prefixIcon: AppIcons.magnifyingGlass,
@@ -90,6 +93,9 @@ class SahneField extends FormField<String> {
 
   /// Alan boşken görünen yer tutucu.
   final String? hintText;
+
+  /// Girdi tek satır kalırken uzun ipucu gerektiğinde sarılabilir.
+  final int? hintMaxLines;
 
   /// Etiketsiz alanlarda ekran okuyucunun söyleyeceği ad.
   final String? semanticLabel;
@@ -289,6 +295,7 @@ class SahneFieldState extends FormFieldState<String> {
               focusedErrorBorder: InputBorder.none,
               filled: false,
               hintText: w.hintText ?? '',
+              hintMaxLines: w.hintMaxLines,
               hintStyle: SahneType.body.copyWith(color: t.tx3),
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(

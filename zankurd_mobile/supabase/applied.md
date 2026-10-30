@@ -286,3 +286,4 @@
 | 2026-10-30_anlam_kategori_celdirici.sql | ✅ | 2026-10-30 sabah, ana ajan uyguladı (GPT-6 Astra yazdı). Tur 5: berxwedan sorusu Paradigma → Ziman; konfederalîzm sorusunda tartışmalı Bookchin çeldiricisi → Hobbes (KU Flash+Argon). Eski değer korumalı; dry-run hatasız; uygulamada doğrulama bloğu geçti. |
 
 | 2026-10-30_t10_room_answer_count.sql | ✅ | 2026-10-30 öğle, ana ajan uyguladı (GPT-6 Astra yazdı). get_room_answer_progress yalnız A/B/C/D cevaplarını sayar (TIMEOUT kayıtları sahte 4/4 üretmesin); search_path sabit, anon yetkisiz. Dry-run hatasız; uygulandı. |
+| 2026-10-30_t11_profile_answer_stats.sql | ⏳ | T11: yeni get_my_online_answer_stats RPC, auth.uid() sahibinin oda/canlı düello, sırayla düello ve turnuva A/B/C/D yanıtlarını toplar; TIMEOUT ve henüz açıklanmamış oda yanıtları hariç. Sabit search_path, anon/PUBLIC kapalı, authenticated (misafir dahil) açık. Mevcut fonksiyon değişmez; canlıya bağlanılmadı/uygulanmadı. |
