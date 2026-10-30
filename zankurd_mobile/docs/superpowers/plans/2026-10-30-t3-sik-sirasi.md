@@ -9,8 +9,9 @@ Kimlik: QuizScreen oda kimliğini; yerel turnuva açık maç kimliğini; solo me
 - [x] Model bekçileri: farklı maç, aynı kimlik, iki istemci, iki dil, anahtarlar, sayısal ve özel türler, reveal, %25±3 ve tüm 24 sıra. Önce kırmızı, sonra yeşil.
 - [x] Ekran bağlama: quiz/oda/canlı düello, sırayla düello ve turnuva; resume ve ilk kare bekçileri.
 - [x] Mevcut konum ve geometri testlerini açık tur kimliğiyle uyarlama (eşikleri koruma).
-- [ ] Analiz, format, ilgili testler, tam yerel CI ve mümkün olan görsel kontrol.
-- [ ] Claude Opus incelemesine değişiklik/risk notu; Türkçe gerekçeli commit, push yok.
+- [x] Analiz, format, ilgili testler, tam yerel CI ve web görsel kontrolü.
+- [x] Değişiklik/risk notu ve Türkçe gerekçeli commit; push yok.
+- [ ] Farklı firmadan model incelemesi (bu oturumda yapılmadı).
 
 Sınırlar: canlı bağlantı, gizli dosya okuma, içerik değişikliği ve sunucu göçü yok. Yeni kullanıcı metni yok; KU tablosu boş. Özel türlerin dağılımı karıştırma istatistiğine dahil edilmez; ayrı değişmezlik bekçisi uygulanır. Sayısal sorunun tek başına dört konuma yayılması sıralama sözleşmesiyle mümkün değildir; tüm banka dağılımında korunur.
 
@@ -25,7 +26,7 @@ Sınırlar: canlı bağlantı, gizli dosya okuma, içerik değişikliği ve sunu
 - Supabase göçü yok; canlı bağlantı yok; kaynak soru bankası, JSON/option_a..d sırası ve mevcut KU metinleri değişmedi.
 - Claude Opus 5.5 incelemesi henüz yapılmadı.
 
-## Doğrulama
+## Önceki sandbox oturumunun doğrulaması (tarihsel)
 
 - Son `flutter analyze --no-pub`: temiz (0 sorun).
 - Son `dart format --set-exit-if-changed lib test`: 1201 dosya, 0 değişiklik.
@@ -38,3 +39,34 @@ Sınırlar: canlı bağlantı, gizli dosya okuma, içerik değişikliği ve sunu
 | Yeni metin | TR | KU |
 |---|---|---|
 | Yok | — | — |
+
+## Tam erişim oturumu — 2026-10-30
+
+- Önceki çalışma `2f8f2af6` ile kaydedildi. İzlenmeyen smoke SQL yoktu; tasarım ve doğrulama notu korundu.
+- Fotoğraf bekçisindeki yanlış olumlu sonuç `7145d66f` ile düzeltildi. Üretim koduna bu oturumda ek değişiklik yapılmadı.
+- `dart analyze`: temiz. Dart MCP ilgili model, düello ekranı ve yeni ekran testinde hata bulmadı.
+- Fotoğraf bekçisi kırmızı kanıtı: yalnız gerçek seçim doğrulaması eklenince 402×874 / %200 yazı testinde seçilen şık sayısı 0 çıktı (`build/astra-validation/photo-red.log`). Şık ekran dışında kaldığından eski dokunma boşa gidiyordu.
+- Bekçi artık gerçek dokunmayı ve cevap öncesi görünürlük koşulunu doğrular. Uzun soruda %200 yazıda fotoğraf elle kaydırmayla zaten gizlenir: bu durum mevcut `_revealKeepingPhoto` sözleşmesine göre kullanıcıyı fotoğrafa geri çekmemelidir. Aynı ölçekte kısa sorulu ek senaryo 64 pt eşiğini sınar; önceki dört görünür fotoğraf senaryosunda eşik korunur. Altı test geçti (`build/astra-validation/photo-green.log`); uyarı susturulmadı.
+- `2f8f2af6` ve `7145d66f` için bağımsız, salt okunur Codex incelemesi engelleyici bulgu vermedi. Algoritma, sunucu anahtarları, yerelleştirme, cevap açılması ve ekranların tur bağlamı incelendi; fotoğraf testi değişikliği mevcut sözleşmeyle uyumlu ve gerçek ürün kusurunu maskelemiyor. Bu inceleme farklı firma onayı değildir.
+- İlk tam CI koşusu son test düzeltmesi öncesindeki dosyayı yüklediği için son kanıt sayılmadı ve durduruldu. Kod/test commit'i `7145d66f` üzerinde `./tool/ci_yerel.sh --tam` baştan sona tamamlandı: çıkış 0; ekran turu 214 geçti, ana paket 6998 geçti / 3 atlandı / 0 başarısız, cihazsız uygulama akışları 4 geçti. Format, analiz, soru kalitesi, şık kalitesi ve dokunma hedefi kapıları geçti. Son satır: `CI yerel: bütün adımlar geçti.` Kayıt: `build/astra-validation/ci-final.log`. Bu kayıttan sonraki değişiklik yalnız bu doğrulama belgesidir.
+
+### Eski testlerin değişme nedenleri
+
+| Dosyalar (`test/` altında) | Gerekçe |
+|---|---|
+| `models/quiz_question_test.dart` | Eski sabit kaydırma beklentisi yerine ortak tur kimliği ve sabit permütasyon vektörü. |
+| `sik_konum_sozlesmesi_test.dart` | Dil, sunucu seçenek anahtarı, yeniden açılma ve %25±3 denge sözleşmesini çok turlu sunumda ölçmek. |
+| `answer_position_category_balance_test.dart` | Eski banka/kategori bekçisini koruyup metin şıklarında çok turlu %25±3 kategori denetimi eklemek. |
+| `expansion_runtime_flow_test.dart`, `quiz_accent_test.dart`, `quiz_effects_test.dart`, `quiz_flow_test.dart`, `quiz_multiplayer_advance_race_test.dart`, `soru_sigma_test.dart`, `soru_sigma_ek_test.dart` | Ekran ile testin aynı tur/oda kimliğini kullanmasını sağlamak; yanlış veya ilk şık seçimini gerçek sunum sırasına bağlamak. Görsel/geometri eşikleri korunur. |
+| `quiz_room_resume_test.dart` | Soğuk devam ve açıklanmış cevap durumunda oda kimliğinden aynı şık sırasını ayrıca doğrulamak. |
+| `quiz_photo_stays_visible_test.dart` | Yukarıdaki boşa dokunma kusurunu gerçek seçim ve görünürlük önkoşullarıyla kapatmak; elle kaydırılmış ve fotoğrafı görünür durumları ayrı sınamak. |
+
+### Görsel doğrulama ve sınırlar
+
+- `flutter build web --debug --no-pub --no-web-resources-cdn --dart-define=USE_BUNDLED_SUPABASE_DEFAULTS=false` başarılı.
+- Playwright yalnız localhost erişimine izin verecek şekilde çalıştırıldı. Türkçe çevrimdışı karşılama → pratik → cevap → sonraki soru akışı kontrol edildi. 390×844 ve 320×667 görünümlerinde şıklar ve ana eylem görünür; cevap açıklanınca sıra korunuyor. Kanıtlar: `build/astra-validation/quiz-web-before.png`, `quiz-web-after.png`, `quiz-web-narrow.png`.
+- Dış ağın bilinçli engellenmesinden kaynaklanan Firebase, Google giriş ve uzak font hataları bu çalışmada canlı hizmet hatası olarak yorumlanmadı.
+- Ayrı açık bulgu: debug web konsolunda ana sayfanın `home-profile-header` Tooltip / `_OverlayChildLayoutBuilder` zincirinden bir layout assertion görüldü. Soru şıkları çalışmaya devam etti; bu farklı bileşen bu görevde değiştirilmedi. Fiziksel cihaz/simülatör onayı ve başka firmadan model incelemesi yok.
+- Son tam CI'da `review-flashcard` ve oda arkadaş daveti hedeflerinde dokunma uyarıları görüldü; testler geçti. Bu farklı testlerin uyarıları ayrıca giderilmedi. Düzeltilen fotoğraf bekçisinin boşa dokunma uyarısı son koşuda yok.
+- Eski ve yeni uygulama sürümleri arasında aynı görünen sıra garantisi yok. Sayısal şıklar tasarım gereği mevcut sıralı sunumunu korur.
+- Sunucu göçü dosyası yok; bu iş bir göç gerektirmiyor. Hiçbir göç uygulanmadı, canlı bağlantı ve push yapılmadı.
