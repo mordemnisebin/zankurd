@@ -135,32 +135,40 @@ void main() {
     // yazılmıştı ama hiçbir çağrı yeri yoktu; Google bağlama bu platformda
     // kapalı olduğundan Apple seçeneği hiç görünmüyordu. Sessizdi çünkü
     // eski test tam tersini ("sosyal seçenek görünmez") sabitliyordu.
-    testWidgets('iOS misafir yükseltmesinde Apple görünür, Google görünmez', (
-      tester,
-    ) async {
-      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-      final guestAuth = _GuestAuthProviderWithGoogleLink();
+    testWidgets(
+      'T4 iOS misafir Google yolu gizliydi; eski bekçi gizlemeyi sabitliyordu',
+      (tester) async {
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        final guestAuth = _GuestAuthProviderWithGoogleLink();
 
-      await tester.pumpWidget(
-        _wrapWithProviders(
-          ProfileScreen(repository: MockZanKurdRepository()),
-          guestAuth,
-        ),
-      );
-      await tester.pumpAndSettle();
-      await _openGuestUpgradeDialog(tester);
-      debugDefaultTargetPlatformOverride = null;
+        await tester.pumpWidget(
+          _wrapWithProviders(
+            ProfileScreen(repository: MockZanKurdRepository()),
+            guestAuth,
+          ),
+        );
+        await tester.pumpAndSettle();
+        await _openGuestUpgradeDialog(tester);
+        debugDefaultTargetPlatformOverride = null;
 
-      expect(find.text('Google ile bağla'), findsNothing);
-      expect(find.text('Apple ile devam et'), findsOneWidget);
-      expect(find.text('E-posta'), findsWidgets);
-      expect(tester.takeException(), isNull);
+        expect(find.text('Google ile bağla'), findsOneWidget);
+        expect(find.text('Apple ile devam et'), findsOneWidget);
+        expect(find.text('E-posta'), findsWidgets);
+        final apple = find.byKey(const ValueKey('guest-upgrade-apple'));
+        final google = find.byKey(const ValueKey('auth-google'));
+        expect(tester.getSize(apple), tester.getSize(google));
+        expect(
+          tester.getTopLeft(google).dy,
+          lessThan(tester.getTopLeft(find.byType(TextField).first).dy),
+        );
+        expect(tester.takeException(), isNull);
 
-      await tester.tap(find.byKey(const ValueKey('guest-upgrade-apple')));
-      await tester.pumpAndSettle();
-      expect(guestAuth.appleLinkCalled, isTrue);
-      expect(guestAuth.googleLinkCalled, isFalse);
-    });
+        await tester.tap(find.byKey(const ValueKey('guest-upgrade-apple')));
+        await tester.pumpAndSettle();
+        expect(guestAuth.appleLinkCalled, isTrue);
+        expect(guestAuth.googleLinkCalled, isFalse);
+      },
+    );
 
     testWidgets('Kurmancî iOS yükseltmesinde Apple etiketi Kurmancî', (
       tester,

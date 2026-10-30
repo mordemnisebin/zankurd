@@ -1592,107 +1592,84 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
 
   @override
   Widget build(BuildContext context) {
+    // 40 px diyalog dış payı + 24 px içerik payı, iki yanda.
+    final contentWidth =
+        (MediaQuery.sizeOf(context).width -
+                MediaQuery.paddingOf(context).horizontal -
+                128)
+            .clamp(1.0, SahneEntryScaffold.columnWidth);
     return AlertDialog(
+      insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+      contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+      scrollable: true,
       title: Text(
         context.t(K.saveAccount),
         style: SahneType.headline.copyWith(color: SahneTokens.of(context).tx),
       ),
-      content: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              context.t(K.saveAccountBody),
-              style: SahneType.caption.copyWith(
-                color: SahneTokens.of(context).tx2,
-              ),
-            ),
-            const SizedBox(height: SahneSpace.x4),
-            SahneField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              label: context.t(K.email),
-              validator: (v) {
-                if (v == null || v.isEmpty || !v.contains('@')) {
-                  return context.t(K.emailInvalid);
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 12),
-            SahneField(
-              controller: _passwordController,
-              obscureText: true,
-              label: context.t(K.password),
-              validator: (v) {
-                if (v == null || v.length < 6) {
-                  return context.t(K.passwordTooShort);
-                }
-                return null;
-              },
-            ),
-            if (widget.supportsGoogleLinking ||
-                widget.supportsAppleLinking) ...[
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(child: Divider(color: SahneTokens.of(context).line)),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      context.t(K.orSeparator),
-                      style: SahneType.caption.copyWith(
-                        color: SahneTokens.of(context).tx2,
-                      ),
-                    ),
-                  ),
-                  Expanded(child: Divider(color: SahneTokens.of(context).line)),
-                ],
-              ),
-              if (widget.supportsAppleLinking) ...[
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                    key: const ValueKey('guest-upgrade-apple'),
-                    onPressed: _submitting
-                        ? null
-                        : () => Navigator.pop(
-                            context,
-                            _GuestUpgradeAction.appleRequested,
-                          ),
-                    icon: BrandIcon(
-                      BrandIcons.apple,
-                      size: 18,
-                      color: SahneTokens.of(context).tx,
-                    ),
-                    label: Text(context.t(K.linkApple)),
-                  ),
+      // AlertDialog intrinsic genişlik ister; LayoutBuilder içeren sosyal
+      // düğmeler ancak somut bir genişlik altında ölçülebilir.
+      content: SizedBox(
+        width: contentWidth,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                context.t(K.saveAccountBody),
+                style: SahneType.caption.copyWith(
+                  color: SahneTokens.of(context).tx2,
                 ),
-              ],
-              if (widget.supportsGoogleLinking) ...[
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                    onPressed: _submitting
-                        ? null
-                        : () => Navigator.pop(
-                            context,
-                            _GuestUpgradeAction.googleRequested,
-                          ),
-                    icon: const BrandIcon(
-                      BrandIcons.google,
-                      size: 18,
-                      color: Color(0xFF4285F4),
-                    ),
-                    label: Text(context.t(K.linkGoogle)),
-                  ),
+              ),
+              const SizedBox(height: SahneSpace.x4),
+              if (widget.supportsGoogleLinking ||
+                  widget.supportsAppleLinking) ...[
+                AuthSocialButtons(
+                  linking: true,
+                  contentWidth: contentWidth,
+                  showGoogle: widget.supportsGoogleLinking,
+                  showApple: widget.supportsAppleLinking,
+                  appleKey: const ValueKey('guest-upgrade-apple'),
+                  onApple: _submitting
+                      ? null
+                      : () => Navigator.pop(
+                          context,
+                          _GuestUpgradeAction.appleRequested,
+                        ),
+                  onGoogle: _submitting
+                      ? null
+                      : () => Navigator.pop(
+                          context,
+                          _GuestUpgradeAction.googleRequested,
+                        ),
                 ),
+                AuthEmailDivider(contentWidth: contentWidth),
               ],
+              SahneField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                label: context.t(K.email),
+                validator: (v) {
+                  if (v == null || v.isEmpty || !v.contains('@')) {
+                    return context.t(K.emailInvalid);
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12),
+              SahneField(
+                controller: _passwordController,
+                obscureText: true,
+                label: context.t(K.password),
+                validator: (v) {
+                  if (v == null || v.length < 6) {
+                    return context.t(K.passwordTooShort);
+                  }
+                  return null;
+                },
+              ),
             ],
-          ],
+          ),
         ),
       ),
       actions: [

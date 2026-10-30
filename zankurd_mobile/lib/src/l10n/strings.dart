@@ -303,14 +303,19 @@ class Tr {
       'ku': 'Kurmancî hîn bibe, zanîna xwe bi pêşbirkê biceribîne.',
       'tr': 'Kurmancî öğren, bilgini yarıştır.',
     },
+    // T4 KU taslakları: bağımsız dil incelemesi bekliyor; mevcut dizeler korunur.
+    K.continueApple: {'ku': 'Bi Apple re bidomîne', 'tr': 'Apple ile devam et'},
+    K.continueGoogle: {'ku': 'Bi Google bidomîne', 'tr': 'Google ile devam et'},
+    K.signInEmail: {'ku': 'Bi e-nameyê têkeve', 'tr': 'E-posta ile giriş'},
+    K.signUpApple: {'ku': 'Bi Apple tomar bibe', 'tr': 'Apple ile kaydol'},
+    K.signUpGoogle: {'ku': 'Bi Google tomar bibe', 'tr': 'Google ile kaydol'},
+    K.continueGuest: {
+      'ku': 'Wek mêvan bidomîne',
+      'tr': 'Misafir olarak devam et',
+    },
     K.signInGoogle: {'ku': 'Bi Google têkeve', 'tr': 'Google ile giriş yap'},
-    K.signInApple: {'ku': 'Bi Apple têkeve', 'tr': 'Apple ile giriş yap'},
     K.orWithEmail: {'ku': 'An jî bi e-nameyê', 'tr': 'Veya e-posta ile'},
     K.signInPlayNow: {'ku': 'Niha bilîze', 'tr': 'Hemen oyna'},
-    K.signInHaveAccount: {
-      'ku': 'Hesabê min heye · Têkeve',
-      'tr': 'Hesabım var · Giriş yap',
-    },
     K.guestSaveTitle: {
       'ku': 'Pêşketina xwe winda neke — hesabê xwe tomar bike',
       'tr': 'İlerlemeni kaybetme — hesabını kaydet',
@@ -2943,7 +2948,6 @@ class Tr {
       'ku': 'Şîfre divê herî kêm 6 karakter be',
       'tr': 'Parola en az 6 karakter olmalı',
     },
-    K.orSeparator: {'ku': 'an jî', 'tr': 'veya'},
     K.linkGoogle: {'ku': 'Bi Google girêde', 'tr': 'Google ile bağla'},
     K.authErrNetwork: {
       'ku':
@@ -5603,7 +5607,6 @@ class K {
   static const emailInvalid = 'common.email.invalid';
   static const password = 'common.password';
   static const passwordTooShort = 'common.password.tooShort';
-  static const orSeparator = 'common.or';
   static const linkGoogle = 'profile.linkGoogle';
   static const linkApple = 'profile.linkApple';
   static const authErrNetwork = 'auth.err.network';
@@ -5634,7 +5637,6 @@ class K {
   static const premiumErrOtherAccount = 'premium.err.otherAccount';
   static const premiumErrGeneric = 'premium.err.generic';
   static const signInPlayNow = 'auth.signInPlayNow';
-  static const signInHaveAccount = 'auth.signInHaveAccount';
   static const guestSaveTitle = 'guestSave.title';
   static const guestSaveBody = 'guestSave.body';
   static const guestSaveEmail = 'guestSave.email';
@@ -5675,8 +5677,13 @@ class K {
   static const signUp = 'auth.signUp';
   static const welcomeTitle = 'auth.welcomeTitle';
   static const entryPromise = 'auth.entryPromise';
+  static const continueApple = 'auth.continueApple';
+  static const continueGoogle = 'auth.continueGoogle';
+  static const signInEmail = 'auth.signInEmail';
+  static const signUpApple = 'auth.signUpApple';
+  static const signUpGoogle = 'auth.signUpGoogle';
+  static const continueGuest = 'auth.continueGuest';
   static const signInGoogle = 'auth.signInGoogle';
-  static const signInApple = 'auth.signInApple';
   static const orWithEmail = 'auth.orWithEmail';
 
   // ── Genel hata / kategori / ana ekran ─────────────────────────

@@ -225,10 +225,7 @@ MockZanKurdRepository freshMockRepository() {
   return TestMockZanKurdRepository();
 }
 
-/// Giriş ekranının ilk görünümünde yalnız "Hemen oyna" (birincil) ve "Hesabım
-/// var · Giriş yap" (ikincil) durur; e-posta/parola formu ve Google/Apple
-/// düğmeleri "Hesabım var"a basılınca açılır (2026-10-28 kurul K10). Formu ya
-/// da sosyal girişleri sınayan testler önce bunu çağırır.
+/// T4: sosyal yollar zaten görünür; yalnız e-posta alanlarını açar.
 Future<void> revealSignInForm(WidgetTester tester) async {
   final button = find.byKey(const ValueKey('sign-in-have-account'));
   if (button.evaluate().isEmpty) return;

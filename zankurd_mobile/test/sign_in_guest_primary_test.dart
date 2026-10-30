@@ -6,12 +6,9 @@
 /// bağlantıydı: yeni oyuncu oynamadan önce hesap açmaya itiliyordu
 /// (Duolingo / Trivia Crack "önce oyna, hesap sonra" düzeninin tersi).
 ///
-/// ## 2026-10-28 K10 (geçersiz kılınan eski karar)
-///
-/// Eskiden Google + e-posta + parola + "Hesabım var" ilk karede yığılıydı ve
-/// bu bekçi onların "perdede olmamasını" yeterli sayıyordu. Artık ilk
-/// görünümde form ve sosyal girişler HİÇ yoktur; "Hesabım var · Giriş yap"a
-/// basılınca açılır ve yine tek birincil düğme "Hemen oyna"dır.
+/// ## T4 (2026-10-30)
+/// Kullanıcı K10 gizleme kararını değiştirdi: sosyal yollar ilk karede,
+/// misafirin altında; yalnız e-posta formu açılır. Alt perde zorunlu değil.
 ///
 /// ## Niçin sessiz kaldı
 ///
@@ -33,7 +30,7 @@ void main() {
   setUpAll(loadAppFonts);
 
   testWidgets(
-    'birincil eylem alt perdedeki "Hemen oyna"dır; girişler ikincil',
+    'T4 ilk karede sosyal yollar gizliydi; K10 gizlemeyi başarı sayıyordu',
     (tester) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       addTearDown(() => debugDefaultTargetPlatformOverride = null);
@@ -45,28 +42,13 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      final dock = find.byKey(const ValueKey('entry-dock'));
-      expect(
-        find.descendant(of: dock, matching: find.text('Hemen oyna')),
-        findsOneWidget,
-      );
-      // 2026-10-28 K10: ilk görünümde YALNIZ "Hesabım var · Giriş yap"
-      // (ikincil) görünür; Google/Apple ve e-posta formu o düğmeyle açılır.
-      expect(
-        find.descendant(
-          of: dock,
-          matching: find.text('Hesabım var · Giriş yap'),
-        ),
-        findsNothing,
-        reason: 'ikincil giriş birincil perdede olmamalı',
-      );
-      expect(find.text('Hesabım var · Giriş yap'), findsOneWidget);
-      for (final hidden in ['Google ile giriş yap', 'Apple ile giriş yap']) {
-        expect(
-          find.text(hidden),
-          findsNothing,
-          reason: '$hidden ilk karede yok',
-        );
+      for (final label in [
+        'Hemen oyna',
+        'Apple ile devam et',
+        'Google ile devam et',
+        'E-posta ile giriş',
+      ]) {
+        expect(find.text(label).hitTestable(), findsOneWidget);
       }
       expect(find.byType(TextField), findsNothing);
 
@@ -78,15 +60,17 @@ void main() {
       expect(primaries, hasLength(1));
       expect(primaries.single.label, 'Hemen oyna');
 
-      // "Hesabım var" formu ve sosyal girişleri açar; birincil yine tek.
-      await tester.tap(find.text('Hesabım var · Giriş yap'));
+      // T4: form açılınca da misafir erişilebilir, artık ikincildir.
+      await tester.tap(find.text('E-posta ile giriş'));
       await tester.pumpAndSettle();
-      expect(find.text('Google ile giriş yap'), findsOneWidget);
-      expect(find.text('Apple ile giriş yap'), findsOneWidget);
+      expect(find.text('Google ile devam et'), findsOneWidget);
+      expect(find.text('Apple ile devam et'), findsOneWidget);
       expect(find.byType(TextField), findsNWidgets(2));
       expect(
-        find.descendant(of: dock, matching: find.text('Hemen oyna')),
-        findsOneWidget,
+        tester
+            .widget<SahneButton>(find.byKey(const ValueKey('sign-in-play-now')))
+            .isPrimary,
+        isFalse,
       );
       expect(
         tester
@@ -94,7 +78,6 @@ void main() {
             .where((b) => b.isPrimary),
         hasLength(1),
       );
-
       await tester.tap(find.text('Hemen oyna'));
       await tester.pumpAndSettle();
       expect(auth.isAuthenticated, isTrue);

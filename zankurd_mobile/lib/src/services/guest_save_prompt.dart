@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
-import '../theme/brand_icons.dart';
+import '../widgets/auth_social_buttons.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/sahne/sahne.dart';
 
@@ -170,14 +169,6 @@ class GuestSavePrompt {
   }
 }
 
-bool get _isApplePlatform =>
-    defaultTargetPlatform == TargetPlatform.iOS ||
-    defaultTargetPlatform == TargetPlatform.macOS;
-
-bool get _supportsGoogleLinking => kIsWeb || !_isApplePlatform;
-
-bool get _supportsAppleLinking => !kIsWeb && _isApplePlatform;
-
 class GuestSaveSheet extends StatefulWidget {
   const GuestSaveSheet({super.key});
 
@@ -275,32 +266,16 @@ class _GuestSaveSheetState extends State<GuestSaveSheet> {
                   style: SahneType.body.copyWith(color: t.tx2),
                 ),
                 const SizedBox(height: SahneSpace.x4),
-                // Profil menüsündeki hesap yükseltmeyle aynı platform kapısı:
-                // Google iOS/macOS dışında, Apple yalnız iOS/macOS'ta.
-                if (_supportsGoogleLinking) ...[
-                  SahneButton.secondary(
-                    label: context.t(K.linkGoogle),
-                    leading: const BrandIcon(BrandIcons.google, size: 20),
-                    expand: true,
-                    arrow: false,
-                    onPressed: _busy
-                        ? null
-                        : () => _link((a) => a.linkGoogleAccount()),
-                  ),
-                  const SizedBox(height: SahneSpace.x2),
-                ],
-                if (_supportsAppleLinking) ...[
-                  SahneButton.secondary(
-                    label: context.t(K.linkApple),
-                    leading: const BrandIcon(BrandIcons.apple, size: 20),
-                    expand: true,
-                    arrow: false,
-                    onPressed: _busy
-                        ? null
-                        : () => _link((a) => a.linkAppleAccount()),
-                  ),
-                  const SizedBox(height: SahneSpace.x2),
-                ],
+                AuthSocialButtons(
+                  linking: true,
+                  onGoogle: _busy
+                      ? null
+                      : () => _link((a) => a.linkGoogleAccount()),
+                  onApple: _busy
+                      ? null
+                      : () => _link((a) => a.linkAppleAccount()),
+                ),
+                const AuthEmailDivider(),
                 if (!_emailOpen)
                   SahneButton.secondary(
                     label: context.t(K.guestSaveEmail),

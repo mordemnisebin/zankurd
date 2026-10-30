@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../theme/brand_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../animations/load_animations.dart';
@@ -11,6 +9,7 @@ import '../providers/reduced_motion_provider.dart';
 import '../services/analytics_service.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_logo.dart';
+import '../widgets/auth_social_buttons.dart';
 import '../widgets/consent_line.dart';
 import '../widgets/language_toggle.dart';
 import '../widgets/loading_overlay.dart';
@@ -33,33 +32,12 @@ class _SignInScreenState extends State<SignInScreen>
   bool _obscurePassword = true;
   late AnimationController _animationController;
 
-  /// E-posta ve parola dolu mu? Doluysa form gönderimi ekranın birincil
-  /// eylemi olur ve "Hemen oyna" ikincile iner. Eskiden form doldurulsa da
-  /// tek dolgulu düğme "Hemen oyna" kalıyordu; giriş yapacak kişi yanlışlıkla
-  /// misafir olabiliyordu (2026-10-28 görsel kurul: GPT-6 Sol + Gemini).
-  bool _credentialsFilled = false;
-
-  /// "Hesabım var · Giriş yap"a basılınca true: e-posta/parola formu ve
-  /// Google/Apple düğmeleri ANCAK o zaman görünür. İlk görünümde ekranın tek
-  /// birincil eylemi "Hemen oyna"dır (turuncu) ve tek ikincil eylem "Hesabım
-  /// var"dır; eskiden Google + e-posta + parola + iki düğme ilk karede
-  /// yığılıyordu (2026-10-28 kurul K10: tek birincil, form sonra).
+  /// T4: yalnız e-posta formu açılır; sosyal yollar ilk karede görünür.
   bool _formOpen = false;
-
-  void _onCredentialsChanged() {
-    final filled =
-        _emailController.text.trim().isNotEmpty &&
-        _passwordController.text.isNotEmpty;
-    if (filled != _credentialsFilled && mounted) {
-      setState(() => _credentialsFilled = filled);
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-    _emailController.addListener(_onCredentialsChanged);
-    _passwordController.addListener(_onCredentialsChanged);
     _animationController = AnimationController(
       // Kademeli giriş animasyonu içeriği süre*0.5–0.95 aralığında
       // gösteriyor; 900ms'de bu ~0.45–0.85sn boş ekran demekti. Faz 4:
@@ -221,22 +199,9 @@ class _SignInScreenState extends State<SignInScreen>
     }
     final t = SahneTokens.of(context);
 
-    // 2026-10-01 giriş iskeleti: dil seçici solda, kahraman kart (logo),
-    // sola yaslı başlık, tek yüzey kartında sosyal girişler + e-posta formu;
-    // ekranın TEK birincil eylemi "Hemen oyna" (misafir, önce oyna hesap
-    // sonra) alt perdede sabit, "Kaydol" altında ikincil metin eylemi (bkz. [SahneEntryScaffold]). Eskiden
-    // "Giriş Yap" kartın ortasında kayıyor, dil seçici sağ üstte duruyor,
-    // başlık kahraman kartın İÇİNDE ortalanıyordu — kayıt ve ad ekranı başka
-    // bir yerleşimdi.
+    // T4: misafir ve sosyal yollar aynı akışta, yalnız e-posta formu açılır.
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Ölçü kısıttan okunur (`MediaQuery.size` bölünmüş ekranda ve
-        // testlerde gerçek alanı söylemez). Kısa yatay telefonda düğmeler bir
-        // basamak alçalır (iki sütun, alan dar); dikey telefonda hiç sıkılaşmaz.
-        final size = constraints.biggest;
-        final denseWide =
-            (size.width > 720 || (size.width >= 640 && size.height < 420)) &&
-            (size.height < 520 || size.width > size.height);
         return Consumer<AuthProvider>(
           builder: (context, authProvider, _) {
             final loading = authProvider.isLoading;
@@ -266,7 +231,7 @@ class _SignInScreenState extends State<SignInScreen>
                         return null;
                       },
                     ),
-                    SizedBox(height: denseWide ? SahneSpace.x2 : SahneSpace.x3),
+                    const SizedBox(height: SahneSpace.x3),
                     FadeTransition(
                       opacity: LoadAnimationSequence.formField2FadeAnimation(
                         _animationController,
@@ -316,66 +281,43 @@ class _SignInScreenState extends State<SignInScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (_supportsGoogleSignIn) ...[
-                    _GoogleSignInButton(
-                      dense: denseWide,
-                      onPressed: loading
-                          ? null
-                          : () => _signInWithGoogle(authProvider),
-                    ),
-                    SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
-                  ],
-                  if (_supportsAppleSignIn) ...[
-                    _AppleSignInButton(
-                      dense: denseWide,
-                      onPressed: loading
-                          ? null
-                          : () => _signInWithApple(authProvider),
-                    ),
-                    SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
-                  ],
-                  const _EmailSectionDivider(),
-                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
                   form,
-                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
-                  // Form içindeki gönderim: alanlar doluyken ekranın birincil
-                  // eylemi olur ("Hemen oyna" ikincile iner), boşken ikincil.
-                  _credentialsFilled
-                      ? SahneButton.primary(
-                          key: const ValueKey('sign-in-submit'),
-                          label: context.t(K.signIn),
-                          icon: AppIcons.rightToBracket,
-                          arrow: false,
-                          expand: true,
-                          onPressed: loading
-                              ? null
-                              : () => _signIn(authProvider),
-                        )
-                      : SahneButton.secondary(
-                          key: const ValueKey('sign-in-submit'),
-                          label: context.t(K.signIn),
-                          icon: AppIcons.rightToBracket,
-                          arrow: false,
-                          expand: true,
-                          onPressed: loading
-                              ? null
-                              : () => _signIn(authProvider),
-                        ),
+                  const SizedBox(height: SahneSpace.x2),
+                  // Form açılınca giriş birincil, misafir yolu ikincildir (T4).
+                  SahneButton.primary(
+                    key: const ValueKey('sign-in-submit'),
+                    label: context.t(K.signIn),
+                    icon: AppIcons.rightToBracket,
+                    arrow: false,
+                    expand: true,
+                    onPressed: loading ? null : () => _signIn(authProvider),
+                  ),
                 ],
               ),
             );
 
-            // İlk görünüm: yalnız "Hesabım var · Giriş yap" (ikincil). Basınca
-            // form ve sosyal girişler açılır.
-            final haveAccount = SahneButton.secondary(
-              key: const ValueKey('sign-in-have-account'),
-              label: context.t(K.signInHaveAccount),
-              icon: AppIcons.rightToBracket,
-              arrow: false,
-              expand: true,
-              onPressed: loading
-                  ? null
-                  : () => setState(() => _formOpen = true),
+            final socialButtons = AuthSocialButtons(
+              onGoogle: loading ? null : () => _signInWithGoogle(authProvider),
+              onApple: loading ? null : () => _signInWithApple(authProvider),
+            );
+            final signUpLink = Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: SahneSpace.x1,
+              children: [
+                Text(
+                  context.t(K.noAccountPrefix),
+                  style: SahneType.body.copyWith(color: t.tx2),
+                ),
+                SahneButton.text(
+                  label: context.t(K.signUp),
+                  onPressed: loading
+                      ? null
+                      : () => Navigator.of(
+                          context,
+                        ).push(AppRoute.to(const SignUpScreen())),
+                ),
+              ],
             );
 
             return SahneEntryScaffold(
@@ -389,9 +331,8 @@ class _SignInScreenState extends State<SignInScreen>
                 controller: _animationController,
                 child: SahneEntryScene(
                   key: const ValueKey('sign-in-hero-banner'),
-                  // İlk görünüm kısa: manzara büyür ve boşluğu doldurur; form
-                  // açılınca alçalır (alan formun).
-                  height: _formOpen ? SahneEntryScene.regularHeight : 264,
+                  // Kompakt manzara: 375×667 ilk karede tüm giriş yollarına yer.
+                  height: 72,
                   child: ScaleTransition(
                     scale: LoadAnimationSequence.logoScaleAnimation(
                       _animationController,
@@ -403,17 +344,19 @@ class _SignInScreenState extends State<SignInScreen>
               title: context.t(K.welcomeTitle),
               // Tek satır ürün vaadi (tur 2 R4).
               body: context.t(K.entryPromise),
-              content: _formOpen ? panel : haveAccount,
-              // 2026-10-24: karşılamadaki yaş kutusu kalktı; şartlar ve
-              // gizlilik kabulü birincil düğmenin hemen ÜSTÜNDE düz metin
-              // bağlantıdır. Altında değil: birincil düğmenin dört giriş
-              // ekranında aynı yerde durması sözleşmedir
-              // (`entry_scaffold_test.dart`); üstteki satır onu kaydırmaz.
-              aboveAction: const ConsentLine(),
+              content: _formOpen
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        socialButtons,
+                        const AuthEmailDivider(),
+                        panel,
+                      ],
+                    )
+                  : null,
+              anchorActions: _formOpen,
+              aboveAction: _formOpen ? const ConsentLine() : null,
               primaryFirstWhenFlowing: true,
-              // İlk görünüm kısa: kahraman grubu perdeyle üst çubuk arasında
-              // ortalanır; "Hesabım var" ile perde arasında boşluk kalmaz.
-              centerWhenAnchored: !_formOpen,
               primary: FadeTransition(
                 opacity: LoadAnimationSequence.buttonFadeAnimation(
                   _animationController,
@@ -422,7 +365,7 @@ class _SignInScreenState extends State<SignInScreen>
                   scale: LoadAnimationSequence.buttonScaleAnimation(
                     _animationController,
                   ),
-                  child: _credentialsFilled
+                  child: _formOpen
                       ? SahneButton.secondary(
                           key: const ValueKey('sign-in-play-now'),
                           label: context.t(K.signInPlayNow),
@@ -445,23 +388,31 @@ class _SignInScreenState extends State<SignInScreen>
                         ),
                 ),
               ),
-              secondary: Wrap(
-                alignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: SahneSpace.x1,
-                children: [
-                  Text(
-                    context.t(K.noAccountPrefix),
-                    style: SahneType.body.copyWith(color: t.tx2),
-                  ),
-                  SahneButton.text(
-                    label: context.t(K.signUp),
-                    onPressed: () => Navigator.of(
-                      context,
-                    ).push(AppRoute.to(const SignUpScreen())),
-                  ),
-                ],
-              ),
+              secondary: _formOpen
+                  ? signUpLink
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: SahneSpace.x1),
+                        socialButtons,
+                        if (!_formOpen) ...[
+                          const SizedBox(height: SahneSpace.x2),
+                          SahneButton.secondary(
+                            key: const ValueKey('sign-in-have-account'),
+                            label: context.t(K.signInEmail),
+                            icon: AppIcons.envelope,
+                            arrow: false,
+                            expand: true,
+                            onPressed: loading
+                                ? null
+                                : () => setState(() => _formOpen = true),
+                          ),
+                        ],
+                        const SizedBox(height: SahneSpace.x2),
+                        const ConsentLine(),
+                        signUpLink,
+                      ],
+                    ),
             );
           },
         );
@@ -488,200 +439,6 @@ class _AnimatedTitle extends StatelessWidget {
         builder: (context, child) =>
             Transform.translate(offset: Offset(0, slide.value), child: child),
         child: child,
-      ),
-    );
-  }
-}
-
-// Supabase OAuth, iOS'ta da sistem tarayıcısını açıp Info.plist'teki
-// `com.zankurd.app://login-callback/` şemasına döner. Bu yüzden sosyal
-// girişleri iOS'ta gizlemek hem Google'ı hem de zorunlu Apple seçeneğini
-// kaldırıyordu; desteklenen tüm ZanKurd yüzeylerinde gösterilir.
-bool get _supportsGoogleSignIn => true;
-
-/// Apple yalnız iOS'ta (2026-10-23): orada Apple'ın yerleşik penceresi
-/// kullanılır ve kimlik doğrudan Supabase'e gider. Android ve web'deki
-/// tarayıcı akışı Supabase'teki Apple anahtarına bağlıdır; Apple bu anahtarı
-/// 6 ayda bir yeniletir, süresi dolunca giriş sessizce kırılır. App Store
-/// 4.8 Apple girişini yalnız Apple platformlarında ister; o tarihe dek
-/// Android/web'de hiç Apple girişi yapılmamıştı.
-bool get _supportsAppleSignIn =>
-    !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
-
-/// Google'ın kendi marka kılavuzundaki "Sign in with Google" renkleri:
-/// beyaz dolgu, #747775 kontur, #1F1F1F yazı. Bunlar Şahnê paletinin
-/// değil, üçüncü tarafın zorunlu kimliğidir; bu yüzden belirteç değil,
-/// burada adlandırılmış sabittir. Şekil uygulamanın M pahıdır, gölge yok.
-const _googleSurface = Color(0xFFFFFFFF);
-const _googleStroke = Color(0xFF747775);
-const _googleInk = Color(0xFF1F1F1F);
-
-class _GoogleSignInButton extends StatelessWidget {
-  const _GoogleSignInButton({required this.onPressed, this.dense = false});
-
-  final VoidCallback? onPressed;
-  final bool dense;
-
-  @override
-  Widget build(BuildContext context) {
-    final enabled = onPressed != null;
-    final shape = SahneShape.withSide(SahneShape.m, _googleStroke, width: 1);
-    return IgnorePointer(
-      ignoring: !enabled,
-      child: Opacity(
-        // Marka düğmesi Şahnê'nin pasif tonuna boyanamaz (kılavuz); yükleme
-        // sürerken yalnız soluklaşır, dokunuş almaz.
-        opacity: enabled ? 1 : 0.55,
-        child: Material(
-          color: _googleSurface,
-          shape: shape,
-          clipBehavior: Clip.antiAlias,
-          child: InkWell(
-            customBorder: shape,
-            onTap: onPressed,
-            child: SizedBox(
-              height: dense ? 48 : 52,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: dense ? SahneSpace.x3 : SahneSpace.x5,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    BrandIcon(
-                      BrandIcons.google,
-                      color: _googleInk,
-                      size: dense ? 18 : 20,
-                    ),
-                    SizedBox(width: dense ? SahneSpace.x2 : SahneSpace.x3),
-                    Flexible(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: AlignmentDirectional.centerStart,
-                        child: Text(
-                          context.t(K.signInGoogle),
-                          maxLines: 1,
-                          style: SahneType.button.copyWith(color: _googleInk),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _AppleSignInButton extends StatelessWidget {
-  const _AppleSignInButton({required this.onPressed, this.dense = false});
-
-  final VoidCallback? onPressed;
-  final bool dense;
-
-  @override
-  Widget build(BuildContext context) {
-    final enabled = onPressed != null;
-    // Apple'ın kendi düğme kılavuzu iki varyant tanımlar: açık zeminde siyah,
-    // koyu zeminde beyaz. Düğme ilk yazıldığında yalnız siyah varyant vardı
-    // ve karanlık temada gövde kartın zeminine 1.24:1 ile oturuyordu —
-    // yalnız beyaz yazı havada duruyordu (2026-08-16 ekran turu,
-    // 75_sign_in_dark). Siyah/beyaz Apple'ın zorunlu kimliğidir, belirteç
-    // değil; şekil uygulamanın M pahı, gölge yok.
-    final dark = Theme.of(context).brightness == Brightness.dark;
-    final surface = dark ? Colors.white : Colors.black;
-    final onSurface = dark ? Colors.black : Colors.white;
-    return IgnorePointer(
-      ignoring: !enabled,
-      child: Opacity(
-        opacity: enabled ? 1 : 0.55,
-        child: AnimatedContainer(
-          duration: sahneMotionReduced(context)
-              ? Duration.zero
-              : SahneMotion.fade,
-          decoration: ShapeDecoration(color: surface, shape: SahneShape.m),
-          child: Material(
-            type: MaterialType.transparency,
-            child: InkWell(
-              customBorder: SahneShape.m,
-              onTap: onPressed,
-              child: SizedBox(
-                height: dense ? 48 : 52,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: dense ? SahneSpace.x3 : SahneSpace.x5,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      BrandIcon(
-                        BrandIcons.apple,
-                        color: onSurface,
-                        size: dense ? 18 : 20,
-                      ),
-                      SizedBox(width: dense ? SahneSpace.x2 : SahneSpace.x3),
-                      Flexible(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: AlignmentDirectional.centerStart,
-                          child: Text(
-                            context.t(K.signInApple),
-                            maxLines: 1,
-                            style: SahneType.button.copyWith(color: onSurface),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// E-posta giriş formunun üstündeki statik bölüm ayıracı (çizgi + metin).
-/// Form her zaman açık gösterildiği için aç/kapa chevron'u yoktur.
-class _EmailSectionDivider extends StatelessWidget {
-  const _EmailSectionDivider();
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    Widget line() => Expanded(
-      child: SizedBox(height: 1, child: ColoredBox(color: t.line)),
-    );
-    // Kurul 4. tur (74): metin `Flexible` (gevşek) iken sağ çizgi soldakinden
-    // kısa kalıyor, ayıraç ortalanmıyordu (boş pay dağıtılmıyor). Metin artık
-    // en çok genişliğin %75'ine kadar kendi boyunda durur, iki çizgi kalanı
-    // EŞİT paylaşır.
-    return ConstrainedBox(
-      // a11y-tap-target: noninteractive — statik bölüm ayıracı.
-      constraints: const BoxConstraints(minHeight: 44),
-      child: LayoutBuilder(
-        builder: (context, box) => Row(
-          children: [
-            line(),
-            ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: box.maxWidth * 0.75),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
-                child: Text(
-                  context.t(K.orWithEmail),
-                  textAlign: TextAlign.center,
-                  style: SahneType.caption.copyWith(color: t.tx2),
-                ),
-              ),
-            ),
-            line(),
-          ],
-        ),
       ),
     );
   }

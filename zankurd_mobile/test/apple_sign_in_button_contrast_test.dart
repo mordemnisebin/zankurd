@@ -54,7 +54,7 @@ Color _appleButtonSurface(WidgetTester tester) {
   final container = tester.widget<AnimatedContainer>(
     find
         .ancestor(
-          of: find.text('Apple ile giriş yap'),
+          of: find.text('Apple ile devam et'),
           matching: find.byType(AnimatedContainer),
         )
         .first,
@@ -65,7 +65,7 @@ Color _appleButtonSurface(WidgetTester tester) {
 
 /// Düğme yazısının rengi — simge de aynı rengi kullanır.
 Color _appleButtonLabel(WidgetTester tester) =>
-    tester.widget<Text>(find.text('Apple ile giriş yap')).style!.color!;
+    tester.widget<Text>(find.text('Apple ile devam et')).style!.color!;
 
 void main() {
   for (final (name, mode) in [

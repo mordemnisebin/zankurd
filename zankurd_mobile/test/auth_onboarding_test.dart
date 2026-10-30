@@ -254,8 +254,8 @@ void main() {
     await revealSignInForm(tester);
     debugDefaultTargetPlatformOverride = null;
 
-    expect(find.text('Google ile giriş yap'), findsOneWidget);
-    expect(find.text('Apple ile giriş yap'), findsOneWidget);
+    expect(find.text('Google ile devam et'), findsOneWidget);
+    expect(find.text('Apple ile devam et'), findsOneWidget);
     expect(find.text('Hemen oyna'), findsOneWidget);
     expect(find.text('Veya e-posta ile'), findsOneWidget);
     expect(tester.takeException(), isNull);
@@ -274,7 +274,7 @@ void main() {
       await tester.pumpAndSettle();
       await revealSignInForm(tester);
 
-      final appleButton = find.text('Apple ile giriş yap');
+      final appleButton = find.text('Apple ile devam et');
       expect(appleButton, findsOneWidget);
 
       await tester.tap(appleButton);
@@ -294,7 +294,7 @@ void main() {
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
     await tester.pumpWidget(testShell(child: const SignInScreen()));
     await tester.pumpAndSettle();
-    final appleButton = find.text('Apple ile giriş yap');
+    final appleButton = find.text('Apple ile devam et');
     debugDefaultTargetPlatformOverride = null;
     expect(appleButton, findsNothing);
   });
@@ -322,7 +322,7 @@ void main() {
     await tester.pumpAndSettle();
     await revealSignInForm(tester);
 
-    await tester.tap(find.text('Apple ile giriş yap'));
+    await tester.tap(find.text('Apple ile devam et'));
     await tester.pumpAndSettle();
 
     debugDefaultTargetPlatformOverride = null;
@@ -352,7 +352,7 @@ void main() {
       await tester.pumpAndSettle();
       await revealSignInForm(tester);
 
-      await tester.tap(find.text('Google ile giriş yap'));
+      await tester.tap(find.text('Google ile devam et'));
       await tester.pumpAndSettle();
 
       debugDefaultTargetPlatformOverride = null;
@@ -426,7 +426,7 @@ void main() {
 
         // Google butonu: iki temada da beyaz dolgu -> koyu metin.
         final googleLabel = tester.widget<Text>(
-          find.text('Google ile giriş yap'),
+          find.text('Google ile devam et'),
         );
         expect(googleLabel.style?.color?.computeLuminance(), lessThan(0.3));
 
@@ -442,28 +442,32 @@ void main() {
 
   // 2026-10-28 görsel kurul: form doldurulunca "Giriş yap" birincil olur,
   // "Hemen oyna" ikincile iner; boşken misafir yolu birincil kalır.
-  testWidgets('form dolunca giriş birincil, Hemen oyna ikincil', (
-    tester,
-  ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-    await tester.pumpWidget(
-      testShell(child: const SignInScreen(), authProvider: GateAuthProvider()),
-    );
-    await tester.pumpAndSettle();
-    await revealSignInForm(tester);
-    bool isPrimary(String key) =>
-        tester.widget<SahneButton>(find.byKey(ValueKey(key))).isPrimary;
-    expect(isPrimary('sign-in-play-now'), isTrue);
-    expect(isPrimary('sign-in-submit'), isFalse);
-    final fields = find.byType(TextField);
-    await tester.enterText(fields.at(0), 'a@b.co');
-    await tester.enterText(fields.at(1), 'parola123');
-    await tester.pump();
-    expect(isPrimary('sign-in-submit'), isTrue);
-    expect(isPrimary('sign-in-play-now'), isFalse);
-    expect(find.text('Giriş yap'), findsWidgets);
-  });
+  testWidgets(
+    'T4 form açıkken misafir ikincil; eski bekçi yalnız dolu formu ölçüyordu',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        testShell(
+          child: const SignInScreen(),
+          authProvider: GateAuthProvider(),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await revealSignInForm(tester);
+      bool isPrimary(String key) =>
+          tester.widget<SahneButton>(find.byKey(ValueKey(key))).isPrimary;
+      expect(isPrimary('sign-in-play-now'), isFalse);
+      expect(isPrimary('sign-in-submit'), isTrue);
+      final fields = find.byType(TextField);
+      await tester.enterText(fields.at(0), 'a@b.co');
+      await tester.enterText(fields.at(1), 'parola123');
+      await tester.pump();
+      expect(isPrimary('sign-in-submit'), isTrue);
+      expect(isPrimary('sign-in-play-now'), isFalse);
+      expect(find.text('Giriş yap'), findsWidgets);
+    },
+  );
 
   testWidgets('auth alternative buttons ignore taps while loading', (
     tester,

@@ -1,9 +1,7 @@
 import 'dart:math' as math;
 import '../widgets/doza_widgets.dart';
-import 'package:flutter/foundation.dart'
-    show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
-import '../theme/brand_icons.dart';
+import '../widgets/auth_social_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
@@ -76,19 +74,8 @@ enum _GuestUpgradeAction {
   appleRequested,
 }
 
-bool get _supportsGoogleAccountLinking =>
-    kIsWeb ||
-    (defaultTargetPlatform != TargetPlatform.iOS &&
-        defaultTargetPlatform != TargetPlatform.macOS);
-
-/// iOS'ta misafirin tek kalıcı yolu e-postaydı: `linkAppleAccount` yazılmış
-/// ama hiçbir çağrı yeri yoktu ve Google bağlama bu platformda kapalıdır.
-/// Apple ile devam etmek hesabı aynı kimlikte (ilerleme kaybolmadan) kalıcı
-/// yapar.
-bool get _supportsAppleAccountLinking =>
-    !kIsWeb &&
-    (defaultTargetPlatform == TargetPlatform.iOS ||
-        defaultTargetPlatform == TargetPlatform.macOS);
+bool get _supportsGoogleAccountLinking => true;
+bool get _supportsAppleAccountLinking => supportsAppleAuth;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({

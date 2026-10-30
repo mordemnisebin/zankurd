@@ -116,19 +116,22 @@ void main() {
     expect(find.text('Şimdi değil'), findsNothing);
   });
 
-  testWidgets('iOS\'ta Google yerine Apple bağlama sunulur', (tester) async {
-    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-    addTearDown(() => debugDefaultTargetPlatformOverride = null);
-    late BuildContext ctx;
-    await tester.pumpWidget(host(_GuestAuth(), (c) => ctx = c));
-    for (var i = 0; i < 3; i++) {
-      GuestSavePrompt.afterGame(ctx, now: () => now);
-      await tester.pumpAndSettle();
-    }
-    expect(find.text('Apple ile devam et'), findsOneWidget);
-    expect(find.text('Google ile bağla'), findsNothing);
-    debugDefaultTargetPlatformOverride = null;
-  });
+  testWidgets(
+    'T4 iOS sosyal seçenek eksikti; eski bekçi tek sağlayıcı istiyordu',
+    (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      addTearDown(() => debugDefaultTargetPlatformOverride = null);
+      late BuildContext ctx;
+      await tester.pumpWidget(host(_GuestAuth(), (c) => ctx = c));
+      for (var i = 0; i < 3; i++) {
+        GuestSavePrompt.afterGame(ctx, now: () => now);
+        await tester.pumpAndSettle();
+      }
+      expect(find.text('Apple ile devam et'), findsOneWidget);
+      expect(find.text('Google ile bağla'), findsOneWidget);
+      debugDefaultTargetPlatformOverride = null;
+    },
+  );
 
   testWidgets('misafir olmayan ne sayılır ne sayfa görür', (tester) async {
     late BuildContext ctx;
