@@ -3,6 +3,7 @@
 // --dart-define=PREVIEW_PUSH=true: deliver a local foreground event at 5s.
 // Default: no event; the visible card must find the invitation by polling.
 // --dart-define=PREVIEW_LANG=ku --dart-define=PREVIEW_DARK=true
+// --dart-define=PREVIEW_RETURNING_USER=true: expose the existing streak calendar.
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 import 'dart:async';
 import 'dart:convert';
@@ -10,6 +11,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/main.dart' show ZanKurdApp;
+import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/paid_freeze_intent.dart';
@@ -85,6 +87,10 @@ Future<void> main() async {
     'zankurd.profileName.completed.$owner': true,
     'zankurd.navTour.seen': true,
     'zankurd.quiz_tutorial.seen': true,
+    if (const bool.fromEnvironment('PREVIEW_RETURNING_USER'))
+      LocalProgressScope.physical('zankurd.achievements.unlocked'): [
+        AchievementIds.firstGame,
+      ],
     LocalProgressScope.physical('zankurd.streak.current'): 7,
     LocalProgressScope.physical('zankurd.streak.best'): 7,
     LocalProgressScope.physical('zankurd.streak.lastDay'): previous,

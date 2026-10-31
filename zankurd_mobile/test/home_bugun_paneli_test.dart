@@ -25,6 +25,7 @@ import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/streak_panel.dart';
 
 import 'support/widget_test_helpers.dart' show freshMockRepository;
 
@@ -100,6 +101,57 @@ void main() {
       'zankurd.achievements.unlocked': ['first_game'],
     });
     AchievementStore.resetInstance();
+  });
+
+  testWidgets('haftalık şerit kurtarılan geçmişi takvimle aynı gösterir', (
+    tester,
+  ) async {
+    final today = DateTime.now();
+    String dayKey(int daysAgo) {
+      final day = DateTime(today.year, today.month, today.day - daysAgo);
+      return '${day.year.toString().padLeft(4, '0')}-'
+          '${day.month.toString().padLeft(2, '0')}-'
+          '${day.day.toString().padLeft(2, '0')}';
+    }
+
+    SharedPreferences.setMockInitialValues({
+      'zankurd.achievements.unlocked': ['first_game'],
+      'zankurd.streak.current': 8,
+      'zankurd.streak.best': 8,
+      'zankurd.streak.lastDay': dayKey(1),
+      'zankurd.streak.playedDays': [dayKey(3), dayKey(1)],
+      'zankurd.streak.frozenDays': [dayKey(2)],
+    });
+    tester.view.physicalSize = const Size(390, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final controller = ScrollController();
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(
+      _wrap(
+        HomeScreen(
+          repository: MockZanKurdRepository(),
+          scrollController: controller,
+          onOpenPlay: () {},
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('home-today-streak')));
+    await tester.pumpAndSettle();
+
+    final panel = tester.widget<StreakPanel>(find.byType(StreakPanel));
+    expect(panel.days, [
+      StreakDayState.blank,
+      StreakDayState.blank,
+      StreakDayState.blank,
+      StreakDayState.completed,
+      StreakDayState.frozen,
+      StreakDayState.completed,
+      StreakDayState.today,
+    ]);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('tek panel: üstte seri, altında hedef + görevler, tek özet', (

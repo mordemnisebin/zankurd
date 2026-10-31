@@ -963,37 +963,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   /// Son yedi günün streak durumunu GERÇEK geçmişten türetir.
   ///
-  /// `MistakeStore` zaten günlük doğru/yanlış sayısını tutuyor; oynanmış
-  /// gün, o günde en az bir cevap bulunan gündür. Uydurma yok: veri yoksa
-  /// gün "kaçırıldı" değil, olduğu gibi boş kalır ve bugünden sonrası
-  /// `upcoming` olarak işaretlenir.
+  /// Kurtarılan ve dondurulan günler aylık takvimle aynı seri kaydından gelir.
+  /// Eski kurulumlarda yalnız soru geçmişinde bulunan cevaplar da korunur.
+  /// Geçmiş başlamadan önceki günler boş kalır.
   Future<List<StreakDayState>> _loadStreakWeek(StreakStore streak) async {
     final store = await MistakeStore.load();
     final history = store.getLast7DaysHistory();
     final today = DateTime.now();
-    final todayKey =
-        '${today.year.toString().padLeft(4, '0')}-'
-        '${today.month.toString().padLeft(2, '0')}-'
-        '${today.day.toString().padLeft(2, '0')}';
-
     final states = <StreakDayState>[];
     for (final entry in history.entries) {
       final played =
           (entry.value['correct'] ?? 0) + (entry.value['wrong'] ?? 0) > 0;
-      if (entry.key == todayKey) {
-        states.add(played ? StreakDayState.completed : StreakDayState.today);
-      } else {
-        // İlk görülen günden önceki boş gün "kaçırıldı ✕" değil, nötr boş:
-        // yeni hesapta haftanın geri kalanı başarısızlık gibi görünüyordu.
-        final day = DateTime.parse(entry.key);
-        states.add(
-          played
-              ? StreakDayState.completed
-              : streak.markFor(day) == StreakCalendarMark.blank
-              ? StreakDayState.blank
-              : StreakDayState.missed,
-        );
-      }
+      final mark = streak.markFor(DateTime.parse(entry.key), now: today);
+      states.add(
+        played
+            ? StreakDayState.completed
+            : switch (mark) {
+                StreakCalendarMark.played => StreakDayState.completed,
+                StreakCalendarMark.frozen => StreakDayState.frozen,
+                StreakCalendarMark.today => StreakDayState.today,
+                StreakCalendarMark.missed => StreakDayState.missed,
+                StreakCalendarMark.upcoming => StreakDayState.upcoming,
+                StreakCalendarMark.blank => StreakDayState.blank,
+              },
+      );
     }
     return states;
   }
