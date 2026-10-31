@@ -2,12 +2,14 @@
 
 Kullanıcı 31 Ekim güncel önizlemesini Terminal'den başlattı. iPhone SE
 (375×667 pt) üzerinde DTD bağlantısı ve hot restart ile güncel kod kontrol edildi.
-Önceki 29 Ekim binary kontrolü aşağıdaki sonuçların kaynağı değildir.
+Önceki 29 Ekim binary kontrolü bu ilk sonuçların kaynağı değildir.
+Sonraki büyük yazı turunun cihazı ve yüklü binary sınırı ayrıca aşağıda belirtilmiştir.
 
 Son doğrulamada standart `tool/ci_yerel.sh --tam` Mac üzerinde başarıyla
 tamamlandı. Analiz, içerik ve dokunma hedefi kapıları, 214 ekran turu,
-7.598 test (3 atlanan) ve dört cihazsız uygulama akışı geçti. İlk oturumun
-SDK/soket engeli, bu sonraki başarılı normal CI koşusunun sonucu değildir.
+7.607 test (3 atlanan) ve dört cihazsız uygulama akışı geçti.
+Koşu kaydı: `/tmp/zk-live-preflight-verified-ci.log`. İlk oturumun SDK/soket
+engeli geçmişte kaldı; son başarılı normal CI koşusunda bu engel yoktur.
 
 Gemini 4 Argon bağımsız incelemesi ders çeldiricileri ve puanlama sınırındaki
 sorunları buldu. Düzeltmeleri yeniden inceleyip onayladı. DeepSeek ve MiMo
@@ -39,11 +41,10 @@ düğmesine dokununca ücret ile vazgeçme seçeneği ayrı bir pencerede görü
 [Davet kartı](qa_2026_10_31/paid_invite_target.png) ·
 [Katılım onayı](qa_2026_10_31/paid_invite_confirmation.png)
 
-Son yerel koşuda 35 dosyadaki 329 hedefli test ve ekran turundaki 214 test
-Flutter test motorunda geçti. Proje genelinde Dart analizi temizdi. Soru
-kalitesi kapısı 3.832 benzersiz kayıtta yeni borç bulmadı. Standart tam CI
-eğitim içeriği ve erişilebilirlik kontrollerinden sonra ekran turunda
-yerel test sunucusu için soket açma iznine takıldı.
+Önceki hedefli koşuda 35 dosyadaki 329 test ve ekran turundaki 214 test
+Flutter test motorunda geçti. Soru kalitesi kapısı 3.832 benzersiz kayıtta
+yeni borç bulmadı. Bu aşamadaki soket izni engeli daha sonraki başarılı tam CI
+koşusuyla aşıldı; güncel tam koşunun sayıları yukarıdadır.
 
 ## 31 Ekim simülatör sonuçları
 
@@ -57,7 +58,10 @@ yerel test sunucusu için soket açma iznine takıldı.
 | Kurmancî/koyu tema | Uygulama ayarlarından geçiş yapıldı; davet kartı, katıl/reddet eylemleri ve sekmeler dar ekranda görüntülendi. |
 | Çalışma zamanı | Tamamlanan gezinmelerde Dart MCP `No runtime errors found` döndürdü. |
 | Arka plandan dönüş ve davet reddi | iOS ana ekranından uygulamaya dönüldüğünde Yarış sekmesinde Rojda daveti görüldü. `Red bike` seçilince davet kartının kalktığı ve sekmenin açık kaldığı ekrandan doğrulandı. Arka plandayken yeni bir davetin teslim süresi ölçülmedi. |
-| Büyük yazı ve gerçek push | Henüz doğrulanmadı. |
+| Büyük yazı: profil ve davet | 390×844 pt ekranda iOS `accessibility-large` ile profil tek kolona geçti; alt eylemlere kaydırarak erişildi. Ana ekrandaki davetin Katıl/Reddet eylemlerine kaydırarak erişildi; Katıl lobiyi açtı. Bu tur mevcut yerel QA build 42 ile yapıldı. |
+| Büyük yazı: lobi alt oyuncu | İkinci ve son oyuncu satırı ile sabit Yarışı başlat düğmesi aynı ekranda görüldü. Bu kanıt iki oyunculu lobinin alt satırına erişimi doğrular; dolu sekiz oyunculu lobi bu tur sınanmadı. |
+| Gerçek push | Henüz doğrulanmadı. |
+| Android emülatör | `adb devices` boş döndü; bu tur Android emülatör kontrolü çalıştırılmadı. |
 
 Kanıtlar: [oda ayarları](qa_2026_10_31/room_50_120_tr.png),
 [lobi](qa_2026_10_31/lobby_50_120_tr.png),
@@ -69,9 +73,35 @@ Kanıtlar: [oda ayarları](qa_2026_10_31/room_50_120_tr.png),
 analiz ve hot restart sonrasında 50 soruluk gerçek akış tekrar doğrulandı.
 Bu değişiklik üretim soru bankası içeriğini değiştirmedi.
 
-Bağımsız görsel ikinci göz dört kanıtta belirgin metin taşması veya ana eylemi
-kapatan çakışma bulmadı. Tek karelerin doğrulamadığı ek durumlar: lobide alt
-oyunculara kaydırarak erişim ve quiz klavyesi açıkken kontrol düğmesine erişim.
+Bağımsız görsel ikinci göz ilk dört kanıtta belirgin metin taşması veya ana
+eylemi kapatan çakışma bulmadı. Sonraki büyük yazı turu ZK-E2E-2 iPhone 17e
+simülatöründe (390×844 pt), yüklü `com.zankurd.localqa` build 42 üzerinde
+kaydırma ve dokunma ile yapıldı. iOS yazı boyutu `accessibility-large` olarak
+ayarlandı; tur sonunda `large` değerine döndürüldü.
+
+Kanıtlar: [büyük yazı profil](qa_2026_10_31/profile_large_text_scrolled.png),
+[büyük yazı davet](qa_2026_10_31/invite_large_text_scrolled.png),
+[büyük yazı lobi](qa_2026_10_31/lobby_large_text_scrolled.png).
+
+Bu üç görüntünün alındığı eski yüklü QA binary'sinin tam kaynak parmak izi
+bu tur doğrulanmadı. Güncel üretim kaynağıyla iOS imzasız release ve Android
+imzalı release derlemeleri ayrıca geçti; derleme başarısı bu görüntülerin
+güncel kaynakla birebir eşleştiğinin kanıtı değildir. Seri takviminde dünün
+onarılmış ve bugünün oynanmamış durumlarının görsel doğrulaması yapılmadı.
+Güncel kaynakta açılış kurtarması ve takvim onarımı için 36 hedefli test
+yeniden geçti. `app_shell_paid_freeze_recovery_test.dart` içindeki
+“açılış eski ücretli günü kurtarır, bugünü oynanmış saymaz” testi, kurtarılan
+günü ve bugünün kayda eklenmediğini denetledi. Kayıt
+`/tmp/zk-final-calendar-tests.log` dosyasındadır.
+Güncel kaynakla ayrı bir çevrimdışı klavye önizlemesi derlendi. Geçici giriş
+`/tmp/zk_keyboard_preview.dart`, mevcut `family_1` havuzundaki yazılı cevap
+sorusunu açtı. `com.zankurd.keyboardqa` uygulamasında klavye açıkken
+`mêr` yazıldı. Kaydırınca Kontrol et düğmesi görünür kaldı; dokununca cevap
+doğru kabul edildi, klavye kapandı ve Bitir düğmesi göründü.
+[Klavye açık ve kontrol erişilebilir](qa_2026_10_31/quiz_keyboard_scrolled_current.png) ·
+[Cevap işlendi](qa_2026_10_31/quiz_keyboard_checked_current.png).
+Bu kontrol güncel üretim bileşenlerini kullandı. Geçici test girişi canlı
+hesap veya servis başlatmadı. Fiziksel cihaz testleri sonraki aşamaya bırakıldı.
 
 ## Güncel kodu canlı hesaba bağlanmadan açma
 
