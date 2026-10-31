@@ -9,7 +9,12 @@
 /// [totalQuestions] verilirse toplam soru sayısına dahil edilir.
 library;
 
+import 'dart:math';
+
+import '../models/question_metadata.dart';
 import '../models/quiz_question.dart';
+import 'question_content_policy.dart';
+import 'question_set_policy.dart';
 
 enum PlacementLevel {
   destpek,
@@ -72,15 +77,17 @@ class PlacementScoring {
     List<PlacementItem> answers, {
     int? totalQuestions,
   }) {
-    final int total = totalQuestions ?? answers.length;
-    if (answers.isEmpty || total <= 0) {
+    final requestedTotal = totalQuestions ?? answers.length;
+    if (answers.isEmpty || requestedTotal <= 0) {
       return PlacementResult(
         level: PlacementLevel.destpek,
         correctCount: 0,
-        totalCount: total < 0 ? 0 : total,
+        totalCount: max(0, requestedTotal),
         weightedRatio: 0,
       );
     }
+
+    final total = max(requestedTotal, answers.length);
 
     // Zorluğu 1-5 aralığına sıkıştır; bilinmeyen/yanlış değerleri normalize et.
     int clampDifficulty(int d) => d.clamp(1, 5);
@@ -98,9 +105,9 @@ class PlacementScoring {
     }
 
     // Cevaplanmayan sorular ortalama-ağırlıkla olası puana eklenir (yanlış).
-    final int unanswered = (total - answers.length).clamp(0, total);
+    final unanswered = total - answers.length;
     if (unanswered > 0) {
-      final avgWeight = answers.isEmpty ? 1.0 : possible / answers.length;
+      final avgWeight = possible / answers.length;
       possible += avgWeight * unanswered;
     }
 
@@ -123,52 +130,89 @@ class PlacementScoring {
     );
   }
 
-  /// Havuzdan kolay/orta/zor dengeli bir sınav seti seçer.
-  ///
-  /// Deterministiktir (havuz sırasına saygı duyar); kolay(1-2), orta(3),
-  /// zor(4-5) kovalarından eşit paylara yakın çeker. Bir kova yetersizse
-  /// kalanı diğer kovalardan doldurur. Görsel/eksik şıklı sorular elenir.
+  // Ders etiketi olmayan, kökü ve seçenekleriyle dil becerisi ölçtüğü
+  // incelenmiş ek maddeler. Bankanın onayı, zorluğu ve oynanabilirlik
+  // denetimi bunlarda da geçerlidir.
+  static const _additionalLanguageItems = {
+    'edit_ziman_0004', // İzafe ile isim bağlama
+    'edit_ziman_0025', // Belirsizlik eki
+    'edit_ziman_0029', // Yer bildiren yapım eki
+    'edit_ziman_0040', // Örnek cümlede zamanı tanıma
+    'edit_ziman_0049', // Sözcüğü kök ve eke ayırma
+    'edit_ziman_0027', // Geçişli geçmişte fiil uyumu
+    'edit_ziman_0042', // Emir kipini tanıma
+    'edit_ziman_0044', // İzafede cinsiyet ayrımı
+    'ds_ziman_1229', // İki örnekte nesneye göre kişi eki
+    'ds_ziman_1232', // Geçişli/geçişsiz fiillerin önceki geçmiş çekimi
+    'ds_ziman_1234', // Olumsuz geçmişte fiil ve zamir seçimi
+    'ds_ziman_1246', // Yalın ve bükünlü zamirleri eşleme
+    'ds_ziman_1249', // Çevre edatların anlamını ayırt etme
+    'ds_ziman_1280', // Bükünlü işaret zamirleri
+    'ds_ziman_1290', // İsim tamlamasında cinsiyet farkını okuma
+  };
+
+  /// Her sınav için onaylı dil hedeflerini örnekler. Aynı zorlukta
+  /// seçenek varsa önceki sınavdaki kimliği veya soru kökünü tekrarlamaz.
+  /// Küçük havuzlarda önce zorluk dengesini korur, sonra eksikleri doldurur.
   static List<QuizQuestion> selectQuestions(
     List<QuizQuestion> pool, {
     int count = 12,
+    List<QuizQuestion> previous = const [],
+    Random? random,
   }) {
-    final usable = pool
-        .where((q) => q.answers.length >= 2 && q.correctAnswer.isNotEmpty)
-        .toList();
-    if (usable.length <= count) return usable;
+    if (count <= 0) return const [];
+    const contentPolicy = QuestionContentPolicy();
+    final candidates = pool.where((q) {
+      final metadata = q.metadata;
+      return q.category == 'Ziman' &&
+          metadata?.reviewStatus == ReviewStatus.approved &&
+          ((metadata?.learningLessonId?.trim().isNotEmpty ?? false) ||
+              metadata?.productiveRecallEligible == true ||
+              _additionalLanguageItems.contains(q.id)) &&
+          (q.type == QuestionType.multipleChoice ||
+              q.type == QuestionType.trueFalse) &&
+          contentPolicy.isPlayable(q);
+    }).toList()..shuffle(random);
 
-    final easy = usable.where((q) => q.difficulty <= 2).toList();
-    final medium = usable.where((q) => q.difficulty == 3).toList();
-    final hard = usable.where((q) => q.difficulty >= 4).toList();
-
-    final perBucket = (count / 3).ceil();
-    final selected = <QuizQuestion>[];
-    final seen = <String>{};
-
-    void take(List<QuizQuestion> bucket, int n) {
-      for (final q in bucket) {
-        if (selected.length >= count) break;
-        if (n <= 0) break;
-        if (seen.add(q.id)) {
-          selected.add(q);
-          n--;
-        }
+    final previousIds = previous.map((q) => q.id).toSet();
+    final previousPrompts = previous
+        .map((q) => QuestionSetPolicy.normalize(q.prompt))
+        .toSet();
+    final fresh = <QuizQuestion>[];
+    final repeated = <QuizQuestion>[];
+    final ids = <String>{};
+    final prompts = <String>{};
+    for (final q in candidates) {
+      final prompt = QuestionSetPolicy.normalize(q.prompt);
+      if (ids.contains(q.id) || prompts.contains(prompt)) continue;
+      ids.add(q.id);
+      prompts.add(prompt);
+      if (previousIds.contains(q.id) || previousPrompts.contains(prompt)) {
+        repeated.add(q);
+      } else {
+        fresh.add(q);
       }
     }
 
-    take(easy, perBucket);
-    take(medium, perBucket);
-    take(hard, perBucket);
-
-    // Eksik kalırsa (bir kova zayıfsa) kalan havuzdan tamamla.
+    final ordered = [...fresh, ...repeated];
+    final buckets = [
+      ordered.where((q) => q.difficulty <= 2),
+      ordered.where((q) => q.difficulty == 3),
+      ordered.where((q) => q.difficulty >= 4),
+    ];
+    final selected = <QuizQuestion>[
+      for (var i = 0; i < buckets.length; i++)
+        ...buckets[i].take(count ~/ 3 + (i < count % 3 ? 1 : 0)),
+    ];
     if (selected.length < count) {
-      for (final q in usable) {
-        if (selected.length >= count) break;
-        if (seen.add(q.id)) selected.add(q);
-      }
+      final selectedIds = selected.map((q) => q.id).toSet();
+      selected.addAll(
+        ordered
+            .where((q) => !selectedIds.contains(q.id))
+            .take(count - selected.length),
+      );
     }
-
-    return selected.take(count).toList();
+    return selected;
   }
 
   /// Belirlenen seviyeye göre öğrenme yolunda ÖNERİLEN başlangıç düğümünün

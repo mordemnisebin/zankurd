@@ -55,6 +55,8 @@ class LevelPlacementScreen extends StatefulWidget {
 }
 
 class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
+  // Aynı oturumda yeniden giriş, son sınavın köklerini ikinci plana alır.
+  static final _previousExam = Expando<List<QuizQuestion>>();
   late final List<QuizQuestion> _questions;
   final List<PlacementItem> _answers = [];
   int _index = 0;
@@ -67,7 +69,9 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     _questions = PlacementScoring.selectQuestions(
       widget.repository.playableQuestions,
       count: widget.questionCount,
+      previous: _previousExam[widget.repository] ?? const [],
     );
+    _previousExam[widget.repository] = _questions;
   }
 
   @visibleForTesting

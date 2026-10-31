@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -51,30 +52,36 @@ String _dayKey(DateTime day) =>
     '${day.day.toString().padLeft(2, '0')}';
 
 void main() {
-  setUp(() => StreakStore.resetInstance());
+  late MockZanKurdRepository repository;
+
+  setUp(() {
+    repository = MockZanKurdRepository();
+    LocalProgressScope.bind(repository.currentUserId!);
+    StreakStore.resetInstance();
+  });
+  tearDown(LocalProgressScope.debugReset);
 
   testWidgets('kırılacak seride dondurma teklifi görünür ve seriyi korur', (
     tester,
   ) async {
     // Eski bir gün: bugün oynanınca seri kırılacak (current > 0).
     SharedPreferences.setMockInitialValues({
-      'zankurd.streak.current': 3,
-      'zankurd.streak.best': 3,
-      'zankurd.streak.lastDay': '2020-01-01',
+      LocalProgressScope.physical('zankurd.streak.current'): 3,
+      LocalProgressScope.physical('zankurd.streak.best'): 3,
+      LocalProgressScope.physical('zankurd.streak.lastDay'): '2020-01-01',
     });
     StreakStore.resetInstance();
 
-    final repo1 = MockZanKurdRepository();
     // Oda turu gibi tohumla: `room` verilmezse çağrı solo sayılır ve
     // günlük tavanlı küçük ödülü verir (2026-08-10).
-    await repo1.awardQuizCoins(
+    await repository.awardQuizCoins(
       score: 1000,
       correctCount: 10,
       totalQuestions: 10,
       bestStreak: 5,
-      room: repo1.createRoom().copyWith(id: 'seed-room'),
+      room: repository.createRoom().copyWith(id: 'seed-room'),
     );
-    await tester.pumpWidget(wrap(buildScreen(repo1)));
+    await tester.pumpWidget(wrap(buildScreen(repository)));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
@@ -93,23 +100,22 @@ void main() {
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({
-      'zankurd.streak.current': 3,
-      'zankurd.streak.best': 3,
-      'zankurd.streak.lastDay': '2020-01-01',
+      LocalProgressScope.physical('zankurd.streak.current'): 3,
+      LocalProgressScope.physical('zankurd.streak.best'): 3,
+      LocalProgressScope.physical('zankurd.streak.lastDay'): '2020-01-01',
     });
     StreakStore.resetInstance();
 
-    final repo2 = MockZanKurdRepository();
     // Oda turu gibi tohumla: `room` verilmezse çağrı solo sayılır ve
     // günlük tavanlı küçük ödülü verir (2026-08-10).
-    await repo2.awardQuizCoins(
+    await repository.awardQuizCoins(
       score: 1000,
       correctCount: 10,
       totalQuestions: 10,
       bestStreak: 5,
-      room: repo2.createRoom().copyWith(id: 'seed-room'),
+      room: repository.createRoom().copyWith(id: 'seed-room'),
     );
-    await tester.pumpWidget(wrap(buildScreen(repo2)));
+    await tester.pumpWidget(wrap(buildScreen(repository)));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
@@ -125,13 +131,15 @@ void main() {
   testWidgets('seri sağlamsa dondurma teklifi gösterilmez', (tester) async {
     // lastDay bugün: seri kırılmaz, teklif çıkmaz.
     SharedPreferences.setMockInitialValues({
-      'zankurd.streak.current': 2,
-      'zankurd.streak.best': 2,
-      'zankurd.streak.lastDay': _dayKey(DateTime.now()),
+      LocalProgressScope.physical('zankurd.streak.current'): 2,
+      LocalProgressScope.physical('zankurd.streak.best'): 2,
+      LocalProgressScope.physical('zankurd.streak.lastDay'): _dayKey(
+        DateTime.now(),
+      ),
     });
     StreakStore.resetInstance();
 
-    await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
+    await tester.pumpWidget(wrap(buildScreen(repository)));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 

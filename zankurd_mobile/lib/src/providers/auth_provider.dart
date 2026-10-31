@@ -27,6 +27,7 @@ import '../data/story_progress_store.dart';
 import '../data/sync_manager.dart';
 import '../models/async_duel.dart' show isMissingRpcError;
 import '../services/push_tap_router.dart';
+import '../services/push_token_sync.dart';
 import '../services/premium_service.dart';
 import '../services/apple_revocation.dart';
 import '../services/native_auth_service.dart';
@@ -1018,6 +1019,21 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
 
   Future<void> signOut({
     bool discardPendingRewards = false,
+    String? pendingRewardsOwnerId,
+  }) => PushTokenSync.suspendRegistrationsDuring(
+    () => _signOut(
+      discardPendingRewards: discardPendingRewards,
+      pendingRewardsOwnerId: pendingRewardsOwnerId,
+    ),
+    // Silme RPC'si bitmiş ve silinen kullanıcı belirliyse yerel temizliği
+    // artık var olmayan profile ait ağ isteği yüzünden geciktirme.
+    waitForPendingWrites:
+        !discardPendingRewards ||
+        (pendingRewardsOwnerId?.trim().isEmpty ?? true),
+  );
+
+  Future<void> _signOut({
+    required bool discardPendingRewards,
     String? pendingRewardsOwnerId,
   }) async {
     var accountCleanupFailed = false;

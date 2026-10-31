@@ -361,6 +361,7 @@ class _ProfileHeroCard extends StatelessWidget {
       button: true,
       label: Tr.forKu(K.playerTagSemantics, ku, {'tag': label}),
       excludeSemantics: true,
+      onTap: () => _copyPlayerTag(context, label, ku),
       child: GestureDetector(
         key: const ValueKey('profile-title-tag'),
         behavior: HitTestBehavior.opaque,
@@ -452,6 +453,7 @@ class _OnCardLink extends StatelessWidget {
       button: true,
       label: label,
       excludeSemantics: true,
+      onTap: onTap,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
@@ -520,6 +522,7 @@ class _PlayerTagChip extends StatelessWidget {
       button: true,
       label: Tr.forKu(K.playerTagSemantics, ku, {'tag': label}),
       excludeSemantics: true,
+      onTap: () => _copyPlayerTag(context, label, ku),
       child: SahneTappable(
         shape: SahneShape.m,
         color: Colors.transparent,

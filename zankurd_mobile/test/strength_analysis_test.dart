@@ -16,6 +16,29 @@ void main() {
     expect(r.focusCategory, isNull);
   });
 
+  test('hatasız küçük örneklem gelişim alanı sayılmaz', () {
+    for (final correct in [5, 19, 20]) {
+      final r = StrengthAnalysis.analyze(
+        categories: cats,
+        masteryCorrect: {'Ziman': correct},
+        mistakes: const {},
+      );
+      expect(r.insufficientData, correct < 20);
+      expect(r.improvements, isEmpty);
+      expect(r.focusCategory, isNull);
+      expect(r.strengths.length, correct == 20 ? 1 : 0);
+    }
+  });
+
+  test('küçük hatasız kategori gerçek hataların yanına eklenmez', () {
+    final r = StrengthAnalysis.analyze(
+      categories: cats,
+      masteryCorrect: const {'Ziman': 5},
+      mistakes: const {'Dîrok': 3},
+    );
+    expect(r.improvements.map((i) => i.category), ['Dîrok']);
+  });
+
   test('tek kategori yoğun hata → improvements + focus o kategori', () {
     final r = StrengthAnalysis.analyze(
       categories: cats,

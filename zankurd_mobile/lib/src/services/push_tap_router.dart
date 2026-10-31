@@ -13,13 +13,14 @@ import '../utils/error_reporter.dart';
 /// sende" satırıdır. `friend_request` → [friends] (Liderlik sekmesi +
 /// üstüne açılan Arkadaşlar ekranı).
 ///
-/// `room_invite` (bir arkadaş beni odasına çağırdı) → [roomInvite]: tek
-/// bekleyen davet varsa doğrudan odaya katılınır, birden çoksa Ana ekranın
-/// "Odaya davet" kartı açılır.
+/// `room_invite` (bir arkadaş beni odasına çağırdı) → [roomInvite]: bildirim kimlikliyse
+/// yalnız o davet açılır. Kimliksiz eski bildirim Ana ekrana döner.
 ///
 /// [home] yerel bildirimlerden gelir (günlük hatırlatıcı, seri uyarısı):
 /// Öğren sekmesi, günün dersi kartı en üstte.
 enum PushTapTarget { playTab, duelInbox, friends, home, roomInvite }
+
+typedef PushTapIntent = ({PushTapTarget target, String? inviteId});
 
 /// Bildirime dokunan oyuncuyu doğru ekrana yönlendirir.
 ///
@@ -50,8 +51,8 @@ class PushTapRouter {
   /// Bekleyen bildirim hedefi. [AppShell] dinler; kabuk hazır olduğunda
   /// [take] ile tüketir. Kabuk henüz kurulmamışsa (açılış, giriş) hedef
   /// burada bekler.
-  static final ValueNotifier<PushTapTarget?> pending =
-      ValueNotifier<PushTapTarget?>(null);
+  static final ValueNotifier<PushTapIntent?> pending =
+      ValueNotifier<PushTapIntent?>(null);
 
   static bool _firebaseWired = false;
 
@@ -63,22 +64,29 @@ class PushTapRouter {
     final kind = data['kind'];
     final target = targetForKind(kind is String ? kind : null);
     if (target == null) return false;
-    offerTarget(target);
+    final inviteId = data['invite_id'];
+    offerTarget(target, inviteId: inviteId is String ? inviteId.trim() : null);
     return true;
   }
 
   /// Çözülmüş bir hedefi doğrudan bekleyen kanala yazar (yerel bildirim
   /// dokunuşları da buradan geçer).
-  static void offerTarget(PushTapTarget target) {
+  static void offerTarget(PushTapTarget target, {String? inviteId}) {
     // Aynı hedef PENDING'DE dururken yeniden gelirse de dinleyici uyansın
     // diye önce boşaltılır (ValueNotifier aynı değerde bildirim yapmaz) —
     // bkz. `JoinDeepLink.offer`deki aynı desen.
     pending.value = null;
-    pending.value = target;
+    pending.value = (
+      target: target,
+      inviteId:
+          target == PushTapTarget.roomInvite && (inviteId?.isNotEmpty ?? false)
+          ? inviteId
+          : null,
+    );
   }
 
   /// Bekleyen hedefi alır ve kanalı boşaltır.
-  static PushTapTarget? take() {
+  static PushTapIntent? take() {
     final target = pending.value;
     if (target != null) pending.value = null;
     return target;

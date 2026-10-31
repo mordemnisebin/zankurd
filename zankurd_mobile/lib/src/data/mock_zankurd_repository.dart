@@ -565,13 +565,18 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Sunucu dersi slug'ı (`silav-u-nasin`) bir ya da birkaç yerel ders
     // kimliğine açılır; yerel kimlik kendisidir (bkz. LearningLessonAliases).
     final bankIds = LearningLessonAliases.bankIdsFor(learningLessonId);
-    final exact = _playableQuestions
-        .where(
-          (question) =>
-              question.category == category &&
-              bankIds.contains(question.metadata?.learningLessonId),
-        )
-        .toList(growable: false);
+    final exact = <QuizQuestion>[
+      ..._playableQuestions.where(
+        (question) =>
+            question.category == category &&
+            bankIds.contains(question.metadata?.learningLessonId),
+      ),
+      ...LearningAssessmentBank.practiceFor(
+        slug: learningLessonId,
+        bankId: bankIds.first,
+        category: category,
+      ),
+    ];
 
     // Açık ders etiketli sorular önce gelir; eksik kalan yer yalnız aynı
     // dersin yerel, editoryal sözlük çiftlerinden üretilen ölçme sorularıyla
@@ -599,14 +604,23 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // (`_replaceSameTarget`) yalnız [limit] dolgu aday olursa ilk dolgu da
     // aynı selamı sorabiliyor ve `_dropSameTarget` onu geri ekliyordu.
     final fillerLimit = limit * 4;
-    final perBank = [
-      for (final bankId in bankIds)
-        LearningAssessmentBank.questionsFor(
-          lessonId: bankId,
-          category: category,
-          limit: fillerLimit,
-        ),
-    ];
+    final seen = await SeenQuestionStore.load();
+    final perBank = <List<QuizQuestion>>[];
+    for (final bankId in bankIds) {
+      final pool = LearningAssessmentBank.questionsFor(
+        lessonId: bankId,
+        category: category,
+        limit: null,
+      );
+      // Küçük havuzda tur kısalmasın: aynı çiftin ters yönü yalnız farklı
+      // hedefler tükenince kullanılabilecek yedek olarak kalır.
+      final preferred = seen.preferUnseen(pool, fillerLimit);
+      final preferredIds = preferred.map((q) => q.id).toSet();
+      perBank.add([
+        ...preferred,
+        ...pool.where((q) => !preferredIds.contains(q.id)),
+      ]);
+    }
     final fillers = <QuizQuestion>[
       for (var i = 0; i < fillerLimit; i++)
         for (final bank in perBank)
@@ -1145,11 +1159,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<List<RoomInvite>> loadMyRoomInvites({
     bool throwOnError = false,
+    String? inviteId,
   }) async {
     if (throwOnError && loadMyRoomInvitesErrorForTesting != null) {
       throw loadMyRoomInvitesErrorForTesting!;
     }
-    return List.of(_incomingRoomInvites);
+    return _incomingRoomInvites
+        .where((i) => inviteId == null || i.id == inviteId)
+        .toList();
   }
 
   @override
@@ -1491,8 +1508,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<List<QuizQuestion>> loadDailyQuestions({
     int limit = 10,
     bool replay = false,
+    int? maxDifficulty,
   }) async {
-    final playable = _playableQuestions;
+    final pool = _playableQuestions;
+    // İlk turu tam kolay havuzdan seç. Karışık bir günlük örneklem bankada
+    // yeterince kolay soru varken bile bunların çoğunu dışarıda bırakabilir.
+    final playable = maxDifficulty == null
+        ? pool
+        : pool
+              .where((q) => q.difficulty <= maxDifficulty)
+              .toList(growable: false);
     // Tekrar turu (kart "Devam et"/"Tekrar oyna" diyorsa): günün sabit seti
     // zaten oynandı; görülmemişler öne alınır.
     if (replay) {
@@ -2219,6 +2244,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<StreakFreezeChargeResult> spendStreakFreeze({
     required String idempotencyKey,
+    bool allowLegacyFallback = true,
   }) async {
     if (_streakFreezeKeys.contains(idempotencyKey)) {
       return const StreakFreezeChargeResult(

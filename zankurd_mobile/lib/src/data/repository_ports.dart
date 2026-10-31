@@ -29,6 +29,7 @@ abstract interface class SoloQuizPort {
   Future<List<QuizQuestion>> loadDailyQuestions({
     int limit = 10,
     bool replay = false,
+    int? maxDifficulty,
   });
   Future<List<QuizQuestion>> loadDailyEventQuestions({int limit = 10});
   Future<bool> toggleFavoriteQuestion(QuizQuestion question, bool favorite);

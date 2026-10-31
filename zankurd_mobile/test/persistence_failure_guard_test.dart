@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/data/learning_goal_store.dart';
 import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/models/learning_goal.dart';
 import 'package:zankurd_mobile/src/providers/analytics_consent_provider.dart';
+import 'package:zankurd_mobile/src/services/notification_service.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,7 @@ void main() {
     originalStore = SharedPreferencesStorePlatform.instance;
     LocalProgressScope.debugReset();
     LearningGoalStore.resetInstance();
+    NotificationService.resetInstance();
     AnalyticsConsentProvider.isEnabled = false;
   });
 
@@ -25,10 +27,42 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     LocalProgressScope.debugReset();
     LearningGoalStore.resetInstance();
+    NotificationService.resetInstance();
     AnalyticsConsentProvider.isEnabled = false;
   });
 
   for (final throwsError in [false, true]) {
+    for (final initialEnabled in [false, true]) {
+      test(
+        'notification master write failure ($throwsError, $initialEnabled) eski tercihi korur',
+        () async {
+          const key = 'flutter.zankurd.notifications.enabled';
+          final disk = _FailingWriteStore(
+            {key: initialEnabled},
+            key,
+            throwsError,
+          );
+          SharedPreferences.resetStatic();
+          SharedPreferencesStorePlatform.instance = disk;
+          final service = await NotificationService.load();
+
+          await expectLater(
+            service.setEnabled(!initialEnabled),
+            throwsA(anything),
+          );
+          expect(service.enabled, initialEnabled);
+          expect(
+            (await SharedPreferences.getInstance()).getBool(
+              'zankurd.notifications.enabled',
+            ),
+            initialEnabled,
+          );
+          expect(disk.values[key], initialEnabled);
+          NotificationService.resetInstance();
+          expect((await NotificationService.load()).enabled, initialEnabled);
+        },
+      );
+    }
     test(
       'analytics write failure ($throwsError) UI state değiştirmez',
       () async {
@@ -64,6 +98,7 @@ void main() {
         expect(await store.save(LearningGoal.discoverCulture), isFalse);
         expect(store.goal, LearningGoal.learnKurmanci);
         LearningGoalStore.resetInstance();
+        NotificationService.resetInstance();
         expect(
           (await LearningGoalStore.load()).goal,
           LearningGoal.learnKurmanci,

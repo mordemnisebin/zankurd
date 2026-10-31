@@ -897,8 +897,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<List<QuizQuestion>> loadDailyQuestions({
     int limit = 10,
     bool replay = false,
+    int? maxDifficulty,
   }) async {
-    return _offline.loadDailyQuestions(limit: limit, replay: replay);
+    return _offline.loadDailyQuestions(
+      limit: limit,
+      replay: replay,
+      maxDifficulty: maxDifficulty,
+    );
   }
 
   @override
@@ -2327,21 +2332,31 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   ///
   /// Göç (`2026-08-03_streak_freeze_idempotency.sql`) henüz uygulanmamış
   /// olabilir; o durumda PostgREST fonksiyonu bulamaz (`PGRST202`/42883) ve
-  /// eski `spend_coins` yoluna düşülür. Düşülen yol idempotent OLMADIĞI
+  /// [allowLegacyFallback] açıksa eski `spend_coins` yoluna düşülür.
+  /// Düşülen yol idempotent OLMADIĞI
   /// için sonuçta `idempotent: false` döner ve çağıran belirsiz kalan bir
   /// tahsilatı tekrarlamaz. Böylece derleme, göçün önünde ya da ardında
   /// yayınlansa da çift çekim riski artmaz.
   @override
   Future<StreakFreezeChargeResult> spendStreakFreeze({
     required String idempotencyKey,
+    bool allowLegacyFallback = true,
   }) async {
+    String? expectedOwnerId;
     try {
-      final _ = client.auth.currentUser ?? await signInAnonymously();
+      final user = client.auth.currentUser ?? await signInAnonymously();
+      expectedOwnerId = user.id;
       await ensureProfile();
+      if (currentUserId != expectedOwnerId) {
+        throw StateError('Streak freeze owner changed before RPC.');
+      }
       final response = await client.rpc(
         'spend_streak_freeze',
         params: {'p_idempotency_key': idempotencyKey},
       );
+      if (currentUserId != expectedOwnerId) {
+        throw StateError('Streak freeze owner changed during RPC.');
+      }
       if (response is Map<String, dynamic>) {
         if (response['success'] == true) {
           return StreakFreezeChargeResult(
@@ -2361,7 +2376,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         idempotent: true,
       );
     } catch (error, stack) {
-      if (_isMissingFunction(error)) {
+      if (_isMissingFunction(error) &&
+          allowLegacyFallback &&
+          expectedOwnerId != null &&
+          currentUserId == expectedOwnerId) {
         // Göç uygulanmamış: eski, idempotent OLMAYAN yol.
         final ok = await spendCoins(50, 'streak_freeze');
         return StreakFreezeChargeResult(
@@ -4462,11 +4480,28 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<List<RoomInvite>> loadMyRoomInvites({
     bool throwOnError = false,
+    String? inviteId,
   }) async {
     if (_roomInviteRpcSupported == false) return const [];
     if (client.auth.currentUser == null) return const [];
     try {
-      final res = await client.rpc<List<dynamic>>('list_my_room_invites');
+      List<dynamic> res;
+      if (inviteId != null) {
+        res = await client.rpc<List<dynamic>>(
+          'list_my_room_invites',
+          params: {'p_invite_id': inviteId},
+        );
+      } else {
+        try {
+          res = await client.rpc<List<dynamic>>('list_my_room_invites_v2');
+        } on PostgrestException catch (error, stack) {
+          if (!isMissingRpcError(error)) {
+            _recordError(error, stack, reason: 'loadMyRoomInvites v2 failed');
+            Error.throwWithStackTrace(error, stack);
+          }
+          res = await client.rpc<List<dynamic>>('list_my_room_invites');
+        }
+      }
       _roomInviteRpcSupported = true;
       final invites = [
         for (final row in res)
@@ -4489,11 +4524,16 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
                   playerCount: i.playerCount,
                   maxPlayers: i.maxPlayers,
                   createdAt: i.createdAt,
+                  entryFee: i.entryFee,
+                  questionCount: i.questionCount,
+                  secondsPerQuestion: i.secondsPerQuestion,
                   inviterProfile: profiles[i.inviterId],
                 ),
       ];
     } catch (error, stack) {
-      if (isMissingRpcError(error)) _roomInviteRpcSupported = false;
+      if (inviteId == null && isMissingRpcError(error)) {
+        _roomInviteRpcSupported = false;
+      }
       _recordError(error, stack, reason: 'loadMyRoomInvites failed');
       if (throwOnError) rethrow;
       return const [];

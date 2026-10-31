@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
+import 'paid_freeze_intent.dart';
 
 /// Sonuç teslimatının kalıcı aşamaları.
 ///
@@ -32,6 +33,10 @@ enum QuizResultReceiptStage {
   /// her çağrı yeni bir `-50` satırı yazar). Kesintiden sonra ileri
   /// çözülür — coin bir daha harcanmaz.
   freezeApplying,
+
+  /// Yalnız idempotent RPC kullanıldı; aynı anahtarla güvenle uzlaştırılır.
+  /// Eski `freezeApplying` kayıtları bu güvenceye sahip değildir.
+  freezeChargePending,
 
   /// Dondurma uygulandı.
   freezeApplied,
@@ -79,9 +84,14 @@ enum QuizResultProgressReceiptOutcome {
 
 /// Sonuç teslimatının kalıcı durumu.
 class QuizResultReceipt {
-  const QuizResultReceipt({required this.stage, this.freezeRequested = false});
+  const QuizResultReceipt({
+    required this.stage,
+    this.freezeRequested = false,
+    this.paidFreezeIntent,
+  });
 
   final QuizResultReceiptStage stage;
+  final PaidFreezeIntent? paidFreezeIntent;
 
   /// Kullanıcı dondurmayı seçti mi. Karar, uygulanmadan ÖNCE yazılır ki
   /// coin harcama ile kararın kendisi aynı kesintide birlikte kaybolmasın.
@@ -90,7 +100,9 @@ class QuizResultReceipt {
   bool get isTerminal => stage == QuizResultReceiptStage.completed;
 
   Map<String, Object?> toJson() => {
-    'v': 2,
+    'v': paidFreezeIntent == null ? 2 : 3,
+    if (paidFreezeIntent != null)
+      'paidFreezeIntent': paidFreezeIntent!.toJson(),
     'stage': stage.name,
     if (freezeRequested) 'freeze': true,
   };
@@ -135,6 +147,9 @@ class QuizResultReceipt {
     return QuizResultReceipt(
       stage: stage,
       freezeRequested: decoded['freeze'] == true,
+      paidFreezeIntent: decoded['v'] == 3
+          ? PaidFreezeIntent.decode(decoded['paidFreezeIntent'])
+          : null,
     );
   }
 }
@@ -204,6 +219,33 @@ class QuizResultProgressReceiptStore {
     return QuizResultReceipt.decode(_preferences.getString(key));
   }
 
+  /// Yalnız doğrulanmış v3, onaylı ve bu sahibin solo tahsilatları.
+  Future<List<PaidFreezeIntent>> pendingSoloIntents(String userId) async {
+    await _preferences.reload();
+    final prefix = '$_keyPrefix${userId.trim()}:solo:';
+    final intents = <PaidFreezeIntent>[];
+    for (final key in _preferences.getKeys().where(
+      (key) => key.startsWith(prefix),
+    )) {
+      try {
+        final receipt = QuizResultReceipt.decode(_preferences.getString(key));
+        final intent = receipt?.paidFreezeIntent;
+        if (receipt?.stage == QuizResultReceiptStage.freezeChargePending &&
+            receipt?.freezeRequested == true &&
+            intent != null &&
+            intent.ownerId == userId &&
+            intent.roundId.startsWith('solo:') &&
+            intent.roundId.length > 5 &&
+            intent.idempotencyKey == key) {
+          intents.add(intent);
+        }
+      } on FormatException {
+        // Tarihi/kimliği bilinmeyen eski veya bozuk kayıt tahsil edilmez.
+      }
+    }
+    return intents;
+  }
+
   /// Durumu ilerletir.
   Future<void> write({
     required String userId,
@@ -249,6 +291,8 @@ class QuizResultProgressReceiptStore {
 
     final receipt = QuizResultReceipt.decode(_preferences.getString(key));
     switch (receipt?.stage) {
+      case QuizResultReceiptStage.freezeChargePending:
+        throw StateError('Streak freeze charge is still pending.');
       case QuizResultReceiptStage.completed:
       case QuizResultReceiptStage.progressApplied:
       case QuizResultReceiptStage.acknowledgementPending:

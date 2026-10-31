@@ -12,9 +12,14 @@ void main() {
     expect(sql, contains('revoke select (fcm_token)'));
 
     final worker = File('tool/send_push_outbox.py').readAsStringSync();
-    expect(worker, contains('claim_push_outbox'));
+    expect(worker, contains('claim_push_outbox_v2'));
+    expect(worker, contains('finish_push_outbox'));
     expect(worker, contains('GOOGLE_APPLICATION_CREDENTIALS'));
-    expect(worker, contains('Sır yoksa çıkış kodu 2'));
+    expect(worker, contains('def _require(name: str) -> str:'));
+    expect(
+      worker,
+      contains('raise SystemExit(f"2: gerekli ortam değişkeni eksik: {name}")'),
+    );
   });
 
   test('iOS Debug development, Release/Profile production APNs kullanır', () {

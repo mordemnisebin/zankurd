@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -5,19 +7,24 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
+import 'package:zankurd_mobile/src/services/foreground_push_center.dart';
+import 'package:zankurd_mobile/src/services/push_messaging_gateway.dart';
 
 /// Arkadaş listesini kaç kez okuduğunu sayan depo.
 class _CountingFriendsRepository extends MockZanKurdRepository {
   int loadFriendsCalls = 0;
+  Completer<List<Friend>>? blockedFriends;
+  List<FriendRequest> requests = [];
 
   @override
   Future<List<Friend>> loadFriends() async {
     loadFriendsCalls++;
-    return const [];
+    return blockedFriends?.future ?? <Friend>[];
   }
 
   @override
-  Future<List<FriendRequest>> loadPendingFriendRequests() async => const [];
+  Future<List<FriendRequest>> loadPendingFriendRequests() async =>
+      List.of(requests);
 }
 
 /// Arkadaşlar ekranının 20 sn'lik yoklaması uygulama arka plandayken
@@ -37,6 +44,86 @@ void _toForeground(WidgetTester tester) => tester.binding
   ..handleAppLifecycleStateChanged(AppLifecycleState.resumed);
 
 void main() {
+  tearDown(ForegroundPushCenter.resetForTest);
+
+  testWidgets('sorgu sürerken gelen istekler tek ek yenilemede görünür', (
+    tester,
+  ) async {
+    final repository = _CountingFriendsRepository();
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => LanguageProvider(initialLang: 'tr'),
+        child: MaterialApp(home: FriendsScreen(repository: repository)),
+      ),
+    );
+    await tester.pump();
+    final initial = repository.loadFriendsCalls;
+    final blocked = repository.blockedFriends = Completer<List<Friend>>();
+    const push = ForegroundPush(data: {'kind': 'friend_request'});
+    ForegroundPushCenter.emit(push);
+    await tester.pump();
+    repository.requests = [
+      FriendRequest(
+        id: 'new-request',
+        fromUserId: 'new-friend',
+        fromUserName: 'Dilan',
+        toUserId: 'me',
+        createdAt: DateTime(2026, 10, 31),
+      ),
+    ];
+    ForegroundPushCenter.emit(push);
+    ForegroundPushCenter.emit(push);
+    await tester.pump();
+    expect(repository.loadFriendsCalls, initial + 1);
+    repository.blockedFriends = null;
+    blocked.complete([]);
+    await tester.pump();
+    await tester.pump();
+    expect(repository.loadFriendsCalls, initial + 2);
+    expect(find.text('Dilan'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('arkadaş push isteği açık listeyi polling beklemeden yeniler', (
+    tester,
+  ) async {
+    final repository = _CountingFriendsRepository();
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => LanguageProvider(initialLang: 'tr'),
+        child: MaterialApp(home: FriendsScreen(repository: repository)),
+      ),
+    );
+    await tester.pump();
+    final initial = repository.loadFriendsCalls;
+    ForegroundPushCenter.emit(
+      const ForegroundPush(data: {'kind': 'friend_request'}),
+    );
+    await tester.pump();
+    expect(repository.loadFriendsCalls, initial + 1);
+    ForegroundPushCenter.emit(
+      const ForegroundPush(data: {'kind': 'room_invite'}),
+    );
+    await tester.pump();
+    expect(repository.loadFriendsCalls, initial + 1);
+    _toBackground(tester);
+    ForegroundPushCenter.emit(
+      const ForegroundPush(data: {'kind': 'friend_accept'}),
+    );
+    await tester.pump();
+    expect(repository.loadFriendsCalls, initial + 1);
+    _toForeground(tester);
+    await tester.pump();
+    expect(repository.loadFriendsCalls, initial + 2);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump();
+    ForegroundPushCenter.emit(
+      const ForegroundPush(data: {'kind': 'friend_request'}),
+    );
+    await tester.pump();
+    expect(repository.loadFriendsCalls, initial + 2);
+  });
+
   testWidgets('arka planda yoklama durur, dönüşte bir kez tazelenir', (
     tester,
   ) async {

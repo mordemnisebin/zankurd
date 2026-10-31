@@ -7,7 +7,15 @@ import 'package:flutter/foundation.dart';
 /// Uygulama AÇIKKEN gelen bir push iletisi (FCM `RemoteMessage`ın uygulamanın
 /// ihtiyaç duyduğu kısmı).
 class ForegroundPush {
-  const ForegroundPush({this.title, this.body, this.data = const {}});
+  const ForegroundPush({
+    this.title,
+    this.body,
+    this.messageId,
+    this.data = const {},
+  });
+
+  /// Kuyruk kimliği bulunmayan eski sunucu iletileri için FCM kimliği.
+  final String? messageId;
 
   final String? title;
   final String? body;
@@ -78,6 +86,7 @@ class FirebasePushMessagingGateway implements PushMessagingGateway {
     if (!isAvailable) return const Stream.empty();
     return FirebaseMessaging.onMessage.map(
       (message) => ForegroundPush(
+        messageId: message.messageId,
         title: message.notification?.title,
         body: message.notification?.body,
         data: message.data,

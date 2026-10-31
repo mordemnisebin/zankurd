@@ -408,6 +408,7 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   @override
   Future<StreakFreezeChargeResult> spendStreakFreeze({
     required String idempotencyKey,
+    bool allowLegacyFallback = true,
   }) async {
     return const StreakFreezeChargeResult(
       outcome: StreakFreezeChargeOutcome.failed,

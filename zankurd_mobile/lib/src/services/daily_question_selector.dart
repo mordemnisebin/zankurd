@@ -18,37 +18,22 @@ List<QuizQuestion> selectDailyQuestionsForGoal({
 }) {
   if (limit <= 0 || candidates.isEmpty) return const [];
 
-  // İlk oturum (sıfırdan başlayan kullanıcı): zorluk üst sınırı. Seçim bütün
-  // zorluklardan yapıldığından ilk soruda ileri bilgiyle karşılaşılabiliyordu
-  // (Codex denetimi 2026-10-29). Sınırı aşanlar yalnız yeterli kolay soru
-  // yoksa, KOLAYDAN ZORA sıralı olarak turu doldurur.
-  if (maxDifficulty != null) {
-    final easy = candidates
-        .where((question) => question.difficulty <= maxDifficulty)
-        .toList(growable: false);
-    final hard =
-        candidates
-            .where((question) => question.difficulty > maxDifficulty)
-            .toList()
-          ..sort((a, b) => a.difficulty.compareTo(b.difficulty));
-    return selectDailyQuestionsForGoal(
-      candidates: [...easy, ...hard],
-      goal: goal,
-      limit: limit,
-    );
-  }
+  // Onay ve hedef önceliği yalnız izin verilen zorluk bandında uygulanır.
+  final eligible = maxDifficulty == null
+      ? candidates
+      : candidates.where((q) => q.difficulty <= maxDifficulty).toList();
 
   // Öğrenme yolunun kaynağı doğrulanmış içerikten oluşsun. İlk sürümlerde
   // metadata taşımayan eski bankalar bulunduğu için onaylı havuz günlük
   // turu doldurmaya yetmiyorsa deterministik aday sırasına geri dönülür;
   // bu, kullanıcıyı boş quiz ile bırakmadan editoryal borcu görünür tutar.
   const approvedPolicy = ContentQualityPolicy(requireApproved: true);
-  final approvedCandidates = candidates
+  final approvedCandidates = eligible
       .where((question) => approvedPolicy.isEligible(question.metadata))
       .toList(growable: false);
   final source = approvedCandidates.length >= limit
       ? approvedCandidates
-      : candidates;
+      : eligible;
 
   final prioritized = <QuizQuestion>[];
   final fallback = <QuizQuestion>[];

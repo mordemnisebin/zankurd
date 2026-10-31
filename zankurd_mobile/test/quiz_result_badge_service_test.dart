@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/data/mastery_store.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
+import 'package:zankurd_mobile/src/data/reward_progress_snapshot.dart';
 import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
@@ -69,7 +70,9 @@ void main() {
           room: _room,
           score: 100,
           correctCount: correct,
-          wrongCount: records.length - correct,
+          wrongCount: records
+              .where((r) => !r.isUnanswered && !r.isCorrect)
+              .length,
           totalQuestions: records.length,
           bestStreak: 1,
           answerRecords: records,
@@ -81,6 +84,36 @@ void main() {
     await tester.pumpAndSettle();
     return BadgeService.load();
   }
+
+  testWidgets('cevaplanan üç soru 100, 500 ve 1000 ödüllerine üç ekler', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.achievements.answeredQuestions': 30,
+    });
+    final badges = await playRound(
+      tester,
+      records: [
+        record(1),
+        record(2),
+        record(3, selected: 'B'),
+        for (var i = 4; i <= 10; i++) record(i, selected: null),
+      ],
+    );
+    AchievementStore.resetInstance();
+    final store = await AchievementStore.load();
+    final rewards = await RewardProgressSnapshot.load(
+      achievements: store,
+      badges: badges,
+    );
+    for (final id in [
+      AchievementIds.hundredQuestions,
+      'questions_500',
+      'questions_1000',
+    ]) {
+      expect(rewards.progress[id]?.current, 33, reason: id);
+    }
+  });
 
   testWidgets('mükemmel 5 soruluk tur perfect_game ve speed_demon açar', (
     tester,

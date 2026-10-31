@@ -389,8 +389,24 @@ class NotificationService {
   }
 
   Future<void> setEnabled(bool value) async {
+    final preferences = _preferences;
+    if (preferences == null) {
+      throw StateError('Notification preferences are unavailable.');
+    }
+    try {
+      final saved = await preferences.setBool(_enabledKey, value);
+      if (!saved) {
+        throw StateError('Notification preference was not persisted.');
+      }
+    } catch (_) {
+      // SharedPreferences updates its cache before the platform write finishes.
+      // A failed write must not leave a value that was never saved in memory.
+      try {
+        await preferences.reload();
+      } catch (_) {}
+      rethrow;
+    }
     _enabled = value;
-    await _preferences?.setBool(_enabledKey, value);
     if (value) {
       await _requestPermissions();
       if (dailyOn) await _scheduleDaily();

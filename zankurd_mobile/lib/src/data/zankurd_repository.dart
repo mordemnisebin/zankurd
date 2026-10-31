@@ -333,6 +333,7 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   Future<List<QuizQuestion>> loadDailyQuestions({
     int limit = 10,
     bool replay = false,
+    int? maxDifficulty,
   });
 
   /// "Günün etkinliği": günün dersinden ayrı tohum, onun setini dışlar.
@@ -503,7 +504,11 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   ///
   /// [throwOnError] true ise ağ/RPC hatası boş listeye çevrilmez, fırlatılır:
   /// push dokunuşu "hiç davet yok" ile "yüklenemedi"yi ayırmak zorundadır.
-  Future<List<RoomInvite>> loadMyRoomInvites({bool throwOnError = false});
+  /// [inviteId] verilirse yalnız o davet sorgulanır (ilk on sınırından bağımsız).
+  Future<List<RoomInvite>> loadMyRoomInvites({
+    bool throwOnError = false,
+    String? inviteId,
+  });
 
   /// Daveti reddeder ya da kabul eder. Kabulde odanın kodunu döner; istemci
   /// onu mevcut `joinOnlineRoom` yoluna verir. Reddette `null`. Süresi
@@ -593,8 +598,10 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// bildirir. Cevabı kaybolan bir istek bu sayede güvenle tekrarlanabilir
   /// — düz [spendCoins] ile bu mümkün değildir, çünkü `streak_freeze`
   /// sunucuda dedup anahtarı taşımaz ve her çağrı yeni bir satır yazar.
+  /// Yeniden denenebilir akışlar [allowLegacyFallback] değerini false tutar.
   Future<StreakFreezeChargeResult> spendStreakFreeze({
     required String idempotencyKey,
+    bool allowLegacyFallback = true,
   });
 
   /// Seri onarımını IDEMPOTENT biçimde işler: ay ([monthKey], `yyyy-MM`) ve

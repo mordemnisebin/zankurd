@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +10,7 @@ import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/quiz_result_progress_receipt_store.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
+import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
@@ -28,6 +31,7 @@ import 'support/widget_test_helpers.dart';
 void main() {
   const roomId = 'room-freeze';
   const userId = 'user-freeze';
+  tearDown(LocalProgressScope.debugReset);
 
   /// Dün oynanmış ve bugün oynanmamış bir seri: `willBreakOnPlay()` true
   /// döner, yani dondurma teklifi tam olarak bu kurulumda çıkar.
@@ -46,7 +50,15 @@ void main() {
   Future<void> reset(Map<String, Object> values) async {
     QuizResultProgressReceiptStore.debugResetInFlight();
     SharedPreferences.resetStatic();
-    SharedPreferences.setMockInitialValues(values);
+    LocalProgressScope.bind(userId);
+    SharedPreferences.setMockInitialValues({
+      for (final entry in values.entries)
+        (entry.key.startsWith('zankurd.streak.') ||
+                    entry.key.startsWith('zankurd.xp.')
+                ? LocalProgressScope.physicalFor(userId, entry.key)
+                : entry.key):
+            entry.value,
+    });
     AchievementStore.resetInstance();
     DailyMissionStore.resetInstance();
     MasteryStore.resetInstance();
@@ -59,12 +71,22 @@ void main() {
     WidgetTester tester,
     _FreezeRepository repository, {
     QuizResultProgressReceiptStore? stages,
+    bool solo = false,
+    String? roundId,
   }) {
     return tester.pumpWidget(
       testShell(
         child: QuizResultScreen(
           repository: repository,
-          room: _room,
+          room: solo
+              ? const GameRoom(
+                  name: 'Solo',
+                  code: '',
+                  category: 'Ziman',
+                  players: [],
+                  status: RoomStatus.finished,
+                )
+              : _room,
           score: 60,
           correctCount: 1,
           wrongCount: 0,
@@ -72,12 +94,129 @@ void main() {
           bestStreak: 1,
           answerRecords: const [],
           coinsAwarded: 10,
-          resultOwnerUserId: userId,
-          rewardSettlementState: QuizRewardSettlementState.claimed,
+          resultOwnerUserId: solo ? null : userId,
+          rewardSettlementState: solo
+              ? null
+              : QuizRewardSettlementState.claimed,
+          roundId: roundId,
           receiptStages: stages,
         ),
       ),
     );
+  }
+
+  testWidgets('solo koruma boş olmayan tur kimliğiyle seriyi korur', (
+    tester,
+  ) async {
+    await reset(breakingStreak());
+    final repository = _FreezeRepository(balance: 500);
+    await pump(tester, repository, solo: true, roundId: 'solo-round-1');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Koru (50)'));
+    await tester.pumpAndSettle();
+
+    expect(repository.keysSeen.single, contains('solo-round-1'));
+    expect(repository.keysSeen.single.trim(), isNotEmpty);
+    expect((await StreakStore.load()).effectiveStreak(), 8);
+  });
+
+  testWidgets('tahsilat yanıtı kaybolunca aynı anahtarla korumayı tamamlar', (
+    tester,
+  ) async {
+    await reset(breakingStreak());
+    final repository = _FreezeRepository(balance: 500, loseFirstReply: true);
+    await pump(tester, repository);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Koru (50)'));
+    await tester.pumpAndSettle();
+
+    expect(repository.charged.length, 1);
+    expect(repository.keysSeen, hasLength(2));
+    expect(repository.keysSeen.toSet(), hasLength(1));
+    expect((await StreakStore.load()).effectiveStreak(), 8);
+    expect(repository.ackCalls, 1);
+  });
+
+  testWidgets('belirsiz tahsilat kalıcı bekler ve yeniden açılışta çözülür', (
+    tester,
+  ) async {
+    final initial = breakingStreak();
+    await reset(initial);
+    final repository = _FreezeRepository(balance: 500, loseEveryReply: true);
+    final stages = QuizResultProgressReceiptStore(
+      await SharedPreferences.getInstance(),
+    );
+    await pump(tester, repository, stages: stages);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Koru (50)'));
+    await tester.pumpAndSettle();
+
+    expect(repository.spendCalls, 2, reason: 'otomatik deneme sınırlıdır');
+    expect(repository.ackCalls, 0);
+    expect(
+      (await StreakStore.load()).lastDay,
+      initial['zankurd.streak.lastDay'],
+    );
+    expect(
+      (await stages.read(userId: userId, roomId: roomId))!.stage.name,
+      'freezeChargePending',
+    );
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    repository.loseEveryReply = false;
+    StreakStore.resetInstance();
+    await pump(tester, repository, stages: stages);
+    await tester.pumpAndSettle();
+
+    expect(repository.charged.length, 1);
+    expect(repository.keysSeen.toSet(), hasLength(1));
+    expect((await StreakStore.load()).effectiveStreak(), 8);
+    expect(repository.ackCalls, 1);
+  });
+
+  for (final outcome in [
+    StreakFreezeChargeOutcome.failed,
+    StreakFreezeChargeOutcome.charged,
+  ]) {
+    testWidgets('hesap değişince bekleyen $outcome başka hesaba uygulanmaz', (
+      tester,
+    ) async {
+      final initial = breakingStreak();
+      await reset(initial);
+      final gate = Completer<StreakFreezeChargeResult>();
+      final repository = _FreezeRepository(balance: 500, firstReply: gate);
+      await pump(tester, repository);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Koru (50)'));
+      await tester.pump();
+      expect(repository.spendCalls, 1);
+      repository.ownerId = 'user-b';
+      LocalProgressScope.bind('user-b');
+      gate.complete(
+        StreakFreezeChargeResult(outcome: outcome, idempotent: true),
+      );
+      await tester.pumpAndSettle();
+
+      expect(repository.spendCalls, 1);
+      expect(repository.ackCalls, 0);
+      final preferences = await SharedPreferences.getInstance();
+      expect(
+        preferences.getInt('zankurd.scope.user-b.zankurd.streak.current'),
+        isNull,
+      );
+      expect(
+        preferences.getString(
+          LocalProgressScope.physicalFor(userId, 'zankurd.streak.lastDay'),
+        ),
+        initial['zankurd.streak.lastDay'],
+      );
+      expect(
+        (await QuizResultProgressReceiptStore(
+          preferences,
+        ).read(userId: userId, roomId: roomId))!.stage.name,
+        'freezeChargePending',
+      );
+    });
   }
 
   // ── 7. Kullanıcı dondurma kullanmadan devam ediyor ─────────────────
@@ -117,7 +256,9 @@ void main() {
   });
 
   // ── 9. Coin harcama hatası ─────────────────────────────────────────
-  testWidgets('harcama hatası ilerlemeyi düşürmez', (tester) async {
+  testWidgets('belirsiz harcama seriyi kırmadan yeniden denenebilir kalır', (
+    tester,
+  ) async {
     await reset(breakingStreak());
     final repository = _FreezeRepository(balance: 500, spendThrows: true);
     await pump(tester, repository);
@@ -126,12 +267,13 @@ void main() {
     await tester.tap(find.text('Koru (50)'));
     await tester.pumpAndSettle();
 
-    expect(repository.spendCalls, 1);
-    // Dondurma başarısız oldu ama tur boşa gitmedi: ekran ayakta ve
-    // ilerleme yazıldı.
+    expect(repository.spendCalls, 2);
     expect(find.byType(QuizResultScreen), findsOneWidget);
-    final preferences = await SharedPreferences.getInstance();
-    expect((preferences.getInt('zankurd.xp.total') ?? 0) > 0, isTrue);
+    expect(repository.ackCalls, 0);
+    final receipt = await QuizResultProgressReceiptStore(
+      await SharedPreferences.getInstance(),
+    ).read(userId: userId, roomId: roomId);
+    expect(receipt!.stage.name, 'freezeChargePending');
   });
 
   // ── Coin tek-seferliği: belirsiz harcama tekrar denenmez ───────────
@@ -197,8 +339,21 @@ void main() {
     expect(find.byType(AlertDialog), findsNothing);
     expect(repository.spendCalls, 0);
     final preferences = await SharedPreferences.getInstance();
-    expect(preferences.getInt('zankurd.streak.current') ?? 0, greaterThan(0));
-    expect((preferences.getInt('zankurd.xp.total') ?? 0) > 0, isTrue);
+    expect(
+      preferences.getInt(
+        LocalProgressScope.physicalFor(userId, 'zankurd.streak.current'),
+      ),
+      1,
+    );
+    expect(preferences.getInt('zankurd.streak.current'), isNull);
+    expect(
+      (preferences.getInt(
+                LocalProgressScope.physicalFor(userId, 'zankurd.xp.total'),
+              ) ??
+              0) >
+          0,
+      isTrue,
+    );
   });
 
   // ── Tahsilat, makbuzla AYNI degismez kimlikten turer ───────────────
@@ -262,18 +417,25 @@ class _FreezeRepository extends MockZanKurdRepository {
     required this.balance,
     this.spendThrows = false,
     this.balanceThrows = false,
+    this.loseFirstReply = false,
+    this.loseEveryReply = false,
+    this.firstReply,
   });
 
   final int balance;
+  final Completer<StreakFreezeChargeResult>? firstReply;
+  String ownerId = 'user-freeze';
   final bool spendThrows;
   final bool balanceThrows;
+  final bool loseFirstReply;
+  bool loseEveryReply;
   int spendCalls = 0;
   int ackCalls = 0;
   final List<String> keysSeen = [];
   final Set<String> charged = {};
 
   @override
-  String? get currentUserId => 'user-freeze';
+  String? get currentUserId => ownerId;
 
   @override
   Future<int> loadCoinBalance() async {
@@ -284,10 +446,25 @@ class _FreezeRepository extends MockZanKurdRepository {
   @override
   Future<StreakFreezeChargeResult> spendStreakFreeze({
     required String idempotencyKey,
+    bool allowLegacyFallback = true,
   }) async {
     spendCalls++;
     keysSeen.add(idempotencyKey);
+    if (spendCalls == 1 && firstReply != null) return firstReply!.future;
+    if (idempotencyKey.trim().isEmpty) {
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.failed,
+        idempotent: true,
+      );
+    }
     if (spendThrows) throw StateError('injected: spend failed');
+    if (loseEveryReply) {
+      charged.add(idempotencyKey);
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.failed,
+        idempotent: true,
+      );
+    }
     if (charged.contains(idempotencyKey)) {
       return const StreakFreezeChargeResult(
         outcome: StreakFreezeChargeOutcome.alreadyCharged,
@@ -295,6 +472,12 @@ class _FreezeRepository extends MockZanKurdRepository {
       );
     }
     charged.add(idempotencyKey);
+    if (loseFirstReply && spendCalls == 1) {
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.failed,
+        idempotent: true,
+      );
+    }
     return const StreakFreezeChargeResult(
       outcome: StreakFreezeChargeOutcome.charged,
       idempotent: true,

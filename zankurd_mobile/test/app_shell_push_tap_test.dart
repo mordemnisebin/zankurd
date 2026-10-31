@@ -31,6 +31,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/models/room_invite.dart';
+import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_inbox.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
@@ -173,7 +174,7 @@ void main() {
 
       expect(find.text('maç sürüyor'), findsOneWidget);
       expect(find.byType(FriendsScreen), findsNothing);
-      expect(PushTapRouter.pending.value, PushTapTarget.friends);
+      expect(PushTapRouter.pending.value?.target, PushTapTarget.friends);
 
       navigator.pop();
       await tester.pumpAndSettle();
@@ -188,11 +189,8 @@ void main() {
     expect(PushTapRouter.pending.value, isNull);
   });
 
-  // Codex incelemesi 2026-10-19 (room_invite push dokunuşu):
-  //  1. loadMyRoomInvites ağ hatasını boş listeye çeviriyordu; dokunuş
-  //     sessizce Ana ekrana düşüyordu. Artık hata görünür olmalı.
-  //  2. Her RoomInviteException "süresi doldu" gösteriyordu; oda dolu ya da
-  //     bilinmeyen hata yanlış kesinlik taşırdı.
+  // Kimliksiz eski bir bildirim, sonradan gelen farklı daveti kabul edemez.
+  // Davet listesi yenilenir; katılım kararı karttan açıkça verilir.
   Future<void> tapRoomInvite(
     WidgetTester tester,
     MockZanKurdRepository repository,
@@ -210,6 +208,98 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  testWidgets('soğuk açılışta en yeni yerine dokunulan daveti gösterir', (
+    tester,
+  ) async {
+    final repository = freshMockRepository()
+      ..seedRoomInviteForTesting(_invite(id: 'other', name: 'Şîlan'))
+      ..seedRoomInviteForTesting(_invite());
+    PushTapRouter.offer({'kind': 'room_invite', 'invite_id': 'inv1'});
+    await tester.pumpWidget(
+      testShell(
+        child: AppShell(
+          repository: repository,
+          connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Rojda'), findsOneWidget);
+    expect(find.textContaining('Şîlan'), findsNothing);
+    expect(await repository.loadMyRoomInvites(), hasLength(2));
+    await tester.tap(find.byKey(const ValueKey('room-invite-decline')));
+    await tester.pumpAndSettle();
+    expect((await repository.loadMyRoomInvites()).single.id, 'other');
+    expect(
+      find.text('Bu davetin süresi doldu ya da oda kapandı.'),
+      findsNothing,
+    );
+  });
+
+  testWidgets(
+    'kimlikli bildirim çevrimdışı bekler ve bağlantı dönünce açılır',
+    (tester) async {
+      final repository = freshMockRepository()
+        ..seedRoomInviteForTesting(_invite(id: 'other', name: 'Şîlan'))
+        ..seedRoomInviteForTesting(_invite());
+      final availability = RemoteAvailability(reachable: false);
+      addTearDown(availability.dispose);
+      PushTapRouter.offer({'kind': 'room_invite', 'invite_id': 'inv1'});
+      await tester.pumpWidget(
+        testShell(
+          remoteAvailability: availability,
+          child: AppShell(
+            repository: repository,
+            connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(PushTapRouter.pending.value?.inviteId, 'inv1');
+      availability.update(true);
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Rojda'), findsOneWidget);
+      expect(find.textContaining('Şîlan'), findsNothing);
+      expect(PushTapRouter.pending.value, isNull);
+    },
+  );
+
+  testWidgets('üst rota kapanınca eski davetin yerine başka davet açılmaz', (
+    tester,
+  ) async {
+    final repository = freshMockRepository()
+      ..seedRoomInviteForTesting(_invite());
+    await tester.pumpWidget(
+      testShell(
+        child: AppShell(
+          repository: repository,
+          connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final nav = Navigator.of(tester.element(find.byType(AppShell)));
+    unawaited(
+      nav.push(
+        MaterialPageRoute<void>(
+          builder: (_) => const Scaffold(body: Text('maç sürüyor')),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    PushTapRouter.offer({'kind': 'room_invite', 'invite_id': 'gone'});
+    await tester.pumpAndSettle();
+    expect(find.text('maç sürüyor'), findsOneWidget);
+    nav.pop();
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Bu davetin süresi doldu ya da oda kapandı.'),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('room-invite-join')), findsNothing);
+    expect(find.textContaining('Rojda'), findsNothing);
+  });
+
   testWidgets('room_invite dokunuşu: yükleme hatası genel davet hatasını '
       'gösterir', (tester) async {
     final repository = freshMockRepository()
@@ -218,37 +308,38 @@ void main() {
     expect(find.text('Davet gönderilemedi. Tekrar dene.'), findsOneWidget);
   });
 
-  testWidgets('room_invite dokunuşu: dolu oda "süresi doldu" demez', (
+  testWidgets('eski room_invite dokunuşu tek kalan yeni daveti kabul etmez', (
     tester,
   ) async {
     final repository = freshMockRepository()
-      ..seedRoomInviteForTesting(_invite())
-      ..respondRoomInviteFailureForTesting = RoomInviteFailure.full;
+      ..seedRoomInviteForTesting(_invite());
     await tapRoomInvite(tester, repository);
-    expect(find.text('Davet gönderilemedi. Tekrar dene.'), findsOneWidget);
-    expect(find.textContaining('süresi doldu'), findsNothing);
+    expect(visibleTabIndex(tester), 0);
+    expect((await repository.loadMyRoomInvites()).single.id, 'inv1');
+    expect(PushTapRouter.pending.value, isNull);
   });
 
-  testWidgets('room_invite dokunuşu: süresi dolan davet "süresi doldu" der', (
+  testWidgets('room_invite dokunuşu kabul isteği veya kabul hatası üretmez', (
     tester,
   ) async {
     final repository = freshMockRepository()
       ..seedRoomInviteForTesting(_invite())
       ..respondRoomInviteFailureForTesting = RoomInviteFailure.expired;
     await tapRoomInvite(tester, repository);
+    expect((await repository.loadMyRoomInvites()).single.id, 'inv1');
     expect(
       find.text('Bu davetin süresi doldu ya da oda kapandı.'),
-      findsOneWidget,
+      findsNothing,
     );
   });
 }
 
-RoomInvite _invite() => RoomInvite(
-  id: 'inv1',
+RoomInvite _invite({String id = 'inv1', String name = 'Rojda'}) => RoomInvite(
+  id: id,
   roomId: 'room-1',
   roomCode: 'ZK-TEST',
   inviterId: 'u2',
-  inviterName: 'Rojda',
+  inviterName: name,
   categoryName: 'Ziman',
   playerCount: 2,
   maxPlayers: 8,

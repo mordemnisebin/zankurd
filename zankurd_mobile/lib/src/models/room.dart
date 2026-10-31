@@ -413,10 +413,12 @@ bool isSupportedRoomCode(String input) {
 }
 
 class GameRoom {
-  static const allowedSecondsPerQuestion = [10, 15, 20, 30, 45, 60];
+  // Yeni seçenekler sunucu sınırları göçü uygulanmadan yayımlanmamalı.
+  // Bkz. docs/room_limits_rollout_2026_10_31.md.
+  static const allowedSecondsPerQuestion = [10, 15, 20, 30, 45, 60, 90, 120];
   static const allowedEntryFees = [0, 25, 50, 100];
-  static const allowedQuestionCounts = [5, 10, 15];
-  static const allowedDurations = [10, 15, 20, 30];
+  static const allowedQuestionCounts = [5, 10, 15, 20, 25, 30, 40, 50];
+  static const allowedDurations = allowedSecondsPerQuestion;
   static const defaultSecondsPerQuestion = 20;
 
   /// Özel odanın izinli kapasiteleri (sunucudaki `create_online_room` ile

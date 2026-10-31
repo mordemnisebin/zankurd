@@ -1,9 +1,24 @@
 import 'dart:io';
+import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/progress_sync.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
+import 'package:zankurd_mobile/src/data/paid_freeze_intent.dart';
+
+const _paidIntent = PaidFreezeIntent(
+  ownerId: 'test-owner',
+  roundId: 'solo:store-test',
+  idempotencyKey:
+      'zankurd.quiz_result_progress_receipt.test-owner:solo:store-test',
+  playedDay: '2026-06-15',
+  previousLastDay: '2026-06-12',
+  targetCurrent: 8,
+  targetBest: 8,
+  playedDays: ['2026-06-12', '2026-06-15'],
+  frozenDays: ['2026-06-13', '2026-06-14'],
+);
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -77,6 +92,57 @@ void main() {
     expect(reloaded.effectiveStreak(now: DateTime(2026, 6, 12)), 0);
     expect(reloaded.best, 0);
   });
+
+  test(
+    'paid freeze preserves owned tokens and replay does not extend twice',
+    () async {
+      SharedPreferences.setMockInitialValues({
+        'zankurd.streak.current': 7,
+        'zankurd.streak.best': 7,
+        'zankurd.streak.lastDay': '2026-06-12',
+        'zankurd.streak.freeze': 1,
+      });
+      final store = await StreakStore.load();
+      await store.applyPaidFreezeIntent(_paidIntent);
+      expect(store.effectiveStreak(now: DateTime(2026, 6, 15)), 8);
+      expect(store.freezeCount, 1);
+      StreakStore.resetInstance();
+      final reloaded = await StreakStore.load();
+      await reloaded.applyPaidFreezeIntent(_paidIntent);
+      expect(reloaded.effectiveStreak(now: DateTime(2026, 6, 15)), 8);
+      expect(reloaded.freezeCount, 1);
+    },
+  );
+
+  test(
+    'interrupted paid freeze completes its target without another increment',
+    () async {
+      SharedPreferences.setMockInitialValues({
+        // current yazılmış, lastDay yazılmadan süreç kapanmış.
+        'zankurd.streak.current': 8,
+        'zankurd.streak.best': 8,
+        'zankurd.streak.lastDay': '2026-06-12',
+        'zankurd.streak.freeze': 1,
+        'zankurd.streak.paidFreezePending': jsonEncode({
+          'current': 8,
+          'best': 8,
+          'lastDay': '2026-06-15',
+          'playedDays': ['2026-06-12', '2026-06-15'],
+          'frozenDays': ['2026-06-13', '2026-06-14'],
+        }),
+      });
+      final store = await StreakStore.load();
+      await store.applyPaidFreezeIntent(_paidIntent);
+      expect(store.effectiveStreak(now: DateTime(2026, 6, 15)), 8);
+      expect(store.freezeCount, 1);
+      expect(
+        (await SharedPreferences.getInstance()).containsKey(
+          'zankurd.streak.paidFreezePending',
+        ),
+        isFalse,
+      );
+    },
+  );
 
   test('addFreeze increments up to the max cap', () async {
     final store = await StreakStore.load();

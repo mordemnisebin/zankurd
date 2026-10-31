@@ -1,6 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/learner_lexicon.dart';
+import 'package:zankurd_mobile/src/data/learning_assessment_bank.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/seen_question_store.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/models/question_metadata.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
@@ -55,6 +58,90 @@ void main() {
           learningLessonId: 'food_1',
         ),
       ]);
+    });
+
+    test('sözlük dolgusu görülmeyen terimlere geçer', () async {
+      SharedPreferences.setMockInitialValues({});
+      SeenQuestionStore.resetInstance();
+      final store = await SeenQuestionStore.load();
+      final terms = <String>{};
+      // Bu kimliğin enjekte edilen bankada etiketli sorusu yoktur.
+      for (var round = 0; round < 4; round++) {
+        final questions = await repository.loadLearningQuizQuestions(
+          category: 'Ziman',
+          learningLessonId: 'numbers_1',
+          limit: 5,
+        );
+        expect(questions, hasLength(5));
+        for (final q in questions) {
+          expect(terms.add(q.metadata!.sourceReference!), isTrue);
+        }
+        await store.markSeen(questions.map((q) => q.id));
+      }
+      expect(terms, hasLength(20));
+    });
+
+    test('dolgunun dört şıkkı mümkünse kendi dersinden gelir', () async {
+      final quiz = await repository.loadLearningQuizQuestions(
+        category: 'Ziman',
+        learningLessonId: 'time_1',
+        limit: 5,
+      );
+      final entries = LearnerLexicon.entriesForSource('time_1');
+      for (final q in quiz) {
+        final options = entries.map(
+          (e) => q.answerLanguage == AnswerLanguage.turkish
+              ? e.meaningTr
+              : e.termKu,
+        );
+        expect(q.answers.toSet(), hasLength(4));
+        expect(options.toSet().containsAll(q.answers), isTrue, reason: q.id);
+      }
+      final tiny = LearningAssessmentBank.questionsFor(
+        lessonId: 'culture_2',
+        category: 'Çand',
+      );
+      expect(tiny, isNotEmpty);
+      for (final q in tiny) {
+        expect(q.answers.toSet(), hasLength(4));
+      }
+    });
+
+    test('hafta günlerinde aynı üç çeldirici bütün sorularda dönmez', () {
+      final entries = LearnerLexicon.entriesForSource('time_weekdays');
+      final laterDays = entries.skip(3).map((entry) => entry.meaningTr).toSet();
+      final distractorSets = {
+        for (final q in LearningAssessmentBank.practiceFor(
+          slug: 'rojen-hefteye',
+          bankId: 'time_weekdays',
+          category: 'Ziman',
+        ))
+          if (q.type == QuestionType.multipleChoice &&
+              laterDays.contains(q.correctAnswer))
+            (q.answers.where((answer) => answer != q.correctAnswer).toList()
+                  ..sort())
+                .join('|'),
+      };
+      expect(distractorSets.length, greaterThan(1));
+    });
+
+    test('aynı anlamlı sözlük maddesi çeldirici olmaz', () {
+      final all = LearningAssessmentBank.questionsFor(
+        lessonId: 'months_1',
+        category: 'Ziman',
+        limit: 100,
+      );
+      final entries = LearnerLexicon.entriesForSource('months_1');
+      for (final q in all.where(
+        (q) => q.answerLanguage == AnswerLanguage.kurmanji,
+      )) {
+        final source = entries.firstWhere((e) => e.termKu == q.correctAnswer);
+        for (final synonym in entries.where(
+          (e) => e.meaningTr == source.meaningTr && e.termKu != source.termKu,
+        )) {
+          expect(q.answers, isNot(contains(synonym.termKu)));
+        }
+      }
     });
 
     test('explicit lesson tags win without unrelated fillers', () async {

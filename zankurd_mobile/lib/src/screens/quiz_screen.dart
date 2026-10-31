@@ -1142,7 +1142,16 @@ class _QuizScreenState extends State<QuizScreen>
     streak = snapshot.streak;
     bestStreak = snapshot.bestStreak;
     correctCount = snapshot.correctCount;
-    wrongCount = snapshot.wrongCount;
+    // Eski özetlerde yanlış toplamına TIMEOUT da dahildi. Ayrıntılar
+    // yoksa mevcut toplamı koru.
+    wrongCount = snapshot.answers.isEmpty
+        ? snapshot.wrongCount
+        : snapshot.answers
+              .where(
+                (answer) =>
+                    !answer.isCorrect && answer.selectedOptionKey != 'TIMEOUT',
+              )
+              .length;
 
     final resolved = _resolveResumeAnswers(snapshot.answers);
     if (initial) answerRecords.clear();
@@ -1644,7 +1653,7 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   /// Yanlış cevabı yanlış defterine ekler, doğru cevap kaydı düşürür.
-  void _trackMistake(bool correct) {
+  void _trackMistake(bool correct, {required bool isTimeout}) {
     final id = question.id;
     final category = question.category;
     if (widget.practice && correct) {
@@ -1668,7 +1677,7 @@ class _QuizScreenState extends State<QuizScreen>
           : store.markMistake(
               id,
               category: category,
-              countAnswer: !_usesServerHiddenAnswers,
+              countAnswer: !_usesServerHiddenAnswers && !isTimeout,
             );
     }, reason: 'quiz mistake progress save failed');
   }
@@ -4112,7 +4121,7 @@ class _QuizScreenState extends State<QuizScreen>
       }
 
       final isCorrect = result['is_correct'] == true;
-      _trackMistake(isCorrect);
+      _trackMistake(isCorrect, isTimeout: isTimeout);
       final oldScore = score;
       setState(() {
         if (revealedQuestion != null) {
@@ -4130,7 +4139,7 @@ class _QuizScreenState extends State<QuizScreen>
         if (!alreadyAnswered) {
           if (correct) {
             correctCount += 1;
-          } else {
+          } else if (!isTimeout) {
             wrongCount += 1;
           }
         }
@@ -4200,7 +4209,7 @@ class _QuizScreenState extends State<QuizScreen>
       // Fallback local logic if network fails during answer submit
       if (!mounted || index != questionIndex) return;
       final correct = question.acceptsAnswer(answer);
-      _trackMistake(correct);
+      _trackMistake(correct, isTimeout: isTimeout);
       if (correct) {
         AppHaptics.medium();
         context.read<SoundProvider>().playCorrect();
@@ -4230,7 +4239,7 @@ class _QuizScreenState extends State<QuizScreen>
           _flyupTrigger += 1;
         } else {
           streak = 0;
-          wrongCount += 1;
+          if (!isTimeout) wrongCount += 1;
           _shakeTrigger += 1;
         }
         _recordAnswer(

@@ -189,6 +189,25 @@ void main() {
     for (final stage in QuizResultReceiptStage.values) {
       QuizResultProgressReceiptStore.debugResetInFlight();
       final store = await storeWith(encoded(stage));
+      if (stage == QuizResultReceiptStage.freezeChargePending) {
+        var applied = false;
+        await expectLater(
+          store.runOnce(
+            userId: userId,
+            roomId: roomId,
+            action: () async {
+              applied = true;
+            },
+          ),
+          throwsStateError,
+        );
+        expect(applied, isFalse);
+        expect(
+          (await store.read(userId: userId, roomId: roomId))!.stage,
+          stage,
+        );
+        continue;
+      }
       await store.runOnce(userId: userId, roomId: roomId, action: () async {});
       final after = await store.read(userId: userId, roomId: roomId);
       // Asıl özellik: hiçbir "sürüyor" aşaması bir koşumdan sağ çıkmaz.

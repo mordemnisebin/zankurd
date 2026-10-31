@@ -9,7 +9,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../services/placement_scoring.dart';
 import '../utils/error_reporter.dart';
 import 'local_progress_scope.dart';
+import 'local_progress_write_lock.dart';
+import 'streak_store.dart';
 import 'progress_snapshot.dart';
+import 'placement_persistence.dart';
 
 /// Yerel SharedPreferences <-> [ProgressSnapshot] dönüşümü.
 ///
@@ -43,14 +46,11 @@ class LocalProgressSnapshot {
   static const _mistakeIds = 'zankurd.mistakeQuestionIds';
   static const _mistakeMeta = 'zankurd.mistakeMetadata';
   static const _mistakeHistory = 'zankurd.dailyPerformance';
-  static const _placementLevel = 'zankurd.placement.v1.level';
-  static const _placementSkipped = 'zankurd.placement.v1.skipped';
-  static const _placementUpdatedAt = 'zankurd.placement.v1.updatedAt';
   static const _storyPrefix = 'zankurd.story.';
   static const _storyMeta = 'zankurd.storyMeta.v1';
   static const _goal = 'zankurd.learning_goal.v1';
 
-  static String _k(String logical) => LocalProgressScope.physical(logical);
+  static String _k(String logical) => LocalProgressWriteLock.physical(logical);
 
   /// Yerel durumu okur.
   static ProgressSnapshot read(SharedPreferences prefs) {
@@ -106,7 +106,7 @@ class LocalProgressSnapshot {
       // Bozuk üst veri: zamansız (eski) kayıt gibi davranılır.
     }
 
-    final placement = prefs.getString(_k(_placementLevel));
+    final placement = PlacementPersistence.read(prefs);
     final (playedDays, frozenDays) = SnapshotStreak.normalizeCalendarDays(
       prefs.getStringList(_k(_streakPlayedDays)) ?? const [],
       prefs.getStringList(_k(_streakFrozenDays)) ?? const [],
@@ -146,9 +146,11 @@ class LocalProgressSnapshot {
         meta: _decodeMeta(prefs.getString(_k(_mistakeMeta))),
         history: _decodeHistory(prefs.getString(_k(_mistakeHistory))),
       ),
-      placementLevel: PlacementLevel.fromStorageKey(placement)?.storageKey,
-      placementSkipped: prefs.getBool(_k(_placementSkipped)) ?? false,
-      placementUpdatedAt: prefs.getInt(_k(_placementUpdatedAt)),
+      placementLevel: PlacementLevel.fromStorageKey(
+        placement.level,
+      )?.storageKey,
+      placementSkipped: placement.skipped,
+      placementUpdatedAt: placement.updatedAt,
       story: story,
       storyUpdatedAt: storyAt,
       storyDone: storyDone,
@@ -163,8 +165,10 @@ class LocalProgressSnapshot {
   static Future<bool> write(
     SharedPreferences prefs,
     ProgressSnapshot snapshot,
-  ) async {
+  ) => LocalProgressWriteLock.run(LocalProgressScope.activeUserId, () async {
+    await StreakStore.recoverPendingWrites(prefs);
     final current = read(prefs);
+    final streak = SnapshotStreak.merge(current.streak, snapshot.streak);
     var ok = true;
 
     Future<void> setInt(String logical, int value) async {
@@ -186,16 +190,16 @@ class LocalProgressSnapshot {
     }
 
     await setInt(_xp, snapshot.xp);
-    await setInt(_streakCurrent, snapshot.streak.current);
-    await setInt(_streakBest, snapshot.streak.best);
-    await setInt(_streakFreeze, snapshot.streak.freeze);
-    final freezeAt = snapshot.streak.freezeAt;
+    await setInt(_streakCurrent, streak.current);
+    await setInt(_streakBest, streak.best);
+    await setInt(_streakFreeze, streak.freeze);
+    final freezeAt = streak.freezeAt;
     if (freezeAt != null) await setInt(_streakFreezeAt, freezeAt);
-    await setString(_streakLastDay, snapshot.streak.lastDay);
-    await setList(_streakPlayedDays, snapshot.streak.playedDays);
-    await setList(_streakFrozenDays, snapshot.streak.frozenDays);
-    await setString(_streakRepairMonth, snapshot.streak.repairMonth);
-    await setString(_streakFirstSeen, snapshot.streak.firstSeen);
+    await setString(_streakLastDay, streak.lastDay);
+    await setList(_streakPlayedDays, streak.playedDays);
+    await setList(_streakFrozenDays, streak.frozenDays);
+    await setString(_streakRepairMonth, streak.repairMonth);
+    await setString(_streakFirstSeen, streak.firstSeen);
     await setList(_badges, snapshot.badges);
     await setList(_achUnlocked, snapshot.achievements.unlocked);
     await setInt(_achAnswered, snapshot.achievements.answered);
@@ -251,25 +255,25 @@ class LocalProgressSnapshot {
           ok;
     }
 
-    final placementAt = snapshot.placementUpdatedAt;
-    if (placementAt != null && placementAt != current.placementUpdatedAt) {
-      ok = await prefs.setInt(_k(_placementUpdatedAt), placementAt) && ok;
-    }
-    if (snapshot.placementLevel != null &&
-        snapshot.placementLevel != current.placementLevel) {
-      ok =
-          await prefs.setString(
-            _k(_placementLevel),
-            snapshot.placementLevel!,
-          ) &&
-          ok;
-      if (prefs.containsKey(_k(_placementSkipped))) {
-        ok = await prefs.remove(_k(_placementSkipped)) && ok;
+    final placementLevel = snapshot.placementLevel ?? current.placementLevel;
+    final placementSkipped = snapshot.placementLevel != null
+        ? false
+        : snapshot.placementSkipped || current.placementSkipped;
+    final placementAt =
+        snapshot.placementUpdatedAt ?? current.placementUpdatedAt;
+    if (placementLevel != current.placementLevel ||
+        placementSkipped != current.placementSkipped ||
+        placementAt != current.placementUpdatedAt) {
+      try {
+        await PlacementPersistence.write(prefs, (
+          level: placementLevel,
+          skipped: placementSkipped,
+          updatedAt: placementAt,
+        ));
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'placement progress sync');
+        ok = false;
       }
-    } else if (snapshot.placementLevel == null &&
-        snapshot.placementSkipped &&
-        !current.placementSkipped) {
-      ok = await prefs.setBool(_k(_placementSkipped), true) && ok;
     }
 
     for (final entry in snapshot.story.entries) {
@@ -324,7 +328,7 @@ class LocalProgressSnapshot {
     }
     await setString(_goal, snapshot.learningGoal);
     return ok;
-  }
+  });
 
   static bool _sameJson(Object? a, Object? b) => jsonEncode(a) == jsonEncode(b);
 

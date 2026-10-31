@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/models/question_metadata.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -28,6 +29,10 @@ class _TranslatedQuestionRepository extends MockZanKurdRepository {
       answersTr: ['Doğru', 'Yanlış', 'Belirsiz', 'İkisi de'],
       correctAnswerTr: 'Doğru',
       difficulty: 2,
+      metadata: QuestionMetadata(
+        reviewStatus: ReviewStatus.approved,
+        learningLessonId: 'lesson',
+      ),
     ),
   ];
 }

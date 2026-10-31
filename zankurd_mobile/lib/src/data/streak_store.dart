@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
+import 'local_progress_write_lock.dart';
+import 'paid_freeze_intent.dart';
 import 'progress_sync.dart';
 
 import '../services/notification_service.dart';
@@ -32,35 +36,37 @@ class StreakStore {
   }
 
   static String get _currentKey =>
-      LocalProgressScope.physical('zankurd.streak.current');
+      LocalProgressWriteLock.physical('zankurd.streak.current');
   static String get _bestKey =>
-      LocalProgressScope.physical('zankurd.streak.best');
+      LocalProgressWriteLock.physical('zankurd.streak.best');
   static String get _lastDayKey =>
-      LocalProgressScope.physical('zankurd.streak.lastDay');
+      LocalProgressWriteLock.physical('zankurd.streak.lastDay');
+  static String get _paidFreezePendingKey =>
+      LocalProgressWriteLock.physical('zankurd.streak.paidFreezePending');
   static String get _freezeKey =>
-      LocalProgressScope.physical('zankurd.streak.freeze');
+      LocalProgressWriteLock.physical('zankurd.streak.freeze');
 
   /// Jeton sayısının son değiştiği an; eşitleme en yeniyi seçer
   /// (bkz. `SnapshotStreak.merge`).
   static String get _freezeAtKey =>
-      LocalProgressScope.physical('zankurd.streak.freezeAt');
+      LocalProgressWriteLock.physical('zankurd.streak.freezeAt');
   // Takvim geçmişi ve onarım durumu (2026-10-24). `zankurd.streak.` öneki
   // [LocalProgressScope.prefixes]te olduğundan kullanıcı kapsamına ve eski
   // kurulum taşımasına kendiliğinden girer.
   static String get _playedDaysKey =>
-      LocalProgressScope.physical('zankurd.streak.playedDays');
+      LocalProgressWriteLock.physical('zankurd.streak.playedDays');
   static String get _frozenDaysKey =>
-      LocalProgressScope.physical('zankurd.streak.frozenDays');
+      LocalProgressWriteLock.physical('zankurd.streak.frozenDays');
   static String get _repairMonthKey =>
-      LocalProgressScope.physical('zankurd.streak.repairMonth');
+      LocalProgressWriteLock.physical('zankurd.streak.repairMonth');
   static String get _lostValueKey =>
-      LocalProgressScope.physical('zankurd.streak.lostValue');
+      LocalProgressWriteLock.physical('zankurd.streak.lostValue');
   static String get _lostLastDayKey =>
-      LocalProgressScope.physical('zankurd.streak.lostLastDay');
+      LocalProgressWriteLock.physical('zankurd.streak.lostLastDay');
   static String get _firstSeenKey =>
-      LocalProgressScope.physical('zankurd.streak.firstSeen');
+      LocalProgressWriteLock.physical('zankurd.streak.firstSeen');
   static String get _offerSeenKey =>
-      LocalProgressScope.physical('zankurd.streak.repairOfferSeenFor');
+      LocalProgressWriteLock.physical('zankurd.streak.repairOfferSeenFor');
 
   /// Takvimde tutulan en fazla gün sayısı (≈ 13 ay); sonsuz büyümesin.
   static const maxHistoryDays = 400;
@@ -77,7 +83,10 @@ class StreakStore {
 
   static Future<StreakStore> load() async {
     final cached = _instance;
-    if (cached != null) return cached;
+    if (cached != null) {
+      await cached._completePendingPaidFreeze();
+      return cached;
+    }
     final inFlight = _loading;
     if (inFlight != null) return inFlight;
 
@@ -104,6 +113,7 @@ class StreakStore {
       ErrorReporter.record(error, stack, reason: 'streak_store');
       preferences = null;
     }
+    if (preferences != null) await _recoverPaidFreeze(preferences);
     return StreakStore._(
       preferences,
       preferences?.getInt(_currentKey) ?? 0,
@@ -128,6 +138,34 @@ class StreakStore {
   }
 
   final SharedPreferences? _preferences;
+  final String? _ownerUserId = LocalProgressScope.activeUserId;
+  static final Set<String> _uncertainPaidFreezeKeys = {};
+
+  void _requireOwner() {
+    if (_ownerUserId != LocalProgressScope.activeUserId) {
+      throw StateError('Streak store owner changed.');
+    }
+  }
+
+  Future<void> _completePendingPaidFreeze() async {
+    _requireOwner();
+    final preferences = _preferences;
+    if (preferences == null) return;
+    if (await _recoverPaidFreeze(preferences)) {
+      _requireOwner();
+      _readPaidFreezeState(preferences);
+    }
+    _requireOwner();
+  }
+
+  Future<T> _mutate<T>(Future<T> Function() action) =>
+      LocalProgressWriteLock.run(_ownerUserId, () async {
+        _requireOwner();
+        await _completePendingPaidFreeze();
+        if (_preferences != null) _readPaidFreezeState(_preferences);
+        return action();
+      });
+
   int _current;
   int _best;
   String? _lastDay;
@@ -201,18 +239,20 @@ class StreakStore {
   bool canFreeze({DateTime? now}) => _freeze > 0 && willBreakOnPlay(now: now);
 
   /// Bir dondurma jetonu ekler (mağaza alımı). Üst sınır [maxFreeze].
-  Future<int> addFreeze() async {
+  Future<int> addFreeze() => _mutate(() async {
+    await _completePendingPaidFreeze();
     if (_freeze >= maxFreeze) return _freeze;
     _freeze += 1;
     await _stampFreeze();
     await _persist();
     return _freeze;
-  }
+  });
 
   /// Bir jeton harcayarak seriyi korur ve bugünkü oyunu işler.
   /// Atlanan gün(ler) köprülenir; seri +1 devam eder. Jeton yoksa ya da
   /// seri zaten kırılmayacaksa normal [recordPlay] davranışına düşer.
-  Future<int> freezeAndRecordPlay({DateTime? now}) async {
+  Future<int> freezeAndRecordPlay({DateTime? now}) => _mutate(() async {
+    await _completePendingPaidFreeze();
     final today = now ?? DateTime.now();
     if (!canFreeze(now: today)) {
       return recordPlay(now: today);
@@ -227,6 +267,166 @@ class StreakStore {
     await _persist();
     await NotificationService.noteStreakActivity();
     return _current;
+  });
+
+  Future<PaidFreezeIntent> createPaidFreezeIntent({
+    required String ownerId,
+    required String roundId,
+    required String idempotencyKey,
+    required DateTime playedAt,
+  }) => _mutate(() async {
+    if (_lastDay == null || !willBreakOnPlay(now: playedAt)) {
+      throw StateError('No broken streak to protect.');
+    }
+    final day = _dayKey(playedAt);
+    final before = Set<String>.of(_frozenDays);
+    _markBridgedDays(_lastDay, playedAt);
+    final frozen = _trimmed(_frozenDays);
+    _frozenDays
+      ..clear()
+      ..addAll(before);
+    return PaidFreezeIntent(
+      ownerId: ownerId,
+      roundId: roundId,
+      idempotencyKey: idempotencyKey,
+      playedDay: day,
+      previousLastDay: _lastDay!,
+      targetCurrent: _current + 1,
+      targetBest: _best > _current + 1 ? _best : _current + 1,
+      playedDays: _trimmed({..._playedDays, day}),
+      frozenDays: frozen,
+    );
+  });
+
+  Future<void> applyPaidFreezeIntent(PaidFreezeIntent intent) =>
+      _mutate(() async {
+        final preferences = _preferences;
+        if (preferences == null) {
+          throw StateError('Paid freeze requires durable storage.');
+        }
+        if (_ownerUserId != null && intent.ownerId != _ownerUserId) {
+          throw StateError('Paid freeze intent owner mismatch.');
+        }
+        // Aynı journal hedefi her tekrar güncel değerlerle birleştirilir.
+        final key = _paidFreezePendingKey;
+        try {
+          final saved = await preferences.setString(
+            key,
+            jsonEncode({
+              'current': intent.targetCurrent,
+              'best': intent.targetBest,
+              'lastDay': intent.playedDay,
+              'playedDays': intent.playedDays,
+              'frozenDays': intent.frozenDays,
+            }),
+          );
+          if (!saved) throw StateError('Paid freeze intent was not persisted.');
+        } catch (_) {
+          _uncertainPaidFreezeKeys.add(key);
+          try {
+            await preferences.reload();
+            _uncertainPaidFreezeKeys.remove(key);
+          } catch (_) {}
+          rethrow;
+        }
+        _requireOwner();
+        await _completePendingPaidFreeze();
+        ProgressSyncService.markDirty();
+      });
+
+  void _readPaidFreezeState(SharedPreferences preferences) {
+    _current = preferences.getInt(_currentKey) ?? _current;
+    _best = preferences.getInt(_bestKey) ?? _best;
+    _freeze = preferences.getInt(_freezeKey) ?? _freeze;
+    _lastDay = preferences.getString(_lastDayKey);
+    _playedDays
+      ..clear()
+      ..addAll(preferences.getStringList(_playedDaysKey) ?? const []);
+    _frozenDays
+      ..clear()
+      ..addAll(preferences.getStringList(_frozenDaysKey) ?? const []);
+  }
+
+  static Future<bool> _recoverPaidFreeze(SharedPreferences preferences) =>
+      LocalProgressWriteLock.run(
+        LocalProgressScope.activeUserId,
+        () => _recoverPaidFreezeUntracked(preferences),
+      );
+
+  /// Snapshot yazımı da önce aynı kullanıcı journal'ını uzlaştırır.
+  static Future<void> recoverPendingWrites(
+    SharedPreferences preferences,
+  ) async {
+    await _recoverPaidFreeze(preferences);
+  }
+
+  static Future<bool> _recoverPaidFreezeUntracked(
+    SharedPreferences preferences,
+  ) async {
+    // Fiziksel anahtarlar await öncesi sabitlenir; hesap değişse bile
+    // başlamış A yazımı B'nin anahtarlarına devam edemez.
+    final pendingKey = _paidFreezePendingKey;
+    final currentKey = _currentKey;
+    final bestKey = _bestKey;
+    final lastDayKey = _lastDayKey;
+    final playedDaysKey = _playedDaysKey;
+    final frozenDaysKey = _frozenDaysKey;
+    try {
+      if (_uncertainPaidFreezeKeys.contains(pendingKey)) {
+        await preferences.reload();
+        _uncertainPaidFreezeKeys.remove(pendingKey);
+      }
+      final raw = preferences.getString(pendingKey);
+      if (raw == null) return false;
+      final target = jsonDecode(raw) as Map<String, dynamic>;
+      final targetDay = target['lastDay'] as String;
+      final currentDay = preferences.getString(lastDayKey);
+      final currentValue = preferences.getInt(currentKey) ?? 0;
+      final targetValue = target['current'] as int;
+      final keepNewer =
+          currentDay != null && currentDay.compareTo(targetDay) > 0;
+      final sameDay = currentDay == targetDay;
+      final mergedCurrent = keepNewer
+          ? currentValue
+          : sameDay && currentValue > targetValue
+          ? currentValue
+          : targetValue;
+      final currentBest = preferences.getInt(bestKey) ?? 0;
+      final targetBest = target['best'] as int;
+      final played = {
+        ...?preferences.getStringList(playedDaysKey),
+        ...List<String>.from(target['playedDays'] as List),
+      };
+      final frozen = {
+        ...?preferences.getStringList(frozenDaysKey),
+        ...List<String>.from(target['frozenDays'] as List),
+      }..removeAll(played);
+      Future<void> checked(Future<bool> write) async {
+        if (!await write) throw StateError('Paid streak freeze write failed.');
+      }
+
+      await checked(preferences.setInt(currentKey, mergedCurrent));
+      await checked(
+        preferences.setInt(
+          bestKey,
+          currentBest > targetBest ? currentBest : targetBest,
+        ),
+      );
+      await checked(
+        preferences.setString(lastDayKey, keepNewer ? currentDay : targetDay),
+      );
+      await checked(preferences.setStringList(playedDaysKey, _trimmed(played)));
+      await checked(preferences.setStringList(frozenDaysKey, _trimmed(frozen)));
+      await checked(preferences.remove(pendingKey));
+      return true;
+    } catch (_) {
+      _uncertainPaidFreezeKeys.add(pendingKey);
+      try {
+        await preferences.reload();
+        _uncertainPaidFreezeKeys.remove(pendingKey);
+      } catch (_) {}
+      rethrow;
+    }
   }
 
   /// Quiz sonucu dışındaki oyun anları (ders bitirme, sırayla düello turu)
@@ -245,7 +445,8 @@ class StreakStore {
   }
 
   /// Tamamlanan bir oyunu işler ve güncel seriyi döner.
-  Future<int> recordPlay({DateTime? now}) async {
+  Future<int> recordPlay({DateTime? now}) => _mutate(() async {
+    await _completePendingPaidFreeze();
     final today = now ?? DateTime.now();
     final todayKey = _dayKey(today);
     final lastDay = _lastDay;
@@ -288,7 +489,7 @@ class StreakStore {
     await _persist();
     await NotificationService.noteStreakActivity();
     return _current;
-  }
+  });
 
   // ── Takvim ──────────────────────────────────────────────────────────
 
@@ -313,11 +514,12 @@ class StreakStore {
   /// Yeni hesapta takvimin geçmiş günleri "kaçırıldı ✕" çiziliyordu: hiç
   /// oynamamış kişiye ayın önceki günleri için başarısızlık işareti hem
   /// yanlış hem moral bozucu. Oyun/yükleme günü bu kayıtla sınır olur.
-  Future<void> markFirstSeen({DateTime? now}) async {
+  Future<void> markFirstSeen({DateTime? now}) => _mutate(() async {
+    await _completePendingPaidFreeze();
     if (_firstSeen != null) return;
     _firstSeen = _dayKey(now ?? DateTime.now());
     await _persist();
-  }
+  });
 
   /// Takvimde "kaçırıldı" sayılabilecek ilk gün: ilk görülen gün ile en
   /// eski oynanan günden eskisi; ikisi de yoksa null (hepsi boş).
@@ -415,36 +617,40 @@ class StreakStore {
       _offerSeenFor == offer.breakDay;
 
   /// Açılış sayfasını bu kırılma için bir daha gösterme.
-  Future<void> markRepairOfferSeen(StreakRepairOffer offer) async {
-    _offerSeenFor = offer.breakDay;
-    await _persist();
-  }
+  Future<void> markRepairOfferSeen(StreakRepairOffer offer) =>
+      _mutate(() async {
+        await _completePendingPaidFreeze();
+        _offerSeenFor = offer.breakDay;
+        await _persist();
+      });
 
   /// Sunucu onarımı onayladıktan SONRA seriyi geri yükler ve hakkı işler.
   ///
   /// Aradaki (kaçırılan) gün dondurulmuş sayılır; seri kırılmamış gibi
   /// sürer. Hak işlendiği için [repairOffer] bu ay artık null döner.
-  Future<int> applyRepair(StreakRepairOffer offer, {DateTime? now}) async {
-    final today = now ?? DateTime.now();
-    final yesterday = DateTime(today.year, today.month, today.day - 1);
-    _frozenDays.add(_dayKey(yesterday));
-    if (offer.playedToday) {
-      _current = offer.lostStreak + 1;
-      _lastDay = _dayKey(today);
-    } else {
-      _current = offer.lostStreak;
-      _lastDay = _dayKey(yesterday);
-    }
-    if (_current > _best) _best = _current;
-    _repairMonth = offer.monthKey;
-    _lostValue = 0;
-    _lostLastDay = null;
-    _offerSeenFor = offer.breakDay;
-    await _persist();
-    // Uyarıyı yeni duruma göre kur (bugün oynandıysa yarına).
-    await NotificationService.syncStreakWarning(now: today);
-    return _current;
-  }
+  Future<int> applyRepair(StreakRepairOffer offer, {DateTime? now}) =>
+      _mutate(() async {
+        await _completePendingPaidFreeze();
+        final today = now ?? DateTime.now();
+        final yesterday = DateTime(today.year, today.month, today.day - 1);
+        _frozenDays.add(_dayKey(yesterday));
+        if (offer.playedToday) {
+          _current = offer.lostStreak + 1;
+          _lastDay = _dayKey(today);
+        } else {
+          _current = offer.lostStreak;
+          _lastDay = _dayKey(yesterday);
+        }
+        if (_current > _best) _best = _current;
+        _repairMonth = offer.monthKey;
+        _lostValue = 0;
+        _lostLastDay = null;
+        _offerSeenFor = offer.breakDay;
+        await _persist();
+        // Uyarıyı yeni duruma göre kur (bugün oynandıysa yarına).
+        await NotificationService.syncStreakWarning(now: today);
+        return _current;
+      });
 
   Future<void> _stampFreeze() async {
     await _preferences?.setInt(
@@ -493,8 +699,10 @@ class StreakStore {
         : sorted.sublist(sorted.length - maxHistoryDays);
   }
 
-  Future<void> clear() async {
+  Future<void> clear() => _mutate(() async {
+    _requireOwner();
     await removePersistedPreferenceKeys(_preferences, [
+      _paidFreezePendingKey,
       _currentKey,
       _bestKey,
       _lastDayKey,
@@ -519,7 +727,7 @@ class StreakStore {
     _lostLastDay = null;
     _offerSeenFor = null;
     _firstSeen = null;
-  }
+  });
 }
 
 /// Takvimdeki bir günün durumu. Renk tek kanal değildir: oynanan dolu

@@ -47,7 +47,7 @@ class LearningLessonAliases {
     'ciya-u-cem': ['geography_1'],
     'cih-u-war': ['geography_2'],
     'hesten-bingehin': ['emotions_1', 'emotions_2'],
-    'rojen-hefteye': ['time_1'],
+    'rojen-hefteye': ['time_weekdays'],
     // 2026-10-02: son dört sunucu dersi için `ders_2026_10_02` kendi sorularını
     // yazdı. Bu kimlikler yerel katalogda ders DEĞİL, yalnız ölçme bankası
     // etiketidir (yerel dersin sözlük kaynağı da yoktur).

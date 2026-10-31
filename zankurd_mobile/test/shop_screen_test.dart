@@ -60,6 +60,7 @@ class _ShopRepository extends MockZanKurdRepository {
   @override
   Future<StreakFreezeChargeResult> spendStreakFreeze({
     required String idempotencyKey,
+    bool allowLegacyFallback = true,
   }) async {
     if (coins < 50) {
       return const StreakFreezeChargeResult(
@@ -1174,11 +1175,15 @@ class _SlowFreezeRepository extends _ShopRepository {
   @override
   Future<StreakFreezeChargeResult> spendStreakFreeze({
     required String idempotencyKey,
+    bool allowLegacyFallback = true,
   }) async {
     keys.add(idempotencyKey);
     await gate.future;
     if (failFirst && keys.length == 1) throw StateError('yanıt kayboldu');
-    return super.spendStreakFreeze(idempotencyKey: idempotencyKey);
+    return super.spendStreakFreeze(
+      idempotencyKey: idempotencyKey,
+      allowLegacyFallback: allowLegacyFallback,
+    );
   }
 }
 

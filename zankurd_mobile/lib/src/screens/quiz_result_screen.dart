@@ -15,10 +15,14 @@ import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
 import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/streak_store.dart';
+import '../data/local_progress_scope.dart';
+import '../data/paid_freeze_intent.dart';
+import '../services/paid_freeze_recovery_service.dart';
 import '../data/progress_sync.dart';
 import '../data/xp_award_publisher.dart';
 import '../data/zankurd_repository.dart';
 import '../utils/error_reporter.dart';
+import '../utils/client_round_id.dart';
 import '../l10n/lang.dart';
 import '../utils/coin_calculator.dart';
 import '../l10n/strings.dart';
@@ -67,6 +71,11 @@ import '../services/app_haptics.dart';
 /// Karar (ve varsa coin harcaması) makbuzun kritik bölümünün DIŞINDA
 /// verilir; buradan sonrası yalnız otomatik yerel yazımdır. Bu tip, iki
 /// aşama arasındaki tek taşıyıcıdır.
+/// Tahsilat belirsizken seri sıfırlanmaz ve sonuç onaylanmaz.
+class _StreakFreezePending implements Exception {
+  const _StreakFreezePending();
+}
+
 class _StreakOutcome {
   const _StreakOutcome({required this.streak, required this.isNewDay});
 
@@ -238,6 +247,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   List<DailyMission> _completedMissions = const [];
   _StreakOutcome? _pendingStreak;
   bool _ackAttempted = false;
+  final String _fallbackFreezeRoundId = newClientRoundId();
+  bool _freezeRetryInFlight = false;
+  late final String? _resultProgressOwner;
+  late final String? _resultProgressScope;
+
   bool _newRoomLoading = false;
   bool _showNotifPrompt = false;
 
@@ -463,6 +477,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   @override
   void initState() {
     super.initState();
+    _resultProgressOwner = repository.currentUserId;
+    _resultProgressScope = LocalProgressScope.activeUserId;
     // Sonuç ekranının kendisi ilerleme yazımına bağlı değildir: skor,
     // doğru/yanlış ve cevap listesi zaten widget parametrelerinden gelir.
     // Yazım zinciri (seri, rozet, ustalık, görev, XP, mağaza değerlendirmesi)
@@ -579,6 +595,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       if (resumed?.isTerminal != true) {
         final streak = await _resolveStreakDecision(
           resumed: resumed,
+          receiptStore: stages,
+          receiptRoundId: resultRoomId,
           // Makbuz anahtarıyla AYNI kimlik: tahsilat da, makbuz da aynı
           // sonuca bağlı olduğu için ikisi tek bir değişmezden türer.
           idempotencyKey: QuizResultProgressReceiptStore.keyFor(
@@ -598,6 +616,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         );
         _pendingStreak = streak;
       }
+    } on _StreakFreezePending {
+      _offerStreakFreezeRetry();
+      return;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'quiz result streak decision');
     }
@@ -724,11 +745,65 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   }
 
   Future<void> _runProgressSafely() async {
+    if (repository.currentUserId != _resultProgressOwner ||
+        LocalProgressScope.activeUserId != _resultProgressScope) {
+      return;
+    }
     try {
-      await _recordProgressAndAnalytics(await _resolveStreakDecision());
+      final ownerId = repository.currentUserId?.trim() ?? '';
+      final roundId = 'solo:${_effectiveRoundId ?? _fallbackFreezeRoundId}';
+      final stages = ownerId.isEmpty ? null : await _defaultStageRecorder();
+      final resumed = await stages?.read(userId: ownerId, roomId: roundId);
+      final streak = await _resolveStreakDecision(
+        resumed: resumed,
+        receiptStore: stages,
+        receiptRoundId: roundId,
+        idempotencyKey: QuizResultProgressReceiptStore.keyFor(
+          userId: ownerId,
+          roomId: roundId,
+        ),
+        recordStage: stages == null
+            ? null
+            : (stage, {bool freezeRequested = false}) => stages.write(
+                userId: ownerId,
+                roomId: roundId,
+                receipt: QuizResultReceipt(
+                  stage: stage,
+                  freezeRequested: freezeRequested,
+                ),
+              ),
+      );
+      if (repository.currentUserId != _resultProgressOwner ||
+          LocalProgressScope.activeUserId != _resultProgressScope) {
+        return;
+      }
+      await _recordProgressAndAnalytics(streak);
+    } on _StreakFreezePending {
+      _offerStreakFreezeRetry();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'quiz result progress');
     }
+  }
+
+  void _offerStreakFreezeRetry() {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(context.t(K.genericError)),
+        action: SnackBarAction(
+          label: context.t(K.retry),
+          onPressed: () async {
+            if (_freezeRetryInFlight || !mounted) return;
+            _freezeRetryInFlight = true;
+            try {
+              await _deliverResult();
+            } finally {
+              _freezeRetryInFlight = false;
+            }
+          },
+        ),
+      ),
+    );
   }
 
   /// quiz_start ile aynı öncelik: öğrenme, pratik, oda, günlük, bot, solo.
@@ -846,13 +921,28 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     Future<void> Function(QuizResultReceiptStage stage, {bool freezeRequested})?
     recordStage,
     QuizResultReceipt? resumed,
+    required QuizResultProgressReceiptStore? receiptStore,
+    required String receiptRoundId,
     // Sonuç makbuzunun değişmez kimliği: `<user>:<room>`. Tahsilatın
     // idempotency anahtarı budur, yani aynı sonuç için yapılan her tekrar
     // aynı anahtarı taşır ve sunucu ikinci kez çekmez.
-    String idempotencyKey = '',
+    required String idempotencyKey,
   }) async {
+    final operationRepository = repository;
+    final operationOwner = _resultProgressOwner;
+    final operationScope = _resultProgressScope;
+    void requireOwner() {
+      if (!identical(repository, operationRepository) ||
+          operationRepository.currentUserId != operationOwner ||
+          LocalProgressScope.activeUserId != operationScope) {
+        throw const _StreakFreezePending();
+      }
+    }
+
+    requireOwner();
     final premium = context.read<PremiumService>();
     final streakStore = await StreakStore.load();
+    requireOwner();
     // Alıştırma (yanlış tekrarı) seriyi ne uzatır ne de dondurma teklifi
     // açar: aynı sorular tekrar çözülüyor, yeni bir oyun günü değil.
     if (practice) return _practiceStreak(streakStore);
@@ -865,6 +955,26 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
     // Kesintiden sonra yan etkili aşamalar ASLA tekrarlanmaz.
     switch (resumed?.stage) {
+      case QuizResultReceiptStage.freezeChargePending:
+        final intent = resumed!.paidFreezeIntent;
+        // v2 kaydın tarihi bilinmez; bugün diye yeni tahsilat üretilemez.
+        if (intent == null || receiptStore == null) {
+          throw const _StreakFreezePending();
+        }
+        final charge = await _applyPaidStreakFreeze(
+          intent,
+          receiptStore,
+          operationRepository,
+          requireOwner,
+        );
+        return _StreakOutcome(
+          streak:
+              charge ??
+              (intent.playedDay == todayKey
+                  ? await streakStore.recordPlay()
+                  : streakStore.effectiveStreak()),
+          isNewDay: isNewDay,
+        );
       // Coin isteği gönderilmiş ama sonucu bilinmiyor. Tekrar harcamak
       // yerine ileri çözülür: coin en fazla bir kez gider.
       case QuizResultReceiptStage.freezeApplying:
@@ -915,6 +1025,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // ve bilinmeyen. Bilinmeyende kullanıcıdan karar istenir, çünkü
     // "abonelik kalktı" demek de doğru olmaz.
     final refresh = await premium.refreshEntitlement();
+    requireOwner();
     if (refresh is EntitlementRefreshKnown) {
       if (refresh.isPremium) {
         await recordStage?.call(QuizResultReceiptStage.freezeApplying);
@@ -937,6 +1048,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // kesinti olursa soruyu yeniden sormak güvenlidir.
     await recordStage?.call(QuizResultReceiptStage.pendingUserDecision);
     final wantsFreeze = await _askForStreakFreeze();
+    requireOwner();
 
     // Karar, UYGULANMADAN önce yazılır: aksi hâlde coin harcama ile
     // kararın kendisi aynı kesintide birlikte kaybolur.
@@ -952,18 +1064,37 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       );
     }
 
-    await recordStage?.call(
-      QuizResultReceiptStage.freezeApplying,
-      freezeRequested: true,
+    if (receiptStore == null ||
+        operationOwner == null ||
+        operationOwner.isEmpty) {
+      throw const _StreakFreezePending();
+    }
+    final intent = await streakStore.createPaidFreezeIntent(
+      ownerId: operationOwner,
+      roundId: receiptRoundId,
+      idempotencyKey: idempotencyKey,
+      playedAt: today,
     );
-    final charge = await _applyPaidStreakFreeze(streakStore, idempotencyKey);
-    await recordStage?.call(
-      charge.streak == null
-          ? QuizResultReceiptStage.freezeSkipped
-          : QuizResultReceiptStage.freezeApplied,
+    requireOwner();
+    // Karar, tarih ve hedef tek kalıcı yazımda, RPC'den ÖNCE yer alır.
+    await receiptStore.write(
+      userId: operationOwner,
+      roomId: receiptRoundId,
+      receipt: QuizResultReceipt(
+        stage: QuizResultReceiptStage.freezeChargePending,
+        freezeRequested: true,
+        paidFreezeIntent: intent,
+      ),
+    );
+    requireOwner();
+    final charge = await _applyPaidStreakFreeze(
+      intent,
+      receiptStore,
+      operationRepository,
+      requireOwner,
     );
     return _StreakOutcome(
-      streak: charge.streak ?? await streakStore.recordPlay(),
+      streak: charge ?? await streakStore.recordPlay(),
       isNewDay: isNewDay,
     );
   }
@@ -1063,36 +1194,34 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   /// Coini harcar ve dondurmayı uygular.
   ///
-  /// Çağıran, bu çağrıdan ÖNCE `freezeApplying` aşamasını yazmış olmalıdır.
+  /// Çağıran, bu çağrıdan ÖNCE `freezeChargePending` aşamasını yazmalıdır.
   /// Tahsilat, sonuç makbuzunun kimliğinden türeyen değişmez bir
   /// idempotency anahtarıyla yapılır: cevabı kaybolan bir istek aynı
   /// anahtarla tekrarlandığında sunucu yeni bir hareket yaratmaz.
   ///
-  /// Dönen [StreakFreezeChargeResult.idempotent] bilgisi çağırana taşınır;
-  /// göç uygulanmamış bir sunucuda eski (idempotent OLMAYAN) yola
-  /// düşüldüğü için belirsiz tahsilat yine tekrarlanmamalıdır.
-  Future<({int? streak, bool idempotent})> _applyPaidStreakFreeze(
-    StreakStore store,
-    String idempotencyKey,
+  /// Bu akış eski, tekil olmayan tahsilata düşmez. Eski `freezeApplying`
+  /// kayıtları ayrı ele alınır ve hiçbir zaman yeniden tahsil edilmez.
+  Future<int?> _applyPaidStreakFreeze(
+    PaidFreezeIntent intent,
+    QuizResultProgressReceiptStore receipts,
+    ZanKurdRepository operationRepository,
+    void Function() requireOwner,
   ) async {
-    StreakFreezeChargeResult charge;
-    try {
-      charge = await repository.spendStreakFreeze(
-        idempotencyKey: idempotencyKey,
-      );
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'streak_freeze_spend');
-      return (streak: null, idempotent: false);
-    }
-    if (!charge.succeeded) {
-      return (streak: null, idempotent: charge.idempotent);
-    }
-    // Coin ödendi: bir jeton verilip hemen uygulanır (seri +1 devam eder).
-    await store.addFreeze();
-    return (
-      streak: await store.freezeAndRecordPlay(),
-      idempotent: charge.idempotent,
+    requireOwner();
+    final result = await PaidFreezeRecoveryService.reconcile(
+      repository: operationRepository,
+      intent: intent,
+      receipts: receipts,
+      isCurrentRepository: () => identical(repository, operationRepository),
     );
+    requireOwner();
+    if (result == PaidFreezeReconciliation.pending) {
+      throw const _StreakFreezePending();
+    }
+    if (result == PaidFreezeReconciliation.insufficient) return null;
+    final store = await StreakStore.load();
+    requireOwner();
+    return store.effectiveStreak();
   }
 
   /// Günün turu sonucunu sunucuya yazan iş; pano bunu BEKLER (yoksa kendi
@@ -1130,6 +1259,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       category: room.category,
       totalQuestions: totalQuestions,
       correctCount: correctCount,
+      answeredCount: answerRecords.isEmpty
+          ? correctCount + wrongCount
+          : answerRecords.where((r) => !r.isUnanswered).length,
       bestStreak: bestStreak,
       dailyStreak: streak,
       userScore: score,

@@ -52,6 +52,7 @@ void main() {
         'grammar_bun',
         'culture_dengbeji',
         'time_seasons',
+        'time_weekdays',
       };
       // 'questions' (Sorulardan): sözcükler ders değil soru bankasından
       // ve hikâye mini rehberlerinin Kurmancî alanlarından gelir; terim ya da
@@ -112,7 +113,8 @@ void main() {
     // 25 ders kaynağı + 7 (2026-10-08 başlangıç yolu II) + 7 (yolu III) + 'questions'
     // (Sorulardan, 2026-10-07); 2026-10-25'te dört ders daha (izafe_1, future_1,
     // imperative_1, months_1).
-    expect(covered, hasLength(44));
+    expect(covered, hasLength(45));
+    expect(LearnerLexicon.entriesForSource('time_weekdays'), hasLength(7));
     expect(covered.contains('time_1'), isTrue);
   });
 

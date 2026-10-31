@@ -24,6 +24,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// ignore: depend_on_referenced_packages
+import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/services/notification_service.dart';
@@ -127,6 +130,29 @@ void main() {
     return service;
   }
 
+  for (final throwsError in [false, true]) {
+    testWidgets(
+      'ana bildirim kaydı başarısızsa ($throwsError) hata gösterilir',
+      (tester) async {
+        final service = await pumpSettings(tester, enabled: true);
+        final original = SharedPreferencesStorePlatform.instance;
+        SharedPreferencesStorePlatform.instance = _FailedMasterStore(
+          original,
+          throwsError,
+        );
+        addTearDown(() => SharedPreferencesStorePlatform.instance = original);
+
+        await tester.tap(find.byKey(_master));
+        await tester.pumpAndSettle();
+
+        expect(_on(tester, _master), isTrue);
+        expect(service.enabled, isTrue);
+        expect(find.text(Tr.forKu(K.saveFailed, false)), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
+  }
+
   testWidgets('ana anahtar kapalıyken tür satırları görünmez', (tester) async {
     await pumpSettings(tester, enabled: false);
     expect(find.byKey(_master), findsOneWidget);
@@ -220,5 +246,26 @@ void main() {
       }
       expect(tester.takeException(), isNull);
     });
+  }
+}
+
+class _FailedMasterStore extends SharedPreferencesStorePlatform {
+  _FailedMasterStore(this.delegate, this.throwsError);
+  final SharedPreferencesStorePlatform delegate;
+  final bool throwsError;
+
+  @override
+  Future<Map<String, Object>> getAll() => delegate.getAll();
+  @override
+  Future<bool> clear() => delegate.clear();
+  @override
+  Future<bool> remove(String key) => delegate.remove(key);
+  @override
+  Future<bool> setValue(String valueType, String key, Object value) {
+    if (key == 'flutter.zankurd.notifications.enabled') {
+      if (throwsError) throw StateError('injected master write failure');
+      return Future.value(false);
+    }
+    return delegate.setValue(valueType, key, value);
   }
 }

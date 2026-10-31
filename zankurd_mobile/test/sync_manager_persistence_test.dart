@@ -9,9 +9,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
+import 'package:zankurd_mobile/src/models/room.dart';
 
 class _OfflineConnectivityMonitor implements ConnectivityMonitor {
   int checkCount = 0;
+  bool online = false;
 
   @override
   Stream<List<ConnectivityResult>> get onConnectivityChanged =>
@@ -20,7 +23,7 @@ class _OfflineConnectivityMonitor implements ConnectivityMonitor {
   @override
   Future<List<ConnectivityResult>> checkConnectivity() async {
     checkCount++;
-    return const [ConnectivityResult.none];
+    return [online ? ConnectivityResult.wifi : ConnectivityResult.none];
   }
 }
 
@@ -35,6 +38,17 @@ class _OwnedSupabaseRepository extends SupabaseZanKurdRepository {
 
   @override
   String? get currentUserId => 'user-a';
+}
+
+class _FailingRewardRepository extends _OwnedSupabaseRepository {
+  @override
+  Future<QuizRewardClaim> awardQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+    GameRoom? room,
+  }) async => throw StateError('injected reward failure');
 }
 
 void main() {
@@ -309,4 +323,107 @@ void main() {
       expect(auth.isAuthenticated, isFalse);
     },
   );
+  for (final throwsOnWrite in [false, true]) {
+    for (final transfer in ['exhausted', 'retry-destination', 'retry-source']) {
+      test('$transfer yazımı ${throwsOnWrite ? "fırlatır" : "false döner"}: '
+          'kayıt korunur ve yeniden denenebilir', () async {
+        const queueKey = 'flutter.zankurd.syncQueue.v2.user-a';
+        const failedKey = 'flutter.zankurd.syncQueue.failed.v1.user-a';
+        final original = jsonEncode([
+          {
+            'queueId': 'durable-reward',
+            'type': 'sync_quiz_reward',
+            'score': 100,
+            'correctCount': 1,
+            'bestStreak': 1,
+            'totalQuestions': 1,
+            'roomId': 'durable-room',
+            'playerId': 'user-a',
+            'timestamp': 1,
+            'retries': 4,
+          },
+        ]);
+        final storage = <String, Object>{
+          transfer == 'exhausted' ? queueKey : failedKey: original,
+        };
+        var rejectWrite = true;
+        final rejectedKey = transfer == 'retry-destination'
+            ? queueKey
+            : failedKey;
+        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(channel, (call) async {
+              if (call.method == 'getAll') return Map.of(storage);
+              if (call.method != 'setString') {
+                throw StateError('Beklenmeyen çağrı: ${call.method}');
+              }
+              final args = Map<String, Object?>.from(call.arguments as Map);
+              final key = args['key'] as String;
+              if (rejectWrite && key == rejectedKey) {
+                if (throwsOnWrite) {
+                  throw PlatformException(code: 'injected-write-failure');
+                }
+                return false;
+              }
+              storage[key] = args['value'] as String;
+              return true;
+            });
+        final connectivity = _OfflineConnectivityMonitor();
+        final manager = await SyncManager.initialize(
+          _FailingRewardRepository(),
+          connectivityMonitor: connectivity,
+        );
+        await manager.sync();
+
+        if (transfer == 'exhausted') {
+          connectivity.online = true;
+          await manager.sync();
+          expect(manager.pendingCount, 1);
+          expect(manager.failedCount, 0);
+          expect(SyncManager.pendingCountNotifier.value, 1);
+          expect(storage[queueKey], contains('durable-reward'));
+        } else {
+          await manager.retryFailedItems();
+          expect(manager.failedCount, 1);
+          expect(manager.pendingCount, 0);
+          expect(SyncManager.failedCountNotifier.value, 1);
+          expect(storage[failedKey], original);
+        }
+
+        // Diskten yeniden açmak, SharedPreferences'ın iyimser önbelleğinin
+        // kayıp kalıcı kaydı gizlemediğini de doğrular.
+        await SyncManager.resetForTesting();
+        SharedPreferences.resetStatic();
+        connectivity.online = false;
+        if (transfer == 'retry-source') {
+          await expectLater(
+            SyncManager.initialize(
+              _FailingRewardRepository(),
+              connectivityMonitor: connectivity,
+            ),
+            throwsStateError,
+          );
+          rejectWrite = false;
+        }
+        final reloaded = await SyncManager.initialize(
+          _FailingRewardRepository(),
+          connectivityMonitor: connectivity,
+        );
+        await reloaded.sync();
+        expect(reloaded.pendingCount + reloaded.failedCount, 1);
+        rejectWrite = false;
+        if (transfer == 'exhausted') {
+          connectivity.online = true;
+          await reloaded.sync();
+          expect(reloaded.pendingCount, 0);
+          expect(reloaded.failedCount, 1);
+          expect(storage[failedKey], contains('durable-reward'));
+        } else {
+          await reloaded.retryFailedItems();
+          expect(reloaded.pendingCount, 1);
+          expect(reloaded.failedCount, 0);
+          expect(storage[queueKey], contains('durable-reward'));
+        }
+      });
+    }
+  }
 }

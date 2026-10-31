@@ -49,6 +49,33 @@ void main() {
     expect(find.textContaining('Coin'), findsNothing);
   });
 
+  testWidgets('sınav yeniden çizimde korunur, yeniden açılışta yenilenir', (
+    tester,
+  ) async {
+    final repository = MockZanKurdRepository();
+    Future<QuizQuestion> open(int attempt) async {
+      await tester.pumpWidget(
+        wrap(
+          LevelPlacementScreen(
+            key: ValueKey(attempt),
+            repository: repository,
+            questionCount: 1,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final state = tester.state(find.byType(LevelPlacementScreen)) as dynamic;
+      // ignore: avoid_dynamic_calls
+      return state.currentQuestionForTest as QuizQuestion;
+    }
+
+    final first = await open(1);
+    expect((await open(1)).id, first.id);
+    final next = await open(2);
+    expect(next.id, isNot(first.id));
+    expect(next.prompt, isNot(first.prompt));
+  });
+
   testWidgets('"Şimdilik geç" onFinished(null) ile geçer ve işaretler', (
     tester,
   ) async {
@@ -153,7 +180,7 @@ void main() {
     final state = tester.state(find.byType(LevelPlacementScreen)) as dynamic;
     // ignore: avoid_dynamic_calls
     final QuizQuestion current = state.currentQuestionForTest;
-    final answer = current.answersFor(isKu: false).first;
+    final answer = current.answers.first;
     final target = find.text(answer).last;
     await tester.ensureVisible(target);
     await tester.pumpAndSettle();

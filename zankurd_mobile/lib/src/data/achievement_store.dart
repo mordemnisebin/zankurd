@@ -355,6 +355,7 @@ class AchievementStore {
     required String category,
     required int totalQuestions,
     required int correctCount,
+    int? answeredCount,
     required int bestStreak,
     required int dailyStreak,
     required int userScore,
@@ -364,7 +365,12 @@ class AchievementStore {
     List<Player> opponents = const [],
     DateTime? now,
   }) async {
-    _answeredQuestions += totalQuestions;
+    // Eski çağrılar boş soru ayırmıyordu. Yeni sonuçlarda yalnız doğru ve
+    // yanlış cevaplar sayılır; depodaki geçmiş toplam korunur.
+    _answeredQuestions += (answeredCount ?? totalQuestions).clamp(
+      0,
+      totalQuestions,
+    );
     if (bestStreak > _bestRoundStreak) _bestRoundStreak = bestStreak;
     if (requiredCategories.contains(category)) {
       _playedCategories.add(category);

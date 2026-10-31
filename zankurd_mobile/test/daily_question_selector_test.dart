@@ -139,23 +139,29 @@ void main() {
     difficulty: difficulty,
   );
 
-  test(
-    'ilk oturum zorluk sınırı: kolaylar önce, zorlar kolaydan zora doldurur',
-    () {
-      final selected = selectDailyQuestionsForGoal(
-        candidates: [
-          hard('d5', 5),
-          hard('e1', 1),
-          hard('d3', 3),
-          hard('e2', 2),
-        ],
-        goal: null,
-        limit: 3,
-        maxDifficulty: 2,
-      );
-      expect(selected.map((q) => q.id), ['e1', 'e2', 'd3']);
-    },
-  );
+  test('ilk oturum kolay havuz yetersizse zor soruyla dolmaz', () {
+    final selected = selectDailyQuestionsForGoal(
+      candidates: [hard('d5', 5), hard('e1', 1), hard('d3', 3), hard('e2', 2)],
+      goal: null,
+      limit: 3,
+      maxDifficulty: 2,
+    );
+    expect(selected.map((q) => q.id), ['e1', 'e2']);
+  });
+
+  test('öğrenme hedefi ilk turdaki zorluk sınırını aşamaz', () {
+    final selected = selectDailyQuestionsForGoal(
+      candidates: [
+        _question('easy-1', 'Çand'),
+        hard('hard-priority', 4),
+        _question('easy-2', 'Çand'),
+      ],
+      goal: LearningGoal.learnKurmanci,
+      limit: 2,
+      maxDifficulty: 2,
+    );
+    expect(selected.map((q) => q.id), ['easy-1', 'easy-2']);
+  });
 
   test('ilk oturum yeterli kolay soruda hiç zor soru almaz', () {
     final selected = selectDailyQuestionsForGoal(

@@ -1066,7 +1066,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       await this.context.read<AuthProvider>().signOut();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'profile_sign_out');
-      // AppShell zaten auth durumuna göre giriş ekranına döner.
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        this.context,
+      ).showSnackBar(SnackBar(content: Text(this.context.t(K.genericError))));
     }
   }
 }

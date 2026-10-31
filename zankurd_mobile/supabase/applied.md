@@ -15,6 +15,8 @@
 
 | Dosya | Canlıda? | Tarih / Not |
 |---|---|---|
+| 2026-10-31_room_limits.sql | ⏳ | 2026-10-31 canlı katalogdan hazırlandı, yerel PostgreSQL’de 50 soru/120 sn ve geri alma sınandı. Canlı uygulama bekliyor. Kanıt: `docs/room_limits_rollout_2026_10_31.md`. |
+| 2026-10-31_room_invite_terms.sql | ⏳ | Oda davetinde ücret, soru sayısı ve süre önizlemesi. |
 | 2026-10-30_presence.sql | ✅ | 2026-10-30 sabah, ana ajan uyguladı (GPT-6 Astra yazdı, Opus güvenlik incelemesi). user_presence (RLS; okuma: kendi + rıza veren arkadaş; yazma yalnız SECURITY DEFINER RPC), touch_presence (60 sn sınır), get/set_presence_visibility, list_friends last_seen_at (eski gövde sarmalandı). Anon yetkisiz. Dry-run hatasız; sonra canlıda tablo var, RLS açık, anon execute=false. |
 | 2026-07-03_reward_hardening.sql | ✅ | 2026-07-03 (claim_* RPC'ler, xp, guard trigger'lar) |
 | 2026-07-03_matchmaking_fix.sql | ✅ | 2026-07-03 (join_matchmaking + realtime queue) |
@@ -289,3 +291,5 @@
 | 2026-10-30_t11_profile_answer_stats.sql | ✅ | 2026-10-30 öğleden sonra, ana ajan uyguladı (GPT-6 Astra yazdı). get_my_online_answer_stats: auth.uid() sahibinin oda/canlı düello/sırayla düello/turnuva cevap istatistikleri (misafir dahil); SECURITY DEFINER, search_path sabit, anon yetkisiz. Dry-run hatasız; canlıda anon=false, authenticated=true. Tur 8'de misafir profilinde 'alınamıyor' görünmesinin nedeni bu göçün uygulanmamış olmasıydı. |
 | 2026-10-30_t13_question_image_cleanup.sql | ✅ | 2026-10-30 akşam, ana ajan uyguladı (GPT-6 Astra yazdı). îro sorusundaki kaldırılmış iro.webp görsel atfı yalnız bu soruda temizlendi (eski değer korumalı). Dry-run hatasız; uygulandı. |
 | 2026-10-30_t16_weekly_answer_history.sql | ✅ | 2026-10-30 akşam, ana ajan uyguladı (GPT-6 Astra yazdı). get_my_online_answer_history: haftalık grafik için auth.uid() sahibinin çevrimiçi cevap geçmişi; SECURITY DEFINER, search_path sabit, anon yetkisiz. Dry-run hatasız; uygulandı. |
+| 2026-10-31_push_delivery_v2.sql | ⏳ | Yerel aday: lease/ack, kuyruk eklemede ve ilk geçerli tokenda uyandırma, kurtarma cron; kapı varsayılan kapalı. Tam göç ve geri alınan teslimat duman testi yerel PGlite PostgreSQL 17.5 üzerinde geçti. Canlı tanım incelemesi, tam Supabase doğrulaması, bağımsız inceleme ve sahip onayı bekleniyor. Henüz uygulanmadı/dağıtılmadı. |
+| 2026-10-31_room_invite_push_target.sql | ⏳ | Push V2 sonrasında gerçek davet kimliğini kuyruklar ve yalnız o daveti sorgular. Temsili PostgreSQL şemasında geri alınan duman geçti. Canlı tanım farkı, tam Supabase doğrulaması ve uygulama bekliyor. |

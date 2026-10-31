@@ -349,6 +349,13 @@ class LearnerLexicon {
       categoryKu: 'Çand',
       categoryTr: 'Kültür',
     ),
+    'time_weekdays': LearnerLexiconSource(
+      id: 'time_weekdays',
+      titleKu: 'Rojên hefteyê',
+      titleTr: 'Haftanın günleri',
+      categoryKu: 'Dem',
+      categoryTr: 'Zaman',
+    ),
     'time_seasons': LearnerLexiconSource(
       id: 'time_seasons',
       titleKu: 'Demsal',
@@ -1632,6 +1639,48 @@ class LearnerLexicon {
       meaningTr: 'Şarkı',
       sourceId: 'culture_dengbeji',
       forms: ['stranên'],
+    ),
+    LearnerLexiconEntry(
+      id: 'weekday-dusem',
+      termKu: 'Duşem',
+      meaningTr: 'Pazartesi',
+      sourceId: 'time_weekdays',
+    ),
+    LearnerLexiconEntry(
+      id: 'weekday-sesem',
+      termKu: 'Sêşem',
+      meaningTr: 'Salı',
+      sourceId: 'time_weekdays',
+    ),
+    LearnerLexiconEntry(
+      id: 'weekday-carsem',
+      termKu: 'Çarşem',
+      meaningTr: 'Çarşamba',
+      sourceId: 'time_weekdays',
+    ),
+    LearnerLexiconEntry(
+      id: 'weekday-pencsem',
+      termKu: 'Pêncşem',
+      meaningTr: 'Perşembe',
+      sourceId: 'time_weekdays',
+    ),
+    LearnerLexiconEntry(
+      id: 'weekday-in',
+      termKu: 'În',
+      meaningTr: 'Cuma',
+      sourceId: 'time_weekdays',
+    ),
+    LearnerLexiconEntry(
+      id: 'weekday-semi',
+      termKu: 'Şemî',
+      meaningTr: 'Cumartesi',
+      sourceId: 'time_weekdays',
+    ),
+    LearnerLexiconEntry(
+      id: 'weekday-yeksem',
+      termKu: 'Yekşem',
+      meaningTr: 'Pazar',
+      sourceId: 'time_weekdays',
     ),
     LearnerLexiconEntry(
       id: 'bihar',

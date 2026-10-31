@@ -457,6 +457,8 @@ class SyncManager {
 
   Future<void> _loadQueue() async {
     final prefs = await SharedPreferences.getInstance();
+    // Başarısız set/remove iyimser önbellekte kalmış olabilir.
+    await prefs.reload();
     try {
       await _migrateLegacyQueue(prefs);
     } catch (error, stack) {
@@ -502,18 +504,23 @@ class SyncManager {
             );
         }
       }
-      // `retryFailedItems` hedefi yazıp kaynağı boşaltmadan kapanmışsa aynı
-      // kayıt iki listede kalır; başarısız listedekini düşür.
-      String canon(Map<String, dynamic> item) =>
-          jsonEncode(Map<String, dynamic>.of(item)..remove('retries'));
-      final queued = _queue.map(canon).toSet();
-      _failedItems.removeWhere((item) => queued.contains(canon(item)));
     } catch (error, stack) {
       ErrorReporter.record(
         error,
         stack,
         reason: 'SyncManager load failed queue',
       );
+    }
+    // İki kalıcı kopya kaldıysa kaynağı sync başlamadan temizle. Yalnız
+    // bellekte tekilleştirmek, hedef boşaldıktan sonra eski kaydı diriltir.
+    String canon(Map<String, dynamic> item) =>
+        jsonEncode(Map<String, dynamic>.of(item)..remove('retries'));
+    final queued = _queue.map(canon).toSet();
+    final failedBeforeDeduplication = _failedItems.length;
+    _failedItems.removeWhere((item) => queued.contains(canon(item)));
+    if (_failedItems.length != failedBeforeDeduplication &&
+        !await _saveFailedQueue()) {
+      throw StateError('Duplicate failed sync items could not be persisted.');
     }
     _notifyNotifiers();
   }
@@ -712,13 +719,17 @@ class SyncManager {
     }
   }
 
-  Future<void> _saveFailedQueue() async {
+  Future<bool> _saveFailedQueue() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_failedQueueKey, jsonEncode(_failedItems));
+      if (!await prefs.setString(_failedQueueKey, jsonEncode(_failedItems))) {
+        throw StateError('Failed sync queue was not persisted.');
+      }
+      return true;
     } catch (e, stack) {
       ErrorReporter.record(e, stack, reason: 'SyncManager save failed queue');
       developer.log('Failed to save failed queue: $e', name: 'SyncManager');
+      return false;
     }
   }
 
@@ -1300,7 +1311,7 @@ class SyncManager {
                 'Coin spend permanently rejected; moving to failed list.',
                 name: 'SyncManager',
               );
-              await _recordExhaustedItem(item);
+              if (!await _recordExhaustedItem(item)) failedItems.add(item);
             }
           }
         }
@@ -1321,7 +1332,7 @@ class SyncManager {
             'RPC not found (${e.code}). Moving item to failed list: $item',
             name: 'SyncManager',
           );
-          await _recordExhaustedItem(item);
+          if (!await _recordExhaustedItem(item)) failedItems.add(item);
           continue;
         }
         final retries = ((item['retries'] as num?) ?? 0).toInt() + 1;
@@ -1337,7 +1348,7 @@ class SyncManager {
             'Max retries reached for item ($item): $e. Dropping.',
             name: 'SyncManager',
           );
-          await _recordExhaustedItem(item);
+          if (!await _recordExhaustedItem(item)) failedItems.add(item);
         } else {
           item['retries'] = retries;
           failedItems.add(item);
@@ -1368,7 +1379,7 @@ class SyncManager {
             'Max retries reached for item ($item): $e. Dropping.',
             name: 'SyncManager',
           );
-          await _recordExhaustedItem(item);
+          if (!await _recordExhaustedItem(item)) failedItems.add(item);
         } else {
           item['retries'] = retries;
           failedItems.add(item);
@@ -1403,9 +1414,11 @@ class SyncManager {
   /// Retry'ları tükenmiş bir ödülü kalıcı "senkronize edilemedi" listesine
   /// taşır. Kalıcı yazım `await`lenir — `unawaited` bırakılırsa kill
   /// öncesi kayıt disk yerine yalnız bellekte kalırdı.
-  Future<void> _recordExhaustedItem(Map<String, dynamic> item) async {
+  Future<bool> _recordExhaustedItem(Map<String, dynamic> item) async {
     _failedItems.add(item);
-    await _saveFailedQueue();
+    if (await _saveFailedQueue()) return true;
+    _failedItems.remove(item);
+    return false;
   }
 
   /// Kalıcı olarak düşürülmüş kayıtları kuyruğa geri koyup yeniden dener.
@@ -1418,10 +1431,10 @@ class SyncManager {
     // liste) boşaltılır. Eski sıra kaynağı önce boşaltıyordu: arada kapanma
     // ya da yazım hatası tek kalıcı kopyayı yok ediyordu (Codex denetimi
     // 2026-10-29). Arada kapanırsa iki kopya kalır; yüklemede tekilleştirilir.
-    final moved = List<Map<String, dynamic>>.of(_failedItems);
-    for (final item in moved) {
-      item['retries'] = 0;
-    }
+    final source = List<Map<String, dynamic>>.of(_failedItems);
+    final moved = source
+        .map((item) => Map<String, dynamic>.of(item)..['retries'] = 0)
+        .toList();
     _queue.addAll(moved);
     try {
       await _saveQueue(propagateFailure: true);
@@ -1429,9 +1442,14 @@ class SyncManager {
       _queue.removeWhere((item) => moved.any((m) => identical(m, item)));
       return;
     }
-    _failedItems.clear();
+    _failedItems.removeWhere((item) => source.contains(item));
+    if (!await _saveFailedQueue()) {
+      _failedItems.addAll(source);
+      _queue.removeWhere((item) => moved.contains(item));
+      _notifyNotifiers();
+      return;
+    }
     _notifyNotifiers();
-    await _saveFailedQueue();
     unawaited(sync());
   }
 

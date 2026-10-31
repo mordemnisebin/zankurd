@@ -43,6 +43,7 @@ void main() {
     // testler o zincirin günlük halkasıdır.
     const yeniAcilanKategori = QuizQuestion(
       id: 'approved-sinema',
+      difficulty: 4,
       category: 'Sînema',
       prompt: 'Pirsa ji kategoriya nû vebûyî?',
       answers: ['A', 'B', 'C', 'D'],
@@ -66,5 +67,13 @@ void main() {
       'approved-visible',
       'approved-sinema',
     });
+    for (final replay in [false, true]) {
+      final first = await MockZanKurdRepository().loadDailyQuestions(
+        limit: 5,
+        replay: replay,
+        maxDifficulty: 2,
+      );
+      expect(first.map((q) => q.id), ['approved-visible']);
+    }
   });
 }

@@ -1,6 +1,9 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/achievement_store.dart';
+import 'package:zankurd_mobile/src/data/mistake_store.dart';
+import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/wildcard.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_wildcard_bar.dart';
@@ -151,6 +154,45 @@ void main() {
     }
     await tester.pumpAndSettle();
     expect(nextButtonCallback(tester), isNotNull);
+  });
+
+  testWidgets('solo sayaç on soruda üç yanıtı ve yedi süre aşımını ayırır', (
+    tester,
+  ) async {
+    final questions = [
+      for (var i = 0; i < 10; i++)
+        QuizQuestion(
+          id: 'timer-$i',
+          category: 'Ziman',
+          prompt: 'Soru $i?',
+          answers: ['Doğru $i', 'Yanlış $i', 'C $i', 'D $i'],
+          correctAnswer: 'Doğru $i',
+          explanation: '',
+        ),
+    ];
+    await pumpQuiz(tester, enableTimer: true, questions: questions);
+    for (var i = 0; i < questions.length; i++) {
+      if (i < 3) {
+        await tester.tap(find.text(i < 2 ? 'Doğru $i' : 'Yanlış $i').first);
+      } else {
+        await tester.pump(const Duration(seconds: 60));
+      }
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('quiz-next-button')));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 600));
+    }
+    await tester.pumpAndSettle();
+    final result = tester.widget<QuizResultScreen>(
+      find.byType(QuizResultScreen),
+    );
+    expect(result.correctCount, 2);
+    expect(result.wrongCount, 1);
+    expect(result.answerRecords.where((r) => r.isUnanswered), hasLength(7));
+    final history = await MistakeStore.load();
+    expect(history.totalCorrect, 2);
+    expect(history.totalWrong, 1);
+    expect((await AchievementStore.load()).answeredQuestions, 3);
   });
 
   testWidgets('10 ardışık soruda her reveal sonrası Piştre ilerler', (

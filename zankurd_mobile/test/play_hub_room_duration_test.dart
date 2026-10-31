@@ -201,6 +201,70 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  for (final scale in [1.0, 2.0]) {
+    testWidgets(
+      'dar ekranda 50 soru ve 120 saniye seçimi odaya aktarılır (yazı x$scale)',
+      (tester) async {
+        tester.view.physicalSize = const Size(320, 640);
+        tester.view.devicePixelRatio = 1;
+        tester.platformDispatcher.textScaleFactorTestValue = scale;
+        addTearDown(tester.view.reset);
+        addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+        final repository = _CapturingRepository();
+        await openCreateSheet(tester, repository);
+
+        Future<void> tapSetting(String key) async {
+          final keyed = find.byKey(ValueKey(key));
+          // Büyük yazıda özet satırı görünür alandan uzun olabilir. Kullanıcı
+          // başlığa dokunabilir; tüm satırın merkezi alt çubuğun altında kalır.
+          final target = key == 'custom-room-settings-row'
+              ? find.descendant(of: keyed, matching: find.text('Ayarlar'))
+              : keyed;
+          await Scrollable.ensureVisible(
+            tester.element(target),
+            alignment: 0.5,
+          );
+          await tester.pumpAndSettle();
+          expect(target.hitTestable(), findsOneWidget);
+          await tester.tap(target);
+          await tester.pumpAndSettle();
+        }
+
+        await tapSetting('custom-room-settings-row');
+        await tapSetting('custom-room-count-50');
+        expect(
+          tester
+              .widget<SahnePickChip>(
+                find.byKey(const ValueKey('custom-room-count-50')),
+              )
+              .selected,
+          isTrue,
+        );
+        await tapSetting('custom-room-duration-120');
+        expect(
+          tester
+              .widget<SahnePickChip>(
+                find.byKey(const ValueKey('custom-room-duration-120')),
+              )
+              .selected,
+          isTrue,
+        );
+        await tapSetting('custom-room-settings-row');
+        expect(find.text('50 soru × 120 sn → ≤ 100 dakika'), findsOneWidget);
+        expect(
+          find.text('50 soru · soru başına 120 sn · giriş ücretsiz'),
+          findsOneWidget,
+        );
+        expect(tester.takeException(), isNull);
+        await tapSetting('custom-room-open');
+
+        expect(repository.capturedQuestionCount, 50);
+        expect(repository.capturedSeconds, 120);
+        expect(tester.takeException(), isNull);
+      },
+    );
+  }
+
   testWidgets('oda kurma: konu çipi karo adını yazar, anlamsal ad tam kalır; '
       'kaydırma alanı altında solma var', (tester) async {
     final handle = tester.ensureSemantics();

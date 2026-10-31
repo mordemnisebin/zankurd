@@ -31,6 +31,8 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
 import '../services/social_push_prompt.dart';
 import '../services/app_haptics.dart';
+import '../services/foreground_push_center.dart';
+import '../services/push_messaging_gateway.dart';
 
 /// Arkadaş listesi, oyuncu arama ve istek yönetimi ekranı.
 class FriendsScreen extends StatefulWidget {
@@ -56,7 +58,10 @@ class _FriendsScreenState extends State<FriendsScreen>
   /// yeniden girmeden görünsün (2026-10-21 iki simülatör turu).
   static const _pollInterval = Duration(seconds: 20);
   Timer? _pollTimer;
+  StreamSubscription<ForegroundPush>? _pushSubscription;
+  bool _appInForeground = true;
   bool _reloading = false;
+  bool _reloadPending = false;
 
   final TextEditingController _searchController = TextEditingController();
 
@@ -118,19 +123,35 @@ class _FriendsScreenState extends State<FriendsScreen>
         ? asyncDuelChallengeAvailable(widget.repository)
         : Future<bool>.value(false);
     _loadFriends();
+    final lifecycle = WidgetsBinding.instance.lifecycleState;
+    _appInForeground =
+        lifecycle == null || lifecycle == AppLifecycleState.resumed;
+    _pushSubscription = ForegroundPushCenter.events.listen((push) {
+      if (!_appInForeground ||
+          !mounted ||
+          !(ModalRoute.of(context)?.isCurrent ?? true)) {
+        return;
+      }
+      if (push.kind == 'friend_request' || push.kind == 'friend_accept') {
+        unawaited(_reload());
+      }
+    });
     WidgetsBinding.instance.addObserver(this);
     _startPolling();
   }
 
   void _startPolling() {
     _pollTimer?.cancel();
-    _pollTimer = Timer.periodic(_pollInterval, (_) => unawaited(_reload()));
+    _pollTimer = Timer.periodic(_pollInterval, (_) {
+      if (!_reloading) unawaited(_reload());
+    });
   }
 
   /// Arka planda yoklama durur (pil, veri, Supabase kotası); dönüşte bir
   /// kez tazelenir ve döngü yeniden kurulur (bkz. leaderboard_screen).
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    _appInForeground = state == AppLifecycleState.resumed;
     switch (state) {
       case AppLifecycleState.resumed:
         unawaited(_reload());
@@ -148,13 +169,17 @@ class _FriendsScreenState extends State<FriendsScreen>
   /// Listeleri sunucudan yeniden okur. Uçuştaki istek varken ikincisi
   /// başlamaz; hata sessizce yutulur (bölüm eski veriyi gösterir).
   Future<void> _reload() async {
-    if (_reloading || !mounted) return;
+    if (!mounted) return;
+    if (_reloading) {
+      _reloadPending = true;
+      return;
+    }
     _reloading = true;
     try {
-      final friends = widget.repository.loadFriends();
-      final requests = widget.repository.loadPendingFriendRequests();
-      final friendList = await friends;
-      final requestList = await requests;
+      final (friendList, requestList) = await (
+        widget.repository.loadFriends(),
+        widget.repository.loadPendingFriendRequests(),
+      ).wait;
       if (!mounted) return;
       // SynchronousFuture: FutureBuilder tamamlanmış veriyi aynı karede
       // çizer; her turda bir kare dönen göstergesi titremez.
@@ -169,11 +194,20 @@ class _FriendsScreenState extends State<FriendsScreen>
       if (mounted) setState(() {});
     } finally {
       _reloading = false;
+      if (_reloadPending) {
+        _reloadPending = false;
+        if (mounted &&
+            _appInForeground &&
+            (ModalRoute.of(context)?.isCurrent ?? true)) {
+          unawaited(_reload());
+        }
+      }
     }
   }
 
   @override
   void dispose() {
+    unawaited(_pushSubscription?.cancel());
     _pollTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     _searchController.dispose();

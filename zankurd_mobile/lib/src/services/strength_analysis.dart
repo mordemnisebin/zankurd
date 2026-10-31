@@ -96,7 +96,7 @@ class StrengthAnalysis {
       final InsightTone tone;
       if (correct >= strengthCorrectThreshold && mist <= correct ~/ 4) {
         tone = InsightTone.strength;
-      } else if (mist >= 3 || correct < strengthCorrectThreshold) {
+      } else if (mist >= 3 || ready > 0) {
         tone = InsightTone.improve;
       } else {
         tone = InsightTone.neutral;
@@ -136,7 +136,7 @@ class StrengthAnalysis {
     }
 
     return StrengthMapResult(
-      insufficientData: false,
+      insufficientData: strengths.isEmpty && improvements.isEmpty,
       strengths: strengths,
       improvements: improvements,
       focusCategory: focus,

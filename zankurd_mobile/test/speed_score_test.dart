@@ -4,13 +4,17 @@ import 'package:zankurd_mobile/src/models/room.dart';
 
 void main() {
   test('oda süresi yalnızca desteklenen seçeneklerden oluşur', () {
-    // 2026-08-19: özelleştirilebilir oda için küme 10 ve 15 saniyeyi de
-    // içerecek biçimde genişletildi, varsayılan 30'dan 20'ye indi. Sunucu
-    // tarafı da aynı kümeyi doğruluyor (`create_online_room`,
-    // `2026-08-19_gamification_and_custom_rooms.sql`): istemci burada bir
-    // değeri geçirip sunucu reddederse oyuncu "oda açılamadı" görür ve
-    // niçinini kimse bilmez.
-    expect(GameRoom.allowedSecondsPerQuestion, [10, 15, 20, 30, 45, 60]);
+    // 90/120 saniye sunucu göçüyle birlikte yayımlanır; varsayılan değişmez.
+    expect(GameRoom.allowedSecondsPerQuestion, [
+      10,
+      15,
+      20,
+      30,
+      45,
+      60,
+      90,
+      120,
+    ]);
     expect(GameRoom.defaultSecondsPerQuestion, 20);
   });
 
@@ -58,6 +62,25 @@ void main() {
     );
     expect(
       SpeedScore.calculate(responseMs: 31_000, limitSeconds: 30, correct: true),
+      0,
+    );
+  });
+
+  test('120 saniyelik odada 60 saniye sonrası cevap geçerlidir', () {
+    expect(
+      SpeedScore.calculate(
+        responseMs: 90_000,
+        limitSeconds: 120,
+        correct: true,
+      ),
+      125,
+    );
+    expect(
+      SpeedScore.calculate(
+        responseMs: 120_001,
+        limitSeconds: 120,
+        correct: true,
+      ),
       0,
     );
   });

@@ -9,6 +9,8 @@
 // çubuğun kalınlığını ve jetonun ayrı hap olup olmadığını hiçbir test
 // sormuyordu. Bekçi: ad yokken başlık "Oyuncu ZK-…" metnidir ve bağlantı
 // kalemli eylem olarak altındadır; çubuk 8 px; jeton ayrı hap.
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +29,32 @@ class _TagRepo extends MockZanKurdRepository {
 
 void main() {
   tearDown(() async => SyncManager.resetForTesting());
+
+  testWidgets('adlı profilde kod satırı ekran okuyucuyla etkinleştirilebilir', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    final repository = _TagRepo();
+    await repository.updateProfileName('Ada');
+    await tester.pumpWidget(
+      testShell(
+        child: Scaffold(body: ProfileScreen(repository: repository)),
+      ),
+    );
+    final tag = find.bySemanticsLabel(
+      'Oyuncu kodun: ZK-4F7K. Kopyalamak için dokun.',
+    );
+    for (var i = 0; i < 40 && tag.evaluate().isEmpty; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+    expect(
+      tester
+          .getSemantics(tag)
+          .getSemanticsData()
+          .hasAction(ui.SemanticsAction.tap),
+      isTrue,
+    );
+  });
 
   testWidgets('adsız profilde başlık "Oyuncu ZK-…", kalemli eylem altında', (
     tester,
@@ -51,6 +79,20 @@ void main() {
       find.descendant(of: cta, matching: find.byIcon(AppIcons.pen)),
       findsOneWidget,
     );
+
+    for (final label in [
+      'Oyundaki adını gir',
+      'Oyuncu kodun: ZK-4F7K. Kopyalamak için dokun.',
+    ]) {
+      expect(
+        tester
+            .getSemantics(find.bySemanticsLabel(label))
+            .getSemanticsData()
+            .hasAction(ui.SemanticsAction.tap),
+        isTrue,
+        reason: label,
+      );
+    }
 
     // Seviye çubuğu 8 px; jeton ayrı hap.
     final bar = tester.widget<SahneProgressBar>(find.byType(SahneProgressBar));

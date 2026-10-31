@@ -8,12 +8,12 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/sync_manager.dart';
+import '../data/local_progress_scope.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/async_duel.dart';
 import '../models/room.dart';
-import '../models/room_invite.dart';
 import '../providers/auth_provider.dart';
 import '../providers/remote_availability.dart';
 import '../providers/repository_holder.dart';
@@ -37,9 +37,11 @@ import '../services/push_tap_router.dart';
 import '../services/social_push_prompt.dart';
 import '../services/room_result_presentation.dart';
 import '../services/push_token_sync.dart';
+import '../services/paid_freeze_recovery_service.dart';
 import 'async_duel/async_duel_inbox.dart';
 import 'async_duel/async_duel_play_screen.dart';
 import 'friends_screen.dart';
+import 'home/room_invite_card.dart';
 import 'password_recovery_screen.dart';
 import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
@@ -163,6 +165,12 @@ class _AppShellState extends State<AppShell>
   bool _isOffline = false;
   bool _connectivityKnown = false;
   StreamSubscription<List<ConnectivityResult>>? _connectivitySub;
+  StreamSubscription<String>? _pushTokenRefreshSub;
+  ZanKurdRepository? _pushRegisteredRepository;
+  String? _pushRegisteredUser;
+  bool _pushWasReachable = false;
+  ZanKurdRepository? _freezeRecoveryRepository;
+  String? _freezeRecoveryUser;
 
   late final ScrollController _homeScrollController;
   late final ScrollController _profileScrollController;
@@ -172,12 +180,13 @@ class _AppShellState extends State<AppShell>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     JoinDeepLink.incoming.addListener(_onIncomingJoinLink);
-    PushTapRouter.pending.addListener(_onPushTapTarget);
+    PushTapRouter.pending.addListener(_consumePushTapTarget);
     ProfileTabRequest.pending.addListener(_onProfileTabRequest);
     _foregroundPushSub = ForegroundPushCenter.events.listen(
       _refreshForForegroundPush,
     );
     SocialPushPrompt.tokenSync = widget.pushTokenSync;
+    _pushTokenRefreshSub = widget.pushTokenSync?.watchTokenRefresh();
     _homeScrollController = ScrollController();
     _profileScrollController = ScrollController();
     _loadOnboardingState();
@@ -185,6 +194,89 @@ class _AppShellState extends State<AppShell>
     unawaited(widget.pushTokenSync?.sync());
     unawaited(NotificationService.syncStreakWarning());
     unawaited(NotificationSync.run(_repository));
+  }
+
+  @override
+  void didUpdateWidget(covariant AppShell oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.pushTokenSync, widget.pushTokenSync)) {
+      unawaited(_pushTokenRefreshSub?.cancel());
+      _pushTokenRefreshSub = widget.pushTokenSync?.watchTokenRefresh();
+      SocialPushPrompt.tokenSync = widget.pushTokenSync;
+      _pushRegisteredRepository = null;
+      _pushRegisteredUser = null;
+    }
+  }
+
+  // Build observes authentication/repository recovery, but registration runs
+  // after the frame. A queued callback must still belong to that session.
+  void _schedulePushRegistration(bool authenticated) {
+    final repository = _repository;
+    final user = authenticated ? repository.currentUserId : null;
+    if (user == null || repository is OfflineZanKurdRepository) {
+      _pushRegisteredRepository = null;
+      _pushRegisteredUser = null;
+      return;
+    }
+    if (identical(_pushRegisteredRepository, repository) &&
+        _pushRegisteredUser == user) {
+      return;
+    }
+    _pushRegisteredRepository = repository;
+    _pushRegisteredUser = user;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted ||
+          !identical(_repository, repository) ||
+          _repository.currentUserId != user ||
+          !context.read<AuthProvider>().isAuthenticated) {
+        return;
+      }
+      unawaited(widget.pushTokenSync?.sync());
+      unawaited(NotificationSync.run(repository));
+    });
+  }
+
+  void _schedulePaidFreezeRecovery(bool authenticated) {
+    final repository = _repository;
+    final user = authenticated ? repository.currentUserId : null;
+    if (user == null ||
+        user != LocalProgressScope.activeUserId ||
+        repository is OfflineZanKurdRepository) {
+      _freezeRecoveryRepository = null;
+      _freezeRecoveryUser = null;
+      return;
+    }
+    if (identical(_freezeRecoveryRepository, repository) &&
+        _freezeRecoveryUser == user) {
+      return;
+    }
+    _freezeRecoveryRepository = repository;
+    _freezeRecoveryUser = user;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted &&
+          identical(_repository, repository) &&
+          _repository.currentUserId == user) {
+        unawaited(_recoverPendingPaidFreezes());
+      }
+    });
+  }
+
+  Future<void> _recoverPendingPaidFreezes() async {
+    if (!mounted || !context.read<AuthProvider>().isAuthenticated) return;
+    final repository = _repository;
+    final user = repository.currentUserId;
+    final recovered = await PaidFreezeRecoveryService.recoverPendingSolo(
+      repository,
+    );
+    if (!recovered ||
+        !mounted ||
+        !identical(_repository, repository) ||
+        repository.currentUserId != user ||
+        LocalProgressScope.activeUserId != user) {
+      return;
+    }
+    _homeRefresh.value++;
+    _profileRefresh.value++;
   }
 
   @override
@@ -200,6 +292,7 @@ class _AppShellState extends State<AppShell>
     if (!identical(availability, _availability)) {
       _availability?.removeListener(_onAvailabilityChanged);
       _availability = availability;
+      _pushWasReachable = availability?.reachable ?? false;
       availability?.addListener(_onAvailabilityChanged);
     }
     final route = ModalRoute.of<dynamic>(context);
@@ -292,6 +385,9 @@ class _AppShellState extends State<AppShell>
       _connectivityKnown = true;
     });
     if (reconnected) {
+      unawaited(widget.pushTokenSync?.sync());
+      unawaited(_recoverPendingPaidFreezes());
+      unawaited(NotificationSync.run(_repository));
       _wakeRoomResumeForCurrentUser();
       // Yerel ağ geri geldiyse uzak başlatma da artık tamamlanmış
       // olabilir: arkadaki geri çekilmeyi (2 sn ve sonrası) beklemeden
@@ -316,6 +412,7 @@ class _AppShellState extends State<AppShell>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _wakeRoomResumeForCurrentUser();
+      unawaited(_recoverPendingPaidFreezes());
       unawaited(widget.pushTokenSync?.sync());
       // Seri uyarısı tek atıştır: öne gelişte bir sonraki akşama yeniden kurulur.
       // Önce saat dilimi tazelenir (seyahat): uyarı yeni dilimde kurulsun.
@@ -374,11 +471,7 @@ class _AppShellState extends State<AppShell>
     // geri gitmeyi işlerken (kilitliyken) gelir ve oradan sayfa itmek
     // onay hatasıyla düşer. Aşağıdaki oda devamı dalı erken dönebildiği
     // için en başta planlanır.
-    if (_pushTapScheduled) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _consumePushTapTarget(),
-      );
-    }
+    _schedulePushTapTarget();
     // Maç sürerken gelen davet bağlantısı da burada, kabuk yeniden en
     // üstteyken açılır.
     if (_pendingJoinCode != null) {
@@ -424,6 +517,13 @@ class _AppShellState extends State<AppShell>
   RemoteAvailability? _availability;
 
   void _onAvailabilityChanged() {
+    final reachable = _availability?.reachable ?? false;
+    if (reachable && !_pushWasReachable) {
+      _schedulePushTapTarget();
+      unawaited(widget.pushTokenSync?.sync());
+      unawaited(_recoverPendingPaidFreezes());
+    }
+    _pushWasReachable = reachable;
     if (_pendingJoinCode == null) return;
     WidgetsBinding.instance.addPostFrameCallback((_) => _tryOpenJoinCode());
   }
@@ -435,9 +535,10 @@ class _AppShellState extends State<AppShell>
     appPageRouteObserver.unsubscribe(_tabRefreshAware);
     WidgetsBinding.instance.removeObserver(this);
     JoinDeepLink.incoming.removeListener(_onIncomingJoinLink);
-    PushTapRouter.pending.removeListener(_onPushTapTarget);
+    PushTapRouter.pending.removeListener(_consumePushTapTarget);
     ProfileTabRequest.pending.removeListener(_onProfileTabRequest);
     unawaited(_foregroundPushSub?.cancel());
+    unawaited(_pushTokenRefreshSub?.cancel());
     if (identical(SocialPushPrompt.tokenSync, widget.pushTokenSync)) {
       SocialPushPrompt.tokenSync = null;
     }
@@ -522,8 +623,11 @@ class _AppShellState extends State<AppShell>
   Widget build(BuildContext context) {
     // Depo takasını izle: geç kurtarmada holder değişince kabuk yeniden
     // çizilir ve [_repository] yeni depoyu okur. Rota yığını bozulmaz.
+    _readyForPushTap = false;
     _repositoryHolder = RepositoryHolder.watch(context);
     final authProvider = context.watch<AuthProvider>();
+    _schedulePushRegistration(authProvider.isAuthenticated);
+    _schedulePaidFreezeRecovery(authProvider.isAuthenticated);
     final ku = context.isKu;
     _syncRoomResumeAccount(
       authProvider.isAuthenticated
@@ -608,6 +712,7 @@ class _AppShellState extends State<AppShell>
       _scheduleRoomResumeCheck(resumableUserId);
     }
     _scheduleJoinDeepLink();
+    _readyForPushTap = true;
     _schedulePushTapTarget();
 
     // Web'de tarayıcı Geri kök rotayı (AppShell, splash sonrası tek rota)
@@ -863,39 +968,25 @@ class _AppShellState extends State<AppShell>
     )?.showSnackBar(SnackBar(content: Text(message)));
   }
 
-  bool _pushTapScheduled = false;
+  bool _readyForPushTap = false;
 
-  /// [JoinDeepLink] ile AYNI desen: kabuk kapıları (onboarding/giriş/isim)
-  /// geçilip bu noktaya ulaşıldığında bir kez planlanır ve bekleyen bildirim
-  /// hedefini bir sonraki karede tüketir.
+  // Rota geçişinde Navigator kilitlidir; kabuk hazır olunca tüket.
   void _schedulePushTapTarget() {
-    if (_pushTapScheduled) return;
-    _pushTapScheduled = true;
+    if (PushTapRouter.pending.value == null) return;
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => _consumePushTapTarget(),
     );
   }
 
-  /// Soğuk açılışta (`getInitialMessage`) ya da kabuk henüz hazır değilken
-  /// gelmiş bir dokunuşu tüketir — hedef [PushTapRouter.pending]de bekliyor
-  /// olabilir, dinleyici onu kabuk hazır olmadan önce görüp yok saymış olsa
-  /// bile burada `take()` ile yakalanır.
   void _consumePushTapTarget() {
-    if (!mounted || !_shellIsTopRoute) return;
-    final target = PushTapRouter.take();
-    if (target == null) return;
-    _applyPushTapTarget(target);
-  }
-
-  /// Uygulama açıkken gelen bildirim dokunuşu (sıcak açılış). Kabuk henüz
-  /// [_schedulePushTapTarget]e ulaşmadıysa hedef kanalda bekler; sonradan
-  /// [_consumePushTapTarget] alır.
-  void _onPushTapTarget() {
-    if (!mounted || !_pushTapScheduled || !_shellIsTopRoute) return;
-    if (PushTapRouter.pending.value == null) return;
-    final target = PushTapRouter.take();
-    if (target == null) return;
-    _applyPushTapTarget(target);
+    if (!mounted || !_readyForPushTap || !_shellIsTopRoute) return;
+    final pending = PushTapRouter.pending.value;
+    if (pending == null) return;
+    if (pending.inviteId != null && (_availability?.socialLocked ?? false)) {
+      return;
+    }
+    final tap = PushTapRouter.take();
+    if (tap != null) _applyPushTapTarget(tap);
   }
 
   StreamSubscription<ForegroundPush>? _foregroundPushSub;
@@ -912,6 +1003,7 @@ class _AppShellState extends State<AppShell>
         _playRefresh.value++;
       case 'room_invite':
         _homeRefresh.value++;
+        _playRefresh.value++;
       case 'async_duel_invite' || 'async_duel_turn' || 'async_duel_result':
         _playRefresh.value++;
     }
@@ -923,8 +1015,8 @@ class _AppShellState extends State<AppShell>
   /// kabuğa dönülünce ([didPopNext]) uygulanır.
   bool get _shellIsTopRoute => ModalRoute.of(context)?.isCurrent ?? true;
 
-  void _applyPushTapTarget(PushTapTarget target) {
-    switch (target) {
+  void _applyPushTapTarget(PushTapIntent tap) {
+    switch (tap.target) {
       case PushTapTarget.home:
         _selectTab(0);
       case PushTapTarget.playTab:
@@ -937,7 +1029,32 @@ class _AppShellState extends State<AppShell>
           ).push(AppRoute.to(AsyncDuelListScreen(repository: _repository))),
         );
       case PushTapTarget.roomInvite:
-        unawaited(_openRoomInviteFromPush());
+        final id = tap.inviteId;
+        if (id == null) {
+          unawaited(_openRoomInviteFromPush());
+        } else {
+          _selectTab(0);
+          unawaited(
+            Navigator.of(context).push(
+              AppRoute.to(
+                Builder(
+                  builder: (context) => SahnePushedPage(
+                    title: context.t(K.roomInviteSection),
+                    children: [
+                      RoomInviteCard(
+                        repository:
+                            RepositoryHolder.watch(context)?.repository ??
+                            _repository,
+                        targetInviteId: id,
+                        topGap: false,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
       case PushTapTarget.friends:
         _selectTab(2);
         unawaited(
@@ -948,34 +1065,13 @@ class _AppShellState extends State<AppShell>
     }
   }
 
-  /// `room_invite` bildirimine dokunuş: tek bekleyen davet varsa kabul edilip
-  /// mevcut oda katılma yolundan girilir (bağlantıyla gelen davetle aynı
-  /// davranış); birden çoksa ya da hiç yoksa Ana ekran açılır, "Odaya davet"
-  /// kartı orada bekler. Süresi dolmuş davet sessiz kalmaz.
+  /// Eski bildirimler davet kimliği taşımıyor. Eski bir bildirim başka bir
+  /// daveti otomatik kabul edemez; güncel kartı gösterip katılımı ona bırakır.
   Future<void> _openRoomInviteFromPush() async {
     _selectTab(0);
     try {
-      final invites = await _repository.loadMyRoomInvites(throwOnError: true);
-      if (!mounted || invites.length != 1) {
-        if (mounted) _homeRefresh.value++;
-        return;
-      }
-      final code = await _repository.respondRoomInvite(
-        invites.single.id,
-        accept: true,
-      );
-      if (code == null || !mounted) return;
-      await _joinOnlineRoomAndOpen(code);
-    } on RoomInviteException catch (error) {
-      if (mounted) {
-        _showJoinFailure(
-          context.t(
-            error.reason == RoomInviteFailure.expired
-                ? K.roomInviteExpired
-                : K.roomInviteFailed,
-          ),
-        );
-      }
+      await _repository.loadMyRoomInvites(throwOnError: true);
+      if (mounted) _homeRefresh.value++;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'room invite push tap');
       if (mounted) _showJoinFailure(context.t(K.roomInviteFailed));
@@ -987,6 +1083,7 @@ class _AppShellState extends State<AppShell>
     return switch (index) {
       0 => LearnHomeScreen(
         repository: _repository,
+        isVisible: _tab == 0,
         scrollController: _homeScrollController,
         refreshSignal: _homeRefresh,
         onOpenLearning: () async {
@@ -996,7 +1093,11 @@ class _AppShellState extends State<AppShell>
         },
         onOpenPlay: () => _selectTab(1),
       ),
-      1 => PlayHubScreen(repository: _repository, refreshSignal: _playRefresh),
+      1 => PlayHubScreen(
+        repository: _repository,
+        refreshSignal: _playRefresh,
+        isVisible: _tab == 1,
+      ),
       2 => LeaderboardScreen(
         repository: _repository,
         refreshSignal: _leaderboardRefresh,

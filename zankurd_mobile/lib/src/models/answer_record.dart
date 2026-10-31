@@ -46,7 +46,10 @@ class AnswerRecord {
       adjudicatedCorrect ??
       (selectedAnswer == correctAnswer && selectedAnswer != null);
 
-  bool get isUnanswered => selectedAnswer == null || selectedAnswer!.isEmpty;
+  bool get isUnanswered =>
+      selectedAnswer == null ||
+      selectedAnswer!.isEmpty ||
+      selectedAnswer == 'TIMEOUT';
 
   bool get hasImage => imageUrl != null && imageUrl!.isNotEmpty;
 }

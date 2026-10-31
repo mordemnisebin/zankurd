@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
 import 'progress_sync.dart';
+import 'placement_persistence.dart';
 
 import '../services/placement_scoring.dart';
 import '../utils/error_reporter.dart';
@@ -10,7 +11,7 @@ import '../utils/error_reporter.dart';
 ///
 /// Sürüm ([_version]) ileride sınav içeriği/eşikleri değişirse temiz bir
 /// geçiş sağlar: yeni sürüm eski anahtarı görmez, kullanıcıya (istenirse)
-/// yeniden sorulur. `SharedPreferences` yoksa bellek-içi çalışır.
+/// yeniden sorulur. Depolama yoksa sonuç kaydı hata verir.
 class PlacementStore {
   PlacementStore._(this._preferences, this._level, this._skipped);
 
@@ -61,11 +62,11 @@ class PlacementStore {
       ErrorReporter.record(error, stack, reason: 'placement_store');
       preferences = null;
     }
-    final level = PlacementLevel.fromStorageKey(
-      preferences?.getString(_levelKey),
-    );
-    final skipped = preferences?.getBool(_skippedKey) ?? false;
-    return PlacementStore._(preferences, level, skipped);
+    final saved = preferences == null
+        ? null
+        : PlacementPersistence.read(preferences);
+    final level = PlacementLevel.fromStorageKey(saved?.level);
+    return PlacementStore._(preferences, level, saved?.skipped ?? false);
   }
 
   /// Testlerde tekil örneği sıfırlamak için.
@@ -90,26 +91,33 @@ class PlacementStore {
   /// Sınav tamamlandığında sonucu yazar. Yeniden sınav da bunu kullanır
   /// (öncekini ezer). Geç işaretini de temizler.
   Future<void> saveResult(PlacementLevel level) async {
+    final preferences = _preferences;
+    if (preferences == null) {
+      throw StateError('Placement storage is unavailable.');
+    }
+    await PlacementPersistence.write(preferences, (
+      level: level.storageKey,
+      skipped: false,
+      updatedAt: DateTime.now().millisecondsSinceEpoch,
+    ));
     _level = level;
     _skipped = false;
-    await _preferences?.setString(_levelKey, level.storageKey);
-    await _preferences?.remove(_skippedKey);
-    await _stamp();
-  }
-
-  Future<void> _stamp() async {
-    await _preferences?.setInt(
-      updatedAtKey,
-      DateTime.now().millisecondsSinceEpoch,
-    );
     ProgressSyncService.markDirty();
   }
 
   /// "Şimdilik geç": ilk kullanımda bir daha otomatik sorulmaz.
   Future<void> markSkipped() async {
+    final preferences = _preferences;
+    if (preferences == null) {
+      throw StateError('Placement storage is unavailable.');
+    }
+    await PlacementPersistence.write(preferences, (
+      level: _level?.storageKey,
+      skipped: true,
+      updatedAt: DateTime.now().millisecondsSinceEpoch,
+    ));
     _skipped = true;
-    await _preferences?.setBool(_skippedKey, true);
-    await _stamp();
+    ProgressSyncService.markDirty();
   }
 
   /// Test/temizlik: tüm seviye durumunu sıfırlar.
@@ -118,6 +126,7 @@ class PlacementStore {
       _levelKey,
       _skippedKey,
       updatedAtKey,
+      PlacementPersistence.key('pending'),
     ]);
     _level = null;
     _skipped = false;

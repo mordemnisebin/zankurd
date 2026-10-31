@@ -982,23 +982,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> _toggleNotifications(bool value) async {
     final service = _notificationService;
     if (service == null) return;
-    await service.setEnabled(value);
-    if (value) {
-      // Ana anahtar açılınca seri uyarısı ve yarışma hatırlatması da kurulur
-      // (açılış eşitlemesi beklenmez).
-      await NotificationService.syncStreakWarning();
-      await NotificationSync.run(widget.repository);
-    }
-    if (!mounted) return;
-    setState(() {
-      _notificationsEnabled = value;
-      _systemPermissionDenied = false;
-    });
-    if (value) {
-      final granted = await service.hasSystemPermission();
-      if (!mounted || granted) return;
-      setState(() => _systemPermissionDenied = true);
-      _showSystemPermissionDialog();
+    try {
+      await service.setEnabled(value);
+      if (value) {
+        // Ana anahtar açılınca seri uyarısı ve yarışma hatırlatması da kurulur
+        // (açılış eşitlemesi beklenmez).
+        await NotificationService.syncStreakWarning();
+        await NotificationSync.run(widget.repository);
+      }
+      if (!mounted) return;
+      setState(() {
+        _notificationsEnabled = value;
+        _systemPermissionDenied = false;
+      });
+      if (value) {
+        final granted = await service.hasSystemPermission();
+        if (!mounted || granted) return;
+        setState(() => _systemPermissionDenied = true);
+        _showSystemPermissionDialog();
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'settings_notification_save');
+      if (!mounted) return;
+      setState(() => _notificationsEnabled = service.enabled);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
     }
   }
 

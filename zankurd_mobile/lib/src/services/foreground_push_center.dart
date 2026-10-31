@@ -9,7 +9,8 @@ import 'push_messaging_gateway.dart';
 ///
 /// Tek yayın akışı iki tüketiciye gider: üstteki bant
 /// (`ForegroundPushBanner`) iletiyi gösterir, [AppShell] ilgili sekmenin
-/// sayacını/listesini tazeler. Global durum yok: akış yalnız olay taşır.
+/// sayacını/listesini tazeler. Akış olay taşır; son ileti kimlikleri sınırlı
+/// bir bellekte tutulur, gönderim tekrarları ikinci bant açmaz.
 class ForegroundPushCenter {
   ForegroundPushCenter._();
 
@@ -17,11 +18,26 @@ class ForegroundPushCenter {
       StreamController<ForegroundPush>.broadcast();
   static StreamSubscription<ForegroundPush>? _subscription;
 
+  static final Set<String> _seenIds = <String>{};
+  static const _maxSeenIds = 256;
+
   static Stream<ForegroundPush> get events => _controller.stream;
 
   /// Bir iletiyi yayınlar (test ve [wire] kullanır).
   static void emit(ForegroundPush push) {
-    if (!_controller.isClosed) _controller.add(push);
+    if (_controller.isClosed) return;
+    final jobId = push.data['job_id'];
+    final messageId = push.messageId;
+    final key = jobId is String && jobId.trim().isNotEmpty
+        ? 'job:$jobId'
+        : messageId != null && messageId.trim().isNotEmpty
+        ? 'fcm:$messageId'
+        : null;
+    if (key != null) {
+      if (!_seenIds.add(key)) return;
+      if (_seenIds.length > _maxSeenIds) _seenIds.remove(_seenIds.first);
+    }
+    _controller.add(push);
   }
 
   /// [PushMessaging.gateway]in ön plan iletilerini yayına bağlar. İkinci
@@ -47,6 +63,7 @@ class ForegroundPushCenter {
   static void resetForTest() {
     unawaited(_subscription?.cancel());
     _subscription = null;
+    _seenIds.clear();
     unawaited(_controller.close());
     _controller = StreamController<ForegroundPush>.broadcast();
   }

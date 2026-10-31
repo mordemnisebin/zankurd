@@ -16,6 +16,8 @@
 /// `oda_davet_sql_test.dart`ta.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
@@ -33,6 +35,24 @@ class _Repo extends TestMockZanKurdRepository {
   _Repo({this._friendCount = 3});
 
   final int _friendCount;
+  String user = 'me';
+  @override
+  String get currentUserId => user;
+  Object? declineError;
+  Completer<String?>? pendingAccept;
+  int responses = 0;
+
+  @override
+  Future<String?> respondRoomInvite(
+    String inviteId, {
+    required bool accept,
+  }) async {
+    responses++;
+    if (!accept && declineError != null) throw declineError!;
+    if (accept && pendingAccept != null) return pendingAccept!.future;
+    return super.respondRoomInvite(inviteId, accept: accept);
+  }
+
   final List<List<String>> sent = [];
   final List<String> joined = [];
 
@@ -61,17 +81,26 @@ class _Repo extends TestMockZanKurdRepository {
   }
 }
 
-RoomInvite _invite({String id = 'inv1', String code = 'ZK-TEST'}) => RoomInvite(
-  id: id,
-  roomId: 'room-$id',
-  roomCode: code,
-  inviterId: 'u2',
-  inviterName: 'Rojda',
-  categoryName: 'Ziman',
-  playerCount: 2,
-  maxPlayers: 8,
-  createdAt: DateTime(2026, 10, 18),
-);
+RoomInvite _invite({
+  String id = 'inv1',
+  String code = 'ZK-TEST',
+  int? fee = 0,
+}) => RoomInvite.fromJson({
+  'invite_id': id,
+  'room_id': 'room-$id',
+  'room_code': code,
+  'inviter_id': 'u2',
+  'inviter_name': 'Rojda',
+  'category_name': 'Ziman',
+  'player_count': 2,
+  'max_players': 8,
+  'created_at': '2026-10-18',
+  if (fee != null) ...{
+    'entry_fee': fee,
+    'question_count': 10,
+    'seconds_per_question': 20,
+  },
+});
 
 GameRoom _room(_Repo repo, {List<Player>? players}) => repo
     .createRoom()
@@ -230,9 +259,11 @@ void main() {
   });
 
   group('alıcı kartı', () {
-    Widget host(_Repo repo) => testShell(
+    Widget host(_Repo repo, {String? target}) => testShell(
       child: Scaffold(
-        body: SingleChildScrollView(child: RoomInviteCard(repository: repo)),
+        body: SingleChildScrollView(
+          child: RoomInviteCard(repository: repo, targetInviteId: target),
+        ),
       ),
     );
 
@@ -253,6 +284,8 @@ void main() {
 
         expect(find.text('Rojda seni odaya çağırıyor'), findsOneWidget);
         expect(find.text('Ziman · 2/8 kişi'), findsOneWidget);
+        expect(find.text('Katıl · Ücretsiz'), findsOneWidget);
+        expect(find.text('Oda davetleri'), findsOneWidget);
 
         await tester.tap(find.byKey(const ValueKey('room-invite-decline')));
         await tester.pumpAndSettle();
@@ -260,6 +293,80 @@ void main() {
         expect(repo.joined, isEmpty);
       },
     );
+
+    testWidgets('eski davette ücret belirsizse yenile tahsilata yol açmaz', (
+      tester,
+    ) async {
+      final repo = _Repo()..seedRoomInviteForTesting(_invite(fee: null));
+      await tester.pumpWidget(host(repo));
+      await tester.pumpAndSettle();
+      expect(find.text('Katılım ücreti: Belirsiz'), findsOneWidget);
+      expect(find.byKey(const ValueKey('room-invite-join')), findsNothing);
+      await tester.tap(find.text('Tekrar dene'));
+      await tester.pumpAndSettle();
+      expect(repo.responses, 0);
+      expect(repo.joined, isEmpty);
+    });
+
+    testWidgets('ücretli oda şartları görünür ve iptalde davet bekler', (
+      tester,
+    ) async {
+      final repo = _Repo()..seedRoomInviteForTesting(_invite(fee: 25));
+      tester.view.physicalSize = const Size(320, 640);
+      tester.view.devicePixelRatio = 1;
+      tester.platformDispatcher.textScaleFactorTestValue = 2;
+      addTearDown(tester.view.reset);
+      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+      await tester.pumpWidget(host(repo, target: 'inv1'));
+      await tester.pumpAndSettle();
+      expect(find.text('Katılım ücreti: 25 jeton'), findsOneWidget);
+      expect(find.text('Katıl · 25 jeton'), findsOneWidget);
+      expect(find.text('Oda davetleri'), findsNothing);
+      expect(find.text('10 soru · soru başına 20 sn'), findsOneWidget);
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('room-invite-join')),
+      );
+      await tester.tap(find.byKey(const ValueKey('room-invite-join')));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 350));
+      expect(find.byType(AlertDialog), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('room-invite-fee-cancel')));
+      await tester.pumpAndSettle();
+      expect(repo.responses, 0);
+      expect(repo.joined, isEmpty);
+    });
+
+    testWidgets('yanıt beklerken hesap değişince yeni hesaptan katılmaz', (
+      tester,
+    ) async {
+      final repo = _Repo()
+        ..seedRoomInviteForTesting(_invite())
+        ..pendingAccept = Completer();
+      await tester.pumpWidget(host(repo));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('room-invite-join')));
+      repo.user = 'other';
+      repo.pendingAccept!.complete('123456');
+      await tester.pumpAndSettle();
+      expect(repo.joined, isEmpty);
+    });
+
+    testWidgets('ret için ağ hatası daveti saklar ve tekrar denenebilir', (
+      tester,
+    ) async {
+      final repo = _Repo()
+        ..seedRoomInviteForTesting(_invite())
+        ..declineError = const RoomInviteException(RoomInviteFailure.unknown);
+      await tester.pumpWidget(host(repo));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('room-invite-decline')));
+      await tester.pumpAndSettle();
+      expect(find.text('Bir şey ters gitti. Tekrar dene.'), findsOneWidget);
+      repo.declineError = null;
+      await tester.tap(find.text('Tekrar dene'));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('room-invite-card')), findsNothing);
+    });
 
     testWidgets('Katıl daveti kabul edip MEVCUT katılma yoluna kodu verir', (
       tester,

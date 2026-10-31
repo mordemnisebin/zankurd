@@ -3,6 +3,8 @@ import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/services/question_content_policy.dart';
+import 'package:zankurd_mobile/src/services/question_set_policy.dart';
+import 'support/widget_test_helpers.dart';
 
 /// Dersin sonundaki alıştırmanın derinliği.
 ///
@@ -73,6 +75,75 @@ const _added = <String, int>{
 };
 
 void main() {
+  const lessons = {
+    'hejmar': 'Ziman',
+    'lekera-bun': 'Ziman',
+    'rojen-hefteye': 'Ziman',
+    'demsal': 'Ziman',
+    'hesten-bingehin': 'Ziman',
+    'newroz': 'Çand',
+    'dengbeji': 'Çand',
+    'ciya-u-cem': 'Cografya',
+    'cih-u-war': 'Cografya',
+  };
+  for (final lesson in lessons.entries) {
+    test('${lesson.key}: ders sonu turunda ölçülen üretim var', () async {
+      final repository = freshMockRepository();
+      for (var run = 0; run < 8; run++) {
+        final quiz = await repository.loadLearningQuizQuestions(
+          category: lesson.value,
+          learningLessonId: lesson.key,
+          limit: 5,
+        );
+        expect(quiz, hasLength(5));
+        expect(quiz.take(2).where(QuestionSetPolicy.isProductionTask), isEmpty);
+        final production = quiz.where(QuestionSetPolicy.isProductionTask);
+        expect(production, isNotEmpty, reason: lesson.key);
+        for (final question in production) {
+          expect(const QuestionContentPolicy().isPlayable(question), isTrue);
+          if (lesson.key == 'ciya-u-cem') {
+            final words = question.answers;
+            expect(words, hasLength(7));
+            expect(
+              question.acceptsAnswer(
+                [words[2], words[1], words[0], ...words.skip(3)].join(' '),
+              ),
+              isTrue,
+            );
+            expect(question.acceptsAnswer(words.reversed.join(' ')), isFalse);
+          }
+          for (final ku in [true, false]) {
+            final localized = question.localized(isKu: ku, learning: true);
+            expect(localized.acceptsAnswer(question.correctAnswer), isTrue);
+            expect(localized.acceptsAnswer(''), isFalse);
+            expect(localized.acceptsAnswer('123xyz'), isFalse);
+          }
+        }
+        if (lesson.key == 'rojen-hefteye') {
+          const days = {
+            'Duşem',
+            'Sêşem',
+            'Çarşem',
+            'Pêncşem',
+            'În',
+            'Şemî',
+            'Yekşem',
+            'Pazartesi',
+            'Salı',
+            'Çarşamba',
+            'Perşembe',
+            'Cuma',
+            'Cumartesi',
+            'Pazar',
+          };
+          for (final question in quiz) {
+            expect(days, contains(question.correctAnswer));
+            expect(days.containsAll(question.answers), isTrue);
+          }
+        }
+      }
+    });
+  }
   group('sunucu dersleri (ders_2026_10_02)', serverLessonGuards);
 
   const policy = QuestionContentPolicy();

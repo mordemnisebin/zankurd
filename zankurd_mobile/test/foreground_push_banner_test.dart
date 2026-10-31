@@ -117,7 +117,7 @@ void main() {
     await tester.tap(open);
     await tester.pump();
 
-    expect(PushTapRouter.pending.value, PushTapTarget.friends);
+    expect(PushTapRouter.pending.value?.target, PushTapTarget.friends);
     expect(banner, findsNothing);
   });
 
@@ -131,12 +131,18 @@ void main() {
       ('async_duel_invite', PushTapTarget.duelInbox),
     ]) {
       events.add(
-        ForegroundPush(title: 'ZanKurd', body: 'x', data: {'kind': kind}),
+        ForegroundPush(
+          title: 'ZanKurd',
+          body: 'x',
+          data: {'kind': kind, 'invite_id': 'invite-7'},
+        ),
       );
       await tester.pump();
       await tester.tap(open);
       await tester.pump();
-      expect(PushTapRouter.take(), target, reason: kind);
+      final tap = PushTapRouter.take();
+      expect(tap?.target, target, reason: kind);
+      expect(tap?.inviteId, kind == 'room_invite' ? 'invite-7' : null);
     }
   });
 

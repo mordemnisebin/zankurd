@@ -31,9 +31,10 @@ import 'package:zankurd_mobile/src/models/room.dart';
 /// Bu bekçi SQL metnini okur. Mekanik ama yerinde: ödül tarafı
 /// `entry_fee` ile jeton YAZIYORSA, giriş tarafında da NEGATİF bir
 /// `coin_transactions` satırı olmak zorundadır. Ayrıca istemcinin sunduğu
-/// ücret ve soru sayısı kümeleri sunucunun kabul ettikleriyle birebir
-/// aynı olmalı — biri büyüyüp öbürü büyümezse oyuncu, sunucunun
-/// reddedeceği bir odayı kurmaya çalışır.
+/// ücret kümesi korunmalı, tarihsel soru sayıları desteklenmelidir.
+/// Yeni 20–50 soru seçenekleri için bu eski SQL kanıt değildir;
+/// canlı sözleşmenin genişletilmesi ayrı göç hazırlayıcısıyla doğrulanır
+/// (docs/room_limits_rollout_2026_10_31.md).
 void main() {
   final sql = File(
     'supabase/2026-08-19_gamification_and_custom_rooms.sql',
@@ -62,7 +63,7 @@ void main() {
     );
   });
 
-  test('istemcinin sunduğu ücret ve soru sayıları sunucununkiyle aynı', () {
+  test('ücret kümesi aynı kalır ve eski soru sayıları desteklenir', () {
     List<int> serverSet(String parameter) {
       final match = RegExp('$parameter not in \\(([^)]*)\\)').firstMatch(sql);
       expect(match, isNotNull, reason: '$parameter kontrolü bulunamadı.');
@@ -82,8 +83,8 @@ void main() {
     );
     expect(
       GameRoom.allowedQuestionCounts,
-      serverSet('p_question_count'),
-      reason: 'Arayüzün sunduğu soru sayıları sunucu kümesiyle uyuşmuyor.',
+      containsAll(serverSet('p_question_count')),
+      reason: 'Tarihsel 5/10/15 soru seçenekleri korunmalı.',
     );
   });
 }

@@ -328,13 +328,13 @@ void main() {
 
       gateway.onTap!(LocalNotificationPayload.streakWarning);
 
-      expect(PushTapRouter.take(), PushTapTarget.home);
+      expect(PushTapRouter.take()?.target, PushTapTarget.home);
     });
 
     test('bildirimle soğuk açılış başlatmada yönlendirilir', () async {
       await _enabledService(launch: LocalNotificationPayload.dailyReminder);
 
-      expect(PushTapRouter.take(), PushTapTarget.home);
+      expect(PushTapRouter.take()?.target, PushTapTarget.home);
     });
 
     test('zamanlanan her iki bildirim payload taşır', () async {

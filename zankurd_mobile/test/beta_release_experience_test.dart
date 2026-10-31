@@ -17,14 +17,21 @@ import 'support/widget_test_helpers.dart';
 
 class _TrackingRepository extends MockZanKurdRepository {
   int? dailyQuestionLimit;
+  int? dailyMaxDifficulty;
 
   @override
   Future<List<QuizQuestion>> loadDailyQuestions({
     int limit = 10,
     bool replay = false,
+    int? maxDifficulty,
   }) async {
     dailyQuestionLimit = limit;
-    return super.loadDailyQuestions(limit: limit, replay: replay);
+    dailyMaxDifficulty = maxDifficulty;
+    return super.loadDailyQuestions(
+      limit: limit,
+      replay: replay,
+      maxDifficulty: maxDifficulty,
+    );
   }
 }
 
@@ -142,10 +149,8 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('home-daily-task-start')));
     await tester.pumpAndSettle();
 
-    // 2026-10-29: ilk tur zorluk 1-2 ile sınırlandığından aday havuzu geniş
-    // istenir (bkz. daily_question_selector `maxDifficulty`); QUIZIN soru
-    // sayısı yine beş.
     expect(repository.dailyQuestionLimit, greaterThanOrEqualTo(5));
+    expect(repository.dailyMaxDifficulty, 2);
     expect(find.byType(QuizScreen), findsOneWidget);
     final quiz = tester.widget<QuizScreen>(find.byType(QuizScreen));
     expect(quiz.questions, hasLength(5));

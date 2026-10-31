@@ -325,19 +325,10 @@ class _SeviyeRepo extends MockZanKurdRepository {
 
   @override
   List<QuizQuestion> get playableQuestions => [
-    for (var i = 0; i < 30; i++)
-      QuizQuestion(
-        id: 'pl-$i',
-        category: const ['Ziman', 'Dîrok', 'Çand'][i % 3],
-        prompt: q.prompt,
-        promptTr: q.promptTr,
-        answers: q.answers,
-        answersTr: q.answersTr,
-        correctAnswer: q.correctAnswer,
-        correctAnswerTr: q.correctAnswerTr,
-        explanation: q.explanation,
-        difficulty: 1 + i % 3,
-      ),
+    QuizQuestion.fromJson({
+      ...q.toJson(),
+      'metadata': {'reviewStatus': 'approved', 'learningLessonId': 'fixture'},
+    }),
   ];
 }
 

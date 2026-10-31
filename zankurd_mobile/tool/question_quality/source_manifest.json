@@ -2,6 +2,21 @@
  "version": 1,
  "sources": [
   {
+   "id": "social_reliability_preview",
+   "description": "Offline room invitation and streak recovery simulator fixture",
+   "path": "tool/reliability_preview.dart",
+   "role": "test_fixture",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 1000,
+   "expectedRecordCount": null,
+   "notes": "Uses the runtime question bank and does not define any questions.",
+   "columns": {}
+  },
+  {
    "id": "t8_visual_preview",
    "description": "T8 offline visual regression fixture",
    "path": "tool/t8_web_preview.dart",

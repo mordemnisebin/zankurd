@@ -166,10 +166,11 @@ void main() {
     });
 
     test('kuyruk service-role ile claim edilir, jeton temizlenir', () {
-      expect(fn, contains('claim_push_outbox'));
+      expect(fn, contains('admin.rpc("claim_push_outbox_v2"'));
+      expect(fn, contains('admin.rpc("finish_push_outbox"'));
       expect(fn, contains('SUPABASE_SERVICE_ROLE_KEY'));
       expect(fn, contains('clear_fcm_token'));
-      expect(fn, contains('BATCH_LIMIT = 50'));
+      expect(fn, contains('BATCH_LIMIT = 20'));
       expect(fn, contains('FCM_SERVICE_ACCOUNT_JSON'));
       expect(
         fn,
@@ -179,20 +180,22 @@ void main() {
     });
 
     test('OAuth jetonu kuyruktan ÖNCE alınır (hata satırları yakmaz)', () {
-      expect(
-        fn.indexOf('await accessToken(account)'),
-        lessThan(fn.indexOf('admin.rpc("claim_push_outbox"')),
-      );
+      final oauth = fn.indexOf('await accessToken(account)');
+      final claim = fn.indexOf('admin.rpc("claim_push_outbox_v2"');
+      expect(oauth, isNonNegative);
+      expect(claim, greaterThan(oauth));
     });
 
     test(
       'iletinin biçimi python betiğiyle uyumlu: notification + data.kind',
       () {
         expect(lib, contains('notification'));
-        expect(lib, contains('data = { kind: job.kind }'));
+        expect(lib, contains('data.kind = job.kind'));
+        expect(lib, contains('job_id: job.job_id'));
         final py = File('tool/send_push_outbox.py').readAsStringSync();
-        expect(py, contains('"kind"'));
-        expect(py, contains('ELLE gönderir (yedek yol)'));
+        expect(py, contains('data["kind"] = job["kind"]'));
+        expect(py, contains('claim_push_outbox_v2'));
+        expect(py, contains('finish_push_outbox'));
       },
     );
 

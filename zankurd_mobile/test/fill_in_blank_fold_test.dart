@@ -77,6 +77,15 @@ void main() {
     expect(_fill('çil').matchAnswer('cil'), FreeTextMatch.none);
   });
 
+  test('Cuma ve çoğul fiil eki birbirinin yazım seçeneği değildir', () {
+    final friday = _fill(LearnerLexicon.byId('weekday-in')!.termKu);
+    final copula = _fill('in');
+    expect(friday.matchAnswer('în'), FreeTextMatch.exact);
+    expect(friday.matchAnswer('in'), FreeTextMatch.none);
+    expect(copula.matchAnswer('in'), FreeTextMatch.exact);
+    expect(copula.matchAnswer('În'), FreeTextMatch.none);
+  });
+
   test('sorunun başka şıkkının katlanmışıyla çakışan yazım reddedilir', () {
     const q = QuizQuestion(
       id: 'fill-rival',

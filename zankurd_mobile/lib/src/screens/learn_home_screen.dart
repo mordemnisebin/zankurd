@@ -14,6 +14,7 @@ class LearnHomeScreen extends StatelessWidget {
     this.displayName,
     this.scrollController,
     this.refreshSignal,
+    this.isVisible = true,
     this.onOpenLearning,
     this.onOpenPlay,
     super.key,
@@ -23,6 +24,7 @@ class LearnHomeScreen extends StatelessWidget {
   final String? displayName;
   final ScrollController? scrollController;
   final Listenable? refreshSignal;
+  final bool isVisible;
   final Future<void> Function()? onOpenLearning;
   final VoidCallback? onOpenPlay;
 
@@ -33,6 +35,7 @@ class LearnHomeScreen extends StatelessWidget {
       displayName: displayName,
       scrollController: scrollController,
       refreshSignal: refreshSignal,
+      isVisible: isVisible,
       onOpenLearning: onOpenLearning,
       onOpenPlay: onOpenPlay,
       // Konu ızgarasında dokunulan kategori doğrudan açılır (bkz.

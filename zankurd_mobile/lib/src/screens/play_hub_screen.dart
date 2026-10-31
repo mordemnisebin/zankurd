@@ -39,6 +39,7 @@ class PlayHubScreen extends StatefulWidget {
   const PlayHubScreen({
     required this.repository,
     this.refreshSignal,
+    this.isVisible = true,
     this.asyncDuelEnabled = kAsyncDuelEnabled,
     super.key,
   });
@@ -48,6 +49,7 @@ class PlayHubScreen extends StatefulWidget {
   /// Kabuk, bir sayfa kapanıp Yarış sekmesine dönülünce bunu tetikler;
   /// "Düellolarım" listesi (sonuç görüldü mü, rakip oynadı mı) tazelenir.
   final Listenable? refreshSignal;
+  final bool isVisible;
 
   /// Varsayılanı [kAsyncDuelEnabled]; testler ve ekran turu kartı bayrak
   /// kapalıyken de açabilsin diye parametredir.
@@ -635,6 +637,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         if (!locked)
           RoomInviteCard(
             repository: widget.repository,
+            isVisible: widget.isVisible,
             refreshSignal: widget.refreshSignal,
             topGap: false,
           ),
@@ -1538,6 +1541,20 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
       '${context.t(K.perQuestionSeconds, {'n': groupThousands(_selectedDuration)})} · '
       '${_selectedEntryFee == 0 ? context.t(K.freeEntrySummary) : '${groupThousands(_selectedEntryFee)} ${context.t(K.coinWord)}'}';
 
+  String _answerTimeLimit(BuildContext context) {
+    final totalSeconds = _selectedQuestionCount * _selectedDuration;
+    final minutes = totalSeconds ~/ 60;
+    final seconds = totalSeconds % 60;
+    final time = [
+      if (minutes > 0)
+        '${groupThousands(minutes)} ${context.t(K.minutes).toLowerCase()}',
+      if (seconds > 0)
+        '${groupThousands(seconds)} ${context.t(K.secondsShortUnit)}',
+    ].join(' ');
+    return '${groupThousands(_selectedQuestionCount)} ${context.t(K.soru)} × '
+        '${groupThousands(_selectedDuration)} ${context.t(K.secondsShortUnit)} → ≤ $time';
+  }
+
   @override
   void initState() {
     super.initState();
@@ -1806,6 +1823,17 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                   });
                                   if (_settingsOpen) _revealSettings();
                                 },
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  top: SahneSpace.x1,
+                                ),
+                                child: Text(
+                                  _answerTimeLimit(context),
+                                  style: SahneType.captionStrong.copyWith(
+                                    color: t.tx2,
+                                  ),
+                                ),
                               ),
                               if (_settingsOpen) ...[
                                 const SizedBox(height: SahneSpace.x3),

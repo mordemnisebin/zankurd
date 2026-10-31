@@ -20,6 +20,9 @@ class RoomInvite {
     required this.maxPlayers,
     required this.createdAt,
     this.inviterProfile,
+    this.entryFee,
+    this.questionCount,
+    this.secondsPerQuestion,
   });
 
   final String id;
@@ -31,6 +34,11 @@ class RoomInvite {
   final int playerCount;
   final int maxPlayers;
   final DateTime createdAt;
+
+  /// Eski sunucu ayarları döndürmez; bilinmeyen ücret ücretsiz sayılmaz.
+  final int? entryFee;
+  final int? questionCount;
+  final int? secondsPerQuestion;
 
   /// Davet edenin fotoğraf/kod kimliği (depo tamamlar; yoksa null).
   final PublicProfile? inviterProfile;
@@ -44,6 +52,12 @@ class RoomInvite {
     categoryName: json['category_name'] as String? ?? '',
     playerCount: (json['player_count'] as num?)?.toInt() ?? 1,
     maxPlayers: (json['max_players'] as num?)?.toInt() ?? 2,
+    entryFee: switch (json['entry_fee']) {
+      final int value when value >= 0 => value,
+      _ => null,
+    },
+    questionCount: json['question_count'] as int?,
+    secondsPerQuestion: json['seconds_per_question'] as int?,
     createdAt:
         DateTime.tryParse(json['created_at'] as String? ?? '') ??
         DateTime.now(),

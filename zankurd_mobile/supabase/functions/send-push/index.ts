@@ -13,11 +13,12 @@
 //   2. Google OAuth erişim jetonu (firebase.messaging kapsamı) ÖNCE alınır,
 //      kuyruk SONRA talep edilir: jeton alınamazsa satırlar "claimed"
 //      işaretlenmeden kalır, bir sonraki dakika yeniden denenir.
-//   3. `claim_push_outbox(p_limit => 50)` (service_role) satırları işaretleyip
-//      hedef jetonlarla döndürür. Satır bir kez talep edilir: FCM hatası
-//      alan ileti YENİDEN DENENMEZ (sonsuz döngü ve çift bildirim olmasın).
-//   4. Her iş için FCM `messages:send`. Jeton yoksa atlanır. FCM 404 /
-//      UNREGISTERED ise `clear_fcm_token` ile o kullanıcının jetonu temizlenir.
+//   3. `claim_push_outbox_v2` en çok 20 işi 120 saniyelik lease ile verir.
+//      Eski kalıcı claim RPC'sine fallback YOK; SQL sözleşmesi önce kurulmalı.
+//   4. En çok 5 eşzamanlı FCM çağrısı, her biri 10 sn zaman aşımı.
+//      `finish_push_outbox` lease kimliğiyle başarı/kalıcı hata/retry kaydeder.
+//      Süreç ölürse lease zaman aşımı işi yeniden alınabilir kılar.
+//      FCM kabulü ile DB ack'i atomik değildir; çok nadir tekrar mümkündür.
 //
 // ORTAM (kodda DEĞER YOK; `supabase secrets set` ile verilir):
 //   FCM_SERVICE_ACCOUNT_JSON  Firebase servis hesabı JSON'unun TÜM metni
@@ -29,18 +30,19 @@
 
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 import {
-  buildFcmMessage,
-  fcmErrorCode,
-  isUnregistered,
+  deliverPushJob,
   parseServiceAccount,
   type PushJob,
   type ServiceAccount,
   signServiceAccountJwt,
   timingSafeEqual,
+  validPushExpiry,
 } from "./lib.ts";
 
 const FCM_SCOPE = "https://www.googleapis.com/auth/firebase.messaging";
-const BATCH_LIMIT = 50;
+const BATCH_LIMIT = 20;
+const CONCURRENCY = 5;
+const REQUEST_TIMEOUT_MS = 10_000;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -70,6 +72,7 @@ async function accessToken(account: ServiceAccount): Promise<string> {
   }
   const assertion = await signServiceAccountJwt(account, FCM_SCOPE);
   const response = await fetch(account.token_uri, {
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
@@ -97,13 +100,19 @@ async function accessToken(account: ServiceAccount): Promise<string> {
 }
 
 Deno.serve(async (request: Request): Promise<Response> => {
-  if (request.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
-  if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+  if (request.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
+  if (request.method !== "POST") {
+    return json({ error: "method_not_allowed" }, 405);
+  }
 
   const expected = Deno.env.get("CRON_SECRET") ?? "";
   if (!expected) return json({ error: "server_misconfigured" }, 500);
   const presented = request.headers.get("x-cron-secret") ?? "";
-  if (!timingSafeEqual(presented, expected)) return json({ error: "unauthorized" }, 401);
+  if (!timingSafeEqual(presented, expected)) {
+    return json({ error: "unauthorized" }, 401);
+  }
 
   let account: ServiceAccount;
   let admin: SupabaseClient;
@@ -112,10 +121,22 @@ Deno.serve(async (request: Request): Promise<Response> => {
     admin = createClient(
       requiredEnv("SUPABASE_URL"),
       requiredEnv("SUPABASE_SERVICE_ROLE_KEY"),
-      { auth: { persistSession: false, autoRefreshToken: false } },
+      {
+        auth: { persistSession: false, autoRefreshToken: false },
+        global: {
+          fetch: (input, init) =>
+            fetch(input, {
+              ...init,
+              signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+            }),
+        },
+      },
     );
   } catch (error) {
-    console.error("send-push misconfigured", error instanceof Error ? error.message : "unknown");
+    console.error(
+      "send-push misconfigured",
+      error instanceof Error ? error.message : "unknown",
+    );
     return json({ error: "server_misconfigured" }, 500);
   }
 
@@ -124,67 +145,112 @@ Deno.serve(async (request: Request): Promise<Response> => {
     bearer = await accessToken(account);
   } catch (error) {
     // Kuyruğa henüz dokunulmadı: bir sonraki çalıştırma yeniden dener.
-    console.error("send-push oauth", error instanceof Error ? error.message : "unknown");
+    console.error(
+      "send-push oauth",
+      error instanceof Error ? error.message : "unknown",
+    );
     return json({ error: "oauth_failed" }, 502);
   }
 
-  const { data, error: claimError } = await admin.rpc("claim_push_outbox", {
-    p_limit: BATCH_LIMIT,
-  });
-  if (claimError) {
-    console.error("claim_push_outbox failed", claimError.code);
+  let data: unknown;
+  try {
+    const result = await admin.rpc("claim_push_outbox_v2", {
+      p_limit: BATCH_LIMIT,
+    });
+    if (result.error) {
+      console.error("claim_push_outbox_v2 failed", result.error.code);
+      return json({ error: "claim_failed" }, 500);
+    }
+    data = result.data;
+  } catch (_) {
     return json({ error: "claim_failed" }, 500);
   }
-  const jobs = (data ?? []) as PushJob[];
-  if (jobs.length === 0) return json({ claimed: 0, sent: 0, skipped: 0, failed: 0, cleared: 0 });
-
-  const fcmUrl = `https://fcm.googleapis.com/v1/projects/${account.project_id}/messages:send`;
-  let sent = 0;
-  let skipped = 0;
-  let failed = 0;
-  let cleared = 0;
-
-  for (const job of jobs) {
-    const token = job.fcm_token;
-    if (!token) {
-      skipped++;
-      continue;
-    }
-    try {
-      const response = await fetch(fcmUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${bearer}`,
-          "Content-Type": "application/json",
+  // Uyumsuz RPC yanıtında FCM'ye dokunma; lease sona erince güvenle yeniden alınır.
+  if (
+    !Array.isArray(data) || data.some((job) =>
+      !job ||
+      typeof job.job_id !== "string" || !job.job_id ||
+      typeof job.claim_token !== "string" || !job.claim_token ||
+      !Number.isInteger(job.attempt_count) || job.attempt_count < 1 ||
+      !validPushExpiry(job.expires_at)
+    )
+  ) {
+    return json({ error: "invalid_claim_contract" }, 500);
+  }
+  const jobs = data as PushJob[];
+  const counts = {
+    claimed: jobs.length,
+    sent: 0,
+    skipped: 0,
+    failed: 0,
+    retry: 0,
+    unsettled: 0,
+    cleared: 0,
+  };
+  const fcmUrl =
+    `https://fcm.googleapis.com/v1/projects/${account.project_id}/messages:send`;
+  let next = 0;
+  // Claim10sn + FCM10sn + token temizleme10sn + ack30sn için lease payı.
+  const startDeadline = Date.now() + 55_000;
+  async function worker() {
+    while (next < jobs.length) {
+      if (Date.now() >= startDeadline) {
+        counts.unsettled += jobs.length - next;
+        next = jobs.length;
+        return; // Kalan işler lease bitince yeniden alınır; FCM gönderilmez.
+      }
+      const job = jobs[next++];
+      const outcome = await deliverPushJob(job, {
+        send: async (_job, _token, payload) => {
+          const response = await fetch(fcmUrl, {
+            signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${bearer}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+          // Sonraki invocation OAuth'u yenilesin;401 retry sayısı SQL'de8 ile sınırlı.
+          if (response.status === 401) cachedToken = null;
+          return response;
         },
-        body: JSON.stringify(buildFcmMessage(job, token)),
+        finish: async (_job, completion) => {
+          const result = await admin.rpc("finish_push_outbox", {
+            p_job_id: _job.job_id,
+            p_claim_token: _job.claim_token,
+            p_outcome: completion.outcome,
+            p_error_code: completion.errorCode ?? null,
+            p_retry_after_seconds: completion.retryAfterSeconds ?? null,
+          });
+          if (result.error) {
+            console.error(
+              "finish_push_outbox failed",
+              _job.job_id,
+              result.error.code,
+            );
+          }
+          return !result.error && result.data === true;
+        },
+        clearToken: async (_job, token) => {
+          const result = await admin.rpc("clear_fcm_token", {
+            p_user_id: _job.to_user_id,
+            p_token: token,
+          });
+          if (result.error) {
+            console.error("clear_fcm_token failed", result.error.code);
+          } else counts.cleared++;
+          return !result.error;
+        },
       });
-      if (response.ok) {
-        await response.body?.cancel();
-        sent++;
-        continue;
+      counts[outcome]++;
+      if (outcome === "unsettled") {
+        console.error("push acknowledgement unsettled", job.job_id);
       }
-      let body: unknown = null;
-      try {
-        body = await response.json();
-      } catch (_) {
-        // gövde yok
-      }
-      failed++;
-      console.error("fcm send failed", job.job_id, response.status, fcmErrorCode(body));
-      if (isUnregistered(response.status, body)) {
-        const { error } = await admin.rpc("clear_fcm_token", {
-          p_user_id: job.to_user_id,
-          p_token: token,
-        });
-        if (error) console.error("clear_fcm_token failed", error.code);
-        else cleared++;
-      }
-    } catch (error) {
-      failed++;
-      console.error("fcm send error", job.job_id, error instanceof Error ? error.name : "unknown");
     }
   }
-
-  return json({ claimed: jobs.length, sent, skipped, failed, cleared });
+  await Promise.all(
+    Array.from({ length: Math.min(CONCURRENCY, jobs.length) }, worker),
+  );
+  return json(counts, counts.unsettled > 0 ? 502 : 200);
 });

@@ -102,12 +102,12 @@ void main() {
 
     test('bilinen tür true döner ve pending e yazılır', () {
       expect(PushTapRouter.offer({'kind': 'friend_request'}), isTrue);
-      expect(PushTapRouter.pending.value, PushTapTarget.friends);
+      expect(PushTapRouter.pending.value?.target, PushTapTarget.friends);
     });
 
     test('async_duel_invite offer edilince Düellolarım listesi bekler', () {
       expect(PushTapRouter.offer({'kind': 'async_duel_invite'}), isTrue);
-      expect(PushTapRouter.pending.value, PushTapTarget.duelInbox);
+      expect(PushTapRouter.pending.value?.target, PushTapTarget.duelInbox);
     });
 
     test('pending zaten aynı hedefi tutarken tekrar offer edilirse '
@@ -115,7 +115,7 @@ void main() {
       // Önce hedefi pending'e koy (henüz kimse tüketmedi) — tıpkı aynı
       // bildirime art arda iki kez dokunulmuş gibi.
       expect(PushTapRouter.offer({'kind': 'async_duel_result'}), isTrue);
-      expect(PushTapRouter.pending.value, PushTapTarget.playTab);
+      expect(PushTapRouter.pending.value?.target, PushTapTarget.playTab);
 
       var notifications = 0;
       void listener() => notifications++;
@@ -128,7 +128,7 @@ void main() {
       expect(PushTapRouter.offer({'kind': 'async_duel_result'}), isTrue);
 
       expect(notifications, 2);
-      expect(PushTapRouter.pending.value, PushTapTarget.playTab);
+      expect(PushTapRouter.pending.value?.target, PushTapTarget.playTab);
     });
   });
 
@@ -136,7 +136,7 @@ void main() {
     test('bekleyen hedefi alır ve kanalı boşaltır', () {
       PushTapRouter.offer({'kind': 'friend_request'});
 
-      expect(PushTapRouter.take(), PushTapTarget.friends);
+      expect(PushTapRouter.take()?.target, PushTapTarget.friends);
       expect(PushTapRouter.pending.value, isNull);
       expect(PushTapRouter.take(), isNull);
     });

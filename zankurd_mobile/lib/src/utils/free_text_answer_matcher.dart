@@ -25,6 +25,8 @@ const Set<String> kFoldDistinctWords = {
   'çil',
   'de',
   'dê',
+  'in',
+  'în',
   'me',
   'mê',
   'ser',

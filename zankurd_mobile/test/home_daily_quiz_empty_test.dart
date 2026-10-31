@@ -14,6 +14,7 @@ class _EmptyDailyRepository extends MockZanKurdRepository {
   Future<List<QuizQuestion>> loadDailyQuestions({
     int limit = 10,
     bool replay = false,
+    int? maxDifficulty,
   }) async => const [];
 }
 
