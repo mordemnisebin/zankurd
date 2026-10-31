@@ -220,9 +220,18 @@ class QuizResultProgressReceiptStore {
   }
 
   /// Yalnız doğrulanmış v3, onaylı ve bu sahibin solo tahsilatları.
-  Future<List<PaidFreezeIntent>> pendingSoloIntents(String userId) async {
+  Future<List<PaidFreezeIntent>> pendingSoloIntents(String userId) async =>
+      (await pendingPaidFreezeIntents(userId))
+          .where(
+            (intent) =>
+                intent.roundId.startsWith('solo:') && intent.roundId.length > 5,
+          )
+          .toList();
+
+  /// Yeni koruma teklifinden önce oda ve solo tahsilatlarını birlikte tara.
+  Future<List<PaidFreezeIntent>> pendingPaidFreezeIntents(String userId) async {
     await _preferences.reload();
-    final prefix = '$_keyPrefix${userId.trim()}:solo:';
+    final prefix = '$_keyPrefix${userId.trim()}:';
     final intents = <PaidFreezeIntent>[];
     for (final key in _preferences.getKeys().where(
       (key) => key.startsWith(prefix),
@@ -234,8 +243,7 @@ class QuizResultProgressReceiptStore {
             receipt?.freezeRequested == true &&
             intent != null &&
             intent.ownerId == userId &&
-            intent.roundId.startsWith('solo:') &&
-            intent.roundId.length > 5 &&
+            intent.roundId.isNotEmpty &&
             intent.idempotencyKey == key) {
           intents.add(intent);
         }

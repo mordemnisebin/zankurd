@@ -1876,6 +1876,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<bool> supportsExtendedRoomOptions() async => true;
+
+  @override
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,

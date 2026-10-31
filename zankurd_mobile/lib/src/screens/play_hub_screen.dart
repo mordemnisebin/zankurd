@@ -176,6 +176,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       );
     }
 
+    final extendedOptions = await widget.repository
+        .supportsExtendedRoomOptions();
+
     int coinBalance = 0;
     try {
       coinBalance = await widget.repository.loadCoinBalance();
@@ -194,6 +197,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         availableCategories: availableCategories,
         coinBalance: coinBalance,
         fixedMaxPlayers: friendDuel ? 2 : null,
+        extendedOptions: extendedOptions,
       ),
     );
 
@@ -207,6 +211,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     }
     if (config is! _CustomRoomConfig) return;
 
+    var reselectOptions = false;
     setState(() => _roomActionLoading = true);
     try {
       final room = await widget.repository.createOnlineRoom(
@@ -222,6 +227,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       if (!mounted) return;
       _openRoom(room, autoInvite: friendDuel);
     } catch (error, stack) {
+      reselectOptions = error is RoomOptionsUnsupported;
       ErrorReporter.record(error, stack, reason: 'play hub create room failed');
       if (!mounted) return;
       ScaffoldMessenger.of(
@@ -229,6 +235,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       ).showSnackBar(SnackBar(content: Text(context.t(K.roomOpenFailed))));
     } finally {
       if (mounted) setState(() => _roomActionLoading = false);
+    }
+    if (mounted && reselectOptions) {
+      await _createOnlineRoom(friendDuel: friendDuel);
     }
   }
 
@@ -1482,8 +1491,10 @@ class _CustomRoomBottomSheet extends StatefulWidget {
     required this.availableCategories,
     required this.coinBalance,
     this.fixedMaxPlayers,
+    required this.extendedOptions,
   });
 
+  final bool extendedOptions;
   final List<String> availableCategories;
   final int coinBalance;
 
@@ -1849,7 +1860,9 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                   columns: 3,
                                   children: [
                                     for (final count
-                                        in GameRoom.allowedQuestionCounts)
+                                        in (widget.extendedOptions
+                                            ? GameRoom.allowedQuestionCounts
+                                            : GameRoom.legacyQuestionCounts))
                                       _choiceChip(
                                         context,
                                         key: ValueKey(
@@ -1879,7 +1892,10 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                   columns: 4,
                                   children: [
                                     for (final seconds
-                                        in GameRoom.allowedDurations)
+                                        in (widget.extendedOptions
+                                            ? GameRoom.allowedDurations
+                                            : GameRoom
+                                                  .legacySecondsPerQuestion))
                                       _choiceChip(
                                         context,
                                         key: ValueKey(

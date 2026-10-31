@@ -745,41 +745,61 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   }
 
   Future<void> _runProgressSafely() async {
-    if (repository.currentUserId != _resultProgressOwner ||
-        LocalProgressScope.activeUserId != _resultProgressScope) {
-      return;
-    }
+    bool owns() =>
+        repository.currentUserId == _resultProgressOwner &&
+        LocalProgressScope.activeUserId == _resultProgressScope;
+    if (!owns()) return;
     try {
       final ownerId = repository.currentUserId?.trim() ?? '';
-      final roundId = 'solo:${_effectiveRoundId ?? _fallbackFreezeRoundId}';
+      final roundToken = _effectiveRoundId ?? _fallbackFreezeRoundId;
+      final roundId = 'solo:$roundToken';
       final stages = ownerId.isEmpty ? null : await _defaultStageRecorder();
       final resumed = await stages?.read(userId: ownerId, roomId: roundId);
-      final streak = await _resolveStreakDecision(
-        resumed: resumed,
-        receiptStore: stages,
-        receiptRoundId: roundId,
-        idempotencyKey: QuizResultProgressReceiptStore.keyFor(
-          userId: ownerId,
-          roomId: roundId,
-        ),
-        recordStage: stages == null
-            ? null
-            : (stage, {bool freezeRequested = false}) => stages.write(
-                userId: ownerId,
-                roomId: roundId,
-                receipt: QuizResultReceipt(
-                  stage: stage,
-                  freezeRequested: freezeRequested,
+      _StreakOutcome? streak;
+      var freezePending = false;
+      try {
+        streak = await _resolveStreakDecision(
+          resumed: resumed,
+          receiptStore: stages,
+          receiptRoundId: roundId,
+          idempotencyKey: QuizResultProgressReceiptStore.keyFor(
+            userId: ownerId,
+            roomId: roundId,
+          ),
+          recordStage: stages == null
+              ? null
+              : (stage, {bool freezeRequested = false}) => stages.write(
+                  userId: ownerId,
+                  roomId: roundId,
+                  receipt: QuizResultReceipt(
+                    stage: stage,
+                    freezeRequested: freezeRequested,
+                  ),
                 ),
-              ),
-      );
-      if (repository.currentUserId != _resultProgressOwner ||
-          LocalProgressScope.activeUserId != _resultProgressScope) {
-        return;
+        );
+      } on _StreakFreezePending {
+        freezePending = true;
       }
-      await _recordProgressAndAnalytics(streak);
-    } on _StreakFreezePending {
-      _offerStreakFreezeRetry();
+      if (!owns()) return;
+      // Tahsilat makbuzu beklerken tamamlanan turun ilerlemesi kaybolmaz.
+      // Ayrı ad alanı, ödeme tekrarını XP/ustalık/görev tekrarından ayırır.
+      // Seri normal oyun olarak kaydolur; geç gelen koruma tarihli niyetle
+      // bu geçmişi birleştirir. Ödeme makbuzu burada asla ezilmez.
+      Future<void> record() async {
+        if (!owns()) throw StateError('Solo result owner changed.');
+        await _recordProgressAndAnalytics(streak);
+      }
+
+      if (stages == null) {
+        await record();
+      } else {
+        await stages.runOnce(
+          userId: ownerId,
+          roomId: 'solo-progress:$roundToken',
+          action: record,
+        );
+      }
+      if (freezePending && owns()) _offerStreakFreezeRetry();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'quiz result progress');
     }
@@ -939,8 +959,29 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       }
     }
 
+    // Tur anahtarı yalnız aynı turdaki tekrarları tekilleştirir. Önceki
+    // turdaki belirsiz tahsilat çözülmeden yeni anahtar üretmek, aynı seri
+    // kırılması için yeniden 50 jeton çekiyordu.
+    Future<void> reconcileEarlierCharges() async {
+      if (receiptStore == null || operationOwner == null) return;
+      final pending = await receiptStore.pendingPaidFreezeIntents(
+        operationOwner,
+      );
+      requireOwner();
+      for (final intent in pending) {
+        if (intent.roundId == receiptRoundId) continue;
+        await _applyPaidStreakFreeze(
+          intent,
+          receiptStore,
+          operationRepository,
+          requireOwner,
+        );
+      }
+    }
+
     requireOwner();
     final premium = context.read<PremiumService>();
+    if (!practice) await reconcileEarlierCharges();
     final streakStore = await StreakStore.load();
     requireOwner();
     // Alıştırma (yanlış tekrarı) seriyi ne uzatır ne de dondurma teklifi
@@ -1068,6 +1109,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         operationOwner == null ||
         operationOwner.isEmpty) {
       throw const _StreakFreezePending();
+    }
+    // Diyalog açıkken başka sonuç/soğuk açılış kurtarması çalışmış olabilir.
+    await reconcileEarlierCharges();
+    requireOwner();
+    if (!streakStore.willBreakOnPlay()) {
+      await recordStage?.call(QuizResultReceiptStage.freezeSkipped);
+      return _StreakOutcome(
+        streak: await streakStore.recordPlay(),
+        isNewDay: isNewDay,
+      );
     }
     final intent = await streakStore.createPaidFreezeIntent(
       ownerId: operationOwner,
@@ -1252,7 +1303,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final isNewDay = streakOutcome.isNewDay;
     // Misafir sayacı oyunun bittiği anda, ilerleme yazımından BAĞIMSIZ
     // sayılır (ekran kapansa ya da seviye atlansa oyun düşmesin).
-    final guestSaveCount = GuestSavePrompt.countGame(context);
+    final guestSaveCount = mounted ? GuestSavePrompt.countGame(context) : null;
     final mistakeStore = await MistakeStore.load();
     final achievementStore = await AchievementStore.load();
     final newAchievements = await achievementStore.recordQuizResult(

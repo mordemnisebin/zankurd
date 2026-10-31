@@ -386,7 +386,7 @@ class StreakStore {
       final keepNewer =
           currentDay != null && currentDay.compareTo(targetDay) > 0;
       final sameDay = currentDay == targetDay;
-      final mergedCurrent = keepNewer
+      var mergedCurrent = keepNewer
           ? currentValue
           : sameDay && currentValue > targetValue
           ? currentValue
@@ -396,11 +396,40 @@ class StreakStore {
       final played = {
         ...?preferences.getStringList(playedDaysKey),
         ...List<String>.from(target['playedDays'] as List),
+        // Eski kurulumlarda takvim olmadan da son oynama günü saklanır.
+        if (currentDay != null &&
+            !preferences.containsKey(playedDaysKey) &&
+            !preferences.containsKey(frozenDaysKey))
+          currentDay,
       };
       final frozen = {
         ...?preferences.getStringList(frozenDaysKey),
         ...List<String>.from(target['frozenDays'] as List),
       }..removeAll(played);
+      var recoveredBest = targetBest;
+      if (keepNewer) {
+        // Ödeme beklerken normal oyun seriyi 1'e indirmiş olabilir.
+        // Sabit hedefi izleyen kesintisiz takvimi yeniden hesapla: yalnız
+        // oynanmış günler +1 eder, dondurulmuş günler köprü görevi görür.
+        // Güncel değere eklememek journal tekrarlarını idempotent tutar.
+        var recoveredCurrent = targetValue;
+        var day = DateTime.parse(targetDay);
+        while (_dayKey(day).compareTo(currentDay) < 0) {
+          day = DateTime(day.year, day.month, day.day + 1);
+          final key = _dayKey(day);
+          if (played.contains(key)) {
+            recoveredCurrent += 1;
+          } else if (!frozen.contains(key)) {
+            break;
+          }
+          if (recoveredCurrent > recoveredBest) {
+            recoveredBest = recoveredCurrent;
+          }
+          if (key == currentDay && recoveredCurrent > mergedCurrent) {
+            mergedCurrent = recoveredCurrent;
+          }
+        }
+      }
       Future<void> checked(Future<bool> write) async {
         if (!await write) throw StateError('Paid streak freeze write failed.');
       }
@@ -409,7 +438,7 @@ class StreakStore {
       await checked(
         preferences.setInt(
           bestKey,
-          currentBest > targetBest ? currentBest : targetBest,
+          currentBest > recoveredBest ? currentBest : recoveredBest,
         ),
       );
       await checked(
@@ -592,6 +621,11 @@ class StreakStore {
     // Kırılan gün = kaçırılan gün (dün). Sunucu bunu bugünden en çok 1 gün
     // önce kabul eder (24 saat kuralı) ve ayı kendi saatiyle belirler.
     breakDay = _dayKey(DateTime(today.year, today.month, today.day - 1));
+    // Gecikmiş koruma kayıp seri kaydından sonra uygulanmış olabilir.
+    // Artık köprülenmiş bir gün için ikinci ücretli onarım sunma.
+    if (_frozenDays.contains(breakDay) || _playedDays.contains(breakDay)) {
+      return null;
+    }
     if (lastDay == twoAgo && _current > 0) {
       lost = _current;
       playedToday = false;

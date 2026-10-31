@@ -114,6 +114,111 @@ void main() {
     },
   );
 
+  test('gecikmiş koruma yeni günü eski seriye bağlar; aynı gün tekrar testi '
+      'sıfırlanmış yeni sayacı sessiz bırakıyordu', () async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.streak.current': 7,
+      'zankurd.streak.best': 7,
+      'zankurd.streak.lastDay': '2026-06-12',
+    });
+    final store = await StreakStore.load();
+    expect(await store.recordPlay(now: DateTime(2026, 6, 16)), 1);
+    await store.applyPaidFreezeIntent(_paidIntent);
+    expect(store.effectiveStreak(now: DateTime(2026, 6, 16)), 9);
+    expect(store.best, 9);
+    expect(store.lastDay, '2026-06-16');
+
+    StreakStore.resetInstance();
+    final reloaded = await StreakStore.load();
+    await reloaded.applyPaidFreezeIntent(_paidIntent);
+    expect(reloaded.effectiveStreak(now: DateTime(2026, 6, 16)), 9);
+    expect(await reloaded.recordPlay(now: DateTime(2026, 6, 17)), 10);
+    await reloaded.applyPaidFreezeIntent(_paidIntent);
+    expect(reloaded.effectiveStreak(now: DateTime(2026, 6, 17)), 10);
+    expect(reloaded.best, 10);
+  });
+
+  test('aynı gün normal ilerleme geç korumayı bastırmaz; eski testler '
+      'ödeme belirsizken normal gün kaydını yapmıyordu', () async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.streak.current': 7,
+      'zankurd.streak.best': 7,
+      'zankurd.streak.lastDay': '2026-06-12',
+    });
+    final store = await StreakStore.load();
+    expect(await store.recordPlay(now: DateTime(2026, 6, 15)), 1);
+    await store.applyPaidFreezeIntent(_paidIntent);
+    expect(store.effectiveStreak(now: DateTime(2026, 6, 15)), 8);
+    expect(store.best, 8);
+    await store.applyPaidFreezeIntent(_paidIntent);
+    expect(store.effectiveStreak(now: DateTime(2026, 6, 15)), 8);
+  });
+
+  test('gecikmiş koruma dondurulan günü puana katmaz; eski testler '
+      'koruma sonrası köprüyü kapsamıyordu', () async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.streak.current': 7,
+      'zankurd.streak.best': 7,
+      'zankurd.streak.lastDay': '2026-06-12',
+      'zankurd.streak.freeze': 1,
+    });
+    final store = await StreakStore.load();
+    await store.recordPlay(now: DateTime(2026, 6, 16));
+    await store.freezeAndRecordPlay(now: DateTime(2026, 6, 18));
+    await store.applyPaidFreezeIntent(_paidIntent);
+    expect(store.effectiveStreak(now: DateTime(2026, 6, 18)), 10);
+    expect(store.best, 10);
+    expect(store.freezeCount, 0);
+    expect(store.frozenDays, contains('2026-06-17'));
+  });
+
+  test('başarılı geç koruma yeniden ücretli onarım önermez; eski testler '
+      'koruma öncesi normal oyunun kayıp seri kaydını kapsamıyordu', () async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.streak.current': 7,
+      'zankurd.streak.best': 7,
+      'zankurd.streak.lastDay': '2026-06-12',
+    });
+    final today = DateTime(2026, 6, 14);
+    final store = await StreakStore.load();
+    final intent = await store.createPaidFreezeIntent(
+      ownerId: 'test-owner',
+      roundId: 'solo:store-test',
+      idempotencyKey: _paidIntent.idempotencyKey,
+      playedAt: today,
+    );
+    expect(await store.recordPlay(now: today), 1);
+    expect(store.repairOffer(now: today), isNotNull);
+    await store.applyPaidFreezeIntent(intent);
+    expect(store.effectiveStreak(now: today), 8);
+    expect(store.repairOffer(now: today), isNull);
+    StreakStore.resetInstance();
+    final restored = await StreakStore.load();
+    expect(restored.repairOffer(now: today), isNull);
+    // Koruma, daha sonra oluşan gerçek bir kırılmanın onarımını engellemez.
+    expect(restored.repairOffer(now: DateTime(2026, 6, 16)), isNotNull);
+  });
+
+  test('gecikmiş koruma sonraki boş günü atlamaz; yalnız anlık başarı '
+      'testleri kurtarılan rekoru ve yeni kırılmayı kaçırıyordu', () async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.streak.current': 7,
+      'zankurd.streak.best': 7,
+      'zankurd.streak.lastDay': '2026-06-12',
+    });
+    final store = await StreakStore.load();
+    await store.recordPlay(now: DateTime(2026, 6, 16));
+    await store.recordPlay(now: DateTime(2026, 6, 18));
+    await store.applyPaidFreezeIntent(_paidIntent);
+    expect(store.effectiveStreak(now: DateTime(2026, 6, 18)), 1);
+    expect(store.best, 9);
+    expect(store.lastDay, '2026-06-18');
+    expect(store.frozenDays, isNot(contains('2026-06-17')));
+    await store.applyPaidFreezeIntent(_paidIntent);
+    expect(store.effectiveStreak(now: DateTime(2026, 6, 18)), 1);
+    expect(store.best, 9);
+  });
+
   test(
     'interrupted paid freeze completes its target without another increment',
     () async {

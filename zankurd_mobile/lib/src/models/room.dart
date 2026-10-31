@@ -413,8 +413,9 @@ bool isSupportedRoomCode(String input) {
 }
 
 class GameRoom {
-  // Yeni seçenekler sunucu sınırları göçü uygulanmadan yayımlanmamalı.
-  // Bkz. docs/room_limits_rollout_2026_10_31.md.
+  // Yeni seçenekler yalnız sunucunun doğrulama kapısı destekliyorsa sunulur.
+  static const legacySecondsPerQuestion = [10, 15, 20, 30, 45, 60];
+  static const legacyQuestionCounts = [5, 10, 15];
   static const allowedSecondsPerQuestion = [10, 15, 20, 30, 45, 60, 90, 120];
   static const allowedEntryFees = [0, 25, 50, 100];
   static const allowedQuestionCounts = [5, 10, 15, 20, 25, 30, 40, 50];
@@ -508,4 +509,9 @@ class GameRoom {
       isCustom: isCustom ?? this.isCustom,
     );
   }
+}
+
+/// Sunucu seçenekleri daraldı; yeniden seçim gerekir, sessizce değer değiştirilmez.
+class RoomOptionsUnsupported implements Exception {
+  const RoomOptionsUnsupported();
 }

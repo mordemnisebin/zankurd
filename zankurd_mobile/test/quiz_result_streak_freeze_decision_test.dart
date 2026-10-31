@@ -14,6 +14,8 @@ import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
+import 'package:zankurd_mobile/src/models/answer_record.dart';
+import 'package:zankurd_mobile/src/services/paid_freeze_recovery_service.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/services/quiz_reward_settlement_service.dart';
@@ -92,7 +94,18 @@ void main() {
           wrongCount: 0,
           totalQuestions: 1,
           bestStreak: 1,
-          answerRecords: const [],
+          answerRecords: const [
+            AnswerRecord(
+              id: 'freeze-progress-question',
+              category: 'Ziman',
+              prompt: 'p',
+              answers: ['A', 'B'],
+              correctAnswer: 'A',
+              selectedAnswer: 'A',
+              explanation: '',
+              responseMs: 4000,
+            ),
+          ],
           coinsAwarded: 10,
           resultOwnerUserId: solo ? null : userId,
           rewardSettlementState: solo
@@ -104,6 +117,96 @@ void main() {
       ),
     );
   }
+
+  testWidgets(
+    'bekçi: belirsiz solo ödeme XP ustalık görevini yutmaz; yalnız seri kurtarması kaybı gizliyordu',
+    (tester) async {
+      await reset(breakingStreak());
+      final repository = _FreezeRepository(balance: 500, loseEveryReply: true);
+      await pump(tester, repository, solo: true, roundId: 'pending-progress');
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Koru (50)'));
+      await tester.pumpAndSettle();
+      expect(repository.spendCalls, 2);
+      expect((await XPStore.load()).totalXP, 90);
+      expect((await MasteryStore.load()).correctCount('Ziman'), 1);
+      expect((await DailyMissionStore.load()).correctAnswersToday, 1);
+
+      await tester.pumpWidget(const SizedBox.shrink());
+      repository.loseEveryReply = false;
+      StreakStore.resetInstance();
+      XPStore.resetInstance();
+      MasteryStore.resetInstance();
+      DailyMissionStore.resetInstance();
+      expect(
+        await PaidFreezeRecoveryService.recoverPendingSolo(repository),
+        isTrue,
+      );
+      expect((await StreakStore.load()).effectiveStreak(), 8);
+      await pump(tester, repository, solo: true, roundId: 'pending-progress');
+      await tester.pumpAndSettle();
+      expect(
+        (await XPStore.load()).totalXP,
+        90,
+        reason: 'yeniden açılış iki kez ödüllendirmez',
+      );
+      expect((await MasteryStore.load()).correctCount('Ziman'), 1);
+      expect((await DailyMissionStore.load()).correctAnswersToday, 1);
+      expect(repository.charged, hasLength(1));
+    },
+  );
+
+  testWidgets(
+    'bekçi: ikinci tur aynı seri için yeniden ücretlenmez; tur bazlı anahtar çift tahsilatı gizliyordu',
+    (tester) async {
+      await reset(breakingStreak());
+      final repository = _FreezeRepository(balance: 500, loseEveryReply: true);
+      await pump(tester, repository, solo: true, roundId: 'first-pending');
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Koru (50)'));
+      await tester.pumpAndSettle();
+      await tester.pumpWidget(const SizedBox.shrink());
+
+      await pump(tester, repository, solo: true, roundId: 'second-pending');
+      await tester.pumpAndSettle();
+      expect(find.text('Koru (50)'), findsNothing);
+      expect(repository.keysSeen.toSet(), hasLength(1));
+      expect(
+        (await XPStore.load()).totalXP,
+        150,
+        reason: 'ikinci tur ilerler; günlük bonus yinelenmez',
+      );
+      expect((await MasteryStore.load()).correctCount('Ziman'), 2);
+
+      repository.loseEveryReply = false;
+      await tester.tap(find.text('Tekrar dene'));
+      await tester.pumpAndSettle();
+      expect(repository.keysSeen.toSet(), hasLength(1));
+      expect(repository.charged, hasLength(1));
+      expect((await StreakStore.load()).effectiveStreak(), 8);
+      expect((await XPStore.load()).totalXP, 150);
+      expect((await DailyMissionStore.load()).correctAnswersToday, 2);
+    },
+  );
+
+  testWidgets(
+    'bekçi: bekleyen oda tahsilatı solo turda yinelenmez; yalnız solo taraması oda borcunu gizliyordu',
+    (tester) async {
+      await reset(breakingStreak());
+      final repository = _FreezeRepository(balance: 500, loseEveryReply: true);
+      await pump(tester, repository);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Koru (50)'));
+      await tester.pumpAndSettle();
+      await tester.pumpWidget(const SizedBox.shrink());
+      await pump(tester, repository, solo: true, roundId: 'after-room');
+      await tester.pumpAndSettle();
+      expect(find.text('Koru (50)'), findsNothing);
+      expect(repository.keysSeen.toSet(), hasLength(1));
+      expect(repository.charged, hasLength(1));
+      expect((await XPStore.load()).totalXP, 90);
+    },
+  );
 
   testWidgets('solo koruma boş olmayan tur kimliğiyle seriyi korur', (
     tester,

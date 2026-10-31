@@ -85,6 +85,7 @@ RoomInvite _invite({
   String id = 'inv1',
   String code = 'ZK-TEST',
   int? fee = 0,
+  bool legacy = false,
 }) => RoomInvite.fromJson({
   'invite_id': id,
   'room_id': 'room-$id',
@@ -100,7 +101,7 @@ RoomInvite _invite({
     'question_count': 10,
     'seconds_per_question': 20,
   },
-});
+}, hasLegacyTerms: legacy);
 
 GameRoom _room(_Repo repo, {List<Player>? players}) => repo
     .createRoom()
@@ -294,19 +295,59 @@ void main() {
       },
     );
 
-    testWidgets('eski davette ücret belirsizse yenile tahsilata yol açmaz', (
-      tester,
-    ) async {
-      final repo = _Repo()..seedRoomInviteForTesting(_invite(fee: null));
-      await tester.pumpWidget(host(repo));
-      await tester.pumpAndSettle();
-      expect(find.text('Katılım ücreti: Belirsiz'), findsOneWidget);
-      expect(find.byKey(const ValueKey('room-invite-join')), findsNothing);
-      await tester.tap(find.text('Tekrar dene'));
-      await tester.pumpAndSettle();
-      expect(repo.responses, 0);
-      expect(repo.joined, isEmpty);
-    });
+    testWidgets(
+      'bozuk modern ücret bilinmiyorsa tahsilat olmaz; eski fallback sanılınca sessiz kalır',
+      (tester) async {
+        final repo = _Repo()..seedRoomInviteForTesting(_invite(fee: null));
+        await tester.pumpWidget(host(repo));
+        await tester.pumpAndSettle();
+        expect(find.text('Katılım ücreti: Belirsiz'), findsOneWidget);
+        expect(find.byKey(const ValueKey('room-invite-join')), findsNothing);
+        await tester.tap(find.text('Tekrar dene'));
+        await tester.pumpAndSettle();
+        expect(repo.responses, 0);
+        expect(repo.joined, isEmpty);
+      },
+    );
+
+    testWidgets(
+      'eski RPC ücretsiz daveti kilitlemez; yalnız modern ücretli fixture sessiz bıraktı',
+      (tester) async {
+        tester.view.physicalSize = const Size(320, 640);
+        tester.view.devicePixelRatio = 1;
+        tester.platformDispatcher.textScaleFactorTestValue = 2;
+        addTearDown(tester.view.reset);
+        addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+        final repo = _Repo()
+          ..seedRoomInviteForTesting(_invite(fee: null, legacy: true));
+        await tester.pumpWidget(host(repo));
+        await tester.pumpAndSettle();
+        expect(
+          find.text('Katılım ücreti: Belirsiz (0–100 jeton)'),
+          findsOneWidget,
+        );
+        final join = find.byKey(const ValueKey('room-invite-join'));
+        await tester.ensureVisible(join);
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+        await tester.tap(join);
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 350));
+        expect(repo.responses, 0);
+        expect(repo.joined, isEmpty);
+        await tester.tap(find.byKey(const ValueKey('room-invite-fee-cancel')));
+        await tester.pumpAndSettle();
+        expect(repo.responses, 0);
+        await tester.tap(join);
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 350));
+        await tester.tap(find.byKey(const ValueKey('room-invite-fee-confirm')));
+        await tester.pumpAndSettle();
+        expect(repo.responses, 1);
+        expect(repo.joined, ['ZK-TEST']);
+        expect(find.byType(RoomScreen), findsOneWidget);
+      },
+    );
 
     testWidgets('ücretli oda şartları görünür ve iptalde davet bekler', (
       tester,

@@ -19,6 +19,12 @@ class _CapturingRepository extends MockZanKurdRepository {
   int? capturedEntryFee;
   int? capturedMaxPlayers;
   String? capturedCategory;
+  bool extendedOptions = true;
+  bool rejectNextOptions = false;
+  int creates = 0;
+
+  @override
+  Future<bool> supportsExtendedRoomOptions() async => extendedOptions;
 
   @override
   Future<GameRoom> createOnlineRoom({
@@ -28,6 +34,12 @@ class _CapturingRepository extends MockZanKurdRepository {
     int entryFee = 0,
     int maxPlayers = 2,
   }) async {
+    creates++;
+    if (rejectNextOptions) {
+      rejectNextOptions = false;
+      extendedOptions = false;
+      throw const RoomOptionsUnsupported();
+    }
     capturedCategory = category;
     capturedSeconds = secondsPerQuestion;
     capturedQuestionCount = questionCount;
@@ -193,13 +205,69 @@ void main() {
     _CapturingRepository repository,
   ) async {
     await tester.pumpWidget(
-      testShell(child: PlayHubScreen(repository: repository)),
+      testShell(
+        child: Scaffold(body: PlayHubScreen(repository: repository)),
+      ),
     );
     await tester.pumpAndSettle();
     await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
   }
+
+  testWidgets(
+    'göçsüz sunucuda 50/120 açılmaz; mock hep yeni sınırları kabul ettiği için sessiz kaldı',
+    (tester) async {
+      final repository = _CapturingRepository()..extendedOptions = false;
+      await openCreateSheet(tester, repository);
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('custom-room-settings-row')),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('custom-room-count-50')), findsNothing);
+      expect(
+        find.byKey(const ValueKey('custom-room-duration-120')),
+        findsNothing,
+      );
+      expect(
+        find.byKey(const ValueKey('custom-room-count-15')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('custom-room-duration-60')),
+        findsOneWidget,
+      );
+    },
+  );
+
+  testWidgets(
+    'sunucu sınır reddinde yeniden seçtirir; ağ başarısı fixture geri dönüşü sessiz bıraktı',
+    (tester) async {
+      final repository = _CapturingRepository()..rejectNextOptions = true;
+      await openCreateSheet(tester, repository);
+      await tester.tap(find.byKey(const ValueKey('custom-room-open')));
+      await tester.pumpAndSettle();
+      expect(repository.creates, 1);
+      expect(repository.capturedQuestionCount, isNull);
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('custom-room-settings-row')),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('custom-room-settings-row')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('custom-room-count-50')), findsNothing);
+      expect(
+        find.byKey(const ValueKey('custom-room-duration-120')),
+        findsNothing,
+      );
+      expect(
+        find.byKey(const ValueKey('custom-room-count-15')),
+        findsOneWidget,
+      );
+    },
+  );
 
   for (final scale in [1.0, 2.0]) {
     testWidgets(

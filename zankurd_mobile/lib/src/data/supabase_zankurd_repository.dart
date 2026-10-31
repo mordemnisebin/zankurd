@@ -924,6 +924,46 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     );
   }
 
+  bool? _extendedRoomOptionsSupported;
+
+  @override
+  Future<bool> supportsExtendedRoomOptions() async {
+    final known = _extendedRoomOptionsSupported;
+    if (known != null) return known;
+    try {
+      // Her iki sunucu gövdesi de negatif ücreti kilit, oda, üyelik ve
+      // tahsilattan ÖNCE reddeder. Geçerli bir istekle oda açarak yoklama yok.
+      await client.rpc(
+        'create_online_room_v2',
+        params: {
+          'p_category_names': <String>[],
+          'p_seconds_per_question': 120,
+          'p_question_count': 50,
+          'p_entry_fee': -1,
+        },
+      );
+    } on PostgrestException catch (error, stack) {
+      if (error.code == 'P0001') {
+        if (error.message == 'Unsupported entry fee') {
+          return _extendedRoomOptionsSupported = true;
+        }
+        if (_isRoomOptionsRejection(error)) {
+          return _extendedRoomOptionsSupported = false;
+        }
+      }
+      _recordError(error, stack, reason: 'room options capability');
+    } catch (error, stack) {
+      // Geçici hatayı yetenek bilgisi olarak önbelleğe alma.
+      _recordError(error, stack, reason: 'room options capability');
+    }
+    return false;
+  }
+
+  static bool _isRoomOptionsRejection(PostgrestException error) =>
+      error.code == 'P0001' &&
+      (error.message == 'Unsupported question count' ||
+          error.message == 'Unsupported seconds per question');
+
   @override
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
@@ -968,6 +1008,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'createOnlineRoom failed');
+      if (error is PostgrestException && _isRoomOptionsRejection(error)) {
+        _extendedRoomOptionsSupported = false;
+        throw const RoomOptionsUnsupported();
+      }
       rethrow;
     }
   }
@@ -4485,50 +4529,65 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     if (_roomInviteRpcSupported == false) return const [];
     if (client.auth.currentUser == null) return const [];
     try {
-      List<dynamic> res;
-      if (inviteId != null) {
-        res = await client.rpc<List<dynamic>>(
-          'list_my_room_invites',
-          params: {'p_invite_id': inviteId},
-        );
-      } else {
+      var legacyTerms = false;
+      Future<List<dynamic>> loadList() async {
         try {
-          res = await client.rpc<List<dynamic>>('list_my_room_invites_v2');
+          return await client.rpc<List<dynamic>>('list_my_room_invites_v2');
         } on PostgrestException catch (error, stack) {
           if (!isMissingRpcError(error)) {
-            _recordError(error, stack, reason: 'loadMyRoomInvites v2 failed');
+            _recordError(error, stack, reason: 'room invite compatibility');
             Error.throwWithStackTrace(error, stack);
           }
-          res = await client.rpc<List<dynamic>>('list_my_room_invites');
+          legacyTerms = true;
+          return client.rpc<List<dynamic>>('list_my_room_invites');
         }
+      }
+
+      List<dynamic> res;
+      if (inviteId != null) {
+        try {
+          res = await client.rpc<List<dynamic>>(
+            'list_my_room_invites',
+            params: {'p_invite_id': inviteId},
+          );
+        } on PostgrestException catch (error, stack) {
+          if (!isMissingRpcError(error)) {
+            _recordError(error, stack, reason: 'room invite compatibility');
+            Error.throwWithStackTrace(error, stack);
+          }
+          res = await loadList();
+        }
+      } else {
+        res = await loadList();
       }
       _roomInviteRpcSupported = true;
       final invites = [
         for (final row in res)
-          RoomInvite.fromJson(Map<String, dynamic>.from(row as Map)),
+          if (inviteId == null || (row as Map)['invite_id'] == inviteId)
+            RoomInvite.fromJson(Map<String, dynamic>.from(row as Map)),
       ];
       final profiles = await _publicProfilesById([
         for (final i in invites) i.inviterId,
       ]);
       return [
         for (final i in invites)
-          profiles[i.inviterId] == null
-              ? i
-              : RoomInvite(
-                  id: i.id,
-                  roomId: i.roomId,
-                  roomCode: i.roomCode,
-                  inviterId: i.inviterId,
-                  inviterName: profiles[i.inviterId]!.nameOr(i.inviterName),
-                  categoryName: i.categoryName,
-                  playerCount: i.playerCount,
-                  maxPlayers: i.maxPlayers,
-                  createdAt: i.createdAt,
-                  entryFee: i.entryFee,
-                  questionCount: i.questionCount,
-                  secondsPerQuestion: i.secondsPerQuestion,
-                  inviterProfile: profiles[i.inviterId],
-                ),
+          RoomInvite(
+            id: i.id,
+            roomId: i.roomId,
+            roomCode: i.roomCode,
+            inviterId: i.inviterId,
+            inviterName:
+                profiles[i.inviterId]?.nameOr(i.inviterName) ?? i.inviterName,
+            categoryName: i.categoryName,
+            playerCount: i.playerCount,
+            maxPlayers: i.maxPlayers,
+            createdAt: i.createdAt,
+            entryFee: i.entryFee,
+            hasLegacyTerms: legacyTerms,
+            questionCount: i.questionCount,
+            secondsPerQuestion: i.secondsPerQuestion,
+            inviterProfile: profiles[i.inviterId],
+          ),
       ];
     } catch (error, stack) {
       if (inviteId == null && isMissingRpcError(error)) {

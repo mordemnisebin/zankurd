@@ -1,8 +1,15 @@
-# Oda seçenekleri — yayın önkoşulu
+# Oda seçenekleri — sunucu yeteneği ve yayın kapısı
 
 İstemci aday seçenekleri: 5, 10, 15, 20, 25, 30, 40, 50 soru;
 10, 15, 20, 30, 45, 60, 90, 120 saniye. Varsayılanlar değişmez.
-Bu istemci, aşağıdaki sunucu kapısı tamamlanmadan yayınlanmamalı.
+İstemci bu seçenekleri yalnız sunucunun doğrulama kapısı destekliyorsa açar.
+`create_online_room_v2`, 50 soru/120 saniye ve geçersiz `p_entry_fee=-1` ile
+yoklanır: eski ve yeni gövdede ücret doğrulaması tüm yazmalardan öncedir.
+Yalnız `P0001 / Unsupported entry fee` yeni sınırları doğrular; eski sınır
+reddi veya belirsiz ağ yanıtı 5/10/15 soru ve 10–60 saniye listesini gösterir.
+Sonraki oluşturma isteği açık sınır reddi alırsa seçim sayfası eski seçeneklerle
+yeniden açılır; kullanıcının seçimi sessizce küçültülmez.
+Yeni seçeneklerin canlıda kullanılabilmesi aşağıdaki sunucu kapısını gerektirir.
 
 ## 31 Ekim 2026 doğrulaması
 

@@ -4,6 +4,7 @@
 // Default: no event; the visible card must find the invitation by polling.
 // --dart-define=PREVIEW_LANG=ku --dart-define=PREVIEW_DARK=true
 // --dart-define=PREVIEW_RETURNING_USER=true: expose the existing streak calendar.
+// --dart-define=PREVIEW_LEGACY_ROOMS=true: old room limits and unknown invite fee.
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 import 'dart:async';
 import 'dart:convert';
@@ -33,6 +34,9 @@ String _day(DateTime date) =>
     '${date.day.toString().padLeft(2, '0')}';
 
 class _PreviewRepository extends MockZanKurdRepository {
+  @override
+  Future<bool> supportsExtendedRoomOptions() async =>
+      !const bool.fromEnvironment('PREVIEW_LEGACY_ROOMS');
   @override
   Future<StreakFreezeChargeResult> spendStreakFreeze({
     required String idempotencyKey,
@@ -135,7 +139,10 @@ Future<void> main() async {
         categoryName: room.category,
         playerCount: 2,
         maxPlayers: 8,
-        entryFee: room.entryFee,
+        entryFee: const bool.fromEnvironment('PREVIEW_LEGACY_ROOMS')
+            ? null
+            : room.entryFee,
+        hasLegacyTerms: const bool.fromEnvironment('PREVIEW_LEGACY_ROOMS'),
         questionCount: room.questionCount,
         secondsPerQuestion: room.secondsPerQuestion,
         createdAt: DateTime.now(),

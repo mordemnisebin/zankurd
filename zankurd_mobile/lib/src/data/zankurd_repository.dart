@@ -341,6 +341,9 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   GameRoom createRoom({String category = 'Ziman'});
   GameRoom joinRoom(String code);
+
+  /// 50 soru / 120 saniye seçenekleri sunucuda kullanılabilir mi?
+  Future<bool> supportsExtendedRoomOptions();
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,

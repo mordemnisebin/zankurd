@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../data/zankurd_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
+import '../../models/room.dart';
 import '../../models/room_invite.dart';
 import '../../providers/remote_availability.dart';
 import '../../theme/app_icons.dart';
@@ -255,13 +256,15 @@ class _RoomInviteCardState extends State<RoomInviteCard>
 
   Future<void> _accept(RoomInvite invite) async {
     final fee = invite.entryFee;
-    if (_busy || fee == null || fee < 0) return;
+    if (_busy || (!invite.hasLegacyTerms && (fee == null || fee < 0))) {
+      return;
+    }
     final repository = widget.repository;
     final userId = repository.currentUserId;
     setState(() => _busy = true);
     try {
-      if (fee > 0) {
-        final feeText = _feeText(context, fee);
+      if (invite.hasLegacyTerms || fee! > 0) {
+        final feeText = _inviteFeeText(context, invite);
         final confirmed = await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
@@ -277,7 +280,11 @@ class _RoomInviteCardState extends State<RoomInviteCard>
                 confirm: FilledButton(
                   key: const ValueKey('room-invite-fee-confirm'),
                   onPressed: () => Navigator.pop(ctx, true),
-                  child: Text('${ctx.t(K.roomInviteJoin)} · $feeText'),
+                  child: Text(
+                    invite.hasLegacyTerms
+                        ? ctx.t(K.roomInviteJoin)
+                        : '${ctx.t(K.roomInviteJoin)} · $feeText',
+                  ),
                 ),
               ),
             ],
@@ -332,6 +339,11 @@ class _RoomInviteCardState extends State<RoomInviteCard>
     _ => context.t(K.unknownPlayer),
   };
 
+  String _inviteFeeText(BuildContext context, RoomInvite invite) =>
+      invite.hasLegacyTerms
+      ? '${context.t(K.unknownPlayer)} (0–${GameRoom.allowedEntryFees.last} ${context.t(K.coinWord)})'
+      : _feeText(context, invite.entryFee);
+
   @override
   Widget build(BuildContext context) {
     // Boş kart da kilidin kalkışını dinlemeli: aksi halde çevrimdışı
@@ -372,8 +384,8 @@ class _RoomInviteCardState extends State<RoomInviteCard>
       if (seconds != null)
         context.t(K.perQuestionSeconds, {'n': groupThousands(seconds)}),
     ].join(' · ');
-    final feeText = _feeText(context, invite.entryFee);
-    final termsKnown = (invite.entryFee ?? -1) >= 0;
+    final feeText = _inviteFeeText(context, invite);
+    final termsKnown = invite.hasLegacyTerms || (invite.entryFee ?? -1) >= 0;
     return Padding(
       key: const ValueKey('room-invite-card'),
       padding: EdgeInsets.only(top: widget.topGap ? SahneSpace.cardGap : 0),
@@ -441,7 +453,9 @@ class _RoomInviteCardState extends State<RoomInviteCard>
                     icon: termsKnown
                         ? AppIcons.peopleGroup
                         : AppIcons.arrowsRotate,
-                    label: termsKnown
+                    label: invite.hasLegacyTerms
+                        ? context.t(K.roomInviteJoin)
+                        : termsKnown
                         ? '${context.t(K.roomInviteJoin)} · $feeText'
                         : context.t(K.retry),
                     expand: true,

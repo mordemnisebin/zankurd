@@ -21,6 +21,7 @@ class RoomInvite {
     required this.createdAt,
     this.inviterProfile,
     this.entryFee,
+    this.hasLegacyTerms = false,
     this.questionCount,
     this.secondsPerQuestion,
   });
@@ -37,13 +38,20 @@ class RoomInvite {
 
   /// Eski sunucu ayarları döndürmez; bilinmeyen ücret ücretsiz sayılmaz.
   final int? entryFee;
+
+  /// Yalnız koşulları hiç döndürmeyen eski RPC için ek ücret onayı gerekir.
+  final bool hasLegacyTerms;
   final int? questionCount;
   final int? secondsPerQuestion;
 
   /// Davet edenin fotoğraf/kod kimliği (depo tamamlar; yoksa null).
   final PublicProfile? inviterProfile;
 
-  static RoomInvite fromJson(Map<String, dynamic> json) => RoomInvite(
+  static RoomInvite fromJson(
+    Map<String, dynamic> json, {
+    bool hasLegacyTerms = false,
+  }) => RoomInvite(
+    hasLegacyTerms: hasLegacyTerms,
     id: json['invite_id'] as String,
     roomId: json['room_id'] as String,
     roomCode: json['room_code'] as String,
