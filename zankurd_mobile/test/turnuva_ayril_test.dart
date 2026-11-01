@@ -154,7 +154,7 @@ void main() {
       );
       expect(
         File('supabase/applied.md').readAsStringSync(),
-        contains('| 2026-11-01_turnuva_ayril.sql | ⏳ |'),
+        contains('| 2026-11-01_turnuva_ayril.sql | ✅ |'),
       );
     });
   });

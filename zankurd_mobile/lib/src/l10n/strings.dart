@@ -2460,17 +2460,17 @@ class Tr {
     // 2026-11-01: başlamamış kupadan ayrılma. KU TASLAKTIR (jüri gerekli).
     K.tournamentLeave: {'ku': 'Ji kûpayê derkeve', 'tr': 'Turnuvadan ayrıl'},
     K.tournamentLeaveTitle: {
-      'ku': 'Ji kûpayê derkevî?',
-      'tr': 'Turnuvadan ayrılsın mısın?',
+      'ku': 'Tu dixwazî ji kûpayê derkevî?',
+      'tr': 'Turnuvadan ayrılmak istiyor musun?',
     },
     K.tournamentLeaveBody: {
       'ku':
-          'Tomara te tê jêbirin. Heta kûpa dest pê neke, tu dikarî dîsa beşdar bibî.',
+          'Tomara te tê jêbirin. Berî ku kûpa dest pê bike, tu dikarî dîsa beşdar bibî.',
       'tr':
           'Kaydın silinir. Turnuva başlamadan istediğin zaman yeniden katılabilirsin.',
     },
     K.tournamentLeaveStarted: {
-      'ku': 'Kûpa dest pê kir; êdî nikarî derkevî.',
+      'ku': 'Kûpa hat destpêkirin; êdî tu nikarî derkevî.',
       'tr': 'Turnuva başladı; artık ayrılamazsın.',
     },
     K.cupStandingActive: {
