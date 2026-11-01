@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
+import 'local_progress_write_lock.dart';
 
 import '../l10n/strings.dart';
 import '../models/achievement.dart';
@@ -11,12 +12,19 @@ import '../utils/error_reporter.dart';
 /// Streak ve puan tabanlı rozet servisi.
 /// Mevcut AchievementStore'u tamamlar; ek rozetleri yönetir.
 class BadgeService {
-  BadgeService._(this._preferences, this._unlockedBadges, this._unlockedAt);
+  BadgeService._(
+    this._preferences,
+    this._unlockedBadges,
+    this._unlockedAt,
+    this._owner,
+  );
+
+  final String? _owner;
 
   static String get _storageKey =>
-      LocalProgressScope.physical('zankurd.badges.unlocked');
+      LocalProgressWriteLock.physical('zankurd.badges.unlocked');
   static String get _unlockedAtKey =>
-      LocalProgressScope.physical('zankurd.badges.unlockedAt');
+      LocalProgressWriteLock.physical('zankurd.badges.unlockedAt');
   static BadgeService? _instance;
 
   /// Rozet tanımları: id → {titleKey, descKey, icon}. Metin [Tr] tablosunda.
@@ -85,6 +93,9 @@ class BadgeService {
   }
 
   static Future<BadgeService> _loadFresh() async {
+    final owner = LocalProgressScope.activeUserId;
+    final storageKey = _storageKey;
+    final unlockedAtKey = _unlockedAtKey;
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -93,11 +104,12 @@ class BadgeService {
       preferences = null;
     }
     final unlocked =
-        preferences?.getStringList(_storageKey)?.toSet() ?? <String>{};
+        preferences?.getStringList(storageKey)?.toSet() ?? <String>{};
     return BadgeService._(
       preferences,
       unlocked,
-      _decodeUnlockedAt(preferences?.getString(_unlockedAtKey)),
+      _decodeUnlockedAt(preferences?.getString(unlockedAtKey)),
+      owner,
     );
   }
 
@@ -123,14 +135,14 @@ class BadgeService {
     _loading = null;
   }
 
-  Future<void> clear() async {
+  Future<void> clear() => _mutate(() async {
     await removePersistedPreferenceKeys(_preferences, [
       _storageKey,
       _unlockedAtKey,
     ]);
     _unlockedBadges.clear();
     _unlockedAt.clear();
-  }
+  });
 
   final SharedPreferences? _preferences;
   final Set<String> _unlockedBadges;
@@ -192,18 +204,21 @@ class BadgeService {
   bool isUnlocked(String id) => _unlockedBadges.contains(id);
 
   /// Streak değerine göre rozetleri değerlendirir.
-  Future<List<String>> evaluateStreakBadges(int currentStreak) async {
-    final newlyUnlocked = <String>[];
-    if (currentStreak >= 30 && !_unlockedBadges.contains('streak_30')) {
-      _unlock('streak_30');
-      newlyUnlocked.add('streak_30');
-    }
-    if (newlyUnlocked.isNotEmpty) await _persist();
-    return newlyUnlocked;
-  }
+  Future<List<String>> evaluateStreakBadges(int currentStreak) =>
+      _mutate(() async {
+        final newlyUnlocked = <String>[];
+        if (currentStreak >= 30 && !_unlockedBadges.contains('streak_30')) {
+          _unlock('streak_30');
+          newlyUnlocked.add('streak_30');
+        }
+        if (newlyUnlocked.isNotEmpty) await _persist();
+        return newlyUnlocked;
+      });
 
   /// Soru sayısına göre rozetleri değerlendirir.
-  Future<List<String>> evaluateQuestionBadges(int totalAnswered) async {
+  Future<List<String>> evaluateQuestionBadges(
+    int totalAnswered,
+  ) => _mutate(() async {
     final newlyUnlocked = <String>[];
     if (totalAnswered >= 500 && !_unlockedBadges.contains('questions_500')) {
       _unlock('questions_500');
@@ -215,7 +230,7 @@ class BadgeService {
     }
     if (newlyUnlocked.isNotEmpty) await _persist();
     return newlyUnlocked;
-  }
+  });
 
   /// Bir turun beceri rozetlerine (mükemmel oyun, hız canavarı) sayılması
   /// için asgari soru sayısı.
@@ -240,7 +255,7 @@ class BadgeService {
       !practice && totalQuestions >= minSkillRoundQuestions && unanswered == 0;
 
   /// Mükemmel oyun rozetini değerlendirir.
-  Future<bool> evaluatePerfectGame(int correct, int total) async {
+  Future<bool> evaluatePerfectGame(int correct, int total) => _mutate(() async {
     if (correct == total &&
         total > 0 &&
         !_unlockedBadges.contains('perfect_game')) {
@@ -249,20 +264,49 @@ class BadgeService {
       return true;
     }
     return false;
-  }
+  });
 
   /// Hız canavarı rozetini değerlendirir.
-  Future<bool> evaluateSpeedDemon(Duration elapsed) async {
+  Future<bool> evaluateSpeedDemon(Duration elapsed) => _mutate(() async {
     if (elapsed.inSeconds < 60 && !_unlockedBadges.contains('speed_demon')) {
       _unlock('speed_demon');
       await _persist();
       return true;
     }
     return false;
-  }
+  });
+
+  Future<T> _mutate<T>(Future<T> Function() action) =>
+      LocalProgressWriteLock.run(_owner, () async {
+        _unlockedBadges.addAll(
+          _preferences?.getStringList(_storageKey) ?? const [],
+        );
+        final storedDates = _decodeUnlockedAt(
+          _preferences?.getString(_unlockedAtKey),
+        );
+        for (final entry in storedDates.entries) {
+          _unlockedAt.putIfAbsent(entry.key, () => entry.value);
+        }
+        return action();
+      });
 
   Future<void> _persist() async {
-    await _preferences?.setStringList(_storageKey, _unlockedBadges.toList());
-    await _preferences?.setString(_unlockedAtKey, jsonEncode(_unlockedAt));
+    final prefs = _preferences;
+    if (prefs == null) throw StateError('Badge persistence unavailable.');
+    try {
+      if (!await prefs.setStringList(_storageKey, _unlockedBadges.toList()) ||
+          !await prefs.setString(_unlockedAtKey, jsonEncode(_unlockedAt))) {
+        throw StateError('Badge progress was not persisted.');
+      }
+    } catch (_) {
+      await prefs.reload();
+      _unlockedBadges
+        ..clear()
+        ..addAll(prefs.getStringList(_storageKey) ?? const []);
+      _unlockedAt
+        ..clear()
+        ..addAll(_decodeUnlockedAt(prefs.getString(_unlockedAtKey)));
+      rethrow;
+    }
   }
 }

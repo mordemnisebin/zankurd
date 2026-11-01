@@ -2,6 +2,21 @@
  "version": 1,
  "sources": [
   {
+   "id": "g16_room_invite_preview",
+   "description": "G16 offline invitation terms browser regression fixture",
+   "path": "tool/g16_invite_preview.dart",
+   "role": "test_fixture",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 1000,
+   "expectedRecordCount": null,
+   "notes": "Uses the runtime mock repository; defines no question content and never imports into the application.",
+   "columns": {}
+  },
+  {
    "id": "social_reliability_preview",
    "description": "Offline room invitation and streak recovery simulator fixture",
    "path": "tool/reliability_preview.dart",

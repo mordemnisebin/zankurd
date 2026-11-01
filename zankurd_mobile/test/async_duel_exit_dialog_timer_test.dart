@@ -100,41 +100,50 @@ void main() {
     await tester.pumpWidget(const SizedBox());
   });
 
-  testWidgets(
-    'çıkış gönderimleri paralel ve süre sınırlı: ağ asılsa da ekran kapanır',
-    (tester) async {
-      await tester.binding.setSurfaceSize(const Size(390, 844));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-      final saved = asyncDuelQuitSendTimeout;
-      asyncDuelQuitSendTimeout = const Duration(seconds: 2);
-      addTearDown(() => asyncDuelQuitSendTimeout = saved);
-      final repository = _HangingAnswersRepository();
+  for (final pending in [false, true]) {
+    testWidgets(
+      'G10 kusur: paralel terk ve havadaki istek sınırsızdı; sessizdi çünkü sıra ve bütçe sınanmıyordu (pending: $pending)',
+      (tester) async {
+        await tester.binding.setSurfaceSize(const Size(390, 844));
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        final saved = asyncDuelQuitSendTimeout;
+        asyncDuelQuitSendTimeout = const Duration(seconds: 2);
+        addTearDown(() => asyncDuelQuitSendTimeout = saved);
+        final repository = _HangingAnswersRepository();
 
-      await tester.pumpWidget(
-        testShell(
-          child: PlayHubScreen(repository: repository, asyncDuelEnabled: true),
-        ),
-      );
-      await tester.pumpAndSettle();
-      await openAsyncOpponentSheet(tester);
-      await tester.tap(find.byKey(const ValueKey('opponent-sheet-random')));
-      await tester.pump();
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 300));
+        await tester.pumpWidget(
+          testShell(
+            child: PlayHubScreen(
+              repository: repository,
+              asyncDuelEnabled: true,
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await openAsyncOpponentSheet(tester);
+        await tester.tap(find.byKey(const ValueKey('opponent-sheet-random')));
+        await tester.pump();
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
 
-      await tester.tap(find.byKey(const ValueKey('async-duel-quit')));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(find.text('Çık'));
-      await tester.pump();
-      // Tüm kalan sorular aynı anda gönderilmiş olmalı (sırayla olsaydı 1).
-      expect(repository.calls, greaterThan(1));
-      // Süre sınırı dolunca ekran kapanır.
-      await tester.pump(const Duration(seconds: 3));
-      await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('play-hub-async-duel')), findsOneWidget);
-    },
-  );
+        if (pending) {
+          await tester.tap(find.byKey(const ValueKey('async-duel-option-0')));
+          await tester.pump();
+        }
+        await tester.tap(find.byKey(const ValueKey('async-duel-quit')));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
+        await tester.tap(find.text('Çık'));
+        await tester.pump();
+        // İlk cevap onaylanmadan sonraki indeks gönderilemez.
+        expect(repository.calls, 1);
+        // Süre sınırı dolunca ekran kapanır.
+        await tester.pump(const Duration(seconds: 3));
+        await tester.pumpAndSettle();
+        expect(find.text('Yarım kaldı'), findsOneWidget);
+      },
+    );
+  }
 
   testWidgets('diyalogda geçen gerçek süre dönüşte sayaca yansır', (
     tester,

@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/data/mastery_store.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
+import 'package:zankurd_mobile/src/data/result_progress_journal.dart';
 import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
@@ -55,12 +56,14 @@ void main() {
     WidgetTester tester, {
     required List<AnswerRecord> records,
     required bool practice,
+    String? roundId,
   }) async {
     final correct = records.where((r) => r.isCorrect).length;
     await tester.pumpWidget(
       testShell(
         child: QuizResultScreen(
           repository: MockZanKurdRepository(),
+          roundId: roundId,
           room: _room,
           score: 100,
           correctCount: correct,
@@ -99,6 +102,30 @@ void main() {
     // Yalnız günün ilk turu bonusu (+30) kalabilir; +50 taban yok.
     expect((await XPStore.load()).totalXP, lessThanOrEqualTo(30));
   });
+
+  testWidgets(
+    'G4 seri yazılıp sonuç kesilince ilk gün XP kayboluyordu; testler tek açılışla sessizdi',
+    (tester) async {
+      await ResultProgressJournal.run(
+        preferences: await SharedPreferences.getInstance(),
+        namespace: 'zankurd.achievements.resultDayIntent',
+        operationId: 'solo:recovered-first-day',
+        prepare: () => const ResultProgressMutation(
+          values: {},
+          result: {'isNewDay': true},
+        ),
+      );
+      await (await StreakStore.load()).recordPlay();
+      StreakStore.resetInstance();
+      await playRound(
+        tester,
+        records: [for (var i = 1; i <= 4; i++) record(i)],
+        practice: false,
+        roundId: 'recovered-first-day',
+      );
+      expect((await XPStore.load()).totalXP, 120);
+    },
+  );
 
   testWidgets('normal solo tur ödülü değişmedi', (tester) async {
     await playRound(

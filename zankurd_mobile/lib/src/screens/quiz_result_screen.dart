@@ -14,6 +14,8 @@ import '../data/mastery_store.dart';
 import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
 import '../data/quiz_result_progress_receipt_store.dart';
+import '../data/result_progress_journal.dart';
+import '../data/local_progress_write_lock.dart';
 import '../data/streak_store.dart';
 import '../data/local_progress_scope.dart';
 import '../data/paid_freeze_intent.dart';
@@ -626,6 +628,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // Aşama 2 — otomatik yerel ilerleme. Yalnız burada kritik bölüm var.
     QuizResultProgressReceiptOutcome receiptOutcome;
     try {
+      await _rememberProgressStreak(_pendingStreak);
       final runner = widget.receiptRunner ?? _runDefaultReceipt;
       receiptOutcome = await runner(
         userId: ownerId,
@@ -708,7 +711,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final preferences = await SharedPreferences.getInstance();
     return QuizResultProgressReceiptStore(
       preferences,
-    ).runOnce(userId: userId, roomId: roomId, action: action);
+    ).runOnce(userId: userId, roomId: roomId, action: action, resumable: true);
   }
 
   bool _isCurrentResultOwner(String ownerId) {
@@ -793,10 +796,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       if (stages == null) {
         await record();
       } else {
+        await _rememberProgressStreak(streak);
         await stages.runOnce(
           userId: ownerId,
           roomId: 'solo-progress:$roundToken',
           action: record,
+          resumable: true,
         );
       }
       if (freezePending && owns()) _offerStreakFreezeRetry();
@@ -853,10 +858,34 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     return null;
   }
 
+  Future<_StreakOutcome> _rememberProgressStreak(
+    _StreakOutcome? outcome,
+  ) async {
+    final resolved = outcome ?? await _fallbackStreak();
+    return LocalProgressWriteLock.run(_resultProgressScope, () async {
+      final metadata = await ResultProgressJournal.run(
+        preferences: await SharedPreferences.getInstance(),
+        namespace: LocalProgressWriteLock.physical(
+          'zankurd.achievements.resultMetadata',
+        ),
+        operationId: _progressOperationId,
+        prepare: () => ResultProgressMutation(
+          values: const {},
+          result: {'streak': resolved.streak, 'isNewDay': resolved.isNewDay},
+        ),
+      );
+      return _StreakOutcome(
+        streak: metadata['streak'] as int,
+        isNewDay: metadata['isNewDay'] as bool,
+      );
+    });
+  }
+
   Future<void> _recordProgressAndAnalytics(
     _StreakOutcome? streakOutcome,
   ) async {
-    await _recordProgress(streakOutcome ?? await _fallbackStreak());
+    final resolved = await _rememberProgressStreak(streakOutcome);
+    await _recordProgress(resolved);
     try {
       final roundId = _effectiveRoundId;
       await repository.logAnalyticsEvent('quiz_complete', {
@@ -992,7 +1021,24 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         '${today.year.toString().padLeft(4, '0')}-'
         '${today.month.toString().padLeft(2, '0')}-'
         '${today.day.toString().padLeft(2, '0')}';
-    final isNewDay = streakStore.lastDay != todayKey;
+    // Seri değişmeden önce niyet kalıcılaşır: recordPlay ile sonuç
+    // günlüğü arasındaki kapanış ilk gün bonusunu düşürmemeli.
+    final dayIntent = await LocalProgressWriteLock.run(
+      _resultProgressScope,
+      () async => ResultProgressJournal.run(
+        preferences: await SharedPreferences.getInstance(),
+        namespace: LocalProgressWriteLock.physical(
+          'zankurd.achievements.resultDayIntent',
+        ),
+        operationId: _progressOperationId,
+        prepare: () => ResultProgressMutation(
+          values: const {},
+          result: {'isNewDay': streakStore.lastDay != todayKey},
+        ),
+      ),
+    );
+    requireOwner();
+    final isNewDay = dayIntent['isNewDay'] as bool;
 
     // Kesintiden sonra yan etkili aşamalar ASLA tekrarlanmaz.
     switch (resumed?.stage) {
@@ -1296,30 +1342,56 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     }
   }
 
+  String get _progressOperationId {
+    final onlineId = widget.room.id?.trim() ?? '';
+    return onlineId.isNotEmpty
+        ? 'room:$onlineId'
+        : 'solo:${_effectiveRoundId ?? _fallbackFreezeRoundId}';
+  }
+
   Future<void> _recordProgress(_StreakOutcome streakOutcome) async {
+    Future<T> step<T>(Future<T> Function() action) async {
+      void requireOwner() {
+        if (LocalProgressScope.activeUserId != _resultProgressScope ||
+            repository.currentUserId != _resultProgressOwner) {
+          throw StateError('Result owner changed during progress.');
+        }
+      }
+
+      requireOwner();
+      final value = await action();
+      requireOwner();
+      return value;
+    }
+
     // Seri kararı bu adımdan ÖNCE, kritik bölümün dışında verildi ve
     // uygulandı. Buradan sonrası yalnız otomatik yerel yazımlardır.
     final streak = streakOutcome.streak;
     final isNewDay = streakOutcome.isNewDay;
     // Misafir sayacı oyunun bittiği anda, ilerleme yazımından BAĞIMSIZ
     // sayılır (ekran kapansa ya da seviye atlansa oyun düşmesin).
-    final guestSaveCount = mounted ? GuestSavePrompt.countGame(context) : null;
-    final mistakeStore = await MistakeStore.load();
-    final achievementStore = await AchievementStore.load();
-    final newAchievements = await achievementStore.recordQuizResult(
-      category: room.category,
-      totalQuestions: totalQuestions,
-      correctCount: correctCount,
-      answeredCount: answerRecords.isEmpty
-          ? correctCount + wrongCount
-          : answerRecords.where((r) => !r.isUnanswered).length,
-      bestStreak: bestStreak,
-      dailyStreak: streak,
-      userScore: score,
-      practice: practice,
-      dailyQuiz: dailyQuiz,
-      remainingMistakes: mistakeStore.count,
-      opponents: opponents,
+    final guestSaveCount = mounted
+        ? GuestSavePrompt.countGame(context, operationId: _progressOperationId)
+        : null;
+    final mistakeStore = await step(() => MistakeStore.load());
+    final achievementStore = await step(() => AchievementStore.load());
+    final newAchievements = await step(
+      () => achievementStore.recordQuizResult(
+        operationId: _progressOperationId,
+        category: room.category,
+        totalQuestions: totalQuestions,
+        correctCount: correctCount,
+        answeredCount: answerRecords.isEmpty
+            ? correctCount + wrongCount
+            : answerRecords.where((r) => !r.isUnanswered).length,
+        bestStreak: bestStreak,
+        dailyStreak: streak,
+        userScore: score,
+        practice: practice,
+        dailyQuiz: dailyQuiz,
+        remainingMistakes: mistakeStore.count,
+        opponents: opponents,
+      ),
     );
 
     // `BadgeService`in beş rozeti (streak_30, questions_500,
@@ -1329,10 +1401,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // yaparsa yapsın asla açılamıyordu (2026-08-14 denetimi). Tur
     // sonucunun zaten hesapladığı verilerle (seri, toplam soru,
     // doğru/toplam, yanıt süreleri) burada değerlendirilirler.
-    final badgeService = await BadgeService.load();
-    await badgeService.evaluateStreakBadges(streak);
-    await badgeService.evaluateQuestionBadges(
-      achievementStore.answeredQuestions,
+    final badgeService = await step(() => BadgeService.load());
+    await step(() => badgeService.evaluateStreakBadges(streak));
+    await step(
+      () => badgeService.evaluateQuestionBadges(
+        achievementStore.answeredQuestions,
+      ),
     );
     // Beceri rozetleri yalnız gerçek turlara: alıştırma, çok kısa tur ve
     // süre aşımı olan tur sayılmaz (bkz. [BadgeService.isSkillRound]).
@@ -1342,17 +1416,21 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       unanswered: answerRecords.where((r) => r.isUnanswered).length,
     );
     if (skillRound) {
-      await badgeService.evaluatePerfectGame(correctCount, totalQuestions);
+      await step(
+        () => badgeService.evaluatePerfectGame(correctCount, totalQuestions),
+      );
       final totalResponseMs = answerRecords.fold<int>(
         0,
         (sum, record) => sum + (record.responseMs ?? 0),
       );
-      await badgeService.evaluateSpeedDemon(
-        Duration(milliseconds: totalResponseMs),
+      await step(
+        () => badgeService.evaluateSpeedDemon(
+          Duration(milliseconds: totalResponseMs),
+        ),
       );
     }
 
-    final masteryStore = await MasteryStore.load();
+    final masteryStore = await step(() => MasteryStore.load());
     final correctByCategory = <String, int>{};
     final answeredByCategory = <String, int>{};
     for (final record in answerRecords) {
@@ -1372,26 +1450,38 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final promotions = <String, MasteryLevel>{};
     if (!practice) {
       for (final entry in correctByCategory.entries) {
-        final newLevel = await masteryStore.addCorrect(entry.key, entry.value);
+        final newLevel = await step(
+          () => masteryStore.addCorrect(
+            entry.key,
+            entry.value,
+            operationId: _progressOperationId,
+          ),
+        );
         if (newLevel != null) promotions[entry.key] = newLevel;
       }
     }
     for (final entry in answeredByCategory.entries) {
-      await masteryStore.recordAnswered(
-        entry.key,
-        entry.value,
-        correct: correctByCategory[entry.key] ?? 0,
+      await step(
+        () => masteryStore.recordAnswered(
+          entry.key,
+          entry.value,
+          correct: correctByCategory[entry.key] ?? 0,
+          operationId: _progressOperationId,
+        ),
       );
     }
 
-    final missionStore = await DailyMissionStore.load();
+    final missionStore = await step(() => DailyMissionStore.load());
     final completedMissions = practice
         ? const <DailyMission>[]
-        : await missionStore.reportQuizCompleted(
-            correctAnswers: correctCount,
-            category: room.category,
-            streakAlive: streak > 0,
-            countsAsRace: _countsAsRace,
+        : await step(
+            () => missionStore.reportQuizCompleted(
+              completionId: _progressOperationId,
+              correctAnswers: correctCount,
+              category: room.category,
+              streakAlive: streak > 0,
+              countsAsRace: _countsAsRace,
+            ),
           );
     // XP ve Seviye Hesaplaması
     //
@@ -1417,8 +1507,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       earnedXP += promotions.length * 200;
     }
 
-    final xpStore = await XPStore.load();
-    final leveledUp = await xpStore.addXP(earnedXP);
+    final xpStore = await step(() => XPStore.load());
+    final leveledUp = await step(
+      () => xpStore.addXP(earnedXP, operationId: _progressOperationId),
+    );
 
     // Aynı XP sunucuya da bildirilir. Cihazdaki `XPStore` seviyeyi ve
     // ilerleme çubuğunu besler; `profiles.xp` ise sıralamanın, toplam puanın
@@ -1443,8 +1535,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final accuracyPercent = totalQuestions == 0
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
-    final reviewService = await ReviewService.load();
-    await reviewService.recordQuizCompletion(accuracyPercent: accuracyPercent);
+    final reviewService = await step(() => ReviewService.load());
+    await step(
+      () => reviewService.recordQuizCompletion(
+        accuracyPercent: accuracyPercent,
+        operationId: _progressOperationId,
+      ),
+    );
 
     AnalyticsService.instance.logQuizComplete(
       category: room.category,

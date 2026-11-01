@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
+import 'result_progress_journal.dart';
 
 import '../models/daily_mission.dart';
 import '../utils/error_reporter.dart';
@@ -47,6 +48,11 @@ class DailyMissionStore {
   static Future<DailyMissionStore>? _loading;
   static String? _loadingDateKey;
   static int _loadGeneration = 0;
+
+  final String _physicalPrefix = LocalProgressScope.physical(
+    'zankurd.missions',
+  );
+  String get _journalNamespace => '$_physicalPrefix.resultJournal';
 
   final SharedPreferences? _prefs;
   final List<DailyMission> _missions;
@@ -112,6 +118,14 @@ class DailyMissionStore {
       );
     }
 
+    if (prefs != null) {
+      await ResultProgressJournal.recover(
+        preferences: prefs,
+        namespace: LocalProgressScope.physical(
+          'zankurd.missions.resultJournal',
+        ),
+      );
+    }
     final storedDate = prefs?.getString(_dateKey);
     final missions = MissionDefinitions.forDay(today);
     var answeredToday = 0;
@@ -173,11 +187,10 @@ class DailyMissionStore {
 
   Future<void> clear() async {
     await removePersistedPreferenceKeys(_prefs, [
-      _dateKey,
-      _progressKey,
-      _completedKey,
-      _claimedKey,
-      _answeredKey,
+      ..._progressValues().keys,
+      ...?_prefs?.getKeys().where(
+        (key) => key.startsWith('$_journalNamespace.'),
+      ),
     ]);
     for (final mission in _missions) {
       mission.progress = 0;
@@ -192,7 +205,84 @@ class DailyMissionStore {
     required String category,
     required bool streakAlive,
     bool countsAsRace = true,
+    String? completionId,
   }) async {
+    final prefs = _prefs;
+    if (completionId != null) {
+      if (prefs == null) throw StateError('Mission preferences unavailable');
+      final result = await ResultProgressJournal.run(
+        preferences: prefs,
+        namespace: _journalNamespace,
+        operationId: completionId,
+        prepare: () {
+          _reloadProgress();
+          // Journal hazırlığı belleği değiştirmez: yazım reddedilirse aynı
+          // tur güvenle yeniden denenir; yalnız kalıcı hedefler artar.
+          final draft = DailyMissionStore._(
+            null,
+            [
+              for (final m in _missions)
+                DailyMission(
+                  type: m.type,
+                  target: m.target,
+                  coinReward: m.coinReward,
+                  category: m.category,
+                  progress: m.progress,
+                  completed: m.completed,
+                  claimed: m.claimed,
+                ),
+            ],
+            _correctAnswersToday,
+            _loadedDateKey,
+          );
+          final completed = draft._applyQuizCompleted(
+            correctAnswers: correctAnswers,
+            category: category,
+            streakAlive: streakAlive,
+            countsAsRace: countsAsRace,
+          );
+          return ResultProgressMutation(
+            values: _progressValues(
+              missions: draft._missions,
+              correctAnswers: draft._correctAnswersToday,
+            ),
+            result: {
+              'completedIds': completed.map((m) => m.missionKey).toList(),
+              'date': _loadedDateKey,
+            },
+          );
+        },
+      );
+      _reloadProgress();
+      if (result['date'] != _loadedDateKey) return [];
+      final completedIds = (result['completedIds'] as List).cast<String>();
+      return _missions
+          .where((m) => completedIds.contains(m.missionKey))
+          .toList();
+    }
+    if (prefs != null) {
+      await ResultProgressJournal.recover(
+        preferences: prefs,
+        namespace: _journalNamespace,
+      );
+      _reloadProgress();
+    }
+    final completed = _applyQuizCompleted(
+      correctAnswers: correctAnswers,
+      category: category,
+      streakAlive: streakAlive,
+      countsAsRace: countsAsRace,
+    );
+    await _persist();
+    return completed;
+  }
+
+  List<DailyMission> _applyQuizCompleted({
+    required int correctAnswers,
+    required String category,
+    required bool streakAlive,
+    required bool countsAsRace,
+  }) {
     final completed = <DailyMission>[];
     // Görev listesinden ÖNCE ve ondan bağımsız: bugünün doğruları o gün
     // hangi görevlerin çekildiğine bakmaksızın sayılır.
@@ -226,11 +316,11 @@ class DailyMissionStore {
         completed.add(mission);
       }
     }
-    await _persist();
     return completed;
   }
 
   Future<DailyMission?> reportWildcardUsed() async {
+    await _recoverPending();
     for (final mission in _missions) {
       if (mission.completed || mission.type != MissionType.useWildcard) {
         continue;
@@ -244,26 +334,74 @@ class DailyMissionStore {
   }
 
   Future<bool> claimReward(DailyMission mission) async {
+    await _recoverPending();
     if (!mission.completed || mission.claimed) return false;
     mission.claimed = true;
     await _persist();
     return true;
   }
 
+  Future<void> _recoverPending() async {
+    final prefs = _prefs;
+    if (prefs == null) return;
+    await ResultProgressJournal.recover(
+      preferences: prefs,
+      namespace: _journalNamespace,
+    );
+    _reloadProgress();
+  }
+
+  Map<String, Object> _progressValues({
+    List<DailyMission>? missions,
+    int? correctAnswers,
+  }) {
+    final current = missions ?? _missions;
+    return {
+      '$_physicalPrefix.date': _loadedDateKey,
+      '$_physicalPrefix.progress': current
+          .map((m) => m.progress.toString())
+          .toList(),
+      '$_physicalPrefix.completed': current
+          .map((m) => m.completed.toString())
+          .toList(),
+      '$_physicalPrefix.claimed': current
+          .map((m) => m.claimed.toString())
+          .toList(),
+      '$_physicalPrefix.answeredToday': correctAnswers ?? _correctAnswersToday,
+    };
+  }
+
+  void _reloadProgress() {
+    final prefs = _prefs;
+    if (prefs == null ||
+        prefs.getString('$_physicalPrefix.date') != _loadedDateKey) {
+      return;
+    }
+    final progress = prefs.getStringList('$_physicalPrefix.progress') ?? [];
+    final completed = prefs.getStringList('$_physicalPrefix.completed') ?? [];
+    final claimed = prefs.getStringList('$_physicalPrefix.claimed') ?? [];
+    for (var i = 0; i < _missions.length; i++) {
+      if (i < progress.length) {
+        _missions[i].progress = int.tryParse(progress[i]) ?? 0;
+      }
+      if (i < completed.length) _missions[i].completed = completed[i] == 'true';
+      if (i < claimed.length) _missions[i].claimed = claimed[i] == 'true';
+    }
+    _correctAnswersToday = prefs.getInt('$_physicalPrefix.answeredToday') ?? 0;
+  }
+
   Future<void> _persist() async {
-    await _prefs?.setString(_dateKey, _loadedDateKey);
-    await _prefs?.setStringList(
-      _progressKey,
-      _missions.map((m) => m.progress.toString()).toList(),
-    );
-    await _prefs?.setStringList(
-      _completedKey,
-      _missions.map((m) => m.completed.toString()).toList(),
-    );
-    await _prefs?.setStringList(
-      _claimedKey,
-      _missions.map((m) => m.claimed.toString()).toList(),
-    );
-    await _prefs?.setInt(_answeredKey, _correctAnswersToday);
+    final prefs = _prefs;
+    if (prefs == null) return;
+    for (final entry in _progressValues().entries) {
+      final value = entry.value;
+      if (value is String) {
+        await prefs.setString(entry.key, value);
+      } else if (value is int) {
+        await prefs.setInt(entry.key, value);
+      } else {
+        await prefs.setStringList(entry.key, value as List<String>);
+      }
+    }
   }
 }

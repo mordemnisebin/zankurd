@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../l10n/lang.dart';
+import '../data/result_progress_journal.dart';
 import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/auth_social_buttons.dart';
@@ -49,10 +50,21 @@ class GuestSavePromptService {
   }
 
   /// Bir oyun bitti: yalnız sayar (sayfayı göstermez, gösterimi kaydetmez).
-  Future<void> countGame() async {
+  Future<void> countGame({String? operationId}) async {
     final prefs = _prefs;
     if (prefs == null) return;
     try {
+      if (operationId != null) {
+        await ResultProgressJournal.run(
+          preferences: prefs,
+          namespace: 'zankurd.guestSave.$_uid.resultJournal',
+          operationId: operationId,
+          prepare: () => ResultProgressMutation(
+            values: {_gamesKey: (prefs.getInt(_gamesKey) ?? 0) + 1},
+          ),
+        );
+        return;
+      }
       await prefs.setInt(_gamesKey, (prefs.getInt(_gamesKey) ?? 0) + 1);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'guest_save_prompt');
@@ -109,6 +121,7 @@ class GuestSavePrompt {
   static Future<GuestSavePromptService?> countGame(
     BuildContext context, {
     DateTime Function()? now,
+    String? operationId,
   }) async {
     try {
       final auth = context.read<AuthProvider>();
@@ -117,7 +130,7 @@ class GuestSavePrompt {
         auth.guestSaveUserId ?? 'local',
         now: now,
       );
-      await service.countGame();
+      await service.countGame(operationId: operationId);
       return service;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'guest_save_prompt');

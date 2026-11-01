@@ -4,14 +4,18 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
+import 'local_progress_write_lock.dart';
+import 'result_progress_journal.dart';
 
 import '../utils/error_reporter.dart';
 
 class XPStore {
-  XPStore._(this._preferences, this._totalXP);
+  XPStore._(this._preferences, this._totalXP, this._owner);
+
+  final String? _owner;
 
   static String get _totalXPKey =>
-      LocalProgressScope.physical('zankurd.xp.total');
+      LocalProgressWriteLock.physical('zankurd.xp.total');
   static XPStore? _instance;
   static Future<XPStore>? _loading;
   static int _loadGeneration = 0;
@@ -65,6 +69,8 @@ class XPStore {
   }
 
   static Future<XPStore> _loadFresh() async {
+    final owner = LocalProgressScope.activeUserId;
+    final key = _totalXPKey;
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -72,12 +78,22 @@ class XPStore {
       ErrorReporter.record(error, stack, reason: 'xp_store_load');
       preferences = null;
     }
-    final total = math.max(0, preferences?.getInt(_totalXPKey) ?? 0);
-    return XPStore._(preferences, total);
+    if (preferences != null) {
+      await LocalProgressWriteLock.run(
+        owner,
+        () => ResultProgressJournal.recover(
+          preferences: preferences!,
+          namespace: '$key.resultJournal',
+        ),
+      );
+    }
+    final total = math.max(0, preferences?.getInt(key) ?? 0);
+    return XPStore._(preferences, total, owner);
   }
 
   @visibleForTesting
   static Future<XPStore> loadForTest(int initialXP) async {
+    final owner = LocalProgressScope.activeUserId;
     _loadGeneration++;
     _loading = null;
     SharedPreferences? preferences;
@@ -87,7 +103,7 @@ class XPStore {
       ErrorReporter.record(error, stack, reason: 'xp_store_persist');
       preferences = null;
     }
-    return _instance = XPStore._(preferences, initialXP);
+    return _instance = XPStore._(preferences, initialXP, owner);
   }
 
   static void resetInstance() {
@@ -122,26 +138,70 @@ class XPStore {
   /// görev ve terfi XP'sini de içerir. Daha düşük sunucu değeri yereli
   /// ezince oda maçından sonra seviye çubuğu geri düşüyordu (2026-10-25);
   /// aynı kural [XpCachePlan.decide] ile eşitlemede de geçerli.
-  Future<bool> applyServerTotal(int total) async {
-    if (total <= _totalXP) return false;
-    final levelBefore = currentLevel;
-    _totalXP = total;
-    await _preferences?.setInt(_totalXPKey, _totalXP);
-    return currentLevel > levelBefore;
-  }
+  Future<bool> applyServerTotal(int total) =>
+      LocalProgressWriteLock.run(_owner, () async {
+        await _recover();
+        _refreshTotal();
+        if (total <= _totalXP) return false;
+        final levelBefore = currentLevel;
+        _totalXP = total;
+        await _preferences?.setInt(_totalXPKey, _totalXP);
+        return currentLevel > levelBefore;
+      });
 
   /// Kullanıcıya XP ekler. Seviye atlama gerçekleştiyse true döner.
-  Future<bool> addXP(int amount) async {
-    if (amount <= 0) return false;
-    final levelBefore = currentLevel;
-    _totalXP += amount;
-    await _preferences?.setInt(_totalXPKey, _totalXP);
-    final levelAfter = currentLevel;
-    return levelAfter > levelBefore;
+  Future<bool> addXP(int amount, {String? operationId}) =>
+      LocalProgressWriteLock.run(_owner, () async {
+        await _recover();
+        _refreshTotal();
+        if (amount <= 0) return false;
+        final prefs = _preferences;
+        if (operationId != null) {
+          if (prefs == null) throw StateError('XP persistence unavailable.');
+          final result = await ResultProgressJournal.run(
+            preferences: prefs,
+            namespace: '$_totalXPKey.resultJournal',
+            operationId: operationId,
+            prepare: () {
+              _refreshTotal();
+              final target = _totalXP + amount;
+              return ResultProgressMutation(
+                values: {_totalXPKey: target},
+                result: {'leveledUp': calculateLevel(target) > currentLevel},
+              );
+            },
+          );
+          _refreshTotal();
+          return result['leveledUp'] == true;
+        }
+        final levelBefore = currentLevel;
+        _totalXP += amount;
+        await _preferences?.setInt(_totalXPKey, _totalXP);
+        final levelAfter = currentLevel;
+        return levelAfter > levelBefore;
+      });
+
+  Future<void> _recover() async {
+    final prefs = _preferences;
+    if (prefs != null) {
+      await ResultProgressJournal.recover(
+        preferences: prefs,
+        namespace: '$_totalXPKey.resultJournal',
+      );
+    }
   }
 
-  Future<void> clear() async {
-    await removePersistedPreferenceKeys(_preferences, [_totalXPKey]);
-    _totalXP = 0;
+  void _refreshTotal() {
+    _totalXP = math.max(_totalXP, _preferences?.getInt(_totalXPKey) ?? 0);
   }
+
+  Future<void> clear() => LocalProgressWriteLock.run(_owner, () async {
+    await removePersistedPreferenceKeys(_preferences, [
+      _totalXPKey,
+      ...?_preferences?.getKeys().where(
+        (key) => key.startsWith('$_totalXPKey.resultJournal.'),
+      ),
+    ]);
+    _totalXP = 0;
+  });
 }

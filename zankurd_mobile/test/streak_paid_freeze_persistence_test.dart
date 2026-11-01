@@ -44,7 +44,7 @@ void main() {
       final entered = Completer<void>();
       final release = Completer<void>();
       final storage = <String, Object>{
-        'flutter.zankurd.scope.owner-b.zankurd.placement.v1.level': 'a1',
+        'flutter.zankurd.scope.owner-b.zankurd.placement.v1.level': 'destpek',
       };
       LocalProgressScope.bind('owner-a');
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -70,7 +70,7 @@ void main() {
         prefs,
         const ProgressSnapshot(
           xp: 100,
-          placementLevel: 'a2',
+          placementLevel: 'navin',
           placementUpdatedAt: 100,
         ),
       );
@@ -80,11 +80,11 @@ void main() {
       expect(await pending, isTrue);
       expect(
         storage['flutter.zankurd.scope.owner-b.zankurd.placement.v1.level'],
-        'a1',
+        'destpek',
       );
       expect(
         storage['flutter.zankurd.scope.owner-a.zankurd.placement.v1.level'],
-        'a2',
+        'navin',
       );
     },
   );

@@ -29,7 +29,6 @@ import '../../widgets/sahne/sahne.dart';
 import '../quiz/quiz_fit.dart';
 import '../quiz/quiz_option_tile.dart';
 import '../quiz/quiz_timer_controller.dart';
-import 'async_duel_inbox.dart';
 import 'async_duel_result_screen.dart';
 import '../../widgets/dialog_action_pair.dart';
 
@@ -237,15 +236,15 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         _popToTournament();
         return;
       }
+      _duel = start;
+      _questions = start.questions;
       // Yeniden açılan kabul edilmiş meydan okumada 7 sorum zaten bitmiş:
       // oynanacak bir şey yok, sonuç listesine geç (hata/boş ekran yok).
       if (start.alreadyFinished ||
           start.answeredCount >= start.questions.length) {
-        unawaited(
-          Navigator.of(context).pushReplacement(
-            AppRoute.to(AsyncDuelListScreen(repository: widget.repository)),
-          ),
-        );
+        if (!await _goToResult(null)) {
+          throw StateError('Final duel result unavailable');
+        }
         return;
       }
       final resumeAt = start.answeredCount;
@@ -265,7 +264,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         _selectedAnswer = null;
         _revealedAnswerText = null;
       });
-      _confirmedIndices.clear();
+      _confirmedIndices
+        ..clear()
+        ..addAll(Iterable<int>.generate(resumeAt));
       _beginQuestion();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'async duel start failed');
@@ -505,8 +506,16 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       if (error.toString().contains('Already answered')) {
         _confirmedIndices.add(index);
         if (!mounted || _exitInFlight) return;
-        _advanceOrFinishUnknown(index);
+        await _advanceOrFinishUnknown(index);
         return;
+      }
+      // Son cevap işlenmiş ama HTTP yanıtı kaybolmuş olabilir. Doğru
+      // toplamını yalnız mevcut sunucu sonuç okumasından kurtar.
+      if (!_isTournament &&
+          index + 1 >= _questions.length &&
+          mounted &&
+          !_exitInFlight) {
+        if (await _goToResult(null)) return;
       }
       ErrorReporter.record(error, stack, reason: 'async duel answer failed');
       if (!mounted || _exitInFlight) return;
@@ -545,20 +554,24 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     // ona cevap verebilir ve aynı soru iki kez gönderilirdi.
     if (!mounted || _exitInFlight) return;
     if (response.finished) {
-      _goToResult(response.result);
+      if (!await _goToResult(response.result) && mounted) {
+        setState(() => _phase = _Phase.error);
+      }
       return;
     }
     _advanceToNextQuestion();
   }
 
   /// Bkz. `_sendAnswer`'daki 'Already answered' yorumu: bu sorunun gerçek
-  /// sonucunu (bitti mi, kaçıncı soru) bilmiyoruz. Son soruysa yine de bir
-  /// sonuç ekranı açabilmek için "bekleniyor" görünümüne düşülür; değilse
-  /// sıradaki soruya geçilir.
-  void _advanceOrFinishUnknown(int index) {
+  /// sonucunu (bitti mi, kaçıncı soru) bilmiyoruz. Son soruda toplamı
+  /// sunucu listesinden tekrar okuruz; okunamazsa yeniden deneme görünür.
+  /// Ara sorularda sıradaki soruya geçilir.
+  Future<void> _advanceOrFinishUnknown(int index) async {
     final total = _questions.length;
     if (index + 1 >= total) {
-      _goToResult(null);
+      if (!await _goToResult(null) && mounted) {
+        setState(() => _phase = _Phase.error);
+      }
       return;
     }
     _advanceToNextQuestion();
@@ -584,38 +597,64 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   /// tamamlayan kullanıcı "yarış tamamla" ve "doğru cevap" görevlerini
   /// ilerletemiyordu (Codex denetimi 2026-10-29). XP burada verilmez: ödül
   /// ana ekranda "Ödülü al" ile tek kez yazılır.
-  Future<void> _reportMissionProgress() async {
+  Future<void> _reportMissionProgress(int myCorrect) async {
     if (_missionReported) return;
-    _missionReported = true;
     try {
       final store = await DailyMissionStore.load();
       await store.reportQuizCompleted(
-        correctAnswers: _results
-            .where((r) => r == SahneDiamondState.correct)
-            .length,
+        completionId:
+            '${_isTournament ? 'tournament' : 'async-duel'}:${_duel!.duelId}',
+        correctAnswers: myCorrect,
         category: _questions.isEmpty
             ? (widget.category ?? '')
             : _questions.first.category,
         streakAlive: true,
       );
+      _missionReported = true;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'async_duel_mission_report');
+      rethrow;
     }
   }
 
-  void _goToResult(AsyncDuelResult? result) {
+  Future<bool> _goToResult(AsyncDuelResult? result) async {
+    final duel = _duel!;
+    AsyncDuelSummary? recovered;
+    if (result == null && !_isTournament) {
+      try {
+        final summaries = await widget.repository.loadMyAsyncDuels();
+        for (final summary in summaries) {
+          // list_my_async_duels.my_correct yalnız async_duel_results'tan
+          // gelir; sonuç satırı ancak bütün cevaplar kaydolunca oluşur.
+          // Kısmi turda null'dır, final yanıt kaybıyla karıştırılmaz.
+          if (summary.duelId == duel.duelId && summary.myCorrect != null) {
+            recovered = summary;
+            break;
+          }
+        }
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'async duel final recovery');
+      }
+      if (recovered == null) return false;
+    }
+    final myCorrect = result?.myCorrect ?? recovered?.myCorrect;
+    if (myCorrect != null) {
+      try {
+        await _reportMissionProgress(myCorrect);
+      } catch (_) {
+        return false;
+      }
+    }
+    if (!mounted || _exitInFlight) return false;
     unawaited(StreakStore.recordActivity());
-    unawaited(_reportMissionProgress());
     if (_isTournament) {
       _popToTournament();
-      return;
+      return true;
     }
-    final duel = _duel!;
-    final view = result == null
-        ? AsyncDuelResultView.unknownAfterFinish(duel.duelId)
-        : AsyncDuelResultView.fromAnswer(duel, result);
-    final navigator = Navigator.of(context);
-    navigator.pushReplacement(
+    final view = recovered != null
+        ? AsyncDuelResultView.fromSummary(recovered)
+        : AsyncDuelResultView.fromAnswer(duel, result!);
+    Navigator.of(context).pushReplacement(
       AppRoute.to(
         AsyncDuelResultScreen(
           repository: widget.repository,
@@ -624,6 +663,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         ),
       ),
     );
+    return true;
   }
 
   Future<void> _confirmExit() async {
@@ -680,73 +720,71 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     await _quitAndTimeoutRemaining();
   }
 
-  /// Yarım bırakılan düello de sonuçlansın diye sunucunun onaylamadığı
-  /// TÜM sorular gönderilir, sonra ekran kapanır.
-  ///
-  /// Önce havadaki istek beklenir (aynı soru iki kez gitmesin). Gönderimi
-  /// ağ hatasıyla düşmüş soru oyuncunun KENDİ seçimiyle yeniden gider —
-  /// oyuncu o soruyu cevaplamıştı; kalanlar TIMEOUT'tur. Tek tek hata
-  /// yutulur (kaydedilir): ilk hatada vazgeçmek düelloyu daha da yarım
-  /// bırakırdı.
+  /// Sıralı RPC sözleşmesi: bir indeks onaylanmadan sonraki gönderilmez.
+  /// Havadaki cevap dahil toplam bütçe dolunca yeni istek başlatılmaz;
+  /// yarım kalan düello mevcut "Yarım kaldı" sonucuyla açıkça gösterilir.
   Future<void> _quitAndTimeoutRemaining() async {
     setState(() => _exitInFlight = true);
     _timerController.pause();
     _stopwatch.stop();
-    final inFlight = _inFlight;
-    if (inFlight != null) await inFlight;
     final duel = _duel;
-    if (duel != null) {
-      // Gönderimler PARALEL ve toplam süre sınırlı (2026-10-21): sırayla
-      // beklemek yavaş ağda her RPC için 15 sn demekti; ekran dakikalarca
-      // `_exitInFlight` ile tutuluyordu. Süre aşılırsa ekran yine kapanır;
-      // ulaşmayan sorular sunucudaki süre dolumuyla tamamlanır.
-      Future<void> sendAt(int i) {
+    var stopped = false;
+    Future<void> sendRemaining() async {
+      final inFlight = _inFlight;
+      if (inFlight != null) await inFlight;
+      if (duel == null || stopped) return;
+      for (var i = 0; i < _questions.length; i++) {
+        if (stopped) return;
+        if (_confirmedIndices.contains(i)) continue;
         final pendingChoice = _pendingChoice;
         final pendingMs = _pendingResponseMs;
         final resendPending =
             i == _index && pendingChoice != null && pendingMs != null;
-        return _sendQuietly(
-          duelId: duel.duelId,
-          index: i,
-          choice: resendPending ? pendingChoice : 'TIMEOUT',
-          responseMs: resendPending ? pendingMs : _questionDurationMs,
-        );
+        for (var attempt = 0; attempt < 2 && !stopped; attempt++) {
+          await _sendQuietly(
+            duelId: duel.duelId,
+            index: i,
+            choice: resendPending ? pendingChoice : 'TIMEOUT',
+            responseMs: resendPending ? pendingMs : _questionDurationMs,
+          );
+          if (_confirmedIndices.contains(i)) break;
+        }
+        if (!_confirmedIndices.contains(i)) return;
       }
+    }
 
-      final remaining = [
-        for (var i = 0; i < _questions.length; i++)
-          if (!_confirmedIndices.contains(i)) i,
-      ];
-      // Turnuva sunucusu cevabı SIRAYLA kabul eder (atlamalı 'Invalid
-      // index'): paralel gönderimde sırası kayan cevaplar düşer ve maç
-      // skorsuz kalırdı. Orada gönderimler sırayla, aynı toplam süreyle.
-      final Future<void> sends = _isTournament
-          ? () async {
-              for (final i in remaining) {
-                await sendAt(i);
-              }
-            }()
-          : Future.wait([for (final i in remaining) sendAt(i)]);
-      try {
-        await sends.timeout(asyncDuelQuitSendTimeout);
-      } on TimeoutException {
-        ErrorReporter.record(
-          TimeoutException('async duel quit sends'),
-          StackTrace.current,
-          reason: 'async duel quit timed out; closing anyway',
-        );
-      }
+    try {
+      await sendRemaining().timeout(asyncDuelQuitSendTimeout);
+    } on TimeoutException catch (error, stack) {
+      stopped = true;
+      ErrorReporter.record(error, stack, reason: 'async duel quit incomplete');
     }
+    stopped = true;
     if (!mounted) return;
-    // Turnuvada bütün sorular sunucuya ulaştıysa skor yazılmıştır: şema
-    // "rakip bekleniyor"u göstersin diye tamamlandı bilgisi döner.
-    if (_isTournament &&
-        duel != null &&
-        _confirmedIndices.length >= _questions.length) {
-      _popToTournament();
-      return;
+    final completed =
+        duel != null && _confirmedIndices.length >= _questions.length;
+    if (_isTournament) {
+      Navigator.of(context).pop(<String, Object?>{'completed': completed});
+    } else if (duel != null && !completed) {
+      Navigator.of(context).pushReplacement(
+        AppRoute.to(
+          AsyncDuelResultScreen(
+            repository: widget.repository,
+            view: AsyncDuelResultView.fromSummary(
+              AsyncDuelSummary(
+                duelId: duel.duelId,
+                status: AsyncDuelStatus.open,
+                role: duel.role,
+                createdAt: DateTime.now(),
+                seen: false,
+              ),
+            ),
+          ),
+        ),
+      );
+    } else {
+      Navigator.of(context).pop();
     }
-    Navigator.of(context).pop();
   }
 
   /// Çıkış döngüsünün tek gönderimi. 'Already answered' beklenen bir

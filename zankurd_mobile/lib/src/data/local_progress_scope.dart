@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'result_progress_journal.dart';
+
 /// Yerel ilerlemeyi kullanıcı kimliğine bağlar.
 ///
 /// Eski kurulumlar genel anahtar kullanır (`zankurd.xp.total`). İlk gerçek
@@ -31,6 +33,7 @@ class LocalProgressScope {
   };
 
   static const prefixes = <String>[
+    'zankurd.xp.total.resultJournal.',
     'zankurd.streak.',
     'zankurd.contest.',
     'zankurd.mastery.',
@@ -44,6 +47,11 @@ class LocalProgressScope {
   ];
 
   static String? _activeUserId;
+  static int _generation = 0;
+  static int get generation => _generation;
+
+  /// Auth geçişi, yerel kapsamın asenkron hazırlanmasından önce eski işleri iptal eder.
+  static void invalidateSession() => _generation++;
   static Future<bool>? _migration;
 
   static String? get activeUserId => _activeUserId;
@@ -53,11 +61,13 @@ class LocalProgressScope {
     if (normalized.isEmpty) {
       throw ArgumentError.value(userId, 'userId', 'Boş olamaz.');
     }
+    if (_activeUserId != normalized) _generation++;
     _activeUserId = normalized;
   }
 
   static void debugReset() {
     _activeUserId = null;
+    _generation++;
     _migration = null;
   }
 
@@ -107,6 +117,19 @@ class LocalProgressScope {
     try {
       await preferences.reload();
       if (preferences.getString(migratedKey) != null) return true;
+      // Prepared günlüklerin hedefleri eski fiziksel anahtarlardır. Önce
+      // tamamla; yalnız done kayıtları ve tamamlanmış değerler taşınsın.
+      for (final namespace in [
+        'zankurd.xp.total.resultJournal',
+        'zankurd.achievements.resultJournal',
+        'zankurd.achievements.masteryResultJournal',
+        'zankurd.missions.resultJournal',
+      ]) {
+        await ResultProgressJournal.recover(
+          preferences: preferences,
+          namespace: namespace,
+        );
+      }
       final owner = preferences.getString(ownerKey);
       final inheritTo = isHumanOwner(owner) ? owner!.trim() : incoming;
       final keys = preferences
@@ -157,6 +180,7 @@ class LocalProgressScope {
       return true;
     }
     _activeUserId = null;
+    _generation++;
     if (owner == null || owner.trim().isEmpty) {
       return preferences.setString(ownerKey, offlineUserId);
     }

@@ -311,7 +311,7 @@ void main() {
     );
 
     testWidgets(
-      'eski RPC ücretsiz daveti kilitlemez; yalnız modern ücretli fixture sessiz bıraktı',
+      'G16 eski davet kesin ücret olmadan katılamaz; aralık onayı güvenli sanıldığı için sessiz kaldı',
       (tester) async {
         tester.view.physicalSize = const Size(320, 640);
         tester.view.devicePixelRatio = 1;
@@ -322,30 +322,16 @@ void main() {
           ..seedRoomInviteForTesting(_invite(fee: null, legacy: true));
         await tester.pumpWidget(host(repo));
         await tester.pumpAndSettle();
-        expect(
-          find.text('Katılım ücreti: Belirsiz (0–100 jeton)'),
-          findsOneWidget,
-        );
-        final join = find.byKey(const ValueKey('room-invite-join'));
-        await tester.ensureVisible(join);
+        expect(find.text('Katılım ücreti: Belirsiz'), findsOneWidget);
+        expect(find.byKey(const ValueKey('room-invite-join')), findsNothing);
+        final retry = find.byKey(const ValueKey('room-invite-retry'));
+        await tester.ensureVisible(retry);
+        await tester.tap(retry);
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);
-        await tester.tap(join);
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 350));
+        expect(find.byType(AlertDialog), findsNothing);
         expect(repo.responses, 0);
         expect(repo.joined, isEmpty);
-        await tester.tap(find.byKey(const ValueKey('room-invite-fee-cancel')));
-        await tester.pumpAndSettle();
-        expect(repo.responses, 0);
-        await tester.tap(join);
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 350));
-        await tester.tap(find.byKey(const ValueKey('room-invite-fee-confirm')));
-        await tester.pumpAndSettle();
-        expect(repo.responses, 1);
-        expect(repo.joined, ['ZK-TEST']);
-        expect(find.byType(RoomScreen), findsOneWidget);
       },
     );
 

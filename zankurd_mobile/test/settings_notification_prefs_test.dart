@@ -28,6 +28,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/services/notification_service.dart';
 import 'support/widget_test_helpers.dart';
@@ -96,6 +97,8 @@ void main() {
   late _Gateway gateway;
 
   setUp(() async {
+    LocalProgressScope.debugReset();
+    LocalProgressScope.bind('user');
     SharedPreferences.setMockInitialValues({'zankurd.language': 'tr'});
     NotificationService.resetInstance();
     repository = freshMockRepository();

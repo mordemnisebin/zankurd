@@ -51,7 +51,9 @@ class _CountingDuelRepository extends MockZanKurdRepository {
       answered: answer.answered,
       total: answer.total,
       finished: answer.finished,
-      result: answer.result,
+      result: answer.finished
+          ? const AsyncDuelResult(waiting: true, myCorrect: 5, myMs: 1000)
+          : null,
     );
   }
 }
@@ -62,56 +64,57 @@ void main() {
     DailyMissionStore.resetInstance();
   });
 
-  testWidgets('düello bitince doğru cevaplar günlük sayaca bir kez işlenir', (
-    tester,
-  ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-    freshMockRepository();
-    final auth = AuthProvider.offline();
-    await auth.signInAsGuest();
-    final prompt = await GuestSavePromptService.load(
-      auth.guestSaveUserId ?? 'local',
-    );
-    await prompt.countGame();
-    await prompt.countGame();
-    final repository = _CountingDuelRepository();
+  testWidgets(
+    'G11 kusur: UI doğruları eksikti; sessizdi çünkü final sunucu toplamı sınanmıyordu',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      freshMockRepository();
+      final auth = AuthProvider.offline();
+      await auth.signInAsGuest();
+      final prompt = await GuestSavePromptService.load(
+        auth.guestSaveUserId ?? 'local',
+      );
+      await prompt.countGame();
+      await prompt.countGame();
+      final repository = _CountingDuelRepository();
 
-    await tester.pumpWidget(
-      testShell(
-        authProvider: auth,
-        child: PlayHubScreen(repository: repository, asyncDuelEnabled: true),
-      ),
-    );
-    await tester.pumpAndSettle();
-    await openAsyncOpponentSheet(tester);
-    await tester.tap(find.byKey(const ValueKey('opponent-sheet-random')));
-    await tester.pump();
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 300));
-
-    for (var i = 0; i < 7; i++) {
-      await tester.tap(find.byKey(const ValueKey('async-duel-option-0')));
+      await tester.pumpWidget(
+        testShell(
+          authProvider: auth,
+          child: PlayHubScreen(repository: repository, asyncDuelEnabled: true),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await openAsyncOpponentSheet(tester);
+      await tester.tap(find.byKey(const ValueKey('opponent-sheet-random')));
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 1300));
       await tester.pump();
-    }
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('async-duel-result')), findsOneWidget);
+      await tester.pump(const Duration(milliseconds: 300));
 
-    final store = await DailyMissionStore.load();
-    expect(store.correctAnswersToday, 7);
-    expect(
-      find.byType(GuestSaveSheet),
-      findsNothing,
-      reason: 'T10: sonuç örtülmemeli',
-    );
-    Navigator.of(tester.element(find.byType(AsyncDuelResultScreen))).pop();
-    await tester.pumpAndSettle();
-    expect(
-      find.byType(GuestSaveSheet),
-      findsOneWidget,
-      reason: 'T10: sonuçtan ayrılınca önerilmeli',
-    );
-  });
+      for (var i = 0; i < 7; i++) {
+        await tester.tap(find.byKey(const ValueKey('async-duel-option-0')));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 1300));
+        await tester.pump();
+      }
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('async-duel-result')), findsOneWidget);
+
+      final store = await DailyMissionStore.load();
+      expect(store.correctAnswersToday, 5);
+      expect(
+        find.byType(GuestSaveSheet),
+        findsNothing,
+        reason: 'T10: sonuç örtülmemeli',
+      );
+      Navigator.of(tester.element(find.byType(AsyncDuelResultScreen))).pop();
+      await tester.pumpAndSettle();
+      expect(
+        find.byType(GuestSaveSheet),
+        findsOneWidget,
+        reason: 'T10: sonuçtan ayrılınca önerilmeli',
+      );
+    },
+  );
 }

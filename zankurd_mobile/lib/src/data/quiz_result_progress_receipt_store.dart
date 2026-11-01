@@ -47,9 +47,8 @@ enum QuizResultReceiptStage {
 
   /// Otomatik yerel ilerleme yazımı sürüyor.
   ///
-  /// Yerel depolar (XP, rozet, ustalık, görev) idempotent değildir, bu
-  /// yüzden kesilen bir yazım da yeniden çalıştırılmaz. Aradaki fark
-  /// şudur: artık ileri çözülür, sonsuza dek kilitlenmez.
+  /// v4 kayıtlar adım günlüğüyle kaldığı yerden devam eder. Eski
+  /// günlüksüz kayıtların hangi kazanımı yazdığı bilinemez.
   progressApplying,
 
   /// Yerel ilerleme yazımı bitti.
@@ -88,10 +87,14 @@ class QuizResultReceipt {
     required this.stage,
     this.freezeRequested = false,
     this.paidFreezeIntent,
+    this.recoverableProgress = false,
   });
 
   final QuizResultReceiptStage stage;
   final PaidFreezeIntent? paidFreezeIntent;
+
+  /// v4: her yerel adım tur kimlikli günlükle yeniden denenebilir.
+  final bool recoverableProgress;
 
   /// Kullanıcı dondurmayı seçti mi. Karar, uygulanmadan ÖNCE yazılır ki
   /// coin harcama ile kararın kendisi aynı kesintide birlikte kaybolmasın.
@@ -100,7 +103,8 @@ class QuizResultReceipt {
   bool get isTerminal => stage == QuizResultReceiptStage.completed;
 
   Map<String, Object?> toJson() => {
-    'v': paidFreezeIntent == null ? 2 : 3,
+    'v': recoverableProgress ? 4 : (paidFreezeIntent == null ? 2 : 3),
+    if (recoverableProgress) 'recoverableProgress': true,
     if (paidFreezeIntent != null)
       'paidFreezeIntent': paidFreezeIntent!.toJson(),
     'stage': stage.name,
@@ -147,7 +151,11 @@ class QuizResultReceipt {
     return QuizResultReceipt(
       stage: stage,
       freezeRequested: decoded['freeze'] == true,
-      paidFreezeIntent: decoded['v'] == 3
+      recoverableProgress:
+          decoded['v'] == 4 && decoded['recoverableProgress'] == true,
+      paidFreezeIntent:
+          decoded['v'] == 3 ||
+              (decoded['v'] == 4 && decoded['paidFreezeIntent'] != null)
           ? PaidFreezeIntent.decode(decoded['paidFreezeIntent'])
           : null,
     );
@@ -273,13 +281,14 @@ class QuizResultProgressReceiptStore {
     required String userId,
     required String roomId,
     required Future<void> Function() action,
+    bool resumable = false,
   }) {
     final key = _validatedKey(userId, roomId);
     final existing = _inFlight[key];
     if (existing != null) return existing;
 
     late final Future<QuizResultProgressReceiptOutcome> tracked;
-    tracked = _run(key, action).whenComplete(() {
+    tracked = _run(key, action, resumable).whenComplete(() {
       if (identical(_inFlight[key], tracked)) {
         _inFlight.remove(key);
       }
@@ -291,6 +300,7 @@ class QuizResultProgressReceiptStore {
   Future<QuizResultProgressReceiptOutcome> _run(
     String key,
     Future<void> Function() action,
+    bool resumable,
   ) async {
     if (_cacheUncertain.contains(key)) {
       await _preferences.reload();
@@ -311,6 +321,7 @@ class QuizResultProgressReceiptStore {
       // şurada: akış ileri taşınır, böylece onay yapılabilir ve kurtarma
       // ekranı tekrarlamayı bırakır.
       case QuizResultReceiptStage.progressApplying:
+        if (resumable && receipt!.recoverableProgress) break;
         await _persist(
           key,
           const QuizResultReceipt(
@@ -330,7 +341,10 @@ class QuizResultProgressReceiptStore {
 
     await _persist(
       key,
-      const QuizResultReceipt(stage: QuizResultReceiptStage.progressApplying),
+      QuizResultReceipt(
+        stage: QuizResultReceiptStage.progressApplying,
+        recoverableProgress: resumable,
+      ),
     );
     await action();
     await _persist(

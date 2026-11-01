@@ -2,6 +2,7 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/error_reporter.dart';
+import '../data/result_progress_journal.dart';
 
 /// Uygulama içi mağaza değerlendirmesini doğru anda, bir kez ister.
 ///
@@ -90,7 +91,33 @@ class ReviewService {
   Future<void> recordQuizCompletion({
     required int accuracyPercent,
     DateTime? now,
+    String? operationId,
   }) async {
+    final prefs = _preferences;
+    if (operationId != null && prefs != null) {
+      final d = now ?? DateTime.now();
+      final day =
+          '${d.year.toString().padLeft(4, '0')}-'
+          '${d.month.toString().padLeft(2, '0')}-'
+          '${d.day.toString().padLeft(2, '0')}';
+      await ResultProgressJournal.run(
+        preferences: prefs,
+        namespace: 'zankurd.review.resultJournal',
+        operationId: operationId,
+        prepare: () => ResultProgressMutation(
+          values: {
+            _completedKey: (prefs.getInt(_completedKey) ?? 0) + 1,
+            _daysKey: {...?prefs.getStringList(_daysKey), day}.toList(),
+          },
+        ),
+      );
+      _completedQuizzes = prefs.getInt(_completedKey) ?? 0;
+      _days
+        ..clear()
+        ..addAll(prefs.getStringList(_daysKey) ?? []);
+      _lastAccuracy = accuracyPercent;
+      return;
+    }
     _completedQuizzes += 1;
     _lastAccuracy = accuracyPercent;
     final d = now ?? DateTime.now();
