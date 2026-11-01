@@ -1342,9 +1342,10 @@ extension _QuizScreenUI on _QuizScreenState {
   /// Günde bir kez, solo turda ilk kullanım bedavadır (bekçi:
   /// `free_wildcard_store_test`, `free_wildcard_quiz_test`).
   bool _canPayWildcard(WildcardType type) =>
-      _freeWildcardAvailable ||
-      _jokerStock > 0 ||
-      _coinBalance >= type.coinCost;
+      !_wildcardsLocked &&
+      (_freeWildcardAvailable ||
+          _jokerStock > 0 ||
+          _coinBalance >= type.coinCost);
 
   /// Bedava hakkı bu kullanımda harcar; harcandıysa `true`.
   ///
@@ -1424,6 +1425,7 @@ extension _QuizScreenUI on _QuizScreenState {
         );
       }
       charged = result.success || result.retryable;
+      if (!charged) _lockWildcards();
     } on RetryableWriteException catch (error, stack) {
       ErrorReporter.record(
         error.cause,
@@ -1453,6 +1455,19 @@ extension _QuizScreenUI on _QuizScreenState {
         reason: 'wildcard balance resync ${type.name}',
       );
     }
+  }
+
+  /// Kalıcı ret sonrası: bu turda yeni joker kapanır, kısa uyarı gösterilir
+  /// (mevcut "Joker için jeton yetmiyor" metni).
+  void _lockWildcards() {
+    if (!mounted || _wildcardsLocked) return;
+    setState(() => _wildcardsLocked = true);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(context.t(K.wildcardNoCoins)),
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 
   void _useFiftyFifty() {

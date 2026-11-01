@@ -333,6 +333,39 @@ class DailyMissionStore {
     return null;
   }
 
+  static final Set<String> _claimsInFlight = <String>{};
+
+  /// Ödülü [grant] BAŞARILI olduktan sonra "alındı" diye kalıcı yazar.
+  ///
+  /// Bayrak ödülden önce yazılınca `addXP` düşerse görev "alındı" kalıyor,
+  /// XP hiç gelmiyordu. Burada [grant] fırlatırsa bayrak yazılmaz ve `false`
+  /// döner (kullanıcı yeniden deneyebilir). Aynı görev için eşzamanlı ikinci
+  /// çağrı `false` döner (çift XP yok).
+  Future<bool> claimRewardAfter(
+    DailyMission mission,
+    Future<void> Function() grant,
+  ) async {
+    await _recoverPending();
+    if (!mission.completed || mission.claimed) return false;
+    final flightKey =
+        '${mission.type.name}|${mission.category}|'
+        '${mission.target}|$_loadedDateKey';
+    if (!_claimsInFlight.add(flightKey)) return false;
+    try {
+      try {
+        await grant();
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'mission_claim_grant');
+        return false;
+      }
+      mission.claimed = true;
+      await _persist();
+      return true;
+    } finally {
+      _claimsInFlight.remove(flightKey);
+    }
+  }
+
   Future<bool> claimReward(DailyMission mission) async {
     await _recoverPending();
     if (!mission.completed || mission.claimed) return false;

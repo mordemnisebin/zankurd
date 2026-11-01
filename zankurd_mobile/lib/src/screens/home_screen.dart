@@ -458,20 +458,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     } catch (_) {}
 
     final missionStore = await DailyMissionStore.load();
-    final claimed = await missionStore.claimReward(mission);
+    // Bayrak XP yazıldıktan SONRA kalıcı olur (`claimRewardAfter`): `addXP`
+    // düşerse görev alınmamış kalır ve "XP kazandın" denmez.
+    final claimed = await missionStore.claimRewardAfter(mission, () async {
+      final xpStore = await XPStore.load();
+      await xpStore.addXP(mission.xpReward);
+    });
     if (!claimed) return;
 
     soundProvider?.playWin();
-
-    try {
-      final xpStore = await XPStore.load();
-      await xpStore.addXP(mission.xpReward);
-      unawaited(
-        XpAwardPublisher.publish(repository: repo, delta: mission.xpReward),
-      );
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'home_claim_mission_xp');
-    }
+    unawaited(
+      XpAwardPublisher.publish(repository: repo, delta: mission.xpReward),
+    );
 
     // `claim_mission_reward` canlıda her zaman 0 döner (görev sunucuda
     // doğrulanamaz; 2026-10-25 canlı tanım okundu). Görev ödülü yalnız XP'dir;

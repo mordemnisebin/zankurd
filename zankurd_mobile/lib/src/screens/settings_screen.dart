@@ -1225,8 +1225,10 @@ class _SettingsScreenState extends State<SettingsScreen>
     setState(() => _deleting = true);
     final authProvider = context.read<AuthProvider>();
     final deletedUserId = widget.repository.currentUserId?.trim();
+    var serverDeleted = false;
     try {
       await widget.repository.deleteMyAccount();
+      serverDeleted = true;
       // Sunucu silmesi başarılı olduktan sonra ekran route'u kapanmış olsa
       // bile yerel kimlik ve tam o hesaba ait kuyruk temizlenmelidir.
       await authProvider.signOut(
@@ -1252,6 +1254,18 @@ class _SettingsScreenState extends State<SettingsScreen>
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'deleteAccount failed');
+      if (serverDeleted) {
+        // Hesap sunucuda SİLİNDİ; çıkış adımı düştü. "Silinemedi" demek
+        // yalan olurdu ve silinmiş hesapta oturumlu kalan kullanıcının
+        // yeniden denemesi de başarısız olurdu: yerel çıkışı zorla.
+        await authProvider.forceLocalSignOut();
+        if (!mounted) return;
+        setState(() => _deleting = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.t(K.accountLocalCleanupFailed))),
+        );
+        return;
+      }
       if (!mounted) return;
       setState(() => _deleting = false);
       ScaffoldMessenger.of(

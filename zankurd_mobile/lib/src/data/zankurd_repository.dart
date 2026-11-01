@@ -674,6 +674,11 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Gerçek backend bu miktarı sunucuda belirlemelidir; istemci yalnızca
   /// dönen miktara göre animasyonu hedefler.
   Future<int> awardSpinCoins();
+
+  /// "Günün ilk paylaşımı" ödülünü sunucudan alır, verilen miktarı döner
+  /// (0 = verilmedi: bugün zaten alındı, oturum yok ya da sunucu işlevi
+  /// yok). Çarkın günlük/ekstra hakkına DOKUNMAZ (`claim_share_reward`).
+  Future<int> claimShareReward();
   Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,

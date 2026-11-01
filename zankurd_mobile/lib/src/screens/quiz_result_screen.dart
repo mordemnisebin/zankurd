@@ -1844,14 +1844,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       if (!shared) return;
       // Gün, sunucu ödülü verdikten SONRA işaretlenir (bkz.
       // test/share_reward_scope_and_order_test.dart).
-      final earned = await ResultSharer.settleDailyShareReward(
-        awardCoins: repository.awardSpinCoins,
+      final earned = await ResultSharer.settleDailyShareRewardAmount(
+        awardCoins: repository.claimShareReward,
       );
-      if (earned && context.mounted) {
+      if (earned > 0 && context.mounted) {
         AppHaptics.medium();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(context.t(K.shareRewardEarned)),
+            content: Text(
+              context.t(K.shareRewardEarned, {'amount': '$earned'}),
+            ),
             duration: const Duration(seconds: 3),
           ),
         );
