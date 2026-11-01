@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import '../data/verified_solo_quiz_port.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -644,6 +645,18 @@ class _QuizScreenState extends State<QuizScreen>
               learning: _isLearningExperience,
             ),
     ];
+    final verifiedRepository = widget.repository;
+    if (widget.room.id == null &&
+        !widget.practice &&
+        verifiedRepository is VerifiedSoloQuizPort) {
+      unawaited(
+        (verifiedRepository as VerifiedSoloQuizPort).startVerifiedSoloRound(
+          clientRoundId: _soloRoundId,
+          questions: sourceQuestions,
+          daily: widget.dailyQuiz,
+        ),
+      );
+    }
     _myId = widget.repository.currentUserId;
     _onlineResultOwnerId = widget.repository.currentUserId?.trim() ?? '';
     livePlayers = List<Player>.of(widget.room.players);
@@ -1078,7 +1091,10 @@ class _QuizScreenState extends State<QuizScreen>
       answerRecords.any((record) => record.id == question.id);
 
   bool get _serverQuestionGatesReady =>
-      _tutorialGateReady && _questionVisualReady && _clientReadyMarked;
+      _tutorialGateReady &&
+      _questionVisualReady &&
+      _clientReadyMarked &&
+      question.prompt.isNotEmpty;
 
   void _applyResumeSnapshotData(
     RoomResumeSnapshot snapshot, {
@@ -2900,11 +2916,66 @@ class _QuizScreenState extends State<QuizScreen>
             snapshot.serverNow.isBefore(latestServerNow));
   }
 
+  bool _roomContentLoading = false;
+
+  /// Yeni sunucu gelecekteki soruların yalnız kimliğini verir. Snapshot'ın
+  /// aktif ettiği içerik gelmeden soru/sayaç açılmaz; sıra hiçbir zaman atılmaz.
+  Future<void> _hydrateRoomContent(RoomResumeSnapshot snapshot) async {
+    if (_roomContentLoading) return;
+    _roomContentLoading = true;
+    try {
+      final loaded = await widget.repository.loadRoomQuestions(widget.room);
+      if (!mounted || !_hasExpectedOnlineOwner || _terminalHandling) return;
+      if (loaded.length != _questions.length ||
+          loaded.asMap().entries.any(
+            (entry) => entry.value.id != _questions[entry.key].id,
+          )) {
+        throw StateError('Room question order changed.');
+      }
+      setState(() {
+        for (var i = 0; i < loaded.length; i++) {
+          if (loaded[i].prompt.isNotEmpty) {
+            _questions[i] = loaded[i].forRound(_answerOrderRoundId);
+          }
+        }
+      });
+      final target = snapshot.currentQuestionIndex.clamp(
+        0,
+        _questions.length - 1,
+      );
+      if (_questions[target].prompt.isNotEmpty) {
+        // Görsel kapısı snapshot sayacı başlatmadan önce kurulmalı.
+        _questionVisualReady = !_questions[target].hasImage;
+        _applyReconciledSnapshot(snapshot);
+        if (!_questionVisualReady) {
+          _visualReadyFallbackTimer?.cancel();
+          _visualReadyFallbackTimer = Timer(const Duration(seconds: 3), () {
+            if (mounted) _handleQuestionVisualReady();
+          });
+        }
+        _maybeStartQuestionFlow();
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'room active content failed');
+      // Düzenli snapshot yoklaması yeniden dener; boş içerik oynanamaz.
+    } finally {
+      _roomContentLoading = false;
+    }
+  }
+
   void _applyReconciledSnapshot(RoomResumeSnapshot snapshot) {
     if (!mounted || _questions.isEmpty) return;
     // Ready ve reconcile istekleri paralel dönebilir. Eski aynı-soru
     // yanıtı yeni deadline/reveal durumunu geri alamaz.
     if (_isOlderRoomSnapshot(snapshot)) return;
+    if (_hasAuthoritativeTiming(snapshot) &&
+        _questions
+            .take(snapshot.currentQuestionIndex + 1)
+            .any((question) => question.prompt.isEmpty)) {
+      setState(() => _serverReadyWaiting = true);
+      unawaited(_hydrateRoomContent(snapshot));
+      return;
+    }
     final oldIndex = index;
     final hasTiming = _hasAuthoritativeTiming(snapshot);
     setState(() {
@@ -4015,6 +4086,18 @@ class _QuizScreenState extends State<QuizScreen>
     if (!mounted || index != questionIndex) return;
 
     final optionKey = question.optionKeyForAnswer(answer);
+    final verifiedRepository = widget.repository;
+    if (widget.room.id == null &&
+        !widget.practice &&
+        verifiedRepository is VerifiedSoloQuizPort) {
+      unawaited(
+        (verifiedRepository as VerifiedSoloQuizPort).recordVerifiedSoloAnswer(
+          clientRoundId: _soloRoundId,
+          questionId: question.id,
+          choice: optionKey,
+        ),
+      );
+    }
 
     // Süresiz tek kişilik turda düşünerek verilen doğru cevap hız
     // sınırını aşıp 0 puan alıyordu (2026-10-25). Burada hız yarışı

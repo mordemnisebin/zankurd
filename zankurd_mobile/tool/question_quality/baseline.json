@@ -34,7 +34,7 @@
   "metrics": {
     "manifestVersion": 1,
     "sourceCount": 24,
-    "unknownSourceCount": 1,
+    "unknownSourceCount": 0,
     "missingProductionSourceCount": 0,
     "reportPhysicalRecords": 3871,
     "reportParsedRecords": 3832,

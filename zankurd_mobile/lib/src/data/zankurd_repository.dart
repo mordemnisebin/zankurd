@@ -237,6 +237,15 @@ RoomJoinFailureReason roomJoinFailureReasonForMessage(String message) {
   return RoomJoinFailureReason.unknown;
 }
 
+/// Yeni düello sunumu içeriği başlangıç kaydıyla birlikte getirir.
+/// Ayrı port eski/sahte depoların mevcut sunum sözleşmesini korur.
+abstract interface class AsyncDuelContentPort {
+  Future<TournamentPresent> presentAsyncDuelContent(
+    String duelId,
+    int questionIndex,
+  );
+}
+
 abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   List<String> get categories;
   List<QuizQuestion> get questions;

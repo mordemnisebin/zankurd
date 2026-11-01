@@ -1,5 +1,53 @@
 # Push V2 kurulumu ve yerel doğrulama
 
+## 1 Kasım 2026 — G15 yerel kapalı geçiş kanıtı
+
+**G15 canlı geçişi tamamlanmadı.** Bu görevde canlı veritabanına bağlanılmadı,
+canlı tanımlar yeniden alınmadı, SQL uygulanmadı, Edge/cron dağıtılmadı ve
+fiziksel cihazda FCM/APNs teslimatı yapılmadı. Aşağıdaki eski 31 Ekim kayıtları
+bu görevin canlı doğrulama kanıtı değildir. Uygulama istemcisinin mevcut
+sunucuyla çalışma sözleşmesi değişmedi; sender V2 yokken V1'e dönmemelidir.
+
+Mevcut `2026-10-31_push_delivery_v2.sql` adayı ve lease/ack göndericisi
+korundu. Yeni `2026-11-01_push_delivery_v2_closed_cutover.sql` bu adaydan
+**sonra** uygulanacak idempotent bir kapalı geçiştir: kapıyı kapatır, V1 cron'u
+pasifleştirir ve V1 claim RPC yetkisini PUBLIC/anon/authenticated/service_role
+rollerinden kaldırır. Böylece cron dışındaki eski gönderici yeni işleri
+`claimed_at` ile sessizce tüketemez. V1 fonksiyon gövdesi yeniden yazılmaz;
+eski/legacy işlerin başarı durumu bilinmediği için replay yapılmaz. Rol
+mirası/sahiplik nedeniyle V1 yetkisi açık kalırsa transaction hata verir.
+
+`supabase/geri_al/2026-11-01_push_delivery_v2_closed_cutover.sql` tam şema
+veya ACL geri dönüşü değil, **güvenli geri durdurmadır**. Kapıyı kapatır,
+V1 tüketimini kapalı ve lease/ack kayıtlarını korur. Eski worker'a yetkiyi
+ve cron'u geri açmak ayrı canlı inceleme ve açık sahip onayı gerektirir.
+Devam eden FCM/ack çağrısını bu SQL iptal etmez; dağıtımda eski göndericilerin
+sonlanması ve iki dakikalık bekleme ayrıca gerekir.
+
+Yalnız bellekte PGlite PostgreSQL 17.5 ile sentetik yerel şema kullanıldı.
+Vault/cron/net arayüzleri yerel taklitlerdi, hiçbir dış HTTP isteği çıkmadı.
+`tool/test_push_delivery_v2_local.mjs` şu sonuçları üretti:
+
+- Önce V2 adayı tek başınayken bekçi kırmızı: service_role V1 claim yetkisi
+  açıktı. Önceki cron testi bu manuel worker yolunu kapsamıyordu.
+- Mevcut `2026-10-31_push_delivery_v2_smoke.sql` bütünü geçti: iş alımı sonrası
+  kesinti/lease kurtarma, eski lease reddi, retry gecikmesi ve ack idempotency.
+- Yeni göç ve geri durdurma ayrı ayrı iki kez geçti. Üç rolde gerçek V1 RPC
+  çağrısı `permission denied` verdi; V2 worker yetkisi korundu; kapı kapalı
+  kaldı. Kuyruk, profiller, engeller ve tetikleyici durumu korundu.
+- Deno gönderici testleri **13/13**, Python gönderici testleri **10/10** geçti.
+  Python SQL sözleşmesinde **4 test geçti, 1 pglast testi açıkça atlandı**;
+  SQL'nin gerçek parse/çalışma denetimi yukarıdaki PGlite provasında yapıldı.
+- Tam Flutter CI ve Dart sözleşme bekçisi ana görevde ayrıca doğrulanır;
+  burada canlı dağıtım veya fiziksel teslimat sonucu olarak sunulmaz.
+
+Tekrar çalıştırma (ikinci argüman mevcut yerel PGlite modül dosyasıdır;
+komut paket indirmez, ağ veya bağlantı dizesi almaz):
+
+```sh
+node tool/test_push_delivery_v2_local.mjs /yerel/pglite/dist/index.js
+```
+
 **Canlıya uygulanmadı.** Push V2 göçünün tamamı, teslimat duman testi ve oda daveti duman testi PGlite PostgreSQL 17.5 üzerinde geçti. 31 Ekim tarihli canlı `invite_friends_to_room`, `list_my_room_invites` ve `claim_push_outbox` tanımlarıyla iki duman testi de tekrar geçti. Teslimat testi sonunda kuyruk, tercihler, engeller, kapı ve tetikleyici önceki durumuna döndü. İlk yerel testte cron, Vault ve pg_net arayüzleri taklit edildi. Ardından izole Supabase Docker ortamında gerçek pg_cron, Vault ve pg_net ile iki rollback duman testi ve HTTP uyandırma zinciri de geçti. Gerçek FCM/APNs ve fiziksel cihaz teslimatı bu provanın dışında kaldı. Bu dosyadaki canlı yazma/deploy/etkinleştirme adımları sahibin ayrıca onayını gerektirir.
 
 ## Ön inceleme (salt okunur)
@@ -104,7 +152,8 @@ iOS 26.5 simülatöründe kurulu 2.1.1 (41) sürümüne, uygulama kapalıyken ye
 
 1. Canlı tanım/şema incelemesini ve yerel smoke'u tamamla; bağımsız kod incelemesini kapat.
 2. Uygulama öncesi eski Mac göndericisinin kapalı olduğunu tekrar kontrol et.
-   Sahibin onayıyla önce `2026-10-31_push_delivery_v2.sql`, ardından
+   Sahibin onayıyla önce `2026-10-31_push_delivery_v2.sql`, hemen ardından
+   `2026-11-01_push_delivery_v2_closed_cutover.sql`, sonra
    `2026-10-31_room_invite_push_target.sql` ve
    `2026-10-31_room_invite_terms.sql` uygulanır. Sonuncusu Ana ve Yarış
    kartlarına ücreti ve süreyi sağlar. Gövde farkını uygulama anında yeniden

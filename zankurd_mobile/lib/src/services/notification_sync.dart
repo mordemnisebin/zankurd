@@ -18,25 +18,29 @@ abstract final class PushPrefsSync {
     NotificationService service,
     ZanKurdRepository repository,
   ) async {
-    final started = service.pushPrefsSnapshot;
-    await service.waitForPushPrefsWrites();
-    final sent = service.pushPrefsSnapshot;
-    final owner = sent.owner;
-    if (owner == null ||
-        started.owner != owner ||
-        started.generation != sent.generation ||
-        repository.currentUserId != owner) {
-      return false;
-    }
-    return service.serializePush(owner, () async {
-      try {
+    try {
+      final started = service.pushPrefsSnapshot;
+      await service.waitForPushPrefsWrites();
+      final sent = service.pushPrefsSnapshot;
+      final owner = sent.owner;
+      if (owner == null ||
+          started.owner != owner ||
+          started.generation != sent.generation ||
+          repository.currentUserId != owner ||
+          repository is OfflineZanKurdRepository) {
+        return false;
+      }
+      // Başarısız ilk gönderim de kalıcı bekler; sahip/oturum değişirse
+      // yeni hesabın kuyruğuna dokunulmaz.
+      await service.markServerPrefsPending(sent);
+      return await service.serializePush(owner, () async {
         if (repository.currentUserId != owner ||
             !service.isCurrentPushPrefs(sent)) {
           return false;
         }
         final ok = await repository.setPushPreferences(
-          duel: sent.duel,
-          social: sent.social,
+          duel: sent.enabled && sent.duel,
+          social: sent.enabled && sent.social,
           expectedUserId: owner,
         );
         if (repository.currentUserId != owner ||
@@ -45,11 +49,11 @@ abstract final class PushPrefsSync {
         }
         if (ok) await service.markServerPrefsSynced(sent);
         return ok;
-      } catch (error, stack) {
-        ErrorReporter.record(error, stack, reason: 'push_prefs_push');
-        return false;
-      }
-    });
+      });
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'push_prefs_push');
+      return false;
+    }
   }
 
   /// Kirli yerel değişiklik varsa yazar, yoksa sunucudaki değeri yerele alır.
@@ -68,7 +72,8 @@ abstract final class PushPrefsSync {
           repository is OfflineZanKurdRepository) {
         return;
       }
-      if (requested.dirty) {
+      // Eski sürümün kuyruğa alınmamış kapalı anahtarını da sunucuya taşı.
+      if (requested.dirty || !requested.enabled) {
         await push(service, repository);
         return;
       }

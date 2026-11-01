@@ -392,20 +392,37 @@ class NotificationService {
     if (preferences == null) {
       throw StateError('Notification preferences are unavailable.');
     }
-    try {
-      final saved = await preferences.setBool(_enabledKey, value);
-      if (!saved) {
-        throw StateError('Notification preference was not persisted.');
-      }
-    } catch (_) {
-      // SharedPreferences updates its cache before the platform write finishes.
-      // A failed write must not leave a value that was never saved in memory.
+    final owner = LocalProgressScope.activeUserId;
+    final generation = LocalProgressScope.generation;
+    // Ana anahtar ve hesap revizyonu aynı yerel yazım kuyruğunda ilerler.
+    // Eski RPC onayı, henüz diske yazılan yeni kapatmayı temizleyemez.
+    await _serializePrefs(() async {
       try {
-        await preferences.reload();
-      } catch (_) {}
-      rethrow;
-    }
-    _enabled = value;
+        final current = _readPushPrefs(owner, generation);
+        await _savePushPrefs(
+          PushPrefsSnapshot(
+            owner: owner,
+            generation: generation,
+            revision: current.revision + 1,
+            enabled: value,
+            duel: current.duel,
+            social: current.social,
+            dirty: true,
+          ),
+        );
+        final saved = await preferences.setBool(_enabledKey, value);
+        if (!saved) {
+          throw StateError('Notification preference was not persisted.');
+        }
+        _enabled = value;
+      } catch (_) {
+        // SharedPreferences platform yazısından önce önbelleğini günceller.
+        try {
+          await preferences.reload();
+        } catch (_) {}
+        rethrow;
+      }
+    });
     if (value) {
       await _requestPermissions();
       if (dailyOn) await _scheduleDaily();
@@ -471,6 +488,7 @@ class NotificationService {
       owner: owner,
       generation: generation,
       revision: value['revision'] as int? ?? 0,
+      enabled: _enabled,
       duel: value['duel'] as bool? ?? true,
       social: value['social'] as bool? ?? true,
       dirty: value['dirty'] as bool? ?? false,
@@ -510,7 +528,8 @@ class NotificationService {
     final current = pushPrefsSnapshot;
     return current.owner == snapshot.owner &&
         current.generation == snapshot.generation &&
-        current.revision == snapshot.revision;
+        current.revision == snapshot.revision &&
+        current.enabled == snapshot.enabled;
   }
 
   Future<void> _savePushPrefs(PushPrefsSnapshot value) async {
@@ -539,6 +558,7 @@ class NotificationService {
           owner: owner,
           generation: generation,
           revision: current.revision + 1,
+          enabled: current.enabled,
           duel: duel ?? current.duel,
           social: social ?? current.social,
           dirty: true,
@@ -549,6 +569,23 @@ class NotificationService {
 
   bool get serverPrefsDirty => pushPrefsSnapshot.dirty;
 
+  /// Eski kapalı anahtar da ilk gönderimden önce hesaba bağlı kuyruğa girer.
+  Future<void> markServerPrefsPending(PushPrefsSnapshot requested) =>
+      _serializePrefs(() async {
+        if (!isCurrentPushPrefs(requested) || serverPrefsDirty) return;
+        await _savePushPrefs(
+          PushPrefsSnapshot(
+            owner: requested.owner,
+            generation: requested.generation,
+            revision: requested.revision,
+            enabled: requested.enabled,
+            duel: requested.duel,
+            social: requested.social,
+            dirty: true,
+          ),
+        );
+      });
+
   Future<void> markServerPrefsSynced(PushPrefsSnapshot sent) =>
       _serializePrefs(() async {
         if (!isCurrentPushPrefs(sent)) return;
@@ -557,6 +594,7 @@ class NotificationService {
             owner: sent.owner,
             generation: sent.generation,
             revision: sent.revision,
+            enabled: sent.enabled,
             duel: sent.duel,
             social: sent.social,
             dirty: false,
@@ -569,12 +607,14 @@ class NotificationService {
     required bool duel,
     required bool social,
   }) => _serializePrefs(() async {
-    if (!isCurrentPushPrefs(requested) || serverPrefsDirty) return;
+    // Kapalı sunucu bayrakları kategori seçimi değil, ana anahtarın maskesidir.
+    if (!isCurrentPushPrefs(requested) || serverPrefsDirty || !enabled) return;
     await _savePushPrefs(
       PushPrefsSnapshot(
         owner: requested.owner,
         generation: requested.generation,
         revision: requested.revision,
+        enabled: requested.enabled,
         duel: duel,
         social: social,
         dirty: false,
@@ -1087,6 +1127,7 @@ class PushPrefsSnapshot {
     required this.owner,
     required this.generation,
     required this.revision,
+    required this.enabled,
     required this.duel,
     required this.social,
     required this.dirty,
@@ -1094,6 +1135,7 @@ class PushPrefsSnapshot {
   final String? owner;
   final int generation;
   final int revision;
+  final bool enabled;
   final bool duel;
   final bool social;
   final bool dirty;

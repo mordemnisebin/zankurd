@@ -20,6 +20,8 @@
 /// * 320 px ve %200 yazıda taşma yok.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,6 +40,33 @@ class _Resolver implements TimeZoneResolver {
 
   @override
   Future<String?> resolve() async => 'Europe/Berlin';
+}
+
+class _UnavailablePushRepository extends MockZanKurdRepository {
+  @override
+  Future<bool> setPushPreferences({
+    bool? duel,
+    bool? social,
+    String? expectedUserId,
+  }) async => false;
+}
+
+class _DelayedPushRepository extends MockZanKurdRepository {
+  bool delayed = false;
+  final response = Completer<bool>();
+
+  @override
+  Future<bool> setPushPreferences({
+    bool? duel,
+    bool? social,
+    String? expectedUserId,
+  }) => delayed
+      ? response.future
+      : super.setPushPreferences(
+          duel: duel,
+          social: social,
+          expectedUserId: expectedUserId,
+        );
 }
 
 class _Gateway implements LocalNotificationGateway {
@@ -163,6 +192,54 @@ void main() {
       expect(find.byKey(key), findsNothing);
     }
   });
+
+  testWidgets(
+    'G12 ana anahtar sunucu pushını kapatır; yalnız yerel iptal gözlendiği için sessizdi',
+    (tester) async {
+      final service = await pumpSettings(tester, enabled: true);
+      await tester.tap(find.byKey(_master));
+      await tester.pumpAndSettle();
+      final flags = (await repository.loadAccountFlags())!;
+      expect(flags.pushDuel, isFalse);
+      expect(flags.pushSocial, isFalse);
+      expect(service.serverPrefsDirty, isFalse);
+      expect(service.duelOn, isTrue);
+      expect(service.socialOn, isTrue);
+    },
+  );
+
+  testWidgets(
+    'G12 çevrimdışı kapatma beklediğini gösterir; RPC sonucu gizlendiği için sessizdi',
+    (tester) async {
+      repository = _UnavailablePushRepository();
+      final service = await pumpSettings(tester, enabled: true);
+      await tester.tap(find.byKey(_master));
+      await tester.pumpAndSettle();
+      expect(_on(tester, _master), isFalse);
+      expect(service.serverPrefsDirty, isTrue);
+      expect(find.text('1 kayıt henüz gönderilmedi'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'G12 yavaş sunucu kapatma görünümünü bekletemez; anlık sahte RPC gecikmeyi gizliyordu',
+    (tester) async {
+      final delayedRepository = _DelayedPushRepository();
+      repository = delayedRepository;
+      final service = await pumpSettings(tester, enabled: true);
+      delayedRepository.delayed = true;
+      await tester.tap(find.byKey(_master));
+      await tester.pumpAndSettle();
+      expect(service.enabled, isFalse);
+      expect(_on(tester, _master), isFalse);
+      expect(find.text('1 kayıt henüz gönderilmedi'), findsOneWidget);
+      delayedRepository.response.complete(false);
+      await tester.pumpAndSettle();
+      expect(service.serverPrefsDirty, isTrue);
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   testWidgets('ana anahtar açıkken beş tür de görünür ve varsayılan AÇIK', (
     tester,

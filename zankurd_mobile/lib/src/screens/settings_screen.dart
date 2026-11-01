@@ -666,6 +666,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // aç" der.
                       SahneListRow.plain(
                         title: context.t(K.notifPromptEnable),
+                        subtitle: _notificationService?.serverPrefsDirty == true
+                            ? context.t(K.pSenkronizeEdilemedi, {'p0': '1'})
+                            : null,
                         trailing: Switch(
                           key: const ValueKey('settings-notif-master'),
                           value: _notificationsEnabled,
@@ -976,6 +979,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     await apply(service);
     if (syncServer) {
       await PushPrefsSync.push(service, widget.repository);
+      if (mounted) setState(() {});
     }
   }
 
@@ -984,6 +988,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (service == null) return;
     try {
       await service.setEnabled(value);
+      if (!mounted) return;
+      // Yerel tercih kaydedildi; çevrimdışı/yavaş RPC görünür anahtarı
+      // ve bekleyen kayıt bilgisini geciktirmemeli.
+      setState(() {
+        _notificationsEnabled = value;
+        _systemPermissionDenied = false;
+      });
+      // Kapatma da hemen sunucuya gitmeli; hata halinde kalıcı kuyruk ve
+      // satırdaki bekleme bilgisi sonraki eşitlemeye kadar korunur.
+      await PushPrefsSync.push(service, widget.repository);
       if (value) {
         // Ana anahtar açılınca seri uyarısı ve yarışma hatırlatması da kurulur
         // (açılış eşitlemesi beklenmez).
@@ -991,10 +1005,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         await NotificationSync.run(widget.repository);
       }
       if (!mounted) return;
-      setState(() {
-        _notificationsEnabled = value;
-        _systemPermissionDenied = false;
-      });
+      setState(() {});
       if (value) {
         final granted = await service.hasSystemPermission();
         if (!mounted || granted) return;
