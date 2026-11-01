@@ -569,6 +569,8 @@ class SahneListRow extends StatelessWidget {
             child: trailing!,
           );
 
+    final largeText = MediaQuery.textScalerOf(context).scale(16) / 16 > 1.3;
+    Widget wrapRow(Widget r) => largeText ? IntrinsicHeight(child: r) : r;
     final row = ConstrainedBox(
       constraints: BoxConstraints(minHeight: _minHeight),
       child: Padding(
@@ -579,39 +581,52 @@ class SahneListRow extends StatelessWidget {
           SahneSpace.x4,
           SahneSpace.x2,
         ),
-        child: Row(
-          children: [
-            if (leading != null) ...[
-              ExcludeSemantics(child: leading),
-              const SizedBox(width: SahneSpace.x3),
-            ],
-            Expanded(
-              child: stacked && trail != null
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ExcludeSemantics(child: text),
-                        const SizedBox(height: SahneSpace.x1),
-                        trail,
-                      ],
-                    )
-                  : ExcludeSemantics(child: text),
-            ),
-            if (!stacked && trail != null) ...[
-              const SizedBox(width: SahneSpace.x2),
-              trail,
-            ],
-            if (chevron) ...[
-              // 7. kurul (Opus + ChatGPT): uzun Kurmancî alt satır ok
-              // simgesine yapışıyordu (27_play_hub_ku); metin ile chevron
-              // arası en az 16 px koruma boşluğu.
-              const SizedBox(width: sahneChevronGuard),
-              ExcludeSemantics(
-                child: Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
+        child: wrapRow(
+          Row(
+            crossAxisAlignment: largeText && leading != null
+                ? CrossAxisAlignment.stretch
+                : CrossAxisAlignment.center,
+            children: [
+              if (leading != null) ...[
+                // En büyük yazıda metin 3-4 satıra uzar; ikon satırın
+                // ortasında kalınca başlıkla hizası kayıyordu (Yarış sekmesi,
+                // 2026-11-01 tur 11). Büyük yazıda ikon üst kenara, başlığın
+                // hizasına yaslanır.
+                ExcludeSemantics(
+                  child: largeText
+                      ? Align(alignment: Alignment.topCenter, child: leading)
+                      : leading,
+                ),
+                const SizedBox(width: SahneSpace.x3),
+              ],
+              Expanded(
+                child: stacked && trail != null
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ExcludeSemantics(child: text),
+                          const SizedBox(height: SahneSpace.x1),
+                          trail,
+                        ],
+                      )
+                    : ExcludeSemantics(child: text),
               ),
+              if (!stacked && trail != null) ...[
+                const SizedBox(width: SahneSpace.x2),
+                trail,
+              ],
+              if (chevron) ...[
+                // 7. kurul (Opus + ChatGPT): uzun Kurmancî alt satır ok
+                // simgesine yapışıyordu (27_play_hub_ku); metin ile chevron
+                // arası en az 16 px koruma boşluğu.
+                const SizedBox(width: sahneChevronGuard),
+                ExcludeSemantics(
+                  child: Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
