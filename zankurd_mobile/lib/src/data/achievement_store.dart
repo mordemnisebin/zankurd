@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
+import 'result_progress_journal.dart';
+import 'local_progress_write_lock.dart';
 
 import '../models/achievement.dart';
 import '../models/contest.dart';
@@ -25,6 +27,7 @@ class AchievementIds {
 class AchievementStore {
   AchievementStore._(
     this._preferences,
+    this._owner,
     this._unlockedIds,
     this._answeredQuestions,
     this._playedCategories,
@@ -53,26 +56,27 @@ class AchievementStore {
   ];
 
   static String get _unlockedKey =>
-      LocalProgressScope.physical('zankurd.achievements.unlocked');
+      LocalProgressWriteLock.physical('zankurd.achievements.unlocked');
   static String get _answeredKey =>
-      LocalProgressScope.physical('zankurd.achievements.answeredQuestions');
+      LocalProgressWriteLock.physical('zankurd.achievements.answeredQuestions');
   static String get _categoriesKey =>
-      LocalProgressScope.physical('zankurd.achievements.playedCategories');
-  static String get _dailyQuizKey =>
-      LocalProgressScope.physical('zankurd.achievements.dailyQuizCompletions');
+      LocalProgressWriteLock.physical('zankurd.achievements.playedCategories');
+  static String get _dailyQuizKey => LocalProgressWriteLock.physical(
+    'zankurd.achievements.dailyQuizCompletions',
+  );
 
   static String get _dailyQuizDayKey =>
-      LocalProgressScope.physical('zankurd.achievements.dailyQuizLastDay');
+      LocalProgressWriteLock.physical('zankurd.achievements.dailyQuizLastDay');
 
   /// Açılış günleri (`id -> yyyy-MM-dd`, JSON). Rozet ekranı "Kazanıldı:
   /// 24.10.2026" yazsın diye tutulur; bu anahtar eklenmeden önce açılan
   /// rozetlerin tarihi yoktur (gösterilmez, uydurulmaz).
   static String get _unlockedAtKey =>
-      LocalProgressScope.physical('zankurd.achievements.unlockedAt');
+      LocalProgressWriteLock.physical('zankurd.achievements.unlockedAt');
 
   /// Bir turda yapılmış en uzun doğru serisi ("10 doğru üst üste" ilerlemesi).
   static String get _bestRoundStreakKey =>
-      LocalProgressScope.physical('zankurd.achievements.bestRoundStreak');
+      LocalProgressWriteLock.physical('zankurd.achievements.bestRoundStreak');
 
   static AchievementStore? _instance;
 
@@ -158,7 +162,7 @@ class AchievementStore {
     if (inFlight != null) return inFlight;
 
     final generation = _loadGeneration;
-    final loading = _loadFresh().then((store) {
+    final loading = _loadFresh(LocalProgressScope.activeUserId).then((store) {
       if (_loadGeneration == generation) {
         return _instance ??= store;
       }
@@ -172,16 +176,33 @@ class AchievementStore {
     }
   }
 
-  static Future<AchievementStore> _loadFresh() async {
-    SharedPreferences? preferences;
-    try {
-      preferences = await SharedPreferences.getInstance();
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'achievement_store');
-      preferences = null;
-    }
+  static Future<AchievementStore> _loadFresh(String? owner) =>
+      LocalProgressWriteLock.run(owner, () async {
+        SharedPreferences? preferences;
+        try {
+          preferences = await SharedPreferences.getInstance();
+        } catch (error, stack) {
+          ErrorReporter.record(error, stack, reason: 'achievement_store');
+          preferences = null;
+        }
+        if (preferences != null) {
+          await ResultProgressJournal.recover(
+            preferences: preferences,
+            namespace: LocalProgressWriteLock.physical(
+              'zankurd.achievements.resultJournal',
+            ),
+          );
+        }
+        return _fromPreferences(preferences, owner);
+      });
+
+  static AchievementStore _fromPreferences(
+    SharedPreferences? preferences,
+    String? owner,
+  ) {
     return AchievementStore._(
       preferences,
+      owner,
       preferences?.getStringList(_unlockedKey)?.toSet() ?? <String>{},
       preferences?.getInt(_answeredKey) ?? 0,
       preferences?.getStringList(_categoriesKey)?.toSet() ?? <String>{},
@@ -214,7 +235,7 @@ class AchievementStore {
     _loading = null;
   }
 
-  Future<void> clear() async {
+  Future<void> clear() => LocalProgressWriteLock.run(_owner, () async {
     await removePersistedPreferenceKeys(_preferences, [
       _unlockedKey,
       _answeredKey,
@@ -223,6 +244,24 @@ class AchievementStore {
       _dailyQuizDayKey,
       _unlockedAtKey,
       _bestRoundStreakKey,
+      ...?_preferences?.getKeys().where(
+        (key) =>
+            key.startsWith(
+              LocalProgressWriteLock.physical(
+                'zankurd.achievements.resultJournal.',
+              ),
+            ) ||
+            key.startsWith(
+              LocalProgressWriteLock.physical(
+                'zankurd.achievements.resultMetadata.',
+              ),
+            ) ||
+            key.startsWith(
+              LocalProgressWriteLock.physical(
+                'zankurd.achievements.resultDayIntent.',
+              ),
+            ),
+      ),
     ]);
     _unlockedIds.clear();
     _answeredQuestions = 0;
@@ -231,9 +270,10 @@ class AchievementStore {
     _dailyQuizLastDay = null;
     _unlockedAt.clear();
     _bestRoundStreak = 0;
-  }
+  });
 
   final SharedPreferences? _preferences;
+  final String? _owner;
   final Set<String> _unlockedIds;
   int _answeredQuestions;
   final Set<String> _playedCategories;
@@ -364,7 +404,101 @@ class AchievementStore {
     int remainingMistakes = 0,
     List<Player> opponents = const [],
     DateTime? now,
-  }) async {
+    String? operationId,
+  }) => LocalProgressWriteLock.run(_owner, () async {
+    final prefs = _preferences;
+    if (operationId != null) {
+      if (prefs == null) throw StateError('Achievement storage unavailable');
+      final result = await ResultProgressJournal.run(
+        preferences: prefs,
+        namespace: LocalProgressWriteLock.physical(
+          'zankurd.achievements.resultJournal',
+        ),
+        operationId: operationId,
+        prepare: () {
+          final next = _fromPreferences(prefs, _owner);
+          final unlocked = next._applyQuizResult(
+            category: category,
+            totalQuestions: totalQuestions,
+            correctCount: correctCount,
+            answeredCount: answeredCount,
+            bestStreak: bestStreak,
+            dailyStreak: dailyStreak,
+            userScore: userScore,
+            dailyQuiz: dailyQuiz,
+            practice: practice,
+            remainingMistakes: remainingMistakes,
+            opponents: opponents,
+            now: now,
+          );
+          return ResultProgressMutation(
+            values: next._persistedValues(),
+            result: {'unlockedIds': unlocked.map((item) => item.id).toList()},
+          );
+        },
+      );
+      _restore(prefs);
+      final ids = (result['unlockedIds'] as List).cast<String>();
+      return definitions.where((item) => ids.contains(item.id)).toList();
+    }
+    if (prefs != null) {
+      await ResultProgressJournal.recover(
+        preferences: prefs,
+        namespace: LocalProgressWriteLock.physical(
+          'zankurd.achievements.resultJournal',
+        ),
+      );
+      _restore(prefs);
+    }
+    final unlocked = _applyQuizResult(
+      category: category,
+      totalQuestions: totalQuestions,
+      correctCount: correctCount,
+      answeredCount: answeredCount,
+      bestStreak: bestStreak,
+      dailyStreak: dailyStreak,
+      userScore: userScore,
+      dailyQuiz: dailyQuiz,
+      practice: practice,
+      remainingMistakes: remainingMistakes,
+      opponents: opponents,
+      now: now,
+    );
+    await _persist();
+    return unlocked;
+  });
+
+  void _restore(SharedPreferences prefs) {
+    final restored = _fromPreferences(prefs, _owner);
+    _unlockedIds
+      ..clear()
+      ..addAll(restored._unlockedIds);
+    _answeredQuestions = restored._answeredQuestions;
+    _playedCategories
+      ..clear()
+      ..addAll(restored._playedCategories);
+    _dailyQuizCompletions = restored._dailyQuizCompletions;
+    _dailyQuizLastDay = restored._dailyQuizLastDay;
+    _unlockedAt
+      ..clear()
+      ..addAll(restored._unlockedAt);
+    _bestRoundStreak = restored._bestRoundStreak;
+  }
+
+  List<Achievement> _applyQuizResult({
+    required String category,
+    required int totalQuestions,
+    required int correctCount,
+    int? answeredCount,
+    required int bestStreak,
+    required int dailyStreak,
+    required int userScore,
+    bool dailyQuiz = false,
+    bool practice = false,
+    int remainingMistakes = 0,
+    List<Player> opponents = const [],
+    DateTime? now,
+  }) {
     // Eski çağrılar boş soru ayırmıyordu. Yeni sonuçlarda yalnız doğru ve
     // yanlış cevaplar sayılır; depodaki geçmiş toplam korunur.
     _answeredQuestions += (answeredCount ?? totalQuestions).clamp(
@@ -421,9 +555,18 @@ class AchievementStore {
     );
     unlockWhen(_dailyQuizCompletions >= 5, AchievementIds.dailyQuizFive);
 
-    await _persist();
     return newlyUnlocked;
   }
+
+  Map<String, Object> _persistedValues() => {
+    _unlockedKey: _unlockedIds.toList(),
+    _answeredKey: _answeredQuestions,
+    _categoriesKey: _playedCategories.toList(),
+    _dailyQuizKey: _dailyQuizCompletions,
+    _bestRoundStreakKey: _bestRoundStreak,
+    _unlockedAtKey: jsonEncode(_unlockedAt),
+    _dailyQuizDayKey: ?_dailyQuizLastDay,
+  };
 
   Future<void> _persist() async {
     await _preferences?.setStringList(_unlockedKey, _unlockedIds.toList());

@@ -2514,14 +2514,26 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<bool> setPushPreferences({bool? duel, bool? social}) async {
+  Future<bool> setPushPreferences({
+    bool? duel,
+    bool? social,
+    String? expectedUserId,
+  }) async {
     try {
-      if (client.auth.currentUser == null) return false;
-      final response = await client.rpc(
-        'set_my_push_prefs',
-        params: {'p_duel': duel, 'p_social': social},
-      );
-      return response is Map<String, dynamic> && response['success'] == true;
+      final session = client.auth.currentSession;
+      final owner = expectedUserId ?? currentUserId;
+      final generation = LocalProgressScope.generation;
+      if (session == null || session.user.id != owner) return false;
+      final response = await client
+          .rpc(
+            'set_my_push_prefs',
+            params: {'p_duel': duel, 'p_social': social},
+          )
+          .setHeader('Authorization', 'Bearer ${session.accessToken}');
+      return currentUserId == owner &&
+          LocalProgressScope.generation == generation &&
+          response is Map<String, dynamic> &&
+          response['success'] == true;
     } catch (error, stack) {
       if (!_isMissingFunction(error) && !isLikelyOfflineError(error)) {
         _recordError(error, stack, reason: 'setPushPreferences failed');
@@ -3503,23 +3515,38 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<Set<String>> loadCompletedLessonIds() async {
-    // Yerel (bekleyen ∪ eşitlenmiş) kümeyi hep ekle: çevrimdışı tamamlanan
-    // ders sunucuya ulaşana kadar sonraki dersleri açık tutar.
-    final local = await LessonCompletionStore.loadLocal();
+    final owner = currentUserId ?? LocalProgressScope.activeUserId;
+    final generation = LocalProgressScope.generation;
+    final session = client.auth.currentSession;
+    bool isCurrent() =>
+        (currentUserId ?? LocalProgressScope.activeUserId) == owner &&
+        LocalProgressScope.generation == generation &&
+        identical(client.auth.currentSession, session);
+    final local = await LessonCompletionStore.loadLocal(owner: owner);
+    if (!isCurrent()) return {};
     try {
-      final rows = await client
+      final query = client
           .from('user_lesson_progress')
           .select('lesson_id')
           .eq('completed', true);
+      final rows = session == null
+          ? await query
+          : await query.setHeader(
+              'Authorization',
+              'Bearer ${session.accessToken}',
+            );
+      if (!isCurrent()) return {};
       final server = rows
           .map((row) => row['lesson_id'] as String?)
           .whereType<String>()
           .toSet();
-      await LessonCompletionStore.cacheServer(server);
-      return {...server, ...(await LessonCompletionStore.loadLocal())};
+      await LessonCompletionStore.cacheServer(server, owner: owner);
+      if (!isCurrent()) return {};
+      final updatedLocal = await LessonCompletionStore.loadLocal(owner: owner);
+      return isCurrent() ? {...server, ...updatedLocal} : {};
     } catch (e, s) {
       _recordError(e, s, reason: 'loadCompletedLessonIds failed');
-      return local;
+      return isCurrent() ? local : {};
     }
   }
 

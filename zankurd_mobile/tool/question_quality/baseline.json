@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "createdDate": "2026-10-30",
+  "createdDate": "2026-11-01",
   "manifestVersion": 1,
   "sourceFingerprints": {
     "assets/data/altkonu_2026_10_01_questions.json": "91d2f1a42fc9444c9f557ca68c817d8403be562d0d89667e19dbdd0767be2076",
@@ -34,7 +34,7 @@
   "metrics": {
     "manifestVersion": 1,
     "sourceCount": 24,
-    "unknownSourceCount": 0,
+    "unknownSourceCount": 1,
     "missingProductionSourceCount": 0,
     "reportPhysicalRecords": 3871,
     "reportParsedRecords": 3832,

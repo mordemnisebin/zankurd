@@ -13,6 +13,7 @@ import 'local_progress_write_lock.dart';
 import 'streak_store.dart';
 import 'progress_snapshot.dart';
 import 'placement_persistence.dart';
+import 'result_progress_journal.dart';
 
 /// Yerel SharedPreferences <-> [ProgressSnapshot] dönüşümü.
 ///
@@ -158,6 +159,23 @@ class LocalProgressSnapshot {
     );
   }
 
+  static Future<void> recoverPendingWrites(SharedPreferences prefs) async {
+    await StreakStore.recoverPendingWrites(prefs);
+    await ResultProgressJournal.recover(
+      preferences: prefs,
+      namespace: '${_k(_xp)}.resultJournal',
+    );
+    for (final namespace in [
+      'zankurd.achievements.resultJournal',
+      'zankurd.achievements.masteryResultJournal',
+    ]) {
+      await ResultProgressJournal.recover(
+        preferences: prefs,
+        namespace: _k(namespace),
+      );
+    }
+  }
+
   /// [snapshot]'u yerel anahtarlara yazar. Hepsi başarılıysa `true`.
   ///
   /// Yalnız birleştirmede DEĞİŞEN değerler yazılır; çağıran, yazımdan sonra
@@ -166,8 +184,9 @@ class LocalProgressSnapshot {
     SharedPreferences prefs,
     ProgressSnapshot snapshot,
   ) => LocalProgressWriteLock.run(LocalProgressScope.activeUserId, () async {
-    await StreakStore.recoverPendingWrites(prefs);
+    await recoverPendingWrites(prefs);
     final current = read(prefs);
+    snapshot = ProgressSnapshot.merge(snapshot, current);
     final streak = SnapshotStreak.merge(current.streak, snapshot.streak);
     var ok = true;
 
@@ -395,7 +414,24 @@ class ProgressRemoteMissing implements Exception {
 }
 
 class SupabaseProgressRemote implements ProgressRemote {
-  SupabaseProgressRemote(this._client);
+  SupabaseProgressRemote(this._client, {String? expectedUserId})
+    : _expectedUserId = expectedUserId ?? _client.auth.currentUser?.id,
+      _generation = LocalProgressScope.generation;
+
+  final String? _expectedUserId;
+  final int _generation;
+
+  String _authorization() {
+    final session = _client.auth.currentSession;
+    if (_expectedUserId == null ||
+        session?.user.id != _expectedUserId ||
+        LocalProgressScope.generation != _generation) {
+      throw StateError('Progress session changed before request.');
+    }
+    // AuthHttpClient awaits token refresh. Pin the verified owner token so a
+    // session switch in that await cannot authorize this payload as B.
+    return 'Bearer ${session!.accessToken}';
+  }
 
   final SupabaseClient _client;
 
@@ -407,7 +443,9 @@ class SupabaseProgressRemote implements ProgressRemote {
   @override
   Future<RemoteProgress?> fetch() async {
     try {
-      final response = await _client.rpc<dynamic>('get_my_progress');
+      final response = await _client
+          .rpc<dynamic>('get_my_progress')
+          .setHeader('Authorization', _authorization());
       if (response is! Map) return null;
       final snapshot = response['snapshot'];
       if (snapshot is! Map) return null;
@@ -423,7 +461,7 @@ class SupabaseProgressRemote implements ProgressRemote {
 
   /// `save_my_progress_v2` (sürüm denetimli, 2026-10-26) yoksa oturum
   /// boyunca eski koşulsuz `save_my_progress`'e düşülür.
-  static bool _v2Missing = false;
+  bool _v2Missing = false;
 
   @override
   Future<bool> save(
@@ -432,15 +470,17 @@ class SupabaseProgressRemote implements ProgressRemote {
   }) async {
     if (!_v2Missing) {
       try {
-        final response = await _client.rpc<dynamic>(
-          'save_my_progress_v2',
-          params: {
-            'p_snapshot': snapshot,
-            'p_expected_updated_at': expectedUpdatedAt
-                ?.toUtc()
-                .toIso8601String(),
-          },
-        );
+        final response = await _client
+            .rpc<dynamic>(
+              'save_my_progress_v2',
+              params: {
+                'p_snapshot': snapshot,
+                'p_expected_updated_at': expectedUpdatedAt
+                    ?.toUtc()
+                    .toIso8601String(),
+              },
+            )
+            .setHeader('Authorization', _authorization());
         return !(response is Map && response['conflict'] == true);
       } on PostgrestException catch (error) {
         if (!_isMissing(error)) rethrow;
@@ -448,10 +488,9 @@ class SupabaseProgressRemote implements ProgressRemote {
       }
     }
     try {
-      await _client.rpc<dynamic>(
-        'save_my_progress',
-        params: {'p_snapshot': snapshot},
-      );
+      await _client
+          .rpc<dynamic>('save_my_progress', params: {'p_snapshot': snapshot})
+          .setHeader('Authorization', _authorization());
       return true;
     } on PostgrestException catch (error) {
       if (_isMissing(error)) throw const ProgressRemoteMissing();
@@ -477,12 +516,18 @@ class ProgressSyncService with WidgetsBindingObserver {
     this.onLocalChanged,
     this.debounce = const Duration(seconds: 20),
     // ignore: prefer_initializing_formals
-  }) : _preferences = preferences;
+  }) : _preferences = preferences,
+       _generation = LocalProgressScope.generation;
 
   static ProgressSyncService? _instance;
   static ProgressSyncService? get maybeInstance => _instance;
 
   final ProgressRemote remote;
+  final int _generation;
+  bool get _isCurrent =>
+      !_closed &&
+      LocalProgressScope.activeUserId == userId &&
+      LocalProgressScope.generation == _generation;
   final String userId;
   final SharedPreferences? _preferences;
 
@@ -509,7 +554,7 @@ class ProgressSyncService with WidgetsBindingObserver {
     Duration debounce = const Duration(seconds: 20),
   }) {
     final previous = _instance;
-    if (previous != null && previous.userId == userId && !previous._closed) {
+    if (previous != null && previous.userId == userId && previous._isCurrent) {
       return previous;
     }
     previous?.close();
@@ -604,7 +649,7 @@ class ProgressSyncService with WidgetsBindingObserver {
     _lastRun = DateTime.now();
     try {
       // Kapsam başka kullanıcıya geçtiyse (hızlı hesap değişimi) dokunma.
-      if (LocalProgressScope.activeUserId != userId) return;
+      if (!_isCurrent) return;
       final prefs = _preferences ?? await SharedPreferences.getInstance();
 
       // Sunucu kaydı okunduktan sonra başka bir cihaz yazdıysa kayıt
@@ -612,36 +657,30 @@ class ProgressSyncService with WidgetsBindingObserver {
       // denenir. İkinci çakışma bir sonraki eşitlemeye kalır.
       for (var attempt = 0; attempt < 2; attempt++) {
         final row = await remote.fetch();
-        if (_closed || LocalProgressScope.activeUserId != userId) return;
-        // Yerel görüntü ağ cevabından SONRA okunur: fetch beklenirken oynanan
-        // gün (seri takvimi), XP ya da rozet, birleşik hal yazılınca eski
-        // kopyanın altında kalıp siliniyordu (2026-10-25 Codex incelemesi).
-        final local = LocalProgressSnapshot.read(prefs);
-
-        ProgressSnapshot merged = local;
-        ProgressSnapshot? remoteSnapshot;
-        if (row != null) {
-          remoteSnapshot = ProgressSnapshot.tryParse(row.snapshot);
-          if (remoteSnapshot == null) {
-            // Daha yeni sürüm ya da bozuk kayıt: üzerine yazma, birleştirme.
-            return;
-          }
-          merged = ProgressSnapshot.merge(local, remoteSnapshot);
-        }
-
-        if (merged != local) {
-          if (await LocalProgressSnapshot.write(prefs, merged)) {
+        if (!_isCurrent) return;
+        final remoteSnapshot = row == null
+            ? null
+            : ProgressSnapshot.tryParse(row.snapshot);
+        if (row != null && remoteSnapshot == null) return;
+        final merged = await LocalProgressWriteLock.run(userId, () async {
+          if (!_isCurrent) return null;
+          await LocalProgressSnapshot.recoverPendingWrites(prefs);
+          if (!_isCurrent) return null;
+          final local = LocalProgressSnapshot.read(prefs);
+          final target = remoteSnapshot == null
+              ? local
+              : ProgressSnapshot.merge(local, remoteSnapshot);
+          if (target != local) {
+            if (!await LocalProgressSnapshot.write(prefs, target)) {
+              throw StateError('Merged progress was not persisted locally.');
+            }
+            if (!_isCurrent) return null;
             onLocalChanged?.call();
-          } else {
-            ErrorReporter.record(
-              StateError('Merged progress was not persisted locally.'),
-              StackTrace.current,
-              reason: 'progress_sync_local_write',
-            );
-            return;
           }
-        }
-
+          return LocalProgressSnapshot.read(prefs);
+        });
+        // A local platform write can await while the auth client switches A→B.
+        if (!_isCurrent || merged == null) return;
         if (merged.isEmpty) return;
         if (remoteSnapshot != null && merged == remoteSnapshot) return;
         final json = _compact(merged);

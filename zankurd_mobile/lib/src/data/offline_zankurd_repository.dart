@@ -427,7 +427,11 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   Future<AccountFlags?> loadAccountFlags() async => null;
 
   @override
-  Future<bool> setPushPreferences({bool? duel, bool? social}) async => false;
+  Future<bool> setPushPreferences({
+    bool? duel,
+    bool? social,
+    String? expectedUserId,
+  }) async => false;
 
   @override
   Future<int> claimMissionReward({

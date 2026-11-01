@@ -2305,7 +2305,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
       AccountFlags(pushDuel: _mockPushDuel, pushSocial: _mockPushSocial);
 
   @override
-  Future<bool> setPushPreferences({bool? duel, bool? social}) async {
+  Future<bool> setPushPreferences({
+    bool? duel,
+    bool? social,
+    String? expectedUserId,
+  }) async {
+    if (expectedUserId != null && expectedUserId != currentUserId) return false;
     _mockPushDuel = duel ?? _mockPushDuel;
     _mockPushSocial = social ?? _mockPushSocial;
     return true;

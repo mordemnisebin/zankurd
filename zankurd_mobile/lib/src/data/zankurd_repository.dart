@@ -623,7 +623,12 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   /// Sunucu tarafı bildirim tercihlerini yazar (null = değişmez). Başarıyı
   /// döner; başarısızsa çağıran yerel tercihi korur ve sonra yeniden dener.
-  Future<bool> setPushPreferences({bool? duel, bool? social});
+  /// [expectedUserId] verilmişse farklı oturum adına gönderim yapılmaz.
+  Future<bool> setPushPreferences({
+    bool? duel,
+    bool? social,
+    String? expectedUserId,
+  });
 
   /// Belirli bir ürün kimliğinin daha önce satın alınıp alınmadığını kontrol eder.
   Future<bool> hasPurchased(String itemId);

@@ -2,9 +2,9 @@
  "version": 1,
  "sources": [
   {
-   "id": "g17_g19_accessibility_preview",
-   "description": "G17-G19 offline accessibility regression fixture",
-   "path": "tool/g17_g19_web_preview.dart",
+   "id": "g16_room_invite_preview",
+   "description": "G16 offline invitation terms browser regression fixture",
+   "path": "tool/g16_invite_preview.dart",
    "role": "test_fixture",
    "parser": "none",
    "canonicalGroup": "none",
@@ -13,7 +13,7 @@
    "productionLike": false,
    "precedence": 1000,
    "expectedRecordCount": null,
-   "notes": "Only the isolated web preview entrypoint; never imported by the application.",
+   "notes": "Uses the runtime mock repository; defines no question content and never imports into the application.",
    "columns": {}
   },
   {

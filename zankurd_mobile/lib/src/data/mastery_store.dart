@@ -1,24 +1,27 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
+import 'result_progress_journal.dart';
+import 'local_progress_write_lock.dart';
 
 import '../models/mastery_level.dart';
 import '../utils/error_reporter.dart';
 
 class MasteryStore {
-  MasteryStore._(this._preferences);
+  MasteryStore._(this._preferences, this._owner);
 
   static String get _keyPrefix =>
-      LocalProgressScope.physical('zankurd.mastery.');
+      LocalProgressWriteLock.physical('zankurd.mastery.');
   static String get _answeredKeyPrefix =>
-      LocalProgressScope.physical('zankurd.masteryAnswered.');
+      LocalProgressWriteLock.physical('zankurd.masteryAnswered.');
   static String get _evidenceCorrectKeyPrefix =>
-      LocalProgressScope.physical('zankurd.masteryEvidenceCorrect.');
+      LocalProgressWriteLock.physical('zankurd.masteryEvidenceCorrect.');
   static MasteryStore? _instance;
   static Future<MasteryStore>? _loading;
   static int _loadGeneration = 0;
 
   final SharedPreferences? _preferences;
+  final String? _owner;
 
   static Future<MasteryStore> load() async {
     final cached = _instance;
@@ -27,7 +30,7 @@ class MasteryStore {
     if (inFlight != null) return inFlight;
 
     final generation = _loadGeneration;
-    final loading = _loadFresh().then((store) {
+    final loading = _loadFresh(LocalProgressScope.activeUserId).then((store) {
       if (_loadGeneration == generation) {
         return _instance ??= store;
       }
@@ -41,16 +44,25 @@ class MasteryStore {
     }
   }
 
-  static Future<MasteryStore> _loadFresh() async {
-    SharedPreferences? preferences;
-    try {
-      preferences = await SharedPreferences.getInstance();
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'mastery_store');
-      preferences = null;
-    }
-    return MasteryStore._(preferences);
-  }
+  static Future<MasteryStore> _loadFresh(String? owner) =>
+      LocalProgressWriteLock.run(owner, () async {
+        SharedPreferences? preferences;
+        try {
+          preferences = await SharedPreferences.getInstance();
+        } catch (error, stack) {
+          ErrorReporter.record(error, stack, reason: 'mastery_store');
+          preferences = null;
+        }
+        if (preferences != null) {
+          await ResultProgressJournal.recover(
+            preferences: preferences,
+            namespace: LocalProgressWriteLock.physical(
+              'zankurd.achievements.masteryResultJournal',
+            ),
+          );
+        }
+        return MasteryStore._(preferences, owner);
+      });
 
   static void resetInstance() {
     _loadGeneration++;
@@ -58,7 +70,7 @@ class MasteryStore {
     _loading = null;
   }
 
-  Future<void> clear() async {
+  Future<void> clear() => LocalProgressWriteLock.run(_owner, () async {
     final prefs = _preferences;
     if (prefs == null) return;
     final keys = prefs.getKeys();
@@ -68,10 +80,15 @@ class MasteryStore {
         (key) =>
             key.startsWith(_keyPrefix) ||
             key.startsWith(_answeredKeyPrefix) ||
-            key.startsWith(_evidenceCorrectKeyPrefix),
+            key.startsWith(_evidenceCorrectKeyPrefix) ||
+            key.startsWith(
+              LocalProgressWriteLock.physical(
+                'zankurd.achievements.masteryResultJournal.',
+              ),
+            ),
       ),
     );
-  }
+  });
 
   int correctCount(String category) =>
       _preferences?.getInt('$_keyPrefix$category') ?? 0;
@@ -103,14 +120,54 @@ class MasteryStore {
     return 400;
   }
 
-  Future<MasteryLevel?> addCorrect(String category, int count) async {
+  Future<MasteryLevel?> addCorrect(
+    String category,
+    int count, {
+    String? operationId,
+  }) => LocalProgressWriteLock.run(_owner, () async {
     if (count <= 0) return null;
+    final prefs = _preferences;
+    if (operationId != null) {
+      if (prefs == null) throw StateError('Mastery storage unavailable');
+      final key = '$_keyPrefix$category';
+      final result = await ResultProgressJournal.run(
+        preferences: prefs,
+        namespace: LocalProgressWriteLock.physical(
+          'zankurd.achievements.masteryResultJournal',
+        ),
+        operationId: '$operationId:correct:$category',
+        prepare: () {
+          final oldCount = prefs.getInt(key) ?? 0;
+          final before = MasteryLevelDetails.fromCorrectCount(oldCount);
+          final after = MasteryLevelDetails.fromCorrectCount(oldCount + count);
+          return ResultProgressMutation(
+            values: {key: oldCount + count},
+            result: {
+              'promotion': after != before && after != MasteryLevel.none
+                  ? after.name
+                  : null,
+            },
+          );
+        },
+      );
+      return MasteryLevel.values
+          .where((level) => level.name == result['promotion'])
+          .firstOrNull;
+    }
+    if (prefs != null) {
+      await ResultProgressJournal.recover(
+        preferences: prefs,
+        namespace: LocalProgressWriteLock.physical(
+          'zankurd.achievements.masteryResultJournal',
+        ),
+      );
+    }
     final before = levelFor(category);
     final newCount = correctCount(category) + count;
     await _preferences?.setInt('$_keyPrefix$category', newCount);
     final after = MasteryLevelDetails.fromCorrectCount(newCount);
     return after != before && after != MasteryLevel.none ? after : null;
-  }
+  });
 
   /// Cevaplanan soruları öğrenme kanıtı olarak kaydeder.
   ///
@@ -121,15 +178,44 @@ class MasteryStore {
     String category,
     int count, {
     int correct = 0,
-  }) async {
+    String? operationId,
+  }) => LocalProgressWriteLock.run(_owner, () async {
     if (count <= 0) return;
     final prefs = _preferences;
-    if (prefs == null) return;
+    if (prefs == null) {
+      if (operationId != null) throw StateError('Mastery storage unavailable');
+      return;
+    }
+    if (operationId != null) {
+      final answeredKey = '$_answeredKeyPrefix$category';
+      final correctKey = '$_evidenceCorrectKeyPrefix$category';
+      await ResultProgressJournal.run(
+        preferences: prefs,
+        namespace: LocalProgressWriteLock.physical(
+          'zankurd.achievements.masteryResultJournal',
+        ),
+        operationId: '$operationId:answered:$category',
+        prepare: () => ResultProgressMutation(
+          values: {
+            answeredKey: (prefs.getInt(answeredKey) ?? 0) + count,
+            correctKey:
+                (prefs.getInt(correctKey) ?? 0) + correct.clamp(0, count),
+          },
+        ),
+      );
+      return;
+    }
+    await ResultProgressJournal.recover(
+      preferences: prefs,
+      namespace: LocalProgressWriteLock.physical(
+        'zankurd.achievements.masteryResultJournal',
+      ),
+    );
     final nextAnswered = answeredCount(category) + count;
     final nextCorrect =
         (prefs.getInt('$_evidenceCorrectKeyPrefix$category') ?? 0) +
         correct.clamp(0, count);
     await prefs.setInt('$_answeredKeyPrefix$category', nextAnswered);
     await prefs.setInt('$_evidenceCorrectKeyPrefix$category', nextCorrect);
-  }
+  });
 }

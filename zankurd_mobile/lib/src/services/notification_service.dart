@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ui' show Color;
 
 import 'package:flutter/foundation.dart';
@@ -10,6 +11,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 import '../l10n/strings.dart';
 import '../data/contest_play_store.dart';
+import '../data/local_progress_scope.dart';
 import '../data/streak_store.dart';
 import '../utils/error_reporter.dart';
 import 'local_notification_tap.dart';
@@ -148,11 +150,8 @@ class NotificationService {
   static const _prefDailyKey = 'zankurd.notifications.pref.daily';
   static const _prefContestKey = 'zankurd.notifications.pref.contest';
   static const _prefStreakKey = 'zankurd.notifications.pref.streak';
-  static const _prefDuelKey = 'zankurd.notifications.pref.duel';
-  static const _prefSocialKey = 'zankurd.notifications.pref.social';
 
-  /// Sunucuya yazılamayan tercih var mı (çevrimdışıyken değiştirildi);
-  /// bir sonraki açılışta yeniden denenir.
+  /// Eski sahipsiz işaret: v2 bunu hiçbir hesaba taşımaz veya göndermez.
   static const prefsDirtyKey = 'zankurd.notifications.pref.serverDirty';
 
   /// Günün yarışması hatırlatmasının saati (yerel).
@@ -248,8 +247,8 @@ class NotificationService {
   bool get dailyOn => _pref(_prefDailyKey);
   bool get contestOn => _pref(_prefContestKey);
   bool get streakOn => _pref(_prefStreakKey);
-  bool get duelOn => _pref(_prefDuelKey);
-  bool get socialOn => _pref(_prefSocialKey);
+  bool get duelOn => pushPrefsSnapshot.duel;
+  bool get socialOn => pushPrefsSnapshot.social;
   int get hour => _hour;
   int get minute => _minute;
   String get timeDisplay =>
@@ -450,35 +449,138 @@ class NotificationService {
     // bugün var olup olmadığı depodan öğrenilir, burada bilinmez.
   }
 
-  /// Düello bildirimleri (sunucu süzer; burada yerel kopya).
-  Future<void> setDuelOn(bool value) async {
-    await _preferences?.setBool(_prefDuelKey, value);
-    await _preferences?.setBool(prefsDirtyKey, true);
+  // Tek JSON kaydı, tercih ve revizyonun diskte yarım ayrılmasını önler.
+  // Sahipsiz V1 kayıtlarını hiçbir hesaba miras bırakmıyoruz.
+  String _pushPrefsKey(String? owner) =>
+      'zankurd.notifications.push.v2.${owner ?? "unowned"}';
+
+  PushPrefsSnapshot get pushPrefsSnapshot => _readPushPrefs(
+    LocalProgressScope.activeUserId,
+    LocalProgressScope.generation,
+  );
+
+  PushPrefsSnapshot _readPushPrefs(String? owner, int generation) {
+    Map<String, dynamic> value = const {};
+    try {
+      final raw = _preferences?.getString(_pushPrefsKey(owner));
+      if (raw != null) value = jsonDecode(raw) as Map<String, dynamic>;
+    } catch (_) {
+      // Bozuk kayıt başka hesaba/genel eski anahtara geri düşmez.
+    }
+    return PushPrefsSnapshot(
+      owner: owner,
+      generation: generation,
+      revision: value['revision'] as int? ?? 0,
+      duel: value['duel'] as bool? ?? true,
+      social: value['social'] as bool? ?? true,
+      dirty: value['dirty'] as bool? ?? false,
+    );
   }
 
-  /// Arkadaş ve oda daveti bildirimleri (sunucu süzer; yerel kopya).
-  Future<void> setSocialOn(bool value) async {
-    await _preferences?.setBool(_prefSocialKey, value);
-    await _preferences?.setBool(prefsDirtyKey, true);
+  Future<void> _prefsWrites = Future<void>.value();
+  final Map<String, Future<void>> _pushWrites = {};
+
+  Future<T> _serializePrefs<T>(Future<T> Function() action) {
+    final result = _prefsWrites.then((_) => action());
+    _prefsWrites = result.then<void>(
+      (_) {},
+      onError: (Object _, StackTrace _) {},
+    );
+    return result;
   }
 
-  /// Yerel düello/arkadaş tercihi sunucuya yazılamadı mı.
-  bool get serverPrefsDirty => _preferences?.getBool(prefsDirtyKey) ?? false;
+  Future<void> waitForPushPrefsWrites() => _prefsWrites;
 
-  Future<void> markServerPrefsSynced() async =>
-      _preferences?.remove(prefsDirtyKey);
+  /// Aynı hesabın uzak yazımları sunucuda ters sırada tamamlanamaz.
+  Future<bool> serializePush(String owner, Future<bool> Function() action) {
+    final result = (_pushWrites[owner] ?? Future<void>.value()).then(
+      (_) => action(),
+    );
+    final tail = result.then<void>(
+      (_) {},
+      onError: (Object _, StackTrace _) {},
+    );
+    _pushWrites[owner] = tail;
+    return result.whenComplete(() {
+      if (identical(_pushWrites[owner], tail)) _pushWrites.remove(owner);
+    });
+  }
 
-  /// Sunucudan okunan değerleri yerele alır (sunucu tercihinin kaynağıdır;
-  /// başka cihazda yapılan değişiklik de gelir). Kirli yerel değişiklik
-  /// varsa EZİLMEZ.
+  bool isCurrentPushPrefs(PushPrefsSnapshot snapshot) {
+    final current = pushPrefsSnapshot;
+    return current.owner == snapshot.owner &&
+        current.generation == snapshot.generation &&
+        current.revision == snapshot.revision;
+  }
+
+  Future<void> _savePushPrefs(PushPrefsSnapshot value) async {
+    final saved = await _preferences?.setString(
+      _pushPrefsKey(value.owner),
+      jsonEncode({
+        'duel': value.duel,
+        'social': value.social,
+        'revision': value.revision,
+        'dirty': value.dirty,
+      }),
+    );
+    if (saved != true) throw StateError('Push preferences were not persisted.');
+  }
+
+  Future<void> setDuelOn(bool value) => _changePushPrefs(duel: value);
+  Future<void> setSocialOn(bool value) => _changePushPrefs(social: value);
+
+  Future<void> _changePushPrefs({bool? duel, bool? social}) {
+    final owner = LocalProgressScope.activeUserId;
+    final generation = LocalProgressScope.generation;
+    return _serializePrefs(() async {
+      final current = _readPushPrefs(owner, generation);
+      await _savePushPrefs(
+        PushPrefsSnapshot(
+          owner: owner,
+          generation: generation,
+          revision: current.revision + 1,
+          duel: duel ?? current.duel,
+          social: social ?? current.social,
+          dirty: true,
+        ),
+      );
+    });
+  }
+
+  bool get serverPrefsDirty => pushPrefsSnapshot.dirty;
+
+  Future<void> markServerPrefsSynced(PushPrefsSnapshot sent) =>
+      _serializePrefs(() async {
+        if (!isCurrentPushPrefs(sent)) return;
+        await _savePushPrefs(
+          PushPrefsSnapshot(
+            owner: sent.owner,
+            generation: sent.generation,
+            revision: sent.revision,
+            duel: sent.duel,
+            social: sent.social,
+            dirty: false,
+          ),
+        );
+      });
+
   Future<void> adoptServerPrefs({
+    required PushPrefsSnapshot requested,
     required bool duel,
     required bool social,
-  }) async {
-    if (serverPrefsDirty) return;
-    await _preferences?.setBool(_prefDuelKey, duel);
-    await _preferences?.setBool(_prefSocialKey, social);
-  }
+  }) => _serializePrefs(() async {
+    if (!isCurrentPushPrefs(requested) || serverPrefsDirty) return;
+    await _savePushPrefs(
+      PushPrefsSnapshot(
+        owner: requested.owner,
+        generation: requested.generation,
+        revision: requested.revision,
+        duel: duel,
+        social: social,
+        dirty: false,
+      ),
+    );
+  });
 
   Future<void> setTime(int hour, int minute) async {
     _hour = hour;
@@ -977,4 +1079,22 @@ class NotificationService {
       ErrorReporter.record(e, s, reason: 'NotificationService friend accepted');
     }
   }
+}
+
+/// Gönderilen tercih görüntüsü: yalnız aynı sahip, oturum ve revizyon onaylanır.
+class PushPrefsSnapshot {
+  const PushPrefsSnapshot({
+    required this.owner,
+    required this.generation,
+    required this.revision,
+    required this.duel,
+    required this.social,
+    required this.dirty,
+  });
+  final String? owner;
+  final int generation;
+  final int revision;
+  final bool duel;
+  final bool social;
+  final bool dirty;
 }

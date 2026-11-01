@@ -39,10 +39,16 @@ class RoomInvite {
   /// Eski sunucu ayarları döndürmez; bilinmeyen ücret ücretsiz sayılmaz.
   final int? entryFee;
 
-  /// Yalnız koşulları hiç döndürmeyen eski RPC için ek ücret onayı gerekir.
+  /// Eski RPC koşul döndürmez; kesin koşullar gelene kadar katılım kapalıdır.
   final bool hasLegacyTerms;
   final int? questionCount;
   final int? secondsPerQuestion;
+
+  bool get hasConfirmedTerms =>
+      !hasLegacyTerms &&
+      (entryFee ?? -1) >= 0 &&
+      (questionCount ?? 0) > 0 &&
+      (secondsPerQuestion ?? 0) > 0;
 
   /// Davet edenin fotoğraf/kod kimliği (depo tamamlar; yoksa null).
   final PublicProfile? inviterProfile;

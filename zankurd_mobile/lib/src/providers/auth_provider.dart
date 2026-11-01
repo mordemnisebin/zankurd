@@ -178,6 +178,7 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     _authSub = client.auth.onAuthStateChange.listen((state) {
       final next = state.session?.user;
       final changed = next?.id != _currentUser?.id;
+      if (changed) LocalProgressScope.invalidateSession();
       _currentUser = next;
       presence.updateSession(next?.id);
       // Onay bağlantısı oturumu kalıcı kullanıcıya çevirdiyse "onay
@@ -302,7 +303,7 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
       return;
     }
     final service = ProgressSyncService.bind(
-      remote: SupabaseProgressRemote(client),
+      remote: SupabaseProgressRemote(client, expectedUserId: user.id),
       userId: user.id,
       onLocalChanged: _dropProgressMemory,
     );

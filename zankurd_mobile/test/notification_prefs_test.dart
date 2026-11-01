@@ -27,12 +27,15 @@
 library;
 
 import 'dart:io';
+import 'dart:async';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/contest_play_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/services/local_notification_tap.dart';
 import 'package:zankurd_mobile/src/services/notification_service.dart';
 import 'package:zankurd_mobile/src/services/notification_sync.dart';
@@ -98,10 +101,39 @@ Future<(NotificationService, _Gateway)> _service({bool enable = true}) async {
   return (service, gateway);
 }
 
+class _DelayedPrefsRepository extends MockZanKurdRepository {
+  String? user = 'user';
+  @override
+  String? get currentUserId => user;
+  final calls = <({String? owner, bool? duel, bool? social})>[];
+  final replies = <Completer<bool>>[];
+  Completer<AccountFlags?>? flagsReply;
+
+  @override
+  Future<bool> setPushPreferences({
+    bool? duel,
+    bool? social,
+    String? expectedUserId,
+  }) {
+    calls.add((owner: expectedUserId, duel: duel, social: social));
+    final reply = Completer<bool>();
+    replies.add(reply);
+    return reply.future;
+  }
+
+  @override
+  Future<AccountFlags?> loadAccountFlags() =>
+      flagsReply?.future ?? super.loadAccountFlags();
+}
+
+Future<void> _flush() => Future<void>.delayed(Duration.zero);
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
+    LocalProgressScope.debugReset();
+    LocalProgressScope.bind('user');
     SharedPreferences.setMockInitialValues({'zankurd.language': 'tr'});
     NotificationService.resetInstance();
     PushTapRouter.resetForTest();
@@ -414,6 +446,140 @@ void main() {
       NotificationService.resetInstance();
       await NotificationSync.run(MockZanKurdRepository());
     });
+  });
+
+  group('G13/G14 sahiplik ve revizyon bekçileri', () {
+    test(
+      'G13 yerel kuyruk beklerken hesap değişimi iptal edilir; RPC öncesi await sessiz kaldı',
+      () async {
+        final (service, _) = await _service();
+        final repo = _DelayedPrefsRepository();
+        await service.setDuelOn(false);
+        final pending = PushPrefsSync.push(service, repo);
+        LocalProgressScope.bind('b');
+        repo.user = 'b';
+        expect(await pending, isFalse);
+        expect(repo.calls, isEmpty);
+        expect(service.serverPrefsDirty, isFalse);
+      },
+    );
+
+    test(
+      'G13 A bekleyen tercihi B hesabına yazılmaz; cihaz genelinde tek anahtar sessiz kaldı',
+      () async {
+        final (service, _) = await _service();
+        final repo = _DelayedPrefsRepository();
+        await service.setDuelOn(false);
+        final pending = PushPrefsSync.push(service, repo);
+        await _flush();
+        expect(repo.calls.single.owner, 'user');
+        LocalProgressScope.bind('b');
+        repo.user = 'b';
+        await PushPrefsSync.reconcile(service, repo);
+        expect(service.duelOn, isTrue);
+        expect(service.serverPrefsDirty, isFalse);
+        expect(repo.calls.length, 1);
+        repo.replies.single.complete(true);
+        expect(await pending, isFalse);
+        LocalProgressScope.bind('user');
+        repo.user = 'user';
+        expect(service.duelOn, isFalse);
+        expect(service.serverPrefsDirty, isTrue);
+      },
+    );
+
+    test(
+      'G13 sahipsiz eski kirli kayıt taşınmaz; ilk oturum sahibini varsaymak sessiz bıraktı',
+      () async {
+        SharedPreferences.setMockInitialValues({
+          'zankurd.notifications.pref.duel': false,
+          'zankurd.notifications.pref.social': false,
+          NotificationService.prefsDirtyKey: true,
+        });
+        final (service, _) = await _service();
+        final repo = _DelayedPrefsRepository();
+        await PushPrefsSync.reconcile(service, repo);
+        expect(repo.calls, isEmpty);
+        expect(service.duelOn, isTrue);
+        expect(service.socialOn, isTrue);
+        expect(service.serverPrefsDirty, isFalse);
+      },
+    );
+
+    test(
+      'G13 A-B-A geç yanıtı reddedilir; yalnız kullanıcı eşitliği oturum değişimini sessiz bıraktı',
+      () async {
+        final (service, _) = await _service();
+        final repo = _DelayedPrefsRepository()
+          ..flagsReply = Completer<AccountFlags?>();
+        final pending = PushPrefsSync.reconcile(service, repo);
+        await _flush();
+        LocalProgressScope.bind('b');
+        LocalProgressScope.bind('user');
+        repo.flagsReply!.complete(
+          const AccountFlags(pushDuel: false, pushSocial: false),
+        );
+        await pending;
+        expect(service.duelOn, isTrue);
+        expect(service.socialOn, isTrue);
+      },
+    );
+
+    test(
+      'G14 eski başarı yeni başarısız tercihi temizlemez; koşulsuz dirty silme sessiz kaldı',
+      () async {
+        final (service, _) = await _service();
+        final repo = _DelayedPrefsRepository();
+        await service.setDuelOn(false);
+        final first = PushPrefsSync.push(service, repo);
+        await _flush();
+        await service.setSocialOn(false);
+        final second = PushPrefsSync.push(service, repo);
+        await _flush();
+        expect(
+          repo.calls.length,
+          1,
+          reason: 'Aynı hesapta istekler sırayla gönderilir.',
+        );
+        repo.replies.first.complete(true);
+        expect(await first, isFalse);
+        await _flush();
+        expect(repo.calls.length, 2);
+        expect(repo.calls.last.duel, isFalse);
+        expect(repo.calls.last.social, isFalse);
+        repo.replies.last.complete(false);
+        expect(await second, isFalse);
+        expect(service.serverPrefsDirty, isTrue);
+        NotificationService.resetInstance();
+        final (reloaded, _) = await _service();
+        expect(reloaded.serverPrefsDirty, isTrue);
+        expect(reloaded.socialOn, isFalse);
+        final retry = PushPrefsSync.push(reloaded, repo);
+        await _flush();
+        repo.replies.last.complete(true);
+        expect(await retry, isTrue);
+        expect(reloaded.serverPrefsDirty, isFalse);
+      },
+    );
+
+    test(
+      'G14 sunucu okuması yeni yerel seçimi ezmez; yalnız sıralı okuma testi sessiz bıraktı',
+      () async {
+        final (service, _) = await _service();
+        final repo = _DelayedPrefsRepository()
+          ..flagsReply = Completer<AccountFlags?>();
+        final pending = PushPrefsSync.reconcile(service, repo);
+        await _flush();
+        await service.setSocialOn(false);
+        repo.flagsReply!.complete(
+          const AccountFlags(pushDuel: false, pushSocial: true),
+        );
+        await pending;
+        expect(service.duelOn, isTrue);
+        expect(service.socialOn, isFalse);
+        expect(service.serverPrefsDirty, isTrue);
+      },
+    );
   });
 
   group('kanal adı', () {

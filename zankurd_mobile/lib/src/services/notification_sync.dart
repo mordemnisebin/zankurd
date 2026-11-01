@@ -18,18 +18,38 @@ abstract final class PushPrefsSync {
     NotificationService service,
     ZanKurdRepository repository,
   ) async {
-    try {
-      if (repository.currentUserId == null) return false;
-      final ok = await repository.setPushPreferences(
-        duel: service.duelOn,
-        social: service.socialOn,
-      );
-      if (ok) await service.markServerPrefsSynced();
-      return ok;
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'push_prefs_push');
+    final started = service.pushPrefsSnapshot;
+    await service.waitForPushPrefsWrites();
+    final sent = service.pushPrefsSnapshot;
+    final owner = sent.owner;
+    if (owner == null ||
+        started.owner != owner ||
+        started.generation != sent.generation ||
+        repository.currentUserId != owner) {
       return false;
     }
+    return service.serializePush(owner, () async {
+      try {
+        if (repository.currentUserId != owner ||
+            !service.isCurrentPushPrefs(sent)) {
+          return false;
+        }
+        final ok = await repository.setPushPreferences(
+          duel: sent.duel,
+          social: sent.social,
+          expectedUserId: owner,
+        );
+        if (repository.currentUserId != owner ||
+            !service.isCurrentPushPrefs(sent)) {
+          return false;
+        }
+        if (ok) await service.markServerPrefsSynced(sent);
+        return ok;
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'push_prefs_push');
+        return false;
+      }
+    });
   }
 
   /// Kirli yerel değişiklik varsa yazar, yoksa sunucudaki değeri yerele alır.
@@ -38,17 +58,28 @@ abstract final class PushPrefsSync {
     ZanKurdRepository repository,
   ) async {
     try {
-      if (repository.currentUserId == null ||
+      final started = service.pushPrefsSnapshot;
+      await service.waitForPushPrefsWrites();
+      final requested = service.pushPrefsSnapshot;
+      if (requested.owner == null ||
+          started.owner != requested.owner ||
+          started.generation != requested.generation ||
+          repository.currentUserId != requested.owner ||
           repository is OfflineZanKurdRepository) {
         return;
       }
-      if (service.serverPrefsDirty) {
+      if (requested.dirty) {
         await push(service, repository);
         return;
       }
       final flags = await repository.loadAccountFlags();
-      if (flags == null) return;
+      if (flags == null ||
+          repository.currentUserId != requested.owner ||
+          !service.isCurrentPushPrefs(requested)) {
+        return;
+      }
       await service.adoptServerPrefs(
+        requested: requested,
         duel: flags.pushDuel,
         social: flags.pushSocial,
       );

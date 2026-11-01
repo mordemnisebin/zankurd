@@ -19,7 +19,6 @@ class LessonCompletionStore {
 
   static String _key(String logical, String? owner) {
     if (owner == null) return LocalProgressScope.physical(logical);
-    if (LocalProgressScope.activeUserId == null) return logical;
     return LocalProgressScope.physicalFor(owner, logical);
   }
 
@@ -29,16 +28,18 @@ class LessonCompletionStore {
   }
 
   /// Bekleyen ∪ eşitlenmiş kümeyi etkin kullanıcı için okur.
-  static Future<Set<String>> loadLocal() async {
-    final pending = await _read(_key(pendingKey, null));
-    final synced = await _read(_key(syncedKey, null));
+  static Future<Set<String>> loadLocal({String? owner}) async {
+    final pendingStorageKey = _key(pendingKey, owner);
+    final syncedStorageKey = _key(syncedKey, owner);
+    final pending = await _read(pendingStorageKey);
+    final synced = await _read(syncedStorageKey);
     return {...synced, ...pending};
   }
 
   /// Dersi bekleyen kümeye yazar; kalıcı yazım kabul edilmezse `false`.
   static Future<bool> addPending(String lessonId, {String? owner}) async {
-    final preferences = await SharedPreferences.getInstance();
     final key = _key(pendingKey, owner);
+    final preferences = await SharedPreferences.getInstance();
     final ids = (preferences.getStringList(key) ?? const <String>[]).toSet()
       ..add(lessonId);
     return preferences.setStringList(key, ids.toList()..sort());
@@ -46,8 +47,9 @@ class LessonCompletionStore {
 
   /// Sunucu onayından sonra dersi bekleyenlerden düşer (eşitlenmişe geçer).
   static Future<void> markSynced(String lessonId, {String? owner}) async {
-    final preferences = await SharedPreferences.getInstance();
     final pendingStorageKey = _key(pendingKey, owner);
+    final syncedStorageKey = _key(syncedKey, owner);
+    final preferences = await SharedPreferences.getInstance();
     final pending = preferences.getStringList(pendingStorageKey);
     if (pending != null && pending.contains(lessonId)) {
       await preferences.setStringList(
@@ -55,7 +57,6 @@ class LessonCompletionStore {
         [...pending]..remove(lessonId),
       );
     }
-    final syncedStorageKey = _key(syncedKey, owner);
     final synced =
         (preferences.getStringList(syncedStorageKey) ?? const <String>[])
             .toSet();
@@ -68,9 +69,12 @@ class LessonCompletionStore {
   }
 
   /// Sunucunun tamamlanmış ders kümesini önbelleğe alır (yalnız değişirse yazar).
-  static Future<void> cacheServer(Set<String> serverIds) async {
+  static Future<void> cacheServer(
+    Set<String> serverIds, {
+    String? owner,
+  }) async {
+    final key = _key(syncedKey, owner);
     final preferences = await SharedPreferences.getInstance();
-    final key = _key(syncedKey, null);
     final current = (preferences.getStringList(key) ?? const <String>[])
         .toSet();
     if (current.length == serverIds.length && current.containsAll(serverIds)) {
