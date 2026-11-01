@@ -194,6 +194,17 @@ void main() {
       addTearDown(tester.view.reset);
 
       final repo = freshMockRepository();
+      repo.asyncDuelQuestionsForTesting = [
+        for (var i = 0; i < 7; i++)
+          QuizQuestion(
+            id: 'y3_fixed_$i',
+            category: 'Cîhan',
+            prompt: 'Paytexta Fransayê kîjan bajar e?',
+            answers: const ['Parîs', 'Roma', 'Berlîn', 'Madrid'],
+            correctAnswer: 'Parîs',
+            explanation: 'Parîs paytexta Fransayê ye.',
+          ),
+      ];
       await tester.pumpWidget(
         testShell(
           child: AsyncDuelPlayScreen(

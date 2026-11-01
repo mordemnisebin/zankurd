@@ -736,6 +736,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
   final Map<String, _MockAsyncDuel> _asyncDuels = {};
   final List<_MockPendingAsyncDuel> _pendingAsyncDuels = [];
 
+  /// Testler için sırayla düello sorularını deterministik kılmak üzere
+  /// enjekte edilebilir soru listesi.
+  @visibleForTesting
+  List<QuizQuestion>? asyncDuelQuestionsForTesting;
+
   String? _normalizedAsyncDuelCategory(String? category) {
     final trimmed = category?.trim();
     return (trimmed == null || trimmed.isEmpty) ? null : trimmed;
@@ -746,6 +751,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
   /// hileyi gizli-cevap yoluna aynı gerekçeyle kapatır (bkz.
   /// `isPlayableWithHiddenAnswer`, oda RPC'sinin uyguladığı süzgeç).
   List<QuizQuestion> _pickAsyncDuelQuestions(String? category) {
+    final overrideQuestions = asyncDuelQuestionsForTesting;
+    if (overrideQuestions != null && overrideQuestions.isNotEmpty) {
+      return List<QuizQuestion>.from(overrideQuestions);
+    }
     final playable = _playableQuestions;
     final byCategory = category == null
         ? playable
