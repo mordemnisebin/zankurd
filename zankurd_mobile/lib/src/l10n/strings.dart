@@ -1267,8 +1267,8 @@ class Tr {
       'tr': 'Bu kod bulunamadı.',
     },
     K.shareRewardEarned: {
-      'ku': 'Ji bo parvekirina yekem a rojê, te +25 zêr qezenc kir!',
-      'tr': 'Günün ilk paylaşımı için +25 jeton kazandın!',
+      'ku': 'Ji bo parvekirina yekem a rojê, te +{amount} zêr qezenc kir!',
+      'tr': 'Günün ilk paylaşımı için +{amount} jeton kazandın!',
     },
     K.resultShareText: {
       'ku':
@@ -1277,6 +1277,15 @@ class Tr {
           'Store\'ê "ZanKurd".',
       'tr':
           'ZanKurd\'da {score} puan aldım! Doğru: {correct}/{total} ({percent}). Sen de oyna, Play Store\'da "ZanKurd".',
+    },
+
+    K.resultShareTextIos: {
+      'ku':
+          'Min di ZanKurd de {score} pûan girt! Rast: '
+          '{correct}/{total} ({percent}). Tu jî bilîze, li App '
+          'Store\'ê "ZanKurd".',
+      'tr':
+          'ZanKurd\'da {score} puan aldım! Doğru: {correct}/{total} ({percent}). Sen de oyna, App Store\'da "ZanKurd".',
     },
 
     // ── Çevrimiçi tur durum satırı ───────────────────────────────────
@@ -5161,6 +5170,7 @@ class K {
   static const invalidReferralCode = 'friends.invalidReferralCode';
   static const shareRewardEarned = 'quiz.shareRewardEarned';
   static const resultShareText = 'quiz.resultShareText';
+  static const resultShareTextIos = 'quiz.resultShareTextIos';
 
   // ── Çevrimiçi tur durum satırı ─────────────────────────────────────
   static const answeredState = 'match.answered';

@@ -3226,6 +3226,21 @@ class SupabaseZanKurdRepository
   }
 
   @override
+  Future<int> claimShareReward() async {
+    try {
+      final row = _firstRow(await client.rpc<dynamic>('claim_share_reward'));
+      if (row == null || row['success'] != true) return 0;
+      return (row['reward_amount'] as num?)?.toInt() ?? 0;
+    } catch (error, stack) {
+      // Göç canlıda değilken (PGRST202/42883) ödül YOK: çarkın hakkını
+      // yakmak yerine sessizce 0 döner.
+      if (isMissingRpcError(error)) return 0;
+      _recordError(error, stack, reason: 'claimShareReward failed');
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> awardSpinCoins() async {
     try {
       final row = _firstRow(await client.rpc<dynamic>('award_spin_coins'));
@@ -4394,7 +4409,12 @@ class SupabaseZanKurdRepository
       });
       return true;
     } catch (e, stack) {
-      _recordError(e, stack, reason: 'submitSuggestedQuestion failed');
+      // Sunucu 24 saatte 10 öneri sınırını aştıysa (`oneri_siniri`) bu bir
+      // çökme değil beklenen ret: raporlanmaz, ekran genel hata iletisini
+      // gösterir.
+      if (!e.toString().contains('suggestion_rate_limited')) {
+        _recordError(e, stack, reason: 'submitSuggestedQuestion failed');
+      }
       return false;
     }
   }

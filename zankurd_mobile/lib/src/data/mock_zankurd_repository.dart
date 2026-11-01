@@ -2219,6 +2219,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
   final awardedRoomXpCalls = <String>[];
 
   @override
+  Future<int> claimShareReward() async => 25;
+
+  @override
   Future<int> awardSpinCoins() async {
     const rewards = [10, 25, 50, 15, 75, 20, 100, 30];
     final amount = rewards[Random().nextInt(rewards.length)];

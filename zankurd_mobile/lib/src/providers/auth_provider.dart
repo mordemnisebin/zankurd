@@ -1144,6 +1144,26 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     }
   }
 
+  /// Sunucuda hesap silindikten sonra `signOut` beklenmedik bir hatayla
+  /// düşerse yerel oturumu YİNE DE kapatır: silinmiş hesapta oturumlu
+  /// kalmak her isteği reddettirir ve yeniden deneme de başarısız olurdu.
+  /// Asla fırlatmaz.
+  Future<void> forceLocalSignOut() async {
+    final client = _client;
+    try {
+      if (client == null) {
+        _mockAuthenticated = false;
+      } else {
+        await client.auth.signOut(scope: SignOutScope.local);
+        _currentUser = client.auth.currentUser;
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'forceLocalSignOut failed');
+    }
+    _errorMessage = null;
+    notifyListeners();
+  }
+
   @visibleForTesting
   String debugTranslateAuthError(AuthException e) => _translateError(e);
 

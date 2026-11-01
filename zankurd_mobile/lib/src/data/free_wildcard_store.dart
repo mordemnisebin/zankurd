@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/contest.dart';
 import '../utils/error_reporter.dart';
 import 'local_progress_scope.dart';
 
@@ -15,18 +16,17 @@ import 'local_progress_scope.dart';
 /// temizler. Anahtar HER çağrıda yeniden hesaplanır (önbellekli örnek yok):
 /// hesap değişince önceki kullanıcının günü yeni kullanıcıya sızmaz.
 ///
-/// "Gün" cihazın yerel gün sınırıdır (gece yarısı yenilenir), UTC değil.
+/// "Gün" Europe/Istanbul takvim günüdür (`contestDayString`), çark ve günün
+/// yarışmasıyla aynı sınır: cihaz saatini geri alan ya da yurtdışında gün
+/// sınırı kayan oyuncu ikinci bedava joker alamaz.
 class FreeWildcardStore {
   const FreeWildcardStore._();
 
   static String get _key =>
       LocalProgressScope.physical('zankurd.missions.freeWildcardDay');
 
-  /// `yyyy-MM-dd`, yerel gün.
-  static String dayKey(DateTime now) =>
-      '${now.year.toString().padLeft(4, '0')}-'
-      '${now.month.toString().padLeft(2, '0')}-'
-      '${now.day.toString().padLeft(2, '0')}';
+  /// `yyyy-MM-dd`, İstanbul günü.
+  static String dayKey(DateTime now) => contestDayString(now);
 
   /// Bugün için bedava hak hâlâ duruyor mu?
   ///

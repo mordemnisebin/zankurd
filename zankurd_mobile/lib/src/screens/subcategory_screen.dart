@@ -34,10 +34,34 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
   /// deposundan, [LevelScreen] ile aynı kaynak).
   Map<String, int> _played = const {};
 
+  /// Görünür alt kategoriler. `SubcategoryConfig.visibleFor` bütün oynanabilir
+  /// soru havuzunu (binlerce) döngüyle sayar; her `build`de çağrılınca
+  /// kaydırma ve ilerleme güncellemelerinde boşuna işlenirdi. Havuz ekran
+  /// açıkken değişmez: açılışta, ilerleme yüklenince ve kategori değişince
+  /// BİR kez hesaplanır (bekçi: `denetim2_duzeltmeleri_test`).
+  List<SubcategoryInfo> _visible = const [];
+
+  void _refreshVisible() {
+    _visible = SubcategoryConfig.visibleFor(
+      category,
+      repository.playableQuestions,
+    );
+  }
+
   @override
   void initState() {
     super.initState();
+    _refreshVisible();
     _loadProgress();
+  }
+
+  @override
+  void didUpdateWidget(SubcategoryScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.category != widget.category ||
+        !identical(oldWidget.repository, widget.repository)) {
+      _refreshVisible();
+    }
   }
 
   Future<void> _loadProgress() async {
@@ -48,6 +72,7 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
       ...?SubcategoryConfig.subcategories[category]?.map((s) => s.id),
       'gisti',
     ];
+    _refreshVisible();
     setState(() {
       _played = {
         for (final id in ids)
@@ -68,10 +93,7 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
     // zaten bu ortak nokta: `MockZanKurdRepository.loadLevelQuestions` da
     // `SupabaseZanKurdRepository` da (kendi `_offline`ı üzerinden) seviye
     // sorularını hep bu getter'dan süzer (2026-09-28).
-    final rawList = SubcategoryConfig.visibleFor(
-      category,
-      repository.playableQuestions,
-    );
+    final rawList = _visible;
     final allInfo = SubcategoryInfo(
       id: 'gisti',
       nameKu: Tr.of(K.allQuestionsSubcategory, AppLanguage.ku),

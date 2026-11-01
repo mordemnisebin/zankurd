@@ -227,9 +227,10 @@ void main() {
       unorderedEquals({
         'daily_mission_load_preferences',
         'daily_mission_test_preferences',
+        'mission_claim_grant',
       }),
     );
-    expect(missionCatches, hasLength(2));
+    expect(missionCatches, hasLength(3));
 
     expect(
       repository,

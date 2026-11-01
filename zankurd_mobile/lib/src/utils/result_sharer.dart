@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:share_plus/share_plus.dart';
@@ -56,24 +57,33 @@ class ResultSharer {
   static Future<bool> settleDailyShareReward({
     required Future<int> Function() awardCoins,
     DateTime? now,
+  }) async =>
+      await settleDailyShareRewardAmount(awardCoins: awardCoins, now: now) > 0;
+
+  /// [settleDailyShareReward] ile aynı, ama sunucunun GERÇEKTEN verdiği
+  /// miktarı döner (0 = verilmedi). Bildirim metni bu miktarı yazar; sabit
+  /// "+25" sunucu başka miktar verirse yalan söylerdi.
+  static Future<int> settleDailyShareRewardAmount({
+    required Future<int> Function() awardCoins,
+    DateTime? now,
   }) async {
     final physicalKey = _shareRewardDateKey;
     final day = _dateKey(now ?? DateTime.now());
     final flightKey = '$physicalKey|$day';
-    if (!_inFlight.add(flightKey)) return false;
+    if (!_inFlight.add(flightKey)) return 0;
     try {
       final prefs = await SharedPreferences.getInstance();
-      if (prefs.getString(physicalKey) == day) return false;
+      if (prefs.getString(physicalKey) == day) return 0;
       final int amount;
       try {
         amount = await awardCoins();
       } catch (error, stack) {
         ErrorReporter.record(error, stack, reason: 'share_reward_award');
-        return false;
+        return 0;
       }
-      if (amount <= 0) return false;
+      if (amount <= 0) return 0;
       await _mark(physicalKey, day);
-      return true;
+      return amount;
     } finally {
       _inFlight.remove(flightKey);
     }
@@ -100,7 +110,7 @@ class ResultSharer {
     final accuracy = totalQuestions == 0
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
-    final text = Tr.forKu(K.resultShareText, isKu, {
+    final text = Tr.forKu(shareTextKey(), isKu, {
       'score': groupThousands(score),
       'correct': groupThousands(correctCount),
       'total': groupThousands(totalQuestions),
@@ -149,9 +159,25 @@ class ResultSharer {
       ErrorReporter.record(error, stack, reason: 'result_share_capture');
       // Görsel paylaşımı başarısız — metne düş.
     }
-    final result = await SharePlus.instance.share(ShareParams(text: text));
-    return statusCounts(result.status);
+    try {
+      final result = await SharePlus.instance.share(ShareParams(text: text));
+      return statusCounts(result.status);
+    } catch (error, stack) {
+      // Metin yolu da düşerse çağıran (`shareResult`) yakalamıyor; işlenmemiş
+      // istisna yerine "paylaşılmadı" döner, ödül de verilmez.
+      ErrorReporter.record(error, stack, reason: 'result_share_text');
+      return false;
+    }
   }
+
+  /// Paylaşım metninin anahtarı: iOS'ta App Store, diğerlerinde Play Store.
+  /// Tek "Play Store'da" metni iOS oyuncusunun paylaştığı davette yanlış
+  /// mağazayı gösteriyordu.
+  @visibleForTesting
+  static String shareTextKey([TargetPlatform? platform]) =>
+      (platform ?? defaultTargetPlatform) == TargetPlatform.iOS
+      ? K.resultShareTextIos
+      : K.resultShareText;
 
   /// Ödüle sayılan paylaşım durumu (bekçi testi bunu doğrudan sınar).
   @visibleForTesting

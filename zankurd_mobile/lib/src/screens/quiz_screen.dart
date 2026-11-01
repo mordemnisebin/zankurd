@@ -361,6 +361,11 @@ class _QuizScreenState extends State<QuizScreen>
   /// ([FreeWildcardStore]).
   bool _freeWildcardAvailable = false;
 
+  /// Sunucu `spend_coins`ı KALICI reddedince (retryable değil) tur boyunca
+  /// yeni joker kapanır: yerel bakiye sunucuyla ayrışmıştır ve her yeni joker
+  /// bedava olurdu (bekçi: `denetim2_duzeltmeleri_test`).
+  bool _wildcardsLocked = false;
+
   /// Mağazadan alınan, kalan joker hakları ([JokerStockStore]). Bedava
   /// hak yoksa jokerler önce buradan, sonra jetondan ödenir.
   int _jokerStock = 0;

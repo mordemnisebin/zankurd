@@ -479,6 +479,9 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<int> claimShareReward() async => 0;
+
+  @override
   Future<bool> spendCoins(int amount, String reason) async {
     return false;
   }
