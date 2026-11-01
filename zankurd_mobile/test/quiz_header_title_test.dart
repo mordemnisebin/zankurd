@@ -59,7 +59,7 @@ void main() {
     final name = CategoryNames.localized(first.category, false);
     expect(find.text('Günün dersi'), findsNothing);
     expect(find.byKey(const ValueKey('quiz-stage-kicker')), findsOneWidget);
-    expect(find.text('Soru 1/2 · $name'), findsOneWidget);
+    expect(find.text('Soru 1/2\u00A0· $name'), findsOneWidget);
     // Odanın varsayılan kategorisi künyeyi yalanlamaz.
     expect(find.text('Dil'), name == 'Dil' ? findsWidgets : findsNothing);
   });
@@ -76,7 +76,7 @@ void main() {
 
     final first = repository.questions.first;
     final name = CategoryNames.localized(first.category, false);
-    expect(find.text('Soru 1/2 · $name'), findsOneWidget);
+    expect(find.text('Soru 1/2\u00A0· $name'), findsOneWidget);
     expect(find.text(name), findsNothing, reason: 'künye tek parça metin');
   });
 }

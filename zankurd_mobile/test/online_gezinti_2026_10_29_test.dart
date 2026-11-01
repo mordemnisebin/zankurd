@@ -592,7 +592,7 @@ void main() {
       final finder = find.byKey(const ValueKey('quiz-stage-kicker'));
       final paragraph = tester.renderObject<RenderParagraph>(finder);
       expect(paragraph.didExceedMaxLines, isFalse, reason: 'künye kesilmemeli');
-      expect(tester.widget<Text>(finder).data, 'Soru 8/10 · Dil');
+      expect(tester.widget<Text>(finder).data, 'Soru 8/10\u00A0· Dil');
     });
 
     testWidgets('skor 100: konu işareti yerinde', (tester) async {

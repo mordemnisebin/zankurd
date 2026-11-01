@@ -1369,19 +1369,20 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   Future<void> _submitDailyEventResult() async {
     try {
-      final verifiedRepository = repository;
-      if (verifiedRepository is VerifiedSoloQuizPort) {
-        final roundId = widget.roundId;
-        if (roundId != null) {
-          await (verifiedRepository as VerifiedSoloQuizPort)
-              .submitVerifiedDailyResult(roundId);
-        }
-        return;
-      }
       final totalMs = answerRecords.fold<int>(
         0,
         (sum, record) => sum + (record.responseMs ?? 0),
       );
+      final verifiedRepository = repository;
+      if (verifiedRepository is VerifiedSoloQuizPort) {
+        final roundId = widget.roundId;
+        if (roundId == null) return;
+        final ok = await (verifiedRepository as VerifiedSoloQuizPort)
+            .submitVerifiedDailyResult(roundId);
+        if (ok) return;
+        // Doğrulanmış RPC canlıda yoksa depo eski canlı yola düşer; RPC
+        // varken ret/hata ise depo hiçbir şey yazmaz (false döner).
+      }
       await repository.submitDailyEventResult(
         correct: correctCount,
         total: totalQuestions,

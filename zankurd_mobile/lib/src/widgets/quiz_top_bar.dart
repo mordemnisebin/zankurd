@@ -127,7 +127,7 @@ class QuizStageCenter extends StatelessWidget {
         ],
         Flexible(
           child: _FitKicker(
-            '$progressLabel · $name',
+            '$progressLabel\u00A0· $name',
             textKey: textKey,
             color: onBand ? SahneVivid.onFill : t.tx,
           ),

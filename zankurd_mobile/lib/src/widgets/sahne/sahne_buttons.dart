@@ -531,9 +531,12 @@ class SahneJokerButton extends StatelessWidget {
     // ad Semantics'te bütündür.
     // Kısa ekranda (< 700 pt, iPhone SE) da düşer: alt perde 28 pt kısalır,
     // soru ve şıklar o kadar yer kazanır (soru sığma, 2026-10-29).
-    final showLabel =
-        MediaQuery.textScalerOf(context).scale(14) < 18.2 &&
-        MediaQuery.sizeOf(context).height >= 700;
+    // Tur 11: büyük yazıda ad artık düşmez (yalnız ikon + fiyat kalıyordu,
+    // düğmeler adsız görünüyordu); ad tek satırda, ölçeği 1,0'a sabitlenmiş
+    // küçük yazıyla çizilir ki kapsül ve alt perde ŞİŞMESİN. Yalnız kısa
+    // ekranda (< 700 pt) düşer; orada ad Semantics + uzun basış ipucundadır.
+    final largeText = MediaQuery.textScalerOf(context).scale(14) >= 18.2;
+    final showLabel = MediaQuery.sizeOf(context).height >= 700;
     final labelColor = selected ? t.goldTx : (enabled ? t.tx : dim(t.tx));
     // Fiyat AYRI bir hap: ad ile karışmaz. Günlük ücretsiz hak jokere değil
     // jokerlerin üstündeki tek çipe aittir (2026-10-28 tur 3 T2).
@@ -634,17 +637,44 @@ class SahneJokerButton extends StatelessWidget {
                           // Ad okunur alt sınırda (caption 14, kapışma U13;
                           // önce 12'ydi): sığmazsa en çok iki satıra iner,
                           // küçülmez.
-                          Text(
-                            label,
-                            key: const ValueKey('joker-name'),
-                            maxLines: 2,
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            style: SahneType.caption.copyWith(
-                              color: labelColor,
-                              height: 1.15,
-                            ),
-                          ),
+                          largeText
+                              ? FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    label,
+                                    key: const ValueKey('joker-name'),
+                                    maxLines: largeText ? 1 : 2,
+                                    textScaler: largeText
+                                        ? TextScaler.noScaling
+                                        : null,
+                                    softWrap: !largeText,
+                                    textAlign: TextAlign.center,
+                                    overflow: largeText
+                                        ? TextOverflow.visible
+                                        : TextOverflow.ellipsis,
+                                    style: SahneType.caption.copyWith(
+                                      color: labelColor,
+                                      height: 1.15,
+                                    ),
+                                  ),
+                                )
+                              : Text(
+                                  label,
+                                  key: const ValueKey('joker-name'),
+                                  maxLines: largeText ? 1 : 2,
+                                  textScaler: largeText
+                                      ? TextScaler.noScaling
+                                      : null,
+                                  softWrap: !largeText,
+                                  textAlign: TextAlign.center,
+                                  overflow: largeText
+                                      ? TextOverflow.visible
+                                      : TextOverflow.ellipsis,
+                                  style: SahneType.caption.copyWith(
+                                    color: labelColor,
+                                    height: 1.15,
+                                  ),
+                                ),
                         ],
                         if (pricePill != null) ...[
                           const SizedBox(height: SahneSpace.x1),

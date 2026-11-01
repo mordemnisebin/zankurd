@@ -2890,12 +2890,21 @@ class SupabaseZanKurdRepository
             params: {'p_client_round_id': clientRoundId},
           )
           .timeout(const Duration(seconds: 8));
+      _verifiedDailyMissing = false;
       return result == true;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'verified daily result unavailable');
+      // Göç canlıda yoksa (PGRST202 / 42883) resmî yol yoktur; ekran bu
+      // durumda eski canlı `submit_daily_event_result` yoluna düşer.
+      if (error is PostgrestException && _isMissingFunction(error)) {
+        _verifiedDailyMissing = true;
+      }
       return false;
     }
   }
+
+  /// `submit_verified_daily_event_result` sunucuda yok (G9 göçü bekliyor).
+  bool _verifiedDailyMissing = false;
 
   static final _lessonUuid = RegExp(
     r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$',
@@ -3531,7 +3540,28 @@ class SupabaseZanKurdRepository
     required int correct,
     required int total,
     required int seconds,
-  }) async => false; // G9: istemci özeti resmî sıralama kanıtı değildir.
+  }) async {
+    // G9: istemci özeti resmî sıralama kanıtı değildir; bu yüzden eski
+    // beyanlı yol YALNIZ doğrulanmış RPC sunucuda yokken (göç öncesi canlı
+    // sunucu) kullanılır, aksi halde hiçbir şey yazılmaz.
+    if (!_verifiedDailyMissing) return false;
+    try {
+      final result = await client
+          .rpc(
+            'submit_daily_event_result',
+            params: {
+              'p_correct': correct,
+              'p_total': total,
+              'p_seconds': seconds,
+            },
+          )
+          .timeout(const Duration(seconds: 8));
+      return result == true;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'daily event legacy submit failed');
+      return false;
+    }
+  }
 
   @override
   Future<DailyEventBoard?> loadDailyEventBoard() async {

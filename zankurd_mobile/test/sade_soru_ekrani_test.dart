@@ -70,7 +70,7 @@ void main() {
 
     expect(find.byKey(const ValueKey('quiz-close')), findsOneWidget);
     expect(find.byKey(const ValueKey('quiz-stage-kicker')), findsOneWidget);
-    expect(find.textContaining('Soru 1/2 · '), findsOneWidget);
+    expect(find.textContaining('Soru 1/2\u00A0· '), findsOneWidget);
     expect(find.byKey(const ValueKey('quiz-circular-timer')), findsOneWidget);
     expect(find.byKey(const ValueKey('stage-timer-seconds')), findsOneWidget);
     expect(find.byKey(const ValueKey('quiz-more-menu')), findsOneWidget);

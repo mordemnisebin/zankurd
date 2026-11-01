@@ -167,7 +167,16 @@ extension _QuizScreenUI on _QuizScreenState {
     if (_translationRevealAllowed && _isKu) {
       inPrompt += SahneSpace.x2 + _QuizHeaderHeights.translation(base);
     }
-    if (question.hasImage) above += 144 + SahneSpace.x3;
+    if (question.hasImage) {
+      // Tur 11: bütçe görselin GERÇEK kutusunu düşer (eskiden sabit 144);
+      // `_QuestionImage` aynı işlevle çizer, ikisi ayrışmasın.
+      above +=
+          questionImagePortraitHeight(
+            layoutSize,
+            isCompact: layoutSize.height < 900,
+          ) +
+          SahneSpace.x3;
+    }
     final listen = _canListenCurrentQuestion && _questionAudioService != null;
     final answers = question.displayAnswers;
     return QuizFit.choose(

@@ -119,7 +119,6 @@ class _QuestionImageState extends State<_QuestionImage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_failed) return const _QuestionImageFallback();
     final assetPath = url.startsWith('asset://')
         ? url.replaceFirst('asset://', '')
         : null;
@@ -199,6 +198,21 @@ class _QuestionImageState extends State<_QuestionImage> {
     // Kurul C18 (Astra + Sol, 2026-10-29): görselin sorunun kendisi olduğu
     // sorularda küçük karedeki ayrıntı seçilemiyordu; dokununca tam ekran,
     // yakınlaştırılabilir görünüm açılır (Duolingo/Quizlet deseni).
+    final boxHeight = (isLandscapeTablet || forcedHeight != null)
+        ? (forcedHeight ?? maxHeight)
+        : portraitHeight;
+    // Tur 11: yüklenemeyen görselin yedeği de AYNI sabit kutuda çizilir
+    // (eskiden kutudan çıkıp iki satırlık metne dönüyor, soru + şıklar
+    // yerinden oynuyordu). Bağımsız kullanımda (layoutSize yok) yedek eski
+    // gibi iki satırlıktır. Zoom yalnız görsel varken açılır.
+    if (_failed && layoutSize == null) return const _QuestionImageFallback();
+    if (_failed) {
+      return SizedBox(
+        width: double.infinity,
+        height: boxHeight,
+        child: const Center(child: _QuestionImageFallback()),
+      );
+    }
     return _ZoomableQuestionImage(
       url: url,
       questionId: questionId,
@@ -206,17 +220,11 @@ class _QuestionImageState extends State<_QuestionImage> {
       // Şahnê: görsel L pahlı karede (kesik köşe), yuvarlak köşe yok.
       child: ClipPath(
         clipper: const ShapeBorderClipper(shape: SahneShape.l),
-        child: (isLandscapeTablet || forcedHeight != null)
-            ? SizedBox(
-                width: double.infinity,
-                height: forcedHeight ?? maxHeight,
-                child: image,
-              )
-            : SizedBox(
-                width: double.infinity,
-                height: portraitHeight,
-                child: image,
-              ),
+        child: SizedBox(
+          width: double.infinity,
+          height: boxHeight,
+          child: image,
+        ),
       ),
     );
   }

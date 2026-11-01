@@ -103,7 +103,9 @@ void main() {
             expect(question, findsOneWidget);
             expect(find.text('Bir + bir?'), findsNothing);
             expect(
-              find.textContaining(ku ? 'Pirs 1/2 · Ziman' : 'Soru 1/2 · Dil'),
+              find.textContaining(
+                ku ? 'Pirs 1/2\u00A0· Ziman' : 'Soru 1/2\u00A0· Dil',
+              ),
               findsOneWidget,
             );
             final top = tester.getTopLeft(question);

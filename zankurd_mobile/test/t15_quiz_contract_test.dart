@@ -325,7 +325,8 @@ void main() {
           find.byKey(const ValueKey('quiz-image-load-failed')),
           findsOneWidget,
         );
-        expect(tester.getTopLeft(find.text('Yek + yek?')).dy, lessThan(before));
+        // Tur 11: yedek de sabit kutuda; soru yukarı KAYMAZ.
+        expect(tester.getTopLeft(find.text('Yek + yek?')).dy, before);
       } else {
         expect(
           tester
@@ -620,7 +621,7 @@ void main() {
         expect(find.text(ku ? 'Ode' : 'Oda'), findsOneWidget);
         expect(
           find.textContaining(
-            ku ? 'Pirs 1/2 · Erdnîgarî' : 'Soru 1/2 · Coğrafya',
+            ku ? 'Pirs 1/2\u00A0· Erdnîgarî' : 'Soru 1/2\u00A0· Coğrafya',
           ),
           findsOneWidget,
         );

@@ -130,7 +130,7 @@ Future<void> _answerCurrentQuestion(
   data: tester
       .widget<Text>(find.byKey(const ValueKey('async-duel-progress')))
       .data
-      ?.split(' ')
+      ?.split(RegExp(r'[ \u00A0]'))
       .elementAtOrNull(1),
 );
 
