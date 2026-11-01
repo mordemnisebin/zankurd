@@ -65,9 +65,9 @@ void main() {
     expect(g.trimRight(), endsWith('commit;'));
   });
 
-  test('applied.md satırı ⏳', () {
+  test('applied.md satırı ✅ (canlıda)', () {
     expect(
-      RegExp(r'2026-11-01_davet_ret_korumasi\.sql \| ⏳').hasMatch(applied),
+      RegExp(r'2026-11-01_davet_ret_korumasi\.sql \| ✅').hasMatch(applied),
       isTrue,
     );
   });
