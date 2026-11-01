@@ -2455,6 +2455,24 @@ class Tr {
       'ku': 'Cihê te yê di kûpaya rastîn de tê parastin; meşq bê xelat e.',
       'tr': 'Gerçek turnuvadaki yerin korunur; antrenman ödülsüzdür.',
     },
+    // Dil adı özel addır; iki dilde aynı yazılır (KU jüri gerekmez).
+    K.promptKurmanciTag: {'ku': 'Kurmancî', 'tr': 'Kurmancî'},
+    // 2026-11-01: başlamamış kupadan ayrılma. KU TASLAKTIR (jüri gerekli).
+    K.tournamentLeave: {'ku': 'Ji kûpayê derkeve', 'tr': 'Turnuvadan ayrıl'},
+    K.tournamentLeaveTitle: {
+      'ku': 'Ji kûpayê derkevî?',
+      'tr': 'Turnuvadan ayrılsın mısın?',
+    },
+    K.tournamentLeaveBody: {
+      'ku':
+          'Tomara te tê jêbirin. Heta kûpa dest pê neke, tu dikarî dîsa beşdar bibî.',
+      'tr':
+          'Kaydın silinir. Turnuva başlamadan istediğin zaman yeniden katılabilirsin.',
+    },
+    K.tournamentLeaveStarted: {
+      'ku': 'Kûpa dest pê kir; êdî nikarî derkevî.',
+      'tr': 'Turnuva başladı; artık ayrılamazsın.',
+    },
     K.cupStandingActive: {
       'ku': 'Di kûpayê de berdewam e',
       'tr': 'Turnuvada devam ediyor',
@@ -5577,6 +5595,11 @@ class K {
   static const cupDurationHM = 'tournament.durationHM';
   static const cupDurationM = 'tournament.durationM';
   static const tournamentPracticeNote = 'tournament.practiceNote';
+  static const promptKurmanciTag = 'quiz.prompt.kurmanciTag';
+  static const tournamentLeave = 'tournament.leave';
+  static const tournamentLeaveTitle = 'tournament.leave.title';
+  static const tournamentLeaveBody = 'tournament.leave.body';
+  static const tournamentLeaveStarted = 'tournament.leave.started';
   static const cupSubmissionsReceived = 'tournament.submissionsReceived';
   static const cupSubmissionPlayed = 'tournament.submissionPlayed';
   static const cupSubmissionNotPlayed = 'tournament.submissionNotPlayed';

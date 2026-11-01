@@ -4556,6 +4556,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<TournamentBracket?> joinRealTournament() async => null;
 
   @override
+  Future<TournamentLeaveResult> leaveRealTournament() async =>
+      TournamentLeaveResult.unavailable;
+
+  @override
   Future<TournamentBracket?> loadRealTournamentBracket() async => null;
 
   @override

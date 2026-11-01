@@ -199,6 +199,18 @@ class QuizQuestion {
     return (translated == null || translated.isEmpty) ? prompt : translated;
   }
 
+  /// Türkçe arayüzde bu sorunun metni Kurmancî'ye DÜŞÜYOR mu?
+  ///
+  /// Sunucudan gelen çevrimiçi sorular (`fromServerRow`) yalnız Kurmancî
+  /// `prompt` taşır: `questions` tablosunda Türkçe metin sütunu yok. Eskiden
+  /// bu düşüş sessizdi; Türkçe seçen oyuncu hiçbir işaret olmadan Kurmancî
+  /// soru görüyordu. Ekran bu bayrakla küçük bir "Kurmancî" etiketi çizer.
+  bool get promptFallsBackToKurmanci {
+    if (prompt.trim().isEmpty) return false;
+    final translated = promptTr?.trim();
+    return translated == null || translated.isEmpty;
+  }
+
   /// Türkçe şık çevirisi *bütün olarak* tutarlı mı?
   ///
   /// Tutarlılık tek tek alanlarda değil, küme olarak değerlendirilir:

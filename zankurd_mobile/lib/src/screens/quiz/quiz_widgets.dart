@@ -560,6 +560,10 @@ class _QuestionTextAndAnswers extends StatelessWidget {
             canListen && onListen != null && listeningListenable != null;
 
         final translation = _revealableTranslation(context);
+        // Türkçe arayüzde Türkçe metni olmayan (çevrimiçi) soru Kurmancî
+        // görünür; sessiz düşüş yerine küçük bir etiketle söylenir.
+        final showKurmanciTag =
+            !context.isKu && question.promptFallsBackToKurmanci;
         final fit0 = QuizFitScope.of(context);
         final promptLine = Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -594,18 +598,21 @@ class _QuestionTextAndAnswers extends StatelessWidget {
         final Widget promptRow = QuizPromptCard(
           key: promptCardKey,
           padding: fit.promptPad,
-          child: translation == null
+          child: (translation == null && !showKurmanciTag)
               ? promptLine
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    if (showKurmanciTag) const _KurmanciPromptTag(),
                     promptLine,
-                    const SizedBox(height: SahneSpace.x2),
-                    PromptTranslationReveal(
-                      key: ValueKey('prompt-tr-reveal-${question.id}'),
-                      translation: translation,
-                    ),
+                    if (translation != null) ...[
+                      const SizedBox(height: SahneSpace.x2),
+                      PromptTranslationReveal(
+                        key: ValueKey('prompt-tr-reveal-${question.id}'),
+                        translation: translation,
+                      ),
+                    ],
                   ],
                 ),
         );
@@ -2168,4 +2175,36 @@ class _QuizHeaderHeights {
 
   /// Kapalı çeviri şeridi.
   static double translation(TextScaler s) => max(32, s.scale(20) + 8);
+
+  /// Türkçesiz sorunun "Kurmancî" etiketi (4 pt alt boşluk dahil); sığdırma
+  /// bütçesinden düşülür, yoksa etiket soruyu kaydırmaya iter.
+  static double kurmanciTag(TextScaler s) => s.scale(20) + 4;
+}
+
+/// Türkçe arayüzde Kurmancî'ye düşen soru metninin yanındaki küçük etiket.
+class _KurmanciPromptTag extends StatelessWidget {
+  const _KurmanciPromptTag()
+    : super(key: const ValueKey('prompt-kurmanci-tag'));
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(AppIcons.language, size: 12, color: t.tx2),
+            const SizedBox(width: 4),
+            Text(
+              context.t(K.promptKurmanciTag),
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

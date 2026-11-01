@@ -138,6 +138,7 @@ abstract interface class LivePlayPort {
   Stream<List<RoomMessage>> subscribeRoomMessages(String roomId);
   Future<List<RoomMessage>> loadRoomMessages(String roomId);
   Future<TournamentBracket?> joinRealTournament();
+  Future<TournamentLeaveResult> leaveRealTournament();
   Future<TournamentBracket?> loadRealTournamentBracket();
   Future<TournamentBracket> joinTournament();
   Future<TournamentBracket?> loadTournamentBracket();

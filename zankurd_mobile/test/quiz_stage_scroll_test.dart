@@ -39,6 +39,9 @@ import 'support/widget_test_helpers.dart';
 const _long1 = QuizQuestion(
   id: 'stage-scroll-1',
   category: 'Ziman',
+  // Paketli sorunun Türkçesi her zaman vardır; yoksa Türkçe arayüzde
+  // "Kurmancî" etiketi çıkar (bu test etiketi değil açıklama satırını ölçer).
+  promptTr: 'Kurmancî dilbilgisinde «navdêr» ne için kullanılır?',
   prompt:
       'Di rêzimana Kurmancî de peyva «navdêr» ji bo çi tê bikaranîn û '
       'di hevokê de çi erkî dike?',

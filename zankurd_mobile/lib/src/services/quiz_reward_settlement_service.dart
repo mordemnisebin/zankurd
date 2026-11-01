@@ -5,10 +5,18 @@ import '../utils/error_reporter.dart';
 enum QuizRewardSettlementState { claimed, queued, unresolved }
 
 class QuizRewardSettlement {
-  const QuizRewardSettlement({required this.state, required this.coinsAwarded});
+  const QuizRewardSettlement({
+    required this.state,
+    required this.coinsAwarded,
+    this.dailyCapReached = false,
+  });
 
   final QuizRewardSettlementState state;
   final int coinsAwarded;
+
+  /// Sunucu `cap_reached` dedi mi? Sonuç ekranı sıfır/kırpılmış ödülün
+  /// sebebini söyleyebilsin diye taşınır (kurtarma yolu bunu düşürüyordu).
+  final bool dailyCapReached;
 
   bool get isDurable => state != QuizRewardSettlementState.unresolved;
 }
@@ -60,14 +68,17 @@ class QuizRewardSettlementService {
     final rewardOwnerId = _repository.currentUserId?.trim() ?? '';
 
     late final int amount;
+    var capReached = false;
     try {
-      amount = (await _repository.awardQuizCoins(
+      final claim = await _repository.awardQuizCoins(
         score: score,
         correctCount: correctCount,
         bestStreak: bestStreak,
         totalQuestions: totalQuestions,
         room: room,
-      )).amount;
+      );
+      amount = claim.amount;
+      capReached = claim.dailyCapReached;
     } catch (error, stack) {
       _errorRecorder(error, stack, reason: 'awardQuizCoins failed');
       final currentOwnerId = _repository.currentUserId?.trim() ?? '';
@@ -128,6 +139,7 @@ class QuizRewardSettlementService {
     return QuizRewardSettlement(
       state: QuizRewardSettlementState.claimed,
       coinsAwarded: amount,
+      dailyCapReached: capReached,
     );
   }
 }

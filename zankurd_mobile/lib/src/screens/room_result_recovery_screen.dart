@@ -174,6 +174,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
             bestStreak: presentation.bestStreak,
             answerRecords: presentation.answerRecords,
             coinsAwarded: settlement.coinsAwarded,
+            dailyCapReached: settlement.dailyCapReached,
             sourceQuestions: questions,
             opponents: presentation.opponents,
             rewardQueued: settlement.state == QuizRewardSettlementState.queued,

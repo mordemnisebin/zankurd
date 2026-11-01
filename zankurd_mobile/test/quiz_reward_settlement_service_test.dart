@@ -6,7 +6,29 @@ import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/services/quiz_reward_settlement_service.dart';
 import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 
+// Günlük tavan bilgisinin KURTARMA yolunda düşmesinin bekçisi.
+//
+// Kusur: sunucu `cap_reached: true` dönse de `QuizRewardSettlement` yalnız
+// miktarı taşıyordu; oda sonucu kurtarma ekranı ve eski sonuç yolu bu yüzden
+// `QuizResultScreen.dailyCapReached`i hiç doldurmuyordu ve tavana varan oyuncu
+// "+0" bile görmeden sebepsiz kalıyordu. Sessizdi: ana oyun yolu doğruydu,
+// yalnız yan yollar bilgiyi düşürdüğü için hiçbir test onu aramıyordu.
 void main() {
+  test('sunucunun cap_reached bilgisi yerleşime taşınır', () async {
+    final service = QuizRewardSettlementService(
+      repository: _AwardRepository(result: 0, capReached: true),
+    );
+    final result = await service.settle(
+      room: _onlineRoom,
+      practice: false,
+      score: 310,
+      correctCount: 7,
+      bestStreak: 4,
+      totalQuestions: 10,
+    );
+    expect(result.dailyCapReached, isTrue);
+  });
+
   test(
     'sunucunun başarılı sıfır ödülü claimed olur ve kuyruğa girmez',
     () async {
@@ -244,8 +266,9 @@ class _QueueFacts {
 }
 
 class _AwardRepository extends MockZanKurdRepository {
-  _AwardRepository({this.result, this.error});
+  _AwardRepository({this.result, this.error, this.capReached = false});
 
+  final bool capReached;
   final int? result;
   final Object? error;
   int calls = 0;
@@ -262,7 +285,7 @@ class _AwardRepository extends MockZanKurdRepository {
     calls++;
     lastFacts = [score, correctCount, bestStreak, totalQuestions, room?.id];
     if (error case final error?) throw error;
-    return (amount: result!, dailyCapReached: false);
+    return (amount: result!, dailyCapReached: capReached);
   }
 }
 

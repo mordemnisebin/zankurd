@@ -167,6 +167,9 @@ extension _QuizScreenUI on _QuizScreenState {
     if (_translationRevealAllowed && _isKu) {
       inPrompt += SahneSpace.x2 + _QuizHeaderHeights.translation(base);
     }
+    if (!_isKu && question.promptFallsBackToKurmanci) {
+      inPrompt += _QuizHeaderHeights.kurmanciTag(base);
+    }
     if (question.hasImage) {
       // Tur 11: bütçe görselin GERÇEK kutusunu düşer (eskiden sabit 144);
       // `_QuestionImage` aynı işlevle çizer, ikisi ayrışmasın.

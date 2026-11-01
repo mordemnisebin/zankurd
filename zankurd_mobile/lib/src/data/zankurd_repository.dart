@@ -111,6 +111,12 @@ class StreakFreezeChargeResult {
       outcome == StreakFreezeChargeOutcome.alreadyCharged;
 }
 
+/// `leave_tournament` sonucu.
+///
+/// [unavailable] göç canlıda değil (42883/PGRST202), çevrimdışı ya da sahte
+/// depo demektir: ekran "Ayrıl" eylemini GİZLER; bir arıza gibi göstermez.
+enum TournamentLeaveResult { left, started, unavailable }
+
 /// Bir tur ödül talebinin sonucu.
 ///
 /// Sunucu yalnız MİKTAR döndürmüyor; solo talepte günlük tavana varılıp
@@ -961,6 +967,11 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// önemli: "sunucu mu, benzetim mi" sorusunu tahmin etmek (oda kimliğine
   /// bakmak gibi) sahte depoyu sunucu sanmaya yol açıyordu (2026-07-26).
   Future<TournamentBracket?> joinRealTournament();
+
+  /// Başlamamış kupadan ayrıl (`leave_tournament`). Kupa başlamışsa
+  /// [TournamentLeaveResult.started]; sunucu tarafı yoksa
+  /// [TournamentLeaveResult.unavailable] döner.
+  Future<TournamentLeaveResult> leaveRealTournament();
 
   /// Gerçek turnuvanın güncel şeması; yoksa `null`.
   Future<TournamentBracket?> loadRealTournamentBracket();

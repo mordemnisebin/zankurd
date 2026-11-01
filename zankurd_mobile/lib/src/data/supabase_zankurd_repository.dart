@@ -4162,6 +4162,23 @@ class SupabaseZanKurdRepository
   }
 
   @override
+  Future<TournamentLeaveResult> leaveRealTournament() async {
+    try {
+      client.auth.currentUser ?? await signInAnonymously();
+      final response = await client.rpc('leave_tournament');
+      if (response is Map && response['left'] == false) {
+        return TournamentLeaveResult.started;
+      }
+      return TournamentLeaveResult.left;
+    } catch (e, s) {
+      // Göç canlıda değilse eylem sessizce kapanır (ekran düğmeyi gizler).
+      if (_isMissingFunction(e)) return TournamentLeaveResult.unavailable;
+      _recordError(e, s, reason: 'leaveRealTournament failed');
+      rethrow;
+    }
+  }
+
+  @override
   Future<TournamentBracket?> loadRealTournamentBracket() async {
     try {
       final response = await client.rpc('get_tournament_bracket');

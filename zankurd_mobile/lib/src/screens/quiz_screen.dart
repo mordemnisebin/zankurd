@@ -3667,6 +3667,7 @@ class _QuizScreenState extends State<QuizScreen>
             bestStreak: bestStreak,
             answerRecords: answerRecords,
             coinsAwarded: settlement.coinsAwarded,
+            dailyCapReached: settlement.dailyCapReached,
             sourceQuestions: _questions,
             rewardQueued: settlement.rewardQueued,
             opponents: _opponents.toList(),

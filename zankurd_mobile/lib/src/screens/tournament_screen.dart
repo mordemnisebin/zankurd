@@ -16,6 +16,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/player_identity.dart';
 import '../widgets/arena_kit.dart';
+import '../widgets/dialog_action_pair.dart';
 import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
@@ -146,6 +147,11 @@ class _TournamentScreenState extends State<TournamentScreen> {
 
   /// Turnuva doldu mu bekliyoruz?
   bool _waitingForPlayers = false;
+
+  /// `leave_tournament` canlıda yoksa (42883/PGRST202) ya da depo sunucusuz
+  /// ise "Ayrıl" eylemi GİZLENİR; bir arıza gibi gösterilmez.
+  bool _leaveAvailable = true;
+  bool _leaving = false;
 
   /// Bekleme ekranındaki doluluk ("1/4 oyuncu katıldı"); sunucu sayıyı
   /// göndermezse null ve satır çizilmez (2026-10-27).
@@ -906,6 +912,56 @@ class _TournamentScreenState extends State<TournamentScreen> {
     );
   }
 
+  Future<void> _confirmLeave() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(dialogContext.t(K.tournamentLeaveTitle)),
+        content: Text(dialogContext.t(K.tournamentLeaveBody)),
+        actions: [
+          DialogActionPair(
+            cancel: TextButton(
+              key: const ValueKey('tournament-leave-cancel'),
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(dialogContext.t(K.cancel)),
+            ),
+            confirm: SahneButton.primary(
+              key: const ValueKey('tournament-leave-confirm'),
+              label: dialogContext.t(K.tournamentLeave),
+              arrow: false,
+              onPressed: () => Navigator.pop(dialogContext, true),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    setState(() => _leaving = true);
+    try {
+      final result = await widget.repository.leaveRealTournament();
+      if (!mounted) return;
+      switch (result) {
+        case TournamentLeaveResult.unavailable:
+          setState(() => _leaveAvailable = false);
+        case TournamentLeaveResult.started:
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.t(K.tournamentLeaveStarted))),
+          );
+          await _load();
+        case TournamentLeaveResult.left:
+          await _load();
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'tournament_leave');
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.checkConnection))));
+    } finally {
+      if (mounted) setState(() => _leaving = false);
+    }
+  }
+
   /// Doluluk gövdenin önünde: oyuncu önce "ne kadar kaldı"yı görür.
   String _waitingMessage(BuildContext context) {
     final body = context.t(K.tournamentWaitingBody);
@@ -1045,6 +1101,15 @@ class _TournamentScreenState extends State<TournamentScreen> {
                   color: SahneTokens.of(context).tx2,
                 ),
               ),
+              // Yalnız başlamamış gerçek kupada (bu dal): başlayınca ekran
+              // şemaya geçer ve eylem kendiliğinden kaybolur.
+              if (_leaveAvailable)
+                SahneButton.text(
+                  key: const ValueKey('tournament-leave'),
+                  label: context.t(K.tournamentLeave),
+                  arrow: false,
+                  onPressed: _leaving ? null : _confirmLeave,
+                ),
               SahneButton.text(
                 key: const ValueKey('tournament-waiting-refresh'),
                 // "Tekrar dene" hata gibi okunuyordu; bu yalnız yenilemedir.

@@ -213,11 +213,14 @@ void main() {
     expect(tr, contains('24 saat'));
     expect(tr, contains('en az 2 oyuncu'));
     expect(tr, contains('yoksa oyuncu beklenir'));
-    // Ayrılma RPC'si yok: ekran uydurma bir "Ayrıl" eylemi sunmaz.
+    // Ayrılma RPC'si 2026-11-01'de yazıldı (`leave_tournament`); ekran
+    // eylemi yalnız `leaveRealTournament` üzerinden sunar, SQL'i doğrudan
+    // çağırmaz. RPC canlı değilken eylem gizlenir (turnuva_ayril_test).
     final screen = File(
       'lib/src/screens/tournament_screen.dart',
     ).readAsStringSync();
-    expect(screen.contains('leave_tournament'), isFalse);
+    expect(screen.contains("rpc('leave_tournament')"), isFalse);
+    expect(screen.contains('leaveRealTournament'), isTrue);
   });
 
   // ── X3 ───────────────────────────────────────────────────────────────────
