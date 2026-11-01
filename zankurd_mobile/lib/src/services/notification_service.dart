@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:ui' show Color;
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show MethodChannel;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
@@ -357,6 +358,24 @@ class NotificationService {
           ?.requestPermissions(alert: true, badge: true, sound: true);
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService');
+    }
+  }
+
+  /// Uygulamanın sistem bildirim ayarlarını açar; açılamazsa false döner.
+  static Future<bool> openSystemSettings() async {
+    if (kIsWeb) return false;
+    try {
+      return await const MethodChannel(
+            'com.zankurd.app/notification_settings',
+          ).invokeMethod<bool>('open') ??
+          false;
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'notification_system_settings',
+      );
+      return false;
     }
   }
 

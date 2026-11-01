@@ -95,7 +95,13 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    expect(find.text('Serin kırılıyor.'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text('Günlük seri'),
+      ),
+      findsOneWidget,
+    );
     expect(
       find.byKey(const ValueKey('result-streak-shortfall')),
       findsOneWidget,
@@ -148,6 +154,12 @@ void main() {
     await tester.pumpWidget(_wrap(_screen(_PoorRepository(0))));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
-    expect(find.text('Serin kırılıyor.'), findsNothing);
+    expect(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text('Günlük seri'),
+      ),
+      findsNothing,
+    );
   });
 }

@@ -3536,11 +3536,27 @@ class SupabaseZanKurdRepository
   @override
   Future<DailyEventBoard?> loadDailyEventBoard() async {
     try {
-      if (currentUserId == null) return null;
-      final res = await client
-          .rpc('get_verified_daily_event_board')
-          .timeout(const Duration(seconds: 8));
-      return DailyEventBoard.tryParse(res);
+      final owner = currentUserId;
+      if (owner == null) return null;
+      Object? res;
+      try {
+        res = await client
+            .rpc('get_verified_daily_event_board')
+            .timeout(const Duration(seconds: 8));
+      } on PostgrestException catch (error, stack) {
+        // G9 göçü beklemedeyken uygulanmış eski pano okunabilir. Bu yalnız
+        // gösterimdir: eski skor/ödül YAZMA yolları kapalı kalır. Yetki ve
+        // ağ hataları göç eksikliği sayılmaz.
+        if (!_isMissingFunction(error)) {
+          _recordError(error, stack, reason: 'loadDailyEventBoard failed');
+          return null;
+        }
+        if (currentUserId != owner) return null;
+        res = await client
+            .rpc('get_daily_event_board')
+            .timeout(const Duration(seconds: 8));
+      }
+      return currentUserId == owner ? DailyEventBoard.tryParse(res) : null;
     } catch (e, s) {
       _recordError(e, s, reason: 'loadDailyEventBoard failed');
       return null;

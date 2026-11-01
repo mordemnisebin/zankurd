@@ -284,7 +284,7 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.text('Rojda seni odaya çağırıyor'), findsOneWidget);
-        expect(find.text('Ziman · 2/8 kişi'), findsOneWidget);
+        expect(find.text('Dil · 2/8 kişi'), findsOneWidget);
         expect(find.text('Katıl · Ücretsiz'), findsOneWidget);
         expect(find.text('Oda davetleri'), findsOneWidget);
 

@@ -265,6 +265,36 @@ void main() {
       expect(find.byKey(const ValueKey('daily-event-row-1')), findsNothing);
     });
 
+    testWidgets('başarılı boş pano hata değildir; hata yeniden denenebilir', (
+      tester,
+    ) async {
+      final repo = MockZanKurdRepository();
+      await pump(tester, repo);
+      expect(
+        find.byKey(const ValueKey('daily-event-board-unavailable')),
+        findsOneWidget,
+      );
+      repo.sampleDailyEventBoard = const DailyEventBoard(
+        participants: 0,
+        top: [],
+      );
+      await tester.tap(find.byKey(const ValueKey('daily-event-board-retry')));
+      await tester.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('daily-event-board-empty')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('daily-event-board-unavailable')),
+        findsNothing,
+      );
+      expect(
+        find.byKey(const ValueKey('daily-event-board-retry')),
+        findsNothing,
+      );
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('Kurmancî metinler', (tester) async {
       final repo = MockZanKurdRepository()..sampleDailyEventBoard = bugun;
       await pump(tester, repo, lang: kurmanciLang());

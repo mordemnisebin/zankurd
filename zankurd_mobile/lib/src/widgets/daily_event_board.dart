@@ -135,8 +135,22 @@ class _DailyEventBoardCardState extends State<DailyEventBoardCard> {
               children: [
                 if (hasRows)
                   _Rows(board: board, isKu: isKu)
-                else
+                else if (board != null)
+                  _InfoLine(
+                    key: const ValueKey('daily-event-board-empty'),
+                    icon: AppIcons.clock,
+                    text: context.t(K.contestTeaserBeFirst),
+                  )
+                else ...[
                   _Unavailable(isKu: isKu),
+                  SahneButton.text(
+                    key: const ValueKey('daily-event-board-retry'),
+                    label: context.t(K.retry),
+                    onPressed: () => setState(() {
+                      _board = _load();
+                    }),
+                  ),
+                ],
                 if (board?.yesterdayWinner case final winner?) ...[
                   const SizedBox(height: SahneSpace.x3),
                   _InfoLine(

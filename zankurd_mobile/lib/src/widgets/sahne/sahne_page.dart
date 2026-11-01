@@ -1245,9 +1245,14 @@ class SahneStageScroll extends StatefulWidget {
     this.fade = SahneSpace.x4,
     this.balance,
     this.holdBalance = false,
+    this.showScrollHint = false,
   });
 
   final Widget child;
+
+  /// Sığmayan soru seçenekleri için alt kenarda görünür kaydırma işareti.
+  /// Yer kaplamaz; normal yazıda sığan sahnenin ölçüsünü değiştirmez.
+  final bool showScrollHint;
 
   /// 2026-10-29 son kurul tur 2 (B): `true` iken [balance] boşluğu
   /// YENİDEN HESAPLANMAZ; içerik, bayrak açıldığı andaki üst boşlukta kalır.
@@ -1420,6 +1425,36 @@ class _SahneStageScrollState extends State<SahneStageScroll> {
                   child: child,
                 ),
               ),
+              if (more && widget.showScrollHint)
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: IgnorePointer(
+                    child: ExcludeSemantics(
+                      child: Center(
+                        child: DecoratedBox(
+                          key: const ValueKey('sahne-stage-scroll-hint'),
+                          decoration: BoxDecoration(
+                            color: opaque,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: SahneTokens.of(context).tx2,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: Icon(
+                              AppIcons.chevronDown,
+                              size: 20,
+                              color: SahneTokens.of(context).tx,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               // Sönmenin açık olduğunu bildiren sıfır boyutlu işaret
               // (testler okur).
               if (more)

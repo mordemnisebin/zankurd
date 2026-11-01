@@ -65,7 +65,8 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsScreenState extends State<SettingsScreen>
+    with WidgetsBindingObserver {
   late final Future<PlacementStore> _placementStoreFuture =
       PlacementStore.load();
   LearningGoal? _learningGoal;
@@ -85,10 +86,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _duelOn = true;
   bool _socialOn = true;
   bool _systemPermissionDenied = false;
+  bool _systemPermissionChecked = false;
+
+  bool get _notificationsActive =>
+      _notificationsEnabled &&
+      _systemPermissionChecked &&
+      !_systemPermissionDenied;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     // 'Tomar Bike' yalnız isim gerçekten değiştiğinde aktif olur (dirty-state).
     _nameController.addListener(() {
       if (mounted) setState(() {});
@@ -138,6 +146,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _nameController.dispose();
     super.dispose();
   }
@@ -671,16 +680,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             : null,
                         trailing: Switch(
                           key: const ValueKey('settings-notif-master'),
-                          value: _notificationsEnabled,
+                          value: _notificationsActive,
                           onChanged: _toggleNotifications,
                         ),
                       ),
-                      if (_notificationsEnabled && _systemPermissionDenied)
+                      if (_systemPermissionDenied) ...[
                         _InlineNotice(
                           icon: AppIcons.bellSlash,
                           text: context.t(K.notifPermDeniedInline),
                           error: true,
                         ),
+                        SahneListRow.plain(
+                          key: const ValueKey('settings-notif-open-system'),
+                          title: context.t(K.settings),
+                          chevron: true,
+                          onTap: _openSystemNotificationSettings,
+                        ),
+                      ],
                     ],
                   ),
                   if (_notificationsEnabled) ...[
@@ -691,15 +707,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       }),
                       trailing: Switch(
                         key: const ValueKey('settings-notif-daily'),
-                        value: _dailyOn,
-                        onChanged: (v) => _setPref(
-                          v,
-                          apply: (service) => service.setDailyOn(v),
-                          assign: () => _dailyOn = v,
-                        ),
+                        value: _notificationsActive && _dailyOn,
+                        onChanged: !_notificationsActive
+                            ? null
+                            : (v) => _setPref(
+                                v,
+                                apply: (service) => service.setDailyOn(v),
+                                assign: () => _dailyOn = v,
+                              ),
                       ),
                     ),
-                    if (_dailyOn)
+                    if (_notificationsActive && _dailyOn)
                       SahneListRow.plain(
                         title: context.t(K.changeTime, {
                           'time': _notificationTime,
@@ -711,50 +729,58 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       title: context.t(K.dailyContest),
                       trailing: Switch(
                         key: const ValueKey('settings-notif-contest'),
-                        value: _contestOn,
-                        onChanged: (v) => _setPref(
-                          v,
-                          apply: (service) => service.setContestOn(v),
-                          assign: () => _contestOn = v,
-                        ),
+                        value: _notificationsActive && _contestOn,
+                        onChanged: !_notificationsActive
+                            ? null
+                            : (v) => _setPref(
+                                v,
+                                apply: (service) => service.setContestOn(v),
+                                assign: () => _contestOn = v,
+                              ),
                       ),
                     ),
                     SahneListRow.plain(
                       title: context.t(K.notifStreakTitle),
                       trailing: Switch(
                         key: const ValueKey('settings-notif-streak'),
-                        value: _streakOn,
-                        onChanged: (v) => _setPref(
-                          v,
-                          apply: (service) => service.setStreakOn(v),
-                          assign: () => _streakOn = v,
-                        ),
+                        value: _notificationsActive && _streakOn,
+                        onChanged: !_notificationsActive
+                            ? null
+                            : (v) => _setPref(
+                                v,
+                                apply: (service) => service.setStreakOn(v),
+                                assign: () => _streakOn = v,
+                              ),
                       ),
                     ),
                     SahneListRow.plain(
                       title: context.t(K.notifDuelTitle),
                       trailing: Switch(
                         key: const ValueKey('settings-notif-duel'),
-                        value: _duelOn,
-                        onChanged: (v) => _setPref(
-                          v,
-                          apply: (service) => service.setDuelOn(v),
-                          assign: () => _duelOn = v,
-                          syncServer: true,
-                        ),
+                        value: _notificationsActive && _duelOn,
+                        onChanged: !_notificationsActive
+                            ? null
+                            : (v) => _setPref(
+                                v,
+                                apply: (service) => service.setDuelOn(v),
+                                assign: () => _duelOn = v,
+                                syncServer: true,
+                              ),
                       ),
                     ),
                     SahneListRow.plain(
                       title: context.t(K.notifSocialTitle),
                       trailing: Switch(
                         key: const ValueKey('settings-notif-social'),
-                        value: _socialOn,
-                        onChanged: (v) => _setPref(
-                          v,
-                          apply: (service) => service.setSocialOn(v),
-                          assign: () => _socialOn = v,
-                          syncServer: true,
-                        ),
+                        value: _notificationsActive && _socialOn,
+                        onChanged: !_notificationsActive
+                            ? null
+                            : (v) => _setPref(
+                                v,
+                                apply: (service) => service.setSocialOn(v),
+                                assign: () => _socialOn = v,
+                                syncServer: true,
+                              ),
                       ),
                     ),
                   ],
@@ -930,28 +956,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> _loadNotificationSettings() async {
     try {
       final service = await NotificationService.load();
+      final granted = await service.hasSystemPermission();
       if (mounted) {
         setState(() {
           _notificationService = service;
+          _systemPermissionChecked = true;
+          _systemPermissionDenied = !granted;
           _applyServicePrefs(service);
         });
         // Düello/arkadaş tercihi sunucuda yaşar: kirli yerel değişikliği
         // yazar, değilse sunucudaki değeri alır.
         await PushPrefsSync.reconcile(service, widget.repository);
         if (mounted) setState(() => _applyServicePrefs(service));
-        if (service.enabled) {
-          // Uygulama içi tercih açık ama sistem izni kapatılmış olabilir
-          // (kullanıcı sistem ayarlarından engellemiştir) — uyarı göster.
-          final granted = await service.hasSystemPermission();
-          if (mounted && !granted) {
-            setState(() => _systemPermissionDenied = true);
-          }
-        }
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'settings_action');
       // Bildirim servisi başlatılamazsa sessizce devam et.
     }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _refreshSystemPermission();
+  }
+
+  Future<void> _refreshSystemPermission() async {
+    final service = _notificationService;
+    if (service == null) return;
+    final granted = await service.hasSystemPermission();
+    if (!mounted) return;
+    setState(() {
+      _systemPermissionChecked = true;
+      _systemPermissionDenied = !granted;
+    });
+  }
+
+  Future<void> _openSystemNotificationSettings() async {
+    final opened = await NotificationService.openSystemSettings();
+    if (!mounted || opened) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(context.t(K.linkOpenFailed))));
   }
 
   void _applyServicePrefs(NotificationService service) {
@@ -988,12 +1033,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (service == null) return;
     try {
       await service.setEnabled(value);
+      final granted = await service.hasSystemPermission();
       if (!mounted) return;
       // Yerel tercih kaydedildi; çevrimdışı/yavaş RPC görünür anahtarı
       // ve bekleyen kayıt bilgisini geciktirmemeli.
       setState(() {
         _notificationsEnabled = value;
-        _systemPermissionDenied = false;
+        _systemPermissionChecked = true;
+        _systemPermissionDenied = !granted;
       });
       // Kapatma da hemen sunucuya gitmeli; hata halinde kalıcı kuyruk ve
       // satırdaki bekleme bilgisi sonraki eşitlemeye kadar korunur.
@@ -1007,10 +1054,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (!mounted) return;
       setState(() {});
       if (value) {
-        final granted = await service.hasSystemPermission();
-        if (!mounted || granted) return;
-        setState(() => _systemPermissionDenied = true);
-        _showSystemPermissionDialog();
+        if (!granted) _showSystemPermissionDialog();
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'settings_notification_save');
@@ -1030,9 +1074,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text(context.t(K.notifPermDenied)),
         content: Text(context.t(K.notifPermDeniedBody)),
         actions: [
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(context.t(K.ok)),
+          DialogActionPair(
+            cancel: TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: Text(context.t(K.ok)),
+            ),
+            confirm: FilledButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+                _openSystemNotificationSettings();
+              },
+              child: Text(context.t(K.settings)),
+            ),
           ),
         ],
       ),

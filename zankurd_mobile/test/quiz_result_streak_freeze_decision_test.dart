@@ -358,6 +358,46 @@ void main() {
     expect(find.byType(QuizResultScreen), findsOneWidget);
   });
 
+  testWidgets('günlük seri uyarısı nedenini ve kaçırılan günleri gösterir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(375, 667));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await reset(breakingStreak());
+    final repository = _FreezeRepository(balance: 500);
+    await pump(tester, repository, solo: true);
+    await tester.pumpAndSettle();
+    final dialog = find.byType(AlertDialog);
+    expect(
+      find.descendant(of: dialog, matching: find.text('Günlük seri')),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('Her gün en az bir tur ya da ders'),
+      findsOneWidget,
+    );
+    final missed = tester
+        .widget<Text>(find.byKey(const ValueKey('streak-freeze-missed-days')))
+        .data!;
+    final last = DateTime.parse(
+      breakingStreak()['zankurd.streak.lastDay']! as String,
+    );
+    final first = DateTime(last.year, last.month, last.day + 1);
+    expect(
+      missed,
+      contains(
+        '${first.day.toString().padLeft(2, '0')}.${first.month.toString().padLeft(2, '0')}.${first.year}',
+      ),
+    );
+    expect(missed, startsWith('Kaçırıldı:'));
+    expect(find.text('Koru (50)').hitTestable(), findsOneWidget);
+    expect(repository.spendCalls, 0);
+    await tester.tap(find.text('Hayır, sıfırlansın'));
+    await tester.pumpAndSettle();
+    expect(repository.spendCalls, 0);
+    expect(tester.takeException(), isNull);
+  });
+
   // ── 9. Coin harcama hatası ─────────────────────────────────────────
   testWidgets('belirsiz harcama seriyi kırmadan yeniden denenebilir kalır', (
     tester,

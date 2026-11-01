@@ -366,7 +366,7 @@ class _RoomInviteCardState extends State<RoomInviteCard>
     );
     final title = context.t(K.roomInviteCardTitle, {'name': name});
     final meta = context.t(K.roomInviteCardMeta, {
-      'category': invite.categoryName,
+      'category': CategoryNames.localized(invite.categoryName, context.isKu),
       'count': groupThousands(invite.playerCount),
       'max': groupThousands(invite.maxPlayers),
     });

@@ -12,5 +12,23 @@ import UIKit
 
   func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
     GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
+    guard let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "NotificationSettings") else {
+      return
+    }
+    let channel = FlutterMethodChannel(
+      name: "com.zankurd.app/notification_settings",
+      binaryMessenger: registrar.messenger()
+    )
+    channel.setMethodCallHandler { call, result in
+      guard call.method == "open" else {
+        result(FlutterMethodNotImplemented)
+        return
+      }
+      guard let url = URL(string: UIApplication.openSettingsURLString) else {
+        result(false)
+        return
+      }
+      UIApplication.shared.open(url, options: [:]) { opened in result(opened) }
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/models/room_invite.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/screens/home/room_invite_card.dart';
 
@@ -67,6 +68,47 @@ void _foreground(WidgetTester tester) => tester.binding
   ..handleAppLifecycleStateChanged(AppLifecycleState.resumed);
 
 void main() {
+  for (final language in ['tr', 'ku']) {
+    testWidgets('davet kategorisi $language dilinde, koşulları korunur', (
+      tester,
+    ) async {
+      final repository = _Repository()
+        ..invites = [
+          RoomInvite(
+            id: 'localized',
+            roomId: 'room',
+            roomCode: 'code',
+            inviterId: 'friend',
+            inviterName: 'Rojda',
+            categoryName: 'Tevlihev',
+            playerCount: 2,
+            maxPlayers: 4,
+            createdAt: DateTime(2026, 11, 1),
+            entryFee: 25,
+            questionCount: 5,
+            secondsPerQuestion: 20,
+          ),
+        ];
+      await tester.pumpWidget(
+        testShell(
+          languageProvider: LanguageProvider(initialLang: language),
+          child: Scaffold(body: RoomInviteCard(repository: repository)),
+        ),
+      );
+      await tester.pump();
+      final meta = tester
+          .widget<Text>(find.byKey(const ValueKey('room-invite-meta')))
+          .data!;
+      expect(meta, contains(language == 'tr' ? 'Karışık' : 'Tevlihev'));
+      if (language == 'tr') expect(meta, isNot(contains('Tevlihev')));
+      expect(meta, contains('2'));
+      expect(meta, contains('4'));
+      expect(find.textContaining('25'), findsWidgets);
+      expect(repository.invites.single.categoryName, 'Tevlihev');
+      await tester.pumpWidget(const SizedBox());
+    });
+  }
+
   testWidgets('aynı depoda hesap değişince ağ hatası eski daveti göstermez', (
     tester,
   ) async {

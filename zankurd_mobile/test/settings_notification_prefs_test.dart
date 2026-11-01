@@ -23,6 +23,7 @@ library;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -124,8 +125,45 @@ bool _on(WidgetTester tester, ValueKey<String> key) =>
 void main() {
   late MockZanKurdRepository repository;
   late _Gateway gateway;
+  var systemPermission = true;
+  var settingsOpened = 0;
+  var settingsOpenResult = true;
+
+  setUpAll(() {
+    // flutter test varsayılan platformu Android; global debug override yok.
+    FlutterLocalNotificationsPlatform.instance =
+        AndroidFlutterLocalNotificationsPlugin();
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(
+          const MethodChannel('dexterous.com/flutter/local_notifications'),
+          (call) async => call.method == 'areNotificationsEnabled'
+              ? systemPermission
+              : null,
+        );
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(
+          const MethodChannel('com.zankurd.app/notification_settings'),
+          (call) async {
+            expect(call.method, 'open');
+            settingsOpened++;
+            return settingsOpenResult;
+          },
+        );
+  });
+  tearDownAll(() {
+    for (final name in [
+      'dexterous.com/flutter/local_notifications',
+      'com.zankurd.app/notification_settings',
+    ]) {
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(MethodChannel(name), null);
+    }
+  });
 
   setUp(() async {
+    systemPermission = true;
+    settingsOpened = 0;
+    settingsOpenResult = true;
     LocalProgressScope.debugReset();
     LocalProgressScope.bind('user');
     SharedPreferences.setMockInitialValues({'zankurd.language': 'tr'});
@@ -161,6 +199,88 @@ void main() {
     await _reveal(tester, find.byKey(_master));
     return service;
   }
+
+  testWidgets(
+    'izin reddinde tercihler kapalı ve pasif; sistem ayarlarından dönüş yenilenir',
+    (tester) async {
+      systemPermission = false;
+      final service = await pumpSettings(
+        tester,
+        enabled: true,
+        size: const Size(320, 800),
+        textScale: 2,
+      );
+      expect(_on(tester, _master), isFalse);
+      expect(
+        service.enabled,
+        isTrue,
+        reason: 'Kaydedilmiş kullanıcı tercihi korunur.',
+      );
+      expect(
+        find.text(Tr.forKu(K.notifPermDeniedInline, false)),
+        findsOneWidget,
+      );
+      for (final key in _keys.values) {
+        await _reveal(tester, find.byKey(key));
+        final toggle = tester.widget<Switch>(find.byKey(key));
+        expect(toggle.value, isFalse);
+        expect(toggle.onChanged, isNull);
+      }
+      expect(find.text('Saati değiştir: 19:00'), findsNothing);
+      final open = find.byKey(const ValueKey('settings-notif-open-system'));
+      await _reveal(tester, open);
+      await tester.tap(open);
+      await tester.pumpAndSettle();
+      expect(settingsOpened, 1);
+
+      systemPermission = true;
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pumpAndSettle();
+      await _reveal(tester, find.byKey(_master));
+      expect(_on(tester, _master), isTrue);
+      expect(open, findsNothing);
+      for (final key in _keys.values) {
+        await _reveal(tester, find.byKey(key));
+        final toggle = tester.widget<Switch>(find.byKey(key));
+        expect(toggle.value, isTrue);
+        expect(toggle.onChanged, isNotNull);
+      }
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'izin isteği reddedilirse anahtar açık görünmez ve diyalog ayarlara açılır',
+    (tester) async {
+      systemPermission = false;
+      await pumpSettings(tester, enabled: false);
+      await tester.tap(find.byKey(_master));
+      await tester.pumpAndSettle();
+      expect(_on(tester, _master), isFalse);
+      final open = find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text(Tr.forKu(K.settings, false)),
+      );
+      expect(open, findsOneWidget);
+      await tester.tap(open);
+      await tester.pumpAndSettle();
+      expect(settingsOpened, 1);
+      expect(find.byType(AlertDialog), findsNothing);
+    },
+  );
+
+  testWidgets('sistem ayarları açılamazsa görünür hata verir', (tester) async {
+    systemPermission = false;
+    settingsOpenResult = false;
+    await pumpSettings(tester, enabled: true);
+    final open = find.byKey(const ValueKey('settings-notif-open-system'));
+    await _reveal(tester, open);
+    await tester.tap(open);
+    await tester.pumpAndSettle();
+    expect(find.text(Tr.forKu(K.linkOpenFailed, false)), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 
   for (final throwsError in [false, true]) {
     testWidgets(

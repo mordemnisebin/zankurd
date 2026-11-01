@@ -43,6 +43,7 @@ class _Rpc extends http.BaseClient {
       'claim_verified_solo_reward' => {'amount': 6},
       'submit_verified_daily_event_result' => true,
       'get_verified_daily_event_board' => null,
+      'get_daily_event_board' => null,
       _ => throw StateError('Unexpected RPC: $name'),
     };
     return http.StreamedResponse(
@@ -186,7 +187,7 @@ void main() {
   );
 
   test(
-    'G9 göçsüz pano: eski sıralamaya geri düşmek doğrulanmamış sonuçları sessizce resmileştirirdi',
+    'G9 iki pano da yoksa dürüst null döner; eski skor yazımı açılmaz',
     () async {
       final rpc = _Rpc()..missing = true;
       final repo = _Repo(rpc);
@@ -194,6 +195,7 @@ void main() {
       expect(await repo.submitVerifiedDailyResult(_round), isFalse);
       expect(rpc.calls.map((c) => c.name), [
         'get_verified_daily_event_board',
+        'get_daily_event_board',
         'submit_verified_daily_event_result',
       ]);
     },

@@ -85,7 +85,13 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    expect(find.text('Serin kırılıyor.'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text('Günlük seri'),
+      ),
+      findsOneWidget,
+    );
 
     await tester.tap(find.text('Koru (50)'));
     await tester.pumpAndSettle();
@@ -143,6 +149,12 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    expect(find.text('Serin kırılıyor.'), findsNothing);
+    expect(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text('Günlük seri'),
+      ),
+      findsNothing,
+    );
   });
 }

@@ -1135,7 +1135,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // Karar bekleniyor. Bu aşamada hiçbir yan etki yoktur, bu yüzden
     // kesinti olursa soruyu yeniden sormak güvenlidir.
     await recordStage?.call(QuizResultReceiptStage.pendingUserDecision);
-    final wantsFreeze = await _askForStreakFreeze();
+    final wantsFreeze = await _askForStreakFreeze(streakStore, today);
     requireOwner();
 
     // Karar, UYGULANMADAN önce yazılır: aksi hâlde coin harcama ile
@@ -1199,7 +1199,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   /// Yalnız sorar. Hiçbir yan etkisi yoktur — bu yüzden kesildiğinde
   /// yeniden sorulabilir.
-  Future<bool> _askForStreakFreeze() async {
+  Future<bool> _askForStreakFreeze(
+    StreakStore streakStore,
+    DateTime today,
+  ) async {
     if (!mounted) return false;
     int balance;
     try {
@@ -1214,6 +1217,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       // kırılıyor: oyuncuya söylenir (yalnız bilgi, karar istemez; akış ve
       // makbuz aşamaları değişmez — soru her zaman `false` döner).
       await _showStreakFreezeShortfall(
+        streakStore: streakStore,
+        today: today,
         missing: coinShortfall(cost: _streakFreezeCost, balance: balance),
       );
       return false;
@@ -1221,11 +1226,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(context.t(K.streakBreaking)),
-        content: Text(
-          context.t(K.streakFreezeAsk, {
-            'cost': groupThousands(_streakFreezeCost),
-          }),
+        scrollable: true,
+        title: Text(context.t(K.gunlukSeriStreak)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ..._streakFreezeContext(streakStore, today),
+            Text(
+              context.t(K.streakFreezeAsk, {
+                'cost': groupThousands(_streakFreezeCost),
+              }),
+            ),
+          ],
         ),
         actions: [
           DialogActionPair(
@@ -1248,18 +1261,45 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     return confirmed == true && mounted;
   }
 
+  List<Widget> _streakFreezeContext(
+    StreakStore streakStore,
+    DateTime today,
+  ) => [
+    Text(context.t(K.faqStreakA)),
+    if (DateTime.tryParse(streakStore.lastDay ?? '') case final last?)
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Text(
+          '${context.t(K.streakDayStateMissed)}: '
+          '${_streakDate(DateTime(last.year, last.month, last.day + 1))}'
+          ' – ${_streakDate(DateTime(today.year, today.month, today.day - 1))}',
+          key: const ValueKey('streak-freeze-missed-days'),
+        ),
+      ),
+  ];
+
+  String _streakDate(DateTime day) =>
+      '${day.day.toString().padLeft(2, '0')}.'
+      '${day.month.toString().padLeft(2, '0')}.${day.year}';
+
   /// Seri kırılacak ama bakiye korumaya yetmiyor: eksik miktar ve jeton
   /// kazanma yolu. Hiçbir yan etkisi yoktur; kesintide yeniden gösterilmesi
   /// güvenlidir (`pendingUserDecision` aşamasındayız).
-  Future<void> _showStreakFreezeShortfall({required int missing}) async {
+  Future<void> _showStreakFreezeShortfall({
+    required int missing,
+    required StreakStore streakStore,
+    required DateTime today,
+  }) async {
     final goEarn = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(context.t(K.streakBreaking)),
+        scrollable: true,
+        title: Text(context.t(K.gunlukSeriStreak)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            ..._streakFreezeContext(streakStore, today),
             Text(context.t(K.streakFreezeNoCoins), textAlign: TextAlign.center),
             const SizedBox(height: SahneSpace.x2),
             SahneShortfallNote(
