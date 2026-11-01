@@ -97,11 +97,19 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
         actions: words.isEmpty
             ? null
             : [
-                SahneIconButton(
-                  key: const ValueKey('my-words-share'),
-                  icon: AppIcons.shareNodes,
-                  semanticLabel: context.t(K.share),
-                  onPressed: () => _shareCsv(words),
+                Builder(
+                  builder: (btnCtx) => SahneIconButton(
+                    key: const ValueKey('my-words-share'),
+                    icon: AppIcons.shareNodes,
+                    semanticLabel: context.t(K.share),
+                    onPressed: () {
+                      final box = btnCtx.findRenderObject() as RenderBox?;
+                      final origin = box == null || !box.hasSize
+                          ? null
+                          : box.localToGlobal(Offset.zero) & box.size;
+                      _shareCsv(words, origin: origin);
+                    },
+                  ),
                 ),
               ],
       ),
@@ -169,7 +177,7 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
 
   /// Listeyi CSV olarak paylaşır (Excel'de açılır). Sözlük kimliği
   /// bulunamayan kayıtlar atlanır; liste boşsa düğme gösterilmez.
-  Future<void> _shareCsv(List<SavedWord> words) async {
+  Future<void> _shareCsv(List<SavedWord> words, {Rect? origin}) async {
     final rows = [
       for (final word in words)
         if (LearnerLexicon.byId(word.entryId) case final entry?)
@@ -191,6 +199,7 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
               name: 'zankurd_kelimeler.csv',
             ),
           ],
+          sharePositionOrigin: origin,
         ),
       );
     } catch (error, stack) {

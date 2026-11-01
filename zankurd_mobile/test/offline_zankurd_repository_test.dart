@@ -164,7 +164,7 @@ void main() {
     final repository = OfflineZanKurdRepository();
 
     await expectLater(repository.joinTournament(), throwsStateError);
-    await expectLater(repository.loadTournamentBracket(), throwsStateError);
+    expect(await repository.loadTournamentBracket(), isNull);
     await expectLater(
       repository.submitTournamentMatch(
         matchId: 'offline-match',

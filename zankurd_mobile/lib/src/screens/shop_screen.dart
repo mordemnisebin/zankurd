@@ -852,12 +852,14 @@ class _ShopScreenState extends State<ShopScreen> {
         purchaseKey,
       );
       if (!result.success && result.retryable) {
-        await SyncManager.maybeInstance?.queueCoinSpend(
-          amount: item.cost,
-          reason: 'purchase_${item.id}',
-          idempotencyKey: purchaseKey,
-        );
-        await _markEffectPending(item.id);
+        if (_hasPurchaseEffect(item.id)) {
+          await SyncManager.maybeInstance?.queueCoinSpend(
+            amount: item.cost,
+            reason: 'purchase_${item.id}',
+            idempotencyKey: purchaseKey,
+          );
+          await _markEffectPending(item.id);
+        }
         if (!mounted) return;
         setState(() {
           _purchaseErrorMessage = context.t(K.errorOccurred);
@@ -905,12 +907,14 @@ class _ShopScreenState extends State<ShopScreen> {
       }
     } on RetryableWriteException catch (error, stack) {
       ErrorReporter.record(error.cause, stack, reason: 'shop_purchase');
-      await SyncManager.maybeInstance?.queueCoinSpend(
-        amount: item.cost,
-        reason: 'purchase_${item.id}',
-        idempotencyKey: purchaseKey,
-      );
-      await _markEffectPending(item.id);
+      if (_hasPurchaseEffect(item.id)) {
+        await SyncManager.maybeInstance?.queueCoinSpend(
+          amount: item.cost,
+          reason: 'purchase_${item.id}',
+          idempotencyKey: purchaseKey,
+        );
+        await _markEffectPending(item.id);
+      }
       if (!mounted) return;
       setState(() {
         _purchaseErrorMessage = context.t(K.errorOccurred);

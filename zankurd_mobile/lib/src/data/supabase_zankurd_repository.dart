@@ -4240,7 +4240,8 @@ class SupabaseZanKurdRepository
   @override
   Future<TournamentBracket?> loadTournamentBracket() async {
     final real = await loadRealTournamentBracket();
-    return real ?? await _offline.loadTournamentBracket();
+    if (real != null) return real;
+    return _offline.loadTournamentBracket();
   }
 
   @override

@@ -67,8 +67,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen>
     with WidgetsBindingObserver {
-  late final Future<PlacementStore> _placementStoreFuture =
-      PlacementStore.load();
+  late Future<PlacementStore> _placementStoreFuture = PlacementStore.load();
   LearningGoal? _learningGoal;
   final _nameController = TextEditingController();
   bool _deleting = false;
@@ -1112,7 +1111,11 @@ class _SettingsScreenState extends State<SettingsScreen>
     await Navigator.of(
       context,
     ).push(AppRoute.to(LevelPlacementScreen(repository: widget.repository)));
-    if (mounted) setState(() {}); // güncel seviyeyi yansıt
+    if (mounted) {
+      setState(() {
+        _placementStoreFuture = PlacementStore.load();
+      });
+    }
   }
 
   Future<void> _confirmDeleteAccount() async {

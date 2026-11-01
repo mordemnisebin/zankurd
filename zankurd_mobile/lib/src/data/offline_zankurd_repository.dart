@@ -256,9 +256,7 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<TournamentBracket?> loadTournamentBracket() async {
-    throw StateError('Remote service unavailable.');
-  }
+  Future<TournamentBracket?> loadTournamentBracket() async => null;
 
   @override
   Future<TournamentMatch> submitTournamentMatch({

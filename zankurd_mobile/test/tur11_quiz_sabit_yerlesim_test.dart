@@ -69,7 +69,7 @@ Future<void> _pump(
         child: QuizScreen(
           repository: repository,
           room: repository.createRoom(),
-          questions: [_question],
+          questions: const [_question],
           enableTimer: false,
           experience: experience,
         ),

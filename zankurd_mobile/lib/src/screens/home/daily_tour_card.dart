@@ -65,8 +65,9 @@ class DailyTourCard extends StatelessWidget {
       'count': groupThousands(questionCount),
     });
     final secondsLabel = Tr.forKu(K.contestSeconds, isKu);
+    final underHour = left.hours <= 0;
     final meta = doneToday
-        ? Tr.forKu(K.contestNextIn, isKu, {
+        ? Tr.forKu(underHour ? K.contestNextInMin : K.contestNextIn, isKu, {
             'h': '${left.hours}',
             'm': '${left.minutes}',
           })

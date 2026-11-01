@@ -13,6 +13,7 @@ import '../config/category_visuals.dart';
 import '../services/app_haptics.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_icons.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/quiz_stage_kit.dart';
 import '../widgets/quiz_top_bar.dart';
 import '../widgets/sahne/sahne.dart';
@@ -109,9 +110,23 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
         _answers,
         totalQuestions: _questions.length,
       );
-      final store = await PlacementStore.load();
-      await store.saveResult(result.level);
+      try {
+        final store = await PlacementStore.load();
+        await store.saveResult(result.level);
+      } catch (error, stack) {
+        ErrorReporter.record(
+          error,
+          stack,
+          reason: 'level placement store save failed',
+        );
+      }
       if (mounted) setState(() => _result = result);
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'level placement finish failed',
+      );
     } finally {
       if (mounted && _result == null) {
         setState(() => _inputLocked = false);

@@ -130,7 +130,7 @@ class _RoomInviteFriendsSheetState extends State<RoomInviteFriendsSheet> {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return SingleChildScrollView(
+    return Padding(
       padding: EdgeInsets.only(
         left: SahneSpace.page,
         right: SahneSpace.page,
@@ -221,18 +221,30 @@ class _RoomInviteFriendsSheetState extends State<RoomInviteFriendsSheet> {
           ),
           const SizedBox(height: SahneSpace.x3),
         ],
-        ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.sizeOf(context).height * 0.4,
-          ),
-          child: SingleChildScrollView(
-            child: SahneListGroup(
-              children: [
-                for (final friend in visible) _row(context, t, friend, inRoom),
-              ],
+        if (visible.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: SahneSpace.x4),
+            child: Text(
+              context.t(K.playerNotFound),
+              key: const ValueKey('room-invite-search-empty'),
+              textAlign: TextAlign.center,
+              style: SahneType.body.copyWith(color: t.tx2),
+            ),
+          )
+        else
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.sizeOf(context).height * 0.4,
+            ),
+            child: SingleChildScrollView(
+              child: SahneListGroup(
+                children: [
+                  for (final friend in visible)
+                    _row(context, t, friend, inRoom),
+                ],
+              ),
             ),
           ),
-        ),
         if (_error != null) ...[
           const SizedBox(height: SahneSpace.x3),
           Text(
