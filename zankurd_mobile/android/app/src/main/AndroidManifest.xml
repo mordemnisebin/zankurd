@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <!-- Telaffuz atölyesi: kayıt yalnız cihazda kalır (2026-10-26). -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!-- RECORD_AUDIO, Play'de mikrofonu zorunlu özellik sayar; mikrofonsuz 21
+         cihaz (çoğu tablet) build 42'de listeden düştü. Telaffuz atölyesi isteğe
+         bağlıdır, uygulamanın geri kalanı mikrofonsuz çalışır. -->
+    <uses-feature android:name="android.hardware.microphone" android:required="false"/>
 
     <!-- Reklam kimliği KALDIRILIR.
          ZanKurd reklam göstermiyor ve `terms.html` de "reklamsız" diyor.
