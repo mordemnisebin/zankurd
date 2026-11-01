@@ -1056,19 +1056,156 @@ class _CrowdScoreHeader extends StatelessWidget {
         : allTied
         ? context.t(K.crowdAllTied)
         : '#${groupThousands(rank!)}/${groupThousands(total)}';
-    // Kartın içi %115 tavanlı ölçekle çizilir; bu `context` tavanın ÜSTÜNDE
-    // olduğundan boylar aynı tavanla buradan hesaplanır.
-    final cardScaler = MediaQuery.textScalerOf(
-      context,
-    ).clamp(maxScaleFactor: quizCrowdMaxScale);
+    final cardScaler = MediaQuery.textScalerOf(context);
     final progressStyle = SahneType.captionStrong.copyWith(
       color: t.tx2,
       fontFeatures: const [FontFeature.tabularFigures()],
+      letterSpacing: 0,
     );
     String answeredText(int answered, int active) => context.t(
       K.crowdAnsweredCount,
       {'answered': groupThousands(answered), 'active': groupThousands(active)},
     );
+
+    if (quizCrowdUsesLargeLayout(cardScaler)) {
+      // G19: büyük yazı tercihi skor/rütbe dahil korunur. Uzun kart mevcut
+      // soru kaydırma alanına katılır; metin sığdırmak için küçültülmez.
+      return Semantics(
+        container: true,
+        label:
+            '${context.t(K.crowdRankLabel)}: $rankText, '
+            '${groupThousands(player.score)} ${context.t(K.scoreWord).toLowerCase()}',
+        child: SahneSurfaceCard(
+          key: const ValueKey('quiz-crowd-header'),
+          padding: const EdgeInsets.all(SahneSpace.x1),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: _QuizHeaderHeights.largeHeaderHeight(cardScaler),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(context.t(K.crowdRankLabel), style: progressStyle),
+                    Text(
+                      rankText,
+                      key: rankKey,
+                      style: progressStyle.copyWith(color: t.raceTx),
+                    ),
+                    Opacity(
+                      opacity: progress == null ? 0 : 1,
+                      child: ExcludeSemantics(
+                        excluding: progress == null,
+                        child: Text(
+                          answeredText(
+                            progress?.answered ?? total,
+                            progress?.active ?? total,
+                          ),
+                          key: progress == null ? null : progressKey,
+                          style: progressStyle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (top.isNotEmpty)
+                Semantics(
+                  label: context.t(K.crowdTopThree),
+                  container: true,
+                  child: Column(
+                    key: topKey,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (final standing in top)
+                        Padding(
+                          padding: const EdgeInsets.only(top: SahneSpace.x1),
+                          child: Semantics(
+                            label:
+                                '${groupThousands(standing.rank)}. '
+                                '${context.playerDisplayName(standing.player.name, tag: standing.player.tag)}'
+                                '${playersShareIdentity(standing.player, player) ? ' (${context.t(K.you)})' : ''}, '
+                                '${groupThousands(standing.player.score)}',
+                            excludeSemantics: true,
+                            child: DecoratedBox(
+                              decoration: ShapeDecoration(
+                                color:
+                                    playersShareIdentity(
+                                      standing.player,
+                                      player,
+                                    )
+                                    ? t.goldTint
+                                    : t.s2,
+                                shape: SahneShape.s,
+                              ),
+                              child: SizedBox(
+                                height: _QuizHeaderHeights.largeChipHeight(
+                                  cardScaler,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(SahneSpace.x1),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SelfMarkedName(
+                                        mark:
+                                            playersShareIdentity(
+                                              standing.player,
+                                              player,
+                                            )
+                                            ? '(${context.t(K.you)})'
+                                            : null,
+                                        markKey: const ValueKey(
+                                          'quiz-crowd-self-mark',
+                                        ),
+                                        markStyle: progressStyle.copyWith(
+                                          color: t.goldTx,
+                                        ),
+                                        minNameWidth: 0,
+                                        name: Text(
+                                          quizCrowdShortName(
+                                            context.playerDisplayName(
+                                              standing.player.name,
+                                              tag: standing.player.tag,
+                                            ),
+                                          ),
+                                          key: ValueKey(
+                                            'quiz-crowd-name-${standing.rank}',
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: progressStyle.copyWith(
+                                            color: t.tx,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        groupThousands(standing.player.score),
+                                        key: ValueKey(
+                                          'quiz-crowd-score-${standing.rank}',
+                                        ),
+                                        style: progressStyle.copyWith(
+                                          color: t.goldTx,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
+    }
 
     // Dört oyuncunun hepsi her zaman görünür: tek satırlık kompakt çipler
     // (sıra + ad + puan). Kendi çipin Zêr tonlu.
@@ -1077,6 +1214,7 @@ class _CrowdScoreHeader extends StatelessWidget {
       final tabular = SahneType.captionStrong.copyWith(
         color: isMe ? t.goldTx : t.tx2,
         fontFeatures: const [FontFeature.tabularFigures()],
+        letterSpacing: 0,
       );
       return DecoratedBox(
         decoration: ShapeDecoration(
@@ -1131,6 +1269,7 @@ class _CrowdScoreHeader extends StatelessWidget {
                 ExcludeSemantics(
                   child: Text(
                     groupThousands(standing.player.score),
+                    key: ValueKey('quiz-crowd-score-${standing.rank}'),
                     maxLines: 1,
                     style: tabular.copyWith(
                       color: t.goldTx,
@@ -1189,6 +1328,7 @@ class _CrowdScoreHeader extends StatelessWidget {
           style: SahneType.captionStrong.copyWith(
             color: t.raceTx,
             fontFeatures: const [FontFeature.tabularFigures()],
+            letterSpacing: 0,
           ),
         ),
         const SizedBox(width: SahneSpace.x2),
@@ -1220,35 +1360,32 @@ class _CrowdScoreHeader extends StatelessWidget {
       ],
     );
 
-    return MediaQuery.withClampedTextScaling(
-      // Skor şeridi bilgi bandıdır; büyük yazıda %115'te durur ki soru ve
-      // şıklar (asıl içerik) büyük yazının alanını alsın. Bütçe aynı sınırı
-      // kullanır ([_QuizHeaderHeights.crowd]).
-      maxScaleFactor: quizCrowdMaxScale,
-      child: Semantics(
-        container: true,
-        label:
-            '${context.t(K.crowdRankLabel)}: $rankText, '
-            '${groupThousands(player.score)} ${context.t(K.scoreWord).toLowerCase()}',
-        child: SahneSurfaceCard(
-          key: const ValueKey('quiz-crowd-header'),
-          padding: const EdgeInsets.all(SahneSpace.x1),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                // a11y-tap-target: noninteractive — salt görüntü satırı (dokunma
-                // yok; oda şeridi artık tıklanmaz). Boy SABİT, bütçeyle aynı.
-                height: _QuizHeaderHeights.headerRowHeight(cardScaler),
-                child: header,
-              ),
-              if (top.isNotEmpty) ...[
-                const SizedBox(height: SahneSpace.x1),
-                strip,
-              ],
+    return Semantics(
+      container: true,
+      label:
+          '${context.t(K.crowdRankLabel)}: $rankText, '
+          '${groupThousands(player.score)} ${context.t(K.scoreWord).toLowerCase()}',
+      child: SahneSurfaceCard(
+        key: const ValueKey('quiz-crowd-header'),
+        padding: const EdgeInsets.symmetric(
+          horizontal: SahneSpace.x1,
+          vertical: _QuizHeaderHeights.compactVerticalPadding,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              // a11y-tap-target: noninteractive — salt görüntü satırı (dokunma
+              // yok; oda şeridi artık tıklanmaz). Boy SABİT, bütçeyle aynı.
+              height: _QuizHeaderHeights.headerRowHeight(cardScaler),
+              child: header,
+            ),
+            if (top.isNotEmpty) ...[
+              const SizedBox(height: SahneSpace.x1),
+              strip,
             ],
-          ),
+          ],
         ),
       ),
     );
@@ -1984,25 +2121,42 @@ class _QuizHeaderHeights {
   /// Oda şeridi: 16 iç boşluk + üst satır + 4 + dört kompakt çip.
   static double crowd(TextScaler s, double contentWidth) {
     // Kart iç boşluğu 4+4, çerçeve 2 (bkz. `_CrowdScoreHeader`).
-    final c = s.clamp(maxScaleFactor: quizCrowdMaxScale);
+    if (quizCrowdUsesLargeLayout(s)) {
+      return 2 * SahneSpace.x1 +
+          largeHeaderHeight(s) +
+          4 * (SahneSpace.x1 + largeChipHeight(s));
+    }
+    final c = s;
     final rows = (4 / quizCrowdColumns(c, contentWidth - 10)).ceil();
-    return 2 * SahneSpace.x1 +
+    return 2 * compactVerticalPadding +
         headerRowHeight(c) +
         rows * (SahneSpace.x1 + chipHeight(c));
   }
+
+  // Satır yüksekliği taban puntoda ölçeklenir: doğrusal olmayan sistem
+  // ölçeğinde scale(20), scale(14) * (20/14) ile aynı değildir.
+  static double largeLineHeight(TextScaler s) =>
+      s.scale(SahneType.captionStrong.fontSize!) *
+      SahneType.captionStrong.height!;
+  static double largeHeaderHeight(TextScaler s) => 3 * largeLineHeight(s);
+  static double largeChipHeight(TextScaler s) => 8 + 2 * largeLineHeight(s);
+
+  // %130 yazıda soru alanını korumak için yalnız dekoratif boşluk azalır;
+  // metin gerçek satır yüksekliğinde kalır.
+  static const double compactVerticalPadding = 2;
 
   /// Kompakt oyuncu çipinin en az yüksekliği.
   static const double chip = 22;
 
   /// Çipin SABİT boyu: en az [chip], büyük yazıda puan satırı kadar.
-  static double chipHeight(TextScaler s) =>
-      max(chip, s.scale(quizCrowdScorePt) * 1.3 + 4);
+  static double chipHeight(TextScaler s) => max(chip, largeLineHeight(s));
 
   /// Sıra + "x/N cevapladı" satırının en az yüksekliği.
   static const double headerRow = 20;
 
   /// Satırın SABİT boyu (bütçe ve çizim aynı formülü kullanır).
-  static double headerRowHeight(TextScaler s) => max(headerRow, s.scale(18));
+  static double headerRowHeight(TextScaler s) =>
+      max(headerRow, largeLineHeight(s));
 
   /// Kapalı çeviri şeridi.
   static double translation(TextScaler s) => max(32, s.scale(20) + 8);

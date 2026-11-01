@@ -35,6 +35,7 @@ import '../widgets/lesson_scroll_edge_fade.dart';
 import '../widgets/story_catalog.dart';
 import '../widgets/todays_review_card.dart';
 import '../widgets/learn_path.dart';
+import '../widgets/keyboard_action.dart';
 import '../widgets/zk_back_button.dart';
 import 'learner_lexicon_screen.dart';
 import 'my_words_screen.dart';
@@ -746,17 +747,20 @@ class _LearningScreenState extends State<LearningScreen> {
         // Satır + kart tek düğme: ekran okuyucu "Sıradaki ders. Alfabe.
         // Sonraki" duyar; kartın her yeri dokunulur.
         wrap: (child) => keyed(
-          Semantics(
-            key: const ValueKey('learning-next-step'),
-            button: true,
-            enabled: true,
-            label: semanticLabel,
-            onTap: open,
-            excludeSemantics: true,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
+          KeyboardAction(
+            onActivate: open,
+            child: Semantics(
+              key: const ValueKey('learning-next-step'),
+              button: true,
+              enabled: true,
+              label: semanticLabel,
               onTap: open,
-              child: child,
+              excludeSemantics: true,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: open,
+                child: child,
+              ),
             ),
           ),
         ),
@@ -1671,29 +1675,32 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   }
 
   Widget _buildFlashcard(LessonSlide slide, BuildContext context, bool ku) {
-    return GestureDetector(
-      onTap: _toggleFlip,
-      child: AnimatedBuilder(
-        animation: _flipAnimation,
-        builder: (context, child) {
-          final angle = _flipAnimation.value * math.pi;
-          final showFront = _flipAnimation.value < 0.5;
-          return Transform(
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001)
-              ..rotateY(angle),
-            alignment: Alignment.center,
-            child: showFront
-                ? _buildFlashcardFront(slide, context)
-                : Transform(
-                    transform: Matrix4.identity()
-                      ..setEntry(3, 2, 0.001)
-                      ..rotateY(math.pi),
-                    alignment: Alignment.center,
-                    child: _buildFlashcardBack(slide, context, ku),
-                  ),
-          );
-        },
+    return KeyboardAction(
+      onActivate: _toggleFlip,
+      child: GestureDetector(
+        onTap: _toggleFlip,
+        child: AnimatedBuilder(
+          animation: _flipAnimation,
+          builder: (context, child) {
+            final angle = _flipAnimation.value * math.pi;
+            final showFront = _flipAnimation.value < 0.5;
+            return Transform(
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.001)
+                ..rotateY(angle),
+              alignment: Alignment.center,
+              child: showFront
+                  ? _buildFlashcardFront(slide, context)
+                  : Transform(
+                      transform: Matrix4.identity()
+                        ..setEntry(3, 2, 0.001)
+                        ..rotateY(math.pi),
+                      alignment: Alignment.center,
+                      child: _buildFlashcardBack(slide, context, ku),
+                    ),
+            );
+          },
+        ),
       ),
     );
   }

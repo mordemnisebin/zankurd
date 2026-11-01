@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../services/app_haptics.dart';
 import '../theme/app_icons.dart';
 import 'sahne/sahne.dart';
+import 'keyboard_action.dart';
 import 'zan_mascot.dart';
 
 /// Öğrenme "keşif rotası" (vay katmanı 2B, B6 — 2026-10-29).
@@ -381,17 +382,20 @@ class _LearnPathRowState extends State<_LearnPathRow> {
       // (satır + kart tek düğme).
       return ExcludeSemantics(child: body);
     }
-    return Semantics(
-      button: !locked,
-      enabled: !locked,
-      label: stop.semanticLabel,
-      onTap: stop.onTap,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        excludeFromSemantics: true,
-        onTap: locked ? _nudgeLock : stop.onTap,
-        child: body,
+    return KeyboardAction(
+      onActivate: locked ? null : stop.onTap,
+      child: Semantics(
+        button: !locked,
+        enabled: !locked,
+        label: stop.semanticLabel,
+        onTap: stop.onTap,
+        excludeSemantics: true,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          excludeFromSemantics: true,
+          onTap: locked ? _nudgeLock : stop.onTap,
+          child: body,
+        ),
       ),
     );
   }

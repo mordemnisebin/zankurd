@@ -63,8 +63,7 @@ class TtsLessonListeningSpeaker implements LessonListeningSpeaker {
   @override
   Future<bool> speak(String text, {bool slow = false}) async {
     if (!available) return false;
-    await _tts.speak(text, rateFactor: slow ? kSlowSpeechFactor : 1.0);
-    return true;
+    return _tts.speak(text, rateFactor: slow ? kSlowSpeechFactor : 1.0);
   }
 
   @override

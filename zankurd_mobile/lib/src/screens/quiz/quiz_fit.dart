@@ -454,8 +454,9 @@ class QuizFitLine extends StatelessWidget {
 /// Oda skor çipindeki puanın punto boyu (Tur 1, I3: 12 pt okunmuyordu).
 const double quizCrowdScorePt = 14;
 
-/// Oda skor kartının yazı ölçeği tavanı (bilgi bandı; bkz. `_CrowdScoreHeader`).
-const double quizCrowdMaxScale = 1.15;
+/// Bu eşikten sonra skorlar tek sütunda, ad ve puan ayrı satırda çizilir.
+/// Kullanıcının ölçeği sınırlandırılmaz; ölçüm bütçesi de aynı düzeni seçer.
+bool quizCrowdUsesLargeLayout(TextScaler scaler) => scaler.scale(14) > 14 * 1.3;
 
 /// Çipteki kısa ad: görünen adın ilk sözcüğü ("Azad Hevrik" → "Azad").
 String quizCrowdShortName(String displayName) {
@@ -479,6 +480,7 @@ int quizCrowdColumns(TextScaler scaler, double innerWidth) {
           fontFamily: SahneType.text,
           fontSize: size,
           fontFeatures: const [FontFeature.tabularFigures()],
+          letterSpacing: 0,
         ),
       ),
       textDirection: TextDirection.ltr,

@@ -2,6 +2,21 @@
  "version": 1,
  "sources": [
   {
+   "id": "g17_g19_accessibility_preview",
+   "description": "G17-G19 offline accessibility regression fixture",
+   "path": "tool/g17_g19_web_preview.dart",
+   "role": "test_fixture",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 1000,
+   "expectedRecordCount": null,
+   "notes": "Only the isolated web preview entrypoint; never imported by the application.",
+   "columns": {}
+  },
+  {
    "id": "social_reliability_preview",
    "description": "Offline room invitation and streak recovery simulator fixture",
    "path": "tool/reliability_preview.dart",

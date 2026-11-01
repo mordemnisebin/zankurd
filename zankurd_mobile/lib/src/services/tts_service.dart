@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +35,23 @@ class TtsService {
   double _rate = _defaultRate;
   double _volume = _defaultVolume;
   String _activeLanguage = '';
+  Completer<bool>? _pendingStart;
+  bool _starting = false;
+  bool _disposed = false;
+  int _speechGeneration = 0;
+
+  static const _startTimeout = Duration(seconds: 3);
+
+  void _finishStart(bool started) {
+    final pending = _pendingStart;
+    if (pending != null && !pending.isCompleted) pending.complete(started);
+  }
+
+  void _speechEnded() {
+    if (_disposed) return;
+    _finishStart(false);
+    speakingNotifier.value = false;
+  }
 
   /// Dinleme durumunu UI'a yaymak için ValueNotifier. true iken TTS
   /// aktif olarak konuşuyor; UI buton durumunu bu değere bağlar.
@@ -67,8 +86,8 @@ class TtsService {
   }
 
   static void resetInstance() {
-    _instance?.speakingNotifier.dispose();
     _instance?._dispose();
+    _instance?.speakingNotifier.dispose();
     _instance = null;
   }
 
@@ -83,17 +102,13 @@ class TtsService {
           .toDouble();
 
       _tts.setStartHandler(() {
+        if (_disposed || _pendingStart == null) return;
+        _finishStart(true);
         speakingNotifier.value = true;
       });
-      _tts.setCompletionHandler(() {
-        speakingNotifier.value = false;
-      });
-      _tts.setErrorHandler((msg) {
-        speakingNotifier.value = false;
-      });
-      _tts.setCancelHandler(() {
-        speakingNotifier.value = false;
-      });
+      _tts.setCompletionHandler(_speechEnded);
+      _tts.setErrorHandler((msg) => _speechEnded());
+      _tts.setCancelHandler(_speechEnded);
 
       // Kürtçe dil desteğini tespit et.
       await _detectKurdishSupport();
@@ -131,47 +146,84 @@ class TtsService {
     }
   }
 
-  Future<void> _applySettings() async {
-    if (!_kurdishAvailable) return;
+  Future<bool> _applySettings() async {
+    if (!_kurdishAvailable) return false;
     try {
       await _tts.setLanguage(_activeLanguage);
       await _tts.setSpeechRate(_rate);
       await _tts.setVolume(_volume);
       await _tts.setPitch(1.0);
+      return true;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'tts apply settings');
+      return false;
     }
   }
 
-  /// [text]'i seslendirir. Zaten konuşuyorsa kesip yeniden başlar.
-  /// Servis kapalıysa veya dil desteklenmiyorsa hiçbir şey yapmaz.
-  /// [rateFactor] yalnız bu okuma için kullanıcının hızını ölçekler
-  /// (yavaş dinleme); kayıtlı ayar değişmez.
-  Future<void> speak(String text, {double rateFactor = 1.0}) async {
-    if (!_enabled || !_kurdishAvailable || text.trim().isEmpty) return;
-    try {
-      if (speakingNotifier.value) {
-        await _tts.stop();
-      }
-      await _applySettings();
+  /// Yalnız motor isteği kabul edip başlangıç olayını bildirdiğinde true.
+  /// Ret, sessiz dönüş, hata ve zaman aşımı dinlenmiş sayılmaz.
+  /// [rateFactor] kayıtlı hızı değiştirmeden bu okumayı yavaşlatır.
+  Future<bool> speak(String text, {double rateFactor = 1.0}) async {
+    if (_disposed ||
+        _starting ||
+        !_enabled ||
+        !_kurdishAvailable ||
+        _volume == 0 ||
+        text.trim().isEmpty) {
+      return false;
+    }
+    _starting = true;
+    final generation = ++_speechGeneration;
+    bool current() => !_disposed && generation == _speechGeneration;
+    Future<bool> start() async {
+      if (speakingNotifier.value) await _tts.stop();
+      if (!current() || !await _applySettings() || !current()) return false;
       if (rateFactor != 1.0) {
         await _tts.setSpeechRate((_rate * rateFactor).clamp(0.05, 1.0));
       }
-      await _tts.speak(text);
+      if (!current()) return false;
+      final pending = Completer<bool>();
+      _pendingStart = pending;
+      final accepted = await _tts.speak(text);
+      if (!current() || accepted != 1) return false;
+      return await pending.future && current();
+    }
+
+    var started = false;
+    try {
+      started = await start().timeout(_startTimeout, onTimeout: () => false);
+      return started;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'tts speak');
-      speakingNotifier.value = false;
+      return false;
+    } finally {
+      _finishStart(false);
+      _pendingStart = null;
+      if (!started && current()) {
+        // Geç dönen platform çağrısı bu denemeyi yeniden başlatamaz.
+        ++_speechGeneration;
+        speakingNotifier.value = false;
+        unawaited(_stopEngine());
+      }
+      _starting = false;
     }
   }
 
-  /// Konuşmayı durdurur.
-  Future<void> stop() async {
+  Future<void> _stopEngine() async {
     try {
       await _tts.stop();
-      speakingNotifier.value = false;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'tts stop');
     }
+  }
+
+  /// Bekleyen başlatmayı da iptal eder; geç yanıt başarıya dönüşmez.
+  Future<void> stop() async {
+    ++_speechGeneration;
+    _finishStart(false);
+    _pendingStart = null;
+    if (!_disposed) speakingNotifier.value = false;
+    await _stopEngine();
   }
 
   Future<void> setEnabled(bool value) async {
@@ -193,8 +245,10 @@ class TtsService {
   }
 
   void _dispose() {
-    try {
-      _tts.stop();
-    } catch (_) {}
+    _disposed = true;
+    ++_speechGeneration;
+    _finishStart(false);
+    _pendingStart = null;
+    unawaited(_stopEngine());
   }
 }
