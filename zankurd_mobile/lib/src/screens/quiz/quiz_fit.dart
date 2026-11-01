@@ -99,6 +99,15 @@ class QuizFit {
   /// Bu yazı ölçeğinin üstünde kademe uygulanmaz.
   static const double maxAccessibleScale = 1.35;
 
+  /// Soru sahnesinin yazı ölçeği TAVANI (2026-11-01, AX5 kusuru). iOS
+  /// "Erişilebilirlik Ekstra Ekstra Ekstra Büyük" ≈ 3,1-3,3x verir; sabit üst
+  /// çubuk (künye dört satıra sarıyordu, ≈ 340 pt) ve sabit alt perde (joker
+  /// dizisi ≈ 160 pt) 667 pt'lik ekranın ~%80'ini yiyor, kaydırılan gövdeye
+  /// ~115 pt kalıyordu: soru kartı tek başına ekranı dolduruyor, şıklar ve
+  /// jokerler fiilen ulaşılmazdı. Sahne bu ölçeğin üstüne çıkmaz; 2x'e kadar
+  /// (şıklar ve joker 375x667'de ulaşılır) her şey olduğu gibi kalır.
+  static const double maxStageTextScale = 2.0;
+
   /// Çizilen en küçük soru / şık puntosu.
   static const double minQuestionPt = 17;
   static const double minOptionPt = 15;

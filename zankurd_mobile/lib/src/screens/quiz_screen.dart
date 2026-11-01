@@ -2137,80 +2137,89 @@ class _QuizScreenState extends State<QuizScreen>
                 timerSeconds: widget.room.secondsPerQuestion,
                 timed: _usesTimer,
                 enabled: !_isMultiplayer,
-                child: SahneStageScaffold(
-                  closeKey: const ValueKey('quiz-close'),
-                  closeLabel: context.t(K.close),
-                  light: _stageLight,
-                  // K6+ (2026-10-28): konu renkli üst bant kalktı; her modda
-                  // aynı lacivert sahne. Mod üstte tek küçük çip; ilerleme
-                  // çubuğu `progress` yuvasında.
-                  ridge: true,
-                  center: _buildStageCenter(context),
-                  score: _buildStageTrailing(context),
-                  progress: _buildStageProgress(context),
-                  dock: landscape ? null : _buildDock(context),
-                  body: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: landscape
-                            ? _buildCompactLandscapeLayout(layoutSize)
-                            : _buildPortraitLayout(layoutSize),
-                      ),
-                      // Vinyet yalnız aktif geri sayım baskısında: cevap
-                      // verildikten (veya süre dolduktan) sonra sönmeli,
-                      // yoksa açıklama okunurken ekran "alarm" modunda
-                      // kalıyor (2026-07-05 görsel QA bulgusu).
-                      if (_usesTimer && !answered)
-                        CriticalVignette(animation: _timerController),
-                      WrongFlash(trigger: _shakeTrigger),
-                      if (_showAnswerBurst)
-                        ConfettiOverlay(
-                          particleCount: 24,
-                          duration: const Duration(milliseconds: 900),
-                          onFinished: () {
-                            setState(() {
-                              _showAnswerBurst = false;
-                            });
-                          },
+                child: MediaQuery(
+                  data: MediaQuery.of(context).copyWith(
+                    textScaler: MediaQuery.textScalerOf(
+                      context,
+                    ).clamp(maxScaleFactor: QuizFit.maxStageTextScale),
+                  ),
+                  child: SahneStageScaffold(
+                    closeKey: const ValueKey('quiz-close'),
+                    closeLabel: context.t(K.close),
+                    light: _stageLight,
+                    // K6+ (2026-10-28): konu renkli üst bant kalktı; her modda
+                    // aynı lacivert sahne. Mod üstte tek küçük çip; ilerleme
+                    // çubuğu `progress` yuvasında.
+                    ridge: true,
+                    center: _buildStageCenter(context),
+                    score: _buildStageTrailing(context),
+                    progress: _buildStageProgress(context),
+                    dock: landscape ? null : _buildDock(context),
+                    body: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: landscape
+                              ? _buildCompactLandscapeLayout(layoutSize)
+                              : _buildPortraitLayout(layoutSize),
                         ),
-                      if (_showConfetti)
-                        ConfettiOverlay(
-                          onFinished: () {
-                            setState(() {
-                              _showConfetti = false;
-                            });
-                          },
-                        ),
-                      if ((_serverReadyWaiting && !answered) ||
-                          (_needsOpponentReadyGate &&
-                              !_opponentClientReady &&
-                              !_questionFlowStarted))
-                        _OpponentWaitingOverlay(isKu: _isKu),
-                      if (_stageToast != null)
-                        PositionedDirectional(
-                          top: SahneSpace.x2,
-                          start: SahneSpace.page,
-                          end: SahneSpace.page,
-                          child: _StageToast(
-                            key: _stageToastKey ?? const ValueKey('quiz-toast'),
-                            text: _stageToast!,
+                        // Vinyet yalnız aktif geri sayım baskısında: cevap
+                        // verildikten (veya süre dolduktan) sonra sönmeli,
+                        // yoksa açıklama okunurken ekran "alarm" modunda
+                        // kalıyor (2026-07-05 görsel QA bulgusu).
+                        if (_usesTimer && !answered)
+                          CriticalVignette(animation: _timerController),
+                        WrongFlash(trigger: _shakeTrigger),
+                        if (_showAnswerBurst)
+                          ConfettiOverlay(
+                            particleCount: 24,
+                            duration: const Duration(milliseconds: 900),
+                            onFinished: () {
+                              setState(() {
+                                _showAnswerBurst = false;
+                              });
+                            },
+                          ),
+                        if (_showConfetti)
+                          ConfettiOverlay(
+                            onFinished: () {
+                              setState(() {
+                                _showConfetti = false;
+                              });
+                            },
+                          ),
+                        if ((_serverReadyWaiting && !answered) ||
+                            (_needsOpponentReadyGate &&
+                                !_opponentClientReady &&
+                                !_questionFlowStarted))
+                          _OpponentWaitingOverlay(isKu: _isKu),
+                        if (_stageToast != null)
+                          PositionedDirectional(
+                            top: SahneSpace.x2,
+                            start: SahneSpace.page,
+                            end: SahneSpace.page,
+                            child: _StageToast(
+                              key:
+                                  _stageToastKey ??
+                                  const ValueKey('quiz-toast'),
+                              text: _stageToast!,
+                            ),
+                          ),
+                        // Canlı çok oyunculu reaksiyon baloncukları.
+                        //
+                        // Baloncuk çizimi burada ELDE yazılmaz: `room_screen`
+                        // gibi `FloatingReactionOverlay`e devredilir (tek
+                        // çizim yolu; animasyon süresi/eğrisi iki ekranda
+                        // ayrışmasın diye).
+                        Positioned.fill(
+                          child: IgnorePointer(
+                            child: FloatingReactionOverlay(
+                              controller: _reactionController,
+                              child: const SizedBox.expand(),
+                            ),
                           ),
                         ),
-                      // Canlı çok oyunculu reaksiyon baloncukları.
-                      //
-                      // Baloncuk çizimi burada ELDE yazılmaz: `room_screen`
-                      // gibi `FloatingReactionOverlay`e devredilir (tek
-                      // çizim yolu; animasyon süresi/eğrisi iki ekranda
-                      // ayrışmasın diye).
-                      Positioned.fill(
-                        child: IgnorePointer(
-                          child: FloatingReactionOverlay(
-                            controller: _reactionController,
-                            child: const SizedBox.expand(),
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );
