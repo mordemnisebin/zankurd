@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../data/verified_solo_quiz_port.dart';
 import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -1282,6 +1283,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   Future<void> _submitDailyEventResult() async {
     try {
+      final verifiedRepository = repository;
+      if (verifiedRepository is VerifiedSoloQuizPort) {
+        final roundId = widget.roundId;
+        if (roundId != null) {
+          await (verifiedRepository as VerifiedSoloQuizPort)
+              .submitVerifiedDailyResult(roundId);
+        }
+        return;
+      }
       final totalMs = answerRecords.fold<int>(
         0,
         (sum, record) => sum + (record.responseMs ?? 0),

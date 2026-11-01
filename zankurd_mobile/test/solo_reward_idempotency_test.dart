@@ -37,7 +37,7 @@ class _RpcRecorder extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    if (!request.url.path.endsWith('/rpc/claim_solo_reward')) {
+    if (!request.url.path.endsWith('/rpc/claim_verified_solo_reward')) {
       throw StateError('Beklenmeyen istek: ${request.url.path}');
     }
     final body =
@@ -125,7 +125,7 @@ void main() {
       expect(claim.amount, 12);
       expect(recorder.bodies, hasLength(1));
       expect(recorder.bodies.single['p_client_round_id'], id);
-      expect(recorder.bodies.single['p_correct_count'], 7);
+      expect(recorder.bodies.single.keys, ['p_client_round_id']);
     });
 
     test('aynı kimlik her denemede aynen gider', () async {
@@ -160,26 +160,28 @@ void main() {
         bestStreak: 1,
         totalQuestions: 5,
       );
-      expect(recorder.bodies.last.containsKey('p_client_round_id'), isFalse);
-    });
-
-    test('göç yokken (PGRST202) eski 3 argümanlı imzaya düşer', () async {
-      final recorder = _RpcRecorder(missingNewSignature: true);
-      final claim = await _repo(recorder).awardSoloQuizCoins(
-        score: 1,
-        correctCount: 4,
-        bestStreak: 2,
-        totalQuestions: 5,
-        clientRoundId: newClientRoundId(),
-      );
-      expect(claim.amount, 12);
-      expect(recorder.bodies, hasLength(2));
-      expect(recorder.bodies.first.containsKey('p_client_round_id'), isTrue);
-      expect(recorder.bodies.last.containsKey('p_client_round_id'), isFalse);
+      expect(recorder.bodies, hasLength(1));
     });
 
     test(
-      'geçersiz kimlik eski imzayla gider (sunucu uuid reddetmesin)',
+      'G5 beyan ödülü: eski geri düşüş sessizce açığı yeniden açardı',
+      () async {
+        final recorder = _RpcRecorder(missingNewSignature: true);
+        final claim = await _repo(recorder).awardSoloQuizCoins(
+          score: 1,
+          correctCount: 4,
+          bestStreak: 2,
+          totalQuestions: 5,
+          clientRoundId: newClientRoundId(),
+        );
+        expect(claim.amount, 0);
+        expect(recorder.bodies, hasLength(1));
+        expect(recorder.bodies.single.keys, ['p_client_round_id']);
+      },
+    );
+
+    test(
+      'G5 kimliksiz ödül: uyumluluk sanılan eski imza sessizce ödeme yapardı',
       () async {
         final recorder = _RpcRecorder();
         await _repo(recorder).awardSoloQuizCoins(
@@ -189,10 +191,7 @@ void main() {
           totalQuestions: 5,
           clientRoundId: 'not-a-uuid',
         );
-        expect(
-          recorder.bodies.single.containsKey('p_client_round_id'),
-          isFalse,
-        );
+        expect(recorder.bodies, isEmpty);
       },
     );
   });

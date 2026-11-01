@@ -1,3 +1,4 @@
+import 'package:zankurd_mobile/src/data/verified_solo_quiz_port.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -136,6 +137,22 @@ void main() {
     );
   });
 
+  testWidgets(
+    'G5 ekran oturum/cevap göndermezse ödül sessizce sıfırlanır: eski test yalnız sonuç RPC çağrısını izliyordu',
+    (tester) async {
+      final repo = _SpyRepository();
+      await playSoloRound(tester, repo);
+      await tester.pumpAndSettle(const Duration(seconds: 3));
+      expect(repo.verifiedEvents, hasLength(2));
+      expect(repo.verifiedEvents.first, startsWith('start:'));
+      expect(repo.verifiedEvents.last, startsWith('answer:'));
+      expect(
+        repo.verifiedEvents.first.substring(6),
+        repo.verifiedEvents.last.substring(7),
+      );
+    },
+  );
+
   testWidgets('alıştırma turu ödül talebi göndermiyor', (tester) async {
     // Aynı kapının MEŞRU yarısı. Alıştırma, yanlış yapılan soruların
     // tekrarıdır; yeni bir tur değildir ve ödüllendirilirse aynı sorudan
@@ -176,7 +193,31 @@ void main() {
   });
 }
 
-class _SpyRepository extends MockZanKurdRepository {
+class _SpyRepository extends MockZanKurdRepository
+    implements VerifiedSoloQuizPort {
+  final verifiedEvents = <String>[];
+
+  @override
+  Future<void> startVerifiedSoloRound({
+    required String clientRoundId,
+    required List<QuizQuestion> questions,
+    required bool daily,
+  }) async {
+    verifiedEvents.add('start:$clientRoundId');
+  }
+
+  @override
+  Future<void> recordVerifiedSoloAnswer({
+    required String clientRoundId,
+    required String questionId,
+    required String choice,
+  }) async {
+    verifiedEvents.add('answer:$clientRoundId');
+  }
+
+  @override
+  Future<bool> submitVerifiedDailyResult(String clientRoundId) async => true;
+
   int awardCalls = 0;
   String? lastRoomId;
   bool sawRoomArgument = false;

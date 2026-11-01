@@ -45,6 +45,11 @@ class _Resolver implements TimeZoneResolver {
   Future<String?> resolve() async => 'Europe/Berlin';
 }
 
+class _UnavailablePushRepository extends MockZanKurdRepository {
+  @override
+  Future<bool> setPushPreferences({bool? duel, bool? social}) async => false;
+}
+
 class _Call {
   _Call(this.id, this.at, this.payload, this.title);
   final int id;
@@ -369,6 +374,86 @@ void main() {
 
   group('sunucu tercihleri', () {
     test(
+      'G12 ana kapatma pushı da maskeler; yalnız yerel iptal sınandığı için sessizdi',
+      () async {
+        final (service, _) = await _service();
+        final repo = MockZanKurdRepository();
+        await service.setDuelOn(false);
+        await PushPrefsSync.push(service, repo);
+        await service.setEnabled(false);
+        expect(service.serverPrefsDirty, isTrue);
+        expect(await PushPrefsSync.push(service, repo), isTrue);
+        final disabled = (await repo.loadAccountFlags())!;
+        expect(disabled.pushDuel, isFalse);
+        expect(disabled.pushSocial, isFalse);
+
+        // Maskeli sunucu false değerleri kategori seçimlerini silemez.
+        await service.adoptServerPrefs(duel: false, social: false);
+        await PushPrefsSync.reconcile(service, repo);
+        expect(service.duelOn, isFalse);
+        expect(service.socialOn, isTrue);
+        await service.setEnabled(true);
+        await PushPrefsSync.push(service, repo);
+        final enabled = (await repo.loadAccountFlags())!;
+        expect(enabled.pushDuel, isFalse);
+        expect(enabled.pushSocial, isTrue);
+      },
+    );
+
+    test(
+      'G12 çevrimdışı kapatma yeniden denenir; ana anahtar kirli sayılmadığı için sessizdi',
+      () async {
+        final (service, _) = await _service();
+        await service.markServerPrefsSynced();
+        await service.setEnabled(false);
+        expect(
+          await PushPrefsSync.push(service, _UnavailablePushRepository()),
+          isFalse,
+        );
+        NotificationService.resetInstance();
+        final (reloaded, _) = await _service(enable: false);
+        expect(reloaded.enabled, isFalse);
+        expect(reloaded.serverPrefsDirty, isTrue);
+        final repo = MockZanKurdRepository();
+        await PushPrefsSync.reconcile(reloaded, repo);
+        expect(reloaded.serverPrefsDirty, isFalse);
+        final flags = (await repo.loadAccountFlags())!;
+        expect(flags.pushDuel, isFalse);
+        expect(flags.pushSocial, isFalse);
+        expect(reloaded.duelOn, isTrue);
+        expect(reloaded.socialOn, isTrue);
+      },
+    );
+
+    test(
+      'G12 eski kapalı tercih sunucuya taşınır; eski sürüm kuyruk yazmadığı için sessizdi',
+      () async {
+        final (service, _) = await _service(enable: false);
+        expect(service.serverPrefsDirty, isFalse);
+        final repo = MockZanKurdRepository();
+        await PushPrefsSync.reconcile(service, repo);
+        final flags = (await repo.loadAccountFlags())!;
+        expect(flags.pushDuel, isFalse);
+        expect(flags.pushSocial, isFalse);
+        expect(service.duelOn, isTrue);
+        expect(service.socialOn, isTrue);
+      },
+    );
+
+    test(
+      'G12 eski kapalı tercihin gönderim hatası kalıcıdır; eski sürüm kirli işaret yazmadığı için sessizdi',
+      () async {
+        final (service, _) = await _service(enable: false);
+        expect(service.serverPrefsDirty, isFalse);
+        await PushPrefsSync.reconcile(service, _UnavailablePushRepository());
+        expect(service.serverPrefsDirty, isTrue);
+        NotificationService.resetInstance();
+        final (reloaded, _) = await _service(enable: false);
+        expect(reloaded.serverPrefsDirty, isTrue);
+      },
+    );
+
+    test(
       'düello/arkadaş değişikliği kirli işaretlenir, push başarırsa temizlenir',
       () async {
         final (service, _) = await _service();
@@ -402,6 +487,7 @@ void main() {
     test('kirli değilken sunucudaki değer yerele alınır', () async {
       final (service, _) = await _service();
       final repo = MockZanKurdRepository();
+      await service.markServerPrefsSynced();
       await repo.setPushPreferences(duel: false, social: false);
 
       await PushPrefsSync.reconcile(service, repo);

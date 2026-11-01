@@ -19,10 +19,16 @@ abstract final class PushPrefsSync {
     ZanKurdRepository repository,
   ) async {
     try {
-      if (repository.currentUserId == null) return false;
+      // Eski sürümün kapalı ama kuyruğa alınmamış tercihi de başarısız
+      // gönderimde görünür ve kalıcı biçimde beklemeli.
+      await service.markServerPrefsPending();
+      if (repository.currentUserId == null ||
+          repository is OfflineZanKurdRepository) {
+        return false;
+      }
       final ok = await repository.setPushPreferences(
-        duel: service.duelOn,
-        social: service.socialOn,
+        duel: service.enabled && service.duelOn,
+        social: service.enabled && service.socialOn,
       );
       if (ok) await service.markServerPrefsSynced();
       return ok;
@@ -42,7 +48,9 @@ abstract final class PushPrefsSync {
           repository is OfflineZanKurdRepository) {
         return;
       }
-      if (service.serverPrefsDirty) {
+      // Eski sürümde ana anahtarı kapatmış hesapların sunucu bayrakları
+      // hâlâ açık olabilir. Kapalı anahtar da her eşitlemede uygulanır.
+      if (service.serverPrefsDirty || !service.enabled) {
         await push(service, repository);
         return;
       }

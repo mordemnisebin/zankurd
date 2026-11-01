@@ -278,7 +278,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   }
 
   void _beginQuestion() {
-    if (_isTournament) {
+    if (_isTournament || widget.repository is AsyncDuelContentPort) {
       unawaited(_presentTournamentQuestion());
       return;
     }
@@ -318,10 +318,13 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     });
     final TournamentPresent presented;
     try {
-      presented = await widget.repository.presentTournamentQuestion(
-        duel.duelId,
-        index,
-      );
+      final repository = widget.repository;
+      presented = !_isTournament && repository is AsyncDuelContentPort
+          ? await (repository as AsyncDuelContentPort).presentAsyncDuelContent(
+              duel.duelId,
+              index,
+            )
+          : await repository.presentTournamentQuestion(duel.duelId, index);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'tournament present failed');
       if (!mounted || _index != index || _exitInFlight) return;
@@ -332,7 +335,13 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       return;
     }
     if (!mounted || _index != index || _exitInFlight) return;
-    final question = presented.question;
+    // Eski sunucu başlangıçta tam içerik verir. Yalnız gerçekten dolu
+    // mevcut soru fallback olabilir; yeni sunucunun yer tutucusu açılamaz.
+    final question =
+        presented.question ??
+        (!_isTournament && _questions[index].prompt.isNotEmpty
+            ? _questions[index]
+            : null);
     // İçerik yoksa (beklenmedik sunucu yanıtı) yer tutucu soru açılmaz ve
     // sayaç başlamaz: oyuncu cevaplanamaz bir soruda süre yakardı.
     if (question == null || index >= _questions.length) {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' show min;
 
+import 'verified_solo_quiz_port.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -211,7 +212,8 @@ ResumedPendingAnswer? _requiredPendingAnswer(Map<String, dynamic> json) {
 /// `suggested_questions_insert_own`).
 const String suggestedQuestionLicenseVersion = '2026-08-11';
 
-class SupabaseZanKurdRepository implements ZanKurdRepository {
+class SupabaseZanKurdRepository
+    implements ZanKurdRepository, VerifiedSoloQuizPort, AsyncDuelContentPort {
   SupabaseZanKurdRepository(
     this.client, {
     this.stopwatchFactory = Stopwatch.new,
@@ -825,7 +827,51 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     String? categoryId,
     int limit = 10,
   }) async {
-    return _offline.loadQuestions(categoryId: categoryId, limit: limit);
+    return await _loadVerifiedSoloQuestions(
+          category: categoryId,
+          limit: limit,
+        ) ??
+        await _offline.loadQuestions(categoryId: categoryId, limit: limit);
+  }
+
+  final _verifiedSelections = <String, ({String owner, String id})>{};
+
+  String _verifiedQuestionKey(Iterable<QuizQuestion> questions) =>
+      questions.map((question) => question.id).join(',');
+
+  Future<List<QuizQuestion>?> _loadVerifiedSoloQuestions({
+    String? category,
+    required int limit,
+  }) async {
+    final owner = currentUserId;
+    if (owner == null) return null;
+    try {
+      final response = await client
+          .rpc(
+            'prepare_verified_solo_questions',
+            params: {'p_category': category, 'p_limit': limit},
+          )
+          .timeout(const Duration(seconds: 4));
+      if (owner != currentUserId || response is! Map) return null;
+      final ids = response['question_ids'];
+      final selectionId = response['selection_id'];
+      final local = {for (final q in playableQuestions) q.id: q};
+      if (selectionId is! String ||
+          ids is! List ||
+          ids.length != limit ||
+          !ids.every((id) => local.containsKey(id))) {
+        return null;
+      }
+      final questions = [for (final id in ids) local[id]!];
+      _verifiedSelections[_verifiedQuestionKey(questions)] = (
+        owner: owner,
+        id: selectionId,
+      );
+      return questions;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'verified solo selection unavailable');
+      return null;
+    }
   }
 
   @override
@@ -863,7 +909,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async {
     final roomId = room.id;
-    if (roomId == null) return _offline.loadRoomQuestions(room);
+    if (roomId == null) {
+      return await _loadVerifiedSoloQuestions(
+            category: room.category,
+            limit: room.questionCount,
+          ) ??
+          await _offline.loadRoomQuestions(room);
+    }
 
     try {
       final response = await client.rpc(
@@ -908,6 +960,24 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<List<QuizQuestion>> loadDailyEventQuestions({int limit = 10}) async {
+    try {
+      final ids = await client
+          .rpc('get_verified_daily_question_ids')
+          .timeout(const Duration(seconds: 4));
+      final local = {for (final q in playableQuestions) q.id: q};
+      if (ids is List &&
+          ids.length == 10 &&
+          ids.every((id) => local.containsKey(id))) {
+        return [for (final id in ids) local[id]!];
+      }
+    } catch (error, stack) {
+      _recordError(
+        error,
+        stack,
+        reason: 'verified daily questions unavailable',
+      );
+    }
+    // Eski/çevrimdışı sunucuda öğrenme sürer, bu set resmî sonuç oluşturmaz.
     return _offline.loadDailyEventQuestions(limit: limit);
   }
 
@@ -2632,10 +2702,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     //
     //   oda turu  → `claim_quiz_reward`: sunucu odayı, oyuncuları ve
     //               cevapları görebildiği için turu DOĞRULAR.
-    //   solo tur  → `claim_solo_reward`: çevrimdışı banka istemcide
-    //               olduğu için sunucu turu doğrulayamaz; talep
-    //               doğrulanmadan kabul edilir ama günlük tavanla
-    //               sınırlanır (bkz. 2026-08-10_solo_round_reward.sql).
+    //   solo tur → `claim_verified_solo_reward`: sunucu oturumu ve tekil
+    //              cevaplar; yerel/çevrimdışı ilerleme tek başına jeton vermez.
     final isSolo = room?.id == null;
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
@@ -2697,36 +2765,123 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
-  /// `claim_solo_reward`: tur kimliği varsa tekil (4 argümanlı) imza, yoksa
-  /// ya da sunucuda henüz yoksa (göç uygulanmamış: `PGRST202`/`42883`) eski
-  /// 3 argümanlı imza. Eski imza yayındaki sürümlerle aynı davranır.
+  // Her tur kendi zincirinde ilerler: son cevap gönderilmeden ödeme/sonuç
+  // istenmez. Zincir sahip kimliğine bağlıdır; hesap değişirse devam etmez.
+  final _verifiedRounds = <String, ({String owner, Future<void> pending})>{};
+
+  @override
+  Future<void> startVerifiedSoloRound({
+    required String clientRoundId,
+    required List<QuizQuestion> questions,
+    required bool daily,
+  }) async {
+    final owner = currentUserId;
+    if (owner == null || _verifiedRounds.containsKey(clientRoundId)) return;
+    final selection = _verifiedSelections.remove(
+      _verifiedQuestionKey(questions),
+    );
+    if (!daily && (selection == null || selection.owner != owner)) return;
+    final pending = () async {
+      if (currentUserId != owner) return;
+      await client
+          .rpc(
+            'start_verified_quiz',
+            params: {
+              'p_client_round_id': clientRoundId,
+              'p_question_ids': [for (final question in questions) question.id],
+              'p_daily': daily,
+              'p_selection_id': selection?.id,
+            },
+          )
+          .timeout(const Duration(seconds: 4));
+    }();
+    // Hata yutulmaz: aşağıdaki zincir aynı başarısızlığı taşır; böylece
+    // eksik cevaplı bir turun son cevabı başarıyla kaydedilmiş sayılmaz.
+    _verifiedRounds[clientRoundId] = (owner: owner, pending: pending);
+    try {
+      await pending;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'verified solo start unavailable');
+    }
+  }
+
+  @override
+  Future<void> recordVerifiedSoloAnswer({
+    required String clientRoundId,
+    required String questionId,
+    required String choice,
+  }) async {
+    final round = _verifiedRounds[clientRoundId];
+    if (round == null) return;
+    final pending = () async {
+      await round.pending;
+      if (currentUserId != round.owner) {
+        throw StateError('Verified solo owner changed.');
+      }
+      await client
+          .rpc(
+            'answer_verified_quiz',
+            params: {
+              'p_client_round_id': clientRoundId,
+              'p_question_id': questionId,
+              'p_choice': choice,
+            },
+          )
+          .timeout(const Duration(seconds: 4));
+    }();
+    _verifiedRounds[clientRoundId] = (owner: round.owner, pending: pending);
+    try {
+      await pending;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'verified solo answer unavailable');
+    }
+  }
+
+  Future<void> _waitVerifiedRound(String clientRoundId) async {
+    final round = _verifiedRounds[clientRoundId];
+    if (round == null) return; // Kalıcı kuyruktaki turu sunucu çözümler.
+    await round.pending;
+    if (round.owner != currentUserId) {
+      throw StateError('Verified solo owner changed before settlement.');
+    }
+  }
+
+  /// Beyanlar ödeme girdisi değildir. Göç yokken eski ödeme imzasına
+  /// dönmek açığı tekrar açardı; yerel ilerleme korunur, jeton verilmez.
   Future<dynamic> _claimSolo({
     required int correctCount,
     required int totalQuestions,
     required int bestStreak,
     required String? clientRoundId,
   }) async {
-    final legacy = {
-      'p_correct_count': correctCount,
-      'p_total_questions': totalQuestions,
-      'p_best_streak': bestStreak,
-    };
-    if (clientRoundId == null) {
-      return client.rpc('claim_solo_reward', params: legacy);
-    }
+    if (clientRoundId == null) return {'amount': 0};
     try {
+      await _waitVerifiedRound(clientRoundId);
       return await client.rpc(
-        'claim_solo_reward',
-        params: {...legacy, 'p_client_round_id': clientRoundId},
+        'claim_verified_solo_reward',
+        params: {'p_client_round_id': clientRoundId},
       );
     } on PostgrestException catch (error, stack) {
+      _recordError(error, stack, reason: 'verified solo reward unavailable');
       if (error.code != 'PGRST202' && error.code != '42883') rethrow;
-      _recordError(
-        error,
-        stack,
-        reason: 'claim_solo_reward round-id signature missing — legacy call',
-      );
-      return client.rpc('claim_solo_reward', params: legacy);
+      return {'amount': 0, 'verification_required': true};
+    }
+  }
+
+  @override
+  Future<bool> submitVerifiedDailyResult(String clientRoundId) async {
+    try {
+      await _waitVerifiedRound(clientRoundId);
+      final result = await client
+          .rpc(
+            'submit_verified_daily_event_result',
+            params: {'p_client_round_id': clientRoundId},
+          )
+          .timeout(const Duration(seconds: 8));
+      return result == true;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'verified daily result unavailable');
+      return false;
     }
   }
 
@@ -3364,32 +3519,14 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     required int correct,
     required int total,
     required int seconds,
-  }) async {
-    try {
-      final res = await client
-          .rpc(
-            'submit_daily_event_result',
-            params: {
-              'p_correct': correct,
-              'p_total': total,
-              'p_seconds': seconds,
-            },
-          )
-          .timeout(const Duration(seconds: 8));
-      return res == true;
-    } catch (e, s) {
-      // Sıralama yalnız gösterimdir: yazılamayan sonuç turu bozmaz.
-      _recordError(e, s, reason: 'submitDailyEventResult failed');
-      return false;
-    }
-  }
+  }) async => false; // G9: istemci özeti resmî sıralama kanıtı değildir.
 
   @override
   Future<DailyEventBoard?> loadDailyEventBoard() async {
     try {
-      if (client.auth.currentUser == null) return null;
+      if (currentUserId == null) return null;
       final res = await client
-          .rpc('get_daily_event_board')
+          .rpc('get_verified_daily_event_board')
           .timeout(const Duration(seconds: 8));
       return DailyEventBoard.tryParse(res);
     } catch (e, s) {
@@ -4273,6 +4410,29 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     } catch (error, stack) {
       _recordError(error, stack, reason: 'startAsyncDuel failed');
       rethrow;
+    }
+  }
+
+  @override
+  Future<TournamentPresent> presentAsyncDuelContent(
+    String duelId,
+    int questionIndex,
+  ) async {
+    try {
+      final response = await client.rpc(
+        'present_async_duel_question_v2',
+        params: {'p_duel_id': duelId, 'p_question_index': questionIndex},
+      );
+      return TournamentPresent.fromJson(
+        _requiredJsonObject(response, 'present_async_duel_question_v2'),
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'presentAsyncDuelContent unavailable');
+      // Yalnız eksik RPC eski sözleşmeye düşer; ağ/yetki hatası içerik açmaz.
+      if (!isMissingRpcError(error)) rethrow;
+      return TournamentPresent(
+        elapsedMs: await presentAsyncDuelQuestion(duelId, questionIndex) ?? 0,
+      );
     }
   }
 

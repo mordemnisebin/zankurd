@@ -394,6 +394,12 @@ class NotificationService {
       throw StateError('Notification preferences are unavailable.');
     }
     try {
+      // Ana tercih de sunucudaki iki push bayrağını değiştirir. Önce kuyruğa
+      // yaz: yerel kayıt sonrasında uygulama kapanırsa kapatma kaybolmasın.
+      final queued = await preferences.setBool(prefsDirtyKey, true);
+      if (!queued) {
+        throw StateError('Notification preference was not queued.');
+      }
       final saved = await preferences.setBool(_enabledKey, value);
       if (!saved) {
         throw StateError('Notification preference was not persisted.');
@@ -465,6 +471,13 @@ class NotificationService {
   /// Yerel düello/arkadaş tercihi sunucuya yazılamadı mı.
   bool get serverPrefsDirty => _preferences?.getBool(prefsDirtyKey) ?? false;
 
+  Future<void> markServerPrefsPending() async {
+    if (serverPrefsDirty) return;
+    if (await _preferences?.setBool(prefsDirtyKey, true) != true) {
+      throw StateError('Notification preference was not queued.');
+    }
+  }
+
   Future<void> markServerPrefsSynced() async =>
       _preferences?.remove(prefsDirtyKey);
 
@@ -475,7 +488,9 @@ class NotificationService {
     required bool duel,
     required bool social,
   }) async {
-    if (serverPrefsDirty) return;
+    // Kapalıyken sunucudaki false değerleri ana tercihin maskesidir;
+    // yeniden açılınca kullanılacak kategori seçimleri değildir.
+    if (serverPrefsDirty || !enabled) return;
     await _preferences?.setBool(_prefDuelKey, duel);
     await _preferences?.setBool(_prefSocialKey, social);
   }

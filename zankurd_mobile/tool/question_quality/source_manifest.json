@@ -2,6 +2,36 @@
  "version": 1,
  "sources": [
   {
+   "id": "g12_notification_preview",
+   "description": "G12 offline notification preference web fixture; no question records",
+   "path": "tool/g12_notification_preview.dart",
+   "role": "test_fixture",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 1000,
+   "expectedRecordCount": null,
+   "notes": "Only this exact file is excluded; question-bank debt is unchanged.",
+   "columns": {}
+  },
+  {
+   "id": "verified_solo_quiz_port",
+   "description": "Verified solo session interface; no question records",
+   "path": "lib/src/data/verified_solo_quiz_port.dart",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 1000,
+   "expectedRecordCount": null,
+   "notes": "Only this exact file is excluded; question-bank debt is unchanged.",
+   "columns": {}
+  },
+  {
    "id": "social_reliability_preview",
    "description": "Offline room invitation and streak recovery simulator fixture",
    "path": "tool/reliability_preview.dart",

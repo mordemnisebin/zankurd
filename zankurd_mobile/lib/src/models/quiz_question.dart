@@ -677,7 +677,7 @@ class QuizQuestion {
     return QuizQuestion(
       id: row['id'] as String,
       category: row['category_name'] as String? ?? 'Ziman',
-      prompt: row['prompt'] as String,
+      prompt: row['content_hidden'] == true ? '' : row['prompt'] as String,
       answers: answers,
       correctAnswer: _revealedServerCorrectAnswer(row, answers),
       explanation: '',

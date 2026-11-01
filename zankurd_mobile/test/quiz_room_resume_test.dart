@@ -216,6 +216,7 @@ class _SessionRepository extends MockZanKurdRepository {
   bool finishOnAdvance = false;
   int resultCalls = 0;
   int resultQuestionCalls = 0;
+  Completer<List<QuizQuestion>>? questionContentGate;
   int ackCalls = 0;
   List<Object?>? lastAwardArguments;
 
@@ -298,7 +299,9 @@ class _SessionRepository extends MockZanKurdRepository {
   @override
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async {
     resultQuestionCalls++;
-    return _resultQuestions;
+    return questionContentGate == null
+        ? _resultQuestions
+        : await questionContentGate!.future;
   }
 
   @override
@@ -480,6 +483,83 @@ void main() {
       'zankurd.quiz_tutorial.seen': true,
     });
   });
+
+  testWidgets(
+    'G7 aktif içerik gelmeden boş soru oynanıyordu; eski testler bütün soruları başta veriyordu',
+    (tester) async {
+      final gate = Completer<List<QuizQuestion>>();
+      final repository = _SessionRepository(_snapshot(questionIndex: 0))
+        ..questionContentGate = gate;
+      repository.readySnapshot = repository.snapshot;
+      addTearDown(repository.close);
+      await tester.pumpWidget(
+        testShell(
+          child: QuizScreen(
+            repository: repository,
+            room: _room,
+            questions: [
+              for (final q in _questions)
+                q.copyWith(prompt: '', answers: const []),
+            ],
+            is1v1: true,
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(repository.resultQuestionCalls, 1);
+      expect(find.text('Pirs 1'), findsNothing);
+      gate.complete(_questions);
+      await tester.pump();
+      await tester.pump();
+      expect(find.text('Pirs 1'), findsOneWidget);
+      expect(repository.submitCalls, 0);
+      await tester.pumpWidget(const SizedBox());
+    },
+  );
+
+  testWidgets(
+    'G7 sonraki indeks yer tutucuda kalıyordu; başlangıç yüklemesi tek başına sınanıyordu',
+    (tester) async {
+      final repository = _SessionRepository(_snapshot(questionIndex: 0));
+      repository.readySnapshot = repository.snapshot;
+      addTearDown(repository.close);
+      await tester.pumpWidget(
+        testShell(
+          child: QuizScreen(
+            repository: repository,
+            room: _room,
+            questions: [
+              _questions.first,
+              for (final q in _questions.skip(1))
+                q.copyWith(prompt: '', answers: const []),
+            ],
+            is1v1: true,
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(repository.resultQuestionCalls, 0);
+      expect(find.text('Pirs 1'), findsOneWidget);
+      final gate = Completer<List<QuizQuestion>>();
+      repository.questionContentGate = gate;
+      repository.snapshot = _snapshot(
+        questionIndex: 1,
+        answers: const [_firstAnswer],
+      );
+      await tester.pump(const Duration(seconds: 4));
+      await tester.pump();
+      expect(repository.resultQuestionCalls, 1);
+      expect(find.text('Pirs 2'), findsNothing);
+      gate.complete(_questions);
+      await tester.pump();
+      await tester.pump();
+      expect(find.text('Pirs 2'), findsOneWidget);
+      expect(repository.submitCalls, 0);
+      await tester.pumpWidget(const SizedBox());
+    },
+  );
 
   testWidgets(
     'T13 reveal snapshot applies opponent score before player refresh',
