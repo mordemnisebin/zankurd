@@ -14,6 +14,8 @@ import '../models/room.dart';
 import '../models/avatar_identity.dart';
 import '../widgets/zk_back_button.dart' show ZkAccentLine;
 import '../widgets/player_avatar.dart';
+import '../models/room_message.dart';
+import '../widgets/lobby_chat_hud.dart';
 import '../widgets/room_chat.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -122,6 +124,14 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
   /// Sohbet paneli açık mı. Kapalı başlar: aa42044'ün kalabalık kaygısı
   /// haklıydı, ama çözümü sohbeti silmek değil katlamaktı.
   bool _chatOpen = false;
+
+  /// Kapalı sohbeti sessizce dinleyen lobi ipuçları (balon, rozet, şerit).
+  LobbyChatController? _chatHud;
+
+  void _setChatOpen(bool open) {
+    setState(() => _chatOpen = open);
+    _chatHud?.chatOpen = open;
+  }
 
   late GameRoom room = widget.initialRoom.copyWith(
     players: dedupeRoomPlayers(widget.initialRoom.players),
@@ -268,6 +278,15 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
     _startSubscriptions();
     _startPolling();
     _startStatusPolling();
+    final hudRoomId = room.id;
+    if (hudRoomId != null) {
+      _chatHud = LobbyChatController(
+        repository: widget.repository,
+        roomId: hudRoomId,
+        isBlocked: (id) => _blockedPlayerIds.contains(id),
+        onReaction: _showIncomingChatReaction,
+      )..start();
+    }
     // Burada `updateReady(room, ready)` YOK — ve olmamalı.
     //
     // Eskiden vardı ve `ready` sabit `true` olduğu için zararsızdı: odaya
@@ -740,6 +759,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
     _cancelSubscriptionsBestEffort('room_dispose_subscription_cancel_failed');
     _pausePolling();
     _pauseStatusPolling();
+    _chatHud?.dispose();
     _reactionController.dispose();
     super.dispose();
   }
@@ -864,7 +884,9 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
     }
   }
 
-  Future<void> _sendReaction(String text) async {
+  /// Hızlı tepki: sohbet mesajı olarak gider (sunucu süzgeci ve hız sınırı
+  /// aynen geçerli), gönderende anında yüzen tepki olarak da görünür.
+  Future<void> _sendReaction(String emoji, String label) async {
     final roomId = room.id;
     final me = room.players.where((p) => p.id == _currentUserId).firstOrNull;
     final myName = PlayerIdentity.resolveNameWithTag(
@@ -872,16 +894,54 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
       isKu: context.isKu,
       tag: me?.tag,
     );
-    _reactionController.triggerReaction(text, senderName: myName);
+    _reactionController.triggerReaction('$emoji $label', senderName: myName);
     if (roomId == null) return;
     try {
-      await widget.repository.sendRoomBroadcast(roomId, {
-        'type': 'reaction',
-        'text': text,
-        'sender_name': myName,
-        'sender_id': _currentUserId,
-      });
-    } catch (_) {}
+      await widget.repository.sendRoomMessage(roomId: roomId, text: emoji);
+    } catch (_) {
+      // Hız sınırı/ağ: tepki kaybı sessiz kalabilir, sohbet bozulmaz.
+    }
+  }
+
+  /// Başkasının emoji tepkisi: yüzen tepki (balon/rozet/şerit üretmez).
+  void _showIncomingChatReaction(RoomMessage message) {
+    if (!mounted) return;
+    final i = lobbyReactionEmojis.indexOf(message.text.trim());
+    if (i < 0) return;
+    final labels = [
+      context.t(K.reactionBravo),
+      context.t(K.reactionGoodLuck),
+      context.t(K.reactionFast),
+      context.t(K.reactionSmiley),
+      context.t(K.reactionFire),
+    ];
+    final sender = room.players
+        .where((p) => p.id == message.senderId)
+        .firstOrNull;
+    _reactionController.triggerReaction(
+      '${lobbyReactionEmojis[i]} ${labels[i]}',
+      senderName: sender == null
+          ? null
+          : PlayerIdentity.resolveNameWithTag(
+              sender.name,
+              isKu: context.isKu,
+              tag: sender.tag,
+            ),
+    );
+  }
+
+  Widget _withChatBadge(Widget button) {
+    final hud = _chatHud;
+    return hud == null
+        ? button
+        : ChatUnreadBadge(controller: hud, child: button);
+  }
+
+  Widget _wrapWithBubble(String? playerId, Widget row) {
+    final hud = _chatHud;
+    return hud == null
+        ? row
+        : ChatBubbleAnchor(controller: hud, playerId: playerId, child: row);
   }
 
   Future<void> _cancelSubscription(
@@ -1292,13 +1352,14 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                   // Yalnızken kimseyle konuşulmaz: gizli (kurul 2026-10-19).
                   trailing:
                       room.id != null && (room.players.length >= 2 || _chatOpen)
-                      ? SahneIconButton(
-                          key: const ValueKey('room-chat-toggle'),
-                          icon: AppIcons.comment,
-                          semanticLabel: context.t(K.chat),
-                          selected: _chatOpen,
-                          onPressed: () =>
-                              setState(() => _chatOpen = !_chatOpen),
+                      ? _withChatBadge(
+                          SahneIconButton(
+                            key: const ValueKey('room-chat-toggle'),
+                            icon: AppIcons.comment,
+                            semanticLabel: context.t(K.chat),
+                            selected: _chatOpen,
+                            onPressed: () => _setChatOpen(!_chatOpen),
+                          ),
                         )
                       : null,
                 ),
@@ -1340,11 +1401,6 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                                 // olmadı" sanıp kapatıyordu. Artık çubuğun hemen
                                 // altında, göründüğü yerde açılır.
                                 if (room.id != null && _chatOpen) ...[
-                                  if (_chatOpen &&
-                                      room.players.length >= 2) ...[
-                                    const SizedBox(height: SahneSpace.x2),
-                                    _buildQuickReactionChips(context),
-                                  ],
                                   if (_chatOpen && room.id != null) ...[
                                     const SizedBox(height: SahneSpace.x2),
                                     padded(
@@ -1353,9 +1409,8 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                                         repository: widget.repository,
                                         roomId: room.id!,
                                         visible: true,
-                                        onToggle: () => setState(
-                                          () => _chatOpen = !_chatOpen,
-                                        ),
+                                        onToggle: () =>
+                                            _setChatOpen(!_chatOpen),
                                       ),
                                     ),
                                   ],
@@ -1430,53 +1485,56 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                                               i < visiblePlayers.length;
                                               i++
                                             )
-                                              _RoomPlayerRow(
-                                                key: ValueKey(
-                                                  'room-player-tile-${i + 1}',
-                                                ),
-                                                rank: i + 1,
-                                                player: visiblePlayers[i],
-                                                isKu: ku,
-                                                // Oyun başlamadan puan ve seri
-                                                // yok: "0 / 0 üst üste" anlamsız
-                                                // sütundu.
-                                                showScore:
-                                                    room.status !=
-                                                    RoomStatus.lobby,
-                                                showReadyState: !crowd,
-                                                quietModeration: crowd,
-                                                // "Hazırım" anahtarı yalnız
-                                                // 1v1/2 kişilik odada ve YEREL
-                                                // oyuncunun kendi satırında.
-                                                onReadyChanged:
-                                                    !crowd && i == selfRowIndex
-                                                    ? _toggleReady
-                                                    : null,
-                                                readyValue: ready,
-                                                repository: widget.repository,
-                                                isSelf:
-                                                    visiblePlayers[i].id ==
-                                                        null ||
-                                                    visiblePlayers[i].id ==
-                                                        widget
-                                                            .repository
-                                                            .currentUserId,
-                                                isHost:
-                                                    room.hostId != null &&
-                                                    visiblePlayers[i].id ==
-                                                        room.hostId,
-                                                onBlocked: () {
-                                                  final id =
-                                                      visiblePlayers[i].id;
-                                                  if (id == null) return;
-                                                  setState(
-                                                    () => _blockedPlayerIds.add(
-                                                      id,
-                                                    ),
-                                                  );
-                                                },
-                                                onKick: _kickHandlerFor(
-                                                  visiblePlayers[i],
+                                              _wrapWithBubble(
+                                                visiblePlayers[i].id,
+                                                _RoomPlayerRow(
+                                                  key: ValueKey(
+                                                    'room-player-tile-${i + 1}',
+                                                  ),
+                                                  rank: i + 1,
+                                                  player: visiblePlayers[i],
+                                                  isKu: ku,
+                                                  // Oyun başlamadan puan ve seri
+                                                  // yok: "0 / 0 üst üste" anlamsız
+                                                  // sütundu.
+                                                  showScore:
+                                                      room.status !=
+                                                      RoomStatus.lobby,
+                                                  showReadyState: !crowd,
+                                                  quietModeration: crowd,
+                                                  // "Hazırım" anahtarı yalnız
+                                                  // 1v1/2 kişilik odada ve YEREL
+                                                  // oyuncunun kendi satırında.
+                                                  onReadyChanged:
+                                                      !crowd &&
+                                                          i == selfRowIndex
+                                                      ? _toggleReady
+                                                      : null,
+                                                  readyValue: ready,
+                                                  repository: widget.repository,
+                                                  isSelf:
+                                                      visiblePlayers[i].id ==
+                                                          null ||
+                                                      visiblePlayers[i].id ==
+                                                          widget
+                                                              .repository
+                                                              .currentUserId,
+                                                  isHost:
+                                                      room.hostId != null &&
+                                                      visiblePlayers[i].id ==
+                                                          room.hostId,
+                                                  onBlocked: () {
+                                                    final id =
+                                                        visiblePlayers[i].id;
+                                                    if (id == null) return;
+                                                    setState(
+                                                      () => _blockedPlayerIds
+                                                          .add(id),
+                                                    );
+                                                  },
+                                                  onKick: _kickHandlerFor(
+                                                    visiblePlayers[i],
+                                                  ),
                                                 ),
                                               ),
                                             if (crowd)
@@ -1496,6 +1554,24 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                                           ],
                                         ),
                                 ),
+                                if (_chatHud != null && room.id != null)
+                                  padded(
+                                    LastMessageStrip(
+                                      controller: _chatHud!,
+                                      onOpen: () => _setChatOpen(true),
+                                    ),
+                                  ),
+                                if (room.id != null && room.players.length >= 2)
+                                  padded(
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: SahneSpace.x2,
+                                      ),
+                                      child: QuickReactionBar(
+                                        onReaction: _sendReaction,
+                                      ),
+                                    ),
+                                  ),
                                 // Dört kişi geldikten sonra öncelik oyuncu
                                 // listesindedir. Açık odalarda davet erişimi
                                 // kalır; dördüncü satırı alt şeride itmez.
@@ -1684,30 +1760,6 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
       _questionLoadExhausted = false;
     });
     _navigateToQuiz();
-  }
-
-  Widget _buildQuickReactionChips(BuildContext context) {
-    final reactions = [
-      (context.t(K.reactionBravo), '👏'),
-      (context.t(K.reactionGoodLuck), '🍀'),
-      (context.t(K.reactionFast), '⚡'),
-      (context.t(K.reactionSmiley), '😊'),
-      (context.t(K.reactionFire), '🔥'),
-    ];
-
-    // 2026-09-29 Şahnê: seçim rayı (kenara taşan, sağda solma). Çip
-    // görselde 44; dokunma kutusu 48 (Android kılavuzu). Anahtardaki emoji
-    // yalnız kimliktir, ekrana yazılmaz.
-    return SahneRail(
-      children: [
-        for (final r in reactions)
-          _ReactionChip(
-            key: ValueKey('room-reaction-${r.$2}'),
-            label: r.$1,
-            onTap: () => _sendReaction(r.$1),
-          ),
-      ],
-    );
   }
 }
 
@@ -2679,21 +2731,6 @@ class _WaitingPlayerTile extends StatelessWidget {
 }
 
 /// Hızlı tepki çipi: [SahneRailChip] (görsel 44, dokunma 48).
-class _ReactionChip extends StatelessWidget {
-  const _ReactionChip({super.key, required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) => SahneRailChip(
-    label: label,
-    selected: false,
-    role: SahneRole.race,
-    onTap: onTap,
-  );
-}
-
 /// Boş koltuk: kesik çizgili soluk elmas + sıra numarası (ya da "+N").
 /// Metin yok: yeni Kurmancî anahtarı gerektirmesin diye ikon ve sayı.
 class _EmptySeatRow extends StatelessWidget {
