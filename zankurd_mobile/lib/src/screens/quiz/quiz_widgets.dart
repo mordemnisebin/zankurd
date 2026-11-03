@@ -2223,4 +2223,3 @@ class _KurmanciPromptTag extends StatelessWidget {
     );
   }
 }
-
