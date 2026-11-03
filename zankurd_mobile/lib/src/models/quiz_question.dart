@@ -663,6 +663,33 @@ class QuizQuestion {
     );
   }
 
+  /// Sunucu satırındaki `source_title` / `source_reference` / `source_url`
+  /// sütunlarını künyeye taşır; üçü de yoksa `null` (RPC'ler bugün göndermez,
+  /// göndermeye başladığı gün istemci ek sürüm istemeden gösterir).
+  static QuestionMetadata? _serverSourceMetadata(Map<String, dynamic> row) {
+    String? text(String key) {
+      final v = row[key];
+      return v is String && v.trim().isNotEmpty ? v.trim() : null;
+    }
+
+    final title = text('source_title');
+    final reference = text('source_reference');
+    final rawUrl = text('source_url');
+    final url =
+        rawUrl != null &&
+            RegExp(r'^https?://', caseSensitive: false).hasMatch(rawUrl)
+        ? rawUrl
+        : null;
+    if (title == null && reference == null && url == null) return null;
+    // `source_url` toplu-yükleme etiketi olabilir; künye süzgeci
+    // (`QuestionMetadata.displaySource`) http(s) olmayanı bağlantı saymaz.
+    final combined = [reference, url].whereType<String>().join('; ');
+    return QuestionMetadata(
+      sourceTitle: title,
+      sourceReference: combined.isEmpty ? null : combined,
+    );
+  }
+
   /// Sunucudan gelen oda/düello soru satırını `QuizQuestion`'a çevirir.
   ///
   /// Oda maçı (`get_room_questions`) ve sırayla düello (`start_async_duel`)
@@ -696,6 +723,7 @@ class QuizQuestion {
       type: _questionTypeFromServerRow(row),
       imageUrl: row['image_url'] as String?,
       difficulty: row['difficulty'] as int? ?? 2,
+      metadata: _serverSourceMetadata(row),
     );
   }
 

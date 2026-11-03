@@ -2858,6 +2858,30 @@ class Tr {
       'tr': 'Mesajları bundan sonra sana gösterilmez.',
     },
     K.chatReported: {'ku': 'Peyam hate ragihandin.', 'tr': 'Mesaj bildirildi.'},
+    // Sustur (2026-11-04): yalnız benim görünümüm, sunucuya yazılmaz.
+    // KU TASLAK — jüri onayı bekler.
+    K.chatMute: {'ku': 'Bêdeng bike', 'tr': 'Sustur'},
+    K.chatMuteSub: {
+      'ku': 'Peyam û bertekên wî/wê ji te re nayên nîşandan.',
+      'tr': 'Mesajları ve tepkileri sana gösterilmez.',
+    },
+    K.chatUnmute: {'ku': 'Bêdengiyê rake', 'tr': 'Susturmayı kaldır'},
+    K.chatUnmuteSub: {
+      'ku': 'Peyam û bertekên wî/wê dîsa têne nîşandan.',
+      'tr': 'Mesajları ve tepkileri yeniden gösterilir.',
+    },
+    K.chatMuted: {
+      'ku': 'Lîstikvan hate bêdengkirin.',
+      'tr': 'Oyuncu susturuldu.',
+    },
+    K.chatUnmuted: {
+      'ku': 'Bêdengiya lîstikvan hate rakirin.',
+      'tr': 'Oyuncunun sesi açıldı.',
+    },
+    K.chatMutedCountP: {
+      'ku': '{p0} peyam hatin veşartin',
+      'tr': '{p0} mesaj gizlendi',
+    },
     // Oda sahibinin lobiden oyuncu çıkarması (2026-10-22). Çıkarılan aynı
     // odaya kodla geri giremez (kick_room_player + room_kicks).
     K.roomKick: {'ku': 'Ji odeyê derxe', 'tr': 'Odadan çıkar'},
@@ -3073,6 +3097,12 @@ class Tr {
     K.asyncDuelOpenInviteClosesHours: {
       'tr': '{n} sa içinde katılan olmazsa kapanır',
       'ku': 'Heke di {n} saet de kes tevlî nebe tê girtin',
+    },
+    // 2026-11-04: bağlantı meydan okuması 7 gün açık kalır; 48 saati aşan
+    // süre "168 sa" yerine gün olarak yazılır. KU TASLAK — jüri onayı bekler.
+    K.asyncDuelOpenInviteClosesDays: {
+      'tr': '{n} gün içinde katılan olmazsa kapanır',
+      'ku': 'Heke di {n} rojan de kes tevlî nebe tê girtin',
     },
     K.asyncDuelOpenInviteClosesMinutes: {
       'tr': '{n} dk içinde katılan olmazsa kapanır',
@@ -4042,6 +4072,7 @@ class Tr {
     // metni). `bi hukmî` (hükmen) Kurmancî jürisi (3 model, çoğunluk)
     // metnidir; `xweber` hükmen anlamına gelmediği için bırakıldı.
     K.asyncDuelTimeLeftHours: {'ku': '{n} saet mane', 'tr': '{n} sa kaldı'},
+    K.asyncDuelTimeLeftDays: {'ku': '{n} roj mane', 'tr': '{n} gün kaldı'},
     K.asyncDuelTimeLeftMinutes: {'ku': '{n} deqe mane', 'tr': '{n} dk kaldı'},
     K.asyncDuelWonForfeit: {
       'ku': 'Tu bi ser ketî · bi hukmî',
@@ -5739,6 +5770,13 @@ class K {
   static const chatReport = 'chat.report';
   static const chatReportSub = 'chat.report.sub';
   static const chatBlock = 'chat.block';
+  static const chatMute = 'chat.mute';
+  static const chatMuteSub = 'chat.mute.sub';
+  static const chatUnmute = 'chat.unmute';
+  static const chatUnmuteSub = 'chat.unmute.sub';
+  static const chatMuted = 'chat.muted';
+  static const chatUnmuted = 'chat.unmuted';
+  static const chatMutedCountP = 'chat.mutedCount';
   static const chatBlockSub = 'chat.block.sub';
   static const roomKick = 'room.kick';
   static const roomKickSub = 'room.kick.sub';
@@ -5806,6 +5844,8 @@ class K {
   static const asyncDuelOpenInvite = 't8.asyncDuelOpenInvite';
   static const asyncDuelOpenInviteClosesHours =
       't8.asyncDuelOpenInviteClosesHours';
+  static const asyncDuelOpenInviteClosesDays =
+      't8.asyncDuelOpenInviteClosesDays';
   static const asyncDuelOpenInviteClosesMinutes =
       't8.asyncDuelOpenInviteClosesMinutes';
   static const timerOpponentSecondsLeft = 't8.timerOpponentSecondsLeft';
@@ -6207,6 +6247,7 @@ class K {
 
   /// Satırın kalan süre etiketi: "18 sa kaldı" / "35 dk kaldı" (`{n}`).
   static const asyncDuelTimeLeftHours = 'duel.async.timeLeft.hours';
+  static const asyncDuelTimeLeftDays = 'duel.async.timeLeft.days';
   static const asyncDuelTimeLeftMinutes = 'duel.async.timeLeft.minutes';
 
   /// Hükmen sonuç başlıkları: "Kazandın · hükmen" / "Kaybettin · hükmen".

@@ -5,6 +5,7 @@ import 'package:flutter/semantics.dart' show CustomSemanticsAction;
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../data/chat_mute_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
@@ -284,7 +285,9 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
       _chatHud = LobbyChatController(
         repository: widget.repository,
         roomId: hudRoomId,
-        isBlocked: (id) => _blockedPlayerIds.contains(id),
+        isBlocked: (id) =>
+            _blockedPlayerIds.contains(id) ||
+            ChatMuteStore.instance.isMuted(id),
         onReaction: _showIncomingChatReaction,
       )..start();
     }
@@ -400,7 +403,9 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                     // Kimliği olmayan yayın kimin olduğu doğrulanamadığı için
                     // engel süzgecinden kaçamaz: bastırılır.
                     senderId == null ||
-                    _blockedPlayerIds.contains(senderId);
+                    _blockedPlayerIds.contains(senderId) ||
+                    // Susturduğumun tepkisi de çizilmez (yerel, geri alınır).
+                    ChatMuteStore.instance.isMuted(senderId);
                 if (text != null && senderId != _currentUserId && !blocked) {
                   _reactionController.triggerReaction(
                     text,
@@ -444,6 +449,9 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
   /// yeniden denenir; yine olmazsa tepkiler bastırılmaya devam eder (güvenli
   /// taraf), satırlar ve oyun akışı etkilenmez.
   Future<void> _loadBlockedPlayers() async {
+    // Susturma listesi (yerel) arkadan okunur; engel listesini BEKLETMEZ
+    // (okuma düşse de tepki/satır akışı etkilenmesin).
+    unawaited(ChatMuteStore.instance.load(widget.repository.currentUserId));
     for (var attempt = 0; attempt < 2; attempt++) {
       try {
         final ids = await widget.repository.loadBlockedPlayerIds();

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import '../data/chat_mute_store.dart';
 import '../data/zankurd_repository.dart';
 import '../models/friend.dart';
 import '../l10n/lang.dart';
@@ -149,6 +152,10 @@ Future<void> showPlayerModerationSheet({
   VoidCallback? onReported,
   Future<bool> Function()? onKick,
 }) async {
+  // Susturma hesap başına yerel; sayfa açılmadan durumu bilinmeli.
+  final muteStore = ChatMuteStore.instance;
+  unawaited(muteStore.load(repository.currentUserId));
+  final muted = muteStore.isMuted(playerId);
   final action = await showModalBottomSheet<String>(
     context: context,
     // 2026-09-29 Şahnê: alt perde Perde (`s1`), üst köşeler L pah.
@@ -185,6 +192,15 @@ Future<void> showPlayerModerationSheet({
             onTap: () => Navigator.of(sheetContext).pop('report'),
           ),
           ListTile(
+            key: const ValueKey('player-mute-action'),
+            leading: Icon(muted ? AppIcons.volumeHigh : AppIcons.volumeXmark),
+            title: Text(sheetContext.t(muted ? K.chatUnmute : K.chatMute)),
+            subtitle: Text(
+              sheetContext.t(muted ? K.chatUnmuteSub : K.chatMuteSub),
+            ),
+            onTap: () => Navigator.of(sheetContext).pop('mute'),
+          ),
+          ListTile(
             key: const ValueKey('player-block-action'),
             leading: const Icon(AppIcons.circleXmark),
             title: Text(sheetContext.t(K.chatBlock)),
@@ -210,6 +226,19 @@ Future<void> showPlayerModerationSheet({
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text(ok ? doneText : failText)));
+    return;
+  }
+
+  if (action == 'mute') {
+    final nowMuted = await muteStore.toggle(
+      playerId,
+      userId: repository.currentUserId,
+    );
+    if (!context.mounted) return;
+    final text = context.t(nowMuted ? K.chatMuted : K.chatUnmuted);
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(text)));
     return;
   }
 

@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../data/chat_mute_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/room_message.dart';
 import '../services/chat_moderation_policy.dart';
 import '../utils/error_reporter.dart';
+import '../utils/number_format.dart';
 import '../utils/player_identity.dart';
 import '../theme/app_icons.dart';
 import 'player_avatar.dart';
@@ -60,15 +62,31 @@ class _RoomChatState extends State<RoomChat> {
         .where(
           (m) =>
               !_blockedSenderIds.contains(m.senderId) &&
+              !ChatMuteStore.instance.isMuted(m.senderId) &&
               !_hiddenMessageIds.contains(m.id),
         )
         .toList();
     return orderChatMessages(list);
   }
 
+  /// Susturduklarım (yerel, hesap başına): liste değişince yeniden çizilir.
+  int get _mutedMessageCount => _messages
+      .where(
+        (m) =>
+            ChatMuteStore.instance.isMuted(m.senderId) &&
+            m.senderId != widget.currentUserId,
+      )
+      .length;
+
+  void _onMuteChanged() {
+    if (mounted) setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    ChatMuteStore.instance.addListener(_onMuteChanged);
+    unawaited(ChatMuteStore.instance.load(widget.currentUserId));
     if (widget.visible) _startListening();
   }
 
@@ -84,6 +102,7 @@ class _RoomChatState extends State<RoomChat> {
 
   @override
   void dispose() {
+    ChatMuteStore.instance.removeListener(_onMuteChanged);
     _stopListening();
     _messageController.dispose();
     _scrollController.dispose();
@@ -227,6 +246,7 @@ class _RoomChatState extends State<RoomChat> {
   /// uygulamada bulunmasını şart koşar. Kendi mesajın için menü açılmaz.
   Future<void> _showModerationSheet(RoomMessage message) async {
     if (message.senderId == widget.currentUserId) return;
+    final muted = ChatMuteStore.instance.isMuted(message.senderId);
     final action = await showModalBottomSheet<String>(
       context: context,
       builder: (sheetContext) => SafeArea(
@@ -241,6 +261,15 @@ class _RoomChatState extends State<RoomChat> {
               onTap: () => Navigator.of(sheetContext).pop('report'),
             ),
             ListTile(
+              key: const ValueKey('chat-mute-action'),
+              leading: Icon(muted ? AppIcons.volumeHigh : AppIcons.volumeXmark),
+              title: Text(sheetContext.t(muted ? K.chatUnmute : K.chatMute)),
+              subtitle: Text(
+                sheetContext.t(muted ? K.chatUnmuteSub : K.chatMuteSub),
+              ),
+              onTap: () => Navigator.of(sheetContext).pop('mute'),
+            ),
+            ListTile(
               key: const ValueKey('chat-block-action'),
               leading: const Icon(AppIcons.circleXmark),
               title: Text(sheetContext.t(K.chatBlock)),
@@ -252,6 +281,19 @@ class _RoomChatState extends State<RoomChat> {
       ),
     );
     if (action == null || !mounted) return;
+
+    if (action == 'mute') {
+      final nowMuted = await ChatMuteStore.instance.toggle(
+        message.senderId,
+        userId: widget.currentUserId,
+      );
+      if (!mounted) return;
+      final text = context.t(nowMuted ? K.chatMuted : K.chatUnmuted);
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(text)));
+      return;
+    }
 
     final okText = context.t(
       action == 'report' ? K.chatReported : K.chatBlocked,
@@ -355,6 +397,17 @@ class _RoomChatState extends State<RoomChat> {
                 ),
               ),
               // Mesaj listesi
+              if (_mutedMessageCount > 0)
+                Padding(
+                  padding: const EdgeInsets.only(top: SahneSpace.x1),
+                  child: Text(
+                    Tr.forKu(K.chatMutedCountP, ku, {
+                      'p0': groupThousands(_mutedMessageCount),
+                    }),
+                    key: const ValueKey('chat-muted-count'),
+                    style: SahneType.caption.copyWith(color: t.tx3),
+                  ),
+                ),
               Expanded(
                 child: _visibleMessages.isEmpty
                     ? Center(

@@ -18,6 +18,14 @@ String? asyncDuelTimeLeftLabel(
   bool openInvite = false,
 }) {
   if (left == null || left <= Duration.zero) return null;
+  // 48 saati aşan süre (bağlantı meydan okuması 7 gün açık kalır) gün olarak.
+  if (left.inHours >= 48) {
+    final days = (left.inHours / 24).round();
+    return context.t(
+      openInvite ? K.asyncDuelOpenInviteClosesDays : K.asyncDuelTimeLeftDays,
+      {'n': groupThousands(days)},
+    );
+  }
   if (left.inMinutes >= 60) {
     final hours = (left.inMinutes / 60).round();
     return context.t(
@@ -34,8 +42,8 @@ String? asyncDuelTimeLeftLabel(
   );
 }
 
-/// Kalan süre oranı (0–1): [left] / [asyncDuelWindow]. Eski 48 saatlik
-/// düellolar 1'e kırpılır.
+/// Kalan süre oranı (0–1): [left] / [asyncDuelWindow]. 7 güne kadar
+/// açık kalan bağlantı meydan okumaları 1'e kırpılır.
 double asyncDuelTimeFraction(Duration left) {
   final ratio = left.inSeconds / asyncDuelWindow.inSeconds;
   return ratio.clamp(0.0, 1.0);

@@ -48,6 +48,7 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/client_round_id.dart';
 import '../utils/error_reporter.dart';
+import '../utils/external_link.dart';
 import '../utils/player_identity.dart';
 import '../utils/question_timer_resume.dart';
 import '../utils/test_environment.dart';

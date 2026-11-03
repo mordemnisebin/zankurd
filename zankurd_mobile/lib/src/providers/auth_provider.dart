@@ -18,6 +18,7 @@ import '../data/seen_question_store.dart';
 import '../data/achievement_store.dart';
 import '../data/badge_service.dart';
 import '../data/mastery_store.dart';
+import '../data/word_list_store.dart';
 import '../data/daily_mission_store.dart';
 import '../data/level_progress_store.dart';
 import '../data/learning_goal_store.dart';
@@ -361,6 +362,7 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     StoryProgressStore.resetInstance();
     LevelProgressStore.resetInstance();
     LearningGoalStore.resetInstance();
+    WordListStore.resetInstance();
   }
 
   @visibleForTesting

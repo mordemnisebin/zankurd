@@ -91,6 +91,61 @@ class QuestionMetadata {
     return title.isNotEmpty || ref.isNotEmpty;
   }
 
+  /// Oyuncuya gösterilecek künye (cevap sonrası "Kaynak: …" satırı).
+  ///
+  /// Neden süzgeç var: paketli soruların `sourceTitle` alanı çoğu zaman
+  /// EDİTÖRYAL iz sürme etiketidir ("ZanKurd başlangıç dersi: …", "Source-first
+  /// verified expansion …", `internal:` başvurular) ve oyuncuya anlamsızdır.
+  /// Sunucudaki `questions.source_url` da bazı satırlarda bir bağlantı değil
+  /// toplu-yükleme etiketidir ("curated_movement_wave_1"). Bu yüzden bağlantı
+  /// yalnız `http(s)://` ile başlıyorsa bağlantı sayılır; başlık iç etiketse
+  /// bağlantının sunucu adı (ör. `en.wikipedia.org`) gösterilir; ikisi de
+  /// yoksa `null` döner ve ekranda HİÇ yer ayrılmaz.
+  ({String label, Uri? url})? get displaySource {
+    final url = _firstHttpUri(sourceReference);
+    final title = sourceTitle?.trim() ?? '';
+    if (title.isNotEmpty && !_isInternalSourceLabel(title)) {
+      return (label: title, url: url);
+    }
+    if (url != null) return (label: url.host, url: url);
+    final ref = (sourceReference ?? '').split(';').first.trim();
+    // Boşluksuz tek sözcük bir kitap/makale künyesi değil toplu-yükleme
+    // etiketidir (ör. `zankurd_pure_kurdish_v1`).
+    if (ref.contains(' ') && !_isInternalSourceLabel(ref)) {
+      return (label: ref, url: null);
+    }
+    return null;
+  }
+
+  static final RegExp _httpPattern = RegExp(
+    r'https?://[^\s;,)]+',
+    caseSensitive: false,
+  );
+
+  static Uri? _firstHttpUri(String? text) {
+    if (text == null) return null;
+    final match = _httpPattern.firstMatch(text);
+    if (match == null) return null;
+    final uri = Uri.tryParse(match.group(0)!);
+    if (uri == null || uri.host.isEmpty) return null;
+    return uri;
+  }
+
+  static const List<String> _internalLabelPrefixes = [
+    'internal:',
+    'zankurd',
+    'source-first',
+    'kolay soru',
+    'görselden',
+    'topluluk katk',
+    'editoryal',
+  ];
+
+  static bool _isInternalSourceLabel(String text) {
+    final lower = text.toLowerCase();
+    return _internalLabelPrefixes.any(lower.startsWith);
+  }
+
   static int _asInt(Object? v, int fallback) {
     if (v is int) return v;
     if (v is num) return v.toInt();

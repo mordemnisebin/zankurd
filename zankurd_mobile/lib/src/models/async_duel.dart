@@ -25,7 +25,8 @@ enum AsyncDuelOutcome { win, loss, draw }
 
 /// Sırayla düellonun süre penceresi: yaratma, eşleşme ve kabulden 24 saat
 /// (sunucu: `supabase/2026-10-24_duello_sirasi.sql`). Kalan süre çubuğunun
-/// paydasıdır; eski 48 saatlik düellolar çubukta dolu görünür (üst sınır 1).
+/// paydasıdır; 7 güne kadar açık kalan bağlantı meydan okumaları çubukta dolu görünür
+/// (üst sınır 1); kabulden sonra pencere yine 24 saattir.
 const Duration asyncDuelWindow = Duration(hours: 24);
 
 /// Süreye bu kadar kala "acele" tonu (kırmızı metin/çubuk) ve sunucu

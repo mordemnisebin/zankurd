@@ -54,6 +54,7 @@ class ProgressSnapshot {
     this.storyUpdatedAt = const {},
     this.storyDone = const {},
     this.learningGoal,
+    this.words = const {},
   });
 
   /// Biçim sürümü. Daha YENİ bir sürüm okunursa istemci ne birleştirir ne
@@ -88,6 +89,15 @@ class ProgressSnapshot {
   final Set<String> storyDone;
   final String? learningGoal;
 
+  /// "Kelimelerim" (Leitner) durumu: sözlük kimliği -> kutu/vade/zaman damgası.
+  ///
+  /// Eskiden yalnız cihazdaydı; telefon değişince ya da yeniden kurulumda
+  /// kullanıcının elle topladığı liste ve tekrar ilerlemesi sessizce giderdi.
+  /// Biçim sürümü ARTIRILMADI: eski istemci `words` anahtarını yok sayar,
+  /// okuyup yazmaya devam eder (yeni cihazın yerel kopyası bir sonraki
+  /// eşitlemede alanı yeniden yükler).
+  final Map<String, SnapshotWord> words;
+
   bool get isEmpty =>
       xp == 0 &&
       streak.isEmpty &&
@@ -100,6 +110,7 @@ class ProgressSnapshot {
       !placementSkipped &&
       story.isEmpty &&
       storyDone.isEmpty &&
+      words.isEmpty &&
       learningGoal == null;
 
   Map<String, dynamic> toJson() => {
@@ -128,6 +139,10 @@ class ProgressSnapshot {
     if (storyDone.isNotEmpty) 'storyDone': _sorted(storyDone),
     // ignore: use_null_aware_elements
     if (learningGoal != null) 'goal': learningGoal,
+    if (words.isNotEmpty)
+      'words': {
+        for (final key in _sorted(words.keys)) key: words[key]!.toJson(),
+      },
   };
 
   /// Kararlı (anahtarları sıralı) JSON dizgisi: eşitlik karşılaştırması ve
@@ -165,6 +180,7 @@ class ProgressSnapshot {
             raw['goal'] is String && (raw['goal'] as String).isNotEmpty
             ? raw['goal'] as String
             : null,
+        words: SnapshotWord.mapFrom(raw['words']),
       );
     } catch (_) {
       return null;
@@ -203,6 +219,7 @@ class ProgressSnapshot {
       storyUpdatedAt: story.$2,
       storyDone: {...local.storyDone, ...remote.storyDone},
       learningGoal: local.learningGoal ?? remote.learningGoal,
+      words: SnapshotWord.mergeAll(local.words, remote.words),
     );
   }
 
@@ -259,6 +276,100 @@ class ProgressSnapshot {
 
   @override
   int get hashCode => encode().hashCode;
+}
+
+/// Tek kelimenin Leitner durumu (yerel `SavedWord`un kompakt hali).
+class SnapshotWord {
+  const SnapshotWord({
+    this.box = 1,
+    this.due = 0,
+    this.added = 0,
+    this.reviews = 0,
+    this.reviewedAt = 0,
+  });
+
+  final int box;
+  final int due;
+  final int added;
+  final int reviews;
+
+  /// Son tekrar zamanı (ms); 0 = yok / damgadan önceki kayıt.
+  final int reviewedAt;
+
+  /// Karşılaştırma için etkin son tekrar zamanı. Damgasız (eski) kayıtta
+  /// tekrar edilmişse vade ve kutu aralığından geri hesaplanır; hiç tekrar
+  /// edilmediyse eklenme anıdır.
+  int get effectiveReviewedAt {
+    if (reviewedAt > 0) return reviewedAt;
+    if (reviews > 0 && due > 0) {
+      final days = const [1, 2, 4, 8, 16][box.clamp(1, 5) - 1];
+      return due - days * Duration.millisecondsPerDay;
+    }
+    return added;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'box': box,
+    'due': due,
+    'added': added,
+    'n': reviews,
+    if (reviewedAt > 0) 'r': reviewedAt,
+  };
+
+  static Map<String, SnapshotWord> mapFrom(Object? raw) {
+    if (raw is! Map) return const {};
+    final out = <String, SnapshotWord>{};
+    raw.forEach((key, value) {
+      if (key is! String || value is! Map) return;
+      out[key] = SnapshotWord(
+        box: _int(value['box']).clamp(1, 5),
+        due: _int(value['due']),
+        added: _int(value['added']),
+        reviews: _int(value['n']),
+        reviewedAt: _int(value['r']),
+      );
+    });
+    return out;
+  }
+
+  /// İki taraf da aynı kelimeyi taşıyorsa son tekrarı YENİ olan kazanır
+  /// (eşitlikte daha çok tekrar, sonra daha yüksek kutu); eklenme zamanı
+  /// ikisinin en erkeni. Tek tarafta olan kelime AYNEN korunur: birleşim, hiçbir
+  /// kelime kaybolmaz (kaldırma cihazlar arasında yayılmaz — bilinçli).
+  static SnapshotWord merge(SnapshotWord a, SnapshotWord b) {
+    final ta = a.effectiveReviewedAt;
+    final tb = b.effectiveReviewedAt;
+    SnapshotWord winner;
+    if (ta != tb) {
+      winner = ta > tb ? a : b;
+    } else if (a.reviews != b.reviews) {
+      winner = a.reviews > b.reviews ? a : b;
+    } else {
+      winner = a.box >= b.box ? a : b;
+    }
+    final added = a.added == 0
+        ? b.added
+        : (b.added == 0 ? a.added : (a.added < b.added ? a.added : b.added));
+    return SnapshotWord(
+      box: winner.box,
+      due: winner.due,
+      added: added,
+      reviews: winner.reviews,
+      reviewedAt: winner.reviewedAt,
+    );
+  }
+
+  static Map<String, SnapshotWord> mergeAll(
+    Map<String, SnapshotWord> a,
+    Map<String, SnapshotWord> b,
+  ) {
+    return {
+      for (final id in {...a.keys, ...b.keys})
+        id: a[id] == null
+            ? b[id]!
+            : (b[id] == null ? a[id]! : merge(a[id]!, b[id]!)),
+    };
+  }
 }
 
 /// Seri kaydı. `lastDay` yerel takvim günü (`yyyy-MM-dd`).

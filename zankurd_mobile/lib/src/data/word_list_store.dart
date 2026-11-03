@@ -56,6 +56,7 @@ class SavedWord {
     required this.dueAtMs,
     required this.addedAtMs,
     this.reviews = 0,
+    this.reviewedAtMs = 0,
   });
 
   /// [LearnerLexiconEntry.id].
@@ -67,14 +68,26 @@ class SavedWord {
   final int addedAtMs;
   final int reviews;
 
+  /// Son tekrar cevabının zamanı (epoch ms); hiç tekrar edilmediyse ya da
+  /// zaman damgasından ÖNCEki kayıtta 0. Cihazlar arası birleştirmede
+  /// "hangi cihazın durumu daha yeni" sorusunun tek ölçüsüdür
+  /// (bkz. `ProgressSnapshot.merge`, kelimeler).
+  final int reviewedAtMs;
+
   bool isDue(DateTime now) => now.millisecondsSinceEpoch >= dueAtMs;
 
-  SavedWord copyWith({int? box, int? dueAtMs, int? reviews}) => SavedWord(
+  SavedWord copyWith({
+    int? box,
+    int? dueAtMs,
+    int? reviews,
+    int? reviewedAtMs,
+  }) => SavedWord(
     entryId: entryId,
     box: box ?? this.box,
     dueAtMs: dueAtMs ?? this.dueAtMs,
     addedAtMs: addedAtMs,
     reviews: reviews ?? this.reviews,
+    reviewedAtMs: reviewedAtMs ?? this.reviewedAtMs,
   );
 
   Map<String, Object> toJson() => {
@@ -82,6 +95,7 @@ class SavedWord {
     'due': dueAtMs,
     'added': addedAtMs,
     'n': reviews,
+    if (reviewedAtMs > 0) 'r': reviewedAtMs,
   };
 }
 
@@ -164,6 +178,7 @@ class WordListStore extends ChangeNotifier {
               dueAtMs: (value['due'] as num?)?.toInt() ?? 0,
               addedAtMs: (value['added'] as num?)?.toInt() ?? 0,
               reviews: (value['n'] as num?)?.toInt() ?? 0,
+              reviewedAtMs: (value['r'] as num?)?.toInt() ?? 0,
             );
           } catch (error, stack) {
             ErrorReporter.record(error, stack, reason: 'word_list_entry');
@@ -176,8 +191,8 @@ class WordListStore extends ChangeNotifier {
     return WordListStore._(effective, key, words);
   }
 
-  /// Testlerde tekil örneği sıfırlamak için.
-  @visibleForTesting
+  /// Sunucudan birleşen kelimeler diske yazıldıktan sonra bellekteki örneği
+  /// bırakır (`auth_provider._dropProgressMemory`); sonraki `load` diskten okur.
   static void resetInstance() {
     _instance = null;
     _loading = null;
@@ -278,6 +293,7 @@ class WordListStore extends ChangeNotifier {
         LeitnerSchedule.intervalForBox(box),
       ).millisecondsSinceEpoch,
       reviews: word.reviews + 1,
+      reviewedAtMs: at.millisecondsSinceEpoch,
     );
     notifyListeners();
     return _persist();

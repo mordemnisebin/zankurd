@@ -50,6 +50,7 @@ class LocalProgressSnapshot {
   static const _storyPrefix = 'zankurd.story.';
   static const _storyMeta = 'zankurd.storyMeta.v1';
   static const _goal = 'zankurd.learning_goal.v1';
+  static const _wordList = 'zankurd.wordList.v1';
 
   static String _k(String logical) => LocalProgressWriteLock.physical(logical);
 
@@ -156,7 +157,18 @@ class LocalProgressSnapshot {
       storyUpdatedAt: storyAt,
       storyDone: storyDone,
       learningGoal: prefs.getString(_k(_goal)),
+      words: _decodeWords(prefs.getString(_k(_wordList))),
     );
+  }
+
+  /// `WordListStore`un yerel JSON'u (kimlik -> {box,due,added,n,r}).
+  static Map<String, SnapshotWord> _decodeWords(String? raw) {
+    if (raw == null) return const {};
+    try {
+      return SnapshotWord.mapFrom(jsonDecode(raw));
+    } catch (_) {
+      return const {};
+    }
   }
 
   static Future<void> recoverPendingWrites(SharedPreferences prefs) async {
@@ -346,6 +358,21 @@ class LocalProgressSnapshot {
           ok;
     }
     await setString(_goal, snapshot.learningGoal);
+    // Kelimelerim: `snapshot` yukarıda yerelle birleşti (birleşim, hiçbir
+    // kelime silinmez); değiştiyse mağazanın kendi biçiminde geri yaz.
+    if (!_sameJson(
+      {for (final e in current.words.entries) e.key: e.value.toJson()},
+      {for (final e in snapshot.words.entries) e.key: e.value.toJson()},
+    )) {
+      ok =
+          await prefs.setString(
+            _k(_wordList),
+            jsonEncode({
+              for (final e in snapshot.words.entries) e.key: e.value.toJson(),
+            }),
+          ) &&
+          ok;
+    }
     return ok;
   });
 
