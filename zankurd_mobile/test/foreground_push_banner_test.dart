@@ -8,6 +8,13 @@
 /// ve uygulama da kendisi göstermezdi. Oyuncu en çok açıkken davet
 /// beklerken hiçbir şey görmüyordu.
 ///
+/// ## Ek kusur (2026-11-03): " · " içeren oyuncu adı
+///
+/// Sunucu gövdesi `<ad> … · <ad> …` biçiminde, ad iki yarıda da geçer. Ad
+/// " · " içerirse metin ikiden çok parçaya bölünüyor ve eski kod tamamını
+/// gösteriyordu: bantta iki dil yan yana çıkıyordu. Hata kimseyi
+/// çökertmediği, yalnız metin uzadığı için sessiz kalırdı.
+///
 /// ## Niçin sessiz kalırdı
 ///
 /// Sunucu "gönderildi" der, FCM teslim eder; ileti ön plandaki uygulamaya
@@ -103,6 +110,10 @@ void main() {
     expect(splitBilingualPushText('A · B', ku: false), 'B');
     expect(splitBilingualPushText('Tek dilli', ku: false), 'Tek dilli');
     expect(splitBilingualPushText('A · B · C', ku: false), 'A · B · C');
+    // Ad " · " içeriyorsa iki yarıda da geçer: parça sayısı çift, ortadan böl.
+    const named = 'A · B ji te re şand · A · B sana gönderdi';
+    expect(splitBilingualPushText(named, ku: true), 'A · B ji te re şand');
+    expect(splitBilingualPushText(named, ku: false), 'A · B sana gönderdi');
     expect(splitBilingualPushText('A ·  ', ku: false), 'A ·  ');
   });
 
