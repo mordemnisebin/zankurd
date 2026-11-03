@@ -171,6 +171,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   String? _displayName;
   int _refreshCounter = 0;
 
+  /// Yerel durum (ilk oturum, bugünkü tur, tekrar sayısı, görevler, seri)
+  /// okunana dek gövde çizilmez. Kusur: bu değerler varsayılanla başlayıp
+  /// ardışık gelince kart yapısı ve yükseklikleri açılışta sıçrıyordu
+  /// (ilk oturum kartı -> günün turu, tekrar satırı, görev kartı).
+  /// Yerel okuma milisaniyelerdir; [_localReadyTimeout] yavaş depoda ekranı
+  /// asla bloklamaz.
+  bool _localReady = false;
+  final Completer<void> _tourFlagReady = Completer<void>();
+  static const Duration _localReadyTimeout = Duration(milliseconds: 800);
+
   ZanKurdRepository get repo => widget.repository;
 
   @override
@@ -189,10 +199,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       _loadAnimationController.forward();
     }
     _bootstrap();
-    _refreshStreak();
-    _loadMissions();
-    _refreshFirstSession();
-    _refreshReviewCount();
+    unawaited(
+      Future.wait<void>([
+            _refreshStreak(),
+            _loadMissions(),
+            _refreshFirstSession(),
+            _refreshReviewCount(),
+            _tourFlagReady.future,
+          ])
+          .timeout(_localReadyTimeout)
+          .catchError((Object _) => <void>[])
+          .whenComplete(() {
+            if (mounted && !_localReady) setState(() => _localReady = true);
+          }),
+    );
     _refreshTourState();
     // "Kaldığın yer" ilk açılışta hiç çağrılmıyordu — yalnız
     // `_handleRefreshSignal` içinden tetikleniyordu, o da yalnız sekmeye
@@ -271,6 +291,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       final store = await AchievementStore.load();
       // İstanbul günü: `dailyQuizDoneOn` içeride `contestDayString` kullanır.
       final done = store.dailyQuizDoneOn(_now());
+      if (!_tourFlagReady.isCompleted) _tourFlagReady.complete();
       if (mounted && done != _tourDoneToday) {
         setState(() => _tourDoneToday = done);
       }
@@ -286,6 +307,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home tour done flag');
+      if (!_tourFlagReady.isCompleted) _tourFlagReady.complete();
     }
     if (!kAsyncDuelEnabled) return;
     try {
@@ -620,6 +642,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    if (!_localReady) return const SizedBox.shrink();
     return LayoutBuilder(
       builder: (context, constraints) =>
           _buildBody(context, ku, constraints.maxWidth > 720),

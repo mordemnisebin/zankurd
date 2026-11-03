@@ -153,7 +153,6 @@ Future<void> main() async {
       runApp(
         BootHost(
           app: _bootApp(),
-          themeMode: ThemeProvider.load().then((p) => p.mode),
           onError: (_) => ZanKurdApp(
             repository: OfflineZanKurdRepository(),
             authProvider: AuthProvider.offline(),

@@ -35,13 +35,9 @@ import 'launch_frame.dart';
 /// * [app] hata verirse [onError] ile yedek kök kurulur; açılış hataya
 ///   kilitlenmez.
 class BootHost extends StatefulWidget {
-  const BootHost({required this.app, this.themeMode, this.onError, super.key});
+  const BootHost({required this.app, this.onError, super.key});
 
   final Future<Widget> app;
-
-  /// Kullanıcının tema tercihi (yerel, hızlı). Gelene dek sistem parlaklığı:
-  /// yerel açılış ekranı da sistemi izler, ilk kare ona birebir uyar.
-  final Future<ThemeMode>? themeMode;
 
   /// [app] hata verirse kurulacak yedek kök.
   final Widget Function(Object error)? onError;
@@ -52,16 +48,10 @@ class BootHost extends StatefulWidget {
 
 class _BootHostState extends State<BootHost> {
   Widget? _root;
-  ThemeMode _mode = ThemeMode.system;
 
   @override
   void initState() {
     super.initState();
-    widget.themeMode
-        ?.then((mode) {
-          if (mounted && _root == null) setState(() => _mode = mode);
-        })
-        .catchError((Object _) {});
     widget.app.then(
       (root) {
         if (mounted) setState(() => _root = root);
@@ -95,7 +85,9 @@ class _BootHostState extends State<BootHost> {
               title: 'ZanKurd',
               theme: AppTheme.light(),
               darkTheme: AppTheme.dark(),
-              themeMode: _mode,
+              // Uygulama temasına ASLA geçmez: yerel açılış ekranı kullanıcının
+              // uygulama içi tema tercihini bilemez; sistem parlaklığını izler.
+              themeMode: ThemeMode.system,
               home: const Scaffold(
                 key: ValueKey('boot-frame'),
                 body: LaunchFrame(),

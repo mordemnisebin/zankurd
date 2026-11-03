@@ -109,16 +109,34 @@ class DailyTourCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: SahneSpace.x1),
-                      if (doneToday && myEntry != null) ...[
-                        Text(
-                          Tr.forKu(K.homeTourMyRank, isKu, {
-                            'rank': groupThousands(myEntry!.rank),
-                            'correct': groupThousands(myEntry!.correct),
-                            'total': groupThousands(myEntry!.total),
-                          }),
-                          key: const ValueKey('home-daily-task-rank'),
-                          style: SahneType.bodyStrong.copyWith(color: t.tx),
-                        ),
+                      if (doneToday) ...[
+                        // Sıra satırının yeri İLK kareden ayrılır: pano ağdan
+                        // geç gelir ve satır sonradan eklenince düğme ve
+                        // altındaki her şey aşağı sıçrıyordu. Veri yokken aynı
+                        // yazı stilinde görünmez, okuyucudan gizli bir satır.
+                        if (myEntry != null)
+                          Text(
+                            Tr.forKu(K.homeTourMyRank, isKu, {
+                              'rank': groupThousands(myEntry!.rank),
+                              'correct': groupThousands(myEntry!.correct),
+                              'total': groupThousands(myEntry!.total),
+                            }),
+                            key: const ValueKey('home-daily-task-rank'),
+                            style: SahneType.bodyStrong.copyWith(color: t.tx),
+                          )
+                        else
+                          ExcludeSemantics(
+                            child: Opacity(
+                              opacity: 0,
+                              child: Text(
+                                ' ',
+                                key: const ValueKey(
+                                  'home-daily-task-rank-slot',
+                                ),
+                                style: SahneType.bodyStrong,
+                              ),
+                            ),
+                          ),
                         const SizedBox(height: SahneSpace.x1),
                       ],
                       Text(

@@ -4,19 +4,21 @@ import 'package:zankurd_mobile/src/screens/splash_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 void main() {
-  testWidgets('açılış zemini yerel açılış ekranının düz zemini', (
+  testWidgets('açılış zemini yerel açılış ekranının düz zemini (platform)', (
     tester,
   ) async {
-    // Gradyan YOK: yerel ekran düz renk; gradyan ilk satırda bile renk
-    // sıçratırdı (bkz. launch_frame_gecis_test.dart).
-    for (final (label, theme, expected) in [
-      ('açık', AppTheme.light(), AppTheme.lightBg),
-      ('koyu', AppTheme.dark(), AppTheme.bg),
+    // Gradyan YOK: yerel ekran düz renk. Zemin uygulama temasını DEĞİL
+    // platform parlaklığını izler (bkz. acilis_platform_parlaklik_test.dart).
+    addTearDown(tester.platformDispatcher.clearAllTestValues);
+    for (final (label, brightness, expected) in [
+      ('açık', Brightness.light, AppTheme.lightBg),
+      ('koyu', Brightness.dark, AppTheme.bg),
     ]) {
+      tester.platformDispatcher.platformBrightnessTestValue = brightness;
       await tester.pumpWidget(
         MaterialApp(
           key: ValueKey(label),
-          theme: theme,
+          theme: AppTheme.light(),
           home: const SplashScreen(
             next: SizedBox.shrink(),
             duration: Duration(hours: 1),
@@ -27,28 +29,10 @@ void main() {
       final bg = tester.widget<ColoredBox>(
         find.byKey(const ValueKey('launch-frame-bg')),
       );
-      expect(bg.color, expected, reason: '$label tema');
+      expect(bg.color, expected, reason: '$label platform');
+      final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
+      expect(scaffold.backgroundColor, expected, reason: '$label platform');
     }
-  });
-
-  testWidgets('koyu temada beyaz flaş yapmadan tema zeminini kullanır', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: ThemeData.dark(),
-        home: const SplashScreen(
-          next: SizedBox.shrink(),
-          duration: Duration(hours: 1),
-        ),
-      ),
-    );
-    await tester.pump();
-
-    // Logo kendi beyaz karesini taşıdığı için Scaffold zemini artık
-    // tema-duyarlı: koyu modda koyu, açık modda açık (2026-07-17 fix).
-    final scaffold = tester.widget<Scaffold>(find.byType(Scaffold));
-    expect(scaffold.backgroundColor, AppTheme.bg);
   });
 
   testWidgets('süre dolunca sonraki ekrana geçer', (tester) async {

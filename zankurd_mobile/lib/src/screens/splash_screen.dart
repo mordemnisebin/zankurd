@@ -132,16 +132,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    // Uygulama teması değil PLATFORM parlaklığı: yerel açılış ekranı tema
+    // tercihini bilemez; koyu sistemde açık temaya sıçrama olmasın.
+    final platform = MediaQuery.platformBrightnessOf(context);
     // İKİNCİ bir marka karesi YOK: yerel açılış ekranı → BootHost →
     // bu ekran aynı kareyi (düz zemin + aynı logo, aynı boyut/konum) çizer;
     // yalnız gerçek hazırlık (tercih deposu, ikon fontu) arkada biter.
     // Eskiden burada ölçekleyen/solan, farklı boyutlu logo + "ZanKurd" +
     // yükleyici vardı: yerel ekrandan sonra ikinci bir sıçramaydı.
     return Scaffold(
-      backgroundColor: LaunchFrame.backgroundFor(Theme.of(context).brightness),
+      backgroundColor: LaunchFrame.backgroundFor(platform),
       body: Stack(
         children: [
-          const Positioned.fill(child: LaunchFrame()),
+          Positioned.fill(child: LaunchFrame(brightness: platform)),
           // Gizli ikon katmanı — font precache (görünmez, layout etkilemez).
           Positioned(
             left: -1000,
