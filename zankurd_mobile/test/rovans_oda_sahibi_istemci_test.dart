@@ -203,6 +203,31 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('lobi kaydırılmışken "Ayarlar değişti" görünen alanda durur', (
+    tester,
+  ) async {
+    // 2026-11-03 turu: bant liste İÇİNDEydi; liste kaydırılmışsa ekran
+    // dışında kalıyor, oyuncu ayarın değiştiğini hiç görmüyordu.
+    final repo = _T2Repo(me: 'guest-1')
+      ..heartbeat = const RoomLobbyState(
+        hostId: 'host-user',
+        category: 'Dîrok',
+        secondsPerQuestion: 30,
+        questionCount: 20,
+      );
+    await _mount(tester, repo);
+    await tester.drag(find.byType(ListView).first, const Offset(0, -2000));
+    await tester.pump();
+    await _tick(tester);
+
+    final banner = find.byKey(bannerKey);
+    expect(banner, findsOneWidget);
+    final rect = tester.getRect(banner);
+    expect(rect.top, greaterThanOrEqualTo(0));
+    expect(rect.bottom, lessThanOrEqualTo(667), reason: 'bant ekran dışında');
+    expect(rect.top, lessThan(200), reason: 'bant görünen alanın tepesinde');
+  });
+
   testWidgets('düzenleme düğmesi yalnız sahipte; ücret/kapasite seçici yok', (
     tester,
   ) async {

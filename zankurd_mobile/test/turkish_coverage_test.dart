@@ -74,9 +74,10 @@ void main() {
     // kayıt geri geldi. 45 -> 44: 2026-10-19 `curated_siyaset_0009` (Barzani
     // hareketinin ilk lideri belirsiz) emekli. Sayı düşerse banka yüklenen kümede görünmüyor
     // demektir; artarsa sessizce yeni curated id girmiştir.
+    // 44 -> 36: 2026-11-04 sekiz Paradigma hareket-öğretisi sorusu emekli.
     expect(
       curated.length,
-      44,
+      36,
       reason:
           'Curated bankadan oynanabilir soru sayısı değişti. Düştüyse banka '
           'yüklenen kümede görünmüyor ve kapsam ölçümü onu atlıyor demektir; '

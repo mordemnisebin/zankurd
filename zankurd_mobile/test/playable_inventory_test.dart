@@ -204,7 +204,9 @@ void main() {
       // okunaksız, soru görsele bağlı) emekli.
       // 3375 -> 3374 (-1): 2026-10-29 `hat_0094` (Mitanni başkenti, hat_0084
       // ile aynı olgu) emekli.
-      3374,
+      // 3374 -> 3366 (-8): 2026-11-04 sekiz Paradigma hareket-öğretisi
+      // sorusu emekli (`supabase/2026-11-04_oda_kategori_havuzu.sql`).
+      3366,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -297,7 +299,7 @@ void main() {
       // 2026-09-30 dördüncü dalga: tartışmalı siyasi görüşü doğru cevap diye
       // sunan sorular (Paradigma 108, Siyaset 51). Bu iki kategori yeniden
       // açıldığı için ilk kez bu gerekçeyle giriyorlar.
-      'retired=Paradigma': 108,
+      'retired=Paradigma': 116, // 2026-11-04 hareket öğretisi +8
       // 2026-09-30 beşinci dalga (ChatGPT ikinci geçişi): Siyaset 51 -> 68
       // (+17: 8 çoktan seçmeli + 9 doğru/yanlış). Paradigma değişmedi.
       // 2026-09-30 altıncı dalga: +2 (68 -> 70).

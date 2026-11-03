@@ -80,6 +80,15 @@ const _recategorisationFix = <String, String>{
 /// id -> sunucuyu onaydan çıkaran göç. Ekleme göçü tarihî bir kayıttır;
 /// soru yerelde artık oynanmaz, sunucuda ise o göçle `is_approved=false`dır.
 const _retiredAfterSync = <String, String>{
+  // 2026-11-04: hareket öğretisi soruları (Bilim odasında çıkmıştı).
+  'curated_paradigma_0001': 'supabase/2026-11-04_oda_kategori_havuzu.sql',
+  'curated_paradigma_0002': 'supabase/2026-11-04_oda_kategori_havuzu.sql',
+  'curated_paradigma_0003': 'supabase/2026-11-04_oda_kategori_havuzu.sql',
+  'curated_paradigma_0004': 'supabase/2026-11-04_oda_kategori_havuzu.sql',
+  'curated_paradigma_0005': 'supabase/2026-11-04_oda_kategori_havuzu.sql',
+  'curated_paradigma_0006': 'supabase/2026-11-04_oda_kategori_havuzu.sql',
+  'curated_paradigma_0007': 'supabase/2026-11-04_oda_kategori_havuzu.sql',
+  'curated_paradigma_0010': 'supabase/2026-11-04_oda_kategori_havuzu.sql',
   // 2026-10-23 soru kalitesi taraması emeklileri.
   'offline_2818': 'supabase/2026-10-23_icerik_taramasi.sql',
   'edit_ziman_0003': 'supabase/2026-10-23_icerik_taramasi.sql',

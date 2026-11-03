@@ -815,6 +815,22 @@ const Set<String> retiredQuestionIds = <String>{
   // Sunucu karşılığı: supabase/2026-10-29_codex_denetim_duzeltmeleri.sql.
   // ---------------------------------------------------------------------
   'hat_0094', // Mitanni başkenti (hat_0084)
+  // ---------------------------------------------------------------------
+  // 2026-11-04: Bilim (iç kimlik Paradigma) kategorili odada "Abdullah
+  // Öcalan ... -îzm" sorusu çıktı. Bu sekiz yerel soru tek bir hareketin
+  // öğretisini doğru cevap diye sunuyor (dördüncü dalganın ölçütü) ama
+  // yerel pakette emekliye ayrılmamıştı; 2026-10-01 eşitlemesi onları
+  // sunucuda yeniden onaylı yaptı. Sunucu karşılığı:
+  // supabase/2026-11-04_oda_kategori_havuzu.sql.
+  // ---------------------------------------------------------------------
+  'curated_paradigma_0001', // "jineolojî" tanımı
+  'curated_paradigma_0002', // "konfederalîzm"e yakın têgeh
+  'curated_paradigma_0003', // "Hevaltî" paradigmada
+  'curated_paradigma_0004', // Öcalan tarafından önerilen -îzm
+  'curated_paradigma_0005', // netewe-dewlet yerine önerilen model
+  'curated_paradigma_0006', // Jineolojî Rojava devriminde
+  'curated_paradigma_0007', // "ekolojî" paradigmada
+  'curated_paradigma_0010', // Rojava devrimi kadın sembolü
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

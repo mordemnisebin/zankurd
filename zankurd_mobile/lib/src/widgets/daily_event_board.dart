@@ -121,11 +121,7 @@ class _DailyEventBoardCardState extends State<DailyEventBoardCard> {
           future: _board,
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
-              return const SkeletonLine(
-                key: ValueKey('daily-event-board-loading'),
-                height: 120,
-                borderRadius: 16,
-              );
+              return const _BoardSkeleton();
             }
             final board = snapshot.data;
             final hasRows =
@@ -229,6 +225,57 @@ extension on _DailyEventBoardCardState {
           },
         ),
       ],
+    );
+  }
+}
+
+/// Yükleme yer tutucusu: gerçek satırlarla AYNI bileşenden (üç sıra satırı
+/// + dünün birincisi satırı), görünmez metinle, yani aynı yükseklikte.
+///
+/// 2026-11-03 simülatör turu: yer tutucu tek 120 pt'lik çubuktu; gerçek
+/// pano (üç iki-satırlı satır + dünün birincisi) ~230 pt tuttuğundan
+/// sıralama gelince altındaki geri sayım ve butonlar aşağı sıçrıyordu.
+class _BoardSkeleton extends StatelessWidget {
+  const _BoardSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return ExcludeSemantics(
+      child: Stack(
+        key: const ValueKey('daily-event-board-loading'),
+        children: [
+          // Boyu belirleyen görünmez gerçek bileşenler.
+          Opacity(
+            opacity: 0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SahneListGroup(
+                  children: [
+                    for (var rank = 1; rank <= 3; rank++)
+                      SahneListRow.rank(
+                        rank: rank,
+                        title: ' ',
+                        icon: AppIcons.user,
+                        subtitle: ' ',
+                        trailing: const SahneRowValue(' '),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: SahneSpace.x3),
+                const _InfoLine(icon: AppIcons.trophy, text: ' '),
+              ],
+            ),
+          ),
+          // Görünen parıltılı iskelet: aynı boyu doldurur.
+          Positioned.fill(
+            child: LayoutBuilder(
+              builder: (context, c) =>
+                  SkeletonLine(height: c.maxHeight, borderRadius: 16),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

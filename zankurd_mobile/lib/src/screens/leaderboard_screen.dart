@@ -646,6 +646,22 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     );
   }
 
+  /// Arkadaş sıralaması: puana göre azalan, eşitlikte kaynağın sırası.
+  ///
+  /// 2026-11-03 simülatör turu: satırdaki soldaki kare SEVİYEYİ gösteriyordu
+  /// ("3", "2", "4"); oyuncu onu sıra sandı ve 187 puanlı satır "3.",
+  /// 177 puanlı "2." göründü. Kare artık listedeki gerçek sırayı yazar ve
+  /// sıra puandan türetilir; sunucu sırası (`get_friends_leaderboard`) ile
+  /// aynıdır, ama eski sürücü yolunda ya da puansız satırlarda da tutar.
+  static List<Friend> _rankedFriends(List<Friend> friends) {
+    final indexed = friends.indexed.toList()
+      ..sort((a, b) {
+        final byScore = b.$2.totalScore.compareTo(a.$2.totalScore);
+        return byScore != 0 ? byScore : a.$1.compareTo(b.$1);
+      });
+    return [for (final e in indexed) e.$2];
+  }
+
   Widget _buildFriendsTab(bool ku) {
     return FutureBuilder<List<Friend>>(
       future: _friendsFuture,
@@ -662,7 +678,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             onRetry: _loadData,
           );
         } else {
-          final friends = snap.data ?? stale ?? [];
+          final friends = _rankedFriends(snap.data ?? stale ?? []);
           if (friends.isEmpty) {
             content = AppEmptyState(
               icon: AppIcons.peopleGroup,
@@ -681,8 +697,14 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                 SahneListGroup(
                   dividerIndent: SahneSpace.x3 + 36 + SahneSpace.x3,
                   children: [
-                    for (final friend in friends)
-                      _FriendRankRow(friend: friend, isKu: ku),
+                    for (final (index, friend) in friends.indexed)
+                      _FriendRankRow(
+                        friend: friend,
+                        isKu: ku,
+                        rank: index + 1,
+                        isSelf:
+                            widget.repository.currentUserId == friend.friendId,
+                      ),
                   ],
                 ),
               ],
@@ -1391,10 +1413,17 @@ class _RankRow extends StatelessWidget {
 ///
 /// Durum noktası yuvarlak ve yeşildir; bilinmeyen varlık işaret üretmez.
 class _FriendRankRow extends StatelessWidget {
-  const _FriendRankRow({required this.friend, required this.isKu});
+  const _FriendRankRow({
+    required this.friend,
+    required this.isKu,
+    required this.rank,
+    required this.isSelf,
+  });
 
   final Friend friend;
   final bool isKu;
+  final int rank;
+  final bool isSelf;
 
   @override
   Widget build(BuildContext context) {
@@ -1412,15 +1441,18 @@ class _FriendRankRow extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Seviye karesi
+            // Sıra karesi (seviye değil)
             DecoratedBox(
               decoration: ShapeDecoration(color: t.s2, shape: SahneShape.s),
               child: SizedBox.square(
                 dimension: 36,
                 child: Center(
                   child: Text(
-                    groupThousands(friend.level),
-                    style: SahneType.captionStrong.copyWith(color: t.tx2),
+                    groupThousands(rank),
+                    key: ValueKey('friend-rank-number-${friend.friendId}'),
+                    style: SahneType.captionStrong.copyWith(
+                      color: isSelf ? t.tx : t.tx2,
+                    ),
                   ),
                 ),
               ),
@@ -1463,15 +1495,29 @@ class _FriendRankRow extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    PlayerIdentity.resolveNameWithTag(
-                      friend.friendName,
-                      isKu: isKu,
-                      tag: friend.friendTag,
-                    ),
-                    style: SahneType.bodyStrong.copyWith(color: t.tx),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          PlayerIdentity.resolveNameWithTag(
+                            friend.friendName,
+                            isKu: isKu,
+                            tag: friend.friendTag,
+                          ),
+                          style: SahneType.bodyStrong.copyWith(color: t.tx),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      if (isSelf) ...[
+                        const SizedBox(width: SahneSpace.x2),
+                        SahneBadge(
+                          key: ValueKey('friend-self-badge-${friend.friendId}'),
+                          label: Tr.forKu(K.you, isKu),
+                          tone: SahneBadgeTone.gold,
+                        ),
+                      ],
+                    ],
                   ),
                   if (friendActivityLabel(context, friend) case final label?)
                     Text(

@@ -77,15 +77,28 @@ class _ForegroundPushBannerState extends State<ForegroundPushBanner> {
   @override
   Widget build(BuildContext context) {
     final push = _current;
-    return Stack(
+    // Bant sayfanın ÜSTÜNE binmez, sayfayı aşağı iter.
+    //
+    // 2026-11-03 simülatör turu: bant ekranın en üstünde kayan bir katmandı
+    // ve sayfa başlığının tam üstüne düşüyordu; başlık 6 sn okunmuyordu.
+    // Başlığın nerede durduğunu bilemeyiz (her ekranın kendi üst çubuğu
+    // var), bu yüzden bant yer kaplar: sayfa onun altından başlar ve
+    // başlık örtülmez. Güvenli alan (çentik) bantta bir kez sayılır; sayfa
+    // bu sürede üst güvenli alanı yeniden eklemesin diye kaldırılır.
+    // Çocuğun ağacı her iki durumda AYNI widget tipleriyle sarılır; bant
+    // gelip gidince sayfanın durumu (yarım quiz, kaydırma) sıfırlanmaz.
+    return Column(
       textDirection: TextDirection.ltr,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Positioned.fill(child: widget.child),
         if (push != null)
-          Positioned(
-            top: MediaQuery.paddingOf(context).top + 8,
-            left: 12,
-            right: 12,
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              12,
+              MediaQuery.paddingOf(context).top + 8,
+              12,
+              8,
+            ),
             child: _Banner(
               key: const ValueKey('foreground-push-banner'),
               push: push,
@@ -93,6 +106,13 @@ class _ForegroundPushBannerState extends State<ForegroundPushBanner> {
               onDismiss: _dismiss,
             ),
           ),
+        Expanded(
+          child: MediaQuery.removePadding(
+            context: context,
+            removeTop: push != null,
+            child: widget.child,
+          ),
+        ),
       ],
     );
   }

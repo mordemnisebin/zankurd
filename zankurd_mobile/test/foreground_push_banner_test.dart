@@ -196,4 +196,67 @@ void main() {
       );
     }
   });
+
+  testWidgets('bant sayfa başlığını örtmez; sayfa durumu korunur', (
+    tester,
+  ) async {
+    final events = StreamController<ForegroundPush>.broadcast();
+    addTearDown(events.close);
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<LanguageProvider>(
+            create: (_) => LanguageProvider(initialLang: 'tr'),
+          ),
+        ],
+        child: MaterialApp(
+          builder: (context, child) =>
+              ForegroundPushBanner(events: events.stream, child: child!),
+          home: Scaffold(
+            appBar: AppBar(title: const Text('Sayfa başlığı')),
+            body: const _Counter(),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.byKey(const ValueKey('counter')));
+    await tester.pump();
+    expect(find.text('1'), findsOneWidget);
+
+    events.add(request);
+    await tester.pump();
+
+    // 2026-11-03: bant başlığın üstüne biniyordu.
+    final bannerRect = tester.getRect(banner);
+    final titleRect = tester.getRect(find.text('Sayfa başlığı'));
+    expect(
+      bannerRect.bottom,
+      lessThanOrEqualTo(titleRect.top),
+      reason: 'bant sayfa başlığını örtüyor',
+    );
+    expect(find.text('1'), findsOneWidget, reason: 'sayfa durumu sıfırlandı');
+    expect(tester.getSize(open).height, greaterThanOrEqualTo(48));
+
+    await tester.pump(const Duration(seconds: 7));
+    expect(banner, findsNothing);
+    expect(find.text('1'), findsOneWidget);
+  });
+}
+
+class _Counter extends StatefulWidget {
+  const _Counter();
+
+  @override
+  State<_Counter> createState() => _CounterState();
+}
+
+class _CounterState extends State<_Counter> {
+  int n = 0;
+
+  @override
+  Widget build(BuildContext context) => TextButton(
+    key: const ValueKey('counter'),
+    onPressed: () => setState(() => n++),
+    child: Text('$n'),
+  );
 }
