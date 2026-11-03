@@ -275,9 +275,9 @@ void main() {
     );
   });
 
-  test('applied.md satırı ⏳ (canlıya uygulanmadı)', () {
+  test('applied.md satırı ✅ (canlıda)', () {
     expect(
-      RegExp(r'2026-11-03_rovans_oda_sahibi\.sql \| ⏳').hasMatch(applied),
+      RegExp(r'2026-11-03_rovans_oda_sahibi\.sql \| ✅').hasMatch(applied),
       isTrue,
     );
   });
