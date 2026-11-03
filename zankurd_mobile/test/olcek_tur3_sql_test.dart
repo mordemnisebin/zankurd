@@ -62,14 +62,14 @@ void main() {
     return code.substring(start, end);
   }
 
-  test('tek işlem, küçük harfli begin/commit; geri alma da; uygulanmadı ⏳', () {
+  test('tek işlem, küçük harfli begin/commit; geri alma da; canlıda ✅', () {
     expect(code.trimLeft(), startsWith('begin;'));
     expect(code.trimRight(), endsWith('commit;'));
     expect(geri.trimLeft(), startsWith('begin;'));
     expect(geri.trimRight(), endsWith('commit;'));
     expect(raw, isNot(contains('COMMIT')));
     expect(geriRaw, isNot(contains('COMMIT')));
-    expect(applied, contains('2026-11-05_olcek_tur3.sql | ⏳'));
+    expect(applied, contains('2026-11-05_olcek_tur3.sql | ✅'));
   });
 
   test('tablo düzeyi kilit yok; büyük tablo indeksi göçte değil', () {
