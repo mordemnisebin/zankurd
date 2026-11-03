@@ -19,6 +19,7 @@ import '../models/add_friend_outcome.dart';
 import '../models/friend.dart';
 import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
+import '../models/weekly_league.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
 import '../models/public_profile.dart';
@@ -745,6 +746,35 @@ class SupabaseZanKurdRepository
   /// Hata ya da eksik RPC `null` döner: eski `leaderboard_entries`
   /// görünümüne (toplam XP) DÜŞÜLMEZ, satır hiç çizilmez. Dönem puanı
   /// doğrulanamıyorsa yanlış iddia sessizce tercih edilir (2026-09-30).
+  @override
+  bool get leagueSupported => true;
+
+  /// `get_my_league` (2026-11-05_haftalik_lig.sql). Göç uygulanmamışsa
+  /// (PGRST202/42883) null: Lig sekmesi gizlenir, eski sıralama çalışır.
+  /// Ağ/sunucu hatası ise FIRLATILIR; "lig yok" ile "lig okunamadı" ayrıdır.
+  @override
+  Future<WeeklyLeague?> getMyLeague() async {
+    if (currentUserId == null) return null;
+    try {
+      final raw = await client.rpc<dynamic>('get_my_league');
+      if (raw is! Map) return null;
+      return WeeklyLeague.fromJson(Map<String, dynamic>.from(raw));
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) return null;
+      _recordError(error, stack, reason: 'getMyLeague failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> ackLeagueResult() async {
+    try {
+      await client.rpc<dynamic>('ack_my_league_result');
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'ackLeagueResult failed');
+    }
+  }
+
   @override
   Future<LeaderboardEntry?> getMyLeaderboardRank(
     LeaderboardPeriod period,
