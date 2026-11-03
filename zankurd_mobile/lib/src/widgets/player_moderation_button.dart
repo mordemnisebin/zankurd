@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../config/feature_flags.dart';
 import '../data/chat_mute_store.dart';
 import '../data/zankurd_repository.dart';
 import '../models/friend.dart';
@@ -171,7 +172,8 @@ Future<void> showPlayerModerationSheet({
         children: [
           // 2026-10-23: sıralamada ya da aynı odada biriyle karşılaşan
           // oyuncunun arkadaş ekleyebilmesi gerekir; bu satır EN ÜSTTE.
-          _AddFriendTile(repository: repository, playerId: playerId),
+          if (FeatureGate.social)
+            _AddFriendTile(repository: repository, playerId: playerId),
           if (onKick != null)
             ListTile(
               key: const ValueKey('player-kick-action'),

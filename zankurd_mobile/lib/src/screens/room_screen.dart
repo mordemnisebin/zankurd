@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../config/feature_flags.dart';
 import '../services/poll_cadence.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart' show CustomSemanticsAction;
@@ -282,7 +283,9 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
     _startPolling();
     _startStatusPolling();
     final hudRoomId = room.id;
-    if (hudRoomId != null) {
+    // Sohbet kapalıysa (uzak anahtar `chat_enabled` ya da 13 yaş altı
+    // beyanı, bkz. `FeatureGate.chat`) akışa hiç abone olunmaz.
+    if (hudRoomId != null && FeatureGate.chat) {
       _chatHud = LobbyChatController(
         repository: widget.repository,
         roomId: hudRoomId,
@@ -1066,7 +1069,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
       tag: me?.tag,
     );
     _reactionController.triggerReaction('$emoji $label', senderName: myName);
-    if (roomId == null) return;
+    if (roomId == null || !FeatureGate.chat) return;
     try {
       await widget.repository.sendRoomMessage(roomId: roomId, text: emoji);
     } catch (_) {
@@ -1206,6 +1209,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
   bool _roomInvitesSupported = false;
 
   bool get _canInviteFriends =>
+      FeatureGate.social &&
       _roomInvitesSupported &&
       room.id != null &&
       room.isCustom &&
@@ -1556,7 +1560,9 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                   // görünüyordu. Sohbet artık başlıkta küçük ikon düğmesi.
                   // Yalnızken kimseyle konuşulmaz: gizli (kurul 2026-10-19).
                   trailing:
-                      room.id != null && (room.players.length >= 2 || _chatOpen)
+                      FeatureGate.chat &&
+                          room.id != null &&
+                          (room.players.length >= 2 || _chatOpen)
                       ? _withChatBadge(
                           SahneIconButton(
                             key: const ValueKey('room-chat-toggle'),
@@ -1608,7 +1614,9 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                                     // dışında açılıyor, düğmeye basan "hiçbir şey
                                     // olmadı" sanıp kapatıyordu. Artık çubuğun hemen
                                     // altında, göründüğü yerde açılır.
-                                    if (room.id != null && _chatOpen) ...[
+                                    if (FeatureGate.chat &&
+                                        room.id != null &&
+                                        _chatOpen) ...[
                                       if (_chatOpen && room.id != null) ...[
                                         const SizedBox(height: SahneSpace.x2),
                                         padded(

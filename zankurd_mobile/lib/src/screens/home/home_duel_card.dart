@@ -1,3 +1,4 @@
+import '../../config/runtime_config.dart';
 import 'package:zankurd_mobile/src/utils/number_format.dart';
 
 import 'dart:async';
@@ -98,6 +99,9 @@ class HomeDuelCard extends StatefulWidget {
   /// (bkz. `PlayHubScreen.asyncDuelEnabled`).
   final bool asyncDuelEnabled;
 
+  /// Derleme bayrağı VE uzak kapatma anahtarı (bkz. `FeatureGate`).
+  bool get duelOn => asyncDuelEnabled && RuntimeConfigService.current.asyncDuel;
+
   @override
   State<HomeDuelCard> createState() => _HomeDuelCardState();
 }
@@ -124,7 +128,7 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
   void initState() {
     super.initState();
     unawaited(_load());
-    if (widget.asyncDuelEnabled) {
+    if (widget.duelOn) {
       unawaited(
         asyncDuelChallengeAvailable(widget.repository).then((available) {
           if (mounted && available) setState(() => _challengeAvailable = true);
@@ -140,7 +144,7 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
   }
 
   Future<void> _load() async {
-    if (!widget.asyncDuelEnabled) return;
+    if (!widget.duelOn) return;
     // Sunucuya ulaşılamıyorken çekim boşuna hata kaydı üretirdi.
     if (RemoteAvailability.read(context)?.socialLocked ?? false) return;
     final epoch = ++_epoch;
@@ -245,8 +249,7 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.asyncDuelEnabled ||
-        RemoteAvailability.socialLockedWatch(context)) {
+    if (!widget.duelOn || RemoteAvailability.socialLockedWatch(context)) {
       return const SizedBox.shrink();
     }
     final readyCount = _ready.length;

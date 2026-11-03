@@ -16,6 +16,7 @@ import 'firebase_options.dart';
 import 'src/utils/join_deep_link.dart';
 import 'src/utils/bundled_font_licenses.dart';
 import 'src/config/app_config.dart';
+import 'src/config/runtime_config.dart';
 import 'src/data/offline_zankurd_repository.dart';
 import 'src/data/question_bank_loader.dart';
 import 'src/data/supabase_zankurd_repository.dart';
@@ -55,6 +56,7 @@ import 'src/utils/error_reporter.dart';
 import 'src/widgets/boot_host.dart';
 import 'src/widgets/foreground_push_banner.dart';
 import 'src/widgets/responsive_wrapper.dart';
+import 'src/widgets/update_gate.dart';
 import 'src/services/app_haptics.dart';
 
 /// Açılış penceresinde ısıtılan iş.
@@ -219,6 +221,13 @@ Future<Widget> _bootApp() async {
     reason: 'AnalyticsConsentProvider load',
     fallback: AnalyticsConsentProvider.new,
   );
+  // Uzak ayar: yalnız ÖNBELLEK burada okunur (tek yerel okuma); ağ isteği
+  // aşağıda arka planda başlar ve açılışı bekletmez (bkz. `RuntimeConfig`).
+  final runtimeConfigFuture = bootStep(
+    RuntimeConfigService.load(),
+    reason: 'RuntimeConfigService load',
+    fallback: RuntimeConfigService.new,
+  );
   final questionBankFuture = bootStepVoid(
     QuestionBankLoader.instance.load(),
     reason: 'question bank load',
@@ -361,6 +370,7 @@ Future<Widget> _bootApp() async {
   await hapticsFuture;
   final bilingualLabelsProvider = await bilingualLabelsFuture;
   final analyticsConsentProvider = await analyticsConsentFuture;
+  final runtimeConfigService = await runtimeConfigFuture;
 
   // İlk kareyi bekletmeyen işler. Hatalar yutulmaz, bildirilir; ama
   // hiçbiri uygulamanın açılmasını engellemez.
@@ -373,6 +383,22 @@ Future<Widget> _bootApp() async {
   }
 
   startInBackground(premiumService.warmUp(), 'premium warmUp');
+  // Uzak ayar okuyucusu `Supabase.instance`ı TEMBEL alır: açılış çevrimdışı
+  // kaldıysa ilk deneme sessizce düşer, öne dönüşteki (≥15 dk) tazeleme ya
+  // da sonradan açılan bağlantı yeniden dener.
+  runtimeConfigService.fetcher = _fetchRuntimeConfig;
+  if (remoteReady) {
+    startInBackground(runtimeConfigService.refresh(), 'runtime config refresh');
+  } else {
+    remoteAvailability.addListener(() {
+      if (remoteAvailability.reachable) {
+        startInBackground(
+          runtimeConfigService.refresh(),
+          'runtime config refresh (late)',
+        );
+      }
+    });
+  }
   // İki rıza ayrı (2026-10-29): kullanım analizi ve hata raporları
   // seçim yokken kapalı; açık olan yalnız kendi hizmetini başlatır.
   if (analyticsConsentProvider.enabled) {
@@ -459,10 +485,19 @@ Future<Widget> _bootApp() async {
     untimedModeProvider: untimedModeProvider,
     bilingualLabelsProvider: bilingualLabelsProvider,
     analyticsConsentProvider: analyticsConsentProvider,
+    runtimeConfigService: runtimeConfigService,
     remoteAvailability: remoteAvailability,
     premiumService: premiumService,
   );
 }
+
+/// `app_runtime_config` tek satırı. Tablo yoksa/erişilemezse null ya da
+/// istisna: [RuntimeConfigService] ikisini de "ayar yok" sayar.
+Future<Map<String, dynamic>?> _fetchRuntimeConfig() => Supabase.instance.client
+    .from('app_runtime_config')
+    .select()
+    .eq('id', 1)
+    .maybeSingle();
 
 /// Uygulama kökü navigatorunun anahtarı.
 ///
@@ -607,6 +642,7 @@ class ZanKurdApp extends StatelessWidget {
     UntimedModeProvider? untimedModeProvider,
     BilingualLabelsProvider? bilingualLabelsProvider,
     AnalyticsConsentProvider? analyticsConsentProvider,
+    RuntimeConfigService? runtimeConfigService,
     RemoteAvailability? remoteAvailability,
     PremiumService? premiumService,
     super.key,
@@ -621,6 +657,7 @@ class ZanKurdApp extends StatelessWidget {
            bilingualLabelsProvider ?? BilingualLabelsProvider(),
        analyticsConsentProvider =
            analyticsConsentProvider ?? AnalyticsConsentProvider(),
+       runtimeConfigService = runtimeConfigService ?? RuntimeConfigService(),
        remoteAvailability =
            remoteAvailability ?? RemoteAvailability(reachable: true),
        premiumService = premiumService ?? PremiumService.fallback();
@@ -638,6 +675,7 @@ class ZanKurdApp extends StatelessWidget {
   final UntimedModeProvider untimedModeProvider;
   final BilingualLabelsProvider bilingualLabelsProvider;
   final AnalyticsConsentProvider analyticsConsentProvider;
+  final RuntimeConfigService runtimeConfigService;
   final RemoteAvailability remoteAvailability;
   final PremiumService premiumService;
 
@@ -678,6 +716,9 @@ class ZanKurdApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<AnalyticsConsentProvider>.value(
           value: analyticsConsentProvider,
+        ),
+        ChangeNotifierProvider<RuntimeConfigService>.value(
+          value: runtimeConfigService,
         ),
         ChangeNotifierProvider<RemoteAvailability>.value(
           value: remoteAvailability,
@@ -740,9 +781,11 @@ class ZanKurdApp extends StatelessWidget {
                 // etkin parlaklığa göre verilir.
                 child: AnnotatedRegion<SystemUiOverlayStyle>(
                   value: _overlayStyleFor(context),
-                  child: ForegroundPushBanner(
-                    child: ResponsiveWrapper(
-                      child: child ?? const SizedBox.shrink(),
+                  child: UpdateGate(
+                    child: ForegroundPushBanner(
+                      child: ResponsiveWrapper(
+                        child: child ?? const SizedBox.shrink(),
+                      ),
                     ),
                   ),
                 ),

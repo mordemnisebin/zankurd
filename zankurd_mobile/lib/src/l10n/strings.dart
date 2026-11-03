@@ -144,6 +144,48 @@ class Tr {
       'tr':
           'Uygulama çökerse teknik hata kaydını gönder; düzeltmemize yardım eder',
     },
+    K.updateRequiredTitle: {
+      'ku': 'Nûvekirin pêwîst e',
+      'tr': 'Güncelleme gerekli',
+    },
+    K.updateRequiredBody: {
+      'ku':
+          'Ev guhertoya ZanKurdê êdî nayê piştgirîkirin. Ji bo ku tu bidomînî, ji dukanê nû bike.',
+      'tr':
+          'Bu sürüm artık desteklenmiyor. Devam etmek için ZanKurd\'u mağazadan güncelle.',
+    },
+    K.updateRequiredAction: {'ku': 'Dukanê veke', 'tr': 'Mağazayı aç'},
+    K.updateSoftBanner: {
+      'ku': 'Guhertoyeke nû ya ZanKurdê heye.',
+      'tr': 'ZanKurd\'un yeni bir sürümü var.',
+    },
+    K.updateSoftAction: {'ku': 'Nû bike', 'tr': 'Güncelle'},
+    K.consentSheetTitle: {
+      'ku': 'Em sepanê bi hev re baştir bikin',
+      'tr': 'Uygulamayı birlikte geliştirelim',
+    },
+    K.consentSheetBody: {
+      'ku':
+          'Daneyên bikaranînê û ragihandinên çewtiyan alîkariya me dikin ku ZanKurd zûtir û bêçewtî bibe. Heke nexwazî, girtî bihêle; tu dikarî her dem ji Mîhengê biguherînî.',
+      'tr':
+          'Kullanım verisi ve hata raporları ZanKurd\'u daha hızlı ve hatasız yapmamıza yardım eder. İstemezsen kapalı bırak; Ayarlar\'dan istediğin zaman değiştirebilirsin.',
+    },
+    K.consentSheetAccept: {'ku': 'Qebûl dikim', 'tr': 'Kabul ediyorum'},
+    K.consentSheetDecline: {'ku': 'Niha na', 'tr': 'Şimdi değil'},
+    K.ageGateTitle: {
+      'ku': 'Tu ji 13 salî mezintir î?',
+      'tr': '13 yaşından büyük müsün?',
+    },
+    K.ageGateBody: {
+      'ku':
+          'Ji bo zarokên bin 13 salî suhbet, taybetmendiyên hevalan û analîza bikaranînê girtî dimînin; hînbûn û lîstika tenê vekirî ne.',
+      'tr':
+          '13 yaşından küçükler için sohbet, arkadaş özellikleri ve kullanım analizi kapalı kalır; öğrenme ve tek başına oyun açıktır.',
+    },
+    K.ageGateMinorOff: {
+      'ku': 'Ev taybetmendî ji bo bin 13 salî girtî ye.',
+      'tr': 'Bu özellik 13 yaş altı için kapalı.',
+    },
     K.reportAbuse: {
       'ku': 'Bikaranîna xerab ragihîne',
       'tr': 'Kötüye kullanım bildir',
@@ -6526,4 +6568,16 @@ class K {
   static const profileStatStreak = 'profile.stat.streak';
   static const profileStatCoins = 'profile.stat.coins';
   static const profileXpToNext = 'profile.xpToNext';
+  static const updateRequiredTitle = 'update.required.title';
+  static const updateRequiredBody = 'update.required.body';
+  static const updateRequiredAction = 'update.required.action';
+  static const updateSoftBanner = 'update.soft.banner';
+  static const updateSoftAction = 'update.soft.action';
+  static const consentSheetTitle = 'consent.sheet.title';
+  static const consentSheetBody = 'consent.sheet.body';
+  static const consentSheetAccept = 'consent.sheet.accept';
+  static const consentSheetDecline = 'consent.sheet.decline';
+  static const ageGateTitle = 'ageGate.title';
+  static const ageGateBody = 'ageGate.body';
+  static const ageGateMinorOff = 'ageGate.minorOff';
 }

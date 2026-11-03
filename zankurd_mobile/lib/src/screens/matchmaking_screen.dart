@@ -1,3 +1,4 @@
+import '../config/runtime_config.dart';
 import 'package:zankurd_mobile/src/utils/number_format.dart';
 
 import 'dart:async';
@@ -103,6 +104,9 @@ class MatchmakingScreen extends StatefulWidget {
   /// kapalıyken de "sırayla düello" teklifini açabilsin diye parametredir
   /// (bkz. `PlayHubScreen.asyncDuelEnabled` — aynı desen).
   final bool asyncDuelEnabled;
+
+  /// Derleme bayrağı VE uzak kapatma anahtarı (bkz. `FeatureGate`).
+  bool get duelOn => asyncDuelEnabled && RuntimeConfigService.current.asyncDuel;
 
   @override
   State<MatchmakingScreen> createState() => _MatchmakingScreenState();
@@ -858,7 +862,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   /// [asyncDuelEnabled] kapalıyken [asyncDuel] hiç üretilmez — diyalog eski
   /// iki düğmeli hâlindedir ve `bot`/`cancel` dışında bir değer dönmez.
   Future<_NoOpponentChoice?> _showBotPrompt() async {
-    if (!widget.asyncDuelEnabled) {
+    if (!widget.duelOn) {
       // Bayrak kapalıyken diyalog BİREBİR eski hâlidir: aynı iki metin,
       // aynı iki düğme. Sunucu göçü uygulanana dek (bkz. `kAsyncDuelEnabled`
       // yorumu) mevcut kullanıcı hiçbir fark görmez.

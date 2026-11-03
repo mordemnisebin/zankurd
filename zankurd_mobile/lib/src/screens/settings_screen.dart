@@ -18,6 +18,7 @@ import '../utils/confirm_word.dart';
 import 'level_placement_screen.dart';
 import '../providers/bilingual_labels_provider.dart';
 import '../providers/auth_provider.dart';
+import '../data/age_gate_store.dart';
 import '../providers/analytics_consent_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../providers/untimed_mode_provider.dart';
@@ -458,7 +459,10 @@ class _SettingsScreenState extends State<SettingsScreen>
                       trailing: Switch(
                         key: const ValueKey('analytics-consent-switch'),
                         value: consent.enabled,
-                        onChanged: _setAnalyticsConsent,
+                        // 13 yaş altı beyanında ölçüm açılamaz (bkz. `AgeGate`).
+                        onChanged: AgeGate.isMinor
+                            ? null
+                            : _setAnalyticsConsent,
                       ),
                     ),
                   ),
@@ -470,7 +474,9 @@ class _SettingsScreenState extends State<SettingsScreen>
                       trailing: Switch(
                         key: const ValueKey('crash-reports-consent-switch'),
                         value: consent.crashReportsEnabled,
-                        onChanged: _setCrashReportsConsent,
+                        onChanged: AgeGate.isMinor
+                            ? null
+                            : _setCrashReportsConsent,
                       ),
                     ),
                   ),

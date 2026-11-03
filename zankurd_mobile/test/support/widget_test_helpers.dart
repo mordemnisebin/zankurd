@@ -194,6 +194,12 @@ class TestMockZanKurdRepository extends MockZanKurdRepository {
 MockZanKurdRepository freshMockRepository() {
   SharedPreferences.setMockInitialValues({
     'zankurd.onboarding.seen': true,
+    // Yaş ve rıza soruları (StartupPrompts) kabukta 2 sn sonra çıkar; bu
+    // kurulumla açılan testler "zaten soruldu" durumundan başlar, yoksa
+    // `pumpAndSettle` uzun süren her test araya bir alt sayfa girmiş bulur.
+    // Soruların kendi davranışı `riza_yas_beyani_test.dart`ta sınanır.
+    'zankurd.ageGate.v1.asked': true,
+    'zankurd.consentPrompt.v1.shown': true,
     'zankurd.profileName.completed.user': true,
     'zankurd.quiz_tutorial.seen': true,
     // Günlük bedava joker hakkı TÜKENMİŞ başlar: eski joker testleri jeton

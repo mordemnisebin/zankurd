@@ -1,6 +1,9 @@
 /// Derleme-zamanı ürün kapıları. Canlı RPC/şema hazır olmadan UI vaat etmesin.
 library;
 
+import '../data/age_gate_store.dart';
+import 'runtime_config.dart';
+
 /// `redeem_referral_code` 2026-09-05'te canlıya basıldı (applied.md ✅).
 /// Davet ödülü kartı açıktır.
 const kReferralRewardsEnabled = true;
@@ -46,3 +49,33 @@ const kAsyncDuelEnabled = true;
 /// fiyat, katman, mağaza ürünleri ve sözleşme/vergi/banka tamamlanınca
 /// açılır. Kapalıyken paywall'a giden hiçbir giriş görünmez.
 const kProEnabled = false;
+
+/// Bayrak = derleme-zamanı sabit VE uzak anahtar (2026-11-04).
+///
+/// Yukarıdaki sabitler "bu sürüm özelliği taşıyor mu"yu söyler; uzak
+/// anahtar (`RuntimeConfigService.current`, tablo `app_runtime_config`)
+/// canlıda sorun çıkan özelliği YENİ SÜRÜM OLMADAN kapatır. İkisi VE'lenir:
+/// derleme kapalıysa uzak açamaz (sunucu hazır değildir), uzak kapalıysa
+/// derleme açık olsa da kapanır. Uzak değer ulaşılamazsa/yoksa AÇIK
+/// varsayılır, yani bugünkü davranış değişmez.
+///
+/// Değer, ekran yeniden çizildiğinde okunur; açık bir ekran kendiliğinden
+/// kapanmaz (oyuncu oyunun ortasında atılmaz), bir sonraki açılışta uygulanır.
+class FeatureGate {
+  const FeatureGate._();
+
+  static bool get asyncDuel =>
+      kAsyncDuelEnabled && RuntimeConfigService.current.asyncDuel;
+  static bool get tournament =>
+      kTournamentEnabled && RuntimeConfigService.current.tournament;
+  static bool get crowdRooms => RuntimeConfigService.current.crowdRooms;
+  static bool get shareChallenge => RuntimeConfigService.current.shareChallenge;
+  static bool get streakRescue => RuntimeConfigService.current.streakRescue;
+  static bool get pushV2 => RuntimeConfigService.current.pushV2;
+
+  /// Sohbet: uzak anahtar VE 13 yaşından büyük beyanı (bkz. `AgeGate`).
+  static bool get chat => RuntimeConfigService.current.chat && !AgeGate.isMinor;
+
+  /// Arkadaş/sosyal özellikler: yalnız 13 yaş beyanına bağlı.
+  static bool get social => !AgeGate.isMinor;
+}

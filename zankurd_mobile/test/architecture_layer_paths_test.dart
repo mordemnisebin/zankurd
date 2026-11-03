@@ -92,7 +92,7 @@ void main() {
         'lib/src/screens/play_hub_screen.dart',
       ).readAsStringSync();
       expect(playHub, isNot(contains('_moreOpen')));
-      final flagIdx = playHub.indexOf('if (kTournamentEnabled)');
+      final flagIdx = playHub.indexOf('if (FeatureGate.tournament)');
       final tourneyIdx = playHub.indexOf("ValueKey('play-hub-tournament')");
       expect(flagIdx, greaterThanOrEqualTo(0));
       expect(

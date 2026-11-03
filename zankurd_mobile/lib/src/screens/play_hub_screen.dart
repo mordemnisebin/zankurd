@@ -1,3 +1,4 @@
+import '../config/runtime_config.dart';
 import 'package:zankurd_mobile/src/utils/number_format.dart';
 
 import 'home/room_invite_card.dart';
@@ -55,6 +56,9 @@ class PlayHubScreen extends StatefulWidget {
   /// kapalıyken de açabilsin diye parametredir.
   final bool asyncDuelEnabled;
 
+  /// Derleme bayrağı VE uzak kapatma anahtarı (bkz. `FeatureGate`).
+  bool get duelOn => asyncDuelEnabled && RuntimeConfigService.current.asyncDuel;
+
   @override
   State<PlayHubScreen> createState() => _PlayHubScreenState();
 }
@@ -110,7 +114,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       if (mounted) unawaited(_refreshModeBadges());
     });
     _asyncDuelInboxSignal.addListener(_refreshModeBadges);
-    if (widget.asyncDuelEnabled) {
+    if (widget.duelOn) {
       unawaited(
         asyncDuelChallengeAvailable(widget.repository).then((available) {
           if (mounted && available) setState(() => _challengeAvailable = true);
@@ -270,7 +274,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
   Future<void> _refreshModeBadges() async {
     await _wheelStatus.refresh();
-    if (!widget.asyncDuelEnabled) return;
+    if (!widget.duelOn) return;
     try {
       final duels = await widget.repository.loadMyAsyncDuels();
       final mine = duels
@@ -300,8 +304,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   /// "nasıl?" (canlı ya da sırayla) kart seçer.
   Future<void> _pickOpponent(_PlayMode mode) async {
     final friendAvailable =
-        mode == _PlayMode.live ||
-        (widget.asyncDuelEnabled && _challengeAvailable);
+        mode == _PlayMode.live || (widget.duelOn && _challengeAvailable);
     final choice = await showSahneSheet<_Opponent>(
       context: context,
       title: context.t(K.pickOpponent),
@@ -673,7 +676,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             refreshSignal: widget.refreshSignal,
             topGap: false,
           ),
-        if (widget.asyncDuelEnabled && !locked)
+        if (widget.duelOn && !locked)
           AsyncDuelTurnSection(
             repository: widget.repository,
             refreshSignal: _asyncDuelInboxSignal,
@@ -717,11 +720,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         const SizedBox(height: SahneSpace.x3),
         SahneListGroup(
           children: [
-            if (widget.asyncDuelEnabled) asyncDuelRow,
+            if (widget.duelOn) asyncDuelRow,
             wheelTile,
             friendsRow,
-            if (!widget.asyncDuelEnabled || kTournamentEnabled) ...[
-              if (!widget.asyncDuelEnabled)
+            if (!widget.duelOn || FeatureGate.tournament) ...[
+              if (!widget.duelOn)
                 SahneListRow.icon(
                   key: const ValueKey('play-hub-async-duel-soon'),
                   icon: AppIcons.shuffle,
@@ -732,11 +735,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     tone: SahneBadgeTone.soon,
                   ),
                 ),
-              // Turnuva (bkz. `kTournamentEnabled`): 2026-10-27'ye dek
+              // Turnuva (bkz. `FeatureGate.tournament`): 2026-10-27'ye dek
               // "Daha fazla" satırının ARDINDAydı; rakiplerde (QuizDuel
               // Arena, Quiz of Kings) modlar oyun ekranında doğrudan durur.
               // Tek öğe için ara dokunuş gereksizdi.
-              if (kTournamentEnabled) ...[
+              if (FeatureGate.tournament) ...[
                 _lockedTap(
                   locked,
                   SahneListRow.icon(
@@ -768,7 +771,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         ),
         // 'Bu hafta' kartı düellolarım kutusunun ALTINDA durur: üstte olunca
         // yüksekliği kutuyu tembel listede ekran dışına itiyordu.
-        if (widget.asyncDuelEnabled && !locked)
+        if (widget.duelOn && !locked)
           AsyncDuelInboxSection(
             repository: widget.repository,
             refreshSignal: _asyncDuelInboxSignal,
@@ -1625,7 +1628,11 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _selectedMaxPlayers = widget.fixedMaxPlayers ?? _selectedMaxPlayers;
+    // Uzak anahtar `crowd_rooms_enabled` kapalıysa kalabalık oda seçilemez:
+    // kapasite 2'ye sabitlenir ve seçim gizlenir (bkz. `FeatureGate`).
+    _selectedMaxPlayers =
+        widget.fixedMaxPlayers ??
+        (FeatureGate.crowdRooms ? _selectedMaxPlayers : 2);
     _selectedEntryFee = _affordableFee(_selectedEntryFee);
     if (widget.editing) {
       _settingsOpen = true;
@@ -1838,7 +1845,8 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
 
                               // Arkadaşla canlı düelloda kapasite 2'ye SABİTTİR; seçim gizlenir.
                               if (widget.fixedMaxPlayers == null &&
-                                  !widget.editing) ...[
+                                  !widget.editing &&
+                                  FeatureGate.crowdRooms) ...[
                                 // Oyuncu sayısı (kapasite). 2 = bugünkü iki kişilik oda;
                                 // daha fazlası kalabalık oda: ev sahibi >= 2 kişiyle
                                 // başlatır, sonuç sıralı gelir.
