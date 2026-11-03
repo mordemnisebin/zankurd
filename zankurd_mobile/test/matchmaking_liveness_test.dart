@@ -277,6 +277,40 @@ void main() {
     await repository.queue.close();
   });
 
+  testWidgets(
+    'arka planda (paused/inactive/hidden) yoklama durur; dönüşte hemen ve '
+    'periyot yeniden kurulur',
+    (tester) async {
+      final repository = _LiveRepository();
+      await _startSearch(tester, repository);
+      final start = repository.touchCalls;
+      for (final state in [
+        AppLifecycleState.inactive,
+        AppLifecycleState.hidden,
+        AppLifecycleState.paused,
+      ]) {
+        tester.binding.handleAppLifecycleStateChanged(state);
+      }
+      // Arka planda 12 sn: hiç yoklama yok (eskiden 2 yoklama giderdi).
+      await tester.pump(PollCadence.matchmakingTouch);
+      await tester.pump(PollCadence.matchmakingTouch);
+      expect(repository.touchCalls, start, reason: 'arka planda yoklama yok');
+
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pump();
+      expect(repository.touchCalls, start + 1, reason: 'dönüşte hemen');
+      // Çift resumed (inactive -> resumed sonrası) ikinci yoklama/zamanlayıcı
+      // üretmez.
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pump();
+      expect(repository.touchCalls, start + 1);
+      await tester.pump(PollCadence.matchmakingTouch);
+      expect(repository.touchCalls, start + 2, reason: 'periyot sürer');
+      await tester.pumpWidget(const SizedBox.shrink());
+      await repository.queue.close();
+    },
+  );
+
   testWidgets('akış hatası eşleşmeyi engellemez, yoklama devralır', (
     tester,
   ) async {
