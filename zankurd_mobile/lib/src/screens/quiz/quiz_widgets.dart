@@ -935,10 +935,6 @@ class _WrongAnswerInsight extends StatelessWidget {
                 key: const ValueKey('quiz-wrong-answer-explanation'),
                 style: SahneType.body.copyWith(color: t.tx),
               ),
-            // Kaynak satırı BİLEREK burada yok: kart cevaptan sonra belirir
-            // ve ekstra bir satır, ortalanmış soru+şık grubunu kaydırır
-            // ("cevaptan sonra hiçbir şey yerinden oynamaz" kuralı,
-            // son_kurul_test B). Kaynak açıklama sayfasında ([_open]).
           ],
         ),
       ),
@@ -981,7 +977,6 @@ class _LearningExplanationAction extends StatelessWidget {
                 prompt: question.prompt,
               ),
             ),
-            QuestionSourceLine(question: question),
           ],
         );
       },
@@ -2229,51 +2224,3 @@ class _KurmanciPromptTag extends StatelessWidget {
   }
 }
 
-/// Cevap sonrası açıklama alanındaki küçük "Kaynak: …" satırı.
-///
-/// Künye yoksa (ya da yalnız iç etiketse) `SizedBox.shrink` döner: HİÇ yer
-/// ayrılmaz, soru ekranı kaydırmasız sığma kuralı (375×667) bozulmaz. Bağlantı
-/// varsa dokunulabilir; harici tarayıcıda açılır ([openExternalUri]).
-class QuestionSourceLine extends StatelessWidget {
-  const QuestionSourceLine({super.key, required this.question});
-
-  final QuizQuestion question;
-
-  @override
-  Widget build(BuildContext context) {
-    final source = question.metadata?.displaySource;
-    if (source == null) return const SizedBox.shrink();
-    final t = SahneTokens.of(context);
-    final text = '${context.t(K.lexiconSource)}: ${source.label}';
-    final url = source.url;
-    final line = Text(
-      text,
-      key: const ValueKey('quiz-question-source'),
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      style: SahneType.caption.copyWith(
-        color: url == null ? t.tx : t.learnTx,
-        decoration: url == null ? null : TextDecoration.underline,
-      ),
-    );
-    return Padding(
-      padding: const EdgeInsets.only(top: SahneSpace.x2),
-      child: url == null
-          ? line
-          : Semantics(
-              link: true,
-              label: text,
-              excludeSemantics: true,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () =>
-                    openExternalUri(context, url, reason: 'question source'),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(minHeight: 48),
-                  child: Align(alignment: Alignment.centerLeft, child: line),
-                ),
-              ),
-            ),
-    );
-  }
-}
