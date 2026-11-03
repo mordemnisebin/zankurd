@@ -309,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ErrorReporter.record(error, stack, reason: 'home tour done flag');
       if (!_tourFlagReady.isCompleted) _tourFlagReady.complete();
     }
-    if (!kAsyncDuelEnabled) return;
+    if (!FeatureGate.asyncDuel) return;
     try {
       final duels = await repo.loadMyAsyncDuels();
       final ready = duels.where((d) => d.outcome != null && !d.seen).length;
@@ -389,7 +389,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // Çevrimdışı depoda ücretli onarım yapılamaz; ücretsiz kurtarma turu
     // sunucusuz çalıştığı için yine sunulur.
     final paid = _paidRepairOffer(store);
-    final offer = paid ?? store.rescueOffer();
+    final offer = paid ?? _rescueOffer(store);
     if (offer == null ||
         _repairSheetOpen ||
         store.repairOfferSeen(offer) ||
@@ -407,7 +407,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         repository: repo,
         offer: offer,
         showPaid: paid != null,
-        onRescue: store.rescueOffer() == null
+        onRescue: _rescueOffer(store) == null
             ? null
             : () => unawaited(_startStreakRescue(store)),
         onRepaired: _onStreakRepaired,
@@ -419,6 +419,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
   }
 
+  /// Ücretsiz "Seriyi kurtar" teklifi; uzak anahtar `streak_rescue_enabled`
+  /// kapalıysa teklif YOK sayılır (ücretli onarım ayrı yoldur, etkilenmez).
+  StreakRepairOffer? _rescueOffer(StreakStore store) =>
+      FeatureGate.streakRescue ? store.rescueOffer() : null;
+
   StreakRepairOffer? _paidRepairOffer(StreakStore store) =>
       repo is OfflineZanKurdRepository ? null : store.repairOffer();
 
@@ -429,7 +434,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   /// Seri, yalnız tur geçilirse ve teklif hâlâ geçerliyse yazılır
   /// ([StreakStore.applyRescue]); kaybedilen tur teklifi yakmaz.
   Future<void> _startStreakRescue(StreakStore store) async {
-    final offer = store.rescueOffer();
+    final offer = _rescueOffer(store);
     if (offer == null || !mounted) return;
     final messenger = ScaffoldMessenger.of(context);
     final navigator = Navigator.of(context);
@@ -1175,7 +1180,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   onFreeze: null,
                 ),
                 // Son 24 saatte kırılan seri: aynı sayfada geri alınabilir.
-                if (_paidRepairOffer(store) ?? store.rescueOffer()
+                if (_paidRepairOffer(store) ?? _rescueOffer(store)
                     case final offer?) ...[
                   const SizedBox(height: SahneSpace.x3),
                   StreakRepairCard(
@@ -1183,7 +1188,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     repository: repo,
                     offer: offer,
                     showPaid: _paidRepairOffer(store) != null,
-                    onRescue: store.rescueOffer() == null
+                    onRescue: _rescueOffer(store) == null
                         ? null
                         : () {
                             Navigator.of(context).pop();

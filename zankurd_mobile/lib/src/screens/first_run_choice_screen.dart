@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/age_gate_store.dart';
 import '../data/first_run_store.dart';
 import '../data/learner_lexicon.dart';
 import '../data/learning_goal_store.dart';
@@ -30,13 +31,24 @@ import 'level_placement_screen.dart';
 /// aynı mevcut parçaları ([LearningGoalChooser], [LevelPlacementScreen])
 /// tek akışa dizer; yeni içerik üretmez.
 ///
+/// [askAge] true ise (yeni oyuncu, yaş beyanı yok) ilk adım "13 yaşından
+/// büyük müsün?" olur (mağaza/COPPA, bkz. [AgeGate]). Bu adım ATLANAMAZ:
+/// "Atla" yalnız amaç/seviye sorularını geçer; iki düğme de (Belê/Na)
+/// beyanı yazar. Yanıt yalnız cihazda saklanır; 13 altına sohbet, arkadaş ve
+/// kullanım analizi kapanır, öğrenme ve tek kişilik oyun açık kalır.
+///
 /// Giriş seçenekleri (Apple/Google/misafir) bu ekranın SONRASINDA, olduğu gibi
 /// görünür; hesap şartı yoktur. "Atla" bütün soruları varsayılanla geçer
 /// (amaçsız, baştan) ve yine ilk derse iner.
 class FirstRunChoiceScreen extends StatefulWidget {
-  const FirstRunChoiceScreen({required this.onDone, super.key});
+  const FirstRunChoiceScreen({
+    required this.onDone,
+    this.askAge = false,
+    super.key,
+  });
 
   final VoidCallback onDone;
+  final bool askAge;
 
   @override
   State<FirstRunChoiceScreen> createState() => _FirstRunChoiceScreenState();
@@ -46,6 +58,12 @@ class _FirstRunChoiceScreenState extends State<FirstRunChoiceScreen> {
   int _step = 0;
   LearningGoal? _goal;
   bool _finishing = false;
+  late bool _ageStep = widget.askAge;
+
+  Future<void> _declareAge(AgeDeclaration value) async {
+    await AgeGate.declare(value);
+    if (mounted) setState(() => _ageStep = false);
+  }
 
   Future<void> _finish({required bool placement}) async {
     if (_finishing) return;
@@ -59,6 +77,27 @@ class _FirstRunChoiceScreenState extends State<FirstRunChoiceScreen> {
   @override
   Widget build(BuildContext context) {
     final isKu = context.isKu;
+    if (_ageStep) {
+      return SahneEntryScaffold(
+        surfaceKey: const ValueKey('first-run-age-surface'),
+        centerWhenAnchored: true,
+        title: context.t(K.ageGateTitle),
+        body: context.t(K.ageGateBody),
+        primary: SahneButton.primary(
+          key: const ValueKey('first-run-age-yes'),
+          label: context.t(K.yes),
+          arrow: false,
+          expand: true,
+          onPressed: () => _declareAge(AgeDeclaration.adult),
+        ),
+        secondary: SahneButton.secondary(
+          key: const ValueKey('first-run-age-no'),
+          label: context.t(K.no),
+          expand: true,
+          onPressed: () => _declareAge(AgeDeclaration.minor),
+        ),
+      );
+    }
     final goalStep = _step == 0;
     return SahneEntryScaffold(
       surfaceKey: const ValueKey('first-run-surface'),

@@ -696,6 +696,12 @@ void main() {
 
     // 2026-11-03 ilk 5 dakika: tanıtımdan sonra amaç/seviye soruları gelir
     // (giriş seçenekleri bunların ARDINDAN, olduğu gibi görünür).
+    // 2026-11-04: ilk soru yaş beyanıdır (mağaza/COPPA); atlanamaz, iki
+    // düğme de cevap yazar. Cevaptan sonra amaç sorusu gelir.
+    expect(find.byKey(const ValueKey('first-run-age-surface')), findsOneWidget);
+    expect(find.byKey(const ValueKey('first-run-skip')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('first-run-age-yes')));
+    await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('first-run-surface')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('first-run-skip')));
     await tester.pumpAndSettle();

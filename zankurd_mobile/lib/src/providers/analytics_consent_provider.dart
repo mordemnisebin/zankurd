@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/age_gate_store.dart';
 import '../utils/error_reporter.dart';
 
 /// Ölçüm rızası: iki AYRI anahtar, ikisi de varsayılan KAPALI.
@@ -70,6 +71,10 @@ class AnalyticsConsentProvider extends ChangeNotifier {
 
   static Future<AnalyticsConsentProvider> load() async {
     try {
+      // 13 yaş altı beyanı: kişiselleştirilmiş ölçüm hiç açılmaz (bkz.
+      // `AgeGate`). Beyan, önceki bir "evet" seçiminden de önce gelir.
+      await AgeGate.load();
+      if (AgeGate.isMinor) return AnalyticsConsentProvider();
       final prefs = await SharedPreferences.getInstance();
       final analytics = prefs.getBool(_storageKey);
       var crashReports = prefs.getBool(_crashStorageKey);
@@ -104,13 +109,24 @@ class AnalyticsConsentProvider extends ChangeNotifier {
   }
 
   /// Kullanım analizi anahtarı.
-  Future<bool> setEnabled(bool value) => _persist(_storageKey, value, () {
+  Future<bool> setEnabled(bool value) {
+    // 13 yaş altı: kullanım analizi AÇILAMAZ (kapatmak serbest).
+    if (value && AgeGate.isMinor) return Future<bool>.value(false);
+    return _setEnabled(value);
+  }
+
+  Future<bool> _setEnabled(bool value) => _persist(_storageKey, value, () {
     _enabled = value;
     isEnabled = value;
   });
 
   /// Hata raporları anahtarı.
-  Future<bool> setCrashReportsEnabled(bool value) =>
+  Future<bool> setCrashReportsEnabled(bool value) {
+    if (value && AgeGate.isMinor) return Future<bool>.value(false);
+    return _setCrashReportsEnabled(value);
+  }
+
+  Future<bool> _setCrashReportsEnabled(bool value) =>
       _persist(_crashStorageKey, value, () {
         _crashReportsEnabled = value;
         _crashChoicePending = false;

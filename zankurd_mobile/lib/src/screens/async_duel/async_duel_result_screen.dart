@@ -1,3 +1,4 @@
+import '../../config/feature_flags.dart';
 import 'package:zankurd_mobile/src/utils/number_format.dart';
 
 import 'dart:async';
@@ -754,7 +755,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
             ),
           ),
       ],
-      primary: view.canShareLink
+      primary: view.canShareLink && FeatureGate.shareChallenge
           ? SahneResultAction(
               key: const ValueKey('async-duel-result-share'),
               label: context.t(K.share),

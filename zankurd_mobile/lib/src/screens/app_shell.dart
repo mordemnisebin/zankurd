@@ -30,6 +30,9 @@ import 'learn_home_screen.dart';
 import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
 import 'first_run_choice_screen.dart';
+import '../config/feature_flags.dart';
+import '../data/age_gate_store.dart';
+import '../widgets/startup_prompts.dart';
 import 'onboarding_screen.dart';
 import '../data/first_run_store.dart';
 import '../services/analytics_service.dart';
@@ -140,6 +143,8 @@ class _AppShellState extends State<AppShell>
   bool _checkingOnboarding = true;
   bool _showOnboarding = false;
   bool _showFirstRunChoice = false;
+  bool _askAge = false;
+  Timer? _promptTimer;
   bool _firstRunLaunchScheduled = false;
   bool _checkingProfileName = false;
   bool _profileNameComplete = false;
@@ -236,7 +241,8 @@ class _AppShellState extends State<AppShell>
           !context.read<AuthProvider>().isAuthenticated) {
         return;
       }
-      unawaited(widget.pushTokenSync?.sync());
+      // Uzak anahtar (push_v2_enabled) kapalıysa jeton eşitlenmez.
+      if (FeatureGate.pushV2) unawaited(widget.pushTokenSync?.sync());
       unawaited(NotificationSync.run(repository));
     });
   }
@@ -548,6 +554,7 @@ class _AppShellState extends State<AppShell>
     if (identical(SocialPushPrompt.tokenSync, widget.pushTokenSync)) {
       SocialPushPrompt.tokenSync = null;
     }
+    _promptTimer?.cancel();
     _connectivitySub?.cancel();
     _homeScrollController.dispose();
     _profileScrollController.dispose();
@@ -563,10 +570,12 @@ class _AppShellState extends State<AppShell>
     // güvenli varsayılan, tanıtımı göstermektir.
     var show = true;
     var choice = false;
+    var askAge = false;
     try {
       final preferences = await SharedPreferences.getInstance();
       show = preferences.getBool(_onboardingSeenKey) != true;
       choice = !show && await FirstRunStore.stage() == FirstRunStage.choice;
+      askAge = choice && await AgeGate.shouldAsk();
     } catch (error, stack) {
       ErrorReporter.record(
         error,
@@ -578,6 +587,7 @@ class _AppShellState extends State<AppShell>
     setState(() {
       _showOnboarding = show;
       _showFirstRunChoice = choice;
+      _askAge = askAge;
       _checkingOnboarding = false;
     });
   }
@@ -598,10 +608,12 @@ class _AppShellState extends State<AppShell>
     // Yeni oyuncu: tanıtımın ardından amaç/seviye soruları (ilk 5 dakika
     // akışı). Tanıtımı daha önce görmüş kullanıcıda bu işaret hiç konmaz.
     await FirstRunStore.armChoice();
+    final askAge = await AgeGate.shouldAsk();
     if (!mounted) return;
     setState(() {
       _showOnboarding = false;
       _showFirstRunChoice = true;
+      _askAge = askAge;
     });
   }
 
@@ -614,7 +626,17 @@ class _AppShellState extends State<AppShell>
     _firstRunLaunchScheduled = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      unawaited(FirstRunFlow.run(context, _repository));
+      // İlk akış (varsa ilk ders) bitince kısa yaş/rıza soruları çıkar;
+      // ikisi de açılışı beklemez ve yalnız bir kez sorulur.
+      unawaited(
+        FirstRunFlow.run(context, _repository).then((_) {
+          if (!mounted) return;
+          // İptal edilebilir sayaç: ağaç sökülünce bekleyen zamanlayıcı kalmaz.
+          _promptTimer = Timer(StartupPrompts.startDelay, () {
+            if (mounted) unawaited(StartupPrompts.run(context));
+          });
+        }),
+      );
     });
   }
 
@@ -678,6 +700,7 @@ class _AppShellState extends State<AppShell>
 
     if (_showFirstRunChoice) {
       return FirstRunChoiceScreen(
+        askAge: _askAge,
         onDone: () => setState(() => _showFirstRunChoice = false),
       );
     }

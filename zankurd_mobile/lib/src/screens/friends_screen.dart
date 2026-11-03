@@ -1,3 +1,4 @@
+import '../config/runtime_config.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart' show SynchronousFuture;
@@ -47,6 +48,9 @@ class FriendsScreen extends StatefulWidget {
   /// Sırayla düello bayrağı; kapalıyken satırın birincil eylemi canlı oda
   /// daveti olarak kalır. Varsayılanı [kAsyncDuelEnabled].
   final bool asyncDuelEnabled;
+
+  /// Derleme bayrağı VE uzak kapatma anahtarı (bkz. `FeatureGate`).
+  bool get duelOn => asyncDuelEnabled && RuntimeConfigService.current.asyncDuel;
 
   @override
   State<FriendsScreen> createState() => _FriendsScreenState();
@@ -119,7 +123,7 @@ class _FriendsScreenState extends State<FriendsScreen>
   void initState() {
     super.initState();
     _playerTagFuture = widget.repository.getPlayerTag();
-    _challengeFuture = widget.asyncDuelEnabled
+    _challengeFuture = widget.duelOn
         ? asyncDuelChallengeAvailable(widget.repository)
         : Future<bool>.value(false);
     _loadFriends();
@@ -515,6 +519,30 @@ class _FriendsScreenState extends State<FriendsScreen>
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    // 13 yaş altı beyanı: arkadaş özellikleri kapalıdır (bkz. `AgeGate`).
+    // Giriş noktaları (Yarış, Sıralama, Profil) yerinde durur; buraya gelen
+    // kişi bekleneni bulmaz ama nedenini görür.
+    if (!FeatureGate.social) {
+      return SahnePushedPage(
+        role: SahneRole.social,
+        title: context.t(K.myFriends),
+        backLabel: context.t(K.back),
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.all(SahneSpace.page),
+            sliver: SliverToBoxAdapter(
+              child: Text(
+                context.t(K.ageGateMinorOff),
+                key: const ValueKey('friends-minor-off'),
+                style: SahneType.body.copyWith(
+                  color: SahneTokens.of(context).tx2,
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
     // 2026-09-29 Şahnê: B iskeleti. Sayfa adı ve alt satırı çubukta; eski
     // kimlik başlığı ve altındaki kilim ayracı kalktı. Bölümler tek bölüm
     // başlığıyla ([SahneSectionHeader]) ayrılır; arkadaşlar ve istekler

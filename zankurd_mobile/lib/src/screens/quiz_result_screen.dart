@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../config/category_visuals.dart';
+import '../config/feature_flags.dart';
 import '../config/coin_prices.dart';
 import '../data/achievement_store.dart';
 import '../data/badge_service.dart';
@@ -1882,6 +1883,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // Düz Paylaş sunucuya hiçbir şey yazmaz; düello yalnız bu satıra açık
     // dokunuşla açılır (bekçi: `solo_challenge_share_contract_test.dart`).
     final canChallenge =
+        FeatureGate.shareChallenge &&
         _challengeAvailable &&
         !isOnlineRoom &&
         !room.isCrowd &&
