@@ -35,6 +35,7 @@ begin
      or exists (
        select 1 from pg_class c, aclexplode(coalesce(c.relacl, '{}')) a
        where c.oid = 'public.olcek_tur3_yedek'::regclass and a.grantee <> c.relowner
+      and a.grantee not in (select oid from pg_roles where rolname = 'service_role')
      ) then
     raise exception 'tur5 geri: olcek_tur3_yedek anon/authenticated tarafından yazılabilir; yedek güvenilmez';
   end if;

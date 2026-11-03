@@ -55,10 +55,12 @@ begin
      or has_table_privilege('authenticated', 'public.olcek_tur3_yedek', 'insert,update,delete,select') then
     raise exception 'tur5: olcek_tur3_yedek anon/authenticated erişimine açık kalıyor';
   end if;
-  -- Sahibi dışında hiçbir alıcıya (doğrudan grant dahil) yetki kalmamalı.
+  -- Sahibi ve Supabase service_role (RLS'yi zaten aşan sunucu rolü) dışında
+  -- hiçbir alıcıya (doğrudan grant dahil) yetki kalmamalı.
   if exists (
     select 1 from pg_class c, aclexplode(coalesce(c.relacl, '{}')) a
     where c.oid = 'public.olcek_tur3_yedek'::regclass and a.grantee <> c.relowner
+      and a.grantee not in (select oid from pg_roles where rolname = 'service_role')
   ) then
     raise exception 'tur5: olcek_tur3_yedek sahibi dışında alıcıya açık (relacl)';
   end if;
