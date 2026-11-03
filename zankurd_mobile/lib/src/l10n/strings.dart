@@ -3323,7 +3323,7 @@ class Tr {
       'tr': 'Kurmancî biliyor musun?',
     },
     K.onbKnowSome: {
-      'ku': 'Hinekî dizanim, asta min bibîne',
+      'ku': 'Hinekî dizanim, asta min diyar bike',
       'tr': 'Biraz biliyorum, seviyemi bul',
     },
     K.onbKnowBeginner: {
@@ -3332,7 +3332,7 @@ class Tr {
     },
     K.onbFirstWordTitle: {'ku': 'Peyva te ya yekem', 'tr': 'İlk kelimen'},
     K.wordsEmptyAction: {
-      'ku': 'Dersa yekem dest pê bike',
+      'ku': 'Dest bi dersa yekem bike',
       'tr': 'İlk derse başla',
     },
     K.learningGoalTitle: {
