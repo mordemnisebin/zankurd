@@ -139,6 +139,7 @@ flutter:
 
   assets:
     - assets/brand/google_g.svg
+    - assets/brand/launch_logo.png
     - assets/question_images/
     - assets/mascot/
     - assets/zankurd.webp

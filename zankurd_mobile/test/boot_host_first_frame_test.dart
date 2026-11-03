@@ -34,6 +34,7 @@ void main() {
 
     session.complete(const MaterialApp(home: Text('SIGNED-IN-HOME')));
     await tester.pump();
+    await tester.pump(const Duration(seconds: 1)); // kök solma geçişi
     expect(find.text('SIGNED-IN-HOME'), findsOneWidget);
     expect(find.text('LOGGED-OUT-UI'), findsNothing);
     expect(find.byKey(const ValueKey('boot-frame')), findsNothing);
@@ -49,6 +50,7 @@ void main() {
     );
     failing.completeError(StateError('x'));
     await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     expect(find.text('YEDEK'), findsOneWidget);
   });
 

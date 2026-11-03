@@ -244,7 +244,10 @@ void main() {
         reason: 'Sunucu durumunu üstteki şerit söyler, kart tekrarlamaz.',
       );
       expect(
-        find.descendant(of: hero, matching: find.text('Seviyene yakın rakip')),
+        find.descendant(
+          of: hero,
+          matching: find.text('Seviyene yakın\u00A0rakip'),
+        ),
         findsOneWidget,
       );
       expect(find.text('Sunucuya ulaşılamadı'), findsNothing);
@@ -287,7 +290,10 @@ void main() {
       // bilgi satırı soru sayısını da söyler.
       final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
       expect(
-        find.descendant(of: hero, matching: find.text('Seviyene yakın rakip')),
+        find.descendant(
+          of: hero,
+          matching: find.text('Seviyene yakın\u00A0rakip'),
+        ),
         findsOneWidget,
       );
       expect(
