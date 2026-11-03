@@ -631,6 +631,13 @@ extension _QuizScreenUI on _QuizScreenState {
       progress:
           '${groupThousands(index + 1)}/${groupThousands(widget.questions.length)}',
       showTug: !compact,
+      // Rakip bu soruda cevap verdiyse (yayın ya da sunucu sayımı) işaret.
+      // Anahtar kümesi her yeni soruda temizlenir.
+      opponentAnswered:
+          _opponentFinished ||
+          _answeredPlayerKeys.contains(
+            playerIdentityKey(id: opponent.id, legacyName: opponent.name),
+          ),
     );
   }
 

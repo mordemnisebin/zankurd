@@ -751,6 +751,14 @@ void main() {
         findsOneWidget,
       );
       expect(find.text('Mevcut seviyen: Orta'), findsOneWidget);
+      // İlerleme yokken güncel kart "Başla" der (tamamlanan ders → "Devam et").
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('learning-active-frame')),
+          matching: find.text('Başla'),
+        ),
+        findsOneWidget,
+      );
       // 2026-10-29 son kurul tur 2 (E): "Sıradaki ders" rozeti kalktı;
       // önerilen düğüm `learning-next-step` sarmalayıcısıyla tanınır.
       expect(
@@ -792,6 +800,15 @@ void main() {
     expect(find.text('Mevcut seviyen: Orta'), findsNothing);
     // 2026-10-29 son kurul tur 2 (E): rozet yerine güncel düğüm.
     expect(find.text('Sıradaki ders'), findsNothing);
+    // 2026-11-03 yol kurulu: dönen oyuncuya yol "Devam et" der (ilk ziyarette
+    // "Başla"; bkz. `_CurrentLessonCard.resume`).
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('learning-active-frame')),
+        matching: find.text('Devam et'),
+      ),
+      findsOneWidget,
+    );
   });
 
   // Niyet: bir ekranda sistem yazı tipine düşen metin olmamalı (bkz.

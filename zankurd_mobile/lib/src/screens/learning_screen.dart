@@ -743,6 +743,7 @@ class _LearningScreenState extends State<LearningScreen> {
           title: _lessonTitle(lesson, ku),
           meta: _placementContextLabel(context, ku) ?? lesson.description(ku),
           onTap: open,
+          resume: _completedIds.isNotEmpty,
         ),
         // Satır + kart tek düğme: ekran okuyucu "Sıradaki ders. Alfabe.
         // Sonraki" duyar; kartın her yeri dokunulur.
@@ -1180,12 +1181,18 @@ class _CurrentLessonCard extends StatelessWidget {
     required this.title,
     required this.meta,
     required this.onTap,
+    this.resume = false,
   });
 
   final Lesson lesson;
   final String title;
   final String? meta;
   final VoidCallback onTap;
+
+  /// Yolda en az bir ders bitmişse düğme "Devam et" der (Duolingo/Memrise
+  /// dili: yeni gelen "Başla", dönen "Devam"); yol kurulunun "ayrı araçlar"
+  /// bulgusu (2026-11-03) yolun bir YOL olduğunu söylemeyi de ister.
+  final bool resume;
 
   @override
   Widget build(BuildContext context) {
@@ -1232,7 +1239,7 @@ class _CurrentLessonCard extends StatelessWidget {
             ],
             const SizedBox(height: SahneSpace.x3),
             SahneButton.primary(
-              label: context.t(K.start),
+              label: context.t(resume ? K.continueAction : K.start),
               onPressed: onTap,
               expand: true,
             ),

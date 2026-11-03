@@ -3420,6 +3420,67 @@ void main() {
     await _shoot(t, '261_crowd_game_header');
   }, tags: ['preview']);
 
+  // Canlı düello soru ekranı: rakip cevapladı işareti (2026-11-03 yol/düello
+  // turu). Yayın gelmeden önce de bir kare basılır: işaret yuvası boştur.
+  for (final dark in [false, true]) {
+    testWidgets(
+      '330 canlı düello — rakip cevapladı${dark ? ' (koyu, Kurmancî)' : ''}',
+      (t) async {
+        final repo = _LiveDuelTourRepository();
+        await _pump(
+          t,
+          QuizScreen(
+            repository: repo,
+            room: const GameRoom(
+              id: 'tour-live-duel',
+              name: '1v1',
+              code: _tourRoomCode,
+              category: 'Ziman',
+              status: RoomStatus.active,
+              questionCount: 5,
+              players: const [
+                Player(id: 'user', name: 'Tu', score: 120, state: 'Hazır'),
+                Player(
+                  id: 'tour-rojda',
+                  name: 'Rojda',
+                  score: 90,
+                  state: 'Hazır',
+                ),
+              ],
+            ),
+            questions: repo.questions.take(5).toList(),
+            is1v1: true,
+            enableTimer: false,
+          ),
+          dark: dark,
+          ku: dark,
+        );
+        repo.emit({
+          'sender': 'Rojda',
+          'sender_id': 'tour-rojda',
+          'ready': true,
+        });
+        await t.pump(const Duration(milliseconds: 600));
+        if (!dark) await _shoot(t, '330_live_duel_opponent_waiting');
+        repo.emit({
+          'sender': 'Rojda',
+          'sender_id': 'tour-rojda',
+          'answered': true,
+          'question_index': 0,
+          'score': 90,
+        });
+        await t.pump(const Duration(milliseconds: 600));
+        await _shoot(
+          t,
+          dark
+              ? '331_live_duel_opponent_answered_dark_ku'
+              : '331_live_duel_opponent_answered',
+        );
+      },
+      tags: ['preview'],
+    );
+  }
+
   testWidgets('262 kalabalık oyun — başlık (karanlık, Kurmancî)', (t) async {
     final crowd = _CrowdGameTourRepository();
     await _pump(
@@ -3515,6 +3576,22 @@ class _CrowdLobbyTourRepository extends _TourRepository {
 }
 
 /// Kalabalık oyun: 12 aktif oyuncu + 1 ayrılan; başlıkta sıra "#2/12".
+class _LiveDuelTourRepository extends _TourRepository {
+  final _broadcast = StreamController<Map<String, dynamic>>.broadcast();
+
+  void emit(Map<String, dynamic> payload) => _broadcast.add(payload);
+
+  @override
+  Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId) =>
+      _broadcast.stream;
+
+  @override
+  Future<void> sendRoomBroadcast(
+    String roomId,
+    Map<String, dynamic> payload,
+  ) async {}
+}
+
 class _CrowdGameTourRepository extends _TourRepository {
   static GameRoom room({bool ku = false}) => GameRoom(
     id: 'tour-crowd-game',

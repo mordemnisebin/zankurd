@@ -18,7 +18,11 @@ class StoriesScreen extends StatelessWidget {
     final t = SahneTokens.of(context);
     return Scaffold(
       backgroundColor: t.bg,
-      appBar: zkAppBar(context, title: Text(context.t(K.storyCatalogTitle))),
+      appBar: zkAppBar(
+        context,
+        title: Text(context.t(K.storyCatalogTitle)),
+        accent: SahneTokens.of(context).learnFill,
+      ),
       body: SafeArea(
         top: false,
         child: ListView(
