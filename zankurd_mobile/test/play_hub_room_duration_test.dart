@@ -200,6 +200,19 @@ void main() {
     }
   });
 
+  /// "Gelişmiş" satırını açar (kapasite, soru sayısı, süre, ücret içinde).
+  Future<void> openAdvanced(WidgetTester tester) async {
+    // Büyük yazıda satırın merkezi alt çubuğun altında kalabilir: başlığa dokun.
+    final title = find.descendant(
+      of: find.byKey(const ValueKey('custom-room-settings-row')),
+      matching: find.text('Gelişmiş'),
+    );
+    await Scrollable.ensureVisible(tester.element(title), alignment: 0.5);
+    await tester.pumpAndSettle();
+    await tester.tap(title);
+    await tester.pumpAndSettle();
+  }
+
   Future<void> openCreateSheet(
     WidgetTester tester,
     _CapturingRepository repository,
@@ -286,7 +299,7 @@ void main() {
           // Büyük yazıda özet satırı görünür alandan uzun olabilir. Kullanıcı
           // başlığa dokunabilir; tüm satırın merkezi alt çubuğun altında kalır.
           final target = key == 'custom-room-settings-row'
-              ? find.descendant(of: keyed, matching: find.text('Ayarlar'))
+              ? find.descendant(of: keyed, matching: find.text('Gelişmiş'))
               : keyed;
           await Scrollable.ensureVisible(
             tester.element(target),
@@ -320,7 +333,7 @@ void main() {
         await tapSetting('custom-room-settings-row');
         expect(find.text('50 soru × 120 sn → ≤ 100 dakika'), findsOneWidget);
         expect(
-          find.text('50 soru · soru başına 120 sn · giriş ücretsiz'),
+          find.text('50 soru · soru başına 120 sn · giriş ücretsiz · 8 kişi'),
           findsOneWidget,
         );
         expect(tester.takeException(), isNull);
@@ -382,6 +395,7 @@ void main() {
     'oyuncu sayısı çipleri izinli kümeyle aynı, varsayılan 8 seçili',
     (tester) async {
       await openCreateSheet(tester, _CapturingRepository());
+      await openAdvanced(tester);
 
       for (final capacity in GameRoom.allowedMaxPlayers) {
         expect(
@@ -419,6 +433,7 @@ void main() {
       addTearDown(tester.view.reset);
       final handle = tester.ensureSemantics();
       await openCreateSheet(tester, _CapturingRepository());
+      await openAdvanced(tester);
       final tops = <int>{};
       for (final c in GameRoom.allowedMaxPlayers) {
         final f = find.byKey(ValueKey('custom-room-capacity-$c'));
@@ -447,6 +462,7 @@ void main() {
     addTearDown(tester.view.reset);
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
     await openCreateSheet(tester, _CapturingRepository());
+    await openAdvanced(tester);
     final first = find.byKey(const ValueKey('custom-room-capacity-2'));
     await tester.scrollUntilVisible(
       find.byKey(const ValueKey('custom-room-capacity-50')),
@@ -470,6 +486,7 @@ void main() {
     (tester) async {
       final repository = _CapturingRepository();
       await openCreateSheet(tester, repository);
+      await openAdvanced(tester);
 
       final chip = find.byKey(const ValueKey('custom-room-capacity-30'));
       await tester.ensureVisible(chip);
@@ -494,6 +511,7 @@ void main() {
   ) async {
     final repository = _CapturingRepository();
     await openCreateSheet(tester, repository);
+    await openAdvanced(tester);
 
     final chip = find.byKey(const ValueKey('custom-room-capacity-2'));
     await tester.ensureVisible(chip);
@@ -613,12 +631,13 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Konu seç'), findsOneWidget);
-    expect(find.text('En çok oyuncu'), findsOneWidget);
+    // Hızlı yol: kapasite "Gelişmiş" altında katlı.
+    expect(find.text('En çok oyuncu'), findsNothing);
     expect(find.byKey(const ValueKey('custom-room-count-5')), findsNothing);
     expect(find.byKey(const ValueKey('custom-room-duration-30')), findsNothing);
     expect(find.byKey(const ValueKey('custom-room-fee-25')), findsNothing);
     expect(
-      find.text('10 soru · soru başına 20 sn · giriş ücretsiz'),
+      find.text('10 soru · soru başına 20 sn · giriş ücretsiz · 8 kişi'),
       findsOneWidget,
     );
 
@@ -638,7 +657,7 @@ void main() {
     await tester.tap(row);
     await tester.pumpAndSettle();
     expect(
-      find.text('5 soru · soru başına 20 sn · giriş ücretsiz'),
+      find.text('5 soru · soru başına 20 sn · giriş ücretsiz · 8 kişi'),
       findsOneWidget,
     );
     expect(find.byKey(const ValueKey('custom-room-count-5')), findsNothing);

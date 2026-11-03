@@ -8,6 +8,8 @@ import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart'
+    show TargetPlatform, debugDefaultTargetPlatformOverride;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
@@ -1504,6 +1506,124 @@ void main() {
       ),
     );
     await _shoot(t, '317_tekrar_bos');
+  }, tags: ['preview']);
+
+  // ── 2026-11-04 kanıt kareleri (GPT-5.6 Sol incelemesi) ────────────────
+  // Var olan ama turda görünmeyen özellikler: iOS'ta Apple ile giriş, hesap
+  // silme + veri dışa aktarma, oyuncu engelle/bildir/sustur, tekrar girişi.
+  Future<void> signInIos(WidgetTester t, String name, {bool ku = false}) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+    try {
+      await _pump(t, const SignInScreen(), ku: ku);
+      await t.tap(find.byKey(const ValueKey('sign-in-have-account')));
+      for (var i = 0; i < 3; i++) {
+        await t.pump(const Duration(milliseconds: 400));
+      }
+      expect(find.byKey(const ValueKey('auth-apple')), findsOneWidget);
+      await _shoot(t, name);
+    } finally {
+      debugDefaultTargetPlatformOverride = null;
+    }
+  }
+
+  testWidgets('400 giriş (iOS: Apple ile devam)', (t) async {
+    await signInIos(t, '400_sign_in_ios');
+  }, tags: ['preview']);
+
+  testWidgets('401 giriş (iOS: Apple, Kurmancî)', (t) async {
+    await signInIos(t, '401_sign_in_ios_ku', ku: true);
+  }, tags: ['preview']);
+
+  testWidgets('402 ayarlar: hesap bölümü (veri dışa aktarma, hesabı sil)', (
+    t,
+  ) async {
+    await _pump(
+      t,
+      SettingsScreen(repository: repository),
+      size: const Size(390, 2400),
+    );
+    expect(find.byKey(const ValueKey('settings-export-data')), findsOneWidget);
+    expect(find.byKey(const ValueKey('delete-account-action')), findsOneWidget);
+    await _shoot(t, '402_settings_account');
+  }, tags: ['preview']);
+
+  Future<void> deleteDialog(
+    WidgetTester t,
+    String name, {
+    bool ku = false,
+  }) async {
+    await _pump(t, SettingsScreen(repository: repository), ku: ku);
+    await _tapShown(t, find.byKey(const ValueKey('delete-account-action')));
+    for (var i = 0; i < 3; i++) {
+      await t.pump(const Duration(milliseconds: 400));
+    }
+    expect(
+      find.byKey(const ValueKey('delete-subscription-note')),
+      findsOneWidget,
+    );
+    await _shoot(t, name);
+  }
+
+  testWidgets('403 hesap silme onayı', (t) async {
+    await deleteDialog(t, '403_delete_account_dialog');
+  }, tags: ['preview']);
+
+  testWidgets('404 hesap silme onayı (Kurmancî)', (t) async {
+    await deleteDialog(t, '404_delete_account_dialog_ku', ku: true);
+  }, tags: ['preview']);
+
+  Future<void> moderationSheet(
+    WidgetTester t,
+    String name, {
+    bool ku = false,
+  }) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: _LobbyTourRepository(_LobbyView.hostGuestReady),
+        initialRoom: _LobbyTourRepository.room(_LobbyView.hostGuestReady),
+      ),
+      ku: ku,
+    );
+    final button = find.byKey(const ValueKey('player-moderation-button'));
+    expect(button, findsWidgets);
+    await t.ensureVisible(button.first);
+    await t.pump();
+    await t.tap(button.first);
+    for (var i = 0; i < 3; i++) {
+      await t.pump(const Duration(milliseconds: 400));
+    }
+    expect(find.byKey(const ValueKey('player-block-action')), findsOneWidget);
+    expect(find.byKey(const ValueKey('player-report-action')), findsOneWidget);
+    expect(find.byKey(const ValueKey('player-mute-action')), findsOneWidget);
+    await _shoot(t, name);
+  }
+
+  testWidgets('405 oyuncu engelle/bildir/sustur sayfası (oda)', (t) async {
+    await moderationSheet(t, '405_player_moderation_sheet');
+  }, tags: ['preview']);
+
+  testWidgets('406 oyuncu engelle/bildir/sustur sayfası (Kurmancî)', (t) async {
+    await moderationSheet(t, '406_player_moderation_sheet_ku', ku: true);
+  }, tags: ['preview']);
+
+  Future<void> homeReview(
+    WidgetTester t,
+    String name, {
+    bool ku = false,
+  }) async {
+    await seedWords(t);
+    await _pump(t, homePreview(repository), ku: ku);
+    expect(find.byKey(const ValueKey('home-review-row')), findsOneWidget);
+    await _shoot(t, name);
+  }
+
+  testWidgets('407 ana ekran: Tekrar zamanı (bekleyen sayı)', (t) async {
+    await homeReview(t, '407_home_review_due');
+  }, tags: ['preview']);
+
+  testWidgets('408 ana ekran: Tekrar zamanı (Kurmancî)', (t) async {
+    await homeReview(t, '408_home_review_due_ku', ku: true);
   }, tags: ['preview']);
 
   testWidgets('315 sözlük Türkçe > Kurmancî arama', (t) async {
@@ -3349,6 +3469,11 @@ void main() {
     await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
+    // Kapasite "Gelişmiş" satırının altında (Hızlı/Gelişmiş ayrımı).
+    final advanced = find.byKey(const ValueKey('custom-room-settings-row'));
+    await t.ensureVisible(advanced);
+    await t.tap(advanced);
+    await t.pumpAndSettle();
     final chip = find.byKey(const ValueKey('custom-room-capacity-16'));
     await t.ensureVisible(chip);
     await t.tap(chip);
@@ -3366,6 +3491,11 @@ void main() {
     await _tapRoomCreate(t);
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
+    // Kapasite "Gelişmiş" satırının altında (Hızlı/Gelişmiş ayrımı).
+    final advanced = find.byKey(const ValueKey('custom-room-settings-row'));
+    await t.ensureVisible(advanced);
+    await t.tap(advanced);
+    await t.pumpAndSettle();
     final chip = find.byKey(const ValueKey('custom-room-capacity-16'));
     await t.ensureVisible(chip);
     await t.tap(chip);

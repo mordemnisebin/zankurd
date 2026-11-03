@@ -52,6 +52,16 @@ import '../services/app_haptics.dart';
 import '../services/data_export.dart';
 import 'package:share_plus/share_plus.dart';
 
+/// Ayarlar'da yalnız "Satın alımları geri yükle" satırı mı çizilsin?
+/// Pro açık ve mağaza yapılandırılmış, ama satılacak paket yok ve kullanıcı
+/// henüz abone görünmüyor: paywall girişi gizlidir, geri yükleme açık kalır.
+bool settingsRestoreOnly({
+  required bool proEnabled,
+  required bool configured,
+  required bool isPremium,
+  required bool canSell,
+}) => proEnabled && configured && !isPremium && !canSell;
+
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
     required this.repository,
@@ -372,6 +382,29 @@ class _SettingsScreenState extends State<SettingsScreen>
                 builder: (context, premium, _) {
                   final isPremium = premium.isPremium;
                   // Satılabilir paket yoksa da gizli (2026-10-23).
+                  if (settingsRestoreOnly(
+                    proEnabled: kProEnabled,
+                    configured: AppConfig.hasRevenuecatConfig,
+                    isPremium: isPremium,
+                    canSell: premium.canSell,
+                  )) {
+                    // Satılacak paket yok ama başka cihazdan/mağazadan abone
+                    // olmuş kullanıcı geri yükleme yolunu kaybetmemeli.
+                    return Padding(
+                      padding: const EdgeInsets.only(top: SahneSpace.cardGap),
+                      child: SahneListGroup(
+                        children: [
+                          SahneListRow.icon(
+                            key: const ValueKey('settings-restore-only'),
+                            icon: AppIcons.gem,
+                            title: context.t(K.restorePurchases),
+                            chevron: true,
+                            onTap: () => _restoreOnly(premium),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                   if (!kProEnabled || (!isPremium && !premium.canSell)) {
                     return const SizedBox.shrink();
                   }
@@ -1233,6 +1266,20 @@ class _SettingsScreenState extends State<SettingsScreen>
       context: context,
       builder: (_) => _FinalDeleteDialog(confirmWord: confirmWord),
     );
+  }
+
+  Future<void> _restoreOnly(PremiumService premium) async {
+    final outcome = await premium.restorePurchases();
+    AnalyticsService.instance.logRestoreOutcome(outcome.name);
+    if (!mounted) return;
+    final message = switch (outcome) {
+      RestoreOutcome.restored => context.t(K.premiumActive),
+      RestoreOutcome.nothingFound => context.t(K.paywallRestoreNothing),
+      RestoreOutcome.failed => context.t(K.paywallRestoreFailed),
+    };
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _deleteAccount() async {

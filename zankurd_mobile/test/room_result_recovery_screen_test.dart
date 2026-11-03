@@ -84,6 +84,60 @@ void main() {
     expect(find.byType(RoomResultRecoveryScreen), findsOneWidget);
   });
 
+  // 2026-11-04 (GPT-5.6 Sol incelemesi): tur biter bitmez sunucu sonucu henüz
+  // yazmamış ya da ağ anlık kopmuş olabilir; oyuncu ilk aksaklıkta "Sonuç
+  // yüklenemedi" görüyordu. Elle deneme ekranından önce üç sessiz deneme var;
+  // ödül bir kez yazılır (çift gönderim yok).
+  testWidgets('geçici hata kendiliğinden yeniden denenir, ödül tek kez', (
+    tester,
+  ) async {
+    roomResultAutoRetryDelays = const [
+      Duration(seconds: 2),
+      Duration(seconds: 3),
+    ];
+    final repository = _RecoveryRepository(
+      questionResponses: [StateError('ağ yok'), _questions],
+    );
+    await _pumpRecovery(
+      tester,
+      repository: repository,
+      settlementService: QuizRewardSettlementService(repository: repository),
+    );
+    await tester.pump();
+    await tester.pump();
+    expect(find.text('Tekrar dene'), findsNothing, reason: 'hata gizli kalır');
+    expect(find.byType(QuizResultScreen), findsNothing);
+
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pumpAndSettle();
+    expect(find.byType(QuizResultScreen), findsOneWidget);
+    expect(repository.loadQuestionCalls, 2);
+    expect(repository.awardCalls, 1);
+  });
+
+  testWidgets('otomatik denemeler biterse elle deneme ekranı çıkar', (
+    tester,
+  ) async {
+    roomResultAutoRetryDelays = const [Duration(seconds: 2)];
+    final repository = _RecoveryRepository(
+      questionResponses: [StateError('1'), StateError('2')],
+    );
+    await _pumpRecovery(
+      tester,
+      repository: repository,
+      settlementService: QuizRewardSettlementService(repository: repository),
+    );
+    await tester.pump();
+    await tester.pump();
+    expect(find.text('Tekrar dene'), findsNothing);
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pump();
+    await tester.pump();
+    expect(find.text('Tekrar dene'), findsOneWidget);
+    expect(repository.loadQuestionCalls, 2);
+    expect(repository.awardCalls, 0);
+  });
+
   testWidgets('malformed üç oyunculu snapshot teslim edilmez', (tester) async {
     final repository = _RecoveryRepository(questionResponses: [_questions]);
     await _pumpRecovery(

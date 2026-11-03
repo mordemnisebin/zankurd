@@ -19,6 +19,20 @@ import 'quiz_result_screen.dart';
 
 const Duration _roomResultRecoveryTimeout = Duration(seconds: 15);
 
+/// Sonuç alınamayınca elle "Tekrar dene" göstermeden ÖNCE kendiliğinden
+/// yapılan yeniden denemelerin bekleme süreleri (üç deneme, ~9 sn).
+///
+/// Niçin: tur biter bitmez sunucu sonucu henüz yazmamış olabilir ya da ağ bir
+/// anlık kopmuş olabilir; kullanıcı "Sonuç yüklenemedi" ekranını ilk kısa
+/// aksaklıkta görüyordu (2026-11-04 GPT-5.6 Sol incelemesi). Yeniden deneme
+/// çift gönderim yapmaz: bekleyen ödül işlemi (`_settlementInFlight`) ve
+/// `finishGame` bayrağı aynı anahtarla yeniden kullanılır.
+List<Duration> roomResultAutoRetryDelays = const [
+  Duration(seconds: 2),
+  Duration(seconds: 3),
+  Duration(seconds: 4),
+];
+
 class RoomResultRecoveryScreen extends StatefulWidget {
   const RoomResultRecoveryScreen({
     required this.repository,
@@ -44,6 +58,8 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
   bool _loading = true;
   bool _ownerMismatch = false;
   int _attempt = 0;
+  int _autoRetries = 0;
+  Timer? _autoRetryTimer;
   RoomResultPresentation? _cachedPresentation;
   List<QuizQuestion>? _cachedQuestions;
   QuizRewardSettlement? _cachedSettlement;
@@ -55,6 +71,28 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       unawaited(_recover());
+    });
+  }
+
+  @override
+  void dispose() {
+    _autoRetryTimer?.cancel();
+    super.dispose();
+  }
+
+  /// Geçici hatada (sahip değişmedi) sessizce yeniden dener; hakkı bitince
+  /// elle deneme ekranını gösterir.
+  void _failOrAutoRetry(int attempt) {
+    if (!mounted || attempt != _attempt) return;
+    final delays = roomResultAutoRetryDelays;
+    if (_autoRetries >= delays.length || !_hasValidDeliveryContext) {
+      _showFailure(attempt);
+      return;
+    }
+    final delay = delays[_autoRetries++];
+    _autoRetryTimer?.cancel();
+    _autoRetryTimer = Timer(delay, () {
+      if (mounted) unawaited(_recover());
     });
   }
 
@@ -120,7 +158,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
             _roomResultRecoveryTimeout,
           );
         } on TimeoutException {
-          _showFailure(attempt);
+          _failOrAutoRetry(attempt);
           return;
         } catch (_) {
           if (identical(_settlementInFlight, pendingSettlement)) {
@@ -144,7 +182,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
       _openResult(presentation, settlement, questions);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'room result recovery');
-      _showFailure(attempt);
+      _failOrAutoRetry(attempt);
     }
   }
 
@@ -231,6 +269,8 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
   }
 
   void _retry() {
+    _autoRetries = 0;
+    _autoRetryTimer?.cancel();
     setState(() {
       _loading = true;
       _ownerMismatch = false;

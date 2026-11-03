@@ -3649,6 +3649,7 @@ class Tr {
       'ku': 'Kirîna Premium bi ser neket. Dîsa biceribîne.',
       'tr': 'Premium alınamadı. Tekrar dene.',
     },
+    K.roomAdvanced: {'ku': 'Pêşketî', 'tr': 'Gelişmiş'},
     K.paywallRestoreNothing: {
       'ku': 'Abonetiyeke çalak nehat dîtin.',
       'tr': 'Geri yüklenecek aktif abonelik bulunamadı.',
@@ -6217,6 +6218,7 @@ class K {
   static const paywallFeatures = 'paywall.features';
   static const paywallPaymentPending = 'paywall.purchase.pending';
   static const paywallPurchaseFailed = 'paywall.purchase.failed';
+  static const roomAdvanced = 'room.create.advanced';
   static const paywallRestoreNothing = 'paywall.restore.nothing';
   static const paywallPerkStreak = 'paywall.perk.streak';
   static const paywallPerkStreakBody = 'paywall.perk.streak.body';

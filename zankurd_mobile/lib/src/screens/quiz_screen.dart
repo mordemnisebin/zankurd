@@ -409,6 +409,8 @@ class _QuizScreenState extends State<QuizScreen>
   bool _terminalHandling = false;
   _OnlineResultPhase _onlineResultPhase = _OnlineResultPhase.idle;
   bool _onlineResultInFlight = false;
+  int _onlineResultAutoRetries = 0;
+  Timer? _onlineResultAutoRetryTimer;
   bool _onlineResultOwnerChanged = false;
   int _onlineResultGeneration = 0;
   String _onlineResultOwnerId = '';
@@ -1781,6 +1783,7 @@ class _QuizScreenState extends State<QuizScreen>
     WidgetsBinding.instance.removeObserver(this);
     _reconcileGeneration++;
     _reconcileQueued = false;
+    _onlineResultAutoRetryTimer?.cancel();
     _playersSub?.cancel();
     _realtimeSub?.cancel();
     _autoNextTimer?.cancel();
@@ -3876,12 +3879,32 @@ class _QuizScreenState extends State<QuizScreen>
         stack,
         reason: 'quiz exact room result recovery failed',
       );
-      _showOnlineResultFailure(generation);
+      _failOrAutoRetryOnlineResult(generation);
     } finally {
       if (generation == _onlineResultGeneration) {
         _onlineResultInFlight = false;
       }
     }
+  }
+
+  /// Geçici hatada elle deneme ekranından önce kendiliğinden yeniden dener
+  /// (bkz. [roomResultAutoRetryDelays]). Çift gönderim yok: `finishGame`
+  /// yalnız `_onlineResultFinishRequired` iken, sonuç okuması salt okunur.
+  void _failOrAutoRetryOnlineResult(int generation) {
+    if (!mounted || generation != _onlineResultGeneration) return;
+    final delays = roomResultAutoRetryDelays;
+    if (_onlineResultAutoRetries >= delays.length ||
+        !_hasExpectedOnlineOwner ||
+        ModalRoute.of(context)?.isCurrent != true) {
+      _showOnlineResultFailure(generation);
+      return;
+    }
+    final delay = delays[_onlineResultAutoRetries++];
+    _onlineResultAutoRetryTimer?.cancel();
+    _onlineResultAutoRetryTimer = Timer(delay, () {
+      if (!mounted || generation != _onlineResultGeneration) return;
+      unawaited(_reconcileCompletedRoomResult());
+    });
   }
 
   bool _canContinueOnlineResult(int generation, String expectedOwnerId) {
@@ -3947,6 +3970,7 @@ class _QuizScreenState extends State<QuizScreen>
       unawaited(_retryTeamOnlineResultGate());
       return;
     }
+    _onlineResultAutoRetries = 0;
     setState(() {
       _onlineResultPhase = _OnlineResultPhase.idle;
       _onlineResultOwnerChanged = false;

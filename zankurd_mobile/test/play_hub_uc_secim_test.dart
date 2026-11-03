@@ -155,7 +155,12 @@ void main() {
     await openRoomSheet(tester);
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
-    // Oda (3+ kişi) akışı değişmedi: kapasite seçimi durur.
+    // Oda (3+ kişi) akışı değişmedi: kapasite seçimi "Gelişmiş" altında durur.
+    final row = find.byKey(const ValueKey('custom-room-settings-row'));
+    await tester.ensureVisible(row);
+    await tester.pumpAndSettle();
+    await tester.tap(row);
+    await tester.pumpAndSettle();
     expect(
       find.byKey(const ValueKey('custom-room-capacity-8')),
       findsOneWidget,

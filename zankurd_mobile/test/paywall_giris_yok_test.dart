@@ -32,6 +32,7 @@ import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'support/widget_test_helpers.dart';
 
 void main() {
+  restoreKapisiTesti();
   setUp(() => SharedPreferences.setMockInitialValues({}));
   tearDown(() => PremiumService.debugCanSell = null);
 
@@ -71,5 +72,29 @@ void main() {
           'Paywall girişi satılabilir paket kapısı (PremiumService.canSell) '
           'olmadan eklenmiş: $offenders',
     );
+  });
+}
+
+/// Paket yokken paywall girişi gizlenir ama geri yükleme kapanmaz: başka
+/// cihazdan abone olmuş kullanıcı aboneliğini geri getirecek yolu
+/// kaybederse yeniden satın almaya itilir.
+void restoreKapisiTesti() {
+  test('paket yokken yalnız geri yükleme satırı açık kalır', () {
+    bool f({
+      bool pro = true,
+      bool conf = true,
+      bool prem = false,
+      bool sell = false,
+    }) => settingsRestoreOnly(
+      proEnabled: pro,
+      configured: conf,
+      isPremium: prem,
+      canSell: sell,
+    );
+    expect(f(), isTrue);
+    expect(f(sell: true), isFalse); // paket var: tam Premium satırı
+    expect(f(prem: true), isFalse); // abone: durum satırı
+    expect(f(pro: false), isFalse);
+    expect(f(conf: false), isFalse);
   });
 }

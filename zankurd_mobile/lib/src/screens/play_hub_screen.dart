@@ -1609,7 +1609,8 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
       '${groupThousands(_selectedQuestionCount)} ${context.t(K.soru)} · '
       // Kurul C13 (Astra + Sol): "20 sn" neyin süresi olduğunu söylemiyordu.
       '${context.t(K.perQuestionSeconds, {'n': groupThousands(_selectedDuration)})} · '
-      '${_selectedEntryFee == 0 ? context.t(K.freeEntrySummary) : '${groupThousands(_selectedEntryFee)} ${context.t(K.coinWord)}'}';
+      '${_selectedEntryFee == 0 ? context.t(K.freeEntrySummary) : '${groupThousands(_selectedEntryFee)} ${context.t(K.coinWord)}'}'
+      '${widget.fixedMaxPlayers == null && !widget.editing && FeatureGate.crowdRooms ? ' · ${context.t(K.roomCapacityOption, {'n': groupThousands(_selectedMaxPlayers)})}' : ''}';
 
   String _answerTimeLimit(BuildContext context) {
     final totalSeconds = _selectedQuestionCount * _selectedDuration;
@@ -1843,67 +1844,6 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                               ),
                               const SizedBox(height: SahneSpace.x3),
 
-                              // Arkadaşla canlı düelloda kapasite 2'ye SABİTTİR; seçim gizlenir.
-                              if (widget.fixedMaxPlayers == null &&
-                                  !widget.editing &&
-                                  FeatureGate.crowdRooms) ...[
-                                // Oyuncu sayısı (kapasite). 2 = bugünkü iki kişilik oda;
-                                // daha fazlası kalabalık oda: ev sahibi >= 2 kişiyle
-                                // başlatır, sonuç sıralı gelir.
-                                Text(
-                                  context.t(K.roomCapacityLabel),
-                                  style: SahneType.bodyStrong.copyWith(
-                                    color: SahneTokens.of(context).tx,
-                                  ),
-                                ),
-                                const SizedBox(height: SahneSpace.x2),
-                                // TEK satır, yalnız rakamlar ("Oyuncu sayısı" başlığı
-                                // birimi söyler; ekran okuyucu "N kişi" okur). İkinci
-                                // satırın yarısı sabit "Odayı aç" altında kaldığında
-                                // "boş çerçeve" gibi okunuyordu (iki tasarım turu).
-                                // 320'de 6x48 sığmaz: 2x3'e iner, hiç yetim çip yok.
-                                _ChoiceGrid(
-                                  columns: GameRoom.allowedMaxPlayers.length,
-                                  minCellWidth: sahneTapTarget,
-                                  fallbackColumns: 3,
-                                  // 6 çip 390 pt telefonda 48'e ancak 6 pt aralıkla sığar.
-                                  gap: 6,
-                                  children: [
-                                    for (final capacity
-                                        in GameRoom.allowedMaxPlayers)
-                                      _choiceChip(
-                                        context,
-                                        key: ValueKey(
-                                          'custom-room-capacity-$capacity',
-                                        ),
-                                        label: groupThousands(capacity),
-                                        semanticLabel: context.t(
-                                          K.roomCapacityOption,
-                                          {'n': groupThousands(capacity)},
-                                        ),
-                                        selected:
-                                            _selectedMaxPlayers == capacity,
-                                        onTap: () => setState(
-                                          () => _selectedMaxPlayers = capacity,
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                                if (_selectedMaxPlayers > 2) ...[
-                                  const SizedBox(height: SahneSpace.x2),
-                                  Text(
-                                    context.t(K.roomCapacityHint),
-                                    key: const ValueKey(
-                                      'custom-room-capacity-hint',
-                                    ),
-                                    style: SahneType.caption.copyWith(
-                                      color: SahneTokens.of(context).tx2,
-                                    ),
-                                  ),
-                                ],
-                                const SizedBox(height: SahneSpace.x3),
-                              ],
-
                               // Kurul 3. tur 2026-10-20: üç ikincil grup (soru sayısı,
                               // süre, ücret) tek "Ayarlar" satırında toplandı; özet
                               // güncel değerleri gösterir, dokununca satır içinde açılır.
@@ -1912,7 +1852,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                   key: const ValueKey(
                                     'custom-room-settings-row',
                                   ),
-                                  title: context.t(K.settings),
+                                  title: context.t(K.roomAdvanced),
                                   summary: _settingsSummary(context),
                                   open: _settingsOpen,
                                   onTap: () {
@@ -1997,6 +1937,70 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                       ),
                                   ],
                                 ),
+                                // Kapasite artık "Gelişmiş"te (2026-11-04): Hızlı yol yalnız
+                                // kategori + Başlat; sıra: soru, süre, kapasite, ücret.
+                                const SizedBox(height: SahneSpace.x3),
+                                // Arkadaşla canlı düelloda kapasite 2'ye SABİTTİR; seçim gizlenir.
+                                if (widget.fixedMaxPlayers == null &&
+                                    !widget.editing &&
+                                    FeatureGate.crowdRooms) ...[
+                                  // Oyuncu sayısı (kapasite). 2 = bugünkü iki kişilik oda;
+                                  // daha fazlası kalabalık oda: ev sahibi >= 2 kişiyle
+                                  // başlatır, sonuç sıralı gelir.
+                                  Text(
+                                    context.t(K.roomCapacityLabel),
+                                    style: SahneType.bodyStrong.copyWith(
+                                      color: SahneTokens.of(context).tx,
+                                    ),
+                                  ),
+                                  const SizedBox(height: SahneSpace.x2),
+                                  // TEK satır, yalnız rakamlar ("Oyuncu sayısı" başlığı
+                                  // birimi söyler; ekran okuyucu "N kişi" okur). İkinci
+                                  // satırın yarısı sabit "Odayı aç" altında kaldığında
+                                  // "boş çerçeve" gibi okunuyordu (iki tasarım turu).
+                                  // 320'de 6x48 sığmaz: 2x3'e iner, hiç yetim çip yok.
+                                  _ChoiceGrid(
+                                    columns: GameRoom.allowedMaxPlayers.length,
+                                    minCellWidth: sahneTapTarget,
+                                    fallbackColumns: 3,
+                                    // 6 çip 390 pt telefonda 48'e ancak 6 pt aralıkla sığar.
+                                    gap: 6,
+                                    children: [
+                                      for (final capacity
+                                          in GameRoom.allowedMaxPlayers)
+                                        _choiceChip(
+                                          context,
+                                          key: ValueKey(
+                                            'custom-room-capacity-$capacity',
+                                          ),
+                                          label: groupThousands(capacity),
+                                          semanticLabel: context.t(
+                                            K.roomCapacityOption,
+                                            {'n': groupThousands(capacity)},
+                                          ),
+                                          selected:
+                                              _selectedMaxPlayers == capacity,
+                                          onTap: () => setState(
+                                            () =>
+                                                _selectedMaxPlayers = capacity,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  if (_selectedMaxPlayers > 2) ...[
+                                    const SizedBox(height: SahneSpace.x2),
+                                    Text(
+                                      context.t(K.roomCapacityHint),
+                                      key: const ValueKey(
+                                        'custom-room-capacity-hint',
+                                      ),
+                                      style: SahneType.caption.copyWith(
+                                        color: SahneTokens.of(context).tx2,
+                                      ),
+                                    ),
+                                  ],
+                                  const SizedBox(height: SahneSpace.x3),
+                                ],
                                 if (!widget.editing) ...[
                                   const SizedBox(height: SahneSpace.x3),
 
