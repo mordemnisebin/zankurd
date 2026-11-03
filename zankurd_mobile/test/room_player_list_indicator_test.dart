@@ -116,7 +116,7 @@ void main() {
 
     // Arka plan yoklaması: 3 saniye sonra `_pollPlayersOnce` listeyi yeniden
     // uygular. Bu tazeleme göstergeyi yeniden yakmamalı.
-    await tester.pump(const Duration(seconds: 3));
+    await tester.pump(const Duration(seconds: 15));
     await tester.pump();
 
     expect(

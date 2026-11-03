@@ -1,4 +1,5 @@
 import 'dart:async';
+import '../services/poll_cadence.dart';
 import 'dart:math' show min;
 
 import 'verified_solo_quiz_port.dart';
@@ -1955,12 +1956,17 @@ class SupabaseZanKurdRepository
         .from('room_messages')
         .stream(primaryKey: ['id'])
         .eq('room_id', roomId)
-        // Akış `order`ının varsayılanı AZALAN (`ascending: false`); sohbet
-        // listesi eski üstte/yeni altta bekler (2026-10-21 ters sohbet).
-        .order('created_at', ascending: true)
+        // Yük denetimi (2026-11-03): akış TÜM oda mesajlarını taşıyordu; uzun
+        // süren kalabalık odada her yeni mesaj bütün geçmişi her istemciye
+        // yeniden yollardı (N mesaj × M istemci). Yalnız SON 50 alınır: azalan
+        // sırada limit son mesajları seçer, sonra çevrilip eski üstte/yeni
+        // altta (2026-10-21 ters sohbet) bırakılır. Arayüzde eski mesajları
+        // sayfalama yok; bu pencere yeterlidir.
+        .order('created_at', ascending: false)
+        .limit(PollCadence.chatWindow)
         .asyncMap(
           (rows) => _withSenderProfiles([
-            for (final row in rows)
+            for (final row in rows.reversed)
               RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
           ]),
         );

@@ -137,13 +137,13 @@ void main() {
     await tester.pumpAndSettle();
     final initialCalls = repository.loadCalls;
 
-    await tester.pump(const Duration(seconds: 31));
+    await tester.pump(const Duration(seconds: 121));
     await tester.pumpAndSettle();
 
     expect(
       repository.loadCalls,
       initialCalls,
-      reason: 'gizli sekme 30sn sayacında RPC atmamalı',
+      reason: 'gizli sekme 120sn sayacında RPC atmamalı',
     );
     expect(tester.takeException(), isNull);
   });
@@ -154,7 +154,7 @@ void main() {
     await tester.pumpAndSettle();
     final initialCalls = repository.loadCalls;
 
-    await tester.pump(const Duration(seconds: 31));
+    await tester.pump(const Duration(seconds: 121));
     await tester.pumpAndSettle();
 
     expect(

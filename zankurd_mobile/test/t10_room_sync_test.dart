@@ -520,7 +520,7 @@ void main() {
     final client = server.clients.first;
     final gate = Completer<void>();
     client.nextProgressGate = gate;
-    await _tick(tester, const Duration(milliseconds: 1100));
+    await _tick(tester, const Duration(milliseconds: 10100));
     expect(client.nextProgressGate, isNull);
     await tester.tap(_inside('A', find.byType(QuizOptionTile)).first);
     await tester.pump();

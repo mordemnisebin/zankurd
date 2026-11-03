@@ -130,8 +130,8 @@ Future<void> _tapVisible(WidgetTester tester, Finder finder) async {
 }
 
 Future<void> _tick(WidgetTester tester) async {
-  // Kalabalık odada yoklama 6 sn.
-  await tester.pump(const Duration(seconds: 6));
+  // Kalabalık odada yoklama 20 sn.
+  await tester.pump(const Duration(seconds: 20));
   await tester.pump();
 }
 

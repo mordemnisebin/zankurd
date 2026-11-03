@@ -631,7 +631,7 @@ void main() {
       expect(find.byKey(const ValueKey('quiz-crowd-header')), findsNothing);
     });
 
-    testWidgets('yedek yoklama kalabalıkta 6 sn, 1v1 odasında 4 sn', (
+    testWidgets('yedek yoklama kalabalıkta 15 sn, 1v1 odasında 10 sn', (
       tester,
     ) async {
       final crowd = await mount(tester);
@@ -645,7 +645,7 @@ void main() {
         base,
         reason: 'kalabalıkta 4,5 sn içinde yoklama olmamalı',
       );
-      await tester.pump(const Duration(milliseconds: 2000));
+      await tester.pump(const Duration(milliseconds: 11000));
       expect(crowd.resumeCalls, greaterThan(base));
 
       // Ekranı sök: ilk testin zamanlayıcıları ikincisini etkilemesin.
@@ -657,7 +657,7 @@ void main() {
       );
       final duel = await mount(tester, room: room, is1v1: true);
       final duelBase = duel.resumeCalls;
-      await tester.pump(const Duration(milliseconds: 4500));
+      await tester.pump(const Duration(milliseconds: 10500));
       expect(duel.resumeCalls, greaterThan(duelBase));
     });
 
@@ -715,14 +715,14 @@ void main() {
       );
     });
 
-    testWidgets('sayı yoklamayla güncellenir (6 sn)', (tester) async {
+    testWidgets('sayı yoklamayla güncellenir (10 sn)', (tester) async {
       final repository = await mount(tester);
       repository.answerProgress = const RoomAnswerProgress(
         questionIndex: 0,
         answered: 1,
         active: 4,
       );
-      await tester.pump(const Duration(milliseconds: 6500));
+      await tester.pump(const Duration(milliseconds: 10500));
       await pumpFrames(tester);
       expect(find.text('1/4 cevapladı'), findsOneWidget);
 
@@ -731,7 +731,7 @@ void main() {
         answered: 2,
         active: 4,
       );
-      await tester.pump(const Duration(milliseconds: 6500));
+      await tester.pump(const Duration(milliseconds: 10500));
       await pumpFrames(tester);
       expect(find.text('2/4 cevapladı'), findsOneWidget);
     });

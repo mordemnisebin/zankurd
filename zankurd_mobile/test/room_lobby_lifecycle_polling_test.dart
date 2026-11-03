@@ -86,7 +86,7 @@ void main() {
     await tester.pump();
 
     // Önde: 3 sn'de bir oyuncu ve durum yoklanır.
-    await tester.pump(const Duration(seconds: 3));
+    await tester.pump(const Duration(seconds: 15));
     await tester.pump();
     expect(repository.playerPolls, 1);
     expect(repository.statusPolls, 1);
@@ -104,7 +104,7 @@ void main() {
     expect(repository.playerPolls, 2);
     expect(repository.statusPolls, 2);
 
-    await tester.pump(const Duration(seconds: 3));
+    await tester.pump(const Duration(seconds: 15));
     await tester.pump();
     expect(repository.playerPolls, 3);
     expect(repository.statusPolls, 3);

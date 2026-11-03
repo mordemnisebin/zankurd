@@ -456,13 +456,13 @@ void main() {
     await _openRoom(tester, repository, repository.onlineLobby());
 
     for (var i = 0; i < 4; i++) {
-      await tester.pump(const Duration(seconds: 3));
+      await tester.pump(const Duration(seconds: 15));
     }
     expect(repository.statusPollCount, 1);
 
     gate.complete();
     await tester.pump();
-    await tester.pump(const Duration(seconds: 3));
+    await tester.pump(const Duration(seconds: 15));
     expect(repository.statusPollCount, greaterThan(1));
     await tester.pumpWidget(const SizedBox());
   });
@@ -481,7 +481,7 @@ void main() {
     expect(find.text('Oyun başlatılamadı. Tekrar dene.'), findsOneWidget);
     expect(repository.statusSubscriptionCount, 1);
 
-    await tester.pump(const Duration(seconds: 3));
+    await tester.pump(const Duration(seconds: 15));
     await tester.pump();
 
     expect(repository.statusPollCount, greaterThan(0));
@@ -516,7 +516,7 @@ void main() {
       // Yoklama her 3 saniyede sunucudaki 'active' durumunu tekrar görür.
       // Sınır olmasaydı bu döngü `questionLoadCalls`ı sınırsız artırırdı.
       for (var i = 0; i < 6; i++) {
-        await tester.pump(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 15));
         await tester.pump();
       }
 
@@ -525,7 +525,7 @@ void main() {
       // geçici SnackBar'ın hangi anda göründüğü animasyona bağlıdır ve bu
       // testin konusu değil; kalıcı gösterge aşağıda doğrulanıyor.
       expect(repository.questionLoadCalls, 3);
-      expect(find.textContaining('Sorular yüklenemedi'), findsOneWidget);
+      expect(find.textContaining('Sorular yüklenemedi'), findsWidgets);
 
       // Sınıra ulaşınca da "Odadan ayrıl" hâlâ çalışır — kullanıcı kilitli
       // kalmaz.

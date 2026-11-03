@@ -589,7 +589,7 @@ void main() {
       );
       expect(disabledButton.onPressed, isNull);
 
-      await tester.pump(const Duration(seconds: 3));
+      await tester.pump(const Duration(seconds: 15));
       await tester.pump();
 
       expect(repository.pollCalls, greaterThan(0));
@@ -622,7 +622,7 @@ void main() {
       await tester.pump();
 
       expect(find.byType(QuizScreen), findsNothing);
-      await tester.pump(const Duration(seconds: 3));
+      await tester.pump(const Duration(seconds: 15));
       await tester.pumpAndSettle();
 
       expect(repository.statusPollCalls, greaterThan(0));

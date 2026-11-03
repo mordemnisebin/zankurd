@@ -1,4 +1,5 @@
 import 'dart:async';
+import '../services/poll_cadence.dart';
 import 'dart:math';
 
 import '../data/verified_solo_quiz_port.dart';
@@ -1814,7 +1815,19 @@ class _QuizScreenState extends State<QuizScreen>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     if (_isMultiplayer) {
+      if (state == AppLifecycleState.paused ||
+          state == AppLifecycleState.hidden ||
+          state == AppLifecycleState.detached) {
+        // Arka planda yedek yoklama ağı yormasın; sayaç/sunucu süresi sürer.
+        _roomPollingPausedByLifecycle = true;
+        _pollTimer?.cancel();
+        _pollTimer = null;
+        _crowdProgressTimer?.cancel();
+        _crowdProgressTimer = null;
+      }
       if (state == AppLifecycleState.resumed) {
+        _roomPollingPausedByLifecycle = false;
+        _ensureRoomPolling();
         unawaited(_reconcileOnlineRoom());
         if (_usesServerHiddenAnswers) {
           _serverReadyRetryCount = 0;
@@ -2706,8 +2719,18 @@ class _QuizScreenState extends State<QuizScreen>
     }
   }
 
-  /// Kalabalık odada yedek yoklama aralığı (1v1'de 4 sn).
-  static const _crowdPollInterval = Duration(seconds: 6);
+  /// Yedek yoklama aralıkları. Asıl kaynak realtime/yayındır (`rooms` akışı,
+  /// `room_players` akışı, `crowd_answered` yayını); yoklama yalnız sessiz
+  /// düşen olayı yakalar. 10.000 eşzamanlı kullanıcıda 1 sn'lik ilerleme
+  /// yoklaması tek başına ~10.000 istek/sn demekti (yük denetimi 2026-11-03).
+  static const crowdPollInterval = PollCadence.crowdRoomIndexFallback;
+  static const duelPollInterval = PollCadence.duelRoomIndexFallback;
+  static const crowdProgressFallbackInterval =
+      PollCadence.crowdProgressFallback;
+
+  /// Arka plandayken yedek yoklama kurulmaz; dönüşte `_reconcileOnlineRoom`
+  /// ve `_ensureRoomPolling` yeniden kurar.
+  bool _roomPollingPausedByLifecycle = false;
 
   bool _crowdDropHandled = false;
   Timer? _crowdRevealProbeTimer;
@@ -2766,11 +2789,18 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   void _ensureRoomPolling() {
-    if (!_isMultiplayer || _pollTimer?.isActive == true) return;
+    if (!_isMultiplayer ||
+        _pollTimer?.isActive == true ||
+        _roomPollingPausedByLifecycle) {
+      return;
+    }
     if (_isCrowd) {
       unawaited(_refreshCrowdProgress());
-      // Hafif sayı RPC'si; ağır resume/oyuncu yükü 6 sn'de kalır.
-      _crowdProgressTimer ??= Timer.periodic(const Duration(seconds: 1), (_) {
+      // Hafif sayı RPC'si; asıl kaynak `crowd_answered` yayını ve
+      // `room_players` akışıdır, bu yalnız yedektir.
+      _crowdProgressTimer ??= Timer.periodic(crowdProgressFallbackInterval, (
+        _,
+      ) {
         if (!_terminalHandling && !completing) {
           unawaited(_refreshCrowdProgress());
         }
@@ -2779,7 +2809,7 @@ class _QuizScreenState extends State<QuizScreen>
     // Kalabalık odada her istemci her turda üç sorgu atar; 50 kişide 4 sn
     // yoklama saniyede ~35 sorgu demek. Asıl uyarı `room_players` akışıdır.
     _pollTimer = Timer.periodic(
-      _isCrowd ? _crowdPollInterval : const Duration(seconds: 4),
+      _isCrowd ? crowdPollInterval : duelPollInterval,
       (_) {
         _pollRoomIndex();
       },

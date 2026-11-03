@@ -548,7 +548,7 @@ void main() {
         questionIndex: 1,
         answers: const [_firstAnswer],
       );
-      await tester.pump(const Duration(seconds: 4));
+      await tester.pump(const Duration(seconds: 10));
       await tester.pump();
       expect(repository.resultQuestionCalls, 1);
       expect(find.text('Pirs 2'), findsNothing);
@@ -1422,7 +1422,7 @@ void main() {
       endedReason: 'host_left',
       forfeitedBy: 'opponent',
     );
-    await tester.pump(const Duration(seconds: 4));
+    await tester.pump(const Duration(seconds: 10));
     await _pumpFrames(tester, 4);
 
     expect(repository.endStateCalls, greaterThan(pollsBefore));

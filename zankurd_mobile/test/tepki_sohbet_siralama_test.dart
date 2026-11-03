@@ -81,7 +81,10 @@ void main() {
     ).readAsStringSync();
     expect(src, contains('payload: encodeRoomBroadcast(payload)'));
     expect(src, contains('controller.add(decodeRoomBroadcast(payload))'));
-    expect(src, contains(".order('created_at', ascending: true)"));
+    // Akış son 50 mesajı azalan sırada seçer, sonra çevirir (yük denetimi
+    // 2026-11-03): ekranda yine eski üstte/yeni altta.
+    expect(src, contains(".order('created_at', ascending: false)"));
+    expect(src, contains('rows.reversed'));
   });
 
   test('orderChatMessages eski üstte yeni altta dizer', () {

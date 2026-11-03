@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../services/poll_cadence.dart';
 import 'package:flutter/material.dart';
 
 import '../config/feature_flags.dart';
@@ -391,7 +392,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     );
   }
 
-  /// 30 saniyelik yenileme yalnız uygulama ÖNDEYKEN çalışır.
+  /// 120 saniyelik yenileme (eskiden 30 sn; elle çekip yenileme var) yalnız uygulama ÖNDEYKEN çalışır.
   ///
   /// Zamanlayıcı eskiden yalnız `dispose()`ta iptal ediliyordu. Ama bu ekran
   /// bir kez ziyaret edildikten sonra `IndexedStack` içinde kalıcı olarak
@@ -405,7 +406,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   /// Supabase kotası (2026-07-31 denetimi).
   void _startAutoRefresh() {
     _refreshTimer?.cancel();
-    _refreshTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+    _refreshTimer = Timer.periodic(PollCadence.leaderboardRefresh, (_) {
       if (!mounted) return;
       if (!(widget.isVisible?.call() ?? true)) return;
       _loadData();

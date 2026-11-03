@@ -612,7 +612,7 @@ void main() {
     for (final reveal in [false, true]) {
       if (reveal) {
         repo.snapshot = snapshot(reveal: true);
-        await tester.pump(const Duration(milliseconds: 6500));
+        await tester.pump(const Duration(milliseconds: 10500));
       }
       for (final ku in [false, true]) {
         lang.setLang(ku ? 'ku' : 'tr');

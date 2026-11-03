@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../services/poll_cadence.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart' show CustomSemanticsAction;
 import 'package:flutter/services.dart';
@@ -257,11 +258,11 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
   ///     AÇMAZ, yalnız kapatır — arka plan tazelemesi gösterge yakmaz.
   bool _playersRefreshing = false;
 
-  static const _pollInterval = Duration(seconds: 3);
+  static const _pollInterval = PollCadence.lobbyFallback;
 
   /// Kalabalık lobide her istemci aynı tabloları yokladığı için (50 kişi =
   /// saniyede ~8 sorgu) yedek yoklama seyrelir; asıl kaynak realtime'dır.
-  static const _crowdPollInterval = Duration(seconds: 6);
+  static const _crowdPollInterval = PollCadence.lobbyCrowdFallback;
   static const _maxPollsBeforePause = 20; // ~60s, yalnızca >=2 oyuncu varken
 
   Duration get _currentPollInterval =>
@@ -335,10 +336,9 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                 _terminalHandled) {
               return;
             }
-            // Bağlantı koptu: sıradaki yoklama turu zaten sunucuyu
-            // okuyacak, ek bir işlem gerekmiyor.
-            _startPolling();
-            _startStatusPolling();
+            // Bağlantı koptu: yedek yoklama zaten çalışıyor (15 sn); beklemeden
+            // bir tur at ki kopuş boyunca liste/durum bayatlamasın.
+            _onRealtimeDropped();
           },
         );
     _statusSub = widget.repository
@@ -372,10 +372,9 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                 _terminalHandled) {
               return;
             }
-            // Bağlantı koptu: sıradaki yoklama turu zaten sunucuyu
-            // okuyacak, ek bir işlem gerekmiyor.
-            _startPolling();
-            _startStatusPolling();
+            // Bağlantı koptu: yedek yoklama zaten çalışıyor (15 sn); beklemeden
+            // bir tur at ki kopuş boyunca liste/durum bayatlamasın.
+            _onRealtimeDropped();
           },
         );
 
@@ -430,8 +429,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                 reason: 'room broadcast stream error',
               );
               if (!mounted || _leaving || _terminalHandled) return;
-              _startPolling();
-              _startStatusPolling();
+              _onRealtimeDropped();
             },
           );
     }
@@ -469,6 +467,15 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
         if (!mounted) return;
       }
     }
+  }
+
+  /// Realtime kanalı hata verdi: yoklamayı (yeniden) kur ve hemen bir tur at.
+  void _onRealtimeDropped() {
+    _startPolling();
+    _startStatusPolling();
+    if (_appInBackground) return;
+    unawaited(_pollPlayersOnce());
+    unawaited(_pollRoomStatusOnce());
   }
 
   /// Realtime suskunlaştıysa yoklama devralır; taze ise bu tur atlanır.
