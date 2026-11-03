@@ -73,9 +73,18 @@ class FeatureGate {
   static bool get streakRescue => RuntimeConfigService.current.streakRescue;
   static bool get pushV2 => RuntimeConfigService.current.pushV2;
 
-  /// Sohbet: uzak anahtar VE 13 yaşından büyük beyanı (bkz. `AgeGate`).
-  static bool get chat => RuntimeConfigService.current.chat && !AgeGate.isMinor;
+  /// Sohbet: uzak anahtar VE "13 yaşından büyüğüm" beyanı (bkz. `AgeGate`).
+  /// Cevap yoksa KAPALI: sohbet verisi ne okunur ne yazılır.
+  static bool get chat => RuntimeConfigService.current.chat && AgeGate.isAdult;
 
-  /// Arkadaş/sosyal özellikler: yalnız 13 yaş beyanına bağlı.
-  static bool get social => !AgeGate.isMinor;
+  /// Sohbet girişi görünsün mü: uzak anahtar açık ve çocuk beyanı yok.
+  /// Cevap yoksa düğme görünür; dokununca yaş sorusu çıkar.
+  static bool get chatVisible =>
+      RuntimeConfigService.current.chat && !AgeGate.isMinor;
+
+  /// Arkadaş/sosyal özellikler: "13 yaşından büyüğüm" beyanı şart.
+  static bool get social => AgeGate.isAdult;
+
+  /// Sosyal girişler görünsün mü (cevap yokken görünür, dokununca sorulur).
+  static bool get socialVisible => !AgeGate.isMinor;
 }

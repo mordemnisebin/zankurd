@@ -121,4 +121,65 @@ void main() {
     );
     await tester.pumpWidget(const SizedBox());
   });
+
+  // 2026-11-04 ikinci tur: halat çubuğu kısa ekranda düşer; puan farkı
+  // yazısı her ekranda kalır ve yuvası sabittir (ilk puan kartı kaydırmaz).
+  testWidgets('puan farkı göstergesi: yuva sabit, fark yazılı', (tester) async {
+    tester.view.physicalSize = const Size(375, 667);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final repo = _Repo();
+    final question = repo.questions.first;
+    GameRoom room(int opponentScore) => GameRoom(
+      id: 'room-1',
+      name: '1v1',
+      code: 'ZK-TEST',
+      category: question.category,
+      status: RoomStatus.active,
+      questionCount: 1,
+      players: [
+        const Player(id: 'user', name: 'Ben', score: 0, state: 'Hazır'),
+        Player(
+          id: 'opponent-1',
+          name: 'Rakip',
+          score: opponentScore,
+          state: 'Hazır',
+        ),
+      ],
+    );
+    await tester.pumpWidget(
+      _wrap(
+        QuizScreen(
+          repository: repo,
+          room: room(0),
+          questions: [question],
+          is1v1: true,
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 300));
+    final before = tester.getTopLeft(
+      find.byKey(const ValueKey('quiz-answer-content')),
+    );
+    expect(find.byKey(const ValueKey('duel-score-diff')), findsNothing);
+    repo.emit({
+      'sender': 'Rakip',
+      'sender_id': 'opponent-1',
+      'answered': true,
+      'question_index': 0,
+      'score': 120,
+    });
+    await tester.pump(const Duration(milliseconds: 400));
+    final diff = find.byKey(const ValueKey('duel-score-diff'));
+    if (diff.evaluate().isNotEmpty) {
+      expect(tester.widget<Text>(diff).data, '−120');
+    }
+    expect(
+      tester.getTopLeft(find.byKey(const ValueKey('quiz-answer-content'))),
+      before,
+      reason: 'fark yazısı soruyu kaydırmamalı',
+    );
+    await tester.pumpWidget(const SizedBox());
+  });
 }

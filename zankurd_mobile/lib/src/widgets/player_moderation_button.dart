@@ -11,6 +11,7 @@ import '../l10n/strings.dart';
 import '../theme/app_icons.dart';
 import '../theme/sahne.dart';
 import 'dialog_action_pair.dart';
+import 'startup_prompts.dart';
 
 /// Yabancı bir oyuncunun avatarı/adı gösterilen yerlerde bildir/engelle.
 ///
@@ -172,7 +173,7 @@ Future<void> showPlayerModerationSheet({
         children: [
           // 2026-10-23: sıralamada ya da aynı odada biriyle karşılaşan
           // oyuncunun arkadaş ekleyebilmesi gerekir; bu satır EN ÜSTTE.
-          if (FeatureGate.social)
+          if (FeatureGate.socialVisible)
             _AddFriendTile(repository: repository, playerId: playerId),
           if (onKick != null)
             ListTile(
@@ -216,6 +217,9 @@ Future<void> showPlayerModerationSheet({
   if (action == null || !context.mounted) return;
 
   if (action == 'friend') {
+    // Yaş beyanı yoksa önce sorulur; "13 üstü" demeden istek gitmez.
+    if (!await StartupPrompts.ensureAgeCleared(context)) return;
+    if (!context.mounted) return;
     final doneText = context.t(K.requestSent);
     final failText = context.t(K.requestFailed);
     bool ok;

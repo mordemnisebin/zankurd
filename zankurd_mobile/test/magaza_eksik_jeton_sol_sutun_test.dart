@@ -69,7 +69,8 @@ void main() {
           .toSet();
       // 2026-10-29 vay 2B (B9): önizleme avatarı artık büyük (64 px) ve VIP
       // ürününde avatarın kendi "VIP" işaretini taşır — ürünün GÖRÜNÜŞÜ.
-      expect(texts.difference({'VIP'}), {'VIP rozeti', '720'});
+      // 2026-11-04: ürün türü etiketi ("Kalıcı") karonun köşesinde durur.
+      expect(texts.difference({'VIP'}), {'VIP rozeti', '720', 'Kalıcı'});
 
       // Bilgi kaybolmadı: ekran okuyucu eksik miktarı söyler.
       expect(find.bySemanticsLabel(RegExp('420 jeton eksik')), findsWidgets);

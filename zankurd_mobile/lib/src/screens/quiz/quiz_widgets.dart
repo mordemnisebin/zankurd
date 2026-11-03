@@ -1591,6 +1591,7 @@ class _DuelScoreHeader extends StatelessWidget {
       );
     }
 
+    final diff = player.score - opponent.score;
     return SahneSurfaceCard(
       padding: const EdgeInsets.symmetric(
         horizontal: SahneSpace.x2,
@@ -1608,6 +1609,31 @@ class _DuelScoreHeader extends StatelessWidget {
                     Text(
                       'VS',
                       style: SahneType.eyebrow.copyWith(color: t.raceTx),
+                    ),
+                    // Puan farkı: halat çubuğu kısa ekranda düşer, fark
+                    // yazısı her ekranda kalır. Yuva SABİT boyludur ve
+                    // fark yokken de ayrılır; ilk puan gelince kart ve
+                    // soru kaymaz (bkz. `duel_puan_farki_test`).
+                    SizedBox(
+                      width: 28,
+                      height: 16,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: diff == 0
+                            ? null
+                            : Text(
+                                '${diff > 0 ? '+' : '−'}'
+                                '${groupThousands(diff.abs())}',
+                                key: const ValueKey('duel-score-diff'),
+                                maxLines: 1,
+                                style: SahneType.captionStrong.copyWith(
+                                  color: diff > 0 ? t.goldTx : t.raceTx,
+                                  fontFeatures: const [
+                                    FontFeature.tabularFigures(),
+                                  ],
+                                ),
+                              ),
+                      ),
                     ),
                   ],
                 ),

@@ -104,6 +104,9 @@ class Tr {
     // Mağaza grup başlıkları (2026-10-28 K11). KU: "Alîkar" (Paketa alîkariyê
     // ile aynı kök), "Çarçove û rozet" (K.frame = Çarçove, Rozeta VIP).
     K.shopGroupBoosters: {'ku': 'Xurtker', 'tr': 'Güçlendiriciler'},
+    // KU jüri gerekli (taslak): ürün türü etiketleri.
+    K.shopTagPermanent: {'ku': 'Mayînde', 'tr': 'Kalıcı'},
+    K.shopTagConsumable: {'ku': 'Yek car tê bikaranîn', 'tr': 'Tek kullanım'},
     K.shopGroupLooks: {'ku': 'Çarçove û rozet', 'tr': 'Çerçeve ve rozet'},
 
     // ── Ayarlar ekranı ───────────────────────────────────────────────
@@ -560,6 +563,8 @@ class Tr {
     // W6 (2026-10-28 tur 5): kahraman düğme "seç" değil "bul" der (eşleşme
     // aranır, oyuncu rakip listesi görmez).
     K.findOpponent: {'ku': 'Hevrikekî bibîne', 'tr': 'Rakip bul'},
+    // KU jüri gerekli (taslak): sonuçta aynı konuda yeni arama düğmesi.
+    K.rematchSearchAgain: {'ku': 'Dîsa hevrik bibîne', 'tr': 'Yeniden eşleş'},
     // W16: sunucuya ulaşılamayan girişe dokununca söylenen kısa söz.
     K.internetRequired: {
       'ku': 'Girêdana înternetê pêwîst e',
@@ -1361,6 +1366,13 @@ class Tr {
     K.lgTierLegend: {'ku': 'Efsane', 'tr': 'Efsane'},
     K.lgLeagueName: {'ku': 'Lîga {tier}', 'tr': '{tier} Lig'},
     K.lgZonePromote: {'ku': 'Herêma bilindbûnê', 'tr': 'Yükselme bölgesi'},
+    // KU jüri gerekli (taslak): küçük kümede bölge kuralı notu.
+    K.lgZonesPending: {
+      'ku':
+          'Gava kom bi kêmanî ji çar lîstikvanan pêk bê, herêmên bilindbûn û daketinê dest pê dikin.',
+      'tr':
+          'Küme en az dört oyuncuya ulaşınca yükselme ve düşme bölgeleri başlar (ilk üçte biri üst lige çıkar, en çok beş).',
+    },
     K.lgZoneDemote: {'ku': 'Herêma daketinê', 'tr': 'Düşme bölgesi'},
     K.lgPromoteHint: {
       'ku': '{n} yên pêşîn diçin lîgeke bilindtir',
@@ -4938,6 +4950,8 @@ class K {
   static const back = 'common.back';
   static const next = 'common.next';
   static const shopGroupBoosters = 'shop.groupBoosters';
+  static const shopTagPermanent = 'shop.tagPermanent';
+  static const shopTagConsumable = 'shop.tagConsumable';
   static const shopGroupLooks = 'shop.groupLooks';
   static const onbContinue = 'common.onbContinue';
   static const skip = 'common.skip';
@@ -5377,6 +5391,7 @@ class K {
   static const lgLeagueName = 'league.leagueName';
   static const lgZonePromote = 'league.zonePromote';
   static const lgZoneDemote = 'league.zoneDemote';
+  static const lgZonesPending = 'league.zonesPending';
   static const lgPromoteHint = 'league.promoteHint';
   static const lgDemoteHint = 'league.demoteHint';
   static const lgTimeLeftDays = 'league.timeLeftDays';
@@ -5675,6 +5690,7 @@ class K {
   static const wheelFreeDaily = 'wheel.freeDaily';
   static const wheelExtraSpins = 'wheel.extraSpins';
   static const findOpponent = 'play.findOpponent';
+  static const rematchSearchAgain = 'play.rematchSearchAgain';
   static const internetRequired = 'common.internetRequired';
   static const freeWord = 'quiz.wildcard.free.word';
   static const modeLesson = 'quiz.mode.lesson';

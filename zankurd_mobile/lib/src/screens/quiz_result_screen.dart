@@ -267,6 +267,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   /// satır "⋯" sayfasındadır, bu yüzden geç gelen yanıt ekranı oynatmaz.
   bool _challengeAvailable = false;
   bool _challengeBusy = false;
+
+  /// Rastgele canlı düelloda rakip kabul edilmiş arkadaş mı? Evetse sonuçta
+  /// "Rövanş" (aynı kişiye sırayla düello meydan okuması) çıkar; hayırsa
+  /// ya da bilinmiyorsa "Yeniden eşleş" (aynı konuda yeni arama).
+  bool _opponentIsFriend = false;
   bool _showNotifPrompt = false;
 
   /// W2: "Cevapları gör" düğmesi "Ayrıntılar" bölümünü açar ve cevap
@@ -488,6 +493,28 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     super.dispose();
   }
 
+  /// Canlı 1v1 rastgele düello rakibi arkadaş mı (bkz. [_opponentIsFriend]).
+  /// Başarısızlık sessizdir: düğme "Yeniden eşleş"e düşer.
+  Future<void> _probeOpponentFriend() async {
+    if (room.id == null ||
+        room.isCustom ||
+        room.isCrowd ||
+        widget.tournamentMatch ||
+        opponents.length != 1) {
+      return;
+    }
+    final opponent = opponents.first;
+    final id = opponent.id;
+    if (opponent.isBot || id == null || !FeatureGate.asyncDuel) return;
+    try {
+      final friends = await repository.loadFriends();
+      if (!mounted) return;
+      if (friends.any((f) => f.friendId == id)) {
+        setState(() => _opponentIsFriend = true);
+      }
+    } catch (_) {}
+  }
+
   @override
   void initState() {
     super.initState();
@@ -498,6 +525,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         if (mounted && available) setState(() => _challengeAvailable = true);
       }),
     );
+    unawaited(_probeOpponentFriend());
     // Sonuç ekranının kendisi ilerleme yazımına bağlı değildir: skor,
     // doğru/yanlış ve cevap listesi zaten widget parametrelerinden gelir.
     // Yazım zinciri (seri, rozet, ustalık, görev, XP, mağaza değerlendirmesi)
@@ -1991,6 +2019,48 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           label: context.t(K.reviewMistakes),
           onTap: () => openReview(wrongRecords),
         ),
+      // Rastgele canlı 1v1 düello: arkadaşsa "Rövanş" (sırayla düello
+      // meydan okuması), değilse "Yeniden eşleş" (aynı konuda yeni arama).
+      // Birincil "Rakip bul" konu seçimine gider; bu ikisi tek dokunuş.
+      if (findNewOpponent && opponents.length == 1)
+        if (_opponentIsFriend)
+          _ResultAction(
+            key: const ValueKey('result-live-rematch-button'),
+            icon: AppIcons.arrowRotateLeft,
+            label: context.t(K.asyncDuelRematch),
+            onTap: () => unawaited(
+              Navigator.of(context).push(
+                AppRoute.to(
+                  AsyncDuelPlayScreen(
+                    repository: repository,
+                    entry: AsyncDuelEntry.createChallenge(
+                      friendId: opponents.first.id,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+        else if (!isMixedCategoryRound && room.category != 'mixed')
+          _ResultAction(
+            key: const ValueKey('result-rematch-search-button'),
+            icon: AppIcons.magnifyingGlass,
+            label: context.t(K.rematchSearchAgain),
+            onTap: () {
+              final navigator = Navigator.of(context);
+              navigator.popUntil((route) => route.isFirst);
+              unawaited(
+                navigator.push(
+                  AppRoute.to(
+                    MatchmakingScreen(
+                      repository: repository,
+                      initialCategory: room.category,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
       // Özel odada "Tekrar oyna" aynı işi görür (aynı ayarla yeni lobi);
       // ikinci bir "Yeni oda" kafa karıştırır.
       if (isOnlineRoom && !canRematch)

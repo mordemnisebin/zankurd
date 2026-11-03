@@ -83,6 +83,19 @@ class StartupPrompts {
     );
   }
 
+  /// Sosyal bir özelliğe girmeden önce çağrılır. Beyan yoksa yaş sorusunu
+  /// gösterir; `true` yalnız "13 yaşından büyüğüm" için döner. Çocuk beyanı
+  /// ya da soruyu kapatma `false` verir (öğrenme ve tek kişilik oyun
+  /// etkilenmez; çağıran yalnız sosyal adımı yapmaz).
+  static Future<bool> ensureAgeCleared(BuildContext context) async {
+    if (AgeGate.isAdult) return true;
+    if (AgeGate.isMinor) return false;
+    await AgeGate.markAsked();
+    if (!context.mounted) return false;
+    await showAgeGateSheet(context);
+    return AgeGate.isAdult;
+  }
+
   static Future<void> showAgeGateSheet(BuildContext context) =>
       showSahneSheet<void>(
         context: context,
