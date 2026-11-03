@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
-import 'branded_loader.dart';
+import 'launch_frame.dart';
 
 /// `runApp`'in İLK karede çizdiği, hiçbir uzak/ağır işe bağlı olmayan kök.
 ///
@@ -39,7 +39,8 @@ class BootHost extends StatefulWidget {
 
   final Future<Widget> app;
 
-  /// Kullanıcının tema tercihi (yerel, hızlı). Gelene dek karanlık varsayılan.
+  /// Kullanıcının tema tercihi (yerel, hızlı). Gelene dek sistem parlaklığı:
+  /// yerel açılış ekranı da sistemi izler, ilk kare ona birebir uyar.
   final Future<ThemeMode>? themeMode;
 
   /// [app] hata verirse kurulacak yedek kök.
@@ -51,7 +52,7 @@ class BootHost extends StatefulWidget {
 
 class _BootHostState extends State<BootHost> {
   Widget? _root;
-  ThemeMode _mode = ThemeMode.dark;
+  ThemeMode _mode = ThemeMode.system;
 
   @override
   void initState() {
@@ -78,27 +79,28 @@ class _BootHostState extends State<BootHost> {
   @override
   Widget build(BuildContext context) {
     final root = _root;
-    if (root != null) return root;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'ZanKurd',
-      theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
-      themeMode: _mode,
-      home: Builder(
-        builder: (context) => Scaffold(
-          key: const ValueKey('boot-frame'),
-          backgroundColor: AppTheme.bgOf(context),
-          body: DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: AppTheme.backgroundGradient(context),
+    // Kök gelince kısa solma; hareket azaltma açıksa anında.
+    final reduce = WidgetsBinding
+        .instance
+        .platformDispatcher
+        .accessibilityFeatures
+        .disableAnimations;
+    return AnimatedSwitcher(
+      duration: reduce ? Duration.zero : const Duration(milliseconds: 250),
+      child: root != null
+          ? KeyedSubtree(key: const ValueKey('boot-root'), child: root)
+          : MaterialApp(
+              key: const ValueKey('boot-app'),
+              debugShowCheckedModeBanner: false,
+              title: 'ZanKurd',
+              theme: AppTheme.light(),
+              darkTheme: AppTheme.dark(),
+              themeMode: _mode,
+              home: const Scaffold(
+                key: ValueKey('boot-frame'),
+                body: LaunchFrame(),
+              ),
             ),
-            child: const Center(
-              child: BrandedLoader(size: 24, strokeWidth: 2.5),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

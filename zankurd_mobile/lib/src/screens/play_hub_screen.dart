@@ -816,7 +816,9 @@ class _OpponentSheet extends StatelessWidget {
           icon: AppIcons.shuffle,
           role: SahneRole.race,
           title: context.t(K.opponentRandom),
-          subtitle: context.t(live ? K.quickDuelHeadline : K.asyncDuelSub),
+          subtitle: glueLastWords(
+            context.t(live ? K.quickDuelHeadline : K.asyncDuelSub),
+          ),
           chevron: true,
           onTap: () => Navigator.of(context).pop(_Opponent.random),
         ),
@@ -949,7 +951,8 @@ class _QuickDuelHeroState extends State<_QuickDuelHero> {
   Widget build(BuildContext context) {
     final onTap = widget.onTap;
     final enabled = onTap != null;
-    final title = context.t(K.quickDuelHeadline);
+    // Son iki sözcük bölünmez: "… asta / te" gibi yarım tamlama kalmasın.
+    final title = glueLastWords(context.t(K.quickDuelHeadline));
     // Eşleşme odası 10 soruyla kurulur (`MatchmakingScreen`, `limit: 10`).
     // Soru sayısı ve süre ayrı dizgelerdir; ayraç çeviriye girmez.
     final meta =
@@ -2186,4 +2189,14 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
       ),
     );
   }
+}
+
+/// Metnin son iki sözcüğünü bölünmez boşlukla (U+00A0) bağlar; satır
+/// kırılınca tamlamanın son sözcüğü ("asta te" -> "te") tek başına kalmaz.
+/// Çeviri metnine dokunmaz, yalnız gösterimde uygulanır.
+@visibleForTesting
+String glueLastWords(String text) {
+  final i = text.lastIndexOf(' ');
+  if (i <= 0) return text;
+  return '${text.substring(0, i)}\u00A0${text.substring(i + 1)}';
 }

@@ -75,8 +75,9 @@ bool errorScreenIsKu = true;
 /// `main()` başında başlar; her işaret, o ana dek geçen ms'yi yazar.
 final Stopwatch _bootClock = Stopwatch();
 void _bootMark(String label) {
-  if (kDebugMode)
+  if (kDebugMode) {
     debugPrint('[boot ${_bootClock.elapsedMilliseconds} ms] $label');
+  }
 }
 
 Future<void> main() async {
