@@ -71,12 +71,17 @@ class ForegroundPushCenter {
 
 /// İki dilli bildirim metnini ("KU · TR") arayüz diline göre böler.
 ///
-/// Sunucu başlığı/gövdeyi `KU · TR` olarak yollar. Tam olarak iki yarı
-/// çıkarsa dile uygun yarı; ayrılamazsa (ayraç yok ya da ikiden fazla parça)
-/// metnin tamamı döner.
+/// Sunucu başlığı/gövdeyi `KU · TR` olarak yollar. İki parça çıkarsa dile
+/// uygun yarı. Oyuncu adı da " · " içerebilir ("A · B ji te … · A · B sana
+/// …"): ad iki yarıda da geçtiğinden parça sayısı ÇİFT olur ve ortadan
+/// bölmek doğru yarıları verir. Tek sayıda parça ya da boş yarı varsa
+/// (ayrılamaz) metnin tamamı döner.
 String splitBilingualPushText(String text, {required bool ku}) {
   final parts = text.split(' · ');
-  if (parts.length != 2) return text;
-  final half = (ku ? parts[0] : parts[1]).trim();
+  if (parts.length < 2 || parts.length.isOdd) return text;
+  final mid = parts.length ~/ 2;
+  final half = (ku ? parts.sublist(0, mid) : parts.sublist(mid))
+      .join(' · ')
+      .trim();
   return half.isEmpty ? text : half;
 }
