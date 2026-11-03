@@ -158,6 +158,30 @@ class GuestSavePrompt {
     }
   }
 
+  /// İlk başarı anının hemen ardından (ilk ders + ilk kelime) misafire hesabı
+  /// kaydetmeyi önerir. Sayaçtan bağımsız bir kez açılır ama gösterimi
+  /// kaydeder: bekleme başlar, üç oyunluk sayaç hemen arkasından ikinci kez
+  /// çıkmaz. Misafir değilse hiçbir şey yapmaz; oyunu ASLA engellemez.
+  static Future<void> presentAfterFirstSuccess(BuildContext context) async {
+    try {
+      final auth = context.read<AuthProvider>();
+      if (!auth.isGuest) return;
+      final service = await GuestSavePromptService.load(
+        auth.guestSaveUserId ?? 'local',
+      );
+      await service.markShown();
+      if (!context.mounted) return;
+      await showModalBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (_) => const GuestSaveSheet(),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'guest_save_prompt');
+    }
+  }
+
   static Future<void> afterGame(
     BuildContext context, {
     DateTime Function()? now,

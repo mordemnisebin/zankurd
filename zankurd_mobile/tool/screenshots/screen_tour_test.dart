@@ -55,6 +55,7 @@ import 'package:zankurd_mobile/src/screens/alphabet_screen.dart';
 import 'package:zankurd_mobile/src/screens/stories_screen.dart';
 import 'package:zankurd_mobile/src/models/my_suggestion.dart';
 import 'package:zankurd_mobile/src/screens/image_credits_screen.dart';
+import 'package:zankurd_mobile/src/screens/first_run_choice_screen.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
@@ -1777,6 +1778,34 @@ void main() {
       }
     }
     await _shoot(t, '73d_onboarding_compete');
+  }, tags: ['preview']);
+
+  // 2026-11-03 ilk 5 dakika: tanıtımdan sonraki iki soru ve ilk başarı anı.
+  testWidgets('73e ilk akış, amaç adımı', (t) async {
+    await _pump(t, FirstRunChoiceScreen(onDone: () {}));
+    await _shoot(t, '73e_first_run_goal');
+  }, tags: ['preview']);
+
+  testWidgets('73f ilk akış, seviye sorusu', (t) async {
+    await _pump(t, FirstRunChoiceScreen(onDone: () {}));
+    await t.tap(find.byKey(const ValueKey('first-run-goal-next')));
+    await t.pump(const Duration(milliseconds: 600));
+    await _shoot(t, '73f_first_run_know');
+  }, tags: ['preview']);
+
+  testWidgets('73g ilk akış, ilk başarı', (t) async {
+    await _pump(
+      t,
+      const FirstSuccessScreen(
+        entry: LearnerLexiconEntry(
+          id: 'tour',
+          termKu: 'Silav',
+          meaningTr: 'Merhaba',
+          sourceId: 'tour',
+        ),
+      ),
+    );
+    await _shoot(t, '73g_first_success');
   }, tags: ['preview']);
 
   testWidgets('74 giriş', (t) async {

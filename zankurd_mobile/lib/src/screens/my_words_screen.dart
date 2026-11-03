@@ -21,6 +21,7 @@ import '../widgets/sahne/sahne.dart';
 import '../widgets/words_review_hero.dart';
 import '../widgets/word_save_button.dart';
 import '../widgets/zk_back_button.dart';
+import 'first_run_choice_screen.dart';
 import 'word_drill_screen.dart';
 
 /// "Kelimelerim": kullanıcının kaydettiği sözlük maddeleri, her kelimenin
@@ -123,6 +124,11 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
                 icon: AppIcons.bookmark,
                 title: context.t(K.wordsEmptyTitle),
                 message: context.t(K.wordsEmptyBody),
+                // Boş liste çıkmaz sokak olmasın: kelimeler derslerden gelir.
+                actionLabel: context.t(K.wordsEmptyAction),
+                actionIcon: AppIcons.play,
+                onAction: () =>
+                    FirstRunFlow.openFirstLesson(context, widget.repository),
               )
             : Builder(
                 builder: (context) {
