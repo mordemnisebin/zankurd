@@ -2276,7 +2276,7 @@ class Tr {
       'tr': 'Tüm oyuncuların hazır olması bekleniyor.',
     },
     K.tapReadyToStart: {
-      'ku': 'Gava amade bûyî, li "Amade me" bixe.',
+      'ku': 'Gava amade bûyî, li "Amade me" bitikîne.',
       'tr': 'Hazır olduğunda "Hazırım"a dokun.',
     },
     // 2026-11-03 tasarım kurulu: kapalı "Yarışı başlat" düğmesinin NEDENİ
