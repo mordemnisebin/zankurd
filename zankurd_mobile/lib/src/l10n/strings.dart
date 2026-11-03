@@ -1333,15 +1333,15 @@ class Tr {
       'tr': 'Haftanın bitmesine {d} gün {h} sa',
     },
     K.lgTimeLeftHours: {
-      'ku': 'Heta dawiya heftê: {h} saet {m} xul',
+      'ku': 'Heta dawiya heftê: {h} saet {m} deqe',
       'tr': 'Haftanın bitmesine {h} sa {m} dk',
     },
     K.lgTimeLeftMinutes: {
-      'ku': 'Heta dawiya heftê: {m} xul',
+      'ku': 'Heta dawiya heftê: {m} deqe',
       'tr': 'Haftanın bitmesine {m} dk',
     },
     K.lgNotJoinedTitle: {
-      'ku': 'Ji bo ketina lîgê xal bi dest bixe',
+      'ku': 'Ji bo ketina lîgê pûan bi dest bixe',
       'tr': 'Lige girmek için puan kazan',
     },
     K.lgNotJoinedBody: {
@@ -1351,7 +1351,7 @@ class Tr {
           'Bu hafta canlı düello ya da odada oyna; aynı kademeden oyuncularla bir kümeye girersin.',
     },
     K.lgResultPromoted: {
-      'ku': 'Tu gihîşt lîga {tier}!',
+      'ku': 'Tu gihîştî lîga {tier}!',
       'tr': '{tier} lige yükseldin!',
     },
     K.lgResultDemoted: {
@@ -1359,7 +1359,7 @@ class Tr {
       'tr': '{tier} lige düştün',
     },
     K.lgResultStayed: {
-      'ku': 'Tu di lîga {tier} de man',
+      'ku': 'Tu di lîga {tier} de mayî',
       'tr': '{tier} ligde kaldın',
     },
     K.lgResultRank: {
@@ -1367,7 +1367,7 @@ class Tr {
       'tr': 'Geçen hafta {r}. oldun',
     },
     K.lgYourRank: {
-      'ku': 'Rêza te: {r} · {p} xal',
+      'ku': 'Rêza te: {r} · {p} pûan',
       'tr': 'Sıran: {r} · {p} puan',
     },
     K.altinLig: {'ku': 'Lîga zêrîn', 'tr': 'Altın lig'},
